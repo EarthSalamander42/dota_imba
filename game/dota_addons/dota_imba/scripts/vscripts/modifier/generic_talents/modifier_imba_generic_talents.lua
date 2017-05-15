@@ -413,12 +413,12 @@ end
 --	  Respawn Reduction    --
 -----------------------------
 modifier_imba_generic_talent_respawn_reduction = ShallowCopy(modifier_imba_generic_talent_base)
-function modifier_imba_generic_talent_bonus_xp:DeclareFunctions()
+function modifier_imba_generic_talent_respawn_reduction:DeclareFunctions()
     local funcs = { MODIFIER_PROPERTY_RESPAWNTIME_STACKING }
 	return funcs
 end
 
-function modifier_imba_generic_talent_bonus_xp:GetModifierStackingRespawnTime()
+function modifier_imba_generic_talent_respawn_reduction:GetModifierStackingRespawnTime()
     -- Return negative value
     return -(self.value)
 end

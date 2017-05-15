@@ -608,11 +608,11 @@ function CDOTA_BaseNPC:GetSpellPower()
 	end
 
 	-- Adjust base spell power based on current intelligence
-	local spell_power = self:GetIntellect() * 0.1
+	local spell_power = self:GetIntellect() * 0.667
 
 	-- Mega Treads increase spell power from intelligence by 30%
 	if self:HasModifier("modifier_imba_mega_treads_stat_multiplier_02") then
-		spell_power = self:GetIntellect() * 0.13
+		spell_power = self:GetIntellect() * 0.1
 	end
 
 	-- Fetch spell power from modifiers
@@ -624,6 +624,43 @@ function CDOTA_BaseNPC:GetSpellPower()
 
 	-- Return current spell power
 	return spell_power
+end
+
+-- Respawn timer modifier
+function CDOTA_BaseNPC:GetRespawnTimeModifier()
+
+	-- If this is not a hero, do nothing
+	local respawn_modifier = 0
+	if not self:IsRealHero() then
+		return respawn_modifier
+	end
+
+	-- Fetch respawn time modifications from modifiers
+	for _, parent_modifier in pairs(self:FindAllModifiers()) do
+		if parent_modifier.GetModifierStackingRespawnTime then
+			respawn_modifier = respawn_modifier + parent_modifier:GetModifierStackingRespawnTime()
+		end
+	end
+
+	-- Calculate respawn timer reduction due to vanilla talents
+	local respawn_reduction_talents = {}
+	respawn_reduction_talents["special_bonus_respawn_reduction_15"] = 9
+	respawn_reduction_talents["special_bonus_respawn_reduction_20"] = 12
+	respawn_reduction_talents["special_bonus_respawn_reduction_25"] = 15
+	respawn_reduction_talents["special_bonus_respawn_reduction_30"] = 18
+	respawn_reduction_talents["special_bonus_respawn_reduction_35"] = 20
+	respawn_reduction_talents["special_bonus_respawn_reduction_40"] = 25
+	respawn_reduction_talents["special_bonus_respawn_reduction_50"] = 30
+	respawn_reduction_talents["special_bonus_respawn_reduction_60"] = 40
+
+	for talent_name, respawn_reduction_bonus in pairs(respawn_reduction_talents) do
+		if self:FindAbilityByName(talent_name) and self:FindAbilityByName(talent_name):GetLevel() > 0 then
+			respawn_modifier = respawn_modifier - respawn_reduction_bonus
+		end
+	end
+
+	-- Return current respawn time modifier
+	return respawn_modifier
 end
 
 -- Calculate physical damage post reduction

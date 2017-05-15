@@ -807,37 +807,14 @@ function GameMode:OnEntityKilled( keys )
 		local hero_level = math.min(killed_unit:GetLevel(), 25)
 		local respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[hero_level]
 
-		-- Calculate respawn timer reduction due to talents
-		local respawn_reduction_talents = {}
-		respawn_reduction_talents["special_bonus_respawn_reduction_15"] = 9
-		respawn_reduction_talents["special_bonus_respawn_reduction_20"] = 12
-		respawn_reduction_talents["special_bonus_respawn_reduction_25"] = 15
-		respawn_reduction_talents["special_bonus_respawn_reduction_30"] = 18
-		respawn_reduction_talents["special_bonus_respawn_reduction_35"] = 20
-		respawn_reduction_talents["special_bonus_respawn_reduction_40"] = 25
-		respawn_reduction_talents["special_bonus_respawn_reduction_50"] = 30
-		respawn_reduction_talents["special_bonus_respawn_reduction_60"] = 40
-
-		for talent_name,respawn_reduction_bonus in pairs(respawn_reduction_talents) do
-			if killed_unit:FindAbilityByName(talent_name) and killed_unit:FindAbilityByName(talent_name):GetLevel() > 0 then
-				respawn_time = respawn_time - respawn_reduction_bonus
-			end
-		end
+		-- Calculate respawn timer reduction due to talents and modifiers
+		print("Respawn time modifiers: "..killed_unit:GetRespawnTimeModifier())
+		respawn_time = respawn_time + killed_unit:GetRespawnTimeModifier()
 
 		-- Fetch decreased respawn timer due to Bloodstone charges
 		if killed_unit.bloodstone_respawn_reduction then
 			respawn_time = math.max( respawn_time - killed_unit.bloodstone_respawn_reduction, 0)
 		end
-
-		-- Get all of the unit's modifiers
-		local respawn_modifiers = 0
-
-		local modifiers = killed_unit:FindAllModifiers()
-		for _,modifier in pairs(modifiers) do
-			if modifier.GetModifierStackingRespawnTime then
-				respawn_modifiers = respawn_modifiers + modifier:GetModifierStackingRespawnTime()				
-			end
-		end		
 
 		-- Multiply respawn timer by the lobby options
 		respawn_time = math.max( respawn_time * HERO_RESPAWN_TIME_MULTIPLIER * 0.01, 1)
