@@ -31,7 +31,6 @@
 	//=================================================================================================================
 
 	"imba_generic_talent_damage"					"攻击力"
-	"imba_generic_talent_damage_Description"		"攻击力提高20。"
 	"imba_generic_talent_all_stats"					"全属性"
 	"imba_generic_talent_strength"					"力量"
 	"imba_generic_talent_agility"					"敏捷"
