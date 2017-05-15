@@ -32,6 +32,7 @@ function Precache( context )
 	LinkLuaModifier("modifier_imba_prevent_actions_game_start", "modifier/modifier_imba_prevent_actions_game_start.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_arena_passive_gold_thinker", "modifier/modifier_imba_arena_passive_gold_thinker.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_range_indicator", "modifier/modifier_imba_range_indicator.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_imba_war_veteran", "modifier/modifier_imba_war_veteran.lua", LUA_MODIFIER_MOTION_NONE )
 
 	-- Generic talent modifiers
 	LinkLuaModifier("modifier_imba_generic_talents_handler", "modifier/generic_talents/modifier_imba_generic_talents_handler.lua", LUA_MODIFIER_MOTION_NONE )

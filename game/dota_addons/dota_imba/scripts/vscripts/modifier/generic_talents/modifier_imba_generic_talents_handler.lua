@@ -6,7 +6,6 @@ if modifier_imba_generic_talents_handler == nil then modifier_imba_generic_talen
 function modifier_imba_generic_talents_handler:IsHidden() return true end
 function modifier_imba_generic_talents_handler:IsDebuff() return false end
 function modifier_imba_generic_talents_handler:IsPurgable() return false end
-function modifier_imba_generic_talents_handler:IsHidden() return true end
 function modifier_imba_generic_talents_handler:IsPermanent() return true end
 
 function modifier_imba_generic_talents_handler:OnCreated()

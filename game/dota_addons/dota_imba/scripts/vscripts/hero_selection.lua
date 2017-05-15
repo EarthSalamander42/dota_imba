@@ -481,6 +481,9 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		-- Apply generic talents handler
 		hero:AddNewModifier(hero, nil, "modifier_imba_generic_talents_handler", {})
 
+		-- Apply War Veteran buff
+		hero:AddNewModifier(hero, nil, "modifier_imba_war_veteran", {})
+
 		-- Initialize innate hero abilities
 		InitializeInnateAbilities(hero)
 
