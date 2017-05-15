@@ -24306,7 +24306,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"passive_respawn_haste"		"0 0 0 0 8 16 24"
+				"passive_respawn_haste"		"0 0 0 8 16 24"
 			}
 
 			"04"
