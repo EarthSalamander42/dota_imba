@@ -26717,32 +26717,37 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NO_INVIS | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES_STRONG"
 		"AbilityTextureName"			"witch_doctor_paralyzing_cask"
 		"CastFilterRejectCaster" 		"1"
 		"FightRecapLevel"				"1"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
 
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"particle"		"particles/units/heroes/hero_witchdoctor/witchdoctor_cask.vpcf"
-			"soundfile"		"sounds/weapons/hero/witch_doctor/cask_cast.vsnd"
-			"soundfile"		"sounds/weapons/hero/witch_doctor/cask_bounce01.vsnd"
-			"soundfile"		"sounds/weapons/hero/witch_doctor/cask_bounce02.vsnd"
+			"particle"					"particles/units/heroes/hero_witchdoctor/witchdoctor_cask.vpcf"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_witch_doctor.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_witch_doctor.vsndevts"
 		}
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"700"
 		"AbilityCastPoint"				"0.35"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"20 18 16 14"
+		"AbilityCooldown"				"20 18 16 14 14 14 14"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"110 120 130 140"
+		"AbilityManaCost"				"110 120 130 140 145 150 155"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -26766,7 +26771,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"creep_damage"			"75 100 125 150"
+				"creep_damage"			"75 100 125 150 150 150 150"
 			}
 			"05"
 			{
@@ -26776,7 +26781,8 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounces"				"4 8 12 16"
+				"bounces"				"2 4 6 8 9 10 11"
+				"LinkedSpecialBonus"	"special_bonus_imba_witch_doctor_5"
 			}
 			"07"
 			{
@@ -26788,6 +26794,11 @@
 				"var_type"				"FIELD_FLOAT"
 				"bounce_delay"			"0.3"
 			}
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"split_amount"			"0 0 0 0 1 1 2"
+			}
 		}
 	}
 
@@ -26798,28 +26809,34 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityTextureName"			"witch_doctor_voodoo_restoration"
 		"ScriptFile"					"hero/hero_witch_doctor"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
 
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
 			"particle"					"particles/units/heroes/hero_witchdoctor/witchdoctor_voodoo_restoration.vpcf"
 			"particle"					"particles/units/heroes/hero_witchdoctor/witchdoctor_voodoo_restoration_flame.vpcf"
-			"particle"					"particles/units/heroes/hero_witchdoctor/witchdoctor_ward_attack_explosion.vpcf"
-			"soundfile"					"sounds/weapons/hero/witch_doctor/voodoo_restoration.vsnd"
-			"soundfile"					"sounds/weapons/hero/witch_doctor/voodoo_restoration_loop.vsnd"
-			"soundfile"					"sounds/weapons/hero/witch_doctor/voodoo_restoration_off.vsnd"
+			"particle"					"particles/hero/witch_doctor/voodoo_cleanse.vpcf"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_witch_doctor.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_witch_doctor.vsndevts"
 		}
+		
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"0.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"20 30 40 50"
+		"AbilityManaCost"				"20 30 40 50 53 56 60"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -26828,7 +26845,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"mana_per_second"			"20 30 40 50"
+				"mana_per_second"			"8 12 16 20 22 24 26"
 			}
 			"02"
 			{
@@ -26838,22 +26855,23 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"heal"						"16 24 32 40"
+				"heal"						"16 24 32 40 43 46 50"
+				"LinkedSpecialBonus"		"special_bonus_imba_witch_doctor_3"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"int_to_heal"				"20 30 40 50"
+				"int_to_heal"				"20 20 20 20 30 40 50"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cleanse_interval"			"6 5 4 3"
+				"cleanse_interval"			"5"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"heal_interval"				"0.2"
+				"heal_interval"				"0.25"		//0.33 is vanilla, but this is for better synching for cleanse
 			}
 		}
 	}
@@ -26865,44 +26883,42 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"					"ability_lua"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"AbilityTextureName"			"witch_doctor_maledict"
 		"ScriptFile"					"hero/hero_witch_doctor"
 		"FightRecapLevel"				"1"
-
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"particle"		"particles/units/heroes/hero_witchdoctor/witchdoctor_maledict.vpcf"
-			"particle"		"particles/units/heroes/hero_witchdoctor/witchdoctor_maledict_aoe.vpcf"
-			"soundfile"		"sounds/weapons/hero/witch_doctor/maledict_cast.vsnd"
-			"soundfile"		"sounds/weapons/hero/witch_doctor/maledict_fail.vsnd"
-			"soundfile"		"sounds/weapons/hero/witch_doctor/maledict_loop.vsnd"
-			"soundfile"		"sounds/weapons/hero/witch_doctor/maledict_tick.vsnd"
+			"particle"					"particles/units/heroes/hero_witchdoctor/witchdoctor_maledict.vpcf"
+			"particle"					"particles/units/heroes/hero_witchdoctor/witchdoctor_maledict_aoe.vpcf"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_witch_doctor.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_witch_doctor.vsndevts"
 		}
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"575"
-		"AbilityCastPoint"				"0.3"
+		"AbilityCastPoint"				"0.35"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"20.0"
-		"AbilityDuration"				"12.0"
-
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"7 14 21 28"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"105 110 115 120"
+		"AbilityManaCost"				"105 110 115 120 125 130 135"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -26912,31 +26928,38 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"180"
+				"LinkedSpecialBonus"		"special_bonus_imba_witch_doctor_2"
 			}
 			"02"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"duration_tooltip"			"12"
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"12.0"
+				"LinkedSpecialBonus"		"special_bonus_imba_witch_doctor_7"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"16 24 32 40"
+				"main_damage"				"7 14 21 28 32 36 40"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_damage_threshold"	"100"
+				"bonus_damage_pct"			"16 24 32 40 40 40 40"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"ticks"						"3"
+				"tick_time_main"			"1"
 			}
 			"06"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"tick_time"					"1"
+				"var_type"					"FIELD_INTEGER"
+				"tick_time_sec"				"4"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"heal_reduce_pct"			"5 5 5 5 20 35 50"
 			}
 		}
 	}
@@ -26948,18 +26971,20 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"					"ability_lua"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"BaseClass"						"ability_lua"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE | DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE | DOTA_UNIT_TARGET_FLAG_NO_INVIS"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityTextureName"			"witch_doctor_death_ward"
 		"ScriptFile"					"hero/hero_witch_doctor"
 		"FightRecapLevel"				"2"
-
-		"HasScepterUpgrade"			"1"
+		"MaxLevel"						"6"
+		"LevelsBetweenUpgrades"			"6"
+		"HasScepterUpgrade"				"1"
 
 		"precache"
 		{
@@ -26973,7 +26998,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"600"
-		"AbilityCastPoint"				"0.3"
+		"AbilityCastPoint"				"0.35"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
@@ -26982,7 +27007,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"200 200 200"
+		"AbilityManaCost"				"200"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -26991,7 +27016,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"60 105 150"
+				"damage"				"60 105 150 170 190 210"
 			}
 			"02"
 			{
@@ -27001,22 +27026,252 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounces_scepter"		"9"
+				"int_to_dmg_pct"		"25 25 25 50 75 100"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_radius"			"650"
+				"attack_range_tooltip"	"700"
+				"LinkedSpecialBonus"	"special_bonus_imba_witch_doctor_4"
 			}
 			"05"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"int_to_damage"			"100"
+				"var_type"				"FIELD_FLOAT"
+				"channel_time_tooltip"	"8.0"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_range"			"700"
+				"bounces_scepter"		"4"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bounce_radius_scepter"	"650"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Witch Doctor Talent 1 (Level 10): Additional Paralyzing Cask heal when bouncing to allies 
+	//=================================================================================================================
+	"special_bonus_imba_witch_doctor_1"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_witch_doctor_paralyzing_cask"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"50"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Witch Doctor Talent 2 (Level 10): + Maledict effect radius
+	//=================================================================================================================
+	"special_bonus_imba_witch_doctor_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_witch_doctor_maledict"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"70"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Witch Doctor Talent 3 (Level 20): Additional Voodoo Restoration healing per second
+	//=================================================================================================================
+	"special_bonus_imba_witch_doctor_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_witch_doctor_voodoo_restoration"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"20"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Witch Doctor Talent 4 (Level 20):  Increased Death Ward attack range
+	//=================================================================================================================
+	"special_bonus_imba_witch_doctor_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_witch_doctor_death_ward"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"175"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Witch Doctor Talent 5 (Level 30):  + Paralyzing Cask max bounces
+	//=================================================================================================================
+	"special_bonus_imba_witch_doctor_5"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_witch_doctor_paralyzing_cask"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"4"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Witch Doctor Talent 6 (Level 30): Voodoo Restoration no longer costs mana
+	//=================================================================================================================
+	"special_bonus_imba_witch_doctor_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	 "imba_witch_doctor_voodoo_restoration"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Witch Doctor Talent 7 (Level 40): + Maledict duration
+	//=================================================================================================================
+	"special_bonus_imba_witch_doctor_7"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	 "imba_witch_doctor_maledict"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"8.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Witch Doctor Talent 8 (Level 40): Now spawns two Death Wards; if channeling is broken, only one of them disappears.
+	//=================================================================================================================
+	"special_bonus_imba_witch_doctor_8"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_witch_doctor_death_ward"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"180"		//Distance between wards
 			}
 		}
 	}
