@@ -1708,7 +1708,7 @@ function imba_techies_focused_detonate:OnSpellStart()
 
     -- Find all mines in radius
     local remote_mines = FindUnitsInRadius(caster:GetTeamNumber(),
-                                           target_point:GetAbsOrigin(),
+                                           target_point,
                                            nil,
                                            radius,
                                            DOTA_UNIT_TARGET_TEAM_FRIENDLY,
