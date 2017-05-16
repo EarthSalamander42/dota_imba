@@ -10552,12 +10552,12 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_distance"		"700"
+				"active_distance"		"1200"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_speed"			"1200"
+				"active_speed"			"3000"
 			}
 			"08"
 			{

@@ -1,199 +1,261 @@
---[[	Author: Firetoad
-		Date:	24.07.2016	]]
+-- Author: Shush
+-- Date: 16/05/2017
 
-function Drums( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local sound_cast = keys.sound_cast
-	local modifier_buff_hero = keys.modifier_buff_hero
-	local modifier_buff_creep = keys.modifier_buff_creep
-	local modifier_particle = keys.modifier_particle
 
-	-- Parameters
+---------------------------------
+--     DRUMS OF ENDURANCE      --
+---------------------------------
+item_imba_ancient_janggo = class({})
+LinkLuaModifier("modifier_imba_drums", "items/item_drums.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_drums_aura", "items/item_drums.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_drums_aura_effect", "items/item_drums.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_drums_active", "items/item_drums.lua", LUA_MODIFIER_MOTION_NONE)
+
+function item_imba_ancient_janggo:GetIntrinsicModifierName()
+	return "modifier_imba_drums"
+end
+
+function item_imba_ancient_janggo:OnSpellStart()
+	-- Ability properties
+	local caster = self:GetCaster()
+	local ability = self
+	local sound_cast = "DOTA_Item.DoE.Activate"
+	local modifier_active = "modifier_imba_drums_active"
+
+	-- Ability specials
+	local hero_multiplier = ability:GetSpecialValueFor("hero_multiplier")	
+	local duration = ability:GetSpecialValueFor("duration")
 	local radius = ability:GetSpecialValueFor("radius")
-	local caster_loc = caster:GetAbsOrigin()
 
-	-- Play cast sound
-	caster:EmitSound(sound_cast)
+	-- Play cast sound effect
+	EmitSoundOn(sound_cast, caster)
 
-	-- Count nearby allies
-	local heroes = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false )
-	local creeps = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false )
-	local total_heroes = #heroes
-	local total_creeps = #creeps
+	-- Find all nearby allies
+	local allies = FindUnitsInRadius(caster:GetTeamNumber(), 
+									 caster:GetAbsOrigin(),
+									 nil,
+									 radius,
+									 DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+									 DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+									 DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD,
+									 FIND_ANY_ORDER,
+									 false)
 
-	-- Iterate through nearby heroes
-	local max = math.max
-	for _,ally in pairs(heroes) do
-		
-		-- Add the particle modifier
-		ability:ApplyDataDrivenModifier(caster, ally, modifier_particle, {})
+	-- Decide how many stacks the active should have
+	local stacks = 0
+	for _,ally in pairs(allies) do
 
-		-- Check for existing hero-based buffs and apply/extend them
-		local current_hero_stacks = 0
-		if ally:HasModifier("modifier_item_imba_siege_cuirass_buff_hero") then
-			current_hero_stacks = max(current_hero_stacks, ally:GetModifierStackCount("modifier_item_imba_siege_cuirass_buff_hero", nil))
-			ally:RemoveModifierByName("modifier_item_imba_siege_cuirass_buff_hero")
+		-- Illusions are treated as creeps
+		if ally:IsRealHero() then
+			stacks = stacks + hero_multiplier
+		else
+			stacks = stacks + 1
 		end
-		if ally:HasModifier("modifier_item_imba_drums_buff_hero") then
-			current_hero_stacks = max(current_hero_stacks, ally:GetModifierStackCount("modifier_item_imba_drums_buff_hero", nil))
-			ally:RemoveModifierByName("modifier_item_imba_drums_buff_hero")
-		end
-		AddStacks(ability, caster, ally, modifier_buff_hero, max(total_heroes, current_hero_stacks), true)
+	end
 
-		-- Check for existing creep-based buffs and apply/extend them
-		if total_creeps > 0 then
-			local current_creep_stacks = 0
-			if ally:HasModifier("modifier_item_imba_siege_cuirass_buff_creep") then
-				current_creep_stacks = max(current_hero_stacks, ally:GetModifierStackCount("modifier_item_imba_siege_cuirass_buff_creep", nil))
-				ally:RemoveModifierByName("modifier_item_imba_siege_cuirass_buff_creep")
+	-- Apply the active modifier on nearby ally with the stacks that were calculated
+	for _,ally in pairs(allies) do
+		-- If the ally has Hellish Siege (Siege cuirass's active), do nothing
+		if not ally:HasModifier("modifier_imba_siege_cuirass_active") then
+			local modifier_active_handler = ally:AddNewModifier(caster, ability, modifier_active, {duration = duration})
+			if modifier_active_handler then
+				modifier_active_handler:SetStackCount(stacks)
 			end
-			if ally:HasModifier("modifier_item_imba_drums_buff_creep") then
-				current_creep_stacks = max(current_hero_stacks, ally:GetModifierStackCount("modifier_item_imba_drums_buff_creep", nil))
-				ally:RemoveModifierByName("modifier_item_imba_drums_buff_creep")
-			end
-			AddStacks(ability, caster, ally, modifier_buff_creep, max(total_creeps, current_creep_stacks), true)
-		end
-	end
-
-	-- Iterate through nearby creeps
-	for _,ally in pairs(creeps) do
-		
-		-- Add the particle modifier
-		ability:ApplyDataDrivenModifier(caster, ally, modifier_particle, {})
-
-		-- Check for existing hero-based buffs and apply/extend them
-		local current_hero_stacks = 0
-		if ally:HasModifier("modifier_item_imba_siege_cuirass_buff_hero") then
-			current_hero_stacks = max(current_hero_stacks, ally:GetModifierStackCount("modifier_item_imba_siege_cuirass_buff_hero", nil))
-			ally:RemoveModifierByName("modifier_item_imba_siege_cuirass_buff_hero")
-		end
-		if ally:HasModifier("modifier_item_imba_drums_buff_hero") then
-			current_hero_stacks = max(current_hero_stacks, ally:GetModifierStackCount("modifier_item_imba_drums_buff_hero", nil))
-			ally:RemoveModifierByName("modifier_item_imba_drums_buff_hero")
-		end
-		AddStacks(ability, caster, ally, modifier_buff_hero, max(total_heroes, current_hero_stacks), true)
-
-		-- Check for existing creep-based buffs and apply/extend them
-		if total_creeps > 0 then
-			local current_creep_stacks = 0
-			if ally:HasModifier("modifier_item_imba_siege_cuirass_buff_creep") then
-				current_creep_stacks = max(current_hero_stacks, ally:GetModifierStackCount("modifier_item_imba_siege_cuirass_buff_creep", nil))
-				ally:RemoveModifierByName("modifier_item_imba_siege_cuirass_buff_creep")
-			end
-			if ally:HasModifier("modifier_item_imba_drums_buff_creep") then
-				current_creep_stacks = max(current_hero_stacks, ally:GetModifierStackCount("modifier_item_imba_drums_buff_creep", nil))
-				ally:RemoveModifierByName("modifier_item_imba_drums_buff_creep")
-			end
-			AddStacks(ability, caster, ally, modifier_buff_creep, max(total_creeps, current_creep_stacks), true)
 		end
 	end
 end
 
-function DrumsAuraThink( keys )
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
-	local modifier_aura = keys.modifier_aura
 
-	-- If a higher-level aura is present, remove this one
-	if target:HasModifier("modifier_item_imba_siege_cuirass_positive_aura") then
-		if target:HasModifier(modifier_aura) then
-			target:RemoveModifierByName(modifier_aura)
+-- Active modifier
+modifier_imba_drums_active = class({})
+
+function modifier_imba_drums_active:OnCreated()
+	-- Ability properties
+	self.caster = self:GetCaster()
+	self.ability = self:GetAbility()
+	self.parent = self:GetParent()
+	self.particle_buff = "particles/items_fx/drum_of_endurance_buff.vpcf"
+
+	-- Ability specials
+	self.active_as_per_ally = self.ability:GetSpecialValueFor("active_as_per_ally")
+	self.active_ms_per_ally = self.ability:GetSpecialValueFor("active_ms_per_ally")
+
+	-- Apply particle effects
+	local particle_buff_fx = ParticleManager:CreateParticle(self.particle_buff, PATTACH_ABSORIGIN_FOLLOW, self.parent)	
+	ParticleManager:SetParticleControl(particle_buff_fx, 0, self.parent:GetAbsOrigin())
+	ParticleManager:SetParticleControl(particle_buff_fx, 1, Vector(0,0,0))
+	self:AddParticle(particle_buff_fx, false, false, -1, false, false)
+end
+
+function modifier_imba_drums_active:DeclareFunctions()
+	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
+   					  MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
+
+	return decFuncs
+end
+
+function modifier_imba_drums_active:GetModifierMoveSpeedBonus_Constant()
+	return self.active_ms_per_ally * self:GetStackCount()
+end
+
+function modifier_imba_drums_active:GetModifierAttackSpeedBonus_Constant()
+	return self.active_as_per_ally * self:GetStackCount()
+end
+
+
+-- Stats modifier (stacks)
+modifier_imba_drums = class({})
+
+function modifier_imba_drums:OnCreated()
+	-- Ability properties
+	self.caster = self:GetCaster()
+	self.ability = self:GetAbility()
+	self.modifier_self = "modifier_imba_drums"
+	self.modifier_aura = "modifier_imba_drums_aura"
+
+	-- Ability specials
+	self.bonus_int = self.ability:GetSpecialValueFor("bonus_int")
+	self.bonus_str = self.ability:GetSpecialValueFor("bonus_str")
+	self.bonus_agi = self.ability:GetSpecialValueFor("bonus_agi")
+	self.bonus_damage = self.ability:GetSpecialValueFor("bonus_damage")
+	self.bonus_mana_regen = self.ability:GetSpecialValueFor("bonus_mana_regen")
+
+	if IsServer() then
+		-- If it is the first drums in inventory, add the aura modifier
+		if not self.caster:HasModifier(self.modifier_aura) then
+			self.caster:AddNewModifier(self.caster, self.ability, self.modifier_aura, {})
 		end
-	elseif not target:HasModifier(modifier_aura) then
-		ability:ApplyDataDrivenModifier(caster, target, modifier_aura, {})
 	end
 end
 
-function DrumsAuraDestroy( keys )
-	local target = keys.target
-	local modifier_aura = keys.modifier_aura
+function modifier_imba_drums:IsHidden() return true end
+function modifier_imba_drums:IsPurgable() return false end
+function modifier_imba_drums:IsDebuff() return false end
+function modifier_imba_drums:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
-	-- Remove aura modifier
-	target:RemoveModifierByName(modifier_aura)
+function modifier_imba_drums:DeclareFunctions()
+	local decFuncs = {MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+					  MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+					  MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+					  MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+					  MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE}
+
+	return decFuncs
 end
 
-function AssaultAllyAuraThink( keys )
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
-	local modifier_aura = keys.modifier_aura
+function modifier_imba_drums:GetModifierBonusStats_Intellect()
+	return self.bonus_int
+end
 
-	-- If a higher-level aura is present, remove this one
-	if target:HasModifier("modifier_item_imba_siege_cuirass_positive_aura") then
-		if target:HasModifier(modifier_aura) then
-			target:RemoveModifierByName(modifier_aura)
+function modifier_imba_drums:GetModifierBonusStats_Strength()
+	return self.bonus_str
+end
+
+function modifier_imba_drums:GetModifierBonusStats_Agility()
+	return self.bonus_agi
+end
+
+function modifier_imba_drums:GetModifierPreAttack_BonusDamage()
+	return self.bonus_damage
+end
+
+function modifier_imba_drums:GetModifierPercentageManaRegen()
+	return self.bonus_mana_regen
+end
+
+function modifier_imba_drums:OnDestroy()
+	if IsServer() then
+		-- If it is the last drums in inventory, remove the aura modifier
+		if not self.caster:HasModifier(self.modifier_self) then
+			self.caster:RemoveModifierByName(self.modifier_aura)		
 		end
-	elseif not target:HasModifier(modifier_aura) then
-		ability:ApplyDataDrivenModifier(caster, target, modifier_aura, {})
 	end
 end
 
-function AssaultAllyAuraDestroy( keys )
-	local target = keys.target
-	local modifier_aura = keys.modifier_aura
 
-	-- Remove aura modifier
-	target:RemoveModifierByName(modifier_aura)
+
+-- Drums aura modifier
+modifier_imba_drums_aura = class({})
+
+function modifier_imba_drums_aura:OnCreated()
+    -- Ability properties
+    self.caster = self:GetCaster()
+    self.ability = self:GetAbility()
+    self.modifier_drum = "modifier_imba_drums_aura_effect"
+
+    -- Ability specials
+    self.radius = self.ability:GetSpecialValueFor("radius")
 end
 
-function AssaultEnemyAuraThink( keys )
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
-	local modifier_aura = keys.modifier_aura
+function modifier_imba_drums_aura:IsDebuff() return false end
+function modifier_imba_drums_aura:AllowIllusionDuplicate() return true end
+function modifier_imba_drums_aura:IsHidden() return true end
+function modifier_imba_drums_aura:IsPurgable() return false end
 
-	-- If a higher-level aura is present, remove this one
-	if target:HasModifier("modifier_item_imba_siege_cuirass_negative_aura") then
-		if target:HasModifier(modifier_aura) then
-			target:RemoveModifierByName(modifier_aura)
-		end
-	elseif not target:HasModifier(modifier_aura) then
-		ability:ApplyDataDrivenModifier(caster, target, modifier_aura, {})
+function modifier_imba_drums_aura:GetAuraRadius()
+    return self.radius
+end
+
+function modifier_imba_drums_aura:GetAuraSearchFlags()
+    return DOTA_UNIT_TARGET_FLAG_NONE 
+end
+
+function modifier_imba_drums_aura:GetAuraSearchTeam()
+    return DOTA_UNIT_TARGET_TEAM_FRIENDLY
+end
+
+function modifier_imba_drums_aura:GetAuraSearchType()
+    return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+end
+
+function modifier_imba_drums_aura:GetModifierAura()
+    return self.modifier_drum
+end
+
+function modifier_imba_drums_aura:IsAura()
+    return true
+end
+
+function modifier_imba_drums_aura:GetAuraEntityReject(target)
+
+	-- If the target has higher level aura (Siege), do not apply the aura
+	if target:HasModifier("modifier_imba_siege_cuirass_aura_positive_effect") then
+		return true
 	end
+
+	-- Apply for the rest
+	return false
 end
 
-function AssaultEnemyAuraDestroy( keys )
-	local target = keys.target
-	local modifier_aura = keys.modifier_aura
 
-	-- Remove aura modifier
-	target:RemoveModifierByName(modifier_aura)
+-- Drum aura modifier effect
+modifier_imba_drums_aura_effect = class({})
+
+function modifier_imba_drums_aura_effect:OnCreated()
+	-- Ability properties
+	self.caster = self:GetCaster()
+	self.ability = self:GetAbility()	
+
+	-- Ability specials
+	self.aura_ms = self.ability:GetSpecialValueFor("aura_ms")
+	self.aura_as = self.ability:GetSpecialValueFor("aura_as")
 end
 
-function DrumsParticleStart( keys )
-	local target = keys.target
-	local particle_buff = keys.particle_buff
+function modifier_imba_drums_aura_effect:IsHidden() return false end
+function modifier_imba_drums_aura_effect:IsPurgable() return false end
+function modifier_imba_drums_aura_effect:IsDebuff() return false end
 
-	-- Create particle
-	target.drums_active_buff_pfx = ParticleManager:CreateParticle(particle_buff, PATTACH_ABSORIGIN_FOLLOW, target)
-	ParticleManager:SetParticleControl(target.drums_active_buff_pfx, 0, target:GetAbsOrigin())
+function modifier_imba_drums_aura_effect:DeclareFunctions()
+	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
+					  MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
+
+	return decFuncs
 end
 
-function DrumsParticleEnd( keys )
-	local target = keys.target
-	local particle_buff = keys.particle_buff
-
-	-- Create particle
-	ParticleManager:DestroyParticle(target.drums_active_buff_pfx, true)
-	ParticleManager:ReleaseParticleIndex(target.drums_active_buff_pfx)
+function modifier_imba_drums_aura_effect:GetModifierMoveSpeedBonus_Constant()
+	return self.aura_ms	
 end
 
-function SiegeCuirassParticleStart( keys )
-	local target = keys.target
-	local particle_buff = keys.particle_buff
-
-	-- Create particle
-	target.siege_cuirass_active_buff_pfx = ParticleManager:CreateParticle(particle_buff, PATTACH_ABSORIGIN_FOLLOW, target)
-	ParticleManager:SetParticleControl(target.siege_cuirass_active_buff_pfx, 0, target:GetAbsOrigin())
-end
-
-function SiegeCuirassParticleEnd( keys )
-	local target = keys.target
-	local particle_buff = keys.particle_buff
-
-	-- Create particle
-	ParticleManager:DestroyParticle(target.siege_cuirass_active_buff_pfx, true)
-	ParticleManager:ReleaseParticleIndex(target.siege_cuirass_active_buff_pfx)
+function modifier_imba_drums_aura_effect:GetModifierAttackSpeedBonus_Constant()
+	return self.aura_as	
 end
