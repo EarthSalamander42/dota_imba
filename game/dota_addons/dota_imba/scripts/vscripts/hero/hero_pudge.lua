@@ -1,7 +1,279 @@
---[[ 	Authors: Pizzalol and D2imba
-		Date: 10.07.2015				]]
+CreateEmptyTalents("pudge")
 
-function HookCast( keys )
+-------------------------------------------
+--                Flesh Heap
+-------------------------------------------
+LinkLuaModifier("modifier_flesh_heap", "hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+
+imba_pudge_flesh_heap = class({})
+function imba_pudge_flesh_heap:IsHiddenWhenStolen() return true end
+function imba_pudge_flesh_heap:IsRefreshable() return false end
+function imba_pudge_flesh_heap:IsStealable() return false end
+function imba_pudge_flesh_heap:IsNetherWardStealable() return false end
+function imba_pudge_flesh_heap:IsInnateAbility() return true end
+-------------------------------------------
+
+function imba_pudge_flesh_heap:GetIntrinsicModifierName()
+		return "modifier_flesh_heap"
+end
+
+-------------------------------------------
+modifier_flesh_heap = class({})
+function modifier_flesh_heap:IsDebuff() return false end
+function modifier_flesh_heap:IsHidden() return false end
+function modifier_flesh_heap:IsPurgable() return false end
+function modifier_flesh_heap:IsPurgeException() return false end
+function modifier_flesh_heap:IsStunDebuff() return false end
+function modifier_flesh_heap:RemoveOnDeath() return false end
+function modifier_flesh_heap:AllowIllusionDuplicate() return true end
+-------------------------------------------
+
+function modifier_flesh_heap:OnCreated()
+	if IsServer() then
+		-- Set stack count for illusions
+		local id = self:GetCaster():GetPlayerOwnerID()
+		local hero = PlayerResource:GetSelectedHeroEntity(id)
+
+		if not hero.nKills then 
+			hero.nKills = 0 
+		end
+
+		self:SetStackCount(hero.nKills)
+	end
+end
+
+
+function modifier_flesh_heap:DeclareFunctions()
+		local decFuns =
+		{
+			MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
+			MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+			MODIFIER_PROPERTY_MODEL_SCALE,  
+
+			MODIFIER_EVENT_ON_DEATH,
+				
+		}
+		return decFuns
+end
+
+function modifier_flesh_heap:GetModifierMagicalResistanceBonus()
+	if self:GetParent():PassivesDisabled() then return end
+	local resist = self:GetAbility():GetSpecialValueFor("base_magic_resist")
+	resist =  resist + self:GetParent():FindTalentValue("special_bonus_imba_pudge_1")
+	return resist
+end
+
+function modifier_flesh_heap:GetModifierBonusStats_Strength()
+	local str = self:GetAbility():GetSpecialValueFor("stack_str")
+	str = str + self:GetParent():FindTalentValue("special_bonus_imba_pudge_5")
+	return self:GetStackCount() * str
+end
+
+function modifier_flesh_heap:GetModifierModelScale()
+	local size = 1 + (self:GetAbility():GetSpecialValueFor("stack_scale_up") * self:GetStackCount())
+	if size > self:GetAbility():GetSpecialValueFor("max_size") then
+		size = self:GetAbility():GetSpecialValueFor("max_size")
+	end
+	return size
+end
+
+function modifier_flesh_heap:OnDeath(keys)
+	-- All these cases shouldn't do anything.
+	if not IsServer() then return end
+	if not keys.unit or not keys.attacker then return end
+	if not keys.unit:IsRealHero() then return end
+	if self:GetParent():IsIllusion() then return end
+	-- Break
+	if self:GetParent():PassivesDisabled() then return end
+	-----------------------------------------------------------------------------
+
+	local hKiller = keys.attacker
+	local hVictim = keys.unit
+
+	if self:GetCaster():GetTeamNumber() ~= hVictim:GetTeamNumber() then
+		self.fleshHeapRange = self:GetAbility():GetSpecialValueFor("range")
+		local vToCaster = self:GetCaster():GetOrigin() - hVictim:GetOrigin()
+		local flDistance = vToCaster:Length2D() - (self:GetCaster():GetCollisionPadding() + hVictim:GetCollisionPadding())
+		if hKiller == self:GetCaster() or self.fleshHeapRange >= flDistance then
+			if self:GetCaster().nKills == nil then
+				self:GetCaster().nKills = 0
+			end
+
+			self:GetCaster().nKills = self:GetCaster().nKills + 1
+			local hBuff = self:GetCaster():FindModifierByName("modifier_flesh_heap")
+			if hBuff ~= nil then
+				hBuff:SetStackCount(self:GetCaster().nKills)
+				self:GetCaster():CalculateStatBonus()
+			else
+				self:GetCaster():AddNewModifier(self:GetCaster(), self,  "modifier_flesh_heap" , {})
+			end
+
+			local nFXIndex = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_fleshheap_count.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetCaster())
+			ParticleManager:SetParticleControl(nFXIndex, 1, Vector(1, 0, 0))
+			ParticleManager:ReleaseParticleIndex(nFXIndex)
+
+		end
+	end
+end
+-------------------------------------------
+
+-------------------------------------------
+--                Rot
+-------------------------------------------
+LinkLuaModifier("modifier_rot", "hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+
+imba_pudge_rot = class({})
+function imba_pudge_rot:IsHiddenWhenStolen() return false end
+function imba_pudge_rot:IsRefreshable() return false end
+function imba_pudge_rot:IsStealable() return true end
+function imba_pudge_rot:IsNetherWardStealable() return false end
+function imba_pudge_rot:ProcsMagicStick() return false end
+function imba_pudge_rot:ResetToggleOnRespawn() return true end
+-------------------------------------------
+function imba_pudge_rot:GetCastRange()
+	self.rot_radius = self:GetSpecialValueFor("base_radius")
+	if not self:IsStolen() then	
+		local heap_stack_increase = self:GetCaster():GetModifierStackCount("modifier_flesh_heap",self:GetCaster()) * self:GetSpecialValueFor("stack_radius")
+		if heap_stack_increase > self:GetSpecialValueFor("max_radius_tooltip") then
+			heap_stack_increase = self:GetSpecialValueFor("base_radius")
+		end
+		self.rot_radius = self.rot_radius + heap_stack_increase
+	end
+	return self.rot_radius
+end
+
+function imba_pudge_rot:OnToggle()
+	-- Apply the rot modifier if the toggle is on
+	if self:GetToggleState() then
+		self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_rot", {})
+
+		if not self:GetCaster():IsChanneling() then
+			self:GetCaster():StartGesture(ACT_DOTA_CAST_ABILITY_ROT)
+		end
+	else
+		-- Remove it if it is off
+		local hRotBuff = self:GetCaster():FindModifierByName("modifier_rot")
+		if hRotBuff ~= nil then
+			hRotBuff:Destroy()
+		end
+	end
+end
+
+-------------------------------------------
+modifier_rot = class({})
+function modifier_rot:IsDebuff() return true end
+function modifier_rot:IsHidden() return false end
+function modifier_rot:IsPurgable() return false end
+function modifier_rot:IsPurgeException() return false end
+function modifier_rot:IsStunDebuff() return false end
+function modifier_rot:RemoveOnDeath() return true end
+-------------------------------------------
+function modifier_rot:IsAura()
+	if self:GetCaster() == self:GetParent() then
+		return true
+	end
+	
+	return false
+end
+
+function modifier_rot:GetModifierAura()
+	return "modifier_rot"
+end
+
+--------------------------------------------------------------------------------
+
+function modifier_rot:GetAuraSearchTeam()
+	return DOTA_UNIT_TARGET_TEAM_ENEMY
+end
+
+--------------------------------------------------------------------------------
+
+function modifier_rot:GetAuraSearchType()
+	return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+end
+
+--------------------------------------------------------------------------------
+
+function modifier_rot:GetAuraRadius()
+	return self.rot_radius
+end
+
+
+function modifier_rot:DeclareFunctions()
+	local decFuns =
+	{
+			MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+	}
+	return decFuns
+end
+
+function modifier_rot:GetModifierMoveSpeedBonus_Percentage()
+	if self:GetParent() == self:GetCaster() then
+		return 0
+	end
+
+	return self.rot_slow
+end
+
+
+
+function modifier_rot:OnCreated(kv)
+	self.rot_slow = self:GetAbility():GetSpecialValueFor("rot_slow")
+	self.rot_damage = self:GetAbility():GetSpecialValueFor("rot_damage")
+	self.rot_damage = self.rot_damage + self:GetCaster():FindTalentValue("")
+	self.rot_tick = self:GetAbility():GetSpecialValueFor("rot_tick")
+	
+
+
+	if IsServer() then
+		self.rot_radius = self:GetAbility():GetCastRange()
+		if self:GetParent() == self:GetCaster() then
+			EmitSoundOn("Hero_Pudge.Rot", self:GetCaster())
+			local nFXIndex = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_rot.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+			ParticleManager:SetParticleControl(nFXIndex, 1, Vector(self.rot_radius, 1, self.rot_radius))
+			self:AddParticle(nFXIndex, false, false, -1, false, false)
+		else
+			local nFXIndex = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_rot_recipient.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+			self:AddParticle(nFXIndex, false, false, -1, false, false)
+		end
+
+		self:StartIntervalThink(self.rot_tick)
+	end
+end
+
+function modifier_rot:OnIntervalThink()
+	if IsServer() then
+		local flDamagePerTick = self.rot_tick * self.rot_damage
+
+		if self:GetCaster():IsAlive() then
+			local damage = {
+				victim = self:GetParent(),
+				attacker = self:GetCaster(),
+				damage = flDamagePerTick,
+				damage_type = DAMAGE_TYPE_MAGICAL,
+				ability = self:GetAbility()
+			}
+
+			ApplyDamage(damage)
+		end
+	end
+end
+
+function modifier_rot:OnDestroy()
+	if IsServer() then
+		StopSoundOn( "Hero_Pudge.Rot", self:GetCaster() )
+	end
+end
+-------------------------------------------
+
+
+
+
+
+--[[  Authors: Pizzalol and D2imba
+		Date: 10.07.2015
+
+function HookCast(keys)
 	local caster = keys.caster
 	local target = keys.target_points[1]
 	local ability = keys.ability
@@ -12,7 +284,7 @@ function HookCast( keys )
 	-- Parameters
 	local base_range = ability:GetLevelSpecialValueFor("base_range", ability_level)
 	local stack_range = ability:GetLevelSpecialValueFor("stack_range", ability_level)
-	local cast_distance = ( target - caster:GetAbsOrigin() ):Length2D()
+	local cast_distance = (target - caster:GetAbsOrigin()):Length2D()
 	caster.stop_hook_cast = nil
 
 	-- Calculate actual cast range
@@ -27,7 +299,7 @@ function HookCast( keys )
 		Timers:CreateTimer(0.1, function()
 
 			-- Update distance and range
-			cast_distance = ( target - caster:GetAbsOrigin() ):Length2D()
+			cast_distance = (target - caster:GetAbsOrigin()):Length2D()
 			light_stacks = caster:GetModifierStackCount(modifier_light, caster)
 			hook_range = base_range + stack_range * light_stacks + GetCastRangeIncrease(caster)
 
@@ -49,12 +321,12 @@ function HookCast( keys )
 	end
 end
 
-function HookCastCheck( keys )
+function HookCastCheck(keys)
 	local caster = keys.caster
 	caster.stop_hook_cast = true
 end
 
-function MeatHook( keys )
+function MeatHook(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
@@ -160,7 +432,7 @@ function MeatHook( keys )
 	ParticleManager:SetParticleAlwaysSimulate(hook_pfx)
 	ParticleManager:SetParticleControlEnt(hook_pfx, 0, caster, PATTACH_POINT_FOLLOW, "attach_weapon_chain_rt", caster_loc, true)
 	ParticleManager:SetParticleControl(hook_pfx, 1, start_loc)
-	ParticleManager:SetParticleControl(hook_pfx, 2, Vector(hook_speed, hook_range, hook_width) )
+	ParticleManager:SetParticleControl(hook_pfx, 2, Vector(hook_speed, hook_range, hook_width))
 	ParticleManager:SetParticleControl(hook_pfx, 6, start_loc)
 	ParticleManager:SetParticleControlEnt(hook_pfx, 6, hook_dummy, PATTACH_POINT_FOLLOW, "attach_overhead", start_loc, false)
 	ParticleManager:SetParticleControlEnt(hook_pfx, 7, caster, PATTACH_CUSTOMORIGIN, nil, caster_loc, true)
@@ -168,9 +440,9 @@ function MeatHook( keys )
 	-- Remove the caster's hook
 	local weapon_hook
 	if caster:IsHero() then
-		weapon_hook = caster:GetTogglableWearable( DOTA_LOADOUT_TYPE_WEAPON )
+		weapon_hook = caster:GetTogglableWearable(DOTA_LOADOUT_TYPE_WEAPON)
 		if weapon_hook ~= nil then
-			weapon_hook:AddEffects( EF_NODRAW )
+			weapon_hook:AddEffects(EF_NODRAW)
 		end
 	end
 
@@ -234,7 +506,7 @@ function MeatHook( keys )
 		end
 
 		-- If we are here, this means the hook has to start reeling back; prepare return variables
-		local direction = ( caster_loc - hook_loc )
+		local direction = (caster_loc - hook_loc)
 		local current_tick = 0
 
 		-- Stop the extending sound and start playing the return sound
@@ -261,7 +533,7 @@ function MeatHook( keys )
 			-- Recalculate position variables
 			caster_loc = caster:GetAbsOrigin()
 			hook_loc = hook_dummy:GetAbsOrigin()
-			direction = ( caster_loc - hook_loc )
+			direction = (caster_loc - hook_loc)
 			hook_step = direction:Normalized() * hook_speed
 			current_tick = current_tick + 1
 			
@@ -293,7 +565,7 @@ function MeatHook( keys )
 
 				-- Give back the caster's hook
 				if weapon_hook ~= nil then
-					weapon_hook:RemoveEffects( EF_NODRAW )
+					weapon_hook:RemoveEffects(EF_NODRAW)
 				end
 
 				-- Clear global variables
@@ -326,7 +598,7 @@ function MeatHook( keys )
 	end)
 end
 
-function HookUpgrade( keys )
+function HookUpgrade(keys)
 	local caster = keys.caster
 	local ability_level = keys.ability:GetLevel()
 	local ability_sharp = caster:FindAbilityByName(keys.ability_sharp)
@@ -339,7 +611,7 @@ function HookUpgrade( keys )
 	end
 end
 
-function HookStacksUpdater( keys )
+function HookStacksUpdater(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	local modifier_sharp = keys.modifier_sharp
@@ -360,13 +632,13 @@ function HookStacksUpdater( keys )
 	local caster_level = caster:GetLevel()
 
 	-- Check if caster level is greater than twice the amount of stacks
-	if (caster_level * 2) > ( sharp_stacks + light_stacks ) then
+	if (caster_level * 2) > (sharp_stacks + light_stacks) then
 		AddStacks(ability, caster, caster, modifier_sharp, 1, true)
 		AddStacks(ability, caster, caster, modifier_light, 1, true)
 	end
 end
 
-function SharpHookToggle( keys )
+function SharpHookToggle(keys)
 	local caster = keys.caster
 	local ability_light = caster:FindAbilityByName(keys.ability_light)
 
@@ -375,7 +647,7 @@ function SharpHookToggle( keys )
 	end
 end
 
-function LightHookToggle( keys )
+function LightHookToggle(keys)
 	local caster = keys.caster
 	local ability_sharp = caster:FindAbilityByName(keys.ability_sharp)
 
@@ -384,7 +656,7 @@ function LightHookToggle( keys )
 	end
 end
 
-function SharpHook( keys )
+function SharpHook(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	local ability_hook = caster:FindAbilityByName(keys.ability_hook)
@@ -413,7 +685,7 @@ function SharpHook( keys )
 	AddStacks(ability_hook, caster, caster, modifier_sharp, 1, true)
 end
 
-function LightHook( keys )
+function LightHook(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	local ability_hook = caster:FindAbilityByName(keys.ability_hook)
@@ -442,7 +714,7 @@ function LightHook( keys )
 	AddStacks(ability_hook, caster, caster, modifier_light, 1, true)
 end
 
-function Rot( keys )
+function Rot(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
@@ -478,7 +750,7 @@ function Rot( keys )
 	end
 end
 
-function RotParticle( keys )
+function RotParticle(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
@@ -501,11 +773,11 @@ function RotParticle( keys )
 
 	-- Draw the particle
 	caster.rot_fx = ParticleManager:CreateParticle(rot_particle, PATTACH_ABSORIGIN_FOLLOW, caster)
-	ParticleManager:SetParticleControl(caster.rot_fx, 0, caster:GetAbsOrigin() )
-	ParticleManager:SetParticleControl(caster.rot_fx, 1, Vector(radius,0,0) )
+	ParticleManager:SetParticleControl(caster.rot_fx, 0, caster:GetAbsOrigin())
+	ParticleManager:SetParticleControl(caster.rot_fx, 1, Vector(radius,0,0))
 end
 
-function RotResponse( keys )
+function RotResponse(keys)
 	local caster = keys.caster
 
 	-- Play pudge's voice reaction
@@ -517,7 +789,7 @@ function RotResponse( keys )
 	end
 end
 
-function RotEnd( keys )
+function RotEnd(keys)
 	local caster = keys.caster
 	local rot_sound = keys.rot_sound
 
@@ -525,7 +797,7 @@ function RotEnd( keys )
 	ParticleManager:DestroyParticle(caster.rot_fx, false)
 end
 
-function FleshHeapUpgrade( keys )
+function FleshHeapUpgrade(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
@@ -546,7 +818,7 @@ function FleshHeapUpgrade( keys )
 	-- Else, fetch kills/assists up to this point of the game (lazy way to make Heap retroactive)
 	else
 		local assists = caster:GetAssists()
-		local kills = caster:GetKills()	
+		local kills = caster:GetKills() 
 		stack_amount = kills + assists
 		resist_amount = math.min(stack_amount, max_stacks)
 
@@ -573,17 +845,17 @@ function FleshHeapUpgrade( keys )
 	caster:CalculateStatBonus()
 
 	-- Make pudge GROW
-	caster:SetModelScale( math.min( 1 + stack_scale_up * stack_amount / 100, 1.75) )
+	caster:SetModelScale(math.min(1 + stack_scale_up * stack_amount / 100, 1.75))
 end
 
-function FleshHeap( keys )
+function FleshHeap(keys)
 	local caster = keys.caster
 	local target = keys.unit
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 
 	-- If this isnt a real hero, do nothing.
-	if ( not target:IsRealHero() ) or target:HasModifier("modifier_arc_warden_tempest_double") then
+	if (not target:IsRealHero()) or target:HasModifier("modifier_arc_warden_tempest_double") then
 		return nil
 	end
 
@@ -603,7 +875,7 @@ function FleshHeap( keys )
 	caster:EmitSound("pudge_pud_ability_heap_0"..RandomInt(1,2))
 end
 
-function HeapUpdater( keys )
+function HeapUpdater(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
@@ -626,7 +898,7 @@ function HeapUpdater( keys )
 		caster:CalculateStatBonus()
 
 		-- Make pudge GROW
-		caster:SetModelScale( math.min( 1 + stack_scale_up * stack_amount / 100, 1.75) )
+		caster:SetModelScale(math.min(1 + stack_scale_up * stack_amount / 100, 1.75))
 	end
 
 	-- If the amount of resist stacks has increased, update it
@@ -640,7 +912,7 @@ function HeapUpdater( keys )
 	end
 end
 
-function Dismember( keys )
+function Dismember(keys)
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
@@ -688,7 +960,7 @@ function Dismember( keys )
 	ParticleManager:ReleaseParticleIndex(blood_pfx)
 end
 
-function DismemberEnd( keys )
+function DismemberEnd(keys)
 	local caster = keys.caster
 	local modifier_dismember = keys.modifier_dismember
 
@@ -699,4 +971,4 @@ function DismemberEnd( keys )
 		-- Reset dismember target
 		caster.dismember_target = nil
 	end
-end
+end]]
