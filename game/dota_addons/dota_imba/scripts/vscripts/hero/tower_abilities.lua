@@ -1948,7 +1948,7 @@ function modifier_imba_tower_plague_aura:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
-	self.particle_rot = "particles/units/heroes/hero_pudge/pudge_rot_radius.vpcf"
+	self.particle_rot = "particles/hero/tower/plague_tower_aura.vpcf"
 
 	-- Ability specials
 	self.aura_radius = self.ability:GetSpecialValueFor("aura_radius")	

@@ -800,7 +800,7 @@ function PickupBountyRune(item, unit)
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_GOLD, unit, current_bounty, nil)
 
 	-- Play the gold gained sound
-	unit:EmitSound("General.Coins")
+	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "General.Coins", unit)
 
 	-- Play the bounty rune activation sound to the unit's team
 	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Bounty", unit)
