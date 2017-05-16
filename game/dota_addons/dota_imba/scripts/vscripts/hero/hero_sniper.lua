@@ -879,6 +879,8 @@ end
 function modifier_imba_take_aim_range:OnIntervalThink()
     if IsServer() then
 
+        self.caster:SetAcquisitionRange(self.caster:GetAttackRange() + 100)
+
         -- If the next shot should be an Aimed Shot, set stacks to 0, otherwise set to 1
         if self.ability:IsCooldownReady() and self.ability:GetAutoCastState() and self.caster:IsRealHero() then        
             self:SetStackCount(0)
