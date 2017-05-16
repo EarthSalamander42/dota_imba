@@ -552,8 +552,34 @@ function GameMode:OrderFilter( keys )
 	--issuer_player_id_const	 ==> 	0
 
 	local units = keys["units"]
-	local unit = EntIndexToHScript(units["0"])
+	local unit
+	if units["0"] then
+		unit = EntIndexToHScript(units["0"])
+	else
+		return nil
+	end
 
+	------------------------------------------------------------------------------------
+	-- Witch Doctor Death Ward handler
+	------------------------------------------------------------------------------------
+	if unit:HasModifier("modifier_imba_death_ward") then
+		if keys.order_type ==  DOTA_UNIT_ORDER_ATTACK_TARGET then
+			local death_ward_mod = unit:FindModifierByName("modifier_imba_death_ward")
+			death_ward_mod.attack_target = EntIndexToHScript(keys.entindex_target)
+			return true
+		else
+			return nil
+		end
+	end
+	
+	if unit:HasModifier("modifier_imba_death_ward_caster") then
+		if keys.order_type ==  DOTA_UNIT_ORDER_ATTACK_TARGET then
+			local modifier = unit:FindModifierByName("modifier_imba_death_ward_caster")
+			modifier.death_ward_mod.attack_target = EntIndexToHScript(keys.entindex_target)
+			return nil
+		end
+	end
+	
 	------------------------------------------------------------------------------------
 	-- Queen of Pain's Sonic Wave confusion
 	------------------------------------------------------------------------------------

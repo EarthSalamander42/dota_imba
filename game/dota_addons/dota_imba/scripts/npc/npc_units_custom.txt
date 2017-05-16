@@ -842,7 +842,7 @@
 		// General
 		//----------------------------------------------------------------
 		"Model"						"models/heroes/pugna/pugna_ward.vmdl"
-		"BaseClass"					"npc_dota_creep_neutral"
+		"BaseClass"					"npc_dota_base_additive"
 		"SoundSet"					"Pugna_NetherWard"
 		"Level"						"0"
 		"ModelScale"				"1"
@@ -916,7 +916,7 @@
 		// General
 		//----------------------------------------------------------------
 		"Model"						"models/heroes/pugna/pugna_ward.vmdl"
-		"BaseClass"					"npc_dota_creep_neutral"
+		"BaseClass"					"npc_dota_base_additive"
 		"SoundSet"					"Pugna_NetherWard"
 		"Level"						"0"
 		"ModelScale"				"1.2"
@@ -990,7 +990,7 @@
 		// General
 		//----------------------------------------------------------------
 		"Model"						"models/heroes/pugna/pugna_ward.vmdl"
-		"BaseClass"					"npc_dota_creep_neutral"
+		"BaseClass"					"npc_dota_base_additive"
 		"SoundSet"					"Pugna_NetherWard"
 		"Level"						"0"
 		"ModelScale"				"1.4"
@@ -1064,7 +1064,7 @@
 		// General
 		//----------------------------------------------------------------
 		"Model"						"models/heroes/pugna/pugna_ward.vmdl"
-		"BaseClass"					"npc_dota_creep_neutral"
+		"BaseClass"					"npc_dota_base_additive"
 		"SoundSet"					"Pugna_NetherWard"
 		"Level"						"0"
 		"ModelScale"				"1.6"
@@ -1138,7 +1138,7 @@
 		// General
 		//----------------------------------------------------------------
 		"Model"						"models/heroes/pugna/pugna_ward.vmdl"
-		"BaseClass"					"npc_dota_creep_neutral"
+		"BaseClass"					"npc_dota_base_additive"
 		"SoundSet"					"Pugna_NetherWard"
 		"Level"						"0"
 		"ModelScale"				"1.6"
@@ -1212,7 +1212,7 @@
 		// General
 		//----------------------------------------------------------------
 		"Model"						"models/heroes/pugna/pugna_ward.vmdl"
-		"BaseClass"					"npc_dota_creep_neutral"
+		"BaseClass"					"npc_dota_base_additive"
 		"SoundSet"					"Pugna_NetherWard"
 		"Level"						"0"
 		"ModelScale"				"1.6"
@@ -1286,7 +1286,7 @@
 		// General
 		//----------------------------------------------------------------
 		"Model"						"models/heroes/pugna/pugna_ward.vmdl"
-		"BaseClass"					"npc_dota_creep_neutral"
+		"BaseClass"					"npc_dota_base_additive"
 		"SoundSet"					"Pugna_NetherWard"
 		"Level"						"0"
 		"ModelScale"				"1.6"
@@ -2580,7 +2580,7 @@
 		// Team
 		//----------------------------------------------------------------
 		"CombatClassAttack"     "DOTA_COMBAT_CLASS_ATTACK_HERO"
-		"CombatClassDefend"     "DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"CombatClassDefend"     "DOTA_COMBAT_CLASS_DEFEND_HERO"
 		"UnitRelationShipClass" "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
 	}
 

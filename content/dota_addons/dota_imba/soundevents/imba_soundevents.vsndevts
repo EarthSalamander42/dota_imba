@@ -1763,3 +1763,68 @@
 		}
 	}
 }
+
+"Imba.WitchDoctorDispel"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/hero/witch_doctor/dispel.vsnd"
+						}
+					}
+					"volume"			{   "value"     "1.000000"  }
+					"pitch_rand_min"	{   "value"     "-0.03000"  }
+					"pitch_rand_max"	{   "value"     "0.030000"  }
+					"pitch"				{   "value"     "1.000000"  }
+					"soundlevel"		{   "value"     "100.00000" }
+					"distance_max"		{   "value"     "1500.000"  }
+					"event_type"		{   "value"     "1.000000"  }
+				}
+			}
+		}
+	}
+}
+
+"Imba.WitchDoctorSingsASong"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/hero/witch_doctor/feel_it_in_your_bones.vsnd"
+						}
+					}
+					"volume"            
+					{   
+						"value"     "3.00000"  
+					}
+					"memory_type"
+					{
+						"value"			"0"
+					}
+				}
+			}
+		}
+	}
+}
