@@ -771,9 +771,18 @@ function GameMode:OnEntityKilled( keys )
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Respawn timer setup
 	-------------------------------------------------------------------------------------------------
-	
-	if killed_unit:IsRealHero() and killed_unit:GetPlayerID() and PlayerResource:IsImbaPlayer(killed_unit:GetPlayerID()) then
-		
+	local can_die = true
+	if killed_unit:HasModifier("modifier_item_imba_aegis") then
+		killed_unit:SetTimeUntilRespawn(killed_unit:FindModifierByName("modifier_item_imba_aegis").reincarnate_time)
+	end
+	if killed_unit:HasModifier("modifier_imba_reincarnation") and (not killed_unit:HasModifier("modifier_item_imba_aegis")) then
+		local wk_mod = killed_unit:FindModifierByName("modifier_imba_reincarnation")
+		can_die = (wk_mod.can_die == false)
+		if can_die then
+			killed_unit:SetTimeUntilRespawn(killed_unit:FindModifierByName("modifier_imba_reincarnation").reincarnate_delay)
+		end
+	end
+	if killed_unit:IsRealHero() and killed_unit:GetPlayerID() and PlayerResource:IsImbaPlayer(killed_unit:GetPlayerID()) and (not killed_unit:HasModifier("modifier_item_imba_aegis")) and can_die then
 		-- Calculate base respawn timer, capped at 60 seconds
 		local hero_level = math.min(killed_unit:GetLevel(), 25)
 		local respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[hero_level]
@@ -792,7 +801,6 @@ function GameMode:OnEntityKilled( keys )
 
 		-- Set up the respawn timer
 		killed_unit:SetTimeUntilRespawn(respawn_time)
-
 	end
 
 	-------------------------------------------------------------------------------------------------
