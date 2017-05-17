@@ -413,40 +413,38 @@ function UpgradeShadowRazes(caster, ability)
     local raze_close = "imba_nevermore_shadowraze_close"
     local raze_medium = "imba_nevermore_shadowraze_medium"
     local raze_far = "imba_nevermore_shadowraze_far"
+    
+    -- Get handles
+    local raze_close_handler
+    local raze_medium_handler
+    local raze_far_handler
 
-    Timers:CreateTimer(FrameTime(), function()
-        -- Get handles
-        local raze_close_handler
-        local raze_medium_handler
-        local raze_far_handler
+    if caster:HasAbility(raze_close) then
+        raze_close_handler = caster:FindAbilityByName(raze_close)            
+    end
 
-        if caster:HasAbility(raze_close) then
-            raze_close_handler = caster:FindAbilityByName(raze_close)            
-        end
+    if caster:HasAbility(raze_medium) then
+        raze_medium_handler = caster:FindAbilityByName(raze_medium)            
+    end
 
-        if caster:HasAbility(raze_medium) then
-            raze_medium_handler = caster:FindAbilityByName(raze_medium)            
-        end
+    if caster:HasAbility(raze_far) then
+        raze_far_handler = caster:FindAbilityByName(raze_far)
+    end
 
-        if caster:HasAbility(raze_far) then
-            raze_far_handler = caster:FindAbilityByName(raze_far)
-        end
+    -- Get the level to compare
+    local leveled_ability_level = ability:GetLevel()
 
-        -- Get the level to compare
-        local leveled_ability_level = ability:GetLevel()
+    if raze_close_handler and raze_close_handler:GetLevel() < leveled_ability_level then
+        raze_close_handler:SetLevel(leveled_ability_level)
+    end
 
-        if raze_close_handler and raze_close_handler:GetLevel() < leveled_ability_level then
-            raze_close_handler:SetLevel(leveled_ability_level)
-        end
+    if raze_medium_handler and raze_medium_handler:GetLevel() < leveled_ability_level then
+        raze_medium_handler:SetLevel(leveled_ability_level)
+    end
 
-        if raze_medium_handler and raze_medium_handler:GetLevel() < leveled_ability_level then
-            raze_medium_handler:SetLevel(leveled_ability_level)
-        end
-
-        if raze_far_handler and raze_far_handler:GetLevel() < leveled_ability_level then
-            raze_far_handler:SetLevel(leveled_ability_level)
-        end
-    end)
+    if raze_far_handler and raze_far_handler:GetLevel() < leveled_ability_level then
+        raze_far_handler:SetLevel(leveled_ability_level)
+    end    
 end
 
 
