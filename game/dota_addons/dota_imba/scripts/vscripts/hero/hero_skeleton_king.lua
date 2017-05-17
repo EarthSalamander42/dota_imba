@@ -783,7 +783,7 @@ function modifier_imba_reincarnation:IsDebuff() return false end
 
 function modifier_imba_reincarnation:OnIntervalThink()
     -- If caster has sufficent mana and the ability is ready, apply
-    if self.caster:GetMana() >= self.reincarnate_mana_cost and self.ability:IsCooldownReady() and not self.caster:HasModifier("modifier_item_imba_aegis") then
+    if (self.caster:GetMana() >= self.reincarnate_mana_cost) and (self.ability:IsCooldownReady()) and (not self.caster:HasModifier("modifier_item_imba_aegis")) then
         self.can_die = false
     else
         self.can_die = true
@@ -834,13 +834,8 @@ function modifier_imba_reincarnation:OnDeath(keys)
         if self.caster == unit then            
 
             -- Check if it was a reincarnation death
-            if reincarnate then                
-                self.reincarnation_death = true
-                
-                -- Force respawning in the delay time, with no regards to the real respawn timer
-                Timers:CreateTimer(FrameTime(), function()
-                    self.caster:SetTimeUntilRespawn(self.reincarnate_delay)
-                end)                                  
+            if reincarnate and (not self.caster:HasModifier("modifier_item_imba_aegis")) then
+				self.reincarnation_death = true
 
                 -- Use the Reincarnation's ability cooldown
                 self.ability:UseResources(false, false, true)
