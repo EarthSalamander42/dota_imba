@@ -369,6 +369,10 @@ function modifier_tiny_toss_movement:OnRemoved()
 	if IsServer() then
 		local caster = self:GetCaster()
 		local radius = self:GetAbility():GetSpecialValueFor("radius") + caster:FindModifierByName("modifier_imba_tiny_rolling_stone"):GetStackCount() * caster:FindAbilityByName("imba_tiny_grow"):GetSpecialValueFor("rolling_stones_aoe")
+
+		-- Destroy trees at the target point
+		GridNav:DestroyTreesAroundPoint(self.tossPosition, radius, true)
+
 		local victims = FindUnitsInRadius(caster:GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, 1, false)
 		for _, victim in pairs(victims) do
 			local damage = self:GetAbility():GetSpecialValueFor("toss_damage")
