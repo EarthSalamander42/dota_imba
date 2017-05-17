@@ -951,9 +951,10 @@ end
 -------------------------------
 
 imba_mirana_moonlight_shadow = class({})
-LinkLuaModifier("modifier_imba_moonlight_shadow", "hero/hero_mirana", LUA_MODIFIER_MOTION_BOTH)
-LinkLuaModifier("modifier_imba_moonlight_shadow_invis", "hero/hero_mirana", LUA_MODIFIER_MOTION_BOTH)
-LinkLuaModifier("modifier_imba_moonlight_shadow_invis_dummy", "hero/hero_mirana", LUA_MODIFIER_MOTION_BOTH)
+LinkLuaModifier("modifier_imba_moonlight_shadow", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_moonlight_shadow_invis", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_moonlight_shadow_invis_dummy", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_moonlight_shadow_invis_fade_time", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 
 function imba_mirana_moonlight_shadow:GetCooldown(level)
     local caster = self:GetCaster()
@@ -1003,7 +1004,7 @@ function modifier_imba_moonlight_shadow:OnCreated()
         self.ability = self:GetAbility()
         self.modifier_invis = "modifier_imba_moonlight_shadow_invis"
         self.modifier_dummy = "modifier_imba_moonlight_shadow_invis_dummy"
-
+		self.fade_delay = self.ability:GetSpecialValueFor("fade_delay")
         -- Start interval think
         self:StartIntervalThink(0.1)
     end
@@ -1016,7 +1017,7 @@ function modifier_imba_moonlight_shadow:IsDebuff() return false end
 function modifier_imba_moonlight_shadow:OnIntervalThink()
     if IsServer() then
         local duration = self:GetRemainingTime()
-
+		
         -- Find all allied heroes
         local allies = FindUnitsInRadius(self.caster:GetTeamNumber(),
                                          self.caster:GetAbsOrigin(),
@@ -1032,7 +1033,10 @@ function modifier_imba_moonlight_shadow:OnIntervalThink()
         for _,ally in pairs(allies) do
             if not ally:HasModifier(self.modifier_invis) then
                 ally:AddNewModifier(self.caster, self.ability, self.modifier_dummy, {duration = duration})
-                ally:AddNewModifier(self.caster, self.ability, self.modifier_invis, {duration = duration})                
+                ally:AddNewModifier(self.caster, self.ability, self.modifier_invis, {duration = duration})
+				if self:GetDuration() < (duration + self.fade_delay) then
+					ally:AddNewModifier(self.caster, self.ability, "modifier_imba_moonlight_shadow_invis_fade_time", {duration = self.fade_delay})
+				end
             end
         end
     end
@@ -1155,6 +1159,7 @@ function modifier_imba_moonlight_shadow_invis:OnAbilityExecuted(keys)
             self.modifier_dummy:SetDuration(self.fade_delay, true)
             self.parent:AddNewModifier(self.caster, self.ability, self:GetName(), {duration = self.fade_delay})
             self.parent:AddNewModifier(self.caster, self.ability, self.modifier_dummy_name, {duration = self.fade_delay})
+			self.parent:AddNewModifier(self.caster, self.ability, "modifier_imba_moonlight_shadow_invis_fade_time", {duration = self.fade_delay})
         end
     end
 end
@@ -1172,6 +1177,7 @@ function modifier_imba_moonlight_shadow_invis:OnAttack(keys)
             self.modifier_dummy:SetDuration(self.fade_delay, true)
             self.parent:AddNewModifier(self.caster, self.ability, self:GetName(), {duration = self.fade_delay})
             self.parent:AddNewModifier(self.caster, self.ability, self.modifier_dummy_name, {duration = self.fade_delay})
+			self.parent:AddNewModifier(self.caster, self.ability, "modifier_imba_moonlight_shadow_invis_fade_time", {duration = self.fade_delay})
         end
     end
 end
@@ -1212,3 +1218,11 @@ end
 function modifier_imba_moonlight_shadow_invis_dummy:GetEffectAttachType()
     return PATTACH_OVERHEAD_FOLLOW
 end
+
+-- Dummy fade modifier (shown)
+modifier_imba_moonlight_shadow_invis_fade_time = class({})
+
+function modifier_imba_moonlight_shadow_invis_fade_time:IsHidden() return false end
+function modifier_imba_moonlight_shadow_invis_fade_time:IsPurgable() return false end
+function modifier_imba_moonlight_shadow_invis_fade_time:IsPurgeException() return false end
+function modifier_imba_moonlight_shadow_invis_fade_time:IsDebuff() return false end
