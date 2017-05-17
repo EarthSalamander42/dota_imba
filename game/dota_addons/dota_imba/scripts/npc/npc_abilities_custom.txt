@@ -28288,8 +28288,9 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"passive_ticks"				"1"
-				"LinkedSpecialBonus"		"special_bonus_imba_tiny_1"
+				"LinkedSpecialBonus"		"special_bonus_imba_tiny_1"											
 			}
+			
 			////// WEIRD INTERACTION
 			"09"
 			{
@@ -28437,7 +28438,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"0.5 1.0 1.5 2.0"
+				"stun_duration"				"0.5 1 1.5 2 2 2 2"
 			}
 			"03"
 			{

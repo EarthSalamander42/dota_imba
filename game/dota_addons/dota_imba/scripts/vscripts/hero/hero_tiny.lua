@@ -1,3 +1,13 @@
+
+
+
+
+
+CreateEmptyTalents("tiny")
+
+
+
+
 imba_tiny_rolling_stone = imba_tiny_rolling_stone or class({})
 
 function imba_tiny_rolling_stone:IsInnateAbility()
@@ -253,46 +263,46 @@ function modifier_imba_tiny_avalanche_passive:OnAttackLanded(params)
 end
 
 imba_tiny_toss = imba_tiny_toss or class({})
-if IsServer() then
-	function imba_tiny_toss:OnSpellStart()
-		self.tossPosition = self:GetCursorPosition()
-		local hTarget = self:GetCursorTarget()
-		local caster = self:GetCaster()
-		local tossVictim = caster
-		
-		if not hTarget then
-			local targets = FindUnitsInRadius(caster:GetTeamNumber(), self.tossPosition, nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 1, false)
-			for _,target in pairs(targets) do
-				hTarget = target
+function imba_tiny_toss:OnSpellStart()
+	self.tossPosition = self:GetCursorPosition()
+	local hTarget = self:GetCursorTarget()
+	local caster = self:GetCaster()
+	local tossVictim = caster
+	
+	if not hTarget then
+		local targets = FindUnitsInRadius(caster:GetTeamNumber(), self.tossPosition, nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 1, false)
+		for _,target in pairs(targets) do
+			hTarget = target
+			break
+		end
+	end
+	if hTarget then
+		self.tossPosition = hTarget:GetAbsOrigin()
+		self.tossTarget = hTarget
+	else
+		self.tossTarget = nil
+	end
+	
+	local tossVictims = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, self:GetSpecialValueFor("grab_radius"), DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, 1, false)
+	for _, victim in pairs(tossVictims) do
+		if victim ~= caster then
+			victim:AddNewModifier(caster, self, "modifier_tiny_toss_movement", {})
+			if not self:GetCaster():HasTalent("special_bonus_imba_tiny_7") then
 				break
 			end
 		end
-		if hTarget then
-			self.tossPosition = hTarget:GetAbsOrigin()
-			self.tossTarget = hTarget
-		else
-			self.tossTarget = nil
-		end
-		
-		local tossVictims = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, self:GetSpecialValueFor("grab_radius"), DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, 1, false)
-		for _, victim in pairs(tossVictims) do
-			if victim ~= caster then
-				victim:AddNewModifier(caster, self, "modifier_tiny_toss_movement", {})
-				if self:GetCaster():HasTalent("special_bonus_imba_tiny_7") then
-					break
-				end
-			end
-		end
-
-		if #tossVictims <= 1 then
-			caster:AddNewModifier(caster, self, "modifier_tiny_toss_movement", {})
-		end
-		
-		caster:StartGesture(ACT_TINY_TOSS)
-		
-		EmitSoundOn("Ability.TossThrow", self:GetCaster())
 	end
+
+	-- If only Tiny himself was found, launch him instead
+	if #tossVictims <= 1 then
+		caster:AddNewModifier(caster, self, "modifier_tiny_toss_movement", {})
+	end
+	
+	caster:StartGesture(ACT_TINY_TOSS)
+	
+	EmitSoundOn("Ability.TossThrow", self:GetCaster())
 end
+
 
 function imba_tiny_toss:GetCastRange(vLocation, hTarget)
 	if IsServer() or hTarget then
@@ -300,6 +310,13 @@ function imba_tiny_toss:GetCastRange(vLocation, hTarget)
 	elseif hTarget == nil then
 		return self:GetSpecialValueFor("grab_radius")
 	end
+end
+
+function imba_tiny_toss:GetAOERadius()
+    local ability = self
+    local radius = ability:GetSpecialValueFor("radius") 
+    
+    return radius
 end
 
 LinkLuaModifier("modifier_tiny_toss_movement", "hero/hero_tiny", LUA_MODIFIER_MOTION_BOTH)
@@ -629,7 +646,13 @@ function modifier_imba_tiny_craggy_exterior_passive:OnAttackLanded(params)
 	if IsServer() then
 		if params.target == self:GetParent() then
 			local caster = self:GetCaster()
-			if RollPercentage(self.chance + self.prng) then
+
+			-- If the caster is broken, do nothing
+			if caster:PassivesDisabled() then
+				return nil
+			end
+
+			if RollPseudoRandom(self.chance, self) then
 				if self:GetParent():HasTalent("special_bonus_imba_tiny_4") then
 					EmitSoundOn("Hero_Tiny.CraggyExterior", self:GetCaster())
 					local radius = self:GetParent():FindTalentValue("special_bonus_imba_tiny_4")
@@ -637,8 +660,8 @@ function modifier_imba_tiny_craggy_exterior_passive:OnAttackLanded(params)
 						ParticleManager:SetParticleControl(avalanche, 0, params.attacker:GetAbsOrigin())
 						ParticleManager:SetParticleControl(avalanche, 1, Vector(radius, 1, radius))
 						Timers:CreateTimer(0.2, function() 
-							ParticleManager:ReleaseParticleIndex(avalanche)
 							ParticleManager:DestroyParticle(avalanche, false)
+							ParticleManager:ReleaseParticleIndex(avalanche)							
 						end)
 					local craggy_targets = FindUnitsInRadius(caster:GetTeamNumber(), params.attacker:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
 					for _,target in pairs(craggy_targets) do
@@ -650,16 +673,23 @@ function modifier_imba_tiny_craggy_exterior_passive:OnAttackLanded(params)
 					ApplyDamage({victim = params.attacker, attacker = caster, damage = self.damage, damage_type = self:GetAbility():GetAbilityDamageType(), ability = self:GetAbility()})
 					params.attacker:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = self.duration})
 					local craggy = ParticleManager:CreateParticle("particles/units/heroes/hero_tiny/tiny_craggy_hit.vpcf", PATTACH_POINT_FOLLOW, self:GetCaster())
-						ParticleManager:SetParticleControl(craggy, 0, self:GetCaster():GetAbsOrigin())
-						ParticleManager:SetParticleControl(craggy, 1, params.attacker:GetAbsOrigin())
+					ParticleManager:SetParticleControl(craggy, 0, self:GetCaster():GetAbsOrigin())
+					ParticleManager:SetParticleControl(craggy, 1, params.attacker:GetAbsOrigin())
 					ParticleManager:ReleaseParticleIndex(craggy)
 					EmitSoundOn("Hero_Tiny.CraggyExterior", self:GetCaster())
 					EmitSoundOn("Hero_Tiny.CraggyExterior.Stun", params.attacker)
-				end
-			else
-				self.prng = self.prng + 2
+				end			
 			end
-			params.attacker:AddNewModifier(caster, self:GetAbility(), "modifier_craggy_exterior_blunt", {duration = self.reduction_duration})
+
+			if not params.attacker:HasModifier("modifier_craggy_exterior_blunt") then
+				params.attacker:AddNewModifier(caster, self:GetAbility(), "modifier_craggy_exterior_blunt", {duration = self.reduction_duration})
+			end
+
+			local modifier_blunt_handler = params.attacker:FindModifierByName("modifier_craggy_exterior_blunt")
+			if modifier_blunt_handler then
+				modifier_blunt_handler:IncrementStackCount()
+				modifier_blunt_handler:ForceRefresh()
+			end
 		end
 	end
 end
@@ -667,40 +697,23 @@ end
 LinkLuaModifier("modifier_craggy_exterior_blunt", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 modifier_craggy_exterior_blunt = class({})
 function modifier_craggy_exterior_blunt:OnCreated()
-	self.reduction = self:GetAbility():GetSpecialValueFor("damage_reduction")
-	self.verified = false
-	self:SetStackCount(1)
-	if IsServer() then
-		if self:GetCaster():HasTalent("special_bonus_imba_tiny_5") then
-			CustomNetTables:SetTableValue("talents", "hero_tiny_talents", {talent5 = self:GetAbility():GetTalentSpecialValueFor("damage_reduction")})
-		end
-	end
+	self.caster = self:GetCaster()
+	self.reduction = self:GetAbility():GetSpecialValueFor("damage_reduction")		
 end
 
 function modifier_craggy_exterior_blunt:OnRefresh()
-	self.reduction = self:GetAbility():GetSpecialValueFor("damage_reduction")
-	self.verified = false
-	if IsServer() then
-		if self:GetCaster():HasTalent("special_bonus_imba_tiny_5") then
-			CustomNetTables:SetTableValue("talents", "hero_tiny_talents", {talent5 = self:GetAbility():GetTalentSpecialValueFor("damage_reduction")})
-		end
-	end
-	self:IncrementStackCount()
+	self:OnCreated()
 end
 
 function modifier_craggy_exterior_blunt:DeclareFunctions()
-	local funcs = {
-		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-	}
+	local funcs = {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE}
+
 	return funcs
 end
 
 function modifier_craggy_exterior_blunt:GetModifierPreAttack_BonusDamage()
-	if CustomNetTables:GetTableValue( "talents", "hero_tiny_talents") and not self.verified then
-		self.reduction = CustomNetTables:GetTableValue( "talents", "hero_tiny_talents").talent5
-		self.verified = true
-	end
-	return self.reduction * self:GetStackCount()
+	local reduction = self.reduction + self.caster:FindTalentValue("special_bonus_imba_tiny_5")	
+	return reduction * self:GetStackCount()
 end
 
 imba_tiny_grow = imba_tiny_grow or class({})
@@ -819,93 +832,4 @@ function modifier_imba_tiny_grow_passive:OnAttackLanded( params )
 			DoCleaveAttack( params.attacker, params.target, self:GetAbility(), params.damage * self.cleave_pct / 100, self.cleave_startwidth, self.cleave_endwidth, self.cleave_distance, "particles/units/heroes/hero_tiny/tiny_grow_cleave.vpcf" )
 		end
 	end
-end
---------------------------------------------------------------------------------
-
-LinkLuaModifier("modifier_special_bonus_imba_tiny_1", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_tiny_1 = class({})
-
-function modifier_special_bonus_imba_tiny_1:IsHidden()
-	return true
-end
-
-function modifier_special_bonus_imba_tiny_1:RemoveOnDeath()
-	return false
-end
-
-
-LinkLuaModifier("modifier_special_bonus_imba_tiny_2", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_tiny_2 = class({})
-
-function modifier_special_bonus_imba_tiny_2:IsHidden()
-	return true
-end
-
-function modifier_special_bonus_imba_tiny_2:RemoveOnDeath()
-	return false
-end
-
-LinkLuaModifier("modifier_special_bonus_imba_tiny_3", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_tiny_3 = class({})
-
-function modifier_special_bonus_imba_tiny_3:IsHidden()
-	return true
-end
-
-function modifier_special_bonus_imba_tiny_3:RemoveOnDeath()
-	return false
-end
-LinkLuaModifier("modifier_special_bonus_imba_tiny_4", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_tiny_4 = class({})
-
-function modifier_special_bonus_imba_tiny_4:IsHidden()
-	return true
-end
-
-function modifier_special_bonus_imba_tiny_4:RemoveOnDeath()
-	return false
-end
-
-LinkLuaModifier("modifier_special_bonus_imba_tiny_5", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_tiny_5 = class({})
-
-function modifier_special_bonus_imba_tiny_5:IsHidden()
-	return true
-end
-
-function modifier_special_bonus_imba_tiny_5:RemoveOnDeath()
-	return false
-end
-
-LinkLuaModifier("modifier_special_bonus_imba_tiny_6", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_tiny_6 = class({})
-
-function modifier_special_bonus_imba_tiny_6:IsHidden()
-	return true
-end
-
-function modifier_special_bonus_imba_tiny_6:RemoveOnDeath()
-	return false
-end
-
-LinkLuaModifier("modifier_special_bonus_imba_tiny_7", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_tiny_7 = class({})
-
-function modifier_special_bonus_imba_tiny_7:IsHidden()
-	return true
-end
-
-function modifier_special_bonus_imba_tiny_7:RemoveOnDeath()
-	return false
-end
-
-LinkLuaModifier("modifier_special_bonus_imba_tiny_8", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_tiny_8 = class({})
-
-function modifier_special_bonus_imba_tiny_8:IsHidden()
-	return true
-end
-
-function modifier_special_bonus_imba_tiny_8:RemoveOnDeath()
-	return false
 end
