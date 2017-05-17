@@ -5303,6 +5303,11 @@
 				"var_type"					"FIELD_INTEGER"
 				"units"						"1 1 1 1 2 3 4"
 			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_damage_reduction"	"-30"
+			}
 		}
 	}
 

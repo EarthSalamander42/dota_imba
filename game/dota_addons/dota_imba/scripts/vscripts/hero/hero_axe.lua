@@ -1,7 +1,7 @@
 --[[
 Author: sercankd
 Date: 25.03.2017
-Updated: 26.03.2017
+Updated: 17.05.2017
 ]]
 
 CreateEmptyTalents("axe")
@@ -217,10 +217,12 @@ imba_axe_battle_hunger = class({})
 LinkLuaModifier("modifier_imba_axe_battle_hunger_caster", "hero/hero_axe", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_axe_battle_hunger_enemy", "hero/hero_axe", LUA_MODIFIER_MOTION_NONE)
 
-function imba_axe_battle_hunger:OnSpellStart()
+function imba_axe_battle_hunger:OnSpellStart(target)
 
   local caster                    =       self:GetCaster()
-  local target                    =       self:GetCursorTarget()
+  if target == nil then
+    target                        =       self:GetCursorTarget()
+  end
   local ability                   =       self
   local caster_modifier           =       "modifier_imba_axe_battle_hunger_caster"
   local random_response           =       "axe_axe_ability_battlehunger_0"..math.random(1,3)
@@ -287,7 +289,6 @@ function modifier_imba_axe_battle_hunger_enemy:OnCreated()
   if IsServer() then
     self.battle_hunger_particle = "particles/units/heroes/hero_axe/axe_battle_hunger.vpcf"
     self.kill_count = 0
-
     self.enemy_particle = ParticleManager:CreateParticle( self.battle_hunger_particle, PATTACH_OVERHEAD_FOLLOW, self:GetParent())
     ParticleManager:SetParticleControl(self.enemy_particle, 2, Vector(0, 0, 0))
 
@@ -321,13 +322,23 @@ end
 
 function modifier_imba_axe_battle_hunger_enemy:DeclareFunctions()
   local funcs = {
-    MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE, MODIFIER_EVENT_ON_DEATH
+    MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE, MODIFIER_EVENT_ON_DEATH, MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE
   }
   return funcs
 end
 
 function modifier_imba_axe_battle_hunger_enemy:GetModifierMoveSpeedBonus_Percentage()
   return self:GetAbility():GetSpecialValueFor("slow") * 0.01
+end
+
+function modifier_imba_axe_battle_hunger_enemy:GetModifierTotalDamageOutgoing_Percentage()
+    self.scepter 	= self:GetCaster():HasScepter()
+    self.scepter_damage_reduction = self:GetAbility():GetSpecialValueFor( "scepter_damage_reduction" )
+    if self.scepter then
+      return self.scepter_damage_reduction
+    else
+      return 0
+    end
 end
 
 function modifier_imba_axe_battle_hunger_enemy:GetStatusEffectName()
@@ -516,18 +527,12 @@ function imba_axe_culling_blade:OnSpellStart()
   self.speed_duration = self.ability:GetSpecialValueFor("speed_duration")
   self.speed_aoe_radius = self.ability:GetSpecialValueFor("speed_aoe")
   self.max_health_kill_heal_pct = self.ability:GetSpecialValueFor("max_health_kill_heal_pct")  
-
+  self.scepter_battle_hunger_radius = self.ability:GetSpecialValueFor("scepter_battle_hunger_radius")
   -- Check for Linkens
   if self.target:GetTeamNumber() ~= self.caster:GetTeamNumber() then
     if self.target:TriggerSpellAbsorb(self.ability) then
       return
     end
-  end
-
-  -- Scepter bonus calculation
-  if self.scepter == true then
-    self.kill_threshold = self.ability:GetSpecialValueFor("kill_threshold_scepter")
-    self.speed_duration = self.ability:GetSpecialValueFor("speed_duration_scepter")
   end
 
   -- #7 Talent: Kill threshold increase
@@ -594,6 +599,16 @@ function imba_axe_culling_blade:OnSpellStart()
       self.ability:EndCooldown()
     end
 
+
+  --scepter apply battle hunger to enemies in radius
+  if self.scepter then
+  	self.targets = FindUnitsInRadius(self.caster:GetTeamNumber(), self.target:GetAbsOrigin(), nil, self.scepter_battle_hunger_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
+    self.battle_hunger_ability = self.caster:FindAbilityByName("imba_axe_battle_hunger")
+    for _,enemies in pairs(self.targets) do
+      self.battle_hunger_ability:OnSpellStart(enemies)
+    end
+  end
+  
   else
     if self.caster:HasTalent("special_bonus_imba_axe_8") then
       self:GetCaster():AddNewModifier( self:GetCaster(), self, "modifier_imba_axe_culling_blade_leap", kv )
@@ -622,13 +637,6 @@ function imba_axe_culling_blade:KillUnit(target)
   ParticleManager:SetParticleControlEnt(self.culling_kill_particle, 8, self.target, PATTACH_POINT_FOLLOW, "attach_hitloc", self.target_location, true)
   ParticleManager:ReleaseParticleIndex(self.culling_kill_particle)
 
-end
-
-function imba_axe_culling_blade:GetCooldown( nLevel )
-  if self.scepter then
-    return self:GetSpecialValueFor( "cooldown_scepter" )
-  end
-  return self.BaseClass.GetCooldown( self, nLevel )
 end
 
 function imba_axe_culling_blade:GetCastAnimation(target)
