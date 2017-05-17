@@ -833,7 +833,7 @@ imba_nyx_assassin_vendetta = class({})
 LinkLuaModifier("modifier_imba_vendetta", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_vendetta_charge", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 
-
+function imba_nyx_assassin_vendetta:IsNetherWardStealable() return false end
 function imba_nyx_assassin_vendetta:IsHiddenWhenStolen()
     return false
 end

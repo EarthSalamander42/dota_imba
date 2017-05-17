@@ -1100,6 +1100,7 @@ LinkLuaModifier("modifier_imba_kingdom_come", "hero/hero_skeleton_king.lua", LUA
 LinkLuaModifier("modifier_imba_kingdom_come_slow", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_kingdom_come_stun", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 
+function imba_wraith_king_kingdom_come:IsNetherWardStealable() return false end
 function imba_wraith_king_kingdom_come:IsInnateAbility()
     return true
 end

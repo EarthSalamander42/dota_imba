@@ -159,6 +159,8 @@ function imba_enigma_demonic_conversion:CastFilterResultTarget(target)
 	end
 end
 
+function imba_enigma_demonic_conversion:IsNetherWardStealable() return false end
+
 function modifier_eidolon_buffs:OnCreated(var)
 	if IsServer() then
 		local shard_percentage,attacks_to_split = getkvValues(self:GetAbility(),"shard_percentage","attacks_to_split") 

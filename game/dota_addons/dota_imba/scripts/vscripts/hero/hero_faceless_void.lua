@@ -76,6 +76,7 @@ LinkLuaModifier("modifier_imba_faceless_void_time_walk_cast", "hero/hero_faceles
 LinkLuaModifier("modifier_imba_faceless_void_time_walk_slow", "hero/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE)			-- Reduced moenemt/attack speed stolen by caster
 
 function imba_faceless_void_time_walk:IsHiddenWhenStolen() return false end
+function imba_faceless_void_time_walk:IsNetherWardStealable() return false end
 
 function imba_faceless_void_time_walk:GetCastRange()
 	-- Affects only the cast range indicator so you can see the max jump range
@@ -817,6 +818,7 @@ if modifier_imba_faceless_void_chronosphere_aura == nil then modifier_imba_facel
 function modifier_imba_faceless_void_chronosphere_aura:IsPurgable() return false end
 function modifier_imba_faceless_void_chronosphere_aura:IsHidden() return true end
 function modifier_imba_faceless_void_chronosphere_aura:IsAura() return true end
+function modifier_imba_faceless_void_chronosphere_aura:IsNetherWardStealable() return false end
 
 function modifier_imba_faceless_void_chronosphere_aura:GetAuraDuration()
 	if self:GetAbility():GetCaster():HasTalent("special_bonus_imba_faceless_void_3") then return 0.01 end

@@ -1,5 +1,5 @@
 imba_silencer_glaives_of_wisdom = class({})
-
+function imba_silencer_glaives_of_wisdom:IsNetherWardStealable() return false end
 function imba_silencer_glaives_of_wisdom:GetCastRange()
 	return self:GetCaster():GetAttackRange()
 end

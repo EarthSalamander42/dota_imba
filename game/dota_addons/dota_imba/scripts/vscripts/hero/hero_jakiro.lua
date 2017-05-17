@@ -13,6 +13,8 @@ end
 -- Base local ability to be used for fire breath and ice breath
 local base_ability_dual_breath = class({})
 
+function base_ability_dual_breath:IsNetherWardStealable() return false end
+
 function base_ability_dual_breath:GetCastRange(Location, Target)
 	if IsServer() then
 		return 0
@@ -652,6 +654,7 @@ LinkLuaModifier("modifier_imba_liquid_fire_caster", "hero/hero_jakiro", LUA_MODI
 LinkLuaModifier("modifier_imba_liquid_fire_animate", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_liquid_fire_debuff", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
 
+function imba_jakiro_liquid_fire:IsNetherWardStealable() return false end
 function imba_jakiro_liquid_fire:OnCreated()
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()

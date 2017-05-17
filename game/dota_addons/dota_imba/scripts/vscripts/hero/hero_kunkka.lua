@@ -29,6 +29,7 @@ end
 -------------------------------------------
 
 imba_kunkka_ebb_and_flow = class({})
+
 LinkLuaModifier("modifier_imba_ebb_and_flow_thinker", "hero/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ebb_and_flow_tide_low", "hero/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ebb_and_flow_tide_red", "hero/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
@@ -41,6 +42,7 @@ function imba_kunkka_ebb_and_flow:GetIntrinsicModifierName()
     return "modifier_imba_ebb_and_flow_thinker"
 end
 
+function imba_kunkka_ebb_and_flow:IsNetherWardStealable() return false end
 function imba_kunkka_ebb_and_flow:IsInnateAbility()
     return true
 end
@@ -1161,6 +1163,8 @@ end
 -------------------------------------------
 
 imba_kunkka_return = class({})
+
+function imba_kunkka_return:IsNetherWardStealable() return false end
 
 function imba_kunkka_return:OnSpellStart()
 	if IsServer() then

@@ -9,7 +9,7 @@ end
 
 -- BLADE FURY --
 imba_juggernaut_blade_fury = class({})
-
+function imba_juggernaut_blade_fury:IsNetherWardStealable() return true end
 function imba_juggernaut_blade_fury:GetCastRange()
 	return self:GetTalentSpecialValueFor("effect_radius")
 end
@@ -118,7 +118,7 @@ end
 
 -- HEALING WARD --
 imba_juggernaut_healing_ward = class({})
-
+function imba_juggernaut_healing_ward:IsNetherWardStealable() return false end
 function imba_juggernaut_healing_ward:OnSpellStart()
 	local caster = self:GetCaster()
 	local targetPoint = self:GetCursorPosition()
@@ -646,7 +646,7 @@ end
 
 -- OMNI SLASH --
 imba_juggernaut_omni_slash = class({})
-
+function imba_juggernaut_omni_slash:IsNetherWardStealable() return false end
 function imba_juggernaut_omni_slash:GetIntrinsicModifierName()
 	return	"modifier_imba_juggernaut_omni_slash_cdr"
 end
