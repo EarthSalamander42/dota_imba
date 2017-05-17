@@ -904,8 +904,7 @@ function modifier_imba_dark_ritual_creeps:OnCreated()
     -- Ability properties
     self.caster = self:GetCaster()
     self.ability = self:GetAbility()
-    self.parent = self:GetParent()
-    self.stacks = self:GetStackCount()
+    self.parent = self:GetParent()    
 
     -- Ability specials
     self.creeps_bonus_as = self.ability:GetSpecialValueFor("creeps_bonus_as")
@@ -917,10 +916,12 @@ function modifier_imba_dark_ritual_creeps:OnCreated()
     self.creeps_bonus_hp_pct = self.creeps_bonus_hp_pct * (1 + self.caster:FindTalentValue("special_bonus_imba_lich_2") * 0.01)
     self.creeps_bonus_dmg_pct = self.creeps_bonus_dmg_pct * (1 + self.caster:FindTalentValue("special_bonus_imba_lich_2") * 0.01)
 
-    if IsServer() then
+    if IsServer() then        
         -- Force adjust HP
-        local adjusted_hp = self.parent:GetMaxHealth() + self.stacks * self.creeps_bonus_hp_pct * 0.01        
-        SetCreatureHealth(self.parent, adjusted_hp, true)
+        Timers:CreateTimer(2, function()
+            local adjusted_hp = self.parent:GetMaxHealth() + self:GetStackCount() * self.creeps_bonus_hp_pct * 0.01                    
+            SetCreatureHealth(self.parent, adjusted_hp, true)            
+        end)
     end
 end
 
@@ -939,12 +940,12 @@ function modifier_imba_dark_ritual_creeps:DeclareFunctions()
     return decFuncs
 end
 
-function modifier_imba_dark_ritual_creeps:GetModifierHealthBonus()     
-     return self.stacks * self.creeps_bonus_hp_pct * 0.01
+function modifier_imba_dark_ritual_creeps:GetModifierAttackSpeedBonus_Constant()     
+     return self:GetStackCount() * self.creeps_bonus_hp_pct * 0.01
 end 
 
 function modifier_imba_dark_ritual_creeps:GetModifierPreAttack_BonusDamage()
-     return self.stacks * self.creeps_bonus_dmg_pct * 0.01
+     return self:GetStackCount() * self.creeps_bonus_dmg_pct * 0.01
 end
 
 -- Allied sacrificed creep hero bonuses

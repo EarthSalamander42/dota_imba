@@ -97,28 +97,35 @@ end
 modifier_imba_guardian_sprint_buff = class({})
 
 function modifier_imba_guardian_sprint_buff:OnCreated()
+	-- Ability properties
+	self.caster = self:GetCaster()
+	self.ability = self:GetAbility()
+	self.modifier_talent_slow = "modifier_imba_guardian_sprint_aspd_slow"
+	self.modifier_rain = "modifier_imba_rain_cloud_buff"	
+
+	-- Ability specials
+	self.search_radius = self.ability:GetSpecialValueFor("search_radius")
+	self.sprint_cd = self.ability:GetSpecialValueFor("sprint_cd")
+	self.ms_bonus_pct = self.ability:GetSpecialValueFor("ms_bonus_pct")
+	self.ms_speed_rain_pct = self.ability:GetSpecialValueFor("ms_speed_rain_pct")
+	self.damage_amp_pct = self.ability:GetSpecialValueFor("damage_amp_pct")
+	self.damage_reduction_rain = self.ability:GetSpecialValueFor("damage_reduction_rain")
+	self.duration = self.ability:GetSpecialValueFor("duration")		
+
 	self:StartIntervalThink(0.2)
 end
 
 function modifier_imba_guardian_sprint_buff:OnIntervalThink()
-	if IsServer() then
-		-- Ability properties
-		local caster = self:GetCaster()
-		local ability = self:GetAbility()
-		local modifier_talent_slow = "modifier_imba_guardian_sprint_aspd_slow"	 
-		
-		-- Ability specials
-		local search_radius = ability:GetSpecialValueFor("search_radius")
-		
+	if IsServer() then		
 		-- #5 Talent: Rip Current can always be cast without needing a unit
-		if caster:HasTalent("special_bonus_imba_slardar_5") then
-			ability:SetActivated(true)
+		if self.caster:HasTalent("special_bonus_imba_slardar_5") then
+			self.ability:SetActivated(true)
 		else
 			-- Decide Rip Current activation
-			local allies = FindUnitsInRadius(caster:GetTeamNumber(),
-											 caster:GetAbsOrigin(),
+			local allies = FindUnitsInRadius(self.caster:GetTeamNumber(),
+											 self.caster:GetAbsOrigin(),
 											 nil,
-											 search_radius,
+											 self.search_radius,
 											 DOTA_UNIT_TARGET_TEAM_BOTH,
 											 DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 											 DOTA_UNIT_TARGET_FLAG_NONE,
@@ -127,18 +134,18 @@ function modifier_imba_guardian_sprint_buff:OnIntervalThink()
 			
 			-- Not including self.
 			if #allies > 1 then
-				ability:SetActivated(true)			
+				self.ability:SetActivated(true)			
 			else
-				ability:SetActivated(false)
+				self.ability:SetActivated(false)
 			end	
 		end
 
 		-- #2 Talent: Sprinting through enemy units slows their attack speed for 0.5 seconds
-		if caster:HasTalent("special_bonus_imba_slardar_2") then
-			local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-											  caster:GetAbsOrigin(),
+		if self.caster:HasTalent("special_bonus_imba_slardar_2") then
+			local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
+											  self.caster:GetAbsOrigin(),
 											  nil,
-											  search_radius,
+											  self.search_radius,
 											  DOTA_UNIT_TARGET_TEAM_ENEMY,
 											  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 											  DOTA_UNIT_TARGET_FLAG_NONE,
@@ -147,7 +154,7 @@ function modifier_imba_guardian_sprint_buff:OnIntervalThink()
 
 			-- Apply enemies attack speed slow modifier
 			for _,enemy in pairs(enemies) do
-				enemy:AddNewModifier(caster, ability, modifier_talent_slow, {duration = 0.3})
+				enemy:AddNewModifier(self.caster, self.ability, self.modifier_talent_slow, {duration = 0.3})
 			end
 		end
 	end
@@ -157,8 +164,7 @@ function modifier_imba_guardian_sprint_buff:GetTexture()
 	return "slardar_sprint"
 end
 
-function modifier_imba_guardian_sprint_buff:CheckState()
-	 
+function modifier_imba_guardian_sprint_buff:CheckState()	 
 	 local state = {[MODIFIER_STATE_NO_UNIT_COLLISION] = true}
 	 return state
 end
@@ -175,31 +181,23 @@ function modifier_imba_guardian_sprint_buff:GetActivityTranslationModifiers()
 	return "sprint"
 end
 
-function modifier_imba_guardian_sprint_buff:GetModifierMoveSpeedBonus_Percentage()
-	local caster = self:GetCaster()
-	local ability = self:GetAbility()
-	local modifier_rain = "modifier_imba_rain_cloud_buff"
-	
-	local ms_bonus_pct = ability:GetSpecialValueFor("ms_bonus_pct")
-	local ms_speed_rain_pct = ability:GetSpecialValueFor("ms_speed_rain_pct")
-	
-	if caster:HasModifier(modifier_rain) then
-		ms_bonus_pct = ms_bonus_pct + ms_speed_rain_pct
+function modifier_imba_guardian_sprint_buff:GetModifierMoveSpeedBonus_Percentage()		
+	local ms_bonus_pct = self.ms_bonus_pct
+
+	-- Grant bonus move speed if the caster is under the Rain Cloud
+	if self.caster:HasModifier(self.modifier_rain) then
+		ms_bonus_pct = self.ms_bonus_pct + self.ms_speed_rain_pct
 	end
 	
-	return ms_bonus_pct	
+	return ms_bonus_pct
 end
 
 function modifier_imba_guardian_sprint_buff:GetModifierIncomingDamage_Percentage()
-	local caster = self:GetCaster()
-	local ability = self:GetAbility()
-	local modifier_rain = "modifier_imba_rain_cloud_buff"
-	
-	local damage_amp_pct = ability:GetSpecialValueFor("damage_amp_pct")
-	local damage_reduction_rain = ability:GetSpecialValueFor("damage_reduction_rain")
-	
-	if caster:HasModifier(modifier_rain) then
-		damage_amp_pct = damage_amp_pct + (-damage_reduction_rain)
+	local damage_amp_pct = self.damage_amp_pct
+
+	-- Grant damage reduction if the caster is under the Rain Cloud
+	if self.caster:HasModifier(self.modifier_rain) then
+		damage_amp_pct = self.damage_amp_pct + (self.damage_reduction_rain * (-1))
 	end
 	
 	return damage_amp_pct	
@@ -215,11 +213,16 @@ end
 
 function modifier_imba_guardian_sprint_buff:OnDestroy()
 	if IsServer() then
-		local ability = self:GetAbility()
-		local sprint_cd = ability:GetSpecialValueFor("sprint_cd")
-		
-		ability:SetActivated(true)
-		ability:StartCooldown(sprint_cd)
+		self.ability:SetActivated(true)		
+		local cooldown_start = (self.ability:GetCooldown(-1) * (1 - self.caster:GetCooldownReduction() * 0.01) - self.duration)		
+
+		-- Adjusts the cooldown timer in case Guardian Sprint was dispelled.
+		local remaining_time = self:GetRemainingTime()		
+		if remaining_time > 0 then
+			cooldown_start = cooldown_start + remaining_time
+		end
+
+		self.ability:StartCooldown(cooldown_start)		
 	end
 end
 
@@ -233,18 +236,24 @@ end
 function modifier_imba_rip_current_movement:OnCreated()
 	if IsServer() then
 		-- Ability properties
-		local caster = self:GetCaster()
-		local ability = self:GetAbility()
+		self.caster = self:GetCaster()
+		self.ability = self:GetAbility()
+		self.sound_land = "n_mud_golem.Boulder.Cast"
+		self.modifier_stun = "modifier_imba_rip_current_stun"
+		self.modifier_slow = "modifier_imba_rip_current_slow"
 		
 		-- Ability specials
-		local distance = ability:GetSpecialValueFor("distance")
-		local velocity = ability:GetSpecialValueFor("velocity")
+		self.distance = self.ability:GetSpecialValueFor("distance")
+		self.velocity = self.ability:GetSpecialValueFor("velocity")
+		self.slow_duration = self.ability:GetSpecialValueFor("slow_duration")
+		self.stun_duration = self.ability:GetSpecialValueFor("stun_duration")
+		self.radius = self.ability:GetSpecialValueFor("radius")
+		self.damage = self.ability:GetSpecialValueFor("damage")
+
 		
 		-- Set variables for current cast
-		self.distance_travelled = 0
-		self.distance = distance
-		self.direction = caster:GetForwardVector()
-		self.velocity = velocity	
+		self.distance_travelled = 0		
+		self.direction = self.caster:GetForwardVector()		
 
 		if self:ApplyHorizontalMotionController() == false then
 			self:Destroy()
@@ -252,16 +261,20 @@ function modifier_imba_rip_current_movement:OnCreated()
 	end
 end
 
+function modifier_imba_rip_current_movement:CheckState()
+	local state = {[MODIFIER_STATE_INVULNERABLE] = true,
+				   [MODIFIER_STATE_STUNNED] = true}
+
+	return state
+end
+
 function modifier_imba_rip_current_movement:UpdateHorizontalMotion( me, dt)
 	if IsServer() then
-		local caster = self:GetCaster()
-		local ability = self:GetAbility()
-		
 		if self.distance_travelled < self.distance then
-			caster:SetAbsOrigin(caster:GetAbsOrigin() + self.direction * self.velocity * dt)
+			self.caster:SetAbsOrigin(self.caster:GetAbsOrigin() + self.direction * self.velocity * dt)
 			self.distance_travelled = self.distance_travelled + self.velocity * dt
 		else
-			caster:InterruptMotionControllers(true)
+			self.caster:InterruptMotionControllers(true)
 			self:Destroy()
 		end
 	end
@@ -280,32 +293,23 @@ function modifier_imba_rip_current_movement:IsPurgable()
 end
 
 function modifier_imba_rip_current_movement:OnRemoved()
-	if IsServer() then
-		-- Ability properties
-		local caster = self:GetCaster()
-		local ability = self:GetAbility()
-		local sound_land = "n_mud_golem.Boulder.Cast"
-		local modifier_stun = "modifier_imba_rip_current_stun"
-		local modifier_slow = "modifier_imba_rip_current_slow"
-		
-		-- Ability specials
-		local slow_duration = ability:GetSpecialValueFor("slow_duration")
-		local stun_duration = ability:GetSpecialValueFor("stun_duration")
-		local radius = ability:GetSpecialValueFor("radius")
-		local damage = ability:GetSpecialValueFor("damage")
+	if IsServer() then		
 
+		local radius = self.radius
+		local damage = self.damage
+		
 		-- #1 Talent: Rip Current land radius and damage increase
-		radius = radius + caster:FindSpecificTalentValue("special_bonus_imba_slardar_1", "radius")
-		damage = damage + caster:FindSpecificTalentValue("special_bonus_imba_slardar_1", "damage")
+		radius = radius + self.caster:FindSpecificTalentValue("special_bonus_imba_slardar_1", "radius")
+		damage = damage + self.caster:FindSpecificTalentValue("special_bonus_imba_slardar_1", "damage")
 		
 		-- Play hit sound
-		EmitSoundOn(sound_land, caster)
+		EmitSoundOn(self.sound_land, self.caster)
 		
 		-- Find nearby enemies
-		local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-										  caster:GetAbsOrigin(),
+		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
+										  self.caster:GetAbsOrigin(),
 										  nil,
-										  radius,
+										  self.radius,
 										  DOTA_UNIT_TARGET_TEAM_ENEMY,
 										  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 										  DOTA_UNIT_TARGET_FLAG_NONE,
@@ -317,15 +321,15 @@ function modifier_imba_rip_current_movement:OnRemoved()
 			if not enemy:IsMagicImmune() then		
 				-- Apply damage
 				local damageTable = {victim = enemy,
-									attacker = caster,
+									attacker = self.caster,
 									damage = damage,
 									damage_type = DAMAGE_TYPE_PHYSICAL}
 							
 				ApplyDamage(damageTable)	
 				
 				-- Apply stun and slow modifiers
-				enemy:AddNewModifier(caster, ability, modifier_stun, {duration = stun_duration})
-				enemy:AddNewModifier(caster, ability, modifier_slow, {duration = slow_duration})				
+				enemy:AddNewModifier(self.caster, self.ability, self.modifier_stun, {duration = self.stun_duration})
+				enemy:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = self.slow_duration})				
 			end
 		end
 	end
