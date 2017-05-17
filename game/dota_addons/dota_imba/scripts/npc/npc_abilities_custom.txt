@@ -4019,6 +4019,7 @@
 		"AbilityType"									"DOTA_ABILITY_TYPE_ULTIMATE"
 		"FightRecapLevel"								"2"
 		"AbilityTextureName"							"abaddon_borrowed_time"
+		"HasScepterUpgrade"								"1"
 		"MaxLevel"										"6"
 
 		// Casting
@@ -5750,6 +5751,7 @@
 		"ScriptFile"					"hero/hero_bounty_hunter"
 		"MaxLevel"						"7"
 		"LevelsBetweenUpgrades"			"2"
+		"HasScepterUpgrade"				"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -6405,6 +6407,7 @@
 		"ScriptFile"					"hero/hero_centaur.lua"
 		"MaxLevel"						"6"
 		"LevelsBetweenUpgrades"			"6"
+		"HasScepterUpgrade" 			"1"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
@@ -7369,6 +7372,7 @@
 		"SpellImmunityType"								"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"								"2"
 		"AbilityTextureName"							"crystal_maiden_freezing_field"
+		"HasScepterUpgrade"								"1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -7744,6 +7748,7 @@
 		"SpellImmunityType"								"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"								"2"
 		"AbilityTextureName"							"crystal_maiden_freezing_field"
+		"HasScepterUpgrade"								"1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -8353,6 +8358,7 @@
 		"AbilityTextureName"							"dazzle_weave"
 		"ScriptFile"									"hero/hero_dazzle.lua"
 		"FightRecapLevel"								"2"
+		"HasScepterUpgrade"								"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -8714,6 +8720,7 @@
 		"MaxLevel"						"6"
 		"LevelsBetweenUpgrades"			"6"
 		"ScriptFile"					"hero/hero_drow_ranger.lua"
+		"HasScepterUpgrade"				"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -13001,6 +13008,7 @@
 		"MaxLevel"					"6"
 		"LevelsBetweenUpgrades"		"6"
 		"ScriptFile"				"hero/hero_lion"
+		"HasScepterUpgrade"			"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -13198,6 +13206,7 @@
 		"ScriptFile"					"hero/hero_lycan"
 		"FightRecapLevel"				"1"
 		"MaxLevel"						"1"
+		"HasScepterUpgrade"				"1"
 
 		"precache"
 		{
@@ -16131,6 +16140,7 @@
 		"MaxLevel"						"6"
 		"LevelsBetweenUpgrades"			"6"
 		"ScriptFile"					"hero/hero_night_stalker.lua"
+		"HasScepterUpgrade"				"1"
 
 		// Unit Targeting
 		//-------------------------------------------------------------------------------------------------------------
@@ -16490,6 +16500,7 @@
 		"MaxLevel"						"6"
 		"LevelsBetweenUpgrades"			"6"
 		"ScriptFile"					"hero/hero_nyx_assassin.lua"
+		"HasScepterUpgrade"				"1"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -16635,6 +16646,7 @@
 		"AbilityTextureName"			"obsidian_destroyer_astral_imprisonment"
 		"MaxLevel"						"7"
 		"ScriptFile"					"hero/hero_obsidian_destroyer.lua"
+		"HasScepterUpgrade"				"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -16791,6 +16803,7 @@
 		"AbilityTextureName"					"obsidian_destroyer_sanity_eclipse"
 		"MaxLevel"								"6"
 		"ScriptFile"							"hero/hero_obsidian_destroyer.lua"
+		"HasScepterUpgrade"						"1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -17087,6 +17100,7 @@
 		"AbilityTextureName"				"omniknight_guardian_angel"
 		"MaxLevel"							"6"
 		"ScriptFile"						"hero/hero_omniknight.lua"
+		"HasScepterUpgrade"					"1"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
@@ -17163,6 +17177,7 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityTextureName"			"phantom_assassin_stifling_dagger"
         "MaxLevel"						"7"
+        "HasScepterUpgrade"				"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -17447,6 +17462,7 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"pudge_meat_hook"
+		"HasScepterUpgrade"				"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -18082,6 +18098,7 @@
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityTextureName"			"custom/pudge_sharp_hook"
+		"HasScepterUpgrade"				"1"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -18179,6 +18196,7 @@
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityTextureName"			"custom/pudge_light_hook"
+		"HasScepterUpgrade"				"1"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -18806,6 +18824,7 @@
 		"AbilityTextureName"				"pugna_life_drain"
 		"MaxLevel"							"6"
 		"ScriptFile"						"hero/hero_pugna.lua"
+		"HasScepterUpgrade"					"1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -19698,6 +19717,7 @@
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD"
 		"FightRecapLevel"				"2"
 		"MaxLevel"						"6"
+		"HasScepterUpgrade"				"1"
 
 
 		// Casting
@@ -20430,6 +20450,7 @@
 		"AbilityTextureName"			"sniper_assassinate"
 		"MaxLevel"						"7"
 		"ScriptFile"					"hero/hero_sniper.lua"
+		"HasScepterUpgrade"				"1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -22120,6 +22141,7 @@
 		"AbilityTextureName"			"sandking_epicenter"
 		"MaxLevel"						"6"
 		"ScriptFile"					"hero/hero_sand_king.lua"
+		"HasScepterUpgrade"				"1"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
@@ -22243,6 +22265,7 @@
 		"AbilityTextureName"		"skywrath_mage_arcane_bolt"
 		"MaxLevel"					"7"
 		"ScriptFile" 				"hero/hero_skywrath_mage.lua"
+		"HasScepterUpgrade"			"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -22344,6 +22367,7 @@
 		"AbilityTextureName"     	"skywrath_mage_concussive_shot"
 		"MaxLevel"					"7"
 		"ScriptFile" 				"hero/hero_skywrath_mage.lua"
+		"HasScepterUpgrade"			"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -22464,6 +22488,7 @@
 		"AbilityTextureName"     	"skywrath_mage_ancient_seal"
 		"MaxLevel"					"7"
 		"ScriptFile" 				"hero/hero_skywrath_mage.lua"
+		"HasScepterUpgrade"			"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -22545,6 +22570,7 @@
 		"AbilityTextureName"     	"skywrath_mage_mystic_flare"
 		"MaxLevel"					"6"
 		"ScriptFile" 				"hero/hero_skywrath_mage.lua"
+		"HasScepterUpgrade"			"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -25211,6 +25237,7 @@
 		"AbilityTextureName"				"vengefulspirit_nether_swap"
 		"MaxLevel"							"6"
 		"LevelsBetweenUpgrades"				"6"
+		"HasScepterUpgrade"					"1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -28020,6 +28047,7 @@
 		"MaxLevel"						"6"
 		"LevelsBetweenUpgrades"			"6"
 		"FightRecapLevel"				"1"
+		"HasScepterUpgrade"				"1"
 
 		"precache"
 		{
@@ -28540,6 +28568,7 @@
 		"ScriptFile"					"hero/hero_slardar"
 		"MaxLevel"						"7"
 		"FightRecapLevel"				"1"
+		"HasScepterUpgrade"				"1"
 
 		"precache"
 		{
@@ -28664,6 +28693,7 @@
 		"ScriptFile"					"hero/hero_slardar"
 		"MaxLevel"						"7"
 		"FightRecapLevel"				"1"
+		"HasScepterUpgrade"				"1"
 
 		"precache"
 		{
@@ -29475,6 +29505,7 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
 		"FightRecapLevel"				"2"
 		"MaxLevel"						"6"
+		"HasScepterUpgrade"				"1"
 
 		"precache"
 		{
