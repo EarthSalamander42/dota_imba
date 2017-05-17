@@ -511,7 +511,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"			"hero/tower_abilities.lua"
+						"ScriptFile"			"hero/fountain_abilities.lua"
 						"Function"				"GrievousWounds"
 
 						"modifier_debuff"		"modifier_imba_fountain_grievous_wounds_debuff"
