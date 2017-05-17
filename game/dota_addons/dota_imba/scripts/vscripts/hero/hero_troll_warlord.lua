@@ -75,7 +75,7 @@ function modifier_imba_berserkers_rage_melee:DeclareFunctions()
 		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
 		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT,
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
 		MODIFIER_PROPERTY_TRANSLATE_ATTACK_SOUND
@@ -87,7 +87,7 @@ function modifier_imba_berserkers_rage_melee:GetAttackSound()
 	return "Hero_TrollWarlord.ProjectileImpact"
 end
 
-function modifier_imba_berserkers_rage_melee:GetModifierMoveSpeedBonus_Percentage()
+function modifier_imba_berserkers_rage_melee:GetModifierMoveSpeedBonus_Constant()
 	return self:GetAbility():GetSpecialValueFor("bonus_move_speed")
 end
 
