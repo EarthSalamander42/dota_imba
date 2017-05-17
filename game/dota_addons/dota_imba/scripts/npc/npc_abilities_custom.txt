@@ -17448,14 +17448,32 @@
 		//=================================================================================================================
 		"imba_pudge_meat_hook"
 		{
-			// General
-			//-------------------------------------------------------------------------------------------------------------
-			"BaseClass"						"ability_datadriven"
+			"BaseClass"             		"ability_lua"
 			"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-			"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+			"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
 			"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+			
 			"FightRecapLevel"				"1"
 			"AbilityTextureName"			"pudge_meat_hook"
+			"MaxLevel"						"7"
+			"ScriptFile"					"hero/hero_pudge.lua"
+
+			// Casting
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+
+			// Time		
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilityCooldown"				"14 13 12 11"
+
+			// Damage.
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilityDamage"					"90 180 270 360 390 420 450"
+
+			// Cost
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilityManaCost"				"110 120 130 140 145 150 155" 
+
 
 			// Precache
 			//-------------------------------------------------------------------------------------------------------------
@@ -17464,20 +17482,8 @@
 				"soundfile"					"soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
 				"particle"					"particles/units/heroes/hero_pudge/pudge_meathook_chain.vpcf"
 				"particle"					"particles/units/heroes/hero_pudge/pudge_meathook_impact.vpcf"
+				
 			}
-
-			// Casting
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilityCastRange"				"0"
-			"AbilityCastPoint"				"0.2"
-
-			// Time
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilityCooldown"				"13.0 12.0 11.0 10.0"
-
-			// Cost
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilityManaCost"				"110"
 
 			// Special
 			//-------------------------------------------------------------------------------------------------------------
@@ -17486,44 +17492,42 @@
 				"01"
 				{
 					"var_type"				"FIELD_INTEGER"
-					"base_speed"			"1600"
+					"hook_speed"			"1450"
 				}
 				"02"
 				{
 					"var_type"				"FIELD_INTEGER"
-					"stack_speed"			"15"
+					"hook_damage"			"90 180 270 360 390 420 450"
 				}
+				
 				"03"
 				{
 					"var_type"				"FIELD_INTEGER"
-					"base_range"			"1100 1200 1300 1400"
+					"hook_distance"			"1000 1100 1200 1300 1350 1400 1450"
+					"LinkedSpecialBonus" "special_bonus_imba_pudge_2"
 				}
 				"04"
 				{
 					"var_type"				"FIELD_INTEGER"
-					"stack_range"			"30"
+					"max_targets"			"1 1 1 1 2 3 4"
 				}
+				
 				"05"
 				{
 					"var_type"				"FIELD_INTEGER"
-					"base_damage"			"90 180 270 360"
+					"multiple_hook_rotation"			"30"
 				}
 				"06"
 				{
 					"var_type"				"FIELD_INTEGER"
-					"stack_damage"			"15"
+					"hook_width"			"100"
 				}
 				"07"
 				{
 					"var_type"				"FIELD_INTEGER"
-					"hook_width"			"100"
-				}
-				"08"
-				{
-					"var_type"				"FIELD_INTEGER"
 					"vision_radius"			"550"
 				}
-				"09"
+				"08"
 				{
 					"var_type"				"FIELD_INTEGER"
 					"vision_duration"		"4"
@@ -17531,213 +17535,105 @@
 				"10"
 				{
 					"var_type"				"FIELD_INTEGER"
-					"damage_scepter"		"10"
+					"damage_scepter"		"90"
 				}
 				"11"
 				{
 					"var_type"				"FIELD_FLOAT"
-					"cooldown_scepter"		"0.1"
+					"cooldown_scepter"		"4"
 				}
 				"12"
 				{
 					"var_type"				"FIELD_FLOAT"
-					"cooldown_cap_scepter"	"3.0"
+					"cooldown"		"14 13 12 11 11 11 11"
 				}
 				"13"
 				{
-					"var_type"				"FIELD_FLOAT"
-					"enemy_disable_linger"	"0.2"
-				}
-			}
-
-			"OnAbilityPhaseStart"
-			{
-				"ApplyModifier"
-				{
-					"ModifierName"			"modifier_imba_meat_hook_cast_check"
-					"Target" 				"CASTER"
-				}
-				"RunScript"
-				{
-					"ScriptFile"			"hero/hero_pudge.lua"
-					"Function"				"HookCast"
-					"Target"				"POINT"
-
-					"modifier_cast_check"	"modifier_imba_meat_hook_cast_check"
-					"modifier_light"		"modifier_imba_hook_light_stack"
-				}
-			}
-
-			"OnSpellStart"
-			{
-				"RunScript"
-				{
-					"ScriptFile"			"hero/hero_pudge.lua"
-					"Function"				"MeatHook"
-					"Target"				"POINT"
-
-					"sound_extend"			"Hero_Pudge.AttackHookExtend"
-					"sound_hit"				"Hero_Pudge.AttackHookImpact"
-					"sound_retract"			"Hero_Pudge.AttackHookRetract"
-					"sound_retract_stop"	"Hero_Pudge.AttackHookRetractStop"
-					"particle_hook"			"particles/units/heroes/hero_pudge/pudge_meathook_chain.vpcf"
-					"particle_hit"			"particles/units/heroes/hero_pudge/pudge_meathook_impact.vpcf"
-					"modifier_caster"		"modifier_imba_hook_caster"
-					"modifier_target_enemy"	"modifier_imba_hook_target_enemy"
-					"modifier_target_ally"	"modifier_imba_hook_target_ally"
-					"modifier_dummy"		"modifier_imba_hook_dummy"
-					"modifier_light"		"modifier_imba_hook_light_stack"
-					"modifier_sharp"		"modifier_imba_hook_sharp_stack"
-				}
-			}
-
-			"OnUpgrade"
-			{
-				"RunScript"
-				{
-					"ScriptFile"			"hero/hero_pudge.lua"
-					"Function"				"HookUpgrade"
-
-					"ability_sharp"			"imba_pudge_sharp_hook"
-					"ability_light"			"imba_pudge_light_hook"
-				}
-			}
-
-			"Modifiers"
-			{
-				"modifier_imba_hook_stack_updater"
-				{
-					"Passive"					"1"
-					"IsHidden"					"1"
-					"IsBuff"					"1"
-					"IsPurgable"				"0"
-
-					"ThinkInterval"  			"0.2"
-
-					"OnIntervalThink"
-					{
-						"RunScript"
-						{
-							"ScriptFile"		"hero/hero_pudge.lua"
-							"Function"			"HookStacksUpdater"
-
-							"modifier_sharp"	"modifier_imba_hook_sharp_stack"
-							"modifier_light"	"modifier_imba_hook_light_stack"
-						}
-					}
-
-					"OnCreated"
-					{
-						"RunScript"
-						{
-							"ScriptFile"		"internal/util.lua"
-							"Function"			"IllusionPassiveRemover"
-
-							"modifier"			"modifier_imba_hook_stack_controller"
-						}
-					}
-				}
-
-				"modifier_imba_hook_sharp_stack"
-				{
-					"Passive"					"0"
-					"IsHidden"					"0"
-					"IsBuff"					"1"
-					"IsPurgable"				"0"
-
-					"TextureName"				"custom/pudge_sharp_hook"
-
-					"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-				}
-
-				"modifier_imba_hook_light_stack"
-				{
-					"Passive"					"0"
-					"IsHidden"					"0"
-					"IsBuff"					"1"
-					"IsPurgable"				"0"
-
-					"TextureName"				"custom/pudge_light_hook"
-
-					"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-				}
-
-				"modifier_imba_hook_caster"
-				{
-					"Passive"					"0"
-					"IsHidden"					"1"
-					"IsDebuff"					"1"
-					"IsPurgable"				"0"
-
-					"OverrideAnimation"     	"ACT_DOTA_OVERRIDE_ABILITY_1"
-
-					"States"
-					{
-						"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
-					}
-				}
-
-				"modifier_imba_hook_target_enemy"
-				{
-					"Passive"					"0"
-					"IsHidden"					"0"
-					"IsDebuff"					"1"
-					"IsPurgable"				"0"
-
-					"OverrideAnimation"			"ACT_DOTA_FLAIL"
-
-					"States"
-					{
-						"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
-					}
-				}
-
-				"modifier_imba_hook_target_ally"
-				{
-					"Passive"					"0"
-					"IsHidden"					"0"
-					"IsBuff"					"1"
-					"IsPurgable"				"0"
-
-					"OverrideAnimation"			"ACT_DOTA_FLAIL"
-
-					"States"
-					{
-						"MODIFIER_STATE_ROOTED"			"MODIFIER_STATE_VALUE_ENABLED"
-					}
-				}
-
-				"modifier_imba_hook_dummy"
-				{
-					"States"
-					{
-						"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
-						"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
-						"MODIFIER_STATE_NOT_ON_MINIMAP"	"MODIFIER_STATE_VALUE_ENABLED"
-						"MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
-						"MODIFIER_STATE_OUT_OF_GAME"	"MODIFIER_STATE_VALUE_ENABLED"
-					}
-				}
-
-				"modifier_imba_meat_hook_cast_check"
-				{
-					"Passive"				"0"
-					"IsHidden"				"1"
-					"IsPurgable"			"0"
-
-					"Attributes"			"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-					"OnOrder"
-					{
-						"RunScript"
-						{
-							"ScriptFile"	"hero/hero_pudge.lua"
-							"Function"		"HookCastCheck"
-						}
-					}
+					"var_type"				"FIELD_INTEGER"
+					"number_of_hooks"		"1"
+					"LinkedSpecialBonus" "special_bonus_imba_pudge_8"
 				}
 			}
 		}
+		//=================================================================================================================
+		// Pudge's Butchers Cleaver
+		//=================================================================================================================
+		"imba_pudge_butchers_cleaver"
+		{
+			"BaseClass"             		"ability_lua"
+			"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+			"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
+			"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+			
+			"FightRecapLevel"				"1"
+			"AbilityTextureName"			"" // ??
+			"MaxLevel"						"7"
+			"ScriptFile"					"hero/hero_pudge.lua"
+			"AbilityCastRange"				"1500"
+			// Casting
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+
+			// Time		
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilityCooldown"				"60"
+
+			// Damage.
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilityDamage"					"50 65 80 95 110 125 140"
+
+			// Cost
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilityManaCost"				"125" 
+
+
+			// Precache
+			//-------------------------------------------------------------------------------------------------------------
+			"precache"
+			{
+				"soundfile"					"soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
+				"particle" 					"particles/units/heroes/hero_mirana/mirana_spell_arrow.vpcf"
+			}
+
+			// Special
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
+			{
+				"01"
+				{
+					"var_type"				"FIELD_FLOAT"
+					"root_duration"			"1.5 2 2.5 3 3 3 3"
+				}
+				"02"
+				{
+					"var_type"				"FIELD_INTEGER"
+					"projectile_radius"		"100"
+				}
+				
+				"03"
+				{
+					"var_type"				"FIELD_INTEGER"
+					"range"			"1500"
+				}
+				"04"
+				{
+					"var_type"				"FIELD_INTEGER"
+					"projectile_speed"			"1800 1800 1800 1800 2100 2400 2700"
+				}
+				"05"
+				{
+					"var_type"				"FIELD_INTEGER"
+					"check_radius"			"300"
+				}
+				"05"
+				{
+					"var_type"				"FIELD_INTEGER"
+					"damage"			"50 65 80 95 110 125 140"
+				}
+			}
+		}
+
+			
 
 		//=================================================================================================================
 		// Pudge's Rot
@@ -17865,6 +17761,84 @@
 				}
 			}
 		}
+		//=================================================================================================================
+		// Pudge's Dismember
+		//=================================================================================================================
+		"imba_pudge_dismember"
+		{
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"							"ability_lua"
+			"ScriptFile"					"hero/hero_pudge.lua"
+			"AbilityType"						"DOTA_ABILITY_TYPE_ULTIMATE"
+			"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+			"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			"AbilityUnitTargetFlags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+			"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
+			"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"
+			"FightRecapLevel"					"2"
+			"AbilityTextureName"				"pudge_dismember"
+
+			// Precache
+			//-------------------------------------------------------------------------------------------------------------
+			"precache"
+			{
+				"soundfile"						"soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
+				"particle"						"particles/units/heroes/hero_pudge/pudge_dismember.vpcf"
+			}
+
+			// Casting
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilityCastRange"					"160"
+			"AbilityCastPoint"					"0.2"
+			"AbilityCastAnimation"				"ACT_DOTA_CHANNEL_ABILITY_4"
+	
+
+			// Time
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilityCooldown"					"30 25 20 20 20 20"
+
+			// Cost
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilityManaCost"					"100 130 160 170 180 190"
+
+			"AbilitySpecial"
+			{
+				"01"
+				{
+					"var_type"					"FIELD_INTEGER"
+					"dismember_damage"			"60 90 120 130 140 150"
+				}
+				"02"
+				{
+					"var_type"					"FIELD_INTEGER"
+					"strength_damage"			"30 45 60 80 100 120"
+				}
+				"03"
+				{
+					"var_type"					"FIELD_FLOAT"
+					"hero_duration"				"2.95"
+					"LinkedSpecialBonus" "special_bonus_imba_pudge_7"
+				}
+				"04"
+				{
+					"var_type"					"FIELD_FLOAT"
+					"creep_duration"				"5.95"
+					"LinkedSpecialBonus" "special_bonus_imba_pudge_7"
+				}
+				"05"
+				{
+					"var_type" 					"FIELD_FLOAT"
+					"tick_rate"					"1"
+				}
+				"06"
+				{
+					"var_type"					"FIELD_INTEGER"
+					"spell_lifesteal"			"100 100 100 133 166 200"
+				}
+			}
+		}
 
 		"special_bonus_imba_pudge_1"
 		{
@@ -17887,6 +17861,78 @@
 				{
 					"var_type"					"FIELD_INTEGER"
 					"value"						"20"
+				}
+			}
+		}
+		"special_bonus_imba_pudge_2"
+		{
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"						"special_bonus_unique_centaur_2"
+			"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+			"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+			"LinkedAbility"
+			{
+				"01" 	"imba_pudge_meat_hook"
+			}
+
+			// Special
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
+			{
+				"01"
+				{
+					"var_type"					"FIELD_INTEGER"
+					"value"						"200"
+				}
+			}
+		}
+		"special_bonus_imba_pudge_3"
+		{
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"						"special_bonus_unique_centaur_2"
+			"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+			"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+			"LinkedAbility"
+			{
+				"01" 	"imba_pudge_flesh_heap"
+			}
+
+			// Special
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
+			{
+				"01"
+				{
+					"var_type"					"FIELD_FLOAT"
+					"value"						"0.75"
+				}
+			}
+		}
+		"special_bonus_imba_pudge_4"
+		{
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"						"special_bonus_unique_centaur_2"
+			"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+			"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+			"LinkedAbility"
+			{
+				"01" 	"imba_pudge_butchers_cleaver"
+			}
+
+			// Special
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
+			{
+				"01"
+				{
+					"var_type"					"FIELD_FLOAT"
+					"value"						"1"
 				}
 			}
 		}
@@ -17940,17 +17986,19 @@
 				}
 			}
 		}
-
-		//=================================================================================================================
-		// Pudge's Sharp Hook
-		//=================================================================================================================
-		"imba_pudge_sharp_hook"
+		"special_bonus_imba_pudge_7"
 		{
 			// General
 			//-------------------------------------------------------------------------------------------------------------
-			"BaseClass"						"ability_datadriven"
-			"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-			"AbilityTextureName"			"custom/pudge_sharp_hook"
+			"BaseClass"						"special_bonus_unique_centaur_2"
+			"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+			"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+			"LinkedAbility"
+			{
+				"01" 	"imba_pudge_dismember"
+				
+			}
 
 			// Special
 			//-------------------------------------------------------------------------------------------------------------
@@ -17959,95 +18007,22 @@
 				"01"
 				{
 					"var_type"					"FIELD_FLOAT"
-					"think_interval"			"0.25 0.17 0.12 0.1"
-				}
-				"02"
-				{
-					"var_type"					"FIELD_INTEGER"
-					"tooltip_stacks_per_second"	"4 6 8 10"
-				}
-				"03"
-				{
-					"var_type"					"FIELD_INTEGER"
-					"stack_damage"				"15"
-				}
-				"04"
-				{
-					"var_type"					"FIELD_FLOAT"
-					"cooldown_scepter"			"0.1"
-				}
-				"05"
-				{
-					"var_type"					"FIELD_INTEGER"
-					"cooldown_cap_scepter"		"3"
-				}
-			}
-
-			"OnToggleOn"
-			{
-				"RunScript"
-				{
-					"ScriptFile"				"hero/hero_pudge.lua"
-					"Function"					"SharpHookToggle"
-
-					"ability_light"				"imba_pudge_light_hook"
-				}
-
-				"ApplyModifier"
-				{
-					"ModifierName"				"modifier_imba_sharp_hook"
-					"Target" 					"CASTER"
-				}
-			}
-
-			"OnToggleOff"
-			{
-				"RemoveModifier"
-				{
-					"ModifierName"				"modifier_imba_sharp_hook"
-					"Target" 					"CASTER"
-				}
-			}
-
-			"Modifiers"
-			{
-				"modifier_imba_sharp_hook"
-				{
-					"Passive"					"0"
-					"IsHidden"					"1"
-					"IsBuff"					"1"
-					"IsPurgable"				"0"
-
-					"Attributes"				"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-					"ThinkInterval"				"%think_interval"
-
-					"OnIntervalThink"
-					{
-						"RunScript"
-						{
-							"ScriptFile"		"hero/hero_pudge.lua"
-							"Function"			"SharpHook"
-
-							"ability_hook"		"imba_pudge_meat_hook"
-							"modifier_sharp"	"modifier_imba_hook_sharp_stack"
-							"modifier_light"	"modifier_imba_hook_light_stack"
-						}
-					}
+					"value"						"2"
 				}
 			}
 		}
-
-		//=================================================================================================================
-		// Pudge's Light Hook
-		//=================================================================================================================
-		"imba_pudge_light_hook"
+		"special_bonus_imba_pudge_8"
 		{
 			// General
 			//-------------------------------------------------------------------------------------------------------------
-			"BaseClass"						"ability_datadriven"
-			"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-			"AbilityTextureName"			"custom/pudge_light_hook"
+			"BaseClass"						"special_bonus_unique_centaur_2"
+			"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+			"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+			"LinkedAbility"
+			{
+				"01" 	"imba_pudge_meat_hook"
+			}
 
 			// Special
 			//-------------------------------------------------------------------------------------------------------------
@@ -18055,227 +18030,12 @@
 			{
 				"01"
 				{
-					"var_type"					"FIELD_FLOAT"
-					"think_interval"			"0.25 0.17 0.12 0.1"
-				}
-				"02"
-				{
 					"var_type"					"FIELD_INTEGER"
-					"tooltip_stacks_per_second"	"4 6 8 10"
-				}
-				"03"
-				{
-					"var_type"					"FIELD_INTEGER"
-					"stack_speed"				"15"
-				}
-				"04"
-				{
-					"var_type"					"FIELD_INTEGER"
-					"stack_range"				"30"
-				}
-				"05"
-				{
-					"var_type"					"FIELD_INTEGER"
-					"damage_scepter"			"10"
-				}
-			}
-
-			"OnToggleOn"
-			{
-				"RunScript"
-				{
-					"ScriptFile"				"hero/hero_pudge.lua"
-					"Function"					"LightHookToggle"
-
-					"ability_sharp"				"imba_pudge_sharp_hook"
-				}
-
-				"ApplyModifier"
-				{
-					"ModifierName"				"modifier_imba_light_hook"
-					"Target" 					"CASTER"
-				}
-			}
-
-			"OnToggleOff"
-			{
-				"RemoveModifier"
-				{
-					"ModifierName"				"modifier_imba_light_hook"
-					"Target" 					"CASTER"
-				}
-			}
-
-			"Modifiers"
-			{
-				"modifier_imba_light_hook"
-				{
-					"Passive"					"0"
-					"IsHidden"					"1"
-					"IsBuff"					"1"
-					"IsPurgable"				"0"
-
-					"Attributes"				"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-					"ThinkInterval"				"%think_interval"
-
-					"OnIntervalThink"
-					{
-						"RunScript"
-						{
-							"ScriptFile"		"hero/hero_pudge.lua"
-							"Function"			"LightHook"
-
-							"ability_hook"		"imba_pudge_meat_hook"
-							"modifier_sharp"	"modifier_imba_hook_sharp_stack"
-							"modifier_light"	"modifier_imba_hook_light_stack"
-						}
-					}
+					"value"						"2"
 				}
 			}
 		}
 
-		//=================================================================================================================
-		// Pudge's Dismember
-		//=================================================================================================================
-		"imba_pudge_dismember"
-		{
-			// General
-			//-------------------------------------------------------------------------------------------------------------
-			"BaseClass"							"ability_datadriven"
-			"AbilityType"						"DOTA_ABILITY_TYPE_ULTIMATE"
-			"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-			"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-			"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-			"AbilityUnitTargetFlags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-			"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
-			"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"
-			"FightRecapLevel"					"2"
-			"AbilityTextureName"				"pudge_dismember"
-
-			// Precache
-			//-------------------------------------------------------------------------------------------------------------
-			"precache"
-			{
-				"soundfile"						"soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
-				"particle"						"particles/units/heroes/hero_pudge/pudge_dismember.vpcf"
-			}
-
-			// Casting
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilityCastRange"					"160"
-			"AbilityCastPoint"					"0.2"
-			"AbilityCastAnimation"				"ACT_DOTA_CHANNEL_ABILITY_4"
-
-			// Time
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilityChannelTime"				"3.0"
-			"AbilityCooldown"					"30.0 25.0 20.0"
-
-			// Cost
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilityManaCost"					"100 125 150"
-
-			"AbilitySpecial"
-			{
-				"01"
-				{
-					"var_type"					"FIELD_INTEGER"
-					"dismember_damage"			"60 90 120"
-				}
-				"02"
-				{
-					"var_type"					"FIELD_INTEGER"
-					"strength_damage"			"100"
-				}
-				"03"
-				{
-					"var_type"					"FIELD_FLOAT"
-					"max_duration"				"3.0"
-				}
-			}
-
-			"OnSpellStart"
-			{
-				"RunScript"
-				{
-					"ScriptFile"				"hero/hero_pudge.lua"
-					"Function"					"Dismember"
-
-					"particle_target"			"particles/units/heroes/hero_pudge/pudge_dismember.vpcf"
-					"modifier_debuff"			"modifier_imba_dismember"
-				}
-
-				"FireSound"
-				{
-					"EffectName"				"Hero_Pudge.Dismember"
-					"Target" 					"CASTER"
-				}
-			}
-
-			"OnChannelInterrupted"
-			{
-				"RunScript"
-				{
-					"ScriptFile"				"hero/hero_pudge.lua"
-					"Function"					"DismemberEnd"
-
-					"modifier_dismember"		"modifier_imba_dismember"
-				}
-			}
-
-			"OnChannelFinish"
-			{
-				"RunScript"
-				{
-					"ScriptFile"				"hero/hero_pudge.lua"
-					"Function"					"DismemberEnd"
-
-					"modifier_dismember"		"modifier_imba_dismember"
-				}
-			}
-
-			"Modifiers"
-			{
-				"modifier_imba_dismember"
-				{
-					"Passive"					"0"
-					"IsDebuff"					"1"
-					"IsHidden"					"0"
-					"IsPurgable"				"0"
-
-					"Duration"					"%max_duration"
-
-					"ThinkInterval"				"1.0"
-
-					"OverrideAnimation"			"ACT_DOTA_DISABLED"
-
-					"OnIntervalThink"
-					{
-						"RunScript"
-						{
-							"ScriptFile"		"hero/hero_pudge.lua"
-							"Function"			"Dismember"
-
-							"particle_target"	"particles/units/heroes/hero_pudge/pudge_dismember.vpcf"
-						}
-
-						"FireSound"
-						{
-							"EffectName"		"Hero_Pudge.Dismember"
-							"Target"			"CASTER"
-						}
-					}
-
-					"States"
-					{
-						"MODIFIER_STATE_STUNNED"			"MODIFIER_STATE_VALUE_ENABLED"
-						"MODIFIER_STATE_INVISIBLE" 			"MODIFIER_STATE_VALUE_DISABLED"
-						"MODIFIER_STATE_PROVIDES_VISION"	"MODIFIER_STATE_VALUE_ENABLED"
-					}
-				}
-			}
-		}
 
 		//=================================================================================================================
 		// Pugna's Nether Blast

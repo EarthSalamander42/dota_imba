@@ -1794,21 +1794,21 @@
 
 		"AttackRange"				"200"
 
-		"Ability1"					""
+		"Ability1"					"imba_pudge_meat_hook"
 		"Ability2"					"imba_pudge_rot"
-		"Ability3"					"imba_pudge_flesh_heap"
-		"Ability4"					""
-		"Ability5"					""
+		"Ability3"					"imba_pudge_butchers_cleaver"
+		"Ability4"					"imba_pudge_dismember"
+		"Ability5"					"imba_pudge_flesh_heap"
 		"Ability6"					""
 
 		"Ability10"					"special_bonus_imba_pudge_1"
-		"Ability11"					""
-		"Ability12"					""
-		"Ability13"					""
+		"Ability11"					"special_bonus_imba_pudge_2"
+		"Ability12"					"special_bonus_imba_pudge_3"
+		"Ability13"					"special_bonus_imba_pudge_4"
 		"Ability14"					"special_bonus_imba_pudge_5"
 		"Ability15"					"special_bonus_imba_pudge_6"
-		"Ability16"					""
-		"Ability17"					""
+		"Ability16"					"special_bonus_imba_pudge_7"
+		"Ability17"					"special_bonus_imba_pudge_8"
 
 		"ProjectileSpeed"			"900"
 	}
