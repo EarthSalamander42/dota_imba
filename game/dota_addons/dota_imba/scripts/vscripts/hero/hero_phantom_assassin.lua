@@ -128,7 +128,7 @@ function imba_phantom_assassin_stifling_dagger:OnSpellStart()
 					enemy.hit_by_pa_dagger = true
 					dagger_target_found = true	
 
-					caster:StartGesture(ACT_DOTA_CAST_ABILITY_1)
+					caster:StartGestureWithPlaybackRate(ACT_DOTA_CAST_ABILITY_1, playbackrate)
 
 					dagger_projectile = {
 										EffectName = "particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf",
