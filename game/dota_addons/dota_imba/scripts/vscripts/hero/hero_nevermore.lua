@@ -345,11 +345,13 @@ function ApplyShadowRazeDamage(caster, ability, enemy)
     local shadow_combo_duration = ability:GetSpecialValueFor("shadow_combo_duration")        
     local damage_per_soul = ability:GetSpecialValueFor("damage_per_soul")
     local souls_per_raze = ability:GetSpecialValueFor("souls_per_raze")
-    local soul_projectile_speed = ability:GetSpecialValueFor("soul_projectile_speed")
+    local soul_projectile_speed = ability:GetSpecialValueFor("soul_projectile_speed")    
 
     -- If the caster has Necromastery souls, increase the damage of Shadowraze and steal a soul
-    if caster:HasModifier(modifier_souls) and enemy:IsRealHero() then
+    print(caster:HasModifier(modifier_souls))
+    if caster:HasModifier(modifier_souls) then        
         local stacks = caster:GetModifierStackCount(modifier_souls, caster)
+        
 
         -- #8 Talent: Necromastery soul grant additional damage
         damage_per_soul = damage_per_soul + caster:FindTalentValue("special_bonus_imba_nevermore_8")
@@ -357,8 +359,10 @@ function ApplyShadowRazeDamage(caster, ability, enemy)
         -- Adjust damage
         damage = damage + stacks * damage_per_soul
 
-        -- Add a Necromastery stack
-        AddNecromasterySouls(caster, souls_per_raze)
+        -- Add a Necromastery stack if it was a hero
+        if enemy:IsRealHero() then
+            AddNecromasterySouls(caster, souls_per_raze)
+        end
 
         -- If caster is not broken, launch a soul projectile to the caster        
         if not caster:PassivesDisabled() then
@@ -393,8 +397,8 @@ function ApplyShadowRazeDamage(caster, ability, enemy)
                         ability = ability
                         }
                                 
-    ApplyDamage(damageTable)
-
+    local actualy_damage = ApplyDamage(damageTable)
+    print(actualy_damage)
     -- Apply a shadow combo modifier to enemy if it doesn't have it. Regardless, add a stack and refresh
     if not enemy:HasModifier(modifier_combo) then
         enemy:AddNewModifier(caster, ability, modifier_combo, {duration = shadow_combo_duration})
