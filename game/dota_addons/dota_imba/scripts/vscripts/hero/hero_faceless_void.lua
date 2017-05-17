@@ -143,35 +143,38 @@ function modifier_imba_faceless_void_time_walk_damage_counter:DeclareFunctions()
 end
 
 function modifier_imba_faceless_void_time_walk_damage_counter:OnCreated()
-	if IsServer() then
-		local caster = self:GetCaster()
-		if not caster.time_walk_damage_taken then
-			caster.time_walk_damage_taken = 0
+	-- Ability properties
+	self.caster = self:GetCaster()
+	self.ability = self:GetAbility()
+
+	-- Ability specials
+	self.damage_time = self.ability:GetSpecialValueFor("damage_time") + self.caster:FindTalentValue("special_bonus_imba_faceless_void_6")
+
+	if IsServer() then		
+		if not self.caster.time_walk_damage_taken then
+			self.caster.time_walk_damage_taken = 0
 		end
 	end
 end
 
 function modifier_imba_faceless_void_time_walk_damage_counter:OnTakeDamage( keys )
 	if IsServer() then
-		local ability = self:GetAbility()
-
-		-- If the ability was unlearned, do nothing
-		if not ability then return nil end
-
-		-- Parameters
-		local caster = ability:GetCaster()
-		local damage_time = ability:GetSpecialValueFor("damage_time") + caster:FindTalentValue("special_bonus_imba_faceless_void_6")
+		local unit = keys.unit
 		local damage_taken = keys.damage
-		
-		-- Stores this instance of damage
-		caster.time_walk_damage_taken = caster.time_walk_damage_taken + damage_taken
 
-		-- Decrease damage counter after the duration is up
-		Timers:CreateTimer(damage_time, function()
-			if caster.time_walk_damage_taken then
-				caster.time_walk_damage_taken = caster.time_walk_damage_taken - damage_taken
-			end
-		end)
+		-- Only apply if the one taking damage is Faceless Void himself
+		if unit == self.caster then
+			
+			-- Stores this instance of damage			
+			self.caster.time_walk_damage_taken = self.caster.time_walk_damage_taken + damage_taken	
+
+			-- Decrease damage counter after the duration is up
+			Timers:CreateTimer(self.damage_time, function()
+				if self.caster.time_walk_damage_taken then					
+					self.caster.time_walk_damage_taken = self.caster.time_walk_damage_taken - damage_taken					
+				end
+			end)
+		end
 	end
 end
 
