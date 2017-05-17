@@ -772,6 +772,7 @@ LinkLuaModifier("modifier_imba_darkness_night", "hero/hero_night_stalker", LUA_M
 LinkLuaModifier("modifier_imba_darkness_vision", "hero/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_darkness_fogvision", "hero/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
 
+function imba_night_stalker_darkness:IsNetherWardStealable() return false end
 function imba_night_stalker_darkness:IsHiddenWhenStolen()
     return false
 end

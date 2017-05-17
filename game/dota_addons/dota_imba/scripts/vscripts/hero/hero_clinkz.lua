@@ -12,7 +12,7 @@ LinkLuaModifier("modifier_imba_strafe_aspd", "hero/hero_clinkz", LUA_MODIFIER_MO
 LinkLuaModifier("modifier_imba_strafe_mount", "hero/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
 
 function imba_clinkz_strafe:IsHiddenWhenStolen() return false end
-
+function imba_clinkz_strafe:IsNetherWardStealable() return false end
 function imba_clinkz_strafe:GetCooldown(level)
     if IsServer() then
         local caster = self:GetCaster()

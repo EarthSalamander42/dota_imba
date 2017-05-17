@@ -329,6 +329,8 @@ LinkLuaModifier("modifier_imba_jinada_thinker", "hero/hero_bounty_hunter", LUA_M
 LinkLuaModifier("modifier_imba_jinada_slow_debuff", "hero/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_jinada_crit", "hero/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
 
+function imba_bounty_hunter_jinada:IsNetherWardStealable() return false end
+
 function imba_bounty_hunter_jinada:GetCooldown(level)	
 	local caster = self:GetCaster()
 	local cd = self.BaseClass.GetCooldown(self, level)
@@ -595,6 +597,7 @@ imba_bounty_hunter_shadow_walk = class({})
 LinkLuaModifier("modifier_imba_shadow_walk_invisibility", "hero/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_shadow_walk_true_sight", "hero/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
 
+function imba_bounty_hunter_shadow_walk:IsNetherWardStealable() return false end
 function imba_bounty_hunter_shadow_walk:GetCastRange(location, target)
 	local caster = self:GetCaster()
 	local ability = self

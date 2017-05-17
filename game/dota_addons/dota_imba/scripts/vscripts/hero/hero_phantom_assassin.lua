@@ -345,7 +345,7 @@ imba_phantom_assassin_phantom_strike = class({})
 
 LinkLuaModifier("modifier_imba_phantom_strike", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_phantom_strike_coup_de_grace", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
-
+function imba_phantom_assassin_phantom_strike:IsNetherWardStealable() return false end
 function imba_phantom_assassin_phantom_strike:CastFilterResultTarget(target)
     if IsServer() then
         local caster = self:GetCaster()
