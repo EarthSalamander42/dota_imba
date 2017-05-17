@@ -613,7 +613,7 @@ end
 --       Borrowed Time     --
 -----------------------------
 imba_abaddon_borrowed_time = class({
-	GetIntrinsicModifierName = function(self) return "modifer_borrowed_time_caster_auto_cast" end
+	GetIntrinsicModifierName = function(self) if self:GetCaster():IsRealHero() then return "modifer_borrowed_time_caster_auto_cast" end end
 })
 LinkLuaModifier("modifer_borrowed_time_caster_auto_cast", "hero/hero_abaddon", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_borrowed_time_caster_buff", "hero/hero_abaddon", LUA_MODIFIER_MOTION_NONE)
@@ -648,18 +648,10 @@ function modifer_borrowed_time_caster_auto_cast:_CheckHealth(damage)
 	local ability = self:GetAbility()
 
 	-- Check state
-	if not ability:IsHidden() and ability:IsCooldownReady() and not target:IsSilenced() and not target:IsHexed() and not target:PassivesDisabled() then
+	if not ability:IsHidden() and ability:IsCooldownReady() and not target:IsSilenced() and not target:IsHexed() and not target:PassivesDisabled() and target:IsAlive() then
 		local hp_threshold = self.hp_threshold
-		local current_hp = target:GetHealth() - damage
-		if current_hp < hp_threshold then
-			-- Prevent death. Casting ability immediately does not prevent death
-			if current_hp <= 0 then
-				-- 'hp_threshold' is the minimum that it can go
-				-- plus 'damage' to current health is to prevent death
-				-- 'current_hp' will be negative or 0 here, hence we minus to make it a positive addition. This represents the health gained from triggering borrowed time
-				target:SetHealth(hp_threshold + damage - current_hp)
-			end
-
+		local current_hp = target:GetHealth()
+		if current_hp <= hp_threshold then
 			target:CastAbilityImmediately(ability, target:GetPlayerID())			
 		end
 	end
@@ -759,7 +751,7 @@ function modifier_borrowed_time_caster_buff:OnCreated()
 		-- Strong Dispel
 		target:Purge(false, true, false, true, false)
 
-		self:StartIntervalThink( 0.03 )
+		self:StartIntervalThink( FrameTime() )
 	end	
 end
 
