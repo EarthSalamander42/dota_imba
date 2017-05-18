@@ -722,8 +722,13 @@ function SpawnImbaRunes()
 	}
 
 	-- Spawn a random powerup rune in a random powerup location
-	if game_time > 1 then
+	if game_time > 1 and game_time < 40 then
 		CreateItemOnPositionForLaunch(powerup_rune_locations[RandomInt(1, #powerup_rune_locations)], CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))
+
+	-- After 40 minutes, spawn powerup runes on both locations
+	elseif game_time >= 40 then
+		CreateItemOnPositionForLaunch(powerup_rune_locations[1], CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))
+		CreateItemOnPositionForLaunch(powerup_rune_locations[2], CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))
 	end
 end
 
