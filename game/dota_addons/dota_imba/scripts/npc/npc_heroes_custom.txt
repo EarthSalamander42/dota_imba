@@ -372,8 +372,6 @@
 		"AttackDamageMin"			"29"
 		"AttackDamageMax"			"89"
 
-		"AttributeStrengthGain"		"3.0"
-
 		"AttackRange"				"200"
 
 		//"Ability1"					"imba_chaos_knight_chaos_bolt"
@@ -2346,8 +2344,6 @@
 		"override_hero"				"npc_dota_hero_terrorblade"
 
 		"ArmorPhysical"				"9"
-
-		"AttributeStrengthGain"		"1.75"
 
 		//"Ability1"					"imba_terrorblade_reflection"
 		//"Ability2"					"imba_terrorblade_conjure_image"
