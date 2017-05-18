@@ -733,9 +733,20 @@ function modifier_imba_spiked_carapace:OnTakeDamage(keys)
         local attacker = keys.attacker
         local unit = keys.unit
         local original_damage = keys.original_damage
+        local damage_flags = keys.damage_flags
         
         -- Only apply on attacks against the caster
         if unit == self.caster then
+
+            -- If it was a no reflection damage, do nothing (blademail)
+            if damage_flags == 4112 then
+                return nil
+            end
+
+            -- If the attacking unit has Nyx's Carapace as well, do nothing
+            if attacker:HasModifier("modifier_imba_spiked_carapace") then
+                return nil
+            end
 
             -- Calculate damage to reflect
             local damage = original_damage * self.damage_reflection_pct * 0.01            
