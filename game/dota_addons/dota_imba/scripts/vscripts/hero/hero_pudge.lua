@@ -995,10 +995,10 @@ end
 function modifier_dismember:OnIntervalThink()
 	if IsServer() then
 		local flDamage = self.dismember_damage
-		if self:GetCaster():HasScepter() then
-			flDamage = flDamage + ( self:GetCaster():GetStrength() * self.strength_damage_scepter )
+		
+			flDamage = flDamage + ( self:GetCaster():GetStrength() * self.strength_damage )
 			--self:GetCaster():Heal( flDamage, self:GetAbility() )
-		end
+		
 
 		local damage = {
 			victim = self:GetParent(),
