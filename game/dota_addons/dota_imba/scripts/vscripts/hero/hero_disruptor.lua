@@ -583,7 +583,7 @@ end
 modifier_imba_glimpse_location_aura = class({})
 
 function modifier_imba_glimpse_location_aura:GetAuraRadius()
-	return 100000 --global radius
+	return 25000 --global radius
 end
 
 ---------------------------------------------------

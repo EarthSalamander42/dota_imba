@@ -29,6 +29,9 @@ if IsServer() then
 		end
 		self:StartIntervalThink(1)
 	end
+
+	function modifier_imba_bloodseeker_bloodrage:IsHidden() return false end
+	function modifier_imba_bloodseeker_bloodrage:IsPurgable() return true end	
 	
 	function modifier_imba_bloodseeker_bloodrage:OnRefresh()
 		self.ampin = self:GetAbility():GetSpecialValueFor("damage_increase_pct")
@@ -204,6 +207,10 @@ if IsServer() then
 		end
 	end
 end
+
+function modifier_imba_bloodseeker_blood_bath_silence:IsHidden() return false end
+function modifier_imba_bloodseeker_blood_bath_silence:IsPurgable() return true end
+function modifier_imba_bloodseeker_blood_bath_silence:IsDebuff() return true end
 
 function modifier_imba_bloodseeker_blood_bath_silence:CheckState()
 	return {[MODIFIER_STATE_SILENCED] = true}

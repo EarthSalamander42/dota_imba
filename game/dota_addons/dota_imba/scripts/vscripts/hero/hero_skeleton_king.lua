@@ -229,6 +229,10 @@ function modifier_imba_wraithfire_blast_debuff:OnCreated()
     end
 end
 
+function modifier_imba_wraithfire_blast_debuff:IsHidden() return false end
+function modifier_imba_wraithfire_blast_debuff:IsPurgable() return true end
+function modifier_imba_wraithfire_blast_debuff:IsDebuff() return true end
+
 function modifier_imba_wraithfire_blast_debuff:OnIntervalThink()
     if IsServer() then
         -- Calculate damage
@@ -1402,6 +1406,10 @@ function modifier_imba_wraith_soul_strike_slow:OnCreated()
         self.ability:SetRefCountsModifiers(true)
     end
 end
+
+function modifier_imba_wraith_soul_strike_slow:IsHidden() return false end
+function modifier_imba_wraith_soul_strike_slow:IsPurgable() return false end
+function modifier_imba_wraith_soul_strike_slow:IsDebuff() return false end
 
 function modifier_imba_wraith_soul_strike_slow:DeclareFunctions()
     local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}

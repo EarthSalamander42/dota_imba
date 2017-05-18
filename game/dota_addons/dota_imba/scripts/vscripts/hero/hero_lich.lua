@@ -110,7 +110,7 @@ end
 modifier_imba_cold_front_debuff = class({})
 
 function modifier_imba_cold_front_debuff:IsHidden() return false end
-function modifier_imba_cold_front_debuff:IsPurgable() return false end
+function modifier_imba_cold_front_debuff:IsPurgable() return true end
 function modifier_imba_cold_front_debuff:IsDebuff() return true end
 
 function modifier_imba_cold_front_debuff:OnCreated()
@@ -388,9 +388,9 @@ function modifier_imba_frost_nova_debuff:OnCreated()
     self.as_slow = self.ability:GetSpecialValueFor("as_slow")
 end
 
-function modifier_imba_cold_front_freeze:IsHidden() return false end
-function modifier_imba_cold_front_freeze:IsPurgable() return true end
-function modifier_imba_cold_front_freeze:IsDebuff() return true end
+function modifier_imba_frost_nova_debuff:IsHidden() return false end
+function modifier_imba_frost_nova_debuff:IsPurgable() return true end
+function modifier_imba_frost_nova_debuff:IsDebuff() return true end
 
 function modifier_imba_frost_nova_debuff:GetStatusEffectName()
     return "particles/status_fx/status_effect_frost_lich.vpcf"

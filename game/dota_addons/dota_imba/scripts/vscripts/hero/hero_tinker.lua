@@ -500,6 +500,11 @@ function imba_tinker_laser:IsHiddenWhenStolen()
 end
 
 modifier_imba_laser_blind = class({})
+
+function modifier_imba_laser_blind:IsHidden() return false end
+function modifier_imba_laser_blind:IsPurgable() return true end
+function modifier_imba_laser_blind:IsDebuff() return true end
+
 function modifier_imba_laser_blind:GetModifierMiss_Percentage()
 	return self:GetAbility():GetSpecialValueFor("miss_chance_pct")
 end

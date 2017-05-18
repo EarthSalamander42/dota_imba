@@ -49,6 +49,11 @@ function modifier_imba_tiny_rolling_stone:OnRefresh()
 end
 
 function modifier_imba_tiny_rolling_stone:OnIntervalThink()
+	if self:GetParent():IsIllusion() then
+		self:SetStackCount(0)
+		return nil
+	end
+
 	if self:GetParent():IsMoving() then
 		self.internalTimer = self.internalTimer + 0.03 * self.gain
 	end
