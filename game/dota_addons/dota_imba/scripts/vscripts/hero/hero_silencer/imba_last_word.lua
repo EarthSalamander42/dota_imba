@@ -207,6 +207,10 @@ function CheckExceptions(ability)
 	return false
 end
 
+function modifier_imba_silencer_last_word_debuff:IsPurgable()
+	return true
+end
+
 ----------------------------------------------------
 -- Last Word repeat thinker : casts Last Word on parent when the modifier expires
 ----------------------------------------------------

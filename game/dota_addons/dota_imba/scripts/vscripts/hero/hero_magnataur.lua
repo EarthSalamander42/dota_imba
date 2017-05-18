@@ -18,6 +18,10 @@ function modifier_imba_polarize_debuff:IsDebuff()
 	return true
 end
 
+function modifier_imba_polarize_debuff:IsPurgable()
+	return true
+end
+
 function modifier_imba_polarize_debuff:IsHidden()
 	return false
 end
@@ -446,6 +450,10 @@ end
 
 function modifier_imba_empower:IsDebuff()
 	return false
+end
+
+function modifier_imba_empower:IsPurgable()
+	return true
 end
 
 function modifier_imba_empower:IsHidden()

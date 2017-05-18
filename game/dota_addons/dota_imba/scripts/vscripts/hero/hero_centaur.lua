@@ -22,9 +22,13 @@ end
 modifier_imba_thick_hide = class({})
 
 function modifier_imba_thick_hide:OnCreated()
+	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
+
+	-- Ability specials
 	self.damage_reduction_pct = self.ability:GetSpecialValueFor("damage_reduction_pct")
+	self.debuff_duration_red_pct = self.ability:GetSpecialValueFor("debuff_duration_red_pct")
 end
 
 function modifier_imba_thick_hide:DeclareFunctions()	
@@ -40,6 +44,10 @@ function modifier_imba_thick_hide:GetModifierIncomingDamage_Percentage()
 	end
 
 	return self.damage_reduction_pct * (-1)
+end
+
+function modifier_imba_thick_hide:GetCustomTenacity()
+	return self.debuff_duration_red_pct
 end
 
 

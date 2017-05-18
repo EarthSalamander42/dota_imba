@@ -961,6 +961,14 @@ function modifier_imba_shapeshift_transform:IsHidden()
 	return false
 end
 
+function modifier_imba_shapeshift_transform:IsPurgable()
+	return false
+end
+
+function modifier_imba_shapeshift_transform:IsDebuff()
+	return false
+end
+
 -- Speed/crit aura
 modifier_imba_shapeshift_aura = class({})
 
@@ -1142,6 +1150,18 @@ end
 
 -- certain crit buff
 modifier_imba_shapeshift_certain_crit = class({})
+
+function modifier_imba_shapeshift_certain_crit:IsHidden()
+	return false
+end
+
+function modifier_imba_shapeshift_certain_crit:IsPurgable()
+	return false
+end
+
+function modifier_imba_shapeshift_certain_crit:IsDebuff()
+	return false
+end
 
 
 ---------------------------------------------------

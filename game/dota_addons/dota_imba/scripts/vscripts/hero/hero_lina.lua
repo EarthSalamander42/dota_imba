@@ -391,6 +391,10 @@ function modifier_imba_fiery_soul:IsHidden()
 	return true
 end
 
+function modifier_imba_fiery_soul:IsPurgable()
+	return false
+end
+
 
 modifier_imba_fiery_soul_counter = class({})
 

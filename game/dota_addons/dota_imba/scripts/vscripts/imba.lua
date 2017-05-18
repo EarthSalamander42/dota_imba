@@ -106,7 +106,9 @@ function GameMode:OnFirstPlayerLoaded()
 		"npc_imba_contributor_hewdraw",
 		"npc_imba_contributor_zimber",
 		"npc_imba_contributor_matt",
-		"npc_imba_contributor_maxime"
+		"npc_imba_contributor_maxime",
+		"npc_imba_contributor_poly",
+		"npc_imba_contributor_firstlady"
 	}
 
 	-- Add 8 random contributor statues
@@ -280,24 +282,6 @@ function GameMode:ModifierFilter( keys )
 				keys.duration = keys.duration * (100 - tenacity) * 0.01
 			end
 		end
-
-	-------------------------------------------------------------------------------------------------
-	-- Centaur Thick Hide debuff duration decrease
-	-------------------------------------------------------------------------------------------------	
-
-		if modifier_owner:HasModifier("modifier_imba_thick_hide") then
-			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
-
-				-- Check for break
-				if not modifier_owner:PassivesDisabled() then
-					local thick_hide_ability = modifier_owner:FindAbilityByName("imba_centaur_thick_hide")
-					local debuff_duration_red_pct = thick_hide_ability:GetSpecialValueFor("debuff_duration_red_pct")
-	
-					keys.duration = keys.duration * (1 - debuff_duration_red_pct * 0.01)
-				end
-			end
-		end
-
 
 
 	-------------------------------------------------------------------------------------------------

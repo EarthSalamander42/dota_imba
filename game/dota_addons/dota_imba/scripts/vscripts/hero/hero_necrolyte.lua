@@ -851,6 +851,10 @@ function modifier_imba_reapers_scythe_respawn:IsHidden()
 	return true
 end
 
+function modifier_imba_reapers_scythe_respawn:IsPurgable()
+	return false
+end
+
 function modifier_imba_reapers_scythe_respawn:GetAttributes()
 	return MODIFIER_ATTRIBUTE_MULTIPLE
 end

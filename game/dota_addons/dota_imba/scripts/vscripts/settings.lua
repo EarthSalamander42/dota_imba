@@ -80,7 +80,7 @@ BUYBACK_COST_PER_SECOND = 0.25												-- Time-based buyback cost
 
 BUYBACK_COOLDOWN_START_POINT = 600											-- Game time (in seconds) after which buyback cooldown is activated
 BUYBACK_COOLDOWN_GROW_FACTOR = 0.167										-- Buyback cooldown increase per second
-BUYBACK_COOLDOWN_MAXIMUM = 300												-- Maximum buyback cooldown
+BUYBACK_COOLDOWN_MAXIMUM = 360												-- Maximum buyback cooldown
 
 ABANDON_TIME = 180															-- Time for a player to be considered as having abandoned the game (in seconds)
 FULL_ABANDON_TIME = 15														-- Time for a team to be considered as having abandoned the game (in seconds)

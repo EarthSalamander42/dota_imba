@@ -301,6 +301,7 @@ imba_sven_warcry = class({})
 function imba_sven_warcry:IsHiddenWhenStolen() return false end
 function imba_sven_warcry:IsRefreshable() return true end
 function imba_sven_warcry:IsStealable() return true end
+function imba_sven_warcry:IsPurgable() return true end
 function imba_sven_warcry:IsNetherWardStealable() return true end
 -------------------------------------------
 

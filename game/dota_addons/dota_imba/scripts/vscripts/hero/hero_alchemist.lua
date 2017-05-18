@@ -176,7 +176,7 @@ function modifier_imba_acid_spray:IsDebuff()
 end
 
 function modifier_imba_acid_spray:IsPurgable()
-    return false
+    return true
 end
 
 function modifier_imba_acid_spray:OnCreated()

@@ -140,6 +140,11 @@ function modifier_imba_angelic_alliance_passive_effect:OnAttackLanded( keys )
 		local duration = ability:GetSpecialValueFor("passive_disarm_duration")
 		
 		if caster:HasModifier("modifier_imba_angelic_alliance_debuff_caster") then return nil end
+
+		-- If the attacker is a building, do nothing
+		if attacker:IsBuilding() then
+			return nil
+		end
 		
 		if caster == target and RollPercentage(chance) then				-- Disarm attacker when the weilder is the one getting hit
 			if attacker:IsMagicImmune() then return end
