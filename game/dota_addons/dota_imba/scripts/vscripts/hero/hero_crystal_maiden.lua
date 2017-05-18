@@ -35,8 +35,18 @@ end
 
 function modifier_imba_arcane_dynamo:OnIntervalThink()
 	if IsServer() then
+		-- If the caster is broken, reset the stacks
+		if self.caster:PassivesDisabled() then
+			self:SetStackCount(0)
+			return nil
+		end
+
 		local mana_percentage = self.caster:GetMana() / self.caster:GetMaxMana()
-		local stacks = math.ceil(mana_percentage * self.max_stacks)
+		local stacks = math.ceil(mana_percentage * self.max_stacks) 
+
+		-- #4 Talent: Doubles Arcane Dynamo's effects
+		stacks = stacks * math.max(1, (self.caster:FindTalentValue("special_bonus_imba_crystal_maiden_4")))
+
 		self:SetStackCount(stacks)
 	end
 end
@@ -58,13 +68,8 @@ function modifier_imba_arcane_dynamo:GetModifierMoveSpeedBonus_Percentage()
 	if self.caster:IsIllusion() then
 		return nil
 	end
-	
-	local movespeed = self:GetStackCount()
-	
-	-- #4 Talent: Doubles Arcane Dynamo's effects
-	movespeed = movespeed * math.max(1, (self.caster:FindTalentValue("special_bonus_imba_crystal_maiden_4")))
 
-	return movespeed
+	return self:GetStackCount()
 end
 
 function modifier_imba_arcane_dynamo:GetModifierSpellAmplify_Percentage()
@@ -77,12 +82,7 @@ function modifier_imba_arcane_dynamo:GetModifierSpellAmplify_Percentage()
 		return nil
 	end
 	
-	local spellamp = self:GetStackCount()
-	
-	-- #4 Talent: Doubles Arcane Dynamo's effects
-	spellamp = spellamp * math.max(1, (self.caster:FindTalentValue("special_bonus_imba_crystal_maiden_4")))
-	
-	return spellamp
+	return self:GetStackCount()
 end
 
 ---------------------------------
@@ -361,23 +361,25 @@ function imba_crystal_maiden_frostbite:GetIntrinsicModifierName() return "modifi
 function imba_crystal_maiden_frostbite:CastFilterResultTarget(target)
 	if IsServer() then
 		local caster = self:GetCaster()
-		if target~= nil then
-			if target:IsMagicImmune() and target:GetTeam() ~= caster:GetTeam() then
-				return UF_FAIL_MAGIC_IMMUNE_ENEMY
-			elseif target:GetTeam() ~= caster:GetTeam() then
-				return UF_SUCCESS
-			elseif target:GetTeam() == caster:GetTeam() and caster:HasTalent("special_bonus_imba_crystal_maiden_2") and target:IsMagicImmune() then
-				return UF_FAIL_MAGIC_IMMUNE_ALLY
-			elseif target:GetTeam() == caster:GetTeam() and caster:HasTalent("special_bonus_imba_crystal_maiden_2") then
-				return UF_SUCCESS
-			elseif target:GetTeam() == caster:GetTeam() then
-				return UF_FAIL_FRIENDLY
-			end
-		end
+		local casterID = caster:GetPlayerID()
+		local targetID = target:GetPlayerID()
+			
+		-- Disable help
+		if target ~= nil and not target:IsOpposingTeam(caster:GetTeamNumber()) and PlayerResource:IsDisableHelpSetForPlayerID(targetID,casterID) then
+            return UF_FAIL_DISABLE_HELP
+        end
+
+		-- #2 Talent: Frostbite can be cast on allies, regenerating them.
+		if target:GetTeamNumber() == caster:GetTeamNumber() and and target:IsHero() and caster:HasTalent("special_bonus_imba_crystal_maiden_2") then
+			return UF_SUCCESS
+		end		
+
+        local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+        return nResult
 	end
 end
 
-function imba_crystal_maiden_frostbite:OnSpellStart()	
+function imba_crystal_maiden_frostbite:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
 		local target = self:GetCursorTarget()
@@ -388,8 +390,8 @@ function imba_crystal_maiden_frostbite:OnSpellStart()
 		local duration_stun = self:GetSpecialValueFor("duration_stun")
 		local damage_interval = self:GetSpecialValueFor("damage_interval")
 		
-		--Check for duration increase talent
-		if caster:HasTalent("special_bonus_imba_crystal_maiden_5") then
+		-- Check for duration increase talent. Does not work when casting on allies.
+		if caster:HasTalent("special_bonus_imba_crystal_maiden_5") and caster:GetTeamNumber() ~= target:GetTeamNumber() then
 			duration = duration + caster:FindTalentValue("special_bonus_imba_crystal_maiden_5")
 		end
 		
@@ -401,7 +403,7 @@ function imba_crystal_maiden_frostbite:OnSpellStart()
 		-- Applies root and damage to attacking unit according to its type, then triggers the cooldown accordingly
 		if target:GetTeam() ~= caster:GetTeam() then
 			if target:IsHero() or IsRoshan(target) then
-				target:AddNewModifier(caster, self, "modifier_stunned", {duration = duration_stun})
+				target:AddNewModifier(caster, self, "modifier_stunned", {duration = duration_stun})				
 				target:AddNewModifier(caster, self, "modifier_imba_crystal_maiden_frostbite_enemy", { duration = duration})
 			else
 				target:AddNewModifier(caster, self, "modifier_stunned", {duration = duration_stun})
@@ -501,8 +503,14 @@ function modifier_imba_crystal_maiden_frostbite_passive_ready:OnTakeDamage(keys)
 			-- Do negative cooldowns break the game? IDK I'm not risking it
 			if cooldown <= 0 then cooldown = .1 end
 		end
-		--Only apply on damage against the caster, and when the attacking unit is an not magic immune enemy hero
+
+		-- Only apply on damage against the caster, and when the attacking unit is an not magic immune enemy hero
 		if unit == self.caster and attacker:GetTeam() ~= unit:GetTeam() and attacker:IsHero() and not attacker:IsMagicImmune() then
+			-- If the caster is broken, do nothing
+			if self.caster:PassivesDisabled() then
+				return nil
+			end
+
 			--Apply Frost bite to enemy
 			attacker:AddNewModifier(unit, self:GetAbility(), "modifier_imba_crystal_maiden_frostbite_enemy", { duration = self:GetAbility():GetLevelSpecialValueFor("duration", 0)})
 			attacker:EmitSound("Hero_Crystal.Frostbite")
@@ -562,21 +570,29 @@ modifier_imba_crystal_maiden_brilliance_aura = class({})
 
 function modifier_imba_crystal_maiden_brilliance_aura:OnCreated()
 	self.caster = self:GetCaster()
+	self.ability = self:GetAbility()
 	self.parent = self:GetParent()
+
+	self.bonus_self = self.ability:GetSpecialValueFor("bonus_self")
+	self.spellpower_threshold_pct = self.ability:GetSpecialValueFor("spellpower_threshold_pct")
+end
+
+function modifier_imba_crystal_maiden_brilliance_aura:OnRefresh()
+	self:OnCreated()
 end
 
 function modifier_imba_crystal_maiden_brilliance_aura:DeclareFunctions()
 	local funcs = {
 			MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
 			MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-			MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE
+			MODIFIER_PROPERTY_MANA_REGEN_CONSTANT
 		}
 		return funcs
 end
 
-function modifier_imba_crystal_maiden_brilliance_aura:GetModifierTotalPercentageManaRegen()
+function modifier_imba_crystal_maiden_brilliance_aura:GetModifierConstantManaRegen()
 	if self.parent == self.caster then
-		return self:GetAbility():GetSpecialValueFor("mana_regen")*2 
+		return self:GetAbility():GetSpecialValueFor("mana_regen")* self.bonus_self
 	else
 		return self:GetAbility():GetSpecialValueFor("mana_regen")
 	end
@@ -584,17 +600,21 @@ end
 	
 function modifier_imba_crystal_maiden_brilliance_aura:GetModifierBonusStats_Intellect() 
 	if self.parent == self.caster then
-		return self:GetAbility():GetSpecialValueFor("bonus_int")*2 
+		return self:GetAbility():GetSpecialValueFor("bonus_int")* self.bonus_self 
 	else 
 		return self:GetAbility():GetSpecialValueFor("bonus_int")
 	end
 end
 
 function modifier_imba_crystal_maiden_brilliance_aura:GetModifierSpellAmplify_Percentage()
-	if self.parent == self.caster then
-		return self:GetAbility():GetSpecialValueFor("bonus_spellpower")*2 
-	else
-		return self:GetAbility():GetSpecialValueFor("bonus_spellpower")
+	-- Only apply if the parent has more than the spellpower threshold
+	if self.parent:GetManaPercent() > self.spellpower_threshold_pct then
+
+		if self.parent == self.caster then
+			return self:GetAbility():GetSpecialValueFor("bonus_spellpower") * self.bonus_self 
+		else
+			return self:GetAbility():GetSpecialValueFor("bonus_spellpower")
+		end
 	end
 end
 

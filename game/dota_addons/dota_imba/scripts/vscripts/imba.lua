@@ -94,39 +94,39 @@ function GameMode:OnFirstPlayerLoaded()
 	-- IMBA: Contributor models
 	-------------------------------------------------------------------------------------------------
 
-	-- Contributor statue list
-	local contributor_statues = {
-		"npc_imba_contributor_hjort",
-		"npc_imba_contributor_martyn",
-		"npc_imba_contributor_mikkel",
-		"npc_imba_contributor_anees",
-		"npc_imba_contributor_swizard",
-		"npc_imba_contributor_phroureo",
-		"npc_imba_contributor_catchy",
-		"npc_imba_contributor_hewdraw",
-		"npc_imba_contributor_zimber",
-		"npc_imba_contributor_matt",
-		"npc_imba_contributor_maxime",
-		"npc_imba_contributor_poly",
-		"npc_imba_contributor_firstlady"
-	}
+	-- -- Contributor statue list
+	-- local contributor_statues = {
+	-- 	"npc_imba_contributor_hjort",
+	-- 	"npc_imba_contributor_martyn",
+	-- 	"npc_imba_contributor_mikkel",
+	-- 	"npc_imba_contributor_anees",
+	-- 	"npc_imba_contributor_swizard",
+	-- 	"npc_imba_contributor_phroureo",
+	-- 	"npc_imba_contributor_catchy",
+	-- 	"npc_imba_contributor_hewdraw",
+	-- 	"npc_imba_contributor_zimber",
+	-- 	"npc_imba_contributor_matt",
+	-- 	"npc_imba_contributor_maxime",
+	-- 	"npc_imba_contributor_poly",
+	-- 	"npc_imba_contributor_firstlady"
+	-- }
 
-	-- Add 8 random contributor statues
-	local current_location
-	local current_statue
-	local statue_entity
-	for i = 1, 8 do
-		current_location = Entities:FindByName(nil, "contributor_location_0"..i):GetAbsOrigin()
-		current_statue = table.remove(contributor_statues, RandomInt(1, #contributor_statues))
-		if i <= 4 then
-			statue_entity = CreateUnitByName(current_statue, current_location, true, nil, nil, DOTA_TEAM_GOODGUYS)
-			statue_entity:SetForwardVector(Vector(1, 1, 0):Normalized())
-		else
-			statue_entity = CreateUnitByName(current_statue, current_location, true, nil, nil, DOTA_TEAM_BADGUYS)
-			statue_entity:SetForwardVector(Vector(-1, -1, 0):Normalized())
-		end
-		statue_entity:AddNewModifier(statue_entity, nil, "modifier_imba_contributor_statue", {})
-	end
+	-- -- Add 8 random contributor statues
+	-- local current_location
+	-- local current_statue
+	-- local statue_entity
+	-- for i = 1, 8 do
+	-- 	current_location = Entities:FindByName(nil, "contributor_location_0"..i):GetAbsOrigin()
+	-- 	current_statue = table.remove(contributor_statues, RandomInt(1, #contributor_statues))
+	-- 	if i <= 4 then
+	-- 		statue_entity = CreateUnitByName(current_statue, current_location, true, nil, nil, DOTA_TEAM_GOODGUYS)
+	-- 		statue_entity:SetForwardVector(Vector(1, 1, 0):Normalized())
+	-- 	else
+	-- 		statue_entity = CreateUnitByName(current_statue, current_location, true, nil, nil, DOTA_TEAM_BADGUYS)
+	-- 		statue_entity:SetForwardVector(Vector(-1, -1, 0):Normalized())
+	-- 	end
+	-- 	statue_entity:AddNewModifier(statue_entity, nil, "modifier_imba_contributor_statue", {})
+	-- end
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Arena mode score initialization
@@ -888,16 +888,16 @@ function GameMode:DamageFilter( keys )
 		end
 
 		-- Centaur Bulging Hide
-		if victim:HasModifier("modifier_imba_return_damage_block") then
-			local return_ability = victim:FindAbilityByName("imba_centaur_return")
-			local stacks = victim:FindModifierByName("modifier_imba_return_damage_block"):GetStackCount()
-			if return_ability and stacks then
-				local damage_block = return_ability:GetSpecialValueFor("damage_block")
-				local block = damage_block * stacks
+		-- if victim:HasModifier("modifier_imba_return_damage_block") then
+		-- 	local return_ability = victim:FindAbilityByName("imba_centaur_return")
+		-- 	local stacks = victim:FindModifierByName("modifier_imba_return_damage_block"):GetStackCount()
+		-- 	if return_ability and stacks then
+		-- 		local damage_block = return_ability:GetSpecialValueFor("damage_block")
+		-- 		local block = damage_block * stacks
 
-				keys.damage = keys.damage - block
-			end
-		end
+		-- 		keys.damage = keys.damage - block
+		-- 	end
+		-- end
 
 		-- Cheese auto-healing
 		if victim:HasModifier("modifier_imba_cheese_death_prevention") then

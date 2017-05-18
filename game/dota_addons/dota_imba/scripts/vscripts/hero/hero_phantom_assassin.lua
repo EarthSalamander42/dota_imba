@@ -363,7 +363,7 @@ function imba_phantom_assassin_phantom_strike:CastFilterResultTarget(target)
     return UF_SUCCESS
 end
 
-function imba_phantom_assassin_phantom_strike:CastFilterResultTarget(target)
+function imba_phantom_assassin_phantom_strike:GetCustomCastErrorTarget(target)
 	return "dota_hud_error_cant_cast_on_self"
 end
 

@@ -7075,18 +7075,32 @@
 			"01"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"mana_regen"							"0.5 0.75 1.0 1.25 1.25 1.25 1.25"
+				"mana_regen"							"1 1.5 2 3 3.5 4 4.5"
 			}
+
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"bonus_int"								"4 5 6 7 8 9 10"
 			}
+
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"bonus_spellpower"						"0 0 0 0 3 6 10"
+				"bonus_spellpower"						"3 3 3 3 6 9 12"
 			}			
+
+			"04"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"spellpower_threshold_pct"				"60"
+			}
+
+			"05"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"bonus_self"							"2"
+			}
 		}	
 	}
 
@@ -7206,7 +7220,7 @@
 			"11"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"scepter_bonus_cast_range"				"700"
+				"scepter_bonus_cast_range"				"900"
 			}
 
 			"12"

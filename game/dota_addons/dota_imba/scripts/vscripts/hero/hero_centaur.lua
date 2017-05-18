@@ -725,21 +725,23 @@ function modifier_imba_return_passive:OnAttacked(keys)
 
 			-- Increment a stack and refresh it	
 			local modifier_damage_block_handler = parent:FindModifierByName(modifier_damage_block)
-			modifier_damage_block_handler:IncrementStackCount()
-			modifier_damage_block_handler:ForceRefresh()
+			if modifier_damage_block_handler then
+				modifier_damage_block_handler:IncrementStackCount()
+				modifier_damage_block_handler:ForceRefresh()
+			end
 
-			-- Gather information for the block message
-			local stacks = modifier_damage_block_handler:GetStackCount()
-			local block = stacks * damage_block
-			local digits = 2 + #tostring(block)				
+			-- -- Gather information for the block message
+			-- local stacks = modifier_damage_block_handler:GetStackCount()
+			-- local block = stacks * damage_block
+			-- local digits = 2 + #tostring(block)				
 
-			-- Add block message particle
-			local particle_block_msg_fx = ParticleManager:CreateParticle(particle_block_msg, PATTACH_ABSORIGIN_FOLLOW, parent)
-			ParticleManager:SetParticleControlEnt(particle_block_msg_fx, 0, parent, PATTACH_POINT_FOLLOW, "attach_head", parent:GetAbsOrigin(), true)
-			ParticleManager:SetParticleControl(particle_block_msg_fx, 1, Vector(1, block, 7))
-			ParticleManager:SetParticleControl(particle_block_msg_fx, 2, Vector(1, digits, 0))
-			ParticleManager:SetParticleControl(particle_block_msg_fx, 3, Vector(192, 192, 192))
-			ParticleManager:ReleaseParticleIndex(particle_block_msg_fx)						
+			-- -- Add block message particle
+			-- local particle_block_msg_fx = ParticleManager:CreateParticle(particle_block_msg, PATTACH_ABSORIGIN_FOLLOW, parent)
+			-- ParticleManager:SetParticleControlEnt(particle_block_msg_fx, 0, parent, PATTACH_POINT_FOLLOW, "attach_head", parent:GetAbsOrigin(), true)
+			-- ParticleManager:SetParticleControl(particle_block_msg_fx, 1, Vector(1, block, 7))
+			-- ParticleManager:SetParticleControl(particle_block_msg_fx, 2, Vector(1, digits, 0))
+			-- ParticleManager:SetParticleControl(particle_block_msg_fx, 3, Vector(192, 192, 192))
+			-- ParticleManager:ReleaseParticleIndex(particle_block_msg_fx)						
 		end		
 	end
 end
@@ -759,6 +761,16 @@ end
 -- Damage block modifier
 modifier_imba_return_damage_block = class({})
 
+
+function modifier_imba_return_damage_block:OnCreated()
+	-- Ability properties
+	self.caster = self:GetCaster()
+	self.ability = self:GetAbility()
+
+	-- Ability specials
+	self.damage_block = self.ability:GetSpecialValueFor("damage_block")
+end
+
 function modifier_imba_return_damage_block:IsHidden()
 	return false
 end
@@ -771,6 +783,9 @@ function modifier_imba_return_damage_block:IsDebuff()
 	return false
 end
 
+function modifier_imba_return_damage_block:GetCustomDamageBlock()
+	return self.damage_block * self:GetStackCount()
+end
 
 ---------------------------------
 -- 		   Stampede            --

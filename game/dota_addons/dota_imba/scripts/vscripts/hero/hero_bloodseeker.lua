@@ -38,7 +38,7 @@ if IsServer() then
 		self.ampout = self:GetAbility():GetSpecialValueFor("damage_increase_pct")
 		self.damageout = self:GetAbility():GetSpecialValueFor("damage_increase_pct")
 		self.damage = self:GetAbility():GetSpecialValueFor("aoe_damage")
-		self.alliedpct = self:GetAbility():GetSpecialValueFor("allied_damage") / 100
+		self.alliedpct = self:GetAbility():GetSpecialValueFor("allied_damage") * 0.01
 		self.radius = self:GetAbility():GetSpecialValueFor("aoe_radius")
 		if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_1") then
 			if self:GetParent():GetTeam() == self:GetCaster():GetTeam() then
@@ -56,7 +56,12 @@ if IsServer() then
 		for _,target in pairs(targets) do
 			local damage = self.damage
 			if target:GetTeam() == self:GetCaster():GetTeam() then damage = damage * self.alliedpct end
-			ApplyDamage({victim = target, attacker = self:GetParent(), damage = damage, damage_type = self:GetAbility():GetAbilityDamageType(), ability = self:GetAbility()})
+
+			if target:GetTeam() == self:GetParent():GetTeam() then
+				ApplyDamage({victim = target, attacker = self:GetCaster(), damage = damage, damage_type = self:GetAbility():GetAbilityDamageType(), ability = self:GetAbility()})
+			else
+				ApplyDamage({victim = target, attacker = self:GetParent(), damage = damage, damage_type = self:GetAbility():GetAbilityDamageType(), ability = self:GetAbility()})
+			end
 		end
 	end
 	
@@ -281,7 +286,7 @@ function modifier_imba_bloodseeker_thirst_passive:IsHidden()
 	return true
 end
 
-function modifier_imba_bloodseeker_thirst_passive:OnCreated()
+function modifier_imba_bloodseeker_thirst_passive:OnCreated()	
 	self.minhp = self:GetAbility():GetSpecialValueFor("max_threshold_pct")
 	self.maxhp = self:GetAbility():GetSpecialValueFor("visibility_threshold_pct")
 	self.movespeed = self:GetAbility():GetSpecialValueFor("bonus_movement_speed") / (self.minhp - self.maxhp)
@@ -307,7 +312,8 @@ function modifier_imba_bloodseeker_thirst_passive:OnRefresh()
 end
 
 function modifier_imba_bloodseeker_thirst_passive:OnIntervalThink()
-	if IsServer() then
+	if IsServer() then		
+
 		if not self.talent7 then
 			if self:GetParent():HasTalent("special_bonus_imba_bloodseeker_7") then
 				self.talent7 = true
@@ -318,10 +324,12 @@ function modifier_imba_bloodseeker_thirst_passive:OnIntervalThink()
 		end
 		local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_DEAD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, 0, false)
 		local hpDeficit = 0
-		for _,enemy in pairs(enemies) do
-			if self:GetCaster():PassivesDisabled() then 
+		for _,enemy in pairs(enemies) do			
+			if self:GetCaster():PassivesDisabled() or not self:GetCaster():IsAlive() then 
 				enemy:RemoveModifierByName("modifier_imba_bloodseeker_thirst_vision")
 			else
+
+
 				if enemy:IsAlive() or (not enemy:IsAlive() and enemy.thirstDeathTimer < self.deathstick) then
 					if enemy:GetHealthPercent() < self.minhp then
 						local enemyHp = (self.minhp - enemy:GetHealthPercent())
