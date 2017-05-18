@@ -283,16 +283,6 @@ function GameMode:ModifierFilter( keys )
 			end
 		end
 
-	-------------------------------------------------------------------------------------------------
-	-- Cursed Rapier debuff duration reduction
-	-------------------------------------------------------------------------------------------------
-
-		if modifier_owner:HasModifier("modifier_item_imba_rapier_cursed_unique") then
-			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
-				keys.duration = keys.duration * 0.5
-			end
-		end
-
 
 	-------------------------------------------------------------------------------------------------
 	-- Silencer Arcane Supremacy silence duration reduction
@@ -323,14 +313,13 @@ function GameMode:ItemAddedFilter( keys )
 	-- item_entindex_const: 1519
 	-- item_parent_entindex_const: -1
 	-- suggested_slot: -1
-
 	local unit = EntIndexToHScript(keys.inventory_parent_entindex_const)
 	local item = EntIndexToHScript(keys.item_entindex_const)
 	local item_name = 0
 	if item:GetName() then
 		item_name = item:GetName()
 	end
-
+	
 	-------------------------------------------------------------------------------------------------
 	-- Rune pickup logic
 	-------------------------------------------------------------------------------------------------
@@ -401,21 +390,23 @@ function GameMode:ItemAddedFilter( keys )
 	-- Rapier pickup logic
 	-------------------------------------------------------------------------------------------------
 
-	if item_name == "item_imba_rapier_dummy" or item_name == "item_imba_rapier_2_dummy" or item_name == "item_imba_rapier_magic_dummy" or item_name == "item_imba_rapier_magic_2_dummy" then
-		
-		-- Only real heroes can pick up rapiers
+	if item.IsRapier then
+		if item.rapier_pfx then
+			ParticleManager:DestroyParticle(item.rapier_pfx, false)
+			ParticleManager:ReleaseParticleIndex(item.rapier_pfx)
+			item.rapier_pfx = nil
+		end
 		if unit:IsRealHero() then
-
-			-- Check current main inventory status
-			local free_slot = false
+			item:SetPurchaser(nil)
+			item:SetPurchaseTime(0)
 			local rapier_amount = 0
 			local rapier_2_amount = 0
 			local rapier_magic_amount = 0
 			local rapier_magic_2_amount = 0
-			for i = 0, 8 do
+			for i = DOTA_ITEM_SLOT_1, DOTA_ITEM_SLOT_6 do
 				local current_item = unit:GetItemInSlot(i)
 				if not current_item then
-					free_slot = true
+					return true
 				elseif current_item and current_item:GetName() == "item_imba_rapier" then
 					rapier_amount = rapier_amount + 1
 				elseif current_item and current_item:GetName() == "item_imba_rapier_2" then
@@ -426,64 +417,21 @@ function GameMode:ItemAddedFilter( keys )
 					rapier_magic_2_amount = rapier_magic_2_amount + 1
 				end
 			end
-
-			-- If the conditions are just right, add a rapier
-			if item_name == "item_imba_rapier_dummy" and (free_slot or rapier_amount >= 2) then
-				unit:AddItem(CreateItem("item_imba_rapier", unit, unit))
-			elseif item_name == "item_imba_rapier_2_dummy" and (free_slot or rapier_magic_2_amount >= 1) then
-				unit:AddItem(CreateItem("item_imba_rapier_2", unit, unit))
-			elseif item_name == "item_imba_rapier_magic_dummy" and (free_slot or rapier_magic_amount >= 2) then
-				unit:AddItem(CreateItem("item_imba_rapier_magic", unit, unit))
-			elseif item_name == "item_imba_rapier_magic_2_dummy" and (free_slot or rapier_2_amount >= 1) then
-				unit:AddItem(CreateItem("item_imba_rapier_magic_2", unit, unit))
-
-			-- Else, launch another dummy
+			if 	((item_name == "item_imba_rapier") and (rapier_amount == 2)) or 
+				((item_name == "item_imba_rapier_magic") and (rapier_magic_amount == 2)) or 
+				((item_name == "item_imba_rapier_2") and (rapier_magic_2_amount >= 1)) or
+				((item_name == "item_imba_rapier_magic_2") and (rapier_2_amount >= 1)) then
+				return true
 			else
-				local unit_pos = unit:GetAbsOrigin()
-				local drop = CreateItem(item_name, nil, nil)
-				CreateItemOnPositionSync(unit_pos, drop)
-				drop:LaunchLoot(false, 250, 0.5, unit_pos + RandomVector(100))
+				DisplayError(unit:GetPlayerID(),"#dota_hud_error_cant_item_enough_slots")
 			end
-
-		-- If this is a non-hero, launch another dummy
-		else
-			local unit_pos = unit:GetAbsOrigin()
-			local drop = CreateItem(item_name, nil, nil)
-			CreateItemOnPositionSync(unit_pos, drop)
-			drop:LaunchLoot(false, 250, 0.5, unit_pos + RandomVector(100))
 		end
-		
-		return false		
-	end
-
-	-------------------------------------------------------------------------------------------------
-	-- Courier Rapier prohibition
-	-------------------------------------------------------------------------------------------------
-
-	if item_name == "item_imba_rapier" or item_name == "item_imba_rapier_2" or item_name == "item_imba_rapier_magic" or item_name == "item_imba_rapier_magic_2" or item_name == "item_imba_rapier_cursed" then
-		
-		-- Launch a dummy rapier if this is not a real hero
-		if not unit:IsHero() then
-
-			-- Fetch appropriate dummy name
-
-			if item_name == "item_imba_rapier" then
-				item_name = "item_imba_rapier_dummy"
-			elseif item_name == "item_imba_rapier_2" then
-				item_name = "item_imba_rapier_2_dummy"
-			elseif item_name == "item_imba_rapier_magic" then
-				item_name = "item_imba_rapier_magic_dummy"
-			elseif item_name == "item_imba_rapier_magic_2" then
-				item_name = "item_imba_rapier_magic_2_dummy"
-			end
-
-			-- Launch dummy
-			local unit_pos = unit:GetAbsOrigin()
-			local drop = CreateItem(item_name, nil, nil)
-			CreateItemOnPositionSync(unit_pos, drop)
-			drop:LaunchLoot(false, 250, 0.5, unit_pos + RandomVector(100))
-			return false
-		end	
+		if unit:IsIllusion() then
+			return true
+		else
+			unit:DropRapier(nil, item_name)
+		end
+		return false
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -498,10 +446,6 @@ function GameMode:ItemAddedFilter( keys )
 			"item_imba_rapier_2",
 			"item_imba_rapier_magic",
 			"item_imba_rapier_magic_2",
-			"item_imba_rapier_dummy",
-			"item_imba_rapier_2_dummy",
-			"item_imba_rapier_magic_dummy",
-			"item_imba_rapier_magic_2_dummy",
 			"item_imba_rapier_cursed",
 			"item_imba_moon_shard",
 			"item_imba_soul_of_truth",
@@ -702,6 +646,52 @@ function GameMode:OrderFilter( keys )
         end
     end
 	
+	
+	-- Divine Rapier undropable
+	if (keys.order_type == DOTA_UNIT_ORDER_DROP_ITEM) or (keys.order_type == DOTA_UNIT_ORDER_MOVE_ITEM) or (keys.order_type == DOTA_UNIT_ORDER_GIVE_ITEM) or (keys.order_type == DOTA_UNIT_ORDER_PICKUP_ITEM) then
+		local item
+		if keys.order_type == DOTA_UNIT_ORDER_PICKUP_ITEM then
+			item = EntIndexToHScript(keys.entindex_target):GetContainedItem()
+		else
+			item = EntIndexToHScript(keys.entindex_ability)
+		end
+		if item.IsRapier then
+			local player_ID
+			-- Courier handling
+			if unit:IsCourier() then
+				player_ID = keys.issuer_player_id_const
+				if (keys.order_type == DOTA_UNIT_ORDER_PICKUP_ITEM) then
+					DisplayError(player_ID,"#dota_hud_error_cant_item_courier")
+					return false
+				end
+				if keys.entindex_target	and (keys.order_type == DOTA_UNIT_ORDER_GIVE_ITEM) then
+					local hTarget = EntIndexToHScript(keys.entindex_target)
+					if item:GetPurchaser():GetPlayerID() == hTarget:GetPlayerID() then
+						return true
+					end
+				end
+			else
+				player_ID = unit:GetPlayerID()
+			end
+			-- Player handling
+			if (keys.order_type == DOTA_UNIT_ORDER_GIVE_ITEM) then
+				DisplayError(player_ID,"#dota_hud_error_cant_item_give")
+				return false
+			end
+			if  (keys.entindex_target >= DOTA_STASH_SLOT_1) and (keys.entindex_target <= DOTA_STASH_SLOT_6) then
+				DisplayError(player_ID,"#dota_hud_error_cant_item_stash")
+				return false
+			end
+			if not ((keys.position_x == 0) and (keys.position_y == 0) and (keys.position_z == 0)) then
+				DisplayError(player_ID,"#dota_hud_error_cant_item_drop")
+				return false
+			end
+			if (keys.entindex_target >= DOTA_ITEM_SLOT_7) and (keys.entindex_target <= DOTA_ITEM_SLOT_9) then
+				DisplayError(player_ID,"#dota_hud_error_cant_item_backpack")
+				return false
+			end
+		end	
+	end
 	return true
 end
 
@@ -732,7 +722,7 @@ function GameMode:DamageFilter( keys )
 		end
 
 		-- Cursed Rapier damage reduction
-		if victim:HasModifier("modifier_item_imba_rapier_cursed_unique") and keys.damage > 0 and victim:GetTeam() ~= attacker:GetTeam() then
+		if victim:HasModifier("modifier_imba_rapier_cursed") and keys.damage > 0 and victim:GetTeam() ~= attacker:GetTeam() then
 			keys.damage = keys.damage * 0.25
 		end
 
