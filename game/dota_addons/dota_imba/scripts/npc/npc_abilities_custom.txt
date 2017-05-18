@@ -20448,7 +20448,7 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"sniper_assassinate"
-		"MaxLevel"						"7"
+		"MaxLevel"						"6"
 		"ScriptFile"					"hero/hero_sniper.lua"
 		"HasScepterUpgrade"				"1"
 
