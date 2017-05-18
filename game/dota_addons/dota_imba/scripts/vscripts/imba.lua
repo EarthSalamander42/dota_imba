@@ -106,7 +106,9 @@ function GameMode:OnFirstPlayerLoaded()
 		"npc_imba_contributor_hewdraw",
 		"npc_imba_contributor_zimber",
 		"npc_imba_contributor_matt",
-		"npc_imba_contributor_maxime"
+		"npc_imba_contributor_maxime",
+		"npc_imba_contributor_poly",
+		"npc_imba_contributor_firstlady"
 	}
 
 	-- Add 8 random contributor statues
