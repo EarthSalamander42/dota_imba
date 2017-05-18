@@ -362,6 +362,15 @@ function modifier_tiny_toss_movement:OnCreated( kv )
 		self.direction = (self.initPoint - self.tossPosition):Normalized()
 		self.speed = (self.distance * 0.03333) / self.time_left
 		self.toss_z = 0
+
+
+		-- If after double the duration we're still stuck in motion, we probably won't ever get out: forced removal
+		Timers:CreateTimer(self.duration * 2, function()
+			-- See if the modifier still exists
+			if not self:IsNull() then
+				self:Destroy()
+			end
+		end)
 	end
 end
 
@@ -685,6 +694,12 @@ function modifier_imba_tiny_craggy_exterior_passive:OnAttackLanded(params)
 				end			
 			end
 
+			-- Bluntstone
+			-- If it is a tower, do nothing
+			if params.attacker:IsBuilding() then
+				return nil
+			end
+
 			if not params.attacker:HasModifier("modifier_craggy_exterior_blunt") then
 				params.attacker:AddNewModifier(caster, self:GetAbility(), "modifier_craggy_exterior_blunt", {duration = self.reduction_duration})
 			end
@@ -734,8 +749,7 @@ function imba_tiny_grow:OnUpgrade()
 		local new_stacks = self:GetLevelSpecialValueFor("rolling_stones_stacks", self:GetLevel() - 1 )
 		if old_stacks == new_stacks then old_stacks = 0 end
 		rolling_stone:SetStackCount(rolling_stone:GetStackCount() - old_stacks + new_stacks)
-		local level = self:GetLevel() + 1
-		print(level)
+		local level = self:GetLevel() + 1		
 		if level < 5 then -- model bullshit
 			-- Set new model
 			self:GetCaster():SetOriginalModel("models/heroes/tiny_0"..level.."/tiny_0"..level..".vmdl")
