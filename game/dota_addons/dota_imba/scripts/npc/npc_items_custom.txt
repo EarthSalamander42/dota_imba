@@ -11083,10 +11083,11 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"									"2065"
-		"BaseClass"								"item_datadriven"
+		"BaseClass"								"item_lua"
 		"AbilityTextureName" 					"custom/imba_rapier"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"Model"									"models/props_gameplay/divine_rapier.mdl"
+		"ScriptFile"							"items/item_rapier.lua"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -11094,10 +11095,9 @@
 		"ItemShopTags"							"damage"
 		"ItemQuality"							"epic"
 		"ItemAliases"							"divine rapier"
-		"ItemShareability"						"ITEM_FULLY_SHAREABLE"
 		"ItemSellable"							"0"
 		"ItemKillable"							"0"
-		"ItemDroppable" 						"0"
+		"ItemDroppable" 						"1"
 		"ItemDeclarations"						"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
 		"ItemContributesToNetWorthWhenDropped"	"0"
 		"ItemStackable"							"0"
@@ -11114,35 +11114,6 @@
 				"bonus_damage"				"333"
 			}
 		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_rapier"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"OnDeath"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_rapier.lua"
-						"Function"			"RapierDrop"
-
-						"rapier_type"		"item_imba_rapier_dummy"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%bonus_damage"
-				}
-			}
-		}
 	}
 
 	//=================================================================================================================
@@ -11153,10 +11124,11 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"									"2211"
-		"BaseClass"								"item_datadriven"
+		"BaseClass"								"item_lua"
 		"AbilityTextureName" 					"custom/imba_rapier_2"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"Model"									"models/props_gameplay/divine_rapier.mdl"
+		"ScriptFile"							"items/item_rapier.lua"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -11164,10 +11136,9 @@
 		"ItemShopTags"							"damage"
 		"ItemQuality"							"epic"
 		"ItemAliases"							"divine rapier;trinity rapier"
-		"ItemShareability"						"ITEM_FULLY_SHAREABLE"
 		"ItemSellable"							"0"
 		"ItemKillable"							"0"
-		"ItemDroppable" 						"0"
+		"ItemDroppable" 						"1"
 		"ItemDeclarations"						"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
 		"ItemContributesToNetWorthWhenDropped"	"0"
 		"ItemStackable"							"0"
@@ -11184,58 +11155,6 @@
 				"bonus_damage"				"1000"
 			}
 		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_rapier_2"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"OnDeath"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_rapier.lua"
-						"Function"			"RapierDrop"
-
-						"rapier_type"		"item_imba_rapier_2_dummy"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%bonus_damage"
-				}
-			}
-
-			"modifier_item_imba_rapier_2_unique"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"ThinkInterval"				"0.03"
-				
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_rapier.lua"
-						"Function"			"RapierThinkPhys"
-
-						"particle_aura"		"particles/item/rapier/rapier_trail_regular.vpcf"
-					}
-				}
-			}
-		}
 	}
 
 	//=================================================================================================================
@@ -11246,10 +11165,11 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"									"2137"
-		"BaseClass"								"item_datadriven"
+		"BaseClass"								"item_lua"
 		"AbilityTextureName" 					"custom/imba_rapier_magic"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"Model"									"models/props_gameplay/divine_rapier.mdl"
+		"ScriptFile"							"items/item_rapier.lua"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -11257,10 +11177,9 @@
 		"ItemShopTags"							"damage"
 		"ItemQuality"							"epic"
 		"ItemAliases"							"divine rapier;arcane rapier"
-		"ItemShareability"						"ITEM_FULLY_SHAREABLE"
 		"ItemSellable"							"0"
 		"ItemKillable"							"0"
-		"ItemDroppable" 						"0"
+		"ItemDroppable" 						"1"
 		"ItemDeclarations"						"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
 		"ItemContributesToNetWorthWhenDropped"	"0"
 		"ItemStackable"							"0"
@@ -11277,30 +11196,6 @@
 				"spell_power"				"70"
 			}
 		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_rapier_magic"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"OnDeath"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_rapier.lua"
-						"Function"			"RapierDrop"
-
-						"rapier_type"		"item_imba_rapier_magic_dummy"
-					}
-				}
-			}
-		}
 	}
 
 	//=================================================================================================================
@@ -11311,10 +11206,11 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"									"2212"
-		"BaseClass"								"item_datadriven"
+		"BaseClass"								"item_lua"
 		"AbilityTextureName" 					"custom/imba_rapier_magic_2"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"Model"									"models/props_gameplay/divine_rapier.mdl"
+		"ScriptFile"							"items/item_rapier.lua"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -11322,10 +11218,9 @@
 		"ItemShopTags"							"damage"
 		"ItemQuality"							"epic"
 		"ItemAliases"							"divine rapier;arcane rapier;archmage rapier"
-		"ItemShareability"						"ITEM_FULLY_SHAREABLE"
 		"ItemSellable"							"0"
 		"ItemKillable"							"0"
-		"ItemDroppable" 						"0"
+		"ItemDroppable" 						"1"
 		"ItemDeclarations"						"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
 		"ItemContributesToNetWorthWhenDropped"	"0"
 		"ItemStackable"							"0"
@@ -11342,53 +11237,6 @@
 				"spell_power"				"200"
 			}
 		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_rapier_magic_2"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"OnDeath"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_rapier.lua"
-						"Function"			"RapierDrop"
-
-						"rapier_type"		"item_imba_rapier_magic_2_dummy"
-					}
-				}
-			}
-
-			"modifier_item_imba_rapier_magic_2_unique"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"ThinkInterval"				"0.03"
-				
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_rapier.lua"
-						"Function"			"RapierThinkMagic"
-
-						"particle_aura"		"particles/item/rapier/rapier_trail_arcane.vpcf"
-					}
-				}
-			}
-		}
 	}
 
 	//=================================================================================================================
@@ -11399,10 +11247,11 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"									"2213"
-		"BaseClass"								"item_datadriven"
+		"BaseClass"								"item_lua"
 		"AbilityTextureName" 					"custom/imba_rapier_cursed"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"Model"									"models/props_gameplay/divine_rapier.mdl"
+		"ScriptFile"							"items/item_rapier.lua"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -11410,10 +11259,9 @@
 		"ItemShopTags"							"damage"
 		"ItemQuality"							"epic"
 		"ItemAliases"							"divine rapier;arcane rapier;archmage rapier"
-		"ItemShareability"						"ITEM_FULLY_SHAREABLE"
 		"ItemSellable"							"0"
 		"ItemKillable"							"0"
-		"ItemDroppable" 						"0"
+		"ItemDroppable" 						"1"
 		"ItemDeclarations"						"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
 		"ItemContributesToNetWorthWhenDropped"	"0"
 		"ItemStackable"							"0"
@@ -11434,7 +11282,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"spell_power"				"200"
 			}
-			// Hardcoded into the damage filter
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -11443,7 +11290,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"disable_reduction"			"50"
+				"tenacity_pct"				"50"
 			}
 			"05"
 			{
@@ -11456,170 +11303,6 @@
 				"time_to_double"			"5"
 			}
 		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_rapier_cursed"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"OnDeath"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_rapier.lua"
-						"Function"			"RapierDrop"
-
-						"rapier_type"		"item_imba_rapier_cursed"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%bonus_damage"
-				}
-			}
-
-			"modifier_item_imba_rapier_cursed_unique"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"ThinkInterval"				"0.03"
-				
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_rapier.lua"
-						"Function"			"RapierThinkCursed"
-
-						"particle_aura"		"particles/item/rapier/item_rapier_cursed.vpcf"
-					}
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Divine Rapier Ground Dummy
-	//=================================================================================================================
-	"item_imba_rapier_dummy"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"									"2214"
-		"BaseClass"								"item_datadriven"
-		"AbilityTextureName" 					"custom/imba_rapier"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"Model"									"models/props_gameplay/divine_rapier.mdl"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"								"0"
-		"ItemQuality"							"epic"
-		"ItemShareability"						"ITEM_FULLY_SHAREABLE"
-		"ItemSellable"							"0"
-		"ItemKillable"							"0"
-		"ItemDroppable" 						"0"
-		"ItemContributesToNetWorthWhenDropped"	"0"
-		"ItemStackable"							"0"
-		"ItemRequiresCharges"					"0"
-		"ItemPurchasable"						"0"
-		"ItemDisassembleRule"					"DOTA_ITEM_DISASSEMBLE_NEVER"
-	}
-
-	//=================================================================================================================
-	// Trinity Rapier Ground Dummy
-	//=================================================================================================================
-	"item_imba_rapier_2_dummy"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"									"2215"
-		"BaseClass"								"item_datadriven"
-		"AbilityTextureName" 					"custom/imba_rapier_2"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"Model"									"models/props_gameplay/divine_rapier.mdl"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"								"0"
-		"ItemQuality"							"epic"
-		"ItemShareability"						"ITEM_FULLY_SHAREABLE"
-		"ItemSellable"							"0"
-		"ItemKillable"							"0"
-		"ItemDroppable" 						"0"
-		"ItemContributesToNetWorthWhenDropped"	"0"
-		"ItemStackable"							"0"
-		"ItemRequiresCharges"					"0"
-		"ItemPurchasable"						"0"
-		"ItemDisassembleRule"					"DOTA_ITEM_DISASSEMBLE_NEVER"
-	}
-
-	//=================================================================================================================
-	// Arcane Rapier Ground Dummy
-	//=================================================================================================================
-	"item_imba_rapier_magic_dummy"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"									"2216"
-		"BaseClass"								"item_datadriven"
-		"AbilityTextureName" 					"custom/imba_rapier_magic"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"Model"									"models/props_gameplay/divine_rapier.mdl"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"								"0"
-		"ItemQuality"							"epic"
-		"ItemShareability"						"ITEM_FULLY_SHAREABLE"
-		"ItemSellable"							"0"
-		"ItemKillable"							"0"
-		"ItemDroppable" 						"0"
-		"ItemContributesToNetWorthWhenDropped"	"0"
-		"ItemStackable"							"0"
-		"ItemRequiresCharges"					"0"
-		"ItemPurchasable"						"0"
-		"ItemDisassembleRule"					"DOTA_ITEM_DISASSEMBLE_NEVER"
-	}
-
-	//=================================================================================================================
-	// Archmage Rapier Ground Dummy
-	//=================================================================================================================
-	"item_imba_rapier_magic_2_dummy"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"									"2217"
-		"BaseClass"								"item_datadriven"
-		"AbilityTextureName" 					"custom/imba_rapier_magic_2"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"Model"									"models/props_gameplay/divine_rapier.mdl"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"								"0"
-		"ItemQuality"							"epic"
-		"ItemShareability"						"ITEM_FULLY_SHAREABLE"
-		"ItemSellable"							"0"
-		"ItemKillable"							"0"
-		"ItemDroppable" 						"0"
-		"ItemContributesToNetWorthWhenDropped"	"0"
-		"ItemStackable"							"0"
-		"ItemRequiresCharges"					"0"
-		"ItemPurchasable"						"0"
-		"ItemDisassembleRule"					"DOTA_ITEM_DISASSEMBLE_NEVER"
 	}
 
 	//=================================================================================================================

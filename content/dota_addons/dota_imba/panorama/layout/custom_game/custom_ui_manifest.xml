@@ -28,6 +28,15 @@
 	GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_TEAMS, false );			//Hero selection Radiant and Dire player lists.
 	GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_GAME_NAME, false );		//Hero selection game mode name display.
 	GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_CLOCK, false );			//Hero selection clock.
+	GameEvents.Subscribe("CreateIngameErrorMessage", function(data) 
+	{
+		GameEvents.SendEventClientSide("dota_hud_error_message", 
+		{
+			"splitscreenplayer": 0,
+			"reason": data.reason || 80,
+			"message": data.message
+		})
+	})
 
 	// These lines set up the panorama colors used by each team (for game select/setup, etc)
 	GameUI.CustomUIConfig().team_colors = {}

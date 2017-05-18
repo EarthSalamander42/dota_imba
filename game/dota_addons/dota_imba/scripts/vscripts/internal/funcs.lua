@@ -118,7 +118,6 @@ function TrueKill(caster, target, ability)
 	target:RemoveModifierByName("modifier_item_vanguard_unique")
 	target:RemoveModifierByName("modifier_item_imba_initiate_robe_stacks")
 	target:RemoveModifierByName("modifier_imba_cheese_death_prevention")
-	target:RemoveModifierByName("modifier_item_imba_rapier_cursed_unique")
 
 	-- Kills the target
 	target:Kill(ability, caster)
@@ -867,6 +866,48 @@ function CalculateDistance(ent1, ent2)
 	if ent2.GetAbsOrigin then pos2 = ent2:GetAbsOrigin() end
 	local distance = (pos1 - pos2):Length2D()
 	return distance
+end
+
+-- Thanks to LoD-Redux & darklord for this!
+function DisplayError(playerID, message)
+    local player = PlayerResource:GetPlayer(playerID)
+    if player then
+        CustomGameEventManager:Send_ServerToPlayer(player, "CreateIngameErrorMessage", {message=message})
+    end
+end
+
+function CDOTA_BaseNPC:DropRapier(hItem, sNewItemName)
+	local vLocation = self:GetAbsOrigin()
+	local sName
+	local hRapier
+	local vRandomVector = RandomVector(100)
+	if hItem then
+		hRapier = hItem
+		sName = hItem:GetName()
+		self:DropItemAtPositionImmediate(hRapier, vLocation)
+	else
+		sName = sNewItemName
+		hRapier = CreateItem(sNewItemName, nil, nil)
+		CreateItemOnPositionSync(vLocation, hRapier)
+	end
+	if sName == "item_imba_rapier" then
+		hRapier:GetContainer():SetRenderColor(230,240,35)
+	elseif sName == "item_imba_rapier_2" then
+		hRapier:GetContainer():SetRenderColor(240,150,30)
+		hRapier.rapier_pfx = ParticleManager:CreateParticle("particles/item/rapier/item_rapier_trinity.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(hRapier.rapier_pfx, 0, vLocation + vRandomVector)
+	elseif sName == "item_imba_rapier_magic" then
+		hRapier:GetContainer():SetRenderColor(35,35,240)
+	elseif sName == "item_imba_rapier_magic_2" then
+		hRapier:GetContainer():SetRenderColor(140,70,220)
+		hRapier.rapier_pfx = ParticleManager:CreateParticle("particles/item/rapier/item_rapier_archmage.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(hRapier.rapier_pfx, 0, vLocation + vRandomVector)
+	elseif sName == "item_imba_rapier_cursed" then
+		hRapier:GetContainer():SetRenderColor(20,160,20)
+		hRapier.rapier_pfx = ParticleManager:CreateParticle("particles/item/rapier/item_rapier_cursed.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(hRapier.rapier_pfx, 0, vLocation + vRandomVector)
+	end
+	hRapier:LaunchLoot(false, 250, 0.5, vLocation + vRandomVector)
 end
 
 function CDOTA_BaseNPC:AddRangeIndicator(hCaster, hAbility, sAttribute, iRange, iRed, iGreen, iBlue, bShowOnCooldown, bShowAlways, bWithCastRangeIncrease, bRemoveOnDeath)
