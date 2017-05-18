@@ -593,11 +593,11 @@ function CDOTA_BaseNPC:GetSpellPower()
 	end
 
 	-- Adjust base spell power based on current intelligence
-	local spell_power = self:GetIntellect() * 0.667
+	local spell_power = self:GetIntellect() / 14
 
 	-- Mega Treads increase spell power from intelligence by 30%
 	if self:HasModifier("modifier_imba_mega_treads_stat_multiplier_02") then
-		spell_power = self:GetIntellect() * 0.1
+		spell_power = self:GetIntellect() * 0.093
 	end
 
 	-- Fetch spell power from modifiers
