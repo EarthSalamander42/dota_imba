@@ -14794,22 +14794,22 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hp_heal"				"300"
+				"hp_heal"				"180"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"mp_heal"				"150"
+				"mp_heal"				"60"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hp_heal_growth"		"10"
+				"hp_heal_growth"		"5"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"mp_heal_growth"		"5"
+				"mp_heal_growth"		"2"
 			}
 			"05"
 			{
@@ -14823,8 +14823,8 @@
 			}
 			"07"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"3"
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"5"
 			}
 			"08"
 			{
