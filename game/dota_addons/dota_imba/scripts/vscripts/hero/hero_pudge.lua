@@ -672,8 +672,9 @@ function imba_pudge_butchers_cleaver:IsInnateAbility() return false end
 function imba_pudge_butchers_cleaver:OnSpellStart()
 	local vTargetPosition = self:GetCursorPosition()
 	local caster = self:GetCaster()
-	
+
 	self.modelOffset = Vector(20,-140,120)
+
 	-- I want to remove the thing but I can't find it.
 	if self:GetCaster() and self:GetCaster():IsHero() then
 		local cleaver = self:GetCaster():GetTogglableWearable( DOTA_LOADOUT_TYPE_OFFHAND_WEAPON )
@@ -681,6 +682,7 @@ function imba_pudge_butchers_cleaver:OnSpellStart()
 			cleaver:AddEffects( EF_NODRAW )
 		end
 	end
+
 	local info = {
 		bDeleteOnHit = true,
 		Ability = self,
@@ -693,8 +695,8 @@ function imba_pudge_butchers_cleaver:OnSpellStart()
 		iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
 		iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 		iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
-		EffectName = "particles/hero/pudge/butchers_cleave_projectile.vpcf",
-		--EffectName = "particles/units/heroes/hero_mirana/mirana_spell_arrow.vpcf",
+		--EffectName = "particles/hero/pudge/butchers_cleave_projectile.vpcf",
+		EffectName = "particles/units/heroes/hero_mirana/mirana_spell_arrow.vpcf",
 		
 	}
 
@@ -704,6 +706,12 @@ end
 
 function imba_pudge_butchers_cleaver:OnProjectileHit(hTarget,vLocation)
 	if not hTarget then 
+		for i =0,30 do
+				local cleaver = self:GetCaster():GetTogglableWearable( i )
+				if cleaver ~= nil then
+					cleaver:RemoveEffects(EF_NODRAW)
+				end
+			end
 		return 
 	end
 	
@@ -758,8 +766,12 @@ function modifier_butchers_cleaver_dummy:DeclareFunctions()
 	return decFuns
 end
 
-function modifier_butchers_cleaver_dummy:GetModifierModelChange()
-	return "models/heroes/pudge/leftweapon.vmdl"
+function modifier_butchers_cleaver_dummy:GetModifierModelChange() -- This doesn't work except for the hook
+	--local model =self:GetCaster():GetTogglableWearable( DOTA_LOADOUT_TYPE_OFFHAND_WEAPON )
+	--if not model then
+		return "models/heroes/pudge/leftweapon.vmdl"
+	--end
+	--return model
 end
 function modifier_butchers_cleaver_dummy:OnCreated()
 	if IsServer() then
@@ -771,6 +783,13 @@ end
 function modifier_butchers_cleaver_dummy:OnDestroy()
 	if IsServer() then
 		UTIL_Remove(self:GetParent())
+
+		if self:GetCaster() and self:GetCaster():IsHero() then
+			local cleaver = self:GetCaster():GetTogglableWearable( DOTA_LOADOUT_TYPE_OFFHAND_WEAPON )
+			if cleaver ~= nil then
+				cleaver:RemoveEffects(EF_NODRAW)
+			end
+		end
 	end
 end
 
@@ -827,14 +846,27 @@ function modifier_butchers_cleaver:OnTakeDamage(keys)
 	end
 end
 
+function modifier_butchers_cleaver:GetEffectName()
+	return ""
+end
+
+function modifier_butchers_cleaver:GetEffectAttachType()
+	return PATTACH_ABSORIGIN_FOLLOW
+end
+
 imba_pudge_dismember= class({})
 
 LinkLuaModifier( "modifier_dismember", "hero/hero_pudge" ,LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_dismember_lifesteal", "hero/hero_pudge" ,LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_dismember_dummy", "hero/hero_pudge" ,LUA_MODIFIER_MOTION_NONE )
 
-
+function imba_pudge_dismember:IsHiddenWhenStolen() return false end
 function imba_pudge_dismember:GetConceptRecipientType()
 	return DOTA_SPEECH_USER_ALL
+end
+
+function imba_pudge_dismember:GetIntrinsicModifierName()
+	return "modifier_dismember_dummy"
 end
 
 --------------------------------------------------------------------------------
@@ -849,19 +881,11 @@ function imba_pudge_dismember:GetChannelTime()
 	self.creep_duration = self:GetSpecialValueFor( "creep_duration" ) + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_7")
 	self.hero_duration = self:GetSpecialValueFor( "hero_duration" ) + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_7")
 
-	if IsServer() then
-		if self.hVictim ~= nil then
-			if self.hVictim:IsConsideredHero() then
-				return self.hero_duration
-			else
-				return self.creep_duration
-			end
-		end
-
-		return 0.0
+	local time = self.hero_duration
+	if self:GetCaster():GetModifierStackCount("modifier_dismember_dummy",self:GetCaster()) == 1 then
+		time = self.creep_duration
 	end
-
-	return self.hero_duration
+	return time
 end
 
 --------------------------------------------------------------------------------
@@ -870,7 +894,6 @@ function imba_pudge_dismember:OnAbilityPhaseStart()
 	if IsServer() then
 		self.hVictim = self:GetCursorTarget()
 	end
-
 	return true
 end
 
@@ -880,7 +903,6 @@ function imba_pudge_dismember:OnSpellStart()
 	if self.hVictim == nil then
 		return
 	end
-
 	if self.hVictim:TriggerSpellAbsorb( self ) then
 		self.hVictim = nil
 		self:GetCaster():Interrupt()
@@ -902,6 +924,35 @@ function imba_pudge_dismember:OnChannelFinish( bInterrupted )
 end
 
 --------------------------------------------------------------------------------
+
+modifier_dismember_dummy = class({})
+function modifier_dismember_dummy:IsDebuff() return false end
+function modifier_dismember_dummy:IsHidden() return true end
+function modifier_dismember_dummy:IsPurgable() return false end
+function modifier_dismember_dummy:IsPurgeException() return false end
+function modifier_dismember_dummy:IsStunDebuff() return false end
+function modifier_dismember_dummy:RemoveOnDeath() return false end
+
+function modifier_dismember_dummy:DeclareFunctions()
+	local decFuns =
+	{
+		MODIFIER_EVENT_ON_ABILITY_START,		
+	}
+	return decFuns
+end
+
+function modifier_dismember_dummy:OnAbilityStart(keys)
+	if IsServer() then
+
+		if keys.unit == self:GetCaster() and keys.ability == self:GetAbility() then
+			if keys.target:IsConsideredHero() then
+				self:SetStackCount(0)
+			else
+				self:SetStackCount(1)
+			end
+		end
+	end
+end
 
 modifier_dismember = class({})
 
@@ -927,7 +978,7 @@ function modifier_dismember:OnCreated( kv )
 	if IsServer() then
 		self:GetParent():InterruptChannel()
 		self:OnIntervalThink()
-		self:StartIntervalThink( 0 )
+		self:StartIntervalThink( self.tick_rate )
 	end
 end
 
@@ -960,7 +1011,7 @@ function modifier_dismember:OnIntervalThink()
 		ApplyDamage( damage )
 		EmitSoundOn( "Hero_Pudge.Dismember", self:GetParent() )
 
-		self:OnIntervalThink(self.tick_rate)
+		--self:SetIntervalThink()
 	end
 end
 
