@@ -18,19 +18,20 @@
 	
 	"addonname"										"Dota IMBA"
 
-	"scoreboard_tool_tip_mute_player"				"屏蔽"
-	"scoreboard_tool_tip_active_mute_player"		"（已屏蔽）"
-	"scoreboard_tool_tip_share_unit"				"共享操作（小兵）"
-	"scoreboard_tool_tip_share_hero"				"共享操作（英雄）"
-	"scoreboard_tool_tip_active_share_unit_hero"	"（已共享）"
+	"scoreboard_tool_tip_mute_player"				"屏蔽聊天和语音"
+	"scoreboard_tool_tip_active_mute_player"		"（已生效）"
+	"scoreboard_tool_tip_share_unit"				"共享小兵操作"
+	"scoreboard_tool_tip_share_hero"				"共享英雄操作"
+	"scoreboard_tool_tip_active_share_unit_hero"	"（已生效）"
 	"scoreboard_tool_tip_disable_help"				"禁用帮助"
-	"scoreboard_tool_tip_active_disable_help"		"（已禁用帮助）"
+	"scoreboard_tool_tip_active_disable_help"		"（已生效）"
 
 	//=================================================================================================================
 	// Generic talent names
 	//=================================================================================================================
 
 	"imba_generic_talent_damage"					"攻击力"
+	"imba_generic_talent_damage_Description"		"攻击力提高20。"
 	"imba_generic_talent_all_stats"					"全属性"
 	"imba_generic_talent_strength"					"力量"
 	"imba_generic_talent_agility"					"敏捷"
