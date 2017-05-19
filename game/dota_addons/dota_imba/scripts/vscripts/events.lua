@@ -771,34 +771,27 @@ function GameMode:OnEntityKilled( keys )
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Respawn timer setup
 	-------------------------------------------------------------------------------------------------
-	local can_die = true
 	if killed_unit:HasModifier("modifier_item_imba_aegis") then
 		killed_unit:SetTimeUntilRespawn(killed_unit:FindModifierByName("modifier_item_imba_aegis").reincarnate_time)
-	end
-	if killed_unit:HasModifier("modifier_imba_reincarnation") and (not killed_unit:HasModifier("modifier_item_imba_aegis")) then
+	elseif killed_unit:HasModifier("modifier_imba_reincarnation") then
 		local wk_mod = killed_unit:FindModifierByName("modifier_imba_reincarnation")
-		can_die = (wk_mod.can_die == false)
+		local can_die = (wk_mod.can_die == false)
 		if can_die then
 			killed_unit:SetTimeUntilRespawn(killed_unit:FindModifierByName("modifier_imba_reincarnation").reincarnate_delay)
 		end
-	end
-	if killed_unit:IsRealHero() and killed_unit:GetPlayerID() and PlayerResource:IsImbaPlayer(killed_unit:GetPlayerID()) and (not killed_unit:HasModifier("modifier_item_imba_aegis")) and can_die then
+	elseif killed_unit:IsRealHero() and killed_unit:GetPlayerID() and PlayerResource:IsImbaPlayer(killed_unit:GetPlayerID()) then
 		-- Calculate base respawn timer, capped at 60 seconds
 		local hero_level = math.min(killed_unit:GetLevel(), 25)
 		local respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[hero_level]
-
 		-- Calculate respawn timer reduction due to talents and modifiers
-		print("Respawn time modifiers: "..killed_unit:GetRespawnTimeModifier())
 		respawn_time = respawn_time + killed_unit:GetRespawnTimeModifier()
 
 		-- Fetch decreased respawn timer due to Bloodstone charges
 		if killed_unit.bloodstone_respawn_reduction then
 			respawn_time = math.max( respawn_time - killed_unit.bloodstone_respawn_reduction, 0)
 		end
-
 		-- Multiply respawn timer by the lobby options
 		respawn_time = math.max( respawn_time * HERO_RESPAWN_TIME_MULTIPLIER * 0.01, 1)
-
 		-- Set up the respawn timer
 		killed_unit:SetTimeUntilRespawn(respawn_time)
 	end

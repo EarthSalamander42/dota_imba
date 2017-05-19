@@ -457,10 +457,10 @@ function GetCastRangeIncrease( unit )
 	local cast_range_increase = 0
 	
 	-- From items
-	if unit:HasModifier("modifier_item_imba_elder_staff_range") then
-		cast_range_increase = cast_range_increase + 300
-	elseif unit:HasModifier("modifier_item_imba_aether_lens_range") then
-		cast_range_increase = cast_range_increase + 225
+	if unit:HasModifier("modifier_imba_elder_staff") then
+		cast_range_increase = cast_range_increase + unit:FindModifierByName("modifier_imba_elder_staff").self.cast_range_bonus
+	elseif unit:HasModifier("modifier_imba_aether_lens") then
+		cast_range_increase = cast_range_increase + unit:FindModifierByName("modifier_imba_aether_lens").self.cast_range_bonus
 	end
 
 	-- From talents
@@ -876,6 +876,49 @@ function DisplayError(playerID, message)
     end
 end
 
+-- Carefully, DON'T use this for visible modifiers or with stack-handling!!!!!!!!!
+-- This is only needed if the modifier has MODIFIER_ATTRIBUTE_MULTIPLE!
+function CDOTA_Modifier_Lua:CheckUnique(bCreated)
+	local hParent = self:GetParent()
+	if bCreated then
+		local mod = hParent:FindAllModifiersByName(self:GetName())
+		if #mod >= 2 then
+			self:SetStackCount(1)
+			return true
+		else
+			self:SetStackCount(0)
+			return false
+		end
+	else
+		if self:GetStackCount() == 0 then
+			local mod = hParent:FindModifierByName(self:GetName())
+			if mod then
+				mod:SetStackCount(0)
+			end
+		end
+		return nil
+	end
+end
+
+function CDOTA_Modifier_Lua:CheckUniqueValue(value, tSuperiorModifierNames)
+	local hParent = self:GetParent()
+	if tSuperiorModifierNames then
+		for _,sSuperiorMod in pairs(tSuperiorModifierNames) do
+			if hParent:HasModifier(sSuperiorMod) then
+				return 0
+			end
+		end
+	end
+	if bit.band(self:GetAttributes(), MODIFIER_ATTRIBUTE_MULTIPLE) == MODIFIER_ATTRIBUTE_MULTIPLE then
+		if self:GetStackCount() == 1 then
+			return 0
+		end
+	end
+	return value
+end
+
+
+-- Serversided function only
 function CDOTA_BaseNPC:DropRapier(hItem, sNewItemName)
 	local vLocation = self:GetAbsOrigin()
 	local sName
@@ -911,18 +954,16 @@ function CDOTA_BaseNPC:DropRapier(hItem, sNewItemName)
 end
 
 function CDOTA_BaseNPC:AddRangeIndicator(hCaster, hAbility, sAttribute, iRange, iRed, iGreen, iBlue, bShowOnCooldown, bShowAlways, bWithCastRangeIncrease, bRemoveOnDeath)
-	if IsServer() then
-		local modifier = self:AddNewModifier(hCaster or self,hAbility, "modifier_imba_range_indicator", {
-			sAttribute = sAttribute,
-			iRange = iRange,
-			iRed = iRed,
-			iGreen = iGreen,
-			iBlue = iBlue,
-			bShowOnCooldown = bShowOnCooldown,
-			bShowAlways = bShowAlways,
-			bWithCastRangeIncrease = bWithCastRangeIncrease,
-			bRemoveOnDeath = bRemoveOnDeath
-		})
-		return modifier
-	end
+	local modifier = self:AddNewModifier(hCaster or self,hAbility, "modifier_imba_range_indicator", {
+		sAttribute = sAttribute,
+		iRange = iRange,
+		iRed = iRed,
+		iGreen = iGreen,
+		iBlue = iBlue,
+		bShowOnCooldown = bShowOnCooldown,
+		bShowAlways = bShowAlways,
+		bWithCastRangeIncrease = bWithCastRangeIncrease,
+		bRemoveOnDeath = bRemoveOnDeath
+	})
+	return modifier
 end
