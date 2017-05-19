@@ -269,66 +269,65 @@ function imba_riki_blink_strike:OnSpellStart()
 		local new_position = Vector(victim_position.x - 100 * math.cos(victim_angle_rad), victim_position.y - 100 * math.sin(victim_angle_rad), 0)
 		
 		-- If there were units used as jump pads
-		if self.jumpTargets[1] then
-			
+		if #self.jumpTargets > 0 then
 			caster:AddNewModifier(caster, self, "modifier_imba_riki_blink_strike_outofworld", {})
 			
 			local jumpDelay = 0.1
-			local reversedTable = { caster }
-			local length = #self.jumpTargets
-			for k,v in ipairs(self.jumpTargets) do
-				reversedTable[length + 1 - k + 1] = v
-			end
+
+			local current_unit = caster
 			
-			for k,v in ipairs(reversedTable) do
-				if k ~= #reversedTable then
-					Timers:CreateTimer(jumpDelay * (k - 1), function()
-						local first = reversedTable[k]
-						local second = reversedTable[k+1]
-						local particle = ParticleManager:CreateParticle(blink_particle, PATTACH_POINT, first)
-							ParticleManager:SetParticleControl(particle, 1, second:GetAbsOrigin())
-							ParticleManager:ReleaseParticleIndex(particle)
-						
-						EmitSoundOn(cast_sound, first)
-						caster:SetAbsOrigin(second:GetAbsOrigin())
-					end)
-				else
-					Timers:CreateTimer(jumpDelay * (k - 1), function()
-						caster:RemoveModifierByName("modifier_imba_riki_blink_strike_outofworld")
-						
-					-- Set the casters position behind the target (psssh nothin' personnel kid)
-					FindClearSpaceForUnit(caster, new_position, true)
-					caster:SetForwardVector(victim_forward_vector)
+			for k,v in pairs(self.jumpTargets) do
+				local next_unit = v
+				Timers:CreateTimer(jumpDelay * k, function()
+					local particle = ParticleManager:CreateParticle(blink_particle, PATTACH_POINT, current_unit)
+						ParticleManager:SetParticleControl(particle, 1, next_unit:GetAbsOrigin())
+						ParticleManager:ReleaseParticleIndex(particle)
 					
-					-- Attack order on target - same behavior as 'A' clicking
-					local order = 
-					{	UnitIndex = caster:entindex(),
-						OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET,
-						TargetIndex = target:entindex(),
-						AbilityIndex = self,
-						Queue = true }
-					ExecuteOrderFromTable(order)
-					end)
-				end
+					EmitSoundOn(cast_sound, current_unit)
+					caster:SetAbsOrigin(next_unit:GetAbsOrigin())
+				end)
+
+				current_unit = next_unit
 			end
-			
-			
+
+			-- Jump from last jumppad unit to the target
+			Timers:CreateTimer(jumpDelay * (#self.jumpTargets+1), function()
+				EmitSoundOn(cast_sound, current_unit)
+
+				local particle = ParticleManager:CreateParticle(blink_particle, PATTACH_POINT, current_unit)
+					ParticleManager:SetParticleControl(particle, 1, target:GetAbsOrigin())
+					ParticleManager:ReleaseParticleIndex(particle)
+
+				caster:RemoveModifierByName("modifier_imba_riki_blink_strike_outofworld")
+				-- Set the casters position behind the target (psssh nothin' personnel kid)
+				FindClearSpaceForUnit(caster, new_position, true)
+				caster:SetForwardVector(victim_forward_vector)
+
+				-- Attack order on target - same behavior as 'A' clicking
+				local order = 
+				{	UnitIndex = caster:entindex(),
+					OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET,
+					TargetIndex = target:entindex(),
+					AbilityIndex = self:entindex(),
+					Queue = true }
+				ExecuteOrderFromTable(order)
+			end)
 		else
+			
 			EmitSoundOn(cast_sound, caster)
 			local particle = ParticleManager:CreateParticle(blink_particle, PATTACH_ABSORIGIN, caster)
 				ParticleManager:SetParticleControl(particle, 1, target:GetAbsOrigin())
 				ParticleManager:ReleaseParticleIndex(particle)
-				
 			-- Set the casters position behind the target (psssh nothin' personnel kid)
 			FindClearSpaceForUnit(caster, new_position, true)
 			caster:SetForwardVector(victim_forward_vector)
-			
+
 			-- Attack order on target - same behavior as 'A' clicking
 			local order = 
 			{	UnitIndex = caster:entindex(),
 				OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET,
 				TargetIndex = target:entindex(),
-				AbilityIndex = self,
+				AbilityIndex = self:entindex(),
 				Queue = true }
 			ExecuteOrderFromTable(order)
 		end
@@ -337,6 +336,7 @@ end
 
 function imba_riki_blink_strike:CastFilterResultTarget( target )
 	if IsServer() then
+		self.jumpTargets = {}
 		local caster = self:GetCaster()
 		
 		-- Can't cast on self, buildings, or spell immune
@@ -348,10 +348,6 @@ function imba_riki_blink_strike:CastFilterResultTarget( target )
 			return UF_FAIL_MAGIC_IMMUNE_ENEMY
 		end
 		
-		-- Clear tables
-		self.jumpTargets = {}
-		self.checkedTargets = {}
-		
 		-- Get Values
 		local jumps = self:GetSpecialValueFor("max_jumps") + self:GetCaster():FindTalentValue("special_bonus_imba_riki_3")
 		local jump_range = self:GetSpecialValueFor("jump_range")
@@ -359,105 +355,72 @@ function imba_riki_blink_strike:CastFilterResultTarget( target )
 		
 		-- See if the target is within the no-jump cast range
 		local caster_target_distance = CalcDistanceBetweenEntityOBB(caster, target)	-- Distance between caster and target
-		if caster_target_distance <= no_jump_cast_range then return UF_SUCCESS end	-- If target is whithin no jump cast range
-		
-		-- Index the filter for later use in the recoursion
-		local find_filter = DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS
-		
-		-- o boi here we go
-		-- Find units around the caster, starting from the furtherest
-		if jumps > 0 then -- See if the caster can jump
-			local jumppable_units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, no_jump_cast_range, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_FARTHEST, false)
-			for _, unit in pairs(jumppable_units) do
-			
-				-- See if the unit was already checked
-				if unit ~= caster and not self.checkedTargets[unit:entindex()] then
-				
-					-- index the unit so he won't be checked again until next cast
-					-- the entity index of the unit is used so its easier to find
-					self.checkedTargets[unit:entindex()] = unit
-					
-					-- Add all units in a small AoE around the current unit to the checked table to reduce clutter from units that are too close to each other (Broodmother and the likes)
-					local irrelevant_units = FindUnitsInRadius(caster:GetTeamNumber(), unit:GetAbsOrigin(), nil, 50, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_FARTHEST, false)
-					for _,IRunit in pairs(irrelevant_units) do
-						if not self.checkedTargets[IRunit:entindex()] then
-							self.checkedTargets[IRunit:entindex()] = IRunit
-						end
-					end
-					
-					-- Get distances
-					local unit_caster_distance_minimum = no_jump_cast_range - jump_range	-- Minimum distance required between unit being checked and caster
-					local unit_caster_distance = CalcDistanceBetweenEntityOBB(unit, caster)	-- Distance between unit being checked and caster
-					local unit_target_distance = CalcDistanceBetweenEntityOBB(unit, target)	-- Distance between unit being checked and target
-					
-					-- Check if the unit is closer to the target, and that it's in effective range to reach new targets outside of no-jump range
-					if unit_caster_distance > unit_caster_distance_minimum and caster_target_distance > unit_target_distance then
-						-- Check if JumpCheck returned true
-						local foundPath = self:JumpCheck(target, unit, caster_target_distance, jump_range, find_filter, jumps-1)
-						
-						-- If a path to the target was found, index the unit and commence spell casting
-						if foundPath then
-							table.insert(self.jumpTargets, unit)
-							return UF_SUCCESS
-						end
-					end
-				end
+		if caster_target_distance <= no_jump_cast_range then
+			return UF_SUCCESS 
+		elseif jumps > 0 then
+			local team_filter = DOTA_UNIT_TARGET_TEAM_BOTH
+			local unit_filter = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+			local find_filter = DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS
+
+			local can_jump_to = self:CanJumpTo(target, jump_range, jumps, team_filter, unit_filter, find_filter)
+			if can_jump_to then
+				return UF_SUCCESS
 			end
 		end
 		
 		return UF_FAIL_CUSTOM
 	end
 end
- 
-function imba_riki_blink_strike:JumpCheck( main_target, jump_target, caster_target_distance, jump_range, find_filter, jumps_left )
-	local caster = self:GetCaster()
-	
-	-- Find units around the unit the caster would jump off
-	local jumppable_units = FindUnitsInRadius(caster:GetTeamNumber(), jump_target:GetAbsOrigin(), nil, jump_range, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_FARTHEST, false)
-	for _, unit in pairs(jumppable_units) do
-	
-		-- See if the unit was already checked
-		if unit ~= caster and not self.checkedTargets[unit:entindex()] then
-		
-			-- index the unit so he won't be checked again until next cast
-			self.checkedTargets[unit:entindex()] = unit
-			
-			-- Add all units in a small AoE around the current unit to the checked table to reduce clutter from units that are too close to each other (Broodmother and the likes)
-			local irrelevant_units = FindUnitsInRadius(caster:GetTeamNumber(), unit:GetAbsOrigin(), nil, 50, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, find_filter, FIND_FARTHEST, false)
-			for _,IRunit in pairs(irrelevant_units) do
-				if not self.checkedTargets[IRunit:entindex()] then
-					self.checkedTargets[IRunit:entindex()] = IRunit
-				end
-			end
-			
-			-- Get distance to target
-			local unit_target_distance = CalcDistanceBetweenEntityOBB(main_target, unit)		-- Distance between unit being checked and target
-			local distance_to_target = CalcDistanceBetweenEntityOBB(main_target, jump_target)	-- Distance between previous unit and target
-			
-			-- If the main target is within range, return true and index the unit used as a jump pad
-			if unit_target_distance <= jump_range then
-				table.insert(self.jumpTargets, main_target)
-				if unit ~= main_target then table.insert(self.jumpTargets, unit) end
-				return true
-			end
-			-- Check if the unit is closer to the target, and that it's in effective range to reach new targets outside of no-jump range
-			-- elseif distance_to_target <= unit_target_distance then
-			
-				-- See if there are any jumps remaining
-				if jumps_left > 1 then
-					-- Check if JumpCheck returned true
-					local foundPath = self:JumpCheck(main_target, unit, caster_target_distance, jump_range, find_filter, jumps_left-1)
-					
-					-- If a path to the target was found, index the unit and commence spell casting
-					if foundPath then
-						table.insert(self.jumpTargets, unit)
-						return true
+
+-- Checks if we can jump from the caster's position to the main_target through as series of jumps, returns true if yes, false if no
+-- In addition, uses self.jumpTargets table to store the units between caster and the target (both excluded)
+function imba_riki_blink_strike:CanJumpTo( main_target, jump_range, max_jumps, team_filter, unit_filter, find_filter )
+	if IsServer() then
+		local caster = self:GetCaster()
+
+		-- We start checking around ourselves first
+		local jumppad_unit = caster
+		local current_unit_target_distance = CalcDistanceBetweenEntityOBB(jumppad_unit, main_target)
+		local processed_units = {}
+		processed_units[jumppad_unit:entindex()] = true
+
+		for jump_no = 1, max_jumps do
+			local jumppable_units = FindUnitsInRadius(caster:GetTeamNumber(), jumppad_unit:GetAbsOrigin(), nil, jump_range, team_filter, unit_filter, find_filter, FIND_FARTHEST, false)
+			local min_distance = current_unit_target_distance
+			local jumppad_found = false
+
+			for _, unit in pairs(jumppable_units) do
+				if not processed_units[unit:entindex()] then
+					local unit_target_distance = CalcDistanceBetweenEntityOBB(unit, main_target)
+
+					-- If the currently processed unit is closer to the target than what we already have, set it as the jumppad
+					if unit_target_distance < min_distance then
+						jumppad_unit = unit
+						jumppad_found = true
 					end
+
+					processed_units[unit:entindex()] = true
 				end
-			-- end
+			end
+
+			--[[
+				If we found a jumppad, see if we can make the jump from the jumppad unit directly to the target
+				If we didn't, it means we can't get any closer to the target, so we can safely fail
+				On the last iteration, if we still can't make the jump, we'll return false at the end of the function
+			]]
+			if jumppad_found then
+				self.jumpTargets[#self.jumpTargets+1] = jumppad_unit
+				current_unit_target_distance = CalcDistanceBetweenEntityOBB(jumppad_unit, main_target)
+				if current_unit_target_distance <= jump_range then
+					return true
+				end
+			else
+				return false
+			end
 		end
+
+		return false
 	end
-	return false
 end
 
 function imba_riki_blink_strike:GetCustomCastErrorTarget( target )
