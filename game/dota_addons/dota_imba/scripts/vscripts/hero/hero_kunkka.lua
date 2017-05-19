@@ -748,7 +748,7 @@ function modifier_imba_tidebringer:OnAttackStart( params )
 		local parent = self:GetParent()
 		local target = params.target
 		if (parent == params.attacker) and (target:GetTeamNumber() ~= parent:GetTeamNumber()) and (target.IsCreep or target.IsHero) then
-			if not target:IsTower() then
+			if not target:IsBuilding() then
 				local ability = self:GetAbility()
 				self.sound_triggered = false
 				-- Check buffs by Ebb and Flow, and set on Cooldown after cast to give a new buff
