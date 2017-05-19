@@ -1,12 +1,12 @@
 --	Author: Firetoad
 --	Date: 			15.08.2015
---	Last Update:	18.03.2017
-
+--	Last Update:	18.05.2017
+-- 	Updated by AtroCty
 -----------------------------------------------------------------------------------------------------------
 --	Orchid definition
 -----------------------------------------------------------------------------------------------------------
 
-if item_imba_orchid == nil then item_imba_orchid = class({}) end
+item_imba_orchid = item_imba_orchid or class({})
 LinkLuaModifier( "modifier_item_imba_orchid", "items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE )			-- Owner's bonus attributes, stackable
 LinkLuaModifier( "modifier_item_imba_orchid_debuff", "items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE )	-- Active debuff
 
@@ -40,12 +40,29 @@ end
 --	Orchid owner bonus attributes (stackable)
 -----------------------------------------------------------------------------------------------------------
 
-if modifier_item_imba_orchid == nil then modifier_item_imba_orchid = class({}) end
+modifier_item_imba_orchid = modifier_item_imba_orchid or class({})
 function modifier_item_imba_orchid:IsHidden() return true end
 function modifier_item_imba_orchid:IsDebuff() return false end
 function modifier_item_imba_orchid:IsPurgable() return false end
 function modifier_item_imba_orchid:IsPermanent() return true end
 function modifier_item_imba_orchid:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_orchid:OnDestroy()
+	self:CheckUnique(false)
+end
+
+function modifier_item_imba_orchid:OnCreated()
+	self.item = self:GetAbility()
+	self.parent = self:GetParent()
+	if self.parent:IsHero() and self.item then
+		self.bonus_intellect = self.item:GetSpecialValueFor("bonus_intellect")
+		self.bonus_attack_speed = self.item:GetSpecialValueFor("bonus_attack_speed")
+		self.bonus_damage = self.item:GetSpecialValueFor("bonus_damage")
+		self.bonus_mana_regen = self.item:GetSpecialValueFor("bonus_mana_regen")
+		self.spell_power = self.item:GetSpecialValueFor("spell_power")
+		self:CheckUnique(true)
+	end
+end
 
 -- Attribute bonuses
 function modifier_item_imba_orchid:DeclareFunctions()
@@ -60,25 +77,26 @@ function modifier_item_imba_orchid:DeclareFunctions()
 end
 
 function modifier_item_imba_orchid:GetModifierBonusStats_Intellect()
-	return self:GetAbility():GetSpecialValueFor("bonus_intellect") end
+	return self.bonus_intellect end
 
 function modifier_item_imba_orchid:GetModifierAttackSpeedBonus_Constant()
-	return self:GetAbility():GetSpecialValueFor("bonus_attack_speed") end
+	return self.bonus_attack_speed end
 
 function modifier_item_imba_orchid:GetModifierPreAttack_BonusDamage()
-	return self:GetAbility():GetSpecialValueFor("bonus_damage") end
+	return self.bonus_damage end
 
 function modifier_item_imba_orchid:GetModifierPercentageManaRegen()
-	return self:GetAbility():GetSpecialValueFor("bonus_mana_regen") end
+	return self.bonus_mana_regen end
 
 function modifier_item_imba_orchid:GetModifierSpellAmplify_Percentage()
-	return self:GetAbility():GetSpecialValueFor("spell_power") end
+	return self:CheckUniqueValue(self.spell_power,{"modifier_item_imba_bloodthorn"})
+end
 
 -----------------------------------------------------------------------------------------------------------
 --	Orchid active debuff
 -----------------------------------------------------------------------------------------------------------
 
-if modifier_item_imba_orchid_debuff == nil then modifier_item_imba_orchid_debuff = class({}) end
+modifier_item_imba_orchid_debuff = modifier_item_imba_orchid_debuff or class({})
 function modifier_item_imba_orchid_debuff:IsHidden() return false end
 function modifier_item_imba_orchid_debuff:IsDebuff() return true end
 function modifier_item_imba_orchid_debuff:IsPurgable() return true end
@@ -96,9 +114,7 @@ end
 function modifier_item_imba_orchid_debuff:OnCreated()
 	if IsServer() then
 		local owner = self:GetParent()
-		if not owner.orchid_damage_storage then
-			owner.orchid_damage_storage = 0
-		end
+		owner.orchid_damage_storage = owner.orchid_damage_storage or 0
 		self.damage_factor = self:GetAbility():GetSpecialValueFor("silence_damage_percent")
 	end
 end
@@ -164,7 +180,7 @@ end
 --	Bloodthorn definition
 -----------------------------------------------------------------------------------------------------------
 
-if item_imba_bloodthorn == nil then item_imba_bloodthorn = class({}) end
+item_imba_bloodthorn = item_imba_bloodthorn or class({})
 LinkLuaModifier( "modifier_item_imba_bloodthorn", "items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE )			-- Owner's bonus attributes, stackable
 LinkLuaModifier( "modifier_item_imba_bloodthorn_unique", "items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE )	-- Crit chance, unstackable
 LinkLuaModifier( "modifier_item_imba_bloodthorn_crit", "items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE )		-- Passive crit buff
@@ -201,7 +217,7 @@ end
 --	Bloodthorn owner bonus attributes (stackable)
 -----------------------------------------------------------------------------------------------------------
 
-if modifier_item_imba_bloodthorn == nil then modifier_item_imba_bloodthorn = class({}) end
+modifier_item_imba_bloodthorn = modifier_item_imba_bloodthorn or class({})
 function modifier_item_imba_bloodthorn:IsHidden() return true end
 function modifier_item_imba_bloodthorn:IsDebuff() return false end
 function modifier_item_imba_bloodthorn:IsPurgable() return false end
@@ -209,14 +225,24 @@ function modifier_item_imba_bloodthorn:IsPermanent() return true end
 function modifier_item_imba_bloodthorn:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Adds the unique modifier when created
-function modifier_item_imba_bloodthorn:OnCreated(keys)
-	if IsServer() then
-		local parent = self:GetParent()
-		if not parent:HasModifier("modifier_item_imba_bloodthorn_unique") then
-			parent:AddNewModifier(parent, self:GetAbility(), "modifier_item_imba_bloodthorn_unique", {})
+function modifier_item_imba_bloodthorn:OnCreated()
+	self.item = self:GetAbility()
+	self.parent = self:GetParent()
+	if self.parent:IsHero() and self.item then
+		self.bonus_intellect = self.item:GetSpecialValueFor("bonus_intellect")
+		self.bonus_attack_speed = self.item:GetSpecialValueFor("bonus_attack_speed")
+		self.bonus_damage = self.item:GetSpecialValueFor("bonus_damage")
+		self.bonus_mana_regen = self.item:GetSpecialValueFor("bonus_mana_regen")
+		self.spell_power = self.item:GetSpecialValueFor("spell_power")
+		self:CheckUnique(true)
+		if IsServer() then
+			if not self.parent:HasModifier("modifier_item_imba_bloodthorn_unique") then
+				self.parent:AddNewModifier(self.parent, self.item, "modifier_item_imba_bloodthorn_unique", {})
+			end
 		end
 	end
 end
+
 
 -- Removes the aura emitter from the caster if this is the last vladmir's offering in its inventory
 function modifier_item_imba_bloodthorn:OnDestroy(keys)
@@ -225,8 +251,10 @@ function modifier_item_imba_bloodthorn:OnDestroy(keys)
 		if not parent:HasModifier("modifier_item_imba_bloodthorn") then
 			parent:RemoveModifierByName("modifier_item_imba_bloodthorn_unique")
 		end
+		self:CheckUnique(false)
 	end
 end
+
 
 -- Attribute bonuses
 function modifier_item_imba_bloodthorn:DeclareFunctions()
@@ -241,25 +269,25 @@ function modifier_item_imba_bloodthorn:DeclareFunctions()
 end
 
 function modifier_item_imba_bloodthorn:GetModifierBonusStats_Intellect()
-	return self:GetAbility():GetSpecialValueFor("bonus_intellect") end
+	return self.bonus_intellect end
 
 function modifier_item_imba_bloodthorn:GetModifierAttackSpeedBonus_Constant()
-	return self:GetAbility():GetSpecialValueFor("bonus_attack_speed") end
+	return self.bonus_attack_speed end
 
 function modifier_item_imba_bloodthorn:GetModifierPreAttack_BonusDamage()
-	return self:GetAbility():GetSpecialValueFor("bonus_damage") end
+	return self.bonus_damage end
 
 function modifier_item_imba_bloodthorn:GetModifierPercentageManaRegen()
-	return self:GetAbility():GetSpecialValueFor("bonus_mana_regen") end
+	return self.bonus_mana_regen end
 
 function modifier_item_imba_bloodthorn:GetModifierSpellAmplify_Percentage()
-	return self:GetAbility():GetSpecialValueFor("spell_power") end
+	return self:CheckUniqueValue(self.spell_power,nil) end
 
 -----------------------------------------------------------------------------------------------------------
 --	Bloodthorn owner unique bonus (crit chance)
 -----------------------------------------------------------------------------------------------------------
 
-if modifier_item_imba_bloodthorn_unique == nil then modifier_item_imba_bloodthorn_unique = class({}) end
+modifier_item_imba_bloodthorn_unique = modifier_item_imba_bloodthorn_unique or class({})
 function modifier_item_imba_bloodthorn_unique:IsHidden() return true end
 function modifier_item_imba_bloodthorn_unique:IsDebuff() return false end
 function modifier_item_imba_bloodthorn_unique:IsPurgable() return false end
@@ -290,8 +318,7 @@ end
 -----------------------------------------------------------------------------------------------------------
 --	Bloodthorn crit buff
 -----------------------------------------------------------------------------------------------------------
-
-if modifier_item_imba_bloodthorn_crit == nil then modifier_item_imba_bloodthorn_crit = class({}) end
+modifier_item_imba_bloodthorn_crit = modifier_item_imba_bloodthorn_crit or class({})
 function modifier_item_imba_bloodthorn_crit:IsHidden() return true end
 function modifier_item_imba_bloodthorn_crit:IsDebuff() return false end
 function modifier_item_imba_bloodthorn_crit:IsPurgable() return false end
@@ -332,8 +359,7 @@ end
 -----------------------------------------------------------------------------------------------------------
 --	Bloodthorn active debuff
 -----------------------------------------------------------------------------------------------------------
-
-if modifier_item_imba_bloodthorn_debuff == nil then modifier_item_imba_bloodthorn_debuff = class({}) end
+modifier_item_imba_bloodthorn_debuff = modifier_item_imba_bloodthorn_debuff or class({})
 function modifier_item_imba_bloodthorn_debuff:IsHidden() return false end
 function modifier_item_imba_bloodthorn_debuff:IsDebuff() return true end
 function modifier_item_imba_bloodthorn_debuff:IsPurgable() return true end
@@ -435,8 +461,7 @@ end
 -----------------------------------------------------------------------------------------------------------
 --	Bloodthorn active attacker crit buff
 -----------------------------------------------------------------------------------------------------------
-
-if modifier_item_imba_bloodthorn_attacker_crit == nil then modifier_item_imba_bloodthorn_attacker_crit = class({}) end
+modifier_item_imba_bloodthorn_attacker_crit = modifier_item_imba_bloodthorn_attacker_crit or class({})
 function modifier_item_imba_bloodthorn_attacker_crit:IsHidden() return true end
 function modifier_item_imba_bloodthorn_attacker_crit:IsDebuff() return false end
 function modifier_item_imba_bloodthorn_attacker_crit:IsPurgable() return false end

@@ -29,6 +29,10 @@ function modifier_item_imba_aegis:DeclareFunctions()
     return decFuncs
 end
 
+function modifier_item_imba_aegis:GetPriority()
+	return 100
+end
+
 function modifier_item_imba_aegis:ReincarnateTime()
 	if IsServer() then
 		local parent = self:GetParent()

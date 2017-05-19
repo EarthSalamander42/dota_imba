@@ -10463,9 +10463,10 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2163"
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"custom/imba_aether_lens"
+		"ScriptFile"					"items/item_aether_lens.lua"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -10493,64 +10494,10 @@
 				"var_type"				"FIELD_INTEGER"
 				"cast_range_bonus"		"225"
 			}
-			// hardcoded to GetSpellPower() on util.lua
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"spell_power"			"10"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_aether_lens"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"Purgable"					"0"
-				
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MANA_BONUS"					"%bonus_mana"
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%bonus_health_regen"
-				}
-			}
-
-			"modifier_item_imba_aether_lens_range"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-				"IsBuff"						"1"
-				"Purgable"						"0"
-
-				"Attributes"					"MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"ThinkInterval"					"1.0"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_aether_lens.lua"
-						"Function"				"AetherLensRangeThink"
-						
-						"modifier_cast_range"	"modifier_item_aether_lens"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_aether_lens.lua"
-						"Function"				"AetherLensRangeDestroy"
-						
-						"modifier_cast_range"	"modifier_item_aether_lens"
-					}
-				}
 			}
 		}
 	}
@@ -10589,9 +10536,10 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2204"
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"custom/imba_nether_wand"
+		"ScriptFile"					"items/item_nether_wand.lua"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -10634,91 +10582,10 @@
 				"var_type"				"FIELD_FLOAT"
 				"burn_tick"				"0.5"
 			}
-			// hardcoded to GetSpellPower() on util.lua
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"spell_power"			"10"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_nether_wand"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"Purgable"					"0"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_as" 
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" 		"%bonus_intellect"
-				}
-			}
-
-			"modifier_item_imba_nether_wand_unique"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-				"IsBuff"						"1"
-				"Purgable"						"0"
-
-				"Attributes"					"MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"OnDealDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_nether_wand.lua"
-						"Function"				"NetherWand"
-
-						"modifier_burn"			"modifier_item_imba_nether_wand_burn"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"internal/util.lua"
-						"Function"				"IllusionPassiveRemover"
-
-						"modifier"				"modifier_item_imba_nether_wand_unique"
-					}
-				}
-			}
-
-			"modifier_item_imba_nether_wand_burn"
-			{
-				"Passive"						"0"
-				"IsHidden"						"0"
-				"IsDebuff"						"1"
-				"Purgable"						"1"
-
-				"TextureName"					"custom/imba_nether_wand"
-
-				"Duration"						"%burn_duration"
-
-				"EffectName"					"particles/item/nether_wand/nether_burn_debuff.vpcf"
-				"EffectAttachType"				"follow_origin"	
-
-				"ThinkInterval"					"%burn_tick"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_nether_wand.lua"
-						"Function"				"NetherWandTick"	
-
-						"modifier_unique"		"modifier_item_imba_nether_wand_unique"					
-					}
-				}
 			}
 		}
 	}
@@ -10757,9 +10624,10 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2206"
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"custom/imba_elder_staff"
+		"ScriptFile"					"items/item_nether_wand.lua"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -10803,7 +10671,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"cast_range_bonus"		"300"
 			}
-			// hardcoded to GetSpellPower() on util.lua
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -10823,122 +10690,6 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"burn_tick"				"0.5"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_elder_staff"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"Purgable"					"0"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_as" 
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" 		"%bonus_intellect"
-					"MODIFIER_PROPERTY_MANA_BONUS"					"%bonus_mana"
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%bonus_health_regen"
-				}
-			}
-
-			"modifier_item_imba_elder_staff_unique"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-				"IsBuff"						"1"
-				"Purgable"						"0"
-
-				"Attributes"					"MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"OnDealDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_nether_wand.lua"
-						"Function"				"ElderStaff"
-
-						"modifier_burn"			"modifier_item_imba_elder_staff_burn"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"internal/util.lua"
-						"Function"				"IllusionPassiveRemover"
-
-						"modifier"				"modifier_item_imba_elder_staff_unique"
-					}
-				}
-			}
-
-			"modifier_item_imba_elder_staff_burn"
-			{
-				"Passive"						"0"
-				"IsHidden"						"0"
-				"IsDebuff"						"1"
-				"Purgable"						"1"
-
-				"TextureName"					"custom/imba_elder_staff"
-
-				"Duration"						"%burn_duration"
-
-				"EffectName"					"particles/item/nether_wand/nether_burn_debuff.vpcf"
-				"EffectAttachType"				"follow_origin"	
-
-				"ThinkInterval"					"%burn_tick"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_nether_wand.lua"
-						"Function"				"NetherWandTick"	
-
-						"modifier_unique"		"modifier_item_imba_elder_staff_unique"					
-					}
-				}
-			}
-
-			"modifier_item_imba_elder_staff_range"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-				"IsBuff"						"1"
-				"Purgable"						"0"
-
-				"Attributes"					"MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"ThinkInterval"					"1.0"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_aether_lens.lua"
-						"Function"				"ElderStaffRangeThink"
-						
-						"modifier_cast_range"	"modifier_item_aether_lens"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_aether_lens.lua"
-						"Function"				"ElderStaffRangeDestroy"
-						
-						"modifier_cast_range"	"modifier_item_aether_lens"
-					}
-				}
 			}
 		}
 	}
