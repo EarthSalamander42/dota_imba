@@ -455,12 +455,12 @@ end
 -- Returns an unit's existing increased cast range modifiers
 function GetCastRangeIncrease( unit )
 	local cast_range_increase = 0
-	
-	-- From items
-	if unit:HasModifier("modifier_imba_elder_staff") then
-		cast_range_increase = cast_range_increase + unit:FindModifierByName("modifier_imba_elder_staff").self.cast_range_bonus
-	elseif unit:HasModifier("modifier_imba_aether_lens") then
-		cast_range_increase = cast_range_increase + unit:FindModifierByName("modifier_imba_aether_lens").self.cast_range_bonus
+	-- Only the greatest increase counts for items, they do not stack
+	for _, parent_modifier in pairs(unit:FindAllModifiers()) do
+		-- Vanguard-based damage reduction does not stack
+		if parent_modifier.GetModifierCastRangeBonus then
+			cast_range_increase = math.max(cast_range_increase,parent_modifier:GetModifierCastRangeBonus())
+		end
 	end
 
 	-- From talents
