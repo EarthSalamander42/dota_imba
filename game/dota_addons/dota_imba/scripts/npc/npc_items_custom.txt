@@ -268,89 +268,6 @@
 	}
 
 	//=================================================================================================================
-	// Enchanted Mango
-	//=================================================================================================================
-	"item_imba_mango"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2001"
-		"BaseClass"						"item_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"AbilityTextureName" 			"custom/imba_mango"
-		"Model"							"models/props_gameplay/mango.mdl"
-
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"400"
-		"AbilityCastPoint"				"0.0"
-		
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"110"
-		"ItemShopTags"					"consumable"
-		"ItemQuality"					"consumable"
-		"ItemAliases"					"mango; enchanted mango"
-		"ItemStackable"					"0"
-		"ItemPermanent"					"0"
-		"ItemInitialCharges"			"1"
-		"ItemRequiresCharges" 			"1"
-		"SideShop"						"0"
-
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"minimum_mana"			"150"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"mana_percent"			"30"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"health_regen"			"1"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"items/item_mango.lua"
-				"Function"				"Mango"
-
-				"sound_cast"			"DOTA_Item.Mango.Activate"
-			}
-
-			"SpendCharge" {}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_mango"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-		
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%health_regen"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Recipe: Hand of Midas
 	//=================================================================================================================
 	"item_recipe_imba_hand_of_midas"
@@ -3408,7 +3325,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"4900"
+		"ItemCost"						"4850"
 		"ItemShopTags"					"regen_health;regen_mana;mana_pool;health_pool"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"bs;bloodstone"

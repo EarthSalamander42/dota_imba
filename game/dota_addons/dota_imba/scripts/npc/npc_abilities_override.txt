@@ -242,7 +242,7 @@
 	"item_winter_greevil_chewy"		"REMOVE"
 	"item_recipe_moon_shard"		"REMOVE"
     "item_moon_shard"				"REMOVE"
-    "item_enchanted_mango"			"REMOVE"
+    //"item_enchanted_mango"			"REMOVE"
     //"item_recipe_travel_boots_2"	"REMOVE"
     //"item_travel_boots_2"			"REMOVE"
     "item_recipe_lotus_orb"			"REMOVE"
