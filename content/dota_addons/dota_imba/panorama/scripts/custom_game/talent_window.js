@@ -336,25 +336,29 @@ function ConfigureTalentClick(panel, heroID, level, luaIndex){
     panel.hittest = true;
 }
 
+
+function WhiteWashTalentChoice(rowLevel, columnIndex, bol_enable){
+    var talentPanel = $.GetContextPanel();
+    var TalentChoiceID = "Talent_Choice_"+rowLevel+"_"+columnIndex;
+    var TalentChoicePanel = talentPanel.FindChildTraverse(TalentChoiceID);
+    if(TalentChoicePanel){
+        var imageChoiceContainer = TalentChoicePanel.FindChild("IMBA_Talent_Choice_Image_Container");
+        if(imageChoiceContainer){
+            imageChoiceContainer.SetHasClass("white_wash", bol_enable &&
+            !imageChoiceContainer.GetParent().BHasClass("upgraded") &&
+            !imageChoiceContainer.GetParent().BHasClass("disabled"));
+        }
+    }
+}
+
 function WhiteWashOtherGenericTalent(currentRowLevel, columnIndex, bol_enable){
 
-    var talentPanel = $.GetContextPanel();
     for(var i=0; i<8; i++){
         if((i%2)>0){
             var otherRowLevel = ConvertRowToLevelRequirement(i);
             if(otherRowLevel != currentRowLevel){
                 //Only white wash for stat talents
-
-                var TalentChoiceID = "Talent_Choice_"+otherRowLevel+"_"+columnIndex;
-                var TalentChoicePanel = talentPanel.FindChildTraverse(TalentChoiceID);
-                if(TalentChoicePanel){
-                    var imageChoiceContainer = TalentChoicePanel.FindChild("IMBA_Talent_Choice_Image_Container");
-                    if(imageChoiceContainer){
-                        imageChoiceContainer.SetHasClass("white_wash", bol_enable &&
-                        !imageChoiceContainer.GetParent().BHasClass("upgraded") &&
-                        !imageChoiceContainer.GetParent().BHasClass("disabled"));
-                    }
-                }
+                WhiteWashTalentChoice(otherRowLevel, columnIndex, bol_enable);
             }
         }
     }
@@ -365,16 +369,7 @@ function WhiteWashOtherCurrentRowChoices(currentRowLevel, columnIndex, bol_enabl
     //Maximum of 8 columns
     for(var i=0; i<8; i++){
         if(i != columnIndex){
-            var TalentChoiceID = "Talent_Choice_"+currentRowLevel+"_"+i;
-            var TalentChoicePanel = talentPanel.FindChildTraverse(TalentChoiceID);
-            if(TalentChoicePanel){
-                var imageChoiceContainer = TalentChoicePanel.FindChild("IMBA_Talent_Choice_Image_Container");
-                if(imageChoiceContainer){
-                     imageChoiceContainer.SetHasClass("white_wash", bol_enable &&
-                    !imageChoiceContainer.GetParent().BHasClass("upgraded") &&
-                    !imageChoiceContainer.GetParent().BHasClass("disabled"));
-                }
-            }
+            WhiteWashTalentChoice(currentRowLevel, i, bol_enable);
         }
     }
 }
