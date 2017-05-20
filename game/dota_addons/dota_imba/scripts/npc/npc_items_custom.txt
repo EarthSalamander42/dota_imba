@@ -2927,7 +2927,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1400"	
+		"ItemCost"						"0"	
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -2936,7 +2936,7 @@
 		"ItemResult"					"item_imba_heart"
 		"ItemRequirements"
 		{
-			"01"						"item_reaver;item_vitality_booster"
+			"01"						"item_reaver;item_vitality_booster;item_vitality_booster"
 		}
 	}
 
@@ -2954,11 +2954,15 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"5500"
+		"ItemCost"						"5200"
 		"ItemShopTags"					"str;regen_health;health_pool"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"hot;heart of tarrasque"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"5"
 		
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -2967,17 +2971,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"35"
+				"bonus_strength"		"40"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"250"
+				"bonus_health"			"500"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_str"				"15"
+				"aura_str"				"10"
 			}
 			"04"
 			{
@@ -10451,7 +10455,7 @@
 		"ItemResult"					"item_imba_aether_lens"
 		"ItemRequirements"
 		{
-			"01"						"item_energy_booster;item_ring_of_health"
+			"01"						"item_energy_booster;item_void_stone"
 		}
 	}
 
@@ -10482,22 +10486,22 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"300"
+				"bonus_mana"			"250"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"10"
+				"bonus_mana_regen"		"100"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cast_range_bonus"		"225"
+				"cast_range_bonus"		"220"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spell_power"			"10"
+				"spell_power"			"6"
 			}
 		}
 	}

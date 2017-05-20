@@ -755,7 +755,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"4"
+				"bonus_health_regen"	"6"
 			}
 			"03"
 			{
@@ -1009,7 +1009,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_stats"			"6"
+				"bonus_stats"			"2"
 			}
 			"02"
 			{
@@ -1024,7 +1024,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hp_regen_aura"			"8"
+				"hp_regen_aura"			"10"
 			}
 			"05"
 			{
@@ -1034,7 +1034,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_min"			"1800"
+				"health_min"			"2000"
 			}
 			"07"
 			{
