@@ -5511,6 +5511,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"enfeeble_duration"			"20"
+				"LinkedSpecialBonus"		"special_bonus_imba_bane_3"
 			}
 
 			"02"
@@ -5523,7 +5524,7 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"damage_reduction"			"30 60 90 120 130 140 150"
-				"LinkedSpecialBonus"		"special_bonus_imba_bane_3"
+				"LinkedSpecialBonus"		"special_bonus_imba_bane_5"
 			}
 		}
 	}
@@ -5573,7 +5574,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"brain_sap_damage"			"90 160 230 300 330 360 390"
-				"LinkedSpecialBonus"		"special_bonus_imba_bane_5"
+				"LinkedSpecialBonus"		"special_bonus_imba_bane_4"
 			}
 			"04"
 			{
@@ -5668,7 +5669,7 @@
 	}
 
 	//=================================================================================================================
-	// Bane Fiends Grip
+	// Bane Fiend's Grip
 	//=================================================================================================================
 	"imba_bane_fiends_grip"
 	{
@@ -5728,13 +5729,13 @@
 			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"fiends_grip_scepter_radius"			"900"
+				"talent_vision_radius"					"900"
 			}
 
 			"06"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"fiends_grip_scepter_vision_cone"		"40"
+				"talent_vision_cone"					"45"
 			}									
 		}
 	}
@@ -28935,7 +28936,7 @@
 	//=================================================================================================================
 	// Bane Talents
 	//=================================================================================================================
-	"special_bonus_imba_bane_1"	// Brain Sap Debuff Duration Increase
+	"special_bonus_imba_bane_1"	// Brain Sap Addlebrained duration increase
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -28945,7 +28946,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_bane_brain_sap"
+			"01"	"imba_bane_brain_sap"
 		}
 
 		// Special
@@ -28960,7 +28961,7 @@
 		}
 	}
 
-	"special_bonus_imba_bane_2"	// Baleful Vision Duration Increase
+	"special_bonus_imba_bane_2"	// Nightmare Baleful Visions duration Increase
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -28980,12 +28981,12 @@
 			"01"
 			{
 				"var_type"		"FIELD_FLOAT"
-				"value"			"1.0"
+				"value"			"3.0"
 			}
 		}
 	}
 
-	"special_bonus_imba_bane_3"	// Enfeeble Damage Reduction
+	"special_bonus_imba_bane_3"	// Enfeeble duration increase
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -29005,12 +29006,12 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"value"			"75"
+				"value"			"10"
 			}
 		}
 	}
 
-	"special_bonus_imba_bane_4"	// Brain Sap Cast Range
+	"special_bonus_imba_bane_4"	// Brain Sap damage increase
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -29030,12 +29031,12 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"value"			"300"
+				"value"			"150"
 			}
 		}
 	}
 
-	"special_bonus_imba_bane_5"	// Brain Sap Damage & Heal Bonus
+	"special_bonus_imba_bane_5"	// Enfeeble damage reduction increase
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -29045,7 +29046,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_bane_brain_sap"
+			"01" 	"imba_bane_enfeeble"
 		}
 
 		// Special
@@ -29055,12 +29056,12 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"value"			"200"
+				"value"			"100"
 			}
 		}
 	}
 
-	"special_bonus_imba_bane_6"	// Fiends Grip Channel Time Increase
+	"special_bonus_imba_bane_6"	// Fiends Grip max channel time Increase
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -29080,12 +29081,12 @@
 			"01"
 			{
 				"var_type"		"FIELD_FLOAT"
-				"value"			"2"
+				"value"			"2.0"
 			}
 		}
 	}
 
-	"special_bonus_imba_bane_7"	// Ally Nightmare Invulnerability duration
+	"special_bonus_imba_bane_7"	// Nightmare invulnerability duration increase for allies
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -29110,7 +29111,7 @@
 		}
 	}
 
-	"special_bonus_imba_bane_8"	// Fiends Grip Cooldown
+	"special_bonus_imba_bane_8"	// Fiend's Grip spread during channeling
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -29130,7 +29131,7 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"value"			"30"
+				"value"			"1"
 			}
 		}
 	}
