@@ -65,5 +65,5 @@ function modifier_imba_aether_lens:GetModifierManaBonus()
 end
 
 function modifier_imba_aether_lens:GetModifierCastRangeBonus()
-	return self:CheckUnique(self.cast_range_bonus,nil,nil, {"modifier_imba_elder_staff"})
+	return self:CheckUniqueValue(self.cast_range_bonus, {"modifier_imba_elder_staff"})
 end
