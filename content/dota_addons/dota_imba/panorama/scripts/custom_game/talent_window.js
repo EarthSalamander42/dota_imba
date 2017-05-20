@@ -336,20 +336,41 @@ function ConfigureTalentClick(panel, heroID, level, luaIndex){
     panel.hittest = true;
 }
 
-function WhiteWashOtherGenericTalent(rowLevelIndex, columnIndex, bol_enable){
+function WhiteWashOtherGenericTalent(currentRowLevel, columnIndex, bol_enable){
 
     var talentPanel = $.GetContextPanel();
     for(var i=0; i<8; i++){
-        if((i%2)>0 && ((7-i)/2 != rowLevelIndex)){
-            //Only white wash for stat talents
-            var currentRowLevel = ConvertRowToLevelRequirement(i);
+        if((i%2)>0){
+            var otherRowLevel = ConvertRowToLevelRequirement(i);
+            if(otherRowLevel != currentRowLevel){
+                //Only white wash for stat talents
 
-            var TalentChoiceID = "Talent_Choice_"+currentRowLevel+"_"+columnIndex;
+                var TalentChoiceID = "Talent_Choice_"+otherRowLevel+"_"+columnIndex;
+                var TalentChoicePanel = talentPanel.FindChildTraverse(TalentChoiceID);
+                if(TalentChoicePanel){
+                    var imageChoiceContainer = TalentChoicePanel.FindChild("IMBA_Talent_Choice_Image_Container");
+                    if(imageChoiceContainer){
+                        imageChoiceContainer.SetHasClass("white_wash", bol_enable &&
+                        !imageChoiceContainer.GetParent().BHasClass("upgraded") &&
+                        !imageChoiceContainer.GetParent().BHasClass("disabled"));
+                    }
+                }
+            }
+        }
+    }
+}
+
+function WhiteWashOtherCurrentRowChoices(currentRowLevel, columnIndex, bol_enable){
+    var talentPanel = $.GetContextPanel();
+    //Maximum of 8 columns
+    for(var i=0; i<8; i++){
+        if(i != columnIndex){
+            var TalentChoiceID = "Talent_Choice_"+currentRowLevel+"_"+i;
             var TalentChoicePanel = talentPanel.FindChildTraverse(TalentChoiceID);
             if(TalentChoicePanel){
                 var imageChoiceContainer = TalentChoicePanel.FindChild("IMBA_Talent_Choice_Image_Container");
                 if(imageChoiceContainer){
-                    imageChoiceContainer.SetHasClass("white_wash", bol_enable &&
+                     imageChoiceContainer.SetHasClass("white_wash", bol_enable &&
                     !imageChoiceContainer.GetParent().BHasClass("upgraded") &&
                     !imageChoiceContainer.GetParent().BHasClass("disabled"));
                 }
@@ -358,7 +379,7 @@ function WhiteWashOtherGenericTalent(rowLevelIndex, columnIndex, bol_enable){
     }
 }
 
-function AttachToolTip(image_container_panel, talent_name, rowLevelIndex, columnIndex){
+function AttachToolTip(image_container_panel, talent_name, currentRowLevel, columnIndex){
 
     //Attach tooltip to first direct child
     var ability_panel = image_container_panel.GetChild(0);
@@ -376,6 +397,7 @@ function AttachToolTip(image_container_panel, talent_name, rowLevelIndex, column
         if(talent_data){
             title = $.Localize(talent_name);
             if(talent_data.value){
+                var rowLevelIndex = (currentRowLevel-5)/10;
                 description = FormatGenericTalentValue(talent_name, talent_data.value.split(" ")[rowLevelIndex]);
             }
         }else{
@@ -393,36 +415,33 @@ function AttachToolTip(image_container_panel, talent_name, rowLevelIndex, column
             }
         }
 
-        var shouldShowWhiteWash = talent_data && image_container_panel.GetParent().BHasClass("selectable");
+        var isTalent = talent_data != null;
+        var shouldShowWhiteWash = image_container_panel.GetParent().BHasClass("selectable");
 
-        if(title){
-            ability_panel.SetPanelEvent("onmouseover", function(){
+        ability_panel.SetPanelEvent("onmouseover", function(){
+            if(title){
                 $.DispatchEvent("DOTAShowTitleTextTooltip", ability_panel, title, description);
-                if(shouldShowWhiteWash){
-                    WhiteWashOtherGenericTalent(rowLevelIndex, columnIndex, true);
-                }
-            });
-            ability_panel.SetPanelEvent("onmouseout", function(){
-                $.DispatchEvent("DOTAHideTitleTextTooltip");
-                if(talent_data){
-                    WhiteWashOtherGenericTalent(rowLevelIndex, columnIndex, false);
-                }
-            });
-        }else{
-            //Fall back display
-            ability_panel.SetPanelEvent("onmouseover", function(){
+            }else{
                 $.DispatchEvent("DOTAShowTextTooltip", ability_panel, description);
-                if(shouldShowWhiteWash){
-                    WhiteWashOtherGenericTalent(rowLevelIndex, columnIndex, true);
+            }
+            if(shouldShowWhiteWash){
+                if(isTalent){
+                    WhiteWashOtherGenericTalent(currentRowLevel, columnIndex, true);
                 }
-            });
-            ability_panel.SetPanelEvent("onmouseout", function(){
+                WhiteWashOtherCurrentRowChoices(currentRowLevel, columnIndex, true);
+            }
+        });
+        ability_panel.SetPanelEvent("onmouseout", function(){
+            if(title){
+                $.DispatchEvent("DOTAHideTitleTextTooltip");
+            }else{
                 $.DispatchEvent("DOTAHideTextTooltip");
-                if(talent_data){
-                    WhiteWashOtherGenericTalent(rowLevelIndex, columnIndex, false);
-                }
-            });
-        }
+            }
+            if(isTalent){
+                WhiteWashOtherGenericTalent(currentRowLevel, columnIndex, false);
+            }
+            WhiteWashOtherCurrentRowChoices(currentRowLevel, columnIndex, false);
+        });
     }
 }
 
@@ -474,9 +493,6 @@ function PopulateIMBATalentWindow(){
                         numOfChoices = 6;
                     }
 
-                    //Used to get the values for the desired row
-                    var rowLevelIndex = (currentRowLevel-5)/10;
-
                     for(var k=0; k<numOfChoices; k++){
                         var luaIndex = k+1; //Lua tables start at index 1
                         var TalentChoiceID = "Talent_Choice_"+currentRowLevel+"_"+k;
@@ -486,6 +502,8 @@ function PopulateIMBATalentWindow(){
                             var labelChoiceText = TalentChoicePanel.FindChildTraverse("IMBA_Talent_Choice_Text");
                             if(labelChoiceText){
                                 if(TalentChoiceData){
+                                    //Used to get the values for the desired row
+                                    var rowLevelIndex = (currentRowLevel-5)/10;
                                     labelChoiceText.text = GetTalentLabelText(TalentChoiceData, rowLevelIndex);
                                 }else{
                                     labelChoiceText.text = "ERR";
@@ -533,7 +551,7 @@ function PopulateIMBATalentWindow(){
                                 //Generic stat talents will be modifiers
                                 CreateImagePanelForTalent(TalentChoiceData, imageChoiceContainer, currentShownUnitID);
 
-                                AttachToolTip(imageChoiceContainer, TalentChoiceData, rowLevelIndex, k);
+                                AttachToolTip(imageChoiceContainer, TalentChoiceData, currentRowLevel, k);
                             }
                         }
                     }
@@ -550,8 +568,7 @@ function OpenImbaTalentWindow(bol_open){
 
     //check if valid
     if(!bol_open || (Entities.IsValidEntity(currentShownUnitID) &&
-            Entities.IsRealHero(currentShownUnitID)))
-        {
+            Entities.IsRealHero(currentShownUnitID))){
 
         var talentWindow = $.GetContextPanel();
 
