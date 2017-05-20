@@ -1,6 +1,7 @@
 <root>
     <styles>
- 		<include src="file://{resources}/styles/custom_game/talent_window.css" />
+        <include src="file://{resources}/styles/custom_game/talent_anim.css" />
+ 		<include src="file://{resources}/styles/custom_game/talent_hud.css" />
     </styles>
 	<Panel class="IMBA_Talent_HUD_Panel" require-composition-layer="true">
         <DOTAScenePanel hittest="false" id="IMBA_Talent_HUD_Button_Bg" map="scenes/hud/levelupburst" camera="camera_1"/>

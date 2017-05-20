@@ -1,5 +1,6 @@
 <root>
     <styles>
+        <include src="file://{resources}/styles/custom_game/talent_anim.css" />
  		<include src="file://{resources}/styles/custom_game/talent_window.css" />
     </styles>
     <scripts>
