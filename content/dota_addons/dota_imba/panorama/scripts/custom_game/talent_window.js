@@ -11,6 +11,7 @@ var _current_ability_points = 0;
 var ATTRIBUTE_UNIT_ID = "open_unit_id";
 var TALENT_TABLE_NAME = "imba_talent_manager";
 var OPEN_TALENT_WINDOW_CLASS = "show_talent_window";
+var IMBA_TALENT_BTN_ID = "ImbaTalentBtn";
 
 function GetHUDRootUI(){
     var rootUI = $.GetContextPanel();
@@ -111,10 +112,10 @@ function GetHeroTalentChoicesTable(hero_id){
     return CustomNetTables.GetTableValue(TALENT_TABLE_NAME, "hero_talent_choice_"+hero_id );
 }
 
-function GetImbaTalentButtonOverlayPanel(){
+function GetImbaTalentButtonPanel(){
     var baseUI = GetHUDRootUI();
     baseUI = baseUI.FindChildTraverse("AbilitiesAndStatBranch");
-    return baseUI.FindChildTraverse("IMBA_Talent_HUD_Button_Overlay");
+    return baseUI.FindChildTraverse(IMBA_TALENT_BTN_ID);
 }
 
 function IsImbaTalentWindowVisible(){
@@ -160,9 +161,9 @@ function OnTalentChoiceUpdated(table_name, key, value){
                     OpenImbaTalentWindow(false);
 
                     //Force remove .upgrade class
-                    var imbaBtnOverlay = GetImbaTalentButtonOverlayPanel();
+                    var imbaBtnPanel = GetImbaTalentButtonPanel();
                     //Should not be null as you need it to open talent window
-                    imbaBtnOverlay.RemoveClass("upgrade");
+                    imbaBtnPanel.RemoveClass("upgrade");
                     bol_to_animate_btn = false;
                 }
             }
@@ -200,19 +201,19 @@ function RepopulateImbaTalentWindowOnAbilityPointsChanged(){
 }
 
 function AnimateImbaTalentButton(){
-    var imbaBtnOverlay = GetImbaTalentButtonOverlayPanel();
+    var imbaBtnPanel = GetImbaTalentButtonPanel();
 
     //Might not be created yet
-    if(imbaBtnOverlay){
+    if(imbaBtnPanel){
         var currentShownUnitID = Players.GetLocalPlayerPortraitUnit();
 
         if(Entities.IsValidEntity(currentShownUnitID) &&
             Entities.IsRealHero(currentShownUnitID) &&
             Entities.IsControllableByPlayer(currentShownUnitID, Players.GetLocalPlayer())){
 
-            imbaBtnOverlay.SetHasClass("upgrade", CanHeroUpgradeAnyTalents(currentShownUnitID));
+            imbaBtnPanel.SetHasClass("upgrade", CanHeroUpgradeAnyTalents(currentShownUnitID));
         }else{
-            imbaBtnOverlay.RemoveClass("upgrade");
+            imbaBtnPanel.RemoveClass("upgrade");
         }
     }
 }
@@ -549,18 +550,18 @@ function OpenImbaTalentWindow(bol_open){
 
         var talentWindow = $.GetContextPanel();
 
-        var btnOverlay = GetImbaTalentButtonOverlayPanel();
+        var imbaBtnPanel = GetImbaTalentButtonPanel();
 
         if(bol_open){
             talentWindow.SetAttributeInt(ATTRIBUTE_UNIT_ID, currentShownUnitID);
             PopulateIMBATalentWindow();
             talentWindow.AddClass(OPEN_TALENT_WINDOW_CLASS);
             CloseIMBATalentWindowWhenDeselectUnit();
-            btnOverlay.AddClass("selected");
+            imbaBtnPanel.AddClass("selected");
         }else{
             talentWindow.SetAttributeInt(ATTRIBUTE_UNIT_ID, -1);
             talentWindow.RemoveClass(OPEN_TALENT_WINDOW_CLASS);
-            btnOverlay.RemoveClass("selected");
+            imbaBtnPanel.RemoveClass("selected");
         }
 
         talentWindow.RemoveClass("preview");
@@ -578,7 +579,6 @@ function InsertIMBATalentButton(){
     $.Msg("InsertIMBATalentButton");
     var baseUI = GetHUDRootUI();
     baseUI = baseUI.FindChildTraverse("AbilitiesAndStatBranch");
-    var IMBA_TALENT_BTN_ID = "ImbaTalentBtn";
     var newButton = baseUI.FindChildTraverse(IMBA_TALENT_BTN_ID);
     if(newButton){
         //Remove existing button

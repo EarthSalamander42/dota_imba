@@ -2,7 +2,8 @@
     <styles>
  		<include src="file://{resources}/styles/custom_game/talent_window.css" />
     </styles>
-	<Panel class="IMBA_Talent_HUD_Panel">
+	<Panel class="IMBA_Talent_HUD_Panel" require-composition-layer="true">
+        <DOTAScenePanel hittest="false" id="IMBA_Talent_HUD_Button_Bg" map="scenes/hud/levelupburst" camera="camera_1"/>
         <Button id="IMBA_Talent_HUD_Button"/>
         <Panel hittest="false" id="IMBA_Talent_HUD_Button_Overlay">
             <Panel class="Overlay_Select"/>

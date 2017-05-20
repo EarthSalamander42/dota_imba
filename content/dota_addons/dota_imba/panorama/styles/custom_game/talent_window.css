@@ -282,12 +282,12 @@
     background-size: contain;
 }
 
-#IMBA_Talent_HUD_Button_Overlay.selected .Overlay_Select
+#ImbaTalentBtn.selected #IMBA_Talent_HUD_Button_Overlay .Overlay_Select
 {
     background-image: url("file://{images}/custom_game/imba_talent_btn_selected.png");
 }
 
-#IMBA_Talent_HUD_Button_Overlay.upgrade .Overlay_Upgrade
+#ImbaTalentBtn.upgrade #IMBA_Talent_HUD_Button_Overlay .Overlay_Upgrade
 {
     animation-name: glowinganimation;
     animation-duration: 0.5s;
@@ -295,4 +295,18 @@
     animation-direction: alternate;
     animation-timing-function: linear;
     background-image: url("file://{images}/custom_game/imba_talent_btn_upgrade.png");
+}
+
+#IMBA_Talent_HUD_Button_Bg
+{
+    visibility: collapse;
+}
+
+#ImbaTalentBtn.upgrade #IMBA_Talent_HUD_Button_Bg
+{
+    visibility: visible;
+    width : 100%;
+    height: 200%;
+    border-radius: 30px;
+    margin-top: -40px;
 }
