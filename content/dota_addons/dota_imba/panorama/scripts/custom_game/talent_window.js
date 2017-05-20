@@ -630,6 +630,8 @@ function InsertIMBATalentButton(){
     });
 
     newButton.SetPanelEvent("onactivate", ToggleIMBATalentWindow);
+
+    AnimateImbaTalentButton();
 }
 
 //////////////////////////////
