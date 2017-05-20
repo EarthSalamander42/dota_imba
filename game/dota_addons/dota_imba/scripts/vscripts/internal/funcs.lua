@@ -919,7 +919,7 @@ end
 
 
 -- Serversided function only
-function CDOTA_BaseNPC:DropRapier(hItem, sNewItemName)
+function CDOTA_BaseNPC:DropRapier(hItem, sNewItemName, holder)
 	local vLocation = self:GetAbsOrigin()
 	local sName
 	local hRapier

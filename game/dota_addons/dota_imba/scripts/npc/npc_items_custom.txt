@@ -875,6 +875,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_aura"			"15"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"04"
 			{
@@ -948,6 +949,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_aura"			"25"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"04"
 			{
@@ -1164,6 +1166,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_damage"				"30"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"04"
 			{
@@ -1179,6 +1182,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"silence_damage_percent"	"30"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"07"
 			{
@@ -1267,6 +1271,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_damage"				"60"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"04"
 			{
@@ -1282,6 +1287,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"silence_damage_percent"	"30"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"07"
 			{
@@ -1292,6 +1298,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"crit_damage"				"175"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"09"
 			{
@@ -1488,11 +1495,13 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"9"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage"				"800"
+				"CalculateSpellDamageTooltip"	"1"
 			}
 			"05"
 			{
@@ -1508,6 +1517,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bounce_damage"			"100"
+				"CalculateSpellDamageTooltip"	"1"
 			}
 			"08"
 			{
@@ -1599,11 +1609,13 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"9"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage"				"800"
+				"CalculateSpellDamageTooltip"	"1"
 			}
 			"05"
 			{
@@ -1619,6 +1631,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bounce_damage"			"175"
+				"CalculateSpellDamageTooltip"	"1"
 			}
 			"08"
 			{
@@ -1710,11 +1723,13 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"9"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage"				"800"
+				"CalculateSpellDamageTooltip"	"1"
 			}
 			"05"
 			{
@@ -1730,6 +1745,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bounce_damage"			"250"
+				"CalculateSpellDamageTooltip"	"1"
 			}
 			"08"
 			{
@@ -1821,11 +1837,13 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"9"
+				"CalculateSpellDamageTooltip"	"1"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage"				"800"
+				"CalculateSpellDamageTooltip"	"1"
 			}
 			"05"
 			{
@@ -1841,6 +1859,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bounce_damage"			"325"
+				"CalculateSpellDamageTooltip"	"1"
 			}
 			"08"
 			{
@@ -1929,11 +1948,13 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"9"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage"				"800"
+				"CalculateSpellDamageTooltip"	"1"
 			}
 			"05"
 			{
@@ -1949,6 +1970,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bounce_damage"			"400"
+				"CalculateSpellDamageTooltip"	"1"
 			}
 			"08"
 			{
@@ -2825,6 +2847,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_damage"				"7"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 
 			"05"
@@ -3200,6 +3223,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage"				"200"
+				"CalculateSpellDamageTooltip"	"1"
 			}
 			"08"
 			{
@@ -3661,6 +3685,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_block"			"10"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 		}
 	}
@@ -3725,6 +3750,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_block"			"20"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 		}
 	}
@@ -3795,6 +3821,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_block"			"40"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 		}
 	}
@@ -3885,6 +3912,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_block"			"50"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"06"
 			{
@@ -3905,6 +3933,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_reduction"		"10"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 		}
 	}
@@ -4001,6 +4030,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_block"			"60"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"07"
 			{
@@ -4021,6 +4051,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_reduction"		"15"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"11"
 			{
@@ -4058,6 +4089,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"10"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
 			{
@@ -4073,6 +4105,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"pierce_damage"			"85"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 		}
 	}
@@ -4132,6 +4165,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"66"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
 			{
@@ -4147,6 +4181,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"pulverize_damage"		"160"
+				"CalculateSpellDamageTooltip"	"1"
 			}
 			"05"
 			{
@@ -4218,6 +4253,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"65"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
 			{
@@ -4228,11 +4264,13 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"base_damage"			"60"
+				"CalculateSpellDamageTooltip"	"1"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"extra_damage"			"2.5"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"05"
 			{
@@ -4326,6 +4364,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"30"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 
 			"03"
@@ -4458,6 +4497,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"76"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
 			{
@@ -4536,6 +4576,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_damage"				"9"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
 			{
@@ -4556,6 +4597,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"unholy_bonus_damage"		"31"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"06"
 			{
@@ -4581,6 +4623,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"stack_damage"				"2"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"11"
 			{
@@ -4657,6 +4700,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_damage"				"22"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
 			{
@@ -4682,6 +4726,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"invis_damage"				"175"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"07"
 			{
@@ -4996,6 +5041,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_damage"				"30"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
 			{
@@ -5026,6 +5072,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"invis_damage"				"175"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"08"
 			{
@@ -5051,6 +5098,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"break_damage_reduction"	"-50"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 		}
 
@@ -5594,6 +5642,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"10"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"07"
 			{
@@ -5822,6 +5871,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"16"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"10"
 			{
@@ -5916,6 +5966,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"16"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"09"
 			{
@@ -6114,6 +6165,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"20"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"12"
 			{
@@ -6243,6 +6295,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"10"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"10"
 			{
@@ -6359,6 +6412,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"base_damage"				"100"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"10"
 			{
@@ -6374,6 +6428,7 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"damage_per_agi"			"1.25"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"13"
 			{
@@ -6394,6 +6449,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage_tooltip"			"125"
+				"CalculateSpellDamageTooltip"	"1"
 			}
 		}
 	}
@@ -6454,6 +6510,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"24"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
 			{
@@ -6469,6 +6526,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bounce_damage"			"120"
+				"CalculateSpellDamageTooltip"	"1"
 			}
 			"05"
 			{
@@ -6543,6 +6601,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"24"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
 			{
@@ -6558,6 +6617,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bounce_damage"			"150"
+				"CalculateSpellDamageTooltip"	"1"
 			}
 			"05"
 			{
@@ -6578,6 +6638,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"static_damage"			"200"
+				"CalculateSpellDamageTooltip"	"1"
 			}
 			"11"
 			{
@@ -6713,6 +6774,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage"				"50"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
 			{
@@ -6748,6 +6810,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"active_damage"			"40"
+				"CalculateSpellDamageTooltip"	"1"
 			}
 		}
 	}
@@ -6818,6 +6881,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage"				"100"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
 			{
@@ -6863,6 +6927,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"active_damage"			"40"
+				"CalculateSpellDamageTooltip"	"1"
 			}
 		}
 	}
@@ -7557,6 +7622,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"3"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 
 			"05"
@@ -7704,6 +7770,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"target_damage"			"100"
+				"CalculateSpellDamageTooltip"	"1"
 			}	
 		}
 
@@ -7888,6 +7955,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_damage"				"25"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"08"
 			{
@@ -7979,6 +8047,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"9"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"03"
 			{
@@ -8243,6 +8312,7 @@
 	//		{
 	//			"var_type"				"FIELD_INTEGER"
 	//			"bonus_damage"			"15"
+	//			"CalculateSpellDamageTooltip"	"0"
 	//		}
 	//		"02"
 	//		{
@@ -8366,6 +8436,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"blast_damage"			"50"
+				"CalculateSpellDamageTooltip"	"1"
 			}
 		}
 	}
@@ -8545,6 +8616,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"15"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
 			{
@@ -8690,6 +8762,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"75"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
 			{
@@ -9084,6 +9157,7 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"main_stat_bonus_damage"	"0.5"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 		}
 	}
@@ -9154,6 +9228,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"70"
+				"CalculateSpellDamageTooltip"	"0"
 			}					
 			"03"
 			{
@@ -9523,6 +9598,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"blink_damage_cooldown"		"3"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 
 			"03"
@@ -9609,6 +9685,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"blink_damage_cooldown"		"3"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"03"
 			{
@@ -9712,6 +9789,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"15"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"05"
 			{
@@ -9966,6 +10044,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"80"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"05"
 			{
@@ -10556,6 +10635,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"15"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
 			{
@@ -10645,6 +10725,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"15"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
 			{
@@ -10863,6 +10944,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_damage"				"333"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 		}
 	}
@@ -10904,6 +10986,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_damage"				"1000"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 		}
 	}
@@ -11027,6 +11110,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_damage"				"1000"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
 			{
@@ -11037,6 +11121,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage_reduction"			"75"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"04"
 			{
@@ -11226,6 +11311,7 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"bonus_damage_owner"			"100"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			// hardcoded in settings.lua
 			"02"
@@ -11242,6 +11328,7 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"bonus_damage_aura"				"30"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			// hardcoded in settings.lua
 			"05"
@@ -11710,6 +11797,7 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"damage"						"45"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 
 			"05"
@@ -11832,6 +11920,7 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"damage"						"90"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 
 			"05"
@@ -11909,6 +11998,7 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"damage_bonus"					"15"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
 			{
@@ -11988,6 +12078,7 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"damage_bonus"					"15"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
 			{
@@ -12028,6 +12119,7 @@
 			{			
 				"var_type"						"FIELD_INTEGER"
 				"rage_damage_bonus"				"20"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"10"
 			{
@@ -12101,6 +12193,7 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"damage_bonus"					"50"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
 			{
@@ -12141,6 +12234,7 @@
 			{
 				"var_type"							"FIELD_FLOAT"
 				"soul_slaughter_damage_per_stack"	"0.25"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"10"
 			{

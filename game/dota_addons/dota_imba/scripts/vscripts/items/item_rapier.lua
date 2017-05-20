@@ -22,8 +22,11 @@ LinkLuaModifier("modifier_imba_rapier_cursed", "items/item_rapier.lua", LUA_MODI
 
 rapier_base_class = class({})
 
-function rapier_base_class:OnOwnerDied()
-	self:GetCaster():DropRapier(self, true)
+function rapier_base_class:OnOwnerDied(params)
+	local hCaster = self:GetCaster()
+	if not hCaster:IsReincarnating() then
+		self:GetCaster():DropRapier(self, true)
+	end
 end
 
 function rapier_base_class:IsRapier()
@@ -87,9 +90,15 @@ modifier_imba_divine_rapier_2 = ShallowCopy( modifier_rapier_base_class )
 function modifier_imba_divine_rapier_2:DeclareFunctions()
     local decFuns =
     {
-		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		MODIFIER_PROPERTY_PROVIDES_FOW_POSITION
     }
     return decFuns
+end
+
+
+function modifier_imba_divine_rapier_2:GetModifierProvidesFOWVision()
+	return 1
 end
 
 function modifier_imba_divine_rapier_2:OnCreated()
@@ -97,25 +106,21 @@ function modifier_imba_divine_rapier_2:OnCreated()
 	self.parent = self:GetParent()
 	if self.parent:IsHero() and item then
 		self.bonus_damage = item:GetSpecialValueFor("bonus_damage")
-		local trail_pfx = ParticleManager:CreateParticle("particles/item/rapier/rapier_trail_regular.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
-		ParticleManager:SetParticleControlEnt(trail_pfx, 0, self.parent, PATTACH_ABSORIGIN_FOLLOW, nil, self.parent:GetAbsOrigin(), true)
-		self:AddParticle(trail_pfx, false, false, 0, true, false)
-		if IsServer() then 
-			self:StartIntervalThink(FrameTime())
-		end
 	else
 		self.bonus_damage = 0
 	end
 end
 
-function modifier_imba_divine_rapier_2:OnIntervalThink()
-	-- Make the owner visible to both teams
-	self.parent:MakeVisibleToTeam(DOTA_TEAM_GOODGUYS, FrameTime())
-	self.parent:MakeVisibleToTeam(DOTA_TEAM_BADGUYS, FrameTime())
-end
-
 function modifier_imba_divine_rapier_2:GetModifierPreAttack_BonusDamage()
 	return self.bonus_damage
+end
+
+function modifier_imba_divine_rapier_2:GetEffectName()
+	return "particles/item/rapier/rapier_trail_regular.vpcf"
+end
+
+function modifier_imba_divine_rapier_2:GetEffectAttachType()
+	return PATTACH_ABSORIGIN_FOLLOW
 end
 -------------------------------------------
 --			  ARCANE RAPIER
@@ -135,7 +140,7 @@ function modifier_imba_arcane_rapier:DeclareFunctions()
     return decFuns
 end
 
-function modifier_imba_arcane_rapier:OnCreated()
+function modifier_imba_arcane_rapier:OnCreated()	
 	local item = self:GetAbility()
 	if self:GetParent():IsHero() and item then
 		self.spell_power = item:GetSpecialValueFor("spell_power")
@@ -146,6 +151,10 @@ end
 
 function modifier_imba_arcane_rapier:GetModifierSpellAmplify_Percentage()
 	return self.spell_power
+end
+
+function modifier_imba_arcane_rapier:GetModifierProvidesFOWVision()
+	return 1
 end
 -------------------------------------------
 --			  ARCHMAGE RAPIER
@@ -160,7 +169,8 @@ modifier_imba_arcane_rapier_2 = ShallowCopy( modifier_rapier_base_class )
 function modifier_imba_arcane_rapier_2:DeclareFunctions()
     local decFuns =
     {
-		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
+		MODIFIER_PROPERTY_PROVIDES_FOW_POSITION
     }
     return decFuns
 end
@@ -170,12 +180,6 @@ function modifier_imba_arcane_rapier_2:OnCreated()
 	self.parent = self:GetParent()
 	if self.parent:IsHero() and item then
 		self.spell_power = item:GetSpecialValueFor("spell_power")
-		local trail_pfx = ParticleManager:CreateParticle("particles/item/rapier/rapier_trail_arcane.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
-		ParticleManager:SetParticleControlEnt(trail_pfx, 0, self.parent, PATTACH_ABSORIGIN_FOLLOW, nil, self.parent:GetAbsOrigin(), true)
-		self:AddParticle(trail_pfx, false, false, 0, true, false)
-		if IsServer() then 
-			self:StartIntervalThink(FrameTime())
-		end
 	else
 		self.spell_power = 0
 	end
@@ -183,6 +187,14 @@ end
 
 function modifier_imba_arcane_rapier_2:GetModifierSpellAmplify_Percentage()
 	return self.spell_power
+end
+
+function modifier_imba_arcane_rapier_2:GetEffectName()
+	return "particles/item/rapier/rapier_trail_arcane.vpcf"
+end
+
+function modifier_imba_arcane_rapier_2:GetEffectAttachType()
+	return PATTACH_ABSORIGIN_FOLLOW
 end
 -------------------------------------------
 --			  CURSED RAPIER
@@ -198,7 +210,8 @@ function modifier_imba_rapier_cursed:DeclareFunctions()
     local decFuns =
     {
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
-		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		MODIFIER_PROPERTY_PROVIDES_FOW_POSITION
     }
     return decFuns
 end
@@ -213,9 +226,6 @@ function modifier_imba_rapier_cursed:OnCreated()
 		self.base_corruption = item:GetSpecialValueFor("base_corruption")
 		self.time_to_double = item:GetSpecialValueFor("time_to_double")
 		self.corruption_total_time = 0
-		local trail_pfx = ParticleManager:CreateParticle("particles/item/rapier/item_rapier_cursed.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.parent)
-		ParticleManager:SetParticleControlEnt(trail_pfx, 0, self.parent, PATTACH_ABSORIGIN_FOLLOW, nil, self.parent:GetAbsOrigin(), true)
-		self:AddParticle(trail_pfx, false, false, 0, true, false)
 		if IsServer() then
 			self:StartIntervalThink(FrameTime())
 		end
@@ -231,11 +241,8 @@ end
 
 function modifier_imba_rapier_cursed:OnIntervalThink()
 	self.corruption_total_time = self.corruption_total_time + FrameTime()
-	-- Make the owner visible to both teams
-	self.parent:MakeVisibleToTeam(DOTA_TEAM_GOODGUYS, FrameTime())
-	self.parent:MakeVisibleToTeam(DOTA_TEAM_BADGUYS, FrameTime())
 	local total_corruption = self.base_corruption * self.parent:GetMaxHealth() * (self.corruption_total_time / self.time_to_double) * 0.01 * FrameTime()
-	ApplyDamage({attacker = self.parent, victim = self.parent, ability = self:GetAbility(), damage = total_corruption, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS})
+	ApplyDamage({attacker = self.parent, victim = self.parent, ability = self:GetAbility(), damage = total_corruption, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS+DOTA_DAMAGE_FLAG_NON_LETHAL})
 end
 
 function modifier_imba_rapier_cursed:GetModifierSpellAmplify_Percentage()
@@ -244,5 +251,17 @@ end
 
 function modifier_imba_rapier_cursed:GetModifierPreAttack_BonusDamage()
 	return self.bonus_damage
+end
+
+function modifier_imba_rapier_cursed:GetModifierProvidesFOWVision()
+	return 1
+end
+
+function modifier_imba_rapier_cursed:GetEffectName()
+	return "particles/item/rapier/item_rapier_cursed.vpcf"
+end
+
+function modifier_imba_rapier_cursed:GetEffectAttachType()
+	return PATTACH_ABSORIGIN_FOLLOW
 end
 -------------------------------------------
