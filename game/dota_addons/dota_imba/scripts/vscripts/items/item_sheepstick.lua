@@ -6,7 +6,7 @@
 --	Sheepstick definition
 -----------------------------------------------------------------------------------------------------------
 
-if item_imba_sheepstick == nil then item_imba_sheepstick = class({}) end
+item_imba_sheepstick = item_imba_sheepstick or class({})
 LinkLuaModifier( "modifier_item_imba_sheepstick", "items/item_sheepstick.lua", LUA_MODIFIER_MOTION_NONE )			-- Owner's bonus attributes, stackable
 LinkLuaModifier( "modifier_item_imba_sheepstick_debuff", "items/item_sheepstick.lua", LUA_MODIFIER_MOTION_NONE )	-- Enemy debuff
 LinkLuaModifier( "modifier_item_imba_sheepstick_buff", "items/item_sheepstick.lua", LUA_MODIFIER_MOTION_NONE )		-- Self-use buff
@@ -24,11 +24,11 @@ function item_imba_sheepstick:CastFilterResultTarget(target)
 		elseif caster:GetTeam() ~= target:GetTeam() and target:IsMagicImmune() then
 			return UF_FAIL_CUSTOM
 		elseif target:IsBuilding() then
-			return UF_FAIL_CUSTOM
+			return UF_FAIL_BUILDING
 		elseif target:HasModifier("modifier_item_imba_sheepstick_debuff") or target:HasModifier("modifier_imba_lion_hex") or target:HasModifier("modifier_shadow_shaman_voodoo") then
 			return UF_FAIL_CUSTOM
 		end
-		return UF_SUCCESS
+		return UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
 	end
 end
 
