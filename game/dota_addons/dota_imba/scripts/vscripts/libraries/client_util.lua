@@ -4,9 +4,9 @@ function GetClientSync(key)
 end
 
 function MergeTables( t1, t2 )
-		for name,info in pairs(t2) do
-				t1[name] = info
-		end
+	for name,info in pairs(t2) do
+		t1[name] = info
+	end
 end
 
 
