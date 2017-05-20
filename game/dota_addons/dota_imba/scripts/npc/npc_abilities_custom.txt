@@ -5545,6 +5545,7 @@
 		"AbilityTextureName"			"bane_brain_sap"
 		"ScriptFile"					"hero/hero_bane"
 		"MaxLevel"						"7"
+		"HasScepterUpgrade"				"1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -5563,18 +5564,21 @@
 				"brain_sap_duration"		"3.5"
 				"LinkedSpecialBonus"		"special_bonus_imba_bane_1"
 			}
-
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"manapool_reduction"		"50 50 50 50 60 70 80"
 			}
-
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"brain_sap_damage"			"90 160 230 300 330 360 390"
 				"LinkedSpecialBonus"		"special_bonus_imba_bane_5"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"cooldown_scepter"			"1.5"
 			}
 		}
 	}
@@ -5684,8 +5688,6 @@
 		"AbilityTextureName"			"bane_fiends_grip"	
 		"ScriptFile"					"hero/hero_bane"
 		"MaxLevel"						"6"
-
-		"HasScepterUpgrade"				"1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------

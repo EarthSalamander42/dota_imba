@@ -116,9 +116,18 @@ function imba_bane_brain_sap:OnSpellStart()
 end
 
 function imba_bane_brain_sap:GetCastRange(l,t)
-	if IsClient() then return self.BaseClass.GetCastRange(self,l,t)                  end  
+	if IsClient() then return self.BaseClass.GetCastRange(self,l,t) end
 	local talentrangebonus = self:GetCaster():FindTalentValue("special_bonus_imba_bane_4")
 	if IsServer() then return self.BaseClass.GetCastRange(self,l,t)+talentrangebonus end
+end
+
+-- Scepter cooldown reduction
+function imba_bane_brain_sap:GetCooldown(level)
+	if self:GetCaster():HasScepter() then
+		return self:GetSpecialValueFor("cooldown_scepter")
+	else
+		return self.BaseClass.GetCooldown(self, level)
+	end
 end
 
 -- Nightmare Spell Cast
