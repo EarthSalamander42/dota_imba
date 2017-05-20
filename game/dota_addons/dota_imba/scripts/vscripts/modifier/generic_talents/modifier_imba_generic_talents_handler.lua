@@ -134,7 +134,7 @@ function modifier_imba_generic_talents_handler:OnAttackLanded( keys )
 		-- Calculate actual lifesteal amount
 		local damage = keys.damage
 		local target_armor = target:GetPhysicalArmorValue()
-		local heal = damage * lifesteal_amount * 0.01 * (1 - 0.06 * (target_armor / (1 + 0.06 * target_armor)))
+		local heal = damage * lifesteal_amount * 0.01 * GetReductionFromArmor(target_armor) * 0.01
 
 		-- Choose the particle to draw
 		local lifesteal_particle = "particles/generic_gameplay/generic_lifesteal.vpcf"
