@@ -20,6 +20,18 @@ function DebugPrintTable(...)
 	--end
 end
 
+function MergeTables( t1, t2 )
+	for name,info in pairs(t2) do
+		t1[name] = info
+	end
+end
+
+function AddTableToTable( t1, t2)
+	for k,v in pairs(t2) do
+		table.insert(t1, v)
+	end
+end
+
 function PrintTable(t, indent, done)
 	--print ( string.format ('PrintTable type %s', type(keys)) )
 	if type(t) ~= "table" then return end
