@@ -11888,7 +11888,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost" 						"1200"
+		"ItemCost" 						"1100"
 		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
 		"ItemShopTags"					"damage;hard_to_tag"
 		"ItemQuality"					"common"
@@ -11900,7 +11900,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{	
-			"particle"						"particles/item/lifesteal_mask/lifesteal_particle.vpcf"
+			"particle"					"particles/item/lifesteal_mask/lifesteal_particle.vpcf"
 		}
 
 		// Casting
@@ -11912,7 +11912,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_bonus"					"15"
+				"damage_bonus"					"10"
 			}
 			"02"
 			{
@@ -11935,7 +11935,7 @@
 	
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"200"	
+		"ItemCost"						"0"	
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -11944,7 +11944,7 @@
 		"ItemResult"					"item_imba_mask_of_madness"
 		"ItemRequirements"
 		{
-			"01"						"item_imba_morbid_mask"
+			"01"						"item_imba_morbid_mask;item_quarterstaff"
 		}
 	}
 
@@ -11960,7 +11960,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1400"
+		"ItemCost"						"1975"
 		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
 		"ItemShopTags"					"hard_to_tag"
 		"ItemQuality"					"artifact"
@@ -11978,12 +11978,11 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{	
-			"particle"						"particles/item/lifesteal_mask/lifesteal_particle.vpcf"
+			"particle"					"particles/item/lifesteal_mask/lifesteal_particle.vpcf"
 
 			// Particle and sound disabled since rage is no longer used 
 			//"particle"					"particles/econ/items/drow/drow_head_mania/mask_of_madness_active_mania.vpcf"
 			//"soundfile"					"soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
-
 		}
 
 		"AbilitySpecial"
@@ -11991,7 +11990,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_bonus"					"15"
+				"damage_bonus"					"20"
 			}
 			"02"
 			{
@@ -12001,7 +12000,7 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"berserk_attack_speed"			"100"
+				"berserk_attack_speed"			"110"
 			}
 			"04"
 			{
@@ -12021,7 +12020,7 @@
 			"07"
 			{			
 				"var_type"						"FIELD_INTEGER"
-				"rage_ms_bonus_pct"				"15"
+				"rage_ms_bonus_pct"				"17"
 			}
 			"08"
 			{			
@@ -12037,6 +12036,11 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"rage_max_distance"				"800"
+			}
+			"11"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"attack_speed_bonus"			"10"
 			}
 		}
 	}
