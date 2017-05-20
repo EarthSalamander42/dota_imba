@@ -242,7 +242,7 @@
 	"item_winter_greevil_chewy"		"REMOVE"
 	"item_recipe_moon_shard"		"REMOVE"
     "item_moon_shard"				"REMOVE"
-    "item_enchanted_mango"			"REMOVE"
+    //"item_enchanted_mango"			"REMOVE"
     //"item_recipe_travel_boots_2"	"REMOVE"
     //"item_travel_boots_2"			"REMOVE"
     "item_recipe_lotus_orb"			"REMOVE"
@@ -755,7 +755,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"4"
+				"bonus_health_regen"	"6"
 			}
 			"03"
 			{
@@ -1009,7 +1009,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_stats"			"6"
+				"bonus_stats"			"2"
 			}
 			"02"
 			{
@@ -1024,7 +1024,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hp_regen_aura"			"8"
+				"hp_regen_aura"			"10"
 			}
 			"05"
 			{
@@ -1034,7 +1034,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_min"			"1800"
+				"health_min"			"2000"
 			}
 			"07"
 			{
@@ -1081,12 +1081,7 @@
 	//=================================================================================================================
 	"item_recipe_urn_of_shadows"
 	{
-		"ItemCost"						"100"
-
-		"ItemRequirements"
-		{
-			"01"						"item_sobi_mask;item_gauntlets"
-		}
+		"ItemCost"						"110"
 	}
 
 	//=================================================================================================================
@@ -1094,7 +1089,7 @@
 	//=================================================================================================================
 	"item_urn_of_shadows"
 	{
-		"ItemCost"						"575"
+		"ItemCost"						"675"
 	}
 
 	//=================================================================================================================
@@ -1570,6 +1565,43 @@
 				"var_type"					"FIELD_INTEGER"
 				"vision_radius"				"1000"
 			}			
+		}
+	}
+
+	//=================================================================================================================
+	// Rod of Atos
+	//=================================================================================================================
+	"item_rod_of_atos"
+	{
+		"ItemCost"						"2730"
+
+		"AbilitySpecial"
+		{		
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intellect"		"20"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_strength"		"15"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_agility"			"6"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"6"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"2.5"
+			}
 		}
 	}
 

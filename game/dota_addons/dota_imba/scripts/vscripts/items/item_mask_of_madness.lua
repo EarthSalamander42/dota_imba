@@ -39,7 +39,8 @@ function modifier_imba_mask_of_madness:OnCreated()
     --self.modifier_rage = "modifier_imba_mask_of_madness_rage"   
 
     -- Ability specials
-    self.damage_bonus = self.ability:GetSpecialValueFor("damage_bonus")    
+    self.damage_bonus = self.ability:GetSpecialValueFor("damage_bonus")
+    self.attack_speed_bonus = self.ability:GetSpecialValueFor("attack_speed_bonus")
     -- self.rage_damage_bonus = self.ability:GetSpecialValueFor("rage_damage_bonus")
     -- self.rage_lifesteal_bonus_pct = self.ability:GetSpecialValueFor("rage_lifesteal_bonus_pct")
 
@@ -54,8 +55,8 @@ function modifier_imba_mask_of_madness:OnCreated()
 end
 
 function modifier_imba_mask_of_madness:DeclareFunctions()
-    local decFunc = {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE}
-
+    local decFunc = {   MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+                        MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT    }
     return decFunc
 end
 
@@ -66,6 +67,10 @@ function modifier_imba_mask_of_madness:GetModifierPreAttack_BonusDamage()
     -- if self.caster:HasModifier(self.modifier_rage) then
     --     damage_bonus = damage_bonus + self.rage_damage_bonus
     -- end    
+end
+
+function modifier_imba_mask_of_madness:GetModifierAttackSpeedBonus_Constant()    
+    return self.attack_speed_bonus
 end
 
 function modifier_imba_mask_of_madness:OnDestroy()

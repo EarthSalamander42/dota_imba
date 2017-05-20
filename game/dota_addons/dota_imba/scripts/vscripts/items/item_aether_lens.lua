@@ -34,7 +34,7 @@ function modifier_imba_aether_lens:OnCreated()
 	self.parent = self:GetParent()
 	if self.parent:IsHero() and item then
 		self.bonus_mana = item:GetSpecialValueFor("bonus_mana")
-		self.bonus_health_regen = item:GetSpecialValueFor("bonus_health_regen")
+		self.bonus_mana_regen = item:GetSpecialValueFor("bonus_mana_regen")
 		self.cast_range_bonus = item:GetSpecialValueFor("cast_range_bonus")
 		self.spell_power = item:GetSpecialValueFor("spell_power")
 		self:CheckUnique(true)
@@ -47,7 +47,7 @@ function modifier_imba_aether_lens:DeclareFunctions()
 		MODIFIER_PROPERTY_CAST_RANGE_BONUS,
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
 		MODIFIER_PROPERTY_MANA_BONUS,
-		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT
+		MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE
     }
     return decFuns
 end
@@ -56,8 +56,8 @@ function modifier_imba_aether_lens:GetModifierSpellAmplify_Percentage()
 	return self:CheckUniqueValue(self.spell_power,{"modifier_imba_elder_staff","modifier_imba_nether_wand"})
 end
 
-function modifier_imba_aether_lens:GetModifierConstantHealthRegen()
-	return self.bonus_health_regen
+function modifier_imba_aether_lens:GetModifierPercentageManaRegen()
+	return self.bonus_mana_regen
 end
 
 function modifier_imba_aether_lens:GetModifierManaBonus()

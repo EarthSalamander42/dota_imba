@@ -76,7 +76,7 @@ function imba_bane_enfeeble:OnSpellStart()
 	if not IsServer() then return end
 	local target,caster = findtarget(self)
 	if target:TriggerSpellAbsorb(self) then return end
-	local enfeeble_duration = getkvValues(self,"enfeeble_duration")  
+	local enfeeble_duration = getkvValues(self,"enfeeble_duration") + caster:FindTalentValue("special_bonus_imba_bane_3")
 	target:AddNewModifier(caster, self, "modifier_imba_bane_enfeeble", {duration = enfeeble_duration})
 	EmitSoundOn("Hero_Bane.Enfeeble.Cast", caster)
 	EmitSoundOn("hero_bane.enfeeble", target)
@@ -92,7 +92,7 @@ function imba_bane_brain_sap:OnSpellStart()
 	local target,caster = findtarget(self)
 	local sapdamage,sapduration = getkvValues(self,"brain_sap_damage","brain_sap_duration")  
 	local talentdurationbonus = caster:FindTalentValue("special_bonus_imba_bane_1")
-	local talentdamagebonus = caster:FindTalentValue("special_bonus_imba_bane_5")	
+	local talentdamagebonus = caster:FindTalentValue("special_bonus_imba_bane_4")	
 	if target:TriggerSpellAbsorb(self) then return end -- Does player have linkins or another spell absorb?
 	damage = {
 		victim      = target,
@@ -115,10 +115,13 @@ function imba_bane_brain_sap:OnSpellStart()
 	end    
 end
 
-function imba_bane_brain_sap:GetCastRange(l,t)
-	if IsClient() then return self.BaseClass.GetCastRange(self,l,t)                  end  
-	local talentrangebonus = self:GetCaster():FindTalentValue("special_bonus_imba_bane_4")
-	if IsServer() then return self.BaseClass.GetCastRange(self,l,t)+talentrangebonus end
+-- Scepter cooldown reduction
+function imba_bane_brain_sap:GetCooldown(level)
+	if self:GetCaster():HasScepter() then
+		return self:GetSpecialValueFor("cooldown_scepter")
+	else
+		return self.BaseClass.GetCooldown(self, level)
+	end
 end
 
 -- Nightmare Spell Cast
@@ -224,26 +227,39 @@ function imba_bane_fiends_grip:OnChannelFinish(bInterrupted)
 	end
 end
 
--- We only care about channel operations when he has scepter
+-- We only care about channel operations when he has the lv40 talent
 function imba_bane_fiends_grip:OnChannelThink()
-	if not IsServer() then return end
-	if self:GetCaster():HasScepter() then
-		local vision_radius,vision_cone,fiends_grip_duration = getkvValues(self,"fiends_grip_duration","fiends_grip_scepter_radius","fiends_grip_scepter_vision_cone") 
-		local talentchannelbonus = self:GetCaster():FindTalentValue("special_bonus_imba_bane_6")
-		local caster_location = self.fiendcaster:GetAbsOrigin()
-		local enemies_to_check = FindUnitsInRadius(self.fiendcaster:GetTeamNumber(), caster_location, nil, vision_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, self:GetAbilityTargetType(), 0, FIND_CLOSEST, false)
-		for _,v in pairs(enemies_to_check) do
-			caster_location = self.fiendcaster:GetAbsOrigin()
-			local isgripped = v:HasModifier("modifier_imba_bane_fiends_grip")
-			local target_location = v:GetAbsOrigin()
-			local direction = (caster_location - target_location):Normalized()
-			local forward_vector = v:GetForwardVector() -- im probably too stupid for vector shit, firetoad wrote this i just slapped some true false in there. didn't touch original code
-			local angle = math.abs(RotationDelta((VectorToAngles(direction)), VectorToAngles(forward_vector)).y)
-			if angle <= ( vision_cone / 2 ) and v:CanEntityBeSeenByMyTeam(self.fiendcaster) and v~=self.fiendtarget and not isgripped and not v:IsMagicImmune() then
-				v:AddNewModifier(self.fiendcaster, self, "modifier_imba_bane_fiends_grip", {duration = ((fiends_grip_duration+talentchannelbonus)-(GameRules:GetGameTime()-self:GetChannelStartTime())),propogated = 0})
-				table.insert(self.fiendgriptable,v)
+	if IsServer() then
+		local caster = self:GetCaster()
+		if caster:HasTalent("special_bonus_imba_bane_8") then
+
+			-- Parameters
+			local vision_radius = self:GetTalentSpecialValueFor("talent_vision_radius")
+			local vision_cone = self:GetTalentSpecialValueFor("talent_vision_cone")
+			local fiends_grip_duration = self:GetTalentSpecialValueFor("fiends_grip_duration") + caster:FindTalentValue("special_bonus_imba_bane_6")
+			local caster_location = caster:GetAbsOrigin()
+
+			-- Iterate through nearby enemies
+			local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_location, nil, vision_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+			for _, enemy in pairs(nearby_enemies) do
+
+				-- If this enemy is already Gripped, do nothing
+				if not enemy:HasModifier("modifier_imba_bane_fiends_grip") then
+					local enemy_location =  enemy:GetAbsOrigin()
+					local enemy_to_caster_direction = (caster_location - enemy_location):Normalized()
+					local enemy_forward_vector =  enemy:GetForwardVector()
+
+					-- This is the angle between the enemy's forward vector and the line between them and the caster
+					local view_angle = math.abs(RotationDelta(VectorToAngles(enemy_to_caster_direction), VectorToAngles(enemy_forward_vector)).y)
+
+					-- If the angle is inside the vision cone, and the channeling caster can be seen by the enemy team, GET GRIPPED NOOB
+					if view_angle <= ( vision_cone / 2 ) and enemy:CanEntityBeSeenByMyTeam(caster) then
+						enemy:AddNewModifier(caster, self, "modifier_imba_bane_fiends_grip", {duration = fiends_grip_duration-(GameRules:GetGameTime()-self:GetChannelStartTime()), propogated = 0})
+						table.insert(self.fiendgriptable, enemy)
+					end
+				end
 			end
-		end    
+		end
 	end
 end
 
@@ -262,7 +278,7 @@ end
 
 function modifier_imba_bane_enfeeble:OnCreated()
 	local statreduction,damagereduction = getkvValues(self:GetAbility(),"stat_reduction","damage_reduction") 
-	local talentdamagereduction = self:GetCaster():FindTalentValue("special_bonus_imba_bane_3")
+	local talentdamagereduction = self:GetCaster():FindTalentValue("special_bonus_imba_bane_5")
 	self.damagereduction   = (damagereduction+talentdamagereduction) * (-1)  
 
 	if not IsServer() then return end
@@ -431,7 +447,10 @@ end
 function modifier_imba_bane_fiends_grip:OnIntervalThink()
 	if not IsServer() then return end 
 	local fiends_grip_mana_damage,fiends_grip_damage = getkvValues(self:GetAbility(),"fiends_grip_mana_damage","fiends_grip_damage")
-	self:GetParent():ReduceMana(self:GetParent():GetMaxMana() * (fiends_grip_mana_damage/100)) -- Reducing mana first, no particular reasoning why.
+	local parent = self:GetParent()
+	local mana_drained = math.min(parent:GetMaxMana() * fiends_grip_mana_damage * 0.01, parent:GetMana())
+	parent:ReduceMana(parent:GetMaxMana() * fiends_grip_mana_damage * 0.01) -- Reducing mana first, no particular reasoning why.
+	self:GetCaster():GiveMana(mana_drained)
 	local damage = {
 		victim      = self:GetParent(),
 		attacker    = self:GetCaster(),
