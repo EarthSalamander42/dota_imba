@@ -447,7 +447,10 @@ end
 function modifier_imba_bane_fiends_grip:OnIntervalThink()
 	if not IsServer() then return end 
 	local fiends_grip_mana_damage,fiends_grip_damage = getkvValues(self:GetAbility(),"fiends_grip_mana_damage","fiends_grip_damage")
-	self:GetParent():ReduceMana(self:GetParent():GetMaxMana() * (fiends_grip_mana_damage/100)) -- Reducing mana first, no particular reasoning why.
+	local parent = self:GetParent()
+	local mana_drained = math.min(parent:GetMaxMana() * fiends_grip_mana_damage * 0.01, parent:GetMana())
+	parent:ReduceMana(parent:GetMaxMana() * fiends_grip_mana_damage * 0.01) -- Reducing mana first, no particular reasoning why.
+	self:GetCaster():GiveMana(mana_drained)
 	local damage = {
 		victim      = self:GetParent(),
 		attacker    = self:GetCaster(),
