@@ -1,3 +1,4 @@
+CreateEmptyTalents("bloodseeker")
 imba_bloodseeker_bloodrage = imba_bloodseeker_bloodrage or class({})
 function imba_bloodseeker_bloodrage:OnSpellStart()
 	local hTarget = self:GetCursorTarget()
@@ -501,7 +502,7 @@ function imba_bloodseeker_rupture:OnSpellStart(target)
 		ApplyDamage({victim = hTarget, attacker = caster, damage = hTarget:GetMaxHealth() * hpBurn / 100, damage_type = self:GetAbilityDamageType(), ability = self})
 		if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_3") then 
 			caster:Heal(hpBurn, caster)
-			local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
+			local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, caster)
 			ParticleManager:ReleaseParticleIndex(healFX)
 		end
 	end
@@ -585,92 +586,3 @@ function modifier_imba_bloodseeker_rupture:GetEffectName()
 end
 
 --------------------------------------------------------------------------------
-
-
-LinkLuaModifier("modifier_special_bonus_imba_bloodseeker_1", "hero/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_bloodseeker_1 = class({})
-
-function modifier_special_bonus_imba_bloodseeker_1:IsHidden()
-	return true
-end
-
-function modifier_special_bonus_imba_bloodseeker_1:RemoveOnDeath()
-	return false
-end
-
-
-LinkLuaModifier("modifier_special_bonus_imba_bloodseeker_2", "hero/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_bloodseeker_2 = class({})
-
-function modifier_special_bonus_imba_bloodseeker_2:IsHidden()
-	return true
-end
-
-function modifier_special_bonus_imba_bloodseeker_2:RemoveOnDeath()
-	return false
-end
-
-LinkLuaModifier("modifier_special_bonus_imba_bloodseeker_3", "hero/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_bloodseeker_3 = class({})
-
-function modifier_special_bonus_imba_bloodseeker_3:IsHidden()
-	return true
-end
-
-function modifier_special_bonus_imba_bloodseeker_3:RemoveOnDeath()
-	return false
-end
-LinkLuaModifier("modifier_special_bonus_imba_bloodseeker_4", "hero/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_bloodseeker_4 = class({})
-
-function modifier_special_bonus_imba_bloodseeker_4:IsHidden()
-	return true
-end
-
-function modifier_special_bonus_imba_bloodseeker_4:RemoveOnDeath()
-	return false
-end
-
-LinkLuaModifier("modifier_special_bonus_imba_bloodseeker_5", "hero/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_bloodseeker_5 = class({})
-
-function modifier_special_bonus_imba_bloodseeker_5:IsHidden()
-	return true
-end
-
-function modifier_special_bonus_imba_bloodseeker_5:RemoveOnDeath()
-	return false
-end
-
-LinkLuaModifier("modifier_special_bonus_imba_bloodseeker_6", "hero/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_bloodseeker_6 = class({})
-
-function modifier_special_bonus_imba_bloodseeker_6:IsHidden()
-	return true
-end
-
-function modifier_special_bonus_imba_bloodseeker_6:RemoveOnDeath()
-	return false
-end
-
-LinkLuaModifier("modifier_special_bonus_imba_bloodseeker_7", "hero/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_bloodseeker_7 = class({})
-
-function modifier_special_bonus_imba_bloodseeker_7:IsHidden()
-	return true
-end
-
-function modifier_special_bonus_imba_bloodseeker_7:RemoveOnDeath()
-	return false
-end
-
-LinkLuaModifier("modifier_special_bonus_imba_bloodseeker_8", "hero/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_bloodseeker_8 = class({})
-
-function modifier_special_bonus_imba_bloodseeker_8:IsHidden()
-	return true
-end
-
-function modifier_special_bonus_imba_bloodseeker_8:RemoveOnDeath()
-	return false
-end
