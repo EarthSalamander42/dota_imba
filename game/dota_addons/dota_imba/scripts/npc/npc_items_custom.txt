@@ -6785,6 +6785,13 @@
 		"AbilityCooldown"				"70"
 		"AbilityManaCost"				"0"
 		"AbilitySharedCooldown"			"desolator"
+    
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"					"particles/item/desolator/desolator2_active.vpcf"
+		}		
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
