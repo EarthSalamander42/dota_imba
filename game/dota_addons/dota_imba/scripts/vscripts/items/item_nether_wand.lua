@@ -6,31 +6,31 @@
 -------------------------------------------
 --			NETHER WAND
 -------------------------------------------
-LinkLuaModifier("modifier_imba_nether_wand", "items/item_nether_wand.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_elder_staff", "items/item_nether_wand.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_elder_nether_burn", "items/item_nether_wand.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_item_nether_wand_passive", "items/item_nether_wand.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_item_elder_staff_passive", "items/item_nether_wand.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_item_elder_nether_debuff_dot", "items/item_nether_wand.lua", LUA_MODIFIER_MOTION_NONE)
 -------------------------------------------
 
 item_imba_nether_wand = item_imba_nether_wand or class({})
 -------------------------------------------
 function item_imba_nether_wand:GetIntrinsicModifierName()
-    return "modifier_imba_nether_wand"
+    return "modifier_imba_item_nether_wand_passive"
 end
 -------------------------------------------
-modifier_imba_nether_wand = modifier_imba_nether_wand or class({})
-function modifier_imba_nether_wand:IsDebuff() return false end
-function modifier_imba_nether_wand:IsHidden() return true end
-function modifier_imba_nether_wand:IsPermanent() return true end
-function modifier_imba_nether_wand:IsPurgable() return false end
-function modifier_imba_nether_wand:IsPurgeException() return false end
-function modifier_imba_nether_wand:IsStunDebuff() return false end
-function modifier_imba_nether_wand:RemoveOnDeath() return false end
-function modifier_imba_nether_wand:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
-function modifier_imba_nether_wand:OnDestroy()
+modifier_imba_item_nether_wand_passive = modifier_imba_item_nether_wand_passive or class({})
+function modifier_imba_item_nether_wand_passive:IsDebuff() return false end
+function modifier_imba_item_nether_wand_passive:IsHidden() return true end
+function modifier_imba_item_nether_wand_passive:IsPermanent() return true end
+function modifier_imba_item_nether_wand_passive:IsPurgable() return false end
+function modifier_imba_item_nether_wand_passive:IsPurgeException() return false end
+function modifier_imba_item_nether_wand_passive:IsStunDebuff() return false end
+function modifier_imba_item_nether_wand_passive:RemoveOnDeath() return false end
+function modifier_imba_item_nether_wand_passive:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_imba_item_nether_wand_passive:OnDestroy()
 	self:CheckUnique(false)
 end
 
-function modifier_imba_nether_wand:OnCreated()
+function modifier_imba_item_nether_wand_passive:OnCreated()
 	self.item = self:GetAbility()
 	self.parent = self:GetParent()
 	if self.parent:IsHero() and self.item then
@@ -45,7 +45,7 @@ function modifier_imba_nether_wand:OnCreated()
 	end
 end
 
-function modifier_imba_nether_wand:DeclareFunctions()
+function modifier_imba_item_nether_wand_passive:DeclareFunctions()
     local decFuns =
     {
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
@@ -57,27 +57,32 @@ function modifier_imba_nether_wand:DeclareFunctions()
     return decFuns
 end
 
-function modifier_imba_nether_wand:GetModifierSpellAmplify_Percentage()
-	return self:CheckUniqueValue(self.spell_power,{"modifier_imba_elder_staff"})
+function modifier_imba_item_nether_wand_passive:GetModifierSpellAmplify_Percentage()
+	return self:CheckUniqueValue(self.spell_power,{"modifier_imba_item_elder_staff_passive"})
 end
 
-function modifier_imba_nether_wand:GetModifierPreAttack_BonusDamage()
+function modifier_imba_item_nether_wand_passive:GetModifierPreAttack_BonusDamage()
 	return self.bonus_damage
 end
 
-function modifier_imba_nether_wand:GetModifierAttackSpeedBonus_Constant()
+function modifier_imba_item_nether_wand_passive:GetModifierAttackSpeedBonus_Constant()
 	return self.bonus_as
 end
 
-function modifier_imba_nether_wand:GetModifierBonusStats_Intellect()
+function modifier_imba_item_nether_wand_passive:GetModifierBonusStats_Intellect()
 	return self.bonus_intellect
 end
 
-function modifier_imba_nether_wand:OnTakeDamage(params)
+function modifier_imba_item_nether_wand_passive:OnTakeDamage(params)
 	if IsServer() then
-		if (self.parent == params.attacker) and (params.inflictor ~= self.item) and (params.unit:GetTeam() ~= self.parent:GetTeam()) and (not self.parent:IsIllusion()) and (self:GetStackCount() == 1) and (not (self.parent:HasModifier("modifier_imba_elder_staff") or params.unit:IsBuilding() or params.unit:IsOther())) then
-			if (self.parent:GetAbsOrigin() - params.unit:GetAbsOrigin()):Length2D() <= IMBA_DAMAGE_EFFECTS_DISTANCE_CUTOFF then
-				params.unit:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_elder_nether_burn", {duration = self.burn_duration})
+		if self:CheckUniqueValue(1,{"modifier_imba_item_elder_staff_passive"}) == 1 then
+			if (self.parent == params.attacker) and
+			(params.inflictor ~= self.item) and
+			(params.unit:GetTeam() ~= self.parent:GetTeam()) and
+			not (params.unit:IsBuilding() or params.unit:IsOther()) then
+				if (self.parent:GetAbsOrigin() - params.unit:GetAbsOrigin()):Length2D() <= IMBA_DAMAGE_EFFECTS_DISTANCE_CUTOFF then
+					params.unit:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_item_elder_nether_debuff_dot", {duration = self.burn_duration})
+				end
 			end
 		end
 	end
@@ -88,23 +93,23 @@ end
 item_imba_elder_staff = item_imba_elder_staff or class({})
 -------------------------------------------
 function item_imba_elder_staff:GetIntrinsicModifierName()
-    return "modifier_imba_elder_staff"
+    return "modifier_imba_item_elder_staff_passive"
 end
 -------------------------------------------
-modifier_imba_elder_staff = modifier_imba_elder_staff or class({})
-function modifier_imba_elder_staff:IsDebuff() return false end
-function modifier_imba_elder_staff:IsHidden() return true end
-function modifier_imba_elder_staff:IsPermanent() return true end
-function modifier_imba_elder_staff:IsPurgable() return false end
-function modifier_imba_elder_staff:IsPurgeException() return false end
-function modifier_imba_elder_staff:IsStunDebuff() return false end
-function modifier_imba_elder_staff:RemoveOnDeath() return false end
-function modifier_imba_elder_staff:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
-function modifier_imba_elder_staff:OnDestroy()
+modifier_imba_item_elder_staff_passive = modifier_imba_item_elder_staff_passive or class({})
+function modifier_imba_item_elder_staff_passive:IsDebuff() return false end
+function modifier_imba_item_elder_staff_passive:IsHidden() return true end
+function modifier_imba_item_elder_staff_passive:IsPermanent() return true end
+function modifier_imba_item_elder_staff_passive:IsPurgable() return false end
+function modifier_imba_item_elder_staff_passive:IsPurgeException() return false end
+function modifier_imba_item_elder_staff_passive:IsStunDebuff() return false end
+function modifier_imba_item_elder_staff_passive:RemoveOnDeath() return false end
+function modifier_imba_item_elder_staff_passive:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_imba_item_elder_staff_passive:OnDestroy()
 	self:CheckUnique(false)
 end
 
-function modifier_imba_elder_staff:OnCreated()
+function modifier_imba_item_elder_staff_passive:OnCreated()
 	self.item = self:GetAbility()
 	self.parent = self:GetParent()
 	if self.parent:IsHero() and self.item then
@@ -120,7 +125,7 @@ function modifier_imba_elder_staff:OnCreated()
 	end
 end
 
-function modifier_imba_elder_staff:DeclareFunctions()
+function modifier_imba_item_elder_staff_passive:DeclareFunctions()
     local decFuns =
     {
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
@@ -135,57 +140,62 @@ function modifier_imba_elder_staff:DeclareFunctions()
     return decFuns
 end
 
-function modifier_imba_elder_staff:GetModifierSpellAmplify_Percentage()
+function modifier_imba_item_elder_staff_passive:GetModifierSpellAmplify_Percentage()
 	return self:CheckUniqueValue(self.spell_power,nil)
 end
 
-function modifier_imba_elder_staff:GetModifierPreAttack_BonusDamage()
+function modifier_imba_item_elder_staff_passive:GetModifierPreAttack_BonusDamage()
 	return self.bonus_damage
 end
 
-function modifier_imba_elder_staff:GetModifierAttackSpeedBonus_Constant()
+function modifier_imba_item_elder_staff_passive:GetModifierAttackSpeedBonus_Constant()
 	return self.bonus_as
 end
 
-function modifier_imba_elder_staff:GetModifierBonusStats_Intellect()
+function modifier_imba_item_elder_staff_passive:GetModifierBonusStats_Intellect()
 	return self.bonus_intellect
 end
 
-function modifier_imba_elder_staff:GetModifierConstantHealthRegen()
+function modifier_imba_item_elder_staff_passive:GetModifierConstantHealthRegen()
 	return self.bonus_health_regen
 end
 
-function modifier_imba_elder_staff:GetModifierManaBonus()
+function modifier_imba_item_elder_staff_passive:GetModifierManaBonus()
 	return self.bonus_mana
 end
 
-function modifier_imba_elder_staff:GetModifierCastRangeBonus()
+function modifier_imba_item_elder_staff_passive:GetModifierCastRangeBonus()
 	return self:CheckUniqueValue(self.cast_range_bonus,nil)
 end
 
-function modifier_imba_elder_staff:OnTakeDamage(params)
+function modifier_imba_item_elder_staff_passive:OnTakeDamage(params)
 	if IsServer() then
-		if (self.parent == params.attacker) and (params.inflictor ~= self.item) and (params.unit:GetTeam() ~= self.parent:GetTeam()) and (not self.parent:IsIllusion()) and (self:GetStackCount() == 1) and (not (params.unit:IsBuilding() or params.unit:IsOther())) then
-			if (self.parent:GetAbsOrigin() - params.unit:GetAbsOrigin()):Length2D() <= IMBA_DAMAGE_EFFECTS_DISTANCE_CUTOFF then
-				params.unit:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_elder_nether_burn", {duration = self.burn_duration})
+		if self:CheckUniqueValue(1,nil) == 1 then
+			if (self.parent == params.attacker) and
+			(params.inflictor ~= self.item) and
+			(params.unit:GetTeam() ~= self.parent:GetTeam()) and
+			not (params.unit:IsBuilding() or params.unit:IsOther()) then
+				if (self.parent:GetAbsOrigin() - params.unit:GetAbsOrigin()):Length2D() <= IMBA_DAMAGE_EFFECTS_DISTANCE_CUTOFF then
+					params.unit:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_item_elder_nether_debuff_dot", {duration = self.burn_duration})
+				end
 			end
 		end
 	end
 end
 -------------------------------------------
-modifier_imba_elder_nether_burn = modifier_imba_elder_nether_burn or class({})
-function modifier_imba_elder_nether_burn:IsDebuff() return true end
-function modifier_imba_elder_nether_burn:IsHidden() return false end
-function modifier_imba_elder_nether_burn:IsPurgable() return true end
-function modifier_imba_elder_nether_burn:IsStunDebuff() return false end
-function modifier_imba_elder_nether_burn:RemoveOnDeath() return true end
+modifier_imba_item_elder_nether_debuff_dot = modifier_imba_item_elder_nether_debuff_dot or class({})
+function modifier_imba_item_elder_nether_debuff_dot:IsDebuff() return true end
+function modifier_imba_item_elder_nether_debuff_dot:IsHidden() return false end
+function modifier_imba_item_elder_nether_debuff_dot:IsPurgable() return true end
+function modifier_imba_item_elder_nether_debuff_dot:IsStunDebuff() return false end
+function modifier_imba_item_elder_nether_debuff_dot:RemoveOnDeath() return true end
 -------------------------------------------
 
-function modifier_imba_elder_nether_burn:OnDestroy()
+function modifier_imba_item_elder_nether_debuff_dot:OnDestroy()
 	self:StartIntervalThink(-1)
 end
 
-function modifier_imba_elder_nether_burn:OnCreated()
+function modifier_imba_item_elder_nether_debuff_dot:OnCreated()
 	self.item = self:GetAbility()
 	self.parent = self:GetParent()
 	if self.item then
@@ -200,7 +210,7 @@ function modifier_imba_elder_nether_burn:OnCreated()
 	end
 end
 
-function modifier_imba_elder_nether_burn:OnRefresh()
+function modifier_imba_item_elder_nether_debuff_dot:OnRefresh()
 	self.item = self:GetAbility()
 	self.parent = self:GetParent()
 	if self.item then
@@ -211,15 +221,15 @@ function modifier_imba_elder_nether_burn:OnRefresh()
 	end
 end
 
-function modifier_imba_elder_nether_burn:GetEffectName()
+function modifier_imba_item_elder_nether_debuff_dot:GetEffectName()
 	return "particles/item/nether_wand/nether_burn_debuff.vpcf"
 end
 
-function modifier_imba_elder_nether_burn:GetEffectAttachType()
+function modifier_imba_item_elder_nether_debuff_dot:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW
 end
 
-function modifier_imba_elder_nether_burn:OnIntervalThink()
+function modifier_imba_item_elder_nether_debuff_dot:OnIntervalThink()
 	local damage = self.burn_amount * self.burn_tick / self.duration * self.parent:GetHealth() * 0.01
 	ApplyDamage({attacker = self:GetCaster(), victim = self.parent, ability = self.item, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 end

@@ -5,17 +5,20 @@ Updated: 17.05.2017
 ]]
 
 CreateEmptyTalents("axe")
-
+local LinkedModifiers = {}
 -------------------------------------------
 --			     Berserker's Call            --
 -------------------------------------------
-
-imba_axe_berserkers_call = class({})
-
-LinkLuaModifier("modifier_imba_berserkers_call_caster", "hero/hero_axe", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_berserkers_call_talent", "hero/hero_axe", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_berserkers_call_enemy", "hero/hero_axe", LUA_MODIFIER_MOTION_NONE)
-
+-- Visible Modifiers:
+MergeTables(LinkedModifiers,{
+	["modifier_imba_berserkers_call_buff_armor"] = LUA_MODIFIER_MOTION_NONE,
+	["modifier_imba_berserkers_call_debuff_cmd"] = LUA_MODIFIER_MOTION_NONE,
+})
+-- Hidden Modifiers:
+MergeTables(LinkedModifiers,{
+	["modifier_imba_berserkers_call_talent"] = LUA_MODIFIER_MOTION_NONE,
+})
+imba_axe_berserkers_call = imba_axe_berserkers_call or class({})
 function imba_axe_berserkers_call:OnSpellStart()
   local caster                    =       self:GetCaster()
   local ability                   =       self
@@ -38,7 +41,7 @@ function imba_axe_berserkers_call:OnSpellStart()
   for _,target in pairs(enemies_in_radius) do
     target:SetForceAttackTarget(caster)
     target:MoveToTargetToAttack(caster)
-    target:AddNewModifier(caster, self, "modifier_imba_berserkers_call_enemy", {duration = ability:GetSpecialValueFor("duration")})
+    target:AddNewModifier(caster, self, "modifier_imba_berserkers_call_debuff_cmd", {duration = ability:GetSpecialValueFor("duration")})
   end
 
   -- if enemies table is empty play random responses_zero_enemy
@@ -48,7 +51,7 @@ function imba_axe_berserkers_call:OnSpellStart()
     self:GetCaster():EmitSound(responses_1_or_more_enemies)
   end
 
-  caster:AddNewModifier(caster, self, "modifier_imba_berserkers_call_caster", {duration = ability:GetSpecialValueFor("duration")})
+  caster:AddNewModifier(caster, self, "modifier_imba_berserkers_call_buff_armor", {duration = ability:GetSpecialValueFor("duration")})
 
   if caster:HasTalent("special_bonus_imba_axe_2") then
     caster:AddNewModifier(caster, self, "modifier_imba_berserkers_call_talent", {duration = ability:GetSpecialValueFor("duration") + 4 })
@@ -73,38 +76,38 @@ end
 -- Berserker's Call caster modifier
 -------------------------------------------
 
-modifier_imba_berserkers_call_caster = class({})
-function modifier_imba_berserkers_call_caster:DeclareFunctions()
+modifier_imba_berserkers_call_buff_armor = modifier_imba_berserkers_call_buff_armor or class({})
+function modifier_imba_berserkers_call_buff_armor:DeclareFunctions()
   local funcs = {
     MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS
   }
   return funcs
 end
 
-function modifier_imba_berserkers_call_caster:GetModifierPhysicalArmorBonus()
+function modifier_imba_berserkers_call_buff_armor:GetModifierPhysicalArmorBonus()
   return self:GetAbility():GetSpecialValueFor( "bonus_armor")
 end
 
-function modifier_imba_berserkers_call_caster:OnCreated()
+function modifier_imba_berserkers_call_buff_armor:OnCreated()
   local caster_particle = ParticleManager:CreateParticle( "particles/units/heroes/hero_axe/axe_beserkers_call_owner.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
   ParticleManager:SetParticleControl(caster_particle, 2, Vector(0, 0, 0))
   ParticleManager:ReleaseParticleIndex(caster_particle)
   return true
 end
 
-function modifier_imba_berserkers_call_caster:GetStatusEffectName()
+function modifier_imba_berserkers_call_buff_armor:GetStatusEffectName()
   return "particles/status_fx/status_effect_gods_strength.vpcf"
 end
 
-function modifier_imba_berserkers_call_caster:IsPurgable()
+function modifier_imba_berserkers_call_buff_armor:IsPurgable()
   return false
 end
 
-function modifier_imba_berserkers_call_caster:IsBuff()
+function modifier_imba_berserkers_call_buff_armor:IsBuff()
   return true
 end
 
-function modifier_imba_berserkers_call_caster:RemoveOnDeath()
+function modifier_imba_berserkers_call_buff_armor:RemoveOnDeath()
   return true
 end
 
@@ -112,7 +115,7 @@ end
 -- Berserker's Call caster talent modifier
 -------------------------------------------
 
-modifier_imba_berserkers_call_talent = class({})
+modifier_imba_berserkers_call_talent = modifier_imba_berserkers_call_talent or class({})
 
 function modifier_imba_berserkers_call_talent:DeclareFunctions()
   local funcs = {
@@ -152,55 +155,55 @@ end
 -- Berserker's Call enemy modifier
 -------------------------------------------
 
-modifier_imba_berserkers_call_enemy = class({})
+modifier_imba_berserkers_call_debuff_cmd = modifier_imba_berserkers_call_debuff_cmd or class({})
 
-function modifier_imba_berserkers_call_enemy:CheckState()
+function modifier_imba_berserkers_call_debuff_cmd:CheckState()
   local state = {[MODIFIER_STATE_COMMAND_RESTRICTED] = true}
   return state
 end
 
-function modifier_imba_berserkers_call_enemy:OnCreated()
+function modifier_imba_berserkers_call_debuff_cmd:OnCreated()
   return true
 end
 
-function modifier_imba_berserkers_call_enemy:DeclareFunctions()
+function modifier_imba_berserkers_call_debuff_cmd:DeclareFunctions()
   local funcs = {
     MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
   }
   return funcs
 end
 
-function modifier_imba_berserkers_call_enemy:OnDestroy()
+function modifier_imba_berserkers_call_debuff_cmd:OnDestroy()
   if IsServer() then
     self:GetParent():SetForceAttackTarget(nil)
     return true
   end
 end
 
-function modifier_imba_berserkers_call_enemy:GetModifierAttackSpeedBonus_Constant()
+function modifier_imba_berserkers_call_debuff_cmd:GetModifierAttackSpeedBonus_Constant()
     local caster = self:GetCaster()
     local ability = self:GetAbility()
     self.speed_bonus = ability:GetSpecialValueFor("bonus_as") + caster:FindTalentValue("special_bonus_imba_axe_5")
     return self.speed_bonus
 end
 
-function modifier_imba_berserkers_call_enemy:GetStatusEffectName()
+function modifier_imba_berserkers_call_debuff_cmd:GetStatusEffectName()
   return "particles/status_fx/status_effect_beserkers_call.vpcf"
 end
 
-function modifier_imba_berserkers_call_enemy:StatusEffectPriority()
+function modifier_imba_berserkers_call_debuff_cmd:StatusEffectPriority()
   return 10
 end
 
-function modifier_imba_berserkers_call_enemy:IsHidden()
+function modifier_imba_berserkers_call_debuff_cmd:IsHidden()
   return false
 end
 
-function modifier_imba_berserkers_call_enemy:IsDebuff()
+function modifier_imba_berserkers_call_debuff_cmd:IsDebuff()
   return true
 end
 
-function modifier_imba_berserkers_call_enemy:IsPurgable()
+function modifier_imba_berserkers_call_debuff_cmd:IsPurgable()
   return false
 end
 
@@ -210,13 +213,13 @@ end
 -------------------------------------------
 -- Battle Hunger
 -------------------------------------------
+-- Visible Modifiers:
+MergeTables(LinkedModifiers,{
+	["modifier_imba_battle_hunger_buff_haste"] = LUA_MODIFIER_MOTION_NONE,
+	["modifier_imba_battle_hunger_debuff"] = LUA_MODIFIER_MOTION_NONE,
+})
 
-
-imba_axe_battle_hunger = class({})
-
-LinkLuaModifier("modifier_imba_axe_battle_hunger_caster", "hero/hero_axe", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_axe_battle_hunger_enemy", "hero/hero_axe", LUA_MODIFIER_MOTION_NONE)
-
+imba_axe_battle_hunger = imba_axe_battle_hunger or class({})
 function imba_axe_battle_hunger:OnSpellStart(target)
 
   local caster                    =       self:GetCaster()
@@ -224,7 +227,7 @@ function imba_axe_battle_hunger:OnSpellStart(target)
     target                        =       self:GetCursorTarget()
   end
   local ability                   =       self
-  local caster_modifier           =       "modifier_imba_axe_battle_hunger_caster"
+  local caster_modifier           =       "modifier_imba_battle_hunger_buff_haste"
   local random_response           =       "axe_axe_ability_battlehunger_0"..math.random(1,3)
 
   self:GetCaster():EmitSound("Hero_Axe.Battle_Hunger")
@@ -243,14 +246,14 @@ function imba_axe_battle_hunger:OnSpellStart(target)
     caster:AddNewModifier(caster, self, caster_modifier, {})
     caster:SetModifierStackCount(caster_modifier, ability, 1)
   else
-    if not target:HasModifier("modifier_imba_axe_battle_hunger_enemy") then
+    if not target:HasModifier("modifier_imba_battle_hunger_debuff_dot") then
       local stack_count = caster:GetModifierStackCount(caster_modifier, ability)
       caster:SetModifierStackCount(caster_modifier, ability, stack_count + 1)
     end
   end
 
-  --caster:AddNewModifier(caster, self, "modifier_imba_axe_battle_hunger_caster", {})
-  target:AddNewModifier(caster, self, "modifier_imba_axe_battle_hunger_enemy", {})
+  --caster:AddNewModifier(caster, self, "modifier_imba_battle_hunger_buff_haste", {})
+  target:AddNewModifier(caster, self, "modifier_imba_battle_hunger_debuff_dot", {})
 
 end
 
@@ -258,24 +261,24 @@ end
 -- Battle Hunger caster modifier
 -------------------------------------------
 
-modifier_imba_axe_battle_hunger_caster = class({})
+modifier_imba_battle_hunger_buff_haste = modifier_imba_battle_hunger_buff_haste or class({})
 
-function modifier_imba_axe_battle_hunger_caster:DeclareFunctions()
+function modifier_imba_battle_hunger_buff_haste:DeclareFunctions()
   local funcs = {
     MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
   }
   return funcs
 end
 
-function modifier_imba_axe_battle_hunger_caster:GetModifierMoveSpeedBonus_Percentage()
+function modifier_imba_battle_hunger_buff_haste:GetModifierMoveSpeedBonus_Percentage()
   return self:GetAbility():GetSpecialValueFor("speed_bonus") * self:GetStackCount()
 end
 
-function modifier_imba_axe_battle_hunger_caster:IsHidden()
+function modifier_imba_battle_hunger_buff_haste:IsHidden()
   return false
 end
 
-function modifier_imba_axe_battle_hunger_caster:IsPurgable()
+function modifier_imba_battle_hunger_buff_haste:IsPurgable()
   return false
 end
 
@@ -283,9 +286,9 @@ end
 -- Battle Hunger enemy modifier
 -------------------------------------------
 
-modifier_imba_axe_battle_hunger_enemy = class({})
+modifier_imba_battle_hunger_debuff_dot = modifier_imba_battle_hunger_debuff_dot or class({})
 
-function modifier_imba_axe_battle_hunger_enemy:OnCreated()
+function modifier_imba_battle_hunger_debuff_dot:OnCreated()
   if IsServer() then
     self.battle_hunger_particle = "particles/units/heroes/hero_axe/axe_battle_hunger.vpcf"
     self.kill_count = 0
@@ -296,11 +299,11 @@ function modifier_imba_axe_battle_hunger_enemy:OnCreated()
   end
 end
 
-function modifier_imba_axe_battle_hunger_enemy:OnRefresh()
+function modifier_imba_battle_hunger_debuff_dot:OnRefresh()
   self.kill_count = 0
 end
 
-function modifier_imba_axe_battle_hunger_enemy:OnIntervalThink()
+function modifier_imba_battle_hunger_debuff_dot:OnIntervalThink()
   if IsServer() then
     local target = self:GetParent()
     local caster = self:GetCaster()
@@ -320,18 +323,18 @@ function modifier_imba_axe_battle_hunger_enemy:OnIntervalThink()
   end
 end
 
-function modifier_imba_axe_battle_hunger_enemy:DeclareFunctions()
+function modifier_imba_battle_hunger_debuff_dot:DeclareFunctions()
   local funcs = {
     MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE, MODIFIER_EVENT_ON_DEATH, MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE
   }
   return funcs
 end
 
-function modifier_imba_axe_battle_hunger_enemy:GetModifierMoveSpeedBonus_Percentage()
+function modifier_imba_battle_hunger_debuff_dot:GetModifierMoveSpeedBonus_Percentage()
   return self:GetAbility():GetSpecialValueFor("slow") * 0.01
 end
 
-function modifier_imba_axe_battle_hunger_enemy:GetModifierTotalDamageOutgoing_Percentage()
+function modifier_imba_battle_hunger_debuff_dot:GetModifierTotalDamageOutgoing_Percentage()
     self.scepter 	= self:GetCaster():HasScepter()
     self.scepter_damage_reduction = self:GetAbility():GetSpecialValueFor( "scepter_damage_reduction" )
     if self.scepter then
@@ -341,37 +344,37 @@ function modifier_imba_axe_battle_hunger_enemy:GetModifierTotalDamageOutgoing_Pe
     end
 end
 
-function modifier_imba_axe_battle_hunger_enemy:GetStatusEffectName()
+function modifier_imba_battle_hunger_debuff_dot:GetStatusEffectName()
   return "particles/status_fx/status_effect_battle_hunger.vpcf"
 end
 
-function modifier_imba_berserkers_call_enemy:StatusEffectPriority()
+function modifier_imba_berserkers_call_debuff_cmd:StatusEffectPriority()
   return 9
 end
 
-function modifier_imba_axe_battle_hunger_enemy:IsDebuff()
+function modifier_imba_battle_hunger_debuff_dot:IsDebuff()
   return true
 end
 
-function modifier_imba_axe_battle_hunger_enemy:IsPurgable()
+function modifier_imba_battle_hunger_debuff_dot:IsPurgable()
   return true
 end
 
-function modifier_imba_axe_battle_hunger_enemy:OnDestroy()
+function modifier_imba_battle_hunger_debuff_dot:OnDestroy()
   if IsServer() then
     local caster = self:GetCaster()
-    local stack_count = caster:GetModifierStackCount("modifier_imba_axe_battle_hunger_caster", self)
+    local stack_count = caster:GetModifierStackCount("modifier_imba_battle_hunger_buff_haste", self)
     if (stack_count == 1) then
-      caster:RemoveModifierByName("modifier_imba_axe_battle_hunger_caster")
+      caster:RemoveModifierByName("modifier_imba_battle_hunger_buff_haste")
     else
-      caster:SetModifierStackCount("modifier_imba_axe_battle_hunger_caster", self, stack_count - 1)
+      caster:SetModifierStackCount("modifier_imba_battle_hunger_buff_haste", self, stack_count - 1)
     end
     ParticleManager:DestroyParticle(self.enemy_particle, false)
     ParticleManager:ReleaseParticleIndex(self.enemy_particle)
   end
 end
 
-function modifier_imba_axe_battle_hunger_enemy:OnDeath(keys)
+function modifier_imba_battle_hunger_debuff_dot:OnDeath(keys)
   if IsServer() then
     local units_to_kill = self:GetAbility():GetSpecialValueFor("units")
     if keys.attacker == self:GetParent() then
@@ -389,28 +392,29 @@ end
 -------------------------------------------
 -- Counter Helix
 -------------------------------------------
-
-imba_axe_counter_helix = class({})
-
-LinkLuaModifier("modifier_imba_counter_helix", "hero/hero_axe", LUA_MODIFIER_MOTION_NONE)
+-- Hidden Modifiers:
+MergeTables(LinkedModifiers,{
+	["modifier_imba_counter_helix_passive"] = LUA_MODIFIER_MOTION_NONE,
+})
+imba_axe_counter_helix = imba_axe_counter_helix or class({})
 
 function imba_axe_counter_helix:GetIntrinsicModifierName()
-  return "modifier_imba_counter_helix"
+  return "modifier_imba_counter_helix_passive"
 end
 
 -------------------------------------------
 -- Counter Helix modifier
 -------------------------------------------
 
-modifier_imba_counter_helix = class({})
+modifier_imba_counter_helix_passive = modifier_imba_counter_helix_passive or class({})
 
-function modifier_imba_counter_helix:OnCreated()
+function modifier_imba_counter_helix_passive:OnCreated()
 
   self.caster = self:GetCaster()
   self.ability = self:GetAbility()
   self.particle_spin_1 = "particles/units/heroes/hero_axe/axe_attack_blur_counterhelix.vpcf"
   self.particle_spin_2 = "particles/units/heroes/hero_axe/axe_counterhelix.vpcf"
-  self.modifier_enemy_taunt = "modifier_imba_berserkers_call_enemy"
+  self.modifier_enemy_taunt = "modifier_imba_berserkers_call_debuff_cmd"
 
   --ability specials
   self.radius = self.ability:GetSpecialValueFor("radius") + self.caster:FindTalentValue("special_bonus_imba_axe_3")
@@ -419,16 +423,16 @@ function modifier_imba_counter_helix:OnCreated()
   self.taunted_damage_bonus_pct = self.ability:GetSpecialValueFor("taunted_damage_bonus_pct")
 end
 
-function modifier_imba_counter_helix:OnRefresh()
+function modifier_imba_counter_helix_passive:OnRefresh()
     self:OnCreated()
 end
 
-function modifier_imba_counter_helix:DeclareFunctions()
+function modifier_imba_counter_helix_passive:DeclareFunctions()
   local decFuncs = {MODIFIER_EVENT_ON_ATTACKED}
   return decFuncs
 end
 
-function modifier_imba_counter_helix:OnAttacked(keys)
+function modifier_imba_counter_helix_passive:OnAttacked(keys)
   if IsServer() then
 
     if keys.target == self:GetParent() then
@@ -478,16 +482,16 @@ function modifier_imba_counter_helix:OnAttacked(keys)
   end
 end
 
-function modifier_imba_counter_helix:IsPassive()
+function modifier_imba_counter_helix_passive:IsPassive()
   return true
 end
-function modifier_imba_counter_helix:IsHidden()
+function modifier_imba_counter_helix_passive:IsHidden()
   return true
 end
-function modifier_imba_counter_helix:IsBuff()
+function modifier_imba_counter_helix_passive:IsBuff()
   return true
 end
-function modifier_imba_counter_helix:IsPurgable()
+function modifier_imba_counter_helix_passive:IsPurgable()
   return false
 end
 
@@ -497,11 +501,15 @@ end
 -------------------------------------------
 -- Culling Blade
 -------------------------------------------
-
-imba_axe_culling_blade = class({})
-
-LinkLuaModifier("modifier_imba_axe_culling_blade_sprint", "hero/hero_axe", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_axe_culling_blade_leap", "hero/hero_axe", LUA_MODIFIER_MOTION_BOTH)
+-- Visible Modifiers:
+MergeTables(LinkedModifiers,{
+	["modifier_imba_culling_blade_buff_haste"] = LUA_MODIFIER_MOTION_NONE,
+})
+-- Hidden Modifiers:
+MergeTables(LinkedModifiers,{
+	["modifier_imba_culling_blade_leap"] = LUA_MODIFIER_MOTION_BOTH,
+})
+imba_axe_culling_blade = imba_axe_culling_blade or class({})
 
 function imba_axe_culling_blade:GetCastRange()
   return 150 + self:GetCaster():FindTalentValue("special_bonus_imba_axe_8");
@@ -560,7 +568,7 @@ function imba_axe_culling_blade:OnSpellStart()
   if self.target:GetHealth() <= self.kill_threshold and not self.target:HasModifier("modifier_imba_reincarnation_scepter_wraith") then
 
     if self.caster:HasTalent("special_bonus_imba_axe_8") then
-      self:GetCaster():AddNewModifier( self:GetCaster(), self, "modifier_imba_axe_culling_blade_leap", kv )
+      self:GetCaster():AddNewModifier( self:GetCaster(), self, "modifier_imba_culling_blade_motion", kv )
       self:GetCaster():StartGestureWithPlaybackRate( ACT_DOTA_CAST_ABILITY_4, 1 )
     	Timers:CreateTimer(0.40, function()
 			  self:KillUnit(self.target)
@@ -591,7 +599,7 @@ function imba_axe_culling_blade:OnSpellStart()
     self.allies_in_radius = FindUnitsInRadius(self.caster:GetTeamNumber(), self.caster:GetAbsOrigin(), nil, self.speed_aoe_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 
     for _,target in pairs(self.allies_in_radius) do
-      target:AddNewModifier(self.caster, self, "modifier_imba_axe_culling_blade_sprint", {duration = self.speed_duration})
+      target:AddNewModifier(self.caster, self, "modifier_imba_culling_blade_buff_haste", {duration = self.speed_duration})
     end
 
     -- refresh cooldown if killed unit is player
@@ -611,7 +619,7 @@ function imba_axe_culling_blade:OnSpellStart()
   
   else
     if self.caster:HasTalent("special_bonus_imba_axe_8") then
-      self:GetCaster():AddNewModifier( self:GetCaster(), self, "modifier_imba_axe_culling_blade_leap", kv )
+      self:GetCaster():AddNewModifier( self:GetCaster(), self, "modifier_imba_culling_blade_motion", kv )
       self:GetCaster():StartGestureWithPlaybackRate( ACT_DOTA_CAST_ABILITY_4, 1 )
     	Timers:CreateTimer(0.50, function()
 			  ApplyDamage( self.damageTable )
@@ -651,39 +659,39 @@ end
 -- Culling Blade sprint modifier
 -------------------------------------------
 
-modifier_imba_axe_culling_blade_sprint = class({})
+modifier_imba_culling_blade_buff_haste = modifier_imba_culling_blade_buff_haste or class({})
 
-function modifier_imba_axe_culling_blade_sprint:OnCreated()
+function modifier_imba_culling_blade_buff_haste:OnCreated()
 
   self.axe_culling_blade_boost = ParticleManager:CreateParticle("particles/units/heroes/hero_axe/axe_culling_blade_boost.vpcf", PATTACH_CUSTOMORIGIN, self.caster)
   ParticleManager:ReleaseParticleIndex(self.axe_culling_blade_boost)
 
 end
 
-function modifier_imba_axe_culling_blade_sprint:DeclareFunctions()
+function modifier_imba_culling_blade_buff_haste:DeclareFunctions()
   local funcs = {
     MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
   }
   return funcs
 end
 
-function modifier_imba_axe_culling_blade_sprint:GetModifierMoveSpeedBonus_Percentage()
+function modifier_imba_culling_blade_buff_haste:GetModifierMoveSpeedBonus_Percentage()
   return self:GetAbility():GetSpecialValueFor( "speed_bonus" )
 end
 
-function modifier_imba_axe_culling_blade_sprint:GetModifierAttackSpeedBonus_Constant()
+function modifier_imba_culling_blade_buff_haste:GetModifierAttackSpeedBonus_Constant()
   return self:GetAbility():GetSpecialValueFor( "as_bonus" )
 end
 
-function modifier_imba_axe_culling_blade_sprint:IsBuff()
+function modifier_imba_culling_blade_buff_haste:IsBuff()
   return true
 end
 
-function modifier_imba_axe_culling_blade_sprint:IsPurgable()
+function modifier_imba_culling_blade_buff_haste:IsPurgable()
   return true
 end
 
-function modifier_imba_axe_culling_blade_sprint:GetStatusEffectName()
+function modifier_imba_culling_blade_buff_haste:GetStatusEffectName()
   return "particles/units/heroes/hero_axe/axe_cullingblade_sprint.vpcf"
 end
 
@@ -692,9 +700,9 @@ end
 -------------------------------------------
 -- credits goes to o0oradaro0o/Battleships_Reborn
 
-modifier_imba_axe_culling_blade_leap = class({})
+modifier_imba_culling_blade_motion = modifier_imba_culling_blade_motion or class({})
 
-function modifier_imba_axe_culling_blade_leap:OnCreated(kv)
+function modifier_imba_culling_blade_motion:OnCreated(kv)
   self.axe_minimum_height_above_lowest = 500
   self.axe_minimum_height_above_highest = 100
   self.axe_acceleration_z = 4000
@@ -732,7 +740,7 @@ function modifier_imba_axe_culling_blade_leap:OnCreated(kv)
 	end
 end
 
-function modifier_imba_axe_culling_blade_leap:UpdateHorizontalMotion( me, dt )
+function modifier_imba_culling_blade_motion:UpdateHorizontalMotion( me, dt )
 	if IsServer() then
 		self.flCurrentTimeHoriz = math.min( self.flCurrentTimeHoriz + dt, self.flPredictedTotalTime )
 		local t = self.flCurrentTimeHoriz / self.flPredictedTotalTime
@@ -754,7 +762,7 @@ function modifier_imba_axe_culling_blade_leap:UpdateHorizontalMotion( me, dt )
 	end
 end
 
-function modifier_imba_axe_culling_blade_leap:UpdateVerticalMotion( me, dt )
+function modifier_imba_culling_blade_motion:UpdateVerticalMotion( me, dt )
 	if IsServer() then
 		self.flCurrentTimeVert = self.flCurrentTimeVert + dt
 		local bGoingDown = ( -self.axe_acceleration_z * self.flCurrentTimeVert + self.flInitialVelocityZ ) < 0
@@ -776,4 +784,8 @@ function modifier_imba_axe_culling_blade_leap:UpdateVerticalMotion( me, dt )
 			self:SetDuration(0.15,true)
 		end
 	end
+end
+-------------------------------------------
+for LinkedModifier, MotionController in pairs(LinkedModifiers) do
+	LinkLuaModifier(LinkedModifier, "hero/hero_axe", MotionController)
 end
