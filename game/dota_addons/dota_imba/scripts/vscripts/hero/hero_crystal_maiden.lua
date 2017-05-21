@@ -360,19 +360,25 @@ function imba_crystal_maiden_frostbite:GetIntrinsicModifierName() return "modifi
 
 function imba_crystal_maiden_frostbite:CastFilterResultTarget(target)
 	if IsServer() then
-		local caster = self:GetCaster()
-		local casterID = caster:GetPlayerID()
-		local targetID = target:GetPlayerID()
+		if target:IsBuilding() then
+			return UF_FAIL_BUILDING
+		end
+		
+		if target:IsHero() then
+			local caster = self:GetCaster()
+			local casterID = caster:GetPlayerID()
+			local targetID = target:GetPlayerID()
+				
+			-- Disable help
+			if target ~= nil and not target:IsOpposingTeam(caster:GetTeamNumber()) and PlayerResource:IsDisableHelpSetForPlayerID(targetID,casterID) then
+				return UF_FAIL_DISABLE_HELP
+			end
 			
-		-- Disable help
-		if target ~= nil and not target:IsOpposingTeam(caster:GetTeamNumber()) and PlayerResource:IsDisableHelpSetForPlayerID(targetID,casterID) then
-            return UF_FAIL_DISABLE_HELP
-        end
-
-		-- #2 Talent: Frostbite can be cast on allies, regenerating them.
-		if target:GetTeamNumber() == caster:GetTeamNumber() and target:IsHero() and caster:HasTalent("special_bonus_imba_crystal_maiden_2") then
-			return UF_SUCCESS
-		end		
+			-- #2 Talent: Frostbite can be cast on allies, regenerating them.
+			if target:GetTeamNumber() == caster:GetTeamNumber() and caster:HasTalent("special_bonus_imba_crystal_maiden_2") then
+				return UF_SUCCESS
+			end	
+		end
 
         local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
         return nResult
