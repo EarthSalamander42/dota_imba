@@ -1,4 +1,5 @@
 CreateEmptyTalents("bloodseeker")
+local LinkedModifiers = {}
 -------------------------------------------
 --				BLOOD RAGE
 -------------------------------------------
@@ -7,7 +8,6 @@ MergeTables(LinkedModifiers,{
 	["modifier_imba_bloodrage_buff_stats"] = LUA_MODIFIER_MOTION_NONE,
 })
 imba_bloodseeker_bloodrage = imba_bloodseeker_bloodrage or class({})
-local LinkedModifiers = {}
 function imba_bloodseeker_bloodrage:OnSpellStart()
 	local hTarget = self:GetCursorTarget()
 	local caster = self:GetCaster()
@@ -467,7 +467,7 @@ function modifier_imba_thirst_haste:GetEffectName()
 end
 
 
-modifier_imba_thirst_debuff_vision = class({})
+modifier_imba_thirst_debuff_vision = modifier_imba_thirst_debuff_vision or class({})
 
 function modifier_imba_thirst_debuff_vision:DeclareFunctions()
 	local funcs = {

@@ -623,8 +623,8 @@ end
 -----------------------------
 -- Visible Modifiers:
 MergeTables(LinkedModifiers,{
-	["modifier_imba_borrowed_time_caster_buff"] = LUA_MODIFIER_MOTION_NONE,
-	["modifier_imba_borrowed_time_allies_buff"] = LUA_MODIFIER_MOTION_NONE,
+	["modifier_imba_borrowed_time_buff_hot_caster"] = LUA_MODIFIER_MOTION_NONE,
+	["modifier_imba_borrowed_time_buff_hot_ally"] = LUA_MODIFIER_MOTION_NONE,
 })
 -- Hidden Modifiers:
 MergeTables(LinkedModifiers,{

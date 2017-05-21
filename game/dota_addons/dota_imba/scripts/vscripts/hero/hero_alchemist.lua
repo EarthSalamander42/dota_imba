@@ -918,7 +918,7 @@ end
 ----------------------------------
 -- Visible Modifiers:
 MergeTables(LinkedModifiers,{
-	["modifier_imba_chemical_rage_buff"] = LUA_MODIFIER_MOTION_NONE,
+	["modifier_imba_chemical_rage_buff_haste"] = LUA_MODIFIER_MOTION_NONE,
 })
 -- Hidden Modifiers:
 MergeTables(LinkedModifiers,{
@@ -1153,6 +1153,10 @@ end
 ----------------------------------
 --         MAMMONITE            --
 ----------------------------------
+-- Hidden Modifiers:
+MergeTables(LinkedModifiers,{
+    ["modifier_mammonite_passive"] = LUA_MODIFIER_MOTION_NONE,
+})
 imba_alchemist_mammonite = imba_alchemist_mammonite or class({})
 
 function imba_alchemist_mammonite:OnToggle() return end    
