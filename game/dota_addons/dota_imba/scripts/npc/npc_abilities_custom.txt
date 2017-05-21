@@ -18967,19 +18967,19 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"full_cast_range"		"800 1400 2000 2000 2000 2000 2000"	// max range (+600 per jump)
+				"full_cast_range"		"700 1400 2100 2100 2100 2100 2100"	// max range (+700 per jump)
 			}
 
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"no_jump_cast_range"	"800"
+				"no_jump_cast_range"	"700"
 			}
 
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"jump_range"			"600"
+				"jump_range"			"700"
 			}
 
 			"07"
