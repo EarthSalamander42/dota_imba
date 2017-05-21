@@ -147,7 +147,7 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 			{
 				var itemPanelName = "_dynamic_item_" + i;
 				var itemPanel = playerItemsContainer.FindChild( itemPanelName );
-				
+
 				var itemInfo = playerItems.inventory[i];
 
 				if ( itemPanel === null )
@@ -155,66 +155,17 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 					//Needs DOTAItemImage to be able to load from flash3 images (similar to those used for dota shop, hence reusing existing resources)
 					itemPanel = $.CreatePanel( "DOTAItemImage", playerItemsContainer, itemPanelName );
 					itemPanel.AddClass( "PlayerItem" );
-				}else{
-					itemPanel.RemoveClass( "RawImageBugFix" );
 				}
 
-				var itemImagePath = "";
 
 				if ( itemInfo )
 				{
-					if ( itemInfo.item_name.indexOf( "recipe" ) >= 0 )
-					{
-						itemImagePath = "file://{images}/items/recipe.png";
-					}
-					else
-					{
-						var item_image_name = itemInfo.item_name.replace( "item_", "" );
-						if ( item_image_name.indexOf( "imba" ) >= 0 )
-						{
-							//Some imba items have same base image
-							switch(item_image_name){
-								case "item_imba_satanic":
-								case "item_imba_mask_of_madness":
-									//Reference to base image
-									item_image_name = item_image_name.replace("imba_", "");
-									itemImagePath = "file://{images}/items/" + item_image_name + ".png";
-								break;
-								case "imba_power_treads_2":
-									//Reference to image that does not match with its name
-									itemImagePath = "raw://resource/flash3/images/items/custom/imba_power_threads.png";
-								break;
-								case "item_imba_shadow_blade":
-									//Reference to image that does not match with its name
-									itemImagePath = "raw://resource/flash3/images/items/custom/imba_invis_sword.png";
-								break;
-								case "item_imba_triumvirate":
-									//Reference to image that does not match with its name
-									itemImagePath = "raw://resource/flash3/images/items/custom/imba_sange_and_azura_and_yasha.png";
-								break;
-								case "item_imba_morbid_mask":
-									//Reference to image that does not match with its name
-									itemImagePath = "raw://resource/flash3/images/items/custom/item_lifesteal.png";
-								break;
-								default:
-									//Reference to custom image
-									itemImagePath = "raw://resource/flash3/images/items/custom/" + item_image_name + ".png";
-								break;
-							}
-
-							//Bug fix for flash image display
-							if(itemImagePath.indexOf("raw://") == 0){
-								itemPanel.AddClass( "RawImageBugFix" );
-							}
-						}
-						else
-						{
-							itemImagePath = "file://{images}/items/" + item_image_name + ".png";
-						}
-					}
+                    itemPanel.itemname = itemInfo.item_name;
 				}
-
-				itemPanel.SetImage( itemImagePath );
+                else
+                {
+                    itemPanel.itemname = "";
+                }
 			}
 		}
 	}

@@ -347,12 +347,8 @@
 	width: 41px;
 	height: 30px;
 	background-color: BACKGROUND_COLOR;
-}
-
-/* Image in the DOTAItemImage does not fit the width, scaling doesn't work well hence this hack is in place */
-#PlayerItemsContainer .RawImageBugFix
-{
-	padding-right: -16px;
+    background-size: 100% 100%;
+    background-position: 50% 50%;
 }
 
 .is_local_player Label
