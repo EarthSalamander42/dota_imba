@@ -86,7 +86,7 @@
 	[
 		{
 			_class = "C_OP_ContinuousEmitter"
-			m_flEmitRate = 3.0
+			m_flEmitRate = 12.0
 		},
 	]
 	m_nInitialParticles = 1

@@ -383,8 +383,8 @@ function modifier_tiny_toss_movement:OnCreated( kv )
 		Timers:CreateTimer(wait_time, function()
 			-- See if the modifier still exists
 			if not self:IsNull() then
-				self:GetCaster():InterruptMotionControllers(true)
-				self:Destroy()
+			 	self:GetCaster():InterruptMotionControllers(true)
+			 	self:Destroy()
 			end
 		end)
 	end
@@ -393,7 +393,10 @@ end
 function modifier_tiny_toss_movement:OnRemoved()
 	if IsServer() then
 		local caster = self:GetCaster()
-		local radius = self:GetAbility():GetSpecialValueFor("radius") + caster:FindModifierByName("modifier_imba_tiny_rolling_stone"):GetStackCount() * caster:FindAbilityByName("imba_tiny_grow"):GetSpecialValueFor("rolling_stones_aoe")
+		local radius = self:GetAbility():GetSpecialValueFor("radius")
+		if caster:HasModifier("modifier_imba_tiny_rolling_stone") and caster:HasAbility("imba_tiny_grow") then
+		 	radius = radius + caster:FindModifierByName("modifier_imba_tiny_rolling_stone"):GetStackCount() * caster:FindAbilityByName("imba_tiny_grow"):GetSpecialValueFor("rolling_stones_aoe")
+		end
 
 		-- Destroy trees at the target point
 		GridNav:DestroyTreesAroundPoint(self.tossPosition, radius, true)
@@ -417,6 +420,7 @@ function modifier_tiny_toss_movement:OnRemoved()
 		if self:GetParent() == caster then
 			ApplyDamage({victim = caster, attacker = caster, damage = caster:GetMaxHealth() * self:GetAbility():GetSpecialValueFor("self_dmg_pct") / 100, damage_type = self:GetAbility():GetAbilityDamageType(), ability = self:GetAbility()})
 		end
+
 		EmitSoundOn("Ability.TossImpact", self:GetParent())
 		if caster:HasScepter() and self:GetParent():IsAlive() and self:GetParent() ~= caster then
 			self:GetParent():AddNewModifier(caster, self:GetAbility(), "modifier_tiny_toss_scepter_bounce", {})

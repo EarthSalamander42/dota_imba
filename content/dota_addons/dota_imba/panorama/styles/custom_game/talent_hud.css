@@ -6,7 +6,7 @@
 .IMBA_Talent_HUD_Panel
 {
     width : 70px;
-    height : 70px;
+    height : 135px;
     vertical-align: bottom;
     margin-right : -1px;
     margin-left: -4px;
@@ -14,10 +14,16 @@
     margin-bottom : 24px;
 }
 
-#IMBA_Talent_HUD_Button
+#IMBA_Talent_HUD_Button,
+#IMBA_Talent_HUD_Button_Overlay
 {
+    margin-top: 65px;
     width : 100%;
     height : 100%;
+}
+
+#IMBA_Talent_HUD_Button
+{
     background-image: url("file://{images}/custom_game/imba_talent_btn.png");
     background-size: contain;
     z-index : 3;
@@ -25,8 +31,6 @@
 
 #IMBA_Talent_HUD_Button_Overlay
 {
-    width : 100%;
-    height : 100%;
     z-index : 4;
 }
 

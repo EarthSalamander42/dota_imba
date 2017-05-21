@@ -362,7 +362,9 @@ function imba_crystal_maiden_frostbite:CastFilterResultTarget(target)
 	if IsServer() then
 		local caster = self:GetCaster()
 		local casterID = caster:GetPlayerID()
-		local targetID = target:GetPlayerID()
+		if target:IsHero() then			
+			local targetID = target:GetPlayerID()
+		end
 			
 		-- Disable help
 		if target ~= nil and not target:IsOpposingTeam(caster:GetTeamNumber()) and PlayerResource:IsDisableHelpSetForPlayerID(targetID,casterID) then

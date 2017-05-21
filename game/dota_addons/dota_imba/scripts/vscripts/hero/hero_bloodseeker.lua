@@ -542,8 +542,8 @@ if IsServer() then
 		self.attackdamage = self:GetAbility():GetSpecialValueFor("attack_damage")
 		self.castdamage = self:GetAbility():GetSpecialValueFor("cast_damage")
 		if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_5") then
-			self.attackdamage = self.attackdamage + self.attackdamage * self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_5")
-			self.castdamage = self.castdamage + self.castdamage * self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_5")
+			self.attackdamage = self.attackdamage + self.attackdamage * self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_5") * 0.01
+			self.castdamage = self.castdamage + self.castdamage * self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_5") * 0.01
 		end
 		self.damagecap = self:GetAbility():GetTalentSpecialValueFor("damage_cap_amount")
 		self.prevLoc = self:GetParent():GetAbsOrigin()
@@ -555,8 +555,8 @@ if IsServer() then
 		self.attackdamage = self:GetAbility():GetSpecialValueFor("attack_damage")
 		self.castdamage = self:GetAbility():GetSpecialValueFor("cast_damage")
 		if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_5") then
-			self.attackdamage = self.attackdamage + self.attackdamage * self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_5")
-			self.castdamage = self.castdamage + self.castdamage * self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_5")
+			self.attackdamage = self.attackdamage + self.attackdamage * self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_5") * 0.01			
+			self.castdamage = self.castdamage + self.castdamage * self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_5") * 0.01
 		end
 		self.damagecap = self:GetAbility():GetSpecialValueFor("damage_cap_amount")
 	end
