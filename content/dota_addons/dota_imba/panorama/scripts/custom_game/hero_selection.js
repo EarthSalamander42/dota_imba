@@ -146,10 +146,11 @@ function HeroUnpicked(player, hero, team) {
 /* Switch the content of the screen to show the picked hero instead of the
  * pickable heroes. */
 function SwitchToHeroPreview( heroName ) {
-	var previewPanel = $.CreatePanel("Panel", $('#PostPickScreen'), "HeroPreview");
-	previewPanel.BLoadLayoutFromString('<root><Panel><DOTAScenePanel style="width: 600px; height: 600px; opacity-mask: url(\'s2r://panorama/images/masks/softedge_box_png.vtex\');" map="background" camera="camera_01" unit="'+heroName+'"/></Panel></root>', false, false );
 
-	$('#PostPickScreen').MoveChildBefore( previewPanel, $("#EnterGameBtn") );
+    var previewPanel = $.CreatePanel("Panel", $('#PostPickScreen'), "HeroPreview");
+    previewPanel.BLoadLayoutFromString('<root><Panel><DOTAScenePanel style="width:100%; height:100%;" particleonly="false" unit="'+heroName+'"/></Panel></root>', false, false );
+
+    $('#PostPickScreen').MoveChildBefore( previewPanel, $("#EnterGameBtn") );
 
 	// Hide/show relevant panels
 	$("#PickHeroBtn").style.visibility = 'collapse';
