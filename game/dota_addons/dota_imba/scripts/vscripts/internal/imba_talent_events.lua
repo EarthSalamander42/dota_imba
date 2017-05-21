@@ -147,6 +147,18 @@ local function PopulateHeroTalentLinkedAbilities(hero)
     CustomNetTables:SetTableValue( "imba_talent_manager", "talent_linked_abilities", existing_table )
 end
 
+local function RemoveTalents(hero)
+    -- This is to prevent default UI bypassing the talent window to upgrade talents via hotkeys even though they are invisible
+    local heroName = hero:GetUnitName()
+    local endAbilityIndex = GetHeroEndAbilityIndex(hero)
+    for i=0,7 do
+        local ability = hero:GetAbilityByIndex(endAbilityIndex-i)
+        if ability then
+            hero:RemoveAbility(ability:GetAbilityName())
+        end
+    end
+end
+
 local function HasNotPopulatedValues(hero_id)
     return (CustomNetTables:GetTableValue( "imba_talent_manager", "hero_talent_list_"..hero_id) == nil)
 end
@@ -156,6 +168,7 @@ function PopulateHeroImbaTalents(hero)
         PopulateHeroTalentChoice(hero)
         PopulateHeroTalentList(hero)
         PopulateHeroTalentLinkedAbilities(hero)
+        RemoveTalents(hero)
     end
 end
 
@@ -208,10 +221,11 @@ function HandlePlayerUpgradeImbaTalent(unused, kv)
                         -- Ability talent (upgrade ability level)
                         local ability = hero:FindAbilityByName(talent_name)
                         if ability then
-                            ability:SetLevel(1)
-                        else
-                            print("Talent: Invalid talent name")
+                            print("Talent: talent name not suppose to exist")
                             return
+                        else
+                            ability = hero:AddAbility(talent_name)
+                            ability:SetLevel(1)
                         end
                     end
 
