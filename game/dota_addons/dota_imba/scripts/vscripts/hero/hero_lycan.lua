@@ -1208,11 +1208,11 @@ function modifier_imba_wolfsbane_aura:DestroyOnExpire()
 end
 
 function modifier_imba_wolfsbane_aura:GetAttributes()
-	return MODIFIER_ATTRIBUTE_MULTIPLE + MODIFIER_ATTRIBUTE_PERMANENT
+	return MODIFIER_ATTRIBUTE_PERMANENT
 end
 
 function modifier_imba_wolfsbane_aura:GetAuraRadius()
-	return 50000 --global
+	return 25000 --global
 end
 
 function modifier_imba_wolfsbane_aura:GetAuraSearchFlags()
@@ -1280,7 +1280,7 @@ function modifier_imba_wolfsbane_aura:GetAuraEntityReject( target )
 	local full_name = ""
 	
 	-- Cycle through wolves names to get a match
-	 for i=1, 6 do
+	 for i= 1, 6 do
 		full_name = wolf_name..i
 		if full_name == target:GetUnitName() then
 			 wolf_found = true
@@ -1413,7 +1413,7 @@ function modifier_imba_wolfsbane_lycan:OnHeroKilled( keys )
 											radius,
 											DOTA_UNIT_TARGET_TEAM_FRIENDLY,
 											DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-											DOTA_UNIT_TARGET_FLAG_NONE,
+											DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
 											FIND_ANY_ORDER,
 											false)
 			
@@ -1424,7 +1424,7 @@ function modifier_imba_wolfsbane_lycan:OnHeroKilled( keys )
 				end
 			end
 			
-			-- If Lycan is present nearby and at least the minimum allies required are present, give stacks
+			-- If Lycan is present nearby and at least the minimum allies required are present, give stacks			
 			if #units >= minimum_allies_required + 1 and lycan_nearby and caster:HasModifier(aura) and not caster:HasModifier(prevent_modifier) then			
 				should_grants_stacks = true
 			end

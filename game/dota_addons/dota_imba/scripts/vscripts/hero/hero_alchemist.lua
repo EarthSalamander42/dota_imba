@@ -957,8 +957,7 @@ function modifier_imba_chemical_rage:OnCreated()
         local particle_acid_aura = "particles/hero/alchemist/chemical_rage_acid_aura.vpcf"
 
         self.ability = caster:FindAbilityByName("imba_alchemist_acid_spray")
-        self.bat_change = self:GetAbility():GetSpecialValueFor("base_attack_time") - 1.7
-        ModifyBAT(caster, 0, self.bat_change)
+        self.bat_change = self:GetAbility():GetSpecialValueFor("base_attack_time")
         self.radius = self.ability:GetSpecialValueFor("radius")
 
         -- #1 Talent: Acid Spray radius increase
@@ -983,9 +982,7 @@ function modifier_imba_chemical_rage:OnDestroy()
         local caster = self:GetCaster()
         if caster:GetUnitName() == "npc_dota_hero_alchemist" then
             caster:StartGesture(ACT_DOTA_ALCHEMIST_CHEMICAL_RAGE_END)
-        end
-
-        ModifyBAT(caster, 0, -self.bat_change)
+        end        
     end
 end
 
@@ -1018,13 +1015,19 @@ function modifier_imba_chemical_rage:DeclareFunctions()
         MODIFIER_PROPERTY_BASE_MANA_REGEN,
         MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
         MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,        
-        MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS
+        MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
+        MODIFIER_PROPERTY_TRANSLATE_ATTACK_SOUND,
+        MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT
     }
     return table
 end
 
 function modifier_imba_chemical_rage:GetActivityTranslationModifiers()
     return "chemical_rage"
+end
+
+function modifier_imba_chemical_rage:GetAttackSound()
+    return "Hero_Alchemist.ChemicalRage.Attack"
 end
 
 function modifier_imba_chemical_rage:GetModifierBaseManaRegen()
@@ -1045,6 +1048,10 @@ end
 function modifier_imba_chemical_rage:GetModifierMoveSpeedBonus_Constant()
     local ability = self:GetAbility()
     return ability:GetSpecialValueFor("bonus_movespeed")
+end
+
+function modifier_imba_chemical_rage:GetModifierBaseAttackTimeConstant()
+    return self.bat_change
 end
 
 function modifier_imba_chemical_rage:GetEffectName()
