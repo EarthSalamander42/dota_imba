@@ -105,6 +105,28 @@ function InitializeIMBATalentWindow(){
     GameEvents.Subscribe("dota_player_learned_ability", OnPlayerLearnedAbility);
     GameEvents.Subscribe("dota_player_update_query_unit", OnPlayerUpdateQueryUnit);
     GameEvents.Subscribe("dota_player_update_selected_unit", OnPlayerUpdateSelectedUnit);
+
+    GameUI.SetMouseCallback( function( eventName, arg ) {
+
+        var talentWindow = $.GetContextPanel();
+        if(talentWindow.BHasClass("show_talent_window") && GameUI.GetClickBehaviors() == CLICK_BEHAVIORS.DOTA_CLICK_BEHAVIOR_NONE){
+
+            if ( eventName == "pressed" ){
+                //No matter what button is pressed, if it is outside the bounds of talent window, close the window
+                var cursorPos = GameUI.GetCursorPosition();
+                if(cursorPos[0] < talentWindow.actualxoffset ||
+                    (talentWindow.actualxoffset + talentWindow.contentwidth) < cursorPos[0] ||
+                    cursorPos[1] < talentWindow.actualyoffset ||
+                    (talentWindow.actualyoffset + talentWindow.contentheight) < cursorPos[1]){
+
+                    OpenImbaTalentWindow(false);
+                }
+            }
+        }
+
+        //Do not consume event
+        return false;
+    });
 }
 
 function GetGenericTalentInfoTable(){
