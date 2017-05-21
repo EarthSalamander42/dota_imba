@@ -370,9 +370,10 @@ function modifier_tiny_toss_movement:OnCreated( kv )
 
 
 		-- If after double the duration we're still stuck in motion, we probably won't ever get out: forced removal
-		Timers:CreateTimer(self.duration * 2, function()
+		Timers:CreateTimer(self.duration, function()
 			-- See if the modifier still exists
 			if not self:IsNull() then
+				self:GetCaster():InterruptMotionControllers(true)
 				self:Destroy()
 			end
 		end)
@@ -407,7 +408,7 @@ function modifier_tiny_toss_movement:OnRemoved()
 			ApplyDamage({victim = caster, attacker = caster, damage = caster:GetMaxHealth() * self:GetAbility():GetSpecialValueFor("self_dmg_pct") / 100, damage_type = self:GetAbility():GetAbilityDamageType(), ability = self:GetAbility()})
 		end
 		EmitSoundOn("Ability.TossImpact", self:GetParent())
-		if caster:HasScepter() and self:GetParent():IsAlive() then
+		if caster:HasScepter() and self:GetParent():IsAlive() and self:GetParent() ~= caster then
 			self:GetParent():AddNewModifier(caster, self:GetAbility(), "modifier_tiny_toss_scepter_bounce", {})
 		end
 	end
@@ -542,6 +543,14 @@ function modifier_tiny_toss_scepter_bounce:OnCreated( kv )
 		if self:ApplyVerticalMotionController() == false then 
 			self:Destroy()
 		end
+
+		self.caster = self:GetCaster()
+		self.ability = self:GetAbility()
+		self.parent = self:GetParent()		
+
+		self.scepter_bounce_damage_pct = self.ability:GetSpecialValueFor("scepter_bounce_damage_pct")
+		self.toss_damage = self.ability:GetSpecialValueFor("toss_damage")
+
 		EmitSoundOn("Hero_Tiny.Toss.Target", self:GetParent())
 		self.bounce_duration = self:GetAbility():GetSpecialValueFor("scepter_bounce_duration")
 		self.time = 0
@@ -593,8 +602,7 @@ function modifier_tiny_toss_scepter_bounce:CheckState()
 end
 
 function modifier_tiny_toss_scepter_bounce:UpdateVerticalMotion( me, dt )
-	if IsServer() then
-		local caster = self:GetParent()
+	if IsServer() then		
 		if self.time < self.bounce_duration then
 			self.time = self.time + dt
 			if self.bounce_duration/2 > self.time then
@@ -602,19 +610,30 @@ function modifier_tiny_toss_scepter_bounce:UpdateVerticalMotion( me, dt )
 				-- This is to memorize the z point when it comes to cliffs and such although the division of speed by 2 isnt necessary, its more of a cosmetic thing
 				self.toss_z = self.toss_z + 25
 				-- Set the new location to the current ground location + the memorized z point
-				caster:SetAbsOrigin(GetGroundPosition(caster:GetAbsOrigin(), caster) + Vector(0,0,self.toss_z))
-			elseif caster:GetAbsOrigin().z > 0 then
+				self.parent:SetAbsOrigin(GetGroundPosition(self.parent:GetAbsOrigin(), self.parent) + Vector(0,0,self.toss_z))
+			elseif self.parent:GetAbsOrigin().z > 0 then
 				-- Go down
 				self.toss_z = self.toss_z - 25
-				caster:SetAbsOrigin(GetGroundPosition(caster:GetAbsOrigin(), caster) + Vector(0,0,self.toss_z))
+				self.parent:SetAbsOrigin(GetGroundPosition(self.parent:GetAbsOrigin(), self.parent) + Vector(0,0,self.toss_z))
 			end
 		else
-			caster:InterruptMotionControllers(true)
+			self.parent:InterruptMotionControllers(true)
 			self:Destroy()
 		end       
 	end
 end
 
+function modifier_tiny_toss_scepter_bounce:OnRemoved()
+	if IsServer() then
+		local damage = self.toss_damage * self.scepter_bounce_damage_pct * 0.01
+		local radius = self:GetAbility():GetSpecialValueFor("radius") + self.caster:FindModifierByName("modifier_imba_tiny_rolling_stone"):GetStackCount() * self.caster:FindAbilityByName("imba_tiny_grow"):GetSpecialValueFor("rolling_stones_aoe")
+
+		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.parent:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		for _,enemy in pairs(enemies) do
+			ApplyDamage({victim = enemy, attacker = self.caster, damage = damage, damage_type = self:GetAbility():GetAbilityDamageType(), ability = self:GetAbility()})
+		end
+	end
+end
 
 imba_tiny_craggy_exterior = imba_tiny_craggy_exterior or class({})
 
