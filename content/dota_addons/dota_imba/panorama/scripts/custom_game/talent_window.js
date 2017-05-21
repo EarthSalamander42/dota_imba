@@ -127,6 +127,23 @@ function InitializeIMBATalentWindow(){
         //Do not consume event
         return false;
     });
+
+    //Enable focus for talent window children (this is to allow catching of Escape button)
+    RecurseEnableFocus(talentPanel);
+
+    $.RegisterKeyBind(talentPanel, "key_escape", function(){
+        if(talentPanel.BHasClass("show_talent_window")){
+            OpenImbaTalentWindow(false);
+        }
+    });
+}
+
+function RecurseEnableFocus(panel){
+    panel.SetAcceptsFocus(true);
+    var children = panel.Children();
+    $.Each(children, function(child){
+        RecurseEnableFocus(child);
+    });
 }
 
 function GetGenericTalentInfoTable(){
