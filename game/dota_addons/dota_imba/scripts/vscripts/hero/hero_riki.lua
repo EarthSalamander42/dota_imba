@@ -242,6 +242,38 @@ function imba_riki_blink_strike:OnUnStolen()
 	end
 end
 
+function imba_riki_blink_strike:OnAbilityPhaseStart()
+	if IsServer() then
+		self.jumpTargets = {}
+		
+		local caster = self:GetCaster()
+		local target = self:GetCursorTarget()
+		local jumps = self:GetSpecialValueFor("max_jumps") + self:GetCaster():FindTalentValue("special_bonus_imba_riki_3")
+		local jump_range = self:GetSpecialValueFor("jump_range")
+		local no_jump_cast_range = self:GetSpecialValueFor("no_jump_cast_range")
+		local caster_target_distance = CalcDistanceBetweenEntityOBB(caster, target)	-- Distance between caster and target
+
+		if caster_target_distance > no_jump_cast_range then
+			if jumps > 0 then
+				local team_filter = DOTA_UNIT_TARGET_TEAM_BOTH
+				local unit_filter = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+				local find_filter = DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS
+
+				local can_jump_to = self:CanJumpTo(target, jump_range, jumps, team_filter, unit_filter, find_filter)
+				if not can_jump_to then
+					caster:MoveToTargetToAttack(target)
+					return false
+				end
+			else
+				caster:MoveToTargetToAttack(target)
+				return false
+			end
+		end
+	end
+
+	return true
+end
+
 function imba_riki_blink_strike:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
@@ -313,7 +345,6 @@ function imba_riki_blink_strike:OnSpellStart()
 				ExecuteOrderFromTable(order)
 			end)
 		else
-			
 			EmitSoundOn(cast_sound, caster)
 			local particle = ParticleManager:CreateParticle(blink_particle, PATTACH_ABSORIGIN, caster)
 				ParticleManager:SetParticleControl(particle, 1, target:GetAbsOrigin())
@@ -336,7 +367,6 @@ end
 
 function imba_riki_blink_strike:CastFilterResultTarget( target )
 	if IsServer() then
-		self.jumpTargets = {}
 		local caster = self:GetCaster()
 		
 		-- Can't cast on self, buildings, or spell immune
@@ -348,27 +378,7 @@ function imba_riki_blink_strike:CastFilterResultTarget( target )
 			return UF_FAIL_MAGIC_IMMUNE_ENEMY
 		end
 		
-		-- Get Values
-		local jumps = self:GetSpecialValueFor("max_jumps") + self:GetCaster():FindTalentValue("special_bonus_imba_riki_3")
-		local jump_range = self:GetSpecialValueFor("jump_range")
-		local no_jump_cast_range = self:GetSpecialValueFor("no_jump_cast_range")
-		
-		-- See if the target is within the no-jump cast range
-		local caster_target_distance = CalcDistanceBetweenEntityOBB(caster, target)	-- Distance between caster and target
-		if caster_target_distance <= no_jump_cast_range then
-			return UF_SUCCESS 
-		elseif jumps > 0 then
-			local team_filter = DOTA_UNIT_TARGET_TEAM_BOTH
-			local unit_filter = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
-			local find_filter = DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS
-
-			local can_jump_to = self:CanJumpTo(target, jump_range, jumps, team_filter, unit_filter, find_filter)
-			if can_jump_to then
-				return UF_SUCCESS
-			end
-		end
-		
-		return UF_FAIL_CUSTOM
+		return UF_SUCCESS
 	end
 end
 
