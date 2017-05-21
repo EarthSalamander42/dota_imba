@@ -9239,38 +9239,45 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_slow" 				"-30 -40 -50 -60 -65 -70 -75"
+				"attack_slow" 				"30 40 50 60 65 70 75"
 			}
+
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"360"
 			}
+
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage"					"12 16 20 24 25 26 27"
 			}
+
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"duration"					"5.0 5.0 5.0 5.0 5.5 6.0 6.5"
 			}
+
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"damage_interval"			"0.25"
 			}
+
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"speed"						"1100"
 			}
+
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"turn_slow"					"-50"
+				"turn_slow"					"50"
 			}
+
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -19245,7 +19252,7 @@
 		// General
 		//--------------------------------------------
 		"BaseClass"								"ability_lua"
-		"ScriptFile"							"hero/hero_silencer/imba_arcane_curse"
+		"ScriptFile"							"hero/hero_silencer.lua"
 
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -19334,7 +19341,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"							"ability_lua"
-		"ScriptFile"						"hero/hero_silencer/imba_glaives_of_wisdom"
+		"ScriptFile"						"hero/hero_silencer.lua"
 
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -19416,7 +19423,7 @@
 		// General
 		//--------------------------------------------
 		"BaseClass"								"ability_lua"
-		"ScriptFile"							"hero/hero_silencer/imba_last_word"
+		"ScriptFile"							"hero/hero_silencer.lua"
 
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitDamageType"					"DAMAGE_TYPE_MAGICAL"
@@ -19489,7 +19496,7 @@
 	"imba_silencer_arcane_supremacy"
 	{
 		"BaseClass"							"ability_lua"
-		"ScriptFile"						"hero/hero_silencer/imba_arcane_supremacy"
+		"ScriptFile"						"hero/hero_silencer.lua"
 
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO"
@@ -19527,7 +19534,7 @@
 		// General
 		//--------------------------------------------
 		"BaseClass"					"ability_lua"
-		"ScriptFile"				"hero/hero_silencer/imba_global_silence"
+		"ScriptFile"				"hero/hero_silencer.lua"
 
 		"AbilityType"				"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
@@ -26784,7 +26791,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"talent_4_slow_pct"			"100"
-			}
+			}			
 		}
 	}
 
@@ -26823,8 +26830,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.05"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
-		"AbilityCastRange"				"800 1200 1500 1800 2000 2200 2400"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"		
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
@@ -26897,6 +26903,12 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"storm_linger"			"0.35"
+			}
+
+			"11"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"cast_range"	"800 1200 1500 1800 2000 2200 2400"
 			}
 		}
 	}
@@ -26990,8 +27002,8 @@
 			}
 			"09"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"scepter_stack_amount"	"5"
+				"var_type"					"FIELD_INTEGER"
+				"stormbearer_stack_amount"	"5"
 			}
 		}
 	}
@@ -34558,7 +34570,7 @@
         }
     }
 
-    "special_bonus_imba_axe_2"  // +1 armor with every hit taken during Berserker's Call, lasts for 4 seconds after it ends.
+    "special_bonus_imba_axe_2"  // +1 armor with every hit taken during Berserker's Call, lasts for 3 seconds after it ends.
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
@@ -34578,7 +34590,7 @@
             "01"
             {
                 "var_type"      "FIELD_FLOAT"
-                "value"         "1.0"
+                "value"         "3"
             }
         }
     }

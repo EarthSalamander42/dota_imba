@@ -96,6 +96,7 @@ function base_modifier_dual_breath_caster:OnCreated( kv )
 			local caster_pos = caster:GetAbsOrigin()
 			local ability_level = ability:GetLevel() - 1
 			local target = ability:GetCursorPosition()
+
 			-- #1 Talent: Dual Breath Range Increase
 			local range = ability:GetSpecialValueFor("range") + GetCastRangeIncrease(caster) + caster:FindTalentValue("special_bonus_imba_jakiro_1")
 			local particle_breath = self.particle_breath
@@ -122,6 +123,7 @@ function base_modifier_dual_breath_caster:OnCreated( kv )
 			-- Ability variables
 			self.breath_direction = breath_direction
 			self.breath_distance = breath_distance
+
 			-- Tick rate is 30 per sec
 			self.breath_speed = breath_speed * 1/30
 			self.breath_traveled = 0
@@ -215,11 +217,6 @@ function base_modifier_dual_breath_caster:UpdateHorizontalMotion()
 			self.breath_traveled = breath_traveled + breath_speed
 		else
 			caster:InterruptMotionControllers( true )
-			if not ability:IsStolen() then
-				-- Switch breath abilities if spell is not stolen
-				caster:SwapAbilities(ability:GetAbilityName(), self.ability_other_breath_name, false, true)
-			end
-
 			self:Destroy()
 		end
 	end
@@ -234,6 +231,13 @@ function base_modifier_dual_breath_caster:CheckState()
 end
 
 function base_modifier_dual_breath_caster:OnHorizontalMotionInterrupted()
+	local caster = self:GetCaster()
+	local ability = self:GetAbility()
+
+	if not ability:IsStolen() then
+		-- Switch breath abilities if spell is not stolen
+		caster:SwapAbilities(ability:GetAbilityName(), self.ability_other_breath_name, false, true)
+	end	
 
 	-- Destroy breath particle when motion interrupted
 	if self.existing_breath_particle then
@@ -884,11 +888,11 @@ modifier_imba_liquid_fire_debuff = ShallowCopy( base_modifier_dot_debuff )
 
 function modifier_imba_liquid_fire_debuff:_UpdateSubClassLevelValues()
 	local ability = self.ability
-	self.attack_slow = -(ability:GetSpecialValueFor("attack_slow"))
+	self.attack_slow = (ability:GetSpecialValueFor("attack_slow"))
 end
 
 function modifier_imba_liquid_fire_debuff:_SubClassOnCreated()
-	self.turn_slow = -(self.ability:GetSpecialValueFor("turn_slow"))
+	self.turn_slow = (self.ability:GetSpecialValueFor("turn_slow"))
 end
 
 function modifier_imba_liquid_fire_debuff:DeclareFunctions()
@@ -900,8 +904,8 @@ function modifier_imba_liquid_fire_debuff:DeclareFunctions()
 	return funcs
 end
 
-function modifier_imba_liquid_fire_debuff:GetModifierAttackSpeedBonus_Constant() return self.attack_slow end
-function modifier_imba_liquid_fire_debuff:GetModifierTurnRate_Percentage() return self.turn_slow end
+function modifier_imba_liquid_fire_debuff:GetModifierAttackSpeedBonus_Constant() return self.attack_slow * (-1) end
+function modifier_imba_liquid_fire_debuff:GetModifierTurnRate_Percentage() return self.turn_slow * (-1) end
 function modifier_imba_liquid_fire_debuff:GetEffectName() return "particles/units/heroes/hero_jakiro/jakiro_liquid_fire_debuff.vpcf" end
 function modifier_imba_liquid_fire_debuff:GetEffectAttachType() return PATTACH_ABSORIGIN_FOLLOW end
 

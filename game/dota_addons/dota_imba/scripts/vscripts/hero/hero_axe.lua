@@ -51,7 +51,8 @@ function imba_axe_berserkers_call:OnSpellStart()
   caster:AddNewModifier(caster, self, "modifier_imba_berserkers_call_caster", {duration = ability:GetSpecialValueFor("duration")})
 
   if caster:HasTalent("special_bonus_imba_axe_2") then
-    caster:AddNewModifier(caster, self, "modifier_imba_berserkers_call_talent", {duration = ability:GetSpecialValueFor("duration") + 4 })
+    local talent_duration = caster:FindTalentValue("special_bonus_imba_axe_2")
+    caster:AddNewModifier(caster, self, "modifier_imba_berserkers_call_talent", {duration = ability:GetSpecialValueFor("duration") + talent_duration})
   end
 
 end
@@ -122,16 +123,17 @@ function modifier_imba_berserkers_call_talent:DeclareFunctions()
 end
 
 function modifier_imba_berserkers_call_talent:GetModifierPhysicalArmorBonus()
-  local stack_count = self:GetCaster():GetModifierStackCount("modifier_imba_berserkers_call_talent", self)
-  local talent_value = self:GetCaster():FindTalentValue("special_bonus_imba_axe_2")
-  return talent_value + stack_count;
+  local stack_count = self:GetCaster():GetModifierStackCount("modifier_imba_berserkers_call_talent", self)  
+  return stack_count
 end
 
 function modifier_imba_berserkers_call_talent:OnAttacked(keys)
   if IsServer() then
     if keys.target == self:GetParent() then
-      local stack_count = self:GetCaster():GetModifierStackCount("modifier_imba_berserkers_call_talent", self)
-      self:GetParent():SetModifierStackCount("modifier_imba_berserkers_call_talent", self, stack_count + 1)
+      if self:GetCaster():HasModifier("modifier_imba_berserkers_call_caster") then
+        local stack_count = self:GetCaster():GetModifierStackCount("modifier_imba_berserkers_call_talent", self)
+        self:GetParent():SetModifierStackCount("modifier_imba_berserkers_call_talent", self, stack_count + 1)
+      end
     end
   end
 end
@@ -141,7 +143,7 @@ function modifier_imba_berserkers_call_talent:IsBuff()
 end
 
 function modifier_imba_berserkers_call_talent:IsHidden()
-  return true
+  return false
 end
 
 function modifier_imba_berserkers_call_talent:IsPurgable()

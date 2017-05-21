@@ -76,6 +76,11 @@ end
 function modifier_imba_stormbearer:GetModifierMoveSpeedBonus_Constant()		
 	self.scepter = self.caster:HasScepter()
 
+	-- Does nothing if the caster is disabled
+	if self.caster:PassivesDisabled() then
+		return nil
+	end
+
 	local stacks = self:GetStackCount()		
 	local move_speed_increase
 
@@ -87,6 +92,27 @@ function modifier_imba_stormbearer:GetModifierMoveSpeedBonus_Constant()
 	
 	return move_speed_increase			
 end
+
+
+function IncrementStormbearerStacks(caster, stacks)
+	-- If no stacks were specified, set them as 1 stack
+	if not stacks then
+		stacks = 1
+	end
+
+	local modifier_stormbearer = "modifier_imba_stormbearer"
+
+	-- Only apply if the caster has the modifier and isn't currently broken
+	if caster:HasModifier(modifier_stormbearer) and not caster:PassivesDisabled() then
+		local modifier_stormbearer_handler = caster:FindModifierByName(modifier_stormbearer)
+		if modifier_stormbearer_handler then
+			for i = 1, stacks do
+				modifier_stormbearer_handler:IncrementStackCount()
+			end
+		end
+	end
+end
+
 
 
 ---------------------------------------------------
@@ -337,10 +363,9 @@ function ThunderStrikeBoltStrike(self)
 			ApplyDamage(damageTable)			
 				
 			-- Give a Stormbearer stack to caster			
-			if self.caster:HasModifier(stormbearer_buff) then
-				local stormbearer_buff_handler = self.caster:FindModifierByName(stormbearer_buff)
-				stormbearer_buff_handler:IncrementStackCount()	
-			end		
+			if self.caster:HasModifier(stormbearer_buff) and enemy:IsRealHero() then
+				IncrementStormbearerStacks(self.caster)
+			end
 		end
 	end
 end
@@ -404,17 +429,16 @@ end
 
 ---------------------------------------------------
 
-function imba_disruptor_glimpse:OnUpgrade()
-	local caster = self:GetCaster()
-	local ability = self
-	
-	-- Give caster the glimpse move check aura
-	if not caster:HasModifier("modifier_imba_glimpse_location_aura") then		
-		caster:AddNewModifier(caster, ability, "modifier_imba_glimpse_location_aura", {})		
-	end
+function imba_disruptor_glimpse:GetIntrinsicModifierName()
+	return "modifier_imba_glimpse_location_aura"
 end
 
 ---------------------------------------------------
+
+function imba_disruptor_glimpse:GetCastRange(location, target)
+	local cast_range = self:GetSpecialValueFor("cast_range")
+	return cast_range
+end
 
 function imba_disruptor_glimpse:OnSpellStart()
 	if IsServer() then
@@ -849,9 +873,8 @@ function modifier_imba_glimpse_storm_debuff:OnIntervalThink()
 			ApplyDamage(damageTable)
 
 			-- Give a Stormbearer stack to caster			
-			if self.caster:HasModifier(self.stormbearer_buff) then
-				local stormbearer_buff_handler = self.caster:FindModifierByName(self.stormbearer_buff)					
-				stormbearer_buff_handler:IncrementStackCount()			
+			if self.caster:HasModifier(self.stormbearer_buff) and self.target:IsRealHero() then
+				IncrementStormbearerStacks(self.caster)
 			end			
 		end
 	end
@@ -987,15 +1010,14 @@ function modifier_imba_kinetic_field_dummy_guard:OnCreated()
 		self.dummy = self:GetParent()
 		
 		self.particle_attack = "particles/hero/disruptor/disruptor_kinetic_field_attack.vpcf"
-		self.stormbearer_buff = "modifier_imba_stormbearer"
-		self.scepter = self.caster:HasScepter()		
+		self.stormbearer_buff = "modifier_imba_stormbearer"		
 
 		-- Ability specials
 		self.edge_damage_hero = self.ability:GetSpecialValueFor("edge_damage_hero")
 		self.edge_damage_creep = self.ability:GetSpecialValueFor("edge_damage_creep")
 		self.knockback_duration = self.ability:GetSpecialValueFor("knockback_duration")
 		self.cooldown_reduction = self.ability:GetSpecialValueFor("cooldown_reduction")		
-		self.scepter_stack_amount = self.ability:GetSpecialValueFor("scepter_stack_amount")
+		self.stormbearer_stack_amount = self.ability:GetSpecialValueFor("stormbearer_stack_amount")
 		self.field_radius = self.ability:GetSpecialValueFor("field_radius") - 15 --340		
 
 		self:StartIntervalThink(0.1)	
@@ -1052,12 +1074,10 @@ function modifier_imba_kinetic_field_dummy_guard:OnIntervalThink()
 					
 					ApplyDamage(damageTable)	
 					
-					-- Give Stormbearer stacks to caster					
-					if self.caster:HasModifier(self.stormbearer_buff) then							
-						local current_stacks = self.caster:GetModifierStackCount(self.stormbearer_buff,self.caster)							
-						self.caster:SetModifierStackCount(self.stormbearer_buff, self.caster, current_stacks + self.scepter_stack_amount)					
-					end
-					
+					-- Give Stormbearer stacks to caster
+					if self.caster:HasModifier(self.stormbearer_buff) and enemy:IsRealHero() then
+						IncrementStormbearerStacks(self.caster, self.stormbearer_stack_amount)
+					end			
 					
 					-- Create dummy that knockbacks toward the field dummy at location
 					local direction = (enemy:GetAbsOrigin() - self.dummy:GetAbsOrigin()):Normalized()
@@ -1115,11 +1135,10 @@ function modifier_imba_kinetic_field_dummy_guard:OnIntervalThink()
 					
 					ApplyDamage(damageTable)																
 
-					-- Give a Stormbearer stack to caster					
-					if self.caster:HasModifier(self.stormbearer_buff) then
-						local stormbearer_buff_handler = self.caster:FindModifierByName(self.stormbearer_buff)
-						stormbearer_buff_handler:IncrementStackCount()					
-					end				
+					-- Give Stormbearer stacks to caster										
+					if self.caster:HasModifier(self.stormbearer_buff) and enemy:IsRealHero() then
+						IncrementStormbearerStacks(self.caster, self.stormbearer_stack_amount)
+					end
 					
 					-- Find location for the shock effect
 					local direction = (enemy:GetAbsOrigin() - self.dummy:GetAbsOrigin()):Normalized()
@@ -1289,9 +1308,8 @@ function imba_disruptor_static_storm:OnSpellStart()
 					damage_increase_from_enemies = damage_increase_from_enemies + damage_increase_enemy
 					
 					-- Give a Stormbearer stack to caster					
-					if caster:HasModifier(stormbearer_buff) then
-						local stormbearer_buff_handler = caster:FindModifierByName(stormbearer_buff)
-						stormbearer_buff_handler:IncrementStackCount()					
+					if caster:HasModifier(stormbearer_buff) and enemy:IsRealHero() then
+						IncrementStormbearerStacks(caster)
 					end					
 				end			
 			end
