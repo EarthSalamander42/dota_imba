@@ -158,7 +158,7 @@ end
 
 -- Talent reducing CD + CDR
 function imba_antimage_blink:GetCooldown( nLevel )
-	return cooldown = self.BaseClass.GetCooldown( self, nLevel ) - self:GetCaster():FindTalentValue("special_bonus_imba_antimage_1")
+	return self.BaseClass.GetCooldown( self, nLevel ) - self:GetCaster():FindTalentValue("special_bonus_imba_antimage_1")
 end
 
 function imba_antimage_blink:OnSpellStart()
