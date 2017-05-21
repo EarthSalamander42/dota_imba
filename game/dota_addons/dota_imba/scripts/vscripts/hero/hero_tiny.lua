@@ -353,8 +353,12 @@ function modifier_tiny_toss_movement:OnCreated( kv )
 	if IsServer() then
 		if self:ApplyHorizontalMotionController() == false or self:ApplyVerticalMotionController() == false then 
 			self:Destroy()
-		end
+		end	
+
+		self.ability = self:GetAbility()	
+
 		EmitSoundOn("Hero_Tiny.Toss.Target", self:GetParent())
+
 		self.traveled = 0
 		self.max_distance = self:GetAbility():GetSpecialValueFor("distance_cap")
 		self.time_left = self:GetAbility():GetSpecialValueFor("duration")
@@ -368,9 +372,15 @@ function modifier_tiny_toss_movement:OnCreated( kv )
 		self.speed = (self.distance * 0.03333) / self.time_left
 		self.toss_z = 0
 
+		self.scepter_bounce_duration = self.ability:GetSpecialValueFor("scepter_bounce_duration")
 
 		-- If after double the duration we're still stuck in motion, we probably won't ever get out: forced removal
-		Timers:CreateTimer(self.duration, function()
+		local wait_time = self.duration 
+		if self:GetCaster():HasScepter() and self:GetParent() ~= self:GetCaster() then
+			wait_time = wait_time + self.scepter_bounce_duration
+		end
+
+		Timers:CreateTimer(wait_time, function()
 			-- See if the modifier still exists
 			if not self:IsNull() then
 				self:GetCaster():InterruptMotionControllers(true)
