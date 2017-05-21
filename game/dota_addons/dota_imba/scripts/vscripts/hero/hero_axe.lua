@@ -54,7 +54,7 @@ function imba_axe_berserkers_call:OnSpellStart()
   caster:AddNewModifier(caster, self, "modifier_imba_berserkers_call_buff_armor", {duration = ability:GetSpecialValueFor("duration")})
 
   if caster:HasTalent("special_bonus_imba_axe_2") then
-    local talent_duration = caster:FindTalentValue("special_bonus_imba_axe_2")
+	local talent_duration = caster:FindTalentValue("special_bonus_imba_axe_2")
     caster:AddNewModifier(caster, self, "modifier_imba_berserkers_call_talent", {duration = ability:GetSpecialValueFor("duration") + talent_duration})
   end
 
@@ -126,14 +126,14 @@ function modifier_imba_berserkers_call_talent:DeclareFunctions()
 end
 
 function modifier_imba_berserkers_call_talent:GetModifierPhysicalArmorBonus()
-  local stack_count = self:GetCaster():GetModifierStackCount("modifier_imba_berserkers_call_talent", self)  
-  return stack_count
+	local stack_count = self:GetCaster():GetModifierStackCount("modifier_imba_berserkers_call_talent", self)  
+	return stack_count
 end
 
 function modifier_imba_berserkers_call_talent:OnAttacked(keys)
   if IsServer() then
     if keys.target == self:GetParent() then
-      if self:GetCaster():HasModifier("modifier_imba_berserkers_call_caster") then
+      if self:GetCaster():HasModifier("modifier_imba_berserkers_call_buff_armor") then
         local stack_count = self:GetCaster():GetModifierStackCount("modifier_imba_berserkers_call_talent", self)
         self:GetParent():SetModifierStackCount("modifier_imba_berserkers_call_talent", self, stack_count + 1)
       end
