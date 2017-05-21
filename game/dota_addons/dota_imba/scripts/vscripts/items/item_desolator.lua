@@ -229,7 +229,8 @@ function modifier_item_imba_desolator:DeclareFunctions()
 end
 
 function modifier_item_imba_desolator:GetModifierPreAttack_BonusDamage()
-	return self:GetAbility():GetSpecialValueFor("damage") end
+	return self:GetAbility():GetSpecialValueFor("damage") 
+end
 
 -- On attack landed, apply the debuff
 function modifier_item_imba_desolator:OnAttackLanded( keys )
@@ -330,7 +331,7 @@ function item_imba_desolator_2:OnSpellStart()
 		-- Base projectile information
 		local desolator_projectile = {
 			Ability				= self,
-			EffectName			= "particles/item/desolator/desolator_active.vpcf",
+			EffectName			= "particles/item/desolator/desolator2_active.vpcf",
 			vSpawnOrigin		= caster_loc + main_direction * 50 + Vector(0, 0, 100),
 			fDistance			= projectile_length,
 			fStartRadius		= projectile_radius,
