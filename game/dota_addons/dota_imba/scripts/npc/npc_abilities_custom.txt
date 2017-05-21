@@ -19237,7 +19237,7 @@
 		// General
 		//--------------------------------------------
 		"BaseClass"								"ability_lua"
-		"ScriptFile"							"hero/hero_silencer/imba_arcane_curse"
+		"ScriptFile"							"hero/hero_silencer.lua"
 
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -19326,7 +19326,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"							"ability_lua"
-		"ScriptFile"						"hero/hero_silencer/imba_glaives_of_wisdom"
+		"ScriptFile"						"hero/hero_silencer.lua"
 
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -19408,7 +19408,7 @@
 		// General
 		//--------------------------------------------
 		"BaseClass"								"ability_lua"
-		"ScriptFile"							"hero/hero_silencer/imba_last_word"
+		"ScriptFile"							"hero/hero_silencer.lua"
 
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitDamageType"					"DAMAGE_TYPE_MAGICAL"
@@ -19481,7 +19481,7 @@
 	"imba_silencer_arcane_supremacy"
 	{
 		"BaseClass"							"ability_lua"
-		"ScriptFile"						"hero/hero_silencer/imba_arcane_supremacy"
+		"ScriptFile"						"hero/hero_silencer.lua"
 
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO"
@@ -19519,7 +19519,7 @@
 		// General
 		//--------------------------------------------
 		"BaseClass"					"ability_lua"
-		"ScriptFile"				"hero/hero_silencer/imba_global_silence"
+		"ScriptFile"				"hero/hero_silencer.lua"
 
 		"AbilityType"				"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
