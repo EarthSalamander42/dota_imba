@@ -202,7 +202,7 @@ function imba_phantom_assassin_stifling_dagger:OnProjectileHit( target, location
 	end
 
 	-- With 20 percentage play random stifling dagger response
-	if RollPercentage(10) then
+	if RollPercentage(20) then
 		caster:EmitSound(response_stifling_dagger)
 	end
 
@@ -594,7 +594,10 @@ function modifier_imba_blur:OnIntervalThink()
 
 		-- Make mortred not transparent (wtf firetoad)
 		self.caster:RemoveModifierByName(self.modifier_blur_transparent)
-		self.caster:EmitSound(responses_blur)
+		
+		if RollPercentage(10) then
+			self.caster:EmitSound(responses_blur)
+		end
 	end
   end
 end
