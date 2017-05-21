@@ -107,11 +107,13 @@ function HeroPicked(player, hero, team, has_randomed) {
 		playerPanels[player].SetHero(hero);
 	}
 
-	// Disable the hero button for the player's team
+	// Disable the hero button according to hero pick rule
 	var LocalPlayer = Players.GetLocalPlayer()
-	if ( Players.GetTeam(LocalPlayer) == team) {
-		$('#'+hero).AddClass("taken");
-	}
+    var hero_pick_rule = CustomNetTables.GetTableValue("game_options", "hero_pick_rule");
+    if(hero_pick_rule[1] == 0 || (hero_pick_rule[1] == 1 && Players.GetTeam(LocalPlayer) == team)){
+        //If 'no same hero' or 'allow team pick same hero'
+        $('#'+hero).AddClass("taken");
+    }
 
 	// Check if the pick was by the local player
 	if ( player == LocalPlayer ) {
@@ -132,7 +134,8 @@ function HeroPicked(player, hero, team, has_randomed) {
 function HeroUnpicked(player, hero, team) {
 
 	// Re-enable the hero button for the player's team
-	if ( Players.GetTeam(Players.GetLocalPlayer()) == team) {
+    var hero_pick_rule = CustomNetTables.GetTableValue("game_options", "hero_pick_rule");
+	if (hero_pick_rule[1] == 0 || (hero_pick_rule[1] == 1 && Players.GetTeam(Players.GetLocalPlayer()) == team)) {
 		var parent_panel = $.GetContextPanel().GetParent().GetParent()
 		parent_panel.FindChildTraverse(hero).RemoveClass( "taken" );
 	}
@@ -336,9 +339,9 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 		var map_info = Game.GetMapInfo();
 
 		if (map_info.map_display_name == "imba_random_omg") {
-			$('#HeroSelectText').text = $.Localize( '#imba_gamemode_name_random_omg' );
+			$('#GameModeSelectText').text = $.Localize( '#imba_gamemode_name_random_omg' );
 		} else if (map_info.map_display_name == "imba_arena") {
-			$('#HeroSelectText').text = $.Localize( '#imba_gamemode_name_arena_mode' );
+			$('#GameModeSelectText').text = $.Localize( '#imba_gamemode_name_arena_mode' );
 		}
 
 		// Hide the top scoreboard during the pick phase
@@ -354,6 +357,7 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 		var max_level = CustomNetTables.GetTableValue("game_options", "max_level");
 		var kills_to_end = CustomNetTables.GetTableValue("game_options", "kills_to_end");
 		var frantic_mode = CustomNetTables.GetTableValue("game_options", "frantic_mode");
+        var hero_pick_rule = CustomNetTables.GetTableValue("game_options", "hero_pick_rule");
 		$("#BountyMultiplierValue").text = bounty_multiplier[1] + "%";
 		$("#RespawnTimerValue").text = respawn_multiplier[1] + "%";
 		$("#InitialGoldValue").text = initial_gold[1];
@@ -385,6 +389,14 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 				$("#FranticModeValue").text = $.Localize( '#imba_gamemode_game_options_frantic_enabled' );
 			}
 		}
+
+        if(hero_pick_rule[1] == 0){
+            $("#HeroPickRuleValue").text = $.Localize( '#imba_gamemode_settings_hero_pick_all_unique' );
+        } else if(hero_pick_rule[1] == 1){
+            $("#HeroPickRuleValue").text = $.Localize( '#imba_gamemode_settings_hero_pick_team_unique' );
+        } else if(hero_pick_rule[1] == 2){
+            $("#HeroPickRuleValue").text = $.Localize( '#imba_gamemode_settings_hero_pick_no_unique' );
+        }
 
 		// If All Random is enabled, pick a random hero
 		var all_random_enabled = CustomNetTables.GetTableValue("game_options", "all_random" );
