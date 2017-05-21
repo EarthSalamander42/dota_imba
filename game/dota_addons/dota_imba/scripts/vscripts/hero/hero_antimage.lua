@@ -5,7 +5,6 @@
   ]]
 CreateEmptyTalents("antimage")
 local LinkedModifiers = {}
-
 -------------------------------------------
 --			  MANA BREAK
 -------------------------------------------
@@ -159,12 +158,7 @@ end
 
 -- Talent reducing CD + CDR
 function imba_antimage_blink:GetCooldown( nLevel )
-	local cooldown = self.BaseClass.GetCooldown( self, nLevel )
-	local caster = self:GetCaster()
-	if caster:HasTalent("special_bonus_imba_antimage_1") then
-		cooldown = cooldown - caster:FindTalentValue("special_bonus_imba_antimage_1")
-	end
-	return cooldown
+	return cooldown = self.BaseClass.GetCooldown( self, nLevel ) - self:GetCaster():FindTalentValue("special_bonus_imba_antimage_1")
 end
 
 function imba_antimage_blink:OnSpellStart()
@@ -257,11 +251,11 @@ end
 -------------------------------------------
 -- Visible Modifiers:
 MergeTables(LinkedModifiers,{
-	["modifier_imba_antimage_spell_shield_buff"] = LUA_MODIFIER_MOTION_NONE,
+	["modifier_imba_spell_shield_buff_reflect"] = LUA_MODIFIER_MOTION_NONE,
 })
 -- Hidden Modifiers:
 MergeTables(LinkedModifiers,{
-	["modifier_imba_antimage_spell_shield_passive"] = LUA_MODIFIER_MOTION_NONE,
+	["modifier_imba_spell_shield_buff_passive"] = LUA_MODIFIER_MOTION_NONE,
 })
 imba_antimage_spell_shield = imba_antimage_spell_shield or class({})
 
@@ -270,7 +264,7 @@ function imba_antimage_spell_shield:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
 		local ability = self
-		local active_modifier = "modifier_imba_antimage_spell_shield_buff"
+		local active_modifier = "modifier_imba_spell_shield_buff_reflect"
 		self.duration = ability:GetSpecialValueFor("active_duration")
 
 
@@ -286,7 +280,7 @@ end
 
 -- Magic resistence modifier
 function imba_antimage_spell_shield:GetIntrinsicModifierName()
-	return "modifier_imba_antimage_spell_shield_passive"
+	return "modifier_imba_spell_shield_buff_passive"
 end
 
 function imba_antimage_spell_shield:GetCooldown( nLevel )
@@ -310,7 +304,7 @@ local function SpellReflect(parent, params)
 	local reflected_spell_name = params.ability:GetAbilityName()
 	local target = params.ability:GetCaster()
 		
-	if ( not exception_spell[reflected_spell_name] ) and (not target:HasModifier("modifier_imba_antimage_spell_shield_buff") ) then
+	if ( not exception_spell[reflected_spell_name] ) and (not target:HasModifier("modifier_imba_spell_shield_buff_reflect") ) then
 		local ability
 			
 		local reflect_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_antimage/antimage_spellshield_reflect.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, parent)
@@ -352,24 +346,24 @@ local function SpellAbsorb(parent)
 	return 1
 end
 
-modifier_imba_antimage_spell_shield_passive = modifier_imba_antimage_spell_shield_passive or class({})
+modifier_imba_spell_shield_buff_passive = modifier_imba_spell_shield_buff_passive or class({})
 
-function modifier_imba_antimage_spell_shield_passive:IsHidden()
+function modifier_imba_spell_shield_buff_passive:IsHidden()
 	return true
 end
 
-function modifier_imba_antimage_spell_shield_passive:IsDebuff()
+function modifier_imba_spell_shield_buff_passive:IsDebuff()
 	return false
 end
 
-function modifier_imba_antimage_spell_shield_passive:DeclareFunctions()	
+function modifier_imba_spell_shield_buff_passive:DeclareFunctions()	
 		local decFuncs = {MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
 						  MODIFIER_PROPERTY_ABSORB_SPELL,
 						  MODIFIER_PROPERTY_REFLECT_SPELL}
 		return decFuncs	
 end
 
-function modifier_imba_antimage_spell_shield_passive:OnCreated()
+function modifier_imba_spell_shield_buff_passive:OnCreated()
 	if IsServer() then
 		self.duration = self:GetAbility():GetSpecialValueFor("active_duration")
 		self.magic_resistance = self:GetAbility():GetSpecialValueFor("magic_resistance")
@@ -378,20 +372,20 @@ function modifier_imba_antimage_spell_shield_passive:OnCreated()
 	end
 end
 
-function modifier_imba_antimage_spell_shield_passive:OnRefresh()
+function modifier_imba_spell_shield_buff_passive:OnRefresh()
 	if IsServer() then
 		self.duration = self:GetAbility():GetSpecialValueFor("active_duration")
 		self.magic_resistance = self:GetAbility():GetSpecialValueFor("magic_resistance")
 	end
 end
 
-function modifier_imba_antimage_spell_shield_passive:GetModifierMagicalResistanceBonus(params)
+function modifier_imba_spell_shield_buff_passive:GetModifierMagicalResistanceBonus(params)
 	if IsServer() then
 		return self.magic_resistance
 	end
 end
 
-function modifier_imba_antimage_spell_shield_passive:GetReflectSpell( params )
+function modifier_imba_spell_shield_buff_passive:GetReflectSpell( params )
 	if IsServer() then
 		local parent = self:GetParent()
 		if ( parent:HasScepter() ) and ( self:GetAbility():IsCooldownReady() ) then
@@ -400,12 +394,12 @@ function modifier_imba_antimage_spell_shield_passive:GetReflectSpell( params )
 	end
 end
 
-function modifier_imba_antimage_spell_shield_passive:GetAbsorbSpell( params )
+function modifier_imba_spell_shield_buff_passive:GetAbsorbSpell( params )
 	if IsServer() then
 		local parent = self:GetParent()
 		if ( parent:HasScepter() ) and ( self:GetAbility():IsCooldownReady() ) then
 			local ability = self:GetAbility()
-			local active_modifier = "modifier_imba_antimage_spell_shield_buff"
+			local active_modifier = "modifier_imba_spell_shield_buff_reflect"
 			self.duration = ability:GetSpecialValueFor("active_duration")
 
 			-- Start skill cooldown.
@@ -419,21 +413,21 @@ end
 
 -- Reflect modifier
 -- Biggest thanks to Yunten !
-modifier_imba_antimage_spell_shield_buff = modifier_imba_antimage_spell_shield_buff or class({})
+modifier_imba_spell_shield_buff_reflect = modifier_imba_spell_shield_buff_reflect or class({})
 
-function modifier_imba_antimage_spell_shield_buff:IsHidden()
+function modifier_imba_spell_shield_buff_reflect:IsHidden()
 	return false
 end
 
-function modifier_imba_antimage_spell_shield_buff:IsDebuff()
+function modifier_imba_spell_shield_buff_reflect:IsDebuff()
 	return false
 end
 
-function modifier_imba_antimage_spell_shield_buff:IsPurgable()
+function modifier_imba_spell_shield_buff_reflect:IsPurgable()
     return false
 end
 
-function modifier_imba_antimage_spell_shield_buff:DeclareFunctions()	
+function modifier_imba_spell_shield_buff_reflect:DeclareFunctions()	
 		local decFuncs = {
 			MODIFIER_PROPERTY_ABSORB_SPELL,
 			MODIFIER_PROPERTY_REFLECT_SPELL
@@ -442,19 +436,19 @@ function modifier_imba_antimage_spell_shield_buff:DeclareFunctions()
 end
 
 -- Initialize old-spell-checker
-function modifier_imba_antimage_spell_shield_buff:OnCreated( params )
+function modifier_imba_spell_shield_buff_reflect:OnCreated( params )
     if IsServer() then
 
     end
 end
 
-function modifier_imba_antimage_spell_shield_buff:GetReflectSpell( params )
+function modifier_imba_spell_shield_buff_reflect:GetReflectSpell( params )
 	if IsServer() then
 		return SpellReflect(self:GetParent(), params)
 	end
 end
 
-function modifier_imba_antimage_spell_shield_buff:GetAbsorbSpell( params )
+function modifier_imba_spell_shield_buff_reflect:GetAbsorbSpell( params )
 	if IsServer() then
 		return SpellAbsorb(self:GetParent())
 	end
@@ -462,7 +456,7 @@ end
 
 -- Deleting old abilities
 -- This is bound to the passive modifier, so this is constantly on!
-function modifier_imba_antimage_spell_shield_passive:OnIntervalThink()
+function modifier_imba_spell_shield_buff_passive:OnIntervalThink()
     if IsServer() then
 		local caster = self:GetParent()
         for i=#caster.tOldSpells,1,-1 do
@@ -478,9 +472,11 @@ end
 -------------------------------------------
 --			MANA VOID
 -------------------------------------------
-
+-- Visible Modifiers:
+MergeTables(LinkedModifiers,{
+	["modifier_imba_mana_void_stunned"] = LUA_MODIFIER_MOTION_NONE,
+})
 imba_antimage_mana_void = imba_antimage_mana_void or class({})
-
 function imba_antimage_mana_void:OnAbilityPhaseStart()
 	if IsServer() then
 		self:GetCaster():EmitSound("Hero_Antimage.ManaVoidCast")
@@ -512,6 +508,7 @@ function imba_antimage_mana_void:OnSpellStart()
 		local target = self:GetCursorTarget()
 		local ability = self
 		local scepter = caster:HasScepter()
+		local modifier_ministun = "modifier_imba_mana_void_stunned"
 		
 		-- Parameters
 		local damage_per_mana = ability:GetSpecialValueFor("mana_void_damage_per_mana")
@@ -530,7 +527,7 @@ function imba_antimage_mana_void:OnSpellStart()
 		-- Burn main target's mana & ministun
 		local target_mana_burn = target:GetMaxMana() * mana_burn_pct / 100
 		target:ReduceMana(target_mana_burn)
-		target:AddNewModifier(caster, ability, "modifier_stunned", {duration = mana_void_ministun})
+		target:AddNewModifier(caster, ability, modifier_ministun, {duration = mana_void_ministun})
 		
 		-- Find all enemies in the area of effect
 		local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
@@ -563,6 +560,22 @@ function imba_antimage_mana_void:OnSpellStart()
 		target:EmitSound("Hero_Antimage.ManaVoid")
 	end	
 end
+
+-------------------------------------------
+-- Stun modifier
+modifier_mana_void_stunned = modifier_mana_void_stunned or class({})
+function modifier_mana_void_stunned:CheckState()
+	local state =
+		{[MODIFIER_STATE_STUNNED] = true}
+	return state	
+end
+
+function modifier_mana_void_stunned:IsPurgable() return false end
+function modifier_mana_void_stunned:IsPurgeException() return true end
+function modifier_mana_void_stunned:IsStunDebuff() return true end
+function modifier_mana_void_stunned:IsHidden() return false end
+function modifier_mana_void_stunned:GetEffectName() return "particles/generic_gameplay/generic_stunned.vpcf" end
+function modifier_mana_void_stunned:GetEffectAttachType() return PATTACH_OVERHEAD_FOLLOW end
 -------------------------------------------
 for LinkedModifier, MotionController in pairs(LinkedModifiers) do
 	LinkLuaModifier(LinkedModifier, "hero/hero_antimage", MotionController)
