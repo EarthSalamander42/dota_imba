@@ -11,8 +11,9 @@
 }
 
 #PlayerAvatar {
-	height: 100%;
-	vertical-align: center;
+	height: 72px;
+    width: 72px;
+	vertical-align: middle;
 	margin-left: 3px;
 	margin-right: 3px;
 	z-index: 3;
