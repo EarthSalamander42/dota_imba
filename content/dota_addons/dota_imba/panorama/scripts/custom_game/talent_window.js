@@ -621,6 +621,7 @@ function OpenImbaTalentWindow(bol_open){
             talentWindow.AddClass(OPEN_TALENT_WINDOW_CLASS);
             CloseIMBATalentWindowWhenDeselectUnit();
             imbaBtnPanel.AddClass("selected");
+            talentWindow.SetFocus();
         }else{
             talentWindow.SetAttributeInt(ATTRIBUTE_UNIT_ID, -1);
             talentWindow.RemoveClass(OPEN_TALENT_WINDOW_CLASS);
@@ -714,7 +715,5 @@ function OnPlayerUpdateSelectedUnit(){
     AnimateImbaTalentButton();
     CloseIMBATalentWindowWhenDeselectUnit();
 }
-
-//TODO check if using hotkey could level up the talents of the hidden default talent UI
 
 
