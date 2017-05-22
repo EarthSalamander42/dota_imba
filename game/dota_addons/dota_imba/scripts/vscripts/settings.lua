@@ -247,11 +247,10 @@ GAME_ROSHAN_KILLS = 0														-- Tracks amount of Roshan kills
 
 END_GAME_ON_KILLS = false													-- Should the game end after a certain number of kills?
 KILLS_TO_END_GAME_FOR_TEAM = 70												-- How many kills for a team should signify the end of the game?
-			
-ALLOW_SAME_HERO_SELECTION = true											-- Allows people to select the same hero as each other if true
 
 IMBA_HYPER_MODE_ON = false													-- Is Hyper mode activated?
 IMBA_FRANTIC_MODE_ON = false												-- Is Frantic mode activated?
+IMBA_HERO_PICK_RULE = 0                                                     -- 0 : All Unique Heroes, 1 : Allow teams to pick same hero, 2 : Allow all to pick same hero
 
 IMBA_PICK_MODE_ALL_RANDOM = false											-- Activates All Random mode when true
 IMBA_ALL_RANDOM_HERO_SELECTION_TIME = 5.0									-- Time we need to wait before the game starts when all heroes are randomed
@@ -391,6 +390,7 @@ CustomNetTables:SetTableValue("game_options", "respawn_multiplier", {100 - HERO_
 CustomNetTables:SetTableValue("game_options", "initial_gold", {HERO_INITIAL_GOLD})
 CustomNetTables:SetTableValue("game_options", "initial_level", {HERO_STARTING_LEVEL})
 CustomNetTables:SetTableValue("game_options", "max_level", {MAX_LEVEL})
+CustomNetTables:SetTableValue("game_options", "hero_pick_rule", {IMBA_HERO_PICK_RULE})
 
 -- XP per level table (only active if custom hero levels are enabled) 
 XP_PER_LEVEL_TABLE = {}

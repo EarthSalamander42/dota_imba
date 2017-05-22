@@ -285,20 +285,35 @@ function HeroSelection:HeroSelect( event )
 		return nil
 	end
 
-	-- Check if this hero hasn't already been picked
-	if PlayerResource:GetTeam(event.PlayerID) == DOTA_TEAM_GOODGUYS then
-		for _, picked_hero in pairs(HeroSelection.radiantPicks) do
-			if event.HeroName == picked_hero then
-				return nil
-			end
-		end
-	else
-		for _, picked_hero in pairs(HeroSelection.direPicks) do
-			if event.HeroName == picked_hero then
-				return nil
-			end
-		end
-	end
+    if IMBA_HERO_PICK_RULE == 0 then
+        -- All Unique heroes
+        for _, picked_hero in pairs(HeroSelection.radiantPicks) do
+            if event.HeroName == picked_hero then
+                return nil
+            end
+        end
+        for _, picked_hero in pairs(HeroSelection.direPicks) do
+            if event.HeroName == picked_hero then
+                return nil
+            end
+        end
+    elseif IMBA_HERO_PICK_RULE == 1 then
+        -- Allow Team pick same hero
+        -- Check if this hero hasn't already been picked
+        if PlayerResource:GetTeam(event.PlayerID) == DOTA_TEAM_GOODGUYS then
+            for _, picked_hero in pairs(HeroSelection.radiantPicks) do
+                if event.HeroName == picked_hero then
+                    return nil
+                end
+            end
+        else
+            for _, picked_hero in pairs(HeroSelection.direPicks) do
+                if event.HeroName == picked_hero then
+                    return nil
+                end
+            end
+        end
+    end
 
 	-- If this player has not picked yet give him the hero
 	if not HeroSelection.playerPicks[ event.PlayerID ] then
