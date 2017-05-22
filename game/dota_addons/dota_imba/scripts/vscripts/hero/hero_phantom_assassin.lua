@@ -226,7 +226,20 @@ function imba_phantom_assassin_stifling_dagger:OnProjectileHit( target, location
 	local initial_pos = caster:GetAbsOrigin()
 	local target_pos = target:GetAbsOrigin()
 
-	caster:SetAbsOrigin(target_pos)	
+	-- Offset is necessary, because cleave from Battlefury doesn't work (in any direction) if you are exactly on top of the target unit
+	local offset = 100 --dotameters (default melee range is 150 dotameters)
+	
+	-- Find the distance vector (distance, but as a vector rather than Length2D)
+	-- z is 0 to prevent any wonkiness due to height differences, we'll use the targets height, unmodified
+	local distance_vector = Vector(target_pos.x - initial_pos.x, target_pos.y - initial_pos.y, 0)
+	-- Normalize it, so the offset can be applied to x/y components, proportionally
+	distance_vector = distance_vector:Normalized()
+	
+	-- Offset the caster 100 units in front of the target
+	target_pos.x = target_pos.x - offset * distance_vector.x
+	target_pos.y = target_pos.y - offset * distance_vector.y
+	
+	caster:SetAbsOrigin(target_pos)
 	caster:PerformAttack(target, true, true, true, true, true, false, true)
 	caster:SetAbsOrigin(initial_pos)
 
