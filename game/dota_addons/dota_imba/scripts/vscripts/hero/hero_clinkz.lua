@@ -784,7 +784,7 @@ function modifier_imba_skeleton_walk_invis:OnRemoved()
                                           nil,
                                           self.spook_radius,
                                           DOTA_UNIT_TARGET_TEAM_ENEMY,
-                                          DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+                                          DOTA_UNIT_TARGET_HERO,
                                           DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,
                                           FIND_ANY_ORDER,
                                           false)

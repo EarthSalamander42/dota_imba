@@ -652,6 +652,11 @@ function modifier_imba_glimpse_location_aura:IsPurgable()
 	return false
 end
 
+---------------------------------------------------
+
+function modifier_imba_glimpse_location_aura:AllowIllusionDuplicate()
+	return false
+end
 
 -- Glimpse checker modifier storer
 modifier_imba_glimpse_location_store = class({})
@@ -804,6 +809,10 @@ function modifier_imba_glimpse_storm_aura:IsPurgable()
 	return false
 end
 
+
+function modifier_imba_glimpse_storm_aura:AllowIllusionDuplicate()
+	return false
+end
 
 modifier_imba_glimpse_storm_debuff = class({})
 
