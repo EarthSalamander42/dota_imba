@@ -261,9 +261,12 @@ end
 
 function modifier_imba_starfall_scepter_thinker:IsPurgable() return false end
 function modifier_imba_starfall_scepter_thinker:IsDebuff() return false end
+function modifier_imba_starfall_scepter_thinker:DestroyOnExpire() return false end
+function modifier_imba_starfall_scepter_thinker:RemoveOnDeath() return false end
+function modifier_imba_starfall_scepter_thinker:IsPermanent() return true end
 
 function modifier_imba_starfall_scepter_thinker:OnIntervalThink()
-    if IsServer() then        
+    if IsServer() then
         -- Ability specials
         self.radius = self.ability:GetSpecialValueFor("radius")
         self.damage = self.ability:GetSpecialValueFor("damage")
@@ -276,7 +279,12 @@ function modifier_imba_starfall_scepter_thinker:OnIntervalThink()
             -- Set the buff's duration to -1
             self:SetDuration(-1, true)
         end
-
+        
+        -- If caster is dead, do nothing
+        if not self.caster:IsAlive() then
+            return nil
+        end
+        
         -- If caster does not have scepter, do nothing
         if not self.caster:HasScepter() then
             return nil
@@ -311,9 +319,6 @@ function modifier_imba_starfall_scepter_thinker:OnIntervalThink()
     end
 end
 
-function modifier_imba_starfall_scepter_thinker:DestroyOnExpire()
-    return false
-end
 
 
 
@@ -1004,7 +1009,7 @@ function modifier_imba_moonlight_shadow:OnCreated()
         self.ability = self:GetAbility()
         self.modifier_invis = "modifier_imba_moonlight_shadow_invis"
         self.modifier_dummy = "modifier_imba_moonlight_shadow_invis_dummy"
-		self.fade_delay = self.ability:GetSpecialValueFor("fade_delay")
+        self.fade_delay = self.ability:GetSpecialValueFor("fade_delay")
         -- Start interval think
         self:StartIntervalThink(0.1)
     end
@@ -1017,7 +1022,7 @@ function modifier_imba_moonlight_shadow:IsDebuff() return false end
 function modifier_imba_moonlight_shadow:OnIntervalThink()
     if IsServer() then
         local duration = self:GetRemainingTime()
-		
+        
         -- Find all allied heroes
         local allies = FindUnitsInRadius(self.caster:GetTeamNumber(),
                                          self.caster:GetAbsOrigin(),
@@ -1034,9 +1039,9 @@ function modifier_imba_moonlight_shadow:OnIntervalThink()
             if not ally:HasModifier(self.modifier_invis) then
                 ally:AddNewModifier(self.caster, self.ability, self.modifier_dummy, {duration = duration})
                 ally:AddNewModifier(self.caster, self.ability, self.modifier_invis, {duration = duration})
-				if self:GetDuration() < (duration + self.fade_delay) then
-					ally:AddNewModifier(self.caster, self.ability, "modifier_imba_moonlight_shadow_invis_fade_time", {duration = self.fade_delay})
-				end
+                if self:GetDuration() < (duration + self.fade_delay) then
+                    ally:AddNewModifier(self.caster, self.ability, "modifier_imba_moonlight_shadow_invis_fade_time", {duration = self.fade_delay})
+                end
             end
         end
     end
@@ -1159,7 +1164,7 @@ function modifier_imba_moonlight_shadow_invis:OnAbilityExecuted(keys)
             self.modifier_dummy:SetDuration(self.fade_delay, true)
             self.parent:AddNewModifier(self.caster, self.ability, self:GetName(), {duration = self.fade_delay})
             self.parent:AddNewModifier(self.caster, self.ability, self.modifier_dummy_name, {duration = self.fade_delay})
-			self.parent:AddNewModifier(self.caster, self.ability, "modifier_imba_moonlight_shadow_invis_fade_time", {duration = self.fade_delay})
+            self.parent:AddNewModifier(self.caster, self.ability, "modifier_imba_moonlight_shadow_invis_fade_time", {duration = self.fade_delay})
         end
     end
 end
@@ -1177,7 +1182,7 @@ function modifier_imba_moonlight_shadow_invis:OnAttack(keys)
             self.modifier_dummy:SetDuration(self.fade_delay, true)
             self.parent:AddNewModifier(self.caster, self.ability, self:GetName(), {duration = self.fade_delay})
             self.parent:AddNewModifier(self.caster, self.ability, self.modifier_dummy_name, {duration = self.fade_delay})
-			self.parent:AddNewModifier(self.caster, self.ability, "modifier_imba_moonlight_shadow_invis_fade_time", {duration = self.fade_delay})
+            self.parent:AddNewModifier(self.caster, self.ability, "modifier_imba_moonlight_shadow_invis_fade_time", {duration = self.fade_delay})
         end
     end
 end
