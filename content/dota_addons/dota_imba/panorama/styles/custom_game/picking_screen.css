@@ -1,49 +1,15 @@
 /* General layout
 =================================================================*/
-#LeftPlayers {
-	padding-top: 56px;
-	width: 13%;
-	height: 100%;
-	flow-children: down;
-	animation-name: left_animation;
-	animation-delay: 0s;
-	animation-duration: 5s;
-	animation-timing-function: linear;
-	animation-iteration-count: 15;
-}
-
 @keyframes 'left_animation'
 {
 	0%
 	{
-		background-color: gradient( linear, 100% 0%, 0% 0%, from( #00000000 ), to( #00105055 ) );
-		animation-timing-function: ease-in, ease-out;
-	}
-
-	50%
-	{
 		background-color: gradient( linear, 100% 0%, 0% 0%, from( #00000000 ), to( #00105000 ) );
-		animation-timing-function: ease-in, ease-out;
 	}
-
 	100%
 	{
 		background-color: gradient( linear, 100% 0%, 0% 0%, from( #00000000 ), to( #00105055 ) );
-		animation-timing-function: ease-in, ease-out;
 	}
-}
-
-#RightPlayers {
-	padding-top: 56px;
-	width: 13%;
-	height: 100%;
-	horizontal-align: right;
-	flow-children: down;
-	animation-name: right_animation;
-	animation-delay: 0s;
-	animation-duration: 5s;
-	animation-timing-function: linear;
-	animation-iteration-count: 15;
 }
 
 @keyframes 'right_animation'
@@ -51,20 +17,38 @@
 	0%
 	{
 		background-color: gradient( linear, 100% 0%, 0% 0%, from( #50000000 ), to( #00000000 ) );
-		animation-timing-function: ease-in, ease-out;
-	}
-
-	50%
-	{
-		background-color: gradient( linear, 100% 0%, 0% 0%, from( #50000055 ), to( #00000000 ) );
-		animation-timing-function: ease-in, ease-out;
 	}
 
 	100%
 	{
-		background-color: gradient( linear, 100% 0%, 0% 0%, from( #50000000 ), to( #00000000 ) );
-		animation-timing-function: ease-in, ease-out;
+		background-color: gradient( linear, 100% 0%, 0% 0%, from( #50000055 ), to( #00000000 ) );
 	}
+}
+
+#PickingScreen {
+	width: 100%;
+	height: 100%;
+    flow-children: right;
+}
+
+#LeftPlayers,
+#RightPlayers {
+    padding-top: 56px;
+	width: 13%;
+	height: 100%;
+	flow-children: down;
+	animation-duration: 2.5s;
+	animation-timing-function: ease-out;
+    animation-direction: alternate;
+	animation-iteration-count: infinite;
+}
+
+#LeftPlayers {
+	animation-name: left_animation;
+}
+
+#RightPlayers {
+	animation-name: right_animation;
 }
 
 #ReturnToMenuButton {
@@ -91,11 +75,6 @@
 	background-image: url("s2r://panorama/images/backgrounds/dashboard_background_png.vtex");
 }
 
-#PickingScreen {
-	width: 100%;
-	height: 100%;
-}
-
 #PickList {
 	width: 100%;
 	height: 100%;
@@ -113,12 +92,9 @@
 .ClassContainer{
 	width: 74%;
 	height: 100%;
-	position: 13% 0 0;
-	background-color: #151515;
 	flow-children: down;
 	color: #ffffff;
-	padding: 20px 0 0px 0;
-	background-color: gradient( radial, 50% 0%, 0% 0%, 40% 40%, from( #000000 ), color-stop(0.4, #000000), to( #00000000 ) );
+    padding-top: 20px;
 }
 
 #HeroPreview {
@@ -189,60 +165,64 @@
 	font-family: "Radiance";
 }
 
+.PickTypePanel {
+    width: 100%;
+    height: 33%;
+    padding: 10px;
+    flow-children: down;
+    margin-bottom: -1px;
+}
+
 /* Hero options
 =================================================================*/
 .ClassOptionRow {
 	width: 98%;
-	height: 10.5%;
+	height: 33%;
+    horizontal-align: middle;
 	vertical-align: top;
 	margin-left: 1%;
 	margin-right: 1%;
 	flow-children: right;
 }
 
-.ClassNormalOption {
-	width: 4.5%;
+.ClassNormalOption,
+.ClassImbaOption {
+    width: 4.7%;
 	height: 95%;
 	horizontal-align: left;
 	vertical-align: center;
 	background-position: center;
 	saturation: 0.6;
 	wash-color: #7090B060;
-	border: 3px solid #000000FF;
 	border-radius: 6px;
 }
 
-.ClassNormalOption:hover {
-	saturation: 1.0;
-	pre-transform-scale2d: 1.05;
-	wash-color: #00000000;
+.ClassNormalOption {
+	border: 3px solid #000000FF;
 }
 
-.ClassNormalOption.taken {
+.ClassImbaOption {
+	border: 3px solid #FF7800FF;
+}
+
+.ClassNormalOption:hover,
+.ClassImbaOption:hover
+{
+	saturation: 1.0;
+	pre-transform-scale2d: 1.1;
+	wash-color: #00000000;
+    z-index: 10;
+}
+
+.ClassNormalOption.taken,
+.ClassImbaOption.taken
+{
 	saturation: 0.0;
 	transform: none;
 	opacity: 0.2;
 	wash-color: #00000000;
 }
 
-.ClassImbaOption {
-	width: 4.5%;
-	height: 95%;
-	horizontal-align: left;
-	vertical-align: center;
-	background-position: center;
-	saturation: 0.6;
-	wash-color: #7090B060;
-	border: 3px solid #FF7800FF;
-	border-radius: 6px;
-}
-
-.ClassImbaOption:hover {
-	saturation: 1.0;
-	pre-transform-scale2d: 1.05;
-	wash-color: #00000000;
-	border-radius: 6px;
-}
 
 .ClassImbaOption.taken {
 	saturation: 0.0;
@@ -263,8 +243,8 @@
 	padding-right: 10px;
 }
 
-.HeroSelectText {
-	horizontal-align: center;
+.GameModeSelectText {
+	horizontal-align: middle;
 	font-size: 48px;
 	font-family: "Goudy Trajan Medium";
 	color: #fff;
@@ -278,8 +258,7 @@
 }
 
 #PickTimerPanel {
-	horizontal-align: center;
-	vertical-align: top;
+	horizontal-align: middle;
 	flow-children: right;
 }
 
@@ -302,52 +281,44 @@
 }
 
 #GameOptionsPanelContainer {
-	width: 480px;
 	margin-top: 10px;
-	height: 140px;
 	horizontal-align: center;
 	vertical-align: bottom;
 	flow-children: right;
 }
 
-#GameOptionsPanel1 {
-	margin-top: 5px;
-	horizontal-align: left;
-	vertical-align: top;
+.GameModeLabelPanel,
+.GameModeValuePanel,
+{
+    margin-top: 5px;
 	flow-children: down;
 }
 
-#GameOptionsPanel2 {
-	margin-top: 5px;
-	horizontal-align: right;
-	vertical-align: top;
-	flow-children: down;
-}
-
-.GameModeLabelPanel {
-	width: 280px;
-	margin-right: 10px;
-	flow-children: right;
+.GameModeValuePanel
+{
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 #GameOptionsLabelPanel8 {
 	visibility: collapse;
 }
 
-.GameModeLabel {
-	horizontal-align: left;
-	text-align: center;
+.GameModeValue,
+.GameModeLabel
+{
+    text-align: center;
 	font-size: 22px;
 	font-family: "Radiance";
+}
+
+.GameModeLabel {
+    horizontal-align : left;
 	color:#FFFFFF;
 }
 
 .GameModeValue {
-	horizontal-align: right;
-	margin-left: 3px;
-	text-align: center;
-	font-size: 22px;
-	font-family: "Radiance";
+    horizontal-align : right;
 	color:#FF7800;
 }
 
@@ -358,21 +329,17 @@
 	font-size: 36px;
 	font-family: "Radiance";
 	color:#fff;
-	vertical-align: middle;
 	margin-bottom: 2%;
 }
 
 .PickListTitlePanel {
 	horizontal-align: left;
-	margin-left: 20px;
-	margin-top: 0px;
-	margin-bottom: 0px;
 	flow-children: right;
 }
 
 .PickListText {
 	horizontal-align: left;
-	vertical-align: center;
+	vertical-align: middle;
 	margin-left: 5px;
 	font-size: 32px;
 	font-family: "Radiance";
@@ -382,69 +349,67 @@
 /* Hero details panel
 =================================================================*/
 #HeroDetailsPanel {
-	height: 100%;
-	horizontal-align: right;
-	vertical-align: center;
-	flow-children: right;
+	vertical-align: middle;
+	flow-children: down;
+    margin-left: 20px;
+    margin-right: 20px;
+    width : fill-parent-flow(1);
 }
 
 #PickedHeroPanel {
-	vertical-align: center;
-	horizontal-align: left;
-	flow-children: down;
+    margin-top: 10px;
+	flow-children: right;
 }
 
 #PickedHeroName {
-	horizontal-align: center;
-	text-align: center;
-	width: 192px;
-	font-size: 28px;
+    margin-left: 10px;
+	text-align: left;
+	font-size: 32px;
 	font-family: "Radiance";
 	color: #ffffff;
 }
 
+/*
+    128x72 landscape default size
+*/
 #PickedHeroImage {
 	horizontal-align: center;
-	margin-top: 8px;
 	width: 192px;
 	height: 108px;
 	border-radius: 20px;
 }
 
 #HeroAbilitiesParentPanel {
-	horizontal-align: right;
-	vertical-align: center;
 	height: 100%;
-	flow-children: down;
-	margin-left: 10px;
+    width: fill-parent-flow(1);
+	flow-children: right;
+    padding: 15px 0px 15px 15px;
 	visibility: collapse;
 }
 
-#HeroAbilitiesPanel {
-	horizontal-align: center;
-	margin-top: 70px;
-	flow-children: right;
+#HeroAbilitiesParentPanel.four_abilities .PickedHeroAbility{
+    width : fill-parent-flow( 0.24 );
+}
+
+#HeroAbilitiesParentPanel.five_abilities .PickedHeroAbility{
+    width : fill-parent-flow( 0.19 );
+}
+
+#HeroAbilitiesParentPanel.six_abilities .PickedHeroAbility{
+    width : fill-parent-flow( 0.15 );
 }
 
 .PickedHeroAbility {
-	height: 67px;
-	width: 67px;
+	height: width-percentage(100%);
 	margin-left: 1px;
 	margin-right: 1px;
 	border-radius: 10px;
+    vertical-align: middle;
 }
 
 #RandomButtonContainer {
-	margin-left: 40px;
 	width: 160px;
 	height: 100%;
-	flow-children: down;
-}
-
-#RandomButtonPanel {
-	vertical-align: center;
-	margin-top: 50px;
-	height: 120px;
 	flow-children: down;
 }
 
@@ -452,18 +417,19 @@
 =================================================================*/
 #RandomPickBtnTxt {
 	horizontal-align: center;
-	margin-top: 7px;
+    vertical-align: bottom;
 	color: #FFFFFF;
 	font-size: 30px;
 	font-family: "Radiance";
+    margin-bottom: 5px;
 }
 
 #RandomPickBtnImage {
 	width: 128px;
 	height: 72px;
 	border-radius: 15px;
-	vertical-align: center;
 	horizontal-align: center;
+    vertical-align: middle;
 	saturation: 0.7;
 }
 
@@ -475,18 +441,17 @@
 /* 'Confirm pick' button
 =================================================================*/
 #PickHeroBtn {
-	horizontal-align: center;
-	vertical-align: bottom;
 	margin-top: 5px;
-	margin-bottom: 20px;
 
 	box-shadow: fill #00000066 -4px -4px 8px 8px;
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #5AA15E ), to( #87d69533 ) );
 	background-image: url("s2r://panorama/images/backgrounds/background_play_button_large_2x_png.vtex");
 	background-size: 320px 120px;
-	height: 42px;
-	width: 420px;
-	border-radius: 10px;
+	height: 70px;
+	width: 100%;
+    margin-left: 207px;
+	border-radius: 5px;
+    visibility: collapse;
 }
 
 #PickHeroBtn:Hover {
@@ -497,9 +462,10 @@
 }
 
 #PickHeroBtn Label {
-	vertical-align: center;
+	vertical-align: middle;
 	horizontal-align: center;
 	color: #FFFFFF;
-	font-size: 30px;
+	font-size: 32px;
 	font-family: "Radiance";
+    margin-top: 2px;
 }

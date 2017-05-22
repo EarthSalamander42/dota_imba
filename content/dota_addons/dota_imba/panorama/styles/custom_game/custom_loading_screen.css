@@ -180,11 +180,21 @@
 	horizontal-align: center;
 }
 
+.GameOptionsSubPanel,
+.GameOptionsLongSubPanel
+{
+    margin-top: 20px;
+	width: 100%;
+}
+
 .GameOptionsSubPanel
 {
-	margin-top: 20px;
-	width: 100%;
 	flow-children: right;
+}
+
+.GameOptionsLongSubPanel
+{
+    flow-children: down;
 }
 
 #KillsToEndOptionsPanel {
@@ -280,11 +290,17 @@
 	visibility: collapse;
 }
 
-.GameOptionsDropdown
+.GameOptionsSubPanel .GameOptionsDropdown
 {
 	margin-left: 10px;
 	width: 120px;
 	horizontal-align: right;
+}
+
+.GameOptionsLongSubPanel .GameOptionsDropdown
+{
+    margin-top: 5px;
+    width: 100%;
 }
 
 /* Confirm options button */

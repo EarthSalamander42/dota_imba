@@ -114,6 +114,7 @@ function SetGameOptions()
 			"respawn_reduction": $('#RespawnTimeOptionsDropdown').GetSelected().id,
 			"hero_power": $('#InitialGoldExpDropdown').GetSelected().id,
 			"kills_to_end": $('#KillsToEndOptionsDropdown').GetSelected().id,
+            "hero_pick_rule" : $('#HeroPickRuleDropdown').GetSelected().id,
 		}
 	});
 

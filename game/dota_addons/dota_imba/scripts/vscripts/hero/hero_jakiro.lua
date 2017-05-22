@@ -989,7 +989,7 @@ function modifier_imba_macropyre_thinker:OnCreated( kv )
 
 		for trail = trail_start, trail_end do
 		
-			local macropyre_pfx = ParticleManager:CreateParticle( particle_name, PATTACH_ABSORIGIN, caster)
+			local macropyre_pfx = ParticleManager:CreateParticle( particle_name, PATTACH_WORLDORIGIN, caster)
 
 			-- Calculate each trail's end position
 			local end_pos = RotatePosition(start_pos, QAngle(0, trail * trail_angle, 0), common_vector)
