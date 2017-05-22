@@ -27,7 +27,7 @@ function imba_riki_smoke_screen:OnSpellStart()
 		local smoke_particle = "particles/units/heroes/hero_riki/riki_smokebomb.vpcf"
 		
 		local duration = self:GetSpecialValueFor("duration")
-		local aoe = self:GetSpecialValueFor("area_of_effect") + self:GetCaster():FindTalentValue("special_bonus_imba_dazzle_1")
+		local aoe = self:GetSpecialValueFor("area_of_effect") + self:GetCaster():FindTalentValue("special_bonus_imba_riki_1")
 		local smoke_handler = "modifier_imba_riki_smoke_screen_handler"
 		local smoke_sound = "Hero_Riki.Smoke_Screen"
 
