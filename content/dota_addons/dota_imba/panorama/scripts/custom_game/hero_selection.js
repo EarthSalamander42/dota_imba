@@ -184,6 +184,7 @@ function SelectHero( heroName ) {
 
 	// Make the abilities panel visible
 	$("#HeroAbilitiesParentPanel").style.visibility = 'visible';
+    $("#PickHeroBtn").style.visibility = 'visible';
 
 	// Request the hero's abilities table to the server 
 	GameEvents.SendCustomGameEventToServer("pick_abilities_requested", { HeroName: heroName} );
@@ -191,10 +192,9 @@ function SelectHero( heroName ) {
 
 /* Updates the selected hero abilities panel */
 function UpdateAbilities(abilityList) {
-	for ( var i = 1; i <= 6; i++ ) {
-		var j = parseInt(i)
+	for( var i = 1; i <= 6; i++ ) {
 		var abilityPanel = abilityPanels[i-1]
-		var ability = abilityList[j]
+		var ability = abilityList[i]
 		if ( ability != null ) {
 			abilityPanel.abilityname = ability;
 			abilityPanel.style.visibility = 'visible';
@@ -212,6 +212,12 @@ function UpdateAbilities(abilityList) {
 			abilityPanel.onmouseover = null;
 		}
 	}
+
+    var numOfAbilities = Object.keys(abilityList).length
+    var abilityParentPanel = $("#HeroAbilitiesParentPanel");
+    abilityParentPanel.SetHasClass("six_abilities", numOfAbilities==6);
+    abilityParentPanel.SetHasClass("five_abilities", numOfAbilities==5);
+    abilityParentPanel.SetHasClass("four_abilities", numOfAbilities==4);
 }
 
 /* Pick a hero, called when a player confirms his hero selection */
@@ -223,7 +229,7 @@ function PickHero() {
 		if (selected_panel.BHasClass( "taken" ) == false) {
 			GameEvents.SendCustomGameEventToServer( "hero_selected", { HeroName: selectedHero, HasRandomed: false} );
 			//Hide the random button
-			$("#RandomButtonPanel").style.visibility = 'collapse';
+			$("#RandomButtonContainer").style.visibility = 'collapse';
 		}
 	}
 }
@@ -246,12 +252,10 @@ function RepickHero() {
 
 		// Make the abilities panel invisible
 		$("#HeroAbilitiesParentPanel").style.visibility = 'collapse';
+        $("#PickHeroBtn").style.visibility = 'collapse';
 
 		// Disable the repick button
 		$("#RepickBtn").AddClass("disabled");
-
-		// Re-enable the "select hero" button
-		$("#PickHeroBtn").style.visibility = 'visible';
 
 		// Show the hero pick menu again
 		$('#HeroPreview').DeleteAsync( 0.0 );

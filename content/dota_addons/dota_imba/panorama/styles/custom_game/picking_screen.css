@@ -349,69 +349,67 @@
 /* Hero details panel
 =================================================================*/
 #HeroDetailsPanel {
-	height: 100%;
-	horizontal-align: right;
-	vertical-align: center;
-	flow-children: right;
+	vertical-align: middle;
+	flow-children: down;
+    margin-left: 20px;
+    margin-right: 20px;
+    width : fill-parent-flow(1);
 }
 
 #PickedHeroPanel {
-	vertical-align: center;
-	horizontal-align: left;
-	flow-children: down;
+    margin-top: 10px;
+	flow-children: right;
 }
 
 #PickedHeroName {
-	horizontal-align: center;
-	text-align: center;
-	width: 192px;
-	font-size: 28px;
+    margin-left: 10px;
+	text-align: left;
+	font-size: 32px;
 	font-family: "Radiance";
 	color: #ffffff;
 }
 
+/*
+    128x72 landscape default size
+*/
 #PickedHeroImage {
 	horizontal-align: center;
-	margin-top: 8px;
 	width: 192px;
 	height: 108px;
 	border-radius: 20px;
 }
 
 #HeroAbilitiesParentPanel {
-	horizontal-align: right;
-	vertical-align: center;
 	height: 100%;
-	flow-children: down;
-	margin-left: 10px;
+    width: fill-parent-flow(1);
+	flow-children: right;
+    padding: 15px 0px 15px 15px;
 	visibility: collapse;
 }
 
-#HeroAbilitiesPanel {
-	horizontal-align: center;
-	margin-top: 70px;
-	flow-children: right;
+#HeroAbilitiesParentPanel.four_abilities .PickedHeroAbility{
+    width : fill-parent-flow( 0.24 );
+}
+
+#HeroAbilitiesParentPanel.five_abilities .PickedHeroAbility{
+    width : fill-parent-flow( 0.19 );
+}
+
+#HeroAbilitiesParentPanel.six_abilities .PickedHeroAbility{
+    width : fill-parent-flow( 0.15 );
 }
 
 .PickedHeroAbility {
-	height: 67px;
-	width: 67px;
+	height: width-percentage(100%);
 	margin-left: 1px;
 	margin-right: 1px;
 	border-radius: 10px;
+    vertical-align: middle;
 }
 
 #RandomButtonContainer {
-	margin-left: 40px;
 	width: 160px;
 	height: 100%;
-	flow-children: down;
-}
-
-#RandomButtonPanel {
-	vertical-align: center;
-	margin-top: 50px;
-	height: 120px;
 	flow-children: down;
 }
 
@@ -419,18 +417,19 @@
 =================================================================*/
 #RandomPickBtnTxt {
 	horizontal-align: center;
-	margin-top: 7px;
+    vertical-align: bottom;
 	color: #FFFFFF;
 	font-size: 30px;
 	font-family: "Radiance";
+    margin-bottom: 5px;
 }
 
 #RandomPickBtnImage {
 	width: 128px;
 	height: 72px;
 	border-radius: 15px;
-	vertical-align: center;
 	horizontal-align: center;
+    vertical-align: middle;
 	saturation: 0.7;
 }
 
@@ -442,18 +441,17 @@
 /* 'Confirm pick' button
 =================================================================*/
 #PickHeroBtn {
-	horizontal-align: center;
-	vertical-align: bottom;
 	margin-top: 5px;
-	margin-bottom: 20px;
 
 	box-shadow: fill #00000066 -4px -4px 8px 8px;
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #5AA15E ), to( #87d69533 ) );
 	background-image: url("s2r://panorama/images/backgrounds/background_play_button_large_2x_png.vtex");
 	background-size: 320px 120px;
-	height: 42px;
-	width: 420px;
-	border-radius: 10px;
+	height: 70px;
+	width: 100%;
+    margin-left: 207px;
+	border-radius: 5px;
+    visibility: collapse;
 }
 
 #PickHeroBtn:Hover {
@@ -464,9 +462,10 @@
 }
 
 #PickHeroBtn Label {
-	vertical-align: center;
+	vertical-align: middle;
 	horizontal-align: center;
 	color: #FFFFFF;
-	font-size: 30px;
+	font-size: 32px;
 	font-family: "Radiance";
+    margin-top: 2px;
 }

@@ -72,37 +72,36 @@
 						</Panel> <!-- End of PickTextPanel -->
 
 						<Panel id="HeroDetailsPanel">
+                            <Label id="PickedHeroName" text="#imba_hero_name_filler"/>
 							<Panel id="PickedHeroPanel">
-								<Label id="PickedHeroName" text="#imba_hero_name_filler"/>
 								<DOTAHeroImage id="PickedHeroImage" heroname="" />
+                                <Panel id="HeroAbilitiesParentPanel">
+                                    <DOTAAbilityImage id="PickedHeroAbility1" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname=""/>
+                                    <DOTAAbilityImage id="PickedHeroAbility2" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
+                                    <DOTAAbilityImage id="PickedHeroAbility3" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
+                                    <DOTAAbilityImage id="PickedHeroAbility4" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
+                                    <DOTAAbilityImage id="PickedHeroAbility5" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
+                                    <DOTAAbilityImage id="PickedHeroAbility6" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
+                                </Panel>
 							</Panel>
-							<Panel id="HeroAbilitiesParentPanel">
-								<Panel id="HeroAbilitiesPanel">
-									<DOTAAbilityImage id="PickedHeroAbility1" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname=""/>
-									<DOTAAbilityImage id="PickedHeroAbility2" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
-									<DOTAAbilityImage id="PickedHeroAbility3" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
-									<DOTAAbilityImage id="PickedHeroAbility4" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
-									<DOTAAbilityImage id="PickedHeroAbility5" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
-									<DOTAAbilityImage id="PickedHeroAbility6" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
-								</Panel>
-								<Button id="PickHeroBtn" onactivate="PickHero()" >
-									<Label id="PickHeroBtnTxt" text="#imba_confirm_pick_button" />
-								</Button>
-							</Panel>
-							<Panel id="RandomButtonContainer">
-								<Panel id="RandomButtonPanel">
-									<Image id="RandomPickBtnImage" src="file://{images}/custom_game/random_button.png" onactivate="SelectRandomHero()"/>
-									<Label id="RandomPickBtnTxt" text="#imba_random_pick_button" />
-								</Panel>
-							</Panel>
+                            <Button id="PickHeroBtn" onactivate="PickHero()" >
+                                <Label id="PickHeroBtnTxt" text="#imba_confirm_pick_button" />
+                            </Button>
 						</Panel>
+
+                        <Panel id="RandomButtonContainer">
+                            <Panel style="width:100%; height:fill-parent-flow(1);">
+                                <Image id="RandomPickBtnImage" src="file://{images}/custom_game/random_button.png" onactivate="SelectRandomHero()"/>
+                            </Panel>
+                            <Label id="RandomPickBtnTxt" text="#imba_random_pick_button" />
+                        </Panel>
 					</Panel>
 
 					<!-- Pick list (showing options) -->
 					<Panel id="PickList">
 
                         <!-- Strength Heroes -->
-                        <Panel class="PickTypePanel" style="background-color: #ea242407;">
+                        <Panel class="PickTypePanel">
                             <Panel id="StrPickListPanel" class="PickListTitlePanel">
                                 <Image src="file://{images}/hud/pip_str.png"/>
                                 <Label class="PickListText" text="#imba_strength_hero_pick_list_title" />
@@ -223,7 +222,7 @@
                         </Panel>
 
                         <!-- Agi Heroes -->
-                        <Panel class="PickTypePanel" style="background-color: #3b783707;">
+                        <Panel class="PickTypePanel">
                             <Panel id="AgiPickListPanel" class="PickListTitlePanel">
                                 <Image src="file://{images}/hud/pip_agi.png"/>
                                 <Label class="PickListText" text="#imba_agility_hero_pick_list_title" />
@@ -335,7 +334,7 @@
                         </Panel>
 
                         <!-- Int Heroes -->
-                        <Panel class="PickTypePanel" style="background-color: #1986ad07;">
+                        <Panel class="PickTypePanel">
                             <Panel id="IntPickListPanel" class="PickListTitlePanel">
                                 <Image src="file://{images}/hud/pip_int.png"/>
                                 <Label class="PickListText" text="#imba_intelligence_hero_pick_list_title" />
