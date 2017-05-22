@@ -6048,7 +6048,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"		
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -6056,6 +6056,7 @@
 		"AbilityCastPoint"				"0.3"
 		"AbilityCooldown"				"4"
 		"AbilityManaCost"				"65"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -8964,40 +8965,47 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"path_radius"				"500"
+				"path_radius"				"180"
 			}
+
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"spill_radius"				"550"
+				"spill_radius"				"225"
 			}
+
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"speed"						"600 600 600 600 650 700 750"
 				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_6"
 			}
+
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage"					"20 35 50 65 70 75 80"
 				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
 			}
+
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"damage_interval"			"0.5"
 			}
+
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"move_slow"					"-10"
+				"move_slow"					"10"
 			}
+
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"duration"					"5"
 			}
+
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -9052,46 +9060,54 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"path_radius"				"500"
+				"path_radius"				"180"
 			}
+
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"spill_radius"				"550"
+				"spill_radius"				"225"
 			}
+
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"speed"						"600 600 600 600 650 700 750"
 				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_6"
 			}
+
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage"					"10 15 20 25 30 35 40"
 			}
+
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"damage_interval"			"0.5"
 			}
+
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"move_slow"					"-32"
+				"move_slow"					"32"
 				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
 			}
+
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_slow"				"-32"
+				"attack_slow"				"32"
 				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
 			}
+
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"duration"					"5"
 			}
+
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -9176,12 +9192,12 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"move_slow"				"-15 -15 -15 -15 -20 -25 -30"
+				"move_slow"				"15 15 15 15 20 25 30"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_slow"			"-15 -15 -15 -15 -20 -25 -30"
+				"attack_slow"			"15 15 15 15 20 25 30"
 			}
 			"08"
 			{
@@ -9445,7 +9461,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"slow_increase"				"-8"
+				"slow_increase"				"8"
 			}
 		}
 	}
@@ -9614,7 +9630,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"init_slow"					"-5"
+				"init_slow"					"5"
 			}
 			"02"
 			{
