@@ -10466,7 +10466,8 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"leech_damage"				"16 24 32 40 40 40 40"
-			}		
+				"LinkedSpecialBonus"		"special_bonus_unique_treant_2"
+			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -10486,6 +10487,21 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"projectile_speed"			"400 400 400 400 450 500 550"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Treant Protector: bonus Leech Seed damage/heal
+	//=================================================================================================================
+	"special_bonus_unique_treant_2"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"25"
 			}
 		}
 	}
