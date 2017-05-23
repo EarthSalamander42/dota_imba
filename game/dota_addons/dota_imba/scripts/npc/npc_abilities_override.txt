@@ -5233,6 +5233,7 @@
 			{
 				"var_type"						"FIELD_FLOAT"
 				"distance_damage_pct"			"15 20 25 28 31 34"
+				"LinkedSpecialBonus"			"special_bonus_unique_enchantress_4"
 			}
 			"02"
 			{
@@ -11839,6 +11840,21 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"stun_duration"				"0.75 1.25 1.75 2.25 2.5 2.75 3.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Wisp: causes Tether to stun instead of slow
+	//=================================================================================================================
+	"special_bonus_unique_wisp_2"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
 			}
 		}
 	}

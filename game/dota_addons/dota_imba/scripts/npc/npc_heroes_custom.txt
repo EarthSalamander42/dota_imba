@@ -2875,9 +2875,9 @@
 		"Ability13"					"special_bonus_mp_regen_4"
 		"Ability14"					"special_bonus_strength_6"
 		"Ability15"					"special_bonus_hp_regen_10"
-		"Ability16"					"special_bonus_respawn_reduction_40"
+		"Ability16"					"special_bonus_attack_range_125"
 		"Ability17"					"special_bonus_unique_wisp"
-		"Ability18"					"special_bonus_attack_range_125"
+		"Ability18"					"special_bonus_unique_wisp_2"
 
 		"ProjectileModel"			"particles/units/heroes/hero_wisp/wisp_base_attack.vpcf"
 	}
