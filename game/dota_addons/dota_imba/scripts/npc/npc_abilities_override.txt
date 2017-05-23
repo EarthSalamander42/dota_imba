@@ -11082,6 +11082,11 @@
 				"var_type"						"FIELD_INTEGER"
 				"bonus_damage_duration"			"30 40 50 60 70 80 90"
 			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_damage_duration_scepter"	"70 80 90 100 110 120 130"
+			}
 		}
 	}
 
@@ -12619,6 +12624,8 @@
 		"AbilityDuration"				"4.0"
 
 		"AbilityDamage"					"115 170 225 280 300 320 340"
+
+		"AbilityManaCost"				"90 100 110 120 125 130 135"
 
 		"AbilitySpecial"
 		{
