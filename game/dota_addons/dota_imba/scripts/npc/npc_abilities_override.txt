@@ -11817,7 +11817,7 @@
 		{
 			"01"
 			{
-				"var_type"			"FIELD_INTEGER"
+				"var_type"			"FIELD_FLOAT"
 				"value"				"2.5"
 			}
 		}
@@ -11838,6 +11838,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"duration"				"4"
+				"LinkedSpecialBonus"	"special_bonus_unique_winter_wyvern_3"
 			}
 			"02"
 			{
@@ -12225,6 +12226,21 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"spread_aoe"			"325 325 325 325 375 425 475"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Zeus: bonus Lightning Bolt stun duration
+	//=================================================================================================================
+	"special_bonus_unique_zeus_3"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value"					"0.7"
 			}
 		}
 	}
