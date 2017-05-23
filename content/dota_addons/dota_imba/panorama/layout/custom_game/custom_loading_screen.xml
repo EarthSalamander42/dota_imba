@@ -139,10 +139,14 @@
 					</Button>
 					<Label id="community_discord_description" class="CommunityText" html="true" text="#community_discord_description"/>
 
+					<Button id="community_discord_header_ru" class="CommunityImg" onactivate="DOTADisplayURL('https://discord.gg/HcybJKt');" >
+						<Image src="file://{images}/custom_game/loading_screen/community_discord_header_ru.png" />
+					</Button>
+					<Label id="community_discord_description_ru" class="CommunityText" html="true" text="#community_discord_description_ru"/>
+
 					<Button id="community_chinese_blog_header" class="CommunityImg" onactivate="DOTADisplayURL('http://www.bilibiliduang.cn/imba');" >
 						<Image src="file://{images}/custom_game/loading_screen/community_chinese_blog.png" />
 					</Button>
-					<Label id="community_chinese_blog_description_01" class="CommunityText" html="true" text="(this space is for the chinese community)"/>
 					<Label id="community_chinese_blog_description_02" class="CommunityText" html="true" text="由于时间过晚，天赋的中二描述尚未翻译，可以通过按住alt键查看实际功能。其他错误还烦请留言或通过邮件告知。感激大家的耐心等待。"/>
 
 				</Panel>
