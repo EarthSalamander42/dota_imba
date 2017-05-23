@@ -4047,7 +4047,8 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"fissure_range"				"1400 1500 1600 1700 1900 2100 2300"
+				"fissure_range"				"1400 1400 1400 1400 1600 1800 2000"
+				"LinkedSpecialBonus"		"special_bonus_unique_earthshaker_3"
 			}
 			"02"
 			{
@@ -4063,6 +4064,21 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"stun_duration"				"1.0 1.25 1.5 1.75 1.9 2.05 2.2"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Earthshaker: bonus Fissure range
+	//=================================================================================================================
+	"special_bonus_unique_earthshaker_3"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"400"
 			}
 		}
 	}
