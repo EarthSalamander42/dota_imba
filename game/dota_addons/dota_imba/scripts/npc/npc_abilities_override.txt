@@ -5724,7 +5724,17 @@
 				"var_type"				"FIELD_FLOAT"
 				"slow_duration"			"0.7 0.8 0.9 1.0 1.25 1.5 1.75"
 				"LinkedSpecialBonus"	"special_bonus_unique_leshrac_2"
-			}			
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"interval_scepter"		"1.25"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius_scepter"		"750"
+			}
 		}
 	}
 
@@ -5774,7 +5784,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_scepter"		"175 220 265 285 305 325"
+				"damage_scepter"		"110 150 190 210 230 250"
 			}
 		}
 	}
@@ -6239,6 +6249,16 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"return_speed"			"1200 1200 1200 1200 1400 1600 1800"
+			}
+			"09"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"stone_form_scepter_base"		"1.0"
+			}
+			"10"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"stone_form_scepter_increment"	"0.4"
 			}
 		}
 	}
