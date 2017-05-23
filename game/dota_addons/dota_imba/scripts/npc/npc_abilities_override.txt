@@ -4032,7 +4032,7 @@
 	//=================================================================================================================
 	"earthshaker_fissure"
 	{
-		"AbilityCastRange"				"1400 1500 1600 1700 1900 2100 2300"
+		"AbilityCastRange"				"1400 1400 1400 1400 1575 1750 1925"
 
 		"AbilityDuration"				"1.0 1.25 1.5 1.75 1.9 2.05 2.2"
 
@@ -4047,7 +4047,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"fissure_range"				"1400 1400 1400 1400 1600 1800 2000"
+				"fissure_range"				"1400 1400 1400 1400 1575 1750 1925"
 				"LinkedSpecialBonus"		"special_bonus_unique_earthshaker_3"
 			}
 			"02"
@@ -4077,8 +4077,8 @@
 		{
 			"01"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"400"
+				"var_type"				"FIELD_INTEGER"
+				"value"					"375"
 			}
 		}
 	}
