@@ -997,7 +997,7 @@ function modifier_imba_chemical_rage_buff_haste:OnCreated()
         self.radius = self.ability:GetSpecialValueFor("radius")
 
         -- #1 Talent: Acid Spray radius increase
-        self.radius = self.radius + caster:FindTalentValue("special_bonus_imba_alchemist_1")
+        self.radius = self.radius + caster:FindTalentValue("special_bonus_imba_alchemist_1")        
 
         local particle_acid_aura_fx = ParticleManager:CreateParticle(particle_acid_aura, PATTACH_ABSORIGIN_FOLLOW, caster)
         ParticleManager:SetParticleControl(particle_acid_aura_fx, 0, caster:GetAbsOrigin())
@@ -1130,14 +1130,19 @@ function modifier_imba_chemical_rage_aura:OnCreated()
         local caster = self:GetCaster()        
         local unit = self:GetParent()
         self.ability = caster:FindAbilityByName("imba_alchemist_acid_spray")
-        self.modifier = unit:AddNewModifier(caster, self.ability, "modifier_imba_acid_spray_debuff_dot", {})
-        self.modifier.damage = self.ability:GetSpecialValueFor("damage")
-        self.modifier.stack_damage = self.ability:GetSpecialValueFor("stack_damage")
-        local tick_rate = self.ability:GetSpecialValueFor("tick_rate")
-        self:StartIntervalThink(tick_rate)
+        self.modifier = unit:FindModifierByName("modifier_imba_acid_spray_debuff_dot")
 
-
+        if self.modifier then
+            self.modifier.damage = self.ability:GetSpecialValueFor("damage")
+            self.modifier.stack_damage = self.ability:GetSpecialValueFor("stack_damage")
+            local tick_rate = self.ability:GetSpecialValueFor("tick_rate")
+            self:StartIntervalThink(tick_rate)
+        end
     end
+end
+
+function modifier_imba_chemical_rage_aura:OnRefresh()
+    self:OnCreated()
 end
 
 function modifier_imba_chemical_rage_aura:OnIntervalThink()

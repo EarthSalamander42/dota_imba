@@ -199,6 +199,13 @@ function modifier_imba_shrapnel_attack:OnOrder(keys)
         -- Only apply if the caster is the issuing unit
         if unit == self.parent then
 
+            -- If the target is a Roshan, do nothing.
+            if target and IsRoshan(target) then
+                self.current_target = nil
+                self.global_distance = false
+                return nil
+            end
+
             -- If the caster issued an attack on a target with the shrapnel debuff, apply global range
             if order_type == DOTA_UNIT_ORDER_ATTACK_TARGET and target:HasModifier(self.modifier_slow) then            
                 self.current_target = target
