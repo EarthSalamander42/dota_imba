@@ -523,7 +523,7 @@ function GameMode:OrderFilter( keys )
 	if keys.order_type == DOTA_UNIT_ORDER_CAST_TARGET then
 		local ability = EntIndexToHScript(keys["entindex_ability"])
 		if ability:GetAbilityName() == "imba_riki_blink_strike" then
-			ability.thinker = CreateModifierThinker(unit, ability, "modifier_imba_blink_strike_thinker", {target = keys.entindex_target}, unit:GetAbsOrigin(), unit:GetTeamNumber(), false )
+			ability.thinker = unit:AddNewModifier(unit, ability, "modifier_imba_blink_strike_thinker", {target = keys.entindex_target})
 		end
 	end
 	

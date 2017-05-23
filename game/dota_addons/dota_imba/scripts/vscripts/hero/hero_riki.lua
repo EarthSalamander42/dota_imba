@@ -342,7 +342,7 @@ function imba_riki_blink_strike:OnAbilityPhaseInterrupted()
 			ParticleManager:DestroyParticle(self.trail_pfx, false)
 			ParticleManager:ReleaseParticleIndex(self.trail_pfx)
 			-- Reset this, it gets removed anyways if you do another order
-			self.thinker = CreateModifierThinker(hCaster, self, "modifier_imba_blink_strike_thinker", {target = self.hTarget:entindex()}, hCaster:GetAbsOrigin(), hCaster:GetTeamNumber(), false )
+			self.thinker = hCaster:AddNewModifier(hCaster, self, "modifier_imba_blink_strike_thinker", {target = self.hTarget:entindex()})
 		end
 	end
 end
@@ -383,7 +383,10 @@ function imba_riki_blink_strike:OnSpellStart()
 			ParticleManager:ReleaseParticleIndex(particle)
 			FindClearSpaceForUnit(self.hCaster, final_pos, true)
 			self.hCaster:MoveToTargetToAttack(hTarget)
-			ApplyDamage({victim = hTarget, attacker = self.hCaster, damage = self.damage, damage_type = self:GetAbilityDamageType()})
+			if (hTarget:GetTeamNumber() ~= self.hCaster:GetTeamNumber()) then
+				ApplyDamage({victim = hTarget, attacker = self.hCaster, damage = self.damage, damage_type = self:GetAbilityDamageType()})
+				hTarget:AddNewModifier(self.hCaster, self, "modifier_imba_blink_strike_debuff_turn", {duration = self.duration})
+			end
 			self.hCaster:SetForwardVector(target_loc_forward_vector)
 			EmitSoundOn("Hero_Riki.Blink_Strike", hTarget)
 		end)
@@ -424,7 +427,7 @@ function imba_riki_blink_strike:DoJumpAttack(hTarget, hNextTarget)
 		self.hCaster:StartGestureWithPlaybackRate(ACT_DOTA_ATTACK, 1.5)
 		self.hCaster:PerformAttack(hTarget, true, true, true, false, false, false, false)
 		ApplyDamage({victim = hTarget, attacker = self.hCaster, damage = self.damage, damage_type = self:GetAbilityDamageType()})
-		self.hCaster:AddNewModifier(self.hCaster, self, "modifier_imba_blink_strike_debuff_turn", {duration = self.duration})
+		hTarget:AddNewModifier(self.hCaster, self, "modifier_imba_blink_strike_debuff_turn", {duration = self.duration})
 		self.hCaster:SetAbsOrigin(location)
 	end
 end
@@ -452,6 +455,7 @@ function modifier_imba_blink_strike_thinker:OnOrder(params)
 				if not (activity:GetName() == "imba_riki_blink_strike") then
 					self.hAbility.tStoredTargets = nil
 					self.hAbility.tMarkedTargets = nil
+					self.hAbility.hTarget = nil
 					self.hAbility.thinker = nil
 					self:Destroy()
 				end
