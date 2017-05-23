@@ -1460,11 +1460,6 @@
 		"AttackDamageMax"			"38"
 		"AttackRate"				"1.3"
 
-		"AttributeBaseIntelligence"	"25"
-		"AttributeIntelligenceGain"	"3.5"
-
-		"AttributeAgilityGain"		"2.75"
-
 		//"Ability1"				"imba_furion_sprout"
 		//"Ability2"				"imba_furion_teleportation"
 		//"Ability3"				"imba_furion_force_of_nature"
@@ -1476,7 +1471,7 @@
 		"Ability13"					"special_bonus_unique_furion_2"
 		"Ability14"					"special_bonus_attack_speed_30"
 		"Ability15"					"special_bonus_armor_5"
-		"Ability16"					"special_bonus_respawn_reduction_40"
+		"Ability16"					"special_bonus_unique_furion_3"
 		"Ability17"					"special_bonus_unique_furion"
 
 		"ProjectileModel"			"particles/units/heroes/hero_furion/furion_base_attack.vpcf"
