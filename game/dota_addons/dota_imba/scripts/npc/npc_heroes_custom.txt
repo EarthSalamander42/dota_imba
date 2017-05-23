@@ -789,8 +789,6 @@
 	{
 		"override_hero"				"npc_dota_hero_enchantress"
 
-		"AttributeBaseIntelligence"	"21"
-
 		"AttackRange"				"600"
 
 		"MovementSpeed"				"335"
@@ -806,7 +804,7 @@
 		"Ability13"					"special_bonus_attack_damage_35"
 		"Ability14"					"special_bonus_magic_resistance_15"
 		"Ability15"					"special_bonus_unique_enchantress_3"
-		"Ability16"					"special_bonus_respawn_reduction_30"
+		"Ability16"					"special_bonus_unique_enchantress_4"
 		"Ability17"					"special_bonus_unique_enchantress_1"
 
 		"ProjectileModel"			"particles/units/heroes/hero_enchantress/enchantress_base_attack.vpcf"
