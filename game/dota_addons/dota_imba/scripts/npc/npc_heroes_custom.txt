@@ -2796,22 +2796,21 @@
 	{
 		"override_hero"				"npc_dota_hero_windrunner"
 
-		"AttackRate"				"1.45"
-		"AttackAnimationPoint"		"0.1"
+		"AttackAnimationPoint"		"0.0"
 
 		//"Ability1"				"imba_windrunner_shackleshot"
 		//"Ability2"				"imba_windrunner_powershot"
 		//"Ability3"				"imba_windrunner_windrun"
 		//"Ability4"				"imba_windrunner_focusfire"
 
-		"Ability10"					"special_bonus_attack_damage_15"
+		"Ability10"					"special_bonus_unique_windranger_2"
 		"Ability11"					"special_bonus_mp_regen_3"
-		"Ability12"					"special_bonus_hp_175"
+		"Ability12"					"special_bonus_unique_windranger_3"
 		"Ability13"					"special_bonus_intelligence_13"
-		"Ability14"					"special_bonus_spell_amplify_8"
-		"Ability15"					"special_bonus_magic_resistance_15"
+		"Ability14"					"special_bonus_unique_windranger"
+		"Ability15"					"special_bonus_movement_speed_35"
 		"Ability16"					"special_bonus_attack_range_100"
-		"Ability17"					"special_bonus_unique_windranger"
+		"Ability17"					"special_bonus_cooldown_reduction_10"
 
 		"ProjectileModel"			"particles/units/heroes/hero_windrunner/windrunner_base_attack.vpcf"
 	}

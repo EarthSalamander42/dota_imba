@@ -12807,16 +12807,16 @@
 	}
 
 	//=================================================================================================================
-	//	Windrunner: Powershot cooldown decrease
+	//	Windrunner: bonus Powershot damage
 	//=================================================================================================================
-	"special_bonus_unique_windranger"
+	"special_bonus_unique_windranger_3"
 	{
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"			"FIELD_FLOAT"
-				"value"				"4.0"
+				"var_type"			"FIELD_INTEGER"
+				"value"				"120"
 			}
 		}
 	}
@@ -12858,6 +12858,21 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"duration"					"3 4 5 6"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Windrunner: Windrun grants invisibility
+	//=================================================================================================================
+	"special_bonus_unique_windranger"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
 			}
 		}
 	}
