@@ -18857,6 +18857,9 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"ScriptFile"					"hero/hero_riki.lua"
 		"AbilityTextureName"			"riki_smoke_screen"
 		"FightRecapLevel"				"1"
@@ -18936,10 +18939,19 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"hero/hero_riki.lua"
-		"AbilityTextureName"			"riki_blink_strike"
+		"ScriptFile"					"hero/hero_riki"
+		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE | DOTA_UNIT_TARGET_FLAG_NO_INVIS"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"riki_blink_strike"
 		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -18960,6 +18972,7 @@
 		{
 			"particle"					"particles/units/heroes/hero_riki/riki_blink_strike.vpcf"
 			"particle"					"particles/units/heroes/hero_riki/riki_blink_strike_start.vpcf"
+			"particle"					"particles/hero/riki/blink_trail.vpcf"
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_riki.vsndevts"
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_phantom_assassin.vsndevts"
 		}
@@ -18973,43 +18986,37 @@
 				"var_type"				"FIELD_INTEGER"
 				"damage"				"55 75 85 100 150 200 250"
 			}
-			
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"duration"				"2.5"
 				"LinkedSpecialBonus"	"special_bonus_imba_riki_4"
 			}
-
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"turn_rate_slow"		"60"
+				"turn_rate_slow_pct"	"60"
 			}
-
 			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"full_cast_range"		"700 1400 2100 2100 2100 2100 2100"	// max range (+700 per jump)
-			}
-
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"no_jump_cast_range"	"700"
-			}
-
-			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"jump_range"			"700"
 			}
-
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_jumps"				"0 1 2 3 3 3 3"
+				"LinkedSpecialBonus"	"special_bonus_imba_riki_3"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"jump_interval_frames"	"12"
+			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_jumps"				"0 1 2 3 3 3 3" 				// last jump is the targeted unit
-				"LinkedSpecialBonus"	"special_bonus_imba_riki_3"
+				"lagg_threshold"		"100"		// If it gets too crowded, it could get laggy.
 			}
 		}
 	}
@@ -19026,6 +19033,8 @@
 		"AbilityTextureName"			"riki_permanent_invisibility"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"MaxLevel"						"7"		
 
 		// Time

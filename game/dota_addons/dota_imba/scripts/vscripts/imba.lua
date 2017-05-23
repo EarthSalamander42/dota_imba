@@ -23,6 +23,8 @@ require('libraries/notifications')
 require('libraries/animations')
 -- This library can be used for creating frankenstein monsters
 require('libraries/attachments')
+-- A*-Path-finding logic
+require('libraries/astar')
 
 -- These internal libraries set up barebones's events and processes.  Feel free to inspect them/change them if you need to.
 require('internal/gamemode')
@@ -467,7 +469,7 @@ end
 
 -- Order filter function
 function GameMode:OrderFilter( keys )
-
+	
 	--entindex_ability	 ==> 	0
 	--sequence_number_const	 ==> 	20
 	--queue	 ==> 	0
@@ -487,6 +489,13 @@ function GameMode:OrderFilter( keys )
 		return nil
 	end
 
+	
+	-- Do special handlings if shift-casted only here! The event gets fired another time if the caster
+	-- is actually doing this order
+	if keys.queue == 1 then
+		return true
+	end
+	
 	------------------------------------------------------------------------------------
 	-- Witch Doctor Death Ward handler
 	------------------------------------------------------------------------------------
@@ -505,6 +514,16 @@ function GameMode:OrderFilter( keys )
 			local modifier = unit:FindModifierByName("modifier_imba_death_ward_caster")
 			modifier.death_ward_mod.attack_target = EntIndexToHScript(keys.entindex_target)
 			return nil
+		end
+	end
+	
+	------------------------------------------------------------------------------------
+	-- Riki Blink-Strike handler
+	------------------------------------------------------------------------------------
+	if keys.order_type == DOTA_UNIT_ORDER_CAST_TARGET then
+		local ability = EntIndexToHScript(keys["entindex_ability"])
+		if ability:GetAbilityName() == "imba_riki_blink_strike" then
+			ability.thinker = CreateModifierThinker(unit, ability, "modifier_imba_blink_strike_thinker", {target = keys.entindex_target}, unit:GetAbsOrigin(), unit:GetTeamNumber(), false )
 		end
 	end
 	
@@ -563,7 +582,9 @@ function GameMode:OrderFilter( keys )
 			end
 			
 			-- Reduce stack-amount
-			modifier:DecrementStackCount()
+			if not (keys.queue == 1) then
+				modifier:DecrementStackCount()
+			end
 			if modifier:GetStackCount() == 0 then
 				modifier:Destroy()
 			end
@@ -589,7 +610,9 @@ function GameMode:OrderFilter( keys )
 			keys.position_z = new_order_vector.z
 			
 			-- Reduce stack-amount
-			modifier:DecrementStackCount()
+			if not (keys.queue == 1) then
+				modifier:DecrementStackCount()
+			end
 			if modifier:GetStackCount() == 0 then
 				modifier:Destroy()
 			end
