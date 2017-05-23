@@ -2732,9 +2732,9 @@
 		"Ability12"					"special_bonus_attack_damage_35"
 		"Ability13"					"special_bonus_cast_range_100"
 		"Ability14"					"special_bonus_hp_200"
-		"Ability15"					"special_bonus_respawn_reduction_35"
+		"Ability15"					"special_bonus_unique_visage_2"
 		"Ability16"					"special_bonus_spell_amplify_10"
-		"Ability17"					"special_bonus_unique_visage_2"
+		"Ability17"					"special_bonus_unique_visage_3"
 
 		"ProjectileModel"			"particles/units/heroes/hero_visage/visage_base_attack.vpcf"
 	}
