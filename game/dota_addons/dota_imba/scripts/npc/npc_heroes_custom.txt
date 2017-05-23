@@ -404,12 +404,12 @@
 		//"Ability4"					"imba_chen_holy_persuasion"
 		//"Ability5"					"imba_chen_hand_of_god"
 
-		"Ability10"					"special_bonus_gold_income_25"
-		"Ability11"					"special_bonus_respawn_reduction_50"
-		"Ability12"					"special_bonus_movement_speed_30"
-		"Ability13"					"special_bonus_unique_chen_3"
-		"Ability14"					"special_bonus_hp_200"
-		"Ability15"					"special_bonus_cast_range_125"
+		"Ability10"					"special_bonus_movement_speed_30"
+		"Ability11"					"special_bonus_cast_range_125"
+		"Ability12"					"special_bonus_unique_chen_3"
+		"Ability13"					"special_bonus_hp_200"
+		"Ability14"					"special_bonus_gold_income_25"
+		"Ability15"					"special_bonus_unique_chen_4"
 		"Ability16"					"special_bonus_unique_chen_1"
 		"Ability17"					"special_bonus_unique_chen_2"
 
