@@ -509,7 +509,7 @@ MergeTables(LinkedModifiers,{
 })
 -- Hidden Modifiers:
 MergeTables(LinkedModifiers,{
-	["modifier_imba_culling_blade_leap"] = LUA_MODIFIER_MOTION_BOTH,
+	["modifier_imba_culling_blade_motion"] = LUA_MODIFIER_MOTION_BOTH,
 })
 imba_axe_culling_blade = imba_axe_culling_blade or class({})
 
