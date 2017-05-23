@@ -9,7 +9,6 @@
 	[
 		{
 			_class = "C_OP_RenderModels"
-			m_bDisableOperator = true
 			m_bOrientZ = true
 			m_ModelList = 
 			[

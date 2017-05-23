@@ -1918,7 +1918,7 @@
 	{
 		"AbilityCooldown"				"4.0"
 
-		"AbilityDuration"				"18 18 18 18 22 26 30"
+		"AbilityDuration"				"16 16 16 16 20 24 28"
 
 		"AbilityManaCost"				"80 75 70 65 60 55 50"
 
@@ -1929,22 +1929,54 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"275 275 275 275 300 325 350"
+				"radius"				"275 275 275 275 310 345 380"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"movement_speed_pct"	"-15 -20 -25 -30 -32 -34 -36"
+				"LinkedSpecialBonus"	"special_bonus_unique_ancient_apparition_4"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"spell_resist_pct"		"-15 -20 -25 -30 -32 -34 -36"
+				"LinkedSpecialBonus"	"special_bonus_unique_ancient_apparition_4"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"vision_aoe"			"350"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Ancient Apparition: reduced Ice Vortex cooldown
+	//=================================================================================================================
+	"special_bonus_unique_ancient_apparition_3"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ancient Apparition: bonus Ice Vortex slow/magic amp
+	//=================================================================================================================
+	"special_bonus_unique_ancient_apparition_4"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"-12"
 			}
 		}
 	}
@@ -2477,11 +2509,11 @@
 	//=================================================================================================================
 	"beastmaster_wild_axes"
 	{
-		"AbilityCastRange"				"1300 1400 1500 1600 1700 1800 1900"
+		"AbilityCastRange"				"1500 1500 1500 1500 1650 1800 1950"
 
 		"AbilityCooldown"				"13 12 11 10 9 8 7"
 
-		"AbilityManaCost"				"120 110 100 90 80 70 60"
+		"AbilityManaCost"				"105 100 95 90 85 80 75"
 
 		"MaxLevel"						"7"
 
@@ -2500,7 +2532,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"range"						"1300 1400 1500 1600 1700 1800 1900"
+				"range"						"1500 1500 1500 1500 1650 1800 1950"
 			}
 			"04"
 			{
@@ -2619,6 +2651,21 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"boar_duration"				"60"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Beastmaster: bonus Boars summoned
+	//=================================================================================================================
+	"special_bonus_unique_beastmaster_2"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"2"
 			}
 		}
 	}
