@@ -941,7 +941,7 @@ function modifier_imba_dark_ritual_creeps:DeclareFunctions()
 end
 
 function modifier_imba_dark_ritual_creeps:GetModifierAttackSpeedBonus_Constant()     
-     return self:GetStackCount() * self.creeps_bonus_hp_pct * 0.01
+     return self.creeps_bonus_as
 end 
 
 function modifier_imba_dark_ritual_creeps:GetModifierPreAttack_BonusDamage()
