@@ -5477,6 +5477,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"mana_restore"			"100 200 300 400 425 450 475"
+				"LinkedSpecialBonus"	"special_bonus_unique_keeper_of_the_light_2"
 			}			
 			"02"
 			{
@@ -5487,6 +5488,21 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"duration"				"20"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Keeper of the Light: bonus Chakra Magic mana
+	//=================================================================================================================
+	"special_bonus_unique_keeper_of_the_light_2"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"375"
 			}
 		}
 	}
