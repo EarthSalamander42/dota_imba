@@ -2303,8 +2303,6 @@
 	{
 		"override_hero"			"npc_dota_hero_templar_assassin"
 
-		"AttackRate"			"1.6"
-
 		"AttackRange"			"200"
 
 		//"Ability1"				"imba_templar_assassin_refraction"
@@ -2319,7 +2317,7 @@
 		"Ability13"				"special_bonus_evasion_15"
 		"Ability14"				"special_bonus_hp_200"
 		"Ability15"				"special_bonus_attack_damage_40"
-		"Ability16"				"special_bonus_respawn_reduction_35"
+		"Ability16"				"special_bonus_unique_templar_assassin_2"
 		"Ability17"				"special_bonus_unique_templar_assassin"
 
 		"ProjectileModel"		"particles/units/heroes/hero_templar_assassin/templar_assassin_base_attack.vpcf"

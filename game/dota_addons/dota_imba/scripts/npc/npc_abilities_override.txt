@@ -9444,6 +9444,7 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"damage"				"24 32 40 48 50 52 54"
+				"LinkedSpecialBonus"	"special_bonus_unique_spirit_breaker_3"
 			}
 			"03"
 			{
@@ -9822,11 +9823,27 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"bonus_armor"							" -3 -5 -7 -9 -10 -11 -12"
+				"LinkedSpecialBonus"					"special_bonus_unique_templar_assassin_2"
 			}
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"armor_reduction_duration_tooltip"		"10"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Templar Assassin: bonus Meld armor reduction
+	//=================================================================================================================
+	"special_bonus_unique_templar_assassin_2"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"-10"
 			}
 		}
 	}
