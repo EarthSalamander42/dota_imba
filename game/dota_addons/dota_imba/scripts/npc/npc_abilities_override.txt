@@ -7666,7 +7666,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bolt_speed"				"1200"
+				"bolt_speed"				"1000"
 			}
 			"03"
 			{
@@ -7677,6 +7677,7 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"maximum_purge_duration"	"2.5"
+				"LinkedSpecialBonus"		"special_bonus_unique_oracle_2"
 			}
 			"05"
 			{
@@ -7687,6 +7688,21 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"max_channel_time_tooltip"	"2.5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Oracle: bonus Fortune's End maximum duration
+	//=================================================================================================================
+	"special_bonus_unique_oracle_2"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value"					"0.75"
 			}
 		}
 	}

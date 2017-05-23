@@ -1596,15 +1596,12 @@
 	{
 		"override_hero"				"npc_dota_hero_oracle"
 
-		"AttackDamageMin"			"28"
-		"AttackDamageMax"			"30"
-
 		//"Ability1"					"imba_oracle_fortunes_end"
 		//"Ability2"					"imba_oracle_fates_edict"
 		//"Ability3"					"imba_oracle_purifying_flames"
 		//"Ability4"					"imba_oracle_false_promise"
 
-		"Ability10"					"special_bonus_respawn_reduction_25"
+		"Ability10"					"special_bonus_unique_oracle_2"
 		"Ability11"					"special_bonus_exp_boost_20"
 		"Ability12"					"special_bonus_hp_175"
 		"Ability13"					"special_bonus_gold_income_25"
