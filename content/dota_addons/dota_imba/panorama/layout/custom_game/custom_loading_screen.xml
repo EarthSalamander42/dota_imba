@@ -143,7 +143,7 @@
 						<Image src="file://{images}/custom_game/loading_screen/community_chinese_blog.png" />
 					</Button>
 					<Label id="community_chinese_blog_description_01" class="CommunityText" html="true" text="(this space is for the chinese community)"/>
-					<Label id="community_chinese_blog_description_02" class="CommunityText" html="true" text="更新日志中文翻译请查看此页面! 全新的IMBA中文翻译已经添加，尽情享用吧！如果您发现了任何翻译的错误或有其他建议，可以访问IMBA的中文页面在任意文章下评论"/>
+					<Label id="community_chinese_blog_description_02" class="CommunityText" html="true" text="由于时间过晚，天赋的中二描述尚未翻译，可以通过按住alt键查看实际功能。其他错误还烦请留言或通过邮件告知。感激大家的耐心等待。"/>
 
 				</Panel>
 

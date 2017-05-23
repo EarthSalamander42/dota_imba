@@ -2640,7 +2640,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"boar_attackslow_tooltip"	"40 50 60 70"
+				"boar_attackslow_tooltip"	"20 40 60 80"
 			}
 			"06"
 			{
@@ -2705,7 +2705,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_speed"			"-30 -40 -50 -60"
+				"attack_speed"			"-20 -40 -60 -80"
 			}
 			"02"
 			{
@@ -3321,6 +3321,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"health_min"			"1200 1200 1200 1200 1500 1800 2100"
+				"LinkedSpecialBonus"	"special_bonus_unique_chen_4"
 			}
 		}
 	}
@@ -3336,6 +3337,21 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"value"				"6"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Chen: bonus Holy Persuasion minimum unit health
+	//=================================================================================================================
+	"special_bonus_unique_chen_4"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"1400"
 			}
 		}
 	}
@@ -3427,6 +3443,21 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"value"				"10"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Clockwerk: Battery Assault damage increase
+	//=================================================================================================================
+	"special_bonus_unique_clockwerk_3"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"40"
 			}
 		}
 	}
@@ -4001,7 +4032,7 @@
 	//=================================================================================================================
 	"earthshaker_fissure"
 	{
-		"AbilityCastRange"				"1400 1500 1600 1700 1900 2100 2300"
+		"AbilityCastRange"				"1400 1400 1400 1400 1575 1750 1925"
 
 		"AbilityDuration"				"1.0 1.25 1.5 1.75 1.9 2.05 2.2"
 
@@ -4016,7 +4047,8 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"fissure_range"				"1400 1500 1600 1700 1900 2100 2300"
+				"fissure_range"				"1400 1400 1400 1400 1575 1750 1925"
+				"LinkedSpecialBonus"		"special_bonus_unique_earthshaker_3"
 			}
 			"02"
 			{
@@ -4032,6 +4064,21 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"stun_duration"				"1.0 1.25 1.5 1.75 1.9 2.05 2.2"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Earthshaker: bonus Fissure range
+	//=================================================================================================================
+	"special_bonus_unique_earthshaker_3"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"375"
 			}
 		}
 	}
@@ -4352,6 +4399,21 @@
 				"var_type"				"FIELD_INTEGER"
 				"total_pull_distance"	"1400"
 			}			
+		}
+	}
+
+	//=================================================================================================================
+	//	Earth Spirit: allows Geomagnetic Grip to target allied heroes
+	//=================================================================================================================
+	"special_bonus_unique_earth_spirit_2"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"0"
+			}
 		}
 	}
 
@@ -5057,7 +5119,7 @@
 
 		"AbilityCooldown"				"20 16 12 8 7 6 5"
 
-		"AbilityDuration"				"5.5"
+		"AbilityDuration"				"2.25 3.5 4.75 6.0"
 
 		"AbilityManaCost"				"65"
 
@@ -5071,12 +5133,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"slow_movement_speed"	"-30 -40 -50 -60 -65 -70 -75"
+				"slow_movement_speed"	"-55 -55 -55 -55 -60 -65 -70"
 			}			
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"tooltip_duration"		"5.5"
+				"tooltip_duration"		"2.25 3.5 4.75 6.0"
 			}
 		}
 	}
@@ -5171,6 +5233,7 @@
 			{
 				"var_type"						"FIELD_FLOAT"
 				"distance_damage_pct"			"15 20 25 28 31 34"
+				"LinkedSpecialBonus"			"special_bonus_unique_enchantress_4"
 			}
 			"02"
 			{
@@ -5181,6 +5244,21 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"bonus_attack_range_scepter"	"200"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Enchantress: bonus Impetus damage
+	//=================================================================================================================
+	"special_bonus_unique_enchantress_4"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"6"
 			}
 		}
 	}
@@ -5399,6 +5477,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"mana_restore"			"100 200 300 400 425 450 475"
+				"LinkedSpecialBonus"	"special_bonus_unique_keeper_of_the_light_2"
 			}			
 			"02"
 			{
@@ -5409,6 +5488,21 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"duration"				"20"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Keeper of the Light: bonus Chakra Magic mana
+	//=================================================================================================================
+	"special_bonus_unique_keeper_of_the_light_2"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"375"
 			}
 		}
 	}
@@ -5630,7 +5724,17 @@
 				"var_type"				"FIELD_FLOAT"
 				"slow_duration"			"0.7 0.8 0.9 1.0 1.25 1.5 1.75"
 				"LinkedSpecialBonus"	"special_bonus_unique_leshrac_2"
-			}			
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"interval_scepter"		"1.25"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius_scepter"		"750"
+			}
 		}
 	}
 
@@ -5680,7 +5784,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_scepter"		"175 220 265 285 305 325"
+				"damage_scepter"		"110 150 190 210 230 250"
 			}
 		}
 	}
@@ -6145,6 +6249,16 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"return_speed"			"1200 1200 1200 1200 1400 1600 1800"
+			}
+			"09"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"stone_form_scepter_base"		"1.0"
+			}
+			"10"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"stone_form_scepter_increment"	"0.4"
 			}
 		}
 	}
@@ -7106,6 +7220,21 @@
 
 		"AbilityCooldown"				"50 40 30 20 19 18 17"
 	}
+
+	//=================================================================================================================
+	//	Nature's Prophet: teleportation cooldown removed
+	//=================================================================================================================
+	"special_bonus_unique_furion_3"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"				"1"
+			}
+		}
+	}
 	
 	//=================================================================================================================
 	// Nature's Prophet: Force of Nature
@@ -7557,7 +7686,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bolt_speed"				"1200"
+				"bolt_speed"				"1000"
 			}
 			"03"
 			{
@@ -7568,6 +7697,7 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"maximum_purge_duration"	"2.5"
+				"LinkedSpecialBonus"		"special_bonus_unique_oracle_2"
 			}
 			"05"
 			{
@@ -7578,6 +7708,21 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"max_channel_time_tooltip"	"2.5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Oracle: bonus Fortune's End maximum duration
+	//=================================================================================================================
+	"special_bonus_unique_oracle_2"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value"					"0.75"
 			}
 		}
 	}
@@ -8951,6 +9096,21 @@
 	}
 
 	//=================================================================================================================
+	//	Shadow Demon: Shadow Poison cooldown reduction
+	//=================================================================================================================
+	"special_bonus_unique_shadow_demon_3"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value"					"0.75"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Shadow Demon: Demonic Purge
 	//=================================================================================================================
 	"shadow_demon_demonic_purge"
@@ -9319,6 +9479,7 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"damage"				"24 32 40 48 50 52 54"
+				"LinkedSpecialBonus"	"special_bonus_unique_spirit_breaker_3"
 			}
 			"03"
 			{
@@ -9364,6 +9525,21 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"value"				"17"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Spirit Breaker: bonus Greater Bash damage
+	//=================================================================================================================
+	"special_bonus_unique_spirit_breaker_3"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"30"
 			}
 		}
 	}
@@ -9682,11 +9858,27 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"bonus_armor"							" -3 -5 -7 -9 -10 -11 -12"
+				"LinkedSpecialBonus"					"special_bonus_unique_templar_assassin_2"
 			}
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"armor_reduction_duration_tooltip"		"10"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Templar Assassin: bonus Meld armor reduction
+	//=================================================================================================================
+	"special_bonus_unique_templar_assassin_2"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"-10"
 			}
 		}
 	}
@@ -10309,7 +10501,8 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"leech_damage"				"16 24 32 40 40 40 40"
-			}		
+				"LinkedSpecialBonus"		"special_bonus_unique_treant_2"
+			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -10329,6 +10522,21 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"projectile_speed"			"400 400 400 400 450 500 550"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Treant Protector: bonus Leech Seed damage/heal
+	//=================================================================================================================
+	"special_bonus_unique_treant_2"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"30"
 			}
 		}
 	}
@@ -10874,6 +11082,11 @@
 				"var_type"						"FIELD_INTEGER"
 				"bonus_damage_duration"			"30 40 50 60 70 80 90"
 			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_damage_duration_scepter"	"70 80 90 100 110 120 130"
+			}
 		}
 	}
 
@@ -11241,8 +11454,8 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"chill_duration"		"3 4 5 6 6 6 6"
+				"var_type"				"FIELD_FLOAT"
+				"chill_duration"		"3.25 4.5 5.75 7.0 7.0 7.0 7.0"
 			}
 			"02"
 			{
@@ -11316,7 +11529,22 @@
 				"damage_max"				"3000.0"
 			}
 		}
-	}	
+	}
+
+	//=================================================================================================================
+	//	Visage: Soul Assumption multicast
+	//=================================================================================================================
+	"special_bonus_unique_visage_3"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"3"
+			}
+		}
+	}
 
 	//=================================================================================================================
 	// Visage: Gravekeeper's Cloak
@@ -11629,7 +11857,7 @@
 		{
 			"01"
 			{
-				"var_type"			"FIELD_INTEGER"
+				"var_type"			"FIELD_FLOAT"
 				"value"				"2.5"
 			}
 		}
@@ -11650,6 +11878,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"duration"				"4"
+				"LinkedSpecialBonus"	"special_bonus_unique_winter_wyvern_3"
 			}
 			"02"
 			{
@@ -11660,6 +11889,21 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"heal_percentage"		"3.0 4.0 5.0 6.0 6.5 7.0 7.5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Winter Wyvern: bonus Cold Embrace duration
+	//=================================================================================================================
+	"special_bonus_unique_winter_wyvern_3"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"2"
 			}
 		}
 	}
@@ -11762,6 +12006,21 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"stun_duration"				"0.75 1.25 1.75 2.25 2.5 2.75 3.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Wisp: causes Tether to stun instead of slow
+	//=================================================================================================================
+	"special_bonus_unique_wisp_2"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
 			}
 		}
 	}
@@ -12007,6 +12266,21 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"spread_aoe"			"325 325 325 325 375 425 475"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Zeus: bonus Lightning Bolt stun duration
+	//=================================================================================================================
+	"special_bonus_unique_zeus_3"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value"					"0.7"
 			}
 		}
 	}
@@ -12351,6 +12625,8 @@
 
 		"AbilityDamage"					"115 170 225 280 300 320 340"
 
+		"AbilityManaCost"				"90 100 110 120 125 130 135"
+
 		"AbilitySpecial"
 		{
 			"01"
@@ -12604,16 +12880,16 @@
 	}
 
 	//=================================================================================================================
-	//	Windrunner: Powershot cooldown decrease
+	//	Windrunner: bonus Powershot damage
 	//=================================================================================================================
-	"special_bonus_unique_windranger"
+	"special_bonus_unique_windranger_3"
 	{
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"			"FIELD_FLOAT"
-				"value"				"4.0"
+				"var_type"			"FIELD_INTEGER"
+				"value"				"120"
 			}
 		}
 	}
@@ -12655,6 +12931,21 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"duration"					"3 4 5 6"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Windrunner: Windrun grants invisibility
+	//=================================================================================================================
+	"special_bonus_unique_windranger"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
 			}
 		}
 	}
@@ -12905,7 +13196,7 @@
 	}
 
 	//=================================================================================================================
-	//	Viper: bonus Vioer Strike dps
+	//	Viper: bonus Viper Strike dps
 	//=================================================================================================================
 	"special_bonus_unique_viper_2"
 	{
@@ -12927,6 +13218,8 @@
 		"MaxLevel"						"7"
 
 		"AbilityCooldown"				"15 15 15 15 14 13 12"
+
+		"AbilityManaCost"				"100 110 120 130 135 140 145"
 
 		"AbilitySpecial"
 		{			
@@ -13033,6 +13326,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"trigger_chance"			"25 25 25 25 30 35 40"
+				"LinkedSpecialBonus"		"special_bonus_unique_legion_commander_3"
 			}
 			"02"
 			{
@@ -13048,13 +13342,28 @@
 	}
 
 	//=================================================================================================================
+	//	Legion Commander: bonus Moment of Courage proc chance
+	//=================================================================================================================
+	"special_bonus_unique_legion_commander_3"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"10"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Legion Commander: Duel
 	//=================================================================================================================
 	"legion_commander_duel"
 	{
 		"MaxLevel"						"6"
 
-		"AbilityCooldown"				"50 43 36 29 22 15"
+		"AbilityCooldown"				"50 44 38 32 26 20"
 
 		"AbilitySpecial"
 		{

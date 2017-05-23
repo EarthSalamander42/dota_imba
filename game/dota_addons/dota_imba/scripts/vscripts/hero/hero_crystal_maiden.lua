@@ -362,8 +362,9 @@ function imba_crystal_maiden_frostbite:CastFilterResultTarget(target)
 	if IsServer() then
 		local caster = self:GetCaster()
 		local casterID = caster:GetPlayerID()
+		local targetID
 		if target:IsHero() then			
-			local targetID = target:GetPlayerID()
+			targetID = target:GetPlayerID()
 		end
 			
 		-- Disable help

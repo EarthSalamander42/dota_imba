@@ -7051,13 +7051,13 @@
 			"11"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"heal_per_tick"							"50 50 50 50 55 60 65"
+				"heal_per_tick"							"50"
 			}
 
 			"12"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"mana_per_tick"							"12.5 12.5 12.5 12.5 15 17.5 20"
+				"mana_per_tick"							"15"
 			}
 		}
 	}
