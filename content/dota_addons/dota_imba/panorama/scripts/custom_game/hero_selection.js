@@ -309,7 +309,7 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 				SwitchToHeroPreview(player_picks[player_id])
 			}
 
-			// Gray out heroes already selected by the player's team
+			// Gray out heroes already selected by according to hero pick rule (handled by server)
 			for (j = 1; j <= picked_heroes.length; j++) {
 				if (picked_heroes[i] != null) {
 					$('#'+picked_heroes[i]).AddClass("taken");
