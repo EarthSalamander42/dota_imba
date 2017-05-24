@@ -302,6 +302,10 @@ function modifier_imba_rip_current_movement:RemoveOnDeath()
 	return false
 end
 
+function modifier_imba_rip_current_movement:IgnoreTenacity()
+	return true
+end
+
 function modifier_imba_rip_current_movement:OnRemoved()
 	if IsServer() then		
 
@@ -877,6 +881,14 @@ function modifier_imba_bash_of_the_deep_stun:CheckState()
 	 return state
 end
 
+function modifier_imba_bash_of_the_deep_stun:GetEffectName()
+	return "particles/generic_gameplay/generic_stunned.vpcf"	
+end
+
+function modifier_imba_bash_of_the_deep_stun:GetEffectAttachType()
+	return PATTACH_OVERHEAD_FOLLOW
+end
+
 
 
 
@@ -1431,6 +1443,10 @@ function modifier_imba_rain_cloud_dummy:CheckState()
 					[MODIFIER_STATE_NOT_ON_MINIMAP] = true,
 					[MODIFIER_STATE_INVULNERABLE] = true}
 	 return state
+end
+
+function modifier_imba_rain_cloud_dummy:IgnoreTenacity()
+	return true
 end
 
 function modifier_imba_rain_cloud_dummy:UpdateHorizontalMotion( me, dt)

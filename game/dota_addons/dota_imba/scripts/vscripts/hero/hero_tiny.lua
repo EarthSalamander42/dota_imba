@@ -273,6 +273,7 @@ function imba_tiny_toss:OnSpellStart()
 	local hTarget = self:GetCursorTarget()
 	local caster = self:GetCaster()
 	local tossVictim = caster
+	local duration = self:GetSpecialValueFor("duration")
 	
 	if not hTarget then
 		local targets = FindUnitsInRadius(caster:GetTeamNumber(), self.tossPosition, nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 1, false)
@@ -293,7 +294,8 @@ function imba_tiny_toss:OnSpellStart()
 	{
 		vLocX = vLocation.x,
 		vLocY = vLocation.y,
-		vLocZ = vLocation.z
+		vLocZ = vLocation.z,
+		duration = duration + 0.2		
 	}
 
 	local tossVictims = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, self:GetSpecialValueFor("grab_radius"), DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, 1, false)
@@ -352,6 +354,10 @@ function modifier_tiny_toss_movement:RemoveOnDeath()
 end
 
 function modifier_tiny_toss_movement:IsHidden()
+	return false
+end
+
+function modifier_tiny_toss_movement:IgnoreTenacity()
 	return true
 end
 
@@ -417,7 +423,7 @@ function modifier_tiny_toss_movement:OnRemoved()
 			end
 			if victim:IsBuilding() then
 				damage = damage * self:GetAbility():GetSpecialValueFor("building_dmg") / 100
-				ApplyDamage({victim = victim, attacker = caster, damage = damage, damage_type = DAMAGE_TYPE_PURE, ability = self:GetAbility()})
+				ApplyDamage({victim = victim, attacker = caster, damage = damage, damage_type = self:GetAbility():GetAbilityDamageType(), ability = self:GetAbility()})
 			else
 				ApplyDamage({victim = victim, attacker = caster, damage = damage, damage_type = self:GetAbility():GetAbilityDamageType(), ability = self:GetAbility()})
 			end

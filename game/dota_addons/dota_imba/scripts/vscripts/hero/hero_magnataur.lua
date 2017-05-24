@@ -779,6 +779,10 @@ function modifier_imba_skewer_motion_controller:RemoveOnDeath()
 	return false
 end
 
+function modifier_imba_skewer_motion_controller:IgnoreTenacity()
+	return true
+end
+
 function modifier_imba_skewer_motion_controller:CheckState()
 	local state =
 	{
@@ -940,6 +944,10 @@ end
 
 function modifier_imba_skewer_motion_controller_target:RemoveOnDeath()
 	return false
+end
+
+function modifier_imba_skewer_motion_controller_target:IgnoreTenacity()
+	return true
 end
 
 function modifier_imba_skewer_motion_controller_target:CheckState()

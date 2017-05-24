@@ -1201,6 +1201,7 @@ function modifier_imba_blast_off_movement:IsHidden() return true end
 function modifier_imba_blast_off_movement:IsPurgable() return false end
 function modifier_imba_blast_off_movement:RemoveOnDeath() return false end
 function modifier_imba_blast_off_movement:IsDebuff() return false end
+function modifier_imba_blast_off_movement:IgnoreTenacity() return true end
 
 function modifier_imba_blast_off_movement:UpdateVerticalMotion(me, dt)
     if IsServer() then        
