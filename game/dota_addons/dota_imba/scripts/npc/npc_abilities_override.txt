@@ -11219,35 +11219,34 @@
 	// Undying: Tombstone
 	//=================================================================================================================
 	"undying_tombstone"
-	{
-		"MaxLevel"						"7"
+	{		
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"tombstone_health"			"8 10 12 16 18 20 22"
+				"tombstone_health"			"8 10 12 16"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"hits_to_destroy_tooltip"	"5 6 7 8 8 8 8"
+				"hits_to_destroy_tooltip"	"5 6 7 8"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"duration"					"15 25 35 45 45 45 45"
+				"duration"					"15 25 35 45"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"725 950 1175 1400 1500 1600 1700"
+				"radius"					"725 950 1175 1400"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"health_threshold"			"250 350 450 550 575 600 625"
+				"health_threshold"			"250 350 450 550"
 			}
 			"06"
 			{
@@ -11257,7 +11256,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"zombie_interval"			"3.0 2.75 2.5 2.25 2.25 2.25 2.25"
+				"zombie_interval"			"3.0 2.75 2.5 2.25"
 			}
 		}
 	}

@@ -232,7 +232,7 @@ function GameMode:ModifierFilter( keys )
 	-- duration					-1
 	-- entindex_caster_const	215
 	-- name_const				modifier_imba_roshan_rage_stack
-	if IsServer() then
+	if IsServer() then		
 		local modifier_owner = EntIndexToHScript(keys.entindex_parent_const)
 		local modifier_name = keys.name_const
 		local modifier_caster
@@ -278,13 +278,27 @@ function GameMode:ModifierFilter( keys )
 	-- Tenacity debuff duration reduction
 	-------------------------------------------------------------------------------------------------
 
-		if modifier_owner.GetTenacity then
+		if modifier_owner.GetTenacity then						
+			local original_duration = keys.duration
+
 			local tenacity = modifier_owner:GetTenacity()
-			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 and tenacity ~= 0 then
+			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 and tenacity ~= 0 then				
 				keys.duration = keys.duration * (100 - tenacity) * 0.01
 			end
-		end
 
+			Timers:CreateTimer(FrameTime(), function()
+				local modifier_handler = modifier_owner:FindModifierByName(modifier_name)
+				if modifier_handler then
+					print("found modifier")
+					if modifier_handler.IgnoreTenacity then
+						if modifier_handler:IgnoreTenacity() then
+							print("has ignore tenacity")
+							modifier_handler:SetDuration(original_duration, true)
+						end
+					end
+				end
+			end)
+		end
 
 	-------------------------------------------------------------------------------------------------
 	-- Silencer Arcane Supremacy silence duration reduction

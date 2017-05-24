@@ -708,6 +708,7 @@ function modifier_imba_culling_blade_motion:IsHidden() return true end
 function modifier_imba_culling_blade_motion:IsPurgable() return false end
 function modifier_imba_culling_blade_motion:IsDebuff() return false end
 function modifier_imba_culling_blade_motion:RemoveOnDeath() return false end
+function modifier_imba_culling_blade_motion:IgnoreTenacity() return true end
 
 function modifier_imba_culling_blade_motion:OnCreated(kv)
   self.axe_minimum_height_above_lowest = 500

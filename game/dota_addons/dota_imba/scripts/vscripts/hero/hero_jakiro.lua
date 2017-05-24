@@ -65,6 +65,7 @@ local base_modifier_dual_breath_caster = class({
 	IsPurgable 						= function(self) return false end,
 	IsDebuff 						= function(self) return false end,
 	RemoveOnDeath 					= function(self) return true end,
+	IgnoreTenacity					= function(self) return true end,
 	AllowIllusionDuplicate			= function(self) return false end,
 	GetOverrideAnimation 			= function(self) return ACT_DOTA_FLAIL end,
 	GetActivityTranslationModifiers = function(self) return "forcestaff_friendly" end,

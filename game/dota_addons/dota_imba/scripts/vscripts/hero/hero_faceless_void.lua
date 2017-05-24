@@ -222,6 +222,7 @@ function modifier_imba_faceless_void_time_walk_cast:IsPurgable() return	false en
 function modifier_imba_faceless_void_time_walk_cast:IsDebuff() return	false end
 function modifier_imba_faceless_void_time_walk_cast:IsHidden() return	true end
 function modifier_imba_faceless_void_time_walk_cast:RemoveOnDeath() return false end
+function modifier_imba_faceless_void_time_walk_cast:IgnoreTenacity() return true end
 
 function modifier_imba_faceless_void_time_walk_cast:GetEffectName()
 	return "particles/units/heroes/hero_faceless_void/faceless_void_time_walk.vpcf" end

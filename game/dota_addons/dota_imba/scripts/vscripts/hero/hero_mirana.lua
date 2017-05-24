@@ -814,6 +814,7 @@ function modifier_imba_leap_movement:IsHidden() return true end
 function modifier_imba_leap_movement:IsPurgable() return false end
 function modifier_imba_leap_movement:IsDebuff() return false end
 function modifier_imba_leap_movement:RemoveOnDeath() return false end
+function modifier_imba_leap_movement:IgnoreTenacity() return true end
 
 function modifier_imba_leap_movement:UpdateVerticalMotion(me, dt)
     if IsServer() then

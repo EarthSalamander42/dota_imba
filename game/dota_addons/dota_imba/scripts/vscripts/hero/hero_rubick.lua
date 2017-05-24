@@ -172,6 +172,7 @@ function modifier_imba_telekinesis:IsHidden() return false end
 function modifier_imba_telekinesis:IsPurgable() return false end
 function modifier_imba_telekinesis:IsPurgeException() return false end
 function modifier_imba_telekinesis:IsStunDebuff() return false end
+function modifier_imba_telekinesis:IgnoreTenacity() return true end
 -------------------------------------------
 
 function modifier_imba_telekinesis:OnCreated( params )
