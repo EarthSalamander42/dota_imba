@@ -1014,6 +1014,11 @@ function imba_sniper_assassinate:OnAbilityPhaseStart()
     local sight_duration = ability:GetSpecialValueFor("sight_duration")
     local scepter_radius = ability:GetSpecialValueFor("scepter_radius")
 
+    -- Initialize index table    
+    if not self.enemy_table then
+        self.enemy_table = {}    
+    end    
+
     -- Targets
     local targets = {}
 
@@ -1040,6 +1045,9 @@ function imba_sniper_assassinate:OnAbilityPhaseStart()
     -- Apply crosshair on target(s)
     for _,target in pairs(targets) do
         target:AddNewModifier(caster, ability, modifier_cross, {duration = sight_duration})
+
+        -- Index enemy
+        table.insert(self.enemy_table, target)
     end
 
     return true
@@ -1068,6 +1076,9 @@ function imba_sniper_assassinate:OnAbilityPhaseInterrupted()
             enemy:RemoveModifierByName(modifier_cross)
         end
     end
+
+    -- Clear enemy table
+    self.enemy_table = nil
 end
 
 function imba_sniper_assassinate:OnSpellStart()
@@ -1090,17 +1101,13 @@ function imba_sniper_assassinate:OnSpellStart()
     if not scepter then
         targets[1] = self:GetCursorTarget()
     else
-        -- Find all enemies in AoE
-        local target_point = self:GetCursorPosition()
-        targets = FindUnitsInRadius(caster:GetTeamNumber(),
-                                    target_point,
-                                    nil,
-                                    scepter_radius,
-                                    DOTA_UNIT_TARGET_TEAM_ENEMY,
-                                    DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-                                    DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
-                                    FIND_ANY_ORDER,
-                                    false)
+        -- Find all enemies that were marked in the AoE
+        for _,enemy in pairs(self.enemy_table) do
+            table.insert(targets, enemy)
+        end
+
+        -- Clear the enemy table for the next use
+        self.enemy_table = nil
     end    
 
     -- Play assassinate sound
