@@ -313,7 +313,7 @@ function GetTalentValue(talent_name, row_level){
     var generic_talent_table = GetGenericTalentInfoTable();
     var talent_data = generic_talent_table[talent_name];
     if(talent_data && talent_data.value){
-        var rowLevelIndex = Math.floor((row_level-5)/10);
+        var rowLevelIndex = (row_level-5)/5;
         return talent_data.value.split(" ")[rowLevelIndex];
     }
     return null;

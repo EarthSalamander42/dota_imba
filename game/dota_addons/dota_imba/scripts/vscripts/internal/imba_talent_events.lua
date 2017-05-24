@@ -223,7 +223,7 @@ function HandlePlayerUpgradeImbaTalent(unused, kv)
                             return
                         else
                             modifier = hero:AddNewModifier(hero, nil, modifier_talent_name, {})
-                            modifier:SetStackCount(math.floor(1+(level-5)/10))
+                            modifier:SetStackCount(1+(level-5)/5)
                             modifier:ForceRefresh() -- Refresh for modifier to update values (for server side. Client side will receive it as onCreated())
                         end
                     else
