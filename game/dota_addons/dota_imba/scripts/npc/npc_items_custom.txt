@@ -11175,7 +11175,7 @@
 				"IsBuff"						"1"
 				"IsPurgable"					"1"
 
-				"AbilityTextureName"			"custom/imba_rune_haste"
+				"TextureName"			        "custom/imba_rune_haste"
 
 				"EffectName"					"particles/generic_gameplay/rune_haste_owner.vpcf"
 				"EffectAttachType"				"follow_origin"
@@ -11202,6 +11202,7 @@
 				"IsBuff"						"1"
 				"IsPurgable"					"0"
 
+                "TextureName"                   "custom/imba_rune_haste"
 				"EffectName"					"particles/generic_gameplay/rune_haste_owner.vpcf"
 				"EffectAttachType"				"follow_origin"
 
@@ -11282,7 +11283,7 @@
 				"IsBuff"						"1"
 				"IsPurgable"					"1"
 
-				"AbilityTextureName"			"custom/imba_rune_double_damage"
+				"TextureName"			        "custom/imba_rune_double_damage"
 
 				"EffectName"					"particles/generic_gameplay/rune_doubledamage_owner.vpcf"
 				"EffectAttachType"				"follow_origin"
@@ -11308,6 +11309,7 @@
 				"IsBuff"						"1"
 				"IsPurgable"					"0"
 
+                "TextureName"                   "custom/imba_rune_double_damage"
 				"EffectName"					"particles/generic_gameplay/rune_doubledamage_owner.vpcf"
 				"EffectAttachType"				"follow_origin"
 
@@ -11403,7 +11405,7 @@
 				"IsBuff"						"1"
 				"IsPurgable"					"1"
 
-				"AbilityTextureName"			"custom/imba_rune_regeneration"
+				"TextureName"			        "custom/imba_rune_regeneration"
 
 				"EffectName"					"particles/generic_gameplay/rune_regen_owner.vpcf"
 				"EffectAttachType"				"follow_origin"
@@ -11431,6 +11433,8 @@
 				"IsHidden"						"1"
 				"IsBuff"						"1"
 				"IsPurgable"					"0"
+
+                "TextureName"			        "custom/imba_rune_regeneration"
 
 				"EffectName"					"particles/generic_gameplay/rune_regen_owner.vpcf"
 				"EffectAttachType"				"follow_origin"
