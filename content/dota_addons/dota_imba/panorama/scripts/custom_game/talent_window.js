@@ -5,6 +5,7 @@
 
 //Timer for talent window to close when user selects another unit
 var _current_show_all_text_timer = null;
+var _current_hover_preview_timer = null;
 //Integer to remove "selectable" class from talent choice panel
 var _current_ability_points = 0;
 
@@ -639,6 +640,28 @@ function ToggleIMBATalentWindow(){
     OpenImbaTalentWindow(!talentWindow.BHasClass(OPEN_TALENT_WINDOW_CLASS));
 }
 
+function PreviewImbaTalentWindow(bol_preview){
+    if(_current_hover_preview_timer != null){
+        $.CancelScheduled(_current_hover_preview_timer);
+        _current_hover_preview_timer = null;
+    }
+
+    var PREVIEW_TALENT_WINDOW_CLASS = "preview";
+    var talentWindow = $.GetContextPanel();
+    if(bol_preview){
+        talentWindow.AddClass(PREVIEW_TALENT_WINDOW_CLASS);
+        ShowAllTextWhenTalentWindowVisibleAndAltIsDown();
+    }else{
+        talentWindow.RemoveClass(PREVIEW_TALENT_WINDOW_CLASS);
+    }
+}
+
+function DelayedPreviewImbaTalentWindow(){
+    //Set to null as timer has fired
+    _current_hover_preview_timer = null;
+    PreviewImbaTalentWindow(true);
+}
+
 function InsertIMBATalentButton(){
     $.Msg("InsertIMBATalentButton");
     var baseUI = GetHUDRootUI();
@@ -655,20 +678,17 @@ function InsertIMBATalentButton(){
 
     var talentWindow = $.GetContextPanel();
 
-    var PREVIEW_CLASS = "preview";
-
     newButton.SetPanelEvent("onmouseover", function(){
-        //Show talent window
-        //Allow preview even if it is an illusion/clone
+        //Populate before preview
         PopulateIMBATalentWindow();
-        talentWindow.AddClass(PREVIEW_CLASS)
-        ShowAllTextWhenTalentWindowVisibleAndAltIsDown();
+        //Allow preview even if it is an illusion/clone
+        _current_hover_preview_timer = $.Schedule(0.3, DelayedPreviewImbaTalentWindow);
     });
 
     newButton.SetPanelEvent("onmouseout", function(){
-        //Close talent window
+        //Remove preview talent window
         //Allow preview even if it is an illusion/clone
-        talentWindow.RemoveClass(PREVIEW_CLASS)
+        PreviewImbaTalentWindow(false);
     });
 
     newButton.SetPanelEvent("onactivate", ToggleIMBATalentWindow);
