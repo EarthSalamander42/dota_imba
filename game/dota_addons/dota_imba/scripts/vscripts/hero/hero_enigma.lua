@@ -152,11 +152,10 @@ function imba_enigma_demonic_conversion:CastFilterResultTarget(target)
 	-- #8 Talent: Cast Eidolons on heroes
 	if caster:HasTalent("special_bonus_imba_enigma_8") and target:IsRealHero() then
 		return UF_SUCCESS
-	elseif target:IsHero() then
-		return UF_FAIL_HERO
-	else
-		return UF_SUCCESS
 	end
+
+	local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+	return nResult
 end
 
 function imba_enigma_demonic_conversion:IsNetherWardStealable() return false end
