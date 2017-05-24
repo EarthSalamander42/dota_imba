@@ -542,21 +542,23 @@ function imba_techies_stasis_trap:GetBehavior()
 end
 
 function imba_techies_stasis_trap:CastFilterResultTarget(target)    
+    if IsServer() then
+        local caster = self:GetCaster()
+        if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+            return UF_FAIL_FRIENDLY
+        end
 
-    local caster = self:GetCaster()
-    if target:GetTeamNumber() ~= caster:GetTeamNumber() then
-        return UF_FAIL_FRIENDLY
+        if target:IsHero() then
+            return UF_FAIL_HERO
+        end
+
+        if target:IsBuilding() then
+            return UF_FAIL_BUILDING
+        end
+
+        local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+        return nResult
     end
-
-    if target:IsHero() then
-        return UF_FAIL_HERO
-    end
-
-    if target:IsBuilding() then
-        return UF_FAIL_BUILDING
-    end
-
-    return UF_SUCCESS
 end
 
 function imba_techies_stasis_trap:OnAbilityPhaseStart()

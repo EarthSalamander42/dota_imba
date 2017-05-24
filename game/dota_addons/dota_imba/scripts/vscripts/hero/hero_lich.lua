@@ -423,24 +423,17 @@ LinkLuaModifier("modifier_imba_frost_armor_freeze", "hero/hero_lich", LUA_MODIFI
 LinkLuaModifier("modifier_imba_frost_armor_auto_cast", "hero/hero_lich", LUA_MODIFIER_MOTION_NONE)
 
 function imba_lich_frost_armor:CastFilterResultTarget(target)
-    local caster = self:GetCaster()
+    if IsServer() then
+        local caster = self:GetCaster()
 
-    -- Can't apply on self since Lich already got it, like, forever
-    if caster == target then
-        return UF_FAIL_CUSTOM
+        -- Can't apply on self since Lich already got it, like, forever
+        if caster == target then
+            return UF_FAIL_CUSTOM
+        end
+
+        local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+        return nResult
     end
-
-    -- Can't apply on enemies
-    if caster:GetTeamNumber() ~= target:GetTeamNumber() then
-        return UF_FAIL_ENEMY
-    end
-
-    -- Can only be applied on heroes, creeps and buildings
-    if not target:IsHero() and not target:IsCreep() and not target:IsBuilding() then
-        return UF_FAIL_OTHER
-    end
-
-    return UF_SUCCESS
 end
 
 function imba_lich_frost_armor:GetCustomCastErrorTarget(target)

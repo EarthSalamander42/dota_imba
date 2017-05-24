@@ -660,8 +660,6 @@ function imba_obsidian_destroyer_astral_imprisonment:CastFilterResultTarget(targ
         local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
         return nResult
     end
-
-    return UF_SUCCESS    
 end
 
 function imba_obsidian_destroyer_astral_imprisonment:GetCastPoint()

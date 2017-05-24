@@ -524,20 +524,22 @@ function imba_lion_mana_drain:GetIntrinsicModifierName()
 end
 
 function imba_lion_mana_drain:CastFilterResultTarget(target)
-    local caster = self:GetCaster()
+    if IsServer() then
+        local caster = self:GetCaster()
 
-    -- Don't apply on targets with 0 max mana (no mana)
-    if target:GetMaxMana() == 0 then
-        return UF_FAIL_CUSTOM
+        -- Don't apply on targets with 0 max mana (no mana)
+        if target:GetMaxMana() == 0 then
+            return UF_FAIL_CUSTOM
+        end
+
+        -- Can't suck yourself
+        if target == caster then
+            return UF_FAIL_CUSTOM
+        end
+
+        local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+        return nResult
     end
-
-    -- Can't suck yourself
-    if target == caster then
-        return UF_FAIL_CUSTOM
-    end
-
-    local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
-    return nResult
 end
 
 function imba_lion_mana_drain:GetCustomCastErrorTarget(target)

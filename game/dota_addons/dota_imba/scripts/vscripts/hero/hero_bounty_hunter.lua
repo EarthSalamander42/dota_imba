@@ -358,7 +358,8 @@ function imba_bounty_hunter_jinada:CastFilterResultTarget(target)
 			return UF_FAIL_CUSTOM
 		end
 
-		return UF_SUCCESS
+		local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+		return nResult
 	end
 end
 

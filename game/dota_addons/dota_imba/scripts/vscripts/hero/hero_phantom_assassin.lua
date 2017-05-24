@@ -373,7 +373,6 @@ function imba_phantom_assassin_phantom_strike:CastFilterResultTarget(target)
         local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
         return nResult
     end
-    return UF_SUCCESS
 end
 
 function imba_phantom_assassin_phantom_strike:GetCustomCastErrorTarget(target)

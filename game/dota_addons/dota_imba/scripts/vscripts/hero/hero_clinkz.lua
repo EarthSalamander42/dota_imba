@@ -888,19 +888,17 @@ LinkLuaModifier("modifier_imba_death_pact_talent_debuff", "hero/hero_clinkz", LU
 LinkLuaModifier("modifier_imba_death_pact_talent_buff", "hero/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
 
 function imba_clinkz_death_pact:CastFilterResultTarget(target)
-    local caster = self:GetCaster()
+    if IsServer() then
+        local caster = self:GetCaster()
 
-    -- Can't target self
-    if caster == target then
-        return UF_FAIL_CUSTOM
+        -- Can't target self
+        if caster == target then
+            return UF_FAIL_CUSTOM
+        end
+
+        local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+        return nResult
     end
-
-    -- Can't target buildings
-    if target:IsBuilding() then
-        return UF_FAIL_BUILDING
-    end
-
-    return UF_SUCCESS
 end
 
 function imba_clinkz_death_pact:GetCustomCastErrorTarget(target) 
