@@ -465,15 +465,8 @@ if IsServer() then
 
 		self.caster:SetModifierStackCount( "modifier_imba_phantom_strike_coup_de_grace", self.caster, attacks_count)
 
-		-- If cast on an enemy, immediately start attacking it
-		if self.caster:GetTeam() ~= self.target:GetTeam() then
-			self.caster.phantom_strike_target = self.target
-			self.caster:SetAttacking(self.target)
-			self.caster:SetForceAttackTarget(self.target)
-			Timers:CreateTimer(FrameTime(), function()
-				self.caster:SetForceAttackTarget(nil)
-			end)
-		end
+		-- If cast on an enemy, immediately start attacking it				
+		self.caster:MoveToTargetToAttack(self.target)
 	end		
 end
 end
