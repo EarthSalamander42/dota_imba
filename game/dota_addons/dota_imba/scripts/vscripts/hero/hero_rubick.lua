@@ -179,7 +179,7 @@ function modifier_imba_telekinesis:OnCreated( params )
 		 -- Ability properties
 		local caster = self:GetCaster()
 		local ability = self:GetAbility()
-		
+		self.parent = self:GetParent()
 		self.z_height = 0
 		self.duration = params.duration
 		self.lift_animation = ability:GetSpecialValueFor("lift_animation")
@@ -200,8 +200,8 @@ function modifier_imba_telekinesis:OnDestroy( params )
 		
 		-- Parameters
 		local damage = ability:GetSpecialValueFor("damage")
-		local impact_radius = ability:GetSpecialValueFor("impact_radius")
 		local impact_stun_duration = ability:GetSpecialValueFor("impact_stun_duration")
+		local impact_radius = ability:GetSpecialValueFor("impact_radius")
 		local cooldown 
 		if self.is_ally then
 			cooldown = ability:GetSpecialValueFor("ally_cooldown")
@@ -229,7 +229,6 @@ function modifier_imba_telekinesis:OnDestroy( params )
 			end
 			ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = ability:GetAbilityDamageType()})
 		end
-		
 		if #enemies > 0 and self.is_ally then
 			parent:EmitSound("Hero_Rubick.Telekinesis.Target.Stun")
 		elseif #enemies > 1 and not self.is_ally then
@@ -241,6 +240,13 @@ end
 
 function modifier_imba_telekinesis:UpdateVerticalMotion(unit, dt)
     if IsServer() then
+	
+		-- If the unit being lifted died, interrupt motion controllers and remove self
+ 		if not self.parent:IsAlive() then
+ 			self.parent:InterruptMotionControllers(true)
+ 			self:Destroy()
+ 		end
+ 
 		self.current_time = self.current_time + dt
 		
 		local max_height = self:GetAbility():GetSpecialValueFor("max_height")
@@ -265,6 +271,12 @@ end
 
 function modifier_imba_telekinesis:UpdateHorizontalMotion(unit, dt)
 	if IsServer() then
+		-- If the unit being lifted died, interrupt motion controllers and remove self
+ 		if not self.parent:IsAlive() then
+ 			self.parent:InterruptMotionControllers(true)
+ 			self:Destroy()
+ 		end
+		
 		self.distance = self.distance or 0
 		if (self.current_time > (self.duration - self.fall_animation)) then
 			if self.changed_target then
@@ -278,6 +290,15 @@ function modifier_imba_telekinesis:UpdateHorizontalMotion(unit, dt)
 				unit:SetAbsOrigin( unit:GetAbsOrigin() + ((self.final_loc - unit:GetAbsOrigin()):Normalized() * self.distance))
 			end
 		end
+	end
+end
+
+function modifier_imba_telekinesis:OnRemoved()
+	if IsServer() then
+		 -- Ability properties
+		local ability = self:GetAbility()
+		local impact_radius = ability:GetSpecialValueFor("impact_radius")
+		GridNav:DestroyTreesAroundPoint(self.final_loc, impact_radius, true)
 	end
 end
 
