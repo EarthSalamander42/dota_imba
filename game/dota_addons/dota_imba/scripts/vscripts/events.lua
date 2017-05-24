@@ -357,6 +357,34 @@ function GameMode:OnPlayerReconnect(keys)
 				print("updating player "..player_id.."'s pick screen state")
 				local pick_state = HeroSelection.playerPickState[player_id].pick_state
 				local repick_state = HeroSelection.playerPickState[player_id].repick_state
+
+                local data = {
+                    PlayerID = player_id,
+                    PlayerPicks = HeroSelection.playerPicks,
+                    pickState = pick_state,
+                    repickState = repick_state
+                }
+
+                if IMBA_HERO_PICK_RULE == 0 then
+                    data.PickedHeroes = {}
+                    -- Set as all of the heroes that were selected
+                    for _,v in pairs(HeroSelection.radiantPicks) do
+                        table.insert(data.PickedHeroes, v)
+                    end
+                    for _,v in pairs(HeroSelection.direPicks) do
+                        table.insert(data.PickedHeroes, v)
+                    end
+                elseif IMBA_HERO_PICK_RULE == 1 then
+                    -- Set as the team's pick to prevent same hero on the same team
+                    if PlayerResource:GetTeam(player_id) == DOTA_TEAM_GOODGUYS then
+                        data.PickedHeroes = HeroSelection.radiantPicks
+                    else
+                        data.PickedHeroes = HeroSelection.direPicks
+                    end
+                else
+                    data.PickedHeroes = {} --Set as empty, to allow all heroes to be selected
+                end
+
 				if PlayerResource:GetTeam(player_id) == DOTA_TEAM_GOODGUYS then
 					CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.radiantPicks, PlayerPicks = HeroSelection.playerPicks, pickState = pick_state, repickState = repick_state})
 				else
