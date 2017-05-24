@@ -183,7 +183,7 @@ function HeroSelection:RandomHero(event)
 		"npc_dota_hero_sven",
 		"npc_dota_hero_tidehunter",
 		"npc_dota_hero_tinker",
-		--"npc_dota_hero_tiny",
+		"npc_dota_hero_tiny",
 		"npc_dota_hero_vengefulspirit",
 		"npc_dota_hero_venomancer",
 		"npc_dota_hero_viper",
