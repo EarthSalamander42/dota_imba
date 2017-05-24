@@ -287,11 +287,19 @@ function imba_tiny_toss:OnSpellStart()
 	else
 		self.tossTarget = nil
 	end
-	
+
+	local vLocation = self.tossPosition
+	local kv =
+	{
+		vLocX = vLocation.x,
+		vLocY = vLocation.y,
+		vLocZ = vLocation.z
+	}
+
 	local tossVictims = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, self:GetSpecialValueFor("grab_radius"), DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, 1, false)
 	for _, victim in pairs(tossVictims) do
 		if victim ~= caster then
-			victim:AddNewModifier(caster, self, "modifier_tiny_toss_movement", {})
+			victim:AddNewModifier(caster, self, "modifier_tiny_toss_movement", kv)
 			if not self:GetCaster():HasTalent("special_bonus_imba_tiny_7") then
 				break
 			end
@@ -300,7 +308,7 @@ function imba_tiny_toss:OnSpellStart()
 
 	-- If only Tiny himself was found, launch him instead
 	if #tossVictims <= 1 then
-		caster:AddNewModifier(caster, self, "modifier_tiny_toss_movement", {})
+		caster:AddNewModifier(caster, self, "modifier_tiny_toss_movement", kv)
 	end
 	
 	caster:StartGesture(ACT_TINY_TOSS)
@@ -350,6 +358,11 @@ end
 --------------------------------------------------------------------------------
 
 function modifier_tiny_toss_movement:OnCreated( kv )
+  self.toss_minimum_height_above_lowest = 500
+  self.toss_minimum_height_above_highest = 100
+  self.toss_acceleration_z = 4000
+  self.toss_max_horizontal_acceleration = 3000
+
 	if IsServer() then
 		if self:ApplyHorizontalMotionController() == false or self:ApplyVerticalMotionController() == false then 
 			self:Destroy()
@@ -359,34 +372,28 @@ function modifier_tiny_toss_movement:OnCreated( kv )
 
 		EmitSoundOn("Hero_Tiny.Toss.Target", self:GetParent())
 
-		self.traveled = 0
-		self.max_distance = self:GetAbility():GetSpecialValueFor("distance_cap")
-		self.time_left = self:GetAbility():GetSpecialValueFor("duration")
-		self.duration = self:GetAbility():GetSpecialValueFor("duration")
-		self.tossTarget = self:GetAbility().tossTarget
-		self.tossPosition = self:GetAbility().tossPosition
-		self.initPoint = self:GetParent():GetAbsOrigin()
-		self.distance = (self.tossPosition - self.initPoint):Length2D()
-		self.distance_left = self.distance
-		self.direction = (self.initPoint - self.tossPosition):Normalized()
-		self.speed = (self.distance * 0.03333) / self.time_left
-		self.toss_z = 0
+    	self.vStartPosition = GetGroundPosition( self:GetParent():GetOrigin(), self:GetParent() )
+		self.flCurrentTimeHoriz = 0.0
+		self.flCurrentTimeVert = 0.0
 
-		self.scepter_bounce_duration = self.ability:GetSpecialValueFor("scepter_bounce_duration")
+		self.vLoc = Vector( kv.vLocX, kv.vLocY, kv.vLocZ )
+		self.vLastKnownTargetPos = self.vLoc
 
-		-- If after double the duration we're still stuck in motion, we probably won't ever get out: forced removal
-		local wait_time = self.duration 
-		if self:GetCaster():HasScepter() and self:GetParent() ~= self:GetCaster() then
-			wait_time = wait_time + self.scepter_bounce_duration
-		end
+		local duration = self:GetAbility():GetSpecialValueFor( "duration" )
+		local flDesiredHeight = self.toss_minimum_height_above_lowest * duration * duration
+		local flLowZ = math.min( self.vLastKnownTargetPos.z, self.vStartPosition.z )
+		local flHighZ = math.max( self.vLastKnownTargetPos.z, self.vStartPosition.z )
+		local flArcTopZ = math.max( flLowZ + flDesiredHeight, flHighZ + self.toss_minimum_height_above_highest )
 
-		Timers:CreateTimer(wait_time, function()
-			-- See if the modifier still exists
-			if not self:IsNull() then
-			 	self:GetCaster():InterruptMotionControllers(true)
-			 	self:Destroy()
-			end
-		end)
+		local flArcDeltaZ = flArcTopZ - self.vStartPosition.z
+		self.flInitialVelocityZ = math.sqrt( 2.0 * flArcDeltaZ * self.toss_acceleration_z )
+
+		local flDeltaZ = self.vLastKnownTargetPos.z - self.vStartPosition.z
+		local flSqrtDet = math.sqrt( math.max( 0, ( self.flInitialVelocityZ * self.flInitialVelocityZ ) - 2.0 * self.toss_acceleration_z * flDeltaZ ) )
+		self.flPredictedTotalTime = math.max( ( self.flInitialVelocityZ + flSqrtDet) / self.toss_acceleration_z, ( self.flInitialVelocityZ - flSqrtDet) / self.toss_acceleration_z )
+
+		self.vHorizontalVelocity = ( self.vLastKnownTargetPos - self.vStartPosition ) / self.flPredictedTotalTime
+		self.vHorizontalVelocity.z = 0.0
 	end
 end
 
@@ -399,7 +406,7 @@ function modifier_tiny_toss_movement:OnRemoved()
 		end
 
 		-- Destroy trees at the target point
-		GridNav:DestroyTreesAroundPoint(self.tossPosition, radius, true)
+		GridNav:DestroyTreesAroundPoint(self.vLastKnownTargetPos, radius, true)
 
 		local victims = FindUnitsInRadius(caster:GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, 1, false)
 		for _, victim in pairs(victims) do
@@ -479,52 +486,55 @@ end
 
 function modifier_tiny_toss_movement:UpdateHorizontalMotion( me, dt )
 	if IsServer() then
-		local caster = self:GetParent()
-		if self.time_left > 0 then
-			caster:SetAbsOrigin(caster:GetAbsOrigin() + self.direction * self.speed)
-			self.traveled = self.traveled + self.speed
-			self.time_left = self.time_left - dt
-			self:UpdateToss()
-		else
-			caster:InterruptMotionControllers(true)
-			self:Destroy()
-		end       
+		self.flCurrentTimeHoriz = math.min( self.flCurrentTimeHoriz + dt, self.flPredictedTotalTime )
+		local t = self.flCurrentTimeHoriz / self.flPredictedTotalTime
+		local vStartToTarget = self.vLastKnownTargetPos - self.vStartPosition
+		local vDesiredPos = self.vStartPosition + t * vStartToTarget
+
+		local vOldPos = me:GetOrigin()
+		local vToDesired = vDesiredPos - vOldPos
+		vToDesired.z = 0.0
+		local vDesiredVel = vToDesired / dt
+		local vVelDif = vDesiredVel - self.vHorizontalVelocity
+		local flVelDif = vVelDif:Length2D()
+		vVelDif = vVelDif:Normalized()
+		local flVelDelta = math.min( flVelDif, self.toss_max_horizontal_acceleration )
+
+		self.vHorizontalVelocity = self.vHorizontalVelocity + vVelDif * flVelDelta * dt
+		local vNewPos = vOldPos + self.vHorizontalVelocity * dt
+		me:SetOrigin( vNewPos )
 	end
 end
 
 function modifier_tiny_toss_movement:UpdateVerticalMotion( me, dt )
 	if IsServer() then
-		local caster = self:GetParent()
+		self.flCurrentTimeVert = self.flCurrentTimeVert + dt
+		local bGoingDown = ( -self.toss_acceleration_z * self.flCurrentTimeVert + self.flInitialVelocityZ ) < 0
 		
-		-- For the first half of the distance the unit goes up and for the second half it goes down
-		if self.duration/2 < self.time_left then
-			-- Go up
-			-- This is to memorize the z point when it comes to cliffs and such although the division of speed by 2 isnt necessary, its more of a cosmetic thing
-			self.toss_z = self.toss_z + 60
-			-- Set the new location to the current ground location + the memorized z point
-			caster:SetAbsOrigin(GetGroundPosition(caster:GetAbsOrigin(), caster) + Vector(0,0,self.toss_z))
-		elseif caster:GetAbsOrigin().z > 0 then
-			-- Go down
-			self.toss_z = self.toss_z - 60
-			caster:SetAbsOrigin(GetGroundPosition(caster:GetAbsOrigin(), caster) + Vector(0,0,self.toss_z))
-		end            
+		local vNewPos = me:GetOrigin()
+		vNewPos.z = self.vStartPosition.z + ( -0.5 * self.toss_acceleration_z * ( self.flCurrentTimeVert * self.flCurrentTimeVert ) + self.flInitialVelocityZ * self.flCurrentTimeVert )
+
+		local flGroundHeight = GetGroundHeight( vNewPos, self:GetParent() )
+		local bLanded = false
+		if ( vNewPos.z < flGroundHeight and bGoingDown == true ) then
+			vNewPos.z = flGroundHeight
+			bLanded = true
+		end
+
+		me:SetOrigin( vNewPos )
+		if bLanded == true then
+			self:GetParent():RemoveHorizontalMotionController( self )
+			self:GetParent():RemoveVerticalMotionController( self )
+			self:SetDuration(0.15,true)
+		end
 	end
 end
 
-function modifier_tiny_toss_movement:UpdateToss()
-	if self.tossTarget then
-		self.tossPosition = self.tossTarget:GetAbsOrigin()
+function modifier_tiny_toss_movement:OnDestroy()
+	if IsServer() then
+		self:GetParent():RemoveHorizontalMotionController( self )
+		self:GetParent():RemoveVerticalMotionController( self )
 	end
-	self.direction = (self.tossPosition - self:GetParent():GetAbsOrigin()):Normalized()
-	self.distance_left = (self:GetParent():GetAbsOrigin() - self.tossPosition):Length2D()
-
-	if self.distance_left > (self.max_distance - self.traveled) then 
-		self.distance_left = (self.max_distance - self.traveled) 
-	end
-	local newSpeed = self.distance_left / self.time_left
-	if newSpeed > 1.1 * self.speed then newSpeed = 1.1 * self.speed end -- smooth out acceleration
-	self.speed = newSpeed
-	if self.speed > (self.max_distance / self.duration) * 0.03333 then self.speed = (self.max_distance / self.duration) * 0.03333 end -- cap speed to be smoother
 end
 
 LinkLuaModifier("modifier_tiny_toss_scepter_bounce", "hero/hero_tiny", LUA_MODIFIER_MOTION_VERTICAL)
@@ -616,7 +626,7 @@ function modifier_tiny_toss_scepter_bounce:CheckState()
 end
 
 function modifier_tiny_toss_scepter_bounce:UpdateVerticalMotion( me, dt )
-	if IsServer() then		
+	if IsServer() then
 		if self.time < self.bounce_duration then
 			self.time = self.time + dt
 			if self.bounce_duration/2 > self.time then
