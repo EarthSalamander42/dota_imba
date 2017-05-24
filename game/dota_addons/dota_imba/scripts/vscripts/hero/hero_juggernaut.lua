@@ -89,6 +89,11 @@ function modifier_imba_juggernaut_blade_fury:OnIntervalThink()
 	end
 end
 
+function modifier_imba_juggernaut_blade_fury:CheckState()
+	local state = {[MODIFIER_STATE_MAGIC_IMMUNE] = true}
+	return state
+end
+
 function modifier_imba_juggernaut_blade_fury:OnRemoved()
 	if IsServer() then
 		self.caster:StopSound("Hero_Juggernaut.BladeFuryStart")
