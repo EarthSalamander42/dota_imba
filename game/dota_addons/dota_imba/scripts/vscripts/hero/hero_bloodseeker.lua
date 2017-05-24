@@ -535,7 +535,8 @@ end
 
 
 modifier_imba_rupture_debuff_dot = modifier_imba_rupture_debuff_dot or class({})
-
+function modifier_imba_rupture_debuff_dot:IsPurgable() return false end
+function modifier_imba_rupture_debuff_dot:IsPurgeException() return false end
 if IsServer() then
 	function modifier_imba_rupture_debuff_dot:OnCreated()
 		self.movedamage = self:GetAbility():GetSpecialValueFor("movement_damage_pct") / 100
