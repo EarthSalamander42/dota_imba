@@ -662,7 +662,7 @@ function modifier_imba_frost_armor_freeze:OnCreated()
     self.caster = self:GetCaster()
     self.ability = self:GetAbility()
     self.parent = self:GetParent()
-    self.particle_hand_freeze = "particles/hero/lich/lich_ice_armor_freeze.vpcf"
+    self.particle_hand_freeze = "particles/hero/lich/lich_ice_armor_freeze.vpcf"    
 
     self.particle_hand_freeze_fx = ParticleManager:CreateParticle(self.particle_hand_freeze, PATTACH_CUSTOMORIGIN_FOLLOW, self.parent)
     ParticleManager:SetParticleControlEnt(self.particle_hand_freeze_fx, 0, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
@@ -691,9 +691,17 @@ function modifier_imba_frost_armor_auto_cast:OnCreated()
 end
 
 function modifier_imba_frost_armor_auto_cast:DeclareFunctions()
-    local decFuncs = {MODIFIER_EVENT_ON_ATTACK}
+    local decFuncs = {MODIFIER_EVENT_ON_ATTACK,                      
+                      MODIFIER_EVENT_ON_RESPAWN}
 
     return decFuncs
+end
+
+function modifier_imba_frost_armor_auto_cast:OnRespawn(keys)
+    -- Only apply if the unit is the caster itself
+    if keys.unit == self.caster then
+        self.caster:AddNewModifier(self.caster, self.ability, self.modifier_frost_armor, {})
+    end
 end
 
 function modifier_imba_frost_armor_auto_cast:OnAttack(keys)    
