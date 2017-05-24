@@ -823,7 +823,7 @@ function GameMode:OnEntityKilled( keys )
 			respawn_time = respawn_time + killed_unit:GetRespawnTimeModifier()
 			killed_unit:SetTimeUntilRespawn(respawn_time)
 		end
-	elseif killed_unit:IsRealHero() and killed_unit:GetPlayerID() and PlayerResource:IsImbaPlayer(killed_unit:GetPlayerID()) then
+	elseif killed_unit:IsRealHero() and killed_unit:GetPlayerID() and (PlayerResource:IsImbaPlayer(killed_unit:GetPlayerID()) or GameRules:IsCheatMode()) then
 		-- Calculate base respawn timer, capped at 60 seconds
 		local hero_level = math.min(killed_unit:GetLevel(), 25)
 		local respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[hero_level]
