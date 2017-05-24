@@ -19,7 +19,10 @@ function GameMode:_OnNPCSpawned(keys)
 
 	if npc:IsRealHero() and npc.bFirstSpawned == nil then
 		npc.bFirstSpawned = true
-        PopulateHeroImbaTalents(npc)
+        if npc:GetUnitName() ~= "npc_dota_hero_wisp" then
+            PopulateHeroImbaTalents(npc)
+            InitializeInnateAbilities(npc)
+        end
 		GameMode:OnHeroInGame(npc)
 	end
 end
