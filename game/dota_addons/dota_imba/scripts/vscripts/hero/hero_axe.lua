@@ -218,7 +218,7 @@ end
 -- Visible Modifiers:
 MergeTables(LinkedModifiers,{
 	["modifier_imba_battle_hunger_buff_haste"] = LUA_MODIFIER_MOTION_NONE,
-	["modifier_imba_battle_hunger_debuff"] = LUA_MODIFIER_MOTION_NONE,
+	["modifier_imba_battle_hunger_debuff_dot"] = LUA_MODIFIER_MOTION_NONE,
 })
 
 imba_axe_battle_hunger = imba_axe_battle_hunger or class({})
@@ -635,7 +635,7 @@ end
 
 function imba_axe_culling_blade:KillUnit(target)
 
-  target:ForceKill(false)
+  TrueKill(self.caster, target, self)
   self.heal_amount = (self.caster:GetMaxHealth() / 100) * self.max_health_kill_heal_pct  
   self.caster:Heal(self.heal_amount, self.caster)
   -- Play the kill particle
