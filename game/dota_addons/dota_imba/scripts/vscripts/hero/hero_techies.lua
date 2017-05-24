@@ -1199,6 +1199,7 @@ end
 
 function modifier_imba_blast_off_movement:IsHidden() return true end
 function modifier_imba_blast_off_movement:IsPurgable() return false end
+function modifier_imba_blast_off_movement:RemoveOnDeath() return false end
 function modifier_imba_blast_off_movement:IsDebuff() return false end
 
 function modifier_imba_blast_off_movement:UpdateVerticalMotion(me, dt)
@@ -1217,6 +1218,12 @@ end
 
 function modifier_imba_blast_off_movement:UpdateHorizontalMotion(me, dt)
     if IsServer() then
+        -- Check if the parent is still alive. Otherwise, destroy self
+        if not self.parent:IsAlive() then
+            self.parent:InterruptMotionControllers(true)
+            self:Destroy()
+        end
+
         -- Check if we're still jumping
         if self.time_elapsed < self.jump_duration then
             -- Move parent towards the target point    
@@ -1310,8 +1317,7 @@ function modifier_imba_blast_off_movement:OnHorizontalMotionInterrupted()
                              damage_flags = DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION
                              }
             
-        local actual_damage = ApplyDamage(damageTable)                                
-        print(actual_damage)
+        local actual_damage = ApplyDamage(damageTable)                                        
 
         --#5 Talent: Blast Off! jumps drop a Proximity Mine
         if self.caster:HasTalent("special_bonus_imba_techies_5") then

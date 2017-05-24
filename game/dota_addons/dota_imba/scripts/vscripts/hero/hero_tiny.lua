@@ -369,6 +369,7 @@ function modifier_tiny_toss_movement:OnCreated( kv )
 		end	
 
 		self.ability = self:GetAbility()	
+		self.parent = self:GetParent()
 
 		EmitSoundOn("Hero_Tiny.Toss.Target", self:GetParent())
 
@@ -486,6 +487,12 @@ end
 
 function modifier_tiny_toss_movement:UpdateHorizontalMotion( me, dt )
 	if IsServer() then
+		-- If the unit being tossed died, interrupt motion controllers and remove self
+		if not self.parent:IsAlive() then
+			self.parent:InterruptMotionControllers(true)
+			self:Destroy()
+		end
+
 		self.flCurrentTimeHoriz = math.min( self.flCurrentTimeHoriz + dt, self.flPredictedTotalTime )
 		local t = self.flCurrentTimeHoriz / self.flPredictedTotalTime
 		local vStartToTarget = self.vLastKnownTargetPos - self.vStartPosition
@@ -560,6 +567,10 @@ function modifier_tiny_toss_scepter_bounce:IsHidden()
 	return true
 end
 
+function modifier_tiny_toss_scepter_bounce:RemoveOnDeath()
+	return false
+end
+
 --------------------------------------------------------------------------------
 
 function modifier_tiny_toss_scepter_bounce:OnCreated( kv )
@@ -627,6 +638,12 @@ end
 
 function modifier_tiny_toss_scepter_bounce:UpdateVerticalMotion( me, dt )
 	if IsServer() then
+		-- If the caster died, stop motion controllers and remove modifier
+		if not self.parent:IsAlive() then
+			self.parent:InterruptMotionControllers(true)
+			self:Destroy()
+		end
+
 		if self.time < self.bounce_duration then
 			self.time = self.time + dt
 			if self.bounce_duration/2 > self.time then

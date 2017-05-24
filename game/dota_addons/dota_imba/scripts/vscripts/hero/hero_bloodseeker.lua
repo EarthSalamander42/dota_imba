@@ -187,6 +187,7 @@ function imba_bloodseeker_blood_bath:OnSpellStart()
 					center_y = vPos.y,
 					center_z = vPos.z
 				}
+				target:RemoveModifierByName("modifier_knockback")
 				target:AddNewModifier(caster, self, "modifier_knockback", knockback)
 			end
 			ApplyDamage({victim = target, attacker = self:GetCaster(), damage = damage, damage_type = self:GetAbilityDamageType(), ability = self})
@@ -382,6 +383,7 @@ function modifier_imba_thirst_passive:DeclareFunctions()
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
+		MODIFIER_PROPERTY_MOVESPEED_MAX
 	}
 	return funcs
 end
@@ -392,6 +394,14 @@ end
 
 function modifier_imba_thirst_passive:GetModifierMoveSpeedBonus_Percentage(params)
 	return self:GetStackCount() * self.movespeed
+end
+
+function modifier_imba_thirst_passive:GetModifierMoveSpeed_Max()
+	return 5000
+end
+
+function modifier_imba_thirst_passive:GetEffectName()
+	return "particles/units/heroes/hero_bloodseeker/bloodseeker_thirst_owner.vpcf"
 end
 
 function modifier_imba_thirst_passive:OnTakeDamage(params)
@@ -445,7 +455,7 @@ end
 function modifier_imba_thirst_haste:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,		
 	}
 	return funcs
 end
@@ -460,10 +470,6 @@ end
 
 function modifier_imba_thirst_haste:IsHidden()
 	return true
-end
-
-function modifier_imba_thirst_haste:GetEffectName()
-	return "particles/units/heroes/hero_bloodseeker/bloodseeker_thirst_owner.vpcf"
 end
 
 
@@ -535,8 +541,7 @@ end
 
 
 modifier_imba_rupture_debuff_dot = modifier_imba_rupture_debuff_dot or class({})
-function modifier_imba_rupture_debuff_dot:IsPurgable() return false end
-function modifier_imba_rupture_debuff_dot:IsPurgeException() return false end
+
 if IsServer() then
 	function modifier_imba_rupture_debuff_dot:OnCreated()
 		self.movedamage = self:GetAbility():GetSpecialValueFor("movement_damage_pct") / 100

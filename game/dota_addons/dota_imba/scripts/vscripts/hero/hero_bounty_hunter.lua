@@ -138,8 +138,8 @@ function imba_bounty_hunter_shuriken_toss:OnProjectileHit_ExtraData(target, loca
 							
 		ApplyDamage(damageTable)	
 
-		-- Apply pull modifier
-		target:AddNewModifier(caster, ability, "modifier_imba_shuriken_toss_pull", {duration = pull_duration})
+		-- Apply pull modifier		
+		target:AddNewModifier(caster, ability, "modifier_imba_shuriken_toss_debuff", {duration = pull_duration})
 
 		-- Find new enemy hero to bounce to
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
@@ -230,9 +230,9 @@ end
 	
 
 -- Pull modifier
-modifier_imba_shuriken_toss_pull = modifier_imba_shuriken_toss_pull or class({})
+modifier_imba_shuriken_toss_debuff = modifier_imba_shuriken_toss_debuff or class({})
 
-function modifier_imba_shuriken_toss_pull:OnCreated()
+function modifier_imba_shuriken_toss_debuff:OnCreated()
 	if IsServer() then
 		-- Ability properties
 		self.parent = self:GetCaster()
@@ -263,11 +263,11 @@ function modifier_imba_shuriken_toss_pull:OnCreated()
 		ParticleManager:SetParticleControl(self.particle_hook_fx, 0, Vector(self.shuriken_toss_dummy:GetAbsOrigin().x, self.shuriken_toss_dummy:GetAbsOrigin().y, 2000))
 		ParticleManager:SetParticleControl(self.particle_hook_fx, 6, self.shuriken_toss_dummy:GetAbsOrigin())
 
-		self:StartIntervalThink(0)		
+		self:StartIntervalThink(FrameTime())		
 	end
 end
 
-function modifier_imba_shuriken_toss_pull:OnIntervalThink()
+function modifier_imba_shuriken_toss_debuff:OnIntervalThink()
 	if IsServer() then
 		-- Find distance and direction between parent and hit location
 		local distance = (self.parent:GetAbsOrigin() - self.toss_hit_location):Length2D()	
@@ -292,7 +292,7 @@ function modifier_imba_shuriken_toss_pull:OnIntervalThink()
 	end
 end
 
-function modifier_imba_shuriken_toss_pull:OnRemoved()
+function modifier_imba_shuriken_toss_debuff:OnRemoved()
 	if IsServer() then
 		-- Clear particles
 		ParticleManager:DestroyParticle(self.particle_leash_fx, false)
@@ -306,15 +306,15 @@ function modifier_imba_shuriken_toss_pull:OnRemoved()
 	end
 end
 
-function modifier_imba_shuriken_toss_pull:IsDebuff()
+function modifier_imba_shuriken_toss_debuff:IsDebuff()
 	return true
 end
 
-function modifier_imba_shuriken_toss_pull:IsHidden()
+function modifier_imba_shuriken_toss_debuff:IsHidden()
 	return false
 end
 
-function modifier_imba_shuriken_toss_pull:IsPurgable()
+function modifier_imba_shuriken_toss_debuff:IsPurgable()
 	return true
 end
 

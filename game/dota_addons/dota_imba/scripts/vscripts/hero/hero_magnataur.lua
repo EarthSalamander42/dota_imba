@@ -793,6 +793,12 @@ function modifier_imba_skewer_motion_controller:UpdateHorizontalMotion( unit, ti
 		local caster_loc = caster:GetAbsOrigin()
 		local ability = self:GetAbility()
 
+		-- If the caster died mid skewer, interrupt motion control and kill modifier
+		if not caster:IsAlive() then
+			caster:InterruptMotionControllers(true)
+			self:Destroy()
+		end
+
 		GridNav:DestroyTreesAroundPoint(caster_loc, self.tree_radius, false)
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, self.skewer_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, 0, false)
 		for _,enemy in ipairs(enemies) do

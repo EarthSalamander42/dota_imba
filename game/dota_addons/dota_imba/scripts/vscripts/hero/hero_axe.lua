@@ -704,6 +704,11 @@ end
 
 modifier_imba_culling_blade_motion = modifier_imba_culling_blade_motion or class({})
 
+function modifier_imba_culling_blade_motion:IsHidden() return true end
+function modifier_imba_culling_blade_motion:IsPurgable() return false end
+function modifier_imba_culling_blade_motion:IsDebuff() return false end
+function modifier_imba_culling_blade_motion:RemoveOnDeath() return false end
+
 function modifier_imba_culling_blade_motion:OnCreated(kv)
   self.axe_minimum_height_above_lowest = 500
   self.axe_minimum_height_above_highest = 100
@@ -711,7 +716,6 @@ function modifier_imba_culling_blade_motion:OnCreated(kv)
   self.axe_max_horizontal_acceleration = 3000
 
 	if IsServer() then
-
 		if self:ApplyHorizontalMotionController() == false or self:ApplyVerticalMotionController() == false then 
 			self:Destroy()
 			return
@@ -766,6 +770,11 @@ end
 
 function modifier_imba_culling_blade_motion:UpdateVerticalMotion( me, dt )
 	if IsServer() then
+    if not self:GetParent():IsAlive() then
+        self:GetParent():InterruptMotionControllers(true)
+        self:Destroy()
+    end
+
 		self.flCurrentTimeVert = self.flCurrentTimeVert + dt
 		local bGoingDown = ( -self.axe_acceleration_z * self.flCurrentTimeVert + self.flInitialVelocityZ ) < 0
 		

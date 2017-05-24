@@ -270,6 +270,12 @@ end
 
 function modifier_imba_rip_current_movement:UpdateHorizontalMotion( me, dt)
 	if IsServer() then
+		-- If the caster somehow died, interrupt motion controls and remove modifier
+		if not self.caster:IsAlive() then
+			self.caster:InterruptMotionControllers(true)
+			self:Destroy()
+		end
+
 		if self.distance_travelled < self.distance then
 			self.caster:SetAbsOrigin(self.caster:GetAbsOrigin() + self.direction * self.velocity * dt)
 			self.distance_travelled = self.distance_travelled + self.velocity * dt
@@ -289,6 +295,10 @@ function modifier_imba_rip_current_movement:IsDebuff()
 end
 
 function modifier_imba_rip_current_movement:IsPurgable()
+	return false
+end
+
+function modifier_imba_rip_current_movement:RemoveOnDeath()
 	return false
 end
 

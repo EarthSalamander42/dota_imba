@@ -408,6 +408,10 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:IsHidden()
 	return true
 end
 
+function modifier_imba_juggernaut_blade_dance_empowered_slice:RemoveOnDeath()
+	return false
+end
+
 function modifier_imba_juggernaut_blade_dance_empowered_slice:OnCreated( )
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
@@ -465,6 +469,12 @@ end
 
 function modifier_imba_juggernaut_blade_dance_empowered_slice:UpdateHorizontalMotion( me, dt )
 	if IsServer() then
+		-- If the caster died, interrupt motion controllers and kill modifier
+		if not self:GetParent():IsAlive() then
+			self:GetParent():InterruptMotionControllers(true)
+			self:Destroy()
+		end
+
 		if self.distance_left > 100 and not self.wind_dance:IsNull() and self.wind_dance:GetStackCount() > 0 then
 			local oldPos = self.caster:GetAbsOrigin()
 			self.direction = ( self.endTarget:GetAbsOrigin() - self.caster:GetAbsOrigin() ):Normalized()

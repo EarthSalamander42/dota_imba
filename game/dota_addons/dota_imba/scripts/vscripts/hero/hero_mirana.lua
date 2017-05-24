@@ -691,8 +691,8 @@ end
 
 imba_mirana_leap = class({})
 LinkLuaModifier("modifier_imba_leap_movement", "hero/hero_mirana", LUA_MODIFIER_MOTION_BOTH)
-LinkLuaModifier("modifier_imba_leap_aura", "hero/hero_mirana", LUA_MODIFIER_MOTION_BOTH)
-LinkLuaModifier("modifier_imba_leap_speed_boost", "hero/hero_mirana", LUA_MODIFIER_MOTION_BOTH)
+LinkLuaModifier("modifier_imba_leap_aura", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_leap_speed_boost", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 
 function imba_mirana_leap:GetCastRange(location, target)        
     local ability = self
@@ -813,9 +813,16 @@ end
 function modifier_imba_leap_movement:IsHidden() return true end
 function modifier_imba_leap_movement:IsPurgable() return false end
 function modifier_imba_leap_movement:IsDebuff() return false end
+function modifier_imba_leap_movement:RemoveOnDeath() return false end
 
 function modifier_imba_leap_movement:UpdateVerticalMotion(me, dt)
     if IsServer() then
+        -- If the caster died, interrupt motion control and kill modifier.
+        if not self.caster:IsAlive() then
+            self.caster:InterruptMotionControllers(true)
+            self:Destroy()
+        end
+
         -- Check if we're still jumping
         if self.time_elapsed < self.jump_time then
 

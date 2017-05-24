@@ -221,6 +221,7 @@ function modifier_imba_faceless_void_time_walk_cast:GetAttributes() return MODIF
 function modifier_imba_faceless_void_time_walk_cast:IsPurgable() return	false end
 function modifier_imba_faceless_void_time_walk_cast:IsDebuff() return	false end
 function modifier_imba_faceless_void_time_walk_cast:IsHidden() return	true end
+function modifier_imba_faceless_void_time_walk_cast:RemoveOnDeath() return false end
 
 function modifier_imba_faceless_void_time_walk_cast:GetEffectName()
 	return "particles/units/heroes/hero_faceless_void/faceless_void_time_walk.vpcf" end
@@ -339,6 +340,12 @@ end
 function modifier_imba_faceless_void_time_walk_cast:UpdateHorizontalMotion( me, dt )
 	if IsServer() then
 		local caster = self:GetCaster()
+
+		-- If the caster died, interrupt motion and kill modiifer
+		if not caster:IsAlive() then
+			caster:InterruptMotionControllers(true)
+			self:Destroy()
+		end		
 		
 		if self.distance_traveled < self.distance then
 			caster:SetAbsOrigin(caster:GetAbsOrigin() + self.direction * self.velocity * dt)
