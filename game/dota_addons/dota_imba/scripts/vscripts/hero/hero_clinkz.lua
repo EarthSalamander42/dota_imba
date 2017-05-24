@@ -41,6 +41,16 @@ function imba_clinkz_strafe:GetBehavior()
     end
 end
 
+function imba_clinkz_strafe:GetManaCost(level)
+    local caster = self:GetCaster()
+    -- If Clinkz is currently mounted, remove the mana cost
+    if caster:HasModifier("modifier_imba_strafe_mount") then
+        return 0    
+    end
+
+    -- Otherwise, return normal mana cost
+    return self.BaseClass.GetManaCost(self, level)
+end
 
 
 function imba_clinkz_strafe:OnSpellStart()
