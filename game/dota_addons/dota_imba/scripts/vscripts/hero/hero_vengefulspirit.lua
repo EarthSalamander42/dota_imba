@@ -197,7 +197,6 @@ function imba_vengefulspirit_magic_missile:CastFilterResultTarget( target )
 		local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
 		return nResult
 	end
-	return UF_SUCCESS
 end
 
 
@@ -698,7 +697,6 @@ function imba_vengefulspirit_nether_swap:IsNetherWardStealable() return false en
 
 function imba_vengefulspirit_nether_swap:CastFilterResultTarget( target )
 	if IsServer() then
-		
 		local caster = self:GetCaster()
 		local casterID = caster:GetPlayerOwnerID()
 		local targetID = target:GetPlayerOwnerID()
@@ -718,7 +716,6 @@ function imba_vengefulspirit_nether_swap:CastFilterResultTarget( target )
 		local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), caster:GetTeamNumber() )
 		return nResult
 	end
-	return UF_SUCCESS
 end
 
 function imba_vengefulspirit_nether_swap:GetCooldown( nLevel )

@@ -1020,7 +1020,6 @@ function imba_kunkka_x_marks_the_spot:CastFilterResultTarget(target)
         local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
         return nResult
     end
-    return UF_SUCCESS
 end
 
 function imba_kunkka_x_marks_the_spot:GetAssociatedSecondaryAbilities()

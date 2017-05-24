@@ -1076,32 +1076,27 @@ function imba_pugna_life_drain:GetCooldown(level)
 end
 
 function imba_pugna_life_drain:CastFilterResultTarget(target)
-    local caster = self:GetCaster()
-    local modifier_drain = "modifier_imba_life_drain"
+    if IsServer() then
+        local caster = self:GetCaster()
+        local modifier_drain = "modifier_imba_life_drain"
 
-    -- Cannot be cast on buildings
-    if target:IsBuilding() then 
-        return UF_FAIL_BUILDING
-    end
+        -- Cannot be cast on invulnerable targets
+        if target:IsInvulnerable() then
+            return UF_FAIL_INVULNERABLE
+        end
 
-    -- Cannot be cast on courier/wards
-    if target:IsOther() then
-        return UF_FAIL_OTHER
-    end
+        -- Cannot be cast on self
+        if target == caster then
+            return UF_FAIL_CUSTOM
+        end
 
-    -- Cannot be cast on invulnerable targets
-    if target:IsInvulnerable() then
-        return UF_FAIL_INVULNERABLE
-    end
+        -- Cannot be cast on targets already afflicted with Life Drain
+        if target:HasModifier(modifier_drain) then
+            return UF_FAIL_CUSTOM
+        end
 
-    -- Cannot be cast on self
-    if target == caster then
-        return UF_FAIL_CUSTOM
-    end
-
-    -- Cannot be cast on targets already afflicted with Life Drain
-    if target:HasModifier(modifier_drain) then
-        return UF_FAIL_CUSTOM
+        local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+        return nResult
     end
 end
 
