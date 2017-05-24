@@ -23952,11 +23952,13 @@
 			"particle"					"particles/hero/tinker/tinker_march_sticky.vpcf"
 			"particle"					"particles/hero/tinker/tinker_march_dismantle.vpcf"
 			"particle"					"particles/hero/tinker/tinker_march_railgun.vpcf"
+			"particle"					"particles/econ/items/tinker/tinker_motm_rollermaw/tinker_rollermaw_model.vpcf"
 			"particle"					"particles/units/heroes/hero_batrider/batrider_firefly_debuff.vpcf"
 			"particle"					"particles/units/heroes/hero_stormspirit/stormspirit_electric_vortex_debuff_end.vpcf"
 			"particle"					"particles/units/heroes/hero_batrider/batrider_stickynapalm_debuff.vpcf"
 			"particle"					"particles/units/heroes/hero_zuus/zuus_arc_lightning_.vpcf"
 			"model"						"models/heroes/tinker/mom.vmdl"
+			"model"						"models/items/tinker/rollermaw.vmdl"
 		}
 
 		// Special
