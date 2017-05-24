@@ -613,7 +613,13 @@ function modifier_imba_nether_ward_degen:OnCreated()
     self.particle_medium = "particles/econ/items/pugna/pugna_ward_ti5/pugna_ward_attack_medium_ti_5.vpcf"
     self.particle_light = "particles/econ/items/pugna/pugna_ward_ti5/pugna_ward_attack_light_ti_5.vpcf"                       
 
-    -- Ability specials
+    -- SAFEGUARD AGAINST CRASHES
+    if not self.ability then
+        self:Destroy()
+        return nil        
+    end
+
+    -- Ability specials    
     self.mana_multiplier = self.ability:GetSpecialValueFor("mana_multiplier")
     self.mana_regen_reduction = self.ability:GetSpecialValueFor("mana_regen_reduction")
     self.hero_damage = self.ability:GetSpecialValueFor("hero_damage")
