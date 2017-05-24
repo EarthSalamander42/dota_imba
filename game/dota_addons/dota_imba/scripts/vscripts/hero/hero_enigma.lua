@@ -147,15 +147,17 @@ function imba_enigma_black_hole:GetChannelTime()
 end
 
 function imba_enigma_demonic_conversion:CastFilterResultTarget(target)
-	local caster = self:GetCaster()	
-	
-	-- #8 Talent: Cast Eidolons on heroes
-	if caster:HasTalent("special_bonus_imba_enigma_8") and target:IsRealHero() then
-		return UF_SUCCESS
-	end
+	if IsServer() then
+		local caster = self:GetCaster()	
+		
+		-- #8 Talent: Cast Eidolons on heroes
+		if caster:HasTalent("special_bonus_imba_enigma_8") and target:IsRealHero() then
+			return UF_SUCCESS
+		end
 
-	local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
-	return nResult
+		local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+		return nResult
+	end
 end
 
 function imba_enigma_demonic_conversion:IsNetherWardStealable() return false end

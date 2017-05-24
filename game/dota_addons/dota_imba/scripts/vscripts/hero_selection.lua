@@ -432,14 +432,24 @@ function HeroSelection:AssignHero(player_id, hero_name)
 
 		-- Fetch wisp entity
 		local wisp = PlayerResource:GetSelectedHeroEntity(player_id)
-		wisp:SetRespawnsDisabled(true)
+		wisp:SetRespawnsDisabled(true)				
 
 		-- Switch for the new hero
 		PlayerResource:ReplaceHeroWith(player_id, hero_name, 0, 0 )
 		PlayerResource:SetCameraTarget(player_id, nil)
 
-		-- Nuke the wisp from orbit
-		UTIL_Remove(wisp)
+		wisp:Destroy()
+
+		-- If the wisp is still somehow alive, RENUKE
+	    Timers:CreateTimer(FrameTime(), function()
+	      	if not wisp:IsNull() then
+	      		print("in timer", wisp)
+		        UTIL_Remove(wisp)
+		        print("wisp removed again")
+		        return 1
+	      	end
+	    end)
+		
 
 		-------------------------------------------------------------------------------------------------
 		-- IMBA: First hero spawn initialization
