@@ -3306,7 +3306,11 @@ function modifier_imba_tower_doppleganger_aura_buff:OnAttackLanded(keys)
 		
 		-- Only apply if the parent is the victim and the attacker is on the opposite team and is not prevented
 		if self.parent == target and attacker:GetTeamNumber() ~= self.parent:GetTeamNumber() and not self.parent:HasModifier(self.prevention_modifier) then		
-			
+
+			-- Calculate cooldown and add a prevention modifier to the parent
+			local cooldown_doppleganger = self.doppleganger_cooldown - self.cd_reduction_per_protective * protective_instinct_stacks
+			self.parent:AddNewModifier(self.caster, self.ability, self.prevention_modifier, {duration = cooldown_doppleganger})
+
 			-- Create effect
 			local particle_doppleganger_fx = ParticleManager:CreateParticle(self.particle_doppleganger, PATTACH_ABSORIGIN, self.parent)
 			ParticleManager:SetParticleControl(particle_doppleganger_fx, 0, self.parent:GetAbsOrigin())
@@ -3322,6 +3326,10 @@ function modifier_imba_tower_doppleganger_aura_buff:OnAttackLanded(keys)
 			doppleganger:AddNewModifier(self.caster, self.ability, "modifier_illusion", {duration = self.doppleganger_duration, outgoing_damage = self.outgoing_damage, incoming_damage = self.incoming_damage})			
 			doppleganger:MakeIllusion()
 			doppleganger:SetRespawnsDisabled(true)
+
+			-- Set the doppleganger as controllable by the player
+			doppleganger:SetControllableByPlayer(self.parent:GetPlayerID(), false)
+			doppleganger:SetPlayerID(self.parent:GetPlayerID())
 			
 			-- Set the doppleganger's level to the parent's
 			local parent_level = self.parent:GetLevel()
@@ -3351,16 +3359,8 @@ function modifier_imba_tower_doppleganger_aura_buff:OnAttackLanded(keys)
 				end
 			end
 			
-			-- Set the doppleganger as controllable by the player
-			doppleganger:SetControllableByPlayer(self.parent:GetPlayerID(), false)
-			doppleganger:SetPlayerID(self.parent:GetPlayerID())
-			
 			-- Set Forward Vector the same as the player
-			doppleganger:SetForwardVector(self.parent:GetForwardVector())
-			
-			-- Calculate cooldown and add a prevention modifier to the parent
-			local cooldown_doppleganger = self.doppleganger_cooldown - self.cd_reduction_per_protective * protective_instinct_stacks
-			self.parent:AddNewModifier(self.caster, self.ability, self.prevention_modifier, {duration = cooldown_doppleganger})
+			doppleganger:SetForwardVector(self.parent:GetForwardVector())					
 							
 			-- Roll a chance to swap positions with the doppleganger
 			local swap_change = math.random(1,2)

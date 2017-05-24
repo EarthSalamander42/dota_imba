@@ -492,6 +492,17 @@ function GameMode:OnPlayerLearnedAbility( keys)
 
 	local player = EntIndexToHScript(keys.player)
 	local abilityname = keys.abilityname
+
+	-- If it the ability is Homing Missiles, wait a bit and set count to 1	
+	if abilityname == "gyrocopter_homing_missile" then
+		Timers:CreateTimer(1, function()
+			-- Find homing missile modifier
+			local modifier_charges = player:GetAssignedHero():FindModifierByName("modifier_gyrocopter_homing_missile_charge_counter")
+			if modifier_charges then
+				modifier_charges:SetStackCount(3)
+			end
+		end)
+	end
 end
 
 -- A channelled ability finished by either completing or being interrupted
