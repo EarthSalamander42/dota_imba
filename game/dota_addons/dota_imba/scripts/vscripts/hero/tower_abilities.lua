@@ -3231,7 +3231,7 @@ function modifier_imba_tower_doppleganger_aura:GetAuraRadius()
 end
 
 function modifier_imba_tower_doppleganger_aura:GetAuraSearchFlags()
-	return DOTA_UNIT_TARGET_FLAG_NOT_SUMMONED
+	return DOTA_UNIT_TARGET_FLAG_NOT_SUMMONED + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS
 end
 
 function modifier_imba_tower_doppleganger_aura:GetAuraSearchTeam()
@@ -3317,6 +3317,11 @@ function modifier_imba_tower_doppleganger_aura_buff:OnAttackLanded(keys)
 			local rand_distance = math.random(0, self.summon_distance)			
 			local summon_origin = self.parent:GetAbsOrigin() + RandomVector(rand_distance)			
 			local doppleganger = CreateUnitByName(self.parent:GetUnitName(), summon_origin, true, self.parent, nil, self.parent:GetTeamNumber()) 			
+
+			-- Turn doppleganger into an illusion with the correct properties			
+			doppleganger:AddNewModifier(self.caster, self.ability, "modifier_illusion", {duration = self.doppleganger_duration, outgoing_damage = self.outgoing_damage, incoming_damage = self.incoming_damage})			
+			doppleganger:MakeIllusion()
+			doppleganger:SetRespawnsDisabled(true)
 			
 			-- Set the doppleganger's level to the parent's
 			local parent_level = self.parent:GetLevel()
@@ -3365,10 +3370,6 @@ function modifier_imba_tower_doppleganger_aura_buff:OnAttackLanded(keys)
 				self.parent:SetAbsOrigin(doppleganger_loc)
 				doppleganger:SetAbsOrigin(parent_loc)
 			end
-			
-			-- Turn doppleganger into an illusion with the correct properties			
-			doppleganger:AddNewModifier(self.caster, self.ability, "modifier_illusion", {duration = self.doppleganger_duration, outgoing_damage = self.outgoing_damage, incoming_damage = self.incoming_damage})			
-			doppleganger:MakeIllusion()		
 			
 			-- Stop the attacker, since it still auto attacks the original (will force it to attack the closest target)
 			attacker:Stop()
