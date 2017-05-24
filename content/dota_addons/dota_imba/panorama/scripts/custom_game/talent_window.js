@@ -532,7 +532,7 @@ function PopulateIMBATalentWindow(){
                         var numOfTalentsInThisRow = Object.keys(heroTalentList[currentRowLevel]).length;
                         TalentRow.SetHasClass("six_choices", numOfTalentsInThisRow == 6);
                         TalentRow.SetHasClass("two_choices", numOfTalentsInThisRow == 2);
-                        TalentRow.SetHasClass("eight_choices", numOfTalentsInThisRow == 8);
+                        TalentRow.SetHasClass("eight_choices", numOfTalentsInThisRow > 6);
                     }
 
                     for(var k=0; k<numOfChoicesToProcess; k++){

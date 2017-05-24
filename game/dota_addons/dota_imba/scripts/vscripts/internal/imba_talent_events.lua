@@ -15,7 +15,6 @@ local function GetHeroEndAbilityIndex(hero)
     return endAbilityIndex
 end
 
-
 local function PopulateHeroTalentList(hero)
     local heroName = hero:GetUnitName()
     local endAbilityIndex = GetHeroEndAbilityIndex(hero)
@@ -31,17 +30,27 @@ local function PopulateHeroTalentList(hero)
             -- Imba talents only allow 2 selection. Non Imba talents allow 8 selection
             local ability1 = hero:GetAbilityByIndex(currentAbilityIndex-1)
             if ability1 then
-                if ability1:GetAbilityName():find("special_bonus_imba_") == 1 then
+                local abilityName = ability1:GetAbilityName()
+                if abilityName:find("special_bonus_imba_") == 1 then
                     areImbaTalents = true
                 end
-                inner_value[7] = ability1:GetAbilityName()
+
+                if abilityName:find("special_bonus_imba_") == 1 or abilityName:find("special_bonus_unique_") == 1 then
+                    -- Only add to selection if it is a imba or unique talent
+                    inner_value[7] = abilityName
+                end
             end
             local ability2 = hero:GetAbilityByIndex(currentAbilityIndex)
             if ability2 then
-                if ability2:GetAbilityName():find("special_bonus_imba_") == 1 then
+                local abilityName = ability2:GetAbilityName()
+                if abilityName:find("special_bonus_imba_") == 1 then
                     areImbaTalents = true
                 end
-                inner_value[8] = ability2:GetAbilityName()
+
+                if abilityName:find("special_bonus_imba_") == 1 or abilityName:find("special_bonus_unique_") == 1 then
+                    -- Only add to selection if it is a imba or unique talent
+                    inner_value[8] = abilityName
+                end
             end
 
             if not areImbaTalents then
