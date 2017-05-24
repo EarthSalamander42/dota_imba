@@ -57,7 +57,7 @@ function imba_troll_warlord_berserkers_rage:OnToggle()
 		end
 	end
 end
-
+	
 function imba_magnataur_skewer:GetAbilityTextureName()
 	if self:GetCaster():HasModifier("modifier_imba_berserkers_rage_melee") then
 		return "troll_warlord_berserkers_rage_active"
