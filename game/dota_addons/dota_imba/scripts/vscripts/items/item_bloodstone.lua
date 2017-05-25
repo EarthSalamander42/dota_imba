@@ -62,7 +62,7 @@ function LoseCharges( keys )
 	local item_level = item:GetLevel() - 1
 
 	-- If this is not a real hero, do nothing
-	if caster:HasModifier("modifier_arc_warden_tempest_double") then
+	if caster:HasModifier("modifier_arc_warden_tempest_double") or ( not caster:IsRealHero() ) then
 		return nil
 	end
 
