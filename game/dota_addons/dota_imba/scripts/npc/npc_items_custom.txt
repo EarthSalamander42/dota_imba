@@ -4479,7 +4479,6 @@
 		"ScriptFile"                    "items/item_armlet.lua"
 
 		"AbilityCooldown"				"0"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_NONE"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -8315,7 +8314,6 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySharedCooldown"			"octarine"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_NONE"
 
 		"ItemCost"						"5900"
 		"ItemShopTags"					"boost_mana;mana_pool"
@@ -11692,7 +11690,6 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NONE"
 		"AbilitySharedCooldown"			"curseblade"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 
@@ -11815,7 +11812,6 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NONE"
 		"AbilitySharedCooldown"			"curseblade"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 
