@@ -122,7 +122,7 @@ end
 --	Aura effects (damage + blind)
 -----------------------------------------------------------------------------------------------------------
 if modifier_imba_radiance_burn == nil then modifier_imba_radiance_burn = class({}) end
-function modifier_imba_radiance_burn:IsHidden() return true end
+function modifier_imba_radiance_burn:IsHidden() return false end
 function modifier_imba_radiance_burn:IsDebuff() return true end
 function modifier_imba_radiance_burn:IsPurgable() return false end
 
