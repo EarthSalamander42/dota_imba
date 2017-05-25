@@ -1486,6 +1486,10 @@ function modifier_imba_tower_mana_burn_aura:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
+	if not self.ability then
+		self:Destroy()
+		return nil
+	end
 
 	-- Ability specials
 	self.aura_radius = self.ability:GetSpecialValueFor("aura_radius")
@@ -1644,7 +1648,10 @@ function modifier_imba_tower_permabash_aura:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
-
+	if not self.ability then
+		self:Destroy()
+		return nil
+	end
 	-- Ability specials
 	self.aura_radius = self.ability:GetSpecialValueFor("aura_radius")
 	self.aura_stickyness = self.ability:GetSpecialValueFor("aura_stickyness")
@@ -1798,6 +1805,10 @@ function modifier_imba_tower_vicious_aura:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
+	if not self.ability then
+		self:Destroy()
+		return nil
+	end
 
 	-- Ability specials
 	self.aura_radius = self.ability:GetSpecialValueFor("aura_radius")
@@ -1915,6 +1926,10 @@ function modifier_imba_tower_spellmastery_aura:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
+	if not self.ability then
+		self:Destroy()
+		return nil
+	end
 
 	-- Ability specials
 	self.aura_radius = self.ability:GetSpecialValueFor("aura_radius")
@@ -2033,16 +2048,22 @@ function modifier_imba_tower_plague_aura:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
+	if not self.ability then
+		self:Destroy()
+		return nil
+	end
 	self.particle_rot = "particles/hero/tower/plague_tower_aura.vpcf"
 
 	-- Ability specials
 	self.aura_radius = self.ability:GetSpecialValueFor("aura_radius")
 
-	-- Apply particles
-	local particle_rot_fx = ParticleManager:CreateParticle(self.particle_rot, PATTACH_ABSORIGIN, self.caster)
-	ParticleManager:SetParticleControl(particle_rot_fx, 0, self.caster:GetAbsOrigin())
-	ParticleManager:SetParticleControl(particle_rot_fx, 1, Vector(self.aura_radius, 1, 1))
-	self:AddParticle(particle_rot_fx, false, false, -1, false, false)
+	if not self.particle_rot_fx then
+		-- Apply particles
+		self.particle_rot_fx = ParticleManager:CreateParticle(self.particle_rot, PATTACH_ABSORIGIN, self.caster)
+		ParticleManager:SetParticleControl(self.particle_rot_fx, 0, self.caster:GetAbsOrigin())
+		ParticleManager:SetParticleControl(self.particle_rot_fx, 1, Vector(self.aura_radius, 1, 1))
+		self:AddParticle(self.particle_rot_fx, false, false, -1, false, false)
+	end
 end
 
 function modifier_imba_tower_plague_aura:OnRefresh()
@@ -2153,6 +2174,10 @@ function modifier_imba_tower_atrophy_aura:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
+	if not self.ability then
+		self:Destroy()
+		return nil
+	end
 
 	-- Ability specials
 	self.aura_radius = self.ability:GetSpecialValueFor("aura_radius")
@@ -2257,6 +2282,10 @@ function modifier_imba_tower_regeneration_aura:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
+	if not self.ability then
+		self:Destroy()
+		return nil
+	end
 
 	-- Ability specials
 	self.aura_radius = self.ability:GetSpecialValueFor("aura_radius")
@@ -2368,6 +2397,10 @@ function modifier_imba_tower_starlight_aura:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
+	if not self.ability then
+		self:Destroy()
+		return nil
+	end
 
 	-- Ability specials
 	self.aura_radius = self.ability:GetSpecialValueFor("aura_radius")
@@ -2551,6 +2584,10 @@ function modifier_imba_tower_grievous_wounds_aura:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
+	if not self.ability then
+		self:Destroy()
+		return nil
+	end
 
 	-- Ability specials
 	self.aura_stickyness = self.ability:GetSpecialValueFor("aura_stickyness")
@@ -2717,6 +2754,10 @@ function modifier_imba_tower_essence_drain_aura:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
+	if not self.ability then
+		self:Destroy()
+		return nil
+	end
 
 	-- Ability specials
 	self.aura_stickyness = self.ability:GetSpecialValueFor("aura_stickyness")
@@ -2807,7 +2848,7 @@ function modifier_imba_tower_essence_drain_aura_buff:OnAttackLanded( keys )
 		local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
 
 		-- Only apply if the parent is the attacker and the victim is on the opposite team
-		if self.parent == attacker and attacker:GetTeamNumber() ~= target:GetTeamNumber() then
+		if (self.parent == attacker) and (attacker:GetTeamNumber() ~= target:GetTeamNumber()) and target:IsHero() then
 
 			-- Apply effect
 			local particle_drain_fx = ParticleManager:CreateParticle(self.particle_drain, PATTACH_ABSORIGIN, target)
@@ -2853,6 +2894,10 @@ function modifier_imba_tower_essence_drain_debuff:OnCreated()
 		-- Ability properties
 		self.caster = self:GetCaster()
 		self.ability = self:GetAbility()
+		if not self.ability then
+			self:Destroy()
+			return nil
+		end
 		self.parent = self:GetParent()
 
 		-- Ability specials
@@ -2956,6 +3001,10 @@ function modifier_imba_tower_essence_drain_buff:OnCreated()
 		-- Ability properties
 		self.caster = self:GetCaster()
 		self.ability = self:GetAbility()
+		if not self.ability then
+			self:Destroy()
+			return nil
+		end
 		self.parent = self:GetParent()
 
 		-- Ability specials
@@ -3099,6 +3148,10 @@ function modifier_imba_tower_protection_aura:OnCreated()
 	-- Ability propertes
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
+	if not self.ability then
+		self:Destroy()
+		return nil
+	end
 
 	-- Ability specials
 	self.aura_radius = self.ability:GetSpecialValueFor("aura_radius")
@@ -3208,6 +3261,10 @@ function modifier_imba_tower_disease_aura:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
+	if not self.ability then
+		self:Destroy()
+		return nil
+	end
 
 	-- Ability specials
 	self.aura_radius = self.ability:GetSpecialValueFor("aura_radius")
@@ -3333,6 +3390,10 @@ function modifier_imba_tower_doppleganger_aura:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
+	if not self.ability then
+		self:Destroy()
+		return nil
+	end
 
 	-- Ability specials
 	self.aura_stickyness = self.ability:GetSpecialValueFor("aura_stickyness")
@@ -3617,6 +3678,10 @@ function modifier_imba_tower_barrier_aura:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
+	if not self.ability then
+		self:Destroy()
+		return nil
+	end
 	self.prevention_modifier = "modifier_imba_tower_barrier_aura_cooldown"
 
 	-- Ability specials
@@ -3680,6 +3745,10 @@ function modifier_imba_tower_barrier_aura_buff:OnCreated()
 		-- Ability properties
 		self.caster = self:GetCaster()
 		self.ability = self:GetAbility()
+		if not self.ability then
+			self:Destroy()
+			return nil
+		end
 		self.parent = self:GetParent()
 		self.prevention_modifier = "modifier_imba_tower_barrier_aura_cooldown"
 
@@ -3808,6 +3877,10 @@ function modifier_imba_tower_soul_leech_aura:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
+	if not self.ability then
+		self:Destroy()
+		return nil
+	end
 
 	-- Ability specials
 	self.aura_radius = self.ability:GetSpecialValueFor("aura_radius")
@@ -3861,6 +3934,10 @@ function modifier_imba_tower_soul_leech_aura_buff:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
+	if not self.ability then
+		self:Destroy()
+		return nil
+	end
 	self.parent = self:GetParent()
 	self.particle_lifesteal = "particles/generic_gameplay/generic_lifesteal.vpcf"
 	self.particle_spellsteal = "particles/items3_fx/octarine_core_lifesteal.vpcf"
@@ -3952,6 +4029,10 @@ function modifier_imba_tower_frost_shroud_aura:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
+	if not self.ability then
+		self:Destroy()
+		return nil
+	end
 
 	-- Ability specials
 	self.aura_stickyness = self.ability:GetSpecialValueFor("aura_stickyness")
@@ -4087,6 +4168,10 @@ function modifier_imba_tower_frost_shroud_debuff:OnCreated()
         -- Ability properties
         self.caster = self:GetCaster()
         self.ability = self:GetAbility()
+		if not self.ability then
+			self:Destroy()
+			return nil
+		end
         self.parent = self:GetParent()
 
 		-- Ability specials
