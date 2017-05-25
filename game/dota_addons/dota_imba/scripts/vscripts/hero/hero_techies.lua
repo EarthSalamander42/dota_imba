@@ -544,8 +544,14 @@ end
 function imba_techies_stasis_trap:CastFilterResultTarget(target)    
     if IsServer() then
         local caster = self:GetCaster()
+
+        -- #2 Talent: Stasis Trap can be inserted within creeps
+        if caster:HasTalent("special_bonus_imba_techies_2") and target:IsCreep() and caster:GetTeamNumber() == target:GetTeamNumber() then
+            return UF_SUCCESS
+        end
+
         if target:GetTeamNumber() ~= caster:GetTeamNumber() then
-            return UF_FAIL_FRIENDLY
+            return UF_FAIL_ENEMY
         end
 
         if target:IsHero() then
@@ -718,6 +724,12 @@ function modifier_imba_statis_trap:OnIntervalThink()
         if self.caster:HasModifier(self.modifier_sign) then
             return nil
         end        
+
+        -- If the Stasis trap is dead, do nothing and destroy
+        if not self.caster:IsAlive() then
+            self:Destroy()
+            return nil
+        end
 
         -- Look for nearby enemies
         local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
