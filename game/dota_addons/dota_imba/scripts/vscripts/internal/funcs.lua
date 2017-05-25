@@ -967,3 +967,38 @@ function CDOTA_BaseNPC:AddRangeIndicator(hCaster, hAbility, sAttribute, iRange, 
 	})
 	return modifier
 end
+
+function CDOTA_BaseNPC:EmitCasterSound(sCasterName, tSoundNames, fChancePct, flags, fCooldown, sCooldownindex)
+	flags = flags or 0
+	if self:GetName() ~= sCasterName then
+		return true
+	end
+	
+	if fCooldown then
+		if self[sCooldownindex] then
+			return true
+		else
+			self[sCooldownindex] = true
+			Timers:CreateTimer(fCooldown, function()
+				self[sCooldownindex] = nil
+			end)
+		end
+	end
+	
+	if fChancePct then
+		if fChancePct > math.random(1,100) then
+			return false -- Only return false if chance was missed
+		end
+	end
+	if (bit.band(flags, DOTA_CAST_SOUND_FLAG_WHILE_DEAD) > 0) or self:IsAlive() then
+		local sound = tSoundNames[math.random(1,#tSoundNames)]
+		if bit.band(flags, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS) > 0 then
+			self:EmitSound(sound)
+		--elseif bit.band(flags, DOTA_CAST_SOUND_FLAG_GLOBAL) > 0 then
+			-- Iterate through players, added later
+		else
+			StartSoundEventReliable(sound, self)
+		end
+	end
+	return true
+end

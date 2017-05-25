@@ -12,7 +12,7 @@ CreateEmptyTalents("magnataur")
 -------------------------------------------
 
 LinkLuaModifier("modifier_imba_polarize_debuff", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
-modifier_imba_polarize_debuff = class({})
+modifier_imba_polarize_debuff = modifier_imba_polarize_debuff or class({})
 
 function modifier_imba_polarize_debuff:IsDebuff()
 	return true
@@ -39,7 +39,7 @@ function modifier_imba_polarize_debuff:GetEffectAttachType()
 end
 
 LinkLuaModifier("modifier_imba_polarize_debuff_stack", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
-modifier_imba_polarize_debuff_stack = class({})
+modifier_imba_polarize_debuff_stack = modifier_imba_polarize_debuff_stack or class({})
 
 function modifier_imba_polarize_debuff_stack:IsDebuff()
 	return true
@@ -90,7 +90,7 @@ end
 --				SHOCKWAVE
 -------------------------------------------
 
-imba_magnataur_shockwave = class({})
+imba_magnataur_shockwave = imba_magnataur_shockwave or class({})
 
 function imba_magnataur_shockwave:OnAbilityPhaseStart()
 	if IsServer() then
@@ -153,13 +153,15 @@ function imba_magnataur_shockwave:OnSpellStart()
 
 		-- Play cast sound on dummy, which tracks the shockwave
 		caster:EmitSound("Hero_Magnataur.ShockWave.Particle")
-
-		if math.random(1,100) <= 75 and (caster:GetName() == "npc_dota_hero_magnataur") then
-			caster:EmitSound("magnataur_magn_shockwave_0"..math.random(1,2))
-		elseif (math.random(1,100) <= 50) and (caster:GetName() == "npc_dota_hero_magnataur") then
-			caster:EmitSound("magnataur_magn_shockwave_0"..math.random(4,5))
-		elseif (math.random(1,100) <= 15) and (caster:GetName() == "npc_dota_hero_magnataur") then
-			caster:EmitSound("magnataur_magn_shockwave_03")
+		if not caster:EmitCasterSound("npc_dota_hero_magnataur",{
+		"magnataur_magn_shockwave_01",
+		"magnataur_magn_shockwave_02"}, 75, DOTA_CAST_SOUND_FLAG_NONE, nil, nil ) then
+			if not caster:EmitCasterSound("npc_dota_hero_magnataur",{
+			"magnataur_magn_shockwave_04",
+			"magnataur_magn_shockwave_05"}, 50, DOTA_CAST_SOUND_FLAG_NONE, nil, nil) then
+				caster:EmitCasterSound("npc_dota_hero_magnataur",{
+				"magnataur_magn_shockwave_03"}, 15, DOTA_CAST_SOUND_FLAG_NONE, nil, nil)
+			end
 		end
 
 		-- Launch projectile
@@ -266,7 +268,7 @@ end
 --				EMPOWER
 -------------------------------------------
 
-imba_magnataur_empower = class({})
+imba_magnataur_empower = imba_magnataur_empower or class({})
 LinkLuaModifier("modifier_imba_empower_aura", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_empower", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_empower_particle", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
@@ -290,13 +292,14 @@ function imba_magnataur_empower:OnSpellStart()
 			target:AddNewModifier(caster, self, "modifier_imba_supercharged", { duration = supercharge_duration})
 		end
 		target:AddNewModifier(caster, self, "modifier_imba_empower", { duration = empower_duration})
-
-		if (math.random(1,100) <= 25) and (caster:GetName() == "npc_dota_hero_magnataur") then
-			local randomsound = math.random(1,4)
-			if randomsound >= 2 then randomsound = randomsound + 1 end
-			caster:EmitSound("magnataur_magn_empower_0"..randomsound)
-		elseif (math.random(1,100) <= 15) and (caster == target) and (caster:GetName() == "npc_dota_hero_magnataur") then
-			caster:EmitSound("magnataur_magn_empower_02")
+		
+		if not caster:EmitCasterSound("npc_dota_hero_magnataur",{
+		"magnataur_magn_empower_01",
+		"magnataur_magn_empower_03",
+		"magnataur_magn_empower_04",
+		"magnataur_magn_empower_05"}, 25, DOTA_CAST_SOUND_FLAG_NONE, 10, "empower") then
+			caster:EmitCasterSound("npc_dota_hero_magnataur",{
+			"magnataur_magn_empower_02"}, 15, DOTA_CAST_SOUND_FLAG_NONE, 10, "empower")
 		end
 	end
 end
@@ -314,7 +317,7 @@ function imba_magnataur_empower:IsStealable()
 end
 
 -- Scepter Aura & self-sustain
-modifier_imba_empower_aura = class({})
+modifier_imba_empower_aura = modifier_imba_empower_aura or class({})
 
 function modifier_imba_empower_aura:GetAuraEntityReject(target)
     if IsServer() then
@@ -386,7 +389,7 @@ function modifier_imba_empower_aura:IsHidden()
 	return true
 end
 
-modifier_imba_empower = class({})
+modifier_imba_empower = modifier_imba_empower or class({})
 
 function modifier_imba_empower:DeclareFunctions()
 	local decFuncs =
@@ -535,7 +538,7 @@ function modifier_imba_empower:OnIntervalThink( )
 	end
 end
 
-modifier_imba_empower_particle = class({})
+modifier_imba_empower_particle = modifier_imba_empower_particle or class({})
 
 function modifier_imba_empower_particle:IsHidden()
 	return true
@@ -566,7 +569,7 @@ function modifier_imba_empower_particle:IsPurgable()
 	return true
 end
 
-modifier_imba_empower_linger = class({})
+modifier_imba_empower_linger = modifier_imba_empower_linger or class({})
 
 function modifier_imba_empower_linger:IsDebuff()
 	return false
@@ -580,7 +583,7 @@ function modifier_imba_empower_linger:IsPurgable()
 	return true
 end
 
-modifier_imba_supercharged = class({})
+modifier_imba_supercharged = modifier_imba_supercharged or class({})
 
 function modifier_imba_supercharged:OnCreated( params )
 	if IsServer() then
@@ -639,7 +642,7 @@ end
 --				SKEWER
 -------------------------------------------
 
-imba_magnataur_skewer = class({})
+imba_magnataur_skewer = imba_magnataur_skewer or class({})
 LinkLuaModifier("modifier_imba_skewer_motion_controller", "hero/hero_magnataur", LUA_MODIFIER_MOTION_HORIZONTAL)
 LinkLuaModifier("modifier_imba_skewer_motion_controller_linger", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_skewer_motion_controller_target", "hero/hero_magnataur", LUA_MODIFIER_MOTION_HORIZONTAL)
@@ -680,20 +683,18 @@ function imba_magnataur_skewer:OnSpellStart()
 
 		-- Play the cast sound
 		caster:EmitSound("Hero_Magnataur.Skewer.Cast")
-
-		local cast_sound = false
-		if (math.random(1,100) <= 25) and (caster:GetName() == "npc_dota_hero_magnataur") then
-			local randomsound = math.random(1,9)
-			if randomsound >= 4 then randomsound = randomsound + 3 end
-			if randomsound >= 10 then randomsound = randomsound + 2 end
-			if randomsound <= 9 then
-				randomsound = "0"..randomsound
-			end
-			caster:EmitSound("magnataur_magn_skewer_"..randomsound)
-			cast_sound = true
-		elseif (math.random(1,100) <= 20) and (caster:GetName() == "npc_dota_hero_magnataur") then
-			caster:EmitSound("magnataur_magn_lasthit_09")
-			cast_sound = true
+		
+		if not caster:EmitCasterSound("npc_dota_hero_magnataur",{
+		"magnataur_magn_skewer_01",
+		"magnataur_magn_skewer_02",
+		"magnataur_magn_skewer_03",
+		"magnataur_magn_skewer_07",
+		"magnataur_magn_skewer_09",
+		"magnataur_magn_skewer_12",
+		"magnataur_magn_skewer_13",
+		"magnataur_magn_skewer_14"}, 25, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, 3, "Skewer") then
+			caster:EmitCasterSound("npc_dota_hero_magnataur",{
+			"magnataur_magn_lasthit_09"}, 20, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, 3, "Skewer")
 		end
 
 		-- Add Motion-Controller-Modifier
@@ -725,7 +726,7 @@ function imba_magnataur_skewer:GetCooldown( nLevel )
 	return self.BaseClass.GetCooldown( self, nLevel ) - self:GetCaster():FindTalentValue("special_bonus_imba_magnataur_4")
 end
 
-modifier_imba_skewer_motion_controller = class({})
+modifier_imba_skewer_motion_controller = modifier_imba_skewer_motion_controller or class({})
 
 function modifier_imba_skewer_motion_controller:OnCreated( params )
 	if IsServer() then
@@ -845,11 +846,8 @@ function modifier_imba_skewer_motion_controller:UpdateHorizontalMotion( unit, ti
 				caster:StartGesture( ACT_DOTA_MAGNUS_SKEWER_END )
 			end
 
-			if (math.random(1,100) <= 15) and (caster == target) and not self.cast_sound and (caster:GetName() == "npc_dota_hero_magnataur") then
-				local randomsound = math.random(4,8)
-				if randomsound >= 7 then randomsound = randomsound + 3 end
-				caster:EmitSound("magnataur_magn_skewer_0"..randomsound)
-			end
+			local responses = {"magnataur_magn_skewer_04","magnataur_magn_skewer_05","magnataur_magn_skewer_06","magnataur_magn_skewer_08","magnataur_magn_skewer_10","magnataur_magn_skewer_11"}
+			caster:EmitCasterSound("npc_dota_hero_magnataur",responses, 25, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, 2, "Skewer")
 
 			caster:InterruptMotionControllers(true)
 
@@ -915,7 +913,7 @@ function modifier_imba_skewer_motion_controller:OnHorizontalMotionInterrupted()
 	end
 end
 
-modifier_imba_skewer_motion_controller_linger = class({})
+modifier_imba_skewer_motion_controller_linger = modifier_imba_skewer_motion_controller_linger or class({})
 
 function modifier_imba_skewer_motion_controller_linger:IsHidden()
 	return true
@@ -925,7 +923,7 @@ function modifier_imba_skewer_motion_controller_linger:IsPurgable()
 	return false
 end
 
-modifier_imba_skewer_motion_controller_target = class({})
+modifier_imba_skewer_motion_controller_target = modifier_imba_skewer_motion_controller_target or class({})
 
 function modifier_imba_skewer_motion_controller_target:OnCreated( params )
 	if IsServer() then
@@ -990,7 +988,7 @@ function modifier_imba_skewer_motion_controller_target:DeclareFunctions()
 	return decFuncs
 end
 
-modifier_imba_skewer_slow = class({})
+modifier_imba_skewer_slow = modifier_imba_skewer_slow or class({})
 
 function modifier_imba_skewer_slow:DeclareFunctions()
 	local decFuncs =
@@ -1023,7 +1021,7 @@ function modifier_imba_skewer_slow:OnCreated( params )
 	self.pardoned = params.pardoned
 end
 
-modifier_imba_skewer_entangle = class({})
+modifier_imba_skewer_entangle = modifier_imba_skewer_entangle or class({})
 
 function modifier_imba_skewer_entangle:DeclareFunctions()
 	local decFuncs =
@@ -1072,7 +1070,7 @@ end
 --			REVERSE POLARITY
 -------------------------------------------
 
-imba_magnataur_reverse_polarity = class({})
+imba_magnataur_reverse_polarity = imba_magnataur_reverse_polarity or class({})
 LinkLuaModifier("modifier_imba_reverse_polarity_slow", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 
 function imba_magnataur_reverse_polarity:OnAbilityPhaseStart()
@@ -1124,13 +1122,8 @@ function imba_magnataur_reverse_polarity:OnSpellStart()
 
 		-- Play cast sound
 		caster:EmitSound("Hero_Magnataur.ReversePolarity.Cast")
-		if (math.random(1,100) <= 25) and (caster:GetName() == "npc_dota_hero_magnataur") then
-			local randomsound = math.random(1,10)
-			if randomsound <= 9 then
-				randomsound = "0"..randomsound
-			end
-			caster:EmitSound("magnataur_magn_polarity_"..randomsound)
-		end
+		local responses = {"magnataur_magn_polarity_01","magnataur_magn_polarity_02","magnataur_magn_polarity_03","magnataur_magn_polarity_04","magnataur_magn_polarity_05","magnataur_magn_polarity_06","magnataur_magn_polarity_07","magnataur_magn_polarity_08","magnataur_magn_polarity_09","magnataur_magn_polarity_10"}
+		caster:EmitCasterSound("npc_dota_hero_magnataur",responses, 25, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, nil, nil)
 
 		local creeps = FindUnitsInRadius(caster:GetTeam(), caster_loc, nil, radius, self:GetAbilityTargetTeam(), DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 		for _,creep in ipairs(creeps) do
@@ -1226,7 +1219,7 @@ function imba_magnataur_reverse_polarity:GetCastRange( location , target)
 	return self.BaseClass.GetCastRange(self,location,target) + self:GetCaster():FindTalentValue("special_bonus_imba_magnataur_7")
 end
 
-modifier_imba_reverse_polarity_slow = class({})
+modifier_imba_reverse_polarity_slow = modifier_imba_reverse_polarity_slow or class({})
 
 function modifier_imba_reverse_polarity_slow:DeclareFunctions()
 	local decFuncs =

@@ -29,6 +29,8 @@ require('libraries/astar')
 -- These internal libraries set up barebones's events and processes.  Feel free to inspect them/change them if you need to.
 require('internal/gamemode')
 require('internal/events')
+-- All custom constants
+require('internal/constants')
 -- This library used to handle scoreboard events
 require('internal/scoreboard_events')
 -- This library used to handle custom IMBA talent UI (hero_selection will need to use a function in this)
@@ -232,7 +234,7 @@ function GameMode:ModifierFilter( keys )
 	-- duration					-1
 	-- entindex_caster_const	215
 	-- name_const				modifier_imba_roshan_rage_stack
-	if IsServer() then		
+	if IsServer() then
 		local modifier_owner = EntIndexToHScript(keys.entindex_parent_const)
 		local modifier_name = keys.name_const
 		local modifier_caster
@@ -289,10 +291,8 @@ function GameMode:ModifierFilter( keys )
 			Timers:CreateTimer(FrameTime(), function()
 				local modifier_handler = modifier_owner:FindModifierByName(modifier_name)
 				if modifier_handler then
-					print("found modifier")
 					if modifier_handler.IgnoreTenacity then
 						if modifier_handler:IgnoreTenacity() then
-							print("has ignore tenacity")
 							modifier_handler:SetDuration(original_duration, true)
 						end
 					end
