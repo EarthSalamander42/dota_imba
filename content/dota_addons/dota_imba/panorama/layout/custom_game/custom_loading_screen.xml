@@ -144,10 +144,10 @@
 					</Button>
 					<Label id="community_discord_description_ru" class="CommunityText" html="true" text="#community_discord_description_ru"/>
 
-					<Button id="community_chinese_blog_header" class="CommunityImg" onactivate="DOTADisplayURL('http://www.bilibiliduang.cn/imba');" >
+					<Button id="community_chinese_blog_header" class="CommunityImg" onactivate="DOTADisplayURL('https://www.bilibiliduang.cn/imbagroup');" >
 						<Image src="file://{images}/custom_game/loading_screen/community_chinese_blog.png" />
 					</Button>
-					<Label id="community_chinese_blog_description_02" class="CommunityText" html="true" text="由于时间过晚，天赋的中二描述尚未翻译，可以通过按住alt键查看实际功能。其他错误还烦请留言或通过邮件告知。感激大家的耐心等待。"/>
+					<Label id="community_chinese_blog_description_02" class="CommunityText" html="true" text="欢迎加入IMBA中文QQ群，讨论、开黑、找队友，没有早退，NO LEAVERS！"/>
 
 				</Panel>
 
