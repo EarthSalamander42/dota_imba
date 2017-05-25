@@ -34,8 +34,15 @@ end
 -----------------------------
 --		Mist Coil          --
 -----------------------------
-
+-- Hidden Modifiers:
+MergeTables(LinkedModifiers,{
+	["modifier_imba_mist_coil_passive"] = LUA_MODIFIER_MOTION_NONE,
+})
 imba_abaddon_mist_coil = imba_abaddon_mist_coil or class({})
+
+function imba_abaddon_mist_coil:GetIntrinsicModifierName()
+    return "modifier_imba_mist_coil_passive"
+end
 
 function imba_abaddon_mist_coil:OnSpellStart()
 	if IsServer() then
@@ -43,6 +50,9 @@ function imba_abaddon_mist_coil:OnSpellStart()
 		local target = self:GetCursorTarget()
 
 		caster:EmitSound("Hero_Abaddon.DeathCoil.Cast")
+		
+		local responses = {"abaddon_abad_deathcoil_01","abaddon_abad_deathcoil_02","abaddon_abad_deathcoil_06","abaddon_abad_deathcoil_08",}
+		caster:EmitCasterSound("npc_dota_hero_abaddon",responses, 25, DOTA_CAST_SOUND_FLAG_NONE, 20,"coil")
 
 		local health_cost = getOverChannelIncrease(caster)
 
@@ -92,8 +102,11 @@ function imba_abaddon_mist_coil:OnProjectileHit( hTarget, vLocation )
 			local damage = self:GetLevelSpecialValueFor("damage", ability_level) + over_channel_increase
 			local damage_type = DAMAGE_TYPE_MAGICAL
 
-			ApplyDamage({ victim = target, attacker = caster, damage = damage,	damage_type = damage_type })
-			
+			-- Aplly damage + parsing if the ability killed the target
+			local dealt_damage = ApplyDamage({ victim = target, attacker = caster, damage = damage,	damage_type = damage_type })
+			if caster:HasModifier(self:GetIntrinsicModifierName()) then
+				caster:FindModifierByName(self:GetIntrinsicModifierName()).applied_damage = dealt_damage
+			end
 			-- Apply curse of avernus debuff
 			local curse_of_avernus = caster:FindAbilityByName("imba_abaddon_curse_of_avernus")
 			
@@ -124,6 +137,57 @@ function imba_abaddon_mist_coil:OnProjectileHit( hTarget, vLocation )
 			over_channel_particle = ParticleManager:CreateParticle("particles/dev/library/base_dust_hit_smoke.vpcf", PATTACH_POINT, target)
 			ParticleManager:ReleaseParticleIndex(over_channel_particle)
 		end
+		
+		-- Cast response
+		Timers:CreateTimer(0.4, function()
+			if self.killed then
+				local responses = {"abaddon_abad_deathcoil_03","abaddon_abad_deathcoil_07","abaddon_abad_deathcoil_04","abaddon_abad_deathcoil_05","abaddon_abad_deathcoil_09","abaddon_abad_deathcoil_10"}
+				caster:EmitCasterSound("npc_dota_hero_abaddon",responses, 25, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, nil,nil)
+				self.killed = nil
+			end
+		end)
+	end
+end
+
+modifier_imba_mist_coil_passive = modifier_imba_mist_coil_passive or class({})
+function modifier_imba_mist_coil_passive:IsDebuff() return false end
+function modifier_imba_mist_coil_passive:IsHidden() return true end
+function modifier_imba_mist_coil_passive:IsPurgable() return false end
+function modifier_imba_mist_coil_passive:IsPurgeException() return false end
+function modifier_imba_mist_coil_passive:IsStunDebuff() return false end
+function modifier_imba_mist_coil_passive:RemoveOnDeath() return false end
+-------------------------------------------
+function modifier_imba_mist_coil_passive:DeclareFunctions()
+    local decFuns =
+    {
+		MODIFIER_EVENT_ON_DEATH,
+		MODIFIER_EVENT_ON_TAKEDAMAGE,
+    }
+    return decFuns
+end
+
+function modifier_imba_mist_coil_passive:OnDeath(keys)
+	if self.applied_damage then
+		if keys.attacker == self:GetParent() then
+			if self.record then
+				if self.record == keys.record then
+					local ability = self:GetAbility()
+					if ability then
+						ability.killed = true
+					end
+				end
+			end
+		end
+	end
+end
+
+function modifier_imba_mist_coil_passive:OnTakeDamage(keys)
+	if self.applied_damage then
+		if keys.attacker == self:GetParent() then
+			if keys.damage == self.applied_damage then
+				self.record = keys.record
+			end
+		end
 	end
 end
 
@@ -148,6 +212,8 @@ function imba_abaddon_aphotic_shield:OnSpellStart()
 
 		-- Play Sound
 		caster:EmitSound("Hero_Abaddon.AphoticShield.Cast")
+		local responses = {"abaddon_abad_aphoticshield_01","abaddon_abad_aphoticshield_02","abaddon_abad_aphoticshield_03","abaddon_abad_aphoticshield_04","abaddon_abad_aphoticshield_05","abaddon_abad_aphoticshield_06","abaddon_abad_aphoticshield_07"}
+		caster:EmitCasterSound("npc_dota_hero_abaddon",responses, 50, DOTA_CAST_SOUND_FLAG_NONE, 20,"aphotic_shield")
 
 		-- Check health cost required due to over channel
 		local health_cost = getOverChannelIncrease(caster)
@@ -356,7 +422,7 @@ end
 
 function modifier_imba_curse_of_avernus_passive:DeclareFunctions()
 	local funcs = {
-		MODIFIER_EVENT_ON_ATTACK
+		MODIFIER_EVENT_ON_ATTACK,
 	}
  
 	return funcs
@@ -379,8 +445,12 @@ function modifier_imba_curse_of_avernus_passive:OnAttack(kv)
 				if target:GetTeamNumber() ~= caster:GetTeamNumber() then
 					-- Apply debuff if enemy
 					local ability = self:GetAbility()
-					local debuff_duration = ability:GetSpecialValueFor("debuff_duration") -- Not possible for this to be 0 here
-					target:AddNewModifier(caster, ability, "modifier_imba_curse_of_avernus_debuff_slow", { duration = debuff_duration })
+					if ability then
+						local debuff_duration = ability:GetSpecialValueFor("debuff_duration") -- Not possible for this to be 0 here
+						target:AddNewModifier(caster, ability, "modifier_imba_curse_of_avernus_debuff_slow", { duration = debuff_duration })
+						local responses = {"abaddon_abad_frostmourne_01","abaddon_abad_frostmourne_02","abaddon_abad_frostmourne_03","abaddon_abad_frostmourne_04","abaddon_abad_frostmourne_05","abaddon_abad_frostmourne_06","abaddon_abad_frostmourne_06"}
+						caster:EmitCasterSound("npc_dota_hero_abaddon",responses, 50, DOTA_CAST_SOUND_FLAG_NONE, 30,"curse_of_avernus")
+					end
 				end
 			end
 		end
@@ -648,6 +718,10 @@ function imba_abaddon_borrowed_time:OnSpellStart()
 		-- #7 Talent: +1sec duration on Borrowed Time
 		local buff_duration = self:GetLevelSpecialValueFor("duration", ability_level) + caster:FindTalentValue("special_bonus_imba_abaddon_7")
 		caster:AddNewModifier(caster, self, "modifier_imba_borrowed_time_buff_hot_caster", { duration = buff_duration })
+		local responses = {"abaddon_abad_borrowedtime_02","abaddon_abad_borrowedtime_03","abaddon_abad_borrowedtime_04","abaddon_abad_borrowedtime_05","abaddon_abad_borrowedtime_06","abaddon_abad_borrowedtime_07","abaddon_abad_borrowedtime_08","abaddon_abad_borrowedtime_09","abaddon_abad_borrowedtime_10","abaddon_abad_borrowedtime_11"}
+		if not caster:EmitCasterSound("npc_dota_hero_abaddon",responses, 50, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS,nil,nil) then
+			caster:EmitCasterSound("npc_dota_hero_abaddon",{"abaddon_abad_borrowedtime_01"}, 1, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, nil,nil)
+		end
 	end
 end
 

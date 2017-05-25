@@ -289,6 +289,9 @@ function GameMode:ModifierFilter( keys )
 			end
 
 			Timers:CreateTimer(FrameTime(), function()
+				if modifier_owner:IsNull() then
+					return false
+				end
 				local modifier_handler = modifier_owner:FindModifierByName(modifier_name)
 				if modifier_handler then
 					if modifier_handler.IgnoreTenacity then
