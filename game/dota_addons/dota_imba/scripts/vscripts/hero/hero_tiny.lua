@@ -354,7 +354,7 @@ function modifier_tiny_toss_movement:RemoveOnDeath()
 end
 
 function modifier_tiny_toss_movement:IsHidden()
-	return false
+	return true
 end
 
 function modifier_tiny_toss_movement:IgnoreTenacity()
