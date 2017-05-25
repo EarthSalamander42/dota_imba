@@ -774,36 +774,29 @@ function GameMode:DamageFilter( keys )
 			-- Prevent crit damage notifications
 			display_red_crit_number = false
 		end
-
-		print(keys.damage)
+		
 		-- If the attacker is holding an Arcane/Archmage/Cursed Rapier and the distance is over the cap, remove the spellpower bonus from it
-		if attacker:HasModifier("modifier_imba_arcane_rapier") or attacker:HasModifier("modifier_imba_arcane_rapier_2") or attacker:HasModifier("modifier_imba_rapier_cursed") then
-			print("has rapier")
+		if attacker:HasModifier("modifier_imba_arcane_rapier") or attacker:HasModifier("modifier_imba_arcane_rapier_2") or attacker:HasModifier("modifier_imba_rapier_cursed") then			
 			local distance = (attacker:GetAbsOrigin() - victim:GetAbsOrigin()):Length2D() 
 
-			if distance > IMBA_DAMAGE_EFFECTS_DISTANCE_CUTOFF then
-				print("distance too high")
+			if distance > IMBA_DAMAGE_EFFECTS_DISTANCE_CUTOFF then				
 				local rapier_spellpower = 0
 
 				-- Get all modifiers, gather how much spellpower the target has from rapiers
 				local modifiers = attacker:FindAllModifiers()
 
-				for _,modifier in pairs(modifiers) do
-					print("checking modifiers", "current rapier spellpower: ", rapier_spellpower)
+				for _,modifier in pairs(modifiers) do					
 					-- Increment Cursed Rapier's spellpower
 					if modifier:GetName() == "modifier_imba_rapier_cursed" then
-						rapier_spellpower = rapier_spellpower + modifier:GetAbility():GetSpecialValueFor("spell_power")
-						print("Cursed Rapier incremention")
+						rapier_spellpower = rapier_spellpower + modifier:GetAbility():GetSpecialValueFor("spell_power")						
 
 					-- Increment Archmage Rapier spellpower
 					elseif modifier:GetName() == "modifier_imba_arcane_rapier_2" then
-						rapier_spellpower = rapier_spellpower + modifier:GetAbility():GetSpecialValueFor("spell_power")
-						print("Archmage Rapier incremention")
+						rapier_spellpower = rapier_spellpower + modifier:GetAbility():GetSpecialValueFor("spell_power")						
 
 					-- Increment Arcane Rapier spellpower
 					elseif modifier:GetName() == "modifier_imba_arcane_rapier" then
-						rapier_spellpower = rapier_spellpower + modifier:GetAbility():GetSpecialValueFor("spell_power")
-						print("Arcane Rapier incremention")
+						rapier_spellpower = rapier_spellpower + modifier:GetAbility():GetSpecialValueFor("spell_power")						
 					end
 				end
 
@@ -812,8 +805,7 @@ function GameMode:DamageFilter( keys )
 					keys.damage = keys.damage / (1 + rapier_spellpower * 0.01)
 				end
 			end
-		end
-		print(keys.damage)
+		end		
 
 		-- Vanguard block
 		if victim:HasModifier("modifier_item_vanguard_unique") and keys.damage > 0 then
