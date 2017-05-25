@@ -741,8 +741,7 @@ function GameMode:DamageFilter( keys )
 		--damagetype_const
 		--damage
 		--entindex_attacker_const
-		--entindex_victim_const
-
+		--entindex_victim_const		
 		local attacker
 		local victim
 
@@ -775,6 +774,46 @@ function GameMode:DamageFilter( keys )
 			-- Prevent crit damage notifications
 			display_red_crit_number = false
 		end
+
+		print(keys.damage)
+		-- If the attacker is holding an Arcane/Archmage/Cursed Rapier and the distance is over the cap, remove the spellpower bonus from it
+		if attacker:HasModifier("modifier_imba_arcane_rapier") or attacker:HasModifier("modifier_imba_arcane_rapier_2") or attacker:HasModifier("modifier_imba_rapier_cursed") then
+			print("has rapier")
+			local distance = (attacker:GetAbsOrigin() - victim:GetAbsOrigin()):Length2D() 
+
+			if distance > IMBA_DAMAGE_EFFECTS_DISTANCE_CUTOFF then
+				print("distance too high")
+				local rapier_spellpower = 0
+
+				-- Get all modifiers, gather how much spellpower the target has from rapiers
+				local modifiers = attacker:FindAllModifiers()
+
+				for _,modifier in pairs(modifiers) do
+					print("checking modifiers", "current rapier spellpower: ", rapier_spellpower)
+					-- Increment Cursed Rapier's spellpower
+					if modifier:GetName() == "modifier_imba_rapier_cursed" then
+						rapier_spellpower = rapier_spellpower + modifier:GetAbility():GetSpecialValueFor("spell_power")
+						print("Cursed Rapier incremention")
+
+					-- Increment Archmage Rapier spellpower
+					elseif modifier:GetName() == "modifier_imba_arcane_rapier_2" then
+						rapier_spellpower = rapier_spellpower + modifier:GetAbility():GetSpecialValueFor("spell_power")
+						print("Archmage Rapier incremention")
+
+					-- Increment Arcane Rapier spellpower
+					elseif modifier:GetName() == "modifier_imba_arcane_rapier" then
+						rapier_spellpower = rapier_spellpower + modifier:GetAbility():GetSpecialValueFor("spell_power")
+						print("Arcane Rapier incremention")
+					end
+				end
+
+				-- If spellpower was accumulated, reduce the damage
+				if rapier_spellpower > 0 then					
+					keys.damage = keys.damage / (1 + rapier_spellpower * 0.01)
+				end
+			end
+		end
+		print(keys.damage)
 
 		-- Vanguard block
 		if victim:HasModifier("modifier_item_vanguard_unique") and keys.damage > 0 then
@@ -925,19 +964,7 @@ function GameMode:DamageFilter( keys )
 					ApplyDamage({attacker = caster, victim = target, ability = ability, damage = target:GetHealth(), damage_type = DAMAGE_TYPE_PURE})
 				end
 			end
-		end
-
-		-- Centaur Bulging Hide
-		-- if victim:HasModifier("modifier_imba_return_damage_block") then
-		-- 	local return_ability = victim:FindAbilityByName("imba_centaur_return")
-		-- 	local stacks = victim:FindModifierByName("modifier_imba_return_damage_block"):GetStackCount()
-		-- 	if return_ability and stacks then
-		-- 		local damage_block = return_ability:GetSpecialValueFor("damage_block")
-		-- 		local block = damage_block * stacks
-
-		-- 		keys.damage = keys.damage - block
-		-- 	end
-		-- end
+		end		
 
 		-- Cheese auto-healing
 		if victim:HasModifier("modifier_imba_cheese_death_prevention") then
