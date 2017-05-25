@@ -525,8 +525,24 @@ function modifier_imba_ice_path_thinker:OnCreated( kv )
 
 		local tick_rate = 0.1
 
+		---- Ice path vision nodes ----
+		-- How far apart are the viewpoints. I believe half of the radius is good enough coverage without too many points
+		local viewpoint_distance = path_radius/2
+		local viewpoint_amount = (start_pos - end_pos):Length2D()/viewpoint_distance
+		local viewpoint_view = path_radius + 5 -- extra so we can see the units the Ice Path stuns on entry
+		-- To create too many or too few, that is the question. Let's go with too many
+		viewpoint_amount = math.ceil(viewpoint_amount)
+		local direction_vector = (end_pos - start_pos):Normalized()
+		------------------------------
+		
 		-- Apply affect after delay
 		Timers:CreateTimer(path_delay, function()
+			-- Create flying vision nodes
+			local current_point = start_pos
+			for i=1,viewpoint_amount do
+				AddFOWViewer(caster:GetTeamNumber(), current_point, viewpoint_view, path_duration, false)
+				current_point = current_point + direction_vector * viewpoint_distance
+			end
 			-- Apply effect immediately after delay
 			self:OnIntervalThink()
 			-- Run applying effects on interval
