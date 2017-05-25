@@ -291,10 +291,8 @@ function GameMode:ModifierFilter( keys )
 			Timers:CreateTimer(FrameTime(), function()
 				local modifier_handler = modifier_owner:FindModifierByName(modifier_name)
 				if modifier_handler then
-					print("found modifier")
 					if modifier_handler.IgnoreTenacity then
 						if modifier_handler:IgnoreTenacity() then
-							print("has ignore tenacity")
 							modifier_handler:SetDuration(original_duration, true)
 						end
 					end
