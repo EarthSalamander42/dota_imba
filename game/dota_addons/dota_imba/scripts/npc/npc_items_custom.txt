@@ -4479,7 +4479,6 @@
 		"ScriptFile"                    "items/item_armlet.lua"
 
 		"AbilityCooldown"				"0"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_NONE"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -8315,7 +8314,6 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySharedCooldown"			"octarine"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_NONE"
 
 		"ItemCost"						"5900"
 		"ItemShopTags"					"boost_mana;mana_pool"
@@ -11175,7 +11173,7 @@
 				"IsBuff"						"1"
 				"IsPurgable"					"1"
 
-				"AbilityTextureName"			"custom/imba_rune_haste"
+				"TextureName"			        "custom/imba_rune_haste"
 
 				"EffectName"					"particles/generic_gameplay/rune_haste_owner.vpcf"
 				"EffectAttachType"				"follow_origin"
@@ -11202,6 +11200,7 @@
 				"IsBuff"						"1"
 				"IsPurgable"					"0"
 
+                "TextureName"                   "custom/imba_rune_haste"
 				"EffectName"					"particles/generic_gameplay/rune_haste_owner.vpcf"
 				"EffectAttachType"				"follow_origin"
 
@@ -11282,7 +11281,7 @@
 				"IsBuff"						"1"
 				"IsPurgable"					"1"
 
-				"AbilityTextureName"			"custom/imba_rune_double_damage"
+				"TextureName"			        "custom/imba_rune_double_damage"
 
 				"EffectName"					"particles/generic_gameplay/rune_doubledamage_owner.vpcf"
 				"EffectAttachType"				"follow_origin"
@@ -11308,6 +11307,7 @@
 				"IsBuff"						"1"
 				"IsPurgable"					"0"
 
+                "TextureName"                   "custom/imba_rune_double_damage"
 				"EffectName"					"particles/generic_gameplay/rune_doubledamage_owner.vpcf"
 				"EffectAttachType"				"follow_origin"
 
@@ -11403,7 +11403,7 @@
 				"IsBuff"						"1"
 				"IsPurgable"					"1"
 
-				"AbilityTextureName"			"custom/imba_rune_regeneration"
+				"TextureName"			        "custom/imba_rune_regeneration"
 
 				"EffectName"					"particles/generic_gameplay/rune_regen_owner.vpcf"
 				"EffectAttachType"				"follow_origin"
@@ -11431,6 +11431,8 @@
 				"IsHidden"						"1"
 				"IsBuff"						"1"
 				"IsPurgable"					"0"
+
+                "TextureName"			        "custom/imba_rune_regeneration"
 
 				"EffectName"					"particles/generic_gameplay/rune_regen_owner.vpcf"
 				"EffectAttachType"				"follow_origin"
@@ -11692,7 +11694,6 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NONE"
 		"AbilitySharedCooldown"			"curseblade"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 
@@ -11815,7 +11816,6 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NONE"
 		"AbilitySharedCooldown"			"curseblade"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 
