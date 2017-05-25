@@ -985,8 +985,9 @@ function CDOTA_BaseNPC:EmitCasterSound(sCasterName, tSoundNames, fChancePct, fla
 		end
 	end
 	
+	
 	if fChancePct then
-		if fChancePct > math.random(1,100) then
+		if fChancePct <= math.random(1,100) then
 			return false -- Only return false if chance was missed
 		end
 	end
