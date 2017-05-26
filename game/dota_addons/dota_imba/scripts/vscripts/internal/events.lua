@@ -17,13 +17,17 @@ end
 function GameMode:_OnNPCSpawned(keys)
 	local npc = EntIndexToHScript(keys.entindex)
 
-	if npc:IsRealHero() and npc.bFirstSpawned == nil then
-		npc.bFirstSpawned = true
-        if npc:GetUnitName() ~= "npc_dota_hero_wisp" then
-            PopulateHeroImbaTalents(npc)
-            InitializeInnateAbilities(npc)
+	if npc:IsRealHero() then
+        if npc.bFirstSpawned == nil then
+            npc.bFirstSpawned = true
+            if npc:GetUnitName() ~= "npc_dota_hero_wisp" then
+                PopulateHeroImbaTalents(npc)
+                InitializeInnateAbilities(npc)
+            end
+            GameMode:OnHeroInGame(npc)
         end
-		GameMode:OnHeroInGame(npc)
+
+        AddMissingGenericTalent(npc)
 	end
 end
 
