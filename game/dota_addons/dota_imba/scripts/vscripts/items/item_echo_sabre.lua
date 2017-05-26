@@ -60,8 +60,7 @@ function modifier_imba_echo_sabre_passive:OnCreated()
 		self.bonus_strength = item:GetSpecialValueFor("bonus_strength")
 		self.bonus_attack_speed = item:GetSpecialValueFor("bonus_attack_speed")
 		self.bonus_damage = item:GetSpecialValueFor("bonus_damage")
-		self.bonus_mana_regen = item:GetSpecialValueFor("bonus_mana_regen")
-		self.slow_duration = item:GetSpecialValueFor("slow_duration")
+		self.bonus_mana_regen = item:GetSpecialValueFor("bonus_mana_regen")		
 		self:CheckUnique(true)
 	end
 end
@@ -154,8 +153,7 @@ function modifier_imba_reverb_rapier_passive:OnCreated()
 		self.bonus_strength = item:GetSpecialValueFor("bonus_strength")
 		self.bonus_attack_speed = item:GetSpecialValueFor("bonus_attack_speed")
 		self.bonus_damage = item:GetSpecialValueFor("bonus_damage")
-		self.bonus_mana_regen = item:GetSpecialValueFor("bonus_mana_regen")
-		self.slow_duration = item:GetSpecialValueFor("slow_duration")
+		self.bonus_mana_regen = item:GetSpecialValueFor("bonus_mana_regen")		
 		self:CheckUnique(true)
 	end
 end
@@ -203,6 +201,22 @@ function modifier_imba_echo_rapier_haste:IsPurgeException() return false end
 function modifier_imba_echo_rapier_haste:IsStunDebuff() return false end
 function modifier_imba_echo_rapier_haste:RemoveOnDeath() return true end
 -------------------------------------------
+function modifier_imba_echo_rapier_haste:OnCreated()
+	local item = self:GetAbility()
+	self.parent = self:GetParent()
+	if item then
+		self.slow_duration = item:GetSpecialValueFor("slow_duration")
+		local current_speed = self.parent:GetIncreasedAttackSpeed()
+		if item:GetName() == "item_imba_reverb_rapier" then
+			current_speed = current_speed * 3
+		else
+			current_speed = current_speed * 2
+		end
+		local max_hits = item:GetSpecialValueFor("max_hits")
+		self:SetStackCount(max_hits)
+		self.attack_speed_buff = math.max(item:GetSpecialValueFor("attack_speed_buff"), current_speed)
+	end
+end
 
 function modifier_imba_echo_rapier_haste:DeclareFunctions()
     local decFuns =
@@ -215,6 +229,8 @@ end
 
 function modifier_imba_echo_rapier_haste:OnAttackLanded(keys)
 	if self.parent == keys.attacker then
+		keys.target:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_echo_rapier_debuff_slow", {duration = self.slow_duration})
+
 		if self:GetStackCount() == 1 then
 			self:Destroy()
 			return nil
@@ -224,21 +240,7 @@ function modifier_imba_echo_rapier_haste:OnAttackLanded(keys)
 	end
 end
 
-function modifier_imba_echo_rapier_haste:OnCreated()
-	local item = self:GetAbility()
-	self.parent = self:GetParent()
-	if item then
-		local current_speed = self.parent:GetIncreasedAttackSpeed()
-		if item:GetName() == "item_imba_reverb_rapier" then
-			current_speed = current_speed * 3
-		else
-			current_speed = current_speed * 2
-		end
-		local max_hits = item:GetSpecialValueFor("max_hits")
-		self:SetStackCount(max_hits)
-		self.attack_speed_buff = math.max(item:GetSpecialValueFor("attack_speed_buff"), current_speed)
-	end
-end
+
 
 function modifier_imba_echo_rapier_haste:GetModifierAttackSpeedBonus_Constant()
 	return self.attack_speed_buff
@@ -275,4 +277,12 @@ end
 
 function modifier_imba_echo_rapier_debuff_slow:GetModifierMoveSpeedBonus_Percentage()
 	return self.movement_slow
+end
+
+function modifier_imba_echo_rapier_debuff_slow:GetTexture()	
+	if self:GetAbility():GetName() == "item_imba_reverb_rapier" then
+		return "custom/imba_reverb_rapier"	
+	else
+		return "custom/imba_echo_sabre"
+	end
 end

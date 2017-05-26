@@ -9848,12 +9848,12 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"movement_slow"			"-100"
+				"movement_slow"			"100"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_speed_slow"		"-100"
+				"attack_speed_slow"		"100"
 			}
 			"08"
 			{
