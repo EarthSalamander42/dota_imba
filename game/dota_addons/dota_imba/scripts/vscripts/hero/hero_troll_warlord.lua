@@ -59,7 +59,7 @@ function imba_troll_warlord_berserkers_rage:OnToggle()
 end
 	
 function imba_troll_warlord_berserkers_rage:GetAbilityTextureName()
-	if self:GetCaster():HasModifier("modifier_imba_berserkers_rage_melee") then
+	if self.mode == 1 then
 		return "troll_warlord_berserkers_rage_active"
 	else
 		return "troll_warlord_berserkers_rage"
@@ -113,7 +113,7 @@ function modifier_imba_berserkers_rage_melee:OnAttackLanded( params )
 			return nil
 		end
 		local parent = self:GetParent()
-		if (parent == params.attacker) and (parent:IsRealHero()) and not params.target:IsBuilding() then
+		if (parent == params.attacker) and (parent:IsRealHero() or parent:IsClone()) and not params.target:IsBuilding() then
 			local ability = self:GetAbility()
 			if RollPseudoRandom(ability:GetTalentSpecialValueFor("bash_chance"), ability) then
 				local bash_damage = ability:GetSpecialValueFor("bash_damage")
@@ -142,6 +142,7 @@ function modifier_imba_berserkers_rage_melee:OnCreated()
 		end
 		parent:SetAttackCapability(DOTA_UNIT_CAP_MELEE_ATTACK)
 	end
+	self:GetAbility().mode = 1
 end
 
 -- Note: This is for BAT-modifying, since only troll modify BAT of others and himself
@@ -172,6 +173,7 @@ function modifier_imba_berserkers_rage_ranged:OnCreated()
 		end
 		parent:SetAttackCapability(DOTA_UNIT_CAP_RANGED_ATTACK)
 	end
+	self:GetAbility().mode = 2
 end
 
 function modifier_imba_berserkers_rage_ranged:DeclareFunctions()
@@ -208,7 +210,7 @@ function modifier_imba_berserkers_rage_ranged:OnAttackLanded( params )
 		if params.attacker:PassivesDisabled() then
 			return nil
 		end
-		if (parent == params.attacker) and (parent:IsRealHero()) then
+		if (parent == params.attacker) and (parent:IsRealHero() or parent:IsClone()) then
 			local ability = self:GetAbility()
 			if RollPseudoRandom(ability:GetTalentSpecialValueFor("hamstring_chance"), ability) then
 				local hamstring_duration = ability:GetSpecialValueFor("hamstring_duration")
@@ -569,7 +571,8 @@ function imba_troll_warlord_fervor:IsNetherWardStealable() return false end
 -------------------------------------------
 
 function imba_troll_warlord_fervor:GetIntrinsicModifierName()
-	if self:GetCaster():IsRealHero() then
+	local hCaster = self:GetCaster()
+	if hCaster:IsRealHero() or hCaster:IsClone() then
 		return "modifier_imba_fervor"
 	end
 	return nil
@@ -607,7 +610,7 @@ function modifier_imba_fervor:OnAttackStart(params)
 	if (
 	(params.attacker == parent) or 
 	((params.attacker:GetTeamNumber() == parent:GetTeamNumber()) and params.attacker:HasModifier("modifier_imba_battle_trance") and parent:HasScepter())) and 
-	(not params.attacker:PassivesDisabled()) and params.attacker:IsRealHero() then
+	(not params.attacker:PassivesDisabled()) and (params.attacker:IsRealHero() or params.attacker:IsClone()) then
 		local modifier = params.attacker:FindModifierByNameAndCaster("modifier_imba_fervor_stacks",parent)
 		if modifier then
 			if modifier.last_target == params.target then
