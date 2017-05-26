@@ -295,7 +295,7 @@ function imba_tiny_toss:OnSpellStart()
 		vLocX = vLocation.x,
 		vLocY = vLocation.y,
 		vLocZ = vLocation.z,
-		duration = duration + 0.2		
+		duration = duration	
 	}
 
 	local tossVictims = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, self:GetSpecialValueFor("grab_radius"), DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, 1, false)
@@ -334,7 +334,7 @@ function imba_tiny_toss:GetAOERadius()
     return radius
 end
 
-LinkLuaModifier("modifier_tiny_toss_movement", "hero/hero_tiny", LUA_MODIFIER_MOTION_BOTH)
+LinkLuaModifier("modifier_tiny_toss_movement", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 
 modifier_tiny_toss_movement = modifier_tiny_toss_movement or class({})
 function modifier_tiny_toss_movement:IsDebuff()
@@ -354,11 +354,19 @@ function modifier_tiny_toss_movement:RemoveOnDeath()
 end
 
 function modifier_tiny_toss_movement:IsHidden()
-	return true
+	return false
 end
 
 function modifier_tiny_toss_movement:IgnoreTenacity()
 	return true
+end
+
+function modifier_tiny_toss_movement:IsMotionController()
+	return true
+end
+
+function modifier_tiny_toss_movement:GetMotionControllerPriority()
+	return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM
 end
 
 --------------------------------------------------------------------------------
@@ -369,11 +377,7 @@ function modifier_tiny_toss_movement:OnCreated( kv )
   self.toss_acceleration_z = 4000
   self.toss_max_horizontal_acceleration = 3000
 
-	if IsServer() then
-		if self:ApplyHorizontalMotionController() == false or self:ApplyVerticalMotionController() == false then 
-			self:Destroy()
-		end	
-
+	if IsServer() then		
 		self.ability = self:GetAbility()	
 		self.parent = self:GetParent()
 
@@ -401,11 +405,39 @@ function modifier_tiny_toss_movement:OnCreated( kv )
 
 		self.vHorizontalVelocity = ( self.vLastKnownTargetPos - self.vStartPosition ) / self.flPredictedTotalTime
 		self.vHorizontalVelocity.z = 0.0
+
+		self.frametime = FrameTime()
+		self:StartIntervalThink(FrameTime())
 	end
 end
 
-function modifier_tiny_toss_movement:OnRemoved()
+function modifier_tiny_toss_movement:OnIntervalThink()
 	if IsServer() then
+		-- Check for motion controllers
+		if not self:CheckMotionControllers() then
+			self:Destroy()
+			return nil
+		end
+
+
+		-- Horizontal motion
+		self:HorizontalMotion(self.parent, self.frametime)
+
+		-- Vertical motion
+		self:VerticalMotion(self.parent, self.frametime)
+	end
+end
+
+function modifier_tiny_toss_movement:TossLand()
+	if IsServer() then
+		-- If the Toss was already completed, do nothing
+		if self.toss_land_commenced then
+			return nil
+		end
+
+		-- Mark Toss as completed
+		self.toss_land_commenced = true
+
 		local caster = self:GetCaster()
 		local radius = self:GetAbility():GetSpecialValueFor("radius")
 		if caster:HasModifier("modifier_imba_tiny_rolling_stone") and caster:HasAbility("imba_tiny_grow") then
@@ -491,8 +523,8 @@ end
 
 --------------------------------------------------------------------------------
 
-function modifier_tiny_toss_movement:UpdateHorizontalMotion( me, dt )
-	if IsServer() then
+function modifier_tiny_toss_movement:HorizontalMotion( me, dt )
+	if IsServer() then		
 		-- If the unit being tossed died, interrupt motion controllers and remove self
 		if not self.parent:IsAlive() then
 			self.parent:InterruptMotionControllers(true)
@@ -519,7 +551,7 @@ function modifier_tiny_toss_movement:UpdateHorizontalMotion( me, dt )
 	end
 end
 
-function modifier_tiny_toss_movement:UpdateVerticalMotion( me, dt )
+function modifier_tiny_toss_movement:VerticalMotion( me, dt )
 	if IsServer() then
 		self.flCurrentTimeVert = self.flCurrentTimeVert + dt
 		local bGoingDown = ( -self.toss_acceleration_z * self.flCurrentTimeVert + self.flInitialVelocityZ ) < 0
@@ -536,17 +568,8 @@ function modifier_tiny_toss_movement:UpdateVerticalMotion( me, dt )
 
 		me:SetOrigin( vNewPos )
 		if bLanded == true then
-			self:GetParent():RemoveHorizontalMotionController( self )
-			self:GetParent():RemoveVerticalMotionController( self )
-			self:SetDuration(0.15,true)
+			self:TossLand()
 		end
-	end
-end
-
-function modifier_tiny_toss_movement:OnDestroy()
-	if IsServer() then
-		self:GetParent():RemoveHorizontalMotionController( self )
-		self:GetParent():RemoveVerticalMotionController( self )
 	end
 end
 
@@ -643,12 +666,7 @@ function modifier_tiny_toss_scepter_bounce:CheckState()
 end
 
 function modifier_tiny_toss_scepter_bounce:UpdateVerticalMotion( me, dt )
-	if IsServer() then
-		-- If the caster died, stop motion controllers and remove modifier
-		if not self.parent:IsAlive() then
-			self.parent:InterruptMotionControllers(true)
-			self:Destroy()
-		end
+	if IsServer() then		
 
 		if self.time < self.bounce_duration then
 			self.time = self.time + dt
