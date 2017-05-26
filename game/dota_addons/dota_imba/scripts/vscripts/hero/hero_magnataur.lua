@@ -644,15 +644,20 @@ end
 
 imba_magnataur_skewer = imba_magnataur_skewer or class({})
 LinkLuaModifier("modifier_imba_skewer_motion_controller", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_skewer_motion_controller_linger", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_skewer_motion_controller_target", "hero/hero_magnataur", LUA_MODIFIER_MOTION_HORIZONTAL)
 LinkLuaModifier("modifier_imba_skewer_slow", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_skewer_entangle", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 
 function imba_magnataur_skewer:OnAbilityPhaseStart()
 	local caster = self:GetCaster()
-	if caster:HasModifier("modifier_imba_skewer_motion_controller_linger") then return false end
+	if self.begged_for_pardon then return false end
 	return true
+end
+
+function imba_magnataur_skewer:CastFilterResult()
+	if IsServer() then
+		self.begged_for_pardon = true
+	end
 end
 
 function imba_magnataur_skewer:GetBehavior()
@@ -751,7 +756,6 @@ function modifier_imba_skewer_motion_controller:OnCreated( params )
 		self.direction = Vector(params.direction_x, params.direction_y, params.direction_z)
 		self.traveled = 0
 		self.final = false
-		self.begged_for_pardon = false
 		self.cooldown = params.cooldown
 
 		self.skewer_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_magnataur/magnataur_skewer.vpcf", PATTACH_ABSORIGIN, caster)
@@ -779,7 +783,6 @@ end
 function modifier_imba_skewer_motion_controller:OnDestroy()
 	if IsServer() then
 		local caster = self:GetCaster()
-		caster:AddNewModifier(caster, self:GetAbility(), "modifier_imba_skewer_motion_controller_linger", {duration = 0.1})
 		self:GetAbility():StartCooldown(self.cooldown)
 
 		ParticleManager:DestroyParticle(self.skewer_fx, false)
@@ -828,7 +831,7 @@ function modifier_imba_skewer_motion_controller:HorizontalMotion( unit, time )
 		end
 
 		-- Move the caster while the distance traveled is less than the original distance upon cast
-		if (self.traveled < self.distance) and caster:IsAlive() and not self.begged_for_pardon then
+		if (self.traveled < self.distance) and caster:IsAlive() and not ability.begged_for_pardon then
 			caster:SetAbsOrigin(caster:GetAbsOrigin() + self.direction * self.speed)
 			-- Calculate the new travel distance
 			self.traveled = self.traveled + self.speed
@@ -881,12 +884,12 @@ function modifier_imba_skewer_motion_controller:EndSkewer()
 
 		for _,enemy in ipairs(piked_enemies) do
 			local damage = self.damage
-			if self.begged_for_pardon then
+			if ability.begged_for_pardon then
 				damage = damage + self.pardon_extra_dmg
 			end
 			local modifier = enemy:FindModifierByNameAndCaster("modifier_imba_skewer_motion_controller_target",caster)
 			if modifier then
-				if self.begged_for_pardon and not enemy:HasModifier("modifier_imba_polarize_debuff") then
+				if ability.begged_for_pardon and not enemy:HasModifier("modifier_imba_polarize_debuff") then
 					local knockup_duration = 0.5 + (math.random() * 0.3)
 					local angle = (math.random() - 0.5) * 100
 					local knockback =
@@ -905,43 +908,39 @@ function modifier_imba_skewer_motion_controller:EndSkewer()
 						ApplyDamage({victim = enemy, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 					end)
 				else
-					local knockup_duration = 0.5
-					local knockback =
-					{
-						should_stun = 1,
-						knockback_duration = knockup_duration,
-						duration = knockup_duration,
-						knockback_distance = self.pardon_min_range + knockup_duration * 100,
-						knockback_height = 125 + (knockup_duration * 50),
-						center_x = caster_loc.x,
-						center_y = caster_loc.y,
-						center_z = caster_loc.z
-					}
-					enemy:AddNewModifier(caster, self:GetAbility(), "modifier_knockback", knockback)
+					local knockup_duration = 0
+					if ability.begged_for_pardon then
+						knockup_duration = 0.5
+						local knockback =
+						{
+							should_stun = 1,
+							knockback_duration = knockup_duration,
+							duration = knockup_duration,
+							knockback_distance = self.pardon_min_range + knockup_duration * 100,
+							knockback_height = 125 + (knockup_duration * 50),
+							center_x = caster_loc.x,
+							center_y = caster_loc.y,
+							center_z = caster_loc.z
+						}
+						enemy:AddNewModifier(caster, self:GetAbility(), "modifier_knockback", knockback)
+					end
 					Timers:CreateTimer(knockup_duration, function()
 						ApplyDamage({victim = enemy, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 						if enemy:HasModifier("modifier_imba_polarize_debuff") and (polarize_counter == 2) then
 							enemy:AddNewModifier(caster, ability, "modifier_imba_skewer_entangle", {duration = self.entangle_dur})
+						else
+							FindClearSpaceForUnit(enemy, enemy:GetAbsOrigin(), true)
 						end
 					end)
 				end
 				enemy:AddNewModifier(caster, ability, "modifier_imba_skewer_slow", {duration = self.slow_duration, pardoned = self.begged_for_pardon})
 			end
 		end
+		ability.begged_for_pardon = nil
 
 		-- Enough with the skewer for today.
 		self:Destroy()
 	end
-end
-
-modifier_imba_skewer_motion_controller_linger = modifier_imba_skewer_motion_controller_linger or class({})
-
-function modifier_imba_skewer_motion_controller_linger:IsHidden()
-	return true
-end
-
-function modifier_imba_skewer_motion_controller_linger:IsPurgable()
-	return false
 end
 
 modifier_imba_skewer_motion_controller_target = modifier_imba_skewer_motion_controller_target or class({})
