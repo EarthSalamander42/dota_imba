@@ -28,14 +28,13 @@ function AddStacksLua(ability, caster, unit, modifier, stack_amount, refresh)
 	end
 end
 
--- Removes [stack_amount] stacks from a modifier
-function RemoveStacks(ability, unit, modifier, stack_amount)
-	if unit:HasModifier(modifier) then
-		if unit:GetModifierStackCount(modifier, ability) > stack_amount then
-			unit:SetModifierStackCount(modifier, ability, unit:GetModifierStackCount(modifier, ability) - stack_amount)
-		else
-			unit:RemoveModifierByName(modifier)
-		end
+-- Removes [stack_amount] stacks from a modifier, and deleted it if it is depleted
+function CDOTA_Buff:RemoveStacks(stack_amount)
+	local current_stacks = self:GetStackCount()
+	if stack_amount >= current_stacks then
+		self:Destroy()
+	else
+		self:SetStackCount(current_stacks-stack_amount)
 	end
 end
 
@@ -824,9 +823,9 @@ function RollPseudoRandom(base_chance, entity)
 	entity.pseudoRandomModifier = entity.pseudoRandomModifier or 0
 	local prngBase
 	for i = 1, #chances_table do
-		if base_chance == chances_table[i][1] then          
+		if base_chance == chances_table[i][1] then		  
 			prngBase = chances_table[i][2]
-		end     
+		end	 
 	end
 
 	if not prngBase then
@@ -838,7 +837,7 @@ function RollPseudoRandom(base_chance, entity)
 		entity.pseudoRandomModifier = 0
 		return true
 	else
-		entity.pseudoRandomModifier = entity.pseudoRandomModifier + prngBase        
+		entity.pseudoRandomModifier = entity.pseudoRandomModifier + prngBase		
 		return false
 	end
 end
@@ -870,10 +869,10 @@ end
 
 -- Thanks to LoD-Redux & darklord for this!
 function DisplayError(playerID, message)
-    local player = PlayerResource:GetPlayer(playerID)
-    if player then
-        CustomGameEventManager:Send_ServerToPlayer(player, "CreateIngameErrorMessage", {message=message})
-    end
+	local player = PlayerResource:GetPlayer(playerID)
+	if player then
+		CustomGameEventManager:Send_ServerToPlayer(player, "CreateIngameErrorMessage", {message=message})
+	end
 end
 
 -- Carefully, DON'T use this for visible modifiers or with stack-handling!!!!!!!!!
@@ -1004,7 +1003,24 @@ function CDOTA_BaseNPC:EmitCasterSound(sCasterName, tSoundNames, fChancePct, fla
 	return true
 end
 
+function CDOTA_Buff:CopyModifier(source,target)
+	for i = 0, source:GetModifierCount() do
+		local modifierMame = source:GetModifierNameByIndex(i)
+		local modifier = source:FindModifierByName(modifierName)
+		if modifier then
+			local caster = modifier:GetCaster()
+			local ability = modifier:GetAbility()
+			local fullDuration = modifier:GetDuration()
+			local duration = modifier:GetRemainingTime()
+			local stackCount = modifier:GetStackCount()
 
+			local copyModifier = target:AddNewModifier(caster,ability,modifierName,{duration = fullDuration})
+			copyModifier:SetDuration(duration,true)
+			copyModifier:SetStackCount(stackCount)
+			return copyModifier
+		end
+	end
+end
 
 function CDOTA_Modifier_Lua:CheckMotionControllers()
 	local parent = self:GetParent()
