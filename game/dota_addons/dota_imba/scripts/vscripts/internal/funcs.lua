@@ -1022,6 +1022,49 @@ function CDOTA_Buff:CopyModifier(source,target)
 	end
 end
 
+-----------------------------------
+--    Talent Helper functions    --
+-----------------------------------
+function CDOTA_BaseNPC_Hero:CopyTalents(hEntity, flags) --type 1(generic only), 2(unique only), 3(all)
+    if (bit.band(flags, DOTA_TALENT_COPY_GENERIC) > 0) then
+        local modifierList = self:FindAllModifiers()
+        for _,modifier in pairs(modifierList) do
+			local modifierName = modifier:GetName()
+            -- Check if it is a generic talent
+            if IMBA_GENERIC_TALENT_LIST[string.gsub(modifierName,"modifier_", "")] then
+                -- Apply to entity
+                local newModifier = hEntity:AddNewModifier(hEntity, nil, modifierName, {})
+				if newModifier then
+                    newModifier:SetStackCount(modifier:GetStackCount())
+                    newModifier:ForceRefresh()
+                else
+                    print("failed to attach generic talent: "..modifierName)
+                end
+            end
+        end
+    end
+
+    if (bit.band(flags, DOTA_TALENT_COPY_UNIQUE) > 0) then
+        local endAbilityIndex = (self:GetAbilityCount()-1)
+        while endAbilityIndex >= 0 do
+            local ability = self:GetAbilityByIndex(endAbilityIndex)
+            if ability then
+                local abilityName = ability:GetName()
+                -- Check if it is a unique talent
+                if abilityName:find("special_bonus_imba_") == 1 or abilityName:find("special_bonus_unique_") == 1 then
+					local newAbility = hEntity:AddAbility(abilityName)
+                    if newAbility then
+                        newAbility:SetLevel(ability:GetLevel())
+                    else
+                        print("failed to attach unique talent: "..abilityName)
+                    end
+                end
+            end
+            endAbilityIndex = endAbilityIndex - 1
+        end
+    end
+end
+
 function CDOTA_Modifier_Lua:CheckMotionControllers()
 	local parent = self:GetParent()
 	local modifier_priority = self:GetMotionControllerPriority()

@@ -19055,6 +19055,7 @@
 			{
 				"var_type"							"FIELD_INTEGER"
 				"fade_time"							"6 5 4 3 3 3 3"
+				"LinkedSpecialBonus"				"special_bonus_imba_riki_6"
 			}
 
 			"02"
@@ -35544,7 +35545,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"value"						"2"
+				"value"						"-2"
 			}
 		}
 	}

@@ -651,6 +651,10 @@ function imba_riki_cloak_and_dagger:OnOwnerSpawned()
 	self:EndCooldown() 
 end
 
+function imba_riki_cloak_and_dagger:GetCooldown( nLevel )
+	return self.BaseClass.GetCooldown( self, nLevel ) + self:GetCaster():FindTalentValue("special_bonus_imba_riki_6")
+end
+
 ----------------------------------------------------------
 -----	Cloak and Dagger backstab + invis handler	  ----
 ----------------------------------------------------------
@@ -668,7 +672,7 @@ function modifier_imba_riki_cloak_and_dagger:CheckState()
 	if IsServer() then
 		local ability = self:GetAbility()
 		local parent = self:GetParent()
-		local fade_time = ability:GetSpecialValueFor("fade_time") + self:GetCaster():FindTalentValue("special_bonus_imba_riki_6")
+		local fade_time = ability:GetTalentSpecialValueFor("fade_time")
 		
 		-- If the owner is broken, remove invis modifier and restart cooldown
 		if parent:PassivesDisabled() then
@@ -707,7 +711,7 @@ function modifier_imba_riki_cloak_and_dagger:OnAttackLanded( keys )
 		if parent == attacker then
 			
 			-- Get values
-			local fade_time = ability:GetSpecialValueFor("fade_time") + self:GetCaster():FindTalentValue("special_bonus_imba_riki_6")
+			local fade_time = ability:GetTalentSpecialValueFor("fade_time")
 			local agility_multiplier = ability:GetSpecialValueFor("agility_damage_multiplier") + self:GetCaster():FindTalentValue("special_bonus_imba_riki_5")
 			local agility_multiplier_smoke = ability:GetSpecialValueFor("agility_damage_multiplier_smoke") * 0.01 * agility_multiplier
 			local agility_multiplier_invis_break = ability:GetSpecialValueFor("invis_break_agility_multiplier")
