@@ -15,6 +15,22 @@ function modifier_imba_generic_talents_handler:OnCreated()
 	end
 end
 
+-- Handler for Arc Warden / Meepo (if ported)
+function modifier_imba_generic_talents_handler:OnAbilityFullyCast(keys)
+	if (keys.ability:GetName() == "arc_warden_tempest_double") and (keys.unit == self:GetParent()) then
+		local heroes = FindUnitsInRadius(keys.unit:GetTeamNumber(), keys.unit:GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+		for _, hero in ipairs(heroes) do
+			if hero:IsTempestDouble() then
+				if hero:GetPlayerOwner() and keys.unit:GetPlayerOwner() then
+					if hero:GetPlayerOwner() == keys.unit:GetPlayerOwner() then
+						keys.unit:CopyTalents(hero, DOTA_TALENT_COPY_GENERIC)
+					end
+				end
+			end
+		end
+	end
+end
+
 function modifier_imba_generic_talents_handler:DeclareFunctions()
 	local funcs = {
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
@@ -23,6 +39,7 @@ function modifier_imba_generic_talents_handler:DeclareFunctions()
 		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
+		MODIFIER_EVENT_ON_ABILITY_FULLY_CAST
 	}
 	return funcs
 end

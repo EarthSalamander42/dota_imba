@@ -208,7 +208,7 @@ function imba_phantom_assassin_stifling_dagger:OnProjectileHit( target, location
 
 	-- If the target possesses a ready Linken's Sphere, do nothing else
 	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
-		if target:TriggerSpellAbsorb(ability) then
+		if target:TriggerSpellAbsorb(self) then
 			return nil
 		end
 	end
