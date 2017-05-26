@@ -690,7 +690,7 @@ end
 -------------------------------
 
 imba_mirana_leap = class({})
-LinkLuaModifier("modifier_imba_leap_movement", "hero/hero_mirana", LUA_MODIFIER_MOTION_BOTH)
+LinkLuaModifier("modifier_imba_leap_movement", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_leap_aura", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_leap_speed_boost", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 
@@ -802,27 +802,35 @@ function modifier_imba_leap_movement:OnCreated()
 
             self.direction = (self.target_point - self.caster:GetAbsOrigin()):Normalized()
 
-            -- Start forced movement
-            if self:ApplyHorizontalMotionController() == false or self:ApplyVerticalMotionController() == false then 
-                self:Destroy()
-            end        
+            self.frametime = FrameTime()
+            self:StartIntervalThink(self.frametime)
         end)        
     end
+end
+
+function modifier_imba_leap_movement:OnIntervalThink()
+    -- Check motion controllers
+    if not self:CheckMotionControllers() then
+        self:Destroy()
+        return nil
+    end
+
+    -- Vertical Motion
+    self:VerticalMotion(self.caster, self.frametime)
+
+    -- Horizontal Motion
+    self:HorizontalMotion(self.caster, self.frametime)
 end
 
 function modifier_imba_leap_movement:IsHidden() return true end
 function modifier_imba_leap_movement:IsPurgable() return false end
 function modifier_imba_leap_movement:IsDebuff() return false end
-function modifier_imba_leap_movement:RemoveOnDeath() return false end
 function modifier_imba_leap_movement:IgnoreTenacity() return true end
+function modifier_imba_leap_movement:IsMotionController() return true end
+function modifier_imba_leap_movement:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
-function modifier_imba_leap_movement:UpdateVerticalMotion(me, dt)
+function modifier_imba_leap_movement:VerticalMotion(me, dt)
     if IsServer() then
-        -- If the caster died, interrupt motion control and kill modifier.
-        if not self.caster:IsAlive() then
-            self.caster:InterruptMotionControllers(true)
-            self:Destroy()
-        end
 
         -- Check if we're still jumping
         if self.time_elapsed < self.jump_time then
@@ -846,7 +854,7 @@ function modifier_imba_leap_movement:UpdateVerticalMotion(me, dt)
     end
 end
 
-function modifier_imba_leap_movement:UpdateHorizontalMotion(me, dt)
+function modifier_imba_leap_movement:HorizontalMotion(me, dt)
    if IsServer() then
         -- Check if we're still jumping
         self.time_elapsed = self.time_elapsed + dt
@@ -855,8 +863,7 @@ function modifier_imba_leap_movement:UpdateHorizontalMotion(me, dt)
             -- Go forward
             local new_location = self.caster:GetAbsOrigin() + self.direction * self.jump_speed * dt
             self.caster:SetAbsOrigin(new_location)            
-        else
-            self.caster:InterruptMotionControllers(true)
+        else            
             self:Destroy()
         end
    end 
@@ -864,6 +871,7 @@ end
 
 function modifier_imba_leap_movement:OnRemoved()    
     if IsServer() then
+        self.caster:SetUnitOnClearGround()
         self.caster:AddNewModifier(self.caster, self.ability, self.modifier_aura, {duration = self.aura_duration})
     end
 end
