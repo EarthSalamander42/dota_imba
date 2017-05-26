@@ -1089,7 +1089,7 @@ function CDOTA_Modifier_Lua:CheckMotionControllers()
 
 		-- If the modifier that was found is a lower priority, destroy it instead
 		else			
-			caster:InterruptMotionControllers(true)
+			parent:InterruptMotionControllers(true)
 			found_modifier_handler:Destroy()
 			return true
 		end

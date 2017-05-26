@@ -643,7 +643,7 @@ end
 -------------------------------------------
 
 imba_magnataur_skewer = imba_magnataur_skewer or class({})
-LinkLuaModifier("modifier_imba_skewer_motion_controller", "hero/hero_magnataur", LUA_MODIFIER_MOTION_HORIZONTAL)
+LinkLuaModifier("modifier_imba_skewer_motion_controller", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_skewer_motion_controller_linger", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_skewer_motion_controller_target", "hero/hero_magnataur", LUA_MODIFIER_MOTION_HORIZONTAL)
 LinkLuaModifier("modifier_imba_skewer_slow", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
@@ -758,9 +758,21 @@ function modifier_imba_skewer_motion_controller:OnCreated( params )
 		ParticleManager:SetParticleControlEnt(self.skewer_fx, 0, caster, PATTACH_ABSORIGIN_FOLLOW, nil, caster:GetAbsOrigin(), true)
 		ParticleManager:SetParticleControlEnt(self.skewer_fx, 1, caster, PATTACH_POINT_FOLLOW, "attach_horn", caster:GetAbsOrigin(), true)
 
-		if self:ApplyHorizontalMotionController() == false then
+		self.frametime = FrameTime()
+		self:StartIntervalThink(self.frametime)
+	end
+end
+
+function modifier_imba_skewer_motion_controller:OnIntervalThink()
+	if IsServer() then
+		-- Check motion controllers
+		if not self:CheckMotionControllers() then
 			self:Destroy()
+			return nil
 		end
+
+		-- Horizontal Motion
+		self:HorizontalMotion(self:GetParent(), self.frametime)
 	end
 end
 
@@ -769,6 +781,10 @@ function modifier_imba_skewer_motion_controller:OnDestroy()
 		local caster = self:GetCaster()
 		caster:AddNewModifier(caster, self:GetAbility(), "modifier_imba_skewer_motion_controller_linger", {duration = 0.1})
 		self:GetAbility():StartCooldown(self.cooldown)
+
+		ParticleManager:DestroyParticle(self.skewer_fx, false)
+		ParticleManager:ReleaseParticleIndex(self.skewer_fx)
+		GridNav:DestroyTreesAroundPoint(self:GetCaster():GetAbsOrigin(), (self.tree_radius + 100), false)		
 	end
 end
 
@@ -776,12 +792,16 @@ function modifier_imba_skewer_motion_controller:IsHidden()
 	return true
 end
 
-function modifier_imba_skewer_motion_controller:RemoveOnDeath()
-	return false
-end
-
 function modifier_imba_skewer_motion_controller:IgnoreTenacity()
 	return true
+end
+
+function modifier_imba_skewer_motion_controller:IsMotionController()
+	return true
+end
+
+function modifier_imba_skewer_motion_controller:GetMotionControllerPriority()
+	return DOTA_MOTION_CONTROLLER_PRIORITY_HIGH
 end
 
 function modifier_imba_skewer_motion_controller:CheckState()
@@ -792,17 +812,11 @@ function modifier_imba_skewer_motion_controller:CheckState()
 	return state
 end
 
-function modifier_imba_skewer_motion_controller:UpdateHorizontalMotion( unit, time )
+function modifier_imba_skewer_motion_controller:HorizontalMotion( unit, time )
 	if IsServer() then
 		local caster = self:GetCaster()
 		local caster_loc = caster:GetAbsOrigin()
-		local ability = self:GetAbility()
-
-		-- If the caster died mid skewer, interrupt motion control and kill modifier
-		if not caster:IsAlive() then
-			caster:InterruptMotionControllers(true)
-			self:Destroy()
-		end
+		local ability = self:GetAbility()		
 
 		GridNav:DestroyTreesAroundPoint(caster_loc, self.tree_radius, false)
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, self.skewer_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, 0, false)
@@ -826,20 +840,6 @@ function modifier_imba_skewer_motion_controller:UpdateHorizontalMotion( unit, ti
 				self.final = true
 			end
 		else
-			local piked_enemies = {}
-			piked_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, self.skewer_radius * 2, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, 0, false)
-			local polarize_counter = 0
-
-			-- Check if polarized targets shall be entangled
-			for _,enemy in ipairs(piked_enemies) do
-				if enemy:HasModifier("modifier_imba_polarize_debuff") then
-					polarize_counter = polarize_counter + 1
-					if polarize_counter == 2 then
-						break
-					end
-				end
-			end
-
 			-- Remove the motion controller once the distance has been traveled
 			if not self.final then
 				caster:FadeGesture( ACT_DOTA_CAST_ABILITY_3 )
@@ -849,66 +849,87 @@ function modifier_imba_skewer_motion_controller:UpdateHorizontalMotion( unit, ti
 			local responses = {"magnataur_magn_skewer_04","magnataur_magn_skewer_05","magnataur_magn_skewer_06","magnataur_magn_skewer_08","magnataur_magn_skewer_10","magnataur_magn_skewer_11"}
 			caster:EmitCasterSound("npc_dota_hero_magnataur",responses, 25, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, 2, "Skewer")
 
-			caster:InterruptMotionControllers(true)
-
-			for _,enemy in ipairs(piked_enemies) do
-				local damage = self.damage
-				if self.begged_for_pardon then
-					damage = damage + self.pardon_extra_dmg
-				end
-				local modifier = enemy:FindModifierByNameAndCaster("modifier_imba_skewer_motion_controller_target",caster)
-				if modifier then
-					if self.begged_for_pardon and not enemy:HasModifier("modifier_imba_polarize_debuff") then
-						local knockup_duration = 0.5 + (math.random() * 0.3)
-						local angle = (math.random() - 0.5) * 100
-						local knockback =
-						{
-							should_stun = 1,
-							knockback_duration = knockup_duration,
-							duration = knockup_duration,
-							knockback_distance = self.pardon_min_range + knockup_duration * 100,
-							knockback_height = 125 + (knockup_duration * 50),
-							center_x = (caster_loc - (RotateVector2D(self.direction,angle, true))*1000).x ,
-							center_y = (caster_loc - (RotateVector2D(self.direction,angle, true))*1000).y,
-							center_z = caster_loc.z
-						}
-						enemy:AddNewModifier(caster, self:GetAbility(), "modifier_knockback", knockback)
-						Timers:CreateTimer(knockup_duration, function()
-							ApplyDamage({victim = enemy, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
-						end)
-					else
-						local knockup_duration = 0.5
-						local knockback =
-						{
-							should_stun = 1,
-							knockback_duration = knockup_duration,
-							duration = knockup_duration,
-							knockback_distance = self.pardon_min_range + knockup_duration * 100,
-							knockback_height = 125 + (knockup_duration * 50),
-							center_x = caster_loc.x,
-							center_y = caster_loc.y,
-							center_z = caster_loc.z
-						}
-						enemy:AddNewModifier(caster, self:GetAbility(), "modifier_knockback", knockback)
-						Timers:CreateTimer(knockup_duration, function()
-							ApplyDamage({victim = enemy, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
-							if enemy:HasModifier("modifier_imba_polarize_debuff") and (polarize_counter == 2) then
-								enemy:AddNewModifier(caster, ability, "modifier_imba_skewer_entangle", {duration = self.entangle_dur})
-							end
-						end)
-					end
-					enemy:AddNewModifier(caster, ability, "modifier_imba_skewer_slow", {duration = self.slow_duration, pardoned = self.begged_for_pardon})
-				end
-			end
+			self:EndSkewer()
 		end
 	end
 end
 
-function modifier_imba_skewer_motion_controller:OnHorizontalMotionInterrupted()
+function modifier_imba_skewer_motion_controller:EndSkewer()
 	if IsServer() then
-		ParticleManager:DestroyParticle(self.skewer_fx, false)
-		ParticleManager:ReleaseParticleIndex(self.skewer_fx)
-		GridNav:DestroyTreesAroundPoint(self:GetCaster():GetAbsOrigin(), (self.tree_radius + 100), false)
+		if self.skewer_finished then
+			return nil
+		end
+
+		self.skewer_finished = true
+
+		local caster = self:GetCaster()
+		local ability = self:GetAbility()
+		local caster_loc = caster:GetAbsOrigin()
+		local piked_enemies = {}
+		piked_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, self.skewer_radius * 2, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, 0, false)
+		local polarize_counter = 0
+
+		-- Check if polarized targets shall be entangled
+		for _,enemy in ipairs(piked_enemies) do
+			if enemy:HasModifier("modifier_imba_polarize_debuff") then
+				polarize_counter = polarize_counter + 1
+				if polarize_counter == 2 then
+					break
+				end
+			end
+		end
+
+		for _,enemy in ipairs(piked_enemies) do
+			local damage = self.damage
+			if self.begged_for_pardon then
+				damage = damage + self.pardon_extra_dmg
+			end
+			local modifier = enemy:FindModifierByNameAndCaster("modifier_imba_skewer_motion_controller_target",caster)
+			if modifier then
+				if self.begged_for_pardon and not enemy:HasModifier("modifier_imba_polarize_debuff") then
+					local knockup_duration = 0.5 + (math.random() * 0.3)
+					local angle = (math.random() - 0.5) * 100
+					local knockback =
+					{
+						should_stun = 1,
+						knockback_duration = knockup_duration,
+						duration = knockup_duration,
+						knockback_distance = self.pardon_min_range + knockup_duration * 100,
+						knockback_height = 125 + (knockup_duration * 50),
+						center_x = (caster_loc - (RotateVector2D(self.direction,angle, true))*1000).x ,
+						center_y = (caster_loc - (RotateVector2D(self.direction,angle, true))*1000).y,
+						center_z = caster_loc.z
+					}
+					enemy:AddNewModifier(caster, self:GetAbility(), "modifier_knockback", knockback)
+					Timers:CreateTimer(knockup_duration, function()
+						ApplyDamage({victim = enemy, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+					end)
+				else
+					local knockup_duration = 0.5
+					local knockback =
+					{
+						should_stun = 1,
+						knockback_duration = knockup_duration,
+						duration = knockup_duration,
+						knockback_distance = self.pardon_min_range + knockup_duration * 100,
+						knockback_height = 125 + (knockup_duration * 50),
+						center_x = caster_loc.x,
+						center_y = caster_loc.y,
+						center_z = caster_loc.z
+					}
+					enemy:AddNewModifier(caster, self:GetAbility(), "modifier_knockback", knockback)
+					Timers:CreateTimer(knockup_duration, function()
+						ApplyDamage({victim = enemy, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+						if enemy:HasModifier("modifier_imba_polarize_debuff") and (polarize_counter == 2) then
+							enemy:AddNewModifier(caster, ability, "modifier_imba_skewer_entangle", {duration = self.entangle_dur})
+						end
+					end)
+				end
+				enemy:AddNewModifier(caster, ability, "modifier_imba_skewer_slow", {duration = self.slow_duration, pardoned = self.begged_for_pardon})
+			end
+		end
+
+		-- Enough with the skewer for today.
 		self:Destroy()
 	end
 end
@@ -930,10 +951,20 @@ function modifier_imba_skewer_motion_controller_target:OnCreated( params )
 		self.direction = Vector(params.direction_x, params.direction_y, params.direction_z)
 		self.speed = params.speed
 
-		if self:ApplyHorizontalMotionController() == false then
-			self:Destroy()
-		end
+		self.frametime = FrameTime()
+		self:StartIntervalThink(self.frametime)
 	end
+end
+
+function modifier_imba_skewer_motion_controller_target:OnIntervalThink()
+	-- Check for motion controllers
+	if not self:CheckMotionControllers() then
+		self:Destroy()
+		return nil
+	end
+
+	-- Horizontal motion
+	self:HorizontalMotion(self:GetParent(), self.frametime)
 end
 
 function modifier_imba_skewer_motion_controller_target:OnDestroy()
@@ -948,6 +979,14 @@ function modifier_imba_skewer_motion_controller_target:IgnoreTenacity()
 	return true
 end
 
+function modifier_imba_skewer_motion_controller_target:IsMotionController()
+	return true
+end
+
+function modifier_imba_skewer_motion_controller_target:GetMotionControllerPriority()
+	return DOTA_MOTION_CONTROLLER_PRIORITY_HIGH
+end
+
 function modifier_imba_skewer_motion_controller_target:CheckState()
 	local state =
 	{
@@ -956,7 +995,7 @@ function modifier_imba_skewer_motion_controller_target:CheckState()
 	return state
 end
 
-function modifier_imba_skewer_motion_controller_target:UpdateHorizontalMotion( unit, time )
+function modifier_imba_skewer_motion_controller_target:HorizontalMotion( unit, time )
 	if IsServer() then
 		local caster = self:GetCaster()
 
@@ -965,14 +1004,8 @@ function modifier_imba_skewer_motion_controller_target:UpdateHorizontalMotion( u
 			unit:SetAbsOrigin(unit:GetAbsOrigin() + self.direction * self.speed)
 		else
 			-- Remove the motion controller once the caster lost the motion-controller
-			unit:InterruptMotionControllers(true)
+			self:Destroy()
 		end
-	end
-end
-
-function modifier_imba_skewer_motion_controller_target:OnHorizontalMotionInterrupted()
-	if IsServer() then
-		self:Destroy()
 	end
 end
 

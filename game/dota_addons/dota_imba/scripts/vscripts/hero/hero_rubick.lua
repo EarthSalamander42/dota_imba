@@ -8,7 +8,7 @@
 -------------------------------------------
 --			TRANSPOSITION
 -------------------------------------------
-LinkLuaModifier("modifier_imba_telekinesis", "hero/hero_rubick", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_telekinesis", "hero/hero_rubick", LUA_MODIFIER_MOTION_BOTH)
 LinkLuaModifier("modifier_imba_telekinesis_stun", "hero/hero_rubick", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_telekinesis_root", "hero/hero_rubick", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_telekinesis_caster", "hero/hero_rubick", LUA_MODIFIER_MOTION_NONE)
@@ -222,16 +222,10 @@ function modifier_imba_telekinesis:EndTransition()
 
 		local caster = self:GetCaster()
 		local parent = self:GetParent()
-		local ability = self:GetAbility()				
+		local ability = self:GetAbility()					
 		
-		Timers:CreateTimer(FrameTime(), function()
-			-- Set the thrown unit on the ground		
-			parent:SetUnitOnGround()
-
-			FindClearSpaceForUnit(parent, parent:GetAbsOrigin(), true)
-
-			ResolveNPCPositions(parent:GetAbsOrigin(), 64)
-		end)
+		-- Set the thrown unit on the ground		
+		parent:SetUnitOnClearGround()		
 
 		-- Remove the stun/root modifier
 		parent:RemoveModifierByName("modifier_imba_telekinesis_stun")
@@ -330,6 +324,15 @@ end
 
 function modifier_imba_telekinesis:GetTexture()
 	return "rubick_telekinesis"
+end
+
+function modifier_imba_telekinesis:OnDestroy()
+	if IsServer() then
+		-- If it was destroyed because of the parent dying, set the caster at the ground position.
+		if not self.parent:IsAlive() then
+			self.parent:SetUnitOnClearGround()
+		end
+	end
 end
 
 -------------------------------------------

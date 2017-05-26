@@ -72,7 +72,7 @@ if imba_faceless_void_time_walk == nil then imba_faceless_void_time_walk = class
 LinkLuaModifier("modifier_imba_faceless_void_time_walk_damage_counter", "hero/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE)-- Reduced moenemt/attack speed stolen by caster
 LinkLuaModifier("modifier_imba_faceless_void_time_walk_buff_as", "hero/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE)		-- Bonus attack speed stolen from enemies
 LinkLuaModifier("modifier_imba_faceless_void_time_walk_buff_ms", "hero/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE)		-- Bonus movement speed stolen from enemies
-LinkLuaModifier("modifier_imba_faceless_void_time_walk_cast", "hero/hero_faceless_void.lua", LUA_MODIFIER_MOTION_HORIZONTAL)	-- Motion + invuln
+LinkLuaModifier("modifier_imba_faceless_void_time_walk_cast", "hero/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE)	-- Motion + invuln
 LinkLuaModifier("modifier_imba_faceless_void_time_walk_slow", "hero/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE)			-- Reduced moenemt/attack speed stolen by caster
 
 function imba_faceless_void_time_walk:IsHiddenWhenStolen() return false end
@@ -221,8 +221,9 @@ function modifier_imba_faceless_void_time_walk_cast:GetAttributes() return MODIF
 function modifier_imba_faceless_void_time_walk_cast:IsPurgable() return	false end
 function modifier_imba_faceless_void_time_walk_cast:IsDebuff() return	false end
 function modifier_imba_faceless_void_time_walk_cast:IsHidden() return	true end
-function modifier_imba_faceless_void_time_walk_cast:RemoveOnDeath() return false end
 function modifier_imba_faceless_void_time_walk_cast:IgnoreTenacity() return true end
+function modifier_imba_faceless_void_time_walk_cast:IsMotionController() return true end
+function modifier_imba_faceless_void_time_walk_cast:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_imba_faceless_void_time_walk_cast:GetEffectName()
 	return "particles/units/heroes/hero_faceless_void/faceless_void_time_walk.vpcf" end
@@ -252,20 +253,27 @@ function modifier_imba_faceless_void_time_walk_cast:OnCreated()
 		self.velocity = ability:GetSpecialValueFor("speed")
 		self.direction = (caster:GetCursorPosition() - caster:GetAbsOrigin()):Normalized()
 		self.distance_traveled = 0
-		self.distance = distance
+		self.distance = distance		
 		
-		-- Enemy effect handler
-		self:StartIntervalThink(0)
+		-- Enemy effect handler		
 		self.as_stolen = 0
-		self.ms_stolen = 0
+		self.ms_stolen = 0		
 
-		if self:ApplyHorizontalMotionController() == false then
-			self:Destroy()
-		end	
+		self.frametime = FrameTime()
+		self:StartIntervalThink(FrameTime())
 	end
 end
 
 function modifier_imba_faceless_void_time_walk_cast:OnIntervalThink()
+
+	-- Check Motion controllers
+	if not self:CheckMotionControllers() then
+		self:Destroy()
+		return nil
+	end	
+
+	-- Horizontal motion
+	self:HorizontalMotion(self:GetParent(), self.frametime)
 
 	local caster = self:GetParent()
 	local ability = self:GetAbility()
@@ -296,7 +304,7 @@ function modifier_imba_faceless_void_time_walk_cast:OnIntervalThink()
 			end
 			
 			-- Apply the slow
-			enemy:AddNewModifier(caster, ability, "modifier_imba_faceless_void_time_walk_slow", {duration = duration})
+			enemy:AddNewModifier(caster, ability, "modifier_imba_faceless_void_time_walk_slow", {duration = duration})			
 		end
 	end
 	
@@ -304,8 +312,6 @@ function modifier_imba_faceless_void_time_walk_cast:OnIntervalThink()
 	if not ability:IsStolen() then
 		AddStacksLua(ability, caster, caster, "modifier_imba_faceless_void_chronocharges", chronocharges, false)
 	end
-	
-	self:StartIntervalThink(0.1)
 end
 
 function modifier_imba_faceless_void_time_walk_cast:OnRemoved()
@@ -338,21 +344,15 @@ function modifier_imba_faceless_void_time_walk_cast:OnDestroy()
 	end
 end
 
-function modifier_imba_faceless_void_time_walk_cast:UpdateHorizontalMotion( me, dt )
+function modifier_imba_faceless_void_time_walk_cast:HorizontalMotion( me, dt )
 	if IsServer() then
-		local caster = self:GetCaster()
 
-		-- If the caster died, interrupt motion and kill modiifer
-		if not caster:IsAlive() then
-			caster:InterruptMotionControllers(true)
-			self:Destroy()
-		end		
+		local caster = self:GetCaster()		
 		
-		if self.distance_traveled < self.distance then
+		if self.distance_traveled < self.distance then			
 			caster:SetAbsOrigin(caster:GetAbsOrigin() + self.direction * self.velocity * dt)
 			self.distance_traveled = self.distance_traveled + self.velocity * dt
-		else
-			caster:InterruptMotionControllers(true)
+		else			
 			self:Destroy()
 		end
 	end
@@ -968,7 +968,19 @@ function modifier_imba_faceless_void_chronosphere_handler:OnIntervalThink()
 	if IsServer() then		
 		-- Normal frozen enemy gets interrupted all the time
 		if self:GetStackCount() == 0 then
+
+			-- Non-IMBA handling
 			self.parent:InterruptMotionControllers(true)
+
+			-- IMBA handling
+			local modifiers = self.parent:FindAllModifiers()
+			for _,modifier in pairs(modifiers) do
+				if modifier.IsMotionController then
+					if modifier:IsMotionController() then
+						modifier:Destroy()
+					end
+				end
+			end
 		end
 	end
 end	
