@@ -14,7 +14,7 @@ CreateEmptyTalents("slardar")
 imba_slardar_guardian_sprint = class({})
 LinkLuaModifier("modifier_imba_guardian_sprint_buff", "hero/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_guardian_sprint_aspd_slow", "hero/hero_slardar", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_rip_current_movement", "hero/hero_slardar", LUA_MODIFIER_MOTION_HORIZONTAL)
+LinkLuaModifier("modifier_imba_rip_current_movement", "hero/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_rip_current_stun", "hero/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_rip_current_slow", "hero/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 
@@ -255,35 +255,87 @@ function modifier_imba_rip_current_movement:OnCreated()
 		self.distance_travelled = 0		
 		self.direction = self.caster:GetForwardVector()		
 
-		if self:ApplyHorizontalMotionController() == false then
-			self:Destroy()
-		end	
+		self.frametime = FrameTime()
+		self:StartIntervalThink(self.frametime)
 	end
 end
 
+function modifier_imba_rip_current_movement:OnIntervalThink()
+	-- Check motion controllers
+	if not self:CheckMotionControllers() then
+		self:Destroy()
+		return nil
+	end
+
+	-- Horizontal Motion
+	self:HorizontalMotion(self.caster, self.frametime)
+end
+
 function modifier_imba_rip_current_movement:CheckState()
-	local state = {[MODIFIER_STATE_INVULNERABLE] = true,
-				   [MODIFIER_STATE_STUNNED] = true}
+	local state = {[MODIFIER_STATE_STUNNED] = true}
 
 	return state
 end
 
-function modifier_imba_rip_current_movement:UpdateHorizontalMotion( me, dt)
+function modifier_imba_rip_current_movement:HorizontalMotion(me, dt)
 	if IsServer() then
-		-- If the caster somehow died, interrupt motion controls and remove modifier
-		if not self.caster:IsAlive() then
-			self.caster:InterruptMotionControllers(true)
-			self:Destroy()
-		end
-
 		if self.distance_travelled < self.distance then
 			self.caster:SetAbsOrigin(self.caster:GetAbsOrigin() + self.direction * self.velocity * dt)
 			self.distance_travelled = self.distance_travelled + self.velocity * dt
 		else
-			self.caster:InterruptMotionControllers(true)
-			self:Destroy()
+			if not self.rip_current_finished then
+				self:RipCurrentLand()
+			end
 		end
 	end
+end
+
+function modifier_imba_rip_current_movement:RipCurrentLand()
+	if self.rip_current_finished then
+		return nil
+	end
+
+	self.rip_current_finished = true
+
+	local radius = self.radius
+	local damage = self.damage
+	
+	-- #1 Talent: Rip Current land radius and damage increase
+	radius = radius + self.caster:FindSpecificTalentValue("special_bonus_imba_slardar_1", "radius")
+	damage = damage + self.caster:FindSpecificTalentValue("special_bonus_imba_slardar_1", "damage")
+	
+	-- Play hit sound
+	EmitSoundOn(self.sound_land, self.caster)
+	
+	-- Find nearby enemies
+	local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
+									  self.caster:GetAbsOrigin(),
+									  nil,
+									  self.radius,
+									  DOTA_UNIT_TARGET_TEAM_ENEMY,
+									  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+									  DOTA_UNIT_TARGET_FLAG_NONE,
+									  FIND_ANY_ORDER,
+									  false)
+	
+	-- Cycle through enemies are not magic immune
+	for _, enemy in pairs(enemies) do						
+		if not enemy:IsMagicImmune() then		
+			-- Apply damage
+			local damageTable = {victim = enemy,
+								attacker = self.caster,
+								damage = damage,
+								damage_type = DAMAGE_TYPE_PHYSICAL}
+						
+			ApplyDamage(damageTable)	
+			
+			-- Apply stun and slow modifiers
+			enemy:AddNewModifier(self.caster, self.ability, self.modifier_stun, {duration = self.stun_duration})
+			enemy:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = self.slow_duration})				
+		end
+	end
+
+	self:Destroy()
 end
 
 function modifier_imba_rip_current_movement:IsHidden()
@@ -306,48 +358,17 @@ function modifier_imba_rip_current_movement:IgnoreTenacity()
 	return true
 end
 
-function modifier_imba_rip_current_movement:OnRemoved()
-	if IsServer() then		
-
-		local radius = self.radius
-		local damage = self.damage
-		
-		-- #1 Talent: Rip Current land radius and damage increase
-		radius = radius + self.caster:FindSpecificTalentValue("special_bonus_imba_slardar_1", "radius")
-		damage = damage + self.caster:FindSpecificTalentValue("special_bonus_imba_slardar_1", "damage")
-		
-		-- Play hit sound
-		EmitSoundOn(self.sound_land, self.caster)
-		
-		-- Find nearby enemies
-		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-										  self.caster:GetAbsOrigin(),
-										  nil,
-										  self.radius,
-										  DOTA_UNIT_TARGET_TEAM_ENEMY,
-										  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-										  DOTA_UNIT_TARGET_FLAG_NONE,
-										  FIND_ANY_ORDER,
-										  false)
-		
-		-- Cycle through enemies are not magic immune
-		for _, enemy in pairs(enemies) do						
-			if not enemy:IsMagicImmune() then		
-				-- Apply damage
-				local damageTable = {victim = enemy,
-									attacker = self.caster,
-									damage = damage,
-									damage_type = DAMAGE_TYPE_PHYSICAL}
-							
-				ApplyDamage(damageTable)	
-				
-				-- Apply stun and slow modifiers
-				enemy:AddNewModifier(self.caster, self.ability, self.modifier_stun, {duration = self.stun_duration})
-				enemy:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = self.slow_duration})				
-			end
-		end
-	end
+function modifier_imba_rip_current_movement:IsMotionController()
+	return true
 end
+
+function modifier_imba_rip_current_movement:GetMotionControllerPriority()
+	return DOTA_MOTION_CONTROLLER_PRIORITY_HIGH
+end
+
+
+
+
 
 function modifier_imba_rip_current_movement:GetEffectName()
 	return "particles/hero/slardar/slardar_foward_propel.vpcf"

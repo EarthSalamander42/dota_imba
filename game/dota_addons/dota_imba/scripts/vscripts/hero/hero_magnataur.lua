@@ -644,7 +644,7 @@ end
 
 imba_magnataur_skewer = imba_magnataur_skewer or class({})
 LinkLuaModifier("modifier_imba_skewer_motion_controller", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_skewer_motion_controller_target", "hero/hero_magnataur", LUA_MODIFIER_MOTION_HORIZONTAL)
+LinkLuaModifier("modifier_imba_skewer_motion_controller_target", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_skewer_slow", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_skewer_entangle", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 
