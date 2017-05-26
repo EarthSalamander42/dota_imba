@@ -639,13 +639,6 @@ function GameMode:OrderFilter( keys )
 	if keys.order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
 		local ability = EntIndexToHScript(keys.entindex_ability)
 		
-		-- Magnataur Skewer handler
-		if unit:HasModifier("modifier_imba_skewer_motion_controller") then
-			if ability:GetAbilityName() == "imba_magnataur_skewer" then
-				unit:FindModifierByName("modifier_imba_skewer_motion_controller").begged_for_pardon = true
-			end
-		end
-		
 		-- Kunkka Torrent cast-handling
 		if ability:GetAbilityName() == "imba_kunkka_torrent" then
 			local range = ability.BaseClass.GetCastRange(ability,ability:GetCursorPosition(),unit) + GetCastRangeIncrease(unit)

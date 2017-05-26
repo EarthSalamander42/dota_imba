@@ -9673,10 +9673,11 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2155"
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"custom/imba_echo_sabre"
 		"FightRecapLevel"				"1"
+		"ScriptFile"					"items/item_echo_sabre.lua"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -9727,168 +9728,32 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bat_reduction"			"-80"
+				"movement_slow"			"100"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"movement_slow"			"-100"
+				"attack_speed_slow"		"100"
 			}
 			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"attack_speed_slow"		"-100"
-			}
-			"09"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"slow_duration"			"0.7"
 			}
-			"10"
+			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"max_hits"				"2"
 			}
-			"11"
+			"10"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"ranged_cooldown"		"6.0"
 			}
-		}
-
-		"OnUnequip"
-		{
-			"RunScript"
+			"11"
 			{
-				"ScriptFile"			"items/item_echo_sabre.lua"
-				"Function"				"EchoSabreUnequip"
-
-				"modifier_multihit"		"modifier_item_imba_echo_sabre_double_hit"
-				"modifier_slow_applier"	"modifier_item_imba_echo_sabre_slow_applier"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_echo_sabre"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsPurgable"			"0"
-				"IsBuff"				"1"
-
-				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_intellect"
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_strength"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed"
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
-					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%bonus_mana_regen"
-				}
-			}
-
-			"modifier_item_imba_echo_sabre_unique"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsPurgable"			"0"
-				"IsBuff"				"1"
-
-				"OnAttackStart"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_echo_sabre.lua"
-						"Function"			"EchoSabreStart"
-
-						"modifier_double"	"modifier_item_imba_echo_sabre_double_hit"
-						"modifier_applier"	"modifier_item_imba_echo_sabre_slow_applier"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"internal/util.lua"
-						"Function"			"IllusionPassiveRemover"
-
-						"modifier"			"modifier_item_imba_echo_sabre_unique"
-					}
-				}
-			}
-
-			"modifier_item_imba_echo_sabre_double_hit"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsPurgable"			"0"
-				"IsBuff"				"1"
-
-				"Duration"				"2.5"
-
-				"OnAttackStart"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_echo_sabre.lua"
-						"Function"			"EchoSabreStartHit"
-
-						"modifier_applier"	"modifier_item_imba_echo_sabre_slow_applier"
-						"modifier_double"	"modifier_item_imba_echo_sabre_double_hit"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_echo_sabre.lua"
-						"Function"			"EchoSabreEnd"
-					}
-				}
-			}
-
-			"modifier_item_imba_echo_sabre_slow_applier"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsPurgable"			"0"
-				"IsBuff"				"1"
-
-				"Duration"				"1.5"
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_echo_sabre.lua"
-						"Function"			"EchoSabreFinishHit"
-
-						"modifier_applier"	"modifier_item_imba_echo_sabre_slow_applier"
-						"modifier_slow"		"modifier_item_imba_echo_sabre_slow"
-					}
-				}
-			}
-
-			"modifier_item_imba_echo_sabre_slow"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsPurgable"			"1"
-				"IsDebuff"				"1"
-
-				"TextureName"			"custom/imba_echo_sabre"
-
-				"Duration"				"%slow_duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed_slow"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movement_slow"
-				}
+				"var_type"				"FIELD_INTEGER"
+				"attack_speed_buff"		"490"
 			}
 		}
 	}
@@ -9928,10 +9793,11 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2157"
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"custom/imba_reverb_rapier"
 		"FightRecapLevel"				"1"
+		"ScriptFile"					"items/item_echo_sabre.lua"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -9982,168 +9848,32 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bat_reduction"			"-90"
+				"movement_slow"			"-100"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"movement_slow"			"-100"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
 				"attack_speed_slow"		"-100"
 			}
-			"09"
+			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"slow_duration"			"0.7"
 			}
-			"10"
+			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"max_hits"				"3"
 			}
-			"11"
+			"10"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"ranged_cooldown"		"6.0"
 			}
-		}
-
-		"OnUnequip"
-		{
-			"RunScript"
+			"11"
 			{
-				"ScriptFile"			"items/item_echo_sabre.lua"
-				"Function"				"EchoSabreUnequip"
-
-				"modifier_multihit"		"modifier_item_imba_reverb_rapier_quadra_hit"
-				"modifier_slow_applier"	"modifier_item_imba_reverb_rapier_slow_applier"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_reverb_rapier"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsPurgable"			"0"
-				"IsBuff"				"1"
-
-				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_intellect"
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_strength"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed"
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
-					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%bonus_mana_regen"
-				}
-			}
-
-			"modifier_item_imba_reverb_rapier_unique"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsPurgable"			"0"
-				"IsBuff"				"1"
-
-				"OnAttackStart"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_echo_sabre.lua"
-						"Function"			"ReverbRapierStart"
-
-						"modifier_double"	"modifier_item_imba_reverb_rapier_quadra_hit"
-						"modifier_applier"	"modifier_item_imba_reverb_rapier_slow_applier"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"internal/util.lua"
-						"Function"			"IllusionPassiveRemover"
-
-						"modifier"			"modifier_item_imba_reverb_rapier_unique"
-					}
-				}
-			}
-
-			"modifier_item_imba_reverb_rapier_quadra_hit"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsPurgable"			"0"
-				"IsBuff"				"1"
-
-				"Duration"				"2.5"
-
-				"OnAttackStart"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_echo_sabre.lua"
-						"Function"			"EchoSabreStartHit"
-
-						"modifier_double"	"modifier_item_imba_reverb_rapier_quadra_hit"
-						"modifier_applier"	"modifier_item_imba_reverb_rapier_slow_applier"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_echo_sabre.lua"
-						"Function"			"EchoSabreEnd"
-					}
-				}
-			}
-
-			"modifier_item_imba_reverb_rapier_slow_applier"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsPurgable"			"0"
-				"IsBuff"				"1"
-
-				"Duration"				"1.5"
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_echo_sabre.lua"
-						"Function"			"EchoSabreFinishHit"
-
-						"modifier_applier"	"modifier_item_imba_reverb_rapier_slow_applier"
-						"modifier_slow"		"modifier_item_imba_reverb_rapier_slow"
-					}
-				}
-			}
-
-			"modifier_item_imba_reverb_rapier_slow"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsPurgable"			"1"
-				"IsDebuff"				"1"
-
-				"TextureName"			"custom/imba_reverb_rapier"
-
-				"Duration"				"%slow_duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed_slow"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movement_slow"
-				}
+				"var_type"				"FIELD_INTEGER"
+				"attack_speed_buff"		"720"
 			}
 		}
 	}
