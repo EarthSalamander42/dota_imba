@@ -703,7 +703,7 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 		return nil
 	end
 	local omnislash_modifier = caster:AddNewModifier(caster, self, "modifier_imba_omni_slash_caster", {})
-
+	self:SetActivated(false)
 	PlayerResource:SetCameraTarget(caster:GetPlayerID(), caster)
 
 	FindClearSpaceForUnit(caster, target:GetAbsOrigin() + RandomVector(128), false)
@@ -778,6 +778,7 @@ function modifier_imba_omni_slash_caster:BounceAndSlaughter( )
 			break
 		end
 	else
+		self.ability:SetActivated(true)
 		self:Destroy()
 	end
 end
