@@ -940,6 +940,9 @@ function modifier_imba_skewer_motion_controller:EndSkewer()
 		end
 		ability.begged_for_pardon = nil
 
+		-- Find a clear space to stand on
+		caster:SetUnitOnClearGround()
+
 		-- Enough with the skewer for today.
 		self:Destroy()
 	end
@@ -969,7 +972,8 @@ function modifier_imba_skewer_motion_controller_target:OnIntervalThink()
 end
 
 function modifier_imba_skewer_motion_controller_target:OnDestroy()
-	return false
+	-- Find a clear space to stand on
+	caster:SetUnitOnClearGround()
 end
 
 function modifier_imba_skewer_motion_controller_target:RemoveOnDeath()
