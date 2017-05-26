@@ -191,13 +191,18 @@ function OnTalentChoiceUpdated(table_name, key, value){
 
         var bol_to_animate_btn = true;
         if(IsImbaTalentWindowVisible()){
-            //Update UI
-            PopulateIMBATalentWindow();
 
             //Ensure that player is still selecting the same unit that was updated
             var currentShownUnitID = Players.GetLocalPlayerPortraitUnit();
             var talentWindow = $.GetContextPanel();
             if(currentShownUnitID == talentWindow.GetAttributeInt(ATTRIBUTE_UNIT_ID, -1)){
+
+                //Update UI only if it is the currently shown unit
+                if(key == "hero_talent_choice_"+currentShownUnitID){
+                    //Update UI
+                    PopulateIMBATalentWindow();
+                }
+
                 if(Entities.GetAbilityPoints(currentShownUnitID) <= 1 || //Note that this is <= 1 because it takes time for server to update the abilityPoints
                     !CanHeroUpgradeAnyTalents(currentShownUnitID)){
                     //Close window if hero no longer has ability points
@@ -627,6 +632,7 @@ function OpenImbaTalentWindow(bol_open){
             talentWindow.SetAttributeInt(ATTRIBUTE_UNIT_ID, -1);
             talentWindow.RemoveClass(OPEN_TALENT_WINDOW_CLASS);
             imbaBtnPanel.RemoveClass("selected");
+            PreviewImbaTalentWindow(false);
         }
 
         talentWindow.RemoveClass("preview");
