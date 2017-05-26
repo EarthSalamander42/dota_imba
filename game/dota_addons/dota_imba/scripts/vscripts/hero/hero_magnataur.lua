@@ -825,14 +825,16 @@ function modifier_imba_skewer_motion_controller:HorizontalMotion( unit, time )
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, self.skewer_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, 0, false)
 		for _,enemy in ipairs(enemies) do
 			if not enemy:HasModifier("modifier_imba_skewer_motion_controller_target") then
-				enemy:SetAbsOrigin( caster:GetAbsOrigin() + self.direction * self.horned_distance )
+				local set_point = caster:GetAbsOrigin() + self.direction * self.horned_distance
+				enemy:SetAbsOrigin(Vector(set_point.x, set_point.y, GetGroundPosition(set_point, enemy).z))
 				enemy:AddNewModifier(caster, ability, "modifier_imba_skewer_motion_controller_target", {direction_x = self.direction.x, direction_y = self.direction.y, direction_z = self.direction.z, speed = self.speed})
 			end
 		end
 
 		-- Move the caster while the distance traveled is less than the original distance upon cast
 		if (self.traveled < self.distance) and caster:IsAlive() and not ability.begged_for_pardon then
-			caster:SetAbsOrigin(caster:GetAbsOrigin() + self.direction * self.speed)
+			local set_point =  caster:GetAbsOrigin() + self.direction * self.speed
+			caster:SetAbsOrigin(Vector(set_point.x, set_point.y, GetGroundPosition(set_point, caster).z))
 			-- Calculate the new travel distance
 			self.traveled = self.traveled + self.speed
 
@@ -1000,7 +1002,8 @@ function modifier_imba_skewer_motion_controller_target:HorizontalMotion( unit, t
 
 		-- Move the target while caster has motion-controller
 		if caster:HasModifier("modifier_imba_skewer_motion_controller") and caster:IsAlive() then
-			unit:SetAbsOrigin(unit:GetAbsOrigin() + self.direction * self.speed)
+			local set_point = unit:GetAbsOrigin() + self.direction * self.speed
+			unit:SetAbsOrigin(Vector(set_point.x, set_point.y, GetGroundPosition(set_point, unit).z))
 		else
 			-- Remove the motion controller once the caster lost the motion-controller
 			self:Destroy()
