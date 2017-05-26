@@ -1087,6 +1087,11 @@ function modifier_imba_riki_tricks_of_the_trade_secondary:OnIntervalThink()
 					EmitSoundOn(backstab_sound, unit)
 					ApplyDamage({victim = unit, attacker = caster, damage = caster:GetAgility() * agility_damage_multiplier, damage_type = backstab_ability:GetAbilityDamageType()})
 				end
+
+				local caster = self:GetParent()
+				local aps = caster:GetAttacksPerSecond()
+				local multiplier = self:GetAbility():GetSpecialValueFor("scepter_attack_speed_mult")
+				self:StartIntervalThink(1/aps/multiplier)
 				
 				return
 			end
