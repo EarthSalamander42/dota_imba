@@ -200,7 +200,7 @@ function item_imba_bloodthorn:OnSpellStart()
 
 		-- If the target possesses a ready Linken's Sphere, do nothing
 		if target:GetTeam() ~= caster:GetTeam() then
-			if target:TriggerSpellAbsorb(ability) then
+			if target:TriggerSpellAbsorb(self) then
 				return nil
 			end
 		end
