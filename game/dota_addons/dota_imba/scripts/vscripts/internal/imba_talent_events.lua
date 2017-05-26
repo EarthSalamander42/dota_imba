@@ -223,6 +223,10 @@ function HandlePlayerUpgradeImbaTalent(unused, kv)
                             return
                         else
                             modifier = hero:AddNewModifier(hero, nil, modifier_talent_name, {})
+                            if modifier == nil then
+                                print("Talent: new modifier handler nil")
+                                return
+                            end
                             modifier:SetStackCount(1+(level-5)/5)
                             modifier:ForceRefresh() -- Refresh for modifier to update values (for server side. Client side will receive it as onCreated())
                         end
