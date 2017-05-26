@@ -1,4 +1,5 @@
 
+local delayed_add_talents_list = {}
 
 local function PopulateGenericImbaTalentTableValues()
     -- Allow client access to IMBA_GENERIC_TALENT_LIST (javascript access)
@@ -224,11 +225,19 @@ function HandlePlayerUpgradeImbaTalent(unused, kv)
                         else
                             modifier = hero:AddNewModifier(hero, nil, modifier_talent_name, {})
                             if modifier == nil then
-                                print("Talent: new modifier handler nil")
-                                return
+                                -- Add to delayed list (you cannot add modifiers to dead heroes)
+                                local existing_list = delayed_add_talents_list[heroID]
+                                if existing_list == nil then
+                                    existing_list = {}
+                                end
+
+                                existing_list[modifier_talent_name] = level
+
+                                delayed_add_talents_list[heroID] = existing_list
+                            else
+                                modifier:SetStackCount(1+(level-5)/5)
+                                modifier:ForceRefresh() -- Refresh for modifier to update values (for server side. Client side will receive it as onCreated())
                             end
-                            modifier:SetStackCount(1+(level-5)/5)
-                            modifier:ForceRefresh() -- Refresh for modifier to update values (for server side. Client side will receive it as onCreated())
                         end
                     else
                         -- Ability talent (upgrade ability level)
@@ -272,4 +281,18 @@ function InitPlayerHeroImbaTalents()
 
     -- Register for event when user select a talent to upgrade
     CustomGameEventManager:RegisterListener("upgrade_imba_talent", HandlePlayerUpgradeImbaTalent)
+end
+
+function AddMissingGenericTalent(hero)
+
+    local heroID = hero:GetEntityIndex()
+    local existing_list = delayed_add_talents_list[heroID]
+    if existing_list then
+        for modifier_talent_name,level in pairs(existing_list) do
+            local modifier = hero:AddNewModifier(hero, nil, modifier_talent_name, {})
+            modifier:SetStackCount(1+(level-5)/5)
+            modifier:ForceRefresh() -- Refresh for modifier to update values (for server side. Client side will receive it as onCreated())
+        end
+        delayed_add_talents_list[heroID] = nil
+    end
 end
