@@ -197,7 +197,7 @@ end
 -------------------------------------------
 modifier_imba_echo_rapier_haste = modifier_imba_echo_rapier_haste or class({})
 function modifier_imba_echo_rapier_haste:IsDebuff() return false end
-function modifier_imba_echo_rapier_haste:IsHidden() return false end
+function modifier_imba_echo_rapier_haste:IsHidden() return true end
 function modifier_imba_echo_rapier_haste:IsPurgable() return false end
 function modifier_imba_echo_rapier_haste:IsPurgeException() return false end
 function modifier_imba_echo_rapier_haste:IsStunDebuff() return false end
