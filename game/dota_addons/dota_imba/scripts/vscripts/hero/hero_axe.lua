@@ -509,7 +509,7 @@ MergeTables(LinkedModifiers,{
 })
 -- Hidden Modifiers:
 MergeTables(LinkedModifiers,{
-	["modifier_imba_culling_blade_motion"] = LUA_MODIFIER_MOTION_BOTH,
+	["modifier_imba_culling_blade_motion"] = LUA_MODIFIER_MOTION_NONE,
 })
 imba_axe_culling_blade = imba_axe_culling_blade or class({})
 
@@ -709,18 +709,16 @@ function modifier_imba_culling_blade_motion:IsPurgable() return false end
 function modifier_imba_culling_blade_motion:IsDebuff() return false end
 function modifier_imba_culling_blade_motion:RemoveOnDeath() return false end
 function modifier_imba_culling_blade_motion:IgnoreTenacity() return true end
+function modifier_imba_culling_blade_motion:IsMotionController() return true end
+function modifier_imba_culling_blade_motion:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_HIGH end
+
 
 function modifier_imba_culling_blade_motion:OnCreated(kv)
-  self.axe_minimum_height_above_lowest = 500
-  self.axe_minimum_height_above_highest = 100
-  self.axe_acceleration_z = 4000
-  self.axe_max_horizontal_acceleration = 3000
-
 	if IsServer() then
-		if self:ApplyHorizontalMotionController() == false or self:ApplyVerticalMotionController() == false then 
-			self:Destroy()
-			return
-		end
+    self.axe_minimum_height_above_lowest = 500
+    self.axe_minimum_height_above_highest = 100
+    self.axe_acceleration_z = 4000
+    self.axe_max_horizontal_acceleration = 3000		
 
     self.vStartPosition = GetGroundPosition( self:GetParent():GetOrigin(), self:GetParent() )
 		self.flCurrentTimeHoriz = 0.0
@@ -744,10 +742,27 @@ function modifier_imba_culling_blade_motion:OnCreated(kv)
 
 		self.vHorizontalVelocity = ( self.vLastKnownTargetPos - self.vStartPosition ) / self.flPredictedTotalTime
 		self.vHorizontalVelocity.z = 0.0
+
+    self.frametime = FrameTime()
+    self:StartIntervalThink(self.frametime)
 	end
 end
 
-function modifier_imba_culling_blade_motion:UpdateHorizontalMotion( me, dt )
+function modifier_imba_culling_blade_motion:OnIntervalThink()
+    -- Check motion controllers
+    if not self:CheckMotionControllers() then
+        self:Destroy()
+        return nil
+    end
+
+    -- Horizontal motion
+    self:HorizontalMotion(self:GetParent(), self.frametime)
+
+    -- Vertical motion
+    self:VerticalMotion(self:GetParent(), self.frametime)
+end
+
+function modifier_imba_culling_blade_motion:HorizontalMotion( me, dt )
 	if IsServer() then
 		self.flCurrentTimeHoriz = math.min( self.flCurrentTimeHoriz + dt, self.flPredictedTotalTime )
 		local t = self.flCurrentTimeHoriz / self.flPredictedTotalTime
@@ -769,7 +784,7 @@ function modifier_imba_culling_blade_motion:UpdateHorizontalMotion( me, dt )
 	end
 end
 
-function modifier_imba_culling_blade_motion:UpdateVerticalMotion( me, dt )
+function modifier_imba_culling_blade_motion:VerticalMotion( me, dt )
 	if IsServer() then
     if not self:GetParent():IsAlive() then
         self:GetParent():InterruptMotionControllers(true)
@@ -791,11 +806,15 @@ function modifier_imba_culling_blade_motion:UpdateVerticalMotion( me, dt )
 
 		me:SetOrigin( vNewPos )
 		if bLanded == true then
-			self:GetParent():RemoveHorizontalMotionController( self )
-			self:GetParent():RemoveVerticalMotionController( self )
-			self:SetDuration(0.15,true)
+			self:Destroy()
 		end
 	end
+end
+
+function modifier_imba_culling_blade_motion:OnDestroy()
+    if IsServer() then
+      self:GetParent():SetUnitOnClearGround()
+    end
 end
 -------------------------------------------
 for LinkedModifier, MotionController in pairs(LinkedModifiers) do

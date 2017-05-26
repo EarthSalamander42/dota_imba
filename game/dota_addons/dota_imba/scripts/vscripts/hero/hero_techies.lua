@@ -963,9 +963,9 @@ function modifier_imba_statis_trap_disarmed:IsDebuff() return false end
 --        BLAST OFF!        --
 ------------------------------
 imba_techies_blast_off = class({})
-LinkLuaModifier("modifier_imba_blast_off", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_BOTH)
-LinkLuaModifier("modifier_imba_blast_off_movement", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_BOTH)
-LinkLuaModifier("modifier_imba_blast_off_silence", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_BOTH)
+LinkLuaModifier("modifier_imba_blast_off", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_blast_off_movement", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_blast_off_silence", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_techies_blast_off:IsHiddenWhenStolen()
     return false
@@ -1200,22 +1200,35 @@ function modifier_imba_blast_off_movement:OnCreated()
                 self.time_elapsed = 0
                 self.current_height = 0                               
 
-                -- Execute forced movement
-                if self:ApplyHorizontalMotionController() == false or self:ApplyVerticalMotionController() == false then 
-                    self:Destroy()
-                end        
+                self.frametime = FrameTime()
+                self:StartIntervalThink(self.frametime)     
             end            
         end)        
     end
 end
 
+function modifier_imba_blast_off_movement:OnIntervalThink()
+    -- Check motion controllers
+    if not self:CheckMotionControllers() then
+        self:Destroy()
+        return nil
+    end
+
+    -- Vertical motion
+    self:VerticalMotion(self.parent, self.frametime)
+
+    -- Horizontal motion
+    self:HorizontalMotion(self.parent, self.frametime)
+end
+
 function modifier_imba_blast_off_movement:IsHidden() return true end
 function modifier_imba_blast_off_movement:IsPurgable() return false end
-function modifier_imba_blast_off_movement:RemoveOnDeath() return false end
 function modifier_imba_blast_off_movement:IsDebuff() return false end
 function modifier_imba_blast_off_movement:IgnoreTenacity() return true end
+function modifier_imba_blast_off_movement:IsMotionController() return true end
+function modifier_imba_blast_off_movement:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
-function modifier_imba_blast_off_movement:UpdateVerticalMotion(me, dt)
+function modifier_imba_blast_off_movement:VerticalMotion(me, dt)
     if IsServer() then        
         -- Calculate height as a parabula
         local t = self.time_elapsed / self.jump_duration
@@ -1229,13 +1242,8 @@ function modifier_imba_blast_off_movement:UpdateVerticalMotion(me, dt)
     end
 end
 
-function modifier_imba_blast_off_movement:UpdateHorizontalMotion(me, dt)
-    if IsServer() then
-        -- Check if the parent is still alive. Otherwise, destroy self
-        if not self.parent:IsAlive() then
-            self.parent:InterruptMotionControllers(true)
-            self:Destroy()
-        end
+function modifier_imba_blast_off_movement:HorizontalMotion(me, dt)
+    if IsServer() then        
 
         -- Check if we're still jumping
         if self.time_elapsed < self.jump_duration then
@@ -1243,14 +1251,19 @@ function modifier_imba_blast_off_movement:UpdateHorizontalMotion(me, dt)
             local new_location = self.parent:GetAbsOrigin() + self.direction * self.velocity * dt
             self.parent:SetAbsOrigin(new_location)            
         else
-            self.parent:InterruptMotionControllers(true)                    
-            self:Destroy()
+            self:BlastOffLanded()            
         end
     end
 end
 
-function modifier_imba_blast_off_movement:OnHorizontalMotionInterrupted()
+function modifier_imba_blast_off_movement:BlastOffLanded()
     if IsServer() then
+        if self.blast_off_finished then
+            return nil
+        end
+
+        self.blast_off_finished = true
+
         -- Play explosion sound
         EmitSoundOn(self.sound_suicide, self.parent)
 
@@ -1343,6 +1356,14 @@ function modifier_imba_blast_off_movement:OnHorizontalMotionInterrupted()
                 end
             end            
         end
+
+        self:Destroy()
+    end
+end
+
+function modifier_imba_blast_off_movement:OnDestroy()
+    if IsServer() then
+        self.parent:SetUnitOnClearGround()
     end
 end
 
