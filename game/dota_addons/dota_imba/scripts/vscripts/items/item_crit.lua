@@ -89,7 +89,8 @@ function modifier_item_imba_greater_crit_buff:DeclareFunctions()
 end
 
 function modifier_item_imba_greater_crit_buff:GetModifierPreAttack_CriticalStrike()	
-	if IsServer() then
+	if IsServer() then		
+
 		-- Find how many Daedaluses we have for calculating crits
 		local crit_modifiers = self.caster:FindAllModifiersByName("modifier_item_imba_greater_crit")
 
@@ -116,6 +117,12 @@ end
 function modifier_item_imba_greater_crit_buff:OnAttackLanded( params )
 	if IsServer() then
 		if params.attacker == self:GetParent() then
+
+			-- If the target is a building, do nothing
+			if params.target:IsBuilding() then
+				return nil
+			end
+
 			if not self.crit_succeeded then
 				local stacks = self:GetStackCount()
 				local crit_modifiers = self.caster:FindAllModifiersByName("modifier_item_imba_greater_crit")
