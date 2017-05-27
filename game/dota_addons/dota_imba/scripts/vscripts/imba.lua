@@ -514,6 +514,15 @@ function GameMode:OrderFilter( keys )
 	end
 	
 	------------------------------------------------------------------------------------
+	-- Prevent Buyback during reincarnation
+	------------------------------------------------------------------------------------
+	if keys.order_type == DOTA_UNIT_ORDER_BUYBACK then
+		if unit:IsReincarnating() then
+			return false
+		end
+	end
+	
+	------------------------------------------------------------------------------------
 	-- Witch Doctor Death Ward handler
 	------------------------------------------------------------------------------------
 	if unit:HasModifier("modifier_imba_death_ward") then
@@ -938,15 +947,16 @@ function GameMode:DamageFilter( keys )
 				if scythe_modifier then
 					scythe_caster = scythe_modifier:GetCaster()
 				end
-				if scythe_caster and attacker ~= scythe_caster then
+				if scythe_caster then
 					keys.damage = 0
 
 					-- Find the Reaper's Scythe ability
-					local ability = caster:FindAbilityByName("imba_necrolyte_reapers_scythe")
+					local ability = scythe_caster:FindAbilityByName("imba_necrolyte_reapers_scythe")
 					if not ability then return nil end
-
+					local mod = victim:AddNewModifier(scythe_caster, ability, "modifier_imba_reapers_scythe_respawn", {})
+					scythe_modifier:Destroy()
 					-- Attempt to kill the target, crediting it to the caster of Reaper's Scythe
-					ApplyDamage({attacker = caster, victim = target, ability = ability, damage = target:GetHealth(), damage_type = DAMAGE_TYPE_PURE})
+					ApplyDamage({attacker = scythe_caster, victim = victim, ability = ability, damage = victim:GetHealth() + 10, damage_type = DAMAGE_TYPE_PURE, damage_flag = DOTA_DAMAGE_FLAG_NO_DAMAGE_MULTIPLIERS + DOTA_DAMAGE_FLAG_BYPASSES_BLOCK})
 				end
 			end
 		end		

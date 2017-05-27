@@ -117,6 +117,7 @@ function TrueKill(caster, target, ability)
 	target:RemoveModifierByName("modifier_item_vanguard_unique")
 	target:RemoveModifierByName("modifier_item_imba_initiate_robe_stacks")
 	target:RemoveModifierByName("modifier_imba_cheese_death_prevention")
+	target:RemoveModifierByName("modifier_imba_reincarnation_wraith_form")
 
 	-- Kills the target
 	target:Kill(ability, caster)
@@ -657,8 +658,8 @@ function CDOTA_BaseNPC:GetRespawnTimeModifier()
 
 	-- Fetch respawn time modifications from modifiers
 	for _, parent_modifier in pairs(self:FindAllModifiers()) do
-		if parent_modifier.GetModifierStackingRespawnTime then
-			respawn_modifier = respawn_modifier + parent_modifier:GetModifierStackingRespawnTime()
+		if parent_modifier.RespawnTimeStacking then
+			respawn_modifier = respawn_modifier + parent_modifier:RespawnTimeStacking()
 		end
 	end
 
@@ -681,6 +682,25 @@ function CDOTA_BaseNPC:GetRespawnTimeModifier()
 
 	-- Return current respawn time modifier
 	return respawn_modifier
+end
+
+function CDOTA_BaseNPC:GetRespawnTimeModifier_Pct()
+
+	-- If this is not a hero, do nothing
+	local multiplicator_pct = 100
+	if not self:IsRealHero() then
+		return multiplicator_pct
+	end
+
+	-- Fetch respawn time modifications from modifiers
+	for _, parent_modifier in pairs(self:FindAllModifiers()) do
+		if parent_modifier.RespawnTimeStacking_Pct then
+			multiplicator_pct = 100 - (100 - multiplicator_pct) * (100 - parent_modifier:RespawnTimeStacking_Pct()) * 0.01
+		end
+	end
+	
+	-- Return current respawn time modifier
+	return multiplicator_pct
 end
 
 -- Calculate physical damage post reduction
