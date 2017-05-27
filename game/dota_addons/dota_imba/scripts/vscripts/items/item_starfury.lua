@@ -17,6 +17,11 @@ function Starfury( keys )
 	local range = ability:GetLevelSpecialValueFor("range", ability_level)
 	local projectile_speed = ability:GetLevelSpecialValueFor("projectile_speed", ability_level)
 
+	-- If the attacker is an illusion, do nothing
+	if caster:IsIllusion() then
+		return nil
+	end
+
 	-- Roll for proc chance
 	if RandomInt(1, 100) <= proc_chance then
 
