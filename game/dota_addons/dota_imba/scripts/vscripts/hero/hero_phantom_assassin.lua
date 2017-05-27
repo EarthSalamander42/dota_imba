@@ -195,7 +195,6 @@ end
 function imba_phantom_assassin_stifling_dagger:OnProjectileHit( target, location )
 
     local caster = self:GetCaster()                                                                                 
-	local response_stifling_dagger = "phantom_assassin_phass_ability_stiflingdagger_0"..math.random(1,4)
 
 	if not target then
 		return nil
