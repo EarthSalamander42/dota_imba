@@ -925,7 +925,7 @@ function imba_clinkz_death_pact:OnSpellStart()
     local ability = self
     local target = self:GetCursorTarget()
     local cast_response = "clinkz_clinkz_ability_pact_0"..math.random(1, 6)
-    local sound_cast = "sounds/weapons/hero/clinkz/death_pact_cast.vsnd"
+    local sound_cast = "Hero_Clinkz.DeathPact.Cast"
     local particle_pact = "particles/units/heroes/hero_clinkz/clinkz_death_pact.vpcf"
     local modifier_pact = "modifier_imba_death_pact_buff"
     local modifier_stack_creep = "modifier_imba_death_pact_stack_creep"
