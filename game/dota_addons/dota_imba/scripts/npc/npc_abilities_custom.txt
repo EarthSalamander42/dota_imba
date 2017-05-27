@@ -8315,7 +8315,13 @@
 			{
 				"var_type"     				"FIELD_INTEGER"
 				"increased_mass_pull_pct" 	"7"
-			}																	
+			}		
+
+			"11"
+			{
+				"var_type"     				"FIELD_INTEGER"
+				"additional_attacks_split"	"3"
+			}																		
 		}
 	}
 
