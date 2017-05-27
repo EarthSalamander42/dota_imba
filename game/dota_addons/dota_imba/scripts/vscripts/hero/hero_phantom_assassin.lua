@@ -195,16 +195,14 @@ end
 function imba_phantom_assassin_stifling_dagger:OnProjectileHit( target, location )
 
     local caster = self:GetCaster()                                                                                 
-	local response_stifling_dagger = "phantom_assassin_phass_ability_stiflingdagger_0"..math.random(1,4)
 
 	if not target then
 		return nil
 	end
 
 	-- With 20 percentage play random stifling dagger response
-	if RollPercentage(20) then
-		caster:EmitSound(response_stifling_dagger)
-	end
+	local responses = {"phantom_assassin_phass_ability_stiflingdagger_01","phantom_assassin_phass_ability_stiflingdagger_02","phantom_assassin_phass_ability_stiflingdagger_03","phantom_assassin_phass_ability_stiflingdagger_04"}
+	caster:EmitCasterSound("npc_dota_hero_phantom_assassin",responses, 20, DOTA_CAST_SOUND_FLAG_NONE, 20,"stifling_dagger")
 
 	-- If the target possesses a ready Linken's Sphere, do nothing else
 	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
@@ -581,7 +579,6 @@ end
 
 function modifier_imba_blur:OnIntervalThink()
   if IsServer() then
-	local responses_blur = "phantom_assassin_phass_ability_blur_0"..math.random(1,3)
 
 	-- Find nearby enemies
 	local nearby_enemies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.caster:GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
@@ -599,10 +596,11 @@ function modifier_imba_blur:OnIntervalThink()
 
 		-- Make mortred not transparent (wtf firetoad)
 		self.caster:RemoveModifierByName(self.modifier_blur_transparent)
-		
-		if RollPercentage(10) then
-			self.caster:EmitSound(responses_blur)
-		end
+		local responses = {"phantom_assassin_phass_ability_blur_01",
+			"phantom_assassin_phass_ability_blur_02",
+			"phantom_assassin_phass_ability_blur_03"
+		}
+		self.caster:EmitCasterSound("npc_dota_hero_phantom_assassin",responses, 10, DOTA_CAST_SOUND_FLAG_NONE, 50,"blur")
 	end
   end
 end
@@ -856,6 +854,12 @@ function modifier_imba_coup_de_grace:GetModifierPreAttack_CriticalStrike(keys)
 			ParticleManager:ReleaseParticleIndex(coup_pfx)
 			
 			StartSoundEvent("Hero_PhantomAssassin.CoupDeGrace", target)
+			local responses = {"phantom_assassin_phass_ability_coupdegrace_01",
+				"phantom_assassin_phass_ability_coupdegrace_02",
+				"phantom_assassin_phass_ability_coupdegrace_03",
+				"phantom_assassin_phass_ability_coupdegrace_04"
+			}
+			self.caster:EmitCasterSound("npc_dota_hero_phantom_assassin",responses, 50, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, 20,"coup_de_grace")
 
 			--TALENT: +8 sec Coup de Grace bonus damage duration			
 			crit_duration = crit_duration + self.caster:FindTalentValue("special_bonus_imba_phantom_assassin_7")			
