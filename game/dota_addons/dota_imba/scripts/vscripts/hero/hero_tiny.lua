@@ -602,6 +602,14 @@ function modifier_tiny_toss_scepter_bounce:RemoveOnDeath()
 	return false
 end
 
+function modifier_tiny_toss_scepter_bounce:IsMotionController()
+	return true
+end
+
+function modifier_tiny_toss_scepter_bounce:GetMotionControllerPriority()
+	return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM
+end
+
 --------------------------------------------------------------------------------
 
 function modifier_tiny_toss_scepter_bounce:OnCreated( kv )
@@ -621,6 +629,8 @@ function modifier_tiny_toss_scepter_bounce:OnCreated( kv )
 		self.bounce_duration = self:GetAbility():GetSpecialValueFor("scepter_bounce_duration")
 		self.time = 0
 		self.toss_z = 0
+		self.frametime = FrameTime()
+		self:StartIntervalThink(FrameTime())
 	end
 end
 
@@ -667,7 +677,20 @@ function modifier_tiny_toss_scepter_bounce:CheckState()
 	return state
 end
 
-function modifier_tiny_toss_scepter_bounce:UpdateVerticalMotion( me, dt )
+function modifier_tiny_toss_scepter_bounce:OnIntervalThink()
+	if IsServer() then
+		-- Check for motion controllers
+		if not self:CheckMotionControllers() then
+			self:Destroy()
+			return nil
+		end
+
+		-- Vertical motion
+		self:VerticalMotion(self.parent, self.frametime)
+	end
+end
+
+function modifier_tiny_toss_scepter_bounce:VerticalMotion( me, dt )
 	if IsServer() then		
 
 		if self.time < self.bounce_duration then
@@ -699,6 +722,7 @@ function modifier_tiny_toss_scepter_bounce:OnRemoved()
 		for _,enemy in pairs(enemies) do
 			ApplyDamage({victim = enemy, attacker = self.caster, damage = damage, damage_type = self:GetAbility():GetAbilityDamageType(), ability = self:GetAbility()})
 		end
+		self:GetParent():SetUnitOnClearGround()
 	end
 end
 
