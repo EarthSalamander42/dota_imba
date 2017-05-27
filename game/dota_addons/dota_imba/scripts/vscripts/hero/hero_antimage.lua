@@ -364,25 +364,25 @@ function modifier_imba_spell_shield_buff_passive:DeclareFunctions()
 end
 
 function modifier_imba_spell_shield_buff_passive:OnCreated()
+	self.magic_resistance = self:GetAbility():GetSpecialValueFor("magic_resistance")
+
 	if IsServer() then
-		self.duration = self:GetAbility():GetSpecialValueFor("active_duration")
-		self.magic_resistance = self:GetAbility():GetSpecialValueFor("magic_resistance")
+		self.duration = self:GetAbility():GetSpecialValueFor("active_duration")		
 		self:GetParent().tOldSpells = {}
         self:StartIntervalThink(FrameTime())
 	end
 end
 
 function modifier_imba_spell_shield_buff_passive:OnRefresh()
+	self.magic_resistance = self:GetAbility():GetSpecialValueFor("magic_resistance")
+
 	if IsServer() then
-		self.duration = self:GetAbility():GetSpecialValueFor("active_duration")
-		self.magic_resistance = self:GetAbility():GetSpecialValueFor("magic_resistance")
+		self.duration = self:GetAbility():GetSpecialValueFor("active_duration")		
 	end
 end
 
-function modifier_imba_spell_shield_buff_passive:GetModifierMagicalResistanceBonus(params)
-	if IsServer() then
-		return self.magic_resistance
-	end
+function modifier_imba_spell_shield_buff_passive:GetModifierMagicalResistanceBonus(params)	
+	return self.magic_resistance	
 end
 
 function modifier_imba_spell_shield_buff_passive:GetReflectSpell( params )

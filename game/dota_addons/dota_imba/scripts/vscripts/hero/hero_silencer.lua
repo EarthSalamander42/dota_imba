@@ -139,14 +139,28 @@ function modifier_imba_arcane_curse_debuff:DeclareFunctions()
 end
 
 function modifier_imba_arcane_curse_debuff:OnAbilityExecuted( params )
-	if IsServer() then
+	if IsServer() then		
 		if params.ability then
+			print(params.ability:GetName())
 			if ( not params.ability:IsItem() ) and ( params.unit == self.parent ) then
 				-- Only extend duration of Toggle abilities when they are turned on
 				-- OnAbilityExecuted is ran before the toggle completes, so 'true' = we are about to turn it off				
 				if params.ability:IsToggle() and params.ability:GetToggleState() then
 					return
 				end
+
+				-- List of abilities that shouldn't get triggered by Arcane Curse
+				local uneffected_spells = {"invoker_quas",
+										   "invoker_wex",
+										   "invoker_exort"}			
+
+				-- If the ability is one of those spells that should be ignored, do nothing
+				for _, spell in pairs(uneffected_spells) do
+					if params.ability:GetName() == spell then
+						return nil
+					end
+				end
+
 				self:SetDuration( self:GetRemainingTime() + self.penalty_duration, true )
 				self:IncrementStackCount()
 			end

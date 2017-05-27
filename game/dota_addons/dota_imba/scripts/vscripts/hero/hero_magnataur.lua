@@ -972,8 +972,11 @@ function modifier_imba_skewer_motion_controller_target:OnIntervalThink()
 end
 
 function modifier_imba_skewer_motion_controller_target:OnDestroy()
-	-- Find a clear space to stand on
-	caster:SetUnitOnClearGround()
+	if IsServer() then
+		local caster = self:GetCaster()
+		-- Find a clear space to stand on
+		caster:SetUnitOnClearGround()
+	end
 end
 
 function modifier_imba_skewer_motion_controller_target:RemoveOnDeath()

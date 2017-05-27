@@ -712,7 +712,8 @@ end
 function modifier_imba_shadow_walk_buff_invis:OnAbilityExecuted(keys)
 	if IsServer() then
 		local ability = keys.ability
-		local caster = keys.caster
+		local caster = keys.unit
+		PrintTable(keys)
 
 		-- Only apply when the shadow walk caster is the one casting an ability
 		if caster == self.caster then

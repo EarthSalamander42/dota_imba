@@ -368,7 +368,7 @@ function imba_crystal_maiden_frostbite:CastFilterResultTarget(target)
 		end
 			
 		-- Disable help
-		if target ~= nil and not target:IsOpposingTeam(caster:GetTeamNumber()) and PlayerResource:IsDisableHelpSetForPlayerID(targetID,casterID) then
+		if target ~= nil and targetID and not target:IsOpposingTeam(caster:GetTeamNumber()) and PlayerResource:IsDisableHelpSetForPlayerID(targetID,casterID) then
             return UF_FAIL_DISABLE_HELP
         end
 
@@ -618,6 +618,9 @@ function modifier_imba_crystal_maiden_brilliance_aura:GetModifierSpellAmplify_Pe
 		else
 			return self:GetAbility():GetSpecialValueFor("bonus_spellpower")
 		end
+	else
+
+		return 0
 	end
 end
 

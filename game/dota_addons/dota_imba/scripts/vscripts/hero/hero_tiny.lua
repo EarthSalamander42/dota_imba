@@ -354,7 +354,7 @@ function modifier_tiny_toss_movement:RemoveOnDeath()
 end
 
 function modifier_tiny_toss_movement:IsHidden()
-	return false
+	return true
 end
 
 function modifier_tiny_toss_movement:IgnoreTenacity()
@@ -447,7 +447,7 @@ function modifier_tiny_toss_movement:TossLand()
 		-- Destroy trees at the target point
 		GridNav:DestroyTreesAroundPoint(self.vLastKnownTargetPos, radius, true)
 
-		local victims = FindUnitsInRadius(caster:GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, 1, false)
+		local victims = FindUnitsInRadius(caster:GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING, 0, 1, false)
 		for _, victim in pairs(victims) do
 			local damage = self:GetAbility():GetSpecialValueFor("toss_damage")
 			if victim == self:GetParent() then
@@ -471,6 +471,8 @@ function modifier_tiny_toss_movement:TossLand()
 		if caster:HasScepter() and self:GetParent():IsAlive() and self:GetParent() ~= caster then
 			self:GetParent():AddNewModifier(caster, self:GetAbility(), "modifier_tiny_toss_scepter_bounce", {})
 		end
+
+		self:GetParent():SetUnitOnClearGround()
 	end
 end
 

@@ -913,6 +913,13 @@ function modifier_imba_greevils_greed_handler:CheckState()
     }
 end
 
+
+
+modifier_imba_goblins_greed_mark = modifier_imba_goblins_greed_mark or class({})
+
+function modifier_imba_goblins_greed_mark:IsHidden() return false end
+function modifier_imba_goblins_greed_mark:IsPurgable() return false end
+
 ----------------------------------
 --          CHEMICAL RAGE       --
 ----------------------------------

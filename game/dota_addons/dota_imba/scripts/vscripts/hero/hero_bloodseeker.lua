@@ -109,6 +109,12 @@ if IsServer() then
 	end
 	function modifier_imba_bloodrage_buff_stats:OnDeath(params)
 		if (params.attacker == self:GetParent() or params.unit == self:GetParent()) and params.attacker ~= params.unit then
+
+			-- If the dead target is a building, do nothing
+			if params.unit:IsBuilding() then
+				return nil
+			end
+
 			local heal = params.unit:GetMaxHealth() * self:GetAbility():GetSpecialValueFor("health_bonus_pct") / 100
 			SendOverheadEventMessage( self:GetCaster():GetOwner(), OVERHEAD_ALERT_HEAL , self:GetParent(), heal, self:GetCaster() )
 			params.attacker:Heal(heal, self:GetCaster())
