@@ -8862,12 +8862,13 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2180"
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityTextureName" 			"custom/imba_soul_of_truth"
 		"Model"							"models/props_gameplay/gem01.vmdl"
+		"ScriptFile"                    "items/item_soul_of_truth.lua"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -8916,70 +8917,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"duration_tooltip"		"6"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"ApplyModifier"
-			{
-				"ModifierName"			"modifier_item_imba_soul_of_truth"
-				"Target"				"CASTER"
-			}
-
-			"FireSound"
-			{
-				"EffectName"			"Item.DropGemWorld"
-				"Target"				"CASTER"
-			}
-
-			"SpendCharge" {}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_soul_of_truth"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"Duration"				"%duration"
-
-				"TextureName"			"custom/imba_soul_of_truth"
-
-				"OnCreated"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_item_gem_of_true_sight"
-						"Target"		"CASTER"
-						"Duration"		"%duration"
-					}
-				}
-
-				"OnDeath"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_item_gem_of_true_sight"
-						"Target"
-						{
-							"Center"  	"CASTER"
-							"Radius" 	"0"
-							"Teams" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-							"Types" 	"DOTA_UNIT_TARGET_HERO"
-							"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
-						}
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%armor"
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%health_regen"
-				}
 			}
 		}
 	}
