@@ -66,6 +66,16 @@ function imba_centaur_hoof_stomp:IsHiddenWhenStolen()
 	return false
 end
 
+function imba_centaur_hoof_stomp:GetCastRange(location, target)
+	local caster = self:GetCaster()
+	local base_range = self.BaseClass.GetCastRange(self, location, target)
+
+	-- #4 Talent: Radius increase for Hoof Stomp		
+	base_range = base_range + caster:FindTalentValue("special_bonus_imba_centaur_4")
+
+	return base_range
+end
+
 function imba_centaur_hoof_stomp:OnSpellStart()
 	if IsServer() then
 		-- Ability properties
@@ -88,7 +98,7 @@ function imba_centaur_hoof_stomp:OnSpellStart()
 		local pit_duration = ability:GetSpecialValueFor("pit_duration")	
 
 		-- #4 Talent: Radius increase for Hoof Stomp		
-		radius = radius + caster:FindTalentValue("special_bonus_imba_centaur_4")		
+		radius = radius + caster:FindTalentValue("special_bonus_imba_centaur_4")				
 
 		-- #5 Talent: Arena/stun duration increase		
 		stun_duration = stun_duration + caster:FindTalentValue("special_bonus_imba_centaur_5")
@@ -151,6 +161,7 @@ function imba_centaur_hoof_stomp:OnSpellStart()
 		-- Add arena particles for the duration
 		local particle_arena_fx = ParticleManager:CreateParticle(particle_arena, PATTACH_ABSORIGIN, caster)
 		ParticleManager:SetParticleControl(particle_arena_fx, 0, caster:GetAbsOrigin())
+		ParticleManager:SetParticleControl(particle_arena_fx, 1, Vector(radius+45, 1, 1))
 		ParticleManager:SetParticleControl(particle_arena_fx, 5, caster:GetAbsOrigin())
 		ParticleManager:SetParticleControl(particle_arena_fx, 6, caster:GetAbsOrigin())
 		ParticleManager:SetParticleControl(particle_arena_fx, 7, caster:GetAbsOrigin())
@@ -322,6 +333,9 @@ function modifier_imba_hoof_stomp_arena_debuff:OnCreated()
 	self.pit_dmg_reduction = self.ability:GetSpecialValueFor("pit_dmg_reduction")
 	self.radius = self.ability:GetSpecialValueFor("radius")
 	self.maximum_distance = self.ability:GetSpecialValueFor("maximum_distance")	
+
+	-- #4 Talent: Radius increase for Hoof Stomp		
+	self.radius = self.radius + self.caster:FindTalentValue("special_bonus_imba_centaur_4")	
 
 	-- Wait a game tick so indexing the arena center would complete, then start thinking.
 	if IsServer() then

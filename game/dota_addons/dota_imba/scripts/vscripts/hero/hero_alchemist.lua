@@ -49,6 +49,8 @@ function imba_alchemist_acid_spray:OnSpellStart()
     local cast_responses = {"alchemist_alch_ability_acid_01", "alchemist_alch_ability_acid_02", "alchemist_alch_ability_acid_03", "alchemist_alch_ability_acid_04", "alchemist_alch_ability_acid_05", "alchemist_alch_ability_acid_06", "alchemist_alch_ability_acid_07", "alchemist_alch_ability_acid_08", "alchemist_alch_ability_acid_09", "alchemist_alch_ability_acid_10", "alchemist_alch_ability_acid_11", "alchemist_alch_ability_acid_12"}
     EmitSoundOn(cast_responses[math.random(1, #cast_responses)], caster)
 
+    print(caster:GetAbsOrigin())
+
     local duration = ability:GetSpecialValueFor("duration")
     local thinker = CreateModifierThinker(caster, self, "modifier_imba_acid_spray_thinker", {duration = duration}, point, team_id, false)
     return true
@@ -748,7 +750,7 @@ function modifier_imba_goblins_greed_passive:OnCreated()
             ability.greevil_ability:SetLevel(1)            
             Timers:CreateTimer(0.1, function()
                 ability.greevil:MoveToNPC(caster)
-            end)            
+            end)                   
         end
     end
 end
@@ -870,35 +872,29 @@ function modifier_imba_greevils_greed_handler:OnCreated()
 end
 
 function modifier_imba_greevils_greed_handler:OnIntervalThink()
-    if IsServer() then        
-        -- If the owner (Alch) is dead, Golden Greevil's should return to base
-        if not self.owner:IsAlive() then            
-            local fountain
-            -- Find this team's fountain
-            if self.caster:GetTeamNumber() == DOTA_TEAM_GOODGUYS then
-                fountain = Entities:FindByName(nil, "ent_dota_fountain_good")
+    if IsServer() then                
+        -- If the greevil's target is dead, clear the target
+        if self.caster.target and not self.caster.target:IsAlive() then
+            self.caster.target = nil
+        end
 
-            elseif self.caster:GetTeamNumber() == DOTA_TEAM_BADGUYS then
-                fountain = Entities:FindByName(nil, "ent_dota_fountain_bad")
-            end
+        -- If the greevil does not have a target, go back to Alchemist, if he is alive.
+        if not self.caster.target then
+            if self.owner:IsAlive() then
+                self.caster:MoveToNPC(self.owner)
 
-            -- Send the Golden Greevil back to base
-            if fountain then
-                self.caster:MoveToNPC(fountain)
-            end
-
-            -- If the target died, casting fails
-            if self.caster.target then
-                self.caster.target = nil
-            end            
-        else
-            -- If Alch is alive and the Greevil has a target, Greevil should go to it
-            if self.caster.target then
-                self.caster:CastAbilityOnTarget(self.caster.target, self.ability, self.owner:GetPlayerID())                
+            -- If Alchemist is dead, send the greevil to the fountain
             else
-                -- If there is no target,  Golden Greevil's should follow Alch
-                self.caster:MoveToNPC(self.owner)                    
-            end            
+                -- Determine which fountain the greevil belongs to
+                local fountain_location
+                if self.caster:GetTeamNumber() == DOTA_TEAM_GOODGUYS then
+                    fountain_location = Vector(-6916, -6508, 512)
+                else
+                    fountain_location = Vector(7020, 6428, 520)
+                end    
+                                
+                self.caster:MoveToPosition(fountain_location)
+            end
         end
     end
 end

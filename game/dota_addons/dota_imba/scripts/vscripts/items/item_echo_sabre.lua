@@ -222,12 +222,12 @@ function modifier_imba_echo_rapier_haste:DeclareFunctions()
     local decFuns =
     {
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		MODIFIER_EVENT_ON_ATTACK_LANDED
+		MODIFIER_EVENT_ON_ATTACK
     }
     return decFuns
 end
 
-function modifier_imba_echo_rapier_haste:OnAttackLanded(keys)
+function modifier_imba_echo_rapier_haste:OnAttack(keys)
 	if self.parent == keys.attacker then
 		keys.target:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_echo_rapier_debuff_slow", {duration = self.slow_duration})
 

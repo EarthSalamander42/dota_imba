@@ -192,7 +192,7 @@
 	"Dota_Tooltip_Talent_special_bonus_imba_centaur_3_title"					"Triple Edged"
 	"Dota_Tooltip_Talent_special_bonus_imba_centaur_3_Description"				"Increases Double Edge's effect radius by 110. <br><br><i>War is an art and perfection is a key to success. Centaur is now capable of swing his mighty axe to reach further than ever.</i>"
 	"Dota_Tooltip_Talent_special_bonus_imba_centaur_4_title"					"Thunderhoof"
-	"Dota_Tooltip_Talent_special_bonus_imba_centaur_4_Description"				"Increases the radius of Hoof Stomp by 75. <br><br><i>Focusing his strength on this move, Centaur is capable of applying the power of a thunderclap into his Hoof Stomp.</i>"
+	"Dota_Tooltip_Talent_special_bonus_imba_centaur_4_Description"				"Increases the radius of Hoof Stomp by 85. <br><br><i>Focusing his strength on this move, Centaur is capable of applying the power of a thunderclap into his Hoof Stomp.</i>"
 	"Dota_Tooltip_Talent_special_bonus_imba_centaur_5_title"					"Knock Out"
 	"Dota_Tooltip_Talent_special_bonus_imba_centaur_5_Description"				"Increases the duration of Hoof Stomp's stun and arena effects by an additional second. <br><br><i>The great shock from the immense power stored in Centaur's legs cause his enemies to become unable to act.</i>"
 	"Dota_Tooltip_Talent_special_bonus_imba_centaur_6_title"					"Counter Leadership"

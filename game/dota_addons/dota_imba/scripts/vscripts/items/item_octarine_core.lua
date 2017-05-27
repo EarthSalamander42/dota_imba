@@ -105,6 +105,7 @@ if modifier_imba_octarine_core_unique == nil then modifier_imba_octarine_core_un
 function modifier_imba_octarine_core_unique:IsHidden() return true end
 function modifier_imba_octarine_core_unique:IsDebuff() return false end
 function modifier_imba_octarine_core_unique:IsPurgable() return false end
+function modifier_imba_octarine_core_unique:RemoveOnDeath() return false end
 
 function modifier_imba_octarine_core_unique:DeclareFunctions()
 	local funcs = {	MODIFIER_EVENT_ON_SPENT_MANA }
