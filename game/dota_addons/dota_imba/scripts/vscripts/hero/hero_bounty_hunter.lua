@@ -537,6 +537,11 @@ function modifier_imba_jinada_buff_crit:OnAttackLanded(keys)
 			return nil
 		end
 
+		-- If the target is a building, do nothing
+		if target:IsBuilding() then
+			return nil
+		end
+
 		-- Only apply on caster attacking enemies
 		if self.parent == attacker and target:GetTeamNumber() ~= self.parent:GetTeamNumber() then
 
@@ -564,14 +569,19 @@ function modifier_imba_jinada_buff_crit:GetModifierPreAttack_CriticalStrike(keys
 	local target = keys.target
 
 	-- If this is an illusion, do nothing
-		if not self.parent:IsRealHero() then
-			return nil
-		end
+	if not self.parent:IsRealHero() then
+		return nil
+	end
 
 	-- If caster has break, do nothing
-		if attacker:PassivesDisabled() then
-			return nil
-		end
+	if attacker:PassivesDisabled() then
+		return nil
+	end
+
+	-- If the target is a building, do nothing
+	if target:IsBuilding() then
+		return nil
+	end
 
 	-- Prevent critical attacks on allies
 	if self.parent:GetTeamNumber() == target:GetTeamNumber() then
