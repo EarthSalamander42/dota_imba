@@ -431,8 +431,15 @@ if IsServer() then
 	StartSoundEvent("Hero_PhantomAssassin.Strike.Start", self:GetCaster())
 
 	-- Blink
-	FindClearSpaceForUnit(self.caster, self.target_pos, true)
-	self.caster:SetForwardVector( (self.target:GetAbsOrigin() - self.caster:GetAbsOrigin()):Normalized() )
+	local distance = (self.target:GetAbsOrigin() - self.caster:GetAbsOrigin()):Length2D()
+	local direction = (self.target:GetAbsOrigin() - self.caster:GetAbsOrigin()):Normalized()
+	local blink_point = self.caster:GetAbsOrigin() + direction * (distance - 128)
+	self.caster:SetAbsOrigin(blink_point)
+	Timers:CreateTimer(FrameTime(), function()
+		FindClearSpaceForUnit(self.caster, blink_point, true)
+	end)
+	
+	self.caster:SetForwardVector(direction)
 
 	-- Disjoint projectiles
 	ProjectileManager:ProjectileDodge(self.caster)
