@@ -810,28 +810,25 @@ function GameMode:OnEntityKilled( keys )
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Respawn timer setup
 	-------------------------------------------------------------------------------------------------
+	local reincarnation_death = false
+	if killed_unit:HasModifier("modifier_imba_reincarnation") then
+		local wk_mod = killed_unit:FindModifierByName("modifier_imba_reincarnation")
+		reincarnation_death = (wk_mod.can_die == false)
+	end
+	
 	if killed_unit:HasModifier("modifier_item_imba_aegis") then
 		killed_unit:SetTimeUntilRespawn(killed_unit:FindModifierByName("modifier_item_imba_aegis").reincarnate_time)
-	elseif killed_unit:HasModifier("modifier_imba_reincarnation") then
-		local wk_mod = killed_unit:FindModifierByName("modifier_imba_reincarnation")
-		local can_die = (wk_mod.can_die == false)
-		if can_die then
-			killed_unit:SetTimeUntilRespawn(killed_unit:FindModifierByName("modifier_imba_reincarnation").reincarnate_delay)
-		else
-			local hero_level = math.min(killed_unit:GetLevel(), 25)
-			local respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[hero_level]
-			respawn_time = respawn_time + killed_unit:GetRespawnTimeModifier()
-			killed_unit:SetTimeUntilRespawn(respawn_time)
-		end
-	elseif killed_unit:IsRealHero() and killed_unit:GetPlayerID() and (PlayerResource:IsImbaPlayer(killed_unit:GetPlayerID()) or GameRules:IsCheatMode()) then
+	elseif reincarnation_death then
+		killed_unit:SetTimeUntilRespawn(killed_unit:FindModifierByName("modifier_imba_reincarnation").reincarnate_delay)
+	elseif killed_unit:IsRealHero() and killed_unit:GetPlayerID() and (PlayerResource:IsImbaPlayer(killed_unit:GetPlayerID()) or (GameRules:IsCheatMode() == true) ) then
 		-- Calculate base respawn timer, capped at 60 seconds
 		local hero_level = math.min(killed_unit:GetLevel(), 25)
 		local respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[hero_level]
 		-- Calculate respawn timer reduction due to talents and modifiers
-		respawn_time = respawn_time + killed_unit:GetRespawnTimeModifier()
-
+		respawn_time = respawn_time * killed_unit:GetRespawnTimeModifier_Pct() * 0.01
+		respawn_time = math.max(respawn_time + killed_unit:GetRespawnTimeModifier(),0)
 		-- Fetch decreased respawn timer due to Bloodstone charges
-		if killed_unit.bloodstone_respawn_reduction then
+		if killed_unit.bloodstone_respawn_reduction and (respawn_time > 0) then
 			respawn_time = math.max( respawn_time - killed_unit.bloodstone_respawn_reduction, 0)
 		end
 		-- Multiply respawn timer by the lobby options

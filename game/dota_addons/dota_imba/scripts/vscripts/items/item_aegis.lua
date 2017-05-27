@@ -54,19 +54,6 @@ function modifier_item_imba_aegis:ReincarnateTime()
 	return self.reincarnate_time
 end
 
-
-function modifier_item_imba_aegis:OnDeath(params)
-    if IsServer() then
-        -- Only apply if the caster is the unit that died
-        if self:GetParent() == params.unit and params.reincarnate then                
-			-- Force respawning in the delay time, with no regards to the real respawn timer
-			Timers:CreateTimer(FrameTime(), function()
-				params.unit:SetTimeUntilRespawn(self.reincarnate_time)
-			end)
-        end
-    end
-end
-
 function modifier_item_imba_aegis:IsDebuff() return false end
 function modifier_item_imba_aegis:IsHidden() return false end
 function modifier_item_imba_aegis:IsPurgable() return false end

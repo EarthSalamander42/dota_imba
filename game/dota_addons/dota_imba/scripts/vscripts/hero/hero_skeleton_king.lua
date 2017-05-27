@@ -718,7 +718,7 @@ end
 --------------------------------
 --       REINCARNATION        --
 --------------------------------
-imba_wraith_king_reincarnation = class({})
+imba_wraith_king_reincarnation = imba_wraith_king_reincarnation or class({})
 LinkLuaModifier("modifier_imba_reincarnation", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_reincarnation_wraith_form_buff", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_reincarnation_wraith_form", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
@@ -752,7 +752,7 @@ end
 
 
 -- Reicarnation modifier
-modifier_imba_reincarnation = class({})
+modifier_imba_reincarnation = modifier_imba_reincarnation or class({})
 
 function modifier_imba_reincarnation:OnCreated()    
         -- Ability properties
@@ -761,12 +761,11 @@ function modifier_imba_reincarnation:OnCreated()
         self.particle_death = "particles/units/heroes/hero_skeletonking/wraith_king_reincarnate.vpcf"
         self.sound_death = "Hero_SkeletonKing.Reincarnate"
         self.sound_reincarnation = "Hero_SkeletonKing.Reincarnate.Stinger"
-        self.sound_be_back = "Hero_WraithKing.IllBeBack"        
+        self.sound_be_back = "Hero_WraithKing.IllBeBack"
         self.modifier_wraith = "modifier_imba_reincarnation_wraith_form"
 
         -- Ability specials
         self.reincarnate_delay = self.ability:GetSpecialValueFor("reincarnate_delay")
-        self.reincarnate_mana_cost = self.ability:GetSpecialValueFor("reincarnate_mana_cost")
         self.passive_respawn_haste = self.ability:GetSpecialValueFor("passive_respawn_haste")        
         self.slow_radius = self.ability:GetSpecialValueFor("slow_radius")
         self.slow_duration = self.ability:GetSpecialValueFor("slow_duration")
@@ -787,7 +786,7 @@ function modifier_imba_reincarnation:IsDebuff() return false end
 
 function modifier_imba_reincarnation:OnIntervalThink()
     -- If caster has sufficent mana and the ability is ready, apply
-    if (self.caster:GetMana() >= self.reincarnate_mana_cost) and (self.ability:IsCooldownReady()) and (not self.caster:HasModifier("modifier_item_imba_aegis")) then
+    if (self.caster:GetMana() >= self.ability:GetManaCost(-1)) and (self.ability:IsCooldownReady()) and (not self.caster:HasModifier("modifier_item_imba_aegis")) then
         self.can_die = false
     else
         self.can_die = true
@@ -817,7 +816,7 @@ function modifier_imba_reincarnation:ReincarnateTime()
     end
 end
 
-function modifier_imba_reincarnation:GetModifierStackingRespawnTime()
+function modifier_imba_reincarnation:RespawnTimeStacking()
     return self.passive_respawn_haste * (-1)
 end
 
@@ -931,14 +930,8 @@ function modifier_imba_reincarnation:IsAuraActiveOnDeath()
 end
 
 
-
-
-
-
-
-
 -- Wraith Form modifier (given from aura, not yet Wraith Form)
-modifier_imba_reincarnation_wraith_form_buff = class({})
+modifier_imba_reincarnation_wraith_form_buff = modifier_imba_reincarnation_wraith_form_buff or class({})
 
 function modifier_imba_reincarnation_wraith_form_buff:OnCreated()
     -- Ability properties
@@ -1027,6 +1020,12 @@ function modifier_imba_reincarnation_wraith_form_buff:OnTakeDamage(keys)
                 local wraith_form_modifier_handler = self.parent:AddNewModifier(self.caster, self.ability, self.modifier_wraith_form, {duration = self.scepter_wraith_form_duration})
                 if wraith_form_modifier_handler then
                     wraith_form_modifier_handler.original_killer = attacker
+					wraith_form_modifier_handler.ability_killer = keys.inflictor
+					if keys.inflictor then
+						if keys.inflictor:GetName() == "imba_necrolyte_reapers_scythe" then
+							keys.inflictor.ghost_death = true
+						end
+					end
                 end                
             end
         end
@@ -1035,7 +1034,7 @@ end
 
 
 -- Wraith Form (actual Wraith Form)
-modifier_imba_reincarnation_wraith_form = class({})
+modifier_imba_reincarnation_wraith_form = modifier_imba_reincarnation_wraith_form or class({})
 
 function modifier_imba_reincarnation_wraith_form:OnCreated()
     -- Ability properties
@@ -1084,7 +1083,7 @@ end
 function modifier_imba_reincarnation_wraith_form:OnDestroy()
     if IsServer() then
         -- Force kill the unit
-        TrueKill(self.original_killer, self.parent, self.caster)
+        TrueKill(self.original_killer, self.parent, self.ability_killer)
     end
 end
 
@@ -1099,7 +1098,7 @@ end
 --------------------------------
 --        KINGDOM COME        --
 --------------------------------
-imba_wraith_king_kingdom_come = class({})
+imba_wraith_king_kingdom_come = imba_wraith_king_kingdom_come or class({})
 LinkLuaModifier("modifier_imba_kingdom_come", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)    
 LinkLuaModifier("modifier_imba_kingdom_come_slow", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_kingdom_come_stun", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
