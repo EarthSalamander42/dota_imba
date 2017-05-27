@@ -508,7 +508,7 @@ function imba_antimage_mana_void:OnSpellStart()
 		local target = self:GetCursorTarget()
 		local ability = self
 		local scepter = caster:HasScepter()
-		local modifier_ministun = "modifier_imba_mana_void_stunned"
+		local modifier_ministun = "modifier_mana_void_stunned"
 		
 		-- Parameters
 		local damage_per_mana = ability:GetSpecialValueFor("mana_void_damage_per_mana")
