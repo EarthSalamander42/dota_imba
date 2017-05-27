@@ -39,8 +39,7 @@ function modifier_imba_arcane_curse_debuff:OnCreated( kv )
 	self.tick_rate = self:GetAbility():GetSpecialValueFor("tick_rate")
 	self.curse_slow = self:GetAbility():GetSpecialValueFor("curse_slow")
 	self.curse_damage = self:GetAbility():GetSpecialValueFor("damage_per_second")
-	self.penalty_duration = self:GetAbility():GetSpecialValueFor("penalty_duration")
-	self.mana_burn = self:GetAbility():GetSpecialValueFor("burn_per_second")
+	self.penalty_duration = self:GetAbility():GetSpecialValueFor("penalty_duration")	
 	self.talent_learned = self.caster:HasTalent("special_bonus_imba_silencer_1")
 
 	if IsServer() then
@@ -89,13 +88,11 @@ function modifier_imba_arcane_curse_debuff:OnIntervalThink()
 		end
 
 		if ( not target:IsSilenced() ) or self.aghs_upgraded then
-			local damage_dealt = self.curse_damage * self.tick_rate
-			local mana_drained = self.mana_burn * self.tick_rate
+			local damage_dealt = self.curse_damage * self.tick_rate			
 			local stack_count = self:GetStackCount()
 
 			if stack_count then
-				damage_dealt = damage_dealt * (stack_count + 1)
-				mana_drained = mana_drained * (stack_count + 1)
+				damage_dealt = damage_dealt * (stack_count + 1)				
 			end
 
 			local damage_table = {
@@ -106,25 +103,19 @@ function modifier_imba_arcane_curse_debuff:OnIntervalThink()
 					ability = self:GetAbility()
 				}
 
-			ApplyDamage( damage_table )
+			local actual_Damage = ApplyDamage( damage_table )
 
-			-- Unfortunately, if we have the mana-drain-as-lifesteal talent, we'll need to make sure we don't heal more than the mana we drain
+			-- #1 Talent: Silencer heals from Arcane Curse damage
 			if self.talent_learned then
-				local enemy_mana = target:GetMana()
-				if enemy_mana > 0 then
-					if ( enemy_mana - mana_drained ) < 0 then
-						mana_drained = enemy_mana
-					end
-				else
-					mana_drained = 0
-				end
-			end
+				local heal_amount = actual_Damage * self.caster:FindTalentValue("special_bonus_imba_silencer_1") * 0.01
+				self.caster:Heal(heal_amount, self.caster)
 
-			target:ReduceMana(mana_drained)
-
-			if self.talent_learned then
-				self.caster:Heal(mana_drained, nil)
-			end
+				-- Show heal particles on the caster
+				local particle_lifesteal = "particles/generic_gameplay/generic_lifesteal.vpcf"
+				local particle_lifesteal_fx = ParticleManager:CreateParticle(particle_lifesteal, PATTACH_ABSORIGIN_FOLLOW, self.caster)
+				ParticleManager:SetParticleControl(particle_lifesteal_fx, 0, self.caster:GetAbsOrigin())
+				ParticleManager:ReleaseParticleIndex(particle_lifesteal_fx)
+			end			
 		end
 	end
 end
@@ -140,8 +131,7 @@ end
 
 function modifier_imba_arcane_curse_debuff:OnAbilityExecuted( params )
 	if IsServer() then		
-		if params.ability then
-			print(params.ability:GetName())
+		if params.ability then			
 			if ( not params.ability:IsItem() ) and ( params.unit == self.parent ) then
 				-- Only extend duration of Toggle abilities when they are turned on
 				-- OnAbilityExecuted is ran before the toggle completes, so 'true' = we are about to turn it off				

@@ -9141,7 +9141,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"					"0"
+		"AbilityCastRange"					"1200 1400 1600 1800 1800 1800 1800"
 		"AbilityCastPoint"					"0.5"
 		"AbilityCastAnimation"				"ACT_DOTA_CAST_ABILITY_2"
 
@@ -19325,11 +19325,7 @@
 				"var_type"			"FIELD_INTEGER"
 				"damage_per_second"	"14 22 30 38 42 46 50"
 			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"burn_per_second"	"7 11 15 19 21 23 25"
-			}
+			
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
@@ -20810,7 +20806,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"base_magnetic_radius"		"600 600 600 600 650 700 750"
+				"base_magnetic_radius"		"300 300 300 300 350 400 450"
 				"LinkedSpecialBonus"		"special_bonus_imba_techies_3"
 			}
 
@@ -20823,7 +20819,7 @@
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"magnetic_stack_radius"		"100"
+				"magnetic_stack_radius"		"75"
 			}
 
 			"09"
@@ -32121,7 +32117,7 @@
 	//=================================================================================================================
 	// Silencer Talents
 	//=================================================================================================================
-	"special_bonus_imba_silencer_1" // Mana burned by Arcane Curse is now absorbed by Silencer as health
+	"special_bonus_imba_silencer_1" // Health drained by Arcane Curse is now absorbed by Silencer as health
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -32141,7 +32137,7 @@
 			"01"
 			{
 					"var_type"                  "FIELD_INTEGER"
-					"value"	                    "1"
+					"value"	                    "25"
 			}
 		}
 	}

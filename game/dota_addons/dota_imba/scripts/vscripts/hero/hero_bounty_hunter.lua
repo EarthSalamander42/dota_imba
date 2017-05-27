@@ -766,7 +766,7 @@ function modifier_imba_shadow_walk_buff_invis:GetAuraSearchTeam()
 end
 
 function modifier_imba_shadow_walk_buff_invis:GetAuraSearchType()
-	return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+	return DOTA_UNIT_TARGET_ALL + DOTA_UNIT_TARGET_CUSTOM + DOTA_UNIT_TARGET_TREE
 end
 
 function modifier_imba_shadow_walk_buff_invis:GetModifierAura()

@@ -39,9 +39,17 @@ function imba_axe_berserkers_call:OnSpellStart()
   -- find targets
   local enemies_in_radius = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
   for _,target in pairs(enemies_in_radius) do
-    target:SetForceAttackTarget(caster)
-    target:MoveToTargetToAttack(caster)
-    target:AddNewModifier(caster, self, "modifier_imba_berserkers_call_debuff_cmd", {duration = ability:GetSpecialValueFor("duration")})
+      if target:IsCreep() then
+          target:SetForceAttackTarget(caster)
+      else
+          local newOrder = {UnitIndex = target:entindex(), 
+                            OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET,
+                            TargetIndex = caster:entindex()} 
+
+          ExecuteOrderFromTable(newOrder)  
+      end      
+
+      target:AddNewModifier(caster, self, "modifier_imba_berserkers_call_debuff_cmd", {duration = ability:GetSpecialValueFor("duration")})
   end
 
   -- if enemies table is empty play random responses_zero_enemy
@@ -164,10 +172,6 @@ function modifier_imba_berserkers_call_debuff_cmd:CheckState()
   return state
 end
 
-function modifier_imba_berserkers_call_debuff_cmd:OnCreated()
-  return true
-end
-
 function modifier_imba_berserkers_call_debuff_cmd:DeclareFunctions()
   local funcs = {
     MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
@@ -175,18 +179,22 @@ function modifier_imba_berserkers_call_debuff_cmd:DeclareFunctions()
   return funcs
 end
 
-function modifier_imba_berserkers_call_debuff_cmd:OnDestroy()
-  if IsServer() then
-    self:GetParent():SetForceAttackTarget(nil)
-    return true
-  end
-end
-
 function modifier_imba_berserkers_call_debuff_cmd:GetModifierAttackSpeedBonus_Constant()
     local caster = self:GetCaster()
     local ability = self:GetAbility()
     self.speed_bonus = ability:GetSpecialValueFor("bonus_as") + caster:FindTalentValue("special_bonus_imba_axe_5")
     return self.speed_bonus
+end
+
+function modifier_imba_berserkers_call_debuff_cmd:OnDestroy()
+    if IsServer() then
+        local caster = self:GetCaster()
+        local parent = self:GetParent()
+
+        if parent:IsCreep() then
+            parent:SetForceAttackTarget(nil)
+        end
+    end
 end
 
 function modifier_imba_berserkers_call_debuff_cmd:GetStatusEffectName()
