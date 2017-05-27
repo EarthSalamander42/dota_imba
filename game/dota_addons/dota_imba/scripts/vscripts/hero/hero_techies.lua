@@ -364,6 +364,18 @@ function modifier_imba_proximity_mine:OnIntervalThink()
                     ParticleManager:SetParticleControl(particle_explosion_fx, 2, Vector(self.explosion_range, 1, 1))
                     ParticleManager:ReleaseParticleIndex(particle_explosion_fx)
 
+                    -- Look for nearby enemies
+                    enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
+                                              self.caster:GetAbsOrigin(),
+                                              nil,
+                                              self.explosion_range,
+                                              DOTA_UNIT_TARGET_TEAM_ENEMY,
+                                              DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING,
+                                              DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
+                                              FIND_ANY_ORDER,
+                                              false)
+
+                    print(#enemies, self.explosion_range)
                     -- Deal damage to nearby non-flying enemies
                     for _,enemy in pairs(enemies) do
 
