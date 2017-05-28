@@ -453,3 +453,63 @@
 		}
 	}
 }
+
+"Imba.Starfury"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"    "sounds/item/starfury.vsnd"
+						}
+					}
+					"volume"			{   "value"     "2.000000"  }
+					"memory_type"
+					{
+						"value"     "0"
+					}
+				}
+			}
+		}
+	}
+}
+
+"Imba.Shotgun"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"    "sounds/item/shotgun.vsnd"
+						}
+					}
+					"volume"			{   "value"     "3.000000"  }
+					"memory_type"
+					{
+						"value"     "0"
+					}
+				}
+			}
+		}
+	}
+}

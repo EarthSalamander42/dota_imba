@@ -2,60 +2,70 @@
 {
 	_class = "CParticleSystemDefinition"
 	m_bShouldHitboxesFallbackToRenderBounds = false
-	m_nMaxParticles = 4
+	m_nMaxParticles = 10
+	m_flConstantRadius = 60.0
+	m_ConstantColor = [ 80, 212, 201, 40 ]
+	m_flNoDrawTimeToGoToSleep = 999999.0
+	m_bShouldSort = false
 	m_Renderers = 
 	[
 		{
 			_class = "C_OP_RenderSprites"
+			VisibilityInputs = 
+			{
+				m_flInputMax = 0.25
+				m_flProxyRadius = 8.0
+				m_flCameraBias = -16.0
+			}
 			m_nSequenceCombineMode = "SEQUENCE_COMBINE_MODE_USE_SEQUENCE_0"
 			m_bAdditive = true
 			m_hTexture = resource:"materials/particle/particle_flares/particle_flare_001.vtex"
+			m_nOrientationControlPoint = 0
 		},
 	]
 	m_Operators = 
 	[
 		{
-			_class = "C_OP_BasicMovement"
-			m_Gravity = [ 0.0, 0.0, -200.0 ]
-		},
-		{
-			_class = "C_OP_InterpolateRadius"
-			m_flStartScale = 0.5
-			m_flEndScale = 3.0
-		},
-		{
 			_class = "C_OP_Decay"
 		},
 		{
+			_class = "C_OP_BasicMovement"
+		},
+		{
 			_class = "C_OP_FadeOutSimple"
-			m_flFadeOutTime = 1.0
+			m_flFadeOutTime = 0.75
+		},
+		{
+			_class = "C_OP_InheritFromParentParticles"
+			m_nFieldOutput = 0
+		},
+		{
+			_class = "C_OP_ColorInterpolate"
+			m_ColorFade = [ 255, 202, 197, 255 ]
 		},
 	]
 	m_Initializers = 
 	[
 		{
 			_class = "C_INIT_RandomLifeTime"
-			m_fLifetimeMin = 0.15
-			m_fLifetimeMax = 0.2
+			m_fLifetimeMax = 1.0
+			m_fLifetimeMin = 0.75
 		},
 		{
-			_class = "C_INIT_CreateWithinSphere"
-			m_LocalCoordinateSystemSpeedMax = [ 0.0, 0.0, 64.0 ]
-			m_LocalCoordinateSystemSpeedMin = [ 0.0, 0.0, 32.0 ]
-			m_fSpeedMax = 48.0
-			m_fSpeedMin = 24.0
-			m_nControlPointNumber = 3
-		},
-		{
-			_class = "C_INIT_RandomRadius"
-			m_flRadiusMax = 60.0
-			m_flRadiusMin = 40.0
+			_class = "C_INIT_RandomRotation"
 		},
 		{
 			_class = "C_INIT_RandomColor"
-			m_ColorMin = [ 0, 0, 255, 255 ]
-			m_ColorMax = [ 155, 155, 255, 255 ]
-			m_bDisableOperator = true
+			m_ColorMax = [ 241, 63, 44, 255 ]
+			m_ColorMin = [ 241, 197, 44, 255 ]
+		},
+		{
+			_class = "C_INIT_RandomAlpha"
+			m_nAlphaMax = 90
+			m_nAlphaMin = 70
+		},
+		{
+			_class = "C_INIT_CreateWithinSphere"
 		},
 		{
 			_class = "C_INIT_RemapCPtoVector"
@@ -69,7 +79,7 @@
 	[
 		{
 			_class = "C_OP_InstantaneousEmitter"
-			m_nParticlesToEmit = 3
+			m_nParticlesToEmit = 6
 		},
 	]
 	m_controlPointConfigurations = 
@@ -79,13 +89,6 @@
 			m_drivers = 
 			[
 				{
-					m_iAttachType = "PATTACH_WORLDORIGIN"
-					m_vecOffset = [ 0.0, 0.0, 0.0 ]
-					m_angOffset = [ null, null, null ]
-					m_entityName = "self"
-				},
-				{
-					m_iControlPoint = 3
 					m_iAttachType = "PATTACH_WORLDORIGIN"
 					m_vecOffset = [ 0.0, 0.0, 0.0 ]
 					m_angOffset = [ null, null, null ]

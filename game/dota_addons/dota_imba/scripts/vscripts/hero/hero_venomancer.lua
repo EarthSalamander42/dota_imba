@@ -414,7 +414,7 @@ function modifier_imba_poison_sting:OnAttack( params )
 	if IsServer() then
 		local caster = self:GetCaster()
 		if (caster == params.target) and (params.attacker.IsCreep or params.attacker.IsHero) then
-			if not params.target:IsTower() and caster:HasTalent("special_bonus_imba_venomancer_6") then
+			if not params.attacker:IsBuilding() and caster:HasTalent("special_bonus_imba_venomancer_6") then
 				local ability = self:GetAbility()
 				local duration = ability:GetSpecialValueFor("duration")
 				local mod = params.attacker:AddNewModifier(caster, ability, "modifier_imba_poison_sting_debuff", {duration = duration})

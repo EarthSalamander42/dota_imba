@@ -8524,9 +8524,14 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2177"
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE"
 		"AbilityTextureName" 			"custom/imba_shotgun"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"ScriptFile"					"items/item_starfury.lua"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -8534,7 +8539,20 @@
 		"ItemShopTags"					"damage;ias;agi"
 		"ItemQuality"					"common"
 		"ItemAliases"					"shotgun"
+		
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"4.0"
+		"AbilitySharedCooldown"			"starfury"
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"						"soundevents/imba_item_soundevents.vsndevts"
+			"particle"						"particles/item/starfury/starfury_projectile.vpcf"
+			"particle"						"particles/item/starfury/shotgun_eject_charlie.vpcf"
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -8542,95 +8560,34 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"15"
+				"var_type"						"FIELD_INTEGER"
+				"bonus_damage"					"15"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_as"				"15"
+				"var_type"						"FIELD_INTEGER"
+				"bonus_as"						"15"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_agi"				"28"
+				"var_type"						"FIELD_INTEGER"
+				"bonus_agi"						"28"
 			}
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"max_targets"			"1"
+				"var_type"						"FIELD_INTEGER"
+				"max_targets"					"1"
 			}
 			"05"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"proc_radius"			"500"
+				"var_type"						"FIELD_INTEGER"
+				"proc_radius"					"500"
 			}
 			"06"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"projectile_speed"		"1100"
-			}
-		}
-
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"				"1"
-			"RunScript"
-			{
-				"ScriptFile"			"items/item_shotgun.lua"
-				"Function"				"ShotgunHit"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_shotgun"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%bonus_as"
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"			"%bonus_damage"
-					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"				"%bonus_agi"
-				}
-			}
-
-			"modifier_item_imba_shotgun_unique"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_shotgun.lua"
-						"Function"				"Shotgun"
-
-						"particle_projectile"	"particles/item/starfury/starfury_projectile.vpcf"
-						"sound_shot"			"Hero_PhantomLancer.Doppelganger.Appear"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"internal/util.lua"
-						"Function"				"IllusionPassiveRemover"
-
-						"modifier"				"modifier_item_imba_shotgun_unique"
-					}
-				}
+				"var_type"						"FIELD_FLOAT"
+				"projectile_speed"				"1100"
 			}
 		}
 	}
@@ -8670,9 +8627,13 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2179"
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE"
 		"AbilityTextureName" 			"custom/imba_starfury"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"ScriptFile"					"items/item_starfury.lua"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -8680,7 +8641,19 @@
 		"ItemShopTags"					"damage;ias;agi"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"starfury"
+		
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"1.0"
+		"AbilitySharedCooldown"			"starfury"
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"						"soundevents/imba_item_soundevents.vsndevts"
+			"particle"						"particles/item/starfury/starfury_projectile.vpcf"
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -8730,126 +8703,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"dmg_reduction"			"-40"
-			}
-		}
-
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"				"1"
-			"RunScript"
-			{
-				"ScriptFile"			"items/item_starfury.lua"
-				"Function"				"StarfuryHit"
-
-				"modifier_dmg_penalty"	"modifier_imba_starfury_dmg_penalty"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_starfury"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%bonus_as"
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"			"%bonus_damage"
-					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"				"%bonus_agi"
-				}
-			}
-
-			"modifier_item_imba_starfury_unique"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_starfury.lua"
-						"Function"			"Starfury"
-
-						"sound_proc"		"Ability.StarfallImpact"
-						"sound_split"		"Hero_PhantomLancer.Doppelganger.Appear"
-						"particle_proc"		"particles/item/starfury/starfury_projectile.vpcf"
-						"modifier_dummy"	"modifier_item_imba_starfury_buff_dummy"
-						"modifier_buff"		"modifier_item_imba_starfury_buff"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"internal/util.lua"
-						"Function"				"IllusionPassiveRemover"
-
-						"modifier"				"modifier_item_imba_starfury_unique"
-					}
-				}
-			}
-
-			"modifier_item_imba_starfury_buff_dummy"
-			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsBuff"					"1"
-				"IsPurgable"				"1"
-
-				"TextureName"				"custom/imba_starfury"
-
-				"Duration"					"%proc_duration"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_starfury.lua"
-						"Function"			"StarfuryBuff"
-
-						"modifier_buff"		"modifier_item_imba_starfury_buff"
-					}
-				}
-			}
-
-			"modifier_item_imba_starfury_buff"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"1"
-
-				"Duration"					"%proc_duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"1"
-				}
-			}
-
-			"modifier_imba_starfury_dmg_penalty"
-			{
-				"Passive"						"0"
-				"IsPurgable"					"0"
-				"IsHidden"						"1"
-				"IsDebuff"						"1"
-
-				"Duration"						"0.01"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"	"%dmg_reduction"
-				}
+				"dmg_reduction"			"40"
 			}
 		}
 	}

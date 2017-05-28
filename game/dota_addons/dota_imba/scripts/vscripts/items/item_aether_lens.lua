@@ -6,30 +6,30 @@
 -------------------------------------------
 --			AETHER LENS
 -------------------------------------------
-LinkLuaModifier("modifier_imba_aether_lens", "items/item_aether_lens.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_aether_lens_passive", "items/item_aether_lens.lua", LUA_MODIFIER_MOTION_NONE)
 -------------------------------------------
 
 item_imba_aether_lens = item_imba_aether_lens or class({})
 -------------------------------------------
 function item_imba_aether_lens:GetIntrinsicModifierName()
-    return "modifier_imba_aether_lens"
+    return "modifier_imba_aether_lens_passive"
 end
 
 -------------------------------------------
-modifier_imba_aether_lens = modifier_imba_aether_lens or class({})
-function modifier_imba_aether_lens:IsDebuff() return false end
-function modifier_imba_aether_lens:IsHidden() return true end
-function modifier_imba_aether_lens:IsPermanent() return true end
-function modifier_imba_aether_lens:IsPurgable() return false end
-function modifier_imba_aether_lens:IsPurgeException() return false end
-function modifier_imba_aether_lens:IsStunDebuff() return false end
-function modifier_imba_aether_lens:RemoveOnDeath() return false end
-function modifier_imba_aether_lens:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
-function modifier_imba_aether_lens:OnDestroy()
+modifier_imba_aether_lens_passive = modifier_imba_aether_lens_passive or class({})
+function modifier_imba_aether_lens_passive:IsDebuff() return false end
+function modifier_imba_aether_lens_passive:IsHidden() return true end
+function modifier_imba_aether_lens_passive:IsPermanent() return true end
+function modifier_imba_aether_lens_passive:IsPurgable() return false end
+function modifier_imba_aether_lens_passive:IsPurgeException() return false end
+function modifier_imba_aether_lens_passive:IsStunDebuff() return false end
+function modifier_imba_aether_lens_passive:RemoveOnDeath() return false end
+function modifier_imba_aether_lens_passive:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+function modifier_imba_aether_lens_passive:OnDestroy()
 	self:CheckUnique(false)
 end
 
-function modifier_imba_aether_lens:OnCreated()
+function modifier_imba_aether_lens_passive:OnCreated()
 	local item = self:GetAbility()
 	self.parent = self:GetParent()
 	if self.parent:IsHero() and item then
@@ -41,7 +41,7 @@ function modifier_imba_aether_lens:OnCreated()
 	end
 end
 
-function modifier_imba_aether_lens:DeclareFunctions()
+function modifier_imba_aether_lens_passive:DeclareFunctions()
     local decFuns =
     {
 		MODIFIER_PROPERTY_CAST_RANGE_BONUS,
@@ -52,18 +52,18 @@ function modifier_imba_aether_lens:DeclareFunctions()
     return decFuns
 end
 
-function modifier_imba_aether_lens:GetModifierSpellAmplify_Percentage()
+function modifier_imba_aether_lens_passive:GetModifierSpellAmplify_Percentage()
 	return self:CheckUniqueValue(self.spell_power,{"modifier_imba_elder_staff","modifier_imba_nether_wand"})
 end
 
-function modifier_imba_aether_lens:GetModifierPercentageManaRegen()
+function modifier_imba_aether_lens_passive:GetModifierPercentageManaRegen()
 	return self.bonus_mana_regen
 end
 
-function modifier_imba_aether_lens:GetModifierManaBonus()
+function modifier_imba_aether_lens_passive:GetModifierManaBonus()
 	return self.bonus_mana
 end
 
-function modifier_imba_aether_lens:GetModifierCastRangeBonus()
+function modifier_imba_aether_lens_passive:GetModifierCastRangeBonus()
 	return self:CheckUniqueValue(self.cast_range_bonus, {"modifier_imba_elder_staff"})
 end
