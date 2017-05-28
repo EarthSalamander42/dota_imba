@@ -338,6 +338,10 @@ function modifier_imba_rip_current_movement:RipCurrentLand()
 	self:Destroy()
 end
 
+function modifier_imba_rip_current_movement:OnDestroy()
+	self.caster:SetUnitOnClearGround()
+end
+
 function modifier_imba_rip_current_movement:IsHidden()
 	return true
 end

@@ -354,7 +354,7 @@
 	"Dota_Tooltip_Talent_special_bonus_imba_lich_3_title"						"Far from the North"
 	"Dota_Tooltip_Talent_special_bonus_imba_lich_3_Description"					"Increases Chain Frost's bounce range by 175.<br><br><i>Lich calls Cold North Winds from far away, allowing him to inflict wrath of ice upon his enemies.</i>"
 	"Dota_Tooltip_Talent_special_bonus_imba_lich_4_title"						"Early Winter"
-	"Dota_Tooltip_Talent_special_bonus_imba_lich_4_Description"					"Decreases Mist Coil's cooldown by 4 seconds.<br><br><i>The Cold North Winds, now my only companion, guided me to my destination early. </i>"
+	"Dota_Tooltip_Talent_special_bonus_imba_lich_4_Description"					"Decreases Frost Nova's cooldown by 4 seconds.<br><br><i>The Cold North Winds, now my only companion, guided me to my destination early. </i>"
 	"Dota_Tooltip_Talent_special_bonus_imba_lich_5_title"						"Edge of Hypothermia"
 	"Dota_Tooltip_Talent_special_bonus_imba_lich_5_Description"					"Increases Cold Front's freeze duration by 1 second.<br><br><i>Blood runs cold, as cold as North itself.</i>"
 	"Dota_Tooltip_Talent_special_bonus_imba_lich_6_title"						"Ice Layer"
