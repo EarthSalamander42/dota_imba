@@ -15,6 +15,20 @@ function SetFlyoutScoreboardVisible( bVisible )
 	}
 }
 
+function HideDotaOriginalScoreboard(){
+    var rootUI = $.GetContextPanel();
+    while(rootUI.id != "Hud" && rootUI.GetParent() != null){
+        rootUI = rootUI.GetParent();
+    }
+
+    //Do not delete original scoreboard, it will cause unwanted crashes
+    var originalScoreboard = rootUI.FindChildTraverse("scoreboard");
+    var children = originalScoreboard.Children();
+    $.Each(children, function(child){
+        child.style.visibility = "collapse";
+    });
+}
+
 (function()
 {
 	if ( ScoreboardUpdater_InitializeScoreboard === null ) { $.Msg( "WARNING: This file requires shared_scoreboard_updater.js to be included." ); }
@@ -29,4 +43,6 @@ function SetFlyoutScoreboardVisible( bVisible )
 	SetFlyoutScoreboardVisible( false );
 
 	$.RegisterEventHandler( "DOTACustomUI_SetFlyoutScoreboardVisible", $.GetContextPanel(), SetFlyoutScoreboardVisible );
+
+    HideDotaOriginalScoreboard();
 })();
