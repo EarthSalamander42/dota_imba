@@ -1,4 +1,4 @@
-Dota_Tooltip_Talent_special_bonus_imba_skeleton_king_8_title"addon"
+"addon"
 {
 	"Unassigned"      								"未知队伍"
 	"Spectator"       								"观察者"
