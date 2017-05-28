@@ -1568,27 +1568,172 @@ function GameMode:InitGameMode()
 	-- Check out internals/gamemode to see/modify the exact code
 	GameMode:_InitGameMode()
 
-	-- Commands can be registered for debugging purposes or as functions that can be called by the custom Scaleform UI
-	Convars:RegisterCommand( "command_example", Dynamic_Wrap(GameMode, 'ExampleConsoleCommand'), "A console command example", FCVAR_CHEAT )
-
 	GameRules.HeroKV = LoadKeyValues("scripts/npc/npc_heroes_custom.txt")
 	GameRules.UnitKV = LoadKeyValues("scripts/npc/npc_units_custom.txt")
 
+	-- IMBA testbed command
+	Convars:RegisterCommand("imba_test", Dynamic_Wrap(GameMode, 'StartImbaTest'), "Spawns several units to help with testing", FCVAR_CHEAT)
+
+	-- Panorama event stuff
 	initScoreBoardEvents()
 	InitPlayerHeroImbaTalents();
 end
 
--- This is an example console command
-function GameMode:ExampleConsoleCommand()
-	print( '******* Example Console Command ***************' )
-	local cmdPlayer = Convars:GetCommandClient()
-	if cmdPlayer then
-		local playerID = cmdPlayer:GetPlayerID()
-		if playerID ~= nil and playerID ~= -1 then
-			-- Do something here for the player who called this command
-			PlayerResource:ReplaceHeroWith(playerID, "npc_dota_hero_viper", 1000, 1000)
+-- Starts the testbed if in tools mode
+function GameMode:StartImbaTest()
+
+	-- If not in tools mode, do nothing
+	if not IsInToolsMode() then
+		print("IMBA testbed is only available in tools mode.")
+		return nil
+	end
+
+	-- If the testbed was already initialized, do nothing
+	if IMBA_TESTBED_INITIALIZED then
+		print("Testbed already initialized.")
+		return nil
+	end
+
+	-- Define testbed zone reference point
+	local testbed_center = Vector(1500, -5000, 256)
+	if GetMapName() == "imba_arena" then
+		testbed_center = Vector(0, 0, 128)
+	end
+
+	-- Move any existing heroes to the testbed area, and grant them useful testing items
+	local player_heroes = HeroList:GetAllHeroes()
+	for _, hero in pairs(player_heroes) do
+		hero:SetAbsOrigin(testbed_center + Vector(-250, 0, 0))
+		hero:AddItemByName("item_imba_diffusal_blade_3")
+		hero:AddItemByName("item_manta")
+		hero:AddItemByName("item_imba_blink")
+		hero:AddItemByName("item_imba_silver_edge")
+		hero:AddItemByName("item_black_king_bar")
+		hero:AddItemByName("item_imba_heart")
+		hero:AddItemByName("item_imba_siege_cuirass")
+		hero:AddItemByName("item_imba_butterfly")
+		hero:AddItemByName("item_ultimate_scepter")
+		hero:AddExperience(100000, DOTA_ModifyXP_Unspecified, false, true)
+		PlayerResource:SetCameraTarget(0, hero)
+	end
+	Timers:CreateTimer(0.1, function()
+		PlayerResource:SetCameraTarget(0, nil)
+	end)
+	ResolveNPCPositions(testbed_center + Vector(-300, 0, 0), 128)
+
+	-- Spawn some high health allies for benefic spell testing
+	local dummy_hero
+	local dummy_ability
+	for i = 1, 3 do
+		dummy_hero = CreateUnitByName("npc_dota_hero_axe", testbed_center + Vector(-500, (i-2) * 300, 0), true, player_heroes[1], player_heroes[1], DOTA_TEAM_GOODGUYS)
+		dummy_hero:AddExperience(25000, DOTA_ModifyXP_Unspecified, false, true)
+		dummy_hero:SetControllableByPlayer(0, true)
+		dummy_hero:AddItemByName("item_imba_heart")
+		dummy_hero:AddItemByName("item_imba_heart")
+
+		-- Add specific items to each dummy hero
+		if i == 1 then
+			dummy_hero:AddItemByName("item_manta")
+			dummy_hero:AddItemByName("item_imba_diffusal_blade_3")
+		elseif i == 2 then
+			dummy_hero:AddItemByName("item_imba_silver_edge")
+			dummy_hero:AddItemByName("item_imba_necronomicon_5")
+		elseif i == 3 then
+			dummy_hero:AddItemByName("item_sphere")
+			dummy_hero:AddItemByName("item_black_king_bar")
 		end
 	end
 
-	print( '*********************************************' )
+	-- Spawn some high health enemies to attack/spam abilities on
+	for i = 1, 3 do
+		dummy_hero = CreateUnitByName("npc_dota_hero_axe", testbed_center + Vector(300, (i-2) * 300, 0), true, player_heroes[1], player_heroes[1], DOTA_TEAM_BADGUYS)
+		dummy_hero:AddExperience(25000, DOTA_ModifyXP_Unspecified, false, true)
+		dummy_hero:SetControllableByPlayer(0, true)
+		dummy_hero:AddItemByName("item_imba_heart")
+		dummy_hero:AddItemByName("item_imba_heart")
+
+		-- Add specific items to each dummy hero
+		if i == 1 then
+			dummy_hero:AddItemByName("item_manta")
+			dummy_hero:AddItemByName("item_imba_diffusal_blade_3")
+		elseif i == 2 then
+			dummy_hero:AddItemByName("item_imba_silver_edge")
+			dummy_hero:AddItemByName("item_imba_necronomicon_5")
+		elseif i == 3 then
+			dummy_hero:AddItemByName("item_sphere")
+			dummy_hero:AddItemByName("item_black_king_bar")
+		end
+	end
+
+	-- Spawn a rubick with spell steal leveled up
+	dummy_hero = CreateUnitByName("npc_dota_hero_rubick", testbed_center + Vector(600, 200, 0), true, player_heroes[1], player_heroes[1], DOTA_TEAM_BADGUYS)
+	dummy_hero:AddExperience(25000, DOTA_ModifyXP_Unspecified, false, true)
+	dummy_hero:SetControllableByPlayer(0, true)
+	dummy_hero:AddItemByName("item_imba_heart")
+	dummy_hero:AddItemByName("item_imba_heart")
+	dummy_ability = dummy_hero:FindAbilityByName("rubick_spell_steal")
+	if dummy_ability then
+		dummy_ability:SetLevel(6)
+	end
+
+	-- Spawn a pugna with nether ward leveled up and some CDR
+	dummy_hero = CreateUnitByName("npc_dota_hero_pugna", testbed_center + Vector(600, 0, 0), true, player_heroes[1], player_heroes[1], DOTA_TEAM_BADGUYS)
+	dummy_hero:AddExperience(25000, DOTA_ModifyXP_Unspecified, false, true)
+	dummy_hero:SetControllableByPlayer(0, true)
+	dummy_hero:AddItemByName("item_imba_heart")
+	dummy_hero:AddItemByName("item_imba_heart")
+	dummy_hero:AddItemByName("item_imba_triumvirate")
+	dummy_hero:AddItemByName("item_imba_octarine_core")
+	dummy_ability = dummy_hero:FindAbilityByName("imba_pugna_nether_ward")
+	if dummy_ability then
+		dummy_ability:SetLevel(7)
+	end
+
+	-- Spawn an antimage with a scepter and leveled up spell shield
+	dummy_hero = CreateUnitByName("npc_dota_hero_antimage", testbed_center + Vector(600, -200, 0), true, player_heroes[1], player_heroes[1], DOTA_TEAM_BADGUYS)
+	dummy_hero:AddExperience(25000, DOTA_ModifyXP_Unspecified, false, true)
+	dummy_hero:SetControllableByPlayer(0, true)
+	dummy_hero:AddItemByName("item_imba_heart")
+	dummy_hero:AddItemByName("item_imba_heart")
+	dummy_hero:AddItemByName("item_ultimate_scepter")
+	dummy_ability = dummy_hero:FindAbilityByName("imba_antimage_spell_shield")
+	if dummy_ability then
+		dummy_ability:SetLevel(7)
+	end
+
+	-- Spawn some assorted neutrals for reasons
+	neutrals_table = {}
+	neutrals_table[1] = {}
+	neutrals_table[2] = {}
+	neutrals_table[3] = {}
+	neutrals_table[4] = {}
+	neutrals_table[5] = {}
+	neutrals_table[6] = {}
+	neutrals_table[7] = {}
+	neutrals_table[8] = {}
+	neutrals_table[1].name = "npc_dota_neutral_big_thunder_lizard"
+	neutrals_table[1].position = Vector(-450, 800, 0)
+	neutrals_table[2].name = "npc_dota_neutral_granite_golem"
+	neutrals_table[2].position = Vector(-150, 800, 0)
+	neutrals_table[3].name = "npc_dota_neutral_black_dragon"
+	neutrals_table[3].position = Vector(150, 800, 0)
+	neutrals_table[4].name = "npc_dota_neutral_prowler_shaman"
+	neutrals_table[4].position = Vector(450, 800, 0)
+	neutrals_table[5].name = "npc_dota_neutral_satyr_hellcaller"
+	neutrals_table[5].position = Vector(-450, 600, 0)
+	neutrals_table[6].name = "npc_dota_neutral_mud_golem"
+	neutrals_table[6].position = Vector(-150, 600, 0)
+	neutrals_table[7].name = "npc_dota_neutral_enraged_wildkin"
+	neutrals_table[7].position = Vector(150, 600, 0)
+	neutrals_table[8].name = "npc_dota_neutral_centaur_khan"
+	neutrals_table[8].position = Vector(450, 600, 0)
+
+	for _, neutral in pairs(neutrals_table) do
+		dummy_hero = CreateUnitByName(neutral.name, testbed_center + neutral.position, true, player_heroes[1], player_heroes[1], DOTA_TEAM_NEUTRALS)
+		dummy_hero:SetControllableByPlayer(0, true)
+		dummy_hero:Hold()
+	end
+
+	-- Flag testbed as having been initialized
+	IMBA_TESTBED_INITIALIZED = true
 end
