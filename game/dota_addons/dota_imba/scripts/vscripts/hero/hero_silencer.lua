@@ -356,12 +356,13 @@ function modifier_imba_silencer_glaives_of_wisdom:OnAttackLanded(keys)
 end
 
 function modifier_imba_silencer_glaives_of_wisdom:OnOrder(keys)
-	local order_type = keys.order_type	
-
-	-- On any order apart from attacking target, clear the forced frost arrow variable.
-	if order_type ~= DOTA_UNIT_ORDER_ATTACK_TARGET then
-		self.ability.force_glaive = nil
-	end 
+	if keys.unit == self.caster then
+		local order_type = keys.order_type
+		-- On any order apart from attacking target, clear the forced frost arrow variable.
+		if order_type ~= DOTA_UNIT_ORDER_ATTACK_TARGET then
+			self.ability.force_glaive = nil
+		end
+	end
 end
 
 function SetGlaiveAttackProjectile(caster, is_glaive_attack)
