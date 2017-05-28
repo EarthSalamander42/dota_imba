@@ -632,10 +632,12 @@ function OpenImbaTalentWindow(bol_open){
             talentWindow.SetAttributeInt(ATTRIBUTE_UNIT_ID, -1);
             talentWindow.RemoveClass(OPEN_TALENT_WINDOW_CLASS);
             imbaBtnPanel.RemoveClass("selected");
-            PreviewImbaTalentWindow(false);
+
+            //Unfocus talentWindow
+            $.DispatchEvent("DropInputFocus", talentWindow);
         }
 
-        talentWindow.RemoveClass("preview");
+        PreviewImbaTalentWindow(false);
 
         ShowAllTextWhenTalentWindowVisibleAndAltIsDown();
     }
