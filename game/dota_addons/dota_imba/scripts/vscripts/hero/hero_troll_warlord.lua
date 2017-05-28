@@ -14,11 +14,12 @@ LinkLuaModifier("modifier_imba_berserkers_rage_ranged", "hero/hero_troll_warlord
 LinkLuaModifier("modifier_imba_berserkers_rage_slow", "hero/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_berserkers_rage_melee", "hero/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
 
-imba_troll_warlord_berserkers_rage = class({})
+imba_troll_warlord_berserkers_rage = imba_troll_warlord_berserkers_rage or class({})
 function imba_troll_warlord_berserkers_rage:IsHiddenWhenStolen() return false end
 function imba_troll_warlord_berserkers_rage:IsRefreshable() return true end
 function imba_troll_warlord_berserkers_rage:IsStealable() return false end
 function imba_troll_warlord_berserkers_rage:IsNetherWardStealable() return false end
+function imba_troll_warlord_berserkers_rage:ResetToggleOnRespawn() return true end
 -------------------------------------------
 
 -- Always have one of the buffs
@@ -32,6 +33,15 @@ function imba_troll_warlord_berserkers_rage:OnUpgrade()
 				caster:AddNewModifier(caster, self, "modifier_imba_berserkers_rage_ranged", {})
 			end
 		end
+	end
+end
+
+function imba_troll_warlord_berserkers_rage:OnOwnerSpawned()
+	if self.mode == 1 then
+		self:ToggleAbility()
+		self:ToggleAbility()
+		self:ToggleAbility()
+		-- Yeah, volvo.
 	end
 end
 
@@ -67,7 +77,7 @@ function imba_troll_warlord_berserkers_rage:GetAbilityTextureName()
 end
 
 -------------------------------------------
-modifier_imba_berserkers_rage_melee = class({})
+modifier_imba_berserkers_rage_melee = modifier_imba_berserkers_rage_melee or class({})
 function modifier_imba_berserkers_rage_melee:AllowIllusionDuplicate() return true end
 function modifier_imba_berserkers_rage_melee:IsDebuff() return false end
 function modifier_imba_berserkers_rage_melee:IsHidden() return true end
@@ -154,7 +164,7 @@ function modifier_imba_berserkers_rage_melee:GetModifierAttackRangeBonus()
 	return -350
 end
 -------------------------------------------
-modifier_imba_berserkers_rage_ranged = class({})
+modifier_imba_berserkers_rage_ranged = modifier_imba_berserkers_rage_ranged or class({})
 function modifier_imba_berserkers_rage_ranged:AllowIllusionDuplicate() return true end
 function modifier_imba_berserkers_rage_ranged:IsDebuff() return false end
 function modifier_imba_berserkers_rage_ranged:IsHidden() return true end
@@ -222,7 +232,7 @@ function modifier_imba_berserkers_rage_ranged:OnAttackLanded( params )
 end
 
 -------------------------------------------
-modifier_imba_berserkers_rage_slow = class({})
+modifier_imba_berserkers_rage_slow = modifier_imba_berserkers_rage_slow or class({})
 function modifier_imba_berserkers_rage_slow:IsDebuff() return true end
 function modifier_imba_berserkers_rage_slow:IsHidden() return false end
 function modifier_imba_berserkers_rage_slow:IsPurgable() return true end
@@ -251,7 +261,7 @@ end
 -------------------------------------------
 LinkLuaModifier("modifier_imba_whirling_axes_ranged", "hero/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
 
-imba_troll_warlord_whirling_axes_ranged = class({})
+imba_troll_warlord_whirling_axes_ranged = imba_troll_warlord_whirling_axes_ranged or class({})
 function imba_troll_warlord_whirling_axes_ranged:IsHiddenWhenStolen() return false end
 function imba_troll_warlord_whirling_axes_ranged:IsRefreshable() return true end
 function imba_troll_warlord_whirling_axes_ranged:IsStealable() return true end
@@ -372,7 +382,7 @@ function imba_troll_warlord_whirling_axes_ranged:OnProjectileHit_ExtraData(targe
 end
 
 -------------------------------------------
-modifier_imba_whirling_axes_ranged = class({})
+modifier_imba_whirling_axes_ranged = modifier_imba_whirling_axes_ranged or class({})
 function modifier_imba_whirling_axes_ranged:IsDebuff() return true end
 function modifier_imba_whirling_axes_ranged:IsHidden() return false end
 function modifier_imba_whirling_axes_ranged:IsPurgable() return true end
@@ -401,7 +411,7 @@ end
 -------------------------------------------
 LinkLuaModifier("modifier_imba_whirling_axes_melee", "hero/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
 
-imba_troll_warlord_whirling_axes_melee = class({})
+imba_troll_warlord_whirling_axes_melee = imba_troll_warlord_whirling_axes_melee or class({})
 function imba_troll_warlord_whirling_axes_melee:IsHiddenWhenStolen() return false end
 function imba_troll_warlord_whirling_axes_melee:IsRefreshable() return true end
 function imba_troll_warlord_whirling_axes_melee:IsStealable() return true end
@@ -513,7 +523,7 @@ function imba_troll_warlord_whirling_axes_melee:DoAxeStuff(index,range,caster_lo
 end
 
 -------------------------------------------
-modifier_imba_whirling_axes_melee = class({})
+modifier_imba_whirling_axes_melee = modifier_imba_whirling_axes_melee or class({})
 function modifier_imba_whirling_axes_melee:IsDebuff() return true end
 function modifier_imba_whirling_axes_melee:IsHidden() return false end
 function modifier_imba_whirling_axes_melee:IsPurgable() return true end
@@ -563,7 +573,7 @@ end
 LinkLuaModifier("modifier_imba_fervor", "hero/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_fervor_stacks", "hero/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
 
-imba_troll_warlord_fervor = class({})
+imba_troll_warlord_fervor = imba_troll_warlord_fervor or class({})
 function imba_troll_warlord_fervor:IsHiddenWhenStolen() return false end
 function imba_troll_warlord_fervor:IsRefreshable() return false end
 function imba_troll_warlord_fervor:IsStealable() return false end
@@ -588,7 +598,7 @@ function imba_troll_warlord_fervor:OnUpgrade()
 end
 
 -------------------------------------------
-modifier_imba_fervor = class({})
+modifier_imba_fervor = modifier_imba_fervor or class({})
 function modifier_imba_fervor:IsDebuff() return false end
 function modifier_imba_fervor:IsHidden() return true end
 function modifier_imba_fervor:IsPurgable() return false end
@@ -628,7 +638,7 @@ function modifier_imba_fervor:OnAttackStart(params)
 end
 
 -------------------------------------------
-modifier_imba_fervor_stacks = class({})
+modifier_imba_fervor_stacks = modifier_imba_fervor_stacks or class({})
 function modifier_imba_fervor_stacks:IsDebuff() return false end
 function modifier_imba_fervor_stacks:IsHidden() return false end
 function modifier_imba_fervor_stacks:IsPurgable() return false end
@@ -663,7 +673,7 @@ end
 -------------------------------------------
 LinkLuaModifier("modifier_imba_battle_trance", "hero/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
 
-imba_troll_warlord_battle_trance = class({})
+imba_troll_warlord_battle_trance = imba_troll_warlord_battle_trance or class({})
 function imba_troll_warlord_battle_trance:IsHiddenWhenStolen() return false end
 function imba_troll_warlord_battle_trance:IsRefreshable() return true end
 function imba_troll_warlord_battle_trance:IsStealable() return true end
@@ -697,7 +707,7 @@ function imba_troll_warlord_battle_trance:OnSpellStart()
 end
 
 -------------------------------------------
-modifier_imba_battle_trance = class({})
+modifier_imba_battle_trance = modifier_imba_battle_trance or class({})
 function modifier_imba_battle_trance:IsDebuff() return false end
 function modifier_imba_battle_trance:IsHidden() return false end
 function modifier_imba_battle_trance:IsPurgable() return false end

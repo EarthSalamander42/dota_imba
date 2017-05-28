@@ -194,8 +194,13 @@ function RoshanFury( keys )
 	-- Projectile geometry
 	local caster_pos = caster:GetAbsOrigin()
 	local target_pos = target:GetAbsOrigin()
-	local projectile_direction = (target_pos - caster_pos):Normalized()
-
+	
+	local projectile_direction
+	if caster_pos == target_pos then
+		projectile_direction = caster:GetForwardVector()
+	else
+		projectile_direction = (target_pos - caster_pos):Normalized()
+	end
 	-- Play sound
 	caster:EmitSound(sound_cast)
 

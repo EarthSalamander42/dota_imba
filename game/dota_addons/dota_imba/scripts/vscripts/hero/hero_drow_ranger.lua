@@ -212,12 +212,14 @@ function ApplyFrostAttack(modifier, target)
 end
 
 function modifier_imba_frost_arrows_thinker:OnOrder(keys)
-	local order_type = keys.order_type	
+	if keys.unit == self.caster then
+		local order_type = keys.order_type	
 
-	-- On any order apart from attacking target, clear the forced frost arrow variable.
-	if order_type ~= DOTA_UNIT_ORDER_ATTACK_TARGET then
-		self.ability.force_frost_arrow = nil
-	end 
+		-- On any order apart from attacking target, clear the forced frost arrow variable.
+		if order_type ~= DOTA_UNIT_ORDER_ATTACK_TARGET then
+			self.ability.force_frost_arrow = nil
+		end
+	end
 end
 
 function SetArrowAttackProjectile(caster, frost_attack)	
