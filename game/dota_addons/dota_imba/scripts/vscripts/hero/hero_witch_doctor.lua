@@ -561,9 +561,9 @@ end
 
 function imba_witch_doctor_death_ward:OnChannelFinish()
 	if IsServer() then
-		UTIL_Remove(self.death_ward)
-		StopSoundEvent("Hero_WitchDoctor.Death_WardBuild", self.death_ward)
-		StopSoundEvent("Imba.WitchDoctorSingsASong", self.death_ward)
+		StopSoundOn("Hero_WitchDoctor.Death_WardBuild", self.death_ward)
+		StopSoundOn("Imba.WitchDoctorSingsASong", self.death_ward)
+		UTIL_Remove(self.death_ward)		
 		if self.mod_caster then self.mod_caster:Destroy() end
 	end
 end

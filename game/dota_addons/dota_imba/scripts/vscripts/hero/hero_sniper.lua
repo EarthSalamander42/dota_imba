@@ -584,12 +584,19 @@ function modifier_imba_headshot_attacks:OnAttackStart(keys)
                 -- Check if Take Aim was found and is learned
                 if ability_aim_handler and ability_aim_handler:GetLevel() > 0 then
                     
-                    -- Check if the Take Aim is not on cooldown and is toggled on
-                    if ability_aim_handler:IsCooldownReady() and ability_aim_handler:GetAutoCastState() then
+                    -- Check if the Take Aim is ready to be shot
+                    local modifier_aim_stacks                    
+                    local modifier_aim_handler = self.caster:FindModifierByName("modifier_imba_take_aim_range")                    
+
+                    if modifier_aim_handler then
+                        modifier_aim_stacks = modifier_aim_handler:GetStackCount()                                                
+                    end
+
+                    if modifier_aim_handler and modifier_aim_stacks == 0 then
                         
                         -- Proc a Perfect Shot, but do not count a stack
                         self:ApplyAllMarks()
-                        self.increment_stacks = false
+                        self.increment_stacks = false                        
                         return nil               
                     end
                 end
@@ -624,6 +631,13 @@ function modifier_imba_headshot_attacks:OnAttack(keys)
             Timers:CreateTimer(FrameTime(), function()
                 self:ClearAllMarks()
             end)
+
+            -- Clear forced mark
+            local modifier_aim_handler = self.caster:FindModifierByName("modifier_imba_take_aim_range")                    
+
+            if modifier_aim_handler then
+                modifier_aim_handler.forced_aimed_assault = nil
+            end            
         end
     end
 end
@@ -846,7 +860,39 @@ function imba_sniper_take_aim:GetCooldown(level)
     return cooldown
 end
 
-function imba_sniper_take_aim:OnSpellStart() return end
+function imba_sniper_take_aim:GetCastRange(location, target)
+    local caster = self:GetCaster()
+
+    -- Get caster's base attack range
+    -- Valve pls, no function for base attack range? really? *sigh* hardcoded it is then
+    base_range = 550    
+    
+    -- Passive range
+    local range = self:GetSpecialValueFor("passive_bonus_range")
+
+    -- #7 Talent: Take Aim Aimed Assault attack range
+    local aim_bonus_range = self:GetSpecialValueFor("aim_bonus_range") + caster:FindTalentValue("special_bonus_imba_sniper_7")   
+    
+    range = range + aim_bonus_range + base_range
+    return range
+end
+
+function imba_sniper_take_aim:OnSpellStart() 
+    -- Ability properties
+    local caster = self:GetCaster()
+    local ability = self
+    local target = self:GetCursorTarget()
+    local modifier_aim = "modifier_imba_take_aim_range"   
+
+    -- Find modifier, mark it
+    local modifier_aim_handler = caster:FindModifierByName(modifier_aim)
+    if modifier_aim_handler then        
+        modifier_aim_handler.forced_aimed_assault = true
+    end
+
+    -- Move to attack, mark as forced Aimed Assault
+    caster:MoveToTargetToAttack(target)    
+end
 
 -- Bonus range modifier
 modifier_imba_take_aim_range = class({})
@@ -863,9 +909,9 @@ function modifier_imba_take_aim_range:OnCreated()
     self.cooldown = self.ability:GetSpecialValueFor("cooldown")
 
     -- Start thinking
-    if IsServer() then       
+    if IsServer() then   
 
-        --When first learned, toggle spell on
+        -- When first learned, toggle spell on
         if not self.toggled_on_default then
             self.toggled_on_default = true
             self.ability:ToggleAutoCast()
@@ -884,9 +930,15 @@ function modifier_imba_take_aim_range:OnRefresh()
 end
 
 function modifier_imba_take_aim_range:OnIntervalThink()
-    if IsServer() then
+    if IsServer() then        
 
-        self.caster:SetAcquisitionRange(self.caster:GetAttackRange() + 100)
+        self.caster:SetAcquisitionRange(self.caster:GetAttackRange() + 100)        
+
+        -- If the attacker manually forced an Aimed Shot, set stacks to 0
+        if self.forced_aimed_assault then            
+            self:SetStackCount(0)
+            return nil
+        end
 
         -- If the next shot should be an Aimed Shot, set stacks to 0, otherwise set to 1
         if self.ability:IsCooldownReady() and self.ability:GetAutoCastState() and self.caster:IsRealHero() then        
@@ -909,11 +961,11 @@ function modifier_imba_take_aim_range:OnAttack(keys)
         local attacker = keys.attacker
 
         -- Only apply if the attacker is the caster
-        if self.caster == attacker then
+        if self.caster == attacker then            
 
-            -- If the caster is broken, do nothing
-            if self.caster:PassivesDisabled() then
-                return nil
+            -- If the attacker fired an Aimed Shot manually, set stacks to 0
+            if self.forced_aimed_assault then                
+                self:SetStackCount(0)
             end
 
             -- If the attacker fired an Aimed Shot, go on cooldown

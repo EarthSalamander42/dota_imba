@@ -504,7 +504,7 @@
 	"Dota_Tooltip_Talent_special_bonus_imba_skeleton_king_6_Description"			"Removes Reincarnation's mana cost.<br><br><i>The King's body reforms with practiced ease, wasting no energy on the process.</i>"
 	"Dota_Tooltip_Talent_special_bonus_imba_skeleton_king_7_title"					"Summon Royal Guard"
 	"Dota_Tooltip_Talent_special_bonus_imba_skeleton_king_7_Description"			"Wraithfire Blast now summons a Wraith on each target hit.<br><br>Wraiths attack 3 times before dying, and deal damage equal to 9% of their target's maximum health.<br><br><i>The King summons his Royal Guard, the very elite of the spiritual world, to devastate the enemies' ranks.</i>"
-	"Dota_Tooltip_Talent_special_bonus_imba_skeleton_king_8_title"					"Eternal Sovereign"
-	"Dota_Tooltip_Talent_special_bonus_imba_skeleton_king_8_Description"			"Reduces Reincarnation's cooldown by 20 seconds.<br><br><i>The King is dead, long live the King!</i>"
+	"Dota_Tooltip_Talent_special_bonus_imba_skeleton_king_8_title"					"Strength of the Crown"
+	"Dota_Tooltip_Talent_special_bonus_imba_skeleton_king_8_Description"			"Mortal Strike critical procs grants 2% of the damage as strength. This effect fully stacks with the health bonus from Mortal Strike's Behold Your King.<br> The strength gained is shown as the stack count of Mortal Strike's modifier. <br><br><i>As a wraith, the king gains eternal life through the very lifeforce of his enemies.</i>"
 	
 }

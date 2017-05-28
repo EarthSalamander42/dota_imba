@@ -859,6 +859,10 @@ function imba_riki_tricks_of_the_trade:GetBehavior()
 	return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_CHANNELLED + DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK + DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT + DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES
 end
 
+function imba_riki_tricks_of_the_trade:IsNetherWardStealable()
+	return false
+end
+
 function imba_riki_tricks_of_the_trade:GetChannelTime()
 	return 5
 end

@@ -698,7 +698,8 @@ function modifier_imba_mortal_strike_buff:OnRefresh()
 end
 
 function modifier_imba_mortal_strike_buff:DeclareFunctions()
-    local decFuncs = {MODIFIER_PROPERTY_HEALTH_BONUS}
+    local decFuncs = {MODIFIER_PROPERTY_HEALTH_BONUS,
+                      MODIFIER_PROPERTY_STATS_STRENGTH_BONUS}
 
     return decFuncs
 end
@@ -710,6 +711,18 @@ function modifier_imba_mortal_strike_buff:GetModifierHealthBonus()
 
     local stacks = self:GetStackCount()
     return stacks * self.stack_value
+end
+
+function modifier_imba_mortal_strike_buff:GetModifierBonusStats_Strength()
+    if self.caster:IsIllusion() then
+        return nil
+    end
+
+    -- #8 Talent: Mortal Strikes grants strength
+    if self.caster:HasTalent("special_bonus_imba_skeleton_king_8") then
+        local stacks = self:GetStackCount()
+        return stacks
+    end
 end
 
 
@@ -734,22 +747,9 @@ function imba_wraith_king_reincarnation:GetManaCost(level)
     return reincarnate_mana_cost
 end
 
-function imba_wraith_king_reincarnation:GetCooldown(level)
-    local caster = self:GetCaster()
-    local ability = self
-    local cooldown = self.BaseClass.GetCooldown(self, level)
-
-    -- #8 Talent: Reincarnate cooldown decrease
-    cooldown = cooldown - caster:FindTalentValue("special_bonus_imba_skeleton_king_8")
-
-    return cooldown
-end
-
-
 function imba_wraith_king_reincarnation:GetIntrinsicModifierName()
     return "modifier_imba_reincarnation"
 end
-
 
 -- Reicarnation modifier
 modifier_imba_reincarnation = modifier_imba_reincarnation or class({})

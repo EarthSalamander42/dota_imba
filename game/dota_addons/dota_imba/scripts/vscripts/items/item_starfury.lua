@@ -78,6 +78,11 @@ function StarfuryHit( keys )
 	local ability = keys.ability
 	local modifier_dmg_penalty = keys.modifier_dmg_penalty
 
+	-- If the caster is dead, no attack can be procced, period, deal with it, life is hard
+	if not caster:IsAlive() then
+		return nil
+	end
+
 	-- Attack the target
 	ability:ApplyDataDrivenModifier(caster, caster, modifier_dmg_penalty, {})
 	if caster:IsRangedAttacker() then
