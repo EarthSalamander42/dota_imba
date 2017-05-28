@@ -112,7 +112,7 @@ function modifier_item_imba_spell_fencer_unique:OnAttackLanded( keys )
 		local ability = self:GetAbility()
 		owner:AddNewModifier(owner, ability, "modifier_item_imba_spell_fencer_buff", {duration = 0.01})
 		target:AddNewModifier(owner, ability, "modifier_item_imba_spell_fencer_buff", {duration = 0.01})
-		ApplyDamage({attacker = owner, victim = target, ability = ability, damage = keys.original_damage, damage_type = DAMAGE_TYPE_MAGICAL})
+		ApplyDamage({attacker = owner, victim = target, ability = ability, damage = keys.original_damage, damage_type = DAMAGE_TYPE_MAGICAL, damage_flag = DOTA_DAMAGE_FLAG_NO_DAMAGE_MULTIPLIERS})
 
 		-- If a higher-priority sword is present, do zilch
 		local priority_sword_modifiers = {

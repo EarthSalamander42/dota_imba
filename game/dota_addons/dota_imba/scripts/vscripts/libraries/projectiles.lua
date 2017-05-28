@@ -33,6 +33,10 @@ function TrackingProjectiles:Projectile( params )
     ParticleManager:SetParticleControlEnt( particle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true )
     --Speed CP
     ParticleManager:SetParticleControl( particle, 2, Vector( speed, 0, 0 ) )
+	--Color CP
+	if params.vColor then
+		ParticleManager:SetParticleControl( particle, 4, params.vColor )
+	end
 
     -- Creating a projectileID so it can be referred to later
     params.bProjectileDodged = false
@@ -57,12 +61,14 @@ function TrackingProjectiles:Think(params,projectileID)
         if projectileID.destroy then
             ParticleManager:DestroyParticle( particle, false )
             ParticleManager:ReleaseParticleIndex(particle)
+			pcall(params.OnProjectileDestroy, params, projectileID)
             return nil
         end
         -- Check if this projectile has been dodged and if it should be destroyed because of that
         if params.bDestroyOnDodge and params.bDodgeable and target.dodged then
             ParticleManager:DestroyParticle( particle, false )
             ParticleManager:ReleaseParticleIndex(particle)
+			pcall(params.OnProjectileDestroy, params, projectileID)
             return nil
         end
         -- Check if the particle has been dodged to prevent it from firing on hit effects
@@ -142,7 +148,6 @@ function TrackingProjectiles:Think(params,projectileID)
         end
     end)
 end
-
 
 function TrackingProjectiles:GetProjectilePosition(projectileID)
     return projectileID.position

@@ -1178,10 +1178,36 @@ function CDOTA_Modifier_Lua:CheckMotionControllers()
 	end
 end
 
-function CDOTA_BaseNPC:SetUnitOnClearGround()	
+function CDOTA_BaseNPC:SetUnitOnClearGround()
 	Timers:CreateTimer(FrameTime(), function()
 		self:SetAbsOrigin(Vector(self:GetAbsOrigin().x, self:GetAbsOrigin().y, GetGroundPosition(self:GetAbsOrigin(), self).z))		
 		FindClearSpaceForUnit(self, self:GetAbsOrigin(), true)
 		ResolveNPCPositions(self:GetAbsOrigin(), 64)
 	end)
+end
+
+function CDOTA_BaseNPC:GetFittingColor()
+	-- Specially colored item modifiers have priority, in this order
+	if self:FindModifierByName("modifier_item_imba_rapier_cursed") then
+		return Vector(1,1,1)
+	elseif self:FindModifierByName("modifier_item_imba_skadi") then
+		return Vector(50,255,255)
+	elseif self:FindModifierByName("modifier_item_imba_nether_wand") or self:FindModifierByName("modifier_item_imba_elder_staff") then
+		return Vector(0,255,0)
+	
+	-- Heroes' color is based on attributes
+	elseif self:IsHero() then
+		local r = self:GetStrength()
+		local g = self:GetAgility()
+		local b = self:GetIntellect()
+		local highest = math.max(r, math.max(g,b))
+		r = math.max(255 - (highest - r) * 20, 0)
+		g = math.max(255 - (highest - g) * 20, 0)
+		b = math.max(255 - (highest - b) * 20, 0)
+		return Vector(r,g,b)
+	
+	-- Other units use the default golden glow
+	else
+		return Vector(253, 144, 63)
+	end
 end

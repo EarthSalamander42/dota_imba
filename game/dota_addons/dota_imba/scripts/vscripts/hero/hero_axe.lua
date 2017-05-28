@@ -263,8 +263,11 @@ function imba_axe_battle_hunger:OnSpellStart(target)
   end
 
   --caster:AddNewModifier(caster, self, "modifier_imba_battle_hunger_buff_haste", {})
-  target:AddNewModifier(caster, self, "modifier_imba_battle_hunger_debuff_dot", {})
-
+  if IsRoshan(target) then
+	target:AddNewModifier(caster, self, "modifier_imba_battle_hunger_debuff_dot", {duration = 10})
+  else
+	target:AddNewModifier(caster, self, "modifier_imba_battle_hunger_debuff_dot", {})
+  end
 end
 
 -------------------------------------------

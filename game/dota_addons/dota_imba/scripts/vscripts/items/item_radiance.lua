@@ -23,7 +23,7 @@ function item_imba_radiance:OnSpellStart()
 		if caster:HasModifier("modifier_imba_radiance_aura") then
 			caster:RemoveModifierByName("modifier_imba_radiance_aura")
 		else
-			caster:AddNewModifier(caster, self, "modifier_imba_radiance_aura", {}) 
+			caster:AddNewModifier(caster, self, "modifier_imba_radiance_aura", {})
 		end
 	end
 end
@@ -98,7 +98,7 @@ function modifier_imba_radiance_aura:OnCreated()
 	if IsServer() then
 		local parent = self:GetParent()
 		self.particle = ParticleManager:CreateParticle("particles/item/radiance/radiance_owner.vpcf", PATTACH_ABSORIGIN_FOLLOW, parent)
-		ParticleManager:SetParticleControl(self.particle, 2, GetRadianceColor(parent))
+		ParticleManager:SetParticleControl(self.particle, 2, parent:GetFittingColor())
 		self:StartIntervalThink(0.5)
 	end
 end
@@ -114,7 +114,7 @@ end
 -- Set color of the radiance glow based on its carrier
 function modifier_imba_radiance_aura:OnIntervalThink()
 	if IsServer() then
-		ParticleManager:SetParticleControl(self.particle, 2, GetRadianceColor(self:GetParent()))
+		ParticleManager:SetParticleControl(self.particle, 2, self:GetParent():GetFittingColor())
 	end
 end
 
@@ -210,7 +210,7 @@ function modifier_imba_radiance_burn:OnIntervalThink()
 		
 		-- Handle particle and color based on Radiance carrier
 		ParticleManager:SetParticleControl(self.particle, 1, caster:GetAbsOrigin())
-		ParticleManager:SetParticleControl(self.particle, 2, GetRadianceColor(caster))
+		ParticleManager:SetParticleControl(self.particle, 2, caster:GetFittingColor())
 	end
 end
 
@@ -237,7 +237,7 @@ function modifier_imba_radiance_afterburn:OnCreated()
 
 		-- Particle creation
 		self.particle = ParticleManager:CreateParticle("particles/item/radiance/radiance_victim.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
-		ParticleManager:SetParticleControl(self.particle, 2, GetRadianceColor(ability:GetCaster()))
+		ParticleManager:SetParticleControl(self.particle, 2, ability:GetCaster():GetFittingColor())
 
 		-- Start thinking
 		self:StartIntervalThink(think_interval)
@@ -278,7 +278,7 @@ function modifier_imba_radiance_afterburn:OnIntervalThink()
 			
 			local parent_loc = parent:GetAbsOrigin()
 			ParticleManager:SetParticleControl(self.particle, 1, Vector(parent_loc.x,parent_loc.y, 100)) -- lul orgy -- I'm 12 btw haHAA
-			ParticleManager:SetParticleControl(self.particle, 2, GetRadianceColor(caster))
+			ParticleManager:SetParticleControl(self.particle, 2, caster:GetFittingColor())
 		end
 	end
 end
@@ -288,33 +288,3 @@ function modifier_imba_radiance_afterburn:DeclareFunctions()
 
 function modifier_imba_radiance_afterburn:GetModifierMiss_Percentage()
 	return self.miss_chance end
-
------------------------------------------------------------------------------------------------------------
---	Auxiliary functions
------------------------------------------------------------------------------------------------------------
-function GetRadianceColor(unit)
-
-	-- Specially colored item modifiers have priority, in this order
-	if unit:FindModifierByName("modifier_item_imba_rapier_cursed") then
-		return Vector(1,1,1)
-	elseif unit:FindModifierByName("modifier_item_imba_skadi") then
-		return Vector(50,255,255)
-	elseif unit:FindModifierByName("modifier_item_imba_nether_wand") or unit:FindModifierByName("modifier_item_imba_elder_staff") then
-		return Vector(0,255,0)
-	
-	-- Heroes' color is based on attributes
-	elseif unit:IsHero() then
-		local r = unit:GetStrength()
-		local g = unit:GetAgility()
-		local b = unit:GetIntellect()
-		local highest = math.max(r, math.max(g,b))
-		r = math.max(255 - (highest - r) * 20, 0)
-		g = math.max(255 - (highest - g) * 20, 0)
-		b = math.max(255 - (highest - b) * 20, 0)
-		return Vector(r,g,b)
-	
-	-- Other units use the default golden glow
-	else
-		return Vector(253, 144, 63)
-	end
-end
