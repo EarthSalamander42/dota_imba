@@ -324,7 +324,7 @@
 	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_6_title"					"Sword and Fury"
 	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_6_Description"			"Allows each one of Blade Fury's slashes to proc Blade Dance, adding a chance to deal critical damage through Blade Fury based on its damage. <br><br><i>When Juggernaut combines his swift footwork with his immersive strikes, he can achieve the perfect form, allowing him to cut through each of his enemies.</i>"
 	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_7_title"					"Spinwheel"
-	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_7_Description"			"Decreases Blade Fury's cooldown by 6 seconds.<br><br><i>Perfecting the art of Blade Fury, he can harness it to keep himself protected from harm while eradicating his enemies.</i>"
+	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_7_Description"			"Decreases Blade Fury's cooldown by 3 seconds.<br><br><i>Perfecting the art of Blade Fury, he can harness it to keep himself protected from harm while eradicating his enemies.</i>"
 	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_8_title"					"Forbidden Blade"
 	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_8_Description"			"Decreases Secret Blade's cooldown by 2 seconds.<br><br><i>Allows Juggernaut to use his forbidden move with almost no delay.</i>"			
 
