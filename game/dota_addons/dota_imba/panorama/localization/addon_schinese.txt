@@ -1,4 +1,4 @@
-"addon"
+Dota_Tooltip_Talent_special_bonus_imba_skeleton_king_8_title"addon"
 {
 	"Unassigned"      								"未知队伍"
 	"Spectator"       								"观察者"
@@ -504,7 +504,7 @@
 	"Dota_Tooltip_Talent_special_bonus_imba_skeleton_king_6_Description"			"重生不消耗魔法"
 	"Dota_Tooltip_Talent_special_bonus_imba_skeleton_king_7_title"					"冥火爆击"
 	"Dota_Tooltip_Talent_special_bonus_imba_skeleton_king_7_Description"			"冥火爆击冥魂飞散也会产生冥魂"
-	"Dota_Tooltip_Talent_special_bonus_imba_skeleton_king_8_title"					"重生"
-	"Dota_Tooltip_Talent_special_bonus_imba_skeleton_king_8_Description"			"-20秒 重生冷却时间"
+	"Dota_Tooltip_Talent_special_bonus_imba_skeleton_king_8_title"					"殊死一搏"
+	"Dota_Tooltip_Talent_special_bonus_imba_skeleton_king_8_Description"			"-殊死一搏致命一击的伤害的2%转为力量"
 	
 }
