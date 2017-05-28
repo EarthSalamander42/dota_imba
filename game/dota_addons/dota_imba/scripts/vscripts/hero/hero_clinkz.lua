@@ -838,23 +838,46 @@ function modifier_imba_skeleton_walk_spook:OnCreated()
 
         self:AddParticle(self.particle_spook_fx, false, false, -1, false, true)        
 
+        self.reacting = true
+
+        -- Determine location to force move to
+        local direction = (self.parent:GetAbsOrigin() - self.caster:GetAbsOrigin()):Normalized()
+        local location = self.parent:GetAbsOrigin() + direction * 500
+
+        local newOrder = {UnitIndex = self.parent:entindex(), 
+                          OrderType = DOTA_UNIT_ORDER_MOVE_TO_POSITION,                 
+                          Position = location}
+ 
+        ExecuteOrderFromTable(newOrder)        
+
+        self.reacting = false
+
         -- RUN FROM CLINKZ!
-        self:StartIntervalThink(0.05)        
+        self:StartIntervalThink(FrameTime())
     end
 end
 
 function modifier_imba_skeleton_walk_spook:OnIntervalThink()    
     -- Determine location to force move to
     local direction = (self.parent:GetAbsOrigin() - self.caster:GetAbsOrigin()):Normalized()
-    local location = self.parent:GetAbsOrigin() + direction * 500
+    local location = self.parent:GetAbsOrigin() + direction * 500    
 
-    self.parent:Stop()
-    self.parent:MoveToPosition(location)
+    self.parent:MoveToPosition(location)    
+end
+
+function modifier_imba_skeleton_walk_spook:OnDestroy()
+    if IsServer() then
+        self.parent:Stop()
+    end
 end
 
 function modifier_imba_skeleton_walk_spook:CheckState()
-    local state = {[MODIFIER_STATE_COMMAND_RESTRICTED] = true}
-    return state 
+    if not self.reacting then
+        local state = {[MODIFIER_STATE_COMMAND_RESTRICTED] = true}
+        return state
+    end
+
+    return nil
 end
 
 

@@ -40,6 +40,7 @@ function modifier_imba_arcane_curse_debuff:OnCreated( kv )
 	self.curse_slow = self:GetAbility():GetSpecialValueFor("curse_slow")
 	self.curse_damage = self:GetAbility():GetSpecialValueFor("damage_per_second")
 	self.penalty_duration = self:GetAbility():GetSpecialValueFor("penalty_duration")	
+	self.damage_per_stack = self:GetAbility():GetSpecialValueFor("damage_per_stack")
 	self.talent_learned = self.caster:HasTalent("special_bonus_imba_silencer_1")
 
 	if IsServer() then
@@ -92,7 +93,7 @@ function modifier_imba_arcane_curse_debuff:OnIntervalThink()
 			local stack_count = self:GetStackCount()
 
 			if stack_count then
-				damage_dealt = damage_dealt * (stack_count + 1)				
+				damage_dealt = damage_dealt + (self.damage_per_stack * stack_count)
 			end
 
 			local damage_table = {
@@ -133,16 +134,49 @@ function modifier_imba_arcane_curse_debuff:OnAbilityExecuted( params )
 	if IsServer() then		
 		if params.ability then			
 			if ( not params.ability:IsItem() ) and ( params.unit == self.parent ) then
-				-- Only extend duration of Toggle abilities when they are turned on
-				-- OnAbilityExecuted is ran before the toggle completes, so 'true' = we are about to turn it off				
-				if params.ability:IsToggle() and params.ability:GetToggleState() then
-					return
+				
+				-- Ignore toggles
+				if params.ability:IsToggle() then
+					return nil
 				end
 
 				-- List of abilities that shouldn't get triggered by Arcane Curse
 				local uneffected_spells = {"invoker_quas",
 										   "invoker_wex",
-										   "invoker_exort"}			
+										   "invoker_exort",
+											"ancient_apparition_ice_blast_release",
+											"earth_spirit_stone_caller",
+											"elder_titan_return_spirit",
+											"ember_spirit_fire_remnant",
+											"wisp_tether_break",
+											"keeper_of_the_light_illuminate_end",
+											"keeper_of_the_light_spirit_form_illuminate_end",
+											"life_stealer_control",
+											"life_stealer_consume",
+											"life_stealer_assimilate_eject",
+											"monkey_king_tree_dance",
+											"monkey_king_primal_spring_early",
+											"monkey_king_mischief",
+											"monkey_king_untransform",
+											"naga_siren_song_of_the_siren_cancel",
+											"nyx_assassin_burrow",
+											"nyx_assassin_unburrow",
+											"phoenix_icarus_dive_stop",
+											"phoenix_launch_fire_spirit",
+											"phoenix_sun_ray_stop",
+											"puck_ethereal_jaunt",
+											"puck_phase_shift",
+											"shadow_demon_shadow_poison_release",
+											"spectre_reality",
+											"imba_techies_minefield_sign",
+											"techies_focused_detonate",
+											"templar_assassin_trap",
+											"shredder_return_chakram",
+											"shredder_return_chakram_2",											
+											"imba_drow_ranger_frost_arrows",
+											"imba_jakiro_liquid_fire",
+											"imba_obsidian_destroyer_arcane_orb",
+											"imba_sniper_take_aim"}
 
 				-- If the ability is one of those spells that should be ignored, do nothing
 				for _, spell in pairs(uneffected_spells) do
@@ -356,13 +390,12 @@ function modifier_imba_silencer_glaives_of_wisdom:OnAttackLanded(keys)
 end
 
 function modifier_imba_silencer_glaives_of_wisdom:OnOrder(keys)
-	if keys.unit == self.caster then
-		local order_type = keys.order_type
-		-- On any order apart from attacking target, clear the forced frost arrow variable.
-		if order_type ~= DOTA_UNIT_ORDER_ATTACK_TARGET then
-			self.ability.force_glaive = nil
-		end
-	end
+	local order_type = keys.order_type	
+
+	-- On any order apart from attacking target, clear the forced frost arrow variable.
+	if order_type ~= DOTA_UNIT_ORDER_ATTACK_TARGET then
+		self.ability.force_glaive = nil
+	end 
 end
 
 function SetGlaiveAttackProjectile(caster, is_glaive_attack)

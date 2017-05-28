@@ -99,6 +99,11 @@ function imba_wraith_king_wraithfire_blast:OnProjectileHit_ExtraData(target, loc
     -- Play impact sound
     EmitSoundOn(sound_hit, caster)    
 
+    -- If the target suddenly became magic immune, do nothing
+    if target:IsMagicImmune() then
+        return nil
+    end
+
     if extra_data.main_blast == 1 then
         -- If target has Linken's Sphere off cooldown, do nothing
         if target:GetTeam() ~= caster:GetTeam() then

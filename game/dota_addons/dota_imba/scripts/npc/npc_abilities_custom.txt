@@ -19331,27 +19331,37 @@
 				"var_type"			"FIELD_INTEGER"
 				"radius"			"425"
 			}
+
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"base_duration"		"6"
 			}
+
 			"04"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"penalty_duration"	"4"
 				"LinkedSpecialBonus" "special_bonus_imba_silencer_2"
 			}
+
 			"05"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"curse_slow"		"9 12 15 18 21 23 25"
 				"LinkedSpecialBonus" "special_bonus_imba_silencer_7"
 			}
+
 			"06"
 			{
 				"var_type"			"FIELD_FLOAT"
 				"tick_rate"			"1.0"
+			}
+
+			"07"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage_per_stack"	"4 6 8 10 15 20 25"
 			}
 		}
 	}
