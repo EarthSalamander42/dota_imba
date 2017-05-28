@@ -507,6 +507,7 @@ end
 imba_wraith_king_mortal_strike = class({})
 LinkLuaModifier("modifier_imba_mortal_strike", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_mortal_strike_buff", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_mortal_strike_buff_talent", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_wraith_king_mortal_strike:GetIntrinsicModifierName()
     return "modifier_imba_mortal_strike"
@@ -521,6 +522,7 @@ function modifier_imba_mortal_strike:OnCreated()
     self.caster = self:GetCaster()
     self.ability = self:GetAbility()
     self.modifier_health = "modifier_imba_mortal_strike_buff"
+    self.modifier_strength = "modifier_imba_mortal_strike_buff_talent"
 
     -- Ability specials
     self.crit_chance = self.ability:GetSpecialValueFor("crit_chance")
@@ -628,6 +630,23 @@ function modifier_imba_mortal_strike:OnAttackLanded(keys)
                     modifier_health_handler:ForceRefresh()
                 end                
             end
+
+            if self.caster:HasTalent("special_bonus_imba_skeleton_king_8") then
+                if target:IsRealHero() then
+                    if not self.caster:HasModifier(self.modifier_strength) then
+                        self.caster:AddNewModifier(self.caster, self.ability, self.modifier_strength, {duration = self.bonus_health_duration})
+                    end
+
+                    local modifier_strength_handler = self.caster:FindModifierByName(self.modifier_strength)
+                    if modifier_strength_handler then
+                        local strength_per_crit = self.caster:FindTalentValue("special_bonus_imba_skeleton_king_8")
+                        for i = 1, strength_per_crit do
+                            modifier_strength_handler:IncrementStackCount()
+                            modifier_strength_handler:ForceRefresh()
+                        end
+                    end
+                end
+            end
         end
     end
 end
@@ -698,8 +717,7 @@ function modifier_imba_mortal_strike_buff:OnRefresh()
 end
 
 function modifier_imba_mortal_strike_buff:DeclareFunctions()
-    local decFuncs = {MODIFIER_PROPERTY_HEALTH_BONUS,
-                      MODIFIER_PROPERTY_STATS_STRENGTH_BONUS}
+    local decFuncs = {MODIFIER_PROPERTY_HEALTH_BONUS}
 
     return decFuncs
 end
@@ -713,7 +731,79 @@ function modifier_imba_mortal_strike_buff:GetModifierHealthBonus()
     return stacks * self.stack_value
 end
 
-function modifier_imba_mortal_strike_buff:GetModifierBonusStats_Strength()
+
+
+-- Bonus strength modifier
+modifier_imba_mortal_strike_buff_talent = class({})
+
+function modifier_imba_mortal_strike_buff_talent:OnCreated()
+    if IsServer() then
+        -- Ability properties
+        self.caster = self:GetCaster()
+        self.ability = self:GetAbility()
+
+        -- Ability specials
+        self.bonus_health_duration = self.ability:GetSpecialValueFor("bonus_health_duration")
+        self.stack_value = self.ability:GetSpecialValueFor("stack_value")
+
+        -- Initialize table
+        self.stacks_table = {}        
+
+        -- Start thinking
+        self:StartIntervalThink(0.1)
+    end
+end
+
+function modifier_imba_mortal_strike_buff_talent:IsHidden() return false end
+function modifier_imba_mortal_strike_buff_talent:IsPurgable() return false end
+function modifier_imba_mortal_strike_buff_talent:IsDebuff() return false end
+
+function modifier_imba_mortal_strike_buff_talent:OnIntervalThink()
+    if IsServer() then
+
+        -- Check if there are any stacks left on the table
+        if #self.stacks_table > 0 then
+
+            -- For each stack, check if it is past its expiration time. If it is, remove it from the table
+            for i = #self.stacks_table, 1, -1 do
+                if self.stacks_table[i] + self.bonus_health_duration < GameRules:GetGameTime() then
+                    table.remove(self.stacks_table, i)             
+                end
+            end
+            
+            -- If after removing the stacks, the table is empty, remove the modifier.
+            if #self.stacks_table == 0 then
+                self:Destroy()
+
+            -- Otherwise, set its stack count
+            else
+                self:SetStackCount(#self.stacks_table)
+            end
+
+            -- Recalculate health bonus based on new stack count
+            self:GetParent():CalculateStatBonus()
+
+        -- If there are no stacks on the table, just remove the modifier.
+        else
+            self:Destroy()
+        end
+    end
+end
+
+function modifier_imba_mortal_strike_buff_talent:OnRefresh()
+    if IsServer() then
+        -- Insert new stack values
+        table.insert(self.stacks_table, GameRules:GetGameTime())
+    end
+end
+
+function modifier_imba_mortal_strike_buff_talent:DeclareFunctions()
+    local decFuncs = {MODIFIER_PROPERTY_STATS_STRENGTH_BONUS}
+
+    return decFuncs
+end
+
+function modifier_imba_mortal_strike_buff_talent:GetModifierBonusStats_Strength()
     if self.caster:IsIllusion() then
         return nil
     end
@@ -724,7 +814,6 @@ function modifier_imba_mortal_strike_buff:GetModifierBonusStats_Strength()
         return stacks
     end
 end
-
 
 
 

@@ -23,7 +23,7 @@
 	"scoreboard_tool_tip_share_unit"				"Share Unit"
 	"scoreboard_tool_tip_share_hero"				"Share Hero"
 	"scoreboard_tool_tip_active_share_unit_hero"	"(SHARED)"
-	"scoreboard_tool_tip_disable_help"				"Disable Help"
+	"scoreboard_tool_tfip_disable_help"				"Disable Help"
 	"scoreboard_tool_tip_active_disable_help"		"(DISABLED)"
 
 	//=================================================================================================================
@@ -505,6 +505,5 @@
 	"Dota_Tooltip_Talent_special_bonus_imba_skeleton_king_7_title"					"Summon Royal Guard"
 	"Dota_Tooltip_Talent_special_bonus_imba_skeleton_king_7_Description"			"Wraithfire Blast now summons a Wraith on each target hit.<br><br>Wraiths attack 3 times before dying, and deal damage equal to 9% of their target's maximum health.<br><br><i>The King summons his Royal Guard, the very elite of the spiritual world, to devastate the enemies' ranks.</i>"
 	"Dota_Tooltip_Talent_special_bonus_imba_skeleton_king_8_title"					"Strength of the Crown"
-	"Dota_Tooltip_Talent_special_bonus_imba_skeleton_king_8_Description"			"Mortal Strike critical procs grants 2% of the damage as strength. This effect fully stacks with the health bonus from Mortal Strike's Behold Your King.<br> The strength gained is shown as the stack count of Mortal Strike's modifier. <br><br><i>As a wraith, the king gains eternal life through the very lifeforce of his enemies.</i>"
-	
+	"Dota_Tooltip_Talent_special_bonus_imba_skeleton_king_8_Description"			"Mortal Strike critical procs on real heroes grants 10 Strength. This effect fully stacks with the health bonus from Mortal Strike's Behold Your King.<br> The strength gained is shown in a separate modifier. Each stack has its own independent duration. <br><br><i>As a wraith, the king gains eternal life through the very lifeforce of his enemies.</i>"	
 }
