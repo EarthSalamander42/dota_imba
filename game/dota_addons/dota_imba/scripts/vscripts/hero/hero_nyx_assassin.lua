@@ -75,7 +75,7 @@ function imba_nyx_assassin_impale:OnSpellStart()
     -- Ability specials
     local width = ability:GetSpecialValueFor("width")
     local duration = ability:GetSpecialValueFor("duration")
-    local length = ability:GetSpecialValueFor("length")
+    local length = ability:GetSpecialValueFor("length") + GetCastRangeIncrease(caster)
     local speed = ability:GetSpecialValueFor("speed")
     local burrow_length_increase = ability:GetSpecialValueFor("burrow_length_increase")
 
