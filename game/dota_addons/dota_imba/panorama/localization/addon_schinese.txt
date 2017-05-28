@@ -192,7 +192,7 @@
 	"Dota_Tooltip_Talent_special_bonus_imba_centaur_3_title"					"双刃剑"
 	"Dota_Tooltip_Talent_special_bonus_imba_centaur_3_Description"				"+110 双刃剑AOE范围"
 	"Dota_Tooltip_Talent_special_bonus_imba_centaur_4_title"					"马蹄践踏"
-	"Dota_Tooltip_Talent_special_bonus_imba_centaur_4_Description"				"+75 马蹄践踏范围"
+	"Dota_Tooltip_Talent_special_bonus_imba_centaur_4_Description"				"+85 马蹄践踏范围"
 	"Dota_Tooltip_Talent_special_bonus_imba_centaur_5_title"					"马蹄践踏"
 	"Dota_Tooltip_Talent_special_bonus_imba_centaur_5_Description"				"+1秒 马蹄践踏眩晕/竞技场持续时间"
 	"Dota_Tooltip_Talent_special_bonus_imba_centaur_6_title"					"反击"
