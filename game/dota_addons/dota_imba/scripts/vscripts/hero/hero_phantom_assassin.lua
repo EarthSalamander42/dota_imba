@@ -759,6 +759,14 @@ function modifier_imba_blur_blur:CheckState()
 	return states
 end
 
+function modifier_imba_blur_blur:OnRemoved()
+	ParticleManager:DestroyParticle(self.blur_particle, false)
+end
+
+function modifier_imba_blur_blur:OnDestroy()
+	ParticleManager:ReleaseParticleIndex(self.blur_particle)
+end
+
 function modifier_imba_blur_blur:IsHidden()	   return true end
 function modifier_imba_blur_blur:IsDebuff()	 return false end
 function modifier_imba_blur_blur:IsPurgable()  return false end
