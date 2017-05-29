@@ -1,4 +1,4 @@
-"addon"
+Dota_Tooltip_Talent_special_bonus_imba_skeleton_king_8_title"addon"
 {
 	"Unassigned"      								"未知队伍"
 	"Spectator"       								"观察者"
@@ -324,7 +324,7 @@
 	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_6_title"					"剑刃风暴"
 	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_6_Description"			"剑刃风暴可触发剑舞暴击"
 	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_7_title"					"剑刃风暴"
-	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_7_Description"			"-6秒 剑刃风暴冷却时间"
+	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_7_Description"			"-3秒 剑刃风暴冷却时间"
 	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_8_title"					"剑舞"
 	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_8_Description"			"-2秒 剑舞冷却时间"			
 
@@ -505,6 +505,6 @@
 	"Dota_Tooltip_Talent_special_bonus_imba_skeleton_king_7_title"					"冥火爆击"
 	"Dota_Tooltip_Talent_special_bonus_imba_skeleton_king_7_Description"			"冥火爆击冥魂飞散也会产生冥魂"
 	"Dota_Tooltip_Talent_special_bonus_imba_skeleton_king_8_title"					"殊死一搏"
-	"Dota_Tooltip_Talent_special_bonus_imba_skeleton_king_8_Description"			"-殊死一搏致命一击的伤害的2%转为力量"
+	"Dota_Tooltip_Talent_special_bonus_imba_skeleton_king_8_Description"			"对英雄殊死一搏致命一击获得10点力量"
 	
 }
