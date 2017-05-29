@@ -488,7 +488,8 @@ function modifier_imba_ice_path_thinker:OnCreated( kv )
 		local stun_duration 		= ability:GetLevelSpecialValueFor("stun_duration", ability_level) + caster:FindTalentValue("special_bonus_imba_jakiro_5")
 
 		local start_pos 			= caster:GetAbsOrigin()
-		local end_pos 				= start_pos + caster:GetForwardVector() * path_length
+		local direction				= (caster:GetCursorPosition() - start_pos):Normalized()
+		local end_pos 				= start_pos + direction * path_length
 		local path_total_duration	= path_delay + path_duration
 
 		self.ice_path_end_time 		= GameRules:GetGameTime() + path_total_duration
