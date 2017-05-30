@@ -17564,9 +17564,8 @@
 			"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 			"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
 			"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-			
+			"AbilityTextureName"		"custom/imba_pudge_cleaver"	
 			"FightRecapLevel"				"1"
-			"AbilityTextureName"			"" // ??
 			"MaxLevel"						"7"
 			"ScriptFile"					"hero/hero_pudge.lua"
 			"AbilityCastRange"				"1500"
