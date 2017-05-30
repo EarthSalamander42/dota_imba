@@ -16953,11 +16953,13 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"AbilityTextureName"		"custom/imba_pudge_cleaver"	
+		"AbilityTextureName"			"custom/imba_pudge_cleaver"	
 		"FightRecapLevel"				"1"
 		"MaxLevel"						"7"
 		"ScriptFile"					"hero/hero_pudge.lua"
 		"AbilityCastRange"				"1500"
+		"AbilityCastAnimation"        	"ACT_DOTA_ATTACK"
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
@@ -17168,6 +17170,7 @@
 		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"
 		"FightRecapLevel"					"2"
 		"AbilityTextureName"				"pudge_dismember"
+		"MaxLevel"							"6"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -17229,7 +17232,7 @@
 		}
 	}
 
-	"special_bonus_imba_pudge_1"
+	"special_bonus_imba_pudge_1" // Bonus Flesh Heaps magic resistance.
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -17254,7 +17257,7 @@
 		}
 	}
 
-	"special_bonus_imba_pudge_2"
+	"special_bonus_imba_pudge_2" // bonus Meat Hook range
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -17279,7 +17282,7 @@
 		}
 	}
 
-	"special_bonus_imba_pudge_3"
+	"special_bonus_imba_pudge_3" // Bonus Spellsteal per Flesh Heap stack
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -17304,7 +17307,7 @@
 		}
 	}
 
-	"special_bonus_imba_pudge_4"
+	"special_bonus_imba_pudge_4" // Pudge lifesteals from all sources of damage on units rooted by Cleaver 
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -17329,7 +17332,7 @@
 		}
 	}
 
-	"special_bonus_imba_pudge_5"
+	"special_bonus_imba_pudge_5" // Bonus strength per Flesh Heaps stack
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -17355,7 +17358,7 @@
 		}
 	}
 
-	"special_bonus_imba_pudge_6"
+	"special_bonus_imba_pudge_6" // Bonus Rot damage per second
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -17381,7 +17384,7 @@
 		}
 	}
 
-	"special_bonus_imba_pudge_7"
+	"special_bonus_imba_pudge_7" // Bonus Dismember duration
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -17407,7 +17410,7 @@
 		}
 	}
 
-	"special_bonus_imba_pudge_8"
+	"special_bonus_imba_pudge_8" // Triple Meat Hooks
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------

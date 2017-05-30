@@ -1,3 +1,4 @@
+
 CreateEmptyTalents("pudge")
 
 -------------------------------------------
@@ -34,11 +35,13 @@ function modifier_flesh_heap:OnCreated()
 		local id = self:GetCaster():GetPlayerOwnerID()
 		local hero = PlayerResource:GetSelectedHeroEntity(id)
 
-		if not hero.nKills then 
+		if hero and not hero.nKills then 
 			hero.nKills = 0 
 		end
 
-		self:SetStackCount(hero.nKills)
+		if hero then
+			self:SetStackCount(hero.nKills)
+		end
 	end
 end
 
@@ -227,10 +230,10 @@ end
 function modifier_rot:OnCreated(kv)
 	self.rot_slow = self:GetAbility():GetSpecialValueFor("rot_slow")
 	self.rot_damage = self:GetAbility():GetSpecialValueFor("rot_damage")
-	self.rot_damage = self.rot_damage + self:GetCaster():FindTalentValue("")
-	self.rot_tick = self:GetAbility():GetSpecialValueFor("rot_tick")
-	
 
+	-- #6 Talent: Rot deals increased damage per tick
+	self.rot_damage = self.rot_damage + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_6")
+	self.rot_tick = self:GetAbility():GetSpecialValueFor("rot_tick")
 
 	if IsServer() then
 		self.rot_radius = self:GetAbility():GetCastRange()
@@ -250,7 +253,7 @@ end
 
 function modifier_rot:OnIntervalThink()
 	if IsServer() then
-		local flDamagePerTick = self.rot_tick * self.rot_damage
+		local flDamagePerTick = self.rot_tick * self.rot_damage		
 
 		if self:GetCaster():IsAlive() then
 			local damage = {
@@ -371,7 +374,7 @@ function imba_pudge_meat_hook:OnSpellStart()
 			iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_BOTH,
 			iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 			iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
-			--	EffectName = "particles/hero/pudge/pudge_butchers_cleaver.vpcf",
+			EffectName = "particles/units/heroes/hero_pudge/pudge_meathook.vpcf",
 			ExtraData = 
 			{
 				nProjectileNumber = i
@@ -422,14 +425,8 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData( hTarget, vLocation,keys
 		if self.hooks[i]["unitsHit"] and #self.hooks[i]["unitsHit"] > 0 then
 			for k,v in pairs(self.hooks[i]["unitsHit"]) do
 				v:RemoveModifierByName( "modifier_meat_hook" )
-
-				local vVictimPosCheck = v:GetAbsOrigin() - vLocation 
-				local flPad = self:GetCaster():GetPaddedCollisionRadius() + v:GetPaddedCollisionRadius()
-				if vVictimPosCheck:Length2D() > flPad then
-					FindClearSpaceForUnit( v, self.hooks[i]["vStartPosition"], false )
-				end
+				v:SetUnitOnClearGround()
 			end
-			ResolveNPCPositions(self:GetCaster():GetAbsOrigin(), 75)
 		end
 		--self.hooks[i]["unitsHit"] = nil
 		ParticleManager:DestroyParticle( self.hooks[i]["nChainParticleFXIndex"], true )
@@ -476,7 +473,7 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData( hTarget, vLocation,keys
 	end
 	-- Check if the hook should retract
 	
-	if #self.hooks[i]["unitsHit"] >= self.max_targets or not hTarget then
+	if #self.hooks[i]["unitsHit"] >= self.max_targets or not hTarget or hTarget:GetTeamNumber() == self:GetCaster():GetTeamNumber()  then
 		if self.hooks[i]["hProjectile"] then
 			ProjectileManager:DestroyLinearProjectile(self.hooks[i]["hProjectile"])
 		end
@@ -515,9 +512,9 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData( hTarget, vLocation,keys
 			Ability = self,
 			vSpawnOrigin = vHookPos,
 			vVelocity = self.hooks[i]["vDirection"] ,
-			fDistance = flDistance,
+			fDistance = flDistance-100,
 			Source = self:GetCaster(),
-			--EffectName = "particles/units/heroes/hero_mirana/mirana_spell_arrow.vpcf",
+			EffectName = "particles/units/heroes/hero_pudge/pudge_meathook.vpcf",
 			ExtraData = 
 			{
 				nProjectileNumber = i
@@ -563,7 +560,7 @@ function imba_pudge_meat_hook:OnProjectileThink_ExtraData(vLocation,keys)
 	self.hooks[i]["vProjectileLocation"] = vLocation
 	if self.hooks[i]["unitsHit"] then
 		for k,v in pairs(self.hooks[i]["unitsHit"]) do
-			v:SetAbsOrigin(vLocation)
+			v:SetAbsOrigin(GetGroundPosition(vLocation,self:GetCaster()))
 		end
 	end
 end
@@ -720,7 +717,7 @@ function imba_pudge_butchers_cleaver:OnProjectileHit(hTarget,vLocation)
 	
 	self.cleaver = CreateUnitByName("npc_dummy_blank",self:GetCaster():GetAbsOrigin(),false,nil,nil,self:GetCaster():GetTeamNumber())
 	self.cleaver:AddNewModifier(self:GetCaster(),self,"modifier_butchers_cleaver_dummy",{duration = self:GetSpecialValueFor("root_duration")})
-	self.cleaver.parentUnit = vHookTarget
+	self.cleaver.parentUnit = hTarget
 
 	hTarget:AddNewModifier(self:GetCaster(),self,"modifier_butchers_cleaver",{duration = self:GetSpecialValueFor("root_duration")})
 
@@ -782,14 +779,12 @@ function modifier_butchers_cleaver_dummy:OnDestroy()
 end
 
 function modifier_butchers_cleaver_dummy:OnIntervalThink()
-	if not self.hit then return end
 	if not self:GetParent().parentUnit or not IsValidEntity(self:GetParent().parentUnit) then
 		UTIL_Remove(self:GetParent())
 		return 
 	end
-	self:GetParent():SetAbsOrigin(self:GetParent().parentUnit:GetAbsOrigin()+self:GetAbility().modelOffset)
-
-	if (self:GetParent().parentUnit:GetAbsOrigin() -self:GetCaster():GetAbsOrigin()):Length2D() <= self:GetAbility():GetSpecialValueFor("check_radius") then
+	self:GetParent():SetAbsOrigin(self:GetParent().parentUnit:GetAbsOrigin())
+	if (self:GetParent():GetAbsOrigin() -self:GetCaster():GetAbsOrigin()):Length2D() <= self:GetAbility():GetSpecialValueFor("check_radius") then
 		if self:GetCaster():HasAbility("imba_pudge_dismember") and self:GetCaster():FindAbilityByName("imba_pudge_dismember"):GetLevel() > 0 then
 			self:GetCaster():FindAbilityByName("imba_pudge_dismember"):EndCooldown()
 		end
