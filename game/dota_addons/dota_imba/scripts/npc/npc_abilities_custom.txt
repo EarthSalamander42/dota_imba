@@ -24216,25 +24216,35 @@
 				"var_type"					"FIELD_INTEGER"
 				"stack_receive_pct"			"2"
 			}
+
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_pct"				"1"
+				"damage_pct"				"3"
 			}
+
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"spell_power"				"1"
 			}
+
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stack_duration"			"2"
+				"stack_duration"			"1"
 			}
+
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"talent_radius"				"900"
+			}
+
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_stacks"				"100"
 			}
 		}
 	}
