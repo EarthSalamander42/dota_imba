@@ -24220,7 +24220,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_pct"				"3"
+				"damage_pct"				"5"
 			}
 
 			"03"

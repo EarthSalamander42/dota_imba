@@ -5610,8 +5610,8 @@
 			}
 			"02"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"proc_duration_self"	"3.0"
+				"var_type"				"FIELD_INTEGER"
+				"proc_duration_self"	"3"
 			}
 			"03"
 			{
@@ -5630,8 +5630,8 @@
 			}
 			"06"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"stack_duration"		"5.0"
+				"var_type"				"FIELD_INTEGER"
+				"stack_duration"		"5"
 			}
 			"07"
 			{
@@ -5687,23 +5687,23 @@
 			}
 			"02"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"proc_duration_enemy"	"1.0"
+				"var_type"				"FIELD_INTEGER"
+				"proc_duration_enemy"	"1"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"amp_stack"				"-7"
+				"amp_stack"				"-3"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_stacks"			"3"
+				"max_stacks"			"7"
 			}
 			"05"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"stack_duration"		"5.0"
+				"var_type"				"FIELD_INTEGER"
+				"stack_duration"		"5"
 			}
 			"06"
 			{
@@ -5756,13 +5756,13 @@
 			}
 			"02"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"proc_duration_enemy"	"1.0"
+				"var_type"				"FIELD_INTEGER"
+				"proc_duration_enemy"	"1"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"proc_duration_self"	"3.0"
+				"var_type"				"FIELD_INTEGER"
+				"proc_duration_self"	"3"
 			}
 			"04"
 			{
@@ -5786,8 +5786,8 @@
 			}
 			"08"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"stack_duration"		"5.0"
+				"var_type"				"FIELD_INTEGER"
+				"stack_duration"		"5"
 			}
 			"09"
 			{
@@ -5856,8 +5856,8 @@
 			}
 			"02"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"proc_duration_enemy"	"1.0"
+				"var_type"				"FIELD_INTEGER"
+				"proc_duration_enemy"	"1"
 			}
 			"03"
 			{
@@ -5867,17 +5867,17 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"amp_stack"				"-7"
+				"amp_stack"				"-4"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_stacks"			"4"
+				"max_stacks"			"7"
 			}
 			"06"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"stack_duration"		"5.0"
+				"var_type"				"FIELD_INTEGER"
+				"stack_duration"		"5"
 			}
 			"07"
 			{
@@ -5941,13 +5941,13 @@
 			}
 			"02"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"proc_duration_enemy"	"1.0"
+				"var_type"				"FIELD_INTEGER"
+				"proc_duration_enemy"	"1"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"proc_duration_self"	"3.0"
+				"var_type"				"FIELD_INTEGER"
+				"proc_duration_self"	"3"
 			}
 			"04"
 			{
@@ -5957,7 +5957,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"amp_stack"				"-7"
+				"amp_stack"				"-4"
 			}
 			"06"
 			{
@@ -5967,7 +5967,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_stacks"			"4"
+				"max_stacks"			"7"
 			}
 			"08"
 			{
@@ -6040,13 +6040,13 @@
 			}
 			"02"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"proc_duration_enemy"	"1.0"
+				"var_type"				"FIELD_INTEGER"
+				"proc_duration_enemy"	"1"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"proc_duration_self"	"3.0"
+				"var_type"				"FIELD_INTEGER"
+				"proc_duration_self"	"3"
 			}
 			"04"
 			{
@@ -6056,7 +6056,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"amp_stack"				"-7"
+				"amp_stack"				"-5"
 			}
 			"06"
 			{
@@ -6066,7 +6066,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"as_stack"				"5"
+				"as_stack"				"7"
 			}
 			"08"
 			{
@@ -6075,8 +6075,8 @@
 			}
 			"09"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"stack_duration"		"5.0"
+				"var_type"				"FIELD_INTEGER"
+				"stack_duration"		"5"
 			}
 			"10"
 			{
@@ -6186,12 +6186,12 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"amp_stack"				"-7"
+				"amp_stack"				"-3"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_stacks"			"3"
+				"max_stacks"			"7"
 			}
 			"05"
 			{
