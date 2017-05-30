@@ -29,6 +29,10 @@ function modifier_item_imba_aegis:DeclareFunctions()
     return decFuncs
 end
 
+function modifier_item_imba_aegis:GetPriority()
+	return 100
+end
+
 function modifier_item_imba_aegis:ReincarnateTime()
 	if IsServer() then
 		local parent = self:GetParent()
@@ -48,19 +52,6 @@ function modifier_item_imba_aegis:ReincarnateTime()
 		ParticleManager:ReleaseParticleIndex(particle)
 	end
 	return self.reincarnate_time
-end
-
-
-function modifier_item_imba_aegis:OnDeath(params)
-    if IsServer() then
-        -- Only apply if the caster is the unit that died
-        if self:GetParent() == params.unit and params.reincarnate then                
-			-- Force respawning in the delay time, with no regards to the real respawn timer
-			Timers:CreateTimer(FrameTime(), function()
-				params.unit:SetTimeUntilRespawn(self.reincarnate_time)
-			end)
-        end
-    end
 end
 
 function modifier_item_imba_aegis:IsDebuff() return false end

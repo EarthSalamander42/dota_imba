@@ -455,11 +455,11 @@ end
 --       NETHER WARD          --
 --------------------------------
 imba_pugna_nether_ward = class({})
-
-function imba_pugna_nether_ward:IsHiddenWhenStolen()
-    return false
-end
-
+function imba_pugna_nether_ward:IsHiddenWhenStolen() return false end
+function imba_pugna_nether_ward:IsRefreshable() return true end
+function imba_pugna_nether_ward:IsStealable() return true end
+function imba_pugna_nether_ward:IsNetherWardStealable() return false end
+-------------------------------------------
 function imba_pugna_nether_ward:OnSpellStart()
     -- Ability properties
     local caster = self:GetCaster()
@@ -613,7 +613,13 @@ function modifier_imba_nether_ward_degen:OnCreated()
     self.particle_medium = "particles/econ/items/pugna/pugna_ward_ti5/pugna_ward_attack_medium_ti_5.vpcf"
     self.particle_light = "particles/econ/items/pugna/pugna_ward_ti5/pugna_ward_attack_light_ti_5.vpcf"                       
 
-    -- Ability specials
+    -- SAFEGUARD AGAINST CRASHES
+    if not self.ability then
+        self:Destroy()
+        return nil        
+    end
+
+    -- Ability specials    
     self.mana_multiplier = self.ability:GetSpecialValueFor("mana_multiplier")
     self.mana_regen_reduction = self.ability:GetSpecialValueFor("mana_regen_reduction")
     self.hero_damage = self.ability:GetSpecialValueFor("hero_damage")
@@ -716,66 +722,28 @@ function modifier_imba_nether_ward_degen:OnSpentMana(keys)
         -- Iterate through the ability list
         local cast_ability_name = cast_ability:GetName()
         local forbidden_abilities = {
-            "imba_pugna_nether_ward",
             "ancient_apparition_ice_blast",
             "furion_teleportation",
             "furion_wrath_of_nature",
-            "imba_juggernaut_healing_ward",
-            "imba_juggernaut_omni_slash",
-            "imba_kunkka_x_marks_the_spot",     
             "life_stealer_infest",
             "life_stealer_assimilate",
             "life_stealer_assimilate_eject",
-            "imba_lina_fiery_soul",
-            "imba_night_stalker_darkness",
-            "imba_sandking_sand_storm",
-            "imba_sandking_epicenter",
             "storm_spirit_static_remnant",
             "storm_spirit_ball_lightning",
-            "imba_tinker_rearm",
-            "imba_venomancer_plague_ward",
-            "imba_witch_doctor_paralyzing_cask",
-            "imba_witch_doctor_voodoo_restoration",
-            "imba_witch_doctor_maledict",
-            "imba_witch_doctor_death_ward",
-            "imba_queenofpain_blink",
-            "imba_jakiro_fire_breath",
-            "imba_jakiro_ice_breath",
-            "imba_jakiro_liquid_fire",
-            "alchemist_unstable_concoction",
-            "alchemist_chemical_rage",
-            "ursa_overpower",
-            "imba_bounty_hunter_wind_walk",
             "invoker_ghost_walk",
-            "imba_clinkz_strafe",       
-            "imba_obsidian_destroyer_arcane_orb",
-            "imba_obsidian_destroyer_sanity_eclipse",
             "shadow_demon_shadow_poison",
             "shadow_demon_demonic_purge",
             "phantom_lancer_doppelwalk",
             "chaos_knight_phantasm",
-            "imba_phantom_assassin_phantom_strike",
             "wisp_relocate",
             "templar_assassin_refraction",
             "templar_assassin_meld",
             "naga_siren_mirror_image",
-            "imba_nyx_assassin_vendetta",
-            "imba_centaur_stampede",
             "ember_spirit_activate_fire_remnant",
             "legion_commander_duel",
             "phoenix_fire_spirits",
             "terrorblade_conjure_image",
-            "imba_techies_land_mines",
-            "imba_techies_stasis_trap",
-            "techies_suicide",
             "winter_wyvern_arctic_burn",
-            "imba_wraith_king_kingdom_come",
-            "imba_faceless_void_chronosphere",
-            "magnataur_skewer",
-            "imba_tinker_march_of_the_machines",
-            "riki_blink_strike",
-            "riki_tricks_of_the_trade",
-            "imba_necrolyte_death_pulse",
             "beastmaster_call_of_the_wild",
             "beastmaster_call_of_the_wild_boar",
             "dark_seer_ion_shell",
@@ -793,7 +761,6 @@ function modifier_imba_nether_ward_degen:OnSpentMana(keys)
             "shredder_timber_chain",
             "shredder_chakram",
             "shredder_chakram_2",
-            "imba_enigma_demonic_conversion",
             "spectre_haunt",
             "windrunner_focusfire",
             "viper_poison_attack",
@@ -821,8 +788,7 @@ function modifier_imba_nether_ward_degen:OnSpentMana(keys)
             "monkey_king_mischief",
             "monkey_king_tree_dance",
             "monkey_king_primal_spring",
-            "monkey_king_wukongs_command",            
-            "imba_silencer_glaives_of_wisdom"
+            "monkey_king_wukongs_command",
         }
 
         -- Ignore items
@@ -1116,32 +1082,27 @@ function imba_pugna_life_drain:GetCooldown(level)
 end
 
 function imba_pugna_life_drain:CastFilterResultTarget(target)
-    local caster = self:GetCaster()
-    local modifier_drain = "modifier_imba_life_drain"
+    if IsServer() then
+        local caster = self:GetCaster()
+        local modifier_drain = "modifier_imba_life_drain"
 
-    -- Cannot be cast on buildings
-    if target:IsBuilding() then 
-        return UF_FAIL_BUILDING
-    end
+        -- Cannot be cast on invulnerable targets
+        if target:IsInvulnerable() then
+            return UF_FAIL_INVULNERABLE
+        end
 
-    -- Cannot be cast on courier/wards
-    if target:IsOther() then
-        return UF_FAIL_OTHER
-    end
+        -- Cannot be cast on self
+        if target == caster then
+            return UF_FAIL_CUSTOM
+        end
 
-    -- Cannot be cast on invulnerable targets
-    if target:IsInvulnerable() then
-        return UF_FAIL_INVULNERABLE
-    end
+        -- Cannot be cast on targets already afflicted with Life Drain
+        if target:HasModifier(modifier_drain) then
+            return UF_FAIL_CUSTOM
+        end
 
-    -- Cannot be cast on self
-    if target == caster then
-        return UF_FAIL_CUSTOM
-    end
-
-    -- Cannot be cast on targets already afflicted with Life Drain
-    if target:HasModifier(modifier_drain) then
-        return UF_FAIL_CUSTOM
+        local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+        return nResult
     end
 end
 

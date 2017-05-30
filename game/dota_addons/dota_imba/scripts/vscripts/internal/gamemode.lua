@@ -6,7 +6,7 @@ function GameMode:_InitGameMode()
 	-- Setup rules
 	GameRules:SetHeroRespawnEnabled( ENABLE_HERO_RESPAWN )
 	GameRules:SetUseUniversalShopMode( UNIVERSAL_SHOP_MODE )
-	GameRules:SetSameHeroSelectionEnabled( ALLOW_SAME_HERO_SELECTION )
+	GameRules:SetSameHeroSelectionEnabled( true ) -- Let server handle hero duplicates
 	GameRules:SetHeroSelectionTime( HERO_SELECTION_TIME )
 	GameRules:SetPreGameTime( PRE_GAME_TIME)
 	GameRules:SetPostGameTime( POST_GAME_TIME )
@@ -313,7 +313,17 @@ function OnSetGameMode( eventSourceIndex, args )
 		XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + i * 100
 	end
 	print("Hero power set to high")
-	
+
+    -- Hero pick rule
+    -- Ignore HeroPickRuleOption1 because that is the default
+    if tostring(mode_info.hero_pick_rule) == "HeroPickRuleOption2" then
+        IMBA_HERO_PICK_RULE = 1
+    elseif tostring(mode_info.hero_pick_rule) == "HeroPickRuleOption3" then
+        IMBA_HERO_PICK_RULE = 2
+	end
+
+    CustomNetTables:SetTableValue("game_options", "hero_pick_rule", {IMBA_HERO_PICK_RULE})
+
 	-- Set the game options as being chosen
 	GAME_OPTIONS_SET = true
 

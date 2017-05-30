@@ -13,6 +13,8 @@ end
 -- Base local ability to be used for fire breath and ice breath
 local base_ability_dual_breath = class({})
 
+function base_ability_dual_breath:IsNetherWardStealable() return false end
+
 function base_ability_dual_breath:GetCastRange(Location, Target)
 	if IsServer() then
 		return 0
@@ -61,8 +63,10 @@ end
 local base_modifier_dual_breath_caster = class({
 	IsHidden 						= function(self) return true end,
 	IsPurgable 						= function(self) return false end,
-	IsDebuff 						= function(self) return false end,
-	RemoveOnDeath 					= function(self) return true end,
+	IsDebuff 						= function(self) return false end,	
+	IgnoreTenacity					= function(self) return true end,
+	IsMotionController				= function(self) return true end,
+	GetMotionControllerPriority		= function(self) return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end,
 	AllowIllusionDuplicate			= function(self) return false end,
 	GetOverrideAnimation 			= function(self) return ACT_DOTA_FLAIL end,
 	GetActivityTranslationModifiers = function(self) return "forcestaff_friendly" end,
@@ -83,69 +87,79 @@ end
 
 function base_modifier_dual_breath_caster:OnCreated( kv )
 
-	if IsServer() then
+	if IsServer() then		
 
-		if self:ApplyHorizontalMotionController() == false then 
-			self:Destroy()
-		else
+		local caster = self:GetCaster()
+		local ability = self:GetAbility()
+		local caster_pos = caster:GetAbsOrigin()
+		local ability_level = ability:GetLevel() - 1
+		local target = ability:GetCursorPosition()
 
-			local caster = self:GetCaster()
-			local ability = self:GetAbility()
-			local caster_pos = caster:GetAbsOrigin()
-			local ability_level = ability:GetLevel() - 1
-			local target = ability:GetCursorPosition()
-			-- #1 Talent: Dual Breath Range Increase
-			local range = ability:GetSpecialValueFor("range") + GetCastRangeIncrease(caster) + caster:FindTalentValue("special_bonus_imba_jakiro_1")
-			local particle_breath = self.particle_breath
+		-- #1 Talent: Dual Breath Range Increase
+		local range = ability:GetSpecialValueFor("range") + GetCastRangeIncrease(caster) + caster:FindTalentValue("special_bonus_imba_jakiro_1")
+		local particle_breath = self.particle_breath
 
-			self.caster = caster
-			self.ability = ability
-			self.path_radius = ability:GetSpecialValueFor("path_radius")
-			self.spill_distance = ability:GetSpecialValueFor("spill_distance")
-			self.debuff_duration = ability:GetSpecialValueFor("duration")
-			self.ability_target_team = ability:GetAbilityTargetTeam()
-			self.ability_target_type = ability:GetAbilityTargetType()
-			self.ability_target_flags = ability:GetAbilityTargetFlags()
+		self.caster = caster
+		self.ability = ability
+		self.path_radius = ability:GetSpecialValueFor("path_radius")
+		self.spill_distance = ability:GetSpecialValueFor("spill_distance")
+		self.debuff_duration = ability:GetSpecialValueFor("duration")
+		self.ability_target_team = ability:GetAbilityTargetTeam()
+		self.ability_target_type = ability:GetAbilityTargetType()
+		self.ability_target_flags = ability:GetAbilityTargetFlags()
 
-			local caster_pos = caster:GetAbsOrigin()
-			local breath_direction = ( target - caster_pos ):Normalized()
-			local breath_distance = ( target - caster_pos ):Length2D()
-			if breath_distance > range then
-				breath_distance = range
-			end
-
-			-- #6 Talent: Dual Breath Speed Increase
-			local breath_speed = ability:GetLevelSpecialValueFor("speed", ability_level) + caster:FindTalentValue("special_bonus_imba_jakiro_6")
-			
-			-- Ability variables
-			self.breath_direction = breath_direction
-			self.breath_distance = breath_distance
-			-- Tick rate is 30 per sec
-			self.breath_speed = breath_speed * 1/30
-			self.breath_traveled = 0
-			self.affected_unit_list = {}
-			
-			-- Destroy existing particle if it exist
-			if self.existing_breath_particle then
-				local destroy_existing_breath_particle = self.existing_breath_particle
-				-- Delay before destroying particle
-				Timers:CreateTimer(0.4, function()
-					ParticleManager:DestroyParticle(destroy_existing_breath_particle, false)
-					ParticleManager:ReleaseParticleIndex( destroy_existing_breath_particle )
-				end)
-			end
-
-			-- Create breath particle
-			local breath_pfx = ParticleManager:CreateParticle(particle_breath, PATTACH_ABSORIGIN, caster)
-			ParticleManager:SetParticleControl(breath_pfx, 0, caster_pos )
-			ParticleManager:SetParticleControl(breath_pfx, 1, breath_direction * breath_speed)
-			ParticleManager:SetParticleControl(breath_pfx, 3, Vector(0,0,0) )
-			ParticleManager:SetParticleControl(breath_pfx, 9, caster_pos )
-
-			self.existing_breath_particle = breath_pfx
+		local caster_pos = caster:GetAbsOrigin()
+		local breath_direction = ( target - caster_pos ):Normalized()
+		local breath_distance = ( target - caster_pos ):Length2D()
+		if breath_distance > range then
+			breath_distance = range
 		end
 
+		-- #6 Talent: Dual Breath Speed Increase
+		local breath_speed = ability:GetLevelSpecialValueFor("speed", ability_level) + caster:FindTalentValue("special_bonus_imba_jakiro_6")
+		
+		-- Ability variables
+		self.breath_direction = breath_direction
+		self.breath_distance = breath_distance
+
+		-- Tick rate is 30 per sec
+		self.breath_speed = breath_speed * 1/30
+		self.breath_traveled = 0
+		self.affected_unit_list = {}
+		
+		-- Destroy existing particle if it exist
+		if self.existing_breath_particle then
+			local destroy_existing_breath_particle = self.existing_breath_particle
+			-- Delay before destroying particle
+			Timers:CreateTimer(0.4, function()
+				ParticleManager:DestroyParticle(destroy_existing_breath_particle, false)
+				ParticleManager:ReleaseParticleIndex( destroy_existing_breath_particle )
+			end)
+		end
+
+		-- Create breath particle
+		local breath_pfx = ParticleManager:CreateParticle(particle_breath, PATTACH_ABSORIGIN, caster)
+		ParticleManager:SetParticleControl(breath_pfx, 0, caster_pos )
+		ParticleManager:SetParticleControl(breath_pfx, 1, breath_direction * breath_speed)
+		ParticleManager:SetParticleControl(breath_pfx, 3, Vector(0,0,0) )
+		ParticleManager:SetParticleControl(breath_pfx, 9, caster_pos )
+
+		self.existing_breath_particle = breath_pfx
+
+		self.frametime = FrameTime()
+		self:StartIntervalThink(self.frametime)		
 	end
+end
+
+function base_modifier_dual_breath_caster:OnIntervalThink()
+	-- Check motion controllers
+	if not self:CheckMotionControllers() then
+		self:Destroy()
+		return nil
+	end
+
+	-- Horizontal motion
+	self:HorizontalMotion(self.caster, self.frametime)	
 end
 
 function base_modifier_dual_breath_caster:_DualBreathApplyModifierToEnemies( enemies )
@@ -198,7 +212,7 @@ function base_modifier_dual_breath_caster:_DualBreathAOEApplyModifier()
 end
 
 
-function base_modifier_dual_breath_caster:UpdateHorizontalMotion()
+function base_modifier_dual_breath_caster:HorizontalMotion()
 
 	if IsServer() then
 		local caster = self.caster
@@ -209,15 +223,10 @@ function base_modifier_dual_breath_caster:UpdateHorizontalMotion()
 		self:_DualBreathAOEApplyModifier()
 
 		if breath_traveled < self.breath_distance and not caster:IsStunned() and not caster:IsSilenced() and not caster:IsHexed() and not caster:IsNightmared() then
-			caster:SetAbsOrigin(caster:GetAbsOrigin() + self.breath_direction * breath_speed)
+			local set_point = caster:GetAbsOrigin() + self.breath_direction * breath_speed
+			caster:SetAbsOrigin(Vector(set_point.x, set_point.y, GetGroundPosition(set_point, caster).z))
 			self.breath_traveled = breath_traveled + breath_speed
-		else
-			caster:InterruptMotionControllers( true )
-			if not ability:IsStolen() then
-				-- Switch breath abilities if spell is not stolen
-				caster:SwapAbilities(ability:GetAbilityName(), self.ability_other_breath_name, false, true)
-			end
-
+		else			
 			self:Destroy()
 		end
 	end
@@ -231,20 +240,29 @@ function base_modifier_dual_breath_caster:CheckState()
 	return state
 end
 
-function base_modifier_dual_breath_caster:OnHorizontalMotionInterrupted()
+function base_modifier_dual_breath_caster:OnDestroy()
+	if IsServer() then
+		local caster = self:GetCaster()
+		local ability = self:GetAbility()
 
-	-- Destroy breath particle when motion interrupted
-	if self.existing_breath_particle then
-		local destroy_existing_breath_particle = self.existing_breath_particle
-		self.existing_breath_particle = nil
-		-- Delay before destroying particle
-		Timers:CreateTimer(0.4, function()
-			ParticleManager:DestroyParticle(destroy_existing_breath_particle, false)
-			ParticleManager:ReleaseParticleIndex( destroy_existing_breath_particle )
-		end)
+		if not ability:IsStolen() then
+			-- Switch breath abilities if spell is not stolen
+			caster:SwapAbilities(ability:GetAbilityName(), self.ability_other_breath_name, false, true)
+		end	
+
+		-- Destroy breath particle when motion interrupted
+		if self.existing_breath_particle then
+			local destroy_existing_breath_particle = self.existing_breath_particle
+			self.existing_breath_particle = nil
+			-- Delay before destroying particle
+			Timers:CreateTimer(0.4, function()
+				ParticleManager:DestroyParticle(destroy_existing_breath_particle, false)
+				ParticleManager:ReleaseParticleIndex( destroy_existing_breath_particle )
+			end)
+		end
+
+		caster:SetUnitOnClearGround()
 	end
-
-	self:Destroy()
 end
 
 -- Base DOT (Damage Over Time) debuff class
@@ -335,7 +353,7 @@ imba_jakiro_fire_breath = ShallowCopy( base_ability_dual_breath )
 imba_jakiro_fire_breath.ability_other_breath_name = "imba_jakiro_ice_breath"
 imba_jakiro_fire_breath.modifier_caster_name = "modifier_imba_fire_breath_caster"
 LinkLuaModifier("modifier_imba_fire_breath_debuff", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_fire_breath_caster", "hero/hero_jakiro", LUA_MODIFIER_MOTION_HORIZONTAL)
+LinkLuaModifier("modifier_imba_fire_breath_caster", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
 
 function imba_jakiro_fire_breath:GetTexture()
 	return "custom/jakiro_fire_breath"
@@ -389,7 +407,7 @@ imba_jakiro_ice_breath = ShallowCopy( base_ability_dual_breath )
 imba_jakiro_ice_breath.ability_other_breath_name = "imba_jakiro_fire_breath"
 imba_jakiro_ice_breath.modifier_caster_name = "modifier_imba_ice_breath_caster"
 LinkLuaModifier("modifier_imba_ice_breath_debuff", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_ice_breath_caster", "hero/hero_jakiro", LUA_MODIFIER_MOTION_HORIZONTAL)
+LinkLuaModifier("modifier_imba_ice_breath_caster", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
 
 function imba_jakiro_ice_breath:GetTexture()
 	return "custom/jakiro_ice_breath"
@@ -470,7 +488,8 @@ function modifier_imba_ice_path_thinker:OnCreated( kv )
 		local stun_duration 		= ability:GetLevelSpecialValueFor("stun_duration", ability_level) + caster:FindTalentValue("special_bonus_imba_jakiro_5")
 
 		local start_pos 			= caster:GetAbsOrigin()
-		local end_pos 				= start_pos + caster:GetForwardVector() * path_length
+		local direction				= (caster:GetCursorPosition() - start_pos):Normalized()
+		local end_pos 				= start_pos + direction * path_length
 		local path_total_duration	= path_delay + path_duration
 
 		self.ice_path_end_time 		= GameRules:GetGameTime() + path_total_duration
@@ -492,7 +511,7 @@ function modifier_imba_ice_path_thinker:OnCreated( kv )
 
 		-- Create ice path blob
 		particle_name = "particles/hero/jakiro/jakiro_ice_path_line_blob.vpcf"
-		local pfx_ice_path_blob = ParticleManager:CreateParticle( particle_name, PATTACH_ABSORIGIN, caster )
+		local pfx_ice_path_blob = ParticleManager:CreateParticle( particle_name, PATTACH_WORLDORIGIN, caster )
 		ParticleManager:SetParticleControl( pfx_ice_path_blob, 0, start_pos )
 		ParticleManager:SetParticleControl( pfx_ice_path_blob, 1, end_pos )
 		ParticleManager:SetParticleControl( pfx_ice_path_blob, 2, Vector(path_duration, 0, 0) ) --Shorter duration as it needs to melt
@@ -501,7 +520,7 @@ function modifier_imba_ice_path_thinker:OnCreated( kv )
 		-- Create ice path flash
 		Timers:CreateTimer(path_delay, function()
 			particle_name = "particles/hero/jakiro/jakiro_ice_path_line_crack.vpcf"
-			local pfx_ice_path_explode = ParticleManager:CreateParticle( particle_name, PATTACH_ABSORIGIN, caster )
+			local pfx_ice_path_explode = ParticleManager:CreateParticle( particle_name, PATTACH_WORLDORIGIN, caster )
 			ParticleManager:SetParticleControl( pfx_ice_path_explode, 0, start_pos )
 			ParticleManager:SetParticleControl( pfx_ice_path_explode, 1, end_pos )
 			ParticleManager:ReleaseParticleIndex( pfx_ice_path_explode )
@@ -509,7 +528,7 @@ function modifier_imba_ice_path_thinker:OnCreated( kv )
 
 		-- Create ice path icicles
 		particle_name = "particles/units/heroes/hero_jakiro/jakiro_ice_path_b.vpcf"
-		local pfx_icicles = ParticleManager:CreateParticle( particle_name, PATTACH_ABSORIGIN, caster )
+		local pfx_icicles = ParticleManager:CreateParticle( particle_name, PATTACH_WORLDORIGIN, caster )
 		ParticleManager:SetParticleControl( pfx_icicles, 0, start_pos )
 		ParticleManager:SetParticleControl( pfx_icicles, 1, end_pos )
 		ParticleManager:SetParticleControl( pfx_icicles, 2, Vector( path_total_duration, 0, 0 ) )
@@ -518,8 +537,24 @@ function modifier_imba_ice_path_thinker:OnCreated( kv )
 
 		local tick_rate = 0.1
 
+		---- Ice path vision nodes ----
+		-- How far apart are the viewpoints. I believe half of the radius is good enough coverage without too many points
+		local viewpoint_distance = path_radius/2
+		local viewpoint_amount = (start_pos - end_pos):Length2D()/viewpoint_distance
+		local viewpoint_view = path_radius + 5 -- extra so we can see the units the Ice Path stuns on entry
+		-- To create too many or too few, that is the question. Let's go with too many
+		viewpoint_amount = math.ceil(viewpoint_amount)
+		local direction_vector = (end_pos - start_pos):Normalized()
+		------------------------------
+		
 		-- Apply affect after delay
 		Timers:CreateTimer(path_delay, function()
+			-- Create flying vision nodes
+			local current_point = start_pos
+			for i=1,viewpoint_amount do
+				AddFOWViewer(caster:GetTeamNumber(), current_point, viewpoint_view, path_duration, false)
+				current_point = current_point + direction_vector * viewpoint_distance
+			end
 			-- Apply effect immediately after delay
 			self:OnIntervalThink()
 			-- Run applying effects on interval
@@ -652,6 +687,7 @@ LinkLuaModifier("modifier_imba_liquid_fire_caster", "hero/hero_jakiro", LUA_MODI
 LinkLuaModifier("modifier_imba_liquid_fire_animate", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_liquid_fire_debuff", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
 
+function imba_jakiro_liquid_fire:IsNetherWardStealable() return false end
 function imba_jakiro_liquid_fire:OnCreated()
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
@@ -881,11 +917,11 @@ modifier_imba_liquid_fire_debuff = ShallowCopy( base_modifier_dot_debuff )
 
 function modifier_imba_liquid_fire_debuff:_UpdateSubClassLevelValues()
 	local ability = self.ability
-	self.attack_slow = -(ability:GetSpecialValueFor("attack_slow"))
+	self.attack_slow = (ability:GetSpecialValueFor("attack_slow"))
 end
 
 function modifier_imba_liquid_fire_debuff:_SubClassOnCreated()
-	self.turn_slow = -(self.ability:GetSpecialValueFor("turn_slow"))
+	self.turn_slow = (self.ability:GetSpecialValueFor("turn_slow"))
 end
 
 function modifier_imba_liquid_fire_debuff:DeclareFunctions()
@@ -897,8 +933,8 @@ function modifier_imba_liquid_fire_debuff:DeclareFunctions()
 	return funcs
 end
 
-function modifier_imba_liquid_fire_debuff:GetModifierAttackSpeedBonus_Constant() return self.attack_slow end
-function modifier_imba_liquid_fire_debuff:GetModifierTurnRate_Percentage() return self.turn_slow end
+function modifier_imba_liquid_fire_debuff:GetModifierAttackSpeedBonus_Constant() return self.attack_slow * (-1) end
+function modifier_imba_liquid_fire_debuff:GetModifierTurnRate_Percentage() return self.turn_slow * (-1) end
 function modifier_imba_liquid_fire_debuff:GetEffectName() return "particles/units/heroes/hero_jakiro/jakiro_liquid_fire_debuff.vpcf" end
 function modifier_imba_liquid_fire_debuff:GetEffectAttachType() return PATTACH_ABSORIGIN_FOLLOW end
 
@@ -982,7 +1018,7 @@ function modifier_imba_macropyre_thinker:OnCreated( kv )
 
 		for trail = trail_start, trail_end do
 		
-			local macropyre_pfx = ParticleManager:CreateParticle( particle_name, PATTACH_ABSORIGIN, caster)
+			local macropyre_pfx = ParticleManager:CreateParticle( particle_name, PATTACH_WORLDORIGIN, caster)
 
 			-- Calculate each trail's end position
 			local end_pos = RotatePosition(start_pos, QAngle(0, trail * trail_angle, 0), common_vector)

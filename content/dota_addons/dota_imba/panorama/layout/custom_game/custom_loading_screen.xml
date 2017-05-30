@@ -35,7 +35,6 @@
 						<ToggleButton id="AllRandomToggle" text="#imba_gamemode_name_all_random" class="GameOptionsToggle" onmouseover="UIShowTextTooltip( imba_gamemode_name_all_random_tooltip )" onmouseout="UIHideTextTooltip()"/>
 						<ToggleButton id="FranticToggle" text="#imba_gamemode_game_options_frantic" class="GameOptionsToggle" onmouseover="UIShowTextTooltip( imba_gamemode_game_options_frantic_tooltip )" onmouseout="UIHideTextTooltip()"/>
 						<ToggleButton id="TowerUpgradesToggle" text="#imba_gamemode_settings_tower_upgrades" class="GameOptionsToggle" onmouseover="UIShowTextTooltip( imba_gamemode_settings_tower_upgrades_tooltip )" onmouseout="UIHideTextTooltip()"/>
-
 					</Panel>
 
 					<Panel id="KillsToEndOptionsPanel" class="GameOptionsSubPanel" onmouseover="UIShowTextTooltip( imba_gamemode_settings_kills_to_end_tooltip )" onmouseout="UIHideTextTooltip()">
@@ -105,6 +104,18 @@
 
 					</Panel>
 
+                    <Panel class="GameOptionsLongSubPanel" onmouseover="UIShowTextTooltip( imba_gamemode_settings_hero_pick_rule_tooltip )" onmouseout="UIHideTextTooltip()">
+
+						<Label class="GameOptionsLabel" text="#imba_gamemode_settings_hero_pick_rule" />
+
+						<DropDown id="HeroPickRuleDropdown" class="GameOptionsDropdown">
+							<Label text="#imba_gamemode_settings_hero_pick_all_unique" id="HeroPickRuleOption1"/>
+							<Label text="#imba_gamemode_settings_hero_pick_team_unique" id="HeroPickRuleOption2"/>
+                            <Label text="#imba_gamemode_settings_hero_pick_no_unique" id="HeroPickRuleOption3"/>
+						</DropDown>
+
+					</Panel>
+
 					<Button id="ConfirmOptionsBtn" onactivate="SetGameOptions();" onmouseover="UIShowTextTooltip( imba_gamemode_settings_lock_options_tooltip )" onmouseout="UIHideTextTooltip()">
 						<Label id="ConfirmOptionsBtnLabel" text="#imba_gamemode_settings_lock_options" />
 					</Button>
@@ -128,11 +139,15 @@
 					</Button>
 					<Label id="community_discord_description" class="CommunityText" html="true" text="#community_discord_description"/>
 
-					<Button id="community_chinese_blog_header" class="CommunityImg" onactivate="DOTADisplayURL('http://www.bilibiliduang.cn/imba');" >
+					<Button id="community_discord_header_ru" class="CommunityImg" onactivate="DOTADisplayURL('https://discord.gg/HcybJKt');" >
+						<Image src="file://{images}/custom_game/loading_screen/community_discord_header_ru.png" />
+					</Button>
+					<Label id="community_discord_description_ru" class="CommunityText" html="true" text="#community_discord_description_ru"/>
+
+					<Button id="community_chinese_blog_header" class="CommunityImg" onactivate="DOTADisplayURL('https://www.bilibiliduang.cn/imbagroup');" >
 						<Image src="file://{images}/custom_game/loading_screen/community_chinese_blog.png" />
 					</Button>
-					<Label id="community_chinese_blog_description_01" class="CommunityText" html="true" text="(this space is for the chinese community)"/>
-					<Label id="community_chinese_blog_description_02" class="CommunityText" html="true" text="更新日志中文翻译请查看此页面! 全新的IMBA中文翻译已经添加，尽情享用吧！如果您发现了任何翻译的错误或有其他建议，可以访问IMBA的中文页面在任意文章下评论"/>
+					<Label id="community_chinese_blog_description_02" class="CommunityText" html="true" text="欢迎加入IMBA中文QQ群，讨论、开黑、找队友，没有早退，NO LEAVERS！"/>
 
 				</Panel>
 

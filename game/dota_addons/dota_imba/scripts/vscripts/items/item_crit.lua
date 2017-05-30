@@ -52,7 +52,7 @@ end
 function modifier_item_imba_greater_crit:OnDestroy()
 	if IsServer() then
 		local parent = self:GetParent()
-		if parent:HasModifier("modifier_item_imba_greater_crit") then
+		if not parent:HasModifier("modifier_item_imba_greater_crit") then
 			parent:RemoveModifierByName("modifier_item_imba_greater_crit_buff")
 		end
 	end
@@ -80,13 +80,17 @@ function modifier_item_imba_greater_crit_buff:OnCreated()
 end
 
 function modifier_item_imba_greater_crit_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE}
+	local decFuncs = {
+		MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE,
+		MODIFIER_EVENT_ON_ATTACK_LANDED
+	}
 
 	return decFuncs
 end
 
 function modifier_item_imba_greater_crit_buff:GetModifierPreAttack_CriticalStrike()	
-	if IsServer() then
+	if IsServer() then		
+
 		-- Find how many Daedaluses we have for calculating crits
 		local crit_modifiers = self.caster:FindAllModifiersByName("modifier_item_imba_greater_crit")
 
@@ -94,19 +98,36 @@ function modifier_item_imba_greater_crit_buff:GetModifierPreAttack_CriticalStrik
 		local stacks = self:GetStackCount()
 		local crit_power = self.base_crit + self.crit_increase/self.crit_increase * stacks 
 		
-		local crit_succeeded = false		
+		self.crit_succeeded = false		
 		local multiplicative_chance = (1 - (1 - self.crit_chance * 0.01) ^ #crit_modifiers) * 100
 
 		if RollPercentage(multiplicative_chance) then
 			self:SetStackCount(0)			
-			crit_succeeded = true
+			self.crit_succeeded = true
 		end		
 
-		if crit_succeeded then
+		if self.crit_succeeded then
 			return crit_power
 		else
-			self:SetStackCount(stacks + self.crit_increase * #crit_modifiers)
-			return nil	
+			return nil
+		end
+	end
+end
+
+function modifier_item_imba_greater_crit_buff:OnAttackLanded( params )
+	if IsServer() then
+		if params.attacker == self:GetParent() then
+
+			-- If the target is a building, do nothing
+			if params.target:IsBuilding() then
+				return nil
+			end
+
+			if not self.crit_succeeded then
+				local stacks = self:GetStackCount()
+				local crit_modifiers = self.caster:FindAllModifiersByName("modifier_item_imba_greater_crit")
+				self:SetStackCount(stacks + self.crit_increase * #crit_modifiers)
+			end
 		end
 	end
 end

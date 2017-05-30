@@ -20,6 +20,24 @@ function DebugPrintTable(...)
 	--end
 end
 
+function PrintAll(t)
+	for k,v in pairs(t) do
+		print(k,v)
+	end
+end
+
+function MergeTables( t1, t2 )
+	for name,info in pairs(t2) do
+		t1[name] = info
+	end
+end
+
+function AddTableToTable( t1, t2)
+	for k,v in pairs(t2) do
+		table.insert(t1, v)
+	end
+end
+
 function PrintTable(t, indent, done)
 	--print ( string.format ('PrintTable type %s', type(keys)) )
 	if type(t) ~= "table" then return end
@@ -722,8 +740,13 @@ function SpawnImbaRunes()
 	}
 
 	-- Spawn a random powerup rune in a random powerup location
-	if game_time > 1 then
+	if game_time > 1 and game_time < 40 then
 		CreateItemOnPositionForLaunch(powerup_rune_locations[RandomInt(1, #powerup_rune_locations)], CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))
+
+	-- After 40 minutes, spawn powerup runes on both locations
+	elseif game_time >= 40 then
+		CreateItemOnPositionForLaunch(powerup_rune_locations[1], CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))
+		CreateItemOnPositionForLaunch(powerup_rune_locations[2], CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))
 	end
 end
 
@@ -800,7 +823,7 @@ function PickupBountyRune(item, unit)
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_GOLD, unit, current_bounty, nil)
 
 	-- Play the gold gained sound
-	unit:EmitSound("General.Coins")
+	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "General.Coins", unit)
 
 	-- Play the bounty rune activation sound to the unit's team
 	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Bounty", unit)

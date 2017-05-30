@@ -5,12 +5,17 @@
 
 //Timer for talent window to close when user selects another unit
 var _current_show_all_text_timer = null;
+var _current_hover_preview_timer = null;
 //Integer to remove "selectable" class from talent choice panel
 var _current_ability_points = 0;
 
 var ATTRIBUTE_UNIT_ID = "open_unit_id";
 var TALENT_TABLE_NAME = "imba_talent_manager";
 var OPEN_TALENT_WINDOW_CLASS = "show_talent_window";
+var IMBA_TALENT_BTN_ID = "ImbaTalentBtn";
+var MAX_TALENT_ROW_NUM_OF_CHOICES = 8;
+var MAX_TALENT_ROWS = 8;
+var MAX_NUM_OF_GENERIC_TALENTS = 6;
 
 function GetHUDRootUI(){
     var rootUI = $.GetContextPanel();
@@ -61,7 +66,7 @@ function InitializeIMBATalentWindow(){
     headerText.text = $.Localize("talent_window_header");
 
     //Ignore if max_level for heroes are more than or less than 40, we will still show the full 8 rows
-    for(var i=0; i<8; i++){
+    for(var i=0; i<MAX_TALENT_ROWS; i++){
         var currentRowLevel = ConvertRowToLevelRequirement(i);
         var newTalentRowID = "Talent_Row_"+currentRowLevel;
         var newTalentRow = $.CreatePanel("Panel", talentPanel, newTalentRowID);
@@ -76,24 +81,19 @@ function InitializeIMBATalentWindow(){
 
         if(panelSpecials){
             var numOfChoices;
-            var extraClass;
             if((i%2)==0){
-                //Special talents
-                numOfChoices = 2;
-                extraClass = "two_choices";
+                //Imba Special talents = 2, non-imba Special talents = 8
+                //Hence first 6 talents on this row will always be generic talents
+                numOfChoices = MAX_TALENT_ROW_NUM_OF_CHOICES;
             }else{
-                //Stat talents
-                numOfChoices = 6;
-                extraClass = "six_choices";
+                //Generic talents only
+                numOfChoices = MAX_NUM_OF_GENERIC_TALENTS;
             }
-
-            newTalentRow.AddClass(extraClass);
 
             for(var k=0; k<numOfChoices; k++){
                 var newTalentChoiceID = "Talent_Choice_"+currentRowLevel+"_"+k;
                 var newTalentChoice = $.CreatePanel("Panel", panelSpecials, newTalentChoiceID);
                 newTalentChoice.BLoadLayout("file://{resources}/layout/custom_game/talent_window_choice.xml", false, false);
-                newTalentChoice.AddClass(extraClass);
             }
         }
     }
@@ -101,6 +101,50 @@ function InitializeIMBATalentWindow(){
     var footerText = $.CreatePanel("Label", talentPanel, "");
     footerText.AddClass("footer");
     footerText.text = $.Localize("talent_window_footer");
+
+    GameEvents.Subscribe("dota_player_gained_level", OnPlayerGainedLevel);
+    GameEvents.Subscribe("dota_player_learned_ability", OnPlayerLearnedAbility);
+    GameEvents.Subscribe("dota_player_update_query_unit", OnPlayerUpdateQueryUnit);
+    GameEvents.Subscribe("dota_player_update_selected_unit", OnPlayerUpdateSelectedUnit);
+
+    GameUI.SetMouseCallback( function( eventName, arg ) {
+
+        var talentWindow = $.GetContextPanel();
+        if(talentWindow.BHasClass("show_talent_window") && GameUI.GetClickBehaviors() == CLICK_BEHAVIORS.DOTA_CLICK_BEHAVIOR_NONE){
+
+            if ( eventName == "pressed" ){
+                //No matter what button is pressed, if it is outside the bounds of talent window, close the window
+                var cursorPos = GameUI.GetCursorPosition();
+                if(cursorPos[0] < talentWindow.actualxoffset ||
+                    (talentWindow.actualxoffset + talentWindow.contentwidth) < cursorPos[0] ||
+                    cursorPos[1] < talentWindow.actualyoffset ||
+                    (talentWindow.actualyoffset + talentWindow.contentheight) < cursorPos[1]){
+
+                    OpenImbaTalentWindow(false);
+                }
+            }
+        }
+
+        //Do not consume event
+        return false;
+    });
+
+    //Enable focus for talent window children (this is to allow catching of Escape button)
+    RecurseEnableFocus(talentPanel);
+
+    $.RegisterKeyBind(talentPanel, "key_escape", function(){
+        if(talentPanel.BHasClass("show_talent_window")){
+            OpenImbaTalentWindow(false);
+        }
+    });
+}
+
+function RecurseEnableFocus(panel){
+    panel.SetAcceptsFocus(true);
+    var children = panel.Children();
+    $.Each(children, function(child){
+        RecurseEnableFocus(child);
+    });
 }
 
 function GetGenericTalentInfoTable(){
@@ -111,10 +155,10 @@ function GetHeroTalentChoicesTable(hero_id){
     return CustomNetTables.GetTableValue(TALENT_TABLE_NAME, "hero_talent_choice_"+hero_id );
 }
 
-function GetImbaTalentButtonOverlayPanel(){
+function GetImbaTalentButtonPanel(){
     var baseUI = GetHUDRootUI();
     baseUI = baseUI.FindChildTraverse("AbilitiesAndStatBranch");
-    return baseUI.FindChildTraverse("IMBA_Talent_HUD_Button_Overlay");
+    return baseUI.FindChildTraverse(IMBA_TALENT_BTN_ID);
 }
 
 function IsImbaTalentWindowVisible(){
@@ -130,7 +174,7 @@ function CanHeroUpgradeAnyTalents(hero_id){
         if(heroTalentChoices){
             var currentHeroLevel = Entities.GetLevel(hero_id);
 
-            for(var i=0; i<8; i++){
+            for(var i=0; i<MAX_TALENT_ROWS; i++){
                 var currentRowLevel = ConvertRowToLevelRequirement(i);
                 if(currentRowLevel <= currentHeroLevel && heroTalentChoices[currentRowLevel] < 0){
                     return true;
@@ -147,22 +191,27 @@ function OnTalentChoiceUpdated(table_name, key, value){
 
         var bol_to_animate_btn = true;
         if(IsImbaTalentWindowVisible()){
-            //Update UI
-            PopulateIMBATalentWindow();
 
             //Ensure that player is still selecting the same unit that was updated
             var currentShownUnitID = Players.GetLocalPlayerPortraitUnit();
             var talentWindow = $.GetContextPanel();
             if(currentShownUnitID == talentWindow.GetAttributeInt(ATTRIBUTE_UNIT_ID, -1)){
+
+                //Update UI only if it is the currently shown unit
+                if(key == "hero_talent_choice_"+currentShownUnitID){
+                    //Update UI
+                    PopulateIMBATalentWindow();
+                }
+
                 if(Entities.GetAbilityPoints(currentShownUnitID) <= 1 || //Note that this is <= 1 because it takes time for server to update the abilityPoints
                     !CanHeroUpgradeAnyTalents(currentShownUnitID)){
                     //Close window if hero no longer has ability points
                     OpenImbaTalentWindow(false);
 
                     //Force remove .upgrade class
-                    var imbaBtnOverlay = GetImbaTalentButtonOverlayPanel();
+                    var imbaBtnPanel = GetImbaTalentButtonPanel();
                     //Should not be null as you need it to open talent window
-                    imbaBtnOverlay.RemoveClass("upgrade");
+                    imbaBtnPanel.RemoveClass("upgrade");
                     bol_to_animate_btn = false;
                 }
             }
@@ -200,19 +249,19 @@ function RepopulateImbaTalentWindowOnAbilityPointsChanged(){
 }
 
 function AnimateImbaTalentButton(){
-    var imbaBtnOverlay = GetImbaTalentButtonOverlayPanel();
+    var imbaBtnPanel = GetImbaTalentButtonPanel();
 
     //Might not be created yet
-    if(imbaBtnOverlay){
+    if(imbaBtnPanel){
         var currentShownUnitID = Players.GetLocalPlayerPortraitUnit();
 
         if(Entities.IsValidEntity(currentShownUnitID) &&
             Entities.IsRealHero(currentShownUnitID) &&
             Entities.IsControllableByPlayer(currentShownUnitID, Players.GetLocalPlayer())){
 
-            imbaBtnOverlay.SetHasClass("upgrade", CanHeroUpgradeAnyTalents(currentShownUnitID));
+            imbaBtnPanel.SetHasClass("upgrade", CanHeroUpgradeAnyTalents(currentShownUnitID));
         }else{
-            imbaBtnOverlay.RemoveClass("upgrade");
+            imbaBtnPanel.RemoveClass("upgrade");
         }
     }
 }
@@ -251,19 +300,28 @@ function FormatGenericTalentValue(talent_name, talent_value){
     }
 }
 
-function GetTalentLabelText(talent_name, rowLevelIndex){
+function GetTalentLabelText(talent_name, row_level){
 
     //Add more label text if it is a generic imba talent
-    var generic_talent_table = GetGenericTalentInfoTable();
-    var talent_data = generic_talent_table[talent_name];
+    var talent_value = GetTalentValue(talent_name, row_level);
 
-    if(talent_data && talent_data.value){
+    if(talent_value){
         //Generic Talent
-        return $.Localize(talent_name)+"\n"+FormatGenericTalentValue(talent_name, talent_data.value.split(" ")[rowLevelIndex]);
+        return $.Localize(talent_name)+"\n"+FormatGenericTalentValue(talent_name, talent_value);
     }else{
         //Ability talent
         return $.Localize("DOTA_Tooltip_ability_" + talent_name); //This is consistent with default dota talent localization
     }
+}
+
+function GetTalentValue(talent_name, row_level){
+    var generic_talent_table = GetGenericTalentInfoTable();
+    var talent_data = generic_talent_table[talent_name];
+    if(talent_data && talent_data.value){
+        var rowLevelIndex = (row_level-5)/5;
+        return talent_data.value.split(" ")[rowLevelIndex];
+    }
+    return null;
 }
 
 function CreateImagePanelForTalent(talent_name, parent_panel, hero_id){
@@ -330,29 +388,43 @@ function ConfigureTalentClick(panel, heroID, level, luaIndex){
     panel.hittest = true;
 }
 
-function WhiteWashOtherGenericTalent(rowLevelIndex, columnIndex, bol_enable){
 
+function WhiteWashTalentChoice(rowLevel, columnIndex, bol_enable){
     var talentPanel = $.GetContextPanel();
-    for(var i=0; i<8; i++){
-        if((i%2)>0 && ((7-i)/2 != rowLevelIndex)){
-            //Only white wash for stat talents
-            var currentRowLevel = ConvertRowToLevelRequirement(i);
-
-            var TalentChoiceID = "Talent_Choice_"+currentRowLevel+"_"+columnIndex;
-            var TalentChoicePanel = talentPanel.FindChildTraverse(TalentChoiceID);
-            if(TalentChoicePanel){
-                var imageChoiceContainer = TalentChoicePanel.FindChild("IMBA_Talent_Choice_Image_Container");
-                if(imageChoiceContainer){
-                    imageChoiceContainer.SetHasClass("white_wash", bol_enable &&
-                    !imageChoiceContainer.GetParent().BHasClass("upgraded") &&
-                    !imageChoiceContainer.GetParent().BHasClass("disabled"));
-                }
-            }
+    var TalentChoiceID = "Talent_Choice_"+rowLevel+"_"+columnIndex;
+    var TalentChoicePanel = talentPanel.FindChildTraverse(TalentChoiceID);
+    if(TalentChoicePanel){
+        var imageChoiceContainer = TalentChoicePanel.FindChild("IMBA_Talent_Choice_Image_Container");
+        if(imageChoiceContainer){
+            imageChoiceContainer.SetHasClass("white_wash", bol_enable &&
+            !imageChoiceContainer.GetParent().BHasClass("upgraded") &&
+            !imageChoiceContainer.GetParent().BHasClass("disabled"));
         }
     }
 }
 
-function AttachToolTip(image_container_panel, talent_name, rowLevelIndex, columnIndex){
+function WhiteWashOtherGenericTalent(currentRowLevel, columnIndex, bol_enable){
+
+    for(var i=0; i<MAX_TALENT_ROWS; i++){
+        var otherRowLevel = ConvertRowToLevelRequirement(i);
+        if(otherRowLevel != currentRowLevel){
+            //Only white wash for stat talents
+            WhiteWashTalentChoice(otherRowLevel, columnIndex, bol_enable);
+        }
+    }
+}
+
+function WhiteWashOtherCurrentRowChoices(currentRowLevel, columnIndex, bol_enable){
+    var talentPanel = $.GetContextPanel();
+    //Maximum of 8 columns
+    for(var i=0; i<MAX_TALENT_ROW_NUM_OF_CHOICES; i++){
+        if(i != columnIndex){
+            WhiteWashTalentChoice(currentRowLevel, i, bol_enable);
+        }
+    }
+}
+
+function AttachToolTip(image_container_panel, talent_name, currentRowLevel, columnIndex){
 
     //Attach tooltip to first direct child
     var ability_panel = image_container_panel.GetChild(0);
@@ -364,14 +436,11 @@ function AttachToolTip(image_container_panel, talent_name, rowLevelIndex, column
         var title;
         var description;
 
-        var generic_talent_table = GetGenericTalentInfoTable();
-        var talent_data = generic_talent_table[talent_name];
+        var talent_value = GetTalentValue(talent_name, currentRowLevel);
 
-        if(talent_data){
+        if(talent_value){
             title = $.Localize(talent_name);
-            if(talent_data.value){
-                description = FormatGenericTalentValue(talent_name, talent_data.value.split(" ")[rowLevelIndex]);
-            }
+            description = FormatGenericTalentValue(talent_name, talent_value);
         }else{
             //Note that the localized strings are to be located in /game/dota_addons/dota_imba/panorama/localization, this is different from localization of abilities
             var prefix = "Dota_Tooltip_talent_" + talent_name;
@@ -387,47 +456,42 @@ function AttachToolTip(image_container_panel, talent_name, rowLevelIndex, column
             }
         }
 
-        var shouldShowWhiteWash = talent_data && image_container_panel.GetParent().BHasClass("selectable");
+        var isTalent = talent_value != null;
+        var shouldShowWhiteWash = image_container_panel.GetParent().BHasClass("selectable");
 
-        if(title){
-            ability_panel.SetPanelEvent("onmouseover", function(){
+        ability_panel.SetPanelEvent("onmouseover", function(){
+            if(title){
                 $.DispatchEvent("DOTAShowTitleTextTooltip", ability_panel, title, description);
-                if(shouldShowWhiteWash){
-                    WhiteWashOtherGenericTalent(rowLevelIndex, columnIndex, true);
-                }
-            });
-            ability_panel.SetPanelEvent("onmouseout", function(){
-                $.DispatchEvent("DOTAHideTitleTextTooltip");
-                if(talent_data){
-                    WhiteWashOtherGenericTalent(rowLevelIndex, columnIndex, false);
-                }
-            });
-        }else{
-            //Fall back display
-            ability_panel.SetPanelEvent("onmouseover", function(){
+            }else{
                 $.DispatchEvent("DOTAShowTextTooltip", ability_panel, description);
-                if(shouldShowWhiteWash){
-                    WhiteWashOtherGenericTalent(rowLevelIndex, columnIndex, true);
+            }
+            if(shouldShowWhiteWash){
+                if(isTalent){
+                    WhiteWashOtherGenericTalent(currentRowLevel, columnIndex, true);
                 }
-            });
-            ability_panel.SetPanelEvent("onmouseout", function(){
+                WhiteWashOtherCurrentRowChoices(currentRowLevel, columnIndex, true);
+            }
+        });
+        ability_panel.SetPanelEvent("onmouseout", function(){
+            if(title){
+                $.DispatchEvent("DOTAHideTitleTextTooltip");
+            }else{
                 $.DispatchEvent("DOTAHideTextTooltip");
-                if(talent_data){
-                    WhiteWashOtherGenericTalent(rowLevelIndex, columnIndex, false);
-                }
-            });
-        }
+            }
+            if(isTalent){
+                WhiteWashOtherGenericTalent(currentRowLevel, columnIndex, false);
+            }
+            WhiteWashOtherCurrentRowChoices(currentRowLevel, columnIndex, false);
+        });
     }
 }
 
 function HasGenericTalentBeenUpgraded(unit_id, column_index){
     var heroTalentChoices = GetHeroTalentChoicesTable(unit_id);
     for(var i=0; i<8; i++){
-        if((i%2)>0){
-            var currentRowLevel = ConvertRowToLevelRequirement(i);
-            if((column_index+1) == heroTalentChoices[currentRowLevel]){
-                return true;
-            }
+        var currentRowLevel = ConvertRowToLevelRequirement(i);
+        if((column_index+1) == heroTalentChoices[currentRowLevel]){
+            return true;
         }
     }
     return false;
@@ -455,79 +519,86 @@ function PopulateIMBATalentWindow(){
         var generic_talent_table = GetGenericTalentInfoTable();
 
         if(heroTalentList){
-            for(var i=0; i<8; i++){
+            for(var i=0; i<MAX_TALENT_ROWS; i++){
                 var currentRowLevel = ConvertRowToLevelRequirement(i);
 
                 if(heroTalentList[currentRowLevel]){
-                    var numOfChoices;
+                    var numOfChoicesToProcess;
                     if((i%2)==0){
                         //Special talents
-                        numOfChoices = 2;
+                        numOfChoicesToProcess = MAX_TALENT_ROW_NUM_OF_CHOICES;
                     }else{
                         //Stat talents
-                        numOfChoices = 6;
+                        numOfChoicesToProcess = MAX_NUM_OF_GENERIC_TALENTS;
                     }
 
-                    //Used to get the values for the desired row
-                    var rowLevelIndex = (currentRowLevel-5)/10;
+                    var TalentRow = talentPanel.FindChildTraverse("Talent_Row_"+currentRowLevel);
+                    if(TalentRow){
+                        var numOfTalentsInThisRow = Object.keys(heroTalentList[currentRowLevel]).length;
+                        TalentRow.SetHasClass("six_choices", numOfTalentsInThisRow == 6);
+                        TalentRow.SetHasClass("two_choices", numOfTalentsInThisRow == 2);
+                        TalentRow.SetHasClass("eight_choices", numOfTalentsInThisRow > 6);
+                    }
 
-                    for(var k=0; k<numOfChoices; k++){
+                    for(var k=0; k<numOfChoicesToProcess; k++){
                         var luaIndex = k+1; //Lua tables start at index 1
                         var TalentChoiceID = "Talent_Choice_"+currentRowLevel+"_"+k;
                         var TalentChoicePanel = talentPanel.FindChildTraverse(TalentChoiceID);
                         var TalentChoiceData = heroTalentList[currentRowLevel][luaIndex];
                         if(TalentChoicePanel){
-                            var labelChoiceText = TalentChoicePanel.FindChildTraverse("IMBA_Talent_Choice_Text");
-                            if(labelChoiceText){
-                                if(TalentChoiceData){
-                                    labelChoiceText.text = GetTalentLabelText(TalentChoiceData, rowLevelIndex);
-                                }else{
-                                    labelChoiceText.text = "ERR";
+                            if(TalentChoiceData == null){
+                                //Hide choices for imba heroes (only allow 2 choices for non-generic talents, first 6 panels will be hidden)
+                                TalentChoicePanel.style.visibility = "collapse";
+                            }else{
+                                TalentChoicePanel.style.visibility = "visible";
+                                var labelChoiceText = TalentChoicePanel.FindChildTraverse("IMBA_Talent_Choice_Text");
+                                if(labelChoiceText){
+                                    labelChoiceText.text = GetTalentLabelText(TalentChoiceData, currentRowLevel);
                                 }
-                            }
 
-                            var imageChoiceContainer = TalentChoicePanel.FindChild("IMBA_Talent_Choice_Image_Container");
-                            if(imageChoiceContainer){
-                                var currentRowChoiceIndex = heroTalentChoices[currentRowLevel];
+                                var imageChoiceContainer = TalentChoicePanel.FindChild("IMBA_Talent_Choice_Image_Container");
+                                if(imageChoiceContainer){
+                                    var currentRowChoiceIndex = heroTalentChoices[currentRowLevel];
 
-                                TalentChoicePanel.RemoveClass("selectable");
-                                TalentChoicePanel.RemoveClass("upgraded");
-                                TalentChoicePanel.RemoveClass("disabled");
-                                //Remove onClick event
-                                TalentChoicePanel.hittest = false;
-                                TalentChoicePanel.ClearPanelEvent("onactivate");
+                                    TalentChoicePanel.RemoveClass("selectable");
+                                    TalentChoicePanel.RemoveClass("upgraded");
+                                    TalentChoicePanel.RemoveClass("disabled");
+                                    //Remove onClick event
+                                    TalentChoicePanel.hittest = false;
+                                    TalentChoicePanel.ClearPanelEvent("onactivate");
 
-                                if(currentRowChoiceIndex >= 0){
+                                    if(currentRowChoiceIndex >= 0){
 
-                                    if(currentRowChoiceIndex == luaIndex){
-                                        //Add .upgraded class to TalentChoicePanel if user has upgraded the index
-                                        TalentChoicePanel.AddClass("upgraded");
+                                        if(currentRowChoiceIndex == luaIndex){
+                                            //Add .upgraded class to TalentChoicePanel if user has upgraded the index
+                                            TalentChoicePanel.AddClass("upgraded");
+                                        }else{
+                                            //Add .disabled class to TalentChoicePanel if user has already upgraded the row but not the index
+                                            TalentChoicePanel.AddClass("disabled");
+                                        }
+
+                                    }else if(k >= MAX_NUM_OF_GENERIC_TALENTS || !HasGenericTalentBeenUpgraded(currentShownUnitID, k)){
+                                        //Only selectable if entity has the right level and has an ability point to spend
+                                        if(currentUnitLevel >= currentRowLevel &&
+                                            currentAbilityPoints > 0 &&
+                                            isControllableByPlayer){
+                                            //Add .selectable class to TalentChoicePanel if user has not upgraded the row of talents
+                                            TalentChoicePanel.AddClass("selectable");
+                                            ConfigureTalentClick(TalentChoicePanel, currentShownUnitID, currentRowLevel, luaIndex);
+                                        }
                                     }else{
-                                        //Add .disabled class to TalentChoicePanel if user has already upgraded the row but not the index
+                                        //Not possible to upgrade the same tree
                                         TalentChoicePanel.AddClass("disabled");
                                     }
 
-                                }else if(numOfChoices == 2 || !HasGenericTalentBeenUpgraded(currentShownUnitID, k)){
-                                    //Only selectable if entity has the right level and has an ability point to spend
-                                    if(currentUnitLevel >= currentRowLevel &&
-                                        currentAbilityPoints > 0 &&
-                                        isControllableByPlayer){
-                                        //Add .selectable class to TalentChoicePanel if user has not upgraded the row of talents
-                                        TalentChoicePanel.AddClass("selectable");
-                                        ConfigureTalentClick(TalentChoicePanel, currentShownUnitID, currentRowLevel, luaIndex);
-                                    }
-                                }else{
-                                    //Not possible to upgrade the same tree
-                                    TalentChoicePanel.AddClass("disabled");
+                                    //Remove old images
+                                    imageChoiceContainer.RemoveAndDeleteChildren();
+                                    //Special talents will be abilities
+                                    //Generic stat talents will be modifiers
+                                    CreateImagePanelForTalent(TalentChoiceData, imageChoiceContainer, currentShownUnitID);
+
+                                    AttachToolTip(imageChoiceContainer, TalentChoiceData, currentRowLevel, k);
                                 }
-
-                                //Remove old images
-                                imageChoiceContainer.RemoveAndDeleteChildren();
-                                //Special talents will be abilities
-                                //Generic stat talents will be modifiers
-                                CreateImagePanelForTalent(TalentChoiceData, imageChoiceContainer, currentShownUnitID);
-
-                                AttachToolTip(imageChoiceContainer, TalentChoiceData, rowLevelIndex, k);
                             }
                         }
                     }
@@ -544,26 +615,29 @@ function OpenImbaTalentWindow(bol_open){
 
     //check if valid
     if(!bol_open || (Entities.IsValidEntity(currentShownUnitID) &&
-            Entities.IsRealHero(currentShownUnitID)))
-        {
+            Entities.IsRealHero(currentShownUnitID))){
 
         var talentWindow = $.GetContextPanel();
 
-        var btnOverlay = GetImbaTalentButtonOverlayPanel();
+        var imbaBtnPanel = GetImbaTalentButtonPanel();
 
         if(bol_open){
             talentWindow.SetAttributeInt(ATTRIBUTE_UNIT_ID, currentShownUnitID);
             PopulateIMBATalentWindow();
             talentWindow.AddClass(OPEN_TALENT_WINDOW_CLASS);
             CloseIMBATalentWindowWhenDeselectUnit();
-            btnOverlay.AddClass("selected");
+            imbaBtnPanel.AddClass("selected");
+            talentWindow.SetFocus();
         }else{
             talentWindow.SetAttributeInt(ATTRIBUTE_UNIT_ID, -1);
             talentWindow.RemoveClass(OPEN_TALENT_WINDOW_CLASS);
-            btnOverlay.RemoveClass("selected");
+            imbaBtnPanel.RemoveClass("selected");
+
+            //Unfocus talentWindow
+            $.DispatchEvent("DropInputFocus", talentWindow);
         }
 
-        talentWindow.RemoveClass("preview");
+        PreviewImbaTalentWindow(false);
 
         ShowAllTextWhenTalentWindowVisibleAndAltIsDown();
     }
@@ -574,11 +648,32 @@ function ToggleIMBATalentWindow(){
     OpenImbaTalentWindow(!talentWindow.BHasClass(OPEN_TALENT_WINDOW_CLASS));
 }
 
+function PreviewImbaTalentWindow(bol_preview){
+    if(_current_hover_preview_timer != null){
+        $.CancelScheduled(_current_hover_preview_timer);
+        _current_hover_preview_timer = null;
+    }
+
+    var PREVIEW_TALENT_WINDOW_CLASS = "preview";
+    var talentWindow = $.GetContextPanel();
+    if(bol_preview){
+        talentWindow.AddClass(PREVIEW_TALENT_WINDOW_CLASS);
+        ShowAllTextWhenTalentWindowVisibleAndAltIsDown();
+    }else{
+        talentWindow.RemoveClass(PREVIEW_TALENT_WINDOW_CLASS);
+    }
+}
+
+function DelayedPreviewImbaTalentWindow(){
+    //Set to null as timer has fired
+    _current_hover_preview_timer = null;
+    PreviewImbaTalentWindow(true);
+}
+
 function InsertIMBATalentButton(){
     $.Msg("InsertIMBATalentButton");
     var baseUI = GetHUDRootUI();
     baseUI = baseUI.FindChildTraverse("AbilitiesAndStatBranch");
-    var IMBA_TALENT_BTN_ID = "ImbaTalentBtn";
     var newButton = baseUI.FindChildTraverse(IMBA_TALENT_BTN_ID);
     if(newButton){
         //Remove existing button
@@ -591,23 +686,22 @@ function InsertIMBATalentButton(){
 
     var talentWindow = $.GetContextPanel();
 
-    var PREVIEW_CLASS = "preview";
-
     newButton.SetPanelEvent("onmouseover", function(){
-        //Show talent window
-        //Allow preview even if it is an illusion/clone
+        //Populate before preview
         PopulateIMBATalentWindow();
-        talentWindow.AddClass(PREVIEW_CLASS)
-        ShowAllTextWhenTalentWindowVisibleAndAltIsDown();
+        //Allow preview even if it is an illusion/clone
+        _current_hover_preview_timer = $.Schedule(0.3, DelayedPreviewImbaTalentWindow);
     });
 
     newButton.SetPanelEvent("onmouseout", function(){
-        //Close talent window
+        //Remove preview talent window
         //Allow preview even if it is an illusion/clone
-        talentWindow.RemoveClass(PREVIEW_CLASS)
+        PreviewImbaTalentWindow(false);
     });
 
     newButton.SetPanelEvent("onactivate", ToggleIMBATalentWindow);
+
+    AnimateImbaTalentButton();
 }
 
 //////////////////////////////
@@ -649,12 +743,5 @@ function OnPlayerUpdateSelectedUnit(){
     AnimateImbaTalentButton();
     CloseIMBATalentWindowWhenDeselectUnit();
 }
-
-GameEvents.Subscribe("dota_player_gained_level", OnPlayerGainedLevel);
-GameEvents.Subscribe("dota_player_learned_ability", OnPlayerLearnedAbility);
-GameEvents.Subscribe("dota_player_update_query_unit", OnPlayerUpdateQueryUnit);
-GameEvents.Subscribe("dota_player_update_selected_unit", OnPlayerUpdateSelectedUnit);
-
-//TODO check if using hotkey could level up the talents of the hidden default talent UI
 
 

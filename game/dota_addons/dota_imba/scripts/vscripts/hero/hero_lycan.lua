@@ -832,15 +832,15 @@ function imba_lycan_shapeshift:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()
 	local ability = self
-	local sound_cast_path = "lycan_lycan_ability_shapeshift_"	
+	local sound_cast = "Hero_Lycan.Shapeshift.Cast"
+	local response_cast = "lycan_lycan_ability_shapeshift_"	
 	local particle_cast = "particles/units/heroes/hero_lycan/lycan_shapeshift_cast.vpcf"
 	local transform_buff = "modifier_imba_shapeshift_transform"
 	local transform_stun = "modifier_imba_shapeshift_transform_stun"
 
 	-- Ability specials
 	local transformation_time = ability:GetSpecialValueFor("transformation_time")
-	local duration = ability:GetSpecialValueFor("duration")
-	
+	local duration = ability:GetSpecialValueFor("duration")	
 	
 	-- #8 Talent: Shapeshift duration increase	
 	duration = duration + caster:FindTalentValue("special_bonus_imba_lycan_8")
@@ -856,8 +856,10 @@ function imba_lycan_shapeshift:OnSpellStart()
 	else
 		correct_sound_num = random_sound
 	end
-	local sound_cast = sound_cast_path .. correct_sound_num 
-	
+	local response_cast = response_cast .. correct_sound_num 	
+	EmitSoundOn(response_cast, caster)
+
+	-- Play cast sound
 	EmitSoundOn(sound_cast, caster)
 	
 	-- Add cast particle effects
@@ -959,6 +961,14 @@ function modifier_imba_shapeshift_transform:IsHidden()
 	return false
 end
 
+function modifier_imba_shapeshift_transform:IsPurgable()
+	return false
+end
+
+function modifier_imba_shapeshift_transform:IsDebuff()
+	return false
+end
+
 -- Speed/crit aura
 modifier_imba_shapeshift_aura = class({})
 
@@ -1002,7 +1012,7 @@ function modifier_imba_shapeshift_aura:GetAuraEntityReject( target )
 	local caster = self:GetCaster()		
 	local owner = target:GetOwnerEntity()
 	
-	if target:IsHero() then
+	if target:IsRealHero() then
 		if target == caster then		
 			return false
 		end
@@ -1016,8 +1026,6 @@ function modifier_imba_shapeshift_aura:GetAuraEntityReject( target )
 		
 	return true
 end
-
-
 
 -- Speed/crit modifier
 modifier_imba_shapeshift = class({})
@@ -1143,6 +1151,18 @@ end
 -- certain crit buff
 modifier_imba_shapeshift_certain_crit = class({})
 
+function modifier_imba_shapeshift_certain_crit:IsHidden()
+	return false
+end
+
+function modifier_imba_shapeshift_certain_crit:IsPurgable()
+	return false
+end
+
+function modifier_imba_shapeshift_certain_crit:IsDebuff()
+	return false
+end
+
 
 ---------------------------------------------------
 ---------------------------------------------------
@@ -1188,11 +1208,11 @@ function modifier_imba_wolfsbane_aura:DestroyOnExpire()
 end
 
 function modifier_imba_wolfsbane_aura:GetAttributes()
-	return MODIFIER_ATTRIBUTE_MULTIPLE + MODIFIER_ATTRIBUTE_PERMANENT
+	return MODIFIER_ATTRIBUTE_PERMANENT
 end
 
 function modifier_imba_wolfsbane_aura:GetAuraRadius()
-	return 50000 --global
+	return 25000 --global
 end
 
 function modifier_imba_wolfsbane_aura:GetAuraSearchFlags()
@@ -1260,7 +1280,7 @@ function modifier_imba_wolfsbane_aura:GetAuraEntityReject( target )
 	local full_name = ""
 	
 	-- Cycle through wolves names to get a match
-	 for i=1, 6 do
+	 for i= 1, 6 do
 		full_name = wolf_name..i
 		if full_name == target:GetUnitName() then
 			 wolf_found = true
@@ -1393,7 +1413,7 @@ function modifier_imba_wolfsbane_lycan:OnHeroKilled( keys )
 											radius,
 											DOTA_UNIT_TARGET_TEAM_FRIENDLY,
 											DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-											DOTA_UNIT_TARGET_FLAG_NONE,
+											DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
 											FIND_ANY_ORDER,
 											false)
 			
@@ -1404,7 +1424,7 @@ function modifier_imba_wolfsbane_lycan:OnHeroKilled( keys )
 				end
 			end
 			
-			-- If Lycan is present nearby and at least the minimum allies required are present, give stacks
+			-- If Lycan is present nearby and at least the minimum allies required are present, give stacks			
 			if #units >= minimum_allies_required + 1 and lycan_nearby and caster:HasModifier(aura) and not caster:HasModifier(prevent_modifier) then			
 				should_grants_stacks = true
 			end
@@ -1569,13 +1589,9 @@ function modifier_imba_summoned_wolf_wicked_crunch:OnAttackLanded ( keys )
 		-- Ability specials
 		local damage_bonus_per_stack = ability:GetSpecialValueFor("damage_bonus_per_stack")	
 		local fixed_lifesteal = ability:GetSpecialValueFor("fixed_lifesteal")
-		local duration = ability:GetSpecialValueFor("duration")
-		local max_stacks = ability:GetSpecialValueFor("max_stacks")	
+		local duration = ability:GetSpecialValueFor("duration")		
 		local lycan_lifesteal = ability:GetSpecialValueFor("lycan_lifesteal")
 		local certain_crit = "modifier_imba_shapeshift_certain_crit"				
-		
-		-- #6 Talent: Double max stacks count
-		max_stacks = max_stacks + owner:FindTalentValue("special_bonus_imba_lycan_6")				
 		
 		-- If wolves are the attackers, grant modifier or increment stacks if already present.
 		if caster == keys.attacker then
@@ -1589,22 +1605,13 @@ function modifier_imba_summoned_wolf_wicked_crunch:OnAttackLanded ( keys )
 				return nil
 			end
 			
-			-- Reset variable
-			local debuff_handler = nil
-			local stacks = nil
-			
 			-- Inflict modifier on enemy, or increment if present 
 			if not target:HasModifier(debuff) then
 				target:AddNewModifier(caster, ability, debuff, {duration =  duration})				
-				debuff_handler = target:FindModifierByName(debuff)
-				debuff_handler:IncrementStackCount()				
-			else		
-				debuff_handler = target:FindModifierByName(debuff)				
-				stacks = debuff_handler:GetStackCount()		
-				if stacks < max_stacks then		
-					debuff_handler:IncrementStackCount()					
-				end		
-			end			
+			end
+
+			local debuff_handler = target:FindModifierByName(debuff)
+			debuff_handler:IncrementStackCount()								
 			
 			-- #6 Talent (wolves generate two stacks per attack) 			
 			if owner:HasTalent("special_bonus_imba_lycan_6") then
@@ -1614,7 +1621,7 @@ function modifier_imba_summoned_wolf_wicked_crunch:OnAttackLanded ( keys )
 			debuff_handler:ForceRefresh()
 			
 			-- Delay the lifesteal for one game tick to prevent blademail interaction
-				Timers:CreateTimer(0.01, function()
+				Timers:CreateTimer(FrameTime(), function()
 					caster:Heal(fixed_lifesteal, caster)
 				end)	
 				
@@ -1673,8 +1680,21 @@ end
 -- Crunch debuff
 modifier_imba_summoned_wolf_wicked_crunch_debuff = class({})
 
-function modifier_imba_summoned_wolf_wicked_crunch_debuff:GetAttributes()
-	return MODIFIER_ATTRIBUTE_MULTIPLE
+function modifier_imba_summoned_wolf_wicked_crunch_debuff:OnCreated()	
+		-- Ability properties
+		self.caster = self:GetCaster()		
+		self.ability = self:GetAbility()
+		self.attack_speed_reduction = self.ability:GetSpecialValueFor("attack_speed_reduction")
+
+		-- Ability specials
+		self.max_stacks = self.ability:GetSpecialValueFor("max_stacks")	
+
+	if IsServer() then
+		self.owner = self.caster:GetOwnerEntity()
+			
+		-- #6 Talent: Double max stacks count
+		self.max_stacks = self.max_stacks + self.owner:FindTalentValue("special_bonus_imba_lycan_6")
+	end
 end
 
 function modifier_imba_summoned_wolf_wicked_crunch_debuff:GetEffectName()
@@ -1707,13 +1727,22 @@ function modifier_imba_summoned_wolf_wicked_crunch_debuff:DeclareFunctions()
 	return decFuncs	
 end
 
-function modifier_imba_summoned_wolf_wicked_crunch_debuff:GetModifierAttackSpeedBonus_Constant()
-	local ability = self:GetAbility()
-	local attack_speed_reduction = ability:GetSpecialValueFor("attack_speed_reduction")
+function modifier_imba_summoned_wolf_wicked_crunch_debuff:GetModifierAttackSpeedBonus_Constant()	
 	
-	return (attack_speed_reduction * (-1))
+	
+	return (self.attack_speed_reduction * (-1))
 end
 
+function modifier_imba_summoned_wolf_wicked_crunch_debuff:OnStackCountChanged()
+	if IsServer() then
+		local stacks = self:GetStackCount()
+
+		-- If we're past the maximum possible stacks, retract them
+		if stacks > self.max_stacks then
+			self:SetStackCount(self.max_stacks)
+		end
+	end
+end
 
 
 

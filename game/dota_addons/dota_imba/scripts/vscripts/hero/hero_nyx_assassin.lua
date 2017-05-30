@@ -75,7 +75,7 @@ function imba_nyx_assassin_impale:OnSpellStart()
     -- Ability specials
     local width = ability:GetSpecialValueFor("width")
     local duration = ability:GetSpecialValueFor("duration")
-    local length = ability:GetSpecialValueFor("length")
+    local length = ability:GetSpecialValueFor("length") + GetCastRangeIncrease(caster)
     local speed = ability:GetSpecialValueFor("speed")
     local burrow_length_increase = ability:GetSpecialValueFor("burrow_length_increase")
 
@@ -733,9 +733,20 @@ function modifier_imba_spiked_carapace:OnTakeDamage(keys)
         local attacker = keys.attacker
         local unit = keys.unit
         local original_damage = keys.original_damage
+        local damage_flags = keys.damage_flags
         
         -- Only apply on attacks against the caster
         if unit == self.caster then
+
+            -- If it was a no reflection damage, do nothing (blademail)
+            if damage_flags == 4112 then
+                return nil
+            end
+
+            -- If the attacking unit has Nyx's Carapace as well, do nothing
+            if attacker:HasModifier("modifier_imba_spiked_carapace") then
+                return nil
+            end
 
             -- Calculate damage to reflect
             local damage = original_damage * self.damage_reflection_pct * 0.01            
@@ -833,7 +844,7 @@ imba_nyx_assassin_vendetta = class({})
 LinkLuaModifier("modifier_imba_vendetta", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_vendetta_charge", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 
-
+function imba_nyx_assassin_vendetta:IsNetherWardStealable() return false end
 function imba_nyx_assassin_vendetta:IsHiddenWhenStolen()
     return false
 end

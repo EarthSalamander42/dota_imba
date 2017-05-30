@@ -3,15 +3,9 @@
 	_class = "CParticleSystemDefinition"
 	m_bShouldHitboxesFallbackToRenderBounds = false
 	m_nMaxParticles = 16
-	m_ConstantColor =
-	[
-		161,
-		184,
-		201,
-		255,
-	]
+	m_ConstantColor = [ 161, 184, 201, 255 ]
 	m_nConstantSequenceNumber = 4
-	m_Renderers =
+	m_Renderers = 
 	[
 		{
 			_class = "C_OP_RenderRopes"
@@ -19,48 +13,49 @@
 			m_bMod2X = true
 			m_nOrientationType = 3
 			m_hTexture = resource:"materials/particle/beam_crack_03.vtex"
-			m_flRadiusScale = 0.500000
+			m_flRadiusScale = 0.5
 			m_flTextureVWorldSize = 499.999969
 			m_nMaxTesselation = 3
 			m_nMinTesselation = 3
 		},
 	]
-	m_Operators =
+	m_Operators = 
 	[
 		{
 			_class = "C_OP_FadeOutSimple"
-			m_flFadeOutTime = 0.150000
+			m_flFadeOutTime = 0.15
 		},
 		{
 			_class = "C_OP_RampScalarLinearSimple"
-			m_flEndTime = 1000000000.000000
-			m_Rate = -2.000000
+			m_flEndTime = 1000000000.0
+			m_Rate = -2.0
 			m_nField = 7
 			m_nOpEndCapState = 1
 		},
 		{
 			_class = "C_OP_AlphaDecay"
-			m_flMinAlpha = 0.001000
+			m_flMinAlpha = 0.001
 		},
 	]
-	m_Initializers =
+	m_Initializers = 
 	[
 		{
 			_class = "C_INIT_RingWave"
-			m_flInitialRadius = 400.000000
+			m_flInitialRadius = 1.0
 			m_bEvenDistribution = true
-			m_flParticlesPerOrbit = 11.000000
+			m_flParticlesPerOrbit = 11.0
 			m_nControlPointNumber = 7
-			m_flPitch = 180.000000
+			m_flPitch = 180.0
+			m_nOverrideCP = 1
 		},
 		{
 			_class = "C_INIT_RandomRadius"
-			m_flRadiusMin = 150.000000
-			m_flRadiusMax = 300.000000
+			m_flRadiusMin = 150.0
+			m_flRadiusMax = 300.0
 		},
 		{
 			_class = "C_INIT_PositionPlaceOnGround"
-			m_flOffset = 5.000000
+			m_flOffset = 5.0
 			m_bIncludeWater = true
 		},
 		{
@@ -68,8 +63,8 @@
 			m_nInputMin = 12
 			m_nInputMax = 14
 			m_nFieldOutput = 7
-			m_flOutputMin = 1.000000
-			m_flOutputMax = 0.000000
+			m_flOutputMin = 1.0
+			m_flOutputMax = 0.0
 			m_bScaleInitialRange = true
 		},
 		{
@@ -80,15 +75,31 @@
 		},
 		{
 			_class = "C_INIT_RandomLifeTime"
-			m_fLifetimeMax = 6.000000
-			m_fLifetimeMin = 6.000000
+			m_fLifetimeMax = 6.0
+			m_fLifetimeMin = 6.0
 		},
 	]
-	m_Emitters =
+	m_Emitters = 
 	[
 		{
 			_class = "C_OP_InstantaneousEmitter"
 			m_nParticlesToEmit = 15
+		},
+	]
+	m_controlPointConfigurations = 
+	[
+		{
+			m_name = "preview"
+			m_drivers = 
+			[
+				{
+					m_iControlPoint = 7
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ null, null, null ]
+					m_entityName = "self"
+				},
+			]
 		},
 	]
 }

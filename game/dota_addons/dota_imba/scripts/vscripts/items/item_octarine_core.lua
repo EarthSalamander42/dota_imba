@@ -59,29 +59,26 @@ function modifier_imba_octarine_core_basic:GetAttributes() return MODIFIER_ATTRI
 
 function modifier_imba_octarine_core_basic:OnCreated()
 	if IsServer() then
-		local parent = self:GetParent()
-		local uniqueModifier = parent:FindModifierByName("modifier_imba_octarine_core_unique")
-		
-		-- If the parent doesn't have the unique modifier, apply it and set its state to enabled
-		if not uniqueModifier then
-			uniqueModifier = parent:AddNewModifier(parent, self:GetAbility(), "modifier_imba_octarine_core_unique", {})
-			uniqueModifier:SetStackCount(2)
+		self.caster = self:GetCaster()		
+		self.ability = self:GetAbility()
+		self.modifier_self = "modifier_imba_octarine_core_basic"
+		self.uniqueModifier = "modifier_imba_octarine_core_unique"
+
+		if not self.caster:HasModifier(self.uniqueModifier) then
+			local modifier_handler = self.caster:AddNewModifier(self.caster, self.ability, self.uniqueModifier, {})
+			if modifier_handler then
+				modifier_handler:SetStackCount(2)
+			end
 		end
 	end
 end
 
 function modifier_imba_octarine_core_basic:OnDestroy()
-	if IsServer() then
-		local parent = self:GetParent()
-		
-		-- See if the parent has another core
-		for i = 0,5 do
-			local item = parent:GetItemInSlot(i)
-			if item and item:GetName() == "item_imba_octarine_core" then return end
-		end
-		
-		-- Remove the unique modifier if no other core was found
-		parent:RemoveModifierByName("modifier_imba_octarine_core_unique")
+	if IsServer() then		
+		-- Remove the unique modifier if no other cores were found		
+		if not self.caster:HasModifier(self.modifier_self) then			
+			self.caster:RemoveModifierByName(self.uniqueModifier)
+		end		
 	end
 end
 
@@ -108,6 +105,7 @@ if modifier_imba_octarine_core_unique == nil then modifier_imba_octarine_core_un
 function modifier_imba_octarine_core_unique:IsHidden() return true end
 function modifier_imba_octarine_core_unique:IsDebuff() return false end
 function modifier_imba_octarine_core_unique:IsPurgable() return false end
+function modifier_imba_octarine_core_unique:RemoveOnDeath() return false end
 
 function modifier_imba_octarine_core_unique:DeclareFunctions()
 	local funcs = {	MODIFIER_EVENT_ON_SPENT_MANA }

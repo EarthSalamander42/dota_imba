@@ -357,6 +357,34 @@ function GameMode:OnPlayerReconnect(keys)
 				print("updating player "..player_id.."'s pick screen state")
 				local pick_state = HeroSelection.playerPickState[player_id].pick_state
 				local repick_state = HeroSelection.playerPickState[player_id].repick_state
+
+                local data = {
+                    PlayerID = player_id,
+                    PlayerPicks = HeroSelection.playerPicks,
+                    pickState = pick_state,
+                    repickState = repick_state
+                }
+
+                if IMBA_HERO_PICK_RULE == 0 then
+                    data.PickedHeroes = {}
+                    -- Set as all of the heroes that were selected
+                    for _,v in pairs(HeroSelection.radiantPicks) do
+                        table.insert(data.PickedHeroes, v)
+                    end
+                    for _,v in pairs(HeroSelection.direPicks) do
+                        table.insert(data.PickedHeroes, v)
+                    end
+                elseif IMBA_HERO_PICK_RULE == 1 then
+                    -- Set as the team's pick to prevent same hero on the same team
+                    if PlayerResource:GetTeam(player_id) == DOTA_TEAM_GOODGUYS then
+                        data.PickedHeroes = HeroSelection.radiantPicks
+                    else
+                        data.PickedHeroes = HeroSelection.direPicks
+                    end
+                else
+                    data.PickedHeroes = {} --Set as empty, to allow all heroes to be selected
+                end
+
 				if PlayerResource:GetTeam(player_id) == DOTA_TEAM_GOODGUYS then
 					CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.radiantPicks, PlayerPicks = HeroSelection.playerPicks, pickState = pick_state, repickState = repick_state})
 				else
@@ -492,6 +520,17 @@ function GameMode:OnPlayerLearnedAbility( keys)
 
 	local player = EntIndexToHScript(keys.player)
 	local abilityname = keys.abilityname
+
+	-- If it the ability is Homing Missiles, wait a bit and set count to 1	
+	if abilityname == "gyrocopter_homing_missile" then
+		Timers:CreateTimer(1, function()
+			-- Find homing missile modifier
+			local modifier_charges = player:GetAssignedHero():FindModifierByName("modifier_gyrocopter_homing_missile_charge_counter")
+			if modifier_charges then
+				modifier_charges:SetStackCount(3)
+			end
+		end)
+	end
 end
 
 -- A channelled ability finished by either completing or being interrupted
@@ -771,28 +810,31 @@ function GameMode:OnEntityKilled( keys )
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Respawn timer setup
 	-------------------------------------------------------------------------------------------------
+	local reincarnation_death = false
+	if killed_unit:HasModifier("modifier_imba_reincarnation") then
+		local wk_mod = killed_unit:FindModifierByName("modifier_imba_reincarnation")
+		reincarnation_death = (wk_mod.can_die == false)
+	end
 	
-	if killed_unit:IsRealHero() and killed_unit:GetPlayerID() and PlayerResource:IsImbaPlayer(killed_unit:GetPlayerID()) then
-		
+	if killed_unit:HasModifier("modifier_item_imba_aegis") then
+		killed_unit:SetTimeUntilRespawn(killed_unit:FindModifierByName("modifier_item_imba_aegis").reincarnate_time)
+	elseif reincarnation_death then
+		killed_unit:SetTimeUntilRespawn(killed_unit:FindModifierByName("modifier_imba_reincarnation").reincarnate_delay)
+	elseif killed_unit:IsRealHero() and killed_unit:GetPlayerID() and (PlayerResource:IsImbaPlayer(killed_unit:GetPlayerID()) or (GameRules:IsCheatMode() == true) ) then
 		-- Calculate base respawn timer, capped at 60 seconds
 		local hero_level = math.min(killed_unit:GetLevel(), 25)
 		local respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[hero_level]
-
 		-- Calculate respawn timer reduction due to talents and modifiers
-		print("Respawn time modifiers: "..killed_unit:GetRespawnTimeModifier())
-		respawn_time = respawn_time + killed_unit:GetRespawnTimeModifier()
-
+		respawn_time = respawn_time * killed_unit:GetRespawnTimeModifier_Pct() * 0.01
+		respawn_time = math.max(respawn_time + killed_unit:GetRespawnTimeModifier(),0)
 		-- Fetch decreased respawn timer due to Bloodstone charges
-		if killed_unit.bloodstone_respawn_reduction then
+		if killed_unit.bloodstone_respawn_reduction and (respawn_time > 0) then
 			respawn_time = math.max( respawn_time - killed_unit.bloodstone_respawn_reduction, 0)
 		end
-
 		-- Multiply respawn timer by the lobby options
 		respawn_time = math.max( respawn_time * HERO_RESPAWN_TIME_MULTIPLIER * 0.01, 1)
-
 		-- Set up the respawn timer
 		killed_unit:SetTimeUntilRespawn(respawn_time)
-
 	end
 
 	-------------------------------------------------------------------------------------------------

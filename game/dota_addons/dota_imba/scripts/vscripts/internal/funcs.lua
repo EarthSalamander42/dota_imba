@@ -28,14 +28,13 @@ function AddStacksLua(ability, caster, unit, modifier, stack_amount, refresh)
 	end
 end
 
--- Removes [stack_amount] stacks from a modifier
-function RemoveStacks(ability, unit, modifier, stack_amount)
-	if unit:HasModifier(modifier) then
-		if unit:GetModifierStackCount(modifier, ability) > stack_amount then
-			unit:SetModifierStackCount(modifier, ability, unit:GetModifierStackCount(modifier, ability) - stack_amount)
-		else
-			unit:RemoveModifierByName(modifier)
-		end
+-- Removes [stack_amount] stacks from a modifier, and deleted it if it is depleted
+function CDOTA_Buff:RemoveStacks(stack_amount)
+	local current_stacks = self:GetStackCount()
+	if stack_amount >= current_stacks then
+		self:Destroy()
+	else
+		self:SetStackCount(current_stacks-stack_amount)
 	end
 end
 
@@ -118,7 +117,7 @@ function TrueKill(caster, target, ability)
 	target:RemoveModifierByName("modifier_item_vanguard_unique")
 	target:RemoveModifierByName("modifier_item_imba_initiate_robe_stacks")
 	target:RemoveModifierByName("modifier_imba_cheese_death_prevention")
-	target:RemoveModifierByName("modifier_item_imba_rapier_cursed_unique")
+	target:RemoveModifierByName("modifier_imba_reincarnation_wraith_form")
 
 	-- Kills the target
 	target:Kill(ability, caster)
@@ -456,12 +455,12 @@ end
 -- Returns an unit's existing increased cast range modifiers
 function GetCastRangeIncrease( unit )
 	local cast_range_increase = 0
-	
-	-- From items
-	if unit:HasModifier("modifier_item_imba_elder_staff_range") then
-		cast_range_increase = cast_range_increase + 300
-	elseif unit:HasModifier("modifier_item_imba_aether_lens_range") then
-		cast_range_increase = cast_range_increase + 225
+	-- Only the greatest increase counts for items, they do not stack
+	for _, parent_modifier in pairs(unit:FindAllModifiers()) do
+		-- Vanguard-based damage reduction does not stack
+		if parent_modifier.GetModifierCastRangeBonus then
+			cast_range_increase = math.max(cast_range_increase,parent_modifier:GetModifierCastRangeBonus())
+		end
 	end
 
 	-- From talents
@@ -593,11 +592,11 @@ function CDOTA_BaseNPC:GetSpellPower()
 	end
 
 	-- Adjust base spell power based on current intelligence
-	local spell_power = self:GetIntellect() * 0.667
+	local spell_power = self:GetIntellect() / 14
 
 	-- Mega Treads increase spell power from intelligence by 30%
 	if self:HasModifier("modifier_imba_mega_treads_stat_multiplier_02") then
-		spell_power = self:GetIntellect() * 0.1
+		spell_power = self:GetIntellect() * 0.093
 	end
 
 	-- Fetch spell power from modifiers
@@ -659,8 +658,8 @@ function CDOTA_BaseNPC:GetRespawnTimeModifier()
 
 	-- Fetch respawn time modifications from modifiers
 	for _, parent_modifier in pairs(self:FindAllModifiers()) do
-		if parent_modifier.GetModifierStackingRespawnTime then
-			respawn_modifier = respawn_modifier + parent_modifier:GetModifierStackingRespawnTime()
+		if parent_modifier.RespawnTimeStacking then
+			respawn_modifier = respawn_modifier + parent_modifier:RespawnTimeStacking()
 		end
 	end
 
@@ -683,6 +682,25 @@ function CDOTA_BaseNPC:GetRespawnTimeModifier()
 
 	-- Return current respawn time modifier
 	return respawn_modifier
+end
+
+function CDOTA_BaseNPC:GetRespawnTimeModifier_Pct()
+
+	-- If this is not a hero, do nothing
+	local multiplicator_pct = 100
+	if not self:IsRealHero() then
+		return multiplicator_pct
+	end
+
+	-- Fetch respawn time modifications from modifiers
+	for _, parent_modifier in pairs(self:FindAllModifiers()) do
+		if parent_modifier.RespawnTimeStacking_Pct then
+			multiplicator_pct = 100 - (100 - multiplicator_pct) * (100 - parent_modifier:RespawnTimeStacking_Pct()) * 0.01
+		end
+	end
+	
+	-- Return current respawn time modifier
+	return multiplicator_pct
 end
 
 -- Calculate physical damage post reduction
@@ -825,9 +843,9 @@ function RollPseudoRandom(base_chance, entity)
 	entity.pseudoRandomModifier = entity.pseudoRandomModifier or 0
 	local prngBase
 	for i = 1, #chances_table do
-		if base_chance == chances_table[i][1] then          
+		if base_chance == chances_table[i][1] then		  
 			prngBase = chances_table[i][2]
-		end     
+		end	 
 	end
 
 	if not prngBase then
@@ -839,7 +857,7 @@ function RollPseudoRandom(base_chance, entity)
 		entity.pseudoRandomModifier = 0
 		return true
 	else
-		entity.pseudoRandomModifier = entity.pseudoRandomModifier + prngBase        
+		entity.pseudoRandomModifier = entity.pseudoRandomModifier + prngBase		
 		return false
 	end
 end
@@ -869,19 +887,327 @@ function CalculateDistance(ent1, ent2)
 	return distance
 end
 
+-- Thanks to LoD-Redux & darklord for this!
+function DisplayError(playerID, message)
+	local player = PlayerResource:GetPlayer(playerID)
+	if player then
+		CustomGameEventManager:Send_ServerToPlayer(player, "CreateIngameErrorMessage", {message=message})
+	end
+end
+
+-- Carefully, DON'T use this for visible modifiers or with stack-handling!!!!!!!!!
+-- This is only needed if the modifier has MODIFIER_ATTRIBUTE_MULTIPLE!
+function CDOTA_Modifier_Lua:CheckUnique(bCreated)
+	local hParent = self:GetParent()
+	if bCreated then
+		local mod = hParent:FindAllModifiersByName(self:GetName())
+		if #mod >= 2 then
+			self:SetStackCount(1)
+			return true
+		else
+			self:SetStackCount(0)
+			return false
+		end
+	else
+		if self:GetStackCount() == 0 then
+			local mod = hParent:FindModifierByName(self:GetName())
+			if mod then
+				mod:SetStackCount(0)
+			end
+		end
+		return nil
+	end
+end
+
+function CDOTA_Modifier_Lua:CheckUniqueValue(value, tSuperiorModifierNames)
+	local hParent = self:GetParent()
+	if tSuperiorModifierNames then
+		for _,sSuperiorMod in pairs(tSuperiorModifierNames) do
+			if hParent:HasModifier(sSuperiorMod) then
+				return 0
+			end
+		end
+	end
+	if bit.band(self:GetAttributes(), MODIFIER_ATTRIBUTE_MULTIPLE) == MODIFIER_ATTRIBUTE_MULTIPLE then
+		if self:GetStackCount() == 1 then
+			return 0
+		end
+	end
+	return value
+end
+
+
+-- Serversided function only
+function CDOTA_BaseNPC:DropRapier(hItem, sNewItemName)
+	local vLocation = self:GetAbsOrigin()
+	local sName
+	local hRapier
+	local vRandomVector = RandomVector(100)
+	if hItem then
+		hRapier = hItem
+		sName = hItem:GetName()
+		self:DropItemAtPositionImmediate(hRapier, vLocation)
+	else
+		sName = sNewItemName
+		hRapier = CreateItem(sNewItemName, nil, nil)
+		CreateItemOnPositionSync(vLocation, hRapier)
+	end
+	if sName == "item_imba_rapier" then
+		hRapier:GetContainer():SetRenderColor(230,240,35)
+	elseif sName == "item_imba_rapier_2" then
+		hRapier:GetContainer():SetRenderColor(240,150,30)
+		hRapier.rapier_pfx = ParticleManager:CreateParticle("particles/item/rapier/item_rapier_trinity.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(hRapier.rapier_pfx, 0, vLocation + vRandomVector)
+	elseif sName == "item_imba_rapier_magic" then
+		hRapier:GetContainer():SetRenderColor(35,35,240)
+	elseif sName == "item_imba_rapier_magic_2" then
+		hRapier:GetContainer():SetRenderColor(140,70,220)
+		hRapier.rapier_pfx = ParticleManager:CreateParticle("particles/item/rapier/item_rapier_archmage.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(hRapier.rapier_pfx, 0, vLocation + vRandomVector)
+	elseif sName == "item_imba_rapier_cursed" then
+		hRapier:GetContainer():SetRenderColor(20,160,20)
+		hRapier.rapier_pfx = ParticleManager:CreateParticle("particles/item/rapier/item_rapier_cursed.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(hRapier.rapier_pfx, 0, vLocation + vRandomVector)
+	end
+	hRapier:LaunchLoot(false, 250, 0.5, vLocation + vRandomVector)
+end
+
 function CDOTA_BaseNPC:AddRangeIndicator(hCaster, hAbility, sAttribute, iRange, iRed, iGreen, iBlue, bShowOnCooldown, bShowAlways, bWithCastRangeIncrease, bRemoveOnDeath)
-	if IsServer() then
-		local modifier = self:AddNewModifier(hCaster or self,hAbility, "modifier_imba_range_indicator", {
-			sAttribute = sAttribute,
-			iRange = iRange,
-			iRed = iRed,
-			iGreen = iGreen,
-			iBlue = iBlue,
-			bShowOnCooldown = bShowOnCooldown,
-			bShowAlways = bShowAlways,
-			bWithCastRangeIncrease = bWithCastRangeIncrease,
-			bRemoveOnDeath = bRemoveOnDeath
-		})
-		return modifier
+	local modifier = self:AddNewModifier(hCaster or self,hAbility, "modifier_imba_range_indicator", {
+		sAttribute = sAttribute,
+		iRange = iRange,
+		iRed = iRed,
+		iGreen = iGreen,
+		iBlue = iBlue,
+		bShowOnCooldown = bShowOnCooldown,
+		bShowAlways = bShowAlways,
+		bWithCastRangeIncrease = bWithCastRangeIncrease,
+		bRemoveOnDeath = bRemoveOnDeath
+	})
+	return modifier
+end
+
+function CDOTA_BaseNPC:EmitCasterSound(sCasterName, tSoundNames, fChancePct, flags, fCooldown, sCooldownindex)
+	flags = flags or 0
+	if self:GetName() ~= sCasterName then
+		return true
+	end
+	
+	if fCooldown then
+		if self[sCooldownindex] then
+			return true
+		else
+			self[sCooldownindex] = true
+			Timers:CreateTimer(fCooldown, function()
+				self[sCooldownindex] = nil
+			end)
+		end
+	end
+	
+	
+	if fChancePct then
+		if fChancePct <= math.random(1,100) then
+			return false -- Only return false if chance was missed
+		end
+	end
+	if (bit.band(flags, DOTA_CAST_SOUND_FLAG_WHILE_DEAD) > 0) or self:IsAlive() then
+		local sound = tSoundNames[math.random(1,#tSoundNames)]
+		if bit.band(flags, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS) > 0 then
+			self:EmitSound(sound)
+		--elseif bit.band(flags, DOTA_CAST_SOUND_FLAG_GLOBAL) > 0 then
+			-- Iterate through players, added later
+		else
+			StartSoundEventReliable(sound, self)
+		end
+	end
+	return true
+end
+
+function CDOTA_Buff:CopyModifier(source,target)
+	for i = 0, source:GetModifierCount() do
+		local modifierMame = source:GetModifierNameByIndex(i)
+		local modifier = source:FindModifierByName(modifierName)
+		if modifier then
+			local caster = modifier:GetCaster()
+			local ability = modifier:GetAbility()
+			local fullDuration = modifier:GetDuration()
+			local duration = modifier:GetRemainingTime()
+			local stackCount = modifier:GetStackCount()
+
+			local copyModifier = target:AddNewModifier(caster,ability,modifierName,{duration = fullDuration})
+			copyModifier:SetDuration(duration,true)
+			copyModifier:SetStackCount(stackCount)
+			return copyModifier
+		end
+	end
+end
+
+-----------------------------------
+--    Talent Helper functions    --
+-----------------------------------
+function CDOTA_BaseNPC_Hero:CopyTalents(hEntity, flags) --type 1(generic only), 2(unique only), 3(all)
+    if (bit.band(flags, DOTA_TALENT_COPY_GENERIC) > 0) then
+        local modifierList = self:FindAllModifiers()
+        for _,modifier in pairs(modifierList) do
+			local modifierName = modifier:GetName()
+            -- Check if it is a generic talent
+            if IMBA_GENERIC_TALENT_LIST[string.gsub(modifierName,"modifier_", "")] then
+                -- Apply to entity
+                local newModifier = hEntity:AddNewModifier(hEntity, nil, modifierName, {})
+				if newModifier then
+                    newModifier:SetStackCount(modifier:GetStackCount())
+                    newModifier:ForceRefresh()
+                else
+                    print("failed to attach generic talent: "..modifierName)
+                end
+            end
+        end
+    end
+
+    if (bit.band(flags, DOTA_TALENT_COPY_UNIQUE) > 0) then
+        local endAbilityIndex = (self:GetAbilityCount()-1)
+        while endAbilityIndex >= 0 do
+            local ability = self:GetAbilityByIndex(endAbilityIndex)
+            if ability then
+                local abilityName = ability:GetName()
+                -- Check if it is a unique talent
+                if abilityName:find("special_bonus_imba_") == 1 or abilityName:find("special_bonus_unique_") == 1 then
+					local newAbility = hEntity:AddAbility(abilityName)
+                    if newAbility then
+                        newAbility:SetLevel(ability:GetLevel())
+                    else
+                        print("failed to attach unique talent: "..abilityName)
+                    end
+                end
+            end
+            endAbilityIndex = endAbilityIndex - 1
+        end
+    end
+end
+
+function CDOTA_Modifier_Lua:CheckMotionControllers()
+	local parent = self:GetParent()
+	local modifier_priority = self:GetMotionControllerPriority()
+	local is_motion_controller = false
+	local motion_controller_priority
+	local found_modifier_handler
+
+	local non_imba_motion_controllers =
+	{"modifier_brewmaster_storm_cyclone",
+	 "modifier_dark_seer_vacuum",
+	 "modifier_eul_cyclone",
+	 "modifier_earth_spirit_rolling_boulder_caster",
+	 "modifier_huskar_life_break_charge",
+	 "modifier_invoker_tornado",
+	 "modifier_item_forcestaff_active",
+	 "modifier_rattletrap_hookshot",
+	 "modifier_phoenix_icarus_dive",
+	 "modifier_shredder_timber_chain",
+	 "modifier_slark_pounce",
+	 "modifier_spirit_breaker_charge_of_darkness",
+	 "modifier_tusk_walrus_punch_air_time",
+	 "modifier_earthshaker_enchant_totem_leap"}
+	
+
+	-- Fetch all modifiers
+	local modifiers = parent:FindAllModifiers()	
+
+	for _,modifier in pairs(modifiers) do		
+		-- Ignore the modifier that is using this function
+		if self ~= modifier then			
+
+			-- Check if this modifier is assigned as a motion controller
+			if modifier.IsMotionController then
+				if modifier:IsMotionController() then
+					-- Get its handle
+					found_modifier_handler = modifier
+
+					is_motion_controller = true
+
+					-- Get the motion controller priority
+					motion_controller_priority = modifier:GetMotionControllerPriority()
+
+					-- Stop iteration					
+					break
+				end
+			end
+
+			-- If not, check on the list
+			for _,non_imba_motion_controller in pairs(non_imba_motion_controllers) do				
+				if modifier:GetName() == non_imba_motion_controller then
+					-- Get its handle
+					found_modifier_handler = modifier
+
+					is_motion_controller = true
+
+					-- We assume that vanilla controllers are the highest priority
+					motion_controller_priority = DOTA_MOTION_CONTROLLER_PRIORITY_HIGHEST
+
+					-- Stop iteration					
+					break
+				end
+			end
+		end
+	end
+
+	-- If this is a motion controller, check its priority level
+	if is_motion_controller and motion_controller_priority then
+
+		-- If the priority of the modifier that was found is higher, override
+		if motion_controller_priority > modifier_priority then			
+			return false
+
+		-- If they have the same priority levels, check which of them is older and remove it
+		elseif motion_controller_priority == modifier_priority then			
+			if found_modifier_handler:GetCreationTime() >= self:GetCreationTime() then				
+				return false
+			else				
+				found_modifier_handler:Destroy()
+				return true
+			end
+
+		-- If the modifier that was found is a lower priority, destroy it instead
+		else			
+			parent:InterruptMotionControllers(true)
+			found_modifier_handler:Destroy()
+			return true
+		end
+	else
+		-- If no motion controllers were found, apply
+		return true
+	end
+end
+
+function CDOTA_BaseNPC:SetUnitOnClearGround()
+	Timers:CreateTimer(FrameTime(), function()
+		self:SetAbsOrigin(Vector(self:GetAbsOrigin().x, self:GetAbsOrigin().y, GetGroundPosition(self:GetAbsOrigin(), self).z))		
+		FindClearSpaceForUnit(self, self:GetAbsOrigin(), true)
+		ResolveNPCPositions(self:GetAbsOrigin(), 64)
+	end)
+end
+
+function CDOTA_BaseNPC:GetFittingColor()
+	-- Specially colored item modifiers have priority, in this order
+	if self:FindModifierByName("modifier_item_imba_rapier_cursed") then
+		return Vector(1,1,1)
+	elseif self:FindModifierByName("modifier_item_imba_skadi") then
+		return Vector(50,255,255)
+	elseif self:FindModifierByName("modifier_item_imba_nether_wand") or self:FindModifierByName("modifier_item_imba_elder_staff") then
+		return Vector(0,255,0)
+	
+	-- Heroes' color is based on attributes
+	elseif self:IsHero() then
+		local r = self:GetStrength()
+		local g = self:GetAgility()
+		local b = self:GetIntellect()
+		local highest = math.max(r, math.max(g,b))
+		r = math.max(255 - (highest - r) * 20, 0)
+		g = math.max(255 - (highest - g) * 20, 0)
+		b = math.max(255 - (highest - b) * 20, 0)
+		return Vector(r,g,b)
+	
+	-- Other units use the default golden glow
+	else
+		return Vector(253, 144, 63)
 	end
 end

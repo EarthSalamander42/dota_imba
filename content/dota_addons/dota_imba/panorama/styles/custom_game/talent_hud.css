@@ -1,0 +1,72 @@
+.NonHero .IMBA_Talent_HUD_Panel
+{
+    visibility: collapse;
+}
+
+.IMBA_Talent_HUD_Panel
+{
+    width : 70px;
+    height : 135px;
+    vertical-align: bottom;
+    margin-right : -1px;
+    margin-left: -4px;
+    padding: 4px;
+    margin-bottom : 24px;
+}
+
+#IMBA_Talent_HUD_Button,
+#IMBA_Talent_HUD_Button_Overlay
+{
+    margin-top: 65px;
+    width : 100%;
+    height : 100%;
+}
+
+#IMBA_Talent_HUD_Button
+{
+    background-image: url("file://{images}/custom_game/imba_talent_btn.png");
+    background-size: contain;
+    z-index : 3;
+}
+
+#IMBA_Talent_HUD_Button_Overlay
+{
+    z-index : 4;
+}
+
+#IMBA_Talent_HUD_Button_Overlay Panel
+{
+    width : 100%;
+    height : 100%;
+    background-size: contain;
+}
+
+#ImbaTalentBtn.selected #IMBA_Talent_HUD_Button_Overlay .Overlay_Select
+{
+    background-image: url("file://{images}/custom_game/imba_talent_btn_selected.png");
+}
+
+#ImbaTalentBtn.upgrade #IMBA_Talent_HUD_Button_Overlay .Overlay_Upgrade
+{
+    animation-name: glowinganimation;
+    animation-duration: 0.5s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: linear;
+    background-image: url("file://{images}/custom_game/imba_talent_btn_upgrade.png");
+}
+
+#IMBA_Talent_HUD_Button_Bg
+{
+    visibility: collapse;
+}
+
+#ImbaTalentBtn.upgrade #IMBA_Talent_HUD_Button_Bg
+{
+    visibility: visible;
+    width : 100%;
+    height: 200%;
+    margin: -1px;
+    border-radius: 30px;
+    margin-top: -55px;
+}

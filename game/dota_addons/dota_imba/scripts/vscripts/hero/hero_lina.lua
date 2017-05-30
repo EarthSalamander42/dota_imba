@@ -391,6 +391,10 @@ function modifier_imba_fiery_soul:IsHidden()
 	return true
 end
 
+function modifier_imba_fiery_soul:IsPurgable()
+	return false
+end
+
 
 modifier_imba_fiery_soul_counter = class({})
 
@@ -531,7 +535,6 @@ function imba_lina_laguna_blade:CastFilterResultTarget( target )
 		local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
 		return nResult
 	end
-	return UF_SUCCESS
 end
 
 function imba_lina_laguna_blade:GetAbilityDamageType()

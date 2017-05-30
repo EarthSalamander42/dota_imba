@@ -99,6 +99,11 @@ function imba_wraith_king_wraithfire_blast:OnProjectileHit_ExtraData(target, loc
     -- Play impact sound
     EmitSoundOn(sound_hit, caster)    
 
+    -- If the target suddenly became magic immune, do nothing
+    if target:IsMagicImmune() then
+        return nil
+    end
+
     if extra_data.main_blast == 1 then
         -- If target has Linken's Sphere off cooldown, do nothing
         if target:GetTeam() ~= caster:GetTeam() then
@@ -228,6 +233,10 @@ function modifier_imba_wraithfire_blast_debuff:OnCreated()
         self:StartIntervalThink(self.damage_interval)
     end
 end
+
+function modifier_imba_wraithfire_blast_debuff:IsHidden() return false end
+function modifier_imba_wraithfire_blast_debuff:IsPurgable() return true end
+function modifier_imba_wraithfire_blast_debuff:IsDebuff() return true end
 
 function modifier_imba_wraithfire_blast_debuff:OnIntervalThink()
     if IsServer() then
@@ -503,6 +512,7 @@ end
 imba_wraith_king_mortal_strike = class({})
 LinkLuaModifier("modifier_imba_mortal_strike", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_mortal_strike_buff", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_mortal_strike_buff_talent", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_wraith_king_mortal_strike:GetIntrinsicModifierName()
     return "modifier_imba_mortal_strike"
@@ -517,6 +527,7 @@ function modifier_imba_mortal_strike:OnCreated()
     self.caster = self:GetCaster()
     self.ability = self:GetAbility()
     self.modifier_health = "modifier_imba_mortal_strike_buff"
+    self.modifier_strength = "modifier_imba_mortal_strike_buff_talent"
 
     -- Ability specials
     self.crit_chance = self.ability:GetSpecialValueFor("crit_chance")
@@ -624,6 +635,23 @@ function modifier_imba_mortal_strike:OnAttackLanded(keys)
                     modifier_health_handler:ForceRefresh()
                 end                
             end
+
+            if self.caster:HasTalent("special_bonus_imba_skeleton_king_8") then
+                if target:IsRealHero() then
+                    if not self.caster:HasModifier(self.modifier_strength) then
+                        self.caster:AddNewModifier(self.caster, self.ability, self.modifier_strength, {duration = self.bonus_health_duration})
+                    end
+
+                    local modifier_strength_handler = self.caster:FindModifierByName(self.modifier_strength)
+                    if modifier_strength_handler then
+                        local strength_per_crit = self.caster:FindTalentValue("special_bonus_imba_skeleton_king_8")
+                        for i = 1, strength_per_crit do
+                            modifier_strength_handler:IncrementStackCount()
+                            modifier_strength_handler:ForceRefresh()
+                        end
+                    end
+                end
+            end
         end
     end
 end
@@ -710,11 +738,94 @@ end
 
 
 
+-- Bonus strength modifier
+modifier_imba_mortal_strike_buff_talent = class({})
+
+function modifier_imba_mortal_strike_buff_talent:OnCreated()
+    if IsServer() then
+        -- Ability properties
+        self.caster = self:GetCaster()
+        self.ability = self:GetAbility()
+
+        -- Ability specials
+        self.bonus_health_duration = self.ability:GetSpecialValueFor("bonus_health_duration")
+        self.stack_value = self.ability:GetSpecialValueFor("stack_value")
+
+        -- Initialize table
+        self.stacks_table = {}        
+
+        -- Start thinking
+        self:StartIntervalThink(0.1)
+    end
+end
+
+function modifier_imba_mortal_strike_buff_talent:IsHidden() return false end
+function modifier_imba_mortal_strike_buff_talent:IsPurgable() return false end
+function modifier_imba_mortal_strike_buff_talent:IsDebuff() return false end
+
+function modifier_imba_mortal_strike_buff_talent:OnIntervalThink()
+    if IsServer() then
+
+        -- Check if there are any stacks left on the table
+        if #self.stacks_table > 0 then
+
+            -- For each stack, check if it is past its expiration time. If it is, remove it from the table
+            for i = #self.stacks_table, 1, -1 do
+                if self.stacks_table[i] + self.bonus_health_duration < GameRules:GetGameTime() then
+                    table.remove(self.stacks_table, i)             
+                end
+            end
+            
+            -- If after removing the stacks, the table is empty, remove the modifier.
+            if #self.stacks_table == 0 then
+                self:Destroy()
+
+            -- Otherwise, set its stack count
+            else
+                self:SetStackCount(#self.stacks_table)
+            end
+
+            -- Recalculate health bonus based on new stack count
+            self:GetParent():CalculateStatBonus()
+
+        -- If there are no stacks on the table, just remove the modifier.
+        else
+            self:Destroy()
+        end
+    end
+end
+
+function modifier_imba_mortal_strike_buff_talent:OnRefresh()
+    if IsServer() then
+        -- Insert new stack values
+        table.insert(self.stacks_table, GameRules:GetGameTime())
+    end
+end
+
+function modifier_imba_mortal_strike_buff_talent:DeclareFunctions()
+    local decFuncs = {MODIFIER_PROPERTY_STATS_STRENGTH_BONUS}
+
+    return decFuncs
+end
+
+function modifier_imba_mortal_strike_buff_talent:GetModifierBonusStats_Strength()
+    if self.caster:IsIllusion() then
+        return nil
+    end
+
+    -- #8 Talent: Mortal Strikes grants strength
+    if self.caster:HasTalent("special_bonus_imba_skeleton_king_8") then
+        local stacks = self:GetStackCount()
+        return stacks
+    end
+end
+
+
 
 --------------------------------
 --       REINCARNATION        --
 --------------------------------
-imba_wraith_king_reincarnation = class({})
+imba_wraith_king_reincarnation = imba_wraith_king_reincarnation or class({})
 LinkLuaModifier("modifier_imba_reincarnation", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_reincarnation_wraith_form_buff", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_reincarnation_wraith_form", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
@@ -730,25 +841,12 @@ function imba_wraith_king_reincarnation:GetManaCost(level)
     return reincarnate_mana_cost
 end
 
-function imba_wraith_king_reincarnation:GetCooldown(level)
-    local caster = self:GetCaster()
-    local ability = self
-    local cooldown = self.BaseClass.GetCooldown(self, level)
-
-    -- #8 Talent: Reincarnate cooldown decrease
-    cooldown = cooldown - caster:FindTalentValue("special_bonus_imba_skeleton_king_8")
-
-    return cooldown
-end
-
-
 function imba_wraith_king_reincarnation:GetIntrinsicModifierName()
     return "modifier_imba_reincarnation"
 end
 
-
 -- Reicarnation modifier
-modifier_imba_reincarnation = class({})
+modifier_imba_reincarnation = modifier_imba_reincarnation or class({})
 
 function modifier_imba_reincarnation:OnCreated()    
         -- Ability properties
@@ -757,12 +855,11 @@ function modifier_imba_reincarnation:OnCreated()
         self.particle_death = "particles/units/heroes/hero_skeletonking/wraith_king_reincarnate.vpcf"
         self.sound_death = "Hero_SkeletonKing.Reincarnate"
         self.sound_reincarnation = "Hero_SkeletonKing.Reincarnate.Stinger"
-        self.sound_be_back = "Hero_WraithKing.IllBeBack"        
+        self.sound_be_back = "Hero_WraithKing.IllBeBack"
         self.modifier_wraith = "modifier_imba_reincarnation_wraith_form"
 
         -- Ability specials
         self.reincarnate_delay = self.ability:GetSpecialValueFor("reincarnate_delay")
-        self.reincarnate_mana_cost = self.ability:GetSpecialValueFor("reincarnate_mana_cost")
         self.passive_respawn_haste = self.ability:GetSpecialValueFor("passive_respawn_haste")        
         self.slow_radius = self.ability:GetSpecialValueFor("slow_radius")
         self.slow_duration = self.ability:GetSpecialValueFor("slow_duration")
@@ -783,7 +880,7 @@ function modifier_imba_reincarnation:IsDebuff() return false end
 
 function modifier_imba_reincarnation:OnIntervalThink()
     -- If caster has sufficent mana and the ability is ready, apply
-    if self.caster:GetMana() >= self.reincarnate_mana_cost and self.ability:IsCooldownReady() and not self.caster:HasModifier("modifier_item_imba_aegis") then
+    if (self.caster:GetMana() >= self.ability:GetManaCost(-1)) and (self.ability:IsCooldownReady()) and (not self.caster:HasModifier("modifier_item_imba_aegis")) then
         self.can_die = false
     else
         self.can_die = true
@@ -813,7 +910,7 @@ function modifier_imba_reincarnation:ReincarnateTime()
     end
 end
 
-function modifier_imba_reincarnation:GetModifierStackingRespawnTime()
+function modifier_imba_reincarnation:RespawnTimeStacking()
     return self.passive_respawn_haste * (-1)
 end
 
@@ -834,13 +931,8 @@ function modifier_imba_reincarnation:OnDeath(keys)
         if self.caster == unit then            
 
             -- Check if it was a reincarnation death
-            if reincarnate then                
-                self.reincarnation_death = true
-                
-                -- Force respawning in the delay time, with no regards to the real respawn timer
-                Timers:CreateTimer(FrameTime(), function()
-                    self.caster:SetTimeUntilRespawn(self.reincarnate_delay)
-                end)                                  
+            if reincarnate and (not self.caster:HasModifier("modifier_item_imba_aegis")) then
+				self.reincarnation_death = true
 
                 -- Use the Reincarnation's ability cooldown
                 self.ability:UseResources(false, false, true)
@@ -932,14 +1024,8 @@ function modifier_imba_reincarnation:IsAuraActiveOnDeath()
 end
 
 
-
-
-
-
-
-
 -- Wraith Form modifier (given from aura, not yet Wraith Form)
-modifier_imba_reincarnation_wraith_form_buff = class({})
+modifier_imba_reincarnation_wraith_form_buff = modifier_imba_reincarnation_wraith_form_buff or class({})
 
 function modifier_imba_reincarnation_wraith_form_buff:OnCreated()
     -- Ability properties
@@ -1028,6 +1114,12 @@ function modifier_imba_reincarnation_wraith_form_buff:OnTakeDamage(keys)
                 local wraith_form_modifier_handler = self.parent:AddNewModifier(self.caster, self.ability, self.modifier_wraith_form, {duration = self.scepter_wraith_form_duration})
                 if wraith_form_modifier_handler then
                     wraith_form_modifier_handler.original_killer = attacker
+					wraith_form_modifier_handler.ability_killer = keys.inflictor
+					if keys.inflictor then
+						if keys.inflictor:GetName() == "imba_necrolyte_reapers_scythe" then
+							keys.inflictor.ghost_death = true
+						end
+					end
                 end                
             end
         end
@@ -1036,7 +1128,7 @@ end
 
 
 -- Wraith Form (actual Wraith Form)
-modifier_imba_reincarnation_wraith_form = class({})
+modifier_imba_reincarnation_wraith_form = modifier_imba_reincarnation_wraith_form or class({})
 
 function modifier_imba_reincarnation_wraith_form:OnCreated()
     -- Ability properties
@@ -1085,7 +1177,7 @@ end
 function modifier_imba_reincarnation_wraith_form:OnDestroy()
     if IsServer() then
         -- Force kill the unit
-        TrueKill(self.original_killer, self.parent, self.caster)
+        TrueKill(self.original_killer, self.parent, self.ability_killer)
     end
 end
 
@@ -1100,11 +1192,12 @@ end
 --------------------------------
 --        KINGDOM COME        --
 --------------------------------
-imba_wraith_king_kingdom_come = class({})
+imba_wraith_king_kingdom_come = imba_wraith_king_kingdom_come or class({})
 LinkLuaModifier("modifier_imba_kingdom_come", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)    
 LinkLuaModifier("modifier_imba_kingdom_come_slow", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_kingdom_come_stun", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 
+function imba_wraith_king_kingdom_come:IsNetherWardStealable() return false end
 function imba_wraith_king_kingdom_come:IsInnateAbility()
     return true
 end
@@ -1262,8 +1355,10 @@ function modifier_imba_kingdom_come_slow:OnDestroy()
             ResolveNPCPositions(self.parent:GetAbsOrigin(), 164)
 
         -- If it is a creep or an illusion, instantly kill it
-        else
-            self.parent:Kill(self.ability, self.caster)
+        else          
+            if not IsRoshan(self.parent) then  
+                self.parent:Kill(self.ability, self.caster)
+            end
         end
     end
 end
@@ -1406,6 +1501,10 @@ function modifier_imba_wraith_soul_strike_slow:OnCreated()
         self.ability:SetRefCountsModifiers(true)
     end
 end
+
+function modifier_imba_wraith_soul_strike_slow:IsHidden() return false end
+function modifier_imba_wraith_soul_strike_slow:IsPurgable() return false end
+function modifier_imba_wraith_soul_strike_slow:IsDebuff() return false end
 
 function modifier_imba_wraith_soul_strike_slow:DeclareFunctions()
     local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}

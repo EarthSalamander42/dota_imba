@@ -4,12 +4,12 @@
     horizontal-align: left;
     vertical-align: top;
     margin-top: 55px;
-    width: 590px;
+    width: fit-children;
     height: 775px;
     flow-children: down;
     background-image: url("s2r://panorama/images/backgrounds/dashboard_background_png.vtex"); 
 
-    transform: translatex( -590px );
+    transform: translatex( -750px );
     transition-property: transform;
     transition-duration: 0.1s;
     padding: 10px;
@@ -47,7 +47,7 @@
 .IMBA_Talent_Row
 {
     flow-children: right;
-    width : 100%;
+    width: fit-children;
     height : 80px;
     margin-left: 10px;
     margin-right: 10px;
@@ -59,11 +59,6 @@
 .IMBA_Talent_Row.six_choices
 {
     height : 70px;
-}
-
-.IMBA_Talent_Row.two_choices
-{
-    height : 80px;
 }
 
 .IMBA_Talent_Level_Container
@@ -101,16 +96,19 @@
     height : 100%;
 }
 
-.IMBA_Talent_Choice.six_choices
-{
-    width: 70px;
-    margin-left: 10px;
-}
-
-.IMBA_Talent_Choice.two_choices
+.IMBA_Talent_Row.two_choices .IMBA_Talent_Choice
 {
     margin-left: 10px;
     width: 230px;
+}
+
+.IMBA_Talent_Row.six_choices .IMBA_Talent_Choice,
+.IMBA_Talent_Row.eight_choices .IMBA_Talent_Choice
+{
+    margin-left: 10px;
+    width: 70px;
+    height: 70px;
+    vertical-align: middle;
 }
 
 .IMBA_Talent_Choice_Text_Container
@@ -136,7 +134,11 @@
     white-space: normal;
 }
 
-#IMBA_Talent_Specials_Row,
+#IMBA_Talent_Specials_Row
+{
+    height: 100%;
+}
+
 .IMBA_Talent_Choice_Text_Container,
 .IMBA_Talent_Choice .IMBA_Talent_Choice_Glow,
 .IMBA_Talent_Choice .IMBA_Talent_Choice_Overlay,
@@ -151,18 +153,6 @@
 {
     border-width: 2px;
     border-style: solid;
-}
-
-@keyframes 'glowinganimation'
-{
-    0%
-    {
-        opacity : 1;
-    }
-    100%
-    {
-        opacity: 0.05;
-    }
 }
 
 .IMBA_Talent_Choice .IMBA_Talent_Choice_Glow
@@ -235,64 +225,17 @@
 
 /*
     128x72 landscape default size
-    80px will be the height for IMBA_Talent_Choice_Image_Container
-    143px = 128 * (80/72)
+    70px will be the height for IMBA_Talent_Choice_Image_Container
+    124px = 128 * (70/72)
 */
 #IMBA_Talent_Choice_Image_Container DOTAHeroImage
 {
-    height : 80px;
-    width : 143px;
+    height : 70px;
+    padding-left: -30px;
+    padding-right: -30px;
 }
 
-.NonHero .IMBA_Talent_HUD_Panel,
 .IMBA_Talent_Choice.disabled .IMBA_Talent_Choice_Text_Container
 {
     visibility: collapse;
-}
-
-.IMBA_Talent_HUD_Panel
-{
-    width : 62px;
-    height : 62px;
-    vertical-align: bottom;
-    margin-right : 3px;
-    margin-bottom : 28px;
-}
-
-#IMBA_Talent_HUD_Button
-{
-    width : 100%;
-    height : 100%;
-    background-image: url("file://{images}/custom_game/imba_talent_btn.png");
-    background-size: contain;
-    z-index : 3;
-}
-
-#IMBA_Talent_HUD_Button_Overlay
-{
-    width : 100%;
-    height : 100%;
-    z-index : 4;
-}
-
-#IMBA_Talent_HUD_Button_Overlay Panel
-{
-    width : 100%;
-    height : 100%;
-    background-size: contain;
-}
-
-#IMBA_Talent_HUD_Button_Overlay.selected .Overlay_Select
-{
-    background-image: url("file://{images}/custom_game/imba_talent_btn_selected.png");
-}
-
-#IMBA_Talent_HUD_Button_Overlay.upgrade .Overlay_Upgrade
-{
-    animation-name: glowinganimation;
-    animation-duration: 0.5s;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-    animation-timing-function: linear;
-    background-image: url("file://{images}/custom_game/imba_talent_btn_upgrade.png");
 }

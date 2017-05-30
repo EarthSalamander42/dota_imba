@@ -1,5 +1,4 @@
 .PickingPlayer {
-	width: 100%;
 	height: 7.5%;
 	vertical-align: center;
 	flow-children: right;
@@ -11,11 +10,13 @@
 }
 
 #PlayerAvatar {
-	height: 100%;
-	vertical-align: center;
-	margin-left: 3px;
-	margin-right: 3px;
-	z-index: 3;
+	height: 72px;
+    width: 72px;
+	vertical-align: middle;
+	margin-left: 5px;
+	margin-right: 5px;
+	z-index: 5;
+    background-size: 100% 100%;
 }
 
 #HeroPanel {

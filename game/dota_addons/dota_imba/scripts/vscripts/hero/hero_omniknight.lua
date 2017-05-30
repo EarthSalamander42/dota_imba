@@ -165,22 +165,14 @@ function Purification(caster, ability, target)
     -- Add Purifiception buff to target if it doesn't have it yet
     if not target:HasModifier(modifier_purifiception) then
         target:AddNewModifier(caster, ability, modifier_purifiception, {duration = purifiception_duration})
+    end    
 
-        -- Give it a stack and refresh it
-        local modifier_purifiception_handler = target:FindModifierByName(modifier_purifiception)
+    -- Just refresh it (stack will be given through OnHealRecieved)
+    local modifier_purifiception_handler = target:FindModifierByName(modifier_purifiception)
 
-        if modifier_purifiception_handler then
-            modifier_purifiception_handler:IncrementStackCount()
-            modifier_purifiception_handler:ForceRefresh()
-        end
-    else
-        -- Just refresh it (stack will be given through OnHealRecieved)
-        local modifier_purifiception_handler = target:FindModifierByName(modifier_purifiception)
-
-        if modifier_purifiception_handler then
-           modifier_purifiception_handler:ForceRefresh() 
-        end
-    end
+    if modifier_purifiception_handler then
+       modifier_purifiception_handler:ForceRefresh() 
+    end    
 end
 
 
@@ -197,6 +189,9 @@ function modifier_imba_purification_buff:OnCreated()
     self.purifiception_heal_amp_pct = self.ability:GetSpecialValueFor("purifiception_heal_amp_pct")
     self.purifiception_max_stacks = self.ability:GetSpecialValueFor("purifiception_max_stacks")
     self.purifiception_stack_threshold = self.ability:GetSpecialValueFor("purifiception_stack_threshold")
+
+    -- Set stacks
+    self:SetStackCount(1)
 end
 
 function modifier_imba_purification_buff:IsHidden() return false end
@@ -225,12 +220,11 @@ function modifier_imba_purification_buff:GetModifierHealAmplify_Percentage(keys)
 end
 
 
-function modifier_imba_purification_buff:OnHealthGained(keys)
-    if IsServer() then       
-
+function modifier_imba_purification_buff:OnHealthGained(keys)    
+    if IsServer() then               
         -- Only apply on the parent getting heals
         if keys.unit == self.parent then            
-            -- Only apply if was healed over the threshold
+            -- Only apply if was healed over the threshold            
             if keys.gain and keys.gain >= self.purifiception_stack_threshold then                
                 self:IncrementStackCount()
             end

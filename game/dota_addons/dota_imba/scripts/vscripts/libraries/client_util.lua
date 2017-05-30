@@ -4,11 +4,16 @@ function GetClientSync(key)
 end
 
 function MergeTables( t1, t2 )
-		for name,info in pairs(t2) do
-				t1[name] = info
-		end
+	for name,info in pairs(t2) do
+		t1[name] = info
+	end
 end
 
+function AddTableToTable( t1, t2)
+	for k,v in pairs(t2) do
+		table.insert(t1, v)
+	end
+end
 
 function GetTableLength(rndTable)
 	local counter = 0
@@ -202,3 +207,23 @@ function IsDaytime()
 
     return true   
 end
+
+function C_DOTA_Modifier_Lua:CheckUniqueValue(value, tSuperiorModifierNames)
+	local hParent = self:GetParent()
+	if tSuperiorModifierNames then
+		for _,sSuperiorMod in pairs(tSuperiorModifierNames) do
+			if hParent:HasModifier(sSuperiorMod) then
+				return 0
+			end
+		end
+	end
+	if bit.band(self:GetAttributes(), MODIFIER_ATTRIBUTE_MULTIPLE) == MODIFIER_ATTRIBUTE_MULTIPLE then
+		if self:GetStackCount() == 1 then
+			return 0
+		end
+	end
+	return value
+end
+
+function C_DOTA_Modifier_Lua:CheckUnique(bCreated)
+return nil end

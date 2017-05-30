@@ -12,7 +12,7 @@ LinkLuaModifier("modifier_imba_strafe_aspd", "hero/hero_clinkz", LUA_MODIFIER_MO
 LinkLuaModifier("modifier_imba_strafe_mount", "hero/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
 
 function imba_clinkz_strafe:IsHiddenWhenStolen() return false end
-
+function imba_clinkz_strafe:IsNetherWardStealable() return false end
 function imba_clinkz_strafe:GetCooldown(level)
     if IsServer() then
         local caster = self:GetCaster()
@@ -41,6 +41,16 @@ function imba_clinkz_strafe:GetBehavior()
     end
 end
 
+function imba_clinkz_strafe:GetManaCost(level)
+    local caster = self:GetCaster()
+    -- If Clinkz is currently mounted, remove the mana cost
+    if caster:HasModifier("modifier_imba_strafe_mount") then
+        return 0    
+    end
+
+    -- Otherwise, return normal mana cost
+    return self.BaseClass.GetManaCost(self, level)
+end
 
 
 function imba_clinkz_strafe:OnSpellStart()
@@ -784,7 +794,7 @@ function modifier_imba_skeleton_walk_invis:OnRemoved()
                                           nil,
                                           self.spook_radius,
                                           DOTA_UNIT_TARGET_TEAM_ENEMY,
-                                          DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+                                          DOTA_UNIT_TARGET_HERO,
                                           DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,
                                           FIND_ANY_ORDER,
                                           false)
@@ -828,23 +838,46 @@ function modifier_imba_skeleton_walk_spook:OnCreated()
 
         self:AddParticle(self.particle_spook_fx, false, false, -1, false, true)        
 
+        self.reacting = true
+
+        -- Determine location to force move to
+        local direction = (self.parent:GetAbsOrigin() - self.caster:GetAbsOrigin()):Normalized()
+        local location = self.parent:GetAbsOrigin() + direction * 500
+
+        local newOrder = {UnitIndex = self.parent:entindex(), 
+                          OrderType = DOTA_UNIT_ORDER_MOVE_TO_POSITION,                 
+                          Position = location}
+ 
+        ExecuteOrderFromTable(newOrder)        
+
+        self.reacting = false
+
         -- RUN FROM CLINKZ!
-        self:StartIntervalThink(0.05)        
+        self:StartIntervalThink(FrameTime())
     end
 end
 
 function modifier_imba_skeleton_walk_spook:OnIntervalThink()    
     -- Determine location to force move to
     local direction = (self.parent:GetAbsOrigin() - self.caster:GetAbsOrigin()):Normalized()
-    local location = self.parent:GetAbsOrigin() + direction * 500
+    local location = self.parent:GetAbsOrigin() + direction * 500    
 
-    self.parent:Stop()
-    self.parent:MoveToPosition(location)
+    self.parent:MoveToPosition(location)    
+end
+
+function modifier_imba_skeleton_walk_spook:OnDestroy()
+    if IsServer() then
+        self.parent:Stop()
+    end
 end
 
 function modifier_imba_skeleton_walk_spook:CheckState()
-    local state = {[MODIFIER_STATE_COMMAND_RESTRICTED] = true}
-    return state 
+    if not self.reacting then
+        local state = {[MODIFIER_STATE_COMMAND_RESTRICTED] = true}
+        return state
+    end
+
+    return nil
 end
 
 
@@ -888,19 +921,17 @@ LinkLuaModifier("modifier_imba_death_pact_talent_debuff", "hero/hero_clinkz", LU
 LinkLuaModifier("modifier_imba_death_pact_talent_buff", "hero/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
 
 function imba_clinkz_death_pact:CastFilterResultTarget(target)
-    local caster = self:GetCaster()
+    if IsServer() then
+        local caster = self:GetCaster()
 
-    -- Can't target self
-    if caster == target then
-        return UF_FAIL_CUSTOM
+        -- Can't target self
+        if caster == target then
+            return UF_FAIL_CUSTOM
+        end
+
+        local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+        return nResult
     end
-
-    -- Can't target buildings
-    if target:IsBuilding() then
-        return UF_FAIL_BUILDING
-    end
-
-    return UF_SUCCESS
 end
 
 function imba_clinkz_death_pact:GetCustomCastErrorTarget(target) 
@@ -917,7 +948,7 @@ function imba_clinkz_death_pact:OnSpellStart()
     local ability = self
     local target = self:GetCursorTarget()
     local cast_response = "clinkz_clinkz_ability_pact_0"..math.random(1, 6)
-    local sound_cast = "sounds/weapons/hero/clinkz/death_pact_cast.vsnd"
+    local sound_cast = "Hero_Clinkz.DeathPact.Cast"
     local particle_pact = "particles/units/heroes/hero_clinkz/clinkz_death_pact.vpcf"
     local modifier_pact = "modifier_imba_death_pact_buff"
     local modifier_stack_creep = "modifier_imba_death_pact_stack_creep"

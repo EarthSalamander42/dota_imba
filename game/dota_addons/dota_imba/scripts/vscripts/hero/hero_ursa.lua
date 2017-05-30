@@ -485,6 +485,11 @@ function modifier_imba_overpower_buff:OnAttack( keys )
 
 	if keys.attacker == caster then		
 		local current_stacks = self:GetStackCount()		
+
+		-- If the attacks came from Starfury's PerformAttacks, do nothing
+		if caster:HasModifier("modifier_imba_starfury_dmg_penalty") then
+			return nil
+		end
 		
 		if current_stacks > 1 then
 			self:DecrementStackCount()
@@ -571,10 +576,6 @@ end
 
 -- Fury Swipes modifier buff
 modifier_imba_fury_swipes = class({})
-
-function modifier_imba_fury_swipes:GetAttributes()
-	return MODIFIER_ATTRIBUTE_PERMANENT
-end
 
 function modifier_imba_fury_swipes:IsDebuff()
 	return false
@@ -700,7 +701,7 @@ end
 ---------------------------------------------------
 ---------------------------------------------------
 ---------------------------------------------------
---			Ursa's Enrage
+--			       Ursa's Enrage
 ---------------------------------------------------
 ---------------------------------------------------
 ---------------------------------------------------
@@ -820,8 +821,8 @@ function modifier_imba_enrage_buff:OnIntervalThink()
 	if IsServer() then
 		local caster = self:GetCaster()
 		local ability = self:GetAbility()	
-		local ability_earthshock = caster:GetAbilityByIndex(0)		
-		local ability_overpower = caster:GetAbilityByIndex(1)	
+		local ability_earthshock = caster:FindAbilityByName("imba_ursa_earthshock")
+		local ability_overpower = caster:FindAbilityByName("imba_ursa_overpower")	
 		
 		-- Ability specials
 		local reduce_cd_amount = ability:GetSpecialValueFor("reduce_cd_amount")
@@ -830,16 +831,21 @@ function modifier_imba_enrage_buff:OnIntervalThink()
 		reduce_cd_amount = reduce_cd_amount + caster:FindTalentValue("special_bonus_imba_ursa_8")
 		
 		-- Find current CD of skills, lower it if above reduction, else refresh	it	
-		local ability_earthshock_cd = ability_earthshock:GetCooldownTimeRemaining()
-		ability_earthshock:EndCooldown()		
-		if ability_earthshock_cd > reduce_cd_amount then		
-			ability_earthshock:StartCooldown(ability_earthshock_cd - reduce_cd_amount)	
+		if ability_earthshock then
+			local ability_earthshock_cd = ability_earthshock:GetCooldownTimeRemaining()
+			ability_earthshock:EndCooldown()		
+			print("earthshock", ability_earthshock_cd, (ability_earthshock_cd - reduce_cd_amount))
+			if ability_earthshock_cd > reduce_cd_amount then		
+				ability_earthshock:StartCooldown(ability_earthshock_cd - reduce_cd_amount)	
+			end
 		end
 		
-		local ability_overpower_cd = ability_overpower:GetCooldownTimeRemaining()
-		ability_overpower:EndCooldown()		
-		if ability_overpower_cd > reduce_cd_amount then		
-			ability_overpower:StartCooldown(ability_overpower_cd - reduce_cd_amount)	
+		if ability_overpower then
+			local ability_overpower_cd = ability_overpower:GetCooldownTimeRemaining()
+			ability_overpower:EndCooldown()		
+			if ability_overpower_cd > reduce_cd_amount then		
+				ability_overpower:StartCooldown(ability_overpower_cd - reduce_cd_amount)	
+			end
 		end
 	end
 end

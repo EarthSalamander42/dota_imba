@@ -364,6 +364,18 @@ function modifier_imba_proximity_mine:OnIntervalThink()
                     ParticleManager:SetParticleControl(particle_explosion_fx, 2, Vector(self.explosion_range, 1, 1))
                     ParticleManager:ReleaseParticleIndex(particle_explosion_fx)
 
+                    -- Look for nearby enemies
+                    enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
+                                              self.caster:GetAbsOrigin(),
+                                              nil,
+                                              self.explosion_range,
+                                              DOTA_UNIT_TARGET_TEAM_ENEMY,
+                                              DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING,
+                                              DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
+                                              FIND_ANY_ORDER,
+                                              false)
+
+                    print(#enemies, self.explosion_range)
                     -- Deal damage to nearby non-flying enemies
                     for _,enemy in pairs(enemies) do
 
@@ -542,21 +554,29 @@ function imba_techies_stasis_trap:GetBehavior()
 end
 
 function imba_techies_stasis_trap:CastFilterResultTarget(target)    
+    if IsServer() then
+        local caster = self:GetCaster()
 
-    local caster = self:GetCaster()
-    if target:GetTeamNumber() ~= caster:GetTeamNumber() then
-        return UF_FAIL_FRIENDLY
+        -- #2 Talent: Stasis Trap can be inserted within creeps
+        if caster:HasTalent("special_bonus_imba_techies_2") and target:IsCreep() and caster:GetTeamNumber() == target:GetTeamNumber() then
+            return UF_SUCCESS
+        end
+
+        if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+            return UF_FAIL_ENEMY
+        end
+
+        if target:IsHero() then
+            return UF_FAIL_HERO
+        end
+
+        if target:IsBuilding() then
+            return UF_FAIL_BUILDING
+        end
+
+        local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+        return nResult
     end
-
-    if target:IsHero() then
-        return UF_FAIL_HERO
-    end
-
-    if target:IsBuilding() then
-        return UF_FAIL_BUILDING
-    end
-
-    return UF_SUCCESS
 end
 
 function imba_techies_stasis_trap:OnAbilityPhaseStart()
@@ -716,6 +736,12 @@ function modifier_imba_statis_trap:OnIntervalThink()
         if self.caster:HasModifier(self.modifier_sign) then
             return nil
         end        
+
+        -- If the Stasis trap is dead, do nothing and destroy
+        if not self.caster:IsAlive() then
+            self:Destroy()
+            return nil
+        end
 
         -- Look for nearby enemies
         local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
@@ -949,9 +975,9 @@ function modifier_imba_statis_trap_disarmed:IsDebuff() return false end
 --        BLAST OFF!        --
 ------------------------------
 imba_techies_blast_off = class({})
-LinkLuaModifier("modifier_imba_blast_off", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_BOTH)
-LinkLuaModifier("modifier_imba_blast_off_movement", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_BOTH)
-LinkLuaModifier("modifier_imba_blast_off_silence", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_BOTH)
+LinkLuaModifier("modifier_imba_blast_off", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_blast_off_movement", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_blast_off_silence", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_techies_blast_off:IsHiddenWhenStolen()
     return false
@@ -1186,20 +1212,35 @@ function modifier_imba_blast_off_movement:OnCreated()
                 self.time_elapsed = 0
                 self.current_height = 0                               
 
-                -- Execute forced movement
-                if self:ApplyHorizontalMotionController() == false or self:ApplyVerticalMotionController() == false then 
-                    self:Destroy()
-                end        
+                self.frametime = FrameTime()
+                self:StartIntervalThink(self.frametime)     
             end            
         end)        
     end
 end
 
+function modifier_imba_blast_off_movement:OnIntervalThink()
+    -- Check motion controllers
+    if not self:CheckMotionControllers() then
+        self:Destroy()
+        return nil
+    end
+
+    -- Vertical motion
+    self:VerticalMotion(self.parent, self.frametime)
+
+    -- Horizontal motion
+    self:HorizontalMotion(self.parent, self.frametime)
+end
+
 function modifier_imba_blast_off_movement:IsHidden() return true end
 function modifier_imba_blast_off_movement:IsPurgable() return false end
 function modifier_imba_blast_off_movement:IsDebuff() return false end
+function modifier_imba_blast_off_movement:IgnoreTenacity() return true end
+function modifier_imba_blast_off_movement:IsMotionController() return true end
+function modifier_imba_blast_off_movement:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
-function modifier_imba_blast_off_movement:UpdateVerticalMotion(me, dt)
+function modifier_imba_blast_off_movement:VerticalMotion(me, dt)
     if IsServer() then        
         -- Calculate height as a parabula
         local t = self.time_elapsed / self.jump_duration
@@ -1213,22 +1254,28 @@ function modifier_imba_blast_off_movement:UpdateVerticalMotion(me, dt)
     end
 end
 
-function modifier_imba_blast_off_movement:UpdateHorizontalMotion(me, dt)
-    if IsServer() then
+function modifier_imba_blast_off_movement:HorizontalMotion(me, dt)
+    if IsServer() then        
+
         -- Check if we're still jumping
         if self.time_elapsed < self.jump_duration then
             -- Move parent towards the target point    
             local new_location = self.parent:GetAbsOrigin() + self.direction * self.velocity * dt
             self.parent:SetAbsOrigin(new_location)            
         else
-            self.parent:InterruptMotionControllers(true)                    
-            self:Destroy()
+            self:BlastOffLanded()            
         end
     end
 end
 
-function modifier_imba_blast_off_movement:OnHorizontalMotionInterrupted()
+function modifier_imba_blast_off_movement:BlastOffLanded()
     if IsServer() then
+        if self.blast_off_finished then
+            return nil
+        end
+
+        self.blast_off_finished = true
+
         -- Play explosion sound
         EmitSoundOn(self.sound_suicide, self.parent)
 
@@ -1308,8 +1355,7 @@ function modifier_imba_blast_off_movement:OnHorizontalMotionInterrupted()
                              damage_flags = DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION
                              }
             
-        local actual_damage = ApplyDamage(damageTable)                                
-        print(actual_damage)
+        local actual_damage = ApplyDamage(damageTable)                                        
 
         --#5 Talent: Blast Off! jumps drop a Proximity Mine
         if self.caster:HasTalent("special_bonus_imba_techies_5") then
@@ -1322,6 +1368,14 @@ function modifier_imba_blast_off_movement:OnHorizontalMotionInterrupted()
                 end
             end            
         end
+
+        self:Destroy()
+    end
+end
+
+function modifier_imba_blast_off_movement:OnDestroy()
+    if IsServer() then
+        self.parent:SetUnitOnClearGround()
     end
 end
 
@@ -1708,7 +1762,7 @@ function imba_techies_focused_detonate:OnSpellStart()
 
     -- Find all mines in radius
     local remote_mines = FindUnitsInRadius(caster:GetTeamNumber(),
-                                           target_point:GetAbsOrigin(),
+                                           target_point,
                                            nil,
                                            radius,
                                            DOTA_UNIT_TARGET_TEAM_FRIENDLY,

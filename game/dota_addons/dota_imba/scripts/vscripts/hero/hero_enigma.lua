@@ -147,23 +147,28 @@ function imba_enigma_black_hole:GetChannelTime()
 end
 
 function imba_enigma_demonic_conversion:CastFilterResultTarget(target)
-	local caster = self:GetCaster()	
-	
-	-- #8 Talent: Cast Eidolons on heroes
-	if caster:HasTalent("special_bonus_imba_enigma_8") and target:IsRealHero() then
-		return UF_SUCCESS
-	elseif target:IsHero() then
-		return UF_FAIL_HERO
-	else
-		return UF_SUCCESS
+	if IsServer() then
+		local caster = self:GetCaster()	
+		
+		-- #8 Talent: Cast Eidolons on heroes
+		if caster:HasTalent("special_bonus_imba_enigma_8") and target:IsRealHero() then
+			return UF_SUCCESS
+		end
+
+		local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+		return nResult
 	end
 end
+
+function imba_enigma_demonic_conversion:IsNetherWardStealable() return false end
 
 function modifier_eidolon_buffs:OnCreated(var)
 	if IsServer() then
 		local shard_percentage,attacks_to_split = getkvValues(self:GetAbility(),"shard_percentage","attacks_to_split") 
+		self.additional_attacks_split = self:GetAbility():GetSpecialValueFor("additional_attacks_split")
 		self.parent = self:GetParent()
-		self.attacks_to_split = attacks_to_split
+		self.attacks_to_split = attacks_to_split + var.additional_attacks
+		self.attacks_increase = var.attacks_increase + 1
 		shard_percentage = shard_percentage / 100
 		self.attacks = var.attacks
 		self.statsource = self.parent:GetOwner()		
@@ -357,6 +362,7 @@ if IsServer() then
 
 	function imba_enigma_demonic_conversion:OnSpellStart()
 		local target,caster = findtarget(self)
+		local attacks_to_split = self:GetSpecialValueFor("attacks_to_split")
 		caster.resetgravity = true  
 		target:EmitSound("Hero_Enigma.Demonic_Conversion")
 		local duration,count = getkvValues(self,"duration","eidolon_count")
@@ -366,16 +372,17 @@ if IsServer() then
 		if target:GetTeamNumber() ~= caster:GetTeamNumber() then
 			if target:TriggerSpellAbsorb(self) then return end
 		end
-		imba_enigma_create_eidolons(target,caster,self,count,duration)
+		imba_enigma_create_eidolons(target,caster,self,count,duration, 0)
 
 	end
 
-	function imba_enigma_create_eidolons(target,caster,abilitysource,number_of_eidolons,duration)
+	function imba_enigma_create_eidolons(target,caster,abilitysource,number_of_eidolons,duration, attacks_increase)
 		local base_health,shard_percentage = getkvValues(abilitysource,"base_health","shard_percentage")		
 		local eidolon_name = "npc_imba_enigma_eidolon_"..math.min(abilitysource:GetLevel(),4)
 		local caster_level = caster:GetLevel()
 		local target_loc = target:GetAbsOrigin()
-		local shard_health,shard_damage_max,shard_damage_min,shard_green_damage,shard_health_regeneration
+		local shard_health,shard_damage_max,shard_damage_min,shard_green_damage
+		local additional_attacks = attacks_increase * abilitysource:GetSpecialValueFor("additional_attacks_split")
 
 		-- #3 Talent: Eidolon Attribute Share
 		shard_percentage = (shard_percentage + caster:FindTalentValue("special_bonus_imba_enigma_3")) * 0.01		
@@ -385,14 +392,12 @@ if IsServer() then
 			shard_damage_min          = target:GetBaseDamageMin() * shard_percentage
 			shard_damage_max          = target:GetBaseDamageMax() * shard_percentage
 			shard_green_damage        = target:GetBonusDamage(target) * shard_percentage
-			shard_health              = target:GetMaxHealth() * shard_percentage
-			shard_health_regeneration = target:GetHealthRegen() * shard_percentage      
+			shard_health              = target:GetMaxHealth() * shard_percentage			
 		else
 			shard_damage_min          = caster:GetBaseDamageMin() * shard_percentage
 			shard_damage_max          = caster:GetBaseDamageMax() * shard_percentage
 			shard_green_damage        = caster:GetBonusDamage(target) * shard_percentage
-			shard_health              = caster:GetMaxHealth() * shard_percentage
-			shard_health_regeneration = caster:GetHealthRegen() * shard_percentage
+			shard_health              = caster:GetMaxHealth() * shard_percentage			
 		end 
 		for i=1, number_of_eidolons do
 			local eidolon_loc = RotatePosition(target_loc, QAngle(0, (i - 1) * 360 / number_of_eidolons, 0), target_loc + caster:GetForwardVector() * 80)       -- Spawn position
@@ -405,15 +410,14 @@ if IsServer() then
 			eidolon:AddNewModifier(caster, abilitysource, "modifier_kill", {duration = duration}) 
 			if target:IsHero() then
 				eidolon:SetOwner(target)
-				eidolon:AddNewModifier(caster, abilitysource, "modifier_eidolon_buffs", {attacks=0,statsource=target:entindex()})
+				eidolon:AddNewModifier(caster, abilitysource, "modifier_eidolon_buffs", {attacks=0,statsource=target:entindex(), additional_attacks = additional_attacks, attacks_increase = attacks_increase})
 			else
 				eidolon:SetOwner(caster)
-				eidolon:AddNewModifier(caster, abilitysource, "modifier_eidolon_buffs", {attacks=0,statsource=caster:entindex()})
+				eidolon:AddNewModifier(caster, abilitysource, "modifier_eidolon_buffs", {attacks=0,statsource=caster:entindex(), additional_attacks = additional_attacks, attacks_increase = attacks_increase})
 			end
 			SetCreatureHealth(eidolon, base_health + shard_health, true)
 			eidolon:SetBaseDamageMin(shard_damage_min + shard_green_damage + eidolon:GetBaseDamageMin())
-			eidolon:SetBaseDamageMax(shard_damage_max + shard_green_damage + eidolon:GetBaseDamageMax())
-			eidolon:SetBaseHealthRegen(shard_health_regeneration + eidolon:GetHealthRegen())
+			eidolon:SetBaseDamageMax(shard_damage_max + shard_green_damage + eidolon:GetBaseDamageMax())			
 		end  
 	end 
 
@@ -588,11 +592,13 @@ if IsServer() then
 				end
 
 				self.attacks = self.attacks + 1
+				print(self.attacks, self.attacks_to_split)
 				if self.attacks >= self.attacks_to_split then 
 					self.attacks = 0
+					self.attacks_to_split = self.attacks_to_split + self.additional_attacks_split
 					self:GetParent():Heal(9999,self:GetParent():GetOwner())
 					local duration = getkvValues(self:GetAbility(),"child_duration") + self:GetParent():FindModifierByName("modifier_kill"):GetDuration()
-					imba_enigma_create_eidolons(self:GetParent(),self:GetCaster(),self:GetAbility(),1,duration)
+					imba_enigma_create_eidolons(self:GetParent(),self:GetCaster(),self:GetAbility(),1,duration, self.attacks_increase)
 				end
 				local targetmodifiers = self:GetParent():GetAggroTarget():FindAllModifiersByName('modifier_eidolon_increased_mass')
 				if #targetmodifiers > 1 then

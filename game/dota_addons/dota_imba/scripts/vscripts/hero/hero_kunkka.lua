@@ -29,6 +29,7 @@ end
 -------------------------------------------
 
 imba_kunkka_ebb_and_flow = class({})
+
 LinkLuaModifier("modifier_imba_ebb_and_flow_thinker", "hero/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ebb_and_flow_tide_low", "hero/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ebb_and_flow_tide_red", "hero/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
@@ -41,6 +42,7 @@ function imba_kunkka_ebb_and_flow:GetIntrinsicModifierName()
     return "modifier_imba_ebb_and_flow_thinker"
 end
 
+function imba_kunkka_ebb_and_flow:IsNetherWardStealable() return false end
 function imba_kunkka_ebb_and_flow:IsInnateAbility()
     return true
 end
@@ -746,7 +748,7 @@ function modifier_imba_tidebringer:OnAttackStart( params )
 		local parent = self:GetParent()
 		local target = params.target
 		if (parent == params.attacker) and (target:GetTeamNumber() ~= parent:GetTeamNumber()) and (target.IsCreep or target.IsHero) then
-			if not target:IsTower() then
+			if not target:IsBuilding() then
 				local ability = self:GetAbility()
 				self.sound_triggered = false
 				-- Check buffs by Ebb and Flow, and set on Cooldown after cast to give a new buff
@@ -1018,7 +1020,6 @@ function imba_kunkka_x_marks_the_spot:CastFilterResultTarget(target)
         local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
         return nResult
     end
-    return UF_SUCCESS
 end
 
 function imba_kunkka_x_marks_the_spot:GetAssociatedSecondaryAbilities()
@@ -1161,6 +1162,8 @@ end
 -------------------------------------------
 
 imba_kunkka_return = class({})
+
+function imba_kunkka_return:IsNetherWardStealable() return false end
 
 function imba_kunkka_return:OnSpellStart()
 	if IsServer() then

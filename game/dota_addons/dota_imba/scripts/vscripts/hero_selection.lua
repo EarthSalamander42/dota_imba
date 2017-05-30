@@ -171,7 +171,7 @@ function HeroSelection:RandomHero(event)
 		"npc_dota_hero_night_stalker",
 		"npc_dota_hero_omniknight",
 		"npc_dota_hero_puck",
-		"npc_dota_hero_pudge",
+		--"npc_dota_hero_pudge",
 		"npc_dota_hero_pugna",
 		"npc_dota_hero_rattletrap",
 		"npc_dota_hero_razor",
@@ -216,7 +216,7 @@ function HeroSelection:RandomHero(event)
 		"npc_dota_hero_rubick",
 		"npc_dota_hero_luna",
 		"npc_dota_hero_wisp",
-		"npc_dota_hero_disruptor",
+		--"npc_dota_hero_disruptor",
 		"npc_dota_hero_undying",
 		"npc_dota_hero_templar_assassin",
 		"npc_dota_hero_naga_siren",
@@ -285,20 +285,35 @@ function HeroSelection:HeroSelect( event )
 		return nil
 	end
 
-	-- Check if this hero hasn't already been picked
-	if PlayerResource:GetTeam(event.PlayerID) == DOTA_TEAM_GOODGUYS then
-		for _, picked_hero in pairs(HeroSelection.radiantPicks) do
-			if event.HeroName == picked_hero then
-				return nil
-			end
-		end
-	else
-		for _, picked_hero in pairs(HeroSelection.direPicks) do
-			if event.HeroName == picked_hero then
-				return nil
-			end
-		end
-	end
+    if IMBA_HERO_PICK_RULE == 0 then
+        -- All Unique heroes
+        for _, picked_hero in pairs(HeroSelection.radiantPicks) do
+            if event.HeroName == picked_hero then
+                return nil
+            end
+        end
+        for _, picked_hero in pairs(HeroSelection.direPicks) do
+            if event.HeroName == picked_hero then
+                return nil
+            end
+        end
+    elseif IMBA_HERO_PICK_RULE == 1 then
+        -- Allow Team pick same hero
+        -- Check if this hero hasn't already been picked
+        if PlayerResource:GetTeam(event.PlayerID) == DOTA_TEAM_GOODGUYS then
+            for _, picked_hero in pairs(HeroSelection.radiantPicks) do
+                if event.HeroName == picked_hero then
+                    return nil
+                end
+            end
+        else
+            for _, picked_hero in pairs(HeroSelection.direPicks) do
+                if event.HeroName == picked_hero then
+                    return nil
+                end
+            end
+        end
+    end
 
 	-- If this player has not picked yet give him the hero
 	if not HeroSelection.playerPicks[ event.PlayerID ] then
@@ -417,14 +432,24 @@ function HeroSelection:AssignHero(player_id, hero_name)
 
 		-- Fetch wisp entity
 		local wisp = PlayerResource:GetSelectedHeroEntity(player_id)
-		wisp:SetRespawnsDisabled(true)
+		wisp:SetRespawnsDisabled(true)				
 
 		-- Switch for the new hero
 		PlayerResource:ReplaceHeroWith(player_id, hero_name, 0, 0 )
 		PlayerResource:SetCameraTarget(player_id, nil)
 
-		-- Nuke the wisp from orbit
-		UTIL_Remove(wisp)
+		wisp:Destroy()
+
+		-- If the wisp is still somehow alive, RENUKE
+	    Timers:CreateTimer(FrameTime(), function()
+	      	if not wisp:IsNull() then
+	      		print("in timer", wisp)
+		        UTIL_Remove(wisp)
+		        print("wisp removed again")
+		        return 1
+	      	end
+	    end)
+		
 
 		-------------------------------------------------------------------------------------------------
 		-- IMBA: First hero spawn initialization

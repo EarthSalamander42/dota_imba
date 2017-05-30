@@ -345,7 +345,7 @@ function modifier_item_imba_greatwyrm_plate:GetModifierBonusStats_Intellect()
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_greatwyrm_plate_buff == nil then modifier_item_imba_greatwyrm_plate_buff = class({}) end
-function modifier_item_imba_greatwyrm_plate_buff:IsHidden() return true end
+function modifier_item_imba_greatwyrm_plate_buff:IsHidden() return false end
 function modifier_item_imba_greatwyrm_plate_buff:IsDebuff() return false end
 function modifier_item_imba_greatwyrm_plate_buff:IsPurgable() return false end
 

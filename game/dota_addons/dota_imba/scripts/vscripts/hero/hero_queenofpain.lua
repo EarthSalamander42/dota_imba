@@ -379,8 +379,6 @@ modifier_imba_scream_of_pain_reflect = class({})
 function modifier_imba_scream_of_pain_reflect:IsDebuff() return true end
 function modifier_imba_scream_of_pain_reflect:IsHidden() return false end
 function modifier_imba_scream_of_pain_reflect:IsPurgable() return true end
-function modifier_imba_scream_of_pain_reflect:IsPurgeException() return false end
-function modifier_imba_scream_of_pain_reflect:IsStunDebuff() return false end
 -------------------------------------------
 function modifier_imba_scream_of_pain_reflect:OnCreated( params )
 	if IsServer() then
@@ -418,7 +416,7 @@ function modifier_imba_scream_of_pain_reflect:OnTakeDamage( params )
 			else
 				self.damage_counter = self.damage_counter + damage
 			end
-			ApplyDamage({victim = parent, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE})
+			ApplyDamage({victim = parent, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS})
 		end
 	end
 end

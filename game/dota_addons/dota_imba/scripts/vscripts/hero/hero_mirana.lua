@@ -261,9 +261,12 @@ end
 
 function modifier_imba_starfall_scepter_thinker:IsPurgable() return false end
 function modifier_imba_starfall_scepter_thinker:IsDebuff() return false end
+function modifier_imba_starfall_scepter_thinker:DestroyOnExpire() return false end
+function modifier_imba_starfall_scepter_thinker:RemoveOnDeath() return false end
+function modifier_imba_starfall_scepter_thinker:IsPermanent() return true end
 
 function modifier_imba_starfall_scepter_thinker:OnIntervalThink()
-    if IsServer() then        
+    if IsServer() then
         -- Ability specials
         self.radius = self.ability:GetSpecialValueFor("radius")
         self.damage = self.ability:GetSpecialValueFor("damage")
@@ -276,7 +279,12 @@ function modifier_imba_starfall_scepter_thinker:OnIntervalThink()
             -- Set the buff's duration to -1
             self:SetDuration(-1, true)
         end
-
+        
+        -- If caster is dead, do nothing
+        if not self.caster:IsAlive() then
+            return nil
+        end
+        
         -- If caster does not have scepter, do nothing
         if not self.caster:HasScepter() then
             return nil
@@ -311,9 +319,6 @@ function modifier_imba_starfall_scepter_thinker:OnIntervalThink()
     end
 end
 
-function modifier_imba_starfall_scepter_thinker:DestroyOnExpire()
-    return false
-end
 
 
 
@@ -685,9 +690,9 @@ end
 -------------------------------
 
 imba_mirana_leap = class({})
-LinkLuaModifier("modifier_imba_leap_movement", "hero/hero_mirana", LUA_MODIFIER_MOTION_BOTH)
-LinkLuaModifier("modifier_imba_leap_aura", "hero/hero_mirana", LUA_MODIFIER_MOTION_BOTH)
-LinkLuaModifier("modifier_imba_leap_speed_boost", "hero/hero_mirana", LUA_MODIFIER_MOTION_BOTH)
+LinkLuaModifier("modifier_imba_leap_movement", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_leap_aura", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_leap_speed_boost", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 
 function imba_mirana_leap:GetCastRange(location, target)        
     local ability = self
@@ -797,20 +802,36 @@ function modifier_imba_leap_movement:OnCreated()
 
             self.direction = (self.target_point - self.caster:GetAbsOrigin()):Normalized()
 
-            -- Start forced movement
-            if self:ApplyHorizontalMotionController() == false or self:ApplyVerticalMotionController() == false then 
-                self:Destroy()
-            end        
+            self.frametime = FrameTime()
+            self:StartIntervalThink(self.frametime)
         end)        
     end
+end
+
+function modifier_imba_leap_movement:OnIntervalThink()
+    -- Check motion controllers
+    if not self:CheckMotionControllers() then
+        self:Destroy()
+        return nil
+    end
+
+    -- Vertical Motion
+    self:VerticalMotion(self.caster, self.frametime)
+
+    -- Horizontal Motion
+    self:HorizontalMotion(self.caster, self.frametime)
 end
 
 function modifier_imba_leap_movement:IsHidden() return true end
 function modifier_imba_leap_movement:IsPurgable() return false end
 function modifier_imba_leap_movement:IsDebuff() return false end
+function modifier_imba_leap_movement:IgnoreTenacity() return true end
+function modifier_imba_leap_movement:IsMotionController() return true end
+function modifier_imba_leap_movement:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
-function modifier_imba_leap_movement:UpdateVerticalMotion(me, dt)
+function modifier_imba_leap_movement:VerticalMotion(me, dt)
     if IsServer() then
+
         -- Check if we're still jumping
         if self.time_elapsed < self.jump_time then
 
@@ -833,7 +854,7 @@ function modifier_imba_leap_movement:UpdateVerticalMotion(me, dt)
     end
 end
 
-function modifier_imba_leap_movement:UpdateHorizontalMotion(me, dt)
+function modifier_imba_leap_movement:HorizontalMotion(me, dt)
    if IsServer() then
         -- Check if we're still jumping
         self.time_elapsed = self.time_elapsed + dt
@@ -842,8 +863,7 @@ function modifier_imba_leap_movement:UpdateHorizontalMotion(me, dt)
             -- Go forward
             local new_location = self.caster:GetAbsOrigin() + self.direction * self.jump_speed * dt
             self.caster:SetAbsOrigin(new_location)            
-        else
-            self.caster:InterruptMotionControllers(true)
+        else            
             self:Destroy()
         end
    end 
@@ -851,6 +871,7 @@ end
 
 function modifier_imba_leap_movement:OnRemoved()    
     if IsServer() then
+        self.caster:SetUnitOnClearGround()
         self.caster:AddNewModifier(self.caster, self.ability, self.modifier_aura, {duration = self.aura_duration})
     end
 end
@@ -951,9 +972,10 @@ end
 -------------------------------
 
 imba_mirana_moonlight_shadow = class({})
-LinkLuaModifier("modifier_imba_moonlight_shadow", "hero/hero_mirana", LUA_MODIFIER_MOTION_BOTH)
-LinkLuaModifier("modifier_imba_moonlight_shadow_invis", "hero/hero_mirana", LUA_MODIFIER_MOTION_BOTH)
-LinkLuaModifier("modifier_imba_moonlight_shadow_invis_dummy", "hero/hero_mirana", LUA_MODIFIER_MOTION_BOTH)
+LinkLuaModifier("modifier_imba_moonlight_shadow", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_moonlight_shadow_invis", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_moonlight_shadow_invis_dummy", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_moonlight_shadow_invis_fade_time", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 
 function imba_mirana_moonlight_shadow:GetCooldown(level)
     local caster = self:GetCaster()
@@ -1003,7 +1025,7 @@ function modifier_imba_moonlight_shadow:OnCreated()
         self.ability = self:GetAbility()
         self.modifier_invis = "modifier_imba_moonlight_shadow_invis"
         self.modifier_dummy = "modifier_imba_moonlight_shadow_invis_dummy"
-
+        self.fade_delay = self.ability:GetSpecialValueFor("fade_delay")
         -- Start interval think
         self:StartIntervalThink(0.1)
     end
@@ -1016,7 +1038,7 @@ function modifier_imba_moonlight_shadow:IsDebuff() return false end
 function modifier_imba_moonlight_shadow:OnIntervalThink()
     if IsServer() then
         local duration = self:GetRemainingTime()
-
+        
         -- Find all allied heroes
         local allies = FindUnitsInRadius(self.caster:GetTeamNumber(),
                                          self.caster:GetAbsOrigin(),
@@ -1032,7 +1054,10 @@ function modifier_imba_moonlight_shadow:OnIntervalThink()
         for _,ally in pairs(allies) do
             if not ally:HasModifier(self.modifier_invis) then
                 ally:AddNewModifier(self.caster, self.ability, self.modifier_dummy, {duration = duration})
-                ally:AddNewModifier(self.caster, self.ability, self.modifier_invis, {duration = duration})                
+                ally:AddNewModifier(self.caster, self.ability, self.modifier_invis, {duration = duration})
+                if self:GetDuration() < (duration + self.fade_delay) then
+                    ally:AddNewModifier(self.caster, self.ability, "modifier_imba_moonlight_shadow_invis_fade_time", {duration = self.fade_delay})
+                end
             end
         end
     end
@@ -1155,6 +1180,7 @@ function modifier_imba_moonlight_shadow_invis:OnAbilityExecuted(keys)
             self.modifier_dummy:SetDuration(self.fade_delay, true)
             self.parent:AddNewModifier(self.caster, self.ability, self:GetName(), {duration = self.fade_delay})
             self.parent:AddNewModifier(self.caster, self.ability, self.modifier_dummy_name, {duration = self.fade_delay})
+            self.parent:AddNewModifier(self.caster, self.ability, "modifier_imba_moonlight_shadow_invis_fade_time", {duration = self.fade_delay})
         end
     end
 end
@@ -1172,6 +1198,7 @@ function modifier_imba_moonlight_shadow_invis:OnAttack(keys)
             self.modifier_dummy:SetDuration(self.fade_delay, true)
             self.parent:AddNewModifier(self.caster, self.ability, self:GetName(), {duration = self.fade_delay})
             self.parent:AddNewModifier(self.caster, self.ability, self.modifier_dummy_name, {duration = self.fade_delay})
+            self.parent:AddNewModifier(self.caster, self.ability, "modifier_imba_moonlight_shadow_invis_fade_time", {duration = self.fade_delay})
         end
     end
 end
@@ -1212,3 +1239,11 @@ end
 function modifier_imba_moonlight_shadow_invis_dummy:GetEffectAttachType()
     return PATTACH_OVERHEAD_FOLLOW
 end
+
+-- Dummy fade modifier (shown)
+modifier_imba_moonlight_shadow_invis_fade_time = class({})
+
+function modifier_imba_moonlight_shadow_invis_fade_time:IsHidden() return false end
+function modifier_imba_moonlight_shadow_invis_fade_time:IsPurgable() return false end
+function modifier_imba_moonlight_shadow_invis_fade_time:IsPurgeException() return false end
+function modifier_imba_moonlight_shadow_invis_fade_time:IsDebuff() return false end

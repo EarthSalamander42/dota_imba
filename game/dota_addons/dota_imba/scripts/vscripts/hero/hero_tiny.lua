@@ -1,3 +1,13 @@
+
+
+
+
+
+CreateEmptyTalents("tiny")
+
+
+
+
 imba_tiny_rolling_stone = imba_tiny_rolling_stone or class({})
 
 function imba_tiny_rolling_stone:IsInnateAbility()
@@ -39,6 +49,11 @@ function modifier_imba_tiny_rolling_stone:OnRefresh()
 end
 
 function modifier_imba_tiny_rolling_stone:OnIntervalThink()
+	if self:GetParent():IsIllusion() then
+		self:SetStackCount(0)
+		return nil
+	end
+
 	if self:GetParent():IsMoving() then
 		self.internalTimer = self.internalTimer + 0.03 * self.gain
 	end
@@ -253,46 +268,56 @@ function modifier_imba_tiny_avalanche_passive:OnAttackLanded(params)
 end
 
 imba_tiny_toss = imba_tiny_toss or class({})
-if IsServer() then
-	function imba_tiny_toss:OnSpellStart()
-		self.tossPosition = self:GetCursorPosition()
-		local hTarget = self:GetCursorTarget()
-		local caster = self:GetCaster()
-		local tossVictim = caster
-		
-		if not hTarget then
-			local targets = FindUnitsInRadius(caster:GetTeamNumber(), self.tossPosition, nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 1, false)
-			for _,target in pairs(targets) do
-				hTarget = target
+function imba_tiny_toss:OnSpellStart()
+	self.tossPosition = self:GetCursorPosition()
+	local hTarget = self:GetCursorTarget()
+	local caster = self:GetCaster()
+	local tossVictim = caster
+	local duration = self:GetSpecialValueFor("duration")
+	
+	if not hTarget then
+		local targets = FindUnitsInRadius(caster:GetTeamNumber(), self.tossPosition, nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 1, false)
+		for _,target in pairs(targets) do
+			hTarget = target
+			break
+		end
+	end
+	if hTarget then
+		self.tossPosition = hTarget:GetAbsOrigin()
+		self.tossTarget = hTarget
+	else
+		self.tossTarget = nil
+	end
+
+	local vLocation = self.tossPosition
+	local kv =
+	{
+		vLocX = vLocation.x,
+		vLocY = vLocation.y,
+		vLocZ = vLocation.z,
+		duration = duration	
+	}
+
+	local tossVictims = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, self:GetSpecialValueFor("grab_radius"), DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, 1, false)
+	for _, victim in pairs(tossVictims) do
+		if victim ~= caster then
+			victim:AddNewModifier(caster, self, "modifier_tiny_toss_movement", kv)
+			if not self:GetCaster():HasTalent("special_bonus_imba_tiny_7") then
 				break
 			end
 		end
-		if hTarget then
-			self.tossPosition = hTarget:GetAbsOrigin()
-			self.tossTarget = hTarget
-		else
-			self.tossTarget = nil
-		end
-		
-		local tossVictims = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, self:GetSpecialValueFor("grab_radius"), DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, 1, false)
-		for _, victim in pairs(tossVictims) do
-			if victim ~= caster then
-				victim:AddNewModifier(caster, self, "modifier_tiny_toss_movement", {})
-				if self:GetCaster():HasTalent("special_bonus_imba_tiny_7") then
-					break
-				end
-			end
-		end
-
-		if #tossVictims <= 1 then
-			caster:AddNewModifier(caster, self, "modifier_tiny_toss_movement", {})
-		end
-		
-		caster:StartGesture(ACT_TINY_TOSS)
-		
-		EmitSoundOn("Ability.TossThrow", self:GetCaster())
 	end
+
+	-- If only Tiny himself was found, launch him instead
+	if #tossVictims <= 1 then
+		caster:AddNewModifier(caster, self, "modifier_tiny_toss_movement", kv)
+	end
+	
+	caster:StartGesture(ACT_TINY_TOSS)
+	
+	EmitSoundOn("Ability.TossThrow", self:GetCaster())
 end
+
 
 function imba_tiny_toss:GetCastRange(vLocation, hTarget)
 	if IsServer() or hTarget then
@@ -302,7 +327,14 @@ function imba_tiny_toss:GetCastRange(vLocation, hTarget)
 	end
 end
 
-LinkLuaModifier("modifier_tiny_toss_movement", "hero/hero_tiny", LUA_MODIFIER_MOTION_BOTH)
+function imba_tiny_toss:GetAOERadius()
+    local ability = self
+    local radius = ability:GetSpecialValueFor("radius") 
+    
+    return radius
+end
+
+LinkLuaModifier("modifier_tiny_toss_movement", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 
 modifier_tiny_toss_movement = modifier_tiny_toss_movement or class({})
 function modifier_tiny_toss_movement:IsDebuff()
@@ -325,34 +357,97 @@ function modifier_tiny_toss_movement:IsHidden()
 	return true
 end
 
+function modifier_tiny_toss_movement:IgnoreTenacity()
+	return true
+end
+
+function modifier_tiny_toss_movement:IsMotionController()
+	return true
+end
+
+function modifier_tiny_toss_movement:GetMotionControllerPriority()
+	return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM
+end
+
 --------------------------------------------------------------------------------
 
 function modifier_tiny_toss_movement:OnCreated( kv )
-	if IsServer() then
-		if self:ApplyHorizontalMotionController() == false or self:ApplyVerticalMotionController() == false then 
-			self:Destroy()
-		end
+  self.toss_minimum_height_above_lowest = 500
+  self.toss_minimum_height_above_highest = 100
+  self.toss_acceleration_z = 4000
+  self.toss_max_horizontal_acceleration = 3000
+
+	if IsServer() then		
+		self.ability = self:GetAbility()	
+		self.parent = self:GetParent()
+
 		EmitSoundOn("Hero_Tiny.Toss.Target", self:GetParent())
-		self.traveled = 0
-		self.max_distance = self:GetAbility():GetSpecialValueFor("distance_cap")
-		self.time_left = self:GetAbility():GetSpecialValueFor("duration")
-		self.duration = self:GetAbility():GetSpecialValueFor("duration")
-		self.tossTarget = self:GetAbility().tossTarget
-		self.tossPosition = self:GetAbility().tossPosition
-		self.initPoint = self:GetParent():GetAbsOrigin()
-		self.distance = (self.tossPosition - self.initPoint):Length2D()
-		self.distance_left = self.distance
-		self.direction = (self.initPoint - self.tossPosition):Normalized()
-		self.speed = (self.distance * 0.03333) / self.time_left
-		self.toss_z = 0
+
+    	self.vStartPosition = GetGroundPosition( self:GetParent():GetOrigin(), self:GetParent() )
+		self.flCurrentTimeHoriz = 0.0
+		self.flCurrentTimeVert = 0.0
+
+		self.vLoc = Vector( kv.vLocX, kv.vLocY, kv.vLocZ )
+		self.vLastKnownTargetPos = self.vLoc
+
+		local duration = self:GetAbility():GetSpecialValueFor( "duration" )
+		local flDesiredHeight = self.toss_minimum_height_above_lowest * duration * duration
+		local flLowZ = math.min( self.vLastKnownTargetPos.z, self.vStartPosition.z )
+		local flHighZ = math.max( self.vLastKnownTargetPos.z, self.vStartPosition.z )
+		local flArcTopZ = math.max( flLowZ + flDesiredHeight, flHighZ + self.toss_minimum_height_above_highest )
+
+		local flArcDeltaZ = flArcTopZ - self.vStartPosition.z
+		self.flInitialVelocityZ = math.sqrt( 2.0 * flArcDeltaZ * self.toss_acceleration_z )
+
+		local flDeltaZ = self.vLastKnownTargetPos.z - self.vStartPosition.z
+		local flSqrtDet = math.sqrt( math.max( 0, ( self.flInitialVelocityZ * self.flInitialVelocityZ ) - 2.0 * self.toss_acceleration_z * flDeltaZ ) )
+		self.flPredictedTotalTime = math.max( ( self.flInitialVelocityZ + flSqrtDet) / self.toss_acceleration_z, ( self.flInitialVelocityZ - flSqrtDet) / self.toss_acceleration_z )
+
+		self.vHorizontalVelocity = ( self.vLastKnownTargetPos - self.vStartPosition ) / self.flPredictedTotalTime
+		self.vHorizontalVelocity.z = 0.0
+
+		self.frametime = FrameTime()
+		self:StartIntervalThink(FrameTime())
 	end
 end
 
-function modifier_tiny_toss_movement:OnRemoved()
+function modifier_tiny_toss_movement:OnIntervalThink()
 	if IsServer() then
+		-- Check for motion controllers
+		if not self:CheckMotionControllers() then
+			self:Destroy()
+			return nil
+		end
+
+
+		-- Horizontal motion
+		self:HorizontalMotion(self.parent, self.frametime)
+
+		-- Vertical motion
+		self:VerticalMotion(self.parent, self.frametime)
+	end
+end
+
+function modifier_tiny_toss_movement:TossLand()
+	if IsServer() then
+		-- If the Toss was already completed, do nothing
+		if self.toss_land_commenced then
+			return nil
+		end
+
+		-- Mark Toss as completed
+		self.toss_land_commenced = true
+
 		local caster = self:GetCaster()
-		local radius = self:GetAbility():GetSpecialValueFor("radius") + caster:FindModifierByName("modifier_imba_tiny_rolling_stone"):GetStackCount() * caster:FindAbilityByName("imba_tiny_grow"):GetSpecialValueFor("rolling_stones_aoe")
-		local victims = FindUnitsInRadius(caster:GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, 1, false)
+		local radius = self:GetAbility():GetSpecialValueFor("radius")
+		if caster:HasModifier("modifier_imba_tiny_rolling_stone") and caster:HasAbility("imba_tiny_grow") then
+		 	radius = radius + caster:FindModifierByName("modifier_imba_tiny_rolling_stone"):GetStackCount() * caster:FindAbilityByName("imba_tiny_grow"):GetSpecialValueFor("rolling_stones_aoe")
+		end
+
+		-- Destroy trees at the target point
+		GridNav:DestroyTreesAroundPoint(self.vLastKnownTargetPos, radius, true)
+
+		local victims = FindUnitsInRadius(caster:GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING, 0, 1, false)
 		for _, victim in pairs(victims) do
 			local damage = self:GetAbility():GetSpecialValueFor("toss_damage")
 			if victim == self:GetParent() then
@@ -360,7 +455,7 @@ function modifier_tiny_toss_movement:OnRemoved()
 			end
 			if victim:IsBuilding() then
 				damage = damage * self:GetAbility():GetSpecialValueFor("building_dmg") / 100
-				ApplyDamage({victim = victim, attacker = caster, damage = damage, damage_type = DAMAGE_TYPE_PURE, ability = self:GetAbility()})
+				ApplyDamage({victim = victim, attacker = caster, damage = damage, damage_type = self:GetAbility():GetAbilityDamageType(), ability = self:GetAbility()})
 			else
 				ApplyDamage({victim = victim, attacker = caster, damage = damage, damage_type = self:GetAbility():GetAbilityDamageType(), ability = self:GetAbility()})
 			end
@@ -371,10 +466,13 @@ function modifier_tiny_toss_movement:OnRemoved()
 		if self:GetParent() == caster then
 			ApplyDamage({victim = caster, attacker = caster, damage = caster:GetMaxHealth() * self:GetAbility():GetSpecialValueFor("self_dmg_pct") / 100, damage_type = self:GetAbility():GetAbilityDamageType(), ability = self:GetAbility()})
 		end
+
 		EmitSoundOn("Ability.TossImpact", self:GetParent())
-		if caster:HasScepter() and self:GetParent():IsAlive() then
+		if caster:HasScepter() and self:GetParent():IsAlive() and self:GetParent() ~= caster then
 			self:GetParent():AddNewModifier(caster, self:GetAbility(), "modifier_tiny_toss_scepter_bounce", {})
 		end
+
+		self:GetParent():SetUnitOnClearGround()
 	end
 end
 
@@ -427,54 +525,54 @@ end
 
 --------------------------------------------------------------------------------
 
-function modifier_tiny_toss_movement:UpdateHorizontalMotion( me, dt )
-	if IsServer() then
-		local caster = self:GetParent()
-		if self.time_left > 0 then
-			caster:SetAbsOrigin(caster:GetAbsOrigin() + self.direction * self.speed)
-			self.traveled = self.traveled + self.speed
-			self.time_left = self.time_left - dt
-			self:UpdateToss()
-		else
-			caster:InterruptMotionControllers(true)
+function modifier_tiny_toss_movement:HorizontalMotion( me, dt )
+	if IsServer() then		
+		-- If the unit being tossed died, interrupt motion controllers and remove self
+		if not self.parent:IsAlive() then
+			self.parent:InterruptMotionControllers(true)
 			self:Destroy()
-		end       
+		end
+
+		self.flCurrentTimeHoriz = math.min( self.flCurrentTimeHoriz + dt, self.flPredictedTotalTime )
+		local t = self.flCurrentTimeHoriz / self.flPredictedTotalTime
+		local vStartToTarget = self.vLastKnownTargetPos - self.vStartPosition
+		local vDesiredPos = self.vStartPosition + t * vStartToTarget
+
+		local vOldPos = me:GetOrigin()
+		local vToDesired = vDesiredPos - vOldPos
+		vToDesired.z = 0.0
+		local vDesiredVel = vToDesired / dt
+		local vVelDif = vDesiredVel - self.vHorizontalVelocity
+		local flVelDif = vVelDif:Length2D()
+		vVelDif = vVelDif:Normalized()
+		local flVelDelta = math.min( flVelDif, self.toss_max_horizontal_acceleration )
+
+		self.vHorizontalVelocity = self.vHorizontalVelocity + vVelDif * flVelDelta * dt
+		local vNewPos = vOldPos + self.vHorizontalVelocity * dt
+		me:SetOrigin( vNewPos )
 	end
 end
 
-function modifier_tiny_toss_movement:UpdateVerticalMotion( me, dt )
+function modifier_tiny_toss_movement:VerticalMotion( me, dt )
 	if IsServer() then
-		local caster = self:GetParent()
+		self.flCurrentTimeVert = self.flCurrentTimeVert + dt
+		local bGoingDown = ( -self.toss_acceleration_z * self.flCurrentTimeVert + self.flInitialVelocityZ ) < 0
 		
-		-- For the first half of the distance the unit goes up and for the second half it goes down
-		if self.duration/2 < self.time_left then
-			-- Go up
-			-- This is to memorize the z point when it comes to cliffs and such although the division of speed by 2 isnt necessary, its more of a cosmetic thing
-			self.toss_z = self.toss_z + 60
-			-- Set the new location to the current ground location + the memorized z point
-			caster:SetAbsOrigin(GetGroundPosition(caster:GetAbsOrigin(), caster) + Vector(0,0,self.toss_z))
-		elseif caster:GetAbsOrigin().z > 0 then
-			-- Go down
-			self.toss_z = self.toss_z - 60
-			caster:SetAbsOrigin(GetGroundPosition(caster:GetAbsOrigin(), caster) + Vector(0,0,self.toss_z))
-		end            
-	end
-end
+		local vNewPos = me:GetOrigin()
+		vNewPos.z = self.vStartPosition.z + ( -0.5 * self.toss_acceleration_z * ( self.flCurrentTimeVert * self.flCurrentTimeVert ) + self.flInitialVelocityZ * self.flCurrentTimeVert )
 
-function modifier_tiny_toss_movement:UpdateToss()
-	if self.tossTarget then
-		self.tossPosition = self.tossTarget:GetAbsOrigin()
-	end
-	self.direction = (self.tossPosition - self:GetParent():GetAbsOrigin()):Normalized()
-	self.distance_left = (self:GetParent():GetAbsOrigin() - self.tossPosition):Length2D()
+		local flGroundHeight = GetGroundHeight( vNewPos, self:GetParent() )
+		local bLanded = false
+		if ( vNewPos.z < flGroundHeight and bGoingDown == true ) then
+			vNewPos.z = flGroundHeight
+			bLanded = true
+		end
 
-	if self.distance_left > (self.max_distance - self.traveled) then 
-		self.distance_left = (self.max_distance - self.traveled) 
+		me:SetOrigin( vNewPos )
+		if bLanded == true then
+			self:TossLand()
+		end
 	end
-	local newSpeed = self.distance_left / self.time_left
-	if newSpeed > 1.1 * self.speed then newSpeed = 1.1 * self.speed end -- smooth out acceleration
-	self.speed = newSpeed
-	if self.speed > (self.max_distance / self.duration) * 0.03333 then self.speed = (self.max_distance / self.duration) * 0.03333 end -- cap speed to be smoother
 end
 
 LinkLuaModifier("modifier_tiny_toss_scepter_bounce", "hero/hero_tiny", LUA_MODIFIER_MOTION_VERTICAL)
@@ -500,6 +598,18 @@ function modifier_tiny_toss_scepter_bounce:IsHidden()
 	return true
 end
 
+function modifier_tiny_toss_scepter_bounce:RemoveOnDeath()
+	return false
+end
+
+function modifier_tiny_toss_scepter_bounce:IsMotionController()
+	return true
+end
+
+function modifier_tiny_toss_scepter_bounce:GetMotionControllerPriority()
+	return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM
+end
+
 --------------------------------------------------------------------------------
 
 function modifier_tiny_toss_scepter_bounce:OnCreated( kv )
@@ -507,10 +617,20 @@ function modifier_tiny_toss_scepter_bounce:OnCreated( kv )
 		if self:ApplyVerticalMotionController() == false then 
 			self:Destroy()
 		end
+
+		self.caster = self:GetCaster()
+		self.ability = self:GetAbility()
+		self.parent = self:GetParent()		
+
+		self.scepter_bounce_damage_pct = self.ability:GetSpecialValueFor("scepter_bounce_damage_pct")
+		self.toss_damage = self.ability:GetSpecialValueFor("toss_damage")
+
 		EmitSoundOn("Hero_Tiny.Toss.Target", self:GetParent())
 		self.bounce_duration = self:GetAbility():GetSpecialValueFor("scepter_bounce_duration")
 		self.time = 0
 		self.toss_z = 0
+		self.frametime = FrameTime()
+		self:StartIntervalThink(FrameTime())
 	end
 end
 
@@ -557,9 +677,22 @@ function modifier_tiny_toss_scepter_bounce:CheckState()
 	return state
 end
 
-function modifier_tiny_toss_scepter_bounce:UpdateVerticalMotion( me, dt )
+function modifier_tiny_toss_scepter_bounce:OnIntervalThink()
 	if IsServer() then
-		local caster = self:GetParent()
+		-- Check for motion controllers
+		if not self:CheckMotionControllers() then
+			self:Destroy()
+			return nil
+		end
+
+		-- Vertical motion
+		self:VerticalMotion(self.parent, self.frametime)
+	end
+end
+
+function modifier_tiny_toss_scepter_bounce:VerticalMotion( me, dt )
+	if IsServer() then		
+
 		if self.time < self.bounce_duration then
 			self.time = self.time + dt
 			if self.bounce_duration/2 > self.time then
@@ -567,19 +700,31 @@ function modifier_tiny_toss_scepter_bounce:UpdateVerticalMotion( me, dt )
 				-- This is to memorize the z point when it comes to cliffs and such although the division of speed by 2 isnt necessary, its more of a cosmetic thing
 				self.toss_z = self.toss_z + 25
 				-- Set the new location to the current ground location + the memorized z point
-				caster:SetAbsOrigin(GetGroundPosition(caster:GetAbsOrigin(), caster) + Vector(0,0,self.toss_z))
-			elseif caster:GetAbsOrigin().z > 0 then
+				self.parent:SetAbsOrigin(GetGroundPosition(self.parent:GetAbsOrigin(), self.parent) + Vector(0,0,self.toss_z))
+			elseif self.parent:GetAbsOrigin().z > 0 then
 				-- Go down
 				self.toss_z = self.toss_z - 25
-				caster:SetAbsOrigin(GetGroundPosition(caster:GetAbsOrigin(), caster) + Vector(0,0,self.toss_z))
+				self.parent:SetAbsOrigin(GetGroundPosition(self.parent:GetAbsOrigin(), self.parent) + Vector(0,0,self.toss_z))
 			end
 		else
-			caster:InterruptMotionControllers(true)
+			self.parent:InterruptMotionControllers(true)
 			self:Destroy()
 		end       
 	end
 end
 
+function modifier_tiny_toss_scepter_bounce:OnRemoved()
+	if IsServer() then
+		local damage = self.toss_damage * self.scepter_bounce_damage_pct * 0.01
+		local radius = self:GetAbility():GetSpecialValueFor("radius") + self.caster:FindModifierByName("modifier_imba_tiny_rolling_stone"):GetStackCount() * self.caster:FindAbilityByName("imba_tiny_grow"):GetSpecialValueFor("rolling_stones_aoe")
+
+		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.parent:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		for _,enemy in pairs(enemies) do
+			ApplyDamage({victim = enemy, attacker = self.caster, damage = damage, damage_type = self:GetAbility():GetAbilityDamageType(), ability = self:GetAbility()})
+		end
+		self:GetParent():SetUnitOnClearGround()
+	end
+end
 
 imba_tiny_craggy_exterior = imba_tiny_craggy_exterior or class({})
 
@@ -629,7 +774,13 @@ function modifier_imba_tiny_craggy_exterior_passive:OnAttackLanded(params)
 	if IsServer() then
 		if params.target == self:GetParent() then
 			local caster = self:GetCaster()
-			if RollPercentage(self.chance + self.prng) then
+
+			-- If the caster is broken, do nothing
+			if caster:PassivesDisabled() then
+				return nil
+			end
+
+			if RollPseudoRandom(self.chance, self) then
 				if self:GetParent():HasTalent("special_bonus_imba_tiny_4") then
 					EmitSoundOn("Hero_Tiny.CraggyExterior", self:GetCaster())
 					local radius = self:GetParent():FindTalentValue("special_bonus_imba_tiny_4")
@@ -637,8 +788,8 @@ function modifier_imba_tiny_craggy_exterior_passive:OnAttackLanded(params)
 						ParticleManager:SetParticleControl(avalanche, 0, params.attacker:GetAbsOrigin())
 						ParticleManager:SetParticleControl(avalanche, 1, Vector(radius, 1, radius))
 						Timers:CreateTimer(0.2, function() 
-							ParticleManager:ReleaseParticleIndex(avalanche)
 							ParticleManager:DestroyParticle(avalanche, false)
+							ParticleManager:ReleaseParticleIndex(avalanche)							
 						end)
 					local craggy_targets = FindUnitsInRadius(caster:GetTeamNumber(), params.attacker:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
 					for _,target in pairs(craggy_targets) do
@@ -650,16 +801,29 @@ function modifier_imba_tiny_craggy_exterior_passive:OnAttackLanded(params)
 					ApplyDamage({victim = params.attacker, attacker = caster, damage = self.damage, damage_type = self:GetAbility():GetAbilityDamageType(), ability = self:GetAbility()})
 					params.attacker:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_stunned", {duration = self.duration})
 					local craggy = ParticleManager:CreateParticle("particles/units/heroes/hero_tiny/tiny_craggy_hit.vpcf", PATTACH_POINT_FOLLOW, self:GetCaster())
-						ParticleManager:SetParticleControl(craggy, 0, self:GetCaster():GetAbsOrigin())
-						ParticleManager:SetParticleControl(craggy, 1, params.attacker:GetAbsOrigin())
+					ParticleManager:SetParticleControl(craggy, 0, self:GetCaster():GetAbsOrigin())
+					ParticleManager:SetParticleControl(craggy, 1, params.attacker:GetAbsOrigin())
 					ParticleManager:ReleaseParticleIndex(craggy)
 					EmitSoundOn("Hero_Tiny.CraggyExterior", self:GetCaster())
 					EmitSoundOn("Hero_Tiny.CraggyExterior.Stun", params.attacker)
-				end
-			else
-				self.prng = self.prng + 2
+				end			
 			end
-			params.attacker:AddNewModifier(caster, self:GetAbility(), "modifier_craggy_exterior_blunt", {duration = self.reduction_duration})
+
+			-- Bluntstone
+			-- If it is a tower, do nothing
+			if params.attacker:IsBuilding() then
+				return nil
+			end
+
+			if not params.attacker:HasModifier("modifier_craggy_exterior_blunt") then
+				params.attacker:AddNewModifier(caster, self:GetAbility(), "modifier_craggy_exterior_blunt", {duration = self.reduction_duration})
+			end
+
+			local modifier_blunt_handler = params.attacker:FindModifierByName("modifier_craggy_exterior_blunt")
+			if modifier_blunt_handler then
+				modifier_blunt_handler:IncrementStackCount()
+				modifier_blunt_handler:ForceRefresh()
+			end
 		end
 	end
 end
@@ -667,40 +831,23 @@ end
 LinkLuaModifier("modifier_craggy_exterior_blunt", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
 modifier_craggy_exterior_blunt = class({})
 function modifier_craggy_exterior_blunt:OnCreated()
-	self.reduction = self:GetAbility():GetSpecialValueFor("damage_reduction")
-	self.verified = false
-	self:SetStackCount(1)
-	if IsServer() then
-		if self:GetCaster():HasTalent("special_bonus_imba_tiny_5") then
-			CustomNetTables:SetTableValue("talents", "hero_tiny_talents", {talent5 = self:GetAbility():GetTalentSpecialValueFor("damage_reduction")})
-		end
-	end
+	self.caster = self:GetCaster()
+	self.reduction = self:GetAbility():GetSpecialValueFor("damage_reduction")		
 end
 
 function modifier_craggy_exterior_blunt:OnRefresh()
-	self.reduction = self:GetAbility():GetSpecialValueFor("damage_reduction")
-	self.verified = false
-	if IsServer() then
-		if self:GetCaster():HasTalent("special_bonus_imba_tiny_5") then
-			CustomNetTables:SetTableValue("talents", "hero_tiny_talents", {talent5 = self:GetAbility():GetTalentSpecialValueFor("damage_reduction")})
-		end
-	end
-	self:IncrementStackCount()
+	self:OnCreated()
 end
 
 function modifier_craggy_exterior_blunt:DeclareFunctions()
-	local funcs = {
-		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-	}
+	local funcs = {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE}
+
 	return funcs
 end
 
 function modifier_craggy_exterior_blunt:GetModifierPreAttack_BonusDamage()
-	if CustomNetTables:GetTableValue( "talents", "hero_tiny_talents") and not self.verified then
-		self.reduction = CustomNetTables:GetTableValue( "talents", "hero_tiny_talents").talent5
-		self.verified = true
-	end
-	return self.reduction * self:GetStackCount()
+	local reduction = self.reduction + self.caster:FindTalentValue("special_bonus_imba_tiny_5")	
+	return reduction * self:GetStackCount()
 end
 
 imba_tiny_grow = imba_tiny_grow or class({})
@@ -717,8 +864,7 @@ function imba_tiny_grow:OnUpgrade()
 		local new_stacks = self:GetLevelSpecialValueFor("rolling_stones_stacks", self:GetLevel() - 1 )
 		if old_stacks == new_stacks then old_stacks = 0 end
 		rolling_stone:SetStackCount(rolling_stone:GetStackCount() - old_stacks + new_stacks)
-		local level = self:GetLevel() + 1
-		print(level)
+		local level = self:GetLevel() + 1		
 		if level < 5 then -- model bullshit
 			-- Set new model
 			self:GetCaster():SetOriginalModel("models/heroes/tiny_0"..level.."/tiny_0"..level..".vmdl")
@@ -819,93 +965,4 @@ function modifier_imba_tiny_grow_passive:OnAttackLanded( params )
 			DoCleaveAttack( params.attacker, params.target, self:GetAbility(), params.damage * self.cleave_pct / 100, self.cleave_startwidth, self.cleave_endwidth, self.cleave_distance, "particles/units/heroes/hero_tiny/tiny_grow_cleave.vpcf" )
 		end
 	end
-end
---------------------------------------------------------------------------------
-
-LinkLuaModifier("modifier_special_bonus_imba_tiny_1", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_tiny_1 = class({})
-
-function modifier_special_bonus_imba_tiny_1:IsHidden()
-	return true
-end
-
-function modifier_special_bonus_imba_tiny_1:RemoveOnDeath()
-	return false
-end
-
-
-LinkLuaModifier("modifier_special_bonus_imba_tiny_2", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_tiny_2 = class({})
-
-function modifier_special_bonus_imba_tiny_2:IsHidden()
-	return true
-end
-
-function modifier_special_bonus_imba_tiny_2:RemoveOnDeath()
-	return false
-end
-
-LinkLuaModifier("modifier_special_bonus_imba_tiny_3", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_tiny_3 = class({})
-
-function modifier_special_bonus_imba_tiny_3:IsHidden()
-	return true
-end
-
-function modifier_special_bonus_imba_tiny_3:RemoveOnDeath()
-	return false
-end
-LinkLuaModifier("modifier_special_bonus_imba_tiny_4", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_tiny_4 = class({})
-
-function modifier_special_bonus_imba_tiny_4:IsHidden()
-	return true
-end
-
-function modifier_special_bonus_imba_tiny_4:RemoveOnDeath()
-	return false
-end
-
-LinkLuaModifier("modifier_special_bonus_imba_tiny_5", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_tiny_5 = class({})
-
-function modifier_special_bonus_imba_tiny_5:IsHidden()
-	return true
-end
-
-function modifier_special_bonus_imba_tiny_5:RemoveOnDeath()
-	return false
-end
-
-LinkLuaModifier("modifier_special_bonus_imba_tiny_6", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_tiny_6 = class({})
-
-function modifier_special_bonus_imba_tiny_6:IsHidden()
-	return true
-end
-
-function modifier_special_bonus_imba_tiny_6:RemoveOnDeath()
-	return false
-end
-
-LinkLuaModifier("modifier_special_bonus_imba_tiny_7", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_tiny_7 = class({})
-
-function modifier_special_bonus_imba_tiny_7:IsHidden()
-	return true
-end
-
-function modifier_special_bonus_imba_tiny_7:RemoveOnDeath()
-	return false
-end
-
-LinkLuaModifier("modifier_special_bonus_imba_tiny_8", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_tiny_8 = class({})
-
-function modifier_special_bonus_imba_tiny_8:IsHidden()
-	return true
-end
-
-function modifier_special_bonus_imba_tiny_8:RemoveOnDeath()
-	return false
 end

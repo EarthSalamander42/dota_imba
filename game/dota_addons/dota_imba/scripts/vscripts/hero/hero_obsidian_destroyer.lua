@@ -282,12 +282,14 @@ function modifier_imba_arcane_orb_thinker:ApplyArcaneOrbAttack(target)
 end
 
 function modifier_imba_arcane_orb_thinker:OnOrder(keys)
-    local order_type = keys.order_type  
+    if keys.unit == self.caster then
+		local order_type = keys.order_type  
 
-    -- On any order apart from attacking target, clear the forced frost arrow variable.
-    if order_type ~= DOTA_UNIT_ORDER_ATTACK_TARGET then
-        self.ability.force_arcane_orb = nil
-    end 
+		-- On any order apart from attacking target, clear the forced frost arrow variable.
+		if order_type ~= DOTA_UNIT_ORDER_ATTACK_TARGET then
+			self.ability.force_arcane_orb = nil
+		end
+	end
 end
 
 function SetArcaneOrbProjectile(caster, orb_attack)
@@ -660,8 +662,6 @@ function imba_obsidian_destroyer_astral_imprisonment:CastFilterResultTarget(targ
         local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
         return nResult
     end
-
-    return UF_SUCCESS    
 end
 
 function imba_obsidian_destroyer_astral_imprisonment:GetCastPoint()

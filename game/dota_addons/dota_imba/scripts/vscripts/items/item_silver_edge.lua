@@ -48,7 +48,7 @@ function SilverEdgeHit( keys )
 	local particle_hit = keys.particle_hit
 
 	-- If the target is a building, do nothing
-	if target:IsBuilding() or target:IsTower() then
+	if target:IsBuilding() then
 		return nil
 	end
 

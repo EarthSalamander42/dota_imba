@@ -14,7 +14,7 @@ CreateEmptyTalents("necrolyte")
 LinkLuaModifier("modifier_imba_sadist", "hero/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_sadist_stack", "hero/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 
-imba_necrolyte_sadist = class({})
+imba_necrolyte_sadist = imba_necrolyte_sadist or class({})
 function imba_necrolyte_sadist:GetIntrinsicModifierName()
     if self:GetCaster():IsRealHero() then return "modifier_imba_sadist" end
 	return false
@@ -124,7 +124,7 @@ function modifier_imba_sadist:OnDeath(params)
 end
 
 
-modifier_imba_sadist_stack = class({})
+modifier_imba_sadist_stack = modifier_imba_sadist_stack or class({})
 
 function modifier_imba_sadist_stack:OnCreated()
     if IsServer() then
@@ -207,7 +207,7 @@ end
 -------------------------------------------
 --			DEATH PULSE
 -------------------------------------------
-imba_necrolyte_death_pulse = class({})
+imba_necrolyte_death_pulse = imba_necrolyte_death_pulse or class({})
 function imba_necrolyte_death_pulse:GetCastRange( location , target)
 	return self:GetTalentSpecialValueFor("radius")
 end
@@ -335,7 +335,7 @@ end
 --			GHOST SHROUD
 -------------------------------------------
 
-imba_necrolyte_ghost_shroud = class({})
+imba_necrolyte_ghost_shroud = imba_necrolyte_ghost_shroud or class({})
 LinkLuaModifier("modifier_imba_ghost_shroud_aura", "hero/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ghost_shroud_aura_debuff", "hero/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ghost_shroud_aura_purge", "hero/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
@@ -369,7 +369,7 @@ function imba_necrolyte_ghost_shroud:IsHiddenWhenStolen()
 	return false
 end
 
-modifier_imba_ghost_shroud_aura_purge = class({})
+modifier_imba_ghost_shroud_aura_purge = modifier_imba_ghost_shroud_aura_purge or class({})
 function modifier_imba_ghost_shroud_aura_purge:IsPurgable()
     return true
 end
@@ -407,7 +407,7 @@ function modifier_imba_ghost_shroud_aura:GetEffectName()
 end
 
 function modifier_imba_ghost_shroud_aura:StatusEffectPriority()
-    return 10
+    return MODIFIER_PRIORITY_ULTRA
 end
 
 function modifier_imba_ghost_shroud_aura:GetEffectAttachType()
@@ -449,7 +449,7 @@ function modifier_imba_ghost_shroud_aura:IsHidden()
 	return false
 end
 
-modifier_imba_ghost_shroud_aura_debuff = class({})
+modifier_imba_ghost_shroud_aura_debuff = modifier_imba_ghost_shroud_aura_debuff or class({})
 function modifier_imba_ghost_shroud_aura_debuff:OnCreated( params )
 	if IsServer() then
 		self.radius = params.radius
@@ -511,7 +511,7 @@ function modifier_imba_ghost_shroud_aura_debuff:GetModifierMagicalResistanceDecr
 	return self:GetAbility():GetSpecialValueFor("magic_amp_pct") * (-1)
 end
 
-modifier_imba_ghost_shroud_buff = class({})
+modifier_imba_ghost_shroud_buff = modifier_imba_ghost_shroud_buff or class({})
 function modifier_imba_ghost_shroud_buff:DeclareFunctions()
 	local decFuncs =
 	{
@@ -549,7 +549,7 @@ function modifier_imba_ghost_shroud_buff:IsPurgable()
 	return true
 end
 
-modifier_imba_ghost_shroud_debuff = class({})
+modifier_imba_ghost_shroud_debuff = modifier_imba_ghost_shroud_debuff or class({})
 function modifier_imba_ghost_shroud_debuff:GetEffectAttachType()
 	return PATTACH_POINT_FOLLOW
 end
@@ -589,7 +589,7 @@ end
 LinkLuaModifier("modifier_imba_heartstopper_aura", "hero/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_heartstopper_aura_damage", "hero/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 
-imba_necrolyte_heartstopper_aura = class({})
+imba_necrolyte_heartstopper_aura = imba_necrolyte_heartstopper_aura or class({})
 function imba_necrolyte_heartstopper_aura:GetIntrinsicModifierName()
     return "modifier_imba_heartstopper_aura"
 end
@@ -683,7 +683,7 @@ function modifier_imba_heartstopper_aura:GetEffectAttachType()
 	return PATTACH_POINT_FOLLOW
 end
 
-modifier_imba_heartstopper_aura_damage = class({})
+modifier_imba_heartstopper_aura_damage = modifier_imba_heartstopper_aura_damage or class({})
 function modifier_imba_heartstopper_aura_damage:IsHidden()
 	return false
 end
@@ -719,7 +719,7 @@ end
 -------------------------------------------
 --			REAPER'S SCYTHE
 -------------------------------------------
-imba_necrolyte_reapers_scythe = class({})
+imba_necrolyte_reapers_scythe = imba_necrolyte_reapers_scythe or class({})
 LinkLuaModifier("modifier_imba_reapers_scythe", "hero/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_reapers_scythe_debuff", "hero/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_reapers_scythe_respawn", "hero/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
@@ -743,11 +743,8 @@ function imba_necrolyte_reapers_scythe:OnSpellStart()
 		-- Parameters
 		local damage = self:GetSpecialValueFor("damage")
 		local stun_duration = self:GetSpecialValueFor("stun_duration")
-		local respawn_increase = self:GetSpecialValueFor("respawn_increase")
-		local debuff_duration = self:GetSpecialValueFor("debuff_duration")
 		
-		target:AddNewModifier(caster, self, "modifier_imba_reapers_scythe", {duration = stun_duration, damage = damage})
-		target:AddNewModifier(caster, self, "modifier_imba_reapers_scythe_respawn", {stun_duration = stun_duration, respawn_increase = respawn_increase, debuff_duration = debuff_duration})
+		target:AddNewModifier(caster, self, "modifier_imba_reapers_scythe", {duration = stun_duration+FrameTime(), damage = damage})
 	end
 end
 
@@ -756,18 +753,29 @@ function imba_necrolyte_reapers_scythe:GetCooldown( nLevel )
 	return self.BaseClass.GetCooldown( self, nLevel )
 end
 
-modifier_imba_reapers_scythe = class({})
-
 function imba_necrolyte_reapers_scythe:IsHiddenWhenStolen()
 	return false
 end
+
+modifier_imba_reapers_scythe = modifier_imba_reapers_scythe or class({})
 
 function modifier_imba_reapers_scythe:OnCreated( params )
 	if IsServer() then
 		local caster = self:GetCaster()
 		local target = self:GetParent()
+		self.ability = self:GetAbility()
 		self.damage = params.damage
-		
+		Timers:CreateTimer(self:GetRemainingTime()-FrameTime(), function()
+			-- Calculates damage
+			if target:IsAlive() and self.ability then
+				self.damage = self.damage * (target:GetMaxHealth() - target:GetHealth())
+				-- Deals damage
+				target:AddNewModifier(self:GetCaster(), self.ability, "modifier_imba_reapers_scythe_respawn", {duration = 2*FrameTime()})
+				ApplyDamage({attacker = caster, victim = target, ability = self.ability, damage = self.damage, damage_type = DAMAGE_TYPE_MAGICAL})
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, target, self.damage, nil)
+				self:Destroy()
+			end
+		end)
 		local stun_fx = ParticleManager:CreateParticle("particles/generic_gameplay/generic_stunned.vpcf", PATTACH_OVERHEAD_FOLLOW, target)
 		self:AddParticle(stun_fx,false,false,-1,false,false)
 		local orig_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_necrolyte/necrolyte_scythe_orig.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
@@ -785,7 +793,11 @@ function modifier_imba_reapers_scythe:GetEffectName()
 end
 
 function modifier_imba_reapers_scythe:StatusEffectPriority()
-    return 10
+    return MODIFIER_PRIORITY_ULTRA
+end
+
+function modifier_imba_reapers_scythe:GetPriority()
+    return MODIFIER_PRIORITY_ULTRA
 end
 
 function modifier_imba_reapers_scythe:GetEffectAttachType()
@@ -804,27 +816,16 @@ function modifier_imba_reapers_scythe:GetAttributes()
 	return MODIFIER_ATTRIBUTE_MULTIPLE
 end
 
-function modifier_imba_reapers_scythe:IsPurgable()
-	return false
-end
+function modifier_imba_reapers_scythe:IsPurgable() return false end
+function modifier_imba_reapers_scythe:IsPurgeException() return false end
 
-function modifier_imba_reapers_scythe:OnRemoved()
-	if IsServer() then
-		-- Calculates damage
-		local target = self:GetParent()
-		self.damage = self.damage * (target:GetMaxHealth() - target:GetHealth())
 
-		-- Deals damage
-		ApplyDamage({attacker = self:GetCaster(), victim = target, ability = self:GetAbility(), damage = self.damage, damage_type = DAMAGE_TYPE_MAGICAL})
-		SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, target, self.damage, nil)
-	end
-end
 
 function modifier_imba_reapers_scythe:DeclareFunctions()
 	local decFuncs = 
 	{
 		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
-		MODIFIER_EVENT_ON_DEATH	
+		MODIFIER_EVENT_ON_DEATH,
 	}
 	return decFuncs
 end
@@ -833,22 +834,47 @@ function modifier_imba_reapers_scythe:GetOverrideAnimation()
 	return ACT_DOTA_DISABLED
 end
 
-modifier_imba_reapers_scythe_respawn = class({})
-function modifier_imba_reapers_scythe_respawn:OnCreated( params )
-	if IsServer() then
-		Timers:CreateTimer(params.stun_duration + 0.1, function()
-			if not self.killed then
-				self:Destroy()
+function modifier_imba_reapers_scythe:OnDeath( params )
+	if params.unit == self:GetParent() then
+		if self.ability and params.inflictor then
+			if self.ability == params.inflictor then
+				params.unit:FindModifierByName("modifier_imba_reapers_scythe_respawn"):SetDuration(-1,true)
 			end
-		end)
-		self.killed = false
-		self.respawn_increase = params.respawn_increase
-		self.debuff_duration = params.debuff_duration
+		end
 	end
+	return true
+end
+
+function modifier_imba_reapers_scythe:OnRemoved()
+	if self.ability then
+		if self.ability.ghost_death then
+			self.ability.ghost_death = nil
+			self:GetParent():AddNewModifier(self:GetCaster(), self.ability, "modifier_imba_reapers_scythe_respawn", {})
+		end
+	end
+end
+
+-------------------------------------------
+modifier_imba_reapers_scythe_respawn = modifier_imba_reapers_scythe_respawn or class({})
+function modifier_imba_reapers_scythe_respawn:OnCreated()
+	if IsServer() then
+		self.ability = self:GetAbility()
+		if self.ability then
+			self.respawn_increase = self.ability:GetSpecialValueFor("respawn_increase")
+		end
+	end
+end
+
+function modifier_imba_reapers_scythe_respawn:RespawnTimeStacking()
+	return self.respawn_increase
 end
 
 function modifier_imba_reapers_scythe_respawn:IsHidden()
 	return true
+end
+
+function modifier_imba_reapers_scythe_respawn:IsPurgable()
+	return false
 end
 
 function modifier_imba_reapers_scythe_respawn:GetAttributes()
@@ -866,31 +892,24 @@ end
 function modifier_imba_reapers_scythe_respawn:DeclareFunctions()
 	local decFuncs = 
 	{
-		MODIFIER_EVENT_ON_DEATH,
-		MODIFIER_EVENT_ON_RESPAWN
+		MODIFIER_EVENT_ON_RESPAWN,
 	}
 	return decFuncs	
-end
-
-function modifier_imba_reapers_scythe_respawn:OnDeath( params )
-	if IsServer() then
-		if (self:GetParent() == params.unit) and (self:GetCaster() == params.attacker) then
-			self.killed = true
-			params.unit:SetTimeUntilRespawn(params.unit:GetRespawnTime() + self.respawn_increase)
-		end
-	end
 end
 
 function modifier_imba_reapers_scythe_respawn:OnRespawn( params )
 	if IsServer() then
 		if (self:GetParent() == params.unit) then
-			params.unit:AddNewModifier(params.unit, self:GetAbility(), "modifier_imba_reapers_scythe_debuff", {duration = self.debuff_duration})
+			if self.ability then
+				local debuff_duration = self.ability:GetSpecialValueFor("debuff_duration")
+				params.unit:AddNewModifier(params.unit, self.ability, "modifier_imba_reapers_scythe_debuff", {duration = debuff_duration})
+			end
 			self:Destroy()
 		end
 	end
 end
 
-modifier_imba_reapers_scythe_debuff = class({})
+modifier_imba_reapers_scythe_debuff = modifier_imba_reapers_scythe_debuff or class({})
 
 function modifier_imba_reapers_scythe_debuff:GetStatusEffectName()
 	return "particles/hero/necrophos/status_effect_reaper_scythe_sickness.vpcf"

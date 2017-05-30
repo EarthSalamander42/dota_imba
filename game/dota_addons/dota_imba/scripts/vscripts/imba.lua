@@ -23,10 +23,14 @@ require('libraries/notifications')
 require('libraries/animations')
 -- This library can be used for creating frankenstein monsters
 require('libraries/attachments')
+-- A*-Path-finding logic
+require('libraries/astar')
 
 -- These internal libraries set up barebones's events and processes.  Feel free to inspect them/change them if you need to.
 require('internal/gamemode')
 require('internal/events')
+-- All custom constants
+require('internal/constants')
 -- This library used to handle scoreboard events
 require('internal/scoreboard_events')
 -- This library used to handle custom IMBA talent UI (hero_selection will need to use a function in this)
@@ -106,7 +110,9 @@ function GameMode:OnFirstPlayerLoaded()
 		"npc_imba_contributor_hewdraw",
 		"npc_imba_contributor_zimber",
 		"npc_imba_contributor_matt",
-		"npc_imba_contributor_maxime"
+		"npc_imba_contributor_maxime",
+		"npc_imba_contributor_poly",
+		"npc_imba_contributor_firstlady"
 	}
 
 	-- Add 8 random contributor statues
@@ -274,41 +280,28 @@ function GameMode:ModifierFilter( keys )
 	-- Tenacity debuff duration reduction
 	-------------------------------------------------------------------------------------------------
 
-		if modifier_owner.GetTenacity then
+		if modifier_owner.GetTenacity then						
+			local original_duration = keys.duration
+
 			local tenacity = modifier_owner:GetTenacity()
-			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 and tenacity ~= 0 then
+			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 and tenacity ~= 0 then				
 				keys.duration = keys.duration * (100 - tenacity) * 0.01
 			end
-		end
 
-	-------------------------------------------------------------------------------------------------
-	-- Cursed Rapier debuff duration reduction
-	-------------------------------------------------------------------------------------------------
-
-		if modifier_owner:HasModifier("modifier_item_imba_rapier_cursed_unique") then
-			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
-				keys.duration = keys.duration * 0.5
-			end
-		end
-
-	-------------------------------------------------------------------------------------------------
-	-- Centaur Thick Hide debuff duration decrease
-	-------------------------------------------------------------------------------------------------	
-
-		if modifier_owner:HasModifier("modifier_imba_thick_hide") then
-			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
-
-				-- Check for break
-				if not modifier_owner:PassivesDisabled() then
-					local thick_hide_ability = modifier_owner:FindAbilityByName("imba_centaur_thick_hide")
-					local debuff_duration_red_pct = thick_hide_ability:GetSpecialValueFor("debuff_duration_red_pct")
-	
-					keys.duration = keys.duration * (1 - debuff_duration_red_pct * 0.01)
+			Timers:CreateTimer(FrameTime(), function()
+				if modifier_owner:IsNull() then
+					return false
 				end
-			end
+				local modifier_handler = modifier_owner:FindModifierByName(modifier_name)
+				if modifier_handler then
+					if modifier_handler.IgnoreTenacity then
+						if modifier_handler:IgnoreTenacity() then
+							modifier_handler:SetDuration(original_duration, true)
+						end
+					end
+				end
+			end)
 		end
-
-
 
 	-------------------------------------------------------------------------------------------------
 	-- Silencer Arcane Supremacy silence duration reduction
@@ -339,14 +332,13 @@ function GameMode:ItemAddedFilter( keys )
 	-- item_entindex_const: 1519
 	-- item_parent_entindex_const: -1
 	-- suggested_slot: -1
-
 	local unit = EntIndexToHScript(keys.inventory_parent_entindex_const)
 	local item = EntIndexToHScript(keys.item_entindex_const)
 	local item_name = 0
 	if item:GetName() then
 		item_name = item:GetName()
 	end
-
+	
 	-------------------------------------------------------------------------------------------------
 	-- Rune pickup logic
 	-------------------------------------------------------------------------------------------------
@@ -417,21 +409,23 @@ function GameMode:ItemAddedFilter( keys )
 	-- Rapier pickup logic
 	-------------------------------------------------------------------------------------------------
 
-	if item_name == "item_imba_rapier_dummy" or item_name == "item_imba_rapier_2_dummy" or item_name == "item_imba_rapier_magic_dummy" or item_name == "item_imba_rapier_magic_2_dummy" then
-		
-		-- Only real heroes can pick up rapiers
+	if item.IsRapier then
+		if item.rapier_pfx then
+			ParticleManager:DestroyParticle(item.rapier_pfx, false)
+			ParticleManager:ReleaseParticleIndex(item.rapier_pfx)
+			item.rapier_pfx = nil
+		end
 		if unit:IsRealHero() then
-
-			-- Check current main inventory status
-			local free_slot = false
+			item:SetPurchaser(nil)
+			item:SetPurchaseTime(0)
 			local rapier_amount = 0
 			local rapier_2_amount = 0
 			local rapier_magic_amount = 0
 			local rapier_magic_2_amount = 0
-			for i = 0, 8 do
+			for i = DOTA_ITEM_SLOT_1, DOTA_ITEM_SLOT_6 do
 				local current_item = unit:GetItemInSlot(i)
 				if not current_item then
-					free_slot = true
+					return true
 				elseif current_item and current_item:GetName() == "item_imba_rapier" then
 					rapier_amount = rapier_amount + 1
 				elseif current_item and current_item:GetName() == "item_imba_rapier_2" then
@@ -442,64 +436,21 @@ function GameMode:ItemAddedFilter( keys )
 					rapier_magic_2_amount = rapier_magic_2_amount + 1
 				end
 			end
-
-			-- If the conditions are just right, add a rapier
-			if item_name == "item_imba_rapier_dummy" and (free_slot or rapier_amount >= 2) then
-				unit:AddItem(CreateItem("item_imba_rapier", unit, unit))
-			elseif item_name == "item_imba_rapier_2_dummy" and (free_slot or rapier_magic_2_amount >= 1) then
-				unit:AddItem(CreateItem("item_imba_rapier_2", unit, unit))
-			elseif item_name == "item_imba_rapier_magic_dummy" and (free_slot or rapier_magic_amount >= 2) then
-				unit:AddItem(CreateItem("item_imba_rapier_magic", unit, unit))
-			elseif item_name == "item_imba_rapier_magic_2_dummy" and (free_slot or rapier_2_amount >= 1) then
-				unit:AddItem(CreateItem("item_imba_rapier_magic_2", unit, unit))
-
-			-- Else, launch another dummy
+			if 	((item_name == "item_imba_rapier") and (rapier_amount == 2)) or 
+				((item_name == "item_imba_rapier_magic") and (rapier_magic_amount == 2)) or 
+				((item_name == "item_imba_rapier_2") and (rapier_magic_2_amount >= 1)) or
+				((item_name == "item_imba_rapier_magic_2") and (rapier_2_amount >= 1)) then
+				return true
 			else
-				local unit_pos = unit:GetAbsOrigin()
-				local drop = CreateItem(item_name, nil, nil)
-				CreateItemOnPositionSync(unit_pos, drop)
-				drop:LaunchLoot(false, 250, 0.5, unit_pos + RandomVector(100))
+				DisplayError(unit:GetPlayerID(),"#dota_hud_error_cant_item_enough_slots")
 			end
-
-		-- If this is a non-hero, launch another dummy
-		else
-			local unit_pos = unit:GetAbsOrigin()
-			local drop = CreateItem(item_name, nil, nil)
-			CreateItemOnPositionSync(unit_pos, drop)
-			drop:LaunchLoot(false, 250, 0.5, unit_pos + RandomVector(100))
 		end
-		
-		return false		
-	end
-
-	-------------------------------------------------------------------------------------------------
-	-- Courier Rapier prohibition
-	-------------------------------------------------------------------------------------------------
-
-	if item_name == "item_imba_rapier" or item_name == "item_imba_rapier_2" or item_name == "item_imba_rapier_magic" or item_name == "item_imba_rapier_magic_2" or item_name == "item_imba_rapier_cursed" then
-		
-		-- Launch a dummy rapier if this is not a real hero
-		if not unit:IsHero() then
-
-			-- Fetch appropriate dummy name
-
-			if item_name == "item_imba_rapier" then
-				item_name = "item_imba_rapier_dummy"
-			elseif item_name == "item_imba_rapier_2" then
-				item_name = "item_imba_rapier_2_dummy"
-			elseif item_name == "item_imba_rapier_magic" then
-				item_name = "item_imba_rapier_magic_dummy"
-			elseif item_name == "item_imba_rapier_magic_2" then
-				item_name = "item_imba_rapier_magic_2_dummy"
-			end
-
-			-- Launch dummy
-			local unit_pos = unit:GetAbsOrigin()
-			local drop = CreateItem(item_name, nil, nil)
-			CreateItemOnPositionSync(unit_pos, drop)
-			drop:LaunchLoot(false, 250, 0.5, unit_pos + RandomVector(100))
-			return false
-		end	
+		if unit:IsIllusion() then
+			return true
+		else
+			unit:DropRapier(nil, item_name)
+		end
+		return false
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -514,10 +465,6 @@ function GameMode:ItemAddedFilter( keys )
 			"item_imba_rapier_2",
 			"item_imba_rapier_magic",
 			"item_imba_rapier_magic_2",
-			"item_imba_rapier_dummy",
-			"item_imba_rapier_2_dummy",
-			"item_imba_rapier_magic_dummy",
-			"item_imba_rapier_magic_2_dummy",
 			"item_imba_rapier_cursed",
 			"item_imba_moon_shard",
 			"item_imba_soul_of_truth",
@@ -539,7 +486,7 @@ end
 
 -- Order filter function
 function GameMode:OrderFilter( keys )
-
+	
 	--entindex_ability	 ==> 	0
 	--sequence_number_const	 ==> 	20
 	--queue	 ==> 	0
@@ -552,8 +499,60 @@ function GameMode:OrderFilter( keys )
 	--issuer_player_id_const	 ==> 	0
 
 	local units = keys["units"]
-	local unit = EntIndexToHScript(units["0"])
+	local unit
+	if units["0"] then
+		unit = EntIndexToHScript(units["0"])
+	else
+		return nil
+	end
 
+	
+	-- Do special handlings if shift-casted only here! The event gets fired another time if the caster
+	-- is actually doing this order
+	if keys.queue == 1 then
+		return true
+	end
+	
+	------------------------------------------------------------------------------------
+	-- Prevent Buyback during reincarnation
+	------------------------------------------------------------------------------------
+	if keys.order_type == DOTA_UNIT_ORDER_BUYBACK then
+		if unit:IsReincarnating() then
+			return false
+		end
+	end
+	
+	------------------------------------------------------------------------------------
+	-- Witch Doctor Death Ward handler
+	------------------------------------------------------------------------------------
+	if unit:HasModifier("modifier_imba_death_ward") then
+		if keys.order_type ==  DOTA_UNIT_ORDER_ATTACK_TARGET then
+			local death_ward_mod = unit:FindModifierByName("modifier_imba_death_ward")
+			death_ward_mod.attack_target = EntIndexToHScript(keys.entindex_target)
+			return true
+		else
+			return nil
+		end
+	end
+	
+	if unit:HasModifier("modifier_imba_death_ward_caster") then
+		if keys.order_type ==  DOTA_UNIT_ORDER_ATTACK_TARGET then
+			local modifier = unit:FindModifierByName("modifier_imba_death_ward_caster")
+			modifier.death_ward_mod.attack_target = EntIndexToHScript(keys.entindex_target)
+			return nil
+		end
+	end
+	
+	------------------------------------------------------------------------------------
+	-- Riki Blink-Strike handler
+	------------------------------------------------------------------------------------
+	if keys.order_type == DOTA_UNIT_ORDER_CAST_TARGET then
+		local ability = EntIndexToHScript(keys["entindex_ability"])
+		if ability:GetAbilityName() == "imba_riki_blink_strike" then
+			ability.thinker = unit:AddNewModifier(unit, ability, "modifier_imba_blink_strike_thinker", {target = keys.entindex_target})
+		end
+	end
+	
 	------------------------------------------------------------------------------------
 	-- Queen of Pain's Sonic Wave confusion
 	------------------------------------------------------------------------------------
@@ -609,7 +608,9 @@ function GameMode:OrderFilter( keys )
 			end
 			
 			-- Reduce stack-amount
-			modifier:DecrementStackCount()
+			if not (keys.queue == 1) then
+				modifier:DecrementStackCount()
+			end
 			if modifier:GetStackCount() == 0 then
 				modifier:Destroy()
 			end
@@ -635,7 +636,9 @@ function GameMode:OrderFilter( keys )
 			keys.position_z = new_order_vector.z
 			
 			-- Reduce stack-amount
-			modifier:DecrementStackCount()
+			if not (keys.queue == 1) then
+				modifier:DecrementStackCount()
+			end
 			if modifier:GetStackCount() == 0 then
 				modifier:Destroy()
 			end
@@ -644,13 +647,6 @@ function GameMode:OrderFilter( keys )
 	
 	if keys.order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
 		local ability = EntIndexToHScript(keys.entindex_ability)
-		
-		-- Magnataur Skewer handler
-		if unit:HasModifier("modifier_imba_skewer_motion_controller") then
-			if ability:GetAbilityName() == "imba_magnataur_skewer" then
-				unit:FindModifierByName("modifier_imba_skewer_motion_controller").begged_for_pardon = true
-			end
-		end
 		
 		-- Kunkka Torrent cast-handling
 		if ability:GetAbilityName() == "imba_kunkka_torrent" then
@@ -692,6 +688,52 @@ function GameMode:OrderFilter( keys )
         end
     end
 	
+	
+	-- Divine Rapier undropable
+	if (keys.order_type == DOTA_UNIT_ORDER_DROP_ITEM) or (keys.order_type == DOTA_UNIT_ORDER_MOVE_ITEM) or (keys.order_type == DOTA_UNIT_ORDER_GIVE_ITEM) or (keys.order_type == DOTA_UNIT_ORDER_PICKUP_ITEM) then
+		local item
+		if keys.order_type == DOTA_UNIT_ORDER_PICKUP_ITEM then
+			item = EntIndexToHScript(keys.entindex_target):GetContainedItem()
+		else
+			item = EntIndexToHScript(keys.entindex_ability)
+		end
+		if item.IsRapier then
+			local player_ID
+			-- Courier handling
+			if unit:IsCourier() then
+				player_ID = keys.issuer_player_id_const
+				if (keys.order_type == DOTA_UNIT_ORDER_PICKUP_ITEM) then
+					DisplayError(player_ID,"#dota_hud_error_cant_item_courier")
+					return false
+				end
+				if keys.entindex_target	and (keys.order_type == DOTA_UNIT_ORDER_GIVE_ITEM) then
+					local hTarget = EntIndexToHScript(keys.entindex_target)
+					if item:GetPurchaser():GetPlayerID() == hTarget:GetPlayerID() then
+						return true
+					end
+				end
+			else
+				player_ID = unit:GetPlayerID()
+			end
+			-- Player handling
+			if (keys.order_type == DOTA_UNIT_ORDER_GIVE_ITEM) then
+				DisplayError(player_ID,"#dota_hud_error_cant_item_give")
+				return false
+			end
+			if  (keys.entindex_target >= DOTA_STASH_SLOT_1) and (keys.entindex_target <= DOTA_STASH_SLOT_6) then
+				DisplayError(player_ID,"#dota_hud_error_cant_item_stash")
+				return false
+			end
+			if not ((keys.position_x == 0) and (keys.position_y == 0) and (keys.position_z == 0)) then
+				DisplayError(player_ID,"#dota_hud_error_cant_item_drop")
+				return false
+			end
+			if (keys.entindex_target >= DOTA_ITEM_SLOT_7) and (keys.entindex_target <= DOTA_ITEM_SLOT_9) then
+				DisplayError(player_ID,"#dota_hud_error_cant_item_backpack")
+				return false
+			end
+		end	
+	end
 	return true
 end
 
@@ -701,8 +743,7 @@ function GameMode:DamageFilter( keys )
 		--damagetype_const
 		--damage
 		--entindex_attacker_const
-		--entindex_victim_const
-
+		--entindex_victim_const		
 		local attacker
 		local victim
 
@@ -722,7 +763,7 @@ function GameMode:DamageFilter( keys )
 		end
 
 		-- Cursed Rapier damage reduction
-		if victim:HasModifier("modifier_item_imba_rapier_cursed_unique") and keys.damage > 0 and victim:GetTeam() ~= attacker:GetTeam() then
+		if victim:HasModifier("modifier_imba_rapier_cursed") and keys.damage > 0 and victim:GetTeam() ~= attacker:GetTeam() then
 			keys.damage = keys.damage * 0.25
 		end
 
@@ -735,6 +776,38 @@ function GameMode:DamageFilter( keys )
 			-- Prevent crit damage notifications
 			display_red_crit_number = false
 		end
+		
+		-- If the attacker is holding an Arcane/Archmage/Cursed Rapier and the distance is over the cap, remove the spellpower bonus from it
+		if attacker:HasModifier("modifier_imba_arcane_rapier") or attacker:HasModifier("modifier_imba_arcane_rapier_2") or attacker:HasModifier("modifier_imba_rapier_cursed") then			
+			local distance = (attacker:GetAbsOrigin() - victim:GetAbsOrigin()):Length2D() 
+
+			if distance > IMBA_DAMAGE_EFFECTS_DISTANCE_CUTOFF then				
+				local rapier_spellpower = 0
+
+				-- Get all modifiers, gather how much spellpower the target has from rapiers
+				local modifiers = attacker:FindAllModifiers()
+
+				for _,modifier in pairs(modifiers) do					
+					-- Increment Cursed Rapier's spellpower
+					if modifier:GetName() == "modifier_imba_rapier_cursed" then
+						rapier_spellpower = rapier_spellpower + modifier:GetAbility():GetSpecialValueFor("spell_power")						
+
+					-- Increment Archmage Rapier spellpower
+					elseif modifier:GetName() == "modifier_imba_arcane_rapier_2" then
+						rapier_spellpower = rapier_spellpower + modifier:GetAbility():GetSpecialValueFor("spell_power")						
+
+					-- Increment Arcane Rapier spellpower
+					elseif modifier:GetName() == "modifier_imba_arcane_rapier" then
+						rapier_spellpower = rapier_spellpower + modifier:GetAbility():GetSpecialValueFor("spell_power")						
+					end
+				end
+
+				-- If spellpower was accumulated, reduce the damage
+				if rapier_spellpower > 0 then					
+					keys.damage = keys.damage / (1 + rapier_spellpower * 0.01)
+				end
+			end
+		end		
 
 		-- Vanguard block
 		if victim:HasModifier("modifier_item_vanguard_unique") and keys.damage > 0 then
@@ -874,30 +947,19 @@ function GameMode:DamageFilter( keys )
 				if scythe_modifier then
 					scythe_caster = scythe_modifier:GetCaster()
 				end
-				if scythe_caster and attacker ~= scythe_caster then
+				if scythe_caster then
 					keys.damage = 0
 
 					-- Find the Reaper's Scythe ability
-					local ability = caster:FindAbilityByName("imba_necrolyte_reapers_scythe")
+					local ability = scythe_caster:FindAbilityByName("imba_necrolyte_reapers_scythe")
 					if not ability then return nil end
-
+					local mod = victim:AddNewModifier(scythe_caster, ability, "modifier_imba_reapers_scythe_respawn", {})
+					scythe_modifier:Destroy()
 					-- Attempt to kill the target, crediting it to the caster of Reaper's Scythe
-					ApplyDamage({attacker = caster, victim = target, ability = ability, damage = target:GetHealth(), damage_type = DAMAGE_TYPE_PURE})
+					ApplyDamage({attacker = scythe_caster, victim = victim, ability = ability, damage = victim:GetHealth() + 10, damage_type = DAMAGE_TYPE_PURE, damage_flag = DOTA_DAMAGE_FLAG_NO_DAMAGE_MULTIPLIERS + DOTA_DAMAGE_FLAG_BYPASSES_BLOCK})
 				end
 			end
-		end
-
-		-- Centaur Bulging Hide
-		if victim:HasModifier("modifier_imba_return_damage_block") then
-			local return_ability = victim:FindAbilityByName("imba_centaur_return")
-			local stacks = victim:FindModifierByName("modifier_imba_return_damage_block"):GetStackCount()
-			if return_ability and stacks then
-				local damage_block = return_ability:GetSpecialValueFor("damage_block")
-				local block = damage_block * stacks
-
-				keys.damage = keys.damage - block
-			end
-		end
+		end		
 
 		-- Cheese auto-healing
 		if victim:HasModifier("modifier_imba_cheese_death_prevention") then
@@ -1506,27 +1568,172 @@ function GameMode:InitGameMode()
 	-- Check out internals/gamemode to see/modify the exact code
 	GameMode:_InitGameMode()
 
-	-- Commands can be registered for debugging purposes or as functions that can be called by the custom Scaleform UI
-	Convars:RegisterCommand( "command_example", Dynamic_Wrap(GameMode, 'ExampleConsoleCommand'), "A console command example", FCVAR_CHEAT )
-
 	GameRules.HeroKV = LoadKeyValues("scripts/npc/npc_heroes_custom.txt")
 	GameRules.UnitKV = LoadKeyValues("scripts/npc/npc_units_custom.txt")
 
+	-- IMBA testbed command
+	Convars:RegisterCommand("imba_test", Dynamic_Wrap(GameMode, 'StartImbaTest'), "Spawns several units to help with testing", FCVAR_CHEAT)
+
+	-- Panorama event stuff
 	initScoreBoardEvents()
 	InitPlayerHeroImbaTalents();
 end
 
--- This is an example console command
-function GameMode:ExampleConsoleCommand()
-	print( '******* Example Console Command ***************' )
-	local cmdPlayer = Convars:GetCommandClient()
-	if cmdPlayer then
-		local playerID = cmdPlayer:GetPlayerID()
-		if playerID ~= nil and playerID ~= -1 then
-			-- Do something here for the player who called this command
-			PlayerResource:ReplaceHeroWith(playerID, "npc_dota_hero_viper", 1000, 1000)
+-- Starts the testbed if in tools mode
+function GameMode:StartImbaTest()
+
+	-- If not in tools mode, do nothing
+	if not IsInToolsMode() then
+		print("IMBA testbed is only available in tools mode.")
+		return nil
+	end
+
+	-- If the testbed was already initialized, do nothing
+	if IMBA_TESTBED_INITIALIZED then
+		print("Testbed already initialized.")
+		return nil
+	end
+
+	-- Define testbed zone reference point
+	local testbed_center = Vector(1500, -5000, 256)
+	if GetMapName() == "imba_arena" then
+		testbed_center = Vector(0, 0, 128)
+	end
+
+	-- Move any existing heroes to the testbed area, and grant them useful testing items
+	local player_heroes = HeroList:GetAllHeroes()
+	for _, hero in pairs(player_heroes) do
+		hero:SetAbsOrigin(testbed_center + Vector(-250, 0, 0))
+		hero:AddItemByName("item_imba_diffusal_blade_3")
+		hero:AddItemByName("item_manta")
+		hero:AddItemByName("item_imba_blink")
+		hero:AddItemByName("item_imba_silver_edge")
+		hero:AddItemByName("item_black_king_bar")
+		hero:AddItemByName("item_imba_heart")
+		hero:AddItemByName("item_imba_siege_cuirass")
+		hero:AddItemByName("item_imba_butterfly")
+		hero:AddItemByName("item_ultimate_scepter")
+		hero:AddExperience(100000, DOTA_ModifyXP_Unspecified, false, true)
+		PlayerResource:SetCameraTarget(0, hero)
+	end
+	Timers:CreateTimer(0.1, function()
+		PlayerResource:SetCameraTarget(0, nil)
+	end)
+	ResolveNPCPositions(testbed_center + Vector(-300, 0, 0), 128)
+
+	-- Spawn some high health allies for benefic spell testing
+	local dummy_hero
+	local dummy_ability
+	for i = 1, 3 do
+		dummy_hero = CreateUnitByName("npc_dota_hero_axe", testbed_center + Vector(-500, (i-2) * 300, 0), true, player_heroes[1], player_heroes[1], DOTA_TEAM_GOODGUYS)
+		dummy_hero:AddExperience(25000, DOTA_ModifyXP_Unspecified, false, true)
+		dummy_hero:SetControllableByPlayer(0, true)
+		dummy_hero:AddItemByName("item_imba_heart")
+		dummy_hero:AddItemByName("item_imba_heart")
+
+		-- Add specific items to each dummy hero
+		if i == 1 then
+			dummy_hero:AddItemByName("item_manta")
+			dummy_hero:AddItemByName("item_imba_diffusal_blade_3")
+		elseif i == 2 then
+			dummy_hero:AddItemByName("item_imba_silver_edge")
+			dummy_hero:AddItemByName("item_imba_necronomicon_5")
+		elseif i == 3 then
+			dummy_hero:AddItemByName("item_sphere")
+			dummy_hero:AddItemByName("item_black_king_bar")
 		end
 	end
 
-	print( '*********************************************' )
+	-- Spawn some high health enemies to attack/spam abilities on
+	for i = 1, 3 do
+		dummy_hero = CreateUnitByName("npc_dota_hero_axe", testbed_center + Vector(300, (i-2) * 300, 0), true, player_heroes[1], player_heroes[1], DOTA_TEAM_BADGUYS)
+		dummy_hero:AddExperience(25000, DOTA_ModifyXP_Unspecified, false, true)
+		dummy_hero:SetControllableByPlayer(0, true)
+		dummy_hero:AddItemByName("item_imba_heart")
+		dummy_hero:AddItemByName("item_imba_heart")
+
+		-- Add specific items to each dummy hero
+		if i == 1 then
+			dummy_hero:AddItemByName("item_manta")
+			dummy_hero:AddItemByName("item_imba_diffusal_blade_3")
+		elseif i == 2 then
+			dummy_hero:AddItemByName("item_imba_silver_edge")
+			dummy_hero:AddItemByName("item_imba_necronomicon_5")
+		elseif i == 3 then
+			dummy_hero:AddItemByName("item_sphere")
+			dummy_hero:AddItemByName("item_black_king_bar")
+		end
+	end
+
+	-- Spawn a rubick with spell steal leveled up
+	dummy_hero = CreateUnitByName("npc_dota_hero_rubick", testbed_center + Vector(600, 200, 0), true, player_heroes[1], player_heroes[1], DOTA_TEAM_BADGUYS)
+	dummy_hero:AddExperience(25000, DOTA_ModifyXP_Unspecified, false, true)
+	dummy_hero:SetControllableByPlayer(0, true)
+	dummy_hero:AddItemByName("item_imba_heart")
+	dummy_hero:AddItemByName("item_imba_heart")
+	dummy_ability = dummy_hero:FindAbilityByName("rubick_spell_steal")
+	if dummy_ability then
+		dummy_ability:SetLevel(6)
+	end
+
+	-- Spawn a pugna with nether ward leveled up and some CDR
+	dummy_hero = CreateUnitByName("npc_dota_hero_pugna", testbed_center + Vector(600, 0, 0), true, player_heroes[1], player_heroes[1], DOTA_TEAM_BADGUYS)
+	dummy_hero:AddExperience(25000, DOTA_ModifyXP_Unspecified, false, true)
+	dummy_hero:SetControllableByPlayer(0, true)
+	dummy_hero:AddItemByName("item_imba_heart")
+	dummy_hero:AddItemByName("item_imba_heart")
+	dummy_hero:AddItemByName("item_imba_triumvirate")
+	dummy_hero:AddItemByName("item_imba_octarine_core")
+	dummy_ability = dummy_hero:FindAbilityByName("imba_pugna_nether_ward")
+	if dummy_ability then
+		dummy_ability:SetLevel(7)
+	end
+
+	-- Spawn an antimage with a scepter and leveled up spell shield
+	dummy_hero = CreateUnitByName("npc_dota_hero_antimage", testbed_center + Vector(600, -200, 0), true, player_heroes[1], player_heroes[1], DOTA_TEAM_BADGUYS)
+	dummy_hero:AddExperience(25000, DOTA_ModifyXP_Unspecified, false, true)
+	dummy_hero:SetControllableByPlayer(0, true)
+	dummy_hero:AddItemByName("item_imba_heart")
+	dummy_hero:AddItemByName("item_imba_heart")
+	dummy_hero:AddItemByName("item_ultimate_scepter")
+	dummy_ability = dummy_hero:FindAbilityByName("imba_antimage_spell_shield")
+	if dummy_ability then
+		dummy_ability:SetLevel(7)
+	end
+
+	-- Spawn some assorted neutrals for reasons
+	neutrals_table = {}
+	neutrals_table[1] = {}
+	neutrals_table[2] = {}
+	neutrals_table[3] = {}
+	neutrals_table[4] = {}
+	neutrals_table[5] = {}
+	neutrals_table[6] = {}
+	neutrals_table[7] = {}
+	neutrals_table[8] = {}
+	neutrals_table[1].name = "npc_dota_neutral_big_thunder_lizard"
+	neutrals_table[1].position = Vector(-450, 800, 0)
+	neutrals_table[2].name = "npc_dota_neutral_granite_golem"
+	neutrals_table[2].position = Vector(-150, 800, 0)
+	neutrals_table[3].name = "npc_dota_neutral_black_dragon"
+	neutrals_table[3].position = Vector(150, 800, 0)
+	neutrals_table[4].name = "npc_dota_neutral_prowler_shaman"
+	neutrals_table[4].position = Vector(450, 800, 0)
+	neutrals_table[5].name = "npc_dota_neutral_satyr_hellcaller"
+	neutrals_table[5].position = Vector(-450, 600, 0)
+	neutrals_table[6].name = "npc_dota_neutral_mud_golem"
+	neutrals_table[6].position = Vector(-150, 600, 0)
+	neutrals_table[7].name = "npc_dota_neutral_enraged_wildkin"
+	neutrals_table[7].position = Vector(150, 600, 0)
+	neutrals_table[8].name = "npc_dota_neutral_centaur_khan"
+	neutrals_table[8].position = Vector(450, 600, 0)
+
+	for _, neutral in pairs(neutrals_table) do
+		dummy_hero = CreateUnitByName(neutral.name, testbed_center + neutral.position, true, player_heroes[1], player_heroes[1], DOTA_TEAM_NEUTRALS)
+		dummy_hero:SetControllableByPlayer(0, true)
+		dummy_hero:Hold()
+	end
+
+	-- Flag testbed as having been initialized
+	IMBA_TESTBED_INITIALIZED = true
 end

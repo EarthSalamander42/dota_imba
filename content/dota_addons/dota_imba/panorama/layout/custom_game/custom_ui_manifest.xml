@@ -24,10 +24,20 @@
 	//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_BAR_BACKGROUND, false );			//Top-left menu buttons in the HUD.
 
 	GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_HEROES, false );						//Heroes and team score at the top of the HUD.
-	GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_FLYOUT_SCOREBOARD, false );				//Lefthand flyout scoreboard.
+	//28-05-17 valve bug: scoreboard hotkey does not work when we disable flyout scoreboard, hence we will have to manually hide it ourselves
+    GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_FLYOUT_SCOREBOARD, true );				//Lefthand flyout scoreboard.
 	GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_TEAMS, false );			//Hero selection Radiant and Dire player lists.
 	GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_GAME_NAME, false );		//Hero selection game mode name display.
 	GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_CLOCK, false );			//Hero selection clock.
+	GameEvents.Subscribe("CreateIngameErrorMessage", function(data) 
+	{
+		GameEvents.SendEventClientSide("dota_hud_error_message", 
+		{
+			"splitscreenplayer": 0,
+			"reason": data.reason || 80,
+			"message": data.message
+		})
+	})
 
 	// These lines set up the panorama colors used by each team (for game select/setup, etc)
 	GameUI.CustomUIConfig().team_colors = {}

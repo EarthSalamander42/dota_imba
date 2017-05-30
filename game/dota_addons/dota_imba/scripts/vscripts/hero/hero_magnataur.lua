@@ -12,9 +12,13 @@ CreateEmptyTalents("magnataur")
 -------------------------------------------
 
 LinkLuaModifier("modifier_imba_polarize_debuff", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
-modifier_imba_polarize_debuff = class({})
+modifier_imba_polarize_debuff = modifier_imba_polarize_debuff or class({})
 
 function modifier_imba_polarize_debuff:IsDebuff()
+	return true
+end
+
+function modifier_imba_polarize_debuff:IsPurgable()
 	return true
 end
 
@@ -35,7 +39,7 @@ function modifier_imba_polarize_debuff:GetEffectAttachType()
 end
 
 LinkLuaModifier("modifier_imba_polarize_debuff_stack", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
-modifier_imba_polarize_debuff_stack = class({})
+modifier_imba_polarize_debuff_stack = modifier_imba_polarize_debuff_stack or class({})
 
 function modifier_imba_polarize_debuff_stack:IsDebuff()
 	return true
@@ -86,7 +90,7 @@ end
 --				SHOCKWAVE
 -------------------------------------------
 
-imba_magnataur_shockwave = class({})
+imba_magnataur_shockwave = imba_magnataur_shockwave or class({})
 
 function imba_magnataur_shockwave:OnAbilityPhaseStart()
 	if IsServer() then
@@ -149,13 +153,15 @@ function imba_magnataur_shockwave:OnSpellStart()
 
 		-- Play cast sound on dummy, which tracks the shockwave
 		caster:EmitSound("Hero_Magnataur.ShockWave.Particle")
-
-		if math.random(1,100) <= 75 and (caster:GetName() == "npc_dota_hero_magnataur") then
-			caster:EmitSound("magnataur_magn_shockwave_0"..math.random(1,2))
-		elseif (math.random(1,100) <= 50) and (caster:GetName() == "npc_dota_hero_magnataur") then
-			caster:EmitSound("magnataur_magn_shockwave_0"..math.random(4,5))
-		elseif (math.random(1,100) <= 15) and (caster:GetName() == "npc_dota_hero_magnataur") then
-			caster:EmitSound("magnataur_magn_shockwave_03")
+		if not caster:EmitCasterSound("npc_dota_hero_magnataur",{
+		"magnataur_magn_shockwave_01",
+		"magnataur_magn_shockwave_02"}, 75, DOTA_CAST_SOUND_FLAG_NONE, nil, nil ) then
+			if not caster:EmitCasterSound("npc_dota_hero_magnataur",{
+			"magnataur_magn_shockwave_04",
+			"magnataur_magn_shockwave_05"}, 50, DOTA_CAST_SOUND_FLAG_NONE, nil, nil) then
+				caster:EmitCasterSound("npc_dota_hero_magnataur",{
+				"magnataur_magn_shockwave_03"}, 15, DOTA_CAST_SOUND_FLAG_NONE, nil, nil)
+			end
 		end
 
 		-- Launch projectile
@@ -262,7 +268,7 @@ end
 --				EMPOWER
 -------------------------------------------
 
-imba_magnataur_empower = class({})
+imba_magnataur_empower = imba_magnataur_empower or class({})
 LinkLuaModifier("modifier_imba_empower_aura", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_empower", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_empower_particle", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
@@ -286,13 +292,14 @@ function imba_magnataur_empower:OnSpellStart()
 			target:AddNewModifier(caster, self, "modifier_imba_supercharged", { duration = supercharge_duration})
 		end
 		target:AddNewModifier(caster, self, "modifier_imba_empower", { duration = empower_duration})
-
-		if (math.random(1,100) <= 25) and (caster:GetName() == "npc_dota_hero_magnataur") then
-			local randomsound = math.random(1,4)
-			if randomsound >= 2 then randomsound = randomsound + 1 end
-			caster:EmitSound("magnataur_magn_empower_0"..randomsound)
-		elseif (math.random(1,100) <= 15) and (caster == target) and (caster:GetName() == "npc_dota_hero_magnataur") then
-			caster:EmitSound("magnataur_magn_empower_02")
+		
+		if not caster:EmitCasterSound("npc_dota_hero_magnataur",{
+		"magnataur_magn_empower_01",
+		"magnataur_magn_empower_03",
+		"magnataur_magn_empower_04",
+		"magnataur_magn_empower_05"}, 25, DOTA_CAST_SOUND_FLAG_NONE, 10, "empower") then
+			caster:EmitCasterSound("npc_dota_hero_magnataur",{
+			"magnataur_magn_empower_02"}, 15, DOTA_CAST_SOUND_FLAG_NONE, 10, "empower")
 		end
 	end
 end
@@ -310,7 +317,7 @@ function imba_magnataur_empower:IsStealable()
 end
 
 -- Scepter Aura & self-sustain
-modifier_imba_empower_aura = class({})
+modifier_imba_empower_aura = modifier_imba_empower_aura or class({})
 
 function modifier_imba_empower_aura:GetAuraEntityReject(target)
     if IsServer() then
@@ -382,7 +389,7 @@ function modifier_imba_empower_aura:IsHidden()
 	return true
 end
 
-modifier_imba_empower = class({})
+modifier_imba_empower = modifier_imba_empower or class({})
 
 function modifier_imba_empower:DeclareFunctions()
 	local decFuncs =
@@ -446,6 +453,10 @@ end
 
 function modifier_imba_empower:IsDebuff()
 	return false
+end
+
+function modifier_imba_empower:IsPurgable()
+	return true
 end
 
 function modifier_imba_empower:IsHidden()
@@ -527,7 +538,7 @@ function modifier_imba_empower:OnIntervalThink( )
 	end
 end
 
-modifier_imba_empower_particle = class({})
+modifier_imba_empower_particle = modifier_imba_empower_particle or class({})
 
 function modifier_imba_empower_particle:IsHidden()
 	return true
@@ -558,7 +569,7 @@ function modifier_imba_empower_particle:IsPurgable()
 	return true
 end
 
-modifier_imba_empower_linger = class({})
+modifier_imba_empower_linger = modifier_imba_empower_linger or class({})
 
 function modifier_imba_empower_linger:IsDebuff()
 	return false
@@ -572,7 +583,7 @@ function modifier_imba_empower_linger:IsPurgable()
 	return true
 end
 
-modifier_imba_supercharged = class({})
+modifier_imba_supercharged = modifier_imba_supercharged or class({})
 
 function modifier_imba_supercharged:OnCreated( params )
 	if IsServer() then
@@ -631,17 +642,22 @@ end
 --				SKEWER
 -------------------------------------------
 
-imba_magnataur_skewer = class({})
-LinkLuaModifier("modifier_imba_skewer_motion_controller", "hero/hero_magnataur", LUA_MODIFIER_MOTION_HORIZONTAL)
-LinkLuaModifier("modifier_imba_skewer_motion_controller_linger", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_skewer_motion_controller_target", "hero/hero_magnataur", LUA_MODIFIER_MOTION_HORIZONTAL)
+imba_magnataur_skewer = imba_magnataur_skewer or class({})
+LinkLuaModifier("modifier_imba_skewer_motion_controller", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_skewer_motion_controller_target", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_skewer_slow", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_skewer_entangle", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 
 function imba_magnataur_skewer:OnAbilityPhaseStart()
 	local caster = self:GetCaster()
-	if caster:HasModifier("modifier_imba_skewer_motion_controller_linger") then return false end
+	if self.begged_for_pardon then return false end
 	return true
+end
+
+function imba_magnataur_skewer:CastFilterResult()
+	if IsServer() then
+		self.begged_for_pardon = true
+	end
 end
 
 function imba_magnataur_skewer:GetBehavior()
@@ -672,20 +688,18 @@ function imba_magnataur_skewer:OnSpellStart()
 
 		-- Play the cast sound
 		caster:EmitSound("Hero_Magnataur.Skewer.Cast")
-
-		local cast_sound = false
-		if (math.random(1,100) <= 25) and (caster:GetName() == "npc_dota_hero_magnataur") then
-			local randomsound = math.random(1,9)
-			if randomsound >= 4 then randomsound = randomsound + 3 end
-			if randomsound >= 10 then randomsound = randomsound + 2 end
-			if randomsound <= 9 then
-				randomsound = "0"..randomsound
-			end
-			caster:EmitSound("magnataur_magn_skewer_"..randomsound)
-			cast_sound = true
-		elseif (math.random(1,100) <= 20) and (caster:GetName() == "npc_dota_hero_magnataur") then
-			caster:EmitSound("magnataur_magn_lasthit_09")
-			cast_sound = true
+		
+		if not caster:EmitCasterSound("npc_dota_hero_magnataur",{
+		"magnataur_magn_skewer_01",
+		"magnataur_magn_skewer_02",
+		"magnataur_magn_skewer_03",
+		"magnataur_magn_skewer_07",
+		"magnataur_magn_skewer_09",
+		"magnataur_magn_skewer_12",
+		"magnataur_magn_skewer_13",
+		"magnataur_magn_skewer_14"}, 25, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, 3, "Skewer") then
+			caster:EmitCasterSound("npc_dota_hero_magnataur",{
+			"magnataur_magn_lasthit_09"}, 20, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, 3, "Skewer")
 		end
 
 		-- Add Motion-Controller-Modifier
@@ -717,7 +731,7 @@ function imba_magnataur_skewer:GetCooldown( nLevel )
 	return self.BaseClass.GetCooldown( self, nLevel ) - self:GetCaster():FindTalentValue("special_bonus_imba_magnataur_4")
 end
 
-modifier_imba_skewer_motion_controller = class({})
+modifier_imba_skewer_motion_controller = modifier_imba_skewer_motion_controller or class({})
 
 function modifier_imba_skewer_motion_controller:OnCreated( params )
 	if IsServer() then
@@ -742,24 +756,38 @@ function modifier_imba_skewer_motion_controller:OnCreated( params )
 		self.direction = Vector(params.direction_x, params.direction_y, params.direction_z)
 		self.traveled = 0
 		self.final = false
-		self.begged_for_pardon = false
 		self.cooldown = params.cooldown
 
 		self.skewer_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_magnataur/magnataur_skewer.vpcf", PATTACH_ABSORIGIN, caster)
 		ParticleManager:SetParticleControlEnt(self.skewer_fx, 0, caster, PATTACH_ABSORIGIN_FOLLOW, nil, caster:GetAbsOrigin(), true)
 		ParticleManager:SetParticleControlEnt(self.skewer_fx, 1, caster, PATTACH_POINT_FOLLOW, "attach_horn", caster:GetAbsOrigin(), true)
 
-		if self:ApplyHorizontalMotionController() == false then
+		self.frametime = FrameTime()
+		self:StartIntervalThink(self.frametime)
+	end
+end
+
+function modifier_imba_skewer_motion_controller:OnIntervalThink()
+	if IsServer() then
+		-- Check motion controllers
+		if not self:CheckMotionControllers() then
 			self:Destroy()
+			return nil
 		end
+
+		-- Horizontal Motion
+		self:HorizontalMotion(self:GetParent(), self.frametime)
 	end
 end
 
 function modifier_imba_skewer_motion_controller:OnDestroy()
 	if IsServer() then
 		local caster = self:GetCaster()
-		caster:AddNewModifier(caster, self:GetAbility(), "modifier_imba_skewer_motion_controller_linger", {duration = 0.1})
 		self:GetAbility():StartCooldown(self.cooldown)
+
+		ParticleManager:DestroyParticle(self.skewer_fx, false)
+		ParticleManager:ReleaseParticleIndex(self.skewer_fx)
+		GridNav:DestroyTreesAroundPoint(self:GetCaster():GetAbsOrigin(), (self.tree_radius + 100), false)		
 	end
 end
 
@@ -767,8 +795,16 @@ function modifier_imba_skewer_motion_controller:IsHidden()
 	return true
 end
 
-function modifier_imba_skewer_motion_controller:RemoveOnDeath()
-	return false
+function modifier_imba_skewer_motion_controller:IgnoreTenacity()
+	return true
+end
+
+function modifier_imba_skewer_motion_controller:IsMotionController()
+	return true
+end
+
+function modifier_imba_skewer_motion_controller:GetMotionControllerPriority()
+	return DOTA_MOTION_CONTROLLER_PRIORITY_HIGH
 end
 
 function modifier_imba_skewer_motion_controller:CheckState()
@@ -779,24 +815,26 @@ function modifier_imba_skewer_motion_controller:CheckState()
 	return state
 end
 
-function modifier_imba_skewer_motion_controller:UpdateHorizontalMotion( unit, time )
+function modifier_imba_skewer_motion_controller:HorizontalMotion( unit, time )
 	if IsServer() then
 		local caster = self:GetCaster()
 		local caster_loc = caster:GetAbsOrigin()
-		local ability = self:GetAbility()
+		local ability = self:GetAbility()		
 
 		GridNav:DestroyTreesAroundPoint(caster_loc, self.tree_radius, false)
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, self.skewer_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, 0, false)
 		for _,enemy in ipairs(enemies) do
 			if not enemy:HasModifier("modifier_imba_skewer_motion_controller_target") then
-				enemy:SetAbsOrigin( caster:GetAbsOrigin() + self.direction * self.horned_distance )
+				local set_point = caster:GetAbsOrigin() + self.direction * self.horned_distance
+				enemy:SetAbsOrigin(Vector(set_point.x, set_point.y, GetGroundPosition(set_point, enemy).z))
 				enemy:AddNewModifier(caster, ability, "modifier_imba_skewer_motion_controller_target", {direction_x = self.direction.x, direction_y = self.direction.y, direction_z = self.direction.z, speed = self.speed})
 			end
 		end
 
 		-- Move the caster while the distance traveled is less than the original distance upon cast
-		if (self.traveled < self.distance) and caster:IsAlive() and not self.begged_for_pardon then
-			caster:SetAbsOrigin(caster:GetAbsOrigin() + self.direction * self.speed)
+		if (self.traveled < self.distance) and caster:IsAlive() and not ability.begged_for_pardon then
+			local set_point =  caster:GetAbsOrigin() + self.direction * self.speed
+			caster:SetAbsOrigin(Vector(set_point.x, set_point.y, GetGroundPosition(set_point, caster).z))
 			-- Calculate the new travel distance
 			self.traveled = self.traveled + self.speed
 
@@ -807,61 +845,74 @@ function modifier_imba_skewer_motion_controller:UpdateHorizontalMotion( unit, ti
 				self.final = true
 			end
 		else
-			local piked_enemies = {}
-			piked_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, self.skewer_radius * 2, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, 0, false)
-			local polarize_counter = 0
-
-			-- Check if polarized targets shall be entangled
-			for _,enemy in ipairs(piked_enemies) do
-				if enemy:HasModifier("modifier_imba_polarize_debuff") then
-					polarize_counter = polarize_counter + 1
-					if polarize_counter == 2 then
-						break
-					end
-				end
-			end
-
 			-- Remove the motion controller once the distance has been traveled
 			if not self.final then
 				caster:FadeGesture( ACT_DOTA_CAST_ABILITY_3 )
 				caster:StartGesture( ACT_DOTA_MAGNUS_SKEWER_END )
 			end
 
-			if (math.random(1,100) <= 15) and (caster == target) and not self.cast_sound and (caster:GetName() == "npc_dota_hero_magnataur") then
-				local randomsound = math.random(4,8)
-				if randomsound >= 7 then randomsound = randomsound + 3 end
-				caster:EmitSound("magnataur_magn_skewer_0"..randomsound)
-			end
+			local responses = {"magnataur_magn_skewer_04","magnataur_magn_skewer_05","magnataur_magn_skewer_06","magnataur_magn_skewer_08","magnataur_magn_skewer_10","magnataur_magn_skewer_11"}
+			caster:EmitCasterSound("npc_dota_hero_magnataur",responses, 25, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, 2, "Skewer")
 
-			caster:InterruptMotionControllers(true)
+			self:EndSkewer()
+		end
+	end
+end
 
-			for _,enemy in ipairs(piked_enemies) do
-				local damage = self.damage
-				if self.begged_for_pardon then
-					damage = damage + self.pardon_extra_dmg
+function modifier_imba_skewer_motion_controller:EndSkewer()
+	if IsServer() then
+		if self.skewer_finished then
+			return nil
+		end
+
+		self.skewer_finished = true
+
+		local caster = self:GetCaster()
+		local ability = self:GetAbility()
+		local caster_loc = caster:GetAbsOrigin()
+		local piked_enemies = {}
+		piked_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, self.skewer_radius * 2, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, 0, false)
+		local polarize_counter = 0
+
+		-- Check if polarized targets shall be entangled
+		for _,enemy in ipairs(piked_enemies) do
+			if enemy:HasModifier("modifier_imba_polarize_debuff") then
+				polarize_counter = polarize_counter + 1
+				if polarize_counter == 2 then
+					break
 				end
-				local modifier = enemy:FindModifierByNameAndCaster("modifier_imba_skewer_motion_controller_target",caster)
-				if modifier then
-					if self.begged_for_pardon and not enemy:HasModifier("modifier_imba_polarize_debuff") then
-						local knockup_duration = 0.5 + (math.random() * 0.3)
-						local angle = (math.random() - 0.5) * 100
-						local knockback =
-						{
-							should_stun = 1,
-							knockback_duration = knockup_duration,
-							duration = knockup_duration,
-							knockback_distance = self.pardon_min_range + knockup_duration * 100,
-							knockback_height = 125 + (knockup_duration * 50),
-							center_x = (caster_loc - (RotateVector2D(self.direction,angle, true))*1000).x ,
-							center_y = (caster_loc - (RotateVector2D(self.direction,angle, true))*1000).y,
-							center_z = caster_loc.z
-						}
-						enemy:AddNewModifier(caster, self:GetAbility(), "modifier_knockback", knockback)
-						Timers:CreateTimer(knockup_duration, function()
-							ApplyDamage({victim = enemy, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
-						end)
-					else
-						local knockup_duration = 0.5
+			end
+		end
+
+		for _,enemy in ipairs(piked_enemies) do
+			local damage = self.damage
+			if ability.begged_for_pardon then
+				damage = damage + self.pardon_extra_dmg
+			end
+			local modifier = enemy:FindModifierByNameAndCaster("modifier_imba_skewer_motion_controller_target",caster)
+			if modifier then
+				if ability.begged_for_pardon and not enemy:HasModifier("modifier_imba_polarize_debuff") then
+					local knockup_duration = 0.5 + (math.random() * 0.3)
+					local angle = (math.random() - 0.5) * 100
+					local knockback =
+					{
+						should_stun = 1,
+						knockback_duration = knockup_duration,
+						duration = knockup_duration,
+						knockback_distance = self.pardon_min_range + knockup_duration * 100,
+						knockback_height = 125 + (knockup_duration * 50),
+						center_x = (caster_loc - (RotateVector2D(self.direction,angle, true))*1000).x ,
+						center_y = (caster_loc - (RotateVector2D(self.direction,angle, true))*1000).y,
+						center_z = caster_loc.z
+					}
+					enemy:AddNewModifier(caster, self:GetAbility(), "modifier_knockback", knockback)
+					Timers:CreateTimer(knockup_duration, function()
+						ApplyDamage({victim = enemy, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+					end)
+				else
+					local knockup_duration = 0
+					if ability.begged_for_pardon then
+						knockup_duration = 0.5
 						local knockback =
 						{
 							should_stun = 1,
@@ -874,58 +925,74 @@ function modifier_imba_skewer_motion_controller:UpdateHorizontalMotion( unit, ti
 							center_z = caster_loc.z
 						}
 						enemy:AddNewModifier(caster, self:GetAbility(), "modifier_knockback", knockback)
-						Timers:CreateTimer(knockup_duration, function()
-							ApplyDamage({victim = enemy, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
-							if enemy:HasModifier("modifier_imba_polarize_debuff") and (polarize_counter == 2) then
-								enemy:AddNewModifier(caster, ability, "modifier_imba_skewer_entangle", {duration = self.entangle_dur})
-							end
-						end)
 					end
-					enemy:AddNewModifier(caster, ability, "modifier_imba_skewer_slow", {duration = self.slow_duration, pardoned = self.begged_for_pardon})
+					Timers:CreateTimer(knockup_duration, function()
+						ApplyDamage({victim = enemy, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+						if enemy:HasModifier("modifier_imba_polarize_debuff") and (polarize_counter == 2) then
+							enemy:AddNewModifier(caster, ability, "modifier_imba_skewer_entangle", {duration = self.entangle_dur})
+						else
+							FindClearSpaceForUnit(enemy, enemy:GetAbsOrigin(), true)
+						end
+					end)
 				end
+				enemy:AddNewModifier(caster, ability, "modifier_imba_skewer_slow", {duration = self.slow_duration, pardoned = self.begged_for_pardon})
 			end
 		end
-	end
-end
+		ability.begged_for_pardon = nil
 
-function modifier_imba_skewer_motion_controller:OnHorizontalMotionInterrupted()
-	if IsServer() then
-		ParticleManager:DestroyParticle(self.skewer_fx, false)
-		ParticleManager:ReleaseParticleIndex(self.skewer_fx)
-		GridNav:DestroyTreesAroundPoint(self:GetCaster():GetAbsOrigin(), (self.tree_radius + 100), false)
+		-- Find a clear space to stand on
+		caster:SetUnitOnClearGround()
+
+		-- Enough with the skewer for today.
 		self:Destroy()
 	end
 end
 
-modifier_imba_skewer_motion_controller_linger = class({})
-
-function modifier_imba_skewer_motion_controller_linger:IsHidden()
-	return true
-end
-
-function modifier_imba_skewer_motion_controller_linger:IsPurgable()
-	return false
-end
-
-modifier_imba_skewer_motion_controller_target = class({})
+modifier_imba_skewer_motion_controller_target = modifier_imba_skewer_motion_controller_target or class({})
 
 function modifier_imba_skewer_motion_controller_target:OnCreated( params )
 	if IsServer() then
 		self.direction = Vector(params.direction_x, params.direction_y, params.direction_z)
 		self.speed = params.speed
 
-		if self:ApplyHorizontalMotionController() == false then
-			self:Destroy()
-		end
+		self.frametime = FrameTime()
+		self:StartIntervalThink(self.frametime)
 	end
 end
 
+function modifier_imba_skewer_motion_controller_target:OnIntervalThink()
+	-- Check for motion controllers
+	if not self:CheckMotionControllers() then
+		self:Destroy()
+		return nil
+	end
+
+	-- Horizontal motion
+	self:HorizontalMotion(self:GetParent(), self.frametime)
+end
+
 function modifier_imba_skewer_motion_controller_target:OnDestroy()
-	return false
+	if IsServer() then
+		local caster = self:GetCaster()
+		-- Find a clear space to stand on
+		caster:SetUnitOnClearGround()
+	end
 end
 
 function modifier_imba_skewer_motion_controller_target:RemoveOnDeath()
 	return false
+end
+
+function modifier_imba_skewer_motion_controller_target:IgnoreTenacity()
+	return true
+end
+
+function modifier_imba_skewer_motion_controller_target:IsMotionController()
+	return true
+end
+
+function modifier_imba_skewer_motion_controller_target:GetMotionControllerPriority()
+	return DOTA_MOTION_CONTROLLER_PRIORITY_HIGH
 end
 
 function modifier_imba_skewer_motion_controller_target:CheckState()
@@ -936,23 +1003,18 @@ function modifier_imba_skewer_motion_controller_target:CheckState()
 	return state
 end
 
-function modifier_imba_skewer_motion_controller_target:UpdateHorizontalMotion( unit, time )
+function modifier_imba_skewer_motion_controller_target:HorizontalMotion( unit, time )
 	if IsServer() then
 		local caster = self:GetCaster()
 
 		-- Move the target while caster has motion-controller
 		if caster:HasModifier("modifier_imba_skewer_motion_controller") and caster:IsAlive() then
-			unit:SetAbsOrigin(unit:GetAbsOrigin() + self.direction * self.speed)
+			local set_point = unit:GetAbsOrigin() + self.direction * self.speed
+			unit:SetAbsOrigin(Vector(set_point.x, set_point.y, GetGroundPosition(set_point, unit).z))
 		else
 			-- Remove the motion controller once the caster lost the motion-controller
-			unit:InterruptMotionControllers(true)
+			self:Destroy()
 		end
-	end
-end
-
-function modifier_imba_skewer_motion_controller_target:OnHorizontalMotionInterrupted()
-	if IsServer() then
-		self:Destroy()
 	end
 end
 
@@ -968,7 +1030,7 @@ function modifier_imba_skewer_motion_controller_target:DeclareFunctions()
 	return decFuncs
 end
 
-modifier_imba_skewer_slow = class({})
+modifier_imba_skewer_slow = modifier_imba_skewer_slow or class({})
 
 function modifier_imba_skewer_slow:DeclareFunctions()
 	local decFuncs =
@@ -1001,7 +1063,7 @@ function modifier_imba_skewer_slow:OnCreated( params )
 	self.pardoned = params.pardoned
 end
 
-modifier_imba_skewer_entangle = class({})
+modifier_imba_skewer_entangle = modifier_imba_skewer_entangle or class({})
 
 function modifier_imba_skewer_entangle:DeclareFunctions()
 	local decFuncs =
@@ -1050,7 +1112,7 @@ end
 --			REVERSE POLARITY
 -------------------------------------------
 
-imba_magnataur_reverse_polarity = class({})
+imba_magnataur_reverse_polarity = imba_magnataur_reverse_polarity or class({})
 LinkLuaModifier("modifier_imba_reverse_polarity_slow", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 
 function imba_magnataur_reverse_polarity:OnAbilityPhaseStart()
@@ -1102,13 +1164,8 @@ function imba_magnataur_reverse_polarity:OnSpellStart()
 
 		-- Play cast sound
 		caster:EmitSound("Hero_Magnataur.ReversePolarity.Cast")
-		if (math.random(1,100) <= 25) and (caster:GetName() == "npc_dota_hero_magnataur") then
-			local randomsound = math.random(1,10)
-			if randomsound <= 9 then
-				randomsound = "0"..randomsound
-			end
-			caster:EmitSound("magnataur_magn_polarity_"..randomsound)
-		end
+		local responses = {"magnataur_magn_polarity_01","magnataur_magn_polarity_02","magnataur_magn_polarity_03","magnataur_magn_polarity_04","magnataur_magn_polarity_05","magnataur_magn_polarity_06","magnataur_magn_polarity_07","magnataur_magn_polarity_08","magnataur_magn_polarity_09","magnataur_magn_polarity_10"}
+		caster:EmitCasterSound("npc_dota_hero_magnataur",responses, 25, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, nil, nil)
 
 		local creeps = FindUnitsInRadius(caster:GetTeam(), caster_loc, nil, radius, self:GetAbilityTargetTeam(), DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 		for _,creep in ipairs(creeps) do
@@ -1204,7 +1261,7 @@ function imba_magnataur_reverse_polarity:GetCastRange( location , target)
 	return self.BaseClass.GetCastRange(self,location,target) + self:GetCaster():FindTalentValue("special_bonus_imba_magnataur_7")
 end
 
-modifier_imba_reverse_polarity_slow = class({})
+modifier_imba_reverse_polarity_slow = modifier_imba_reverse_polarity_slow or class({})
 
 function modifier_imba_reverse_polarity_slow:DeclareFunctions()
 	local decFuncs =

@@ -22,9 +22,13 @@ end
 modifier_imba_thick_hide = class({})
 
 function modifier_imba_thick_hide:OnCreated()
+	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
+
+	-- Ability specials
 	self.damage_reduction_pct = self.ability:GetSpecialValueFor("damage_reduction_pct")
+	self.debuff_duration_red_pct = self.ability:GetSpecialValueFor("debuff_duration_red_pct")
 end
 
 function modifier_imba_thick_hide:DeclareFunctions()	
@@ -42,6 +46,10 @@ function modifier_imba_thick_hide:GetModifierIncomingDamage_Percentage()
 	return self.damage_reduction_pct * (-1)
 end
 
+function modifier_imba_thick_hide:GetCustomTenacity()
+	return self.debuff_duration_red_pct
+end
+
 
 ---------------------------------
 -- 		   Hoof Stomp          --
@@ -56,6 +64,16 @@ LinkLuaModifier("modifier_imba_hoof_stomp_arena_buff", "hero/hero_centaur.lua", 
 
 function imba_centaur_hoof_stomp:IsHiddenWhenStolen()
 	return false
+end
+
+function imba_centaur_hoof_stomp:GetCastRange(location, target)
+	local caster = self:GetCaster()
+	local base_range = self.BaseClass.GetCastRange(self, location, target)
+
+	-- #4 Talent: Radius increase for Hoof Stomp		
+	base_range = base_range + caster:FindTalentValue("special_bonus_imba_centaur_4")
+
+	return base_range
 end
 
 function imba_centaur_hoof_stomp:OnSpellStart()
@@ -80,7 +98,7 @@ function imba_centaur_hoof_stomp:OnSpellStart()
 		local pit_duration = ability:GetSpecialValueFor("pit_duration")	
 
 		-- #4 Talent: Radius increase for Hoof Stomp		
-		radius = radius + caster:FindTalentValue("special_bonus_imba_centaur_4")		
+		radius = radius + caster:FindTalentValue("special_bonus_imba_centaur_4")				
 
 		-- #5 Talent: Arena/stun duration increase		
 		stun_duration = stun_duration + caster:FindTalentValue("special_bonus_imba_centaur_5")
@@ -143,6 +161,7 @@ function imba_centaur_hoof_stomp:OnSpellStart()
 		-- Add arena particles for the duration
 		local particle_arena_fx = ParticleManager:CreateParticle(particle_arena, PATTACH_ABSORIGIN, caster)
 		ParticleManager:SetParticleControl(particle_arena_fx, 0, caster:GetAbsOrigin())
+		ParticleManager:SetParticleControl(particle_arena_fx, 1, Vector(radius+45, 1, 1))
 		ParticleManager:SetParticleControl(particle_arena_fx, 5, caster:GetAbsOrigin())
 		ParticleManager:SetParticleControl(particle_arena_fx, 6, caster:GetAbsOrigin())
 		ParticleManager:SetParticleControl(particle_arena_fx, 7, caster:GetAbsOrigin())
@@ -314,6 +333,9 @@ function modifier_imba_hoof_stomp_arena_debuff:OnCreated()
 	self.pit_dmg_reduction = self.ability:GetSpecialValueFor("pit_dmg_reduction")
 	self.radius = self.ability:GetSpecialValueFor("radius")
 	self.maximum_distance = self.ability:GetSpecialValueFor("maximum_distance")	
+
+	-- #4 Talent: Radius increase for Hoof Stomp		
+	self.radius = self.radius + self.caster:FindTalentValue("special_bonus_imba_centaur_4")	
 
 	-- Wait a game tick so indexing the arena center would complete, then start thinking.
 	if IsServer() then
@@ -717,21 +739,23 @@ function modifier_imba_return_passive:OnAttacked(keys)
 
 			-- Increment a stack and refresh it	
 			local modifier_damage_block_handler = parent:FindModifierByName(modifier_damage_block)
-			modifier_damage_block_handler:IncrementStackCount()
-			modifier_damage_block_handler:ForceRefresh()
+			if modifier_damage_block_handler then
+				modifier_damage_block_handler:IncrementStackCount()
+				modifier_damage_block_handler:ForceRefresh()
+			end
 
-			-- Gather information for the block message
-			local stacks = modifier_damage_block_handler:GetStackCount()
-			local block = stacks * damage_block
-			local digits = 2 + #tostring(block)				
+			-- -- Gather information for the block message
+			-- local stacks = modifier_damage_block_handler:GetStackCount()
+			-- local block = stacks * damage_block
+			-- local digits = 2 + #tostring(block)				
 
-			-- Add block message particle
-			local particle_block_msg_fx = ParticleManager:CreateParticle(particle_block_msg, PATTACH_ABSORIGIN_FOLLOW, parent)
-			ParticleManager:SetParticleControlEnt(particle_block_msg_fx, 0, parent, PATTACH_POINT_FOLLOW, "attach_head", parent:GetAbsOrigin(), true)
-			ParticleManager:SetParticleControl(particle_block_msg_fx, 1, Vector(1, block, 7))
-			ParticleManager:SetParticleControl(particle_block_msg_fx, 2, Vector(1, digits, 0))
-			ParticleManager:SetParticleControl(particle_block_msg_fx, 3, Vector(192, 192, 192))
-			ParticleManager:ReleaseParticleIndex(particle_block_msg_fx)						
+			-- -- Add block message particle
+			-- local particle_block_msg_fx = ParticleManager:CreateParticle(particle_block_msg, PATTACH_ABSORIGIN_FOLLOW, parent)
+			-- ParticleManager:SetParticleControlEnt(particle_block_msg_fx, 0, parent, PATTACH_POINT_FOLLOW, "attach_head", parent:GetAbsOrigin(), true)
+			-- ParticleManager:SetParticleControl(particle_block_msg_fx, 1, Vector(1, block, 7))
+			-- ParticleManager:SetParticleControl(particle_block_msg_fx, 2, Vector(1, digits, 0))
+			-- ParticleManager:SetParticleControl(particle_block_msg_fx, 3, Vector(192, 192, 192))
+			-- ParticleManager:ReleaseParticleIndex(particle_block_msg_fx)						
 		end		
 	end
 end
@@ -751,6 +775,16 @@ end
 -- Damage block modifier
 modifier_imba_return_damage_block = class({})
 
+
+function modifier_imba_return_damage_block:OnCreated()
+	-- Ability properties
+	self.caster = self:GetCaster()
+	self.ability = self:GetAbility()
+
+	-- Ability specials
+	self.damage_block = self.ability:GetSpecialValueFor("damage_block")
+end
+
 function modifier_imba_return_damage_block:IsHidden()
 	return false
 end
@@ -763,6 +797,9 @@ function modifier_imba_return_damage_block:IsDebuff()
 	return false
 end
 
+function modifier_imba_return_damage_block:GetCustomDamageBlock()
+	return self.damage_block * self:GetStackCount()
+end
 
 ---------------------------------
 -- 		   Stampede            --

@@ -71,7 +71,7 @@
 #CommunityPanel
 {
 	padding-top: 10px;
-	margin-top: 80px;
+	margin-top: 60px;
 	width: 400px;
 	flow-children: down;
 	background-color: gradient( linear, 100% 0%, 100% 100%, from( #111111 ), color-stop( 0.3, #202327 ), color-stop( 0.7, #141619 ), to( #000000B0 ) );
@@ -84,7 +84,7 @@
 /* Show community button */
 #show_community_panel_button
 {
-	margin-top: 30px;
+	margin-top: 10px;
 	width: 400px;
 	height: 40px;
 	background-image: url("s2r://panorama/images/backgrounds/background_play_button_large_2x_png.vtex");
@@ -180,11 +180,21 @@
 	horizontal-align: center;
 }
 
+.GameOptionsSubPanel,
+.GameOptionsLongSubPanel
+{
+    margin-top: 20px;
+	width: 100%;
+}
+
 .GameOptionsSubPanel
 {
-	margin-top: 20px;
-	width: 100%;
 	flow-children: right;
+}
+
+.GameOptionsLongSubPanel
+{
+    flow-children: down;
 }
 
 #KillsToEndOptionsPanel {
@@ -280,11 +290,17 @@
 	visibility: collapse;
 }
 
-.GameOptionsDropdown
+.GameOptionsSubPanel .GameOptionsDropdown
 {
 	margin-left: 10px;
 	width: 120px;
 	horizontal-align: right;
+}
+
+.GameOptionsLongSubPanel .GameOptionsDropdown
+{
+    margin-top: 5px;
+    width: 100%;
 }
 
 /* Confirm options button */

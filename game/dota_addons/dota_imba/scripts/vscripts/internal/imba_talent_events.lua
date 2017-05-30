@@ -1,4 +1,5 @@
 
+local delayed_add_talents_list = {}
 
 local function PopulateGenericImbaTalentTableValues()
     -- Allow client access to IMBA_GENERIC_TALENT_LIST (javascript access)
@@ -15,7 +16,6 @@ local function GetHeroEndAbilityIndex(hero)
     return endAbilityIndex
 end
 
-
 local function PopulateHeroTalentList(hero)
     local heroName = hero:GetUnitName()
     local endAbilityIndex = GetHeroEndAbilityIndex(hero)
@@ -25,15 +25,40 @@ local function PopulateHeroTalentList(hero)
         local current_level = 40-(i*5)
         local inner_value = {}
         if i%2 == 0 then
+            local areImbaTalents = false
             local currentAbilityIndex = (endAbilityIndex - i)
-            -- Special talents (Pick either of the 2)
+            -- Special talents
+            -- Imba talents only allow 2 selection. Non Imba talents allow 8 selection
             local ability1 = hero:GetAbilityByIndex(currentAbilityIndex-1)
             if ability1 then
-                inner_value[1] = ability1:GetAbilityName()
+                local abilityName = ability1:GetAbilityName()
+                if abilityName:find("special_bonus_imba_") == 1 then
+                    areImbaTalents = true
+                end
+
+                if abilityName:find("special_bonus_imba_") == 1 or abilityName:find("special_bonus_unique_") == 1 then
+                    -- Only add to selection if it is a imba or unique talent
+                    inner_value[7] = abilityName
+                end
             end
             local ability2 = hero:GetAbilityByIndex(currentAbilityIndex)
             if ability2 then
-                inner_value[2] = ability2:GetAbilityName()
+                local abilityName = ability2:GetAbilityName()
+                if abilityName:find("special_bonus_imba_") == 1 then
+                    areImbaTalents = true
+                end
+
+                if abilityName:find("special_bonus_imba_") == 1 or abilityName:find("special_bonus_unique_") == 1 then
+                    -- Only add to selection if it is a imba or unique talent
+                    inner_value[8] = abilityName
+                end
+            end
+
+            if not areImbaTalents then
+                -- Copy table
+                for k,v in pairs(IMBA_HERO_TALENTS_LIST[heroName]) do 
+                    inner_value[k] = v
+                end
             end
         else
             -- Stat talents (Pick either of the 6)
@@ -132,6 +157,18 @@ local function PopulateHeroTalentLinkedAbilities(hero)
     CustomNetTables:SetTableValue( "imba_talent_manager", "talent_linked_abilities", existing_table )
 end
 
+local function RemoveTalents(hero)
+    -- This is to prevent default UI bypassing the talent window to upgrade talents via hotkeys even though they are invisible
+    local heroName = hero:GetUnitName()
+    local endAbilityIndex = GetHeroEndAbilityIndex(hero)
+    for i=0,7 do
+        local ability = hero:GetAbilityByIndex(endAbilityIndex-i)
+        if ability then
+            hero:RemoveAbility(ability:GetAbilityName())
+        end
+    end
+end
+
 local function HasNotPopulatedValues(hero_id)
     return (CustomNetTables:GetTableValue( "imba_talent_manager", "hero_talent_list_"..hero_id) == nil)
 end
@@ -141,6 +178,7 @@ function PopulateHeroImbaTalents(hero)
         PopulateHeroTalentChoice(hero)
         PopulateHeroTalentList(hero)
         PopulateHeroTalentLinkedAbilities(hero)
+        RemoveTalents(hero)
     end
 end
 
@@ -174,7 +212,6 @@ function HandlePlayerUpgradeImbaTalent(unused, kv)
                 local talent_name = hero_talent_list[level_key][tostring(index)]
                 if talent_name ~= nil then
 
-                    -- TODO not working, fix
                     if string.find(talent_name, "imba_generic_talent") == 1 then
                         -- Generic talent (add as modifier)
                         -- level goes from 1 to 4
@@ -183,20 +220,34 @@ function HandlePlayerUpgradeImbaTalent(unused, kv)
                         local modifier = hero:FindModifierByName(modifier_talent_name)
                         if modifier ~= nil then
                             -- Do not allow learning of the same type of ability again
+                            print("Talent: Taken before")
                             return
                         else
                             modifier = hero:AddNewModifier(hero, nil, modifier_talent_name, {})
-                            modifier:SetStackCount((1+(level-5)/10))
-                            modifier:ForceRefresh() -- Refresh for modifier to update values (for server side. Client side will receive it as onCreated())
+                            if modifier == nil then
+                                -- Add to delayed list (you cannot add modifiers to dead heroes)
+                                local existing_list = delayed_add_talents_list[heroID]
+                                if existing_list == nil then
+                                    existing_list = {}
+                                end
+
+                                existing_list[modifier_talent_name] = level
+
+                                delayed_add_talents_list[heroID] = existing_list
+                            else
+                                modifier:SetStackCount(1+(level-5)/5)
+                                modifier:ForceRefresh() -- Refresh for modifier to update values (for server side. Client side will receive it as onCreated())
+                            end
                         end
-                else
+                    else
                         -- Ability talent (upgrade ability level)
                         local ability = hero:FindAbilityByName(talent_name)
                         if ability then
-                            ability:SetLevel(1)
-                        else
-                            print("Talent: Invalid talent name")
+                            print("Talent: talent name not suppose to exist")
                             return
+                        else
+                            ability = hero:AddAbility(talent_name)
+                            ability:SetLevel(1)
                         end
                     end
 
@@ -230,4 +281,18 @@ function InitPlayerHeroImbaTalents()
 
     -- Register for event when user select a talent to upgrade
     CustomGameEventManager:RegisterListener("upgrade_imba_talent", HandlePlayerUpgradeImbaTalent)
+end
+
+function AddMissingGenericTalent(hero)
+
+    local heroID = hero:GetEntityIndex()
+    local existing_list = delayed_add_talents_list[heroID]
+    if existing_list then
+        for modifier_talent_name,level in pairs(existing_list) do
+            local modifier = hero:AddNewModifier(hero, nil, modifier_talent_name, {})
+            modifier:SetStackCount(1+(level-5)/5)
+            modifier:ForceRefresh() -- Refresh for modifier to update values (for server side. Client side will receive it as onCreated())
+        end
+        delayed_add_talents_list[heroID] = nil
+    end
 end

@@ -110,7 +110,7 @@ end
 modifier_imba_cold_front_debuff = class({})
 
 function modifier_imba_cold_front_debuff:IsHidden() return false end
-function modifier_imba_cold_front_debuff:IsPurgable() return false end
+function modifier_imba_cold_front_debuff:IsPurgable() return true end
 function modifier_imba_cold_front_debuff:IsDebuff() return true end
 
 function modifier_imba_cold_front_debuff:OnCreated()
@@ -388,9 +388,9 @@ function modifier_imba_frost_nova_debuff:OnCreated()
     self.as_slow = self.ability:GetSpecialValueFor("as_slow")
 end
 
-function modifier_imba_cold_front_freeze:IsHidden() return false end
-function modifier_imba_cold_front_freeze:IsPurgable() return true end
-function modifier_imba_cold_front_freeze:IsDebuff() return true end
+function modifier_imba_frost_nova_debuff:IsHidden() return false end
+function modifier_imba_frost_nova_debuff:IsPurgable() return true end
+function modifier_imba_frost_nova_debuff:IsDebuff() return true end
 
 function modifier_imba_frost_nova_debuff:GetStatusEffectName()
     return "particles/status_fx/status_effect_frost_lich.vpcf"
@@ -423,24 +423,17 @@ LinkLuaModifier("modifier_imba_frost_armor_freeze", "hero/hero_lich", LUA_MODIFI
 LinkLuaModifier("modifier_imba_frost_armor_auto_cast", "hero/hero_lich", LUA_MODIFIER_MOTION_NONE)
 
 function imba_lich_frost_armor:CastFilterResultTarget(target)
-    local caster = self:GetCaster()
+    if IsServer() then
+        local caster = self:GetCaster()
 
-    -- Can't apply on self since Lich already got it, like, forever
-    if caster == target then
-        return UF_FAIL_CUSTOM
+        -- Can't apply on self since Lich already got it, like, forever
+        if caster == target then
+            return UF_FAIL_CUSTOM
+        end
+
+        local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+        return nResult
     end
-
-    -- Can't apply on enemies
-    if caster:GetTeamNumber() ~= target:GetTeamNumber() then
-        return UF_FAIL_ENEMY
-    end
-
-    -- Can only be applied on heroes, creeps and buildings
-    if not target:IsHero() and not target:IsCreep() and not target:IsBuilding() then
-        return UF_FAIL_OTHER
-    end
-
-    return UF_SUCCESS
 end
 
 function imba_lich_frost_armor:GetCustomCastErrorTarget(target)
@@ -669,7 +662,7 @@ function modifier_imba_frost_armor_freeze:OnCreated()
     self.caster = self:GetCaster()
     self.ability = self:GetAbility()
     self.parent = self:GetParent()
-    self.particle_hand_freeze = "particles/hero/lich/lich_ice_armor_freeze.vpcf"
+    self.particle_hand_freeze = "particles/hero/lich/lich_ice_armor_freeze.vpcf"    
 
     self.particle_hand_freeze_fx = ParticleManager:CreateParticle(self.particle_hand_freeze, PATTACH_CUSTOMORIGIN_FOLLOW, self.parent)
     ParticleManager:SetParticleControlEnt(self.particle_hand_freeze_fx, 0, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
@@ -698,9 +691,17 @@ function modifier_imba_frost_armor_auto_cast:OnCreated()
 end
 
 function modifier_imba_frost_armor_auto_cast:DeclareFunctions()
-    local decFuncs = {MODIFIER_EVENT_ON_ATTACK}
+    local decFuncs = {MODIFIER_EVENT_ON_ATTACK,                      
+                      MODIFIER_EVENT_ON_RESPAWN}
 
     return decFuncs
+end
+
+function modifier_imba_frost_armor_auto_cast:OnRespawn(keys)
+    -- Only apply if the unit is the caster itself
+    if keys.unit == self.caster then
+        self.caster:AddNewModifier(self.caster, self.ability, self.modifier_frost_armor, {})
+    end
 end
 
 function modifier_imba_frost_armor_auto_cast:OnAttack(keys)    
@@ -904,8 +905,7 @@ function modifier_imba_dark_ritual_creeps:OnCreated()
     -- Ability properties
     self.caster = self:GetCaster()
     self.ability = self:GetAbility()
-    self.parent = self:GetParent()
-    self.stacks = self:GetStackCount()
+    self.parent = self:GetParent()    
 
     -- Ability specials
     self.creeps_bonus_as = self.ability:GetSpecialValueFor("creeps_bonus_as")
@@ -917,10 +917,12 @@ function modifier_imba_dark_ritual_creeps:OnCreated()
     self.creeps_bonus_hp_pct = self.creeps_bonus_hp_pct * (1 + self.caster:FindTalentValue("special_bonus_imba_lich_2") * 0.01)
     self.creeps_bonus_dmg_pct = self.creeps_bonus_dmg_pct * (1 + self.caster:FindTalentValue("special_bonus_imba_lich_2") * 0.01)
 
-    if IsServer() then
+    if IsServer() then        
         -- Force adjust HP
-        local adjusted_hp = self.parent:GetMaxHealth() + self.stacks * self.creeps_bonus_hp_pct * 0.01        
-        SetCreatureHealth(self.parent, adjusted_hp, true)
+        Timers:CreateTimer(2, function()
+            local adjusted_hp = self.parent:GetMaxHealth() + self:GetStackCount() * self.creeps_bonus_hp_pct * 0.01                    
+            SetCreatureHealth(self.parent, adjusted_hp, true)            
+        end)
     end
 end
 
@@ -939,12 +941,12 @@ function modifier_imba_dark_ritual_creeps:DeclareFunctions()
     return decFuncs
 end
 
-function modifier_imba_dark_ritual_creeps:GetModifierHealthBonus()     
-     return self.stacks * self.creeps_bonus_hp_pct * 0.01
+function modifier_imba_dark_ritual_creeps:GetModifierAttackSpeedBonus_Constant()     
+     return self.creeps_bonus_as
 end 
 
 function modifier_imba_dark_ritual_creeps:GetModifierPreAttack_BonusDamage()
-     return self.stacks * self.creeps_bonus_dmg_pct * 0.01
+     return self:GetStackCount() * self.creeps_bonus_dmg_pct * 0.01
 end
 
 -- Allied sacrificed creep hero bonuses

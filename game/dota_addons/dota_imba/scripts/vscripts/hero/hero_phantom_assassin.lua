@@ -32,7 +32,7 @@ function imba_phantom_assassin_stifling_dagger:OnSpellStart()
 	damage_reduction 		=	ability:GetSpecialValueFor("damage_reduction")
 	dagger_vision 			=	ability:GetSpecialValueFor("dagger_vision")
 	scepter_knives_interval =	0.3
-	cast_range				=	ability:GetCastRange(caster:GetAbsOrigin(), target)
+	cast_range				=	ability:GetCastRange(caster:GetAbsOrigin(), target) + GetCastRangeIncrease(caster)
 	playbackrate			=	1 + scepter_knives_interval
 
 	--TALENT: +35 Stifling Dagger bonus damage
@@ -128,7 +128,7 @@ function imba_phantom_assassin_stifling_dagger:OnSpellStart()
 					enemy.hit_by_pa_dagger = true
 					dagger_target_found = true	
 
-					caster:StartGesture(ACT_DOTA_CAST_ABILITY_1)
+					caster:StartGestureWithPlaybackRate(ACT_DOTA_CAST_ABILITY_1, playbackrate)
 
 					dagger_projectile = {
 										EffectName = "particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf",
@@ -195,20 +195,18 @@ end
 function imba_phantom_assassin_stifling_dagger:OnProjectileHit( target, location )
 
     local caster = self:GetCaster()                                                                                 
-	local response_stifling_dagger = "phantom_assassin_phass_ability_stiflingdagger_0"..math.random(1,4)
 
 	if not target then
 		return nil
 	end
 
 	-- With 20 percentage play random stifling dagger response
-	if RollPercentage(10) then
-		caster:EmitSound(response_stifling_dagger)
-	end
+	local responses = {"phantom_assassin_phass_ability_stiflingdagger_01","phantom_assassin_phass_ability_stiflingdagger_02","phantom_assassin_phass_ability_stiflingdagger_03","phantom_assassin_phass_ability_stiflingdagger_04"}
+	caster:EmitCasterSound("npc_dota_hero_phantom_assassin",responses, 20, DOTA_CAST_SOUND_FLAG_NONE, 20,"stifling_dagger")
 
 	-- If the target possesses a ready Linken's Sphere, do nothing else
 	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
-		if target:TriggerSpellAbsorb(ability) then
+		if target:TriggerSpellAbsorb(self) then
 			return nil
 		end
 	end
@@ -226,7 +224,20 @@ function imba_phantom_assassin_stifling_dagger:OnProjectileHit( target, location
 	local initial_pos = caster:GetAbsOrigin()
 	local target_pos = target:GetAbsOrigin()
 
-	caster:SetAbsOrigin(target_pos)	
+	-- Offset is necessary, because cleave from Battlefury doesn't work (in any direction) if you are exactly on top of the target unit
+	local offset = 100 --dotameters (default melee range is 150 dotameters)
+	
+	-- Find the distance vector (distance, but as a vector rather than Length2D)
+	-- z is 0 to prevent any wonkiness due to height differences, we'll use the targets height, unmodified
+	local distance_vector = Vector(target_pos.x - initial_pos.x, target_pos.y - initial_pos.y, 0)
+	-- Normalize it, so the offset can be applied to x/y components, proportionally
+	distance_vector = distance_vector:Normalized()
+	
+	-- Offset the caster 100 units in front of the target
+	target_pos.x = target_pos.x - offset * distance_vector.x
+	target_pos.y = target_pos.y - offset * distance_vector.y
+	
+	caster:SetAbsOrigin(target_pos)
 	caster:PerformAttack(target, true, true, true, true, true, false, true)
 	caster:SetAbsOrigin(initial_pos)
 
@@ -345,7 +356,7 @@ imba_phantom_assassin_phantom_strike = class({})
 
 LinkLuaModifier("modifier_imba_phantom_strike", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_phantom_strike_coup_de_grace", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
-
+function imba_phantom_assassin_phantom_strike:IsNetherWardStealable() return false end
 function imba_phantom_assassin_phantom_strike:CastFilterResultTarget(target)
     if IsServer() then
         local caster = self:GetCaster()
@@ -360,10 +371,9 @@ function imba_phantom_assassin_phantom_strike:CastFilterResultTarget(target)
         local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
         return nResult
     end
-    return UF_SUCCESS
 end
 
-function imba_phantom_assassin_phantom_strike:CastFilterResultTarget(target)
+function imba_phantom_assassin_phantom_strike:GetCustomCastErrorTarget(target)
 	return "dota_hud_error_cant_cast_on_self"
 end
 
@@ -421,8 +431,15 @@ if IsServer() then
 	StartSoundEvent("Hero_PhantomAssassin.Strike.Start", self:GetCaster())
 
 	-- Blink
-	FindClearSpaceForUnit(self.caster, self.target_pos, true)
-	self.caster:SetForwardVector( (self.target:GetAbsOrigin() - self.caster:GetAbsOrigin()):Normalized() )
+	local distance = (self.target:GetAbsOrigin() - self.caster:GetAbsOrigin()):Length2D()
+	local direction = (self.target:GetAbsOrigin() - self.caster:GetAbsOrigin()):Normalized()
+	local blink_point = self.caster:GetAbsOrigin() + direction * (distance - 128)
+	self.caster:SetAbsOrigin(blink_point)
+	Timers:CreateTimer(FrameTime(), function()
+		FindClearSpaceForUnit(self.caster, blink_point, true)
+	end)
+	
+	self.caster:SetForwardVector(direction)
 
 	-- Disjoint projectiles
 	ProjectileManager:ProjectileDodge(self.caster)
@@ -453,15 +470,8 @@ if IsServer() then
 
 		self.caster:SetModifierStackCount( "modifier_imba_phantom_strike_coup_de_grace", self.caster, attacks_count)
 
-		-- If cast on an enemy, immediately start attacking it
-		if self.caster:GetTeam() ~= self.target:GetTeam() then
-			self.caster.phantom_strike_target = self.target
-			self.caster:SetAttacking(self.target)
-			self.caster:SetForceAttackTarget(self.target)
-			Timers:CreateTimer(FrameTime(), function()
-				self.caster:SetForceAttackTarget(nil)
-			end)
-		end
+		-- If cast on an enemy, immediately start attacking it				
+		self.caster:MoveToTargetToAttack(self.target)
 	end		
 end
 end
@@ -576,7 +586,6 @@ end
 
 function modifier_imba_blur:OnIntervalThink()
   if IsServer() then
-	local responses_blur = "phantom_assassin_phass_ability_blur_0"..math.random(1,3)
 
 	-- Find nearby enemies
 	local nearby_enemies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.caster:GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
@@ -594,7 +603,11 @@ function modifier_imba_blur:OnIntervalThink()
 
 		-- Make mortred not transparent (wtf firetoad)
 		self.caster:RemoveModifierByName(self.modifier_blur_transparent)
-		self.caster:EmitSound(responses_blur)
+		local responses = {"phantom_assassin_phass_ability_blur_01",
+			"phantom_assassin_phass_ability_blur_02",
+			"phantom_assassin_phass_ability_blur_03"
+		}
+		self.caster:EmitCasterSound("npc_dota_hero_phantom_assassin",responses, 10, DOTA_CAST_SOUND_FLAG_NONE, 50,"blur")
 	end
   end
 end
@@ -746,6 +759,14 @@ function modifier_imba_blur_blur:CheckState()
 	return states
 end
 
+function modifier_imba_blur_blur:OnRemoved()
+	ParticleManager:DestroyParticle(self.blur_particle, false)
+end
+
+function modifier_imba_blur_blur:OnDestroy()
+	ParticleManager:ReleaseParticleIndex(self.blur_particle)
+end
+
 function modifier_imba_blur_blur:IsHidden()	   return true end
 function modifier_imba_blur_blur:IsDebuff()	 return false end
 function modifier_imba_blur_blur:IsPurgable()  return false end
@@ -848,6 +869,12 @@ function modifier_imba_coup_de_grace:GetModifierPreAttack_CriticalStrike(keys)
 			ParticleManager:ReleaseParticleIndex(coup_pfx)
 			
 			StartSoundEvent("Hero_PhantomAssassin.CoupDeGrace", target)
+			local responses = {"phantom_assassin_phass_ability_coupdegrace_01",
+				"phantom_assassin_phass_ability_coupdegrace_02",
+				"phantom_assassin_phass_ability_coupdegrace_03",
+				"phantom_assassin_phass_ability_coupdegrace_04"
+			}
+			self.caster:EmitCasterSound("npc_dota_hero_phantom_assassin",responses, 50, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, 20,"coup_de_grace")
 
 			--TALENT: +8 sec Coup de Grace bonus damage duration			
 			crit_duration = crit_duration + self.caster:FindTalentValue("special_bonus_imba_phantom_assassin_7")			
