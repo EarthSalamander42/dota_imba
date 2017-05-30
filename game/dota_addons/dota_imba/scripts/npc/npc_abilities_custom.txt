@@ -17592,7 +17592,8 @@
 			"precache"
 			{
 				"soundfile"					"soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
-				"particle" 					"particles/units/heroes/hero_mirana/mirana_spell_arrow.vpcf"
+				"particle" 					"particles/hero/pudge/pudge_cleaver_overhead.vpcf"
+				"particle" 					"particles/hero/pudge/butchers_cleave_projectile.vpcf"
 			}
 
 			// Special
@@ -17625,7 +17626,7 @@
 					"var_type"				"FIELD_INTEGER"
 					"check_radius"			"300"
 				}
-				"05"
+				"06"
 				{
 					"var_type"				"FIELD_INTEGER"
 					"damage"			"50 65 80 95 110 125 140"

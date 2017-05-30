@@ -5,7 +5,7 @@
 	m_nMaxParticles = 16
 	m_flCullRadius = 100.0
 	m_nCullControlPoint = 3
-	m_flConstantRadius = 1.2
+	m_flConstantRadius = 1.0
 	m_bShouldSort = false
 	m_flMaxRecreationTime = -1.0
 	m_Renderers = 
@@ -15,12 +15,11 @@
 			m_ModelList = 
 			[
 				{
-					m_model = resource:"models/heroes/pudge/leftweapon.vmdl"
+					m_model = resource:"models/pudge_cleaver_model2.vmdl"
 				},
 			]
 			m_bAnimated = true
 			m_nLOD = 1
-			m_bOrientZ = true
 		},
 	]
 	m_Operators = 
@@ -39,12 +38,9 @@
 		},
 		{
 			_class = "C_OP_RampScalarLinear"
-			m_nField = 19
-			m_RateMin = 1.0
-			m_RateMax = 1.0
-			m_flEndTime_min = 0.0
-			m_flEndTime_max = 0.0
-			m_bProportionalOp = false
+			m_nField = 12
+			m_RateMin = 10.0
+			m_RateMax = 10.0
 		},
 		{
 			_class = "C_OP_FadeInSimple"
@@ -54,12 +50,12 @@
 			_class = "C_OP_MovementPlaceOnGround"
 			m_nLerpCP = 3
 			m_flTolerance = 96.0
+			m_flOffset = 70.0
 			m_bIncludeWater = true
 			m_flMaxTraceLength = 1024.0
 			m_flTraceOffset = 256.0
 			m_CollisionGroupName = "DEBRIS"
 			m_nRefCP1 = 3
-			m_flOffset = 70.0
 		},
 		{
 			_class = "C_OP_RemapVelocityToVector"
@@ -90,10 +86,8 @@
 			m_nControlPoint = 1
 		},
 		{
-			_class = "C_INIT_PositionOffset"
-			m_OffsetMin = [ -80.0, 10.0, -100.0 ]
-			m_OffsetMax = [ -80.0, 10.0, -100.0 ]
-			m_bDisableOperator = true
+			_class = "C_INIT_RemapCPOrientationToRotations"
+			m_vecRotation = [ 90.0, 0.0, 0.0 ]
 		},
 	]
 	m_Emitters = 
@@ -103,22 +97,6 @@
 			m_nParticlesToEmit = 1
 		},
 	]
-	m_Children = 
-	[
-		{
-			m_bEndCap = true
-			m_ChildRef = resource:"particles/units/heroes/hero_mirana/mirana_spell_arrow_destruction.vpcf"
-		},
-		{
-			m_ChildRef = resource:"particles/units/heroes/hero_mirana/mirana_spell_arrow_ribbon_b.vpcf"
-			m_bDisableChild = true
-		},
-		{
-			m_ChildRef = resource:"particles/units/heroes/hero_mirana/mirana_spell_arrow_ribbon.vpcf"
-			m_bDisableChild = true
-		},
-	]
-	m_nTopology = "PARTICLE_TOPOLOGY_POINTS"
 	m_controlPointConfigurations = 
 	[
 		{
