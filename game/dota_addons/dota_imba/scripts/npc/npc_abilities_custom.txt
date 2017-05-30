@@ -20197,6 +20197,7 @@
 			"soundfile"						"soundevents/voscripts/game_sounds_vo_techies.vsndevts"
 			"particle"						"particles/units/heroes/hero_techies/techies_land_mine.vpcf"
 			"particle"						"particles/units/heroes/hero_techies/techies_land_mine_explode.vpcf"			
+			"particle"						"particles/hero/techies/techies_big_boom_explosions.vpcf"
 			"model"							"models/heroes/techies/fx_techiesfx_mine.vmdl"	
 		}
 
@@ -20220,7 +20221,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"mine_placement_count"		"3"
+				"initial_mines"				"1"
 			}
 
 			"02"
@@ -20276,6 +20277,60 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"buidling_damage_duration"  "0.1"
+			}
+
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"charge_replenish_duration" "20 20 20 20 17 14 11"
+			}
+
+			"12"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_charges"				"4"
+			}
+
+			"13"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mana_increase_per_stack"	"30"
+			}
+
+			"14"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"big_boom_mine_hits"		"4"
+			}
+
+			"15"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"big_boom_mine_bonus_dmg"	"150"
+			}
+
+			"16"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"big_boom_shrapnel_aoe"		"1000"
+			}
+
+			"17"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"big_boom_shrapnel_duration"	"3"
+			}
+
+			"18"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"big_boom_shrapnel_damage"		"125"
+			}
+
+			"18"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"big_boom_shrapnel_interval"	"0.25"
 			}
 		}		
 	}
@@ -20361,6 +20416,36 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"fow_duration"				"1"
+			}
+
+			"12"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"big_boom_mine_bonus_dmg"	"150"
+			}
+
+			"13"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"big_boom_shrapnel_aoe"		"1000"
+			}
+
+			"14"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"big_boom_shrapnel_duration"	"3"
+			}
+
+			"14"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"big_boom_shrapnel_damage"		"125"
+			}
+
+			"18"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"big_boom_shrapnel_interval"	"0.25"
 			}
 		}
 	}
@@ -33952,7 +34037,7 @@
         }
     }
 
-    "special_bonus_imba_techies_7" // Proximity Mine now scatters additional mines
+    "special_bonus_imba_techies_7" // Proximity Mines initial mine is a Big Boom
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
@@ -33972,7 +34057,7 @@
             "01"
             {
                 "var_type"                  "FIELD_INTEGER"
-                "value"	                    "3"
+                "value"	                    "1"
             }
         }
     }
