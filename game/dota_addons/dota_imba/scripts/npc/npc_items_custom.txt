@@ -11859,11 +11859,11 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost" 						"875"
+		"ItemCost" 						"3800"
 		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
 		"ItemShopTags"					"agi;int;str;armor;boost_health;mana_regen"
 		"ItemQuality"					"artifact"
-		"ItemAliases"					"urn"
+		"ItemAliases"					"urn;bkb"
 		"ItemInitialCharges"            "0"
         "ItemPermanent"                 "1"
         "ItemRequiresCharges"           "0"
