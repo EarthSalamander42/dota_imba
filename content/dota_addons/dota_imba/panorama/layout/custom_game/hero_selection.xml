@@ -14,7 +14,7 @@
 	</scripts>
 
 	<Panel hittest="false" style="width: 100%; height: 100%;">
-		<Panel hittest="true" id="Background">
+		<Panel hittest="false" id="Background">
 			<Button id="ReturnToMenuButton" onactivate="DOTAHUDShowDashboard();" onmouseover="UIShowTextTooltip( DOTA_HUD_BackToDashboard )"  onmouseout="UIHideTextTooltip()">
 			</Button>
 			<Panel hittest="true" id="PickingScreen">
