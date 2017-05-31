@@ -179,9 +179,9 @@
                                 <Panel id="npc_dota_hero_phoenix" class="ClassNormalOption" 
                                     onactivate="SelectHero('npc_dota_hero_phoenix')" 
                                     style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_phoenix.png');" />
-                                <!-- <Panel id="npc_dota_hero_pudge" class="ClassImbaOption" 
+                                <Panel id="npc_dota_hero_pudge" class="ClassImbaOption" 
                                     onactivate="SelectHero('npc_dota_hero_pudge')" 
-                                    style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_pudge.png');" /> -->
+                                    style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_pudge.png');" />
                                 <Panel id="npc_dota_hero_sand_king" class="ClassImbaOption" 
                                     onactivate="SelectHero('npc_dota_hero_sand_king')" 
                                     style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_sand_king.png');" />

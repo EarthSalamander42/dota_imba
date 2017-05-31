@@ -171,7 +171,7 @@ function HeroSelection:RandomHero(event)
 		"npc_dota_hero_night_stalker",
 		"npc_dota_hero_omniknight",
 		"npc_dota_hero_puck",
-		--"npc_dota_hero_pudge",
+		"npc_dota_hero_pudge",
 		"npc_dota_hero_pugna",
 		"npc_dota_hero_rattletrap",
 		"npc_dota_hero_razor",
