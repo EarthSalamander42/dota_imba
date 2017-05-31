@@ -309,6 +309,14 @@ function modifier_imba_decrepify:OnCreated()
     end
 end
 
+function modifier_imba_decrepify:OnRefresh() 
+    if IsServer() then
+	print(self.damage_stored)
+		self:OnDestroy()
+		self.damage_stored = 0
+    end  
+end
+
 function modifier_imba_decrepify:IsHidden() return false end
 function modifier_imba_decrepify:IsPurgable() return true end
 
