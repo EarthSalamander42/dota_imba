@@ -1064,6 +1064,8 @@ function GameMode:OnAllPlayersLoaded()
 
 	-- CHAT
 	self.chat = Chat(self.Players, self.Users, TEAM_COLORS)
+--	Chat:constructor(players, users, teamColors)
+	print("Constructing Chat!")
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Fountain abilities setup
