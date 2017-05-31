@@ -681,12 +681,12 @@ function GameMode:OrderFilter( keys )
 	
 	-- Techies' Focused Detonate cast-handlign
 	if keys.order_type == DOTA_UNIT_ORDER_CAST_POSITION then
-        local ability = EntIndexToHScript(keys.entindex_ability)        
-        
-        if ability:GetAbilityName() == "imba_techies_focused_detonate" then                        
-            unit:AddNewModifier(unit, ability, "modifier_imba_focused_detonate", {duration = 0.2})            
-        end
-    end
+		local ability = EntIndexToHScript(keys.entindex_ability)        
+		
+		if ability:GetAbilityName() == "imba_techies_focused_detonate" then                        
+			unit:AddNewModifier(unit, ability, "modifier_imba_focused_detonate", {duration = 0.2})            
+		end
+	end
 	
 	
 	-- Divine Rapier undropable
@@ -1054,7 +1054,6 @@ function GameMode:OnAllPlayersLoaded()
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Game filters setup
 	-------------------------------------------------------------------------------------------------
-
 	GameRules:GetGameModeEntity():SetBountyRunePickupFilter( Dynamic_Wrap(GameMode, "BountyRuneFilter"), self )
 	GameRules:GetGameModeEntity():SetExecuteOrderFilter( Dynamic_Wrap(GameMode, "OrderFilter"), self )
 	GameRules:GetGameModeEntity():SetDamageFilter( Dynamic_Wrap(GameMode, "DamageFilter"), self )
@@ -1062,6 +1061,9 @@ function GameMode:OnAllPlayersLoaded()
 	GameRules:GetGameModeEntity():SetModifyExperienceFilter( Dynamic_Wrap(GameMode, "ExperienceFilter"), self )
 	GameRules:GetGameModeEntity():SetModifierGainedFilter( Dynamic_Wrap(GameMode, "ModifierFilter"), self )
 	GameRules:GetGameModeEntity():SetItemAddedToInventoryFilter( Dynamic_Wrap(GameMode, "ItemAddedFilter"), self )
+
+	-- CHAT
+	self.chat = Chat(self.Players, self.Users, TEAM_COLORS)
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Fountain abilities setup
@@ -1082,15 +1084,10 @@ function GameMode:OnAllPlayersLoaded()
 			-- Add fountain passive abilities
 			building:AddAbility("imba_fountain_buffs")
 			building:AddAbility("imba_fountain_grievous_wounds")
-			building:AddAbility("imba_fountain_relief")
-
 			local fountain_ability = building:FindAbilityByName("imba_fountain_buffs")
 			local swipes_ability = building:FindAbilityByName("imba_fountain_grievous_wounds")
-			local relief_aura_ability = building:FindAbilityByName("imba_fountain_relief")
-
 			fountain_ability:SetLevel(1)
 			swipes_ability:SetLevel(1)
-			relief_aura_ability:SetLevel(1)
 		elseif string.find(building_name, "tower") then
 			building:SetDayTimeVisionRange(1900)
 			building:SetNightTimeVisionRange(800)

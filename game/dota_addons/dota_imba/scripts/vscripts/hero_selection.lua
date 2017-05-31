@@ -128,13 +128,14 @@ end
 
 -- Randoms a valid hero for the player who requested it
 function HeroSelection:RandomHero(event)
+local id = event.PlayerID
 
-	if HeroSelection.playerPickState[event.PlayerID].pick_state ~= "selecting_hero" then
+	if HeroSelection.playerPickState[id].pick_state ~= "selecting_hero" then
 		return nil
 	end
 
 	-- Flag the player as having randomed
-	PlayerResource:SetHasRandomed(event.PlayerID)
+	PlayerResource:SetHasRandomed(id)
 
 	-- Fetch a list of valid heroes to random
 	local valid_heroes = {
@@ -251,24 +252,27 @@ function HeroSelection:RandomHero(event)
 	local random_hero = valid_heroes[RandomInt(1, #valid_heroes)]
 
 	-- Check if this random hero hasn't already been picked
-	if PlayerResource:GetTeam(event.PlayerID) == DOTA_TEAM_GOODGUYS then
+	if PlayerResource:GetTeam(id) == DOTA_TEAM_GOODGUYS then
 		for _, picked_hero in pairs(HeroSelection.radiantPicks) do
 			if random_hero == picked_hero then
-				HeroSelection:RandomHero({PlayerID = event.PlayerID})
+				HeroSelection:RandomHero({PlayerID = id})
 				break
 			end
 		end
 	else
 		for _, picked_hero in pairs(HeroSelection.direPicks) do
 			if random_hero == picked_hero then
-				HeroSelection:RandomHero({PlayerID = event.PlayerID})
+				HeroSelection:RandomHero({PlayerID = id})
 				break
 			end
 		end
 	end
 
 	-- If it's a valid hero, allow the player to select it
-	HeroSelection:HeroSelect({PlayerID = event.PlayerID, HeroName = random_hero, HasRandomed = true})
+	HeroSelection:HeroSelect({PlayerID = id, HeroName = random_hero, HasRandomed = true})
+
+	-- Send a Custom Message in PreGame Chat to tell other players this player has randomed
+	Chat:PlayerRandomed(id, PlayerResource:GetPlayer(id), PlayerResource:GetTeam(id), random_hero)
 end
 
 --[[

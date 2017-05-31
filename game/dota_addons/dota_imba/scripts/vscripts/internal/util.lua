@@ -1155,17 +1155,78 @@ function StoreCurrentDayCycle()
 end
 
 function IsDaytime()
-    if CustomNetTables:GetTableValue("gamerules", "isdaytime") then
-        if CustomNetTables:GetTableValue("gamerules", "isdaytime").is_day then  
-            local is_day = CustomNetTables:GetTableValue("gamerules", "isdaytime").is_day  
+	if CustomNetTables:GetTableValue("gamerules", "isdaytime") then
+		if CustomNetTables:GetTableValue("gamerules", "isdaytime").is_day then  
+			local is_day = CustomNetTables:GetTableValue("gamerules", "isdaytime").is_day  
 
-            if is_day == 1 then
-                return true
-            else
-                return false
-            end
-        end
-    end
+			if is_day == 1 then
+				return true
+			else
+				return false
+			end
+		end
+	end
 
-    return true   
+	return true   
+end
+
+-- COOKIES: PreGame Chat System, created by Mahou Shoujo
+Chat = Chat or class({})
+
+function Chat:constructor(players, users, teamColors)
+	self.players = players
+	self.teamColors = TEAM_COLORS
+	self.users = users
+
+	CustomGameEventManager:RegisterListener("custom_chat_say", function(id, ...) Dynamic_Wrap(self, "OnSay")(self, ...) end)
+	print("CHAT: constructing...")
+end
+
+function Chat:OnSay(args)
+	local id = args.PlayerID
+	local message = args.message
+	local player = PlayerResource:GetPlayer(id)
+
+	message = message:gsub("^%s*(.-)%s*$", "%1") -- Whitespace trim
+	message = message:gsub("^(.{0,256})", "%1") -- Limit string length
+
+	if message:len() == 0 then
+		return
+	end
+
+	local arguments = {
+		hero = player,
+		color = TEAM_COLORS[player:GetPlayerID()],
+		player = id,
+		message = args.message,
+		team = args.team,
+--		IsFiretoad = player:IsFireToad() -- COOKIES: Define this function later, can also be used for all devs
+	}
+
+	if args.team then
+		CustomGameEventManager:Send_ServerToTeam(player:GetTeamNumber(), "custom_chat_say", arguments)
+--	else -- i leave this here if someday we want to create a whole new chat, and not only a pregame chat
+--		CustomGameEventManager:Send_ServerToAllClients("custom_chat_say", arguments)
+	end
+end
+
+function Chat:PlayerRandomed(id, hero, teamLocal, name)
+	local hero = PlayerResource:GetPlayer(id)
+	local shared = {
+		color = TEAM_COLORS[hero:GetPlayerID()],
+		player = id,
+--		IsFiretoad = player:IsFireToad()
+	}
+
+	local localArgs = vlua.clone(shared)
+	localArgs.hero = hero
+	localArgs.team = teamLocal
+	localArgs.name = name
+
+	CustomGameEventManager:Send_ServerToAllClients("custom_randomed_message", localArgs)
+	print("CHAT: PlayerRandomed, success!")
+end
+
+function SystemMessage(token, vars)
+	CustomGameEventManager:Send_ServerToAllClients("custom_system_message", { token = token or "", vars = vars or {}})
 end
