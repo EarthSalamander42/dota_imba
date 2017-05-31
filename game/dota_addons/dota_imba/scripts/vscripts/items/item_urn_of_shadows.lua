@@ -27,7 +27,9 @@ function item_imba_urn_of_shadows:OnSpellStart()
 	local target = self:GetCursorTarget()
 
 	if target:GetTeam() ~= caster:GetTeam() then
-		if target:TriggerSpellAbsorb(self) then
+		if target:IsMagicImmune() then
+			return
+		elseif target:TriggerSpellAbsorb(self) then
 			return
 		end
 	end
