@@ -545,9 +545,11 @@ function imba_bloodseeker_rupture:OnSpellStart(target)
 	end
 end
 
-
 modifier_imba_rupture_debuff_dot = modifier_imba_rupture_debuff_dot or class({})
-
+-- Rupture is undispellable.
+function modifier_imba_rupture_debuff_dot:IsPurgable()
+    return false
+end
 if IsServer() then
 	function modifier_imba_rupture_debuff_dot:OnCreated()
 		self.movedamage = self:GetAbility():GetSpecialValueFor("movement_damage_pct") / 100

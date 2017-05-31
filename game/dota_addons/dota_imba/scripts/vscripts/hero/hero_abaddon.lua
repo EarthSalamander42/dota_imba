@@ -737,7 +737,7 @@ function modifer_imba_borrowed_time_handler:_CheckHealth(damage)
 	local ability = self:GetAbility()
 
 	-- Check state
-	if not ability:IsHidden() and ability:IsCooldownReady() and not target:IsSilenced() and not target:IsHexed() and not target:PassivesDisabled() and target:IsAlive() then
+	if not ability:IsHidden() and ability:IsCooldownReady() and not target:PassivesDisabled() and target:IsAlive() then
 		local hp_threshold = self.hp_threshold
 		local current_hp = target:GetHealth()
 		if current_hp <= hp_threshold then
