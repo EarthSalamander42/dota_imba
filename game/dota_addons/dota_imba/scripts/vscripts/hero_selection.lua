@@ -108,6 +108,7 @@ end
 	Params:
 		- event {table} - A table containing PlayerID and HeroID.
 ]]
+
 function HeroSelection:Tick() 
 	-- Send a time update to all clients
 	if HeroSelection.TimeLeft >= 0 then
