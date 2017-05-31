@@ -10,6 +10,16 @@ function item_imba_urn_of_shadows:GetIntrinsicModifierName()
 	return "modifier_imba_urn_of_shadows_passive"
 end
 
+function item_imba_urn_of_shadows:CastFilterResultTarget(target)
+	if IsServer() then
+		local caster = self:GetCaster()
+		if caster:GetTeam() ~= target:GetTeam() and target:IsMagicImmune() then
+			return UF_FAIL_MAGIC_IMMUNE_ENEMY
+		end
+		return UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+	end
+end
+
 function item_imba_urn_of_shadows:OnSpellStart()
 	if not IsServer() then
 		return nil
@@ -27,9 +37,7 @@ function item_imba_urn_of_shadows:OnSpellStart()
 	local target = self:GetCursorTarget()
 
 	if target:GetTeam() ~= caster:GetTeam() then
-		if target:IsMagicImmune() then
-			return
-		elseif target:TriggerSpellAbsorb(self) then
+		if target:TriggerSpellAbsorb(self) then
 			return
 		end
 	end
