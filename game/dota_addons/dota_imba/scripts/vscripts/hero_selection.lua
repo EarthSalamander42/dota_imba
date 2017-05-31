@@ -94,7 +94,7 @@ function HeroSelection:Start()
 		end)
 	end
 end
-
+ 
 -- Horribly implemented reconnection detection
 function HeroSelection:UiInitialized(event)
 	Timers:CreateTimer(0.04, function()
