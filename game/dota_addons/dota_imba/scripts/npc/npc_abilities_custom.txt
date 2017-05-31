@@ -24348,7 +24348,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"spell_power"				"0.5"
+				"spell_power"				"1"
 			}
 
 			"04"
@@ -24573,7 +24573,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"spell_power"				"1"
+				"spell_power"				"5"
 			}
 		}
 	}
