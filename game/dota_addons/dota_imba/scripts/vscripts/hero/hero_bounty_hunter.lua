@@ -892,6 +892,10 @@ function imba_bounty_hunter_track:IsHiddenWhenStolen()
 	return false
 end
 
+function imba_bounty_hunter_track:GetCastAnimation()
+  return ACT_DOTA_CAST_ABILITY_4
+end
+
 -- Track modifier (aura)
 modifier_imba_track_debuff_mark = modifier_imba_track_debuff_mark or class({})
 
