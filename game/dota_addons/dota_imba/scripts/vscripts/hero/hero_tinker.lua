@@ -137,7 +137,7 @@ function imba_tinker_rearm:OnChannelFinish( bInterrupted )
 				"item_imba_guardian_greaves",
 				"item_imba_hand_of_midas",
 				"item_imba_white_queen_cape",
-				"item_imba_black_king_bar",
+				"item_black_king_bar",
 				"item_imba_refresher",
 				"item_imba_necronomicon",
 				"item_imba_necronomicon_2",

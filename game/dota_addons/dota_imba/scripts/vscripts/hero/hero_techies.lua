@@ -7,7 +7,8 @@ CreateEmptyTalents("techies")
 ------------------------------
 --     PROXIMITY MINE       --
 ------------------------------
-imba_techies_proximity_mine = class({})
+imba_techies_proximity_mine = imba_techies_proximity_mine or class({})
+LinkLuaModifier("modifier_imba_proximity_mine_charges", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_techies_proximity_mine:IsHiddenWhenStolen()
     return false
@@ -17,7 +18,25 @@ function imba_techies_proximity_mine:IsNetherWardStealable()
     return false
 end
 
+function imba_techies_proximity_mine:GetIntrinsicModifierName()
+    return "modifier_imba_proximity_mine_charges"
+end
 
+function imba_techies_proximity_mine:GetManaCost(level)
+    -- Ability properties    
+    local caster = self:GetCaster()
+    local initial_mana_cost = self.BaseClass.GetManaCost(self, level)
+    local modifier_charges = "modifier_imba_proximity_mine_charges"
+
+    -- Ability specials
+    local mana_increase_per_stack = self:GetSpecialValueFor("mana_increase_per_stack")        
+
+    -- Find stack count
+    stacks = caster:GetModifierStackCount(modifier_charges, caster)
+
+    local mana_cost = initial_mana_cost + mana_increase_per_stack * stacks
+    return mana_cost
+end
 
 function imba_techies_proximity_mine:CastFilterResultLocation(location)
     if IsServer() then        
@@ -50,7 +69,7 @@ function imba_techies_proximity_mine:CastFilterResultLocation(location)
 
         -- Search and see if mines were found        
         for _,unit in pairs(friendly_units) do            
-            if unit:GetUnitName() == "npc_imba_techies_proximity_mine" then
+            if unit:GetUnitName() == "npc_imba_techies_proximity_mine" or unit:GetUnitName() == "npc_imba_techies_proximity_mine_big_boom" then
                 mine_found = true
                 break
             end
@@ -88,9 +107,10 @@ function imba_techies_proximity_mine:OnSpellStart()
     local target_point = self:GetCursorPosition()
     local cast_response = {"techies_tech_setmine_01", "techies_tech_setmine_02", "techies_tech_setmine_04", "techies_tech_setmine_08", "techies_tech_setmine_09", "techies_tech_setmine_10", "techies_tech_setmine_11", "techies_tech_setmine_13", "techies_tech_setmine_16", "techies_tech_setmine_17", "techies_tech_setmine_18", "techies_tech_setmine_19", "techies_tech_setmine_20", "techies_tech_setmine_30", "techies_tech_setmine_32", "techies_tech_setmine_33", "techies_tech_setmine_34", "techies_tech_setmine_38", "techies_tech_setmine_45", "techies_tech_setmine_46", "techies_tech_setmine_47", "techies_tech_setmine_48", "techies_tech_setmine_50", "techies_tech_setmine_51", "techies_tech_setmine_54", "techies_tech_cast_02", "techies_tech_cast_03", "techies_tech_setmine_05", "techies_tech_setmine_06", "techies_tech_setmine_07", "techies_tech_setmine_14", "techies_tech_setmine_21", "techies_tech_setmine_22", "techies_tech_setmine_23", "techies_tech_setmine_24", "techies_tech_setmine_25", "techies_tech_setmine_26", "techies_tech_setmine_28", "techies_tech_setmine_29", "techies_tech_setmine_35", "techies_tech_setmine_36", "techies_tech_setmine_37", "techies_tech_setmine_39", "techies_tech_setmine_41", "techies_tech_setmine_42", "techies_tech_setmine_43", "techies_tech_setmine_44", "techies_tech_setmine_52"}
     local sound_cast = "Hero_Techies.LandMine.Plant"    
+    local modifier_charges = "modifier_imba_proximity_mine_charges"
 
     -- Ability special
-    local mine_placement_count = ability:GetSpecialValueFor("mine_placement_count")
+    local initial_mines = ability:GetSpecialValueFor("initial_mines")
     local mine_distance = ability:GetSpecialValueFor("mine_distance")    
 
     -- Play cast response
@@ -99,15 +119,34 @@ function imba_techies_proximity_mine:OnSpellStart()
     -- Play cast sound
     EmitSoundOn(sound_cast, caster)
 
+    -- Get the amount of Proximity Mine charges, and consume all stacks
+    local mine_placement_count = 0
+    local modifier_charges_handler = caster:FindModifierByName(modifier_charges)
+    if modifier_charges_handler then
+        mine_placement_count = mine_placement_count + modifier_charges_handler:GetStackCount()
+
+        -- If there are no charges, do nothing
+        if modifier_charges_handler:GetStackCount() > 0 then
+            modifier_charges_handler:SetStackCount(0)
+        end
+    end    
+
     -- Determine mine locations, depending on mine count
-    local direction = (target_point - caster:GetAbsOrigin()):Normalized()
+    local direction = (target_point - caster:GetAbsOrigin()):Normalized()    
 
-    -- #7 Talent: Proximity Mine now scatters additional mines
-    mine_placement_count = mine_placement_count + caster:FindTalentValue("special_bonus_imba_techies_7")
+    -- Always plant the initial mine in the target point. Big boom if appropriate    
+    local big_boom = false
 
-    -- 3 mines are placed in a triangle around the cast point
-    if mine_placement_count == 3 then
-        local degree = 120   
+    -- #7 Talent: Proximity Mines initial mine is a Big Boom
+    if caster:HasTalent("special_bonus_imba_techies_7") then
+        big_boom = true
+    end
+
+    PlantProximityMine(caster, ability, target_point, big_boom)
+
+    -- Rotate the locations and find the additional mine spots
+    if mine_placement_count > 0 then
+        local degree = 360 / mine_placement_count     
 
         -- Calculate location of the first mine, ahead of the target point
         local mine_spawn_point = target_point + direction * mine_distance
@@ -120,77 +159,22 @@ function imba_techies_proximity_mine:OnSpellStart()
             local mine_point = RotatePosition(target_point, qangle, mine_spawn_point)
 
             -- Plant a mine!
-            PlantProximityMine(caster, ability, mine_point)
+            PlantProximityMine(caster, ability, mine_point, false)
         end
-
-    -- 4 mines are placed in the form of a X
-    elseif mine_placement_count == 4 then
-        local degree = 90
-
-        -- Calculate location of the first mine, ahead of the target point
-        local mine_spawn_point = target_point + direction * mine_distance        
-
-        for i = 1, mine_placement_count do
-            -- Prepare the QAngle
-            local qangle = QAngle(0, (i-1) * degree, 0)
-
-            -- Rotate the mine point
-            local mine_point = RotatePosition(target_point, qangle, mine_spawn_point)
-
-            -- Plant a mine!
-            PlantProximityMine(caster, ability, mine_point)
-        end
-    
-
-    -- 5 mines are placed in the form of a X, with a mine in the center of it
-    elseif mine_placement_count == 5 then
-        local degree = 90
-
-        -- Calculate location of the first mine, ahead of the target point
-        local mine_spawn_point = target_point + direction * mine_distance        
-
-        for i = 1, mine_placement_count-1 do
-            -- Prepare the QAngle
-            local qangle = QAngle(0, (i-1) * degree, 0)
-
-            -- Rotate the mine point
-            local mine_point = RotatePosition(target_point, qangle, mine_spawn_point)
-
-            -- Plant a mine!
-            PlantProximityMine(caster, ability, mine_point)
-        end
-
-        -- A final mine is planted at the target point
-        PlantProximityMine(caster, ability, target_point)
-
-    -- 6 mines are placed in a circle, with a mine in the center of it. #7 Talent can increase the amount of mines in the outer circle
-    else
-        local degree = 360 / (mine_placement_count-1)
-    
-        -- Calculate location of the first mine, ahead of the target point
-        local mine_spawn_point = target_point + direction * mine_distance        
-
-        for i = 1, mine_placement_count-1 do
-            -- Prepare the QAngle
-            local qangle = QAngle(0, (i-1) * degree, 0)
-
-            -- Rotate the mine point
-            local mine_point = RotatePosition(target_point, qangle, mine_spawn_point)
-
-            -- Plant a mine!
-            PlantProximityMine(caster, ability, mine_point)
-        end
-
-        -- A final mine is planted at the target point
-        PlantProximityMine(caster, ability, target_point)        
     end
 end
 
-function PlantProximityMine(caster, ability, spawn_point)
+function PlantProximityMine(caster, ability, spawn_point, big_boom)
     local mine_ability = "imba_techies_proximity_mine_trigger"
 
     -- Create the mine unit
-    local mine = CreateUnitByName("npc_imba_techies_proximity_mine", spawn_point, true, caster, caster, caster:GetTeamNumber())
+    local mine
+    if big_boom then
+        mine = CreateUnitByName("npc_imba_techies_proximity_mine_big_boom", spawn_point, true, caster, caster, caster:GetTeamNumber())
+    else
+        mine = CreateUnitByName("npc_imba_techies_proximity_mine", spawn_point, true, caster, caster, caster:GetTeamNumber())
+    end
+    
 	mine:AddRangeIndicator(caster, nil, nil, ability:GetAOERadius(), 150, 22, 22, false, false, false)
 
     -- Set the mine's team to be the same as the caster
@@ -211,20 +195,89 @@ end
 
 
 
+-- Charges modifier
+modifier_imba_proximity_mine_charges = modifier_imba_proximity_mine_charges or class({})
+
+function modifier_imba_proximity_mine_charges:OnCreated()
+    -- Ability properties
+    self.caster = self:GetCaster()
+    self.ability = self:GetAbility()
+
+    -- Ability specials
+    self.charge_replenish_duration = self.ability:GetSpecialValueFor("charge_replenish_duration")
+    self.max_charges = self.ability:GetSpecialValueFor("max_charges")
+
+    -- Set a bonus first mine immediatley when the ability is first learned
+    if not self.repeated then
+        self:SetStackCount(1)
+        self:SetDuration(self.charge_replenish_duration, true)
+        self.repeated = true
+    end
+
+    -- Start thinking
+    self:StartIntervalThink(0.1)
+end
+
+function modifier_imba_proximity_mine_charges:OnRefresh()
+    self:OnCreated()
+end
+
+function modifier_imba_proximity_mine_charges:OnIntervalThink()
+    -- Check the current duration
+    local duration = self:GetDuration()
+
+    -- If the duration is fixed, do nothing
+    if duration == -1 then
+        return nil        
+    end
+
+    -- Otherwise, get the remaining duration. If it's 0 or below, grant a stack!
+    local remaining_duration = self:GetRemainingTime()
+
+    if remaining_duration <= 0 then
+        self.restart = true
+        self:IncrementStackCount()        
+    end
+end
+
+function modifier_imba_proximity_mine_charges:IsHidden() return false end
+function modifier_imba_proximity_mine_charges:IsDebuff() return false end
+function modifier_imba_proximity_mine_charges:IsPurgable() return false end
+function modifier_imba_proximity_mine_charges:RemoveOnDeath() return false end
+function modifier_imba_proximity_mine_charges:AllowIllusionDuplicate() return false end
+function modifier_imba_proximity_mine_charges:DestroyOnExpire() return false end
+
+function modifier_imba_proximity_mine_charges:OnStackCountChanged(old_count)
+    -- Get current stack count
+    local stacks = self:GetStackCount()
+
+    -- If the stack is in the maximum, stop the duration
+    if stacks == self.max_charges then
+        self:SetDuration(-1, true)
+
+    -- Otherwise, if it needs to be restared, do so
+    elseif self.restart or old_count == self.max_charges then
+        self:SetDuration(self.charge_replenish_duration, true)
+    end
+
+    self.restart = false
+end
+
+
 ------------------------------
 --     PROXIMITY MINE AI    --
 ------------------------------
-imba_techies_proximity_mine_trigger = class({})
+imba_techies_proximity_mine_trigger = imba_techies_proximity_mine_trigger or class({})
 LinkLuaModifier("modifier_imba_proximity_mine", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_proximity_mine_building_res", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
-
+LinkLuaModifier("modifier_imba_proximity_mine_talent", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_techies_proximity_mine_trigger:GetIntrinsicModifierName()
     return "modifier_imba_proximity_mine"
 end
 
 -- Proximity mine states modifier
-modifier_imba_proximity_mine = class({})
+modifier_imba_proximity_mine = modifier_imba_proximity_mine or class({})
 
 function modifier_imba_proximity_mine:OnCreated()
     if IsServer() then
@@ -240,8 +293,9 @@ function modifier_imba_proximity_mine:OnCreated()
         self.modifier_building_res = "modifier_imba_proximity_mine_building_res"
         self.modifier_electrocharge = "modifier_imba_statis_trap_electrocharge"
         self.modifier_inflammable = "modifier_imba_remote_mine_inflammable"
+        self.modifier_talent_shrapnel = "modifier_imba_proximity_mine_talent"
         self.modifier_sign = "modifier_imba_minefield_sign_detection"
-        self.detonate_ability = "imba_techies_remote_mine_pinpoint_detonation"
+        self.detonate_ability = "imba_techies_remote_mine_pinpoint_detonation"        
 
         -- Ability specials
         self.explosion_delay = self.ability:GetSpecialValueFor("explosion_delay")
@@ -254,6 +308,8 @@ function modifier_imba_proximity_mine:OnCreated()
         self.tick_interval = self.ability:GetSpecialValueFor("tick_interval")
         self.fow_radius = self.ability:GetSpecialValueFor("fow_radius")
         self.fow_duration = self.ability:GetSpecialValueFor("fow_duration")
+        self.big_boom_mine_bonus_dmg = self.ability:GetSpecialValueFor("big_boom_mine_bonus_dmg")        
+        self.big_boom_shrapnel_duration = self.ability:GetSpecialValueFor("big_boom_shrapnel_duration")        
 
         -- #1 Talent: Trigger range increase
         self.trigger_range = self.trigger_range + self.caster:FindTalentValue("special_bonus_imba_techies_1")
@@ -270,6 +326,11 @@ function modifier_imba_proximity_mine:OnCreated()
         self.trigger_time = 0
 
         if IsServer() then
+
+            -- Determine if this is a Big Boom            
+            if self.caster:GetUnitName() == "npc_imba_techies_proximity_mine_big_boom" then
+                self.is_big_boom = true
+            end
 
             -- Wait for the mine to activate
             Timers:CreateTimer(self.activation_delay, function()
@@ -374,16 +435,25 @@ function modifier_imba_proximity_mine:OnIntervalThink()
                                               DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
                                               FIND_ANY_ORDER,
                                               false)
-
-                    print(#enemies, self.explosion_range)
+                    
                     -- Deal damage to nearby non-flying enemies
                     for _,enemy in pairs(enemies) do
 
                         -- If an enemy doesn't have flying movement, ignore it, otherwise continue
                         if not enemy:HasFlyMovementCapability() then
 
-                            -- If the enemy is a building, reduce damage to it
+                            -- If this is a Big Boom, RAIN THEM SHRAPNELS!
+                            if self.is_big_boom then
+                                CreateModifierThinker(self.caster, self.ability, self.modifier_talent_shrapnel, {duration = self.big_boom_shrapnel_duration}, self.caster:GetAbsOrigin(), self.caster:GetTeamNumber(), false)
+                            end
+
+                            -- If this is a Big Boom, add damage to the blast!
                             local damage = self.mine_damage
+                            if self.is_big_boom then
+                                damage = damage + self.big_boom_mine_bonus_dmg
+                            end
+
+                            -- If the enemy is a building, reduce damage to it                            
                             if enemy:IsBuilding() then
                                 damage = damage * self.building_damage_pct * 0.01
                             end
@@ -487,13 +557,40 @@ function modifier_imba_proximity_mine:CheckState()
     return state
 end
 
+function modifier_imba_proximity_mine:DeclareFunctions()
+    local decFuncs = {MODIFIER_EVENT_ON_TAKEDAMAGE,
+                     MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE}
+
+    return decFuncs
+end
+
+function modifier_imba_proximity_mine:GetModifierIncomingDamage_Percentage()
+    return -100
+end
+
+function modifier_imba_proximity_mine:OnTakeDamage(keys)
+    local unit = keys.unit
+    local attacker = keys.attacker
+
+    -- Only apply if the unit taking damage is the mine
+    if unit == self.caster then
+        -- Reduce mines' life by 1, or kill it. This is only relevant for Big Boom mines
+        local mine_health = self.caster:GetHealth()
+        if mine_health > 1 then
+            self.caster:SetHealth(self.caster:GetHealth() - 1)
+        else
+            self.caster:Kill(self.ability, attacker)
+        end
+    end
+end
+
 function modifier_imba_proximity_mine:GetPriority()
     return MODIFIER_PRIORITY_NORMAL
 end
 
 
 -- Building fortification modifier
-modifier_imba_proximity_mine_building_res = class({})
+modifier_imba_proximity_mine_building_res = modifier_imba_proximity_mine_building_res or class({})
 
 function modifier_imba_proximity_mine_building_res:OnCreated()
     -- Ability properties
@@ -521,10 +618,71 @@ function modifier_imba_proximity_mine_building_res:IsDebuff() return false end
 
 
 
+-- BIG BOOM SHRAPNEL MODIFIER!
+modifier_imba_proximity_mine_talent = modifier_imba_proximity_mine_talent or class({})
+
+function modifier_imba_proximity_mine_talent:OnCreated()
+    if IsServer() then
+        -- Ability properties
+        self.caster = self:GetCaster()
+        self.parent = self:GetParent()
+        self.parent_team = self.parent:GetTeamNumber()
+        self.parent_pos = self.parent:GetAbsOrigin()
+        self.ability = self:GetAbility()
+        self.particle_rain = "particles/hero/techies/techies_big_boom_explosions.vpcf"
+
+        -- Ability specials
+        self.big_boom_shrapnel_aoe = self.ability:GetSpecialValueFor("big_boom_shrapnel_aoe")
+        self.big_boom_shrapnel_damage = self.ability:GetSpecialValueFor("big_boom_shrapnel_damage")
+        self.big_boom_shrapnel_interval = self.ability:GetSpecialValueFor("big_boom_shrapnel_interval")
+
+        -- Create rain particles
+        local particle_rain_fx = ParticleManager:CreateParticle(self.particle_rain, PATTACH_WORLDORIGIN, nil)
+        ParticleManager:SetParticleControl(particle_rain_fx, 0, self.parent:GetAbsOrigin())
+        ParticleManager:SetParticleControl(particle_rain_fx, 1, self.parent:GetAbsOrigin())
+        ParticleManager:SetParticleControl(particle_rain_fx, 3, self.parent:GetAbsOrigin())
+        self:AddParticle(particle_rain_fx, false, false, -1, false, false)
+
+        -- Damage per interval
+        self.damage = self.big_boom_shrapnel_damage * self.big_boom_shrapnel_interval
+
+        -- Start thinking
+        self:StartIntervalThink(self.big_boom_shrapnel_interval)
+    end
+end
+
+function modifier_imba_proximity_mine_talent:OnIntervalThink()
+    if IsServer() then
+        -- Find all nearby units
+        local enemies = FindUnitsInRadius(self.parent_team,
+                                          self.parent_pos,
+                                          nil,
+                                          self.big_boom_shrapnel_aoe,
+                                          DOTA_UNIT_TARGET_TEAM_ENEMY,
+                                          DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO,
+                                          DOTA_DAMAGE_FLAG_NONE,
+                                          FIND_ANY_ORDER,
+                                          false)
+
+        for _, enemy in pairs(enemies) do
+            -- Deal magical damage to them
+            local damageTable = {victim = enemy,
+                                 attacker = self.caster, 
+                                 damage = self.damage,
+                                 damage_type = DAMAGE_TYPE_MAGICAL,
+                                 ability = self.ability
+                                 }
+                
+            ApplyDamage(damageTable)
+        end
+    end
+end
+
+
 ------------------------------
 --       STASIS TRAP        --
 ------------------------------
-imba_techies_stasis_trap = class({})
+imba_techies_stasis_trap = imba_techies_stasis_trap or class({})
 
 function imba_techies_stasis_trap:IsHiddenWhenStolen()
     return false
@@ -673,7 +831,7 @@ end
 ------------------------------
 --      STATIS TRAP AI      --
 ------------------------------
-imba_techies_stasis_trap_trigger = class({})
+imba_techies_stasis_trap_trigger = imba_techies_stasis_trap_trigger or class({})
 LinkLuaModifier("modifier_imba_statis_trap", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_statis_trap_root", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_statis_trap_electrocharge", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
@@ -685,7 +843,7 @@ function imba_techies_stasis_trap_trigger:GetIntrinsicModifierName()
 end
 
 -- Statis Trap thinker modifier
-modifier_imba_statis_trap = class({})
+modifier_imba_statis_trap = modifier_imba_statis_trap or class({})
 
 
 function modifier_imba_statis_trap:OnCreated()
@@ -866,7 +1024,7 @@ end
 
 
 -- Root modifier
-modifier_imba_statis_trap_root = class({})
+modifier_imba_statis_trap_root = modifier_imba_statis_trap_root or class({})
 
 function modifier_imba_statis_trap_root:CheckState()
     local state = {[MODIFIER_STATE_ROOTED] = true}
@@ -883,7 +1041,7 @@ end
 
 
 -- Electrocharge modifier
-modifier_imba_statis_trap_electrocharge = class({})
+modifier_imba_statis_trap_electrocharge = modifier_imba_statis_trap_electrocharge or class({})
 
 function modifier_imba_statis_trap_electrocharge:OnCreated()
     if IsServer() then
@@ -934,7 +1092,7 @@ function modifier_imba_statis_trap_electrocharge:OnIntervalThink()
 
         -- Move each mine towards the parent of the debuff
         for _,mine in pairs(mines) do            
-            if mine:GetUnitName() == "npc_imba_techies_proximity_mine" or mine:GetUnitName() == "npc_imba_techies_stasis_trap" or mine:GetUnitName() == "npc_imba_techies_remote_mine" then
+            if mine:GetUnitName() == "npc_imba_techies_proximity_mine" or mine:GetUnitName() == "npc_imba_techies_proximity_mine_big_boom" or mine:GetUnitName() == "npc_imba_techies_stasis_trap" or mine:GetUnitName() == "npc_imba_techies_remote_mine" then
 
                 -- Get mine's direction and distance from enemy
                 local direction = (self.parent:GetAbsOrigin() - mine:GetAbsOrigin()):Normalized()                
@@ -957,7 +1115,7 @@ end
 
 
 -- Disarmed Statis Traps modifier
-modifier_imba_statis_trap_disarmed = class({})
+modifier_imba_statis_trap_disarmed = modifier_imba_statis_trap_disarmed or class({})
 
 function modifier_imba_statis_trap_disarmed:IsHidden() return false end
 function modifier_imba_statis_trap_disarmed:IsPurgable() return false end
@@ -974,7 +1132,7 @@ function modifier_imba_statis_trap_disarmed:IsDebuff() return false end
 ------------------------------
 --        BLAST OFF!        --
 ------------------------------
-imba_techies_blast_off = class({})
+imba_techies_blast_off = imba_techies_blast_off or class({})
 LinkLuaModifier("modifier_imba_blast_off", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_blast_off_movement", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_blast_off_silence", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
@@ -1040,7 +1198,7 @@ end
 
 
 -- Blast off modifier
-modifier_imba_blast_off = class({})
+modifier_imba_blast_off = modifier_imba_blast_off or class({})
 
 function modifier_imba_blast_off:OnCreated()
     if IsServer() then
@@ -1168,7 +1326,7 @@ end
 
 
 -- Blast off motion controller modifier
-modifier_imba_blast_off_movement = class({})
+modifier_imba_blast_off_movement = modifier_imba_blast_off_movement or class({})
 
 function modifier_imba_blast_off_movement:OnCreated()
     if IsServer() then
@@ -1387,7 +1545,7 @@ end
 
 
 -- Blast Off Silence modifier
-modifier_imba_blast_off_silence = class({})
+modifier_imba_blast_off_silence = modifier_imba_blast_off_silence or class({})
 
 function modifier_imba_blast_off_silence:IsHidden() return false end
 function modifier_imba_blast_off_silence:IsPurgable() return true end
@@ -1411,7 +1569,7 @@ end
 ------------------------------
 --      REMOTE MINES        --
 ------------------------------
-imba_techies_remote_mine = class({})
+imba_techies_remote_mine = imba_techies_remote_mine or class({})
 
 function imba_techies_remote_mine:IsHiddenWhenStolen()
     return false
@@ -1522,7 +1680,7 @@ end
 ------------------------------
 --    PINPOINT DETONATION   --
 ------------------------------
-imba_techies_remote_mine_pinpoint_detonation = class({})
+imba_techies_remote_mine_pinpoint_detonation = imba_techies_remote_mine_pinpoint_detonation or class({})
 LinkLuaModifier("modifier_imba_remote_mine", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_remote_mine_inflammable", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 
@@ -1665,7 +1823,7 @@ function imba_techies_remote_mine_pinpoint_detonation:OnSpellStart()
 end
 
 
-modifier_imba_remote_mine = class({})
+modifier_imba_remote_mine = modifier_imba_remote_mine or class({})
 
 
 function modifier_imba_remote_mine:OnCreated()
@@ -1693,7 +1851,7 @@ end
 
 
 -- Remote Mines' Inflammable modifier
-modifier_imba_remote_mine_inflammable = class({})
+modifier_imba_remote_mine_inflammable = modifier_imba_remote_mine_inflammable or class({})
 
 function modifier_imba_remote_mine_inflammable:OnCreated()
     -- Ability properties
@@ -1728,7 +1886,7 @@ end
 ------------------------------
 --     FOCUSED DETONATE     --
 ------------------------------
-imba_techies_focused_detonate = class({})
+imba_techies_focused_detonate = imba_techies_focused_detonate or class({})
 LinkLuaModifier("modifier_imba_focused_detonate", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_techies_focused_detonate:IsStealable()
@@ -1788,7 +1946,7 @@ end
 
 -- Modifier for casting Focused Detonate without facing cast direction
 -- Modifier is added in the OrderFilter in imba.lua
-modifier_imba_focused_detonate = class({})
+modifier_imba_focused_detonate = modifier_imba_focused_detonate or class({})
 
 function modifier_imba_focused_detonate:DeclareFunctions()
     local decFuncs =
@@ -1831,7 +1989,7 @@ end
 ------------------------------
 --      MINEFIELD SIGN      --
 ------------------------------
-imba_techies_minefield_sign = class({})
+imba_techies_minefield_sign = imba_techies_minefield_sign or class({})
 LinkLuaModifier("modifier_imba_minefield_sign_aura", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_minefield_sign_detection", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 
@@ -1895,7 +2053,7 @@ end
 
 
 -- Sign aura modifier
-modifier_imba_minefield_sign_aura = class({})
+modifier_imba_minefield_sign_aura = modifier_imba_minefield_sign_aura or class({})
 
 function modifier_imba_minefield_sign_aura:OnCreated()
     -- Ability proprties
@@ -1921,7 +2079,7 @@ end
 
 function modifier_imba_minefield_sign_aura:GetAuraEntityReject(target)
     -- Only apply on mines
-    if target:GetUnitName() == "npc_imba_techies_proximity_mine" or target:GetUnitName() == "npc_imba_techies_stasis_trap" or target:GetUnitName() == "npc_imba_techies_remote_mine" then
+    if target:GetUnitName() == "npc_imba_techies_proximity_mine" or target:GetUnitName() == "npc_imba_techies_proximity_mine_big_boom" or target:GetUnitName() == "npc_imba_techies_stasis_trap" or target:GetUnitName() == "npc_imba_techies_remote_mine" then
         return false
     end
 
@@ -1965,7 +2123,7 @@ end
 
 
 -- Sign modifier given to nearby mines
-modifier_imba_minefield_sign_detection = class({})
+modifier_imba_minefield_sign_detection = modifier_imba_minefield_sign_detection or class({})
 
 function modifier_imba_minefield_sign_detection:CheckState()
     local state = {[MODIFIER_STATE_TRUESIGHT_IMMUNE] = true}

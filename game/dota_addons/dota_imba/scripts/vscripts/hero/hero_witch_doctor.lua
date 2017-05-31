@@ -210,8 +210,8 @@ function imba_witch_doctor_voodoo_restoration:OnToggle()
 			end)
 		end
 	else
-		EmitSoundOn("Hero_WitchDoctor.Voodoo_Restoration.Off", caster)
-		StopSoundEvent("Hero_WitchDoctor.Voodoo_Restoration.Loop", caster)
+		EmitSoundOn("Hero_WitchDoctor.Voodoo_Restoration.Off", hCaster)
+		StopSoundEvent("Hero_WitchDoctor.Voodoo_Restoration.Loop", hCaster)
 		hCaster:RemoveModifierByName("modifier_imba_voodoo_restoration")
 	end
 end

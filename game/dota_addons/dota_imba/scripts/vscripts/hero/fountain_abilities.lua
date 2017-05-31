@@ -30,7 +30,7 @@ end
 ----------------------------------------------------
 ----------------------------------------------------
 
-imba_fountain_relief= imba_fountain_relief or class({})
+imba_fountain_relief = imba_fountain_relief or class({})
 LinkLuaModifier("modifier_imba_fountain_relief_aura", "hero/fountain_abilities", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_fountain_relief_aura_buff", "hero/fountain_abilities", LUA_MODIFIER_MOTION_NONE)
 
@@ -93,7 +93,7 @@ end
 
 function modifier_imba_fountain_relief_aura:IsHidden()
   return true
-
+end
 
 ------------------------
 -- Tenacity Modifier

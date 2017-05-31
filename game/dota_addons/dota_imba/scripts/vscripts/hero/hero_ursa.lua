@@ -435,10 +435,18 @@ end
 -- Overpower attack speed buff
 modifier_imba_overpower_buff = class({})
 
-function modifier_imba_overpower_buff:GetEffectName()
-	return "particles/units/heroes/hero_ursa/ursa_overpower_buff.vpcf"
+function modifier_imba_overpower_buff:OnCreated()
+	local caster = self:GetCaster()
+	local target_location = caster:GetAbsOrigin()
+	local ursa_overpower_buff_particle = "particles/units/heroes/hero_ursa/ursa_overpower_buff.vpcf"
+	
+	self.ursa_overpower_buff_particle_fx = ParticleManager:CreateParticle(ursa_overpower_buff_particle, PATTACH_CUSTOMORIGIN, caster)
+	ParticleManager:SetParticleControlEnt(self.ursa_overpower_buff_particle_fx, 0, caster, PATTACH_POINT_FOLLOW, "attach_head", target_location, true)
+	ParticleManager:SetParticleControlEnt(self.ursa_overpower_buff_particle_fx, 1, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", target_location, true)
+	ParticleManager:SetParticleControlEnt(self.ursa_overpower_buff_particle_fx, 2, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", target_location, true)
+	ParticleManager:SetParticleControlEnt(self.ursa_overpower_buff_particle_fx, 3, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", target_location, true)
 end
-
+		
 function modifier_imba_overpower_buff:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW
 end
@@ -498,7 +506,11 @@ function modifier_imba_overpower_buff:OnAttack( keys )
 		end
 	end
 end
-
+	
+function modifier_imba_overpower_buff:OnRemoved()	
+	ParticleManager:DestroyParticle( self.ursa_overpower_buff_particle_fx, false )
+	ParticleManager:ReleaseParticleIndex(self.ursa_overpower_buff_particle_fx)	
+end
 -- Overpower disarm debuff
 modifier_imba_overpower_disarm = class({})
 
