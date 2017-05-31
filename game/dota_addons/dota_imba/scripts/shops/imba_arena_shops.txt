@@ -96,7 +96,7 @@
 	{
 		"item"		"item_iron_talon"
 		"item"		"item_ring_of_basilius"
-		"item"		"item_urn_of_shadows"
+		"item"		"item_imba_urn_of_shadows"
 		"item"		"item_headdress"
 		"item"		"item_buckler"
 		"item"		"item_ring_of_aquila"
