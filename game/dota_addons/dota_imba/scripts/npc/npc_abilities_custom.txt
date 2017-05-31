@@ -24347,8 +24347,8 @@
 
 			"03"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"spell_power"				"1"
+				"var_type"					"FIELD_FLOAT"
+				"spell_power"				"0.5"
 			}
 
 			"04"
@@ -24573,7 +24573,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"spell_power"				"5"
+				"spell_power"				"1"
 			}
 		}
 	}
@@ -27616,6 +27616,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"tiny_craggy_exterior"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"MaxLevel"						"7"
 
 		// Stats

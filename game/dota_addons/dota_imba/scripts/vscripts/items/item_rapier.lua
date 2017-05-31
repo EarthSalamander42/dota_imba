@@ -196,6 +196,10 @@ end
 function modifier_imba_arcane_rapier_2:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW
 end
+
+function modifier_imba_arcane_rapier_2:GetModifierProvidesFOWVision()
+	return 1
+end
 -------------------------------------------
 --			  CURSED RAPIER
 -------------------------------------------

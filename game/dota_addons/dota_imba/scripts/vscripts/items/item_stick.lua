@@ -36,7 +36,7 @@ function MagicStickCharge( keys )
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local cast_ability = keys.event_ability
-
+	local cast_ability_name = cast_ability:GetName()
 	-- Parameters
 	local max_charges = ability:GetLevelSpecialValueFor("max_charges", ability_level)
 	local current_charges = ability:GetCurrentCharges()
@@ -45,10 +45,18 @@ function MagicStickCharge( keys )
 	local mana_spent = cast_ability:GetManaCost(cast_ability:GetLevel() - 1)
 	local procs_stick = cast_ability:ProcsMagicStick()
 	local caster_visible = caster:CanEntityBeSeenByMyTeam(target)
-
-	-- If all conditions are met, increase stick charges
-	if mana_spent > 0 and procs_stick and caster_visible then
-		
+    local special_abilities = {"storm_spirit_ball_lightning"}
+	local special_ability_casted = 0
+	
+	-- If the ability is on the list of special abilities, increase stack by 1 for now zero
+	for _,special_ability in pairs(special_abilities) do
+		if cast_ability_name == special_ability and special_ability_casted ~= 1 then
+			special_ability_casted = 1
+		end
+	end
+	
+	-- If all other conditions are met, increase stick charges
+	if mana_spent > 0 and procs_stick and caster_visible and not special_ability_casted then
 		-- If the stick is not maxed yet, increase the amount of charges
 		if current_charges < max_charges then
 			ability:SetCurrentCharges(current_charges + 1)

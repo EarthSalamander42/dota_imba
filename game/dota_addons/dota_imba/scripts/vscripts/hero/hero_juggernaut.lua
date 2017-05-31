@@ -434,8 +434,7 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:OnCreated( )
 		self.traveled = 0		
 		self.wind_dance = self.caster:FindModifierByName("modifier_imba_juggernaut_blade_dance_wind_dance")
 		
-		self.frametime = FrameTime()
-		self:StartIntervalThink(self.frametime)
+		self:StartIntervalThink(FrameTime())
 	end
 end
 
@@ -455,7 +454,7 @@ end
 
 function modifier_imba_juggernaut_blade_dance_empowered_slice:SeekAndDestroy()
 	if IsServer() then
-		local sliceEnemies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.caster:GetAbsOrigin(), nil, 150, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		local sliceEnemies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.caster:GetAbsOrigin(), nil, 150, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
 		for _,enemy in pairs(sliceEnemies) do	
 			-- If this enemy was already hit by this cast, do nothing
 			local enemy_hit = false
@@ -740,7 +739,7 @@ function modifier_imba_omni_slash_caster:OnIntervalThink( )
 end
 
 function modifier_imba_omni_slash_caster:BounceAndSlaughter( )
-	nearby_enemies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.caster:GetAbsOrigin(), nil, self.bounce_range, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)	
+	local nearby_enemies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.caster:GetAbsOrigin(), nil, self.bounce_range, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)	
 	if self.bounce_amt >= 1 and #nearby_enemies >= 1 then
 		for _,enemy in pairs(nearby_enemies) do
 			local previous_position = self.caster:GetAbsOrigin()
@@ -793,7 +792,7 @@ function modifier_imba_omni_slash_caster:OnRemoved()
 		PlayerResource:SetCameraTarget(self.caster:GetPlayerID(), nil)
 		if self.bounce_amt > 1 then
 			local rand = RandomInt(1, 2)
-			caster:EmitSound("juggernaut_jug_ability_waste_0"..rand)
+			self.caster:EmitSound("juggernaut_jug_ability_waste_0"..rand)
 		end
 	end
 end
