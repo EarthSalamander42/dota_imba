@@ -9,5 +9,6 @@
     "gamerules",
     "shared_unit_control",
     "imba_talent_manager"
+    
   ]
 }
