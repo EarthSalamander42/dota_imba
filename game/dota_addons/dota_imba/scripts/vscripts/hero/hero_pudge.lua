@@ -343,7 +343,7 @@ function imba_pudge_meat_hook:OnSpellStart()
 	-- Root the caster
 	self:GetCaster():AddNewModifier( self:GetCaster(), self, "modifier_meat_hook_followthrough", { --[[duration = flFollowthroughDuration]] } )
 
-	EmitSoundOn( "Hero_Pudge.AttackHookExtend", self:GetCaster() )
+	EmitSoundOn( "Hero_Pudge.AttackHookExtend", self:GetCaster())
 
 	for i=1,self.nAmountOfHooks do
 		self.hooks[i] = {}
@@ -410,7 +410,7 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData( hTarget, vLocation,keys
 
 	local i = keys.nProjectileNumber	
 	
-	if self.hooks[i]["bRetracting"] then
+	if self.hooks[i]["bRetracting"] then		
 		-- Hitting someone on the way back is ignored
 	 	if hTarget then
 			return 
@@ -419,9 +419,14 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData( hTarget, vLocation,keys
 		if self:GetCaster() and self:GetCaster():IsHero() then
 			local hHook = self:GetCaster():GetTogglableWearable( DOTA_LOADOUT_TYPE_WEAPON )
 			if hHook ~= nil then
-				hHook:RemoveEffects( EF_NODRAW )
+				hHook:RemoveEffects( EF_NODRAW )								
 			end
+			print("disabling!")
+			StopSoundOn( "Hero_Pudge.AttackHookRetract", self:GetCaster())
+			StopSoundOn( "Hero_Pudge.AttackHookExtend", self:GetCaster())
+			StopSoundOn( "Hero_Pudge.AttackHookRetractStop", self:GetCaster() )			
 		end
+
 		if self.hooks[i]["unitsHit"] and #self.hooks[i]["unitsHit"] > 0 then
 			for k,v in pairs(self.hooks[i]["unitsHit"]) do
 				v:RemoveModifierByName( "modifier_meat_hook" )
@@ -436,7 +441,7 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData( hTarget, vLocation,keys
 	end
 
 	-- Here the hook always moves forward. The impact is handled here.
-	if hTarget  then
+	if hTarget  then		
 		EmitSoundOn( "Hero_Pudge.AttackHookImpact", hTarget )
 		hTarget:AddNewModifier( self:GetCaster(), self, "modifier_meat_hook", {duration = 1.5} )
 		if not self.targets[hTarget] then
@@ -477,7 +482,7 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData( hTarget, vLocation,keys
 		if self.hooks[i]["hProjectile"] then
 			ProjectileManager:DestroyLinearProjectile(self.hooks[i]["hProjectile"])
 		end
-		self.hooks[i]["bRetracting"] = true
+		self.hooks[i]["bRetracting"] = true		
 
 		for j = 1,self.nAmountOfHooks do
 			self.bAllRetracting = false
@@ -536,9 +541,7 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData( hTarget, vLocation,keys
 				ParticleManager:SetParticleControlEnt( self.hooks[i]["nChainParticleFXIndex"], 1, v, PATTACH_POINT_FOLLOW, "attach_hitloc", v:GetAbsOrigin() + vHookOffset, true )
 				ParticleManager:SetParticleControl( self.hooks[i]["nChainParticleFXIndex"], 4, Vector( 0, 0, 0 ) )
 				ParticleManager:SetParticleControl( self.hooks[i]["nChainParticleFXIndex"], 5, Vector( 1, 0, 0 ) )
-			end
-
-			EmitSoundOn( "Hero_Pudge.AttackHookRetract", v )
+			end			
 		end
 	end
 
@@ -570,11 +573,10 @@ end
 function imba_pudge_meat_hook:OnOwnerDied()
 	self:GetCaster():RemoveGesture( ACT_DOTA_OVERRIDE_ABILITY_1 );
 	self:GetCaster():RemoveGesture( ACT_DOTA_CHANNEL_ABILITY_1 );
-end
+end	
+
 
 --------------------------------------------------------------------------------
-
-
 
 modifier_meat_hook = class({})
 --------------------------------------------------------------------------------
@@ -642,13 +644,12 @@ function modifier_meat_hook_followthrough:IsHidden()
 	return true
 end
 
-
 --------------------------------------------------------------------------------
 
 function modifier_meat_hook_followthrough:CheckState()
 	local state = 
 	{
-		[MODIFIER_STATE_ROOTED] = true,
+		[MODIFIER_STATE_STUNNED] = true,
 	}
 	return state
 end
