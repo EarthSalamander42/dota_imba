@@ -45,11 +45,13 @@ function modifier_imba_juggernaut_blade_fury:OnCreated()
 	self.tick = self.ability:GetTalentSpecialValueFor("damage_tick")
 	self.caster = self:GetCaster()
 	if IsServer() then
-		self.blade_fury_spin_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_juggernaut/juggernaut_blade_fury.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.caster)
-		ParticleManager:SetParticleControl(self.blade_fury_spin_pfx, 5, Vector(self.radius * 1.2, 0, 0))
-		self:StartIntervalThink(self.tick)
-		self.caster:EmitSound("Hero_Juggernaut.BladeFuryStart")
-		StartAnimation(self.caster, {activity = ACT_DOTA_OVERRIDE_ABILITY_1, rate = 1.0})
+		if self.caster:IsAlive() then
+			self.blade_fury_spin_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_juggernaut/juggernaut_blade_fury.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.caster)
+			ParticleManager:SetParticleControl(self.blade_fury_spin_pfx, 5, Vector(self.radius * 1.2, 0, 0))
+			self:StartIntervalThink(self.tick)
+			self.caster:EmitSound("Hero_Juggernaut.BladeFuryStart")
+			StartAnimation(self.caster, {activity = ACT_DOTA_OVERRIDE_ABILITY_1, rate = 1.0})
+		end
 	end
 end
 
@@ -102,9 +104,11 @@ function modifier_imba_juggernaut_blade_fury:OnRemoved()
 		else
 			EndAnimation(self.caster)
 		end
-		ParticleManager:DestroyParticle(self.blade_fury_spin_pfx, false)
-		ParticleManager:ReleaseParticleIndex(self.blade_fury_spin_pfx)
-		self.blade_fury_spin_pfx = nil
+		if self.blade_fury_spin_pfx then
+			ParticleManager:DestroyParticle(self.blade_fury_spin_pfx, false)
+			ParticleManager:ReleaseParticleIndex(self.blade_fury_spin_pfx)
+			self.blade_fury_spin_pfx = nil
+		end
 	end
 end
 
