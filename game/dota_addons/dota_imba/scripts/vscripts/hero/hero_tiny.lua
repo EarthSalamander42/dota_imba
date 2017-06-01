@@ -473,6 +473,9 @@ function modifier_tiny_toss_movement:TossLand()
 		end
 
 		self:GetParent():SetUnitOnClearGround()
+		Timers:CreateTimer(FrameTime(), function()
+			ResolveNPCPositions(self:GetParent():GetAbsOrigin(), 150)
+		end)		
 	end
 end
 

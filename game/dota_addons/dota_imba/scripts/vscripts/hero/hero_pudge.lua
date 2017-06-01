@@ -420,8 +420,7 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData( hTarget, vLocation,keys
 			local hHook = self:GetCaster():GetTogglableWearable( DOTA_LOADOUT_TYPE_WEAPON )
 			if hHook ~= nil then
 				hHook:RemoveEffects( EF_NODRAW )								
-			end
-			print("disabling!")
+			end			
 			StopSoundOn( "Hero_Pudge.AttackHookRetract", self:GetCaster())
 			StopSoundOn( "Hero_Pudge.AttackHookExtend", self:GetCaster())
 			StopSoundOn( "Hero_Pudge.AttackHookRetractStop", self:GetCaster() )			
