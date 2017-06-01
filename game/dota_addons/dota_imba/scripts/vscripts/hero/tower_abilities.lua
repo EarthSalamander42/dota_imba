@@ -361,7 +361,6 @@ function GrievousWounds( keys )
 	AddStacks(ability, caster, target, modifier_debuff, 1, true)
 end
 
-
 -- Tier 1 to 3 tower aura abilities
 -- Author: Shush
 -- Date: 8/2/2017
@@ -4430,5 +4429,17 @@ end
 function modifier_tower_healing_think:IsPurgable()
 	return false
 end
+
+
+
+
+
+
+
+
+
+
+
+
 
 

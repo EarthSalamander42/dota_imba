@@ -141,18 +141,18 @@ function modifier_imba_angelic_alliance_passive_effect:OnAttackLanded( keys )
 		
 		if caster:HasModifier("modifier_imba_angelic_alliance_debuff_caster") then return nil end
 
-		-- Don't disarm towers
-		if attacker:IsBuilding() or target:IsBuilding() then
+		-- If the attacker is a building, do nothing
+		if attacker:IsBuilding() then
 			return nil
 		end
 		
-		if caster == target and RollPercentage(chance) then				-- Disarm attacker when the wielder is the one getting hit
+		if caster == target and RollPercentage(chance) then				-- Disarm attacker when the weilder is the one getting hit
 			if attacker:IsMagicImmune() then return end
 			if attacker:HasModifier("modifier_imba_angelic_alliance_passive_disarm") or attacker:HasModifier("modifier_imba_angelic_alliance_passive_disarm_cooldown") then return end
 			attacker:AddNewModifier(caster, ability, "modifier_imba_angelic_alliance_passive_disarm", {duration = duration})
 			attacker:EmitSound("DOTA_Item.HeavensHalberd.Activate")
 		
-		elseif caster == attacker and RollPercentage(chance) then			-- Disarm target when the wielder is the one hitting
+		elseif caster == attacker and RollPercentage(chance) then			-- Disarm target when the weilder is the one hitting
 			if target:IsMagicImmune() then return end
 			if target:HasModifier("modifier_imba_angelic_alliance_passive_disarm") or target:HasModifier("modifier_imba_angelic_alliance_passive_disarm_cooldown") then return end
 			target:AddNewModifier(caster, ability, "modifier_imba_angelic_alliance_passive_disarm", {duration = duration})
@@ -350,8 +350,6 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_imba_angelic_alliance_passive_disarm == nil then modifier_imba_angelic_alliance_passive_disarm = class({}) end
-
-
 function modifier_imba_angelic_alliance_passive_disarm:IsHidden() return false end
 function modifier_imba_angelic_alliance_passive_disarm:IsDebuff() return true end
 function modifier_imba_angelic_alliance_passive_disarm:IsPurgable() return false end
@@ -373,7 +371,6 @@ function modifier_imba_angelic_alliance_passive_disarm:OnDestroy( keys )
 		local caster = self:GetCaster()
 		local ability = self:GetAbility()
 		local duration = ability:GetSpecialValueFor("passive_disarm_cooldown")
-	
 		target:AddNewModifier(caster, ability, "modifier_imba_angelic_alliance_passive_disarm_cooldown", {duration = duration})
 	end
 end

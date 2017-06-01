@@ -77,7 +77,6 @@ function modifier_imba_rancor:IsStunDebuff() return false end
 
 function modifier_imba_rancor:OnCreated()
 	self.dmg_received_pct = self.dmg_received_pct or 0
-	self.max_stacks = self:GetAbility():GetSpecialValueFor("max_stacks")
 end
 
 function modifier_imba_rancor:DeclareFunctions()
@@ -106,7 +105,7 @@ function modifier_imba_rancor:OnTakeDamage( params )
 					if parent:HasModifier("modifier_imba_rancor_stack") then
 						local modifier = parent:FindModifierByName("modifier_imba_rancor_stack")
 						-- Adding a limit to prevent possible exploits
-						if modifier:GetStackCount() < self.max_stacks then
+						if modifier:GetStackCount() < 200 then
 							modifier:IncrementStackCount()
 						end
 					else
@@ -160,7 +159,7 @@ function modifier_imba_rancor_stack:DeclareFunctions()
 	local decFuncs = 
 	{
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
-		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE
+		MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE
 	}
 	return decFuncs
 end
@@ -169,7 +168,7 @@ function modifier_imba_rancor_stack:GetModifierSpellAmplify_Percentage()
 	return (self:GetAbility():GetSpecialValueFor("spell_power") * self:GetStackCount())
 end
 
-function modifier_imba_rancor_stack:GetModifierPreAttack_BonusDamage()
+function modifier_imba_rancor_stack:GetModifierBaseDamageOutgoing_Percentage()
 	return (self:GetAbility():GetSpecialValueFor("damage_pct") * self:GetStackCount())
 end
 

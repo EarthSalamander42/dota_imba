@@ -775,8 +775,8 @@ function modifier_imba_tiny_craggy_exterior_passive:OnAttackLanded(params)
 		if params.target == self:GetParent() then
 			local caster = self:GetCaster()
 
-			if caster:PassivesDisabled() or                                              -- if Tiny is broken, do nothing.
-			params.attacker:IsBuilding() or	params.attacker:IsMagicImmune() then         -- if the guy attacking Tiny is a tower or spell immune, do nothing.
+			-- If the caster is broken, do nothing
+			if caster:PassivesDisabled() then
 				return nil
 			end
 
@@ -810,7 +810,11 @@ function modifier_imba_tiny_craggy_exterior_passive:OnAttackLanded(params)
 			end
 
 			-- Bluntstone
-			
+			-- If it is a tower, do nothing
+			if params.attacker:IsBuilding() then
+				return nil
+			end
+
 			if not params.attacker:HasModifier("modifier_craggy_exterior_blunt") then
 				params.attacker:AddNewModifier(caster, self:GetAbility(), "modifier_craggy_exterior_blunt", {duration = self.reduction_duration})
 			end
