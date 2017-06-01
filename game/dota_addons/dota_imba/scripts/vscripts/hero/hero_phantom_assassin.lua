@@ -521,8 +521,7 @@ function modifier_imba_phantom_strike_coup_de_grace:OnAttackLanded(keys)
 	if owner ~= keys.attacker then
 		return end
 
-	if stackcount == 1 then
-		print()
+	if stackcount == 1 then		
 		self:Destroy()
 		if caster:HasModifier(modifier_speed) then
 			caster:RemoveModifierByName(modifier_speed)
@@ -670,8 +669,7 @@ function modifier_imba_blur_speed:OnCreated()
 
         -- Ability specials
         self.speed_bonus_duration = self.ability:GetSpecialValueFor("speed_bonus_duration")
-        self.blur_ms = self.ability:GetSpecialValueFor("blur_ms")
-        print(self.blur_ms)
+        self.blur_ms = self.ability:GetSpecialValueFor("blur_ms")        
 
     if IsServer() then
 

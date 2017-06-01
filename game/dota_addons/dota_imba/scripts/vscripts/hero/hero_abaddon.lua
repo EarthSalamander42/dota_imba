@@ -10,8 +10,7 @@ function getCurseOfAvernusDummyReference()
 	if IsServer() and _curse_of_avernus_reference == nil then
 		local abaddon_dummy = CreateUnitByName('npc_dummy_unit', Vector(0,0,0), false, nil, nil, DOTA_TEAM_NOTEAM )
 		_curse_of_avernus_reference = abaddon_dummy:AddAbility("imba_abaddon_curse_of_avernus")
-		_curse_of_avernus_reference:SetLevel(1)
-		print("created dummy for curse of avernus reference")
+		_curse_of_avernus_reference:SetLevel(1)		
 	end
 
 	return _curse_of_avernus_reference

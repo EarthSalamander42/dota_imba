@@ -347,8 +347,7 @@ function ApplyShadowRazeDamage(caster, ability, enemy)
     local souls_per_raze = ability:GetSpecialValueFor("souls_per_raze")
     local soul_projectile_speed = ability:GetSpecialValueFor("soul_projectile_speed")
 
-    -- If the caster has Necromastery souls, increase the damage of Shadowraze and steal a soul
-    print(caster:HasModifier(modifier_souls))
+    -- If the caster has Necromastery souls, increase the damage of Shadowraze and steal a soul    
     if caster:HasModifier(modifier_souls) then
         local stacks = caster:GetModifierStackCount(modifier_souls, caster)
 
@@ -397,8 +396,7 @@ function ApplyShadowRazeDamage(caster, ability, enemy)
                         ability = ability
                         }
 
-    local actualy_damage = ApplyDamage(damageTable)
-    print(actualy_damage)
+    local actualy_damage = ApplyDamage(damageTable)    
     -- Apply a shadow combo modifier to enemy if it doesn't have it. Regardless, add a stack and refresh
     if not enemy:HasModifier(modifier_combo) then
         enemy:AddNewModifier(caster, ability, modifier_combo, {duration = shadow_combo_duration})

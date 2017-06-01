@@ -239,8 +239,7 @@ function item_imba_blink_boots:OnSpellStart()
 	
 	local target_point
 	if self:GetCursorTargetingNothing() then
-		target_point = self:GetCursorPosition()
-		print("a")
+		target_point = self:GetCursorPosition()		
 	else
 		local target = self:GetCursorTarget()
 		

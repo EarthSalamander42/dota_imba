@@ -149,8 +149,7 @@ function modifier_imba_earthshock_slow:OnCreated()
 		self.earthshock_debuff_slow_pct = self.slow_pct + self.bonus_slow_pct					
 	else
 		self.scale_increase_for_distance =  math.floor(self.edge_distance / self.values_increase_distance) --how much it should scale
-		self.pct_increase_for_distance =  self.values_increase_pct * self.scale_increase_for_distance -- how many percents the scale should go up		
-		print(self.pct_increase_for_distance)
+		self.pct_increase_for_distance =  self.values_increase_pct * self.scale_increase_for_distance -- how many percents the scale should go up				
 		self.earthshock_debuff_slow_pct = self.slow_pct * (1 + self.pct_increase_for_distance) -- final slow value													
 	end	
 end
@@ -845,8 +844,7 @@ function modifier_imba_enrage_buff:OnIntervalThink()
 		-- Find current CD of skills, lower it if above reduction, else refresh	it	
 		if ability_earthshock then
 			local ability_earthshock_cd = ability_earthshock:GetCooldownTimeRemaining()
-			ability_earthshock:EndCooldown()		
-			print("earthshock", ability_earthshock_cd, (ability_earthshock_cd - reduce_cd_amount))
+			ability_earthshock:EndCooldown()					
 			if ability_earthshock_cd > reduce_cd_amount then		
 				ability_earthshock:StartCooldown(ability_earthshock_cd - reduce_cd_amount)	
 			end
