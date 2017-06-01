@@ -140,21 +140,23 @@ function modifier_imba_angelic_alliance_passive_effect:OnAttackLanded( keys )
 		local duration = ability:GetSpecialValueFor("passive_disarm_duration")
 		
 		if caster:HasModifier("modifier_imba_angelic_alliance_debuff_caster") then return nil end
-
+		-- Proc once every 6 seconds, regardless of if it's us attacking or being attacked
+		if caster:HasModifier("modifier_imba_angelic_alliance_passive_disarm_cooldown") then return nil end
 		-- Don't disarm towers
 		if attacker:IsBuilding() or target:IsBuilding() then
 			return nil
 		end
 		
+
 		if caster == target and RollPercentage(chance) then				-- Disarm attacker when the wielder is the one getting hit
 			if attacker:IsMagicImmune() then return end
-			if attacker:HasModifier("modifier_imba_angelic_alliance_passive_disarm") or attacker:HasModifier("modifier_imba_angelic_alliance_passive_disarm_cooldown") then return end
+			if attacker:HasModifier("modifier_imba_angelic_alliance_passive_disarm") then return end
 			attacker:AddNewModifier(caster, ability, "modifier_imba_angelic_alliance_passive_disarm", {duration = duration})
 			attacker:EmitSound("DOTA_Item.HeavensHalberd.Activate")
 		
 		elseif caster == attacker and RollPercentage(chance) then			-- Disarm target when the wielder is the one hitting
 			if target:IsMagicImmune() then return end
-			if target:HasModifier("modifier_imba_angelic_alliance_passive_disarm") or target:HasModifier("modifier_imba_angelic_alliance_passive_disarm_cooldown") then return end
+			if target:HasModifier("modifier_imba_angelic_alliance_passive_disarm") then return end
 			target:AddNewModifier(caster, ability, "modifier_imba_angelic_alliance_passive_disarm", {duration = duration})
 			target:EmitSound("DOTA_Item.HeavensHalberd.Activate")
 		end
@@ -367,14 +369,14 @@ function modifier_imba_angelic_alliance_passive_disarm:CheckState()
 	return mods
 end
 
-function modifier_imba_angelic_alliance_passive_disarm:OnDestroy( keys )
+function modifier_imba_angelic_alliance_passive_disarm:OnCreated( keys )
 	if IsServer() then
 		local target = self:GetParent()
 		local caster = self:GetCaster()
 		local ability = self:GetAbility()
 		local duration = ability:GetSpecialValueFor("passive_disarm_cooldown")
 	
-		target:AddNewModifier(caster, ability, "modifier_imba_angelic_alliance_passive_disarm_cooldown", {duration = duration})
+		caster:AddNewModifier(caster, ability, "modifier_imba_angelic_alliance_passive_disarm_cooldown", {duration = duration})
 	end
 end
 
@@ -383,6 +385,7 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_imba_angelic_alliance_passive_disarm_cooldown == nil then modifier_imba_angelic_alliance_passive_disarm_cooldown = class({}) end
-function modifier_imba_angelic_alliance_passive_disarm_cooldown:IsHidden() return true end
+function modifier_imba_angelic_alliance_passive_disarm_cooldown:IsHidden() return false end
 function modifier_imba_angelic_alliance_passive_disarm_cooldown:IsDebuff() return true end
 function modifier_imba_angelic_alliance_passive_disarm_cooldown:IsPurgable() return false end
+function modifier_imba_angelic_alliance_passive_disarm_cooldown:GetTexture() return "custom/imba_angelic_alliance" end
