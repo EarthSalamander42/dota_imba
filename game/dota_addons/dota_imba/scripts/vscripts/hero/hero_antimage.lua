@@ -517,7 +517,7 @@ function imba_antimage_mana_void:OnSpellStart()
 		local target = self:GetCursorTarget()
 		local ability = self
 		local scepter = caster:HasScepter()
-		local modifier_ministun = "modifier_mana_void_stunned"
+		local modifier_ministun = "modifier_imba_mana_void_stunned"
 		
 		-- Parameters
 		local damage_per_mana = ability:GetSpecialValueFor("mana_void_damage_per_mana")
@@ -572,19 +572,19 @@ end
 
 -------------------------------------------
 -- Stun modifier
-modifier_mana_void_stunned = modifier_mana_void_stunned or class({})
-function modifier_mana_void_stunned:CheckState()
+modifier_imba_mana_void_stunned = modifier_imba_mana_void_stunned or class({})
+function modifier_imba_mana_void_stunned:CheckState()
 	local state =
 		{[MODIFIER_STATE_STUNNED] = true}
 	return state	
 end
 
-function modifier_mana_void_stunned:IsPurgable() return false end
-function modifier_mana_void_stunned:IsPurgeException() return true end
-function modifier_mana_void_stunned:IsStunDebuff() return true end
-function modifier_mana_void_stunned:IsHidden() return false end
-function modifier_mana_void_stunned:GetEffectName() return "particles/generic_gameplay/generic_stunned.vpcf" end
-function modifier_mana_void_stunned:GetEffectAttachType() return PATTACH_OVERHEAD_FOLLOW end
+function modifier_imba_mana_void_stunned:IsPurgable() return false end
+function modifier_imba_mana_void_stunned:IsPurgeException() return true end
+function modifier_imba_mana_void_stunned:IsStunDebuff() return true end
+function modifier_imba_mana_void_stunned:IsHidden() return false end
+function modifier_imba_mana_void_stunned:GetEffectName() return "particles/generic_gameplay/generic_stunned.vpcf" end
+function modifier_imba_mana_void_stunned:GetEffectAttachType() return PATTACH_OVERHEAD_FOLLOW end
 -------------------------------------------
 for LinkedModifier, MotionController in pairs(LinkedModifiers) do
 	LinkLuaModifier(LinkedModifier, "hero/hero_antimage", MotionController)
