@@ -2062,7 +2062,7 @@ function modifier_imba_tower_plague_aura:OnCreated()
 		-- Apply particles
 		self.particle_rot_fx = ParticleManager:CreateParticle(self.particle_rot, PATTACH_ABSORIGIN, self.caster)
 		ParticleManager:SetParticleControl(self.particle_rot_fx, 0, self.caster:GetAbsOrigin())
-		ParticleManager:SetParticleControl(self.particle_rot_fx, 1, Vector(self.aura_radius, 1, 1))
+		ParticleManager:SetParticleControl(self.particle_rot_fx, 3, self.caster:GetAbsOrigin())
 		self:AddParticle(self.particle_rot_fx, false, false, -1, false, false)
 	end
 end

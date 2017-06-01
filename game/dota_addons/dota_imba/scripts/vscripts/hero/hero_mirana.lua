@@ -445,7 +445,7 @@ function imba_mirana_arrow:OnProjectileHit_ExtraData(target, location, extra_dat
     local distance_tick = ability:GetSpecialValueFor("distance_tick")
     local stun_increase_per_tick = ability:GetSpecialValueFor("stun_increase_per_tick")
     local damage_increase_per_tick = ability:GetSpecialValueFor("damage_increase_per_tick")
-    local max_damage = ability:GetSpecialValueFor("max_damage")
+    local max_bonus_damage = ability:GetSpecialValueFor("max_bonus_damage")
     local max_stun_duration = ability:GetSpecialValueFor("max_stun_duration")
     local base_stun = ability:GetSpecialValueFor("base_stun")
     local vision_radius = ability:GetSpecialValueFor("vision_radius")
@@ -488,12 +488,7 @@ function imba_mirana_arrow:OnProjectileHit_ExtraData(target, location, extra_dat
     local distance = (target:GetAbsOrigin() - cast_location):Length2D()
 
     -- Calculate damage
-    local damage = base_damage + (distance / distance_tick * damage_increase_per_tick)
-
-    -- Cannot exceed max damage
-    if damage > max_damage then
-        damage = max_damage
-    end
+    local damage = base_damage + (distance / distance_tick * damage_increase_per_tick)    
 
     -- Apply damage
     local damageTable = {victim = target,

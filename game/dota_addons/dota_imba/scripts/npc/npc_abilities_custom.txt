@@ -13869,7 +13869,7 @@
 			"06"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"max_damage"						"140"
+				"max_bonus_damage"					"140"
 			}
 			"07"
 			{
