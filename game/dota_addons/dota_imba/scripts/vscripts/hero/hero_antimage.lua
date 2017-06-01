@@ -297,14 +297,20 @@ end
 local function SpellReflect(parent, params)
 	-- If some spells shouldn't be reflected, enter it into this spell-list
 	local exception_spell = 
-	{
+	{		
 		["rubick_spell_steal"] = true,
 	}
 		
 	local reflected_spell_name = params.ability:GetAbilityName()
 	local target = params.ability:GetCaster()
 		
-	if ( not exception_spell[reflected_spell_name] ) and (not target:HasModifier("modifier_imba_spell_shield_buff_reflect") ) then
+	if ( not exception_spell[reflected_spell_name] ) and (not target:HasModifier("modifier_imba_spell_shield_buff_reflect")) then
+
+		-- If this is a reflected ability, do nothing
+		if params.ability.spell_shield_reflect then
+			return nil
+		end
+
 		local ability
 			
 		local reflect_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_antimage/antimage_spellshield_reflect.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, parent)
@@ -324,6 +330,9 @@ local function SpellReflect(parent, params)
 			ability = parent:AddAbility(reflected_spell_name)
 			ability:SetStolen(true)
 			ability:SetHidden(true)
+
+			-- Tag ability as a reflection ability
+			ability.spell_shield_reflect = true
 				
 			-- Modifier counter, and add it into the old-spell list
 			ability:SetRefCountsModifiers(true)
