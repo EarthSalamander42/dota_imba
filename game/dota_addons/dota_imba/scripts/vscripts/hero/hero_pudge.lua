@@ -438,7 +438,7 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData( hTarget, vLocation,keys
 	-- Here the hook always moves forward. The impact is handled here.
 	if hTarget  then
 		EmitSoundOn( "Hero_Pudge.AttackHookImpact", hTarget )
-		hTarget:AddNewModifier( self:GetCaster(), self, "modifier_meat_hook", {} )
+		hTarget:AddNewModifier( self:GetCaster(), self, "modifier_meat_hook", {duration = 1.5} )
 		if not self.targets[hTarget] then
 			if hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
 			
