@@ -96,7 +96,7 @@
 	{
 		"item"		"item_iron_talon"
 		"item"		"item_ring_of_basilius"
-		"item"		"item_urn_of_shadows"
+		"item"		"item_imba_urn_of_shadows"
 		"item"		"item_headdress"
 		"item"		"item_buckler"
 		"item"		"item_ring_of_aquila"
@@ -136,6 +136,7 @@
 		"item"		"item_imba_vanguard"
 		"item"		"item_blade_mail"
 		"item"		"item_black_king_bar"
+		"item"		"item_imba_black_queen_cape"
 		"item"		"item_imba_assault"
 		"item"		"item_hurricane_pike"
 		"item"		"item_imba_shivas_guard"

@@ -95,8 +95,8 @@
 	//"item_ring_of_basilius"			"REMOVE"
 	//"item_recipe_pipe"				"REMOVE"
 	//"item_pipe"						"REMOVE"
-	//"item_recipe_urn_of_shadows"	"REMOVE"
-	//"item_urn_of_shadows"			"REMOVE"
+	"item_recipe_urn_of_shadows"	"REMOVE"
+	"item_urn_of_shadows"			"REMOVE"
 	//"item_recipe_headdress"			"REMOVE"
 	//"item_headdress"				"REMOVE"
 	"item_recipe_sheepstick"		"REMOVE"
@@ -1074,22 +1074,6 @@
 	"item_buckler"
 	{
 		"ItemCost"						"750"
-	}
-
-	//=================================================================================================================
-	// Recipe: Urn of Shadows
-	//=================================================================================================================
-	"item_recipe_urn_of_shadows"
-	{
-		"ItemCost"						"110"
-	}
-
-	//=================================================================================================================
-	// Urn of Shadows
-	//=================================================================================================================
-	"item_urn_of_shadows"
-	{
-		"ItemCost"						"675"
 	}
 
 	//=================================================================================================================
