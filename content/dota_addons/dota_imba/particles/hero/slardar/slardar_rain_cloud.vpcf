@@ -2,7 +2,7 @@
 {
 	_class = "CParticleSystemDefinition"
 	m_bShouldHitboxesFallbackToRenderBounds = false
-	m_nMaxParticles = 128
+	m_nMaxParticles = 48
 	m_nConstantSequenceNumber = 34
 	m_nConstantSequenceNumber1 = 50
 	m_flMaxDrawDistance = 10000.0
@@ -66,8 +66,8 @@
 		},
 		{
 			_class = "C_INIT_RandomLifeTime"
-			m_fLifetimeMin = 1.5
-			m_fLifetimeMax = 2.0
+			m_fLifetimeMin = 0.5
+			m_fLifetimeMax = 1.5
 		},
 		{
 			_class = "C_INIT_RandomRadius"
@@ -130,6 +130,28 @@
 		},
 		{
 			m_ChildRef = resource:"particles/hero/slardar/slardar_rain_cloud_puddle.vpcf"
+		},
+	]
+	m_controlPointConfigurations = 
+	[
+		{
+			m_name = "preview"
+			m_drivers = 
+			[
+				{
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ null, null, null ]
+					m_entityName = "self"
+				},
+				{
+					m_iControlPoint = 1
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ null, null, null ]
+					m_entityName = "self"
+				},
+			]
 		},
 	]
 }

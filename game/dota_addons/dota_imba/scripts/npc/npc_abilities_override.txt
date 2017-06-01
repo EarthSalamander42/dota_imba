@@ -12322,7 +12322,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cloud_duration"		"35"
+				"cloud_duration"		"40"
 			}
 			"02"
 			{
@@ -12332,7 +12332,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cloud_radius"			"700"
+				"cloud_radius"			"500"
 			}
 		}
 	}
@@ -12990,7 +12990,7 @@
 			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"focusfire_damage_reduction_scepter"	"-30 -15 0 0 0 0"
+				"focusfire_damage_reduction_scepter"	"0 0 0 0 0 0"
 			}			
 		}
 	}

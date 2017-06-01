@@ -6,6 +6,11 @@ function GrievousWounds( keys )
     local modifier_debuff = keys.modifier_debuff
     local particle_hit = keys.particle_hit
 
+    -- Don't apply if the target is dead
+    if not target:IsAlive() then
+      return nil
+    end
+
     -- Parameters
     local damage_increase = ability:GetLevelSpecialValueFor("damage_increase", ability_level)
 

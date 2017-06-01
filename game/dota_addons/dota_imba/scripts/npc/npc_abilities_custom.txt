@@ -525,7 +525,7 @@
 				"Passive"						"0"
 				"IsHidden"						"0"
 				"IsDebuff"						"1"
-				"IsPurgable"					"0"
+				"IsPurgable"					"1"
 
 				"Duration"						"%debuff_duration"
 
