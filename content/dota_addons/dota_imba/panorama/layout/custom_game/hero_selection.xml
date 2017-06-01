@@ -331,10 +331,7 @@
 									onactivate="SelectHero('npc_dota_hero_vengefulspirit')" 
 									style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_vengefulspirit.png');" />
 							</Panel>
-							<Panel class="ClassOptionRow">
-								<Panel id="npc_dota_hero_vengefulspirit" class="ClassImbaOption" 
-									onactivate="SelectHero('npc_dota_hero_vengefulspirit')" 
-									style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_vengefulspirit.png');" />
+							<Panel class="ClassOptionRow">								
 								<Panel id="npc_dota_hero_venomancer" class="ClassImbaOption" 
 									onactivate="SelectHero('npc_dota_hero_venomancer')" 
 									style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_venomancer.png');" />
