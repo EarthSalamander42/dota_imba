@@ -758,7 +758,7 @@ function imba_necrolyte_reapers_scythe:IsHiddenWhenStolen()
 end
 
 modifier_imba_reapers_scythe = modifier_imba_reapers_scythe or class({})
-
+function modifier_imba_reapers_scythe:IgnoreTenacity() return true end
 function modifier_imba_reapers_scythe:OnCreated( params )
 	if IsServer() then
 		local caster = self:GetCaster()

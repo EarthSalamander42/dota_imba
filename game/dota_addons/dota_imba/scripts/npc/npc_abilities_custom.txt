@@ -16883,6 +16883,8 @@
 		"AbilityTextureName"			"pudge_meat_hook"
 		"MaxLevel"						"7"
 		"ScriptFile"					"hero/hero_pudge.lua"
+		"HasScepterUpgrade"				"1"
+		
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -16907,8 +16909,7 @@
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
 			"particle"					"particles/units/heroes/hero_pudge/pudge_meathook_chain.vpcf"
-			"particle"					"particles/units/heroes/hero_pudge/pudge_meathook_impact.vpcf"
-			
+			"particle"					"particles/units/heroes/hero_pudge/pudge_meathook_impact.vpcf"			
 		}
 
 		// Special
@@ -16966,7 +16967,7 @@
 			"11"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"cooldown_scepter"		"4"
+				"scepter_cooldown"		"4"
 			}
 			"12"
 			{
@@ -24348,7 +24349,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"spell_power"				"0.5"
+				"spell_power"				"1"
 			}
 
 			"04"
@@ -24573,7 +24574,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"spell_power"				"1"
+				"spell_power"				"5"
 			}
 		}
 	}

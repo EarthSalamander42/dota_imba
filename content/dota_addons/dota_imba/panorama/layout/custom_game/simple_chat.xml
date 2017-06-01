@@ -1,0 +1,97 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/custom_game/simple_chat.css" />
+		<include src="file://{resources}/styles/custom_game/util.css" />
+	</styles>
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/simple_chat.js" />
+	</scripts>
+	<script>
+
+		$("#ChatTarget").text = $.Localize("#ChatTeam");
+
+		function SubmitChat() {
+			GameEvents.SendCustomGameEventToServer("custom_chat_say", { message: $("#ChatEntry").text, team: !$("#ChatEntry").shiftHeld });
+
+			$("#ChatEntry").text = "";
+		}
+
+		function AddChatLine(token, vars, team, wasTopPlayer, system) {
+			$.Msg("CHAT: AddChatLine check.")
+			var lineParent = $.CreatePanel("Panel", $("#ChatContent"), "");
+			lineParent.AddClass("ChatLine");
+			lineParent.AddClass("ChatLineAppear");
+
+			if (wasTopPlayer) {
+				var trophy = $.CreatePanel("Panel", lineParent, "");
+
+				trophy.AddClass("TopPlayerIcon");
+				trophy.AddClass("ChatIcon");
+			}
+
+			var last = $("#ChatContent").GetChild(0);
+			var line = $.CreatePanel("Label", lineParent, "");
+
+			for (key in vars) {
+				line.SetDialogVariable(key, vars[key]);
+			}
+
+			line.html = true;
+			line.text = (system ? ($.Localize("#System") + " ") : "") + (team ? ($.Localize("#ChatTeam") + " ") : "") + $.Localize(token, line);
+			line.AddClass("ChatLineText");
+
+			if (last != null) {
+				$("#ChatContent").MoveChildBefore(lineParent, last);
+			}
+		}
+
+		function OnRandomedMessage(args) {
+			AddChatLine("#ChatRandomed", {
+				name: EscapeHtml(Players.GetPlayerName(args.player)),
+				color: LuaColor(args.color),
+				hero: args.hero ? $.Localize(args.name) : $.Localize("HeroName_None")
+			}, args.team, args.wasTopPlayer);
+		}
+
+		function OnChatSay(args) {
+			$.Msg("CHAT: Sending Custom Chat Message")
+			AddChatLine(args.hasPass ? "#ChatLinePass" : "#ChatLine", {
+				name: EscapeHtml(Players.GetPlayerName(args.player)),
+				color:  LuaColor(args.color),
+				message: InsertEmotes(args.message, args.wasTopPlayer)
+			}, args.team, args.wasTopPlayer);
+		}
+
+		function OnSystemMessage(args) {
+			for (var key in args.vars) {
+				if (key === "player") {
+					args.vars[key] = EscapeHtml(Players.GetPlayerName(args.vars[key]))
+				}
+
+				if (key === "color") {
+					args.vars[key] = LuaColor(args.vars[key])
+				}
+			}
+			
+			AddChatLine(args.token, args.vars, false, false, true);
+		}
+
+		GameEvents.Subscribe("custom_chat_say", OnChatSay);
+		GameEvents.Subscribe("custom_randomed_message", OnRandomedMessage);
+		GameEvents.Subscribe("custom_system_message", OnSystemMessage);
+		GameEvents.Subscribe("custom_chat_wheel", function(args) {
+			AddChatLine("#ChatLine", {
+				name: args.playerName,
+				color:  args.color,
+				message: InsertEmotes(args.message, false, true)
+			}, args.team);
+		});
+	</script>
+	<Panel class="Chat" hittest="false">
+		<Panel id="ChatContent" hittest="false">
+		</Panel>
+		<TextEntry id="ChatEntry" multiline="false" textmode="normal" oninputsubmit="SubmitChat()" oncancel="DropInputFocus()" maxchars="256" placeholder="#ChatPlaceholder">
+			<Label id="ChatTarget" />
+		</TextEntry>
+	</Panel>
+</root>

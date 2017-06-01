@@ -11700,5 +11700,254 @@
 		}
 	}
 
-	//next free ID: 2239
+	//=================================================================================================================
+	// Recipe: Urn of Shadows
+	//=================================================================================================================
+	"item_recipe_imba_urn_of_shadows"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2239"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+		"Model"							"models/props_gameplay/recipe.mdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"310"
+		"ItemShopTags"					""
+
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_urn_of_shadows"
+		"ItemRequirements"
+		{
+			"01"						"item_infused_raindrop;item_circlet;item_ring_of_protection"
+		}
+	}
+
+	//=================================================================================================================
+	// Urn of Shadows
+	//=================================================================================================================
+	"item_imba_urn_of_shadows"
+	{
+		"ID"							"2240"
+		"BaseClass"						"item_lua"
+		"AbilityTextureName"			"item_urn_of_shadows"
+		"ScriptFile"					"items/item_urn_of_shadows.lua"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost" 						"775"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemShopTags"					"agi;int;str;armor;boost_health;mana_regen"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"urn"
+		"ItemInitialCharges"            "0"
+        "ItemPermanent"                 "1"
+        "ItemRequiresCharges"           "1"
+        "ItemDisplayCharges"            "1"
+		"SideShop" 						"0"
+		"SecretShop" 					"0"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityCastRange"				"950"
+		"AbilityCooldown"				"7"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"						"particles/items2_fx/urn_of_shadows.vpcf"
+			"particle"						"particles/items2_fx/urn_of_shadows_damage.vpcf"
+			"particle"						"particles/items2_fx/urn_of_shadows_heal.vpcf"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_strength"				"2"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_agility"					"2"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_intelligence"			"2"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"bonus_armor"					"2.0"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"bonus_mana_regen"				"1.0"
+			}
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"soultrap_range"				"1400"
+			}
+			"08"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage"						"150"
+				"CalculateSpellDamageTooltip"	"0"
+			}
+			"09"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"heal"							"400"
+				"CalculateSpellDamageTooltip"	"0"
+			}
+			"10"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"duration"						"8"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Recipe: Black Queen's Cape
+	//=================================================================================================================
+	"item_recipe_imba_black_queen_cape"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2241"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+		"Model"							"models/props_gameplay/recipe.mdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"800"
+		"ItemShopTags"					""
+
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_black_queen_cape"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_white_queen_cape;item_ring_of_health;item_imba_urn_of_shadows"
+		}
+	}
+
+	//=================================================================================================================
+	// Black Queen's Cape
+	//=================================================================================================================
+	"item_imba_black_queen_cape"
+	{
+		"ID"							"2242"
+		"BaseClass"						"item_lua"
+		"AbilityTextureName"			"custom/imba_black_queen_cape"
+		"ScriptFile"					"items/item_black_queen_cape.lua"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost" 						"3800"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemShopTags"					"agi;int;str;armor;boost_health;mana_regen"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"urn;bkb"
+		"ItemInitialCharges"            "0"
+        "ItemPermanent"                 "1"
+        "ItemRequiresCharges"           "0"
+        "ItemDisplayCharges"            "1"
+		"SideShop" 						"0"
+		"SecretShop" 					"0"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityCastRange"				"950"
+		"AbilityCooldown"				"22"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"						"particles/items2_fx/urn_of_shadows.vpcf"
+			"particle"						"particles/items2_fx/urn_of_shadows_heal.vpcf"
+			"particle"						"particles/item/black_queen_cape/black_king_bar_avatar.vpcf"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_strength"				"9"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_agility"					"3"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_intelligence"			"3"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_armor"					"3"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"bonus_mana_regen"				"1.25"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_damage"					"10"
+			}
+			"07"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"bonus_health_regen"			"8.0"
+			}
+			"08"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"heal"							"600"
+				"CalculateSpellDamageTooltip"	"0"
+			}
+			"09"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"heal_duration"					"6"
+			}
+			"10"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"bkb_duration"					"3.5"
+			}
+			"11"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"soultrap_range"				"1400"
+			}
+		}
+	}
+
+	//next free ID: 2243
 }

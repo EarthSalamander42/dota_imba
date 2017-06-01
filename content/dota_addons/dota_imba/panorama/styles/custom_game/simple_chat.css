@@ -1,0 +1,84 @@
+.Chat
+{
+    flow-children: down;
+}
+
+#ChatContent
+{
+    width: 100%;
+    height: fill-parent-flow(1.0);
+    flow-children: down;
+    padding: 10px;
+    overflow: squish clip;
+    vertical-align: bottom;
+    transform: scaleY(-1.0);
+    margin-bottom: 32px;
+}
+
+#ChatEntry
+{
+    border: 0px solid yellow;
+    width: 100%;
+    height: 32px;
+    background-color: rgba(0, 0, 0, 0.88);
+    font-size: 16px;
+    padding: 6px 3px 5px 3px;
+    color: #9C9383;
+    font-family: Radiance,FZLanTingHei-R-GBK,TH Sarabun New,YDYGO 540,Gulim,MingLiU;
+    text-overflow: clip;
+    border-radius: 3px;
+}
+
+#ChatTarget
+{
+    horizontal-align: right;
+    margin-right: 8px;
+    color: #BBBBBB;
+}
+
+.ChatIcon
+{
+    margin-right: 5px;
+    vertical-align: bottom;
+}
+
+.ChatLine
+{
+    flow-children: right;
+    transition-property: transform, position;
+    transition-duration: 0.2s;
+    transform: translateX(-100%) scaleY(-1.0);
+}
+
+.ChatLine .ChatWheelIcon
+{
+    width: 20px;
+    height: 16px !important;
+    margin-top: 3px;
+    margin-bottom: -3px;
+    vertical-align: top;
+}
+
+.ChatLineText
+{
+    font-family: Radiance,FZLanTingHei-R-GBK,TH Sarabun New,YDYGO 540,Gulim,MingLiU;
+    color: white;
+    font-size: 15px;
+    vertical-align: center;
+}
+
+.ChatLineAppear
+{
+    transform: translateX(0px) scaleY(-1.0);
+}
+
+#ChatEntry #PlaceholderText {
+    transition-property: opacity;
+    transition-duration: 0.2s;
+    font-size: 17px;
+    color: #555555;
+}
+
+#ChatEntry:focus #PlaceholderText {
+    opacity: 0.0;
+}

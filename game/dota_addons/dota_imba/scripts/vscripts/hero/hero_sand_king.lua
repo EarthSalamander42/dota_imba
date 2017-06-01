@@ -699,10 +699,15 @@ function modifier_imba_caustic_finale_trigger:OnTakeDamage(keys)
         local ability = keys.inflictor        
 
         -- Only apply if the caster has the talent
-        if self.caster:HasTalent("special_bonus_imba_sand_king_8") then
+        if self.caster:HasTalent("special_bonus_imba_sand_king_8") then            
+            -- Only apply if the caster is the one who dealt damage, but not with Caustic Finale
+            if attacker == self.caster and not (ability == self.ability) then
 
-            -- Only apply if the caster is the one who dealt damage, but not with Caustic Finale            
-            if attacker == self.caster and not (ability == self.ability) then                
+                -- Ignore Nether Wand and Elder Stuff burns, otherwise it'll be an infinite cycle
+                if ability and ability:GetName() == "item_imba_nether_wand" or ability:GetName() == "item_imba_elder_staff" then                    
+                    return nil
+                end
+
                 ApplyCausticFinale(self, attacker, target)
             end
         end

@@ -297,14 +297,20 @@ end
 local function SpellReflect(parent, params)
 	-- If some spells shouldn't be reflected, enter it into this spell-list
 	local exception_spell = 
-	{
+	{		
 		["rubick_spell_steal"] = true,
 	}
 		
 	local reflected_spell_name = params.ability:GetAbilityName()
 	local target = params.ability:GetCaster()
 		
-	if ( not exception_spell[reflected_spell_name] ) and (not target:HasModifier("modifier_imba_spell_shield_buff_reflect") ) then
+	if ( not exception_spell[reflected_spell_name] ) and (not target:HasModifier("modifier_imba_spell_shield_buff_reflect")) then
+
+		-- If this is a reflected ability, do nothing
+		if params.ability.spell_shield_reflect then
+			return nil
+		end
+
 		local ability
 			
 		local reflect_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_antimage/antimage_spellshield_reflect.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, parent)
@@ -324,6 +330,9 @@ local function SpellReflect(parent, params)
 			ability = parent:AddAbility(reflected_spell_name)
 			ability:SetStolen(true)
 			ability:SetHidden(true)
+
+			-- Tag ability as a reflection ability
+			ability.spell_shield_reflect = true
 				
 			-- Modifier counter, and add it into the old-spell list
 			ability:SetRefCountsModifiers(true)
@@ -508,7 +517,7 @@ function imba_antimage_mana_void:OnSpellStart()
 		local target = self:GetCursorTarget()
 		local ability = self
 		local scepter = caster:HasScepter()
-		local modifier_ministun = "modifier_mana_void_stunned"
+		local modifier_ministun = "modifier_imba_mana_void_stunned"
 		
 		-- Parameters
 		local damage_per_mana = ability:GetSpecialValueFor("mana_void_damage_per_mana")
@@ -563,19 +572,19 @@ end
 
 -------------------------------------------
 -- Stun modifier
-modifier_mana_void_stunned = modifier_mana_void_stunned or class({})
-function modifier_mana_void_stunned:CheckState()
+modifier_imba_mana_void_stunned = modifier_imba_mana_void_stunned or class({})
+function modifier_imba_mana_void_stunned:CheckState()
 	local state =
 		{[MODIFIER_STATE_STUNNED] = true}
 	return state	
 end
 
-function modifier_mana_void_stunned:IsPurgable() return false end
-function modifier_mana_void_stunned:IsPurgeException() return true end
-function modifier_mana_void_stunned:IsStunDebuff() return true end
-function modifier_mana_void_stunned:IsHidden() return false end
-function modifier_mana_void_stunned:GetEffectName() return "particles/generic_gameplay/generic_stunned.vpcf" end
-function modifier_mana_void_stunned:GetEffectAttachType() return PATTACH_OVERHEAD_FOLLOW end
+function modifier_imba_mana_void_stunned:IsPurgable() return false end
+function modifier_imba_mana_void_stunned:IsPurgeException() return true end
+function modifier_imba_mana_void_stunned:IsStunDebuff() return true end
+function modifier_imba_mana_void_stunned:IsHidden() return false end
+function modifier_imba_mana_void_stunned:GetEffectName() return "particles/generic_gameplay/generic_stunned.vpcf" end
+function modifier_imba_mana_void_stunned:GetEffectAttachType() return PATTACH_OVERHEAD_FOLLOW end
 -------------------------------------------
 for LinkedModifier, MotionController in pairs(LinkedModifiers) do
 	LinkLuaModifier(LinkedModifier, "hero/hero_antimage", MotionController)
