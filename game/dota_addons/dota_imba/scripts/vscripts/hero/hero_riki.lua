@@ -572,11 +572,11 @@ function modifier_imba_blink_strike_debuff_turn:DeclareFunctions()
 end
 
 function modifier_imba_blink_strike_debuff_turn:OnCreated()
-	self.slow_pct = self:GetAbility():GetSpecialValueFor("turn_rate_slow") * (-1)
+	self.slow_pct = self:GetAbility():GetSpecialValueFor("turn_rate_slow_pct")
 end
 
 function modifier_imba_blink_strike_debuff_turn:GetModifierTurnRate_Percentage()
-	return self.slow_pct
+	return self.slow_pct * (-1)
 end
 
 ---------------------------------------------------------------
@@ -722,7 +722,7 @@ function modifier_imba_riki_cloak_and_dagger:OnAttackLanded( keys )
 			
 			-- If the target is not a building, and passives are not disabled for the passive owner
 			-- Also checks if the parent is not channeling Tricks of the Trade, since backstab is handled through there.
-			if not parent:HasModifier("modifier_imba_riki_tricks_of_the_trade_primary") and not target:IsBuilding() and not parent:PassivesDisabled() then
+			if not parent:HasModifier("modifier_imba_riki_tricks_of_the_trade_primary") and not target:IsBuilding() and not parent:PassivesDisabled() then				
 			
 				-- If the passive is off cooldown, apply invis break bonus to backstab damage
 				if ability:IsCooldownReady() and parent:IsInvisible() then
@@ -782,7 +782,52 @@ function modifier_imba_riki_cloak_and_dagger:OnAttackLanded( keys )
 						ApplyDamage({victim = target, attacker = attacker, damage = attacker:GetAgility() * agility_multiplier_smoke, damage_type = ability:GetAbilityDamageType()})
 					end
 					parent:AddNewModifier(parent, self, "modifier_imba_riki_backstab_translation", {duration = parent:GetAttackSpeed()})
-				end
+
+				-- #8 Talent: Riki gains a chance to attack an opponent's back					
+				elseif parent:HasTalent("special_bonus_imba_riki_8") then
+				
+					-- Get the chance for Riki to appear at the back of the victim
+					local back_chance = parent:FindTalentValue("special_bonus_imba_riki_8")
+					if RollPseudoRandom(back_chance, self) then
+
+						-- Get the Blink Strike ability for the debuff duration. If it doesn't have it, no debuff for you!
+						blink_strike_ability = parent:FindAbilityByName("imba_riki_blink_strike")
+						local turn_debuff_duration
+						if blink_strike_ability then
+							turn_debuff_duration = blink_strike_ability:GetSpecialValueFor("duration")
+							target:AddNewModifier(parent, blink_strike_ability, "modifier_imba_blink_strike_debuff_turn", {duration = turn_debuff_duration})
+						end
+					
+						-- Emit Blink Strike sound
+						EmitSoundOn("Hero_Riki.Blink_Strike", attacker)
+
+						-- Get behind the victim						
+						local direction = (target:GetAbsOrigin() - attacker:GetAbsOrigin()):Normalized()
+						local distance = (target:GetAbsOrigin() - attacker:GetAbsOrigin()):Length2D()
+
+						local blink_point = attacker:GetAbsOrigin() + direction * (distance + 150)						
+						attacker:SetAbsOrigin(blink_point)
+						attacker:SetForwardVector(-direction)
+						attacker:SetUnitOnClearGround()
+
+						-- Play sound and particle
+						local particle = ParticleManager:CreateParticle(backstab_particle, PATTACH_ABSORIGIN_FOLLOW, target) 
+						ParticleManager:SetParticleControlEnt(particle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+						ParticleManager:ReleaseParticleIndex(particle)
+						EmitSoundOn(backstab_sound, target)
+						
+						-- If breaking invisibility, play the critstab sound
+						if ability:IsCooldownReady() then
+							EmitSoundOn(backstab_invisbreak_sound, target)
+						end
+						
+						-- If the attacker is an illusion, don't apply the damage
+						if not parent:IsIllusion() then
+							ApplyDamage({victim = target, attacker = attacker, damage = attacker:GetAgility() * agility_multiplier, damage_type = ability:GetAbilityDamageType()})
+						end
+						parent:AddNewModifier(parent, self, "modifier_imba_riki_backstab_translation", {duration = parent:GetAttackSpeed()})
+					end
+				end				
 			end
 			
 			-- Set skill cooldown to fade time (cooldown is used as an indicator for invis and backstab break bonus)
@@ -871,17 +916,17 @@ function imba_riki_tricks_of_the_trade:GetCastRange()
 	if self:GetCaster():HasScepter() then
 		return self:GetSpecialValueFor("scepter_cast_range") end
 		
-	return self:GetSpecialValueFor("area_of_effect") + self:GetCaster():FindTalentValue("special_bonus_imba_riki_8")
+	return self:GetSpecialValueFor("area_of_effect")
 end
 
 function imba_riki_tricks_of_the_trade:GetAOERadius()
-	return self:GetSpecialValueFor("area_of_effect") + self:GetCaster():FindTalentValue("special_bonus_imba_riki_8") end
+	return self:GetSpecialValueFor("area_of_effect") end
 	
 function imba_riki_tricks_of_the_trade:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
 		local origin = caster:GetAbsOrigin()
-		local aoe = self:GetSpecialValueFor("area_of_effect") + self:GetCaster():FindTalentValue("special_bonus_imba_riki_8")
+		local aoe = self:GetSpecialValueFor("area_of_effect")
 		local target = self:GetCursorTarget()
 		
 		if caster:HasScepter() then
@@ -973,7 +1018,7 @@ end
 
 function modifier_imba_riki_tricks_of_the_trade_primary:GetModifierAttackRangeBonus()
 	local ability = self:GetAbility()
-	local aoe = ability:GetSpecialValueFor("area_of_effect") + self:GetCaster():FindTalentValue("special_bonus_imba_riki_8")
+	local aoe = ability:GetSpecialValueFor("area_of_effect")
 	return aoe
 end
 
@@ -1019,7 +1064,7 @@ function modifier_imba_riki_tricks_of_the_trade_primary:OnIntervalThink()
 			caster:SetAbsOrigin(origin)
 		end
 
-		local aoe = ability:GetSpecialValueFor("area_of_effect") + self:GetCaster():FindTalentValue("special_bonus_imba_riki_8")
+		local aoe = ability:GetSpecialValueFor("area_of_effect")
 		
 		local backstab_ability = caster:FindAbilityByName("imba_riki_cloak_and_dagger")
 		local backstab_particle = "particles/units/heroes/hero_riki/riki_backstab.vpcf"
@@ -1074,7 +1119,7 @@ function modifier_imba_riki_tricks_of_the_trade_secondary:OnIntervalThink()
 			caster:SetAbsOrigin(origin)
 		end
 
-		local aoe = ability:GetSpecialValueFor("area_of_effect") + self:GetCaster():FindTalentValue("special_bonus_imba_riki_8")
+		local aoe = ability:GetSpecialValueFor("area_of_effect")
 		
 		local backstab_ability = caster:FindAbilityByName("imba_riki_cloak_and_dagger")
 		local backstab_particle = "particles/units/heroes/hero_riki/riki_backstab.vpcf"
