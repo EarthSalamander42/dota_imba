@@ -34,6 +34,7 @@ function item_imba_black_queen_cape:OnSpellStart()
 	ParticleManager:ReleaseParticleIndex(particle_fx)
 
 	target:AddNewModifier(caster, self, bkb_modifier, {duration = bkb_duration})
+	target:Purge(false, true, false, false, false)
 
 	if self:GetCurrentCharges() > 0 then
 		EmitSoundOn("DOTA_Item.UrnOfShadows.Activate", target)
