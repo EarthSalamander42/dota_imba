@@ -6169,13 +6169,11 @@
 		"ID"							"2237"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"items/item_spell_fencer.lua"
-		"AbilityTextureName"			"custom/imba_spell_fencer"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName" 			"custom/imba_spell_fencer"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"5"
-		"AbilitySharedCooldown"			"sword"
+		"AbilityCooldown"				"12"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -6201,32 +6199,32 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"amp_stack"				"-3"
+				"damage_reduce_pct"		"40"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_stacks"			"7"
+				"amp_stack"				"-3"
 			}
 			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_stacks"			"7"
+			}
+			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"stack_duration"		"5.0"
 			}
-			"06"
+			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_cdr"				"10"
 			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_int"				"26"
-			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana_regen"		"75"
+				"bonus_int"				"26"
 			}
 			"09"
 			{
@@ -6238,6 +6236,16 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_attack_speed"	"10"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana_regen"		"75"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"proc_cooldown"			"5"
 			}
 		}
 	}
