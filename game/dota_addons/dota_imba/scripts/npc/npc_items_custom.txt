@@ -1001,6 +1001,21 @@
 				"var_type"				"FIELD_INTEGER"
 				"tree_radius"			"175"
 			}
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stacking_penalty"		"0.5"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stacking_penalty_dur"	"10"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stacking_penalty_max"	"10"
+			}
 		}
 	}
 
