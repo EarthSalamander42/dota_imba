@@ -267,8 +267,8 @@ function modifier_imba_juggernaut_healing_ward_passive:GetModifierAura()
 	return "modifier_imba_juggernaut_healing_ward_aura"
 end
 
-function modifier_imba_juggernaut_healing_ward_passive:GetAuraEntityReject(hEntity)
-	if hEntity == self:GetParent() then return true end
+function modifier_imba_juggernaut_healing_ward_passive:GetAuraEntityReject(target)
+	if target:GetUnitName() == self:GetParent():GetUnitName() then return true end
 	return false
 end
 
