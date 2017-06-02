@@ -27436,17 +27436,20 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"tick_interval"				"0.25"
-			}
+			}						
 			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"num_ticks"					"4 4 4 4"
-			}
-			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"stun_duration"				"1.0"
 			}
+
+			////// WEIRD INTERACTION
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"toss_damage_multiplier"	"2"
+			}
+			
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
@@ -27468,15 +27471,9 @@
 				"var_type"					"FIELD_INTEGER"
 				"passive_ticks"				"1"
 				"LinkedSpecialBonus"		"special_bonus_imba_tiny_1"											
-			}
+			}		
 			
-			////// WEIRD INTERACTION
 			"09"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"toss_damage_multiplier"			"2"
-			}
-			"10"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"passive_ticks_tooltip"		"25"

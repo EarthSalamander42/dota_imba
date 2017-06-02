@@ -130,8 +130,8 @@ if IsServer() then
 		local casterPos = caster:GetAbsOrigin()
 		local distance = (vPos - casterPos):Length2D()
 		local direction = (vPos - casterPos):Normalized()
-		local velocity = distance/delay * direction
-		local ticks = self:GetSpecialValueFor("num_ticks")
+		local velocity = distance/delay * direction		
+		local ticks = 1 / self:GetSpecialValueFor("tick_interval")
 		velocity.z = 0
 		
 		local info = {
@@ -158,7 +158,8 @@ if IsServer() then
 		local toss_mult = self:GetSpecialValueFor("toss_damage_multiplier")
 		local radius = self:GetSpecialValueFor("radius") + caster:FindModifierByName("modifier_imba_tiny_rolling_stone"):GetStackCount() * caster:FindAbilityByName("imba_tiny_grow"):GetSpecialValueFor("rolling_stones_aoe")
 		local interval = self:GetSpecialValueFor("tick_interval")
-		local damage = self:GetTalentSpecialValueFor("avalanche_damage") / self:GetSpecialValueFor("num_ticks")
+		local damage = self:GetTalentSpecialValueFor("avalanche_damage") * self:GetSpecialValueFor("tick_interval")		
+		self.repeat_increase = false
 		local avalanche = ParticleManager:CreateParticle("particles/units/heroes/hero_tiny/tiny_avalanche.vpcf", PATTACH_CUSTOMORIGIN, nil) 
 				ParticleManager:SetParticleControl(avalanche, 0, vLocation)
 				ParticleManager:SetParticleControl(avalanche, 1, Vector(radius, 1, radius))
@@ -182,8 +183,11 @@ if IsServer() then
 		Timers:CreateTimer(function()
 			local enemies_tick = FindUnitsInRadius(caster:GetTeamNumber(), hitLoc, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
 			for _,enemy in pairs(enemies_tick) do
-				if enemy:HasModifier("modifier_tiny_toss_movement") then damage = damage * toss_mult end
-				ApplyDamage({victim = enemy, attacker = caster, damage = damage, damage_type = self:GetAbilityDamageType(), ability = self})
+				if enemy:HasModifier("modifier_tiny_toss_movement") and not self.repeat_increase then 
+					damage = damage * toss_mult 
+					self.repeat_increase = true
+				end
+				ApplyDamage({victim = enemy, attacker = caster, damage = damage, damage_type = self:GetAbilityDamageType(), ability = self})				
 				enemy:AddNewModifier(caster, self, "modifier_stunned", {duration = duration})
 			end
 			hitLoc = hitLoc + offset / ticks
@@ -447,34 +451,34 @@ function modifier_tiny_toss_movement:TossLand()
 		-- Destroy trees at the target point
 		GridNav:DestroyTreesAroundPoint(self.vLastKnownTargetPos, radius, true)
 
-		local victims = FindUnitsInRadius(caster:GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING, 0, 1, false)
+		local victims = FindUnitsInRadius(caster:GetTeamNumber(), self.parent:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING, 0, 1, false)
 		for _, victim in pairs(victims) do
-			local damage = self:GetAbility():GetSpecialValueFor("toss_damage")
-			if victim == self:GetParent() then
-				damage = damage * (1 + (self:GetAbility():GetSpecialValueFor("bonus_damage_pct") + self:GetCaster():FindModifierByName("modifier_imba_tiny_rolling_stone"):GetStackCount()) / 100)
+			local damage = self.ability:GetSpecialValueFor("toss_damage")
+			if victim == self.parent then
+				damage = damage * (1 + (self.ability:GetSpecialValueFor("bonus_damage_pct") + caster:FindModifierByName("modifier_imba_tiny_rolling_stone"):GetStackCount()) / 100)
 			end
 			if victim:IsBuilding() then
-				damage = damage * self:GetAbility():GetSpecialValueFor("building_dmg") / 100
-				ApplyDamage({victim = victim, attacker = caster, damage = damage, damage_type = self:GetAbility():GetAbilityDamageType(), ability = self:GetAbility()})
+				damage = damage * self.ability:GetSpecialValueFor("building_dmg") * 0.01
+				ApplyDamage({victim = victim, attacker = caster, damage = damage, damage_type = self.ability:GetAbilityDamageType(), ability = self.ability})
 			else
-				ApplyDamage({victim = victim, attacker = caster, damage = damage, damage_type = self:GetAbility():GetAbilityDamageType(), ability = self:GetAbility()})
+				ApplyDamage({victim = victim, attacker = caster, damage = damage, damage_type = self.ability:GetAbilityDamageType(), ability = self.ability})
 			end
 			if caster:HasScepter() and not victim:IsBuilding() then
-				victim:AddNewModifier(caster, self:GetAbility(), "modifier_stunned", {duration = self:GetAbility():GetSpecialValueFor("scepter_stun_duration")})
+				victim:AddNewModifier(caster, self.ability, "modifier_stunned", {duration = self.ability:GetSpecialValueFor("scepter_stun_duration")})
 			end
 		end
-		if self:GetParent() == caster then
-			ApplyDamage({victim = caster, attacker = caster, damage = caster:GetMaxHealth() * self:GetAbility():GetSpecialValueFor("self_dmg_pct") / 100, damage_type = self:GetAbility():GetAbilityDamageType(), ability = self:GetAbility()})
+		if self.parent == caster then
+			ApplyDamage({victim = caster, attacker = caster, damage = caster:GetMaxHealth() * self.ability:GetSpecialValueFor("self_dmg_pct") * 0.01, damage_type = self.ability:GetAbilityDamageType(), ability = self.ability})
 		end
 
-		EmitSoundOn("Ability.TossImpact", self:GetParent())
-		if caster:HasScepter() and self:GetParent():IsAlive() and self:GetParent() ~= caster then
-			self:GetParent():AddNewModifier(caster, self:GetAbility(), "modifier_tiny_toss_scepter_bounce", {})
+		EmitSoundOn("Ability.TossImpact", self.parent)
+		if caster:HasScepter() and self.parent:IsAlive() and self.parent ~= caster then
+			self.parent:AddNewModifier(caster, self.ability, "modifier_tiny_toss_scepter_bounce", {})
 		end
 
-		self:GetParent():SetUnitOnClearGround()
+		self.parent:SetUnitOnClearGround()
 		Timers:CreateTimer(FrameTime(), function()
-			ResolveNPCPositions(self:GetParent():GetAbsOrigin(), 150)
+			ResolveNPCPositions(self.parent:GetAbsOrigin(), 150)
 		end)		
 	end
 end
