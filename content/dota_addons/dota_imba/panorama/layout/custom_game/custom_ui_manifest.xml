@@ -81,7 +81,8 @@
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/talent_window.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/simple_chat.xml" />
 		<CustomUIElement type="EndScreen" layoutfile="file://{resources}/layout/custom_game/multiteam_end_screen.xml" />
-		<CustomUIElement type="FlyoutScoreboard" layoutfile="file://{resources}/layout/custom_game/multiteam_flyout_scoreboard.xml" />
+		<CustomUIElement type="FlyoutScoreboard" layoutfile="file://{resources}/layout/custom_game/multiteam_flyout_scoreboard.xml" />		
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/statcollection.xml" />
 	</Panel>
 	
 </root>

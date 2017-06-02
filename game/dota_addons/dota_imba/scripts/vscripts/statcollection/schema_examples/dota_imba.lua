@@ -4,8 +4,8 @@ function customSchema:init()
 
     -- Check the schema_examples folder for different implementations
 
-    -- Tracks game version
-    statCollection:setFlags({version = IMBA_VERSION})
+    -- Flag Example
+    statCollection:setFlags({ version = IMBA_VERSION })
 
     -- Listen for changes in the current state
     ListenToGameEvent('game_rules_state_change', function(keys)
@@ -43,8 +43,8 @@ function BuildGameArray()
     local game = {}
 
     -- Add game values here as game.someValue = GetSomeGameValue()
-    game.gl = GameRules:GetDOTATime(false, false) -- Tracks total game length, from the horn sound, in seconds
-    game.wt = GAME_WINNER_TEAM -- Tracks which team won the game
+    game.gl = GAME_TIME_ELAPSED -- Game length, from the horn sound, in seconds
+    game.wt = GAME_WINNER_TEAM -- Winning team
 
     return game
 end
@@ -67,7 +67,6 @@ function BuildPlayersArray()
                 end
 
                 table.insert(players, {
-
                     -- steamID32 required in here
                     steamID32 = PlayerResource:GetSteamAccountID(playerID),
 
@@ -75,21 +74,19 @@ function BuildPlayersArray()
                     -- Add player values here as someValue = GetSomePlayerValue(),
 
                     ph = GetHeroName(playerID), -- Hero by its short name
-                    pl = hero:GetLevel(),       -- Hero level at the end of the game
-                    pnw = GetNetworth(hero),    -- Sum of hero gold and item worth
-                    pbb = hero.buyback_count,   -- Amount of buybacks performed during the game
-                    pt = player_team,           -- Team this hero belongs to
-                    pk = hero:GetKills(),       -- Number of kills of this players hero
-                    pa = hero:GetAssists(),     -- Number of deaths of this players hero
-                    pd = hero:GetDeaths(),      -- Number of deaths of this players hero
-
-                    -- Item list
-                    i1 = GetItemSlotImba(hero, 0),
-                    i2 = GetItemSlotImba(hero, 1),
-                    i3 = GetItemSlotImba(hero, 2),
-                    i4 = GetItemSlotImba(hero, 3),
-                    i5 = GetItemSlotImba(hero, 4),
-                    i6 = GetItemSlotImba(hero, 5)
+                    pl = hero:GetLevel(), -- Hero level at the end of the game
+                    pnw = GetNetworth(hero), -- Sum of hero gold and item worth
+                    pbb = hero.buyback_count, -- Amount of buybacks performed during the game
+                    pt = player_team, -- Team this hero belongs to
+                    pk = hero:GetKills(), -- Number of kills of this players hero
+                    pa = hero:GetAssists(), -- Number of deaths of this players hero
+                    pd = hero:GetDeaths(), -- Number of deaths of this players hero
+                    i1 = GetItemSlotIMBA(hero, 0), -- Item Slot #1
+                    i2 = GetItemSlotIMBA(hero, 1), -- Item Slot #2
+                    i3 = GetItemSlotIMBA(hero, 2), -- Item Slot #3
+                    i4 = GetItemSlotIMBA(hero, 3), -- Item Slot #4
+                    i5 = GetItemSlotIMBA(hero, 4), -- Item Slot #5
+                    i6 = GetItemSlotIMBA(hero, 5), -- Item Slot #6
                 })
             end
         end
@@ -146,17 +143,36 @@ end
 -------------------------------------
 -- MY CUSTOM FUNCTIONS
 -------------------------------------
+function GetItemListImba(hero)
+    local itemTable = {}
 
--- String of item name, without the item_imba_ prefix
-function GetItemSlotImba(hero, slot)
+    for i = 0, 5 do
+        local item = hero:GetItemInSlot(i)
+        if item then
+            if string.find(item:GetAbilityName(), "imba") then
+                local itemName = string.gsub(item:GetAbilityName(), "item_imba_", "")
+                table.insert(itemTable, itemName)
+            else
+                local itemName = string.gsub(item:GetAbilityName(), "item_", "")
+                table.insert(itemTable, itemName)
+            end
+        end
+    end
+
+    table.sort(itemTable)
+    local itemList = table.concat(itemTable, ",")
+
+    return itemList
+end
+
+function GetItemSlotIMBA(hero, slot)
     local item = hero:GetItemInSlot(slot)
-    local itemName = "empty"
 
     if item then
         if string.find(item:GetAbilityName(), "imba") then
-            itemName = string.gsub(item:GetAbilityName(), "item_imba_", "")
+            local itemName = string.gsub(item:GetAbilityName(), "item_imba_", "")
         else
-            itemName = string.gsub(item:GetAbilityName(), "item_", "")
+            local itemName = string.gsub(item:GetAbilityName(), "item_", "")
         end
     end
 

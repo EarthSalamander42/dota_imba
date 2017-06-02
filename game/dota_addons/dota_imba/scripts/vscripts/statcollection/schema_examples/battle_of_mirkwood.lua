@@ -4,8 +4,8 @@ function customSchema:init()
 
     -- Check the schema_examples folder for different implementations
 
-    -- Tracks game version
-    statCollection:setFlags({version = IMBA_VERSION})
+    -- Flag Example
+    -- statCollection:setFlags({version = GetVersion()})
 
     -- Listen for changes in the current state
     ListenToGameEvent('game_rules_state_change', function(keys)
@@ -43,8 +43,11 @@ function BuildGameArray()
     local game = {}
 
     -- Add game values here as game.someValue = GetSomeGameValue()
-    game.gl = GameRules:GetDOTATime(false, false) -- Tracks total game length, from the horn sound, in seconds
-    game.wt = GAME_WINNER_TEAM -- Tracks which team won the game
+
+    -- team 1 score
+    game.s1 = GameRules.WAGameMode.vDeaths[DOTA_TEAM_BADGUYS] or 0
+    -- team 2 score
+    game.s2 = GameRules.WAGameMode.vDeaths[DOTA_TEAM_GOODGUYS] or 0
 
     return game
 end
@@ -58,39 +61,42 @@ function BuildPlayersArray()
 
                 local hero = PlayerResource:GetSelectedHeroEntity(playerID)
 
-                -- Team string logic
-                local player_team = ""
-                if hero:GetTeam() == DOTA_TEAM_GOODGUYS then
-                    player_team = "Radiant"
-                else
-                    player_team = "Dire"
-                end
-
-                table.insert(players, {
-
+                local __stats__ = {
                     -- steamID32 required in here
                     steamID32 = PlayerResource:GetSteamAccountID(playerID),
 
                     -- Example functions for generic stats are defined in statcollection/lib/utilities.lua
                     -- Add player values here as someValue = GetSomePlayerValue(),
 
-                    ph = GetHeroName(playerID), -- Hero by its short name
-                    pl = hero:GetLevel(),       -- Hero level at the end of the game
-                    pnw = GetNetworth(hero),    -- Sum of hero gold and item worth
-                    pbb = hero.buyback_count,   -- Amount of buybacks performed during the game
-                    pt = player_team,           -- Team this hero belongs to
-                    pk = hero:GetKills(),       -- Number of kills of this players hero
-                    pa = hero:GetAssists(),     -- Number of deaths of this players hero
-                    pd = hero:GetDeaths(),      -- Number of deaths of this players hero
+                    -- player hero name
+                    hn = GetHeroName(playerID),
+                    -- kills
+                    hk = hero:GetKills(),
+                    -- deaths
+                    hd = hero:GetDeaths(),
+                    -- last hits/ creep kills
+                    lh = PlayerResource:GetLastHits(playerID),
+                    -- total gold earned
+                    xg = hero.xGoldEarned,
+                    -- abadon time
+                    at = GameRules.vDisconnectedHeroes[hero] or -1,
+                }
 
-                    -- Item list
-                    i1 = GetItemSlotImba(hero, 0),
-                    i2 = GetItemSlotImba(hero, 1),
-                    i3 = GetItemSlotImba(hero, 2),
-                    i4 = GetItemSlotImba(hero, 3),
-                    i5 = GetItemSlotImba(hero, 4),
-                    i6 = GetItemSlotImba(hero, 5)
-                })
+
+                -- record abilities and ability level
+                local abilities = GetAbilityList(hero)
+                for i = 1, BOM_ABILITY_LIMIT do
+                    --[[
+                        = 
+                        a1 = "evasion,1"
+                        a2 = "life_steal,30"
+                        ...
+                        a7 = "xxx,15"
+                    ]]
+                    __stats__["a" .. i] = abilities[i] or "empty,-1"
+                end
+
+                table.insert(players, __stats__)
             end
         end
     end
@@ -143,22 +149,15 @@ function BuildRoundWinnerArray()
     return winners
 end
 
--------------------------------------
--- MY CUSTOM FUNCTIONS
--------------------------------------
-
--- String of item name, without the item_imba_ prefix
-function GetItemSlotImba(hero, slot)
-    local item = hero:GetItemInSlot(slot)
-    local itemName = "empty"
-
-    if item then
-        if string.find(item:GetAbilityName(), "imba") then
-            itemName = string.gsub(item:GetAbilityName(), "item_imba_", "")
-        else
-            itemName = string.gsub(item:GetAbilityName(), "item_", "")
+---------------------------- Custom Stats------------------------
+function GetAbilityList(hero)
+    local abilities = {}
+    if hero.vAbilityLevel and type(hero.vAbilityLevel) == "table" then
+        for ability_name, ability_level in pairs(hero.vAbilityLevel) do
+            table.insert(abilities, ability_name .. "," .. ability_level)
         end
     end
-
-    return itemName
+    return abilities
 end
+
+----------------------------End Custom Stats Functions----------
