@@ -155,6 +155,7 @@ function imba_bloodseeker_blood_bath:OnSpellStart()
 	local caster = self:GetCaster()
 	
 	local radius = self:GetSpecialValueFor("radius")
+	AddFOWViewer(caster:GetTeamNumber(),vPos,self:GetSpecialValueFor("vision_aoe"),self:GetSpecialValueFor("vision_duration"),true)   --gives ground vision
 	EmitSoundOn("Hero_Bloodseeker.BloodRite.Cast", caster)
 	EmitSoundOnLocationWithCaster( vPos, "Hero_Bloodseeker.BloodRite", caster )
 	local bloodriteFX = ParticleManager:CreateParticle("particles/units/heroes/hero_bloodseeker/bloodseeker_bloodritual_ring.vpcf", PATTACH_CUSTOMORIGIN, nil)
@@ -165,6 +166,8 @@ function imba_bloodseeker_blood_bath:OnSpellStart()
 		EmitSoundOnLocationWithCaster( vPos, "hero_bloodseeker.bloodRite.silence", caster )
 		ParticleManager:DestroyParticle(bloodriteFX, false)
 		ParticleManager:ReleaseParticleIndex(bloodriteFX)
+		
+
 		local targets = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), vPos, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
 
 		if #targets > 0 then
