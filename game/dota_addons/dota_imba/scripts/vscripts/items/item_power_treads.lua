@@ -64,7 +64,7 @@ function modifier_imba_power_treads_2:DeclareFunctions()
 end
 
 function modifier_imba_power_treads_2:OnCreated()
-	if IsServer() then
+	if IsServer() then		
 		if self:GetParent():IsHero() then
 			local ability = self:GetAbility()
 			local parent = self:GetParent()
@@ -72,8 +72,9 @@ function modifier_imba_power_treads_2:OnCreated()
 			if parent:IsRealHero() then
 				self:SetStackCount(parent:GetPrimaryAttribute())
 				ability.state = parent:GetPrimaryAttribute()
+				self:StartIntervalThink(0.2)
 			else
-				Timers:CreateTimer(0.01, function()	-- Timer because Valve decided that modifiers should be applied before items are added
+				Timers:CreateTimer(FrameTime(), function()	-- Timer because Valve decided that modifiers should be applied before items are added
 					local ownerFinder = FindUnitsInRadius(parent:GetTeamNumber(), parent:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH , DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_DEAD + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD , FIND_ANY_ORDER , false) 
 					for _,hero in pairs(ownerFinder) do
 						if hero:GetName() == parent:GetName() then
@@ -100,12 +101,12 @@ function modifier_imba_power_treads_2:OnCreated()
 							end
 							break
 						end
-					end
-					self:StartIntervalThink( 0.2 )
+					end	
+					self:StartIntervalThink(0.2)									
 				end)
-			end
+			end			
 		end
-	end
+	end	
 	if IsClient() then
 		self:StartIntervalThink( 0.2 )
 	end
@@ -121,11 +122,10 @@ function modifier_imba_power_treads_2:OnIntervalThink()
 		local state = self:GetStackCount()
 		local ability = self:GetAbility()
 		local parent = self:GetParent()
-		local mod = parent:FindModifierByName("modifier_imba_mega_treads_stat_multiplier_0"..state)
-		if not parent:IsRealHero() then return end
-		
-		if mod then return
-		else parent:AddNewModifier(parent, ability, "modifier_imba_mega_treads_stat_multiplier_0"..state, {})
+		if not parent:IsRealHero() then return end		
+
+		if not parent:HasModifier("modifier_imba_mega_treads_stat_multiplier_0"..state) then
+		 	parent:AddNewModifier(parent, ability, "modifier_imba_mega_treads_stat_multiplier_0"..state, {})
 		end
 	end
 end
