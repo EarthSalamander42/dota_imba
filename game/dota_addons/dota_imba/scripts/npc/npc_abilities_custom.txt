@@ -19176,7 +19176,7 @@
 			"03"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"aura_silence"		"2"
+				"aura_silence"		"3"
 			}
 			"04"
 			{
@@ -32084,7 +32084,7 @@
 			"01"
 			{
 					"var_type"                  "FIELD_INTEGER"
-					"value"	                    "20"
+					"value"	                    "6"
 			}
 		}
 	}
