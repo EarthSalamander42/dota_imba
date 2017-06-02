@@ -1290,7 +1290,8 @@ function modifier_imba_kingdom_come_slow:OnCreated()
     self.ms_slow_pct = self.ability:GetSpecialValueFor("ms_slow_pct")
     self.as_slow = self.ability:GetSpecialValueFor("as_slow")
     self.stun_duration = self.ability:GetSpecialValueFor("stun_duration")
-    self.damage = self.ability:GetSpecialValueFor("damage")    
+    self.damage = self.ability:GetSpecialValueFor("damage")        
+    self.radius = self.ability:GetSpecialValueFor("radius")
 
     -- Add particle effect
     local particle_slow_fx = ParticleManager:CreateParticle(self.particle_slow, PATTACH_ABSORIGIN_FOLLOW, self.parent)
@@ -1319,8 +1320,17 @@ end
 
 function modifier_imba_kingdom_come_slow:OnDestroy()    
     if IsServer() then
+        -- Check the distance, see if it's still inside the ring AoE        
+        local distance = (self.caster:GetAbsOrigin() - self.parent:GetAbsOrigin()):Length2D()
+
+        -- if the parent is too far, do nothing
+        if distance > self.radius then
+            return nil
+        end 
+
         -- If this is a real hero, stun and deal damage to it
         if self.parent:IsRealHero() then
+
             self.parent:AddNewModifier(self.caster, self.ability, self.modifier_stun, {duration = self.stun_duration})
 
             local damageTable = {victim = self.parent,
