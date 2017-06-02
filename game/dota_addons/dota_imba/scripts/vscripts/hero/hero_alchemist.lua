@@ -47,9 +47,7 @@ function imba_alchemist_acid_spray:OnSpellStart()
     local point = self:GetCursorPosition()
     local team_id = caster:GetTeamNumber()
     local cast_responses = {"alchemist_alch_ability_acid_01", "alchemist_alch_ability_acid_02", "alchemist_alch_ability_acid_03", "alchemist_alch_ability_acid_04", "alchemist_alch_ability_acid_05", "alchemist_alch_ability_acid_06", "alchemist_alch_ability_acid_07", "alchemist_alch_ability_acid_08", "alchemist_alch_ability_acid_09", "alchemist_alch_ability_acid_10", "alchemist_alch_ability_acid_11", "alchemist_alch_ability_acid_12"}
-    EmitSoundOn(cast_responses[math.random(1, #cast_responses)], caster)
-
-    print(caster:GetAbsOrigin())
+    EmitSoundOn(cast_responses[math.random(1, #cast_responses)], caster)    
 
     local duration = ability:GetSpecialValueFor("duration")
     local thinker = CreateModifierThinker(caster, self, "modifier_imba_acid_spray_thinker", {duration = duration}, point, team_id, false)
@@ -444,14 +442,14 @@ function imba_alchemist_unstable_concoction:OnProjectileHit(target, location)
             ParticleManager:SetParticleControl(particle_acid_blast_fx, 2, Vector(acid_spray_radius, 0, 0))
             ParticleManager:ReleaseParticleIndex(particle_acid_blast_fx)
 
-            local acid_spray_units = FindUnitsInRadius(caster:GetTeam(), location, nil, acid_spray_radius * 2, self:GetAbilityTargetTeam(), DOTA_UNIT_TARGET_ALL, self:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
+            local acid_spray_units = FindUnitsInRadius(caster:GetTeam(), location, nil, acid_spray_radius * 2, self:GetAbilityTargetTeam(), DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, self:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
             local damage_multiplier = self:GetSpecialValueFor("acid_spray_damage") * 0.01
 
             -- #4 Talent: Unstable Concoction blows stronger on Acid Spray
-            damage_multiplier = damage_multiplier + caster:FindTalentValue("special_bonus_imba_alchemist_4")
+            damage_multiplier = damage_multiplier + caster:FindTalentValue("special_bonus_imba_alchemist_4") * 0.01
             
             for _,acid_spray_unit in pairs(acid_spray_units) do
-                ApplyDamage({victim = acid_spray_unit, attacker = caster, damage = damage * damage_multiplier, damage_type = damage_type,})
+                local actual_damage = ApplyDamage({victim = acid_spray_unit, attacker = caster, damage = damage * damage_multiplier, damage_type = damage_type,})                
                 local modifier = acid_spray_unit:FindModifierByName("modifier_imba_acid_spray_debuff_dot")
                 if modifier then
                     modifier:OnIntervalThink(false, true)

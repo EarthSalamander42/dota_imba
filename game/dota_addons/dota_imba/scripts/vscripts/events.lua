@@ -349,6 +349,9 @@ function GameMode:OnPlayerReconnect(keys)
 	-- IMBA: Player reconnect logic
 	-------------------------------------------------------------------------------------------------
 
+	--COOKIES: Enable the HUD
+	CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(player_id), "show_hud", {})
+
 	-- Reinitialize the player's pick screen panorama, if necessary
 	if HeroSelection.HorriblyImplementedReconnectDetection then
 		HeroSelection.HorriblyImplementedReconnectDetection[player_id] = false

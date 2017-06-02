@@ -445,7 +445,7 @@ function GameMode:ItemAddedFilter( keys )
 				DisplayError(unit:GetPlayerID(),"#dota_hud_error_cant_item_enough_slots")
 			end
 		end
-		if unit:IsIllusion() then
+		if unit:IsIllusion() or unit:IsTempestDouble() then
 			return true
 		else
 			unit:DropRapier(nil, item_name)
@@ -1062,6 +1062,11 @@ function GameMode:OnAllPlayersLoaded()
 	GameRules:GetGameModeEntity():SetModifyExperienceFilter( Dynamic_Wrap(GameMode, "ExperienceFilter"), self )
 	GameRules:GetGameModeEntity():SetModifierGainedFilter( Dynamic_Wrap(GameMode, "ModifierFilter"), self )
 	GameRules:GetGameModeEntity():SetItemAddedToInventoryFilter( Dynamic_Wrap(GameMode, "ItemAddedFilter"), self )
+
+	-- CHAT
+	self.chat = Chat(self.Players, self.Users, TEAM_COLORS)
+    --	Chat:constructor(players, users, teamColors)
+	print("Constructing Chat!")
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Fountain abilities setup

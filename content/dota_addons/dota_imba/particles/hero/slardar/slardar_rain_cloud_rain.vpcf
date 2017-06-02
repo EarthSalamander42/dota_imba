@@ -2,7 +2,7 @@
 {
 	_class = "CParticleSystemDefinition"
 	m_bShouldHitboxesFallbackToRenderBounds = false
-	m_nMaxParticles = 175
+	m_nMaxParticles = 40
 	m_flMaxDrawDistance = 10000.0
 	m_Renderers = 
 	[
@@ -20,7 +20,7 @@
 	[
 		{
 			_class = "C_OP_BasicMovement"
-			m_Gravity = [ 0.0, 0.0, -3000.0 ]
+			m_Gravity = [ 0.0, 0.0, -6000.0 ]
 			m_fDrag = 0.05
 		},
 		{
@@ -57,8 +57,8 @@
 	[
 		{
 			_class = "C_INIT_PositionOffset"
-			m_OffsetMax = [ 10.0, 10.0, 500.0 ]
-			m_OffsetMin = [ -10.0, -10.0, 500.0 ]
+			m_OffsetMax = [ 10.0, 10.0, 480.0 ]
+			m_OffsetMin = [ -10.0, -10.0, 480.0 ]
 			m_bLocalCoords = true
 		},
 		{
@@ -72,8 +72,8 @@
 		},
 		{
 			_class = "C_INIT_RandomLifeTime"
-			m_fLifetimeMax = 0.8
-			m_fLifetimeMin = 0.4
+			m_fLifetimeMax = 0.4
+			m_fLifetimeMin = 0.2
 		},
 		{
 			_class = "C_INIT_RandomRadius"
@@ -107,6 +107,28 @@
 	[
 		{
 			m_ChildRef = resource:"particles/units/heroes/hero_slardar/slardar_amp_damage_ripple.vpcf"
+		},
+	]
+	m_controlPointConfigurations = 
+	[
+		{
+			m_name = "preview"
+			m_drivers = 
+			[
+				{
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ null, null, null ]
+					m_entityName = "self"
+				},
+				{
+					m_iControlPoint = 1
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ null, null, null ]
+					m_entityName = "self"
+				},
+			]
 		},
 	]
 }

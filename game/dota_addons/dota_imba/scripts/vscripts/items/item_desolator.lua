@@ -475,8 +475,10 @@ function modifier_item_imba_desolator_2_debuff:IsPurgable() return true end
 -- Store modifier values in case the original ability is missing
 function modifier_item_imba_desolator_2_debuff:OnCreated()
 	local ability = self:GetAbility()
-	self.armor_reduction = (-1) * ability:GetSpecialValueFor("armor_reduction")
-	self.vision_reduction = (-1) * ability:GetSpecialValueFor("vision_reduction")
+	if ability then
+		self.armor_reduction = (-1) * ability:GetSpecialValueFor("armor_reduction")
+		self.vision_reduction = (-1) * ability:GetSpecialValueFor("vision_reduction")
+	end
 end
 
 -- Declare modifier events/properties

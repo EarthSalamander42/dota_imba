@@ -933,7 +933,7 @@ function modifier_imba_shapeshift_transform:OnCreated()
 	local ability = self:GetAbility()
 	local aura = "modifier_imba_shapeshift_aura"	 
 
-	if not caster:HasModifier(aura) then
+	if caster and not caster:HasModifier(aura) then
 		caster:AddNewModifier(caster, ability, aura, {})
 	end	
 end

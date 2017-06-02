@@ -276,6 +276,12 @@ function EnterGame() {
 	if ( canEnter ) {
 		$('#Background').GetParent().DeleteAsync( 0.0 );
 		$.GetContextPanel().GetParent().GetParent().FindChildTraverse("ScoreboardContainer").style.visibility = "visible";
+
+		//COOKIES: Re-enable HUD parts when 1 player enter in the game, might need to find a way to show these HUD parts for player only rather than global
+		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_TIMEOFDAY, true );
+		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ACTION_PANEL, true );
+		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ACTION_MINIMAP, true );
+		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_SHOP, true );
 	}
 }
 
@@ -413,5 +419,10 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 
 		// Tell the server this player's UI was initialized
 		GameEvents.SendCustomGameEventToServer( "ui_initialized", {} );
+		// Show the HUD if a player has reconnected
+		GameEvents.Subscribe("show_hud", EnterGame);
+
+		//COOKIES: Custom Chat, created by Mahou Shoujo, approved to be used in IMBA
+		$("#HeroSelectionChat").BLoadLayout("file://{resources}/layout/custom_game/simple_chat.xml", false, false);
 	}
 })();

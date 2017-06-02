@@ -230,6 +230,12 @@ MergeTables(LinkedModifiers,{
 })
 
 imba_axe_battle_hunger = imba_axe_battle_hunger or class({})
+
+--Do the battle hunger animation
+function imba_axe_battle_hunger:GetCastAnimation()
+   return(ACT_DOTA_OVERRIDE_ABILITY_2)
+end
+
 function imba_axe_battle_hunger:OnSpellStart(target)
 
   local caster                    =       self:GetCaster()
