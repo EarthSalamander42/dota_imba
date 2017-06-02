@@ -1001,6 +1001,21 @@
 				"var_type"				"FIELD_INTEGER"
 				"tree_radius"			"175"
 			}
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stacking_penalty"		"0.5"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stacking_penalty_dur"	"10"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stacking_penalty_max"	"10"
+			}
 		}
 	}
 
@@ -11121,17 +11136,17 @@
 			"09"
 			{
 				"var_type"              "FIELD_INTEGER"
-				"passive_disarm_chance" "33"
+				"passive_disarm_chance" "25"
 			}
 			"10"
 			{
 				"var_type"              "FIELD_INTEGER"
-				"passive_disarm_duration" "3"
+				"passive_disarm_duration" "2"
 			}
 			"11"
 			{
 				"var_type"              "FIELD_INTEGER"
-				"passive_disarm_cooldown" "20"
+				"passive_disarm_cooldown" "6"
 			}
 
 			// Stats from component items

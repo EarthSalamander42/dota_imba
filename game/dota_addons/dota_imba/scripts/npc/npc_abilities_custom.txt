@@ -525,7 +525,7 @@
 				"Passive"						"0"
 				"IsHidden"						"0"
 				"IsDebuff"						"1"
-				"IsPurgable"					"0"
+				"IsPurgable"					"1"
 
 				"Duration"						"%debuff_duration"
 
@@ -13869,7 +13869,7 @@
 			"06"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"max_damage"						"140"
+				"max_bonus_damage"					"140"
 			}
 			"07"
 			{
@@ -18805,8 +18805,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"area_of_effect"		"500 500 500 550 600 650"
-				"LinkedSpecialBonus"	"special_bonus_imba_riki_8"
+				"area_of_effect"		"500 500 500 550 600 650"				
 			}
 
 			"02"
@@ -35350,18 +35349,13 @@
 		}
 	}
 
-	"special_bonus_imba_riki_8" // Tricks of the Trade radius increase
+	"special_bonus_imba_riki_8" // Riki gains a chance to attack an opponent's back
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_unique_centaur_2"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-            "01"        "imba_riki_tricks_of_the_trade"
-        }
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"        
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -35370,7 +35364,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"500"
+				"value"						"20"
 			}
 		}
 	}

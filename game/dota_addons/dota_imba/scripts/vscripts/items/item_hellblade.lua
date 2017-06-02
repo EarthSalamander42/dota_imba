@@ -244,8 +244,7 @@ function modifier_item_imba_hellblade_unique:OnAttacked(keys)
 					end
 
 					-- If a match was found, get its remaining duration, and remove it from caster
-					if is_valid_debuff then
-						print("valid!")
+					if is_valid_debuff then						
 						local modifier_duration = modifier:GetRemainingTime()								
 						self.caster:RemoveModifierByName(modifier_name)
 						

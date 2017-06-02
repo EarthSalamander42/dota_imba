@@ -346,10 +346,8 @@ function modifier_imba_dazzle_nothl_protection:OnTakeDamage( keys )
 						ParticleManager:DestroyParticle(particle, true)
 						ParticleManager:ReleaseParticleIndex(particle)
 						
-						local nothl_cooldown = ability:GetSpecialValueFor("nothl_protection_cooldown")
-						print(nothl_cooldown)
-						nothl_cooldown = nothl_cooldown + parent:FindTalentValue("special_bonus_imba_dazzle_7")
-						print(nothl_cooldown)
+						local nothl_cooldown = ability:GetSpecialValueFor("nothl_protection_cooldown")						
+						nothl_cooldown = nothl_cooldown + parent:FindTalentValue("special_bonus_imba_dazzle_7")						
 						
 						self:SetStackCount(math.floor(nothl_cooldown))
 						self:StartIntervalThink(1)

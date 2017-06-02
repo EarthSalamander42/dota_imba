@@ -419,6 +419,8 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 
 		// Tell the server this player's UI was initialized
 		GameEvents.SendCustomGameEventToServer( "ui_initialized", {} );
+		// Show the HUD if a player has reconnected
+		GameEvents.Subscribe("show_hud", EnterGame);
 
 		//COOKIES: Custom Chat, created by Mahou Shoujo, approved to be used in IMBA
 		$("#HeroSelectionChat").BLoadLayout("file://{resources}/layout/custom_game/simple_chat.xml", false, false);

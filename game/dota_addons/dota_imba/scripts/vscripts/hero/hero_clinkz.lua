@@ -1205,11 +1205,11 @@ function modifier_imba_death_pact_talent_debuff:OnHeroKilled(keys)
         -- Only apply if the killed hero is the parent of the debuff        
         if killed_hero == self.parent and self.caster:HasModifier(self.modifier_hero_pact) then            
             -- Get stack count from the modifier
-            local buff_stacks = self.caster:FindModifierByName(self.modifier_hero_pact):GetStackCount()
-            print(buff_stacks)
+            local buff_stacks = self.caster:FindModifierByName(self.modifier_hero_pact):GetStackCount()            
+
             -- Calculate stack amount to keep
-            local stacks = buff_stacks * (self.caster:FindSpecificTalentValue("special_bonus_imba_clinkz_8", "stacks_pct") * 0.01)
-            print(stacks)
+            local stacks = buff_stacks * (self.caster:FindSpecificTalentValue("special_bonus_imba_clinkz_8", "stacks_pct") * 0.01)            
+            
             -- Add perma buff if not exists yet
             if not self.caster:HasModifier(self.modifier_perma_buff) then
                 self.caster:AddNewModifier(self.caster, self.ability, self.modifier_perma_buff, {})

@@ -591,8 +591,7 @@ if IsServer() then
 					return nil
 				end
 
-				self.attacks = self.attacks + 1
-				print(self.attacks, self.attacks_to_split)
+				self.attacks = self.attacks + 1				
 				if self.attacks >= self.attacks_to_split then 
 					self.attacks = 0
 					self.attacks_to_split = self.attacks_to_split + self.additional_attacks_split
