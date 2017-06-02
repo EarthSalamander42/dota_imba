@@ -35,17 +35,16 @@ modifier_imba_satanic = class({})
 function modifier_imba_satanic:OnCreated()        
     -- Ability properties
     self.caster = self:GetCaster()
-    self.ability = self:GetAbility()                
+    self.ability = self:GetAbility()                	
 
     -- Ability specials
     self.damage_bonus = self.ability:GetSpecialValueFor("damage_bonus")    
     self.strength_bonus = self.ability:GetSpecialValueFor("strength_bonus")                    
 
-    if not self.caster:HasModifier("modifier_imba_satanic_unique") then
-        self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_satanic_unique", {})
-    end
-
     if IsServer() then
+	    if not self.caster:HasModifier("modifier_imba_satanic_unique") then
+			self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_satanic_unique", {})
+		end
         -- Change to lifesteal projectile, if there's nothing "stronger"    
         ChangeAttackProjectileImba(self.caster)       
     end
@@ -105,7 +104,7 @@ function modifier_imba_satanic_unique:IsDebuff() return false end
 function modifier_imba_satanic_unique:OnCreated()
     -- Ability properties
     self.caster = self:GetCaster()
-    self.ability = self:GetAbility()    
+    self.ability = self:GetAbility()
     self.particle_lifesteal = "particles/generic_gameplay/generic_lifesteal.vpcf"
     self.modifier_unholy = "modifier_imba_satanic_active"
     self.modifier_soul = "modifier_imba_satanic_soul_slaughter"
@@ -114,8 +113,8 @@ function modifier_imba_satanic_unique:OnCreated()
     self.lifesteal_pct = self.ability:GetSpecialValueFor("lifesteal_pct")
     self.unholy_rage_lifesteal_bonus = self.ability:GetSpecialValueFor("unholy_rage_lifesteal_bonus")
     self.soul_slaughter_hp_increase_pct = self.ability:GetSpecialValueFor("soul_slaughter_hp_increase_pct")
-    self.soul_slaughter_creep_duration = self.ability:GetSpecialValueFor("soul_slaughter_creep_duration")
-    self.soul_slaughter_hero_duration = self.ability:GetSpecialValueFor("soul_slaughter_hero_duration")
+	self.soul_slaughter_creep_duration = self.ability:GetSpecialValueFor("soul_slaughter_creep_duration")
+	self.soul_slaughter_hero_duration = self.ability:GetSpecialValueFor("soul_slaughter_hero_duration")
 end
 
 function modifier_imba_satanic_unique:DeclareFunctions()
@@ -161,42 +160,36 @@ function modifier_imba_satanic_unique:OnAttackLanded(keys)
                     local soul_health = target:GetMaxHealth() * (self.soul_slaughter_hp_increase_pct * 0.01) 
                     local soul_stacks = (soul_health/10)
 
-                    -- Assign correct duration
-                    local duration
-                    if target:IsHero() then
-                        duration = self.soul_slaughter_hero_duration
-                    else
-                        duration = self.soul_slaughter_creep_duration
-                    end
+					--Calculate maximum stacks based on caster health
+					local maximum_stacks = (attacker:GetMaxHealth()*2/10)
 
                     -- Set variable
                     local modifier_soul_feast
 
+					-- Assign 5 second duration
+                    local duration = self.soul_slaughter_creep_duration
+                   
                     -- Feast on its soul!
                     -- Check if the buff already exists, otherwise, add it
-                    if self.caster:HasModifier(self.modifier_soul) then
-                        modifier_soul_feast = self.caster:FindModifierByName(self.modifier_soul)
-                        modifier_soul_feast:SetStackCount(modifier_soul_feast:GetStackCount() + soul_stacks)
+                    if not self.caster:HasModifier(self.modifier_soul) then                        
+						self.caster:AddNewModifier(self.caster, self.ability, self.modifier_soul, {duration = duration})
+					end
 
-                        -- Refresh the buff if the new duration is higher than the current remaining duration
-                        if modifier_soul_feast:GetRemainingTime() < duration then
-                            modifier_soul_feast:SetDuration(duration, true)
-                        end
-
-                    else
-                        modifier_soul_feast = self.caster:AddNewModifier(self.caster, self.ability, self.modifier_soul, {duration = duration})
-                    end
-
-                    -- Give stacks
-                    if modifier_soul_feast then
-                        modifier_soul_feast:SetStackCount(modifier_soul_feast:GetStackCount() + soul_stacks)
-                    end
+					modifier_soul_feast = self.caster:FindModifierByName(self.modifier_soul)
+					if modifier_soul_feast then							
+						for i = 1, soul_stacks do							
+							-- Increment the stack count if it will not exceed the maximum
+							if modifier_soul_feast:GetStackCount() < maximum_stacks then
+								modifier_soul_feast:IncrementStackCount()
+								modifier_soul_feast:ForceRefresh()
+							end
+						end
+					end																	
                 end
             end)            
         end
     end
 end
-
 
 
 -- Active Satanic modifier
@@ -226,14 +219,56 @@ end
 -- Soul Slaughter modifier
 modifier_imba_satanic_soul_slaughter = class({})
 
-function modifier_imba_satanic_soul_slaughter:OnCreated()
+function modifier_imba_satanic_soul_slaughter:OnCreated()   
     self.ability = self:GetAbility()
     self.soul_slaughter_damage_per_stack = self.ability:GetSpecialValueFor("soul_slaughter_damage_per_stack")
     self.soul_slaughter_hp_per_stack = self.ability:GetSpecialValueFor("soul_slaughter_hp_per_stack")
+	if IsServer() then    
+		-- Use the creep duration for all stacks
+		self.duration = self.ability:GetSpecialValueFor("soul_slaughter_creep_duration")
+        
+		-- Initialize table
+        self.stacks_table = {}        
+		
+        -- Start thinking
+        self:StartIntervalThink(0.1)
+    end
+end
+
+function modifier_imba_satanic_soul_slaughter:OnIntervalThink()
+    if IsServer() then
+
+        -- Check if there are any stacks left on the table
+        if #self.stacks_table > 0 then
+
+            -- For each stack, check if it is past its expiration time. If it is, remove it from the table
+            for i = #self.stacks_table, 1, -1 do
+                if self.stacks_table[i] + self.duration < GameRules:GetGameTime() then
+                    table.remove(self.stacks_table, i)      
+                end
+            end
+            
+            -- If after removing the stacks, the table is empty, remove the modifier.
+            if #self.stacks_table == 0 then
+                self:Destroy()
+
+            -- Otherwise, set its stack count
+            else
+                self:SetStackCount(#self.stacks_table)
+            end
+
+        -- If there are no stacks on the table, just remove the modifier.
+        else
+            self:Destroy()
+        end
+    end
 end
 
 function modifier_imba_satanic_soul_slaughter:OnRefresh()
-    self:OnCreated()
+    if IsServer() then
+        -- Insert new stack values
+        table.insert(self.stacks_table, GameRules:GetGameTime())
+    end
 end
 
 function modifier_imba_satanic_soul_slaughter:IsHidden()
