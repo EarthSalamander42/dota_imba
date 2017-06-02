@@ -72,7 +72,7 @@ if IsServer() then
 			end
 		end
 	end
-	
+	--TEST
 	function modifier_imba_bloodrage_buff_stats:DeclareFunctions()
 		local funcs = {
 			MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE ,
