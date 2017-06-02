@@ -278,10 +278,10 @@ function EnterGame() {
 		$.GetContextPanel().GetParent().GetParent().FindChildTraverse("ScoreboardContainer").style.visibility = "visible";
 
 		//COOKIES: Re-enable HUD parts when 1 player enter in the game, might need to find a way to show these HUD parts for player only rather than global
-		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_TIMEOFDAY, true );
-		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ACTION_PANEL, true );
-		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ACTION_MINIMAP, true );
-		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_SHOP, true );
+		var parent_panel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
+		parent_panel.FindChildTraverse("lower_hud").style.visibility = "visible";
+		parent_panel.FindChildTraverse("topbar").style.visibility = "visible";
+		parent_panel.FindChildTraverse("minimap_container").style.visibility = "visible";
 	}
 }
 
@@ -356,6 +356,9 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 
 		// Hide the top scoreboard during the pick phase
 		parent_panel.FindChildTraverse("ScoreboardContainer").style.visibility = "collapse";
+		parent_panel.FindChildTraverse("lower_hud").style.visibility = "collapse";
+		parent_panel.FindChildTraverse("topbar").style.visibility = "collapse";
+		parent_panel.FindChildTraverse("minimap_container").style.visibility = "collapse";
 
 		// Update the game options display
 		var bounty_multiplier = CustomNetTables.GetTableValue("game_options", "bounty_multiplier");
@@ -419,8 +422,6 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 
 		// Tell the server this player's UI was initialized
 		GameEvents.SendCustomGameEventToServer( "ui_initialized", {} );
-		// Show the HUD if a player has reconnected
-		GameEvents.Subscribe("show_hud", EnterGame);
 
 		//COOKIES: Custom Chat, created by Mahou Shoujo, approved to be used in IMBA
 		$("#HeroSelectionChat").BLoadLayout("file://{resources}/layout/custom_game/simple_chat.xml", false, false);
