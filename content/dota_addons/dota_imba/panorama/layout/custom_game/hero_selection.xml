@@ -17,7 +17,7 @@
 		<Panel hittest="false" id="Background">
 			<Button id="ReturnToMenuButton" onactivate="DOTAHUDShowDashboard();" onmouseover="UIShowTextTooltip( DOTA_HUD_BackToDashboard )"  onmouseout="UIHideTextTooltip()">
 			</Button>
-			<Panel hittest="true" id="PickingScreen">
+			<Panel hittest="false" id="PickingScreen">
 
 				<!--Left-hand player section 
 				==================================================================-->
@@ -92,7 +92,7 @@
 								<Label class="PickListText" text="#imba_strength_hero_pick_list_title" />
 							</Panel>
 
-							<Panel id="PickListSeparator" class="PickListTitlePanel" />
+							<Panel id="PickListSeparator1" class="PickListTitlePanel" />
 
 							<Panel class="ClassOptionRow"> <!-- 0-5 -->
 								<Panel id="npc_dota_hero_abaddon" class="ClassImbaOption" 
@@ -227,7 +227,7 @@
 								<Label class="PickListText" text="#imba_agility_hero_pick_list_title" />
 							</Panel>
 
-							<Panel id="PickListSeparator" class="PickListTitlePanel" />
+							<Panel id="PickListSeparator2" class="PickListTitlePanel" />
 
 							<Panel class="ClassOptionRow">
 								<Panel id="npc_dota_hero_antimage" class="ClassImbaOption" 
@@ -351,7 +351,7 @@
 								<Label class="PickListText" text="#imba_intelligence_hero_pick_list_title" />
 							</Panel>
 
-							<Panel id="PickListSeparator" class="PickListTitlePanel" />
+							<Panel id="PickListSeparator3" class="PickListTitlePanel" />
 
 							<Panel class="ClassOptionRow">
 								<Panel id="npc_dota_hero_ancient_apparition" class="ClassNormalOption" 

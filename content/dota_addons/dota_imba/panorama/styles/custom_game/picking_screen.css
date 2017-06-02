@@ -34,7 +34,7 @@
 #LeftPlayers,
 #RightPlayers {
 	padding-top: 56px;
-	width: 10%;
+	width: 11%;
 	height: 100%;
 	flow-children: down;
 	animation-duration: 2.5s;
@@ -91,7 +91,7 @@
 }
 
 .ClassContainer{
-	width: 80%;
+	width: 78%;
 	height: 100%;
 	flow-children: down;
 	color: #ffffff;
@@ -181,8 +181,8 @@
 	height: fit-children;
 	horizontal-align: middle;
 	vertical-align: top;
-	margin-left: 0%;
-	margin-right: 7.5%;
+	margin-left: 3.3%;
+	margin-right: 3.3%;
 	flow-children: right;
 }
 
@@ -193,7 +193,35 @@
 	margin-top: 5px;
 	margin-bottom: 5px;
 	width: 75px;
-	height: 50px;
+	height: 51px;
+	horizontal-align: left;
+	background-position: center;
+	saturation: 0.6;
+	wash-color: #7090B060;
+}
+
+.AspectRatio16x10 .ClassNormalOption,
+.AspectRatio16x10 .ClassImbaOption {
+	margin-left: 2.5px;
+	margin-right: 2.5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	width: 67px;
+	height: 44px;
+	horizontal-align: left;
+	background-position: center;
+	saturation: 0.6;
+	wash-color: #7090B060;
+}
+
+.AspectRatio4x3 .ClassNormalOption,
+.AspectRatio4x3 .ClassImbaOption {
+	margin-left: 2.5px;
+	margin-right: 2.5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	width: 57px;
+	height: 57px;
 	horizontal-align: left;
 	background-position: center;
 	saturation: 0.6;
@@ -237,7 +265,7 @@
 /* Text elements and timer
 =================================================================*/
 #PickInfoPanel {
-	width: fit-children;
+	width: 100%;
 	height: fit-children;
 	horizontal-align: center;
 	vertical-align: middle;
@@ -255,6 +283,10 @@
 	vertical-align: middle;
 }
 
+.AspectRatio4x3 .GameModeSelectText {
+	font-size: 34px;
+}
+
 #PickTextPanel {
 	horizontal-align: left;
 	vertical-align: center;
@@ -265,7 +297,12 @@
 	horizontal-align: middle;
 	vertical-align: middle;
 	flow-children: right;
-	margin-right: 4%;
+	margin-right: 3%;
+}
+
+.AspectRatio4x3 #PickTimerPanel {
+	flow-children: down;
+	margin-right: 0%;
 }
 
 #PickTimer {
@@ -275,6 +312,7 @@
 	border-radius: 30px;
 	margin: 0px 20px 0px 0px;
 	vertical-align: middle;
+	horizontal-align: middle;
 }
 
 #TimerTxt {
@@ -306,6 +344,11 @@
 	margin-right: 50px;
 }
 
+.AspectRatio4x3 .GameModeValuePanel
+{
+	margin-right: 30px;
+}
+
 #GameOptionsLabelPanel8 {
 	visibility: collapse;
 }
@@ -315,6 +358,13 @@
 {
 	text-align: center;
 	font-size: 22px;
+	font-family: "Radiance";
+}
+
+.AspectRatio4x3 .GameModeLabel
+{
+	text-align: center;
+	font-size: 20px;
 	font-family: "Radiance";
 }
 
@@ -332,33 +382,66 @@
 	width: 100%;
 	height: 8%;
 	text-align: center;
-	font-size: 36px;
+	font-size: 30px;
 	font-family: "Radiance";
 	color:#fff;
 	margin-bottom: 2%;
 }
 
 .PickListTitlePanel {
+	margin-left: 6%;
 	horizontal-align: left;
 	flow-children: right;
-	margin-left: 6%;
 }
 
 .PickListText {
 	horizontal-align: left;
 	vertical-align: middle;
 	margin-left: 5px;
-	font-size: 32px;
+	font-size: 30px;
 	font-family: "Radiance";
 	color: #ffffff;
 }
 
-#PickListSeparator {
-	margin: 1% 11% 3% 6%;
-	width: 100%;
-	height: 0.4%;
-	background-color: grey;
+#PickListSeparator1,
+#PickListSeparator2,
+#PickListSeparator3
+{
+	margin: 0% 0% 5% 0%;
+	width: 420px;
+	height: 2px;
 	opacity: 0.2;
+	horizontal-align: middle;
+}
+
+.AspectRatio16x10 #PickListSeparator1,
+.AspectRatio16x10 #PickListSeparator2,
+.AspectRatio16x10 #PickListSeparator3
+{
+	width: 370px;
+}
+
+.AspectRatio4x3 #PickListSeparator1,
+.AspectRatio4x3 #PickListSeparator2,
+.AspectRatio4x3 #PickListSeparator3
+{
+	width: 300px;
+	height: 2px;
+	opacity: 0.2;
+	horizontal-align: middle;
+}
+
+#PickListSeparator1 {
+	
+	background-color: red;
+}
+
+#PickListSeparator2 {
+	background-color: green;
+}
+
+#PickListSeparator3 {
+	background-color: dodgerblue;
 }
 
 /* Hero details panel
@@ -368,6 +451,13 @@
 	horizontal-align: middle;
 	flow-children: down;
 	width: 30%;
+}
+
+.AspectRatio4x3 #HeroDetailsPanel {
+	vertical-align: middle;
+	horizontal-align: middle;
+	flow-children: down;
+	width: 40%;
 }
 
 #PickedHeroPanel {
@@ -495,7 +585,13 @@
 	margin-left: -127%;
 	margin-bottom: 7%;
 	align: center bottom;
-	width: 26%;
+	width: 23%;
 	height: 20.5%;
 //	background-color: #000000da;
+}
+
+.AspectRatio4x3 #HeroSelectionChat
+{
+	width: 20%;
+	height: 18%;
 }
