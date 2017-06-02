@@ -293,9 +293,9 @@
 								<Panel id="npc_dota_hero_phantom_assassin" class="ClassImbaOption" 
 									onactivate="SelectHero('npc_dota_hero_phantom_assassin')" 
 									style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_phantom_assassin.png');" />
-								<Panel id="npc_dota_hero_phantom_lancer" class="ClassNormalOption" 
+								<!-- <Panel id="npc_dota_hero_phantom_lancer" class="ClassNormalOption" 
 									onactivate="SelectHero('npc_dota_hero_phantom_lancer')" 
-									style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_phantom_lancer.png');" />
+									style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_phantom_lancer.png');" /> -->
 							</Panel>
 							<Panel class="ClassOptionRow">
 								<Panel id="npc_dota_hero_razor" class="ClassNormalOption" 

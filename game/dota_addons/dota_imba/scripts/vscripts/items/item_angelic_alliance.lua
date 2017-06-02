@@ -58,18 +58,20 @@ function item_imba_angelic_alliance:OnSpellStart()
 end
 
 function item_imba_angelic_alliance:CastFilterResultTarget(target)
-	local caster = self:GetCaster()
+	if IsServer() then
+		local caster = self:GetCaster()
 
-	if caster == target then
-		return UF_FAIL_CUSTOM
+		if caster == target then
+			return UF_FAIL_CUSTOM
+		end
+
+		if target:IsBuilding() then
+			return UF_FAIL_BUILDING
+		end
+
+		local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+	    return nResult
 	end
-
-	if target:IsBuilding() then
-		return UF_FAIL_BUILDING
-	end
-
-	local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
-    return nResult
 end
 
 function item_imba_angelic_alliance:GetCustomCastErrorTarget(target)

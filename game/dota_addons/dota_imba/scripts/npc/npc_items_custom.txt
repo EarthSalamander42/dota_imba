@@ -11010,6 +11010,12 @@
 		"ItemShopTags"					"dust;appearance;detection"
 		"ItemAliases"					"dust;dust of appearance;invis;reveal"
 		"ItemQuality"					"common"
+		"ItemInitialCharges"			"3"
+		"ItemPermanent"					"1"
+		"ItemRequiresCharges"			"1"
+		"ItemDisplayCharges"			"1"
+		"ItemKillable" 					"1" 
+		"ItemSellable" 					"1"
 
 		"AbilitySpecial"
 		{
@@ -11080,7 +11086,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY | DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NONE"
 
 		// Item
 		//-------------------------------------------------------------------------------------------------------------
@@ -11514,7 +11520,7 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"1975"
-		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
 		"ItemShopTags"					"hard_to_tag"
 		"ItemQuality"					"artifact"
 		"ItemAliases"					"madness;berserk"

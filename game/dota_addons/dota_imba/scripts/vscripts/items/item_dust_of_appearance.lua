@@ -27,6 +27,15 @@ function item_imba_dust_of_appearance:OnSpellStart()
 	
 	local chance = self:GetSpecialValueFor("meme_chance") * foundInvis
 	if RollPercentage(chance) then caster:EmitSound("Imba.DustMGS") end
+	-- Consume charge if we didn't find any invis units, so no spammy-spammy
+	if foundInvis == 0 then
+		local new_charge_count = self:GetCurrentCharges() - 1
+		if new_charge_count == 0 then
+			self:Destroy()
+		else
+			self:SetCurrentCharges(new_charge_count)
+		end
+	end
 end
 
 -----------------------------------------------------------------------------------------------------------

@@ -656,6 +656,18 @@ function imba_silencer_last_word_aura:GetAuraSearchType()
 	return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
 end
 
+
+----------------------------------------------------
+-- Last Word silence talent aura prevention
+----------------------------------------------------
+LinkLuaModifier("imba_silencer_last_word_aura_prevent", "hero/hero_silencer", LUA_MODIFIER_MOTION_NONE)
+imba_silencer_last_word_aura_prevent = imba_silencer_last_word_aura_prevent or class({})
+
+function imba_silencer_last_word_aura_prevent:IsHidden() return false end
+function imba_silencer_last_word_aura_prevent:IsPurgable() return false end
+function imba_silencer_last_word_aura_prevent:IsDebuff() return false end
+
+
 ----------------------------------------------------
 -- Last Word aura enemy silence modifier
 ----------------------------------------------------
@@ -667,6 +679,8 @@ function imba_silencer_last_word_silence_aura:IsPurgable() return false end
 
 function imba_silencer_last_word_silence_aura:OnCreated( kv )
 	self.silence_duration = self:GetAbility():GetSpecialValueFor("aura_silence")
+	self.prevention_duration = self:GetCaster():FindTalentValue("special_bonus_imba_silencer_8")
+	self.modifier_prevention = "imba_silencer_last_word_aura_prevent"
 end
 
 function imba_silencer_last_word_silence_aura:DeclareFunctions()
@@ -686,6 +700,16 @@ function imba_silencer_last_word_silence_aura:OnAbilityExecuted( params )
 			if params.ability:IsToggle() and params.ability:GetToggleState() then
 				return
 			end
+
+			-- If Last Aura aura was already triggered, do nothing
+			if self:GetCaster():HasModifier(self.modifier_prevention) then
+			 	return nil
+			end
+
+			-- Add prevention modifier
+			self:GetCaster():AddNewModifier(self:GetCaster(), self:GetAbility(), self.modifier_prevention, {duration = self.prevention_duration})
+
+			-- Silence!
 			self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_silence", {duration = self.silence_duration})
 		end
 	end

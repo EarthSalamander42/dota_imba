@@ -208,7 +208,7 @@ local id = event.PlayerID
 		"npc_dota_hero_clinkz",
 		"npc_dota_hero_obsidian_destroyer",
 		"npc_dota_hero_shadow_demon",
-		"npc_dota_hero_phantom_lancer",
+		--"npc_dota_hero_phantom_lancer",
 		"npc_dota_hero_treant",
 		"npc_dota_hero_ogre_magi",
 		"npc_dota_hero_chaos_knight",
