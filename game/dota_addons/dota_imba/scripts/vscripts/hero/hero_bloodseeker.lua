@@ -11,6 +11,7 @@ imba_bloodseeker_bloodrage = imba_bloodseeker_bloodrage or class({})
 function imba_bloodseeker_bloodrage:OnSpellStart()
 	local hTarget = self:GetCursorTarget()
 	local caster = self:GetCaster()
+	if hTarget:TriggerSpellAbsorb(self) then return end --if target has spell absorption, stop.
 	hTarget:AddNewModifier(caster, self, "modifier_imba_bloodrage_buff_stats", {duration = self:GetSpecialValueFor("duration")})
 	EmitSoundOn("hero_bloodseeker.bloodRage", hTarget)
 end
@@ -527,6 +528,7 @@ imba_bloodseeker_rupture = imba_bloodseeker_rupture or class({})
 function imba_bloodseeker_rupture:OnSpellStart(target)
 	local hTarget = target or self:GetCursorTarget()
 	local caster = self:GetCaster()
+	if hTarget:TriggerSpellAbsorb(self) then return end --if target has spell absorption, stop.
 	if target then
 		hTarget:AddNewModifier(caster, self, "modifier_imba_rupture_debuff_dot", {duration = 0.3})
 	else
