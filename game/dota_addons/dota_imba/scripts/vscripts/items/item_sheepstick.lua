@@ -92,13 +92,19 @@ function item_imba_sheepstick:OnSpellStart()
 			--Pick up the debuff to retrieve the current the stack count
 			local modifier_stacking_penalty_debuff = target:FindModifierByName("modifier_item_imba_sheepstick_stacking_penalty_debuff")
 			local stack_count = modifier_stacking_penalty_debuff:GetStackCount()
-			--Ignore the first stack
-			if stack_count >= 1 then
-				local product = stacking_penalty_base
-				for i = 1, stack_count-1 do
-					product = product * stacking_penalty_base
-				end				
-				stacking_penalty = stacking_penalty - product
+						
+
+			if stack_count > 0 then
+				local product = 0
+				for i=1,stack_count do
+					if product == 0 then
+						product = (1-stacking_penalty_base)
+					else
+					    product = product * (1-stacking_penalty_base)
+					end
+				end
+				stacking_penalty = 1-product
+
 				--Minimum hex time of 0.1 seconds
 				modified_duration = math.max(hex_duration - (hex_duration * stacking_penalty),0.1)							
 			end
