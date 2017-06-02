@@ -10,6 +10,7 @@ item_imba_sheepstick = item_imba_sheepstick or class({})
 LinkLuaModifier( "modifier_item_imba_sheepstick", "items/item_sheepstick.lua", LUA_MODIFIER_MOTION_NONE )			-- Owner's bonus attributes, stackable
 LinkLuaModifier( "modifier_item_imba_sheepstick_debuff", "items/item_sheepstick.lua", LUA_MODIFIER_MOTION_NONE )	-- Enemy debuff
 LinkLuaModifier( "modifier_item_imba_sheepstick_buff", "items/item_sheepstick.lua", LUA_MODIFIER_MOTION_NONE )		-- Self-use buff
+LinkLuaModifier( "modifier_item_imba_sheepstick_stacking_penalty_debuff", "items/item_sheepstick.lua", LUA_MODIFIER_MOTION_NONE )	-- Enemy stacking debuff (prevent chain hex)
 
 function item_imba_sheepstick:GetIntrinsicModifierName()
 	return "modifier_item_imba_sheepstick" end
@@ -51,6 +52,11 @@ function item_imba_sheepstick:OnSpellStart()
 		local caster = self:GetCaster()
 		local target = self:GetCursorTarget()
 		local hex_duration = self:GetSpecialValueFor("hex_duration")
+		local stacking_penalty_base = self:GetSpecialValueFor("stacking_penalty")
+		local stacking_penalty = stacking_penalty
+		local stacking_penalty_duration = self:GetSpecialValueFor("stacking_penalty_dur")
+		local stacking_penalty_max = self:GetSpecialValueFor("stacking_penalty_max")
+		local modified_duration = hex_duration
 
 		-- If the target possesses a ready Linken's Sphere, do nothing
 		if target:GetTeam() ~= caster:GetTeam() then
@@ -78,7 +84,21 @@ function item_imba_sheepstick:OnSpellStart()
 			target:AddNewModifier(caster, self, "modifier_item_imba_sheepstick_buff", {duration = hex_duration})
 			target:Purge(false, true, false, false, false)
 		else
-			target:AddNewModifier(caster, self, "modifier_item_imba_sheepstick_debuff", {duration = hex_duration})
+			--If the target has already been hexed recently, reduce the duration based on the number of times it has been hexed
+			local modifier_stacking_penalty_debuff_handler = target:FindModifierByName("modifier_item_imba_sheepstick_stacking_penalty_debuff")                                 
+			if modifier_stacking_penalty_debuff_handler then                
+				local no_of_stacks = modifier_stacking_penalty_debuff_handler.GetStackCount
+				stacking_penalty = stacking_penalty_base + (stacking_penalty_base / no_of_stacks)
+				modified_duration = hex_duration / (1 / stacking_penalty)
+				--Apply the hex with the reduced duration
+				target:AddNewModifier(caster, self, "modifier_item_imba_sheepstick_debuff", {duration = modified_duration})
+				-- Increment the stack count of the stacking penalty
+				modifier_stacking_penalty_debuff_handler:IncrementStackCount()
+				modifier_stacking_penalty_debuff_handler:ForceRefresh()
+			else
+				target:AddNewModifier(caster, self, "modifier_item_imba_sheepstick_debuff", {duration = hex_duration})
+				target:AddNewModifier(caster, self, "modifier_item_imba_sheepstick_stacking_penalty_debuff", {duration = stacking_penalty_duration})
+			end
 		end
 	end
 end
@@ -116,6 +136,74 @@ function modifier_item_imba_sheepstick:GetModifierBonusStats_Intellect()
 
 function modifier_item_imba_sheepstick:GetModifierPercentageManaRegen()
 	return self:GetAbility():GetSpecialValueFor("bonus_mana_regen") end
+
+-----------------------------------------------------------------------------------------------------------
+--	Sheepstick enemy stacking penalty debuff
+-----------------------------------------------------------------------------------------------------------
+
+if modifier_item_imba_sheepstick_stacking_penalty_debuff == nil then modifier_item_imba_sheepstick_stacking_penalty_debuff = class({}) end
+function modifier_item_imba_sheepstick_stacking_penalty_debuff:IsHidden() return false end
+function modifier_item_imba_sheepstick_stacking_penalty_debuff:IsDebuff() return true end
+function modifier_item_imba_sheepstick_stacking_penalty_debuff:IsPurgable() return true end
+
+function modifier_item_imba_sheepstick:DeclareFunctions()
+	local funcs = {
+	}
+	return funcs
+end
+
+function modifier_item_imba_sheepstick_stacking_penalty_debuff:OnCreated()
+    if IsServer() then
+        -- Ability properties
+        self.caster = self:GetCaster()
+        self.ability = self:GetAbility()
+        self.parent = self:GetParent()
+
+        -- Ability specials
+        self.duration = self.ability:GetSpecialValueFor("stacking_penalty_dur")
+
+        -- Initialize table
+        self.stacks_table = {}        
+
+        -- Start thinking
+        self:StartIntervalThink(0.1)
+    end
+end
+
+function modifier_item_imba_sheepstick_stacking_penalty_debuff:OnIntervalThink()
+    if IsServer() then
+
+        -- Check if there are any stacks left on the table
+        if #self.stacks_table > 0 then
+
+            -- For each stack, check if it is past its expiration time. If it is, remove it from the table
+            for i = #self.stacks_table, 1, -1 do
+                if self.stacks_table[i] + self.duration < GameRules:GetGameTime() then
+                    table.remove(self.stacks_table, i)      
+                end
+            end
+            
+            -- If after removing the stacks, the table is empty, remove the modifier.
+            if #self.stacks_table == 0 then
+                self:Destroy()
+
+            -- Otherwise, set its stack count
+            else
+                self:SetStackCount(#self.stacks_table)
+            end
+        -- If there are no stacks on the table, just remove the modifier.
+        else
+            self:Destroy()
+        end
+    end
+end
+
+function modifier_item_imba_sheepstick_stacking_penalty_debuff:OnRefresh()
+    if IsServer() then
+        -- Insert new stack values
+        table.insert(self.stacks_table, GameRules:GetGameTime())
+    end
+end
 
 -----------------------------------------------------------------------------------------------------------
 --	Sheepstick enemy debuff
