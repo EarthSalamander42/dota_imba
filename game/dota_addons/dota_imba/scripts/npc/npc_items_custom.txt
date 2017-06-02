@@ -11014,6 +11014,8 @@
 		"ItemPermanent"					"1"
 		"ItemRequiresCharges"			"1"
 		"ItemDisplayCharges"			"1"
+		"ItemKillable" 					"1" 
+		"ItemSellable" 					"1"
 
 		"AbilitySpecial"
 		{
