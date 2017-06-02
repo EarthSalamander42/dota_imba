@@ -11708,23 +11708,25 @@
 			"07"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"soul_slaughter_creep_duration"		"5"
+				"soul_slaughter_duration"			"10"
 			}
+
 			"08"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"soul_slaughter_hero_duration"		"12"
-			}
-			"09"
 			{
 				"var_type"							"FIELD_FLOAT"
 				"soul_slaughter_damage_per_stack"	"0.25"
 				"CalculateSpellDamageTooltip"	"0"
 			}
-			"10"
+			"09"
 			{
 				"var_type"							"FIELD_INTEGER"
 				"soul_slaughter_hp_per_stack"		"10"
+			}
+
+			"10"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"soul_slaughter_max_hp_pct"			"200"
 			}
 		}
 	}
