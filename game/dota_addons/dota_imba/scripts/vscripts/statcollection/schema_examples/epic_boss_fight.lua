@@ -4,8 +4,8 @@ function customSchema:init()
 
     -- Check the schema_examples folder for different implementations
 
-    -- Tracks game version
-    statCollection:setFlags({version = IMBA_VERSION})
+    -- Flag Example
+    -- statCollection:setFlags({version = GetVersion()})
 
     -- Listen for changes in the current state
     ListenToGameEvent('game_rules_state_change', function(keys)
@@ -43,8 +43,11 @@ function BuildGameArray()
     local game = {}
 
     -- Add game values here as game.someValue = GetSomeGameValue()
-    game.gl = GameRules:GetDOTATime(false, false) -- Tracks total game length, from the horn sound, in seconds
-    game.wt = GAME_WINNER_TEAM -- Tracks which team won the game
+    game.M_R = GameRules._roundnumber -- max round achieved
+    game.F_G = GameRules._finish -- has the game finished (win)
+    game.life = GameRules._live -- how many lives left
+    game.U_L = GameRules._used_live -- Used Life
+    game.T_L = GameRules._used_live + GameRules._live -- Total Life
 
     return game
 end
@@ -58,38 +61,29 @@ function BuildPlayersArray()
 
                 local hero = PlayerResource:GetSelectedHeroEntity(playerID)
 
-                -- Team string logic
-                local player_team = ""
-                if hero:GetTeam() == DOTA_TEAM_GOODGUYS then
-                    player_team = "Radiant"
-                else
-                    player_team = "Dire"
-                end
-
                 table.insert(players, {
-
                     -- steamID32 required in here
                     steamID32 = PlayerResource:GetSteamAccountID(playerID),
 
                     -- Example functions for generic stats are defined in statcollection/lib/utilities.lua
                     -- Add player values here as someValue = GetSomePlayerValue(),
+                    HN = GetHeroName(playerID), -- Hero
+                    P_L = hero:GetLevel(), -- Level
+                    P_NW = GetNetworth(PlayerResource:GetSelectedHeroEntity(playerID)), -- Networth
+                    P_T = team, -- Team
+                    P_K = hero:GetKills(), -- Kills
+                    P_D = hero:GetDeaths(), -- Deaths
+                    P_H = PlayerResource:GetHealing(hero:GetPlayerOwnerID()), -- Healing
+                    P_R = hero.Ressurect, -- Ressurections
+                    P_GPM = math.floor(PlayerResource:GetGoldPerMin(hero:GetPlayerOwnerID())), -- GPM
 
-                    ph = GetHeroName(playerID), -- Hero by its short name
-                    pl = hero:GetLevel(),       -- Hero level at the end of the game
-                    pnw = GetNetworth(hero),    -- Sum of hero gold and item worth
-                    pbb = hero.buyback_count,   -- Amount of buybacks performed during the game
-                    pt = player_team,           -- Team this hero belongs to
-                    pk = hero:GetKills(),       -- Number of kills of this players hero
-                    pa = hero:GetAssists(),     -- Number of deaths of this players hero
-                    pd = hero:GetDeaths(),      -- Number of deaths of this players hero
-
-                    -- Item list
-                    i1 = GetItemSlotImba(hero, 0),
-                    i2 = GetItemSlotImba(hero, 1),
-                    i3 = GetItemSlotImba(hero, 2),
-                    i4 = GetItemSlotImba(hero, 3),
-                    i5 = GetItemSlotImba(hero, 4),
-                    i6 = GetItemSlotImba(hero, 5)
+                    --inventory :
+                    i1 = GetItemSlot(hero, 0),
+                    i2 = GetItemSlot(hero, 1),
+                    i3 = GetItemSlot(hero, 2),
+                    i4 = GetItemSlot(hero, 3),
+                    i5 = GetItemSlot(hero, 4),
+                    i6 = GetItemSlot(hero, 5)
                 })
             end
         end
@@ -144,21 +138,3 @@ function BuildRoundWinnerArray()
 end
 
 -------------------------------------
--- MY CUSTOM FUNCTIONS
--------------------------------------
-
--- String of item name, without the item_imba_ prefix
-function GetItemSlotImba(hero, slot)
-    local item = hero:GetItemInSlot(slot)
-    local itemName = "empty"
-
-    if item then
-        if string.find(item:GetAbilityName(), "imba") then
-            itemName = string.gsub(item:GetAbilityName(), "item_imba_", "")
-        else
-            itemName = string.gsub(item:GetAbilityName(), "item_", "")
-        end
-    end
-
-    return itemName
-end

@@ -3,11 +3,11 @@ customSchema = class({})
 function customSchema:init(options)
 
     -- Flags
-    statCollection:setFlags({version = GetVersion()})
+    statCollection:setFlags({ version = GetVersion() })
 
     -- Listen for changes in the current state
     ListenToGameEvent('game_rules_state_change', function(keys)
-    -- Grab the current state
+        -- Grab the current state
         local state = GameRules:State_Get()
 
         if state == DOTA_GAMERULES_STATE_POST_GAME then
@@ -19,7 +19,7 @@ function customSchema:init(options)
             local players = BuildPlayersArray()
 
             -- Send custom stats
-            statCollection:sendCustom({game=game, players=players})
+            statCollection:sendCustom({ game = game, players = players })
         end
     end, nil)
 end
@@ -29,13 +29,12 @@ function customSchema:submitRound(args)
     game = BuildGameArray()
     players = BuildPlayersArray()
 
-    statCollection:sendCustom({game=game, players=players})
+    statCollection:sendCustom({ game = game, players = players })
 
-    return {winners = winners, lastRound = false}
+    return { winners = winners, lastRound = false }
 end
 
 -------------------------------------
-
 function BuildRoundWinnerArray()
     local winners = {}
     local current_winner_team = GameRules.Winner or 0
@@ -110,7 +109,7 @@ function BuildPlayersArray()
     return players
 end
 
-function GetPlayerWeaponLevel( playerID )
+function GetPlayerWeaponLevel(playerID)
     local player_upgrades = PMP:GetUpgradeList(playerID)
     local race = GetPlayerRace(playerID)
     local weapon_level = 0
