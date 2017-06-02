@@ -274,7 +274,7 @@ function modifier_item_imba_heavens_halberd_disarm_cooldown:IsPermanent() return
 -----------------------------------------------------------------------------------------------------------
 
 if modifier_item_imba_heavens_halberd_active_disarm == nil then modifier_item_imba_heavens_halberd_active_disarm = class({}) end
-function modifier_item_imba_heavens_halberd_active_disarm:IsHidden() return true end
+function modifier_item_imba_heavens_halberd_active_disarm:IsHidden() return false end
 function modifier_item_imba_heavens_halberd_active_disarm:IsDebuff() return true end
 function modifier_item_imba_heavens_halberd_active_disarm:IsPurgable() return false end
 
