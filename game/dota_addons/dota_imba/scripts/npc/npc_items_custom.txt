@@ -10995,6 +10995,10 @@
 		"ItemShopTags"					"dust;appearance;detection"
 		"ItemAliases"					"dust;dust of appearance;invis;reveal"
 		"ItemQuality"					"common"
+		"ItemInitialCharges"			"3"
+		"ItemPermanent"					"1"
+		"ItemRequiresCharges"			"1"
+		"ItemDisplayCharges"			"1"
 
 		"AbilitySpecial"
 		{
