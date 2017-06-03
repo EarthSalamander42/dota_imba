@@ -11886,6 +11886,7 @@
 		"ID"							"2242"
 		"BaseClass"						"item_lua"
 		"AbilityTextureName"			"custom/imba_black_queen_cape"
+		"AbilitySharedCooldown"			"bkb"
 		"ScriptFile"					"items/item_black_queen_cape.lua"
 
 		// Item Info
