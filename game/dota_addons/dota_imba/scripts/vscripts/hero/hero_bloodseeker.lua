@@ -153,6 +153,7 @@ function imba_bloodseeker_blood_bath:OnSpellStart()
 	local vPos = self:GetCursorPosition()
 	local caster = self:GetCaster()
 	
+	AddFOWViewer(caster:GetTeamNumber(),vPos,self:GetSpecialValueFor("vision_aoe"),self:GetSpecialValueFor("vision_duration"),true)   --gives ground vision
 	local radius = self:GetSpecialValueFor("radius")
 	EmitSoundOn("Hero_Bloodseeker.BloodRite.Cast", caster)
 	EmitSoundOnLocationWithCaster( vPos, "Hero_Bloodseeker.BloodRite", caster )
