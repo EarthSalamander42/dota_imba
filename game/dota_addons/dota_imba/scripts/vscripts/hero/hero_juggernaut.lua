@@ -387,7 +387,7 @@ function imba_juggernaut_blade_dance:OnSpellStart()
 	local caster = self:GetCaster()
 	local target = self:GetCursorTarget()
 	self.endTarget = target
-	caster:AddNewModifier(caster, self, "modifier_imba_juggernaut_blade_dance_empowered_slice", {})
+	caster:AddNewModifier(caster, self, "modifier_imba_juggernaut_blade_dance_empowered_slice", { duration = 3 })
 end
 
 function imba_juggernaut_blade_dance:GetCastRange()
