@@ -387,7 +387,7 @@ function imba_juggernaut_blade_dance:OnSpellStart()
 	local caster = self:GetCaster()
 	local target = self:GetCursorTarget()
 	self.endTarget = target
-	caster:AddNewModifier(caster, self, "modifier_imba_juggernaut_blade_dance_empowered_slice", {})
+	caster:AddNewModifier(caster, self, "modifier_imba_juggernaut_blade_dance_empowered_slice", { duration = 3 })
 end
 
 function imba_juggernaut_blade_dance:GetCastRange()
@@ -495,7 +495,10 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:HorizontalMotion( 
 			self:GetParent():InterruptMotionControllers(true)
 			self:Destroy()
 		end
-
+		if self.endTarget:IsInvisible() or self.endTarget:IsOutOfGame() then
+					self:GetParent():InterruptMotionControllers(true)
+			self:Destroy()
+		end
 		if self.distance_left > 100 and not self.wind_dance:IsNull() and self.wind_dance:GetStackCount() > 0 then
 			local oldPos = self.caster:GetAbsOrigin()
 			self.direction = ( self.endTarget:GetAbsOrigin() - self.caster:GetAbsOrigin() ):Normalized()
