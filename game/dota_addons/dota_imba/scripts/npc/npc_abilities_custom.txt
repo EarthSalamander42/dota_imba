@@ -6723,7 +6723,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"base_spook_duration"	"0.75"
+				"base_spook_duration"	"1.75"
 			}
 			"05"
 			{
@@ -6733,12 +6733,12 @@
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"spook_added_duration"	"0.1 0.1 0.1 0.1 0.15 0.2 0.25"
+				"spook_added_duration"	"0.25"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"max_spook_duration"	"1.75 1.75 1.75 1.75 2.25 2.75 3.25"
+				"max_spook_duration"	"3 3 3 3 3.5 4 4.5"
 			}
 		}
 	}

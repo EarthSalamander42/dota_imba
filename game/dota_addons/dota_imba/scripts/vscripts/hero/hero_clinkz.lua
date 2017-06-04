@@ -209,6 +209,11 @@ function modifier_imba_strafe_mount:OnIntervalThink()
             self:Destroy()
         end
 
+        -- If the target is invulnerable, kill modifier
+        if self.target:IsInvulnerable() then
+            self:Destroy()
+        end
+
         if distance > 300 then
             -- Set Clinkz' location to it        
             self.caster:SetAbsOrigin(mount_point) 
@@ -852,17 +857,26 @@ function modifier_imba_skeleton_walk_spook:OnCreated()
 
         self.reacting = false
 
+        self.qangle_angle = 0
+
         -- RUN FROM CLINKZ!
-        self:StartIntervalThink(FrameTime())
+        self:StartIntervalThink(0.1)
     end
 end
 
 function modifier_imba_skeleton_walk_spook:OnIntervalThink()    
-    -- Determine location to force move to
-    local direction = (self.parent:GetAbsOrigin() - self.caster:GetAbsOrigin()):Normalized()
-    local location = self.parent:GetAbsOrigin() + direction * 500    
+    -- Determine a random direction to force move to
+    local qangle = QAngle(0, self.qangle_angle, 0)
+    self.qangle_angle = self.qangle_angle + 30
+    if self.qangle_angle >= 360 then
+        self.qangle_angle = 0
+    end
 
-    self.parent:MoveToPosition(location)    
+    local direction = (self.parent:GetAbsOrigin() - self.caster:GetAbsOrigin()):Normalized()        
+    local location = self.parent:GetAbsOrigin() + direction * 500    
+    local final_location = RotatePosition(self.parent:GetAbsOrigin(), qangle, location)
+
+    self.parent:MoveToPosition(final_location)    
 end
 
 function modifier_imba_skeleton_walk_spook:OnDestroy()
