@@ -871,6 +871,13 @@ end
 
 function modifier_imba_greevils_greed_handler:OnIntervalThink()
     if IsServer() then                
+        -- If Alchemist is invisible, remove the model
+        if self.owner:IsInvisible() then
+            self.caster:AddNoDraw()
+        else
+            self.caster:RemoveNoDraw()
+        end
+
         -- If the greevil's target is dead, clear the target
         if self.caster.target and not self.caster.target:IsAlive() then
             self.caster.target = nil
@@ -879,7 +886,7 @@ function modifier_imba_greevils_greed_handler:OnIntervalThink()
         -- If the greevil does not have a target, go back to Alchemist, if he is alive.
         if not self.caster.target then
             if self.owner:IsAlive() then
-                self.caster:MoveToNPC(self.owner)
+                self.caster:MoveToNPC(self.owner)                
 
             -- If Alchemist is dead, send the greevil to the fountain
             else
@@ -898,15 +905,18 @@ function modifier_imba_greevils_greed_handler:OnIntervalThink()
 end
 
 function modifier_imba_greevils_greed_handler:CheckState()
-    return {
-        [MODIFIER_STATE_INVULNERABLE] = true,
-        [MODIFIER_STATE_UNSELECTABLE] = true,
-        [MODIFIER_STATE_NOT_ON_MINIMAP] = true,
-        [MODIFIER_STATE_NO_HEALTH_BAR] = true,
-        [MODIFIER_STATE_OUT_OF_GAME] = true,
-    }
-end
+    if IsServer() then                            
+        local state = {
+                [MODIFIER_STATE_INVULNERABLE] = true,
+                [MODIFIER_STATE_UNSELECTABLE] = true,
+                [MODIFIER_STATE_NOT_ON_MINIMAP] = true,
+                [MODIFIER_STATE_NO_HEALTH_BAR] = true,
+                [MODIFIER_STATE_OUT_OF_GAME] = true,
+            }        
 
+        return state
+    end
+end
 
 
 modifier_imba_goblins_greed_mark = modifier_imba_goblins_greed_mark or class({})

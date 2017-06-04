@@ -134,7 +134,7 @@ function modifier_imba_shrapnel_attack:OnCreated()
     end
 end
 
-function modifier_imba_shrapnel_attack:IsHidden() return false end
+function modifier_imba_shrapnel_attack:IsHidden() return true end
 function modifier_imba_shrapnel_attack:IsPurgable() return false end
 function modifier_imba_shrapnel_attack:IsDebuff() return false end
 
@@ -306,7 +306,7 @@ function modifier_imba_shrapnel_charges:OnIntervalThink()
             self.ability:SetActivated(false)
         end        
 
-        -- If we're at max charges, and do nothing else
+        -- If we're at max charges, do nothing else
         if stacks == self.max_charge_count then            
             return nil
         end        
@@ -329,7 +329,7 @@ function modifier_imba_shrapnel_charges:OnIntervalThink()
     end
 end
 
-function modifier_imba_shrapnel_charges:OnStackCountChanged()
+function modifier_imba_shrapnel_charges:OnStackCountChanged(old_stack_count)
     if IsServer() then
         -- Current stacks
         local stacks = self:GetStackCount() 
@@ -345,12 +345,25 @@ function modifier_imba_shrapnel_charges:OnStackCountChanged()
             self.ability:EndCooldown()
         end
 
-        -- If we're not at the max stacks yet, reset the timer   
-        if stacks < self.max_charge_count then
-            self:SetDuration(self.charge_replenish_rate, true)
+        local lost_stack
+        if old_stack_count > stacks then
+            lost_stack = true
         else
-            -- Otherwise, stop the timer
-            self:SetDuration(-1, true)
+            lost_stack = false
+        end
+
+        if not lost_stack then
+            -- If we're not at the max stacks yet, reset the timer   
+            if stacks < self.max_charge_count then
+                self:SetDuration(self.charge_replenish_rate, true)
+            else
+                -- Otherwise, stop the timer
+                self:SetDuration(-1, true)
+            end
+        else
+            if old_stack_count == self.max_charge_count then
+                self:SetDuration(self.charge_replenish_rate, true)            
+            end
         end
     end
 end
