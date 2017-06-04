@@ -190,14 +190,14 @@ function modifier_imba_berserkers_rage_ranged:DeclareFunctions()
     local decFuns =
     {
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT,
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS
     }
     return decFuns
 end
 
-function modifier_imba_berserkers_rage_ranged:GetModifierMoveSpeedBonus_Percentage()
+function modifier_imba_berserkers_rage_ranged:GetModifierMoveSpeedBonus_Constant()
 	return self:GetCaster():FindSpecificTalentValue("special_bonus_imba_troll_warlord_1", "movespeed_pct")
 end
 

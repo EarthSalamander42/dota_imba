@@ -1012,7 +1012,7 @@ function modifier_imba_reincarnation:GetModifierAura()
 end
 
 function modifier_imba_reincarnation:IsAura()
-    if self.caster:HasScepter() then
+    if self.caster:IsRealHero() and self.caster:HasScepter() then
         return true        
     end
 
@@ -1136,6 +1136,10 @@ function modifier_imba_reincarnation_wraith_form:OnCreated()
     self.ability = self:GetAbility()
     self.parent = self:GetParent()
 end
+
+function modifier_imba_reincarnation_wraith_form:IsHidden() return false end
+function modifier_imba_reincarnation_wraith_form:IsDebuff() return false end
+function modifier_imba_reincarnation_wraith_form:IsPurgable() return false end
 
 function modifier_imba_reincarnation_wraith_form:DeclareFunctions()
     local decFuncs = {MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL,
@@ -1292,6 +1296,7 @@ function modifier_imba_kingdom_come_slow:OnCreated()
     self.stun_duration = self.ability:GetSpecialValueFor("stun_duration")
     self.damage = self.ability:GetSpecialValueFor("damage")        
     self.radius = self.ability:GetSpecialValueFor("radius")
+    self.wraith_duration = self.ability:GetSpecialValueFor("wraith_duration")
 
     -- Add particle effect
     local particle_slow_fx = ParticleManager:CreateParticle(self.particle_slow, PATTACH_ABSORIGIN_FOLLOW, self.parent)
@@ -1361,6 +1366,9 @@ function modifier_imba_kingdom_come_slow:OnDestroy()
             wraith:SetBaseMaxHealth(self.parent:GetBaseMaxHealth())
             wraith:SetMaxHealth(self.parent:GetMaxHealth())
             wraith:SetHealth(wraith:GetMaxHealth())
+
+            -- Set the Wraith to die after a small duration
+            wraith:AddNewModifier(self.caster, self.ability, "modifier_kill", {duration = self.wraith_duration})
 
             ResolveNPCPositions(self.parent:GetAbsOrigin(), 164)
 
