@@ -48,9 +48,16 @@ function modifier_item_imba_poor_mans_shield:IsPurgable() return false end
 function modifier_item_imba_poor_mans_shield:IsPermanent() return true end
 function modifier_item_imba_poor_mans_shield:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
+function modifier_item_imba_poor_mans_shield:OnCreated()
+	self.ability = self:GetAbility()
+
+	self.damage_block = self.ability:GetSpecialValueFor("damage_block")
+	self.bonus_agi = self.ability:GetSpecialValueFor("bonus_agi")
+end
+
 -- Custom unique damage block property
 function modifier_item_imba_poor_mans_shield:GetCustomDamageBlockUnique()
-	return self:GetAbility():GetSpecialValueFor("damage_block") end
+	return self.damage_block end
 
 -- Declare modifier events/properties
 function modifier_item_imba_poor_mans_shield:DeclareFunctions()
@@ -61,7 +68,7 @@ function modifier_item_imba_poor_mans_shield:DeclareFunctions()
 end
 
 function modifier_item_imba_poor_mans_shield:GetModifierBonusStats_Agility()
-	return self:GetAbility():GetSpecialValueFor("bonus_agi") end
+	return self.bonus_agi end
 
 -----------------------------------------------------------------------------------------------------------
 --	Vanguard definition
@@ -84,6 +91,13 @@ function modifier_item_imba_vanguard:IsPurgable() return false end
 function modifier_item_imba_vanguard:IsPermanent() return true end
 function modifier_item_imba_vanguard:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
+function modifier_item_imba_vanguard:OnCreated()
+	self.ability = self:GetAbility()
+
+	self.health = self.ability:GetSpecialValueFor("health")
+	self.health_regen = self.ability:GetSpecialValueFor("health_regen")
+end
+
 -- Custom unique damage block property
 function modifier_item_imba_vanguard:GetCustomDamageBlockUnique()
 	return self:GetAbility():GetSpecialValueFor("damage_block") end
@@ -98,10 +112,10 @@ function modifier_item_imba_vanguard:DeclareFunctions()
 end
 
 function modifier_item_imba_vanguard:GetModifierHealthBonus()
-	return self:GetAbility():GetSpecialValueFor("health") end
+	return self.health end
 
 function modifier_item_imba_vanguard:GetModifierConstantHealthRegen()
-	return self:GetAbility():GetSpecialValueFor("health_regen") end
+	return self.health_regen end
 
 -----------------------------------------------------------------------------------------------------------
 --	Crimson Guard definition
@@ -154,13 +168,25 @@ function modifier_item_imba_crimson_guard:IsPurgable() return false end
 function modifier_item_imba_crimson_guard:IsPermanent() return true end
 function modifier_item_imba_crimson_guard:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
+function modifier_item_imba_crimson_guard:OnCreated()
+	self.ability = self:GetAbility()
+
+	self.damage_block = self.ability:GetSpecialValueFor("damage_block")
+	self.damage_reduction = self.ability:GetSpecialValueFor("damage_reduction")
+	self.health = self.ability:GetSpecialValueFor("health")
+	self.health_regen = self.ability:GetSpecialValueFor("health_regen")
+	self.armor = self.ability:GetSpecialValueFor("armor")
+	self.bonus_stats = self.ability:GetSpecialValueFor("bonus_stats")
+end
+
+
 -- Custom unique damage block property
 function modifier_item_imba_crimson_guard:GetCustomDamageBlockUnique()
-	return self:GetAbility():GetSpecialValueFor("damage_block") end
+	return self.damage_block end
 
 -- Custom unique damage reduction property
 function modifier_item_imba_crimson_guard:GetCustomIncomingDamageReductionUnique()
-	return self:GetAbility():GetSpecialValueFor("damage_reduction") end
+	return self.damage_reduction end
 
 -- Declare modifier events/properties
 function modifier_item_imba_crimson_guard:DeclareFunctions()
@@ -176,22 +202,22 @@ function modifier_item_imba_crimson_guard:DeclareFunctions()
 end
 
 function modifier_item_imba_crimson_guard:GetModifierHealthBonus()
-	return self:GetAbility():GetSpecialValueFor("health") end
+	return self.health end
 
 function modifier_item_imba_crimson_guard:GetModifierConstantHealthRegen()
-	return self:GetAbility():GetSpecialValueFor("health_regen") end
+	return self.health_regen end
 
 function modifier_item_imba_crimson_guard:GetModifierPhysicalArmorBonus()
-	return self:GetAbility():GetSpecialValueFor("armor") end
+	return self.armor end
 
 function modifier_item_imba_crimson_guard:GetModifierBonusStats_Strength()
-	return self:GetAbility():GetSpecialValueFor("bonus_stats") end
+	return self.bonus_stats end
 
 function modifier_item_imba_crimson_guard:GetModifierBonusStats_Agility()
-	return self:GetAbility():GetSpecialValueFor("bonus_stats") end
+	return self.bonus_stats end
 
 function modifier_item_imba_crimson_guard:GetModifierBonusStats_Intellect()
-	return self:GetAbility():GetSpecialValueFor("bonus_stats") end
+	return self.bonus_stats end
 
 -----------------------------------------------------------------------------------------------------------
 --	Crimson Guard active buff
@@ -297,6 +323,16 @@ function modifier_item_imba_greatwyrm_plate:IsPurgable() return false end
 function modifier_item_imba_greatwyrm_plate:IsPermanent() return true end
 function modifier_item_imba_greatwyrm_plate:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
+function modifier_item_imba_greatwyrm_plate:OnCreated()
+	self.ability = self:GetAbility()
+
+	self.health = self.ability:GetSpecialValueFor("health")
+	self.health_regen = self.ability:GetSpecialValueFor("health_regen")
+	self.armor = self.ability:GetSpecialValueFor("armor")
+	self.bonus_stats = self.ability:GetSpecialValueFor("bonus_stats")
+	self.bonus_strength = self.ability:GetSpecialValueFor("bonus_strength")	
+end
+
 -- Custom unique damage block property
 function modifier_item_imba_greatwyrm_plate:GetCustomDamageBlockUnique()
 	return self:GetAbility():GetSpecialValueFor("damage_block") end
@@ -323,22 +359,22 @@ function modifier_item_imba_greatwyrm_plate:DeclareFunctions()
 end
 
 function modifier_item_imba_greatwyrm_plate:GetModifierHealthBonus()
-	return self:GetAbility():GetSpecialValueFor("health") end
+	return self.health end
 
 function modifier_item_imba_greatwyrm_plate:GetModifierConstantHealthRegen()
-	return self:GetAbility():GetSpecialValueFor("health_regen") end
+	return self.health_regen end
 
 function modifier_item_imba_greatwyrm_plate:GetModifierPhysicalArmorBonus()
-	return self:GetAbility():GetSpecialValueFor("armor") end
+	return self.armor end
 
 function modifier_item_imba_greatwyrm_plate:GetModifierBonusStats_Strength()
-	return self:GetAbility():GetSpecialValueFor("bonus_stats") + self:GetAbility():GetSpecialValueFor("bonus_strength") end
+	return self.bonus_stats + self.bonus_strength end
 
 function modifier_item_imba_greatwyrm_plate:GetModifierBonusStats_Agility()
-	return self:GetAbility():GetSpecialValueFor("bonus_stats") end
+	return self.bonus_stats end
 
 function modifier_item_imba_greatwyrm_plate:GetModifierBonusStats_Intellect()
-	return self:GetAbility():GetSpecialValueFor("bonus_stats") end
+	return self.bonus_stats end
 
 -----------------------------------------------------------------------------------------------------------
 --	Tutela Plate active buff
