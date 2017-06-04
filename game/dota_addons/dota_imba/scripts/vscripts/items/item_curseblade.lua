@@ -93,6 +93,11 @@ function modifier_item_imba_curseblade:OnCreated()
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
 
+	if not self.ability then
+		self:Destroy()			
+		return nil
+	end
+
 	-- Ability specials
 	self.agility_bonus = self.ability:GetSpecialValueFor("agility_bonus")
 	self.intelligence_bonus = self.ability:GetSpecialValueFor("intelligence_bonus")	

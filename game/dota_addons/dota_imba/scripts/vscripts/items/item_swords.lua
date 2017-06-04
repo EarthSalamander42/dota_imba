@@ -1437,8 +1437,15 @@ end
 
 -- Modifier property storage
 function modifier_item_imba_triumvirate_stacks_debuff:OnCreated()
-	self.maim_stack = self:GetAbility():GetSpecialValueFor("maim_stack")
-	self.amp_stack = self:GetAbility():GetSpecialValueFor("amp_stack")
+	self.ability = self:GetAbility()
+
+	if not self.ability then
+		self:Destroy()
+		return nil
+	end
+
+	self.maim_stack = self.ability():GetSpecialValueFor("maim_stack")
+	self.amp_stack = self.ability():GetSpecialValueFor("amp_stack")
 
 	-- Inherit stacks from lower-tier modifiers
 	if IsServer() then
