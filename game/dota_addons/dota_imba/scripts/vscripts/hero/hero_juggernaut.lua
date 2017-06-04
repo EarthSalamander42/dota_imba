@@ -383,11 +383,27 @@ function imba_juggernaut_blade_dance:GetIntrinsicModifierName()
 	return "modifier_imba_juggernaut_blade_dance_passive"
 end
 
+function imba_juggernaut_blade_dance:CastFilterResultTarget(target)
+	if IsServer() then
+		local caster = self:GetCaster()
+		if caster:IsDisarmed() then
+			return UF_FAIL_CUSTOM
+		end
+
+		local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+	    return nResult
+	end
+end
+
+function imba_juggernaut_blade_dance:GetCustomCastErrorTarget(target)
+	return "dota_hud_error_cant_use_disarmed"	
+end
+
 function imba_juggernaut_blade_dance:OnSpellStart()
 	local caster = self:GetCaster()
 	local target = self:GetCursorTarget()
-	self.endTarget = target
-	caster:AddNewModifier(caster, self, "modifier_imba_juggernaut_blade_dance_empowered_slice", { duration = 3 })
+	self.endTarget = target	
+	caster:AddNewModifier(caster, self, "modifier_imba_juggernaut_blade_dance_empowered_slice", {})
 end
 
 function imba_juggernaut_blade_dance:GetCastRange()
@@ -423,7 +439,7 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:GetMotionControlle
 	return DOTA_MOTION_CONTROLLER_PRIORITY_HIGH
 end
 
-function modifier_imba_juggernaut_blade_dance_empowered_slice:OnCreated( )
+function modifier_imba_juggernaut_blade_dance_empowered_slice:OnCreated()
 	if IsServer() then
 		self.caster = self:GetCaster()
 		self.ability = self:GetAbility()
@@ -437,6 +453,7 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:OnCreated( )
 		self.direction = ( self.endTarget:GetAbsOrigin() - self.caster:GetAbsOrigin() ):Normalized()		
 		self.traveled = 0		
 		self.wind_dance = self.caster:FindModifierByName("modifier_imba_juggernaut_blade_dance_wind_dance")
+		self.frametime = FrameTime()
 		
 		self:StartIntervalThink(FrameTime())
 	end
@@ -466,6 +483,11 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:SeekAndDestroy()
 				if hit_enemy == enemy then
 					enemy_hit = true
 				end
+
+				-- If this enemy is attack immune, do nothing
+				if enemy:IsAttackImmune() then
+					enemy_hit = true
+				end
 			end
 
 			if not enemy_hit then
@@ -489,14 +511,8 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:SeekAndDestroy()
 end
 
 function modifier_imba_juggernaut_blade_dance_empowered_slice:HorizontalMotion( me, dt )
-	if IsServer() then
-		-- If the caster died, interrupt motion controllers and kill modifier
-		if not self:GetParent():IsAlive() then
-			self:GetParent():InterruptMotionControllers(true)
-			self:Destroy()
-		end
-		if self.endTarget:IsInvisible() or self.endTarget:IsOutOfGame() then
-					self:GetParent():InterruptMotionControllers(true)
+	if IsServer() then				
+		if self.endTarget:IsInvisible() or self.endTarget:IsOutOfGame() then					
 			self:Destroy()
 		end
 		if self.distance_left > 100 and not self.wind_dance:IsNull() and self.wind_dance:GetStackCount() > 0 then
@@ -509,8 +525,7 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:HorizontalMotion( 
 			ParticleManager:SetParticleControl(sliceFX, 2, oldPos)
 			ParticleManager:SetParticleControl(sliceFX, 3, self.caster:GetAbsOrigin())
 			ParticleManager:ReleaseParticleIndex(sliceFX)
-		else
-			self.caster:InterruptMotionControllers(true)
+		else			
 			FindClearSpaceForUnit(self.caster, self.endTarget:GetAbsOrigin() - self.endTarget:GetForwardVector()*150, true)
 			self.caster:MoveToTargetToAttack(self.endTarget)
 			self.caster:SetForwardVector(self.endTarget:GetForwardVector())
