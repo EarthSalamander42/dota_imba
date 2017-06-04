@@ -251,6 +251,12 @@ function modifier_imba_proximity_mine_charges:OnStackCountChanged(old_count)
     -- Get current stack count
     local stacks = self:GetStackCount()
 
+    -- If the stacks somehow surpassed max charges, reset to max
+    -- This somehow happens when player is disconnected for some reason
+    if stacks > self.max_charges then
+        self:SetStackCount(self,max_charges)
+    end
+
     -- If the stack is in the maximum, stop the duration
     if stacks == self.max_charges then
         self:SetDuration(-1, true)
