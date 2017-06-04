@@ -29,21 +29,21 @@ function imba_nyx_assassin_impale:GetIntrinsicModifierName()
     return "modifier_imba_impale_suffering_aura"
 end
 
-function imba_nyx_assassin_impale:GetCastRange(location, target)
+function imba_nyx_assassin_impale:GetCastRange(location, target)    
     -- Ability properties
     local caster = self:GetCaster()
     local ability = self
     local modifier_burrowed = "modifier_nyx_assassin_burrow"
-    local base_cast_range = self.BaseClass.GetCastRange(self, location, target)
+    local base_cast_range = self.BaseClass.GetCastRange(self, location, target)    
 
     -- Ability specials
     local burrow_length_increase = ability:GetSpecialValueFor("burrow_length_increase")        
 
-    if caster:HasModifier(modifier_burrowed) then
+    if caster:HasModifier(modifier_burrowed) then        
         return base_cast_range + burrow_length_increase
-    else
-        return base_cast_range
     end
+
+    return base_cast_range
 end
 
 function imba_nyx_assassin_impale:GetCooldown(level)
@@ -77,7 +77,7 @@ function imba_nyx_assassin_impale:OnSpellStart()
     local duration = ability:GetSpecialValueFor("duration")
     local length = ability:GetSpecialValueFor("length") + GetCastRangeIncrease(caster)
     local speed = ability:GetSpecialValueFor("speed")
-    local burrow_length_increase = ability:GetSpecialValueFor("burrow_length_increase")
+    local burrow_length_increase = ability:GetSpecialValueFor("burrow_length_increase")    
 
     -- Play cast sound
     EmitSoundOn(sound_cast, caster)
@@ -733,13 +733,23 @@ function modifier_imba_spiked_carapace:OnTakeDamage(keys)
         local attacker = keys.attacker
         local unit = keys.unit
         local original_damage = keys.original_damage
-        local damage_flags = keys.damage_flags
+        local damage_flags = keys.damage_flags        
         
         -- Only apply on attacks against the caster
-        if unit == self.caster then
+        if unit == self.caster then            
 
-            -- If it was a no reflection damage, do nothing (blademail)
-            if damage_flags == 4112 then
+            -- If it was a no reflection damage, do nothing
+            if damage_flags == 5136 then
+                return nil
+            end
+
+            -- If this has a no no reflection flag or a HP loss, do nothing
+            if damage_flags == DOTA_DAMAGE_FLAG_HPLOSS or damage_flags == DOTA_DAMAGE_FLAG_REFLECTION then
+                return nil
+            end
+
+            -- If the unit is a building, do nothing
+            if attacker:IsBuilding() then
                 return nil
             end
 
