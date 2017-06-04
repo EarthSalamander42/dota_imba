@@ -131,6 +131,7 @@ end
 --                Rot
 -------------------------------------------
 LinkLuaModifier("modifier_rot", "hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_cleaver_rot", "hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 
 imba_pudge_rot = class({})
 function imba_pudge_rot:IsHiddenWhenStolen() return false end
@@ -142,7 +143,7 @@ function imba_pudge_rot:ResetToggleOnRespawn() return true end
 -------------------------------------------
 function imba_pudge_rot:GetCastRange()
 	self.rot_radius = self:GetSpecialValueFor("base_radius")
-	if self:GetCaster():GetUnitName() == "npc_dota_hero_pudge" then -- I need to ensure the unit has fles heap.
+	if self:GetCaster():HasModifier("modifier_flesh_heap") then 
 		local heap_stack_increase = self:GetCaster():GetModifierStackCount("modifier_flesh_heap",self:GetCaster()) * self:GetSpecialValueFor("stack_radius")
 		if heap_stack_increase > self:GetSpecialValueFor("max_radius_tooltip") then
 			heap_stack_increase = self:GetSpecialValueFor("base_radius")
@@ -170,7 +171,7 @@ function imba_pudge_rot:OnToggle()
 end
 
 -------------------------------------------
-modifier_rot = class({})
+modifier_rot = modifier_rot or class({})
 function modifier_rot:IsDebuff() return true end
 function modifier_rot:IsHidden() return false end
 function modifier_rot:IsPurgable() return false end
@@ -179,7 +180,7 @@ function modifier_rot:IsStunDebuff() return false end
 function modifier_rot:RemoveOnDeath() return true end
 -------------------------------------------
 function modifier_rot:IsAura()
-	if self:GetCaster() == self:GetParent() then
+	if self:GetCaster() == self:GetParent() or self:GetParent().butcher_cleaver_target then
 		return true
 	end
 	
@@ -193,7 +194,11 @@ end
 --------------------------------------------------------------------------------
 
 function modifier_rot:GetAuraSearchTeam()
-	return DOTA_UNIT_TARGET_TEAM_ENEMY
+	if self:GetCaster() == self:GetParent() then
+		return DOTA_UNIT_TARGET_TEAM_ENEMY
+	end
+
+	return DOTA_UNIT_TARGET_TEAM_FRIENDLY
 end
 
 --------------------------------------------------------------------------------
@@ -226,7 +231,6 @@ function modifier_rot:GetModifierMoveSpeedBonus_Percentage()
 end
 
 
-
 function modifier_rot:OnCreated(kv)
 	self.rot_slow = self:GetAbility():GetSpecialValueFor("rot_slow")
 	self.rot_damage = self:GetAbility():GetSpecialValueFor("rot_damage")
@@ -237,12 +241,17 @@ function modifier_rot:OnCreated(kv)
 
 	if IsServer() then
 		self.rot_radius = self:GetAbility():GetCastRange()
-		if self:GetParent() == self:GetCaster() then
+		if self:GetParent() == self:GetCaster()then
 			EmitSoundOn("Hero_Pudge.Rot", self:GetCaster())
 			local nFXIndex = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_rot.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 			ParticleManager:SetParticleControl(nFXIndex, 1, Vector(self.rot_radius, 1, self.rot_radius))
 			self:AddParticle(nFXIndex, false, false, -1, false, false)
-		else
+
+		elseif self:GetParent().butcher_cleaver_target then
+			local nFXIndex = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_rot.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+			ParticleManager:SetParticleControl(nFXIndex, 1, Vector(self.rot_radius, 1, self.rot_radius))
+			self:AddParticle(nFXIndex, false, false, -1, false, false)
+		else		
 			local nFXIndex = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_rot_recipient.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 			self:AddParticle(nFXIndex, false, false, -1, false, false)
 		end
@@ -272,6 +281,116 @@ end
 function modifier_rot:OnDestroy()
 	if IsServer() then
 		StopSoundOn( "Hero_Pudge.Rot", self:GetCaster() )
+
+		if self:GetParent().butcher_cleaver_target then
+			self:GetParent().butcher_cleaver_target = nil
+		end
+	end
+end
+
+
+
+
+
+modifier_cleaver_rot = modifier_cleaver_rot or class({})
+function modifier_cleaver_rot:IsDebuff() return true end
+function modifier_cleaver_rot:IsHidden() return false end
+function modifier_cleaver_rot:IsPurgable() return false end
+function modifier_cleaver_rot:IsPurgeException() return false end
+function modifier_cleaver_rot:IsStunDebuff() return false end
+function modifier_cleaver_rot:RemoveOnDeath() return true end
+-------------------------------------------
+function modifier_cleaver_rot:IsAura()
+	if self:GetParent().butcher_cleaver_target then
+		return true
+	end
+	
+	return false
+end
+
+function modifier_cleaver_rot:GetModifierAura()
+	return "modifier_cleaver_rot"
+end
+
+--------------------------------------------------------------------------------
+
+function modifier_cleaver_rot:GetAuraSearchTeam()
+	return DOTA_UNIT_TARGET_TEAM_FRIENDLY
+end
+
+--------------------------------------------------------------------------------
+
+function modifier_cleaver_rot:GetAuraSearchType()
+	return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+end
+
+--------------------------------------------------------------------------------
+
+function modifier_cleaver_rot:GetAuraRadius()
+	return self.rot_radius
+end
+
+
+function modifier_cleaver_rot:DeclareFunctions()
+	local decFuns =
+	{
+			MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+	}
+	return decFuns
+end
+
+function modifier_cleaver_rot:GetModifierMoveSpeedBonus_Percentage()
+	return self.rot_slow
+end
+
+
+function modifier_cleaver_rot:OnCreated(kv)
+	self.rot_slow = self:GetAbility():GetSpecialValueFor("rot_slow")
+	self.rot_damage = self:GetAbility():GetSpecialValueFor("rot_damage")
+
+	-- #6 Talent: Rot deals increased damage per tick
+	self.rot_damage = self.rot_damage + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_6")
+	self.rot_tick = self:GetAbility():GetSpecialValueFor("rot_tick")
+
+	if IsServer() then
+		self.rot_radius = self:GetAbility():GetCastRange()		
+
+		if self:GetParent().butcher_cleaver_target then
+			local nFXIndex = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_rot.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+			ParticleManager:SetParticleControl(nFXIndex, 1, Vector(self.rot_radius, 1, self.rot_radius))
+			self:AddParticle(nFXIndex, false, false, -1, false, false)
+		else		
+			local nFXIndex = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_rot_recipient.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+			self:AddParticle(nFXIndex, false, false, -1, false, false)
+		end
+
+		self:StartIntervalThink(self.rot_tick)
+	end
+end
+
+function modifier_cleaver_rot:OnIntervalThink()
+	if IsServer() then
+		local flDamagePerTick = self.rot_tick * self.rot_damage		
+
+		if self:GetCaster():IsAlive() then
+			local damage = {
+				victim = self:GetParent(),
+				attacker = self:GetCaster(),
+				damage = flDamagePerTick,
+				damage_type = DAMAGE_TYPE_MAGICAL,
+				ability = self:GetAbility()
+			}
+
+			ApplyDamage(damage)
+		end
+	end
+end
+
+function modifier_cleaver_rot:OnDestroy()
+	if IsServer() then
+		if self:GetParent().butcher_cleaver_target then
+			self:GetParent().butcher_cleaver_target = nil
+		end
 	end
 end
 -------------------------------------------
@@ -690,8 +809,7 @@ function imba_pudge_butchers_cleaver:OnSpellStart()
 		iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
 		iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 		iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
-		EffectName = "particles/hero/pudge/butchers_cleave_projectile.vpcf",
-		--EffectName = "particles/units/heroes/hero_mirana/mirana_spell_arrow.vpcf",
+		EffectName = "particles/hero/pudge/butchers_cleave_projectile.vpcf",		
 		
 	}
 	
@@ -726,7 +844,7 @@ function imba_pudge_butchers_cleaver:OnProjectileHit(hTarget,vLocation)
 		victim = hTarget,
 		attacker = self:GetCaster(),
 		damage = self:GetSpecialValueFor("damage"),
-		damage_type = DAMAGE_TYPE_PURE,		
+		damage_type = DAMAGE_TYPE_MAGICAL,		
 		ability = self,
 	}
 	ApplyDamage( damage )
@@ -782,14 +900,7 @@ function modifier_butchers_cleaver_dummy:OnIntervalThink()
 	if not self:GetParent().parentUnit or not IsValidEntity(self:GetParent().parentUnit) then
 		UTIL_Remove(self:GetParent())
 		return 
-	end
-	self:GetParent():SetAbsOrigin(self:GetParent().parentUnit:GetAbsOrigin())
-	if (self:GetParent():GetAbsOrigin() -self:GetCaster():GetAbsOrigin()):Length2D() <= self:GetAbility():GetSpecialValueFor("check_radius") then
-		if self:GetCaster():HasAbility("imba_pudge_dismember") and self:GetCaster():FindAbilityByName("imba_pudge_dismember"):GetLevel() > 0 then
-			self:GetCaster():FindAbilityByName("imba_pudge_dismember"):EndCooldown()
-		end
-		UTIL_Remove(self:GetParent())
-	end
+	end	
 end
 
 modifier_butchers_cleaver = class({})
@@ -800,6 +911,30 @@ function modifier_butchers_cleaver:IsPurgeException() return false end
 function modifier_butchers_cleaver:IsStunDebuff() return false end
 function modifier_butchers_cleaver:RemoveOnDeath() return true end
 function modifier_butchers_cleaver:AllowIllusionDuplicate() return false end
+
+function modifier_butchers_cleaver:OnCreated()
+	self.caster = self:GetCaster()
+	self.ability = self:GetAbility()
+	self.parent = self:GetParent()
+	self.modifier_rot = "modifier_cleaver_rot"	
+
+	if IsServer() then
+	self.ability_rot = self.caster:FindAbilityByName("imba_pudge_rot")
+	
+		if self.ability_rot and self.ability_rot:GetLevel() > 0 then
+			self.parent.butcher_cleaver_target = true			
+			self.parent:AddNewModifier(self.caster, self.ability_rot, self.modifier_rot, {})
+		end
+	end
+end
+
+function modifier_butchers_cleaver:OnDestroy()
+	if IsServer() then
+		if self.parent.butcher_cleaver_target then
+			self.parent:RemoveModifierByNameAndCaster(self.modifier_rot, self.caster)
+		end
+	end
+end
 -------------------------------------------
 
 function modifier_butchers_cleaver:DeclareFunctions()
@@ -837,7 +972,7 @@ function modifier_butchers_cleaver:GetEffectAttachType()
 	return PATTACH_OVERHEAD_FOLLOW
 end
 
-imba_pudge_dismember= class({})
+imba_pudge_dismember = imba_pudge_dismember or class({})
 
 LinkLuaModifier( "modifier_dismember", "hero/hero_pudge" ,LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_dismember_lifesteal", "hero/hero_pudge" ,LUA_MODIFIER_MOTION_NONE )
@@ -979,9 +1114,7 @@ function modifier_dismember:OnIntervalThink()
 	if IsServer() then
 		local flDamage = self.dismember_damage
 		
-			flDamage = flDamage + ( self:GetCaster():GetStrength() * self.strength_damage )
-			--self:GetCaster():Heal( flDamage, self:GetAbility() )
-		
+		flDamage = flDamage + ( self:GetCaster():GetStrength() * self.strength_damage )
 
 		local damage = {
 			victim = self:GetParent(),
@@ -992,9 +1125,7 @@ function modifier_dismember:OnIntervalThink()
 		}
 
 		ApplyDamage( damage )
-		EmitSoundOn( "Hero_Pudge.Dismember", self:GetParent() )
-
-		--self:SetIntervalThink()
+		EmitSoundOn( "Hero_Pudge.Dismember", self:GetParent() )		
 	end
 end
 

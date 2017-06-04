@@ -16989,7 +16989,7 @@
 	{
 		"BaseClass"             		"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityTextureName"			"custom/imba_pudge_cleaver"	
 		"FightRecapLevel"				"1"
@@ -17000,15 +17000,11 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+		"AbilityCastPoint"				"0.3"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"60"
-
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"50 65 80 95 110 125 140"
+		"AbilityCooldown"				"12"		
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -17031,7 +17027,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"root_duration"			"1.5 2 2.5 3 3 3 3"
+				"root_duration"			"2 2.25 2.5 2.75 3 3 3"
 			}
 			"02"
 			{
@@ -17044,20 +17040,17 @@
 				"var_type"				"FIELD_INTEGER"
 				"range"					"1500"
 			}
+
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"projectile_speed"		"1800 1800 1800 1800 2100 2400 2700"
+				"projectile_speed"		"1500"
 			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"check_radius"			"300"
-			}
+			
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"50 65 80 95 110 125 140"
+				"damage"				"100 120 140 160 200 250 300"
 			}
 		}
 	}
@@ -17198,7 +17191,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"							"ability_lua"
-		"ScriptFile"					"hero/hero_pudge.lua"
+		"ScriptFile"						"hero/hero_pudge.lua"
 		"AbilityType"						"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
