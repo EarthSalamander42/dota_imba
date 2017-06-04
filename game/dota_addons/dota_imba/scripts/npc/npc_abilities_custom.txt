@@ -17652,13 +17652,19 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"base_radius"				"100"
-			}
+			}			
 
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"total_dmg_conversion_pct"	"10 10 10 10 15 20 25"
 				"LinkedSpecialBonus"		"special_bonus_imba_pugna_4"
+			}
+
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_radius"				"1200"
 			}
 		}
 	}

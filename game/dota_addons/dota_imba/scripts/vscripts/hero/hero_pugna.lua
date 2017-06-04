@@ -295,6 +295,7 @@ function modifier_imba_decrepify:OnCreated()
     self.blast_delay = self.ability:GetSpecialValueFor("blast_delay")
     self.base_radius = self.ability:GetSpecialValueFor("base_radius")
     self.total_dmg_conversion_pct = self.ability:GetSpecialValueFor("total_dmg_conversion_pct")
+    self.max_radius = self.ability:GetSpecialValueFor("max_radius")
 
     -- Define whether the afflicted is an ally or an enemy
     if self.parent:GetTeamNumber() == self.caster:GetTeamNumber() then
@@ -376,7 +377,7 @@ function modifier_imba_decrepify:OnTakeDamage(keys)
         local damage = keys.damage
 
         -- Only apply if the unit taking damage is the parent of this modifier
-        if unit == self.parent then
+        if unit == self.parent then            
             -- Add the current damage to the damage stored
             self.damage_stored = self.damage_stored + damage
         end
@@ -393,6 +394,11 @@ function modifier_imba_decrepify:OnDestroy()
 
         -- Radius is equal to base radius + all damage stored
         local total_radius = self.base_radius + self.damage_stored
+
+        -- Radius cannot exceed max radius
+        if total_radius > self.max_radius then
+            total_radius = self.max_radius
+        end
 
         -- Calculate damage and heal
         local damage = self.damage_stored * self.total_dmg_conversion_pct * 0.01

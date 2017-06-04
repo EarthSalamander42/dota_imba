@@ -461,8 +461,8 @@
 	// Smoke of Deceit
 	//=================================================================================================================
 	"item_smoke_of_deceit"
-	{
-		"ItemStockTime"					"300.0"
+	{		
+		"ItemStockTime"					"60"
 	}
 
 	//=================================================================================================================
@@ -705,6 +705,10 @@
 	"item_infused_raindrop"
 	{
 		"ItemCost"						"125"
+		"ItemStockInitial" 				"3"
+		"ItemInitialStockTime"			"0"
+		"ItemStockTime" 				"60"
+		"ItemStockMax" 					"3" 
 	}
 
 	//=================================================================================================================
@@ -11937,7 +11941,7 @@
 	{
 		"MaxLevel"						"7"
 
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"3"
 
 		"AbilityDuration"				"60"
 
@@ -11990,7 +11994,7 @@
 			"09"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"0.75 1.25 1.75 2.25 2.5 2.75 3.0"
+				"stun_duration"				"0.75 1.25 1.75 2.25 2.25 2.25 2.25"
 			}
 		}
 	}
@@ -12327,7 +12331,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"cloud_bolt_interval"	"2.0"
+				"cloud_bolt_interval"	"2.5"
 			}
 			"03"
 			{
