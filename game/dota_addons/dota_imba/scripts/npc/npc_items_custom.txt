@@ -9297,15 +9297,12 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2196"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName"			"custom/imba_blink"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"AbilityTextureName"			"custom/imba_blink"		
 		"FightRecapLevel"				"1"
 		"ScriptFile"                    "items/item_blink.lua"
 
 		// Stats
-		//-------------------------------------------------------------------------------------------------------------
+		//-------------------------------------------------------------------------------------------------------------		
 		"AbilityCooldown"				"7.0"
 		"AbilitySharedCooldown"			"blink"
 
@@ -9393,10 +9390,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2153"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName"			"custom/imba_blink_boots"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"AbilityTextureName"			"custom/imba_blink_boots"		
 		"FightRecapLevel"				"1"
 		"ScriptFile"                    "items/item_blink.lua"
 

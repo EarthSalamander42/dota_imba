@@ -10,63 +10,15 @@ if item_imba_blink == nil then item_imba_blink = class({}) end
 LinkLuaModifier( "modifier_imba_blink_dagger_handler", "items/item_blink.lua", LUA_MODIFIER_MOTION_NONE ) -- Check if the target was damaged and set cooldown
 
 function item_imba_blink:GetBehavior()
-	return DOTA_ABILITY_BEHAVIOR_OPTIONAL_POINT + DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_DIRECTIONAL + DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES + DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING end
+	return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES end
 
 function item_imba_blink:GetIntrinsicModifierName()
 	return "modifier_imba_blink_dagger_handler" end
 
 function item_imba_blink:OnSpellStart()
 	local caster = self:GetCaster()
-	local origin_point = caster:GetAbsOrigin()
-	
-	local target_point
-	if self:GetCursorTargetingNothing() then
-		target_point = self:GetCursorPosition()
-	else
-		local target = self:GetCursorTarget()
-		
-		if target == caster then
-			if self.teamFountain == nil then	-- nil = fountain wasn't searched for
-			
-				-- Find a fountain entity
-				local fountain = Entities:FindByClassname(nil, "ent_dota_fountain")
-				
-				-- Set fountain to false in case the while loop doesn't start
-				self.teamFountain = false
-				
-				-- If a fountain is found...
-				while fountain do
-				
-					-- Check if that fountain is on the casters team
-					if fountain:GetTeamNumber() == caster:GetTeamNumber() then
-					
-						-- Index it inside the ability and end loop
-						self.teamFountain = fountain
-						break
-					else
-						
-						-- Find next fountain. If no fountain was found, end loop
-						fountain = Entities:FindByClassname(fountain, "ent_dota_fountain")
-						if not fountain then break end
-					end
-				end
-				
-				target_point = self.teamFountain:GetAbsOrigin()
-				
-			elseif self.teamFountain then		-- If previous check didn't pass, should be true
-				target_point = self.teamFountain:GetAbsOrigin()
-				
-			else								-- self.teamFountain should be false
-                self:EndCooldown()
-                self:RefundManaCost()
-				return
-			end
-		elseif target then
-			target_point = target:GetAbsOrigin()
-		else
-			target_point = self:GetCursorPosition()
-		end
-	end
+	local origin_point = caster:GetAbsOrigin()	
+	local target_point = self:GetCursorPosition()		
 	
 	local distance = (target_point - origin_point):Length2D()
 	local max_blink_range = self:GetSpecialValueFor("max_blink_range")
@@ -228,63 +180,15 @@ if item_imba_blink_boots == nil then item_imba_blink_boots = class({}) end
 LinkLuaModifier( "modifier_imba_blink_boots_handler", "items/item_blink.lua", LUA_MODIFIER_MOTION_NONE ) -- Check if the target was damaged and set cooldown + item bonuses
 
 function item_imba_blink_boots:GetBehavior()
-	return DOTA_ABILITY_BEHAVIOR_OPTIONAL_POINT + DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_DIRECTIONAL + DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES + DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING end
+	return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES end
 	
 function item_imba_blink_boots:GetIntrinsicModifierName()
 	return "modifier_imba_blink_boots_handler" end
 
 function item_imba_blink_boots:OnSpellStart()
 	local caster = self:GetCaster()
-	local origin_point = caster:GetAbsOrigin()
-	
-	local target_point
-	if self:GetCursorTargetingNothing() then
-		target_point = self:GetCursorPosition()		
-	else
-		local target = self:GetCursorTarget()
-		
-		if target == caster then
-			if self.teamFountain == nil then	-- nil = fountain wasn't searched for
-			
-				-- Find a fountain entity
-				local fountain = Entities:FindByClassname(nil, "ent_dota_fountain")
-				
-				-- Set fountain to false in case the while loop doesn't start
-				self.teamFountain = false
-				
-				-- If a fountain is found...
-				while fountain do
-				
-					-- Check if that fountain is on the casters team
-					if fountain:GetTeamNumber() == caster:GetTeamNumber() then
-					
-						-- Index it inside the ability and end loop
-						self.teamFountain = fountain
-						break
-					else
-						
-						-- Find next fountain. If no fountain was found, end loop
-						fountain = Entities:FindByClassname(fountain, "ent_dota_fountain")
-						if not fountain then break end
-					end
-				end
-				
-				target_point = self.teamFountain:GetAbsOrigin()
-				
-			elseif self.teamFountain then		-- If previous check didn't pass, should be true
-				target_point = self.teamFountain:GetAbsOrigin()
-				
-			else								-- self.teamFountain should be false
-                self:EndCooldown()
-                self:RefundManaCost()
-				return
-			end
-		elseif target then
-			target_point = target:GetAbsOrigin()
-		else
-			target_point = self:GetCursorPosition()
-		end
-	end
+	local origin_point = caster:GetAbsOrigin()	
+	local target_point = self:GetCursorPosition()					
 	
 	local distance = (target_point - origin_point):Length2D()
 	local max_blink_range = self:GetSpecialValueFor("max_blink_range")
