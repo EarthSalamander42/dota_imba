@@ -34,6 +34,12 @@ function modifier_imba_soul_of_truth_buff:RemoveOnDeath() return false end
 -------------------------------------------
 function modifier_imba_soul_of_truth_buff:OnCreated()
 	local hItem = self:GetAbility()
+
+	if not hItem then
+		self:Destroy()
+		return nil
+	end
+
 	self.radius = hItem:GetSpecialValueFor("radius")
 	self.armor = hItem:GetSpecialValueFor("armor")
 	self.health_regen = hItem:GetSpecialValueFor("health_regen")

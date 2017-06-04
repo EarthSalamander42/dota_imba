@@ -339,7 +339,9 @@ function modifier_imba_rip_current_movement:RipCurrentLand()
 end
 
 function modifier_imba_rip_current_movement:OnDestroy()
-	self.caster:SetUnitOnClearGround()
+	if IsServer() then
+		self.caster:SetUnitOnClearGround()
+	end
 end
 
 function modifier_imba_rip_current_movement:IsHidden()
