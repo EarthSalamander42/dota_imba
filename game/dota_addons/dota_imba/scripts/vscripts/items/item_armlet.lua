@@ -117,12 +117,13 @@ end
 
 function modifier_imba_armlet_unholy_strength:OnDestroy()
 	if IsServer() then
-
-		-- Adjust caster's health
-		local caster = self:GetCaster()
-		local bonus_health = self:GetAbility():GetSpecialValueFor("unholy_bonus_strength") * 20
-		local health_before_deactivation = caster:GetHealthPercent() * (caster:GetMaxHealth() + bonus_health) * 0.01
-		caster:SetHealth(math.max(health_before_deactivation - bonus_health, 1))
+		if self:GetCaster():IsAlive() then
+			-- Adjust caster's health
+			local caster = self:GetCaster()
+			local bonus_health = self:GetAbility():GetSpecialValueFor("unholy_bonus_strength") * 20
+			local health_before_deactivation = caster:GetHealthPercent() * (caster:GetMaxHealth() + bonus_health) * 0.01
+			caster:SetHealth(math.max(health_before_deactivation - bonus_health, 1))
+		end
 	end
 end
 
