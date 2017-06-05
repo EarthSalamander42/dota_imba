@@ -19,10 +19,6 @@ imba_lycan_summon_wolves = class({})
 LinkLuaModifier("modifier_imba_lycan_wolf_charge", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_lycan_wolf_death_check", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
-function modifier_imba_lycan_wolf_charge:GetIntrinsicModifierName()
-    return "modifier_imba_lycan_wolf_charge"
-end
-
 function imba_lycan_summon_wolves:OnUpgrade()
     if IsServer() then
     	-- Ability properties
@@ -166,6 +162,10 @@ end
 -- Charge modifier
 modifier_imba_lycan_wolf_charge = class({}) 
 
+function modifier_imba_lycan_wolf_charge:GetIntrinsicModifierName()
+    return "modifier_imba_lycan_wolf_charge"
+end
+
 function modifier_imba_lycan_wolf_charge:IsDebuff()
 	return false	
 end
@@ -193,7 +193,6 @@ function modifier_imba_lycan_wolf_charge:OnCreated()
         self.ability = self:GetAbility()	    	
     	
     	-- Ability specials
-    	self.charge_cooldown = self.ability:GetSpecialValueFor("charge_cooldown")	
         self.max_charges = self.ability:GetSpecialValueFor("max_charges")
         self.charge_cooldown = self.ability:GetSpecialValueFor("charge_cooldown")
         self.wolves_count = self.ability:GetSpecialValueFor("wolves_count")                     
@@ -203,7 +202,7 @@ function modifier_imba_lycan_wolf_charge:OnCreated()
         self.wolves_count = self.wolves_count + self.caster:FindTalentValue("special_bonus_imba_lycan_5")      
     			
         -- Start thinking
-    	self:StartIntervalThink(charge_cooldown-0.01)
+    	self:StartIntervalThink(self.charge_cooldown-0.01)
     end
 end
 
@@ -638,10 +637,10 @@ function modifier_imba_feral_impulse_aura:OnCreated()
         self.parent = self:GetParent() 
 
         -- Ability specials        
-        self.base_bonus_damage_perc = ability:GetSpecialValueFor("base_bonus_damage_perc")
-        self.damage_inc_per_unit = ability:GetSpecialValueFor("damage_inc_per_unit")
-        self.aura_radius = ability:GetSpecialValueFor("aura_radius")
-        self.hero_inc_multiplier = ability:GetSpecialValueFor("hero_inc_multiplier")
+        self.base_bonus_damage_perc = self.ability:GetSpecialValueFor("base_bonus_damage_perc")
+        self.damage_inc_per_unit = self.ability:GetSpecialValueFor("damage_inc_per_unit")
+        self.aura_radius = self.ability:GetSpecialValueFor("aura_radius")
+        self.hero_inc_multiplier = self.ability:GetSpecialValueFor("hero_inc_multiplier")
 
 	    self:StartIntervalThink(0.2)
     end
@@ -957,7 +956,6 @@ modifier_imba_shapeshift_aura = class({})
 function modifier_imba_shapeshift_aura:OnCreated()
     if IsServer() then
         self.caster = self:GetCaster()
-        self.owner = target:GetOwnerEntity()
     end
 end
 
@@ -1005,8 +1003,8 @@ function modifier_imba_shapeshift_aura:GetAuraEntityReject(target)
     		end
     	end
     	
-    	if self.owner then
-    		if self.owner == self.caster then
+    	if target:GetOwnerEntity() then
+    		if target:GetOwnerEntity() == self.caster then
     			return false
     		end
     	end	
@@ -1282,7 +1280,7 @@ function modifier_imba_wolfsbane_wolves:OnCreated()
         self.damage_bonus = self.ability:GetSpecialValueFor("damage_bonus")
 
         -- #4 Talent: Wolfsbane damage increase
-        self.damage_bonus = self.damage_bonus + caster:FindTalentValue("special_bonus_imba_lycan_4")
+        self.damage_bonus = self.damage_bonus + self.caster:FindTalentValue("special_bonus_imba_lycan_4")
 
         -- Start thinking
         self:StartIntervalThink(0.5)
@@ -1329,7 +1327,7 @@ end
 function modifier_imba_wolfsbane_wolves:GetModifierBaseAttack_BonusDamage()	
 	local stacks = self:GetStackCount()	
 	
-	if self.parent:PassivesDisabled() then
+	if self:GetParent():PassivesDisabled() then
 		return nil
 	end
 	
@@ -1372,7 +1370,7 @@ function modifier_imba_wolfsbane_lycan:OnIntervalThink()
 end
 
 function modifier_imba_wolfsbane_lycan:DeclareFunctions()	
-	local decFuncs = {MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE,
+	local decFuncs = {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 					  MODIFIER_EVENT_ON_HERO_KILLED}
 	
 	return decFuncs	
@@ -1442,7 +1440,7 @@ function modifier_imba_wolfsbane_lycan:OnHeroKilled( keys )
 	end	
 end
 
-function modifier_imba_wolfsbane_lycan:GetModifierBaseAttack_BonusDamage()
+function modifier_imba_wolfsbane_lycan:GetModifierPreAttack_BonusDamage()
 	local stacks = self:GetStackCount()
 
 	-- #4 Talent: Wolfsbane damage increase
@@ -1845,7 +1843,7 @@ function modifier_imba_summoned_wolf_invisibility:OnCreated()
     self.invis_fade = "modifier_imba_summoned_wolf_invisibility_fade"
 
     -- Ability specials
-    self.fade_time = ability:GetSpecialValueFor("fade_time")
+    self.fade_time = self.ability:GetSpecialValueFor("fade_time")
 end
 
 function modifier_imba_summoned_wolf_invisibility:IsDebuff()
