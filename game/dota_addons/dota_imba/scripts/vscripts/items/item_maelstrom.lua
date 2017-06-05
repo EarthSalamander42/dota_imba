@@ -9,7 +9,6 @@
 
 if item_imba_maelstrom == nil then item_imba_maelstrom = class({}) end
 LinkLuaModifier( "modifier_item_imba_maelstrom", "items/item_maelstrom.lua", LUA_MODIFIER_MOTION_NONE )			-- Owner's bonus attributes, stackable
-LinkLuaModifier( "modifier_item_imba_maelstrom_counter", "items/item_maelstrom.lua", LUA_MODIFIER_MOTION_NONE )	-- Proc attack counter
 
 function item_imba_maelstrom:GetIntrinsicModifierName()
 	return "modifier_item_imba_maelstrom" end
@@ -61,28 +60,16 @@ function modifier_item_imba_maelstrom:OnAttackLanded( keys )
 
 		-- All conditions met, stack the proc counter up
 		local ability = self:GetAbility()
-		local proc_modifier = attacker:AddNewModifier(attacker, ability, "modifier_item_imba_maelstrom_counter", {})
-		if proc_modifier then
-			proc_modifier:SetStackCount(proc_modifier:GetStackCount() + 1)
+		-- local proc_modifier = attacker:AddNewModifier(attacker, ability, "modifier_item_imba_maelstrom_counter", {})
 
-			-- If enough stacks accumulated, reset them and zap the target's ass
-			local proc_count = ability:GetSpecialValueFor("proc_count")
-			if proc_modifier:GetStackCount() >= proc_count then
-				proc_modifier:SetStackCount(proc_modifier:GetStackCount() - proc_count)
-				LaunchLightning(attacker, target, ability, ability:GetSpecialValueFor("bounce_damage"), ability:GetSpecialValueFor("bounce_radius"))
-			end
+		-- zap the target's ass
+		local proc_chance = ability:GetSpecialValueFor("proc_chance")
+		if RollPseudoRandom(proc_chance, ability) then
+			LaunchLightning(attacker, target, ability, ability:GetSpecialValueFor("bounce_damage"), ability:GetSpecialValueFor("bounce_radius"))
 		end
 	end
 end
 
------------------------------------------------------------------------------------------------------------
---	Maelstrom proc counter
------------------------------------------------------------------------------------------------------------
-
-if modifier_item_imba_maelstrom_counter == nil then modifier_item_imba_maelstrom_counter = class({}) end
-function modifier_item_imba_maelstrom_counter:IsHidden() return true end
-function modifier_item_imba_maelstrom_counter:IsDebuff() return false end
-function modifier_item_imba_maelstrom_counter:IsPurgable() return false end
 
 -----------------------------------------------------------------------------------------------------------
 --	Mjollnir definition
@@ -157,28 +144,14 @@ function modifier_item_imba_mjollnir:OnAttackLanded( keys )
 
 		-- All conditions met, stack the proc counter up
 		local ability = self:GetAbility()
-		local proc_modifier = attacker:AddNewModifier(attacker, ability, "modifier_item_imba_mjollnir_counter", {})
-		if proc_modifier then
-			proc_modifier:SetStackCount(proc_modifier:GetStackCount() + 1)
-
-			-- If enough stacks accumulated, reset them and zap the target's ass
-			local proc_count = ability:GetSpecialValueFor("proc_count")
-			if proc_modifier:GetStackCount() >= proc_count then
-				proc_modifier:SetStackCount(proc_modifier:GetStackCount() - proc_count)
-				LaunchLightning(attacker, target, ability, ability:GetSpecialValueFor("bounce_damage"), ability:GetSpecialValueFor("bounce_radius"))
-			end
+		
+		-- zap the target's ass
+		local proc_chance = ability:GetSpecialValueFor("proc_chance")
+		if RollPseudoRandom(proc_chance, ability) then
+			LaunchLightning(attacker, target, ability, ability:GetSpecialValueFor("bounce_damage"), ability:GetSpecialValueFor("bounce_radius"))
 		end
 	end
 end
-
------------------------------------------------------------------------------------------------------------
---	Mjollnir proc counter
------------------------------------------------------------------------------------------------------------
-
-if modifier_item_imba_mjollnir_counter == nil then modifier_item_imba_mjollnir_counter = class({}) end
-function modifier_item_imba_mjollnir_counter:IsHidden() return true end
-function modifier_item_imba_mjollnir_counter:IsDebuff() return false end
-function modifier_item_imba_mjollnir_counter:IsPurgable() return false end
 
 -----------------------------------------------------------------------------------------------------------
 --	Mjollnir static shield
@@ -234,53 +207,38 @@ function modifier_item_imba_mjollnir_static:OnTakeDamage( keys )
 
 		-- All conditions met, stack the proc counter up
 		local ability = self:GetAbility()
-		local proc_modifier = shield_owner:AddNewModifier(shield_owner, ability, "modifier_item_imba_mjollnir_static_counter", {})
-		if proc_modifier then
-			proc_modifier:SetStackCount(proc_modifier:GetStackCount() + 1)
+		-- If enough stacks accumulated, reset them and zap nearby enemies
+		local static_proc_chance = ability:GetSpecialValueFor("static_proc_chance")
+		local static_damage = ability:GetSpecialValueFor("static_damage")
+		local static_radius = ability:GetSpecialValueFor("static_radius")
+		local static_slow_duration = ability:GetSpecialValueFor("static_slow_duration")
+		if RollPseudoRandom(static_proc_chance, ability) then
 
-			-- If enough stacks accumulated, reset them and zap nearby enemies
-			local static_proc_count = ability:GetSpecialValueFor("static_proc_count")
-			local static_damage = ability:GetSpecialValueFor("static_damage")
-			local static_radius = ability:GetSpecialValueFor("static_radius")
-			local static_slow_duration = ability:GetSpecialValueFor("static_slow_duration")
-			if proc_modifier:GetStackCount() >= static_proc_count then
-				proc_modifier:SetStackCount(proc_modifier:GetStackCount() - static_proc_count)
+			-- Iterate through nearby enemies
+			local static_origin = shield_owner:GetAbsOrigin() + Vector(0, 0, 100)
+			local nearby_enemies = FindUnitsInRadius(shield_owner:GetTeamNumber(), shield_owner:GetAbsOrigin(), nil, static_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
+			for _, enemy in pairs(nearby_enemies) do
 
-				-- Iterate through nearby enemies
-				local static_origin = shield_owner:GetAbsOrigin() + Vector(0, 0, 100)
-				local nearby_enemies = FindUnitsInRadius(shield_owner:GetTeamNumber(), shield_owner:GetAbsOrigin(), nil, static_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
-				for _, enemy in pairs(nearby_enemies) do
+				-- Play particle
+				local static_pfx = ParticleManager:CreateParticle("particles/item/mjollnir/static_lightning_bolt.vpcf", PATTACH_ABSORIGIN_FOLLOW, shield_owner)
+				ParticleManager:SetParticleControlEnt(static_pfx, 0, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
+				ParticleManager:SetParticleControl(static_pfx, 1, static_origin)
+				ParticleManager:ReleaseParticleIndex(static_pfx)
 
-					-- Play particle
-					local static_pfx = ParticleManager:CreateParticle("particles/item/mjollnir/static_lightning_bolt.vpcf", PATTACH_ABSORIGIN_FOLLOW, shield_owner)
-					ParticleManager:SetParticleControlEnt(static_pfx, 0, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
-					ParticleManager:SetParticleControl(static_pfx, 1, static_origin)
-					ParticleManager:ReleaseParticleIndex(static_pfx)
+				-- Apply damage
+				ApplyDamage({attacker = shield_owner, victim = enemy, ability = ability, damage = static_damage, damage_type = DAMAGE_TYPE_MAGICAL})
 
-					-- Apply damage
-					ApplyDamage({attacker = shield_owner, victim = enemy, ability = ability, damage = static_damage, damage_type = DAMAGE_TYPE_MAGICAL})
+				-- Apply slow modifier
+				enemy:AddNewModifier(shield_owner, ability, "modifier_item_imba_mjollnir_slow", {duration = static_slow_duration})
+			end
 
-					-- Apply slow modifier
-					enemy:AddNewModifier(shield_owner, ability, "modifier_item_imba_mjollnir_slow", {duration = static_slow_duration})
-				end
-
-				-- Play hit sound if at least one enemy was hit
-				if #nearby_enemies > 0 then
-					shield_owner:EmitSound("Item.Maelstrom.Chain_Lightning.Jump")
-				end
+			-- Play hit sound if at least one enemy was hit
+			if #nearby_enemies > 0 then
+				shield_owner:EmitSound("Item.Maelstrom.Chain_Lightning.Jump")
 			end
 		end
 	end
 end
-
------------------------------------------------------------------------------------------------------------
---	Mjollnir static proc counter
------------------------------------------------------------------------------------------------------------
-
-if modifier_item_imba_mjollnir_static_counter == nil then modifier_item_imba_mjollnir_static_counter = class({}) end
-function modifier_item_imba_mjollnir_static_counter:IsHidden() return true end
-function modifier_item_imba_mjollnir_static_counter:IsDebuff() return false end
-function modifier_item_imba_mjollnir_static_counter:IsPurgable() return false end
 
 -----------------------------------------------------------------------------------------------------------
 --	Mjollnir passive modifier (stackable)
