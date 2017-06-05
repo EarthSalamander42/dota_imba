@@ -720,7 +720,7 @@ function imba_vengefulspirit_nether_swap:CastFilterResultTarget( target )
 end
 
 function imba_vengefulspirit_nether_swap:GetCooldown( nLevel )
-	if self:GetCaster():HasScepter() then return self:GetSpecialValueFor("scepter_cooldown") end
+	if self:GetCaster():HasScepter() then return self:GetSpecialValueFor("cooldown_scepter") end
 	return self.BaseClass.GetCooldown( self, nLevel )
 end
 
