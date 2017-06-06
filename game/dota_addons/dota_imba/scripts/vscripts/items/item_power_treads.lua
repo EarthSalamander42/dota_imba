@@ -53,13 +53,15 @@ if modifier_imba_power_treads_2 == nil then modifier_imba_power_treads_2 = class
 function modifier_imba_power_treads_2:IsHidden() return true end
 function modifier_imba_power_treads_2:IsDebuff() return false end
 function modifier_imba_power_treads_2:IsPurgable() return false end
+function modifier_imba_power_treads_2:RemoveOnDeath() return false end
 function modifier_imba_power_treads_2:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_power_treads_2:DeclareFunctions()
 	local funcs = {	MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE,
 					MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 					MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
-					MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,}
+					MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+					MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE}
 	return funcs
 end
 
@@ -69,9 +71,7 @@ function modifier_imba_power_treads_2:OnCreated()
 			local ability = self:GetAbility()
 			local parent = self:GetParent()
 			
-			if parent:IsRealHero() then
-				self:SetStackCount(parent:GetPrimaryAttribute())
-				ability.state = parent:GetPrimaryAttribute()
+			if parent:IsRealHero() then				
 				self:StartIntervalThink(0.2)
 			else
 				Timers:CreateTimer(FrameTime(), function()	-- Timer because Valve decided that modifiers should be applied before items are added
@@ -145,8 +145,7 @@ function modifier_imba_power_treads_2:GetModifierBaseAttack_BonusDamage()
 	
 	local ability = self:GetAbility()
 	local main_stats = parent:GetPrimaryStatValue()
-	local damage_bonus = ability:GetSpecialValueFor("main_stat_bonus_damage")
-	
+	local damage_bonus = ability:GetSpecialValueFor("main_stat_bonus_damage")	
 	return main_stats * damage_bonus
 end
 
@@ -197,35 +196,44 @@ function modifier_imba_mega_treads_stat_multiplier_00:IsHidden() return true end
 function modifier_imba_mega_treads_stat_multiplier_00:IsDebuff() return false end
 function modifier_imba_mega_treads_stat_multiplier_00:IsPurgable() return false end
 
+function modifier_imba_mega_treads_stat_multiplier_00:OnCreated()
+	if IsServer() then
+		self:StartIntervalThink(0.2)
+	end
+end
+
+function modifier_imba_mega_treads_stat_multiplier_00:OnIntervalThink()
+	if IsServer() then
+		local strength = self:GetParent():GetStrength()
+		self:SetStackCount(strength)
+	end
+end
+
 function modifier_imba_mega_treads_stat_multiplier_00:DeclareFunctions()
 	local funcs = {	MODIFIER_PROPERTY_HEALTH_BONUS,			
 					MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,}
 	return funcs
 end
 
-function modifier_imba_mega_treads_stat_multiplier_00:GetModifierHealthBonus()
-	if self:GetStackCount() ~= DOTA_ATTRIBUTE_STRENGTH then return end
+function modifier_imba_mega_treads_stat_multiplier_00:GetModifierHealthBonus()	
 	
 	local ability = self:GetAbility()
 	local parent = self:GetParent()
 	if not parent:IsHero() then return end
 	
-	local strength = parent:GetStrength()
-	local health_bonus = ability:GetSpecialValueFor("str_bonus_max_health")
-	
+	local strength = self:GetStackCount()
+	local health_bonus = ability:GetSpecialValueFor("str_bonus_max_health")	
 	return strength * health_bonus
 end
 
-function modifier_imba_mega_treads_stat_multiplier_00:GetModifierConstantHealthRegen()
-	if self:GetStackCount() ~= DOTA_ATTRIBUTE_STRENGTH then return end
+function modifier_imba_mega_treads_stat_multiplier_00:GetModifierConstantHealthRegen()	
 	
 	local ability = self:GetAbility()
 	local parent = self:GetParent()
 	if not parent:IsHero() then return end
 	
-	local strength = parent:GetStrength()
-	local regen_bonus = ability:GetSpecialValueFor("str_bonus_hp_regen")
-	
+	local strength = self:GetStackCount()
+	local regen_bonus = ability:GetSpecialValueFor("str_bonus_hp_regen")	
 	return strength * regen_bonus
 end
 
@@ -239,37 +247,42 @@ function modifier_imba_mega_treads_stat_multiplier_01:IsPurgable() return false 
 
 function modifier_imba_mega_treads_stat_multiplier_01:DeclareFunctions()
 	local funcs = {	MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-					MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,		}
+					MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS}
 	return funcs
 end
 
-function modifier_imba_mega_treads_stat_multiplier_01:GetModifierAttackSpeedBonus_Constant()
+function modifier_imba_mega_treads_stat_multiplier_01:OnCreated()
 	if IsServer() then
-		if self:GetStackCount() ~= DOTA_ATTRIBUTE_AGILITY then return end
-		
-		local ability = self:GetAbility()
-		local parent = self:GetParent()
-		if not parent:IsHero() then return end
-		
-		local agility = parent:GetAgility()
-		local attack_speed_bonus = ability:GetSpecialValueFor("agi_bonus_attack_speed")
-		
-		return agility * attack_speed_bonus
+		self:StartIntervalThink(0.2)
 	end
 end
 
-function modifier_imba_mega_treads_stat_multiplier_01:GetModifierPhysicalArmorBonus()
+function modifier_imba_mega_treads_stat_multiplier_01:OnIntervalThink()
 	if IsServer() then
-		if self:GetStackCount() ~= DOTA_ATTRIBUTE_AGILITY then return end
-		
-		local ability = self:GetAbility()
-		local parent = self:GetParent()
-		if not parent:IsHero() then return end
-		
-		local agility = parent:GetAgility() 
-		local armor_bonus = ability:GetSpecialValueFor("agi_bonus_armor")
-		return agility * armor_bonus
+		local agility = self:GetParent():GetAgility()
+		self:SetStackCount(agility)
 	end
+end
+
+function modifier_imba_mega_treads_stat_multiplier_01:GetModifierAttackSpeedBonus_Constant()		
+	local ability = self:GetAbility()
+	local parent = self:GetParent()
+	if not parent:IsHero() then return end
+	
+	local agility = self:GetStackCount()
+	local attack_speed_bonus = ability:GetSpecialValueFor("agi_bonus_attack_speed")	
+	return agility * attack_speed_bonus	
+end
+
+function modifier_imba_mega_treads_stat_multiplier_01:GetModifierPhysicalArmorBonus()			
+	local ability = self:GetAbility()
+	local parent = self:GetParent()
+	if not parent:IsHero() then return end
+	
+	local agility = self:GetStackCount()
+	local armor_bonus = ability:GetSpecialValueFor("agi_bonus_armor")	
+
+	return agility * armor_bonus	
 end
 
 -----------------------------------------------------------------------------------------------------------
@@ -282,13 +295,13 @@ function modifier_imba_mega_treads_stat_multiplier_02:IsPurgable() return false 
 
 function modifier_imba_mega_treads_stat_multiplier_02:DeclareFunctions()
 	local funcs = {	MODIFIER_PROPERTY_MANA_BONUS,	
-					MODIFIER_PROPERTY_BASE_MANA_REGEN,}
+					MODIFIER_PROPERTY_BASE_MANA_REGEN}
 	return funcs
 end
 
 function modifier_imba_mega_treads_stat_multiplier_02:OnCreated()
 	if IsServer() then
-		self:StartIntervalThink( 0.2 )
+		self:StartIntervalThink(0.2)
 	end
 end
 
@@ -300,27 +313,25 @@ function modifier_imba_mega_treads_stat_multiplier_02:OnIntervalThink()
 	end
 end
 
-function modifier_imba_mega_treads_stat_multiplier_02:GetModifierManaBonus()
-	if self:GetStackCount() ~= DOTA_ATTRIBUTE_INTELLECT then return end
+function modifier_imba_mega_treads_stat_multiplier_02:GetModifierManaBonus()	
 	
 	local ability = self:GetAbility()
 	local parent = self:GetParent()
 	if not parent:IsHero() then return end
 	
-	local intellect = parent:GetIntellect()
+	local intellect = self:GetStackCount()
 	local mana_bonus = ability:GetSpecialValueFor("int_bonus_max_mp")
 	
 	return intellect * mana_bonus
 end
 
-function modifier_imba_mega_treads_stat_multiplier_02:GetModifierBaseRegen()
-	if self:GetStackCount() ~= DOTA_ATTRIBUTE_INTELLECT then return end
+function modifier_imba_mega_treads_stat_multiplier_02:GetModifierBaseRegen()	
 	
 	local ability = self:GetAbility()
 	local parent = self:GetParent()
 	if not parent:IsHero() then return end
 	
-	local intellect = parent:GetIntellect()
+	local intellect = self:GetStackCount()
 	local regen_bonus = ability:GetSpecialValueFor("int_bonus_mp_regen")
 	
 	return intellect * regen_bonus
