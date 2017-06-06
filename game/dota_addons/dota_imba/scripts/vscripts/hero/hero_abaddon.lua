@@ -18,7 +18,7 @@ end
 
 
 function getOverChannelIncrease(caster)
-	if caster:HasModifier("modifer_over_channel_handler") then
+	if caster:HasModifier("modifier_over_channel_handler") then
 		local over_channel = caster:FindAbilityByName("imba_abaddon_over_channel")
 		if over_channel then
 			local ability_level = over_channel:GetLevel() - 1
@@ -121,15 +121,18 @@ function imba_abaddon_mist_coil:OnProjectileHit( hTarget, vLocation )
 			end
 
 		else
-			local heal = self:GetLevelSpecialValueFor("heal", ability_level) + over_channel_increase
+			--Apply spellpower to heal
+			local heal_amp = 1 + (caster:GetSpellPower() * 0.01)
 
+			local heal = (self:GetLevelSpecialValueFor("heal", ability_level) + over_channel_increase) * heal_amp			
+	
 			-- heal allies or self
 			target:Heal(heal, caster)
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal, nil)
         end
 
 		-- Extra effect if coil was casted with over channel
-		if caster:HasModifier("modifer_over_channel_handler") then
+		if caster:HasModifier("modifier_over_channel_handler") then
 			local over_channel_particle = ParticleManager:CreateParticle("particles/dev/library/base_dust_hit_detail.vpcf", PATTACH_POINT, target)
 			ParticleManager:ReleaseParticleIndex(over_channel_particle)
 
@@ -277,7 +280,7 @@ function modifier_imba_aphotic_shield_buff_block:OnCreated()
 		self:AddParticle(particle, false, false, -1, false, false)
 
 		-- Extra effect if shield was casted with over channel
-		if caster:HasModifier("modifer_over_channel_handler") then
+		if caster:HasModifier("modifier_over_channel_handler") then
 			local over_channel_particle = ParticleManager:CreateParticle("particles/econ/courier/courier_baekho/courier_baekho_ambient_vapor.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
 			ParticleManager:SetParticleControlEnt(over_channel_particle, 0, target, PATTACH_POINT_FOLLOW, attach_hitloc, target_origin, true)
 			self:AddParticle(over_channel_particle, false, false, -1, false, false)
@@ -629,7 +632,7 @@ function modifier_imba_curse_of_avernus_buff_haste:GetModifierAttackSpeedBonus_C
 -----------------------------
 -- Hidden Modifiers:
 MergeTables(LinkedModifiers,{
-	["modifer_over_channel_handler"] = LUA_MODIFIER_MOTION_NONE,
+	["modifier_over_channel_handler"] = LUA_MODIFIER_MOTION_NONE,
 })
 imba_abaddon_over_channel = imba_abaddon_over_channel or class({
 	IsStealable 			= function(self) return false end,
@@ -640,7 +643,7 @@ imba_abaddon_over_channel = imba_abaddon_over_channel or class({
 function imba_abaddon_over_channel:OnToggle()
 	if IsServer() then
 		local caster 		= self:GetCaster()
-		local modifier_name = "modifer_over_channel_handler"
+		local modifier_name = "modifier_over_channel_handler"
 		if self:GetToggleState() then
 			caster:AddNewModifier(caster, self, modifier_name, {})
 		else
@@ -662,7 +665,7 @@ function imba_abaddon_over_channel:OnOwnerDied()
 	-- Note that I have tried ResetToggleOnRespawn but it doesn't seem to work
 end
 
-modifer_over_channel_handler = modifer_over_channel_handler or class({
+modifier_over_channel_handler = modifier_over_channel_handler or class({
 	IsHidden				= function(self) return true end,
 	IsPurgable	  			= function(self) return false end,
 	IsDebuff	  			= function(self) return false end,
@@ -671,7 +674,7 @@ modifer_over_channel_handler = modifer_over_channel_handler or class({
 	AllowIllusionDuplicate	= function(self) return true end -- Allow illusions to carry this particle modifier
 })
 
-function modifer_over_channel_handler:OnCreated()
+function modifier_over_channel_handler:OnCreated()
 	local target = self:GetParent()
 	local target_origin = target:GetAbsOrigin()
 	local particle_name = "particles/econ/courier/courier_hyeonmu_ambient/courier_hyeonmu_ambient_trail_steam_blue.vpcf"
@@ -697,10 +700,10 @@ MergeTables(LinkedModifiers,{
 })
 -- Hidden Modifiers:
 MergeTables(LinkedModifiers,{
-	["modifer_imba_borrowed_time_handler"] = LUA_MODIFIER_MOTION_NONE,
+	["modifier_imba_borrowed_time_handler"] = LUA_MODIFIER_MOTION_NONE,
 })
 imba_abaddon_borrowed_time = imba_abaddon_borrowed_time or class({
-	GetIntrinsicModifierName = function(self) if self:GetCaster():IsRealHero() then return "modifer_imba_borrowed_time_handler" end end
+	GetIntrinsicModifierName = function(self) if self:GetCaster():IsRealHero() then return "modifier_imba_borrowed_time_handler" end end
 })
 function imba_abaddon_borrowed_time:IsNetherWardStealable() return false end
 function imba_abaddon_borrowed_time:OnUpgrade()
@@ -724,14 +727,14 @@ function imba_abaddon_borrowed_time:OnSpellStart()
 	end
 end
 
-modifer_imba_borrowed_time_handler = modifer_imba_borrowed_time_handler or class({
+modifier_imba_borrowed_time_handler = modifier_imba_borrowed_time_handler or class({
 	IsHidden				= function(self) return true end,
 	IsPurgable	  			= function(self) return false end,
 	IsDebuff	  			= function(self) return false end,
 	AllowIllusionDuplicate	= function(self) return false end,
 })
 
-function modifer_imba_borrowed_time_handler:_CheckHealth(damage)
+function modifier_imba_borrowed_time_handler:_CheckHealth(damage)
 	local target = self:GetParent()
 	local ability = self:GetAbility()
 
@@ -745,7 +748,7 @@ function modifer_imba_borrowed_time_handler:_CheckHealth(damage)
 	end
 end
 
-function modifer_imba_borrowed_time_handler:OnCreated()
+function modifier_imba_borrowed_time_handler:OnCreated()
 	if IsServer() then
 		local target = self:GetParent()
 		if target:IsIllusion() then
@@ -759,7 +762,7 @@ function modifer_imba_borrowed_time_handler:OnCreated()
 	end
 end
 
-function modifer_imba_borrowed_time_handler:DeclareFunctions()
+function modifier_imba_borrowed_time_handler:DeclareFunctions()
 	local funcs = {
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
 		MODIFIER_EVENT_ON_STATE_CHANGED
@@ -768,7 +771,7 @@ function modifer_imba_borrowed_time_handler:DeclareFunctions()
 	return funcs
 end
 
-function modifer_imba_borrowed_time_handler:OnTakeDamage(kv)
+function modifier_imba_borrowed_time_handler:OnTakeDamage(kv)
 	
 	if IsServer() then
 		local target = self:GetParent()
@@ -781,7 +784,7 @@ function modifer_imba_borrowed_time_handler:OnTakeDamage(kv)
 	
 end
 
-function modifer_imba_borrowed_time_handler:OnStateChanged(kv)
+function modifier_imba_borrowed_time_handler:OnStateChanged(kv)
 	-- Trigger borrowed time if health below hp_threshold after silence/hex
 	if IsServer() then
 		local target = self:GetParent()
