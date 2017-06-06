@@ -8600,17 +8600,27 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"max_targets"					"1"
+				"projectile_speed"				"1100"
 			}
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"proc_radius"					"500"
+				"agility_pct"					"25"
 			}
 			"06"
 			{
-				"var_type"						"FIELD_FLOAT"
-				"projectile_speed"				"1100"
+				"var_type"						"FIELD_INTEGER"
+				"ranged_proj_range"				"700"
+			}
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"ranged_proj_radius"			"75"
+			}
+			"08"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"ranged_proj_angle"				"25"
 			}
 		}
 	}
@@ -8726,7 +8736,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"dmg_reduction"			"40"
+				"agility_pct"			"35"
 			}
 		}
 	}
@@ -9297,12 +9307,15 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2196"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName"			"custom/imba_blink"		
+		"AbilityTextureName"			"custom/imba_blink"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"FightRecapLevel"				"1"
 		"ScriptFile"                    "items/item_blink.lua"
 
 		// Stats
-		//-------------------------------------------------------------------------------------------------------------		
+		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"7.0"
 		"AbilitySharedCooldown"			"blink"
 
@@ -9390,7 +9403,10 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2153"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName"			"custom/imba_blink_boots"		
+		"AbilityTextureName"			"custom/imba_blink_boots"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"FightRecapLevel"				"1"
 		"ScriptFile"                    "items/item_blink.lua"
 
@@ -10550,7 +10566,7 @@
 		"BaseClass"								"item_lua"
 		"AbilityTextureName" 					"custom/imba_rapier_cursed"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"Model"									"models/props_gameplay/divine_rapier.mdl"
+		"Model"									"models/cursed_rapier.mdl"
 		"ScriptFile"							"items/item_rapier.lua"
 
 		// Item Info
@@ -10567,7 +10583,14 @@
 		"ItemStackable"							"0"
 		"ItemRequiresCharges"					"0"
 		"ItemDisassembleRule"					"DOTA_ITEM_DISASSEMBLE_NEVER"
-
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"					"particles/item/rapier/item_rapier_cursed.vpcf"
+			"model"						"models/cursed_rapier.vmdl"
+		}
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -11880,7 +11903,6 @@
 		"ID"							"2242"
 		"BaseClass"						"item_lua"
 		"AbilityTextureName"			"custom/imba_black_queen_cape"
-		"AbilitySharedCooldown"			"bkb"
 		"ScriptFile"					"items/item_black_queen_cape.lua"
 
 		// Item Info

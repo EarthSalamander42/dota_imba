@@ -163,6 +163,14 @@ end
 function modifier_imba_berserkers_rage_melee:GetModifierAttackRangeBonus()
 	return -350
 end
+
+function modifier_imba_berserkers_rage_melee:GetEffectName()
+	return "particles/units/heroes/hero_troll_warlord/troll_warlord_berserk_buff.vpcf"
+end
+
+function modifier_imba_berserkers_rage_melee:GetEffectAttachType()
+	return PATTACH_POINT_FOLLOW
+end
 -------------------------------------------
 modifier_imba_berserkers_rage_ranged = modifier_imba_berserkers_rage_ranged or class({})
 function modifier_imba_berserkers_rage_ranged:AllowIllusionDuplicate() return true end

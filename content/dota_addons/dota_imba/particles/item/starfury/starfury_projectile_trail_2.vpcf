@@ -6,13 +6,9 @@
 	m_Renderers = 
 	[
 		{
-			_class = "C_OP_RenderTrails"
-			m_flLengthFadeInTime = 0.2
-			m_vEndTrailTintFactor = [ 4.0, 0.25, 0.25, 0.5 ]
-			m_flRadiusScale = 0.5
-			m_flFinalTextureScaleV = -1.0
-			m_flFinalTextureOffsetV = 1.0
+			_class = "C_OP_RenderSprites"
 			m_nSequenceCombineMode = "SEQUENCE_COMBINE_MODE_USE_SEQUENCE_0"
+			m_bAdditive = true
 			m_hTexture = resource:"materials/particle/softglow_tra.vtex"
 		},
 	]
@@ -66,7 +62,7 @@
 		},
 		{
 			_class = "C_INIT_RemapCPtoVector"
-			m_nCPInput = 5
+			m_nCPInput = 4
 			m_nFieldOutput = 6
 			m_vInputMax = [ 255.0, 255.0, 255.0 ]
 			m_vOutputMax = [ 1.0, 1.0, 1.0 ]
