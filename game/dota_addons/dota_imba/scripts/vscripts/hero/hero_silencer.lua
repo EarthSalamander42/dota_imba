@@ -373,8 +373,11 @@ function modifier_imba_silencer_glaives_of_wisdom:OnAttackLanded(keys)
 				if not hit_counter then
 					hit_counter = target:AddNewModifier(self.caster, self.ability, self.modifier_hit_counter, {req_hits = self.hits_to_silence, silence_dur = self.silence_duration})
 				end
-				hit_counter:IncrementStackCount()
-				hit_counter:SetDuration(self.hit_count_duration, true)
+
+				if hit_counter then
+					hit_counter:IncrementStackCount()
+					hit_counter:SetDuration(self.hit_count_duration, true)
+				end
 
 				local int_damage = target:FindModifierByName(self.modifier_int_damage)
 				if not int_damage then
@@ -895,11 +898,17 @@ function modifier_imba_silencer_arcane_supremacy:DeclareFunctions()
 end
 
 function modifier_imba_silencer_arcane_supremacy:OnDeath( params )
-	if IsServer() then
+	if IsServer() then		
 		if self.caster:PassivesDisabled() then
 			return nil
 		end
 		if params.unit:IsRealHero() and ( params.unit ~= self.caster ) and ( params.unit:GetTeam() ~= self.caster:GetTeam() ) then
+
+			-- If the dead unit is reincarnating, do nothing
+			if params.reincarnate then
+				return nil
+			end
+
 			local distance = ( self.caster:GetAbsOrigin() - params.unit:GetAbsOrigin() ):Length2D()
 			if ( distance <= self.steal_range ) or ( params.attacker == self.caster ) or ( params.unit:HasModifier("modifier_imba_silencer_global_silence") ) then
 				local enemy_min_int = 1

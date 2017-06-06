@@ -414,7 +414,7 @@ function modifier_imba_searing_arrows_passive:OnAttackStart(keys)
         end
 
         -- If the target is not a valid Searing Arrow target, do nothing
-        if not target:IsHero() or target:IsBuilding() or target:IsCreep() then
+        if not target:IsHero() and not target:IsBuilding() and not target:IsCreep() then
             SetArrowAttackProjectile(self.caster, false)
             return nil
         end          

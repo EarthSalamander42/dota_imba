@@ -976,7 +976,7 @@ function modifier_imba_track_debuff_mark:IsPurgable()
 	return true
 end
 
-function modifier_imba_track_debuff_mark:IsPermanent()
+function modifier_imba_track_debuff_mark:RemoveOnDeath()
 	return false
 end
 
@@ -1000,20 +1000,28 @@ end
 function modifier_imba_track_debuff_mark:OnHeroKilled(keys)
 	if IsServer() then
 		local target = keys.target
+		local reincarnate = keys.reincarnate
+
 		-- Only apply if the target of the track debuff is the one who just died
 		if target == self.parent then
+
 			-- If the target was an illusion, do nothing
 			if not target:IsRealHero() then
 				return nil
 			end
 
+			-- If the target is reincarnating, do nothing
+			if reincarnate then
+				return nil
+			end
+
 			-- Give money to the track caster
 			self.caster:ModifyGold(self.bonus_gold_self, true, 0)
-			SendOverheadEventMessage(self.caster, OVERHEAD_ALERT_GOLD, self.caster, bonus_gold_self, nil)
+			SendOverheadEventMessage(self.caster, OVERHEAD_ALERT_GOLD, self.caster, self.bonus_gold_self, nil)
 
 			-- Find caster's allies nearby
-			local allies = FindUnitsInRadius(caster:GetTeamNumber(),
-											 self.parent,
+			local allies = FindUnitsInRadius(self.caster:GetTeamNumber(),
+											 self.parent:GetAbsOrigin(),
 											 nil,
 											 self.haste_radius,
 											 DOTA_UNIT_TARGET_TEAM_FRIENDLY,
@@ -1026,9 +1034,12 @@ function modifier_imba_track_debuff_mark:OnHeroKilled(keys)
 				-- Give allies bonus allied gold, except caster
 				if ally ~= self.caster then
 					ally:ModifyGold(self.bonus_gold_allies, true, 0)
-					SendOverheadEventMessage(ally, OVERHEAD_ALERT_GOLD, ally, bonus_gold_allies, nil)
+					SendOverheadEventMessage(ally, OVERHEAD_ALERT_GOLD, ally, self.bonus_gold_allies, nil)
 				end
 			end
+
+			-- Remove the debuff modifier from the enemy that just died
+			self:Destroy()
 		end
 	end
 end
@@ -1273,7 +1284,7 @@ function modifier_imba_headhunter_debuff_handler:OnIntervalThink()
 	local heroes = FindUnitsInRadius(self.parent:GetTeamNumber(),
 									 self.parent:GetAbsOrigin(),
 									 nil,
-									 50000, -- global
+									 25000, -- global
 									 DOTA_UNIT_TARGET_TEAM_FRIENDLY,
 									 DOTA_UNIT_TARGET_HERO,
 									 DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
@@ -1300,32 +1311,47 @@ function modifier_imba_headhunter_debuff_handler:OnHeroKilled(keys)
 	if IsServer() then
 		local attacker = keys.attacker
 		local target = keys.target
+		local reincarnate = keys.reincarnate
 
-		-- Only apply if Bounty was the killer, OR the target had Track on it
-		if (self.caster == attacker and self.parent == target) or (self.parent == target and self.parent:HasModifier(self.track_debuff)) then
-			-- Check if the caster has Track as an ability
-			if self.caster:HasAbility(self.track_ability_name) then
-				-- Get ability handle
-				self.track_ability = self.caster:FindAbilityByName("imba_bounty_hunter_track")
-				-- Check if the ability has at least one level in it, if so, fetch allies gold value
-				if self.track_ability:GetLevel() > 0 then
-					self.contract_gold = self.track_ability:GetSpecialValueFor("bonus_gold_allies")
+		if self.parent == target then
+
+			-- If the target is reincarnating, do nothing
+			if reincarnate then
+				return nil
+			end
+
+			-- Only apply if Bounty was the killer, OR the target had Track on it
+			if self.caster == attacker or self.parent:HasModifier(self.track_debuff) then
+
+				-- Check if the caster has Track as an ability
+				if self.caster:HasAbility(self.track_ability_name) then
+
+					-- Get ability handle
+					self.track_ability = self.caster:FindAbilityByName("imba_bounty_hunter_track")
+
+					-- Check if the ability has at least one level in it, if so, fetch allies gold value
+					if self.track_ability:GetLevel() > 0 then
+						self.contract_gold = self.track_ability:GetSpecialValueFor("bonus_gold_allies")
+					end
+				end
+
+				-- If Track gold is defined, use it, otherwise use Headhunter's skill's minimum gold
+				if not self.contract_gold then
+					self.contract_gold = self.gold_minimum
+				end
+
+				-- Grant Bounty Hunter the gold for completing the contract
+				self.caster:ModifyGold(self.contract_gold, true, 0)
+				SendOverheadEventMessage(self.caster, OVERHEAD_ALERT_GOLD, self.caster, self.contract_gold, nil)
+
+				-- Remove the contract modifier from Bounty Hunter
+				if self.caster:HasModifier(self.modifier_contract_buff) then
+					self.caster:RemoveModifierByName(self.modifier_contract_buff)
 				end
 			end
 
-			-- If Track gold is defined, use it, otherwise use Headhunter's skill's minimum gold
-			if not self.contract_gold then
-				self.contract_gold = self.gold_minimum
-			end
-
-			-- Grant Bounty Hunter the gold for completing the contract
-			self.caster:ModifyGold(self.contract_gold, true, 0)
-			SendOverheadEventMessage(self.caster, OVERHEAD_ALERT_GOLD, self.caster, self.contract_gold, nil)
-
-			-- Remove the contract modifier from Bounty Hunter
-			if self.caster:HasModifier(self.modifier_contract_buff) then
-				self.caster:RemoveModifierByName(self.modifier_contract_buff)
-			end
+			-- Either way, destroy the modifier
+			self:Destroy()
 		end
 	end
 end
@@ -1335,6 +1361,10 @@ function modifier_imba_headhunter_debuff_handler:IsDebuff()
 end
 
 function modifier_imba_headhunter_debuff_handler:IsPurgable()
+	return false
+end
+
+function modifier_imba_headhunter_debuff_handler:RemoveOnDeath()
 	return false
 end
 

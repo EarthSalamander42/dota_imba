@@ -29,7 +29,7 @@ function item_imba_satanic:OnSpellStart()
     caster:AddNewModifier(caster, ability, modifier_unholy, {duration = unholy_rage_duration})
 end
 
--- morbid mask modifier
+-- Satanic modifier
 modifier_imba_satanic = class({})
 
 function modifier_imba_satanic:OnCreated()        
@@ -148,6 +148,8 @@ function modifier_imba_satanic_unique:OnAttackLanded(keys)
                 return nil
             end         
 
+            local will_incarnate = target:WillReincarnate()
+
             -- Wait a gametick to let things die
             Timers:CreateTimer(FrameTime(), function()
                 -- If the target is an illusion, do nothing
@@ -156,7 +158,8 @@ function modifier_imba_satanic_unique:OnAttackLanded(keys)
                 end
 
                 -- Check if the target died as a result of that attack
-                if not target:IsAlive() then
+                if not target:IsAlive() and not will_incarnate then
+                    
                     -- Calculate soul worth in health and stacks
                     local soul_health = target:GetMaxHealth() * (self.soul_slaughter_hp_increase_pct * 0.01) 
                     local soul_stacks = (soul_health/self.soul_slaughter_hp_per_stack)

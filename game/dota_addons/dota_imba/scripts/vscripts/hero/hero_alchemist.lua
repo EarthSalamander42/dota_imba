@@ -764,12 +764,19 @@ function modifier_imba_goblins_greed_passive:OnDeath(keys)
     local ability = self:GetAbility()
     local attacker = keys.attacker
     local unit = keys.unit
+    local reincarnate = keys.reincarnate
 
     if caster:PassivesDisabled() then
         return
     end
 
     if caster == attacker and caster:GetTeamNumber() ~= unit:GetTeamNumber() or unit:HasModifier("modifier_imba_goblins_greed_mark") then
+
+        -- If the target is reincarnating, do nothing
+        if reincarnate then
+            return nil
+        end
+
         local stacks = self:GetStackCount()
         local hero_multiplier = 1
         if unit:IsHero() then

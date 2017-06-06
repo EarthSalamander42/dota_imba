@@ -92,6 +92,7 @@ function modifier_flesh_heap:OnDeath(keys)
 	if not IsServer() then return end
 	if not keys.unit or not keys.attacker then return end
 	if not keys.unit:IsRealHero() then return end
+	if keys.reincarnate then return end
 	if self:GetParent():IsIllusion() then return end
 	-- Break
 	if self:GetParent():PassivesDisabled() then return end
