@@ -17,6 +17,7 @@ require('libraries/timers')
 require('libraries/physics')
 -- This library can be used for advanced 3D projectile systems.
 require('libraries/projectiles')
+require('libraries/projectiles_new')
 -- This library can be used for sending panorama notifications to the UIs of players/teams/everyone
 require('libraries/notifications')
 -- This library can be used for starting customized animations on units from lua
@@ -414,6 +415,11 @@ function GameMode:ItemAddedFilter( keys )
 			ParticleManager:DestroyParticle(item.rapier_pfx, false)
 			ParticleManager:ReleaseParticleIndex(item.rapier_pfx)
 			item.rapier_pfx = nil
+		end
+		if item.x_pfx then
+			ParticleManager:DestroyParticle(item.x_pfx, false)
+			ParticleManager:ReleaseParticleIndex(item.x_pfx)
+			item.x_pfx = nil
 		end
 		if unit:IsRealHero() then
 			item:SetPurchaser(nil)

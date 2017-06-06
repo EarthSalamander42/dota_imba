@@ -37,6 +37,9 @@ function TrackingProjectiles:Projectile( params )
 	if params.vColor then
 		ParticleManager:SetParticleControl( particle, 4, params.vColor )
 	end
+	if params.vColor2 then
+		ParticleManager:SetParticleControl( particle, 5, params.vColor2 )
+	end
 
     -- Creating a projectileID so it can be referred to later
     params.bProjectileDodged = false

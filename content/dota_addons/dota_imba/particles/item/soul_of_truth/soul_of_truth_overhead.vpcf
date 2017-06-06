@@ -9,7 +9,7 @@
 			_class = "C_OP_RenderSprites"
 			m_nSequenceCombineMode = "SEQUENCE_COMBINE_MODE_USE_SEQUENCE_0"
 			m_bAdditive = true
-			m_hTexture = resource:"materials/particle/true_sight.vtex"
+			m_hTexture = resource:"materials/particle/true_sight_truth.vtex"
 		},
 	]
 	m_Operators = 
@@ -53,12 +53,9 @@
 	m_Emitters = 
 	[
 		{
-			_class = "C_OP_InstantaneousEmitter"
-			m_nParticlesToEmit = 2
-			m_bDisableOperator = true
-		},
-		{
 			_class = "C_OP_ContinuousEmitter"
+			m_flEmitRate = 30.0
+			m_flEmissionScale = -1.0
 		},
 	]
 	m_ConstantColor = [ 255, 255, 0, 255 ]

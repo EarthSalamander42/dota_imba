@@ -91,11 +91,15 @@ function modifier_imba_divine_rapier_2:DeclareFunctions()
     local decFuns =
     {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-		MODIFIER_PROPERTY_PROVIDES_FOW_POSITION
+		MODIFIER_PROPERTY_PROVIDES_FOW_POSITION,
+		MODIFIER_PROPERTY_FORCE_DRAW_MINIMAP
     }
     return decFuns
 end
 
+function modifier_imba_divine_rapier_2:GetForceDrawOnMinimap()
+	return 1
+end
 
 function modifier_imba_divine_rapier_2:GetModifierProvidesFOWVision()
 	return 1
@@ -152,10 +156,6 @@ end
 function modifier_imba_arcane_rapier:GetModifierSpellAmplify_Percentage()
 	return self.spell_power
 end
-
-function modifier_imba_arcane_rapier:GetModifierProvidesFOWVision()
-	return 1
-end
 -------------------------------------------
 --			  ARCHMAGE RAPIER
 -------------------------------------------
@@ -170,7 +170,8 @@ function modifier_imba_arcane_rapier_2:DeclareFunctions()
     local decFuns =
     {
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
-		MODIFIER_PROPERTY_PROVIDES_FOW_POSITION
+		MODIFIER_PROPERTY_PROVIDES_FOW_POSITION,
+		MODIFIER_PROPERTY_FORCE_DRAW_MINIMAP
     }
     return decFuns
 end
@@ -200,6 +201,10 @@ end
 function modifier_imba_arcane_rapier_2:GetModifierProvidesFOWVision()
 	return 1
 end
+
+function modifier_imba_arcane_rapier_2:GetForceDrawOnMinimap()
+	return 1
+end
 -------------------------------------------
 --			  CURSED RAPIER
 -------------------------------------------
@@ -215,7 +220,8 @@ function modifier_imba_rapier_cursed:DeclareFunctions()
     {
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-		MODIFIER_PROPERTY_PROVIDES_FOW_POSITION
+		MODIFIER_PROPERTY_PROVIDES_FOW_POSITION,
+		MODIFIER_PROPERTY_FORCE_DRAW_MINIMAP
     }
     return decFuns
 end
@@ -258,6 +264,10 @@ function modifier_imba_rapier_cursed:GetModifierPreAttack_BonusDamage()
 end
 
 function modifier_imba_rapier_cursed:GetModifierProvidesFOWVision()
+	return 1
+end
+
+function modifier_imba_rapier_cursed:GetForceDrawOnMinimap()
 	return 1
 end
 

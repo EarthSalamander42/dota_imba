@@ -53,8 +53,8 @@
 		},
 		{
 			_class = "C_INIT_RandomAlpha"
-			m_nAlphaMin = 80
-			m_nAlphaMax = 110
+			m_nAlphaMin = 40
+			m_nAlphaMax = 70
 		},
 		{
 			_class = "C_INIT_RandomSequence"

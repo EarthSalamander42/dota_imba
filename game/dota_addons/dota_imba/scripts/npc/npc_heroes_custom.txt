@@ -1278,7 +1278,12 @@
 	"npc_imba_hero_magnataur"
 	{
 		"override_hero"				"npc_dota_hero_magnataur"
-
+		
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		"particle_folder"			"particles/units/heroes/hero_magnataur"
+		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+		"VoiceFile" 				"soundevents/voscripts/game_sounds_vo_magnataur.vsndevts"
+		
 		"Ability1"					"imba_magnataur_shockwave"
 		"Ability2"					"imba_magnataur_empower"
 		"Ability3"					"imba_magnataur_skewer"

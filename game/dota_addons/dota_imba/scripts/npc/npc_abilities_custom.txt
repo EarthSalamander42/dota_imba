@@ -22422,6 +22422,7 @@
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts"
+			"particle"					"particles/units/heroes/hero_troll_warlord/troll_warlord_berserk_buff.vpcf"
 		}
 
 		// Special
