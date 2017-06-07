@@ -11069,8 +11069,8 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"500"
-		"AbilityCooldown"				"35"
+		"AbilityCastRange"				"800"
+		"AbilityCooldown"				"25"
 		"AbilityManaCost"				"75"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -11146,24 +11146,19 @@
 			"10"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_aoe"						"700"
+				"aura_aoe"						"400"
 			}
 
 			"11"
 			{
 				"var_type"						"FIELD_FLOAT"
 				"aura_damage_heal_interval"		"0.5"
-			}
+			}			
+			
 			"12"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_heal_per_enemy_ps"		"10"
-			}
-			
-			"13"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"aura_damage_per_second"		"40"
+				"aura_damage_per_second"		"20"
 			}
 		}
 	}
@@ -11214,8 +11209,8 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"500"
-		"AbilityCooldown"				"35"
+		"AbilityCastRange"				"800"
+		"AbilityCooldown"				"25"
 		"AbilityManaCost"				"75"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -11299,22 +11294,17 @@
 				"var_type"						"FIELD_FLOAT"
 				"aura_damage_heal_interval"		"0.5"
 			}
-			
-			"12"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"aura_heal_per_enemy_ps"		"10"
-			}
+
 			"13"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_damage_per_second"		"60"
+				"aura_damage_per_second"		"35"
 			}
 			
 			"14"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_aoe"						"700"
+				"aura_aoe"						"500"
 			}
 		}
 	}

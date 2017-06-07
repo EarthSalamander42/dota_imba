@@ -89,24 +89,29 @@ end
 -------------------------------------------
 LinkLuaModifier("modifier_imba_souldrain_damage", "items/item_curseblade", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_souldrain = modifier_imba_souldrain or class({})
---Aura properties
-function modifier_imba_souldrain:IsAura() 		return true end
-function modifier_imba_souldrain:IsHidden()
-if self:GetStackCount() > 0 then return false end
-return true end
-function modifier_imba_souldrain:IsDebuff() 		return false end
-function modifier_imba_souldrain:IsPurgable() 	return false end
-function modifier_imba_souldrain:GetAuraSearchTeam()	return DOTA_UNIT_TARGET_TEAM_ENEMY end
-function modifier_imba_souldrain:GetAuraSearchType()	return DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO end
+-- Aura properties
+function modifier_imba_souldrain:IsAura() return true end
+function modifier_imba_souldrain:IsHidden() return true end
+function modifier_imba_souldrain:IsDebuff() return false end
+function modifier_imba_souldrain:IsPurgable() return false end
+function modifier_imba_souldrain:GetAuraSearchTeam() return DOTA_UNIT_TARGET_TEAM_ENEMY end
+function modifier_imba_souldrain:GetAuraSearchType() return DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO end
 function modifier_imba_souldrain:GetAuraRadius() return self:GetAbility():GetSpecialValueFor("aura_aoe") end
 function modifier_imba_souldrain:GetModifierAura()	return "modifier_imba_souldrain_damage" end
 
---Start aura
+function modifier_imba_souldrain:GetAuraEntityReject(target)
+	-- If the target has Hellblade's aura, reject it
+	if target:HasModifier("modifier_imba_helldrain_damage") then
+		return true
+	end
+
+	return false
+end
+
+-- Start aura
 function modifier_imba_souldrain:OnCreated() 
-	if IsServer() then
-		if not started_ticking then
-			self:StartIntervalThink( self:GetAbility():GetSpecialValueFor("aura_damage_heal_interval") )
-		started_ticking = true end
+	if IsServer() then		
+		self:StartIntervalThink( self:GetAbility():GetSpecialValueFor("aura_damage_heal_interval"))					
 	end
 end
 
@@ -123,60 +128,38 @@ function modifier_imba_souldrain:OnIntervalThink()
 		local item 					=	self:GetAbility()
 		local caster				= 	item:GetCaster()
 		local location 				=	caster:GetAbsOrigin()
+
 		--Ability paramaters
 		local radius 				=	item:GetSpecialValueFor("aura_aoe")
-		local heal_per_enemy		= 	item:GetSpecialValueFor("aura_heal_per_enemy_ps")
+		local heal_per_enemy		= 	item:GetSpecialValueFor("aura_damage_per_second")
 		local heal_interval			=	item:GetSpecialValueFor("aura_damage_heal_interval")
 
 		--Search for nearby enemies
-		local enemies 				= 	FindUnitsInRadius(caster:GetTeamNumber(), location, nil, radius, item:GetAbilityTargetTeam(), item:GetAbilityTargetType(), item:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
-		
-		local heal_count 			=	0
-		
+		local enemies 				= 	FindUnitsInRadius(caster:GetTeamNumber(), location, nil, radius, item:GetAbilityTargetTeam(), item:GetAbilityTargetType(), item:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)				
 
-		--Apply aura damage and heal
-		for _,enemy in ipairs(enemies) do
-			caster:Heal(heal_per_enemy*heal_interval,caster)
-			heal_count = heal_count+1
-		end
-		--Show heal amount
-		if GetStackCount == 0 then 
-		end
-		self:SetStackCount(heal_count)
-		heal_count = 0
+		local valid_enemies = 0
+		for _,enemy in pairs(enemies) do			
+			if enemy:HasModifier("modifier_imba_souldrain_damage") then
+				local actual_damage = ApplyDamage({victim = enemy, attacker = caster, ability = item, damage = heal_per_enemy * heal_interval, damage_type = DAMAGE_TYPE_MAGICAL, ability = item})		
+
+				-- Apply aura damage and heal		
+				caster:Heal(actual_damage, caster)
+
+				valid_enemies = valid_enemies + 1			
+			end
+		end		
 	end
 end
 
 --------------
---Aura damage
+-- Aura damage
 --------------
 modifier_imba_souldrain_damage = modifier_imba_souldrain_damage or class ({})
- --Modifier properties
+-- Modifier properties
 function modifier_imba_souldrain_damage:IsHidden() return false end
 function modifier_imba_souldrain_damage:IsDebuff() return false end
 function modifier_imba_souldrain_damage:IsPurgable() return false end
-function modifier_imba_souldrain_damage:GetEffectName()	return "particles/units/heroes/hero_night_stalker/nightstalker_void.vpcf" end
-
---Start ticking damage
-function modifier_imba_souldrain_damage:OnCreated()
-	if IsServer() then
-		self:StartIntervalThink(self:GetAbility():GetSpecialValueFor("aura_damage_heal_interval"))
-	end
-end
-
---Deal damage
-function modifier_imba_souldrain_damage:OnIntervalThink()
-	if IsServer() then
-		local item 				=	self:GetAbility()
-		local caster 			=	item:GetCaster()
-		local dps				=	item:GetSpecialValueFor("aura_damage_per_second")
-		local damage_interval	=	item:GetSpecialValueFor("aura_damage_heal_interval")
-		
-		ApplyDamage({victim = self:GetParent(), attacker = caster, ability = item, damage = dps*damage_interval, damage_type = DAMAGE_TYPE_MAGICAL})
-		
-	end
-end
-
+function modifier_imba_souldrain_damage:GetEffectName()	return "particles/item/curseblade/imba_curseblade_curse_rope_pnt.vpcf" end
 
 
 -----------------------------------------
@@ -218,9 +201,9 @@ end
 function modifier_item_imba_curseblade:OnDestroy()
 	if IsServer() then
 		local parent = self:GetParent()
-			if not parent:HasModifier("modifier_item_imba_curseblade") then
-				parent:RemoveModifierByName("modifier_imba_souldrain")
-			end
+		if not parent:HasModifier("modifier_item_imba_curseblade") then
+			parent:RemoveModifierByName("modifier_imba_souldrain")
+		end
 	end
 end
 function modifier_item_imba_curseblade:IsHidden() return true end
