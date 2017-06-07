@@ -681,8 +681,13 @@ function modifier_imba_headshot_attacks:OnAttackLanded(keys)
             local headshot_duration = self.headshot_duration * (1 + (self.caster:FindTalentValue("special_bonus_imba_sniper_3") * 0.01))
             local perfectshot_stun_duration = self.perfectshot_stun_duration * (1+ (self.caster:FindTalentValue("special_bonus_imba_sniper_3") * 0.01))            
 
+            -- If target is magic immune, we won't get any headshot or perfectshot, because fuck logic
+            if target:IsMagicImmune() then
+                return nil
+            end
+
             -- If a Perfectshot is marked, headshot and stun the target
-            if self.attack_perfectshot_stun then
+            if self.attack_perfectshot_stun then                
                 target:AddNewModifier(self.caster, self.ability, self.modifier_imba_headshot_slow, {duration = headshot_duration})
                 target:AddNewModifier(self.caster, self.ability, self.modifier_imba_perfectshot_stun, {duration = perfectshot_stun_duration})
 

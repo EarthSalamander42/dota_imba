@@ -216,6 +216,7 @@ end
 function modifier_item_imba_monkey_king_bar_unique:OnAttackLanded(keys)
 	if IsServer() then
 		local owner = self:GetParent()
+		local target = keys.target
 
 		-- If this attack was not performed by the modifier's owner, do nothing
 		if owner ~= keys.attacker then
@@ -226,8 +227,6 @@ function modifier_item_imba_monkey_king_bar_unique:OnAttackLanded(keys)
 			return end
 
 		-- Else, keep going
-		local target = keys.target
-		
 		-- If the target is a hero or creep, increase this modifier's stack count
 		if IsHeroOrCreep(target) and owner:GetTeam() ~= target:GetTeam() then
 			self:SetStackCount(self:GetStackCount() + 1)
@@ -235,17 +234,23 @@ function modifier_item_imba_monkey_king_bar_unique:OnAttackLanded(keys)
 			-- If this is the appropriate amount of stacks, pulverize the target
 			if self:GetStackCount() >= self.pulverize_count then
 
+				-- Reset stack amount
+				self:SetStackCount(0)
+
 				-- Play sound
 				target:EmitSound("DOTA_Item.MKB.Minibash")
+				
+				-- If the target is magic immune, do nothing - effect is wasted
+				if target:IsMagicImmune() then
+					return nil
+				end
 
 				-- Mini-bash
 				target:AddNewModifier(owner, self:GetAbility(), "modifier_stunned", {duration = self.pulverize_stun})
 
 				-- Deal damage
-				ApplyDamage({attacker = owner, victim = target, ability = self:GetAbility(), damage = self.pulverize_damage, damage_type = DAMAGE_TYPE_MAGICAL})
+				ApplyDamage({attacker = owner, victim = target, ability = self:GetAbility(), damage = self.pulverize_damage, damage_type = DAMAGE_TYPE_MAGICAL})			
 				
-				-- Reset stack amount
-				self:SetStackCount(0)
 			end
 		end
 	end
