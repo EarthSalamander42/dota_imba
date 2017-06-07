@@ -26,6 +26,17 @@ function imba_sniper_shrapnel:GetAOERadius()
     return radius
 end
 
+
+function imba_sniper_shrapnel:GetCastRange(location, target)
+    local caster = self:GetCaster()
+    local base_range = self.BaseClass.GetCastRange(self, location, target)
+
+    -- #1 Talent: Doubles Shrapnel cast range
+    base_range = base_range + caster:FindTalentValue("special_bonus_imba_sniper_1")
+
+    return base_range
+end
+
 function imba_sniper_shrapnel:OnSpellStart()
     -- Ability properties
     local caster = self:GetCaster()
@@ -251,9 +262,12 @@ function modifier_imba_shrapnel_attack:GetModifierDamageOutgoing_Percentage()
             -- Otherwise, reduce the outgoing damage
             local distance_damage_pct = self.distance_damage_pct
 
-            -- #1 Talent: Shrapnel Out-of-range attack damage increase
-            local distance_damage_pct = distance_damage_pct + self.caster:FindTalentValue("special_bonus_imba_sniper_1")      
-            return (100 - distance_damage_pct) * (-1)
+            -- #8 Talent: Shrapnel attacks increase the damage done to the target instead of lowering it
+            if self.caster:HasTalent("special_bonus_imba_sniper_8") then
+                return distance_damage_pct
+            else
+                return (100 - distance_damage_pct) * (-1)
+            end
         end
     end
 end
@@ -1033,18 +1047,6 @@ function imba_sniper_assassinate:GetBehavior()
     else
         return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN
     end
-end
-
-function imba_sniper_assassinate:GetCastRange(location, target)
-    local caster = self:GetCaster()
-    local cast_range = self.BaseClass.GetCastRange(self, location, target)
-
-    -- #8 Talent: Global Assassinate
-    if caster:HasTalent("special_bonus_imba_sniper_8") then
-        cast_range = caster:FindTalentValue("special_bonus_imba_sniper_8")
-    end
-
-    return cast_range
 end
 
 function imba_sniper_assassinate:GetAOERadius()

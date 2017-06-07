@@ -19352,8 +19352,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"distance_damage_pct"		"20 20 20 20 30 40 50"
-				"LinkedSpecialBonus"		"special_bonus_imba_sniper_1"
+				"distance_damage_pct"		"20 20 20 20 30 40 50"				
 			}
 
 			"07"
@@ -33530,7 +33529,7 @@
     //=================================================================================================================
     // Sniper's Talents
     //=================================================================================================================
-    "special_bonus_imba_sniper_1" // Shrapnel Out-of-range attack damage increase
+    "special_bonus_imba_sniper_1" // Doubles Shrapnel cast range
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
@@ -33550,7 +33549,7 @@
             "01"
             {
                 "var_type"                  "FIELD_FLOAT"
-                "value"	                    "10"
+                "value"	                    "1800"
             }
         }
     }
@@ -33705,7 +33704,7 @@
         }
     }
 
-    "special_bonus_imba_sniper_8" // Global Assassinate
+    "special_bonus_imba_sniper_8" // Shrapnel attacks increase the damage done to the target instead of lowering it
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
@@ -33715,7 +33714,7 @@
 
         "LinkedAbility"
         {
-        	"01"	"imba_sniper_assassinate"
+        	"01"	"imba_sniper_shrapnel"
         }
 
         // Special
@@ -33725,7 +33724,7 @@
             "01"
             {
                 "var_type"                  "FIELD_FLOAT"
-                "value"	                    "25000"
+                "value"	                    "1"
             }
         }
     }
