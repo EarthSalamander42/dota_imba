@@ -294,7 +294,7 @@ function modifier_item_imba_hellblade_unique:OnAttacked(keys)
 		
 		-- Only apply on the caster being attacked, if the roll is in the range
 		if keys.target == self.caster and RollPseudoRandom(self.transfer_chance, self) then			
-		local particle_drain_fx = ParticleManager:CreateParticle("particles/item/curseblade/skeleton_king_vampiric_aura_lifesteal_2.vpcf", PATTACH_ABSORIGIN, self.caster)
+		local particle_drain_fx = ParticleManager:CreateParticle("particles/item/curseblade/wk_aura_purple.vpcf", PATTACH_ABSORIGIN, self.caster)
 		ParticleManager:SetParticleControl(particle_drain_fx, 0, self.caster:GetAbsOrigin())
 		ParticleManager:SetParticleControl(particle_drain_fx, 1, self.caster:GetAbsOrigin())
 		ParticleManager:ReleaseParticleIndex(particle_drain_fx)	
@@ -435,7 +435,7 @@ function modifier_item_imba_hellblade_debuff:OnIntervalThink()
 	if IsServer() then				
 		
 		-- Show drain particles
-		local particle_drain_fx = ParticleManager:CreateParticle("particles/hero/skeleton_king/skeleton_king_vampiric_aura_lifesteal.vpcf", PATTACH_ABSORIGIN, self.caster)
+		local particle_drain_fx = ParticleManager:CreateParticle(self.particle_drain, PATTACH_ABSORIGIN, self.caster)
 		ParticleManager:SetParticleControl(particle_drain_fx, 0, self.caster:GetAbsOrigin())
 		ParticleManager:SetParticleControl(particle_drain_fx, 1, self.caster:GetAbsOrigin())		
 		ParticleManager:ReleaseParticleIndex(particle_drain_fx)
