@@ -17161,12 +17161,12 @@
 			"04"
 			{
 				"var_type"							"FIELD_FLOAT"
-				"stack_scale_up"					"0.025"
+				"stack_scale_up"					"1.75"
 			}
 			"05"
 			{
 				"var_type"							"FIELD_FLOAT"
-				"max_size"							"1.75"
+				"max_size"							"75"
 			}
 		}
 	}

@@ -84,6 +84,7 @@ function modifier_flesh_heap:GetModifierModelScale()
 	if size > self:GetAbility():GetSpecialValueFor("max_size") then
 		size = self:GetAbility():GetSpecialValueFor("max_size")
 	end
+	print(size)
 	return size
 end
 
@@ -438,7 +439,7 @@ function imba_pudge_meat_hook:OnSpellStart()
 	if self.hVictim ~= nil then
 		--self.hVictim:InterruptMotionControllers( true )
 	end
-	self.hooks = self.hooks or {}
+	self.hooks = {}
 	self.targets = {}
 	self.max_targets = self:GetSpecialValueFor( "max_targets" )  
 	self.hook_damage = self:GetSpecialValueFor( "hook_damage" )  
@@ -528,10 +529,8 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData( hTarget, vLocation,keys
 		return
 	end
 
-	local i = keys.nProjectileNumber
-	if not self.hooks[i] then return end	
+	local i = keys.nProjectileNumber	
 	
-	-- RETRACTING
 	if self.hooks[i]["bRetracting"] then		
 		-- Hitting someone on the way back is ignored
 	 	if hTarget then
@@ -550,27 +549,22 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData( hTarget, vLocation,keys
 
 		if self.hooks[i]["unitsHit"] and #self.hooks[i]["unitsHit"] > 0 then
 			for k,v in pairs(self.hooks[i]["unitsHit"]) do
-				if IsValidEntity(v) then
-					v:RemoveModifierByName( "modifier_meat_hook" )
-					v:SetUnitOnClearGround()
-				end
+				v:RemoveModifierByName( "modifier_meat_hook" )
+				v:SetUnitOnClearGround()
 			end
 		end
 		--self.hooks[i]["unitsHit"] = nil
 		ParticleManager:DestroyParticle( self.hooks[i]["nChainParticleFXIndex"], true )
-		ParticleManager:ReleaseParticleIndex( self.hooks[i]["nChainParticleFXIndex"] )
 		EmitSoundOn( "Hero_Pudge.AttackHookRetractStop", self:GetCaster() )
 
-		self.hooks[i] = nil
 		return
 	end
 
-	-- Here the hook always moves forward and has a target. The impact is handled here.
-	if hTarget then
-		if not self.targets[hTarget] then -- Storing the targets so it won't get handled again
-			EmitSoundOn( "Hero_Pudge.AttackHookImpact", hTarget )
-			hTarget:AddNewModifier( self:GetCaster(), self, "modifier_meat_hook", {duration = 1.5} )
-			self.targets[hTarget] = i
+	-- Here the hook always moves forward. The impact is handled here.
+	if hTarget  then		
+		EmitSoundOn( "Hero_Pudge.AttackHookImpact", hTarget )
+		hTarget:AddNewModifier( self:GetCaster(), self, "modifier_meat_hook", {duration = 1.5} )
+		if not self.targets[hTarget] then
 			if hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
 			
 				local damage = 
@@ -582,11 +576,11 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData( hTarget, vLocation,keys
 					ability = self
 				}
 				ApplyDamage( damage )
-				
+				self.targets[hTarget] = true
 		
 
 				if not hTarget:IsAlive() then
-					self.hooks[i]["bDiedInHook"] = true
+					self.bDiedInHook = true
 				end
 
 				if not hTarget:IsMagicImmune() then
@@ -599,85 +593,77 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData( hTarget, vLocation,keys
 			end
 
 			AddFOWViewer( self:GetCaster():GetTeamNumber(), hTarget:GetOrigin(), self.vision_radius, self.vision_duration, false )
-
 			table.insert(self.hooks[i]["unitsHit"], hTarget)
 		end
 	end
 	-- Check if the hook should retract
 	
-	if #self.hooks[i]["unitsHit"] >= self.max_targets or not hTarget or self.targets[hTarget] == i then
-		if (not hTarget or self.targets[hTarget] == i) or hTarget:GetTeamNumber() == self:GetCaster():GetTeamNumber()  then
-			if self.hooks[i]["hProjectile"] then
-				ProjectileManager:DestroyLinearProjectile(self.hooks[i]["hProjectile"])
-			end
-			local vHookOffset = Vector( 0, 0, 96 )
-			if not self.hooks[i]["unitsHit"] or #self.hooks[i]["unitsHit"] == 0  then 
-	
-				ParticleManager:SetParticleControlEnt( self.hooks[i]["nChainParticleFXIndex"], 1, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_weapon_chain_rt", self:GetCaster():GetAbsOrigin() + vHookOffset, true);
-				ParticleManager:SetParticleControl( self.hooks[i]["nChainParticleFXIndex"], 4, Vector( 0, 0, 0 ) )
-				ParticleManager:SetParticleControl( self.hooks[i]["nChainParticleFXIndex"], 5, Vector( 1, 0, 0 ) )
-			else
-	
-				for k,v in pairs(self.hooks[i]["unitsHit"]) do
-	
-					if v ~= nil and ( not v:IsInvisible() ) then
-						ParticleManager:SetParticleControlEnt( self.hooks[i]["nChainParticleFXIndex"], 1, v, PATTACH_POINT_FOLLOW, "attach_hitloc", v:GetAbsOrigin() + vHookOffset, true )
-						ParticleManager:SetParticleControl( self.hooks[i]["nChainParticleFXIndex"], 4, Vector( 0, 0, 0 ) )
-						ParticleManager:SetParticleControl( self.hooks[i]["nChainParticleFXIndex"], 5, Vector( 1, 0, 0 ) )
-					end			
-				end
-			end
-			self.hooks[i]["bRetracting"] = true		
-			
-			for j = 1,self.nAmountOfHooks do
-				self.bAllRetracting = false
-				if self.hooks[i]["bRetracting"] == false then
-					self.bAllRetracting = false
-					break
-				else
-	
-					self.bAllRetracting = true
-				end
-			end
-	
-			if self.bAllRetracting then
-				self:GetCaster():RemoveModifierByName("modifier_meat_hook_followthrough")
-			end
-	
-			local vHookPos = self.hooks[i]["vProjectileLocation"]
-			local flPad = self:GetCaster():GetPaddedCollisionRadius()
-			if hTarget ~= nil then
-				vHookPos = hTarget:GetAbsOrigin()
-				flPad = flPad + hTarget:GetPaddedCollisionRadius()
-			end
-			--Missing: Setting target facing angle
-			local vVelocity = self.hooks[i]["vStartPosition"] - vHookPos
-			vVelocity.z = 0.0
-	
-			local flDistance = vVelocity:Length2D()-- - flPad
-			vVelocity = vVelocity:Normalized() * self.hook_speed
-	
-			self.hooks[i]["vDirection"] = self.hooks[i]["vDirection"] * -1
-			local info = 
-			{
-				Ability = self,
-				vSpawnOrigin = vHookPos,
-				vVelocity = self.hooks[i]["vDirection"] ,
-				fDistance = flDistance-100,
-				Source = self:GetCaster(),
-				EffectName =  "particles/units/heroes/hero_pudge/pudge_meathook.vpcf",
-				ExtraData = 
-				{
-					nProjectileNumber = i
-				}
-			}
-			
-			self.hooks[i]["hProjectile"] = ProjectileManager:CreateLinearProjectile( info )
+	if #self.hooks[i]["unitsHit"] >= self.max_targets or not hTarget or hTarget:GetTeamNumber() == self:GetCaster():GetTeamNumber()  then
+		if self.hooks[i]["hProjectile"] then
+			ProjectileManager:DestroyLinearProjectile(self.hooks[i]["hProjectile"])
 		end
+		self.hooks[i]["bRetracting"] = true		
+
+		for j = 1,self.nAmountOfHooks do
+			self.bAllRetracting = false
+			if self.hooks[i]["bRetracting"] == false then
+				self.bAllRetracting = false
+				break
+			else
+				self.bAllRetracting = true
+			end
+		end
+
+		if self.bAllRetracting then
+			self:GetCaster():RemoveModifierByName("modifier_meat_hook_followthrough")
+		end
+
+		local vHookPos = self.hooks[i]["vProjectileLocation"]
+		local flPad = self:GetCaster():GetPaddedCollisionRadius()
+		if hTarget ~= nil then
+			vHookPos = hTarget:GetAbsOrigin()
+			flPad = flPad + hTarget:GetPaddedCollisionRadius()
+		end
+		--Missing: Setting target facing angle
+		local vVelocity = self.hooks[i]["vStartPosition"] - vHookPos
+		vVelocity.z = 0.0
+
+		local flDistance = vVelocity:Length2D()-- - flPad
+		vVelocity = vVelocity:Normalized() * self.hook_speed
+
+		self.hooks[i]["vDirection"] = self.hooks[i]["vDirection"] * -1
+		local info = 
+		{
+			Ability = self,
+			vSpawnOrigin = vHookPos,
+			vVelocity = self.hooks[i]["vDirection"] ,
+			fDistance = flDistance-100,
+			Source = self:GetCaster(),
+			EffectName = "particles/units/heroes/hero_pudge/pudge_meathook.vpcf",
+			ExtraData = 
+			{
+				nProjectileNumber = i
+			}
+		}
+		
+		self.hooks[i]["hProjectile"] = ProjectileManager:CreateLinearProjectile( info )
 	end
 
-	
-	
+	local vHookOffset = Vector( 0, 0, 96 )
+
+	if not self.hooks[i]["unitsHit"] or #self.hooks[i]["unitsHit"] == 0  then 
+		ParticleManager:SetParticleControlEnt( self.hooks[i]["nChainParticleFXIndex"], 1, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_weapon_chain_rt", self:GetCaster():GetAbsOrigin() + vHookOffset, true);
+	else
+
+		for k,v in pairs(self.hooks[i]["unitsHit"]) do
+
+			if v ~= nil and ( not v:IsInvisible() ) then
+				ParticleManager:SetParticleControlEnt( self.hooks[i]["nChainParticleFXIndex"], 1, v, PATTACH_POINT_FOLLOW, "attach_hitloc", v:GetAbsOrigin() + vHookOffset, true )
+				ParticleManager:SetParticleControl( self.hooks[i]["nChainParticleFXIndex"], 4, Vector( 0, 0, 0 ) )
+				ParticleManager:SetParticleControl( self.hooks[i]["nChainParticleFXIndex"], 5, Vector( 1, 0, 0 ) )
+			end			
+		end
+	end
 
 
 	if self:GetCaster():IsAlive() then
@@ -692,14 +678,12 @@ end
 function imba_pudge_meat_hook:OnProjectileThink_ExtraData(vLocation,keys)
 
 	local i = keys.nProjectileNumber
-	if not self.hooks[i] then return end
+	
 
 	self.hooks[i]["vProjectileLocation"] = vLocation
 	if self.hooks[i]["unitsHit"] then
 		for k,v in pairs(self.hooks[i]["unitsHit"]) do
-			if IsValidEntity(v) then
-				v:SetAbsOrigin(GetGroundPosition(vLocation,self:GetCaster()))
-			end
+			v:SetAbsOrigin(GetGroundPosition(vLocation,self:GetCaster()))
 		end
 	end
 end
