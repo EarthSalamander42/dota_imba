@@ -132,6 +132,7 @@ function Projectiles:CreateProjectile(projectile)
   projectile.OnUnitHit = projectile.OnUnitHit or function() return end
   projectile.OnTreeHit = projectile.OnTreeHit or function() return end
   projectile.OnWallHit = projectile.OnWallHit or function() return end
+  projectile.OnThink = projectile.OnThink or function() return end
   projectile.OnGroundHit = projectile.OnGroundHit or function() return end
   projectile.OnFinish = projectile.OnFinish or nil
 
@@ -324,6 +325,10 @@ function Projectiles:CreateProjectile(projectile)
       local radius = projectile.radius
       local rad2 = radius * radius
       
+	  if projectile.OnThink then
+		projectile.OnThink()
+	  end
+	  
       -- debug draw
       if projectile.draw then
         local alpha = 1

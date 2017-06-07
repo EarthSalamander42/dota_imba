@@ -649,6 +649,7 @@ function imba_tinker_march_of_the_machines:OnSpellStart()
 		local target_loc = self:GetCursorPosition()
 		local caster_loc = caster:GetAbsOrigin()
 		local direction = (target_loc - caster_loc):Normalized()
+		local ability = self
 		
 		-- Parameters
 		local damage = self:GetSpecialValueFor("damage")
@@ -723,163 +724,245 @@ function imba_tinker_march_of_the_machines:OnSpellStart()
 				if (bot_random <= touch_chance_pct) and unlock_flame then
 					local index = "projectile_" .. DoUniqueString("projectile")
 					self[index] = {}
-					projectile = 
-					{
-						Ability				= self,
-						EffectName			= "particles/hero/tinker/tinker_march_flame.vpcf",
-						vSpawnOrigin		= target_loc - (direction * spawn_radius) + (spawn_line_direction * position_ran),
-						fDistance			= travel_distance,
-						fStartRadius		= collision_radius,
-						fEndRadius			= collision_radius,
-						Source				= caster,
-						bHasFrontalCone		= false,
-						bReplaceExisting	= false,
-						iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
-						iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
-						iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-						fExpireTime 		= GameRules:GetGameTime() + 10.0,
-						bDeleteOnHit		= true,
-						vVelocity			= Vector(direction.x,direction.y,0) * speed,
-						bProvidesVision		= false,
-						ExtraData			= {index = index, damage = damage, explosion_radius = explosion_radius, flame_radius = flame_radius, flame_duration = flame_duration}
+					projectile = {
+					  EffectName = "particles/hero/tinker/tinker_march_flame.vpcf",
+					  vSpawnOrigin = target_loc - (direction * spawn_radius) + (spawn_line_direction * position_ran),
+					  fDistance = travel_distance,
+					  fStartRadius = collision_radius,
+					  fEndRadius = collision_radius,
+					  Source = caster,
+					  fExpireTime = GameRules:GetGameTime() + 10.0,
+					  vVelocity = Vector(direction.x,direction.y,0) * speed,
+					  UnitBehavior = PROJECTILES_DESTROY,
+					  bMultipleHits = false,
+					  bIgnoreSource = true,
+					  TreeBehavior = PROJECTILES_NOTHING,
+					  bCutTrees = false,
+					  bTreeFullCollision = false,
+					  WallBehavior = PROJECTILES_NOTHING,
+					  GroundBehavior = PROJECTILES_NOTHING,
+					  fGroundOffset = 80,
+					  nChangeMax = 1,
+					  bRecreateOnChange = false,
+					  bDestroyImmediate = false,
+					  bZCheck = false,
+					  bGroundLock = true,
+					  bProvidesVision = false,
+					  OnThink = function(self) 
+					    ability:OnProjectileThink_ExtraData(projectile:GetPosition(), {index = index, damage = damage, explosion_radius = explosion_radius, flame_radius = flame_radius, flame_duration = flame_duration})
+					  end,
+					  UnitTest = function(self, unit) return unit:GetUnitName() ~= "npc_dummy_unit" and unit:GetTeamNumber() ~= caster:GetTeamNumber() end,
+					  OnUnitHit = function(self, unit) 
+						ability:OnProjectileHit_ExtraData(unit, projectile:GetPosition(), {index = index, damage = damage, explosion_radius = explosion_radius, flame_radius = flame_radius, flame_duration = flame_duration})
+					  end,
 					}
 				-- Tesla bot
 				elseif ((bot_random <= (2 * touch_chance_pct)) and (bot_random > (touch_chance_pct))) and unlock_tesla then
-					projectile = 
-					{
-						Ability				= self,
-						EffectName			= "particles/hero/tinker/tinker_march_tesla.vpcf",
-						vSpawnOrigin		= target_loc - (direction * spawn_radius) + (spawn_line_direction * position_ran),
-						fDistance			= travel_distance,
-						fStartRadius		= collision_radius,
-						fEndRadius			= collision_radius,
-						Source				= caster,
-						bHasFrontalCone		= false,
-						bReplaceExisting	= false,
-						iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
-						iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
-						iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-						fExpireTime 		= GameRules:GetGameTime() + 10.0,
-						bDeleteOnHit		= true,
-						vVelocity			= Vector(direction.x,direction.y,0) * speed,
-						bProvidesVision		= false,
-						ExtraData			= {damage = damage, explosion_radius = explosion_radius, tesla_stun_duration = tesla_stun_duration}
+					projectile = {
+					  EffectName = "particles/hero/tinker/tinker_march_tesla.vpcf",
+					  vSpawnOrigin = target_loc - (direction * spawn_radius) + (spawn_line_direction * position_ran),
+					  fDistance = travel_distance,
+					  fStartRadius = collision_radius,
+					  fEndRadius = collision_radius,
+					  Source = caster,
+					  fExpireTime = GameRules:GetGameTime() + 10.0,
+					  vVelocity = Vector(direction.x,direction.y,0) * speed,
+					  UnitBehavior = PROJECTILES_DESTROY,
+					  bMultipleHits = false,
+					  bIgnoreSource = true,
+					  TreeBehavior = PROJECTILES_NOTHING,
+					  bCutTrees = false,
+					  bTreeFullCollision = false,
+					  WallBehavior = PROJECTILES_NOTHING,
+					  GroundBehavior = PROJECTILES_NOTHING,
+					  fGroundOffset = 80,
+					  nChangeMax = 1,
+					  bRecreateOnChange = false,
+					  bDestroyImmediate = false,
+					  bZCheck = false,
+					  bGroundLock = true,
+					  bProvidesVision = false,
+					  OnThink = function(self) 
+					    ability:OnProjectileThink_ExtraData(projectile:GetPosition(), {damage = damage, explosion_radius = explosion_radius, tesla_stun_duration = tesla_stun_duration})
+					  end,
+					  UnitTest = function(self, unit) return unit:GetUnitName() ~= "npc_dummy_unit" and unit:GetTeamNumber() ~= caster:GetTeamNumber() end,
+					  OnUnitHit = function(self, unit) 
+						ability:OnProjectileHit_ExtraData(unit, projectile:GetPosition(), {damage = damage, explosion_radius = explosion_radius, tesla_stun_duration = tesla_stun_duration})
+					  end,
 					}
 				-- Drone bot
 				elseif ((bot_random <= (3 * touch_chance_pct)) and (bot_random > (2 * touch_chance_pct))) and unlock_drone then
 					local index = "projectile_" .. DoUniqueString("projectile")
 					self[index] = {}
-					projectile = 
-					{
-						Ability				= self,
-						EffectName			= "particles/hero/tinker/tinker_march_drone.vpcf",
-						vSpawnOrigin		= target_loc - (direction * spawn_radius) + (spawn_line_direction * position_ran),
-						fDistance			= travel_distance,
-						fStartRadius		= collision_radius,
-						fEndRadius			= collision_radius,
-						Source				= caster,
-						bHasFrontalCone		= false,
-						bReplaceExisting	= false,
-						iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
-						iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
-						iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-						fExpireTime 		= GameRules:GetGameTime() + 10.0,
-						bDeleteOnHit		= true,
-						vVelocity			= Vector(direction.x,direction.y,0) * speed,
-						bProvidesVision		= false,
-						ExtraData			= {damage = damage, explosion_radius = explosion_radius, drone_duration = drone_duration}
+					projectile = {
+					  EffectName = "particles/hero/tinker/tinker_march_drone.vpcf",
+					  vSpawnOrigin = target_loc - (direction * spawn_radius) + (spawn_line_direction * position_ran),
+					  fDistance = travel_distance,
+					  fStartRadius = collision_radius,
+					  fEndRadius = collision_radius,
+					  Source = caster,
+					  fExpireTime = GameRules:GetGameTime() + 10.0,
+					  vVelocity = Vector(direction.x,direction.y,0) * speed,
+					  UnitBehavior = PROJECTILES_DESTROY,
+					  bMultipleHits = false,
+					  bIgnoreSource = true,
+					  TreeBehavior = PROJECTILES_NOTHING,
+					  bCutTrees = false,
+					  bTreeFullCollision = false,
+					  WallBehavior = PROJECTILES_NOTHING,
+					  GroundBehavior = PROJECTILES_NOTHING,
+					  fGroundOffset = 80,
+					  nChangeMax = 1,
+					  bRecreateOnChange = false,
+					  bDestroyImmediate = false,
+					  bZCheck = false,
+					  bGroundLock = true,
+					  bProvidesVision = false,
+					  OnThink = function(self) 
+					    ability:OnProjectileThink_ExtraData(projectile:GetPosition(), {damage = damage, explosion_radius = explosion_radius, drone_duration = drone_duration})
+					  end,
+					  UnitTest = function(self, unit) return unit:GetUnitName() ~= "npc_dummy_unit" and unit:GetTeamNumber() ~= caster:GetTeamNumber() end,
+					  OnUnitHit = function(self, unit) 
+						ability:OnProjectileHit_ExtraData(unit, projectile:GetPosition(), {damage = damage, explosion_radius = explosion_radius, drone_duration = drone_duration})
+					  end,
 					}
 				-- Sticky bot
 				elseif ((bot_random <= (4 * touch_chance_pct)) and (bot_random > (3 * touch_chance_pct))) and unlock_sticky then
-					projectile = 
-					{
-						Ability				= self,
-						EffectName			= "particles/hero/tinker/tinker_march_sticky.vpcf",
-						vSpawnOrigin		= target_loc - (direction * spawn_radius) + (spawn_line_direction * position_ran),
-						fDistance			= travel_distance,
-						fStartRadius		= collision_radius,
-						fEndRadius			= collision_radius,
-						Source				= caster,
-						bHasFrontalCone		= false,
-						bReplaceExisting	= false,
-						iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
-						iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
-						iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-						fExpireTime 		= GameRules:GetGameTime() + 10.0,
-						bDeleteOnHit		= true,
-						vVelocity			= Vector(direction.x,direction.y,0) * speed,
-						bProvidesVision		= false,
-						ExtraData			= {damage = damage, explosion_radius = explosion_radius, sticky_duration = sticky_duration}
+					projectile = {
+					  EffectName = "particles/hero/tinker/tinker_march_sticky.vpcf",
+					  vSpawnOrigin = target_loc - (direction * spawn_radius) + (spawn_line_direction * position_ran),
+					  fDistance = travel_distance,
+					  fStartRadius = collision_radius,
+					  fEndRadius = collision_radius,
+					  Source = caster,
+					  fExpireTime = GameRules:GetGameTime() + 10.0,
+					  vVelocity = Vector(direction.x,direction.y,0) * speed,
+					  UnitBehavior = PROJECTILES_DESTROY,
+					  bMultipleHits = false,
+					  bIgnoreSource = true,
+					  TreeBehavior = PROJECTILES_NOTHING,
+					  bCutTrees = false,
+					  bTreeFullCollision = false,
+					  WallBehavior = PROJECTILES_NOTHING,
+					  GroundBehavior = PROJECTILES_NOTHING,
+					  fGroundOffset = 80,
+					  nChangeMax = 1,
+					  bRecreateOnChange = false,
+					  bDestroyImmediate = false,
+					  bZCheck = false,
+					  bGroundLock = true,
+					  bProvidesVision = false,
+					  OnThink = function(self) 
+					    ability:OnProjectileThink_ExtraData(projectile:GetPosition(), {damage = damage, explosion_radius = explosion_radius, sticky_duration = sticky_duration})
+					  end,
+					  UnitTest = function(self, unit) return unit:GetUnitName() ~= "npc_dummy_unit" and unit:GetTeamNumber() ~= caster:GetTeamNumber() end,
+					  OnUnitHit = function(self, unit) 
+						ability:OnProjectileHit_ExtraData(unit, projectile:GetPosition(), {damage = damage, explosion_radius = explosion_radius, sticky_duration = sticky_duration})
+					  end,
 					}
 				-- Dismantle bot
 				elseif ((bot_random <= (5 * touch_chance_pct)) and (bot_random > (4 * touch_chance_pct))) and unlock_dismantle then
-					projectile = 
-					{
-						Ability				= self,
-						EffectName			= "particles/hero/tinker/tinker_march_dismantle.vpcf",
-						vSpawnOrigin		= target_loc - (direction * spawn_radius) + (spawn_line_direction * position_ran),
-						fDistance			= travel_distance,
-						fStartRadius		= collision_radius,
-						fEndRadius			= collision_radius,
-						Source				= caster,
-						bHasFrontalCone		= false,
-						bReplaceExisting	= false,
-						iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
-						iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
-						iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-						fExpireTime 		= GameRules:GetGameTime() + 10.0,
-						bDeleteOnHit		= true,
-						vVelocity			= Vector(direction.x,direction.y,0) * speed,
-						bProvidesVision		= false,
-						ExtraData			= {damage = damage, explosion_radius = explosion_radius, dismantle_duration = dismantle_duration }
+					projectile = {
+					  EffectName = "particles/hero/tinker/tinker_march_dismantle.vpcf",
+					  vSpawnOrigin = target_loc - (direction * spawn_radius) + (spawn_line_direction * position_ran),
+					  fDistance = travel_distance,
+					  fStartRadius = collision_radius,
+					  fEndRadius = collision_radius,
+					  Source = caster,
+					  fExpireTime = GameRules:GetGameTime() + 10.0,
+					  vVelocity = Vector(direction.x,direction.y,0) * speed,
+					  UnitBehavior = PROJECTILES_DESTROY,
+					  bMultipleHits = false,
+					  bIgnoreSource = true,
+					  TreeBehavior = PROJECTILES_NOTHING,
+					  bCutTrees = false,
+					  bTreeFullCollision = false,
+					  WallBehavior = PROJECTILES_NOTHING,
+					  GroundBehavior = PROJECTILES_NOTHING,
+					  fGroundOffset = 80,
+					  nChangeMax = 1,
+					  bRecreateOnChange = false,
+					  bDestroyImmediate = false,
+					  bZCheck = false,
+					  bGroundLock = true,
+					  bProvidesVision = false,
+					  OnThink = function(self) 
+					    ability:OnProjectileThink_ExtraData(projectile:GetPosition(), {damage = damage, explosion_radius = explosion_radius, dismantle_duration = dismantle_duration})
+					  end,
+					  UnitTest = function(self, unit) return unit:GetUnitName() ~= "npc_dummy_unit" and unit:GetTeamNumber() ~= caster:GetTeamNumber() end,
+					  OnUnitHit = function(self, unit) 
+						ability:OnProjectileHit_ExtraData(unit, projectile:GetPosition(), {damage = damage, explosion_radius = explosion_radius, dismantle_duration = dismantle_duration})
+					  end,
 					}
 				-- Railgun bot
 				elseif ((bot_random <= (6 * touch_chance_pct)) and (bot_random > (5 * touch_chance_pct))) and unlock_railgun then
 					local index = "projectile_" .. DoUniqueString("projectile")
 					self[index] = {}
-					projectile = 
-					{
-						Ability				= self,
-						EffectName			= "particles/hero/tinker/tinker_march_railgun.vpcf",
-						vSpawnOrigin		= target_loc - (direction * spawn_radius) + (spawn_line_direction * position_ran),
-						fDistance			= travel_distance,
-						fStartRadius		= collision_radius,
-						fEndRadius			= collision_radius,
-						Source				= caster,
-						bHasFrontalCone		= false,
-						bReplaceExisting	= false,
-						iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
-						iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
-						iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-						fExpireTime 		= GameRules:GetGameTime() + 10.0,
-						bDeleteOnHit		= true,
-						vVelocity			= Vector(direction.x,direction.y,0) * speed,
-						bProvidesVision		= false,
-						ExtraData			= {index = index, damage = damage, explosion_radius = explosion_radius, railgun_damage = railgun_damage, railgun_range = railgun_range, railgun_radius = railgun_radius, direction_x = direction.x, direction_y = direction.y}
+					projectile = {
+					  EffectName = "particles/hero/tinker/tinker_march_railgun.vpcf",
+					  vSpawnOrigin = target_loc - (direction * spawn_radius) + (spawn_line_direction * position_ran),
+					  fDistance = travel_distance,
+					  fStartRadius = collision_radius,
+					  fEndRadius = collision_radius,
+					  Source = caster,
+					  fExpireTime = GameRules:GetGameTime() + 10.0,
+					  vVelocity = Vector(direction.x,direction.y,0) * speed,
+					  UnitBehavior = PROJECTILES_DESTROY,
+					  bMultipleHits = false,
+					  bIgnoreSource = true,
+					  TreeBehavior = PROJECTILES_NOTHING,
+					  bCutTrees = false,
+					  bTreeFullCollision = false,
+					  WallBehavior = PROJECTILES_NOTHING,
+					  GroundBehavior = PROJECTILES_NOTHING,
+					  fGroundOffset = 80,
+					  nChangeMax = 1,
+					  bRecreateOnChange = false,
+					  bDestroyImmediate = false,
+					  bZCheck = false,
+					  bGroundLock = true,
+					  bProvidesVision = false,
+					  OnThink = function(self) 
+					    ability:OnProjectileThink_ExtraData(projectile:GetPosition(), {index = index, damage = damage, explosion_radius = explosion_radius, railgun_damage = railgun_damage, railgun_range = railgun_range, railgun_radius = railgun_radius, direction_x = direction.x, direction_y = direction.y})
+					  end,
+					  UnitTest = function(self, unit) return unit:GetUnitName() ~= "npc_dummy_unit" and unit:GetTeamNumber() ~= caster:GetTeamNumber() end,
+					  OnUnitHit = function(self, unit) 
+						ability:OnProjectileHit_ExtraData(unit, projectile:GetPosition(), {index = index, damage = damage, explosion_radius = explosion_radius, railgun_damage = railgun_damage, railgun_range = railgun_range, railgun_radius = railgun_radius, direction_x = direction.x, direction_y = direction.y})
+					  end,
 					}
 				else
-					projectile = 
-					{
-						Ability				= self,
-						EffectName			= "particles/units/heroes/hero_tinker/tinker_machine.vpcf",
-						vSpawnOrigin		= target_loc - (direction * spawn_radius) + (spawn_line_direction * position_ran),
-						fDistance			= travel_distance,
-						fStartRadius		= collision_radius,
-						fEndRadius			= collision_radius,
-						Source				= caster,
-						bHasFrontalCone		= false,
-						bReplaceExisting	= false,
-						iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
-						iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
-						iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-						fExpireTime 		= GameRules:GetGameTime() + 10.0,
-						bDeleteOnHit		= true,
-						vVelocity			= Vector(direction.x,direction.y,0) * speed,
-						bProvidesVision		= false,
-						ExtraData			= {damage = damage, explosion_radius = explosion_radius}
+					projectile = {
+					  EffectName = "particles/units/heroes/hero_tinker/tinker_machine.vpcf",
+					  vSpawnOrigin = target_loc - (direction * spawn_radius) + (spawn_line_direction * position_ran),
+					  fDistance = travel_distance,
+					  fStartRadius = collision_radius,
+					  fEndRadius = collision_radius,
+					  Source = caster,
+					  fExpireTime = GameRules:GetGameTime() + 10.0,
+					  vVelocity = Vector(direction.x,direction.y,0) * speed,
+					  UnitBehavior = PROJECTILES_DESTROY,
+					  bMultipleHits = false,
+					  bIgnoreSource = true,
+					  TreeBehavior = PROJECTILES_NOTHING,
+					  bCutTrees = false,
+					  bTreeFullCollision = false,
+					  WallBehavior = PROJECTILES_NOTHING,
+					  GroundBehavior = PROJECTILES_NOTHING,
+					  fGroundOffset = 80,
+					  nChangeMax = 1,
+					  bRecreateOnChange = false,
+					  bDestroyImmediate = false,
+					  bZCheck = false,
+					  bGroundLock = true,
+					  bProvidesVision = false,
+					  OnThink = function(self) end,
+					  UnitTest = function(self, unit) return unit:GetUnitName() ~= "npc_dummy_unit" and unit:GetTeamNumber() ~= caster:GetTeamNumber() end,
+					  OnUnitHit = function(self, unit) 
+						ability:OnProjectileHit_ExtraData(unit, self:GetPosition(), {damage = damage, explosion_radius = explosion_radius})
+					  end,
 					}
 				end
-				ProjectileManager:CreateLinearProjectile(projectile)
+				Projectiles:CreateProjectile(projectile)
 			end)
 		end
 	end
