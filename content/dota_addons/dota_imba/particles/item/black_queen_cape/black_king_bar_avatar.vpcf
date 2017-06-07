@@ -4,7 +4,7 @@
 	m_bShouldHitboxesFallbackToRenderBounds = false
 	m_nMaxParticles = 110
 	m_BoundingBoxMax = [ 10.0, 10.0, 750.0 ]
-	m_ConstantColor = [ 233, 242, 254, 255 ]
+	m_ConstantColor = [ 233, 254, 233, 255 ]
 	m_Renderers = 
 	[
 		{
@@ -39,7 +39,7 @@
 		},
 		{
 			_class = "C_OP_ColorInterpolate"
-			m_ColorFade = [ 176, 196, 222, 255 ]
+			m_ColorFade = [ 175, 222, 175, 255 ]
 			m_flFadeStartTime = 0.5
 		},
 		{

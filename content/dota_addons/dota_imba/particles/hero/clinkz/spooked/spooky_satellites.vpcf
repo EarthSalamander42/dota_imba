@@ -66,6 +66,9 @@
 			_class = "C_OP_MovementRotateParticleAroundAxis"
 			m_nCP = 3
 		},
+		{
+			_class = "C_OP_PositionLock"
+		},
 	]
 	m_Initializers = 
 	[
@@ -87,21 +90,6 @@
 		{
 			_class = "C_OP_InstantaneousEmitter"
 			m_nParticlesToEmit = 3
-		},
-	]
-	m_ForceGenerators = 
-	[
-		{
-			_class = "C_OP_AttractToControlPoint"
-			m_fForceAmount = 10.0
-			m_fFalloffPower = -0.25
-			m_vecComponentScale = [ 0.0, 0.0, 1.0 ]
-			m_bDisableOperator = true
-		},
-		{
-			_class = "C_OP_TwistAroundAxis"
-			m_fForceAmount = -15.0
-			m_bDisableOperator = true
 		},
 	]
 	m_Constraints = 

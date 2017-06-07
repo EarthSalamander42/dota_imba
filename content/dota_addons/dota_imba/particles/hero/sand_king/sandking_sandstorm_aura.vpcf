@@ -2,7 +2,7 @@
 {
 	_class = "CParticleSystemDefinition"
 	m_bShouldHitboxesFallbackToRenderBounds = false
-	m_nMaxParticles = 255
+	m_nMaxParticles = 45
 	m_nInitialParticles = 16
 	m_BoundingBoxMax = [ 10.0, 10.0, 110.0 ]
 	m_hFallback = resource:"particles/units/heroes/hero_sandking/sandking_sandstorm_mid.vpcf"

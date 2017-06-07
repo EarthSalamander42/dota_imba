@@ -2,7 +2,7 @@
 {
 	_class = "CParticleSystemDefinition"
 	m_bShouldHitboxesFallbackToRenderBounds = false
-	m_nMaxParticles = 100
+	m_nMaxParticles = 48
 	m_Renderers = 
 	[
 		{
@@ -79,6 +79,7 @@
 	[
 		{
 			_class = "C_OP_ContinuousEmitter"
+			m_flEmitRate = 50.0
 		},
 	]
 	m_ForceGenerators = 

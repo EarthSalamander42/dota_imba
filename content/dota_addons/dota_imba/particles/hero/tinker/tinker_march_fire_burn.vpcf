@@ -2,7 +2,7 @@
 {
 	_class = "CParticleSystemDefinition"
 	m_bShouldHitboxesFallbackToRenderBounds = false
-	m_nMaxParticles = 350
+	m_nMaxParticles = 120
 	m_flConstantLifespan = 3.0
 	m_ConstantColor = [ 182, 138, 119, 25 ]
 	m_bShouldSort = false
@@ -129,25 +129,13 @@
 	[
 		{
 			_class = "C_OP_ContinuousEmitter"
-			m_flEmitRate = 50.0
+			m_flEmitRate = 20.0
 			m_flOpEndFadeInTime = 8.0
+			m_nScaleControlPoint = 11
 		},
 		{
 			_class = "C_OP_InstantaneousEmitter"
 			m_nParticlesToEmit = 1
-		},
-		{
-			_class = "C_OP_ContinuousEmitter"
-			m_flEmitRate = 50.0
-			m_flOpStartFadeInTime = 3.0
-			m_flOpEndFadeInTime = 5.0
-		},
-		{
-			_class = "C_OP_ContinuousEmitter"
-			m_flEmitRate = 50.0
-			m_flOpStartFadeInTime = 5.0
-			m_flOpEndFadeInTime = 12.0
-			m_nScaleControlPoint = 11
 		},
 	]
 	m_controlPointConfigurations = 

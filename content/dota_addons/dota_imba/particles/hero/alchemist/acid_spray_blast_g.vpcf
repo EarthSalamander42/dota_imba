@@ -135,4 +135,5 @@
 			]
 		},
 	]
+	m_nMaxParticles = 380
 }

@@ -2,7 +2,7 @@
 {
 	_class = "CParticleSystemDefinition"
 	m_bShouldHitboxesFallbackToRenderBounds = false
-	m_nMaxParticles = 16
+	m_nMaxParticles = 8
 	m_nConstantSequenceNumber = 7
 	m_bShouldSort = false
 	m_Renderers = 
