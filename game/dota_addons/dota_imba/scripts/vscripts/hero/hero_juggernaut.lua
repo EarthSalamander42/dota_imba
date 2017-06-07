@@ -475,6 +475,7 @@ end
 
 function modifier_imba_juggernaut_blade_dance_empowered_slice:SeekAndDestroy()
 	if IsServer() then
+		AddFOWViewer(self.caster:GetTeamNumber(), self.endTarget:GetAbsOrigin(), 100, FrameTime(), false)
 		local sliceEnemies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.caster:GetAbsOrigin(), nil, 150, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
 		for _,enemy in pairs(sliceEnemies) do	
 			-- If this enemy was already hit by this cast, do nothing
@@ -512,7 +513,7 @@ end
 
 function modifier_imba_juggernaut_blade_dance_empowered_slice:HorizontalMotion( me, dt )
 	if IsServer() then				
-		if self.endTarget:IsInvisible() or self.endTarget:IsOutOfGame() then					
+		if self.endTarget:IsInvisible() or self.endTarget:IsOutOfGame() or self.endTarget:CanEntityBeSeenByMyTeam(self.caster) then
 			self:Destroy()
 		end
 		if self.distance_left > 100 and not self.wind_dance:IsNull() and self.wind_dance:GetStackCount() > 0 then
@@ -550,6 +551,11 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:GetStatusEffectNam
 	return "particles/status_fx/status_effect_omnislash.vpcf"
 end
 
+function modifier_imba_juggernaut_blade_dance_empowered_slice:OnDestroy()
+	if IsServer() then
+		self.caster:SetUnitOnClearGround()
+	end
+end
 
 LinkLuaModifier("modifier_imba_juggernaut_blade_dance_passive", "hero/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_juggernaut_blade_dance_passive = modifier_imba_juggernaut_blade_dance_passive or class({})
@@ -773,7 +779,6 @@ function modifier_imba_omni_slash_caster:BounceAndSlaughter( )
 
 			if enemy:TriggerSpellAbsorb(self) then
 				break
-				return nil
 			end
 
 			-- Provide vision of the target for a short duration

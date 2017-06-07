@@ -1090,25 +1090,27 @@ end
 -- Territorial Hunter debuff
 modifier_terrorital_hunter_fogvision = class({})
 
+function modifier_terrorital_hunter_fogvision:GetAttributes()
+	return MODIFIER_ATTRIBUTE_MULTIPLE
+end
+
 function modifier_terrorital_hunter_fogvision:IsHidden()
 	return true
 end
 
-function modifier_terrorital_hunter_fogvision:DeclareFunctions()	
-		local decFuncs = {MODIFIER_PROPERTY_PROVIDES_FOW_POSITION}
-		
-		return decFuncs	
+function modifier_terrorital_hunter_fogvision:OnCreated()
+	if IsServer() then
+		self:StartIntervalThink(FrameTime())
+	end
 end
 
-function modifier_terrorital_hunter_fogvision:GetModifierProvidesFOWVision()
-	return 1
+function modifier_terrorital_hunter_fogvision:OnIntervalThink()
+	if IsServer() then
+		local caster = self:GetCaster()
+		local parent = self:GetParent()
+		AddFOWViewer(caster:GetTeamNumber(), parent:GetAbsOrigin(), 10, FrameTime(), false)
+	end
 end
-
-
-
-
-
-
 
 
 
