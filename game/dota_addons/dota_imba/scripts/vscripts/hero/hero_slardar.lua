@@ -96,6 +96,10 @@ end
 -- Sprint modifier
 modifier_imba_guardian_sprint_buff = class({})
 
+function modifier_imba_guardian_sprint_buff:IsHidden() return false end
+function modifier_imba_guardian_sprint_buff:IsPurgable() return false end
+function modifier_imba_guardian_sprint_buff:IsDebuff() return false end
+
 function modifier_imba_guardian_sprint_buff:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()

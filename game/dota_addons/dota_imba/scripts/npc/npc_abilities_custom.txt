@@ -11537,21 +11537,9 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"projectile_vision"			"800"
-			}
+			}			
 
 			"11"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"scepter_bonus_projectiles"	"2"
-			}
-
-			"12"
-			{
-				"var_type"					 		"FIELD_INTEGER"
-				"scepter_projectiles_damage_pct"	"25"
-			}
-
-			"13"
 			{
 				"var_type"					 		"FIELD_INTEGER"
 				"cold_front_stacks"					"2"
@@ -31015,7 +31003,7 @@
         }
     }
 
-    "special_bonus_imba_lich_7" // Chain Frost bounces infinitely
+    "special_bonus_imba_lich_7" // Chain Frost bounces now procs two little Mini Frosts when bouncing
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
@@ -31035,12 +31023,18 @@
             "01"
             {
                 "var_type"                  "FIELD_INTEGER"
-                "value"	                    "9999"
+                "bonus_projectiles"			"2"
+            }
+
+            "02"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "projectiles_damage_pct"	"25"
             }
         }
     }
 
-    "special_bonus_imba_lich_8" //Cold Front gains additional stack from skills
+    "special_bonus_imba_lich_8" // Cold Front gains additional stack from skills
     {
         // General
         //-------------------------------------------------------------------------------------------------------------

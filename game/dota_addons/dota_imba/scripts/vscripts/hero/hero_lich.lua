@@ -1044,6 +1044,7 @@ function imba_lich_chain_frost:OnSpellStart()
     local particle_projectile = "particles/units/heroes/hero_lich/lich_chain_frost.vpcf"
     local sound_cast = "Hero_Lich.ChainFrost"
     local modifier_ministun = "modifier_imba_chain_frost_ministun"
+    local scepter = caster:HasScepter()
 
     -- Ability specials
     local ministun_duration = ability:GetSpecialValueFor("ministun_duration")
@@ -1051,8 +1052,10 @@ function imba_lich_chain_frost:OnSpellStart()
     local projectile_vision = ability:GetSpecialValueFor("projectile_vision")
     local num_bounces = ability:GetSpecialValueFor("num_bounces")    
 
-    -- #7 Talent: Chain Frost bounces infinitely
-    num_bounces = num_bounces + caster:FindTalentValue("special_bonus_imba_lich_7")
+    -- If the caster has Scepter, increase bounces to infinity (well, almost, but you get the point)
+    if scepter then        
+       num_bounces = num_bounces + 99999
+    end
 
     -- Play cast sound
     EmitSoundOn(sound_cast, caster)
@@ -1089,8 +1092,7 @@ function imba_lich_chain_frost:OnProjectileHit_ExtraData(target, location, extra
     local ability = self
     local sound_hit = "Hero_Lich.ChainFrostImpact.Creep"
     local particle_projectile = "particles/units/heroes/hero_lich/lich_chain_frost.vpcf"
-    local particle_mini_frost_projectile = "particles/hero/lich/lich_mini_frosts.vpcf"
-    local scepter = caster:HasScepter()
+    local particle_mini_frost_projectile = "particles/hero/lich/lich_mini_frosts.vpcf"    
     local modifier_slow = "modifier_imba_chain_frost_slow"
 
     -- Ability specials    
@@ -1100,9 +1102,9 @@ function imba_lich_chain_frost:OnProjectileHit_ExtraData(target, location, extra
     local speed_increase_per_bounce = ability:GetSpecialValueFor("speed_increase_per_bounce")
     local projectile_delay = ability:GetSpecialValueFor("projectile_delay")
     local projectile_vision = ability:GetSpecialValueFor("projectile_vision")
-    local scepter_bonus_projectiles = ability:GetSpecialValueFor("scepter_bonus_projectiles")
-    local scepter_projectiles_damage_pct = ability:GetSpecialValueFor("scepter_projectiles_damage_pct")
-    local cold_front_stacks = ability:GetSpecialValueFor("cold_front_stacks")
+    local bonus_projectiles = caster:FindSpecificTalentValue("special_bonus_imba_lich_7", "bonus_projectiles")
+    local projectiles_damage_pct = caster:FindSpecificTalentValue("special_bonus_imba_lich_7", "projectiles_damage_pct")
+    local cold_front_stacks = ability:GetSpecialValueFor("cold_front_stacks")    
 
     -- Make sure there is a target
     if not target then
@@ -1118,7 +1120,7 @@ function imba_lich_chain_frost:OnProjectileHit_ExtraData(target, location, extra
     -- #8 Talent: Cold Front gains additional stack from skills
     cold_front_stacks = cold_front_stacks + caster:FindTalentValue("special_bonus_imba_lich_8")
 
-    -- Check if this is a main chain frost (not scepter frosts)
+    -- Check if this is a main chain frost (not talent mini frosts)
     if extradata.main_chain_frost == 1 then       
 
         -- Start a timer and bounce again!
@@ -1179,13 +1181,13 @@ function imba_lich_chain_frost:OnProjectileHit_ExtraData(target, location, extra
 
             ProjectileManager:CreateTrackingProjectile(chain_frost_projectile)  
 
-            -- If there is more than one enemy and the caster holds a scepter, throw smaller chain frosts at them
-            if scepter then
+            -- If there is more than one enemy and the caster has #7 Talent, throw smaller chain frosts at them
+            if caster:HasTalent("special_bonus_imba_lich_7") then
                 local projectiles_launched = 0
 
                 for i = 2, #enemies do
                     -- Check if there are still more projectiles that should be launched
-                    if projectiles_launched < scepter_bonus_projectiles then                       
+                    if projectiles_launched < bonus_projectiles then                       
 
                         -- Define and launch a smaller frost
                         chain_frost_projectile = {Target = enemies[i],
@@ -1211,8 +1213,8 @@ function imba_lich_chain_frost:OnProjectileHit_ExtraData(target, location, extra
             end
         end)
     else
-        -- Scepter ball! Adjust damage
-        damage = damage * scepter_projectiles_damage_pct * 0.01
+        -- Talent mini ball! Adjust damage
+        damage = damage * projectiles_damage_pct * 0.01
     end 
 
     -- If target has Linken's Sphere off cooldown, do nothing
