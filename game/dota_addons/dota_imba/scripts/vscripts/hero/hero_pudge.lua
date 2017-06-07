@@ -413,7 +413,7 @@ end
 
 function imba_pudge_meat_hook:GetCooldown()
 	if self:GetCaster():HasScepter() then
-		return self:GetSpecialValueFor("scepter_cooldown")
+		return self:GetSpecialValueFor("cooldown_scepter")
 	else
 		return self:GetSpecialValueFor("cooldown")
 	end
