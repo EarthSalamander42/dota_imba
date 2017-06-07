@@ -42,6 +42,7 @@ function modifier_imba_shotgun_passive:OnCreated()
 			self.ranged_proj_range = self.item:GetSpecialValueFor("ranged_proj_range")
 			self.ranged_proj_radius = self.item:GetSpecialValueFor("ranged_proj_radius")
 			self.ranged_proj_angle = self.item:GetSpecialValueFor("ranged_proj_angle")
+			self.ranged_proj_stun = self.item:GetSpecialValueFor("ranged_proj_stun")
 		end
 	end
 end
@@ -72,15 +73,20 @@ end
 
 function modifier_imba_shotgun_passive:OnAttackLanded(params)
 	if IsServer() then
+		-- Only for real heroes & clones
 		if params.attacker == self.parent and self.parent:IsRealHero() then
+			-- Cooldown check and lookup for Starfury
 			if self.item:IsCooldownReady() and (self:CheckUniqueValue(1,{"modifier_imba_starfury_passive"}) == 1) then
+				-- Parameters
 				local hero = self.parent
 				local damage = hero:GetAgility() * self.agility_pct
 				local damage_type = DAMAGE_TYPE_PHYSICAL
+				local stun_duration = self.ranged_proj_stun
 				if hero:HasItemInInventory("item_imba_spell_fencer") then
 					damage_type = DAMAGE_TYPE_MAGICAL
 				end
 				local vColor = hero:GetFittingColor()
+				-- If ranged then launch 3 projectiles
 				if hero:IsRangedAttacker() then
 					local hero_pos = hero:GetAbsOrigin()
 					local target_pos = params.target:GetAbsOrigin()
@@ -90,6 +96,10 @@ function modifier_imba_shotgun_passive:OnAttackLanded(params)
 					else
 						main_direction = (target_pos - hero_pos):Normalized()
 					end
+					-- Hit counter, stun if hit by all projectiles
+					local hits = 0
+					local last_target
+					
 					for i = 1, 3 do
 						local direction = main_direction
 						if i == 1 then
@@ -128,6 +138,15 @@ function modifier_imba_shotgun_passive:OnAttackLanded(params)
 							iVelocityCP = 90, -- That it won't be used
 							UnitTest = function(self, unit) return unit:GetUnitName() ~= "npc_dummy_unit" and unit:GetTeamNumber() ~= hero:GetTeamNumber() end,
 							OnUnitHit = function(self, unit)
+								if last_target == nil then
+									last_target = unit
+								elseif last_target ~= unit then
+									hits = -1
+								end
+								hits = hits + 1
+								if hits == 3 then
+									unit:AddNewModifier(hero, self.item, "modifier_stunned", {duration = stun_duration})
+								end
 								params.damage = damage
 								params.damage_type = damage_type
 								params.hCaster = hero

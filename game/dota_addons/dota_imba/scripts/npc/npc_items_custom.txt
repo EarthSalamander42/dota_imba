@@ -8615,12 +8615,17 @@
 			"07"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"ranged_proj_radius"			"75"
+				"ranged_proj_radius"			"100"
 			}
 			"08"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"ranged_proj_angle"				"25"
+			}
+			"09"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"ranged_proj_stun"				"0.25"
 			}
 		}
 	}
