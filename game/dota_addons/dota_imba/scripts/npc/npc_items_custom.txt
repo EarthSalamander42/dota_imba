@@ -11328,6 +11328,29 @@
 				"var_type"						"FIELD_FLOAT"
 				"tick_rate"						"0.1"
 			}
+			
+			"10"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_aoe"						"700"
+			}
+
+			"11"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"aura_damage_heal_interval"		"0.5"
+			}
+			"12"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_heal_per_enemy_ps"		"10"
+			}
+			
+			"13"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_damage_per_second"		"40"
+			}
 		}
 	}
 
@@ -11455,6 +11478,29 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"transfer_chance"				"20"
+			}
+	
+			"11"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"aura_damage_heal_interval"		"0.5"
+			}
+			
+			"12"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_heal_per_enemy_ps"		"10"
+			}
+			"13"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_damage_per_second"		"60"
+			}
+			
+			"14"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_aoe"						"700"
 			}
 		}
 	}

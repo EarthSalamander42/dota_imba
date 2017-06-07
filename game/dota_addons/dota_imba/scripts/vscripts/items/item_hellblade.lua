@@ -8,6 +8,7 @@ end
 LinkLuaModifier("modifier_item_imba_hellblade", "items/item_hellblade", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_item_imba_hellblade_unique", "items/item_hellblade", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_item_imba_hellblade_debuff", "items/item_hellblade", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_helldrain", "items/item_hellblade", LUA_MODIFIER_MOTION_NONE)
 
 
 function item_imba_hellblade:GetIntrinsicModifierName()
@@ -83,6 +84,100 @@ function item_imba_hellblade:OnSpellStart()
 	end
 end		
 
+-------------------------------------------
+--			HELLDRAIN AURA
+-------------------------------------------
+LinkLuaModifier("modifier_imba_helldrain_damage", "items/item_hellblade", LUA_MODIFIER_MOTION_NONE)
+modifier_imba_helldrain = modifier_imba_helldrain or class({})
+
+--Aura properties
+function modifier_imba_helldrain:IsAura() 		return true end
+function modifier_imba_helldrain:IsHidden()
+if self:GetStackCount() > 0 then return false end
+return true end
+function modifier_imba_helldrain:IsDebuff() 		return false end
+function modifier_imba_helldrain:IsPurgable() 	return false end
+function modifier_imba_helldrain:GetAuraSearchTeam()	return DOTA_UNIT_TARGET_TEAM_ENEMY end
+function modifier_imba_helldrain:GetAuraSearchType()	return DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO end
+function modifier_imba_helldrain:GetAuraRadius() return self:GetAbility():GetSpecialValueFor("aura_aoe") end
+function modifier_imba_helldrain:GetModifierAura()	return "modifier_imba_helldrain_damage" end
+
+--Start aura
+function modifier_imba_helldrain:OnCreated() 
+	if IsServer() then
+		if not started_ticking then
+			self:StartIntervalThink( self:GetAbility():GetSpecialValueFor("aura_damage_heal_interval") )
+		started_ticking = true end
+	end
+end
+
+function modifier_imba_helldrain:OnRefresh()
+	if IsServer() then
+		self:OnCreated()
+	end
+end
+
+--Heal and Distribute damage modifier
+function modifier_imba_helldrain:OnIntervalThink()
+	if IsServer() then
+   		--Ability properties
+		local item 					=	self:GetAbility()
+		local caster				= 	item:GetCaster()
+		local location 				=	caster:GetAbsOrigin()
+		--Ability paramaters
+		local radius 				=	item:GetSpecialValueFor("aura_aoe")
+		local heal_per_enemy		= 	item:GetSpecialValueFor("aura_heal_per_enemy_ps")
+		local heal_interval			=	item:GetSpecialValueFor("aura_damage_heal_interval")
+
+		--Search for nearby enemies
+		local enemies 				= 	FindUnitsInRadius(caster:GetTeamNumber(), location, nil, radius, item:GetAbilityTargetTeam(), item:GetAbilityTargetType(), item:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
+		
+		local heal_count 			=	0
+		
+
+		--Apply aura damage and heal
+		for _,enemy in ipairs(enemies) do
+			caster:Heal(heal_per_enemy*heal_interval,caster)
+			heal_count = heal_count+1
+		end
+		--Show heal amount
+		if GetStackCount == 0 then 
+		end
+		self:SetStackCount(heal_count)
+		heal_count = 0
+	end
+end
+
+--------------
+--Aura damage
+--------------
+modifier_imba_helldrain_damage = modifier_imba_helldrain_damage or class ({})
+ --Modifier properties
+function modifier_imba_helldrain_damage:IsHidden() return false end
+function modifier_imba_helldrain_damage:IsDebuff() return false end
+function modifier_imba_helldrain_damage:IsPurgable() return false end
+function modifier_imba_helldrain_damage:GetEffectName()	return "particles/units/heroes/hero_night_stalker/nightstalker_void.vpcf" end
+
+--Start ticking damage
+function modifier_imba_helldrain_damage:OnCreated()
+	if IsServer() then
+		self:StartIntervalThink(self:GetAbility():GetSpecialValueFor("aura_damage_heal_interval"))
+	end
+end
+
+--Deal damage
+function modifier_imba_helldrain_damage:OnIntervalThink()
+	if IsServer() then
+		local item 				=	self:GetAbility()
+		local caster 			=	item:GetCaster()
+		local dps				=	item:GetSpecialValueFor("aura_damage_per_second")
+		local damage_interval	=	item:GetSpecialValueFor("aura_damage_heal_interval")
+		
+		ApplyDamage({victim = self:GetParent(), attacker = caster, ability = item, damage = dps*damage_interval, damage_type = DAMAGE_TYPE_MAGICAL})
+		
+	end
+end
+
 
 -- Passive stats modifier (stackable)
 if modifier_item_imba_hellblade == nil then
@@ -106,7 +201,12 @@ function modifier_item_imba_hellblade:OnCreated()
 	self.damage = self.ability:GetSpecialValueFor("damage")
 
 	if IsServer() then
-		-- Create a unique modifier for passive attack transfer (doesn't stack)
+		--Create the aura
+		local parent = self:GetParent()
+		if not parent:HasModifier("modifier_imba_helldrain") then
+				parent:AddNewModifier(parent, self:GetAbility(), "modifier_imba_helldrain", {})
+			end
+			-- Create a unique modifier for passive attack transfer (doesn't stack)
 		if not self.caster:HasModifier("modifier_item_imba_hellblade_unique") then
 			self.caster:AddNewModifier(self.caster, self.ability, "modifier_item_imba_hellblade_unique", {})
 		end
@@ -116,8 +216,14 @@ end
 -- Removes the unique modifier from the caster if this is the last skadi in its inventory
 function modifier_item_imba_hellblade:OnDestroy()
 	if IsServer() then		
+		local parent = self:GetParent()
+			if not parent:HasModifier("modifier_item_imba_hellblade") then
+				parent:RemoveModifierByName("modifier_imba_helldrain")
+			end
 		if not self.caster:HasModifier("modifier_item_imba_hellblade") then
 			self.caster:RemoveModifierByName("modifier_item_imba_hellblade_unique")
+
+			
 		end
 	end
 end
@@ -159,15 +265,17 @@ function modifier_item_imba_hellblade_unique:IsDebuff() return false end
 
 
 function modifier_item_imba_hellblade_unique:OnCreated()
-	-- Ability properties
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
-	self.parent = self:GetParent()
-	self.sound_cast = "Imba.Curseblade"
-	self.datadrive_baseclass = "modifier_datadriven"						
+		
+		-- Ability properties
+		self.caster = self:GetCaster()
+		self.ability = self:GetAbility()
+		self.parent = self:GetParent()
+		self.sound_cast = "Imba.Curseblade"
+		self.datadrive_baseclass = "modifier_datadriven"						
 
-	-- Ability specials
-	self.transfer_chance = self.ability:GetSpecialValueFor("transfer_chance")
+		-- Ability specials
+		self.transfer_chance = self.ability:GetSpecialValueFor("transfer_chance")
+	
 end
 
 function modifier_item_imba_hellblade_unique:DeclareFunctions()
@@ -186,7 +294,10 @@ function modifier_item_imba_hellblade_unique:OnAttacked(keys)
 		
 		-- Only apply on the caster being attacked, if the roll is in the range
 		if keys.target == self.caster and RollPseudoRandom(self.transfer_chance, self) then			
-		
+		local particle_drain_fx = ParticleManager:CreateParticle("particles/item/curseblade/skeleton_king_vampiric_aura_lifesteal_2.vpcf", PATTACH_ABSORIGIN, self.caster)
+		ParticleManager:SetParticleControl(particle_drain_fx, 0, self.caster:GetAbsOrigin())
+		ParticleManager:SetParticleControl(particle_drain_fx, 1, self.caster:GetAbsOrigin())
+		ParticleManager:ReleaseParticleIndex(particle_drain_fx)	
 			-- Find all modifiers on caster, check if it has at least one purgable debuff
 			local modifiers = self.caster:FindAllModifiers()		
 			for _,modifier in pairs(modifiers) do
@@ -324,7 +435,7 @@ function modifier_item_imba_hellblade_debuff:OnIntervalThink()
 	if IsServer() then				
 		
 		-- Show drain particles
-		local particle_drain_fx = ParticleManager:CreateParticle(self.particle_drain, PATTACH_ABSORIGIN, self.caster)
+		local particle_drain_fx = ParticleManager:CreateParticle("particles/hero/skeleton_king/skeleton_king_vampiric_aura_lifesteal.vpcf", PATTACH_ABSORIGIN, self.caster)
 		ParticleManager:SetParticleControl(particle_drain_fx, 0, self.caster:GetAbsOrigin())
 		ParticleManager:SetParticleControl(particle_drain_fx, 1, self.caster:GetAbsOrigin())		
 		ParticleManager:ReleaseParticleIndex(particle_drain_fx)

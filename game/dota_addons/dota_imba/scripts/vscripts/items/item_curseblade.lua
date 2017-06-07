@@ -7,10 +7,12 @@ end
 
 LinkLuaModifier("modifier_item_imba_curseblade", "items/item_curseblade", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_item_imba_curseblade_debuff", "items/item_curseblade", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_souldrain", "items/item_curseblade", LUA_MODIFIER_MOTION_NONE)
 
 function item_imba_curseblade:GetIntrinsicModifierName()
 	return "modifier_item_imba_curseblade"
 end
+
 
 function item_imba_curseblade:OnSpellStart()
 	if IsServer() then		
@@ -22,10 +24,10 @@ function item_imba_curseblade:OnSpellStart()
 		local particle_curse = "particles/item/curseblade/imba_curseblade_curse.vpcf"
 		local datadrive_baseclass = "modifier_datadriven"
 		local debuff = "modifier_item_imba_curseblade_debuff"
-		
+
 		-- Ability specials
 		local duration = self:GetSpecialValueFor("duration")		
-		
+
 		-- Play sound cast
 		EmitSoundOn(sound_cast, caster)
 		
@@ -82,6 +84,104 @@ function item_imba_curseblade:OnSpellStart()
 	end
 end		
 
+-------------------------------------------
+--			SOULDRAIN AURA
+-------------------------------------------
+LinkLuaModifier("modifier_imba_souldrain_damage", "items/item_curseblade", LUA_MODIFIER_MOTION_NONE)
+modifier_imba_souldrain = modifier_imba_souldrain or class({})
+--Aura properties
+function modifier_imba_souldrain:IsAura() 		return true end
+function modifier_imba_souldrain:IsHidden()
+if self:GetStackCount() > 0 then return false end
+return true end
+function modifier_imba_souldrain:IsDebuff() 		return false end
+function modifier_imba_souldrain:IsPurgable() 	return false end
+function modifier_imba_souldrain:GetAuraSearchTeam()	return DOTA_UNIT_TARGET_TEAM_ENEMY end
+function modifier_imba_souldrain:GetAuraSearchType()	return DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO end
+function modifier_imba_souldrain:GetAuraRadius() return self:GetAbility():GetSpecialValueFor("aura_aoe") end
+function modifier_imba_souldrain:GetModifierAura()	return "modifier_imba_souldrain_damage" end
+
+--Start aura
+function modifier_imba_souldrain:OnCreated() 
+	if IsServer() then
+		if not started_ticking then
+			self:StartIntervalThink( self:GetAbility():GetSpecialValueFor("aura_damage_heal_interval") )
+		started_ticking = true end
+	end
+end
+
+function modifier_imba_souldrain:OnRefresh()
+	if IsServer() then
+		self:OnCreated()
+	end
+end
+
+--Heal and Distribute damage modifier
+function modifier_imba_souldrain:OnIntervalThink()
+	if IsServer() then
+   		--Ability properties
+		local item 					=	self:GetAbility()
+		local caster				= 	item:GetCaster()
+		local location 				=	caster:GetAbsOrigin()
+		--Ability paramaters
+		local radius 				=	item:GetSpecialValueFor("aura_aoe")
+		local heal_per_enemy		= 	item:GetSpecialValueFor("aura_heal_per_enemy_ps")
+		local heal_interval			=	item:GetSpecialValueFor("aura_damage_heal_interval")
+
+		--Search for nearby enemies
+		local enemies 				= 	FindUnitsInRadius(caster:GetTeamNumber(), location, nil, radius, item:GetAbilityTargetTeam(), item:GetAbilityTargetType(), item:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
+		
+		local heal_count 			=	0
+		
+
+		--Apply aura damage and heal
+		for _,enemy in ipairs(enemies) do
+			caster:Heal(heal_per_enemy*heal_interval,caster)
+			heal_count = heal_count+1
+		end
+		--Show heal amount
+		if GetStackCount == 0 then 
+		end
+		self:SetStackCount(heal_count)
+		heal_count = 0
+	end
+end
+
+--------------
+--Aura damage
+--------------
+modifier_imba_souldrain_damage = modifier_imba_souldrain_damage or class ({})
+ --Modifier properties
+function modifier_imba_souldrain_damage:IsHidden() return false end
+function modifier_imba_souldrain_damage:IsDebuff() return false end
+function modifier_imba_souldrain_damage:IsPurgable() return false end
+function modifier_imba_souldrain_damage:GetEffectName()	return "particles/units/heroes/hero_night_stalker/nightstalker_void.vpcf" end
+
+--Start ticking damage
+function modifier_imba_souldrain_damage:OnCreated()
+	if IsServer() then
+		self:StartIntervalThink(self:GetAbility():GetSpecialValueFor("aura_damage_heal_interval"))
+	end
+end
+
+--Deal damage
+function modifier_imba_souldrain_damage:OnIntervalThink()
+	if IsServer() then
+		local item 				=	self:GetAbility()
+		local caster 			=	item:GetCaster()
+		local dps				=	item:GetSpecialValueFor("aura_damage_per_second")
+		local damage_interval	=	item:GetSpecialValueFor("aura_damage_heal_interval")
+		
+		ApplyDamage({victim = self:GetParent(), attacker = caster, ability = item, damage = dps*damage_interval, damage_type = DAMAGE_TYPE_MAGICAL})
+		
+	end
+end
+
+
+
+-----------------------------------------
+--			PASSIVE STAT MODIFIER
+-----------------------------------------
 
 -- Passive stats modifier
 if modifier_item_imba_curseblade == nil then
@@ -89,22 +189,40 @@ if modifier_item_imba_curseblade == nil then
 end
 
 function modifier_item_imba_curseblade:OnCreated()
-	-- Ability properties
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
+	if IsServer() then
+		--Apply aura
+		local parent = self:GetParent()
+		if not parent:HasModifier("modifier_imba_souldrain") then
+			parent:AddNewModifier(parent, self:GetAbility(), "modifier_imba_souldrain", {})
+		end
+		
+		-- Ability properties
+		self.caster = self:GetCaster()
+		self.ability = self:GetAbility()
+	
+		--Add the aura	
 
-	if not self.ability then
-		self:Destroy()			
-		return nil
+		if not self.ability then
+			self:Destroy()			
+			return nil
+		end
+
+		-- Ability specials
+		self.agility_bonus = self.ability:GetSpecialValueFor("agility_bonus")
+		self.intelligence_bonus = self.ability:GetSpecialValueFor("intelligence_bonus")	
+		self.strength_bonus = self.ability:GetSpecialValueFor("strength_bonus")
+		self.damage = self.ability:GetSpecialValueFor("damage") 
 	end
-
-	-- Ability specials
-	self.agility_bonus = self.ability:GetSpecialValueFor("agility_bonus")
-	self.intelligence_bonus = self.ability:GetSpecialValueFor("intelligence_bonus")	
-	self.strength_bonus = self.ability:GetSpecialValueFor("strength_bonus")
-	self.damage = self.ability:GetSpecialValueFor("damage") 
 end
 
+function modifier_item_imba_curseblade:OnDestroy()
+	if IsServer() then
+		local parent = self:GetParent()
+			if not parent:HasModifier("modifier_item_imba_curseblade") then
+				parent:RemoveModifierByName("modifier_imba_souldrain")
+			end
+	end
+end
 function modifier_item_imba_curseblade:IsHidden() return true end
 function modifier_item_imba_curseblade:IsPurgable() return false end
 function modifier_item_imba_curseblade:IsDebuff() return false end
@@ -212,3 +330,5 @@ function modifier_item_imba_curseblade_debuff:OnIntervalThink()
 		self.caster:GiveMana(manadrain)
 	end	
 end
+
+
