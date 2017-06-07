@@ -360,7 +360,7 @@
 	"Dota_Tooltip_Talent_special_bonus_imba_lich_6_title"						"霜冻护甲"
 	"Dota_Tooltip_Talent_special_bonus_imba_lich_6_Description"					"+36 霜冻护甲对建筑物护甲加成"
 	"Dota_Tooltip_Talent_special_bonus_imba_lich_7_title"						"连环霜冻"
-	"Dota_Tooltip_Talent_special_bonus_imba_lich_7_Description"					"连环霜冻无限弹跳"
+	"Dota_Tooltip_Talent_special_bonus_imba_lich_7_Description"					"连环霜冻每次伤害生成两个不会弹跳的次级冰霜球"
 	"Dota_Tooltip_Talent_special_bonus_imba_lich_8_title"						"永久冻结"
 	"Dota_Tooltip_Talent_special_bonus_imba_lich_8_Description"					"+1 技能施加永久冻结层数"
 
