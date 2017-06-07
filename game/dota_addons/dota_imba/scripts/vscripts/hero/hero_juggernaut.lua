@@ -720,9 +720,7 @@ end
 function imba_juggernaut_omni_slash:OnSpellStart()
 	local caster = self:GetCaster()
 	local target = self:GetCursorTarget()
-	if target:TriggerSpellAbsorb(self) then
-		return nil
-	end
+
 	local omnislash_modifier = caster:AddNewModifier(caster, self, "modifier_imba_omni_slash_caster", {})
 	self:SetActivated(false)
 	PlayerResource:SetCameraTarget(caster:GetPlayerID(), caster)
@@ -733,6 +731,10 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 
 	StartAnimation(caster, {activity = ACT_DOTA_OVERRIDE_ABILITY_4, rate = 1.0})
 	
+	if target:TriggerSpellAbsorb(self) then
+		return nil
+	end
+
 	caster:PerformAttack(target, true, true, true, true, true, false, false)
 end
 
@@ -769,6 +771,11 @@ function modifier_imba_omni_slash_caster:BounceAndSlaughter( )
 			self.caster:MoveToTargetToAttack(enemy)
 			local current_position = self.caster:GetAbsOrigin()
 
+			if enemy:TriggerSpellAbsorb(self) then
+				break
+				return nil
+			end
+
 			-- Provide vision of the target for a short duration
 			self.ability:CreateVisibilityNode(current_position, 300, 1.0)
 
@@ -798,8 +805,7 @@ function modifier_imba_omni_slash_caster:BounceAndSlaughter( )
 			ParticleManager:ReleaseParticleIndex(trail_pfx)
 			break
 		end
-	else
-		self.ability:SetActivated(true)
+	else		
 		self:Destroy()
 	end
 end
@@ -811,11 +817,14 @@ function modifier_imba_omni_slash_caster:OnRemoved()
 		else
 			EndAnimation(self.caster)
 		end
+
 		PlayerResource:SetCameraTarget(self.caster:GetPlayerID(), nil)
 		if self.bounce_amt > 1 then
 			local rand = RandomInt(1, 2)
 			self.caster:EmitSound("juggernaut_jug_ability_waste_0"..rand)
 		end
+
+		self.ability:SetActivated(true)
 	end
 end
 
@@ -837,6 +846,10 @@ end
 function modifier_imba_omni_slash_caster:GetStatusEffectName()
 	return "particles/status_fx/status_effect_omnislash.vpcf"
 end
+
+function modifier_imba_omni_slash_caster:IsHidden() return false end
+function modifier_imba_omni_slash_caster:IsPurgable() return false end
+function modifier_imba_omni_slash_caster:IsDebuff() return false end
 
 LinkLuaModifier("modifier_imba_juggernaut_omni_slash_cdr", "hero/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_juggernaut_omni_slash_cdr = modifier_imba_juggernaut_omni_slash_cdr or class({})

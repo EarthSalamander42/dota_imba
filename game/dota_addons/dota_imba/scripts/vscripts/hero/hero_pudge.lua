@@ -84,7 +84,7 @@ function modifier_flesh_heap:GetModifierModelScale()
 	if size > self:GetAbility():GetSpecialValueFor("max_size") then
 		size = self:GetAbility():GetSpecialValueFor("max_size")
 	end
-	print(size)
+	
 	return size
 end
 
