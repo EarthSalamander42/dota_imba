@@ -6966,31 +6966,31 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2201"
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
 		"AbilityTextureName" 			"custom/imba_diffusal_blade"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"ScriptFile"					"items/item_diffusal"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"600"
-		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"1.0"
+		"AbilityCastPoint"				"0"
+		"AbilityCooldown"				"4"
+		"AbilityManaCost"				"0"
 		"AbilitySharedCooldown"			"diffusal"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 
 		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
+		//-------------------------------------------------------------------------------------------------------------		
 		"ItemCost"						"2150"
 		"ItemShopTags"					"agi;int;unique;hard_to_tag"
 		"ItemQuality"					"artifact"
 		"ItemAliases"					"diffusal blade"
-
 		"ItemPermanent"					"1"
-		"ItemInitialCharges"			"10"
+		"ItemInitialCharges"			"8"
 		"ItemRequiresCharges"			"1"
 		"ItemDisplayCharges"			"1"
 		"MaxUpgradeLevel"				"3"
@@ -7006,132 +7006,63 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_agi"					"15"
+				"bonus_agi"					"25"
 			}
+
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_int"					"9"
+				"bonus_int"					"10"
 			}
+
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"initial_charges"			"10"
+				"initial_charges"			"8"
 			}
+
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"mana_burn"					"60"
+				"mana_burn"					"50"
 			}
+
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"slow_stack"				"-20"
-			}
+				"slow_degrade_pct"			"20"
+			}	
+
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"max_stacks"				"5"
-			}
+				"starting_slow_pct"			"100"
+			}			
+
 			"07"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"stack_loss_time"			"0.8"
 			}
+
 			"08"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"tooltip_duration"			"4.0"
+				"var_type"					"FIELD_INTEGER"
+				"total_slow_duration"		"4"
 			}
+
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"illusion_mana_burn"		"15"
+				"illusion_mana_burn"		"16"
 			}
-		}
 
-		"OnSpellStart"
-		{
-			"RunScript"
+			"10"
 			{
-				"ScriptFile"				"items/item_diffusal.lua"
-				"Function"					"DiffusalCast"
-
-				"sound_cast"				"DOTA_Item.DiffusalBlade.Activate"
-				"sound_target"				"DOTA_Item.DiffusalBlade.Target"
-				"particle_target"			"particles/generic_gameplay/generic_manaburn.vpcf"
-				"modifier_slow"				"modifier_item_imba_diffusal_slow"
+				"var_type"					"FIELD_INTEGER"
+				"root_duration"				"3"
 			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_diffusal"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"%bonus_agi"
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"%bonus_int"
-				}
-			}
-
-			"modifier_item_imba_diffusal_unique"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_diffusal.lua"
-						"Function"			"DiffusalHit"
-
-						"particle_hit"		"particles/generic_gameplay/generic_manaburn.vpcf"
-					}
-				}
-			}
-
-			"modifier_item_imba_diffusal_slow"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsDebuff"					"1"
-				"IsPurgable"				"1"
-
-				"Duration"					"%tooltip_duration"
-
-				"EffectName"				"particles/items_fx/diffusal_slow.vpcf"
-				"EffectAttachType"			"follow_origin"
-
-				"ThinkInterval"				"%stack_loss_time"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_diffusal.lua"
-						"Function"			"DiffusalSlowDecay"
-
-						"modifier_slow"		"modifier_item_imba_diffusal_slow"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_stack"
-				}
-			}
-		}
+		}		
 	}
 
 	//=================================================================================================================
@@ -7142,12 +7073,13 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2202"
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
 		"AbilityTextureName" 			"custom/imba_diffusal_blade_2"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"ScriptFile"					"items/item_diffusal"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -7166,7 +7098,7 @@
 		"ItemAliases"					"diffusal blade 2;purgeblade"
 
 		"ItemPermanent"					"1"
-		"ItemInitialCharges"			"15"
+		"ItemInitialCharges"			"16"
 		"ItemRequiresCharges"			"1"
 		"ItemDisplayCharges"			"1"
 		"MaxUpgradeLevel"				"3"
@@ -7182,137 +7114,75 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_agi"					"30"
+				"bonus_agi"					"40"
 			}
+
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_int"					"18"
 			}
+
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"initial_charges"			"15"
+				"initial_charges"			"16"
 			}
+
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"mana_burn"					"90"
+				"mana_burn"					"75"
 			}
+
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"slow_stack"				"-20"
-			}
+				"slow_degrade_pct"			"20"
+			}	
+
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"max_stacks"				"5"
-			}
+				"starting_slow_pct"			"100"
+			}			
+
 			"07"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"stack_loss_time"			"0.8"
 			}
+
 			"08"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"tooltip_duration"			"4.0"
+				"var_type"					"FIELD_INTEGER"
+				"total_slow_duration"		"4"
 			}
+
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"proc_chance"				"50"
+				"illusion_mana_burn"		"25"
 			}
+
 			"10"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"illusion_mana_burn"		"30"
+				"root_duration"				"3"
 			}
-		}
 
-		"OnSpellStart"
-		{
-			"RunScript"
+			"11"
 			{
-				"ScriptFile"				"items/item_diffusal.lua"
-				"Function"					"DiffusalCast"
-
-				"sound_cast"				"DOTA_Item.DiffusalBlade.Activate"
-				"sound_target"				"DOTA_Item.DiffusalBlade.Target"
-				"particle_target"			"particles/item/diffusal/diffusal_manaburn_2.vpcf"
-				"modifier_slow"				"modifier_item_imba_diffusal_slow"
+				"var_type"					"FIELD_INTEGER"
+				"dispel_chance_pct"			"20"
 			}
-		}
 
-		"Modifiers"
-		{
-			"modifier_item_imba_diffusal"
+			"12"
 			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"%bonus_agi"
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"%bonus_int"
-				}
+				"var_type"					"FIELD_INTEGER"
+				"dispel_burn"				"100"
 			}
-
-			"modifier_item_imba_diffusal_2_unique"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_diffusal.lua"
-						"Function"			"Diffusal2Hit"
-
-						"particle_hit"		"particles/item/diffusal/diffusal_manaburn_2.vpcf"
-					}
-				}
-			}
-
-			"modifier_item_imba_diffusal_slow"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsDebuff"					"1"
-				"IsPurgable"				"1"
-
-				"Duration"					"%tooltip_duration"
-
-				"EffectName"				"particles/items_fx/diffusal_slow.vpcf"
-				"EffectAttachType"			"follow_origin"
-
-				"ThinkInterval"				"%stack_loss_time"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_diffusal.lua"
-						"Function"			"DiffusalSlowDecay"
-
-						"modifier_slow"		"modifier_item_imba_diffusal_slow"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_stack"
-				}
-			}
-		}
+		}		
 	}
 
 	//=================================================================================================================
@@ -7323,12 +7193,13 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2203"
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
 		"AbilityTextureName" 			"custom/imba_diffusal_blade_3"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"ScriptFile"					"items/item_diffusal"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -7349,7 +7220,7 @@
 		"ItemBaseLevel"					"3"
 
 		"ItemPermanent"					"1"
-		"ItemInitialCharges"			"20"
+		"ItemInitialCharges"			"24"
 		"ItemRequiresCharges"			"1"
 		"ItemDisplayCharges"			"1"
 
@@ -7360,135 +7231,73 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_agi"					"45"
+				"bonus_agi"					"55"
 			}
+
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_int"					"27"
+				"bonus_int"					"25"
 			}
+
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"initial_charges"			"20"
+				"initial_charges"			"24"
 			}
+
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"mana_burn"					"120"
+				"mana_burn"					"100"
 			}
+
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"slow_stack"				"-20"
-			}
+				"slow_degrade_pct"			"20"
+			}	
+
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"max_stacks"				"5"
-			}
+				"starting_slow_pct"			"100"
+			}			
+
 			"07"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"stack_loss_time"			"0.8"
 			}
+
 			"08"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"tooltip_duration"			"4.0"
+				"var_type"					"FIELD_INTEGER"
+				"total_slow_duration"		"4"
 			}
+
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"proc_chance"				"50"
+				"illusion_mana_burn"		"32"
 			}
+
 			"10"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"illusion_mana_burn"		"45"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"				"items/item_diffusal.lua"
-				"Function"					"DiffusalCast"
-
-				"sound_cast"				"DOTA_Item.DiffusalBlade.Activate"
-				"sound_target"				"DOTA_Item.DiffusalBlade.Target"
-				"particle_target"			"particles/item/diffusal/diffusal_manaburn_3.vpcf"
-				"modifier_slow"				"modifier_item_imba_diffusal_slow"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_diffusal"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"%bonus_agi"
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"%bonus_int"
-				}
+				"root_duration"				"3"
 			}
 
-			"modifier_item_imba_diffusal_3_unique"
+			"11"
 			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_diffusal.lua"
-						"Function"			"Diffusal3Hit"
-
-						"particle_hit"		"particles/item/diffusal/diffusal_manaburn_3.vpcf"
-					}
-				}
+				"var_type"					"FIELD_INTEGER"
+				"steal_chance_pct"			"25"
 			}
 
-			"modifier_item_imba_diffusal_slow"
+			"12"
 			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsDebuff"					"1"
-				"IsPurgable"				"1"
-
-				"Duration"					"%tooltip_duration"
-
-				"EffectName"				"particles/items_fx/diffusal_slow.vpcf"
-				"EffectAttachType"			"follow_origin"
-
-				"ThinkInterval"				"%stack_loss_time"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_diffusal.lua"
-						"Function"			"DiffusalSlowDecay"
-
-						"modifier_slow"		"modifier_item_imba_diffusal_slow"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_stack"
-				}
+				"var_type"					"FIELD_INTEGER"
+				"steal_burn"				"130"
 			}
 		}
 	}
