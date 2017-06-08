@@ -38,7 +38,8 @@ function modifier_imba_shotgun_passive:OnCreated()
 		self:CheckUnique(true)
 		if not self.parent:IsIllusion() then
 			self.projectile_speed = self.item:GetSpecialValueFor("projectile_speed")
-			self.agility_pct = self.item:GetSpecialValueFor("agility_pct") * 0.01
+			self.agility_pct_ranged = self.item:GetSpecialValueFor("agility_pct_ranged") * 0.01
+			self.agility_pct_melee = self.item:GetSpecialValueFor("agility_pct_melee") * 0.01
 			self.ranged_proj_range = self.item:GetSpecialValueFor("ranged_proj_range")
 			self.ranged_proj_radius = self.item:GetSpecialValueFor("ranged_proj_radius")
 			self.ranged_proj_angle = self.item:GetSpecialValueFor("ranged_proj_angle")
@@ -53,8 +54,7 @@ local decFuns =
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
-		MODIFIER_EVENT_ON_ATTACK_LANDED,
-		MODIFIER_EVENT_ON_ATTACK_FAIL,
+		MODIFIER_EVENT_ON_ATTACK
 }
 return decFuns
 end
@@ -71,15 +71,21 @@ function modifier_imba_shotgun_passive:GetModifierBonusStats_Agility()
 	return self.bonus_agi
 end
 
-function modifier_imba_shotgun_passive:OnAttackLanded(params)
+function modifier_imba_shotgun_passive:OnAttack(params)
 	if IsServer() then
 		-- Only for real heroes & clones
 		if params.attacker == self.parent and self.parent:IsRealHero() then
 			-- Cooldown check and lookup for Starfury
 			if self.item:IsCooldownReady() and (self:CheckUniqueValue(1,{"modifier_imba_starfury_passive"}) == 1) then
 				-- Parameters
-				local hero = self.parent
-				local damage = hero:GetAgility() * self.agility_pct
+				local hero = self.parent				
+				local damage
+				if hero:IsRangedAttacker() then
+					damage = hero:GetAgility() * self.agility_pct_ranged
+				else
+					damage = hero:GetAgility() * self.agility_pct_melee
+				end
+
 				local damage_type = DAMAGE_TYPE_PHYSICAL
 				local stun_duration = self.ranged_proj_stun
 				if hero:HasItemInInventory("item_imba_spell_fencer") then
@@ -171,10 +177,6 @@ function modifier_imba_shotgun_passive:OnAttackLanded(params)
 			end
 		end
 	end
-end
-
-function modifier_imba_shotgun_passive:OnAttackFail(params)
-	self:OnAttackLanded(params)
 end
 
 -------------------------------------------

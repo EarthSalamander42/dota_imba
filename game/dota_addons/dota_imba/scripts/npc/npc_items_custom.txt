@@ -8374,7 +8374,7 @@
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"4.0"
+		"AbilityCooldown"				"4"
 		"AbilitySharedCooldown"			"starfury"
 		
 		// Precache
@@ -8396,45 +8396,59 @@
 				"bonus_damage"					"15"
 				"CalculateSpellDamageTooltip"	"0"
 			}
+
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"bonus_as"						"15"
 			}
+
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"bonus_agi"						"28"
 			}
+
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"projectile_speed"				"1100"
+				"projectile_speed"				"1200"
 			}
+
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"agility_pct"					"25"
+				"agility_pct_ranged"			"25"
 			}
+
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"ranged_proj_range"				"700"
-			}
+				"agility_pct_melee"				"50"
+			}			
+
 			"07"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"ranged_proj_radius"			"100"
 			}
+
 			"08"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"ranged_proj_angle"				"25"
 			}
+
 			"09"
 			{
 				"var_type"						"FIELD_FLOAT"
 				"ranged_proj_stun"				"0.25"
+			}
+
+			"10"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"ranged_proj_range"				"700"
 			}
 		}
 	}
@@ -8491,7 +8505,7 @@
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"1.0"
+		"AbilityCooldown"				"1"
 		"AbilitySharedCooldown"			"starfury"
 		
 		// Precache
@@ -8512,45 +8526,53 @@
 				"bonus_damage"			"75"
 				"CalculateSpellDamageTooltip"	"0"
 			}
+
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_as"				"20"
 			}
+
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_agi"				"65"
 			}
+
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"proc_chance"			"10"
 			}
+
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"proc_bonus"			"20"
+				"proc_bonus"			"30"
 			}
+
 			"06"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"proc_duration"			"3.0"
+				"var_type"				"FIELD_INTEGER"
+				"proc_duration"			"3"
 			}
+
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"range"					"700"
 			}
+
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"projectile_speed"		"1100"
+				"projectile_speed"		"1200"
 			}
+
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"agility_pct"			"35"
+				"agility_pct"			"50"
 			}
 		}
 	}

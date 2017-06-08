@@ -70,6 +70,7 @@
 		"item"		"item_shadow_amulet"
 		"item"		"item_ghost"
 		"item"		"item_imba_blink"				
+		"item"		"item_imba_shotgun"
 	}
 	
 	// Level 1 - Green Recipes

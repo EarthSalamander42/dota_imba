@@ -381,9 +381,9 @@ function modifier_tiny_toss_movement:OnCreated( kv )
   self.toss_acceleration_z = 4000
   self.toss_max_horizontal_acceleration = 3000
 
-	if IsServer() then		
+	if IsServer() then				
 		self.ability = self:GetAbility()	
-		self.parent = self:GetParent()
+		self.parent = self:GetParent()		
 
 		EmitSoundOn("Hero_Tiny.Toss.Target", self:GetParent())
 
@@ -480,6 +480,12 @@ function modifier_tiny_toss_movement:TossLand()
 		Timers:CreateTimer(FrameTime(), function()
 			ResolveNPCPositions(self.parent:GetAbsOrigin(), 150)
 		end)		
+	end
+end
+
+function modifier_tiny_toss_movement:OnDestroy()
+	if IsServer() then
+		self.parent:SetUnitOnClearGround()
 	end
 end
 
