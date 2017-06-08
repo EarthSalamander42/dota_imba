@@ -571,6 +571,8 @@ function modifier_imba_crystal_maiden_brilliance_aura_emitter:IsPurgable() retur
 -- Arcilliance Aura
 modifier_imba_crystal_maiden_brilliance_aura = class({})
 
+function modifier_imba_crystal_maiden_brilliance_aura:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
 function modifier_imba_crystal_maiden_brilliance_aura:OnCreated()
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
