@@ -87,6 +87,10 @@ function imba_queenofpain_shadow_strike:OnSpellStart( params )
 			target = params
 		else
 			target = self:GetCursorTarget()
+			caster:EmitSound("Hero_QueenOfPain.ShadowStrike")
+			if (math.random(1,100) <= 15) and (caster:GetName() == "npc_dota_hero_queenofpain") then
+				caster:EmitSound("queenofpain_pain_ability_shadowstrike_0"..math.random(1,4))
+			end
 		end
 
 		-- Parameters
@@ -95,15 +99,6 @@ function imba_queenofpain_shadow_strike:OnSpellStart( params )
 		local damage_interval = self:GetSpecialValueFor("damage_interval")
 		local duration = self:GetSpecialValueFor("duration")
 		local projectile_speed = self:GetSpecialValueFor("projectile_speed")
-		
-		if damage_pct then
-			damage = damage * (damage_pct / 100)
-		else
-			caster:EmitSound("Hero_QueenOfPain.ShadowStrike")
-			if (math.random(1,100) <= 15) and (caster:GetName() == "npc_dota_hero_queenofpain") then
-				caster:EmitSound("queenofpain_pain_ability_shadowstrike_0"..math.random(1,4))
-			end
-		end
 
 		-- Play caster particle
 		local caster_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_queenofpain/queen_shadow_strike_body.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
