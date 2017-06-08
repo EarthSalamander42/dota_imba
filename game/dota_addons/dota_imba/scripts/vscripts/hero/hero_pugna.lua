@@ -472,6 +472,7 @@ function imba_pugna_nether_ward:IsHiddenWhenStolen() return false end
 function imba_pugna_nether_ward:IsRefreshable() return true end
 function imba_pugna_nether_ward:IsStealable() return true end
 function imba_pugna_nether_ward:IsNetherWardStealable() return false end
+
 -------------------------------------------
 function imba_pugna_nether_ward:OnSpellStart()
     -- Ability properties
@@ -520,6 +521,8 @@ function imba_pugna_nether_ward_aura:GetIntrinsicModifierName()
     return "modifier_imba_nether_ward_aura"
 end
 
+function imba_pugna_nether_ward_aura:GetCastRange()
+	return self:GetSpecialValueFor("radius") end
 -- Aura modifier
 modifier_imba_nether_ward_aura = class({})
 
@@ -1162,6 +1165,9 @@ end
 -- Life drain modifier
 modifier_imba_life_drain = class({})
 
+function modifier_imba_life_drain:GetPriority()
+	return MODIFIER_PRIORITY_HIGH
+end
 function modifier_imba_life_drain:OnCreated()
     -- Ability properties
     self.caster = self:GetCaster()
@@ -1340,10 +1346,22 @@ function modifier_imba_life_drain:OnIntervalThink()
 end
 
 function modifier_imba_life_drain:DeclareFunctions()
-    local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
+    local decFuncs =   {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+						MODIFIER_PROPERTY_PROVIDES_FOW_POSITION
+						}
+	
 
     return decFuncs
 end
+
+function modifier_imba_life_drain:CheckState()
+	local state =
+				{[MODIFIER_STATE_PROVIDES_VISION]=true,
+				[MODIFIER_STATE_INVISIBLE] = false}
+	return state
+end
+
+function modifier_imba_life_drain:GetModifierProvidesFOWVision() return 1 end
 
 function modifier_imba_life_drain:GetModifierMoveSpeedBonus_Percentage()
     -- Don't slow allies
