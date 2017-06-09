@@ -11,6 +11,10 @@
 if item_imba_arcane_boots == nil then item_imba_arcane_boots = class({}) end
 LinkLuaModifier( "modifier_item_imba_arcane_boots", "items/item_mekansm.lua", LUA_MODIFIER_MOTION_NONE )				-- Owner's bonus attributes, stackable
 
+function item_imba_arcane_boots:GetAbilityTextureName()
+   return "custom/imba_arcane_boots"
+end
+
 function item_imba_arcane_boots:GetIntrinsicModifierName()
 	return "modifier_item_imba_arcane_boots" end
 
@@ -82,6 +86,10 @@ LinkLuaModifier( "modifier_item_imba_mekansm_heal", "items/item_mekansm.lua", LU
 
 function item_imba_mekansm:GetIntrinsicModifierName()
 	return "modifier_item_imba_mekansm" end
+
+function item_imba_mekansm:GetAbilityTextureName()
+   return "custom/imba_mekansm"
+end
 
 function item_imba_mekansm:OnSpellStart()
 	if IsServer() then
@@ -276,6 +284,10 @@ LinkLuaModifier( "modifier_item_imba_guardian_greaves", "items/item_mekansm.lua"
 LinkLuaModifier( "modifier_item_imba_guardian_greaves_aura_emitter", "items/item_mekansm.lua", LUA_MODIFIER_MOTION_NONE )	-- Aura emitter
 LinkLuaModifier( "modifier_item_imba_guardian_greaves_aura", "items/item_mekansm.lua", LUA_MODIFIER_MOTION_NONE )			-- Aura buff
 LinkLuaModifier( "modifier_item_imba_guardian_greaves_heal", "items/item_mekansm.lua", LUA_MODIFIER_MOTION_NONE )			-- Heal buff
+
+function item_imba_guardian_greaves:GetAbilityTextureName()
+   return "custom/imba_guardian_greaves"
+end
 
 function item_imba_guardian_greaves:GetIntrinsicModifierName()
 	return "modifier_item_imba_guardian_greaves" end

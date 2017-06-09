@@ -12,6 +12,10 @@ LinkLuaModifier("modifier_imba_frost_arrows_thinker", "hero/hero_drow_ranger", L
 LinkLuaModifier("modifier_imba_frost_arrows_slow", "hero/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_frost_arrows_freeze", "hero/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
 
+function imba_drow_ranger_frost_arrows:GetAbilityTextureName()
+   return "drow_ranger_frost_arrows"
+end
+
 function imba_drow_ranger_frost_arrows:GetIntrinsicModifierName()
 	return "modifier_imba_frost_arrows_thinker"
 end
@@ -461,6 +465,10 @@ imba_drow_ranger_deadeye = class({})
 LinkLuaModifier("modifier_imba_deadeye_aura", "hero/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_deadeye_vision", "hero/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
 
+function imba_drow_ranger_deadeye:GetAbilityTextureName()
+   return "custom/drow_deadeye"
+end
+
 function imba_drow_ranger_deadeye:IsInnateAbility()
 	return true
 end
@@ -500,7 +508,7 @@ function modifier_imba_deadeye_aura:GetAuraEntityReject(target)
 end
 
 function modifier_imba_deadeye_aura:GetAuraRadius()
-	return 50000 --global
+	return 25000 --global
 end
 
 function modifier_imba_deadeye_aura:GetAuraSearchFlags()
@@ -608,6 +616,10 @@ end
 
 imba_drow_ranger_gust = class({})
 LinkLuaModifier("modifier_imba_gust_silence", "hero/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+
+function imba_drow_ranger_gust:GetAbilityTextureName()
+   return "drow_ranger_wave_of_silence"
+end
 
 function imba_drow_ranger_gust:IsHiddenWhenStolen()
 	return false
@@ -755,10 +767,14 @@ function modifier_imba_gust_silence:CheckState()
 --	   PRECISION AURA     --
 ----------------------------
 
- imba_drow_ranger_trueshot = class({})
- LinkLuaModifier("modifier_imba_trueshot_aura", "hero/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
- LinkLuaModifier("modifier_imba_trueshot", "hero/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
- LinkLuaModifier("modifier_imba_trueshot_active", "hero/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE) 
+imba_drow_ranger_trueshot = class({})
+LinkLuaModifier("modifier_imba_trueshot_aura", "hero/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_trueshot", "hero/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_trueshot_active", "hero/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE) 
+
+function imba_drow_ranger_trueshot:GetAbilityTextureName()
+	return "drow_ranger_trueshot"
+end
 
 function imba_drow_ranger_trueshot:GetIntrinsicModifierName()
 	return "modifier_imba_trueshot_aura"
@@ -978,6 +994,10 @@ end
 imba_drow_ranger_marksmanship = class({})
 LinkLuaModifier("modifier_imba_marksmanship", "hero/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_marksmanship_scepter_dmg_reduction", "hero/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+
+function imba_drow_ranger_marksmanship:GetAbilityTextureName()
+   return "drow_ranger_marksmanship"
+end
 
 function imba_drow_ranger_marksmanship:GetIntrinsicModifierName()
 	return "modifier_imba_marksmanship"

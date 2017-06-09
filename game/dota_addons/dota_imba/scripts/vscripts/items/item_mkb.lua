@@ -10,6 +10,10 @@ if item_imba_javelin == nil then item_imba_javelin = class({}) end
 LinkLuaModifier( "modifier_item_imba_javelin", "items/item_mkb.lua", LUA_MODIFIER_MOTION_NONE )			-- Owner's bonus attributes, stackable
 LinkLuaModifier( "modifier_item_imba_javelin_unique", "items/item_mkb.lua", LUA_MODIFIER_MOTION_NONE )	-- Pierce and bonus attack range
 
+function item_imba_javelin:GetAbilityTextureName()
+   return "custom/imba_javelin"
+end
+
 function item_imba_javelin:GetIntrinsicModifierName()
 	return "modifier_item_imba_javelin" end
 
@@ -127,6 +131,10 @@ LinkLuaModifier( "modifier_item_imba_monkey_king_bar_unique", "items/item_mkb.lu
 
 function item_imba_monkey_king_bar:GetIntrinsicModifierName()
 	return "modifier_item_imba_monkey_king_bar" end
+
+function item_imba_monkey_king_bar:GetAbilityTextureName()
+   return "custom/imba_monkey_king_bar"
+end
 
 -----------------------------------------------------------------------------------------------------------
 --	Monkey King Bar owner bonus attributes (stackable)

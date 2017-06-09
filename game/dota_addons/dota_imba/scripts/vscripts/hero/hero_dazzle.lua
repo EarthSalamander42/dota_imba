@@ -10,6 +10,10 @@ if imba_dazzle_poison_touch == nil then imba_dazzle_poison_touch = class({}) end
 LinkLuaModifier( "modifier_imba_dazzle_poison_touch_setin", "hero/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )	-- Set in modifier (slow + attack counter)
 LinkLuaModifier( "modifier_imba_dazzle_poison_touch_debuff", "hero/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )	-- Stun + damage over time
 
+function imba_dazzle_poison_touch:GetAbilityTextureName()
+   return "dazzle_poison_touch"
+end
+
 function imba_dazzle_poison_touch:GetCooldown()
 	local cooldown = self:GetSpecialValueFor("cooldown")
 	local cooldownbonus = self:GetCaster():FindTalentValue("special_bonus_imba_dazzle_5")
@@ -181,6 +185,10 @@ end
 if imba_dazzle_shallow_grave == nil then imba_dazzle_shallow_grave = class({}) end
 LinkLuaModifier( "modifier_imba_dazzle_shallow_grave", "hero/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )	-- Shallow Grave effect
 LinkLuaModifier( "modifier_imba_dazzle_nothl_protection", "hero/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )-- Passive self-cast
+
+function imba_dazzle_shallow_grave:GetAbilityTextureName()
+   return "dazzle_shallow_grave"
+end
 
 function imba_dazzle_shallow_grave:GetManaCost()
 	if self:GetCaster():HasTalent("special_bonus_imba_dazzle_1") then 
@@ -386,6 +394,10 @@ if imba_dazzle_shadow_wave == nil then imba_dazzle_shadow_wave = class({}) end
 LinkLuaModifier( "modifier_imba_dazzle_shadow_wave_buff", "hero/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )		-- Allied bonus armor
 LinkLuaModifier( "modifier_imba_dazzle_shadow_wave_injured_buff", "hero/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )-- Allied bonus armor
 
+function imba_dazzle_shadow_wave:GetAbilityTextureName()
+   return "dazzle_shadow_wave"
+end
+
 function imba_dazzle_shadow_wave:GetBehavior()
 	return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK end
 
@@ -567,6 +579,10 @@ function modifier_imba_dazzle_shadow_wave_injured_buff:GetModifierPhysicalArmorB
 if imba_dazzle_weave == nil then imba_dazzle_weave = class({}) end
 LinkLuaModifier( "modifier_imba_dazzle_weave_buff", "hero/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )	-- Allied bonus armor
 LinkLuaModifier( "modifier_imba_dazzle_weave_debuff", "hero/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )-- Allied bonus armor
+
+function imba_dazzle_weave:GetAbilityTextureName()
+   return "dazzle_weave"
+end
 
 function imba_dazzle_weave:GetCooldown()
 	local cooldown = self:GetSpecialValueFor("cooldown")

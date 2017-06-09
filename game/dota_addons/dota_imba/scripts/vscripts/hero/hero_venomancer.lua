@@ -19,6 +19,10 @@ function imba_venomancer_toxicity:IsRefreshable() return false end
 function imba_venomancer_toxicity:IsStealable() return false end
 function imba_venomancer_toxicity:IsNetherWardStealable() return false end
 function imba_venomancer_toxicity:IsInnateAbility() return true end
+
+function imba_venomancer_toxicity:GetAbilityTextureName()
+   return "custom/venomancer_toxicity"
+end
 -------------------------------------------
 
 function imba_venomancer_toxicity:GetIntrinsicModifierName()
@@ -131,6 +135,10 @@ function imba_venomancer_venomous_gale:IsHiddenWhenStolen() return false end
 function imba_venomancer_venomous_gale:IsRefreshable() return true end
 function imba_venomancer_venomous_gale:IsStealable() return true end
 function imba_venomancer_venomous_gale:IsNetherWardStealable() return true end
+
+function imba_venomancer_venomous_gale:GetAbilityTextureName()
+   return "venomancer_venomous_gale"
+end
 -------------------------------------------
 
 function imba_venomancer_venomous_gale:GetCastRange( location , target)
@@ -385,6 +393,10 @@ function imba_venomancer_poison_sting:IsHiddenWhenStolen() return false end
 function imba_venomancer_poison_sting:IsRefreshable() return false end
 function imba_venomancer_poison_sting:IsStealable() return false end
 function imba_venomancer_poison_sting:IsNetherWardStealable() return false end
+
+function imba_venomancer_poison_sting:GetAbilityTextureName()
+   return "venomancer_poison_sting"
+end
 -------------------------------------------
 
 function imba_venomancer_poison_sting:GetIntrinsicModifierName()
@@ -600,6 +612,10 @@ function imba_venomancer_plague_ward:IsHiddenWhenStolen() return false end
 function imba_venomancer_plague_ward:IsRefreshable() return true end
 function imba_venomancer_plague_ward:IsStealable() return true end
 function imba_venomancer_plague_ward:IsNetherWardStealable() return false end
+
+function imba_venomancer_plague_ward:GetAbilityTextureName()
+   return "venomancer_plague_ward"
+end
 -------------------------------------------
 
 function imba_venomancer_plague_ward:OnSpellStart()
@@ -739,6 +755,10 @@ function imba_venomancer_poison_nova:IsHiddenWhenStolen() return false end
 function imba_venomancer_poison_nova:IsRefreshable() return true end
 function imba_venomancer_poison_nova:IsStealable() return true end
 function imba_venomancer_poison_nova:IsNetherWardStealable() return true end
+
+function imba_venomancer_poison_nova:GetAbilityTextureName()
+   return "venomancer_poison_nova"
+end
 -------------------------------------------
 
 function imba_venomancer_poison_nova:OnSpellStart()

@@ -15,6 +15,11 @@ LinkLuaModifier("modifier_imba_sadist", "hero/hero_necrolyte", LUA_MODIFIER_MOTI
 LinkLuaModifier("modifier_imba_sadist_stack", "hero/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 
 imba_necrolyte_sadist = imba_necrolyte_sadist or class({})
+
+function imba_necrolyte_sadist:GetAbilityTextureName()
+   return "custom/necrolyte_sadist"
+end
+
 function imba_necrolyte_sadist:GetIntrinsicModifierName()
     if self:GetCaster():IsRealHero() then return "modifier_imba_sadist" end
 	return false
@@ -208,6 +213,11 @@ end
 --			DEATH PULSE
 -------------------------------------------
 imba_necrolyte_death_pulse = imba_necrolyte_death_pulse or class({})
+
+function imba_necrolyte_death_pulse:GetAbilityTextureName()
+   return "necrolyte_death_pulse"
+end
+
 function imba_necrolyte_death_pulse:GetCastRange( location , target)
 	return self:GetTalentSpecialValueFor("radius")
 end
@@ -341,6 +351,10 @@ LinkLuaModifier("modifier_imba_ghost_shroud_aura_debuff", "hero/hero_necrolyte",
 LinkLuaModifier("modifier_imba_ghost_shroud_aura_purge", "hero/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ghost_shroud_buff", "hero/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ghost_shroud_debuff", "hero/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+
+function imba_necrolyte_ghost_shroud:GetAbilityTextureName()
+   return "necrolyte_sadist"
+end
 
 function imba_necrolyte_ghost_shroud:OnSpellStart()
 	if IsServer() then
@@ -594,6 +608,10 @@ function imba_necrolyte_heartstopper_aura:GetIntrinsicModifierName()
     return "modifier_imba_heartstopper_aura"
 end
 
+function imba_necrolyte_heartstopper_aura:GetAbilityTextureName()
+   return "necrolyte_heartstopper_aura"
+end
+
 function imba_necrolyte_heartstopper_aura:GetCastRange( location , target)
 	return self:GetSpecialValueFor("radius")
 end
@@ -723,6 +741,10 @@ imba_necrolyte_reapers_scythe = imba_necrolyte_reapers_scythe or class({})
 LinkLuaModifier("modifier_imba_reapers_scythe", "hero/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_reapers_scythe_debuff", "hero/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_reapers_scythe_respawn", "hero/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+
+function imba_necrolyte_reapers_scythe:GetAbilityTextureName()
+   return "necrolyte_reapers_scythe"
+end
 
 function imba_necrolyte_reapers_scythe:OnSpellStart()
 	if IsServer() then

@@ -12,6 +12,10 @@ LinkLuaModifier("modifier_imba_arcane_dynamo", "hero/hero_crystal_maiden.lua", L
 function imba_crystal_maiden_arcane_dynamo:GetIntrinsicModifierName() return "modifier_imba_arcane_dynamo" end
 function imba_crystal_maiden_arcane_dynamo:IsInnateAbility() return true end
 
+function imba_crystal_maiden_arcane_dynamo:GetAbilityTextureName()
+   return "custom/crystal_maiden_arcane_dynamo"
+end
+
 ---------------------------------
 -- Arcane Dynamo Modifier      --
 ---------------------------------
@@ -94,6 +98,10 @@ LinkLuaModifier("modifier_imba_crystal_nova_snowfield_ally_aura", "hero/hero_cry
 LinkLuaModifier("modifier_imba_crystal_nova_snowfield_enemy_aura", "hero/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_crystal_nova_snowfield_debuff", "hero/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_crystal_nova_snowfield_buff", "hero/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
+
+function imba_crystal_maiden_crystal_nova:GetAbilityTextureName()
+   return "crystal_maiden_crystal_nova"
+end
 
 function imba_crystal_maiden_crystal_nova:GetAOERadius() 
 	return self:GetSpecialValueFor("nova_radius") + self:GetCaster():FindTalentValue("special_bonus_imba_crystal_maiden_3")
@@ -356,6 +364,10 @@ LinkLuaModifier("modifier_imba_crystal_maiden_frostbite_ally", "hero/hero_crysta
 
 imba_crystal_maiden_frostbite = class({})
 
+function imba_crystal_maiden_frostbite:GetAbilityTextureName()
+   return "crystal_maiden_frostbite"
+end
+
 function imba_crystal_maiden_frostbite:GetIntrinsicModifierName() return "modifier_imba_crystal_maiden_frostbite_passive_ready" end
 
 function imba_crystal_maiden_frostbite:CastFilterResultTarget(target)
@@ -550,6 +562,10 @@ end
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 imba_crystal_maiden_brilliance_aura = class({})
 
+function imba_crystal_maiden_brilliance_aura:GetAbilityTextureName()
+   return "crystal_maiden_brilliance_aura"
+end
+
 function imba_crystal_maiden_brilliance_aura:GetIntrinsicModifierName() return "modifier_imba_crystal_maiden_brilliance_aura_emitter" end
 
 LinkLuaModifier("modifier_imba_crystal_maiden_brilliance_aura_emitter", "hero/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
@@ -637,6 +653,10 @@ LinkLuaModifier("modifier_imba_crystal_maiden_freezing_field_aura", "hero/hero_c
 LinkLuaModifier("modifier_imba_crystal_maiden_freezing_field_slow", "hero/hero_crystal_maiden.lua", LUA_MODIFIER_MOTION_NONE)
 
 imba_crystal_maiden_freezing_field = class({})
+
+function imba_crystal_maiden_freezing_field:GetAbilityTextureName()
+   return "crystal_maiden_freezing_field"
+end
 
 --If caster has scepter, allow for ability to be cast at a point
 function imba_crystal_maiden_freezing_field:GetBehavior()

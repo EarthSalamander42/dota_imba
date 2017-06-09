@@ -15,6 +15,10 @@ function imba_witch_doctor_paralyzing_cask:IsHiddenWhenStolen() return false end
 function imba_witch_doctor_paralyzing_cask:IsRefreshable() return true end
 function imba_witch_doctor_paralyzing_cask:IsStealable() return true end
 function imba_witch_doctor_paralyzing_cask:IsNetherWardStealable() return true end
+
+function imba_witch_doctor_paralyzing_cask:GetAbilityTextureName()
+   return "witch_doctor_paralyzing_cask"
+end
 -------------------------------------------
 
 function imba_witch_doctor_paralyzing_cask:OnSpellStart()
@@ -183,6 +187,10 @@ imba_witch_doctor_voodoo_restoration = class({})
 LinkLuaModifier("modifier_imba_voodoo_restoration", "hero/hero_witch_doctor", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_voodoo_restoration_heal", "hero/hero_witch_doctor", LUA_MODIFIER_MOTION_NONE)
 
+function imba_witch_doctor_voodoo_restoration:GetAbilityTextureName()
+   return "witch_doctor_voodoo_restoration"
+end
+
 function imba_witch_doctor_voodoo_restoration:GetCastRange()
 	return self:GetSpecialValueFor("radius")
 end
@@ -337,6 +345,10 @@ function imba_witch_doctor_maledict:IsHiddenWhenStolen() return false end
 function imba_witch_doctor_maledict:IsRefreshable() return true end
 function imba_witch_doctor_maledict:IsStealable() return true end
 function imba_witch_doctor_maledict:IsNetherWardStealable() return true end
+
+function imba_witch_doctor_maledict:GetAbilityTextureName()
+   return "witch_doctor_maledict"
+end
 -------------------------------------------
 
 function imba_witch_doctor_maledict:OnSpellStart()
@@ -483,6 +495,10 @@ function imba_witch_doctor_death_ward:IsHiddenWhenStolen() return false end
 function imba_witch_doctor_death_ward:IsRefreshable() return true end
 function imba_witch_doctor_death_ward:IsStealable() return true end
 function imba_witch_doctor_death_ward:IsNetherWardStealable() return false end
+
+function imba_witch_doctor_death_ward:GetAbilityTextureName()
+   return "witch_doctor_death_ward"
+end
 -------------------------------------------
 
 function imba_witch_doctor_death_ward:OnSpellStart()

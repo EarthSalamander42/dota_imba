@@ -11,6 +11,10 @@ imba_clinkz_strafe = class({})
 LinkLuaModifier("modifier_imba_strafe_aspd", "hero/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_strafe_mount", "hero/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
 
+function imba_clinkz_strafe:GetAbilityTextureName()
+   return "clinkz_strafe"
+end
+
 function imba_clinkz_strafe:IsHiddenWhenStolen() return false end
 function imba_clinkz_strafe:IsNetherWardStealable() return false end
 function imba_clinkz_strafe:GetCooldown(level)
@@ -251,6 +255,10 @@ end
 imba_clinkz_searing_arrows = class({})
 LinkLuaModifier("modifier_imba_searing_arrows_passive", "hero/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_searing_arrows_active", "hero/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
+
+function imba_clinkz_searing_arrows:GetAbilityTextureName()
+   return "clinkz_searing_arrows"
+end
 
 function imba_clinkz_searing_arrows:GetIntrinsicModifierName()    
     return "modifier_imba_searing_arrows_passive"
@@ -611,6 +619,10 @@ LinkLuaModifier("modifier_imba_skeleton_walk_invis", "hero/hero_clinkz", LUA_MOD
 LinkLuaModifier("modifier_imba_skeleton_walk_spook", "hero/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_skeleton_walk_talent_ms", "hero/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
 
+function imba_clinkz_skeleton_walk:GetAbilityTextureName()
+   return "clinkz_wind_walk"
+end
+
 function imba_clinkz_skeleton_walk:IsHiddenWhenStolen()
     return false
 end
@@ -933,6 +945,10 @@ LinkLuaModifier("modifier_imba_death_pact_stack_creep", "hero/hero_clinkz", LUA_
 LinkLuaModifier("modifier_imba_death_pact_stack_hero", "hero/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_death_pact_talent_debuff", "hero/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_death_pact_talent_buff", "hero/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
+
+function imba_clinkz_death_pact:GetAbilityTextureName()
+   return "clinkz_death_pact"
+end
 
 function imba_clinkz_death_pact:CastFilterResultTarget(target)
     if IsServer() then

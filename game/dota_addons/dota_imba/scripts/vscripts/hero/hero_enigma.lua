@@ -6,21 +6,26 @@ CreateEmptyTalents("enigma")
 -- All of these are available to BOTH server and client!!
 imba_enigma_malefice           = imba_enigma_malefice           or class({
 		IsHiddenWhenStolen         = function(self) return true                                       end,    
+		GetAbilityTextureName      = function(self) return "enigma_malefice"                          end,    
 	})  
 imba_enigma_demonic_conversion = imba_enigma_demonic_conversion or class({
 		IsHiddenWhenStolen         = function(self) return true                                       end,   
+		GetAbilityTextureName      = function(self) return "enigma_demonic_conversion"                end,    
 	})  
 imba_enigma_midnight_pulse     = imba_enigma_midnight_pulse     or class({
 		IsHiddenWhenStolen         = function(self) return true                                       end,   
+		GetAbilityTextureName      = function(self) return "enigma_midnight_pulse"		              end,    
 	})  
 imba_enigma_black_hole         = imba_enigma_black_hole         or class({
 		IsHiddenWhenStolen         = function(self) return true                                       end,   
+		GetAbilityTextureName      = function(self) return "enigma_black_hole"			              end,    
 	}) 
 imba_enigma_gravity_well       = imba_enigma_gravity_well       or class({
 		IsHiddenWhenStolen         = function(self) return true                                       end,   
 		IsStealable                = function(self) return false                                      end,   
 		GetIntrinsicModifierName   = function(self) return 'modifier_imba_enigma_gravity_well_stacks' end,   
 		IsInnateAbility 		   = function(self) return true 									  end,
+		GetAbilityTextureName      = function(self) return "custom/imba_enigma_gravity"               end,    
 	}) 
 
 LinkLuaModifier("modifier_imba_enigma_malefice",           "hero/hero_enigma", LUA_MODIFIER_MOTION_NONE)

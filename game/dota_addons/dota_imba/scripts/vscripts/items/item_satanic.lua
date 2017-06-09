@@ -11,6 +11,9 @@ LinkLuaModifier("modifier_imba_satanic_unique", "items/item_satanic.lua", LUA_MO
 LinkLuaModifier("modifier_imba_satanic_active", "items/item_satanic.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_satanic_soul_slaughter", "items/item_satanic.lua", LUA_MODIFIER_MOTION_NONE)
 
+function item_imba_satanic:GetAbilityTextureName()
+   return "item_satanic"
+end
 
 function item_imba_satanic:GetIntrinsicModifierName()
     return "modifier_imba_satanic"

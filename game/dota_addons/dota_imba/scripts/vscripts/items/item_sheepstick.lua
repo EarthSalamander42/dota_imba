@@ -12,6 +12,10 @@ LinkLuaModifier( "modifier_item_imba_sheepstick_debuff", "items/item_sheepstick.
 LinkLuaModifier( "modifier_item_imba_sheepstick_buff", "items/item_sheepstick.lua", LUA_MODIFIER_MOTION_NONE )		-- Self-use buff
 LinkLuaModifier( "modifier_item_imba_sheepstick_stacking_penalty_debuff", "items/item_sheepstick.lua", LUA_MODIFIER_MOTION_NONE )	-- Enemy stacking debuff (prevent chain hex)
 
+function item_imba_sheepstick:GetAbilityTextureName()
+   return "custom/imba_sheepstick"
+end
+
 function item_imba_sheepstick:GetIntrinsicModifierName()
 	return "modifier_item_imba_sheepstick" end
 

@@ -17126,7 +17126,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"AbilityTextureName"	"pudge_flesh_heap"
+		"AbilityTextureName"		"pudge_flesh_heap"
 		"MaxLevel"						"1"
 		"ScriptFile"					"hero/hero_pudge.lua"
 
@@ -19368,7 +19368,7 @@
 		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"					"DAMAGE_TYPE_PHYSICAL"
-		"SpellImmunityType"						"SPELL_IMMUNITY_ENEMIES_YES"
+		"SpellImmunityType"						"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityTextureName"					"sniper_headshot"
 		"MaxLevel"								"7"
 		"ScriptFile"							"hero/hero_sniper.lua"

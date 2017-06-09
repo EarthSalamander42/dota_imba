@@ -18,6 +18,10 @@ function imba_queenofpain_delightful_torment:IsRefreshable() return false end
 function imba_queenofpain_delightful_torment:IsStealable() return false end
 function imba_queenofpain_delightful_torment:IsNetherWardStealable() return false end
 function imba_queenofpain_delightful_torment:IsInnateAbility() return true end
+
+function imba_queenofpain_delightful_torment:GetAbilityTextureName()
+   return "custom/queenofpain_delightful_torment"
+end
 -------------------------------------------
 
 function imba_queenofpain_delightful_torment:GetIntrinsicModifierName()
@@ -77,6 +81,10 @@ function imba_queenofpain_shadow_strike:IsHiddenWhenStolen() return false end
 function imba_queenofpain_shadow_strike:IsRefreshable() return true end
 function imba_queenofpain_shadow_strike:IsStealable() return true end
 function imba_queenofpain_shadow_strike:IsNetherWardStealable() return true end
+
+function imba_queenofpain_shadow_strike:GetAbilityTextureName()
+   return "queenofpain_shadow_strike"
+end
 -------------------------------------------
 
 function imba_queenofpain_shadow_strike:OnSpellStart( params )
@@ -221,6 +229,10 @@ function imba_queenofpain_blink:IsHiddenWhenStolen() return false end
 function imba_queenofpain_blink:IsRefreshable() return true end
 function imba_queenofpain_blink:IsStealable() return true end
 function imba_queenofpain_blink:IsNetherWardStealable() return false end
+
+function imba_queenofpain_blink:GetAbilityTextureName()
+   return "queenofpain_blink"
+end
 -------------------------------------------
 
 function imba_queenofpain_blink:GetCooldown( nLevel )
@@ -285,8 +297,12 @@ end
 --			SCREAM OF PAIN
 -------------------------------------------
 LinkLuaModifier("modifier_imba_scream_of_pain_reflect", "hero/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
-
 imba_queenofpain_scream_of_pain = class({})
+
+function imba_queenofpain_scream_of_pain:GetAbilityTextureName()
+   return "queenofpain_scream_of_pain"
+end
+
 function imba_queenofpain_scream_of_pain:IsHiddenWhenStolen() return false end
 function imba_queenofpain_scream_of_pain:IsRefreshable() return true end
 function imba_queenofpain_scream_of_pain:IsStealable() return true end
@@ -423,6 +439,11 @@ LinkLuaModifier("modifier_imba_sonic_wave", "hero/hero_queenofpain", LUA_MODIFIE
 LinkLuaModifier("modifier_imba_sonic_wave_daze", "hero/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
 
 imba_queenofpain_sonic_wave = class({})
+
+function imba_queenofpain_sonic_wave:GetAbilityTextureName()
+   return "queenofpain_sonic_wave"
+end
+
 function imba_queenofpain_sonic_wave:IsHiddenWhenStolen() return false end
 function imba_queenofpain_sonic_wave:IsRefreshable() return true end
 function imba_queenofpain_sonic_wave:IsStealable() return true end

@@ -11,6 +11,10 @@ imba_skywrath_mage_arcane_bolt = class({})
 LinkLuaModifier("modifier_imba_arcane_bolt_buff", "hero/hero_skywrath_mage.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_skywrath_flying_movement", "hero/hero_skywrath_mage.lua", LUA_MODIFIER_MOTION_NONE)
 
+function imba_skywrath_mage_arcane_bolt:GetAbilityTextureName()
+   return "skywrath_mage_arcane_bolt"
+end
+
 function imba_skywrath_mage_arcane_bolt:IsHiddenWhenStolen()
     return false
 end
@@ -257,6 +261,10 @@ function modifier_imba_arcane_bolt_buff:IsDebuff() return false end
 ----------------------------
 imba_skywrath_mage_concussive_shot = class({})
 LinkLuaModifier("modifier_imba_concussive_shot_slow", "hero/hero_skywrath_mage.lua", LUA_MODIFIER_MOTION_NONE)
+
+function imba_skywrath_mage_concussive_shot:GetAbilityTextureName()
+   return "skywrath_mage_concussive_shot"
+end
 
 function imba_skywrath_mage_concussive_shot:IsHiddenWhenStolen()
     return false
@@ -546,6 +554,10 @@ LinkLuaModifier("modifier_imba_ancient_seal_main", "hero/hero_skywrath_mage.lua"
 LinkLuaModifier("modifier_imba_ancient_seal_aura", "hero/hero_skywrath_mage.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ancient_seal_secondary", "hero/hero_skywrath_mage.lua", LUA_MODIFIER_MOTION_NONE)
 
+function imba_skywrath_mage_ancient_seal:GetAbilityTextureName()
+   return "skywrath_mage_ancient_seal"
+end
+
 function imba_skywrath_mage_ancient_seal:IsHiddenWhenStolen()
     return false
 end
@@ -809,6 +821,10 @@ end
 ----------------------------
 imba_skywrath_mage_mystic_flare = class({})
 LinkLuaModifier("modifier_imba_mystic_flare", "hero/hero_skywrath_mage.lua", LUA_MODIFIER_MOTION_NONE)
+
+function imba_skywrath_mage_mystic_flare:GetAbilityTextureName()
+   return "skywrath_mage_mystic_flare"
+end
 
 function imba_skywrath_mage_mystic_flare:IsHiddenWhenStolen()
     return false

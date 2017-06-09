@@ -20,6 +20,11 @@ MergeTables(LinkedModifiers,{
 	["modifier_imba_smoke_screen_vision"] = LUA_MODIFIER_MOTION_NONE,	-- Reduces vision in comparison to smoke centre
 })
 imba_riki_smoke_screen = imba_riki_smoke_screen or class({})
+
+function imba_riki_smoke_screen:GetAbilityTextureName()
+   return "riki_smoke_screen"
+end
+
 function imba_riki_smoke_screen:GetBehavior()
 	return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_AOE end
 
@@ -232,6 +237,10 @@ function imba_riki_blink_strike:IsHiddenWhenStolen() return false end
 function imba_riki_blink_strike:IsRefreshable() return true end
 function imba_riki_blink_strike:IsStealable() return true end
 function imba_riki_blink_strike:IsNetherWardStealable() return false end
+
+function imba_riki_blink_strike:GetAbilityTextureName()
+   return "riki_blink_strike"
+end
 -------------------------------------------
 
 function imba_riki_blink_strike:GetCastRange(location , target)
@@ -640,6 +649,11 @@ LinkLuaModifier( "modifier_imba_riki_cloak_and_dagger", "hero/hero_riki.lua", LU
 LinkLuaModifier( "modifier_imba_riki_invisibility", "hero/hero_riki.lua", LUA_MODIFIER_MOTION_NONE )		-- Invisibility modifier
 LinkLuaModifier( "modifier_imba_riki_backstab_translation", "hero/hero_riki.lua", LUA_MODIFIER_MOTION_NONE )		-- Attack translate
 
+
+function imba_riki_cloak_and_dagger:GetAbilityTextureName()
+   return "riki_permanent_invisibility"
+end
+
 function imba_riki_cloak_and_dagger:GetBehavior() return DOTA_ABILITY_BEHAVIOR_PASSIVE end
 function imba_riki_cloak_and_dagger:IsRefreshable() return false end
 
@@ -843,6 +857,7 @@ end
 -----	Cloak and Dagger invisibility	  ----
 ----------------------------------------------
 modifier_imba_riki_invisibility = modifier_imba_riki_invisibility or class({})
+
 function modifier_imba_riki_invisibility:IsPurgable() return false end
 function modifier_imba_riki_invisibility:IsDebuff() return false end
 function modifier_imba_riki_invisibility:IsHidden()	return false end
@@ -897,6 +912,10 @@ end
 if imba_riki_tricks_of_the_trade == nil then imba_riki_tricks_of_the_trade = class({}) end
 LinkLuaModifier( "modifier_imba_riki_tricks_of_the_trade_primary", "hero/hero_riki.lua", LUA_MODIFIER_MOTION_NONE )		-- Hides the caster and damages all enemies in the AoE
 LinkLuaModifier( "modifier_imba_riki_tricks_of_the_trade_secondary", "hero/hero_riki.lua", LUA_MODIFIER_MOTION_NONE )	-- Attacks a single enemy based on attack speed
+
+function imba_riki_tricks_of_the_trade:GetAbilityTextureName()
+   return "riki_tricks_of_the_trade"
+end
 
 function imba_riki_tricks_of_the_trade:GetBehavior()
 	if self:GetCaster():HasScepter() then

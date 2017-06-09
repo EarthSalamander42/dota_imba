@@ -18,7 +18,13 @@ MergeTables(LinkedModifiers,{
 MergeTables(LinkedModifiers,{
 	["modifier_imba_berserkers_call_talent"] = LUA_MODIFIER_MOTION_NONE,
 })
+
 imba_axe_berserkers_call = imba_axe_berserkers_call or class({})
+
+function imba_axe_berserkers_call:GetAbilityTextureName()
+   return "axe_berserkers_call"
+end
+
 function imba_axe_berserkers_call:OnSpellStart()
   local caster                    =       self:GetCaster()
   local ability                   =       self
@@ -231,6 +237,10 @@ MergeTables(LinkedModifiers,{
 
 imba_axe_battle_hunger = imba_axe_battle_hunger or class({})
 
+function imba_axe_battle_hunger:GetAbilityTextureName()
+   return "axe_battle_hunger"
+end
+
 --Do the battle hunger animation
 function imba_axe_battle_hunger:GetCastAnimation()
    return(ACT_DOTA_OVERRIDE_ABILITY_2)
@@ -417,6 +427,10 @@ MergeTables(LinkedModifiers,{
 })
 imba_axe_counter_helix = imba_axe_counter_helix or class({})
 
+function imba_axe_counter_helix:GetAbilityTextureName()
+   return "axe_counter_helix"
+end
+
 function imba_axe_counter_helix:GetIntrinsicModifierName()
   return "modifier_imba_counter_helix_passive"
 end
@@ -529,6 +543,10 @@ MergeTables(LinkedModifiers,{
 	["modifier_imba_culling_blade_motion"] = LUA_MODIFIER_MOTION_NONE,
 })
 imba_axe_culling_blade = imba_axe_culling_blade or class({})
+
+function imba_axe_culling_blade:GetAbilityTextureName()
+   return "axe_culling_blade"
+end
 
 function imba_axe_culling_blade:GetCastRange()
   return 150 + self:GetCaster():FindTalentValue("special_bonus_imba_axe_8");

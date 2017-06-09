@@ -14,6 +14,10 @@ LinkLuaModifier( "modifier_item_imba_spell_fencer_passive_silence", "items/item_
 LinkLuaModifier( "modifier_item_imba_spell_fencer_buff", "items/item_spell_fencer.lua", LUA_MODIFIER_MOTION_NONE )		-- Physical damage prevention modifier
 LinkLuaModifier( "modifier_item_imba_spell_fencer_cooldown", "items/item_spell_fencer.lua", LUA_MODIFIER_MOTION_NONE )  -- Passive silence cooldown modifier
 
+function item_imba_spell_fencer:GetAbilityTextureName()
+   return "custom/imba_spell_fencer"
+end
+
 function item_imba_spell_fencer:GetBehavior()
 	return DOTA_ABILITY_BEHAVIOR_IMMEDIATE + DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL + DOTA_ABILITY_BEHAVIOR_ITEM
 end

@@ -15,6 +15,10 @@ function item_imba_hellblade:GetIntrinsicModifierName()
 	return "modifier_item_imba_hellblade"
 end
 
+function item_imba_hellblade:GetAbilityTextureName()
+   return "custom/imba_hellblade"
+end
+
 function item_imba_hellblade:OnSpellStart()
 	if IsServer() then
 			-- Ability properties

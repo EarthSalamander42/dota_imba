@@ -497,6 +497,10 @@ LinkLuaModifier("modifier_imba_slithereen_crush_stun", "hero/hero_slardar", LUA_
 LinkLuaModifier("modifier_imba_slithereen_crush_slow", "hero/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_slithereen_crush_royal_break", "hero/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 
+function imba_slardar_slithereen_crush:GetAbilityTextureName()
+   return "slardar_slithereen_crush"
+end
+
 function imba_slardar_slithereen_crush:OnAbilityPhaseStart()
 	local caster = self:GetCaster()
 	local ability = self		
@@ -730,6 +734,10 @@ imba_slardar_bash_of_the_deep = class({})
 LinkLuaModifier("modifier_imba_bash_of_the_deep_attack", "hero/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_bash_of_the_deep_stun", "hero/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 
+function imba_slardar_bash_of_the_deep:GetAbilityTextureName()
+   return "slardar_bash"
+end
+
 function imba_slardar_bash_of_the_deep:GetIntrinsicModifierName()
 	return "modifier_imba_bash_of_the_deep_attack"	
 end
@@ -935,6 +943,10 @@ imba_slardar_corrosive_haze = class({})
 LinkLuaModifier("modifier_imba_corrosive_haze_debuff", "hero/hero_slardar", LUA_MODIFIER_MOTION_HORIZONTAL)
 LinkLuaModifier("modifier_imba_corrosive_haze_debuff_secondary", "hero/hero_slardar", LUA_MODIFIER_MOTION_HORIZONTAL)
 LinkLuaModifier("modifier_imba_corrosive_haze_slip_debuff", "hero/hero_slardar", LUA_MODIFIER_MOTION_HORIZONTAL)
+
+function imba_slardar_corrosive_haze:GetAbilityTextureName()
+   return "slardar_amplify_damage"
+end
 
 function imba_slardar_corrosive_haze:OnInventoryContentsChanged()
 	-- Checks if Slardar now has a scepter, or still has it.
@@ -1360,6 +1372,9 @@ LinkLuaModifier("modifier_imba_rain_cloud_slardar", "hero/hero_slardar", LUA_MOD
 LinkLuaModifier("modifier_imba_rain_cloud_buff", "hero/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_rain_cloud_dummy", "hero/hero_slardar", LUA_MODIFIER_MOTION_HORIZONTAL)
 
+function imba_slardar_rain_cloud:GetAbilityTextureName()
+   return "custom/slardar_rain_cloud"
+end
 
 function imba_slardar_rain_cloud:GetIntrinsicModifierName()
 	return "modifier_imba_rain_cloud_slardar"

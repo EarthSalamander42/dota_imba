@@ -19,6 +19,10 @@ MergeTables(LinkedModifiers,{
 
 imba_alchemist_acid_spray = imba_alchemist_acid_spray or class ({})
 
+function imba_alchemist_acid_spray:GetAbilityTextureName()
+   return "alchemist_acid_spray"
+end
+
 function imba_alchemist_acid_spray:GetCastRange(location, target)
     return self.BaseClass.GetCastRange(self, location, target)
 end
@@ -287,6 +291,10 @@ MergeTables(LinkedModifiers,{
 	["modifier_imba_unstable_concoction_handler"] = LUA_MODIFIER_MOTION_NONE,
 })
 imba_alchemist_unstable_concoction = imba_alchemist_unstable_concoction or class({})
+
+function imba_alchemist_unstable_concoction:GetAbilityTextureName()
+   return "alchemist_unstable_concoction"
+end
 
 function imba_alchemist_unstable_concoction:GetCastRange(location, target)
     local caster = self:GetCaster()
@@ -655,6 +663,10 @@ MergeTables(LinkedModifiers,{
 })
 imba_alchemist_goblins_greed = imba_alchemist_goblins_greed or class ({})
 
+function imba_alchemist_goblins_greed:GetAbilityTextureName()
+   return "alchemist_goblins_greed"
+end
+
 function imba_alchemist_goblins_greed:IsStealable()
     return false
 end
@@ -831,6 +843,10 @@ modifier_imba_goblins_greed = modifier_imba_goblins_greed or class({})
 
 imba_alchemist_greevils_greed = imba_alchemist_greevils_greed or class ({})
 
+function imba_alchemist_greevils_greed:GetAbilityTextureName()
+    return "alchemist_goblins_greed"
+end
+
 function imba_alchemist_greevils_greed:GetCastRange()
     return 1
 end
@@ -944,6 +960,10 @@ MergeTables(LinkedModifiers,{
 	["modifier_imba_chemical_rage_aura"] = LUA_MODIFIER_MOTION_NONE,
 })
 imba_alchemist_chemical_rage = imba_alchemist_chemical_rage or class ({})
+
+function imba_alchemist_chemical_rage:GetAbilityTextureName()
+   return "alchemist_chemical_rage"
+end
 
 function imba_alchemist_chemical_rage:IsHiddenWhenStolen()
     return false
@@ -1181,6 +1201,10 @@ MergeTables(LinkedModifiers,{
     ["modifier_mammonite_passive"] = LUA_MODIFIER_MOTION_NONE,
 })
 imba_alchemist_mammonite = imba_alchemist_mammonite or class({})
+
+function imba_alchemist_mammonite:GetAbilityTextureName()
+   return "custom/alchemist_mammonite"
+end
 
 function imba_alchemist_mammonite:OnToggle() return end    
 

@@ -13,6 +13,10 @@ function item_imba_butterfly:GetIntrinsicModifierName()
 	return "modifier_item_imba_butterfly"
 end
 
+function item_imba_butterfly:GetAbilityTextureName()
+   return "custom/imba_butterfly"
+end
+
 function item_imba_butterfly:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()

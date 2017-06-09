@@ -19,6 +19,10 @@ LinkLuaModifier("modifier_imba_trembling_steps_buff", "hero/hero_ursa", LUA_MODI
 LinkLuaModifier("modifier_imba_trembling_steps_prevent", "hero/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_trembling_steps_debuff", "hero/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 
+function imba_ursa_earthshock:GetAbilityTextureName()
+   return "ursa_earthshock"
+end
+
 function imba_ursa_earthshock:OnSpellStart()
 	if IsServer() then	
 		-- Ability properties
@@ -355,6 +359,10 @@ imba_ursa_overpower = class({})
 LinkLuaModifier("modifier_imba_overpower_buff", "hero/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_overpower_disarm", "hero/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 
+function imba_ursa_overpower:GetAbilityTextureName()
+   return "ursa_overpower"
+end
+
 function imba_ursa_overpower:OnSpellStart()
 	if IsServer() then
 		-- Ability properties
@@ -557,6 +565,10 @@ imba_ursa_fury_swipes = class({})
 LinkLuaModifier("modifier_imba_fury_swipes_debuff", "hero/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_fury_swipes", "hero/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 
+function imba_ursa_fury_swipes:GetAbilityTextureName()
+   return "ursa_fury_swipes"
+end
+
 function imba_ursa_fury_swipes:GetIntrinsicModifierName()
 	return "modifier_imba_fury_swipes"
 end
@@ -721,6 +733,10 @@ imba_ursa_enrage = class({})
 LinkLuaModifier("modifier_imba_enrage_buff", "hero/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_scepter_enrage_damage", "hero/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_scepter_enrage_prevent", "hero/hero_ursa", LUA_MODIFIER_MOTION_NONE)
+
+function imba_ursa_enrage:GetAbilityTextureName()
+   return "ursa_enrage"
+end
 
 function imba_ursa_enrage:GetCooldown(level)
 	local caster = self:GetCaster()
@@ -980,6 +996,10 @@ end
 imba_ursa_territorial_hunter = class({})
 LinkLuaModifier("modifier_terrorital_hunter_aura", "hero/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_terrorital_hunter_fogvision", "hero/hero_ursa", LUA_MODIFIER_MOTION_NONE)
+
+function imba_ursa_territorial_hunter:GetAbilityTextureName()
+   return "custom/territorial_hunter"
+end
 
 function imba_ursa_territorial_hunter:IsInnateAbility()
 	return true

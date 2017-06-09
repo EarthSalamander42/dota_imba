@@ -10,6 +10,10 @@ function item_imba_black_queen_cape:GetIntrinsicModifierName()
 	return "modifier_imba_black_queen_cape_passive"
 end
 
+function item_imba_black_queen_cape:GetAbilityTextureName()
+   return "custom/imba_black_queen_cape"
+end
+
 function item_imba_black_queen_cape:OnSpellStart()
 	if not IsServer() then
 		return nil

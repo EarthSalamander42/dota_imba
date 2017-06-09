@@ -13,6 +13,11 @@ MergeTables(LinkedModifiers,{
 	["modifier_imba_mana_break_passive"] = LUA_MODIFIER_MOTION_NONE,
 })
 imba_antimage_mana_break = imba_antimage_mana_break or class({})
+
+function imba_antimage_mana_break:GetAbilityTextureName()
+   return "antimage_mana_break"
+end
+
 function imba_antimage_mana_break:GetIntrinsicModifierName()
 	return "modifier_imba_mana_break_passive"
 end
@@ -141,6 +146,11 @@ end
 -------------------------------------------
 
 imba_antimage_blink = imba_antimage_blink or class({})
+
+function imba_antimage_blink:GetAbilityTextureName()
+   return "antimage_blink"
+end
+
 function imba_antimage_blink:IsNetherWardStealable() return false end
 -- Talent reducing cast point
 function imba_antimage_blink:OnAbilityPhaseStart()
@@ -258,6 +268,10 @@ MergeTables(LinkedModifiers,{
 	["modifier_imba_spell_shield_buff_passive"] = LUA_MODIFIER_MOTION_NONE,
 })
 imba_antimage_spell_shield = imba_antimage_spell_shield or class({})
+
+function imba_antimage_spell_shield:GetAbilityTextureName()
+   return "antimage_spell_shield"
+end
 
 -- Declare active skill + visuals
 function imba_antimage_spell_shield:OnSpellStart()
@@ -486,6 +500,11 @@ MergeTables(LinkedModifiers,{
 	["modifier_imba_mana_void_stunned"] = LUA_MODIFIER_MOTION_NONE,
 })
 imba_antimage_mana_void = imba_antimage_mana_void or class({})
+
+function imba_antimage_mana_void:GetAbilityTextureName()
+   return "antimage_mana_void"
+end
+
 function imba_antimage_mana_void:OnAbilityPhaseStart()
 	if IsServer() then
 		self:GetCaster():EmitSound("Hero_Antimage.ManaVoidCast")

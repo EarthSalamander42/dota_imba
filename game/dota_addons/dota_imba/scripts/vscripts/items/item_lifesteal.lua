@@ -13,6 +13,10 @@ function item_imba_morbid_mask:GetIntrinsicModifierName()
     return "modifier_imba_morbid_mask"
 end
 
+function item_imba_morbid_mask:GetAbilityTextureName()
+   return "item_lifesteal"
+end
+
 -- morbid mask modifier
 modifier_imba_morbid_mask = class({})
 

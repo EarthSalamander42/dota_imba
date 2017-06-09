@@ -60,6 +60,10 @@ function imba_vengefulspirit_rancor:IsRefreshable() return false end
 function imba_vengefulspirit_rancor:IsStealable() return false end
 function imba_vengefulspirit_rancor:IsNetherWardStealable() return false end
 function imba_vengefulspirit_rancor:IsInnateAbility() return true end
+
+function imba_vengefulspirit_rancor:GetAbilityTextureName()
+   return "custom/vengeful_rancor"
+end
 -------------------------------------------
 
 function imba_vengefulspirit_rancor:GetIntrinsicModifierName()
@@ -182,6 +186,10 @@ function imba_vengefulspirit_magic_missile:IsHiddenWhenStolen() return false end
 function imba_vengefulspirit_magic_missile:IsRefreshable() return true end
 function imba_vengefulspirit_magic_missile:IsStealable() return true end
 function imba_vengefulspirit_magic_missile:IsNetherWardStealable() return true end
+
+function imba_vengefulspirit_magic_missile:GetAbilityTextureName()
+   return "vengefulspirit_magic_missile"
+end
 -------------------------------------------
 
 function imba_vengefulspirit_magic_missile:GetAOERadius()
@@ -350,6 +358,10 @@ function imba_vengefulspirit_wave_of_terror:IsHiddenWhenStolen() return false en
 function imba_vengefulspirit_wave_of_terror:IsRefreshable() return true end
 function imba_vengefulspirit_wave_of_terror:IsStealable() return true end
 function imba_vengefulspirit_wave_of_terror:IsNetherWardStealable() return true end
+
+function imba_vengefulspirit_wave_of_terror:GetAbilityTextureName()
+   return "vengefulspirit_wave_of_terror"
+end
 -------------------------------------------
 LinkLuaModifier("modifier_imba_wave_of_terror", "hero/hero_vengefulspirit", LUA_MODIFIER_MOTION_NONE)
 
@@ -486,6 +498,10 @@ function imba_vengefulspirit_command_aura:IsHiddenWhenStolen() return false end
 function imba_vengefulspirit_command_aura:IsRefreshable() return false end
 function imba_vengefulspirit_command_aura:IsStealable() return false end
 function imba_vengefulspirit_command_aura:IsNetherWardStealable() return false end
+
+function imba_vengefulspirit_command_aura:GetAbilityTextureName()
+   return "vengefulspirit_command_aura"
+end
 -------------------------------------------
 
 function imba_vengefulspirit_command_aura:GetIntrinsicModifierName()
@@ -694,6 +710,10 @@ function imba_vengefulspirit_nether_swap:IsHiddenWhenStolen() return false end
 function imba_vengefulspirit_nether_swap:IsRefreshable() return true end
 function imba_vengefulspirit_nether_swap:IsStealable() return true end
 function imba_vengefulspirit_nether_swap:IsNetherWardStealable() return false end
+
+function imba_vengefulspirit_nether_swap:GetAbilityTextureName()
+   return "vengefulspirit_nether_swap"
+end
 -------------------------------------------
 
 function imba_vengefulspirit_nether_swap:CastFilterResultTarget( target )
@@ -901,6 +921,10 @@ function imba_vengefulspirit_swap_back:IsHiddenWhenStolen() return false end
 function imba_vengefulspirit_swap_back:IsRefreshable() return true end
 function imba_vengefulspirit_swap_back:IsStealable() return true end
 function imba_vengefulspirit_swap_back:IsNetherWardStealable() return false end
+
+function imba_vengefulspirit_swap_back:GetAbilityTextureName()
+   return "custom/vengeful_swap_back"
+end
 -------------------------------------------
 function imba_vengefulspirit_swap_back:GetAssociatedPrimaryAbilities()
 	return "imba_vengefulspirit_nether_swap"

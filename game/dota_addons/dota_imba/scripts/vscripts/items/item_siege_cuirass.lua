@@ -18,6 +18,9 @@ function item_imba_siege_cuirass:GetIntrinsicModifierName()
     return "modifier_imba_siege_cuirass"
 end
 
+function item_imba_siege_cuirass:GetAbilityTextureName()
+   return "custom/imba_siege_cuirass"
+end
 
 function item_imba_siege_cuirass:OnSpellStart()
     -- Ability properties

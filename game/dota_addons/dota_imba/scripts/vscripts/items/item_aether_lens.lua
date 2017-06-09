@@ -15,6 +15,10 @@ function item_imba_aether_lens:GetIntrinsicModifierName()
     return "modifier_imba_aether_lens_passive"
 end
 
+function item_imba_aether_lens:GetAbilityTextureName()
+   return "custom/imba_aether_lens"
+end
+
 -------------------------------------------
 modifier_imba_aether_lens_passive = modifier_imba_aether_lens_passive or class({})
 function modifier_imba_aether_lens_passive:IsDebuff() return false end

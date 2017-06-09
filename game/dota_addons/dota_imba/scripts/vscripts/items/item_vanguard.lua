@@ -9,6 +9,10 @@
 if item_imba_stout_shield == nil then item_imba_stout_shield = class({}) end
 LinkLuaModifier( "modifier_item_imba_stout_shield", "items/item_vanguard.lua", LUA_MODIFIER_MOTION_NONE )	-- Owner's bonus attributes, stackable
 
+function item_imba_stout_shield:GetAbilityTextureName()
+   return "custom/imba_stout_shield"
+end
+
 function item_imba_stout_shield:GetIntrinsicModifierName()
 	return "modifier_item_imba_stout_shield" end
 
@@ -33,6 +37,10 @@ function modifier_item_imba_stout_shield:GetCustomDamageBlockUnique()
 
 if item_imba_poor_mans_shield == nil then item_imba_poor_mans_shield = class({}) end
 LinkLuaModifier( "modifier_item_imba_poor_mans_shield", "items/item_vanguard.lua", LUA_MODIFIER_MOTION_NONE )	-- Owner's bonus attributes, stackable
+
+function item_imba_poor_mans_shield:GetAbilityTextureName()
+   return "custom/imba_poor_mans_shield"
+end
 
 function item_imba_poor_mans_shield:GetIntrinsicModifierName()
 	return "modifier_item_imba_poor_mans_shield" end
@@ -76,6 +84,10 @@ function modifier_item_imba_poor_mans_shield:GetModifierBonusStats_Agility()
 
 if item_imba_vanguard == nil then item_imba_vanguard = class({}) end
 LinkLuaModifier( "modifier_item_imba_vanguard", "items/item_vanguard.lua", LUA_MODIFIER_MOTION_NONE )			-- Owner's bonus attributes, stackable
+
+function item_imba_vanguard:GetAbilityTextureName()
+   return "custom/imba_vanguard"
+end
 
 function item_imba_vanguard:GetIntrinsicModifierName()
 	return "modifier_item_imba_vanguard" end
@@ -124,6 +136,10 @@ function modifier_item_imba_vanguard:GetModifierConstantHealthRegen()
 if item_imba_crimson_guard == nil then item_imba_crimson_guard = class({}) end
 LinkLuaModifier( "modifier_item_imba_crimson_guard", "items/item_vanguard.lua", LUA_MODIFIER_MOTION_NONE )			-- Owner's bonus attributes, stackable
 LinkLuaModifier( "modifier_item_imba_crimson_guard_buff", "items/item_vanguard.lua", LUA_MODIFIER_MOTION_NONE )		-- Active allied buff
+
+function item_imba_crimson_guard:GetAbilityTextureName()
+   return "custom/imba_crimson_guard"
+end
 
 function item_imba_crimson_guard:GetIntrinsicModifierName()
 	return "modifier_item_imba_crimson_guard" end
@@ -280,6 +296,10 @@ function modifier_item_imba_crimson_guard_buff:GetModifierPhysical_ConstantBlock
 if item_imba_greatwyrm_plate == nil then item_imba_greatwyrm_plate = class({}) end
 LinkLuaModifier( "modifier_item_imba_greatwyrm_plate", "items/item_vanguard.lua", LUA_MODIFIER_MOTION_NONE )			-- Owner's bonus attributes, stackable
 LinkLuaModifier( "modifier_item_imba_greatwyrm_plate_buff", "items/item_vanguard.lua", LUA_MODIFIER_MOTION_NONE )		-- Active allied buff
+
+function item_imba_greatwyrm_plate:GetAbilityTextureName()
+   return "custom/imba_greatwyrm_plate"
+end
 
 function item_imba_greatwyrm_plate:GetIntrinsicModifierName()
 	return "modifier_item_imba_greatwyrm_plate" end

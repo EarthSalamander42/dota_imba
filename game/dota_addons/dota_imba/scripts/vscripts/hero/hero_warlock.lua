@@ -10,6 +10,10 @@ CreateEmptyTalents("warlock")
 imba_warlock_fatal_bonds = class({})
 LinkLuaModifier("modifier_imba_fatal_bonds", "hero/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
 
+function imba_warlock_fatal_bonds:GetAbilityTextureName()
+   return "warlock_fatal_bonds"
+end
+
 function imba_warlock_fatal_bonds:IsHiddenWhenStolen()
     return false
 end
@@ -306,6 +310,10 @@ end
 imba_warlock_shadow_word = class({})
 LinkLuaModifier("modifier_imba_shadow_word", "hero/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
 
+function imba_warlock_shadow_word:GetAbilityTextureName()
+   return "warlock_shadow_word"
+end
+
 function imba_warlock_shadow_word:IsHiddenWhenStolen()
     return false
 end
@@ -511,6 +519,10 @@ imba_warlock_upheaval = class({})
 LinkLuaModifier("modifier_imba_upheaval", "hero/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_upheaval_debuff", "hero/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_upheaval_buff", "hero/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
+
+function imba_warlock_upheaval:GetAbilityTextureName()
+   return "warlock_upheaval"
+end
 
 function imba_warlock_upheaval:IsHiddenWhenStolen()
     return false
@@ -772,6 +784,10 @@ LinkLuaModifier("modifier_imba_rain_of_chaos_stun", "hero/hero_warlock.lua", LUA
 LinkLuaModifier("modifier_imba_rain_of_chaos_golem_as", "hero/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_rain_of_chaos_golem_ms", "hero/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_rain_of_chaos_demon_link", "hero/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
+
+function imba_warlock_rain_of_chaos:GetAbilityTextureName()
+   return "warlock_rain_of_chaos"
+end
 
 function imba_warlock_rain_of_chaos:IsHiddenWhenStolen()
     return false
@@ -1211,6 +1227,10 @@ end
 imba_warlock_flaming_fists = class({})
 LinkLuaModifier("modifier_imba_flaming_fists", "hero/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
 
+function imba_warlock_flaming_fists:GetAbilityTextureName()
+   return "warlock_golem_flaming_fists"
+end
+
 function imba_warlock_flaming_fists:GetIntrinsicModifierName()
     return "modifier_imba_flaming_fists"
 end
@@ -1324,6 +1344,10 @@ LinkLuaModifier("modifier_imba_permanent_immolation_debuff", "hero/hero_warlock.
 
 function imba_warlock_permanent_immolation:GetIntrinsicModifierName()
     return "modifier_imba_permanent_immolation_aura"
+end
+
+function imba_warlock_permanent_immolation:GetAbilityTextureName()
+   return "warlock_golem_permanent_immolation"
 end
 
 -- Permanent immolation aura modifier
@@ -1468,6 +1492,10 @@ function modifier_imba_permanent_immolation_debuff:IsDebuff() return true end
 -----------------------------
 imba_warlock_golem_spell_immunity = class({})
 LinkLuaModifier("modifier_imba_golem_spell_immunity", "hero/hero_warlock.lua", LUA_MODIFIER_MOTION_NONE)
+
+function imba_warlock_golem_spell_immunity:GetAbilityTextureName()
+   return "neutral_spell_immunity"
+end
 
 function imba_warlock_golem_spell_immunity:GetIntrinsicModifierName()
     return "modifier_imba_golem_spell_immunity"

@@ -92,6 +92,10 @@ end
 
 imba_magnataur_shockwave = imba_magnataur_shockwave or class({})
 
+function imba_magnataur_shockwave:GetAbilityTextureName()
+   return "magnataur_shockwave"
+end
+
 function imba_magnataur_shockwave:OnAbilityPhaseStart()
 	if IsServer() then
 		local caster = self:GetCaster()
@@ -274,6 +278,10 @@ LinkLuaModifier("modifier_imba_empower", "hero/hero_magnataur", LUA_MODIFIER_MOT
 LinkLuaModifier("modifier_imba_empower_particle", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_supercharged", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_empower_linger", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
+
+function imba_magnataur_empower:GetAbilityTextureName()
+   return "magnataur_empower"
+end
 
 function imba_magnataur_empower:OnAbilityPhaseStart()
 	self:GetCaster():EmitSound("Hero_Magnataur.Empower.Cast")
@@ -647,6 +655,10 @@ LinkLuaModifier("modifier_imba_skewer_motion_controller", "hero/hero_magnataur",
 LinkLuaModifier("modifier_imba_skewer_motion_controller_target", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_skewer_slow", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_skewer_entangle", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
+
+function imba_magnataur_skewer:GetAbilityTextureName()
+   return "magnataur_skewer"
+end
 
 function imba_magnataur_skewer:OnAbilityPhaseStart()
 	local caster = self:GetCaster()
@@ -1114,6 +1126,10 @@ end
 
 imba_magnataur_reverse_polarity = imba_magnataur_reverse_polarity or class({})
 LinkLuaModifier("modifier_imba_reverse_polarity_slow", "hero/hero_magnataur", LUA_MODIFIER_MOTION_NONE)
+
+function imba_magnataur_reverse_polarity:GetAbilityTextureName()
+   return "magnataur_reverse_polarity"
+end
 
 function imba_magnataur_reverse_polarity:OnAbilityPhaseStart()
 	if IsServer() then

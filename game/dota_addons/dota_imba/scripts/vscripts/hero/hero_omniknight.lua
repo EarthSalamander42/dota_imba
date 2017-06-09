@@ -14,6 +14,9 @@ LinkLuaModifier("modifier_imba_purification_buff", "hero/hero_omniknight.lua", L
 LinkLuaModifier("modifier_imba_purification_omniguard_ready", "hero/hero_omniknight.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_purification_omniguard_recharging", "hero/hero_omniknight.lua", LUA_MODIFIER_MOTION_NONE)
 
+function imba_omniknight_purification:GetAbilityTextureName()
+   return "omniknight_purification"
+end
 
 function imba_omniknight_purification:IsHiddenWhenStolen()
     return false
@@ -347,6 +350,10 @@ LinkLuaModifier("modifier_imba_repel", "hero/hero_omniknight.lua", LUA_MODIFIER_
 LinkLuaModifier("modifier_imba_degen_aura", "hero/hero_omniknight.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_degen_debuff", "hero/hero_omniknight.lua", LUA_MODIFIER_MOTION_NONE)
 
+function imba_omniknight_repel:GetAbilityTextureName()
+   return "omniknight_repel"
+end
+
 function imba_omniknight_repel:IsHiddenWhenStolen()
     return false
 end
@@ -590,6 +597,10 @@ imba_omniknight_hammer_of_virtue = class({})
 LinkLuaModifier("modifier_imba_hammer_of_virtue", "hero/hero_omniknight.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_hammer_of_virtue_nodamage", "hero/hero_omniknight.lua", LUA_MODIFIER_MOTION_NONE)
 
+function imba_omniknight_hammer_of_virtue:GetAbilityTextureName()
+   return "custom/omniknight_hammer_of_virtue"
+end
+
 function imba_omniknight_hammer_of_virtue:GetIntrinsicModifierName()
     return "modifier_imba_hammer_of_virtue"
 end
@@ -737,6 +748,10 @@ end
 imba_omniknight_guardian_angel = class({})
 LinkLuaModifier("modifier_imba_guardian_angel", "hero/hero_omniknight.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_guardian_angel_shield", "hero/hero_omniknight.lua", LUA_MODIFIER_MOTION_NONE)
+
+function imba_omniknight_guardian_angel:GetAbilityTextureName()
+   return "omniknight_guardian_angel"
+end
 
 function imba_omniknight_guardian_angel:IsHiddenWhenStolen()
     return false

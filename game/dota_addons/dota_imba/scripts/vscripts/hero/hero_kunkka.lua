@@ -38,6 +38,10 @@ LinkLuaModifier("modifier_imba_ebb_and_flow_tide_high", "hero/hero_kunkka", LUA_
 LinkLuaModifier("modifier_imba_ebb_and_flow_tide_wave", "hero/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ebb_and_flow_tsunami", "hero/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
 
+function imba_kunkka_ebb_and_flow:GetAbilityTextureName()
+   return "custom/kunkka_ebb_and_flow"
+end
+
 function imba_kunkka_ebb_and_flow:GetIntrinsicModifierName()
     return "modifier_imba_ebb_and_flow_thinker"
 end
@@ -261,6 +265,10 @@ LinkLuaModifier("modifier_imba_torrent_slow_tide", "hero/hero_kunkka", LUA_MODIF
 LinkLuaModifier("modifier_imba_torrent_slow", "hero/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_sec_torrent_slow", "hero/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_torrent_phase", "hero/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
+
+function imba_kunkka_torrent:GetAbilityTextureName()
+   return "kunkka_torrent"
+end
 
 function imba_kunkka_torrent:OnSpellStart()
 	if IsServer() then
@@ -614,6 +622,10 @@ LinkLuaModifier("modifier_imba_tidebringer_sword_particle", "hero/hero_kunkka", 
 LinkLuaModifier("modifier_imba_tidebringer_manual", "hero/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_tidebringer_slow", "hero/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
 
+function imba_kunkka_tidebringer:GetAbilityTextureName()
+   return "kunkka_tidebringer"
+end
+
 function imba_kunkka_tidebringer:GetIntrinsicModifierName()
     return "modifier_imba_tidebringer"
 end
@@ -951,6 +963,10 @@ imba_kunkka_x_marks_the_spot = class({})
 LinkLuaModifier("modifier_imba_x_marks_the_spot", "hero/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_x_marks_the_spot_return", "hero/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
 
+function imba_kunkka_x_marks_the_spot:GetAbilityTextureName()
+   return "kunkka_x_marks_the_spot"
+end
+
 function imba_kunkka_x_marks_the_spot:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
@@ -1163,6 +1179,10 @@ end
 
 imba_kunkka_return = class({})
 
+function imba_kunkka_return:GetAbilityTextureName()
+   return "kunkka_return"
+end
+
 function imba_kunkka_return:IsNetherWardStealable() return false end
 
 function imba_kunkka_return:OnSpellStart()
@@ -1205,6 +1225,10 @@ imba_kunkka_ghostship = class({})
 LinkLuaModifier("modifier_imba_ghostship_rum", "hero/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ghostship_rum_damage", "hero/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ghostship_tide_slow", "hero/hero_kunkka", LUA_MODIFIER_MOTION_NONE)
+
+function imba_kunkka_ghostship:GetAbilityTextureName()
+   return "kunkka_ghostship"
+end
 
 function imba_kunkka_ghostship:OnSpellStart()
 	if IsServer() then

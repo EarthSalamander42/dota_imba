@@ -17,6 +17,10 @@ LinkLuaModifier("modifier_imba_stifling_dagger_silence", "hero/hero_phantom_assa
 LinkLuaModifier("modifier_imba_stifling_dagger_bonus_damage", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_stifling_dagger_dmg_reduction", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
 
+function imba_phantom_assassin_stifling_dagger:GetAbilityTextureName()
+   return "phantom_assassin_stifling_dagger"
+end
+
 function imba_phantom_assassin_stifling_dagger:OnSpellStart()
 
     local caster 	= self:GetCaster()
@@ -354,6 +358,10 @@ end
 
 imba_phantom_assassin_phantom_strike = class({})
 
+function imba_phantom_assassin_phantom_strike:GetAbilityTextureName()
+   return "phantom_assassin_phantom_strike"
+end
+
 LinkLuaModifier("modifier_imba_phantom_strike", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_phantom_strike_coup_de_grace", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
 function imba_phantom_assassin_phantom_strike:IsNetherWardStealable() return false end
@@ -548,6 +556,10 @@ LinkLuaModifier("modifier_imba_blur", "hero/hero_phantom_assassin", LUA_MODIFIER
 LinkLuaModifier("modifier_imba_blur_blur", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE) --wat
 LinkLuaModifier("modifier_imba_blur_speed", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_blur_opacity", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
+
+function imba_phantom_assassin_blur:GetAbilityTextureName()
+   return "phantom_assassin_blur"
+end
 
 function imba_phantom_assassin_blur:GetIntrinsicModifierName()
   return "modifier_imba_blur"
@@ -804,6 +816,10 @@ LinkLuaModifier("modifier_imba_coup_de_grace_crit", "hero/hero_phantom_assassin"
 
 function imba_phantom_assassin_coup_de_grace:GetIntrinsicModifierName()
   return "modifier_imba_coup_de_grace"
+end
+
+function imba_phantom_assassin_coup_de_grace:GetAbilityTextureName()
+   return "phantom_assassin_coup_de_grace"
 end
 
 -------------------------------------------

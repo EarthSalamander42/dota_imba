@@ -16,7 +16,9 @@ LinkLuaModifier( "modifier_imba_angelic_alliance_passive_disarm_cooldown", "item
 --	Item Definition 
 -----------------------------------------------------------------------------------------------------------
 
-
+function item_imba_angelic_alliance:GetAbilityTextureName()
+   return "custom/imba_angelic_alliance"
+end
 
 function item_imba_angelic_alliance:GetManaCost()		return self:GetSpecialValueFor("mana_cost")	end
 function item_imba_angelic_alliance:GetCooldown()		return self:GetSpecialValueFor("cooldown")	end

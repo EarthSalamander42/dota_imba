@@ -15,6 +15,10 @@ function item_imba_diffusal_blade:GetIntrinsicModifierName()
     return "modifier_item_imba_diffusal"
 end
 
+function item_imba_diffusal_blade:GetAbilityTextureName()
+   return "custom/imba_diffusal_blade"
+end
+
 function item_imba_diffusal_blade:OnSpellStart()
     -- Ability properties
     local caster = self:GetCaster()
@@ -288,6 +292,10 @@ end
 item_imba_diffusal_blade_2 = item_imba_diffusal_blade_2 or class({})
 LinkLuaModifier("modifier_item_imba_diffusal_2", "items/item_diffusal", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_item_imba_diffusal_2_unique", "items/item_diffusal", LUA_MODIFIER_MOTION_NONE)
+
+function item_imba_diffusal_blade_2:GetAbilityTextureName()
+   return "custom/imba_diffusal_blade_2"
+end
 
 function item_imba_diffusal_blade_2:GetIntrinsicModifierName()
     return "modifier_item_imba_diffusal_2"
@@ -659,6 +667,10 @@ end
 item_imba_diffusal_blade_3 = item_imba_diffusal_blade_3 or class({})
 LinkLuaModifier("modifier_item_imba_diffusal_3", "items/item_diffusal", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_item_imba_diffusal_3_unique", "items/item_diffusal", LUA_MODIFIER_MOTION_NONE)
+
+function item_imba_diffusal_blade_3:GetAbilityTextureName()
+   return "custom/imba_diffusal_blade_3"
+end
 
 function item_imba_diffusal_blade_3:GetIntrinsicModifierName()
     return "modifier_item_imba_diffusal_3"

@@ -11,6 +11,10 @@ LinkLuaModifier( "modifier_item_imba_vladmir", "items/item_vladmir.lua", LUA_MOD
 LinkLuaModifier( "modifier_item_imba_vladmir_aura_emitter", "items/item_vladmir.lua", LUA_MODIFIER_MOTION_NONE )	-- Aura emitter
 LinkLuaModifier( "modifier_item_imba_vladmir_aura", "items/item_vladmir.lua", LUA_MODIFIER_MOTION_NONE )			-- Aura buff
 
+function item_imba_vladmir:GetAbilityTextureName()
+   return "custom/imba_vladmir"
+end
+
 function item_imba_vladmir:GetBehavior()
 	return DOTA_ABILITY_BEHAVIOR_PASSIVE + DOTA_ABILITY_BEHAVIOR_AURA end
 
@@ -228,6 +232,10 @@ if item_imba_vladmir_2 == nil then item_imba_vladmir_2 = class({}) end
 LinkLuaModifier( "modifier_item_imba_vladmir_blood", "items/item_vladmir.lua", LUA_MODIFIER_MOTION_NONE )				-- Owner's bonus attributes, stackable
 LinkLuaModifier( "modifier_item_imba_vladmir_blood_aura_emitter", "items/item_vladmir.lua", LUA_MODIFIER_MOTION_NONE )	-- Aura emitter
 LinkLuaModifier( "modifier_item_imba_vladmir_blood_aura", "items/item_vladmir.lua", LUA_MODIFIER_MOTION_NONE )			-- Aura buff
+
+function item_imba_vladmir_2:GetAbilityTextureName()
+   return "custom/imba_vladmir_2"
+end
 
 function item_imba_vladmir_2:GetBehavior()
 	return DOTA_ABILITY_BEHAVIOR_PASSIVE + DOTA_ABILITY_BEHAVIOR_AURA end

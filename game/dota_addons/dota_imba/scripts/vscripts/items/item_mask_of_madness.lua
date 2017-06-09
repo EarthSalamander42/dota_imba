@@ -11,6 +11,9 @@ LinkLuaModifier("modifier_imba_mask_of_madness_unique", "items/item_mask_of_madn
 LinkLuaModifier("modifier_imba_mask_of_madness_berserk", "items/item_mask_of_madness.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_mask_of_madness_rage", "items/item_mask_of_madness.lua", LUA_MODIFIER_MOTION_NONE)
 
+function item_imba_mask_of_madness:GetAbilityTextureName()
+   return "item_mask_of_madness"
+end
 
 function item_imba_mask_of_madness:GetIntrinsicModifierName()
     return "modifier_imba_mask_of_madness"

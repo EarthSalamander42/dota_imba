@@ -12,10 +12,16 @@ LinkLuaModifier("modifier_imba_item_elder_nether_debuff_dot", "items/item_nether
 -------------------------------------------
 
 item_imba_nether_wand = item_imba_nether_wand or class({})
+
 -------------------------------------------
 function item_imba_nether_wand:GetIntrinsicModifierName()
     return "modifier_imba_item_nether_wand_passive"
 end
+
+function item_imba_nether_wand:GetAbilityTextureName()
+   return "custom/imba_nether_wand"
+end
+
 -------------------------------------------
 modifier_imba_item_nether_wand_passive = modifier_imba_item_nether_wand_passive or class({})
 function modifier_imba_item_nether_wand_passive:IsDebuff() return false end
@@ -94,6 +100,10 @@ item_imba_elder_staff = item_imba_elder_staff or class({})
 -------------------------------------------
 function item_imba_elder_staff:GetIntrinsicModifierName()
     return "modifier_imba_item_elder_staff_passive"
+end
+
+function item_imba_elder_staff:GetAbilityTextureName()
+   return "custom/imba_elder_staff"
 end
 -------------------------------------------
 modifier_imba_item_elder_staff_passive = modifier_imba_item_elder_staff_passive or class({})

@@ -19,6 +19,10 @@ imba_lycan_summon_wolves = class({})
 LinkLuaModifier("modifier_imba_lycan_wolf_charge", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_lycan_wolf_death_check", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
+function imba_lycan_summon_wolves:GetAbilityTextureName()
+   return "lycan_summon_wolves"
+end
+
 function imba_lycan_summon_wolves:OnUpgrade()
     if IsServer() then
     	-- Ability properties
@@ -386,6 +390,10 @@ end
 imba_lycan_howl = class ({})
 LinkLuaModifier("modifier_imba_howl_buff", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
+function imba_lycan_howl:GetAbilityTextureName()
+   return "lycan_howl"
+end
+
 function imba_lycan_howl:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()
@@ -622,6 +630,10 @@ imba_lycan_feral_impulse = class({})
 LinkLuaModifier("modifier_imba_feral_impulse_aura", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_feral_impulse", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
+function imba_lycan_feral_impulse:GetAbilityTextureName()
+   return "lycan_feral_impulse"
+end
+
 function imba_lycan_feral_impulse:GetIntrinsicModifierName()	
     return "modifier_imba_feral_impulse_aura"
 end
@@ -806,6 +818,10 @@ LinkLuaModifier("modifier_imba_shapeshift_transform", "hero/hero_lycan", LUA_MOD
 LinkLuaModifier("modifier_imba_shapeshift_aura", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_shapeshift", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_shapeshift_certain_crit", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+
+function imba_lycan_shapeshift:GetAbilityTextureName()
+   return "lycan_shapeshift"
+end
 
 function imba_lycan_shapeshift:OnSpellStart()
 	-- Ability properties
@@ -1144,6 +1160,10 @@ LinkLuaModifier("modifier_imba_wolfsbane_aura", "hero/hero_lycan", LUA_MODIFIER_
 LinkLuaModifier("modifier_imba_wolfsbane_wolves", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wolfsbane_lycan", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wolfsbane_lycan_prevent", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+
+function imba_lycan_wolfsbane:GetAbilityTextureName()
+   return "custom/wolfsbane"
+end
 
 function imba_lycan_wolfsbane:IsInnateAbility()
 	return true
@@ -1496,6 +1516,10 @@ imba_summoned_wolf_wicked_crunch = class({})
 LinkLuaModifier("modifier_imba_summoned_wolf_wicked_crunch_debuff", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_summoned_wolf_wicked_crunch", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
+function imba_summoned_wolf_wicked_crunch:GetAbilityTextureName()
+   return "lycan_summon_wolves_critical_strike"
+end
+
 function imba_summoned_wolf_wicked_crunch:GetIntrinsicModifierName()
 	return "modifier_imba_summoned_wolf_wicked_crunch"
 end
@@ -1717,6 +1741,10 @@ end
 imba_summoned_wolf_hunter_instincts = class({})
 LinkLuaModifier("modifier_imba_summoned_wolf_hunter_instincts", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
+function imba_summoned_wolf_hunter_instincts:GetAbilityTextureName()
+   return "custom/hunter_instincts"
+end
+
 function imba_summoned_wolf_hunter_instincts:GetIntrinsicModifierName()
     return "modifier_imba_summoned_wolf_hunter_instincts"
 end
@@ -1777,6 +1805,10 @@ end
 imba_summoned_wolf_invisibility = class({})
 LinkLuaModifier("modifier_imba_summoned_wolf_invisibility_fade", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_summoned_wolf_invisibility", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
+
+function imba_summoned_wolf_invisibility:GetAbilityTextureName()
+   return "lycan_summon_wolves_invisibility"
+end
 
 function imba_summoned_wolf_invisibility:OnUpgrade()
 	 if IsServer() then

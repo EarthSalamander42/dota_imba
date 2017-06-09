@@ -4,6 +4,10 @@
 item_imba_hand_of_midas = class({})
 LinkLuaModifier("modifier_item_imba_hand_of_midas", "items/item_midas", LUA_MODIFIER_MOTION_NONE)
 
+function item_imba_hand_of_midas:GetAbilityTextureName()
+   return "custom/imba_hand_of_midas"
+end
+
 function item_imba_hand_of_midas:CastFilterResultTarget(target)
 	if IsServer() then
 		local caster = self:GetCaster()

@@ -89,6 +89,10 @@ end
 
 imba_lina_dragon_slave = class({})
 
+function imba_lina_dragon_slave:GetAbilityTextureName()
+   return "lina_dragon_slave"
+end
+
 function imba_lina_dragon_slave:OnUpgrade()
 	self.cast_point = self.cast_point or self:GetCastPoint()
 end
@@ -248,6 +252,10 @@ end
 
 imba_lina_light_strike_array = class({})
 
+function imba_lina_light_strike_array:GetAbilityTextureName()
+   return "lina_light_strike_array"
+end
+
 function imba_lina_light_strike_array:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
@@ -363,6 +371,11 @@ function imba_lina_fiery_soul:GetIntrinsicModifierName()
     return "modifier_imba_fiery_soul"
 end
 
+
+function imba_lina_fiery_soul:GetAbilityTextureName()
+   return "lina_fiery_soul"
+end
+
 modifier_imba_fiery_soul = class({})
 
 function modifier_imba_fiery_soul:DeclareFunctions()
@@ -467,6 +480,10 @@ end
 -------------------------------------------
 
 imba_lina_laguna_blade = class({})
+
+function imba_lina_laguna_blade:GetAbilityTextureName()
+   return "lina_laguna_blade"
+end
 
 function imba_lina_laguna_blade:OnSpellStart()
 	if IsServer() then

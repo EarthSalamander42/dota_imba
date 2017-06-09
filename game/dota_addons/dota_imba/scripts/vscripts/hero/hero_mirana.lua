@@ -11,6 +11,10 @@ CreateEmptyTalents("mirana")
 imba_mirana_starfall = class({})
 LinkLuaModifier("modifier_imba_starfall_scepter_thinker", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 
+function imba_mirana_starfall:GetAbilityTextureName()
+   return "mirana_starfall"
+end
+
 function imba_mirana_starfall:OnUpgrade()
     local caster = self:GetCaster()
     local modifier_agh_starfall = "modifier_imba_starfall_scepter_thinker"
@@ -329,6 +333,10 @@ end
 imba_mirana_arrow = class({})
 LinkLuaModifier("modifier_imba_sacred_arrow_stun", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_sacred_arrow_haste", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+
+function imba_mirana_arrow:GetAbilityTextureName()
+   return "mirana_arrow"
+end
 
 function imba_mirana_arrow:IsHiddenWhenStolen()
     return false
@@ -689,6 +697,10 @@ LinkLuaModifier("modifier_imba_leap_movement", "hero/hero_mirana", LUA_MODIFIER_
 LinkLuaModifier("modifier_imba_leap_aura", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_leap_speed_boost", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 
+function imba_mirana_leap:GetAbilityTextureName()
+   return "mirana_leap"
+end
+
 function imba_mirana_leap:GetCastRange(location, target)        
     local ability = self
     local leap_range = ability:GetSpecialValueFor("leap_range")
@@ -971,6 +983,10 @@ LinkLuaModifier("modifier_imba_moonlight_shadow", "hero/hero_mirana", LUA_MODIFI
 LinkLuaModifier("modifier_imba_moonlight_shadow_invis", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_moonlight_shadow_invis_dummy", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_moonlight_shadow_invis_fade_time", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+
+function imba_mirana_moonlight_shadow:GetAbilityTextureName()
+   return "mirana_invis"
+end
 
 function imba_mirana_moonlight_shadow:GetCooldown(level)
     local caster = self:GetCaster()

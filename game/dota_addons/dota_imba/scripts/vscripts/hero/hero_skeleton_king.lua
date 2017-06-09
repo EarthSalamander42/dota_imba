@@ -11,6 +11,10 @@ imba_wraith_king_wraithfire_blast = class({})
 LinkLuaModifier("modifier_imba_wraithfire_blast_stun", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wraithfire_blast_debuff", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 
+function imba_wraith_king_wraithfire_blast:GetAbilityTextureName()
+   return "skeleton_king_hellfire_blast"
+end
+
 function imba_wraith_king_wraithfire_blast:IsHiddenWhenStolen()
     return false
 end
@@ -312,6 +316,10 @@ imba_wraith_king_vampiric_aura = class({})
 LinkLuaModifier("modifier_imba_vampiric_aura", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_vampiric_aura_buff", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 
+function imba_wraith_king_vampiric_aura:GetAbilityTextureName()
+   return "skeleton_king_vampiric_aura"
+end
+
 function imba_wraith_king_vampiric_aura:OnToggle() return nil end
 function imba_wraith_king_vampiric_aura:IsStealable() return false end
 
@@ -513,6 +521,10 @@ imba_wraith_king_mortal_strike = class({})
 LinkLuaModifier("modifier_imba_mortal_strike", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_mortal_strike_buff", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_mortal_strike_buff_talent", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
+
+function imba_wraith_king_mortal_strike:GetAbilityTextureName()
+   return "skeleton_king_mortal_strike"
+end
 
 function imba_wraith_king_mortal_strike:GetIntrinsicModifierName()
     return "modifier_imba_mortal_strike"
@@ -829,6 +841,10 @@ imba_wraith_king_reincarnation = imba_wraith_king_reincarnation or class({})
 LinkLuaModifier("modifier_imba_reincarnation", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_reincarnation_wraith_form_buff", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_reincarnation_wraith_form", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
+
+function imba_wraith_king_reincarnation:GetAbilityTextureName()
+   return "skeleton_king_reincarnation"
+end
 
 function imba_wraith_king_reincarnation:GetManaCost(level)
     local caster = self:GetCaster()
@@ -1201,6 +1217,10 @@ LinkLuaModifier("modifier_imba_kingdom_come", "hero/hero_skeleton_king.lua", LUA
 LinkLuaModifier("modifier_imba_kingdom_come_slow", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_kingdom_come_stun", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)
 
+function imba_wraith_king_kingdom_come:GetAbilityTextureName()
+   return "custom/wraith_king_wraithfire_aura"
+end
+
 function imba_wraith_king_kingdom_come:IsNetherWardStealable() return false end
 function imba_wraith_king_kingdom_come:IsInnateAbility()
     return true
@@ -1412,10 +1432,13 @@ imba_wraith_king_wraith_soul_strike = class({})
 LinkLuaModifier("modifier_imba_wraith_soul_strike", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)    
 LinkLuaModifier("modifier_imba_wraith_soul_strike_slow", "hero/hero_skeleton_king.lua", LUA_MODIFIER_MOTION_NONE)    
 
+function imba_wraith_king_wraith_soul_strike:GetAbilityTextureName()
+   return "ghost_frost_attack"
+end
+
 function imba_wraith_king_wraith_soul_strike:GetIntrinsicModifierName()
     return "modifier_imba_wraith_soul_strike"
 end
-
 
 modifier_imba_wraith_soul_strike = class({})
 

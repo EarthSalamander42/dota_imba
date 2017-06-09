@@ -10,6 +10,10 @@ CreateEmptyTalents("centaur")
 imba_centaur_thick_hide = class({})
 LinkLuaModifier("modifier_imba_thick_hide", "hero/hero_centaur.lua", LUA_MODIFIER_MOTION_NONE)
 
+function imba_centaur_thick_hide:GetAbilityTextureName()
+   return "custom/centaur_thick_hide"
+end
+
 function imba_centaur_thick_hide:GetIntrinsicModifierName()
 	return "modifier_imba_thick_hide"
 end
@@ -61,6 +65,9 @@ LinkLuaModifier("modifier_imba_hoof_stomp_stun", "hero/hero_centaur.lua", LUA_MO
 LinkLuaModifier("modifier_imba_hoof_stomp_arena_debuff", "hero/hero_centaur.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_hoof_stomp_arena_buff", "hero/hero_centaur.lua", LUA_MODIFIER_MOTION_NONE)
 
+function imba_centaur_hoof_stomp:GetAbilityTextureName()
+   return "centaur_hoof_stomp"
+end
 
 function imba_centaur_hoof_stomp:IsHiddenWhenStolen()
 	return false
@@ -438,6 +445,10 @@ end
 imba_centaur_double_edge = class({})
 LinkLuaModifier("modifier_imba_double_edge_death_prevent", "hero/hero_centaur", LUA_MODIFIER_MOTION_NONE)
 
+function imba_centaur_double_edge:GetAbilityTextureName()
+   return "centaur_double_edge"
+end
+
 function imba_centaur_double_edge:IsHiddenWhenStolen()
 	return false
 end
@@ -598,6 +609,10 @@ imba_centaur_return = class({})
 LinkLuaModifier("modifier_imba_return_aura", "hero/hero_centaur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_return_passive", "hero/hero_centaur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_return_damage_block", "hero/hero_centaur", LUA_MODIFIER_MOTION_NONE)
+
+function imba_centaur_return:GetAbilityTextureName()
+   return "centaur_return"
+end
 
 function imba_centaur_return:GetIntrinsicModifierName()
 	return "modifier_imba_return_aura"
@@ -810,6 +825,10 @@ imba_centaur_stampede = class({})
 LinkLuaModifier("modifier_imba_stampede_haste", "hero/hero_centaur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_stampede_trample_stun", "hero/hero_centaur", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_stampede_trample_slow", "hero/hero_centaur", LUA_MODIFIER_MOTION_NONE)
+
+function imba_centaur_stampede:GetAbilityTextureName()
+   return "centaur_stampede"
+end
 
 function imba_centaur_stampede:IsHiddenWhenStolen()
 	return false

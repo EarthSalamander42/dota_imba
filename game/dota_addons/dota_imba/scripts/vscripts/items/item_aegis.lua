@@ -6,6 +6,12 @@
 	
 item_imba_aegis = item_imba_aegis or class({})
 LinkLuaModifier("modifier_item_imba_aegis", "items/item_aegis.lua", LUA_MODIFIER_MOTION_NONE)
+
+function item_imba_aegis:GetAbilityTextureName()
+   return "custom/imba_aegis"
+end
+
+
 modifier_item_imba_aegis = modifier_item_imba_aegis or class({})
 -- Passive modifier
 function modifier_item_imba_aegis:OnCreated()

@@ -39,6 +39,10 @@ MergeTables(LinkedModifiers,{
 })
 imba_abaddon_mist_coil = imba_abaddon_mist_coil or class({})
 
+function imba_abaddon_mist_coil:GetAbilityTextureName()
+   return "abaddon_death_coil"
+end
+
 function imba_abaddon_mist_coil:GetIntrinsicModifierName()
     return "modifier_imba_mist_coil_passive"
 end
@@ -201,6 +205,10 @@ MergeTables(LinkedModifiers,{
 	["modifier_imba_aphotic_shield_buff_block"] = LUA_MODIFIER_MOTION_NONE,
 })
 imba_abaddon_aphotic_shield = imba_abaddon_aphotic_shield or class({})
+
+function imba_abaddon_aphotic_shield:GetAbilityTextureName()
+   return "abaddon_aphotic_shield"
+end
 
 function imba_abaddon_aphotic_shield:GetCastRange(Location, Target)
 	-- #1 Talent: +150 Aphotic Shield cast range
@@ -403,7 +411,8 @@ MergeTables(LinkedModifiers,{
 	["modifier_imba_curse_of_avernus_passive"] = LUA_MODIFIER_MOTION_NONE,
 })
 imba_abaddon_curse_of_avernus = imba_abaddon_curse_of_avernus or class({
-	GetIntrinsicModifierName = function(self) return "modifier_imba_curse_of_avernus_passive" end
+	GetIntrinsicModifierName = function(self) return "modifier_imba_curse_of_avernus_passive" end,
+	GetAbilityTextureName = function(self) return "abaddon_frostmourne" end
 })
 
 modifier_imba_curse_of_avernus_passive = modifier_imba_curse_of_avernus_passive or class({
@@ -637,7 +646,7 @@ MergeTables(LinkedModifiers,{
 imba_abaddon_over_channel = imba_abaddon_over_channel or class({
 	IsStealable 			= function(self) return false end,
 	IsInnateAbility			= function(self) return true end,
-
+	GetAbilityTextureName	= function(self) return "custom/abaddon_over_channel" end,
 })
 
 function imba_abaddon_over_channel:OnToggle()
@@ -703,7 +712,8 @@ MergeTables(LinkedModifiers,{
 	["modifier_imba_borrowed_time_handler"] = LUA_MODIFIER_MOTION_NONE,
 })
 imba_abaddon_borrowed_time = imba_abaddon_borrowed_time or class({
-	GetIntrinsicModifierName = function(self) if self:GetCaster():IsRealHero() then return "modifier_imba_borrowed_time_handler" end end
+	GetIntrinsicModifierName = function(self) if self:GetCaster():IsRealHero() then return "modifier_imba_borrowed_time_handler" end end,
+	GetAbilityTextureName = function(self) return "abaddon_borrowed_time" end
 })
 function imba_abaddon_borrowed_time:IsNetherWardStealable() return false end
 function imba_abaddon_borrowed_time:OnUpgrade()

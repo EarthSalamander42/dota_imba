@@ -11,7 +11,11 @@ LinkLuaModifier("modifier_imba_shotgun_passive", "items/item_starfury.lua", LUA_
 item_imba_shotgun = item_imba_shotgun or class({})
 -------------------------------------------
 function item_imba_shotgun:GetIntrinsicModifierName()
-return "modifier_imba_shotgun_passive"
+	return "modifier_imba_shotgun_passive"
+end
+
+function item_imba_shotgun:GetAbilityTextureName()
+   return "custom/imba_shotgun"
 end
 
 -------------------------------------------
@@ -188,7 +192,11 @@ LinkLuaModifier("modifier_imba_starfury_buff_increase", "items/item_starfury.lua
 item_imba_starfury = item_imba_starfury or class({})
 -------------------------------------------
 function item_imba_starfury:GetIntrinsicModifierName()
-return "modifier_imba_starfury_passive"
+	return "modifier_imba_starfury_passive"
+end
+
+function item_imba_starfury:GetAbilityTextureName()
+   return "custom/imba_starfury"
 end
 -------------------------------------------
 modifier_imba_starfury_passive = modifier_imba_starfury_passive or class({})

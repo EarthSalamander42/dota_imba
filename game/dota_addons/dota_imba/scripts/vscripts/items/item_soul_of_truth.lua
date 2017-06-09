@@ -10,6 +10,10 @@ LinkLuaModifier( "modifier_imba_soul_of_truth_vision", "items/item_soul_of_truth
 --			  SOUL OF TRUTH
 -------------------------------------------
 item_imba_soul_of_truth = item_imba_soul_of_truth or class({})
+
+function item_imba_soul_of_truth:GetAbilityTextureName()
+   return "custom/imba_soul_of_truth"
+end
 -------------------------------------------
 
 function item_imba_soul_of_truth:OnSpellStart()

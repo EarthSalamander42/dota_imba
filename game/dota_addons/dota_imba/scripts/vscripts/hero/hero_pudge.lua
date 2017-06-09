@@ -12,6 +12,10 @@ function imba_pudge_flesh_heap:IsRefreshable() return false end
 function imba_pudge_flesh_heap:IsStealable() return false end
 function imba_pudge_flesh_heap:IsNetherWardStealable() return false end
 function imba_pudge_flesh_heap:IsInnateAbility() return true end
+
+function imba_pudge_flesh_heap:GetAbilityTextureName()
+   return "pudge_flesh_heap"
+end
 -------------------------------------------
 
 function imba_pudge_flesh_heap:GetIntrinsicModifierName()
@@ -141,6 +145,10 @@ function imba_pudge_rot:IsStealable() return true end
 function imba_pudge_rot:IsNetherWardStealable() return false end
 function imba_pudge_rot:ProcsMagicStick() return false end
 function imba_pudge_rot:ResetToggleOnRespawn() return true end
+
+function imba_pudge_rot:GetAbilityTextureName()
+   return "pudge_rot"
+end
 -------------------------------------------
 function imba_pudge_rot:GetCastRange()
 	self.rot_radius = self:GetSpecialValueFor("base_radius")
@@ -406,6 +414,10 @@ function imba_pudge_meat_hook:IsRefreshable() return true end
 function imba_pudge_meat_hook:IsStealable() return true end
 function imba_pudge_meat_hook:IsNetherWardStealable() return true end
 function imba_pudge_meat_hook:IsInnateAbility() return false end
+
+function imba_pudge_meat_hook:GetAbilityTextureName()
+   return "pudge_meat_hook"
+end
 -------------------------------------------
 function imba_pudge_meat_hook:GetCastRange()
 	return self:GetSpecialValueFor("hook_distance") + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_2")
@@ -801,6 +813,10 @@ function imba_pudge_butchers_cleaver:IsRefreshable() return true end
 function imba_pudge_butchers_cleaver:IsStealable() return true end
 function imba_pudge_butchers_cleaver:IsNetherWardStealable() return true end
 function imba_pudge_butchers_cleaver:IsInnateAbility() return false end
+
+function imba_pudge_butchers_cleaver:GetAbilityTextureName()
+   return "custom/imba_pudge_cleaver"
+end
 -------------------------------------------
 
 function imba_pudge_butchers_cleaver:OnSpellStart()
@@ -995,6 +1011,10 @@ imba_pudge_dismember = imba_pudge_dismember or class({})
 LinkLuaModifier( "modifier_dismember", "hero/hero_pudge" ,LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_dismember_lifesteal", "hero/hero_pudge" ,LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_dismember_dummy", "hero/hero_pudge" ,LUA_MODIFIER_MOTION_NONE )
+
+function imba_pudge_dismember:GetAbilityTextureName()
+   return "pudge_dismember"
+end
 
 function imba_pudge_dismember:IsHiddenWhenStolen() return false end
 function imba_pudge_dismember:GetConceptRecipientType()

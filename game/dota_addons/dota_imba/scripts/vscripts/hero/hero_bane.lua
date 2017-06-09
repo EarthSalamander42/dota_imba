@@ -71,6 +71,10 @@ function imba_bane_nightmare:    IsHiddenWhenStolen()  return false             
 function imba_bane_nightmare_end:IsHiddenWhenStolen()  return false                                                    end
 function imba_bane_fiends_grip:  IsHiddenWhenStolen()  return false                                                    end
 
+function imba_bane_enfeeble:GetAbilityTextureName()
+   return "bane_enfeeble"
+end
+
 -- Enfeeble Spell Cast
 function imba_bane_enfeeble:OnSpellStart() 
 	if not IsServer() then return end
@@ -85,8 +89,11 @@ function imba_bane_enfeeble:OnSpellStart()
 	end       
 end
 
--- Brain Sap Spell Cast
+function imba_bane_brain_sap:GetAbilityTextureName()
+   return "bane_brain_sap"
+end
 
+-- Brain Sap Spell Cast
 function imba_bane_brain_sap:OnSpellStart()
 	if not IsServer() then return end
 	local target,caster = findtarget(self)
@@ -135,6 +142,10 @@ function imba_bane_nightmare:GetAssociatedSecondaryAbilities()
 	return "imba_bane_nightmare_end" 
 end 
 
+function imba_bane_nightmare:GetAbilityTextureName()
+   return "bane_nightmare"
+end
+
 function imba_bane_nightmare:OnSpellStart()
 	if not IsServer() then return end
 	local target,caster = findtarget(self) -- who did we target? who are we?
@@ -167,6 +178,10 @@ function imba_bane_nightmare:CastFilterResultTarget(target)
 	end
 end
 
+function imba_bane_nightmare_end:GetAbilityTextureName()
+   return "bane_nightmare_end"
+end
+
 function imba_bane_nightmare_end:OnSpellStart()
 	if not IsServer() then return end
 	local caster = self:GetCaster()
@@ -187,6 +202,9 @@ function imba_bane_nightmare_end:GetAssociatedPrimaryAbilities()
 	return "imba_bane_nightmare" end
 
 -- Fiends Grip Spell Cast
+function imba_bane_fiends_grip:GetAbilityTextureName()
+   return "bane_fiends_grip"
+end
 
 function imba_bane_fiends_grip:GetChannelTime()
 	local talentchannelbonus = self:GetCaster():FindTalentValue("special_bonus_imba_bane_6")  -- net tables

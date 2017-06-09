@@ -13,6 +13,10 @@ CreateEmptyTalents("night_stalker")
 imba_night_stalker_stalker_in_the_night = class({})
 LinkLuaModifier("modifier_imba_stalker_in_the_night", "hero/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
 
+function imba_night_stalker_stalker_in_the_night:GetAbilityTextureName()
+   return "custom/stalker_in_the_night"
+end
+
 function imba_night_stalker_stalker_in_the_night:GetIntrinsicModifierName()
     return "modifier_imba_stalker_in_the_night"
 end
@@ -158,6 +162,10 @@ end
 imba_night_stalker_void = class({})
 LinkLuaModifier("modifier_imba_void_ministun", "hero/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_void_slow", "hero/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
+
+function imba_night_stalker_void:GetAbilityTextureName()
+   return "night_stalker_void"
+end
 
 function imba_night_stalker_void:IsHiddenWhenStolen()
     return false
@@ -368,6 +376,10 @@ end
 imba_night_stalker_crippling_fear = class({})
 LinkLuaModifier("modifier_imba_crippling_fear_silence", "hero/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
 
+function imba_night_stalker_crippling_fear:GetAbilityTextureName()
+   return "night_stalker_crippling_fear"
+end
+
 function imba_night_stalker_crippling_fear:IsHiddenWhenStolen()
     return false
 end
@@ -548,6 +560,10 @@ end
 imba_night_stalker_hunter_in_the_night = class({})
 LinkLuaModifier("modifier_imba_hunter_in_the_night_thinker", "hero/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_hunter_in_the_night", "hero/hero_night_stalker", LUA_MODIFIER_MOTION_NONE)
+
+function imba_night_stalker_hunter_in_the_night:GetAbilityTextureName()
+   return "night_stalker_hunter_in_the_night"
+end
 
 function imba_night_stalker_hunter_in_the_night:GetIntrinsicModifierName()
     return "modifier_imba_hunter_in_the_night_thinker"    
@@ -775,6 +791,10 @@ LinkLuaModifier("modifier_imba_darkness_fogvision", "hero/hero_night_stalker", L
 function imba_night_stalker_darkness:IsNetherWardStealable() return false end
 function imba_night_stalker_darkness:IsHiddenWhenStolen()
     return false
+end
+
+function imba_night_stalker_darkness:GetAbilityTextureName()
+   return "night_stalker_darkness"
 end
 
 function imba_night_stalker_darkness:OnUpgrade()   

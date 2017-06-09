@@ -20,6 +20,10 @@ function imba_troll_warlord_berserkers_rage:IsRefreshable() return true end
 function imba_troll_warlord_berserkers_rage:IsStealable() return false end
 function imba_troll_warlord_berserkers_rage:IsNetherWardStealable() return false end
 function imba_troll_warlord_berserkers_rage:ResetToggleOnRespawn() return true end
+
+function imba_troll_warlord_berserkers_rage:GetAbilityTextureName()
+   return "troll_warlord_berserkers_rage"
+end
 -------------------------------------------
 
 -- Always have one of the buffs
@@ -274,6 +278,10 @@ function imba_troll_warlord_whirling_axes_ranged:IsHiddenWhenStolen() return fal
 function imba_troll_warlord_whirling_axes_ranged:IsRefreshable() return true end
 function imba_troll_warlord_whirling_axes_ranged:IsStealable() return true end
 function imba_troll_warlord_whirling_axes_ranged:IsNetherWardStealable() return true end
+
+function imba_troll_warlord_whirling_axes_ranged:GetAbilityTextureName()
+   return "troll_warlord_whirling_axes_ranged"
+end
 -------------------------------------------
 
 function imba_troll_warlord_whirling_axes_ranged:GetCooldown( nLevel )
@@ -424,6 +432,10 @@ function imba_troll_warlord_whirling_axes_melee:IsHiddenWhenStolen() return fals
 function imba_troll_warlord_whirling_axes_melee:IsRefreshable() return true end
 function imba_troll_warlord_whirling_axes_melee:IsStealable() return true end
 function imba_troll_warlord_whirling_axes_melee:IsNetherWardStealable() return true end
+
+function imba_troll_warlord_whirling_axes_melee:GetAbilityTextureName()
+   return "troll_warlord_whirling_axes_melee"
+end
 -------------------------------------------
 
 function imba_troll_warlord_whirling_axes_melee:GetCooldown( nLevel )
@@ -586,6 +598,10 @@ function imba_troll_warlord_fervor:IsHiddenWhenStolen() return false end
 function imba_troll_warlord_fervor:IsRefreshable() return false end
 function imba_troll_warlord_fervor:IsStealable() return false end
 function imba_troll_warlord_fervor:IsNetherWardStealable() return false end
+
+function imba_troll_warlord_fervor:GetAbilityTextureName()
+   return "troll_warlord_fervor"
+end
 -------------------------------------------
 
 function imba_troll_warlord_fervor:GetIntrinsicModifierName()
@@ -686,6 +702,10 @@ function imba_troll_warlord_battle_trance:IsHiddenWhenStolen() return false end
 function imba_troll_warlord_battle_trance:IsRefreshable() return true end
 function imba_troll_warlord_battle_trance:IsStealable() return true end
 function imba_troll_warlord_battle_trance:IsNetherWardStealable() return true end
+
+function imba_troll_warlord_battle_trance:GetAbilityTextureName()
+   return "troll_warlord_battle_trance"
+end
 -------------------------------------------
 
 function imba_troll_warlord_battle_trance:OnSpellStart()

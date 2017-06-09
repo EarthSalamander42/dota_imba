@@ -18,6 +18,10 @@ function imba_sven_storm_bolt:IsHiddenWhenStolen() return false end
 function imba_sven_storm_bolt:IsRefreshable() return true end
 function imba_sven_storm_bolt:IsStealable() return true end
 function imba_sven_storm_bolt:IsNetherWardStealable() return false end
+
+function imba_sven_storm_bolt:GetAbilityTextureName()
+   return "sven_storm_bolt"
+end
 -------------------------------------------
 
 function imba_sven_storm_bolt:OnSpellStart()
@@ -183,6 +187,10 @@ function imba_sven_great_cleave:IsHiddenWhenStolen() return false end
 function imba_sven_great_cleave:IsRefreshable() return true end
 function imba_sven_great_cleave:IsStealable() return true end
 function imba_sven_great_cleave:IsNetherWardStealable() return false end
+
+function imba_sven_great_cleave:GetAbilityTextureName()
+   return "sven_great_cleave"
+end
 -------------------------------------------
 
 function imba_sven_great_cleave:GetIntrinsicModifierName()
@@ -303,6 +311,10 @@ function imba_sven_warcry:IsRefreshable() return true end
 function imba_sven_warcry:IsStealable() return true end
 function imba_sven_warcry:IsPurgable() return true end
 function imba_sven_warcry:IsNetherWardStealable() return true end
+
+function imba_sven_warcry:GetAbilityTextureName()
+   return "sven_warcry"
+end
 -------------------------------------------
 
 function imba_sven_warcry:OnSpellStart()
@@ -452,6 +464,10 @@ function imba_sven_gods_strength:IsHiddenWhenStolen() return false end
 function imba_sven_gods_strength:IsRefreshable() return true end
 function imba_sven_gods_strength:IsStealable() return true end
 function imba_sven_gods_strength:IsNetherWardStealable() return false end
+
+function imba_sven_gods_strength:GetAbilityTextureName()
+   return "sven_gods_strength"
+end
 -------------------------------------------
 function imba_sven_gods_strength:GetCooldown( nLevel )
 	return self.BaseClass.GetCooldown( self, nLevel ) - self:GetCaster():FindTalentValue("special_bonus_imba_sven_4")
@@ -629,6 +645,10 @@ function imba_sven_colossal_slash:IsHiddenWhenStolen() return false end
 function imba_sven_colossal_slash:IsRefreshable() return true end
 function imba_sven_colossal_slash:IsStealable() return true end
 function imba_sven_colossal_slash:IsNetherWardStealable() return false end
+
+function imba_sven_colossal_slash:GetAbilityTextureName()
+   return "custom/sven_colossal_strike"
+end
 -------------------------------------------
 
 function imba_sven_colossal_slash:GetAssociatedPrimaryAbilities()

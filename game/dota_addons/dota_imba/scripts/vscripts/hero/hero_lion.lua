@@ -11,6 +11,10 @@ CreateEmptyTalents("lion")
 imba_lion_earth_spike = class({})
 LinkLuaModifier("modifier_imba_earthspike_stun", "hero/hero_lion", LUA_MODIFIER_MOTION_NONE)
 
+function imba_lion_earth_spike:GetAbilityTextureName()
+   return "lion_impale"
+end
+
 function imba_lion_earth_spike:IsHiddenWhenStolen()
      return false
  end 
@@ -314,6 +318,10 @@ end
 imba_lion_hex = class({})
 LinkLuaModifier("modifier_imba_lion_hex", "hero/hero_lion", LUA_MODIFIER_MOTION_NONE)
 
+function imba_lion_hex:GetAbilityTextureName()
+   return "lion_voodoo"
+end
+
 function imba_lion_hex:IsHiddenWhenStolen()
     return false
 end
@@ -504,6 +512,10 @@ LinkLuaModifier("modifier_imba_manadrain_aura", "hero/hero_lion", LUA_MODIFIER_M
 LinkLuaModifier("modifier_imba_manadrain_aura_debuff", "hero/hero_lion", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_manadrain_debuff", "hero/hero_lion", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_manadrain_buff", "hero/hero_lion", LUA_MODIFIER_MOTION_NONE)
+
+function imba_lion_mana_drain:GetAbilityTextureName()
+   return "lion_mana_drain"
+end
 
 function imba_lion_mana_drain:OnUnStolen()
     local caster = self:GetCaster()
@@ -914,6 +926,10 @@ end
 imba_lion_finger_of_death = class({})
 LinkLuaModifier("modifier_imba_trigger_finger_debuff", "hero/hero_lion", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_finger_of_death_hex", "hero/hero_lion", LUA_MODIFIER_MOTION_NONE)
+
+function imba_lion_finger_of_death:GetAbilityTextureName()
+   return "lion_finger_of_death"
+end
 
 function imba_lion_finger_of_death:IsHiddenWhenStolen()
     return false

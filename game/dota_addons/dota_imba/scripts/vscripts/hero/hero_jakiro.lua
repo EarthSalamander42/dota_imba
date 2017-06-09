@@ -355,7 +355,7 @@ imba_jakiro_fire_breath.modifier_caster_name = "modifier_imba_fire_breath_caster
 LinkLuaModifier("modifier_imba_fire_breath_debuff", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_fire_breath_caster", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
 
-function imba_jakiro_fire_breath:GetTexture()
+function imba_jakiro_fire_breath:GetAbilityTextureName()
 	return "custom/jakiro_fire_breath"
 end
 
@@ -409,7 +409,7 @@ imba_jakiro_ice_breath.modifier_caster_name = "modifier_imba_ice_breath_caster"
 LinkLuaModifier("modifier_imba_ice_breath_debuff", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ice_breath_caster", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
 
-function imba_jakiro_ice_breath:GetTexture()
+function imba_jakiro_ice_breath:GetAbilityTextureName()
 	return "custom/jakiro_ice_breath"
 end
 
@@ -460,6 +460,10 @@ imba_jakiro_ice_path = class({})
 LinkLuaModifier("modifier_imba_ice_path_thinker", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ice_path_freeze_debuff", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ice_path_slow_debuff", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
+
+function imba_jakiro_ice_path:GetAbilityTextureName()
+   return "jakiro_ice_path"
+end
 
 function imba_jakiro_ice_path:OnSpellStart()
 	if IsServer() then
@@ -686,6 +690,10 @@ imba_jakiro_liquid_fire = class({
 LinkLuaModifier("modifier_imba_liquid_fire_caster", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_liquid_fire_animate", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_liquid_fire_debuff", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
+
+function imba_jakiro_liquid_fire:GetAbilityTextureName()
+   return "jakiro_liquid_fire"
+end
 
 function imba_jakiro_liquid_fire:IsNetherWardStealable() return false end
 function imba_jakiro_liquid_fire:OnCreated()
@@ -945,6 +953,10 @@ function modifier_imba_liquid_fire_debuff:GetEffectAttachType() return PATTACH_A
 imba_jakiro_macropyre = class({})
 LinkLuaModifier("modifier_imba_macropyre_thinker", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_macropyre_debuff", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
+
+function imba_jakiro_macropyre:GetAbilityTextureName()
+   return "jakiro_macropyre"
+end
 
 function imba_jakiro_macropyre:OnSpellStart()
 	if IsServer() then

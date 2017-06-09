@@ -10,6 +10,10 @@ item_imba_orchid = item_imba_orchid or class({})
 LinkLuaModifier( "modifier_item_imba_orchid", "items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE )			-- Owner's bonus attributes, stackable
 LinkLuaModifier( "modifier_item_imba_orchid_debuff", "items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE )	-- Active debuff
 
+function item_imba_orchid:GetAbilityTextureName()
+   return "custom/imba_orchid"
+end
+
 function item_imba_orchid:GetIntrinsicModifierName()
 	return "modifier_item_imba_orchid" end
 
@@ -186,6 +190,10 @@ LinkLuaModifier( "modifier_item_imba_bloodthorn_unique", "items/item_orchid.lua"
 LinkLuaModifier( "modifier_item_imba_bloodthorn_crit", "items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE )		-- Passive crit buff
 LinkLuaModifier( "modifier_item_imba_bloodthorn_attacker_crit", "items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE )		-- Active attackers' crit buff
 LinkLuaModifier( "modifier_item_imba_bloodthorn_debuff", "items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE )	-- Active debuff
+
+function item_imba_bloodthorn:GetAbilityTextureName()
+   return "custom/imba_bloodthorn"
+end
 
 function item_imba_bloodthorn:GetIntrinsicModifierName()
 	return "modifier_item_imba_bloodthorn" end

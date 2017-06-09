@@ -10,6 +10,10 @@ CreateEmptyTalents("techies")
 imba_techies_proximity_mine = imba_techies_proximity_mine or class({})
 LinkLuaModifier("modifier_imba_proximity_mine_charges", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 
+function imba_techies_proximity_mine:GetAbilityTextureName()
+   return "techies_land_mines"
+end
+
 function imba_techies_proximity_mine:IsHiddenWhenStolen()
     return false
 end
@@ -280,6 +284,10 @@ LinkLuaModifier("modifier_imba_proximity_mine_talent", "hero/hero_techies.lua", 
 
 function imba_techies_proximity_mine_trigger:GetIntrinsicModifierName()
     return "modifier_imba_proximity_mine"
+end
+
+function imba_techies_proximity_mine_trigger:GetAbilityTextureName()
+   return "rubick_empty1"
 end
 
 -- Proximity mine states modifier
@@ -690,6 +698,10 @@ end
 ------------------------------
 imba_techies_stasis_trap = imba_techies_stasis_trap or class({})
 
+function imba_techies_stasis_trap:GetAbilityTextureName()
+   return "techies_stasis_trap"
+end
+
 function imba_techies_stasis_trap:IsHiddenWhenStolen()
     return false
 end
@@ -843,6 +855,9 @@ LinkLuaModifier("modifier_imba_statis_trap_root", "hero/hero_techies.lua", LUA_M
 LinkLuaModifier("modifier_imba_statis_trap_electrocharge", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_statis_trap_disarmed", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 
+function imba_techies_stasis_trap_trigger:GetAbilityTextureName()
+   return "techies_stasis_trap"
+end
 
 function imba_techies_stasis_trap_trigger:GetIntrinsicModifierName()
     return "modifier_imba_statis_trap" 
@@ -1142,6 +1157,10 @@ imba_techies_blast_off = imba_techies_blast_off or class({})
 LinkLuaModifier("modifier_imba_blast_off", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_blast_off_movement", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_blast_off_silence", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
+
+function imba_techies_blast_off:GetAbilityTextureName()
+   return "techies_suicide"
+end
 
 function imba_techies_blast_off:IsHiddenWhenStolen()
     return false
@@ -1577,6 +1596,10 @@ end
 ------------------------------
 imba_techies_remote_mine = imba_techies_remote_mine or class({})
 
+function imba_techies_remote_mine:GetAbilityTextureName()
+   return "techies_remote_mines"
+end
+
 function imba_techies_remote_mine:IsHiddenWhenStolen()
     return false
 end
@@ -1689,6 +1712,10 @@ end
 imba_techies_remote_mine_pinpoint_detonation = imba_techies_remote_mine_pinpoint_detonation or class({})
 LinkLuaModifier("modifier_imba_remote_mine", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_remote_mine_inflammable", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
+
+function imba_techies_remote_mine_pinpoint_detonation:GetAbilityTextureName()
+   return "techies_remote_mines_self_detonate"
+end
 
 function imba_techies_remote_mine_pinpoint_detonation:IsStealable()
     return false
@@ -1895,6 +1922,10 @@ end
 imba_techies_focused_detonate = imba_techies_focused_detonate or class({})
 LinkLuaModifier("modifier_imba_focused_detonate", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 
+function imba_techies_focused_detonate:GetAbilityTextureName()
+   return "techies_focused_detonate"
+end
+
 function imba_techies_focused_detonate:IsStealable()
     return false
 end
@@ -1998,6 +2029,10 @@ end
 imba_techies_minefield_sign = imba_techies_minefield_sign or class({})
 LinkLuaModifier("modifier_imba_minefield_sign_aura", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_minefield_sign_detection", "hero/hero_techies.lua", LUA_MODIFIER_MOTION_NONE)
+
+function imba_techies_minefield_sign:GetAbilityTextureName()
+   return "techies_minefield_sign"
+end
 
 function imba_techies_minefield_sign:IsHiddenWhenStolen()
     return false

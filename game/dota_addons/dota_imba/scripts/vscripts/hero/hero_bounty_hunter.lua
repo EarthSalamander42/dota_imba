@@ -14,6 +14,10 @@ MergeTables(LinkedModifiers,{
 })
 imba_bounty_hunter_shuriken_toss = imba_bounty_hunter_shuriken_toss or class({})
 
+function imba_bounty_hunter_shuriken_toss:GetAbilityTextureName()
+   return "bounty_hunter_shuriken_toss"
+end
+
 function imba_bounty_hunter_shuriken_toss:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()
@@ -334,6 +338,10 @@ MergeTables(LinkedModifiers,{
 
 imba_bounty_hunter_jinada = imba_bounty_hunter_jinada or class({})
 
+function imba_bounty_hunter_jinada:GetAbilityTextureName()
+   return "bounty_hunter_jinada"
+end
+
 function imba_bounty_hunter_jinada:IsNetherWardStealable() return false end
 
 function imba_bounty_hunter_jinada:GetCooldown(level)
@@ -620,6 +628,10 @@ imba_bounty_hunter_shadow_walk = imba_bounty_hunter_shadow_walk or class({})
 LinkLuaModifier("modifier_imba_shadow_walk_buff_invis", "hero/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_shadow_walk_vision", "hero/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
 
+function imba_bounty_hunter_shadow_walk:GetAbilityTextureName()
+   return "bounty_hunter_wind_walk"
+end
+
 function imba_bounty_hunter_shadow_walk:IsNetherWardStealable() return false end
 function imba_bounty_hunter_shadow_walk:GetCastRange(location, target)
 	local caster = self:GetCaster()
@@ -833,6 +845,10 @@ MergeTables(LinkedModifiers,{
 })
 
 imba_bounty_hunter_track = imba_bounty_hunter_track or class({})
+
+function imba_bounty_hunter_track:GetAbilityTextureName()
+   return "bounty_hunter_track"
+end
 
 function imba_bounty_hunter_track:GetCooldown(level)
 	local caster = self:GetCaster()
@@ -1106,6 +1122,10 @@ LinkLuaModifier("modifier_imba_headhunter_passive", "hero/hero_bounty_hunter", L
 LinkLuaModifier("modifier_imba_headhunter_debuff_handler", "hero/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_headhunter_buff_handler", "hero/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_headhunter_debuff_illu", "hero/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
+
+function imba_bounty_hunter_headhunter:GetAbilityTextureName()
+   return "custom/bounty_hunter_headhunter"
+end
 
 function imba_bounty_hunter_headhunter:GetIntrinsicModifierName()
 	return "modifier_imba_headhunter_passive"

@@ -14,6 +14,10 @@ function imba_juggernaut_blade_fury:GetCastRange()
 	return self:GetTalentSpecialValueFor("effect_radius")
 end
 
+function imba_juggernaut_blade_fury:GetAbilityTextureName()
+   return "juggernaut_blade_fury"
+end
+
 function imba_juggernaut_blade_fury:GetCooldown(nLevel)
 	local cooldown = self.BaseClass.GetCooldown( self, nLevel ) + self:GetCaster():FindTalentValue("special_bonus_imba_juggernaut_7")
 	return cooldown
@@ -127,6 +131,11 @@ end
 -- HEALING WARD --
 imba_juggernaut_healing_ward = imba_juggernaut_healing_ward or class({})
 function imba_juggernaut_healing_ward:IsNetherWardStealable() return false end
+
+function imba_juggernaut_healing_ward:GetAbilityTextureName()
+   return "juggernaut_healing_ward"
+end
+
 function imba_juggernaut_healing_ward:OnSpellStart()
 	local caster = self:GetCaster()
 	local targetPoint = self:GetCursorPosition()
@@ -158,6 +167,10 @@ end
 
 
 imba_juggernaut_healing_ward_passive = imba_juggernaut_healing_ward_passive or class({})
+
+function imba_juggernaut_healing_ward_passive:GetAbilityTextureName()
+	return "juggernaut_healing_ward"
+end
 
 function imba_juggernaut_healing_ward_passive:GetIntrinsicModifierName()
 	return "modifier_imba_juggernaut_healing_ward_passive"
@@ -381,6 +394,10 @@ imba_juggernaut_blade_dance = imba_juggernaut_blade_dance or class({})
 
 function imba_juggernaut_blade_dance:GetIntrinsicModifierName()
 	return "modifier_imba_juggernaut_blade_dance_passive"
+end
+
+function imba_juggernaut_blade_dance:GetAbilityTextureName()
+   return "juggernaut_blade_dance"
 end
 
 function imba_juggernaut_blade_dance:CastFilterResultTarget(target)
@@ -710,6 +727,9 @@ function imba_juggernaut_omni_slash:GetIntrinsicModifierName()
 	return	"modifier_imba_juggernaut_omni_slash_cdr"
 end
 
+function imba_juggernaut_omni_slash:GetAbilityTextureName()
+   return "juggernaut_omni_slash"
+end
 
 function imba_juggernaut_omni_slash:OnAbilityPhaseStart()
 	local caster = self:GetCaster()

@@ -1,14 +1,18 @@
-
-
-
-
+-- Author: yahnich
+-- Date updated: 09/06/2017
 
 CreateEmptyTalents("tiny")
 
 
 
-
+---------------------------------------
+--          ROLLING STONE            --
+---------------------------------------
 imba_tiny_rolling_stone = imba_tiny_rolling_stone or class({})
+
+function imba_tiny_rolling_stone:GetAbilityTextureName()
+   return "custom/imba_tiny_rolling_stone"
+end
 
 function imba_tiny_rolling_stone:IsInnateAbility()
 	return true
@@ -117,7 +121,17 @@ function modifier_imba_tiny_rolling_stone:GetModifierModelScale()
 	end
 end
 
+
+---------------------------------------
+--             AVALANCH              --
+---------------------------------------
+
 imba_tiny_avalanche = imba_tiny_avalanche or class({})
+
+function imba_tiny_avalanche:GetAbilityTextureName()
+   return "tiny_avalanche"
+end
+
 function imba_tiny_avalanche:GetAOERadius()
 	return self:GetSpecialValueFor("radius")
 end
@@ -271,7 +285,16 @@ function modifier_imba_tiny_avalanche_passive:OnAttackLanded(params)
 	end
 end
 
+---------------------------------------
+--               TOSS                --
+---------------------------------------
+
 imba_tiny_toss = imba_tiny_toss or class({})
+
+function imba_tiny_toss:GetAbilityTextureName()
+   return "tiny_toss"
+end
+
 function imba_tiny_toss:OnSpellStart()
 	self.tossPosition = self:GetCursorPosition()
 	local hTarget = self:GetCursorTarget()
@@ -739,10 +762,18 @@ function modifier_tiny_toss_scepter_bounce:OnRemoved()
 	end
 end
 
+---------------------------------------
+--          CRAGGY EXTERIOR          --
+---------------------------------------
+
 imba_tiny_craggy_exterior = imba_tiny_craggy_exterior or class({})
 
 function imba_tiny_craggy_exterior:GetIntrinsicModifierName()
 	return "modifier_imba_tiny_craggy_exterior_passive"
+end
+
+function imba_tiny_craggy_exterior:GetAbilityTextureName()
+   return "tiny_craggy_exterior"
 end
 
 LinkLuaModifier("modifier_imba_tiny_craggy_exterior_passive", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
@@ -859,7 +890,15 @@ function modifier_craggy_exterior_blunt:GetModifierPreAttack_BonusDamage()
 	return reduction * self:GetStackCount()
 end
 
+
+---------------------------------------
+--          	  GROW 		         --
+---------------------------------------
 imba_tiny_grow = imba_tiny_grow or class({})
+
+function imba_tiny_grow:GetAbilityTextureName()
+   return "tiny_grow"
+end
 
 function imba_tiny_grow:GetIntrinsicModifierName()
 	return "modifier_imba_tiny_grow_passive"

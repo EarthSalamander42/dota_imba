@@ -13,6 +13,10 @@ LinkLuaModifier( "modifier_item_imba_maelstrom", "items/item_maelstrom.lua", LUA
 function item_imba_maelstrom:GetIntrinsicModifierName()
 	return "modifier_item_imba_maelstrom" end
 
+function item_imba_maelstrom:GetAbilityTextureName()
+   return "custom/imba_maelstrom"
+end
+
 -----------------------------------------------------------------------------------------------------------
 --	Maelstrom passive modifier (stackable)
 -----------------------------------------------------------------------------------------------------------
@@ -59,8 +63,7 @@ function modifier_item_imba_maelstrom:OnAttackLanded( keys )
 			return end
 
 		-- All conditions met, stack the proc counter up
-		local ability = self:GetAbility()
-		-- local proc_modifier = attacker:AddNewModifier(attacker, ability, "modifier_item_imba_maelstrom_counter", {})
+		local ability = self:GetAbility()		
 
 		-- zap the target's ass
 		local proc_chance = ability:GetSpecialValueFor("proc_chance")

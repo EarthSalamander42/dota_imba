@@ -12,6 +12,10 @@ LinkLuaModifier( "modifier_item_imba_sange", "items/item_swords.lua", LUA_MODIFI
 LinkLuaModifier( "modifier_item_imba_sange_maim", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )		-- Maim debuff
 LinkLuaModifier( "modifier_item_imba_sange_disarm", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )		-- Disarm debuff
 
+function item_imba_sange:GetAbilityTextureName()
+   return "custom/imba_sange"
+end
+
 function item_imba_sange:GetIntrinsicModifierName()
 	return "modifier_item_imba_sange" end
 
@@ -156,6 +160,10 @@ if item_imba_heavens_halberd == nil then item_imba_heavens_halberd = class({}) e
 LinkLuaModifier( "modifier_item_imba_heavens_halberd", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )					-- Owner's bonus attributes, stackable
 LinkLuaModifier( "modifier_item_imba_heavens_halberd_disarm_cooldown", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )	-- Passive disarm cooldown counter
 LinkLuaModifier( "modifier_item_imba_heavens_halberd_active_disarm", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )	-- Active disarm debuff
+
+function item_imba_heavens_halberd:GetAbilityTextureName()
+   return "custom/imba_heavens_halberd"
+end
 
 function item_imba_heavens_halberd:GetIntrinsicModifierName()
 	return "modifier_item_imba_heavens_halberd" end
@@ -303,6 +311,10 @@ if item_imba_yasha == nil then item_imba_yasha = class({}) end
 LinkLuaModifier( "modifier_item_imba_yasha", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )			-- Owner's bonus attributes, stackable
 LinkLuaModifier( "modifier_item_imba_yasha_stacks", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )		-- Stacking attack speed
 LinkLuaModifier( "modifier_item_imba_yasha_proc", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )		-- Move speed proc
+
+function item_imba_yasha:GetAbilityTextureName()
+   return "custom/imba_yasha"
+end
 
 function item_imba_yasha:GetIntrinsicModifierName()
 	return "modifier_item_imba_yasha" end
@@ -471,6 +483,10 @@ LinkLuaModifier( "modifier_item_imba_azura", "items/item_swords.lua", LUA_MODIFI
 LinkLuaModifier( "modifier_item_imba_azura_amp", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )		-- Magic amp debuff
 LinkLuaModifier( "modifier_item_imba_azura_silence", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )	-- Silence debuff
 
+function item_imba_azura:GetAbilityTextureName()
+   return "custom/imba_azura"
+end
+
 function item_imba_azura:GetIntrinsicModifierName()
 	return "modifier_item_imba_azura" end
 
@@ -611,6 +627,10 @@ LinkLuaModifier( "modifier_item_imba_sange_yasha_maim", "items/item_swords.lua",
 LinkLuaModifier( "modifier_item_imba_sange_yasha_disarm", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )		-- Disarm debuff
 LinkLuaModifier( "modifier_item_imba_sange_yasha_stacks", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )		-- Stacking attack speed
 LinkLuaModifier( "modifier_item_imba_sange_yasha_proc", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )			-- Move speed proc
+
+function item_imba_sange_yasha:GetAbilityTextureName()
+   return "custom/imba_sange_and_yasha"
+end
 
 function item_imba_sange_yasha:GetIntrinsicModifierName()
 	return "modifier_item_imba_sange_yasha" end
@@ -898,6 +918,10 @@ LinkLuaModifier( "modifier_item_imba_sange_azura", "items/item_swords.lua", LUA_
 LinkLuaModifier( "modifier_item_imba_sange_azura_stacks", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )		-- Maim/amp debuff
 LinkLuaModifier( "modifier_item_imba_sange_azura_proc", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )			-- Disarm/silence debuff
 
+function item_imba_sange_azura:GetAbilityTextureName()
+   return "custom/imba_sange_and_azura"
+end
+
 function item_imba_sange_azura:GetIntrinsicModifierName()
 	return "modifier_item_imba_sange_azura" end
 
@@ -1069,6 +1093,10 @@ LinkLuaModifier( "modifier_item_imba_azura_yasha_amp", "items/item_swords.lua", 
 LinkLuaModifier( "modifier_item_imba_azura_yasha_silence", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )		-- Silence debuff
 LinkLuaModifier( "modifier_item_imba_azura_yasha_stacks", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )		-- Stacking attack speed
 LinkLuaModifier( "modifier_item_imba_azura_yasha_proc", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )			-- Move speed proc
+
+function item_imba_azura_yasha:GetAbilityTextureName()
+   return "custom/imba_azura_and_yasha"
+end
 
 function item_imba_azura_yasha:GetIntrinsicModifierName()
 	return "modifier_item_imba_azura_yasha" end
@@ -1353,6 +1381,10 @@ LinkLuaModifier( "modifier_item_imba_triumvirate_stacks_debuff", "items/item_swo
 LinkLuaModifier( "modifier_item_imba_triumvirate_proc_debuff", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )		-- Disarm/silence debuff
 LinkLuaModifier( "modifier_item_imba_triumvirate_stacks_buff", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )		-- Stacking attack speed
 LinkLuaModifier( "modifier_item_imba_triumvirate_proc_buff", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )		-- Move speed proc
+
+function item_imba_triumvirate:GetAbilityTextureName()
+   return "custom/imba_sange_and_azura_and_yasha"
+end
 
 function item_imba_triumvirate:GetIntrinsicModifierName()
 	return "modifier_item_imba_triumvirate" end

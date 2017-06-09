@@ -8,6 +8,11 @@ MergeTables(LinkedModifiers,{
 	["modifier_imba_bloodrage_buff_stats"] = LUA_MODIFIER_MOTION_NONE,
 })
 imba_bloodseeker_bloodrage = imba_bloodseeker_bloodrage or class({})
+
+function imba_bloodseeker_bloodrage:GetAbilityTextureName()
+   return "bloodseeker_bloodrage"
+end
+
 function imba_bloodseeker_bloodrage:OnSpellStart()
 	local hTarget = self:GetCursorTarget()
 	local caster = self:GetCaster()
@@ -145,6 +150,11 @@ MergeTables(LinkedModifiers,{
 	["modifier_imba_blood_bath_debuff_silence"] = LUA_MODIFIER_MOTION_NONE,
 })
 imba_bloodseeker_blood_bath = imba_bloodseeker_blood_bath or class({})
+
+function imba_bloodseeker_blood_bath:GetAbilityTextureName()
+   return "bloodseeker_blood_bath"
+end
+
 function imba_bloodseeker_blood_bath:GetAOERadius()
 	return self:GetSpecialValueFor("radius")
 end
@@ -304,6 +314,10 @@ MergeTables(LinkedModifiers,{
 	["modifier_imba_thirst_haste"] = LUA_MODIFIER_MOTION_NONE,
 })
 imba_bloodseeker_thirst = imba_bloodseeker_thirst or class({})
+
+function imba_bloodseeker_thirst:GetAbilityTextureName()
+   return "bloodseeker_thirst"
+end
 
 function imba_bloodseeker_thirst:GetIntrinsicModifierName()
 	return "modifier_imba_thirst_passive"
@@ -525,6 +539,10 @@ MergeTables(LinkedModifiers,{
 })
 
 imba_bloodseeker_rupture = imba_bloodseeker_rupture or class({})
+
+function imba_bloodseeker_rupture:GetAbilityTextureName()
+   return "bloodseeker_rupture"
+end
 
 function imba_bloodseeker_rupture:OnSpellStart(target)
 	local hTarget = target or self:GetCursorTarget()

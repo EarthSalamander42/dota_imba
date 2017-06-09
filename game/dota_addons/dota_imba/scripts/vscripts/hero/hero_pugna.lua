@@ -11,6 +11,10 @@ CreateEmptyTalents("pugna")
 imba_pugna_nether_blast = class({})
 LinkLuaModifier("modifier_imba_nether_blast_magic_res", "hero/hero_pugna.lua", LUA_MODIFIER_MOTION_NONE)
 
+function imba_pugna_nether_blast:GetAbilityTextureName()
+   return "pugna_nether_blast"
+end
+
 function imba_pugna_nether_blast:GetCooldown(level)
     local caster = self:GetCaster()
     local cooldown = self.BaseClass.GetCooldown(self, level)
@@ -222,6 +226,10 @@ end
 
 imba_pugna_decrepify = class({})
 LinkLuaModifier("modifier_imba_decrepify", "hero/hero_pugna.lua", LUA_MODIFIER_MOTION_NONE)
+
+function imba_pugna_decrepify:GetAbilityTextureName()
+   return "pugna_decrepify"
+end
 
 function imba_pugna_decrepify:IsHiddenWhenStolen()
     return false
@@ -473,6 +481,10 @@ function imba_pugna_nether_ward:IsRefreshable() return true end
 function imba_pugna_nether_ward:IsStealable() return true end
 function imba_pugna_nether_ward:IsNetherWardStealable() return false end
 
+function imba_pugna_nether_ward:GetAbilityTextureName()
+   return "pugna_nether_ward"
+end
+
 -------------------------------------------
 function imba_pugna_nether_ward:OnSpellStart()
     -- Ability properties
@@ -516,6 +528,10 @@ end
 imba_pugna_nether_ward_aura = class({})
 LinkLuaModifier("modifier_imba_nether_ward_aura", "hero/hero_pugna.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_nether_ward_degen", "hero/hero_pugna.lua", LUA_MODIFIER_MOTION_NONE)
+
+function imba_pugna_nether_ward_aura:GetAbilityTextureName()
+   return "pugna_nether_ward"
+end
 
 function imba_pugna_nether_ward_aura:GetIntrinsicModifierName()
     return "modifier_imba_nether_ward_aura"
@@ -1065,6 +1081,9 @@ end
 imba_pugna_life_drain = class({})
 LinkLuaModifier("modifier_imba_life_drain", "hero/hero_pugna.lua", LUA_MODIFIER_MOTION_NONE)
 
+function imba_pugna_life_drain:GetAbilityTextureName()
+   return "pugna_life_drain"
+end
 
 function imba_pugna_life_drain:IsHiddenWhenStolen()
     return false
@@ -1399,6 +1418,10 @@ end
 --     LIFE DRAIN CANCEL      --
 --------------------------------
 imba_pugna_life_drain_end = class({})
+
+function imba_pugna_life_drain_end:GetAbilityTextureName()
+   return "custom/pugna_life_drain_end"
+end
 
 function imba_pugna_life_drain_end:IsNetherWardStealable()
     return false

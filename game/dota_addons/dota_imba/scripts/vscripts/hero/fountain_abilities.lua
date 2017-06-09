@@ -39,6 +39,10 @@ imba_fountain_relief = imba_fountain_relief or class({})
 LinkLuaModifier("modifier_imba_fountain_relief_aura", "hero/fountain_abilities", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_fountain_relief_aura_buff", "hero/fountain_abilities", LUA_MODIFIER_MOTION_NONE)
 
+function imba_fountain_relief:GetAbilityTextureName()
+   return "custom/fountain_relief"
+end
+
 function imba_fountain_relief:GetIntrinsicModifierName()
   return "modifier_imba_fountain_relief_aura"
 end

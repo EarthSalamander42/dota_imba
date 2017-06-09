@@ -12,6 +12,10 @@ LinkLuaModifier("modifier_imba_impale_suffering_aura", "hero/hero_nyx_assassin",
 LinkLuaModifier("modifier_imba_impale_suffering", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_impale_stun", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 
+function imba_nyx_assassin_impale:GetAbilityTextureName()
+   return "nyx_assassin_impale"
+end
+
 function imba_nyx_assassin_impale:IsHiddenWhenStolen()
     return false
 end
@@ -358,6 +362,9 @@ imba_nyx_assassin_mana_burn = class({})
 LinkLuaModifier("modifier_imba_mana_burn_parasite", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_mana_burn_parasite_charged", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 
+function imba_nyx_assassin_mana_burn:GetAbilityTextureName()
+   return "nyx_assassin_mana_burn"
+end
 
 function imba_nyx_assassin_mana_burn:IsHiddenWhenStolen()
     return false
@@ -614,6 +621,10 @@ imba_nyx_assassin_spiked_carapace = class({})
 LinkLuaModifier("modifier_imba_spiked_carapace", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_spiked_carapace_stun", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 
+function imba_nyx_assassin_spiked_carapace:GetAbilityTextureName()
+   return "nyx_assassin_spiked_carapace"
+end
+
 function imba_nyx_assassin_spiked_carapace:IsHiddenWhenStolen()
     return false
 end
@@ -853,6 +864,10 @@ end
 imba_nyx_assassin_vendetta = class({})
 LinkLuaModifier("modifier_imba_vendetta", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_vendetta_charge", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
+
+function imba_nyx_assassin_vendetta:GetAbilityTextureName()
+   return "nyx_assassin_vendetta"
+end
 
 function imba_nyx_assassin_vendetta:IsNetherWardStealable() return false end
 function imba_nyx_assassin_vendetta:IsHiddenWhenStolen()

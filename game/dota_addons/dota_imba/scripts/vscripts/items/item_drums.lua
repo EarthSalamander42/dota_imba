@@ -15,6 +15,10 @@ function item_imba_ancient_janggo:GetIntrinsicModifierName()
 	return "modifier_imba_drums"
 end
 
+function item_imba_ancient_janggo:GetAbilityTextureName()
+   return "custom/imba_ancient_janggo"
+end
+
 function item_imba_ancient_janggo:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()

@@ -18,6 +18,10 @@ function item_imba_skadi:GetIntrinsicModifierName()
 	return "modifier_item_imba_skadi" 
 end
 
+function item_imba_skadi:GetAbilityTextureName()
+   return "custom/imba_skadi"
+end
+
 -- Dynamic cast range
 function item_imba_skadi:GetCastRange()
 	local caster = self:GetCaster()	

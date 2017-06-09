@@ -29,6 +29,10 @@ LinkLuaModifier("modifier_imba_rearm_shield", "hero/hero_tinker", LUA_MODIFIER_M
 
 imba_tinker_rearm = class({})
 
+function imba_tinker_rearm:GetAbilityTextureName()
+   return "tinker_rearm"
+end
+
 function imba_tinker_rearm:IsNetherWardStealable()
 	return false
 end
@@ -383,8 +387,12 @@ end
 --			   LASER
 -------------------------------------------
 LinkLuaModifier("modifier_imba_laser_blind", "hero/hero_tinker", LUA_MODIFIER_MOTION_NONE)
-
 imba_tinker_laser = class({})
+
+function imba_tinker_laser:GetAbilityTextureName()
+   return "tinker_laser"
+end
+
 function imba_tinker_laser:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
@@ -522,6 +530,10 @@ end
 -------------------------------------------
 imba_tinker_heat_seeking_missile = class({})
 
+function imba_tinker_heat_seeking_missile:GetAbilityTextureName()
+   return "tinker_heat_seeking_missile"
+end
+
 function imba_tinker_heat_seeking_missile:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
@@ -643,6 +655,11 @@ LinkLuaModifier("modifier_imba_march_dismantle", "hero/hero_tinker", LUA_MODIFIE
 LinkLuaModifier("modifier_imba_march_drone", "hero/hero_tinker", LUA_MODIFIER_MOTION_NONE)
 
 imba_tinker_march_of_the_machines = class({})
+
+function imba_tinker_march_of_the_machines:GetAbilityTextureName()
+   return "tinker_march_of_the_machines"
+end
+
 function imba_tinker_march_of_the_machines:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
@@ -1275,6 +1292,10 @@ end
 --			TECHNOMANCY
 -------------------------------------------
 imba_tinker_technomancy = class({})
+
+function imba_tinker_technomancy:GetAbilityTextureName()
+   return "custom/tinker_tinkermaster"
+end
 
 function imba_tinker_technomancy:OnUpgrade()
 	local caster = self:GetCaster()

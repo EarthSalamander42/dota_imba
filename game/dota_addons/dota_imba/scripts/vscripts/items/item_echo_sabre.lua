@@ -18,6 +18,10 @@ function item_imba_echo_sabre:GetIntrinsicModifierName()
     return "modifier_imba_echo_sabre_passive"
 end
 
+function item_imba_echo_sabre:GetAbilityTextureName()
+   return "custom/imba_echo_sabre"
+end
+
 function item_imba_echo_sabre:GetCooldown( nLevel )
 	local cooldown = self.BaseClass.GetCooldown( self, nLevel )
 	if self:GetCaster():IsRangedAttacker() then
@@ -109,6 +113,10 @@ item_imba_reverb_rapier = item_imba_reverb_rapier or class({})
 -------------------------------------------
 function item_imba_reverb_rapier:GetIntrinsicModifierName()
     return "modifier_imba_reverb_rapier_passive"
+end
+
+function item_imba_reverb_rapier:GetAbilityTextureName()
+   return "custom/imba_reverb_rapier"
 end
 
 function item_imba_reverb_rapier:GetCooldown( nLevel )

@@ -12,6 +12,10 @@ LinkLuaModifier("modifier_imba_shrapnel_charges", "hero/hero_sniper.lua", LUA_MO
 LinkLuaModifier("modifier_imba_shrapnel_aura", "hero/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_shrapnel_slow", "hero/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
 
+function imba_sniper_shrapnel:GetAbilityTextureName()
+   return "sniper_shrapnel"
+end
+
 function imba_sniper_shrapnel:GetIntrinsicModifierName()
     return "modifier_imba_shrapnel_charges"
 end
@@ -507,6 +511,10 @@ LinkLuaModifier("modifier_imba_headshot_attacks", "hero/hero_sniper.lua", LUA_MO
 LinkLuaModifier("modifier_imba_headshot_slow", "hero/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_perfectshot_stun", "hero/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
 
+function imba_sniper_headshot:GetAbilityTextureName()
+   return "sniper_headshot"
+end
+
 function imba_sniper_headshot:GetIntrinsicModifierName()
     return "modifier_imba_headshot_attacks"
 end
@@ -874,6 +882,10 @@ function modifier_imba_perfectshot_stun:IsStunDebuff() return true end
 imba_sniper_take_aim = class({})
 LinkLuaModifier("modifier_imba_take_aim_range", "hero/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
 
+function imba_sniper_take_aim:GetAbilityTextureName()
+   return "sniper_take_aim"
+end
+
 function imba_sniper_take_aim:GetIntrinsicModifierName()
     return "modifier_imba_take_aim_range"
 end
@@ -1038,6 +1050,10 @@ end
 imba_sniper_assassinate = class({})
 LinkLuaModifier("modifier_imba_assassinate_cross", "hero/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_assassinate_ministun", "hero/hero_sniper.lua", LUA_MODIFIER_MOTION_NONE)
+
+function imba_sniper_assassinate:GetAbilityTextureName()
+   return "sniper_assassinate"
+end
 
 function imba_sniper_assassinate:IsHiddenWhenStolen()
     return false

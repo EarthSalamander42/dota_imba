@@ -11,6 +11,10 @@ imba_nevermore_shadowraze_close = imba_nevermore_shadowraze_close or class({})
 LinkLuaModifier("modifier_shadow_raze_combo", "hero/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_shadow_raze_prevention", "hero/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
 
+function imba_nevermore_shadowraze_close:GetAbilityTextureName()
+   return "nevermore_shadowraze1"
+end
+
 function imba_nevermore_shadowraze_close:IsHiddenWhenStolen()
     return false
 end
@@ -76,6 +80,10 @@ end
 --     SHADOW RAZE (MEDIUM)       --
 ------------------------------------
 imba_nevermore_shadowraze_medium = imba_nevermore_shadowraze_medium or class({})
+
+function imba_nevermore_shadowraze_medium:GetAbilityTextureName()
+   return "nevermore_shadowraze2"
+end
 
 function imba_nevermore_shadowraze_medium:IsHiddenWhenStolen()
     return false
@@ -164,6 +172,10 @@ end
 --       SHADOW RAZE (FAR)        --
 ------------------------------------
 imba_nevermore_shadowraze_far = imba_nevermore_shadowraze_far or class({})
+
+function imba_nevermore_shadowraze_far:GetAbilityTextureName()
+   return "nevermore_shadowraze3"
+end
 
 function imba_nevermore_shadowraze_far:IsHiddenWhenStolen()
     return false
@@ -523,6 +535,10 @@ function modifier_shadow_raze_prevention:IsDebuff() return false end
 ------------------------------------
 imba_nevermore_necromastery = imba_nevermore_necromastery or class({})
 LinkLuaModifier("modifier_imba_necromastery_souls", "hero/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
+
+function imba_nevermore_necromastery:GetAbilityTextureName()
+   return "nevermore_necromastery"
+end
 
 function imba_nevermore_necromastery:GetIntrinsicModifierName()
     return "modifier_imba_necromastery_souls"
@@ -945,6 +961,10 @@ imba_nevermore_dark_lord = imba_nevermore_dark_lord or class({})
 LinkLuaModifier("modifier_imba_dark_lord_aura", "hero/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_dark_lord_debuff", "hero/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
 
+function imba_nevermore_dark_lord:GetAbilityTextureName()
+   return "nevermore_dark_lord"
+end
+
 function imba_nevermore_dark_lord:GetIntrinsicModifierName()
     return "modifier_imba_dark_lord_aura"
 end
@@ -1162,6 +1182,10 @@ imba_nevermore_requiem = imba_nevermore_requiem or class({})
 LinkLuaModifier("modifier_imba_reqiuem_phase_buff", "hero/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_reqiuem_debuff", "hero/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_reqiuem_harvest", "hero/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
+
+function imba_nevermore_requiem:GetAbilityTextureName()
+   return "nevermore_requiem"
+end
 
 function imba_nevermore_requiem:IsHiddenWhenStolen()
     return false

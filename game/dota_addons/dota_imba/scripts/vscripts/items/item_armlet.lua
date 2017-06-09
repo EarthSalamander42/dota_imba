@@ -11,6 +11,10 @@ LinkLuaModifier( "modifier_imba_armlet_basic", 			 				"items/item_armlet.lua", 
 LinkLuaModifier( "modifier_imba_armlet_unholy_strength_visual_effect", 	"items/item_armlet.lua", LUA_MODIFIER_MOTION_NONE )	-- Unholy Strength Visual Effect
 LinkLuaModifier( "modifier_imba_armlet_unholy_strength", 				"items/item_armlet.lua", LUA_MODIFIER_MOTION_NONE )	-- Unholy Strength
 
+function item_imba_armlet:GetAbilityTextureName()
+   return "custom/imba_armlet"
+end
+
 function item_imba_armlet:GetBehavior()
 	return DOTA_ABILITY_BEHAVIOR_IMMEDIATE + DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL + DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE + DOTA_ABILITY_BEHAVIOR_ITEM end
 	

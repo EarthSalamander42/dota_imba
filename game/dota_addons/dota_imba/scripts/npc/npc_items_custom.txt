@@ -6465,7 +6465,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"proc_count"			"4"
+				"proc_chance"			"25"
 			}
 			"04"
 			{

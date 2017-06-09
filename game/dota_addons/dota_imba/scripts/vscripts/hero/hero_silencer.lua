@@ -5,6 +5,10 @@ CreateEmptyTalents("silencer")
 ----------------------------------------------------
 imba_silencer_arcane_curse = imba_silencer_arcane_curse or class({})
 
+function imba_silencer_arcane_curse:GetAbilityTextureName()
+   return "silencer_curse_of_the_silent"
+end
+
 function imba_silencer_arcane_curse:OnSpellStart()
 	local point = self:GetCursorPosition()
 	local caster = self:GetCaster()
@@ -200,6 +204,10 @@ end
 -- Glaives of Wisdom
 ----------------------------------------------------
 imba_silencer_glaives_of_wisdom = imba_silencer_glaives_of_wisdom or class({})
+
+function imba_silencer_glaives_of_wisdom:GetAbilityTextureName()
+   return "silencer_glaives_of_wisdom"
+end
 
 function imba_silencer_glaives_of_wisdom:IsNetherWardStealable() return false end
 function imba_silencer_glaives_of_wisdom:IsStealable() return false end
@@ -599,6 +607,10 @@ end
 --------------------------------------------------
 imba_silencer_last_word = imba_silencer_last_word or class({})
 
+function imba_silencer_last_word:GetAbilityTextureName()
+   return "silencer_last_word"
+end
+
 function imba_silencer_last_word:OnSpellStart()
 	local target = self:GetCursorTarget()
 	local caster = self:GetCaster()
@@ -857,6 +869,10 @@ end
 --------------------------------------------------------
 imba_silencer_arcane_supremacy = imba_silencer_arcane_supremacy or class({})
 
+function imba_silencer_arcane_supremacy:GetAbilityTextureName()
+   return "custom/arcane_supremacy"
+end
+
 LinkLuaModifier("modifier_imba_silencer_arcane_supremacy", "hero/hero_silencer", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_silencer_arcane_supremacy = modifier_imba_silencer_arcane_supremacy or class({})
 
@@ -946,6 +962,10 @@ end
 -- Global Silence
 ---------------------------------------------------------
 imba_silencer_global_silence = imba_silencer_global_silence or class({})
+
+function imba_silencer_global_silence:GetAbilityTextureName()
+   return "silencer_global_silence"
+end
 
 function imba_silencer_global_silence:OnSpellStart()
 	local caster = self:GetCaster()

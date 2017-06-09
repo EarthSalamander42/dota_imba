@@ -10,6 +10,10 @@ imba_sandking_burrowstrike = class({})
 LinkLuaModifier("modifier_imba_burrowstrike_stun", "hero/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_burrowstrike_burrow", "hero/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
 
+function imba_sandking_burrowstrike:GetAbilityTextureName()
+   return "sandking_burrowstrike"
+end
+
 function imba_sandking_burrowstrike:IsHiddenWhenStolen()
     return false
 end
@@ -255,6 +259,10 @@ imba_sandking_sand_storm = class({})
 LinkLuaModifier("modifier_imba_sandstorm", "hero/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_sandstorm_invis", "hero/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_sandstorm_aura", "hero/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
+
+function imba_sandking_sand_storm:GetAbilityTextureName()
+   return "sandking_sand_storm"
+end
 
 function imba_sandking_sand_storm:IsHiddenWhenStolen()
     return false
@@ -646,6 +654,9 @@ LinkLuaModifier("modifier_imba_caustic_finale_trigger", "hero/hero_sand_king.lua
 LinkLuaModifier("modifier_imba_caustic_finale_poison", "hero/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_caustic_finale_debuff", "hero/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
 
+function imba_sandking_caustic_finale:GetAbilityTextureName()
+   return "sandking_caustic_finale"
+end
 
 function imba_sandking_caustic_finale:GetIntrinsicModifierName()
     return "modifier_imba_caustic_finale_trigger"
@@ -861,11 +872,15 @@ end
 
 
 -------------------------------
---       BURROWSTRIKE        --
+--         EPICENTER         --
 -------------------------------
 imba_sandking_epicenter = class({})
 LinkLuaModifier("modifier_imba_epicenter_pulse", "hero/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_epicenter_slow", "hero/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
+
+function imba_sandking_epicenter:GetAbilityTextureName()
+   return "sandking_epicenter"
+end
 
 function imba_sandking_epicenter:IsHiddenWhenStolen()
     return false

@@ -12,6 +12,10 @@ LinkLuaModifier( "modifier_imba_blink_dagger_handler", "items/item_blink.lua", L
 function item_imba_blink:GetBehavior()
 	return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES end
 
+function item_imba_blink:GetAbilityTextureName()
+   return "custom/imba_blink"
+end
+
 function item_imba_blink:GetIntrinsicModifierName()
 	return "modifier_imba_blink_dagger_handler" end
 
@@ -178,6 +182,10 @@ end
 -----------------------------------------------------------------------------------------------------------
 if item_imba_blink_boots == nil then item_imba_blink_boots = class({}) end
 LinkLuaModifier( "modifier_imba_blink_boots_handler", "items/item_blink.lua", LUA_MODIFIER_MOTION_NONE ) -- Check if the target was damaged and set cooldown + item bonuses
+
+function item_imba_blink_boots:GetAbilityTextureName()
+   return "custom/imba_blink_boots"
+end
 
 function item_imba_blink_boots:GetBehavior()
 	return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES end

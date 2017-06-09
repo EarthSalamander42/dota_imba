@@ -12,6 +12,10 @@ LinkLuaModifier("modifier_imba_arcane_orb_thinker", "hero/hero_obsidian_destroye
 LinkLuaModifier("modifier_imba_arcane_orb_buff", "hero/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_arcane_orb_debuff", "hero/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
 
+function imba_obsidian_destroyer_arcane_orb:GetAbilityTextureName()
+   return "obsidian_destroyer_arcane_orb"
+end
+
 function imba_obsidian_destroyer_arcane_orb:IsStealable()
     return false
 end
@@ -637,6 +641,10 @@ imba_obsidian_destroyer_astral_imprisonment = class({})
 LinkLuaModifier("modifier_imba_astral_imprisonment", "hero/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_astral_imprisonment_buff", "hero/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
 
+function imba_obsidian_destroyer_astral_imprisonment:GetAbilityTextureName()
+   return "obsidian_destroyer_astral_imprisonment"
+end
+
 function imba_obsidian_destroyer_astral_imprisonment:GetBehavior()
     local caster = self:GetCaster()
     local modifier_self = "modifier_imba_astral_imprisonment_buff"
@@ -999,6 +1007,9 @@ LinkLuaModifier("modifier_imba_essence_aura_buff", "hero/hero_obsidian_destroyer
 LinkLuaModifier("modifier_imba_essence_aura_proc", "hero/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_essence_aura_over_maximum", "hero/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
 
+function imba_obsidian_destroyer_essence_aura:GetAbilityTextureName()
+   return "obsidian_destroyer_essence_aura"
+end
 
 function imba_obsidian_destroyer_essence_aura:GetIntrinsicModifierName()
     return "modifier_imba_essence_aura"
@@ -1393,6 +1404,10 @@ end
 --    SANITY ECLIPSE     --
 ---------------------------
 imba_obsidian_destroyer_sanity_eclipse = class({})
+
+function imba_obsidian_destroyer_sanity_eclipse:GetAbilityTextureName()
+   return "obsidian_destroyer_sanity_eclipse"
+end
 
 function imba_obsidian_destroyer_sanity_eclipse:IsHiddenWhenStolen()
     return false

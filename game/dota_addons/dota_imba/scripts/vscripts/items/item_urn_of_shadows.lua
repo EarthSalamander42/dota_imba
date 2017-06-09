@@ -10,6 +10,10 @@ function item_imba_urn_of_shadows:GetIntrinsicModifierName()
 	return "modifier_imba_urn_of_shadows_passive"
 end
 
+function item_imba_urn_of_shadows:GetAbilityTextureName()
+   return "item_urn_of_shadows"
+end
+
 function item_imba_urn_of_shadows:CastFilterResultTarget(target)
 	if IsServer() then
 		local caster = self:GetCaster()
