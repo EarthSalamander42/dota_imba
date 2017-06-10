@@ -60,8 +60,8 @@ function modifier_imba_power_treads_2:DeclareFunctions()
 	local funcs = {	MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE,
 					MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 					MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
-					MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-					MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE}
+					MODIFIER_PROPERTY_STATS_INTELLECT_BONUS
+				}	
 	return funcs
 end
 
@@ -139,15 +139,7 @@ function modifier_imba_power_treads_2:OnDestroyed()
 	end
 end
 
-function modifier_imba_power_treads_2:GetModifierBaseAttack_BonusDamage()
-	local parent = self:GetParent()
-	if not parent:IsHero() then return end
-	
-	local ability = self:GetAbility()
-	local main_stats = parent:GetPrimaryStatValue()
-	local damage_bonus = ability:GetSpecialValueFor("main_stat_bonus_damage")	
-	return main_stats * damage_bonus
-end
+
 
 function modifier_imba_power_treads_2:GetModifierMoveSpeedBonus_Special_Boots()
 	local ability = self:GetAbility()
@@ -211,7 +203,9 @@ end
 
 function modifier_imba_mega_treads_stat_multiplier_00:DeclareFunctions()
 	local funcs = {	MODIFIER_PROPERTY_HEALTH_BONUS,			
-					MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,}
+					MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
+					MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE
+					}
 	return funcs
 end
 
@@ -237,6 +231,16 @@ function modifier_imba_mega_treads_stat_multiplier_00:GetModifierConstantHealthR
 	return strength * regen_bonus
 end
 
+function modifier_imba_mega_treads_stat_multiplier_00:GetModifierBaseAttack_BonusDamage()
+	local parent = self:GetParent()
+	if not parent:IsHero() then return end
+	
+	local ability = self:GetAbility()
+	local main_stats = parent:GetPrimaryStatValue()
+	local damage_bonus = ability:GetSpecialValueFor("main_stat_bonus_damage")	
+	return main_stats * damage_bonus
+end
+
 -----------------------------------------------------------------------------------------------------------
 --	Agility multiplier modifier
 -----------------------------------------------------------------------------------------------------------
@@ -247,7 +251,9 @@ function modifier_imba_mega_treads_stat_multiplier_01:IsPurgable() return false 
 
 function modifier_imba_mega_treads_stat_multiplier_01:DeclareFunctions()
 	local funcs = {	MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-					MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS}
+					MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+					MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE
+					}
 	return funcs
 end
 
@@ -285,6 +291,16 @@ function modifier_imba_mega_treads_stat_multiplier_01:GetModifierPhysicalArmorBo
 	return agility * armor_bonus	
 end
 
+function modifier_imba_mega_treads_stat_multiplier_01:GetModifierBaseAttack_BonusDamage()
+	local parent = self:GetParent()
+	if not parent:IsHero() then return end
+	
+	local ability = self:GetAbility()
+	local main_stats = parent:GetPrimaryStatValue()
+	local damage_bonus = ability:GetSpecialValueFor("main_stat_bonus_damage")	
+	return main_stats * damage_bonus
+end
+
 -----------------------------------------------------------------------------------------------------------
 --	Intelliegence multiplier modifier (Stacks are used to calculate bonus spell power)
 -----------------------------------------------------------------------------------------------------------
@@ -295,7 +311,9 @@ function modifier_imba_mega_treads_stat_multiplier_02:IsPurgable() return false 
 
 function modifier_imba_mega_treads_stat_multiplier_02:DeclareFunctions()
 	local funcs = {	MODIFIER_PROPERTY_MANA_BONUS,	
-					MODIFIER_PROPERTY_BASE_MANA_REGEN}
+					MODIFIER_PROPERTY_BASE_MANA_REGEN,
+					MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE
+					}
 	return funcs
 end
 
@@ -335,4 +353,14 @@ function modifier_imba_mega_treads_stat_multiplier_02:GetModifierBaseRegen()
 	local regen_bonus = ability:GetSpecialValueFor("int_bonus_mp_regen")
 	
 	return intellect * regen_bonus
+end
+
+function modifier_imba_mega_treads_stat_multiplier_02:GetModifierBaseAttack_BonusDamage()
+	local parent = self:GetParent()
+	if not parent:IsHero() then return end
+	
+	local ability = self:GetAbility()
+	local main_stats = parent:GetPrimaryStatValue()
+	local damage_bonus = ability:GetSpecialValueFor("main_stat_bonus_damage")	
+	return main_stats * damage_bonus
 end
