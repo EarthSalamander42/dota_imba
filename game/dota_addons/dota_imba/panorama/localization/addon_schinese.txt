@@ -421,7 +421,7 @@
 	// Magnus
 	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_1_title"					"震荡波"			
 	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_1_Description"			"+12秒 震荡波磁化持续时间"
-	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_2_title"					"两级反转"
+	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_2_title"					"两极反转"
 	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_2_Description"			"+125 两级反转对磁化单位伤害"
 	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_3_title"					"授予力量"
 	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_3_Description"			"+15% 授予力量效果"
@@ -431,9 +431,10 @@
 	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_5_Description"			"-4秒 震荡波冷却时间"
 	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_6_title"					"授予力量"	
 	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_6_Description"			"+5%/50 极度加强移动/攻击速度加成"
-	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_7_title"					"两级反转"
+	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_7_title"					"两极反转"
 	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_7_Description"			"+100 两级反转对磁化单位作用范围"		
-	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_8_title"					"+250 两级反转对磁化单位牵引距离"
+	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_8_title"					"两极反转"
+	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_8_Description"			"+250 两级反转对磁化单位牵引距离"		
 
 	// Venomancer
 	"Dota_Tooltip_Talent_special_bonus_imba_venomancer_1_title"						"瘴气"
