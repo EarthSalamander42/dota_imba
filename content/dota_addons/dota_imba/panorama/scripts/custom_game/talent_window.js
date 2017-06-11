@@ -201,18 +201,18 @@ function OnTalentChoiceUpdated(table_name, key, value){
                 if(key == "hero_talent_choice_"+currentShownUnitID){
                     //Update UI
                     PopulateIMBATalentWindow();
-                }
 
-                if(Entities.GetAbilityPoints(currentShownUnitID) <= 1 || //Note that this is <= 1 because it takes time for server to update the abilityPoints
-                    !CanHeroUpgradeAnyTalents(currentShownUnitID)){
-                    //Close window if hero no longer has ability points
-                    OpenImbaTalentWindow(false);
+                    if(Entities.GetAbilityPoints(currentShownUnitID) <= 1 || //Note that this is <= 1 because it takes time for server to update the abilityPoints
+                        !CanHeroUpgradeAnyTalents(currentShownUnitID)){
+                        //Close window if hero no longer has ability points
+                        OpenImbaTalentWindow(false);
 
-                    //Force remove .upgrade class
-                    var imbaBtnPanel = GetImbaTalentButtonPanel();
-                    //Should not be null as you need it to open talent window
-                    imbaBtnPanel.RemoveClass("upgrade");
-                    bol_to_animate_btn = false;
+                        //Force remove .upgrade class
+                        var imbaBtnPanel = GetImbaTalentButtonPanel();
+                        //Should not be null as you need it to open talent window
+                        imbaBtnPanel.RemoveClass("upgrade");
+                        bol_to_animate_btn = false;
+                    }
                 }
             }
         }
