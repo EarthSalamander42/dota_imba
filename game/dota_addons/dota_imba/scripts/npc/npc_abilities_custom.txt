@@ -26593,6 +26593,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO | DOTA_UNIT_TARGET_FLAG_DEAD"
 		"AbilityTextureName"			"disruptor_glimpse"
 		"ScriptFile"					"hero/hero_disruptor"
 		"FightRecapLevel"				"1"
@@ -26656,7 +26657,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"vision_linger"			"3.34"
+				"vision_duration"			"3.34"
 			}
 
 			"06"
@@ -26694,6 +26695,10 @@
 				"var_type"				"FIELD_FLOAT"
 				"cast_range"	"800 1200 1500 1800 2000 2200 2400"
 			}
+			"12"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"global_radius"		"100000"
 		}
 	}
 
@@ -26706,7 +26711,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityTextureName"			"disruptor_kinetic_field"
@@ -26782,7 +26787,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"cooldown_reduction"	"1.5"
+				"cooldown_reduction"	"0.5"
 			}
 			"09"
 			{
