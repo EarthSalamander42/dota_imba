@@ -1,32 +1,27 @@
 "use strict";
 
 var g_ScoreboardHandle = null;
+var g_flyoutUpdateTimer = null;
+
+function UpdateFlyoutScoreboard()
+{
+    ScoreboardUpdater_SetScoreboardActive( g_ScoreboardHandle, true );
+    g_flyoutUpdateTimer = $.Schedule( 0.2, UpdateFlyoutScoreboard );
+}
 
 function SetFlyoutScoreboardVisible( bVisible )
 {
 	$.GetContextPanel().SetHasClass( "flyout_scoreboard_visible", bVisible );
-	if ( bVisible )
-	{
-		ScoreboardUpdater_SetScoreboardActive( g_ScoreboardHandle, true );
-	}
-	else
-	{
-		ScoreboardUpdater_SetScoreboardActive( g_ScoreboardHandle, false );
-	}
-}
-
-function HideDotaOriginalScoreboard(){
-    var rootUI = $.GetContextPanel();
-    while(rootUI.id != "Hud" && rootUI.GetParent() != null){
-        rootUI = rootUI.GetParent();
+    if( bVisible ){
+        UpdateFlyoutScoreboard();
+    }else{
+        ScoreboardUpdater_SetScoreboardActive( g_ScoreboardHandle, false );
+        if( g_flyoutUpdateTimer )
+        {
+            $.CancelScheduled(g_flyoutUpdateTimer);
+            g_flyoutUpdateTimer = null;
+        }
     }
-
-    //Do not delete original scoreboard, it will cause unwanted crashes
-    var originalScoreboard = rootUI.FindChildTraverse("scoreboard");
-    var children = originalScoreboard.Children();
-    $.Each(children, function(child){
-        child.style.visibility = "collapse";
-    });
 }
 
 (function()
@@ -43,6 +38,4 @@ function HideDotaOriginalScoreboard(){
 	SetFlyoutScoreboardVisible( false );
 
 	$.RegisterEventHandler( "DOTACustomUI_SetFlyoutScoreboardVisible", $.GetContextPanel(), SetFlyoutScoreboardVisible );
-
-    HideDotaOriginalScoreboard();
 })();
