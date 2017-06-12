@@ -237,7 +237,7 @@ end
 if modifier_item_imba_skadi_slow == nil then modifier_item_imba_skadi_slow = class({}) end
 function modifier_item_imba_skadi_slow:IsHidden() return false end
 function modifier_item_imba_skadi_slow:IsDebuff() return true end
-function modifier_item_imba_skadi_slow:IsPurgable() return false end
+function modifier_item_imba_skadi_slow:IsPurgable() return true end
 
 -- Modifier status effect
 function modifier_item_imba_skadi_slow:GetStatusEffectName()
@@ -274,7 +274,7 @@ function modifier_item_imba_skadi_slow:GetModifierMoveSpeedBonus_Percentage()
 if modifier_item_imba_skadi_freeze == nil then modifier_item_imba_skadi_freeze = class({}) end
 function modifier_item_imba_skadi_freeze:IsHidden() return true end
 function modifier_item_imba_skadi_freeze:IsDebuff() return true end
-function modifier_item_imba_skadi_freeze:IsPurgable() return false end
+function modifier_item_imba_skadi_freeze:IsPurgable() return true end
 
 -- Modifier particle
 function modifier_item_imba_skadi_freeze:GetEffectName()

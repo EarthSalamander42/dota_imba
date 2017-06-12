@@ -82,7 +82,7 @@ function imba_lycan_summon_wolves:OnSpellStart()
 	wolves_count = wolves_count + caster:FindTalentValue("special_bonus_imba_lycan_5")
 	
 	
-	-- Fine and kill any living wolves on the map
+	-- Find and kill any living wolves on the map
 	local creatures = FindUnitsInRadius(caster:GetTeamNumber(),
 									caster:GetAbsOrigin(),
 									nil,
@@ -97,7 +97,7 @@ function imba_lycan_summon_wolves:OnSpellStart()
 	-- Iterate between all wolf levels to make sure all of them are dead
 	for _,creature in pairs(creatures) do -- check each friendly player controlled creep
 		for i = 1, 6 do						
-			if creature:GetUnitName() == wolf_name..i then -- if it's a wolf, kill it
+			if creature:GetUnitName() == wolf_name..i and creature:GetPlayerOwnerID() == player_id then -- If it's your wolf, kill it
 				creature.killed_by_resummon = true
 				creature:ForceKill(false)				
 			end	
