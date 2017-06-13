@@ -172,12 +172,14 @@ function PlantProximityMine(caster, ability, spawn_point, big_boom)
     local mine_ability = "imba_techies_proximity_mine_trigger"
 
     -- Create the mine unit
-    local mine
+    local mine_name
     if big_boom then
-        mine = CreateUnitByName("npc_imba_techies_proximity_mine_big_boom", spawn_point, true, caster, caster, caster:GetTeamNumber())
+        mine_name = "npc_imba_techies_proximity_mine_big_boom"
     else
-        mine = CreateUnitByName("npc_imba_techies_proximity_mine", spawn_point, true, caster, caster, caster:GetTeamNumber())
+        mine_name = "npc_imba_techies_proximity_mine"
     end
+
+    local mine = CreateUnitByName(mine_name, spawn_point, true, caster, caster, caster:GetTeamNumber())
 
 	mine:AddRangeIndicator(caster, nil, nil, ability:GetAOERadius(), 150, 22, 22, false, false, false)
 
