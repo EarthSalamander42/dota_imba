@@ -536,11 +536,13 @@ function modifier_imba_proximity_mine:OnIntervalThink()
                     end
 
                     -- If an enemy was killed from a mine, play kill response
-                    Timers:CreateTimer(FrameTime()*2, function()
-                        if enemy_killed and RollPercentage(25) then
-                            EmitSoundOn(self.kill_response[math.random(1, #self.kill_response)], self.owner)
-                        end
-                    end)
+                    if RollPercentage(25) then
+                        Timers:CreateTimer(FrameTime()*2, function()
+                            if enemy_killed then
+                                EmitSoundOn(self.kill_response[math.random(1, #self.kill_response)], self.owner)
+                            end
+                        end)
+                    end
 
                     -- Apply flying vision at detonation point
                     AddFOWViewer(self.caster:GetTeamNumber(), self.caster:GetAbsOrigin(), self.fow_radius, self.fow_duration, false)
