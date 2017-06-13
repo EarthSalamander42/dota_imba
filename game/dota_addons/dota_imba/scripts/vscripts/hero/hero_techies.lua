@@ -188,11 +188,9 @@ function PlantProximityMine(caster, ability, spawn_point, big_boom)
     mine:SetControllableByPlayer(playerID, true)
 
     -- Set the mine's ability to be the same level as the planting ability
-    if mine:HasAbility(mine_ability) then
-        local mine_ability_handler = mine:FindAbilityByName(mine_ability)
-        if mine_ability_handler then
-            mine_ability_handler:SetLevel(ability:GetLevel())
-        end
+    local mine_ability_handler = mine:FindAbilityByName(mine_ability)
+    if mine_ability_handler then
+        mine_ability_handler:SetLevel(ability:GetLevel())
     end
 
     -- Set the mine's owner to be the caster
@@ -490,12 +488,10 @@ function modifier_imba_proximity_mine:OnIntervalThink()
                             end
 
                             -- If the enemy has Electrocharge (from Stasis Trap), refresh it and add a stack
-                            if enemy:HasModifier(self.modifier_electrocharge) then
-                                local modifier_electrocharge_handler = enemy:FindModifierByName(self.modifier_electrocharge)
-                                if modifier_electrocharge_handler then
-                                    modifier_electrocharge_handler:IncrementStackCount()
-                                    modifier_electrocharge_handler:ForceRefresh()
-                                end
+                            local modifier_electrocharge_handler = enemy:FindModifierByName(self.modifier_electrocharge)
+                            if modifier_electrocharge_handler then
+                                modifier_electrocharge_handler:IncrementStackCount()
+                                modifier_electrocharge_handler:ForceRefresh()
                             end
 
                             -- Find Remote Mines in the explosion radius
@@ -512,15 +508,17 @@ function modifier_imba_proximity_mine:OnIntervalThink()
                             -- Give them inflammable stacks
                             for _,remote_mine in pairs(remote_mines) do
                                 if remote_mine:GetUnitName() == "npc_imba_techies_remote_mine" then
-                                    if not remote_mine:HasModifier(self.modifier_inflammable) and remote_mine:HasAbility(self.detonate_ability) then
+
+                                    local modifier_inflammable_handler = remote_mine:FindModifierByName(self.modifier_inflammable)
+                                    if not modifier_inflammable_handler then
                                         local detonate_ability_handler = remote_mine:FindAbilityByName(self.detonate_ability)
                                         if detonate_ability_handler then
                                             local inflammable_duration = detonate_ability_handler:GetSpecialValueFor("inflammable_duration")
-                                            remote_mine:AddNewModifier(self.caster, detonate_ability_handler, self.modifier_inflammable, {duration = inflammable_duration})
+                                            modifier_inflammable_handler = remote_mine:AddNewModifier(self.caster, detonate_ability_handler, self.modifier_inflammable, {duration = inflammable_duration})
                                         end
                                     end
 
-                                    local modifier_inflammable_handler = remote_mine:FindModifierByName(self.modifier_inflammable)
+                                    -- Nil Check
                                     if modifier_inflammable_handler then
                                         modifier_inflammable_handler:IncrementStackCount()
                                         modifier_inflammable_handler:ForceRefresh()
@@ -831,11 +829,9 @@ function imba_techies_stasis_trap:OnSpellStart()
         trap:SetControllableByPlayer(playerID, true)
 
         -- Set the mine's ability to be the same level as the planting ability
-        if trap:HasAbility(trap_ability) then
-            local trap_ability_handler = trap:FindAbilityByName(trap_ability)
-            if trap_ability_handler then
-                trap_ability_handler:SetLevel(ability:GetLevel())
-            end
+        local trap_ability_handler = trap:FindAbilityByName(trap_ability)
+        if trap_ability_handler then
+            trap_ability_handler:SetLevel(ability:GetLevel())
         end
 
         -- Set the mine's owner to be the caster
@@ -994,15 +990,16 @@ function modifier_imba_statis_trap:OnIntervalThink()
                 -- Find Remote Mines in the explosion radius and give them inflammable stacks
                 for _,mine in pairs(mines) do
                     if mine:GetUnitName() == "npc_imba_techies_remote_mine" then
-                        if not mine:HasModifier(self.modifier_inflammable) and mine:HasAbility(self.detonate_ability) then
+                        local modifier_inflammable_handler = mine:FindModifierByName(self.modifier_inflammable)
+                        if not modifier_inflammable_handler then
                             local detonate_ability_handler = mine:FindAbilityByName(self.detonate_ability)
                             if detonate_ability_handler then
                                 local inflammable_duration = detonate_ability_handler:GetSpecialValueFor("inflammable_duration")
-                                mine:AddNewModifier(self.caster, detonate_ability_handler, self.modifier_inflammable, {duration = inflammable_duration})
+                                modifier_inflammable_handler = mine:AddNewModifier(self.caster, detonate_ability_handler, self.modifier_inflammable, {duration = inflammable_duration})
                             end
                         end
 
-                        local modifier_inflammable_handler = mine:FindModifierByName(self.modifier_inflammable)
+                        -- Nil check
                         if modifier_inflammable_handler then
                             modifier_inflammable_handler:IncrementStackCount()
                             modifier_inflammable_handler:ForceRefresh()
@@ -1325,11 +1322,9 @@ end
 
 function modifier_imba_blast_off:OnDestroy()
     if IsServer() then
-        if self.parent:HasModifier(self.modifier_movement) then
-            local modifier_movement_handler = self.parent:FindModifierByName(self.modifier_movement)
-            if modifier_movement_handler then
-                modifier_movement_handler.last_jump = true
-            end
+        local modifier_movement_handler = self.parent:FindModifierByName(self.modifier_movement)
+        if modifier_movement_handler then
+            modifier_movement_handler.last_jump = true
         end
 
         -- If it was a pig, remove it after a small delay
@@ -1537,11 +1532,9 @@ function modifier_imba_blast_off_movement:BlastOffLanded()
         if self.caster:HasTalent("special_bonus_imba_techies_5") then
 
             -- Find Proximity Mine ability. Talent can't proc if the caster doesn't have Proximity Mines.
-            if self.caster:HasAbility(self.proximity_ability) then
-                local proximity_ability_handler = self.caster:FindAbilityByName(self.proximity_ability)
-                if proximity_ability_handler and proximity_ability_handler:GetLevel() > 0 then
-                    PlantProximityMine(self.caster, proximity_ability_handler, self.parent:GetAbsOrigin())
-                end
+            local proximity_ability_handler = self.caster:FindAbilityByName(self.proximity_ability)
+            if proximity_ability_handler and proximity_ability_handler:GetLevel() > 0 then
+                PlantProximityMine(self.caster, proximity_ability_handler, self.parent:GetAbsOrigin())
             end
         end
 
@@ -1609,11 +1602,9 @@ function imba_techies_remote_mine:OnUpgrade()
     local caster = self:GetCaster()
     local focused_ability = "imba_techies_focused_detonate"
 
-    if caster:HasAbility(focused_ability) then
-        local focused_ability_handler = caster:FindAbilityByName(focused_ability)
-        if focused_ability_handler then
-            focused_ability_handler:SetLevel(1)
-        end
+    local focused_ability_handler = caster:FindAbilityByName(focused_ability)
+    if focused_ability_handler then
+        focused_ability_handler:SetLevel(1)
     end
 end
 
@@ -1686,11 +1677,9 @@ function imba_techies_remote_mine:OnSpellStart()
     mine:SetControllableByPlayer(playerID, true)
 
     -- Set the mine's ability to be the same level as the planting ability
-    if mine:HasAbility(mine_ability) then
-        local mine_ability_handler = mine:FindAbilityByName(mine_ability)
-        if mine_ability_handler then
-            mine_ability_handler:SetLevel(ability:GetLevel())
-        end
+    local mine_ability_handler = mine:FindAbilityByName(mine_ability)
+    if mine_ability_handler then
+        mine_ability_handler:SetLevel(ability:GetLevel())
     end
 
     -- Set the mine's owner to be the caster
@@ -1774,11 +1763,9 @@ function imba_techies_remote_mine_pinpoint_detonation:OnSpellStart()
 
         -- Fetch stacks of Inflammable
         local stacks = 0
-        if caster:HasModifier(modifier_inflammable) then
-            local modifier_inflammable_handler = caster:FindModifierByName(modifier_inflammable)
-            if modifier_inflammable_handler then
-                stacks = modifier_inflammable_handler:GetStackCount()
-            end
+        local modifier_inflammable_handler = caster:FindModifierByName(modifier_inflammable)
+        if modifier_inflammable_handler then
+            stacks = modifier_inflammable_handler:GetStackCount()
         end
 
         -- Increase radius and damage by current Inflammable stacks
@@ -1809,12 +1796,10 @@ function imba_techies_remote_mine_pinpoint_detonation:OnSpellStart()
             ApplyDamage(damageTable)
 
             -- If the enemy has Electrocharge (from Stasis Trap), refresh it and add a stack
-            if enemy:HasModifier(modifier_electrocharge) then
-                local modifier_electrocharge_handler = enemy:FindModifierByName(modifier_electrocharge)
-                if modifier_electrocharge_handler then
-                    modifier_electrocharge_handler:IncrementStackCount()
-                    modifier_electrocharge_handler:ForceRefresh()
-                end
+            local modifier_electrocharge_handler = enemy:FindModifierByName(modifier_electrocharge)
+            if modifier_electrocharge_handler then
+                modifier_electrocharge_handler:IncrementStackCount()
+                modifier_electrocharge_handler:ForceRefresh()
             end
         end
 
@@ -1830,14 +1815,15 @@ function imba_techies_remote_mine_pinpoint_detonation:OnSpellStart()
                                         false)
 
         for _,mine in pairs(mines) do
-            -- If a mine doesn't inflammable yet, give it to it
             if mine:GetUnitName() == "npc_imba_techies_remote_mine" then
-                if not mine:HasModifier(modifier_inflammable) then
-                    mine:AddNewModifier(caster, ability, modifier_inflammable, {duration = inflammable_duration})
+
+                local modifier_inflammable_handler = mine:FindModifierByName(modifier_inflammable)
+                if not modifier_inflammable_handler then
+                    -- If a mine doesn't inflammable yet, give it to it
+                    modifier_inflammable_handler = mine:AddNewModifier(caster, ability, modifier_inflammable, {duration = inflammable_duration})
                 end
 
                 -- Grant them a stack of Inflammable
-                local modifier_inflammable_handler = mine:FindModifierByName(modifier_inflammable)
                 if modifier_inflammable_handler then
                     modifier_inflammable_handler:IncrementStackCount()
                     modifier_inflammable_handler:ForceRefresh()
@@ -1966,11 +1952,9 @@ function imba_techies_focused_detonate:OnSpellStart()
         Timers:CreateTimer(FrameTime()*(i-1), function()
 
             -- Find their Pinpoint Detonate spell and force them to cast it
-            if remote_mines[i]:HasAbility(detonate_ability) then
-                local detonate_ability_handler = remote_mines[i]:FindAbilityByName(detonate_ability)
-                if detonate_ability_handler then
-                    detonate_ability_handler:OnSpellStart()
-                end
+            local detonate_ability_handler = remote_mines[i]:FindAbilityByName(detonate_ability)
+            if detonate_ability_handler then --detonate only if remote_mines has the ability
+                detonate_ability_handler:OnSpellStart()
             end
         end)
     end
@@ -2176,7 +2160,7 @@ function modifier_imba_minefield_sign_detection:OnDestroy()
 
             if parent:GetUnitName() == "npc_imba_techies_remote_mine" and parent:IsAlive() then
                 local detonate_ability_handler = parent:FindAbilityByName(detonate_ability)
-                if detonate_ability_handler then
+                if detonate_ability_handler then --detonate only if parent has the ability
                     local radius = detonate_ability_handler:GetSpecialValueFor("radius")
 
                     local enemies = FindUnitsInRadius(parent:GetTeamNumber(),
