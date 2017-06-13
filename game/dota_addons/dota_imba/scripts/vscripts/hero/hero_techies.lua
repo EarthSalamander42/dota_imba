@@ -2159,31 +2159,28 @@ end
 
 function modifier_imba_minefield_sign_detection:OnDestroy()
     if IsServer() then
-        self.parent = self:GetParent()
-        self.detonate_ability = "imba_techies_remote_mine_pinpoint_detonation"
+        local parent = self:GetParent()
 
         -- If it is a Remote Mine, wait a game tick, check if the mine is still alive, and scan for nearby enemies
         Timers:CreateTimer(FrameTime(), function()
-            if self.parent:GetUnitName() == "npc_imba_techies_remote_mine" then
-                if self.parent:IsAlive() then
-                    if self.parent:HasAbility(self.detonate_ability) then
-                        local detonate_ability_handler = self.parent:FindAbilityByName(self.detonate_ability)
-                        if detonate_ability_handler then
-                            local radius = detonate_ability_handler:GetSpecialValueFor("radius")
+            local detonate_ability = "imba_techies_remote_mine_pinpoint_detonation"
 
-                            local enemies = FindUnitsInRadius(self.parent:GetTeamNumber(),
-                                                              self.parent:GetAbsOrigin(),
-                                                              nil,
-                                                              radius,
-                                                              DOTA_UNIT_TARGET_TEAM_ENEMY,
-                                                              DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-                                                              DOTA_UNIT_TARGET_FLAG_NONE,
-                                                              FIND_ANY_ORDER,
-                                                              false)
-                            if #enemies > 0 then
-                                detonate_ability_handler:OnSpellStart()
-                            end
-                        end
+            if parent:GetUnitName() == "npc_imba_techies_remote_mine" and parent:IsAlive() then
+                local detonate_ability_handler = parent:FindAbilityByName(detonate_ability)
+                if detonate_ability_handler then
+                    local radius = detonate_ability_handler:GetSpecialValueFor("radius")
+
+                    local enemies = FindUnitsInRadius(parent:GetTeamNumber(),
+                                                        parent:GetAbsOrigin(),
+                                                        nil,
+                                                        radius,
+                                                        DOTA_UNIT_TARGET_TEAM_ENEMY,
+                                                        DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+                                                        DOTA_UNIT_TARGET_FLAG_NONE,
+                                                        FIND_ANY_ORDER,
+                                                        false)
+                    if #enemies > 0 then
+                        detonate_ability_handler:OnSpellStart()
                     end
                 end
             end
