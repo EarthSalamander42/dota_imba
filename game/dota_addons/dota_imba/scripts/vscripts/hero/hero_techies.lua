@@ -591,7 +591,7 @@ function modifier_imba_proximity_mine:OnTakeDamage(keys)
         -- Reduce mines' life by 1, or kill it. This is only relevant for Big Boom mines
         local mine_health = self.caster:GetHealth()
         if mine_health > 1 then
-            self.caster:SetHealth(self.caster:GetHealth() - 1)
+            self.caster:SetHealth(mine_health - 1)
         else
             self.caster:Kill(self.ability, attacker)
         end
@@ -711,10 +711,7 @@ function imba_techies_stasis_trap:IsNetherWardStealable()
 end
 
 function imba_techies_stasis_trap:GetAOERadius()
-    local caster = self:GetCaster()
-    local ability = self
-
-    local root_range = ability:GetSpecialValueFor("root_range")
+    local root_range = self:GetSpecialValueFor("root_range")
     return root_range
 end
 
@@ -1091,18 +1088,20 @@ end
 
 function modifier_imba_statis_trap_electrocharge:IsHidden() return false end
 function modifier_imba_statis_trap_electrocharge:IsPurgable() return true end
-function modifier_imba_statis_trap_electrocharge:IsDebuff() return true end    
+function modifier_imba_statis_trap_electrocharge:IsDebuff() return true end
 
 function modifier_imba_statis_trap_electrocharge:OnIntervalThink()
     if IsServer() then
         -- Determine movespeed and radius for this tick
         local stacks = self:GetStackCount()
         local movespeed = self.base_magnetic_movespeed + self.magnetic_stack_movespeed * stacks
-        local radius = self.base_magnetic_radius + self.magnetic_stack_radius * stacks        
+        local radius = self.base_magnetic_radius + self.magnetic_stack_radius * stacks
+
+        local parentAbsOrigin = self.parent:GetAbsOrigin()
 
         -- Find all nearby mines
         local mines = FindUnitsInRadius(self.teamnumber,
-                                        self.parent:GetAbsOrigin(),
+                                        parentAbsOrigin,
                                         nil,
                                         radius,
                                         DOTA_UNIT_TARGET_TEAM_FRIENDLY,
@@ -1112,17 +1111,20 @@ function modifier_imba_statis_trap_electrocharge:OnIntervalThink()
                                         false)
 
         -- Move each mine towards the parent of the debuff
-        for _,mine in pairs(mines) do            
-            if mine:GetUnitName() == "npc_imba_techies_proximity_mine" or mine:GetUnitName() == "npc_imba_techies_proximity_mine_big_boom" or mine:GetUnitName() == "npc_imba_techies_stasis_trap" or mine:GetUnitName() == "npc_imba_techies_remote_mine" then
+        for _,mine in pairs(mines) do
+            local mineUnitName = mine:GetUnitName()
+            if mineUnitName == "npc_imba_techies_proximity_mine" or mineUnitName == "npc_imba_techies_proximity_mine_big_boom" or mineUnitName == "npc_imba_techies_stasis_trap" or mineUnitName == "npc_imba_techies_remote_mine" then
+                local mineAbsOrigin = mine:GetAbsOrigin()
 
-                -- Get mine's direction and distance from enemy
-                local direction = (self.parent:GetAbsOrigin() - mine:GetAbsOrigin()):Normalized()                
-                local distance = (self.parent:GetAbsOrigin() - mine:GetAbsOrigin()):Length2D()  
+                -- Get mine's distance from enemy
+                local distance = (parentAbsOrigin - mineAbsOrigin):Length2D()
 
                 -- Minimum distance so game won't keep trying to put it closer in zero range
                 if distance > 25 then
+                    -- Get mine's direction from enemy
+                    local direction = (parentAbsOrigin - mineAbsOrigin):Normalized()
                     -- Set the mine's location closer to the enemy
-                    local mine_location = mine:GetAbsOrigin() + direction * movespeed * FrameTime()
+                    local mine_location = mineAbsOrigin + direction * movespeed * FrameTime()
                     mine:SetAbsOrigin(mine_location)
                 end
             end
