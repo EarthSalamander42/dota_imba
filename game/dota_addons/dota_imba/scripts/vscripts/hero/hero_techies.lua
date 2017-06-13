@@ -73,7 +73,8 @@ function imba_techies_proximity_mine:CastFilterResultLocation(location)
 
         -- Search and see if mines were found
         for _,unit in pairs(friendly_units) do
-            if unit:GetUnitName() == "npc_imba_techies_proximity_mine" or unit:GetUnitName() == "npc_imba_techies_proximity_mine_big_boom" then
+            local unitName = unit:GetUnitName()
+            if unitName == "npc_imba_techies_proximity_mine" or unitName == "npc_imba_techies_proximity_mine_big_boom" then
                 mine_found = true
                 break
             end
@@ -610,7 +611,6 @@ modifier_imba_proximity_mine_building_res = modifier_imba_proximity_mine_buildin
 
 function modifier_imba_proximity_mine_building_res:OnCreated()
     -- Ability properties
-    self.caster = self:GetCaster()
     self.ability = self:GetAbility()
 
     -- Ability specials
@@ -643,7 +643,8 @@ function modifier_imba_proximity_mine_talent:OnCreated()
         self.caster = self:GetCaster()
         self.parent = self:GetParent()
         self.parent_team = self.parent:GetTeamNumber()
-        self.parent_pos = self.parent:GetAbsOrigin()
+        local parentAbsOrigin = self.parent:GetAbsOrigin()
+        self.parent_pos = parentAbsOrigin
         self.ability = self:GetAbility()
         self.particle_rain = "particles/hero/techies/techies_big_boom_explosions.vpcf"
 
@@ -654,9 +655,9 @@ function modifier_imba_proximity_mine_talent:OnCreated()
 
         -- Create rain particles
         local particle_rain_fx = ParticleManager:CreateParticle(self.particle_rain, PATTACH_WORLDORIGIN, nil)
-        ParticleManager:SetParticleControl(particle_rain_fx, 0, self.parent:GetAbsOrigin())
-        ParticleManager:SetParticleControl(particle_rain_fx, 1, self.parent:GetAbsOrigin())
-        ParticleManager:SetParticleControl(particle_rain_fx, 3, self.parent:GetAbsOrigin())
+        ParticleManager:SetParticleControl(particle_rain_fx, 0, parentAbsOrigin)
+        ParticleManager:SetParticleControl(particle_rain_fx, 1, parentAbsOrigin)
+        ParticleManager:SetParticleControl(particle_rain_fx, 3, parentAbsOrigin)
         self:AddParticle(particle_rain_fx, false, false, -1, false, false)
 
         -- Damage per interval
@@ -1170,10 +1171,7 @@ function imba_techies_blast_off:IsHiddenWhenStolen()
 end
 
 function imba_techies_blast_off:GetAOERadius()
-    local caster = self:GetCaster()
-    local ability = self
-
-    local radius  = ability:GetSpecialValueFor("radius")
+    local radius  = self:GetSpecialValueFor("radius")
     return radius
 end
 
@@ -1476,7 +1474,7 @@ function modifier_imba_blast_off_movement:BlastOffLanded()
                                  ability = self.ability
                                  }
 
-            local actual_damage = ApplyDamage(damageTable)
+            ApplyDamage(damageTable)
 
             -- Add silence modifier to them
             enemy:AddNewModifier(self.caster, self.ability, self.modifier_silence, {duration = self.silence_duration})
@@ -1528,7 +1526,7 @@ function modifier_imba_blast_off_movement:BlastOffLanded()
                              damage_flags = DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION
                              }
 
-        local actual_damage = ApplyDamage(damageTable)
+        ApplyDamage(damageTable)
 
         --#5 Talent: Blast Off! jumps drop a Proximity Mine
         if self.caster:HasTalent("special_bonus_imba_techies_5") then
@@ -1843,15 +1841,14 @@ modifier_imba_remote_mine = modifier_imba_remote_mine or class({})
 
 
 function modifier_imba_remote_mine:OnCreated()
-    -- Ability properties
-    self.caster = self:GetCaster()
-    self.ability = self:GetAbility()
-    self.particle_mine = "particles/units/heroes/hero_techies/techies_remote_mine.vpcf"
+    local caster = self:GetCaster()
+    local casterAbsOrigin = caster:GetAbsOrigin()
+    local particle_mine = "particles/units/heroes/hero_techies/techies_remote_mine.vpcf"
 
     -- Play particle effect
-    local particle_mine_fx = ParticleManager:CreateParticle(self.particle_mine, PATTACH_ABSORIGIN, self.caster)
-    ParticleManager:SetParticleControl(particle_mine_fx, 0, self.caster:GetAbsOrigin())
-    ParticleManager:SetParticleControl(particle_mine_fx, 3, self.caster:GetAbsOrigin())
+    local particle_mine_fx = ParticleManager:CreateParticle(particle_mine, PATTACH_ABSORIGIN, caster)
+    ParticleManager:SetParticleControl(particle_mine_fx, 0, casterAbsOrigin)
+    ParticleManager:SetParticleControl(particle_mine_fx, 3, casterAbsOrigin)
     ParticleManager:ReleaseParticleIndex(particle_mine_fx)
 end
 
@@ -1870,12 +1867,8 @@ end
 modifier_imba_remote_mine_inflammable = modifier_imba_remote_mine_inflammable or class({})
 
 function modifier_imba_remote_mine_inflammable:OnCreated()
-    -- Ability properties
-    self.caster = self:GetCaster()
-    self.ability = self:GetAbility()
-
     -- Ability specials
-    self.inflammable_max_charges = self.ability:GetSpecialValueFor("inflammable_max_charges")
+    self.inflammable_max_charges = self:GetAbility():GetSpecialValueFor("inflammable_max_charges")
 end
 
 function modifier_imba_remote_mine_inflammable:GetTexture()
@@ -2078,7 +2071,7 @@ end
 modifier_imba_minefield_sign_aura = modifier_imba_minefield_sign_aura or class({})
 
 function modifier_imba_minefield_sign_aura:OnCreated()
-    -- Ability proprties
+    -- Ability properties
     self.caster = self:GetCaster()
     self.ability = self:GetAbility()
 
@@ -2101,7 +2094,8 @@ end
 
 function modifier_imba_minefield_sign_aura:GetAuraEntityReject(target)
     -- Only apply on mines
-    if target:GetUnitName() == "npc_imba_techies_proximity_mine" or target:GetUnitName() == "npc_imba_techies_proximity_mine_big_boom" or target:GetUnitName() == "npc_imba_techies_stasis_trap" or target:GetUnitName() == "npc_imba_techies_remote_mine" then
+    local targetUnitName = target:GetUnitName()
+    if targetUnitName == "npc_imba_techies_proximity_mine" or targetUnitName == "npc_imba_techies_proximity_mine_big_boom" or targetUnitName == "npc_imba_techies_stasis_trap" or targetUnitName == "npc_imba_techies_remote_mine" then
         return false
     end
 
@@ -2134,11 +2128,7 @@ end
 function modifier_imba_minefield_sign_aura:IsAura()
     if IsServer() then
         -- If the spell is toggled on, aura is emitted from the sign
-        if self.ability:GetAutoCastState() then
-            return true
-        else
-            return false
-        end
+        return self.ability:GetAutoCastState()
     end
 end
 
