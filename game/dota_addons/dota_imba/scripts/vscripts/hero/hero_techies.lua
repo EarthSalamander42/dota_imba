@@ -2060,7 +2060,7 @@ function imba_techies_minefield_sign:OnSpellStart()
     local modifier_sign = "modifier_imba_minefield_sign_aura"
 
     -- Play cast sound
-    EmitSoundOn(modifier_sign, caster)
+    EmitSoundOn(sound_cast, caster)
 
     -- If there is already a sign assigned to this ability, destroy it
     if self.assigned_sign then
