@@ -1493,22 +1493,27 @@ function modifier_imba_blast_off_movement:BlastOffLanded()
         -- If no enemies were found, play miss response
         if #enemies == 0 and self.last_jump then
             -- Roll for rare response
+            local sound
             if RollPercentage(15) then
-                EmitSoundOn(self.rare_miss_response[math.random(1, #self.rare_miss_response)], self.caster)
+                sound = self.rare_miss_response[math.random(1, #self.rare_miss_response)]
             else
-                EmitSoundOn(self.miss_response[math.random(1, #self.miss_response)], self.caster)
+                sound = self.miss_response[math.random(1, #self.miss_response)]
             end
+
+            EmitSoundOn(sound, self.caster)
         end
 
         Timers:CreateTimer(FrameTime()*2, function()
             -- If an enemy died, play kill response
             if enemy_killed then
                 -- Roll for rare response
+                local sound
                 if RollPercentage(15) then
-                    EmitSoundOn(self.rare_kill_response[math.random(1, #self.rare_kill_response)], self.caster)
+                    sound = self.rare_kill_response[math.random(1, #self.rare_kill_response)]
                 else
-                    EmitSoundOn(self.kill_response[math.random(1, #self.kill_response)], self.caster)
+                    sound = self.kill_response[math.random(1, #self.kill_response)]
                 end
+                EmitSoundOn(sound, self.caster)
             end
         end)
 
@@ -1660,11 +1665,13 @@ function imba_techies_remote_mine:OnSpellStart()
     local mine_duration = ability:GetSpecialValueFor("mine_duration")
 
     -- Roll for rare cast response
+    local sound
     if RollPercentage(1) then
-        EmitSoundOn(rare_cast_response, caster)
+        sound = rare_cast_response
     else
-        EmitSoundOn(cast_response[math.random(1, #cast_response)], caster)
+        sound = cast_response[math.random(1, #cast_response)]
     end
+    EmitSoundOn(sound, caster)
 
     -- Play cast sound
     EmitSoundOn(sound_cast, caster)
