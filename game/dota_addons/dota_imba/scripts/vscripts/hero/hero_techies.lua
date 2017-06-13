@@ -1194,6 +1194,7 @@ function imba_techies_blast_off:OnSpellStart()
 
     -- #8 Talent: Blast Off throws a little pig instead of you
     local pig
+    local modifierParam = {target_point_x = target_point.x, target_point_y = target_point.y, target_point_z = target_point.z}
     if caster:HasTalent("special_bonus_imba_techies_8") then
         pig = CreateUnitByName("npc_imba_techies_blast_off_piggy", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
 
@@ -1209,25 +1210,20 @@ function imba_techies_blast_off:OnSpellStart()
             EmitSoundOn(piggy_response, caster)
         end
 
-        -- Add the blast off modifier, and assign it the target point
-        local modifier_blast_handler = pig:AddNewModifier(caster, ability, modifier_blast, {})
-        if modifier_blast_handler then
-            modifier_blast_handler.target_point = target_point
-        end    
+        -- Add the blast off modifier, initialize with target point
+        pig:AddNewModifier(caster, ability, modifier_blast, modifierParam)
+
     else
-        -- Add the blast off modifier, and assign it the target point
-        local modifier_blast_handler = caster:AddNewModifier(caster, ability, modifier_blast, {})
-        if modifier_blast_handler then
-            modifier_blast_handler.target_point = target_point
-        end    
-    end    
+        -- Add the blast off modifier, initialize with target point
+        caster:AddNewModifier(caster, ability, modifier_blast, modifierParam)
+    end
 end
 
 
 -- Blast off modifier
 modifier_imba_blast_off = modifier_imba_blast_off or class({})
 
-function modifier_imba_blast_off:OnCreated()
+function modifier_imba_blast_off:OnCreated( keys )
     if IsServer() then
         -- Ability properties
         self.caster = self:GetCaster()
@@ -1238,35 +1234,30 @@ function modifier_imba_blast_off:OnCreated()
         -- Ability specials
         self.max_jumps = self.ability:GetSpecialValueFor("max_jumps")
         self.jump_continue_delay = self.ability:GetSpecialValueFor("jump_continue_delay")
-        self.jump_duration = self.ability:GetSpecialValueFor("jump_duration")        
+        self.jump_duration = self.ability:GetSpecialValueFor("jump_duration")
 
-        -- Set the caster to jump freely unless otherwise issued        
-        self.jumps = 0                
+        -- Set the caster to jump freely unless otherwise issued
+        self.jumps = 0
 
-        -- Wait for the target point to be assigned to the modifier
-        Timers:CreateTimer(FrameTime(), function()
-            if not self.target_point then
-                return FrameTime()
-            else
-                self.direction = (self.target_point - self.parent:GetAbsOrigin()):Normalized()
-                self.distance = (self.target_point - self.parent:GetAbsOrigin()):Length2D()
+        self.target_point = Vector(keys.target_point_x, keys.target_point_y, keys.target_point_z)
 
-                -- Apply the first jump and assign the target point to it as well
-                local modifier_movement_handler = self.parent:AddNewModifier(self.caster, self.ability, self.modifier_movement, {duration = self.jump_duration + self.jump_continue_delay})
-                if modifier_movement_handler then
-                    modifier_movement_handler.target_point = self.target_point
-                end
+        local parentAbsOrigin = self.parent:GetAbsOrigin()
+        self.direction = (self.target_point - parentAbsOrigin):Normalized()
+        self.distance = (self.target_point - parentAbsOrigin):Length2D()
 
-                -- Start thinking
-                self:StartIntervalThink(self.jump_duration + self.jump_continue_delay)
-            end
-        end)
+        local tick = self.jump_duration + self.jump_continue_delay
+
+        -- Apply the first jump and initialize target point to it as well
+        self.parent:AddNewModifier(self.caster, self.ability, self.modifier_movement, {duration = tick, target_point_x = keys.target_point_x, target_point_y = keys.target_point_y, target_point_z = keys.target_point_z })
+
+        -- Start thinking
+        self:StartIntervalThink(tick)
     end
 end
 
 function modifier_imba_blast_off:OnIntervalThink()
     -- Increment jump count
-    self.jumps = self.jumps + 1    
+    self.jumps = self.jumps + 1
 
     -- If the caster is stunned, hexed, or silenced, destroy self
     if self.parent:IsStunned() or self.parent:IsHexed() or self.parent:IsSilenced() then
@@ -1283,11 +1274,8 @@ function modifier_imba_blast_off:OnIntervalThink()
     -- Find new jump position, using the same distance and direction
     self.target_point = self.target_point + self.direction * self.distance
 
-    -- Apply another jump and assign the new target point to it
-    local modifier_movement_handler = self.parent:AddNewModifier(self.caster, self.ability, self.modifier_movement, {duration = self.jump_duration + self.jump_continue_delay})
-    if modifier_movement_handler then
-        modifier_movement_handler.target_point = self.target_point
-    end
+    -- Apply another jump and initialize the new target point to it
+    self.parent:AddNewModifier(self.caster, self.ability, self.modifier_movement, {duration = self.jump_duration + self.jump_continue_delay, target_point_x = self.target_point.x, target_point_y = self.target_point.y, target_point_z = self.target_point.z})
 end
 
 function modifier_imba_blast_off:IsHidden() return true end
@@ -1355,16 +1343,16 @@ end
 -- Blast off motion controller modifier
 modifier_imba_blast_off_movement = modifier_imba_blast_off_movement or class({})
 
-function modifier_imba_blast_off_movement:OnCreated()
+function modifier_imba_blast_off_movement:OnCreated( keys )
     if IsServer() then
         -- Ability properties
         self.caster = self:GetCaster()
         self.ability = self:GetAbility()
-        self.parent = self:GetParent()  
+        self.parent = self:GetParent()
         self.miss_response = {"techies_tech_suicidesquad_04", "techies_tech_suicidesquad_09", "techies_tech_suicidesquad_13"}
         self.rare_miss_response = {"techies_tech_suicidesquad_08", "techies_tech_failure_01"}
         self.kill_response = {"techies_tech_suicidesquad_02", "techies_tech_suicidesquad_03", "techies_tech_suicidesquad_06", "techies_tech_suicidesquad_11", "techies_tech_suicidesquad_12"}
-        self.rare_kill_response = {"techies_tech_focuseddetonate_14"}  
+        self.rare_kill_response = {"techies_tech_focuseddetonate_14"}
         self.sound_suicide = "Hero_Techies.Suicide"
         self.particle_trail = "particles/units/heroes/hero_techies/techies_blast_off_trail.vpcf"
         self.particle_explosion = "particles/units/heroes/hero_techies/techies_blast_off.vpcf"
@@ -1376,31 +1364,27 @@ function modifier_imba_blast_off_movement:OnCreated()
         self.radius = self.ability:GetSpecialValueFor("radius")
         self.self_damage_pct = self.ability:GetSpecialValueFor("self_damage_pct")
         self.silence_duration = self.ability:GetSpecialValueFor("silence_duration")
-        self.jump_duration = self.ability:GetSpecialValueFor("jump_duration")        
-        self.jump_max_height = self.ability:GetSpecialValueFor("jump_max_height")                
+        self.jump_duration = self.ability:GetSpecialValueFor("jump_duration")
+        self.jump_max_height = self.ability:GetSpecialValueFor("jump_max_height")
 
-        -- Wait for the target point to be assigned to the modifier
-        Timers:CreateTimer(FrameTime(), function()
-            if not self.target_point then
-                return FrameTime()
-            else
-                -- Add trail particle
-                local particle_trail_fx = ParticleManager:CreateParticle(self.particle_trail, PATTACH_ABSORIGIN_FOLLOW, self.parent)
-                ParticleManager:SetParticleControl(particle_trail_fx, 0, self.parent:GetAbsOrigin())
-                ParticleManager:SetParticleControl(particle_trail_fx, 1, self.parent:GetAbsOrigin())                
-                self:AddParticle(particle_trail_fx, false, false, -1, false, false)
+        self.target_point = Vector(keys.target_point_x, keys.target_point_y, keys.target_point_z)
 
-                -- Calculate jump variables
-                self.direction = (self.target_point - self.parent:GetAbsOrigin()):Normalized()
-                self.distance = (self.target_point - self.parent:GetAbsOrigin()):Length2D()
-                self.velocity = self.distance / self.jump_duration
-                self.time_elapsed = 0
-                self.current_height = 0                               
+        local parentAbsOrigin = self.parent:GetAbsOrigin()
+        -- Add trail particle
+        local particle_trail_fx = ParticleManager:CreateParticle(self.particle_trail, PATTACH_ABSORIGIN_FOLLOW, self.parent)
+        ParticleManager:SetParticleControl(particle_trail_fx, 0, parentAbsOrigin)
+        ParticleManager:SetParticleControl(particle_trail_fx, 1, parentAbsOrigin)
+        self:AddParticle(particle_trail_fx, false, false, -1, false, false)
 
-                self.frametime = FrameTime()
-                self:StartIntervalThink(self.frametime)     
-            end            
-        end)        
+        -- Calculate jump variables
+        self.direction = (self.target_point - parentAbsOrigin):Normalized()
+        self.distance = (self.target_point - parentAbsOrigin):Length2D()
+        self.velocity = self.distance / self.jump_duration
+        self.time_elapsed = 0
+        self.current_height = 0
+
+        self.frametime = FrameTime()
+        self:StartIntervalThink(self.frametime)
     end
 end
 
