@@ -411,7 +411,7 @@ end
 function modifier_imba_spell_shield_buff_passive:GetReflectSpell( params )
 	if IsServer() then
 		local parent = self:GetParent()
-		if ( parent:HasScepter() ) and ( self:GetAbility():IsCooldownReady() ) then
+		if parent:HasScepter() and self:GetAbility():IsCooldownReady() and parent:IsRealHero() then
 			return SpellReflect(parent, params)
 		end
 	end
@@ -420,7 +420,7 @@ end
 function modifier_imba_spell_shield_buff_passive:GetAbsorbSpell( params )
 	if IsServer() then
 		local parent = self:GetParent()
-		if ( parent:HasScepter() ) and ( self:GetAbility():IsCooldownReady() ) then
+		if parent:HasScepter() and self:GetAbility():IsCooldownReady() and parent:IsRealHero() then
 			local ability = self:GetAbility()
 			local active_modifier = "modifier_imba_spell_shield_buff_reflect"
 			self.duration = ability:GetSpecialValueFor("active_duration")

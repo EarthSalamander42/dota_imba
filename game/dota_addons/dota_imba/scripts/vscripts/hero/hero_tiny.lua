@@ -295,6 +295,10 @@ function imba_tiny_toss:GetAbilityTextureName()
    return "tiny_toss"
 end
 
+function imba_tiny_toss:IsNetherWardStealable()
+	return false
+end
+
 function imba_tiny_toss:OnSpellStart()
 	self.tossPosition = self:GetCursorPosition()
 	local hTarget = self:GetCursorTarget()

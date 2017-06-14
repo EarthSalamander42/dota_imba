@@ -99,6 +99,7 @@ function modifier_imba_smoke_screen_handler:OnIntervalThink()
 		
 	local aoe = self:GetAbility():GetSpecialValueFor("area_of_effect")
 	local max_reduction = ability:GetSpecialValueFor("max_vision_reduction_pcnt")
+	local remaining_duration = self:GetRemainingTime()
 	
 	local targets = FindUnitsInRadius(parent:GetTeamNumber(), parent:GetAbsOrigin(), nil, aoe, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
 	
@@ -107,13 +108,13 @@ function modifier_imba_smoke_screen_handler:OnIntervalThink()
 	
 		-- If the unit was never afflicted with a modifier instance from this handler, give it the modifier and index it along with the units ID
 		if not parent.afflicted[unit:entindex()] then
-			local mod = unit:AddNewModifier(caster, self:GetAbility(), "modifier_imba_smoke_screen_vision", {})
+			local mod = unit:AddNewModifier(caster, self:GetAbility(), "modifier_imba_smoke_screen_vision", {duration = remaining_duration})
 			table.insert(parent.afflicted, unit:entindex(), mod)
 			
 		else
 			-- If the parent somehow (death for example) lost the modifier and got back into the smoke(glimpse, timelapse), reapply and re-index it
 			if not parent.afflicted[unit:entindex()] then
-				local mod = unit:AddNewModifier(caster, self:GetAbility(), "modifier_imba_smoke_screen_vision", {})
+				local mod = unit:AddNewModifier(caster, self:GetAbility(), "modifier_imba_smoke_screen_vision", {duration = remaining_duration})
 				table.insert(parent.afflicted, unit:entindex(), mod)
 			end
 			
@@ -138,7 +139,9 @@ function modifier_imba_smoke_screen_handler:OnIntervalThink()
 			end
 			
 			-- If it is the strongest, apply the stacks normally
-			if isStrongest then parent.afflicted[unit:entindex()]:SetStackCount(stacks) end
+			if isStrongest and not parent.afflicted[unit:entindex()]:IsNull() then
+				parent.afflicted[unit:entindex()]:SetStackCount(stacks) 
+			end
 		end
 	end
 	
@@ -1089,7 +1092,7 @@ function modifier_imba_riki_tricks_of_the_trade_primary:OnIntervalThink()
 		local backstab_particle = "particles/units/heroes/hero_riki/riki_backstab.vpcf"
 		local backstab_sound = "Hero_Riki.Backstab"
 		
-		local targets = FindUnitsInRadius(caster:GetTeamNumber(), origin, nil, aoe, DOTA_UNIT_TARGET_TEAM_ENEMY , DOTA_UNIT_TARGET_HERO , DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER , false)
+		local targets = FindUnitsInRadius(caster:GetTeamNumber(), origin, nil, aoe, DOTA_UNIT_TARGET_TEAM_ENEMY , DOTA_UNIT_TARGET_HERO , DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER , false)
 		for _,unit in pairs(targets) do
 			if unit:IsAlive() then
 				caster:PerformAttack(unit, true, true, true, false, false, false, false)
@@ -1144,7 +1147,7 @@ function modifier_imba_riki_tricks_of_the_trade_secondary:OnIntervalThink()
 		local backstab_particle = "particles/units/heroes/hero_riki/riki_backstab.vpcf"
 		local backstab_sound = "Hero_Riki.Backstab"
 		
-		local targets = FindUnitsInRadius(caster:GetTeamNumber(), origin, nil, aoe, DOTA_UNIT_TARGET_TEAM_ENEMY , DOTA_UNIT_TARGET_HERO , DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER , false)
+		local targets = FindUnitsInRadius(caster:GetTeamNumber(), origin, nil, aoe, DOTA_UNIT_TARGET_TEAM_ENEMY , DOTA_UNIT_TARGET_HERO , DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER , false)
 		for _,unit in pairs(targets) do
 			if unit:IsAlive() then
 				caster:PerformAttack(unit, true, true, true, false, false, false, false)
