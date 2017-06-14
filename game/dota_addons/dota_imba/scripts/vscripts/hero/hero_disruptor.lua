@@ -182,7 +182,6 @@ function modifier_imba_thunder_strike_debuff:OnCreated()
 			
 		-- Strike immediately upon creation, depending on amount of enemies
 		ThunderStrikeBoltStart(self)			
-		print(self.strike_interval)
 		-- Start interval striking
 		self:StartIntervalThink(self.strike_interval)
 	end
@@ -757,13 +756,15 @@ function imba_disruptor_kinetic_field:OnSpellStart()
 		local formation_particle_fx = ParticleManager:CreateParticle(formation_particle, PATTACH_WORLDORIGIN, caster)
 		ParticleManager:SetParticleControl(formation_particle_fx, 0, target_point)
 		ParticleManager:SetParticleControl(formation_particle_fx, 1, Vector(field_radius, field_radius, 0))
-		ParticleManager:SetParticleControl(formation_particle_fx, 2, target_point)
+		ParticleManager:SetParticleControl(formation_particle_fx, 2, Vector(1, 0, 0))
+		ParticleManager:SetParticleControl(formation_particle_fx, 4, Vector(1, 1, 1))
+		ParticleManager:SetParticleControl(formation_particle_fx, 15, target_point)
 
 		--marker particle
 		local marker_particle = ParticleManager:CreateParticle(formation_particle_marker, PATTACH_WORLDORIGIN, caster)
 		ParticleManager:SetParticleControl(marker_particle, 0, target_point)
 		ParticleManager:SetParticleControl(marker_particle, 1, Vector(field_radius, field_radius, 0))
-		ParticleManager:SetParticleControl(marker_particle, 2, target_point)
+		ParticleManager:SetParticleControl(marker_particle, 2, Vector(1, 0, 0))
 		-- Wait for formation to finish setting up
 		Timers:CreateTimer(formation_delay, function()
 			-- Apply thinker modifier on target location
@@ -790,22 +791,22 @@ function modifier_imba_kinetic_field:OnCreated(keys)
 		--fuck you vectors
 		self.target_point = Vector(keys.target_point_x, keys.target_point_y, keys.target_point_z)
 		local vision_aoe = self.ability:GetSpecialValueFor("vision_aoe")
-		local duration = self.ability:GetSpecialValueFor("duration")
+		self.duration = self.ability:GetSpecialValueFor("duration")
 		local particle_field = "particles/units/heroes/hero_disruptor/disruptor_kineticfield.vpcf" -- the field itself
 
 		self.sound_cast = "Hero_Disruptor.KineticField"
 		EmitSoundOn(self.sound_cast, self.caster)
 
-		AddFOWViewer(self.caster:GetTeamNumber(), self.target:GetAbsOrigin(), vision_aoe, duration, false)
+		AddFOWViewer(self.caster:GetTeamNumber(), self.target:GetAbsOrigin(), vision_aoe, self.duration, false)
 		ParticleManager:DestroyParticle(keys.formation_particle_fx, true)
 		ParticleManager:ReleaseParticleIndex(keys.formation_particle_fx)
 		ParticleManager:DestroyParticle(keys.marker_particle, true)
 		ParticleManager:ReleaseParticleIndex(keys.marker_particle)
 		
 		self.field_particle = ParticleManager:CreateParticle(particle_field, PATTACH_WORLDORIGIN, self.caster)
-		ParticleManager:SetParticleControl(self.field_particle, 0, self.target:GetAbsOrigin())
-		ParticleManager:SetParticleControl(self.field_particle, 1, Vector(self.field_radius, self.field_radius, 0))
-		ParticleManager:SetParticleControl(self.field_particle, 2, self.target:GetAbsOrigin())
+		ParticleManager:SetParticleControl(self.field_particle, 0, self.target_point)
+		ParticleManager:SetParticleControl(self.field_particle, 1, Vector(self.field_radius, 1, 1))
+		ParticleManager:SetParticleControl(self.field_particle, 2, Vector(self.duration, 0, 0))
 		self:StartIntervalThink(0.1)
 	end
 end
@@ -832,7 +833,7 @@ function modifier_imba_kinetic_field:OnIntervalThink()
 									FIND_ANY_ORDER,
 									false)
 	for _,enemy in pairs(enemies_in_field) do
-		enemy:AddNewModifier(self.caster, self.ability, "modifier_imba_kinetic_field_check_position", {target_point_x = self.target_point.x, target_point_y = self.target_point.y, target_point_z = self.target_point.z})
+		enemy:AddNewModifier(self.caster, self.ability, "modifier_imba_kinetic_field_check_position", {duration = self:GetRemainingTime(), target_point_x = self.target_point.x, target_point_y = self.target_point.y, target_point_z = self.target_point.z})
 	end
 end
 
@@ -1182,9 +1183,10 @@ function modifier_imba_static_storm:OnCreated(keys)
 		EmitSoundOn(self.sound_cast, self.caster)
 
 		self.particle_storm_fx = ParticleManager:CreateParticle(particle_storm, PATTACH_WORLDORIGIN, self.caster)
-		ParticleManager:SetParticleControl(self.particle_storm_fx, 0, self.target_point)
-		ParticleManager:SetParticleControl(self.particle_storm_fx, 1, Vector(self.radius, self.radius, 0))
-		ParticleManager:SetParticleControl(self.particle_storm_fx, 2, self.target_point)
+		ParticleManager:SetParticleControl(self.particle_storm_fx, 0,self.target_point)
+		ParticleManager:SetParticleControl(self.particle_storm_fx, 1, Vector(self.radius, 0, 0))
+		ParticleManager:SetParticleControl(self.particle_storm_fx, 2, Vector(self.duration, 0, 0))
+
 
 		-- consume Stormbearer stacks, increase initial damage of the spell
 		if self.caster:HasModifier(self.stormbearer_buff) then
