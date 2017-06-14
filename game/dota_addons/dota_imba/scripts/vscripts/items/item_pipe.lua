@@ -195,8 +195,8 @@ function modifier_imba_pipe_active_bonus:OnIntervalThink()
 		-- Serious math
 		if self.magic_resist_compensation > 0 then
 			local current_compensation = self.magic_resist_compensation / 100
-			local compensation = ( self.unreducable_magic_resist - 1 ) * ( 1 - current_compensation) / (1 - current_res) - 1 + current_compensation
-			self.magic_resist_compensation = self.magic_resist_compensation + compensation * 100
+			local compensation = ( self.unreducable_magic_resist - 1 ) * ( 1 - current_compensation) / (1 - current_res) + 1
+			self.magic_resist_compensation = compensation * 100
 		else
 			local compensation = 1 + (self.unreducable_magic_resist - 1) / (1 - current_res)
 			self.magic_resist_compensation = compensation * 100
@@ -205,9 +205,9 @@ function modifier_imba_pipe_active_bonus:OnIntervalThink()
 	elseif self.magic_resist_compensation > 0 and current_res > ( self.unreducable_magic_resist + self.precision ) then
 		-- Serious copy-paste
 		local current_compensation = self.magic_resist_compensation / 100
-		local compensation = (self.unreducable_magic_resist - 1) * ( 1 - current_compensation) / (1 - current_res) - 1 + current_compensation
+		local compensation = (self.unreducable_magic_resist - 1) * ( 1 - current_compensation) / (1 - current_res) + 1
 		
-		self.magic_resist_compensation = math.max(self.magic_resist_compensation - compensation * 100, 0)
+		self.magic_resist_compensation = math.max(compensation * 100, 0)
 	end
 end
 
