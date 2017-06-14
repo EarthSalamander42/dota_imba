@@ -1342,10 +1342,9 @@ function modifier_imba_blast_off:OnDestroy()
         if self.parent:GetUnitName() == "npc_imba_techies_blast_off_piggy" then
             -- Avoid reference values from self after onDestroy
             local parent = self.parent
-            local ability = self.ability
-            local caster = self.caster
-            Timers:CreateTimer(1, function()
-                parent:Kill(ability, caster)
+
+            Timers:CreateTimer(FrameTime(), function()
+                parent:ForceKill(false)
             end)
         end
     end
