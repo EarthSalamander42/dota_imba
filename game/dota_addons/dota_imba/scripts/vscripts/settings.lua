@@ -233,9 +233,9 @@ elseif GetMapName() == "imba_10v10" then
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 10
 elseif GetMapName() == "imba_arena" then
 	IMBA_PICK_MODE_ALL_PICK = true
-	IMBA_PLAYERS_ON_GAME = 16
-	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 8
-	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 8
+	IMBA_PLAYERS_ON_GAME = 12
+	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 6
+	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 6
 end
 
 -------------------------------------------------------------------------------------------------
@@ -384,6 +384,7 @@ CustomNetTables:SetTableValue("game_options", "all_random", {IMBA_PICK_MODE_ALL_
 CustomNetTables:SetTableValue("game_options", "tower_upgrades", {TOWER_UPGRADE_MODE})
 CustomNetTables:SetTableValue("game_options", "kills_to_end", {KILLS_TO_END_GAME_FOR_TEAM})
 CustomNetTables:SetTableValue("game_options", "bounty_multiplier", {100 + CUSTOM_GOLD_BONUS})
+CustomNetTables:SetTableValue("game_options", "exp_multiplier", {100 + CUSTOM_XP_BONUS})
 CustomNetTables:SetTableValue("game_options", "creep_power", {CREEP_POWER_FACTOR})
 CustomNetTables:SetTableValue("game_options", "tower_power", {TOWER_POWER_FACTOR})
 CustomNetTables:SetTableValue("game_options", "respawn_multiplier", {100 - HERO_RESPAWN_TIME_MULTIPLIER})

@@ -105,10 +105,10 @@ function GameMode:OnGameRulesStateChange(keys)
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Pick screen stuff
 	-------------------------------------------------------------------------------------------------
-	
+
 	if new_state == DOTA_GAMERULES_STATE_HERO_SELECTION then
-        HeroSelection:Start()
-    end
+		HeroSelection:Start()
+	end
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Start-of-pre-game stuff
@@ -116,8 +116,15 @@ function GameMode:OnGameRulesStateChange(keys)
 
 	if new_state == DOTA_GAMERULES_STATE_PRE_GAME then
 		Timers:CreateTimer(1.5, function()
-			for _, hero in pairs(HeroList:GetAllHeroes()) do
-				hero:AddNewModifier(hero, nil, "modifier_imba_prevent_actions_game_start", {})
+			if IMBA_PICK_MODE_ALL_RANDOM == false then
+				for _, hero in pairs(HeroList:GetAllHeroes()) do
+					hero:AddNewModifier(hero, nil, "modifier_imba_prevent_actions_game_start", {})
+				end
+			else
+				for _, hero in pairs(HeroList:GetAllHeroes()) do
+					HeroSelection:RandomHero({PlayerID = hero:GetPlayerID()})
+					hero:AddNewModifier(hero, nil, "modifier_imba_prevent_actions_game_start", {})
+				end
 			end
 		end)
 	end

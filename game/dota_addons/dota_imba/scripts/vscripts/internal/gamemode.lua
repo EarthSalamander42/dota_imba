@@ -219,23 +219,34 @@ function OnSetGameMode( eventSourceIndex, args )
 	end
 
 	-- Bounty multiplier increase
-	if tostring(mode_info.bounty_multiplier) == "GoldExpOption2" then
+	if tostring(mode_info.bounty_multiplier) == "GoldOption2" then
 		if map_name == "imba_standard" or map_name == "imba_random_omg" then
 			CUSTOM_GOLD_BONUS = 75
-			CUSTOM_XP_BONUS = 75
 		elseif map_name == "imba_custom" then
 			CUSTOM_GOLD_BONUS = 300
-			CUSTOM_XP_BONUS = 300
 		elseif map_name == "imba_10v10" then
 			CUSTOM_GOLD_BONUS = 125
-			CUSTOM_XP_BONUS = 125
 		elseif map_name == "imba_arena" then
 			CUSTOM_GOLD_BONUS = 150
-			CUSTOM_XP_BONUS = 150
 		end
 		CustomNetTables:SetTableValue("game_options", "bounty_multiplier", {100 + CUSTOM_GOLD_BONUS})
+		print("Bounty multiplier set to high")
 	end
-	print("Bounty multipliers set to high")
+
+	-- Bounty multiplier increase
+	if tostring(mode_info.exp_multiplier) == "ExpOption2" then
+		if map_name == "imba_standard" or map_name == "imba_random_omg" then
+			CUSTOM_XP_BONUS = 75
+		elseif map_name == "imba_custom" then
+			CUSTOM_XP_BONUS = 300
+		elseif map_name == "imba_10v10" then
+			CUSTOM_XP_BONUS = 125
+		elseif map_name == "imba_arena" then
+			CUSTOM_XP_BONUS = 150
+		end
+		CustomNetTables:SetTableValue("game_options", "exp_multiplier", {100 + CUSTOM_XP_BONUS})
+		print("Exp multiplier set to high")
+	end
 
 	-- Creep power increase
 	if tostring(mode_info.creep_power) == "CreepPowerOption2" then
@@ -247,8 +258,8 @@ function OnSetGameMode( eventSourceIndex, args )
 			CREEP_POWER_FACTOR = 2
 		end
 		CustomNetTables:SetTableValue("game_options", "creep_power", {CREEP_POWER_FACTOR})
+		print("Creep power set to high")
 	end
-	print("Creep power set to high")
 
 	-- Tower power increase
 	if tostring(mode_info.tower_power) == "TowerPowerOption2" then
@@ -260,8 +271,8 @@ function OnSetGameMode( eventSourceIndex, args )
 			TOWER_POWER_FACTOR = 2
 		end
 		CustomNetTables:SetTableValue("game_options", "tower_power", {TOWER_POWER_FACTOR})
+		print("Tower power set to high")
 	end
-	print("Tower power set to high")
 
 	-- Respawn timer decrease
 	if tostring(mode_info.respawn_reduction) == "RespawnTimeOption2" then
@@ -273,11 +284,11 @@ function OnSetGameMode( eventSourceIndex, args )
 			HERO_RESPAWN_TIME_MULTIPLIER = 50
 		end
 		CustomNetTables:SetTableValue("game_options", "respawn_multiplier", {100 - HERO_RESPAWN_TIME_MULTIPLIER})
+		print("Respawn timer reduction set to high")
 	end
-	print("Respawn timer reduction set to high")
 
 	-- Hero power increase
-	if tostring(mode_info.hero_power) == "InitialGoldExp2" then
+	if tostring(mode_info.hero_power) == "HeroPower2" then
 		if map_name == "imba_standard" or map_name == "imba_random_omg" then
 			HERO_INITIAL_GOLD = 1200
 			HERO_REPICK_GOLD = 1000
@@ -306,13 +317,13 @@ function OnSetGameMode( eventSourceIndex, args )
 		CustomNetTables:SetTableValue("game_options", "initial_gold", {HERO_INITIAL_GOLD})
 		CustomNetTables:SetTableValue("game_options", "initial_level", {HERO_STARTING_LEVEL})
 		CustomNetTables:SetTableValue("game_options", "max_level", {MAX_LEVEL})
+		print("Hero power set to high")
 	end
 
 	-- Allow heroes to level up further than normal
 	for i = 25, MAX_LEVEL do
 		XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + i * 100
 	end
-	print("Hero power set to high")
 
     -- Hero pick rule
     -- Ignore HeroPickRuleOption1 because that is the default

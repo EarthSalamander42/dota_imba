@@ -33,10 +33,12 @@ function InitializeUI() {
 		// Update other elements according to the current map
 		var map_info = Game.GetMapInfo();
 		if (map_info.map_display_name == "imba_standard") {
-			
-		} else if (map_info.map_display_name == "imba_random_omg") {
-			$('#game_options_game_mode_title').text = $.Localize( "#imba_gamemode_name_random_omg" );
-			$('#AllRandomToggle').SetSelected(true);
+			$('#QuickOptionsPanel').style.visibility = 'collapse';
+			$('#HeroPowerOptionsPanel').style.visibility = 'collapse';
+			$('#CreepPowerOptionsPanel').style.visibility = 'collapse';
+			$('#TowerPowerOptionsPanel').style.visibility = 'collapse';
+			$('#RespawnTimeOptionsPanel').style.visibility = 'collapse';
+			$('#TowerUpgradesToggle').style.visibility = 'collapse';
 		} else if (map_info.map_display_name == "imba_10v10") {
 			$('#game_options_game_mode_title').text = $.Localize( "#imba_gamemode_name_10v10" );
 			$('#TowerUpgradesToggle').SetSelected(true);
@@ -47,6 +49,7 @@ function InitializeUI() {
 			$('#game_options_game_mode_title').text = $.Localize( "#imba_gamemode_name_arena_mode" );
 			$('#KillsToEndOptionsPanel').style.visibility = 'visible';
 			$('#QuickOptionsPanel').style.visibility = 'collapse';
+			$('#HeroPowerOptionsPanel').style.visibility = 'collapse';
 			$('#CreepPowerOptionsPanel').style.visibility = 'collapse';
 			$('#TowerPowerOptionsPanel').style.visibility = 'collapse';
 			$('#RespawnTimeOptionsPanel').style.visibility = 'collapse';
@@ -75,11 +78,12 @@ function SetQuickOptionsNormal() {
 	} 
 
 	// Sets everything else to normal options
-	$('#GoldExpOptionsDropdown').SetSelected('GoldExpOption1');
+	$('#GoldOptionsDropdown').SetSelected('GoldOption1');
+	$('#ExpOptionsDropdown').SetSelected('ExpOption1');
 	$('#CreepPowerOptionsDropdown').SetSelected('CreepPowerOption1');
 	$('#TowerPowerOptionsDropdown').SetSelected('TowerPowerOption1');
 	$('#RespawnTimeOptionsDropdown').SetSelected('RespawnTimeOption1');
-	$('#InitialGoldExpDropdown').SetSelected('InitialGoldExp1');
+	$('#HeroPowerDropdown').SetSelected('HeroPower1');
 }
 
 // Sets all options to Hyper mode
@@ -92,11 +96,12 @@ function SetQuickOptionsHigh() {
 	} 
 
 	// Sets everything else to high options
-	$('#GoldExpOptionsDropdown').SetSelected('GoldExpOption2');
+	$('#GoldOptionsDropdown').SetSelected('GoldOption2');
+	$('#ExpOptionsDropdown').SetSelected('ExpOption2');
 	$('#CreepPowerOptionsDropdown').SetSelected('CreepPowerOption2');
 	$('#TowerPowerOptionsDropdown').SetSelected('TowerPowerOption2');
 	$('#RespawnTimeOptionsDropdown').SetSelected('RespawnTimeOption2');
-	$('#InitialGoldExpDropdown').SetSelected('InitialGoldExp2');
+	$('#HeroPowerDropdown').SetSelected('HeroPower2');
 }
 
 // Locks the game mode
@@ -108,11 +113,12 @@ function SetGameOptions()
 			"all_random": $('#AllRandomToggle').checked,
 			"frantic_mode": $('#FranticToggle').checked,
 			"tower_upgrades": $('#TowerUpgradesToggle').checked,
-			"bounty_multiplier": $('#GoldExpOptionsDropdown').GetSelected().id,
+			"bounty_multiplier": $('#GoldOptionsDropdown').GetSelected().id,
+			"exp_multiplier": $('#ExpOptionsDropdown').GetSelected().id,
 			"creep_power": $('#CreepPowerOptionsDropdown').GetSelected().id,
 			"tower_power": $('#TowerPowerOptionsDropdown').GetSelected().id,
 			"respawn_reduction": $('#RespawnTimeOptionsDropdown').GetSelected().id,
-			"hero_power": $('#InitialGoldExpDropdown').GetSelected().id,
+			"hero_power": $('#HeroPowerDropdown').GetSelected().id,
 			"kills_to_end": $('#KillsToEndOptionsDropdown').GetSelected().id,
             "hero_pick_rule" : $('#HeroPickRuleDropdown').GetSelected().id,
 		}

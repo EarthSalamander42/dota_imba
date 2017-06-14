@@ -367,6 +367,7 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 
 		// Update the game options display
 		var bounty_multiplier = CustomNetTables.GetTableValue("game_options", "bounty_multiplier");
+		var exp_multiplier = CustomNetTables.GetTableValue("game_options", "exp_multiplier");
 		var creep_power = CustomNetTables.GetTableValue("game_options", "creep_power");
 		var tower_power = CustomNetTables.GetTableValue("game_options", "tower_power");
 		var respawn_multiplier = CustomNetTables.GetTableValue("game_options", "respawn_multiplier");
@@ -377,6 +378,7 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 		var frantic_mode = CustomNetTables.GetTableValue("game_options", "frantic_mode");
         var hero_pick_rule = CustomNetTables.GetTableValue("game_options", "hero_pick_rule");
 		$("#BountyMultiplierValue").text = bounty_multiplier[1] + "%";
+		$("#ExpMultiplierValue").text = exp_multiplier[1] + "%";
 		$("#RespawnTimerValue").text = respawn_multiplier[1] + "%";
 		$("#InitialGoldValue").text = initial_gold[1];
 		$("#InitialLevelValue").text = initial_level[1];
@@ -402,8 +404,8 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 		}
 
 		if (map_info.map_display_name == "imba_custom") {
-			$("#GameOptionsLabelPanel8").style.visibility = 'visible';
 			if(frantic_mode) {
+				$.Msg("FRANTIC SHOULD BE ENABLED NOW")
 				$("#FranticModeValue").text = $.Localize( '#imba_gamemode_game_options_frantic_enabled' );
 			}
 		}
@@ -421,7 +423,7 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 		if (all_random_enabled != null && all_random_enabled[1] == 1) {
 			$("#PickHeroBtn").AddClass( "disabled" );
 			$("#RepickBtn").AddClass( "disabled" );
-			$('#HeroSelectText').text = $.Localize( '#imba_gamemode_name_all_random' );
+			$('#GameModeSelectText').text = $.Localize( '#imba_gamemode_name_all_random' );
 			$.Schedule(5, SelectRandomHero);
 		}
 
