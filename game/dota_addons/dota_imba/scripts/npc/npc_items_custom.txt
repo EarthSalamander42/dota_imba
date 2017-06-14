@@ -11869,5 +11869,218 @@
 		}
 	}
 
-	//next free ID: 2243
+	//=================================================================================================================
+	// Recipe : Hood of Defiance
+	//=================================================================================================================
+	"item_recipe_imba_hood_of_defiance"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2243"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"
+		"ItemShopTags"					""
+
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_hood_of_defiance"
+		"ItemRequirements"
+		{
+			"01"						"item_ring_of_health;item_cloak;item_ring_of_regen"
+		}
+	}
+
+	//=================================================================================================================
+	// Hood of Defiance
+	//=================================================================================================================
+	"item_imba_hood_of_defiance"
+	{
+		"ID"							"2244"
+		"BaseClass"						"item_lua"
+		"AbilityTextureName"			"item_hood_of_defiance"
+		"ScriptFile"					"items/item_hood_of_defiance.lua"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost" 						"1725"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemShopTags"					"health_regen;defense;magic_resist"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"hood;defiance"
+		"SideShop" 						"0"
+		"SecretShop" 					"0"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityCooldown"				"60"
+		"AbilityManaCost"				"75"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"						"particles/items2_fx/pipe_of_insight.vpcf"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_health_regen"			"8"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_magic_resist"			"25"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"passive_tenacity_pct"			"10"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"shield_health"					"325"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"active_tenacity_pct"			"35"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"unreducable_magic_resist"		"25"
+			}
+			"07"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"duration"						"12"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Recipe : Pipe of Insight
+	//=================================================================================================================
+	"item_recipe_imba_pipe"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2245"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+		"Model"							"models/props_gameplay/recipe.mdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"800"
+		"ItemShopTags"					""
+
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_pipe"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_hood_of_defiance;item_headdress"
+		}
+	}
+
+	//=================================================================================================================
+	// Pipe of Insight
+	//=================================================================================================================
+	"item_imba_pipe"
+	{
+		"ID"							"2246"
+		"BaseClass"						"item_lua"
+		"AbilityTextureName"			"item_pipe"
+		"ScriptFile"					"items/item_pipe.lua"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost" 						"3150"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemShopTags"					"health_regen;support;magic_resist"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"pipe"
+		"SideShop" 						"0"
+		"SecretShop" 					"0"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityCooldown"				"60"
+		"AbilityManaCost"				"100"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"						"particles/items2_fx/pipe_of_insight.vpcf"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_health_regen"			"8"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_magic_resist"			"30"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_bonus_health_regen"		"4"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_bonus_magic_resist"		"10"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_tenacity_pct"				"10"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"active_tenacity_pct"			"35"
+			}
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_radius"					"900"
+			}
+			"08"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"shield_health"					"400"
+			}
+			"09"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"unreducable_magic_resist"		"40"
+			}
+			"10"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"duration"						"12"
+			}
+		}
+	}
+	//next free ID: 2247
 }
