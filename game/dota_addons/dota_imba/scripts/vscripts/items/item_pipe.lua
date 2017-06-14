@@ -173,12 +173,11 @@ function modifier_imba_pipe_active_bonus:IsPurgeException() return false end
 function modifier_imba_pipe_active_bonus:OnCreated( params )
 	self.magic_resist_compensation = 0
 	self.precision = 0.5 / 100 -- margin of 0.5% magic resistance. This is to prevent rounding-related errors/recalculations
-	self.parent = self:GetParent()
-	if IsServer() then
-		self.unreducable_magic_resist = params.unreducable_magic_resist
-		self.unreducable_magic_resist = self.unreducable_magic_resist / 100 -- lua errors on client if not here
-		self:StartIntervalThink(0.1)
-	end
+	self.parent = self:GetParent()	
+
+	self.unreducable_magic_resist = self:GetAbility():GetSpecialValueFor("unreducable_magic_resist")
+	self.unreducable_magic_resist = self.unreducable_magic_resist / 100
+	self:StartIntervalThink(0.1)	
 end
 
 function modifier_imba_pipe_active_bonus:DeclareFunctions()

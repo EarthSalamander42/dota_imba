@@ -103,10 +103,6 @@ function modifier_imba_hood_of_defiance_active_shield:OnRefresh( params )
 	end
 end
 
-function modifier_imba_hood_of_defiance_active_shield:GetTexture()
-	return "item_hood_of_defiance"
-end
-
 -- Shield absorption, returns damage to deal to the victim (in DamageFilter)
 function modifier_imba_hood_of_defiance_active_shield:AbsorbDamage(damage)
 	if IsServer() then
@@ -134,15 +130,14 @@ function modifier_imba_hood_of_defiance_active_bonus:IsHidden() return false end
 function modifier_imba_hood_of_defiance_active_bonus:IsPurgable() return false end
 function modifier_imba_hood_of_defiance_active_bonus:IsPurgeException() return false end
 
-function modifier_imba_hood_of_defiance_active_bonus:OnCreated( params )
+function modifier_imba_hood_of_defiance_active_bonus:OnCreated()
 	self.magic_resist_compensation = 0
 	self.precision = 0.5 / 100 -- margin of 0.5% magic resistance. This is to prevent rounding-related errors/recalculations
-	self.parent = self:GetParent()
-	if IsServer() then
-		self.unreducable_magic_resist = params.unreducable_magic_resist
-		self.unreducable_magic_resist = self.unreducable_magic_resist / 100 -- lua errors on client if not here
-		self:StartIntervalThink(0.1)
-	end
+	self.parent = self:GetParent()	
+
+	self.unreducable_magic_resist = self:GetAbility():GetSpecialValueFor("unreducable_magic_resist")
+	self.unreducable_magic_resist = self.unreducable_magic_resist / 100
+	self:StartIntervalThink(0.1)	
 end
 
 function modifier_imba_hood_of_defiance_active_bonus:DeclareFunctions()
@@ -159,7 +154,8 @@ function modifier_imba_hood_of_defiance_active_bonus:OnIntervalThink()
 		self:Destroy()
 		return
 	end
-	-- If we are under the effect of the stronger bonus of pipe, reset outseleves and do nothing
+
+	-- If we are under the effect of the stronger bonus of pipe, reset ourseleves and do nothing
 	if self.parent:HasModifier("modifier_imba_pipe_active_bonus") then
 		self.magic_resist_compensation = 0
 		return
@@ -187,6 +183,6 @@ function modifier_imba_hood_of_defiance_active_bonus:OnIntervalThink()
 	end
 end
 
-function modifier_imba_hood_of_defiance_active_bonus:GetModifierMagicalResistanceBonus()
+function modifier_imba_hood_of_defiance_active_bonus:GetModifierMagicalResistanceBonus()	
 	return self.magic_resist_compensation
 end
