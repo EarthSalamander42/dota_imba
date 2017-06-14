@@ -582,7 +582,7 @@ function modifier_imba_proximity_mine:_Explode()
     AddFOWViewer(caster:GetTeamNumber(), casterAbsOrigin, self.fow_radius, self.fow_duration, false)
 
     -- Kill self and remove modifier
-    caster:Kill(self.ability, caster)
+    caster:ForceKill(false)
     self:Destroy()
 end
 
@@ -1027,7 +1027,7 @@ function modifier_imba_statis_trap:_Explode()
     AddFOWViewer(caster:GetTeamNumber(), caster:GetAbsOrigin(), self.root_range, self.flying_vision_duration, false)
 
     -- Kill trap and destroy modifier
-    caster:Kill(self.ability, caster)
+    caster:ForceKill(false)
     self:Destroy()
 end
 
@@ -1842,7 +1842,7 @@ function imba_techies_remote_mine_pinpoint_detonation:OnSpellStart()
         end
 
         -- Kill self
-        caster:Kill(ability, caster)
+        caster:ForceKill(true)
     end)
 end
 
