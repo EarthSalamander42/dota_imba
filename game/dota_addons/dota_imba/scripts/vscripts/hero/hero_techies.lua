@@ -3,6 +3,61 @@
 
 CreateEmptyTalents("techies")
 
+------------------------------
+--     HELPER FUNCTIONS     --
+------------------------------
+
+local function ApplyInflammableToRemoteMines(caster, range, remote_mines)
+
+    if not remote_mines then
+        -- Find Remote Mines in the explosion radius
+        remote_mines = FindUnitsInRadius(caster:GetTeamNumber(),
+                                        caster:GetAbsOrigin(),
+                                        nil,
+                                        range,
+                                        DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+                                        DOTA_UNIT_TARGET_OTHER,
+                                        DOTA_UNIT_TARGET_FLAG_NONE,
+                                        FIND_ANY_ORDER,
+                                        false)
+    end
+
+    local modifier_inflammable = "modifier_imba_remote_mine_inflammable"
+    local detonate_ability = "imba_techies_remote_mine_pinpoint_detonation"
+
+    -- Give them inflammable stacks
+    for _,remote_mine in pairs(remote_mines) do
+        if remote_mine:GetUnitName() == "npc_imba_techies_remote_mine" then
+
+            local modifier_inflammable_handler = remote_mine:FindModifierByName(modifier_inflammable)
+            if not modifier_inflammable_handler then
+                local detonate_ability_handler = remote_mine:FindAbilityByName(detonate_ability)
+                if detonate_ability_handler then
+                    local inflammable_duration = detonate_ability_handler:GetSpecialValueFor("inflammable_duration")
+                    modifier_inflammable_handler = remote_mine:AddNewModifier(caster, detonate_ability_handler, modifier_inflammable, {duration = inflammable_duration})
+                end
+            end
+
+            -- Nil Check
+            if modifier_inflammable_handler then
+                modifier_inflammable_handler:IncrementStackCount()
+                modifier_inflammable_handler:ForceRefresh()
+            end
+        end
+    end
+end
+
+local function RefreshElectroCharge(unit)
+    local modifier_electrocharge = "modifier_imba_statis_trap_electrocharge"
+
+    -- If the enemy has Electrocharge (from Stasis Trap), refresh it and add a stack
+    local modifier_electrocharge_handler = unit:FindModifierByName(modifier_electrocharge)
+    if modifier_electrocharge_handler then
+        modifier_electrocharge_handler:IncrementStackCount()
+        modifier_electrocharge_handler:ForceRefresh()
+    end
+end
+
 
 ------------------------------
 --     PROXIMITY MINE       --
@@ -169,7 +224,7 @@ function imba_techies_proximity_mine:OnSpellStart()
     end
 end
 
-function PlantProximityMine(caster, ability, spawn_point, big_boom)
+local function PlantProximityMine(caster, ability, spawn_point, big_boom)
     local mine_ability = "imba_techies_proximity_mine_trigger"
 
     -- Create the mine unit
@@ -464,10 +519,7 @@ function modifier_imba_proximity_mine:_Explode()
                                         false)
 
     local modifier_building_res = "modifier_imba_proximity_mine_building_res"
-    local modifier_electrocharge = "modifier_imba_statis_trap_electrocharge"
-    local modifier_inflammable = "modifier_imba_remote_mine_inflammable"
     local modifier_talent_shrapnel = "modifier_imba_proximity_mine_talent"
-    local detonate_ability = "imba_techies_remote_mine_pinpoint_detonation"
 
     -- If this is a Big Boom, RAIN THEM SHRAPNELS!
     if self.is_big_boom then
@@ -506,12 +558,7 @@ function modifier_imba_proximity_mine:_Explode()
                 enemy:AddNewModifier(caster, self.ability, modifier_building_res, {duration = self.buidling_damage_duration})
             end
 
-            -- If the enemy has Electrocharge (from Stasis Trap), refresh it and add a stack
-            local modifier_electrocharge_handler = enemy:FindModifierByName(modifier_electrocharge)
-            if modifier_electrocharge_handler then
-                modifier_electrocharge_handler:IncrementStackCount()
-                modifier_electrocharge_handler:ForceRefresh()
-            end
+            RefreshElectroCharge(enemy)
 
             -- See if the enemy died from the mine
             Timers:CreateTimer(FrameTime(), function()
@@ -522,37 +569,7 @@ function modifier_imba_proximity_mine:_Explode()
         end
     end
 
-    -- Find Remote Mines in the explosion radius
-    local remote_mines = FindUnitsInRadius(caster:GetTeamNumber(),
-                                            casterAbsOrigin,
-                                            nil,
-                                            self.trigger_range,
-                                            DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-                                            DOTA_UNIT_TARGET_OTHER,
-                                            DOTA_UNIT_TARGET_FLAG_NONE,
-                                            FIND_ANY_ORDER,
-                                            false)
-
-    -- Give them inflammable stacks
-    for _,remote_mine in pairs(remote_mines) do
-        if remote_mine:GetUnitName() == "npc_imba_techies_remote_mine" then
-
-            local modifier_inflammable_handler = remote_mine:FindModifierByName(modifier_inflammable)
-            if not modifier_inflammable_handler then
-                local detonate_ability_handler = remote_mine:FindAbilityByName(detonate_ability)
-                if detonate_ability_handler then
-                    local inflammable_duration = detonate_ability_handler:GetSpecialValueFor("inflammable_duration")
-                    modifier_inflammable_handler = remote_mine:AddNewModifier(caster, detonate_ability_handler, modifier_inflammable, {duration = inflammable_duration})
-                end
-            end
-
-            -- Nil Check
-            if modifier_inflammable_handler then
-                modifier_inflammable_handler:IncrementStackCount()
-                modifier_inflammable_handler:ForceRefresh()
-            end
-        end
-    end
+    ApplyInflammableToRemoteMines(caster, self.trigger_range, nil)
 
     -- If an enemy was killed from a mine, play kill response
     if RollPercentage(25) then
@@ -984,11 +1001,7 @@ function modifier_imba_statis_trap:_Explode()
         if not enemy:HasModifier(modifier_electrocharge) then
             enemy:AddNewModifier(caster, self.ability, modifier_electrocharge, {duration = self.root_duration})
         else
-            local modifier_electrocharge_handler = enemy:FindModifierByName(modifier_electrocharge)
-            if modifier_electrocharge_handler then
-                modifier_electrocharge_handler:IncrementStackCount()
-                modifier_electrocharge_handler:ForceRefresh()
-            end
+            RefreshElectroCharge(enemy)
         end
     end
 
@@ -1011,28 +1024,7 @@ function modifier_imba_statis_trap:_Explode()
 
     -- #4 Talent: Stasis Traps grants charges of Inflammable to Remote mines
     if self.owner and self.owner:HasTalent("special_bonus_imba_techies_4") then
-        local modifier_inflammable = "modifier_imba_remote_mine_inflammable"
-        local detonate_ability = "imba_techies_remote_mine_pinpoint_detonation"
-
-        -- Find Remote Mines in the explosion radius and give them inflammable stacks
-        for _,mine in pairs(mines) do
-            if mine:GetUnitName() == "npc_imba_techies_remote_mine" then
-                local modifier_inflammable_handler = mine:FindModifierByName(modifier_inflammable)
-                if not modifier_inflammable_handler then
-                    local detonate_ability_handler = mine:FindAbilityByName(detonate_ability)
-                    if detonate_ability_handler then
-                        local inflammable_duration = detonate_ability_handler:GetSpecialValueFor("inflammable_duration")
-                        modifier_inflammable_handler = mine:AddNewModifier(caster, detonate_ability_handler, modifier_inflammable, {duration = inflammable_duration})
-                    end
-                end
-
-                -- Nil check
-                if modifier_inflammable_handler then
-                    modifier_inflammable_handler:IncrementStackCount()
-                    modifier_inflammable_handler:ForceRefresh()
-                end
-            end
-        end
+        ApplyInflammableToRemoteMines(caster, self.root_range, mines)
     end
 
     -- Apply flying vision
@@ -1821,12 +1813,7 @@ function imba_techies_remote_mine_pinpoint_detonation:OnSpellStart()
 
             ApplyDamage(damageTable)
 
-            -- If the enemy has Electrocharge (from Stasis Trap), refresh it and add a stack
-            local modifier_electrocharge_handler = enemy:FindModifierByName(modifier_electrocharge)
-            if modifier_electrocharge_handler then
-                modifier_electrocharge_handler:IncrementStackCount()
-                modifier_electrocharge_handler:ForceRefresh()
-            end
+            RefreshElectroCharge(enemy)
         end
 
         -- Find remote mines in explosion range
