@@ -469,16 +469,16 @@ function modifier_imba_proximity_mine:_Explode()
     local modifier_talent_shrapnel = "modifier_imba_proximity_mine_talent"
     local detonate_ability = "imba_techies_remote_mine_pinpoint_detonation"
 
+    -- If this is a Big Boom, RAIN THEM SHRAPNELS!
+    if self.is_big_boom then
+        CreateModifierThinker(caster, self.ability, modifier_talent_shrapnel, {duration = self.big_boom_shrapnel_duration}, casterAbsOrigin, caster:GetTeamNumber(), false)
+    end
+
     -- Deal damage to nearby non-flying enemies
     for _,enemy in pairs(enemies) do
 
         -- If an enemy doesn't have flying movement, ignore it, otherwise continue
         if not enemy:HasFlyMovementCapability() then
-
-            -- If this is a Big Boom, RAIN THEM SHRAPNELS!
-            if self.is_big_boom then
-                CreateModifierThinker(caster, self.ability, modifier_talent_shrapnel, {duration = self.big_boom_shrapnel_duration}, casterAbsOrigin, caster:GetTeamNumber(), false)
-            end
 
             -- If this is a Big Boom, add damage to the blast!
             local damage = self.mine_damage
@@ -513,44 +513,44 @@ function modifier_imba_proximity_mine:_Explode()
                 modifier_electrocharge_handler:ForceRefresh()
             end
 
-            -- Find Remote Mines in the explosion radius
-            local remote_mines = FindUnitsInRadius(caster:GetTeamNumber(),
-                                                    casterAbsOrigin,
-                                                    nil,
-                                                    self.trigger_range,
-                                                    DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-                                                    DOTA_UNIT_TARGET_OTHER,
-                                                    DOTA_UNIT_TARGET_FLAG_NONE,
-                                                    FIND_ANY_ORDER,
-                                                    false)
-
-            -- Give them inflammable stacks
-            for _,remote_mine in pairs(remote_mines) do
-                if remote_mine:GetUnitName() == "npc_imba_techies_remote_mine" then
-
-                    local modifier_inflammable_handler = remote_mine:FindModifierByName(modifier_inflammable)
-                    if not modifier_inflammable_handler then
-                        local detonate_ability_handler = remote_mine:FindAbilityByName(detonate_ability)
-                        if detonate_ability_handler then
-                            local inflammable_duration = detonate_ability_handler:GetSpecialValueFor("inflammable_duration")
-                            modifier_inflammable_handler = remote_mine:AddNewModifier(caster, detonate_ability_handler, modifier_inflammable, {duration = inflammable_duration})
-                        end
-                    end
-
-                    -- Nil Check
-                    if modifier_inflammable_handler then
-                        modifier_inflammable_handler:IncrementStackCount()
-                        modifier_inflammable_handler:ForceRefresh()
-                    end
-                end
-            end
-
             -- See if the enemy died from the mine
             Timers:CreateTimer(FrameTime(), function()
                 if not enemy:IsAlive() then
                     enemy_killed = true
                 end
             end)
+        end
+    end
+
+    -- Find Remote Mines in the explosion radius
+    local remote_mines = FindUnitsInRadius(caster:GetTeamNumber(),
+                                            casterAbsOrigin,
+                                            nil,
+                                            self.trigger_range,
+                                            DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+                                            DOTA_UNIT_TARGET_OTHER,
+                                            DOTA_UNIT_TARGET_FLAG_NONE,
+                                            FIND_ANY_ORDER,
+                                            false)
+
+    -- Give them inflammable stacks
+    for _,remote_mine in pairs(remote_mines) do
+        if remote_mine:GetUnitName() == "npc_imba_techies_remote_mine" then
+
+            local modifier_inflammable_handler = remote_mine:FindModifierByName(modifier_inflammable)
+            if not modifier_inflammable_handler then
+                local detonate_ability_handler = remote_mine:FindAbilityByName(detonate_ability)
+                if detonate_ability_handler then
+                    local inflammable_duration = detonate_ability_handler:GetSpecialValueFor("inflammable_duration")
+                    modifier_inflammable_handler = remote_mine:AddNewModifier(caster, detonate_ability_handler, modifier_inflammable, {duration = inflammable_duration})
+                end
+            end
+
+            -- Nil Check
+            if modifier_inflammable_handler then
+                modifier_inflammable_handler:IncrementStackCount()
+                modifier_inflammable_handler:ForceRefresh()
+            end
         end
     end
 
