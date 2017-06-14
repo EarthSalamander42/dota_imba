@@ -446,10 +446,7 @@ end
 --------------------------------------------------------------------------------
 
 function imba_pudge_meat_hook:OnSpellStart()
-	self.bChainAttached = false
-	if self.hVictim ~= nil then
-		--self.hVictim:InterruptMotionControllers( true )
-	end
+	self.bChainAttached = false	
 	self.hooks = self.hooks or {}
 	self.targets = {}
 	self.max_targets = self:GetSpecialValueFor( "max_targets" )  
@@ -515,7 +512,7 @@ function imba_pudge_meat_hook:OnSpellStart()
 
 		self.hooks[i]["hProjectile"] = ProjectileManager:CreateLinearProjectile( info )
 
-		self.hooks[i]["nChainParticleFXIndex"] = ParticleManager:CreateParticle( "particles/units/heroes/hero_pudge/pudge_meathook.vpcf", PATTACH_CUSTOMORIGIN, self:GetCaster() )
+		self.hooks[i]["nChainParticleFXIndex"] = ParticleManager:CreateParticle( "particles/units/heroes/hero_pudge/pudge_meathook.vpcf", PATTACH_CUSTOMORIGIN, nil)
 		ParticleManager:SetParticleAlwaysSimulate( self.hooks[i]["nChainParticleFXIndex"])
 		ParticleManager:SetParticleControlEnt( self.hooks[i]["nChainParticleFXIndex"], 0, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_weapon_chain_rt", self:GetCaster():GetAbsOrigin() + vHookOffset, true )
 		ParticleManager:SetParticleControl( self.hooks[i]["nChainParticleFXIndex"], 1, self.hooks[i]["vHookTarget"] )

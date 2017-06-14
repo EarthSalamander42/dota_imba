@@ -356,10 +356,13 @@ end
 function modifier_imba_nightmare_dot:OnAttackStart(t)
 	if not IsServer() then return end
 	if t.target == self:GetParent() then -- am i the target of an attack?
+		if t.attacker:IsBuilding() then
+			return nil
+		end
+
 		local nightmare_duration,nightmare_invuln_duration = getkvValues(self:GetAbility(),"nightmare_duration","nightmare_invuln_duration")
 		t.attacker:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_nightmare_dot", {duration = nightmare_duration}) -- Spread Nightmare
-		t.attacker:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_nightmare_invul", {duration = nightmare_invuln_duration}) -- Apply invuln, idk if firetoad wanted allies to gain the talent so i'm leaving original functionality
-		--self:Destroy() -- This is the original design of nightmare, it wasn't specified in the board if we only wanted '1' active nightmare.  So it's here if someone wants to uncomment it
+		t.attacker:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_nightmare_invul", {duration = nightmare_invuln_duration}) -- Apply invuln, idk if firetoad wanted allies to gain the talent so i'm leaving original functionality		
 	end
 end
 

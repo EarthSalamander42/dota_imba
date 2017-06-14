@@ -143,9 +143,7 @@ function modifier_imba_shotgun_passive:OnAttack(params)
 							bGroundLock = true,
 							bProvidesVision = false,
 							bFlyingVision = false,
-							ControlPoints = {[0]=hero_pos+Vector(0,0,90),[1]=end_loc,[2]=Vector(self.projectile_speed,0,0),[3]=end_loc,[4]=vColor,[5]=hero:GetHeroColorSecondary()},
-							iPositionCP = 90, -- That it won't be used
-							iVelocityCP = 90, -- That it won't be used
+							ControlPoints = {[0]=hero_pos+Vector(0,0,90),[1]=end_loc,[2]=Vector(self.projectile_speed,0,0),[3]=end_loc,[4]=vColor,[5]=hero:GetHeroColorSecondary()},							
 							UnitTest = function(self, unit) return unit:GetUnitName() ~= "npc_dummy_unit" and unit:GetTeamNumber() ~= hero:GetTeamNumber() end,
 							OnUnitHit = function(self, unit)
 								if last_target == nil then
