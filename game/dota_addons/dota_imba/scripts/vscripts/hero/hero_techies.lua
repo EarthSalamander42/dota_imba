@@ -183,7 +183,7 @@ function imba_techies_proximity_mine:OnSpellStart()
     local mine_placement_count = 0
     local modifier_charges_handler = caster:FindModifierByName(modifier_charges)
     if modifier_charges_handler then
-        mine_placement_count = mine_placement_count + modifier_charges_handler:GetStackCount()
+        mine_placement_count = modifier_charges_handler:GetStackCount()
 
         -- If there are no charges, do nothing
         if modifier_charges_handler:GetStackCount() > 0 then
@@ -259,13 +259,11 @@ end
 modifier_imba_proximity_mine_charges = modifier_imba_proximity_mine_charges or class({})
 
 function modifier_imba_proximity_mine_charges:OnCreated()
-    -- Ability properties
-    self.caster = self:GetCaster()
-    self.ability = self:GetAbility()
+    local ability = self:GetAbility()
 
     -- Ability specials
-    self.charge_replenish_duration = self.ability:GetSpecialValueFor("charge_replenish_duration")
-    self.max_charges = self.ability:GetSpecialValueFor("max_charges")
+    self.charge_replenish_duration = ability:GetSpecialValueFor("charge_replenish_duration")
+    self.max_charges = ability:GetSpecialValueFor("max_charges")
 
     -- Set a bonus first mine immediatley when the ability is first learned
     if not self.repeated then
@@ -1037,12 +1035,13 @@ end
 
 function modifier_imba_statis_trap:CheckState()
     if IsServer() then
-        local state
 
         -- Planted inside a creep
         if self.caster:IsCreep() then
             return nil
         end
+
+        local state
 
         -- Trap is invisible since activation
         if self.active then
@@ -1364,15 +1363,8 @@ function modifier_imba_blast_off_movement:OnCreated( keys )
         self.caster = self:GetCaster()
         self.ability = self:GetAbility()
         self.parent = self:GetParent()
-        self.miss_response = {"techies_tech_suicidesquad_04", "techies_tech_suicidesquad_09", "techies_tech_suicidesquad_13"}
-        self.rare_miss_response = {"techies_tech_suicidesquad_08", "techies_tech_failure_01"}
-        self.kill_response = {"techies_tech_suicidesquad_02", "techies_tech_suicidesquad_03", "techies_tech_suicidesquad_06", "techies_tech_suicidesquad_11", "techies_tech_suicidesquad_12"}
-        self.rare_kill_response = {"techies_tech_focuseddetonate_14"}
-        self.sound_suicide = "Hero_Techies.Suicide"
+
         local particle_trail = "particles/units/heroes/hero_techies/techies_blast_off_trail.vpcf"
-        self.particle_explosion = "particles/units/heroes/hero_techies/techies_blast_off.vpcf"
-        self.modifier_silence = "modifier_imba_blast_off_silence"
-        self.proximity_ability = "imba_techies_proximity_mine"
 
         -- Ability specials
         self.damage = self.ability:GetSpecialValueFor("damage")
@@ -1461,10 +1453,12 @@ function modifier_imba_blast_off_movement:BlastOffLanded()
         self.blast_off_finished = true
 
         -- Play explosion sound
-        EmitSoundOn(self.sound_suicide, self.parent)
+        local sound_suicide = "Hero_Techies.Suicide"
+        EmitSoundOn(sound_suicide, self.parent)
 
         -- Add explosion particle
-        local particle_explosion_fx = ParticleManager:CreateParticle(self.particle_explosion, PATTACH_WORLDORIGIN, self.parent)
+        local particle_explosion = "particles/units/heroes/hero_techies/techies_blast_off.vpcf"
+        local particle_explosion_fx = ParticleManager:CreateParticle(particle_explosion, PATTACH_WORLDORIGIN, self.parent)
         ParticleManager:SetParticleControl(particle_explosion_fx, 0, self.parent:GetAbsOrigin())
         ParticleManager:ReleaseParticleIndex(particle_explosion_fx)
 
@@ -1482,6 +1476,8 @@ function modifier_imba_blast_off_movement:BlastOffLanded()
                                           FIND_ANY_ORDER,
                                           false)
 
+        local modifier_silence = "modifier_imba_blast_off_silence"
+
         local enemy_killed = false
         for _,enemy in pairs(enemies) do
             -- Deal magical damage to them
@@ -1495,7 +1491,7 @@ function modifier_imba_blast_off_movement:BlastOffLanded()
             ApplyDamage(damageTable)
 
             -- Add silence modifier to them
-            enemy:AddNewModifier(self.caster, self.ability, self.modifier_silence, {duration = self.silence_duration})
+            enemy:AddNewModifier(self.caster, self.ability, modifier_silence, {duration = self.silence_duration})
 
             -- Check (and mark) if an enemy died from the blast
             Timers:CreateTimer(FrameTime(), function()
@@ -1510,9 +1506,11 @@ function modifier_imba_blast_off_movement:BlastOffLanded()
             -- Roll for rare response
             local sound
             if RollPercentage(15) then
-                sound = self.rare_miss_response[math.random(1, #self.rare_miss_response)]
+                local rare_miss_response = {"techies_tech_suicidesquad_08", "techies_tech_failure_01"}
+                sound = rare_miss_response[math.random(1, #rare_miss_response)]
             else
-                sound = self.miss_response[math.random(1, #self.miss_response)]
+                local miss_response = {"techies_tech_suicidesquad_04", "techies_tech_suicidesquad_09", "techies_tech_suicidesquad_13"}
+                sound = miss_response[math.random(1, #miss_response)]
             end
 
             EmitSoundOn(sound, self.caster)
@@ -1524,9 +1522,11 @@ function modifier_imba_blast_off_movement:BlastOffLanded()
                 -- Roll for rare response
                 local sound
                 if RollPercentage(15) then
-                    sound = self.rare_kill_response[math.random(1, #self.rare_kill_response)]
+                    local rare_kill_response = {"techies_tech_focuseddetonate_14"}
+                    sound = rare_kill_response[math.random(1, #rare_kill_response)]
                 else
-                    sound = self.kill_response[math.random(1, #self.kill_response)]
+                    local kill_response = {"techies_tech_suicidesquad_02", "techies_tech_suicidesquad_03", "techies_tech_suicidesquad_06", "techies_tech_suicidesquad_11", "techies_tech_suicidesquad_12"}
+                    sound = kill_response[math.random(1, #kill_response)]
                 end
                 EmitSoundOn(sound, self.caster)
             end
@@ -1548,9 +1548,9 @@ function modifier_imba_blast_off_movement:BlastOffLanded()
 
         --#5 Talent: Blast Off! jumps drop a Proximity Mine
         if self.caster:HasTalent("special_bonus_imba_techies_5") then
-
+            local proximity_ability = "imba_techies_proximity_mine"
             -- Find Proximity Mine ability. Talent can't proc if the caster doesn't have Proximity Mines.
-            local proximity_ability_handler = self.caster:FindAbilityByName(self.proximity_ability)
+            local proximity_ability_handler = self.caster:FindAbilityByName(proximity_ability)
             if proximity_ability_handler and proximity_ability_handler:GetLevel() > 0 then
                 PlantProximityMine(self.caster, proximity_ability_handler, self.parent:GetAbsOrigin())
             end
@@ -2161,9 +2161,10 @@ function modifier_imba_minefield_sign_detection:OnDestroy()
 
         -- If it is a Remote Mine, wait a game tick, check if the mine is still alive, and scan for nearby enemies
         Timers:CreateTimer(FrameTime(), function()
-            local detonate_ability = "imba_techies_remote_mine_pinpoint_detonation"
 
             if parent:GetUnitName() == "npc_imba_techies_remote_mine" and parent:IsAlive() then
+
+                local detonate_ability = "imba_techies_remote_mine_pinpoint_detonation"
                 local detonate_ability_handler = parent:FindAbilityByName(detonate_ability)
                 if detonate_ability_handler then --detonate only if parent has the ability
                     local radius = detonate_ability_handler:GetSpecialValueFor("radius")
