@@ -108,7 +108,7 @@
 		"item"		"item_helm_of_the_dominator"
 		"item"		"item_imba_mekansm"
 		"item"		"item_imba_vladmir"
-		"item"		"item_pipe"		
+		"item"		"item_imba_pipe"		
 	}
 				
 	"magics"			
@@ -133,7 +133,7 @@
 	// Level 3 - Purple Recipes	
 	"defense"
 	{
-		"item"		"item_hood_of_defiance"
+		"item"		"item_imba_hood_of_defiance"
 		"item"		"item_imba_vanguard"
 		"item"		"item_blade_mail"
 		"item"		"item_black_king_bar"

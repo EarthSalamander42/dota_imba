@@ -927,7 +927,16 @@ function GameMode:DamageFilter( keys )
 				victim:SetModifierStackCount("modifier_item_imba_initiate_robe_stacks", victim, math.floor(shield_stacks - keys.damage))
 				keys.damage = 0
 			end
-		end		
+		end
+
+		-- Magic barrier (pipe/hood) damage mitigation
+		if victim:HasModifier("modifier_imba_hood_of_defiance_active_shield") and victim:GetTeam() ~= attacker:GetTeam() and damage_type == DAMAGE_TYPE_MAGICAL then
+			local shield_modifier = victim:FindModifierByName("modifier_imba_hood_of_defiance_active_shield")
+
+			if shield_modifier and shield_modifier.AbsorbDamage then
+				keys.damage = shield_modifier:AbsorbDamage(keys.damage)
+			end
+		end
 
 		-- Damage overhead display
 		if display_red_crit_number then
