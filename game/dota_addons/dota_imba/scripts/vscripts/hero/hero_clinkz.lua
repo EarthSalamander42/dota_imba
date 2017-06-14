@@ -416,6 +416,11 @@ function modifier_imba_searing_arrows_passive:OnAttackStart(keys)
         local attacker = keys.attacker
         local target = keys.target
 
+        -- If the ability is null, do nothing
+        if self.ability:IsNull() then
+            return nil
+        end
+
         -- If the ability is stolen, do nothing
         if self.ability:IsStolen() then
             return nil
@@ -440,6 +445,11 @@ function modifier_imba_searing_arrows_passive:OnAttackStart(keys)
 end
 
 function modifier_imba_searing_arrows_passive:GetModifierBaseAttack_BonusDamage()
+    -- If the ability is null, do nothing
+    if self.ability:IsNull() then
+        return nil
+    end
+    
     -- Ignore if it is a stolen ability
     if self.ability:IsStolen() then
         return nil

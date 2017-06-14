@@ -330,19 +330,18 @@ function modifier_imba_shrapnel_charges:OnIntervalThink()
         end        
 
         -- If a charge has finished charging, give a stack
-        if self:GetRemainingTime() < 0 then
+        if self:GetRemainingTime() < 0 then            
             self:IncrementStackCount()
         end
 
         -- #5 Talent: Max Shrapnel charges increase
-        if self.caster:HasTalent("special_bonus_imba_sniper_5") and not self.talent5 then
-
+        if self.caster:HasTalent("special_bonus_imba_sniper_5") and not self.talent5 then            
             -- Grant the stacks immediately, mark talent5 as applied
             self.talent5 = true
 
             local talent_stacks = self.caster:FindTalentValue("special_bonus_imba_sniper_5")
-            self.max_charge_count = self.max_charge_count + talent_stacks
-            self:SetStackCount(self:GetStackCount() + talent_stacks)            
+            self.max_charge_count = self.max_charge_count + talent_stacks            
+            self:SetStackCount(self:GetStackCount() + talent_stacks)                                    
         end
     end
 end
@@ -351,11 +350,12 @@ function modifier_imba_shrapnel_charges:OnStackCountChanged(old_stack_count)
     if IsServer() then
         -- Current stacks
         local stacks = self:GetStackCount() 
+        local true_replenish_cooldown = self.charge_replenish_rate * (1 - self.caster:GetCooldownReduction() * 0.01)
 
         -- If the stacks are now 0, start the ability's cooldown
         if stacks == 0 then
             self.ability:EndCooldown()
-            self.ability:StartCooldown(self.charge_replenish_rate)
+            self.ability:StartCooldown(self:GetRemainingTime())
         end
 
         -- If the stack count is now 1, and the skill is still in cooldown because of some cd manipulation, refresh it
@@ -371,16 +371,17 @@ function modifier_imba_shrapnel_charges:OnStackCountChanged(old_stack_count)
         end
 
         if not lost_stack then
+
             -- If we're not at the max stacks yet, reset the timer   
             if stacks < self.max_charge_count then
-                self:SetDuration(self.charge_replenish_rate, true)
+                self:SetDuration(true_replenish_cooldown, true)
             else
                 -- Otherwise, stop the timer
                 self:SetDuration(-1, true)
             end
         else
             if old_stack_count == self.max_charge_count then
-                self:SetDuration(self.charge_replenish_rate, true)            
+                self:SetDuration(true_replenish_cooldown, true)            
             end
         end
     end

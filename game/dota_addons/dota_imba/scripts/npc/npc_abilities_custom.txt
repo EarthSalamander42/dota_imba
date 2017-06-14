@@ -18798,15 +18798,9 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"attack_interval"		"1 0.95 0.9 0.85 0.8 0.75"
-			}
+			}			
 
 			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"scepter_attack_speed_mult"	"1 1.2 1.4 1.6 1.8 2"
-			}
-
-			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"scepter_cast_range"	"1000"

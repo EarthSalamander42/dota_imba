@@ -412,7 +412,7 @@ function imba_alchemist_unstable_concoction:OnProjectileHit(target, location)
                 if not target:IsInvulnerable() then
                     if not target:IsOutOfGame() then
                         ApplyDamage({victim = target, attacker = caster, damage = damage, damage_type = damage_type,})
-                        target:AddNewModifier(caster, self, "modifier_imba_unstable_concoction_stunned", {duration = stun_duration,})
+                        target:AddNewModifier(caster, self, "modifier_imba_unstable_concoction_stunned", {duration = stun_duration})
                     end
                 end
             end
@@ -557,10 +557,23 @@ function modifier_imba_unstable_concoction_handler:OnDestroy()
     local caster = self:GetCaster()
     local ability = self:GetAbility()
     if IsServer() then
-        if not caster:IsAlive() then
-            ability:OnProjectileHit(caster, caster:GetAbsOrigin())
-            ability:StartCooldown(ability:GetCooldown(ability:GetLevel()))
-        end
+        Timers:CreateTimer(FrameTime(), function()
+            if not caster:IsAlive() then
+                local projectile_speed = ability:GetSpecialValueFor("movement_speed")
+                local info = 
+                {
+                    Target = caster,
+                    Source = caster,
+                    Ability = ability, 
+                    EffectName = "particles/units/heroes/hero_alchemist/alchemist_unstable_concoction_projectile.vpcf",
+                    iMoveSpeed = projectile_speed,
+                }
+                ProjectileManager:CreateTrackingProjectile(info)
+
+                ability:OnProjectileHit(caster, caster:GetAbsOrigin())
+                ability:UseResources(false, false, true)
+            end
+        end)
     end
 end
 
@@ -856,7 +869,18 @@ function imba_alchemist_greevils_greed:OnSpellStart()
     local target = self:GetCursorTarget()
     local owner = caster:GetOwner()
 
-    local greed_ability = owner:FindAbilityByName("imba_alchemist_goblins_greed")
+    local greed_ability
+
+    if owner then
+        if owner:HasAbility("imba_alchemist_goblins_greed") then
+            greed_ability = owner:FindAbilityByName("imba_alchemist_goblins_greed")
+        end
+    end       
+
+    if not greed_ability then
+        return nil
+    end
+
     local greed_duration = greed_ability:GetSpecialValueFor("greed_duration")
 
     local particle_greevil = "particles/hero/alchemist/greevil_midas_touch.vpcf"
