@@ -2604,7 +2604,7 @@
 	{
 		// General
 		//----------------------------------------------------------------
-		"BaseClass"             "npc_dota_creature"
+		"BaseClass"             "npc_dota_witch_doctor_death_ward"
 		"Model"                 "models/heroes/witchdoctor/witchdoctor_ward.vmdl"
 		"ModelScale"            "1.0"
 		"Level"                 "1"
@@ -2630,12 +2630,14 @@
 	   
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"        "DOTA_HULL_SIZE_HERO"
+		"BoundsHullName"        "DOTA_HULL_SIZE_SIEGE"
 		"RingRadius"            "70"
 	   
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"  "DOTA_UNIT_CAP_MOVE_NONE"
+		"MovementSpeed"			"0"			
+		"MovementTurnRate"		"0.5"		
 	   
 		// Status
 		//----------------------------------------------------------------

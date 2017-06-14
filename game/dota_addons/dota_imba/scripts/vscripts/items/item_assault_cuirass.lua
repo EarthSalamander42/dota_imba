@@ -32,6 +32,10 @@ function modifier_imba_assault_cuirass:OnCreated()
     self.modifier_aura_positive = "modifier_imba_assault_cuirass_aura_positive"
     self.modifier_aura_negative = "modifier_imba_assault_cuirass_aura_negative"
 
+    if not self.ability then
+        self:Destroy()
+    end
+
     -- Abiltiy specials
     self.bonus_as = self.ability:GetSpecialValueFor("bonus_as")
     self.bonus_armor = self.ability:GetSpecialValueFor("bonus_armor")    
@@ -52,10 +56,12 @@ function modifier_imba_assault_cuirass:DeclareFunctions()
 end
 
 function modifier_imba_assault_cuirass:GetModifierAttackSpeedBonus_Constant()
+    if not self.ability then return nil end
     return self.bonus_as
 end
 
 function modifier_imba_assault_cuirass:GetModifierPhysicalArmorBonus()
+    if not self.ability then return nil end
     return self.bonus_armor
 end
 
@@ -138,6 +144,11 @@ function modifier_imba_assault_cuirass_aura_positive_effect:OnCreated()
     self.caster = self:GetCaster()
     self.ability = self:GetAbility()    
 
+    if not self.ability then
+        self:Destroy()
+        return nil
+    end
+
     -- Ability specials
     self.aura_as_ally = self.ability:GetSpecialValueFor("aura_as_ally")    
     self.aura_armor_ally = self.ability:GetSpecialValueFor("aura_armor_ally")    
@@ -155,10 +166,12 @@ function modifier_imba_assault_cuirass_aura_positive_effect:DeclareFunctions()
 end
 
 function modifier_imba_assault_cuirass_aura_positive_effect:GetModifierAttackSpeedBonus_Constant()    
+    if not self.ability then return nil end
     return self.aura_as_ally    
 end
 
 function modifier_imba_assault_cuirass_aura_positive_effect:GetModifierPhysicalArmorBonus()    
+    if not self.ability then return nil end
     return self.aura_armor_ally       
 end
 

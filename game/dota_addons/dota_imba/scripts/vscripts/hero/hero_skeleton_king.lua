@@ -1035,10 +1035,6 @@ function modifier_imba_reincarnation:IsAura()
     return false
 end
 
-function modifier_imba_reincarnation:IsAuraActiveOnDeath()
-    return true
-end
-
 
 -- Wraith Form modifier (given from aura, not yet Wraith Form)
 modifier_imba_reincarnation_wraith_form_buff = modifier_imba_reincarnation_wraith_form_buff or class({})

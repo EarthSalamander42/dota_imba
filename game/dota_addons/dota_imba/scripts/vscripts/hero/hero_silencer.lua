@@ -180,7 +180,9 @@ function modifier_imba_arcane_curse_debuff:OnAbilityExecuted( params )
 											"imba_drow_ranger_frost_arrows",
 											"imba_jakiro_liquid_fire",
 											"imba_obsidian_destroyer_arcane_orb",
-											"imba_sniper_take_aim"}
+											"imba_sniper_take_aim",
+											"imba_kunkka_ebb_and_flow",
+											"imba_kunkka_tidebringer"}
 
 				-- If the ability is one of those spells that should be ignored, do nothing
 				for _, spell in pairs(uneffected_spells) do

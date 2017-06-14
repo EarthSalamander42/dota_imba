@@ -699,7 +699,7 @@ end
 function modifier_imba_juggernaut_blade_dance_wind_dance:OnRemoved()
 	self:GetAbility().GetBehavior = function() return DOTA_ABILITY_BEHAVIOR_PASSIVE end
 	self:GetAbility():GetBehavior()
-	self:GetAbility():GetCastRange(self:GetCaster(), self:GetCaster():GetAbsOrigin())
+	self:GetAbility():GetCastRange(self:GetCaster():GetAbsOrigin(), self:GetCaster())
 	self:GetAbility():GetCooldown()
 end
 

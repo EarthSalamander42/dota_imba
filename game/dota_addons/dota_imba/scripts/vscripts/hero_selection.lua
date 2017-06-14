@@ -217,7 +217,7 @@ local id = event.PlayerID
 		"npc_dota_hero_rubick",
 		"npc_dota_hero_luna",
 		"npc_dota_hero_wisp",
-		--"npc_dota_hero_disruptor",
+		"npc_dota_hero_disruptor",
 		"npc_dota_hero_undying",
 		"npc_dota_hero_templar_assassin",
 		"npc_dota_hero_naga_siren",

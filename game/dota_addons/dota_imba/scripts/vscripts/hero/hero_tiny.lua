@@ -249,8 +249,12 @@ end
 
 function modifier_imba_tiny_avalanche_passive:OnAttackLanded(params)
 	if IsServer() then
+		if params.attacker:PassivesDisabled() then
+			return nil
+		end
+
 		if params.attacker == self:GetParent() then
-			if RollPercentage(self.chance + self.prng) then
+			if RollPseudoRandom(self.chance, self) then
 				local vPos = params.target:GetAbsOrigin()
 				local caster = self:GetCaster()
 				local delay = self:GetAbility():GetSpecialValueFor("projectile_duration")	
@@ -276,10 +280,7 @@ function modifier_imba_tiny_avalanche_passive:OnAttackLanded(params)
 					ExtraData = {ticks = ticks}
 				}
 				ProjectileManager:CreateLinearProjectile( info )
-				EmitSoundOnLocationWithCaster(vPos, "Ability.Avalanche", caster)
-				self.prng = -10
-			else
-				self.prng = self.prng + 2
+				EmitSoundOnLocationWithCaster(vPos, "Ability.Avalanche", caster)				
 			end
 		end
 	end
@@ -293,6 +294,10 @@ imba_tiny_toss = imba_tiny_toss or class({})
 
 function imba_tiny_toss:GetAbilityTextureName()
    return "tiny_toss"
+end
+
+function imba_tiny_toss:IsNetherWardStealable()
+	return false
 end
 
 function imba_tiny_toss:OnSpellStart()

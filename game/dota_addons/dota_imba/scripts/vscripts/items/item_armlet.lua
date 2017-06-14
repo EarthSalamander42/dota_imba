@@ -134,9 +134,10 @@ end
 function modifier_imba_armlet_unholy_strength:OnIntervalThink()
 	if IsServer() then
 		local parent = self:GetParent()
-		
+
 		-- If the parent no longer has the modifier (which means he no longer has an armlet), commit sudoku
 		if not parent:HasModifier("modifier_imba_armlet_basic") then
+			parent:RemoveModifierByName("modifier_imba_armlet_unholy_strength_visual_effect")
 			self:Destroy()
 			return
 		end

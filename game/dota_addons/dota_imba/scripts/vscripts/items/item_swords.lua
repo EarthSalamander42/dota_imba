@@ -41,9 +41,11 @@ function modifier_item_imba_sange:DeclareFunctions()
 end
 
 function modifier_item_imba_sange:GetModifierPreAttack_BonusDamage()
+	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_damage") end
 
 function modifier_item_imba_sange:GetModifierBonusStats_Strength()
+	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_strength") end
 
 -- On attack landed, roll for proc and apply stacks
@@ -121,9 +123,11 @@ function modifier_item_imba_sange_maim:DeclareFunctions()
 end
 
 function modifier_item_imba_sange_maim:GetModifierAttackSpeedBonus_Constant()
+	if not self:GetAbility() then return end
 	return self.maim_stack * self:GetStackCount() end
 
 function modifier_item_imba_sange_maim:GetModifierMoveSpeedBonus_Percentage()
+	if not self:GetAbility() then return end
 	return self.maim_stack * self:GetStackCount() end
 
 -----------------------------------------------------------------------------------------------------------
@@ -210,12 +214,15 @@ function modifier_item_imba_heavens_halberd:DeclareFunctions()
 end
 
 function modifier_item_imba_heavens_halberd:GetModifierPreAttack_BonusDamage()
+	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_damage") end
 
 function modifier_item_imba_heavens_halberd:GetModifierBonusStats_Strength()
+	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_strength") end
 
 function modifier_item_imba_heavens_halberd:GetModifierEvasion_Constant()
+	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_evasion") end
 
 -- On attack landed, roll for proc and apply stacks
@@ -342,12 +349,15 @@ function modifier_item_imba_yasha:DeclareFunctions()
 end
 
 function modifier_item_imba_yasha:GetModifierAttackSpeedBonus_Constant()
+	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_attack_speed") end
 
 function modifier_item_imba_yasha:GetModifierMoveSpeedBonus_Percentage_Unique()
+	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_ms") end
 
 function modifier_item_imba_yasha:GetModifierBonusStats_Agility()
+	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_agility") end
 
 -- On attack landed, roll for proc and apply stacks
@@ -511,9 +521,11 @@ function modifier_item_imba_azura:DeclareFunctions()
 end
 
 function modifier_item_imba_azura:GetCustomCooldownReduction()
+	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_cdr") end
 
 function modifier_item_imba_azura:GetModifierBonusStats_Intellect()
+	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_int") end
 
 -- On attack landed, roll for proc and apply stacks
@@ -589,6 +601,7 @@ function modifier_item_imba_azura_amp:DeclareFunctions()
 end
 
 function modifier_item_imba_azura_amp:GetModifierMagicalResistanceBonus()
+	if not self:GetAbility() then return end
 	return self.amp_stack * self:GetStackCount() end
 
 -----------------------------------------------------------------------------------------------------------
@@ -660,18 +673,23 @@ function modifier_item_imba_sange_yasha:DeclareFunctions()
 end
 
 function modifier_item_imba_sange_yasha:GetModifierPreAttack_BonusDamage()
+	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_damage") end
 
 function modifier_item_imba_sange_yasha:GetModifierAttackSpeedBonus_Constant()
+	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_attack_speed") end
 
 function modifier_item_imba_sange_yasha:GetModifierMoveSpeedBonus_Percentage_Unique()
+	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_ms") end
 
 function modifier_item_imba_sange_yasha:GetModifierBonusStats_Agility()
+	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_agility") end
 
 function modifier_item_imba_sange_yasha:GetModifierBonusStats_Strength()
+	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_strength") end
 
 -- On attack landed, roll for proc and apply stacks
@@ -760,9 +778,11 @@ function modifier_item_imba_sange_yasha_maim:DeclareFunctions()
 end
 
 function modifier_item_imba_sange_yasha_maim:GetModifierAttackSpeedBonus_Constant()
+	if not self:GetAbility() then return end
 	return self.maim_stack * self:GetStackCount() end
 
 function modifier_item_imba_sange_yasha_maim:GetModifierMoveSpeedBonus_Percentage()
+	if not self:GetAbility() then return end
 	return self.maim_stack * self:GetStackCount() end
 
 -----------------------------------------------------------------------------------------------------------
@@ -907,6 +927,7 @@ function modifier_item_imba_sange_yasha_proc:DeclareFunctions()
 end
 
 function modifier_item_imba_sange_yasha_proc:GetModifierMoveSpeedBonus_Percentage()
+	if not self:GetAbility() then return end
 	return self.proc_ms end
 
 -----------------------------------------------------------------------------------------------------------
@@ -948,15 +969,19 @@ function modifier_item_imba_sange_azura:DeclareFunctions()
 end
 
 function modifier_item_imba_sange_azura:GetCustomCooldownReduction()
+	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_cdr") end
 
 function modifier_item_imba_sange_azura:GetModifierBonusStats_Intellect()
+	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_int") end
 
 function modifier_item_imba_sange_azura:GetModifierPreAttack_BonusDamage()
+	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_damage") end
 
 function modifier_item_imba_sange_azura:GetModifierBonusStats_Strength()
+	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_strength") end
 
 -- On attack landed, roll for proc and apply stacks
@@ -1048,12 +1073,15 @@ function modifier_item_imba_sange_azura_stacks:DeclareFunctions()
 end
 
 function modifier_item_imba_sange_azura_stacks:GetModifierMagicalResistanceBonus()
+	if not self:GetAbility() then return end
 	return self.amp_stack * self:GetStackCount() end
 
 function modifier_item_imba_sange_azura_stacks:GetModifierAttackSpeedBonus_Constant()
+	if not self:GetAbility() then return end
 	return self.maim_stack * self:GetStackCount() end
 
 function modifier_item_imba_sange_azura_stacks:GetModifierMoveSpeedBonus_Percentage()
+	if not self:GetAbility() then return end
 	return self.maim_stack * self:GetStackCount() end
 
 -----------------------------------------------------------------------------------------------------------
@@ -1125,18 +1153,23 @@ function modifier_item_imba_azura_yasha:DeclareFunctions()
 end
 
 function modifier_item_imba_azura_yasha:GetCustomCooldownReduction()
+	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_cdr") end
 
 function modifier_item_imba_azura_yasha:GetModifierAttackSpeedBonus_Constant()
+	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_attack_speed") end
 
 function modifier_item_imba_azura_yasha:GetModifierMoveSpeedBonus_Percentage_Unique()
+	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_ms") end
 
 function modifier_item_imba_azura_yasha:GetModifierBonusStats_Agility()
+	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_agility") end
 
 function modifier_item_imba_azura_yasha:GetModifierBonusStats_Intellect()
+	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_int") end
 
 -- On attack landed, roll for proc and apply stacks
@@ -1225,6 +1258,7 @@ function modifier_item_imba_azura_yasha_amp:DeclareFunctions()
 end
 
 function modifier_item_imba_azura_yasha_amp:GetModifierMagicalResistanceBonus()
+	if not self:GetAbility() then return end
 	return self.amp_stack * self:GetStackCount() end
 
 -----------------------------------------------------------------------------------------------------------
@@ -1313,6 +1347,7 @@ function modifier_item_imba_azura_yasha_stacks:DeclareFunctions()
 end
 
 function modifier_item_imba_azura_yasha_stacks:GetModifierAttackSpeedBonus_Constant()
+	if not self:GetAbility() then return end
 	return self.as_stack * self:GetStackCount() end
 
 -----------------------------------------------------------------------------------------------------------
@@ -1369,6 +1404,7 @@ function modifier_item_imba_azura_yasha_proc:DeclareFunctions()
 end
 
 function modifier_item_imba_azura_yasha_proc:GetModifierMoveSpeedBonus_Percentage()
+	if not self:GetAbility() then return end
 	return self.proc_ms end
 
 -----------------------------------------------------------------------------------------------------------
@@ -1415,24 +1451,31 @@ function modifier_item_imba_triumvirate:DeclareFunctions()
 end
 
 function modifier_item_imba_triumvirate:GetModifierPreAttack_BonusDamage()
+	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_damage") end
 
 function modifier_item_imba_triumvirate:GetCustomCooldownReduction()
+	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_cdr") end
 
 function modifier_item_imba_triumvirate:GetModifierAttackSpeedBonus_Constant()
+	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_attack_speed") end
 
 function modifier_item_imba_triumvirate:GetModifierMoveSpeedBonus_Percentage_Unique()
+	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_ms") end
 
 function modifier_item_imba_triumvirate:GetModifierBonusStats_Strength()
+	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_str") end
 
 function modifier_item_imba_triumvirate:GetModifierBonusStats_Agility()
+	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_agi") end
 
 function modifier_item_imba_triumvirate:GetModifierBonusStats_Intellect()
+	if not self:GetAbility() then return end
 	return self:GetAbility():GetSpecialValueFor("bonus_int") end
 
 -- On attack landed, roll for proc and apply stacks
@@ -1476,8 +1519,8 @@ function modifier_item_imba_triumvirate_stacks_debuff:OnCreated()
 		return nil
 	end
 
-	self.maim_stack = self.ability():GetSpecialValueFor("maim_stack")
-	self.amp_stack = self.ability():GetSpecialValueFor("amp_stack")
+	self.maim_stack = self.ability:GetSpecialValueFor("maim_stack")
+	self.amp_stack = self.ability:GetSpecialValueFor("amp_stack")
 
 	-- Inherit stacks from lower-tier modifiers
 	if IsServer() then
@@ -1511,13 +1554,16 @@ function modifier_item_imba_triumvirate_stacks_debuff:DeclareFunctions()
 	return funcs
 end
 
-function modifier_item_imba_triumvirate_stacks_debuff:GetModifierMagicalResistanceBonus()
+function modifier_item_imba_triumvirate_stacks_debuff:GetModifierMagicalResistanceBonus()	
+	if not self.amp_stack then return nil end	
 	return self.amp_stack * self:GetStackCount() end
 
 function modifier_item_imba_triumvirate_stacks_debuff:GetModifierAttackSpeedBonus_Constant()
+	if not self.maim_stack then return nil end		
 	return self.maim_stack * self:GetStackCount() end
 
 function modifier_item_imba_triumvirate_stacks_debuff:GetModifierMoveSpeedBonus_Percentage()
+	if not self.maim_stack then return nil end	
 	return self.maim_stack * self:GetStackCount() end
 
 -----------------------------------------------------------------------------------------------------------

@@ -313,6 +313,9 @@ local function SpellReflect(parent, params)
 	local exception_spell = 
 	{		
 		["rubick_spell_steal"] = true,
+		["imba_alchemist_greevils_greed"] = true,
+		["imba_alchemist_unstable_concoction"] = true,
+		["imba_disruptor_glimpse"] = true,		
 	}
 		
 	local reflected_spell_name = params.ability:GetAbilityName()
@@ -351,7 +354,7 @@ local function SpellReflect(parent, params)
 			-- Modifier counter, and add it into the old-spell list
 			ability:SetRefCountsModifiers(true)
 			table.insert(parent.tOldSpells, ability)
-		end
+		end		
 			
 		ability:SetLevel(params.ability:GetLevel())
 		-- Set target & fire spell
@@ -411,7 +414,7 @@ end
 function modifier_imba_spell_shield_buff_passive:GetReflectSpell( params )
 	if IsServer() then
 		local parent = self:GetParent()
-		if ( parent:HasScepter() ) and ( self:GetAbility():IsCooldownReady() ) then
+		if parent:HasScepter() and self:GetAbility():IsCooldownReady() and parent:IsRealHero() then
 			return SpellReflect(parent, params)
 		end
 	end
@@ -420,7 +423,7 @@ end
 function modifier_imba_spell_shield_buff_passive:GetAbsorbSpell( params )
 	if IsServer() then
 		local parent = self:GetParent()
-		if ( parent:HasScepter() ) and ( self:GetAbility():IsCooldownReady() ) then
+		if parent:HasScepter() and self:GetAbility():IsCooldownReady() and parent:IsRealHero() then
 			local ability = self:GetAbility()
 			local active_modifier = "modifier_imba_spell_shield_buff_reflect"
 			self.duration = ability:GetSpecialValueFor("active_duration")

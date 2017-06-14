@@ -433,7 +433,8 @@
 	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_6_Description"			"Increases Empower's Supercharge's move speed bonus by 5% and its attack speed by 50.<br><br><i>Magnus uses the magnetic capabilities of the affected unit's wearables, making them lighter, and thus, faster.</i>"
 	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_7_title"					"Frontal Polarity"
 	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_7_Description"			"Increases Reverse Polarity radius by 100. This bonus includes enemies coming into the bonus range from Polarize' pull effect.<br><br><i>Magnus expels his magnetic forces further before pushing them back in, resulting in an increased effect area.</i>"		
-	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_8_title"					"Increases Reverse Polarity's pull distance effect on Polarized enemies by 250.<br><br><i>Magnus is capable of sending his entire magnetic force to the ends of the world, then call them in, pushing polarized units further towards him.</i>"
+	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_8_title"                  "Magnetic Forces"					
+    "DOTA_Tooltip_Talent_special_bonus_imba_magnataur_8_Description"            "Increases Reverse Polarity's pull distance effect on Polarized enemies by 250.<br><br><i>Magnus is capable of sending his entire magnetic force to the ends of the world, then call them in, pushing polarized units further towards him.</i>"
 
 	// Venomancer
 	"Dota_Tooltip_Talent_special_bonus_imba_venomancer_1_title"						"Vicious Gale"
