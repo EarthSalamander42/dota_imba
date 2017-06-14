@@ -26699,6 +26699,7 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"global_radius"		"100000"
+			}
 		}
 	}
 
@@ -35588,5 +35589,3 @@
 		}
 	}
 }
-}
-

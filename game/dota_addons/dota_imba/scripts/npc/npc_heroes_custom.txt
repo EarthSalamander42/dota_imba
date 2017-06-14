@@ -7,6 +7,8 @@
 	{
 		"override_hero"				"npc_dota_hero_abaddon"
 
+		"IsImba"					"1"
+
 		"AbilityLayout"				"5"
 
 		"Ability1"					"imba_abaddon_mist_coil"
@@ -30,7 +32,9 @@
 	//=================================================================================================================
 	"npc_imba_hero_alchemist"
 	{
-		"override_hero"				"npc_dota_hero_alchemist"		
+		"override_hero"				"npc_dota_hero_alchemist"	
+			
+		"IsImba"					"1"
 
 		"Ability1"					"imba_alchemist_acid_spray"
 		"Ability2"					"imba_alchemist_unstable_concoction"
@@ -82,6 +86,8 @@
 	{
 		"override_hero"				"npc_dota_hero_antimage"
 
+		"IsImba"					"1"
+
 		"Ability1"					"imba_antimage_mana_break"
 		"Ability2"					"imba_antimage_blink"
 		"Ability3"					"imba_antimage_spell_shield"
@@ -130,6 +136,8 @@
 	{
 		"override_hero"				"npc_dota_hero_axe"
 
+		"IsImba"					"1"
+
 		"ModelScale"				"1.08"
 
 		"Ability1"					"imba_axe_berserkers_call"
@@ -155,6 +163,8 @@
 	"npc_imba_hero_bane"
 	{
 		"override_hero"				"npc_dota_hero_bane"
+
+		"IsImba"					"1"
 
         "AbilityLayout"             "5"
 
@@ -237,21 +247,23 @@
 	//=================================================================================================================
 	"npc_imba_hero_bloodseeker"
 	{
-		"override_hero"		"npc_dota_hero_bloodseeker"
+		"override_hero"				"npc_dota_hero_bloodseeker"
 
-		"Ability1"			"imba_bloodseeker_bloodrage"
-		"Ability2"			"imba_bloodseeker_blood_bath"
-		"Ability3"			"imba_bloodseeker_thirst"
-		"Ability4"			"imba_bloodseeker_rupture"
+		"IsImba"					"1"
+
+		"Ability1"					"imba_bloodseeker_bloodrage"
+		"Ability2"					"imba_bloodseeker_blood_bath"
+		"Ability3"					"imba_bloodseeker_thirst"
+		"Ability4"					"imba_bloodseeker_rupture"
 		
-		"Ability10"			"special_bonus_imba_bloodseeker_1"
-		"Ability11"			"special_bonus_imba_bloodseeker_2"
-		"Ability12"			"special_bonus_imba_bloodseeker_3"
-		"Ability13"			"special_bonus_imba_bloodseeker_4"
-		"Ability14"			"special_bonus_imba_bloodseeker_5"
-		"Ability15"			"special_bonus_imba_bloodseeker_6"
-		"Ability16"			"special_bonus_imba_bloodseeker_7"
-		"Ability17"			"special_bonus_imba_bloodseeker_8"
+		"Ability10"					"special_bonus_imba_bloodseeker_1"
+		"Ability11"					"special_bonus_imba_bloodseeker_2"
+		"Ability12"					"special_bonus_imba_bloodseeker_3"
+		"Ability13"					"special_bonus_imba_bloodseeker_4"
+		"Ability14"					"special_bonus_imba_bloodseeker_5"
+		"Ability15"					"special_bonus_imba_bloodseeker_6"
+		"Ability16"					"special_bonus_imba_bloodseeker_7"
+		"Ability17"					"special_bonus_imba_bloodseeker_8"
 
 		"ProjectileSpeed"			"900"
 	}
@@ -262,6 +274,8 @@
 	"npc_imba_hero_bounty_hunter"
 	{
 		"override_hero"				"npc_dota_hero_bounty_hunter"
+
+		"IsImba"					"1"
 
 		"AbilityLayout"				"5"
 
@@ -341,6 +355,8 @@
 	"npc_imba_hero_centaur"
 	{
 		"override_hero"				"npc_dota_hero_centaur"
+
+		"IsImba"					"1"
  
 		"AbilityLayout"				"5"
 
@@ -422,6 +438,8 @@
 	"npc_imba_hero_clinkz"
 	{
 		"override_hero"				"npc_dota_hero_clinkz"		
+		
+		"IsImba"					"1"
 
 		"Ability1"					"imba_clinkz_strafe"
 		"Ability2"					"imba_clinkz_searing_arrows"
@@ -470,6 +488,8 @@
 	"npc_imba_hero_crystal_maiden"
 	{
 		"override_hero"				"npc_dota_hero_crystal_maiden"
+
+		"IsImba"					"1"
 		
 		"AbilityLayout"				"5"
 		
@@ -522,6 +542,8 @@
 	{
 		"override_hero"				"npc_dota_hero_dazzle"
 
+		"IsImba"					"1"
+
 		"Ability1"					"imba_dazzle_poison_touch"
 		"Ability2"					"imba_dazzle_shallow_grave"
 		"Ability3"					"imba_dazzle_shadow_wave"
@@ -571,6 +593,8 @@
 	"npc_imba_hero_disruptor"
 	{
 		"override_hero"				"npc_dota_hero_disruptor"
+
+		"IsImba"					"1"
 
 		"AbilityLayout"				"5"
 
@@ -652,6 +676,9 @@
 	"npc_imba_hero_drow_ranger"
 	{
 		"override_hero"				"npc_dota_hero_drow_ranger"
+
+		"IsImba"					"1"
+
 		"AttackAcquisitionRange"	"900"
 
 		"AbilityLayout"				"5"
@@ -819,6 +846,8 @@
 
 		"AbilityLayout"				"5"
 
+		"IsImba"					"1"
+
 		"Ability1"					"imba_enigma_malefice"
 		"Ability2"					"imba_enigma_demonic_conversion"
 		"Ability3"					"imba_enigma_midnight_pulse"
@@ -845,6 +874,8 @@
 		"override_hero"				"npc_dota_hero_faceless_void"
 
 		"AbilityLayout"				"5"
+
+		"IsImba"					"1"
 
 		"Ability1"					"imba_faceless_void_time_walk"
 		"Ability2"					"imba_faceless_void_time_dilation"
@@ -956,6 +987,8 @@
 	{
 		"override_hero"				"npc_dota_hero_jakiro"
 
+		"IsImba"					"1"
+
 		"AttackRange"				"500"
 
 		"Ability1"					"imba_jakiro_fire_breath"
@@ -982,6 +1015,8 @@
 	"npc_imba_hero_juggernaut"
 	{
 		"override_hero"				"npc_dota_hero_juggernaut"
+
+		"IsImba"					"1"
 
 		"Ability1"					"imba_juggernaut_blade_fury"
 		"Ability2"					"imba_juggernaut_healing_ward"
@@ -1039,6 +1074,8 @@
 	"npc_imba_hero_kunkka"
 	{
 		"override_hero"				"npc_dota_hero_kunkka"
+
+		"IsImba"					"1"
 
 		"MovementTurnRate"			"5.0"
 
@@ -1123,6 +1160,8 @@
 	{
 		"override_hero"				"npc_dota_hero_lich"
 
+		"IsImba"					"1"
+
 		"AbilityLayout"				"5"
 		
 		"Ability1"					"imba_lich_frost_nova"
@@ -1177,6 +1216,8 @@
 	"npc_imba_hero_lina"
 	{
 		"override_hero"				"npc_dota_hero_lina"
+
+		"IsImba"					"1"
 		
 		"Ability1"					"imba_lina_dragon_slave"
 		"Ability2"					"imba_lina_light_strike_array"
@@ -1201,6 +1242,8 @@
 	"npc_imba_hero_lion"
 	{
 		"override_hero"				"npc_dota_hero_lion"
+
+		"IsImba"					"1"
 
 		"Ability1"					"imba_lion_earth_spike"				
 		"Ability2"					"imba_lion_hex"				
@@ -1250,7 +1293,9 @@
 	//=================================================================================================================
 	"npc_imba_hero_lycan"
 	{
-		"override_hero"				"npc_dota_hero_lycan"		
+		"override_hero"				"npc_dota_hero_lycan"	
+
+		"IsImba"					"1"	
 
 		"AbilityLayout"				"5"
 
@@ -1278,6 +1323,8 @@
 	"npc_imba_hero_magnataur"
 	{
 		"override_hero"				"npc_dota_hero_magnataur"
+
+		"IsImba"					"1"
 		
 		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
 		"particle_folder"			"particles/units/heroes/hero_magnataur"
@@ -1332,6 +1379,8 @@
 	{
 		"override_hero"				"npc_dota_hero_meepo"
 
+		"IsDisabled"				"1"
+
 		//"Ability1"					"imba_meepo_earthbind"
 		//"Ability2"					"imba_meepo_poof"
 		//"Ability3"					"imba_meepo_geostrike"
@@ -1355,6 +1404,8 @@
     "npc_imba_hero_mirana"
 	{
 		"override_hero"				"npc_dota_hero_mirana"		
+
+		"IsImba"					"1"
 
 		"Ability1"					"imba_mirana_starfall"
 		"Ability2"					"imba_mirana_arrow"
@@ -1488,6 +1539,8 @@
 	"npc_imba_hero_necrolyte"
 	{
 		"override_hero"				"npc_dota_hero_necrolyte"		
+
+		"IsImba"					"1"
 		
 		"AbilityLayout"				"5"		
 
@@ -1515,6 +1568,8 @@
 	"npc_imba_hero_night_stalker"
 	{
 		"override_hero" 			"npc_dota_hero_night_stalker"    	
+
+		"IsImba"					"1"
 
 		"VisionDaytimeRange"        "1800"
 		"VisionNighttimeRange"      "800"
@@ -1545,6 +1600,8 @@
     "npc_imba_hero_nyx_assassin"
 	{
 		"override_hero"				"npc_dota_hero_nyx_assassin"
+
+		"IsImba"					"1"
 
 		"Ability1"					"imba_nyx_assassin_impale"
 		"Ability2"					"imba_nyx_assassin_mana_burn"
@@ -1625,6 +1682,8 @@
 	{
 		"override_hero"				"npc_dota_hero_obsidian_destroyer"		
 
+		"IsImba"					"1"
+
 		"Ability1"					"imba_obsidian_destroyer_arcane_orb"
 		"Ability2"					"imba_obsidian_destroyer_astral_imprisonment"
 		"Ability3"					"imba_obsidian_destroyer_essence_aura"
@@ -1648,6 +1707,8 @@
 	"npc_imba_hero_omniknight"
 	{
 		"override_hero"				"npc_dota_hero_omniknight"
+
+		"IsImba"					"1"
 
 		"Ability1"					"imba_omniknight_purification"
 		"Ability2"					"imba_omniknight_repel"
@@ -1674,6 +1735,8 @@
 	{
 		"override_hero"				"npc_dota_hero_phantom_assassin"
 
+		"IsImba"					"1"
+
 		"AttackRate"				"1.5"
 
 		"Ability1"					"imba_phantom_assassin_stifling_dagger"
@@ -1699,6 +1762,8 @@
 	"npc_imba_hero_phantom_lancer"
 	{
 		"override_hero"				"npc_dota_hero_phantom_lancer"
+
+		"IsDisabled"				"1"
 
 		"AttributeAgilityGain"		"3.5"
 
@@ -1782,6 +1847,8 @@
 	{
 		"override_hero"				"npc_dota_hero_pudge"				
 
+		"IsImba"					"1"
+
 		"AbilityLayout"				"5"
 
 		"AttackRange"				"200"
@@ -1812,6 +1879,8 @@
 	{
 		"override_hero"				"npc_dota_hero_pugna"
 
+		"IsImba"					"1"
+
 		"AbilityLayout"				"5"
 
 		"Ability1"					"imba_pugna_nether_blast"
@@ -1838,6 +1907,8 @@
 	"npc_imba_hero_queenofpain"
 	{
 		"override_hero"				"npc_dota_hero_queenofpain"
+
+		"IsImba"					"1"
 
 		"AbilityLayout"				"5"
 
@@ -1889,6 +1960,8 @@
 	"npc_imba_hero_riki"
 	{
 		"override_hero"				"npc_dota_hero_riki"
+
+		"IsImba"					"1"
 
 		"Ability1"					"imba_riki_smoke_screen"
 		"Ability2"					"imba_riki_blink_strike"
@@ -1942,7 +2015,9 @@
 	//=================================================================================================================
 	"npc_imba_hero_sand_king"
 	{
-		"override_hero"				"npc_dota_hero_sand_king"		
+		"override_hero"				"npc_dota_hero_sand_king"	
+
+		"IsImba"					"1"	
 
 		"Ability1"					"imba_sandking_burrowstrike"
 		"Ability2"					"imba_sandking_sand_storm"
@@ -1992,6 +2067,8 @@
 	"npc_imba_hero_nevermore"
 	{
 		"override_hero"				"npc_dota_hero_nevermore"
+
+		"IsImba"					"1"
 	
 		"Ability1"					"imba_nevermore_shadowraze_close"
 		"Ability2"					"imba_nevermore_shadowraze_medium"
@@ -2019,6 +2096,8 @@
 	{
 		"override_hero"				"npc_dota_hero_shadow_shaman"
 
+		"IsDisabled"				"1"
+
 		//"Ability1"					"imba_shadow_shaman_ether_shock"
 		//"Ability2"					"imba_shadow_shaman_voodoo"
 		//"Ability3"					"imba_shadow_shaman_shackles"
@@ -2034,6 +2113,8 @@
 	"npc_imba_hero_silencer"
 	{
 		"override_hero"				"npc_dota_hero_silencer"		
+
+		"IsImba"					"1"
 
 		"AbilityLayout"				"5"
 
@@ -2061,6 +2142,8 @@
 	"npc_imba_hero_skeleton_king"
 	{
 		"override_hero"				"npc_dota_hero_skeleton_king"
+
+		"IsImba"					"1"
 		
 		"AbilityLayout"				"5"		
 
@@ -2089,6 +2172,8 @@
 	{
 		"override_hero"				"npc_dota_hero_skywrath_mage"
 
+		"IsImba"					"1"
+
 		"Ability1"					"imba_skywrath_mage_arcane_bolt"
 		"Ability2"					"imba_skywrath_mage_concussive_shot"
 		"Ability3"					"imba_skywrath_mage_ancient_seal"
@@ -2112,6 +2197,8 @@
 	"npc_imba_hero_slardar"
 	{
 		"override_hero"				"npc_dota_hero_slardar"		
+
+		"IsImba"					"1"
 
 		"Ability1"					"imba_slardar_guardian_sprint"
 		"Ability2"					"imba_slardar_slithereen_crush"
@@ -2164,6 +2251,8 @@
 	{
 		"override_hero"				"npc_dota_hero_sniper"		
 
+		"IsImba"					"1"
+
 		"Ability1"					"imba_sniper_shrapnel"
 		"Ability2"					"imba_sniper_headshot"
 		"Ability3"					"imba_sniper_take_aim"		
@@ -2187,6 +2276,8 @@
 	"npc_imba_hero_spectre"
 	{
 		"override_hero"				"npc_dota_hero_spectre"
+
+		"IsDisabled"				"1"
 
 		//"Ability1"				"imba_spectre_spectral_dagger"
 		//"Ability2"				"imba_spectre_desolate"
@@ -2254,6 +2345,8 @@
 	"npc_imba_hero_sven"
 	{
 		"override_hero"				"npc_dota_hero_sven"		
+
+		"IsImba"					"1"
 		
 		"AbilityLayout"				"5"
 
@@ -2281,6 +2374,8 @@
 	"npc_imba_hero_techies"
 	{
 		"override_hero"				"npc_dota_hero_techies"		
+
+		"IsImba"					"1"
 
 		"Ability1"					"imba_techies_proximity_mine"
 		"Ability2"					"imba_techies_stasis_trap"
@@ -2388,6 +2483,8 @@
 	"npc_imba_hero_tinker"
 	{
 		"override_hero"				"npc_dota_hero_tinker"
+
+		"IsImba"					"1"
 		
 		"AbilityLayout"				"6"
 
@@ -2442,6 +2539,8 @@
 	"npc_imba_hero_tiny"
 	{
 		"override_hero"				"npc_dota_hero_tiny"		
+
+		"IsImba"					"1"
 
 		"AbilityLayout"				"5"
 
@@ -2501,6 +2600,8 @@
 	"npc_imba_hero_troll_warlord"
 	{
 		"override_hero"				"npc_dota_hero_troll_warlord"		
+
+		"IsImba"					"1"
 
 		"Ability1"					"imba_troll_warlord_berserkers_rage"
 		"Ability2"					"imba_troll_warlord_whirling_axes_melee"
@@ -2612,6 +2713,8 @@
 	{
 		"override_hero"				"npc_dota_hero_ursa"
 
+		"IsImba"					"1"
+
 		"AbilityLayout"				"5"		
 
 		"Ability1"					"imba_ursa_earthshock"
@@ -2664,6 +2767,8 @@
 	{
 		"override_hero"				"npc_dota_hero_vengefulspirit"
 
+		"IsImba"					"1"
+
 		"AttackDamageMin"			"28"
 		"AttackDamageMax"			"34"
 
@@ -2697,6 +2802,8 @@
 	"npc_imba_hero_venomancer"
 	{
 		"override_hero"				"npc_dota_hero_venomancer"
+
+		"IsImba"					"1"
 
 		"AttackRange"				"500"
 
@@ -2750,6 +2857,8 @@
 	"npc_imba_hero_warlock"
 	{
 		"override_hero"				"npc_dota_hero_warlock"
+
+		"IsImba"					"1"
 
 		"Ability1"					"imba_warlock_fatal_bonds"
 		"Ability2"					"imba_warlock_shadow_word"
@@ -2880,6 +2989,8 @@
 	"npc_imba_hero_witch_doctor"
 	{
 		"override_hero"				"npc_dota_hero_witch_doctor"
+
+		"IsImba"					"1"
 
 		"Ability1"					"imba_witch_doctor_paralyzing_cask"
 		"Ability2"					"imba_witch_doctor_voodoo_restoration"
