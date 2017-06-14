@@ -321,7 +321,8 @@ function imba_alchemist_unstable_concoction:OnSpellStart()
         local target = self:GetCursorTarget()
         -- Stops the charging sound
         caster:StopSound("Hero_Alchemist.UnstableConcoction.Fuse")
-
+		--Emit the throwing sound
+		caster:EmitSound("Hero_Alchemist.UnstableConcoction.Throw")
         -- Last second throw responses
         local modifier_unstable_handler = caster:FindModifierByName("modifier_imba_unstable_concoction_handler")
         if modifier_unstable_handler then
@@ -405,6 +406,8 @@ function imba_alchemist_unstable_concoction:OnProjectileHit(target, location)
     if stun_duration > stun then
         stun_duration = stun
     end
+	--Emit blow up sound
+	target:EmitSound("Hero_Alchemist.UnstableConcoction.Stun")
 
     if target then
         if target == caster then
@@ -557,7 +560,10 @@ function modifier_imba_unstable_concoction_handler:OnDestroy()
     local caster = self:GetCaster()
     local ability = self:GetAbility()
     if IsServer() then
+		--Blow up the concoction on death
         if not caster:IsAlive() then
+			caster:EmitSound("Hero_Alchemist.UnstableConcoction.Stun")
+			caster:StopSound("Hero_Alchemist.UnstableConcoction.Fuse")
             ability:OnProjectileHit(caster, caster:GetAbsOrigin())
             ability:StartCooldown(ability:GetCooldown(ability:GetLevel()))
         end
