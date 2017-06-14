@@ -19,14 +19,20 @@ end
 
 function item_imba_power_treads_2:OnSpellStart()
 	if IsServer() then
+		
 		local caster = self:GetCaster()
 		if not caster:IsHero() then return end
 		
 		-- Switch tread attribute
-		local modifier = caster:FindModifierByName("modifier_imba_power_treads_2")
-		local state = modifier:GetStackCount()
-		modifier:SetStackCount((state - 1 + DOTA_ATTRIBUTE_MAX) % DOTA_ATTRIBUTE_MAX)
-		self.state = state
+		local modifiers = caster:FindAllModifiersByName("modifier_imba_power_treads_2")
+		for _,modifier in pairs(modifiers) do
+			if modifier:GetAbility() == self then
+				local state = modifier:GetStackCount()
+				modifier:SetStackCount((state - 1 + DOTA_ATTRIBUTE_MAX) % DOTA_ATTRIBUTE_MAX)
+				self.state = state		
+				break
+			end
+		end	
 		
 		-- Remove stat multiplier modifiers (they get reapplied in the item modifier if relevant)
 		for i = 0,2 do 

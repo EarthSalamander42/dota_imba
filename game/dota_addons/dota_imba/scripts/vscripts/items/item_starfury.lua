@@ -258,7 +258,7 @@ function modifier_imba_starfury_passive:OnAttackLanded(params)
 			end
 			if self.item:IsCooldownReady() and (self:CheckUniqueValue(1,{}) == 1) then
 				target_loc = params.target:GetAbsOrigin()
-				StartSoundEventFromPosition("Imba.Starfury",target_loc)
+				StartSoundEventFromPosition("Ability.StarfallImpact", target_loc)
 				local damage = self.parent:GetAgility() * self.agility_pct
 				local damage_type = DAMAGE_TYPE_PHYSICAL
 				if self.parent:HasItemInInventory("item_imba_spell_fencer") then
