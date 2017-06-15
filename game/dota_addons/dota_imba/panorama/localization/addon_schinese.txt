@@ -258,13 +258,13 @@
 
     // Disruptor
     "DOTA_Tooltip_Talent_special_bonus_imba_disruptor_1_title"                  "动能立场"
-    "DOTA_Tooltip_Talent_special_bonus_imba_disruptor_1_Description"            "外部的英雄可以进入动能立场而不是被阻隔"
+    "DOTA_Tooltip_Talent_special_bonus_imba_disruptor_1_Description"            "外部的单位将被吸入动能立场而不是被击退"
     "DOTA_Tooltip_Talent_special_bonus_imba_disruptor_2_title"                  "静态风暴"
     "DOTA_Tooltip_Talent_special_bonus_imba_disruptor_2_Description"            "+1.25秒 静态风暴风暴鞭笞持续时间"
     "DOTA_Tooltip_Talent_special_bonus_imba_disruptor_3_title"                  "风暴之怒"
     "DOTA_Tooltip_Talent_special_bonus_imba_disruptor_3_Description"            "+0.5 每层风暴之怒移动速度加成"
     "DOTA_Tooltip_Talent_special_bonus_imba_disruptor_4_title"                  "雷霆之击"
-    "DOTA_Tooltip_Talent_special_bonus_imba_disruptor_4_Description"            "雷霆之击减少主目标100%移动速度持续0.25秒"  
+    "DOTA_Tooltip_Talent_special_bonus_imba_disruptor_4_Description"            "雷霆之击减少主目标100%移动速度0.25秒"  
     "DOTA_Tooltip_Talent_special_bonus_imba_disruptor_5_title"                  "静态风暴"
     "DOTA_Tooltip_Talent_special_bonus_imba_disruptor_5_Description"            "+50 静态风暴最大伤害"
     "DOTA_Tooltip_Talent_special_bonus_imba_disruptor_6_title"                  "动能立场"
