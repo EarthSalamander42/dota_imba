@@ -306,11 +306,15 @@ function modifier_imba_purification_omniguard_ready:OnTakeDamage(keys)
             local current_health_pct = self.caster:GetHealthPercent()
 
             -- If the caster's health is below the threshold, activate!
-            if current_health_pct <= self.trigger_hp_pct then
+            if current_health_pct <= self.trigger_hp_pct and not self.caster:HasModifier(self.modifier_recharge) then
+
+                -- Apply recharge modifier
+                self.caster:AddNewModifier(self.caster, self.ability, self.modifier_recharge, {duration = self.cooldown})
+
+                -- Boom!
                 Purification(self.caster, self.ability, self.caster)
 
-                -- Apply recharge modifier and remove ready
-                self.caster:AddNewModifier(self.caster, self.ability, self.modifier_recharge, {duration = self.cooldown})
+                -- Remove self
                 self:Destroy()
             end
         end
