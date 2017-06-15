@@ -5,16 +5,16 @@
 CreateEmptyTalents("alchemist")
 local LinkedModifiers = {}
 -------------------------------------------
---				ACID SPRAY
+--              ACID SPRAY
 -------------------------------------------
 -- Visible Modifiers:
 MergeTables(LinkedModifiers,{
-	["modifier_imba_acid_spray_debuff_dot"] = LUA_MODIFIER_MOTION_NONE,
+    ["modifier_imba_acid_spray_debuff_dot"] = LUA_MODIFIER_MOTION_NONE,
 })
 -- Hidden Modifiers:
 MergeTables(LinkedModifiers,{
-	["modifier_imba_acid_spray_thinker"] = LUA_MODIFIER_MOTION_NONE,
-	["modifier_imba_acid_spray_handler"] = LUA_MODIFIER_MOTION_NONE,
+    ["modifier_imba_acid_spray_thinker"] = LUA_MODIFIER_MOTION_NONE,
+    ["modifier_imba_acid_spray_handler"] = LUA_MODIFIER_MOTION_NONE,
 })
 
 imba_alchemist_acid_spray = imba_alchemist_acid_spray or class ({})
@@ -280,15 +280,15 @@ function modifier_imba_acid_spray_debuff_dot:GetModifierPhysicalArmorBonus()
     return armor_reduction * (-1)
 end
 -------------------------------------------
---			UNSTABLE CONCOCTION
+--          UNSTABLE CONCOCTION
 -------------------------------------------
 -- Visible Modifiers:
 MergeTables(LinkedModifiers,{
-	["modifier_imba_unstable_concoction_stunned"] = LUA_MODIFIER_MOTION_NONE,
+    ["modifier_imba_unstable_concoction_stunned"] = LUA_MODIFIER_MOTION_NONE,
 })
 -- Hidden Modifiers:
 MergeTables(LinkedModifiers,{
-	["modifier_imba_unstable_concoction_handler"] = LUA_MODIFIER_MOTION_NONE,
+    ["modifier_imba_unstable_concoction_handler"] = LUA_MODIFIER_MOTION_NONE,
 })
 imba_alchemist_unstable_concoction = imba_alchemist_unstable_concoction or class({})
 
@@ -321,8 +321,8 @@ function imba_alchemist_unstable_concoction:OnSpellStart()
         local target = self:GetCursorTarget()
         -- Stops the charging sound
         caster:StopSound("Hero_Alchemist.UnstableConcoction.Fuse")
-		--Emit the throwing sound
-		caster:EmitSound("Hero_Alchemist.UnstableConcoction.Throw")
+        --Emit the throwing sound
+        caster:EmitSound("Hero_Alchemist.UnstableConcoction.Throw")
         -- Last second throw responses
         local modifier_unstable_handler = caster:FindModifierByName("modifier_imba_unstable_concoction_handler")
         if modifier_unstable_handler then
@@ -395,6 +395,8 @@ function imba_alchemist_unstable_concoction:OnProjectileHit(target, location)
     local kill_response = {"alchemist_alch_ability_concoc_09", "alchemist_alch_ability_concoc_15"}
     local particle_acid_blast = "particles/hero/alchemist/acid_spray_blast.vpcf"
 
+    caster:FadeGesture(ACT_DOTA_ALCHEMIST_CONCOCTION)
+
     if target then
         location = target:GetAbsOrigin()
     end
@@ -406,8 +408,8 @@ function imba_alchemist_unstable_concoction:OnProjectileHit(target, location)
     if stun_duration > stun then
         stun_duration = stun
     end
-	--Emit blow up sound
-	target:EmitSound("Hero_Alchemist.UnstableConcoction.Stun")
+    --Emit blow up sound
+    target:EmitSound("Hero_Alchemist.UnstableConcoction.Stun")
 
     if target then
         if target == caster then
@@ -415,7 +417,7 @@ function imba_alchemist_unstable_concoction:OnProjectileHit(target, location)
                 if not target:IsInvulnerable() then
                     if not target:IsOutOfGame() then
                         ApplyDamage({victim = target, attacker = caster, damage = damage, damage_type = damage_type,})
-                        target:AddNewModifier(caster, self, "modifier_imba_unstable_concoction_stunned", {duration = stun_duration})
+                        target:AddNewModifier(caster, self, "modifier_imba_unstable_concoction_stunned", {duration = stun_duration,})
                     end
                 end
             end
@@ -560,27 +562,13 @@ function modifier_imba_unstable_concoction_handler:OnDestroy()
     local caster = self:GetCaster()
     local ability = self:GetAbility()
     if IsServer() then
-        Timers:CreateTimer(FrameTime(), function()
-            if not caster:IsAlive() then
-                --Blow up the concoction on death        
-			          caster:EmitSound("Hero_Alchemist.UnstableConcoction.Stun")
-			          caster:StopSound("Hero_Alchemist.UnstableConcoction.Fuse")          
-          
-                local projectile_speed = ability:GetSpecialValueFor("movement_speed")
-                local info = 
-                {
-                    Target = caster,
-                    Source = caster,
-                    Ability = ability, 
-                    EffectName = "particles/units/heroes/hero_alchemist/alchemist_unstable_concoction_projectile.vpcf",
-                    iMoveSpeed = projectile_speed,
-                }
-                ProjectileManager:CreateTrackingProjectile(info)
-
-                ability:OnProjectileHit(caster, caster:GetAbsOrigin())
-                ability:UseResources(false, false, true)
-            end
-        end)
+        --Blow up the concoction on death
+        if not caster:IsAlive() then
+            caster:EmitSound("Hero_Alchemist.UnstableConcoction.Stun")
+            caster:StopSound("Hero_Alchemist.UnstableConcoction.Fuse")
+            ability:OnProjectileHit(caster, caster:GetAbsOrigin())
+            ability:StartCooldown(ability:GetCooldown(ability:GetLevel()))
+        end
     end
 end
 
@@ -657,9 +645,19 @@ end
 
 modifier_imba_unstable_concoction_stunned = modifier_imba_unstable_concoction_stunned or class({})
 function modifier_imba_unstable_concoction_stunned:CheckState()
-	local state =
-		{[MODIFIER_STATE_STUNNED] = true}
-	return state	
+    local state =
+        {[MODIFIER_STATE_STUNNED] = true}
+    return state    
+end
+
+function modifier_imba_unstable_concoction_stunned:DeclareFunctions()
+    local decFuncs = {MODIFIER_PROPERTY_OVERRIDE_ANIMATION}
+
+    return decFuncs
+end
+
+function modifier_imba_unstable_concoction_stunned:GetOverrideAnimation()
+    return ACT_DOTA_DISABLED
 end
 
 function modifier_imba_unstable_concoction_stunned:IsPurgable() return false end
@@ -669,17 +667,17 @@ function modifier_imba_unstable_concoction_stunned:IsHidden() return false end
 function modifier_imba_unstable_concoction_stunned:GetEffectName() return "particles/generic_gameplay/generic_stunned.vpcf" end
 function modifier_imba_unstable_concoction_stunned:GetEffectAttachType() return PATTACH_OVERHEAD_FOLLOW end
 -------------------------------------------
---		GOBLINS GREED & GREEVILS GREED
+--      GOBLINS GREED & GREEVILS GREED
 -------------------------------------------
 -- Visible Modifiers:
 MergeTables(LinkedModifiers,{
-	["modifier_imba_goblins_greed_passive"] = LUA_MODIFIER_MOTION_NONE,
-	["modifier_imba_goblins_greed_mark"] = LUA_MODIFIER_MOTION_NONE,
+    ["modifier_imba_goblins_greed_passive"] = LUA_MODIFIER_MOTION_NONE,
+    ["modifier_imba_goblins_greed_mark"] = LUA_MODIFIER_MOTION_NONE,
 })
 -- Hidden Modifiers:
 MergeTables(LinkedModifiers,{
-	["modifier_imba_goblins_greed_vision"] = LUA_MODIFIER_MOTION_NONE,
-	["modifier_imba_greevils_greed_handler"] = LUA_MODIFIER_MOTION_NONE,
+    ["modifier_imba_goblins_greed_vision"] = LUA_MODIFIER_MOTION_NONE,
+    ["modifier_imba_greevils_greed_handler"] = LUA_MODIFIER_MOTION_NONE,
 })
 imba_alchemist_goblins_greed = imba_alchemist_goblins_greed or class ({})
 
@@ -876,18 +874,7 @@ function imba_alchemist_greevils_greed:OnSpellStart()
     local target = self:GetCursorTarget()
     local owner = caster:GetOwner()
 
-    local greed_ability
-
-    if owner then
-        if owner:HasAbility("imba_alchemist_goblins_greed") then
-            greed_ability = owner:FindAbilityByName("imba_alchemist_goblins_greed")
-        end
-    end       
-
-    if not greed_ability then
-        return nil
-    end
-
+    local greed_ability = owner:FindAbilityByName("imba_alchemist_goblins_greed")
     local greed_duration = greed_ability:GetSpecialValueFor("greed_duration")
 
     local particle_greevil = "particles/hero/alchemist/greevil_midas_touch.vpcf"
@@ -983,12 +970,12 @@ function modifier_imba_goblins_greed_mark:IsPurgable() return false end
 ----------------------------------
 -- Visible Modifiers:
 MergeTables(LinkedModifiers,{
-	["modifier_imba_chemical_rage_buff_haste"] = LUA_MODIFIER_MOTION_NONE,
+    ["modifier_imba_chemical_rage_buff_haste"] = LUA_MODIFIER_MOTION_NONE,
 })
 -- Hidden Modifiers:
 MergeTables(LinkedModifiers,{
     ["modifier_imba_chemical_rage_handler"] = LUA_MODIFIER_MOTION_NONE,
-	["modifier_imba_chemical_rage_aura"] = LUA_MODIFIER_MOTION_NONE,
+    ["modifier_imba_chemical_rage_aura"] = LUA_MODIFIER_MOTION_NONE,
 })
 imba_alchemist_chemical_rage = imba_alchemist_chemical_rage or class ({})
 
@@ -1121,8 +1108,8 @@ function modifier_imba_chemical_rage_buff_haste:DeclareFunctions()
         MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
         MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,        
         MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
-		MODIFIER_PROPERTY_TRANSLATE_ATTACK_SOUND,
-		MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT
+        MODIFIER_PROPERTY_TRANSLATE_ATTACK_SOUND,
+        MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT
     }
     return table
 end
@@ -1132,7 +1119,7 @@ function modifier_imba_chemical_rage_buff_haste:GetActivityTranslationModifiers(
 end
 
 function modifier_imba_chemical_rage_buff_haste:GetAttackSound()
-	return "Hero_Alchemist.ChemicalRage.Attack"
+    return "Hero_Alchemist.ChemicalRage.Attack"
 end
 
 function modifier_imba_chemical_rage_buff_haste:GetModifierBaseManaRegen()
@@ -1156,7 +1143,7 @@ function modifier_imba_chemical_rage_buff_haste:GetModifierMoveSpeedBonus_Consta
 end
 
 function modifier_imba_chemical_rage_buff_haste:GetModifierBaseAttackTimeConstant()
-	return self.bat_change
+    return self.bat_change
 end
 
 function modifier_imba_chemical_rage_buff_haste:GetEffectName()
@@ -1306,5 +1293,5 @@ function modifier_mammonite_passive:OnAttackFinished(keys)
 end
 -------------------------------------------
 for LinkedModifier, MotionController in pairs(LinkedModifiers) do
-	LinkLuaModifier(LinkedModifier, "hero/hero_alchemist.lua", MotionController)
+    LinkLuaModifier(LinkedModifier, "hero/hero_alchemist.lua", MotionController)
 end

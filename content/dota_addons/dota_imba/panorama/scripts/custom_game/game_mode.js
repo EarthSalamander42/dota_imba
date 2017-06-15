@@ -39,7 +39,6 @@ function InitializeUI() {
 			$('#TowerPowerOptionsPanel').style.visibility = 'collapse';
 			$('#RespawnTimeOptionsPanel').style.visibility = 'collapse';
 			$('#TowerUpgradesToggle').style.visibility = 'collapse';
-			$('#HeroPickRulePanel').style.visibility = 'collapse';
 		} else if (map_info.map_display_name == "imba_10v10") {
 			$('#game_options_game_mode_title').text = $.Localize( "#imba_gamemode_name_10v10" );
 			$('#TowerUpgradesToggle').SetSelected(true);
@@ -55,7 +54,6 @@ function InitializeUI() {
 			$('#TowerPowerOptionsPanel').style.visibility = 'collapse';
 			$('#RespawnTimeOptionsPanel').style.visibility = 'collapse';
 			$('#TowerUpgradesToggle').style.visibility = 'collapse';
-			$('#HeroPickRulePanel').style.visibility = 'collapse';
 		}
 	}
 }
@@ -73,11 +71,11 @@ function CheckForHostPrivileges() {
 // Sets all options to Normal mode
 function SetQuickOptionsNormal() {
 
-	// Disables upgradable towers in standard
+	// Disables upgradable towers in standard and random_omg
 	var map_info = Game.GetMapInfo();
-	if (map_info.map_display_name == "imba_standard") {
+	if (map_info.map_display_name == "imba_standard" || map_info.map_display_name == "imba_random_omg") {
 		$('#TowerUpgradesToggle').SetSelected(false);
-	}
+	} 
 
 	// Sets everything else to normal options
 	$('#GoldOptionsDropdown').SetSelected('GoldOption1');
@@ -91,9 +89,9 @@ function SetQuickOptionsNormal() {
 // Sets all options to Hyper mode
 function SetQuickOptionsHigh() {
 
-	// Enables upgradable towers in standard
+	// Enables upgradable towers in standard and random_omg
 	var map_info = Game.GetMapInfo();
-	if (map_info.map_display_name == "imba_standard") {
+	if (map_info.map_display_name == "imba_standard" || map_info.map_display_name == "imba_random_omg") {
 		$('#TowerUpgradesToggle').SetSelected(true);
 	} 
 
@@ -109,7 +107,7 @@ function SetQuickOptionsHigh() {
 // Locks the game mode
 function SetGameOptions()
 {
-	GameEvents.SendCustomGameEventToServer("set_game_mode", {
+	GameEvents.SendCustomGameEventToServer( "set_game_mode", {
 		"is_host": CheckForHostPrivileges(),
 		"modes": {
 			"all_random": $('#AllRandomToggle').checked,

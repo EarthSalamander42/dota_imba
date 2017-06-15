@@ -573,19 +573,15 @@ function modifier_imba_rupture_debuff_dot:IsPurgable()
 end
 if IsServer() then
 	function modifier_imba_rupture_debuff_dot:OnCreated()
-		self.caster = self:GetCaster()
-		self.ability = self:GetAbility()
-		self.parent = self:GetParent()
-
-		self.movedamage = self.ability:GetSpecialValueFor("movement_damage_pct") / 100
-		self.attackdamage = self.ability:GetSpecialValueFor("attack_damage")
-		self.castdamage = self.ability:GetSpecialValueFor("cast_damage")
-		if self.caster:HasTalent("special_bonus_imba_bloodseeker_5") then
-			self.attackdamage = self.attackdamage + self.attackdamage * self.caster:FindTalentValue("special_bonus_imba_bloodseeker_5") * 0.01
-			self.castdamage = self.castdamage + self.castdamage * self.caster:FindTalentValue("special_bonus_imba_bloodseeker_5") * 0.01
+		self.movedamage = self:GetAbility():GetSpecialValueFor("movement_damage_pct") / 100
+		self.attackdamage = self:GetAbility():GetSpecialValueFor("attack_damage")
+		self.castdamage = self:GetAbility():GetSpecialValueFor("cast_damage")
+		if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_5") then
+			self.attackdamage = self.attackdamage + self.attackdamage * self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_5") * 0.01
+			self.castdamage = self.castdamage + self.castdamage * self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_5") * 0.01
 		end
-		self.damagecap = self.ability:GetTalentSpecialValueFor("damage_cap_amount")
-		self.prevLoc = self.parent:GetAbsOrigin()
+		self.damagecap = self:GetAbility():GetTalentSpecialValueFor("damage_cap_amount")
+		self.prevLoc = self:GetParent():GetAbsOrigin()
 		self:StartIntervalThink( self:GetAbility():GetSpecialValueFor("damage_cap_interval") )
 	end
 
@@ -593,23 +589,21 @@ if IsServer() then
 		self.movedamage = self:GetAbility():GetSpecialValueFor("movement_damage_pct") / 100
 		self.attackdamage = self:GetAbility():GetSpecialValueFor("attack_damage")
 		self.castdamage = self:GetAbility():GetSpecialValueFor("cast_damage")
-		if self.caster:HasTalent("special_bonus_imba_bloodseeker_5") then
-			self.attackdamage = self.attackdamage + self.attackdamage * self.caster:FindTalentValue("special_bonus_imba_bloodseeker_5") * 0.01
-			self.castdamage = self.castdamage + self.castdamage * self.caster:FindTalentValue("special_bonus_imba_bloodseeker_5") * 0.01
+		if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_5") then
+			self.attackdamage = self.attackdamage + self.attackdamage * self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_5") * 0.01
+			self.castdamage = self.castdamage + self.castdamage * self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_5") * 0.01
 		end
 		self.damagecap = self:GetAbility():GetSpecialValueFor("damage_cap_amount")
 	end
 	
 	function modifier_imba_rupture_debuff_dot:OnIntervalThink()
-		if CalculateDistance(self.prevLoc, self.parent) < self.damagecap then
-			local move_damage = CalculateDistance(self.prevLoc, self.parent) * self.movedamage
-			if move_damage > 0 then
-				ApplyDamage({victim = self.parent, attacker = self.caster, damage = move_damage, damage_type = self.ability:GetAbilityDamageType(), ability = self.ability})
-				if self.caster:HasTalent("special_bonus_imba_bloodseeker_3") then 
-					self.caster:Heal(move_damage, self.caster) 
-					local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, self.caster)
-					ParticleManager:ReleaseParticleIndex(healFX)
-				end
+		if CalculateDistance(self.prevLoc, self:GetParent()) < self.damagecap then
+			local move_damage = CalculateDistance(self.prevLoc, self:GetParent()) * self.movedamage
+			ApplyDamage({victim = self:GetParent(), attacker = self:GetCaster(), damage = move_damage, damage_type = self:GetAbility():GetAbilityDamageType(), ability = self:GetAbility()})
+			if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_3") then 
+				self:GetCaster():Heal(move_damage, self:GetCaster()) 
+				local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
+				ParticleManager:ReleaseParticleIndex(healFX)
 			end
 		end
 		self.prevLoc = self:GetParent():GetAbsOrigin()
@@ -625,22 +619,22 @@ if IsServer() then
     end
 	
 	function modifier_imba_rupture_debuff_dot:OnAbilityStart(params)
-        if params.unit == self.parent then
-			ApplyDamage({victim = self.parent, attacker = self.caster, damage = self.castdamage, damage_type = self.ability:GetAbilityDamageType(), ability = self.ability})
-			if self.caster:HasTalent("special_bonus_imba_bloodseeker_3") then 
-				self.caster:Heal(self.castdamage, self.caster) 
-				local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, self.caster)
+        if params.unit == self:GetParent() then
+			ApplyDamage({victim = self:GetParent(), attacker = self:GetCaster(), damage = self.castdamage, damage_type = self:GetAbility():GetAbilityDamageType(), ability = self:GetAbility()})
+			if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_3") then 
+				self:GetCaster():Heal(self.castdamage, self:GetCaster()) 
+				local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
 				ParticleManager:ReleaseParticleIndex(healFX)
 			end
 		end
     end
 	
 	function modifier_imba_rupture_debuff_dot:OnAttackStart(params)
-        if params.attacker == self.parent then
-			ApplyDamage({victim = self.parent, attacker = self.caster, damage = self.castdamage, damage_type = self.ability:GetAbilityDamageType(), ability = self.ability})
-			if self.caster:HasTalent("special_bonus_imba_bloodseeker_3") then 
-				self.caster:Heal(self.castdamage, self.caster) 
-				local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, self.caster)
+        if params.attacker == self:GetParent() then
+			ApplyDamage({victim = self:GetParent(), attacker = self:GetCaster(), damage = self.attackdamage, damage_type = self:GetAbility():GetAbilityDamageType(), ability = self:GetAbility()})
+			if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_3") then 
+				self:GetCaster():Heal(self.attackdamage, self:GetCaster()) 
+				local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
 				ParticleManager:ReleaseParticleIndex(healFX)
 			end
 		end

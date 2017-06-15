@@ -3,89 +3,6 @@
 
 CreateEmptyTalents("techies")
 
-------------------------------
---     HELPER FUNCTIONS     --
-------------------------------
-
-local function ApplyInflammableToRemoteMines(caster, range, remote_mines)
-
-    if not remote_mines then
-        -- Find Remote Mines in the explosion radius
-        remote_mines = FindUnitsInRadius(caster:GetTeamNumber(),
-                                        caster:GetAbsOrigin(),
-                                        nil,
-                                        range,
-                                        DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-                                        DOTA_UNIT_TARGET_OTHER,
-                                        DOTA_UNIT_TARGET_FLAG_NONE,
-                                        FIND_ANY_ORDER,
-                                        false)
-    end
-
-    local modifier_inflammable = "modifier_imba_remote_mine_inflammable"
-    local detonate_ability = "imba_techies_remote_mine_pinpoint_detonation"
-
-    -- Give them inflammable stacks
-    for _,remote_mine in pairs(remote_mines) do
-        if remote_mine:GetUnitName() == "npc_imba_techies_remote_mine" then
-
-            local modifier_inflammable_handler = remote_mine:FindModifierByName(modifier_inflammable)
-            if not modifier_inflammable_handler then
-                local detonate_ability_handler = remote_mine:FindAbilityByName(detonate_ability)
-                if detonate_ability_handler then
-                    local inflammable_duration = detonate_ability_handler:GetSpecialValueFor("inflammable_duration")
-                    modifier_inflammable_handler = remote_mine:AddNewModifier(caster, detonate_ability_handler, modifier_inflammable, {duration = inflammable_duration})
-                end
-            end
-
-            -- Nil Check
-            if modifier_inflammable_handler then
-                modifier_inflammable_handler:IncrementStackCount()
-                modifier_inflammable_handler:ForceRefresh()
-            end
-        end
-    end
-end
-
-local function RefreshElectroCharge(unit)
-    local modifier_electrocharge = "modifier_imba_statis_trap_electrocharge"
-
-    -- If the enemy has Electrocharge (from Stasis Trap), refresh it and add a stack
-    local modifier_electrocharge_handler = unit:FindModifierByName(modifier_electrocharge)
-    if modifier_electrocharge_handler then
-        modifier_electrocharge_handler:IncrementStackCount()
-        modifier_electrocharge_handler:ForceRefresh()
-    end
-end
-
-local function PlantProximityMine(caster, ability, spawn_point, big_boom)
-    local mine_ability = "imba_techies_proximity_mine_trigger"
-
-    -- Create the mine unit
-    local mine_name
-    if big_boom then
-        mine_name = "npc_imba_techies_proximity_mine_big_boom"
-    else
-        mine_name = "npc_imba_techies_proximity_mine"
-    end
-
-    local mine = CreateUnitByName(mine_name, spawn_point, true, caster, caster, caster:GetTeamNumber())
-
-	mine:AddRangeIndicator(caster, nil, nil, ability:GetAOERadius(), 150, 22, 22, false, false, false)
-
-    -- Set the mine's team to be the same as the caster
-    local playerID = caster:GetPlayerID()
-    mine:SetControllableByPlayer(playerID, true)
-
-    -- Set the mine's ability to be the same level as the planting ability
-    local mine_ability_handler = mine:FindAbilityByName(mine_ability)
-    if mine_ability_handler then
-        mine_ability_handler:SetLevel(ability:GetLevel())
-    end
-
-    -- Set the mine's owner to be the caster
-    mine:SetOwner(caster)
-end
 
 ------------------------------
 --     PROXIMITY MINE       --
@@ -110,13 +27,13 @@ function imba_techies_proximity_mine:GetIntrinsicModifierName()
 end
 
 function imba_techies_proximity_mine:GetManaCost(level)
-    -- Ability properties
+    -- Ability properties    
     local caster = self:GetCaster()
     local initial_mana_cost = self.BaseClass.GetManaCost(self, level)
     local modifier_charges = "modifier_imba_proximity_mine_charges"
 
     -- Ability specials
-    local mana_increase_per_stack = self:GetSpecialValueFor("mana_increase_per_stack")
+    local mana_increase_per_stack = self:GetSpecialValueFor("mana_increase_per_stack")        
 
     -- Find stack count
     stacks = caster:GetModifierStackCount(modifier_charges, caster)
@@ -126,7 +43,7 @@ function imba_techies_proximity_mine:GetManaCost(level)
 end
 
 function imba_techies_proximity_mine:CastFilterResultLocation(location)
-    if IsServer() then
+    if IsServer() then        
         -- Ability properties
         local caster = self:GetCaster()
         local ability = self
@@ -154,10 +71,9 @@ function imba_techies_proximity_mine:CastFilterResultLocation(location)
 
         local mine_found = false
 
-        -- Search and see if mines were found
-        for _,unit in pairs(friendly_units) do
-            local unitName = unit:GetUnitName()
-            if unitName == "npc_imba_techies_proximity_mine" or unitName == "npc_imba_techies_proximity_mine_big_boom" then
+        -- Search and see if mines were found        
+        for _,unit in pairs(friendly_units) do            
+            if unit:GetUnitName() == "npc_imba_techies_proximity_mine" or unit:GetUnitName() == "npc_imba_techies_proximity_mine_big_boom" then
                 mine_found = true
                 break
             end
@@ -171,8 +87,8 @@ function imba_techies_proximity_mine:CastFilterResultLocation(location)
     end
 end
 
-function imba_techies_proximity_mine:GetCustomCastErrorLocation(location)
-    return "Cannot place mine in range of other mines"
+function imba_techies_proximity_mine:GetCustomCastErrorLocation(location)    
+    return "Cannot place mine in range of other mines"    
 end
 
 function imba_techies_proximity_mine:GetAOERadius()
@@ -191,15 +107,15 @@ end
 function imba_techies_proximity_mine:OnSpellStart()
     -- Ability properties
     local caster = self:GetCaster()
-    local ability = self
+    local ability = self    
     local target_point = self:GetCursorPosition()
     local cast_response = {"techies_tech_setmine_01", "techies_tech_setmine_02", "techies_tech_setmine_04", "techies_tech_setmine_08", "techies_tech_setmine_09", "techies_tech_setmine_10", "techies_tech_setmine_11", "techies_tech_setmine_13", "techies_tech_setmine_16", "techies_tech_setmine_17", "techies_tech_setmine_18", "techies_tech_setmine_19", "techies_tech_setmine_20", "techies_tech_setmine_30", "techies_tech_setmine_32", "techies_tech_setmine_33", "techies_tech_setmine_34", "techies_tech_setmine_38", "techies_tech_setmine_45", "techies_tech_setmine_46", "techies_tech_setmine_47", "techies_tech_setmine_48", "techies_tech_setmine_50", "techies_tech_setmine_51", "techies_tech_setmine_54", "techies_tech_cast_02", "techies_tech_cast_03", "techies_tech_setmine_05", "techies_tech_setmine_06", "techies_tech_setmine_07", "techies_tech_setmine_14", "techies_tech_setmine_21", "techies_tech_setmine_22", "techies_tech_setmine_23", "techies_tech_setmine_24", "techies_tech_setmine_25", "techies_tech_setmine_26", "techies_tech_setmine_28", "techies_tech_setmine_29", "techies_tech_setmine_35", "techies_tech_setmine_36", "techies_tech_setmine_37", "techies_tech_setmine_39", "techies_tech_setmine_41", "techies_tech_setmine_42", "techies_tech_setmine_43", "techies_tech_setmine_44", "techies_tech_setmine_52"}
-    local sound_cast = "Hero_Techies.LandMine.Plant"
+    local sound_cast = "Hero_Techies.LandMine.Plant"    
     local modifier_charges = "modifier_imba_proximity_mine_charges"
 
     -- Ability special
     local initial_mines = ability:GetSpecialValueFor("initial_mines")
-    local mine_distance = ability:GetSpecialValueFor("mine_distance")
+    local mine_distance = ability:GetSpecialValueFor("mine_distance")    
 
     -- Play cast response
     EmitSoundOn(cast_response[math.random(1, #cast_response)], caster)
@@ -211,18 +127,18 @@ function imba_techies_proximity_mine:OnSpellStart()
     local mine_placement_count = 0
     local modifier_charges_handler = caster:FindModifierByName(modifier_charges)
     if modifier_charges_handler then
-        mine_placement_count = modifier_charges_handler:GetStackCount()
+        mine_placement_count = mine_placement_count + modifier_charges_handler:GetStackCount()
 
         -- If there are no charges, do nothing
         if modifier_charges_handler:GetStackCount() > 0 then
             modifier_charges_handler:SetStackCount(0)
         end
-    end
+    end    
 
     -- Determine mine locations, depending on mine count
-    local direction = (target_point - caster:GetAbsOrigin()):Normalized()
+    local direction = (target_point - caster:GetAbsOrigin()):Normalized()    
 
-    -- Always plant the initial mine in the target point. Big boom if appropriate
+    -- Always plant the initial mine in the target point. Big boom if appropriate    
     local big_boom = false
 
     -- #7 Talent: Proximity Mines initial mine is a Big Boom
@@ -234,7 +150,7 @@ function imba_techies_proximity_mine:OnSpellStart()
 
     -- Rotate the locations and find the additional mine spots
     if mine_placement_count > 0 then
-        local degree = 360 / mine_placement_count
+        local degree = 360 / mine_placement_count     
 
         -- Calculate location of the first mine, ahead of the target point
         local mine_spawn_point = target_point + direction * mine_distance
@@ -252,16 +168,48 @@ function imba_techies_proximity_mine:OnSpellStart()
     end
 end
 
+function PlantProximityMine(caster, ability, spawn_point, big_boom)
+    local mine_ability = "imba_techies_proximity_mine_trigger"
+
+    -- Create the mine unit
+    local mine
+    if big_boom then
+        mine = CreateUnitByName("npc_imba_techies_proximity_mine_big_boom", spawn_point, true, caster, caster, caster:GetTeamNumber())
+    else
+        mine = CreateUnitByName("npc_imba_techies_proximity_mine", spawn_point, true, caster, caster, caster:GetTeamNumber())
+    end
+    
+	mine:AddRangeIndicator(caster, nil, nil, ability:GetAOERadius(), 150, 22, 22, false, false, false)
+
+    -- Set the mine's team to be the same as the caster
+    local playerID = caster:GetPlayerID()
+    mine:SetControllableByPlayer(playerID, true)
+
+    -- Set the mine's ability to be the same level as the planting ability
+    if mine:HasAbility(mine_ability) then
+        local mine_ability_handler = mine:FindAbilityByName(mine_ability)
+        if mine_ability_handler then
+            mine_ability_handler:SetLevel(ability:GetLevel())
+        end
+    end
+
+    -- Set the mine's owner to be the caster
+    mine:SetOwner(caster)
+end
+
+
 
 -- Charges modifier
 modifier_imba_proximity_mine_charges = modifier_imba_proximity_mine_charges or class({})
 
 function modifier_imba_proximity_mine_charges:OnCreated()
-    local ability = self:GetAbility()
+    -- Ability properties
+    self.caster = self:GetCaster()
+    self.ability = self:GetAbility()
 
     -- Ability specials
-    self.charge_replenish_duration = ability:GetSpecialValueFor("charge_replenish_duration")
-    self.max_charges = ability:GetSpecialValueFor("max_charges")
+    self.charge_replenish_duration = self.ability:GetSpecialValueFor("charge_replenish_duration")
+    self.max_charges = self.ability:GetSpecialValueFor("max_charges")
 
     -- Set a bonus first mine immediatley when the ability is first learned
     if not self.repeated then
@@ -284,7 +232,7 @@ function modifier_imba_proximity_mine_charges:OnIntervalThink()
 
     -- If the duration is fixed, do nothing
     if duration == -1 then
-        return nil
+        return nil        
     end
 
     -- Otherwise, get the remaining duration. If it's 0 or below, grant a stack!
@@ -292,7 +240,7 @@ function modifier_imba_proximity_mine_charges:OnIntervalThink()
 
     if remaining_duration <= 0 then
         self.restart = true
-        self:IncrementStackCount()
+        self:IncrementStackCount()        
     end
 end
 
@@ -349,8 +297,19 @@ function modifier_imba_proximity_mine:OnCreated()
     if IsServer() then
         -- Ability properties
         self.caster = self:GetCaster()
-        self.ability = self:GetAbility()
+        self.ability = self:GetAbility()    
         self.owner = self.caster:GetOwner()
+        self.kill_response = {"techies_tech_mineblowsup_01", "techies_tech_mineblowsup_02", "techies_tech_mineblowsup_03", "techies_tech_mineblowsup_04", "techies_tech_mineblowsup_05", "techies_tech_mineblowsup_06", "techies_tech_mineblowsup_08", "techies_tech_mineblowsup_09", "techies_tech_minekill_01", "techies_tech_minekill_02", "techies_tech_minekill_03"}
+        self.sound_prime = "Hero_Techies.LandMine.Priming"
+        self.sound_explosion = "Hero_Techies.LandMine.Detonate"    
+        self.particle_mine = "particles/units/heroes/hero_techies/techies_land_mine.vpcf"       
+        self.particle_explosion = "particles/units/heroes/hero_techies/techies_land_mine_explode.vpcf"    
+        self.modifier_building_res = "modifier_imba_proximity_mine_building_res"
+        self.modifier_electrocharge = "modifier_imba_statis_trap_electrocharge"
+        self.modifier_inflammable = "modifier_imba_remote_mine_inflammable"
+        self.modifier_talent_shrapnel = "modifier_imba_proximity_mine_talent"
+        self.modifier_sign = "modifier_imba_minefield_sign_detection"
+        self.detonate_ability = "imba_techies_remote_mine_pinpoint_detonation"        
 
         -- Ability specials
         self.explosion_delay = self.ability:GetSpecialValueFor("explosion_delay")
@@ -358,20 +317,19 @@ function modifier_imba_proximity_mine:OnCreated()
         self.explosion_range = self.ability:GetSpecialValueFor("explosion_range")
         self.trigger_range = self.ability:GetSpecialValueFor("trigger_range")
         self.activation_delay = self.ability:GetSpecialValueFor("activation_delay")
-        self.building_damage_pct = self.ability:GetSpecialValueFor("building_damage_pct")
+        self.building_damage_pct = self.ability:GetSpecialValueFor("building_damage_pct")    
         self.buidling_damage_duration = self.ability:GetSpecialValueFor("buidling_damage_duration")
         self.tick_interval = self.ability:GetSpecialValueFor("tick_interval")
         self.fow_radius = self.ability:GetSpecialValueFor("fow_radius")
         self.fow_duration = self.ability:GetSpecialValueFor("fow_duration")
-        self.big_boom_mine_bonus_dmg = self.ability:GetSpecialValueFor("big_boom_mine_bonus_dmg")
-        self.big_boom_shrapnel_duration = self.ability:GetSpecialValueFor("big_boom_shrapnel_duration")
+        self.big_boom_mine_bonus_dmg = self.ability:GetSpecialValueFor("big_boom_mine_bonus_dmg")        
+        self.big_boom_shrapnel_duration = self.ability:GetSpecialValueFor("big_boom_shrapnel_duration")        
 
         -- #1 Talent: Trigger range increase
         self.trigger_range = self.trigger_range + self.caster:FindTalentValue("special_bonus_imba_techies_1")
 
-        -- Add mine particle effect
-        local particle_mine = "particles/units/heroes/hero_techies/techies_land_mine.vpcf"
-        local particle_mine_fx = ParticleManager:CreateParticle(particle_mine, PATTACH_ABSORIGIN_FOLLOW, self.caster)
+        -- Add mine particle effect    
+        local particle_mine_fx = ParticleManager:CreateParticle(self.particle_mine, PATTACH_ABSORIGIN_FOLLOW, self.caster)
         ParticleManager:SetParticleControl(particle_mine_fx, 0, self.caster:GetAbsOrigin())
         ParticleManager:SetParticleControl(particle_mine_fx, 3, self.caster:GetAbsOrigin())
         self:AddParticle(particle_mine_fx, false, false, -1, false, false)
@@ -383,7 +341,7 @@ function modifier_imba_proximity_mine:OnCreated()
 
         if IsServer() then
 
-            -- Determine if this is a Big Boom
+            -- Determine if this is a Big Boom            
             if self.caster:GetUnitName() == "npc_imba_techies_proximity_mine_big_boom" then
                 self.is_big_boom = true
             end
@@ -405,26 +363,23 @@ function modifier_imba_proximity_mine:IsPurgable() return false end
 function modifier_imba_proximity_mine:IsDebuff() return false end
 
 function modifier_imba_proximity_mine:OnIntervalThink()
-    if IsServer() then
-        local caster = self.caster
-
+    if IsServer() then     
         -- If the mine was killed, remove the modifier
-        if not caster:IsAlive() then
-            self:Destroy()
-        end
+        if not self.caster:IsAlive() then
+            self:Destroy()            
+        end        
 
-        local modifier_sign = "modifier_imba_minefield_sign_detection"
         -- If the mine is under the sign effect, reset possible triggers and do nothing
-        if caster:HasModifier(modifier_sign) then
+        if self.caster:HasModifier(self.modifier_sign) then
             self.triggered = false
             self.trigger_time = 0
             self.hidden_by_sign = true
-            return nil
+            return nil                    
         end
 
         -- Look for nearby enemies
-        local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-                                          caster:GetAbsOrigin(),
+        local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
+                                          self.caster:GetAbsOrigin(),
                                           nil,
                                           self.trigger_range,
                                           DOTA_UNIT_TARGET_TEAM_ENEMY,
@@ -432,8 +387,6 @@ function modifier_imba_proximity_mine:OnIntervalThink()
                                           DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
                                           FIND_ANY_ORDER,
                                           false)
-
-        local enemy_found
 
         if #enemies > 0 then
             local non_flying_enemies = false
@@ -448,33 +401,153 @@ function modifier_imba_proximity_mine:OnIntervalThink()
 
             -- At least one non-flying enemy found - mark as found
             if non_flying_enemies then
-                enemy_found = true
+                self.enemy_found = true
             else
-                enemy_found = false
+                self.enemy_found = false
             end
         else
-            enemy_found = false
-        end
+            self.enemy_found = false
+        end      
 
         -- If the mine is not triggered, check if it should be triggered
         if not self.triggered then
-            if enemy_found then
+            if self.enemy_found then
                 self.triggered = true
-                self.trigger_time = 0
+                self.trigger_time = 0                          
 
                 -- Play prime sound
-                local sound_prime = "Hero_Techies.LandMine.Priming"
-                EmitSoundOn(sound_prime, caster)
+                EmitSoundOn(self.sound_prime, self.caster)
             end
 
         -- If the mine was already triggered, check if it should stop or count time
         else
-            if enemy_found then
+            if self.enemy_found then
                 self.trigger_time = self.trigger_time + self.tick_interval
 
                 -- Check if the mine should blow up
-                if self.trigger_time >= self.explosion_delay then
-                    self:_Explode()
+                if self.trigger_time >= self.explosion_delay then                    
+
+                    local enemy_killed
+
+                    -- BLOW UP TIME! Play explosion sound
+                    EmitSoundOn(self.sound_explosion, self.caster)
+
+                    -- Add particle explosion effect
+                    local particle_explosion_fx = ParticleManager:CreateParticle(self.particle_explosion, PATTACH_WORLDORIGIN, self.caster)
+                    ParticleManager:SetParticleControl(particle_explosion_fx, 0, self.caster:GetAbsOrigin())
+                    ParticleManager:SetParticleControl(particle_explosion_fx, 1, self.caster:GetAbsOrigin())
+                    ParticleManager:SetParticleControl(particle_explosion_fx, 2, Vector(self.explosion_range, 1, 1))
+                    ParticleManager:ReleaseParticleIndex(particle_explosion_fx)
+
+                    -- Look for nearby enemies
+                    enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
+                                              self.caster:GetAbsOrigin(),
+                                              nil,
+                                              self.explosion_range,
+                                              DOTA_UNIT_TARGET_TEAM_ENEMY,
+                                              DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING,
+                                              DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
+                                              FIND_ANY_ORDER,
+                                              false)
+                    
+                    -- Deal damage to nearby non-flying enemies
+                    for _,enemy in pairs(enemies) do
+
+                        -- If an enemy doesn't have flying movement, ignore it, otherwise continue
+                        if not enemy:HasFlyMovementCapability() then
+
+                            -- If this is a Big Boom, RAIN THEM SHRAPNELS!
+                            if self.is_big_boom then
+                                CreateModifierThinker(self.caster, self.ability, self.modifier_talent_shrapnel, {duration = self.big_boom_shrapnel_duration}, self.caster:GetAbsOrigin(), self.caster:GetTeamNumber(), false)
+                            end
+
+                            -- If this is a Big Boom, add damage to the blast!
+                            local damage = self.mine_damage
+                            if self.is_big_boom then
+                                damage = damage + self.big_boom_mine_bonus_dmg
+                            end
+
+                            -- If the enemy is a building, reduce damage to it                            
+                            if enemy:IsBuilding() then
+                                damage = damage * self.building_damage_pct * 0.01
+                            end
+
+                            -- Deal damage
+                            local damageTable = {victim = enemy,
+                                                 attacker = self.caster, 
+                                                 damage = damage,
+                                                 damage_type = DAMAGE_TYPE_MAGICAL,
+                                                 ability = self.ability
+                                                 }
+        
+                            ApplyDamage(damageTable)
+
+                            -- If the enemy was a building, give it magical protection
+                            if enemy:IsBuilding() and not enemy:HasModifier(self.modifier_building_res) then
+                                enemy:AddNewModifier(self.caster, self.ability, self.modifier_building_res, {duration = self.buidling_damage_duration})
+                            end
+
+                            -- If the enemy has Electrocharge (from Stasis Trap), refresh it and add a stack
+                            if enemy:HasModifier(self.modifier_electrocharge) then
+                                local modifier_electrocharge_handler = enemy:FindModifierByName(self.modifier_electrocharge)
+                                if modifier_electrocharge_handler then
+                                    modifier_electrocharge_handler:IncrementStackCount()
+                                    modifier_electrocharge_handler:ForceRefresh()
+                                end
+                            end
+
+                            -- Find Remote Mines in the explosion radius 
+                            local remote_mines = FindUnitsInRadius(self.caster:GetTeamNumber(),
+                                                                   self.caster:GetAbsOrigin(),
+                                                                   nil,
+                                                                   self.trigger_range,
+                                                                   DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+                                                                   DOTA_UNIT_TARGET_OTHER,
+                                                                   DOTA_UNIT_TARGET_FLAG_NONE,
+                                                                   FIND_ANY_ORDER,
+                                                                   false)
+
+                            -- Give them inflammable stacks
+                            for _,remote_mine in pairs(remote_mines) do
+                                if remote_mine:GetUnitName() == "npc_imba_techies_remote_mine" then
+                                    if not remote_mine:HasModifier(self.modifier_inflammable) and remote_mine:HasAbility(self.detonate_ability) then
+                                        local detonate_ability_handler = remote_mine:FindAbilityByName(self.detonate_ability)
+                                        if detonate_ability_handler then
+                                            local inflammable_duration = detonate_ability_handler:GetSpecialValueFor("inflammable_duration")
+                                            remote_mine:AddNewModifier(self.caster, detonate_ability_handler, self.modifier_inflammable, {duration = inflammable_duration})
+                                        end
+                                    end
+
+                                    local modifier_inflammable_handler = remote_mine:FindModifierByName(self.modifier_inflammable)
+                                    if modifier_inflammable_handler then
+                                        modifier_inflammable_handler:IncrementStackCount()
+                                        modifier_inflammable_handler:ForceRefresh()
+                                    end
+                                end
+                            end
+
+                            -- See if the enemy died from the mine
+                            Timers:CreateTimer(FrameTime(), function()
+                                if not enemy:IsAlive() then                                    
+                                    enemy_killed = true                                    
+                                end
+                            end)
+                        end
+                    end
+
+                    -- If an enemy was killed from a mine, play kill response
+                    Timers:CreateTimer(FrameTime()*2, function()                                                
+                        if enemy_killed and RollPercentage(25) then
+                            EmitSoundOn(self.kill_response[math.random(1, #self.kill_response)], self.owner)
+                        end
+                    end)                    
+
+                    -- Apply flying vision at detonation point
+                    AddFOWViewer(self.caster:GetTeamNumber(), self.caster:GetAbsOrigin(), self.fow_radius, self.fow_duration, false)                    
+
+                    -- Kill self and remove modifier
+                    self.caster:Kill(self.ability, self.caster)
+                    self:Destroy()
                 end
             else
                 self.triggered = false
@@ -482,109 +555,7 @@ function modifier_imba_proximity_mine:OnIntervalThink()
             end
         end
     end
-end
-
-function modifier_imba_proximity_mine:_Explode()
-    local enemy_killed
-    local caster = self.caster
-    local explosion_range = self.explosion_range
-
-    -- BLOW UP TIME! Play explosion sound
-    local sound_explosion = "Hero_Techies.LandMine.Detonate"
-    EmitSoundOn(sound_explosion, caster)
-
-    local casterAbsOrigin = caster:GetAbsOrigin()
-
-    -- Add particle explosion effect
-    local particle_explosion = "particles/units/heroes/hero_techies/techies_land_mine_explode.vpcf"
-    local particle_explosion_fx = ParticleManager:CreateParticle(particle_explosion, PATTACH_WORLDORIGIN, caster)
-    ParticleManager:SetParticleControl(particle_explosion_fx, 0, casterAbsOrigin)
-    ParticleManager:SetParticleControl(particle_explosion_fx, 1, casterAbsOrigin)
-    ParticleManager:SetParticleControl(particle_explosion_fx, 2, Vector(explosion_range, 1, 1))
-    ParticleManager:ReleaseParticleIndex(particle_explosion_fx)
-
-    -- Look for nearby enemies
-    local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-                                        casterAbsOrigin,
-                                        nil,
-                                        explosion_range,
-                                        DOTA_UNIT_TARGET_TEAM_ENEMY,
-                                        DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING,
-                                        DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
-                                        FIND_ANY_ORDER,
-                                        false)
-
-    local modifier_building_res = "modifier_imba_proximity_mine_building_res"
-    local modifier_talent_shrapnel = "modifier_imba_proximity_mine_talent"
-
-    -- If this is a Big Boom, RAIN THEM SHRAPNELS!
-    if self.is_big_boom then
-        CreateModifierThinker(caster, self.ability, modifier_talent_shrapnel, {duration = self.big_boom_shrapnel_duration}, casterAbsOrigin, caster:GetTeamNumber(), false)
-    end
-
-    -- Deal damage to nearby non-flying enemies
-    for _,enemy in pairs(enemies) do
-
-        -- If an enemy doesn't have flying movement, ignore it, otherwise continue
-        if not enemy:HasFlyMovementCapability() then
-
-            -- If this is a Big Boom, add damage to the blast!
-            local damage = self.mine_damage
-            if self.is_big_boom then
-                damage = damage + self.big_boom_mine_bonus_dmg
-            end
-
-            -- If the enemy is a building, reduce damage to it
-            if enemy:IsBuilding() then
-                damage = damage * self.building_damage_pct * 0.01
-            end
-
-            -- Deal damage
-            local damageTable = {victim = enemy,
-                                    attacker = caster,
-                                    damage = damage,
-                                    damage_type = DAMAGE_TYPE_MAGICAL,
-                                    ability = self.ability
-                                    }
-
-            ApplyDamage(damageTable)
-
-            -- If the enemy was a building, give it magical protection
-            if enemy:IsBuilding() and not enemy:HasModifier(modifier_building_res) then
-                enemy:AddNewModifier(caster, self.ability, modifier_building_res, {duration = self.buidling_damage_duration})
-            end
-
-            RefreshElectroCharge(enemy)
-
-            -- See if the enemy died from the mine
-            Timers:CreateTimer(FrameTime(), function()
-                if not enemy:IsAlive() then
-                    enemy_killed = true
-                end
-            end)
-        end
-    end
-
-    ApplyInflammableToRemoteMines(caster, self.trigger_range, nil)
-
-    -- If an enemy was killed from a mine, play kill response
-    if RollPercentage(25) then
-        Timers:CreateTimer(FrameTime()*2, function()
-            local kill_response = {"techies_tech_mineblowsup_01", "techies_tech_mineblowsup_02", "techies_tech_mineblowsup_03", "techies_tech_mineblowsup_04", "techies_tech_mineblowsup_05", "techies_tech_mineblowsup_06", "techies_tech_mineblowsup_08", "techies_tech_mineblowsup_09", "techies_tech_minekill_01", "techies_tech_minekill_02", "techies_tech_minekill_03"}
-
-            if enemy_killed then
-                EmitSoundOn(kill_response[math.random(1, #kill_response)], self.owner)
-            end
-        end)
-    end
-
-    -- Apply flying vision at detonation point
-    AddFOWViewer(caster:GetTeamNumber(), casterAbsOrigin, self.fow_radius, self.fow_duration, false)
-
-    -- Kill self and remove modifier
-    caster:ForceKill(false)
-    self:Destroy()
-end
+end    
 
 function modifier_imba_proximity_mine:CheckState()
     local state
@@ -620,7 +591,7 @@ function modifier_imba_proximity_mine:OnTakeDamage(keys)
         -- Reduce mines' life by 1, or kill it. This is only relevant for Big Boom mines
         local mine_health = self.caster:GetHealth()
         if mine_health > 1 then
-            self.caster:SetHealth(mine_health - 1)
+            self.caster:SetHealth(self.caster:GetHealth() - 1)
         else
             self.caster:Kill(self.ability, attacker)
         end
@@ -637,6 +608,7 @@ modifier_imba_proximity_mine_building_res = modifier_imba_proximity_mine_buildin
 
 function modifier_imba_proximity_mine_building_res:OnCreated()
     -- Ability properties
+    self.caster = self:GetCaster()
     self.ability = self:GetAbility()
 
     -- Ability specials
@@ -656,7 +628,7 @@ end
 function modifier_imba_proximity_mine_building_res:IsHidden() return true end
 function modifier_imba_proximity_mine_building_res:IsPurgable() return false end
 function modifier_imba_proximity_mine_building_res:IsDebuff() return false end
-
+    
 
 
 
@@ -669,9 +641,9 @@ function modifier_imba_proximity_mine_talent:OnCreated()
         self.caster = self:GetCaster()
         self.parent = self:GetParent()
         self.parent_team = self.parent:GetTeamNumber()
-        local parentAbsOrigin = self.parent:GetAbsOrigin()
-        self.parent_pos = parentAbsOrigin
+        self.parent_pos = self.parent:GetAbsOrigin()
         self.ability = self:GetAbility()
+        self.particle_rain = "particles/hero/techies/techies_big_boom_explosions.vpcf"
 
         -- Ability specials
         self.big_boom_shrapnel_aoe = self.ability:GetSpecialValueFor("big_boom_shrapnel_aoe")
@@ -679,11 +651,10 @@ function modifier_imba_proximity_mine_talent:OnCreated()
         self.big_boom_shrapnel_interval = self.ability:GetSpecialValueFor("big_boom_shrapnel_interval")
 
         -- Create rain particles
-        local particle_rain = "particles/hero/techies/techies_big_boom_explosions.vpcf"
-        local particle_rain_fx = ParticleManager:CreateParticle(particle_rain, PATTACH_WORLDORIGIN, nil)
-        ParticleManager:SetParticleControl(particle_rain_fx, 0, parentAbsOrigin)
-        ParticleManager:SetParticleControl(particle_rain_fx, 1, parentAbsOrigin)
-        ParticleManager:SetParticleControl(particle_rain_fx, 3, parentAbsOrigin)
+        local particle_rain_fx = ParticleManager:CreateParticle(self.particle_rain, PATTACH_WORLDORIGIN, nil)
+        ParticleManager:SetParticleControl(particle_rain_fx, 0, self.parent:GetAbsOrigin())
+        ParticleManager:SetParticleControl(particle_rain_fx, 1, self.parent:GetAbsOrigin())
+        ParticleManager:SetParticleControl(particle_rain_fx, 3, self.parent:GetAbsOrigin())
         self:AddParticle(particle_rain_fx, false, false, -1, false, false)
 
         -- Damage per interval
@@ -710,12 +681,12 @@ function modifier_imba_proximity_mine_talent:OnIntervalThink()
         for _, enemy in pairs(enemies) do
             -- Deal magical damage to them
             local damageTable = {victim = enemy,
-                                 attacker = self.caster,
+                                 attacker = self.caster, 
                                  damage = self.damage,
                                  damage_type = DAMAGE_TYPE_MAGICAL,
                                  ability = self.ability
                                  }
-
+                
             ApplyDamage(damageTable)
         end
     end
@@ -740,7 +711,10 @@ function imba_techies_stasis_trap:IsNetherWardStealable()
 end
 
 function imba_techies_stasis_trap:GetAOERadius()
-    local root_range = self:GetSpecialValueFor("root_range")
+    local caster = self:GetCaster()
+    local ability = self
+
+    local root_range = ability:GetSpecialValueFor("root_range")
     return root_range
 end
 
@@ -755,7 +729,7 @@ function imba_techies_stasis_trap:GetBehavior()
     end
 end
 
-function imba_techies_stasis_trap:CastFilterResultTarget(target)
+function imba_techies_stasis_trap:CastFilterResultTarget(target)    
     if IsServer() then
         local caster = self:GetCaster()
 
@@ -782,28 +756,29 @@ function imba_techies_stasis_trap:CastFilterResultTarget(target)
 end
 
 function imba_techies_stasis_trap:OnAbilityPhaseStart()
-
+    -- Ability properties
+    local caster = self:GetCaster()
+    local ability = self  
     local target = self:GetCursorTarget()
+    local target_point = self:GetCursorPosition()  
+    local particle_cast = "particles/units/heroes/hero_techies/techies_stasis_trap_plant.vpcf"
+    local particle_creep = "particles/hero/techies/techies_stasis_trap_plant_creep.vpcf"
 
     if target then
         -- If it was on a target, place effect in it
-        local particle_creep = "particles/hero/techies/techies_stasis_trap_plant_creep.vpcf"
         local particle_creep_fx = ParticleManager:CreateParticle(particle_creep, PATTACH_ABSORIGIN_FOLLOW, target)
         ParticleManager:SetParticleControl(particle_creep_fx, 0, target:GetAbsOrigin())
         ParticleManager:SetParticleControl(particle_creep_fx, 1, target:GetAbsOrigin())
         ParticleManager:ReleaseParticleIndex(particle_creep_fx)
-
+    
     -- If it was on a point in the ground, place effect
     else
-        local caster = self:GetCaster()
-        local target_point = self:GetCursorPosition()
         -- Add cast particle
-        local particle_cast = "particles/units/heroes/hero_techies/techies_stasis_trap_plant.vpcf"
         local particle_cast_fx = ParticleManager:CreateParticle(particle_cast, PATTACH_ABSORIGIN, caster)
         ParticleManager:SetParticleControl(particle_cast_fx, 0, target_point)
         ParticleManager:SetParticleControl(particle_cast_fx, 1, target_point)
         ParticleManager:ReleaseParticleIndex(particle_cast_fx)
-    end
+    end   
 
     return true
 end
@@ -811,9 +786,9 @@ end
 function imba_techies_stasis_trap:OnSpellStart()
     -- Ability properties
     local caster = self:GetCaster()
-    local ability = self
+    local ability = self    
     local target = self:GetCursorTarget()
-    local target_point = self:GetCursorPosition()
+    local target_point = self:GetCursorPosition()  
     local particle_creep = "particles/hero/techies/techies_stasis_trap_plant_creep.vpcf"
     local cast_response = {"techies_tech_settrap_01", "techies_tech_settrap_02", "techies_tech_settrap_03", "techies_tech_settrap_04", "techies_tech_settrap_06", "techies_tech_settrap_07", "techies_tech_settrap_08", "techies_tech_settrap_09", "techies_tech_settrap_10", "techies_tech_settrap_11"}
     local sound_cast = "Hero_Techies.StasisTrap.Plant"
@@ -824,25 +799,25 @@ function imba_techies_stasis_trap:OnSpellStart()
     end
 
     -- Play cast sound
-    EmitSoundOn(sound_cast, caster)
+    EmitSoundOn(sound_cast, caster)    
 
     -- Plant inside a creep (#2 Talent)
     if target then
-        local modifier_stasis = target:AddNewModifier(target, ability, "modifier_imba_statis_trap", {})
+        local modifier_stasis = target:AddNewModifier(target, ability, "modifier_imba_statis_trap", {})        
         if modifier_stasis then
             modifier_stasis.owner = caster
         end
 
         Timers:CreateTimer(1, function()
-            if target:IsAlive() then
-                local particle_creep_fx = ParticleManager:CreateParticle(particle_creep, PATTACH_CUSTOMORIGIN_FOLLOW, target)
+            if target:IsAlive() then                
+                local particle_creep_fx = ParticleManager:CreateParticle(particle_creep, PATTACH_CUSTOMORIGIN_FOLLOW, target)                
                 ParticleManager:SetParticleControlEnt(particle_creep_fx, 0, target, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
                 ParticleManager:SetParticleControlEnt(particle_creep_fx, 1, target, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
                 ParticleManager:ReleaseParticleIndex(particle_creep_fx)
 
                 return 1
             else
-
+                
                 return nil
             end
         end)
@@ -857,14 +832,16 @@ function imba_techies_stasis_trap:OnSpellStart()
         trap:SetControllableByPlayer(playerID, true)
 
         -- Set the mine's ability to be the same level as the planting ability
-        local trap_ability_handler = trap:FindAbilityByName(trap_ability)
-        if trap_ability_handler then
-            trap_ability_handler:SetLevel(ability:GetLevel())
+        if trap:HasAbility(trap_ability) then
+            local trap_ability_handler = trap:FindAbilityByName(trap_ability)
+            if trap_ability_handler then
+                trap_ability_handler:SetLevel(ability:GetLevel())
+            end
         end
 
         -- Set the mine's owner to be the caster
-        trap:SetOwner(caster)
-    end
+        trap:SetOwner(caster)    
+    end    
 end
 
 
@@ -883,7 +860,7 @@ function imba_techies_stasis_trap_trigger:GetAbilityTextureName()
 end
 
 function imba_techies_stasis_trap_trigger:GetIntrinsicModifierName()
-    return "modifier_imba_statis_trap"
+    return "modifier_imba_statis_trap" 
 end
 
 -- Statis Trap thinker modifier
@@ -895,18 +872,26 @@ function modifier_imba_statis_trap:OnCreated()
         -- Ability properties
         self.caster = self:GetCaster()
         self.ability = self:GetAbility()
-        self.owner = self.caster:GetOwner()
+        self.owner = self.caster:GetOwner()    
+        self.sound_explosion = "Hero_Techies.StasisTrap.Stun"
+        self.particle_explode = "particles/units/heroes/hero_techies/techies_stasis_trap_explode.vpcf"        
+        self.modifier_root = "modifier_imba_statis_trap_root"
+        self.modifier_electrocharge = "modifier_imba_statis_trap_electrocharge"
+        self.modifier_disarmed = "modifier_imba_statis_trap_disarmed"
+        self.modifier_sign = "modifier_imba_minefield_sign_detection"        
+        self.modifier_inflammable = "modifier_imba_remote_mine_inflammable"
+        self.detonate_ability = "imba_techies_remote_mine_pinpoint_detonation"
 
         -- Ability specials
         self.activate_delay = self.ability:GetSpecialValueFor("activate_delay")
         self.trigger_range = self.ability:GetSpecialValueFor("trigger_range")
         self.root_range = self.ability:GetSpecialValueFor("root_range")
         self.root_duration = self.ability:GetSpecialValueFor("root_duration")
-        self.tick_rate = self.ability:GetSpecialValueFor("tick_rate")
+        self.tick_rate = self.ability:GetSpecialValueFor("tick_rate")        
         self.flying_vision_duration = self.ability:GetSpecialValueFor("flying_vision_duration")
 
         -- Set variables
-        self.active = false
+        self.active = false        
 
         -- Wait for activation
         Timers:CreateTimer(self.activate_delay, function()
@@ -915,7 +900,7 @@ function modifier_imba_statis_trap:OnCreated()
             self.active = true
 
             -- Start thinking
-            self:StartIntervalThink(self.tick_rate)
+            self:StartIntervalThink(self.tick_rate)            
         end)
     end
 end
@@ -926,23 +911,20 @@ function modifier_imba_statis_trap:IsDebuff() return false end
 
 function modifier_imba_statis_trap:OnIntervalThink()
     if IsServer() then
-        local caster = self.caster
-
         -- If the caster has the sign modifier, do nothing
-        local modifier_sign = "modifier_imba_minefield_sign_detection"
-        if caster:HasModifier(modifier_sign) then
+        if self.caster:HasModifier(self.modifier_sign) then
             return nil
-        end
+        end        
 
         -- If the Stasis trap is dead, do nothing and destroy
-        if not caster:IsAlive() then
+        if not self.caster:IsAlive() then
             self:Destroy()
             return nil
         end
 
         -- Look for nearby enemies
-        local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-                                          caster:GetAbsOrigin(),
+        local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
+                                          self.caster:GetAbsOrigin(),
                                           nil,
                                           self.trigger_range,
                                           DOTA_UNIT_TARGET_TEAM_ENEMY,
@@ -952,94 +934,102 @@ function modifier_imba_statis_trap:OnIntervalThink()
                                           false)
 
         if #enemies > 0 then
-            self:_Explode()
+            -- Springing the trap! Play root sound
+            EmitSoundOn(self.sound_explosion, self.caster)
+
+            -- Add explosion particle
+            local particle_explode = ParticleManager:CreateParticle(self.particle_explode, PATTACH_WORLDORIGIN, self.caster)
+            ParticleManager:SetParticleControl(particle_explode, 0, self.caster:GetAbsOrigin())
+            ParticleManager:SetParticleControl(particle_explode, 1, Vector(self.root_range, 1, 1))
+            ParticleManager:SetParticleControl(particle_explode, 3, self.caster:GetAbsOrigin())
+            ParticleManager:ReleaseParticleIndex(particle_explode)            
+
+            -- Find all units in radius
+            enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
+                                        self.caster:GetAbsOrigin(),
+                                        nil,
+                                        self.root_range,
+                                        DOTA_UNIT_TARGET_TEAM_ENEMY,
+                                        DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+                                        DOTA_UNIT_TARGET_FLAG_NONE,
+                                        FIND_ANY_ORDER,
+                                        false)
+
+            -- Root enemies nearby if not disarmed, and apply a electrocharge
+            for _,enemy in pairs(enemies) do
+                if not self.caster:HasModifier(self.modifier_disarmed) then
+                    enemy:AddNewModifier(self.caster, self.ability, self.modifier_root, {duration = self.root_duration})
+                end
+
+                -- If the enemy is not yet afflicted with electrocharge, add it. Otherwise, add a stack
+                if not enemy:HasModifier(self.modifier_electrocharge) then
+                    enemy:AddNewModifier(self.caster, self.ability, self.modifier_electrocharge, {duration = self.root_duration})
+                else
+                    local modifier_electrocharge_handler = enemy:FindModifierByName(self.modifier_electrocharge)
+                    if modifier_electrocharge_handler then
+                        modifier_electrocharge_handler:IncrementStackCount()
+                        modifier_electrocharge_handler:ForceRefresh()
+                    end
+                end
+            end
+
+            -- Find nearby Statis Traps and mark them as disarmed
+            local mines = FindUnitsInRadius(self.caster:GetTeamNumber(),
+                                            self.caster:GetAbsOrigin(),
+                                            nil,
+                                            self.root_range,
+                                            DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+                                            DOTA_UNIT_TARGET_OTHER,
+                                            DOTA_UNIT_TARGET_FLAG_NONE,
+                                            FIND_ANY_ORDER,
+                                            false)
+
+            for _,mine in pairs(mines) do
+                if mine:GetUnitName() == "npc_imba_techies_stasis_trap" and mine ~= self.caster then
+                    mine:AddNewModifier(self.caster, self.ability, self.modifier_disarmed, {})
+                end
+            end
+
+            -- #4 Talent: Stasis Traps grants charges of Inflammable to Remote mines
+            if self.owner and self.owner:HasTalent("special_bonus_imba_techies_4") then
+                -- Find Remote Mines in the explosion radius and give them inflammable stacks
+                for _,mine in pairs(mines) do
+                    if mine:GetUnitName() == "npc_imba_techies_remote_mine" then
+                        if not mine:HasModifier(self.modifier_inflammable) and mine:HasAbility(self.detonate_ability) then
+                            local detonate_ability_handler = mine:FindAbilityByName(self.detonate_ability)
+                            if detonate_ability_handler then
+                                local inflammable_duration = detonate_ability_handler:GetSpecialValueFor("inflammable_duration")
+                                mine:AddNewModifier(self.caster, detonate_ability_handler, self.modifier_inflammable, {duration = inflammable_duration})
+                            end
+                        end
+
+                        local modifier_inflammable_handler = mine:FindModifierByName(self.modifier_inflammable)
+                        if modifier_inflammable_handler then
+                            modifier_inflammable_handler:IncrementStackCount()
+                            modifier_inflammable_handler:ForceRefresh()
+                        end
+                    end
+                end
+            end
+
+            -- Apply flying vision
+            AddFOWViewer(self.caster:GetTeamNumber(), self.caster:GetAbsOrigin(), self.root_range, self.flying_vision_duration, false)
+
+            -- Kill trap and destroy modifier
+            self.caster:Kill(self.ability, self.caster)
+            self:Destroy()
         end
     end
-end
-
-function modifier_imba_statis_trap:_Explode()
-    local caster = self.caster
-
-    -- Springing the trap! Play root sound
-    local sound_explosion = "Hero_Techies.StasisTrap.Stun"
-    EmitSoundOn(sound_explosion, caster)
-
-    -- Add explosion particle
-    local particle_explode = "particles/units/heroes/hero_techies/techies_stasis_trap_explode.vpcf"
-    local particle_explode_fx = ParticleManager:CreateParticle(particle_explode, PATTACH_WORLDORIGIN, caster)
-    ParticleManager:SetParticleControl(particle_explode_fx, 0, caster:GetAbsOrigin())
-    ParticleManager:SetParticleControl(particle_explode_fx, 1, Vector(self.root_range, 1, 1))
-    ParticleManager:SetParticleControl(particle_explode_fx, 3, caster:GetAbsOrigin())
-    ParticleManager:ReleaseParticleIndex(particle_explode_fx)
-
-    -- Find all units in radius
-    local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-                                caster:GetAbsOrigin(),
-                                nil,
-                                self.root_range,
-                                DOTA_UNIT_TARGET_TEAM_ENEMY,
-                                DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-                                DOTA_UNIT_TARGET_FLAG_NONE,
-                                FIND_ANY_ORDER,
-                                false)
-
-    local modifier_root = "modifier_imba_statis_trap_root"
-    local modifier_electrocharge = "modifier_imba_statis_trap_electrocharge"
-    local modifier_disarmed = "modifier_imba_statis_trap_disarmed"
-
-    -- Root enemies nearby if not disarmed, and apply a electrocharge
-    for _,enemy in pairs(enemies) do
-        if not caster:HasModifier(modifier_disarmed) then
-            enemy:AddNewModifier(caster, self.ability, modifier_root, {duration = self.root_duration})
-        end
-
-        -- If the enemy is not yet afflicted with electrocharge, add it. Otherwise, add a stack
-        if not enemy:HasModifier(modifier_electrocharge) then
-            enemy:AddNewModifier(caster, self.ability, modifier_electrocharge, {duration = self.root_duration})
-        else
-            RefreshElectroCharge(enemy)
-        end
-    end
-
-    -- Find nearby Statis Traps and mark them as disarmed
-    local mines = FindUnitsInRadius(caster:GetTeamNumber(),
-                                    caster:GetAbsOrigin(),
-                                    nil,
-                                    self.root_range,
-                                    DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-                                    DOTA_UNIT_TARGET_OTHER,
-                                    DOTA_UNIT_TARGET_FLAG_NONE,
-                                    FIND_ANY_ORDER,
-                                    false)
-
-    for _,mine in pairs(mines) do
-        if mine:GetUnitName() == "npc_imba_techies_stasis_trap" and mine ~= caster then
-            mine:AddNewModifier(caster, self.ability, modifier_disarmed, {})
-        end
-    end
-
-    -- #4 Talent: Stasis Traps grants charges of Inflammable to Remote mines
-    if self.owner and self.owner:HasTalent("special_bonus_imba_techies_4") then
-        ApplyInflammableToRemoteMines(caster, self.root_range, mines)
-    end
-
-    -- Apply flying vision
-    AddFOWViewer(caster:GetTeamNumber(), caster:GetAbsOrigin(), self.root_range, self.flying_vision_duration, false)
-
-    -- Kill trap and destroy modifier
-    caster:ForceKill(false)
-    self:Destroy()
 end
 
 function modifier_imba_statis_trap:CheckState()
     if IsServer() then
-
+        local state
+        
         -- Planted inside a creep
         if self.caster:IsCreep() then
             return nil
         end
-
-        local state
 
         -- Trap is invisible since activation
         if self.active then
@@ -1047,7 +1037,7 @@ function modifier_imba_statis_trap:CheckState()
                      [MODIFIER_STATE_NO_UNIT_COLLISION] = true}
         else
             state = {[MODIFIER_STATE_INVISIBLE] = false,
-                     [MODIFIER_STATE_NO_UNIT_COLLISION] = true}
+                     [MODIFIER_STATE_NO_UNIT_COLLISION] = true}            
         end
         return state
     end
@@ -1064,7 +1054,7 @@ end
 
 function modifier_imba_statis_trap_root:IsHidden() return false end
 function modifier_imba_statis_trap_root:IsPurgable() return true end
-function modifier_imba_statis_trap_root:IsDebuff() return true end
+function modifier_imba_statis_trap_root:IsDebuff() return true end    
 
 function modifier_imba_statis_trap_root:GetStatusEffectName()
     return "particles/status_fx/status_effect_techies_stasis.vpcf"
@@ -1091,7 +1081,7 @@ function modifier_imba_statis_trap_electrocharge:OnCreated()
 
         -- #3 Talent: Electrocharge mines pull radius increase
         if self.owner then
-            self.base_magnetic_radius = self.base_magnetic_radius + self.owner:FindTalentValue("special_bonus_imba_techies_3")
+            self.base_magnetic_radius = self.base_magnetic_radius + self.owner:FindTalentValue("special_bonus_imba_techies_3")        
         end
 
         -- Start thinking
@@ -1101,20 +1091,18 @@ end
 
 function modifier_imba_statis_trap_electrocharge:IsHidden() return false end
 function modifier_imba_statis_trap_electrocharge:IsPurgable() return true end
-function modifier_imba_statis_trap_electrocharge:IsDebuff() return true end
+function modifier_imba_statis_trap_electrocharge:IsDebuff() return true end    
 
 function modifier_imba_statis_trap_electrocharge:OnIntervalThink()
     if IsServer() then
         -- Determine movespeed and radius for this tick
         local stacks = self:GetStackCount()
         local movespeed = self.base_magnetic_movespeed + self.magnetic_stack_movespeed * stacks
-        local radius = self.base_magnetic_radius + self.magnetic_stack_radius * stacks
-
-        local parentAbsOrigin = self.parent:GetAbsOrigin()
+        local radius = self.base_magnetic_radius + self.magnetic_stack_radius * stacks        
 
         -- Find all nearby mines
         local mines = FindUnitsInRadius(self.teamnumber,
-                                        parentAbsOrigin,
+                                        self.parent:GetAbsOrigin(),
                                         nil,
                                         radius,
                                         DOTA_UNIT_TARGET_TEAM_FRIENDLY,
@@ -1124,20 +1112,17 @@ function modifier_imba_statis_trap_electrocharge:OnIntervalThink()
                                         false)
 
         -- Move each mine towards the parent of the debuff
-        for _,mine in pairs(mines) do
-            local mineUnitName = mine:GetUnitName()
-            if mineUnitName == "npc_imba_techies_proximity_mine" or mineUnitName == "npc_imba_techies_proximity_mine_big_boom" or mineUnitName == "npc_imba_techies_stasis_trap" or mineUnitName == "npc_imba_techies_remote_mine" then
-                local mineAbsOrigin = mine:GetAbsOrigin()
+        for _,mine in pairs(mines) do            
+            if mine:GetUnitName() == "npc_imba_techies_proximity_mine" or mine:GetUnitName() == "npc_imba_techies_proximity_mine_big_boom" or mine:GetUnitName() == "npc_imba_techies_stasis_trap" or mine:GetUnitName() == "npc_imba_techies_remote_mine" then
 
-                -- Get mine's distance from enemy
-                local distance = (parentAbsOrigin - mineAbsOrigin):Length2D()
+                -- Get mine's direction and distance from enemy
+                local direction = (self.parent:GetAbsOrigin() - mine:GetAbsOrigin()):Normalized()                
+                local distance = (self.parent:GetAbsOrigin() - mine:GetAbsOrigin()):Length2D()  
 
                 -- Minimum distance so game won't keep trying to put it closer in zero range
                 if distance > 25 then
-                    -- Get mine's direction from enemy
-                    local direction = (parentAbsOrigin - mineAbsOrigin):Normalized()
                     -- Set the mine's location closer to the enemy
-                    local mine_location = mineAbsOrigin + direction * movespeed * FrameTime()
+                    local mine_location = mine:GetAbsOrigin() + direction * movespeed * FrameTime()
                     mine:SetAbsOrigin(mine_location)
                 end
             end
@@ -1182,7 +1167,10 @@ function imba_techies_blast_off:IsHiddenWhenStolen()
 end
 
 function imba_techies_blast_off:GetAOERadius()
-    local radius  = self:GetSpecialValueFor("radius")
+    local caster = self:GetCaster()
+    local ability = self
+
+    local radius  = ability:GetSpecialValueFor("radius")
     return radius
 end
 
@@ -1194,8 +1182,8 @@ function imba_techies_blast_off:OnSpellStart()
     -- Ability properties
     local caster = self:GetCaster()
     local ability = self
-    local target_point = self:GetCursorPosition()
-    local piggy_response = "Imba.LittlePiggyWhy"
+    local target_point = self:GetCursorPosition()  
+    local piggy_response = "Imba.LittlePiggyWhy"  
     local sound_cast = "Hero_Techies.BlastOff.Cast"
     local modifier_blast = "modifier_imba_blast_off"
 
@@ -1204,7 +1192,6 @@ function imba_techies_blast_off:OnSpellStart()
 
     -- #8 Talent: Blast Off throws a little pig instead of you
     local pig
-    local modifierParam = {target_point_x = target_point.x, target_point_y = target_point.y, target_point_z = target_point.z}
     if caster:HasTalent("special_bonus_imba_techies_8") then
         pig = CreateUnitByName("npc_imba_techies_blast_off_piggy", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
 
@@ -1220,20 +1207,25 @@ function imba_techies_blast_off:OnSpellStart()
             EmitSoundOn(piggy_response, caster)
         end
 
-        -- Add the blast off modifier, initialize with target point
-        pig:AddNewModifier(caster, ability, modifier_blast, modifierParam)
-
+        -- Add the blast off modifier, and assign it the target point
+        local modifier_blast_handler = pig:AddNewModifier(caster, ability, modifier_blast, {})
+        if modifier_blast_handler then
+            modifier_blast_handler.target_point = target_point
+        end    
     else
-        -- Add the blast off modifier, initialize with target point
-        caster:AddNewModifier(caster, ability, modifier_blast, modifierParam)
-    end
+        -- Add the blast off modifier, and assign it the target point
+        local modifier_blast_handler = caster:AddNewModifier(caster, ability, modifier_blast, {})
+        if modifier_blast_handler then
+            modifier_blast_handler.target_point = target_point
+        end    
+    end    
 end
 
 
 -- Blast off modifier
 modifier_imba_blast_off = modifier_imba_blast_off or class({})
 
-function modifier_imba_blast_off:OnCreated( keys )
+function modifier_imba_blast_off:OnCreated()
     if IsServer() then
         -- Ability properties
         self.caster = self:GetCaster()
@@ -1244,30 +1236,35 @@ function modifier_imba_blast_off:OnCreated( keys )
         -- Ability specials
         self.max_jumps = self.ability:GetSpecialValueFor("max_jumps")
         self.jump_continue_delay = self.ability:GetSpecialValueFor("jump_continue_delay")
-        self.jump_duration = self.ability:GetSpecialValueFor("jump_duration")
+        self.jump_duration = self.ability:GetSpecialValueFor("jump_duration")        
 
-        -- Set the caster to jump freely unless otherwise issued
-        self.jumps = 0
+        -- Set the caster to jump freely unless otherwise issued        
+        self.jumps = 0                
 
-        self.target_point = Vector(keys.target_point_x, keys.target_point_y, keys.target_point_z)
+        -- Wait for the target point to be assigned to the modifier
+        Timers:CreateTimer(FrameTime(), function()
+            if not self.target_point then
+                return FrameTime()
+            else
+                self.direction = (self.target_point - self.parent:GetAbsOrigin()):Normalized()
+                self.distance = (self.target_point - self.parent:GetAbsOrigin()):Length2D()
 
-        local parentAbsOrigin = self.parent:GetAbsOrigin()
-        self.direction = (self.target_point - parentAbsOrigin):Normalized()
-        self.distance = (self.target_point - parentAbsOrigin):Length2D()
+                -- Apply the first jump and assign the target point to it as well
+                local modifier_movement_handler = self.parent:AddNewModifier(self.caster, self.ability, self.modifier_movement, {duration = self.jump_duration + self.jump_continue_delay})
+                if modifier_movement_handler then
+                    modifier_movement_handler.target_point = self.target_point
+                end
 
-        local tick = self.jump_duration + self.jump_continue_delay
-
-        -- Apply the first jump and initialize target point to it as well
-        self.parent:AddNewModifier(self.caster, self.ability, self.modifier_movement, {duration = tick, target_point_x = keys.target_point_x, target_point_y = keys.target_point_y, target_point_z = keys.target_point_z })
-
-        -- Start thinking
-        self:StartIntervalThink(tick)
+                -- Start thinking
+                self:StartIntervalThink(self.jump_duration + self.jump_continue_delay)
+            end
+        end)
     end
 end
 
 function modifier_imba_blast_off:OnIntervalThink()
     -- Increment jump count
-    self.jumps = self.jumps + 1
+    self.jumps = self.jumps + 1    
 
     -- If the caster is stunned, hexed, or silenced, destroy self
     if self.parent:IsStunned() or self.parent:IsHexed() or self.parent:IsSilenced() then
@@ -1284,8 +1281,11 @@ function modifier_imba_blast_off:OnIntervalThink()
     -- Find new jump position, using the same distance and direction
     self.target_point = self.target_point + self.direction * self.distance
 
-    -- Apply another jump and initialize the new target point to it
-    self.parent:AddNewModifier(self.caster, self.ability, self.modifier_movement, {duration = self.jump_duration + self.jump_continue_delay, target_point_x = self.target_point.x, target_point_y = self.target_point.y, target_point_z = self.target_point.z})
+    -- Apply another jump and assign the new target point to it
+    local modifier_movement_handler = self.parent:AddNewModifier(self.caster, self.ability, self.modifier_movement, {duration = self.jump_duration + self.jump_continue_delay})
+    if modifier_movement_handler then
+        modifier_movement_handler.target_point = self.target_point
+    end
 end
 
 function modifier_imba_blast_off:IsHidden() return true end
@@ -1304,9 +1304,9 @@ function modifier_imba_blast_off:OnOrder(keys)
         local unit = keys.unit
 
         -- Only apply if the unit issuing the command is the caster
-        if unit == self.parent then
+        if unit == self.parent then            
 
-            -- Apply for stop move, or attack commands
+            -- Apply for stop move, or attack commands            
             local eligible_order_types = {DOTA_UNIT_ORDER_HOLD_POSITION,
                                           DOTA_UNIT_ORDER_STOP,
                                           DOTA_UNIT_ORDER_MOVE_TO_POSITION,
@@ -1319,7 +1319,7 @@ function modifier_imba_blast_off:OnOrder(keys)
                 if eligible_order_types[i] == order_type then
                     self:Destroy()
                     break
-                end
+                end                
             end
         end
     end
@@ -1333,19 +1333,18 @@ end
 
 function modifier_imba_blast_off:OnDestroy()
     if IsServer() then
-        local modifier_movement_handler = self.parent:FindModifierByName(self.modifier_movement)
-        if modifier_movement_handler then
-            modifier_movement_handler.last_jump = true
+        if self.parent:HasModifier(self.modifier_movement) then
+            local modifier_movement_handler = self.parent:FindModifierByName(self.modifier_movement)
+            if modifier_movement_handler then
+                modifier_movement_handler.last_jump = true
+            end
         end
 
         -- If it was a pig, remove it after a small delay
         if self.parent:GetUnitName() == "npc_imba_techies_blast_off_piggy" then
-            -- Avoid reference values from self after onDestroy
-            local parent = self.parent
-
-            Timers:CreateTimer(FrameTime(), function()
-                parent:ForceKill(false)
-            end)
+            Timers:CreateTimer(1, function()
+                self.parent:Kill(self.ability, self.caster)
+            end)      
         end
     end
 end
@@ -1354,41 +1353,52 @@ end
 -- Blast off motion controller modifier
 modifier_imba_blast_off_movement = modifier_imba_blast_off_movement or class({})
 
-function modifier_imba_blast_off_movement:OnCreated( keys )
+function modifier_imba_blast_off_movement:OnCreated()
     if IsServer() then
         -- Ability properties
         self.caster = self:GetCaster()
         self.ability = self:GetAbility()
-        self.parent = self:GetParent()
-
-        local particle_trail = "particles/units/heroes/hero_techies/techies_blast_off_trail.vpcf"
+        self.parent = self:GetParent()  
+        self.miss_response = {"techies_tech_suicidesquad_04", "techies_tech_suicidesquad_09", "techies_tech_suicidesquad_13"}
+        self.rare_miss_response = {"techies_tech_suicidesquad_08", "techies_tech_failure_01"}
+        self.kill_response = {"techies_tech_suicidesquad_02", "techies_tech_suicidesquad_03", "techies_tech_suicidesquad_06", "techies_tech_suicidesquad_11", "techies_tech_suicidesquad_12"}
+        self.rare_kill_response = {"techies_tech_focuseddetonate_14"}  
+        self.sound_suicide = "Hero_Techies.Suicide"
+        self.particle_trail = "particles/units/heroes/hero_techies/techies_blast_off_trail.vpcf"
+        self.particle_explosion = "particles/units/heroes/hero_techies/techies_blast_off.vpcf"
+        self.modifier_silence = "modifier_imba_blast_off_silence"
+        self.proximity_ability = "imba_techies_proximity_mine"
 
         -- Ability specials
         self.damage = self.ability:GetSpecialValueFor("damage")
         self.radius = self.ability:GetSpecialValueFor("radius")
         self.self_damage_pct = self.ability:GetSpecialValueFor("self_damage_pct")
         self.silence_duration = self.ability:GetSpecialValueFor("silence_duration")
-        self.jump_duration = self.ability:GetSpecialValueFor("jump_duration")
-        self.jump_max_height = self.ability:GetSpecialValueFor("jump_max_height")
+        self.jump_duration = self.ability:GetSpecialValueFor("jump_duration")        
+        self.jump_max_height = self.ability:GetSpecialValueFor("jump_max_height")                
 
-        self.target_point = Vector(keys.target_point_x, keys.target_point_y, keys.target_point_z)
+        -- Wait for the target point to be assigned to the modifier
+        Timers:CreateTimer(FrameTime(), function()
+            if not self.target_point then
+                return FrameTime()
+            else
+                -- Add trail particle
+                local particle_trail_fx = ParticleManager:CreateParticle(self.particle_trail, PATTACH_ABSORIGIN_FOLLOW, self.parent)
+                ParticleManager:SetParticleControl(particle_trail_fx, 0, self.parent:GetAbsOrigin())
+                ParticleManager:SetParticleControl(particle_trail_fx, 1, self.parent:GetAbsOrigin())                
+                self:AddParticle(particle_trail_fx, false, false, -1, false, false)
 
-        local parentAbsOrigin = self.parent:GetAbsOrigin()
-        -- Add trail particle
-        local particle_trail_fx = ParticleManager:CreateParticle(self.particle_trail, PATTACH_ABSORIGIN_FOLLOW, self.parent)
-        ParticleManager:SetParticleControl(particle_trail_fx, 0, parentAbsOrigin)
-        ParticleManager:SetParticleControl(particle_trail_fx, 1, parentAbsOrigin)
-        self:AddParticle(particle_trail_fx, false, false, -1, false, false)
+                -- Calculate jump variables
+                self.direction = (self.target_point - self.parent:GetAbsOrigin()):Normalized()
+                self.distance = (self.target_point - self.parent:GetAbsOrigin()):Length2D()
+                self.velocity = self.distance / self.jump_duration
+                self.time_elapsed = 0
+                self.current_height = 0                               
 
-        -- Calculate jump variables
-        self.direction = (self.target_point - parentAbsOrigin):Normalized()
-        self.distance = (self.target_point - parentAbsOrigin):Length2D()
-        self.velocity = self.distance / self.jump_duration
-        self.time_elapsed = 0
-        self.current_height = 0
-
-        self.frametime = FrameTime()
-        self:StartIntervalThink(self.frametime)
+                self.frametime = FrameTime()
+                self:StartIntervalThink(self.frametime)     
+            end            
+        end)        
     end
 end
 
@@ -1414,13 +1424,13 @@ function modifier_imba_blast_off_movement:IsMotionController() return true end
 function modifier_imba_blast_off_movement:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_imba_blast_off_movement:VerticalMotion(me, dt)
-    if IsServer() then
+    if IsServer() then        
         -- Calculate height as a parabula
         local t = self.time_elapsed / self.jump_duration
         self.current_height = self.current_height + FrameTime() * self.jump_max_height * (4-8*t)
 
         -- Set the new height
-        self.parent:SetAbsOrigin(GetGroundPosition(self.parent:GetAbsOrigin(), self.parent) + Vector(0,0,self.current_height))
+        self.parent:SetAbsOrigin(GetGroundPosition(self.parent:GetAbsOrigin(), self.parent) + Vector(0,0,self.current_height))         
 
         -- Increase the time elapsed
         self.time_elapsed = self.time_elapsed + dt
@@ -1428,15 +1438,15 @@ function modifier_imba_blast_off_movement:VerticalMotion(me, dt)
 end
 
 function modifier_imba_blast_off_movement:HorizontalMotion(me, dt)
-    if IsServer() then
+    if IsServer() then        
 
         -- Check if we're still jumping
         if self.time_elapsed < self.jump_duration then
-            -- Move parent towards the target point
+            -- Move parent towards the target point    
             local new_location = self.parent:GetAbsOrigin() + self.direction * self.velocity * dt
-            self.parent:SetAbsOrigin(new_location)
+            self.parent:SetAbsOrigin(new_location)            
         else
-            self:BlastOffLanded()
+            self:BlastOffLanded()            
         end
     end
 end
@@ -1450,19 +1460,17 @@ function modifier_imba_blast_off_movement:BlastOffLanded()
         self.blast_off_finished = true
 
         -- Play explosion sound
-        local sound_suicide = "Hero_Techies.Suicide"
-        EmitSoundOn(sound_suicide, self.parent)
+        EmitSoundOn(self.sound_suicide, self.parent)
 
         -- Add explosion particle
-        local particle_explosion = "particles/units/heroes/hero_techies/techies_blast_off.vpcf"
-        local particle_explosion_fx = ParticleManager:CreateParticle(particle_explosion, PATTACH_WORLDORIGIN, self.parent)
+        local particle_explosion_fx = ParticleManager:CreateParticle(self.particle_explosion, PATTACH_WORLDORIGIN, self.parent)
         ParticleManager:SetParticleControl(particle_explosion_fx, 0, self.parent:GetAbsOrigin())
         ParticleManager:ReleaseParticleIndex(particle_explosion_fx)
 
         -- Destroy trees around the landing point
         GridNav:DestroyTreesAroundPoint(self.parent:GetAbsOrigin(), self.radius, true)
 
-        -- Find all nearby enemies
+        -- Find all nearby enemies    
         local enemies = FindUnitsInRadius(self.parent:GetTeamNumber(),
                                           self.parent:GetAbsOrigin(),
                                           nil,
@@ -1473,22 +1481,20 @@ function modifier_imba_blast_off_movement:BlastOffLanded()
                                           FIND_ANY_ORDER,
                                           false)
 
-        local modifier_silence = "modifier_imba_blast_off_silence"
-
         local enemy_killed = false
         for _,enemy in pairs(enemies) do
             -- Deal magical damage to them
             local damageTable = {victim = enemy,
-                                 attacker = self.caster,
+                                 attacker = self.caster, 
                                  damage = self.damage,
                                  damage_type = DAMAGE_TYPE_MAGICAL,
                                  ability = self.ability
                                  }
-
-            ApplyDamage(damageTable)
+            
+            local actual_damage = ApplyDamage(damageTable)            
 
             -- Add silence modifier to them
-            enemy:AddNewModifier(self.caster, self.ability, modifier_silence, {duration = self.silence_duration})
+            enemy:AddNewModifier(self.caster, self.ability, self.modifier_silence, {duration = self.silence_duration})
 
             -- Check (and mark) if an enemy died from the blast
             Timers:CreateTimer(FrameTime(), function()
@@ -1501,56 +1507,49 @@ function modifier_imba_blast_off_movement:BlastOffLanded()
         -- If no enemies were found, play miss response
         if #enemies == 0 and self.last_jump then
             -- Roll for rare response
-            local sound
             if RollPercentage(15) then
-                local rare_miss_response = {"techies_tech_suicidesquad_08", "techies_tech_failure_01"}
-                sound = rare_miss_response[math.random(1, #rare_miss_response)]
+                EmitSoundOn(self.rare_miss_response[math.random(1, #self.rare_miss_response)], self.caster)
             else
-                local miss_response = {"techies_tech_suicidesquad_04", "techies_tech_suicidesquad_09", "techies_tech_suicidesquad_13"}
-                sound = miss_response[math.random(1, #miss_response)]
+                EmitSoundOn(self.miss_response[math.random(1, #self.miss_response)], self.caster)
             end
-
-            EmitSoundOn(sound, self.caster)
         end
 
         Timers:CreateTimer(FrameTime()*2, function()
             -- If an enemy died, play kill response
             if enemy_killed then
                 -- Roll for rare response
-                local sound
                 if RollPercentage(15) then
-                    local rare_kill_response = {"techies_tech_focuseddetonate_14"}
-                    sound = rare_kill_response[math.random(1, #rare_kill_response)]
+                    EmitSoundOn(self.rare_kill_response[math.random(1, #self.rare_kill_response)], self.caster)
                 else
-                    local kill_response = {"techies_tech_suicidesquad_02", "techies_tech_suicidesquad_03", "techies_tech_suicidesquad_06", "techies_tech_suicidesquad_11", "techies_tech_suicidesquad_12"}
-                    sound = kill_response[math.random(1, #kill_response)]
+                    EmitSoundOn(self.kill_response[math.random(1, #self.kill_response)], self.caster)
                 end
-                EmitSoundOn(sound, self.caster)
             end
         end)
-
+        
 
         -- Deal damage to the caster based on its max health
-        local self_damage = self.parent:GetMaxHealth() * self.self_damage_pct * 0.01
-
+        local self_damage = self.parent:GetMaxHealth() * self.self_damage_pct * 0.01       
+        
         local damageTable = {victim = self.parent,
-                             attacker = self.caster,
+                             attacker = self.caster, 
                              damage = self_damage,
                              damage_type = DAMAGE_TYPE_PURE,
                              ability = self.ability,
                              damage_flags = DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION
                              }
-
-        ApplyDamage(damageTable)
+            
+        local actual_damage = ApplyDamage(damageTable)                                        
 
         --#5 Talent: Blast Off! jumps drop a Proximity Mine
         if self.caster:HasTalent("special_bonus_imba_techies_5") then
-            local proximity_ability = "imba_techies_proximity_mine"
+
             -- Find Proximity Mine ability. Talent can't proc if the caster doesn't have Proximity Mines.
-            local proximity_ability_handler = self.caster:FindAbilityByName(proximity_ability)
-            if proximity_ability_handler and proximity_ability_handler:GetLevel() > 0 then
-                PlantProximityMine(self.caster, proximity_ability_handler, self.parent:GetAbsOrigin())
-            end
+            if self.caster:HasAbility(self.proximity_ability) then
+                local proximity_ability_handler = self.caster:FindAbilityByName(self.proximity_ability)
+                if proximity_ability_handler and proximity_ability_handler:GetLevel() > 0 then
+                    PlantProximityMine(self.caster, proximity_ability_handler, self.parent:GetAbsOrigin())
+                end
+            end            
         end
 
         self:Destroy()
@@ -1617,9 +1616,11 @@ function imba_techies_remote_mine:OnUpgrade()
     local caster = self:GetCaster()
     local focused_ability = "imba_techies_focused_detonate"
 
-    local focused_ability_handler = caster:FindAbilityByName(focused_ability)
-    if focused_ability_handler then
-        focused_ability_handler:SetLevel(1)
+    if caster:HasAbility(focused_ability) then
+        local focused_ability_handler = caster:FindAbilityByName(focused_ability)
+        if focused_ability_handler then
+            focused_ability_handler:SetLevel(1)
+        end
     end
 end
 
@@ -1647,7 +1648,7 @@ function imba_techies_remote_mine:OnAbilityPhaseStart()
     local particle_plant = "particles/hero/techies/techies_remote_mine_plant.vpcf"
 
     -- Play toss sound
-    EmitSoundOn(sound_toss, caster)
+    EmitSoundOn(sound_toss, caster)    
 
     -- Add particle effect
     local particle_plant_fx = ParticleManager:CreateParticle(particle_plant, PATTACH_CUSTOMORIGIN_FOLLOW, caster)
@@ -1666,20 +1667,18 @@ function imba_techies_remote_mine:OnSpellStart()
     local target_point = self:GetCursorPosition()
     local cast_response = {"techies_tech_remotemines_03", "techies_tech_remotemines_04", "techies_tech_remotemines_05", "techies_tech_remotemines_07", "techies_tech_remotemines_08", "techies_tech_remotemines_09", "techies_tech_remotemines_13", "techies_tech_remotemines_14", "techies_tech_remotemines_15", "techies_tech_remotemines_17", "techies_tech_remotemines_18", "techies_tech_remotemines_19", "techies_tech_remotemines_20", "techies_tech_remotemines_25", "techies_tech_remotemines_26", "techies_tech_remotemines_27", "techies_tech_remotemines_30", "techies_tech_remotemines_02", "techies_tech_remotemines_10", "techies_tech_remotemines_11", "techies_tech_remotemines_16", "techies_tech_remotemines_21", "techies_tech_remotemines_22", "techies_tech_remotemines_23", "techies_tech_remotemines_28", "techies_tech_remotemines_29"}
     local rare_cast_response = "techies_tech_remotemines_01"
-    local sound_cast = "Hero_Techies.RemoteMine.Plant"
+    local sound_cast = "Hero_Techies.RemoteMine.Plant"        
     local mine_ability = "imba_techies_remote_mine_pinpoint_detonation"
 
     -- Ability specials
-    local mine_duration = ability:GetSpecialValueFor("mine_duration")
+    local mine_duration = ability:GetSpecialValueFor("mine_duration")    
 
     -- Roll for rare cast response
-    local sound
     if RollPercentage(1) then
-        sound = rare_cast_response
+        EmitSoundOn(rare_cast_response, caster)
     else
-        sound = cast_response[math.random(1, #cast_response)]
+        EmitSoundOn(cast_response[math.random(1, #cast_response)], caster)
     end
-    EmitSoundOn(sound, caster)
 
     -- Play cast sound
     EmitSoundOn(sound_cast, caster)
@@ -1692,9 +1691,11 @@ function imba_techies_remote_mine:OnSpellStart()
     mine:SetControllableByPlayer(playerID, true)
 
     -- Set the mine's ability to be the same level as the planting ability
-    local mine_ability_handler = mine:FindAbilityByName(mine_ability)
-    if mine_ability_handler then
-        mine_ability_handler:SetLevel(ability:GetLevel())
+    if mine:HasAbility(mine_ability) then
+        local mine_ability_handler = mine:FindAbilityByName(mine_ability)
+        if mine_ability_handler then
+            mine_ability_handler:SetLevel(ability:GetLevel())
+        end
     end
 
     -- Set the mine's owner to be the caster
@@ -1735,8 +1736,8 @@ end
 function imba_techies_remote_mine_pinpoint_detonation:OnSpellStart()
     -- Ability properties
     local caster = self:GetCaster()
-    local ability = self
-    local owner = caster:GetOwner()
+    local ability = self  
+    local owner = caster:GetOwner()  
     local sound_activate = "Hero_Techies.RemoteMine.Activate"
     local sound_detonate = "Hero_Techies.RemoteMine.Detonate"
     local particle_explosion = "particles/units/heroes/hero_techies/techies_remote_mines_detonate.vpcf"
@@ -1778,9 +1779,11 @@ function imba_techies_remote_mine_pinpoint_detonation:OnSpellStart()
 
         -- Fetch stacks of Inflammable
         local stacks = 0
-        local modifier_inflammable_handler = caster:FindModifierByName(modifier_inflammable)
-        if modifier_inflammable_handler then
-            stacks = modifier_inflammable_handler:GetStackCount()
+        if caster:HasModifier(modifier_inflammable) then
+            local modifier_inflammable_handler = caster:FindModifierByName(modifier_inflammable)
+            if modifier_inflammable_handler then
+                stacks = modifier_inflammable_handler:GetStackCount()
+            end
         end
 
         -- Increase radius and damage by current Inflammable stacks
@@ -1802,15 +1805,22 @@ function imba_techies_remote_mine_pinpoint_detonation:OnSpellStart()
 
             -- Deal damage to enemies
             local damageTable = {victim = enemy,
-                                 attacker = caster,
+                                 attacker = caster, 
                                  damage = damage,
                                  damage_type = DAMAGE_TYPE_MAGICAL,
                                  ability = ability
                                  }
 
-            ApplyDamage(damageTable)
+            ApplyDamage(damageTable)            
 
-            RefreshElectroCharge(enemy)
+            -- If the enemy has Electrocharge (from Stasis Trap), refresh it and add a stack
+            if enemy:HasModifier(modifier_electrocharge) then
+                local modifier_electrocharge_handler = enemy:FindModifierByName(modifier_electrocharge)
+                if modifier_electrocharge_handler then
+                    modifier_electrocharge_handler:IncrementStackCount()
+                    modifier_electrocharge_handler:ForceRefresh()
+                end
+            end
         end
 
         -- Find remote mines in explosion range
@@ -1823,26 +1833,25 @@ function imba_techies_remote_mine_pinpoint_detonation:OnSpellStart()
                                         DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
                                         FIND_ANY_ORDER,
                                         false)
-
+        
         for _,mine in pairs(mines) do
+            -- If a mine doesn't inflammable yet, give it to it
             if mine:GetUnitName() == "npc_imba_techies_remote_mine" then
-
-                local modifier_inflammable_handler = mine:FindModifierByName(modifier_inflammable)
-                if not modifier_inflammable_handler then
-                    -- If a mine doesn't inflammable yet, give it to it
-                    modifier_inflammable_handler = mine:AddNewModifier(caster, ability, modifier_inflammable, {duration = inflammable_duration})
+                if not mine:HasModifier(modifier_inflammable) then
+                    mine:AddNewModifier(caster, ability, modifier_inflammable, {duration = inflammable_duration})
                 end
 
                 -- Grant them a stack of Inflammable
+                local modifier_inflammable_handler = mine:FindModifierByName(modifier_inflammable)
                 if modifier_inflammable_handler then
                     modifier_inflammable_handler:IncrementStackCount()
                     modifier_inflammable_handler:ForceRefresh()
-                end
+                end                
             end
-        end
+        end        
 
         -- Kill self
-        caster:ForceKill(true)
+        caster:Kill(ability, caster)
     end)
 end
 
@@ -1851,14 +1860,15 @@ modifier_imba_remote_mine = modifier_imba_remote_mine or class({})
 
 
 function modifier_imba_remote_mine:OnCreated()
-    local caster = self:GetCaster()
-    local casterAbsOrigin = caster:GetAbsOrigin()
-    local particle_mine = "particles/units/heroes/hero_techies/techies_remote_mine.vpcf"
+    -- Ability properties
+    self.caster = self:GetCaster()
+    self.ability = self:GetAbility()
+    self.particle_mine = "particles/units/heroes/hero_techies/techies_remote_mine.vpcf"
 
     -- Play particle effect
-    local particle_mine_fx = ParticleManager:CreateParticle(particle_mine, PATTACH_ABSORIGIN, caster)
-    ParticleManager:SetParticleControl(particle_mine_fx, 0, casterAbsOrigin)
-    ParticleManager:SetParticleControl(particle_mine_fx, 3, casterAbsOrigin)
+    local particle_mine_fx = ParticleManager:CreateParticle(self.particle_mine, PATTACH_ABSORIGIN, self.caster)
+    ParticleManager:SetParticleControl(particle_mine_fx, 0, self.caster:GetAbsOrigin())
+    ParticleManager:SetParticleControl(particle_mine_fx, 3, self.caster:GetAbsOrigin())
     ParticleManager:ReleaseParticleIndex(particle_mine_fx)
 end
 
@@ -1877,12 +1887,16 @@ end
 modifier_imba_remote_mine_inflammable = modifier_imba_remote_mine_inflammable or class({})
 
 function modifier_imba_remote_mine_inflammable:OnCreated()
+    -- Ability properties
+    self.caster = self:GetCaster()
+    self.ability = self:GetAbility()
+
     -- Ability specials
-    self.inflammable_max_charges = self:GetAbility():GetSpecialValueFor("inflammable_max_charges")
+    self.inflammable_max_charges = self.ability:GetSpecialValueFor("inflammable_max_charges")
 end
 
 function modifier_imba_remote_mine_inflammable:GetTexture()
-    return "techies_remote_mines_self_detonate"
+    return "techies_remote_mines_self_detonate" 
 end
 
 function modifier_imba_remote_mine_inflammable:IsHidden() return false end
@@ -1927,7 +1941,7 @@ end
 function imba_techies_focused_detonate:GetAOERadius()
     local ability = self
 
-    local radius = ability:GetSpecialValueFor("radius")
+    local radius = ability:GetSpecialValueFor("radius")    
     return radius
 end
 
@@ -1935,7 +1949,7 @@ function imba_techies_focused_detonate:OnSpellStart()
     -- Ability properties
     local caster = self:GetCaster()
     local ability = self
-    local target_point = self:GetCursorPosition()
+    local target_point = self:GetCursorPosition()    
     local detonate_ability = "imba_techies_remote_mine_pinpoint_detonation"
 
     -- Ability specials
@@ -1953,14 +1967,16 @@ function imba_techies_focused_detonate:OnSpellStart()
                                            false)
 
     -- Iterate every mine every game tick
-    for i = 1, #remote_mines do
+    for i = 1, #remote_mines do        
         Timers:CreateTimer(FrameTime()*(i-1), function()
 
             -- Find their Pinpoint Detonate spell and force them to cast it
-            local detonate_ability_handler = remote_mines[i]:FindAbilityByName(detonate_ability)
-            if detonate_ability_handler then --detonate only if remote_mines has the ability
-                detonate_ability_handler:OnSpellStart()
-            end
+            if remote_mines[i]:HasAbility(detonate_ability) then
+                local detonate_ability_handler = remote_mines[i]:FindAbilityByName(detonate_ability)
+                if detonate_ability_handler then
+                    detonate_ability_handler:OnSpellStart()
+                end
+            end            
         end)
     end
 end
@@ -2042,7 +2058,7 @@ function imba_techies_minefield_sign:GetAOERadius()
 end
 
 function imba_techies_minefield_sign:OnUpgrade()
-    local ability = self
+    local ability = self    
 
     if not ability:GetAutoCastState() then
         ability:ToggleAutoCast()
@@ -2055,10 +2071,10 @@ function imba_techies_minefield_sign:OnSpellStart()
     local ability = self
     local target_point = self:GetCursorPosition()
     local sound_cast = "Hero_Techies.Sign"
-    local modifier_sign = "modifier_imba_minefield_sign_aura"
+    local modifier_sign = "modifier_imba_minefield_sign_aura"   
 
     -- Play cast sound
-    EmitSoundOn(sound_cast, caster)
+    EmitSoundOn(modifier_sign, caster)
 
     -- If there is already a sign assigned to this ability, destroy it
     if self.assigned_sign then
@@ -2072,7 +2088,7 @@ function imba_techies_minefield_sign:OnSpellStart()
     -- Assign it to the ability
     self.assigned_sign = sign
 
-    -- Assign the sign aura modifier to it
+    -- Assign the sign aura modifier to it    
     sign:AddNewModifier(caster, ability, modifier_sign, {})
 end
 
@@ -2081,7 +2097,7 @@ end
 modifier_imba_minefield_sign_aura = modifier_imba_minefield_sign_aura or class({})
 
 function modifier_imba_minefield_sign_aura:OnCreated()
-    -- Ability properties
+    -- Ability proprties
     self.caster = self:GetCaster()
     self.ability = self:GetAbility()
 
@@ -2104,8 +2120,7 @@ end
 
 function modifier_imba_minefield_sign_aura:GetAuraEntityReject(target)
     -- Only apply on mines
-    local targetUnitName = target:GetUnitName()
-    if targetUnitName == "npc_imba_techies_proximity_mine" or targetUnitName == "npc_imba_techies_proximity_mine_big_boom" or targetUnitName == "npc_imba_techies_stasis_trap" or targetUnitName == "npc_imba_techies_remote_mine" then
+    if target:GetUnitName() == "npc_imba_techies_proximity_mine" or target:GetUnitName() == "npc_imba_techies_proximity_mine_big_boom" or target:GetUnitName() == "npc_imba_techies_stasis_trap" or target:GetUnitName() == "npc_imba_techies_remote_mine" then
         return false
     end
 
@@ -2138,7 +2153,11 @@ end
 function modifier_imba_minefield_sign_aura:IsAura()
     if IsServer() then
         -- If the spell is toggled on, aura is emitted from the sign
-        return self.ability:GetAutoCastState()
+        if self.ability:GetAutoCastState() then
+            return true
+        else
+            return false
+        end
     end
 end
 
@@ -2154,29 +2173,31 @@ end
 
 function modifier_imba_minefield_sign_detection:OnDestroy()
     if IsServer() then
-        local parent = self:GetParent()
+        self.parent = self:GetParent()
+        self.detonate_ability = "imba_techies_remote_mine_pinpoint_detonation"
 
         -- If it is a Remote Mine, wait a game tick, check if the mine is still alive, and scan for nearby enemies
         Timers:CreateTimer(FrameTime(), function()
+            if self.parent:GetUnitName() == "npc_imba_techies_remote_mine" then
+                if self.parent:IsAlive() then
+                    if self.parent:HasAbility(self.detonate_ability) then
+                        local detonate_ability_handler = self.parent:FindAbilityByName(self.detonate_ability)
+                        if detonate_ability_handler then
+                            local radius = detonate_ability_handler:GetSpecialValueFor("radius")                            
 
-            if parent:GetUnitName() == "npc_imba_techies_remote_mine" and parent:IsAlive() then
-
-                local detonate_ability = "imba_techies_remote_mine_pinpoint_detonation"
-                local detonate_ability_handler = parent:FindAbilityByName(detonate_ability)
-                if detonate_ability_handler then --detonate only if parent has the ability
-                    local radius = detonate_ability_handler:GetSpecialValueFor("radius")
-
-                    local enemies = FindUnitsInRadius(parent:GetTeamNumber(),
-                                                        parent:GetAbsOrigin(),
-                                                        nil,
-                                                        radius,
-                                                        DOTA_UNIT_TARGET_TEAM_ENEMY,
-                                                        DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-                                                        DOTA_UNIT_TARGET_FLAG_NONE,
-                                                        FIND_ANY_ORDER,
-                                                        false)
-                    if #enemies > 0 then
-                        detonate_ability_handler:OnSpellStart()
+                            local enemies = FindUnitsInRadius(self.parent:GetTeamNumber(),
+                                                              self.parent:GetAbsOrigin(),
+                                                              nil,
+                                                              radius,
+                                                              DOTA_UNIT_TARGET_TEAM_ENEMY,
+                                                              DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+                                                              DOTA_UNIT_TARGET_FLAG_NONE,
+                                                              FIND_ANY_ORDER,
+                                                              false)
+                            if #enemies > 0 then
+                                detonate_ability_handler:OnSpellStart()
+                            end
+                        end
                     end
                 end
             end

@@ -132,6 +132,7 @@ function modifier_imba_pipe_aura:OnCreated( params )
 	self.bonus_health_regen = self:GetAbility():GetSpecialValueFor("aura_bonus_health_regen")
 	self.bonus_magic_resist = self:GetAbility():GetSpecialValueFor("aura_bonus_magic_resist")
 	self.aura_tenacity_pct = self:GetAbility():GetSpecialValueFor("aura_tenacity_pct")
+	self.active_tenacity_pct = self:GetAbility():GetSpecialValueFor("active_tenacity_pct")
 end
 
 function modifier_imba_pipe_aura:DeclareFunctions()
@@ -151,6 +152,11 @@ function modifier_imba_pipe_aura:GetModifierMagicalResistanceBonus()
 end
 
 function modifier_imba_pipe_aura:GetCustomTenacity()
+	-- If the parent has the active bonus, tenacity bonus is increased
+	if self.parent:HasModifier("modifier_imba_pipe_active_bonus") then
+		return self.active_tenacity_pct
+	end
+
 	return self.aura_tenacity_pct
 end
 
@@ -170,7 +176,6 @@ function modifier_imba_pipe_active_bonus:OnCreated( params )
 	self.parent = self:GetParent()	
 
 	self.unreducable_magic_resist = self:GetAbility():GetSpecialValueFor("unreducable_magic_resist")
-	self.active_tenacity_pct = self:GetAbility():GetSpecialValueFor("active_tenacity_pct")
 	self.unreducable_magic_resist = self.unreducable_magic_resist / 100
 	self:StartIntervalThink(0.1)	
 end
@@ -207,8 +212,4 @@ end
 
 function modifier_imba_pipe_active_bonus:GetModifierMagicalResistanceBonus()
 	return self.magic_resist_compensation
-end
-
-function modifier_imba_pipe_active_bonus:GetCustomTenacity()
-	return self.active_tenacity_pct
 end

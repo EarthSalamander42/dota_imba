@@ -48,7 +48,7 @@
 						</DropDown>
 					</Panel>
 
-					<Panel id="ExpOptionsPanel" class="GameOptionsSubPanel" onmouseover="UIShowTextTooltip( imba_gamemode_settings_exp_multiplier_tooltip )" onmouseout="UIHideTextTooltip()">
+					<Panel id="ExpPanel" class="GameOptionsSubPanel" onmouseover="UIShowTextTooltip( imba_gamemode_settings_exp_multiplier_tooltip )" onmouseout="UIHideTextTooltip()">
 						<Label id="ExpLabel" class="GameOptionsLabel" text="#imba_gamemode_settings_exp_multiplier" />
 						<DropDown id="ExpOptionsDropdown" class="GameOptionsDropdown">
 							<Label text="#imba_gamemode_settings_power_1" id="ExpOption1"/>
@@ -88,7 +88,7 @@
 						</DropDown>
 					</Panel>
 
-                    <Panel id="HeroPickRulePanel" class="GameOptionsLongSubPanel" onmouseover="UIShowTextTooltip( imba_gamemode_settings_hero_pick_rule_tooltip )" onmouseout="UIHideTextTooltip()">
+                    <Panel class="GameOptionsLongSubPanel" onmouseover="UIShowTextTooltip( imba_gamemode_settings_hero_pick_rule_tooltip )" onmouseout="UIHideTextTooltip()">
 						<Label class="GameOptionsLabel" text="#imba_gamemode_settings_hero_pick_rule" />
 						<DropDown id="HeroPickRuleDropdown" class="GameOptionsDropdown">
 							<Label text="#imba_gamemode_settings_hero_pick_all_unique" id="HeroPickRuleOption1"/>

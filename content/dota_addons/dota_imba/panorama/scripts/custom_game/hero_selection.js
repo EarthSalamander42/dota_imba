@@ -353,7 +353,9 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 		var parent_panel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
 		var map_info = Game.GetMapInfo();
 
-		if (map_info.map_display_name == "imba_arena") {
+		if (map_info.map_display_name == "imba_random_omg") {
+			$('#GameModeSelectText').text = $.Localize( '#imba_gamemode_name_random_omg' );
+		} else if (map_info.map_display_name == "imba_arena") {
 			$('#GameModeSelectText').text = $.Localize( '#imba_gamemode_name_arena_mode' );
 		}
 
