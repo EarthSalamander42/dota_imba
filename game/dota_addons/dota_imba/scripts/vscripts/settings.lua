@@ -63,8 +63,8 @@ FIXED_RESPAWN_TIME = -1						-- What time should we use for a fixed respawn time
 FOUNTAIN_CONSTANT_MANA_REGEN = 14			-- What should we use for the constant fountain mana regen?  Use -1 to keep the default dota behavior.
 FOUNTAIN_PERCENTAGE_MANA_REGEN = 6			-- What should we use for the percentage fountain mana regen?  Use -1 to keep the default dota behavior.
 FOUNTAIN_PERCENTAGE_HEALTH_REGEN = 6		-- What should we use for the percentage fountain health regen?  Use -1 to keep the default dota behavior.
-MAXIMUM_ATTACK_SPEED = 10000				-- What should we use for the maximum attack speed?
-MINIMUM_ATTACK_SPEED = 10					-- What should we use for the minimum attack speed?
+MAXIMUM_ATTACK_SPEED = 800					-- What should we use for the maximum attack speed?
+MINIMUM_ATTACK_SPEED = 0					-- What should we use for the minimum attack speed?
 DOTA_MAX_PLAYERS = 20						-- Maximum amount of players allowed in a game
 
 -------------------------------------------------------------------------------------------------
