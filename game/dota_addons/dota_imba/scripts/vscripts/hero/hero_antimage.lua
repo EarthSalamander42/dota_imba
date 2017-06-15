@@ -313,6 +313,9 @@ local function SpellReflect(parent, params)
 	local exception_spell = 
 	{		
 		["rubick_spell_steal"] = true,
+		["imba_alchemist_greevils_greed"] = true,
+		["imba_alchemist_unstable_concoction"] = true,
+		["imba_disruptor_glimpse"] = true,		
 	}
 		
 	local reflected_spell_name = params.ability:GetAbilityName()
@@ -351,7 +354,7 @@ local function SpellReflect(parent, params)
 			-- Modifier counter, and add it into the old-spell list
 			ability:SetRefCountsModifiers(true)
 			table.insert(parent.tOldSpells, ability)
-		end
+		end		
 			
 		ability:SetLevel(params.ability:GetLevel())
 		-- Set target & fire spell

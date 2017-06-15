@@ -1123,9 +1123,8 @@ function modifier_imba_riki_tricks_of_the_trade_secondary:IsHidden() return true
 function modifier_imba_riki_tricks_of_the_trade_secondary:OnCreated()
 	if IsServer() then
 		local parent = self:GetParent()
-		local aps = parent:GetAttacksPerSecond()
-		local multiplier = self:GetAbility():GetSpecialValueFor("scepter_attack_speed_mult")
-		self:StartIntervalThink(1/aps/multiplier)
+		local aps = parent:GetAttacksPerSecond()				
+		self:StartIntervalThink(1/aps)
 	end
 end
 
@@ -1164,10 +1163,8 @@ function modifier_imba_riki_tricks_of_the_trade_secondary:OnIntervalThink()
 				end
 
 				local caster = self:GetParent()
-				local aps = caster:GetAttacksPerSecond()
-				local multiplier = self:GetAbility():GetSpecialValueFor("scepter_attack_speed_mult")
-				self:StartIntervalThink(1/aps/multiplier)
-				
+				local aps = caster:GetAttacksPerSecond()				
+				self:StartIntervalThink(1/aps)				
 				return
 			end
 		end

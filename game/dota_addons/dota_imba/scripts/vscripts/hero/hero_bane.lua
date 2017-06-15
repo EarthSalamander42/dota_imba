@@ -236,6 +236,7 @@ end
 -- When channel is finished or interrupted iterate through table and destroy original modifier. Destroy will trigger OnDestroy() for the modifier, and determine eligibility for propogation
 function imba_bane_fiends_grip:OnChannelFinish(bInterrupted) 
 	if not IsServer() then return end  
+	if not self.fiendgriptable then return end
 	for k,v in pairs(self.fiendgriptable) do
 		-- Doing it this way prevents a runtime error in case some not accounted for situations occur.
 		if ((self.fiendgriptable[k]:HasModifier("modifier_imba_fiends_grip_handler")) and self.fiendgriptable[k]:FindModifierByName("modifier_imba_fiends_grip_handler").propogated == 0) then
