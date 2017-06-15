@@ -226,6 +226,7 @@ elseif GetMapName() == "imba_random_omg" then
 	IMBA_ABILITY_MODE_RANDOM_OMG = true
 elseif GetMapName() == "imba_custom" then
 	IMBA_PICK_MODE_ALL_PICK = true
+	IMBA_PLAYERS_ON_GAME = 20
 elseif GetMapName() == "imba_10v10" then
 	IMBA_PICK_MODE_ALL_PICK = true
 	IMBA_PLAYERS_ON_GAME = 20
