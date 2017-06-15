@@ -699,7 +699,7 @@ end
 if modifier_imba_dazzle_weave_debuff == nil then modifier_imba_dazzle_weave_debuff = class({}) end
 function modifier_imba_dazzle_weave_debuff:IsPurgable() return false end
 function modifier_imba_dazzle_weave_debuff:IsHidden() return false end
-function modifier_imba_dazzle_weave_debuff:IsDebuff() return false end
+function modifier_imba_dazzle_weave_debuff:IsDebuff() return true end
 function modifier_imba_dazzle_weave_debuff:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_dazzle_weave_debuff:DeclareFunctions()

@@ -181,7 +181,7 @@ function modifier_imba_thunder_strike_debuff:OnCreated()
 		self.strike_interval = self.strike_interval - self.caster:FindSpecificTalentValue("special_bonus_imba_disruptor_8", "value2")
 			
 		-- Strike immediately upon creation, depending on amount of enemies
-		ThunderStrikeBoltStart(self)					
+		ThunderStrikeBoltStart(self)			
 		-- Start interval striking
 		self:StartIntervalThink(self.strike_interval)
 	end
@@ -753,16 +753,18 @@ function imba_disruptor_kinetic_field:OnSpellStart()
 		EmitSoundOn(kinetic_field_sound, caster)
 
 		--formation particle
-		local formation_particle_fx = ParticleManager:CreateParticle(formation_particle, PATTACH_WORLDORIGIN, nil)
+		local formation_particle_fx = ParticleManager:CreateParticle(formation_particle, PATTACH_WORLDORIGIN, caster)
 		ParticleManager:SetParticleControl(formation_particle_fx, 0, target_point)
 		ParticleManager:SetParticleControl(formation_particle_fx, 1, Vector(field_radius, field_radius, 0))
-		ParticleManager:SetParticleControl(formation_particle_fx, 2, target_point)
+		ParticleManager:SetParticleControl(formation_particle_fx, 2, Vector(1, 0, 0))
+		ParticleManager:SetParticleControl(formation_particle_fx, 4, Vector(1, 1, 1))
+		ParticleManager:SetParticleControl(formation_particle_fx, 15, target_point)
 
 		--marker particle
-		local marker_particle = ParticleManager:CreateParticle(formation_particle_marker, PATTACH_WORLDORIGIN, nil)
+		local marker_particle = ParticleManager:CreateParticle(formation_particle_marker, PATTACH_WORLDORIGIN, caster)
 		ParticleManager:SetParticleControl(marker_particle, 0, target_point)
 		ParticleManager:SetParticleControl(marker_particle, 1, Vector(field_radius, field_radius, 0))
-		ParticleManager:SetParticleControl(marker_particle, 2, target_point)
+		ParticleManager:SetParticleControl(marker_particle, 2, Vector(1, 0, 0))
 		-- Wait for formation to finish setting up
 		Timers:CreateTimer(formation_delay, function()
 			-- Apply thinker modifier on target location
@@ -789,22 +791,22 @@ function modifier_imba_kinetic_field:OnCreated(keys)
 		--fuck you vectors
 		self.target_point = Vector(keys.target_point_x, keys.target_point_y, keys.target_point_z)
 		local vision_aoe = self.ability:GetSpecialValueFor("vision_aoe")
-		local duration = self.ability:GetSpecialValueFor("duration")
+		self.duration = self.ability:GetSpecialValueFor("duration")
 		local particle_field = "particles/units/heroes/hero_disruptor/disruptor_kineticfield.vpcf" -- the field itself
 
 		self.sound_cast = "Hero_Disruptor.KineticField"
 		EmitSoundOn(self.sound_cast, self.caster)
 
-		AddFOWViewer(self.caster:GetTeamNumber(), self.target:GetAbsOrigin(), vision_aoe, duration, false)
-		-- ParticleManager:DestroyParticle(keys.formation_particle_fx, true)
-		-- ParticleManager:ReleaseParticleIndex(keys.formation_particle_fx)
-		-- ParticleManager:DestroyParticle(keys.marker_particle, true)
-		-- ParticleManager:ReleaseParticleIndex(keys.marker_particle)
+		AddFOWViewer(self.caster:GetTeamNumber(), self.target:GetAbsOrigin(), vision_aoe, self.duration, false)
+		ParticleManager:DestroyParticle(keys.formation_particle_fx, true)
+		ParticleManager:ReleaseParticleIndex(keys.formation_particle_fx)
+		ParticleManager:DestroyParticle(keys.marker_particle, true)
+		ParticleManager:ReleaseParticleIndex(keys.marker_particle)
 		
 		self.field_particle = ParticleManager:CreateParticle(particle_field, PATTACH_WORLDORIGIN, self.caster)
-		ParticleManager:SetParticleControl(self.field_particle, 0, self.target:GetAbsOrigin())
-		ParticleManager:SetParticleControl(self.field_particle, 1, Vector(self.field_radius, self.field_radius, 0))
-		ParticleManager:SetParticleControl(self.field_particle, 2, self.target:GetAbsOrigin())
+		ParticleManager:SetParticleControl(self.field_particle, 0, self.target_point)
+		ParticleManager:SetParticleControl(self.field_particle, 1, Vector(self.field_radius, 1, 1))
+		ParticleManager:SetParticleControl(self.field_particle, 2, Vector(self.duration, 0, 0))
 		self:StartIntervalThink(0.1)
 	end
 end
@@ -831,7 +833,7 @@ function modifier_imba_kinetic_field:OnIntervalThink()
 									FIND_ANY_ORDER,
 									false)
 	for _,enemy in pairs(enemies_in_field) do
-		enemy:AddNewModifier(self.caster, self.ability, "modifier_imba_kinetic_field_check_position", {target_point_x = self.target_point.x, target_point_y = self.target_point.y, target_point_z = self.target_point.z})
+		enemy:AddNewModifier(self.caster, self.ability, "modifier_imba_kinetic_field_check_position", {duration = self:GetRemainingTime(), target_point_x = self.target_point.x, target_point_y = self.target_point.y, target_point_z = self.target_point.z})
 	end
 end
 
@@ -843,9 +845,12 @@ modifier_imba_kinetic_field_check_position = modifier_imba_kinetic_field_check_p
 
 function modifier_imba_kinetic_field_check_position:IsHidden()	return true end
 function modifier_imba_kinetic_field_check_position:OnCreated(keys)
-	--fuck you vectors
+	-- Fuck you vectors
 	self.target_point = Vector(keys.target_point_x, keys.target_point_y, keys.target_point_z)
+
+	self.stormbearer_stack_amount = self:GetAbility():GetSpecialValueFor("stormbearer_stack_amount")
 end
+
 function modifier_imba_kinetic_field_check_position:DeclareFunctions()
   local funcs = { MODIFIER_EVENT_ON_UNIT_MOVED }
   return funcs
@@ -893,20 +898,24 @@ function modifier_imba_kinetic_field_check_position:kineticize(caster, target, a
 	angle_from_center = angle_from_center + 180.0
 	
 	-- Checks if the target is inside the field
-	if distance_from_border < 0 and math.abs(distance_from_border) <= 40 then
+	local give_stormbearer_stacks = false
+	if distance_from_border < 15 and math.abs(distance_from_border) <= 40 then
 		target:AddNewModifier(caster, ability, modifier_barrier, {})
 		target:AddNewModifier(caster, ability, "modifier_imba_kinetic_field_pull", {duration = 0.5, target_point_x = self.target_point.x, target_point_y = self.target_point.y, target_point_z = self.target_point.z})
+		give_stormbearer_stacks = true
 
 	-- Checks if the target is outside the field,
 	elseif distance_from_border > 0 and math.abs(distance_from_border) <= 40 then
 		target:AddNewModifier(caster, ability, modifier_barrier, {})
 
-		--check if caster has scepter
+		-- Check if caster has #1 talent, sucking people in 
 		if caster:HasTalent("special_bonus_imba_disruptor_1") then
 			target:AddNewModifier(caster, ability, "modifier_imba_kinetic_field_pull", {duration = 0.5, target_point_x = self.target_point.x, target_point_y = self.target_point.y, target_point_z = self.target_point.z})
 		else
 			target:AddNewModifier(caster, ability, "modifier_imba_kinetic_field_knockback", {duration = 0.5, target_point_x = self.target_point.x, target_point_y = self.target_point.y, target_point_z = self.target_point.z})
 		end
+
+		give_stormbearer_stacks = true
 	else
 		-- Removes debuffs, so the unit can move freely
 		if target:HasModifier(modifier_barrier) then
@@ -914,14 +923,23 @@ function modifier_imba_kinetic_field_check_position:kineticize(caster, target, a
 		end
 		self:Destroy()
 	end
+
+	-- If Kinetic Field was triggered and we should give Stormbearer stacks to Disruptor, do so
+	if give_stormbearer_stacks then
+		local stormbearer_handler = self:GetCaster():FindModifierByName("modifier_imba_stormbearer")
+		if stormbearer_handler then
+			stormbearer_handler:SetStackCount(stormbearer_handler:GetStackCount() + self.stormbearer_stack_amount)
+			stormbearer_handler:ForceRefresh()
+		end
+	end
 end
 
 function modifier_imba_kinetic_field_check_position:OnDestroy()
 	if IsServer() then
 		local target = self:GetParent()
-			if target:HasModifier("modifier_imba_kinetic_field_barrier") then
-				target:RemoveModifierByName("modifier_imba_kinetic_field_barrier")
-			end
+		if target:HasModifier("modifier_imba_kinetic_field_barrier") then
+			target:RemoveModifierByName("modifier_imba_kinetic_field_barrier")
+		end
 	end
 end
 
@@ -1000,6 +1018,7 @@ function modifier_imba_kinetic_field_knockback:OnCreated( keys )
 	if IsServer() then
 		self.target_point = Vector(keys.target_point_x, keys.target_point_y, keys.target_point_z)
 		self.parent = self:GetParent()
+		self.knock_distance = self:GetAbility():GetSpecialValueFor("knockback_distance")
 		self.frametime = FrameTime()
 		self:StartIntervalThink(self.frametime)	
 	end
@@ -1027,18 +1046,23 @@ function modifier_imba_kinetic_field_knockback:OnIntervalThink()
 		self:Destroy()
 		return nil
 	end
+
 	-- Horizontal motion
 	self:HorizontalMotion(self.parent, self.frametime)	
 end
 
 function modifier_imba_kinetic_field_knockback:HorizontalMotion()
-	if IsServer() then
-		local knock_distance = 25
+	if IsServer() then		
 		local direction = (self.parent:GetAbsOrigin() - self.target_point):Normalized()
-		local set_point = self.parent:GetAbsOrigin() + direction * knock_distance
-		self.parent:SetAbsOrigin(Vector(set_point.x, set_point.y, GetGroundPosition(set_point, self.parent).z))
-		self.parent:SetUnitOnClearGround()
-		GridNav:DestroyTreesAroundPoint(self.parent:GetAbsOrigin(), knock_distance, false)
+		local set_point = self.parent:GetAbsOrigin() + direction * self.knock_distance
+		self.parent:SetAbsOrigin(Vector(set_point.x, set_point.y, GetGroundPosition(set_point, self.parent).z))		
+		GridNav:DestroyTreesAroundPoint(self.parent:GetAbsOrigin(), 50, false)
+	end
+end
+
+function modifier_imba_kinetic_field_knockback:OnDestroy()
+	if IsServer() then		
+		self.parent:SetUnitOnClearGround()		
 	end
 end
 
@@ -1057,6 +1081,7 @@ function modifier_imba_kinetic_field_pull:OnCreated( keys )
 		self.parent = self:GetParent()
 		self.caster = self:GetCaster()
 		self.ability = self:GetAbility()
+		self.pull_distance = self:GetAbility():GetSpecialValueFor("knockback_distance")
 		self.frametime = FrameTime()
 		self:StartIntervalThink(self.frametime)	
 	end
@@ -1088,16 +1113,26 @@ function modifier_imba_kinetic_field_pull:OnIntervalThink()
 	self:HorizontalMotion(self.parent, self.frametime)	
 end
 
+function modifier_imba_kinetic_field_pull:CheckState()
+	local state = {[MODIFIER_STATE_ROOTED] = true}
+	return state
+end
+
 function modifier_imba_kinetic_field_pull:HorizontalMotion()
-	if IsServer() then
-		local pull_distance = 15
+	if IsServer() then		
 		local direction = (self.target_point - self.parent:GetAbsOrigin()):Normalized()
-		local set_point = self.parent:GetAbsOrigin() + direction * pull_distance
-		self.parent:SetAbsOrigin(Vector(set_point.x, set_point.y, GetGroundPosition(set_point, self.parent).z))
-		self.parent:SetUnitOnClearGround()
-		GridNav:DestroyTreesAroundPoint(self.parent:GetAbsOrigin(), pull_distance, false)
+		local set_point = self.parent:GetAbsOrigin() + direction * self.pull_distance
+		self.parent:SetAbsOrigin(Vector(set_point.x, set_point.y, GetGroundPosition(set_point, self.parent).z))				
+		GridNav:DestroyTreesAroundPoint(self.parent:GetAbsOrigin(), 125, false)
 	end
 end
+
+function modifier_imba_kinetic_field_pull:OnDestroy()
+	if IsServer() then		
+		self.parent:SetUnitOnClearGround()		
+	end
+end
+
 
 
 ---------------------------------------------------
@@ -1181,9 +1216,10 @@ function modifier_imba_static_storm:OnCreated(keys)
 		EmitSoundOn(self.sound_cast, self.caster)
 
 		self.particle_storm_fx = ParticleManager:CreateParticle(particle_storm, PATTACH_WORLDORIGIN, self.caster)
-		ParticleManager:SetParticleControl(self.particle_storm_fx, 0, self.target_point)
-		ParticleManager:SetParticleControl(self.particle_storm_fx, 1, Vector(self.radius, self.radius, 0))
-		ParticleManager:SetParticleControl(self.particle_storm_fx, 2, self.target_point)
+		ParticleManager:SetParticleControl(self.particle_storm_fx, 0,self.target_point)
+		ParticleManager:SetParticleControl(self.particle_storm_fx, 1, Vector(self.radius, 0, 0))
+		ParticleManager:SetParticleControl(self.particle_storm_fx, 2, Vector(self.duration, 0, 0))
+
 
 		-- consume Stormbearer stacks, increase initial damage of the spell
 		if self.caster:HasModifier(self.stormbearer_buff) then
