@@ -25,12 +25,6 @@
 						</Button>
 					</Panel>
 
-					<Panel id="TowerUpgradeOptionsPanel">
-						<ToggleButton id="AllRandomToggle" text="#imba_gamemode_name_all_random" class="GameOptionsToggle" onmouseover="UIShowTextTooltip( imba_gamemode_name_all_random_tooltip )" onmouseout="UIHideTextTooltip()"/>
-						<ToggleButton id="FranticToggle" text="#imba_gamemode_game_options_frantic" class="GameOptionsToggle" onmouseover="UIShowTextTooltip( imba_gamemode_game_options_frantic_tooltip )" onmouseout="UIHideTextTooltip()"/>
-						<ToggleButton id="TowerUpgradesToggle" text="#imba_gamemode_settings_tower_upgrades" class="GameOptionsToggle" onmouseover="UIShowTextTooltip( imba_gamemode_settings_tower_upgrades_tooltip )" onmouseout="UIHideTextTooltip()"/>
-					</Panel>
-
 					<Panel id="KillsToEndOptionsPanel" class="GameOptionsSubPanel" onmouseover="UIShowTextTooltip( imba_gamemode_settings_kills_to_end_tooltip )" onmouseout="UIHideTextTooltip()">
 						<Label id="KillsToEndOptionsLabel" class="GameOptionsLabel" text="#imba_gamemode_settings_kills_to_end" />
 						<DropDown id="KillsToEndOptionsDropdown" class="GameOptionsDropdown">
@@ -48,7 +42,7 @@
 						</DropDown>
 					</Panel>
 
-					<Panel id="ExpPanel" class="GameOptionsSubPanel" onmouseover="UIShowTextTooltip( imba_gamemode_settings_exp_multiplier_tooltip )" onmouseout="UIHideTextTooltip()">
+					<Panel id="ExpOptionsPanel" class="GameOptionsSubPanel" onmouseover="UIShowTextTooltip( imba_gamemode_settings_exp_multiplier_tooltip )" onmouseout="UIHideTextTooltip()">
 						<Label id="ExpLabel" class="GameOptionsLabel" text="#imba_gamemode_settings_exp_multiplier" />
 						<DropDown id="ExpOptionsDropdown" class="GameOptionsDropdown">
 							<Label text="#imba_gamemode_settings_power_1" id="ExpOption1"/>
@@ -88,13 +82,19 @@
 						</DropDown>
 					</Panel>
 
-                    <Panel class="GameOptionsLongSubPanel" onmouseover="UIShowTextTooltip( imba_gamemode_settings_hero_pick_rule_tooltip )" onmouseout="UIHideTextTooltip()">
+                    <Panel id="HeroPickRulePanel" class="GameOptionsLongSubPanel" onmouseover="UIShowTextTooltip( imba_gamemode_settings_hero_pick_rule_tooltip )" onmouseout="UIHideTextTooltip()">
 						<Label class="GameOptionsLabel" text="#imba_gamemode_settings_hero_pick_rule" />
 						<DropDown id="HeroPickRuleDropdown" class="GameOptionsDropdown">
 							<Label text="#imba_gamemode_settings_hero_pick_all_unique" id="HeroPickRuleOption1"/>
 							<Label text="#imba_gamemode_settings_hero_pick_team_unique" id="HeroPickRuleOption2"/>
                             <Label text="#imba_gamemode_settings_hero_pick_no_unique" id="HeroPickRuleOption3"/>
 						</DropDown>
+					</Panel>
+
+					<Panel id="TowerUpgradeOptionsPanel">
+						<ToggleButton id="AllRandomToggle" text="#imba_gamemode_name_all_random" class="GameOptionsToggle" onmouseover="UIShowTextTooltip( imba_gamemode_name_all_random_tooltip )" onmouseout="UIHideTextTooltip()"/>
+						<ToggleButton id="FranticToggle" text="#imba_gamemode_game_options_frantic" class="GameOptionsToggle" onmouseover="UIShowTextTooltip( imba_gamemode_game_options_frantic_tooltip )" onmouseout="UIHideTextTooltip()"/>
+						<ToggleButton id="TowerUpgradesToggle" text="#imba_gamemode_settings_tower_upgrades" class="GameOptionsToggle" onmouseover="UIShowTextTooltip( imba_gamemode_settings_tower_upgrades_tooltip )" onmouseout="UIHideTextTooltip()"/>
 					</Panel>
 
 					<Button id="ConfirmOptionsBtn" onactivate="SetGameOptions();" onmouseover="UIShowTextTooltip( imba_gamemode_settings_lock_options_tooltip )" onmouseout="UIHideTextTooltip()">
