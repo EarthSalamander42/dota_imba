@@ -161,6 +161,7 @@ function SwitchToHeroPreview( heroName ) {
 	$('#PostPickScreen').style.visibility = 'visible';
 	$('#RandomButtonContainer').style.visibility = 'collapse';
 	$('#RandomImbaButtonContainer').style.visibility = 'collapse';
+	$('#WelcomePanel').style.visibility = 'collapse';	
 }
 
 /* Select a hero, called when a player clicks a hero panel in the layout */
