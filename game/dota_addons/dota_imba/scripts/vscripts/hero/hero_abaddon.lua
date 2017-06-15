@@ -47,6 +47,11 @@ function imba_abaddon_mist_coil:GetIntrinsicModifierName()
     return "modifier_imba_mist_coil_passive"
 end
 
+function imba_abaddon_mist_coil:GetCastRange() 
+	return self:GetSpecialValueFor("cast_range")
+end
+function imba_abaddon_mist_coil:IsHiddenWhenStolen()	return false end
+
 function imba_abaddon_mist_coil:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
@@ -105,7 +110,7 @@ function imba_abaddon_mist_coil:OnProjectileHit( hTarget, vLocation )
 			local damage = self:GetLevelSpecialValueFor("damage", ability_level) + over_channel_increase
 			local damage_type = DAMAGE_TYPE_MAGICAL
 
-			-- Aplly damage + parsing if the ability killed the target
+			-- Apply damage + parsing if the ability killed the target
 			local dealt_damage = ApplyDamage({ victim = target, attacker = caster, damage = damage,	damage_type = damage_type })
 			if caster:HasModifier(self:GetIntrinsicModifierName()) then
 				caster:FindModifierByName(self:GetIntrinsicModifierName()).applied_damage = dealt_damage
@@ -120,7 +125,7 @@ function imba_abaddon_mist_coil:OnProjectileHit( hTarget, vLocation )
 			local debuff_duration = curse_of_avernus:GetSpecialValueFor("debuff_duration")
 
 			-- debuff_duration can be 0 if caster has ability but not learnt it yet
-			if debuff_duration > 0 then
+			if debuff_duration > 0 and not caster:PassivesDisabled() then
 				target:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff_slow", { duration = debuff_duration })
 			end
 
@@ -215,6 +220,8 @@ function imba_abaddon_aphotic_shield:GetCastRange(Location, Target)
 	return self:GetSpecialValueFor("cast_range") + self:GetCaster():FindTalentValue("special_bonus_imba_abaddon_1")
 end
 
+function imba_abaddon_aphotic_shield:IsHiddenWhenStolen()	return false end
+
 function imba_abaddon_aphotic_shield:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
@@ -255,7 +262,7 @@ modifier_imba_aphotic_shield_buff_block = modifier_imba_aphotic_shield_buff_bloc
 
 function modifier_imba_aphotic_shield_buff_block:DeclareFunctions()
 	local funcs = {
-		MODIFIER_EVENT_ON_TAKEDAMAGE
+		MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK
 	}
  
 	return funcs
@@ -298,11 +305,10 @@ function modifier_imba_aphotic_shield_buff_block:OnCreated()
 			self:AddParticle(over_channel_particle, false, false, -1, false, false)
 		end
 
-		self:StartIntervalThink( 0.03 )
 	end
 end
 
-function modifier_imba_aphotic_shield_buff_block:OnRemoved()
+function modifier_imba_aphotic_shield_buff_block:OnDestroy()
 	if IsServer() then
 		local target 				= self:GetParent()
 		local caster 				= self:GetCaster()
@@ -340,8 +346,9 @@ function modifier_imba_aphotic_shield_buff_block:OnRemoved()
 		-- debuff_duration can be 0 if caster has ability but has not learnt it yet
 		if debuff_duration > 0 then
 			for _,enemy in pairs(enemies) do
-				enemy:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff_slow", { duration = debuff_duration })
-
+				if not caster:PassivesDisabled() then
+					enemy:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff_slow", { duration = debuff_duration })
+				end
 				-- Show particle when hit
 				particle = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_hit.vpcf", PATTACH_POINT, enemy)
 				ParticleManager:SetParticleControlEnt(particle, 0, enemy, PATTACH_POINT, "attach_hitloc", enemy:GetAbsOrigin(), true)
@@ -353,50 +360,38 @@ function modifier_imba_aphotic_shield_buff_block:OnRemoved()
 	end
 end
 
-function modifier_imba_aphotic_shield_buff_block:OnTakeDamage(kv)
+
+--Block damage
+function modifier_imba_aphotic_shield_buff_block:GetModifierTotal_ConstantBlock(kv)
 	if IsServer() then
-		local target = self:GetParent()
-
-		-- Absorb damage taken by unit which has this buff
-		if target == kv.unit then
-			-- Avoid calculation when borrowed time is active
-			if target:HasModifier("modifier_imba_borrowed_time_buff_hot_caster") == false then
-				local damage = kv.damage
-				-- Avoid if damage is 0 (can happen when you cast shield on manta illusion and cast manta again. If you do not check this the manta illusion will not die)
-				if damage > 0 then
-					local shield_remaining = self.shield_remaining
-					local set_to_health
-
-					-- If the damage is bigger than what the shield can absorb, heal a portion
-					-- Heal can fail due to modifiers preventing heal, set unit's health instead
-					local damage_block_amount
-					if damage > shield_remaining then
-						damage_block_amount = shield_remaining
-						set_to_health = self.target_current_health - damage + shield_remaining
-					else
-						damage_block_amount = damage
-						set_to_health = self.target_current_health
-					end
-					-- Show effect of damage blocked
-					SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, target, damage_block_amount, nil)
-					
-					-- Note that we did not use GetHealth() here because it will ignore the health regen, which will sometimes cause health to decrease by 1
-					target:SetHealth(set_to_health)
-
-					self.shield_remaining = shield_remaining - damage
-					if self.shield_remaining <= 0 then
-						target:RemoveModifierByName("modifier_imba_aphotic_shield_buff_block")
-					end
-				end
+		local target 					= self:GetParent()
+		local original_shield_amount	= self.shield_remaining
+		local shield_hit_particle 		= "particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_hit.vpcf"
+		-- Avoid blocking when borrowed time is active						--No need for block when there is no damage
+		if not target:HasModifier("modifier_imba_borrowed_time_buff_hot_caster")  and kv.damage > 0 then
+		
+			--Reduce the amount of shield remaining
+			self.shield_remaining = self.shield_remaining - kv.damage 
+				
+			
+			--If there is enough shield to block everything, then block everything.
+			if kv.damage < original_shield_amount then
+				--Emit damage blocking effect
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, target, kv.damage, nil)
+				return kv.damage
+			--Else, reduce what you can and blow up the shield
+			else
+				--Emit damage block effect
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, target, original_shield_amount, nil)
+				self:Destroy()
+				return original_shield_amount
 			end
+			
 		end
 	end
-end
+	
+end 
 
-function modifier_imba_aphotic_shield_buff_block:OnIntervalThink()
-	-- Get current health per frame
-	self.target_current_health = self:GetParent():GetHealth()
-end
 
 -----------------------------
 --     Curse Of Avernus    --
@@ -569,8 +564,6 @@ function modifier_imba_curse_of_avernus_debuff_slow:OnTakeDamage(kv)
 				-- Show heal animation on caster
 				local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, caster)
 				ParticleManager:ReleaseParticleIndex(healFX)
-				-- Show value healed
-				SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, heal_amount, nil)
 				-- Heal caster equal to a percentage of damage taken by unit affected by this debuff
 				caster:Heal(heal_amount, caster)
 
@@ -821,7 +814,7 @@ modifier_imba_borrowed_time_buff_hot_caster = modifier_imba_borrowed_time_buff_h
 
 function modifier_imba_borrowed_time_buff_hot_caster:DeclareFunctions()
 	local funcs = {
-		MODIFIER_EVENT_ON_TAKEDAMAGE
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE
 	}
  
 	return funcs
@@ -852,43 +845,29 @@ function modifier_imba_borrowed_time_buff_hot_caster:OnCreated()
 		-- Strong Dispel
 		target:Purge(false, true, false, true, false)
 
-		self:StartIntervalThink( FrameTime() )
 	end	
 end
 
-function modifier_imba_borrowed_time_buff_hot_caster:OnIntervalThink()
-	-- Get current health per frame
-	self.target_current_health = self:GetParent():GetHealth()
-end
 
-function modifier_imba_borrowed_time_buff_hot_caster:OnTakeDamage(kv)
+--Block damage
+
+function modifier_imba_borrowed_time_buff_hot_caster:GetModifierIncomingDamage_Percentage(kv)
 	if IsServer() then
-		-- Ignore damage and convert to healing
-		local target = self:GetParent()
+		-- Ability properties
+		local target 	= self:GetParent()
 
-		if target == kv.unit then
-			local damage = kv.damage
-
-			if damage > 0 then
-				-- Block incoming damage
-				SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, target, damage, nil)
-				-- If you use GetHealth() here, it will ignore the regen rate of abaddon
-				target:SetHealth(self.target_current_health)
-
-				-- Show borrowed time heal particle
-				local heal_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/abaddon_borrowed_time_heal.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
-				local target_vector = target:GetAbsOrigin()
-				ParticleManager:SetParticleControl(heal_particle, 0, target_vector)
-				ParticleManager:SetParticleControl(heal_particle, 1, target_vector)
-				ParticleManager:ReleaseParticleIndex(heal_particle)
-
-				-- Heal blocked damage
-				SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, damage, nil)
-				target:Heal(damage, target)
-			end
-		end
+		-- Show borrowed time heal particle
+		local heal_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/abaddon_borrowed_time_heal.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+		local target_vector = target:GetAbsOrigin()
+		ParticleManager:SetParticleControl(heal_particle, 0, target_vector)
+		ParticleManager:SetParticleControl(heal_particle, 1, target_vector)
+		ParticleManager:ReleaseParticleIndex(heal_particle)
+		
+			--  A heal to heal the damage,and -100% to prevent it,
+			target:Heal(kv.damage, target)
+			return -100
 	end
-end
+end 
 
 modifier_imba_borrowed_time_buff_hot_ally = modifier_imba_borrowed_time_buff_hot_ally or class({
 	IsHidden				= function(self) return false end,
@@ -898,7 +877,7 @@ modifier_imba_borrowed_time_buff_hot_ally = modifier_imba_borrowed_time_buff_hot
 
 function modifier_imba_borrowed_time_buff_hot_ally:DeclareFunctions()
 	local funcs = {
-		MODIFIER_EVENT_ON_TAKEDAMAGE
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE
 	}
  
 	return funcs
@@ -938,36 +917,26 @@ function modifier_imba_borrowed_time_buff_hot_ally:OnRemoved()
 	end
 end
 
-function modifier_imba_borrowed_time_buff_hot_ally:OnTakeDamage(kv)
+function modifier_imba_borrowed_time_buff_hot_ally:GetModifierIncomingDamage_Percentage(kv)
 	if IsServer() then
-		local target = self:GetParent()
-
-		-- Works for illusions as well
-		if target == kv.unit then
-			local damage = kv.damage
-
-			if damage > 0 then
-				local caster = self:GetCaster()
-				local ability = self:GetAbility()
-				local ability_level = ability:GetLevel()
-				local redirect = (ability:GetLevelSpecialValueFor("redirect", ability_level) / 100)
-				
-				local attacker = kv.attacker
-
-				-- Redirect damage to caster (which should heal when caster takes damage)
-				local redirect_damage = damage * redirect
-
-				-- Setting health instead of healing target as healing will be blocked by heal prevention debuffs
-				-- NOTE: this ignores regen rate of target, however if we have to create a 0.03 for every ally, it will cause unwanted lag.
-				target:SetHealth(target:GetHealth() + redirect_damage)
-				-- Redirect as pure damage else it will be reduced again by armour/magic resistance
-				ApplyDamage({ victim = caster, attacker = attacker, damage = redirect_damage, damage_type = DAMAGE_TYPE_PURE })
-			end
-		end
+		-- Ability properties
+		local caster 		=	self:GetCaster()
+		local target 		= 	self:GetParent()
+		local ability 		=	self:GetAbility()
+		local ability_level	=	ability:GetLevel()
+		local attacker 		=	kv.attacker
+		local redirect_pct	=	(ability:GetLevelSpecialValueFor("redirect", ability_level))
+		local redirect_damage =	kv.damage * (redirect_pct/100)
 		
+		--Apply the damage to Abaddon.
+		ApplyDamage({ victim = caster, attacker = attacker, damage = redirect_damage, damage_type = DAMAGE_TYPE_PURE })
+		
+		--Block the amount of damage required.
+		return -(redirect_pct)
+
 	end
-	
 end
+
 -------------------------------------------
 for LinkedModifier, MotionController in pairs(LinkedModifiers) do
 	LinkLuaModifier(LinkedModifier, "hero/hero_abaddon", MotionController)
