@@ -25,6 +25,19 @@
 	}
 }
 
+@keyframes 'fade'
+{
+	0%
+	{
+		opacity: 0.0;
+	}
+
+	100%
+	{
+		opacity: 0.4;
+	}
+}
+
 #PickingScreen {
 	width: 100%;
 	height: 100%;
@@ -193,11 +206,12 @@
 	margin-top: 5px;
 	margin-bottom: 5px;
 	width: 75px;
-	height: 51px;
+	height: 48px;
 	horizontal-align: left;
-	background-position: center;
 	saturation: 0.6;
 	wash-color: #7090B060;
+	background-size: 100% 100%;
+	background-position: 0px 0px;
 }
 
 .AspectRatio16x10 .ClassNormalOption,
@@ -220,8 +234,8 @@
 	margin-right: 2.5px;
 	margin-top: 5px;
 	margin-bottom: 5px;
-	width: 57px;
-	height: 57px;
+	width: 56px;
+	height: 48px;
 	horizontal-align: left;
 	background-position: center;
 	saturation: 0.6;
@@ -297,12 +311,12 @@
 	horizontal-align: middle;
 	vertical-align: middle;
 	flow-children: right;
-	margin-right: 3%;
+	margin-right: 2%;
 }
 
 .AspectRatio4x3 #PickTimerPanel {
 	flow-children: down;
-	margin-right: 0%;
+	margin-right: 2%;
 }
 
 #PickTimer {
@@ -450,7 +464,27 @@
 	vertical-align: middle;
 	horizontal-align: middle;
 	flow-children: down;
-	width: 30%;
+	width: 33%;
+}
+
+#WelcomePanel {
+	vertical-align: middle;
+	horizontal-align: middle;
+	flow-children: down;
+	margin-top: 3%;
+	animation-name: fade;
+	animation-duration: 5.0s;
+	animation-timing-function: ease-out;
+	animation-direction: alternate;
+	animation-iteration-count: infinite;
+}
+
+#WelcomeText {
+	vertical-align: middle;
+	horizontal-align: middle;
+	font-size: 40px;
+	font-family: "Radiance";
+	color: #CE6722;
 }
 
 .AspectRatio4x3 #HeroDetailsPanel {
@@ -477,8 +511,8 @@
 */
 #PickedHeroImage {
 	horizontal-align: center;
-	width: 192px;
-	height: 108px;
+	width: 155px;
+	height: 92px;
 	border-radius: 20px;
 }
 
@@ -512,16 +546,20 @@
 
 /* 'Pick random hero' button
 =================================================================*/
-#RandomButtonContainer {
+#RandomButtonContainer,
+#RandomImbaButtonContainer
+{
 	margin-top: 0%;
-	margin-left: 0%; /* COOKIES: for reasons it is out of the screen, maybe fit-children issue, fix later */
+	margin-left: 2%;
 	width: fit-children;
 	height: fit-children;
 	flow-children: down;
 	horizontal-align: center;
 }
 
-#RandomPickBtn {
+#RandomPickBtn,
+#RandomImbaPickBtn
+{
 	width: 128px;
 	height: 72px;
 	border-radius: 4px;
@@ -532,16 +570,20 @@
 	background-image: url("file://{images}/custom_game/random_button.png");
 }
 
-#RandomPickBtn:hover {
+#RandomPickBtn:hover,
+#RandomImbaPickBtn:hover
+{
 	box-shadow: fill #FF7800FF -2px -2px 4px 4px;
 	saturation: 1.0;
 }
 
-#RandomPickBtnTxt {
+#RandomPickBtnTxt,
+#RandomImbaPickBtnTxt
+{
 	horizontal-align: center;
 	vertical-align: bottom;
 	color: #FFFFFF;
-	font-size: 30px;
+	font-size: 22px;
 	font-family: "Radiance";
 }
 

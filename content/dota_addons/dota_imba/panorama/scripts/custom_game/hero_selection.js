@@ -160,6 +160,7 @@ function SwitchToHeroPreview( heroName ) {
 	$('#PickList').style.visibility = 'collapse';
 	$('#PostPickScreen').style.visibility = 'visible';
 	$('#RandomButtonContainer').style.visibility = 'collapse';
+	$('#RandomImbaButtonContainer').style.visibility = 'collapse';
 }
 
 /* Select a hero, called when a player clicks a hero panel in the layout */
@@ -230,6 +231,7 @@ function PickHero() {
 			GameEvents.SendCustomGameEventToServer( "hero_selected", { HeroName: selectedHero, HasRandomed: false} );
 			//Hide the random button
 			$("#RandomButtonContainer").style.visibility = 'collapse';
+			$("#RandomImbaButtonContainer").style.visibility = 'collapse';
 		}
 	}
 }
@@ -262,12 +264,17 @@ function RepickHero() {
 		$('#PickList').style.visibility = 'visible';
 		$('#PostPickScreen').style.visibility = 'collapse';
 		$('#RandomButtonContainer').style.visibility = 'visible';
+		$('#RandomImbaButtonContainer').style.visibility = 'visible';
 	}
 }
 
 /* Random a hero, called when a player clicks the random hero button */
 function SelectRandomHero() {
 	GameEvents.SendCustomGameEventToServer("hero_randomed", {});
+}
+
+function SelectRandomImbaHero() {
+	GameEvents.SendCustomGameEventToServer("hero_imba_randomed", {});
 }
 
 /* Enter the game by removing the picking screen, called when the player
@@ -384,12 +391,18 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 		$("#InitialLevelValue").text = initial_level[1];
 		$("#MaxLevelValue").text = max_level[1];
 
-		if (tower_power[1] == 0) {
+//		if (tower_power[1] == 0) {
+//			$("#TowerPowerValue").text = $.Localize( '#imba_gamemode_settings_power_1' );
+//		} else if (tower_power[1] == 1) {
+//			$("#TowerPowerValue").text = $.Localize( '#imba_gamemode_settings_power_2' );
+//		} else if (tower_power[1] == 2) {
+//			$("#TowerPowerValue").text = $.Localize( '#imba_gamemode_settings_power_3' );
+//		}
+
+		if (tower_power[1] == 1) {
 			$("#TowerPowerValue").text = $.Localize( '#imba_gamemode_settings_power_1' );
-		} else if (tower_power[1] == 1) {
-			$("#TowerPowerValue").text = $.Localize( '#imba_gamemode_settings_power_2' );
 		} else if (tower_power[1] == 2) {
-			$("#TowerPowerValue").text = $.Localize( '#imba_gamemode_settings_power_3' );
+			$("#TowerPowerValue").text = $.Localize( '#imba_gamemode_settings_power_2' );
 		}
 
 		if (map_info.map_display_name == "imba_arena") {
@@ -405,7 +418,6 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 
 		if (map_info.map_display_name == "imba_custom") {
 			if(frantic_mode) {
-				$.Msg("FRANTIC SHOULD BE ENABLED NOW")
 				$("#FranticModeValue").text = $.Localize( '#imba_gamemode_game_options_frantic_enabled' );
 			}
 		}
