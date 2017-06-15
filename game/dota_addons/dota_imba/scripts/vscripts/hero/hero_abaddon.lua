@@ -125,7 +125,7 @@ function imba_abaddon_mist_coil:OnProjectileHit( hTarget, vLocation )
 			local debuff_duration = curse_of_avernus:GetSpecialValueFor("debuff_duration")
 
 			-- debuff_duration can be 0 if caster has ability but not learnt it yet
-			if debuff_duration > 0 and not caster:PassivesDisabled() then
+			if debuff_duration > 0 then
 				target:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff_slow", { duration = debuff_duration })
 			end
 
