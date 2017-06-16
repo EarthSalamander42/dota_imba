@@ -557,8 +557,7 @@
 	horizontal-align: center;
 }
 
-#RandomPickBtn,
-#RandomImbaPickBtn
+#RandomPickBtn
 {
 	width: 128px;
 	height: 72px;
@@ -568,6 +567,18 @@
 	saturation: 0.7;
 	background-color: gradient(linear, 0% 0%, 0% 100%, from(grey), to (black));
 	background-image: url("file://{images}/custom_game/random_button.png");
+}
+
+#RandomImbaPickBtn
+{
+	width: 128px;
+	height: 72px;
+	border-radius: 4px;
+	horizontal-align: center;
+	vertical-align: middle;
+	saturation: 0.7;
+	background-color: gradient(linear, 0% 0%, 0% 100%, from(grey), to (black));
+	background-image: url("file://{images}/custom_game/random_button_IMBA.png");
 }
 
 #RandomPickBtn:hover,
