@@ -312,33 +312,37 @@ function modifier_imba_thunder_strike_talent_slow:IsDebuff()	return true end
 ---------------------------------------------------
 
 MergeTables(LinkedModifiers,{
-	["modifier_imba_glimpse_movement_check_aura"] = LUA_MODIFIER_MOTION_NONE,
-	["modifier_imba_glimpse_movement_check"] = LUA_MODIFIER_MOTION_NONE,
-	["modifier_imba_glimpse_projectile_control"] = LUA_MODIFIER_MOTION_NONE,
-	["modifier_imba_glimpse_modifier_dummy"] = LUA_MODIFIER_MOTION_NONE,
+	["modifier_imba_glimpse_thinker"] = LUA_MODIFIER_MOTION_NONE,
+	["modifier_imba_glimpse"] = LUA_MODIFIER_MOTION_NONE,
+	["modifier_imba_glimpse_movement_check_aura"] = LUA_MODIFIER_MOTION_NONE,	
 	["modifier_imba_glimpse_storm_aura"] = LUA_MODIFIER_MOTION_NONE,
 	["modifier_imba_glimpse_storm_debuff"] = LUA_MODIFIER_MOTION_NONE,
 })
 
 imba_disruptor_glimpse = imba_disruptor_glimpse or class({})
 
+function imba_disruptor_glimpse:GetCastRange(location, target)
+    return self:GetSpecialValueFor("cast_range")
+end
+
 function imba_disruptor_glimpse:GetIntrinsicModifierName()
 	return "modifier_imba_glimpse_movement_check_aura"
 end
+
 function imba_disruptor_glimpse:GetAbilityTextureName()
    return "disruptor_glimpse"
 end
+
 function imba_disruptor_glimpse:OnSpellStart()
 	if IsServer() then
 		local caster	=	self:GetCaster()
 		local ability	=	self
-		local target	=	self:GetCursorTarget()
-		local modifier_projectile_control = "modifier_imba_glimpse_projectile_control"
+		local target	=	self:GetCursorTarget()		
 		local cast_sound = "Hero_Disruptor.Glimpse.Target"
 		local delay = ability:GetSpecialValueFor("move_delay")
 		local cast_response = "disruptor_dis_glimpse_0"..math.random(1,5)
 
-			-- Check for Linken's Sphere
+		-- Check for Linken's Sphere
 		if target:GetTeam() ~= caster:GetTeam() then
 			if target:TriggerSpellAbsorb(ability) then
 				return nil
@@ -355,351 +359,342 @@ function imba_disruptor_glimpse:OnSpellStart()
 		if RollPercentage(75) then
 			EmitSoundOn(cast_response, caster)
 		end
-
-		EmitSoundOn(cast_sound, target)	
-
-		target:AddNewModifier(caster, ability, modifier_projectile_control, {duration = delay})	
+		
+		local thinker = CreateModifierThinker(caster, ability, "modifier_imba_glimpse_thinker", {}, target:GetAbsOrigin(), caster:GetTeamNumber(), false)	
+		local thinkerBuff = thinker:FindModifierByName("modifier_imba_glimpse_thinker")
+		local buff = target:FindModifierByName("modifier_imba_glimpse")
+		if buff then		
+			EmitSoundOn(cast_sound, target)	
+            thinkerBuff:BeginGlimpse(target, buff:GetOldestPosition())
+		end		
 	end
 end
+
 -------------------------------------------
---	Glimpse movement check aura
+--	Glimpse Thinker
+-------------------------------------------
+modifier_imba_glimpse_thinker = class({})
+
+function modifier_imba_glimpse_thinker:IsHidden()
+	return false
+end
+
+function modifier_imba_glimpse_thinker:IsPurgable()
+	return true
+end
+
+function modifier_imba_glimpse_thinker:OnCreated( kv )
+	if IsServer() then		
+        -- Ability properties
+		self.caster = self:GetCaster()
+		self.ability = self:GetAbility()
+        self.modifier_storm = "modifier_imba_glimpse_storm_aura"
+
+        -- Ability specials
+		self.move_delay = self.ability:GetSpecialValueFor("move_delay")		
+		self.projectile_speed = self.ability:GetSpecialValueFor("projectile_speed")
+        self.vision_radius = self.ability:GetSpecialValueFor("vision_radius")
+        self.vision_duration = self.ability:GetSpecialValueFor("vision_duration")		
+        self.storm_duration = self.ability:GetSpecialValueFor("storm_duration")
+	end
+end
+
+function modifier_imba_glimpse_thinker:BeginGlimpse(target, old_position)
+	if IsServer() then				
+		local hUnit = target
+		local vOldLocation = old_position
+		if hUnit and vOldLocation then
+			local vVelocity = ( vOldLocation - hUnit:GetOrigin())
+			vVelocity.z = 0.0
+
+			local flDist = vVelocity:Length2D()
+			vVelocity = vVelocity:Normalized()
+
+			local flDuration = math.max(0.05, math.min(self.move_delay, flDist / self.projectile_speed))
+			
+			local projectile =
+			{
+                Ability = self:GetAbility(),
+				EffectName = "particles/units/heroes/hero_disruptor/disruptor_glimpse_travel.vpcf",
+				vSpawnOrigin = hUnit:GetOrigin(), 
+                fDistance = flDist,
+				Source = self:GetCaster(),                				
+				vVelocity = vVelocity * ( flDist / flDuration ),
+				fStartRadius = 0,
+                fEndRadius = 0,				
+				bProvidesVision = true,
+				iVisionRadius = self.vision_radius,
+				iVisionTeamNumber = self:GetCaster():GetTeamNumber(),
+			}			  
+
+            ProjectileManager:CreateLinearProjectile(projectile)                      
+
+			local nFXIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_disruptor/disruptor_glimpse_travel.vpcf", PATTACH_CUSTOMORIGIN, nil )
+			ParticleManager:SetParticleControlEnt( nFXIndex, 0, hUnit, PATTACH_ABSORIGIN_FOLLOW, nil, hUnit:GetOrigin(), true )
+			ParticleManager:SetParticleControl( nFXIndex, 1, vOldLocation )
+			ParticleManager:SetParticleControl( nFXIndex, 2, Vector( flDuration, flDuration, flDuration ) )
+			self:AddParticle( nFXIndex, false, false, -1, false, false )
+
+			local nFXIndex2 = ParticleManager:CreateParticle( "particles/units/heroes/hero_disruptor/disruptor_glimpse_targetend.vpcf", PATTACH_CUSTOMORIGIN, nil )
+			ParticleManager:SetParticleControlEnt( nFXIndex2, 0, hUnit, PATTACH_ABSORIGIN_FOLLOW, nil, hUnit:GetOrigin(), true )
+			ParticleManager:SetParticleControl( nFXIndex2, 1, vOldLocation )
+			ParticleManager:SetParticleControl( nFXIndex2, 2, Vector( flDuration, flDuration, flDuration ) )
+			self:AddParticle( nFXIndex2, false, false, -1, false, false )
+
+			local nFXIndex3 = ParticleManager:CreateParticle( "particles/units/heroes/hero_disruptor/disruptor_glimpse_targetstart.vpcf", PATTACH_CUSTOMORIGIN, nil )
+			ParticleManager:SetParticleControlEnt( nFXIndex3, 0, hUnit, PATTACH_ABSORIGIN_FOLLOW, nil, hUnit:GetOrigin(), true )
+			ParticleManager:SetParticleControl( nFXIndex3, 2, Vector( flDuration, flDuration, flDuration ) )
+			self:AddParticle( nFXIndex3, false, false, -1, false, false )
+			
+			EmitSoundOnLocationForAllies( vOldLocation, "Hero_Disruptor.GlimpseNB2017.Destination", self:GetCaster() )
+			local buff = hUnit:FindModifierByName( "modifier_imba_glimpse" )
+			if buff then
+				buff.hThinker = self						
+                buff:SetGlimpsePosition(old_position)
+				buff:SetExpireTime( GameRules:GetGameTime() + flDuration )						                    
+			end			
+		end		
+	end
+end
+
+function modifier_imba_glimpse_thinker:EndGlimpse(hUnit, old_position)	
+	if hUnit and not hUnit:IsMagicImmune() then
+        AddFOWViewer(self:GetCaster():GetTeamNumber(), old_position, self.vision_radius, self.vision_duration, false)
+		FindClearSpaceForUnit( hUnit, old_position, true)
+		hUnit:Interrupt()
+
+        -- Create a Glimpse Storm thinker
+        CreateModifierThinker(self:GetCaster(), self:GetAbility(), self.modifier_storm, {duration = self.storm_duration}, old_position, self:GetCaster():GetTeamNumber(), false)       
+
+        self:Destroy()		    	    		
+	end
+end
+
+
+-------------------------------------------
+--	Glimpse Aura
 -------------------------------------------
 
 modifier_imba_glimpse_movement_check_aura = modifier_imba_glimpse_movement_check_aura or class({})
 
 function modifier_imba_glimpse_movement_check_aura:IsHidden()	return true end
 function modifier_imba_glimpse_movement_check_aura:IsPassive()	return true end
-
 function modifier_imba_glimpse_movement_check_aura:IsAura() return true end
-
+function modifier_imba_glimpse_movement_check_aura:IsAuraActiveOnDeath() return true end
 function modifier_imba_glimpse_movement_check_aura:GetAuraRadius() 	return self:GetAbility():GetSpecialValueFor("global_radius") end
 function modifier_imba_glimpse_movement_check_aura:GetAuraSearchFlags()	return DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO end
 function modifier_imba_glimpse_movement_check_aura:GetAuraSearchTeam()	return DOTA_UNIT_TARGET_TEAM_ENEMY end
 function modifier_imba_glimpse_movement_check_aura:GetAuraSearchType()	return DOTA_UNIT_TARGET_HERO end
 
 function modifier_imba_glimpse_movement_check_aura:GetModifierAura()
-	return "modifier_imba_glimpse_movement_check"
+	return "modifier_imba_glimpse"
 end
 
 -------------------------------------------
---	Glimpse movement check modifier
+--	Glimpse Movement checker
 -------------------------------------------
-modifier_imba_glimpse_movement_check = modifier_imba_glimpse_movement_check or class({})
+modifier_imba_glimpse = class({})
 
-function modifier_imba_glimpse_movement_check:IsHidden()	return true end
-function modifier_imba_glimpse_movement_check:DeclareFunctions()
-  local funcs = {
-    MODIFIER_EVENT_ON_TELEPORTED, MODIFIER_EVENT_ON_UNIT_MOVED
-  }
-  return funcs
+function modifier_imba_glimpse:IsHidden()
+	return true
 end
-function modifier_imba_glimpse_movement_check:OnTeleported(keys)
+
+function modifier_imba_glimpse:IsPurgable()
+	return true
+end
+
+function modifier_imba_glimpse:OnCreated( kv )
+	if IsServer() then	
+        self.backtrack_time = self:GetAbility():GetSpecialValueFor("backtrack_time")
+        self.interval = 0.1
+        self.possible_positions = self.backtrack_time / 0.1
+
+		self.vPositions = {}
+		for i = 1, self.possible_positions do
+			table.insert(self.vPositions, self:GetParent():GetOrigin())
+		end
+
+		self.flExpireTime = -1
+		self:StartIntervalThink(self.interval)
+	end
+end
+
+function modifier_imba_glimpse:OnIntervalThink()
 	if IsServer() then
-		local parent = self:GetParent()
-		--OnUnitMoved actually responds to ALL units. Return immediately if not the modifier's parent.
-		if keys.unit then
-			if keys.unit:GetEntityIndex() ~= parent:GetEntityIndex() then
-				return
-			else
-				movement_check(parent,self:GetAbility())
+		if self.flExpireTime ~= -1 and GameRules:GetGameTime() > self.flExpireTime then
+			if self.hThinker then
+				self.hThinker:EndGlimpse(self:GetParent(), self.glimpse_position)
 			end
-		else
-			return
+			self.flExpireTime = -1
+			self.hThinker = nil
 		end
+
+		for i = 1, #self.vPositions-1 do
+			self.vPositions[i] = self.vPositions[i+1]
+		end
+
+		self.vPositions[ #self.vPositions ] = self:GetParent():GetOrigin()
 	end
-end	
-function modifier_imba_glimpse_movement_check:OnUnitMoved(keys)
+end
+
+function modifier_imba_glimpse:GetOldestPosition()
+	return self.vPositions[1]
+end
+
+function modifier_imba_glimpse:SetExpireTime( flTime )
 	if IsServer() then
-		local parent = self:GetParent()
-		--OnUnitMoved actually responds to ALL units. Return immediately if not the modifier's parent.
-		if keys.unit then
-			if keys.unit:GetEntityIndex() ~= parent:GetEntityIndex() then
-				return
-			else
-				movement_check(parent,self:GetAbility())
-			end
-		else
-			return
-		end
+		self.flExpireTime = flTime
 	end
 end
 
---this function is fishy, if it causes lag i will replace it wit onintervalthink every 1 second
-function movement_check(target, ability)
-	if target:IsHero() then
-		local backtrack_time = ability:GetSpecialValueFor("backtrack_time")
-
-		-- Temporary position array and index
-		local temp = {}
-		local temp_index = 0
-
-		-- Global position array and index
-		local target_index = 0
-		if target.position == nil then
-			target.position = {}
-		end
-
-		-- Sets the position and game time values in the tempororary array, if the target moved within 4 seconds of current time
-		while target.position do
-			if target.position[target_index] == nil then
-			break
-			elseif Time() - target.position[target_index+1] <= backtrack_time then
-				temp[temp_index] = target.position[target_index]
-				temp[temp_index+1] = target.position[target_index+1]
-				temp_index = temp_index + 2
-			end
-			target_index = target_index + 2
-		end
-
-		-- Places most recent position and current time in the temporary array
-		temp[temp_index] = target:GetAbsOrigin()
-		temp[temp_index+1] = Time()
-		
-		-- Sets the global array as the temporary array
-		target.position = temp
-	end
+function modifier_imba_glimpse:SetGlimpsePosition(old_position)
+    self.glimpse_position = old_position
 end
 
--------------------------------------------
---	Glimpse projectile control
--------------------------------------------
 
-modifier_imba_glimpse_projectile_control = modifier_imba_glimpse_projectile_control or class({})
-
-function modifier_imba_glimpse_projectile_control:IsHidden()	return true end
-
-function modifier_imba_glimpse_projectile_control:GetEffectName()
-	return "particles/units/heroes/hero_disruptor/disruptor_glimpse_targetstart.vpcf"
-end
-
-function modifier_imba_glimpse_projectile_control:GetEffectAttachType()
-	return PATTACH_ABSORIGIN
-end
-
-function modifier_imba_glimpse_projectile_control:OnCreated(keys)
-	if IsServer() then
-		local caster = self:GetAbility():GetCaster()
-		local target = self:GetParent()
-		local ability = self:GetAbility()	
-		local projectile_speed = ability:GetSpecialValueFor("projectile_speed")/100
-		local glimpse_target_particle = "particles/units/heroes/hero_disruptor/disruptor_glimpse_targetend.vpcf"
-		local travel_particle = "particles/units/heroes/hero_disruptor/disruptor_glimpse_travel.vpcf"
-
-		ability.moved = false
-
-		-- The glimpse location will be the oldest stored position in the array, providing it has been instantiated
-		if target.position[0] == nil then
-			ability.glimpse_location = target:GetAbsOrigin()
-		else
-			ability.glimpse_location = target.position[0]
-		end
-			-- Creates a dummy unit at the glimpse location to throw the projectile at
-		self.dummy = CreateUnitByName("npc_dummy_unit", ability.glimpse_location, false, caster, caster, caster:GetTeamNumber())
-		-- Applies a modifier that removes it health bar
-		self.dummy:AddNewModifier(caster, ability, "modifier_imba_glimpse_modifier_dummy", {})	
-
-		-- Renders the glimpse location particle
-		self.glimpse_target_fx = ParticleManager:CreateParticle(glimpse_target_particle, PATTACH_WORLDORIGIN, caster)
-		ParticleManager:SetParticleControl(self.glimpse_target_fx, 0, ability.glimpse_location)
-		ParticleManager:SetParticleControl(self.glimpse_target_fx, 1, ability.glimpse_location)
-		ParticleManager:SetParticleControl(self.glimpse_target_fx, 2, ability.glimpse_location)
-
-		-- Throws the glimpse projectile at the dummy
-		local info = {
-		Target = self.dummy,
-		Source = target,
-		Ability = ability,
-		EffectName = travel_particle,
-		bDodgeable = false,
-		iMoveSpeed = projectile_speed,
-		iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
-		}
-		ProjectileManager:CreateTrackingProjectile( info )
-	end
-end
-
-function modifier_imba_glimpse_projectile_control:OnDestroy(keys)
-	local target = self:GetParent()
-	local ability = self:GetAbility()
-	local caster = ability:GetCaster()
-	local glimpse_end_sound = "Hero_Disruptor.Glimpse.End"
-
-	local vision_radius = ability:GetSpecialValueFor("vision_radius")
-	local vision_duration = ability:GetSpecialValueFor("vision_duration")
-
-	--storm aura stuff
-	local storm_aura = "modifier_imba_glimpse_storm_aura"
-	local storm_duration = ability:GetSpecialValueFor("storm_duration")
-	local storm_particle = "particles/hero/disruptor/disruptor_static_storm.vpcf"
-	local sound_storm = "Hero_Disruptor.StaticStorm"
-	local sound_storm_end = "Hero_Disruptor.StaticStorm.End"
-
-	-- Checks if the target has been moved yet
-	if ability.moved == false then
-		-- Plays the move sound on the target
-		EmitSoundOn(glimpse_end_sound, target)
-
-		AddFOWViewer(caster:GetTeamNumber(), self.dummy:GetAbsOrigin(),vision_radius, vision_duration, false)
-		-- Destroys the glimpse location particle
-		ParticleManager:DestroyParticle(self.glimpse_target_fx, true)
-		ParticleManager:ReleaseParticleIndex(self.glimpse_target_fx)
-		-- Moves the target
-		target:SetAbsOrigin(ability.glimpse_location)
-		FindClearSpaceForUnit(target, ability.glimpse_location, true)
-
-		-- Give dummy static storm aura
-		self.dummy:AddNewModifier(caster, ability, storm_aura, {duration = storm_duration})
-		-- Play storm's sounds 
-		EmitSoundOn(sound_storm, self.dummy)
-
-		-- Add storm particles in dummy's area
-		self.storm_particle_fx = ParticleManager:CreateParticle(storm_particle, PATTACH_ABSORIGIN, caster)
-		ParticleManager:SetParticleControl(self.storm_particle_fx, 0, self.dummy:GetAbsOrigin())
-		ParticleManager:SetParticleControl(self.storm_particle_fx, 1, Vector(10,10,10))
-		ParticleManager:SetParticleControl(self.storm_particle_fx, 2, Vector(storm_duration,1,1))
-
-		Timers:CreateTimer(storm_duration, function()
-			-- Stop storm's sound, play end's sound
-			StopSoundOn(sound_storm, self.dummy)
-			EmitSoundOn(sound_storm_end, self.dummy)
-			ParticleManager:DestroyParticle(self.storm_particle_fx, false)
-			ParticleManager:ReleaseParticleIndex(self.storm_particle_fx)
-		end)
-
-		-- Remove dummy a second after storm's end to allow particles to fade out
-		Timers:CreateTimer(storm_duration+1, function()					
-			--destroy this little shit
-			UTIL_Remove(self.dummy)
-		end)
-	end
-	ability.moved = true
-end
+------------------------------------------------------------------------------------------------------
 
 
 -------------------------------------------
---	Glimpse dummy modifier
--------------------------------------------
-
-modifier_imba_glimpse_modifier_dummy = modifier_imba_glimpse_modifier_dummy or class({})
-
-function modifier_imba_glimpse_modifier_dummy:CheckState()
-	local state = {[MODIFIER_STATE_NO_HEALTH_BAR] = true} 
-	return state
-end
-
--------------------------------------------
---	Glimpse storm aura
+--  Glimpse storm aura
 -------------------------------------------
 
 modifier_imba_glimpse_storm_aura = modifier_imba_glimpse_storm_aura or class({})
 
 function modifier_imba_glimpse_storm_aura:OnCreated()
-	if IsServer() then
-		self.caster = self:GetCaster()
-		self.ability = self:GetAbility()
-		self.storm_linger = self.ability:GetSpecialValueFor("storm_linger")
-		self.storm_radius = self.ability:GetSpecialValueFor("storm_radius")					
-	end
+    if IsServer() then
+        -- Ability properties
+        self.caster = self:GetCaster()
+        self.ability = self:GetAbility()
+        self.parent = self:GetParent()
+        self.parent_pos = self.parent:GetAbsOrigin()
+        self.storm_particle = "particles/hero/disruptor/disruptor_static_storm.vpcf"
+        self.sound_storm = "Hero_Disruptor.StaticStorm"
+        self.sound_storm_end = "Hero_Disruptor.StaticStorm.End"        
+
+        -- Ability specials
+        self.storm_linger = self.ability:GetSpecialValueFor("storm_linger")
+        self.storm_radius = self.ability:GetSpecialValueFor("storm_radius")                         
+        self.storm_duration = self.ability:GetSpecialValueFor("storm_duration")
+
+        -- Create storm effects
+        local storm_particle = ParticleManager:CreateParticle(self.storm_particle, PATTACH_WORLDORIGIN, nil)
+        ParticleManager:SetParticleControl(storm_particle, 0, self.parent_pos)
+        ParticleManager:SetParticleControl(storm_particle, 1, Vector(10,10,10))
+        ParticleManager:SetParticleControl(storm_particle, 2, Vector(self.storm_duration,1,1))
+        self:AddParticle(storm_particle, false, false, -1, false, false)
+
+        -- Play storm sound
+        EmitSoundOn(self.sound_storm, self.parent)        
+    end
 end
-function modifier_imba_glimpse_storm_aura:GetAuraRadius()	
-	return self.storm_radius - 50 
+function modifier_imba_glimpse_storm_aura:GetAuraRadius()   
+    return self.storm_radius - 50 
 end
 
 function modifier_imba_glimpse_storm_aura:GetAuraDuration()
-	return self.storm_linger + self.caster:FindTalentValue("special_bonus_imba_disruptor_2")
+    return self.storm_linger + self.caster:FindTalentValue("special_bonus_imba_disruptor_2")
 end
 
 function modifier_imba_glimpse_storm_aura:GetAuraSearchFlags()
-	return DOTA_UNIT_TARGET_FLAG_NONE
+    return DOTA_UNIT_TARGET_FLAG_NONE
 end
 
 function modifier_imba_glimpse_storm_aura:GetAuraSearchTeam()
-	return DOTA_UNIT_TARGET_TEAM_ENEMY
+    return DOTA_UNIT_TARGET_TEAM_ENEMY
 end
 
 function modifier_imba_glimpse_storm_aura:GetAuraSearchType()
-	return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+    return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
 end
 
 function modifier_imba_glimpse_storm_aura:GetModifierAura()
-	return "modifier_imba_glimpse_storm_debuff"
+    return "modifier_imba_glimpse_storm_debuff"
 end
 
-function modifier_imba_glimpse_storm_aura:IsAura()	return true end
+function modifier_imba_glimpse_storm_aura:OnRemoved()
+    if IsServer() then
+        -- Stop storm sound
+        StopSoundOn(self.sound_storm, self.parent)
 
-function modifier_imba_glimpse_storm_aura:IsHidden()	return true end
+        -- Play end sound
+        EmitSoundOnLocationWithCaster(self.parent_pos, self.sound_storm_end, nil)
+    end
+end
 
-function modifier_imba_glimpse_storm_aura:IsPurgable()	return false end
+function modifier_imba_glimpse_storm_aura:IsAura()  return true end
 
-function modifier_imba_glimpse_storm_aura:AllowIllusionDuplicate()	return false end
+function modifier_imba_glimpse_storm_aura:IsHidden()    return true end
+
+function modifier_imba_glimpse_storm_aura:IsPurgable()  return false end
+
+function modifier_imba_glimpse_storm_aura:AllowIllusionDuplicate()  return false end
 
 -------------------------------------------
---	Glimpse storm aura debuff
+--  Glimpse storm aura debuff
 -------------------------------------------
 
 modifier_imba_glimpse_storm_debuff = modifier_imba_glimpse_storm_debuff or class({})
 
-function modifier_imba_glimpse_storm_debuff:OnCreated()	
-	-- Ability properties
-	self.target = self:GetParent()
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
-	self.stormbearer_buff = "modifier_imba_stormbearer"
-	self.scepter = self.caster:HasScepter()
+function modifier_imba_glimpse_storm_debuff:OnCreated() 
+    -- Ability properties
+    self.target = self:GetParent()
+    self.caster = self:GetCaster()
+    self.ability = self:GetAbility()
+    self.stormbearer_buff = "modifier_imba_stormbearer"
+    self.scepter = self.caster:HasScepter()
 
-	-- Ability specials
-	self.storm_interval = self.ability:GetSpecialValueFor("storm_interval")
-	self.storm_damage = self.ability:GetSpecialValueFor("storm_damage")
-	
-	-- Start thinking
-	self:StartIntervalThink(self.storm_interval)	
+    -- Ability specials
+    self.storm_interval = self.ability:GetSpecialValueFor("storm_interval")
+    self.storm_damage = self.ability:GetSpecialValueFor("storm_damage")
+    
+    -- Start thinking
+    self:StartIntervalThink(self.storm_interval)    
 end
 
-function modifier_imba_glimpse_storm_debuff:IsDebuff()	return true end
+function modifier_imba_glimpse_storm_debuff:IsDebuff()  return true end
 
-function modifier_imba_glimpse_storm_debuff:IsHidden() 	return false end
+function modifier_imba_glimpse_storm_debuff:IsHidden()  return false end
 
-function modifier_imba_glimpse_storm_debuff:IsPurgable()	return false end
+function modifier_imba_glimpse_storm_debuff:IsPurgable()    return false end
 
-function modifier_imba_glimpse_storm_debuff:OnDestroy()	self:StartIntervalThink(-1) end
+function modifier_imba_glimpse_storm_debuff:OnDestroy() self:StartIntervalThink(-1) end
 
-function modifier_imba_glimpse_storm_debuff:GetEffectName()	return "particles/generic_gameplay/generic_silenced.vpcf" end
+function modifier_imba_glimpse_storm_debuff:GetEffectName() return "particles/generic_gameplay/generic_silenced.vpcf" end
 
-function modifier_imba_glimpse_storm_debuff:GetEffectAttachType() 	return PATTACH_OVERHEAD_FOLLOW end
+function modifier_imba_glimpse_storm_debuff:GetEffectAttachType()   return PATTACH_OVERHEAD_FOLLOW end
 
 function modifier_imba_glimpse_storm_debuff:OnIntervalThink()
-	if IsServer() then		
-		if not self.target:IsMagicImmune() or not self.target:IsInvulnerable() then			
-			local damageTable = {
-									victim = self.target,
-									attacker = self.caster,
-									damage = self.storm_damage,
-									damage_type = DAMAGE_TYPE_MAGICAL,		
-									ability = self.ability
-								}
-								
-			ApplyDamage(damageTable)
+    if IsServer() then      
+        if not self.target:IsMagicImmune() or not self.target:IsInvulnerable() then         
+            local damageTable = {
+                                    victim = self.target,
+                                    attacker = self.caster,
+                                    damage = self.storm_damage,
+                                    damage_type = DAMAGE_TYPE_MAGICAL,      
+                                    ability = self.ability
+                                }
+                                
+            ApplyDamage(damageTable)
 
-			-- Give a Stormbearer stack to caster			
-			if self.caster:HasModifier(self.stormbearer_buff) and self.target:IsRealHero() then
-				IncrementStormbearerStacks(self.caster)
-			end			
-		end
-	end
+            -- Give a Stormbearer stack to caster           
+            if self.caster:HasModifier(self.stormbearer_buff) and self.target:IsRealHero() then
+                IncrementStormbearerStacks(self.caster)
+            end         
+        end
+    end
 end
 
-function modifier_imba_glimpse_storm_debuff:CheckState()			
-	local state	
-	if self.scepter then
-		state = { [MODIFIER_STATE_SILENCED] = true,
-				  [MODIFIER_STATE_MUTED] = true}
-	else
-		state = { [MODIFIER_STATE_SILENCED] = true}	
-	end		
-	return state	
+function modifier_imba_glimpse_storm_debuff:CheckState()            
+    local state 
+    if self.scepter then
+        state = { [MODIFIER_STATE_SILENCED] = true,
+                  [MODIFIER_STATE_MUTED] = true}
+    else
+        state = { [MODIFIER_STATE_SILENCED] = true} 
+    end     
+    return state    
 end
-
-------------------------------------------------------------------------------------------------------
 
 ---------------------------------------------------
 --				Kinetic Field
@@ -732,9 +727,9 @@ function imba_disruptor_kinetic_field:OnSpellStart()
 		local ability = self
 		local cast_response = "disruptor_dis_kineticfield_0"..math.random(1,5)
 		local kinetic_field_sound = "Hero_Disruptor.KineticField"
-		local formation_particle = "particles/units/heroes/hero_disruptor/disruptor_kineticfield_formation.vpcf"
-		local formation_particle_marker = "particles/units/heroes/hero_disruptor/disruptor_kineticfield_formation_markers.vpcf"
+		local formation_particle = "particles/units/heroes/hero_disruptor/disruptor_kineticfield_formation.vpcf"		
 		local modifier_kinetic_field = "modifier_imba_kinetic_field"
+
 		-- Ability specials
 		local formation_delay = ability:GetSpecialValueFor("formation_delay")
 		local field_radius = ability:GetSpecialValueFor("field_radius")
@@ -752,23 +747,19 @@ function imba_disruptor_kinetic_field:OnSpellStart()
 		-- Plays the formation sound
 		EmitSoundOn(kinetic_field_sound, caster)
 
-		--formation particle
-		local formation_particle_fx = ParticleManager:CreateParticle(formation_particle, PATTACH_WORLDORIGIN, caster)
+		-- Formation particle
+		local formation_particle_fx = ParticleManager:CreateParticle(formation_particle, PATTACH_WORLDORIGIN, nil)
 		ParticleManager:SetParticleControl(formation_particle_fx, 0, target_point)
-		ParticleManager:SetParticleControl(formation_particle_fx, 1, Vector(field_radius, field_radius, 0))
-		ParticleManager:SetParticleControl(formation_particle_fx, 2, Vector(1, 0, 0))
+		ParticleManager:SetParticleControl(formation_particle_fx, 1, Vector(field_radius, 1, 0))
+		ParticleManager:SetParticleControl(formation_particle_fx, 2, Vector(formation_delay, 0, 0))
 		ParticleManager:SetParticleControl(formation_particle_fx, 4, Vector(1, 1, 1))
-		ParticleManager:SetParticleControl(formation_particle_fx, 15, target_point)
+		ParticleManager:SetParticleControl(formation_particle_fx, 15, target_point)           		
 
-		--marker particle
-		local marker_particle = ParticleManager:CreateParticle(formation_particle_marker, PATTACH_WORLDORIGIN, caster)
-		ParticleManager:SetParticleControl(marker_particle, 0, target_point)
-		ParticleManager:SetParticleControl(marker_particle, 1, Vector(field_radius, field_radius, 0))
-		ParticleManager:SetParticleControl(marker_particle, 2, Vector(1, 0, 0))
 		-- Wait for formation to finish setting up
 		Timers:CreateTimer(formation_delay, function()
+
 			-- Apply thinker modifier on target location
-			CreateModifierThinker(caster, ability, modifier_kinetic_field, {duration = duration, target_point_x = target_point.x, target_point_y = target_point.y, target_point_z = target_point.z, marker_particle = marker_particle, formation_particle_fx = formation_particle_fx}, target_point, caster:GetTeamNumber(), false)
+			CreateModifierThinker(caster, ability, modifier_kinetic_field, {duration = duration, target_point_x = target_point.x, target_point_y = target_point.y, target_point_z = target_point.z, formation_particle_fx = formation_particle_fx}, target_point, caster:GetTeamNumber(), false)
 		end)
 	end
 end
@@ -779,7 +770,7 @@ end
 modifier_imba_kinetic_field = modifier_imba_kinetic_field or class({})
 
 function modifier_imba_kinetic_field:IsHidden()	return true end
-function modifier_imba_kinetic_field:IsPassive()	return true end
+function modifier_imba_kinetic_field:IsPassive() return true end
 
 function modifier_imba_kinetic_field:OnCreated(keys)
 	if IsServer() then
@@ -799,11 +790,9 @@ function modifier_imba_kinetic_field:OnCreated(keys)
 
 		AddFOWViewer(self.caster:GetTeamNumber(), self.target:GetAbsOrigin(), vision_aoe, self.duration, false)
 		ParticleManager:DestroyParticle(keys.formation_particle_fx, true)
-		ParticleManager:ReleaseParticleIndex(keys.formation_particle_fx)
-		ParticleManager:DestroyParticle(keys.marker_particle, true)
-		ParticleManager:ReleaseParticleIndex(keys.marker_particle)
+		ParticleManager:ReleaseParticleIndex(keys.formation_particle_fx)		
 		
-		self.field_particle = ParticleManager:CreateParticle(particle_field, PATTACH_WORLDORIGIN, self.caster)
+		self.field_particle = ParticleManager:CreateParticle(particle_field, PATTACH_WORLDORIGIN, nil)
 		ParticleManager:SetParticleControl(self.field_particle, 0, self.target_point)
 		ParticleManager:SetParticleControl(self.field_particle, 1, Vector(self.field_radius, 1, 1))
 		ParticleManager:SetParticleControl(self.field_particle, 2, Vector(self.duration, 0, 0))
@@ -818,6 +807,7 @@ function modifier_imba_kinetic_field:OnDestroy()
 		local ability = self:GetAbility()
 		local kinetic_field_sound_end = "Hero_Disruptor.KineticField.End"
 		ParticleManager:DestroyParticle(self.field_particle, true)
+        ParticleManager:ReleaseParticleIndex(self.field_particle)
 		StopSoundEvent(self.sound_cast, caster)
 	end
 end
@@ -845,12 +835,9 @@ modifier_imba_kinetic_field_check_position = modifier_imba_kinetic_field_check_p
 
 function modifier_imba_kinetic_field_check_position:IsHidden()	return true end
 function modifier_imba_kinetic_field_check_position:OnCreated(keys)
-	-- Fuck you vectors
+	--fuck you vectors
 	self.target_point = Vector(keys.target_point_x, keys.target_point_y, keys.target_point_z)
-
-	self.stormbearer_stack_amount = self:GetAbility():GetSpecialValueFor("stormbearer_stack_amount")
 end
-
 function modifier_imba_kinetic_field_check_position:DeclareFunctions()
   local funcs = { MODIFIER_EVENT_ON_UNIT_MOVED }
   return funcs
@@ -898,24 +885,20 @@ function modifier_imba_kinetic_field_check_position:kineticize(caster, target, a
 	angle_from_center = angle_from_center + 180.0
 	
 	-- Checks if the target is inside the field
-	local give_stormbearer_stacks = false
-	if distance_from_border < 15 and math.abs(distance_from_border) <= 40 then
+	if distance_from_border < 0 and math.abs(distance_from_border) <= 40 then
 		target:AddNewModifier(caster, ability, modifier_barrier, {})
 		target:AddNewModifier(caster, ability, "modifier_imba_kinetic_field_pull", {duration = 0.5, target_point_x = self.target_point.x, target_point_y = self.target_point.y, target_point_z = self.target_point.z})
-		give_stormbearer_stacks = true
 
 	-- Checks if the target is outside the field,
 	elseif distance_from_border > 0 and math.abs(distance_from_border) <= 40 then
 		target:AddNewModifier(caster, ability, modifier_barrier, {})
 
-		-- Check if caster has #1 talent, sucking people in 
+		--check if caster has scepter
 		if caster:HasTalent("special_bonus_imba_disruptor_1") then
 			target:AddNewModifier(caster, ability, "modifier_imba_kinetic_field_pull", {duration = 0.5, target_point_x = self.target_point.x, target_point_y = self.target_point.y, target_point_z = self.target_point.z})
 		else
 			target:AddNewModifier(caster, ability, "modifier_imba_kinetic_field_knockback", {duration = 0.5, target_point_x = self.target_point.x, target_point_y = self.target_point.y, target_point_z = self.target_point.z})
 		end
-
-		give_stormbearer_stacks = true
 	else
 		-- Removes debuffs, so the unit can move freely
 		if target:HasModifier(modifier_barrier) then
@@ -923,23 +906,14 @@ function modifier_imba_kinetic_field_check_position:kineticize(caster, target, a
 		end
 		self:Destroy()
 	end
-
-	-- If Kinetic Field was triggered and we should give Stormbearer stacks to Disruptor, do so
-	if give_stormbearer_stacks then
-		local stormbearer_handler = self:GetCaster():FindModifierByName("modifier_imba_stormbearer")
-		if stormbearer_handler then
-			stormbearer_handler:SetStackCount(stormbearer_handler:GetStackCount() + self.stormbearer_stack_amount)
-			stormbearer_handler:ForceRefresh()
-		end
-	end
 end
 
 function modifier_imba_kinetic_field_check_position:OnDestroy()
 	if IsServer() then
 		local target = self:GetParent()
-		if target:HasModifier("modifier_imba_kinetic_field_barrier") then
-			target:RemoveModifierByName("modifier_imba_kinetic_field_barrier")
-		end
+			if target:HasModifier("modifier_imba_kinetic_field_barrier") then
+				target:RemoveModifierByName("modifier_imba_kinetic_field_barrier")
+			end
 	end
 end
 
@@ -1018,7 +992,6 @@ function modifier_imba_kinetic_field_knockback:OnCreated( keys )
 	if IsServer() then
 		self.target_point = Vector(keys.target_point_x, keys.target_point_y, keys.target_point_z)
 		self.parent = self:GetParent()
-		self.knock_distance = self:GetAbility():GetSpecialValueFor("knockback_distance")
 		self.frametime = FrameTime()
 		self:StartIntervalThink(self.frametime)	
 	end
@@ -1046,23 +1019,18 @@ function modifier_imba_kinetic_field_knockback:OnIntervalThink()
 		self:Destroy()
 		return nil
 	end
-
 	-- Horizontal motion
 	self:HorizontalMotion(self.parent, self.frametime)	
 end
 
 function modifier_imba_kinetic_field_knockback:HorizontalMotion()
-	if IsServer() then		
+	if IsServer() then
+		local knock_distance = 25
 		local direction = (self.parent:GetAbsOrigin() - self.target_point):Normalized()
-		local set_point = self.parent:GetAbsOrigin() + direction * self.knock_distance
-		self.parent:SetAbsOrigin(Vector(set_point.x, set_point.y, GetGroundPosition(set_point, self.parent).z))		
-		GridNav:DestroyTreesAroundPoint(self.parent:GetAbsOrigin(), 50, false)
-	end
-end
-
-function modifier_imba_kinetic_field_knockback:OnDestroy()
-	if IsServer() then		
-		self.parent:SetUnitOnClearGround()		
+		local set_point = self.parent:GetAbsOrigin() + direction * knock_distance
+		self.parent:SetAbsOrigin(Vector(set_point.x, set_point.y, GetGroundPosition(set_point, self.parent).z))
+		self.parent:SetUnitOnClearGround()
+		GridNav:DestroyTreesAroundPoint(self.parent:GetAbsOrigin(), knock_distance, false)
 	end
 end
 
@@ -1081,7 +1049,6 @@ function modifier_imba_kinetic_field_pull:OnCreated( keys )
 		self.parent = self:GetParent()
 		self.caster = self:GetCaster()
 		self.ability = self:GetAbility()
-		self.pull_distance = self:GetAbility():GetSpecialValueFor("knockback_distance")
 		self.frametime = FrameTime()
 		self:StartIntervalThink(self.frametime)	
 	end
@@ -1113,26 +1080,16 @@ function modifier_imba_kinetic_field_pull:OnIntervalThink()
 	self:HorizontalMotion(self.parent, self.frametime)	
 end
 
-function modifier_imba_kinetic_field_pull:CheckState()
-	local state = {[MODIFIER_STATE_ROOTED] = true}
-	return state
-end
-
 function modifier_imba_kinetic_field_pull:HorizontalMotion()
-	if IsServer() then		
+	if IsServer() then
+		local pull_distance = 15
 		local direction = (self.target_point - self.parent:GetAbsOrigin()):Normalized()
-		local set_point = self.parent:GetAbsOrigin() + direction * self.pull_distance
-		self.parent:SetAbsOrigin(Vector(set_point.x, set_point.y, GetGroundPosition(set_point, self.parent).z))				
-		GridNav:DestroyTreesAroundPoint(self.parent:GetAbsOrigin(), 125, false)
+		local set_point = self.parent:GetAbsOrigin() + direction * pull_distance
+		self.parent:SetAbsOrigin(Vector(set_point.x, set_point.y, GetGroundPosition(set_point, self.parent).z))
+		self.parent:SetUnitOnClearGround()
+		GridNav:DestroyTreesAroundPoint(self.parent:GetAbsOrigin(), pull_distance, false)
 	end
 end
-
-function modifier_imba_kinetic_field_pull:OnDestroy()
-	if IsServer() then		
-		self.parent:SetUnitOnClearGround()		
-	end
-end
-
 
 
 ---------------------------------------------------
