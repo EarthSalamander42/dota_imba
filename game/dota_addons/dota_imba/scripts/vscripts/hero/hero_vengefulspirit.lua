@@ -887,7 +887,7 @@ function imba_vengefulspirit_nether_swap:OnOwnerDied()
 	local caster = self:GetCaster()
 	if self:GetLevel() > 0 and caster:HasScepter() and( not caster:IsIllusion() ) then
 		local super_illusion = CreateUnitByName(caster:GetUnitName(), caster:GetAbsOrigin(), true, caster, nil, caster:GetTeam())
-		super_illusion:AddNewModifier(caster, self, "modifier_illusion", {})
+		super_illusion:AddNewModifier(caster, self, "modifier_illusion", {outgoing_damage = -(100 - self:GetSpecialValueFor("tooltip_illu_dmg_scepter")), incoming_damage = -(100 - self:GetSpecialValueFor("tooltip_illu_amp_scepter"))})
 		super_illusion:AddNewModifier(caster, self, "modifier_vengefulspirit_hybrid_special", {}) -- speshul snowflek modifier from vanilla
 		super_illusion:SetRespawnsDisabled(true)
 		super_illusion:MakeIllusion()
