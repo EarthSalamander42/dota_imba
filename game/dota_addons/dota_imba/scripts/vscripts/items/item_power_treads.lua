@@ -136,7 +136,7 @@ function modifier_imba_power_treads_2:OnIntervalThink()
 	end
 end
 
-function modifier_imba_power_treads_2:OnDestroyed()
+function modifier_imba_power_treads_2:OnDestroy()
 	if IsServer() then
 		for i = 0,2 do
 			local parent = self:GetParent()
@@ -144,7 +144,6 @@ function modifier_imba_power_treads_2:OnDestroyed()
 		end
 	end
 end
-
 
 
 function modifier_imba_power_treads_2:GetModifierMoveSpeedBonus_Special_Boots()
@@ -204,6 +203,7 @@ function modifier_imba_mega_treads_stat_multiplier_00:OnIntervalThink()
 	if IsServer() then
 		local strength = self:GetParent():GetStrength()
 		self:SetStackCount(strength)
+		self:GetParent():CalculateStatBonus()
 	end
 end
 
@@ -273,6 +273,7 @@ function modifier_imba_mega_treads_stat_multiplier_01:OnIntervalThink()
 	if IsServer() then
 		local agility = self:GetParent():GetAgility()
 		self:SetStackCount(agility)
+		self:GetParent():CalculateStatBonus()
 	end
 end
 
@@ -334,6 +335,7 @@ function modifier_imba_mega_treads_stat_multiplier_02:OnIntervalThink()
 		local parent = self:GetParent()
 		local int = parent:GetIntellect()
 		self:SetStackCount(int)
+		self:GetParent():CalculateStatBonus()
 	end
 end
 
