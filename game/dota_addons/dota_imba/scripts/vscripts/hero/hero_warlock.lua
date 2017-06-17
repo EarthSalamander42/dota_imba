@@ -578,6 +578,7 @@ function imba_warlock_upheaval:OnSpellStart()
 
             -- Find the demon's Upheaval ability
             local ability_demon = demon:FindAbilityByName("imba_warlock_upheaval")
+            ability_demon:SetActivated(true)
             ExecuteOrderFromTable({ UnitIndex = demon:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_POSITION, Position = demon:GetAbsOrigin(), AbilityIndex = ability_demon:GetEntityIndex(), Queue = queue})
             ability_demon:SetActivated(false)
 
