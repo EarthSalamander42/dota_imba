@@ -12081,6 +12081,103 @@
 				"duration"						"12"
 			}
 		}
+	}	
+
+
+	//=================================================================================================================
+	// Recipe : Blade Mail
+	//=================================================================================================================
+	"item_recipe_imba_blade_mail"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2247"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+		"Model"							"models/props_gameplay/recipe.mdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"
+		"ItemShopTags"					""
+
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_blade_mail"
+		"ItemRequirements"
+		{
+			"01"						"item_broadsword;item_chainmail;item_robe"
+		}
 	}
-	//next free ID: 2247
+
+	//=================================================================================================================
+	// Blade Mail
+	//=================================================================================================================
+	"item_imba_blade_mail"
+	{
+		"ID"							"2248"
+		"BaseClass"						"item_lua"
+		"AbilityTextureName"			"item_blade_mail"
+		"ScriptFile"					"items/item_blademail.lua"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost" 						"2200"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemShopTags"					"agi;int;str;armor;damage"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"blade;blademail;"
+		"SideShop" 						"0"
+		"SecretShop" 					"0"
+		"AbilitySharedCooldown"			"blademail"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityCooldown"				"20"
+		"AbilityManaCost"				"25"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"						"particles/items_fx/blademail.vpcf"
+			"particle"						"particles/status_fx/status_effect_blademail.vpcf"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_int"						"10"
+			}			
+
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_damage"					"22"
+			}	
+
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_armor"					"6"
+			}
+
+			"04"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"return_duration"				"4.5"
+			}
+
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"return_damage_pct"				"100"
+			}
+		}
+	}
+	//next free ID: 2248
 }

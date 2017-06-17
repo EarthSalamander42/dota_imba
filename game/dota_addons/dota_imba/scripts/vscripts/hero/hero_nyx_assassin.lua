@@ -750,12 +750,12 @@ function modifier_imba_spiked_carapace:OnTakeDamage(keys)
         if unit == self.caster then            
 
             -- If it was a no reflection damage, do nothing
-            if damage_flags == 5136 then
+            if bit.band(damage_flags, DOTA_DAMAGE_FLAG_REFLECTION) == DOTA_DAMAGE_FLAG_REFLECTION then
                 return nil
             end
 
-            -- If this has a no no reflection flag or a HP loss, do nothing
-            if damage_flags == DOTA_DAMAGE_FLAG_HPLOSS or damage_flags == DOTA_DAMAGE_FLAG_REFLECTION then
+            -- If this has a HP loss flag, do nothing
+            if bit.band(damage_flags, DOTA_DAMAGE_FLAG_HPLOSS) == DOTA_DAMAGE_FLAG_HPLOSS then
                 return nil
             end
 
@@ -794,10 +794,10 @@ function modifier_imba_spiked_carapace:OnTakeDamage(keys)
                 end
             end
 
-            -- If the attacker is magic immune, do nothing
-            if attacker:IsMagicImmune() then
+            -- If the attacker is magic immune or invulnerable, do nothing
+            if attacker:IsMagicImmune() or attacker:IsInvulnerable() then
                 return nil
-            end            
+            end  
 
             -- Damage the attacker
             local damageTable = {victim = attacker,

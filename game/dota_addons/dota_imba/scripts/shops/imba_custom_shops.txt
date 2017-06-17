@@ -136,7 +136,7 @@
 	{
 		"item"		"item_imba_hood_of_defiance"
 		"item"		"item_imba_vanguard"
-		"item"		"item_blade_mail"
+		"item"		"item_imba_blade_mail"
 		"item"		"item_black_king_bar"
 		"item"		"item_imba_black_queen_cape"
 		"item"		"item_imba_assault"
