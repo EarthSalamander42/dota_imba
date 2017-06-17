@@ -1807,7 +1807,7 @@ function imba_techies_remote_mine_pinpoint_detonation:OnSpellStart()
                                  damage_type = DAMAGE_TYPE_MAGICAL,
                                  ability = ability
                                  }
-
+             ApplyDamage(damageTable)
             RefreshElectroCharge(enemy)
         end
 
