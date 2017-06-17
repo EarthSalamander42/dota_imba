@@ -380,7 +380,7 @@
 	"DOTA_Tooltip_Talent_special_bonus_imba_lina_7_title"						"炽魂"
 	"DOTA_Tooltip_Talent_special_bonus_imba_lina_7_Description"					"+1 炽魂最大叠加数"
 	"DOTA_Tooltip_Talent_special_bonus_imba_lina_8_title"						"炽魂"
-	"DOTA_Tooltip_Talent_special_bonus_imba_lina_8_Description"					"炽魂获得焚身效果"
+	"DOTA_Tooltip_Talent_special_bonus_imba_lina_8_Description"					"炽魂获得焚身效果，攻击将点燃目标，持续10秒，每秒目标将受到莉娜10%智力的魔法伤害，如果莉娜的任何技能对目标造成了伤害，则直接结算焚身的总伤害。"
 
 	// Lion
 	"Dota_Tooltip_Talent_special_bonus_imba_lion_1_title"							"裂地尖刺"
