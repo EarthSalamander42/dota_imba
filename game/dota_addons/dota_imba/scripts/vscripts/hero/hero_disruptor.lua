@@ -884,8 +884,7 @@ function modifier_imba_kinetic_field_check_position:kineticize(caster, target, a
 	origin_difference_radian = origin_difference_radian * 180
 	local angle_from_center = origin_difference_radian / math.pi
 	-- Makes angle "0 to 360 degrees" as opposed to "-180 to 180 degrees" aka standard dota angles.
-	angle_from_center = angle_from_center + 180.0
-	print(math.abs(distance_from_border))
+	angle_from_center = angle_from_center + 180.0	
 	-- Checks if the target is inside the field
 	if distance_from_border < 0 and math.abs(distance_from_border) <= 50 then
 		target:AddNewModifier(caster, ability, modifier_barrier, {})
