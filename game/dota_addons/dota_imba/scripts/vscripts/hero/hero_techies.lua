@@ -541,8 +541,8 @@ function modifier_imba_proximity_mine:_Explode()
 
             -- Deal damage
             local damageTable = {victim = enemy,
-                                    attacker = caster,
-                                    damage = damage,
+                                    attacker = caster, 
+                                    damage = damage * ((1+(PlayerResource:GetSelectedHeroEntity(self.caster:GetPlayerOwnerID()):GetSpellPower() * 0.01))),
                                     damage_type = DAMAGE_TYPE_MAGICAL,
                                     ability = self.ability
                                     }
@@ -711,7 +711,7 @@ function modifier_imba_proximity_mine_talent:OnIntervalThink()
             -- Deal magical damage to them
             local damageTable = {victim = enemy,
                                  attacker = self.caster,
-                                 damage = self.damage,
+                                 damage = self.damage * ((1+(PlayerResource:GetSelectedHeroEntity(self.caster:GetPlayerOwnerID()):GetSpellPower() * 0.01))),
                                  damage_type = DAMAGE_TYPE_MAGICAL,
                                  ability = self.ability
                                  }
@@ -1803,12 +1803,10 @@ function imba_techies_remote_mine_pinpoint_detonation:OnSpellStart()
             -- Deal damage to enemies
             local damageTable = {victim = enemy,
                                  attacker = caster,
-                                 damage = damage,
+                                 damage = damage * (1+(PlayerResource:GetSelectedHeroEntity(caster:GetPlayerOwnerID()):GetSpellPower() * 0.01)),
                                  damage_type = DAMAGE_TYPE_MAGICAL,
                                  ability = ability
                                  }
-
-            ApplyDamage(damageTable)
 
             RefreshElectroCharge(enemy)
         end
