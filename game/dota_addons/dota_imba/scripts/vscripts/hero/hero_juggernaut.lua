@@ -35,6 +35,7 @@ function imba_juggernaut_blade_fury:OnSpellStart()
 	elseif rand >= 10 and rand <= 18 then
 		caster:EmitSound("Imba.JuggernautBladeFury"..rand)
 	end
+
 end
 
 LinkLuaModifier("modifier_imba_juggernaut_blade_fury", "hero/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
@@ -775,6 +776,7 @@ modifier_imba_omni_slash_caster = modifier_imba_omni_slash_caster or class({})
 function modifier_imba_omni_slash_caster:OnCreated( )
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
+	
 	if not self.caster:HasScepter() then
 		self.bounce_range = self.ability:GetTalentSpecialValueFor("bounce_range")
 		self.bounce_amt = self.ability:GetTalentSpecialValueFor("jump_amount")
@@ -784,6 +786,7 @@ function modifier_imba_omni_slash_caster:OnCreated( )
 	end
 	
 	if IsServer() then
+		self.ability:SetRefCountsModifiers(false)
 		self:StartIntervalThink(self.ability:GetSpecialValueFor("bounce_delay"))
 	end
 end
