@@ -1,6 +1,7 @@
 --[[
 Author: sercankd
 Date: 06.06.2017
+Updated: 17.06.2017
 ]]
 
 
@@ -796,7 +797,7 @@ function modifier_imba_kinetic_field:OnCreated(keys)
 		ParticleManager:SetParticleControl(self.field_particle, 0, self.target_point)
 		ParticleManager:SetParticleControl(self.field_particle, 1, Vector(self.field_radius, 1, 1))
 		ParticleManager:SetParticleControl(self.field_particle, 2, Vector(self.duration, 0, 0))
-		self:StartIntervalThink(0.1)
+		self:StartIntervalThink(FrameTime())
 	end
 end
 
@@ -816,7 +817,7 @@ function modifier_imba_kinetic_field:OnIntervalThink()
 	local enemies_in_field = FindUnitsInRadius(self.caster:GetTeamNumber(),
 									self.target_point,
 									nil,
-									self.field_radius + 50,
+									self.field_radius + 200,
 									DOTA_UNIT_TARGET_TEAM_ENEMY,
 									DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 									DOTA_UNIT_TARGET_FLAG_NONE,
@@ -837,6 +838,7 @@ function modifier_imba_kinetic_field_check_position:IsHidden()	return true end
 function modifier_imba_kinetic_field_check_position:OnCreated(keys)
 	--fuck you vectors
 	self.target_point = Vector(keys.target_point_x, keys.target_point_y, keys.target_point_z)
+	self:StartIntervalThink(FrameTime())
 end
 function modifier_imba_kinetic_field_check_position:DeclareFunctions()
   local funcs = { MODIFIER_EVENT_ON_UNIT_MOVED }
@@ -883,14 +885,14 @@ function modifier_imba_kinetic_field_check_position:kineticize(caster, target, a
 	local angle_from_center = origin_difference_radian / math.pi
 	-- Makes angle "0 to 360 degrees" as opposed to "-180 to 180 degrees" aka standard dota angles.
 	angle_from_center = angle_from_center + 180.0
-	
+	print(math.abs(distance_from_border))
 	-- Checks if the target is inside the field
-	if distance_from_border < 0 and math.abs(distance_from_border) <= 40 then
+	if distance_from_border < 0 and math.abs(distance_from_border) <= 50 then
 		target:AddNewModifier(caster, ability, modifier_barrier, {})
 		target:AddNewModifier(caster, ability, "modifier_imba_kinetic_field_pull", {duration = 0.5, target_point_x = self.target_point.x, target_point_y = self.target_point.y, target_point_z = self.target_point.z})
 
 	-- Checks if the target is outside the field,
-	elseif distance_from_border > 0 and math.abs(distance_from_border) <= 40 then
+	elseif distance_from_border > 0 and math.abs(distance_from_border) <= 60 then
 		target:AddNewModifier(caster, ability, modifier_barrier, {})
 
 		--check if caster has scepter
@@ -951,7 +953,9 @@ function modifier_imba_kinetic_field_barrier:OnCreated()
 				ability = ability
 				}
 			end
-		ApplyDamage(damageTable)
+		if not target:HasModifier("modifier_imba_kinetic_field_knockback") or not target:HasModifier("modifier_imba_kinetic_field_pull") then
+			ApplyDamage(damageTable)
+		end
 		-- reduce ability cooldown everytime a player touch the barrier
 		if not kinetic_recharge then
 			local kinetic_recharge = true
@@ -1013,6 +1017,15 @@ end
 function modifier_imba_kinetic_field_knockback:GetEffectAttachType()
 	return PATTACH_ABSORIGIN
 end
+
+function modifier_imba_kinetic_field_knockback:CheckState()
+    local state = 
+	{
+		[MODIFIER_STATE_STUNNED] = IsServer()
+	}
+    return state
+end
+
 function modifier_imba_kinetic_field_knockback:OnIntervalThink()
 	-- Check motion controllers
 	if not self:CheckMotionControllers() then
@@ -1091,7 +1104,13 @@ function modifier_imba_kinetic_field_pull:HorizontalMotion()
 	end
 end
 
-
+function modifier_imba_kinetic_field_pull:CheckState()
+    local state = 
+	{
+		[MODIFIER_STATE_STUNNED] = IsServer()
+	}
+    return state
+end
 ---------------------------------------------------
 --			Static Storm
 ---------------------------------------------------
