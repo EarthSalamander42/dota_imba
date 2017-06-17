@@ -776,6 +776,11 @@ modifier_imba_omni_slash_caster = modifier_imba_omni_slash_caster or class({})
 function modifier_imba_omni_slash_caster:OnCreated( )
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
+
+	if not self.ability then
+		self:Destroy()
+		return nil
+	end
 	
 	if not self.caster:HasScepter() then
 		self.bounce_range = self.ability:GetTalentSpecialValueFor("bounce_range")
@@ -838,21 +843,16 @@ function modifier_imba_omni_slash_caster:BounceAndSlaughter( )
 	end
 end
 
-function modifier_imba_omni_slash_caster:OnRemoved()
+function modifier_imba_omni_slash_caster:OnDestroy()
 	if IsServer() then
-		if self.caster:HasModifier("modifier_imba_blade_fury_caster") then
-			StartAnimation(self.caster, {activity = ACT_DOTA_OVERRIDE_ABILITY_1, rate = 1.0})
-		else
-			EndAnimation(self.caster)
-		end
-
 		PlayerResource:SetCameraTarget(self.caster:GetPlayerID(), nil)
+
 		if self.bounce_amt > 1 then
 			local rand = RandomInt(1, 2)
 			self.caster:EmitSound("juggernaut_jug_ability_waste_0"..rand)
 		end
 
-		self.ability:SetActivated(true)
+		self.ability:SetActivated(true)		
 	end
 end
 

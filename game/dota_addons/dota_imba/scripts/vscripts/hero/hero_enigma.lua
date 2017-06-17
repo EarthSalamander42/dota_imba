@@ -65,18 +65,6 @@ modifier_imba_enigma_malefice_stun = class({ -- actual 'stun' of malefice
 		states = {[MODIFIER_STATE_STUNNED]= true}
 	})
 
-modifier_eidolon_buffs = class({ 
-		DeclareFunctions                     = function(self) return modifier_eidolon_buffs.funcs                      end,     
-		IsDebuff                             = function(self) return false                                             end,
-		IsPurgable                           = function(self) return false                                             end,           
-		IsHidden                             = function(self) return true                                              end,    
-		GetModifierAttackSpeedBonus_Constant = function(self) return self.shard_attack_speed                           end,
-		GetModifierPhysicalArmorBonus        = function(self) return self.shard_armor                                  end,
-		GetModifierMoveSpeedBonus_Constant   = function(self) return self.shard_movespeed                              end,
-		},{
-		funcs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,MODIFIER_EVENT_ON_ATTACK,MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
-	})
-
 modifier_imba_enigma_black_hole = class({ -- ultra hard disable, forces pull on gravity well, enigma gets perma buff per hero caught
 		DeclareFunctions                 = function(self) return modifier_imba_enigma_black_hole.funcs             end,
 		CheckState                                           = function(self) return self.states                   end,
@@ -167,21 +155,59 @@ end
 
 function imba_enigma_demonic_conversion:IsNetherWardStealable() return false end
 
+modifier_eidolon_buffs = modifier_eidolon_buffs or class({})
+
 function modifier_eidolon_buffs:OnCreated(var)
 	if IsServer() then
-		local shard_percentage,attacks_to_split = getkvValues(self:GetAbility(),"shard_percentage","attacks_to_split") 
-		self.additional_attacks_split = self:GetAbility():GetSpecialValueFor("additional_attacks_split")
 		self.parent = self:GetParent()
+		self.statsource = self.parent:GetOwner()
+		self:SetStackCount(self.statsource:entindex())
+		local attacks_to_split = self:GetAbility():GetSpecialValueFor("attacks_to_split")
+		self.attacks = var.attacks		
 		self.attacks_to_split = attacks_to_split + var.additional_attacks
 		self.attacks_increase = var.attacks_increase + 1
-		shard_percentage = shard_percentage / 100
-		self.attacks = var.attacks
-		self.statsource = self.parent:GetOwner()		
-		self.shard_attack_speed        = self.statsource:GetAttackSpeed()        * shard_percentage
-		self.shard_movespeed           = self.statsource:GetBaseMoveSpeed()      * shard_percentage
-		self.shard_armor               = self.statsource:GetPhysicalArmorValue() * shard_percentage						
-	end	
+		self.additional_attacks_split = self:GetAbility():GetSpecialValueFor("additional_attacks_split")
+	end
+
+	self:StartIntervalThink(0.5)	
 end	
+
+function modifier_eidolon_buffs:OnIntervalThink()
+	local shard_percentage = getkvValues(self:GetAbility(),"shard_percentage") 	
+
+	local source_handle = EntIndexToHScript(self:GetStackCount())
+	shard_percentage = (shard_percentage + self:GetCaster():FindTalentValue("special_bonus_imba_enigma_3")) * 0.01							
+	self.shard_attack_speed        = source_handle:GetAttackSpeed()        * shard_percentage * 100
+	self.shard_movespeed           = source_handle:GetBaseMoveSpeed()      * shard_percentage
+	self.shard_armor               = source_handle:GetPhysicalArmorValue() * shard_percentage		
+
+	self:StartIntervalThink(-1)
+end
+
+function modifier_eidolon_buffs:DeclareFunctions()
+	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
+					  MODIFIER_EVENT_ON_ATTACK,
+					  MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+					  MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
+	return decFuncs
+end
+
+function modifier_eidolon_buffs:IsDebuff() return false end
+function modifier_eidolon_buffs:IsHidden() return true end
+function modifier_eidolon_buffs:IsPurgable() return false end
+
+function modifier_eidolon_buffs:GetModifierAttackSpeedBonus_Constant()	
+	return self.shard_attack_speed
+end
+
+function modifier_eidolon_buffs:GetModifierPhysicalArmorBonus()
+	return self.shard_armor	
+end
+
+function modifier_eidolon_buffs:GetModifierMoveSpeedBonus_Constant()
+	return self.shard_movespeed
+end
+
 
 -------------------------------
 --[[ SERVER EXECUTION ONLY ]]--
