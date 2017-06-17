@@ -241,7 +241,8 @@ function modifier_imba_rapier_cursed:DeclareFunctions()
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_PROPERTY_PROVIDES_FOW_POSITION,
-		MODIFIER_PROPERTY_FORCE_DRAW_MINIMAP
+		MODIFIER_PROPERTY_FORCE_DRAW_MINIMAP,
+        MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE
     }
     return decFuns
 end
@@ -254,6 +255,7 @@ function modifier_imba_rapier_cursed:OnCreated()
 		self.bonus_damage = item:GetSpecialValueFor("bonus_damage")
 		self.tenacity_pct = item:GetSpecialValueFor("tenacity_pct")
 		self.base_corruption = item:GetSpecialValueFor("base_corruption")
+        self.damage_reduction = item:GetSpecialValueFor("damage_reduction")
 		self.time_to_double = item:GetSpecialValueFor("time_to_double")
 		self.corruption_total_time = 0
 		if IsServer() then
@@ -263,6 +265,10 @@ function modifier_imba_rapier_cursed:OnCreated()
 		self.spell_power = 0
 		self.bonus_damage = 0
 	end
+end
+
+function modifier_imba_rapier_cursed:GetModifierIncomingDamage_Percentage()
+    return self.damage_reduction * (-1)
 end
 
 function modifier_imba_rapier_cursed:GetTenacity()

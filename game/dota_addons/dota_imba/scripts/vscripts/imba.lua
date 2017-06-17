@@ -760,28 +760,12 @@ function GameMode:DamageFilter( keys )
 			return false
 		end
 
-		local damage_type = keys.damagetype_const
-		local display_red_crit_number = false
+		local damage_type = keys.damagetype_const		
 
 		-- Lack of entities handling
 		if not attacker or not victim then
 			return false
-		end
-
-		-- Cursed Rapier damage reduction
-		if victim:HasModifier("modifier_imba_rapier_cursed") and keys.damage > 0 and victim:GetTeam() ~= attacker:GetTeam() then
-			keys.damage = keys.damage * 0.25
-		end
-
-		-- Spiked Carapace damage prevention
-		if victim:HasModifier("modifier_imba_spiked_carapace") and keys.damage > 0 then
-
-			-- Nullify damage
-			keys.damage = 0
-
-			-- Prevent crit damage notifications
-			display_red_crit_number = false
-		end
+		end		
 		
 		-- If the attacker is holding an Arcane/Archmage/Cursed Rapier and the distance is over the cap, remove the spellpower bonus from it
 		if attacker:HasModifier("modifier_imba_arcane_rapier") or attacker:HasModifier("modifier_imba_arcane_rapier_2") or attacker:HasModifier("modifier_imba_rapier_cursed") then			
@@ -813,109 +797,7 @@ function GameMode:DamageFilter( keys )
 					keys.damage = keys.damage / (1 + rapier_spellpower * 0.01)
 				end
 			end
-		end		
-
-		-- Vanguard block
-		if victim:HasModifier("modifier_item_vanguard_unique") and keys.damage > 0 then
-
-			-- If a higher tier of Vanguard-based block is present, do nothing
-			if not ( victim:HasModifier("modifier_item_crimson_guard_unique") or victim:HasModifier("modifier_item_crimson_guard_active") or victim:HasModifier("modifier_item_greatwyrm_plate_unique") or victim:HasModifier("modifier_item_greatwyrm_plate_active") ) and not victim:HasModifier("modifier_sheepstick_debuff") then
-
-				-- Reduce damage
-				if victim:GetTeam() ~= attacker:GetTeam() then
-					keys.damage = keys.damage * 0.90
-				end
-
-				-- Physical damage block
-				if damage_type == DAMAGE_TYPE_PHYSICAL and not ( attacker:IsBuilding() or attacker:GetUnitName() == "witch_doctor_death_ward" ) then
-
-					-- Calculate damage block
-					local damage_block = 0 + victim:GetLevel()
-
-					-- Calculate actual damage
-					local actual_damage = math.max(keys.damage - damage_block, 0)
-
-					-- Calculate actually blocked damage
-					local damage_blocked = keys.damage - actual_damage
-
-					-- Play block message
-					SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, victim, damage_blocked, nil)
-
-					-- Reduce damage
-					keys.damage = actual_damage
-				end
-			end
-		end
-
-		-- Crimson Guard block
-		if ( victim:HasModifier("modifier_item_crimson_guard_unique") or victim:HasModifier("modifier_item_crimson_guard_active") ) and keys.damage > 0 then
-
-			-- If a higher tier of Vanguard-based block is present, do nothing
-			if not ( victim:HasModifier("modifier_item_greatwyrm_plate_unique") or victim:HasModifier("modifier_item_greatwyrm_plate_active") ) and not victim:HasModifier("modifier_sheepstick_debuff") then
-
-				-- Reduce damage
-				if victim:GetTeam() ~= attacker:GetTeam() then
-					keys.damage = keys.damage * 0.85
-				end
-
-				-- Physical damage block
-				if damage_type == DAMAGE_TYPE_PHYSICAL and not ( attacker:IsBuilding() or attacker:GetUnitName() == "witch_doctor_death_ward" ) then
-
-					-- Calculate damage block
-					local damage_block
-					if victim:GetLevel() then
-						damage_block = 5 + victim:GetLevel()
-					else
-						damage_block = 20
-					end
-
-					-- Calculate actual damage
-					local actual_damage = math.max(keys.damage - damage_block, 0)
-
-					-- Calculate actually blocked damage
-					local damage_blocked = keys.damage - actual_damage
-
-					-- Play block message
-					SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, victim, damage_blocked, nil)
-
-					-- Reduce damage
-					keys.damage = actual_damage
-				end
-			end
-		end
-
-		-- Greatwyrm plate block
-		if ( victim:HasModifier("modifier_item_greatwyrm_plate_unique") or victim:HasModifier("modifier_item_greatwyrm_plate_active") ) and keys.damage > 0 and not victim:HasModifier("modifier_sheepstick_debuff") then
-
-			-- Reduce damage
-			if victim:GetTeam() ~= attacker:GetTeam() then
-				keys.damage = keys.damage * 0.85
-			end
-
-			-- Physical damage block
-			if damage_type == DAMAGE_TYPE_PHYSICAL and not ( attacker:IsBuilding() or attacker:GetUnitName() == "witch_doctor_death_ward" ) then
-
-				-- Calculate damage block
-				local damage_block
-				if victim:GetLevel() then
-					damage_block = 10 + victim:GetLevel()
-				else
-					damage_block = 25
-				end
-
-				-- Calculate actual damage
-				local actual_damage = math.max(keys.damage - damage_block, 0)
-
-				-- Calculate actually blocked damage
-				local damage_blocked = keys.damage - actual_damage
-
-				-- Play block message
-				SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, victim, damage_blocked, nil)
-
-				-- Reduce damage
-				keys.damage = actual_damage
-			end
-		end
+		end				
 
 		-- Magic shield damage prevention
 		if victim:HasModifier("modifier_item_imba_initiate_robe_stacks") and victim:GetTeam() ~= attacker:GetTeam() then
@@ -942,12 +824,7 @@ function GameMode:DamageFilter( keys )
 			if shield_modifier and shield_modifier.AbsorbDamage then
 				keys.damage = shield_modifier:AbsorbDamage(keys.damage)
 			end
-		end
-
-		-- Damage overhead display
-		if display_red_crit_number then
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, victim, keys.damage, nil)		
-		end
+		end		
 
 		-- Reaper's Scythe kill credit logic
 		if victim:HasModifier("modifier_imba_reapers_scythe") then

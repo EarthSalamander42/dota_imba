@@ -727,6 +727,10 @@ function imba_juggernaut_omni_slash:GetIntrinsicModifierName()
 	return	"modifier_imba_juggernaut_omni_slash_cdr"
 end
 
+function imba_juggernaut_omni_slash:IsHiddenWhenStolen()
+	return false
+end
+
 function imba_juggernaut_omni_slash:GetAbilityTextureName()
    return "juggernaut_omni_slash"
 end
@@ -789,17 +793,13 @@ function modifier_imba_omni_slash_caster:OnIntervalThink( )
 end
 
 function modifier_imba_omni_slash_caster:BounceAndSlaughter( )
-	local nearby_enemies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.caster:GetAbsOrigin(), nil, self.bounce_range, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)	
+	local nearby_enemies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.caster:GetAbsOrigin(), nil, self.bounce_range, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)	
 	if self.bounce_amt >= 1 and #nearby_enemies >= 1 then
 		for _,enemy in pairs(nearby_enemies) do
 			local previous_position = self.caster:GetAbsOrigin()
 			FindClearSpaceForUnit(self.caster, enemy:GetAbsOrigin() + RandomVector(128), false)
 			self.caster:MoveToTargetToAttack(enemy)
-			local current_position = self.caster:GetAbsOrigin()
-
-			if enemy:TriggerSpellAbsorb(self) then
-				break
-			end
+			local current_position = self.caster:GetAbsOrigin()			
 
 			-- Provide vision of the target for a short duration
 			self.ability:CreateVisibilityNode(current_position, 300, 1.0)
