@@ -883,6 +883,48 @@ function imba_vengefulspirit_nether_swap:OnProjectileHit(target, location)
 	EmitSoundOnLocationWithCaster(location, "Hero_VengefulSpirit.MagicMissileImpact", caster)
 end
 
+function imba_vengefulspirit_nether_swap:OnOwnerDied()
+	local caster = self:GetCaster()
+	if self:GetLevel() > 0 and caster:HasScepter() and( not caster:IsIllusion() ) then
+		local super_illusion = CreateUnitByName(caster:GetUnitName(), caster:GetAbsOrigin(), true, caster, nil, caster:GetTeam())
+		super_illusion:AddNewModifier(caster, self, "modifier_illusion", {})
+		super_illusion:AddNewModifier(caster, self, "modifier_vengefulspirit_hybrid_special", {}) -- speshul snowflek modifier from vanilla
+		super_illusion:SetRespawnsDisabled(true)
+		super_illusion:MakeIllusion()
+		
+		super_illusion:SetControllableByPlayer(caster:GetPlayerID(), true)
+		super_illusion:SetPlayerID(caster:GetPlayerID())
+		
+		local parent_level = caster:GetLevel()
+		for i=1, parent_level-1 do
+			super_illusion:HeroLevelUp(false)
+		end
+
+		-- Set the skill points to 0 and learn the skills of the caster
+		super_illusion:SetAbilityPoints(0)
+		for abilitySlot=0,15 do
+			local ability = caster:GetAbilityByIndex(abilitySlot)
+			if ability ~= nil then
+				local abilityLevel = ability:GetLevel()
+				local abilityName = ability:GetAbilityName()
+				local illusionAbility = super_illusion:FindAbilityByName(abilityName)
+				if illusionAbility then
+					illusionAbility:SetLevel(abilityLevel)
+				end
+			end
+		end
+
+		 -- Recreate the items of the caster
+		for itemSlot=0,5 do
+			local item = caster:GetItemInSlot(itemSlot)
+			if item ~= nil then
+				local itemName = item:GetName()
+				local newItem = CreateItem(itemName, super_illusion, super_illusion)
+				super_illusion:AddItem(newItem)
+			end
+		end
+	end
+end
 -------------------------------------------
 modifier_imba_nether_swap = class({})
 function modifier_imba_nether_swap:IsDebuff() return false end
