@@ -629,7 +629,7 @@ end
 
 function modifier_imba_crystal_maiden_brilliance_aura:GetModifierSpellAmplify_Percentage()
 	-- Only apply if the parent has more than the spellpower threshold
-	if self.parent:GetManaPercent() > self.spellpower_threshold_pct then
+	if self.parent and self.parent:GetManaPercent() > self.spellpower_threshold_pct then
 
 		if self.parent == self.caster then
 			return self:GetAbility():GetSpecialValueFor("bonus_spellpower") * self.bonus_self 

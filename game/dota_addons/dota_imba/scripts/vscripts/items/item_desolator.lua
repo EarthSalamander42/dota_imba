@@ -86,6 +86,12 @@ function modifier_item_imba_blight_stone_debuff:IsPurgable() return true end
 -- Store modifier values in case the original ability is missing
 function modifier_item_imba_blight_stone_debuff:OnCreated()
 	local ability = self:GetAbility()
+
+	if not ability then
+		self:Destroy()
+		return nil
+	end
+	
 	self.armor_reduction = (-1) * ability:GetSpecialValueFor("armor_reduction")
 	self.vision_reduction = (-1) * ability:GetSpecialValueFor("vision_reduction")
 end
