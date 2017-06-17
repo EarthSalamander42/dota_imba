@@ -117,8 +117,8 @@ function modifier_imba_blade_mail_active:OnTakeDamage(keys)
     -- Only apply if the one taking damage is the parent
     if target == self.parent then        
 
-        -- If the damage was self-inflicted, ignore it
-        if attacker == target then
+        -- If the damage was self-inflicted or from an ally, ignore it
+        if attacker:GetTeamNumber() == target:GetTeamNumber() then
             return nil
         end
 
