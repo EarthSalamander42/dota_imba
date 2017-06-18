@@ -601,6 +601,39 @@ imba_omniknight_hammer_of_virtue = class({})
 LinkLuaModifier("modifier_imba_hammer_of_virtue", "hero/hero_omniknight.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_hammer_of_virtue_nodamage", "hero/hero_omniknight.lua", LUA_MODIFIER_MOTION_NONE)
 
+function imba_omniknight_hammer_of_virtue:OnToggle() return end
+
+function imba_omniknight_hammer_of_virtue:OnSpellStart() 
+	if IsServer() then
+		-- Force attack the target
+		local caster = self:GetCaster()
+		caster:MoveToTargetToAttack(self:GetCursorTarget())
+		-- If manually casted, reset CD, CD getting applied on hit
+		self:EndCooldown()
+		self.isAutoAttack = false 
+	end   
+end
+
+-- THIS IF VERY FRAGILE CODE, EVEN PRINTING IT WILL FUCK THINGS UP
+function imba_omniknight_hammer_of_virtue:IsAutoAttack()
+	if self.isAutoAttack ~= nil then
+		-- Reset auto attack checker
+		local original_value = self.isAutoAttack
+		self.isAutoAttack = true 
+		
+		return original_value
+	end
+	return true 
+end
+
+function imba_omniknight_hammer_of_virtue:IsStealable()
+	return false
+end
+
+function imba_omniknight_hammer_of_virtue:GetCastRange(location, target)
+    return self:GetCaster():GetAttackRange()
+end
+
 function imba_omniknight_hammer_of_virtue:GetAbilityTextureName()
    return "custom/omniknight_hammer_of_virtue"
 end
@@ -620,23 +653,25 @@ function modifier_imba_hammer_of_virtue:OnCreated()
         self.particle_heal = "particles/hero/omniknight/hammer_of_virtue_heal.vpcf"
         self.particle_hit = "particles/units/heroes/hero_omniknight/omniknight_purification_hit.vpcf"
         self.modifier_nodmg = "modifier_imba_hammer_of_virtue_nodamage"
+		self.IsAutoAttack = self.ability:IsAutoAttack() 
 
+		--  When first learned, activate auto-cast.
+		if not self.toggled_on_default then
+            self.toggled_on_default = true
+            self.ability:ToggleAutoCast()
+        end
+	
         -- Ability specials
         self.radius = self.ability:GetSpecialValueFor("radius")
         self.damage_as_heal_pct = self.ability:GetSpecialValueFor("damage_as_heal_pct")
     end 
 end
 
-function modifier_imba_hammer_of_virtue:IsHidden() return true end
-function modifier_imba_hammer_of_virtue:IsPurgable() return false end
-function modifier_imba_hammer_of_virtue:IsDebuff() return false end
-
-function modifier_imba_hammer_of_virtue:OnRefresh()
-    self:OnCreated()
-end
 
 function modifier_imba_hammer_of_virtue:DeclareFunctions()
-    local decFuncs = {MODIFIER_EVENT_ON_ATTACK_LANDED}
+    local decFuncs = {MODIFIER_EVENT_ON_ATTACK_LANDED,
+						
+	}
 
     return decFuncs
 end
@@ -656,11 +691,16 @@ function modifier_imba_hammer_of_virtue:OnAttackLanded(keys)
         -- Only apply on caster attacking
         if self.caster == attacker then
 
-            -- If the ability is in cooldown, do nothing
+            -- If the ability is on cooldown, do nothing
             if not self.ability:IsCooldownReady() then
                 return nil
             end
-
+			
+			-- If auto cast is disabled then don't apply automaticly
+			if self.ability:IsAutoAttack() and not self.ability:GetAutoCastState() then
+				return nil
+			end
+			
             -- If the attack was on a teammate, do nothing
             if self.caster:GetTeamNumber() == target:GetTeamNumber() then
                 return nil
@@ -720,10 +760,20 @@ function modifier_imba_hammer_of_virtue:OnAttackLanded(keys)
 
             -- Start the cooldown of the ability
             self.ability:UseResources(false, false, true)
+			
+			
         end
     end
 end
 
+function modifier_imba_hammer_of_virtue:IsHidden() return true end
+function modifier_imba_hammer_of_virtue:IsPurgable() return false end
+function modifier_imba_hammer_of_virtue:IsDebuff() return false end
+function modifier_imba_hammer_of_virtue:RemoveOnDeath() return false end
+
+function modifier_imba_hammer_of_virtue:OnRefresh()
+    self:OnCreated()
+end
 
 -- Hammer of Virtue no damage buff
 
