@@ -60,8 +60,17 @@ function modifier_item_imba_aegis:ReincarnateTime()
 	return self.reincarnate_time
 end
 
+function modifier_item_imba_aegis:OnDeath(keys)
+	if keys.unit == self:GetParent() then
+		Timers:CreateTimer(FrameTime(), function()
+			self:Destroy()
+		end)
+	end
+end
+
 function modifier_item_imba_aegis:IsDebuff() return false end
 function modifier_item_imba_aegis:IsHidden() return false end
 function modifier_item_imba_aegis:IsPurgable() return false end
 function modifier_item_imba_aegis:IsPurgeException() return false end
 function modifier_item_imba_aegis:IsStunDebuff() return false end
+function modifier_item_imba_aegis:RemoveOnDeath() return false end
