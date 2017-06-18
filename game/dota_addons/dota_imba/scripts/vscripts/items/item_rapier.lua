@@ -19,6 +19,8 @@ LinkLuaModifier("modifier_imba_divine_rapier_2", "items/item_rapier.lua", LUA_MO
 LinkLuaModifier("modifier_imba_arcane_rapier", "items/item_rapier.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_arcane_rapier_2", "items/item_rapier.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_rapier_cursed", "items/item_rapier.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_rapier_cursed_damage_reduction", "items/item_rapier.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_rapier_cursed_curse", "items/item_rapier.lua", LUA_MODIFIER_MOTION_NONE)
 
 rapier_base_class = class({})
 
@@ -254,12 +256,13 @@ function modifier_imba_rapier_cursed:OnCreated()
 		self.spell_power = item:GetSpecialValueFor("spell_power")
 		self.bonus_damage = item:GetSpecialValueFor("bonus_damage")
 		self.tenacity_pct = item:GetSpecialValueFor("tenacity_pct")
-		self.base_corruption = item:GetSpecialValueFor("base_corruption")
-        self.damage_reduction = item:GetSpecialValueFor("damage_reduction")
-		self.time_to_double = item:GetSpecialValueFor("time_to_double")
-		self.corruption_total_time = 0
-		if IsServer() then
-			self:StartIntervalThink(FrameTime())
+		-- Damage reductions don't stack
+		if not self.parent:HasModifier("modifier_imba_rapier_cursed_damage_reduction") then
+			self.parent:AddNewModifier(self.parent, item, "modifier_imba_rapier_cursed_damage_reduction", {})
+		end
+		-- Neither does the curse
+		if not self.parent:HasModifier("modifier_imba_rapier_cursed_curse") then
+			self.parent:AddNewModifier(self.parent, item, "modifier_imba_rapier_cursed_curse", {})
 		end
 	else
 		self.spell_power = 0
@@ -267,18 +270,15 @@ function modifier_imba_rapier_cursed:OnCreated()
 	end
 end
 
-function modifier_imba_rapier_cursed:GetModifierIncomingDamage_Percentage()
-    return self.damage_reduction * (-1)
+function modifier_imba_rapier_cursed:OnDestroy()
+	if not self.parent:HasModifier("modifier_imba_rapier_cursed") and IsServer() then
+		self.parent:RemoveModifierByName("modifier_imba_rapier_cursed_damage_reduction")
+		self.parent:RemoveModifierByName("modifier_imba_rapier_cursed_curse")
+	end
 end
 
 function modifier_imba_rapier_cursed:GetTenacity()
 	return self.tenacity_pct
-end
-
-function modifier_imba_rapier_cursed:OnIntervalThink()
-	self.corruption_total_time = self.corruption_total_time + FrameTime()
-	local total_corruption = self.base_corruption * self.parent:GetMaxHealth() * (self.corruption_total_time / self.time_to_double) * 0.01 * FrameTime()
-	ApplyDamage({attacker = self.parent, victim = self.parent, ability = self:GetAbility(), damage = total_corruption, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS+DOTA_DAMAGE_FLAG_NON_LETHAL})
 end
 
 function modifier_imba_rapier_cursed:GetModifierSpellAmplify_Percentage()
@@ -303,5 +303,61 @@ end
 
 function modifier_imba_rapier_cursed:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW
+end
+-------------------------------------------
+modifier_imba_rapier_cursed_damage_reduction = modifier_imba_rapier_cursed_damage_reduction or class({})
+
+function modifier_imba_rapier_cursed_damage_reduction:IsDebuff() return false end
+function modifier_imba_rapier_cursed_damage_reduction:IsHidden() return true end
+function modifier_imba_rapier_cursed_damage_reduction:IsPurgable() return false end
+function modifier_imba_rapier_cursed_damage_reduction:IsPurgeException() return false end
+function modifier_imba_rapier_cursed_damage_reduction:IsStunDebuff() return false end
+function modifier_imba_rapier_cursed_damage_reduction:RemoveOnDeath() return false end
+
+function modifier_imba_rapier_cursed_damage_reduction:OnCreated()
+	self.damage_reduction = self:GetAbility():GetSpecialValueFor("damage_reduction")
+end
+
+function modifier_imba_rapier_cursed_damage_reduction:DeclareFunctions()
+    local decFuns =
+    {
+        MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE
+    }
+    return decFuns
+end
+
+function modifier_imba_rapier_cursed_damage_reduction:GetModifierIncomingDamage_Percentage()
+    return self.damage_reduction * (-1)
+end
+-------------------------------------------
+modifier_imba_rapier_cursed_curse = modifier_imba_rapier_cursed_curse or class({})
+
+function modifier_imba_rapier_cursed_curse:IsDebuff() return false end
+function modifier_imba_rapier_cursed_curse:IsHidden() return true end
+function modifier_imba_rapier_cursed_curse:IsPurgable() return false end
+function modifier_imba_rapier_cursed_curse:IsPurgeException() return false end
+function modifier_imba_rapier_cursed_curse:IsStunDebuff() return false end
+function modifier_imba_rapier_cursed_curse:RemoveOnDeath() return false end
+
+function modifier_imba_rapier_cursed_curse:OnCreated()
+	self.parent = self:GetParent()
+	self.base_corruption = self:GetAbility():GetSpecialValueFor("base_corruption")
+	self.time_to_double = self:GetAbility():GetSpecialValueFor("time_to_double")
+	self.corruption_total_time = 0
+	if IsServer() then
+		self:StartIntervalThink(FrameTime())
+	end
+end
+
+function modifier_imba_rapier_cursed_curse:OnDestroy()
+	if IsServer() then
+		self:StartIntervalThink(-1)
+	end
+end
+
+function modifier_imba_rapier_cursed_curse:OnIntervalThink()
+	self.corruption_total_time = self.corruption_total_time + FrameTime()
+	local total_corruption = self.base_corruption * self.parent:GetMaxHealth() * (self.corruption_total_time / self.time_to_double) * 0.01 * FrameTime()
+	ApplyDamage({attacker = self.parent, victim = self.parent, ability = self:GetAbility(), damage = total_corruption, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS+DOTA_DAMAGE_FLAG_NON_LETHAL})
 end
 -------------------------------------------
