@@ -272,6 +272,9 @@ local id = event.PlayerID
 	-- If it's a valid hero, allow the player to select it
 	HeroSelection:HeroSelect({PlayerID = id, HeroName = random_hero, HasRandomed = true})
 
+	-- The person has randomed (separate from Set/HasRandomed, because those cannot be unset)
+	HeroSelection.playerPickState[id].random_state = true
+
 	-- Send a Custom Message in PreGame Chat to tell other players this player has randomed
 	Chat:PlayerRandomed(id, PlayerResource:GetPlayer(id), PlayerResource:GetTeam(id), random_hero)
 end
@@ -355,6 +358,7 @@ local id = event.PlayerID
 
 	PlayerResource:SetHasRandomed(id)
 	HeroSelection:HeroSelect({PlayerID = id, HeroName = random_hero, HasRandomed = true})
+	HeroSelection.playerPickState[id].random_state = true
 	Chat:PlayerRandomed(id, PlayerResource:GetPlayer(id), PlayerResource:GetTeam(id), random_hero)
 end
 
@@ -472,6 +476,7 @@ function HeroSelection:HeroRepicked( event )
 	PlayerResource:CustomSetHasRepicked(player_id, true)
 	HeroSelection.playerPickState[player_id].pick_state = "selecting_hero"
 	HeroSelection.playerPickState[player_id].repick_state = true
+	HeroSelection.playerPickState[player_id].random_state = false
 
 	-- Play pick sound to the player
 	EmitSoundOnClient("ui.pick_repick", PlayerResource:GetPlayer(player_id))
@@ -574,10 +579,14 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		end
 
 		-- Set up initial gold
-		local has_randomed = PlayerResource:HasRandomed(player_id)
+		-- local has_randomed = PlayerResource:HasRandomed(player_id)
+		-- This randomed variable gets reset when the player chooses to Repick, so you can detect a rerandom
+		local has_randomed = HeroSelection.playerPickState[player_id].random_state
 		local has_repicked = PlayerResource:CustomGetHasRepicked(player_id)
 
-		if has_repicked then
+		if has_repicked and has_randomed then
+			PlayerResource:SetGold(player_id, HERO_RERANDOM, false)
+		elseif has_repicked then
 			PlayerResource:SetGold(player_id, HERO_REPICK_GOLD, false)
 		elseif has_randomed or IMBA_PICK_MODE_ALL_RANDOM then
 			PlayerResource:SetGold(player_id, HERO_RANDOM_GOLD, false)
