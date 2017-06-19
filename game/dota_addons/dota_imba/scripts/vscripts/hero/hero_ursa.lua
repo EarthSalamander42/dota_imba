@@ -664,7 +664,7 @@ function modifier_imba_fury_swipes:GetModifierPreAttack_BonusDamage( keys )
 			
 			-- Initialize variables
 			local fury_swipes_debuff_handler
-			
+			local damage
 			-- Add debuff/increment stacks if already exists
 			if target:HasModifier(fury_swipes_debuff) then
 				fury_swipes_debuff_handler = target:FindModifierByName(fury_swipes_debuff)
@@ -687,7 +687,7 @@ function modifier_imba_fury_swipes:GetModifierPreAttack_BonusDamage( keys )
 			local fury_swipes_stacks = fury_swipes_debuff_handler:GetStackCount()
 			
 			-- Calculate damage
-			local damage = damage_per_stack * fury_swipes_stacks
+			damage = damage_per_stack * fury_swipes_stacks
 			
 			-- Check for Enrage's multiplier
 			if caster:HasModifier(enrage_buff) then
@@ -707,16 +707,7 @@ function modifier_imba_fury_swipes:GetModifierPreAttack_BonusDamage( keys )
 				EmitSoundOn(sound_deep_strike, caster)
 			end
 			
-			--[[
-			-- Apply additional damage	
-			local damageTable = {victim = target,
-								attacker = caster,
-								damage = damage,
-								damage_type = DAMAGE_TYPE_PHYSICAL,
-								ability = ability}
-						
-			ApplyDamage(damageTable)
---]]			return damage
+						return damage
 		end
 	end
 end
