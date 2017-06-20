@@ -613,17 +613,19 @@ function modifier_imba_fury_swipes:IsPurgable()
 end
 
 function modifier_imba_fury_swipes:DeclareFunctions()		
-	local decFuncs = {MODIFIER_EVENT_ON_ATTACK_LANDED}					 
+	local decFuncs = {
+	MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE 
+	}					 
 	return decFuncs		
 end
 
-function modifier_imba_fury_swipes:OnAttackLanded( keys )
+function modifier_imba_fury_swipes:GetModifierPreAttack_BonusDamage( keys )
 	-- Ability properties
 	if IsServer() then
 		local caster = self:GetCaster()
 		local target = keys.target
 		local ability = self:GetAbility()
-		local swipes_particle = "particles/units/heroes/hero_ursa/ursa_fury_swipes.vpcf"
+		local 	swipes_particle = "particles/units/heroes/hero_ursa/ursa_fury_swipes.vpcf"
 		local fury_swipes_debuff = "modifier_imba_fury_swipes_debuff"	
 		local deep_strike_particle = "particles/units/heroes/hero_bloodseeker/bloodseeker_bloodritual_impact.vpcf"		
 		local sound_deep_strike = "Imba.UrsaDeepStrike"
@@ -663,7 +665,6 @@ function modifier_imba_fury_swipes:OnAttackLanded( keys )
 			-- Initialize variables
 			local fury_swipes_debuff_handler
 			local damage
-			
 			-- Add debuff/increment stacks if already exists
 			if target:HasModifier(fury_swipes_debuff) then
 				fury_swipes_debuff_handler = target:FindModifierByName(fury_swipes_debuff)
@@ -706,18 +707,10 @@ function modifier_imba_fury_swipes:OnAttackLanded( keys )
 				EmitSoundOn(sound_deep_strike, caster)
 			end
 			
-			-- Apply additional damage	
-			local damageTable = {victim = target,
-								attacker = caster,
-								damage = damage,
-								damage_type = DAMAGE_TYPE_PHYSICAL,
-								ability = ability}
-						
-			ApplyDamage(damageTable)	
+						return damage
 		end
 	end
 end
-
 
 
 
