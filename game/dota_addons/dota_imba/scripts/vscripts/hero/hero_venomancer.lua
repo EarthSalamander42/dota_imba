@@ -442,7 +442,7 @@ function modifier_imba_poison_sting:OnAttackLanded( params )
 		local ability = self:GetAbility()
 		local duration = ability:GetSpecialValueFor("duration")
 		if (caster == params.attacker) and (params.target.IsCreep or params.target.IsHero) then
-			if not params.target:IsTower() then
+			if not params.target:IsBuilding() then
 				local mod = params.target:AddNewModifier(caster, ability, "modifier_imba_poison_sting_debuff", {duration = duration})
 				if mod then
 					mod:IncrementStackCount()
@@ -451,7 +451,7 @@ function modifier_imba_poison_sting:OnAttackLanded( params )
 		end
 		if params.attacker:GetName() == "npc_dota_venomancer_plagueward" then
 			if (params.attacker:GetPlayerOwnerID() == caster:GetPlayerID()) and params.attacker.bIsScourge and (params.target.IsCreep or params.target.IsHero) then
-				if not params.target:IsTower() then
+				if not params.target:IsBuilding() then
 					local poison = params.target:FindModifierByNameAndCaster("modifier_imba_poison_sting_debuff",caster)
 					if poison then
 						poison:SetDuration(poison:GetDuration(), true)
