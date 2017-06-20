@@ -638,7 +638,7 @@ function modifier_imba_heartstopper_aura:OnIntervalThink()
 	if IsServer() then
 		local caster = self:GetCaster()
 		if not caster:PassivesDisabled() then
-			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS, FIND_ANY_ORDER, false)
 			for _,enemy in ipairs(enemies) do
 				local modifier = enemy:FindModifierByNameAndCaster("modifier_imba_heartstopper_aura_damage",caster)
 				if modifier then
@@ -663,7 +663,7 @@ function modifier_imba_heartstopper_aura:GetAuraRadius()
 end
 
 function modifier_imba_heartstopper_aura:GetAuraSearchFlags()
-	return DOTA_UNIT_TARGET_FLAG_NONE
+	return DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS
 end
 
 function modifier_imba_heartstopper_aura:GetAuraSearchTeam()
