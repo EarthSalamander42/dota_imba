@@ -956,6 +956,8 @@ function imba_riki_tricks_of_the_trade:OnSpellStart()
 		
 		caster:AddNewModifier(caster, self, "modifier_imba_riki_tricks_of_the_trade_primary", {})
 		caster:AddNewModifier(caster, self, "modifier_imba_riki_tricks_of_the_trade_secondary", {})
+
+		ProjectileManager:ProjectileDodge(caster)
 			   
 		local cast_particle = "particles/units/heroes/hero_riki/riki_tricks_cast.vpcf"
 		local tricks_particle = "particles/units/heroes/hero_riki/riki_tricks.vpcf"
@@ -1053,13 +1055,15 @@ function modifier_imba_riki_tricks_of_the_trade_primary:CheckState()
 					--	[MODIFIER_STATE_UNSELECTABLE] = true,		Temporary Solution to self-casting getting cancelled
 					--	[MODIFIER_STATE_OUT_OF_GAME] = true,		Side effects - Caster will still be selectable with drag-box, and will interact with skillshots (like meat hook)
 						[MODIFIER_STATE_NOT_ON_MINIMAP] = true,
-						[MODIFIER_STATE_NO_UNIT_COLLISION] = true,}
+						[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
+						[MODIFIER_STATE_MAGIC_IMMUNE] = true}
 		else
 			state = {	[MODIFIER_STATE_INVULNERABLE] = true,
 						[MODIFIER_STATE_UNSELECTABLE] = true,
 						[MODIFIER_STATE_OUT_OF_GAME] = true,
 						[MODIFIER_STATE_NOT_ON_MINIMAP] = true,
-						[MODIFIER_STATE_NO_UNIT_COLLISION] = true,}
+						[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
+						[MODIFIER_STATE_MAGIC_IMMUNE] = true}
 		end
 			
 		return state
