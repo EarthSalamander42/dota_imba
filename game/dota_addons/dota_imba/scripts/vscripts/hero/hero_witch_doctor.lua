@@ -534,6 +534,12 @@ function imba_witch_doctor_death_ward:CreateWard(vPosition)
 	local hCaster = self:GetCaster()
 	local damage = self:GetSpecialValueFor("damage") + hCaster:GetIntellect()*self:GetSpecialValueFor("int_to_dmg_pct")/100
 	local death_ward = CreateUnitByName("imba_witch_doctor_death_ward", vPosition, true, hCaster, nil, hCaster:GetTeam())
+
+	-- Set on a clear space
+	Timers:CreateTimer(FrameTime(), function()		
+		ResolveNPCPositions(vPosition, 128)
+	end)
+
 	death_ward:SetControllableByPlayer(hCaster:GetPlayerID(), true)
 	death_ward:SetOwner(hCaster)
 	death_ward:SetCanSellItems(false)
