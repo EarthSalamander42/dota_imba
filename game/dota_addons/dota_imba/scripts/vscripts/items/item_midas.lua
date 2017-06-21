@@ -20,12 +20,7 @@ function item_imba_hand_of_midas:CastFilterResultTarget(target)
 		-- If the target is a hero, deny it
 		if target:IsHero() then
 			return UF_FAIL_HERO
-		end
-
-		-- If this unit is a clone, deny it
-		if caster:IsTempestDouble() then
-			return UF_FAIL_CUSTOM
-		end
+		end		
 
 		-- If the target is a ward, deny it
 		if target:IsOther() then
@@ -49,11 +44,6 @@ end
 function item_imba_hand_of_midas:GetCustomCastErrorTarget(target)
 	if IsServer() then
 		local caster = self:GetCaster()
-		
-		-- Clone message
-		if caster:IsTempestDouble() then
-			return "#dota_hud_error_clone_cant_use"
-		end
 
 		-- Ward message
 		if target:IsOther() then
