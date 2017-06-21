@@ -298,6 +298,7 @@ MAP_INITIAL_GOLD = 0														-- Gold granted to players at the start of the
 HERO_INITIAL_GOLD = 625														-- Gold to add to players as soon as they spawn into the game
 HERO_REPICK_GOLD = 525														-- Gold lost by players who repick their hero
 HERO_RANDOM_GOLD = 825														-- Gold granted to players who random their hero
+HERO_RERANDOM_GOLD = 725
 
 HERO_STARTING_LEVEL = 1														-- User-defined starting level
 
@@ -316,6 +317,7 @@ if GetMapName() == "imba_standard" then										-- Standard map defaults
 	HERO_INITIAL_GOLD = 625
 	HERO_REPICK_GOLD = 525
 	HERO_RANDOM_GOLD = 825
+	HERO_RERANDOM_GOLD = 725
 	HERO_STARTING_LEVEL = 1
 	MAX_LEVEL = 40
 elseif GetMapName() == "imba_random_omg" then								-- ROMG map defaults
@@ -329,6 +331,7 @@ elseif GetMapName() == "imba_random_omg" then								-- ROMG map defaults
 	HERO_INITIAL_GOLD = 625
 	HERO_REPICK_GOLD = 525
 	HERO_RANDOM_GOLD = 825
+	HERO_RERANDOM_GOLD = 725
 	HERO_STARTING_LEVEL = 1
 	MAX_LEVEL = 40
 	IMBA_PICK_MODE_ALL_RANDOM = true
@@ -343,6 +346,7 @@ elseif GetMapName() == "imba_custom" then									-- Custom map defaults
 	HERO_INITIAL_GOLD = 2000
 	HERO_REPICK_GOLD = 1600
 	HERO_RANDOM_GOLD = 2400
+	HERO_RERANDOM_GOLD = 2200
 	HERO_STARTING_LEVEL = 5
 	MAX_LEVEL = 50
 elseif GetMapName() == "imba_10v10" then									-- 10v10 map defaults
@@ -356,6 +360,7 @@ elseif GetMapName() == "imba_10v10" then									-- 10v10 map defaults
 	HERO_INITIAL_GOLD = 2000
 	HERO_REPICK_GOLD = 1600
 	HERO_RANDOM_GOLD = 2400
+	HERO_RERANDOM_GOLD = 2200
 	HERO_STARTING_LEVEL = 5
 	MAX_LEVEL = 40
 elseif GetMapName() == "imba_arena" then									-- Arena map defaults
@@ -374,6 +379,7 @@ elseif GetMapName() == "imba_arena" then									-- Arena map defaults
 	HERO_INITIAL_GOLD = 1000
 	HERO_REPICK_GOLD = 750
 	HERO_RANDOM_GOLD = 1250
+	HERO_RERANDOM_GOLD = 1125
 	HERO_STARTING_LEVEL = 3
 	MAX_LEVEL = 40
 	RUNE_SPAWN_TIME = 15
