@@ -585,7 +585,7 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		local has_repicked = PlayerResource:CustomGetHasRepicked(player_id)
 
 		if has_repicked and has_randomed then
-			PlayerResource:SetGold(player_id, HERO_RERANDOM, false)
+			PlayerResource:SetGold(player_id, HERO_RERANDOM_GOLD, false)
 		elseif has_repicked then
 			PlayerResource:SetGold(player_id, HERO_REPICK_GOLD, false)
 		elseif has_randomed or IMBA_PICK_MODE_ALL_RANDOM then
