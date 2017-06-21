@@ -728,7 +728,10 @@ function modifier_imba_return_passive:OnAttacked(keys)
 		end
 
 		-- Only commence on enemies attacking Centaur
-		if attacker:GetTeamNumber() ~= parent:GetTeamNumber() and parent == target then
+		if attacker:GetTeamNumber() ~= parent:GetTeamNumber() and parent == target 
+		-- Don't affect wards.
+		and not attacker:IsOther()
+		then
 			-- Add return particle
 			local particle_return_fx = ParticleManager:CreateParticle(particle_return, PATTACH_ABSORIGIN, parent)
 			ParticleManager:SetParticleControlEnt(particle_return_fx, 0, parent, PATTACH_POINT_FOLLOW, "attach_hitloc", parent:GetAbsOrigin(), true)
