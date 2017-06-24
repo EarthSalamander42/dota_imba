@@ -835,19 +835,6 @@ function PickupBountyRune(item, unit)
         end
     end
 		
-	function GoldPickup(event)
-		if IsServer() then
-			local item = EntIndexToHScript( event.ItemEntityIndex )
-			local owner = EntIndexToHScript( event.HeroEntityIndex )
-			if event.itemname == "item_bag_of_gold" then
-				local gold_per_bag = item:GetCurrentCharges()
-				PlayerResource:ModifyGold( owner:GetPlayerID(), gold_per_bag, true, 0 )
-				SendOverheadEventMessage( owner, OVERHEAD_ALERT_GOLD, owner, gold_per_bag, nil )
-				UTIL_Remove( item ) -- otherwise it pollutes the player inventory
-			end
-		end
-	end
-	
 	-- Grant the unit gold
 	unit:ModifyGold(current_bounty, false, DOTA_ModifyGold_Unspecified)
 
@@ -895,6 +882,20 @@ function PickupRegenerationRune(item, unit)
 	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Regen", unit)
 end
 
+-- Gold bag pickup event function
+function GoldPickup(event)
+	if IsServer() then
+		local item = EntIndexToHScript( event.ItemEntityIndex )
+		local owner = EntIndexToHScript( event.HeroEntityIndex )
+		if event.itemname == "item_bag_of_gold" then
+			local gold_per_bag = item:GetCurrentCharges()
+			PlayerResource:ModifyGold( owner:GetPlayerID(), gold_per_bag, true, 0 )
+			SendOverheadEventMessage( owner, OVERHEAD_ALERT_GOLD, owner, gold_per_bag, nil )
+			UTIL_Remove( item ) -- otherwise it pollutes the player inventory
+		end
+	end
+end
+	
 -- Talents modifier function
 function ApplyAllTalentModifiers()
 	Timers:CreateTimer(0.1,function()
