@@ -69,6 +69,11 @@ StoreCurrentDayCycle()
 
 	This function should generally only be used if the Precache() function in addon_game_mode.lua is not working.
 ]]
+
+function GameMode:OnItemPickedUp(event)
+    GoldPickup(event)
+end
+
 function GameMode:PostLoadPrecache()
 
 end
