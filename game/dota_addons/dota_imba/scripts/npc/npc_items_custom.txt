@@ -8680,7 +8680,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2187"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName" 			"custom/imba_power_treads"
+		"AbilityTextureName" 			"custom/imba_mega_treads_0"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"ScriptFile"                    "items/item_power_treads.lua"
 
@@ -8689,7 +8689,7 @@
 		"ItemCost"						"5150"
 		"ItemShopTags"					"attack_speed;move_speed;int;agi;str;damage"
 		"ItemQuality"					"magic"
-		"ItemAliases"					"power treads"
+		"ItemAliases"					"power treads; mega; mega treads"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_SPECTATORS"
 
 		// Special
@@ -8746,6 +8746,11 @@
 				"var_type"					"FIELD_FLOAT"
 				"main_stat_bonus_damage"	"0.5"
 				"CalculateSpellDamageTooltip"	"0"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"efficiency_divisor_pct"	"50"
 			}
 		}
 	}
@@ -10063,7 +10068,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"10"
+				"bonus_mana_regen"		"100"
 			}
 			"06"
 			{

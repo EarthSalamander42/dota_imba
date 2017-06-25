@@ -1191,6 +1191,7 @@ function imba_magnataur_reverse_polarity:OnSpellStart()
 			ApplyDamage({victim = creep, attacker = caster, ability = self, damage = damage, damage_type = self:GetAbilityDamageType()})
 			creep:EmitSound("Hero_Magnataur.ReversePolarity.Stun")
 		end
+
 		-- Finding all heroes on the map
 		local enemies = FindUnitsInRadius(caster:GetTeam(), caster_loc, nil, 25000, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
 		for _,enemy in ipairs(enemies) do
@@ -1214,6 +1215,8 @@ function imba_magnataur_reverse_polarity:OnSpellStart()
 			-- Check if the target will be pulled into the main-radius, else check for slow, else global pull
 			if pull_distance >= current_distance then
 				-- Play pull particle
+				enemy:InterruptMotionControllers(true)
+				enemy:StopCustomMotionControllers()
 				enemy:SetAbsOrigin(final_loc)
 				FindClearSpaceForUnit(enemy, final_loc, true)
 				enemy:AddNewModifier(caster, self, "modifier_stunned", {duration = hero_stun_duration})

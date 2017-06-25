@@ -914,7 +914,7 @@ function imba_sandking_epicenter:OnSpellStart()
     local channel_time = ability:GetSpecialValueFor("channel_time")
 
     -- Play cast sound
-    EmitSoundOn(sound_cast, caster)    
+    EmitSoundOnLocationWithCaster(caster:GetAbsOrigin(), sound_cast, caster)
 
     -- Add sand strikes particle
     self.particle_sandblast_fx = ParticleManager:CreateParticle(particle_sandblast, PATTACH_CUSTOMORIGIN_FOLLOW, caster)

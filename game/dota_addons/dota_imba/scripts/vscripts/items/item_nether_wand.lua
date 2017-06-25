@@ -127,7 +127,7 @@ function modifier_imba_item_elder_staff_passive:OnCreated()
 		self.bonus_as = self.item:GetSpecialValueFor("bonus_as")
 		self.bonus_intellect = self.item:GetSpecialValueFor("bonus_intellect")
 		self.bonus_mana = self.item:GetSpecialValueFor("bonus_mana")
-		self.bonus_health_regen = self.item:GetSpecialValueFor("bonus_health_regen")
+		self.bonus_mana_regen = self.item:GetSpecialValueFor("bonus_mana_regen")
 		self.cast_range_bonus = self.item:GetSpecialValueFor("cast_range_bonus")
 		self.spell_power = self.item:GetSpecialValueFor("spell_power")
 		self.burn_duration = self.item:GetSpecialValueFor("burn_duration")
@@ -145,7 +145,7 @@ function modifier_imba_item_elder_staff_passive:DeclareFunctions()
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
 		MODIFIER_PROPERTY_CAST_RANGE_BONUS,
 		MODIFIER_PROPERTY_MANA_BONUS,
-		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT
+		MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE
     }
     return decFuns
 end
@@ -166,8 +166,8 @@ function modifier_imba_item_elder_staff_passive:GetModifierBonusStats_Intellect(
 	return self.bonus_intellect
 end
 
-function modifier_imba_item_elder_staff_passive:GetModifierConstantHealthRegen()
-	return self.bonus_health_regen
+function modifier_imba_item_elder_staff_passive:GetModifierPercentageManaRegen()
+	return self.bonus_mana_regen
 end
 
 function modifier_imba_item_elder_staff_passive:GetModifierManaBonus()

@@ -217,15 +217,24 @@ end
 ---------------------------------------------------------------------
 arcane_supremacy_eligible_debuffs = {
 	["modifier_silence"] = true,
-	["modifier_item_imba_orchid_debuff"] = true,
-	["modifier_item_imba_bloodthorn_debuff"] = true,
+	["modifier_imba_glimpse_storm_debuff"] = true,
+	["modifier_imba_static_storm_debuff"] = true,
+	["modifier_imba_static_storm_debuff_linger"] = true,
 	["modifier_imba_gust_silence"] = true,
-	["modifier_imba_crippling_fear_day"] = true,
-	["modifier_imba_crippling_fear_night"] = true,
-	["modifier_imba_stifling_dagger_silence"] = true,
-	["modifier_imba_ancient_seal_silence"] = true,
+	["modifier_imba_crippling_fear_silence"] = true,
+	["modifier_imba_ancient_seal_main"] = true,
+	["modifier_imba_ancient_seal_secondary"] = true,
+	["modifier_imba_silencer_last_word_debuff"] = true,
 	["modifier_imba_silencer_last_word_repeat_thinker"] = true,
 	["modifier_imba_silencer_global_silence"] = true,
+	["modifier_silence"] = true,
+	["modifier_silence"] = true,
+	["modifier_silence"] = true,
+	["modifier_silence"] = true,
+	["modifier_silence"] = true,
+	["modifier_silence"] = true,
+	["modifier_silence"] = true,
+	
 }
 
 -- Modifier gained filter function
@@ -749,7 +758,7 @@ function GameMode:DamageFilter( keys )
 		--damagetype_const
 		--damage
 		--entindex_attacker_const
-		--entindex_victim_const		
+		--entindex_victim_const
 		local attacker
 		local victim
 

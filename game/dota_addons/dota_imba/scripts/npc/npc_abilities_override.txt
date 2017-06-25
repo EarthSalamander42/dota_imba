@@ -143,7 +143,7 @@
 	"item_recipe_vanguard"			"REMOVE"
 	"item_vanguard"					"REMOVE"
 	"item_recipe_blade_mail"		"REMOVE"
-	//"item_blade_mail"				"REMOVE"
+	"item_blade_mail"				"REMOVE"
 	//"item_recipe_soul_booster"		"REMOVE"
 	//"item_soul_booster"				"REMOVE"
 	"item_recipe_hood_of_defiance"	"REMOVE"

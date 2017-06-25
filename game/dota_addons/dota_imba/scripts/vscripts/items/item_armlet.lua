@@ -10,6 +10,7 @@ if item_imba_armlet == nil then item_imba_armlet = class({}) end
 LinkLuaModifier( "modifier_imba_armlet_basic", 			 				"items/item_armlet.lua", LUA_MODIFIER_MOTION_NONE )	-- Item stat
 LinkLuaModifier( "modifier_imba_armlet_unholy_strength_visual_effect", 	"items/item_armlet.lua", LUA_MODIFIER_MOTION_NONE )	-- Unholy Strength Visual Effect
 LinkLuaModifier( "modifier_imba_armlet_unholy_strength", 				"items/item_armlet.lua", LUA_MODIFIER_MOTION_NONE )	-- Unholy Strength
+LinkLuaModifier( "modifier_imba_armlet_toggle_prevention", 				"items/item_armlet.lua", LUA_MODIFIER_MOTION_NONE )	-- Toggle prevention
 
 function item_imba_armlet:GetAbilityTextureName()
    return "custom/imba_armlet"
@@ -26,6 +27,15 @@ function item_imba_armlet:OnSpellStart()
 
 		-- Grant or remove the appropriate modifiers
 		local caster = self:GetCaster()
+
+		-- If the caster has a toggle prevention, prevent toggling
+		if caster:HasModifier("modifier_imba_armlet_toggle_prevention") then
+			return nil
+		end
+
+		-- Prevent abusers from spamming Armlets.
+		caster:AddNewModifier(caster, self, "modifier_imba_armlet_toggle_prevention", {duration = 0.05})
+
 		if caster:HasModifier("modifier_imba_armlet_unholy_strength") then
 			caster:EmitSound("DOTA_Item.Armlet.Activate")
 			caster:RemoveModifierByName("modifier_imba_armlet_unholy_strength_visual_effect")
@@ -171,3 +181,11 @@ end
 function modifier_imba_armlet_unholy_strength:GetModifierAttackSpeedBonus_Constant()	-- Stacks only
 	return self:GetStackCount() * self:GetAbility():GetSpecialValueFor("stack_as")
 end
+
+
+-- Toggle prevention
+modifier_imba_armlet_toggle_prevention = modifier_imba_armlet_toggle_prevention or class({})
+
+function modifier_imba_armlet_toggle_prevention:IsHidden() return true end
+function modifier_imba_armlet_toggle_prevention:IsDebuff() return false end
+function modifier_imba_armlet_toggle_prevention:IsPurgable() return false end

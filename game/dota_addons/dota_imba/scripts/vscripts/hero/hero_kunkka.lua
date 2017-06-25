@@ -1297,35 +1297,9 @@ function imba_kunkka_ghostship:OnSpellStart()
 			end
 			
 			spawn_pos = target
-
-			-- X-Mark nearest target
-			if caster:HasAbility("imba_kunkka_x_marks_the_spot") then
-				local ability_x = caster:FindAbilityByName("imba_kunkka_x_marks_the_spot")
-				if ability_x:GetLevel() == 0 then
-					boat_direction = ( target - caster_pos ):Normalized()
-					crash_pos = spawn_pos + boat_direction * ( crash_distance + start_distance)
-				else
-					local distance_buffer = 99999
-					for _, x_marked in pairs(ability_x.positions) do
-						local current_distance = ( target - x_marked ):Length2D()
-						if current_distance < distance_buffer then
-							closest_target = x_marked
-							distance_buffer = current_distance
-						end
-					end
-
-					if not ( closest_target == true ) then
-						boat_direction = ( closest_target - target ):Normalized()
-						crash_pos = spawn_pos + boat_direction * ( crash_distance + start_distance)
-					else
-						boat_direction = ( target - caster_pos ):Normalized()
-						crash_pos = spawn_pos + boat_direction * ( crash_distance + start_distance)
-					end
-				end
-			else
-				boat_direction = ( target - caster_pos ):Normalized()
-				crash_pos = spawn_pos + boat_direction * ( crash_distance + start_distance)
-			end
+			
+			boat_direction = ( target - caster_pos ):Normalized()
+			crash_pos = spawn_pos + boat_direction * ( crash_distance + start_distance)			
 		end
 
 		-- In case the ability is stolen don't cast the next tide
@@ -1379,10 +1353,14 @@ function imba_kunkka_ghostship:OnSpellStart()
 						ParticleManager:ReleaseParticleIndex(water_fx)
 					end)
 					
-					-- Rooting all hit enemies
+					-- Stunning and rooting all hit enemies
 					local enemies = FindUnitsInRadius(caster:GetTeam(), target, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, self:GetAbilityTargetType(), 0, 0, false)
 					for k, enemy in pairs(enemies) do
+                        enemy:AddNewModifier(caster, self, "modifier_stunned", {duration = stun_duration})
 						enemy:AddNewModifier(caster, self, "modifier_rooted", { duration = travel_time})
+
+                        -- Deal crash damage to enemies hit
+                        ApplyDamage({victim = enemy, attacker = caster, ability = self, damage = damage, damage_type = self:GetAbilityDamageType()})
 					end
 
 					local dummy = CreateUnitByName("npc_dummy_unit", crash_pos, true, caster, caster, caster:GetTeamNumber() )

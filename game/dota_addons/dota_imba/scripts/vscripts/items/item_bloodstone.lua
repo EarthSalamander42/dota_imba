@@ -66,6 +66,11 @@ function LoseCharges( keys )
 		return nil
 	end
 
+	-- If caster will reincarnate, do nothing
+	if caster:WillReincarnate() then
+		return nil
+	end
+
 	-- Parameters
 	local on_death_charge_loss = item:GetLevelSpecialValueFor("on_death_loss", item_level)
 	local effect_radius = item:GetLevelSpecialValueFor("effect_radius", item_level)

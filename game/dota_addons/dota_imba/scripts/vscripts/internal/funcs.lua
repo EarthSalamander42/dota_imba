@@ -1180,6 +1180,18 @@ function CDOTA_Modifier_Lua:CheckMotionControllers()
 	end
 end
 
+function CDOTA_BaseNPC:StopCustomMotionControllers()
+	local modifiers = self:FindAllModifiers()
+
+	for _,modifier in pairs(modifiers) do
+		if modifier.IsMotionController then
+			if modifier.IsMotionController() then
+				modifier:Destroy()
+			end
+		end
+	end
+end
+
 function CDOTA_BaseNPC:SetUnitOnClearGround()
 	Timers:CreateTimer(FrameTime(), function()
 		self:SetAbsOrigin(Vector(self:GetAbsOrigin().x, self:GetAbsOrigin().y, GetGroundPosition(self:GetAbsOrigin(), self).z))		
