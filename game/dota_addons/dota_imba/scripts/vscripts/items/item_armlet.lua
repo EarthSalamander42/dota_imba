@@ -17,7 +17,7 @@ function item_imba_armlet:GetAbilityTextureName()
 end
 
 function item_imba_armlet:GetBehavior()
-	return DOTA_ABILITY_BEHAVIOR_IMMEDIATE + DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL + DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE + DOTA_ABILITY_BEHAVIOR_ITEM end
+	return DOTA_ABILITY_BEHAVIOR_IMMEDIATE + DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL + DOTA_ABILITY_BEHAVIOR_ITEM end
 	
 function item_imba_armlet:GetIntrinsicModifierName()
 	return "modifier_imba_armlet_basic" end
