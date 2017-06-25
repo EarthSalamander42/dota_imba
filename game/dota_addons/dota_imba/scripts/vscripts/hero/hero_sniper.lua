@@ -387,6 +387,24 @@ function modifier_imba_shrapnel_charges:OnStackCountChanged(old_stack_count)
     end
 end
 
+function modifier_imba_shrapnel_charges:DeclareFunctions()
+    local decFuncs = {MODIFIER_EVENT_ON_ABILITY_FULLY_CAST}
+
+    return decFuncs
+end
+
+function modifier_imba_shrapnel_charges:OnAbilityFullyCast(keys)
+    if IsServer() then
+        local ability = keys.ability
+        local unit = keys.unit
+
+        -- If this was the caster casting Refresher, refresh charges
+        if unit == self.caster and ability:GetName() == "item_refresher" then
+            self:SetStackCount(self.max_charge_count)            
+        end
+    end
+end
+
 function modifier_imba_shrapnel_charges:DestroyOnExpire()
     return false
 end

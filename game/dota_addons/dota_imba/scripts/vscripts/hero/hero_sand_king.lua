@@ -407,9 +407,7 @@ function modifier_imba_sandstorm:OnCreated()
 end
 
 function modifier_imba_sandstorm:OnIntervalThink()
-    if IsServer() then
-        -- Resolve NPC positions
-        ResolveNPCPositions(self.caster:GetAbsOrigin(), self.radius)
+    if IsServer() then        
 
         -- Variable to decide if enemies should be damaged this instance
         local damage_enemies = false
@@ -418,12 +416,12 @@ function modifier_imba_sandstorm:OnIntervalThink()
         self.time_elapsed = self.time_elapsed + FrameTime()
 
         -- Check if it's time to damage an enemy
-            if self.time_elapsed >= self.damage_instance_time then                
-                damage_enemies = true
+        if self.time_elapsed >= self.damage_instance_time then                
+            damage_enemies = true
 
-                -- Move to the next damage instance time
-                self.damage_instance_time = self.damage_instance_time + self.damage_interval
-            end
+            -- Move to the next damage instance time
+            self.damage_instance_time = self.damage_instance_time + self.damage_interval
+        end
 
         -- Find all enemies in the radius
         local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
@@ -459,6 +457,9 @@ function modifier_imba_sandstorm:OnIntervalThink()
 
                 -- Set the enemy at that location
                 enemy:SetAbsOrigin(pull_location)
+
+                -- Resolve NPC positions
+                ResolveNPCPositions(enemy:GetAbsOrigin(), enemy:GetHullRadius())
             end
         end
     end

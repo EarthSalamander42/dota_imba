@@ -560,7 +560,11 @@ function imba_witch_doctor_death_ward:CreateWard(vPosition)
 	for i = 0, 5 do
 		local item = hCaster:GetItemInSlot(i)
 		if item and not exceptionList[item:GetName()] then
-			death_ward:AddItemByName(item:GetName())
+			death_ward:AddItemByName(item:GetName())			
+		end
+
+		if hCaster:HasModifier("modifier_item_imba_spell_fencer_unique") then
+			death_ward:AddNewModifier(hCaster, self, "modifier_item_imba_spell_fencer_unique", {})
 		end
 	end
 	-- Removing the bonus damage from items

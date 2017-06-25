@@ -443,6 +443,9 @@ function modifier_imba_crystal_maiden_frostbite_enemy:OnCreated()
 		self.parent = self:GetParent()
 		self.damage_interval = self.ability:GetSpecialValueFor("damage_interval")
 		self.damage_per_tick = self.ability:GetSpecialValueFor("damage_per_tick")
+
+		-- Immediately proc the first damage instance
+		self:OnIntervalThink()
 		
 		--Play sound
 		self:GetParent():EmitSound("Hero_Crystal.Frostbite")
@@ -579,7 +582,19 @@ function modifier_imba_crystal_maiden_brilliance_aura_emitter:GetAuraSearchFlags
 function modifier_imba_crystal_maiden_brilliance_aura_emitter:GetAuraSearchTeam() return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
 function modifier_imba_crystal_maiden_brilliance_aura_emitter:GetAuraSearchType() return DOTA_UNIT_TARGET_HERO end
 function modifier_imba_crystal_maiden_brilliance_aura_emitter:GetModifierAura() return "modifier_imba_crystal_maiden_brilliance_aura" end
-function modifier_imba_crystal_maiden_brilliance_aura_emitter:IsAura() return true end
+
+function modifier_imba_crystal_maiden_brilliance_aura_emitter:IsAura()
+	if self:GetCaster():PassivesDisabled() then
+		return false
+	end
+
+	if self:GetCaster():IsIllusion() then
+		return false
+	end
+
+	return true 
+end
+
 function modifier_imba_crystal_maiden_brilliance_aura_emitter:IsHidden() return true end
 function modifier_imba_crystal_maiden_brilliance_aura_emitter:IsDebuff() return false end
 function modifier_imba_crystal_maiden_brilliance_aura_emitter:IsPurgable() return false end

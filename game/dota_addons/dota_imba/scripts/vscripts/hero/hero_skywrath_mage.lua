@@ -377,7 +377,7 @@ function imba_skywrath_mage_concussive_shot:OnProjectileHit_ExtraData(target, lo
     local sound_impact = "Hero_SkywrathMage.ConcussiveShot.Target"    
     local modifier_slow = "modifier_imba_concussive_shot_slow"
     local primary_concussive = extra_data.primary_concussive
-    local bounces_left = extra_data.bounces_left
+    local bounces_left = extra_data.bounces_left    
 
     -- Ability specials
     local search_radius = ability:GetSpecialValueFor("search_radius")
@@ -398,6 +398,7 @@ function imba_skywrath_mage_concussive_shot:OnProjectileHit_ExtraData(target, lo
     if not target:IsHero() then
         return nil
     end
+
 
     -- Add FOW Viewer
     AddFOWViewer(caster:GetTeamNumber(),
@@ -448,16 +449,17 @@ function imba_skywrath_mage_concussive_shot:OnProjectileHit_ExtraData(target, lo
             -- Apply/Refresh slow debuff
             enemy:AddNewModifier(caster, ability, modifier_slow, {duration = slow_duration})
         end
-    end
+    end    
 
-    -- Check if there are anymore bounces to fire
+    -- Check if there are anymore bounces to fire    
     if bounces_left > 0 then
+      local target_pos = target:GetAbsOrigin()
         -- If there are, wait a second
         Timers:CreateTimer(ghastly_delay, function()
 
             -- Search for the closest nearby friendly hero (of the enemy)
             local enemies = FindUnitsInRadius(target:GetTeamNumber(),
-                                              target:GetAbsOrigin(),
+                                              target_pos,
                                               nil,
                                               search_radius,
                                               DOTA_UNIT_TARGET_TEAM_FRIENDLY,
@@ -466,18 +468,26 @@ function imba_skywrath_mage_concussive_shot:OnProjectileHit_ExtraData(target, lo
                                               FIND_CLOSEST,
                                               false)
 
-            -- If no heroes were found, do nothing
-            if #enemies == 0 then
+            -- If no heroes were found, do nothing            
+            if #enemies == 0 then                
                 return nil
             end
 
             -- Reduce a bounce
             bounces_left = bounces_left - 1    
 
+            -- This marks the closest hero, since if the target died he won't be counted.
+            local enemy_target
+            if enemies[1] == target then
+                enemy_target = enemies[2]
+            else
+                enemy_target = enemies[1]
+            end
+
             -- Otherwise, launch a secondary projectile at the closest hero
-            LaunchConcussiveShot(caster, target, ability, enemies[2], false, bounces_left)
+            LaunchConcussiveShot(caster, target, ability, enemy_target, false, bounces_left)
         end)
-    end            
+    end
 end
 
 function LaunchConcussiveShot(caster, source, ability, target, primary, bounces_left)
