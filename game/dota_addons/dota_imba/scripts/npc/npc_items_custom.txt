@@ -10445,7 +10445,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_reduction"			"75"
+				"damage_reduction"			"50"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"04"
@@ -10461,7 +10461,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"time_to_double"			"5"
+				"time_to_double"			"10"
 			}
 		}
 	}

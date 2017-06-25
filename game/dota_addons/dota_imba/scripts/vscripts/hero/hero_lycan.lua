@@ -1288,8 +1288,7 @@ end
 -- Wolfsbane modifier (wolves or anyone if Lycan holds a scepter)
 modifier_imba_wolfsbane_wolves = class({})
 
-function modifier_imba_wolfsbane_wolves:OnCreated()
-	if IsServer() then
+function modifier_imba_wolfsbane_wolves:OnCreated()	
         -- Ability properties
         self.caster = self:GetCaster()
         self.ability = self:GetAbility()
@@ -1302,6 +1301,7 @@ function modifier_imba_wolfsbane_wolves:OnCreated()
         -- #4 Talent: Wolfsbane damage increase
         self.damage_bonus = self.damage_bonus + self.caster:FindTalentValue("special_bonus_imba_lycan_4")
 
+    if IsServer() then
         -- Start thinking
         self:StartIntervalThink(0.5)
 	end	
@@ -1339,17 +1339,17 @@ function modifier_imba_wolfsbane_wolves:IsPermanent()
 end
 
 function modifier_imba_wolfsbane_wolves:DeclareFunctions()	
-	local decFuncs = {MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE}
+	local decFuncs = {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE}
 	
 	return decFuncs	
 end
 
-function modifier_imba_wolfsbane_wolves:GetModifierBaseAttack_BonusDamage()	
+function modifier_imba_wolfsbane_wolves:GetModifierPreAttack_BonusDamage()		
 	local stacks = self:GetStackCount()	
 	
 	if self:GetParent():PassivesDisabled() then
 		return nil
-	end
+	end	
 	
 	return self.damage_bonus * stacks
 end

@@ -530,6 +530,7 @@ function modifier_imba_ghost_shroud_buff:DeclareFunctions()
 	local decFuncs =
 	{
 		MODIFIER_PROPERTY_HEAL_AMPLIFY_PERCENTAGE,
+		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
 	}
 	return decFuncs
 end
@@ -548,6 +549,10 @@ function modifier_imba_ghost_shroud_buff:GetHealthRegenAmp()
 		healing_amp_pct = healing_amp_pct / 2
 	end
 	return healing_amp_pct
+end
+
+function modifier_imba_ghost_shroud_buff:GetAbsoluteNoDamagePhysical()
+	return 1
 end
 
 function modifier_imba_ghost_shroud_buff:IsDebuff()
@@ -638,7 +643,7 @@ function modifier_imba_heartstopper_aura:OnIntervalThink()
 	if IsServer() then
 		local caster = self:GetCaster()
 		if not caster:PassivesDisabled() then
-			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, self.radius + 100, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS, FIND_ANY_ORDER, false)
+			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 			for _,enemy in ipairs(enemies) do
 				local modifier = enemy:FindModifierByNameAndCaster("modifier_imba_heartstopper_aura_damage",caster)
 				if modifier then
@@ -663,7 +668,7 @@ function modifier_imba_heartstopper_aura:GetAuraRadius()
 end
 
 function modifier_imba_heartstopper_aura:GetAuraSearchFlags()
-	return DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS
+	return DOTA_UNIT_TARGET_FLAG_NONE
 end
 
 function modifier_imba_heartstopper_aura:GetAuraSearchTeam()
