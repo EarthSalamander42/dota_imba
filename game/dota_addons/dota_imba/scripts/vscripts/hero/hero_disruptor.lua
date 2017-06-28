@@ -141,7 +141,7 @@ function imba_disruptor_thunder_strike:OnSpellStart()
 		EmitSoundOn(sound_cast, target)	
 
 		-- #8 Talent: Thunder Strike duration increase
-		duration = duration + caster:FindSpecificTalentValue("special_bonus_imba_disruptor_8", "value")
+		duration = duration + caster:FindTalentValue("special_bonus_imba_disruptor_8", "value")
 
 		-- Apply Thunder Strike on target
 		target:AddNewModifier(caster, ability, debuff, {duration = duration})	
@@ -179,7 +179,7 @@ function modifier_imba_thunder_strike_debuff:OnCreated()
 		self.talent_4_slow_duration = self.ability:GetSpecialValueFor("talent_4_slow_duration")	
 
 		-- #8 Talent: Thunder Strike interval reduction
-		self.strike_interval = self.strike_interval - self.caster:FindSpecificTalentValue("special_bonus_imba_disruptor_8", "value2")
+		self.strike_interval = self.strike_interval - self.caster:FindTalentValue("special_bonus_imba_disruptor_8", "value2")
 			
 		-- Strike immediately upon creation, depending on amount of enemies
 		ThunderStrikeBoltStart(self)			

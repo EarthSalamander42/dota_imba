@@ -509,14 +509,14 @@ function modifier_imba_howl_buff:OnCreated()
     self.bonus_ms_units = self.ability:GetSpecialValueFor("bonus_ms_units")                 
         
     -- #7 Talent: Increased damage, move speed and health
-    self.bonus_damage_hero = self.bonus_damage_hero + self.caster:FindSpecificTalentValue("special_bonus_imba_lycan_7", "damage_hero")
-    self.bonus_damage_units = self.bonus_damage_units + self.caster:FindSpecificTalentValue("special_bonus_imba_lycan_7", "damage_creep")      
+    self.bonus_damage_hero = self.bonus_damage_hero + self.caster:FindTalentValue("special_bonus_imba_lycan_7", "damage_hero")
+    self.bonus_damage_units = self.bonus_damage_units + self.caster:FindTalentValue("special_bonus_imba_lycan_7", "damage_creep")      
 
-    self.bonus_ms_heroes = self.bonus_ms_heroes + self.caster:FindSpecificTalentValue("special_bonus_imba_lycan_7", "ms_hero")
-    self.bonus_ms_units = self.bonus_ms_units + self.caster:FindSpecificTalentValue("special_bonus_imba_lycan_7", "ms_creep")              
+    self.bonus_ms_heroes = self.bonus_ms_heroes + self.caster:FindTalentValue("special_bonus_imba_lycan_7", "ms_hero")
+    self.bonus_ms_units = self.bonus_ms_units + self.caster:FindTalentValue("special_bonus_imba_lycan_7", "ms_creep")              
 
-    self.bonus_health_heroes = self.bonus_health_heroes + self.caster:FindSpecificTalentValue("special_bonus_imba_lycan_7", "health_hero")
-    self.bonus_health_units = self.bonus_health_units + self.caster:FindSpecificTalentValue("special_bonus_imba_lycan_7", "health_creep")      
+    self.bonus_health_heroes = self.bonus_health_heroes + self.caster:FindTalentValue("special_bonus_imba_lycan_7", "health_hero")
+    self.bonus_health_units = self.bonus_health_units + self.caster:FindTalentValue("special_bonus_imba_lycan_7", "health_creep")      
 end
 
 function modifier_imba_howl_buff:GetEffectName()

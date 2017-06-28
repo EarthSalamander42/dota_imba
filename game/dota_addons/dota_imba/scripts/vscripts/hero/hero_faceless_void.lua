@@ -605,10 +605,10 @@ function modifier_imba_faceless_void_time_dilation_buff:GetModifierAttackSpeedBo
 	return self:GetAbility():GetSpecialValueFor("as_buff") * self:GetStackCount() end
 
 function modifier_imba_faceless_void_time_dilation_buff:GetModifierConstantHealthRegen()
-	return self:GetAbility():GetCaster():FindSpecificTalentValue("special_bonus_imba_faceless_void_2","hp_regen") * self:GetStackCount() end
+	return self:GetAbility():GetCaster():FindTalentValue("special_bonus_imba_faceless_void_2","hp_regen") * self:GetStackCount() end
 
 function modifier_imba_faceless_void_time_dilation_buff:GetModifierConstantManaRegen()
-	return self:GetAbility():GetCaster():FindSpecificTalentValue("special_bonus_imba_faceless_void_2","mp_regen") * self:GetStackCount() end
+	return self:GetAbility():GetCaster():FindTalentValue("special_bonus_imba_faceless_void_2","mp_regen") * self:GetStackCount() end
 
 -------------------------------------------
 -----	Time Dilation talent buff	  -----

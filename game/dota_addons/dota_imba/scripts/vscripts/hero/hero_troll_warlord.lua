@@ -210,15 +210,15 @@ function modifier_imba_berserkers_rage_ranged:DeclareFunctions()
 end
 
 function modifier_imba_berserkers_rage_ranged:GetModifierMoveSpeedBonus_Constant()
-	return self:GetCaster():FindSpecificTalentValue("special_bonus_imba_troll_warlord_1", "movespeed_pct")
+	return self:GetCaster():FindTalentValue("special_bonus_imba_troll_warlord_1", "movespeed_pct")
 end
 
 function modifier_imba_berserkers_rage_ranged:GetModifierPhysicalArmorBonus()
-	return self:GetCaster():FindSpecificTalentValue("special_bonus_imba_troll_warlord_1", "armor")
+	return self:GetCaster():FindTalentValue("special_bonus_imba_troll_warlord_1", "armor")
 end
 
 function modifier_imba_berserkers_rage_ranged:GetModifierBaseAttackTimeConstant()
-	return self:GetCaster():FindSpecificTalentValue("special_bonus_imba_troll_warlord_1", "bat")
+	return self:GetCaster():FindTalentValue("special_bonus_imba_troll_warlord_1", "bat")
 end
 
 -- Note: This is for BAT-modifying, since only troll modify BAT of others and himself

@@ -305,8 +305,8 @@ function modifier_imba_rip_current_movement:RipCurrentLand()
 	local damage = self.damage
 	
 	-- #1 Talent: Rip Current land radius and damage increase
-	radius = radius + self.caster:FindSpecificTalentValue("special_bonus_imba_slardar_1", "radius")
-	damage = damage + self.caster:FindSpecificTalentValue("special_bonus_imba_slardar_1", "damage")
+	radius = radius + self.caster:FindTalentValue("special_bonus_imba_slardar_1", "radius")
+	damage = damage + self.caster:FindTalentValue("special_bonus_imba_slardar_1", "damage")
 	
 	-- Play hit sound
 	EmitSoundOn(self.sound_land, self.caster)
@@ -986,7 +986,7 @@ end
 
 function imba_slardar_corrosive_haze:GetAOERadius()
 	local caster = self:GetCaster()
-	return caster:FindSpecificTalentValue("special_bonus_imba_slardar_7", "radius")
+	return caster:FindTalentValue("special_bonus_imba_slardar_7", "radius")
 end
 
 function imba_slardar_corrosive_haze:OnSpellStart()
@@ -1051,7 +1051,7 @@ function imba_slardar_corrosive_haze:OnSpellStart()
 
 	-- #7 Talent: Corrosize Haze now applies to all targets
 	if caster:HasTalent("special_bonus_imba_slardar_7") then
-		local radius = caster:FindSpecificTalentValue("special_bonus_imba_slardar_7", "radius")		
+		local radius = caster:FindTalentValue("special_bonus_imba_slardar_7", "radius")		
 
 		-- Find all enemies and apply Corrosive Haze on them as well
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
@@ -1128,7 +1128,7 @@ function modifier_imba_corrosive_haze_debuff:OnTakeDamage(keys)
 
 	-- Only apply if the victim is in another team of the attacker, and is the one getting hit
 	if parent == victim and caster:GetTeamNumber() ~= victim:GetTeamNumber() then
-		local max_stacks = caster:FindSpecificTalentValue("special_bonus_imba_slardar_8", "max_stacks")
+		local max_stacks = caster:FindTalentValue("special_bonus_imba_slardar_8", "max_stacks")
 		local stacks = self:GetStackCount()
 
 		-- Give stack, but don't apply over the allowed amount
@@ -1144,7 +1144,7 @@ function modifier_imba_corrosive_haze_debuff:GetModifierPhysicalArmorBonus()
 	local ability = self:GetAbility()
 	local armor_reduction = ability:GetSpecialValueFor("armor_reduction")	
 	local stacks = self:GetStackCount()
-	local armor_per_stack = caster:FindSpecificTalentValue("special_bonus_imba_slardar_8", "armor_per_stack")
+	local armor_per_stack = caster:FindTalentValue("special_bonus_imba_slardar_8", "armor_per_stack")
 
 	armor_reduction = armor_reduction + armor_per_stack * stacks
 	return armor_reduction * (-1)
@@ -1244,7 +1244,7 @@ function modifier_imba_corrosive_haze_debuff_secondary:GetModifierPhysicalArmorB
 	local ability = self:GetAbility()
 	local armor_reduction = ability:GetSpecialValueFor("armor_reduction")
 	
-	local armor_loss_pct = caster:FindSpecificTalentValue("special_bonus_imba_slardar_7", "armor_loss_pct")
+	local armor_loss_pct = caster:FindTalentValue("special_bonus_imba_slardar_7", "armor_loss_pct")
 	armor_reduction = armor_reduction * (armor_loss_pct * 0.01)
 	
 

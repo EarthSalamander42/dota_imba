@@ -1511,7 +1511,7 @@ function modifier_imba_wraith_soul_strike:OnAttackLanded(keys)
 
         -- #4 Talent: Kingdom Come Wraiths's attacks slow enemies
         if self.owner:HasTalent("special_bonus_imba_skeleton_king_4") then
-            local duration = self.owner:FindSpecificTalentValue("special_bonus_imba_skeleton_king_4", "duration")
+            local duration = self.owner:FindTalentValue("special_bonus_imba_skeleton_king_4", "duration")
 
             target:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = duration})
         end
@@ -1530,7 +1530,7 @@ function modifier_imba_wraith_soul_strike_slow:OnCreated()
         self.owner = self.caster:GetOwner()
 
         -- Talent properties
-        self.ms_slow_pct = self.owner:FindSpecificTalentValue("special_bonus_imba_skeleton_king_4", "ms_slow_pct")
+        self.ms_slow_pct = self.owner:FindTalentValue("special_bonus_imba_skeleton_king_4", "ms_slow_pct")
 
         -- Set server count
         self:SetStackCount(self.ms_slow_pct)

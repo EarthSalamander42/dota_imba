@@ -1165,8 +1165,8 @@ function modifier_imba_dark_lord_debuff:GetModifierPhysicalArmorBonus()
     local stacks = self:GetStackCount()
 
     -- #2 Talent: Presence of the Dark Lord Armor reduction increase
-    local armor_reduction = self.armor_reduction + self.caster:FindSpecificTalentValue("special_bonus_imba_nevermore_2", "armor_reduction")
-    local raze_armor_reduction = self.raze_armor_reduction + self.caster:FindSpecificTalentValue("special_bonus_imba_nevermore_2", "raze_armor_reduction")
+    local armor_reduction = self.armor_reduction + self.caster:FindTalentValue("special_bonus_imba_nevermore_2", "armor_reduction")
+    local raze_armor_reduction = self.raze_armor_reduction + self.caster:FindTalentValue("special_bonus_imba_nevermore_2", "raze_armor_reduction")
 
     local total_armor_reduction = armor_reduction + stacks * raze_armor_reduction
 

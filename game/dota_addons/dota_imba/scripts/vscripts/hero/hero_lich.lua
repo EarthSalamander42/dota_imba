@@ -1121,8 +1121,8 @@ function imba_lich_chain_frost:OnProjectileHit_ExtraData(target, location, extra
     local speed_increase_per_bounce = ability:GetSpecialValueFor("speed_increase_per_bounce")
     local projectile_delay = ability:GetSpecialValueFor("projectile_delay")
     local projectile_vision = ability:GetSpecialValueFor("projectile_vision")
-    local bonus_projectiles = caster:FindSpecificTalentValue("special_bonus_imba_lich_7", "bonus_projectiles")
-    local projectiles_damage_pct = caster:FindSpecificTalentValue("special_bonus_imba_lich_7", "projectiles_damage_pct")
+    local bonus_projectiles = caster:FindTalentValue("special_bonus_imba_lich_7", "bonus_projectiles")
+    local projectiles_damage_pct = caster:FindTalentValue("special_bonus_imba_lich_7", "projectiles_damage_pct")
     local cold_front_stacks = ability:GetSpecialValueFor("cold_front_stacks")    
 
     -- Make sure there is a target

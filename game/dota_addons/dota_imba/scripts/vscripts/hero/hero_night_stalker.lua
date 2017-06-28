@@ -736,7 +736,7 @@ function modifier_imba_hunter_in_the_night:GetModifierMoveSpeedBonus_Percentage(
     end
 
     -- #3 Talent: Hunter in the Night bonuses
-    local base_bonus_ms_pct = self.base_bonus_ms_pct + self.caster:FindSpecificTalentValue("special_bonus_imba_night_stalker_3", "ms_bonus_pct")
+    local base_bonus_ms_pct = self.base_bonus_ms_pct + self.caster:FindTalentValue("special_bonus_imba_night_stalker_3", "ms_bonus_pct")
 
     return base_bonus_ms_pct
 end
@@ -750,7 +750,7 @@ function modifier_imba_hunter_in_the_night:GetModifierAttackSpeedBonus_Constant(
     local stacks = self.caster:GetModifierStackCount(self.modifier_stalker, self.caster)
 
     -- #3 Talent: Hunter in the Night bonuses
-    local base_bonus_as = self.base_bonus_as + self.caster:FindSpecificTalentValue("special_bonus_imba_night_stalker_3", "as_bonus")    
+    local base_bonus_as = self.base_bonus_as + self.caster:FindTalentValue("special_bonus_imba_night_stalker_3", "as_bonus")    
     return (base_bonus_as + self.as_increase_per_stack * stacks)
 end
 
