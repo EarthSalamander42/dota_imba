@@ -66,7 +66,7 @@
     "Dota_Tooltip_Talent_special_bonus_imba_abaddon_3_title"                    "无光之盾"
     "Dota_Tooltip_Talent_special_bonus_imba_abaddon_3_Description"              "无光之盾被施加的第1秒吸收所有伤害并将其转换为无光之盾的吸收量与伤害"
     "Dota_Tooltip_Talent_special_bonus_imba_abaddon_4_title"                    "魔霭诅咒"
-    "Dota_Tooltip_Talent_special_bonus_imba_abaddon_4_Description"              "魔霭诅咒可以主动使用，消耗当前生命值的10%，将其转变为攻击力，只能维持1次攻击。8秒冷却时间。"
+    "Dota_Tooltip_Talent_special_bonus_imba_abaddon_4_Description"              "魔霭诅咒获得法球效果：攻击时消耗当前生命值的10%，将其转变为攻击力。8秒冷却时间。"
     "Dota_Tooltip_Talent_special_bonus_imba_abaddon_5_title"                    "魔霭诅咒"
     "Dota_Tooltip_Talent_special_bonus_imba_abaddon_5_Description"              "魔霭诅咒的增益效果被动对900范围内的友军生效"
     "Dota_Tooltip_Talent_special_bonus_imba_abaddon_6_title"                    "魔霭圣地的力量"
