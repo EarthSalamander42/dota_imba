@@ -5402,33 +5402,40 @@
 				"var_type"					"FIELD_INTEGER"
 				"slow"						"12"
 			}
-
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"speed_bonus"				"12"
 			}
-
 			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"miss_chance"				"25"
+			}
+			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage"					"16 24 32 40 48 56 64"
 			}
-
-			"04"
+			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"units"						"1 1 1 1 2 3 4"
 			}
-			"05"
+			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_damage_reduction"	"-30"
 			}
-			"06"
+			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"duration"					"10"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"pause_time"				"2"
 			}
 		}
 	}
@@ -5469,20 +5476,32 @@
 				"var_type"								"FIELD_INTEGER"
 				"radius"								"275 285 295 305 315 325 335"
 			}
-
 			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"radius_increase"						"15"
+			}
+			"03"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"stack_limit"							"5"
+			}
+			"04"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"stack_duration"						"4"
+			}
+			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"proc_chance"							"20"
 			}
-
-			"03"
+			"06"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"base_damage"							"75 110 145 180 200 220 240"
 			}
-
-			"04"
+			"07"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"taunted_damage_bonus_pct"				"12 12 12 12 18 24 30"

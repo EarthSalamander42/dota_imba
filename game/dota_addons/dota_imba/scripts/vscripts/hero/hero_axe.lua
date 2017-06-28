@@ -321,8 +321,14 @@ modifier_imba_battle_hunger_debuff_dot = modifier_imba_battle_hunger_debuff_dot 
 
 function modifier_imba_battle_hunger_debuff_dot:OnCreated()
   if IsServer() then
+    self.caster = self:GetCaster()
+    self.parent = self:GetParent()
+    self.damage_over_time = self:GetAbility():GetSpecialValueFor( "damage" ) + self.caster:FindTalentValue("special_bonus_imba_axe_6")
+    self.miss_chance = self:GetAbility():GetSpecialValueFor("miss_chance")
+    self.pause_time = self:GetAbility():GetSpecialValueFor("pause_time")
     self.battle_hunger_particle = "particles/units/heroes/hero_axe/axe_battle_hunger.vpcf"
     self.kill_count = 0
+    self.last_damage_time = GameRules:GetGameTime()
     self.enemy_particle = ParticleManager:CreateParticle( self.battle_hunger_particle, PATTACH_OVERHEAD_FOLLOW, self:GetParent())
     ParticleManager:SetParticleControl(self.enemy_particle, 2, Vector(0, 0, 0))
 
@@ -336,16 +342,16 @@ end
 
 function modifier_imba_battle_hunger_debuff_dot:OnIntervalThink()
   if IsServer() then
-    local target = self:GetParent()
-    local caster = self:GetCaster()
-    local damage_over_time = self:GetAbility():GetSpecialValueFor( "damage" ) + caster:FindTalentValue("special_bonus_imba_axe_6")
     local damageTable = {
-      victim = target,
-      attacker = caster,
-      damage = damage_over_time,
+      victim = self.parent,
+      attacker = self.caster,
+      damage = self.damage_over_time,
       damage_type = DAMAGE_TYPE_MAGICAL,
     }
     ApplyDamage(damageTable)
+    if GameRules:GetGameTime() > self.last_damage_time + self.pause_time then
+      self:SetDuration(self:GetRemainingTime() + 1, true)
+    end
     --check if target is in fountain area
     if IsNearFriendlyClass(target, 1360, "ent_dota_fountain") then
       self:Destroy()
@@ -356,7 +362,7 @@ end
 
 function modifier_imba_battle_hunger_debuff_dot:DeclareFunctions()
   local funcs = {
-    MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE, MODIFIER_EVENT_ON_DEATH, MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE
+    MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE, MODIFIER_EVENT_ON_DEATH, MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE, MODIFIER_EVENT_ON_TAKEDAMAGE, MODIFIER_EVENT_ON_ATTACK_START
   }
   return funcs
 end
@@ -417,6 +423,19 @@ function modifier_imba_battle_hunger_debuff_dot:OnDeath(keys)
   end
 end
 
+function modifier_imba_battle_hunger_debuff_dot:OnTakeDamage(keys)
+  if keys.attacker == self:GetParent() and keys.damage > 0 then
+    self.last_damage_time = GameRules:GetGameTime()
+  end
+end
+
+function modifier_imba_battle_hunger_debuff_dot:OnAttackStart(keys)
+  if keys.attacker == self:GetParent() then
+    for k,v in pairs(keys) do
+      print(k, " : ", v)
+    end
+  end
+end
 ----------------------------------------------------------------------------------------------------
 
 
@@ -426,6 +445,7 @@ end
 -- Hidden Modifiers:
 MergeTables(LinkedModifiers,{
 	["modifier_imba_counter_helix_passive"] = LUA_MODIFIER_MOTION_NONE,
+  ["modifier_imba_counter_helix_spin_stacks"] = LUA_MODIFIER_MOTION_NONE,
 })
 imba_axe_counter_helix = imba_axe_counter_helix or class({})
 
@@ -453,6 +473,9 @@ function modifier_imba_counter_helix_passive:OnCreated()
 
   --ability specials
   self.radius = self.ability:GetSpecialValueFor("radius") + self.caster:FindTalentValue("special_bonus_imba_axe_3")
+  self.radius_increase = self.ability:GetSpecialValueFor("radius_increase")
+  self.stack_limit = self.ability:GetSpecialValueFor("stack_limit")
+  self.stack_duration = self.ability:GetSpecialValueFor("stack_duration")
   self.proc_chance = self.ability:GetSpecialValueFor("proc_chance")
   self.base_damage = self.ability:GetSpecialValueFor("base_damage")
   self.taunted_damage_bonus_pct = self.ability:GetSpecialValueFor("taunted_damage_bonus_pct")
@@ -529,7 +552,18 @@ end
 function modifier_imba_counter_helix_passive:IsPurgable()
   return false
 end
+----------------------------------------------------------------------------------------------------
+modifier_imba_counter_helix_spin_stacks = modifier_imba_counter_helix_spin_stacks or class({})
 
+function modifier_imba_counter_helix_spin_stacks:IsHidden()
+  return false
+end
+function modifier_imba_counter_helix_spin_stacks:IsBuff()
+  return true
+end
+function modifier_imba_counter_helix_spin_stacks:IsPurgable()
+  return false
+end
 ----------------------------------------------------------------------------------------------------
 
 
