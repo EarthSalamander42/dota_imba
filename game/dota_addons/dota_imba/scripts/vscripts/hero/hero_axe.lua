@@ -255,6 +255,7 @@ function imba_axe_battle_hunger:OnSpellStart(target)
   local ability                   =       self
   local caster_modifier           =       "modifier_imba_battle_hunger_buff_haste"
   local random_response           =       "axe_axe_ability_battlehunger_0"..math.random(1,3)
+  local duration = self:GetSpecialValueFor("duration")
 
   self:GetCaster():EmitSound("Hero_Axe.Battle_Hunger")
   self:GetCaster():EmitSound(random_response)
@@ -279,10 +280,11 @@ function imba_axe_battle_hunger:OnSpellStart(target)
   end
 
   --caster:AddNewModifier(caster, self, "modifier_imba_battle_hunger_buff_haste", {})
+  -- Roshan Battle Hunger doesn't pause due to no damage done
   if IsRoshan(target) then
-	target:AddNewModifier(caster, self, "modifier_imba_battle_hunger_debuff_dot", {duration = 10})
+	  target:AddNewModifier(caster, self, "modifier_imba_battle_hunger_debuff_dot", {duration = duration, no_pause = true})
   else
-	target:AddNewModifier(caster, self, "modifier_imba_battle_hunger_debuff_dot", {})
+	  target:AddNewModifier(caster, self, "modifier_imba_battle_hunger_debuff_dot", {duration = duration, no_pause = false})
   end
 end
 

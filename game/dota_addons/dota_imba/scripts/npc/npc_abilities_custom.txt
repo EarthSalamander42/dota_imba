@@ -5425,6 +5425,11 @@
 				"var_type"					"FIELD_INTEGER"
 				"scepter_damage_reduction"	"-30"
 			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"duration"					"10"
+			}
 		}
 	}
 
