@@ -482,9 +482,10 @@ function CDOTA_BaseNPC:HasTalent(talentName)
 	return false
 end
 
-function CDOTA_BaseNPC:FindTalentValue(talentName)
+function CDOTA_BaseNPC:FindTalentValue(talentName, key)
 	if self:HasAbility(talentName) then
-		return self:FindAbilityByName(talentName):GetSpecialValueFor("value")
+		local value_name = key or "value"
+		return self:FindAbilityByName(talentName):GetSpecialValueFor(value_name)
 	end
 	return 0
 end
