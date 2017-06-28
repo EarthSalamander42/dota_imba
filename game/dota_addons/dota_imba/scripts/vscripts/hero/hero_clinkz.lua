@@ -1081,7 +1081,7 @@ function imba_clinkz_death_pact:OnSpellStart()
     -- #8 Talent: Death Pact bonuses stay permanently if enemy target dies quickly
     -- Apply a marker on the target if caster has the talent
     if caster:HasTalent("special_bonus_imba_clinkz_8") and caster:GetTeamNumber() ~= target:GetTeamNumber() then
-        local mark_duration = caster:FindSpecificTalentValue("special_bonus_imba_clinkz_8", "mark_duration")
+        local mark_duration = caster:FindTalentValue("special_bonus_imba_clinkz_8", "mark_duration")
         target:AddNewModifier(caster, ability, modifier_talent_debuff_mark, {duration = mark_duration})
     end
 end
@@ -1248,7 +1248,7 @@ function modifier_imba_death_pact_talent_debuff:OnHeroKilled(keys)
             local buff_stacks = self.caster:FindModifierByName(self.modifier_hero_pact):GetStackCount()            
 
             -- Calculate stack amount to keep
-            local stacks = buff_stacks * (self.caster:FindSpecificTalentValue("special_bonus_imba_clinkz_8", "stacks_pct") * 0.01)            
+            local stacks = buff_stacks * (self.caster:FindTalentValue("special_bonus_imba_clinkz_8", "stacks_pct") * 0.01)            
             
             -- Add perma buff if not exists yet
             if not self.caster:HasModifier(self.modifier_perma_buff) then

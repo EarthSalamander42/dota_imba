@@ -28,7 +28,7 @@ end
 function modifier_special_bonus_imba_vengefulspirit_4:GetAuraRadius()
 	local caster = self:GetCaster()
 	if caster:IsRealHero() then
-		return self:GetCaster():FindSpecificTalentValue("special_bonus_imba_vengefulspirit_4", "radius")
+		return self:GetCaster():FindTalentValue("special_bonus_imba_vengefulspirit_4", "radius")
 	else
 		return 0
 	end
@@ -101,7 +101,7 @@ function modifier_imba_rancor:OnTakeDamage( params )
 				local stack_receive_pct = ability:GetSpecialValueFor("stack_receive_pct")
 				if params.unit:HasModifier("modifier_imba_rancor_allies") and not (parent == params.unit) then
 					if params.unit:FindModifierByNameAndCaster("modifier_imba_rancor_allies", parent) then
-						self.dmg_received_pct = self.dmg_received_pct + ((100 / parent:GetMaxHealth()) * math.min(params.damage, parent:GetHealth())) * (parent:FindSpecificTalentValue("special_bonus_imba_vengefulspirit_4", "rate_pct") / 100)
+						self.dmg_received_pct = self.dmg_received_pct + ((100 / parent:GetMaxHealth()) * math.min(params.damage, parent:GetHealth())) * (parent:FindTalentValue("special_bonus_imba_vengefulspirit_4", "rate_pct") / 100)
 					end
 				else
 					self.dmg_received_pct = self.dmg_received_pct + ((100 / parent:GetMaxHealth()) * math.min(params.damage, parent:GetHealth()))
@@ -530,7 +530,7 @@ function modifier_imba_command_aura_positive:DeclareFunctions()
 end
 
 function modifier_imba_command_aura_positive:GetModifierSpellAmplify_Percentage()
-	return self:GetAbility():GetSpecialValueFor("spell_power") + self:GetCaster():FindSpecificTalentValue("special_bonus_imba_vengefulspirit_3", "spell_power")
+	return self:GetAbility():GetSpecialValueFor("spell_power") + self:GetCaster():FindTalentValue("special_bonus_imba_vengefulspirit_3", "spell_power")
 end
 
 function modifier_imba_command_aura_positive:GetModifierBaseDamageOutgoing_Percentage()
@@ -538,7 +538,7 @@ function modifier_imba_command_aura_positive:GetModifierBaseDamageOutgoing_Perce
 		if self:GetCaster():HasTalent("special_bonus_imba_vengefulspirit_8") then
 			return 0
 		else
-			return self:GetAbility():GetSpecialValueFor("bonus_damage_pct") + self:GetCaster():FindSpecificTalentValue("special_bonus_imba_vengefulspirit_3", "bonus_damage_pct")
+			return self:GetAbility():GetSpecialValueFor("bonus_damage_pct") + self:GetCaster():FindTalentValue("special_bonus_imba_vengefulspirit_3", "bonus_damage_pct")
 		end
 	end
 end
@@ -546,7 +546,7 @@ end
 function modifier_imba_command_aura_positive:GetModifierDamageOutgoing_Percentage()
 	if self:GetCaster() then
 		if self:GetCaster():HasTalent("special_bonus_imba_vengefulspirit_8") then
-			return self:GetAbility():GetSpecialValueFor("bonus_damage_pct") + self:GetCaster():FindSpecificTalentValue("special_bonus_imba_vengefulspirit_3", "bonus_damage_pct")
+			return self:GetAbility():GetSpecialValueFor("bonus_damage_pct") + self:GetCaster():FindTalentValue("special_bonus_imba_vengefulspirit_3", "bonus_damage_pct")
 		else
 			return 0
 		end
@@ -633,20 +633,20 @@ function modifier_imba_command_aura_negative:DeclareFunctions()
 end
 
 function modifier_imba_command_aura_negative:GetModifierSpellAmplify_Percentage()
-	return (self:GetAbility():GetSpecialValueFor("spell_power") + self:GetCaster():FindSpecificTalentValue("special_bonus_imba_vengefulspirit_3", "spell_power")) * (-1)
+	return (self:GetAbility():GetSpecialValueFor("spell_power") + self:GetCaster():FindTalentValue("special_bonus_imba_vengefulspirit_3", "spell_power")) * (-1)
 end
 
 function modifier_imba_command_aura_negative:GetModifierBaseDamageOutgoing_Percentage()
 	if self:GetCaster():HasTalent("special_bonus_imba_vengefulspirit_8") then
 		return 0
 	else
-		return (self:GetAbility():GetSpecialValueFor("bonus_damage_pct") + self:GetCaster():FindSpecificTalentValue("special_bonus_imba_vengefulspirit_3", "bonus_damage_pct")) * (-1)
+		return (self:GetAbility():GetSpecialValueFor("bonus_damage_pct") + self:GetCaster():FindTalentValue("special_bonus_imba_vengefulspirit_3", "bonus_damage_pct")) * (-1)
 	end
 end
 
 function modifier_imba_command_aura_negative:GetModifierDamageOutgoing_Percentage()
 	if self:GetCaster():HasTalent("special_bonus_imba_vengefulspirit_8") then
-		return (self:GetAbility():GetSpecialValueFor("bonus_damage_pct") + self:GetCaster():FindSpecificTalentValue("special_bonus_imba_vengefulspirit_3", "bonus_damage_pct")) * (-1)
+		return (self:GetAbility():GetSpecialValueFor("bonus_damage_pct") + self:GetCaster():FindTalentValue("special_bonus_imba_vengefulspirit_3", "bonus_damage_pct")) * (-1)
 	else
 		return 0
 	end
@@ -831,7 +831,7 @@ function imba_vengefulspirit_nether_swap:OnSpellStart()
 			
 			-- #6 Talent - cast weak meteors
 			if caster:HasTalent("special_bonus_imba_vengefulspirit_6") then
-				local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target_loc, nil, caster:FindSpecificTalentValue("special_bonus_imba_vengefulspirit_6", "radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+				local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target_loc, nil, caster:FindTalentValue("special_bonus_imba_vengefulspirit_6", "radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 				for _, enemy in pairs(enemies) do
 					self:CastTalentMeteor(enemy)
 				end
@@ -873,8 +873,8 @@ end
 function imba_vengefulspirit_nether_swap:OnProjectileHit(target, location)
 	local caster = self:GetCaster()
 	if target then
-		local damage = caster:FindSpecificTalentValue("special_bonus_imba_vengefulspirit_6", "damage")
-		local stun_duration = caster:FindSpecificTalentValue("special_bonus_imba_vengefulspirit_6", "stun_duration")
+		local damage = caster:FindTalentValue("special_bonus_imba_vengefulspirit_6", "damage")
+		local stun_duration = caster:FindTalentValue("special_bonus_imba_vengefulspirit_6", "stun_duration")
 		ApplyDamage({victim = target, attacker = caster, ability = self, damage = damage, damage_type = self:GetAbilityDamageType()})
 		if not target:IsMagicImmune() then 
 			target:AddNewModifier(caster, self, "modifier_stunned", {duration = stun_duration})
@@ -993,7 +993,7 @@ function imba_vengefulspirit_swap_back:OnSpellStart()
 		FindClearSpaceForUnit(caster, target_loc, true)
 		-- #6 Talent - cast weak meteors
 		if caster:HasTalent("special_bonus_imba_vengefulspirit_6") then
-			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target_loc, nil, caster:FindSpecificTalentValue("special_bonus_imba_vengefulspirit_6", "radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target_loc, nil, caster:FindTalentValue("special_bonus_imba_vengefulspirit_6", "radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 			for _, enemy in pairs(enemies) do
 				ability_handle:CastTalentMeteor(enemy)
 			end

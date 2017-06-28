@@ -24,9 +24,9 @@ function modifier_special_bonus_imba_lina_8:OnAttackLanded( params )
 		local target = params.target
 		if parent == params.attacker and target:GetTeamNumber() ~= parent:GetTeamNumber() and (target.IsCreep or target.IsHero) then
 			local int = parent:GetIntellect()
-			local ticks = parent:FindSpecificTalentValue("special_bonus_imba_lina_8", "ticks_amount")
-			local duration = parent:FindSpecificTalentValue("special_bonus_imba_lina_8", "duration")
-			local dmg_int_pct = parent:FindSpecificTalentValue("special_bonus_imba_lina_8", "dmg_int_pct")
+			local ticks = parent:FindTalentValue("special_bonus_imba_lina_8", "ticks_amount")
+			local duration = parent:FindTalentValue("special_bonus_imba_lina_8", "duration")
+			local dmg_int_pct = parent:FindTalentValue("special_bonus_imba_lina_8", "dmg_int_pct")
 			local dmg_per_tick = ( int * dmg_int_pct / 100) / (duration / ticks)
 			local tick_duration = duration / ticks
 			target:AddNewModifier(parent, nil, "modifier_imba_blazing_strike", {duration = duration, dmg_per_tick = dmg_per_tick, tick_duration = tick_duration})
@@ -463,7 +463,7 @@ function modifier_imba_fiery_soul_counter:GetModifierAttackSpeedBonus_Constant()
 end
 
 function modifier_imba_fiery_soul_counter:GetModifierMoveSpeedBonus_Percentage()
-	local speed = self:GetAbility():GetSpecialValueFor("bonus_ms_pct") + self:GetCaster():FindSpecificTalentValue("special_bonus_imba_lina_5", "value2")
+	local speed = self:GetAbility():GetSpecialValueFor("bonus_ms_pct") + self:GetCaster():FindTalentValue("special_bonus_imba_lina_5", "value2")
 	return speed * self:GetStackCount()
 end
 

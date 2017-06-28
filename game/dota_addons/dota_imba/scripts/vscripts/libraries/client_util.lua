@@ -49,18 +49,6 @@ function C_DOTA_BaseNPC:FindTalentValue(talentName, key)
 	return 0
 end
 
-function C_DOTA_BaseNPC:FindSpecificTalentValue(talentName, valname)
-	if self:HasModifier("modifier_"..talentName) then  
-		local specialVal = AbilityKV[talentName]["AbilitySpecial"]
-		for l,m in pairs(specialVal) do
-			if m[valname] then
-				return m[valname]
-			end
-		end
-	end
-	return 0
-end
-
 function C_DOTABaseAbility:GetTalentSpecialValueFor(value)
 	local base = self:GetSpecialValueFor(value)
 	local talentName

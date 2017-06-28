@@ -299,8 +299,8 @@ function modifier_imba_purification_omniguard_ready:OnTakeDamage(keys)
             end
 
             -- #2 Talent: Purification auto cast on critical health
-            self.cooldown = self.caster:FindSpecificTalentValue("special_bonus_imba_omniknight_2", "cooldown")
-            self.trigger_hp_pct = self.caster:FindSpecificTalentValue("special_bonus_imba_omniknight_2", "trigger_hp_pct")
+            self.cooldown = self.caster:FindTalentValue("special_bonus_imba_omniknight_2", "cooldown")
+            self.trigger_hp_pct = self.caster:FindTalentValue("special_bonus_imba_omniknight_2", "trigger_hp_pct")
 
             -- Get caster's HP
             local current_health_pct = self.caster:GetHealthPercent()
@@ -405,8 +405,8 @@ function imba_omniknight_repel:OnSpellStart()
     -- #6 Talent: Repel affects nearby allies briefly
     if caster:HasTalent("special_bonus_imba_omniknight_6") then
         -- Talent values
-        local radius = caster:FindSpecificTalentValue("special_bonus_imba_omniknight_6", "radius")
-        local talent_duration = caster:FindSpecificTalentValue("special_bonus_imba_omniknight_6", "duration")
+        local radius = caster:FindTalentValue("special_bonus_imba_omniknight_6", "radius")
+        local talent_duration = caster:FindTalentValue("special_bonus_imba_omniknight_6", "duration")
 
         -- Find all nearby allies
         local allies = FindUnitsInRadius(caster:GetTeamNumber(),

@@ -410,7 +410,7 @@ end
 
 function modifier_imba_empower:GetModifierBaseDamageOutgoing_Percentage()
 	if self:GetCaster():IsRealHero() then
-		return self:GetAbility():GetSpecialValueFor("bonus_damage_pct") + self:GetCaster():FindSpecificTalentValue("special_bonus_imba_magnataur_3", "bonus_damage_pct")
+		return self:GetAbility():GetSpecialValueFor("bonus_damage_pct") + self:GetCaster():FindTalentValue("special_bonus_imba_magnataur_3", "bonus_damage_pct")
 	end
 	return 0
 end
@@ -429,7 +429,7 @@ function modifier_imba_empower:OnAttackLanded( params )
 			end
 			if params.attacker:IsRangedAttacker() then
 				-- Ranged-Attacker
-				local cleave_damage_ranged = (ability:GetSpecialValueFor("cleave_damage_ranged") + caster:FindSpecificTalentValue("special_bonus_imba_magnataur_3", "cleave_damage_ranged")) / 100
+				local cleave_damage_ranged = (ability:GetSpecialValueFor("cleave_damage_ranged") + caster:FindTalentValue("special_bonus_imba_magnataur_3", "cleave_damage_ranged")) / 100
 				local splash_radius = ability:GetSpecialValueFor("splash_radius")
 
 				-- Find enemies to damage
@@ -448,7 +448,7 @@ function modifier_imba_empower:OnAttackLanded( params )
 				ParticleManager:ReleaseParticleIndex(cleave_pfx)
 			else
 				-- Melee-Attacker
-				local cleave_damage_pct = (ability:GetSpecialValueFor("cleave_damage_pct") + caster:FindSpecificTalentValue("special_bonus_imba_magnataur_3", "cleave_damage_pct")) / 100
+				local cleave_damage_pct = (ability:GetSpecialValueFor("cleave_damage_pct") + caster:FindTalentValue("special_bonus_imba_magnataur_3", "cleave_damage_pct")) / 100
 				local cleave_radius_start = ability:GetSpecialValueFor("cleave_radius_start")
 				local cleave_radius_end = ability:GetSpecialValueFor("cleave_radius_end")
 				local cleave_distance = ability:GetSpecialValueFor("cleave_distance")
@@ -639,11 +639,11 @@ function modifier_imba_supercharged:DeclareFunctions()
 end
 
 function modifier_imba_supercharged:GetModifierAttackSpeedBonus_Constant()
-	return self:GetAbility():GetSpecialValueFor("supercharge_as") + self:GetCaster():FindSpecificTalentValue("special_bonus_imba_magnataur_6", "bonus_as")
+	return self:GetAbility():GetSpecialValueFor("supercharge_as") + self:GetCaster():FindTalentValue("special_bonus_imba_magnataur_6", "bonus_as")
 end
 
 function modifier_imba_supercharged:GetModifierMoveSpeedBonus_Percentage()
-	return self:GetAbility():GetSpecialValueFor("supercharge_ms") + self:GetCaster():FindSpecificTalentValue("special_bonus_imba_magnataur_6", "bonus_ms")
+	return self:GetAbility():GetSpecialValueFor("supercharge_ms") + self:GetCaster():FindTalentValue("special_bonus_imba_magnataur_6", "bonus_ms")
 end
 
 -------------------------------------------

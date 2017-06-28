@@ -92,7 +92,7 @@ if IsServer() then
 				outamp = outamp * self:GetAbility():GetSpecialValueFor("red_val_amount") / 100
 			end
 			if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_8") then
-				local ampPct = self:GetCaster():FindSpecificTalentValue("special_bonus_imba_bloodseeker_8", "value") / self:GetCaster():FindSpecificTalentValue("special_bonus_imba_bloodseeker_8", "value2") -- find amp per pct
+				local ampPct = self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_8", "value") / self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_8", "value2") -- find amp per pct
 				local hpPct = (1 - self:GetParent():GetHealth() / self:GetParent():GetMaxHealth()) * 100 -- missing hp in pct
 				outamp = outamp + ampPct * hpPct
 			end
@@ -106,7 +106,7 @@ if IsServer() then
 				inamp = inamp * self:GetAbility():GetSpecialValueFor("red_val_amount") / 100
 			end
 			if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_8") then
-				local ampPct = self:GetCaster():FindSpecificTalentValue("special_bonus_imba_bloodseeker_8", "value") / self:GetCaster():FindSpecificTalentValue("special_bonus_imba_bloodseeker_8", "value2") -- find amp per pct
+				local ampPct = self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_8", "value") / self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_8", "value2") -- find amp per pct
 				local hpPct = (1 - self:GetParent():GetHealth() / self:GetParent():GetMaxHealth()) * 100 -- missing hp in pct
 				inamp = inamp + ampPct * hpPct
 			end
@@ -347,8 +347,8 @@ function modifier_imba_thirst_passive:OnRefresh()
 	self.talent7 = false
 	if IsServer() then
 		if self:GetParent():HasTalent("special_bonus_imba_bloodseeker_7") then
-			self.movespeed = self.movespeed + self:GetParent():FindSpecificTalentValue("special_bonus_imba_bloodseeker_7", "value") / (self.minhp - self.maxhp)
-			self.damage = self.damage + self:GetParent():FindSpecificTalentValue("special_bonus_imba_bloodseeker_7", "value2") / (self.minhp - self.maxhp)
+			self.movespeed = self.movespeed + self:GetParent():FindTalentValue("special_bonus_imba_bloodseeker_7", "value") / (self.minhp - self.maxhp)
+			self.damage = self.damage + self:GetParent():FindTalentValue("special_bonus_imba_bloodseeker_7", "value2") / (self.minhp - self.maxhp)
 			CustomNetTables:SetTableValue("talents", "hero_bloodseeker_talents", {talent7_ms = self.movespeed, talent7_dmg = self.damage})
 		end
 	end
@@ -360,8 +360,8 @@ function modifier_imba_thirst_passive:OnIntervalThink()
 		if not self.talent7 then
 			if self:GetParent():HasTalent("special_bonus_imba_bloodseeker_7") then
 				self.talent7 = true
-				self.movespeed = self.movespeed + self:GetParent():FindSpecificTalentValue("special_bonus_imba_bloodseeker_7", "value")  / (self.minhp - self.maxhp)
-				self.damage = self.damage + self:GetParent():FindSpecificTalentValue("special_bonus_imba_bloodseeker_7", "value2")  / (self.minhp - self.maxhp)
+				self.movespeed = self.movespeed + self:GetParent():FindTalentValue("special_bonus_imba_bloodseeker_7", "value")  / (self.minhp - self.maxhp)
+				self.damage = self.damage + self:GetParent():FindTalentValue("special_bonus_imba_bloodseeker_7", "value2")  / (self.minhp - self.maxhp)
 				CustomNetTables:SetTableValue("talents", "hero_bloodseeker_talents", {talent7_ms = self.movespeed, talent7_dmg = self.damage})
 			end
 		end

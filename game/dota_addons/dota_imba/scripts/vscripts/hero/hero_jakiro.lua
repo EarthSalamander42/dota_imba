@@ -370,7 +370,7 @@ function modifier_imba_fire_breath_debuff:_UpdateDebuffLevelValues()
 		local ability = self.ability
 
 		-- #2 Talent: Fire Breath DPS Increase, Ice Breath Slow Increase
-		local damage = ability:GetSpecialValueFor("damage") + caster:FindSpecificTalentValue("special_bonus_imba_jakiro_2", "fire_damage_increase")
+		local damage = ability:GetSpecialValueFor("damage") + caster:FindTalentValue("special_bonus_imba_jakiro_2", "fire_damage_increase")
 		self.tick_damage = damage * self.damage_interval
 	end
 end
@@ -425,7 +425,7 @@ end
 function modifier_imba_ice_breath_debuff:_UpdateSubClassLevelValues()
 	local ability = self:GetAbility()
 	-- #2 Talent: Fire Breath DPS Increase, Ice Breath Slow Increase
-	local talent_slow = self:GetCaster():FindSpecificTalentValue("special_bonus_imba_jakiro_2", "slow_increase")
+	local talent_slow = self:GetCaster():FindTalentValue("special_bonus_imba_jakiro_2", "slow_increase")
 	-- slow_increase is positive
 	-- attack_slow is a constant, not a percentage
 	self.attack_slow = -(ability:GetSpecialValueFor("attack_slow")) * (1+(talent_slow/100))
@@ -1143,11 +1143,11 @@ function modifier_imba_macropyre_debuff:_UpdateSubClassLevelValues()
 		-- This exludes slow from other abilities
 
 		if not self.move_slow or self.move_slow == 0 then
-			self.move_slow = -(caster:FindSpecificTalentValue("special_bonus_imba_jakiro_8", "init_slow"))
+			self.move_slow = -(caster:FindTalentValue("special_bonus_imba_jakiro_8", "init_slow"))
 		else
 			--Cache scale_per_tick value
 			if not self.scale_per_tick then
-				self.scale_per_tick = caster:FindSpecificTalentValue("special_bonus_imba_jakiro_8", "scale_per_tick")
+				self.scale_per_tick = caster:FindTalentValue("special_bonus_imba_jakiro_8", "scale_per_tick")
 			end
 			self.move_slow = self.move_slow * self.scale_per_tick
 		end
