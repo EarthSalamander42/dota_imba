@@ -227,14 +227,6 @@ arcane_supremacy_eligible_debuffs = {
 	["modifier_imba_silencer_last_word_debuff"] = true,
 	["modifier_imba_silencer_last_word_repeat_thinker"] = true,
 	["modifier_imba_silencer_global_silence"] = true,
-	["modifier_silence"] = true,
-	["modifier_silence"] = true,
-	["modifier_silence"] = true,
-	["modifier_silence"] = true,
-	["modifier_silence"] = true,
-	["modifier_silence"] = true,
-	["modifier_silence"] = true,
-	
 }
 
 -- Modifier gained filter function
