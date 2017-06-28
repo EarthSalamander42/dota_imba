@@ -1131,7 +1131,10 @@ end
 
 function modifier_imba_borrowed_time_buff_hot_caster:GetAuraEntityReject(hEntity)
 	-- Do not apply aura to target
-	return hEntity == self:GetParent()
+	if hEntity == self:GetParent() or hEntity:HasModifier("modifier_imba_borrowed_time_buff_hot_caster") then
+		return true
+	end
+	return false
 end
 
 function modifier_imba_borrowed_time_buff_hot_caster:OnCreated()
