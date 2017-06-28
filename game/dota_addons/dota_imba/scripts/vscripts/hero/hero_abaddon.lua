@@ -957,6 +957,8 @@ function imba_abaddon_over_channel:OnSpellStart()
 		local modifier_name = "modifier_over_channel_handler"
 		if not caster:HasModifier(modifier_name) then
 			caster:AddNewModifier(caster, self, modifier_name, {})
+		else
+			caster:RemoveModifierByName("modifier_over_channel_handler")
 		end
 	end
 end
