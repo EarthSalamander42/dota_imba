@@ -288,11 +288,12 @@ end
 
 function modifier_imba_mist_coil_mist_enemy:OnCreated()
 	self.on_hit_damage = self:GetAbility():GetSpecialValueFor("on_hit_damage")
+	self.damage_threshold = self:GetAbility():GetSpecialValueFor("damage_threshold")
 	self.damage_type = DAMAGE_TYPE_MAGICAL
 end
 
 function modifier_imba_mist_coil_mist_enemy:OnTakeDamage(keys)
-	if keys.unit == self:GetParent() and keys.original_damage > 50 then
+	if keys.unit == self:GetParent() and keys.original_damage > self.damage_threshold then
 		ApplyDamage({victim = keys.unit, attacker = keys.attacker, damage = self.on_hit_damage, damage_type = self.damage_type})
 	end
 end

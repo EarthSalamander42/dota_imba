@@ -3895,6 +3895,11 @@
 				"var_type"								"FIELD_FLOAT"
 				"cooldown"								"4.5"
 			}
+			"10"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"damage_threshold"						"50"
+			}
 		}
 
 		"precache"
@@ -4064,12 +4069,12 @@
 			"02"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"extra_mist_duration"					"2.0"
+				"extra_shield_health"					"75"
 			}
 			"03"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"extra_shield_health"					"75"
+				"extra_mist_duration"					"2.0"
 			}
 			"04"
 			{
