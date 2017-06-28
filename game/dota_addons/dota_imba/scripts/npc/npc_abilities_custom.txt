@@ -4501,7 +4501,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"             		"ability_lua"
 		"ScriptFile"					"hero/hero_alchemist"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
@@ -4615,7 +4615,8 @@
 		"AbilityTextureName"			"alchemist_goblins_greed"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
 		"MaxLevel" 						"7"
 
 		"HasScepterUpgrade"				"1"
@@ -4632,6 +4633,7 @@
 			"particle"	"particles/units/heroes/hero_alchemist/alchemist_lasthit_coins.vpcf"
 			"particle"	"particles/units/heroes/hero_alchemist/alchemist_lasthit_msg_gold.vpcf"
 			"particle"	"particles/hero/alchemist/greevil_midas_touch.vpcf"
+			"particle"	"particles/items2_fx/hand_of_midas.vpcf"
 		}
 
 		"AbilitySpecial"
@@ -4662,14 +4664,36 @@
 
 			"05"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bounty_multiplier"		"2"
+				"var_type"				"FIELD_FLOAT"
+				"gold_multiplier"		"3.0"
 			}
 
 			"06"
 			{
+				"var_type"				"FIELD_FLOAT"
+				"exp_multiplier"		"3.0"
+			}
+			
+			"07"
+			{
 				"var_type"				"FIELD_INTEGER"
-				"greed_duration"		"30"
+				"bonus_stacks"			"10"
+			}
+			
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"greevil_duration"		"10"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"periodic_gold_percentage"	"50"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"bounty_multiplier"			"2.0"
 			}
 		}
 	}
@@ -34812,7 +34836,7 @@
 	//=================================================================================================================
 	// Alchemist's Talents
 	//=================================================================================================================
-	"special_bonus_imba_alchemist_1"	// Acid Spray radius increase
+	"special_bonus_imba_alchemist_1"	// Sticky Acid slows
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -34831,38 +34855,13 @@
 		{
 			"01"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"value"			"200"
+				"var_type"		"FIELD_INTEGER"
+				"value"			"-15"
 			}
 		}
 	}
 
-	"special_bonus_imba_alchemist_2"	// Acid Spray armor reduction
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
-		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"		"imba_alchemist_acid_spray"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_FLOAT"
-				"value"			"4"
-			}
-		}
-	}
-
-	"special_bonus_imba_alchemist_3"	// Unstable Concoction duration increase
+	"special_bonus_imba_alchemist_2"	// Concoction gives Chemical Rage to allies
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -34882,12 +34881,12 @@
 			"01"
 			{
 				"var_type"		"FIELD_FLOAT"
-				"value"			"2"
+				"value"			"1.0"
 			}
 		}
 	}
 
-	"special_bonus_imba_alchemist_4"	// Unstable Concoction blows stronger on Acid Spray
+	"special_bonus_imba_alchemist_3"	// Bounty runes spawn gold bags
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -34897,7 +34896,7 @@
 
 		"LinkedAbility"
 		{
-			"01"		"imba_alchemist_unstable_concoction"
+			"01"		"imba_alchemist_goblins_greed"
 		}
 
 		// Special
@@ -34907,12 +34906,68 @@
 			"01"
 			{
 				"var_type"		"FIELD_FLOAT"
+				"value"			"100.0"
+			}
+		}
+	}
+
+	"special_bonus_imba_alchemist_4"	// Enemies affected by Acid Spray have a chance to drop gold bags on death.
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_alchemist_acid_spray"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"stacks_to_gold_percentage"	"50"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"drop_chance_percentage"	"50"
+			}
+		}
+	}
+
+	"special_bonus_imba_alchemist_5"	// Greed stacks increase acid spray damage
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_alchemist_acid_spray"
+			"02"		"imba_alchemist_goblins_greed"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
 				"value"			"25"
 			}
 		}
 	}
 
-	"special_bonus_imba_alchemist_5"	// Chemical Rage duration increase
+	"special_bonus_imba_alchemist_6"	// When in Chemical Rage, Alchemist brews Unstable Concoction faster.	
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -34922,7 +34977,8 @@
 
 		"LinkedAbility"
 		{
-			"01"		"imba_alchemist_chemical_rage"
+			"01"		"imba_alchemist_unstable_concoction"
+			"02"		"imba_alchemist_chemical_rage"
 		}
 
 		// Special
@@ -34931,33 +34987,8 @@
 		{
 			"01"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"value"			"5"
-			}
-		}
-	}
-
-	"special_bonus_imba_alchemist_6"	// Chemical Rage health regeneration increase
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
-		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"		"imba_alchemist_chemical_rage"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_FLOAT"
-				"value"			"75"
+				"var_type"		"FIELD_INTEGER"
+				"value"			"2"
 			}
 		}
 	}
@@ -34987,7 +35018,7 @@
 		}
 	}
 
-	"special_bonus_imba_alchemist_8"	// Halves Greevil's Greed's cooldown
+	"special_bonus_imba_alchemist_8"	// Chemical Rage damage aura
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -34997,7 +35028,8 @@
 
 		"LinkedAbility"
 		{
-			"01"		"imba_alchemist_goblins_greed"
+			"01"		"imba_alchemist_chemical_rage"
+			"02"		"imba_alchemist_goblins_greed"
 		}
 
 		// Special
@@ -35006,8 +35038,8 @@
 		{
 			"01"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"value"			"15"
+				"var_type"		"FIELD_INTEGER"
+				"value"			"700"
 			}
 		}
 	}

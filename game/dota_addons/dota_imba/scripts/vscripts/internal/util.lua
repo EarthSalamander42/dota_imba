@@ -814,8 +814,27 @@ function PickupBountyRune(item, unit)
 		if unit:HasTalent("special_bonus_imba_alchemist_7") then
 			current_bounty = current_bounty * unit:FindTalentValue("special_bonus_imba_alchemist_7")
 		end
+		
 	end
 
+	
+	-- #3 Talent: Bounty runes give gold bags
+    if unit:HasTalent("special_bonus_imba_alchemist_3") then
+        local stacks_to_gold =( unit:FindTalentValue("special_bonus_imba_alchemist_3")/ 100 )  / 5
+        local gold_per_bag = unit:FindModifierByName("modifier_imba_goblins_greed_passive"):GetStackCount() * stacks_to_gold
+        for i=1, 5 do
+            -- Drop gold bags
+            local newItem = CreateItem( "item_bag_of_gold", nil, nil )
+            newItem:SetPurchaseTime( 0 )
+            newItem:SetCurrentCharges( gold_per_bag )
+            
+            local drop = CreateItemOnPositionSync( unit:GetAbsOrigin(), newItem )
+            local dropTarget = unit:GetAbsOrigin() + RandomVector( RandomFloat( 300, 450 ) )
+            newItem:LaunchLoot( true, 300, 0.75, dropTarget )
+            EmitSoundOn( "Dungeon.TreasureItemDrop", unit )
+        end
+    end
+		
 	-- Grant the unit gold
 	unit:ModifyGold(current_bounty, false, DOTA_ModifyGold_Unspecified)
 
@@ -863,6 +882,20 @@ function PickupRegenerationRune(item, unit)
 	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Regen", unit)
 end
 
+-- Gold bag pickup event function
+function GoldPickup(event)
+	if IsServer() then
+		local item = EntIndexToHScript( event.ItemEntityIndex )
+		local owner = EntIndexToHScript( event.HeroEntityIndex )
+		if event.itemname == "item_bag_of_gold" then
+			local gold_per_bag = item:GetCurrentCharges()
+			PlayerResource:ModifyGold( owner:GetPlayerID(), gold_per_bag, true, 0 )
+			SendOverheadEventMessage( owner, OVERHEAD_ALERT_GOLD, owner, gold_per_bag, nil )
+			UTIL_Remove( item ) -- otherwise it pollutes the player inventory
+		end
+	end
+end
+	
 -- Talents modifier function
 function ApplyAllTalentModifiers()
 	Timers:CreateTimer(0.1,function()
