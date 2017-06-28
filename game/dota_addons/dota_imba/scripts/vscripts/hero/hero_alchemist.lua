@@ -203,9 +203,9 @@ function modifier_imba_acid_spray_handler:OnDeath(params)
 				
 				-- Ability paramaters
 				local greed_stacks		=	caster:FindModifierByName("modifier_imba_goblins_greed_passive"):GetStackCount()
-				local stacks_to_gold 	=	caster:FindSpecificTalentValue("special_bonus_imba_alchemist_4", "stacks_to_gold_percentage" )/ 100 
+				local stacks_to_gold 	=	caster:FindTalentValue("special_bonus_imba_alchemist_4", "stacks_to_gold_percentage" )/ 100 
 				local gold				=	greed_stacks * stacks_to_gold
-				local drop_chance		=	caster:FindSpecificTalentValue("special_bonus_imba_alchemist_4", "drop_chance_percentage" )
+				local drop_chance		=	caster:FindTalentValue("special_bonus_imba_alchemist_4", "drop_chance_percentage" )
 				
 				-- % Chance to drop gold bag
 				if RandomInt(0, 100) < drop_chance then
