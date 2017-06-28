@@ -957,6 +957,8 @@ function imba_abaddon_over_channel:OnSpellStart()
 		local modifier_name = "modifier_over_channel_handler"
 		if not caster:HasModifier(modifier_name) then
 			caster:AddNewModifier(caster, self, modifier_name, {})
+		else
+			caster:RemoveModifierByName("modifier_over_channel_handler")
 		end
 	end
 end
@@ -1131,7 +1133,10 @@ end
 
 function modifier_imba_borrowed_time_buff_hot_caster:GetAuraEntityReject(hEntity)
 	-- Do not apply aura to target
-	return hEntity == self:GetParent()
+	if hEntity == self:GetParent() or hEntity:HasModifier("modifier_imba_borrowed_time_buff_hot_caster") then
+		return true
+	end
+	return false
 end
 
 function modifier_imba_borrowed_time_buff_hot_caster:OnCreated()
