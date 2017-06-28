@@ -629,6 +629,7 @@ function imba_abaddon_curse_of_avernus:OnSpellStart()
 	if IsServer() then
 		self.curse_of_avernus_target = self:GetCursorTarget()
 		self:GetCaster():MoveToTargetToAttack(self.curse_of_avernus_target)
+		self:EndCooldown() --we enter cooldown OnAttack
 	end
 end
 
@@ -713,6 +714,13 @@ function modifier_imba_curse_of_avernus_passive:OnAttack(kv)
 
 		if kv.attacker == caster and self.ability:IsCooldownReady() and ( self.ability.curse_of_avernus_target or self.ability:GetAutoCastState() ) then
 			local health_lost = caster:GetHealth() * caster:FindTalentValue("special_bonus_imba_abaddon_4", "health_cost_pct") / 100
+
+			local over_channel_modifier = caster:FindModifierByName("modifier_over_channel_handler")
+			if over_channel_modifier then
+				-- if we have overchannel, double the health lost and damage (+50% Overchannel strength also applies multiplicatively, for maximum lols)
+				health_lost = health_lost * over_channel_modifier:GetAbility():GetSpecialValueFor("curse_of_avernus_multiplier") * (1 + caster:FindTalentValue("special_bonus_imba_abaddon_6"))
+				over_channel_modifier:Destroy()
+			end
 
 			self.damage = health_lost * caster:FindTalentValue("special_bonus_imba_abaddon_4", "health_to_damage_ratio")
 			self.ability.curse_of_avernus_target = kv.target

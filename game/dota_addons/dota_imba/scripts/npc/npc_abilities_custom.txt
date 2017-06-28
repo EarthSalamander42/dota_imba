@@ -4071,6 +4071,11 @@
 				"var_type"								"FIELD_FLOAT"
 				"extra_shield_health"					"75"
 			}
+			"04"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"curse_of_avernus_multiplier"			"2"
+			}
 		}
 
 		"precache"
