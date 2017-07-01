@@ -757,7 +757,7 @@ function modifier_imba_fiends_grip_handler:OnIntervalThink()
 			victim      = self:GetParent(),
 			attacker    = self:GetCaster(),
 			damage      = fiends_grip_damage + total_demon_damage,
-			damage_type = DAMAGE_TYPE_PURE,
+			damage_type = DAMAGE_TYPE_MAGICAL,
 			ability     = self:GetAbility()
 		}
 		if not self:GetParent():IsMagicImmune() then
