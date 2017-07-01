@@ -4304,6 +4304,80 @@
 	}
 
 	//=================================================================================
+	// Bane: Fiend's Grip demon
+	//=================================================================================
+	"npc_imba_fiends_grip_demon"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creep"
+		"Model"						"models/items/courier/onibi_lvl_05/onibi_lvl_05_flying.vmdl"
+		"SoundSet"					""
+		"IdleSoundLoop"				""
+		"Level"						"1"
+		"ModelScale"				"1"
+		"IsAncient"					"0"
+		"ConsideredHero"			"0"
+		"CanBeDominated"			"0"
+		"HasInventory"				"0"
+		"UnitLabel"					"demon"
+		"VoiceFile" 				""
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"100"
+		"MagicalResistance"			"100"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageMin"			"0"
+		"AttackDamageMax"			"0"
+		"AttackRate"				"1"
+		"AttackAnimationPoint"		"0"
+		"AttackAcquisitionRange"	"0"
+		"AttackRange"				"0"
+		"ProjectileModel"			""
+		"ProjectileSpeed"			"0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"HealthBarOffset"			"240"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"0"
+		"BountyGoldMin"				"0"
+		"BountyGoldMax"				"0"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
+		"MovementSpeed"				"1000"
+		"MovementTurnRate"			"1"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1"
+		"StatusHealthRegen"			"0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"0"
+		"VisionNighttimeRange"		"0"
+	}
+
+	//=================================================================================
 	// Radiant Behemoth
 	//=================================================================================
 	"npc_imba_goodguys_mega_hulk"
