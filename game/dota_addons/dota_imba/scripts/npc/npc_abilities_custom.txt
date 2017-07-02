@@ -16992,7 +16992,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"hook_distance"			"1000 1100 1200 1300 1350 1400 1450"
-				"LinkedSpecialBonus" 	"special_bonus_imba_pudge_2"
 			}
 			"04"
 			{
@@ -17040,6 +17039,16 @@
 				"var_type"				"FIELD_INTEGER"
 				"number_of_hooks"		"1"
 				"LinkedSpecialBonus" 	"special_bonus_imba_pudge_8"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stack_bonus_damage"			"5"
+			}
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stack_max_bonus_damage"			"200"
 			}
 		}
 	}
@@ -17169,7 +17178,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"rot_damage"			"30 60 90 120 130 140 150"
-				"LinkedSpecialBonus"	"special_bonus_imba_pudge_6"
 			}
 			"05"
 			{
@@ -17184,7 +17192,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_radius_tooltip"	"400"
+				"max_radius_tooltip"	"500"
 			}
 		}
 
@@ -17218,13 +17226,11 @@
 			{
 				"var_type"							"FIELD_INTEGER"
 				"base_magic_resist"					"12"
-				"LinkedSpecialBonus"				"special_bonus_imba_pudge_1"
 			}
 			"02"
 			{
 				"var_type"							"FIELD_FLOAT"
 				"stack_str"							"2.5"
-				"LinkedSpecialBonus"				"special_bonus_imba_pudge_5"
 			}
 			"03"
 			{
@@ -17240,6 +17246,16 @@
 			{
 				"var_type"							"FIELD_FLOAT"
 				"max_size"							"75"
+			}
+			"06"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"stack_magic_resistance"	"2"
+			}
+			"07"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"max_stack_resist"					"30"
 			}
 		}
 	}
@@ -17302,13 +17318,11 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"hero_duration"				"2.95"
-				"LinkedSpecialBonus" 		"special_bonus_imba_pudge_7"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"creep_duration"			"5.95"
-				"LinkedSpecialBonus" 		"special_bonus_imba_pudge_7"
 			}
 			"05"
 			{
@@ -17323,7 +17337,37 @@
 		}
 	}
 
-	"special_bonus_imba_pudge_1" // Bonus Flesh Heaps magic resistance.
+	"special_bonus_imba_pudge_1" // Rot deals x more damage for every y% health he misses
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_pudge_rot"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"						"40"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"hp_treshhold_percent"						"0.05"
+			}
+		}
+	}
+
+	"special_bonus_imba_pudge_2" // Meat Shield: Consume X stacks of charges to block Y damage, restores after Z seconds, Ignore on A damage?
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -17343,32 +17387,22 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"20"
+				"stacks_needed"						"5"
 			}
-		}
-	}
-
-	"special_bonus_imba_pudge_2" // bonus Meat Hook range
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_pudge_meat_hook"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
+			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"200"
+				"damage_block"						"100"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"return_time"						"10"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"min_damage"						"20"
 			}
 		}
 	}
@@ -17433,7 +17467,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_pudge_flesh_heap"
+			"01" 	"imba_pudge_butchers_cleaver"
 			
 		}
 
@@ -17444,12 +17478,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"value"						"1.75"
+				"value"						"1"
 			}
 		}
 	}
 
-	"special_bonus_imba_pudge_6" // Bonus Rot damage per second
+	"special_bonus_imba_pudge_6" //Hook now deals damage for each tree the unit passes through
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -17459,7 +17493,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_pudge_rot"
+			"01" 	"imba_pudge_meat_hook"
 			
 		}
 
@@ -17469,13 +17503,13 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_FLOAT"
+				"var_type"					"FIELD_INTEGER"
 				"value"						"120"
 			}
 		}
 	}
 
-	"special_bonus_imba_pudge_7" // Bonus Dismember duration
+	"special_bonus_imba_pudge_7" // Dismember now disarms the target after the duration for the channeled duration
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -17495,8 +17529,8 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"value"						"2"
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
 			}
 		}
 	}

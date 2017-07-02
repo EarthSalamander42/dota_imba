@@ -5,6 +5,7 @@ CreateEmptyTalents("pudge")
 --                Flesh Heap
 -------------------------------------------
 LinkLuaModifier("modifier_flesh_heap", "hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_flesh_heap_return_timer", "hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 
 imba_pudge_flesh_heap = class({})
 function imba_pudge_flesh_heap:IsHiddenWhenStolen() return true end
@@ -21,7 +22,37 @@ end
 function imba_pudge_flesh_heap:GetIntrinsicModifierName()
 	return "modifier_flesh_heap"
 end
+-------------------------------------------
+modifier_flesh_heap_return_timer = class({})
+function modifier_flesh_heap_return_timer:IsDebuff() return true end
+function modifier_flesh_heap_return_timer:IsHidden() return not IsInToolsMode() end
+function modifier_flesh_heap_return_timer:IsPurgable() return false end
+function modifier_flesh_heap_return_timer:IsPurgeException() return false end
+function modifier_flesh_heap_return_timer:IsStunDebuff() return false end
+function modifier_flesh_heap_return_timer:RemoveOnDeath() return true end
+function modifier_flesh_heap_return_timer:AllowIllusionDuplicate() return false end
+-------------------------------------------
+function modifier_flesh_heap_return_timer:GetAttributes()
+	return {MODIFIER_ATTRIBUTE_MULTIPLE}
+end
 
+function modifier_flesh_heap_return_timer:OnCreated()
+ if IsServer() then
+ 	local modifier = self:GetParent():FindModifierByName(self:GetAbility():GetIntrinsicModifierName())
+ 	for i=0, self:GetParent():FindTalentValue("special_bonus_imba_pudge_2","stacks_needed")-1 do
+ 		modifier:DecrementStackCount()
+ 	end
+ end
+end
+
+function modifier_flesh_heap_return_timer:OnDestroy()
+	if IsServer() then
+	 	local modifier = self:GetParent():FindModifierByName(self:GetAbility():GetIntrinsicModifierName())
+	 	for i=0, self:GetParent():FindTalentValue("special_bonus_imba_pudge_2","stacks_needed")-1 do
+	 		modifier:IncrementStackCount()
+	 	end
+  end
+end
 -------------------------------------------
 modifier_flesh_heap = class({})
 function modifier_flesh_heap:IsDebuff() return false end
@@ -55,7 +86,8 @@ function modifier_flesh_heap:DeclareFunctions()
 		{
 			MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
 			MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-			MODIFIER_PROPERTY_MODEL_SCALE,  
+			MODIFIER_PROPERTY_MODEL_SCALE,
+			MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK,  
 
 			MODIFIER_EVENT_ON_DEATH,
 				
@@ -71,14 +103,15 @@ end
 function modifier_flesh_heap:GetModifierMagicalResistanceBonus()
 	if self:GetParent():PassivesDisabled() then return end
 	local resist = self:GetAbility():GetSpecialValueFor("base_magic_resist")
-	resist =  resist + self:GetParent():FindTalentValue("special_bonus_imba_pudge_1")
+	local stack_resist = self:GetAbility():GetSpecialValueFor("stack_magic_resistance") * self:GetStackCount()
+	stack_resist = math.min(stack_resist, self:GetAbility():GetSpecialValueFor("max_stack_resist"))
+	resist =  resist + stack_resist
 	return resist
 end
 
 function modifier_flesh_heap:GetModifierBonusStats_Strength()
 	if self:GetParent():PassivesDisabled() then return end
 	local str = self:GetAbility():GetSpecialValueFor("stack_str")
-	str = str + self:GetParent():FindTalentValue("special_bonus_imba_pudge_5")
 	return self:GetStackCount() * str
 end
 
@@ -90,6 +123,29 @@ function modifier_flesh_heap:GetModifierModelScale()
 	end
 	return size
 end
+
+function modifier_flesh_heap:GetModifierTotal_ConstantBlock(keys)
+	if not IsServer() then return end
+	if keys.target ~= self:GetCaster() then return 0 end
+	if keys.attacker == self:GetCaster() then return 0 end
+	if self:GetParent():PassivesDisabled() then return 0 end
+	if not self:GetParent():IsRealHero() then return 0 end
+
+	-- Only attacks?
+	if inflictor then return 0 end
+
+	if self:GetStackCount() < self:GetParent():FindTalentValue("special_bonus_imba_pudge_2","stacks_needed") then return 0 end
+
+	local damage = keys.damage
+	if damage <= self:GetParent():FindTalentValue("special_bonus_imba_pudge_2","min_damage") then return 0 end
+	local max_damage = self:GetParent():FindTalentValue("special_bonus_imba_pudge_2","damage_block")
+	if damage > max_damage then
+		damage = max_damage
+	end
+	self:GetParent():AddNewModifier(self:GetParent(),self:GetAbility(),"modifier_flesh_heap_return_timer",{duration=self:GetParent():FindTalentValue("special_bonus_imba_pudge_2","return_time")})
+	return damage
+end
+
 
 function modifier_flesh_heap:OnDeath(keys)
 	-- All these cases shouldn't do anything.
@@ -110,19 +166,18 @@ function modifier_flesh_heap:OnDeath(keys)
 		local vToCaster = self:GetCaster():GetOrigin() - hVictim:GetOrigin()
 		local flDistance = vToCaster:Length2D() - (self:GetCaster():GetCollisionPadding() + hVictim:GetCollisionPadding())
 		if hKiller == self:GetCaster() or self.fleshHeapRange >= flDistance then
-			if self:GetCaster().nKills == nil then
-				self:GetCaster().nKills = 0
-			end
 
-			self:GetCaster().nKills = self:GetCaster().nKills + 1
+			--self:GetCaster().nKills = self:GetCaster().nKills + 1
 			local hBuff = self:GetCaster():FindModifierByName("modifier_flesh_heap")
 			if hBuff ~= nil then
-				hBuff:SetStackCount(self:GetCaster().nKills)
+				hBuff:IncrementStackCount()
 				self:GetCaster():CalculateStatBonus()
 			else
 				self:GetCaster():AddNewModifier(self:GetCaster(), self,  "modifier_flesh_heap" , {})
 			end
-
+			if hKiller == self:GetCaster() then
+				hBuff:IncrementStackCount()
+			end
 			local nFXIndex = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_fleshheap_count.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetCaster())
 			ParticleManager:SetParticleControl(nFXIndex, 1, Vector(1, 0, 0))
 			ParticleManager:ReleaseParticleIndex(nFXIndex)
@@ -241,11 +296,10 @@ end
 
 
 function modifier_rot:OnCreated(kv)
-	self.rot_slow = self:GetAbility():GetSpecialValueFor("rot_slow")
+	local caster = self:GetCaster()
+	self.rot_slow = self:GetAbility():GetSpecialValueFor("rot_slow") 
 	self.rot_damage = self:GetAbility():GetSpecialValueFor("rot_damage")
 
-	-- #6 Talent: Rot deals increased damage per tick
-	self.rot_damage = self.rot_damage + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_6")
 	self.rot_tick = self:GetAbility():GetSpecialValueFor("rot_tick")
 
 	if IsServer() then
@@ -271,8 +325,13 @@ end
 
 function modifier_rot:OnIntervalThink()
 	if IsServer() then
-		local flDamagePerTick = self.rot_tick * self.rot_damage		
-
+		if self:GetCaster():FindTalentValue("special_bonus_imba_pudge_1","damage") ~= 0 then
+			self.rot_real_damage = self.rot_damage + (self:GetCaster():FindTalentValue("special_bonus_imba_pudge_1","damage") * (((100-self:GetCaster():GetHealthPercent())/100) / self:GetCaster():FindTalentValue("special_bonus_imba_pudge_1","hp_treshhold_percent")))
+		else
+			self.rot_real_damage = self.rot_damage
+		end
+		local flDamagePerTick = self.rot_tick * self.rot_real_damage		
+		
 		if self:GetCaster():IsAlive() then
 			local damage = {
 				victim = self:GetParent(),
@@ -449,8 +508,11 @@ function imba_pudge_meat_hook:OnSpellStart()
 	self.bChainAttached = false	
 	self.hooks = self.hooks or {}
 	self.targets = {}
+	self.treeTargets = {}
 	self.max_targets = self:GetSpecialValueFor( "max_targets" )  
-	self.hook_damage = self:GetSpecialValueFor( "hook_damage" )  
+	self.hook_damage = self:GetSpecialValueFor( "hook_damage" )
+	self.hook_stackdamage = math.min(self:GetCaster():GetModifierStackCount("modifier_flesh_heap",self:GetCaster()) * self:GetSpecialValueFor("stack_bonus_damage"),self:GetSpecialValueFor("stack_max_bonus_damage"))  
+	self.hook_damage = self.hook_damage + self.hook_stackdamage
 	self.hook_speed = self:GetSpecialValueFor( "hook_speed" )
 	self.hook_width = self:GetSpecialValueFor( "hook_width" )
 	self.hook_distance = self:GetSpecialValueFor( "hook_distance" ) + GetCastRangeIncrease(self:GetCaster())
@@ -476,6 +538,7 @@ function imba_pudge_meat_hook:OnSpellStart()
 
 	for i=1,self.nAmountOfHooks do
 		self.hooks[i] = {}
+		self.treeTargets[i] = 0
 		self.hooks[i]["vStartPosition"] = self:GetCaster():GetAbsOrigin()
 		self.hooks[i]["vProjectileLocation"] = self.hooks[i]["vStartPosition"]
 		self.hooks[i]["vDirection"] = (self:GetCursorPosition() - self.hooks[i]["vStartPosition"]):Normalized() * self.hook_distance
@@ -501,7 +564,7 @@ function imba_pudge_meat_hook:OnSpellStart()
 			fEndRadius = self.hook_width ,
 			Source = self:GetCaster(),
 			iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_BOTH,
-			iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_TREE,
 			iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
 			EffectName = "particles/units/heroes/hero_pudge/pudge_meathook.vpcf",
 			ExtraData = 
@@ -577,34 +640,47 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData( hTarget, vLocation,keys
 	-- Here the hook always moves forward and has a target. The impact is handled here.
 	if hTarget then
 		if not self.targets[hTarget] then -- Storing the targets so it won't get handled again
-			EmitSoundOn( "Hero_Pudge.AttackHookImpact", hTarget )
-			hTarget:AddNewModifier( self:GetCaster(), self, "modifier_meat_hook", {duration = 1.5} )
-			self.targets[hTarget] = i
-			if hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
-			
-				local damage = 
-				{
-					victim = hTarget,
-					attacker = self:GetCaster(),
-					damage = self.hook_damage,
-					damage_type = DAMAGE_TYPE_PURE,		
-					ability = self
-				}
-				ApplyDamage( damage )
-				
-		
+			if hTarget.IsStanding then -- It is a treea
+			--[[	self.treeTargets[i] = self.treeTargets[i] + 1 -- Doesn't work, using OnProjectileThink
+				print("Trees hit:", self.treeTargets[i])
+				return]]
+			else
+				EmitSoundOn( "Hero_Pudge.AttackHookImpact", hTarget )
+				hTarget:AddNewModifier( self:GetCaster(), self, "modifier_meat_hook", {duration = 1.5} )
+				self.targets[hTarget] = i
+				if hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
+					local bonusTreeDamage = self.treeTargets[i] * self:GetCaster():FindTalentValue("special_bonus_imba_pudge_6")
+					local damage = 
+					{
+						victim = hTarget,
+						attacker = self:GetCaster(),
+						damage = bonusTreeDamage,
+						damage_type = DAMAGE_TYPE_PHYSICAL,		
+						ability = self
+					}
+					ApplyDamage( damage )
+					local damage = 
+					{
+						victim = hTarget,
+						attacker = self:GetCaster(),
+						damage = self.hook_damage,
+						damage_type = DAMAGE_TYPE_PURE,		
+						ability = self
+					}
+					ApplyDamage( damage )
 
-				if not hTarget:IsAlive() then
-					self.hooks[i]["bDiedInHook"] = true
+					if not hTarget:IsAlive() then
+						self.hooks[i]["bDiedInHook"] = true
+					end
+
+					if not hTarget:IsMagicImmune() then
+						hTarget:Interrupt()
+					end
+
+					local nFXIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_pudge/pudge_meathook_impact.vpcf", PATTACH_CUSTOMORIGIN, hTarget )
+					ParticleManager:SetParticleControlEnt( nFXIndex, 0, hTarget, PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true )
+					ParticleManager:ReleaseParticleIndex( nFXIndex )
 				end
-
-				if not hTarget:IsMagicImmune() then
-					hTarget:Interrupt()
-				end
-
-				local nFXIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_pudge/pudge_meathook_impact.vpcf", PATTACH_CUSTOMORIGIN, hTarget )
-				ParticleManager:SetParticleControlEnt( nFXIndex, 0, hTarget, PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true )
-				ParticleManager:ReleaseParticleIndex( nFXIndex )
 			end
 
 			AddFOWViewer( self:GetCaster():GetTeamNumber(), hTarget:GetOrigin(), self.vision_radius, self.vision_duration, false )
@@ -644,7 +720,6 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData( hTarget, vLocation,keys
 				self.bAllRetracting = false
 				break
 			else
-	
 				self.bAllRetracting = true
 			end
 		end
@@ -675,6 +750,7 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData( hTarget, vLocation,keys
 			fDistance = flDistance-100,
 			Source = self:GetCaster(),
 			EffectName =  "particles/units/heroes/hero_pudge/pudge_meathook.vpcf",
+			--iUnitTargetType = DOTA_UNIT_TARGET_TREE,
 			ExtraData = 
 			{
 				nProjectileNumber = i
@@ -683,11 +759,6 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData( hTarget, vLocation,keys
 		
 		self.hooks[i]["hProjectile"] = ProjectileManager:CreateLinearProjectile( info )
 	end
-	
-
-	
-	
-
 
 	if self:GetCaster():IsAlive() then
 		self:GetCaster():RemoveGesture( ACT_DOTA_OVERRIDE_ABILITY_1 );
@@ -702,6 +773,18 @@ function imba_pudge_meat_hook:OnProjectileThink_ExtraData(vLocation,keys)
 
 	local i = keys.nProjectileNumber
 	if not self.hooks[i] then return end
+	if self:GetCaster():FindTalentValue("special_bonus_imba_pudge_6") ~= 0 then
+		local trees = GridNav:GetAllTreesAroundPoint(vLocation,self.hook_width,false)
+		for _,tree in pairs(trees) do
+			if tree:IsStanding() then
+				tree:CutDown(self:GetCaster():GetTeamNumber())
+				self.treeTargets[i] = self.treeTargets[i] + 1
+			else
+				table.remove(trees, tree)
+			end
+		end
+	end
+	
 
 	self.hooks[i]["vProjectileLocation"] = vLocation
 	if self.hooks[i]["unitsHit"] then
@@ -827,12 +910,12 @@ function imba_pudge_butchers_cleaver:OnSpellStart()
 			cleaver:AddEffects( EF_NODRAW )
 		end
 	end
-
+	local velocity = (self:GetCursorPosition() - caster:GetAbsOrigin()):Normalized() * self:GetSpecialValueFor("projectile_speed")
 	local info = {
-		bDeleteOnHit = true,
+		bDeleteOnHit = self:GetCaster():FindTalentValue("special_bonus_imba_pudge_5") == 0,
 		Ability = self,
 		vSpawnOrigin = self:GetCaster():GetAbsOrigin(),
-		vVelocity = (self:GetCursorPosition() - caster:GetAbsOrigin()):Normalized() * self:GetSpecialValueFor("projectile_speed"),
+		vVelocity = Vector(velocity.x,velocity.y,0),
 		fDistance = self:GetSpecialValueFor("range"),
 		fStartRadius = self:GetSpecialValueFor("projectile_radius"),
 		fEndRadius = self:GetSpecialValueFor("projectile_radius"),
@@ -840,7 +923,11 @@ function imba_pudge_butchers_cleaver:OnSpellStart()
 		iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
 		iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 		iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
-		EffectName = "particles/hero/pudge/butchers_cleave_projectile.vpcf",		
+		EffectName = "particles/hero/pudge/butchers_cleave_projectile.vpcf",
+
+		iVisionRadius = self:GetSpecialValueFor("projectile_radius"),
+		bProvidesVision = true,
+		iVisionTeamNumber = caster:GetTeamNumber(),		
 		
 	}
 	
@@ -879,8 +966,9 @@ function imba_pudge_butchers_cleaver:OnProjectileHit(hTarget,vLocation)
 		ability = self,
 	}
 	ApplyDamage( damage )
-
-	return true
+	if self:GetCaster():FindTalentValue("special_bonus_imba_pudge_5") == 0 then
+		return true
+	end
 end
 
 
@@ -1008,6 +1096,7 @@ imba_pudge_dismember = imba_pudge_dismember or class({})
 LinkLuaModifier( "modifier_dismember", "hero/hero_pudge" ,LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_dismember_lifesteal", "hero/hero_pudge" ,LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_dismember_dummy", "hero/hero_pudge" ,LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_dismember_disarm", "hero/hero_pudge" ,LUA_MODIFIER_MOTION_NONE )
 
 function imba_pudge_dismember:GetAbilityTextureName()
    return "pudge_dismember"
@@ -1060,6 +1149,7 @@ function imba_pudge_dismember:OnSpellStart()
 		self.hVictim = nil
 		self:GetCaster():Interrupt()
 	else
+		self.startTime = GameRules:GetGameTime()
 		self.hVictim:AddNewModifier( self:GetCaster(), self, "modifier_dismember", { duration = self:GetChannelTime() } )
 		self:GetCaster():AddNewModifier( self:GetCaster(), self, "modifier_dismember_lifesteal", { duration = self:GetChannelTime() } )
 		self.hVictim:Interrupt()
@@ -1072,11 +1162,37 @@ end
 function imba_pudge_dismember:OnChannelFinish( bInterrupted )
 	if self.hVictim ~= nil then
 		self.hVictim:RemoveModifierByName( "modifier_dismember" )
-		self:GetCaster():RemoveModifierByName( "modifier_dismember_lifesteal" )
+		self:GetCaster():RemoveModifierByName( "modifier_dismember_lifesteal")
+		if self:GetCaster():FindTalentValue("special_bonus_imba_pudge_7") ~= 0 then
+			self.hVictim:AddNewModifier(self:GetCaster(),self,"modifier_dismember_disarm",{duration = GameRules:GetGameTime() - self.startTime})
+		end
 	end
 end
 
 --------------------------------------------------------------------------------
+modifier_dismember_disarm = class({})	
+function modifier_dismember_disarm:IsHidden() return false end
+function modifier_dismember_disarm:IsDebuff() return true end
+function modifier_dismember_disarm:IsPurgable() return false end
+function modifier_dismember_disarm:IsPurgeException() return false end
+
+
+-- Modifier particle
+function modifier_dismember_disarm:GetEffectName()
+	return "particles/items2_fx/heavens_halberd.vpcf"
+end
+
+function modifier_dismember_disarm:GetEffectAttachType()
+	return PATTACH_ABSORIGIN_FOLLOW
+end
+
+-- Declare modifier states
+function modifier_dismember_disarm:CheckState()
+	local states = {
+		[MODIFIER_STATE_DISARMED] = true,
+	}
+	return states
+end
 
 modifier_dismember_dummy = class({})
 function modifier_dismember_dummy:IsDebuff() return false end
@@ -1159,7 +1275,10 @@ function modifier_dismember:OnIntervalThink()
 			ability = self:GetAbility()
 		}
 
-		ApplyDamage( damage )
+		local dam = ApplyDamage( damage )
+		if dam < 5 then -- Target is likely immune
+		  self:GetCaster():Heal(flDamage* 0.75,self:GetCaster())
+		end
 		EmitSoundOn( "Hero_Pudge.Dismember", self:GetParent() )		
 	end
 end
