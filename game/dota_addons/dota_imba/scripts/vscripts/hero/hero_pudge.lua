@@ -331,7 +331,7 @@ function modifier_rot:OnIntervalThink()
 			self.rot_real_damage = self.rot_damage
 		end
 		local flDamagePerTick = self.rot_tick * self.rot_real_damage		
-		
+
 		if self:GetCaster():IsAlive() then
 			local damage = {
 				victim = self:GetParent(),
@@ -1272,13 +1272,11 @@ function modifier_dismember:OnIntervalThink()
 			attacker = self:GetCaster(),
 			damage = flDamage,
 			damage_type = DAMAGE_TYPE_MAGICAL,
-			ability = self:GetAbility()
+			ability = self:GetAbility(),
+			damage_flags  = DOTA_DAMAGE_FLAG_IGNORES_MAGIC_ARMOR,
 		}
-
-		local dam = ApplyDamage( damage )
-		if dam < 5 then -- Target is likely immune
-		  self:GetCaster():Heal(flDamage* 0.75,self:GetCaster())
-		end
+		ApplyDamage( damage )
+		
 		EmitSoundOn( "Hero_Pudge.Dismember", self:GetParent() )		
 	end
 end
