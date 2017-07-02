@@ -701,7 +701,6 @@ end
 -- Magic Resistance
 function CDOTA_BaseNPC:GetMagicalResistance()
 	local magicResistance = 1 - self:GetBaseMagicalResistanceValue()/100
-	print(magicResistance)
 	for _, parent_modifier in pairs(self:FindAllModifiers()) do
 		if parent_modifier.GetModifierMagicalResistanceBonus  then
 			if parent_modifier:GetModifierMagicalResistanceDecrepifyUnique() < 100 then
