@@ -698,6 +698,25 @@ function CDOTA_BaseNPC:GetRespawnTimeModifier_Pct()
 	return multiplicator_pct
 end
 
+-- Magic Resistance
+function CDOTA_BaseNPC:GetMagicalResistance()
+	local magicResistance = 1 - self:GetBaseMagicalResistanceValue()/100
+	print(magicResistance)
+	for _, parent_modifier in pairs(self:FindAllModifiers()) do
+		if parent_modifier.GetModifierMagicalResistanceBonus  then
+			if parent_modifier:GetModifierMagicalResistanceDecrepifyUnique() < 100 then
+				magicResistance = magicResistance * (1- (parent_modifier:GetModifierMagicalResistanceBonus()/100))
+			end
+		end
+		if parent_modifier.GetModifierMagicalResistanceDecrepifyUnique then
+			if parent_modifier:GetModifierMagicalResistanceDecrepifyUnique() < 100 then
+				magicResistance = magicResistance * (1- (parent_modifier:GetModifierMagicalResistanceDecrepifyUnique()/100))	
+			end
+		end
+	end
+	return magicResistance
+end
+
 -- Calculate physical damage post reduction
 function CDOTA_BaseNPC:GetPhysicalArmorReduction()
 	local armornpc = self:GetPhysicalArmorValue()

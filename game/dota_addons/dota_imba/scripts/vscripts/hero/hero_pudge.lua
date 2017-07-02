@@ -1264,9 +1264,10 @@ end
 function modifier_dismember:OnIntervalThink()
 	if IsServer() then
 		local flDamage = self.dismember_damage
-		
 		flDamage = flDamage + ( self:GetCaster():GetStrength() * self.strength_damage )
-
+		print(flDamage)
+		flDamage = self:GetParent():GetMagicalResistance() * flDamage
+		print(flDamage)
 		local damage = {
 			victim = self:GetParent(),
 			attacker = self:GetCaster(),
