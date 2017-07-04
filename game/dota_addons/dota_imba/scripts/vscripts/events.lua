@@ -108,6 +108,7 @@ function GameMode:OnGameRulesStateChange(keys)
 
 	if new_state == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		HeroSelection:Start()
+		Server_WaitToEnableXpGain()
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -893,6 +894,8 @@ end
 function GameMode:OnConnectFull(keys)
 	DebugPrint('[BAREBONES] OnConnectFull')
 	DebugPrintTable(keys)
+
+	Server_OnConnectFull()
 
 	GameMode:_OnConnectFull(keys)
 	

@@ -51,7 +51,7 @@ function print_r ( t )   --To deep-decode the Json code...
     print()
 end
 
-function Server_OnConnectFull(key)
+function Server_OnConnectFull()
     print('123123')
     print(DOTA_MAX_TEAM_PLAYERS)
     table_PlayerID[1]= "a"
@@ -60,33 +60,37 @@ function Server_OnConnectFull(key)
 
 end
 
-function Server_123OnConnectFull(key)
+function Server_SendAndGetInfoForAll()
+    require('libraries/json')
     print('123123')
     print(DOTA_MAX_TEAM_PLAYERS)
     local iPlayerNum = 1
     for nPlayerID=0, DOTA_MAX_TEAM_PLAYERS-1 do
-        if PlayerResource:GetTeam( nPlayerID ) == DOTA_TEAM_GOODGUYS or PlayerResource:GetTeam( nPlayerID ) == DOTA_TEAM_BADGUYS then
 
-            --table_PlayerID[iPlayerNum] = nPlayerID
-            table_SteamID64[nPlayerID] = PlayerResource:GetSteamID(nPlayerID)
-            table_XP[nPlayerID] = "100"
+        --table_PlayerID[iPlayerNum] = nPlayerID
+        table_SteamID64[nPlayerID] = PlayerResource:GetSteamID(nPlayerID)
+        table_XP[nPlayerID] = "100"
 
-            local jsondata={}
-            local jsontable={}
-            jsontable.XP=table_XP[nPlayerID]
-            jsontable.SteamID64=table_SteamID64[nPlayerID]
-            table.insert(jsondata,jsontable)
-            local request = CreateHTTPRequestScriptVM( "GET", "http://www.dota2imba.cn/XP_game_to_tmp.php" )
-                request:SetHTTPRequestGetOrPostParameter("data_json",JSON:encode(jsondata))
-                request:SetHTTPRequestGetOrPostParameter("auth",_AuthCode);
-                request:Send(function(result)
-                Adecode=JSON:decode(result.Body)
-                print_r(Adecode)
-            end )
+        local jsondata={}
+        local jsontable={}
+        jsontable.XP=table_XP[nPlayerID]
+        jsontable.SteamID64=table_SteamID64[nPlayerID]
+        table.insert(jsondata,jsontable)
+        local request = CreateHTTPRequestScriptVM( "GET", "http://www.dota2imba.cn/XP_game_to_tmp.php" )
+            request:SetHTTPRequestGetOrPostParameter("data_json",JSON:encode(jsondata))
+            request:SetHTTPRequestGetOrPostParameter("auth",_AuthCode);
+            request:Send(function(result)
+            Adecode=JSON:decode(result.Body)
+            print_r(Adecode)
+        end )
 
-            table_player_key[nPlayerID] = player_key
-            table_XP_has[nPlayerID] = XP_has
-        end
+        table_player_key[nPlayerID] = player_key
+        table_XP_has[nPlayerID] = XP_has
     end
 
+end
+
+
+function Server_WaitToEnableXpGain()
+    print("Hero select!!!!!")
 end

@@ -70,6 +70,7 @@ end
 -- This function is called once a player says something on any chat
 function GameMode:OnPlayerChat(keys)
 	local text = keys.text
+
 	
 	-- This Handler is only for commands, ends the function if first character is not "-"
 	if not (string.byte(text) == 45) then
