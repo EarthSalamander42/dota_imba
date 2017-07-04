@@ -895,7 +895,7 @@ function GameMode:OnConnectFull(keys)
 	DebugPrint('[BAREBONES] OnConnectFull')
 	DebugPrintTable(keys)
 
-	Server_OnConnectFull()
+	Server_SendAndGetInfoForAll()
 
 	GameMode:_OnConnectFull(keys)
 	

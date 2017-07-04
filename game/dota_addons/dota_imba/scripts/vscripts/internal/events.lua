@@ -119,7 +119,12 @@ function GameMode:OnPlayerChat(keys)
 		if str == "-rangeoff" then
 			caster.norange = true
 		end
-		
+
+		if str == "-chred" then
+			Server_SendAndGetInfoForAll()
+		end
+
+
 		if str == "-rangeon" then
 			caster.norange = nil
 		end
