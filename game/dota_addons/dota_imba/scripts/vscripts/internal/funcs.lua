@@ -698,24 +698,6 @@ function CDOTA_BaseNPC:GetRespawnTimeModifier_Pct()
 	return multiplicator_pct
 end
 
--- Magic Resistance
-function CDOTA_BaseNPC:GetMagicalResistance()
-	local magicResistance = 1 - self:GetBaseMagicalResistanceValue()/100
-	for _, parent_modifier in pairs(self:FindAllModifiers()) do
-		if parent_modifier.GetModifierMagicalResistanceBonus  then
-			if parent_modifier:GetModifierMagicalResistanceDecrepifyUnique() < 100 then
-				magicResistance = magicResistance * (1- (parent_modifier:GetModifierMagicalResistanceBonus()/100))
-			end
-		end
-		if parent_modifier.GetModifierMagicalResistanceDecrepifyUnique then
-			if parent_modifier:GetModifierMagicalResistanceDecrepifyUnique() < 100 then
-				magicResistance = magicResistance * (1- (parent_modifier:GetModifierMagicalResistanceDecrepifyUnique()/100))	
-			end
-		end
-	end
-	return magicResistance
-end
-
 -- Calculate physical damage post reduction
 function CDOTA_BaseNPC:GetPhysicalArmorReduction()
 	local armornpc = self:GetPhysicalArmorValue()
@@ -1488,5 +1470,16 @@ function CDOTA_BaseNPC_Hero:GetHeroColorSecondary()
 	if hero_theme[heroname] then
 		return hero_theme[heroname]
 	end
+	return false
+end
+
+-- Finds whether or not an entity is an item container (the box on the game ground)
+function CBaseEntity:IsItemContainer()
+	if self.GetContainedItem then
+		if self:GetContainedItem() then
+			return true
+		end
+	end
+
 	return false
 end

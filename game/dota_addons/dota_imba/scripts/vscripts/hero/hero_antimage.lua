@@ -1,8 +1,9 @@
 --[[  
     Author: AtroCty
     Date: 07.03.2015
-    Updated: 19.05.2017
+    Updated: 04.07.2017    
   ]]
+
 CreateEmptyTalents("antimage")
 local LinkedModifiers = {}
 -------------------------------------------
@@ -44,23 +45,21 @@ function modifier_imba_mana_break_passive:OnCreated()
   if IsServer() then
     self.ability = self:GetAbility()
     self.parent = self:GetParent()
+    self.particle_blast = "particles/hero/antimage/mana_break_blast.vpcf"
+    self.sound_blast = "tutorial_smallfence_smash"
+    self.particle_aoe_mana_burn = "particles/hero/antimage/mana_break_aoe_burn.vpcf"
     
     self.damage_per_burn = self.ability:GetSpecialValueFor("damage_per_burn")
-    self.base_mana_burn = self.ability:GetSpecialValueFor("base_mana_burn")
-    self.bonus_mana_burn = self.ability:GetSpecialValueFor("bonus_mana_burn")
-    self.illusion_factor = self.ability:GetSpecialValueFor("illusion_factor")
+    self.base_mana_burn = self.ability:GetSpecialValueFor("base_mana_burn")    
+    self.threshold_difference = self.ability:GetSpecialValueFor("threshold_difference")        
+    self.blast_aoe = self.ability:GetSpecialValueFor("blast_aoe")    
+    self.max_mana_blast = self.ability:GetSpecialValueFor("max_mana_blast")    
   end
 end
 
 function modifier_imba_mana_break_passive:OnRefresh()
   if IsServer() then
-    self.ability = self:GetAbility()
-    self.parent = self:GetParent()
-    
-    self.damage_per_burn = self.ability:GetSpecialValueFor("damage_per_burn")
-    self.base_mana_burn = self.ability:GetSpecialValueFor("base_mana_burn")
-    self.bonus_mana_burn = self.ability:GetSpecialValueFor("bonus_mana_burn")
-    self.illusion_factor = self.ability:GetSpecialValueFor("illusion_factor")
+    self:OnCreated()
   end
 end
 
@@ -69,11 +68,16 @@ function modifier_imba_mana_break_passive:OnAttackStart(keys)
     local attacker = keys.attacker
     local target = keys.target
     
-    -- If target has break, do nothing
+    -- If caster has break, do nothing
     if attacker:PassivesDisabled() then
       return nil
     end
     
+    -- If the target is an item, do nothing
+    if target:IsItemContainer() then
+        return nil
+    end
+
     -- If there isn't a valid target, do nothing
     if target:GetMaxMana() == 0 or target:IsMagicImmune() then
       return nil
@@ -87,10 +91,18 @@ function modifier_imba_mana_break_passive:OnAttackStart(keys)
       if (target_mana_burn > self.base_mana_burn) then
         target_mana_burn = self.base_mana_burn
       end
+
+      -- Get the target's current mana percentage
+      self.mana_percentage = target:GetManaPercent()
+
+      -- Get the threshold difference phase he's currently in (4 is 75%-100%, 3 is 50%-75% etc unless numbers change)
+      -- Phase 0 means he has no mana at all
+      self.mana_phase = math.ceil(self.mana_percentage / self.threshold_difference)
       
+      -- Decide how much damage should be added
       self.add_damage = target_mana_burn * self.damage_per_burn
       
-      -- Talent 3 - % of missing mana as extra-dmg
+      -- Talent 4 - % of missing mana as extra-dmg
       if attacker:HasTalent("special_bonus_imba_antimage_4") then
         self.add_damage = self.add_damage + (( (target:GetMaxMana() - target:GetMana() + target_mana_burn) * ( (attacker:FindTalentValue("special_bonus_imba_antimage_4")) / 100)) * self.damage_per_burn)
       end
@@ -128,9 +140,97 @@ function modifier_imba_mana_break_passive:OnAttackLanded(keys)
       local target_mana_burn = target:GetMana()
       if (target_mana_burn > self.base_mana_burn) then
         target_mana_burn = self.base_mana_burn
+
       end
+
       target:ReduceMana(target_mana_burn)
-      SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_LOSS, target, target_mana_burn, nil)
+      SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_LOSS, target, target_mana_burn, nil)      
+
+      -- If the target is magic immune, this is it for us.
+      if target:IsMagicImmune() then
+          return nil
+      end
+      
+      -- Get the target's percentage now
+      local current_mana_percentage = target:GetManaPercent()      
+
+      -- Get the current mana phase the target is in now
+      local current_mana_phase = math.ceil(current_mana_percentage / self.threshold_difference)
+
+      -- If the attack caused the target to "lose" a phase of mana, or it is in phase 0, BLAST IT!      
+      if current_mana_phase < self.mana_phase or current_mana_phase == 0 then        
+
+          -- Sexy blast effect        
+          local particle_blast_fx = ParticleManager:CreateParticle(self.particle_blast, PATTACH_CUSTOMORIGIN_FOLLOW, target)
+          ParticleManager:SetParticleControlEnt(particle_blast_fx, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+          ParticleManager:ReleaseParticleIndex(particle_blast_fx)
+
+          -- Calculate blast damage
+          local blast_damage = target:GetMaxMana() * self.max_mana_blast * 0.01
+
+          -- Find all enemies, and deal damage to them
+          local enemies = FindUnitsInRadius(attacker:GetTeamNumber(),
+                                            target:GetAbsOrigin(),
+                                            nil,
+                                            self.blast_aoe,
+                                            DOTA_UNIT_TARGET_TEAM_ENEMY,
+                                            DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+                                            DOTA_UNIT_TARGET_FLAG_NONE,
+                                            FIND_ANY_ORDER,
+                                            false)
+
+          for _,enemy in pairs(enemies) do
+              -- If the enemy suddenly became magic immune, ignore it. Otherwise, continue
+              if not enemy:IsMagicImmune() then
+                  local damageTable = {victim = enemy,
+                                      damage = blast_damage,
+                                      damage_type = DAMAGE_TYPE_MAGICAL,
+                                      attacker = attacker,
+                                      ability = self.ability
+                                      }
+
+                  ApplyDamage(damageTable)
+              end
+          end
+
+          -- Play blast sound
+          EmitSoundOnLocationWithCaster(target:GetAbsOrigin(), self.sound_blast, self.parnet)
+      end
+
+      -- #7 Talent: Mana Break attacks burn mana of nearby enemies in AoE, equal to a portion of the mana burned.
+      if self.parent:HasTalent("special_bonus_imba_antimage_7") then
+
+          -- Gather talent information
+          local mana_burn_aoe = self.parent:FindTalentValue("special_bonus_imba_antimage_7", "mana_burn_aoe")
+          local mana_burn_pct = self.parent:FindTalentValue("special_bonus_imba_antimage_7", "mana_burn_pct")          
+
+          -- Create particle
+          local particle_aoe_mana_burn_fx = ParticleManager:CreateParticle(self.particle_aoe_mana_burn, PATTACH_ABSORIGIN, self.parent)
+          ParticleManager:SetParticleControl(particle_aoe_mana_burn_fx, 0, target:GetAbsOrigin())
+          ParticleManager:ReleaseParticleIndex(particle_aoe_mana_burn_fx)
+
+          -- Calculate mana to burn
+          local mana_aoe_break = target_mana_burn * mana_burn_pct * 0.01
+
+          -- Find nearby enemies in range
+          local enemies = FindUnitsInRadius(self.parent:GetTeamNumber(),
+                                            target:GetAbsOrigin(),
+                                            nil,
+                                            mana_burn_aoe,
+                                            DOTA_UNIT_TARGET_TEAM_ENEMY,
+                                            DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+                                            DOTA_UNIT_TARGET_FLAG_NONE,
+                                            FIND_ANY_ORDER,
+                                            false)
+
+          -- Remove mana from enemies. Ignore the main target
+          for _,enemy in pairs(enemies) do
+              if enemy ~= target and not enemy:IsMagicImmune() then
+                  enemy:ReduceMana(mana_aoe_break)
+                  SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_LOSS, enemy, mana_aoe_break, nil)      
+              end
+          end
+      end
     end
   end
 end
@@ -144,11 +244,18 @@ end
 -------------------------------------------
 --       BLINK
 -------------------------------------------
-
 imba_antimage_blink = imba_antimage_blink or class({})
+MergeTables(LinkedModifiers,{
+  ["modifier_imba_antimage_blink_charges"] = LUA_MODIFIER_MOTION_NONE,
+  ["modifier_imba_antimage_blink_spell_immunity"] = LUA_MODIFIER_MOTION_NONE,
+})
 
 function imba_antimage_blink:GetAbilityTextureName()
    return "antimage_blink"
+end
+
+function imba_antimage_blink:GetIntrinsicModifierName()
+    return "modifier_imba_antimage_blink_charges"
 end
 
 function imba_antimage_blink:IsNetherWardStealable() return false end
@@ -168,7 +275,12 @@ end
 
 -- Talent reducing CD + CDR
 function imba_antimage_blink:GetCooldown( nLevel )
-  return self.BaseClass.GetCooldown( self, nLevel ) - self:GetCaster():FindTalentValue("special_bonus_imba_antimage_1")
+  -- #1 Talent: Blink becomes charges (no CD needed)
+  if self:GetCaster():HasTalent("special_bonus_imba_antimage_1") then
+      return 0
+  end
+
+  return self.BaseClass.GetCooldown( self, nLevel )
 end
 
 function imba_antimage_blink:OnSpellStart()
@@ -177,16 +289,25 @@ function imba_antimage_blink:OnSpellStart()
     local caster = self:GetCaster()
     local caster_position = caster:GetAbsOrigin()
     local target_point = self:GetCursorPosition()
+    local modifier_spell_immunity = "modifier_imba_antimage_blink_spell_immunity"
     
     local distance = target_point - caster_position
     
     self.blink_range = self:GetSpecialValueFor("blink_range")
     self.percent_mana_burn = self:GetSpecialValueFor("percent_mana_burn")
     if caster:HasTalent("special_bonus_imba_antimage_1") then
-      self.percent_mana_burn = self.percent_mana_burn + caster:FindTalentValue("special_bonus_imba_antimage_5")
+      self.percent_mana_burn = self.percent_mana_burn
     end
     self.percent_damage = self:GetSpecialValueFor("percent_damage")
     self.radius = self:GetSpecialValueFor("radius")
+
+    -- #1 Talent: Blink has charges
+    if caster:HasTalent("special_bonus_imba_antimage_1") then
+        local modifier_blink_charges_handler = caster:FindModifierByName("modifier_imba_antimage_blink_charges")
+        if modifier_blink_charges_handler then
+            modifier_blink_charges_handler:DecrementStackCount()
+        end
+    end
     
     -- Range-check
     if distance:Length2D() > self.blink_range then
@@ -201,6 +322,11 @@ function imba_antimage_blink:OnSpellStart()
     ParticleManager:ReleaseParticleIndex(blink_pfx)
     caster:EmitSound("Hero_Antimage.Blink_out")
 
+    -- #5 Talent: Blinking grants a brief magic immunity shield.
+    if caster:HasTalent("special_bonus_imba_antimage_5") then
+        local immunity_duration = caster:FindTalentValue("special_bonus_imba_antimage_5")
+        caster:AddNewModifier(caster, self, modifier_spell_immunity, {duration = immunity_duration})
+    end
     
     -- Adding an extreme small timer for the particles, else they will only appear at the dest
     Timers:CreateTimer(0.01, function()
@@ -256,6 +382,186 @@ function imba_antimage_blink:IsHiddenWhenStolen()
     return false
 end
 
+
+-- Blink charges modifier
+modifier_imba_antimage_blink_charges = modifier_imba_antimage_blink_charges or class({})
+
+function modifier_imba_antimage_blink_charges:IsHidden() 
+    if self:GetCaster():HasTalent("special_bonus_imba_antimage_1") then
+        return false
+    end
+
+    return true
+end
+
+function modifier_imba_antimage_blink_charges:IsDebuff() return false end
+function modifier_imba_antimage_blink_charges:IsPurgable() return false end
+function modifier_imba_antimage_blink_charges:RemoveOnDeath() return false end
+
+function modifier_imba_antimage_blink_charges:OnCreated()    
+    if IsServer() then
+        -- Ability properties
+        self.caster = self:GetCaster()
+        self.ability = self:GetAbility()
+        self.parent = self:GetParent()
+        self.modifier_charge = "modifier_imba_antimage_blink_charges"
+
+        -- Ability specials
+        self.max_charge_count = self.caster:FindTalentValue("special_bonus_imba_antimage_1")
+        self.charge_replenish_rate = self.ability.BaseClass.GetCooldown(self.ability, -1)
+
+        -- If it the real one, set max charges
+        if self.caster:IsRealHero() then
+            self:SetStackCount(self.max_charge_count)            
+        else
+            -- Illusions find their owner and its charges
+            local playerid = self.caster:GetPlayerID()
+            local real_hero = playerid:GetAssignedHero()
+
+            if hero:HasModifier(self.modifier_charge) then
+                self.modifier_charge_handler = hero:FindModifierByName(self.modifier_charge)
+                if self.modifier_charge_handler then
+                    self:SetStackCount(self.modifier_charge_handler:GetStackCount())
+                    self:SetDuration(self.modifier_charge_handler:GetRemainingTime(), true)                            
+                end
+            end
+        end
+
+        -- Start thinking
+        self:StartIntervalThink(0.1)
+    end
+end
+
+function modifier_imba_antimage_blink_charges:OnIntervalThink()
+    if IsServer() then
+        -- If the caster doesn't have the blink charges talent, do nothing
+        if not self.caster:HasTalent("special_bonus_imba_antimage_1") then
+            return nil
+        end
+
+        -- If this is the first time the charges are "turned on", set the stack count.
+        if not self.turned_on then
+            self.turned_on = true            
+            self:OnCreated()            
+        end
+
+        local stacks = self:GetStackCount()
+
+        -- If we have at least one stack, set ability to active, otherwise disable it
+        if stacks > 0 then
+            self.ability:SetActivated(true)
+        else
+            self.ability:SetActivated(false)
+        end        
+
+        -- If we're at max charges, do nothing else
+        if stacks == self.max_charge_count then            
+            return nil
+        end        
+
+        -- If a charge has finished charging, give a stack
+        if self:GetRemainingTime() < 0 then                        
+            self:IncrementStackCount()
+        end        
+    end
+end
+
+function modifier_imba_antimage_blink_charges:OnStackCountChanged(old_stack_count)
+    if IsServer() then
+        -- If the talent isn't activated yet, do nothing
+        if not self.turned_on then
+            return nil
+        end
+
+        -- Current stacks
+        local stacks = self:GetStackCount() 
+        local true_replenish_cooldown = self.charge_replenish_rate * (1 - self.caster:GetCooldownReduction() * 0.01)
+
+        -- If the stacks are now 0, start the ability's cooldown
+        if stacks == 0 then
+            self.ability:EndCooldown()
+            self.ability:StartCooldown(self:GetRemainingTime())
+        end
+
+        -- If the stack count is now 1, and the skill is still in cooldown because of some cd manipulation, refresh it
+        if stacks == 1 and not self.ability:IsCooldownReady() then            
+            self.ability:EndCooldown()
+        end
+
+        local lost_stack
+        if old_stack_count > stacks then
+            lost_stack = true
+        else
+            lost_stack = false
+        end
+
+        if not lost_stack then
+
+            -- If we're not at the max stacks yet, reset the timer   
+            if stacks < self.max_charge_count then
+                self:SetDuration(true_replenish_cooldown, true)
+            else
+                -- Otherwise, stop the timer
+                self:SetDuration(-1, true)
+            end
+        else
+            if old_stack_count == self.max_charge_count then
+                self:SetDuration(true_replenish_cooldown, true)            
+            end
+        end
+    end
+end
+
+function modifier_imba_antimage_blink_charges:DeclareFunctions()
+    local decFuncs = {MODIFIER_EVENT_ON_ABILITY_FULLY_CAST}
+
+    return decFuncs
+end
+
+function modifier_imba_antimage_blink_charges:OnAbilityFullyCast(keys)
+    if IsServer() then
+        local ability = keys.ability
+        local unit = keys.unit
+
+        -- If this was the caster casting Refresher, refresh charges
+        if unit == self.caster and ability:GetName() == "item_refresher" then
+            self:SetStackCount(self.max_charge_count)            
+        end
+    end
+end
+
+function modifier_imba_antimage_blink_charges:DestroyOnExpire()
+    return false
+end
+
+
+-- Blink's Spell Immunity
+modifier_imba_antimage_blink_spell_immunity = modifier_imba_antimage_blink_spell_immunity or class({})
+
+function modifier_imba_antimage_blink_spell_immunity:OnCreated()
+    -- Purge the target
+    self:GetParent():Purge(false, true, false, false, false)
+end
+
+function modifier_imba_antimage_blink_spell_immunity:GetEffectName()
+    return "particles/hero/antimage/blink_spellguard_immunity.vpcf"
+end
+
+function modifier_imba_antimage_blink_spell_immunity:GetEffectAttachType()
+    return PATTACH_ABSORIGIN_FOLLOW
+end
+
+function modifier_imba_antimage_blink_spell_immunity:IsHidden() return false end
+function modifier_imba_antimage_blink_spell_immunity:IsPurgable() return false end
+function modifier_imba_antimage_blink_spell_immunity:IsDebuff() return false end
+
+function modifier_imba_antimage_blink_spell_immunity:CheckState()
+    local state = {[MODIFIER_STATE_MAGIC_IMMUNE] = true}
+
+    return state
+end
+
+
 -------------------------------------------
 --      SPELL SHIELD
 -------------------------------------------
@@ -273,6 +579,14 @@ function imba_antimage_spell_shield:GetAbilityTextureName()
    return "antimage_spell_shield"
 end
 
+function imba_antimage_spell_shield:GetBehavior()
+    if self:GetCaster():HasTalent("special_bonus_imba_antimage_2") then
+        return DOTA_ABILITY_BEHAVIOR_IMMEDIATE + DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE
+    end
+
+    return DOTA_ABILITY_BEHAVIOR_IMMEDIATE + DOTA_ABILITY_BEHAVIOR_NO_TARGET
+end
+
 -- Declare active skill + visuals
 function imba_antimage_spell_shield:OnSpellStart()
   if IsServer() then
@@ -280,7 +594,6 @@ function imba_antimage_spell_shield:OnSpellStart()
     local ability = self
     local active_modifier = "modifier_imba_spell_shield_buff_reflect"
     self.duration = ability:GetSpecialValueFor("active_duration")
-
 
     -- Start skill cooldown.
     caster:AddNewModifier(caster, ability, active_modifier, {duration = self.duration})
@@ -319,16 +632,14 @@ local function SpellReflect(parent, params)
   }
     
   local reflected_spell_name = params.ability:GetAbilityName()
-  local target = params.ability:GetCaster()
+  local target = params.ability:GetCaster()  
     
   if ( not exception_spell[reflected_spell_name] ) and (not target:HasModifier("modifier_imba_spell_shield_buff_reflect")) then
 
     -- If this is a reflected ability, do nothing
     if params.ability.spell_shield_reflect then
       return nil
-    end
-
-    local ability
+    end    
       
     local reflect_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_antimage/antimage_spellshield_reflect.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, parent)
     ParticleManager:SetParticleControlEnt(reflect_pfx, 0, parent, PATTACH_POINT_FOLLOW, "attach_hitloc", parent:GetAbsOrigin(), true)
@@ -393,9 +704,12 @@ function modifier_imba_spell_shield_buff_passive:OnCreated()
   self.magic_resistance = self:GetAbility():GetSpecialValueFor("magic_resistance")
 
   if IsServer() then
-    self.duration = self:GetAbility():GetSpecialValueFor("active_duration")   
-    self:GetParent().tOldSpells = {}
-        self:StartIntervalThink(FrameTime())
+      self.duration = self:GetAbility():GetSpecialValueFor("active_duration")   
+      self.spellshield_max_distance = self:GetAbility():GetSpecialValueFor("spellshield_max_distance")
+
+      self:GetParent().tOldSpells = {}
+
+      self:StartIntervalThink(FrameTime())
   end
 end
 
@@ -416,6 +730,13 @@ function modifier_imba_spell_shield_buff_passive:GetReflectSpell( params )
     local parent = self:GetParent()
     if parent:HasScepter() and self:GetAbility():IsCooldownReady() and parent:IsRealHero() then
       if not self:GetParent():PassivesDisabled() then
+
+        -- If the targets are too far apart, do nothing
+        local distance = (parent:GetAbsOrigin() - params.ability:GetCaster():GetAbsOrigin()):Length2D()
+        if distance > self.spellshield_max_distance then
+            return nil
+        end
+
         return SpellReflect(parent, params)
       end
     end
@@ -509,6 +830,7 @@ end
 -- Visible Modifiers:
 MergeTables(LinkedModifiers,{
   ["modifier_imba_mana_void_stunned"] = LUA_MODIFIER_MOTION_NONE,
+  ["modifier_imba_mana_void_delay_counter"] = LUA_MODIFIER_MOTION_NONE,
 })
 imba_antimage_mana_void = imba_antimage_mana_void or class({})
 
@@ -527,9 +849,7 @@ end
 function imba_antimage_mana_void:GetCooldown( nLevel )
   local cooldown = self.BaseClass.GetCooldown( self, nLevel )
   local caster = self:GetCaster()
-  if caster:HasTalent("special_bonus_imba_antimage_7") then
-    cooldown = cooldown - caster:FindTalentValue("special_bonus_imba_antimage_7")
-  end
+  
   return cooldown
 end
 
@@ -548,6 +868,7 @@ function imba_antimage_mana_void:OnSpellStart()
     local ability = self
     local scepter = caster:HasScepter()
     local modifier_ministun = "modifier_imba_mana_void_stunned"
+    local modifier_delay = "modifier_imba_mana_void_delay_counter"
     
     -- Parameters
     local damage_per_mana = ability:GetSpecialValueFor("mana_void_damage_per_mana")
@@ -562,41 +883,62 @@ function imba_antimage_mana_void:OnSpellStart()
         return nil
       end
     end
-    
-    -- Burn main target's mana & ministun
-    local target_mana_burn = target:GetMaxMana() * mana_burn_pct / 100
-    target:ReduceMana(target_mana_burn)
-    target:AddNewModifier(caster, ability, modifier_ministun, {duration = mana_void_ministun})
-    
-    -- Find all enemies in the area of effect
-    local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-    for _,enemy in pairs(nearby_enemies) do
 
-      -- Calculate this enemy's damage contribution
-      local this_enemy_damage = 0
-      
-      -- Talent 8, all missing mana pools added to damage
-      if ( caster:HasTalent("special_bonus_imba_antimage_8") ) or (enemy == target) then
-        this_enemy_damage = (enemy:GetMaxMana() - enemy:GetMana()) * damage_per_mana
-      end
-      -- Add this enemy's contribution to the damage tally
-      damage = damage + this_enemy_damage
+    local time_to_wait = 0
+
+    -- #6 Talent: Mana Void explosion is delayed. Each point of mana lost is worth as 2 missing mana points
+    if caster:HasTalent("special_bonus_imba_antimage_6") then
+        time_to_wait = caster:FindTalentValue("special_bonus_imba_antimage_6", "delay_duration")
+
+        -- Add a counter to the target
+        target:AddNewModifier(caster, ability, modifier_delay, {duration = time_to_wait + 0.2})
     end
 
-    -- Damage all enemies in the area for the total damage tally
-    for _,enemy in pairs(nearby_enemies) do
-      ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE})
-      SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, enemy, damage, nil)
-    end
+    Timers:CreateTimer(time_to_wait, function()
+        -- Burn main target's mana & ministun
+        local target_mana_burn = target:GetMaxMana() * mana_burn_pct / 100
+        target:ReduceMana(target_mana_burn)
+        target:AddNewModifier(caster, ability, modifier_ministun, {duration = mana_void_ministun})
+        
+        -- Find all enemies in the area of effect
+        local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+        for _,enemy in pairs(nearby_enemies) do
 
-    -- Shake screen due to excessive PURITY OF WILL
-    ScreenShake(target:GetOrigin(), 10, 0.1, 1, 500, 0, true)
-    
-    local void_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_antimage/antimage_manavoid.vpcf", PATTACH_POINT_FOLLOW, target)
-    ParticleManager:SetParticleControlEnt(void_pfx, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetOrigin(), true)
-    ParticleManager:SetParticleControl(void_pfx, 1, Vector(radius,0,0))
-    ParticleManager:ReleaseParticleIndex(void_pfx)
-    target:EmitSound("Hero_Antimage.ManaVoid")
+          -- Calculate this enemy's damage contribution
+          local this_enemy_damage = 0
+          
+          -- Talent 8, all missing mana pools added to damage
+          if ( caster:HasTalent("special_bonus_imba_antimage_8") ) or (enemy == target) then
+            this_enemy_damage = (enemy:GetMaxMana() - enemy:GetMana()) * damage_per_mana
+          end
+          -- Add this enemy's contribution to the damage tally
+          damage = damage + this_enemy_damage
+        end
+
+        -- #6 Talent: Every point of mana lost during the delay duration is added as additional damage
+        if caster:HasTalent("special_bonus_imba_antimage_6") then
+            local modifier_delay_handler = target:FindModifierByName(modifier_delay)
+            if modifier_delay_handler then
+                damage = damage + modifier_delay_handler:GetStackCount()
+                modifier_delay_handler:Destroy()
+            end
+        end
+
+        -- Damage all enemies in the area for the total damage tally
+        for _,enemy in pairs(nearby_enemies) do
+          ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE})
+          SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, enemy, damage, nil)
+        end
+
+        -- Shake screen due to excessive PURITY OF WILL
+        ScreenShake(target:GetOrigin(), 10, 0.1, 1, 500, 0, true)
+        
+        local void_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_antimage/antimage_manavoid.vpcf", PATTACH_POINT_FOLLOW, target)
+        ParticleManager:SetParticleControlEnt(void_pfx, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetOrigin(), true)
+        ParticleManager:SetParticleControl(void_pfx, 1, Vector(radius,0,0))
+        ParticleManager:ReleaseParticleIndex(void_pfx)
+        target:EmitSound("Hero_Antimage.ManaVoid")
+    end)   
   end 
 end
 
@@ -618,4 +960,47 @@ function modifier_imba_mana_void_stunned:GetEffectAttachType() return PATTACH_OV
 -------------------------------------------
 for LinkedModifier, MotionController in pairs(LinkedModifiers) do
   LinkLuaModifier(LinkedModifier, "hero/hero_antimage", MotionController)
+end
+
+
+-- #6 Talent Delay counter
+modifier_imba_mana_void_delay_counter = modifier_imba_mana_void_delay_counter or class({})
+
+function modifier_imba_mana_void_delay_counter:IsHidden() return true end
+function modifier_imba_mana_void_delay_counter:IsDebuff() return true end
+function modifier_imba_mana_void_delay_counter:IsPurgable() return false end
+
+function modifier_imba_mana_void_delay_counter:OnCreated()
+    self.caster = self:GetCaster()
+    self.parent = self:GetParent()
+    self.mana_point_worth = self.caster:FindTalentValue("special_bonus_imba_antimage_6", "mana_point_worth")
+    self.particle_bubble = "particles/hero/antimage/mana_void_delay_bubble.vpcf"
+
+    -- Apply a delay bubble!
+    local particle_bubble_fx = ParticleManager:CreateParticle(self.particle_bubble, PATTACH_ABSORIGIN_FOLLOW, self.parent)
+    ParticleManager:SetParticleControl(particle_bubble_fx, 0, self.parent:GetAbsOrigin())
+    self:AddParticle(particle_bubble_fx, false, false, -1, false, false)
+
+    -- Index current target's mana
+    self.target_mana = self.parent:GetMana()
+    self:StartIntervalThink(FrameTime())
+end
+
+function modifier_imba_mana_void_delay_counter:OnIntervalThink()
+    -- Check for difference in mana
+    local mana_difference = self.target_mana - self.parent:GetMana()
+
+    self.target_mana = self.parent:GetMana()    
+
+    -- If mana difference is negative (target got mana), do nothing
+    if mana_difference <= 0 then
+        return nil
+    end
+
+    -- Get current stacks
+    local stacks = self:GetStackCount()
+
+    -- Add stacks equal to mana lost and its value
+    local stack_to_add = mana_difference * self.mana_point_worth
+    self:SetStackCount(self:GetStackCount() + stack_to_add)    
 end

@@ -3873,32 +3873,8 @@
 			"05"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"mist_duration"							"2.0"
-			}
-			"06"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"on_hit_damage"							"10 12 15 19 24 30 37 45"
-			}
-			"07"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"damage_heal_pct"						"10 11 12 15 18 22 26 30"
-			}
-			"08"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"shield_duration_extend"				"3.0"
-			}
-			"09"
-			{
-				"var_type"								"FIELD_FLOAT"
 				"cooldown"								"4.5"
-			}
-			"10"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"damage_threshold"						"50"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_3"
 			}
 		}
 
@@ -3934,7 +3910,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"								"12.0 10.0 8.0 6.0 6.0 6.0 6.0"
+		"AbilityCooldown"								"12.0 10.0 8.0 6.0 5.5 5.0 4.5"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -3949,11 +3925,13 @@
 			{
 				"var_type"								"FIELD_FLOAT"
 				"duration"								"15.0"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_2"
 			}
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"shield"								"110 140 170 200 225 250 275"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_5"
 			}
 			"03"
 			{
@@ -3964,6 +3942,7 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"cast_range"							"500"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_1"
 			}
 		}
 
@@ -3986,9 +3965,8 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"										"ability_lua"
-		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"ScriptFile"									"hero/hero_abaddon.lua"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"SpellImmunityType"								"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityTextureName"							"abaddon_frostmourne"
 		"MaxLevel"										"7"
@@ -4021,11 +3999,13 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"move_increase"							"15"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_4"
 			}
 			"06"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"attack_increase"						"10 20 30 40 40 40 40"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_4"
 			}
 			"07"
 			{
@@ -4043,7 +4023,7 @@
 	}
 
 	//=================================================================================================================
-	// Abaddon's Overchannel
+	// Abaddon's Over Channel
 	//=================================================================================================================
 	"imba_abaddon_over_channel"
 	{
@@ -4051,11 +4031,9 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"										"ability_lua"
 		"ScriptFile"									"hero/hero_abaddon.lua"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityTextureName"							"custom/abaddon_over_channel"
 		"MaxLevel"										"7"
-
-		"AbilityCooldown"								"3.0"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -4064,22 +4042,7 @@
 			"01"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"extra_dmg"								"90 125 160 195 230 265 300"
-			}
-			"02"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"extra_shield_health"					"75"
-			}
-			"03"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"extra_mist_duration"					"2.0"
-			}
-			"04"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"curse_of_avernus_multiplier"			"2"
+				"extra_dmg"								"90 125 160 195 230 265 300 "
 			}
 		}
 
@@ -4130,6 +4093,7 @@
 			{
 				"var_type"								"FIELD_FLOAT"
 				"duration"								"4.0 5.0 6.0 6.5 7.0 7.5"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_7"
 			}
 			"03"
 			{
@@ -4140,6 +4104,7 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"redirect_range"						"900"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_8"
 			}
 		}
 
@@ -4154,7 +4119,7 @@
 	}
 
 	//=================================================================================================================
-	// Abaddon Talent 1 (Level 10): When the shield breaks, applies Mist Coil to all allies and enemies within 350 radius
+	// Abaddon Talent 1 (Level 10): +150 Aphotic Shield cast range
 	//=================================================================================================================
 	"special_bonus_imba_abaddon_1"
 	{
@@ -4166,7 +4131,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_abaddon_mist_coil"			
+			"01" 	"imba_abaddon_aphotic_shield"			
 		}
 
 		// Special
@@ -4176,13 +4141,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"350"
+				"value"						"150"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Abaddon Talent 2 (Level 10): Consecutives hits of Curse of Avernus refreshes the buff/debuff and increases the duration of the buff/debuff by 1 second.
+	// Abaddon Talent 2 (Level 10): +45sec duration on Aphotic Shield
 	//=================================================================================================================
 	"special_bonus_imba_abaddon_2"
 	{
@@ -4194,7 +4159,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_abaddon_curse_of_avernus"			
+			"01" 	"imba_abaddon_aphotic_shield"			
 		}
 		    
 
@@ -4205,13 +4170,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"value"						"1.0"
+				"value"						"45.0"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Abaddon Talent 3 (Level 20): During the first second of Aphotic Shield, it absorbs all damage done to it and adds it to it's health/damage.
+	// Abaddon Talent 3 (Level 20): -1.5sec cooldown on Mist Coil
 	//=================================================================================================================
 	"special_bonus_imba_abaddon_3"
 	{
@@ -4223,7 +4188,7 @@
 
 		"LinkedAbility"
 		{
-			"01"	 "imba_abaddon_aphotic_shield"
+			"01"	 "imba_abaddon_mist_coil"
 		}
 
 		// Special
@@ -4233,13 +4198,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"value"						"1.0"
+				"value"						"-1.5"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Abaddon Talent 4 (Level 20): Curse of Avernus can now be activated to sacrifice a 10% of your current health, and deal it as extra damage on the next attack. Has a 8 seconds cooldown.
+	// Abaddon Talent 4 (Level 20): +5% move speed/+30 attack speed on Curse of Avernus
 	//=================================================================================================================
 	"special_bonus_imba_abaddon_4"
 	{
@@ -4261,23 +4226,18 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"active_cooldown"			"8"
+				"attack_increase"			"30"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"health_cost_pct"			"10"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"health_to_damage_ratio"	"1"
+				"move_increase"				"5"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Abaddon Talent 5 (Level 30): Curse of Avernus Abbadon buff now apply as an aura around him in 900 AoE, affecting all allies in range.
+	// Abaddon Talent 5 (Level 30): +200 shielding on Aphotic Shield
 	//=================================================================================================================
 	"special_bonus_imba_abaddon_5"
 	{
@@ -4289,7 +4249,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_abaddon_curse_of_avernus"			
+			"01" 	"imba_abaddon_aphotic_shield"			
 		}
 
 		// Special
@@ -4299,7 +4259,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"900"
+				"value"						"200"
 			}
 		}
 	}
@@ -4333,7 +4293,7 @@
 	}
 
 	//=================================================================================================================
-	// Abaddon Talent 7 (Level 40): Borrowed Time Strong Purges all allies in 900 AoE on cast.
+	// Abaddon Talent 7 (Level 40): +1sec duration on Borrowed Time
 	//=================================================================================================================
 	"special_bonus_imba_abaddon_7"
 	{
@@ -4352,7 +4312,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01" //Unused
+			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"value"						"1.0"
@@ -4361,7 +4321,7 @@
 	}
 
 	//=================================================================================================================
-	// Abaddon Talent 8 (Level 40): Heals that heal above maximum health threshold during Borrowed Time grants a mist shield (25% ratio) that is released after Borrowed Time expires for 5 seconds, healing Abaddon.
+	// Abaddon Talent 8 (Level 40): +300 aura range on Borrowed Time
 	//=================================================================================================================
 	"special_bonus_imba_abaddon_8"
 	{
@@ -4383,12 +4343,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"ratio_pct"					"25"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"mist_duration"				"5"
+				"value"						"300"
 			}
 		}
 	}
@@ -4501,7 +4456,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"             		"ability_lua"
 		"ScriptFile"					"hero/hero_alchemist"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
@@ -4615,8 +4570,7 @@
 		"AbilityTextureName"			"alchemist_goblins_greed"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"MaxLevel" 						"7"
 
 		"HasScepterUpgrade"				"1"
@@ -4633,7 +4587,6 @@
 			"particle"	"particles/units/heroes/hero_alchemist/alchemist_lasthit_coins.vpcf"
 			"particle"	"particles/units/heroes/hero_alchemist/alchemist_lasthit_msg_gold.vpcf"
 			"particle"	"particles/hero/alchemist/greevil_midas_touch.vpcf"
-			"particle"	"particles/items2_fx/hand_of_midas.vpcf"
 		}
 
 		"AbilitySpecial"
@@ -4664,36 +4617,14 @@
 
 			"05"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"gold_multiplier"		"3.0"
+				"var_type"				"FIELD_INTEGER"
+				"bounty_multiplier"		"2"
 			}
 
 			"06"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"exp_multiplier"		"3.0"
-			}
-			
-			"07"
-			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_stacks"			"10"
-			}
-			
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"greevil_duration"		"10"
-			}
-			"09"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"periodic_gold_percentage"	"50"
-			}
-			"10"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"bounty_multiplier"			"2.0"
+				"greed_duration"		"30"
 			}
 		}
 	}
@@ -4846,6 +4777,8 @@
 		"precache"
 		{
 			"particle"  					"particles/generic_gameplay/generic_manaburn.vpcf"
+			"particle"						"particles/hero/antimage/mana_break_blast.vpcf"
+			"particle"						"particles/hero/antimage/mana_break_aoe_burn.vpcf"
 			"soundfile" 					"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
 		}
 
@@ -4858,11 +4791,29 @@
 				"var_type"					"FIELD_FLOAT"
 				"damage_per_burn"			"0.6"
 			}
+
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"base_mana_burn"			"28 40 52 64 76 88 100"
-				"LinkedSpecialBonus"		"special_bonus_imba_antimage_6"
+				"base_mana_burn"			"28 40 52 64 76 88 100"				
+			}
+
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"threshold_difference"		"25"
+			}
+
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"blast_aoe"					"380"
+			}
+
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_mana_blast"			"5 5 5 5 10 15 20"
 			}
 		}
 	}
@@ -4891,6 +4842,7 @@
 			"particle"		"particles/units/heroes/hero_antimage/antimage_blink_start.vpcf"
 			"particle"		"particles/hero/antimage/blink_manaburn_basher_ti_5.vpcf"
 			"particle"		"particles/hero/antimage/blink_basher_manaburn_impact_lightning.vpcf"
+			"particle"		"particles/hero/antimage/blink_spellguard_immunity.vpcf"
 		}
 
 		// Stats
@@ -4908,17 +4860,19 @@
 				"var_type"					"FIELD_INTEGER"
 				"blink_range"				"925 1000 1075 1150 1175 1200 1225"
 			}
+
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"percent_mana_burn"			"0 0 0 0 5 10 15"
-				"LinkedSpecialBonus"		"special_bonus_imba_antimage_5"
+				"percent_mana_burn"			"8 12 16 20 25 30 35"				
 			}
+
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"percent_damage"			"30"
 			}
+			
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -4966,16 +4920,23 @@
 				"var_type"				"FIELD_INTEGER"
 				"magic_resistance"		"26 34 42 50 54 58 62"
 			}
+
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"active_duration"		"1.5 1.5 1.5 1.5 2.0 2.5 3.0"
-				"LinkedSpecialBonus"	"special_bonus_imba_antimage_2"
+				"active_duration"		"1.5 1.5 1.5 1.5 2.0 2.5 3.0"				
 			}
+
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"cooldown_scepter"		"12"
+			}
+
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"spellshield_max_distance"	"2500"
 			}
 		}
 	}
@@ -5009,6 +4970,7 @@
 			"particle"					"particles/units/heroes/hero_antimage/antimage_manavoid.vpcf"
 			"particle"					"particles/econ/items/antimage/antimage_weapon_basher_ti5/antimage_manavoid_ti_5.vpcf"
 			"particle"					"particles/econ/items/antimage/antimage_weapon_basher_ti5/antimage_manavoid_basher_cast.vpcf"
+			"particle"					"particles/hero/antimage/mana_void_delay_bubble.vpcf"
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
 		}
 
@@ -5035,16 +4997,19 @@
 				"var_type"							"FIELD_FLOAT"
 				"mana_void_damage_per_mana"			"0.6 0.85 1.1 1.15 1.2 1.25"
 			}
+
 			"02"
 			{
 				"var_type"							"FIELD_FLOAT"
 				"mana_void_ministun"				"0.3"
 			}
+
 			"03"
 			{
 				"var_type"							"FIELD_INTEGER"
 				"mana_void_aoe_radius"				"500"
 			}
+
 			"04"
 			{
 				"var_type"							"FIELD_INTEGER"
@@ -5054,7 +5019,7 @@
 	}
 
 	//=================================================================================================================
-	// Antimage Talent 1 (Level 10): Blink cooldown decrease
+	// Antimage Talent 1: Blink now has charges
 	//=================================================================================================================
 	"special_bonus_imba_antimage_1"
 	{
@@ -5076,13 +5041,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"1"
+				"value"						"3"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Antimage Talent 2 (Level 10): Spell Shield active duration increase
+	// Antimage Talent 2 (Level 10): Spell Shield can be used while stunned.
 	//=================================================================================================================
 	"special_bonus_imba_antimage_2"
 	{
@@ -5166,7 +5131,7 @@
 	}
 
 	//=================================================================================================================
-	// Antimage Talent 5 (Level 30): Blink mana burn increase
+	// Antimage Talent 5 (Level 30): Blinking grants a 1 second magic immunity shield.
 	//=================================================================================================================
 	"special_bonus_imba_antimage_5"
 	{
@@ -5188,43 +5153,15 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"10"
+				"value"						"1"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Antimage Talent 6 (Level 30): Mana Break manaburn increase
+	// Antimage Talent 6 (Level 30): Mana Void explosion is delayed. Each point of mana lost is worth as 2x missing mana points
 	//=================================================================================================================
 	"special_bonus_imba_antimage_6"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_antimage_mana_break"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"35"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Antimage Talent 7 (Level 40): Decreased Mana Void Cooldown
-	//=================================================================================================================
-	"special_bonus_imba_antimage_7"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -5244,7 +5181,47 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"50"
+				"delay_duration"			"2"
+			}
+
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mana_point_worth"			"2"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Antimage Talent 7 (Level 40): Mana Break attacks burn mana of nearby enemies in AoE, equal to a portion of the mana burned.
+	//=================================================================================================================
+	"special_bonus_imba_antimage_7"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_antimage_mana_break"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mana_burn_aoe"				"500"
+			}
+
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mana_burn_pct"				"30"
 			}
 		}
 	}
@@ -16992,6 +16969,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"hook_distance"			"1000 1100 1200 1300 1350 1400 1450"
+				"LinkedSpecialBonus" 	"special_bonus_imba_pudge_2"
 			}
 			"04"
 			{
@@ -17039,16 +17017,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"number_of_hooks"		"1"
 				"LinkedSpecialBonus" 	"special_bonus_imba_pudge_8"
-			}
-			"14"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"stack_bonus_damage"			"5"
-			}
-			"15"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"stack_max_bonus_damage"			"200"
 			}
 		}
 	}
@@ -17178,6 +17146,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"rot_damage"			"30 60 90 120 130 140 150"
+				"LinkedSpecialBonus"	"special_bonus_imba_pudge_6"
 			}
 			"05"
 			{
@@ -17192,7 +17161,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_radius_tooltip"	"500"
+				"max_radius_tooltip"	"400"
 			}
 		}
 
@@ -17226,11 +17195,13 @@
 			{
 				"var_type"							"FIELD_INTEGER"
 				"base_magic_resist"					"12"
+				"LinkedSpecialBonus"				"special_bonus_imba_pudge_1"
 			}
 			"02"
 			{
 				"var_type"							"FIELD_FLOAT"
 				"stack_str"							"2.5"
+				"LinkedSpecialBonus"				"special_bonus_imba_pudge_5"
 			}
 			"03"
 			{
@@ -17246,16 +17217,6 @@
 			{
 				"var_type"							"FIELD_FLOAT"
 				"max_size"							"75"
-			}
-			"06"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"stack_magic_resistance"	"2"
-			}
-			"07"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"max_stack_resist"					"30"
 			}
 		}
 	}
@@ -17318,11 +17279,13 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"hero_duration"				"2.95"
+				"LinkedSpecialBonus" 		"special_bonus_imba_pudge_7"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"creep_duration"			"5.95"
+				"LinkedSpecialBonus" 		"special_bonus_imba_pudge_7"
 			}
 			"05"
 			{
@@ -17337,37 +17300,7 @@
 		}
 	}
 
-	"special_bonus_imba_pudge_1" // Rot deals x more damage for every y% health he misses
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_pudge_rot"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"						"40"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"hp_treshhold_percent"						"0.05"
-			}
-		}
-	}
-
-	"special_bonus_imba_pudge_2" // Meat Shield: Consume X stacks of charges to block Y damage, restores after Z seconds, Ignore on A damage?
+	"special_bonus_imba_pudge_1" // Bonus Flesh Heaps magic resistance.
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -17387,22 +17320,32 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stacks_needed"						"5"
+				"value"						"20"
 			}
-			"02"
+		}
+	}
+
+	"special_bonus_imba_pudge_2" // bonus Meat Hook range
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_pudge_meat_hook"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_block"						"100"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"return_time"						"10"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"min_damage"						"20"
+				"value"						"200"
 			}
 		}
 	}
@@ -17467,7 +17410,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_pudge_butchers_cleaver"
+			"01" 	"imba_pudge_flesh_heap"
 			
 		}
 
@@ -17478,12 +17421,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"value"						"1"
+				"value"						"1.75"
 			}
 		}
 	}
 
-	"special_bonus_imba_pudge_6" //Hook now deals damage for each tree the unit passes through
+	"special_bonus_imba_pudge_6" // Bonus Rot damage per second
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -17493,7 +17436,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_pudge_meat_hook"
+			"01" 	"imba_pudge_rot"
 			
 		}
 
@@ -17503,13 +17446,13 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
+				"var_type"					"FIELD_FLOAT"
 				"value"						"120"
 			}
 		}
 	}
 
-	"special_bonus_imba_pudge_7" // Dismember now disarms the target after the duration for the channeled duration
+	"special_bonus_imba_pudge_7" // Bonus Dismember duration
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -17529,8 +17472,8 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"1"
+				"var_type"					"FIELD_FLOAT"
+				"value"						"2"
 			}
 		}
 	}
@@ -34870,7 +34813,7 @@
 	//=================================================================================================================
 	// Alchemist's Talents
 	//=================================================================================================================
-	"special_bonus_imba_alchemist_1"	// Sticky Acid slows
+	"special_bonus_imba_alchemist_1"	// Acid Spray radius increase
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -34889,13 +34832,38 @@
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"-15"
+				"var_type"		"FIELD_FLOAT"
+				"value"			"200"
 			}
 		}
 	}
 
-	"special_bonus_imba_alchemist_2"	// Concoction gives Chemical Rage to allies
+	"special_bonus_imba_alchemist_2"	// Acid Spray armor reduction
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_alchemist_acid_spray"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"4"
+			}
+		}
+	}
+
+	"special_bonus_imba_alchemist_3"	// Unstable Concoction duration increase
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -34915,12 +34883,12 @@
 			"01"
 			{
 				"var_type"		"FIELD_FLOAT"
-				"value"			"1.0"
+				"value"			"2"
 			}
 		}
 	}
 
-	"special_bonus_imba_alchemist_3"	// Bounty runes spawn gold bags
+	"special_bonus_imba_alchemist_4"	// Unstable Concoction blows stronger on Acid Spray
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -34930,7 +34898,7 @@
 
 		"LinkedAbility"
 		{
-			"01"		"imba_alchemist_goblins_greed"
+			"01"		"imba_alchemist_unstable_concoction"
 		}
 
 		// Special
@@ -34940,68 +34908,12 @@
 			"01"
 			{
 				"var_type"		"FIELD_FLOAT"
-				"value"			"100.0"
-			}
-		}
-	}
-
-	"special_bonus_imba_alchemist_4"	// Enemies affected by Acid Spray have a chance to drop gold bags on death.
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
-		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"		"imba_alchemist_acid_spray"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"stacks_to_gold_percentage"	"50"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"drop_chance_percentage"	"50"
-			}
-		}
-	}
-
-	"special_bonus_imba_alchemist_5"	// Greed stacks increase acid spray damage
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
-		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"		"imba_alchemist_acid_spray"
-			"02"		"imba_alchemist_goblins_greed"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_INTEGER"
 				"value"			"25"
 			}
 		}
 	}
 
-	"special_bonus_imba_alchemist_6"	// When in Chemical Rage, Alchemist brews Unstable Concoction faster.	
+	"special_bonus_imba_alchemist_5"	// Chemical Rage duration increase
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -35011,8 +34923,7 @@
 
 		"LinkedAbility"
 		{
-			"01"		"imba_alchemist_unstable_concoction"
-			"02"		"imba_alchemist_chemical_rage"
+			"01"		"imba_alchemist_chemical_rage"
 		}
 
 		// Special
@@ -35021,8 +34932,33 @@
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"2"
+				"var_type"		"FIELD_FLOAT"
+				"value"			"5"
+			}
+		}
+	}
+
+	"special_bonus_imba_alchemist_6"	// Chemical Rage health regeneration increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_alchemist_chemical_rage"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"75"
 			}
 		}
 	}
@@ -35052,7 +34988,7 @@
 		}
 	}
 
-	"special_bonus_imba_alchemist_8"	// Chemical Rage damage aura
+	"special_bonus_imba_alchemist_8"	// Halves Greevil's Greed's cooldown
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -35062,8 +34998,7 @@
 
 		"LinkedAbility"
 		{
-			"01"		"imba_alchemist_chemical_rage"
-			"02"		"imba_alchemist_goblins_greed"
+			"01"		"imba_alchemist_goblins_greed"
 		}
 
 		// Special
@@ -35072,8 +35007,8 @@
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"700"
+				"var_type"		"FIELD_FLOAT"
+				"value"			"15"
 			}
 		}
 	}

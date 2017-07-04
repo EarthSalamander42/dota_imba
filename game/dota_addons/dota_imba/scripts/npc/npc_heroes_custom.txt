@@ -93,14 +93,14 @@
 		"Ability3"					"imba_antimage_spell_shield"
 		"Ability4"					"imba_antimage_mana_void"
 
-		"Ability10"					"special_bonus_imba_antimage_1"
-		"Ability11"					"special_bonus_imba_antimage_2"
-		"Ability12"					"special_bonus_imba_antimage_3"
-		"Ability13"					"special_bonus_imba_antimage_4"
-		"Ability14"					"special_bonus_imba_antimage_5"
-		"Ability15"					"special_bonus_imba_antimage_6"
-		"Ability16"					"special_bonus_imba_antimage_7"
-		"Ability17"					"special_bonus_imba_antimage_8"
+		"Ability10"					"special_bonus_imba_antimage_1" //Blink now has charges
+		"Ability11"					"special_bonus_imba_antimage_2" //Spell Shield can be used even while stunned.
+		"Ability12"					"special_bonus_imba_antimage_3" //Blink cast point decrease
+		"Ability13"					"special_bonus_imba_antimage_4" //% of target's missing mana added to Mana Break damage
+		"Ability14"					"special_bonus_imba_antimage_5" //Blinking grants a 1 second magic immunity shield.
+		"Ability15"					"special_bonus_imba_antimage_6" //Mana Void explosion is delayed. Each point of mana lost is worth as 2 missing mana points
+		"Ability16"					"special_bonus_imba_antimage_7" //Mana Break attacks burn mana of nearby enemies in AoE, equal to a portion of the mana burned.
+		"Ability17"					"special_bonus_imba_antimage_8" //Mana Void counts missing mana from all targets in the AOE
 
 		"ProjectileSpeed"			"900"
 	}
