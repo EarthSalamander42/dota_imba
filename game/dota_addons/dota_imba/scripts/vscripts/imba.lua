@@ -30,6 +30,9 @@ require('libraries/astar')
 -- These internal libraries set up barebones's events and processes.  Feel free to inspect them/change them if you need to.
 require('internal/gamemode')
 require('internal/events')
+-- These are the XP system
+require('server/server')
+require('libraries/json')
 -- All custom constants
 require('internal/constants')
 -- This library used to handle scoreboard events
