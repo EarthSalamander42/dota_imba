@@ -555,7 +555,7 @@ function imba_bloodseeker_rupture:OnSpellStart(target)
 		EmitSoundOn("hero_bloodseeker.rupture.cast", caster)
 		EmitSoundOn("hero_bloodseeker.rupture", hTarget)
 		--How bad was their day?
-		if (math.random(1,100) <= 15) then
+		if RollPercentage(15) then
 			--You're taking one down
 			EmitSoundOn("Imba.BloodseekerBadDay", hTarget)
 			--SING A SAD SONG JUST TO TURN IT AROUND

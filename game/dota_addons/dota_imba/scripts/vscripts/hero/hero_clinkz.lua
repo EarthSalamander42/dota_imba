@@ -846,7 +846,7 @@ function modifier_imba_skeleton_walk_invis:OnRemoved()
 		
 		-- Are we feeling extra spooky today? Did we actually spooky anyone?
 		local spook_likelihood = 10
-		if #enemies > 0 and RandomInt(1, 100) <= spook_likelihood then
+		if #enemies > 0 and RollPercentage(spook_likelihood)
 			-- sPo0kY sCaRy sKeLeToNs
 			EmitSoundOn("Imba.ClinkzSpooky", self.parent)
 		end

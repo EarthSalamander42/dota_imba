@@ -256,8 +256,8 @@
 		"Ability3"					"imba_bloodseeker_thirst"
 		"Ability4"					"imba_bloodseeker_rupture"
 		
-		"Ability10"					"special_bonus_imba_bloodseeker_1"
-		"Ability11"					"special_bonus_imba_bloodseeker_2"
+		"Ability10"					"special_bonus_imba_bloodseeker_1" //Blood Amp shift
+		"Ability11"					"special_bonus_imba_bloodseeker_2" //Blood Rite applies Rupture on targets and pushes them out of the circle
 		"Ability12"					"special_bonus_imba_bloodseeker_3"
 		"Ability13"					"special_bonus_imba_bloodseeker_4"
 		"Ability14"					"special_bonus_imba_bloodseeker_5"

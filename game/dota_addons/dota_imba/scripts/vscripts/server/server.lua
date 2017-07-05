@@ -1,5 +1,8 @@
 local statInfo = LoadKeyValues('scripts/vscripts/server/auth.kv')
 
+if not statInfo then
+    return nil
+end
 
 local _AuthCode = statInfo._auth --The auth code for game and http server
 

@@ -1155,7 +1155,7 @@ function modifier_imba_borrowed_time_buff_hot_caster:OnCreated()
 		target._borrowed_time_buffed_allies = {}
 
 		-- Hey you?
-		if (math.random(1,100) <= 15) then
+		if RollPercentage(15) then
 			--WHATCHA GUN DO
 			target:EmitSound("Imba.AbaddonHeyYou")
 		end

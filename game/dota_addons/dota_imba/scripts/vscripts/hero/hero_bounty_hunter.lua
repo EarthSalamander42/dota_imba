@@ -887,9 +887,9 @@ function imba_bounty_hunter_track:OnSpellStart()
 
 		
 		-- Can Bounty smell what his target is cooking?
-		local smell_probability = 2
+		local smell_probability = 5
 		
-		if RandomInt(1, 100) <= smell_probability then
+		if RollPercentage(smell_probability) then
 			--( ͡° ͜ʖ ͡°) 
 			EmitSoundOnLocationForAllies(caster:GetAbsOrigin(), "Imba.BountyHunterSmell", caster)
 		else

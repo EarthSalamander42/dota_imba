@@ -28570,8 +28570,7 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
 		"AbilityTextureName"			"bloodseeker_blood_bath"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"MaxLevel"						"7"
-		"HasScepterUpgrade"				"1"
+		"MaxLevel"						"7"		
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -28781,44 +28780,57 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"12.0"
+				"var_type"					"FIELD_INTEGER"
+				"duration"					"12"
 			}
+
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"movement_damage_pct"		"30 45 60 65 70 75"
 			}
+
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage_cap_amount"			"1300"
 				"LinkedSpecialBonus"		"special_bonus_imba_bloodseeker_6"
 			}
+
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"damage_cap_interval"		"0.25"
 			}
+
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"cast_range_tooltip"		"1000"
 			}
+
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage_initial_pct"		"75"
 			}
+
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"attack_damage"				"20 35 50 60 70 80"
 			}
+
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"cast_damage"				"40 70 100 120 140 160"
+			}
+
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"rupture_charges"			"2"
 			}
 		}
 	}
@@ -29054,7 +29066,7 @@
 		}
 	}
 
-	"special_bonus_imba_bloodseeker_2"	// +25% Blood Rite Hero Kill Cooldown Reduction
+	"special_bonus_imba_bloodseeker_2"	// Blood Rite applies Rupture on targets and pushes them out of the circle
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -29065,6 +29077,7 @@
 		"LinkedAbility"
 		{
 			"01" 	"imba_bloodseeker_blood_bath"
+			"02"	"imba_bloodseeker_rupture"
 		}
 
 		// Special

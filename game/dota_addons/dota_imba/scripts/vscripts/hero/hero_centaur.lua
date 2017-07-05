@@ -857,7 +857,7 @@ function imba_centaur_stampede:OnSpellStart()
 
 		-- Should we inform the bitches they need to move?
 		local bitch_be_gone = 15
-		if RandomInt(1, 100) <= bitch_be_gone then
+		if RollPercentage(bitch_be_gone) then
 			EmitSoundOnLocationForAllies(caster:GetAbsOrigin(), "Imba.CentaurMoveBitch", caster)
 		end
 		
@@ -865,7 +865,7 @@ function imba_centaur_stampede:OnSpellStart()
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
 			           					  caster:GetAbsOrigin(),
 			              				  nil,
-			              				  50000, -- global
+			              				  25000, -- global
 			              				  DOTA_UNIT_TARGET_TEAM_ENEMY,
 			              				  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 			              				  DOTA_UNIT_TARGET_FLAG_NONE,
@@ -880,7 +880,7 @@ function imba_centaur_stampede:OnSpellStart()
 		local allies = FindUnitsInRadius(caster:GetTeamNumber(),
 			           					 caster:GetAbsOrigin(),
 			              				nil,
-			              				50000, -- global
+			              				25000, -- global
 			              				DOTA_UNIT_TARGET_TEAM_FRIENDLY,
 			              				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 			              				DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
@@ -921,7 +921,7 @@ function modifier_imba_stampede_haste:OnCreated()
 		-- Nether ward interaction
 		if self.caster:IsHero() then
 			-- Generate caster's strength, calculate damage
-			self.trample_damage = self.caster:GetStrength() * (self.strength_damage/100)
+			self.trample_damage = self.caster:GetStrength() * (self.strength_damage * 0.01)
 		else
 			self.trample_damage = self.nether_ward_damage
 		end

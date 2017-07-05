@@ -151,8 +151,8 @@
     // Bloodseeker
     "DOTA_Tooltip_Talent_special_bonus_imba_bloodseeker_1_title"				"Blood Amplification Shift"
     "DOTA_Tooltip_Talent_special_bonus_imba_bloodseeker_1_Description"			"Casting Bloodrage on an ally causes him to take 30% damage and deal 50% of it to enemies. The effect is inverted on enemies, causing them to take 50% damage, but deal only 30% of it.<br><br><i>Bloodseeker controls the volatile energies emnating from enemies affected by his rage, shifting them in his favor.</i>"
-    "DOTA_Tooltip_Talent_special_bonus_imba_bloodseeker_2_title"				"Sacrifice of the Flayed One"
-    "DOTA_Tooltip_Talent_special_bonus_imba_bloodseeker_2_Description"			"Increases the cooldown refreshed by Blood Rite's Sacrifical Lamb effect by 25%. <br><br><i>By sacrificing his enemies to the gods, Bloodseeker gains the power to do so once again.</i>"
+    "DOTA_Tooltip_Talent_special_bonus_imba_bloodseeker_2_title"				"Bleeding Your Way Out"
+    "DOTA_Tooltip_Talent_special_bonus_imba_bloodseeker_2_Description"			"Causes Blood Rite to apply Rupture on targets hit, then pushes them out of the circle over 0.3 seconds, dealing Rupture damage. <br> After this effect ends, Rupture is removed on all targets that did not have Rupture before then.<br><br><i>A sacrificial ritual usually ends up with the victims bleeding out everywhere, if they're not dead yet.</i>"
 	"DOTA_Tooltip_Talent_special_bonus_imba_bloodseeker_3_title"				"Ruptured Sanity"
 	"DOTA_Tooltip_Talent_special_bonus_imba_bloodseeker_3_Description"			"Whenever a ruptured enemy takes damage from Rupture, Bloodseeker gets healed for the same amount. <br><br><i>Bloodseeker enjoys the screams of his enemies that he literally regains his fatigue from it.</i>"		
 	"DOTA_Tooltip_Talent_special_bonus_imba_bloodseeker_4_title"				"Thirst Sense"
