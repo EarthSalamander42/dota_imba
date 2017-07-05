@@ -1828,3 +1828,183 @@
 		}
 	}
 }
+
+"Imba.AbaddonHeyYou"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/hero/abaddon/abaddon_borrowed_time.vsnd"
+						}
+					}
+					"memory_type"
+					{
+						"value"			"0"
+					}
+					"volume"			{   "value"     "4.00000"  }
+				}
+			}
+		}
+	}
+}
+
+"Imba.AlchemistMySwamp"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/hero/alchemist/alchemist_chemical_rage.vsnd"
+						}
+					}
+					"memory_type"
+					{
+						"value"			"0"
+					}
+					"volume"			{   "value"     "8.00000"  }
+				}
+			}
+		}
+	}
+}
+
+"Imba.BloodSeekerBadDay"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/hero/bloodseeker/bloodseeker_rupture.vsnd"
+						}
+					}
+					"memory_type"
+					{
+						"value"			"0"
+					}
+					"volume"			{   "value"     "3.00000"  }
+				}
+			}
+		}
+	}
+}
+
+"Imba.BountyHunterSmell"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/hero/bounty_hunter/bounty_hunter_track.vsnd"
+						}
+					}
+					"memory_type"
+					{
+						"value"			"0"
+					}
+					"volume"			{   "value"     "2.00000"  }
+				}
+			}
+		}
+	}
+}
+
+"Imba.CentaurMoveBitch"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/hero/centaur_warrunner/centaur_stampede_movebitch.vsnd"
+						}
+					}
+					"memory_type"
+					{
+						"value"			"0"
+					}
+					"volume"			{   "value"     "6.00000"  }
+				}
+			}
+		}
+	}
+}
+
+"Imba.ClinkzSpooky"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/hero/clinkz/clinkz_skeleton_walk_spook.vsnd"
+						}
+					}
+					"memory_type"
+					{
+						"value"			"0"
+					}
+					"volume"			{   "value"     "3.00000"  }
+				}
+			}
+		}
+	}
+}

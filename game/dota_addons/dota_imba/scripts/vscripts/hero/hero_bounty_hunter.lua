@@ -885,6 +885,18 @@ function imba_bounty_hunter_track:OnSpellStart()
 		-- Play cast sound for the player's team only
 		EmitSoundOnLocationForAllies(caster:GetAbsOrigin(), sound_cast, caster)
 
+		
+		-- Can Bounty smell what his target is cooking?
+		local smell_probability = 2
+		
+		if RandomInt(1, 100) <= smell_probability then
+			--( ͡° ͜ʖ ͡°) 
+			EmitSoundOnLocationForAllies(caster:GetAbsOrigin(), "Imba.BountyHunterSmell", caster)
+		else
+			-- Play cast sound for the player's team only
+			EmitSoundOnLocationForAllies(caster:GetAbsOrigin(), sound_cast, caster)
+		end
+
 		-- Add track particle, only for the player's team
 		local particle_projectile_fx = ParticleManager:CreateParticleForTeam(particle_projectile, PATTACH_CUSTOMORIGIN, caster, caster:GetTeamNumber())
 		ParticleManager:SetParticleControlEnt(particle_projectile_fx, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
