@@ -1154,15 +1154,8 @@ function modifier_imba_borrowed_time_buff_hot_caster:OnCreated()
 		-- Create/Reset list to keep track of allies affected by buff
 		target._borrowed_time_buffed_allies = {}
 
-		-- Hey you?
-		if RollPercentage(15) then
-			--WHATCHA GUN DO
-			target:EmitSound("Imba.AbaddonHeyYou")
-		end
-		
-		--Play the borrowed time sound either way
+		-- Play Sound
 		target:EmitSound("Hero_Abaddon.BorrowedTime")
-
 
 		-- Strong Dispel
 		target:Purge(false, true, false, true, false)
@@ -1172,8 +1165,6 @@ end
 
 function modifier_imba_borrowed_time_buff_hot_caster:OnDestroy()
 	if IsServer() then
-		--Stop Meme Sounds
-		StopSoundEvent("Imba.AbaddonHeyYou", self:GetParent())
 		if self.has_talent and self:GetStackCount() > 0 then
 			local target = self:GetParent()
 			target:AddNewModifier(target, self:GetAbility(), "modifier_imba_borrowed_time_buff_mist", {duration = self.mist_duration, heal_stacks = self:GetStackCount()})

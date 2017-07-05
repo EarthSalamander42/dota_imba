@@ -120,15 +120,16 @@ function GameMode:OnPlayerChat(keys)
 			caster.norange = true
 		end
 
-		if str == "-chred" then
-			Server_SendAndGetInfoForAll()
-		end
-
-
 		if str == "-rangeon" then
 			caster.norange = nil
 		end
-		
+
+
+		if str == "-print" then
+		Server_PrintInfo() --print the XP system info
+		end
+
+
 		if str == "-blink" then
 			blink_command = true
 		elseif blink_command == false then

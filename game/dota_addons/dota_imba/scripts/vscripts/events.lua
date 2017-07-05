@@ -37,6 +37,8 @@ function GameMode:OnDisconnect(keys)
 		local hero_name = PlayerResource:GetPickedHeroName(player_id)
 		local line_duration = 7
 
+		Server_DisableToGainXpForPlayer(player_id)
+
 		-- Start tracking
 		print("started keeping track of player "..player_id.."'s connection state")
 		local disconnect_time = 0
@@ -108,7 +110,7 @@ function GameMode:OnGameRulesStateChange(keys)
 
 	if new_state == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		HeroSelection:Start()
-		--Server_WaitToEnableXpGain()
+		Server_SendAndGetInfoForAll()
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -130,6 +132,14 @@ function GameMode:OnGameRulesStateChange(keys)
 		end)
 	end
 
+	if new_state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS  then
+		Server_WaitToEnableXpGain()
+	end
+
+	if new_state == DOTA_GAMERULES_STATE_POST_GAME then
+    	local winning_team = GAME_WINNER_TEAM
+    	Server_CalculateXPForWinnerAndAll(winning_team)
+	end
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Stat collection stuff
 	-------------------------------------------------------------------------------------------------
@@ -352,6 +362,7 @@ function GameMode:OnPlayerReconnect(keys)
 	PrintTable(keys)
 
 	local player_id = keys.PlayerID
+	Server_EnableToGainXPForPlyaer(player_id)
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Player reconnect logic
@@ -895,7 +906,7 @@ function GameMode:OnConnectFull(keys)
 	DebugPrint('[BAREBONES] OnConnectFull')
 	DebugPrintTable(keys)
 
-	--Server_SendAndGetInfoForAll()
+	
 
 	GameMode:_OnConnectFull(keys)
 	
