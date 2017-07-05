@@ -28883,7 +28883,7 @@
 	//=================================================================================================================
 	// Bane Talents
 	//=================================================================================================================
-	"special_bonus_imba_bane_1"	// Brain Sap Addlebrained duration increase
+	"special_bonus_imba_bane_1"	//Grants Enfeeble stacks when Nightmaring a target.
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -28893,7 +28893,8 @@
 
 		"LinkedAbility"
 		{
-			"01"	"imba_bane_brain_sap"
+			"01"	"imba_bane_nightmare"
+			"02"	"imba_bane_enfeeble"
 		}
 
 		// Special
@@ -28902,13 +28903,13 @@
 		{
 			"01"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"value"			"1.5"
+				"var_type"		"FIELD_INTEGER"
+				"value"			"2"
 			}
 		}
 	}
 
-	"special_bonus_imba_bane_2"	// Nightmare Baleful Visions duration Increase
+	"special_bonus_imba_bane_2"	// Enfeeble is now cast in a AoE to all targets around the main target.
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -28918,7 +28919,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_bane_nightmare"
+			"01" 	"imba_bane_enfeeble"
 		}
 
 		// Special
@@ -28927,13 +28928,38 @@
 		{
 			"01"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"value"			"3.0"
+				"var_type"		"FIELD_INTEGER"
+				"value"			"450"
 			}
 		}
 	}
 
-	"special_bonus_imba_bane_3"	// Enfeeble duration increase
+	"special_bonus_imba_bane_3"	// Fiend's Grip is no longer channeled
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_bane_fiends_grip"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_bane_4"	// Enfeeble causes the target to lose his stats. This effect increases for each Enfeeble stack it has.
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -28958,7 +28984,7 @@
 		}
 	}
 
-	"special_bonus_imba_bane_4"	// Brain Sap damage increase
+	"special_bonus_imba_bane_5"	// Brain Sap casts summons a Baby Bane which applies a Baby Fiend's Grip on the target.
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -28969,56 +28995,7 @@
 		"LinkedAbility"
 		{
 			"01" 	"imba_bane_brain_sap"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"150"
-			}
-		}
-	}
-
-	"special_bonus_imba_bane_5"	// Enfeeble damage reduction increase
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"
-		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_bane_enfeeble"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"100"
-			}
-		}
-	}
-
-	"special_bonus_imba_bane_6"	// Fiends Grip max channel time Increase
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"
-		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_bane_fiends_grip"
+			"02" 	"imba_bane_fiends_grip"
 		}
 
 		// Special
@@ -29028,7 +29005,37 @@
 			"01"
 			{
 				"var_type"		"FIELD_FLOAT"
-				"value"			"2.0"
+				"duration"		"0.5"
+			}
+			"02"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"dmg_mana_pct"	"25"
+			}
+		}
+	}
+
+	"special_bonus_imba_bane_6"	// Nightmare also mutes items for enemies affected.
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_bane_nightmare"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"3.0"
 			}
 		}
 	}
