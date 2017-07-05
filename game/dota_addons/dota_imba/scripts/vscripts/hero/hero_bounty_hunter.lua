@@ -40,6 +40,24 @@ function imba_bounty_hunter_shuriken_toss:OnSpellStart()
 	-- Play cast sound
 	EmitSoundOn(sound_cast, caster)
 
+	-- #4 Talent: Jinada is applied to the shuriken if ready
+	local shuriken_crit = false
+	if caster:HasTalent("special_bonus_imba_bounty_hunter_4") then
+		local jinada_ability_name = "imba_bounty_hunter_jinada"
+		local jinada_ability = caster:FindAbilityByName(jinada_ability_name)
+
+		if caster:HasModifier("modifier_imba_jinada_buff_crit") and jinada_ability and jinada_ability:GetLevel() > 0 then
+			-- Jinada goes on cooldown
+			jinada_ability:UseResources(false, false, true)
+
+			-- Consumes Jinada's buff
+			caster:RemoveModifierByName("modifier_imba_jinada_buff_crit")			
+
+			-- Set the shuriken to be a critical shuriken
+			shuriken_crit = true
+		end
+	end
+
 	-- Prepare enemy table
 	local enemy_table = {}
 	table.insert(enemy_table, target)
@@ -57,7 +75,7 @@ function imba_bounty_hunter_shuriken_toss:OnSpellStart()
 		bVisibleToEnemies = true,
 		bReplaceExisting = false,
 		bProvidesVision = false,
-		ExtraData = {enemy_table_string = enemy_table_string}
+		ExtraData = {enemy_table_string = enemy_table_string, shuriken_crit = shuriken_crit}
 		}
 
 	ProjectileManager:CreateTrackingProjectile(shuriken_projectile)
@@ -77,7 +95,7 @@ function imba_bounty_hunter_shuriken_toss:OnSpellStart()
 			bVisibleToEnemies = true,
 			bReplaceExisting = false,
 			bProvidesVision = false,
-			ExtraData = {enemy_table_string = enemy_table_string}
+			ExtraData = {enemy_table_string = enemy_table_string, shuriken_crit = shuriken_crit}
 			}
 			ProjectileManager:CreateTrackingProjectile(shuriken_projectile)
 		end)
@@ -93,6 +111,7 @@ function imba_bounty_hunter_shuriken_toss:OnProjectileHit_ExtraData(target, loca
 		local scepter = caster:HasScepter()
 		local enemy_table_string = extradata.enemy_table_string
 		local enemy_table = StringToTableEnt(enemy_table_string, ",")
+		local shuriken_crit = extradata.shuriken_crit
 
 		-- Ability specials
 		local projectile_speed = ability:GetSpecialValueFor("projectile_speed")
@@ -100,10 +119,7 @@ function imba_bounty_hunter_shuriken_toss:OnProjectileHit_ExtraData(target, loca
 		local bounce_radius = ability:GetSpecialValueFor("bounce_radius")
 		local stun_duration = ability:GetSpecialValueFor("stun_duration")
 		local scepter_stun_duration = ability:GetSpecialValueFor("scepter_stun_duration")
-		local pull_duration = ability:GetSpecialValueFor("pull_duration")
-
-		-- #3 Talent - Shuriken Damage increase
-		damage = damage + caster:FindTalentValue("special_bonus_imba_bounty_hunter_3")
+		local pull_duration = ability:GetSpecialValueFor("pull_duration")		
 
 		-- #5 Talent - Shuriken bounce radius becomes global
 		bounce_radius = bounce_radius + caster:FindTalentValue("special_bonus_imba_bounty_hunter_5")
@@ -131,6 +147,26 @@ function imba_bounty_hunter_shuriken_toss:OnProjectileHit_ExtraData(target, loca
 		end
 
 		target:AddNewModifier(caster, ability, "modifier_imba_shuriken_toss_stunned", {duration = stun_duration})
+
+		-- Check if the Shuriken is an enchanted shuriken from #4 talent
+		if shuriken_crit == 1 then
+			local jinada_ability_name = "imba_bounty_hunter_jinada"
+			local jinada_ability = caster:FindAbilityByName(jinada_ability_name)
+
+			if jinada_ability and jinada_ability:GetLevel() > 0 then
+				-- Get Jinada's critical rate and maim duration
+				local crit_damage = jinada_ability:GetSpecialValueFor("crit_damage")
+				local slow_duration = jinada_ability:GetSpecialValueFor("slow_duration")
+
+				damage = damage * crit_damage * 0.01
+
+				-- Get a critical overhead alert
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, target, damage, nil)
+
+				-- Apply the slow debuff on the target
+				target:AddNewModifier(caster, jinada_ability, "modifier_imba_jinada_debuff_slow", {duration = slow_duration})
+			end			
+		end
 
 		-- Deal damage
 		local damageTable = {victim = target,
@@ -191,7 +227,7 @@ function imba_bounty_hunter_shuriken_toss:OnProjectileHit_ExtraData(target, loca
 				bVisibleToEnemies = true,
 				bReplaceExisting = false,
 				bProvidesVision = false,
-				ExtraData = {enemy_table_string = enemy_table_string}
+				ExtraData = {enemy_table_string = enemy_table_string, shuriken_crit = shuriken_crit}
 				}
 
 				ProjectileManager:CreateTrackingProjectile(shuriken_projectile)
@@ -344,15 +380,6 @@ end
 
 function imba_bounty_hunter_jinada:IsNetherWardStealable() return false end
 
-function imba_bounty_hunter_jinada:GetCooldown(level)
-	local caster = self:GetCaster()
-	local cd = self.BaseClass.GetCooldown(self, level)
-
-	-- #7 Talent cd reduction
-	cd = cd - caster:FindTalentValue("special_bonus_imba_bounty_hunter_7")
-	return cd
-end
-
 function imba_bounty_hunter_jinada:GetIntrinsicModifierName()
 	return "modifier_imba_jinada_passive"
 end
@@ -361,8 +388,28 @@ function imba_bounty_hunter_jinada:CastFilterResultTarget(target)
 	if IsServer() then
 		local caster = self:GetCaster()
 
-		-- Check if caster has Track, or target is an ally
-		if not target:HasModifier("modifier_imba_track_debuff_mark") or target:GetTeamNumber() == caster:GetTeamNumber() then
+		-- Check if the caster has #3 Talent: Jinada can now be cast on allies, granting them the ensured Jinada buff
+		-- And apply if it is an ally, but not Bounty himself
+		if caster:HasTalent("special_bonus_imba_bounty_hunter_3") then
+			if target ~= caster and caster:GetTeamNumber() == target:GetTeamNumber() then				
+				local nResult = UnitFilter( target, DOTA_UNIT_TARGET_TEAM_FRIENDLY, self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber())
+				return nResult
+			end
+		end
+
+		-- target is an ally
+		if target:GetTeamNumber() == caster:GetTeamNumber() then
+			return UF_FAIL_FRIENDLY
+		end
+
+		-- Check if the caster has #7 Talent on a contract target, which removes the need for track
+		if caster:HasTalent("special_bonus_imba_bounty_hunter_7") and target:HasModifier("modifier_imba_headhunter_debuff_handler") then
+			local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber())
+			return nResult
+		end
+
+		-- Check if caster has Track.		
+		if not target:HasModifier("modifier_imba_track_debuff_mark") then			
 			return UF_FAIL_CUSTOM
 		end
 
@@ -375,20 +422,60 @@ function imba_bounty_hunter_jinada:GetCustomCastErrorTarget(target)
 	return "#dota_hud_error_shadow_jaunt_track"
 end
 
+function imba_bounty_hunter_jinada:GetCastRange(location, target)
+	local caster = self:GetCaster()
+
+	-- #7 Talent: Shadow Jaunt can be cast on Headhunter's contract targets from 2500 range
+	if caster:HasTalent("special_bonus_imba_bounty_hunter_7") then		
+
+		-- If there is a target, and the target has contract debuff, give huge distance jump!
+		if target and target:HasModifier("modifier_imba_headhunter_debuff_handler") then					
+			return caster:FindTalentValue("special_bonus_imba_bounty_hunter_7", "cast_range")
+		end
+	end
+
+	-- Otherwise, return normal range	
+	return self.BaseClass.GetCastRange(self, location, target)
+end
+
 function imba_bounty_hunter_jinada:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
 		local ability = self
 		local target = self:GetCursorTarget()
 
-		-- If target has Linken's sphere, do nothing
+		-- If it is a tracked enemy, Shadow Jaunt it!
+		if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+			self:ShadowJaunt(caster, ability, target)
+		else
+			-- #3 Talent: Jinada can now be cast on allies, granting them the ensured Jinada buff.
+			-- Apply Track's animation
+			caster:StartGesture(ACT_DOTA_CAST_ABILITY_4)
+
+			-- Play cast sound!
+			EmitSoundOnLocationWithCaster(target:GetAbsOrigin(), "Hero_Enchantress.EnchantCast", caster)
+
+			-- Cast on an ally to give him the Jinada crit bonus
+			local duration = caster:FindTalentValue("special_bonus_imba_bounty_hunter_3", "jinada_buff_duration")
+			target:AddNewModifier(caster, ability, "modifier_imba_jinada_buff_crit", {duration = duration})
+
+			-- If Bounty is ready to crit, remove his own crit buff
+			if caster:HasModifier("modifier_imba_jinada_buff_crit") then
+				caster:RemoveModifierByName("modifier_imba_jinada_buff_crit")
+			end
+		end
+	end
+end
+
+function imba_bounty_hunter_jinada:ShadowJaunt(caster, ability, target)
+	-- If target has Linken's sphere, do nothing
 		if caster:GetTeamNumber() ~= target:GetTeamNumber() then
 			if target:TriggerSpellAbsorb(ability) then
 				return nil
 			end
 		end
 
-		-- Teleport caster near the target.
+		-- Teleport caster near the target
 		local blink_direction = (target:GetAbsOrigin() - caster:GetAbsOrigin()):Normalized()
 		target_pos = target:GetAbsOrigin() + blink_direction * (-50)
 		FindClearSpaceForUnit(caster, target_pos, false)
@@ -410,7 +497,6 @@ function imba_bounty_hunter_jinada:OnSpellStart()
 		Timers:CreateTimer(FrameTime(), function()
 			caster:MoveToTargetToAttack(target)
 		end)
-	end
 end
 
 function imba_bounty_hunter_jinada:IsStealable()
@@ -457,15 +543,11 @@ end
 modifier_imba_jinada_debuff_slow = modifier_imba_jinada_debuff_slow or class({})
 
 function modifier_imba_jinada_debuff_slow:OnCreated()
-		-- Prepare variables
-		self.caster = self:GetCaster()
-		self.ability = self:GetAbility()
-		self.ms_slow_pct = self.ability:GetSpecialValueFor("ms_slow_pct")
-		self.as_slow = self.ability:GetSpecialValueFor("as_slow")
-
-		-- #2 Talent: Jinada's slow increase
-		 self.ms_slow_pct = self.ms_slow_pct + self.caster:FindTalentValue("special_bonus_imba_bounty_hunter_2")
-		 self.as_slow = self.as_slow + self.caster:FindTalentValue("special_bonus_imba_bounty_hunter_2")
+	-- Prepare variables
+	self.caster = self:GetCaster()
+	self.ability = self:GetAbility()
+	self.ms_slow_pct = self.ability:GetSpecialValueFor("ms_slow_pct")
+	self.as_slow = self.ability:GetSpecialValueFor("as_slow")		
 end
 
 function modifier_imba_jinada_debuff_slow:DeclareFunctions()
@@ -501,33 +583,73 @@ modifier_imba_jinada_buff_crit = modifier_imba_jinada_buff_crit or class({})
 
 function modifier_imba_jinada_buff_crit:OnCreated()
 	if IsServer() then
-		self.parent = self:GetCaster()
+		self.caster = self:GetCaster()
 		self.ability = self:GetAbility()
 		self.parent = self:GetParent()
 		self.particle_glow = "particles/units/heroes/hero_bounty_hunter/bounty_hunter_hand_l.vpcf"
 		self.particle_hit = "particles/units/heroes/hero_bounty_hunter/bounty_hunter_jinda_slow.vpcf"
 		self.modifier_slow = "modifier_imba_jinada_debuff_slow"
 
-		-- Set up glowing weapon particles
-		self.particle_glow_fx = ParticleManager:CreateParticle(self.particle_glow, PATTACH_ABSORIGIN, self.parent)
-		ParticleManager:SetParticleControlEnt(self.particle_glow_fx, 0, self.parent, PATTACH_POINT_FOLLOW, "attach_weapon1", self.parent:GetAbsOrigin(), true)
-		self:AddParticle(self.particle_glow_fx, false, false, -1, false, false)
-
-		self.particle_glow_fx = ParticleManager:CreateParticle(self.particle_glow, PATTACH_ABSORIGIN, self.parent)
-		ParticleManager:SetParticleControlEnt(self.particle_glow_fx, 0, self.parent, PATTACH_POINT_FOLLOW, "attach_weapon2", self.parent:GetAbsOrigin(), true)
-		self:AddParticle(self.particle_glow_fx, false, false, -1, false, false)
-
 		-- Set up variables for later use
 		self.crit_damage = self.ability:GetSpecialValueFor("crit_damage")
 		self.slow_duration = self.ability:GetSpecialValueFor("slow_duration")
+
+		-- Decide if it Bounty Hunter, with his two glowing blades, or someone else that needs to be assigned another thing
+		if self.caster == self.parent then
+			self.caster_buff = true
+		else
+			self.caster_buff = false
+		end
+
+		if self.caster_buff then
+			-- Set up glowing weapon particles
+			self.particle_glow_fx = ParticleManager:CreateParticle(self.particle_glow, PATTACH_ABSORIGIN, self.parent)
+			ParticleManager:SetParticleControlEnt(self.particle_glow_fx, 0, self.parent, PATTACH_POINT_FOLLOW, "attach_weapon1", self.parent:GetAbsOrigin(), true)
+			self:AddParticle(self.particle_glow_fx, false, false, -1, false, false)
+
+			self.particle_glow_fx = ParticleManager:CreateParticle(self.particle_glow, PATTACH_ABSORIGIN, self.parent)
+			ParticleManager:SetParticleControlEnt(self.particle_glow_fx, 0, self.parent, PATTACH_POINT_FOLLOW, "attach_weapon2", self.parent:GetAbsOrigin(), true)
+			self:AddParticle(self.particle_glow_fx, false, false, -1, false, false)			
+		else
+			self.particle_glow_fx = ParticleManager:CreateParticle("particles/hero/bounty_hunter/bounty_hunter_jinada_ally.vpcf", PATTACH_OVERHEAD_FOLLOW, self.parent)
+			ParticleManager:SetParticleControl(self.particle_glow_fx, 0, self.parent:GetAbsOrigin())									
+			self:AddParticle(self.particle_glow_fx, false, false, -1, false, false)			
+		end
 	end
 end
 
 function modifier_imba_jinada_buff_crit:DeclareFunctions()
-		local decFuncs = {MODIFIER_EVENT_ON_ATTACK_LANDED,
+		local decFuncs = {MODIFIER_EVENT_ON_ATTACK,
+						  MODIFIER_EVENT_ON_ATTACK_LANDED,
 						  MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE}
 
 		return decFuncs
+end
+
+function modifier_imba_jinada_buff_crit:OnAttack(keys)
+	if IsServer() then
+		local attacker = keys.attacker
+		local target = keys.target
+
+		-- If this is an illusion, do nothing
+		if not attacker:IsRealHero() then
+			return nil
+		end
+
+		-- If target has break, do nothing
+		if attacker:PassivesDisabled() then
+			return nil
+		end
+
+		-- If the target is a building, do nothing
+		if target:IsBuilding() then
+			return nil
+		end
+
+		if self.parent == attacker and target:GetTeamNumber() ~= self.parent:GetTeamNumber() then
+			self.crit_attack_fired = true
+		end
+	end
 end
 
 function modifier_imba_jinada_buff_crit:OnAttackLanded(keys)
@@ -591,6 +713,11 @@ function modifier_imba_jinada_buff_crit:GetModifierPreAttack_CriticalStrike(keys
 		return nil
 	end
 
+	-- If an attack was already fired (ranged heroes), disable further critical strikes
+	if self.crit_attack_fired then
+		return nil
+	end
+
 	-- Prevent critical attacks on allies
 	if self.parent:GetTeamNumber() == target:GetTeamNumber() then
 		return nil
@@ -600,7 +727,11 @@ function modifier_imba_jinada_buff_crit:GetModifierPreAttack_CriticalStrike(keys
 end
 
 function modifier_imba_jinada_buff_crit:IsHidden()
-	return true
+	if self.caster_buff then
+		return true
+	end
+
+	return false
 end
 
 function modifier_imba_jinada_buff_crit:IsPurgable()
@@ -638,8 +769,6 @@ function imba_bounty_hunter_shadow_walk:GetCastRange(location, target)
 	local ability = self
 	local true_sight_radius = ability:GetSpecialValueFor("true_sight_radius")
 
-	-- #1 Talent: Shadow Walk true sight radius increase
-	true_sight_radius = true_sight_radius + caster:FindTalentValue("special_bonus_imba_bounty_hunter_1")
 	return true_sight_radius
 end
 
@@ -694,14 +823,58 @@ modifier_imba_shadow_walk_buff_invis = modifier_imba_shadow_walk_buff_invis or c
 function modifier_imba_shadow_walk_buff_invis:OnCreated()
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
+	self.parent = self:GetParent()
 
 	self.bonus_damage = self.ability:GetSpecialValueFor("bonus_damage")
 	self.invis_ms_bonus = self.ability:GetSpecialValueFor("invis_ms_bonus")
 	self.true_sight_radius = self.ability:GetSpecialValueFor("true_sight_radius") 
 
-	-- #1 Talent: Shadow Walk true sight radius increase
-	self.true_sight_radius = self.true_sight_radius + self.caster:FindTalentValue("special_bonus_imba_bounty_hunter_1")
+	if IsServer() then
+		-- #6 Talnet: Moving in Shadow Walk grants a move speed buff
+		if self.caster:HasTalent("special_bonus_imba_bounty_hunter_6") then
+			-- Gather information
+			self.ms_bonus_per_check_pct = self.caster:FindTalentValue("special_bonus_imba_bounty_hunter_6", "ms_bonus_per_check_pct") 
+			self.check_interval = self.caster:FindTalentValue("special_bonus_imba_bounty_hunter_6", "check_interval")
 
+			-- Set a variable
+			self.last_movement_time = GameRules:GetGameTime()
+
+			-- Set move speed bonus
+			self.movespeed_bonus_pct = 0
+			self.approved_checks = 0
+
+			-- Start thinking
+			self:StartIntervalThink(0.1)
+		end
+	end
+end
+
+function modifier_imba_shadow_walk_buff_invis:OnRefresh()
+	self:OnCreated()
+end
+
+function modifier_imba_shadow_walk_buff_invis:OnIntervalThink()
+	if IsServer() then	
+		local current_gametime = GameRules:GetGameTime()		
+
+		-- If last movement was over the threshold, reset the counters
+		if current_gametime - self.last_movement_time > self.check_interval then
+			self.movespeed_bonus_pct = 0
+			self.approved_checks = 0
+		else
+			-- Otherwise, approve a check	
+			self.approved_checks = self.approved_checks + 1
+		end
+
+		-- If there are 10 approved checks, we get a move speed bonus		
+		if self.approved_checks >= 10 then
+			self.movespeed_bonus_pct = self.movespeed_bonus_pct + self.ms_bonus_per_check_pct			
+			self.approved_checks = 0
+		end
+
+		-- Set the stacks so people can see its progress
+		self:SetStackCount(self.movespeed_bonus_pct)
+	end
 end
 
 function modifier_imba_shadow_walk_buff_invis:CheckState()
@@ -718,9 +891,24 @@ function modifier_imba_shadow_walk_buff_invis:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 					  MODIFIER_PROPERTY_INVISIBILITY_LEVEL,
 					  MODIFIER_EVENT_ON_ABILITY_EXECUTED,
-					  MODIFIER_EVENT_ON_ATTACK_LANDED}
+					  MODIFIER_EVENT_ON_ATTACK_LANDED,
+					  MODIFIER_EVENT_ON_UNIT_MOVED,
+					  MODIFIER_PROPERTY_MOVESPEED_MAX}
 
 	return decFuncs
+end
+
+function modifier_imba_shadow_walk_buff_invis:GetModifierMoveSpeed_Max()	
+	return 550 * (1 + self:GetStackCount() * 0.01)
+end
+
+function modifier_imba_shadow_walk_buff_invis:OnUnitMoved(keys)
+	if IsServer() then
+		-- Only apply whenever the moving unit is the parent of the buff
+		if keys.unit == self.parent then
+			self.last_movement_time = GameRules:GetGameTime()
+		end
+	end
 end
 
 function modifier_imba_shadow_walk_buff_invis:GetModifierInvisibilityLevel()
@@ -728,7 +916,7 @@ function modifier_imba_shadow_walk_buff_invis:GetModifierInvisibilityLevel()
 end
 
 function modifier_imba_shadow_walk_buff_invis:GetModifierMoveSpeedBonus_Percentage()
-	return self.invis_ms_bonus
+	return self.invis_ms_bonus + self:GetStackCount()
 end
 
 function modifier_imba_shadow_walk_buff_invis:OnAbilityExecuted(keys)
@@ -850,13 +1038,6 @@ function imba_bounty_hunter_track:GetAbilityTextureName()
    return "bounty_hunter_track"
 end
 
-function imba_bounty_hunter_track:GetCooldown(level)
-	local caster = self:GetCaster()
-
-	-- #4 Talent: Track cooldown decrease
-	return self.BaseClass.GetCooldown(self, level) - caster:FindTalentValue("special_bonus_imba_bounty_hunter_4")
-end
-
 function imba_bounty_hunter_track:OnSpellStart()
 	if IsServer() then
 		-- Ability properties
@@ -884,7 +1065,6 @@ function imba_bounty_hunter_track:OnSpellStart()
 
 		-- Play cast sound for the player's team only
 		EmitSoundOnLocationForAllies(caster:GetAbsOrigin(), sound_cast, caster)
-
 		
 		-- Can Bounty smell what his target is cooking?
 		local smell_probability = 5
@@ -938,8 +1118,8 @@ function modifier_imba_track_debuff_mark:OnCreated()
 
 	if IsServer() then
 		-- Adjust custom lobby gold settings to the gold
-		self.bonus_gold_self = self.bonus_gold_self * (1 + CUSTOM_GOLD_BONUS/100)
-		self.bonus_gold_allies = self.bonus_gold_allies * (1 + CUSTOM_GOLD_BONUS/100)
+		self.bonus_gold_self = self.bonus_gold_self * (1 + CUSTOM_GOLD_BONUS * 0.01)
+		self.bonus_gold_allies = self.bonus_gold_allies * (1 + CUSTOM_GOLD_BONUS * 0.01)
 
 		-- Add overhead particle only for the caster's team
 		self.particle_shield_fx = ParticleManager:CreateParticleForTeam(self.particle_shield, PATTACH_OVERHEAD_FOLLOW, self.parent, self.caster:GetTeamNumber())
@@ -952,9 +1132,26 @@ function modifier_imba_track_debuff_mark:OnCreated()
 		ParticleManager:SetParticleControlEnt(self.particle_trail_fx, 1, self.parent, PATTACH_ABSORIGIN_FOLLOW, nil, self.parent:GetAbsOrigin(), true)
 		ParticleManager:SetParticleControl(self.particle_trail_fx, 8, Vector(1,0,0))
 		self:AddParticle(self.particle_trail_fx, false, false, -1, false, false)
+
+		-- #2 Talent: Tracked enemies grant normal vision instead of fogvision for the duration.
+		if self.caster:HasTalent("special_bonus_imba_bounty_hunter_2") then
+			self.has_talent_2 = true
+			self.talent_2_vision_radius = self.caster:FindTalentValue("special_bonus_imba_bounty_hunter_2")
+		end
+
+		-- If Bounty has the talent, start thinking
+		if self.has_talent_2 then
+			self:StartIntervalThink(FrameTime())
+		end
 	end
+end
 
+function modifier_imba_track_debuff_mark:OnRefresh()
+	self:OnCreated()
+end
 
+function modifier_imba_track_debuff_mark:OnIntervalThink()	
+	AddFOWViewer(self.caster:GetTeamNumber(), self.parent:GetAbsOrigin(), self.talent_2_vision_radius, FrameTime(), false)	
 end
 
 function modifier_imba_track_debuff_mark:CheckState()
@@ -995,7 +1192,7 @@ function modifier_imba_track_debuff_mark:IsDebuff()
 end
 
 function modifier_imba_track_debuff_mark:IsPurgable()
-	-- #8 Talent - unpurgable track
+	-- #8 Talent - Unpurgable track
 	local purge_value = self.caster:FindTalentValue("special_bonus_imba_bounty_hunter_8")
 	if purge_value == 1 then
 	 	return false
@@ -1009,7 +1206,7 @@ function modifier_imba_track_debuff_mark:RemoveOnDeath()
 end
 
 function modifier_imba_track_debuff_mark:IsHidden()
-	-- #8 Talent - unpurgable track
+	-- #8 Talent - Hidden track
 	local hidden_value = self.caster:FindTalentValue("special_bonus_imba_bounty_hunter_8")
 	if hidden_value == 1 then
 		return true
@@ -1020,9 +1217,21 @@ end
 
 function modifier_imba_track_debuff_mark:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_PROVIDES_FOW_POSITION,
-					  MODIFIER_EVENT_ON_HERO_KILLED}
+					  MODIFIER_EVENT_ON_HERO_KILLED,
+					  MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE}
 
 	return decFuncs
+end
+
+function modifier_imba_track_debuff_mark:GetModifierIncomingDamage_Percentage()
+	-- Only apply if the caster has #1 Talent: Tracked enemies take increased damage from any source
+	if self.caster:HasTalent("special_bonus_imba_bounty_hunter_1") then
+		-- Gather talent info
+		local bonus_damage_pct = self.caster:FindTalentValue("special_bonus_imba_bounty_hunter_1", "bonus_damage_pct")
+		return bonus_damage_pct
+	end
+
+	return nil
 end
 
 function modifier_imba_track_debuff_mark:OnHeroKilled(keys)
@@ -1073,6 +1282,11 @@ function modifier_imba_track_debuff_mark:OnHeroKilled(keys)
 end
 
 function modifier_imba_track_debuff_mark:GetModifierProvidesFOWVision()
+	-- If the caster has #2 Talent, fogvision is disabled.
+	if self.has_talent_2 then
+		return nil
+	end
+
 	return 1
 end
 
@@ -1298,6 +1512,9 @@ function modifier_imba_headhunter_debuff_handler:OnCreated()
 		self.track_debuff = "modifier_imba_track_debuff_mark"
 		self.track_ability_name = "imba_bounty_hunter_track"
 		self.gold_minimum = self.ability:GetSpecialValueFor("gold_minimum")
+		self.contract_vision_timer = self.ability:GetSpecialValueFor("contract_vision_timer")
+		self.contract_vision_linger = self.ability:GetSpecialValueFor("contract_vision_linger")
+		self.vision_radius = self.ability:GetSpecialValueFor("vision_radius")
 		self.modifier_dummy = "modifier_imba_headhunter_debuff_illu"
 
 		-- Apply particles visible only to the caster's team
@@ -1307,28 +1524,41 @@ function modifier_imba_headhunter_debuff_handler:OnCreated()
 
 		self:AddParticle(self.particle_contract_fx, false, false, -1, false, true)
 
+		self.time_passed = 0
 		self:StartIntervalThink(0.1)
 	end
 end
 
 function modifier_imba_headhunter_debuff_handler:OnIntervalThink()
-	-- Find all heroes in the parent's team
-	local heroes = FindUnitsInRadius(self.parent:GetTeamNumber(),
-									 self.parent:GetAbsOrigin(),
-									 nil,
-									 25000, -- global
-									 DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-									 DOTA_UNIT_TARGET_HERO,
-									 DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
-									 FIND_ANY_ORDER,
-									 false)
+	if IsServer() then
+		-- Find all heroes in the parent's team
+		local heroes = FindUnitsInRadius(self.parent:GetTeamNumber(),
+										 self.parent:GetAbsOrigin(),
+										 nil,
+										 25000, -- global
+										 DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+										 DOTA_UNIT_TARGET_HERO,
+										 DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
+										 FIND_ANY_ORDER,
+										 false)
 
-	-- Check which of them are controlled by the same player and are illusions of the hero
-	for _, hero in pairs(heroes) do
-		if self.parent:GetPlayerID() == hero:GetPlayerID() and self.parent:GetUnitName() == hero:GetUnitName() and hero:IsIllusion() then
-			-- Apply the debuff modifiers on those illusions as well, if they don't have it,
-			-- however we apply dummy ones that only show particles
-			hero:AddNewModifier(self.caster, self.ability, self.modifier_dummy, {duration = self:GetRemainingTime()})
+		-- Check which of them are controlled by the same player and are illusions of the hero
+		for _, hero in pairs(heroes) do
+			if self.parent:GetPlayerID() == hero:GetPlayerID() and self.parent:GetUnitName() == hero:GetUnitName() and hero:IsIllusion() then
+				-- Apply the debuff modifiers on those illusions as well, if they don't have it,
+				-- however we apply dummy ones that only show particles
+				hero:AddNewModifier(self.caster, self.ability, self.modifier_dummy, {duration = self:GetRemainingTime()})
+			end
+		end
+
+		-- Count time!
+		self.time_passed = self.time_passed + 0.1
+
+		-- If enough time passed, show the target
+		if self.time_passed >= self.contract_vision_timer then
+			self.time_passed = 0 
+			
+			AddFOWViewer(self.caster:GetTeamNumber(), self.parent:GetAbsOrigin(), self.vision_radius, self.contract_vision_linger, false)
 		end
 	end
 end

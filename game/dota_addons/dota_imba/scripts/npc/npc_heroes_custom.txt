@@ -285,14 +285,14 @@
 		"Ability4"					"imba_bounty_hunter_headhunter"
 		"Ability5"					"imba_bounty_hunter_track"
 
-		"Ability10"					"special_bonus_imba_bounty_hunter_1"
-		"Ability11"					"special_bonus_imba_bounty_hunter_2"
-		"Ability12"					"special_bonus_imba_bounty_hunter_3"
-		"Ability13"					"special_bonus_imba_bounty_hunter_4"
-		"Ability14"					"special_bonus_imba_bounty_hunter_5"
-		"Ability15"					"special_bonus_imba_bounty_hunter_6"
-		"Ability16"					"special_bonus_imba_bounty_hunter_7"
-		"Ability17"					"special_bonus_imba_bounty_hunter_8"
+		"Ability10"					"special_bonus_imba_bounty_hunter_1" //Tracked enemies take increased damage from any source
+		"Ability11"					"special_bonus_imba_bounty_hunter_2" //Tracked enemies grant normal vision instead of fogvision for the duration.
+		"Ability12"					"special_bonus_imba_bounty_hunter_3" //Jinada can now be cast on allies, granting them the ensured Jinada buff.
+		"Ability13"					"special_bonus_imba_bounty_hunter_4" //Shuriken Toss procs Jinada. The shuriken deals bonus critical damage and applies the Jinada slow debuff on all enemies hit.
+		"Ability14"					"special_bonus_imba_bounty_hunter_5" //Global Shuriken bounce range on all Tracked targets
+		"Ability15"					"special_bonus_imba_bounty_hunter_6" //While in Shadow Walk, as long as Bounty Hunter is moving, he gains bonus move speed
+		"Ability16"					"special_bonus_imba_bounty_hunter_7" //Shadow Jaunt can be cast on Headhunter's contract targets from huge range
+		"Ability17"					"special_bonus_imba_bounty_hunter_8" //Track becomes hidden and unpurgable
 
 		"ProjectileSpeed"			"900"
 	}
