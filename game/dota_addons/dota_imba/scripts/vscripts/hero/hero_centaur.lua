@@ -851,10 +851,16 @@ function imba_centaur_stampede:OnSpellStart()
 
 		-- Play cast sound
 		EmitGlobalSound(sound_cast)		
-
+		
 		-- Play cast animation
 		caster:StartGesture(cast_animation)	
 
+		-- Should we inform the bitches they need to move?
+		local bitch_be_gone = 15
+		if RandomInt(1, 100) <= bitch_be_gone then
+			EmitSoundOnLocationForAllies(caster:GetAbsOrigin(), "Imba.CentaurMoveBitch", caster)
+		end
+		
 		-- Find all enemies and clear trample marks from them
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
 			           					  caster:GetAbsOrigin(),

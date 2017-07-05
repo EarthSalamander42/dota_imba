@@ -554,6 +554,12 @@ function imba_bloodseeker_rupture:OnSpellStart(target)
 		hTarget:AddNewModifier(caster, self, "modifier_imba_rupture_debuff_dot", {duration = self:GetSpecialValueFor("duration")})
 		EmitSoundOn("hero_bloodseeker.rupture.cast", caster)
 		EmitSoundOn("hero_bloodseeker.rupture", hTarget)
+		--How bad was their day?
+		if (math.random(1,100) <= 15) then
+			--You're taking one down
+			EmitSoundOn("Imba.BloodseekerBadDay", hTarget)
+			--SING A SAD SONG JUST TO TURN IT AROUND
+		end	
 	end
 	if hTarget:GetHealthPercent() > self:GetSpecialValueFor("damage_initial_pct") then
 		local hpBurn = hTarget:GetHealthPercent() - self:GetSpecialValueFor("damage_initial_pct")
@@ -645,6 +651,11 @@ if IsServer() then
 			end
 		end
     end
+	
+	function modifier_imba_rupture_debuff_dot:OnDestroy()
+		--Stop Meme Sounds
+		StopSoundEvent("Imba.BloodseekerBadDay", self.parent)
+	end
 end
 
 function modifier_imba_rupture_debuff_dot:GetEffectName()

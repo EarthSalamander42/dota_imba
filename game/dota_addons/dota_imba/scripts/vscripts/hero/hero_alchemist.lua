@@ -1173,9 +1173,21 @@ end
 function imba_alchemist_chemical_rage:OnSpellStart()
     local caster = self:GetCaster()
     local cast_response = {"alchemist_alch_ability_rage_01", "alchemist_alch_ability_rage_02", "alchemist_alch_ability_rage_03", "alchemist_alch_ability_rage_04", "alchemist_alch_ability_rage_05", "alchemist_alch_ability_rage_06", "alchemist_alch_ability_rage_07", "alchemist_alch_ability_rage_08", "alchemist_alch_ability_rage_09", "alchemist_alch_ability_rage_10", "alchemist_alch_ability_rage_11", "alchemist_alch_ability_rage_12", "alchemist_alch_ability_rage_13", "alchemist_alch_ability_rage_15", "alchemist_alch_ability_rage_16", "alchemist_alch_ability_rage_17", "alchemist_alch_ability_rage_18", "alchemist_alch_ability_rage_19", "alchemist_alch_ability_rage_20", "alchemist_alch_ability_rage_21", "alchemist_alch_ability_rage_22", "alchemist_alch_ability_rage_23", "alchemist_alch_ability_rage_24", "alchemist_alch_ability_rage_25"}
-
-    -- Play cast response
-    EmitSoundOn(cast_response[math.random(1,#cast_response)], caster)
+	
+	
+	-- See if enough enemies are nearby to inform them about the visitation rules of your swamp
+	local radius_of_swamp = 700
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius_of_swamp, DOTA_UNIT_TARGET_TEAM_ENEMY,DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE,FIND_ANY_ORDER, false)
+    local swamp_maximum_occupancy = IMBA_PLAYERS_ON_GAME * 0.25
+	
+	--Wait how many of you are there around me?
+	if #enemies >= swamp_maximum_occupancy then
+		-- WHAT ARE YOU DOING IN MY SWAMP?!
+		caster:EmitSound("Imba.AlchemistMySwamp")
+	else
+		-- Play cast response
+		EmitSoundOn(cast_response[math.random(1,#cast_response)], caster)
+	end
 
     caster:AddNewModifier(caster, self, "modifier_imba_chemical_rage_handler", {})
     caster:EmitSound("Hero_Alchemist.ChemicalRage.Cast")
