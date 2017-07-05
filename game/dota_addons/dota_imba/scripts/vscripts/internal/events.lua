@@ -125,7 +125,7 @@ function GameMode:OnPlayerChat(keys)
 		end
 
 
-		if str == "-print" then
+		if str == "-printxpinfo" then
 		Server_PrintInfo() --print the XP system info
 		end
 

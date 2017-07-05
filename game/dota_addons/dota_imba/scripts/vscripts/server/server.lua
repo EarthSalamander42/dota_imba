@@ -222,7 +222,7 @@ end
 
 function Server_WaitToEnableXpGain()
     Timers:CreateTimer({
-    endTime = 1, -- Plyaer can gain XP from this game after 10 mins later the creep spwans
+    endTime = 600, -- Plyaer can gain XP from this game after 10 mins later the creep spwans
     callback = function()
         EnnDisEnabled = 1
         print("Enable Xp gain system....")
