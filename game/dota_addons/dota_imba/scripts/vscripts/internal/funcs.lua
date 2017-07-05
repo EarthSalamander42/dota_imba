@@ -1483,3 +1483,14 @@ function CBaseEntity:IsItemContainer()
 
 	return false
 end
+
+-- Rotates a direction 90 degrees clockwise or counter-clockwise.
+function Orthogonal(vec, clockwise)
+	local vector = Vector(-vec.y, vec.x, 0)
+
+	if not clockwise then
+		vector = vector * (-1)
+	end
+
+	return vector
+end

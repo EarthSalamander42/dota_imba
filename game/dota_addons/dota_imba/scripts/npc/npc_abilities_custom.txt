@@ -28636,8 +28636,7 @@
 			"08"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"cooldown_reduction"			"25"
-				"LinkedSpecialBonus"			"special_bonus_imba_bloodseeker_2"
+				"cooldown_reduction"			"25"				
 			}
 			"09"
 			{
@@ -28710,8 +28709,7 @@
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"atk_buff_duration"			"5"
-				"LinkedSpecialBonus"		"special_bonus_imba_bloodseeker_4"
+				"atk_buff_duration"			"5"				
 			}
 			"09"
 			{
@@ -29117,7 +29115,7 @@
 		}
 	}
 
-	"special_bonus_imba_bloodseeker_4"	// Thirst On-Hit +Duration
+	"special_bonus_imba_bloodseeker_4"	// Blood Rite's silence becomes unpurgable
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -29127,7 +29125,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_bloodseeker_thirst"
+			"01" 	"imba_bloodseeker_blood_bath"
 		}
 
 		// Special
@@ -29137,12 +29135,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"2"
+				"value"					"1"
 			}
 		}
 	}
 
-	"special_bonus_imba_bloodseeker_5"	// +% Rupture Cast/Attack Bonus Damage
+	"special_bonus_imba_bloodseeker_5"	// Blood Rite is cast in three overlapping circles
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -29152,7 +29150,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_bloodseeker_rupture"
+			"01" 	"imba_bloodseeker_blood_bath"
 		}
 
 		// Special
@@ -29162,12 +29160,18 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"25"
+				"circles"				"3"
+			}
+
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"distance"				"500"
 			}
 		}
 	}
 
-	"special_bonus_imba_bloodseeker_6"	// + Rupture Distance Cap
+	"special_bonus_imba_bloodseeker_6"	// Rupture's distance cap increase
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -29192,7 +29196,7 @@
 		}
 	}
 
-	"special_bonus_imba_bloodseeker_7"	// Bonus Thirst Movespeed/Damage
+	"special_bonus_imba_bloodseeker_7"	// Killing a Bloodraged unit grants the killer huge speed buff
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -29202,7 +29206,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_bloodseeker_thirst"
+			"01" 	"imba_bloodseeker_bloodrage"
 		}
 
 		// Special
@@ -29211,14 +29215,15 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"5"
-			}
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"3.5"
+			}			
+
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value2"				"26"
-			}
+				"ms_bonus_pct"			"100"
+			}	
 		}
 	}
 
