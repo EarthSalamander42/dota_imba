@@ -815,6 +815,9 @@ function modifier_imba_skeleton_walk_invis:OnRemoved()
         -- Play cast sound, yes, again
         EmitSoundOn(self.sound_cast, self.parent)
 
+		
+		
+		
         -- Find nearby enemies
         local enemies = FindUnitsInRadius(self.parent:GetTeamNumber(),
                                           self.parent:GetAbsOrigin(),
@@ -840,6 +843,13 @@ function modifier_imba_skeleton_walk_invis:OnRemoved()
                 enemy:AddNewModifier(self.parent, self.ability, self.modifier_spook, {duration = spook_duration})
             end
         end
+		
+		-- Are we feeling extra spooky today? Did we actually spooky anyone?
+		local spook_likelihood = 10
+		if #enemies > 0 and RollPercentage(spook_likelihood)
+			-- sPo0kY sCaRy sKeLeToNs
+			EmitSoundOn("Imba.ClinkzSpooky", self.parent)
+		end
     end
 end
 
