@@ -694,8 +694,8 @@ function imba_obsidian_destroyer_astral_imprisonment:GetCastRange(location, targ
     end   
 
     -- Otherwise, normal cast range
-    local cast_range = self.BaseClass.GetCastRange(self, location, target)
-
+    local cast_range = self:GetSpecialValueFor("cast_range")
+	
     -- #2 Talent: Astral Imprisonment cast range increase
     cast_range = cast_range + caster:FindTalentValue("special_bonus_imba_obsidian_destroyer_2")
     return cast_range    

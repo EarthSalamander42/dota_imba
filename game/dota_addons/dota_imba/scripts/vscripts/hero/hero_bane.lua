@@ -315,12 +315,11 @@ function imba_bane_brain_sap:OnSpellStart()
 			baby_bane:AddNewModifier(caster, nil, "modifier_imba_brain_sap_baby_bane", {duration	=	baby_duration} )
 
 			-- Apply (a weaker) Fiend's grip
-			target:AddNewModifier  (caster,
+			target:AddNewModifier(caster,
 			self,
 			"modifier_imba_fiends_grip_handler",
 			{ duration = baby_fiends_grip_duration, propogated = 1, original_target = 1, baby = true }
 			)
-
 			-- Make the baby look towards the target
 			local direction = (target:GetAbsOrigin() - baby_bane:GetAbsOrigin()):Normalized()
 			baby_bane:SetForwardVector(direction)
@@ -543,6 +542,10 @@ function imba_bane_nightmare:GetAbilityTextureName()
 	return "bane_nightmare"
 end
 
+function imba_bane_nightmare:GetCastRange()
+	return self:GetSpecialValueFor("cast_range")
+end
+
 -- Nightmare's sub ability (Nightmare end)
 imba_bane_nightmare_end  = imba_bane_nightmare_end  or class({})
 
@@ -583,6 +586,7 @@ end
 function imba_bane_nightmare_end:GetAbilityTextureName()
 	return "bane_nightmare_end"
 end
+
 
 -- Nightmare Debuff
 modifier_imba_nightmare_dot = modifier_imba_nightmare_dot or class({
@@ -896,13 +900,16 @@ function imba_bane_fiends_grip:GetCooldown(nLevel)
 end
 
 function imba_bane_fiends_grip:  GetChannelAnimation() return
-ACT_DOTA_CHANNEL_ABILITY_4 or ACT_DOTA_CHANNEL_ABILITY_5
+	ACT_DOTA_CHANNEL_ABILITY_4 or ACT_DOTA_CHANNEL_ABILITY_5
 end
 
 function imba_bane_fiends_grip:GetAbilityTextureName()
 	return "bane_fiends_grip"
 end
 
+function imba_bane_fiends_grip:GetCastRange()
+	return self:GetSpecialValueFor("cast_range")
+end
 
 -- Fiends Grip Debuff
 modifier_imba_fiends_grip_handler = modifier_imba_fiends_grip_handler or class({

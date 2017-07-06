@@ -24,7 +24,7 @@ end
 
 function imba_sandking_burrowstrike:GetCastRange(location, target)
     local caster = self:GetCaster()
-    local cast_range = self.BaseClass.GetCastRange(self, location, target)
+    local cast_range = self:GetSpecialValueFor("cast_range")
 
     -- #3 Talent: Burrowstrike cast range increase
     cast_range = cast_range + caster:FindTalentValue("special_bonus_imba_sand_king_3")

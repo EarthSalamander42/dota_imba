@@ -252,6 +252,9 @@ function imba_techies_proximity_mine:OnSpellStart()
     end
 end
 
+function imba_techies_proximity_mine:GetCastRange()
+	return self:GetSpecialValueFor("cast_range")
+end
 
 -- Charges modifier
 modifier_imba_proximity_mine_charges = modifier_imba_proximity_mine_charges or class({})

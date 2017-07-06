@@ -5562,7 +5562,7 @@
 		}
 	}
 
-//=================================================================================================================
+	//=================================================================================================================
 	// Bane Enfeeble
 	//=================================================================================================================
 	"imba_bane_enfeeble"
@@ -5722,7 +5722,6 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"500 550 600 650 700 750 800"
 		"AbilityCastPoint"				"0.5"
 		"AbilityCooldown"				"22 19 16 13 13 13 13"
 		"AbilityManaCost"				"165"
@@ -5763,7 +5762,12 @@
 			{
 				"var_type"									"FIELD_FLOAT"
 				"nightmare_baleful_visions_duration"		"4 4 5 5 6 6 7"
-			}		
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range"				"500 550 600 650 700 750 800"
+			}
 		}
 	}
 
@@ -5811,7 +5815,6 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"625 625 625 675 725 775"
 		"AbilityCastPoint"				"0.5"
 		"AbilityCooldown"				"100 100 100 90 80 70"
 		"AbilityManaCost"				"200 300 400 425 450 475"
@@ -5876,6 +5879,11 @@
 				"var_type"								"FIELD_INTEGER"
 				"demon_mana_drain"						"2 2 2 3 4 5"
 			}		
+			"09"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"cast_range"							"625 625 625 675 725 775"
+			}
 		}
 	}
 	
@@ -5916,7 +5924,6 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"400 400 400 400 500 600 700"
 		"AbilityCastPoint"				"0.3"
 		"AbilityCooldown"				"9"
 		"AbilityManaCost"				"120 130 140 150 150 150 150"
@@ -5999,6 +6006,11 @@
 				"scepter_throw_delay"		"1"
 			}
 
+			"13"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range"				"400 400 400 400 500 600 700"
+			}
 		}
 
 	}
@@ -6011,7 +6023,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"bounty_hunter_jinada"
 		"ScriptFile"					"hero/hero_bounty_hunter"
@@ -6031,13 +6043,12 @@
 		// Unit Targeting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"600 600 600 600 700 800 900"
 		"AbilityCastPoint"				"0.1"
 		"AbilityCooldown"				"12 10 8 6 6 6 6"
 		"AbilityManaCost"				"65"
@@ -6061,13 +6072,19 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"ms_slow_pct"			"30"				
+				"ms_slow_pct"			"30"
+				"LinkedSpecialBonus"	"special_bonus_imba_bounty_hunter_2"
 			}
 
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"as_slow"				"30"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_range"			"600 600 600 600 700 800 900"
 			}
 		}
 	}
@@ -6135,7 +6152,8 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"true_sight_radius"		"200 200 200 200 300 400 500"				
+				"true_sight_radius"		"200 200 200 200 300 400 500"
+				"LinkedSpecialBonus"	"special_bonus_imba_bounty_hunter_1"
 			}
 
 			"05"
@@ -6209,7 +6227,8 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration"				"30"				
+				"duration"				"30"
+				"LinkedSpecialBonus"	"special_bonus_imba_bounty_hunter_6"
 			}
 
 			"04"
@@ -6298,25 +6317,13 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"vision_radius"			"600"
+				"vision_radius"			"300"
 			}
 
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"vision_linger_time"	"2"
-			}
-
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"contract_vision_timer"	"10"
-			}
-
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"contract_vision_linger"	"1"
 			}
 		}
 	}
@@ -7633,7 +7640,6 @@
 		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"								"SPELL_IMMUNITY_ENEMIES_NO"
-		"AbilityCastRange"								"600 650 700 750 775 800 825"
 		"AbilityCastPoint"								"0.2"
 		"AbilityManaCost"								"70"
 		"MaxLevel"										"7"
@@ -7696,6 +7702,12 @@
 				"var_type"								"FIELD_INTEGER"
 				"projectile_speed"						"1300"
 			}
+			
+			"10"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"cast_range"							"600 650 700 750 775 800 825"
+			}
 		}
 	}
 
@@ -7726,7 +7738,6 @@
 		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"SpellImmunityType"								"SPELL_IMMUNITY_ALLIES_YES"
 		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO"
-		"AbilityCastRange"								"550 700 850 1000 1000 1000 1000"
 		"AbilityCooldown"								"60 45 30 15 14 13 12"
 		"AbilityCastPoint"								"0.35"
 		"MaxLevel"										"7"
@@ -7756,6 +7767,11 @@
 				"var_type"								"FIELD_INTEGER"
 				"nothl_protection_cooldown"				"90 90 90 90 70 50 30"
 				"LinkedSpecialBonus"					"special_bonus_imba_dazzle_7"
+			}
+			"05"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"cast_range"							"550 700 850 1000 1000 1000 1000"
 			}
 		}
 	}
@@ -7787,7 +7803,6 @@
 		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityManaCost"								"90 100 110 120 125 130 135"
 		"AbilityCooldown"								"12 10 8 6 6 6 6"
-		"AbilityCastRange"								"800 800 800 900 1000 1100 1200"
 		"AbilityCastPoint"								"0.2"
 		"MaxLevel"										"7"
 
@@ -7842,6 +7857,12 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"buff_duration"							"2 2 3 3 4 5 6"
+			}
+			
+			"09"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"cast_range"							"800 800 800 900 1000 1100 1200"
 			}
 		}
 	}
@@ -16177,7 +16198,6 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"225 300 375 450 475 500 525"
 		"AbilityCastPoint"				"0.25"
 
 		// Cost
@@ -16224,6 +16244,11 @@
 				"var_type"						"FIELD_INTEGER"
 				"scepter_int_steal_duration"	"80"
 				"LinkedSpecialBonus"			"special_bonus_imba_obsidian_destroyer_4"
+			}
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"cast_range"					"225 300 375 450 475 500 525"
 			}
 		}
 	}
@@ -16765,6 +16790,11 @@
 			{
 				"var_type"				    "FIELD_INTEGER"
 				"scepter_knives_interval"	"0.3"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range_tooltip"		"525 750 975 1200 1225 1250 1275"
 			}
 		}
 	}
@@ -17577,7 +17607,6 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"400 400 400 400 450 500 550"
 		"AbilityCastPoint"				"0.2"
 
 		// Time
@@ -17656,6 +17685,11 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"main_blast_radius"			"400"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range"				"400 400 400 400 450 500 550"
 			}
 		}
 	}
@@ -17966,7 +18000,6 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"					"900 1050 1200 1200 1200 1200"
 		"AbilityCastPoint"					"0.2"
 
 		// Time
@@ -18031,6 +18064,12 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"break_distance_extend"		"50"
+			}
+			
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range"				"900 1050 1200 1200 1200 1200"
 			}
 		}
 	}
@@ -18935,7 +18974,6 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"550 575 600 625 650 675 700"
 		"AbilityCastPoint"				"0.0"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
 
@@ -19016,6 +19054,11 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"ally_cooldown"				"10"
+			}
+			"12"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range"				"550 575 600 625 650 675 700"
 			}
 		}
 	}
@@ -19600,7 +19643,6 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"2000 2500 3000 3300 3600 3900"
 		"AbilityCastRangeBuffer"		"1000"
 		"AbilityCastPoint"				"2"
 
@@ -19666,6 +19708,12 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"charge_time"				"2"
+			}
+			
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range"				"2000 2500 3000 3300 3600 3900"
 			}
 		}
 	}
@@ -20325,7 +20373,6 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"					"100 100 100 100 150 200 250"
 		"AbilityCastPoint"					"0"
 		
 		// Time		
@@ -20449,10 +20496,16 @@
 				"big_boom_shrapnel_damage"		"125"
 			}
 
-			"18"
+			"19"
 			{
 				"var_type"						"FIELD_FLOAT"
 				"big_boom_shrapnel_interval"	"0.25"
+			}
+			
+			"20"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"cast_range"					"100 100 100 100 150 200 250"
 			}
 		}		
 	}
@@ -21123,7 +21176,6 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"350 450 550 650 775 900 1025"
 		"AbilityCastPoint"				"0.0"
 
 		// Time
@@ -21201,6 +21253,14 @@
 				"var_type"				"FIELD_FLOAT"
 				"burrowstrike_time"		"0.45"
 			}
+			
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_range"			"350 450 550 650 775 900 1025"
+				"LinkedSpecialBonus"	"special_bonus_imba_sand_king_3"
+			}
+			
 		}
 	}
 
@@ -24916,6 +24976,11 @@
 				"var_type"				"FIELD_INTEGER"
 				"ward_range"			"350 350 350 350 600 850 1100"
 			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_range"			"800 800 800 800 800 850 1100"
+			}
 		}
 	}
 
@@ -25546,7 +25611,6 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.5"
-		"AbilityCastRange"				"525 600 675 750 775 800 825"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
@@ -25607,6 +25671,12 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"tick_interval"			"1"
+			}
+			
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_range"			"525 600 675 750 775 800 825"
 			}
 		}
 	}
@@ -27614,7 +27684,6 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1300 1300 1300 1300 1400 1500 1600"
 		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
 
 		// Time
@@ -27709,6 +27778,12 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"scepter_bounce_damage_pct"	"20"
+			}
+			
+			"12"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range"				"1300 1300 1300 1300 1400 1500 1600"
 			}
 		}
 	}
@@ -28510,6 +28585,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"value"				"1"
+				
 			}
 		}
 	}
@@ -29323,7 +29399,7 @@
 	//=================================================================================================================
 	// Bounty Hunter Talents
 	//=================================================================================================================
-	"special_bonus_imba_bounty_hunter_1"	// Tracked enemies take increased damage from any source
+	"special_bonus_imba_bounty_hunter_1"	// Shadow Walk true sight radius increase
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -29333,7 +29409,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_bounty_hunter_track"
+			"01" 	"imba_bounty_hunter_shadow_walk"
 		}
 
 		// Special
@@ -29343,37 +29419,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage_pct"		"20"
+				"value"					"200"
 			}
 		}
 	}
 
-	"special_bonus_imba_bounty_hunter_2"	// Tracked enemies grant normal vision instead of fogvision for the duration. The vision has a 600 AoE radius.
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_bounty_hunter_track"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"600"
-			}
-		}
-	}
-
-	"special_bonus_imba_bounty_hunter_3"	// Jinada can now be cast on allies, granting them the Jinada critical buff
+	"special_bonus_imba_bounty_hunter_2"	// Jinada's slow increase
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -29393,12 +29444,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"jinada_buff_duration"	"10"
+				"value"					"15"
 			}
 		}
 	}
 
-	"special_bonus_imba_bounty_hunter_4"	// If Jinada is off cooldown, Shuriken Toss procs it. The shuriken deals bonus critical damage and applies the Jinada slow debuff on all enemies hit.
+	"special_bonus_imba_bounty_hunter_3"	// Shuriken Toss Damage increase
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -29418,7 +29469,32 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"1"
+				"value"					"75"
+			}
+		}
+	}
+
+	"special_bonus_imba_bounty_hunter_4"	// Track cooldown decrease
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_bounty_hunter_track"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"2"
 			}
 		}
 	}
@@ -29448,7 +29524,7 @@
 		}
 	}
 
-	"special_bonus_imba_bounty_hunter_6"	// While in Shadow Walk, as long as Bounty Hunter is moving, he gains bonus move speed
+	"special_bonus_imba_bounty_hunter_6"	// Increased Track duration
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -29458,7 +29534,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_bounty_hunter_shadow_walk"
+			"01" 	"imba_bounty_hunter_track"
 		}
 
 		// Special
@@ -29468,18 +29544,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"check_interval"		"1"
-			}
-
-			"02"
-			{
-				"var_type"				 "FIELD_INTEGER"
-				"ms_bonus_per_check_pct" "1"
+				"value"					"30"
 			}
 		}
 	}
 
-	"special_bonus_imba_bounty_hunter_7"	// Shadow Jaunt can be cast on Headhunter's contract targets from huge range
+	"special_bonus_imba_bounty_hunter_7"	// Decreased Jinada Cooldown
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -29490,7 +29560,6 @@
 		"LinkedAbility"
 		{
 			"01" 	"imba_bounty_hunter_jinada"
-			"02"	"imba_bounty_hunter_headhunter"
 		}
 
 		// Special
@@ -29500,7 +29569,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cast_range"			"2500"
+				"value"					"5"
 			}
 		}
 	}

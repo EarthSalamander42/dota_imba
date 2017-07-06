@@ -186,6 +186,9 @@ function imba_pugna_nether_blast:OnSpellStart()
     end)
 end
 
+function imba_pugna_nether_blast:GetCastRange()
+	return self:GetSpecialValueFor("cast_range")
+end
 
 -- Magic resistance reduction modifier
 modifier_imba_nether_blast_magic_res = class({})
@@ -1179,6 +1182,10 @@ function imba_pugna_life_drain:OnSpellStart()
 
     -- Add life drain modifier on target
     target:AddNewModifier(caster, ability, modifier_lifedrain, {duration = duration})
+end
+
+function imba_pugna_life_drain:GetCastRange()
+	return self:GetSpecialValueFor("cast_range")
 end
 
 -- Life drain modifier
