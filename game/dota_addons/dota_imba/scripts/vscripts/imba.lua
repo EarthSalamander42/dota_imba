@@ -937,6 +937,30 @@ function GameMode:DamageFilter( keys )
 				end
 			end
 		end
+
+		-- Axe Battle Hunger kill credit
+		if victim:GetTeam() == attacker:GetTeam() and keys.damage > 0 and attacker:HasModifier("modifier_imba_battle_hunger_debuff_dot") then
+			-- Check if this is the killing blow
+			local victim_health = victim:GetHealth()
+			if keys.damage >= victim_health then
+				-- Prevent death and trigger Reaper's Scythe's on-kill effects
+				local battle_hunger_modifier = victim:FindModifierByName("modifier_imba_battle_hunger_debuff_dot")
+				local battle_hunger_caster = false
+				local battle_hunger_ability = false
+				if battle_hunger_modifier then
+					battle_hunger_caster = battle_hunger_modifier:GetCaster()
+					battle_hunger_ability = battle_hunger_modifier:GetAbility()
+				end
+				if battle_hunger_caster then
+					keys.damage = 0
+
+					if not battle_hunger_ability then return nil end
+
+					-- Attempt to kill the target, crediting it to Axe
+					ApplyDamage({attacker = battle_hunger_caster, victim = victim, ability = battle_hunger_ability, damage = victim:GetHealth() + 10, damage_type = DAMAGE_TYPE_PURE, damage_flag = DOTA_DAMAGE_FLAG_NO_DAMAGE_MULTIPLIERS + DOTA_DAMAGE_FLAG_BYPASSES_BLOCK})
+				end
+			end
+		end
 	end
 	return true
 end

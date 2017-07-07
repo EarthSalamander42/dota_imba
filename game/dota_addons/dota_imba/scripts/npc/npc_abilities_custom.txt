@@ -5410,7 +5410,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"miss_chance"				"25"
+				"miss_chance_pct"			"25"
 			}
 			"04"
 			{
@@ -5432,7 +5432,7 @@
 				"var_type"					"FIELD_INTEGER"
 				"duration"					"10"
 			}
-			"07"
+			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"pause_time"				"2"
@@ -5455,10 +5455,6 @@
 		"AbilityTextureName"            "axe_counter_helix"
 		"MaxLevel"						"7"
 
-		// Cast
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"								"350"
-
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
@@ -5479,7 +5475,7 @@
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"radius_increase"						"15"
+				"radius_increase_per_stack"				"15"
 			}
 			"03"
 			{
@@ -5565,46 +5561,65 @@
 				"var_type"						"FIELD_INTEGER"
 				"kill_threshold"				"250 325 400 475 550 625"
 			}
-
 			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"kill_threshold_max_hp_pct"		"15"
+			}
+			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"damage"						"150 200 250 300 350 400"
 			}
-
-			"03"
+			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"speed_bonus"					"30"
 			}
-
-			"04"
+			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"as_bonus"						"30"
 			}
-
-			"05"
+			"06"
 			{
 				"var_type"						"FIELD_FLOAT"
 				"speed_duration"				"6"
 			}
-
-			"06"
+			"07"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"speed_aoe"						"900"
 			}
-
-			"07"
+			"08"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"scepter_battle_hunger_radius"	"700"
 			}
-			"08"
+			"09"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"max_health_kill_heal_pct"      "20"
+				"max_health_kill_heal_pct"      "15"
+			}
+			"10"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"threshold_increase"  			"100"
+			}
+			"11"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"threshold_max_hp_pct_increase" "5"
+			}
+			"12"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"stack_limit"  					"5"
+			}
+			"13"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"stack_duration"  				"60"
 			}
 		}
 	}
@@ -34454,7 +34469,7 @@
     //=================================================================================================================
     // Axe Talents
     //=================================================================================================================
-    "special_bonus_imba_axe_1"  // +90 Berserker's Call radius
+    "special_bonus_imba_axe_1"  // If an enemy unit with Battle Hunger attacks an ally, that ally also gains the Battle Hunger debuff
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
@@ -34464,14 +34479,14 @@
 
         "LinkedAbility"
         {
-            "01"    "imba_axe_berserkers_call"
+            "01"    "imba_axe_battle_hunger"
         }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
         {
-            "01"
+            "01" // Unused
             {
                 "var_type"      "FIELD_INTEGER"
                 "value"         "90"
@@ -34504,7 +34519,7 @@
         }
     }
 
-    "special_bonus_imba_axe_3"  // +90 Counter helix radius
+    "special_bonus_imba_axe_3"  // Allows self-casting of Battle Hunger - applies it to everyone affected by Berserker's Call.
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
@@ -34514,14 +34529,14 @@
 
         "LinkedAbility"
         {
-            "01"    "imba_axe_counter_helix"
+            "01"    "imba_axe_battle_hunger"
         }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
         {
-            "01"
+            "01" // Unused
             {
                 "var_type"      "FIELD_INTEGER"
                 "value"         "90"
@@ -34554,7 +34569,7 @@
         }
     }
 
-    "special_bonus_imba_axe_5"  // +150 Berserker's Call taunted attack speed
+    "special_bonus_imba_axe_5"  // Counter Helix chance doubles, but each Counter Helix deals 66% of the original base damage.
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
@@ -34564,7 +34579,7 @@
 
         "LinkedAbility"
         {
-            "01"    "imba_axe_berserkers_call"
+            "01"    "imba_axe_counter_helix"
         }
 
         // Special
@@ -34573,13 +34588,18 @@
         {
             "01"
             {
-                "var_type"      "FIELD_INTEGER"
-                "value"         "150"
+                "var_type"      				"FIELD_INTEGER"
+                "proc_chance_multiplier"        "2"
+            }
+            "02"
+            {
+                "var_type"      				"FIELD_FLOAT"
+                "damage_multiplier"        		"0.66"
             }
         }
     }
 
-    "special_bonus_imba_axe_6"  // +100 Battle Hunger damage per second.
+    "special_bonus_imba_axe_6"  // When Counter Helix procs, it has 25% chance to immediately proc again. Psuedo Random chance. The extra proc cannot trigger this again.
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
@@ -34589,7 +34609,7 @@
 
         "LinkedAbility"
         {
-            "01"    "imba_axe_battle_hunger"
+            "01"    "imba_axe_counter_helix"
         }
 
         // Special
@@ -34599,12 +34619,12 @@
             "01"
             {
                 "var_type"      "FIELD_INTEGER"
-                "value"         "100"
+                "value"         "25"
             }
         }
     }
 
-    "special_bonus_imba_axe_7"  // +400 Culling Blade kill threshold
+    "special_bonus_imba_axe_7"  // Counter Helix's damage is increased by 1 for each point of Armor Axe has.
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
@@ -34614,17 +34634,17 @@
 
         "LinkedAbility"
         {
-            "01"    "imba_axe_culling_blade"
+            "01"    "imba_axe_counter_helix"
         }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
         {
-            "01"
+            "01" //Damage to add per armor point
             {
                 "var_type"      "FIELD_INTEGER"
-                "value"         "400"
+                "value"         "1"
             }
         }
     }
