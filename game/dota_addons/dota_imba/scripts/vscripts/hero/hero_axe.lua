@@ -385,7 +385,7 @@ function modifier_imba_battle_hunger_debuff_dot:OnCreated( params )
     self.tick_rate = 1 --once per second
     self.cmd_restrict_modifier = "modifier_imba_battle_hunger_debuff_cmd"
     self.deny_allow_modifier = "modifier_imba_battle_hunger_debuff_deny"
-    self.damage_over_time = self:GetAbility():GetSpecialValueFor( "damage" ) + self.caster:FindTalentValue("special_bonus_imba_axe_6")
+    self.damage_over_time = self:GetAbility():GetSpecialValueFor( "damage" )
     self.miss_chance_pct = self:GetAbility():GetSpecialValueFor("miss_chance_pct")
     -- Talent : If Battle Hunger'ed target attacks an ally, cast Battle Hunger on them (with original duration)
     if self.caster:HasTalent("special_bonus_imba_axe_1") then
