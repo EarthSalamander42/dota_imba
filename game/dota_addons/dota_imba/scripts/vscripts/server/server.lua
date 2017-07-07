@@ -316,7 +316,7 @@ function Serer_CheckForAFKPlayer()
                                 _AFK_check_pass = _AFK_check_pass +1
                             end
                         end
-                        if _AFK_check_pass == 6 then
+                        if _AFK_check_pass == cycle_AFK_exp_max_round-1 then
                             is_AFK[nPlayerID] = 1
                             Server_DisableToGainXpForPlayer(nPlayerID)
                         end
