@@ -46,6 +46,10 @@ function imba_dazzle_poison_touch:OnProjectileHit(target, location)
 	target:AddNewModifier(self:GetCaster(), self, "modifier_imba_dazzle_poison_touch_setin", {duration = self:GetSpecialValueFor("set_in_time")})
 end
 
+function imba_dazzle_poison_touch:GetCastRange()
+	return self:GetSpecialValueFor("cast_range")
+end
+
 -----------------------------------------------
 -----	Poison Touch set in modifier	  -----
 -----------------------------------------------
@@ -215,6 +219,10 @@ function imba_dazzle_shallow_grave:GetIntrinsicModifierName()
 	if not caster:HasAbility("imba_pugna_nether_ward_aura") and not caster:IsIllusion() then
 		return "modifier_imba_dazzle_nothl_protection"
 	end
+end
+
+function imba_dazzle_shallow_grave:GetCastRange()
+	return self:GetSpecialValueFor("cast_range")
 end
 
 ---------------------------------------
@@ -539,6 +547,10 @@ function imba_dazzle_shadow_wave:WaveHit(unit)
 			ApplyDamage({victim = enemy, attacker = caster, damage = damage, damage_type = DAMAGE_TYPE_PHYSICAL})
 		end
 	end
+end
+
+function imba_dazzle_shadow_wave:GetCastRange()
+	return self:GetSpecialValueFor("cast_range")
 end
 
 ---------------------------------------

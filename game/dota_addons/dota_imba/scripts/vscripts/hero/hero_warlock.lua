@@ -380,7 +380,9 @@ function imba_warlock_shadow_word:OnSpellStart()
     end)
 end
 
-
+function imba_warlock_shadow_word:GetCastRange()
+	return self:GetSpecialValueFor("cast_range")
+end
 
 modifier_imba_shadow_word = class({})
 

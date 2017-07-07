@@ -128,7 +128,7 @@ function imba_rubick_telekinesis:GetCastRange( location , target)
 	if self:GetCaster():HasModifier("modifier_imba_telekinesis_caster") then
 		return 25000
 	end
-	return self.BaseClass.GetCastRange(self,location,target)
+	return self:GetSpecialValueFor("cast_range")
 end
 
 function imba_rubick_telekinesis:CastFilterResultTarget( target )
