@@ -68,8 +68,7 @@ function Server_DecodeForPlayer ( t, nPlayerID )   --To deep-decode the Json cod
                     if (type(val)=="table") then
                         sub_print_r(val,indent..string.rep(" ",string.len(pos)+8))
                     elseif (type(val)=="string") then
-                        --print(pos..':'..val)
-                        if pos == "SteamID64" then
+                        --print(pos..':'..val                        if pos == "SteamID64" then
                             SteamID64 = val
                             print("SteamID64="..SteamID64)
                         end
@@ -121,7 +120,6 @@ function Server_PrintInfo()
 end
 
 function Server_GetPlayerLevelAndTitle(nPlayerID)
-    --print("1231231313"..table_XP_has[nPlayerID])
     for i=31,1,-1 do
         if tonumber(table_XP_has[nPlayerID]) >= table_rankXP[i] then
             XP_level[nPlayerID] = i-1
@@ -138,12 +136,14 @@ function Server_GetPlayerLevelAndTitle(nPlayerID)
     end
 end
 
+local _finished = 0
+
 
 function Server_SendAndGetInfoForAll()
     require('libraries/json')
+    if __finished ~= 1 then
     Server_SetRankTitle()
-    --print('123123')
-    --print(DOTA_MAX_TEAM_PLAYERS)
+
     for nPlayerID=0, DOTA_MAX_TEAM_PLAYERS-1 do
         if  PlayerResource:IsValidPlayer(nPlayerID)  then
         if PlayerResource:IsFakeClient(nPlayerID) then
@@ -165,16 +165,17 @@ function Server_SendAndGetInfoForAll()
                 Server_DecodeForPlayer(Adecode, nPlayerID)
                 Server_GetPlayerLevelAndTitle(nPlayerID)
             end )
-            --Server_GetPlayerLevelAndTitle(nPlayerID)
 
         end
         end
     end
+    end
+    _finished = 1
 end
 
 function Server_EnableToGainXPForPlyaer(nPlayerID)
     --print("player key:"..table_player_key[nPlayerID])
-    if EnnDisEnabled == 1 then
+    if EnnDisEnabled == 1 and is_AFK[nPlayerID] == 0 then
         table_able[nPlayerID] = 1
         local jsondata={}
         local jsontable={}
@@ -186,14 +187,11 @@ function Server_EnableToGainXPForPlyaer(nPlayerID)
             request:SetHTTPRequestGetOrPostParameter("data_json",JSON:encode(jsondata))
             request:SetHTTPRequestGetOrPostParameter("auth",_AuthCode);
             request:Send(function(result)
-            --print(table_SteamID64[nPlayerID].."("..player_key[nPlayerID].."):Can gain XP...Code="..table_able[nPlayerID])
-            --print(result.Body)
         end )
     end
 end
 
 function Server_DisableToGainXpForPlayer(nPlayerID)
-    --print("player key:"..table_player_key[nPlayerID])
     if EnnDisEnabled == 1 then
         table_able[nPlayerID] = 0
         local jsondata={}
@@ -206,8 +204,6 @@ function Server_DisableToGainXpForPlayer(nPlayerID)
             request:SetHTTPRequestGetOrPostParameter("data_json",JSON:encode(jsondata))
             request:SetHTTPRequestGetOrPostParameter("auth",_AuthCode);
             request:Send(function(result)
-            --print(table_SteamID64[nPlayerID].."("..player_key[nPlayerID].."):Can **not** gain XP...Code="..table_able[nPlayerID])
-            --print(result.Body)
         end )
     end
 end
@@ -221,6 +217,7 @@ end
 
 
 function Server_WaitToEnableXpGain()
+    Serer_CheckForAFKPlayer()
     Timers:CreateTimer({
     endTime = 600, -- Plyaer can gain XP from this game after 10 mins later the creep spwans
     callback = function()
@@ -274,11 +271,69 @@ function Server_CalculateXPForWinnerAndAll(winning_team)
                 request:SetHTTPRequestGetOrPostParameter("data_json",JSON:encode(jsondata))
                 request:SetHTTPRequestGetOrPostParameter("auth",_AuthCode);
                 request:Send(function(result)
-                --Adecode=JSON:decode(result.Body)
-                --Server_DecodeForPlayer(Adecode, nPlayerID)
             end )
 
         end
         end
     end 
 end
+
+
+local table_AFK_check_allHeroes = {}
+local is_AFK = {}
+local cycle_AFK_check_interval = 60
+local AFK_check_times = 5
+local _maxLv
+
+local table_AFK_exp_round =  {}
+local cycle_AFK_exp_round = 1
+local cycle_AFK_exp_max_round = AFK_check_times
+
+function Serer_CheckForAFKPlayer()
+    for i=1,cycle_AFK_exp_max_round do
+        table_AFK_exp_round[i] = {}
+    end
+    for k,v in pairs(CustomNetTables:GetTableValue("game_options", "max_level")) do
+        _maxLv = v
+    end
+    Timers(function()
+            for nPlayerID=0, DOTA_MAX_TEAM_PLAYERS-1 do
+                if PlayerResource:IsValidPlayer(nPlayerID)  then
+                if PlayerResource:IsFakeClient(nPlayerID) then
+                else
+                    table_AFK_check_allHeroes[nPlayerID]=PlayerResource:GetSelectedHeroEntity(nPlayerID)   
+
+                    if PlayerResource:GetLevel(nPlayerID) ~= _maxLv then
+                        table_AFK_exp_round[cycle_AFK_exp_round][nPlayerID]=CDOTA_BaseNPC_Hero.GetCurrentXP(table_AFK_check_allHeroes[nPlayerID])
+                        if cycle_AFK_exp_round == cycle_AFK_exp_max_round then
+                            cycle_AFK_exp_round = 1
+                        else
+                            cycle_AFK_exp_round = cycle_AFK_exp_round + 1
+                        end
+                        local _AFK_check_pass = 0
+                        for i=1,cycle_AFK_exp_max_round-1 do
+                            if table_AFK_exp_round[i][nPlayerID] == table_AFK_exp_round[i+1][nPlayerID] then
+                                _AFK_check_pass = _AFK_check_pass +1
+                            end
+                        end
+                        if _AFK_check_pass == 6 then
+                            is_AFK[nPlayerID] = 1
+                            Server_DisableToGainXpForPlayer(nPlayerID)
+                        end
+                    end
+
+                    local idle_change_time = CDOTA_BaseNPC.GetLastIdleChangeTime(table_AFK_check_allHeroes[nPlayerID])
+                    local current_game_time = GameRules:GetGameTime()
+
+                    if current_game_time-idle_change_time > 10 then --AFK_check_times * cycle_AFK_check_interval
+                        is_AFK[nPlayerID] = 1
+                        Server_DisableToGainXpForPlayer(nPlayerID)
+                    end
+
+                end
+                end
+            end
+    return 1.0 --cycle_AFK_check_interval
+    end)
+end
+

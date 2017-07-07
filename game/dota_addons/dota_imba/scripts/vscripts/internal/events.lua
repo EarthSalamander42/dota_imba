@@ -124,7 +124,6 @@ function GameMode:OnPlayerChat(keys)
 			caster.norange = nil
 		end
 
-
 		if str == "-printxpinfo" then
 		Server_PrintInfo() --print the XP system info
 		end

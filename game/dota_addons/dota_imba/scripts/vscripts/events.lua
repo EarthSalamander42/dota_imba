@@ -110,7 +110,6 @@ function GameMode:OnGameRulesStateChange(keys)
 
 	if new_state == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		HeroSelection:Start()
-		Server_SendAndGetInfoForAll()
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -905,8 +904,8 @@ end
 function GameMode:OnConnectFull(keys)
 	DebugPrint('[BAREBONES] OnConnectFull')
 	DebugPrintTable(keys)
-
 	
+	Server_SendAndGetInfoForAll()
 
 	GameMode:_OnConnectFull(keys)
 	
