@@ -142,7 +142,7 @@ end
 -------------------------------------------
 
 function imba_venomancer_venomous_gale:GetCastRange( location , target)
-	local range = self.BaseClass.GetCastRange(self,location,target)
+	local range = self:GetSpecialValueFor("cast_range")
 	if IsServer() then
 		local caster = self:GetCaster()
 		if (caster:GetAbsOrigin() - location):Length2D() <= (range + GetCastRangeIncrease(caster)) then

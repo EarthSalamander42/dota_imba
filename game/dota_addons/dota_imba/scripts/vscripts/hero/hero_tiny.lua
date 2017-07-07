@@ -353,7 +353,7 @@ end
 
 function imba_tiny_toss:GetCastRange(vLocation, hTarget)
 	if IsServer() or hTarget then
-		return self.BaseClass.GetCastRange( self, vLocation, hTarget )
+		return self:GetSpecialValueFor("cast_range")
 	elseif hTarget == nil then
 		return self:GetSpecialValueFor("grab_radius")
 	end

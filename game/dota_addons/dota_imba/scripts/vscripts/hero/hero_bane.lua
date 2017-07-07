@@ -6,26 +6,26 @@ CreateEmptyTalents("bane")
 --------------------------------------
 ----------    ENFEEBLE    ------------
 --------------------------------------
-LinkLuaModifier("modifier_imba_enfeeble_debuff",          "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_enfeeble_debuff_vision_handler",   "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_enfeeble_debuff_vision",   "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_enfeeble_debuff", "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_enfeeble_debuff_vision_handler", "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_enfeeble_debuff_vision", "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
 
 -- Main enfeeble casting
-imba_bane_enfeeble       = imba_bane_enfeeble       or class({})  
+imba_bane_enfeeble = imba_bane_enfeeble or class({})  
 
 -- Enfeeble Spell Cast
 function imba_bane_enfeeble:OnSpellStart() 
 	if  IsServer() then
 		-- Ability properties
-		local target,caster 	= findtarget(self)
+		local target,caster = findtarget(self)
 		local enfeeble_duration = self:GetSpecialValueFor("enfeeble_duration")
-		local talent_aoe	=	caster:FindTalentValue("special_bonus_imba_bane_2")
+		local talent_aoe = caster:FindTalentValue("special_bonus_imba_bane_2")
 		
 		if target:TriggerSpellAbsorb(self) then return end	--Spell block handler
 		
 		-- #2 TALENT : Enfeeble is aoe
 		if caster:HasTalent("special_bonus_imba_bane_2") then 
-			local enemies	= FindUnitsInRadius(caster:GetTeamNumber(),
+			local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
 												target:GetAbsOrigin(),
 												nil,
 												talent_aoe,
@@ -58,9 +58,9 @@ end
 
 -- #2 TALENT : Enfeeble is aoe
 function imba_bane_enfeeble:GetBehavior()
-	local caster	=	self:GetCaster()
+	local caster = self:GetCaster()
 	if caster:HasTalent("special_bonus_imba_bane_2") then
-		return  DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK + DOTA_ABILITY_BEHAVIOR_AOE
+		return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK + DOTA_ABILITY_BEHAVIOR_AOE
 	else
 		return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK
 	end
@@ -68,7 +68,7 @@ function imba_bane_enfeeble:GetBehavior()
 end
 
 function imba_bane_enfeeble:GetAOERadius()
-	local caster	=	self:GetCaster()
+	local caster = self:GetCaster()
 	local radius
 	
 	if caster:HasTalent("special_bonus_imba_bane_2") then
@@ -79,25 +79,24 @@ function imba_bane_enfeeble:GetAOERadius()
 end
 
 -- Enfeeble Debuff
-modifier_imba_enfeeble_debuff = modifier_imba_enfeeble_debuff or class({
-		IsDebuff                        = function(self) return true                                                                                                        end,    
-		IsPurgable                      = function(self) return false                                                                                                       end,    
-		IsPurgableException             = function(self) return false                                                                                                       end, 
-		GetEffectName                   = function(self) return "particles/units/heroes/hero_bane/bane_enfeeble.vpcf"                                                       end,
-		GetEffectAttachType             = function(self) return PATTACH_OVERHEAD_FOLLOW                                                                                     end,
-	})
+modifier_imba_enfeeble_debuff = modifier_imba_enfeeble_debuff or class({})
+
+function modifier_imba_enfeeble_debuff:IsDebuff() return true end  
+function modifier_imba_enfeeble_debuff:IsPurgable() return false end
+function modifier_imba_enfeeble_debuff:IsPurgableException() return false end
+function modifier_imba_enfeeble_debuff:GetEffectName() return "particles/units/heroes/hero_bane/bane_enfeeble.vpcf" end
+function modifier_imba_enfeeble_debuff:GetEffectAttachType() return PATTACH_OVERHEAD_FOLLOW end	
 
 function modifier_imba_enfeeble_debuff:OnCreated()
 	if IsServer() then
-
 		--Ability properties 
-		local ability 	=	self:GetAbility()
-		local caster	=	self:GetCaster()
-		self.parent		=	self:GetParent()
+		local ability =	self:GetAbility()
+		local caster = self:GetCaster()
+		self.parent = self:GetParent()
 		
 		-- Ability paramaters
-		self.duration	=	self:GetDuration()
-		self.max_stacks	=	ability:GetSpecialValueFor("max_stacks")
+		self.duratio = self:GetDuration()
+		self.max_stacks	= ability:GetSpecialValueFor("max_stacks")
 		
 		-- Initialize table
 	    self.stacks_table = {}
@@ -107,13 +106,12 @@ function modifier_imba_enfeeble_debuff:OnCreated()
 	    self:StartIntervalThink(0.1)
 		
 		-- Apply periodic vision reduction modifier
-		self.parent:AddNewModifier(caster,ability,"modifier_imba_enfeeble_debuff_vision_handler", {duration =  	self.duration +5} )
-		
+		self.parent:AddNewModifier(caster,ability,"modifier_imba_enfeeble_debuff_vision_handler", {duration = self.duration +5})		
 	
 		-- #4 TALENT: Enfeeble reduces stats
-		self.strength_bonus	=	-( self.parent:GetStrength() * (caster:FindTalentValue("special_bonus_imba_bane_4") / 100 ) ) 
-		self.agility_bonus	=	-( self.parent:GetAgility() * (caster:FindTalentValue("special_bonus_imba_bane_4") / 100 ) ) 
-		self.intellect_bonus=	-( self.parent:GetIntellect() * (caster:FindTalentValue("special_bonus_imba_bane_4") / 100 ) ) 
+		self.strength_bonus	= -( self.parent:GetStrength() * (caster:FindTalentValue("special_bonus_imba_bane_4") * 0.01 )) 
+		self.agility_bonus	= -( self.parent:GetAgility() * (caster:FindTalentValue("special_bonus_imba_bane_4") * 0.01 )) 
+		self.intellect_bonus= -( self.parent:GetIntellect() * (caster:FindTalentValue("special_bonus_imba_bane_4") * 0.01)) 
 	end
 end
 
@@ -154,9 +152,9 @@ end
 function modifier_imba_enfeeble_debuff:OnDestroy()
 	-- Remove vision debuff at the end
 	if IsServer() then
-		local vision_modifier	= "modifier_imba_enfeeble_debuff_vision"
+		local vision_modifier = "modifier_imba_enfeeble_debuff_vision"
 		if self.parent:FindModifierByName(vision_modifier) then self.parent:RemoveModifierByName(vision_modifier) end
-		local vision_modifier_handler	= "modifier_imba_enfeeble_debuff_vision_handler"
+		local vision_modifier_handler = "modifier_imba_enfeeble_debuff_vision_handler"
 		if self.parent:FindModifierByName(vision_modifier_handler) then self.parent:RemoveModifierByName(vision_modifier_handler) end 
 	end
 end
@@ -174,7 +172,7 @@ end
 function modifier_imba_enfeeble_debuff:GetModifierPreAttack_BonusDamage()
 	-- Keep working if the stacks were consumed
 	if self:GetStackCount() > 0 then
-		return self:GetAbility():GetSpecialValueFor("damage_reduction")  * (self:GetStackCount() )   
+		return self:GetAbility():GetSpecialValueFor("damage_reduction")  * (self:GetStackCount())   
 	else
 		return self:GetAbility():GetSpecialValueFor("damage_reduction")
 	end
@@ -186,7 +184,7 @@ function modifier_imba_enfeeble_debuff:GetModifierBonusStats_Strength()
 	if self.strength_bonus then
 		-- Keep working if the stacks were consumed
 		if self:GetStackCount() > 0 then
-			return self.strength_bonus * (self:GetStackCount() )
+			return self.strength_bonus * (self:GetStackCount())
 		else
 			return self.strength_bonus
 		end
@@ -212,7 +210,7 @@ function modifier_imba_enfeeble_debuff:GetModifierBonusStats_Intellect()
 	if self.intellect_bonus then
 		-- Keep working if the stacks were consumed
 		if self:GetStackCount() > 0 then
-			return self.intellect_bonus * (self:GetStackCount() )
+			return self.intellect_bonus * (self:GetStackCount())
 		else
 			return self.intellect_bonus
 		end
@@ -223,7 +221,7 @@ end
 
 -- Enfeeble vision debuff applier
 
-modifier_imba_enfeeble_debuff_vision_handler = modifier_imba_enfeeble_debuff_vision_handler or class ({})
+modifier_imba_enfeeble_debuff_vision_handler = modifier_imba_enfeeble_debuff_vision_handler or class({})
 
 function modifier_imba_enfeeble_debuff_vision_handler:IsDebuff() return true end
 function modifier_imba_enfeeble_debuff_vision_handler:IsPurgable() return false end
@@ -231,8 +229,8 @@ function modifier_imba_enfeeble_debuff_vision_handler:IsHidden() return true end
 
 function modifier_imba_enfeeble_debuff_vision_handler:OnCreated()
 	if IsServer() then
-		local ability	=	self:GetAbility()
-		local vision_interval 	= 	ability:GetSpecialValueFor("vision_cycle_time")
+		local ability =	self:GetAbility()
+		local vision_interval = ability:GetSpecialValueFor("vision_cycle_time")
 	
 		self:StartIntervalThink(vision_interval)
 	end
@@ -241,19 +239,18 @@ end
 function modifier_imba_enfeeble_debuff_vision_handler:OnIntervalThink()
 	if IsServer() then
 		
-		local ability	=	self:GetAbility()
-		local parent	=	self:GetParent()
-		local caster	=	self:GetCaster()
-		local vision_interval 	= 	ability:GetSpecialValueFor("vision_cycle_time")
-		local vision_uptime_pct	=	ability:GetSpecialValueFor("vision_uptime_pct")
+		local ability =	self:GetAbility()
+		local parent = self:GetParent()
+		local caster = self:GetCaster()
+		local vision_interval = ability:GetSpecialValueFor("vision_cycle_time")
+		local vision_uptime_pct	= ability:GetSpecialValueFor("vision_uptime_pct")
 		
-		parent:AddNewModifier(caster,ability,"modifier_imba_enfeeble_debuff_vision",{duration = vision_interval * (vision_uptime_pct / 100 ) } )
-		
+		parent:AddNewModifier(caster,ability,"modifier_imba_enfeeble_debuff_vision",{duration = vision_interval * (vision_uptime_pct * 0.01)})		
 	end
 end
 
 -- Actual enfeeble vision debuff
-modifier_imba_enfeeble_debuff_vision	=	modifier_imba_enfeeble_debuff_vision or class({})
+modifier_imba_enfeeble_debuff_vision = modifier_imba_enfeeble_debuff_vision or class({})
 
 function modifier_imba_enfeeble_debuff_vision:IsDebuff() return true end
 function modifier_imba_enfeeble_debuff_vision:IsPurgable() return false end
@@ -261,18 +258,18 @@ function modifier_imba_enfeeble_debuff_vision:IsHidden() return true end
 
 function modifier_imba_enfeeble_debuff_vision:OnCreated()
 	-- Ability properties
-	local parent	=	self:GetParent()
-	local enfeeble_stacks	=	parent:GetModifierStackCount("modifier_imba_enfeeble_debuff",self:GetCaster() )
-	local ability	=	self:GetAbility()
-	local reduction	=	ability:GetSpecialValueFor("vision_reduction")
-	self.vision_reduction	=	reduction * enfeeble_stacks
+	local parent = self:GetParent()
+	local enfeeble_stacks =	parent:GetModifierStackCount("modifier_imba_enfeeble_debuff",self:GetCaster() )
+	local ability =	self:GetAbility()
+	local reduction	= ability:GetSpecialValueFor("vision_reduction")
+	self.vision_reduction =	reduction * enfeeble_stacks
 end
 
 function modifier_imba_enfeeble_debuff_vision:DeclareFunctions()
-	local decFuncs =   {
+	local decFuncs = {
 						MODIFIER_PROPERTY_BONUS_DAY_VISION,
 						MODIFIER_PROPERTY_BONUS_NIGHT_VISION
-					   }
+					 }
 	return decFuncs
 end
 
@@ -287,39 +284,37 @@ end
 --------------------------------------
 ---------    BRAIN SAP     -----------
 --------------------------------------
-LinkLuaModifier("modifier_imba_brain_sap_mana",                 "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_brain_sap_baby_bane",                 "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_brain_sap_mana", "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_brain_sap_baby_bane", "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
 
 -- Main Brain Sap casting
-imba_bane_brain_sap      = imba_bane_brain_sap      or class({})  
+imba_bane_brain_sap = imba_bane_brain_sap or class({})  
 
 -- Brain Sap Spell Cast
 function imba_bane_brain_sap:OnSpellStart()
 	if IsServer() then
 		-- Ability properties
-		local target,caster 	= 	findtarget(self)
-		local enfeeble_debuff	=	target:FindModifierByName("modifier_imba_enfeeble_debuff")
+		local caster = self:GetCaster()
+		local target = self:GetCursorPosition()		
+		local enfeeble_debuff =	target:FindModifierByName("modifier_imba_enfeeble_debuff")
+
 		-- Ability paramaters
-		local sapdamage				=	self:GetSpecialValueFor("brain_sap_damage")
-		local sapduration			=	self:GetSpecialValueFor("brain_sap_duration")
-		local enfeeble_stack_to_damage	=	self:GetSpecialValueFor("enfeeble_stack_to_damage")
+		local sapdamage = self:GetSpecialValueFor("brain_sap_damage")
+		local sapduration =	self:GetSpecialValueFor("brain_sap_duration")
+		local enfeeble_stack_to_damage = self:GetSpecialValueFor("enfeeble_stack_to_damage")
 		local enfeeble_charges = 0
 		
 		if target:TriggerSpellAbsorb(self) then return end 	-- Spell block handler
 		
 		-- #5 TALENT: Brain Sap spawns a Baby bane that casts Fiend's Grip
 		if caster:HasTalent("special_bonus_imba_bane_5") then
-			local baby_fiends_grip_duration	=	caster:FindTalentValue("special_bonus_imba_bane_5", "duration")
-			local baby_duration	=	baby_fiends_grip_duration + 1
-			local baby_bane	=	CreateUnitByName("npc_imba_brain_sap_baby_bane", caster:GetAbsOrigin() + RandomVector(100), true, caster, caster, caster:GetTeam() )
-			baby_bane:AddNewModifier(caster, nil, "modifier_imba_brain_sap_baby_bane", {duration	=	baby_duration} )
+			local baby_fiends_grip_duration	= caster:FindTalentValue("special_bonus_imba_bane_5", "duration")
+			local baby_duration	= baby_fiends_grip_duration + 1
+			local baby_bane	= CreateUnitByName("npc_imba_brain_sap_baby_bane", caster:GetAbsOrigin() + RandomVector(100), true, caster, caster, caster:GetTeam())
+			baby_bane:AddNewModifier(caster, nil, "modifier_imba_brain_sap_baby_bane", {duration = baby_duration} )
 
 			-- Apply (a weaker) Fiend's grip
-			target:AddNewModifier  (caster,
-			self,
-			"modifier_imba_fiends_grip_handler",
-			{ duration = baby_fiends_grip_duration, propogated = 1, original_target = 1, baby = true }
-			)
+			target:AddNewModifier(caster, self, "modifier_imba_fiends_grip_handler",{duration = baby_fiends_grip_duration, propogated = 1, original_target = 1, baby = true})
 
 			-- Make the baby look towards the target
 			local direction = (target:GetAbsOrigin() - baby_bane:GetAbsOrigin()):Normalized()
@@ -329,7 +324,7 @@ function imba_bane_brain_sap:OnSpellStart()
 		-- Consume enfeeble charges
 		if enfeeble_debuff then
 			-- Increase damage 
-			enfeeble_charges	=	target:GetModifierStackCount("modifier_imba_enfeeble_debuff", caster)
+			enfeeble_charges = target:GetModifierStackCount("modifier_imba_enfeeble_debuff", caster)
 			-- Remove stacks
 			for k,v in pairs(enfeeble_debuff.stacks_table) do
 				enfeeble_debuff.stacks_table[k] = nil
@@ -337,7 +332,7 @@ function imba_bane_brain_sap:OnSpellStart()
 			enfeeble_debuff:SetStackCount(0)
 		end
 		
-		local enfeeble_bonus_damage	=	enfeeble_stack_to_damage * enfeeble_charges
+		local enfeeble_bonus_damage	= enfeeble_stack_to_damage * enfeeble_charges
 		-- Deal damage
 		damage_table = {
 				victim      = target,
@@ -346,20 +341,20 @@ function imba_bane_brain_sap:OnSpellStart()
 				damage_type = DAMAGE_TYPE_PURE,
 				ability     = self
 		}
+
 		ApplyDamage(damage_table)
 		-- Heal caster
 		caster:Heal(sapdamage, caster) 
 		
 		-- Apply brain sap debuff
-		target:AddNewModifier(caster, self, "modifier_imba_brain_sap_mana", {duration = (sapduration)}) 
-		
-		
+		target:AddNewModifier(caster, self, "modifier_imba_brain_sap_mana", {duration = sapduration}) 
 		
 		-- Emit brain sap particle
 		local sapFX = ParticleManager:CreateParticle("particles/units/heroes/hero_bane/bane_sap.vpcf", PATTACH_ABSORIGIN, caster)     
 		ParticleManager:SetParticleControlEnt(sapFX, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)   
 		ParticleManager:SetParticleControlEnt(sapFX, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)   
 		ParticleManager:ReleaseParticleIndex(sapFX)   
+
 		-- Emit brain sap sound
 		EmitSoundOn("Hero_Bane.BrainSap", caster)
 		EmitSoundOn("Hero_Bane.BrainSap.Target", target) -- slslslllslslsllrprpp
@@ -383,10 +378,9 @@ function imba_bane_brain_sap:GetAbilityTextureName()
 end
 
 -- Brain_sap Debuff
-modifier_imba_brain_sap_mana = modifier_imba_brain_sap_mana or class({
-		IsDebuff                         = function(self) return true                                                                                                           end,
-		--GetModifierManaBonus             = function(self) return (((self:GetParent():GetIntellect() * 12) + 50) * (100 * 0.01 * (-1))) end,    -- This is what you call hardcore hardcoding
-	})
+modifier_imba_brain_sap_mana = modifier_imba_brain_sap_mana or class({})
+
+function modifier_imba_brain_sap_mana:IsDebuff() return true end	
 	
 function modifier_imba_brain_sap_mana:DeclareFunctions()
 	local funcs = {
@@ -397,9 +391,12 @@ end
 
 function modifier_imba_brain_sap_mana:OnCreated()
 	if IsServer() then
-		local parent	=	self:GetParent()
-		self.int_loss	=	-( parent:GetIntellect() ) 
-		self.previous_mana	=	parent:GetMana()
+		local parent = self:GetParent()
+		if parent:IsHero() then
+            self.int_loss = -(parent:GetIntellect())
+        end
+
+		self.previous_mana = parent:GetMana()
 		
 		-- Set mana to 0
 		parent:SetMana(0)
@@ -423,12 +420,13 @@ modifier_imba_brain_sap_baby_bane = modifier_imba_brain_sap_baby_bane or class({
 function modifier_imba_brain_sap_baby_bane:OnCreated()
 	if IsServer() then
 		-- Give the baby bane body parts because we are evil men who won't let the baby grow naturally
-		local baby_bane	=	self:GetParent()
-		local fiends_grip_duration	=	self:GetCaster():FindTalentValue("special_bonus_imba_bane_5","duration")
+		local baby_bane	= self:GetParent()
+		local fiends_grip_duration = self:GetCaster():FindTalentValue("special_bonus_imba_bane_5","duration")
 
-		--Create attachments
-		local head	 		= SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/bane/bane_head.vmdl"})
-		local shoulders 	= SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/bane/bane_shoulders.vmdl"})
+		-- Create attachments
+		local head = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/bane/bane_head.vmdl"})
+		local shoulders = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/heroes/bane/bane_shoulders.vmdl"})
+
 		-- Attach
 		head:FollowEntity(baby_bane, true)
 		shoulders:FollowEntity(baby_bane, true)
@@ -444,7 +442,7 @@ function modifier_imba_brain_sap_baby_bane:OnCreated()
 end
 
 function modifier_imba_brain_sap_baby_bane:CheckState()
-	local checkState	=  {
+	local checkState = {
 		[MODIFIER_STATE_INVULNERABLE] = true,
 		[MODIFIER_STATE_UNSELECTABLE] = true,
 		[MODIFIER_STATE_NO_HEALTH_BAR] = true
@@ -455,7 +453,7 @@ end
 function modifier_imba_brain_sap_baby_bane:OnDestroy()
 	if IsServer() then
 		-- Kill the baby
-		local parent	=	self:GetParent()
+		local parent = self:GetParent()
 		parent:ForceKill(false)
 	end
 end
@@ -463,29 +461,35 @@ end
 ---------    NIGHTMARE     -----------
 --------------------------------------
 
-LinkLuaModifier("modifier_imba_nightmare_dot",                 	"hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_nightmare_invul",   				"hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_nightmare_vision", 				"hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_nightmare_talent", 				"hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_nightmare_dot", "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_nightmare_invul", "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_nightmare_vision", "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_nightmare_talent", "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
 
 -- Main Nightmare casting 
-imba_bane_nightmare      = imba_bane_nightmare      or class({})
+imba_bane_nightmare = imba_bane_nightmare or class({})
+
+function imba_bane_nightmare:GetCastRange()
+ 	return self:GetSpecialValueFor("cast_range")
+end
 
 -- Nightmare Spell Cast
 function imba_bane_nightmare:OnSpellStart()
 	if IsServer() then
 		-- Ability properties 
-		local target,caster	 	=	 findtarget(self)
+		local caster = self:GetCaster()
+		local target = self:GetCursorTarget()
+
 		-- Ability paramaters
-		local invulnduration 	=	self:GetSpecialValueFor("nightmare_invuln_duration")
-		local nightmareduration	=	self:GetSpecialValueFor("nightmare_duration")
+		local invulnduration = self:GetSpecialValueFor("nightmare_invuln_duration")
+		local nightmareduration	= self:GetSpecialValueFor("nightmare_duration")
 		local talentinvulnbonus = caster:FindTalentValue("special_bonus_imba_bane_7")
 
 		if target:TriggerSpellAbsorb(self) then return end    --Spell block handler
 
 		-- #7 TALENT: increased nightmare invulnerability duration
 		if caster:GetTeamNumber() == target:GetTeamNumber() then
-			invulnduration=invulnduration+talentinvulnbonus
+			invulnduration = invulnduration + talentinvulnbonus
 		end
 
 		-- #1 TALENT: nightmare applies enfeeble stacks on enemies
@@ -528,7 +532,8 @@ function imba_bane_nightmare:CastFilterResultTarget(target)
 end
 
 function imba_bane_nightmare:OnUpgrade()
-	local caster 	=	self:GetCaster()
+	local caster  =	self:GetCaster()
+
 	-- When you level up nightmare while it is active, don't level up nightmare end (cuz that's a bad idea)
 	if caster:HasAbility("imba_bane_nightmare_end") and caster:FindAbilityByName("imba_bane_nightmare_end"):GetLevel() ~= 1 then
 		caster:FindAbilityByName("imba_bane_nightmare_end"):SetLevel(1)
@@ -557,7 +562,7 @@ function imba_bane_nightmare_end:OnSpellStart()
 		local units = FindUnitsInRadius(caster:GetTeamNumber(),
 		caster:GetAbsOrigin(),
 		nil,
-		25000, 			-- Global
+		25000, -- Global
 		DOTA_UNIT_TARGET_TEAM_BOTH,
 		DOTA_UNIT_TARGET_ALL,
 		DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD,
@@ -585,17 +590,16 @@ function imba_bane_nightmare_end:GetAbilityTextureName()
 end
 
 -- Nightmare Debuff
-modifier_imba_nightmare_dot = modifier_imba_nightmare_dot or class({
-	IsDebuff                         = function(self) return true                                                                                                           end,
-	IsNightmared                     = function(self) return true                                                                                                           end,
-	IsPurgable                       = function(self) return true                                                                                                           end,
-	GetBonusVisionPercentage         = function(self) return -100                                                                                                           end,
-	GetEffectName                    = function(self) return "particles/units/heroes/hero_bane/bane_nightmare.vpcf"                                                         end,
-	GetEffectAttachType              = function(self) return PATTACH_OVERHEAD_FOLLOW                                                                                        end,
-	GetOverrideAnimation             = function(self) return ACT_DOTA_FLAIL                                                                                                 end,
-	GetOverrideAnimationRate         = function(self) return 0.2                                                                                                            end,
-})
+modifier_imba_nightmare_dot = modifier_imba_nightmare_dot or class({})
 
+function modifier_imba_nightmare_dot:IsDebuff() return true end
+function modifier_imba_nightmare_dot:IsNightmared() return true end
+function modifier_imba_nightmare_dot:IsPurgable() return true end
+function modifier_imba_nightmare_dot:GetBonusVisionPercentage() return -100 end
+function modifier_imba_nightmare_dot:GetEffectName() return "particles/units/heroes/hero_bane/bane_nightmare.vpcf" end
+function modifier_imba_nightmare_dot:GetEffectAttachType() return PATTACH_OVERHEAD_FOLLOW end
+function modifier_imba_nightmare_dot:GetOverrideAnimation() return ACT_DOTA_FLAIL end
+function modifier_imba_nightmare_dot:GetOverrideAnimationRate() return 0.2 end
 
 function modifier_imba_nightmare_dot:DeclareFunctions()
 	local funcs = {
@@ -620,10 +624,10 @@ end
 
 function modifier_imba_nightmare_dot:CheckState()
 	return{
-		[MODIFIER_STATE_NIGHTMARED]           = true,
-		[MODIFIER_STATE_STUNNED]              = true,
-		[MODIFIER_STATE_SPECIALLY_DENIABLE]   = true,
-		[MODIFIER_STATE_LOW_ATTACK_PRIORITY]  = true,
+		[MODIFIER_STATE_NIGHTMARED] = true,
+		[MODIFIER_STATE_STUNNED] = true,
+		[MODIFIER_STATE_SPECIALLY_DENIABLE] = true,
+		[MODIFIER_STATE_LOW_ATTACK_PRIORITY] = true,
 	}
 end
 
@@ -639,11 +643,11 @@ end
 function modifier_imba_nightmare_dot:OnAttackStart(t)
 	if IsServer() then
 		-- Ability properties
-		local ability 	=	self:GetAbility()
-		local caster	=	self:GetCaster()
+		local ability =	self:GetAbility()
+		local caster = self:GetCaster()
 		-- Ability paramaters 
-		local nightmare_duration 		= 	ability:GetSpecialValueFor("nightmare_duration")
-		local nightmare_invuln_duration	=	ability:GetSpecialValueFor("nightmare_invuln_duration")
+		local nightmare_duration = ability:GetSpecialValueFor("nightmare_duration")
+		local nightmare_invuln_duration	= ability:GetSpecialValueFor("nightmare_invuln_duration")
 
 		-- Redirect Nightmare to auto-attackers 
 		if t.target == self:GetParent() then
@@ -661,9 +665,9 @@ end
 function modifier_imba_nightmare_dot:OnIntervalThink()
 	if IsServer() then
 		-- Ability properties
-		local ability 	=	self:GetAbility()
-		local caster	=	self:GetCaster()
-		local parent 	= 	self:GetParent()
+		local ability =	self:GetAbility()
+		local caster = self:GetCaster()
+		local parent = self:GetParent()
 		-- Ability paramaters
 		local CurHP = parent:GetHealth()
 		local nightmare_damage = ability:GetSpecialValueFor("nightmare_damage")
@@ -691,11 +695,11 @@ end
 function modifier_imba_nightmare_dot:OnDestroy()
 	if IsServer() then
 		-- Ability properties
-		local ability 	=	self:GetAbility()
-		local caster	=	self:GetCaster()
-		local parent 	= 	self:GetParent()
+		local ability =	self:GetAbility()
+		local caster = self:GetCaster()
+		local parent = self:GetParent()
 		-- Ability paramaters
-		local nightmare_baleful_visions_duration	=	ability:GetSpecialValueFor("nightmare_baleful_visions_duration")
+		local nightmare_baleful_visions_duration = ability:GetSpecialValueFor("nightmare_baleful_visions_duration")
 
 		-- Check if the nightmare'd is an enemy
 		if caster:GetTeamNumber() ~= parent:GetTeamNumber() then
@@ -719,11 +723,10 @@ function modifier_imba_nightmare_dot:OnDestroy()
 end
 
 -- Nightmare Invulnerability
-modifier_imba_nightmare_invul = modifier_imba_nightmare_invul or class({
-	IsDebuff                         = function(self) return true                                                                                                           end,
-	IsHidden                         = function(self) return true                                                                                                           end,
-})
+modifier_imba_nightmare_invul = modifier_imba_nightmare_invul or class({})
 
+function modifier_imba_nightmare_invul:IsDebuff() return true end
+function modifier_imba_nightmare_invul:IsHidden() return true end
 
 function modifier_imba_nightmare_invul:DeclareFunctions()
 	local funcs = {
@@ -734,23 +737,19 @@ function modifier_imba_nightmare_invul:DeclareFunctions()
 end
 
 function modifier_imba_nightmare_invul:CheckState()
-	return{[MODIFIER_STATE_INVULNERABLE] = true, [MODIFIER_STATE_NO_HEALTH_BAR] = true}
+	return{[MODIFIER_STATE_INVULNERABLE] = true,
+		   [MODIFIER_STATE_NO_HEALTH_BAR] = true}
 end
 
 -- Nightmare Baneful Visions
-modifier_imba_nightmare_vision = modifier_imba_nightmare_vision or class({
-	GetBonusVisionPercentage         = function(self) return -100                                                                                          end,
-})
+modifier_imba_nightmare_vision = modifier_imba_nightmare_vision or class({})
+
+function modifier_imba_nightmare_vision:GetBonusVisionPercentage() return -100 end
 
 function modifier_imba_nightmare_vision:DeclareFunctions()
-	local funcs = {
-		MODIFIER_PROPERTY_BONUS_VISION_PERCENTAGE,
-	}
-	return funcs
-end
+	local funcs = {MODIFIER_PROPERTY_BONUS_VISION_PERCENTAGE}
 
-function modifier_imba_nightmare_vision:OnCreated()
-	self:StartIntervalThink(0)
+	return funcs
 end
 
 modifier_imba_nightmare_talent = modifier_imba_nightmare_talent or class({})
@@ -769,19 +768,24 @@ function modifier_imba_nightmare_talent:IsPurgable() return true end
 --------------------------------------
 -----       FIEND'S GRIP         -----
 --------------------------------------
-LinkLuaModifier("modifier_imba_fiends_grip_handler",            "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_fiends_grip_demon",            "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_fiends_grip_talent",            "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fiends_grip_handler", "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fiends_grip_demon", "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fiends_grip_talent", "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
 
-imba_bane_fiends_grip    = imba_bane_fiends_grip    or class({})
+imba_bane_fiends_grip = imba_bane_fiends_grip or class({})
+
+function imba_bane_fiends_grip:GetCastRange()
+	return self:GetSpecialValueFor("cast_range")
+end
 
 -- Fiends Grip Spell Cast
 function imba_bane_fiends_grip:OnSpellStart()
 	if IsServer() then
-		-- Ability properties 
-		self.fiendtarget,self.fiendcaster 	= 	findtarget(self)
+		-- Ability properties
+		self.fiendtarget, self.fiendcaster = findtarget(self)
+
 		-- Ability paramaters 
-		local fiends_grip_duration			= 	self:GetSpecialValueFor("fiends_grip_duration")
+		local fiends_grip_duration = self:GetSpecialValueFor("fiends_grip_duration")
 
 		if self.fiendtarget:TriggerSpellAbsorb(self) then self.fiendcaster:Interrupt() return end    -- Spell absorb handler 
 
@@ -812,12 +816,7 @@ function imba_bane_fiends_grip:OnSpellStart()
 		EmitSoundOn("Hero_Bane.FiendsGrip.Cast", self.fiendcaster)
 		EmitSoundOn("hero_bane.fiends_grip", self.fiendtarget)
 		EmitSoundOn("hero_bane.fiends_grip", self.fiendcaster)
-		EmitSoundOn ("bane_bane_ability_fiendsgrip_"..string.format("%02d",RandomInt(1,7)), self:GetCaster())
-
-		-- #3 TALENT + #8 TALENT: Fiend's Grip needs to check for enemies even when not channeling
-		if self.fiendcaster:HasTalent("special_bonus_imba_bane_3") then
-			--self:StartIntervalThink(0.1)
-		end
+		EmitSoundOn ("bane_bane_ability_fiendsgrip_"..string.format("%02d",RandomInt(1,7)), self:GetCaster())		
 	end
 end
 
@@ -833,7 +832,6 @@ function imba_bane_fiends_grip:OnChannelFinish(bInterrupted)
 		end
 	end
 end
-
 
 -- We only care about channel operations when he has the lv40 talent			-- Seinken definitely didn't write this block :nofun:
 function imba_bane_fiends_grip:OnChannelThink()
@@ -873,7 +871,7 @@ end
 
 -- #3 TALENT: Fiend's Grip is no longer channeled
 function imba_bane_fiends_grip:GetBehavior()
-	local caster	=	self:GetCaster()
+	local caster = self:GetCaster()
 	if caster:HasTalent("special_bonus_imba_bane_3") then
 		return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING
 	else
@@ -882,7 +880,7 @@ function imba_bane_fiends_grip:GetBehavior()
 end
 
 -- #3 TALENT: There is no channel time
-function imba_bane_fiends_grip:GetChannelTime()  -- net tables
+function imba_bane_fiends_grip:GetChannelTime() 
 	if not self:GetCaster():HasTalent("special_bonus_imba_bane_3") then
 		return (self:GetSpecialValueFor("fiends_grip_duration"))
 	else
@@ -903,46 +901,42 @@ function imba_bane_fiends_grip:GetAbilityTextureName()
 	return "bane_fiends_grip"
 end
 
-
 -- Fiends Grip Debuff
-modifier_imba_fiends_grip_handler = modifier_imba_fiends_grip_handler or class({
-	IsDebuff                         = function(self) return true                                                                                                           end,
-	IsStunDebuff                     = function(self) return true                                                                                                           end,
-	IsPurgableException              = function(self) return true                                                                                                           end,
-	GetEffectName                    = function(self) return "particles/units/heroes/hero_bane/bane_fiends_grip.vpcf"                                                       end,
-	GetEffectAttachType              = function(self) return PATTACH_OVERHEAD_FOLLOW                                                                                        end,
-	GetOverrideAnimation             = function(self) return ACT_DOTA_FLAIL                                                                                                 end,
-})
+modifier_imba_fiends_grip_handler = modifier_imba_fiends_grip_handler or class({})
+
+function modifier_imba_fiends_grip_handler:IsDebuff() return true end
+function modifier_imba_fiends_grip_handler:IsStunDebuff() return true end
+function modifier_imba_fiends_grip_handler:IsPurgableException() return true end
+function modifier_imba_fiends_grip_handler:GetEffectName() return "particles/units/heroes/hero_bane/bane_fiends_grip.vpcf" end
+function modifier_imba_fiends_grip_handler:GetEffectAttachType() return PATTACH_OVERHEAD_FOLLOW end
+function modifier_imba_fiends_grip_handler:GetOverrideAnimation() return ACT_DOTA_FLAIL end
 
 function modifier_imba_fiends_grip_handler:DeclareFunctions()
-	local funcs = {
-		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
-	}
+	local funcs = {MODIFIER_PROPERTY_OVERRIDE_ANIMATION}
 	return funcs
 end
 
 function modifier_imba_fiends_grip_handler:OnCreated(var)
 	if IsServer() then
-		parent 	=	self:GetParent()
-		local caster	=	self:GetCaster()
+		parent = self:GetParent()
+		local caster = self:GetCaster()
 		parent:Interrupt()
 		parent:StartGesture(ACT_DOTA_FLAIL)  -- Flail em
-		if var.propogated	==	0 then
-			parent.grip_link_particle_table	=	{} -- Particle table for the life drain particles
+		if var.propogated == 0 then
+			parent.grip_link_particle_table	= {} -- Particle table for the life drain particles
 		end
-		self.baby	=	var.baby
+		self.baby =	var.baby
 		self:OnIntervalThink() -- Invoke a damage instance, once
 		self:StartIntervalThink(1) -- Begin damage instances, 1 second interval
 		self.propogated = var.propogated -- attribute defining a 'spread' grip
-		self.original_target = var.original_target -- Original target for interrupt purposes
+		self.original_target = var.original_target -- Original target for interrupt purposes		
 		-- #5 TALENT: Check if the baby cast this
 	end
 end
 
 function modifier_imba_fiends_grip_handler:OnRefresh(var)
 	if IsServer() then
-		local caster	=	self:GetCaster()
-
+		local caster = self:GetCaster()
 		parent:Interrupt()
 		self.baby	=	var.baby
 		self:GetParent():Interrupt()
@@ -957,25 +951,27 @@ end
 function modifier_imba_fiends_grip_handler:OnIntervalThink()
 	if  IsServer() then
 		-- Ability properties
-		local ability	=	self:GetAbility()
-		local parent 	= 	self:GetParent()
-		local caster	=	self:GetCaster()
-		local enfeeble_debuff	=	parent:FindModifierByName("modifier_imba_enfeeble_debuff")
-		local drain_particle	=	"particles/hero/bane/bane_fiends_grip_tether.vpcf"
+		local ability =	self:GetAbility()
+		local parent = self:GetParent()
+		local caster = self:GetCaster()
+		local enfeeble_debuff =	parent:FindModifierByName("modifier_imba_enfeeble_debuff")
+		local drain_particle = "particles/hero/bane/bane_fiends_grip_tether.vpcf"
+
 		-- Ability paramaters
-		local fiends_grip_mana_damage	=	ability:GetSpecialValueFor("fiends_grip_mana_damage")
-		local fiends_grip_damage		=	ability:GetSpecialValueFor("fiends_grip_damage")
-		local demon_damage				=	ability:GetSpecialValueFor("demon_damage")
-		local demon_mana_drain			=	ability:GetSpecialValueFor("demon_mana_drain")
+		local fiends_grip_mana_damage =	ability:GetSpecialValueFor("fiends_grip_mana_damage")
+		local fiends_grip_damage = ability:GetSpecialValueFor("fiends_grip_damage")
+		local demon_damage = ability:GetSpecialValueFor("demon_damage")
+		local demon_mana_drain = ability:GetSpecialValueFor("demon_mana_drain")
+
 		-- #5 TALENT: Baby Fiend's Grip does reduced damage
 		local baby_multiplier = 1
 		if self.baby then
-			baby_multiplier	=	caster:FindTalentValue("special_bonus_imba_bane_5","dmg_mana_pct") * 0.01
+			baby_multiplier	= caster:FindTalentValue("special_bonus_imba_bane_5","dmg_mana_pct") * 0.01
 		end
 
 		-- Consume enfeeble charge
 		if enfeeble_debuff and not self.baby then
-			local stacks_table	=	enfeeble_debuff.stacks_table
+			local stacks_table = enfeeble_debuff.stacks_table
 			if #stacks_table > 0 then
 
 				-- Remove enfeeble stack
@@ -991,22 +987,20 @@ function modifier_imba_fiends_grip_handler:OnIntervalThink()
 				local particle	=	parent.grip_link_particle_table[#parent.grip_link_particle_table]
 				ParticleManager:SetParticleControlEnt(particle, 0, demon, PATTACH_POINT_FOLLOW, "attach_hitloc", demon:GetAbsOrigin(), true)
 				ParticleManager:SetParticleControlEnt(particle, 1, parent, PATTACH_POINT_FOLLOW, "attach_hitloc", parent:GetAbsOrigin(), true)
-
 			end
 
 			-- Multiply bonus damage by how many demons there are
 			self.total_demon_damage	=	demon_damage * #parent.grip_link_particle_table
 			self.total_demon_mana_drain= 	demon_mana_drain * #parent.grip_link_particle_table
-
 		else
 			self.total_demon_damage,self.total_demon_mana_drain = 0,0
 		end
-
 
 		-- Drain mana
 		local mana_drained = math.min(parent:GetMaxMana() * (fiends_grip_mana_damage + self.total_demon_mana_drain) * 0.01, parent:GetMana())
 		parent:ReduceMana( (parent:GetMaxMana() * (fiends_grip_mana_damage + self.total_demon_mana_drain) * 0.01) * baby_multiplier )
 		caster:GiveMana(mana_drained)
+
 		-- Deal damage
 		local damage = {
 			victim      = self:GetParent(),
@@ -1022,9 +1016,7 @@ function modifier_imba_fiends_grip_handler:OnIntervalThink()
 end
 
 function modifier_imba_fiends_grip_handler:CheckState()
-	local state = {
-		[MODIFIER_STATE_STUNNED] = true,
-	}
+	local state = {[MODIFIER_STATE_STUNNED] = true}
 	return state
 end
 
@@ -1035,23 +1027,22 @@ function modifier_imba_fiends_grip_handler:OnDestroy()
 		local parent	= 	self:GetParent()
 		local caster	=	self:GetCaster()
 		local fiends_grip_linger_duration = ability:GetSpecialValueFor("fiends_grip_linger_duration")
-		local talent_3	=	caster:FindModifierByName("modifier_imba_fiends_grip_talent")
+		local talent_3	= caster:FindModifierByName("modifier_imba_fiends_grip_talent")
 
 		-- Remove #3 talent modifier
 		if talent_3 then
 			talent_3:Destroy()
 		end
 
-		parent:FadeGesture(ACT_DOTA_FLAIL)    				-- Fade the gesture, even though it can be immeditaely reinvoked if it's not been spread
-		if not parent:IsMagicImmune() and self.propogated == 0 then 					-- Are we magic immune somehow(omniknight)? have we already retriggered once? 			
-			if self.original_target == 1 then 			-- If we are the original target and it's NOT spread, we need to interrupt the primary caster (typically Bane)
+		parent:FadeGesture(ACT_DOTA_FLAIL) -- Fade the gesture, even though it can be immeditaely reinvoked if it's not been spread
+		if not parent:IsMagicImmune() and self.propogated == 0 then -- Are we magic immune somehow(omniknight)? have we already retriggered once? 			
+			if self.original_target == 1 then -- If we are the original target and it's NOT spread, we need to interrupt the primary caster (typically Bane)
 				parent:InterruptChannel()
 			end
 
 			parent:AddNewModifier(	caster,
 			ability, "modifier_imba_fiends_grip_handler",
 			{duration = fiends_grip_linger_duration, propogated = 1})
-
 		end
 
 		if not self.baby then
@@ -1063,6 +1054,7 @@ function modifier_imba_fiends_grip_handler:OnDestroy()
 					ParticleManager:DestroyParticle(parent.grip_link_particle_table[i], false)
 					ParticleManager:ReleaseParticleIndex(parent.grip_link_particle_table[i])
 				end
+
 				-- Kill the demons
 				local creatures = FindUnitsInRadius(caster:GetTeamNumber(),
 				caster:GetAbsOrigin(),
@@ -1075,7 +1067,7 @@ function modifier_imba_fiends_grip_handler:OnDestroy()
 				false)
 
 				-- Iterate between all demons to make sure all of them are dead
-				for _,creature in pairs(creatures) do 		-- check each friendly creep
+				for _,creature in pairs(creatures) do -- check each friendly creep
 					if creature:GetUnitName() == "npc_imba_fiends_grip_demon" and creature:GetPlayerOwnerID() == caster:GetPlayerID() then -- If it's your demon, kill it
 						creature:ForceKill(false)
 					end
@@ -1086,7 +1078,7 @@ function modifier_imba_fiends_grip_handler:OnDestroy()
 end
 
 -- #3 TALENT: check for interruptions and #8 talent modifier
-modifier_imba_fiends_grip_talent	=	modifier_imba_fiends_grip_talent or class({})
+modifier_imba_fiends_grip_talent = modifier_imba_fiends_grip_talent or class({})
 
 function modifier_imba_fiends_grip_talent:IsDebuff() return false end
 function modifier_imba_fiends_grip_talent:IsHidden()
@@ -1101,7 +1093,7 @@ function modifier_imba_fiends_grip_talent:IsPurgable() return false end
 
 function modifier_imba_fiends_grip_talent:OnCreated()
 	if IsServer() then
-		local caster	=	self:GetCaster()
+		local caster = self:GetCaster()
 		-- Start animation
 		caster:StartGesture(ACT_DOTA_CHANNEL_ABILITY_4)
 
@@ -1114,11 +1106,12 @@ end
 function modifier_imba_fiends_grip_talent:OnIntervalThink()
 	if IsServer() then
 		-- Ability properties
-		local caster 	= 	self:GetCaster()
-		local ability	=	self:GetAbility()
+		local caster = self:GetCaster()
+		local ability =	self:GetAbility()
 
 		-- #8 TALENT: Fiends Grip applies Fiends Grip on enemies that look at bane
 		if caster:HasTalent("special_bonus_imba_bane_8") then
+
 			-- Parameters
 			local vision_radius = ability:GetTalentSpecialValueFor("talent_vision_radius")
 			local vision_cone = ability:GetTalentSpecialValueFor("talent_vision_cone")
@@ -1159,10 +1152,10 @@ end
 
 function modifier_imba_fiends_grip_talent:OnStateChanged(keys)
 	-- Ability properties
-	local unit		=	keys.unit
-	local caster	=	self:GetCaster()
-	local ability	=	self:GetAbility()
-	local fiends_grip_modifier	=	ability.fiendtarget:FindModifierByName("modifier_imba_fiends_grip_handler")
+	local unit = keys.unit
+	local caster = self:GetCaster()
+	local ability =	self:GetAbility()
+	local fiends_grip_modifier = ability.fiendtarget:FindModifierByName("modifier_imba_fiends_grip_handler")
 
 	-- Only apply if the unit is the caster himself
 	if unit == caster then
@@ -1181,10 +1174,9 @@ function modifier_imba_fiends_grip_talent:GetModifierProvidesFOWVision() return 
 
 function modifier_imba_fiends_grip_talent:OnDestroy()
 	if IsServer() then
-		local caster	=	self:GetCaster()
+		local caster = self:GetCaster()
 		-- Stop animation
 		caster:FadeGesture(ACT_DOTA_CHANNEL_ABILITY_4)
-
 	end
 end
 -- Demon modifier
@@ -1201,8 +1193,8 @@ end
 
 
 -- Rubick shit 
-function imba_bane_enfeeble:     IsHiddenWhenStolen()  return false      end
-function imba_bane_brain_sap:    IsHiddenWhenStolen()  return false      end
-function imba_bane_nightmare:    IsHiddenWhenStolen()  return false      end
-function imba_bane_nightmare_end:IsHiddenWhenStolen()  return false      end
-function imba_bane_fiends_grip:  IsHiddenWhenStolen()  return false      end
+function imba_bane_enfeeble:IsHiddenWhenStolen() return false end
+function imba_bane_brain_sap:IsHiddenWhenStolen() return false end
+function imba_bane_nightmare:IsHiddenWhenStolen() return false end
+function imba_bane_nightmare_end:IsHiddenWhenStolen() return false end
+function imba_bane_fiends_grip:IsHiddenWhenStolen() return false end

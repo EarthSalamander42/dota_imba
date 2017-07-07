@@ -97,6 +97,10 @@ function imba_techies_proximity_mine:GetAbilityTextureName()
    return "techies_land_mines"
 end
 
+function imba_techies_proximity_mine:GetCastRange()
+    return self:GetSpecialValueFor("cast_range")
+end
+
 function imba_techies_proximity_mine:IsHiddenWhenStolen()
     return false
 end

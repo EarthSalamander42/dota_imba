@@ -314,6 +314,10 @@ function imba_warlock_shadow_word:GetAbilityTextureName()
    return "warlock_shadow_word"
 end
 
+function imba_warlock_shadow_word:GetCastRange()
+    return self:GetSpecialValueFor("cast_range")
+end
+
 function imba_warlock_shadow_word:IsHiddenWhenStolen()
     return false
 end

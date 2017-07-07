@@ -15,6 +15,10 @@ function imba_pugna_nether_blast:GetAbilityTextureName()
    return "pugna_nether_blast"
 end
 
+function imba_pugna_nether_blast:GetCastRange()
+   return self:GetSpecialValueFor("cast_range")
+end
+
 function imba_pugna_nether_blast:GetCooldown(level)
     local caster = self:GetCaster()
     local cooldown = self.BaseClass.GetCooldown(self, level)
@@ -1083,6 +1087,10 @@ LinkLuaModifier("modifier_imba_life_drain", "hero/hero_pugna.lua", LUA_MODIFIER_
 
 function imba_pugna_life_drain:GetAbilityTextureName()
    return "pugna_life_drain"
+end
+
+function imba_pugna_life_drain:GetCastRange()
+   return self:GetSpecialValueFor("cast_range")
 end
 
 function imba_pugna_life_drain:IsHiddenWhenStolen()

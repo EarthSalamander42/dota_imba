@@ -14,6 +14,10 @@ function imba_dazzle_poison_touch:GetAbilityTextureName()
    return "dazzle_poison_touch"
 end
 
+function imba_dazzle_poison_touch:GetCastRange()
+	return self:GetSpecialValueFor("cast_range")
+end
+
 function imba_dazzle_poison_touch:GetCooldown()
 	local cooldown = self:GetSpecialValueFor("cooldown")
 	local cooldownbonus = self:GetCaster():FindTalentValue("special_bonus_imba_dazzle_5")
@@ -188,6 +192,10 @@ LinkLuaModifier( "modifier_imba_dazzle_nothl_protection", "hero/hero_dazzle.lua"
 
 function imba_dazzle_shallow_grave:GetAbilityTextureName()
    return "dazzle_shallow_grave"
+end
+
+function imba_dazzle_shallow_grave:GetCastRange()
+	return self:GetSpecialValueFor("cast_range")
 end
 
 function imba_dazzle_shallow_grave:GetManaCost()
@@ -396,6 +404,10 @@ LinkLuaModifier( "modifier_imba_dazzle_shadow_wave_injured_buff", "hero/hero_daz
 
 function imba_dazzle_shadow_wave:GetAbilityTextureName()
    return "dazzle_shadow_wave"
+end
+
+function imba_dazzle_shadow_wave:GetCastRange()
+	return self:GetSpecialValueFor("cast_range")
 end
 
 function imba_dazzle_shadow_wave:GetBehavior()

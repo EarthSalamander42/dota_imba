@@ -14,6 +14,10 @@ MergeTables(LinkedModifiers,{
 })
 imba_bounty_hunter_shuriken_toss = imba_bounty_hunter_shuriken_toss or class({})
 
+function imba_bounty_hunter_shuriken_toss:GetCastRange()
+	return self:GetSpecialValueFor("cast_range")
+end
+
 function imba_bounty_hunter_shuriken_toss:GetAbilityTextureName()
    return "bounty_hunter_shuriken_toss"
 end
@@ -373,6 +377,10 @@ MergeTables(LinkedModifiers,{
 })
 
 imba_bounty_hunter_jinada = imba_bounty_hunter_jinada or class({})
+
+function imba_bounty_hunter_jinada:GetCastRange()
+	return self:GetSpecialValueFor("cast_range")
+end
 
 function imba_bounty_hunter_jinada:GetAbilityTextureName()
    return "bounty_hunter_jinada"
