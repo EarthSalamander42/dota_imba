@@ -325,7 +325,7 @@ function Serer_CheckForAFKPlayer()
                     local idle_change_time = CDOTA_BaseNPC.GetLastIdleChangeTime(table_AFK_check_allHeroes[nPlayerID])
                     local current_game_time = GameRules:GetGameTime()
 
-                    if current_game_time-idle_change_time > 10 then --AFK_check_times * cycle_AFK_check_interval
+                    if current_game_time-idle_change_time > AFK_check_times * cycle_AFK_check_interval then --AFK_check_times * cycle_AFK_check_interval
                         is_AFK[nPlayerID] = 1
                         Server_DisableToGainXpForPlayer(nPlayerID)
                     end
@@ -333,7 +333,7 @@ function Serer_CheckForAFKPlayer()
                 end
                 end
             end
-    return 1.0 --cycle_AFK_check_interval
+    return cycle_AFK_check_interval --cycle_AFK_check_interval
     end)
 end
 
