@@ -137,6 +137,7 @@ function Server_GetPlayerLevelAndTitle(nPlayerID)
 end
 
 local _finished = 0
+local is_AFK = {}
 
 function Server_SendAndGetInfoForAll()
 if _finished == 0 then
@@ -164,6 +165,7 @@ if _finished == 0 then
                 Server_DecodeForPlayer(Adecode, nPlayerID)
                 Server_GetPlayerLevelAndTitle(nPlayerID)
             end )
+            is_AFK[nPlayerID] = 0
 
         end
         end
@@ -279,7 +281,6 @@ end
 
 
 local table_AFK_check_allHeroes = {}
-local is_AFK = {}
 local cycle_AFK_check_interval = 60
 local AFK_check_times = 5
 local _maxLv
