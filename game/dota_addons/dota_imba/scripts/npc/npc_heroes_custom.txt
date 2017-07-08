@@ -298,6 +298,30 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Brewmaster
+	//=================================================================================================================
+	"npc_imba_hero_brewmaster"
+	{
+		"override_hero"				"npc_dota_hero_brewmaster"				
+
+		//"Ability1"					"brewmaster_thunder_clap"
+		//"Ability2"			 		"brewmaster_drunken_haze"
+		//"Ability3"					"brewmaster_drunken_brawler"
+		//"Ability4"					"brewmaster_primal_split"		
+
+		//"Ability10"					"special_bonus_unique_brewmaster" 
+		//"Ability11"					"special_bonus_unique_brewmaster_2" 
+		//"Ability12"					"special_bonus_unique_brewmaster_3" 
+		//"Ability13"					"special_bonus_strength_5" 
+		//"Ability14"					"special_bonus_strength_5" 
+		//"Ability15"					"special_bonus_strength_5" 
+		//"Ability16"					"special_bonus_strength_5" 
+		//"Ability17"					"special_bonus_strength_5" 
+
+		"ProjectileSpeed"			"900"
+	}
+
+	//=================================================================================================================
 	// HERO: Bristleback
 	//=================================================================================================================
 	"npc_imba_hero_bristleback"
@@ -1258,6 +1282,32 @@
 		"Ability15"					"special_bonus_imba_lion_6"
 		"Ability16"					"special_bonus_imba_lion_7"
 		"Ability17"					"special_bonus_imba_lion_8"
+
+		"ProjectileModel"			"particles/units/heroes/hero_lion/lion_base_attack.vpcf"
+	}
+
+	//=================================================================================================================
+	// HERO: Lone Druid
+	//=================================================================================================================
+	"npc_imba_hero_lone_druid"
+	{
+		"override_hero"				"npc_dota_hero_lone_druid"
+
+		"IsImba"					"1"
+
+		//"Ability1"					"imba_lone_druid_spirit_bear"				
+		//"Ability2"					"imba_lone_druid_rabid"				
+		//"Ability3"					"imba_lone_druid_savage_roar"			
+		//"Ability4"					"imba_lone_druid_true_form"
+		
+		//"Ability10"					"special_bonus_unique_lone_druid_1"
+		//"Ability11"					"special_bonus_unique_lone_druid_2"
+		//"Ability12"					"special_bonus_unique_lone_druid_3"
+		//"Ability13"					"special_bonus_unique_lone_druid_4"
+		//"Ability14"					"special_bonus_unique_lone_druid_5"
+		//"Ability15"					"special_bonus_hp_150"
+		//"Ability16"					"special_bonus_hp_150"
+		//"Ability17"					"special_bonus_hp_150"
 
 		"ProjectileModel"			"particles/units/heroes/hero_lion/lion_base_attack.vpcf"
 	}

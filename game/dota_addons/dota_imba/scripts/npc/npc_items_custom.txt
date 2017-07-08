@@ -364,12 +364,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"xp_multiplier"			"2.5"
+				"xp_multiplier"			"1.85"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_gold"			"190"
+				"bonus_gold"			"200"
 			}
 			// Hardcoded into the gold gain filter
 			"04"
@@ -447,7 +447,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"250"
+				"bonus_mana"			"400"
 			}
 			"03"
 			{
@@ -462,7 +462,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"replenish_mana_pct"	"7"
+				"replenish_mana_pct"	"10"
 			}
 		}
 	}
@@ -546,12 +546,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_health_regen"		"4"
+				"aura_health_regen"		"6"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal_amount"			"250"
+				"heal_amount"			"325"
 			}
 			"06"
 			{
@@ -561,12 +561,12 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal_bonus_armor"		"2"
+				"heal_bonus_armor"		"4"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"heal_percentage"		"0.5"
+				"heal_percentage"		"0.75"
 			}
 			"09"
 			{
@@ -641,7 +641,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_ms"				"55"
+				"bonus_ms"				"65"
 			}
 			"02"
 			{
@@ -656,27 +656,27 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"5"
+				"bonus_armor"			"6"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_regen"			"4"
+				"aura_regen"			"6"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_armor"			"2"
+				"aura_armor"			"4"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_max_regen_bonus"	"20"
+				"aura_max_regen_bonus"	"25"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_max_armor_bonus"	"20"
+				"aura_max_armor_bonus"	"25"
 			}
 			"09"
 			{
@@ -686,12 +686,12 @@
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"mend_base_health"		"250"
+				"mend_base_health"		"400"
 			}
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"mend_base_mana"		"160"
+				"mend_base_mana"		"200"
 			}
 			"12"
 			{
@@ -701,7 +701,7 @@
 			"13"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"mend_regen"			"0.75"
+				"mend_regen"			"0.85"
 			}
 			"14"
 			{
@@ -833,7 +833,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hp_regen_aura"			"3"
+				"hp_regen_aura"			"5"
 			}
 			"07"
 			{
@@ -907,7 +907,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hp_regen_aura"			"9"
+				"hp_regen_aura"			"13"
 			}
 			"07"
 			{
@@ -1026,22 +1026,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"tree_radius"			"175"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"stacking_penalty"		"0.5"
-			}
-			"10"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"stacking_penalty_dur"	"10"
-			}
-			"11"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"stacking_penalty_max"	"10"
-			}
+			}			
 		}
 	}
 
@@ -1474,13 +1459,13 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_damage"			"100"
+				"bounce_damage"			"300"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_range"			"325"
+				"bounce_range"			"600"
 			}
 		}
 
@@ -1588,13 +1573,13 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_damage"			"175"
+				"bounce_damage"			"400"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_range"			"375"
+				"bounce_range"			"650"
 			}
 		}
 
@@ -1702,13 +1687,13 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_damage"			"250"
+				"bounce_damage"			"500"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_range"			"425"
+				"bounce_range"			"700"
 			}
 		}
 
@@ -1816,13 +1801,13 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_damage"			"325"
+				"bounce_damage"			"600"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_range"			"475"
+				"bounce_range"			"750"
 			}
 		}
 
@@ -2147,12 +2132,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"warrior_health"		"700"
+				"warrior_health"		"1000"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"archer_health"			"700"
+				"archer_health"			"1000"
 			}
 		}
 
@@ -2254,12 +2239,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"warrior_health"		"900"
+				"warrior_health"		"1400"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"archer_health"			"800"
+				"archer_health"			"1400"
 			}
 		}
 
@@ -2361,12 +2346,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"warrior_health"		"1100"
+				"warrior_health"		"1800"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"archer_health"			"900"
+				"archer_health"			"1800"
 			}
 		}
 
@@ -2468,12 +2453,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"warrior_health"		"1350"
+				"warrior_health"		"2200"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"archer_health"			"1050"
+				"archer_health"			"2200"
 			}
 		}
 
@@ -2572,12 +2557,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"warrior_health"		"1600"
+				"warrior_health"		"2600"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"archer_health"			"1200"
+				"archer_health"			"2600"
 			}
 		}
 
@@ -2972,7 +2957,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"base_regen"			"2.0"
+				"base_regen"			"1.5"
 			}
 			"06"
 			{
@@ -3121,7 +3106,7 @@
 	}
 
 	//=================================================================================================================
-	// Shiva's
+	// Shiva's Guard
 	//=================================================================================================================
 	"item_imba_shivas_guard"
 	{
@@ -3184,7 +3169,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"200"
+				"damage"				"300"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 			"08"
@@ -3405,12 +3390,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_health"				"475"
+				"bonus_health"				"700"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_mana"				"425"
+				"bonus_mana"				"700"
 			}
 			"03"
 			{
@@ -3772,12 +3757,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health"				"250"
+				"health"				"400"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_regen"			"8"
+				"health_regen"			"10"
 			}
 			"03"
 			{
@@ -3853,12 +3838,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health"				"250"
+				"health"				"425"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_regen"			"8"
+				"health_regen"			"11"
 			}
 			"03"
 			{
@@ -3966,12 +3951,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health"				"250"
+				"health"				"600"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_regen"			"8"
+				"health_regen"			"15"
 			}
 			"03"
 			{
@@ -3986,18 +3971,18 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"armor"					"5"
+				"armor"					"8"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_block"			"60"
+				"damage_block"			"85"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_armor"			"2"
+				"active_armor"			"5"
 			}
 			"08"
 			{
@@ -4012,13 +3997,13 @@
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_reduction"		"15"
+				"damage_reduction"		"10"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"tenacity"				"15"
+				"tenacity"				"20"
 			}
 		}
 	}
@@ -4056,17 +4041,17 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_range"			"75"
+				"bonus_range"			"50"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pierce_count"			"4"
+				"pierce_count"			"3"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pierce_damage"			"85"
+				"pierce_damage"			"95"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 		}
@@ -4132,7 +4117,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_range"			"150"
+				"bonus_range"			"100"
 			}
 			"03"
 			{
@@ -4142,7 +4127,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pulverize_damage"		"160"
+				"pulverize_damage"		"200"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 			"05"
@@ -4231,7 +4216,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"extra_damage"			"2.5"
+				"extra_damage"			"2.75"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"05"
@@ -4350,7 +4335,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"flutter_movespeed_pct" "35"
+				"flutter_movespeed_pct" "40"
 			}
 
 			"07"
@@ -4368,13 +4353,13 @@
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"wind_song_bonus_ms_pct"	"25"
+				"wind_song_bonus_ms_pct"	"35"
 			}
 
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"wind_song_bonus_as"	"50"
+				"wind_song_bonus_as"	"75"
 			}
 
 			"11"
@@ -4392,7 +4377,7 @@
 			"13"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"wind_song_ms_slow_pct"	"10"
+				"wind_song_ms_slow_pct"	"20"
 			}
 
 			"14"
@@ -6393,12 +6378,12 @@
 			"11"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration_per_int"			"0.015"
+				"duration_per_int"			"0.03"
 			}
 			"12"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"damage_per_agi"			"1.25"
+				"damage_per_agi"			"1.5"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"13"
@@ -6421,6 +6406,12 @@
 				"var_type"					"FIELD_INTEGER"
 				"damage_tooltip"			"125"
 				"CalculateSpellDamageTooltip"	"1"
+			}
+
+			"17"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_distance"				"2500"				
 			}
 		}
 	}
@@ -6496,7 +6487,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_damage"			"120"
+				"bounce_damage"			"145"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 			"05"
@@ -6587,7 +6578,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_damage"			"150"
+				"bounce_damage"			"200"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 			"05"
@@ -6624,7 +6615,7 @@
 			"13"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"static_slow_duration"	"0.5"
+				"static_slow_duration"	"1.25"
 			}
 		}
 	}
@@ -6780,7 +6771,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_damage"			"40"
+				"active_damage"			"160"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 		}
@@ -6904,7 +6895,7 @@
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_damage"			"40"
+				"active_damage"			"200"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 		}
@@ -7476,7 +7467,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"0"
+		"ItemCost"						"500"
 		"ItemShopTags"					""
 
 		// Recipe
@@ -7485,7 +7476,7 @@
 		"ItemResult"					"item_imba_veil_of_discord"
 		"ItemRequirements"
 		{
-			"01"						"item_helm_of_iron_will;item_imba_azura"
+			"01"						"item_helm_of_iron_will;item_null_talisman;item_null_talisman"
 		}
 	}
 
@@ -7512,7 +7503,7 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"75"
-		"ItemCost"						"2950"
+		"ItemCost"						"2030"
 		"ItemShopTags"					"int;armor;regen_health;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"vod;veil of discord"
@@ -7526,27 +7517,27 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"1200"
+				"aura_radius"			"900"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_resist"			"-30"
+				"aura_resist"			"-20"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"5"
+				"bonus_health_regen"	"6"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"7"
+				"bonus_armor"			"8"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_int"				"25"
+				"bonus_int"				"14"
 			}
 			"06"
 			{
@@ -8182,7 +8173,7 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"10"
+		"AbilityCooldown"				"5"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -8196,12 +8187,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"525"
+				"bonus_health"			"800"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"525"
+				"bonus_mana"			"800"
 			}
 			"04"
 			{
@@ -8221,7 +8212,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"blast_damage"			"50"
+				"blast_damage"			"40"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 		}
@@ -8294,7 +8285,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"0"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"3.0"
+		"AbilityCooldown"				"6.0"
 		"AbilityManaCost"				"0"
 
 		// Item Info
@@ -8693,7 +8684,7 @@
 		"ItemResult"					"item_imba_power_treads_2"
 		"ItemRequirements"
 		{
-			"01"						"item_power_treads;item_relic"
+			"01"						"item_power_treads;item_staff_of_wizardry;item_blade_of_alacrity;item_ogre_axe"
 		}
 	}
 
@@ -8712,7 +8703,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"5150"
+		"ItemCost"						"4350"
 		"ItemShopTags"					"attack_speed;move_speed;int;agi;str;damage"
 		"ItemQuality"					"magic"
 		"ItemAliases"					"power treads; mega; mega treads"
@@ -8725,12 +8716,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_movement_speed"		"80"
+				"bonus_movement_speed"		"60"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_stat"				"50"
+				"bonus_stat"				"30"
 			}
 			"03"
 			{
@@ -8772,12 +8763,7 @@
 				"var_type"					"FIELD_FLOAT"
 				"main_stat_bonus_damage"	"0.5"
 				"CalculateSpellDamageTooltip"	"0"
-			}
-			"11"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"efficiency_divisor_pct"	"50"
-			}
+			}			
 		}
 	}
 
@@ -8857,7 +8843,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"phase_duration"		"3.0"
+				"phase_duration"		"4.0"
 			}
 			"05"
 			{
@@ -9228,7 +9214,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"max_extra_cooldown"		"6.0"
+				"max_extra_cooldown"		"5.0"
 			}
 			"06"
 			{
@@ -9819,7 +9805,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"250"
+				"bonus_mana"			"400"
 			}
 			"02"
 			{
@@ -9834,7 +9820,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spell_power"			"6"
+				"spell_power"			"8"
 			}
 		}
 	}
@@ -9908,7 +9894,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"burn_duration"			"2.5"
+				"burn_duration"			"2"
 			}
 			"05"
 			{
@@ -9923,7 +9909,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spell_power"			"10"
+				"spell_power"			"12"
 			}
 		}
 	}
@@ -9998,7 +9984,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"300"
+				"bonus_mana"			"450"
 			}
 			"05"
 			{
@@ -10008,7 +9994,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cast_range_bonus"		"300"
+				"cast_range_bonus"		"350"
 			}
 			"07"
 			{
@@ -10018,7 +10004,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"burn_duration"			"2.5"
+				"burn_duration"			"2"
 			}
 			"09"
 			{
@@ -10243,7 +10229,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"1000"
+				"bonus_damage"				"1250"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 		}
@@ -10326,7 +10312,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"spell_power"				"200"
+				"spell_power"				"250"
 			}
 		}
 	}
@@ -10374,24 +10360,24 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"1000"
+				"bonus_damage"				"1500"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"spell_power"				"200"
+				"spell_power"				"275"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_reduction"			"50"
+				"damage_reduction"			"40"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"tenacity_pct"				"50"
+				"tenacity_pct"				"60"
 			}
 			"05"
 			{
@@ -10401,7 +10387,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"time_to_double"			"10"
+				"time_to_double"			"8"
 			}
 		}
 	}
@@ -10472,17 +10458,17 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_ms_owner"				"100"
+				"bonus_ms_owner"				"60"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_as_owner"				"100"
+				"bonus_as_owner"				"40"
 			}
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_radius"					"1200"
+				"aura_radius"					"900"
 			}
 			"04"
 			{
@@ -10908,7 +10894,7 @@
 			"02"
 			{
 				"var_type"              "FIELD_INTEGER"
-				"cast_range"            "1200"
+				"cast_range"            "800"
 			}
 			"03"
 			{
@@ -10943,12 +10929,12 @@
 			"09"
 			{
 				"var_type"              "FIELD_INTEGER"
-				"passive_disarm_chance" "25"
+				"passive_disarm_chance" "20"
 			}
 			"10"
 			{
-				"var_type"              "FIELD_INTEGER"
-				"passive_disarm_duration" "2"
+				"var_type"              "FIELD_FLOAT"
+				"passive_disarm_duration" "1.5"
 			}
 			"11"
 			{
@@ -11392,17 +11378,17 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"lifesteal_pct"					"15"
+				"lifesteal_pct"					"18"
 			}
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"berserk_attack_speed"			"110"
+				"berserk_attack_speed"			"160"
 			}
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"berserk_ms_bonus_pct"			"17"
+				"berserk_ms_bonus_pct"			"22"
 			}
 			"05"
 			{
@@ -11788,7 +11774,7 @@
 			"08"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"heal"							"600"
+				"heal"							"800"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"09"
@@ -11898,7 +11884,7 @@
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"unreducable_magic_resist"		"25"
+				"unreducable_magic_resist"		"40"
 			}
 			"07"
 			{
@@ -11998,7 +11984,7 @@
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"active_tenacity_pct"			"35"
+				"active_tenacity_pct"			"45"
 			}
 			"07"
 			{
@@ -12013,7 +11999,7 @@
 			"09"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"unreducable_magic_resist"		"40"
+				"unreducable_magic_resist"		"55"
 			}
 			"10"
 			{

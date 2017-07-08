@@ -3375,7 +3375,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"700"
+		"StatusHealth"				"1000"
 		"StatusHealthRegen"			"5"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
@@ -3466,7 +3466,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"900"
+		"StatusHealth"				"1400"
 		"StatusHealthRegen"			"7"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
@@ -3558,7 +3558,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"1100"
+		"StatusHealth"				"1800"
 		"StatusHealthRegen"			"9"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
@@ -3653,7 +3653,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"1350"
+		"StatusHealth"				"2200"
 		"StatusHealthRegen"			"12"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
@@ -3749,7 +3749,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"1600"
+		"StatusHealth"				"2600"
 		"StatusHealthRegen"			"15"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
@@ -3839,7 +3839,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"700"
+		"StatusHealth"				"1000"
 		"StatusHealthRegen"			"5"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
@@ -3929,7 +3929,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"800"
+		"StatusHealth"				"1400"
 		"StatusHealthRegen"			"6"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
@@ -4020,7 +4020,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"900"
+		"StatusHealth"				"1800"
 		"StatusHealthRegen"			"7"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
@@ -4113,7 +4113,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"1050"
+		"StatusHealth"				"2200"
 		"StatusHealthRegen"			"8"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
@@ -4207,7 +4207,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"1200"
+		"StatusHealth"				"2600"
 		"StatusHealthRegen"			"10"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"

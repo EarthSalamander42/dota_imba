@@ -185,6 +185,7 @@ function modifier_item_imba_skadi_unique:OnCreated(keys)
 		self.max_duration = ability:GetSpecialValueFor("max_duration")
 		self.min_duration = ability:GetSpecialValueFor("min_duration")
 		self.slow_range_cap = ability:GetSpecialValueFor("slow_range_cap")
+		self.max_distance = ability:GetSpecialValueFor("max_distance")
 	end
 end
 
@@ -221,8 +222,16 @@ function modifier_item_imba_skadi_unique:OnTakeDamage( keys )
 		if (not IsHeroOrCreep(target)) or attacker:GetTeam() == target:GetTeam() then
 			return end
 
+
+
 		-- Calculate actual slow duration
 		local target_distance = (target:GetAbsOrigin() - attacker:GetAbsOrigin()):Length2D()
+
+		-- If the target is too far away, do nothing
+		if target_distance >= self.max_distance then
+			return nil
+		end
+
 		local slow_duration = self.min_duration + (self.max_duration - self.min_duration) * math.max( self.slow_range_cap - target_distance, 0) / self.slow_range_cap
 
 		-- Apply the slow

@@ -194,8 +194,6 @@ function modifier_imba_mega_treads_stat_multiplier_00:IsPurgable() return false 
 
 function modifier_imba_mega_treads_stat_multiplier_00:OnCreated()
 	if IsServer() then
-		self.efficiency_divisor_pct = self:GetAbility():GetSpecialValueFor("efficiency_divisor_pct")
-
 		self:StartIntervalThink(0.2)
 	end
 end
@@ -203,7 +201,7 @@ end
 function modifier_imba_mega_treads_stat_multiplier_00:OnIntervalThink()
 	if IsServer() then
 		local strength = self:GetParent():GetStrength()
-		self:SetStackCount(strength * self.efficiency_divisor_pct * 0.01)
+		self:SetStackCount(strength)
 		self:GetParent():CalculateStatBonus()
 	end
 end
@@ -266,8 +264,6 @@ end
 
 function modifier_imba_mega_treads_stat_multiplier_01:OnCreated()
 	if IsServer() then
-		self.efficiency_divisor_pct = self:GetAbility():GetSpecialValueFor("efficiency_divisor_pct")
-
 		self:StartIntervalThink(0.2)
 	end
 end
@@ -275,7 +271,7 @@ end
 function modifier_imba_mega_treads_stat_multiplier_01:OnIntervalThink()
 	if IsServer() then
 		local agility = self:GetParent():GetAgility()
-		self:SetStackCount(agility * self.efficiency_divisor_pct * 0.01)
+		self:SetStackCount(agility)
 		self:GetParent():CalculateStatBonus()
 	end
 end
@@ -329,8 +325,6 @@ end
 
 function modifier_imba_mega_treads_stat_multiplier_02:OnCreated()
 	if IsServer() then
-		self.efficiency_divisor_pct = self:GetAbility():GetSpecialValueFor("efficiency_divisor_pct")
-
 		self:StartIntervalThink(0.2)
 	end
 end
@@ -339,7 +333,7 @@ function modifier_imba_mega_treads_stat_multiplier_02:OnIntervalThink()
 	if IsServer() then
 		local parent = self:GetParent()
 		local int = parent:GetIntellect()
-		self:SetStackCount(int * self.efficiency_divisor_pct * 0.01)
+		self:SetStackCount(int)
 		self:GetParent():CalculateStatBonus()
 	end
 end

@@ -186,6 +186,7 @@
 		"item"		"item_imba_mjollnir"
 		"item"		"item_imba_satanic"
 		"item"		"item_imba_skadi"		
+		"item"		"item_lotus_orb"
 	}
 
 	"sideshop1"

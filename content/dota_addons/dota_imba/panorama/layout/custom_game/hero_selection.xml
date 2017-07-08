@@ -108,11 +108,15 @@
 								<Panel id="npc_dota_hero_beastmaster" class="ClassNormalOption" 
 									onactivate="SelectHero('npc_dota_hero_beastmaster')" 
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_beastmaster.png');" />
+									
+								<Panel id="npc_dota_hero_brewmaster" class="ClassNormalOption" 
+									onactivate="SelectHero('npc_dota_hero_brewmaster')" 
+									style="background-image: url('file://{images}/heroes/npc_dota_hero_brewmaster.png');" />								
+							</Panel>
+							<Panel class="ClassOptionRow"> <!-- 5-10 -->
 								<Panel id="npc_dota_hero_bristleback" class="ClassNormalOption" 
 									onactivate="SelectHero('npc_dota_hero_bristleback')" 
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_bristleback.png');" />
-							</Panel>
-							<Panel class="ClassOptionRow"> <!-- 5-10 -->
 								<Panel id="npc_dota_hero_centaur" class="ClassImbaOption"
 									onactivate="SelectHero('npc_dota_hero_centaur')" 
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_centaur.png');" />
@@ -124,12 +128,12 @@
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_rattletrap.png');" />
 								<Panel id="npc_dota_hero_doom_bringer" class="ClassNormalOption" 
 									onactivate="SelectHero('npc_dota_hero_doom_bringer')" 
-									style="background-image: url('file://{images}/heroes/npc_dota_hero_doom_bringer.png');" />
+									style="background-image: url('file://{images}/heroes/npc_dota_hero_doom_bringer.png');" />								
+							</Panel>
+							<Panel class="ClassOptionRow"> <!-- 10-15 -->
 								<Panel id="npc_dota_hero_dragon_knight" class="ClassNormalOption" 
 									onactivate="SelectHero('npc_dota_hero_dragon_knight')" 
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_dragon_knight.png');" />
-							</Panel>
-							<Panel class="ClassOptionRow"> <!-- 10-15 -->
 								<Panel id="npc_dota_hero_earth_spirit" class="ClassNormalOption" 
 									onactivate="SelectHero('npc_dota_hero_earth_spirit')" 
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_earth_spirit.png');" />
@@ -141,12 +145,12 @@
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_elder_titan.png');" />
 								<Panel id="npc_dota_hero_huskar" class="ClassNormalOption" 
 									onactivate="SelectHero('npc_dota_hero_huskar')" 
-									style="background-image: url('file://{images}/heroes/npc_dota_hero_huskar.png');" />
+									style="background-image: url('file://{images}/heroes/npc_dota_hero_huskar.png');" />								
+							</Panel>
+							<Panel class="ClassOptionRow"> <!-- 15-20 -->
 								<Panel id="npc_dota_hero_wisp" class="ClassNormalOption" 
 									onactivate="SelectHero('npc_dota_hero_wisp')" 
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_wisp.png');" />
-							</Panel>
-							<Panel class="ClassOptionRow"> <!-- 15-20 -->
 								<Panel id="npc_dota_hero_kunkka" class="ClassImbaOption" 
 									onactivate="SelectHero('npc_dota_hero_kunkka')" 
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_kunkka.png');" />
@@ -158,12 +162,12 @@
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_life_stealer.png');" />
 								<Panel id="npc_dota_hero_lycan" class="ClassImbaOption" 
 									onactivate="SelectHero('npc_dota_hero_lycan')" 
-									style="background-image: url('file://{images}/heroes/npc_dota_hero_lycan.png');" />
+									style="background-image: url('file://{images}/heroes/npc_dota_hero_lycan.png');" />								
+							</Panel>
+							<Panel class="ClassOptionRow"> <!-- 20-25 -->
 								<Panel id="npc_dota_hero_magnataur" class="ClassImbaOption" 
 									onactivate="SelectHero('npc_dota_hero_magnataur')" 
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_magnataur.png');" />
-							</Panel>
-							<Panel class="ClassOptionRow"> <!-- 20-25 -->
 								<Panel id="npc_dota_hero_night_stalker" class="ClassImbaOption" 
 									onactivate="SelectHero('npc_dota_hero_night_stalker')" 
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_night_stalker.png');" />
@@ -175,12 +179,12 @@
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_phoenix.png');" />
 								<Panel id="npc_dota_hero_pudge" class="ClassImbaOption" 
 									onactivate="SelectHero('npc_dota_hero_pudge')" 
-									style="background-image: url('file://{images}/heroes/npc_dota_hero_pudge.png');" />
+									style="background-image: url('file://{images}/heroes/npc_dota_hero_pudge.png');" />								
+							</Panel>
+							<Panel class="ClassOptionRow"> <!-- 20-25 -->
 								<Panel id="npc_dota_hero_sand_king" class="ClassImbaOption" 
 									onactivate="SelectHero('npc_dota_hero_sand_king')" 
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_sand_king.png');" />
-							</Panel>
-							<Panel class="ClassOptionRow"> <!-- 20-25 -->
 								<Panel id="npc_dota_hero_slardar" class="ClassImbaOption" 
 									onactivate="SelectHero('npc_dota_hero_slardar')" 
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_slardar.png');" />
@@ -192,12 +196,12 @@
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_sven.png');" />
 								<Panel id="npc_dota_hero_tidehunter" class="ClassNormalOption" 
 									onactivate="SelectHero('npc_dota_hero_tidehunter')" 
-									style="background-image: url('file://{images}/heroes/npc_dota_hero_tidehunter.png');" />
+									style="background-image: url('file://{images}/heroes/npc_dota_hero_tidehunter.png');" />								
+							</Panel>
+							<Panel class="ClassOptionRow"> <!-- 20-25 -->
 								<Panel id="npc_dota_hero_shredder" class="ClassNormalOption" 
 									onactivate="SelectHero('npc_dota_hero_shredder')" 
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_shredder.png');" />
-							</Panel>
-							<Panel class="ClassOptionRow"> <!-- 20-25 -->
 								<Panel id="npc_dota_hero_tiny" class="ClassImbaOption" 
 									onactivate="SelectHero('npc_dota_hero_tiny')" 
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_tiny.png');" />
@@ -209,12 +213,12 @@
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_tusk.png');" />
 								<Panel id="npc_dota_hero_abyssal_underlord" class="ClassNormalOption" 
 									onactivate="SelectHero('npc_dota_hero_abyssal_underlord')" 
-									style="background-image: url('file://{images}/heroes/npc_dota_hero_abyssal_underlord.png');" />
+									style="background-image: url('file://{images}/heroes/npc_dota_hero_abyssal_underlord.png');" />								
+							</Panel>														
+							<Panel class="ClassOptionRow"> <!-- 20-25 -->
 								<Panel id="npc_dota_hero_undying" class="ClassNormalOption" 
 									onactivate="SelectHero('npc_dota_hero_undying')" 
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_undying.png');" />
-							</Panel>
-							<Panel class="ClassOptionRow"> <!-- 20-25 -->
 								<Panel id="npc_dota_hero_skeleton_king" class="ClassImbaOption" 
 									onactivate="SelectHero('npc_dota_hero_skeleton_king')" 
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_skeleton_king.png');" />
@@ -268,6 +272,9 @@
 								<Panel id="npc_dota_hero_juggernaut" class="ClassImbaOption" 
 									onactivate="SelectHero('npc_dota_hero_juggernaut')" 
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_juggernaut.png');" />
+								<Panel id="npc_dota_hero_lone_druid" class="ClassNormalOption" 
+									onactivate="SelectHero('npc_dota_hero_lone_druid')" 
+									style="background-image: url('file://{images}/heroes/npc_dota_hero_lone_druid.png');" />
 								<Panel id="npc_dota_hero_luna" class="ClassNormalOption" 
 									onactivate="SelectHero('npc_dota_hero_luna')" 
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_luna.png');" />
@@ -276,12 +283,12 @@
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_medusa.png');" />
 								<Panel id="npc_dota_hero_mirana" class="ClassImbaOption" 
 									onactivate="SelectHero('npc_dota_hero_mirana')" 
-									style="background-image: url('file://{images}/heroes/npc_dota_hero_mirana.png');" />
+									style="background-image: url('file://{images}/heroes/npc_dota_hero_mirana.png');" />								
+							</Panel>
+							<Panel class="ClassOptionRow">
 								<Panel id="npc_dota_hero_monkey_king" class="ClassNormalOption" 
 									onactivate="SelectHero('npc_dota_hero_monkey_king')" 
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_monkey_king.png');" />
-							</Panel>
-							<Panel class="ClassOptionRow">
 								<Panel id="npc_dota_hero_morphling" class="ClassNormalOption" 
 									onactivate="SelectHero('npc_dota_hero_morphling')" 
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_morphling.png');" />
@@ -293,7 +300,7 @@
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_nyx_assassin.png');" />
 								<Panel id="npc_dota_hero_phantom_assassin" class="ClassImbaOption" 
 									onactivate="SelectHero('npc_dota_hero_phantom_assassin')" 
-									style="background-image: url('file://{images}/heroes/npc_dota_hero_phantom_assassin.png');" />
+									style="background-image: url('file://{images}/heroes/npc_dota_hero_phantom_assassin.png');" />									
 								<!-- <Panel id="npc_dota_hero_phantom_lancer" class="ClassNormalOption" 
 									onactivate="SelectHero('npc_dota_hero_phantom_lancer')" 
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_phantom_lancer.png');" /> -->
@@ -447,16 +454,19 @@
 									onactivate="SelectHero('npc_dota_hero_rubick')" 
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_rubick.png');" />
 								<Panel id="npc_dota_hero_shadow_demon" class="ClassNormalOption" 
-									onactivate="SelectHero('npc_dota_hero_shadow_demon')" 
+									onactivate="SelectHero('npc_dota_hero_shadow_demon')" 									
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_shadow_demon.png');" />
+								<Panel id="npc_dota_hero_shadow_shaman" class="ClassNormalOption" 
+									onactivate="SelectHero('npc_dota_hero_shadow_shaman')" 
+									style="background-image: url('file://{images}/heroes/npc_dota_hero_shadow_shaman.png');" />
 								<Panel id="npc_dota_hero_silencer" class="ClassImbaOption" 
 									onactivate="SelectHero('npc_dota_hero_silencer')" 
-									style="background-image: url('file://{images}/heroes/npc_dota_hero_silencer.png');" />
-								<Panel id="npc_dota_hero_skywrath_mage" class="ClassImbaOption" 
-									onactivate="SelectHero('npc_dota_hero_skywrath_mage')" 
-									style="background-image: url('file://{images}/heroes/npc_dota_hero_skywrath_mage.png');" />
+									style="background-image: url('file://{images}/heroes/npc_dota_hero_silencer.png');" />								
 							</Panel>
 							<Panel class="ClassOptionRow">
+								<Panel id="npc_dota_hero_skywrath_mage" class="ClassImbaOption" 
+									onactivate="SelectHero('npc_dota_hero_skywrath_mage')" 
+									style="background-image: url('file://{images}/heroes/npc_dota_hero_skywrath_mage.png');" />									
 								<Panel id="npc_dota_hero_storm_spirit" class="ClassNormalOption" 
 									onactivate="SelectHero('npc_dota_hero_storm_spirit')" 
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_storm_spirit.png');" />
@@ -468,12 +478,12 @@
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_tinker.png');" />
 								<Panel id="npc_dota_hero_visage" class="ClassNormalOption" 
 									onactivate="SelectHero('npc_dota_hero_visage')" 
-									style="background-image: url('file://{images}/heroes/npc_dota_hero_visage.png');" />
+									style="background-image: url('file://{images}/heroes/npc_dota_hero_visage.png');" />								
+							</Panel>
+							<Panel class="ClassOptionRow">
 								<Panel id="npc_dota_hero_warlock" class="ClassImbaOption" 
 									onactivate="SelectHero('npc_dota_hero_warlock')" 
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_warlock.png');" />
-							</Panel>
-							<Panel class="ClassOptionRow">
 								<Panel id="npc_dota_hero_windrunner" class="ClassNormalOption" 
 									onactivate="SelectHero('npc_dota_hero_windrunner')" 
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_windrunner.png');" />
@@ -485,7 +495,7 @@
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_witch_doctor.png');" />
 								<Panel id="npc_dota_hero_zuus" class="ClassNormalOption" 
 									onactivate="SelectHero('npc_dota_hero_zuus')" 
-									style="background-image: url('file://{images}/heroes/npc_dota_hero_zuus.png');" />
+									style="background-image: url('file://{images}/heroes/npc_dota_hero_zuus.png');" />								
 							</Panel>
 						</Panel>
 					</Panel>
