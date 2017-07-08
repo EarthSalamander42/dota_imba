@@ -417,7 +417,7 @@ function imba_crystal_maiden_frostbite:OnSpellStart()
 		
 		-- Applies root and damage to attacking unit according to its type, then triggers the cooldown accordingly
 		if target:GetTeam() ~= caster:GetTeam() then
-			if target:IsHero() or IsRoshan(target) then
+			if target:IsHero() or IsRoshan(target) or target:IsAncient() then
 				target:AddNewModifier(caster, self, "modifier_stunned", {duration = duration_stun})				
 				target:AddNewModifier(caster, self, "modifier_imba_crystal_maiden_frostbite_enemy", { duration = duration})
 			else
