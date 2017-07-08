@@ -21,7 +21,6 @@
 	[
 		{
 			_class = "C_OP_Orient2DRelToCP"
-			m_nCP = 7
 			m_nFieldOutput = 12
 		},
 		{
@@ -45,12 +44,14 @@
 			m_FrequencyMax = 0.5
 			m_flEndTime_max = 9999999.0
 		},
+		{
+			_class = "C_OP_PositionLock"
+		},
 	]
 	m_Initializers = 
 	[
 		{
 			_class = "C_INIT_RingWave"
-			m_nControlPointNumber = 7
 			m_flParticlesPerOrbit = 6.0
 			m_bEvenDistribution = true
 			m_flInitialRadius = 1.0

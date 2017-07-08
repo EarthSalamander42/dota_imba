@@ -44,12 +44,14 @@
 			m_vecOutputMin = [ -5.0, -5.0, 0.0 ]
 			m_nFieldOutput = 0
 		},
+		{
+			_class = "C_OP_PositionLock"
+		},
 	]
 	m_Initializers = 
 	[
 		{
 			_class = "C_INIT_RingWave"
-			m_nControlPointNumber = 7
 			m_flInitialSpeedMin = -150.0
 			m_flParticlesPerOrbit = 200.0
 			m_bEvenDistribution = true

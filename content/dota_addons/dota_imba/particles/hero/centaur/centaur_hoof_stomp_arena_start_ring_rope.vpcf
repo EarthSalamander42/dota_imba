@@ -45,12 +45,14 @@
 			m_flFadeStartTime = 0.75
 			m_ColorFade = [ 255, 219, 143, 255 ]
 		},
+		{
+			_class = "C_OP_PositionLock"
+		},
 	]
 	m_Initializers = 
 	[
 		{
 			_class = "C_INIT_RingWave"
-			m_nControlPointNumber = 7
 			m_flParticlesPerOrbit = 28.0
 			m_bEvenDistribution = true
 			m_flInitialRadius = 1.0

@@ -52,6 +52,9 @@
 		{
 			_class = "C_OP_Decay"
 		},
+		{
+			_class = "C_OP_PositionLock"
+		},
 	]
 	m_Initializers = 
 	[
@@ -65,7 +68,6 @@
 			m_flInitialSpeedMax = 100.0
 			m_flInitialRadius = 1.0
 			m_flInitialSpeedMin = 10.0
-			m_nControlPointNumber = 7
 			m_nOverrideCP = 1
 		},
 		{

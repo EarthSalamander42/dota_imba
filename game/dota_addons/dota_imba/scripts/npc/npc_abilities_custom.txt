@@ -6536,7 +6536,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"radius"				"190"
-				"LinkedSpecialBonus"	"special_bonus_imba_centaur_3"
 			}
 			"03"
 			{
@@ -35318,9 +35317,37 @@
 	}
 
 	//=================================================================================================================
-	// Centaur Warrunner Talent 3 (Level 20): Radius increase for Double Edge
+	// Centaur Warrunner Talent 3 (Level 20): Centaur hoof stomp arena moves along with hero
 	//=================================================================================================================
 	"special_bonus_imba_centaur_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_centaur_hoof_stomp"
+        }
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"600"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Centaur Warrunner Talent 4 (Level 20): Double edge damage in increased by x * strength
+	//=================================================================================================================
+	"special_bonus_imba_centaur_4"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -35340,42 +35367,14 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"110"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Centaur Warrunner Talent 4 (Level 20): Radius increase for Hoof Stomp
-	//=================================================================================================================
-	"special_bonus_imba_centaur_4"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-            "01"        "imba_centaur_hoof_stomp"
-        }
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"85"
+				"value"						"2"
 			}
 		}
 	}
 
 
 	//=================================================================================================================
-	// Centaur Warrunner Talent 5 (Level 30): Arena/stun duration increase
+	// Centaur Warrunner Talent 5 (Level 30): Heroes with Stampede haste get 75% tenacity.
 	//=================================================================================================================
 	"special_bonus_imba_centaur_5"
 	{
@@ -35387,7 +35386,7 @@
 
         "LinkedAbility"
         {
-            "01"        "imba_centaur_hoof_stomp"
+            "01"        "imba_centaur_stampede"
         }
 		
 		// Special
@@ -35397,7 +35396,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"1"
+				"value"						"75"
 			}
 		}
 	}
@@ -35431,7 +35430,7 @@
 	}
 
 	//=================================================================================================================
-	// Centaur Warrunner Talent 7 (Level 40): Increased return damage block
+	// Centaur Warrunner Talent 7 (Level 40): Return's Bulging Hide gains stacks from all auto attacks, or any kind of damage above 100.
 	//=================================================================================================================
 	"special_bonus_imba_centaur_7"
 	{
@@ -35453,7 +35452,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"5"
+				"value"						"100"
 			}
 		}
 	}
