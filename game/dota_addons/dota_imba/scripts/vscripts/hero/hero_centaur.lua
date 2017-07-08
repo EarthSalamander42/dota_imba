@@ -77,9 +77,6 @@ function imba_centaur_hoof_stomp:GetCastRange(location, target)
 	local caster = self:GetCaster()
 	local base_range = self.BaseClass.GetCastRange(self, location, target)
 
-	-- #4 Talent: Radius increase for Hoof Stomp		
-	base_range = base_range + caster:FindTalentValue("special_bonus_imba_centaur_4")
-
 	return base_range
 end
 
@@ -97,19 +94,17 @@ function imba_centaur_hoof_stomp:OnSpellStart()
 		local modifier_arena_buff = "modifier_imba_hoof_stomp_arena_buff"
 		local modifier_stun = "modifier_imba_hoof_stomp_stun"
 		local arena_center = caster:GetAbsOrigin()
+		self.lastCasterLocation = nil
+
+		caster:RemoveModifierByName("modifier_imba_return_passive")
+		caster:AddNewModifier(caster,caster:FindAbilityByName("imba_centaur_return"),"modifier_imba_return_passive",{})
 
 		-- Ability specials
 		local radius = ability:GetSpecialValueFor("radius")
 		local stun_duration = ability:GetSpecialValueFor("stun_duration")
 		local stomp_damage = ability:GetSpecialValueFor("stomp_damage")
 		local pit_duration = ability:GetSpecialValueFor("pit_duration")	
-
-		-- #4 Talent: Radius increase for Hoof Stomp		
-		radius = radius + caster:FindTalentValue("special_bonus_imba_centaur_4")				
-
-		-- #5 Talent: Arena/stun duration increase		
-		stun_duration = stun_duration + caster:FindTalentValue("special_bonus_imba_centaur_5")
-		pit_duration = pit_duration + caster:FindTalentValue("special_bonus_imba_centaur_5")		
+			
 
 		-- Roll for cast response
 		local cast_response_chance = 50
@@ -166,16 +161,18 @@ function imba_centaur_hoof_stomp:OnSpellStart()
 		end	
 
 		-- Add arena particles for the duration
-		local particle_arena_fx = ParticleManager:CreateParticle(particle_arena, PATTACH_ABSORIGIN, caster)
-		ParticleManager:SetParticleControl(particle_arena_fx, 0, caster:GetAbsOrigin())
-		ParticleManager:SetParticleControl(particle_arena_fx, 1, Vector(radius+45, 1, 1))
-		ParticleManager:SetParticleControl(particle_arena_fx, 5, caster:GetAbsOrigin())
-		ParticleManager:SetParticleControl(particle_arena_fx, 6, caster:GetAbsOrigin())
-		ParticleManager:SetParticleControl(particle_arena_fx, 7, caster:GetAbsOrigin())
+		self.particle_arena_fx = ParticleManager:CreateParticle(particle_arena, PATTACH_ABSORIGIN, caster)
+		ParticleManager:SetParticleControl(self.particle_arena_fx, 0, caster:GetAbsOrigin())
+		ParticleManager:SetParticleControl(self.particle_arena_fx, 1, Vector(radius+45, 1, 1))
+		--[[ParticleManager:SetParticleControl(self.particle_arena_fx, 5, caster:GetAbsOrigin())
+		ParticleManager:SetParticleControl(self.particle_arena_fx, 6, caster:GetAbsOrigin())
+		ParticleManager:SetParticleControl(self.particle_arena_fx, 7, caster:GetAbsOrigin())
+		ParticleManager:SetParticleControl(self.particle_arena_fx, 8, caster:GetAbsOrigin())]]
 		Timers:CreateTimer(pit_duration, function()
-			ParticleManager:DestroyParticle(particle_arena_fx, false)
-			ParticleManager:ReleaseParticleIndex(particle_arena_fx)
-		end)		
+			ParticleManager:DestroyParticle(self.particle_arena_fx, false)
+			ParticleManager:ReleaseParticleIndex(self.particle_arena_fx)
+		end)
+
 
 		-- Index a modifier to send the modifier the arena center variable.
 		local modifier
@@ -229,6 +226,34 @@ function imba_centaur_hoof_stomp:OnSpellStart()
 			-- Resolve NPCs stuck into one another
 			ResolveNPCPositions(arena_center, radius)
 
+			if caster:HasTalent("special_bonus_imba_centaur_3") then
+				arena_center = caster:GetAbsOrigin()
+				for _,enemy in pairs(enemies) do
+					modifier = enemy:FindModifierByName(modifier_arena_debuff)
+					if modifier then
+						modifier.arena_center = arena_center
+					end
+				end
+
+				-- Check if caster moved more then the allowed units in one frame, if he does stop this effect.
+				if self.lastCasterLocation then
+					local distance = (caster:GetAbsOrigin() - self.lastCasterLocation):Length2D()
+					if distance > caster:FindTalentValue("special_bonus_imba_centaur_3") then
+						caster:RemoveModifierByName(modifier_arena_buff)
+						ParticleManager:DestroyParticle(self.particle_arena_fx,true)
+						return nil
+					end
+				end
+				self.lastCasterLocation = caster:GetAbsOrigin()
+
+				ParticleManager:SetParticleControl(self.particle_arena_fx, 0, caster:GetAbsOrigin())
+				--[[ParticleManager:SetParticleControl(self.particle_arena_fx, 1, Vector(radius+45, 1, 1))
+				ParticleManager:SetParticleControl(self.particle_arena_fx, 5, caster:GetAbsOrigin())
+				ParticleManager:SetParticleControl(self.particle_arena_fx, 6, caster:GetAbsOrigin())
+				ParticleManager:SetParticleControl(self.particle_arena_fx, 7, caster:GetAbsOrigin())]]
+
+
+			end	
 			-- Check caster, if he doesn't have the arena modifier and he's in the arena, give it to him again 
 			if not caster:HasModifier(modifier_arena_buff) then
 				local distance = (caster:GetAbsOrigin() - arena_center):Length2D()
@@ -341,8 +366,6 @@ function modifier_imba_hoof_stomp_arena_debuff:OnCreated()
 	self.radius = self.ability:GetSpecialValueFor("radius")
 	self.maximum_distance = self.ability:GetSpecialValueFor("maximum_distance")	
 
-	-- #4 Talent: Radius increase for Hoof Stomp		
-	self.radius = self.radius + self.caster:FindTalentValue("special_bonus_imba_centaur_4")	
 
 	-- Wait a game tick so indexing the arena center would complete, then start thinking.
 	if IsServer() then
@@ -357,6 +380,7 @@ end
 
 function modifier_imba_hoof_stomp_arena_debuff:OnIntervalThink()
 	if IsServer() then
+		if not self:GetCaster():HasModifier("modifier_imba_hoof_stomp_arena_buff") then self:Destroy() return end
 		-- Calculate distance				
 		local distance = (self.parent:GetAbsOrigin() - self.arena_center):Length2D()		
 		
@@ -466,12 +490,11 @@ function imba_centaur_double_edge:OnSpellStart()
 		local modifier_prevent = "modifier_imba_double_edge_death_prevent"
 
 		-- Ability specials
-		local damage = ability:GetSpecialValueFor("damage")
+		-- #4 Talent: Damage increased by 2*strength		
+		local damage = ability:GetSpecialValueFor("damage") + (caster:FindTalentValue("special_bonus_imba_centaur_4") * caster:GetStrength())
 		local radius = ability:GetSpecialValueFor("radius")
 		local str_damage_reduction = ability:GetSpecialValueFor("str_damage_reduction")
-
-		-- #3 Talent: Radius increase for Double Edge		
-		radius = radius + caster:FindTalentValue("special_bonus_imba_centaur_3")		
+	
 
 		-- Cast responses are troublesome for this spell so they get their own section
 		-- Roll for a cast response
@@ -688,34 +711,33 @@ end
 modifier_imba_return_passive = class({})
 
 function modifier_imba_return_passive:DeclareFunctions()
-	local decFuncs = {MODIFIER_EVENT_ON_ATTACKED}
+	local decFuncs = {MODIFIER_EVENT_ON_TAKEDAMAGE}
 
 	return decFuncs
 end
 
-function modifier_imba_return_passive:OnAttacked(keys)
+function modifier_imba_return_passive:OnTakeDamage(keys)
 	if IsServer() then
 		-- Ability properties
 		local caster = self:GetCaster()
 		local parent = self:GetParent()
 		local ability = self:GetAbility()
 		local attacker = keys.attacker
-		local target = keys.target
+		local target = keys.unit
 		local particle_return = "particles/units/heroes/hero_centaur/centaur_return.vpcf"
 		local modifier_damage_block = "modifier_imba_return_damage_block"		
 		local particle_block_msg = "particles/msg_fx/msg_block.vpcf"
-
 		-- Ability specials
 		local damage = ability:GetSpecialValueFor("damage")
 		local str_pct_as_damage = ability:GetSpecialValueFor("str_pct_as_damage")
 		local damage_block = ability:GetSpecialValueFor("damage_block")
 		local block_duration = ability:GetSpecialValueFor("block_duration")	
 
-		-- #1 Talent: Double Edge self-damage reduction		
+		-- #1 Talent:Reduced self damage_block
 		str_pct_as_damage = str_pct_as_damage + caster:FindTalentValue("special_bonus_imba_centaur_1")		
 
-		-- #7 Talent: Increased return damage block		
-		damage_block = damage_block + caster:FindTalentValue("special_bonus_imba_centaur_7")		
+		
+
 
 		-- Not inherited by illusions
 		if not target:IsRealHero() then
@@ -726,12 +748,25 @@ function modifier_imba_return_passive:OnAttacked(keys)
 		if parent:PassivesDisabled() then
 			return nil
 		end
+		
 
 		-- Only commence on enemies attacking Centaur
 		if attacker:GetTeamNumber() ~= parent:GetTeamNumber() and parent == target 
 		-- Don't affect wards.
 		and not attacker:IsOther()
+		-- Nor buildings
+		and not attacker:IsBuilding()
 		then
+				-- #7 Talent:Return's Bulging Hide gains stacks from all auto attacks, or any kind of damage above 100.
+			if not caster:HasTalent("special_bonus_imba_centaur_7") then 
+				if keys.inflictor then
+					return 
+				end
+			else
+				if keys.inflictor and keys.damage < caster:FindTalentValue("special_bonus_imba_centaur_7") then
+					return
+				end
+			end
 			-- Add return particle
 			local particle_return_fx = ParticleManager:CreateParticle(particle_return, PATTACH_ABSORIGIN, parent)
 			ParticleManager:SetParticleControlEnt(particle_return_fx, 0, parent, PATTACH_POINT_FOLLOW, "attach_hitloc", parent:GetAbsOrigin(), true)
@@ -1020,6 +1055,10 @@ function modifier_imba_stampede_haste:GetModifierIncomingDamage_Percentage()
 	end
 	
 	return nil
+end
+
+function modifier_imba_stampede_haste:GetTenacity()
+	return caster:FindTalentValue("special_bonus_imba_centaur_5")
 end
 
 function modifier_imba_stampede_haste:CheckState()

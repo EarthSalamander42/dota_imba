@@ -59,31 +59,30 @@ end
 function Server_DecodeForPlayer ( t, nPlayerID )   --To deep-decode the Json code...
     local print_r_cache={}
     local function sub_print_r(t,indent)
-        if (print_r_cache[tostring(t)]) then
-            print(indent.."*"..tostring(t))
-        else
-            print_r_cache[tostring(t)]=true
-            if (type(t)=="table") then
-                for pos,val in pairs(t) do
-                    if (type(val)=="table") then
-                        sub_print_r(val,indent..string.rep(" ",string.len(pos)+8))
-                    elseif (type(val)=="string") then
-                        --print(pos..':'..val                        if pos == "SteamID64" then
-                            SteamID64 = val
-                            print("SteamID64="..SteamID64)
-                        end
-                        if pos == "player_key" then
-                            player_key = val
-                            table_player_key[nPlayerID] = tostring(player_key)
-                            print("player_key="..table_player_key[nPlayerID])
-                        end
-                        if pos == "XP_has" then
-                            XP_has = val
-                            table_XP_has[nPlayerID] = tostring(XP_has)
-                            print("XP_has="..table_XP_has[nPlayerID])
-                        end
-                        table_able[nPlayerID] = tostring(0)
+    if (print_r_cache[tostring(t)]) then
+        print(indent.."*"..tostring(t))
+    else
+        print_r_cache[tostring(t)]=true
+        if (type(t)=="table") then
+            for pos,val in pairs(t) do
+                if (type(val)=="table") then
+                    sub_print_r(val,indent..string.rep(" ",string.len(pos)+8))
+                elseif (type(val)=="string") then
+                    --print(pos..':'..val                        if pos == "SteamID64" then
+                        SteamID64 = val
+                        print("SteamID64="..SteamID64)
                     end
+                    if pos == "player_key" then
+                        player_key = val
+                        table_player_key[nPlayerID] = tostring(player_key)
+                        print("player_key="..table_player_key[nPlayerID])
+                    end
+                    if pos == "XP_has" then
+                        XP_has = val
+                        table_XP_has[nPlayerID] = tostring(XP_has)
+                        print("XP_has="..table_XP_has[nPlayerID])
+                    end
+                    table_able[nPlayerID] = tostring(0)
                 end
             end
         end
@@ -98,23 +97,23 @@ end
 function Server_PrintInfo()
     for nPlayerID=0, DOTA_MAX_TEAM_PLAYERS-1 do
         if  PlayerResource:IsValidPlayer(nPlayerID)  then
-        if PlayerResource:IsFakeClient(nPlayerID) then
-        else
-            print("=============================")
-            print("PlayerID:"..nPlayerID)
-            print("SteamID64:"..table_SteamID64[nPlayerID])
-            print("Level:"..XP_level[nPlayerID])
-            print("Rank_title:"..XP_level_title_player[nPlayerID])
-            print("XP this level need:"..XP_this_level[nPlayerID])
-            print("XP has in this level:"..XP_has_this_level[nPlayerID])
-            print("XP need to level up:"..XP_need_to_next_level[nPlayerID])
-            print("player_key:"..table_player_key[nPlayerID])
-            print("If able to get XP:"..table_able[nPlayerID])
-            print("XP has:"..table_XP_has[nPlayerID])
-            print("XP to get this game:"..table_XP[nPlayerID])
-            print("Team(2 is Radiant, 3 is Dire):"..PlayerResource:GetTeam(nPlayerID))
-            print("=============================")
-        end
+            if PlayerResource:IsFakeClient(nPlayerID) then
+            else
+                print("=============================")
+                print("PlayerID:"..nPlayerID)
+                print("SteamID64:"..table_SteamID64[nPlayerID])
+                print("Level:"..XP_level[nPlayerID])
+                print("Rank_title:"..XP_level_title_player[nPlayerID])
+                print("XP this level need:"..XP_this_level[nPlayerID])
+                print("XP has in this level:"..XP_has_this_level[nPlayerID])
+                print("XP need to level up:"..XP_need_to_next_level[nPlayerID])
+                print("player_key:"..table_player_key[nPlayerID])
+                print("If able to get XP:"..table_able[nPlayerID])
+                print("XP has:"..table_XP_has[nPlayerID])
+                print("XP to get this game:"..table_XP[nPlayerID])
+                print("Team(2 is Radiant, 3 is Dire):"..PlayerResource:GetTeam(nPlayerID))
+                print("=============================")
+            end
         end
     end
 end

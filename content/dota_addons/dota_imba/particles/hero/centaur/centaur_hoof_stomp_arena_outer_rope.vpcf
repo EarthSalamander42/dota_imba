@@ -36,6 +36,9 @@
 			_class = "C_OP_AlphaDecay"
 			m_flMinAlpha = 0.001
 		},
+		{
+			_class = "C_OP_PositionLock"
+		},
 	]
 	m_Initializers = 
 	[
@@ -44,7 +47,6 @@
 			m_flInitialRadius = 1.0
 			m_bEvenDistribution = true
 			m_flParticlesPerOrbit = 11.0
-			m_nControlPointNumber = 7
 			m_flPitch = 180.0
 			m_nOverrideCP = 1
 		},

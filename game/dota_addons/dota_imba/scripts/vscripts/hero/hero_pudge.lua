@@ -132,7 +132,7 @@ function modifier_flesh_heap:GetModifierTotal_ConstantBlock(keys)
 	if not self:GetParent():IsRealHero() then return 0 end
 
 	-- Only attacks?
-	if inflictor then return 0 end
+	if keys.inflictor then return 0 end
 
 	if self:GetStackCount() < self:GetParent():FindTalentValue("special_bonus_imba_pudge_2","stacks_needed") then return 0 end
 

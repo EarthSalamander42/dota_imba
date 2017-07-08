@@ -52,12 +52,14 @@
 			_class = "C_OP_ColorInterpolate"
 			m_ColorFade = [ 140, 100, 36, 255 ]
 		},
+		{
+			_class = "C_OP_PositionLock"
+		},
 	]
 	m_Initializers = 
 	[
 		{
 			_class = "C_INIT_RingWave"
-			m_nControlPointNumber = 7
 			m_flInitialSpeedMax = 20.0
 			m_flParticlesPerOrbit = 10.0
 			m_bEvenDistribution = true

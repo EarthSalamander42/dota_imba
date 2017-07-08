@@ -37,12 +37,14 @@
 			_class = "C_OP_AlphaDecay"
 			m_flMinAlpha = 0.001
 		},
+		{
+			_class = "C_OP_PositionLock"
+		},
 	]
 	m_Initializers = 
 	[
 		{
 			_class = "C_INIT_RingWave"
-			m_nControlPointNumber = 7
 			m_flParticlesPerOrbit = 200.0
 			m_bEvenDistribution = true
 			m_flInitialRadius = 1.0
