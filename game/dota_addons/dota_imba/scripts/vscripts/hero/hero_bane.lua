@@ -253,9 +253,8 @@ end
 function modifier_imba_enfeeble_debuff_vision_handler:OnIntervalThink()		
 	local enfeeble_stacks =	self.parent:GetModifierStackCount("modifier_imba_enfeeble_debuff",self:GetCaster())			
 
-	-- Whew perry, I salute you. Diminishing returns over stacks!
-	local scale = (self.efficiency ^ (enfeeble_stacks - 1) / math.log(self.efficiency)) - 1 / math.log(self.efficiency) + 1 
-	self.vision_reduction = self.reduction * scale
+	-- Whew perry, I salute you. Diminishing returns over stacks!	
+	self.vision_reduction = self.reduction * (1- (self.efficiency) ^ enfeeble_stacks) / (1-self.efficiency)
 end
 
 function modifier_imba_enfeeble_debuff_vision_handler:DeclareFunctions()

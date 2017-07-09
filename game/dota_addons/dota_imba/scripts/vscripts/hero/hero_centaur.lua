@@ -753,10 +753,7 @@ function modifier_imba_return_passive:OnTakeDamage(keys)
 		-- Only commence on enemies attacking Centaur
 		if attacker:GetTeamNumber() ~= parent:GetTeamNumber() and parent == target 
 		-- Don't affect wards.
-		and not attacker:IsOther()
-		-- Nor buildings
-		and not attacker:IsBuilding()
-		then
+		and not attacker:IsOther() then
 				-- #7 Talent:Return's Bulging Hide gains stacks from all auto attacks, or any kind of damage above 100.
 			if not caster:HasTalent("special_bonus_imba_centaur_7") then 
 				if keys.inflictor then
@@ -785,6 +782,11 @@ function modifier_imba_return_passive:OnTakeDamage(keys)
 										
 			ApplyDamage(damageTable)	
 
+			-- If this is a building, do not grant Bulging Hide stack.
+			if attacker:IsBuilding() then
+				return nil
+			end
+
 			-- Add damage block modifier if parent doesn't have one
 			if not parent:HasModifier(modifier_damage_block) then
 				parent:AddNewModifier(parent, ability, modifier_damage_block, {duration = block_duration})
@@ -795,20 +797,7 @@ function modifier_imba_return_passive:OnTakeDamage(keys)
 			if modifier_damage_block_handler then
 				modifier_damage_block_handler:IncrementStackCount()
 				modifier_damage_block_handler:ForceRefresh()
-			end
-
-			-- -- Gather information for the block message
-			-- local stacks = modifier_damage_block_handler:GetStackCount()
-			-- local block = stacks * damage_block
-			-- local digits = 2 + #tostring(block)				
-
-			-- -- Add block message particle
-			-- local particle_block_msg_fx = ParticleManager:CreateParticle(particle_block_msg, PATTACH_ABSORIGIN_FOLLOW, parent)
-			-- ParticleManager:SetParticleControlEnt(particle_block_msg_fx, 0, parent, PATTACH_POINT_FOLLOW, "attach_head", parent:GetAbsOrigin(), true)
-			-- ParticleManager:SetParticleControl(particle_block_msg_fx, 1, Vector(1, block, 7))
-			-- ParticleManager:SetParticleControl(particle_block_msg_fx, 2, Vector(1, digits, 0))
-			-- ParticleManager:SetParticleControl(particle_block_msg_fx, 3, Vector(192, 192, 192))
-			-- ParticleManager:ReleaseParticleIndex(particle_block_msg_fx)						
+			end			
 		end		
 	end
 end
@@ -1057,8 +1046,8 @@ function modifier_imba_stampede_haste:GetModifierIncomingDamage_Percentage()
 	return nil
 end
 
-function modifier_imba_stampede_haste:GetTenacity()
-	return caster:FindTalentValue("special_bonus_imba_centaur_5")
+function modifier_imba_stampede_haste:GetCustomTenacity()
+	return self:GetCaster():FindTalentValue("special_bonus_imba_centaur_5")
 end
 
 function modifier_imba_stampede_haste:CheckState()
