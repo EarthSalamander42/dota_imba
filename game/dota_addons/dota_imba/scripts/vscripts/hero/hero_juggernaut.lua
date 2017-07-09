@@ -806,7 +806,9 @@ function modifier_imba_omni_slash_caster:BounceAndSlaughter( )
 		for _,enemy in pairs(nearby_enemies) do
 			local previous_position = self.caster:GetAbsOrigin()
 			FindClearSpaceForUnit(self.caster, enemy:GetAbsOrigin() + RandomVector(128), false)
+			
 			self.caster:MoveToTargetToAttack(enemy)
+			
 			local current_position = self.caster:GetAbsOrigin()			
 
 			-- Provide vision of the target for a short duration
@@ -850,6 +852,9 @@ function modifier_imba_omni_slash_caster:OnDestroy()
 		if self.bounce_amt > 1 then
 			local rand = RandomInt(1, 2)
 			self.caster:EmitSound("juggernaut_jug_ability_waste_0"..rand)
+		else
+		-- If jugg has stopped bouncing, stop the animation.
+		self.caster:FadeGesture(ACT_DOTA_OVERRIDE_ABILITY_4)
 		end
 
 		self.ability:SetActivated(true)		
