@@ -2842,7 +2842,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration"				"24"
+				"duration"				"24 24 24 24 26 28 30"
 			}
 		}
 	}
@@ -2865,13 +2865,13 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage"						"10 15 20 25 25 25 25"
+				"damage"						"10 15 20 25 28 31 34"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"375"
+				"radius"				"375 375 375 375 400 425 450"
 			}
 			"03"
 			{
@@ -3042,7 +3042,7 @@
 	//=================================================================================================================
 	"batrider_flaming_lasso"
 	{
-		"AbilityCastRange"				"100 100 100 200 300 400"
+		"AbilityCastRange"				"300 300 300 400 450 500"
 		
 		"AbilityCooldown"				"90 75 60 55 50 45"
 
@@ -3142,7 +3142,7 @@
 	//=================================================================================================================
 	"beastmaster_call_of_the_wild"
 	{
-		"AbilityCastPoint"					"0.0"
+		"AbilityCastPoint"					"0.0"		
 
 		"AbilityCooldown"					"40 30 20 10"
 
@@ -3158,22 +3158,22 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"hawk_hp_tooltip"			"40 60 80 100"
+				"hawk_hp_tooltip"			"60 180 300 420"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"hawk_speed_tooltip"		"250 275 300 325"
+				"hawk_speed_tooltip"		"275 300 325 350"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"hawk_daysight_tooltip"		"500 750 1000 1250"
+				"hawk_daysight_tooltip"		"500 750 1000 1250 1350 1450 1550"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"hawk_nightsight_tooltip"	"500 650 800 950"
+				"hawk_nightsight_tooltip"	"500 650 800 950 1050 1200 1350"
 			}
 			"06"
 			{
@@ -3187,7 +3187,8 @@
 	// Bestmaster: Call of the Wild Boar
 	//=================================================================================================================
 	"beastmaster_call_of_the_wild_boar"
-	{
+	{		
+
 		"AbilityCastPoint"					"0.0"
 
 		"AbilityCooldown"					"40 30 20 10"
@@ -3204,12 +3205,12 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"boar_hp_tooltip"			"200 300 400 500"
+				"boar_hp_tooltip"			"200 400 600 800"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"boar_damage_tooltip"		"15 30 45 60"
+				"boar_damage_tooltip"		"15 45 75 105"
 			}
 			"04"
 			{
@@ -3316,7 +3317,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"15 25 35 45 50 55 60"
+				"bonus_attack_speed"	"15 25 35 45 60 75 90"
 			}
 		}
 	}
@@ -3399,26 +3400,19 @@
 	//=================================================================================================================
 	"brewmaster_thunder_clap"
 	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"5400"							// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
-		"AbilitySound"					"Hero_Brewmaster.ThunderClap"
+		"MaxLevel"						"7"		
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"13"
+		"AbilityCooldown"				"13 13 13 13 12 11 10"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.4 0.4 0.4"
+		"AbilityCastPoint"				"0.4"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"90 105 130 150"		
+		"AbilityManaCost"				"90 105 130 150 160 170 180"		
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -3427,23 +3421,23 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"400 400 400 400"
+				"radius"					"400 400 400 400 475 550 625"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"100 175 250 300"
+				"damage"					"100 175 250 300 350 400 450"
 				"LinkedSpecialBonus"		"special_bonus_unique_brewmaster_2"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movement_slow"				"25 35 45 55"
+				"movement_slow"				"25 35 45 55 55 55 55"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_speed_slow"			"25 35 45 55"
+				"attack_speed_slow"			"25 35 45 55 55 55 55"
 			}			
 			"05"
 			{
@@ -3463,19 +3457,9 @@
 	//=================================================================================================================
 	// Brewmaster: Drunken Haze
 	//=================================================================================================================
-	"brewmaster_drunken_haze"
+	"brewmaster_drunken_haze"	
 	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"5401"							// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
-		"AbilityCastRange"				"850 850 850 850"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
-		"FightRecapLevel"				"1"
-		"AbilitySound"					"Hero_Brewmaster.DrunkenHaze.Cast"
+		"MaxLevel"						"7"		
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -3483,7 +3467,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"8 7 6 5"
+		"AbilityCooldown"				"8 7 6 5 4.5 4 3.5"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -3501,12 +3485,12 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movement_slow"				"10 20 30 40"
+				"movement_slow"				"10 20 30 40 45 50 55"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"miss_chance"				"70"
+				"miss_chance"				"70 70 70 70 80 90 100"
 			}
 		}
 	}
@@ -3516,12 +3500,8 @@
 	//=================================================================================================================
 	"brewmaster_drunken_brawler"
 	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"5402"							// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilitySound"					"Hero_Brewmaster.Brawler.Crit"
-
+		"MaxLevel"							"7"
+		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -3529,22 +3509,22 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"dodge_chance"				"10 15 20 25"
+				"dodge_chance"				"10 15 20 25 28 32 36"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_chance"				"10 15 20 25"
+				"crit_chance"				"10 15 20 25 28 32 36"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_multiplier"			"230"
+				"crit_multiplier"			"230 230 230 230 240 250 260"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"last_proc"			"13 12 11 10"
+				"last_proc"					"13 12 11 10 9.5 9 8.5"
 			}
 		}
 	}
@@ -3554,20 +3534,12 @@
 	//=================================================================================================================
 	"brewmaster_primal_split"
 	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"5403"							// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
-		"FightRecapLevel"				"2"
-		"AbilitySound"					"Hero_Brewmaster.PrimalSplit.Spawn"
 
-		"HasScepterUpgrade"			"1"
+		"MaxLevel"						"6"		
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"140 120 100"
+		"AbilityCooldown"				"140 120 100 80 60 40"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -3575,7 +3547,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"125 150 175"		
+		"AbilityManaCost"				"125 150 175 200 225 250"		
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -3585,7 +3557,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"16 18 20"
+				"duration"					"16 18 20 22 24 26"
 			}
 			"02"
 			{
@@ -3600,22 +3572,13 @@
 	//=================================================================================================================
 	"brewmaster_earth_hurl_boulder"
 	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"5404"							// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_YES_STRONG"
-		"AbilitySound"					"Brewmaster_Earth.Boulder.Cast"
-
-		"AbilityCastRange"				"800 800 800 800"
+		"MaxLevel"						"6"
+		
+		"AbilityCastRange"				"800 800 800 800 850 900 950"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"5"
+		"AbilityCooldown"				"5 5 5 5 4.5 4 3.5"
 		"AbilityCastPoint"				"0.25"
 
 		// Cost
@@ -3629,7 +3592,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"50 100 150"
+				"damage"					"50 100 150 200 250 300"
 			}
 			"02"
 			{
@@ -3649,16 +3612,7 @@
 	//=================================================================================================================
 	"brewmaster_earth_spell_immunity"
 	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"5405"							// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-		}
+		"MaxLevel"						"6"		
 	}
 
 	//=================================================================================================================
@@ -3666,10 +3620,7 @@
 	//=================================================================================================================
 	"brewmaster_earth_pulverize"
 	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"5406"							// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"MaxLevel"						"6"		
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -3678,7 +3629,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_building_damage"		"90 180 270"
+				"bonus_building_damage"	"90 180 270 320 370 420"
 			}
 		}
 	}
@@ -3688,15 +3639,9 @@
 	//=================================================================================================================
 	"brewmaster_storm_dispel_magic"
 	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"5408"							// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"AbilitySound"					"Brewmaster_Storm.DispelMagic"
+		"MaxLevel"						"6"				
 
-		"AbilityCastRange"				"500 500 500 500"
+		"AbilityCastRange"				"500 500 500 500 600 700 800"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -3729,16 +3674,9 @@
 	//=================================================================================================================
 	"brewmaster_storm_cyclone"
 	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"5409"							// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"MaxLevel"						"6"						
 
-		"AbilityCastRange"				"600 600 600 600"
+		"AbilityCastRange"				"600 600 600 600 600 600"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -3761,7 +3699,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration_unit"				"20.0 20.0 20.0 20.0"
+				"duration_unit"				"20.0 20.0 20.0 20.0 20.0 20.0"
 			}
 		}
 	}
@@ -3771,12 +3709,7 @@
 	//=================================================================================================================
 	"brewmaster_storm_wind_walk"
 	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"5410"							// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
-		"AbilitySound"					"Brewmaster_Storm.WindWalk"
+		"MaxLevel"						"6"								
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -3784,7 +3717,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"75 75 75 75"		
+		"AbilityManaCost"				"75 75 75 75 75 75"		
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -3798,7 +3731,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_movement_speeed"		"50 50 50 50"
+				"bonus_movement_speeed"		"50 50 50 55 60 65"
 			}
 			"03"
 			{
@@ -3808,7 +3741,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"fade_time"					"0.6 0.6 0.6 0.6"
+				"fade_time"					"0.6 0.6 0.6 0.55 0.5 0.45"
 			}
 		}
 	}
@@ -3818,13 +3751,7 @@
 	//=================================================================================================================
 	"brewmaster_fire_permanent_immolation"
 	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"5411"							// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"MaxLevel"						"6"								
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -3833,12 +3760,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"15 30 45"
+				"damage"					"15 30 45 70 100 130"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"220 220 220"
+				"radius"					"220 220 220 260 300 340"
 			}
 		}
 	}
@@ -4064,6 +3991,273 @@
 	}
 
 	//=================================================================================================================
+	// Broodmother: Spawn Spiderlings
+	//=================================================================================================================
+	"broodmother_spawn_spiderlings"
+	{
+		"MaxLevel"						"7"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"buff_duration"			"12"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spiderling_duration"	"60"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"70 140 210 280 300 320 340"
+				"LinkedSpecialBonus"	"special_bonus_unique_broodmother_3"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"count"					"1 2 3 4 5 6 7"
+			}	 
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"		"1200"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Broodmother: bonus Spiderling health
+	//=================================================================================================================
+	"special_bonus_unique_broodmother_2"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"525"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Broodmother: bonus Spawn Spiderling damage
+	//=================================================================================================================
+	"special_bonus_unique_broodmother_3"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"50"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Broodmother: bonus Spiderling damage
+	//=================================================================================================================
+	"special_bonus_unique_broodmother_4"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"22"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Broodmother: Poison Sting
+	//=================================================================================================================
+	"broodmother_poison_sting"
+	{
+		"AbilitySpecial"
+		{
+			
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_per_second"		"10"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movement_speed"		"-10"
+			}
+			"03"
+			{		
+				"var_type"				"FIELD_FLOAT"
+				"duration_hero"			"2.5"
+			}			
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"6.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Broodmother: Spawn Spiderites
+	//=================================================================================================================
+	"broodmother_spawn_spiderite"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"spiderite_duration"			"60"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"buff_duration"					"12"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Broodmother: Spin Web
+	//=================================================================================================================
+	"broodmother_spin_web"
+	{
+		"MaxLevel"						"7"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"900"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"count"					"3 5 7 9 10 11 12"
+				"LinkedSpecialBonus"	"special_bonus_unique_broodmother_1"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"heath_regen"			"2 4 6 8 10 12 14"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movespeed"		"20 25 30 35 36 37 38"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"invis_movespeed_tooltip"	"40 50 60 70 72 74 76"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"fade_delay"			"2.0 2.0 2.0 2.0 1.75 1.5 1.25"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_time"			"6"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_charges"			"4"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"charge_restore_time"	"30"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Broodmother: bonus maximum Web count
+	//=================================================================================================================
+	"special_bonus_unique_broodmother_1"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"8"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Broodmother: Incapacitating Bite
+	//=================================================================================================================
+	"broodmother_incapacitating_bite"
+	{
+		"MaxLevel"						"7"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"miss_chance"			"40 50 60 70 80 90 100"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movespeed"		"-16 -26 -36 -46 -49 -52 -55"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"2.0 2.0 2.0 2.0 2.5 3.0 3.5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Broodmother: Insatiable Hunger
+	//=================================================================================================================
+	"broodmother_insatiable_hunger"
+	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+
+		"MaxLevel"						"6"
+
+		"AbilityCastPoint"				"0.0"
+
+		"AbilityCooldown"				"45 40 35 30 25 20"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"70 105 140 160 180 200"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lifesteal_pct"			"70 105 140 160 180 200"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"14 15 16 17 18 19"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	//	Chaos Knight: Chaos Bolt
 	//=================================================================================================================
 	"chaos_knight_chaos_bolt"
@@ -4261,7 +4455,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage_taken"	"36"
+				"bonus_damage_taken"	"36 36 36 36 38 40 42"
 			}
 		}
 	}
@@ -4287,7 +4481,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_max"			"100 200 300 400 425 450 475"
+				"damage_max"			"100 200 300 400 475 550 625"
 			}
 		}
 	}
@@ -4342,13 +4536,13 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_units"				"1 2 3 4 4 4 4"
+				"max_units"				"1 2 3 4 4 4 5"
 				"LinkedSpecialBonus"	"special_bonus_unique_chen_1"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_min"			"1200 1200 1200 1200 1500 1800 2100"
+				"health_min"			"1200 1200 1200 1200 1800 2400 3000"
 				"LinkedSpecialBonus"	"special_bonus_unique_chen_4"
 			}
 		}
@@ -4553,7 +4747,7 @@
 	{
 		"AbilityCooldown"			"20 18 16 14 13 12 11"
 
-		"AbilityDamage"				"80 120 160 200 225 250 275"
+		"AbilityDamage"				"80 120 160 200 250 300 350"
 
 		"MaxLevel"					"7"
 
@@ -4675,7 +4869,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"40 80 120 160 200 240 280"
+				"damage"				"40 80 120 160 220 280 340"
 			}
 			"04"
 			{
@@ -4843,6 +5037,440 @@
 		}
 	}
 
+
+	//=================================================================================================================
+	// Death Prophet: Crypt Swarm
+	//=================================================================================================================
+	"death_prophet_carrion_swarm"
+	{
+		"MaxLevel"						"7"
+
+		"AbilityCastRange"				"1000"
+
+		"AbilityCooldown"				"8 7 6 5 4.5 4.0 3.5"
+
+		"AbilityDamage"					"100 175 250 325 340 355 370"
+
+		"AbilityManaCost"				"105 120 135 150 155 160 165"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"start_radius"			"110 110 110 110 130 150 170"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"end_radius"			"300 300 300 300 320 340 360"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"range"					"810 810 810 810 900 990 1080"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"1100 1100 1100 1100 1250 1400 1550"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Death Prophet: Crypt Swarm cooldown reduction
+	//=================================================================================================================
+	"special_bonus_unique_death_prophet_2"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value"					"1.0"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Death Prophet: Silence
+	//=================================================================================================================
+	"death_prophet_silence"
+	{
+		"MaxLevel"						"7"
+
+		"AbilityCooldown"				"15 14 13 12 11 10 9"
+
+		"AbilityDuration"				"3.0 4.0 5.0 6.0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"425 425 425 425 475 525 575"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"3.0 4.0 5.0 6.0 6.0 6.0 6.0"
+			}
+		}
+	}	
+	 
+	//=================================================================================================================
+	// Death Prophet: Spirit Siphon
+	//=================================================================================================================
+	"death_prophet_spirit_siphon"
+	{
+		"MaxLevel"						"7"
+
+		"AbilityManaCost"				"70 65 60 55 50 45 40"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"14 16 18 20 22 24 26"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_pct"			"1.0 2.5 4.0 5.5 5.75 6.0 6.25"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"haunt_duration"		"6.0 6.0 6.0 6.0 6.5 7.0 7.5"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movement_slow"			"5 10 15 20 20 20 20"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"siphon_buffer"			"250 250 250 250 300 350 400"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_charges"			"4"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"charge_restore_time"	"45"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Death Prophet: Exorcism
+	//=================================================================================================================
+	"death_prophet_exorcism"
+	{
+		"MaxLevel"						"6"
+
+		"AbilityCooldown"				"145 140 135 120 105 90"
+
+		"AbilityDuration"				"35"
+
+		"AbilityManaCost"				"200 300 400 425 450 475"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"700"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spirits"				"12 18 24"
+				"LinkedSpecialBonus"	"special_bonus_unique_death_prophet"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spirit_speed"			"500 500 500 550 600 650"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_distance"			"2000"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"give_up_distance"		"1200"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"min_damage"			"55 65 75 85 95 105"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_damage"			"55 65 75 85 95 105"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"heal_percent"			"25"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"average_damage"		"55 65 75 85 95 105"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"ghost_spawn_rate"		"0.2"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Death Prophet: bonus Exorcism spirits
+	//=================================================================================================================
+	"special_bonus_unique_death_prophet"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"8"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Doom Bringer: Devour
+	//=================================================================================================================
+	"doom_bringer_devour"
+	{
+		"MaxLevel"						"7"
+
+		"AbilityCooldown"				"60 55 50 45 40 35 30"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_gold"			"30 60 90 120 140 160 180"
+				"LinkedSpecialBonus"	"special_bonus_unique_doom_3"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health_per_second"		"100"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Doom: Devour can target Ancients
+	//=================================================================================================================
+	"special_bonus_unique_doom_2"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Doom: bonus Devour gold
+	//=================================================================================================================
+	"special_bonus_unique_doom_3"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"60"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Doom Bringer: Scorched Earth
+	//=================================================================================================================
+	"doom_bringer_scorched_earth"
+	{
+		"MaxLevel"							"7"
+
+		"AbilityCastRange"					"600 600 600 600 700 800 900"
+
+		"AbilityCooldown"					"55 50 45 40 35 30 25"
+
+		"AbilityManaCost"					"60 65 70 75 80 85 90"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_per_second"			"20 30 40 50 65 80 95"
+				"LinkedSpecialBonus"		"special_bonus_unique_doom_4"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"600 600 600 600 700 800 900"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_movement_speed_pct"	"15 17 19 21 25 29 33"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"duration"					"16"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Doom: bonus Scorched Earth DPS
+	//=================================================================================================================
+	"special_bonus_unique_doom_4"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"15"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Doom Bringer: Infernal Blade
+	//=================================================================================================================
+	"doom_bringer_infernal_blade"
+	{
+		"MaxLevel"						"7"
+
+		"AbilityCooldown"				"10 8 6 4 4 4 4"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"burn_damage"			"25 30 35 40 45 50 55"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"burn_damage_pct"		"1.25 2.5 3.75 5.0 5.25 5.5 5.75"
+				"LinkedSpecialBonus"	"special_bonus_unique_doom_1"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"burn_duration"			"6.0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"ministun_duration"		"0.4 0.4 0.4 0.4 0.6 0.8 1.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Doom: bonus Infernal Blade damage per second
+	//=================================================================================================================
+	"special_bonus_unique_doom_1"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value"					"2.25"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Doom Bringer: Doom
+	//=================================================================================================================
+	"doom_bringer_doom"
+	{
+		"MaxLevel"						"6"
+
+		"AbilityCastRange"				"666"
+
+		"AbilityCooldown"				"145 135 125 115 105 95"
+
+		"AbilityManaCost"				"150 200 250 260 270 280"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"15 16 17 18 19 20"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"30 45 60 70 80 90"
+				"LinkedSpecialBonus"	"special_bonus_unique_doom_5"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration_scepter"		"20"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_scepter"		"30 45 60 70 80 90"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"deniable_pct"			"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Doom: bonus Doom DPS
+	//=================================================================================================================
+	"special_bonus_unique_doom_5"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"40"
+			}
+		}
+	}
+
+
 	//=================================================================================================================
 	//	Dragon Knight: Breathe Fire
 	//=================================================================================================================
@@ -4941,7 +5569,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_armor"					"3 6 9 12 13 14 15"
+				"bonus_armor"					"3 6 9 12 16 20 24"
 				"LinkedSpecialBonus"			"special_bonus_unique_dragon_knight"
 				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
 			}
@@ -5015,7 +5643,7 @@
 			"10"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"frost_bonus_attack_speed"		"-20"
+				"frost_bonus_attack_speed"		"-60"
 			}
 			"11"
 			{
@@ -5045,7 +5673,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_attack_speed"		"-20"
+				"bonus_attack_speed"		"-60"
 			}
 			"03"
 			{
@@ -5060,6 +5688,8 @@
 	//=================================================================================================================
 	"earthshaker_fissure"
 	{
+
+		"AbilityCooldown"				"15 15 15 13 11 9"
 		"AbilityCastRange"				"1400 1400 1400 1400 1575 1750 1925"
 
 		"AbilityDuration"				"1.0 1.25 1.5 1.75 1.9 2.05 2.2"
@@ -5145,7 +5775,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"aftershock_range"			"300"
+				"aftershock_range"			"300 300 300 300 350 400 450"
 			}
 		}
 	}
@@ -5276,7 +5906,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"0.75 1.25 1.75 2.25 2.25 2.25 2.25"
+				"stun_duration"			"1 1.5 2 2.5 2.5 2.5 2.5"
 			}
 			"05"
 			{
@@ -5345,7 +5975,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"100 100 100 100 125 150 175"
+				"damage"				"100 130 160 190 210 230 250"
 				"LinkedSpecialBonus"	"special_bonus_unique_earth_spirit"
 			}
 			"08"
@@ -5356,7 +5986,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"slow_duration"			"1.4 1.6 1.8 2.0 2.2 2.4 2.6"
+				"slow_duration"			"1.4 1.6 1.8 2.0 2.25 2.5 2.75"
 			}
 		}
 	}
@@ -5518,7 +6148,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_second"		"50 75 100 100 100 100"
+				"damage_per_second"		"50 75 100 125 150 175"
 			}
 			"03"
 			{
@@ -5589,7 +6219,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stomp_damage"			"80 115 150 185 200 215 230"
+				"stomp_damage"			"80 120 160 200 240 280 320"
 			}
 			"05"
 			{
@@ -5635,7 +6265,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stomp_damage"			"80 115 150 185 200 215 230"
+				"stomp_damage"			"80 120 160 200 240 280 320"
 			}
 			"05"
 			{
@@ -5937,7 +6567,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_hero_damage"				"30 60 90 120 130 140 150"
+				"bonus_hero_damage"				"30 60 90 120 150 180 210"
 				"CalculateSpellDamageTooltip"	"0"
 			}		
 			"03"
@@ -5982,7 +6612,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"absorb_amount"				"100 275 450 625 650 675 700"
+				"absorb_amount"				"100 275 450 625 725 825 925"
 				"LinkedSpecialBonus"		"special_bonus_unique_ember_spirit_1"
 			}				
 			"04"
@@ -5993,7 +6623,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_per_second"			"30 40 50 60 65 70 75"
+				"damage_per_second"			"30 40 50 60 70 80 90"
 			}
 		}
 	}
@@ -6037,7 +6667,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"charge_restore_time"	"30"
+				"charge_restore_time"	"30 30 30 30 28 26 24"
 			}
 			"04"
 			{
@@ -6292,6 +6922,1061 @@
 	}
 
 	//=================================================================================================================
+	// Gyrocopter: Rocket Barrage
+	//=================================================================================================================
+	"gyrocopter_rocket_barrage"
+	{
+		"MaxLevel"						"7"
+
+		"AbilityCooldown"				"7.0 6.5 6.0 5.5 5.0 4.5 4.0"
+
+		"AbilityDuration"				"3 3 3 3 3.3 3.6 4.0"
+
+		"AbilityDamage"					"12 16 20 24 24 24 24"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"400"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"rockets_per_second"	"10"
+			}
+		}
+	}	
+
+	//=================================================================================================================
+	// Gyrocopter: Homing Missile
+	//=================================================================================================================
+	"gyrocopter_homing_missile"
+	{
+		"MaxLevel"						"7"
+
+		"AbilityCooldown"				"20 17 14 11 10 9 8"
+
+		"AbilityDamage"					"225 350 475 600 650 700 750"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hits_to_kill_tooltip"		"3 4 5 6 6 6 6"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"tower_hits_to_kill_tooltip"	"6 8 10 12 12 12 12"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"stun_duration"				"2.2 2.4 2.6 2.8 2.8 2.8 2.8"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"attack_speed_bonus_pct"	"400"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"min_damage"				"50"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_distance"				"1800"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"pre_flight_time"			"3 3 3 3 2 1 0"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hero_damage"				"34 26 21 17 17 17 17"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"speed"						"340"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"acceleration"				"20 25 30 35 45 55 65"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"enemy_vision_time"			"4"
+			}
+			"12"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"charge_restore_time"		"20 17 14 11 10 9 8"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Gyrocopter: bonus Homing Missile charges
+	//=================================================================================================================
+	"special_bonus_unique_gyrocopter_1"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"3"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Gyrocopter: Flak Cannon
+	//=================================================================================================================
+	"gyrocopter_flak_cannon"
+	{
+		"MaxLevel"						"7"
+
+		"AbilityCooldown"				"30 30 30 30 25 20 15"
+
+		"AbilityDuration"				"15"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"1000"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_attacks"			"4 5 6 7 8 9 10"
+				"LinkedSpecialBonus"	"special_bonus_unique_gyrocopter_2"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"		"800"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"fire_rate"				"0.7"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"scepter_radius"		"1000"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Gyrocopter: bonus Flak Cannon attacks
+	//=================================================================================================================
+	"special_bonus_unique_gyrocopter_2"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"10"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Gyrocopter: Call Down
+	//=================================================================================================================
+	"gyrocopter_call_down"
+	{
+		"MaxLevel"							"6"
+
+		"AbilityCastRange"					"1000 1000 1000 1500 2000 2500"
+
+		"AbilityCooldown"					"55 50 45 40 35 30"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow_duration_first"		"4"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow_duration_second"		"2"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_first"				"200 275 350 375 400 425"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_second"				"200 275 350 375 400 425"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow_first"				"30 30 30 50 70 90"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow_second"				"60 60 60 70 80 90"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"600"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"range_scepter"				"0"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_second_scepter"		"200 275 350 375 400 425"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Huskar: Inner Vitality
+	//=================================================================================================================
+	"huskar_inner_vitality"
+	{
+		"MaxLevel"						"7"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"heal"					"12 16 20 24 28 32 36"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"attrib_bonus"			"0.05 0.1 0.15 0.2 0.2 0.2 0.2"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"hurt_attrib_bonus"		"0.2 0.4 0.6 0.8 0.9 1.0 1.1"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"hurt_percent"			"0.35 0.35 0.35 0.35 0.40 0.45 0.50"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"tooltip_attrib_bonus"			"5 10 15 20 20 20 20"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"tooltip_hurt_attrib_bonus"		"20 40 60 80 90 100 110"
+			}
+		}
+	}	
+	
+	//=================================================================================================================
+	// Huskar: Burning Spear
+	//=================================================================================================================
+	"huskar_burning_spear"
+	{
+		"MaxLevel"								"7"
+
+		"AbilityDuration"						"8 8 8 8 9 10 11"
+
+		"AbilityDamage"							"8 12 16 20 22 24 25"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"health_cost"					"15"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Huskar: bonus Burning Spear DPS
+	//=================================================================================================================
+	"special_bonus_unique_huskar_2"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"value"							"5"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Huskar: Berserker's Blood
+	//=================================================================================================================
+	"huskar_berserkers_blood"
+	{
+		"MaxLevel"								"7"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"maximum_attack_speed"			"220 260 300 340 380 420 460"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"maximum_resistance"			"30 40 50 60 65 70 75"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"hp_threshold_max"				"10 10 10 10 12 14 16"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Huskar: Life Break
+	//=================================================================================================================
+	"huskar_life_break"
+	{
+		"MaxLevel"							"6"
+
+		"AbilityCooldown"					"12 11 10 9 8 7"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"health_cost_percent"		"0.35"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"health_damage"				"0.35 0.4 0.45 0.5 0.55 0.6"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"health_damage_scepter"		"0.65"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"charge_speed"				"1000"
+			}
+			"05"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"tooltip_health_damage"				"35 40 45 50 55 60"
+			}
+			"06"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"tooltip_health_cost_percent"		"35"
+				"CalculateSpellDamageTooltip"		"0"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movespeed"					"-40 -50 -60 -65 -70 -75"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow_durtion_tooltip"		"4 5 6 6 6 6"
+			}
+			"09"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"tooltip_health_damage_scepter"		"65"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cooldown_scepter"			"3"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Huskar: bonus Life Break cast range
+	//=================================================================================================================
+	"special_bonus_unique_huskar"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"550"
+			}
+		}
+	}
+
+
+	//=================================================================================================================
+	// Invoker: Quas
+	//=================================================================================================================
+	"invoker_quas"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"health_regen_per_instance"		"2 4 6 8 12 16 20"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Invoker: Wex
+	//=================================================================================================================
+	"invoker_wex"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"attack_speed_per_instance"		"3 6 9 12 16 20 25"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"move_speed_per_instance"		"3 4 5 6 7 8 9"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Invoker: Exort
+	//=================================================================================================================
+	"invoker_exort"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_damage_per_instance"		"4 8 12 18 24 30 40"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Invoker: Invoke
+	//=================================================================================================================
+	"invoker_invoke"
+	{
+		"RequiredLevel"						"0"
+
+		"MaxLevel"							"7"
+
+		"AbilityCooldown"					"6 2 2 2 2 2 2"
+
+		"AbilityManaCost"					"60"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_invoked_spells"		"2"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cooldown_scepter"			"2 0 0 0 0 0 0"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mana_cost_scepter"			"0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_intellect"			"0 0 8 10 12 14 16"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"magic_resistance_pct"		"0 0 0 8 12 16 20"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_spellpower"			"0 0 0 0 6 9 12"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"spell_lifesteal"			"0 0 0 0 0 15 20"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cooldown_reduction_pct"	"0 0 0 0 0 0 15"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Invoker: Cold Snap
+	//=================================================================================================================
+	"invoker_cold_snap"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"3 3.5 4.0 4.5 5.0 5.5 6.0 6.5"
+				"levelkey"				"quaslevel"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"freeze_duration"		"0.4"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"freeze_cooldown"		"0.65 0.6 0.55 0.5 0.45 0.4 0.35 0.3"
+				"levelkey"				"quaslevel"	
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"freeze_damage"			"10 20 30 40 50 60 70 80"
+				"levelkey"				"quaslevel"	
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_trigger"		"10"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Invoker: Ghost Walk
+	//=================================================================================================================
+	"invoker_ghost_walk"
+	{
+		"AbilityManaCost"				"100"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"100"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"area_of_effect"		"625"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"enemy_slow"			"-20 -25 -30 -35 -40 -50 -60 -70"
+				"levelkey"				"quaslevel"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"self_slow"				"-15 -10 -5 0 10 20 30 40"
+				"levelkey"				"wexlevel"
+			}			
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"aura_fade_time"		"2.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Invoker: Tornado
+	//=================================================================================================================
+	"invoker_tornado"
+	{
+		"AbilityCastRange"				"3000"
+			
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"travel_distance"		"1000 1500 2000 2500 3000 4000 5000 6000"
+				"levelkey"				"wexlevel"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"travel_speed"			"1200"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"area_of_effect"		"275"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_distance"		"400"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"end_vision_duration"	"3"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"lift_duration"			"0.8 1.1 1.4 1.7 2.0 2.3 2.6 2.9"
+				"levelkey"				"quaslevel"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"base_damage"			"100"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"quas_damage"			"0"
+				"levelkey"				"quaslevel"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"wex_damage"			"50 100 150 200 250 300 350 400"
+				"levelkey"				"wexlevel"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Invoker: EMP
+	//=================================================================================================================
+	"invoker_emp"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"delay"					"2.9"
+				"levelkey"				"wexlevel"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"area_of_effect"		"775"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_burned"			"125 200 300 400 500 600 700 800"
+				"levelkey"				"wexlevel"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_per_mana_pct"	"50"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Invoker: Alacrity
+	//=================================================================================================================
+	"invoker_alacrity"
+	{
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_BUILDING"
+
+		"AbilityCastRange"				"900"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"15 30 45 60 80 100 120 140"
+				"levelkey"				"wexlevel"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"15 30 45 60 80 100 120 140"
+				"levelkey"				"exortlevel"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"12"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Invoker: Chaos Meteor
+	//=================================================================================================================
+	"invoker_chaos_meteor"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"land_time"				"1.3"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"area_of_effect"		"325"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"travel_distance"		"800 1200 1600 2000 2500 3000 3500 4000"
+				"levelkey"				"wexlevel"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"travel_speed"			"350"
+			}			
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_interval"		"0.5"
+				"CalculateSpellDamageTooltip"	"0"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_distance"		"500"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"end_vision_duration"	"3.0"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"main_damage"			"60 80 100 120 145 170 195 220"
+				"levelkey"				"exortlevel"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"burn_duration"			"3.0"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"burn_dps"				"15 20 25 30 36 42 48 54"
+				"levelkey"				"exortlevel"
+				"CalculateSpellDamageTooltip"	"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Invoker: Sun Strike
+	//=================================================================================================================
+	"invoker_sun_strike"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"delay"					"1.7"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"area_of_effect"		"175"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"125 200 275 350 430 515 605 700"
+				"levelkey"				"exortlevel"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_distance"		"500"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"vision_duration"		"4.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Invoker: Forge Spirit
+	//=================================================================================================================
+	"invoker_forge_spirit"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spirit_damage"			"28 37 46 55 64 76 88 100"
+				"levelkey"				"exortlevel"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spirit_mana"			"150 200 250 300 350 400 450 500"
+				"levelkey"				"exortlevel"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spirit_armor"			"3 4 5 6 8 10 12"
+				"levelkey"				"exortlevel"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spirit_attack_range"	"300 375 450 525 600 675 750 825"
+				"levelkey"				"quaslevel"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spirit_hp"				"300 400 500 600 700 800 900 1000"
+				"levelkey"				"quaslevel"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spirit_duration"		"40 45 50 55 60 70 80 90"
+				"levelkey"				"quaslevel"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Invoker: Forged Spirit: Melting Strike
+	//=================================================================================================================
+	"forged_spirit_melting_strike"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"armor_removed"			"1"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_armor_removed"		"12"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Invoker: Ice Wall
+	//=================================================================================================================
+	"invoker_ice_wall"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"3.5 5.0 6.5 8.0 9.5 11.0 12.5 14.0"
+				"levelkey"				"quaslevel"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow"					"-20 -40 -60 -80 -100 -120 -140 -160"
+				"levelkey"				"quaslevel"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"slow_duration"			"2.0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_per_second"		"12 18 24 30 40 50 60 70"
+				"levelkey"				"exortlevel"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"wall_place_distance"	"200"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"num_wall_elements"		"21"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"wall_element_spacing"	"80"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"wall_element_radius"	"105"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Invoker: Deafening Blast
+	//=================================================================================================================
+	"invoker_deafening_blast"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"travel_distance"		"1400"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"travel_speed"			"1400"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius_start"			"225"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius_end"			"275"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"end_vision_duration"	"3.0"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"50 100 150 200 250 300 360 420"
+				"levelkey"				"exortlevel"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"knockback_duration"	"0.6 0.8 1.0 1.2 1.4 1.6 1.8 2.0"
+				"levelkey"				"quaslevel"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"disarm_duration"		"1.25 2.0 2.75 3.5 4.25 5.0 5.75 6.5"
+				"levelkey"				"wexlevel"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Invoker: multiple Forge Spirit summoning
+	//=================================================================================================================
+	"special_bonus_unique_invoker_1"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"3"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Invoker: 360 Deafening Blast
+	//=================================================================================================================
+	"special_bonus_unique_invoker_2"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Special Bonus
+	//=================================================================================================================
+	"special_bonus_unique_invoker_3"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"18"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Keeper of the Light: Illuminate
 	//=================================================================================================================
 	"keeper_of_the_light_illuminate"
@@ -6309,7 +7994,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_second"		"120 120 120 120 130 140 150"
+				"damage_per_second"		"120 120 120 120 145 170 195"
 			}
 			"02"
 			{
@@ -6397,7 +8082,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_second"		"120 120 120 120 130 140 150"
+				"damage_per_second"		"120 120 120 120 145 170 195"
 			}
 			"02"
 			{
@@ -6504,7 +8189,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"mana_restore"			"100 200 300 400 425 450 475"
+				"mana_restore"			"100 200 300 400 550 700 850"
 				"LinkedSpecialBonus"	"special_bonus_unique_keeper_of_the_light_2"
 			}			
 			"02"
@@ -6613,6 +8298,198 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"knockback_duration"	"0.4"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Legion Commander: Overwhelming Odds
+	//=================================================================================================================
+	"legion_commander_overwhelming_odds"
+	{
+		"MaxLevel"						"7"
+
+		"AbilityCooldown"				"15 15 15 15 14 13 12"
+
+		"AbilityManaCost"				"100 110 120 130 135 140 145"
+
+		"AbilitySpecial"
+		{			
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"40 60 80 100 120 140 160"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_per_unit"		"15 20 25 30 32 34 36"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_per_hero"		"35 65 95 125 130 135 140"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"illusion_dmg_pct"		"100"
+				"CalculateSpellDamageTooltip"	"0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_speed_creeps"	"3"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_speed_heroes"	"9 9 9 9 10 11 12"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"7 7 7 7 8 9 10"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"330 330 330 330 380 430 480"
+			}
+		}
+	}
+	
+
+	//=================================================================================================================
+	// Legion Commander: Press the Attack
+	//=================================================================================================================
+	"legion_commander_press_the_attack"
+	{
+		"MaxLevel"						"7"
+
+		"AbilityCooldown"				"16 15 14 13 12 11 10"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"5 5 5 5 6 7 8"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"attack_speed"			"70 95 120 145 150 155 160"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hp_regen"				"35 45 55 65 70 75 80"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Legion Commander: Press the Attack cooldown reduction
+	//=================================================================================================================
+	"special_bonus_unique_legion_commander_2"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Legion Commander: Moment of Courage
+	//=================================================================================================================
+	"legion_commander_moment_of_courage"
+	{
+		"MaxLevel"							"7"
+
+		"AbilityCooldown"					"1.8 1.2 0.6 0.0 0.0 0.0 0.0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"trigger_chance"			"25 25 25 25 30 35 40"
+				"LinkedSpecialBonus"		"special_bonus_unique_legion_commander_3"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"buff_duration"				"1.0"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hp_leech_percent"			"55 65 75 85 90 95 100"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Legion Commander: bonus Moment of Courage proc chance
+	//=================================================================================================================
+	"special_bonus_unique_legion_commander_3"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"10"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Legion Commander: Duel
+	//=================================================================================================================
+	"legion_commander_duel"
+	{
+		"MaxLevel"						"6"
+
+		"AbilityCooldown"				"50 44 38 32 26 20"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"4.0 4.75 5.5 6.0 6.5 7.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration_scepter"		"8.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"reward_damage"			"12 16 20 24 28 32"
+				"LinkedSpecialBonus"	"special_bonus_unique_legion_commander"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Legion Commander: bonus Duel damage
+	//=================================================================================================================
+	"special_bonus_unique_legion_commander"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"32"
 			}
 		}
 	}
@@ -6833,7 +8710,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_speed_bonus"	"40 50 60 70 80 90 100"
+				"attack_speed_bonus"	"40 50 60 70 85 100 115"
 			}
 			"02"
 			{
@@ -6997,50 +8874,33 @@
 	//=================================================================================================================
 	"lone_druid_spirit_bear"
 	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"					"5412"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"DisplayAdditionalHeroes"	"1"
-		"AbilitySound"					"Hero_LoneDruid.SpiritBear.Cast"
-
-		"HasScepterUpgrade"			"1"
+		"MaxLevel"						"7"		
 		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.5 0.5 0.5 0.5"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"120.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"75 75 75 75"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"120 120 120 120 90 60 30"
+		
+		"AbilityManaCost"				"75"
+		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bear_hp"					"1400 1800 2300 2700"
+				"bear_hp"					"1400 1800 2300 2700 3500 4200 4900"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bear_regen_tooltip"	"2 3 4 5"
+				"bear_regen_tooltip"		"2 3 4 5 7 9 11"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"bear_bat"					"1.75 1.65 1.55 1.45"
+				"bear_bat"					"1.65 1.55 1.45 1.35 1.32 1.3 1.28"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bear_armor"				"3 4 5 6"
+				"bear_armor"				"3 4 5 6 8 10 12"
 			}
 			"05"
 			{
@@ -7050,7 +8910,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"cooldown_scepter"			"120.0"
+				"cooldown_scepter"			"120 120 120 120 90 60 30"
 			}
 		}
 	}
@@ -7060,17 +8920,11 @@
 	//=================================================================================================================
 	"lone_druid_rabid"
 	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"					"5413"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
-		"FightRecapLevel"				"1"
-		"AbilitySound"					"Hero_LoneDruid.Rabid"
+		"MaxLevel"						"7"				
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.5 0.5 0.5 0.5"
+		"AbilityCastPoint"				"0.5"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -7086,13 +8940,13 @@
 		{
 			"01"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"bonus_attack_speed"		"20 30 40 50"		
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"20 30 40 50 65 80 95"		
 			}
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"bonus_move_speed"	"10 15 20 25"
+				"bonus_move_speed"	"10 15 20 25 28 31 34"
 			}
 			"03"
 			{
@@ -7107,13 +8961,7 @@
 	//=================================================================================================================
 	"lone_druid_savage_roar"
 	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"5414"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
-		"AbilitySound"					"Hero_LoneDruid.SavageRoar.Cast"
+		"MaxLevel"						"7"		
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -7121,7 +8969,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"38 32 26 20"
+		"AbilityCooldown"				"38 32 26 20 18 16 14"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -7134,7 +8982,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"325"
+				"radius"				"325 325 325 325 350 375 400"
 			}
 			"02"
 			{
@@ -7144,7 +8992,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"1.2 1.6 2.0 2.4"
+				"duration"				"1.2 1.6 2.0 2.4 2.6 2.8 3"
 			}
 		}
 	}
@@ -7153,13 +9001,8 @@
 	// Lone Druid: Savage Roar Bear
 	//=================================================================================================================
 	"lone_druid_savage_roar_bear"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"5687"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+	{		
+		"MaxLevel"						"7"		
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -7167,7 +9010,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"38 32 26 20"
+		"AbilityCooldown"				"38 32 26 20 18 16 14"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -7180,7 +9023,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"325"
+				"radius"				"325 325 325 325 350 375 400"
 			}
 			"02"
 			{
@@ -7190,7 +9033,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"1.2 1.6 2.0 2.4"
+				"duration"				"1.2 1.6 2.0 2.4 2.6 2.8 3"
 			}
 		}
 	}
@@ -7200,13 +9043,7 @@
 	//=================================================================================================================
 	"lone_druid_true_form"
 	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"5415"							// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
-		"AbilitySound"					"Hero_LoneDruid.TrueForm.Cast"
+		"MaxLevel"						"6"		
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -7227,17 +9064,17 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"base_attack_time"			"1.5 1.5 1.5"
+				"base_attack_time"			"1.5 1.5 1.5 1.45 1.42 1.4"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_armor"				"4 6 8"
+				"bonus_armor"				"4 6 8 8 8 8"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_hp"					"300 600 900"
+				"bonus_hp"					"300 600 900 1050 1200 1350"
 			}
 			"04"
 			{
@@ -7257,23 +9094,18 @@
 	//=================================================================================================================
 	"lone_druid_true_form_druid"
 	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"5416"							// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"MaxLevel"						"6"				
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0 0 0"
+		"AbilityCastPoint"				"0"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0.0 0.0 0.0"
+		"AbilityCooldown"				"0"
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"25 25 25"		
+		"AbilityManaCost"				"25"		
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -7291,26 +9123,11 @@
 	// Lone Druid: True Form Battle Cry
 	//=================================================================================================================
 	"lone_druid_true_form_battle_cry"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"					"5417"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_TYPE_ULTIMATE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
-		"MaxLevel"						"3"
-		"AbilitySound"					"Hero_LoneDruid.BattleCry"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.5 0.5 0.5"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"60.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"50 50 50"
+	{		
+		
+		"AbilityCooldown"				"60 60 60 55 50 45"	
+		
+		"AbilityManaCost"				"50"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -7319,22 +9136,22 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"bonus_damage"		"70 100 130"		
+				"bonus_damage"		"70 100 130 145 160 175"		
 			}
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"bonus_armor"		"10 15 20"
+				"bonus_armor"		"10 15 20 20 20 20"
 			}
 			"03"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"cry_duration"		"6.0"
+				"cry_duration"		"6 6 6 7 8 9"
 			}
 			"04"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"range"		"1000"
+				"range"				"1000"
 			}
 		}
 	}
@@ -7344,26 +9161,11 @@
 	// Lone Druid: Spirit Bear Return
 	//=================================================================================================================
 	"lone_druid_spirit_bear_return"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"					"5418"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	{		
+		"AbilityCooldown"				"5.0"	
 		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"5.0"
-	
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"0"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
+		
 		"AbilitySpecial"
 		{
 			"01"
@@ -7563,7 +9365,7 @@
 	{
 		"MaxLevel"							"6"
 
-		"AbilityCooldown"					"140 140 140 130 120 110"
+		"AbilityCooldown"					"140 140 140 120 100 80"
 
 		"AbilityManaCost"					"150 200 250 275 300 325"
 		
@@ -7709,12 +9511,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"snake_damage"			"80 120 160 200 220 240 260"
+				"snake_damage"			"80 120 160 200 240 280 320"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"snake_mana_steal"		"20"
+				"snake_mana_steal"		"20 20 20 20 60 100 140"
 			}
 			"06"
 			{
@@ -7756,7 +9558,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_mana"		"1.6 2.0 2.4 2.8 3.2 3.6 4.0"
+				"damage_per_mana"		"1.6 2.0 2.4 2.8 3.5 4.2 4.8"
 			}
 			"02"
 			{
@@ -7773,7 +9575,7 @@
 	{
 		"MaxLevel"							"6"
 
-		"AbilityCooldown"					"90 90 90 85 80 75"
+		"AbilityCooldown"					"90 90 90 80 70 60"
 
 		"AbilityManaCost"					"200 160 120 80 40 0"
 
@@ -8478,12 +10280,12 @@
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"outgoing_damage"						"-60 -60 -50 -50 -50 -40 -40"
+				"outgoing_damage"						"-60 -60 -50 -50 -40 -35 -30"
 			}
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"outgoing_damage_tooltip"				"40 40 50 50 50 60 60"
+				"outgoing_damage_tooltip"				"40 40 50 50 60 65 70"
 			}
 			"04"
 			{
@@ -10174,7 +11976,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"drain_rate"			"12 20 28 36 39 42 45"
+				"drain_rate"			"12 20 28 36 42 48 54"
 				"LinkedSpecialBonus"	"special_bonus_unique_razor"
 			}
 			"04"
@@ -10351,7 +12153,7 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"hero_attack_damage_reduction"	"25 30 35 40 55 70 85"
+				"hero_attack_damage_reduction"	"25 30 35 40 60 80 100"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"04"
@@ -10397,7 +12199,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"radius"						"900 900 900 900 1800 3600 7200"
+				"radius"						"900"
 			}
 		}
 	}
@@ -10500,12 +12302,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage_taken"	"20 30 40 50 53 56 60"
+				"bonus_damage_taken"	"20 30 40 50 60 70 80"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"450 450 450 450 380 310 240"
+				"radius"				"450"
 			}
 			"03"
 			{
@@ -10664,29 +12466,17 @@
 	//=================================================================================================================
 	"shadow_shaman_ether_shock"
 	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"					"5078"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"FightRecapLevel"				"1"
-		"AbilitySound"					"Hero_ShadowShaman.EtherShock"
+		"MaxLevel"						"7"				
 		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"600"
-		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+		"AbilityCastRange"				"600 600 600 600 675 750 825"
+
+		"AbilityCastPoint"				"0.3"		
 		
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"8.0 8.0 8.0 8.0"
+		"AbilityCooldown"				"8.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"95 105 135 160"
+		"AbilityManaCost"				"95 105 135 160 185 210 235"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -10710,12 +12500,12 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"targets"					"1 3 5 7"
+				"targets"					"1 3 5 7 8 9 10"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"140 200 260 320"
+				"damage"					"140 200 260 320 340 360 380"
 			}
 		}
 	}
@@ -10724,30 +12514,17 @@
 	// Shadow Shaman: Voodoo
 	//=================================================================================================================
 	"shadow_shaman_voodoo"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"					"5079"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
-		"FightRecapLevel"				"1"
-		"AbilitySound"					"Hero_ShadowShaman.Hex.Target"
+	{		
+		"MaxLevel"						"7"
 
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"500"
-		"AbilityCastPoint"				"0 0 0 0"
+		"AbilityCastRange"				"500 500 500 500 550 600 650"
+		"AbilityCastPoint"				"0 0 0 0"		
 		
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"13"
+		"AbilityCooldown"				"13 13 13 13 12 11 10"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"110 140 170 200"
+		"AbilityManaCost"				"110 140 170 200 225 250 275"
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -10761,7 +12538,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"1.25 2.0 2.75 3.5"
+				"duration"					"1.25 2.0 2.75 3.5 3.75 4 4.25"
 			}
 		}
 	}
@@ -10771,25 +12548,14 @@
 	//=================================================================================================================
 	"shadow_shaman_shackles"
 	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"					"5080"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_YES_STRONG"
-		"FightRecapLevel"				"1"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"400"
-		"AbilityCastPoint"				"0.3 0.3 0.3 0.3"
+		"MaxLevel"						"7"		
+		
+		"AbilityCastRange"				"400 400 400 400 450 500 550"
+		"AbilityCastPoint"				"0.3"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityChannelTime"			"2.75 3.5 4.25 5.0"
+		"AbilityChannelTime"			"2.75 3.5 4.25 5.0 5.25 5.5 5.75"
 		"AbilityCooldown"				"10"
 		
 		// Cost
@@ -10813,7 +12579,7 @@
 			"03"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"channel_time"		"2.75 3.5 4.25 5.0"
+				"channel_time"		"2.75 3.5 4.25 5.0 5.25 5.5 5.75"
 				"LinkedSpecialBonus"	"special_bonus_unique_shadow_shaman_2"
 			}
 		}
@@ -10823,30 +12589,20 @@
 	// Shadow Shaman: Mass Serpent Ward
 	//=================================================================================================================
 	"shadow_shaman_mass_serpent_ward"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"					"5081"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"FightRecapLevel"				"2"
-		"HasScepterUpgrade"			"1"
-		"AbilitySound"					"Hero_ShadowShaman.SerpentWard"
+	{		
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"550"
+		"AbilityCastRange"				"550 550 550 600 650 700"
 		"AbilityCastPoint"				"0.3"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"120"
+		"AbilityCooldown"				"120 120 120 100 80 60"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"200 350 600"
+		"AbilityManaCost"				"200 350 600 650 700 750"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -10854,13 +12610,13 @@
 		{
 			"01"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"ward_count"		"10"
+				"var_type"				"FIELD_INTEGER"
+				"ward_count"			"10 12 14"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_tooltip"			"40 70 100"
+				"damage_tooltip"		"50 90 140"
 			}
 			"03"
 			{
@@ -10870,7 +12626,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"scepter_range"			"225"
+				"scepter_range"			"325"
 			}
 		}
 	}
@@ -11000,17 +12756,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"agi_gain"				"3 3 3 3 4 5 5"
+				"agi_gain"				"3"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stat_loss"				"1 1 1 1 1 1 2"
+				"stat_loss"				"1"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration"				"15 30 60 120 120 120 120"
+				"duration"				"15 30 60 120 140 160 180"
 			}
 		}
 	}
@@ -11083,7 +12839,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"movement_speed"		"800 900 1000 1100 1400 1700 2000"
+				"movement_speed"		"800 900 1000 1100 1250 1400 1550"
 				"LinkedSpecialBonus"	"special_bonus_unique_spirit_breaker_2"
 			}
 			"02"
@@ -11136,17 +12892,17 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_movespeed_pct"		"9 12 15 18 19 20 21"
+				"bonus_movespeed_pct"		"9 12 15 18 20 22 24"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"aura_radius"				"900 900 900 900 1800 3600 7200"
+				"aura_radius"				"900"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_movespeed_pct_extra"	"9"
+				"bonus_movespeed_pct_extra"	"9 9 9 9 12 15 18"
 			}
 			"04"
 			{
@@ -11163,7 +12919,7 @@
 	{
 		"MaxLevel"						"7"
 
-		"AbilityCooldown"				"1.5 1.5 1.5 1.5 1.0 0.5 0.0"
+		"AbilityCooldown"				"1.5"
 
 		"AbilitySpecial"
 		{
@@ -11249,9 +13005,9 @@
 	{
 		"MaxLevel"						"6"
 
-		"AbilityCastRange"				"700 700 700 1200 3000 25000"
+		"AbilityCastRange"				"700 700 700 1200 1700 2300"
 
-		"AbilityCastRangeBuffer"		"10000"
+		"AbilityCastRangeBuffer"		"3500"
 
 		"AbilityCooldown"				"70 65 60 55 40 35"
 
@@ -11272,7 +13028,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"tooltip_range"			"700 700 700 1200 3000 25000"
+				"tooltip_range"			"700 700 700 1200 1700 2300"
 			}
 			"04"
 			{
@@ -11299,7 +13055,7 @@
 	{
 		"MaxLevel"						"7"
 
-		"AbilityDuration"				"12 12 12 12 28 44 60"
+		"AbilityDuration"				"12"
 
 		"AbilitySpecial"
 		{
@@ -11397,9 +13153,9 @@
 	{
 		"MaxLevel"						"7"
 
-		"AbilityDuration"				"0.6 0.6 0.6 0.6 0.73 0.86 1.0"
+		"AbilityDuration"				"0.6 0.6 0.6 0.6 0.8 1 1.2"
 
-		"AbilityDamage"					"40 60 80 100 110 120 130"
+		"AbilityDamage"					"40 60 80 100 125 150 175"
 
 		"AbilitySpecial"
 		{
@@ -11421,7 +13177,7 @@
 			"04"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"tooltip_duration"				"0.6 0.6 0.6 0.6 0.73 0.86 1.0"
+				"tooltip_duration"				"0.6 0.6 0.6 0.6 0.8 0.1 1.2"
 			}
 		}
 	}
@@ -11504,7 +13260,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"30 50 70 90 100 110 120"
+				"bonus_damage"				"30 50 70 90 115 140 165"
 			}
 			"03"
 			{
@@ -11782,12 +13538,12 @@
 			"04"
 			{
 				"var_type"									"FIELD_INTEGER"
-				"illusion_incoming_damage"					"300 300 300 300 250 200 150"
+				"illusion_incoming_damage"					"300 300 300 300 225 150 75"
 			}
 			"05"
 			{
 				"var_type"									"FIELD_INTEGER"
-				"illusion_incoming_damage_total_tooltip"	"400 400 400 400 350 300 250"
+				"illusion_incoming_damage_total_tooltip"	"400 400 400 400 325 250 175"
 			}		
 		}
 	}
@@ -11883,6 +13639,176 @@
 	}
 
 	//=================================================================================================================
+	// Tidehunter: Gush
+	//=================================================================================================================
+	"tidehunter_gush"
+	{
+		"MaxLevel"						"7"
+
+		"AbilityCooldown"				"12 12 12 12 11 10 9"
+
+		"AbilityDuration"				"4.0"
+
+		"AbilityDamage"					"115 170 225 280 300 320 340"
+
+		"AbilityManaCost"				"90 100 110 120 125 130 135"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"		"2500"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movement_speed"		"-40"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"negative_armor"		"4 5 6 7 8 9 10"
+				"LinkedSpecialBonus"	"special_bonus_unique_tidehunter"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed_scepter"			"1600"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aoe_scepter"			"350"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cooldown_scepter"		"7"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_range_scepter"	"1800"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Tidehunter: increased Gush armor reduction
+	//=================================================================================================================
+	"special_bonus_unique_tidehunter"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Tidehunter: Kraken Shell
+	//=================================================================================================================
+	"tidehunter_kraken_shell"
+	{
+		"MaxLevel"						"7"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_reduction"		"18 30 42 54 60 66 72"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_cleanse"		"600 550 500 450 425 400 375"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_reset_interval"	"6"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Tidehunter: Anchor Smash
+	//=================================================================================================================
+	"tidehunter_anchor_smash"
+	{
+		"MaxLevel"						"7"
+
+		"AbilityCastRange"				"375 375 375 375 410 445 480"
+
+		"AbilityCooldown"				"7 6 5 4 4 4 4"
+
+		"AbilityDamage"					"100 150 200 250 275 300 325"
+
+		"AbilityManaCost"				"30 40 50 60 63 66 70"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_reduction"		"-45 -50 -55 -60 -65 -70 -75"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"reduction_duration"	"6 6 6 6 7 8 9"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"375 375 375 375 410 445 480"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Tidehunter: Ravage
+	//=================================================================================================================
+	"tidehunter_ravage"
+	{
+		"MaxLevel"					"6"
+
+		"AbilityCastRange"			"1025 1025 1025 1175 1325 1475"
+
+		"AbilityCastPoint"			"0.0"
+		
+		"AbilityCooldown"			"150 140 130 110 90 70"
+
+		"AbilityDamage"				"240 330 420 460 500 540"
+
+		"AbilityManaCost"			"150 225 325 340 355 370"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"1025 1025 1025 1175 1325 1475"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"speed"				"775 775 775 1000 1225 1450"
+			}
+			"03"
+			{	
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"2.2 2.5 2.8 3.0 3.2 3.4"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Timbersaw: Whirling Death
 	//=================================================================================================================
 	"shredder_whirling_death"
@@ -11903,7 +13829,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"whirling_damage"			"110 165 220 275 300 325 350"
+				"whirling_damage"			"110 165 220 275 325 375 425"
 			}
 			"03"
 			{
@@ -11913,7 +13839,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stat_loss_pct"				"15 15 15 15 17 19 21"
+				"stat_loss_pct"				"15 15 15 15 20 25 30"
 				"LinkedSpecialBonus"		"special_bonus_unique_timbersaw"
 			}
 			"05"
@@ -11997,12 +13923,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_hp_regen"		"0.5 0.9 1.3 1.7 1.9 2.1 2.3"
+				"bonus_hp_regen"		"0.5 0.9 1.3 1.7 2.2 2.7 3.2"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stack_limit"			"20"
+				"stack_limit"			"20 20 20 20 22 24 26"
 			}
 			"04"
 			{
@@ -12172,7 +14098,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"bash_duration"				"1.0 1.4 1.8 2.2 2.2 2.2 2.2"
+				"bash_duration"				"1.0 1.4 1.8 2.2 2.5 2.75 3"
 			}
 		}
 	}	
@@ -12198,7 +14124,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"leech_damage"				"16 24 32 40 40 40 40"
+				"leech_damage"				"16 24 32 40 50 60 70"
 				"LinkedSpecialBonus"		"special_bonus_unique_treant_2"
 			}
 			"03"
@@ -12358,7 +14284,7 @@
 	{
 		"MaxLevel"						"7"
 
-		"AbilityCooldown"				"19 16 13 10"
+		"AbilityCooldown"				"19 16 13 10 10 10 10"
 
 		"AbilityManaCost"				"100 105 110 115 120 125 130"
 
@@ -12663,7 +14589,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"wave_interval"				"0.8 0.8 0.8 0.8 0.75 0.7 0.65"
+				"wave_interval"				"0.8 0.8 0.8 0.8 0.7 0.6 0.5"
 			}
 			"06"
 			{
@@ -12679,7 +14605,7 @@
 			"08"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"burn_duration"				"3.0"
+				"burn_duration"				"3 3 3 3 4 5 6"
 			}
 			"09"
 			{
@@ -12895,7 +14821,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_unit"		"18 22 26 30 32 34 36"
+				"damage_per_unit"		"18 22 26 30 35 40 45"
 			}			
 			"02"
 			{
@@ -12920,33 +14846,34 @@
 	//=================================================================================================================
 	"undying_tombstone"
 	{		
+		"MaxLevel"							"7"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"tombstone_health"			"8 10 12 16"
+				"tombstone_health"			"8 10 12 16 20 24 28"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"hits_to_destroy_tooltip"	"5 6 7 8"
+				"hits_to_destroy_tooltip"	"5 6 7 8 10 12 14"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"duration"					"15 25 35 45"
+				"duration"					"15 25 35 45 50 55 60"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"725 950 1175 1400"
+				"radius"					"725 950 1175 1400 1600 1800 2000"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"health_threshold"			"250 350 450 550"
+				"health_threshold"			"250 350 450 550 625 700 775"
 			}
 			"06"
 			{
@@ -12956,7 +14883,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"zombie_interval"			"3.0 2.75 2.5 2.25"
+				"zombie_interval"			"3.0 2.75 2.5 2.25 2.1 1.95 1.8"
 			}
 		}
 	}
@@ -12981,22 +14908,24 @@
 	//=================================================================================================================
 	"undying_tombstone_zombie_aura"
 	{
+		"MaxLevel"						"7"
+
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"725 950 1175 1400"
+				"radius"				"725 950 1175 1400 1600 1800 2000"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_threshold"		"250 350 450 550"
+				"health_threshold"		"250 350 450 550 625 700 775"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"zombie_interval"		"3.0 2.75 2.5 2.25"
+				"zombie_interval"		"3.0 2.75 2.5 2.25 2.1 1.95 1.8"
 			}
 			"04"
 			{
@@ -13011,6 +14940,8 @@
 	//=================================================================================================================
 	"undying_tombstone_zombie_deathstrike"
 	{
+		"MaxLevel"						"7"
+
 		"AbilitySpecial"
 		{
 			"01"
@@ -13021,7 +14952,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_threshold"		"250 350 450 550"
+				"health_threshold"		"250 350 450 550 625 700 775"
 			}
 			"03"
 			{
@@ -13106,37 +15037,207 @@
 	}
 
 	//=================================================================================================================
-	//	Vengeful Spirit: Nether Swap
+	// Viper: Poison Attack
 	//=================================================================================================================
-	"vengefulspirit_nether_swap"
+	"viper_poison_attack"
 	{
-		"AbilityType"								"DOTA_ABILITY_TYPE_BASIC"
-		"AbilityBehavior"							"DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"MaxLevel"								"7"
+
+		"AbilityManaCost"						"20 18 16 14 12 10 8"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"							"FIELD_INTEGER"
-				"tooltip_range"						"0"
+				"var_type"						"FIELD_FLOAT"
+				"duration"						"3 3 3 3 3.5 4 4.5"
 			}
 			"02"
 			{
-				"var_type"							"FIELD_FLOAT"
-				"nether_swap_cooldown_scepter"		"10"
+				"var_type"						"FIELD_INTEGER"
+				"damage"						"12 18 24 30 40 50 60"
 			}
 			"03"
 			{
-				"var_type"							"FIELD_FLOAT"
-				"illusion_damage_out_pct_scepter"	"50"
+				"var_type"						"FIELD_INTEGER"
+				"bonus_movement_speed"			"-16 -24 -32 -40 -43 -46 -50"
 			}
 			"04"
 			{
-				"var_type"							"FIELD_INTEGER"
-				"illusion_damage_in_pct_scepter"	"150"
+				"var_type"						"FIELD_INTEGER"
+				"bonus_attack_speed"			"-20 -30 -40 -50 -60 -70 -80"
 			}
 		}
 	}
+
+	//=================================================================================================================
+	//	Viper: Poison Attack ability to affect towers
+	//=================================================================================================================
+	"special_bonus_unique_viper_1"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Viper: Nethertoxin
+	//=================================================================================================================
+	"viper_nethertoxin"
+	{
+		"MaxLevel"								"7"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_damage"					"5 8 11 14 16 18 20"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"non_hero_damage_pct"			"100"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"max_damage_tooltip"			"80 128 176 224 256 288 320"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Viper: Corrosive Skin
+	//=================================================================================================================
+	"viper_corrosive_skin"
+	{
+		"MaxLevel"							"7"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"4.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_movement_speed"		"-12 -18 -24 -30 -32 -34 -36"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_attack_speed"		"-20 -30 -40 -50 -60 -70 -80"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_magic_resistance"	"10 15 20 25 30 35 40"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"12 18 24 30 40 50 60"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_range_tooltip"			"1400"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Viper: Viper Strike
+	//=================================================================================================================
+	"viper_viper_strike"
+	{
+		"MaxLevel"						"6"
+		
+		"AbilityCooldown"				"70 50 30 25 20 15"
+	
+		"AbilityManaCost"				"125 175 225 240 255 270"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"5.1 5.1 5.1 6.1 7.1 8.1"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"70 115 160 165 170 175"
+				"LinkedSpecialBonus"	"special_bonus_unique_viper_2"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movement_speed"	"-40 -60 -80 -100 -120 -140"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"-40 -60 -80 -120 -160 -200"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_cost_scepter"		"125"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cooldown_scepter"		"10"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_range_scepter"	"900"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"		"1200"
+			}	
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_charges"			"2"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"charge_restore_time"	"15"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Viper: bonus Viper Strike dps
+	//=================================================================================================================
+	"special_bonus_unique_viper_2"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"65"
+			}
+		}
+	}
+
+	
+	
 
 	//=================================================================================================================
 	// Visage: Grave Chill
@@ -13289,14 +15390,16 @@
 	//=================================================================================================================
 	"visage_summon_familiars"
 	{
-		"AbilityCooldown"					"160 120 80"
+		"MaxLevel"							"6"
+
+		"AbilityCooldown"					"160 120 80 80 80 80"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"familiar_hp"				"400 550 700"
+				"familiar_hp"				"400 550 700 900 1100 1300"
 			}
 			"02"
 			{
@@ -13312,22 +15415,22 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"familiar_max_damage"		"64 128 192"
+				"familiar_max_damage"		"64 128 192 216 248 270"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"damage_charge_time"		"2.0 1.5 1.0"
+				"damage_charge_time"		"2.0 1.5 1.0 1.0 1.0 1.0"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_per_charge"			"8 16 24"
+				"damage_per_charge"			"8 16 24 24 24 24"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"max_damage_charges"		"8"
+				"max_damage_charges"		"8 8 8 10 12 14"
 			}
 		}
 	}
@@ -13337,6 +15440,8 @@
 	//=================================================================================================================
 	"visage_summon_familiars_stone_form"
 	{
+		"MaxLevel"							"6"
+
 		"AbilityCooldown"					"14"
 
 		"AbilitySpecial"
@@ -13401,6 +15506,409 @@
 				"var_type"			"FIELD_INTEGER"
 				"value"				"120"
 			}
+		}
+	}
+
+	//=================================================================================================================
+	// Weaver: The Swarm
+	//=================================================================================================================
+	"weaver_the_swarm"
+	{
+		"MaxLevel"						"7"
+
+		"AbilityCooldown"				"35 30 25 20 18 16 14"
+
+		"AbilityManaCost"				"70 80 90 100 105 110 115"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"15 18 21 24 25 26 27"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"attack_rate"		"1.25 1.1 0.95 0.8 0.75 0.7 0.65"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"count"				"12"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"armor_reduction"	"1"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"16"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"destroy_attacks"	"8"
+			}
+			"07"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"100"
+			}
+			"08"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"speed"				"600 600 600 600 700 800 900"
+			}
+			"09"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"spawn_radius"		"300"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Weaver: Shukuchi
+	//=================================================================================================================
+	"weaver_shukuchi"
+	{
+		"MaxLevel"						"7"
+
+		"AbilityCooldown"				"12 10 8 6 5 4 3"
+
+		"AbilityManaCost"				"60 55 50 45 40 35 30"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"80 110 140 170 185 200 215"
+				"LinkedSpecialBonus"	"special_bonus_unique_weaver_1"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"175"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"fade_time"				"0.25"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"4.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Weaver: Shukuchi bonus damage
+	//=================================================================================================================
+	"special_bonus_unique_weaver_1"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"35"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Weaver: Shukuchi bonus movement speed
+	//=================================================================================================================
+	"special_bonus_unique_weaver_2"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"250"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Ability: Weaver's Geminate Attack
+	//=================================================================================================================
+	"weaver_geminate_attack"
+	{
+		"MaxLevel"						"7"
+
+		"AbilityCooldown"				"6.0 5.0 4.0 3.0 2.5 2.0 1.5"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"delay"					"0.2"
+			}
+		}		
+	}
+
+	//=================================================================================================================
+	// Ability: Weaver's Time Lapse
+	//=================================================================================================================
+	"weaver_time_lapse"
+	{
+		"AbilityUnitTargetTeam"					"DOTA_UNIT_TARGET_TEAM_BOTH"
+
+		"MaxLevel"								"6"
+
+		"AbilityCooldown"						"50 40 30 25 20 15"
+
+		"AbilityManaCost"						"150 75 0 0 0 0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"cooldown_scepter"				"15"
+			}	
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"cast_range_tooltip_scepter"	"1000"
+			}				
+		}
+	}
+
+	//=================================================================================================================
+	// Windrunner: Shackleshot
+	//=================================================================================================================
+	"windrunner_shackleshot"
+	{
+		"MaxLevel"						"7"
+
+		"AbilityManaCost"				"90 100 110 120 125 130 135"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"fail_stun_duration"	"0.75 0.75 0.75 0.75 1.0 1.25 1.5"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"			"2.25 2.75 3.25 3.75 3.75 3.75 3.75"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"shackle_distance"		"575 575 575 575 620 665 710"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"arrow_speed"			"1650"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"shackle_count"			"1 1 1 1 2 3 4"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"shackle_angle"			"30 30 30 30 35 40 45"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Windrunner: Powershot
+	//=================================================================================================================
+	"windrunner_powershot"
+	{
+		"MaxLevel"						"7"
+
+		"AbilityCastRange"				"2600 2600 2600 2600 2900 3200 3500"
+
+		"AbilityCooldown"				"12 11 10 9 8 7 6"
+
+		"AbilityDamage"					"195 270 345 420 440 460 480"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_reduction"		"0.2 0.2 0.2 0.2 0.15 0.1 0.05"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"arrow_width"			"125"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"arrow_range"			"2600 2600 2600 2600 2900 3200 3500"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"arrow_speed"			"3000"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tree_width"			"75"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_radius"			"400"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"vision_duration"		"3.34"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Windrunner: bonus Powershot damage
+	//=================================================================================================================
+	"special_bonus_unique_windranger_3"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"120"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Windrunner: Windrun
+	//=================================================================================================================
+	"windrunner_windrun"
+	{
+		"MaxLevel"						"7"
+
+		"AbilityCooldown"				"12 12 12 12 11 10 9"
+
+		"AbilityDuration"				"3 4 5 6"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movespeed_bonus_pct"		"60 60 60 60 70 80 90"		
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"evasion_pct_tooltip"		"100"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"enemy_movespeed_bonus_pct"	"-15 -20 -25 -30 -33 -36 -40"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"325 325 325 325 375 405 475"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"3 4 5 6"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Windrunner: Windrun grants invisibility
+	//=================================================================================================================
+	"special_bonus_unique_windranger"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Windrunner: bonus Windrun slow
+	//=================================================================================================================
+	"special_bonus_unique_windranger_2"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"30"
+			}
+		}
+	}
+		
+	//=================================================================================================================
+	// Windrunner: Focus Fire
+	//=================================================================================================================
+	"windrunner_focusfire"
+	{
+		"MaxLevel"						"6"
+
+		"AbilityCooldown"				"60 55 50 45 40 35"
+
+		"AbilityDuration"				"20"
+
+		"AbilityManaCost"				"75 100 125 140 155 170"
+
+		"AbilityCastRange"				"1200"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_attack_speed"			"500 500 500 700 900 1100"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"focusfire_damage_reduction"	"-50 -40 -30 -30 -30 -30"
+			}						
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"focusfire_duration_tooltip"	"20"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"cooldown_scepter"				"15"
+			}
+			"05"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"focusfire_damage_reduction_scepter"	"0 0 0 0 0 0"
+			}			
 		}
 	}
 
@@ -14099,2722 +16607,21 @@
 		}
 	}
 
-	//=================================================================================================================
-	// Death Prophet: Crypt Swarm
-	//=================================================================================================================
-	"death_prophet_carrion_swarm"
-	{
-		"MaxLevel"						"7"
-
-		"AbilityCastRange"				"1000"
-
-		"AbilityCooldown"				"8 7 6 5 4.5 4.0 3.5"
-
-		"AbilityDamage"					"100 175 250 325 340 355 370"
-
-		"AbilityManaCost"				"105 120 135 150 155 160 165"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"start_radius"			"110 110 110 110 130 150 170"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"end_radius"			"300 300 300 300 320 340 360"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"range"					"810 810 810 810 900 990 1080"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed"					"1100 1100 1100 1100 1250 1400 1550"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Death Prophet: Crypt Swarm cooldown reduction
-	//=================================================================================================================
-	"special_bonus_unique_death_prophet_2"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"value"					"1.0"
-			}
-		}
-	}
 	
-	//=================================================================================================================
-	// Death Prophet: Silence
-	//=================================================================================================================
-	"death_prophet_silence"
-	{
-		"MaxLevel"						"7"
 
-		"AbilityCooldown"				"15 14 13 12 11 10 9"
-
-		"AbilityDuration"				"3.0 4.0 5.0 6.0"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"425 425 425 425 475 525 575"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"3.0 4.0 5.0 6.0 6.0 6.0 6.0"
-			}
-		}
-	}	
-	 
-	//=================================================================================================================
-	// Death Prophet: Spirit Siphon
-	//=================================================================================================================
-	"death_prophet_spirit_siphon"
-	{
-		"MaxLevel"						"7"
-
-		"AbilityManaCost"				"70 65 60 55 50 45 40"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"14 16 18 20 22 24 26"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_pct"			"1.0 2.5 4.0 5.5 5.75 6.0 6.25"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"haunt_duration"		"6.0 6.0 6.0 6.0 6.5 7.0 7.5"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"movement_slow"			"5 10 15 20 20 20 20"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"siphon_buffer"			"250 250 250 250 300 350 400"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_charges"			"4"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"charge_restore_time"	"45"
-			}
-		}
-	}
 	
-	//=================================================================================================================
-	// Death Prophet: Exorcism
-	//=================================================================================================================
-	"death_prophet_exorcism"
-	{
-		"MaxLevel"						"6"
 
-		"AbilityCooldown"				"145 140 135 120 105 90"
-
-		"AbilityDuration"				"35"
-
-		"AbilityManaCost"				"200 300 400 425 450 475"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"700"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"spirits"				"12 18 24"
-				"LinkedSpecialBonus"	"special_bonus_unique_death_prophet"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"spirit_speed"			"500 500 500 550 600 650"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_distance"			"2000"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"give_up_distance"		"1200"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"min_damage"			"55 65 75 85 95 105"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_damage"			"55 65 75 85 95 105"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"heal_percent"			"25"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"average_damage"		"55 65 75 85 95 105"
-			}
-			"10"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"ghost_spawn_rate"		"0.2"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Death Prophet: bonus Exorcism spirits
-	//=================================================================================================================
-	"special_bonus_unique_death_prophet"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"8"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Tidehunter: Gush
-	//=================================================================================================================
-	"tidehunter_gush"
-	{
-		"MaxLevel"						"7"
-
-		"AbilityCooldown"				"12 12 12 12 11 10 9"
-
-		"AbilityDuration"				"4.0"
-
-		"AbilityDamage"					"115 170 225 280 300 320 340"
-
-		"AbilityManaCost"				"90 100 110 120 125 130 135"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"projectile_speed"		"2500"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"movement_speed"		"-40"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"negative_armor"		"4 5 6 7 8 9 10"
-				"LinkedSpecialBonus"	"special_bonus_unique_tidehunter"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed_scepter"			"1600"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"aoe_scepter"			"350"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"cooldown_scepter"		"7"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"cast_range_scepter"	"1800"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Tidehunter: increased Gush armor reduction
-	//=================================================================================================================
-	"special_bonus_unique_tidehunter"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"5"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Tidehunter: Kraken Shell
-	//=================================================================================================================
-	"tidehunter_kraken_shell"
-	{
-		"MaxLevel"						"7"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_reduction"		"18 30 42 54 60 66 72"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_cleanse"		"600 550 500 450 425 400 375"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_reset_interval"	"6"
-			}
-		}
-	}
 	
-	//=================================================================================================================
-	// Tidehunter: Anchor Smash
-	//=================================================================================================================
-	"tidehunter_anchor_smash"
-	{
-		"MaxLevel"						"7"
 
-		"AbilityCastRange"				"375 375 375 375 410 445 480"
 
-		"AbilityCooldown"				"7 6 5 4 4 4 4"
 
-		"AbilityDamage"					"100 150 200 250 275 300 325"
-
-		"AbilityManaCost"				"30 40 50 60 63 66 70"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_reduction"		"-45 -50 -55 -60 -65 -70 -75"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"reduction_duration"	"6 6 6 6 7 8 9"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"375 375 375 375 410 445 480"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Tidehunter: Ravage
-	//=================================================================================================================
-	"tidehunter_ravage"
-	{
-		"MaxLevel"					"6"
-
-		"AbilityCastRange"			"1025 1025 1025 1175 1325 1475"
-
-		"AbilityCastPoint"			"0.0"
-		
-		"AbilityCooldown"			"150 140 130 110 90 70"
-
-		"AbilityDamage"				"240 330 420 460 500 540"
-
-		"AbilityManaCost"			"150 225 325 340 355 370"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"radius"			"1025 1025 1025 1175 1325 1475"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"speed"				"775 775 775 1000 1225 1450"
-			}
-			"03"
-			{	
-				"var_type"			"FIELD_FLOAT"
-				"duration"			"2.2 2.5 2.8 3.0 3.2 3.4"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Windrunner: Shackleshot
-	//=================================================================================================================
-	"windrunner_shackleshot"
-	{
-		"MaxLevel"						"7"
-
-		"AbilityManaCost"				"90 100 110 120 125 130 135"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"fail_stun_duration"	"0.75 0.75 0.75 0.75 1.0 1.25 1.5"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"2.25 2.75 3.25 3.75 3.75 3.75 3.75"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"shackle_distance"		"575 575 575 575 620 665 710"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"arrow_speed"			"1650"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"shackle_count"			"1 1 1 1 2 3 4"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"shackle_angle"			"30 30 30 30 35 40 45"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Windrunner: Powershot
-	//=================================================================================================================
-	"windrunner_powershot"
-	{
-		"MaxLevel"						"7"
-
-		"AbilityCastRange"				"2600 2600 2600 2600 2900 3200 3500"
-
-		"AbilityCooldown"				"12 11 10 9 8 7 6"
-
-		"AbilityDamage"					"195 270 345 420 440 460 480"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_reduction"		"0.2 0.2 0.2 0.2 0.15 0.1 0.05"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"arrow_width"			"125"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"arrow_range"			"2600 2600 2600 2600 2900 3200 3500"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"arrow_speed"			"3000"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"tree_width"			"75"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"vision_radius"			"400"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"vision_duration"		"3.34"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Windrunner: bonus Powershot damage
-	//=================================================================================================================
-	"special_bonus_unique_windranger_3"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"120"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Windrunner: Windrun
-	//=================================================================================================================
-	"windrunner_windrun"
-	{
-		"MaxLevel"						"7"
-
-		"AbilityCooldown"				"12 12 12 12 11 10 9"
-
-		"AbilityDuration"				"3 4 5 6"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"movespeed_bonus_pct"		"60 60 60 60 70 80 90"		
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"evasion_pct_tooltip"		"100"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"enemy_movespeed_bonus_pct"	"-15 -20 -25 -30 -33 -36 -40"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"325 325 325 325 375 405 475"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"3 4 5 6"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Windrunner: Windrun grants invisibility
-	//=================================================================================================================
-	"special_bonus_unique_windranger"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"1"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Windrunner: bonus Windrun slow
-	//=================================================================================================================
-	"special_bonus_unique_windranger_2"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"30"
-			}
-		}
-	}
-		
-	//=================================================================================================================
-	// Windrunner: Focus Fire
-	//=================================================================================================================
-	"windrunner_focusfire"
-	{
-		"MaxLevel"						"6"
-
-		"AbilityCooldown"				"60 55 50 45 40 35"
-
-		"AbilityDuration"				"20"
-
-		"AbilityManaCost"				"75 100 125 140 155 170"
-
-		"AbilityCastRange"				"1200"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_attack_speed"			"500 500 500 700 900 1100"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"focusfire_damage_reduction"	"-50 -40 -30 -30 -30 -30"
-			}						
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"focusfire_duration_tooltip"	"20"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"cooldown_scepter"				"15"
-			}
-			"05"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"focusfire_damage_reduction_scepter"	"0 0 0 0 0 0"
-			}			
-		}
-	}
-
-	//=================================================================================================================
-	// Viper: Poison Attack
-	//=================================================================================================================
-	"viper_poison_attack"
-	{
-		"MaxLevel"								"7"
-
-		"AbilityManaCost"						"20 18 16 14 12 10 8"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"duration"						"3.0"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"damage"						"12 18 24 30 33 36 40"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_movement_speed"			"-16 -24 -32 -40 -43 -46 -50"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_attack_speed"			"-20 -30 -40 -50 -60 -70 -80"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Viper: Poison Attack ability to affect towers
-	//=================================================================================================================
-	"special_bonus_unique_viper_1"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"0"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Viper: Nethertoxin
-	//=================================================================================================================
-	"viper_nethertoxin"
-	{
-		"MaxLevel"								"7"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_damage"					"5 8 11 14 16 18 20"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"non_hero_damage_pct"			"100"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"max_damage_tooltip"			"80 128 176 224 256 288 320"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Viper: Corrosive Skin
-	//=================================================================================================================
-	"viper_corrosive_skin"
-	{
-		"MaxLevel"							"7"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"4.0"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_movement_speed"		"-12 -18 -24 -30 -32 -34 -36"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_attack_speed"		"-20 -30 -40 -50 -60 -70 -80"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_magic_resistance"	"10 15 20 25 30 35 40"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"12 18 24 30 33 36 40"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"max_range_tooltip"			"1400"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Viper: Viper Strike
-	//=================================================================================================================
-	"viper_viper_strike"
-	{
-		"MaxLevel"						"6"
-		
-		"AbilityCooldown"				"70 50 30 25 20 15"
 	
-		"AbilityManaCost"				"125 175 225 240 255 270"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"5.1 5.1 5.1 6.1 7.1 8.1"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"70 115 160 165 170 175"
-				"LinkedSpecialBonus"	"special_bonus_unique_viper_2"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_movement_speed"	"-40 -60 -80 -100 -120 -140"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"-40 -60 -80 -120 -160 -200"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"mana_cost_scepter"		"125"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"cooldown_scepter"		"10"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"cast_range_scepter"	"900"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"projectile_speed"		"1200"
-			}	
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_charges"			"2"
-			}
-			"10"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"charge_restore_time"	"15"
-			}
-		}
-	}
 
-	//=================================================================================================================
-	//	Viper: bonus Viper Strike dps
-	//=================================================================================================================
-	"special_bonus_unique_viper_2"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"65"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Legion Commander: Overwhelming Odds
-	//=================================================================================================================
-	"legion_commander_overwhelming_odds"
-	{
-		"MaxLevel"						"7"
-
-		"AbilityCooldown"				"15 15 15 15 14 13 12"
-
-		"AbilityManaCost"				"100 110 120 130 135 140 145"
-
-		"AbilitySpecial"
-		{			
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"40 60 80 100 110 120 130"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_per_unit"		"15 20 25 30 32 34 36"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_per_hero"		"35 65 95 125 130 135 140"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"illusion_dmg_pct"		"100"
-				"CalculateSpellDamageTooltip"	"0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_speed_creeps"	"3"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_speed_heroes"	"9 9 9 9 10 11 12"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"7 7 7 7 8 9 10"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"330 330 330 330 380 430 480"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Legion Commander: Press the Attack
-	//=================================================================================================================
-	"legion_commander_press_the_attack"
-	{
-		"MaxLevel"						"7"
-
-		"AbilityCooldown"				"16 15 14 13 12 11 10"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"5 5 5 5 6 7 8"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"attack_speed"			"70 95 120 145 150 155 160"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"hp_regen"				"35 45 55 65 70 75 80"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Legion Commander: Press the Attack cooldown reduction
-	//=================================================================================================================
-	"special_bonus_unique_legion_commander_2"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"5"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Legion Commander: Moment of Courage
-	//=================================================================================================================
-	"legion_commander_moment_of_courage"
-	{
-		"MaxLevel"							"7"
-
-		"AbilityCooldown"					"1.8 1.2 0.6 0.0 0.0 0.0 0.0"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"trigger_chance"			"25 25 25 25 30 35 40"
-				"LinkedSpecialBonus"		"special_bonus_unique_legion_commander_3"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"buff_duration"				"1.0"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"hp_leech_percent"			"55 65 75 85 90 95 100"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Legion Commander: bonus Moment of Courage proc chance
-	//=================================================================================================================
-	"special_bonus_unique_legion_commander_3"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"10"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Legion Commander: Duel
-	//=================================================================================================================
-	"legion_commander_duel"
-	{
-		"MaxLevel"						"6"
-
-		"AbilityCooldown"				"50 44 38 32 26 20"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"4.0 4.75 5.5 6.0 6.5 7.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration_scepter"		"8.0"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"reward_damage"			"12 16 20 24 28 32"
-				"LinkedSpecialBonus"	"special_bonus_unique_legion_commander"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Legion Commander: bonus Duel damage
-	//=================================================================================================================
-	"special_bonus_unique_legion_commander"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"32"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Invoker: Quas
-	//=================================================================================================================
-	"invoker_quas"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"health_regen_per_instance"		"2 4 6 8 12 16 20"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Invoker: Wex
-	//=================================================================================================================
-	"invoker_wex"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"attack_speed_per_instance"		"3 6 9 12 16 20 25"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"move_speed_per_instance"		"3 4 5 6 7 8 9"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Invoker: Exort
-	//=================================================================================================================
-	"invoker_exort"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_damage_per_instance"		"4 8 12 18 24 30 40"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Invoker: Invoke
-	//=================================================================================================================
-	"invoker_invoke"
-	{
-		"RequiredLevel"						"0"
-
-		"MaxLevel"							"7"
-
-		"AbilityCooldown"					"6 2 2 2 2 2 2"
-
-		"AbilityManaCost"					"60"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"max_invoked_spells"		"2"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cooldown_scepter"			"2 0 0 0 0 0 0"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"mana_cost_scepter"			"0"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_intellect"			"0 0 8 10 12 14 16"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"magic_resistance_pct"		"0 0 0 8 12 16 20"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_spellpower"			"0 0 0 0 6 9 12"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"spell_lifesteal"			"0 0 0 0 0 15 20"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cooldown_reduction_pct"	"0 0 0 0 0 0 15"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Invoker: Cold Snap
-	//=================================================================================================================
-	"invoker_cold_snap"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"3 3.5 4.0 4.5 5.0 5.5 6.0 6.5"
-				"levelkey"				"quaslevel"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"freeze_duration"		"0.4"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"freeze_cooldown"		"0.65 0.6 0.55 0.5 0.45 0.4 0.35 0.3"
-				"levelkey"				"quaslevel"	
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"freeze_damage"			"10 20 30 40 50 60 70 80"
-				"levelkey"				"quaslevel"	
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_trigger"		"10"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Invoker: Ghost Walk
-	//=================================================================================================================
-	"invoker_ghost_walk"
-	{
-		"AbilityManaCost"				"100"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"100"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"area_of_effect"		"625"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"enemy_slow"			"-20 -25 -30 -35 -40 -50 -60 -70"
-				"levelkey"				"quaslevel"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"self_slow"				"-15 -10 -5 0 10 20 30 40"
-				"levelkey"				"wexlevel"
-			}			
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"aura_fade_time"		"2.0"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Invoker: Tornado
-	//=================================================================================================================
-	"invoker_tornado"
-	{
-		"AbilityCastRange"				"3000"
-			
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"travel_distance"		"1000 1500 2000 2500 3000 4000 5000 6000"
-				"levelkey"				"wexlevel"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"travel_speed"			"1200"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"area_of_effect"		"275"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"vision_distance"		"400"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"end_vision_duration"	"3"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"lift_duration"			"0.8 1.1 1.4 1.7 2.0 2.3 2.6 2.9"
-				"levelkey"				"quaslevel"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"base_damage"			"100"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"quas_damage"			"0"
-				"levelkey"				"quaslevel"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"wex_damage"			"50 100 150 200 250 300 350 400"
-				"levelkey"				"wexlevel"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Invoker: EMP
-	//=================================================================================================================
-	"invoker_emp"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"delay"					"2.9"
-				"levelkey"				"wexlevel"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"area_of_effect"		"775"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"mana_burned"			"125 200 300 400 500 600 700 800"
-				"levelkey"				"wexlevel"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_per_mana_pct"	"50"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Invoker: Alacrity
-	//=================================================================================================================
-	"invoker_alacrity"
-	{
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_BUILDING"
-
-		"AbilityCastRange"				"900"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"15 30 45 60 80 100 120 140"
-				"levelkey"				"wexlevel"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"15 30 45 60 80 100 120 140"
-				"levelkey"				"exortlevel"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"12"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Invoker: Chaos Meteor
-	//=================================================================================================================
-	"invoker_chaos_meteor"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"land_time"				"1.3"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"area_of_effect"		"325"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"travel_distance"		"800 1200 1600 2000 2500 3000 3500 4000"
-				"levelkey"				"wexlevel"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"travel_speed"			"350"
-			}			
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_interval"		"0.5"
-				"CalculateSpellDamageTooltip"	"0"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"vision_distance"		"500"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"end_vision_duration"	"3.0"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"main_damage"			"60 80 100 120 145 170 195 220"
-				"levelkey"				"exortlevel"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"burn_duration"			"3.0"
-			}
-			"10"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"burn_dps"				"15 20 25 30 36 42 48 54"
-				"levelkey"				"exortlevel"
-				"CalculateSpellDamageTooltip"	"1"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Invoker: Sun Strike
-	//=================================================================================================================
-	"invoker_sun_strike"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"delay"					"1.7"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"area_of_effect"		"175"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"125 200 275 350 430 515 605 700"
-				"levelkey"				"exortlevel"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"vision_distance"		"500"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"vision_duration"		"4.0"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Invoker: Forge Spirit
-	//=================================================================================================================
-	"invoker_forge_spirit"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"spirit_damage"			"28 37 46 55 64 76 88 100"
-				"levelkey"				"exortlevel"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"spirit_mana"			"150 200 250 300 350 400 450 500"
-				"levelkey"				"exortlevel"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"spirit_armor"			"3 4 5 6 8 10 12"
-				"levelkey"				"exortlevel"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"spirit_attack_range"	"300 375 450 525 600 675 750 825"
-				"levelkey"				"quaslevel"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"spirit_hp"				"300 400 500 600 700 800 900 1000"
-				"levelkey"				"quaslevel"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"spirit_duration"		"40 45 50 55 60 70 80 90"
-				"levelkey"				"quaslevel"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Invoker: Forged Spirit: Melting Strike
-	//=================================================================================================================
-	"forged_spirit_melting_strike"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"armor_removed"			"1"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_armor_removed"		"12"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"5"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Invoker: Ice Wall
-	//=================================================================================================================
-	"invoker_ice_wall"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"3.5 5.0 6.5 8.0 9.5 11.0 12.5 14.0"
-				"levelkey"				"quaslevel"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"slow"					"-20 -40 -60 -80 -100 -120 -140 -160"
-				"levelkey"				"quaslevel"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"slow_duration"			"2.0"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_per_second"		"12 18 24 30 40 50 60 70"
-				"levelkey"				"exortlevel"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"wall_place_distance"	"200"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"num_wall_elements"		"21"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"wall_element_spacing"	"80"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"wall_element_radius"	"105"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Invoker: Deafening Blast
-	//=================================================================================================================
-	"invoker_deafening_blast"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"travel_distance"		"1400"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"travel_speed"			"1400"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius_start"			"225"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius_end"			"275"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"end_vision_duration"	"3.0"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"50 100 150 200 250 300 360 420"
-				"levelkey"				"exortlevel"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"knockback_duration"	"0.6 0.8 1.0 1.2 1.4 1.6 1.8 2.0"
-				"levelkey"				"quaslevel"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"disarm_duration"		"1.25 2.0 2.75 3.5 4.25 5.0 5.75 6.5"
-				"levelkey"				"wexlevel"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Invoker: multiple Forge Spirit summoning
-	//=================================================================================================================
-	"special_bonus_unique_invoker_1"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"3"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Invoker: 360 Deafening Blast
-	//=================================================================================================================
-	"special_bonus_unique_invoker_2"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"0"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Ability: Special Bonus
-	//=================================================================================================================
-	"special_bonus_unique_invoker_3"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"18"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Huskar: Inner Vitality
-	//=================================================================================================================
-	"huskar_inner_vitality"
-	{
-		"MaxLevel"						"7"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"heal"					"12 16 20 24 28 32 36"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"attrib_bonus"			"0.05 0.1 0.15 0.2 0.2 0.2 0.2"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"hurt_attrib_bonus"		"0.2 0.4 0.6 0.8 0.9 1.0 1.1"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"hurt_percent"			"0.35 0.35 0.35 0.35 0.40 0.45 0.50"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"tooltip_attrib_bonus"			"5 10 15 20 20 20 20"
-			}
-			"06"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"tooltip_hurt_attrib_bonus"		"20 40 60 80 90 100 110"
-			}
-		}
-	}	
 	
-	//=================================================================================================================
-	// Huskar: Burning Spear
-	//=================================================================================================================
-	"huskar_burning_spear"
-	{
-		"MaxLevel"								"7"
 
-		"AbilityDuration"						"8 8 8 8 9 10 11"
-
-		"AbilityDamage"							"8 12 16 20 22 24 25"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"health_cost"					"15"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Huskar: bonus Burning Spear DPS
-	//=================================================================================================================
-	"special_bonus_unique_huskar_2"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"value"							"5"
-			}
-		}
-	}
 	
-	//=================================================================================================================
-	// Huskar: Berserker's Blood
-	//=================================================================================================================
-	"huskar_berserkers_blood"
-	{
-		"MaxLevel"								"7"
 
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"maximum_attack_speed"			"220 260 300 340 380 420 460"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"maximum_resistance"			"30 40 50 60 65 70 75"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"hp_threshold_max"				"10 10 10 10 12 14 16"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Huskar: Life Break
-	//=================================================================================================================
-	"huskar_life_break"
-	{
-		"MaxLevel"							"6"
 
-		"AbilityCooldown"					"12 11 10 9 8 7"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"health_cost_percent"		"0.35"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"health_damage"				"0.35 0.4 0.45 0.5 0.55 0.6"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"health_damage_scepter"		"0.65"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"charge_speed"				"1000"
-			}
-			"05"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"tooltip_health_damage"				"35 40 45 50 55 60"
-			}
-			"06"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"tooltip_health_cost_percent"		"35"
-				"CalculateSpellDamageTooltip"		"0"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"movespeed"					"-40 -50 -60 -65 -70 -75"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"slow_durtion_tooltip"		"4 5 6 6 6 6"
-			}
-			"09"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"tooltip_health_damage_scepter"		"65"
-			}
-			"10"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cooldown_scepter"			"3"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Huskar: bonus Life Break cast range
-	//=================================================================================================================
-	"special_bonus_unique_huskar"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"550"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Doom Bringer: Devour
-	//=================================================================================================================
-	"doom_bringer_devour"
-	{
-		"MaxLevel"						"7"
-
-		"AbilityCooldown"				"60 55 50 45 40 35 30"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_gold"			"30 60 90 120 140 160 180"
-				"LinkedSpecialBonus"	"special_bonus_unique_doom_3"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"health_per_second"		"100"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Doom: Devour can target Ancients
-	//=================================================================================================================
-	"special_bonus_unique_doom_2"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"0"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Doom: bonus Devour gold
-	//=================================================================================================================
-	"special_bonus_unique_doom_3"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"60"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Doom Bringer: Scorched Earth
-	//=================================================================================================================
-	"doom_bringer_scorched_earth"
-	{
-		"MaxLevel"							"7"
-
-		"AbilityCastRange"					"600 600 600 600 700 800 900"
-
-		"AbilityCooldown"					"55 50 45 40 35 30 25"
-
-		"AbilityManaCost"					"60 65 70 75 80 85 90"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_per_second"			"20 30 40 50 55 60 65"
-				"LinkedSpecialBonus"		"special_bonus_unique_doom_4"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"600 600 600 600 700 800 900"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_movement_speed_pct"	"15 17 19 21 23 25 27"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"16"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Doom: bonus Scorched Earth DPS
-	//=================================================================================================================
-	"special_bonus_unique_doom_4"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"15"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Doom Bringer: Infernal Blade
-	//=================================================================================================================
-	"doom_bringer_infernal_blade"
-	{
-		"MaxLevel"						"7"
-
-		"AbilityCooldown"				"10 8 6 4 4 4 4"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"burn_damage"			"25 30 35 40 45 50 55"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"burn_damage_pct"		"1.25 2.5 3.75 5.0 5.25 5.5 5.75"
-				"LinkedSpecialBonus"	"special_bonus_unique_doom_1"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"burn_duration"			"6.0"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"ministun_duration"		"0.4 0.4 0.4 0.4 0.6 0.8 1.0"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Doom: bonus Infernal Blade damage per second
-	//=================================================================================================================
-	"special_bonus_unique_doom_1"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"value"					"2.25"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Doom Bringer: Doom
-	//=================================================================================================================
-	"doom_bringer_doom"
-	{
-		"MaxLevel"						"6"
-
-		"AbilityCastRange"				"666"
-
-		"AbilityCooldown"				"145 135 125 115 105 95"
-
-		"AbilityManaCost"				"150 200 250 260 270 280"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"15 16 17 18 19 20"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"30 45 60 70 80 90"
-				"LinkedSpecialBonus"	"special_bonus_unique_doom_5"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration_scepter"		"20"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_scepter"		"30 45 60 70 80 90"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"deniable_pct"			"1"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Doom: bonus Doom DPS
-	//=================================================================================================================
-	"special_bonus_unique_doom_5"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"40"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Gyrocopter: Rocket Barrage
-	//=================================================================================================================
-	"gyrocopter_rocket_barrage"
-	{
-		"MaxLevel"						"7"
-
-		"AbilityCooldown"				"7.0 6.5 6.0 5.5 5.0 4.5 4.0"
-
-		"AbilityDuration"				"3 3 3 3 3.3 3.6 4.0"
-
-		"AbilityDamage"					"12 16 20 24 24 24 24"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"400"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"rockets_per_second"	"10"
-			}
-		}
-	}	
-
-	//=================================================================================================================
-	// Gyrocopter: Homing Missile
-	//=================================================================================================================
-	"gyrocopter_homing_missile"
-	{
-		"MaxLevel"						"7"
-
-		"AbilityCooldown"				"20 17 14 11 10 9 8"
-
-		"AbilityDamage"					"225 350 475 600 650 700 750"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"hits_to_kill_tooltip"		"3 4 5 6 6 6 6"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"tower_hits_to_kill_tooltip"	"6 8 10 12 12 12 12"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"2.2 2.4 2.6 2.8 2.8 2.8 2.8"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"attack_speed_bonus_pct"	"400"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"min_damage"				"50"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"max_distance"				"1800"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"pre_flight_time"			"3 3 3 3 2 1 0"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"hero_damage"				"34 26 21 17 17 17 17"
-			}
-			"09"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"speed"						"340"
-			}
-			"10"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"acceleration"				"20 25 30 35 45 55 65"
-			}
-			"11"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"enemy_vision_time"			"4"
-			}
-			"12"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"charge_restore_time"		"20 17 14 11 10 9 8"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Gyrocopter: bonus Homing Missile charges
-	//=================================================================================================================
-	"special_bonus_unique_gyrocopter_1"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"3"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Gyrocopter: Flak Cannon
-	//=================================================================================================================
-	"gyrocopter_flak_cannon"
-	{
-		"MaxLevel"						"7"
-
-		"AbilityCooldown"				"30 30 30 30 25 20 15"
-
-		"AbilityDuration"				"15"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"1000"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_attacks"			"4 5 6 7 8 9 10"
-				"LinkedSpecialBonus"	"special_bonus_unique_gyrocopter_2"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"projectile_speed"		"800"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"fire_rate"				"0.7"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"scepter_radius"		"1000"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Gyrocopter: bonus Flak Cannon attacks
-	//=================================================================================================================
-	"special_bonus_unique_gyrocopter_2"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"10"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Gyrocopter: Call Down
-	//=================================================================================================================
-	"gyrocopter_call_down"
-	{
-		"MaxLevel"							"6"
-
-		"AbilityCastRange"					"1000 1000 1000 1500 2000 2500"
-
-		"AbilityCooldown"					"55 50 45 40 35 30"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"slow_duration_first"		"4"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"slow_duration_second"		"2"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_first"				"200 275 350 375 400 425"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_second"				"200 275 350 375 400 425"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"slow_first"				"30 30 30 50 70 90"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"slow_second"				"60 60 60 70 80 90"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"600"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"range_scepter"				"0"
-			}
-			"09"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_second_scepter"		"200 275 350 375 400 425"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Broodmother: Spawn Spiderlings
-	//=================================================================================================================
-	"broodmother_spawn_spiderlings"
-	{
-		"MaxLevel"						"7"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"buff_duration"			"12"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"spiderling_duration"	"60 60 60 60 75 90 105"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"70 140 210 280 300 320 340"
-				"LinkedSpecialBonus"	"special_bonus_unique_broodmother_3"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"count"					"1 2 3 4 5 6 7"
-			}	 
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"projectile_speed"		"1200"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Broodmother: bonus Spiderling health
-	//=================================================================================================================
-	"special_bonus_unique_broodmother_2"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"525"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Broodmother: bonus Spawn Spiderling damage
-	//=================================================================================================================
-	"special_bonus_unique_broodmother_3"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"50"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Broodmother: bonus Spiderling damage
-	//=================================================================================================================
-	"special_bonus_unique_broodmother_4"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"22"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Broodmother: Poison Sting
-	//=================================================================================================================
-	"broodmother_poison_sting"
-	{
-		"AbilitySpecial"
-		{
-			
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_per_second"		"10"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"movement_speed"		"-10"
-			}
-			"03"
-			{		
-				"var_type"				"FIELD_FLOAT"
-				"duration_hero"			"2.5"
-			}			
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"6.0"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Broodmother: Spawn Spiderites
-	//=================================================================================================================
-	"broodmother_spawn_spiderite"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"spiderite_duration"			"60"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"buff_duration"					"12"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Broodmother: Spin Web
-	//=================================================================================================================
-	"broodmother_spin_web"
-	{
-		"MaxLevel"						"7"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"900"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"count"					"3 5 7 9 10 11 12"
-				"LinkedSpecialBonus"	"special_bonus_unique_broodmother_1"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"heath_regen"			"2 4 6 8 10 12 14"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_movespeed"		"20 25 30 35 36 37 38"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"invis_movespeed_tooltip"	"40 50 60 70 72 74 76"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"fade_delay"			"2.0 2.0 2.0 2.0 1.75 1.5 1.25"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_time"			"6"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_charges"			"4"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"charge_restore_time"	"30"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Broodmother: bonus maximum Web count
-	//=================================================================================================================
-	"special_bonus_unique_broodmother_1"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"8"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Broodmother: Incapacitating Bite
-	//=================================================================================================================
-	"broodmother_incapacitating_bite"
-	{
-		"MaxLevel"						"7"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"miss_chance"			"40 50 60 70 80 90 100"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_movespeed"		"-16 -26 -36 -46 -49 -52 -55"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"2.0 2.0 2.0 2.0 2.5 3.0 3.5"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Broodmother: Insatiable Hunger
-	//=================================================================================================================
-	"broodmother_insatiable_hunger"
-	{
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-
-		"MaxLevel"						"6"
-
-		"AbilityCastPoint"				"0.0"
-
-		"AbilityCooldown"				"45 40 35 30 25 20"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"70 105 140 160 180 200"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"lifesteal_pct"			"70 105 140 160 180 200"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"14 15 16 17 18 19"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Weaver: The Swarm
-	//=================================================================================================================
-	"weaver_the_swarm"
-	{
-		"MaxLevel"						"7"
-
-		"AbilityCooldown"				"35 30 25 20 18 16 14"
-
-		"AbilityManaCost"				"70 80 90 100 105 110 115"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"damage"			"15 18 21 24 25 26 27"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"attack_rate"		"1.25 1.1 0.95 0.8 0.75 0.7 0.65"
-			}
-			"03"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"count"				"12"
-			}
-			"04"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"armor_reduction"	"1"
-			}
-			"05"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"duration"			"16"
-			}
-			"06"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"destroy_attacks"	"8"
-			}
-			"07"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"radius"			"100"
-			}
-			"08"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"speed"				"600 600 600 600 700 800 900"
-			}
-			"09"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"spawn_radius"		"300"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Weaver: Shukuchi
-	//=================================================================================================================
-	"weaver_shukuchi"
-	{
-		"MaxLevel"						"7"
-
-		"AbilityCooldown"				"12 10 8 6 5 4 3"
-
-		"AbilityManaCost"				"60 55 50 45 40 35 30"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"80 110 140 170 180 190 200"
-				"LinkedSpecialBonus"	"special_bonus_unique_weaver_1"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"175"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"fade_time"				"0.25"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"4.0"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Weaver: Shukuchi bonus damage
-	//=================================================================================================================
-	"special_bonus_unique_weaver_1"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"35"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Weaver: Shukuchi bonus movement speed
-	//=================================================================================================================
-	"special_bonus_unique_weaver_2"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"250"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Ability: Weaver's Geminate Attack
-	//=================================================================================================================
-	"weaver_geminate_attack"
-	{
-		"MaxLevel"						"7"
-
-		"AbilityCooldown"				"6.0 5.0 4.0 3.0 2.5 2.0 1.5"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"delay"					"0.2"
-			}
-		}		
-	}
-
-	//=================================================================================================================
-	// Ability: Weaver's Time Lapse
-	//=================================================================================================================
-	"weaver_time_lapse"
-	{
-		"AbilityUnitTargetTeam"					"DOTA_UNIT_TARGET_TEAM_BOTH"
-
-		"MaxLevel"								"6"
-
-		"AbilityCooldown"						"50 40 30 25 20 15"
-
-		"AbilityManaCost"						"150 75 0 0 0 0"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"cooldown_scepter"				"15"
-			}	
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"cast_range_tooltip_scepter"	"1000"
-			}				
-		}
-	}
 
 	//=================================================================================================================
 	//-----------------------------------------------------------------------------------------------------------------

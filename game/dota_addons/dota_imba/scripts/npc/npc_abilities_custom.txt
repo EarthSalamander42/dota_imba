@@ -27709,8 +27709,7 @@
 				"var_type"					"FIELD_FLOAT"
 				"stun_duration"				"1.0"
 			}
-
-			////// WEIRD INTERACTION
+			
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"

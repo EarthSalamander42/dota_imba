@@ -291,6 +291,11 @@ function modifier_imba_proximity_mine_charges:OnIntervalThink()
         return nil
     end
 
+    -- If the amount of mines somehow got over the maximum, retain max charges
+    if self:GetStackCount() > self.max_charges then
+        self:SetStackCount(self.max_charges)
+    end
+
     -- Otherwise, get the remaining duration. If it's 0 or below, grant a stack!
     local remaining_duration = self:GetRemainingTime()
 
@@ -314,7 +319,7 @@ function modifier_imba_proximity_mine_charges:OnStackCountChanged(old_count)
     -- If the stacks somehow surpassed max charges, reset to max
     -- This somehow happens when player is disconnected for some reason
     if stacks > self.max_charges then
-        self:SetStackCount(self,max_charges)
+        self:SetStackCount(self.max_charges)
     end
 
     -- If the stack is in the maximum, stop the duration
