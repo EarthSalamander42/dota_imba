@@ -42,14 +42,23 @@
 		"Ability4"					"imba_alchemist_mammonite"	
 		"Ability5"					"imba_alchemist_chemical_rage"	
 
-		"Ability10"					"special_bonus_imba_alchemist_1" // 
-		"Ability11"					"special_bonus_imba_alchemist_3" // 
-		"Ability12"					"special_bonus_imba_alchemist_8"
-		"Ability13"					"special_bonus_imba_alchemist_5"
-		"Ability14"					"special_bonus_imba_alchemist_7"
-		"Ability15"					"special_bonus_imba_alchemist_2"
-		"Ability16"					"special_bonus_imba_alchemist_6"
-		"Ability17"					"special_bonus_imba_alchemist_4"
+		"Ability10"					"special_bonus_imba_alchemist_1" // Sticky Acid slows by 15%
+		"Ability11"					"special_bonus_imba_alchemist_3" // Bounty runes spawn gold bags
+		"Ability12"					"special_bonus_imba_alchemist_8" // Chemical Rage grants a damage aura
+		"Ability13"					"special_bonus_imba_alchemist_5" // Greed stacks increase Acid Spray damage
+		"Ability14"					"special_bonus_imba_alchemist_7" // Alchemist now gains 4x gold from bounty runes
+		"Ability15"					"special_bonus_imba_alchemist_2" // Unstable Concoction can grant allies Chemical Rage
+		"Ability16"					"special_bonus_imba_alchemist_6" // When in Chemical Rage, Alchemist brews Unstable Concoction faster.
+		"Ability17"					"special_bonus_imba_alchemist_4" // Enemies affected by Acid Spray have a chance to drop gold bags on death.
+
+		"Ability10"					"special_bonus_imba_alchemist_7" // Alchemist now gains 4x gold from bounty runes
+		"Ability11"					"special_bonus_imba_alchemist_1" // Sticky Acid slows by 15%
+		"Ability12"					"special_bonus_imba_alchemist_3" // Bounty runes spawn gold bags
+		"Ability13"					"special_bonus_imba_alchemist_4" // Enemies affected by Acid Spray have a chance to drop gold bags on death.
+		"Ability14"					"special_bonus_imba_alchemist_6" // When in Chemical Rage, Alchemist brews Unstable Concoction faster.
+		"Ability15"					"special_bonus_imba_alchemist_2" // Unstable Concoction can grant allies Chemical Rage
+		"Ability16"					"special_bonus_imba_alchemist_5" // Greed stacks increase Acid Spray damage
+		"Ability17"					"special_bonus_imba_alchemist_8" // Chemical Rage grants a damage aura
 
 		"ProjectileSpeed"			"900"
 	}

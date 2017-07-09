@@ -198,17 +198,30 @@ function modifier_imba_acid_spray_handler:OnDeath(params)
 		parent	=	self:GetParent()
 		
 		if (params.unit == parent) then
+
+            -- Illusions are ignored.
+            if params.unit:IsIllusion() then
+                return nil
+            end
 		
-			if caster:HasTalent("special_bonus_imba_alchemist_4") then
+			if caster:HasTalent("special_bonus_imba_alchemist_4") and caster:HasModifier("modifier_imba_goblins_greed_passive") then
 				
 				-- Ability paramaters
 				local greed_stacks		=	caster:FindModifierByName("modifier_imba_goblins_greed_passive"):GetStackCount()
-				local stacks_to_gold 	=	caster:FindTalentValue("special_bonus_imba_alchemist_4", "stacks_to_gold_percentage" )/ 100 
+				local stacks_to_gold 	=	caster:FindTalentValue("special_bonus_imba_alchemist_4", "stacks_to_gold_percentage" ) * 0.01
 				local gold				=	greed_stacks * stacks_to_gold
-				local drop_chance		=	caster:FindTalentValue("special_bonus_imba_alchemist_4", "drop_chance_percentage" )
+				local drop_chance_hero	=	caster:FindTalentValue("special_bonus_imba_alchemist_4", "drop_chance_percentage_hero")
+                local drop_chance_creep =   caster:FindTalentValue("special_bonus_imba_alchemist_4", "drop_chance_percentage_creep")
+
+                local drop_chance 
+                if params.unit:IsHero() then
+                    drop_chance = drop_chance_hero                    
+                else
+                    drop_chance = drop_chance_creep
+                end
 				
 				-- % Chance to drop gold bag
-				if RandomInt(0, 100) < drop_chance then
+				if RollPercentage(drop_chance) then
 					-- Drop gold bag
 					local newItem = CreateItem( "item_bag_of_gold", nil, nil )
 					newItem:SetPurchaseTime( 0 )
@@ -706,6 +719,11 @@ function modifier_imba_unstable_concoction_handler:OnIntervalThink()
 		local allHeroes = HeroList:GetAllHeroes()
 		local particleName = "particles/units/heroes/hero_alchemist/alchemist_unstable_concoction_timer.vpcf"
 		local number = math.abs(GameRules:GetGameTime() - ability.brew_start - brew_time_passed)
+
+        if caster:HasTalent("special_bonus_imba_alchemist_6") and caster:HasModifier("modifier_imba_chemical_rage_buff_haste") then
+            number = number * caster:FindTalentValue("special_bonus_imba_alchemist_6")
+        end
+
 		-- Get the integer. Add a bit because the think interval isn't a perfect 0.5 timer
 		local integer = math.floor(number)        
 		if integer <= 0 and not self.last_second_responded then
@@ -736,7 +754,15 @@ function modifier_imba_unstable_concoction_handler:OnIntervalThink()
 					ParticleManager:SetParticleControl(particle, 0, caster:GetAbsOrigin())
 					ParticleManager:SetParticleControl(particle, 1, Vector(0, integer, decimal))
 					ParticleManager:SetParticleControl(particle, 2, Vector(digits, 0, 0))
-					ParticleManager:ReleaseParticleIndex(particle)
+
+                    if caster:HasTalent("special_bonus_imba_alchemist_6") and caster:HasModifier("modifier_imba_chemical_rage_buff_haste") then
+                        Timers:CreateTimer(0.5 / caster:FindTalentValue("special_bonus_imba_alchemist_6"), function()
+                            ParticleManager:DestroyParticle(particle, true)    
+                            ParticleManager:ReleaseParticleIndex(particle)
+                        end)
+                    else
+                        ParticleManager:ReleaseParticleIndex(particle)
+                    end					
 				end
 			end
 		else
