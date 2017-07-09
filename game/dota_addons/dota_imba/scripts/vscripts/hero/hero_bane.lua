@@ -8,7 +8,6 @@ CreateEmptyTalents("bane")
 --------------------------------------
 LinkLuaModifier("modifier_imba_enfeeble_debuff", "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_enfeeble_debuff_vision_handler", "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_enfeeble_debuff_vision", "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
 
 -- Main enfeeble casting
 imba_bane_enfeeble = imba_bane_enfeeble or class({})  
@@ -95,7 +94,7 @@ function modifier_imba_enfeeble_debuff:OnCreated()
 		self.parent = self:GetParent()
 		
 		-- Ability paramaters
-		self.duratio = self:GetDuration()
+		self.duration = self:GetDuration()
 		self.max_stacks	= ability:GetSpecialValueFor("max_stacks")
 		
 		-- Initialize table
@@ -106,7 +105,7 @@ function modifier_imba_enfeeble_debuff:OnCreated()
 	    self:StartIntervalThink(0.1)
 		
 		-- Apply periodic vision reduction modifier
-		self.parent:AddNewModifier(caster,ability,"modifier_imba_enfeeble_debuff_vision_handler", {duration = self.duration +5})		
+		self.parent:AddNewModifier(caster,ability,"modifier_imba_enfeeble_debuff_vision_handler", {})		
 	
 		-- #4 TALENT: Enfeeble reduces stats
 		self.strength_bonus	= -( self.parent:GetStrength() * (caster:FindTalentValue("special_bonus_imba_bane_4") * 0.01 )) 
@@ -136,6 +135,9 @@ function modifier_imba_enfeeble_debuff:OnIntervalThink()
                 self:SetStackCount(#self.stacks_table)
             end
 
+            -- Calculate stats
+            self:GetParent():CalculateStatBonus()
+
 		end
 	end
 end
@@ -145,17 +147,21 @@ function modifier_imba_enfeeble_debuff:OnRefresh()
         -- Insert new stack values
 		if self:GetStackCount() < 5 then
 			table.insert(self.stacks_table, GameRules:GetGameTime())
-		end
+		end		
+
+		-- #4 TALENT: Enfeeble reduces stats
+		local caster = self:GetCaster()
+		self.strength_bonus	= -( self.parent:GetStrength() * (caster:FindTalentValue("special_bonus_imba_bane_4") * 0.01 )) 
+		self.agility_bonus	= -( self.parent:GetAgility() * (caster:FindTalentValue("special_bonus_imba_bane_4") * 0.01 )) 
+		self.intellect_bonus= -( self.parent:GetIntellect() * (caster:FindTalentValue("special_bonus_imba_bane_4") * 0.01)) 
     end
 end
 
 function modifier_imba_enfeeble_debuff:OnDestroy()
 	-- Remove vision debuff at the end
-	if IsServer() then
-		local vision_modifier = "modifier_imba_enfeeble_debuff_vision"
-		if self.parent:FindModifierByName(vision_modifier) then self.parent:RemoveModifierByName(vision_modifier) end
+	if IsServer() then				
 		local vision_modifier_handler = "modifier_imba_enfeeble_debuff_vision_handler"
-		if self.parent:FindModifierByName(vision_modifier_handler) then self.parent:RemoveModifierByName(vision_modifier_handler) end 
+		if self.parent:HasModifier(vision_modifier_handler) then self.parent:RemoveModifierByName(vision_modifier_handler) end 
 	end
 end
 
@@ -227,45 +233,32 @@ function modifier_imba_enfeeble_debuff_vision_handler:IsDebuff() return true end
 function modifier_imba_enfeeble_debuff_vision_handler:IsPurgable() return false end
 function modifier_imba_enfeeble_debuff_vision_handler:IsHidden() return true end
 
-function modifier_imba_enfeeble_debuff_vision_handler:OnCreated()
-	if IsServer() then
-		local ability =	self:GetAbility()
-		local vision_interval = ability:GetSpecialValueFor("vision_cycle_time")
+function modifier_imba_enfeeble_debuff_vision_handler:OnCreated()	
+	self.caster = self:GetCaster()
+	self.ability =	self:GetAbility()
+	self.parent = self:GetParent()		
 	
-		self:StartIntervalThink(vision_interval)
-	end
+	self.check_interval = self.ability:GetSpecialValueFor("check_interval")			
+	self.reduction = self.ability:GetSpecialValueFor("vision_reduction")
+	self.stack_vision_efficiency = self.ability:GetSpecialValueFor("stack_vision_efficiency") 
+	self.efficiency = (1 - self.stack_vision_efficiency * 0.01)	
+
+	self:StartIntervalThink(self.check_interval)	
 end
 
-function modifier_imba_enfeeble_debuff_vision_handler:OnIntervalThink()
-	if IsServer() then
-		
-		local ability =	self:GetAbility()
-		local parent = self:GetParent()
-		local caster = self:GetCaster()
-		local vision_interval = ability:GetSpecialValueFor("vision_cycle_time")
-		local vision_uptime_pct	= ability:GetSpecialValueFor("vision_uptime_pct")
-		
-		parent:AddNewModifier(caster,ability,"modifier_imba_enfeeble_debuff_vision",{duration = vision_interval * (vision_uptime_pct * 0.01)})		
-	end
+function modifier_imba_enfeeble_debuff_vision_handler:OnRefresh()
+	self:OnCreated()
 end
 
--- Actual enfeeble vision debuff
-modifier_imba_enfeeble_debuff_vision = modifier_imba_enfeeble_debuff_vision or class({})
+function modifier_imba_enfeeble_debuff_vision_handler:OnIntervalThink()		
+	local enfeeble_stacks =	self.parent:GetModifierStackCount("modifier_imba_enfeeble_debuff",self:GetCaster())			
 
-function modifier_imba_enfeeble_debuff_vision:IsDebuff() return true end
-function modifier_imba_enfeeble_debuff_vision:IsPurgable() return false end
-function modifier_imba_enfeeble_debuff_vision:IsHidden() return true end
-
-function modifier_imba_enfeeble_debuff_vision:OnCreated()
-	-- Ability properties
-	local parent = self:GetParent()
-	local enfeeble_stacks =	parent:GetModifierStackCount("modifier_imba_enfeeble_debuff",self:GetCaster() )
-	local ability =	self:GetAbility()
-	local reduction	= ability:GetSpecialValueFor("vision_reduction")
-	self.vision_reduction =	reduction * enfeeble_stacks
+	-- Whew perry, I salute you. Diminishing returns over stacks!
+	local scale = (self.efficiency ^ (enfeeble_stacks - 1) / math.log(self.efficiency)) - 1 / math.log(self.efficiency) + 1 
+	self.vision_reduction = self.reduction * scale
 end
 
-function modifier_imba_enfeeble_debuff_vision:DeclareFunctions()
+function modifier_imba_enfeeble_debuff_vision_handler:DeclareFunctions()
 	local decFuncs = {
 						MODIFIER_PROPERTY_BONUS_DAY_VISION,
 						MODIFIER_PROPERTY_BONUS_NIGHT_VISION
@@ -273,13 +266,18 @@ function modifier_imba_enfeeble_debuff_vision:DeclareFunctions()
 	return decFuncs
 end
 
-function modifier_imba_enfeeble_debuff_vision:GetBonusDayVision()
-	return self.vision_reduction 
+function modifier_imba_enfeeble_debuff_vision_handler:GetBonusDayVision()	
+	if self.vision_reduction then
+		return self.vision_reduction * (-1)
+	end
 end
 
-function modifier_imba_enfeeble_debuff_vision:GetBonusNightVision()
-	return self.vision_reduction 
+function modifier_imba_enfeeble_debuff_vision_handler:GetBonusNightVision()
+	if self.vision_reduction then
+		return self.vision_reduction * (-1)
+	end
 end
+
 
 --------------------------------------
 ---------    BRAIN SAP     -----------
@@ -295,8 +293,9 @@ function imba_bane_brain_sap:OnSpellStart()
 	if IsServer() then
 		-- Ability properties
 		local caster = self:GetCaster()
-		local target = self:GetCursorPosition()		
-		local enfeeble_debuff =	target:FindModifierByName("modifier_imba_enfeeble_debuff")
+		local target = self:GetCursorTarget()		
+
+		local enfeeble_debuff =	target:FindModifierByName("modifier_imba_enfeeble_debuff")		
 
 		-- Ability paramaters
 		local sapdamage = self:GetSpecialValueFor("brain_sap_damage")

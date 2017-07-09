@@ -201,14 +201,23 @@
 		"Ability4"					"imba_bane_nightmare_end"
 		"Ability5"					"imba_bane_fiends_grip"
 
-		"Ability10"					"special_bonus_imba_bane_1"
-		"Ability11"					"special_bonus_imba_bane_2"
-		"Ability12"					"special_bonus_imba_bane_3"
-		"Ability13"					"special_bonus_imba_bane_4"
-		"Ability14"					"special_bonus_imba_bane_5"
-		"Ability15"					"special_bonus_imba_bane_6"
-		"Ability16"					"special_bonus_imba_bane_7"
-		"Ability17"					"special_bonus_imba_bane_8"
+		"Ability10"					"special_bonus_imba_bane_1" //Grants Enfeeble stacks when Nightmaring a target.
+		"Ability11"					"special_bonus_imba_bane_2" //Enfeeble is now cast in a AoE to all targets around the main target.
+		"Ability12"					"special_bonus_imba_bane_3" //Fiend's Grip is no longer channeled
+		"Ability13"					"special_bonus_imba_bane_4" //Enfeeble causes the target to lose his stats. This effect increases for each Enfeeble stack it has.
+		"Ability14"					"special_bonus_imba_bane_5" //Brain Sap casts summons a Baby Bane which applies a Baby Fiend's Grip on the target.
+		"Ability15"					"special_bonus_imba_bane_6" //Nightmare also mutes items for enemies affected.
+		"Ability16"					"special_bonus_imba_bane_7" //Nightmare invulnerability duration increase for allies
+		"Ability17"					"special_bonus_imba_bane_8" //Fiend's Grip spread during channeling
+
+		"Ability10"					"special_bonus_imba_bane_1" //Grants Enfeeble stacks when Nightmaring a target.
+		"Ability11"					"special_bonus_imba_bane_4" //Enfeeble causes the target to lose his stats. This effect increases for each Enfeeble stack it has.
+		"Ability12"					"special_bonus_imba_bane_6" //Nightmare also mutes items for enemies affected.
+		"Ability13"					"special_bonus_imba_bane_7" //Nightmare invulnerability duration increase for allies
+		"Ability14"					"special_bonus_imba_bane_2" //Enfeeble is now cast in a AoE to all targets around the main target.
+		"Ability15"					"special_bonus_imba_bane_3" //Fiend's Grip is no longer channeled
+		"Ability16"					"special_bonus_imba_bane_8" //Fiend's Grip spread during channeling
+		"Ability17"					"special_bonus_imba_bane_5" //Brain Sap casts summons a Baby Bane which applies a Baby Fiend's Grip on the target.
 
 		"ProjectileModel"			"particles/units/heroes/hero_bane/bane_projectile.vpcf"
 	}
