@@ -290,15 +290,15 @@
 		"Ability1"					"imba_bloodseeker_bloodrage"
 		"Ability2"					"imba_bloodseeker_blood_bath"
 		"Ability3"					"imba_bloodseeker_thirst"
-		"Ability4"					"imba_bloodseeker_rupture"
-		
+		"Ability4"					"imba_bloodseeker_rupture"			
+
 		"Ability10"					"special_bonus_imba_bloodseeker_1" //Blood Amp shift
-		"Ability11"					"special_bonus_imba_bloodseeker_2" //Blood Rite applies Rupture on targets and pushes them out of the circle
-		"Ability12"					"special_bonus_imba_bloodseeker_3" //Rupture Damage Heals Bloodseeker
-		"Ability13"					"special_bonus_imba_bloodseeker_4" //Blood Rite's silence becomes unpurgable
-		"Ability14"					"special_bonus_imba_bloodseeker_5" //Blood Rite is cast in three overlapping circles
-		"Ability15"					"special_bonus_imba_bloodseeker_6" //Rupture's distance cap increase
-		"Ability16"					"special_bonus_imba_bloodseeker_7" //Killing a Bloodraged unit grants the killer huge speed buff
+		"Ability11"					"special_bonus_imba_bloodseeker_6" //Rupture's distance cap increase
+		"Ability12"					"special_bonus_imba_bloodseeker_2" //Blood Rite applies Rupture on targets and pushes them out of the circle
+		"Ability13"					"special_bonus_imba_bloodseeker_7" //Killing a Bloodraged unit grants the killer huge speed buff
+		"Ability14"					"special_bonus_imba_bloodseeker_4" //Blood Rite's silence becomes unpurgable
+		"Ability15"					"special_bonus_imba_bloodseeker_3" //Rupture Damage Heals Bloodseeker
+		"Ability16"					"special_bonus_imba_bloodseeker_5" //Blood Rite is cast in three overlapping circles
 		"Ability17"					"special_bonus_imba_bloodseeker_8" //Bloodrage's damage amplification increases the less health the target has
 
 		"ProjectileSpeed"			"900"
@@ -319,15 +319,15 @@
 		"Ability2"			 		"imba_bounty_hunter_jinada"
 		"Ability3"					"imba_bounty_hunter_shadow_walk"
 		"Ability4"					"imba_bounty_hunter_headhunter"
-		"Ability5"					"imba_bounty_hunter_track"
+		"Ability5"					"imba_bounty_hunter_track"		
 
-		"Ability10"					"special_bonus_imba_bounty_hunter_1" //Tracked enemies take increased damage from any source
-		"Ability11"					"special_bonus_imba_bounty_hunter_2" //Tracked enemies grant normal vision instead of fogvision for the duration.
-		"Ability12"					"special_bonus_imba_bounty_hunter_3" //Jinada can now be cast on allies, granting them the ensured Jinada buff.
-		"Ability13"					"special_bonus_imba_bounty_hunter_4" //Shuriken Toss procs Jinada. The shuriken deals bonus critical damage and applies the Jinada slow debuff on all enemies hit.
-		"Ability14"					"special_bonus_imba_bounty_hunter_5" //Global Shuriken bounce range on all Tracked targets
-		"Ability15"					"special_bonus_imba_bounty_hunter_6" //While in Shadow Walk, as long as Bounty Hunter is moving, he gains bonus move speed
-		"Ability16"					"special_bonus_imba_bounty_hunter_7" //Shadow Jaunt can be cast on Headhunter's contract targets from huge range
+		"Ability10"					"special_bonus_imba_bounty_hunter_6" //While in Shadow Walk, as long as Bounty Hunter is moving, he gains bonus move speed
+		"Ability11"					"special_bonus_imba_bounty_hunter_3" //Jinada can now be cast on allies, granting them the ensured Jinada buff.
+		"Ability12"					"special_bonus_imba_bounty_hunter_4" //Shuriken Toss procs Jinada. The shuriken deals bonus critical damage and applies the Jinada slow debuff on all enemies hit.
+		"Ability13"					"special_bonus_imba_bounty_hunter_7" //Shadow Jaunt can be cast on Headhunter's contract targets from huge range
+		"Ability14"					"special_bonus_imba_bounty_hunter_2" //Tracked enemies grant normal vision instead of fogvision for the duration.
+		"Ability15"					"special_bonus_imba_bounty_hunter_5" //Global Shuriken bounce range on all Tracked targets
+		"Ability16"					"special_bonus_imba_bounty_hunter_1" //Tracked enemies take increased damage from any source
 		"Ability17"					"special_bonus_imba_bounty_hunter_8" //Track becomes hidden and unpurgable
 
 		"ProjectileSpeed"			"900"
@@ -424,16 +424,16 @@
 		"Ability2"					"imba_centaur_double_edge"
 		"Ability3"					"imba_centaur_return"
 		"Ability4"					"imba_centaur_thick_hide"
-		"Ability5"					"imba_centaur_stampede"
+		"Ability5"					"imba_centaur_stampede"		
 
-		"Ability10"					"special_bonus_imba_centaur_1"
-		"Ability11"					"special_bonus_imba_centaur_2"
-		"Ability12"					"special_bonus_imba_centaur_3"
-		"Ability13"					"special_bonus_imba_centaur_4"
-		"Ability14"					"special_bonus_imba_centaur_5"
-		"Ability15"					"special_bonus_imba_centaur_6"
-		"Ability16"					"special_bonus_imba_centaur_7"
-		"Ability17"					"special_bonus_imba_centaur_8"
+		"Ability10"					"special_bonus_imba_centaur_1" //Double Edge self-damage reduction
+		"Ability11"					"special_bonus_imba_centaur_4" //Double edge damage in increased by x * strength
+		"Ability12"					"special_bonus_imba_centaur_8" //Stampede duration increase per trampled enemy
+		"Ability13"					"special_bonus_imba_centaur_2" //Arena damage reduction extends to allies
+		"Ability14"					"special_bonus_imba_centaur_3" //Centaur hoof stomp arena moves along with hero
+		"Ability15"					"special_bonus_imba_centaur_6" //Return becomes an aura 
+		"Ability16"					"special_bonus_imba_centaur_7" //Return's Bulging Hide gains stacks from all auto attacks, or any kind of damage above 100.
+		"Ability17"					"special_bonus_imba_centaur_5" //Heroes with Stampede haste get 75% tenacity. 
 
 		"ProjectileSpeed"			"900"
 	}

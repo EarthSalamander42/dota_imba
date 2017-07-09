@@ -547,6 +547,8 @@ function modifier_imba_jinada_passive:IsDebuff()
 	return false
 end
 
+
+
 -- Slow debuff modifier
 modifier_imba_jinada_debuff_slow = modifier_imba_jinada_debuff_slow or class({})
 
@@ -1199,13 +1201,11 @@ function modifier_imba_track_debuff_mark:IsDebuff()
 	return true
 end
 
-function modifier_imba_track_debuff_mark:IsPurgable()
-	-- #8 Talent - Unpurgable track
-	local purge_value = self.caster:FindTalentValue("special_bonus_imba_bounty_hunter_8")
-	if purge_value == 1 then
+function modifier_imba_track_debuff_mark:IsPurgable()	
+	-- #8 Talent - Unpurgable track	
+	if self.caster:HasTalent("special_bonus_imba_bounty_hunter_8") then		
 	 	return false
 	end
-
 	return true
 end
 
@@ -1214,9 +1214,8 @@ function modifier_imba_track_debuff_mark:RemoveOnDeath()
 end
 
 function modifier_imba_track_debuff_mark:IsHidden()
-	-- #8 Talent - Hidden track
-	local hidden_value = self.caster:FindTalentValue("special_bonus_imba_bounty_hunter_8")
-	if hidden_value == 1 then
+	-- #8 Talent - Hidden track	
+	if self.caster:HasTalent("special_bonus_imba_bounty_hunter_8") then
 		return true
 	end
 
@@ -1300,6 +1299,10 @@ end
 
 function modifier_imba_track_debuff_mark:GetPriority()
 	return MODIFIER_PRIORITY_HIGH
+end
+
+function modifier_imba_track_debuff_mark:IsPermanent()
+	return false
 end
 
 
