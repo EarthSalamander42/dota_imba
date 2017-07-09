@@ -111,6 +111,15 @@
 		"Ability16"					"special_bonus_imba_antimage_7" //Mana Break attacks burn mana of nearby enemies in AoE, equal to a portion of the mana burned.
 		"Ability17"					"special_bonus_imba_antimage_8" //Mana Void counts missing mana from all targets in the AOE
 
+		"Ability10"					"special_bonus_imba_antimage_3" //Blink cast point decrease
+		"Ability11"					"special_bonus_imba_antimage_7" //Mana Break attacks burn mana of nearby enemies in AoE, equal to a portion of the mana burned.
+		"Ability12"					"special_bonus_imba_antimage_2" //Spell Shield can be used even while stunned.
+		"Ability13"					"special_bonus_imba_antimage_6" //Mana Void explosion is delayed. Each point of mana lost is worth as 2 missing mana points
+		"Ability14"					"special_bonus_imba_antimage_1" //Blink now has charges
+		"Ability15"					"special_bonus_imba_antimage_5" //Blinking grants a 1 second magic immunity shield.
+		"Ability16"					"special_bonus_imba_antimage_8" //Mana Void counts missing mana from all targets in the AOE
+		"Ability17"					"special_bonus_imba_antimage_4" //% of target's missing mana added to Mana Break damage
+
 		"ProjectileSpeed"			"900"
 	}
 
@@ -154,14 +163,23 @@
 		"Ability3"					"imba_axe_counter_helix"
 		"Ability4"					"imba_axe_culling_blade"
 
-		"Ability10"					"special_bonus_imba_axe_4"
-		"Ability11"					"special_bonus_imba_axe_2"
-		"Ability12"					"special_bonus_imba_axe_3"
-		"Ability13"					"special_bonus_imba_axe_1"
-		"Ability14"					"special_bonus_imba_axe_5"
-		"Ability15"					"special_bonus_imba_axe_6"
-		"Ability16"					"special_bonus_imba_axe_7"
-		"Ability17"					"special_bonus_imba_axe_8"
+		"Ability10"					"special_bonus_imba_axe_4" // +30% of your strength added to Counter Helix damage.
+		"Ability11"					"special_bonus_imba_axe_2" // +1 armor with every hit taken during Berserker's Call, lasts for 3 seconds after it ends.
+		"Ability12"					"special_bonus_imba_axe_3" // Allows self-casting of Battle Hunger - applies it to everyone affected by Berserker's Call.
+		"Ability13"					"special_bonus_imba_axe_1" // If an enemy unit with Battle Hunger attacks an ally, that ally also gains the Battle Hunger debuff
+		"Ability14"					"special_bonus_imba_axe_5" // Counter Helix chance doubles, but each Counter Helix deals 66% of the original base damage.
+		"Ability15"					"special_bonus_imba_axe_6" // When Counter Helix procs, it has 25% chance to immediately proc again. Psuedo Random chance. The extra proc cannot trigger this again.
+		"Ability16"					"special_bonus_imba_axe_7" // Counter Helix's damage is increased by 1 for each point of Armor Axe has.
+		"Ability17"					"special_bonus_imba_axe_8" // +650 Culling Blade cast range (leaps into the target to execute it).
+
+		"Ability10"					"special_bonus_imba_axe_2" // +1 armor with every hit taken during Berserker's Call, lasts for 3 seconds after it ends.
+		"Ability11"					"special_bonus_imba_axe_7" // Counter Helix's damage is increased by 1 for each point of Armor Axe has.
+		"Ability12"					"special_bonus_imba_axe_5" // Counter Helix chance doubles, but each Counter Helix deals 66% of the original base damage.
+		"Ability13"					"special_bonus_imba_axe_1" // If an enemy unit with Battle Hunger attacks an ally, that ally also gains the Battle Hunger debuff
+		"Ability14"					"special_bonus_imba_axe_3" // Allows self-casting of Battle Hunger - applies it to everyone affected by Berserker's Call.
+		"Ability15"					"special_bonus_imba_axe_4" // +30% of your strength added to Counter Helix damage.
+		"Ability16"					"special_bonus_imba_axe_6" // When Counter Helix procs, it has 25% chance to immediately proc again. Psuedo Random chance. The extra proc cannot trigger this again.
+		"Ability17"					"special_bonus_imba_axe_8" // +650 Culling Blade cast range (leaps into the target to execute it).
 
 		"ProjectileSpeed"			"900"
 	}
