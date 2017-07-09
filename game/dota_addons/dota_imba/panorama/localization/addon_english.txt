@@ -73,8 +73,8 @@
     "Dota_Tooltip_Talent_special_bonus_imba_abaddon_6_Description"              "Increases Overchannel's health drain by 50%, and the bonus to spells affected by it by the same amount.<br><br><i>When paying the Mist in blood, it accepts you, but also demands more.</i>"
     "Dota_Tooltip_Talent_special_bonus_imba_abaddon_7_title"                    "Purging Mist"
     "Dota_Tooltip_Talent_special_bonus_imba_abaddon_7_Description"              "Borrowed Time applies a strong purge on all allies in the redirect range on cast.<br><br><i>As the full power of the Font is unleased, it's not only Abaddon that is cleansed of impurities...</i>"
-    "Dota_Tooltip_Talent_special_bonus_imba_abaddon_8_title"                    "Overflowing Redirect"
-    "Dota_Tooltip_Talent_special_bonus_imba_abaddon_8_Description"              "Heals that heal above maximum health threshold during Borrowed Time grants a mist shield that is released after Borrowed Time expires, healing Abaddon.<br>Only 25% of the damage is converted into healing. Heals over 5 seconds.<br><br><i>Abaddon unveils the full power of the Mist.</i>"
+    "Dota_Tooltip_Talent_special_bonus_imba_abaddon_8_title"                    "Overflowing Redirection"
+    "Dota_Tooltip_Talent_special_bonus_imba_abaddon_8_Description"              "Heals that occur while Abaddon has full health during Borrowed Time grants a mist shield that is released after Borrowed Time expires, increasing Abaddon's health regeneration for the duration.<br>Only 25% of the damage is converted into health regeneration. Mist lasts 5 seconds.<br><br><i>Abaddon unveils the full power of the Mist.</i>"
 
 	// Alchemist
 	"Dota_Tooltip_Talent_special_bonus_imba_alchemist_1_title"					"Acidic Quantity"	
