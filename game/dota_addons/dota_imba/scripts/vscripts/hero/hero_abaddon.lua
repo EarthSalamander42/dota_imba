@@ -91,7 +91,15 @@ function imba_abaddon_mist_coil:OnSpellStart(unit, special_cast)
 	if IsServer() then
 		local caster = self:GetCaster()
 		local target = unit or self:GetCursorTarget()
-
+		
+		-- Use up overchannel
+		self.overchannel_damage_increase	=	getOverChannelDamageIncrease(caster)
+		self.overchannel_mist_increase		=	getOverChannelMistIncrease(caster)
+		local over_channel_modifier = caster:FindModifierByName("modifier_over_channel_handler")
+		if over_channel_modifier then
+			over_channel_modifier:Destroy()
+		end
+		
 		caster:EmitSound("Hero_Abaddon.DeathCoil.Cast")
 
 		-- If caster is alive
@@ -137,13 +145,10 @@ function imba_abaddon_mist_coil:OnProjectileHit_ExtraData( hTarget, vLocation, E
 		local special_cast = ExtraData.special_cast or false
 
 		target:EmitSound("Hero_Abaddon.DeathCoil.Target")
-
-		local over_channel_increase = 0
 		local mist_duration = self:GetSpecialValueFor("mist_duration")
 
 		if not special_cast then
-			over_channel_increase = getOverChannelDamageIncrease(caster)
-			mist_duration = mist_duration + getOverChannelMistIncrease(caster)
+			mist_duration = mist_duration + self.overchannel_mist_increase
 		end
 
         if target:GetTeam() ~= caster:GetTeam() then
@@ -152,7 +157,7 @@ function imba_abaddon_mist_coil:OnProjectileHit_ExtraData( hTarget, vLocation, E
                 return nil
             end
 
-			local damage = self:GetLevelSpecialValueFor("damage", ability_level) + over_channel_increase
+			local damage = self:GetLevelSpecialValueFor("damage", ability_level) + self.overchannel_damage_increase
 			local damage_type = DAMAGE_TYPE_MAGICAL
 
 			-- Apply damage + parsing if the ability killed the target
@@ -180,7 +185,7 @@ function imba_abaddon_mist_coil:OnProjectileHit_ExtraData( hTarget, vLocation, E
 			--Apply spellpower to heal
 			local heal_amp = 1 + (caster:GetSpellPower() * 0.01)
 
-			local heal = (self:GetLevelSpecialValueFor("heal", ability_level) + over_channel_increase) * heal_amp			
+			local heal = (self:GetLevelSpecialValueFor("heal", ability_level) + self.overchannel_damage_increase) * heal_amp			
 	
 			-- heal allies or self and apply mist
 			target:Heal(heal, caster)
@@ -201,10 +206,6 @@ function imba_abaddon_mist_coil:OnProjectileHit_ExtraData( hTarget, vLocation, E
 			over_channel_particle = ParticleManager:CreateParticle("particles/dev/library/base_dust_hit_smoke.vpcf", PATTACH_POINT, target)
 			ParticleManager:ReleaseParticleIndex(over_channel_particle)
 
-			local over_channel_modifier = caster:FindModifierByName("modifier_over_channel_handler")
-			if over_channel_modifier then
-				over_channel_modifier:Destroy()
-			end
 		end
 		
 		-- Cast response
