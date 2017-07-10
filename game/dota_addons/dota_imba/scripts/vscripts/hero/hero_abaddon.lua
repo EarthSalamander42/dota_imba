@@ -691,7 +691,6 @@ end
 function modifier_imba_curse_of_avernus_passive:OnAttack(kv)
 	if IsServer() then
 		local caster = self:GetCaster()
-
 		-- Do not apply curse if avernus if "break"
 		if not caster:PassivesDisabled() then
 
@@ -716,6 +715,8 @@ function modifier_imba_curse_of_avernus_passive:OnAttack(kv)
 		end
 
 		if kv.attacker == caster and self.ability:IsCooldownReady() and ( self.ability.curse_of_avernus_target or self.ability:GetAutoCastState() ) then
+				print("still works")
+
 			local health_lost = caster:GetHealth() * caster:FindTalentValue("special_bonus_imba_abaddon_4", "health_cost_pct") / 100
 
 			local over_channel_modifier = caster:FindModifierByName("modifier_over_channel_handler")
@@ -743,12 +744,16 @@ function modifier_imba_curse_of_avernus_passive:OnOrder(kv)
 	end
 end
 
-function modifier_imba_curse_of_avernus_passive:OnAttackFail()
-	self.ability.curse_of_avernus_target = nil
+function modifier_imba_curse_of_avernus_passive:OnAttackFail(kv)
+	if self:GetParent() == kv.attacker then
+		self.ability.curse_of_avernus_target = nil
+	end
 end
 
-function modifier_imba_curse_of_avernus_passive:OnAttackLanded()
-	self.ability.curse_of_avernus_target = nil
+function modifier_imba_curse_of_avernus_passive:OnAttackLanded(kv)
+	if self:GetParent()	== kv.attacker then
+		self.ability.curse_of_avernus_target = nil
+	end
 end
 
 function modifier_imba_curse_of_avernus_passive:GetModifierProcAttack_BonusDamage_Physical(kv)
