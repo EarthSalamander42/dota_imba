@@ -1265,14 +1265,14 @@ function modifier_dismember:OnIntervalThink()
 	if IsServer() then
 		local flDamage = self.dismember_damage
 		flDamage = flDamage + ( self:GetCaster():GetStrength() * self.strength_damage )
-		flDamage = self:GetParent():GetMagicalResistance() * flDamage
+		--flDamage = self:GetParent():GetMagicalResistance() * flDamage
 		local damage = {
 			victim = self:GetParent(),
 			attacker = self:GetCaster(),
 			damage = flDamage,
 			damage_type = DAMAGE_TYPE_MAGICAL,
 			ability = self:GetAbility(),
-			damage_flags  = DOTA_DAMAGE_FLAG_IGNORES_MAGIC_ARMOR,
+			--damage_flags  = DOTA_DAMAGE_FLAG_IGNORES_MAGIC_ARMOR,
 		}
 		ApplyDamage( damage )
 		
