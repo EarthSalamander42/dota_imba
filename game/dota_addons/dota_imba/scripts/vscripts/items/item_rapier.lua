@@ -73,7 +73,7 @@ end
 
 function modifier_imba_divine_rapier:OnCreated()
 	local item = self:GetAbility()
-	if self:GetParent():IsHero() and item then
+	if not self:GetParent():IsCourier() and item then
 		self.bonus_damage = item:GetSpecialValueFor("bonus_damage")
 	else
 		self.bonus_damage = 0
@@ -118,7 +118,7 @@ end
 function modifier_imba_divine_rapier_2:OnCreated()
 	local item = self:GetAbility()
 	self.parent = self:GetParent()
-	if self.parent:IsHero() and item then
+	if not self:GetParent():IsCourier() and item then
 		self.bonus_damage = item:GetSpecialValueFor("bonus_damage")
 	else
 		self.bonus_damage = 0
@@ -160,7 +160,7 @@ end
 
 function modifier_imba_arcane_rapier:OnCreated()	
 	local item = self:GetAbility()
-	if self:GetParent():IsHero() and item then
+	if not self:GetParent():IsCourier() and item then
 		self.spell_power = item:GetSpecialValueFor("spell_power")
 	else
 		self.spell_power = 0
@@ -197,7 +197,7 @@ end
 function modifier_imba_arcane_rapier_2:OnCreated()
 	local item = self:GetAbility()
 	self.parent = self:GetParent()
-	if self.parent:IsHero() and item then
+	if not self:GetParent():IsCourier() and item then
 		self.spell_power = item:GetSpecialValueFor("spell_power")
 	else
 		self.spell_power = 0
@@ -252,7 +252,7 @@ end
 function modifier_imba_rapier_cursed:OnCreated()
 	local item = self:GetAbility()
 	self.parent = self:GetParent()
-	if self.parent:IsHero() and item then
+	if not self:GetParent():IsCourier() and item then
 		self.spell_power = item:GetSpecialValueFor("spell_power")
 		self.bonus_damage = item:GetSpecialValueFor("bonus_damage")
 		self.tenacity_pct = item:GetSpecialValueFor("tenacity_pct")
