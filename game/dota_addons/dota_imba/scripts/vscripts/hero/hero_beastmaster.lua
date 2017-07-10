@@ -31,7 +31,8 @@ function imba_beastmaster_summon_hawk:OnSpellStart()
 
         -- Create hawk
         self.hawk = CreateUnitByName(hawk_name..hawk_level, spawn_point, false, caster, caster, caster:GetTeamNumber())
-        self.hawk:AddNewModifier(caster, self, "modifier_imba_beastmaster_hawk", {duration = hawk_duration})
+        self.hawk:AddNewModifier(caster, self, "modifier_imba_beastmaster_hawk", {})
+		self.hawk:AddNewModifier(caster, self, "modifier_kill", {duration = hawk_duration})
         self.hawk:SetControllableByPlayer(caster:GetPlayerID(), true)
 
 		end
@@ -72,7 +73,7 @@ end
 function modifier_imba_beastmaster_hawk:GetModifierMoveSpeed_Max()
     return 1200
 end
-
+--[[
 -- Kill hawk when it's duration is over
 function modifier_imba_beastmaster_hawk:OnDestroy()
     if IsServer() then
@@ -80,7 +81,7 @@ function modifier_imba_beastmaster_hawk:OnDestroy()
         self:GetParent():ForceKill(false)
     end
 end
-
+]]
 -----------------------------------------------------
 -------- CALL OF THE WILD: HAWK: Invisibility -------
 -----------------------------------------------------
@@ -209,7 +210,9 @@ function imba_beastmaster_summon_boar:OnSpellStart()
 
 		-- Create hawk
 		boar = CreateUnitByName(boar_name..boar_level, spawn_point, true, caster, caster, caster:GetTeamNumber())
-		boar:AddNewModifier(caster, self, "modifier_imba_beastmaster_boar", {duration = boar_duration})
+		boar:AddNewModifier(caster, self, "modifier_imba_beastmaster_boar", {})
+		boar:AddNewModifier(caster, self, "modifier_kill", {duration = boar_duration})
+
 		boar:SetControllableByPlayer(caster:GetPlayerID(), true)
 
 	end
