@@ -36,7 +36,7 @@ function imba_phantom_assassin_stifling_dagger:OnSpellStart()
 	damage_reduction 		=	ability:GetSpecialValueFor("damage_reduction")
 	dagger_vision 			=	ability:GetSpecialValueFor("dagger_vision")
 	scepter_knives_interval =	0.3
-	cast_range				=	ability:GetCastRange(caster:GetAbsOrigin(), target) + GetCastRangeIncrease(caster)
+	cast_range				=	ability:GetCastRange() + GetCastRangeIncrease(caster)
 	playbackrate			=	1 + scepter_knives_interval
 
 	--TALENT: +35 Stifling Dagger bonus damage
@@ -250,6 +250,9 @@ function imba_phantom_assassin_stifling_dagger:OnProjectileHit( target, location
 	return true
 end
 
+function imba_phantom_assassin_stifling_dagger:GetCastRange()
+	return self:GetSpecialValueFor("cast_range")
+end
 -------------------------------------------
 -- Stifling Dagger slow modifier
 -------------------------------------------
