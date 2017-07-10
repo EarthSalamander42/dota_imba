@@ -5996,6 +5996,239 @@
 		}
 	}
 	
+		
+	//=================================================================================================================
+	// Beastmaster: Call of the Wild Hawk
+	//=================================================================================================================
+	"imba_beastmaster_summon_hawk"
+	{
+		//General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"              	"ability_lua"
+		"ScriptFile"				"hero/hero_beastmaster.lua"
+		"AbilityBehavior"        	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"FightRecapLevel"			"1"
+		"AbilityTextureName"     	"beastmaster_call_of_the_wild"
+		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"2"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"42 38 34 30 26 22 18"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"25"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_beastmaster.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_beastmaster.vsndevts"
+			"particle"					"particles/units/heroes/hero_beastmaster/beastmaster_call_bird.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			// If you want to change the values of the hawk, change this and the hawk units in npc_units_custom.
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hawk_hp_tooltip"			"100 150 200 250 300 350 400"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hawk_speed_tooltip"		"400 450 500 550 600 650 700"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hawk_daysight_tooltip"		"800 1000 1200 1400 1600 1800 2000"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hawk_nightsight_tooltip"	"500 650 800 950 1100 1250 1400"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hawk_duration"				"60 60 60 60 65 70 75"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"hawk_fade_delay_tooltip"	"6 5 4 3 2 1.5 1"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Beastmaster's Hawk Invisibility
+	//=================================================================================================================
+	"imba_beastmaster_hawk_invis"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_beastmaster.lua"
+		"AbilityTextureName"			"beastmaster_hawk_invisibility"
+		"FightRecapLevel"				"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"MaxLevel"						"7"		
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"6 5 4 3 2 1.5 1"					// Visible indicator of fade time
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"fade_time"							"6.0 5.0 4.0 3.0 2.0 1.5 1.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Beastmaster's Call of the Wild Boar
+	//=================================================================================================================
+	"imba_beastmaster_summon_boar"
+	{
+		//General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"              	"ability_lua"
+		"ScriptFile"				"hero/hero_beastmaster.lua"
+		"AbilityBehavior"        	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"FightRecapLevel"			"1"
+		"AbilityTextureName"     	"beastmaster_call_of_the_wild_boar"
+		"MaxLevel"					"7"
+		"LevelsBetweenUpgrades"		"2"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"42 38 34 30 28 26 24"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"25"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_beastmaster.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_beastmaster.vsndevts"
+			"particle"					"particles/units/heroes/hero_beastmaster/beastmaster_call_boar.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			// If you want to change the values of the boar, change this and the boar units in npc_units_custom.
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"boar_health_tooltip"			"250 400 550 700 850 1000 1150"
+			}
+
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"boar_armor_tooltip"			"0 1 2 3 4 5 6"
+			}
+			
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"boar_damage_tooltip"			"20 40 60 80 90 100 110"
+			}
+
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"boar_moveslow_tooltip"			"15 25 35 45 50 55 60"
+			}
+
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"boar_attackslow_tooltip"		"10 20 30 40 50 60 70"
+			}
+
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"poison_duration_tooltip"		"3"
+			}
+
+			"07"
+			{
+				"var_type" 						"FIELD_INTEGER"
+				"boar_duration"					"60 60 60 60 65 70 75"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Beastmaster's Boar poison
+	//=================================================================================================================
+	"imba_beastmaster_boar_poison"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_beastmaster"
+		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"beastmaster_boar_poison"
+		"MaxLevel"						"7"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movespeed_slow"			"-15 -25 -35 -45 -50 -55 -60"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"attackspeed_slow"			"-10 -20 -30 -40 -50 -60 -70"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"3.0"
+			}
+		}
+	}
+
 	//=================================================================================================================
 	// Bounty Hunter's Shuriken Toss
 	//=================================================================================================================
