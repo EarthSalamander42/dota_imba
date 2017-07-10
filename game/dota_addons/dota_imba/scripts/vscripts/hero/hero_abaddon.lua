@@ -644,6 +644,7 @@ modifier_imba_curse_of_avernus_passive = modifier_imba_curse_of_avernus_passive 
 	GetAuraSearchType		= function(self) return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC end,
 	GetAuraSearchTeam		= function(self) return DOTA_UNIT_TARGET_TEAM_FRIENDLY end,
 })
+function modifier_imba_curse_of_avernus_passive:RemoveOnDeath() return false end
 
 function modifier_imba_curse_of_avernus_passive:OnCreated()
 	self.caster = self:GetCaster()
