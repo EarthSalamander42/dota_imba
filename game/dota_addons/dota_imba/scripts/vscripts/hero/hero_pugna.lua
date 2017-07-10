@@ -824,6 +824,7 @@ function modifier_imba_nether_ward_degen:OnSpentMana(keys)
             "monkey_king_tree_dance",
             "monkey_king_primal_spring",
             "monkey_king_wukongs_command",
+			"doom_doom",
         }
 
         -- Ignore items
