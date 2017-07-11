@@ -109,6 +109,7 @@ function modifier_imba_ironleaf_boots_unique:OnCreated()
         self.iron_body_normal_reduction = self.ability:GetSpecialValueFor("iron_body_normal_reduction")
         self.iron_body_min_stacks_req = self.ability:GetSpecialValueFor("iron_body_min_stacks_req")
         self.leafwalk_hold_time = self.ability:GetSpecialValueFor("leafwalk_hold_time")
+        self.leafwalk_duration = self.ability:GetSpecialValueFor("leafwalk_duration")
 
         -- Add meditate's modifier
         self.caster:AddNewModifier(self.caster, self.ability, self.modifier_meditate, {})
@@ -123,6 +124,18 @@ end
 
 function modifier_imba_ironleaf_boots_unique:OnIntervalThink()
     if IsServer() then       
+        -- If the boots are broken, reset the timer. If it has Leafwalk, also remove it.
+        if not self:GetAbility():IsCooldownReady() then
+            self.last_movement = GameRules:GetGameTime()
+
+            if self.caster:HasModifier(self.modifier_leafwalk) then
+                local leafwalk_handler = self.caster:FindModifierByName(self.modifier_leafwalk)
+                if leafwalk_handler then
+                    leafwalk_handler:Destroy()
+                end
+            end
+        end
+
         -- If the caster already has Leafwalk, do nothing.
         if self.caster:HasModifier(self.modifier_leafwalk) then
             return nil
@@ -130,7 +143,7 @@ function modifier_imba_ironleaf_boots_unique:OnIntervalThink()
 
         -- If the last movement was above the threshold, apply Leafwalk
         if GameRules:GetGameTime() - self.last_movement >= self.leafwalk_hold_time then
-            self.caster:AddNewModifier(self.caster, self.ability, self.modifier_leafwalk, {})
+            self.caster:AddNewModifier(self.caster, self.ability, self.modifier_leafwalk, {duration = self.leafwalk_duration})
         end
     end
 end
@@ -260,7 +273,8 @@ function modifier_imba_ironleaf_boots_meditate:OnCreated()
     self.meditate_health_regen = self.ability:GetSpecialValueFor("meditate_health_regen")
     self.meditate_magic_resistance_pct = self.ability:GetSpecialValueFor("meditate_magic_resistance_pct")
     self.max_stacks = self.ability:GetSpecialValueFor("max_stacks")
-    self.meditate_stacks_loss = self.ability:GetSpecialValueFor("meditate_stacks_loss")    
+    self.meditate_stacks_loss_creep = self.ability:GetSpecialValueFor("meditate_stacks_loss_creep")    
+    self.meditate_stacks_loss_hero = self.ability:GetSpecialValueFor("meditate_stacks_loss_hero")
 
     if IsServer() then
         -- Start thinking
@@ -302,7 +316,6 @@ function modifier_imba_ironleaf_boots_meditate:GetModifierMagicalResistanceBonus
     return self.meditate_magic_resistance_pct * self:GetStackCount()
 end
 
-
 function modifier_imba_ironleaf_boots_meditate:OnAttackLanded(keys)
     if IsServer() then
         local attacker = keys.attacker
@@ -318,8 +331,17 @@ function modifier_imba_ironleaf_boots_meditate:OnAttackLanded(keys)
 
             -- Reduce stacks by the loss amount 
             local stacks = self:GetStackCount()
-            if stacks >= self.meditate_stacks_loss then
-                self:SetStackCount(self:GetStackCount() - self.meditate_stacks_loss)
+
+            -- Get the amount of stacks to lose
+            local meditate_stacks_loss
+            if attacker:IsHero() then
+                meditate_stacks_loss = self.meditate_stacks_loss_hero
+            else
+                meditate_stacks_loss = self.meditate_stacks_loss_creep
+            end
+
+            if stacks >= meditate_stacks_loss then
+                self:SetStackCount(self:GetStackCount() - meditate_stacks_loss)
             else
                 self:SetStackCount(0)
             end
@@ -396,4 +418,18 @@ function modifier_imba_ironleaf_boots_leafwalk:CheckState()
     local state = {[MODIFIER_STATE_INVISIBLE] = true}
 
     return state
+end
+
+function modifier_imba_ironleaf_boots_leafwalk:OnDestroy()
+    if IsServer() then
+        -- Check if it was destroyed because of it simply expiring out
+        if self.caster:HasModifier("modifier_imba_ironleaf_boots_unique") then
+
+            -- If so, set the last movement to this moment
+            local ironleaf_modifier_handler = self.caster:FindModifierByName("modifier_imba_ironleaf_boots_unique")
+            if ironleaf_modifier_handler then
+                ironleaf_modifier_handler.last_movement = GameRules:GetGameTime()
+            end
+        end
+    end 
 end
