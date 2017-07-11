@@ -4451,6 +4451,896 @@
 		"VisionNighttimeRange"		"0"
 	}
 
+		//=================================================================================
+	// Beastmaster: Call of the Wild Hawk
+	//=================================================================================	
+	
+    "npc_imba_dota_beastmaster_hawk_1"
+    {                                       
+        // General
+        //----------------------------------------------------------------
+        "Model"                     "models/heroes/beastmaster/beastmaster_bird.vmdl"   // Model.
+        "BaseClass"                 "npc_dota_beastmaster_hawk"
+        "SoundSet"                  "Hero_Beastmaster.Call.Hawk"         // Name of sound set.
+        "Level"                     "1"
+        "ModelScale"                "1.2"
+        "IsSummoned"                "1"
+        "UnitLabel"                 "hawk"
+
+        // Abilities
+        //----------------------------------------------------------------
+        "Ability1"                  "imba_beastmaster_hawk_invis"          // Ability 1
+
+        // Armor
+        //----------------------------------------------------------------
+        "ArmorPhysical"             "5"         // Physical protection.
+
+        // Attack
+        //----------------------------------------------------------------
+        "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+
+        // Bounds
+        //----------------------------------------------------------------
+        "HealthBarOffset"           "165"
+
+        // Bounty
+        //----------------------------------------------------------------
+        "BountyXP"                  "77"        // Experience earn.
+        "BountyGoldMin"             "30"        // Gold earned min.
+        "BountyGoldMax"             "30"        // Gold earned max.
+
+        // Movement
+        //----------------------------------------------------------------
+        "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_FLY"
+        "MovementSpeed"             "400"       // Speed.
+        "MovementTurnRate"          "0.6"       // Turning rate.
+
+        // Status
+        //----------------------------------------------------------------
+        "StatusHealth"              "100"        // Base health.
+        "StatusHealthRegen"         "1.5"       // Health regeneration rate.
+        
+        // Vision
+        //----------------------------------------------------------------
+        "VisionDaytimeRange"        "800"       // Range of vision during day light.
+        "VisionNighttimeRange"      "500"       // Range of vision at night time.
+
+        // Team
+        //----------------------------------------------------------------
+        "TeamName"                  "DOTA_TEAM_NEUTRALS"                            // Team name.
+        "CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
+        "CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
+        "UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+        
+        "WakesNeutrals"             "0"
+    }   
+
+    "npc_imba_dota_beastmaster_hawk_2"
+    {                                       
+        // General
+        //----------------------------------------------------------------
+        "Model"                     "models/heroes/beastmaster/beastmaster_bird.vmdl"   // Model.
+        "BaseClass"                 "npc_dota_beastmaster_hawk"
+        "SoundSet"                  "Hero_Beastmaster.Call.Hawk"         // Name of sound set.
+        "Level"                     "1"
+        "ModelScale"                "1.2"
+        "IsSummoned"                "1"
+        "UnitLabel"                 "hawk"
+
+        // Abilities
+        //----------------------------------------------------------------
+        "Ability1"                  "imba_beastmaster_hawk_invis"          // Ability 1
+
+        // Armor
+        //----------------------------------------------------------------
+        "ArmorPhysical"             "5"         // Physical protection.
+
+        // Attack
+        //----------------------------------------------------------------
+        "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+
+        // Bounds
+        //----------------------------------------------------------------
+        "HealthBarOffset"           "165"
+
+        // Bounty
+        //----------------------------------------------------------------
+        "BountyXP"                  "77"        // Experience earn.
+        "BountyGoldMin"             "30"        // Gold earned min.
+        "BountyGoldMax"             "30"        // Gold earned max.
+
+        // Movement
+        //----------------------------------------------------------------
+        "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_FLY"
+        "MovementSpeed"             "450"       // Speed.
+        "MovementTurnRate"          "0.6"       // Turning rate.
+
+        // Status
+        //----------------------------------------------------------------
+        "StatusHealth"              "150"        // Base health.
+        "StatusHealthRegen"         "1.5"       // Health regeneration rate.
+        
+        // Vision
+        //----------------------------------------------------------------
+        "VisionDaytimeRange"        "1000"       // Range of vision during day light.
+        "VisionNighttimeRange"      "650"       // Range of vision at night time.
+
+        // Team
+        //----------------------------------------------------------------
+        "TeamName"                  "DOTA_TEAM_NEUTRALS"                            // Team name.
+        "CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
+        "CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
+        "UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+        
+        "WakesNeutrals"             "0"
+    } 
+		
+    "npc_imba_dota_beastmaster_hawk_3"
+    {                                       
+        // General
+        //----------------------------------------------------------------
+        "Model"                     "models/heroes/beastmaster/beastmaster_bird.vmdl"   // Model.
+        "BaseClass"                 "npc_dota_beastmaster_hawk"
+        "SoundSet"                  "Hero_Beastmaster.Call.Hawk"         // Name of sound set.
+        "Level"                     "1"
+        "ModelScale"                "1.2"
+        "IsSummoned"                "1"
+        "UnitLabel"                 "hawk"
+
+        // Abilities
+        //----------------------------------------------------------------
+        "Ability1"                  "imba_beastmaster_hawk_invis"          // Ability 1
+
+        // Armor
+        //----------------------------------------------------------------
+        "ArmorPhysical"             "5"         // Physical protection.
+
+        // Attack
+        //----------------------------------------------------------------
+        "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+
+        // Bounds
+        //----------------------------------------------------------------
+        "HealthBarOffset"           "165"
+
+        // Bounty
+        //----------------------------------------------------------------
+        "BountyXP"                  "77"        // Experience earn.
+        "BountyGoldMin"             "30"        // Gold earned min.
+        "BountyGoldMax"             "30"        // Gold earned max.
+
+        // Movement
+        //----------------------------------------------------------------
+        "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_FLY"
+        "MovementSpeed"             "500"       // Speed.
+        "MovementTurnRate"          "0.6"       // Turning rate.
+
+        // Status
+        //----------------------------------------------------------------
+        "StatusHealth"              "200"        // Base health.
+        "StatusHealthRegen"         "1.5"       // Health regeneration rate.
+        
+        // Vision
+        //----------------------------------------------------------------
+        "VisionDaytimeRange"        "1200"       // Range of vision during day light.
+        "VisionNighttimeRange"      "800"       // Range of vision at night time.
+
+        // Team
+        //----------------------------------------------------------------
+        "TeamName"                  "DOTA_TEAM_NEUTRALS"                            // Team name.
+        "CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
+        "CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
+        "UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+        
+        "WakesNeutrals"             "0"
+    } 
+		
+    "npc_imba_dota_beastmaster_hawk_4"
+    {                                       
+        // General
+        //----------------------------------------------------------------
+        "Model"                     "models/heroes/beastmaster/beastmaster_bird.vmdl"   // Model.
+        "BaseClass"                 "npc_dota_beastmaster_hawk"
+        "SoundSet"                  "Hero_Beastmaster.Call.Hawk"         // Name of sound set.
+        "Level"                     "1"
+        "ModelScale"                "1.2"
+        "IsSummoned"                "1"
+        "UnitLabel"                 "hawk"
+
+        // Abilities
+        //----------------------------------------------------------------
+        "Ability1"                  "imba_beastmaster_hawk_invis"          // Ability 1
+
+        // Armor
+        //----------------------------------------------------------------
+        "ArmorPhysical"             "5"         // Physical protection.
+
+        // Attack
+        //----------------------------------------------------------------
+        "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+
+        // Bounds
+        //----------------------------------------------------------------
+        "HealthBarOffset"           "165"
+
+        // Bounty
+        //----------------------------------------------------------------
+        "BountyXP"                  "77"        // Experience earn.
+        "BountyGoldMin"             "30"        // Gold earned min.
+        "BountyGoldMax"             "30"        // Gold earned max.
+
+        // Movement
+        //----------------------------------------------------------------
+        "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_FLY"
+        "MovementSpeed"             "550"       // Speed.
+        "MovementTurnRate"          "0.6"       // Turning rate.
+
+        // Status
+        //----------------------------------------------------------------
+        "StatusHealth"              "250"        // Base health.
+        "StatusHealthRegen"         "1.5"       // Health regeneration rate.
+        
+        // Vision
+        //----------------------------------------------------------------
+        "VisionDaytimeRange"        "1400"       // Range of vision during day light.
+        "VisionNighttimeRange"      "950"       // Range of vision at night time.
+
+        // Team
+        //----------------------------------------------------------------
+        "TeamName"                  "DOTA_TEAM_NEUTRALS"                            // Team name.
+        "CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
+        "CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
+        "UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+        
+        "WakesNeutrals"             "0"
+    } 
+		
+    "npc_imba_dota_beastmaster_hawk_5"
+    {                                       
+        // General
+        //----------------------------------------------------------------
+        "Model"                     "models/heroes/beastmaster/beastmaster_bird.vmdl"   // Model.
+        "BaseClass"                 "npc_dota_beastmaster_hawk"
+        "SoundSet"                  "Hero_Beastmaster.Call.Hawk"         // Name of sound set.
+        "Level"                     "1"
+        "ModelScale"                "1.2"
+        "IsSummoned"                "1"
+        "UnitLabel"                 "hawk"
+
+        // Abilities
+        //----------------------------------------------------------------
+        "Ability1"                  "imba_beastmaster_hawk_invis"          // Ability 1
+
+        // Armor
+        //----------------------------------------------------------------
+        "ArmorPhysical"             "5"         // Physical protection.
+
+        // Attack
+        //----------------------------------------------------------------
+        "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+
+        // Bounds
+        //----------------------------------------------------------------
+        "HealthBarOffset"           "165"
+
+        // Bounty
+        //----------------------------------------------------------------
+        "BountyXP"                  "77"        // Experience earn.
+        "BountyGoldMin"             "30"        // Gold earned min.
+        "BountyGoldMax"             "30"        // Gold earned max.
+
+        // Movement
+        //----------------------------------------------------------------
+        "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_FLY"
+        "MovementSpeed"             "600"       // Speed.
+        "MovementTurnRate"          "0.6"       // Turning rate.
+
+        // Status
+        //----------------------------------------------------------------
+        "StatusHealth"              "300"        // Base health.
+        "StatusHealthRegen"         "1.5"       // Health regeneration rate.
+        
+        // Vision
+        //----------------------------------------------------------------
+        "VisionDaytimeRange"        "1600"       // Range of vision during day light.
+        "VisionNighttimeRange"      "1100"       // Range of vision at night time.
+
+        // Team
+        //----------------------------------------------------------------
+        "TeamName"                  "DOTA_TEAM_NEUTRALS"                            // Team name.
+        "CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
+        "CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
+        "UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+        
+        "WakesNeutrals"             "0"
+    } 
+		
+    "npc_imba_dota_beastmaster_hawk_6"
+    {                                       
+        // General
+        //----------------------------------------------------------------
+        "Model"                     "models/heroes/beastmaster/beastmaster_bird.vmdl"   // Model.
+        "BaseClass"                 "npc_dota_beastmaster_hawk"
+        "SoundSet"                  "Hero_Beastmaster.Call.Hawk"         // Name of sound set.
+        "Level"                     "1"
+        "ModelScale"                "1.2"
+        "IsSummoned"                "1"
+        "UnitLabel"                 "hawk"
+
+        // Abilities
+        //----------------------------------------------------------------
+        "Ability1"                  "imba_beastmaster_hawk_invis"          // Ability 1
+
+        // Armor
+        //----------------------------------------------------------------
+        "ArmorPhysical"             "5"         // Physical protection.
+
+        // Attack
+        //----------------------------------------------------------------
+        "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+
+        // Bounds
+        //----------------------------------------------------------------
+        "HealthBarOffset"           "165"
+
+        // Bounty
+        //----------------------------------------------------------------
+        "BountyXP"                  "77"        // Experience earn.
+        "BountyGoldMin"             "30"        // Gold earned min.
+        "BountyGoldMax"             "30"        // Gold earned max.
+
+        // Movement
+        //----------------------------------------------------------------
+        "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_FLY"
+        "MovementSpeed"             "650"       // Speed.
+        "MovementTurnRate"          "0.6"       // Turning rate.
+
+        // Status
+        //----------------------------------------------------------------
+        "StatusHealth"              "100"        // Base health.
+        "StatusHealthRegen"         "1.5"       // Health regeneration rate.
+        
+        // Vision
+        //----------------------------------------------------------------
+        "VisionDaytimeRange"        "1800"       // Range of vision during day light.
+        "VisionNighttimeRange"      "1250"       // Range of vision at night time.
+
+        // Team
+        //----------------------------------------------------------------
+        "TeamName"                  "DOTA_TEAM_NEUTRALS"                            // Team name.
+        "CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
+        "CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
+        "UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+        
+        "WakesNeutrals"             "0"
+    } 
+		
+    "npc_imba_dota_beastmaster_hawk_7"
+    {                                       
+        // General
+        //----------------------------------------------------------------
+        "Model"                     "models/heroes/beastmaster/beastmaster_bird.vmdl"   // Model.
+        "BaseClass"                 "npc_dota_beastmaster_hawk"
+        "SoundSet"                  "Hero_Beastmaster.Call.Hawk"         // Name of sound set.
+        "Level"                     "1"
+        "ModelScale"                "1.2"
+        "IsSummoned"                "1"
+        "UnitLabel"                 "hawk"
+
+        // Abilities
+        //----------------------------------------------------------------
+        "Ability1"                  "imba_beastmaster_hawk_invis"          // Ability 1
+
+        // Armor
+        //----------------------------------------------------------------
+        "ArmorPhysical"             "5"         // Physical protection.
+
+        // Attack
+        //----------------------------------------------------------------
+        "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+
+        // Bounds
+        //----------------------------------------------------------------
+        "HealthBarOffset"           "165"
+
+        // Bounty
+        //----------------------------------------------------------------
+        "BountyXP"                  "77"        // Experience earn.
+        "BountyGoldMin"             "30"        // Gold earned min.
+        "BountyGoldMax"             "30"        // Gold earned max.
+
+        // Movement
+        //----------------------------------------------------------------
+        "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_FLY"
+        "MovementSpeed"             "700"       // Speed.
+        "MovementTurnRate"          "0.6"       // Turning rate.
+
+        // Status
+        //----------------------------------------------------------------
+        "StatusHealth"              "400"        // Base health.
+        "StatusHealthRegen"         "1.5"       // Health regeneration rate.
+        
+        // Vision
+        //----------------------------------------------------------------
+        "VisionDaytimeRange"        "2000"       // Range of vision during day light.
+        "VisionNighttimeRange"      "1400"       // Range of vision at night time.
+
+        // Team
+        //----------------------------------------------------------------
+        "TeamName"                  "DOTA_TEAM_NEUTRALS"                            // Team name.
+        "CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
+        "CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
+        "UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+        
+        "WakesNeutrals"             "0"
+    } 
+	
+	//=================================================================================
+	// Beastmaster: Call of the Wild Boar
+	//=================================================================================
+    "npc_imba_dota_beastmaster_boar_1"
+    {                                       
+        // General
+        //----------------------------------------------------------------
+        "Model"                     "models/heroes/beastmaster/beastmaster_beast.vmdl"  // Model.
+        "BaseClass"                 "npc_dota_beastmaster_boar"
+        "SoundSet"                  "Hero_Beastmaster.Call.Boar"          // Name of sound set.
+        "Level"                     "1"
+        "ModelScale"                "0.65"
+        "IsSummoned"                "1"
+        "UnitLabel"                 "boar"
+
+        // Abilities
+        //----------------------------------------------------------------
+        "Ability1"                  "imba_beastmaster_boar_poison"           // Ability 1
+
+        // Armor
+        //----------------------------------------------------------------
+        "ArmorPhysical"             "0"         // Physical protection.
+
+        // Attack
+        //----------------------------------------------------------------
+        "AttackCapabilities"        "DOTA_UNIT_CAP_RANGED_ATTACK"
+        "AttackDamageMin"           "20"        // Damage range min.
+        "AttackDamageMax"           "20"        // Damage range max.    
+        "AttackRate"                "1.25"      // Speed of attack.
+        "AttackAnimationPoint"      "0.5"       // Normalized time in animation cycle to attack.
+        "AttackAcquisitionRange"    "600"       // Range within a target can be acquired.
+        "AttackRange"               "550"       // Range within a target can be attacked.
+        "ProjectileModel"           "particles/units/heroes/hero_beastmaster/beastmaster_boar_attack.vpcf"  // Particle system model for projectile.
+        "ProjectileSpeed"           "1500"      // Speed of projectile.        
+
+        // Bounds
+        //----------------------------------------------------------------
+        "HealthBarOffset"           "125"
+
+        // Bounty
+        //----------------------------------------------------------------
+        "BountyXP"                  "60"        // Experience earn.
+        "BountyGoldMin"             "26"        // Gold earned min.
+        "BountyGoldMax"             "38"        // Gold earned max.
+
+        // Movement
+        //----------------------------------------------------------------
+        "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+        "MovementSpeed"             "350"       // Speed.
+        "MovementTurnRate"          "0.6"       // Turning rate.
+
+        // Status
+        //----------------------------------------------------------------
+        "StatusHealth"              "250"       // Base health.
+        "StatusHealthRegen"         "1.5"       // Health regeneration rate.
+        
+        // Vision
+        //----------------------------------------------------------------
+        "VisionDaytimeRange"        "1400"      // Range of vision during day light.
+        "VisionNighttimeRange"      "800"       // Range of vision at night time.
+
+        // Team
+        //----------------------------------------------------------------
+        "TeamName"                  "DOTA_TEAM_NEUTRALS"                            // Team name.
+        "CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+        "CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
+        "UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+    }   
+
+    "npc_imba_dota_beastmaster_boar_2"
+    {                                       
+        // General
+        //----------------------------------------------------------------
+        "Model"                     "models/heroes/beastmaster/beastmaster_beast.vmdl"  // Model.
+        "BaseClass"                 "npc_dota_beastmaster_boar"
+        "SoundSet"                  "Hero_Beastmaster.Call.Boar"          // Name of sound set.
+        "Level"                     "1"
+        "ModelScale"                "0.8"
+        "IsSummoned"                "1"
+        "UnitLabel"                 "boar"
+
+        // Abilities
+        //----------------------------------------------------------------
+        "Ability1"                  "imba_beastmaster_boar_poison"           // Ability 1
+
+        // Armor
+        //----------------------------------------------------------------
+        "ArmorPhysical"             "1"         // Physical protection.
+
+        // Attack
+        //----------------------------------------------------------------
+        "AttackCapabilities"        "DOTA_UNIT_CAP_RANGED_ATTACK"
+        "AttackDamageMin"           "40"        // Damage range min.
+        "AttackDamageMax"           "40"        // Damage range max.    
+        "AttackRate"                "1.25"      // Speed of attack.
+        "AttackAnimationPoint"      "0.5"       // Normalized time in animation cycle to attack.
+        "AttackAcquisitionRange"    "600"       // Range within a target can be acquired.
+        "AttackRange"               "550"       // Range within a target can be attacked.
+        "ProjectileModel"           "particles/units/heroes/hero_beastmaster/beastmaster_boar_attack.vpcf"  // Particle system model for projectile.
+        "ProjectileSpeed"           "1500"      // Speed of projectile.        
+
+        // Bounds
+        //----------------------------------------------------------------
+        "HealthBarOffset"           "125"
+
+        // Bounty
+        //----------------------------------------------------------------
+        "BountyXP"                  "70"        // Experience earn.
+        "BountyGoldMin"             "26"        // Gold earned min.
+        "BountyGoldMax"             "38"        // Gold earned max.
+
+        // Movement
+        //----------------------------------------------------------------
+        "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+        "MovementSpeed"             "350"       // Speed.
+        "MovementTurnRate"          "0.6"       // Turning rate.
+
+        // Status
+        //----------------------------------------------------------------
+        "StatusHealth"              "400"       // Base health.
+        "StatusHealthRegen"         "1.5"       // Health regeneration rate.
+        
+        // Vision
+        //----------------------------------------------------------------
+        "VisionDaytimeRange"        "1400"      // Range of vision during day light.
+        "VisionNighttimeRange"      "800"       // Range of vision at night time.
+
+        // Team
+        //----------------------------------------------------------------
+        "TeamName"                  "DOTA_TEAM_NEUTRALS"                            // Team name.
+        "CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+        "CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
+        "UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+    }   
+
+    "npc_imba_dota_beastmaster_boar_3"
+    {                                       
+        // General
+        //----------------------------------------------------------------
+        "Model"                     "models/heroes/beastmaster/beastmaster_beast.vmdl"  // Model.
+        "BaseClass"                 "npc_dota_beastmaster_boar"
+        "SoundSet"                  "Hero_Beastmaster.Call.Boar"          // Name of sound set.
+        "Level"                     "1"
+        "ModelScale"                "0.95"
+        "IsSummoned"                "1"
+        "UnitLabel"                 "boar"
+
+        // Abilities
+        //----------------------------------------------------------------
+        "Ability1"                  "imba_beastmaster_boar_poison"           // Ability 1
+
+        // Armor
+        //----------------------------------------------------------------
+        "ArmorPhysical"             "2"         // Physical protection.
+
+        // Attack
+        //----------------------------------------------------------------
+        "AttackCapabilities"        "DOTA_UNIT_CAP_RANGED_ATTACK"
+        "AttackDamageMin"           "60"        // Damage range min.
+        "AttackDamageMax"           "60"        // Damage range max.    
+        "AttackRate"                "1.25"      // Speed of attack.
+        "AttackAnimationPoint"      "0.5"       // Normalized time in animation cycle to attack.
+        "AttackAcquisitionRange"    "600"       // Range within a target can be acquired.
+        "AttackRange"               "550"       // Range within a target can be attacked.
+        "ProjectileModel"           "particles/units/heroes/hero_beastmaster/beastmaster_boar_attack.vpcf"  // Particle system model for projectile.
+        "ProjectileSpeed"           "1500"      // Speed of projectile.        
+
+        // Bounds
+        //----------------------------------------------------------------
+        "HealthBarOffset"           "125"
+
+        // Bounty
+        //----------------------------------------------------------------
+        "BountyXP"                  "80"        // Experience earn.
+        "BountyGoldMin"             "26"        // Gold earned min.
+        "BountyGoldMax"             "38"        // Gold earned max.
+
+        // Movement
+        //----------------------------------------------------------------
+        "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+        "MovementSpeed"             "350"       // Speed.
+        "MovementTurnRate"          "0.6"       // Turning rate.
+
+        // Status
+        //----------------------------------------------------------------
+        "StatusHealth"              "550"       // Base health.
+        "StatusHealthRegen"         "1.5"       // Health regeneration rate.
+        
+        // Vision
+        //----------------------------------------------------------------
+        "VisionDaytimeRange"        "1400"      // Range of vision during day light.
+        "VisionNighttimeRange"      "800"       // Range of vision at night time.
+
+        // Team
+        //----------------------------------------------------------------
+        "TeamName"                  "DOTA_TEAM_NEUTRALS"                            // Team name.
+        "CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+        "CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
+        "UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+    }   
+
+    "npc_imba_dota_beastmaster_boar_4"
+    {                                       
+        // General
+        //----------------------------------------------------------------
+        "Model"                     "models/heroes/beastmaster/beastmaster_beast.vmdl"  // Model.
+        "BaseClass"                 "npc_dota_beastmaster_boar"
+        "SoundSet"                  "Hero_Beastmaster.Call.Boar"          // Name of sound set.
+        "Level"                     "1"
+        "ModelScale"                "1.1"
+        "IsSummoned"                "1"
+        "UnitLabel"                 "boar"
+
+        // Abilities
+        //----------------------------------------------------------------
+        "Ability1"                  "imba_beastmaster_boar_poison"           // Ability 1
+
+        // Armor
+        //----------------------------------------------------------------
+        "ArmorPhysical"             "3"         // Physical protection.
+
+        // Attack
+        //----------------------------------------------------------------
+        "AttackCapabilities"        "DOTA_UNIT_CAP_RANGED_ATTACK"
+        "AttackDamageMin"           "80"        // Damage range min.
+        "AttackDamageMax"           "80"        // Damage range max.    
+        "AttackRate"                "1.25"      // Speed of attack.
+        "AttackAnimationPoint"      "0.5"       // Normalized time in animation cycle to attack.
+        "AttackAcquisitionRange"    "600"       // Range within a target can be acquired.
+        "AttackRange"               "550"       // Range within a target can be attacked.
+        "ProjectileModel"           "particles/units/heroes/hero_beastmaster/beastmaster_boar_attack.vpcf"  // Particle system model for projectile.
+        "ProjectileSpeed"           "1500"      // Speed of projectile.        
+
+        // Bounds
+        //----------------------------------------------------------------
+        "HealthBarOffset"           "125"
+
+        // Bounty
+        //----------------------------------------------------------------
+        "BountyXP"                  "90"        // Experience earn.
+        "BountyGoldMin"             "26"        // Gold earned min.
+        "BountyGoldMax"             "38"        // Gold earned max.
+
+        // Movement
+        //----------------------------------------------------------------
+        "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+        "MovementSpeed"             "350"       // Speed.
+        "MovementTurnRate"          "0.6"       // Turning rate.
+
+        // Status
+        //----------------------------------------------------------------
+        "StatusHealth"              "700"       // Base health.
+        "StatusHealthRegen"         "1.5"       // Health regeneration rate.
+        
+        // Vision
+        //----------------------------------------------------------------
+        "VisionDaytimeRange"        "1400"      // Range of vision during day light.
+        "VisionNighttimeRange"      "800"       // Range of vision at night time.
+
+        // Team
+        //----------------------------------------------------------------
+        "TeamName"                  "DOTA_TEAM_NEUTRALS"                            // Team name.
+        "CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+        "CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
+        "UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+    }   
+
+    "npc_imba_dota_beastmaster_boar_5"
+    {                                       
+        // General
+        //----------------------------------------------------------------
+        "Model"                     "models/heroes/beastmaster/beastmaster_beast.vmdl"  // Model.
+        "BaseClass"                 "npc_dota_beastmaster_boar"
+        "SoundSet"                  "Hero_Beastmaster.Call.Boar"          // Name of sound set.
+        "Level"                     "1"
+        "ModelScale"                "1.25"
+        "IsSummoned"                "1"
+        "UnitLabel"                 "boar"
+
+        // Abilities
+        //----------------------------------------------------------------
+        "Ability1"                  "imba_beastmaster_boar_poison"           // Ability 1
+
+        // Armor
+        //----------------------------------------------------------------
+        "ArmorPhysical"             "4"         // Physical protection.
+
+        // Attack
+        //----------------------------------------------------------------
+        "AttackCapabilities"        "DOTA_UNIT_CAP_RANGED_ATTACK"
+        "AttackDamageMin"           "90"        // Damage range min.
+        "AttackDamageMax"           "90"        // Damage range max.    
+        "AttackRate"                "1.25"      // Speed of attack.
+        "AttackAnimationPoint"      "0.5"       // Normalized time in animation cycle to attack.
+        "AttackAcquisitionRange"    "600"       // Range within a target can be acquired.
+        "AttackRange"               "550"       // Range within a target can be attacked.
+        "ProjectileModel"           "particles/units/heroes/hero_beastmaster/beastmaster_boar_attack.vpcf"  // Particle system model for projectile.
+        "ProjectileSpeed"           "1500"      // Speed of projectile.        
+
+        // Bounds
+        //----------------------------------------------------------------
+        "HealthBarOffset"           "125"
+
+        // Bounty
+        //----------------------------------------------------------------
+        "BountyXP"                  "90"        // Experience earn.
+        "BountyGoldMin"             "26"        // Gold earned min.
+        "BountyGoldMax"             "38"        // Gold earned max.
+
+        // Movement
+        //----------------------------------------------------------------
+        "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+        "MovementSpeed"             "375"       // Speed.
+        "MovementTurnRate"          "0.6"       // Turning rate.
+
+        // Status
+        //----------------------------------------------------------------
+        "StatusHealth"              "850"       // Base health.
+        "StatusHealthRegen"         "1.5"       // Health regeneration rate.
+        
+        // Vision
+        //----------------------------------------------------------------
+        "VisionDaytimeRange"        "1400"      // Range of vision during day light.
+        "VisionNighttimeRange"      "800"       // Range of vision at night time.
+
+        // Team
+        //----------------------------------------------------------------
+        "TeamName"                  "DOTA_TEAM_NEUTRALS"                            // Team name.
+        "CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+        "CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
+        "UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+    } 
+	
+    "npc_imba_dota_beastmaster_boar_6"
+    {                                       
+        // General
+        //----------------------------------------------------------------
+        "Model"                     "models/heroes/beastmaster/beastmaster_beast.vmdl"  // Model.
+        "BaseClass"                 "npc_dota_beastmaster_boar"
+        "SoundSet"                  "Hero_Beastmaster.Call.Boar"          // Name of sound set.
+        "Level"                     "1"
+        "ModelScale"                "1.4"
+        "IsSummoned"                "1"
+        "UnitLabel"                 "boar"
+
+        // Abilities
+        //----------------------------------------------------------------
+        "Ability1"                  "imba_beastmaster_boar_poison"           // Ability 1
+
+        // Armor
+        //----------------------------------------------------------------
+        "ArmorPhysical"             "5"         // Physical protection.
+
+        // Attack
+        //----------------------------------------------------------------
+        "AttackCapabilities"        "DOTA_UNIT_CAP_RANGED_ATTACK"
+        "AttackDamageMin"           "100"        // Damage range min.
+        "AttackDamageMax"           "100"        // Damage range max.    
+        "AttackRate"                "1.25"      // Speed of attack.
+        "AttackAnimationPoint"      "0.5"       // Normalized time in animation cycle to attack.
+        "AttackAcquisitionRange"    "600"       // Range within a target can be acquired.
+        "AttackRange"               "550"       // Range within a target can be attacked.
+        "ProjectileModel"           "particles/units/heroes/hero_beastmaster/beastmaster_boar_attack.vpcf"  // Particle system model for projectile.
+        "ProjectileSpeed"           "1500"      // Speed of projectile.        
+
+        // Bounds
+        //----------------------------------------------------------------
+        "HealthBarOffset"           "125"
+
+        // Bounty
+        //----------------------------------------------------------------
+        "BountyXP"                  "90"        // Experience earn.
+        "BountyGoldMin"             "26"        // Gold earned min.
+        "BountyGoldMax"             "38"        // Gold earned max.
+
+        // Movement
+        //----------------------------------------------------------------
+        "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+        "MovementSpeed"             "400"       // Speed.
+        "MovementTurnRate"          "0.6"       // Turning rate.
+
+        // Status
+        //----------------------------------------------------------------
+        "StatusHealth"              "1000"       // Base health.
+        "StatusHealthRegen"         "1.5"       // Health regeneration rate.
+        
+        // Vision
+        //----------------------------------------------------------------
+        "VisionDaytimeRange"        "1400"      // Range of vision during day light.
+        "VisionNighttimeRange"      "800"       // Range of vision at night time.
+
+        // Team
+        //----------------------------------------------------------------
+        "TeamName"                  "DOTA_TEAM_NEUTRALS"                            // Team name.
+        "CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+        "CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
+        "UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+    }
+	
+	
+    "npc_imba_dota_beastmaster_boar_7"
+    {                                       
+        // General
+        //----------------------------------------------------------------
+        "Model"                     "models/heroes/beastmaster/beastmaster_beast.vmdl"  // Model.
+        "BaseClass"                 "npc_dota_beastmaster_boar"
+        "SoundSet"                  "Hero_Beastmaster.Call.Boar"          // Name of sound set.
+        "Level"                     "1"
+        "ModelScale"                "1.55"
+        "IsSummoned"                "1"
+        "UnitLabel"                 "boar"
+
+        // Abilities
+        //----------------------------------------------------------------
+        "Ability1"                  "imba_beastmaster_boar_poison"           // Ability 1
+
+        // Armor
+        //----------------------------------------------------------------
+        "ArmorPhysical"             "6"         // Physical protection.
+
+        // Attack
+        //----------------------------------------------------------------
+        "AttackCapabilities"        "DOTA_UNIT_CAP_RANGED_ATTACK"
+        "AttackDamageMin"           "110"        // Damage range min.
+        "AttackDamageMax"           "110"        // Damage range max.    
+        "AttackRate"                "1.25"      // Speed of attack.
+        "AttackAnimationPoint"      "0.5"       // Normalized time in animation cycle to attack.
+        "AttackAcquisitionRange"    "600"       // Range within a target can be acquired.
+        "AttackRange"               "550"       // Range within a target can be attacked.
+        "ProjectileModel"           "particles/units/heroes/hero_beastmaster/beastmaster_boar_attack.vpcf"  // Particle system model for projectile.
+        "ProjectileSpeed"           "1500"      // Speed of projectile.        
+
+        // Bounds
+        //----------------------------------------------------------------
+        "HealthBarOffset"           "125"
+
+        // Bounty
+        //----------------------------------------------------------------
+        "BountyXP"                  "90"        // Experience earn.
+        "BountyGoldMin"             "26"        // Gold earned min.
+        "BountyGoldMax"             "38"        // Gold earned max.
+
+        // Movement
+        //----------------------------------------------------------------
+        "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+        "MovementSpeed"             "425"       // Speed.
+        "MovementTurnRate"          "0.6"       // Turning rate.
+
+        // Status
+        //----------------------------------------------------------------
+        "StatusHealth"              "1150"       // Base health.
+        "StatusHealthRegen"         "1.5"       // Health regeneration rate.
+        
+        // Vision
+        //----------------------------------------------------------------
+        "VisionDaytimeRange"        "1400"      // Range of vision during day light.
+        "VisionNighttimeRange"      "800"       // Range of vision at night time.
+
+        // Team
+        //----------------------------------------------------------------
+        "TeamName"                  "DOTA_TEAM_NEUTRALS"                            // Team name.
+        "CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+        "CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
+        "UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+    }
+	
 	//=================================================================================
 	// Radiant Behemoth
 	//=================================================================================

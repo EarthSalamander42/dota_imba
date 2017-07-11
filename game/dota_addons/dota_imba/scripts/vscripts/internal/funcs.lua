@@ -98,7 +98,7 @@ function TrueKill(caster, target, ability)
 	end
 
 	-- Deals lethal damage in order to trigger death-preventing abilities... Except for Reincarnation
-	if not ( target:HasModifier("modifier_imba_reincarnation") or target:HasModifier("modifier_imba_reincarnation_scepter") ) then
+	if not ( target:HasModifier("modifier_imba_reincarnation") or target:HasModifier("modifier_imba_reincarnation_wraith_form_buff") or target:HasModifier("modifier_imba_reincarnation_wraith_form") ) then
 		target:Kill(ability, caster)
 	end
 
@@ -116,12 +116,13 @@ function TrueKill(caster, target, ability)
 	target:RemoveModifierByName("modifier_item_vanguard_unique")
 	target:RemoveModifierByName("modifier_item_imba_initiate_robe_stacks")
 	target:RemoveModifierByName("modifier_imba_cheese_death_prevention")
-	target:RemoveModifierByName("modifier_imba_reincarnation_wraith_form")
 	target:RemoveModifierByName("modifier_imba_rapier_cursed")
 	
 
 	-- Kills the target
-	target:Kill(ability, caster)
+	if not target:HasModifier("modifier_imba_reincarnation_wraith_form") then
+		target:Kill(ability, caster)
+	end
 end
 
 -- Checks if a given unit is Roshan

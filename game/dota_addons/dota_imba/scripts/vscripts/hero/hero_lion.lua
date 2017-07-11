@@ -596,11 +596,7 @@ function imba_lion_mana_drain:OnSpellStart()
         end
     end 
     
-    -- Check for illusions  
-    if target:IsIllusion() then
-        target:Kill(ability, caster)
-        return nil
-    end
+
 
     -- Assign the correct modifier based on enemy or ally
     local modifier_manadrain
@@ -800,6 +796,12 @@ function modifier_imba_manadrain_debuff:OnCreated()
         self.ability = self:GetAbility()
         self.parent = self:GetParent()
         self.particle_drain = "particles/econ/items/lion/lion_demon_drain/lion_spell_mana_drain_demon.vpcf"
+
+        -- Destroy the target if it is an illusion
+        if self.parent:IsIllusion() then
+        self.parent:Kill(self.ability, self.caster)
+            return nil
+        end
 
         -- Ability specials
         self.interval = self.ability:GetSpecialValueFor("interval")

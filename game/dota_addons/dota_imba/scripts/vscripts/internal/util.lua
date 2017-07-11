@@ -887,12 +887,10 @@ function GoldPickup(event)
 	if IsServer() then
 		local item = EntIndexToHScript( event.ItemEntityIndex )
 		local owner = EntIndexToHScript( event.HeroEntityIndex )
-		if event.itemname == "item_bag_of_gold" then
-			local gold_per_bag = item:GetCurrentCharges()
-			PlayerResource:ModifyGold( owner:GetPlayerID(), gold_per_bag, true, 0 )
-			SendOverheadEventMessage( owner, OVERHEAD_ALERT_GOLD, owner, gold_per_bag, nil )
-			UTIL_Remove( item ) -- otherwise it pollutes the player inventory
-		end
+		local gold_per_bag = item:GetCurrentCharges()
+		PlayerResource:ModifyGold( owner:GetPlayerID(), gold_per_bag, true, 0 )
+		SendOverheadEventMessage( owner, OVERHEAD_ALERT_GOLD, owner, gold_per_bag, nil )
+		UTIL_Remove( item ) -- otherwise it pollutes the player inventory
 	end
 end
 	

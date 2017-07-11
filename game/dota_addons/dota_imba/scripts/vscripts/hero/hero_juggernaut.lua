@@ -801,9 +801,17 @@ function modifier_imba_omni_slash_caster:OnIntervalThink( )
 end
 
 function modifier_imba_omni_slash_caster:BounceAndSlaughter( )
-	local nearby_enemies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.caster:GetAbsOrigin(), nil, self.bounce_range, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)	
-	if self.bounce_amt >= 1 and #nearby_enemies >= 1 then
-		for _,enemy in pairs(nearby_enemies) do
+	self.nearby_enemies = FindUnitsInRadius(	self.caster:GetTeamNumber(),
+												self.caster:GetAbsOrigin(),
+												nil,
+												self.bounce_range,
+												DOTA_UNIT_TARGET_TEAM_ENEMY,
+												DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP,
+												DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
+												FIND_ANY_ORDER,
+												false)	
+	if self.bounce_amt >= 1 and #self.nearby_enemies >= 1 then
+		for _,enemy in pairs(self.nearby_enemies) do
 			local previous_position = self.caster:GetAbsOrigin()
 			FindClearSpaceForUnit(self.caster, enemy:GetAbsOrigin() + RandomVector(128), false)
 			
@@ -852,8 +860,10 @@ function modifier_imba_omni_slash_caster:OnDestroy()
 		if self.bounce_amt > 1 then
 			local rand = RandomInt(1, 2)
 			self.caster:EmitSound("juggernaut_jug_ability_waste_0"..rand)
-		else
+		end
+		
 		-- If jugg has stopped bouncing, stop the animation.
+		if self.bounce_amt == 0 or  #self.nearby_enemies == 0 then
 		self.caster:FadeGesture(ACT_DOTA_OVERRIDE_ABILITY_4)
 		end
 

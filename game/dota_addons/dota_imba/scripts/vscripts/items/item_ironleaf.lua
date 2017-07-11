@@ -241,9 +241,13 @@ end
 -- MEDITATE STACKS MODIFIER
 modifier_imba_ironleaf_boots_meditate = modifier_imba_ironleaf_boots_meditate or class({})
 
-function modifier_imba_ironleaf_boots_meditate:IsHidden() return false end
+function modifier_imba_ironleaf_boots_meditate:IsHidden() 
+	if self:GetStackCount() == 0 then return true end
+	return false
+end
 function modifier_imba_ironleaf_boots_meditate:IsPurgable() return false end
 function modifier_imba_ironleaf_boots_meditate:IsDebuff() return false end
+function modifier_imba_ironleaf_boots_meditate:RemoveOnDeath() return false end
 
 function modifier_imba_ironleaf_boots_meditate:OnCreated()
     -- Ability properties

@@ -691,10 +691,9 @@ end
 
 function modifier_imba_nether_ward_degen:OnSpentMana(keys)
     if IsServer() then
-        local target = keys.unit    
-        local cast_ability = keys.ability
-        local ability_cost = keys.cost
-
+        local target 		= 	keys.unit    
+        local cast_ability 	= 	keys.ability
+        local ability_cost	= 	keys.cost
         -- If there is no target ability, or the ability costs no mana, do nothing
         if not target or not cast_ability or not ability_cost or ability_cost == 0 then
             return nil
@@ -713,7 +712,7 @@ function modifier_imba_nether_ward_degen:OnSpentMana(keys)
         local ward = self.caster
         local caster = ward:GetOwnerEntity()    
         local ability_zap = self.ability                    
-
+		
         -- Deal damage
         ApplyDamage({attacker = ward,
                     victim = target,
@@ -825,6 +824,7 @@ function modifier_imba_nether_ward_degen:OnSpentMana(keys)
             "monkey_king_tree_dance",
             "monkey_king_primal_spring",
             "monkey_king_wukongs_command",
+			"doom_doom",
         }
 
         -- Ignore items
@@ -1065,6 +1065,11 @@ function modifier_imba_nether_ward_degen:OnSpentMana(keys)
             ability_was_used = true
         end
 
+		-- Very edge cases in which the nether ward is silenced (doesn't actually cast a spell)
+		if ward:IsSilenced() then 
+			ability_was_used	=	false
+		end
+		
         -- If an ability was actually used, reduce the ward's health
         if ability_was_used then
             ward:SetHealth(ward:GetHealth() - self.spell_damage)

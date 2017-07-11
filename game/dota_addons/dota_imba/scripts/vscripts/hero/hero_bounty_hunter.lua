@@ -378,10 +378,6 @@ MergeTables(LinkedModifiers,{
 
 imba_bounty_hunter_jinada = imba_bounty_hunter_jinada or class({})
 
-function imba_bounty_hunter_jinada:GetCastRange()
-	return self:GetSpecialValueFor("cast_range")
-end
-
 function imba_bounty_hunter_jinada:GetAbilityTextureName()
    return "bounty_hunter_jinada"
 end
@@ -443,7 +439,7 @@ function imba_bounty_hunter_jinada:GetCastRange(location, target)
 	end
 
 	-- Otherwise, return normal range	
-	return self.BaseClass.GetCastRange(self, location, target)
+	return self:GetSpecialValueFor("cast_range")
 end
 
 function imba_bounty_hunter_jinada:OnSpellStart()

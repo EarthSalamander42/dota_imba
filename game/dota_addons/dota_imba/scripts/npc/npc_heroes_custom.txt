@@ -261,8 +261,8 @@
 		"AttackRate"				"1.55"
 
 		//"Ability1"					"imba_beastmaster_wild_axes"
-		//"Ability2"					"imba_beastmaster_call_of_the_wild"
-		//"Ability3"					"imba_beastmaster_call_of_the_wild_boar"
+		"Ability2"						"imba_beastmaster_summon_hawk"
+		"Ability3"						"imba_beastmaster_summon_boar"
 		//"Ability4"					"imba_beastmaster_inner_beast"
 		//"Ability5"					"imba_beastmaster_primal_roar"
 

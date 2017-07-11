@@ -74,7 +74,10 @@ StoreCurrentDayCycle()
 ]]
 
 function GameMode:OnItemPickedUp(event)
-    GoldPickup(event)
+	local owner = EntIndexToHScript( event.HeroEntityIndex )
+	if owner:IsHero() and event.itemname == "item_bag_of_gold" then
+		GoldPickup(event)
+	end
 end
 
 function GameMode:PostLoadPrecache()
@@ -727,8 +730,12 @@ function GameMode:OrderFilter( keys )
 						return true
 					end
 				end
+			elseif unit:IsHero() then
+				player_ID 	= 	unit:GetPlayerID()
+			
+			-- This is essentialy just bears
 			else
-				player_ID = unit:GetPlayerID()
+				player_ID	=	keys.issuer_player_id_const
 			end
 			-- Player handling
 			if (keys.order_type == DOTA_UNIT_ORDER_GIVE_ITEM) then

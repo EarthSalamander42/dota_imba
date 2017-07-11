@@ -8764,6 +8764,11 @@
 				"main_stat_bonus_damage"	"0.5"
 				"CalculateSpellDamageTooltip"	"0"
 			}			
+			"11"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"efficiency_divisor_pct_tooltip"	"50"
+			}
 		}
 	}
 
