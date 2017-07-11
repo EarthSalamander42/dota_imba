@@ -230,6 +230,35 @@ function GameMode:ExperienceFilter( keys )
 				break
 			end			
 		end
+
+		-- Find other team's highest level
+		local highest_level = 0
+
+		for i = 0, DOTA_MAX_PLAYERS-1 do
+			local player = PlayerResource:GetPlayer(i)
+
+			if player then								
+				local player_hero = player:GetAssignedHero()
+				print("player found! hero is:", player_hero:GetUnitName())
+
+				if player_hero:GetTeamNumber() ~= hero:GetTeamNumber() then
+					if player_hero:GetLevel() > highest_level then
+						highest_level = player_hero:GetLevel()
+					end
+				end
+			else
+				print("no player! breaking")
+				break
+			end
+		end
+
+		print("highest_level", highest_level, "hero's level", hero:GetLevel())
+
+		-- If the highest level is above the threshold, grant bonus exp
+		if (highest_level - hero:GetLevel()) > HIGHEST_LEVEL_ENEMY_DIFFERENCE then
+			print("exp boost!")
+			keys.experience = keys.experience * (1 + PLAYER_EXP_BOOST_PERCENTAGE * 0.01)
+		end
 	end	
 
 	return true

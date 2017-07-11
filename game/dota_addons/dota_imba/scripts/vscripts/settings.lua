@@ -141,6 +141,9 @@ EXPERIENCE_AMPLIFICATION_PERCENTAGE[4] = 0
 EXPERIENCE_AMPLIFICATION_PERCENTAGE[5] = -15
 EXPERIENCE_AMPLIFICATION_PERCENTAGE[6] = -25
 
+HIGHEST_LEVEL_ENEMY_DIFFERENCE = 10                                          -- Level difference that the highest enemy team member need to be for the team to get an EXP
+PLAYER_EXP_BOOST_PERCENTAGE = 50                                             -- Experience amplifiers for the hero that got experience on the losing team
+
 
 -------------------------------------------------------------------------------------------------
 -- IMBA: map-based settings

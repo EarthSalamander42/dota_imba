@@ -778,10 +778,13 @@ function modifier_imba_counter_helix_passive:Spin( repeat_allowed )
 
   if spin_to_win then
     spin_to_win:ForceRefresh()
+    spin_to_win:IncrementStackCount()
   else
     spin_to_win = self.caster:AddNewModifier(self.caster, self.ability, self.spin_to_win_modifier, {duration = self.stack_duration})
+    if spin_to_win then
+        spin_to_win:IncrementStackCount()
+    end
   end
-  spin_to_win:IncrementStackCount()
 
   -- Repeat Counter Helix'es don't proc repeats themselves
   if repeat_allowed and RollPercentage(self.repeat_chance_pct) then
