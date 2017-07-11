@@ -605,6 +605,8 @@
 	//=================================================================================================================
 	"item_tranquil_boots"
 	{		
+		"AbilityCooldown"				"6"
+
 		"AbilitySpecial"
 		{
 			"01"
@@ -3135,105 +3137,7 @@
 				"value"				"240"
 			}
 		}
-	}
-
-	//=================================================================================================================
-	// Bestmaster: Call of the Wild Hawk
-	//=================================================================================================================
-	"beastmaster_call_of_the_wild"
-	{
-		"AbilityCastPoint"					"0.0"		
-
-		"AbilityCooldown"					"40 30 20 10"
-
-		"AbilityManaCost"					"0"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"boar_duration"				"60"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"hawk_hp_tooltip"			"60 180 300 420"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"hawk_speed_tooltip"		"275 300 325 350"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"hawk_daysight_tooltip"		"500 750 1000 1250 1350 1450 1550"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"hawk_nightsight_tooltip"	"500 650 800 950 1050 1200 1350"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"hawk_duration"				"60"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Bestmaster: Call of the Wild Boar
-	//=================================================================================================================
-	"beastmaster_call_of_the_wild_boar"
-	{		
-
-		"AbilityCastPoint"					"0.0"
-
-		"AbilityCooldown"					"40 30 20 10"
-
-		"AbilityManaCost"					"0"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"hawk_duration"				"60"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"boar_hp_tooltip"			"200 400 600 800"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"boar_damage_tooltip"		"15 45 75 105"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"boar_moveslow_tooltip"		"25 30 35 40"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"boar_attackslow_tooltip"	"20 40 60 80"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"poison_duration_tooltip"	"3"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"boar_duration"				"60"
-			}
-		}
-	}
+	}	
 
 	//=================================================================================================================
 	//	Beastmaster: bonus Boars summoned
@@ -3245,7 +3149,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"2"
+				"value"					"1"
 			}
 		}
 	}
@@ -6219,7 +6123,8 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stomp_damage"			"80 120 160 200 240 280 320"
+				"stomp_damage"			"80 120 160 200 240 280 320"				
+				"LinkedSpecialBonus"	"special_bonus_unique_elder_titan_2"
 			}
 			"05"
 			{
@@ -6266,6 +6171,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"stomp_damage"			"80 120 160 200 240 280 320"
+				"LinkedSpecialBonus"	"special_bonus_unique_elder_titan_2"
 			}
 			"05"
 			{
@@ -9516,7 +9422,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"snake_mana_steal"		"20 20 20 20 60 100 140"
+				"snake_mana_steal"		"20 20 20 20 28 36 44"
 			}
 			"06"
 			{
@@ -14785,7 +14691,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"str_steal_scepter"			"14"
+				"str_steal_scepter"			"14 14 14 14 16 18 20"
 			}
 		}
 	}

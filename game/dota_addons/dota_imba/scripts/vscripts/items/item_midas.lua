@@ -32,6 +32,11 @@ function item_imba_hand_of_midas:CastFilterResultTarget(target)
 			return UF_FAIL_CUSTOM
 		end
 
+		-- If the target is a spirit bear, deny it
+		if target:IsConsideredHero() then
+			return UF_FAIL_CONSIDERED_HERO
+		end
+
 		-- If the target is a building, deny it
 		if target:IsBuilding() then
 			return UF_FAIL_BUILDING

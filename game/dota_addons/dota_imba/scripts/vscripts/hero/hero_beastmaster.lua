@@ -1,4 +1,37 @@
 -- Author: Fudge
+-- Date: 10/07/2017
+
+
+-- HELPER FUNCTION
+
+local function UpgradeBeastsSummons(caster, ability)    
+    local hawk_ability = "imba_beastmaster_summon_hawk"
+    local boar_ability = "imba_beastmaster_summon_boar"        
+
+    -- Get handles
+    local hawk_ability_handler
+    local boar_ability_handler
+    local raze_far_handler
+
+    if caster:HasAbility(hawk_ability) then
+        hawk_ability_handler = caster:FindAbilityByName(hawk_ability)
+    end
+
+    if caster:HasAbility(boar_ability) then
+        boar_ability_handler = caster:FindAbilityByName(boar_ability)
+    end        
+
+    -- Get the level to compare
+    local leveled_ability_level = ability:GetLevel()
+
+    if hawk_ability_handler and hawk_ability_handler:GetLevel() < leveled_ability_level then
+        hawk_ability_handler:SetLevel(leveled_ability_level)
+    end
+
+    if boar_ability_handler and boar_ability_handler:GetLevel() < leveled_ability_level then
+        boar_ability_handler:SetLevel(leveled_ability_level)
+    end            
+end
 
 
 ---------------------------------------
@@ -6,6 +39,10 @@
 ---------------------------------------
 imba_beastmaster_summon_hawk    =   imba_beastmaster_summon_hawk or class({})
 LinkLuaModifier("modifier_imba_beastmaster_hawk",  "hero/hero_beastmaster", LUA_MODIFIER_MOTION_NONE)
+
+function imba_beastmaster_summon_hawk:OnUpgrade()
+    UpgradeBeastsSummons(self:GetCaster(), self)
+end
 
 function imba_beastmaster_summon_hawk:OnSpellStart()
     if IsServer() then
@@ -101,16 +138,18 @@ modifier_imba_hawk_invis_handler = modifier_imba_hawk_invis_handler or class({})
 
 function modifier_imba_hawk_invis_handler:IsPurgable() return false end
 function modifier_imba_hawk_invis_handler:IsDebuff() return false end
-function modifier_imba_hawk_invis_handler:IsHidden()	return false end
+function modifier_imba_hawk_invis_handler:IsHidden() return true end
 
 function modifier_imba_hawk_invis_handler:OnCreated()
 	if IsServer() then
 		local ability	=	self:GetAbility()
 		ability:StartCooldown(ability:GetSpecialValueFor("fade_time") )
+
+        self:StartIntervalThink(0.2)
 	end
 end
 
-function modifier_imba_hawk_invis_handler:CheckState()
+function modifier_imba_hawk_invis_handler:OnIntervalThink()
     if IsServer() then
 		local ability = self:GetAbility()
 		local parent = self:GetParent()
@@ -139,6 +178,7 @@ function modifier_imba_hawk_invis_handler:OnUnitMoved(keys)
 		if keys.unit	==	self:GetParent() then
 			local ability = self:GetAbility()
 			local fade_time = ability:GetSpecialValueFor("fade_time")
+
 			-- Refresh the timer on the invis
 			if ability:GetCooldownTimeRemaining() < fade_time * 0.9 then
 				ability:StartCooldown(fade_time)
@@ -154,7 +194,7 @@ modifier_imba_hawk_invis	=	modifier_imba_hawk_invis or class({})
 
 function modifier_imba_hawk_invis:IsPurgable() return false end
 function modifier_imba_hawk_invis:IsDebuff() return false end
-function modifier_imba_hawk_invis:IsHidden()	return true end
+function modifier_imba_hawk_invis:IsHidden() return false end
 
 function modifier_imba_hawk_invis:OnCreated()
 	local particle = ParticleManager:CreateParticle("particles/generic_hero_status/status_invisibility_start.vpcf", PATTACH_ABSORIGIN, self:GetParent())
@@ -179,6 +219,10 @@ function modifier_imba_hawk_invis:CheckState()
 	end
 end
 
+function modifier_imba_hawk_invis:GetPriority()
+    return MODIFIER_PRIORITY_NORMAL
+end
+
 ---------------------------------------
 -------- CALL OF THE WILD: BOAR -------
 ---------------------------------------
@@ -186,6 +230,10 @@ end
 imba_beastmaster_summon_boar = imba_beastmaster_summon_boar or class({})
 
 LinkLuaModifier("modifier_imba_beastmaster_boar",  "hero/hero_beastmaster", LUA_MODIFIER_MOTION_NONE)
+
+function imba_beastmaster_summon_boar:OnUpgrade()
+    UpgradeBeastsSummons(self:GetCaster(), self)    
+end
 
 function imba_beastmaster_summon_boar:OnSpellStart()
 	if IsServer() then
@@ -208,13 +256,26 @@ function imba_beastmaster_summon_boar:OnSpellStart()
 		local spawn_particle_fx = ParticleManager:CreateParticle(spawn_particle, PATTACH_ABSORIGIN, caster)
 		ParticleManager:SetParticleControl( spawn_particle_fx, 0, spawn_point )
 
-		-- Create hawk
-		boar = CreateUnitByName(boar_name..boar_level, spawn_point, true, caster, caster, caster:GetTeamNumber())
-		boar:AddNewModifier(caster, self, "modifier_imba_beastmaster_boar", {})
-		boar:AddNewModifier(caster, self, "modifier_kill", {duration = boar_duration})
+        -- Moar Boar talent
+        local boar_count = 1
+        if caster:HasAbility("special_bonus_unique_beastmaster_2") then
+            local talent_handler = caster:FindAbilityByName("special_bonus_unique_beastmaster_2")
+            if talent_handler and talent_handler:GetLevel() > 0 then
+                local additional_boars = talent_handler:GetSpecialValueFor("value")
+                if additional_boars then
+                    boar_count = boar_count + additional_boars
+                end
+            end
+        end
 
-		boar:SetControllableByPlayer(caster:GetPlayerID(), true)
+        for i = 1, boar_count do
+    		-- Create boar
+    		boar = CreateUnitByName(boar_name..boar_level, spawn_point, true, caster, caster, caster:GetTeamNumber())
+    		boar:AddNewModifier(caster, self, "modifier_imba_beastmaster_boar", {})
+    		boar:AddNewModifier(caster, self, "modifier_kill", {duration = boar_duration})
 
+    		boar:SetControllableByPlayer(caster:GetPlayerID(), true)
+        end
 	end
 end
 
@@ -223,6 +284,8 @@ end
 -----------------
 
 modifier_imba_beastmaster_boar = modifier_imba_beastmaster_boar or class({})
+
+
 
 -- Modifier properties
 function modifier_imba_beastmaster_boar:IsDebuff() return false end
@@ -324,10 +387,10 @@ function modifier_imba_boar_poison_debuff:DeclareFunctions()
 end
 
 function modifier_imba_boar_poison_debuff:GetModifierMoveSpeedBonus_Percentage()
-	return self.movespeed_slow
+	return self.movespeed_slow * (-1)
 end
 
 function modifier_imba_boar_poison_debuff:GetModifierAttackSpeedBonus_Constant()
-	return self.movespeed_slow
+	return self.attackspeed_slow * (-1)
 end
 

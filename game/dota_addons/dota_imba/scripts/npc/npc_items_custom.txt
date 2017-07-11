@@ -4210,7 +4210,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_damage"			"60"
+				"base_damage"			"80"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 			"04"
@@ -4222,7 +4222,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"miss_chance"			"17"
+				"miss_chance"			"20"
 			}
 			"06"
 			{

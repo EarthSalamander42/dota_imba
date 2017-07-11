@@ -121,17 +121,19 @@ end
 
 function Server_GetPlayerLevelAndTitle(nPlayerID)
     for i=31,1,-1 do
-        if tonumber(table_XP_has[nPlayerID]) >= table_rankXP[i] then
-            XP_level[nPlayerID] = i-1
-            XP_level_title_player[nPlayerID] = XP_level_title[i]
-            XP_this_level[nPlayerID] = table_rankXP[i]
-            if i == 31 then
-                XP_need_to_next_level[nPlayerID] = 0
-            else
-                XP_need_to_next_level[nPlayerID] = table_rankXP[i+1] - tonumber(table_XP_has[nPlayerID])
+        if table_XP_has and table_rankXP then
+            if tonumber(table_XP_has[nPlayerID]) >= table_rankXP[i] then
+                XP_level[nPlayerID] = i-1
+                XP_level_title_player[nPlayerID] = XP_level_title[i]
+                XP_this_level[nPlayerID] = table_rankXP[i]
+                if i == 31 then
+                    XP_need_to_next_level[nPlayerID] = 0
+                else
+                    XP_need_to_next_level[nPlayerID] = table_rankXP[i+1] - tonumber(table_XP_has[nPlayerID])
+                end
+                XP_has_this_level[nPlayerID] = tonumber(table_XP_has[nPlayerID]) - table_rankXP[i]
+                break
             end
-            XP_has_this_level[nPlayerID] = tonumber(table_XP_has[nPlayerID]) - table_rankXP[i]
-            break
         end
     end
 end
