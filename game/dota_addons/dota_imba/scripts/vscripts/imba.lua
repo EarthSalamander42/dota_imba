@@ -238,25 +238,20 @@ function GameMode:ExperienceFilter( keys )
 			local player = PlayerResource:GetPlayer(i)
 
 			if player then								
-				local player_hero = player:GetAssignedHero()
-				print("player found! hero is:", player_hero:GetUnitName())
+				local player_hero = player:GetAssignedHero()				
 
 				if player_hero:GetTeamNumber() ~= hero:GetTeamNumber() then
 					if player_hero:GetLevel() > highest_level then
 						highest_level = player_hero:GetLevel()
 					end
 				end
-			else
-				print("no player! breaking")
+			else				
 				break
 			end
-		end
-
-		print("highest_level", highest_level, "hero's level", hero:GetLevel())
+		end	
 
 		-- If the highest level is above the threshold, grant bonus exp
-		if (highest_level - hero:GetLevel()) > HIGHEST_LEVEL_ENEMY_DIFFERENCE then
-			print("exp boost!")
+		if (highest_level - hero:GetLevel()) > HIGHEST_LEVEL_ENEMY_DIFFERENCE then			
 			keys.experience = keys.experience * (1 + PLAYER_EXP_BOOST_PERCENTAGE * 0.01)
 		end
 	end	
