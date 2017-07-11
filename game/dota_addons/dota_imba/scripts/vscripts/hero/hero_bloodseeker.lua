@@ -275,6 +275,7 @@ function imba_bloodseeker_blood_bath:FormBloodRiteCircle(caster, vPos)
 			target:AddNewModifier(caster, self, "modifier_imba_blood_bath_debuff_silence", {duration = self:GetSpecialValueFor("silence_duration")})
 			if rupture then
 				if rupture:GetLevel() >= 1 then
+					rupture.from_blood_rite = true
 					rupture:OnSpellStart(target)
 				end
 				local distance = radius - (target:GetAbsOrigin() - vPos):Length2D()
@@ -653,12 +654,14 @@ function imba_bloodseeker_rupture:OnSpellStart(target)
 	end
 
 	-- Scepter effect: Rupture has charges
-    if caster:HasScepter() then
+    if caster:HasScepter() and not self.from_blood_rite then
         local modifier_rupture_charges_handler = caster:FindModifierByName(modifier_rupture_charges)
         if modifier_rupture_charges_handler then
             modifier_rupture_charges_handler:DecrementStackCount()
         end
     end
+	self.from_blood_rite = false
+	
 end
 
 modifier_imba_rupture_debuff_dot = modifier_imba_rupture_debuff_dot or class({})
