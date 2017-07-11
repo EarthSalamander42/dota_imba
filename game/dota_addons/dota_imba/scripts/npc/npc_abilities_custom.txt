@@ -4443,7 +4443,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"400 475 550 625 625 625 625"				
+				"radius"				"400 400 400 400 450 500 550"				
 			}
 
 			"02"
@@ -4461,7 +4461,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"armor_reduction"		"4 5 6 7 8 9 10"				
+				"armor_reduction"		"4 4 4 4 5 6 7"				
 			}
 
 			"05"
@@ -4572,7 +4572,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius_increase"			"0 0 0 0 45 90 135"
+				"radius_increase"			"45 45 45 45 90 145 180"
 			}
 
 			"07"
@@ -4661,19 +4661,19 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"gold_multiplier"		"3.0"
+				"gold_multiplier"		"2.2"
 			}
 
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"exp_multiplier"		"3.0"
+				"exp_multiplier"		"1.5"
 			}
 			
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_stacks"			"10"
+				"bonus_stacks"			"3"
 			}
 			
 			"08"
