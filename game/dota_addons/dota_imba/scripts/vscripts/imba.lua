@@ -211,6 +211,8 @@ function GameMode:ExperienceFilter( keys )
 	-- experience		130
 	-- player_id_const	0
 
+	local hero = PlayerResource:GetPickedHero(keys.player_id_const)
+
 	-- Ignore negative experience values
 	if keys.experience < 0 then
 		return false
@@ -219,6 +221,19 @@ function GameMode:ExperienceFilter( keys )
 	-- Lobby options adjustment
 	local game_time = math.max(GameRules:GetDOTATime(false, false), 0)
 	keys.experience = keys.experience * (1 + CUSTOM_XP_BONUS * 0.01) * (1 + game_time * BOUNTY_RAMP_PER_SECOND * 0.01)
+
+	-- Level adjustments
+	print(hero)
+	if hero then
+		for i = 1, #EXPERIENCE_AMPLIFICATION_LEVEL_LIMIT do						
+			if hero:GetLevel() < EXPERIENCE_AMPLIFICATION_LEVEL_LIMIT[i] then
+				print("hero level", hero:GetLevel(), EXPERIENCE_AMPLIFICATION_LEVEL_LIMIT[i])
+				keys.experience = keys.experience * (1 + EXPERIENCE_AMPLIFICATION_PERCENTAGE[i] * 0.01)
+				print(EXPERIENCE_AMPLIFICATION_PERCENTAGE[i])
+				break
+			end			
+		end
+	end	
 
 	return true
 end

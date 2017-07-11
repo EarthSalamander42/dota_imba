@@ -151,7 +151,10 @@ function modifier_imba_satanic_unique:OnAttackLanded(keys)
                 return nil
             end         
 
-            local will_incarnate = target:WillReincarnate()
+            local will_incarnate
+            if target:IsHero() then
+                will_incarnate =  target:WillReincarnate()
+            end
 
             -- Wait a gametick to let things die
             Timers:CreateTimer(FrameTime(), function()
