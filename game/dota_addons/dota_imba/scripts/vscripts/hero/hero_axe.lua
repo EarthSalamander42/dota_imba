@@ -391,18 +391,23 @@ modifier_imba_battle_hunger_debuff_dot = modifier_imba_battle_hunger_debuff_dot 
 function modifier_imba_battle_hunger_debuff_dot:OnCreated( params )
   if IsServer() then
     self.caster = self:GetCaster()
+    self.ability = self:GetAbility()
     self.parent = self:GetParent()
     self.tick_rate = 1 --once per second
     self.cmd_restrict_modifier = "modifier_imba_battle_hunger_debuff_cmd"
     self.deny_allow_modifier = "modifier_imba_battle_hunger_debuff_deny"
     self.damage_over_time = self:GetAbility():GetSpecialValueFor( "damage" )
-    self.miss_chance_pct = self:GetAbility():GetSpecialValueFor("miss_chance_pct")
+    self.maddening_chance_pct = self:GetAbility():GetSpecialValueFor("maddening_chance_pct")
+    self.max_maddening_duration = self:GetAbility():GetSpecialValueFor("max_maddening_duration")
+    self.maddening_buffer_distance = self:GetAbility():GetSpecialValueFor("maddening_buffer_distance")
+
     -- Talent : If Battle Hunger'ed target attacks an ally, cast Battle Hunger on them (with original duration)
     if self.caster:HasTalent("special_bonus_imba_axe_1") then
       self.spread_enabled = true
     else
       self.spread_enabled = false
     end
+
     self.no_pause = params.no_pause
     self.pause_time = self:GetAbility():GetSpecialValueFor("pause_time")
     self.kill_count = 0
@@ -421,21 +426,27 @@ end
 
 function modifier_imba_battle_hunger_debuff_dot:OnIntervalThink()
   if IsServer() then
+    -- Check if target is in fountain area
+    if IsNearFriendlyClass(self.parent, 1360, "ent_dota_fountain") then
+      self:Destroy()
+      return nil
+    end
+
     local damageTable = {
       victim = self.parent,
       attacker = self.caster,
       damage = self.damage_over_time,
       damage_type = DAMAGE_TYPE_MAGICAL,
-    }
-    ApplyDamage(damageTable)
-    if not self.no_pause and ( GameRules:GetGameTime() > self.last_damage_time + self.pause_time ) then
+      ability = self.ability
+      }
+
+    ApplyDamage(damageTable)    
+
+    -- Check if the parent didn't attack for a long time - if so, the modifier should reset itself
+    if self.no_pause == 0 and ( GameRules:GetGameTime() > self.last_damage_time + self.pause_time ) then
       self:SetDuration(self:GetRemainingTime() + self.tick_rate, true)
     end
-    --check if target is in fountain area
-    if IsNearFriendlyClass(self.parent, 1360, "ent_dota_fountain") then
-      self:Destroy()
-      return nil
-    end
+    
   end
 end
 
@@ -464,7 +475,7 @@ function modifier_imba_battle_hunger_debuff_dot:GetStatusEffectName()
   return "particles/status_fx/status_effect_battle_hunger.vpcf"
 end
 
-function modifier_imba_berserkers_call_debuff_cmd:StatusEffectPriority()
+function modifier_imba_battle_hunger_debuff_dot:StatusEffectPriority()
   return 9
 end
 
@@ -487,7 +498,8 @@ function modifier_imba_battle_hunger_debuff_dot:OnDestroy()
     end
     ParticleManager:DestroyParticle(self.enemy_particle, false)
     ParticleManager:ReleaseParticleIndex(self.enemy_particle)
-    -- both modifiers are created in OnAttackStart and removed OnAttack, this is just in case shit happens...as it always tends to
+
+    -- Both modifiers are created in OnAttackStart and removed OnAttack, this is just in case shit happens...as it always tends to
     if self.restrict_modifier and not self.restrict_modifier:IsNull() then
       self.restrict_modifier:Destroy()
     end
@@ -510,35 +522,45 @@ function modifier_imba_battle_hunger_debuff_dot:OnDeath(keys)
 end
 
 function modifier_imba_battle_hunger_debuff_dot:OnTakeDamage(keys)
-  if keys.attacker == self.parent and keys.damage > 0 then
-    self.last_damage_time = GameRules:GetGameTime()
+  if IsServer() then
+    if keys.attacker == self.parent and keys.damage > 0 then
+      self.last_damage_time = GameRules:GetGameTime()
+    end
   end
 end
 
 function modifier_imba_battle_hunger_debuff_dot:OnAttackStart(keys)
-  -- If we attack the caster, don't redirect
-  if keys.attacker == self.parent and self.parent:IsHero() and keys.target ~= self.caster then
-    if not self.cmd_restricted and RollPercentage(self.miss_chance_pct) then
-      local targets = FindUnitsInRadius(self.parent:GetTeamNumber(), self.parent:GetAbsOrigin(), nil, self.parent:GetAttackRange(), DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
-      -- if no one but us or us+current target are around, do nothing
-      if #targets <= 2 then
-        return
-      end
-      -- find the first non-self unit and attack that (can even be the same unit we are attacking)
-      self.cmd_restricted = true --to prevent repeated target changing due to forced order
-      for _, unit in pairs(targets) do
-        if unit ~= self.parent then
-          local newOrder = {UnitIndex = self.parent:entindex(),
-            OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET,
-            TargetIndex = unit:entindex()}
-          ExecuteOrderFromTable(newOrder)
-          -- Modifier that prevents orders until OnAttack happens
-          self.restrict_modifier = self.parent:AddNewModifier(self.caster, self:GetAbility(), self.cmd_restrict_modifier, {})
-          -- Modifier that allows the enemy to attack it's targetted ally
-          if unit:GetTeamNumber() == self.parent:GetTeamNumber() then
-            self.deny_modifier = unit:AddNewModifier(self.caster, self:GetAbility(), self.deny_allow_modifier, {})
+  if IsServer() then    
+
+    -- If we attack the caster, don't redirect
+    if keys.attacker == self.parent and self.parent:IsHero() and keys.target ~= self.caster then          
+
+      if not self.cmd_restricted and RollPseudoRandom(self.maddening_chance_pct, self) then
+        local targets = FindUnitsInRadius(self.parent:GetTeamNumber(), self.parent:GetAbsOrigin(), nil, self.parent:GetAttackRange() + self.maddening_buffer_distance, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+        
+        -- If no one but us or us + current target are around, do nothing
+        if #targets <= 2 then
+          return
+        end
+
+        -- Find the first non-self unit and attack that (can even be the same unit we are attacking)
+        self.cmd_restricted = true -- To prevent repeated target changing due to forced order
+        for _, unit in pairs(targets) do
+          if unit ~= self.parent and unit ~= keys.target then
+            local newOrder = {UnitIndex = self.parent:entindex(),
+              OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET,
+              TargetIndex = unit:entindex()}
+            ExecuteOrderFromTable(newOrder)
+
+            -- Modifier that prevents orders until OnAttack happens
+            self.restrict_modifier = self.parent:AddNewModifier(self.caster, self:GetAbility(), self.cmd_restrict_modifier, {duration = self.max_maddening_duration})
+
+            -- Modifier that allows the enemy to attack it's targetted ally
+            if unit:GetTeamNumber() == self.parent:GetTeamNumber() then
+              self.deny_modifier = unit:AddNewModifier(self.caster, self:GetAbility(), self.deny_allow_modifier, {self.max_maddening_duration})
+            end
+            break
           end
-          break
         end
       end
     end
@@ -546,20 +568,22 @@ function modifier_imba_battle_hunger_debuff_dot:OnAttackStart(keys)
 end
 
 function modifier_imba_battle_hunger_debuff_dot:OnAttack(keys)
-  if keys.attacker == self:GetParent() and self.cmd_restricted then
-    -- Stop forcing attacking the target
-    self.cmd_restricted = false
-    if self.restrict_modifier and not self.restrict_modifier:IsNull() then
-      self.restrict_modifier:Destroy()
-    end
-    if self.deny_modifier and not self.deny_modifier:IsNull() then
-      self.deny_modifier:Destroy()
-    end
+  if IsServer() then
+    if keys.attacker == self:GetParent() and self.cmd_restricted then
+      -- Stop forcing attacking the target
+      self.cmd_restricted = false
+      if self.restrict_modifier and not self.restrict_modifier:IsNull() then
+        self.restrict_modifier:Destroy()
+      end
+      if self.deny_modifier and not self.deny_modifier:IsNull() then
+        self.deny_modifier:Destroy()
+      end
 
-    -- If we have talent, target gets Battle Hunger'ed
-    if self.spread_enabled and keys.target:GetTeamNumber() == keys.attacker:GetTeamNumber() then
-      if self:GetAbility() and self:GetAbility().ApplyBattleHunger then
-        self:GetAbility():ApplyBattleHunger(self.caster, keys.target)
+      -- If we have talent, target gets Battle Hunger'ed
+      if self.spread_enabled and keys.target:GetTeamNumber() == keys.attacker:GetTeamNumber() then
+        if self:GetAbility() and self:GetAbility().ApplyBattleHunger then
+          self:GetAbility():ApplyBattleHunger(self.caster, keys.target)
+        end
       end
     end
   end

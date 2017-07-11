@@ -5450,7 +5450,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"miss_chance_pct"			"25"
+				"maddening_chance_pct"		"30"
 			}
 			"04"
 			{
@@ -5476,6 +5476,18 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"pause_time"				"2"
+			}
+
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_maddening_duration"	"2"
+			}
+
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"maddening_buffer_distance"	"120"
 			}
 		}
 	}
