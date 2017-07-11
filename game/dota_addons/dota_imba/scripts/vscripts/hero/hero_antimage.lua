@@ -621,7 +621,7 @@ function imba_antimage_spell_shield:IsHiddenWhenStolen()
     return false
 end
 
-local function SpellReflect(parent, params)
+local function SpellReflect(parent, params)  
   -- If some spells shouldn't be reflected, enter it into this spell-list
   local exception_spell = 
   {   
@@ -633,6 +633,17 @@ local function SpellReflect(parent, params)
     
   local reflected_spell_name = params.ability:GetAbilityName()
   local target = params.ability:GetCaster()  
+
+  -- Does not reflect allies' projectiles for any reason
+  if target:GetTeamNumber() == parent:GetTeamNumber() then
+      return nil
+  end
+
+  -- FOR NOW, UNTIL LOTUS ORB IS DONE
+  -- Do not reflect spells if the target has Lotus Orb on, otherwise the game will die hard.
+  if target:HasModifier("modifier_item_lotus_orb_active") then
+      return nil
+  end  
     
   if ( not exception_spell[reflected_spell_name] ) and (not target:HasModifier("modifier_imba_spell_shield_buff_reflect")) then
 
