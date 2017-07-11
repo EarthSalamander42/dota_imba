@@ -196,6 +196,12 @@ end
 
 modifier_imba_berserkers_call_debuff_cmd = modifier_imba_berserkers_call_debuff_cmd or class({})
 
+function modifier_imba_berserkers_call_debuff_cmd:OnCreated()
+  if IsServer() then
+    self:GetParent():Stop()
+  end
+end
+
 function modifier_imba_berserkers_call_debuff_cmd:CheckState()
   local state = {[MODIFIER_STATE_COMMAND_RESTRICTED] = true}
   return state
