@@ -256,14 +256,17 @@ function modifier_imba_rapier_cursed:OnCreated()
 		self.spell_power = item:GetSpecialValueFor("spell_power")
 		self.bonus_damage = item:GetSpecialValueFor("bonus_damage")
 		self.tenacity_pct = item:GetSpecialValueFor("tenacity_pct")
-		-- Damage reductions don't stack
-		if not self.parent:HasModifier("modifier_imba_rapier_cursed_damage_reduction") then
-			self.parent:AddNewModifier(self.parent, item, "modifier_imba_rapier_cursed_damage_reduction", {})
-		end
-		-- Neither does the curse
-		if not self.parent:HasModifier("modifier_imba_rapier_cursed_curse") then
-			self.parent:AddNewModifier(self.parent, item, "modifier_imba_rapier_cursed_curse", {})
-		end
+
+        if IsServer() then
+    		-- Damage reductions don't stack
+    		if not self.parent:HasModifier("modifier_imba_rapier_cursed_damage_reduction") then
+    			self.parent:AddNewModifier(self.parent, item, "modifier_imba_rapier_cursed_damage_reduction", {})
+    		end
+    		-- Neither does the curse
+    		if not self.parent:HasModifier("modifier_imba_rapier_cursed_curse") then
+    			self.parent:AddNewModifier(self.parent, item, "modifier_imba_rapier_cursed_curse", {})
+    		end
+        end
 	else
 		self.spell_power = 0
 		self.bonus_damage = 0
@@ -277,7 +280,7 @@ function modifier_imba_rapier_cursed:OnDestroy()
 	end
 end
 
-function modifier_imba_rapier_cursed:GetTenacity()
+function modifier_imba_rapier_cursed:GetCustomTenacity()
 	return self.tenacity_pct
 end
 

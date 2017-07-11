@@ -1500,6 +1500,10 @@ function modifier_imba_assassinate_cross:IsDebuff() return true end
     
 function modifier_imba_assassinate_cross:CheckState()    
     local state = nil
+    if self:GetParent():HasModifier("modifier_slark_shadow_dance") then
+        state = {[MODIFIER_STATE_PROVIDES_VISION] = true}
+    end
+
     if self.should_share_vision then
         state = {[MODIFIER_STATE_PROVIDES_VISION] = true,
                  [MODIFIER_STATE_INVISIBLE] = false}

@@ -1161,6 +1161,10 @@ function modifier_imba_track_debuff_mark:OnIntervalThink()
 end
 
 function modifier_imba_track_debuff_mark:CheckState()
+	if self:GetParent():HasModifier("modifier_slark_shadow_dance") then
+		return nil
+	end
+	
 	local state = {[MODIFIER_STATE_INVISIBLE] = false}
 	return state
 end

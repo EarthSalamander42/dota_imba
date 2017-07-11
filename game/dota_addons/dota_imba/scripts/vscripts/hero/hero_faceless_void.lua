@@ -1022,6 +1022,11 @@ function modifier_imba_faceless_void_chronosphere_handler:CheckState()
 	local state = {}
 	
 	if stacks == 0 then
+		if self:GetParent():HasModifier("modifier_slark_shadow_dance") then
+			state = {[MODIFIER_STATE_STUNNED] = true,
+					 [MODIFIER_STATE_FROZEN] = true}
+		end
+
 		state = {	[MODIFIER_STATE_FROZEN] = true,
 					[MODIFIER_STATE_ROOTED] = true,
 					[MODIFIER_STATE_STUNNED] = true,

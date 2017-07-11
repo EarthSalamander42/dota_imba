@@ -499,12 +499,7 @@ function modifier_imba_overpower_buff:OnAttack( keys )
 	local caster = self:GetCaster()
 
 	if keys.attacker == caster then		
-		local current_stacks = self:GetStackCount()		
-
-		-- If the attacks came from Starfury's PerformAttacks, do nothing
-		if caster:HasModifier("modifier_imba_starfury_dmg_penalty") then
-			return nil
-		end
+		local current_stacks = self:GetStackCount()				
 		
 		if current_stacks > 1 then
 			self:DecrementStackCount()
@@ -614,18 +609,18 @@ end
 
 function modifier_imba_fury_swipes:DeclareFunctions()		
 	local decFuncs = {
-	MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE 
+	MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_PHYSICAL 
 	}					 
 	return decFuncs		
 end
 
-function modifier_imba_fury_swipes:GetModifierPreAttack_BonusDamage( keys )
+function modifier_imba_fury_swipes:GetModifierProcAttack_BonusDamage_Physical( keys )
 	-- Ability properties
 	if IsServer() then
 		local caster = self:GetCaster()
 		local target = keys.target
 		local ability = self:GetAbility()
-		local 	swipes_particle = "particles/units/heroes/hero_ursa/ursa_fury_swipes.vpcf"
+		local swipes_particle = "particles/units/heroes/hero_ursa/ursa_fury_swipes.vpcf"
 		local fury_swipes_debuff = "modifier_imba_fury_swipes_debuff"	
 		local deep_strike_particle = "particles/units/heroes/hero_bloodseeker/bloodseeker_bloodritual_impact.vpcf"		
 		local sound_deep_strike = "Imba.UrsaDeepStrike"

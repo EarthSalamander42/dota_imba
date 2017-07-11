@@ -67,6 +67,10 @@ function modifier_imba_dust_of_appearance:GetPriority()
 	return MODIFIER_PRIORITY_SUPER_ULTRA end
 
 function modifier_imba_dust_of_appearance:CheckState()
+	if self:GetParent():HasModifier("modifier_slark_shadow_dance") then
+		return nil
+	end
+
 	return {[MODIFIER_STATE_INVISIBLE] = false,}
 end
 

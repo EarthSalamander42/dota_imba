@@ -1387,9 +1387,13 @@ function modifier_imba_life_drain:DeclareFunctions()
 end
 
 function modifier_imba_life_drain:CheckState()
-	local state =
-				{[MODIFIER_STATE_PROVIDES_VISION]=true,
-				[MODIFIER_STATE_INVISIBLE] = false}
+    if self:GetParent():HasModifier("modifier_slark_shadow_dance") then
+        local state = {[MODIFIER_STATE_PROVIDES_VISION] = true}
+        return state
+    end
+
+	local state = {[MODIFIER_STATE_PROVIDES_VISION]= true,
+				   [MODIFIER_STATE_INVISIBLE] = false}
 	return state
 end
 
