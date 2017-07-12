@@ -3900,6 +3900,12 @@
 				"var_type"								"FIELD_FLOAT"
 				"damage_threshold"						"50"
 			}
+
+			"11"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"self_damage"							"50 75 100 125 140 150 160"
+			}
 		}
 
 		"precache"

@@ -8772,6 +8772,12 @@
 				"var_type"					"FIELD_INTEGER"
 				"bonus_attackspeed"			"35"
 			}
+
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"effectiveness_boost"		"50"
+			}
 		}
 	}
 
