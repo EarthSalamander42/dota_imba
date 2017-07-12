@@ -1164,7 +1164,6 @@ function imba_pudge_dismember:OnChannelFinish( bInterrupted )
 	if self.hVictim ~= nil then
 		self.hVictim:RemoveModifierByName( "modifier_dismember" )
 		self:GetCaster():RemoveModifierByName( "modifier_dismember_lifesteal")
-		StopSoundEvent("Imba.BloodseekerBadDay", self.parent)
 		if self:GetCaster():FindTalentValue("special_bonus_imba_pudge_7") ~= 0 then
 			self.hVictim:AddNewModifier(self:GetCaster(),self,"modifier_dismember_disarm",{duration = GameRules:GetGameTime() - self.startTime})
 		end
@@ -1261,8 +1260,7 @@ function modifier_dismember:OnDestroy()
 	if IsServer() then
 		self:GetCaster():InterruptChannel()
 		if self.castResponse then
-			--StopSoundEvent(self.castResponse, self:GetCaster())
-			StopSoundEvent("Imba.PudgeNom", self:GetCaster())
+			StopSoundEvent(self.castResponse, self:GetCaster())
 		end
 	end
 end
