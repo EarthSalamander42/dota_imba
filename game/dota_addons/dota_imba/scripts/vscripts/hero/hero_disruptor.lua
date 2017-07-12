@@ -1145,10 +1145,20 @@ function imba_disruptor_static_storm:OnSpellStart()
 			duration = scepter_duration
 		end
 		
-		-- Roll cast response
-		if RollPercentage(75) then
+		
+		
+		
+		--Who's that poke'mon?
+		local pikachu_probability = 10
+		
+		if RollPercentage(pikachu_probability) then
+			--PIKACHUUUUUUUUUU
+			EmitSoundOn("Imba.DisruptorPikachu", caster)
+		elseif RollPercentage(65) then
+			--It's....just disruptor
 			EmitSoundOn(cast_response, caster)
 		end
+		
 		CreateModifierThinker(caster, ability, modifier_static_storm, {duration = duration, target_point_x = target_point.x, target_point_y = target_point.y, target_point_z = target_point.z}, target_point, caster:GetTeamNumber(), false)
 	end
 end

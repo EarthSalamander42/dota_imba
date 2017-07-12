@@ -851,9 +851,18 @@ function imba_lycan_shapeshift:OnSpellStart()
 	else
 		correct_sound_num = random_sound
 	end
+	
+	
+	--Are we concerned about the identity of the dog releaser?
 	local response_cast = response_cast .. correct_sound_num 	
-	EmitSoundOn(response_cast, caster)
-
+	local who_let_the_dogs_out = 10
+	
+	if RollPercentage(who_let_the_dogs_out) then
+		EmitSoundOn("Imba.LycanDogsOut", caster)
+	else
+		EmitSoundOn(response_cast, caster)
+	end
+	
 	-- Play cast sound
 	EmitSoundOn(sound_cast, caster)
 	

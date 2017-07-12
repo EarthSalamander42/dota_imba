@@ -739,12 +739,16 @@ end
 function imba_juggernaut_omni_slash:OnAbilityPhaseStart()
 	local caster = self:GetCaster()
 	local rand = math.random
-	local rand_number = rand(100)
-	if rand_number <= 15 then
+	local im_the_juggernaut_lich = 10
+	local ryujinnokenwokurae = 10
+	if RollPercentage(im_the_juggernaut_lich) then
 		caster:EmitSound("juggernaut_jug_rare_17")
+	elseif RollPercentage(im_the_juggernaut_lich) then
+		caster:EmitSound("Imba.JuggernautGenji")
 	else
 		caster:EmitSound("juggernaut_jug_ability_omnislash_0"..rand(3))
 	end
+	
 	return true
 end
 

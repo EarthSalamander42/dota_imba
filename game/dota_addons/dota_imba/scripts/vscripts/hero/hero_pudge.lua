@@ -1135,6 +1135,7 @@ end
 function imba_pudge_dismember:OnAbilityPhaseStart()
 	if IsServer() then
 		self.hVictim = self:GetCursorTarget()
+	
 	end
 	return true
 end
@@ -1163,6 +1164,7 @@ function imba_pudge_dismember:OnChannelFinish( bInterrupted )
 	if self.hVictim ~= nil then
 		self.hVictim:RemoveModifierByName( "modifier_dismember" )
 		self:GetCaster():RemoveModifierByName( "modifier_dismember_lifesteal")
+		StopSoundEvent("Imba.BloodseekerBadDay", self.parent)
 		if self:GetCaster():FindTalentValue("special_bonus_imba_pudge_7") ~= 0 then
 			self.hVictim:AddNewModifier(self:GetCaster(),self,"modifier_dismember_disarm",{duration = GameRules:GetGameTime() - self.startTime})
 		end
@@ -1212,7 +1214,6 @@ end
 
 function modifier_dismember_dummy:OnAbilityStart(keys)
 	if IsServer() then
-
 		if keys.unit == self:GetCaster() and keys.ability == self:GetAbility() then
 			if keys.target:IsConsideredHero() then
 				self:SetStackCount(0)
@@ -1247,6 +1248,9 @@ function modifier_dismember:OnCreated( kv )
 	if IsServer() then
 		self:GetParent():InterruptChannel()
 		self:OnIntervalThink()
+		local cast_responses = {"Imba.PudgeDismember1", "Imba.PudgeDismember2", "Imba.PudgeDismember3", "Imba.PudgeNom"}
+		self.castResponse = cast_responses[math.random(1, #cast_responses)]
+		EmitSoundOn(self.castResponse, self:GetCaster())
 		self:StartIntervalThink( self.tick_rate )
 	end
 end
@@ -1256,6 +1260,10 @@ end
 function modifier_dismember:OnDestroy()
 	if IsServer() then
 		self:GetCaster():InterruptChannel()
+		if self.castResponse then
+			--StopSoundEvent(self.castResponse, self:GetCaster())
+			StopSoundEvent("Imba.PudgeNom", self:GetCaster())
+		end
 	end
 end
 
