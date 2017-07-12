@@ -275,6 +275,7 @@ function imba_bloodseeker_blood_bath:FormBloodRiteCircle(caster, vPos)
 			target:AddNewModifier(caster, self, "modifier_imba_blood_bath_debuff_silence", {duration = self:GetSpecialValueFor("silence_duration")})
 			if rupture then
 				if rupture:GetLevel() >= 1 then
+					rupture.from_blood_rite = true
 					rupture:OnSpellStart(target)
 				end
 				local distance = radius - (target:GetAbsOrigin() - vPos):Length2D()
@@ -575,11 +576,7 @@ return 1
 end
 
 function modifier_imba_thirst_debuff_vision:CheckState()
-	if self:GetParent():HasModifier("modifier_slark_shadow_dance") then
-		return nil
-	end
-
-	local state = {[MODIFIER_STATE_INVISIBLE] = false}
+	local state = {[MODIFIER_STATE_INVISIBLE] = false,}
 	return state
 end
 
@@ -648,21 +645,33 @@ function imba_bloodseeker_rupture:OnSpellStart(target)
 	end
 	if hTarget:GetHealthPercent() > self:GetSpecialValueFor("damage_initial_pct") then
 		local hpBurn = hTarget:GetHealthPercent() - self:GetSpecialValueFor("damage_initial_pct")
-		ApplyDamage({victim = hTarget, attacker = caster, damage = hTarget:GetMaxHealth() * hpBurn * 0.01, damage_type = self:GetAbilityDamageType(), ability = self})
+		local damage	=	hTarget:GetMaxHealth() * hpBurn * 0.01
+		
+		local damage_table	=  {victim = hTarget,
+								attacker = caster,
+								damage = damage,
+								damage_type = DAMAGE_TYPE_PURE,
+								ability = self,
+								damage_flags	=	DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NO_DAMAGE_MULTIPLIERS + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION
+								}
+								
+		ApplyDamage(damage_table)
 		if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_3") then 
-			caster:Heal(hpBurn, caster)
+			caster:Heal(damage, caster)
 			local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, caster)
 			ParticleManager:ReleaseParticleIndex(healFX)
 		end
 	end
 
 	-- Scepter effect: Rupture has charges
-    if caster:HasScepter() then
+    if caster:HasScepter() and not self.from_blood_rite then
         local modifier_rupture_charges_handler = caster:FindModifierByName(modifier_rupture_charges)
         if modifier_rupture_charges_handler then
             modifier_rupture_charges_handler:DecrementStackCount()
         end
     end
+	self.from_blood_rite = false
+	
 end
 
 modifier_imba_rupture_debuff_dot = modifier_imba_rupture_debuff_dot or class({})
