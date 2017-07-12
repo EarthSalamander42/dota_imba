@@ -1,7 +1,7 @@
---local statInfo = LoadKeyValues('scripts/vscripts/server/auth.kv')
+local statInfo = LoadKeyValues('scripts/vscripts/server/auth.kv')
 
 
---local _AuthCode = statInfo._auth --The auth code for game and http server
+local _AuthCode = statInfo._auth --The auth code for game and http server
 
 
 local table_PlayerID = {}
