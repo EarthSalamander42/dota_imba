@@ -44,10 +44,14 @@ function imba_axe_berserkers_call:OnSpellStart()
 
   -- find targets
   local enemies_in_radius = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
-  for _,target in pairs(enemies_in_radius) do
+  for _,target in pairs(enemies_in_radius) do     
+
       if target:IsCreep() then
           target:SetForceAttackTarget(caster)
       else
+          target:Stop()
+          target:Interrupt()
+
           local newOrder = {UnitIndex = target:entindex(), 
                             OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET,
                             TargetIndex = caster:entindex()} 
@@ -195,12 +199,6 @@ end
 -------------------------------------------
 
 modifier_imba_berserkers_call_debuff_cmd = modifier_imba_berserkers_call_debuff_cmd or class({})
-
-function modifier_imba_berserkers_call_debuff_cmd:OnCreated()
-  if IsServer() then
-    self:GetParent():Stop()
-  end
-end
 
 function modifier_imba_berserkers_call_debuff_cmd:CheckState()
   local state = {[MODIFIER_STATE_COMMAND_RESTRICTED] = true}
