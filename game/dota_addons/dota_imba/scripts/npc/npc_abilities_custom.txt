@@ -20520,7 +20520,7 @@
 			"01"
 			{
 				"var_type"										"FIELD_INTEGER"
-				"pull_units_per_second"							"100"		
+				"pull_units_per_second"							"300"		
 			}	
 			"02"
 			{
@@ -20535,7 +20535,7 @@
 			"04"
 			{
 				"var_type"										"FIELD_FLOAT"
-				"duration"										"1.5 2.0 2.5 3.0 3.0 3.0 3.0"
+				"pull_duration"									"1.5 2.0 2.5 3.0 3.0 3.0 3.0"
 				"LinkedSpecialBonus"							"special_bonus_unique_storm_spirit"
 			}
 			"05"
