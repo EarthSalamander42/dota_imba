@@ -117,6 +117,10 @@ function modifier_imba_soul_of_truth_buff:IsAura() return true end
 
 modifier_imba_soul_of_truth_vision = modifier_imba_soul_of_truth_vision or class({})
 function modifier_imba_soul_of_truth_vision:CheckState()
+	if self:GetParent():HasModifier("modifier_slark_shadow_dance") then
+		return nil
+	end
+
 	local state = {[MODIFIER_STATE_INVISIBLE] = false}
 	return state
 end

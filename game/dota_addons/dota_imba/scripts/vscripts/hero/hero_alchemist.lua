@@ -1203,7 +1203,7 @@ function imba_alchemist_chemical_rage:OnSpellStart()
 	
 	-- See if enough enemies are nearby to inform them about the visitation rules of your swamp
 	local radius_of_swamp = 800
-	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius_of_swamp, DOTA_UNIT_TARGET_TEAM_ENEMY,DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE,FIND_ANY_ORDER, false)
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius_of_swamp, DOTA_UNIT_TARGET_TEAM_ENEMY,DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE,FIND_ANY_ORDER, false)
     local swamp_maximum_occupancy = IMBA_PLAYERS_ON_GAME * 0.25
 	
 	--Wait how many of you are there around me?

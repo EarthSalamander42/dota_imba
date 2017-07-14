@@ -1089,10 +1089,14 @@ end
 modifier_imba_corrosive_haze_debuff = class({})
 
 function modifier_imba_corrosive_haze_debuff:CheckState()
+	if self:GetParent():HasModifier("modifier_slark_shadow_dance") then
+		local state = {[MODIFIER_STATE_PROVIDES_VISION] = true}
+		return state
+	end
 	 
-	 local state = {[MODIFIER_STATE_PROVIDES_VISION] = true,
-					[MODIFIER_STATE_INVISIBLE] = false}
-	 return state
+	local state = {[MODIFIER_STATE_PROVIDES_VISION] = true,
+				   [MODIFIER_STATE_INVISIBLE] = false}
+	return state
 end
 
 function modifier_imba_corrosive_haze_debuff:GetPriority() 

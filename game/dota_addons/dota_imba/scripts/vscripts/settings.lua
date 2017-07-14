@@ -63,7 +63,7 @@ FIXED_RESPAWN_TIME = -1						-- What time should we use for a fixed respawn time
 FOUNTAIN_CONSTANT_MANA_REGEN = 14			-- What should we use for the constant fountain mana regen?  Use -1 to keep the default dota behavior.
 FOUNTAIN_PERCENTAGE_MANA_REGEN = 6			-- What should we use for the percentage fountain mana regen?  Use -1 to keep the default dota behavior.
 FOUNTAIN_PERCENTAGE_HEALTH_REGEN = 6		-- What should we use for the percentage fountain health regen?  Use -1 to keep the default dota behavior.
-MAXIMUM_ATTACK_SPEED = 800					-- What should we use for the maximum attack speed?
+MAXIMUM_ATTACK_SPEED = 1600					-- What should we use for the maximum attack speed?
 MINIMUM_ATTACK_SPEED = 0					-- What should we use for the minimum attack speed?
 DOTA_MAX_PLAYERS = 20						-- Maximum amount of players allowed in a game
 
@@ -124,43 +124,26 @@ HERO_RESPAWN_TIME_PER_LEVEL[23] = 56
 HERO_RESPAWN_TIME_PER_LEVEL[24] = 58
 HERO_RESPAWN_TIME_PER_LEVEL[25] = 60
 
-SPELL_POWER_TALENTS = {}													-- Spell power talent values
-SPELL_POWER_TALENTS["special_bonus_spell_amplify_3"] = 10
-SPELL_POWER_TALENTS["special_bonus_spell_amplify_4"] = 15
-SPELL_POWER_TALENTS["special_bonus_spell_amplify_5"] = 20
-SPELL_POWER_TALENTS["special_bonus_spell_amplify_6"] = 25
-SPELL_POWER_TALENTS["special_bonus_spell_amplify_8"] = 30
-SPELL_POWER_TALENTS["special_bonus_spell_amplify_10"] = 35
-SPELL_POWER_TALENTS["special_bonus_spell_amplify_12"] = 40
-SPELL_POWER_TALENTS["special_bonus_spell_amplify_15"] = 45
-SPELL_POWER_TALENTS["special_bonus_spell_amplify_20"] = 50
-SPELL_POWER_TALENTS["special_bonus_spell_amplify_25"] = 60
+-- Experience Levels amplifications
+EXPERIENCE_AMPLIFICATION_LEVEL_LIMIT = {}
+EXPERIENCE_AMPLIFICATION_LEVEL_LIMIT[1] = 12                                  -- Experience level limits
+EXPERIENCE_AMPLIFICATION_LEVEL_LIMIT[2] = 25
+EXPERIENCE_AMPLIFICATION_LEVEL_LIMIT[3] = 30
+EXPERIENCE_AMPLIFICATION_LEVEL_LIMIT[4] = 35
+EXPERIENCE_AMPLIFICATION_LEVEL_LIMIT[5] = 40
+EXPERIENCE_AMPLIFICATION_LEVEL_LIMIT[6] = MAX_LEVEL
 
-ITEM_SPELL_POWER = {}														-- Spell power item values
-ITEM_SPELL_POWER["item_imba_aether_lens"] = 10
-ITEM_SPELL_POWER["item_imba_nether_wand"] = 10
-ITEM_SPELL_POWER["item_imba_elder_staff"] = 20
-ITEM_SPELL_POWER["item_imba_orchid"] = 25
-ITEM_SPELL_POWER["item_imba_bloodthorn"] = 30
-ITEM_SPELL_POWER["item_imba_rapier_magic"] = 70
-ITEM_SPELL_POWER["item_imba_rapier_magic_2"] = 200
-ITEM_SPELL_POWER["item_imba_rapier_cursed"] = 200
+EXPERIENCE_AMPLIFICATION_PERCENTAGE = {}									 -- Experience level amplifiers
+EXPERIENCE_AMPLIFICATION_PERCENTAGE[1] = 40
+EXPERIENCE_AMPLIFICATION_PERCENTAGE[2] = 20
+EXPERIENCE_AMPLIFICATION_PERCENTAGE[3] = 10
+EXPERIENCE_AMPLIFICATION_PERCENTAGE[4] = 0
+EXPERIENCE_AMPLIFICATION_PERCENTAGE[5] = -15
+EXPERIENCE_AMPLIFICATION_PERCENTAGE[6] = -25
 
-MODIFIER_SPELL_POWER = {}													-- Spell power modifier values
-MODIFIER_SPELL_POWER["modifier_imba_rune_double_damage_owner"] = 50
-MODIFIER_SPELL_POWER["modifier_imba_rune_double_damage_aura"] = 20
+HIGHEST_LEVEL_ENEMY_DIFFERENCE = 10                                          -- Level difference that the highest enemy team member need to be for the team to get an EXP
+PLAYER_EXP_BOOST_PERCENTAGE = 50                                             -- Experience amplifiers for the hero that got experience on the losing team
 
-CAST_RANGE_TALENTS = {}														-- Cast range talent values
-CAST_RANGE_TALENTS["special_bonus_cast_range_50"] = 100
-CAST_RANGE_TALENTS["special_bonus_cast_range_60"] = 125
-CAST_RANGE_TALENTS["special_bonus_cast_range_75"] = 150
-CAST_RANGE_TALENTS["special_bonus_cast_range_100"] = 200
-CAST_RANGE_TALENTS["special_bonus_cast_range_125"] = 250
-CAST_RANGE_TALENTS["special_bonus_cast_range_150"] = 300
-CAST_RANGE_TALENTS["special_bonus_cast_range_175"] = 350
-CAST_RANGE_TALENTS["special_bonus_cast_range_200"] = 400
-CAST_RANGE_TALENTS["special_bonus_cast_range_250"] = 450
-CAST_RANGE_TALENTS["special_bonus_cast_range_300"] = 500
 
 -------------------------------------------------------------------------------------------------
 -- IMBA: map-based settings
@@ -314,27 +297,12 @@ if GetMapName() == "imba_standard" then										-- Standard map defaults
 	TOWER_UPGRADE_MODE = false
 	TOWER_POWER_FACTOR = 1
 	HERO_RESPAWN_TIME_MULTIPLIER = 100
-	HERO_INITIAL_GOLD = 625
-	HERO_REPICK_GOLD = 525
-	HERO_RANDOM_GOLD = 825
-	HERO_RERANDOM_GOLD = 725
-	HERO_STARTING_LEVEL = 1
-	MAX_LEVEL = 40
-elseif GetMapName() == "imba_random_omg" then								-- ROMG map defaults
-	END_GAME_ON_KILLS = false
-	CUSTOM_GOLD_BONUS = 35
-	CUSTOM_XP_BONUS = 35
-	CREEP_POWER_FACTOR = 1
-	TOWER_UPGRADE_MODE = false
-	TOWER_POWER_FACTOR = 1
-	HERO_RESPAWN_TIME_MULTIPLIER = 100
-	HERO_INITIAL_GOLD = 625
-	HERO_REPICK_GOLD = 525
-	HERO_RANDOM_GOLD = 825
-	HERO_RERANDOM_GOLD = 725
-	HERO_STARTING_LEVEL = 1
-	MAX_LEVEL = 40
-	IMBA_PICK_MODE_ALL_RANDOM = true
+	HERO_INITIAL_GOLD = 1200
+	HERO_REPICK_GOLD = 1100
+	HERO_RANDOM_GOLD = 1400
+	HERO_RERANDOM_GOLD = 1300
+	HERO_STARTING_LEVEL = 3
+	MAX_LEVEL = 60
 elseif GetMapName() == "imba_custom" then									-- Custom map defaults
 	END_GAME_ON_KILLS = false
 	CUSTOM_GOLD_BONUS = 150
@@ -348,7 +316,7 @@ elseif GetMapName() == "imba_custom" then									-- Custom map defaults
 	HERO_RANDOM_GOLD = 2400
 	HERO_RERANDOM_GOLD = 2200
 	HERO_STARTING_LEVEL = 5
-	MAX_LEVEL = 50
+	MAX_LEVEL = 60
 elseif GetMapName() == "imba_10v10" then									-- 10v10 map defaults
 	END_GAME_ON_KILLS = false
 	CUSTOM_GOLD_BONUS = 60
@@ -362,7 +330,7 @@ elseif GetMapName() == "imba_10v10" then									-- 10v10 map defaults
 	HERO_RANDOM_GOLD = 2400
 	HERO_RERANDOM_GOLD = 2200
 	HERO_STARTING_LEVEL = 5
-	MAX_LEVEL = 40
+	MAX_LEVEL = 60
 elseif GetMapName() == "imba_arena" then									-- Arena map defaults
 	END_GAME_ON_KILLS = true
 	TOWER_ABILITY_MODE = false
@@ -381,7 +349,7 @@ elseif GetMapName() == "imba_arena" then									-- Arena map defaults
 	HERO_RANDOM_GOLD = 1250
 	HERO_RERANDOM_GOLD = 1125
 	HERO_STARTING_LEVEL = 3
-	MAX_LEVEL = 40
+	MAX_LEVEL = 60
 	RUNE_SPAWN_TIME = 15
 	FOUNTAIN_PERCENTAGE_MANA_REGEN = 15
 	FOUNTAIN_PERCENTAGE_HEALTH_REGEN = 15
@@ -467,9 +435,6 @@ IMBA_TESTBED_INITIALIZED = false
 
 HERO_ABILITY_LIST = LoadKeyValues("scripts/npc//KV/nonhidden_ability_list.kv")
 TOWER_ABILITIES = LoadKeyValues("scripts/npc/KV/tower_abilities.kv")
-RANDOM_OMG_HEROES = LoadKeyValues("scripts/npc/KV/random_omg_heroes.kv")
-RANDOM_OMG_ABILITIES = LoadKeyValues("scripts/npc/KV/random_omg_abilities.kv")
-RANDOM_OMG_ULTIMATES = LoadKeyValues("scripts/npc/KV/random_omg_ultimates.kv")
 PURGE_BUFF_LIST = LoadKeyValues("scripts/npc/KV/purge_buffs_list.kv")
 IMBA_GENERIC_TALENT_LIST = LoadKeyValues("scripts/npc/KV/imba_generic_talent_list.kv")
 IMBA_HERO_TALENTS_LIST = LoadKeyValues("scripts/npc/KV/imba_hero_talents_list.kv")

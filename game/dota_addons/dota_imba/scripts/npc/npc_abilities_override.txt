@@ -6650,6 +6650,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"slow_attack_speed"		"-60 -100 -140 -180 -220 -260 -300"
+				"LinkedSpecialBonus"	"special_bonus_unique_enchantress_3"
 			}
 			"02"
 			{

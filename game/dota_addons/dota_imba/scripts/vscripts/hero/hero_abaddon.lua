@@ -27,10 +27,9 @@ end
 local function getOverChannelDamageIncrease(caster)
 	if caster:HasModifier("modifier_over_channel_handler") then
 		local over_channel = caster:FindAbilityByName("imba_abaddon_over_channel")
-		if over_channel then
-			local ability_level = over_channel:GetLevel() - 1
-			-- #6 Talent: +50% Overchannel power
-			return over_channel:GetLevelSpecialValueFor( "extra_dmg" , ability_level ) * (1 + caster:FindTalentValue("special_bonus_imba_abaddon_6"))
+		if over_channel then			
+			-- #6 Talent: +50% Overchannel power			
+			return over_channel:GetSpecialValueFor("extra_dmg") * (1 + caster:FindTalentValue("special_bonus_imba_abaddon_6") * 0.01)
 		end
 	end
 
@@ -43,7 +42,7 @@ local function getOverChannelMistIncrease(caster)
 		if over_channel then
 			local ability_level = over_channel:GetLevel() - 1
 			-- #6 Talent: +50% Overchannel power
-			return over_channel:GetLevelSpecialValueFor( "extra_mist_duration" , ability_level ) * (1 + caster:FindTalentValue("special_bonus_imba_abaddon_6"))
+			return over_channel:GetLevelSpecialValueFor( "extra_mist_duration" , ability_level ) * (1 + caster:FindTalentValue("special_bonus_imba_abaddon_6") * 0.01)
 		end
 	end
 
@@ -56,7 +55,7 @@ local function getOverChannelShieldIncrease(caster)
 		if over_channel then
 			local ability_level = over_channel:GetLevel() - 1
 			-- #6 Talent: +50% Overchannel power
-			return over_channel:GetLevelSpecialValueFor( "extra_dmg" , ability_level ) * (1 + caster:FindTalentValue("special_bonus_imba_abaddon_6")) + over_channel:GetLevelSpecialValueFor( "extra_shield_health" , ability_level )
+			return over_channel:GetLevelSpecialValueFor( "extra_dmg" , ability_level ) * (1 + caster:FindTalentValue("special_bonus_imba_abaddon_6") * 0.01) + over_channel:GetLevelSpecialValueFor( "extra_shield_health" , ability_level )
 		end
 	end
 
@@ -92,14 +91,6 @@ function imba_abaddon_mist_coil:OnSpellStart(unit, special_cast)
 		local caster = self:GetCaster()
 		local target = unit or self:GetCursorTarget()
 		
-		-- Use up overchannel
-		self.overchannel_damage_increase	=	getOverChannelDamageIncrease(caster)
-		self.overchannel_mist_increase		=	getOverChannelMistIncrease(caster)
-		local over_channel_modifier = caster:FindModifierByName("modifier_over_channel_handler")
-		if over_channel_modifier then
-			over_channel_modifier:Destroy()
-		end
-		
 		caster:EmitSound("Hero_Abaddon.DeathCoil.Cast")
 
 		-- If caster is alive
@@ -107,11 +98,20 @@ function imba_abaddon_mist_coil:OnSpellStart(unit, special_cast)
 			local responses = {"abaddon_abad_deathcoil_01","abaddon_abad_deathcoil_02","abaddon_abad_deathcoil_06","abaddon_abad_deathcoil_08",}
 			caster:EmitCasterSound("npc_dota_hero_abaddon",responses, 25, DOTA_CAST_SOUND_FLAG_NONE, 20,"coil")
 
-			local health_cost = getOverChannelDamageIncrease(caster)
+			local health_cost = self:GetSpecialValueFor("self_damage")						
+			health_cost = health_cost + getOverChannelDamageIncrease(caster)			
 
 			if health_cost > 0 then
 				ApplyDamage({ victim = caster, attacker = caster, ability = self, damage = health_cost, damage_type = DAMAGE_TYPE_PURE })
 			end
+		end
+
+		-- Use up overchannel
+		self.overchannel_damage_increase	=	getOverChannelDamageIncrease(caster)
+		self.overchannel_mist_increase		=	getOverChannelMistIncrease(caster)
+		local over_channel_modifier = caster:FindModifierByName("modifier_over_channel_handler")
+		if over_channel_modifier then
+			over_channel_modifier:Destroy()
 		end
 
 		-- Create the projectile

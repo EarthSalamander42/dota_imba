@@ -1135,6 +1135,7 @@ end
 function imba_pudge_dismember:OnAbilityPhaseStart()
 	if IsServer() then
 		self.hVictim = self:GetCursorTarget()
+	
 	end
 	return true
 end
@@ -1212,7 +1213,6 @@ end
 
 function modifier_dismember_dummy:OnAbilityStart(keys)
 	if IsServer() then
-
 		if keys.unit == self:GetCaster() and keys.ability == self:GetAbility() then
 			if keys.target:IsConsideredHero() then
 				self:SetStackCount(0)
@@ -1247,6 +1247,9 @@ function modifier_dismember:OnCreated( kv )
 	if IsServer() then
 		self:GetParent():InterruptChannel()
 		self:OnIntervalThink()
+		local cast_responses = {"Imba.PudgeDismember1", "Imba.PudgeDismember2", "Imba.PudgeDismember3", "Imba.PudgeNom"}
+		self.castResponse = cast_responses[math.random(1, #cast_responses)]
+		EmitSoundOn(self.castResponse, self:GetCaster())
 		self:StartIntervalThink( self.tick_rate )
 	end
 end
@@ -1256,6 +1259,9 @@ end
 function modifier_dismember:OnDestroy()
 	if IsServer() then
 		self:GetCaster():InterruptChannel()
+		if self.castResponse then
+			StopSoundEvent(self.castResponse, self:GetCaster())
+		end
 	end
 end
 
@@ -1283,6 +1289,11 @@ end
 --------------------------------------------------------------------------------
 
 function modifier_dismember:CheckState()
+	if self:GetParent():HasModifier("modifier_slark_shadow_dance") then
+		local state = {[MODIFIER_STATE_STUNNED] = true}
+		return state
+	end
+
 	local state = {
 		[MODIFIER_STATE_STUNNED] = true,
 		[MODIFIER_STATE_INVISIBLE] = false,

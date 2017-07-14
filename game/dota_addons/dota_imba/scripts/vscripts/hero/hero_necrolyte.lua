@@ -668,7 +668,7 @@ function modifier_imba_heartstopper_aura:GetAuraRadius()
 end
 
 function modifier_imba_heartstopper_aura:GetAuraSearchFlags()
-	return DOTA_UNIT_TARGET_FLAG_NONE
+	return DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS
 end
 
 function modifier_imba_heartstopper_aura:GetAuraSearchTeam()

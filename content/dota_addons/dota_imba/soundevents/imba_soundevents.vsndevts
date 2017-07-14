@@ -1972,7 +1972,12 @@
 					{
 						"value"			"0"
 					}
-					"volume"			{   "value"     "6.00000"  }
+					"volume"			{   "value"     "4.00000"  }
+					"pitch"				{   "value"     "1.000000"  }
+					"volume_falloff_max"{	"value"		"20000.000"	}
+					"event_type"		{   "value"     "1.000000"  }
+					"spread_radius"		{	"value"		"900.0000"	}
+					"volume_use_fow"	{   "value"     "1.000000"  }
 				}
 			}
 		}
@@ -2003,6 +2008,296 @@
 						"value"			"0"
 					}
 					"volume"			{   "value"     "3.00000"  }
+				}
+			}
+		}
+	}
+}
+
+"Imba.DisruptorPikachu"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/hero/disruptor/disruptor_staticstorm_pikachu.vsnd"
+						}
+					}
+					"memory_type"
+					{
+						"value"			"0"
+					}
+					"volume"			{   "value"     "3.00000"  }
+				}
+			}
+		}
+	}
+}
+
+"Imba.JuggernautGenji"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/hero/juggernaut/juggernaut_omnislash_ryujinnokenwokurae.vsnd"
+						}
+					}
+					"memory_type"
+					{
+						"value"			"0"
+					}
+					"volume"			{   "value"     "3.00000"  }
+				}
+			}
+		}
+	}
+}
+
+"Imba.JuggernautSpin"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/hero/juggernaut/juggernaut_omnislash_ryujinnokenwokurae.vsnd"
+						}
+					}
+					"memory_type"
+					{
+						"value"			"0"
+					}
+					"volume"			{   "value"     "2.00000"  }
+				}
+			}
+		}
+	}
+}
+
+"Imba.LycanDogsOut"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/hero/lycan/lycan_shapeshift.vsnd"
+						}
+					}
+					"memory_type"
+					{
+						"value"			"0"
+					}
+					"volume"			{   "value"     "3.00000"  }
+				}
+			}
+		}
+	}
+}
+
+"Imba.PudgeDismember1"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	 "sounds/vo/pudge/pud_ability_devour_02.vsnd"
+						}
+					}
+					"memory_type"
+					{
+						"value"			"0"
+					}
+					"volume"			{   "value"     "5.00000"  }
+					"pitch"				{   "value"     "1.000000"  }
+					"volume_falloff_max"{	"value"		"25000.000"	}
+					"event_type"		{   "value"     "1.000000"  }
+					"spread_radius"		{	"value"		"900.0000"	}
+					"volume_use_fow"	{   "value"     "1.000000"  }
+				}
+			}
+		}
+	}
+}
+
+"Imba.PudgeDismember2"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	 "sounds/vo/pudge/pud_ability_devour_03.vsnd"
+						}
+					}
+					"memory_type"
+					{
+						"value"			"0"
+					}
+					"volume"			{   "value"     "5.00000"  }
+					"pitch"				{   "value"     "1.000000"  }
+					"volume_falloff_max"{	"value"		"25000.000"	}
+					"event_type"		{   "value"     "1.000000"  }
+					"spread_radius"		{	"value"		"900.0000"	}
+					"volume_use_fow"	{   "value"     "1.000000"  }
+				}
+			}
+		}
+	}
+}
+
+"Imba.PudgeDismember3"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/vo/pudge/pud_ability_devour_04.vsnd"
+						}
+					}
+					"memory_type"
+					{
+						"value"			"0"
+					}
+					"volume"			{   "value"     "5.00000"  }
+					"pitch"				{   "value"     "1.000000"  }
+					"volume_falloff_max"{	"value"		"25000.000"	}
+					"event_type"		{   "value"     "1.000000"  }
+					"spread_radius"		{	"value"		"900.0000"	}
+					"volume_use_fow"	{   "value"     "1.000000"  }
+				}
+			}
+		}
+	}
+}
+
+"Imba.PudgeNom"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/hero/pudge/pudge_dismember.vsnd"
+						}
+					}
+					"memory_type"
+					{
+						"value"			"0"
+					}
+					"volume"			{   "value"     "5.00000"  }
+					"pitch"				{   "value"     "1.000000"  }
+					"volume_falloff_max"{	"value"		"25000.000"	}
+					"event_type"		{   "value"     "1.000000"  }
+					"spread_radius"		{	"value"		"900.0000"	}
+					"volume_use_fow"	{   "value"     "1.000000"  }
+				}
+			}
+		}
+	}
+}
+
+"Imba.TechiesKira"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/hero/techies/techies_mine_kill_kiratheme.vsnd"
+						}
+					}
+					"memory_type"
+					{
+						"value"			"0"
+					}
+					"volume"			{   "value"     "4.00000"  }
 				}
 			}
 		}

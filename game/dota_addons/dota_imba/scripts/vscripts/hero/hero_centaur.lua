@@ -874,7 +874,7 @@ function imba_centaur_stampede:OnSpellStart()
 		local duration = ability:GetSpecialValueFor("duration")
 
 		-- Play cast sound
-		EmitGlobalSound(sound_cast)		
+		EmitSoundOn(sound_cast, caster)		
 		
 		-- Play cast animation
 		caster:StartGesture(cast_animation)	
@@ -882,7 +882,7 @@ function imba_centaur_stampede:OnSpellStart()
 		-- Should we inform the bitches they need to move?
 		local bitch_be_gone = 15
 		if RollPercentage(bitch_be_gone) then
-			EmitSoundOnLocationForAllies(caster:GetAbsOrigin(), "Imba.CentaurMoveBitch", caster)
+			EmitSoundOn("Imba.CentaurMoveBitch", caster)
 		end
 		
 		-- Find all enemies and clear trample marks from them
