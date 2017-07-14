@@ -341,7 +341,8 @@ function modifier_imba_enigma_midnight_pulse_aura_talent:OnIntervalThink()
       attacker = self:GetCaster(),
       damage = self.damage_per_tick,
       damage_type = DAMAGE_TYPE_MAGICAL,
-      ability = self:GetAbility()
+      ability = self:GetAbility(),
+      flags = DOTA_DAMAGE_FLAG_DONT_DISPLAY_DAMAGE_IF_SOURCE_HIDDEN,
     }
     ApplyDamage(damage)
     -- I do not think this should apply force, uncomment if someone thinks it should
