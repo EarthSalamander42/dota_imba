@@ -72,17 +72,17 @@ function Server_DecodeForPlayer ( t, nPlayerID )   --To deep-decode the Json cod
                     elseif (type(val)=="string") then                   
                         if pos == "SteamID64" then
                             SteamID64 = val
-                            print("SteamID64="..SteamID64)
+                            --print("SteamID64="..SteamID64)
                         end
                         if pos == "player_key" then
                             player_key = val
                             table_player_key[nPlayerID] = tostring(player_key)
-                            print("player_key="..table_player_key[nPlayerID])
+                            --print("player_key="..table_player_key[nPlayerID])
                         end
                         if pos == "XP_has" then
                             XP_has = val
                             table_XP_has[nPlayerID] = tostring(XP_has)
-                            print("XP_has="..table_XP_has[nPlayerID])
+                            --print("XP_has="..table_XP_has[nPlayerID])
                         end
                         table_able[nPlayerID] = tostring(0)
                     end
