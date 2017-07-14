@@ -636,7 +636,7 @@ function modifier_imba_singularity:OnDeath(keys)
   if not IsServer() then return end
   if keys.unit ~= self:GetParent() then return end
 
-  if not self:GetParent():HasTalent("special_bonus_imba_enigma_1") then return end
+  if not self:GetParent():HasTalent("special_bonus_imba_enigma_4") then return end
 
   local ability = self:GetAbility()
   ability.duration = ability:GetSpecialValueFor("duration") /2
