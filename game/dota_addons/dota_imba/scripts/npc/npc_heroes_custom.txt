@@ -904,15 +904,14 @@
 	{
 		"override_hero"				"npc_dota_hero_enigma"		
 
-		"AbilityLayout"				"5"
+		"AbilityLayout"				"4"
 
 		"IsImba"					"1"
 
 		"Ability1"					"imba_enigma_malefice"
 		"Ability2"					"imba_enigma_demonic_conversion"
 		"Ability3"					"imba_enigma_midnight_pulse"
-		"Ability4"					"imba_enigma_gravity_well"
-		"Ability5"					"imba_enigma_black_hole"
+		"Ability4"					"imba_enigma_black_hole"
 
 		"Ability10"					"special_bonus_imba_enigma_1"
 		"Ability11"					"special_bonus_imba_enigma_2"
