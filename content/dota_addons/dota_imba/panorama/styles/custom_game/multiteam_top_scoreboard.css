@@ -1,6 +1,4 @@
 @define ANIM_TIME: 0.75s;
-@define EXTRA_PADDING: 100px;
-@define M_EXTRA_PADDING: -50px;
 
 .CustomHudRoot
 {
@@ -12,12 +10,6 @@
 {
 	horizontal-align: center;
 	vertical-align: top;
-}
-
-.AspectRatio4x3 #TopBarScoreboard,
-.AspectRatio5x4 #TopBarScoreboard
-{
-	margin-left: 225px;
 }
 
 #ScoreboardContainer
@@ -43,8 +35,8 @@
 	border-right: 5px solid transparent;
 	transition-property: position;
 	transition-duration: ANIM_TIME;
-	margin-left: M_EXTRA_PADDING;
-	margin-right: M_EXTRA_PADDING;
+	margin-left: -50px;
+	margin-right: -50px;
 }
 
 #TeamLogo
@@ -62,8 +54,8 @@
 
 #ScoreboardTeam
 {
-	margin-left: EXTRA_PADDING;
-	margin-right: EXTRA_PADDING;
+	margin-left: 100px;
+	margin-right: 100px;
 	padding-left: 2px;
 	padding-right: 2px;
 }
@@ -171,6 +163,16 @@
 {
 	width: 64px;
 	height: 36px;
+}
+
+.AspectRatio16x10 #HeroIcon
+{
+	width: 58px;
+}
+
+.AspectRatio4x3 #HeroIcon
+{
+	width: 46px;
 }
 
 .player_dead #HeroIcon

@@ -1,49 +1,50 @@
 
 .FlyoutScoreboardRoot
 {
-    horizontal-align: left;
-    vertical-align: top;
-    margin-top: 70px;
-    flow-children: down;
+	horizontal-align: left;
+	vertical-align: top;
+	margin-top: 70px;
+	flow-children: down;
 
-    transform: translatex( -650px );
-    transition-property: transform;
-    transition-duration: 0.1s;
+	transform: translatex( -1000px );
+	transition-property: transform;
+	transition-duration: 0.15s;
 }
 
 .ScoreCol_DisplayPic DOTAAvatarImage
 {
-    height: 32px;
-    width: 32px;
-    vertical-align: middle;
+	height: 32px;
+	width: 32px;
+	vertical-align: middle;
 }
 
 .FlyoutScoreboardRoot.flyout_scoreboard_visible
 {
-    transform: translatey( 0px );
+	transform: translatey( 0px );
 }
 
 .Legend
 {
-    flow-children: right;
-    background-color : #444b57cc;
-    width: 100%;
+	flow-children: right;
+	background-color : #444b57cc;
+	width: 100%;
 }
 
 .LegendPanel
 {
-    margin-top: 1px;
-    margin-left: 1px;
+	margin-top: 1px;
+	margin-left: 1px;
 }
 
 .Legend Label
 {
-    text-transform: uppercase;
-    font-size: 16px;
-    font-weight: bold;
-    color: #afd2e3;
-    padding-top: 8px;
-    height: 32px;
+	text-transform: uppercase;
+	font-size: 16px;
+	font-weight: bold;
+	color: #afd2e3;
+	padding-top: 8px;
+	height: 32px;
+	text-align: center;
 }
 
 .ScoreCol_DisplayPic,
@@ -51,147 +52,147 @@
 .ScoreCol_TeamScore,
 #PlayerColorBar
 {
-    margin-right: 6px;
+	margin-right: 6px;
 }
 
 #PlayerColorBar
 {
-    align : left center;
-    height: 100%;
+	align : left center;
+	height: 100%;
 }
 
 .ScoreCol_TeamScore
 {
-    width: 48px;
+	width: 48px;
 }
 
 .ScoreCol_DisplayPic
 {
-    flow-children: right;
-    width: 43px;
+	flow-children: right;
+	width: 43px;
 }
 
 .ScoreCol_TeamName
 {
-    width: 210px;
+	width: 210px;
 }
 
 .ScoreCol_HeroPic
 {
-    width: 54px;
+	width: 54px;
 }
 
 .ScoreCol_PlayerDetails
 {
-    width: 140px;
+	width: 140px;
 }
 
 .ScoreCol_HeroLevel
 {
-    width: 60px;
-    text-align: center;
+	width: 60px;
+}
+
+.ScoreCol_ImbaXP
+{
+	width: 160px;
 }
 
 .ScoreCol_Gold
 {
-    width: 90px;
-    text-align: center;
+	width: 90px;
 }
 
 .ScoreCol_Kills,
 .ScoreCol_Deaths,
 .ScoreCol_Assists
 {
-    width: 30px;
-    text-align: center;
+	width: 30px;
 }
 
 .ScoreCol_Ultimate
 {
-    width: 40px;
-    text-align: center;
+	width: 40px;
 }
 
 .ScoreCol_Buttons
 {
-    width: 110px;
-    text-align: center;
-    vertical-align: center;
-    flow-children: right;
+	width: 110px;
+	vertical-align: center;
+	flow-children: right;
 }
 
 .spectator_view .ScoreCol_Buttons
 {
-    width: 25px;
+	width: 25px;
 }
 
 #TeamsContainer
 {
-    flow-children: down;
-    horizontal-align: left;
+	flow-children: down;
+	horizontal-align: left;
 }
 
 .FlyoutTeamData
 {
-    margin-top: -30px;
-    flow-children: right;
-    height: 50px;
+	margin-top: -30px;
+	flow-children: right;
+	height: 50px;
 }
 
 .FlyoutPlayer
 { 
-    flow-children: right;
+	flow-children: right;
 }
 
 #PlayersContainer
 {
-    flow-children: down;
-    padding-bottom: 30px;
-    background-color: #262c36bb;
+	flow-children: down;
+	padding-bottom: 30px;
+	background-color: #262c36bb;
 }
 
 #TeamScore,
 #TeamName
 {
-    color: #ffffff;
-    font-size: 28px;
-    text-shadow: 0px 0px 8px #587648;
-    font-weight: bold;
+	color: #ffffff;
+	font-size: 28px;
+	text-shadow: 0px 0px 8px #587648;
+	font-weight: bold;
 }
 
 #TeamScore,
 {
-    horizontal-align: center;
+	horizontal-align: center;
 }
 
 .PlayerRow
 {
-    height: 32px;
-    margin-bottom: 2px;
-    background-color: #21272fbb;
+	height: 32px;
+	margin-bottom: 2px;
+	background-color: #21272fbb;
 }
 
 .is_local_player #PlayerRowContainer
 {
-    background-color: #111111bb;
+	background-color: #111111bb;
 }
 
 #PlayerRowContainer
 {
-    flow-children: right;
-    height: 100%;
+	flow-children: right;
+	height: 100%;
 }
 
 #PlayerColorBar
 {
-    width: 5px;
-    height: 100%;
+	width: 5px;
+	height: 100%;
 }
 
 #HeroIcon
 {
-    vertical-align: middle;
-    border: 1px solid #ffffff22;
+	vertical-align: middle;
+	border: 1px solid #ffffff22;
 }
 
 #LevelContainer,
@@ -199,165 +200,175 @@
 #DeathsContainer,
 #AssistsContainer
 {
-    height: 100%;
+	height: 100%;
 }
 
 .ScoreboardPanel
 {
-    height : 100%;
-    margin-top: 1px;
-    margin-left: 1px;
+	height : 100%;
+	margin-top: 1px;
+	margin-left: 1px;
 }
 
 .ScoreboardPanel Label
 {
-    font-size: 30px;
+	font-size: 30px;
+	text-align: center;
+	horizontal-align: center;
 }
 
 .UltimateIndicatorShared
 {
-    margin-top: 4px;
-    height: 30px;
-    background-size: 20px;
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
+	margin-top: 4px;
+	height: 30px;
+	background-size: 20px;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
 }
 
 #Level
 {
-    vertical-align: center;
-    horizontal-align: center;
-    color: #acacac;
-    font-weight: bold;
-    font-size: 26px;
+	vertical-align: center;
+	horizontal-align: center;
+	color: #acacac;
+	font-weight: bold;
+	font-size: 26px;
+}
+
+#ImbaXP
+{
+	vertical-align: center;
+	horizontal-align: center;
+	color: #acacac;
+	font-weight: bold;
+	font-size: 26px;
 }
 
 #Kills,
 #Deaths,
 #Assists
 {
-    vertical-align: center;
-    font-size: 18px;
-    text-align: center;
-    margin-top: 3px;
-    width: 100%;
-    color: #acacac;
+	vertical-align: center;
+	font-size: 18px;
+	margin-top: 3px;
+	width: 100%;
+	color: #acacac;
 }
 
 #PlayerAndHeroName
 {
-    padding-top: 1px;
-    padding-bottom: 1px;
+	padding-top: 1px;
+	padding-bottom: 1px;
 }
 
 #PlayerName
 {
-    color: white;
-    font-size: 14px;
-    margin-top: 0px;
-    white-space: nowrap;
+	color: white;
+	font-size: 14px;
+	margin-top: 0px;
+	white-space: nowrap;
 }
 
 #HeroNameAndDescription
 {
-    color: #898b8c;
-    font-size: 13px;
+	color: #898b8c;
+	font-size: 13px;
 }
 
 #TeammateGoldAmount
 {
-    margin-bottom: -2px;
-    vertical-align: bottom;
-    horizontal-align: center;
-    font-size: 25px;
-    font-weight: bold;
-    color: #ffcc33;
-    visibility: collapse;
-    text-decoration: underline;
+	margin-bottom: -2px;
+	vertical-align: bottom;
+	horizontal-align: center;
+	font-size: 25px;
+	font-weight: bold;
+	color: #ffcc33;
+	visibility: collapse;
+	text-decoration: underline;
 }
 
 .is_local_player .ScoreCol_Buttons Button
 {
-    visibility: collapse;
+	visibility: collapse;
 }
 
 .ScoreCol_Buttons Button
 {
-    width: 20px;
-    height: 20px;
-    margin-right: 5px;
-    background-repeat: no-repeat;
+	width: 20px;
+	height: 20px;
+	margin-right: 5px;
+	background-repeat: no-repeat;
 	background-position: 50% 50%;
-    background-size: contain;
-    vertical-align: middle;
+	background-size: contain;
+	vertical-align: middle;
 }
 
 #BtnMuteVoice
 {
-    background-image: url("file://{images}/custom_game/mute_voice_off.png");
+	background-image: url("file://{images}/custom_game/mute_voice_off.png");
 }
 
 #BtnShareUnit
 {
-    background-image: url("file://{images}/custom_game/share_unit_off.png");
-    visibility: collapse;
+	background-image: url("file://{images}/custom_game/share_unit_off.png");
+	visibility: collapse;
 }
 
 #BtnShareHero
 {
-    background-image: url("file://{images}/custom_game/share_hero_off.png");
-    visibility: collapse;
+	background-image: url("file://{images}/custom_game/share_hero_off.png");
+	visibility: collapse;
 }
 
 #BtnDisableHelp
 {
-    background-image: url("file://{images}/custom_game/disable_help_off.png");
-    visibility: collapse;
+	background-image: url("file://{images}/custom_game/disable_help_off.png");
+	visibility: collapse;
 }
 
 .local_player_teammate #BtnShareUnit,
 .local_player_teammate #BtnShareHero,
 .local_player_teammate #BtnDisableHelp,
 {
-    visibility: visible;
+	visibility: visible;
 }
 
 #BtnMuteVoice.Activated
 {
-    background-image: url("file://{images}/custom_game/mute_voice_on.png");
+	background-image: url("file://{images}/custom_game/mute_voice_on.png");
 }
 
 #BtnShareUnit.Activated
 {
-    background-image: url("file://{images}/custom_game/share_unit_on.png");
+	background-image: url("file://{images}/custom_game/share_unit_on.png");
 }
 
 #BtnShareHero.Activated
 {
-    background-image: url("file://{images}/custom_game/share_hero_on.png");
+	background-image: url("file://{images}/custom_game/share_hero_on.png");
 }
 
 #BtnDisableHelp.Activated
 {
-    background-image: url("file://{images}/custom_game/disable_help_on.png");
+	background-image: url("file://{images}/custom_game/disable_help_on.png");
 }
 
 
 .local_player_team #TeammateGoldAmount,
 .spectator_view #TeammateGoldAmount
 {
-    visibility: visible;
+	visibility: visible;
 }
 
 #PlayerDetailsContainer
 {
-    height: 100%;
+	height: 100%;
 }
 
 #PlayerAndHeroName
 {
-    flow-children: down;
-    padding-left: 8px;
+	flow-children: down;
+	padding-left: 8px;
 }
 
 .is_local_player #Kills,
@@ -366,8 +377,54 @@
 .is_local_player #Level,
 .is_local_player #HeroName
 {
-    color: white;
+	color: white;
 }
 
+/* Imba XP */
+/*
+#XP_alt
+{
+	width: 500px;
+	height: 64px;
+	horizontal-align: center;
+	vertical-align: center;
+	margin-bottom: 800px;
+	visibility: collapse;
+}
+*/
 
+#XPProgressBar
+{
+	width: 100%;
+	border-radius: 4px;
+	border: 3px solid #444;
+	background-color: black;
+	height: 24px;
+	vertical-align: middle;
+	horizontal-align: right;
+	box-shadow: fill #000 -3px -3px 6px 6px;
+}
 
+#XPProgressBar_Left
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #326114 ), color-stop( 0.3, #54BA07 ), color-stop( .5, #54BA07 ), to( #326114 ) );
+	box-shadow: inset #000 1px 1px 3px 3px;	
+	border-radius: 2px;
+}
+
+#XPProgressBar_Left
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #320000 ), color-stop( 0.3, #ff4A07 ), color-stop( .5, #ff4A07 ), to( #320000 ) );
+}
+
+#XPProgressBar_Right
+{
+	background-color: gradient( linear, 0% 0%, 100% 0%, from( #222222FF ), to( black ) );
+}
+
+#XPProgressBarContainer
+{
+	vertical-align: bottom;
+	height: 40px;
+	width: 100%;
+}

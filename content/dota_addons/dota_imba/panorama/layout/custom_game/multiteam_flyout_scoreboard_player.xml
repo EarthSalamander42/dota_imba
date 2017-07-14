@@ -26,6 +26,11 @@
 			<Panel class="ScoreCol_HeroLevel ScoreboardPanel">
 				<Label id="Level" text="999" />
 			</Panel>
+			<Panel class="ScoreCol_ImbaXP ScoreboardPanel">
+				<Panel id="XPProgressBarContainer" hittest="false">
+					<ProgressBar hittest="false" id="XPProgressBar" value="1.0"/>
+				</Panel>
+			</Panel>
 			<Panel class="ScoreCol_Gold ScoreboardPanel">
 				<Label id="TeammateGoldAmount" text="999" />
 			</Panel>
