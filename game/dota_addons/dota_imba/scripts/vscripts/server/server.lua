@@ -130,7 +130,7 @@ function Server_GetPlayerLevelAndTitle(nPlayerID)
 				end
 				XP_has_this_level[nPlayerID] = tonumber(table_XP_has[nPlayerID]) - table_rankXP[i]
 				CustomNetTables:SetTableValue("player_table", "ImbaXP", {value = "XP", number = XP_has_this_level[nPlayerID]})
-				print("Setup Imba XP Bar:", XP_has_this_level[nPlayerID])
+				--print("Setup Imba XP Bar:", XP_has_this_level[nPlayerID])
 				break
 			end
 		end
@@ -336,4 +336,128 @@ function Serer_CheckForAFKPlayer()
 			end
 	return cycle_AFK_check_interval --cycle_AFK_check_interval
 	end)
+end
+
+
+
+
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------HERO Particle-----------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
+
+function Server_findHeroByPlayerID(nPlayerID)
+    local _Hero = PlayerResource:GetSelectedHeroEntity(nPlayerID)
+    return _Hero
+end
+
+
+local Table_Hero_Particle = {}
+
+function Server_DestroyParticle(_particle)
+    ParticleManager:DestroyParticle(_particle, true)
+    ParticleManager:ReleaseParticleIndex(_particle)
+    _particle = nil
+end
+
+function Server_Particle_Darkmoon(nPlayerID)
+    if Table_Hero_Particle[nPlayerID] then
+        Server_DestroyParticle(Table_Hero_Particle[nPlayerID])
+    end
+    local hero = Server_findHeroByPlayerID(nPlayerID)
+    local _particle = ParticleManager:CreateParticle("particles/econ/courier/courier_roshan_darkmoon/courier_roshan_darkmoon.vpcf",PATTACH_ABSORIGIN_FOLLOW,hero)
+    Table_Hero_Particle[nPlayerID] = _particle
+    ParticleManager:SetParticleControlEnt(_particle,0,hero,PATTACH_ABSORIGIN_FOLLOW,"follow_origin",hero:GetAbsOrigin(),true)
+end
+
+function Server_Particle_Sands(nPlayerID)
+    if Table_Hero_Particle[nPlayerID] then
+        Server_DestroyParticle(Table_Hero_Particle[nPlayerID])
+    end
+    local hero = Server_findHeroByPlayerID(nPlayerID)
+    local _particle = ParticleManager:CreateParticle("particles/econ/courier/courier_roshan_desert_sands/baby_roshan_desert_sands_ambient.vpcf",PATTACH_ABSORIGIN_FOLLOW,hero)
+    Table_Hero_Particle[nPlayerID] = _particle
+    ParticleManager:SetParticleControlEnt(_particle,0,hero,PATTACH_ABSORIGIN_FOLLOW,"follow_origin",hero:GetAbsOrigin(),true)
+end
+
+
+function Server_Particle_Frost(nPlayerID)
+    if Table_Hero_Particle[nPlayerID] then
+        Server_DestroyParticle(Table_Hero_Particle[nPlayerID])
+    end
+    local hero = Server_findHeroByPlayerID(nPlayerID)
+    local _particle = ParticleManager:CreateParticle("particles/econ/courier/courier_roshan_frost/courier_roshan_frost_ambient.vpcf",PATTACH_ABSORIGIN_FOLLOW,hero)
+    Table_Hero_Particle[nPlayerID] = _particle
+    ParticleManager:SetParticleControlEnt(_particle,0,hero,PATTACH_ABSORIGIN_FOLLOW,"follow_origin",hero:GetAbsOrigin(),true)
+end
+
+function Server_Particle_Lava(nPlayerID)
+    if Table_Hero_Particle[nPlayerID] then
+        Server_DestroyParticle(Table_Hero_Particle[nPlayerID])
+    end
+    local hero = Server_findHeroByPlayerID(nPlayerID)
+    local _particle = ParticleManager:CreateParticle("particles/econ/courier/courier_roshan_lava/courier_roshan_lava.vpcf",PATTACH_ABSORIGIN_FOLLOW,hero)
+    Table_Hero_Particle[nPlayerID] = _particle
+    ParticleManager:SetParticleControlEnt(_particle,0,hero,PATTACH_ABSORIGIN_FOLLOW,"follow_origin",hero:GetAbsOrigin(),true)
+end
+
+function Server_Particle_Platinum(nPlayerID)
+    if Table_Hero_Particle[nPlayerID] then
+        Server_DestroyParticle(Table_Hero_Particle[nPlayerID])
+    end
+    local hero = Server_findHeroByPlayerID(nPlayerID)
+    local _particle = ParticleManager:CreateParticle("particles/econ/courier/courier_platinum_roshan/platinum_roshan_ambient.vpcf",PATTACH_ABSORIGIN_FOLLOW,hero)
+    Table_Hero_Particle[nPlayerID] = _particle
+    ParticleManager:SetParticleControlEnt(_particle,0,hero,PATTACH_ABSORIGIN_FOLLOW,"follow_origin",hero:GetAbsOrigin(),true)
+end
+
+function Server_Particle_FlameHaze(nPlayerID)
+    if Table_Hero_Particle[nPlayerID] then
+        Server_DestroyParticle(Table_Hero_Particle[nPlayerID])
+    end
+    local hero = Server_findHeroByPlayerID(nPlayerID)
+    local _particle = ParticleManager:CreateParticle("particles/econ/courier/courier_greevil_orange/courier_greevil_orange_ambient_3.vpcf",PATTACH_ABSORIGIN_FOLLOW,hero)
+    Table_Hero_Particle[nPlayerID] = _particle
+    ParticleManager:SetParticleControlEnt(_particle,0,hero,PATTACH_ABSORIGIN_FOLLOW,"follow_origin",hero:GetAbsOrigin(),true)
+end
+
+function Server_Particle_HellFire(nPlayerID)
+    if Table_Hero_Particle[nPlayerID] then
+        Server_DestroyParticle(Table_Hero_Particle[nPlayerID])
+    end
+    local hero = Server_findHeroByPlayerID(nPlayerID)
+    local _particle = ParticleManager:CreateParticle("particles/econ/courier/courier_greevil_red/courier_greevil_red_ambient_3.vpcf",PATTACH_ABSORIGIN_FOLLOW,hero)
+    Table_Hero_Particle[nPlayerID] = _particle
+    ParticleManager:SetParticleControlEnt(_particle,0,hero,PATTACH_ABSORIGIN_FOLLOW,"follow_origin",hero:GetAbsOrigin(),true)
+end
+
+function Server_Particle_Sakura(nPlayerID)
+    if Table_Hero_Particle[nPlayerID] then
+        Server_DestroyParticle(Table_Hero_Particle[nPlayerID])
+    end
+    local hero = Server_findHeroByPlayerID(nPlayerID)
+    local _particle = ParticleManager:CreateParticle("particles/econ/courier/courier_trail_blossoms/courier_trail_blossoms.vpcf",PATTACH_ABSORIGIN_FOLLOW,hero)
+    Table_Hero_Particle[nPlayerID] = _particle
+    ParticleManager:SetParticleControlEnt(_particle,0,hero,PATTACH_ABSORIGIN_FOLLOW,"follow_origin",hero:GetAbsOrigin(),true)
+end
+
+function Server_Particle_Radiant(nPlayerID)
+    if Table_Hero_Particle[nPlayerID] then
+        Server_DestroyParticle(Table_Hero_Particle[nPlayerID])
+    end
+    local hero = Server_findHeroByPlayerID(nPlayerID)
+    local _particle = ParticleManager:CreateParticle("particles/radiant_fx2/good_ancient001_ambient.vpcf",PATTACH_ABSORIGIN_FOLLOW,hero)
+    Table_Hero_Particle[nPlayerID] = _particle
+    ParticleManager:SetParticleControlEnt(_particle,0,hero,PATTACH_ABSORIGIN_FOLLOW,"follow_origin",hero:GetAbsOrigin(),true)
+end
+
+function Server_Particle_Dire(nPlayerID)
+    if Table_Hero_Particle[nPlayerID] then
+        Server_DestroyParticle(Table_Hero_Particle[nPlayerID])
+    end
+    local hero = Server_findHeroByPlayerID(nPlayerID)
+    local _particle = ParticleManager:CreateParticle("particles/dire_fx/bad_ancient_flow_test.vpcf",PATTACH_ABSORIGIN_FOLLOW,hero)
+    Table_Hero_Particle[nPlayerID] = _particle
+    ParticleManager:SetParticleControlEnt(_particle,0,hero,PATTACH_ABSORIGIN_FOLLOW,"follow_origin",hero:GetAbsOrigin(),true)
 end
