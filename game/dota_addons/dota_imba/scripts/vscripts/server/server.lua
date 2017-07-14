@@ -59,7 +59,7 @@ function Server_DecodeForPlayer ( t, nPlayerID )   --To deep-decode the Json cod
 	local print_r_cache={}
 	local function sub_print_r(t,indent)
 		if (print_r_cache[tostring(t)]) then
-			print(indent.."*"..tostring(t))
+			--print(indent.."*"..tostring(t))
 		else
 			print_r_cache[tostring(t)]=true
 			if (type(t)=="table") then
@@ -69,17 +69,17 @@ function Server_DecodeForPlayer ( t, nPlayerID )   --To deep-decode the Json cod
 					elseif (type(val)=="string") then                   
 						if pos == "SteamID64" then
 							SteamID64 = val
-							print("SteamID64="..SteamID64)
+							--print("SteamID64="..SteamID64)
 						end
 						if pos == "player_key" then
 							player_key = val
 							table_player_key[nPlayerID] = tostring(player_key)
-							print("player_key="..table_player_key[nPlayerID])
+							--print("player_key="..table_player_key[nPlayerID])
 						end
 						if pos == "XP_has" then
 							XP_has = val
 							table_XP_has[nPlayerID] = tostring(XP_has)
-							print("XP_has="..table_XP_has[nPlayerID])
+							--print("XP_has="..table_XP_has[nPlayerID])
 						end
 						table_able[nPlayerID] = tostring(0)
 					end
@@ -224,7 +224,7 @@ function Server_WaitToEnableXpGain()
 	endTime = 600, -- Plyaer can gain XP from this game after 10 mins later the creep spwans
 	callback = function()
 		EnnDisEnabled = 1
-		print("Enable Xp gain system....")
+		--print("Enable Xp gain system....")
 		for nPlayerID=0, DOTA_MAX_TEAM_PLAYERS-1 do
 			if PlayerResource:IsValidPlayer(nPlayerID)  then
 			if PlayerResource:IsFakeClient(nPlayerID) then
