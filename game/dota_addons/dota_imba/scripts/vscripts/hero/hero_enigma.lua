@@ -973,7 +973,7 @@ LinkLuaModifier("modifier_imba_enigma_eidolon","hero/hero_enigma", LUA_MODIFIER_
 modifier_imba_enigma_eidolon = class({})
 
 function modifier_imba_enigma_eidolon:IsDebuff() return false end
-function modifier_imba_enigma_eidolon:IsHidden() return false end
+function modifier_imba_enigma_eidolon:IsHidden() return true end
 function modifier_imba_enigma_eidolon:IsPurgable() return false end
 
 function modifier_imba_enigma_eidolon:OnCreated()
@@ -1075,6 +1075,6 @@ LinkLuaModifier("modifier_imba_enigma_eidolon_attack_counter","hero/hero_enigma"
 modifier_imba_enigma_eidolon_attack_counter = class({})
 
 function modifier_imba_enigma_eidolon_attack_counter:IsDebuff() return false end
-function modifier_imba_enigma_eidolon_attack_counter:IsHidden() return false end
+function modifier_imba_enigma_eidolon_attack_counter:IsHidden() return true end
 function modifier_imba_enigma_eidolon_attack_counter:IsPurgable() return false end
 
