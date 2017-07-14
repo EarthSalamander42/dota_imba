@@ -113,7 +113,7 @@ function modifier_imba_enigma_malefice:OnIntervalThink()
   -- Get the duration boost caused by eidolons
   local eidolon_bonus_duration = 0
   local modifier = parent:FindModifierByName("modifier_imba_enigma_eidolon_attack_counter")
-  if modifier then
+  if modifier and self.eidolon_bonus_duration_percent then
     eidolon_bonus_duration = modifier:GetStackCount() * (1+self.eidolon_bonus_duration_percent)
   end
   local duration = self.stun_duration + eidolon_bonus_duration
