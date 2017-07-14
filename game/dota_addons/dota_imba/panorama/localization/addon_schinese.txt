@@ -302,7 +302,7 @@
     "DOTA_Tooltip_Talent_special_bonus_imba_enigma_4_title"                     "黑洞"
     "DOTA_Tooltip_Talent_special_bonus_imba_enigma_4_Description"               "死亡时施放黑洞"
     "DOTA_Tooltip_Talent_special_bonus_imba_enigma_5_title"                     "憎恶"
-    "DOTA_Tooltip_Talent_special_bonus_imba_enigma_5_Description"               "憎恶在眩晕时将创造迷你黑洞"
+    "DOTA_Tooltip_Talent_special_bonus_imba_enigma_5_Description"               "憎恶在眩晕时将创造黑洞"
     "DOTA_Tooltip_Talent_special_bonus_imba_enigma_6_title"                     "午夜凋零"
     "DOTA_Tooltip_Talent_special_bonus_imba_enigma_6_Description"               "被动午夜凋零光环"
     "DOTA_Tooltip_Talent_special_bonus_imba_enigma_7_title"                     "谜团"
