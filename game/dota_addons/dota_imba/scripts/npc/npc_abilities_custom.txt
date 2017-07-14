@@ -8665,16 +8665,13 @@
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_enigma.vsndevts"
 			"particle"					"particles/status_fx/status_effect_enigma_malefice.vpcf"
-			"particle"					"particles/units/heroes/hero_enigma/enigma_malefice.vpcf"
-			"particle"					"particles/hero/enigma/malefice_targetstart.vpcf"
-			"particle"					"particles/hero/enigma/malefice_travel.vpcf"
-			"particle"					"particles/hero/enigma/malefice_targetend.vpcf"
+			"particle"					"particles/units/heroes/hero_enigma/enigma_malefice.vpcf"	
 		}
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"600"
-		"AbilityCastPoint"				"0.3"
+		//"AbilityCastRange"				"600" // Done in lua
+		//"AbilityCastPoint"				"0.3" // Done in lua
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -8716,7 +8713,6 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"total_duration"			"4"
-				"LinkedSpecialBonus"		"special_bonus_imba_enigma_1"
 			}			
 
 			"06"
@@ -8728,8 +8724,23 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"well_pull_strength" 		"50 60 70 80 100 120 140"
-			}									
+				"pull_strength" 		"100 120 140 160 200 240 280"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_point" 		"0.3"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range" 		"600"
+			}		
+			"10"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"eidolon_bonus_duration_percent"				"0.07"
+			}											
 		}
 
 	}
@@ -8761,8 +8772,8 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.3"
+		//"AbilityCastRange"				"700"
+		//"AbilityCastPoint"				"0.3"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -8807,11 +8818,10 @@
 			}			
 
 			"06"
-		    {
-		        "var_type"      			"FIELD_INTEGER"
-		        "shard_percentage" 			"5 5 5 5 10 15 20"
-		        "LinkedSpecialBonus"		"special_bonus_imba_enigma_3"
-		    }
+		  {
+		    "var_type"      			"FIELD_INTEGER"
+		    "shard_percentage" 			"5 5 5 5 10 15 20"
+		  }
 
 			"07"
 			{
@@ -8841,7 +8851,18 @@
 			{
 				"var_type"     				"FIELD_INTEGER"
 				"additional_attacks_split"	"3"
-			}																		
+			}
+			"12"
+			{
+				"var_type"     				"FIELD_INTEGER"
+				"cast_range" 	"700"
+			}		
+
+			"13"
+			{
+				"var_type"     				"FIELD_FLOAT"
+				"cast_point"	"0.3"
+			}																					
 		}
 	}
 
@@ -8873,8 +8894,8 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.1"
+		//"AbilityCastRange"				"700"
+		//"AbilityCastPoint"				"0.1"
 		"AbilityCastAnimation"			"ACT_DOTA_MIDNIGHT_PULSE"
 		
 		// Time		
@@ -8907,10 +8928,31 @@
 				"duration"					"11"
 			}			
 
-			"05"
+			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"well_pull_strength"		"45 45 45 45 60 75 90"
+				"pull_strength"		"45 45 45 45 60 75 90"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"eidolon_heal_duration"			"3.0"
+			}			
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"pull_duration"			"1"
+			}
+			"07"
+			{
+				"var_type"     				"FIELD_INTEGER"
+				"cast_range" 	"700"
+			}		
+
+			"08"
+			{
+				"var_type"     				"FIELD_FLOAT"
+				"cast_point"	"0.3"
 			}									
 		}
 	}
@@ -9002,6 +9044,7 @@
 		"precache"
 		{
 			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_enigma.vsndevts"
+			"particle"						"particles/units/heroes/hero_enigma/enigma_blackhole_target.vpcf"
 			"particle"						"particles/econ/items/enigma/enigma_world_chasm/enigma_blackhole_target_ti5.vpcf"
 			"particle"						"particles/econ/items/enigma/enigma_world_chasm/enigma_blackhole_ti5.vpcf"
 			"particle"						"particles/econ/items/enigma/enigma_world_chasm/status_effect_enigma_blackhole_tgt_ti5.vpcf"
@@ -9012,8 +9055,8 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"					"300"
-		"AbilityCastPoint"					"0.3"
+		//"AbilityCastRange"					"300"
+		//"AbilityCastPoint"					"0.3"
 		"AbilityChannelTime"				"4.0"
 		"AbilityCastAnimation"				"ACT_DOTA_CAST_ABILITY_4"
 		
@@ -9033,13 +9076,12 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"420"
-				"LinkedSpecialBonus"		"special_bonus_imba_enigma_6"
 			}
 
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"base_pull_distance"		"1000"
+				"pull_radius"		"1200"
 			}
 
 			"03"
@@ -9051,25 +9093,45 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"50 100 150 175 200 225"
+				"damage_per_tick"					"50 100 150 175 200 225"
 			}			
 
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"well_pull_strength" 		"100 125 150 175 200 225"			
+				"min_pull_power" 		"75"			
 			}		
 
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"pull_strength" 			"100 140 180 190 200 210"			
+				"pull_strength" 			"50 70 90 110 130 150"			
 			}
 
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"duration"	 				"4"			
+			}
+			"08"
+			{
+				"var_type" 					"FIELD_INTEGER"
+				"singularity_pull_radius_increment_per_stack" "50"
+			}
+			"09"
+			{
+				"var_type" 		"FIELD_INTEGER"
+				"singularity_stun_radius_increment_per_stack" "25"
+			}
+			"10"
+			{
+				"var_type" 		"FIELD_INTEGER"
+				"cast_range" "300"
+			}
+			"11"
+			{
+				"var_type" 		"FIELD_INTEGER"
+				"cast_point" "0.3"
 			}
 		}
 	}
@@ -35155,7 +35217,7 @@
     //=================================================================================================================
 	// Enigma Talents
 	//=================================================================================================================
-	"special_bonus_imba_enigma_1"	// Malefice Duration bonus (2s)
+	"special_bonus_imba_enigma_1"	// Each Singularity stack consumed now decreases Black Hole's cooldown by 2 seconds.
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -35165,7 +35227,7 @@
 
 		"LinkedAbility"
 		{
-			"01"		"imba_enigma_malefice"
+			"01"		"imba_enigma_black_hole"
 		}
 
 		// Special
@@ -35200,12 +35262,12 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"value"			"215"
+				"value"			"400"
 			}
 		}
 	}
 		
-	"special_bonus_imba_enigma_3"	// Eidolon Attribute Share
+	"special_bonus_imba_enigma_3"	// Midnight Pulse doubles its AoE over the duration.
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -35215,7 +35277,7 @@
 
 		"LinkedAbility"
 		{
-			"01"		"imba_enigma_demonic_conversion"
+			"01"		"imba_enigma_midnight_pulse"
 		}
 
 		// Special
@@ -35225,12 +35287,12 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"value"			"15"
+				"value"			"1"
 			}
 		}
 	}
 
-	"special_bonus_imba_enigma_4"	// Black Hole Cast Range
+	"special_bonus_imba_enigma_4"	// Black Hole cast on death
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -35255,7 +35317,7 @@
 		}
 	}
 
-	"special_bonus_imba_enigma_5"	// Singularity Pull & Speed
+	"special_bonus_imba_enigma_5"	// True malefice, instead of stuns little black holes are created
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -35265,7 +35327,7 @@
 
 		"LinkedAbility"
 		{
-			"01"		"imba_enigma_gravity_well"
+			"01"		"imba_enigma_malefice"
 		}
 
 		// Special
@@ -35275,12 +35337,12 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"value"			"15"
+				"value"			"150"
 			}
 		}
 	}
 
-	"special_bonus_imba_enigma_6"	// Black Hole Radius
+	"special_bonus_imba_enigma_6"	// Enigma has a constant AoE Midnight pulse around him. Stacks with regular pulse.
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -35290,7 +35352,7 @@
 
 		"LinkedAbility"
 		{
-			"01"		"imba_enigma_black_hole"
+			"01"		"imba_enigma_midnight_pulse"
 		}
 
 		// Special
@@ -35300,12 +35362,12 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"value"			"80"
+				"value"			"1"
 			}
 		}
 	}
 
-	"special_bonus_imba_enigma_7"	// Black Hole Duration
+	"special_bonus_imba_enigma_7"	// Magic immunity on spell cast
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
