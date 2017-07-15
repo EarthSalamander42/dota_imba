@@ -1,0 +1,21 @@
+<root>
+
+	<styles>
+		<include src="file://{resources}/styles/custom_game/server_part_select.css" />
+        <include src="file://{resources}/styles/custom_game/talent_anim.css" />
+ 		<include src="file://{resources}/styles/custom_game/talent_hud.css" />
+    </styles>
+	
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/server_part_select.js" />
+	</scripts>
+
+
+	<Panel require-composition-layer="true">
+
+        <Button id="select_button"/>
+
+    </Panel>
+	
+	
+</root>

@@ -670,8 +670,38 @@ function DelayedPreviewImbaTalentWindow(){
     PreviewImbaTalentWindow(true);
 }
 
+function GetHUDRootUI_Server()
+{
+    var rootUI = $.GetContextPanel();
+    while(rootUI.id != "Hud" && rootUI.GetParent() != null){
+        rootUI = rootUI.GetParent();
+    }
+    return rootUI;
+}
+
+function GetUI_Server()
+{
+	return GetHUDRootUI_Server().FindChildTraverse("ButtonBar");
+}
+
+function GetLastButton_Server()
+{
+	return GetHUDRootUI_Server().FindChildTraverse("ButtonBar").FindChildTraverse("ToggleScoreboardButton");
+}
+
+function InsertPartSelectButton()
+{
+	var targetButton = GetLastButton_Server();
+	var baseUI = GetUI_Server();
+	var newButton = $.CreatePanel("Panel", baseUI, "hahaha");
+    newButton.BLoadLayout("file://{resources}/layout/custom_game/server_part_select.xml", false, false);
+    baseUI.MoveChildAfter(newButton, targetButton);
+	
+}
+
 function InsertIMBATalentButton(){
     $.Msg("InsertIMBATalentButton");
+	InsertPartSelectButton()
     var baseUI = GetHUDRootUI();
     baseUI = baseUI.FindChildTraverse("AbilitiesAndStatBranch");
     var newButton = baseUI.FindChildTraverse(IMBA_TALENT_BTN_ID);
