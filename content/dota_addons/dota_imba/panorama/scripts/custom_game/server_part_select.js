@@ -1,18 +1,18 @@
 
 
-function ShowPartPage()
+function Server_Show_Select_Page()
 {
 	
-	ShowTooltip()
+	$.Msg("!@#");
 }
 
-function ShowTooltip()
+
+function Server_Part_Select_Show_Tooltip()
 {
-    $.DispatchEvent("DOTAShowTitleTextTooltip",$("#part_select_button"), "this is title", "this is msg");
+    $.DispatchEvent("DOTAShowTitleTextTooltip",$("#select_button"), ":D", ":DDD");
 }
 
-function HideTooltip()
+function Server_Part_Select_Hide_Tooltip()
 {
-    $.DispatchEvent( "DOTAHideTitleTextTooltip",$("#part_select_button") );
+    $.DispatchEvent( "DOTAHideTitleTextTooltip",$("#select_button") );
 }
-

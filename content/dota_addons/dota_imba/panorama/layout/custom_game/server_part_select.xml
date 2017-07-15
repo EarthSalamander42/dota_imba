@@ -2,8 +2,7 @@
 
 	<styles>
 		<include src="file://{resources}/styles/custom_game/server_part_select.css" />
-        <include src="file://{resources}/styles/custom_game/talent_anim.css" />
- 		<include src="file://{resources}/styles/custom_game/talent_hud.css" />
+
     </styles>
 	
 	<scripts>
@@ -13,7 +12,7 @@
 
 	<Panel require-composition-layer="true">
 
-        <Button id="select_button"/>
+        <Button id="select_button" onactivate="Server_Show_Select_Page()" onmouseover="Server_Part_Select_Show_Tooltip()" onmouseout="Server_Part_Select_Hide_Tooltip()"  />
 
     </Panel>
 	
