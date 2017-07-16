@@ -11019,7 +11019,7 @@
 		"ItemResult"					"item_imba_curseblade"
 		"ItemRequirements"
 		{
-			"01"						"item_imba_diffusal_blade;item_claymore;item_imba_morbid_mask;item_belt_of_strength"
+			"01"						"item_imba_diffusal_blade;item_ogre_axe;item_imba_occult_mask"
 		}
 	}
 
@@ -11065,7 +11065,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"agility_bonus"					"16"
+				"agility_bonus"					"25"
 			}
 
 			"02"
@@ -11077,13 +11077,13 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"strength_bonus"				"9"
+				"strength_bonus"				"20"
 			}
 
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage"						"45"
+				"damage"						"14"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 
@@ -11132,7 +11132,7 @@
 			"12"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_damage_per_second"		"20"
+				"aura_damage_per_second"		"25"
 			}
 		}
 	}
@@ -11150,7 +11150,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"0"
+		"ItemCost"						"750"
 		"ItemShopTags"					""
 
 		// Recipe
@@ -11159,7 +11159,7 @@
 		"ItemResult"					"item_imba_hellblade"
 		"ItemRequirements"
 		{
-			"01"						"item_imba_curseblade;item_claymore;item_imba_morbid_mask;item_belt_of_strength"
+			"01"						"item_imba_curseblade;item_reaver"
 		}
 	}
 
@@ -11205,25 +11205,25 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"agility_bonus"					"18"
+				"agility_bonus"					"25"
 			}
 
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"intelligence_bonus"			"12"
+				"intelligence_bonus"			"10"
 			}
 
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"strength_bonus"				"16"
+				"strength_bonus"				"50"
 			}
 
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage"						"90"
+				"damage"						"14"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 
@@ -11272,7 +11272,7 @@
 			"13"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_damage_per_second"		"35"
+				"aura_damage_per_second"		"40"
 			}
 			
 			"14"
@@ -12131,5 +12131,99 @@
 			}
 		}
 	}
-	//next free ID: 2248
+	
+	//=================================================================================================================
+	// Recipe : Occult Mask
+	//=================================================================================================================
+	"item_recipe_imba_occult_mask"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2249"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+		"Model"							"models/props_gameplay/recipe.mdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"450"
+		"ItemShopTags"					""
+
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_occult_mask"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_morbid_mask;item_belt_of_strength"
+		}
+	}
+
+	//=================================================================================================================
+	// Occult Mask
+	//=================================================================================================================
+	"item_imba_occult_mask"
+	{
+		"ID"							"2250"
+		"BaseClass"						"item_lua"
+		"AbilityTextureName"			"custom/occult_mask"
+		"ScriptFile"					"items/item_occult.lua"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost" 						"2200"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemShopTags"					"str;damage"
+		"ItemQuality"					"rare"
+		"ItemAliases"					"occult;curse;"
+		"SideShop" 						"0"
+		"SecretShop" 					"0"		
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"						"particles/item/occult_mask/imba_occult_mask_spirits.vpcf"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_damage"					"12"
+			}						
+
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_strength"				"6"
+			}
+
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_per_second"				"15"
+			}
+
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"radius"						"300"
+			}
+
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"interval"						"0.5"
+			}
+		}
+	}
+
+	//next free ID: 2251
 }

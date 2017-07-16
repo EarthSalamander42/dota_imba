@@ -44,7 +44,11 @@ function item_imba_hellblade:OnSpellStart()
 				return nil
 			end
 		end	
-		
+	end
+end		
+
+function item_imba_hellblade:TransferAllDebuffs(caster, target)
+	if IsServer() then
 		-- Find all modifiers on caster	
 		local modifiers = caster:FindAllModifiers()		
 		for _,modifier in pairs(modifiers) do
@@ -84,9 +88,9 @@ function item_imba_hellblade:OnSpellStart()
 					target:AddNewModifier(caster, modifier_ability, modifier_name, {duration = modifier_duration})
 				end				
 			end
-		end				
+		end
 	end
-end		
+end
 
 -------------------------------------------
 --			HELLDRAIN AURA
@@ -153,7 +157,7 @@ end
 modifier_imba_helldrain_damage = modifier_imba_helldrain_damage or class ({})
  -- Modifier properties
 function modifier_imba_helldrain_damage:IsHidden() return false end
-function modifier_imba_helldrain_damage:IsDebuff() return false end
+function modifier_imba_helldrain_damage:IsDebuff() return true end
 function modifier_imba_helldrain_damage:IsPurgable() return false end
 function modifier_imba_helldrain_damage:GetEffectName()	return "particles/item/curseblade/imba_hellblade_rope_pnt.vpcf" end
 
@@ -384,6 +388,9 @@ function modifier_item_imba_hellblade_debuff:OnCreated()
 	self.lifedrain_per_second = self.ability:GetSpecialValueFor("lifedrain_per_second")
 	self.manadrain_per_second = self.ability:GetSpecialValueFor("manadrain_per_second")
 	self.slow_amount = self.ability:GetSpecialValueFor("slow_amount")
+
+	-- Transfer debuffs
+	self.ability:TransferAllDebuffs(self.caster, self.parent)
 		
 	-- Start interval for ticking HP/MP drain.
 	self:StartIntervalThink(self.tick_rate)	
@@ -409,6 +416,8 @@ end
 
 function modifier_item_imba_hellblade_debuff:OnIntervalThink()
 	if IsServer() then				
+		-- Transfer debuffs to the cursed target
+		self.ability:TransferAllDebuffs(self.caster, self.parent)
 		
 		-- Show drain particles
 		local particle_drain_fx = ParticleManager:CreateParticle(self.particle_drain, PATTACH_ABSORIGIN, self.caster)
@@ -434,8 +443,7 @@ function modifier_item_imba_hellblade_debuff:OnIntervalThink()
 		-- Reduce enemy's mana, replenish caster's.
 		self.parent:ReduceMana(manadrain)
 		self.caster:GiveMana(manadrain)
-	end
-	
+	end	
 end
 
 

@@ -160,7 +160,7 @@ end
 modifier_imba_souldrain_damage = modifier_imba_souldrain_damage or class ({})
 -- Modifier properties
 function modifier_imba_souldrain_damage:IsHidden() return false end
-function modifier_imba_souldrain_damage:IsDebuff() return false end
+function modifier_imba_souldrain_damage:IsDebuff() return true end
 function modifier_imba_souldrain_damage:IsPurgable() return false end
 function modifier_imba_souldrain_damage:GetEffectName()	return "particles/item/curseblade/imba_curseblade_curse_rope_pnt.vpcf" end
 

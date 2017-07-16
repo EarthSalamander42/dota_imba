@@ -98,15 +98,6 @@
 			m_nParticlesToEmit = 64
 		},
 	]
-	m_Children = 
-	[
-		{
-			m_ChildRef = resource:"particles/item/curseblade/skeleton_king_vampiric_aura_lifesteal_2_b.vpcf"
-		},
-		{
-			m_ChildRef = resource:"particles/item/curseblade/skeleton_king_vampiric_aura_lifesteal_2_c.vpcf"
-		},
-	]
 	m_controlPointConfigurations = 
 	[
 		{

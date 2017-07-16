@@ -60,8 +60,8 @@
 		{
 			_class = "C_INIT_RingWave"
 			m_flYaw = 210.0
-			m_flInitialSpeedMax = 75.0
-			m_flInitialSpeedMin = 75.0
+			m_flInitialSpeedMax = 125.0
+			m_flInitialSpeedMin = 125.0
 			m_flParticlesPerOrbit = 5.0
 			m_bEvenDistribution = true
 			m_flInitialRadius = 10.0
@@ -87,11 +87,7 @@
 	m_Children = 
 	[
 		{
-			m_ChildRef = resource:"particles/item/curseblade/imba_hellblade_curse_rope_rig.vpcf"
-		},
-		{
-			m_ChildRef = resource:"particles/item/curseblade/imba_hellblade_curse_rope_rig.vpcf"
-			m_flDelay = 0.2
+			m_ChildRef = resource:"particles/item/occult_mask/imba_occult_mask_spirits_rope_rig.vpcf"
 		},
 	]
 	m_controlPointConfigurations = 

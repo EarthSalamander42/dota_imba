@@ -236,6 +236,7 @@
 		"item"		"item_reaver"
 		"item"		"item_eagle"
 		"item"		"item_relic"
+		"item"		"item_imba_occult_mask"
 	}
 
 	"pregame"
