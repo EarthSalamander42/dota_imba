@@ -574,7 +574,7 @@ function modifier_imba_headshot_attacks:OnRefresh()
     self:OnCreated()
 end
 
-function modifier_imba_headshot_attacks:IsHidden() return true end
+function modifier_imba_headshot_attacks:IsHidden() return false end
 function modifier_imba_headshot_attacks:IsPurgable() return false end
 function modifier_imba_headshot_attacks:IsDebuff() return false end
 
@@ -1466,6 +1466,9 @@ function imba_sniper_assassinate:OnProjectileThink(location)
     end
 end
 
+function imba_sniper_assassinate:GetCastRange()
+	return self:GetSpecialValueFor("cast_range")
+end
 
 -- Cross enemy debuff
 modifier_imba_assassinate_cross = class({})
