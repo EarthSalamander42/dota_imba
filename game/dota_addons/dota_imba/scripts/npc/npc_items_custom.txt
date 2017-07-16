@@ -8782,9 +8782,9 @@
 	}
 
 	//=================================================================================================================
-	// Recipe: Phase Boots II
+	// Recipe: Haste Boots
 	//=================================================================================================================
-	"item_recipe_imba_phase_boots_2"
+	"item_recipe_imba_haste_boots"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -8795,40 +8795,49 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1900"
+		"ItemCost"						"660"
 		"ItemShopTags"					""
 
 		// Recipe
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemRecipe"					"1"
-		"ItemResult"					"item_imba_phase_boots_2"
+		"ItemResult"					"item_imba_haste_boots"
 		"ItemRequirements"
 		{
-			"01"						"item_phase_boots;item_phase_boots"
+			"01"						"item_phase_boots;item_imba_occult_mask"
 		}
 	}
 
 	//=================================================================================================================
-	// Phase Boots II
+	// Haste Boots
 	//=================================================================================================================
-	"item_imba_phase_boots_2"
+	"item_imba_haste_boots"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2189"
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
 		"AbilityTextureName" 			"custom/imba_phase_boots_2"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"ScriptFile"					"items/item_haste_boots"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"6.0"
+		"AbilityCooldown"				"6"
 		"AbilitySharedCooldown"			"phase"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"					"particles/item/boots/haste_boots_speed_boost.vpcf"			
+			"particle"					"particles/item/boots/haste_boots_drain.vpcf"
+		}
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"4380"
+		"ItemCost"						"4000"
 		"ItemShopTags"					"damage;move_speed;hard_to_tag"
 		"ItemQuality"					"common"
 		"ItemAliases"					"haste boots"
@@ -8841,80 +8850,50 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_movement_speed"	"100"
+				"bonus_movement_speed"	"90"
 			}
+
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"70"
+				"bonus_damage"			"45"
 				"CalculateSpellDamageTooltip"	"0"
 			}
+
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"phase_ms"				"40"
 			}
+
 			"04"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"phase_duration"		"4.0"
+				"var_type"				"FIELD_INTEGER"
+				"phase_duration"		"4"
 			}
+
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"new_ms_limit"			"700"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"items/item_boots.lua"
-				"Function"				"HasteBoots"
-
-				"modifier_ms"			"modifier_item_imba_phase_boots_2_move_speed"
-				"sound_haste"			"DOTA_Item.PhaseBoots.Activate"
-				"particle_haste"		"particles/econ/events/ti6/phase_boots_ti6_streaks.vpcf"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_phase_boots_2"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-
-				"Attributes" 					"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE"		"%bonus_movement_speed"
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_NO_UNIT_COLLISION"				"MODIFIER_STATE_VALUE_ENABLED"
-				}
+				"ms_limit"				"700"
 			}
 
-			"modifier_item_imba_phase_boots_2_move_speed"
+			"06"
 			{
-				"Passive"						"0"
-				"IsHidden"						"0"
-				"IsBuff"						"1"
-				"IsPurgable"					"0"
+				"var_type"				"FIELD_INTEGER"
+				"bonus_strength"		"8"
+			}
 
-				"TextureName"					"custom/imba_phase_boots_2"
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"drain_damage"			"120"
+			}
 
-				"Duration"						"%phase_duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%phase_ms"
-				}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"drain_radius"			"145"
 			}
 		}
 	}
