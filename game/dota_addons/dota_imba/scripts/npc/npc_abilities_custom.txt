@@ -9123,7 +9123,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"pull_strength" 			"50 70 90 110 130 150"			
+				"pull_strength" 			"75 90 105 125 140 155"			
 			}
 
 			"07"
