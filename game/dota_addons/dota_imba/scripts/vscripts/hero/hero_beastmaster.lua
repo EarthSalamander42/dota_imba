@@ -52,14 +52,13 @@ function imba_beastmaster_summon_hawk:OnSpellStart()
         local hawk_level        =   self:GetLevel()
         local spawn_point       =   caster:GetAbsOrigin()
         local spawn_particle    =   "particles/units/heroes/hero_beastmaster/beastmaster_call_bird.vpcf"
-        local response          =   "beastmaster/beas_ability_summonsbird_0"
+        local response          =   "beastmaster_beas_ability_summonsbird_0"
         -- Ability paramaters
         local hawk_duration =   self:GetSpecialValueFor("hawk_duration")
 		
 		
         -- Say response
-        caster:EmitSound(response..RandomInt(1,5)..".vsnd")
-        caster:EmitSound("beastmaster/beas_ability_summonsbird_01.vsnd")
+        caster:EmitSound(response..RandomInt(1,5))
         -- Emit cast sound
         caster:EmitSound("Hero_Beastmaster.Call.Hawk")
         -- Do the summon particle
@@ -243,13 +242,12 @@ function imba_beastmaster_summon_boar:OnSpellStart()
 		local boar_level        =   self:GetLevel()
 		local spawn_point       =   caster:GetAbsOrigin()
 		local spawn_particle    =   "particles/units/heroes/hero_beastmaster/beastmaster_call_boar.vpcf"
-		local response          =   "beastmaster/beas_ability_summonsboar_0"
+		local response          =   "beastmaster_beas_ability_summonsboar_0"
 		-- Ability paramaters
 		local boar_duration =   self:GetSpecialValueFor("boar_duration")
 
 		-- Say response
-		caster:EmitSound(response..RandomInt(1,5)..".vsnd")
-		caster:EmitSound("beastmaster/beas_ability_summonsboar_01.vsnd")
+		caster:EmitSound(response..RandomInt(1,5))
 		-- Emit cast sound
 		caster:EmitSound("Hero_Beastmaster.Call.Boar")
 		-- Do the summon particle
