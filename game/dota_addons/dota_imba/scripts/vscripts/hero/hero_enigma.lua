@@ -646,7 +646,7 @@ end
 LinkLuaModifier("modifier_imba_enigma_black_hole_aura","hero/hero_enigma", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_enigma_black_hole_aura = class({})
 function modifier_imba_enigma_black_hole_aura:IsDebuff() return false end
-function modifier_imba_enigma_black_hole_aura:IsHidden() return false end
+function modifier_imba_enigma_black_hole_aura:IsHidden() return true end
 function modifier_imba_enigma_black_hole_aura:IsPurgable() return false end
 function modifier_imba_enigma_black_hole_aura:RemoveOnDeath() return false end
 function modifier_imba_enigma_black_hole_aura:IsAura() return true end
@@ -693,15 +693,17 @@ function modifier_imba_enigma_black_hole_aura:DealDamage()
   ability:CreateVisibilityNode(self:GetParent():GetAbsOrigin(),self.radius,1.5)
   local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.stun_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
   for _,enemy in pairs(enemies) do
-    local damage = 
-    {
-      victim = enemy,
-      attacker = self:GetCaster(),
-      damage = self.damage_per_tick,
-      damage_type = DAMAGE_TYPE_MAGICAL,
-      ability = self:GetAbility()
-    }
-    ApplyDamage(damage)
+    if IsValidEntity(enemy) then
+      local damage = 
+      {
+        victim = enemy,
+        attacker = self:GetCaster(),
+        damage = self.damage_per_tick,
+        damage_type = DAMAGE_TYPE_MAGICAL,
+        ability = self:GetAbility()
+      }
+      ApplyDamage(damage)
+    end
   end
 end
 
@@ -756,7 +758,7 @@ LinkLuaModifier("modifier_imba_enigma_black_hole_aura_modifier","hero/hero_enigm
 modifier_imba_enigma_black_hole_aura_modifier = class({})
 function modifier_imba_enigma_black_hole_aura_modifier:IsDebuff() return true end
 function modifier_imba_enigma_black_hole_aura_modifier:IsStunDebuff() return true end
-function modifier_imba_enigma_black_hole_aura_modifier:IsHidden() return false end
+function modifier_imba_enigma_black_hole_aura_modifier:IsHidden() return true end
 function modifier_imba_enigma_black_hole_aura_modifier:IsPurgable() return false end
 
 function modifier_imba_enigma_black_hole_aura_modifier:GetEffectName()
