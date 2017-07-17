@@ -36,8 +36,8 @@ end
 
 function modifier_imba_mana_break_passive:DeclareFunctions()  
     local decFuncs = {MODIFIER_EVENT_ON_ATTACK_START,
-              MODIFIER_EVENT_ON_ATTACK_LANDED,
-              MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE}
+                      MODIFIER_EVENT_ON_ATTACK_LANDED,
+                      MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE}
     return decFuncs 
 end
 
@@ -54,6 +54,7 @@ function modifier_imba_mana_break_passive:OnCreated()
     self.threshold_difference = self.ability:GetSpecialValueFor("threshold_difference")        
     self.blast_aoe = self.ability:GetSpecialValueFor("blast_aoe")    
     self.max_mana_blast = self.ability:GetSpecialValueFor("max_mana_blast")    
+    self.illusions_efficiency_pct = self.ability:GetSpecialValueFor("illusions_efficiency_pct")
   end
 end
 
@@ -178,6 +179,11 @@ function modifier_imba_mana_break_passive:OnAttackLanded(keys)
                                             DOTA_UNIT_TARGET_FLAG_NONE,
                                             FIND_ANY_ORDER,
                                             false)
+
+          -- If this is an illusion, the blast deals less damage
+          if self.parent:IsIllusion() then
+              blast_damage = blast_damage * self.illusions_efficiency_pct * 0.01
+          end
 
           for _,enemy in pairs(enemies) do
               -- If the enemy suddenly became magic immune, ignore it. Otherwise, continue
@@ -568,6 +574,8 @@ end
 -- Visible Modifiers:
 MergeTables(LinkedModifiers,{
   ["modifier_imba_spell_shield_buff_reflect"] = LUA_MODIFIER_MOTION_NONE,
+  ["modifier_imba_spellshield_scepter_ready"] = LUA_MODIFIER_MOTION_NONE,
+  ["modifier_imba_spellshield_scepter_recharge"] = LUA_MODIFIER_MOTION_NONE,
 })
 -- Hidden Modifiers:
 MergeTables(LinkedModifiers,{
@@ -610,10 +618,7 @@ function imba_antimage_spell_shield:GetIntrinsicModifierName()
   return "modifier_imba_spell_shield_buff_passive"
 end
 
-function imba_antimage_spell_shield:GetCooldown( nLevel )
-  if self:GetCaster():HasScepter() then
-    return self:GetSpecialValueFor( "cooldown_scepter" )
-  end
+function imba_antimage_spell_shield:GetCooldown( nLevel )  
   return self.BaseClass.GetCooldown( self, nLevel )
 end
 
@@ -717,6 +722,14 @@ function modifier_imba_spell_shield_buff_passive:OnCreated()
   if IsServer() then
       self.duration = self:GetAbility():GetSpecialValueFor("active_duration")   
       self.spellshield_max_distance = self:GetAbility():GetSpecialValueFor("spellshield_max_distance")
+      self.internal_cooldown = self:GetAbility():GetSpecialValueFor("internal_cooldown")      
+      self.modifier_ready = "modifier_imba_spellshield_scepter_ready"
+      self.modifier_recharge = "modifier_imba_spellshield_scepter_recharge"
+
+      -- Add the scepter modifier
+      if not self:GetParent():HasModifier(self.modifier_ready) then
+          self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), self.modifier_ready, {})
+      end
 
       self:GetParent().tOldSpells = {}
 
@@ -725,11 +738,7 @@ function modifier_imba_spell_shield_buff_passive:OnCreated()
 end
 
 function modifier_imba_spell_shield_buff_passive:OnRefresh()
-  self.magic_resistance = self:GetAbility():GetSpecialValueFor("magic_resistance")
-
-  if IsServer() then
-    self.duration = self:GetAbility():GetSpecialValueFor("active_duration")   
-  end
+    self:OnCreated()
 end
 
 function modifier_imba_spell_shield_buff_passive:GetModifierMagicalResistanceBonus(params)  
@@ -739,7 +748,7 @@ end
 function modifier_imba_spell_shield_buff_passive:GetReflectSpell( params )
   if IsServer() then
     local parent = self:GetParent()
-    if parent:HasScepter() and self:GetAbility():IsCooldownReady() and parent:IsRealHero() then
+    if parent:HasScepter() and parent:IsRealHero() and not self:GetParent():HasModifier(self.modifier_recharge) then
       if not self:GetParent():PassivesDisabled() then
 
         -- If the targets are too far apart, do nothing
@@ -748,6 +757,7 @@ function modifier_imba_spell_shield_buff_passive:GetReflectSpell( params )
             return nil
         end
 
+        -- Apply the spell reflect
         return SpellReflect(parent, params)
       end
     end
@@ -757,20 +767,27 @@ end
 function modifier_imba_spell_shield_buff_passive:GetAbsorbSpell( params )
   if IsServer() then
     local parent = self:GetParent()
-    if parent:HasScepter() and self:GetAbility():IsCooldownReady() and parent:IsRealHero() then
-      if not self:GetParent():PassivesDisabled() then
-        local ability = self:GetAbility()
-        local active_modifier = "modifier_imba_spell_shield_buff_reflect"
-        self.duration = ability:GetSpecialValueFor("active_duration")
+    if parent:HasScepter() and parent:IsRealHero() and not self:GetParent():HasModifier(self.modifier_recharge) then
+      if not self:GetParent():PassivesDisabled() then        
 
-        -- Start skill cooldown.
-        parent:AddNewModifier(parent, ability, active_modifier, {duration = self.duration})
-        ability:StartCooldown( (ability:GetCooldown(ability:GetLevel()-1) * (1 - self:GetCaster():GetCooldownReduction() * 0.01) ) )
+        -- Start the internal recharge modifier
+        self:GetParent():AddNewModifier(self:GetParent(), self:GetAbility(), self.modifier_recharge, {duration = self.internal_cooldown})
+
+        -- Apply Spell Absorption
         return SpellAbsorb(parent)
       end
     end
     return false
   end
+end
+
+function modifier_imba_spell_shield_buff_passive:OnDestroy()
+    -- If for some reason this modifier is destroyed (Rubick losing it, for instance), remove the scepter modifier
+    if IsServer() then
+        if self:GetParent():HasModifier(self.modifier_ready) then
+            self:GetParent():RemoveModifierByName(self.modifier_ready)
+        end
+    end
 end
 
 -- Reflect modifier
@@ -835,6 +852,48 @@ function modifier_imba_spell_shield_buff_passive:OnIntervalThink()
     end
 end
 
+
+
+-- Scepter block Ready modifier
+modifier_imba_spellshield_scepter_ready = modifier_imba_spellshield_scepter_ready or class({})
+
+function modifier_imba_spellshield_scepter_ready:IsHidden() 
+    -- If the caster doesn't have scepter, hide
+    if not self:GetParent():HasScepter() then
+        return true
+    end
+
+    -- If the caster is recharging its scepter reflect, hide
+    if self:GetParent():HasModifier("modifier_imba_spellshield_scepter_recharge") then
+        return true
+    end
+
+    -- Otherwise, show normally
+    return false
+end
+
+function modifier_imba_spellshield_scepter_ready:IsPurgable() return false end
+function modifier_imba_spellshield_scepter_ready:IsDebuff() return false end
+function modifier_imba_spellshield_scepter_ready:RemoveOnDeath() return false end
+
+
+-- Scepter block recharge modifier
+modifier_imba_spellshield_scepter_recharge = modifier_imba_spellshield_scepter_recharge or class({})
+
+function modifier_imba_spellshield_scepter_recharge:IsHidden() 
+    -- If the caster doesn't has scepter, hide it
+    if not self:GetParent():HasScepter() then
+        return true
+    end
+
+    return false 
+end
+
+function modifier_imba_spellshield_scepter_recharge:IsPurgable() return false end
+function modifier_imba_spellshield_scepter_recharge:IsDebuff() return false end
+function modifier_imba_spellshield_scepter_recharge:RemoveOnDeath() return false end
+
+
 -------------------------------------------
 --      MANA VOID
 -------------------------------------------
@@ -876,8 +935,7 @@ function imba_antimage_mana_void:OnSpellStart()
   if IsServer() then
     local caster = self:GetCaster()
     local target = self:GetCursorTarget()
-    local ability = self
-    local scepter = caster:HasScepter()
+    local ability = self    
     local modifier_ministun = "modifier_imba_mana_void_stunned"
     local modifier_delay = "modifier_imba_mana_void_delay_counter"
     
