@@ -143,7 +143,7 @@ function modifier_imba_souldrain:OnIntervalThink()
 		local valid_enemies = 0
 		for _,enemy in pairs(enemies) do			
 			if enemy:HasModifier("modifier_imba_souldrain_damage") then
-				local actual_damage = ApplyDamage({victim = enemy, attacker = caster, ability = item, damage = heal_per_enemy * heal_interval, damage_type = DAMAGE_TYPE_PURE, ability = item})		
+				local actual_damage = ApplyDamage({victim = enemy, attacker = caster, ability = item, damage = heal_per_enemy * heal_interval, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS, ability = item})		
 
 				-- Apply aura damage and heal		
 				caster:Heal(actual_damage, caster)
@@ -305,6 +305,7 @@ function modifier_item_imba_curseblade_debuff:OnIntervalThink()
 		local damageTable = {victim = self.parent,
 							attacker = self.caster,
 							damage = lifedrain,
+							damage_flags = DOTA_DAMAGE_FLAG_HPLOSS,
 							damage_type = DAMAGE_TYPE_MAGICAL}			
 		
 		ApplyDamage(damageTable)	
