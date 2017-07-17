@@ -220,7 +220,6 @@ end
 
 -- Enigma midnight Pulse
 imba_enigma_midnight_pulse = class({})
-function imba_enigma_midnight_pulse:IsHidden() return false end
 function imba_enigma_midnight_pulse:IsHiddenWhenStolen() return false end
 function imba_enigma_midnight_pulse:IsRefreshable() return true end
 function imba_enigma_midnight_pulse:IsStealable() return true end
@@ -670,7 +669,7 @@ function modifier_imba_enigma_black_hole_aura:OnCreated(keys)
       ability:CreateVisibilityNode(self:GetParent():GetAbsOrigin(),self.stun_radius,1.5)
       Timers:CreateTimer(1,function()
         self:DealDamage()
-        if IsValidEntity(self) then
+        if not self:IsNull() then
           return 1
         end
       end)
@@ -822,7 +821,7 @@ function modifier_imba_enigma_black_hole_aura_modifier:OnIntervalThink()
 
     local distance = (self:GetParent():GetAbsOrigin()-self.parent:GetAbsOrigin()):Length2D()
     local pct_distance = 1- (distance / self.radius)
-    self.modifier.pull_strength = FrameTime() * (self.min_pull_power + (self.pull_strength * pct_distance))
+    self.modifier.pull_strength = FrameTime() * math.max(self.min_pull_power , (self.pull_strength * pct_distance))
 
     if not self.stun_radius or distance < self.stun_radius or self.stun_radius == 0 then
       self:SetStackCount(1)
@@ -837,13 +836,14 @@ function modifier_imba_enigma_black_hole_aura_modifier:CheckState()
     {
       [MODIFIER_STATE_STUNNED] = self:GetStackCount() == 1,
     }
+    return states
 end
 
 -- Modifier applying force
 LinkLuaModifier("modifier_imba_enigma_black_hole_force","hero/hero_enigma", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_enigma_black_hole_force = class({})
 function modifier_imba_enigma_black_hole_force:IsDebuff() return true end
-function modifier_imba_enigma_black_hole_force:IsHidden() return false end
+function modifier_imba_enigma_black_hole_force:IsHidden() return true end
 function modifier_imba_enigma_black_hole_force:IsPurgable() return false end
 function modifier_imba_enigma_black_hole_force:IsPurgeException()return true end
 function modifier_imba_enigma_black_hole_force:IsStunDebuff() return false end
