@@ -8994,13 +8994,13 @@
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"meditate_health_regen"		"5"
+				"meditate_health_regen"		"4"
 			}
 
 			"09"
 			{
-				"var_type"						"FIELD_FLOAT"
-				"meditate_magic_resistance_pct"	"0.5"
+				"var_type"						"FIELD_INTEGER"
+				"meditate_magic_resistance_pct"	"1"
 			}
 
 			"10"
@@ -9030,13 +9030,13 @@
 			"14"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"iron_body_high_reduction"		"100"
+				"iron_body_high_reduction"		"150"
 			}
 
 			"15"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"iron_body_normal_reduction"	"25"
+				"iron_body_normal_reduction"	"40"
 			}
 
 			"16"
@@ -9061,6 +9061,12 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"meditate_stacks_loss_hero"	"5"
+			}
+
+			"20"
+			{
+				"var_type"					 		"FIELD_INTEGER"
+				"broken_meditate_efficiency_pct"	"50"
 			}
 		}		
 	}
@@ -12110,7 +12116,8 @@
 			}
 		}
 	}
-	
+
+
 	//=================================================================================================================
 	// Recipe : Occult Mask
 	//=================================================================================================================

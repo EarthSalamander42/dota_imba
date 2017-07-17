@@ -124,8 +124,10 @@ end
 
 function modifier_imba_ironleaf_boots_unique:OnIntervalThink()
     if IsServer() then       
-        -- If the boots are broken, reset the timer. If it has Leafwalk, also remove it.
+        -- If the boots are broken, reset the timer and set the stack count as 1 (broken). If it has Leafwalk, also remove it.
         if not self:GetAbility():IsCooldownReady() then
+            self:SetStackCount(1)
+
             self.last_movement = GameRules:GetGameTime()
 
             if self.caster:HasModifier(self.modifier_leafwalk) then
@@ -134,6 +136,9 @@ function modifier_imba_ironleaf_boots_unique:OnIntervalThink()
                     leafwalk_handler:Destroy()
                 end
             end
+        else
+            -- Otherwise, set the stack count as 0 (active)
+            self:SetStackCount(0)
         end
 
         -- If the caster already has Leafwalk, do nothing.
@@ -162,7 +167,7 @@ function modifier_imba_ironleaf_boots_unique:OnDestroy()
 end
 
 function modifier_imba_ironleaf_boots_unique:DeclareFunctions()
-    local decFuncs = {MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK,
+    local decFuncs = {MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,
                      MODIFIER_EVENT_ON_UNIT_MOVED,
                      MODIFIER_EVENT_ON_ATTACK_START,
                      MODIFIER_EVENT_ON_ABILITY_START,
@@ -223,7 +228,7 @@ function modifier_imba_ironleaf_boots_unique:OnUnitMoved(keys)
     end
 end
 
-function modifier_imba_ironleaf_boots_unique:GetModifierTotal_ConstantBlock(keys)
+function modifier_imba_ironleaf_boots_unique:GetModifierPhysical_ConstantBlock(keys)
     if IsServer() then
         local target = keys.target    
         local damage = keys.damage
@@ -275,24 +280,28 @@ function modifier_imba_ironleaf_boots_meditate:OnCreated()
     self.max_stacks = self.ability:GetSpecialValueFor("max_stacks")
     self.meditate_stacks_loss_creep = self.ability:GetSpecialValueFor("meditate_stacks_loss_creep")    
     self.meditate_stacks_loss_hero = self.ability:GetSpecialValueFor("meditate_stacks_loss_hero")
+    self.broken_meditate_efficiency_pct = self.ability:GetSpecialValueFor("broken_meditate_efficiency_pct")
+    self.modifier_unique = "modifier_imba_ironleaf_boots_unique"    
 
     if IsServer() then
-        -- Start thinking
+        -- Start thinking for Meditate stacks 
         self:StartIntervalThink(self.meditate_interval)
-    end
+    end    
 end
 
 function modifier_imba_ironleaf_boots_meditate:OnIntervalThink()
-    -- If boots are broken due to a recent attack, do nothing
-    if not self.ability:IsCooldownReady() then
-        return nil
-    end
+    if IsServer() then
+        -- If boots are broken due to a recent attack, do nothing
+        if not self.ability:IsCooldownReady() then
+            return nil
+        end
 
-    -- If we're not in the threshold yet, increase a stack!
-    local stacks = self:GetStackCount()
-    if stacks < self.max_stacks then
-        self:IncrementStackCount()
-    end
+        -- If we're not in the threshold yet, increase a stack!
+        local stacks = self:GetStackCount()
+        if stacks < self.max_stacks then
+            self:IncrementStackCount()
+        end
+    end        
 end
 
 function modifier_imba_ironleaf_boots_meditate:DeclareFunctions()
@@ -305,14 +314,26 @@ function modifier_imba_ironleaf_boots_meditate:DeclareFunctions()
 end
 
 function modifier_imba_ironleaf_boots_meditate:GetModifierMoveSpeedBonus_Percentage()
+    if self.caster:GetModifierStackCount(self.modifier_unique, self.caster) == 1 then
+        return self.meditate_movespeed_bonus_pct * self:GetStackCount() * self.broken_meditate_efficiency_pct * 0.01
+    end
+
     return self.meditate_movespeed_bonus_pct * self:GetStackCount()
 end
 
 function modifier_imba_ironleaf_boots_meditate:GetModifierConstantHealthRegen()
+    if self.caster:GetModifierStackCount(self.modifier_unique, self.caster) == 1 then        
+        return self.meditate_health_regen * self:GetStackCount() * self.broken_meditate_efficiency_pct * 0.01
+    end
+
     return self.meditate_health_regen * self:GetStackCount()
 end
 
 function modifier_imba_ironleaf_boots_meditate:GetModifierMagicalResistanceBonus()
+    if self.caster:GetModifierStackCount(self.modifier_unique, self.caster) == 1 then        
+        return self.meditate_magic_resistance_pct * self:GetStackCount() * self.broken_meditate_efficiency_pct * 0.01
+    end
+
     return self.meditate_magic_resistance_pct * self:GetStackCount()
 end
 
@@ -354,11 +375,6 @@ function modifier_imba_ironleaf_boots_meditate:OnAttackLanded(keys)
         end
     end
 end
-
-
-
-
-
 
 
 -- LEAFWALK INVISIBILITY MODIFIER
