@@ -20357,6 +20357,13 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.3 0.3 0.3"
 
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_stormspirit.vsndevts"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_vo_stormspirit.vsndevts"
+			"particle"					"particles/units/heroes/hero_stormspirit/stormspirit_ball_lightning.vpcf"
+		}
+		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
