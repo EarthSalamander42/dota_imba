@@ -971,17 +971,22 @@ function imba_riki_tricks_of_the_trade:OnSpellStart()
 		
 		EmitSoundOnLocationWithCaster(origin, cast_sound, caster)
 		EmitSoundOn(continuos_sound, caster)
-		
-		self.TricksDummy = CreateUnitByName("npc_dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
+
+		local caster_loc = caster:GetAbsOrigin()
 		
 		if caster:HasScepter() and target ~= caster then
-			self.TricksParticle = ParticleManager:CreateParticle(tricks_particle, PATTACH_ABSORIGIN_FOLLOW , target)
-			ParticleManager:CreateParticle(cast_particle, PATTACH_ABSORIGIN, self.TricksDummy)
+			self.TricksParticle = ParticleManager:CreateParticle(tricks_particle, PATTACH_WORLDORIGIN, caster)
+			
+
+			ParticleManager:CreateParticle(cast_particle, PATTACH_WORLDORIGIN, nil)
 		else
-			self.TricksParticle = ParticleManager:CreateParticle(tricks_particle, PATTACH_ABSORIGIN, self.TricksDummy)
-			ParticleManager:CreateParticle(cast_particle, PATTACH_ABSORIGIN, self.TricksDummy)
-		end
+			self.TricksParticle = ParticleManager:CreateParticle(tricks_particle, PATTACH_WORLDORIGIN, caster)
+			
+
+			ParticleManager:CreateParticle(cast_particle, PATTACH_WORLDORIGIN, nil)
+		end		
 		
+		ParticleManager:SetParticleControl(self.TricksParticle, 0, caster:GetAbsOrigin())
 		ParticleManager:SetParticleControl(self.TricksParticle, 1, Vector(aoe, 0, aoe))
 		ParticleManager:SetParticleControl(self.TricksParticle, 2, Vector(aoe, 0, aoe))
 		
@@ -996,6 +1001,8 @@ function imba_riki_tricks_of_the_trade:OnChannelThink()
 		if caster:HasScepter() and target and target ~= caster then
 			origin = target:GetAbsOrigin()
 			caster:SetAbsOrigin(origin)
+			ParticleManager:SetParticleControl(self.TricksParticle, 0, origin)
+			ParticleManager:SetParticleControl(self.TricksParticle, 3, origin)
 		end
 	end
 end
@@ -1013,9 +1020,7 @@ function imba_riki_tricks_of_the_trade:OnChannelFinish()
 		StopSoundEvent("Imba.RikiSurpriseButtsex", caster)
 		ParticleManager:DestroyParticle(self.TricksParticle, false)
 		ParticleManager:ReleaseParticleIndex(self.TricksParticle)
-		self.TricksParticle = nil
-		self.TricksDummy:Destroy()
-		self.TricksDummy = nil
+		self.TricksParticle = nil				
 		
 		local target = self:GetCursorTarget()
 		caster:RemoveNoDraw()

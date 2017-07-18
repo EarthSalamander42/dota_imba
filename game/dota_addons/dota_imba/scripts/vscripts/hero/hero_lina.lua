@@ -315,11 +315,9 @@ end
 
 function imba_lina_light_strike_array:CreateStrike( position, delay, cast_delay, radius, damage, stun_duration )
 	local caster = self:GetCaster()
-	local dummy = CreateUnitByName("npc_dummy_unit", position, false, caster, caster, caster:GetTeamNumber() )
-	position = dummy:GetAbsOrigin()
-	dummy:Destroy()
+	
 	Timers:CreateTimer(delay, function()
-		local cast_pfx = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_lina/lina_spell_light_strike_array_ray_team.vpcf", PATTACH_CUSTOMORIGIN, caster, caster:GetTeam())
+		local cast_pfx = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_lina/lina_spell_light_strike_array_ray_team.vpcf", PATTACH_WORLDORIGIN, caster, caster:GetTeam())
 		ParticleManager:SetParticleControl(cast_pfx, 0, position)
 		ParticleManager:SetParticleControl(cast_pfx, 1, Vector(radius * 2, 0, 0))
 		ParticleManager:ReleaseParticleIndex(cast_pfx)
