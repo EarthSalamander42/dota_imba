@@ -4,9 +4,9 @@ CreateEmptyTalents("enigma")
 -- Returns the handle of the strongest force, so use this:GetAbsOrigin() to get the location
 -- Use if FindStrongestForce(caster)!
 function FindStrongestForce(caster)
-  if caster.hBlackHoleDummyUnit and IsValidEntity(caster.hBlackHoleDummyUnit) then
+  if caster.hBlackHoleDummyUnit and not caster.hBlackHoleDummyUnit:IsNull() then
     return caster.hBlackHoleDummyUnit
-  elseif caster.hMidnightPulseDummyUnit and IsValidEntity(caster.hMidnightPulseDummyUnit) then
+  elseif caster.hMidnightPulseDummyUnit and not caster.hMidnightPulseDummyUnit:IsNull()  then
     return caster.hMidnightPulseDummyUnit
   elseif caster:IsAlive() then
     return caster
@@ -267,9 +267,12 @@ function imba_enigma_midnight_pulse:OnSpellStart()
   local pull_strength = self:GetSpecialValueFor("pull_strength")
 
   -- Dummy unit to handle force and broadcast aura
-  caster.hMidnightPulseDummyUnit = CreateUnitByName("npc_dummy_unit",point,false,caster,caster:GetOwner(),caster:GetTeamNumber())
+  --[[caster.hMidnightPulseDummyUnit = CreateUnitByName("npc_dummy_unit",point,false,caster,caster:GetOwner(),caster:GetTeamNumber())
   caster.hMidnightPulseDummyUnit:FindAbilityByName("dummy_unit_state"):SetLevel(1)
-  caster.hMidnightPulseDummyUnit:AddNewModifier(caster,self,"modifier_imba_enigma_midnight_pulse_aura",{duration = duration})
+  caster.hMidnightPulseDummyUnit:AddNewModifier(caster,self,"modifier_imba_enigma_midnight_pulse_aura",{duration = duration})]]
+
+  caster.hMidnightPulseDummyUnit = CreateModifierThinker(caster,self,"modifier_imba_enigma_midnight_pulse_aura",{duration = duration},point,caster:GetTeamNumber(),false)
+  
   -- Sound
   EmitSoundOnLocationWithCaster(point,"Hero_Enigma.Midnight_Pulse",caster)
 
@@ -485,7 +488,7 @@ function modifier_imba_enigma_midnight_pulse_force:GetMotionControllerPriority()
 function modifier_imba_enigma_midnight_pulse_force:OnCreated()
   if IsServer() then
     self:GetParent():StartGesture(ACT_DOTA_FLAIL)
-    
+    print("Force")
     self:StartIntervalThink(FrameTime())
   end
 end
@@ -600,13 +603,15 @@ function imba_enigma_black_hole:OnSpellStart()
   end
 
   -- Dummy unit to handle force and broadcast aura
-  caster.hBlackHoleDummyUnit = CreateUnitByName("npc_dummy_unit",point,false,caster,caster:GetOwner(),caster:GetTeamNumber())
-  caster.hBlackHoleDummyUnit:FindAbilityByName("dummy_unit_state"):SetLevel(1)
-  local modifier = caster.hBlackHoleDummyUnit:AddNewModifier(caster,self,"modifier_imba_enigma_black_hole_aura",{duration = duration})
-  modifier.radius = self.radius
+  --caster.hBlackHoleDummyUnit = CreateUnitByName("npc_dummy_unit",point,false,caster,caster:GetOwner(),caster:GetTeamNumber())
+  --caster.hBlackHoleDummyUnit:FindAbilityByName("dummy_unit_state"):SetLevel(1)
+  --local modifier = caster.hBlackHoleDummyUnit:AddNewModifier(caster,self,"modifier_imba_enigma_black_hole_aura",{duration = duration})
+  --modifier.radius = self.radius
 
+  caster.hBlackHoleDummyUnit = CreateModifierThinker(caster,ability,"modifier_imba_enigma_black_hole_aura",{duration = duration,radius = radius},point,caster:GetTeamNumber(),false)
+  
   if caster:HasScepter() then
-    caster.hBlackHoleDummyUnit:AddNewModifier(caster,self,"modifier_imba_enigma_midnight_pulse_aura",{duration = duration})
+    CreateModifierThinker(caster,caster:FindAbilityByName("imba_enigma_midnight_pulse"),"modifier_imba_enigma_midnight_pulse_aura",{duration = duration},point,caster:GetTeamNumber(),false)
   end
 
   -- Sound
