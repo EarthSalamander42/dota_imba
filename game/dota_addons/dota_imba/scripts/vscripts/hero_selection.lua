@@ -18,8 +18,8 @@ end
 function HeroSelection:Start()
 
 	-- Play pick music
-	HeroSelection.pick_sound_dummy = CreateUnitByName("npc_dummy_unit", Vector(0, 0, 0), false, nil, nil, DOTA_TEAM_GOODGUYS)
-	HeroSelection.pick_sound_dummy:EmitSound("Imba.PickPhaseDrums")
+	HeroSelection.pick_sound_dummy = Entities:FindByClassname(nil, "ent_dota_fountain")
+	EmitGlobalSound("Imba.PickPhaseDrums")
 
 	-- Figure out which players have to pick
 	HeroSelection.HorriblyImplementedReconnectDetection = {}
@@ -34,8 +34,7 @@ function HeroSelection:Start()
 			HeroSelection.playerPickState[pID] = {}
 			HeroSelection.playerPickState[pID].pick_state = "selecting_hero"
 			HeroSelection.playerPickState[pID].repick_state = false
-			HeroSelection.HorriblyImplementedReconnectDetection[pID] = true
-			PlayerResource:SetCameraTarget(pID, HeroSelection.pick_sound_dummy)
+			HeroSelection.HorriblyImplementedReconnectDetection[pID] = true			
 		end
 	end
 
@@ -56,44 +55,12 @@ function HeroSelection:Start()
 
 	-- Play relevant pick lines
 	if IMBA_PICK_MODE_ALL_RANDOM then
-		EmitGlobalSound("announcer_announcer_type_all_random")
-	elseif IMBA_ABILITY_MODE_RANDOM_OMG then
-		EmitGlobalSound("announcer_announcer_type_random_draft")
+		EmitGlobalSound("announcer_announcer_type_all_random")	
 	elseif IMBA_PICK_MODE_ARENA_MODE then
 		EmitGlobalSound("announcer_announcer_type_death_match")
 	else
 		EmitGlobalSound("announcer_announcer_type_all_pick")
-	end
-
-	-- Block-pick heroes forbidden in certain modes
-	if IMBA_ABILITY_MODE_RANDOM_OMG then
-		local random_omg_forbidden_heroes = {
-			"npc_dota_hero_earth_spirit",
-			"npc_dota_hero_life_stealer",
-			"npc_dota_hero_morphling",
-			"npc_dota_hero_nyx_assassin",
-			"npc_dota_hero_ogre_magi",
-			"npc_dota_hero_shredder",
-			"npc_dota_hero_treant",
-			"npc_dota_hero_tusk",
-			"npc_dota_hero_zuus",
-			"npc_dota_hero_night_stalker",
-			"npc_dota_hero_silencer",
-			"npc_dota_hero_keeper_of_the_light",
-			"npc_dota_hero_visage",
-			"npc_dota_hero_faceless_void"
-		}
-
-		-- Block those picks in all clients
-		Timers:CreateTimer(0.04, function()
-			for _, hero_name in pairs(random_omg_forbidden_heroes) do
-				HeroSelection.radiantPicks[#HeroSelection.radiantPicks + 1] = hero_name
-				HeroSelection.direPicks[#HeroSelection.direPicks + 1] = hero_name
-				CustomGameEventManager:Send_ServerToAllClients("hero_picked", {PlayerID = nil, HeroName = hero_name, Team = DOTA_TEAM_GOODGUYS, HasRandomed = false})
-				CustomGameEventManager:Send_ServerToAllClients("hero_picked", {PlayerID = nil, HeroName = hero_name, Team = DOTA_TEAM_BADGUYS, HasRandomed = false})
-			end
-		end)
-	end
+	end	
 end
 
 -- Horribly implemented reconnection detection

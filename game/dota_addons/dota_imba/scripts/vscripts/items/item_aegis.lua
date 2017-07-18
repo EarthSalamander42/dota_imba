@@ -35,6 +35,10 @@ function modifier_item_imba_aegis:DeclareFunctions()
     return decFuncs
 end
 
+function modifier_item_imba_aegis:GetTexture()
+	return "custom/imba_aegis"
+end
+
 function modifier_item_imba_aegis:GetPriority()
 	return 100
 end
@@ -74,3 +78,13 @@ function modifier_item_imba_aegis:IsPurgable() return false end
 function modifier_item_imba_aegis:IsPurgeException() return false end
 function modifier_item_imba_aegis:IsStunDebuff() return false end
 function modifier_item_imba_aegis:RemoveOnDeath() return false end
+
+function modifier_item_imba_aegis:OnDestroy()
+	if IsServer() then
+		local item = self:GetAbility()
+		
+		UTIL_Remove(item:GetContainer())
+		UTIL_Remove(item)
+	end
+end
+

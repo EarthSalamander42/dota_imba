@@ -394,9 +394,7 @@ function GameMode:ItemAddedFilter( keys )
 	-------------------------------------------------------------------------------------------------
 
 	if item_name == "item_imba_rune_bounty" or item_name == "item_imba_rune_bounty_arena" or item_name == "item_imba_rune_double_damage" or item_name == "item_imba_rune_haste" or item_name == "item_imba_rune_regeneration" then
-
-		-- Only real heroes can pick up runes
-		--if unit:IsRealHero() then
+		
 			if item_name == "item_imba_rune_bounty" or item_name == "item_imba_rune_bounty_arena" then
 				PickupBountyRune(item, unit)
 				return false
@@ -415,14 +413,7 @@ function GameMode:ItemAddedFilter( keys )
 			if item_name == "item_imba_rune_regeneration" then
 				PickupRegenerationRune(item, unit)
 				return false
-			end
-
-		-- If this is not a real hero, drop another rune in place of the picked up one
-		-- else
-		-- 	local new_rune = CreateItem(item_name, nil, nil)
-		-- 	CreateItemOnPositionForLaunch(item:GetAbsOrigin(), new_rune)
-		-- 	return false
-		-- end
+			end					
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -449,6 +440,9 @@ function GameMode:ItemAddedFilter( keys )
 			local drop = CreateItem("item_imba_aegis", nil, nil)
 			CreateItemOnPositionSync(unit:GetAbsOrigin(), drop)
 			drop:LaunchLoot(false, 250, 0.5, unit:GetAbsOrigin() + RandomVector(100))
+
+			UTIL_Remove(item:GetContainer())
+			UTIL_Remove(item)
 
 			-- Destroy the item
 			return false

@@ -448,65 +448,6 @@ function IsValidPickRandomOMG( hero )
 	return false
 end
 
--- Removes undesired permanent modifiers in Random OMG mode
-function RemovePermanentModifiersRandomOMG( hero )
-	hero:RemoveModifierByName("modifier_imba_tidebringer_cooldown")
-	hero:RemoveModifierByName("modifier_imba_hunter_in_the_night")
-	hero:RemoveModifierByName("modifier_imba_dazzle_shallow_grave")
-	hero:RemoveModifierByName("modifier_imba_dazzle_nothl_protection")
-	hero:RemoveModifierByName("modifier_imba_shallow_grave_passive_cooldown")
-	hero:RemoveModifierByName("modifier_imba_shallow_grave_passive_check")
-	hero:RemoveModifierByName("modifier_imba_vendetta_damage_stacks")
-	hero:RemoveModifierByName("modifier_imba_heartstopper_aura")
-	hero:RemoveModifierByName("modifier_imba_antimage_spell_shield_passive")
-	hero:RemoveModifierByName("modifier_imba_brilliance_aura")
-	hero:RemoveModifierByName("modifier_imba_trueshot_aura_owner_hero")
-	hero:RemoveModifierByName("modifier_imba_trueshot_aura_owner_creep")
-	hero:RemoveModifierByName("modifier_imba_frost_nova_aura")
-	hero:RemoveModifierByName("modifier_imba_moonlight_scepter_aura")
-	hero:RemoveModifierByName("modifier_imba_sadist_aura")
-	hero:RemoveModifierByName("modifier_imba_impale_aura")
-	hero:RemoveModifierByName("modifier_imba_essence_aura")
-	hero:RemoveModifierByName("modifier_imba_degen_aura")
-	hero:RemoveModifierByName("modifier_imba_flesh_heap_aura")
-	hero:RemoveModifierByName("modifier_borrowed_time")
-	hero:RemoveModifierByName("attribute_bonus_str")
-	hero:RemoveModifierByName("attribute_bonus_agi")
-	hero:RemoveModifierByName("attribute_bonus_int")
-	hero:RemoveModifierByName("modifier_imba_hook_sharp_stack")
-	hero:RemoveModifierByName("modifier_imba_hook_light_stack")
-	hero:RemoveModifierByName("modifier_imba_hook_caster")
-	hero:RemoveModifierByName("modifier_imba_god_strength")
-	hero:RemoveModifierByName("modifier_imba_god_strength_aura")
-	hero:RemoveModifierByName("modifier_imba_god_strength_aura_scepter")
-	hero:RemoveModifierByName("modifier_imba_warcry_passive_aura")
-	hero:RemoveModifierByName("modifier_imba_great_cleave")
-	hero:RemoveModifierByName("modifier_imba_blur")
-	hero:RemoveModifierByName("modifier_imba_flesh_heap_aura")
-	hero:RemoveModifierByName("modifier_imba_flesh_heap_stacks")
-	hero:RemoveModifierByName("modifier_medusa_split_shot")
-	hero:RemoveModifierByName("modifier_luna_lunar_blessing")
-	hero:RemoveModifierByName("modifier_luna_lunar_blessing_aura")
-	hero:RemoveModifierByName("modifier_luna_moon_glaive")
-	hero:RemoveModifierByName("modifier_dragon_knight_dragon")
-	hero:RemoveModifierByName("modifier_dragon_knight_dragon_blood")
-	hero:RemoveModifierByName("modifier_zuus_static_field")
-	hero:RemoveModifierByName("modifier_witchdoctor_voodoorestoration")
-	hero:RemoveModifierByName("modifier_imba_land_mines_caster")
-	hero:RemoveModifierByName("modifier_imba_purification_passive")
-	hero:RemoveModifierByName("modifier_imba_purification_passive_cooldown")
-	hero:RemoveModifierByName("modifier_imba_double_edge_prevent_deny")
-	hero:RemoveModifierByName("modifier_imba_vampiric_aura")
-	hero:RemoveModifierByName("modifier_imba_reincarnation_detector")
-	hero:RemoveModifierByName("modifier_imba_time_walk_damage_counter")
-	hero:RemoveModifierByName("modifier_charges")
-	hero:RemoveModifierByName("modifier_imba_reincarnation")
-
-	while hero:HasModifier("modifier_imba_flesh_heap_bonus") do
-		hero:RemoveModifierByName("modifier_imba_flesh_heap_bonus")
-	end
-end
-
 -- Precaches an unit, or, if something else is being precached, enters it into the precache queue
 function PrecacheUnitWithQueue( unit_name )
 	
@@ -621,37 +562,37 @@ end
 
 
 -- Skeleton king cosmetics
-function SkeletonKingWearables( hero )
+-- function SkeletonKingWearables( hero )
 
-	-- Cape
-	Attachments:AttachProp(hero, "attach_head", "models/heroes/skeleton_king/wraith_king_cape.vmdl", 1.0)
+-- 	-- Cape
+-- 	Attachments:AttachProp(hero, "attach_head", "models/heroes/skeleton_king/wraith_king_cape.vmdl", 1.0)
 
-	-- Shoulderpiece
-	Attachments:AttachProp(hero, "attach_head", "models/heroes/skeleton_king/wraith_king_shoulder.vmdl", 1.0)
+-- 	-- Shoulderpiece
+-- 	Attachments:AttachProp(hero, "attach_head", "models/heroes/skeleton_king/wraith_king_shoulder.vmdl", 1.0)
 
-	-- Crown
-	Attachments:AttachProp(hero, "attach_head", "models/heroes/skeleton_king/wraith_king_head.vmdl", 1.0)
+-- 	-- Crown
+-- 	Attachments:AttachProp(hero, "attach_head", "models/heroes/skeleton_king/wraith_king_head.vmdl", 1.0)
 
-	-- Gauntlet
-	Attachments:AttachProp(hero, "attach_attack1", "models/heroes/skeleton_king/wraith_king_gauntlet.vmdl", 1.0)
+-- 	-- Gauntlet
+-- 	Attachments:AttachProp(hero, "attach_attack1", "models/heroes/skeleton_king/wraith_king_gauntlet.vmdl", 1.0)
 
-	-- Weapon (randomly chosen)
-	local random_weapon = {
-		"models/items/skeleton_king/spine_splitter/spine_splitter.vmdl",
-		"models/items/skeleton_king/regalia_of_the_bonelord_sword/regalia_of_the_bonelord_sword.vmdl",
-		"models/items/skeleton_king/weapon_backbone.vmdl",
-		"models/items/skeleton_king/the_blood_shard/the_blood_shard.vmdl",
-		"models/items/skeleton_king/sk_dragon_jaw/sk_dragon_jaw.vmdl",
-		"models/items/skeleton_king/weapon_spine_sword.vmdl",
-		"models/items/skeleton_king/shattered_destroyer/shattered_destroyer.vmdl"
-	}
-	Attachments:AttachProp(hero, "attach_attack1", random_weapon[RandomInt(1, #random_weapon)], 1.0)
+-- 	-- Weapon (randomly chosen)
+-- 	local random_weapon = {
+-- 		"models/items/skeleton_king/spine_splitter/spine_splitter.vmdl",
+-- 		"models/items/skeleton_king/regalia_of_the_bonelord_sword/regalia_of_the_bonelord_sword.vmdl",
+-- 		"models/items/skeleton_king/weapon_backbone.vmdl",
+-- 		"models/items/skeleton_king/the_blood_shard/the_blood_shard.vmdl",
+-- 		"models/items/skeleton_king/sk_dragon_jaw/sk_dragon_jaw.vmdl",
+-- 		"models/items/skeleton_king/weapon_spine_sword.vmdl",
+-- 		"models/items/skeleton_king/shattered_destroyer/shattered_destroyer.vmdl"
+-- 	}
+-- 	Attachments:AttachProp(hero, "attach_attack1", random_weapon[RandomInt(1, #random_weapon)], 1.0)
 
-	-- Eye particles
-	local eye_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_skeletonking/skeletonking_eyes.vpcf", PATTACH_ABSORIGIN, hero)
-	ParticleManager:SetParticleControlEnt(eye_pfx, 0, hero, PATTACH_POINT_FOLLOW, "attach_eyeL", hero:GetAbsOrigin(), true)
-	ParticleManager:SetParticleControlEnt(eye_pfx, 1, hero, PATTACH_POINT_FOLLOW, "attach_eyeR", hero:GetAbsOrigin(), true)
-end
+-- 	-- Eye particles
+-- 	local eye_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_skeletonking/skeletonking_eyes.vpcf", PATTACH_ABSORIGIN, hero)
+-- 	ParticleManager:SetParticleControlEnt(eye_pfx, 0, hero, PATTACH_POINT_FOLLOW, "attach_eyeL", hero:GetAbsOrigin(), true)
+-- 	ParticleManager:SetParticleControlEnt(eye_pfx, 1, hero, PATTACH_POINT_FOLLOW, "attach_eyeR", hero:GetAbsOrigin(), true)
+-- end
 
 -- Randoms an ability of a certain tier for the Ancient
 function GetAncientAbility( tier )
@@ -702,6 +643,9 @@ end
 -- Spawns runes on the map
 function SpawnImbaRunes()
 
+	-- Remove any existing runes, if any
+	RemoveRunes()
+
 	-- Locate the rune spots on the map
 	local bounty_rune_spawner_a = Entities:FindAllByName("bounty_rune_location_dire_bot")
 	local bounty_rune_spawner_b = Entities:FindAllByName("bounty_rune_location_dire_top")
@@ -720,11 +664,15 @@ function SpawnImbaRunes()
 		powerup_rune_spawner_b[1]:GetAbsOrigin()
 	}
 
+	local rune
+
 	-- Spawn bounty runes
 	local game_time = GameRules:GetDOTATime(false, false)
 	for _, bounty_loc in pairs(bounty_rune_locations) do
 		local bounty_rune = CreateItem("item_imba_rune_bounty", nil, nil)
-		CreateItemOnPositionForLaunch(bounty_loc, bounty_rune)
+		rune = CreateItemOnPositionForLaunch(bounty_loc, bounty_rune)
+		print("rune:", rune, rune:GetName(), rune:IsItemContainer(), rune:GetContainedItem())
+		RegisterRune(rune)
 
 		-- If these are the 00:00 runes, double their worth
 		if game_time < 1 then
@@ -740,13 +688,45 @@ function SpawnImbaRunes()
 	}
 
 	-- Spawn a random powerup rune in a random powerup location
-	if game_time > 1 and game_time < 40 then
-		CreateItemOnPositionForLaunch(powerup_rune_locations[RandomInt(1, #powerup_rune_locations)], CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))
+	if game_time > 1 and game_time < 40 then		
+		rune = CreateItemOnPositionForLaunch(powerup_rune_locations[RandomInt(1, #powerup_rune_locations)], CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))
+		print("rune:", rune, rune:GetName(), rune:IsItemContainer())
+		RegisterRune(rune)
 
 	-- After 40 minutes, spawn powerup runes on both locations
 	elseif game_time >= 40 then
-		CreateItemOnPositionForLaunch(powerup_rune_locations[1], CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))
-		CreateItemOnPositionForLaunch(powerup_rune_locations[2], CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))
+		rune = CreateItemOnPositionForLaunch(powerup_rune_locations[1], CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))
+		RegisterRune(rune)
+		rune = CreateItemOnPositionForLaunch(powerup_rune_locations[2], CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))
+		RegisterRune(rune)
+	end
+end
+
+function RegisterRune(rune)
+
+	-- Initialize table
+	if not rune_spawn_table then
+		rune_spawn_table = {}
+	end
+
+	-- Register rune into table
+	table.insert(rune_spawn_table, rune)
+end
+
+function RemoveRunes()
+	if rune_spawn_table then
+
+		-- Remove existing runes
+		for _,rune in pairs(rune_spawn_table) do
+			if not rune:IsNull() then								
+				local item = rune:GetContainedItem()
+				UTIL_Remove(item)
+				UTIL_Remove(rune)
+			end
+		end
+
+		-- Clear the table
+		rune_spawn_table = {}
 	end
 end
 
@@ -813,9 +793,10 @@ function PickupBountyRune(item, unit)
 		-- #7 Talent: Doubles gold from bounty runes
 		if unit:HasTalent("special_bonus_imba_alchemist_7") then
 			current_bounty = current_bounty * unit:FindTalentValue("special_bonus_imba_alchemist_7")
-		end
-		
+		end		
 	end
+
+	UTIL_Remove(item)
 
 	
 	-- #3 Talent: Bounty runes give gold bags
@@ -859,7 +840,10 @@ function PickupHasteRune(item, unit)
 	unit:AddNewModifier(unit, item, "modifier_imba_haste_rune_speed_limit_break", {duration = duration})
 
 	-- Play the haste rune activation sound to the unit's team
-	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Haste", unit)
+	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Haste", unit)	
+
+	UTIL_Remove(item:GetContainer())
+	UTIL_Remove(item)
 end
 
 -- Picks up a double damage rune
@@ -869,7 +853,10 @@ function PickupDoubleDamageRune(item, unit)
 	item:ApplyDataDrivenModifier(unit, unit, "modifier_imba_rune_double_damage_owner", {})
 
 	-- Play the double damage rune activation sound to the unit's team
-	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.DD", unit)
+	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.DD", unit)	
+
+	UTIL_Remove(item:GetContainer())
+	UTIL_Remove(item)
 end
 
 -- Picks up a regeneration rune
@@ -879,7 +866,10 @@ function PickupRegenerationRune(item, unit)
 	item:ApplyDataDrivenModifier(unit, unit, "modifier_imba_rune_regeneration_owner", {})
 
 	-- Play the double damage rune activation sound to the unit's team
-	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Regen", unit)
+	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Regen", unit)	
+
+	UTIL_Remove(item:GetContainer())
+	UTIL_Remove(item)
 end
 
 -- Gold bag pickup event function
