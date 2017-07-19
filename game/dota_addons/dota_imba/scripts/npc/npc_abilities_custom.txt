@@ -22371,7 +22371,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"ward_count_tooltip"	"10"						// Note: This is hardcoded due to the formation of the wards.
+				"ward_count"			"10"						// Note: There is currently a maximum of 14 wards total
 				"LinkedSpecialBonus"	"special_bonus_imba_shadow_shaman_1"
 			}
 			"02"
@@ -22433,7 +22433,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"4"						// Note: This is hardcoded due to the ward's formation
+				"value"						"4"						// Note: There is currently a maximum of 14 wards total
 			}
 		}
 	}

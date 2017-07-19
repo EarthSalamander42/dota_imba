@@ -14,7 +14,7 @@ LinkLuaModifier("modifier_imba_mass_serpent_ward",  "hero/hero_shadow_shaman", L
 function imba_shadow_shaman_mass_serpent_ward:OnSpellStart()
     -- Ability properties
     local caster            =   self:GetCaster()
-    local spawn_point       =   self:GetCursorPosition()
+    local target_point      =   self:GetCursorPosition()
     local ward_level        =   self:GetLevel()
     local ward_name         =   "npc_imba_dota_shadow_shaman_ward_"
     local response          =   "shadowshaman_shad_ability_ward_"
@@ -30,33 +30,31 @@ function imba_shadow_shaman_mass_serpent_ward:OnSpellStart()
 
     -- Emit spawn particle
     local spawn_particle_fx = ParticleManager:CreateParticle(spawn_particle, PATTACH_ABSORIGIN, caster)
-    ParticleManager:SetParticleControl( spawn_particle_fx, 0, spawn_point )
+    ParticleManager:SetParticleControl( spawn_particle_fx, 0, target_point )
 
-    -- Create 8 wards in a box formation (note the vectors)
-    ward_table  =   {}
-    ward_table[1] = CreateUnitByName(ward_name..ward_level, spawn_point + Vector(-64, -64 ,0), true, caster, caster, caster:GetTeamNumber())
-    ward_table[2] = CreateUnitByName(ward_name..ward_level, spawn_point + Vector(-64, 0 ,0), true, caster, caster, caster:GetTeamNumber())
-    ward_table[3] = CreateUnitByName(ward_name..ward_level, spawn_point + Vector(-64, 64 ,0), true, caster, caster, caster:GetTeamNumber())
-    ward_table[4] = CreateUnitByName(ward_name..ward_level, spawn_point + Vector(0, -64 ,0), true, caster, caster, caster:GetTeamNumber())
-    ward_table[5] = CreateUnitByName(ward_name..ward_level, spawn_point + Vector(0, 64 ,0), true, caster, caster, caster:GetTeamNumber())
-    ward_table[6] = CreateUnitByName(ward_name..ward_level, spawn_point + Vector(64, -64 ,0), true, caster, caster, caster:GetTeamNumber())
-    ward_table[7] = CreateUnitByName(ward_name..ward_level, spawn_point + Vector(64, 0 ,0), true, caster, caster, caster:GetTeamNumber())
-    ward_table[8] = CreateUnitByName(ward_name..ward_level, spawn_point + Vector(64, 64 ,0), true, caster, caster, caster:GetTeamNumber())
-    -- Create 2 additional wards next to the other ones
-    ward_table[9] = CreateUnitByName(ward_name..ward_level, spawn_point + Vector(-128 , 64 ,0), true, caster, caster, caster:GetTeamNumber())
-    ward_table[10] = CreateUnitByName(ward_name..ward_level, spawn_point + Vector(128 , 64 ,0), true, caster, caster, caster:GetTeamNumber())
+	-- #1 TALENT: More Serpent Wards
+    if caster:HasTalent("special_bonus_imba_shadow_shaman_1") then 
+		ward_count = ward_count + caster:FindTalentValue("special_bonus_imba_shadow_shaman_1")
+	end
+	
+    -- Create 8 wards in a box formation (note the vectors) + more wards near them
+    local formation_vectors = {
+								Vector(-128 , 64 ,0), Vector(-64, 64, 0) ,  Vector(0, 64 ,0), Vector(64, 64 ,0) , Vector(128 , 64 ,0),
+													  Vector(-64, 0, 0)  ,				      Vector(64, 0 ,0)  ,
+													  Vector(-64, -64, 0), Vector(0, -64 ,0), Vector(64, -64 ,0),
+       -- Talent vectors
+			Vector(-192, 64 ,0),																										Vector(192, 64 ,0),
+								Vector(-128, -64 ,0),															 Vector(128, -64 ,0),
+       
+    }
 
-    -- #1 TALENT: More Serpent Wards
-    if caster:HasTalent("special_bonus_imba_shadow_shaman_1") then
-        ward_table[11] = CreateUnitByName(ward_name..ward_level, spawn_point + Vector(-128, -64 ,0), true, caster, caster, caster:GetTeamNumber())
-        ward_table[12] = CreateUnitByName(ward_name..ward_level, spawn_point + Vector(128, -64 ,0), true, caster, caster, caster:GetTeamNumber())
-        ward_table[13] = CreateUnitByName(ward_name..ward_level, spawn_point + Vector(192, 64 ,0), true, caster, caster, caster:GetTeamNumber())
-        ward_table[14] = CreateUnitByName(ward_name..ward_level, spawn_point + Vector(-192, 64 ,0), true, caster, caster, caster:GetTeamNumber())
-    end
+    local find_clear_space = true
+    local npc_owner = caster
+    local unit_owner = caster
 
-    -- Give the wards their modifiers
-    for _,ward in pairs(ward_table) do
-        ward:SetForwardVector(caster:GetForwardVector())
+    for i=1, ward_count do
+        local ward = CreateUnitByName(ward_name..ward_level, target_point + formation_vectors[i], find_clear_space, npc_owner, unit_owner, caster:GetTeamNumber())
+		ward:SetForwardVector(caster:GetForwardVector())
         ward:AddNewModifier(caster, self, "modifier_imba_mass_serpent_ward", {})
         ward:AddNewModifier(caster, self, "modifier_kill", {duration = ward_duration})
         ward:SetControllableByPlayer(caster:GetPlayerID(), true)
@@ -100,7 +98,6 @@ function modifier_imba_mass_serpent_ward:DeclareFunctions()
         MODIFIER_EVENT_ON_ATTACK,
         MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
         MODIFIER_PROPERTY_HEALTH_BONUS,
-       -- MODIFIER_EVENT_ON_TAKEDAMAGE
     }
     return funcs
 end
