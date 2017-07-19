@@ -3720,6 +3720,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"stack_limit"			"4 4 4 4 5 5 6"
+				"LinkedSpecialBonus"	"special_bonus_unique_bristleback"
 			}
 			"07"
 			{
@@ -3763,12 +3764,12 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"quill_stack_damage"	"30 32 34 36 39 42 45"
+				"LinkedSpecialBonus"	"special_bonus_unique_bristleback_2"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"quill_stack_duration"	"14.0"
-				"LinkedSpecialBonus"	"special_bonus_unique_bristleback"
 			}
 			"05"
 			{
