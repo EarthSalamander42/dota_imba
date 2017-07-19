@@ -8456,7 +8456,9 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"								"ability_lua"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"					"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"					"DOTA_UNIT_TARGET_HERO"
 		"SpellImmunityType"						"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"						"1"
 		"AbilityTextureName"					"drow_ranger_wave_of_silence"
@@ -8543,6 +8545,9 @@
 				"var_type"						"FIELD_INTEGER"
 				"silence_duration"				"3 4 5 6 6 6 6"
 			}
+
+			
+
 		}
 	}
 
@@ -8572,7 +8577,6 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"agi_to_damage_pct"			"20 26 32 38 40 42 44"
-				"LinkedSpecialBonus"		"special_bonus_imba_drow_ranger_3"
 			}
 
 			"02"
@@ -8683,13 +8687,16 @@
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_enigma.vsndevts"
 			"particle"					"particles/status_fx/status_effect_enigma_malefice.vpcf"
-			"particle"					"particles/units/heroes/hero_enigma/enigma_malefice.vpcf"	
+			"particle"					"particles/units/heroes/hero_enigma/enigma_malefice.vpcf"
+			"particle"					"particles/hero/enigma/malefice_targetstart.vpcf"
+			"particle"					"particles/hero/enigma/malefice_travel.vpcf"
+			"particle"					"particles/hero/enigma/malefice_targetend.vpcf"
 		}
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		//"AbilityCastRange"				"600" // Done in lua
-		//"AbilityCastPoint"				"0.3" // Done in lua
+		"AbilityCastRange"				"600"
+		"AbilityCastPoint"				"0.3"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -8731,6 +8738,7 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"total_duration"			"4"
+				"LinkedSpecialBonus"		"special_bonus_imba_enigma_1"
 			}			
 
 			"06"
@@ -8742,23 +8750,8 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"pull_strength" 		"100 120 140 160 200 240 280"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cast_point" 		"0.3"
-			}
-			"09"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cast_range" 		"600"
-			}		
-			"10"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"eidolon_bonus_duration_percent"				"0.07"
-			}											
+				"well_pull_strength" 		"50 60 70 80 100 120 140"
+			}									
 		}
 
 	}
@@ -8790,8 +8783,8 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		//"AbilityCastRange"				"700"
-		//"AbilityCastPoint"				"0.3"
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -8836,10 +8829,11 @@
 			}			
 
 			"06"
-		  {
-		    "var_type"      			"FIELD_INTEGER"
-		    "shard_percentage" 			"5 5 5 5 10 15 20"
-		  }
+		    {
+		        "var_type"      			"FIELD_INTEGER"
+		        "shard_percentage" 			"5 5 5 5 10 15 20"
+		        "LinkedSpecialBonus"		"special_bonus_imba_enigma_3"
+		    }
 
 			"07"
 			{
@@ -8869,18 +8863,7 @@
 			{
 				"var_type"     				"FIELD_INTEGER"
 				"additional_attacks_split"	"3"
-			}
-			"12"
-			{
-				"var_type"     				"FIELD_INTEGER"
-				"cast_range" 	"700"
-			}		
-
-			"13"
-			{
-				"var_type"     				"FIELD_FLOAT"
-				"cast_point"	"0.3"
-			}																					
+			}																		
 		}
 	}
 
@@ -8912,8 +8895,8 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		//"AbilityCastRange"				"700"
-		//"AbilityCastPoint"				"0.1"
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.1"
 		"AbilityCastAnimation"			"ACT_DOTA_MIDNIGHT_PULSE"
 		
 		// Time		
@@ -8946,31 +8929,10 @@
 				"duration"					"11"
 			}			
 
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"pull_strength"		"45 45 45 45 60 75 90"
-			}
 			"05"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"eidolon_heal_duration"			"3.0"
-			}			
-			"06"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"pull_duration"			"1"
-			}
-			"07"
-			{
-				"var_type"     				"FIELD_INTEGER"
-				"cast_range" 	"700"
-			}		
-
-			"08"
-			{
-				"var_type"     				"FIELD_FLOAT"
-				"cast_point"	"0.3"
+				"var_type"					"FIELD_INTEGER"
+				"well_pull_strength"		"45 45 45 45 60 75 90"
 			}									
 		}
 	}
@@ -9062,7 +9024,6 @@
 		"precache"
 		{
 			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_enigma.vsndevts"
-			"particle"						"particles/units/heroes/hero_enigma/enigma_blackhole_target.vpcf"
 			"particle"						"particles/econ/items/enigma/enigma_world_chasm/enigma_blackhole_target_ti5.vpcf"
 			"particle"						"particles/econ/items/enigma/enigma_world_chasm/enigma_blackhole_ti5.vpcf"
 			"particle"						"particles/econ/items/enigma/enigma_world_chasm/status_effect_enigma_blackhole_tgt_ti5.vpcf"
@@ -9073,8 +9034,8 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		//"AbilityCastRange"					"300"
-		//"AbilityCastPoint"					"0.3"
+		"AbilityCastRange"					"300"
+		"AbilityCastPoint"					"0.3"
 		"AbilityChannelTime"				"4.0"
 		"AbilityCastAnimation"				"ACT_DOTA_CAST_ABILITY_4"
 		
@@ -9094,12 +9055,13 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"420"
+				"LinkedSpecialBonus"		"special_bonus_imba_enigma_6"
 			}
 
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"pull_radius"		"1200"
+				"base_pull_distance"		"1000"
 			}
 
 			"03"
@@ -9111,45 +9073,25 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_per_tick"					"50 100 150 175 200 225"
+				"damage"					"50 100 150 175 200 225"
 			}			
 
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"min_pull_power" 		"75"			
+				"well_pull_strength" 		"100 125 150 175 200 225"			
 			}		
 
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"pull_strength" 			"50 70 90 110 130 150"			
+				"pull_strength" 			"100 140 180 190 200 210"			
 			}
 
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"duration"	 				"4"			
-			}
-			"08"
-			{
-				"var_type" 					"FIELD_INTEGER"
-				"singularity_pull_radius_increment_per_stack" "50"
-			}
-			"09"
-			{
-				"var_type" 		"FIELD_INTEGER"
-				"singularity_stun_radius_increment_per_stack" "25"
-			}
-			"10"
-			{
-				"var_type" 		"FIELD_INTEGER"
-				"cast_range" "300"
-			}
-			"11"
-			{
-				"var_type" 		"FIELD_INTEGER"
-				"cast_point" "0.3"
 			}
 		}
 	}
@@ -9441,7 +9383,6 @@
 			"particle"					"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
 			"particle"					"particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf"
 			"particle"					"particles/units/heroes/hero_faceless_void/faceless_void_chrono_speed.vpcf"
-			"particle"					"particles/econ/items/faceless_void/faceless_void_weapon_bfury/faceless_void_weapon_bfury_cleave.vpcf"
 		}
 
 		// Casting
@@ -9495,313 +9436,33 @@
 
 			"06"
 			{
-				"var_type"							"FIELD_FLOAT"
-				"cd_increase_per_enemy"				"1.0"
-			}
-			
-			"07"
-			{
 				"var_type"							"FIELD_INTEGER"
 				"scepter_cooldown"					"60"
 			}
 
-			"08"
+			"06"
 			{
 				"var_type"							"FIELD_INTEGER"
 				"scepter_ally_as_slow"				"150"
 			}
 
-			"09"
+			"07"
 			{
 				"var_type"							"FIELD_INTEGER"
 				"scepter_ally_ms_slow_pcnt"			"50"
 			}
 
-			"10"
+			"08"
 			{
 				"var_type"							"FIELD_INTEGER"
 				"scepter_ally_projectile_slow"		"50"
 			}
 
-			"11"
+			"09"
 			{
 				"var_type"							"FIELD_INTEGER"
 				"scepter_ally_casttime_pcnt_debuff"	"50"
 			}
-		}
-	}
-	
-	//=================================================================================================================
-	//=================================================================================================================
-	// Faceless Void's Talents 
-	//=================================================================================================================
-	//=================================================================================================================
-	
-	//=================================================================================================================================
-	// Time Dilation grants Faceless Void a chance to backtrack damage instances that increases per ability affected by Time Dilation
-	//=================================================================================================================================
-	"special_bonus_imba_faceless_void_1" 
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-            "01"        "imba_faceless_void_time_dilation"
-        }
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"backtrack_pct_per_enemy"	"5"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"max_pct"					"50"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"6"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Time Dilation grants bonus health and mana per charge spent on them
-	//=================================================================================================================
-	"special_bonus_imba_faceless_void_2"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-            "01"        "imba_faceless_void_time_dilation"
-        }
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"hp_regen"					"12"
-			}
-
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"mp_regen"					"6"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Movement inside Chronosphere is instant, Void constantly dodges projectiles
-	//=================================================================================================================
-	"special_bonus_imba_faceless_void_3" 
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-            "01"        "imba_faceless_void_chronosphere"
-        }
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"1"
-			}			
-		}
-	}
-	
-	//==========================================================================================================================
-	// Bashing enemies with the Time Dilation debuff increases their active spells' CD while decreasing all of Voids cooldowns
-	//==========================================================================================================================
-	"special_bonus_imba_faceless_void_4" 
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-            "01"        "imba_faceless_void_time_dilation"
-			"02"        "imba_faceless_void_time_lock"
-        }
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"target_increase"		"0.5"
-			}		
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"self_reduction"		"0.5"
-			}					
-		}
-	}
-
-	//=================================================================================================================
-	// Time Lock now spawns mini chronospheres
-	//=================================================================================================================
-	"special_bonus_imba_faceless_void_5" 
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-            "01"        "imba_faceless_void_time_lock"
-			"02"        "imba_faceless_void_chronosphere"
-        }
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"aoe"					"180"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"1.0"
-			}			
-		}
-	}
-
-	//=================================================================================================================
-	// Time Lord bonuses are increased when Faceless Void is inside a Chronosphere
-	//=================================================================================================================
-	"special_bonus_imba_faceless_void_6"  
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-            "01"        "imba_faceless_void_timelord"
-			"02"        "imba_faceless_void_chronosphere"
-        }
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"value"					"2.0"
-			}			
-		}
-	}
-
-	//=================================================================================================================
-	// Time Dilation no longer spends chronocharges to affect allies
-	//=================================================================================================================
-	"special_bonus_imba_faceless_void_7" 
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-            "01"        "imba_faceless_void_time_dilation"
-        }
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"value"					"1"
-			}			
-		}
-	}
-
-	//=================================================================================================================
-	// Chronosphere causes Faceless Void attacks to cleave
-	//=================================================================================================================
-	"special_bonus_imba_faceless_void_8" 
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-            "01"        "imba_faceless_void_chronosphere"
-        }
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cleave_damage_pct"			"50"
-			}	
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cleave_starting_width"		"150"
-			}		
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cleave_ending_width"		"300"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cleave_distance"			"600"
-			}			
 		}
 	}
 
@@ -20582,7 +20243,7 @@
 			"01"
 			{
 				"var_type"										"FIELD_INTEGER"
-				"pull_units_per_second"							"300"		
+				"pull_units_per_second"							"100"		
 			}	
 			"02"
 			{
@@ -20597,7 +20258,7 @@
 			"04"
 			{
 				"var_type"										"FIELD_FLOAT"
-				"pull_duration"									"1.5 2.0 2.5 3.0 3.0 3.0 3.0"
+				"duration"										"1.5 2.0 2.5 3.0 3.0 3.0 3.0"
 				"LinkedSpecialBonus"							"special_bonus_unique_storm_spirit"
 			}
 			"05"
@@ -30914,7 +30575,7 @@
 	//=================================================================================================================
 	// Drow Ranger Talents
 	//=================================================================================================================
-	"special_bonus_imba_drow_ranger_1"	// Frost Arrows duration increase
+	"special_bonus_imba_drow_ranger_1"	// Gust can be self cast, making a wave that moves Drow Ranger herself forward. This wave silences all enemies that it comes in contact with normally.
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -30924,7 +30585,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_drow_ranger_frost_arrows"
+			"01" 	"imba_drow_ranger_gust"
 		}
 
 		// Special
@@ -30936,6 +30597,19 @@
 				"var_type"				"FIELD_INTEGER"
 				"value"					"1"
 			}
+
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"jump_speed"			"2000"
+			}
+			
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"leap_range"			"900"
+			}
+
 		}
 	}
 
@@ -30959,32 +30633,7 @@
 		}
 	}
 
-	"special_bonus_imba_drow_ranger_3"	// Precision Aura damage increase
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_drow_ranger_trueshot"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"12"
-			}
-		}
-	}
-
-	"special_bonus_imba_drow_ranger_4"	// Gust effect/knockback range increase
+	"special_bonus_imba_drow_ranger_3"	// After casting Gust, all auto attacks hitting a target casts a small Gust for 5 seconds. This small gust wave pushes the main target back 50 units, deals no damage, and does not silence.
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -31003,13 +30652,74 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"400"
+				"var_type"							"FIELD_INTEGER"
+				"value"								"1"
+			}
+
+			"02"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"buff_duration"						"5"
+			}
+
+			"03"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"wave_width"						"150"
+			}
+
+			"04"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"wave_distance"						"900"
+			}
+
+			"05"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"knockback_duration"				"0.4"
+			}
+
+			"06"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"knockback_distance"				"50"
 			}
 		}
 	}
 
-	"special_bonus_imba_drow_ranger_5"	// Marksmanship Agility Increase
+	"special_bonus_imba_drow_ranger_4"	// Each Chilled enemy grants drow +10 flat movespeed bonus for the duration. Stacks with itself, depending on amounts of Chill stacks on enemies.
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_drow_ranger_frost_arrows"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"1"
+			}
+
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movespeed"		"10"
+			}
+		}
+	}
+
+	"special_bonus_imba_drow_ranger_5"	// While Marksmanship is active (not disabled by nearby enemies), Drow Ranger emits an aura on nearby allies that makes their attack chill their targets, slowing them by 15%.
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -31029,12 +30739,31 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"30"
+				"value"					"1"
 			}
+
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow_pct"				"15"
+			}
+
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"1.5"
+			}
+
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_radius"			"900"
+			}
+
 		}
 	}
 
-	"special_bonus_imba_drow_ranger_6"	// Deadeye vision bonuses
+	"special_bonus_imba_drow_ranger_6"	// While Trueshot Aura is active, Drow gains agility equal to 5% of every allied hero's agility.
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -31044,7 +30773,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_drow_ranger_deadeye"
+			"01" 	"imba_drow_ranger_trueshot"
 		}
 
 		// Special
@@ -31053,8 +30782,13 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"250"
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"agility_bonus_percent"		"5"
 			}
 		}
 	}
@@ -35673,7 +35407,7 @@
     //=================================================================================================================
 	// Enigma Talents
 	//=================================================================================================================
-	"special_bonus_imba_enigma_1"	// Each Singularity stack consumed now decreases Black Hole's cooldown by 2 seconds.
+	"special_bonus_imba_enigma_1"	// Malefice Duration bonus (2s)
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -35683,7 +35417,7 @@
 
 		"LinkedAbility"
 		{
-			"01"		"imba_enigma_black_hole"
+			"01"		"imba_enigma_malefice"
 		}
 
 		// Special
@@ -35718,12 +35452,12 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"value"			"400"
+				"value"			"215"
 			}
 		}
 	}
 		
-	"special_bonus_imba_enigma_3"	// Midnight Pulse doubles its AoE over the duration.
+	"special_bonus_imba_enigma_3"	// Eidolon Attribute Share
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -35733,7 +35467,7 @@
 
 		"LinkedAbility"
 		{
-			"01"		"imba_enigma_midnight_pulse"
+			"01"		"imba_enigma_demonic_conversion"
 		}
 
 		// Special
@@ -35743,12 +35477,12 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"value"			"1"
+				"value"			"15"
 			}
 		}
 	}
 
-	"special_bonus_imba_enigma_4"	// Black Hole cast on death
+	"special_bonus_imba_enigma_4"	// Black Hole Cast Range
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -35773,7 +35507,7 @@
 		}
 	}
 
-	"special_bonus_imba_enigma_5"	// True malefice, instead of stuns little black holes are created
+	"special_bonus_imba_enigma_5"	// Singularity Pull & Speed
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -35783,7 +35517,7 @@
 
 		"LinkedAbility"
 		{
-			"01"		"imba_enigma_malefice"
+			"01"		"imba_enigma_gravity_well"
 		}
 
 		// Special
@@ -35793,12 +35527,12 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"value"			"150"
+				"value"			"15"
 			}
 		}
 	}
 
-	"special_bonus_imba_enigma_6"	// Enigma has a constant AoE Midnight pulse around him. Stacks with regular pulse.
+	"special_bonus_imba_enigma_6"	// Black Hole Radius
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -35808,7 +35542,7 @@
 
 		"LinkedAbility"
 		{
-			"01"		"imba_enigma_midnight_pulse"
+			"01"		"imba_enigma_black_hole"
 		}
 
 		// Special
@@ -35818,12 +35552,12 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"value"			"1"
+				"value"			"80"
 			}
 		}
 	}
 
-	"special_bonus_imba_enigma_7"	// Magic immunity on spell cast
+	"special_bonus_imba_enigma_7"	// Black Hole Duration
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -36512,6 +36246,215 @@
 				"var_type"					"FIELD_INTEGER"
 				"value"						"20"
 			}
+		}
+	}
+
+	//=================================================================================================================
+	// Faceless Void's Talents 
+	//=================================================================================================================
+	"special_bonus_imba_faceless_void_1" // Time Dilation grants bonus move/attack speed per charge spent
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_faceless_void_time_dilation"
+        }
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"5"
+			}
+		}
+	}
+
+	"special_bonus_imba_faceless_void_2" // Time Dilation grants bonus health and mana per charge spent on them
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_faceless_void_time_dilation"
+        }
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hp_regen"					"12"
+			}
+
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mp_regen"					"6"
+			}
+		}
+	}
+
+	"special_bonus_imba_faceless_void_3" // Movement inside Chronosphere is instant, Void constantly dodges projectiles
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_faceless_void_chronosphere"
+        }
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"1"
+			}			
+		}
+	}
+
+	"special_bonus_imba_faceless_void_4" // Chronosphere duration increase per point of spell power 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_faceless_void_chronosphere"
+        }
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value"					"0.05"
+			}			
+		}
+	}
+
+	"special_bonus_imba_faceless_void_5" // Time walk cast range increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_faceless_void_time_walk"
+        }
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value"					"600"
+			}			
+		}
+	}
+
+	"special_bonus_imba_faceless_void_6" // Time walk backtracks further
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_faceless_void_time_walk"
+        }
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value"					"1"
+			}			
+		}
+	}
+
+	"special_bonus_imba_faceless_void_7" // Time Dilation no longer spends chronocharges to affect allies
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_faceless_void_time_dilation"
+        }
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value"					"1"
+			}			
+		}
+	}
+
+	"special_bonus_imba_faceless_void_8" // Chronosphere effects per chronocharge increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_faceless_void_chronosphere"
+        }
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value"					"50"
+			}			
 		}
 	}
 }
