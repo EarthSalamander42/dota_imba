@@ -170,7 +170,7 @@ function modifier_imba_blink_dagger_handler:OnTakeDamage( keys )
 	local unit = keys.unit							-- Who took damage
 	local damage = keys.damage						-- Damage taken
 	
-	if parent == unit and damage > 0 and (attacker_name == "npc_dota_roshan" or keys.attacker:IsControllableByAnyPlayer()) and ( keys.attacker:GetTeam() ~= parent:GetTeam() ) then
+	if parent == unit and damage > 0 and (attacker_name == "npc_dota_roshan" or keys.attacker:IsControllableByAnyPlayer() or attacker:GetName() == "npc_dota_shadowshaman_serpentward")  and ( keys.attacker:GetTeam() ~= parent:GetTeam() ) then
 		if ability:GetCooldownTimeRemaining() < blink_damage_cooldown then
 			ability:StartCooldown(blink_damage_cooldown)
 		end
@@ -286,7 +286,7 @@ function modifier_imba_blink_boots_handler:OnTakeDamage( keys )
 	local unit = keys.unit							-- Who took damage
 	local damage = keys.damage						-- Damage taken
 	
-	if parent == unit and damage > 0 and (attacker_name == "npc_dota_roshan" or keys.attacker:IsControllableByAnyPlayer()) and ( keys.attacker:GetTeam() ~= parent:GetTeam() ) then
+	if parent == unit and damage > 0 and (attacker_name == "npc_dota_roshan" or keys.attacker:IsControllableByAnyPlayer() or attacker_name == "npc_dota_shadowshaman_serpentward")  and ( keys.attacker:GetTeam() ~= parent:GetTeam() ) then
 		if ability:GetCooldownTimeRemaining() < blink_damage_cooldown then
 			ability:StartCooldown(blink_damage_cooldown)
 		end
