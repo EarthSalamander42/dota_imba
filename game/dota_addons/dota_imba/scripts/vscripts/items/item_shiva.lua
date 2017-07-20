@@ -26,8 +26,6 @@ function ShivaBlast( keys )
 	ParticleManager:SetParticleControl(blast_pfx, 1, Vector(blast_radius, blast_duration * 1.33, blast_speed))
 	ParticleManager:ReleaseParticleIndex(blast_pfx)
 
-	-- Spawn flying vision dummy unit
-	local vision_dummy = CreateUnitByName("npc_dummy_shiva_vision", current_loc, false, nil, nil, caster:GetTeam())
 
 	-- Initialize targets hit table
 	local targets_hit = {}
@@ -36,11 +34,14 @@ function ShivaBlast( keys )
 	local current_radius = 0
 	local tick_interval = 0.1
 	Timers:CreateTimer(tick_interval, function()
-		
+
+		-- Give vision
+		AddFOWViewer(caster:GetTeamNumber(), current_loc, current_radius, 0.1, false)
+
 		-- Update current radius and location
 		current_radius = current_radius + blast_speed * tick_interval
 		current_loc = caster:GetAbsOrigin()
-		vision_dummy:SetAbsOrigin(current_loc)
+		--vision_dummy:SetAbsOrigin(current_loc)
 
 		-- Iterate through enemies in the radius
 		local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), current_loc, nil, current_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
@@ -76,10 +77,6 @@ function ShivaBlast( keys )
 		-- If the current radius is smaller than the maximum radius, keep going
 		if current_radius < blast_radius then
 			return tick_interval
-		else
-			Timers:CreateTimer(2.0, function()
-				vision_dummy:Destroy()
-			end)
 		end
 	end)
 end
