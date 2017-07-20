@@ -629,10 +629,10 @@ function imba_bloodseeker_rupture:OnSpellStart(target)
 	local caster = self:GetCaster()
 	local modifier_rupture_charges = "modifier_imba_rupture_charges"
 
-	if hTarget:TriggerSpellAbsorb(self) then return end --if target has spell absorption, stop.
 	if target then
 		hTarget:AddNewModifier(caster, self, "modifier_imba_rupture_debuff_dot", {duration = 0.3})
 	else
+		if hTarget:TriggerSpellAbsorb(self) then return end --if target has spell absorption, stop.
 		hTarget:AddNewModifier(caster, self, "modifier_imba_rupture_debuff_dot", {duration = self:GetSpecialValueFor("duration")})
 		EmitSoundOn("hero_bloodseeker.rupture.cast", caster)
 		EmitSoundOn("hero_bloodseeker.rupture", hTarget)
