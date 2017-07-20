@@ -2,6 +2,29 @@
 -- IMBA: custom utility functions
 -------------------------------------------------------------------------------------------------
 
+-- Returns true if a value is in a table, false if it is not.
+function CheckIfInTable(table, searched_value, optional_number_of_table_rows_to_search_through)
+	-- Searches through the ENTIRE table
+	if not optional_number_of_table_rows_to_search_through then
+		for _,table_value in pairs(table) do
+			if table_value == searched_value then
+				return true
+			end
+		end
+	else
+	
+		-- Searches through the first few rows
+		for i=1, optional_number_of_table_rows_to_search_through do
+			if i <= #table then
+				if table[i] == searched_value then
+					return true
+				end
+			end
+		end
+	end
+	return false
+end
+
 -- Adds [stack_amount] stacks to a modifier
 function AddStacks(ability, caster, unit, modifier, stack_amount, refresh)
 	if unit:HasModifier(modifier) then
