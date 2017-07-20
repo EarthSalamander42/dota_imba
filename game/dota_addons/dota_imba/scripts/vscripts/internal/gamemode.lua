@@ -326,7 +326,7 @@ function OnSetGameMode( eventSourceIndex, args )
 
 	-- Allow heroes to level up further than normal
 	for i = 25, MAX_LEVEL do
-		XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + i * 100
+		XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + 5000
 	end
 
     -- Hero pick rule
