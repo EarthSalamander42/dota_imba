@@ -1912,13 +1912,13 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_damage"			"400"
+				"bounce_damage"			"700"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_range"			"525"
+				"bounce_range"			"800"
 			}
 		}
 
