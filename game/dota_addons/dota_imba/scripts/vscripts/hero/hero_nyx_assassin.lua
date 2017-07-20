@@ -634,11 +634,11 @@ function imba_nyx_assassin_spiked_carapace:OnSpellStart()
     local caster = self:GetCaster()
     local ability = self
     local cast_response = {"nyx_assassin_nyx_spikedcarapace_03", "nyx_assassin_nyx_spikedcarapace_05"}
-    local sound_cast = "Hero_NyxAssassin.SpikedCarapace"    
-    local modifier_spikes = "modifier_imba_spiked_carapace"    
+    local sound_cast = "Hero_NyxAssassin.SpikedCarapace"
+    local modifier_spikes = "modifier_imba_spiked_carapace"
 
     -- Ability specials
-    local reflect_duration = ability:GetSpecialValueFor("reflect_duration")    
+    local reflect_duration = ability:GetSpecialValueFor("reflect_duration")
     local burrow_stun_range = ability:GetSpecialValueFor("burrow_stun_range")
 
     -- #7 Talent: Spiked Carapace duration increase
@@ -664,7 +664,7 @@ function modifier_imba_spiked_carapace:OnCreated()
         -- Ability properties
         self.caster = self:GetCaster()
         self.ability = self:GetAbility()
-        self.vendetta_ability = self.caster:FindAbilityByName("imba_nyx_assassin_vendetta") 
+        self.vendetta_ability = self.caster:FindAbilityByName("imba_nyx_assassin_vendetta")
         self.particle_spikes = "particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace.vpcf"
         self.modifier_stun = "modifier_imba_spiked_carapace_stun"
         self.modifier_vendetta = "modifier_imba_vendetta_charge"
@@ -673,29 +673,28 @@ function modifier_imba_spiked_carapace:OnCreated()
         -- Ability specials
         self.stun_duration = self.ability:GetSpecialValueFor("stun_duration")
         self.damage_to_vendetta_pct = self.ability:GetSpecialValueFor("damage_to_vendetta_pct")
-        self.burrowed_stun_range = self.ability:GetSpecialValueFor("burrowed_stun_range")
+        self.burrowed_stun_range = self.ability:GetSpecialValueFor("burrow_stun_range")
         self.burrowed_vendetta_stacks = self.ability:GetSpecialValueFor("burrowed_vendetta_stacks")
         self.damage_reflection_pct = self.ability:GetSpecialValueFor("damage_reflection_pct")
 
         -- Add spikes particles
-        self.particle_spikes_fx = ParticleManager:CreateParticle(self.particle_spikes, PATTACH_CUSTOMORIGIN_FOLLOW, self.caster)    
+        self.particle_spikes_fx = ParticleManager:CreateParticle(self.particle_spikes, PATTACH_CUSTOMORIGIN_FOLLOW, self.caster)
         ParticleManager:SetParticleControlEnt(self.particle_spikes_fx, 0, self.caster, PATTACH_POINT_FOLLOW, "attach_hitloc", self.caster:GetAbsOrigin(), true)
         self:AddParticle(self.particle_spikes_fx, false, false, -1, false, false)
 
         -- #3 Talent: Spiked Carapace damage reflection increase (percentage)
         self.damage_reflection_pct = self.damage_reflection_pct + self.caster:FindTalentValue("special_bonus_imba_nyx_assassin_3")
-
         -- If caster is burrowed, stun all nearby enemies and grant stacks per enemy
         if self.caster:HasModifier(self.modifier_burrowed) then
             local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-                                              self.caster:GetAbsOrigin(),
-                                              nil,
-                                              self.burrowed_stun_range,
-                                              DOTA_UNIT_TARGET_TEAM_ENEMY,
-                                              DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-                                              DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,
-                                              FIND_ANY_ORDER,
-                                              false)
+            self.caster:GetAbsOrigin(),
+            nil,
+            self.burrowed_stun_range,
+            DOTA_UNIT_TARGET_TEAM_ENEMY,
+            DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+            DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,
+            FIND_ANY_ORDER,
+            false)
 
             for _,enemy in pairs(enemies) do
                 -- Stun each enemy
@@ -712,7 +711,7 @@ function modifier_imba_spiked_carapace:OnCreated()
 
                         -- Get modifier handler
                         local modifier_vendetta_handler = self.caster:FindModifierByName(self.modifier_vendetta)
-                        if modifier_vendetta_handler then                            
+                        if modifier_vendetta_handler then
 
                             -- Set Vendetta stacks
                             modifier_vendetta_handler:SetStackCount(modifier_vendetta_handler:GetStackCount() + self.burrowed_vendetta_stacks)
@@ -730,9 +729,9 @@ function modifier_imba_spiked_carapace:IsDebuff() return false end
 
 function modifier_imba_spiked_carapace:DeclareFunctions()
     local decFuncs = {MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
-                     MODIFIER_EVENT_ON_TAKEDAMAGE}
+        MODIFIER_EVENT_ON_TAKEDAMAGE}
 
-    return decFuncs    
+    return decFuncs
 end
 
 function modifier_imba_spiked_carapace:GetModifierIncomingDamage_Percentage()
@@ -744,10 +743,10 @@ function modifier_imba_spiked_carapace:OnTakeDamage(keys)
         local attacker = keys.attacker
         local unit = keys.unit
         local original_damage = keys.original_damage
-        local damage_flags = keys.damage_flags        
-        
+        local damage_flags = keys.damage_flags
+
         -- Only apply on attacks against the caster
-        if unit == self.caster then            
+        if unit == self.caster then
 
             -- If it was a no reflection damage, do nothing
             if bit.band(damage_flags, DOTA_DAMAGE_FLAG_REFLECTION) == DOTA_DAMAGE_FLAG_REFLECTION then
@@ -770,11 +769,11 @@ function modifier_imba_spiked_carapace:OnTakeDamage(keys)
             end
 
             -- Calculate damage to reflect
-            local damage = original_damage * self.damage_reflection_pct * 0.01            
+            local damage = original_damage * self.damage_reflection_pct * 0.01
 
             -- Only apply if the caster has Vendetta as ability
             if self.vendetta_ability and self.vendetta_ability:GetLevel() > 0 then
-                
+
                 -- Convert damage to vendetta charges
                 if not self.caster:HasModifier(self.modifier_vendetta) then
                     self.caster:AddNewModifier(self.caster, self.vendetta_ability, self.modifier_vendetta, {})
@@ -797,17 +796,17 @@ function modifier_imba_spiked_carapace:OnTakeDamage(keys)
             -- If the attacker is magic immune or invulnerable, do nothing
             if attacker:IsMagicImmune() or attacker:IsInvulnerable() then
                 return nil
-            end  
+            end
 
             -- Damage the attacker
             local damageTable = {victim = attacker,
-                                 attacker = self.caster, 
-                                 damage = damage,
-                                 damage_type = DAMAGE_TYPE_MAGICAL,
-                                 ability = self.ability
-                                }
-        
-            ApplyDamage(damageTable)  
+                attacker = self.caster,
+                damage = damage,
+                damage_type = DAMAGE_TYPE_MAGICAL,
+                ability = self.ability
+            }
+
+            ApplyDamage(damageTable)
 
             -- Stun it
             attacker:AddNewModifier(self.caster, self.ability, self.modifier_stun, {duration = self.stun_duration})
@@ -866,7 +865,7 @@ LinkLuaModifier("modifier_imba_vendetta", "hero/hero_nyx_assassin", LUA_MODIFIER
 LinkLuaModifier("modifier_imba_vendetta_charge", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 
 function imba_nyx_assassin_vendetta:GetAbilityTextureName()
-   return "nyx_assassin_vendetta"
+    return "nyx_assassin_vendetta"
 end
 
 function imba_nyx_assassin_vendetta:IsNetherWardStealable() return false end
@@ -879,8 +878,8 @@ function imba_nyx_assassin_vendetta:OnSpellStart()
     local caster = self:GetCaster()
     local ability = self
     local burrow_ability = caster:FindAbilityByName("nyx_assassin_unburrow")
-    local cast_response = {"nyx_assassin_nyx_vendetta_01", "nyx_assassin_nyx_vendetta_02", "nyx_assassin_nyx_vendetta_03", "nyx_assassin_nyx_vendetta_09"}   
-    local sound_cast = "Hero_NyxAssassin.Vendetta"    
+    local cast_response = {"nyx_assassin_nyx_vendetta_01", "nyx_assassin_nyx_vendetta_02", "nyx_assassin_nyx_vendetta_03", "nyx_assassin_nyx_vendetta_09"}
+    local sound_cast = "Hero_NyxAssassin.Vendetta"
     local modifier_vendetta = "modifier_imba_vendetta"
     local modifier_burrowed = "modifier_nyx_assassin_burrow"
 
@@ -918,7 +917,7 @@ function modifier_imba_vendetta:OnCreated()
 
     -- Ability specials
     self.movement_speed_pct = self.ability:GetSpecialValueFor("movement_speed_pct")
-    self.bonus_damage = self.ability:GetSpecialValueFor("bonus_damage")    
+    self.bonus_damage = self.ability:GetSpecialValueFor("bonus_damage")
 
     -- #6 Talent: Vendetta movement speed increase
     self.movement_speed_pct = self.movement_speed_pct + self.caster:FindTalentValue("special_bonus_imba_nyx_assassin_6")
@@ -936,15 +935,15 @@ function modifier_imba_vendetta:IsDebuff() return false end
 
 function modifier_imba_vendetta:CheckState()
     local state = {[MODIFIER_STATE_INVISIBLE] = true,
-                   [MODIFIER_STATE_NO_UNIT_COLLISION]= true}
+        [MODIFIER_STATE_NO_UNIT_COLLISION]= true}
     return state
 end
 
 function modifier_imba_vendetta:DeclareFunctions()
     local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-                      MODIFIER_EVENT_ON_ATTACK_LANDED,
-                      MODIFIER_EVENT_ON_ABILITY_EXECUTED,
-                      MODIFIER_PROPERTY_INVISIBILITY_LEVEL}
+        MODIFIER_EVENT_ON_ATTACK_LANDED,
+        MODIFIER_EVENT_ON_ABILITY_EXECUTED,
+        MODIFIER_PROPERTY_INVISIBILITY_LEVEL}
 
     return decFuncs
 end
@@ -1011,20 +1010,20 @@ function modifier_imba_vendetta:OnAttackLanded(keys)
 
             -- Deal damage
             local damageTable = {victim = target,
-                                 attacker = self.caster, 
-                                 damage = damage,
-                                 damage_type = DAMAGE_TYPE_PHYSICAL,
-                                 ability = self.ability
-                                }
-            
-            ApplyDamage(damageTable)  
+                attacker = self.caster,
+                damage = damage,
+                damage_type = DAMAGE_TYPE_PHYSICAL,
+                ability = self.ability
+            }
+
+            ApplyDamage(damageTable)
 
             -- Create alert
             SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, target, damage, nil)
 
             -- Remove modifier
             self:Destroy()
-        end    
+        end
     end
 end
 
@@ -1036,10 +1035,10 @@ function modifier_imba_vendetta_charge:OnCreated()
     if IsServer() then
         -- Ability properties
         self.caster = self:GetCaster()
-        self.ability = self:GetAbility()            
+        self.ability = self:GetAbility()
 
         -- Ability specials
-        self.maximum_vendetta_stacks = self.ability:GetSpecialValueFor("maximum_vendetta_stacks")        
+        self.maximum_vendetta_stacks = self.ability:GetSpecialValueFor("maximum_vendetta_stacks")
 
         -- #8 Talent: Maximum Vendetta stored damage increase
         self.maximum_vendetta_stacks = self.maximum_vendetta_stacks + self.caster:FindTalentValue("special_bonus_imba_nyx_assassin_8")
@@ -1055,11 +1054,11 @@ function modifier_imba_vendetta_charge:IsPurgable() return false end
 function modifier_imba_vendetta_charge:IsDebuff() return false end
 
 function modifier_imba_vendetta_charge:OnStackCountChanged()
-    if IsServer() then        
+    if IsServer() then
         -- Limit stack count                
-        local stacks = self:GetStackCount()        
+        local stacks = self:GetStackCount()
 
-        if stacks > self.maximum_vendetta_stacks then        
+        if stacks > self.maximum_vendetta_stacks then
             self:SetStackCount(self.maximum_vendetta_stacks)
         end
     end
