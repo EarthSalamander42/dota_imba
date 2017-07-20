@@ -1291,7 +1291,7 @@ function modifier_imba_life_drain:OnIntervalThink()
         end        
 
         -- Link breaks if the distance is greater than current cast range + base
-        local cast_range = self.ability:GetCastRange(self.caster:GetAbsOrigin(), self.parent)
+        local cast_range = self.ability:GetCastRange(self.caster:GetAbsOrigin(), self.parent) + GetCastRangeIncrease(self.caster)
         local distance = (self.parent:GetAbsOrigin() - self.caster:GetAbsOrigin()):Length2D()
 
         if distance > (cast_range + self.break_distance_extend) then
