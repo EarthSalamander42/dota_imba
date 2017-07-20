@@ -951,7 +951,7 @@ function imba_pudge_butchers_cleaver:OnProjectileHit(hTarget,vLocation)
 	ParticleManager:SetParticleControlEnt( nFXIndex, 0, hTarget, PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true )
 	ParticleManager:ReleaseParticleIndex( nFXIndex )
 	
-	self.cleaver = CreateUnitByName("npc_dummy_blank",self:GetCaster():GetAbsOrigin(),false,nil,nil,self:GetCaster():GetTeamNumber())
+	self.cleaver = CreateUnitByName("npc_dummy_unit",self:GetCaster():GetAbsOrigin(),false,nil,nil,self:GetCaster():GetTeamNumber())
 	self.cleaver:AddNewModifier(self:GetCaster(),self,"modifier_butchers_cleaver_dummy",{duration = self:GetSpecialValueFor("root_duration")})
 	self.cleaver.parentUnit = hTarget
 
