@@ -8126,7 +8126,6 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"mana_cost"								"150"
-				"LinkedSpecialBonus"					"special_bonus_imba_dazzle_1"
 			}
 
 			"02"
@@ -8144,8 +8143,7 @@
 			"04"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"nothl_protection_cooldown"				"90 90 90 90 70 50 30"
-				"LinkedSpecialBonus"					"special_bonus_imba_dazzle_7"
+				"nothl_protection_cooldown"				"30"
 			}
 
 			"05"
@@ -8153,6 +8151,42 @@
  				"var_type"								"FIELD_INTEGER"
  				"cast_range"							"550 700 850 1000 1000 1000 1000"
  			}
+			
+			"06"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"post_grave_duration"					"5"
+			}
+			
+			"07"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"post_grave_armor_per_hit"				"1"
+			}
+			
+			"08"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"post_grave_resist_per_hit"				"2"
+			}
+			
+			"09"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"talent_wave_bounce_distance"			"475"
+			}
+			"10"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"talent_aura_nothl_duration"			"1.5"
+			}
+			
+			
+			"11"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"talent_aura_radius"					"900"
+			}
 		}
 	}
 
@@ -8179,7 +8213,7 @@
 
 		// Ability
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityManaCost"								"90 100 110 120 125 130 135"
 		"AbilityCooldown"								"12 10 8 6 6 6 6"		
@@ -8194,55 +8228,37 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"bounce_distance"						"475"
-				"LinkedSpecialBonus"					"special_bonus_imba_dazzle_2"
 			}
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"bonus_heal"							"4 5 6 7 8 9 10"
+				"damage"								"80 100 120 140 160 180 200"
+				// and heal
 			}
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"damage"								"80 100 120 140 160 180 200"
-				"LinkedSpecialBonus"					"special_bonus_imba_dazzle_4"
+				"damage_radius"							"250"
 			}
-
 			"04"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"damage_radius"							"185"
-				"LinkedSpecialBonus"					"special_bonus_imba_dazzle_3"
-			}
-			
-			"05"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"bonus_armor"							"3"
-			}
-
-			"06"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"bonus_armor_injured"					"15"
-			}
-
-			"07"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"injured_threshold"						"35"
-			}
-
-			"08"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"buff_duration"							"2 2 3 3 4 5 6"
-			}
-
-			"09"
  			{
  				"var_type"								"FIELD_INTEGER"
  				"cast_range"							"800 800 800 900 1000 1100 1200"
+ 			}
+			"05"
+ 			{
+ 				"var_type"								"FIELD_INTEGER"
+ 				"talent_delayed_wave_max_waves"			"3"
+ 			}
+			"06"
+ 			{
+ 				"var_type"								"FIELD_INTEGER"
+ 				"talent_delayed_wave_delay"				"1"
+ 			}
+			"07"
+ 			{
+ 				"var_type"								"FIELD_INTEGER"
+ 				"talent_delayed_wave_rehit_cd"			"5"
  			}
 		}
 	}
@@ -8334,7 +8350,59 @@
 			"09"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"scepter_aoe_bonus"						"200"
+				"repeat_delay"							"4"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Dazzle's Ressurection
+	//=================================================================================================================
+	"imba_dazzle_ressurection"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"AbilityTextureName"							"custom/dazzle_ressurection"
+		"ScriptFile"									"hero/hero_dazzle.lua"
+		"FightRecapLevel"								"1"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"									"soundevents/game_sounds_heroes/game_sounds_dazzle.vsndevts"
+			"particle"									"particles/units/heroes/hero_dazzle/dazzle_weave.vpcf"
+			"particle"									"particles/units/heroes/hero_dazzle/dazzle_armor_friend.vpcf"
+			"particle"									"particles/units/heroes/hero_dazzle/dazzle_armor_enemy.vpcf"
+		}
+
+		// Ability
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"						"DOTA_UNIT_TARGET_FLAG_DEAD"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityType"									"DOTA_ABILITY_TYPE_BASIC"
+		"AbilityCastRange"								"0"
+		"AbilityCastPoint"								"0.2"
+		"AbilityManaCost"								"250"
+		"AbilityCooldown"								"100"
+		"MaxLevel"										"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"search_radius"							"300"				
+			}
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"delay"									"3"				
 			}
 		}
 	}
@@ -8462,7 +8530,9 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"								"ability_lua"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"					"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"					"DOTA_UNIT_TARGET_HERO"
 		"SpellImmunityType"						"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"						"1"
 		"AbilityTextureName"					"drow_ranger_wave_of_silence"
@@ -8549,6 +8619,9 @@
 				"var_type"						"FIELD_INTEGER"
 				"silence_duration"				"3 4 5 6 6 6 6"
 			}
+
+			
+
 		}
 	}
 
@@ -8578,7 +8651,6 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"agi_to_damage_pct"			"20 26 32 38 40 42 44"
-				"LinkedSpecialBonus"		"special_bonus_imba_drow_ranger_3"
 			}
 
 			"02"
@@ -30950,7 +31022,7 @@
 	//=================================================================================================================
 	// Drow Ranger Talents
 	//=================================================================================================================
-	"special_bonus_imba_drow_ranger_1"	// Frost Arrows duration increase
+	"special_bonus_imba_drow_ranger_1"	// Gust can be self cast, making a wave that moves Drow Ranger herself forward. This wave silences all enemies that it comes in contact with normally.
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -30960,7 +31032,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_drow_ranger_frost_arrows"
+			"01" 	"imba_drow_ranger_gust"
 		}
 
 		// Special
@@ -30970,20 +31042,21 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"buff_duration"			"5"
+				"value"					"1"
 			}
 
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"distance"		"50"
+				"jump_speed"			"2000"
 			}
-
+			
 			"03"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"knockback_duration"	"0.5"
+				"var_type"				"FIELD_INTEGER"
+				"leap_range"			"900"
 			}
+
 		}
 	}
 
@@ -31007,32 +31080,7 @@
 		}
 	}
 
-	"special_bonus_imba_drow_ranger_3"	// Precision Aura damage increase
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_drow_ranger_trueshot"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"12"
-			}
-		}
-	}
-
-	"special_bonus_imba_drow_ranger_4"	// Gust effect/knockback range increase
+	"special_bonus_imba_drow_ranger_3"	// After casting Gust, all auto attacks hitting a target casts a small Gust for 5 seconds. This small gust wave pushes the main target back 50 units, deals no damage, and does not silence.
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -31051,13 +31099,74 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"400"
+				"var_type"							"FIELD_INTEGER"
+				"value"								"1"
+			}
+
+			"02"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"buff_duration"						"5"
+			}
+
+			"03"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"wave_width"						"150"
+			}
+
+			"04"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"wave_distance"						"900"
+			}
+
+			"05"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"knockback_duration"				"0.4"
+			}
+
+			"06"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"knockback_distance"				"50"
 			}
 		}
 	}
 
-	"special_bonus_imba_drow_ranger_5"	// Marksmanship Agility Increase
+	"special_bonus_imba_drow_ranger_4"	// Each Chilled enemy grants drow +10 flat movespeed bonus for the duration. Stacks with itself, depending on amounts of Chill stacks on enemies.
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_drow_ranger_frost_arrows"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"1"
+			}
+
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movespeed"		"10"
+			}
+		}
+	}
+
+	"special_bonus_imba_drow_ranger_5"	// While Marksmanship is active (not disabled by nearby enemies), Drow Ranger emits an aura on nearby allies that makes their attack chill their targets, slowing them by 15%.
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -31077,12 +31186,31 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"30"
+				"value"					"1"
 			}
+
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow_pct"				"15"
+			}
+
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"1.5"
+			}
+
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_radius"			"900"
+			}
+
 		}
 	}
 
-	"special_bonus_imba_drow_ranger_6"	// Deadeye vision bonuses
+	"special_bonus_imba_drow_ranger_6"	// While Trueshot Aura is active, Drow gains agility equal to 5% of every allied hero's agility.
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -31092,7 +31220,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_drow_ranger_deadeye"
+			"01" 	"imba_drow_ranger_trueshot"
 		}
 
 		// Special
@@ -31101,8 +31229,13 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"250"
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"agility_bonus_percent"		"5"
 			}
 		}
 	}

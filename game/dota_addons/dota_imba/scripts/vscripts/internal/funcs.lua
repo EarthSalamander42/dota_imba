@@ -140,6 +140,7 @@ function TrueKill(caster, target, ability)
 	target:RemoveModifierByName("modifier_item_imba_initiate_robe_stacks")
 	target:RemoveModifierByName("modifier_imba_cheese_death_prevention")
 	target:RemoveModifierByName("modifier_imba_rapier_cursed")
+	target:RemoveModifierByName("modifier_imba_dazzle_nothl_protection_aura_talent")
 	
 
 	-- Kills the target

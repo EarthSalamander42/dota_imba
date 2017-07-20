@@ -30,6 +30,7 @@
 		}
 	}
 }
+
 "Imba.SvenShockWave"
 {
 	"operator_stacks"
@@ -2298,6 +2299,68 @@
 						"value"			"0"
 					}
 					"volume"			{   "value"     "4.00000"  }
+				}
+			}
+		}
+	}
+}
+
+"Imba.DazzleRessurection"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"    "sounds/hero/dazzle/ressurection.vsnd"
+						}
+					}
+					"memory_type"
+					{
+						"value"     "0"
+					}
+					
+					"volume"			{   "value"     "2.00000"  }
+				}
+			}
+		}
+	}
+}
+
+"Imba.DazzleRessurectionFail"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"    "sounds/hero/dazzle/ressurection_fail.vsnd"
+						}
+					}
+					"memory_type"
+					{
+						"value"     "0"
+					}
+					
+					"volume"			{   "value"     "2.00000"  }
 				}
 			}
 		}
