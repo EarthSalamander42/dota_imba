@@ -8028,7 +8028,6 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"cooldown"								"12 11 10 9 8 7 6"
-				"LinkedSpecialBonus"					"special_bonus_imba_dazzle_5"
 			}
 
 			"02"
@@ -8083,6 +8082,24 @@
  			{
  				"var_type"								"FIELD_INTEGER"
  				"cast_range"							"600 650 700 750 775 800 825"
+ 			}
+			
+			"11"
+ 			{
+ 				"var_type"								"FIELD_INTEGER"
+ 				"talent_slow_per_damage"				"3"
+ 			}
+			
+			"12"
+ 			{
+ 				"var_type"								"FIELD_INTEGER"
+ 				"talent_slow_max"						"80"
+ 			}
+			
+			"13"
+ 			{
+ 				"var_type"								"FIELD_INTEGER"
+ 				"talent_damage_for_slow_proc"			"3"
  			}
 		}
 	}
@@ -20287,7 +20304,8 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"particle"  				"particles/units/heroes/hero_stormspirit/stormspirit_static_remnant.vpcf"
+			"particle"  				"particles/units/heroes/hero_stormspirit/stormspirit_static_remnant_image.vpcf"
+			"particle"					"particles/units/heroes/hero_stormspirit/stormspirit_overload_discharge.vpcf"
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_stormspirit.vsndevts"
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_vo_stormspirit.vsndevts"
 
@@ -20311,12 +20329,12 @@
 			"03"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"big_remnant_duration"				"12"
+				"big_remnant_duration"				"12 12 12 12 12 12 12"
 			}
 			"04"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"big_remnant_damage"				"160 220 280 340 400 440 480"
+				"big_remnant_damage"				"140 180 220 260 340 500 820"
 			}
 			"05"
 			{
@@ -20340,6 +20358,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"hero/hero_storm_spirit"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
@@ -20356,7 +20375,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"21 20 19 18 17 16 15"
+		"AbilityCooldown"				"21 20 19 18"
 	
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -20376,13 +20395,12 @@
 			"01"
 			{
 				"var_type"										"FIELD_INTEGER"
-				"pull_units_per_second"							"100 100 100 100 150 200 250"		
-				"LinkedSpecialBonus"							"special_bonus_imba_storm_spirit_2"
+				"pull_units_per_second"							"300"		
 			}	
 			"02"
 			{
 				"var_type"										"FIELD_INTEGER"
-				"self_slow"										"-50 -40 -30 -20 -10 -5 0"
+				"self_slow"										"-50"
 			}
 			"03"
 			{
@@ -20392,20 +20410,18 @@
 			"04"
 			{
 				"var_type"										"FIELD_FLOAT"
-				"pull_duration"									"1.5 2.0 2.5 3.0 3.25 3.5 3.75"
-				"LinkedSpecialBonus"							"special_bonus_imba_storm_spirit_1"
+				"pull_duration"									"1.5 2.0 2.5 3.0 3.0 3.0 3.0"
+				"LinkedSpecialBonus"							"special_bonus_unique_storm_spirit"
 			}
 			"05"
 			{
 				"var_type"										"FIELD_INTEGER"
 				"cast_range"									"300 300 300 300 350 400 450"
-				"LinkedSpecialBonus"							"special_bonus_imba_storm_spirit_2"
 			}
 			"05"
 			{
 				"var_type"										"FIELD_INTEGER"
-				"scepter_radius"								"600"
-				"LinkedSpecialBonus"							"special_bonus_imba_storm_spirit_2"
+				"scepter_radius"								"475"
 			}
 		}
 	}
@@ -20461,12 +20477,12 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"attack_slow"					"-50 -60 -70 -80 -90 -100 -110"
+				"attack_slow"					"-50"
 			}
 			"05"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"slow_duration"					"0.6 0.6 0.6 0.6 0.8 1.0 1.2"
+				"slow_duration"					"0.6 0.6 0.6 0.6 0.6 0.6 0.6"
 			}
 		}
 	}
@@ -20492,6 +20508,13 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.3 0.3 0.3"
 
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_stormspirit.vsndevts"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_vo_stormspirit.vsndevts"
+			"particle"					"particles/units/heroes/hero_stormspirit/stormspirit_ball_lightning.vpcf"
+		}
+		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -20504,7 +20527,7 @@
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"initial_mana_cost_pct"					"5"		
+				"initial_mana_cost_pct"					"8"		
 			}
 			"03"
 			{
@@ -20514,12 +20537,12 @@
 			"04"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"travel_mana_cost_pct"					"0.4"		
+				"travel_mana_cost_pct"					"0.7"		
 			}
 			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"ball_speed"							"1200 1875 2500 3000 3500 4000"		
+				"ball_speed"							"500 1875 2500 3000 3500 4000"		
 			}
 			"06"
 			{
@@ -20534,7 +20557,7 @@
 			"08"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"ball_vision_radius"					"1000"		
+				"ball_vision_radius"					"400"		
 			}
 		}
 	}
@@ -20546,7 +20569,7 @@
 	//=================================================================================================================
 	
 	//=================================================================================================================================
-	// More Electric Vortex pull duration 
+	// More pull duration 
 	//=================================================================================================================================
 	"special_bonus_imba_storm_spirit_1" 
 	{
@@ -20567,36 +20590,8 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"value"						"0.75"
-			}
-		}
-	}
-	
-	//=================================================================================================================================
-	// More Eletric vortex range and speed 
-	//=================================================================================================================================
-	"special_bonus_imba_storm_spirit_2" 
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-            "01"        "imba_storm_spirit_electric_vortex"
-        }
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
 				"var_type"					"FIELD_INTEGER"
-				"value"				"300"
+				"value"						"0.75"
 			}
 		}
 	}
