@@ -9,8 +9,6 @@ imba_shadow_shaman_mass_serpent_ward = imba_shadow_shaman_mass_serpent_ward or c
 
 LinkLuaModifier("modifier_imba_mass_serpent_ward",  "hero/hero_shadow_shaman", LUA_MODIFIER_MOTION_NONE)
 
--- TODO: make count as hero damage
-
 function imba_shadow_shaman_mass_serpent_ward:OnSpellStart()
     -- Ability properties
     local caster            =   self:GetCaster()
@@ -196,5 +194,6 @@ function modifier_imba_mass_serpent_ward:OnDestroy()
         -- Emit ward death particle
         local spawn_particle_fx = ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN, self:GetCaster())
         ParticleManager:SetParticleControl( spawn_particle_fx, 0, self:GetParent():GetAbsOrigin() )
+		ParticleManager:ReleaseParticleIndex(spawn_particle_fx)
     end
 end
