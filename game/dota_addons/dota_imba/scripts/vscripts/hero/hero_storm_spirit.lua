@@ -201,13 +201,13 @@ function imba_storm_spirit_electric_vortex:OnSpellStart()
 		else
 			-- AGHANIM'S SCEPTER: Electric Vortex affects multiple targets around Storm.
 			--Find nearby enemies
-			local enemies	=	FindUnitsInRadius(	self.caster:GetTeamNumber(),
+			local enemies	=	FindUnitsInRadius(	caster:GetTeamNumber(),
 			caster_loc,
 			nil,
 			self:GetCastRange(),
-			self.ability:GetAbilityTargetTeam(),
-			self.ability:GetAbilityTargetType(),
-			self.ability:GetAbilityTargetFlags(),
+			self:GetAbilityTargetTeam(),
+			self:GetAbilityTargetType(),
+			self:GetAbilityTargetFlags(),
 			FIND_ANY_ORDER,
 			false)
 
