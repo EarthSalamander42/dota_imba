@@ -607,7 +607,8 @@
 		"Ability1"					"imba_dazzle_poison_touch"
 		"Ability2"					"imba_dazzle_shallow_grave"
 		"Ability3"					"imba_dazzle_shadow_wave"
-		"Ability4"					"imba_dazzle_weave"
+		"Ability4"                  "imba_dazzle_ressurection"
+        "Ability5"                  "imba_dazzle_weave"
 
 		"Ability10"					"special_bonus_imba_dazzle_3"
 		"Ability11"					"special_bonus_imba_dazzle_2"
