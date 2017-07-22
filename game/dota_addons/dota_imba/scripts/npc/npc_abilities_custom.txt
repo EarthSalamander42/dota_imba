@@ -4057,7 +4057,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"										"ability_lua"
 		"ScriptFile"									"hero/hero_abaddon.lua"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityTextureName"							"custom/abaddon_over_channel"
 		"MaxLevel"										"7"
 
