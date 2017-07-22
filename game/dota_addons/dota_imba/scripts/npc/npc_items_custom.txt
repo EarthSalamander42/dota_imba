@@ -7556,7 +7556,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_resis"			"-10"
+				"active_resis"			"-25"
 			}
 			"08"
 			{
@@ -7566,12 +7566,12 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"debuff_duration"		"8"
+				"debuff_duration"		"16"
 			}
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"buff_duration"			"8"
+				"buff_duration"			"16"
 			}
 			"11"
 			{
@@ -7581,7 +7581,7 @@
 			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_resist"			"-25"
+				"aura_resist"			"-10"
 			}
 		}
 	}
