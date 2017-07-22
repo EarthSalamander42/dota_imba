@@ -19,6 +19,9 @@ function item_imba_veil_of_discord:OnSpellStart()
     local buff_duration     =   self:GetSpecialValueFor("buff_duration")
     local debuff_duration   =   self:GetSpecialValueFor("debuff_duration")
 
+    -- Emit sound
+    caster:EmitSound("DOTA_Item.VeilofDiscord.Activate")
+    
     -- Emit the particle
     local particle_fx = ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN, caster)
     ParticleManager:SetParticleControl(particle_fx, 0, target_loc)
