@@ -583,6 +583,10 @@ function modifier_imba_sandstorm_aura:IsDebuff() return false end
 
 function modifier_imba_sandstorm_aura:OnIntervalThink()
     if IsServer() then
+
+        -- Doesn't work off of your corpse
+        if not self.caster:IsAlive() then return end
+
         -- Resolve NPC positions
         ResolveNPCPositions(self.caster:GetAbsOrigin(), self.radius)
 
@@ -643,8 +647,34 @@ function modifier_imba_sandstorm_aura:OnRefresh()
     self:OnCreated()
 end
 
+function modifier_imba_sandstorm_aura:DeclareFunctions()
+    local funcs ={
+        MODIFIER_EVENT_ON_DEATH,
+        MODIFIER_EVENT_ON_RESPAWN
+    }
+    return funcs
+end
 
+function modifier_imba_sandstorm_aura:OnDeath(params)
+    if IsServer() then
+        if params.unit == self.caster then
+            -- Remove the particle from the corpse
+            ParticleManager:DestroyParticle(self.particle_sandstorm_fx, false)
+            ParticleManager:ReleaseParticleIndex(self.particle_sandstorm_fx)
+        end
+    end
+end
 
+function modifier_imba_sandstorm_aura:OnRespawn(params)
+    if IsServer() then
+        if params.unit == self.caster then
+            -- Apply the sandstorm effect
+            self.particle_sandstorm_fx = ParticleManager:CreateParticle(self.particle_sandstorm, PATTACH_ABSORIGIN_FOLLOW, self.caster)
+            ParticleManager:SetParticleControl(self.particle_sandstorm_fx, 0, self.caster:GetAbsOrigin())
+            ParticleManager:SetParticleControl(self.particle_sandstorm_fx, 1, Vector(self.radius, self.radius, 1))
+        end
+    end
+end
 
 -------------------------------
 --       CAUSTIC FINALE      --
@@ -656,7 +686,7 @@ LinkLuaModifier("modifier_imba_caustic_finale_poison", "hero/hero_sand_king.lua"
 LinkLuaModifier("modifier_imba_caustic_finale_debuff", "hero/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_sandking_caustic_finale:GetAbilityTextureName()
-   return "sandking_caustic_finale"
+    return "sandking_caustic_finale"
 end
 
 function imba_sandking_caustic_finale:GetIntrinsicModifierName()
@@ -669,7 +699,7 @@ modifier_imba_caustic_finale_trigger = class({})
 function modifier_imba_caustic_finale_trigger:OnCreated()
     -- Ability properties
     self.caster = self:GetCaster()
-    self.ability = self:GetAbility()    
+    self.ability = self:GetAbility()
     self.modifier_poison = "modifier_imba_caustic_finale_poison"
 
     -- Ability specials
@@ -680,13 +710,13 @@ function modifier_imba_caustic_finale_trigger:OnRefresh()
     self:OnCreated()
 end
 
-function modifier_imba_caustic_finale_trigger:IsHidden() return true end   
+function modifier_imba_caustic_finale_trigger:IsHidden() return true end
 function modifier_imba_caustic_finale_trigger:IsPurgable() return false end
 function modifier_imba_caustic_finale_trigger:IsDebuff() return false end
 
 function modifier_imba_caustic_finale_trigger:DeclareFunctions()
     local decFuncs = {MODIFIER_EVENT_ON_ATTACK_LANDED,
-                      MODIFIER_EVENT_ON_TAKEDAMAGE}
+        MODIFIER_EVENT_ON_TAKEDAMAGE}
 
     return decFuncs
 end
@@ -708,15 +738,15 @@ function modifier_imba_caustic_finale_trigger:OnTakeDamage(keys)
         -- #8 Talent: Caustic Finale triggers from any damage source
         local attacker = keys.attacker
         local target = keys.unit
-        local ability = keys.inflictor        
+        local ability = keys.inflictor
 
         -- Only apply if the caster has the talent
-        if self.caster:HasTalent("special_bonus_imba_sand_king_8") then            
+        if self.caster:HasTalent("special_bonus_imba_sand_king_8") then
             -- Only apply if the caster is the one who dealt damage, but not with Caustic Finale
             if attacker == self.caster and not (ability == self.ability) then
 
                 -- Ignore Nether Wand and Elder Stuff burns, otherwise it'll be an infinite cycle
-                if ability and ability:GetName() == "item_imba_nether_wand" or ability:GetName() == "item_imba_elder_staff" then                    
+                if ability and ability:GetName() == "item_imba_nether_wand" or ability:GetName() == "item_imba_elder_staff" then
                     return nil
                 end
 
@@ -726,7 +756,7 @@ function modifier_imba_caustic_finale_trigger:OnTakeDamage(keys)
     end
 end
 
-function ApplyCausticFinale(modifier, attacker,  target)    
+function ApplyCausticFinale(modifier, attacker,  target)
     -- If the caster is broken, do nothing
     if modifier.caster:PassivesDisabled() then
         return nil
@@ -779,23 +809,23 @@ function modifier_imba_caustic_finale_poison:OnCreated()
     if IsServer() then
         -- Add particle effects repeatedly
         Timers:CreateTimer(0.3, function()
-            if not self:IsNull() then                
+            if not self:IsNull() then
                 self.particle_debuff_fx = ParticleManager:CreateParticle(self.particle_debuff, PATTACH_CUSTOMORIGIN_FOLLOW, self.parent)
                 ParticleManager:SetParticleControlEnt(self.particle_debuff_fx, 0, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
                 self:AddParticle(self.particle_debuff_fx, false, false, -1, false, false)
 
                 return 0.3
-            end            
-        end)        
-    end        
+            end
+        end)
+    end
 end
 
-function modifier_imba_caustic_finale_poison:IsHidden() return false end   
+function modifier_imba_caustic_finale_poison:IsHidden() return false end
 function modifier_imba_caustic_finale_poison:IsPurgable() return true end
 function modifier_imba_caustic_finale_poison:IsDebuff() return true end
 
 function modifier_imba_caustic_finale_poison:OnDestroy()
-    if IsServer() then       
+    if IsServer() then
         -- Play explosion sound
         EmitSoundOn(self.sound_explode, self.parent)
 
@@ -806,24 +836,24 @@ function modifier_imba_caustic_finale_poison:OnDestroy()
 
         -- Find all nearby enemies
         local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-                                          self.parent:GetAbsOrigin(),
-                                          nil,
-                                          self.radius,
-                                          DOTA_UNIT_TARGET_TEAM_ENEMY,
-                                          DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-                                          DOTA_UNIT_TARGET_FLAG_NONE,
-                                          FIND_ANY_ORDER,
-                                          false)    
+        self.parent:GetAbsOrigin(),
+        nil,
+        self.radius,
+        DOTA_UNIT_TARGET_TEAM_ENEMY,
+        DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+        DOTA_UNIT_TARGET_FLAG_NONE,
+        FIND_ANY_ORDER,
+        false)
         for _,enemy in pairs(enemies) do
             -- Deal damage
             local damageTable = {victim = enemy,
-                                 attacker = self.caster, 
-                                 damage = self.damage,
-                                 damage_type = DAMAGE_TYPE_MAGICAL,
-                                 ability = self.ability
-                                 }
-            
-            ApplyDamage(damageTable)  
+                attacker = self.caster,
+                damage = self.damage,
+                damage_type = DAMAGE_TYPE_MAGICAL,
+                ability = self.ability
+            }
+
+            ApplyDamage(damageTable)
 
             -- If an enemy has Caustic Finale debuff, pop it! Kaboom!
             if enemy:HasModifier(self.modifier_poison) then
@@ -835,7 +865,7 @@ function modifier_imba_caustic_finale_poison:OnDestroy()
 
             -- Apply slow
             enemy:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = self.slow_duration})
-        end        
+        end
     end
 end
 
@@ -854,7 +884,7 @@ function modifier_imba_caustic_finale_debuff:OnCreated()
     self.ms_slow_pct = self.ms_slow_pct + self.caster:FindTalentValue("special_bonus_imba_sand_king_5")
 end
 
-function modifier_imba_caustic_finale_debuff:IsHidden() return false end   
+function modifier_imba_caustic_finale_debuff:IsHidden() return false end
 function modifier_imba_caustic_finale_debuff:IsPurgable() return true end
 function modifier_imba_caustic_finale_debuff:IsDebuff() return true end
 
@@ -880,7 +910,7 @@ LinkLuaModifier("modifier_imba_epicenter_pulse", "hero/hero_sand_king.lua", LUA_
 LinkLuaModifier("modifier_imba_epicenter_slow", "hero/hero_sand_king.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_sandking_epicenter:GetAbilityTextureName()
-   return "sandking_epicenter"
+    return "sandking_epicenter"
 end
 
 function imba_sandking_epicenter:IsHiddenWhenStolen()
@@ -902,11 +932,11 @@ function imba_sandking_epicenter:GetChannelTime()
     end
 end
 
-function imba_sandking_epicenter:OnSpellStart()    
+function imba_sandking_epicenter:OnSpellStart()
     -- Ability properties
-    local caster = self:GetCaster()    
+    local caster = self:GetCaster()
     local ability = self
-    local sound_cast = "Ability.SandKing_Epicenter.spell"    
+    local sound_cast = "Ability.SandKing_Epicenter.spell"
     local particle_sandblast = "particles/units/heroes/hero_sandking/sandking_epicenter_tell.vpcf"
     local modifier_pulse = "modifier_imba_epicenter_pulse"
 
@@ -928,7 +958,7 @@ function imba_sandking_epicenter:OnSpellStart()
             caster:StartGesture(ACT_DOTA_CAST_ABILITY_4)
             return FrameTime()
         else
-            caster:FadeGesture(ACT_DOTA_CAST_ABILITY_4)            
+            caster:FadeGesture(ACT_DOTA_CAST_ABILITY_4)
             return nil
         end
     end)
@@ -960,7 +990,7 @@ function imba_sandking_epicenter:OnChannelFinish(interrupted)
     ParticleManager:ReleaseParticleIndex(self.particle_sandblast_fx)
 
     -- If the caster was interrupted, complain and do nothing 
-    if interrupted then                
+    if interrupted then
         EmitSoundOn(failed_response, caster)
         return nil
     end
@@ -978,7 +1008,7 @@ function modifier_imba_epicenter_pulse:OnCreated()
         -- Ability properties
         self.caster = self:GetCaster()
         self.ability = self:GetAbility()
-        self.sound_epicenter = "Ability.SandKing_Epicenter"        
+        self.sound_epicenter = "Ability.SandKing_Epicenter"
         self.particle_epicenter = "particles/units/heroes/hero_sandking/sandking_epicenter.vpcf"
         self.scepter = self.caster:HasScepter()
         self.modifier_slow = "modifier_imba_epicenter_slow"
@@ -992,7 +1022,7 @@ function modifier_imba_epicenter_pulse:OnCreated()
         self.max_pulse_radius = self.ability:GetSpecialValueFor("max_pulse_radius")
         self.pull_speed = self.ability:GetSpecialValueFor("pull_speed")
         self.scepter_pulses_count_pct = self.ability:GetSpecialValueFor("scepter_pulses_count_pct")
-        self.epicenter_duration = self.ability:GetSpecialValueFor("epicenter_duration")        
+        self.epicenter_duration = self.ability:GetSpecialValueFor("epicenter_duration")
 
         -- Play epicenter sound
         EmitSoundOn(self.sound_epicenter, self.caster)
@@ -1026,53 +1056,53 @@ function modifier_imba_epicenter_pulse:OnIntervalThink()
         self.pull_radius = self.pull_radius + self.caster:FindTalentValue("special_bonus_imba_sand_king_4")
 
         -- Increment pulse count
-        self.pulses = self.pulses + 1        
+        self.pulses = self.pulses + 1
 
         -- Add particle
         self.particle_epicenter_fx = ParticleManager:CreateParticle(self.particle_epicenter, PATTACH_ABSORIGIN_FOLLOW, self.caster)
         ParticleManager:SetParticleControl(self.particle_epicenter_fx, 0, self.caster:GetAbsOrigin())
-        ParticleManager:SetParticleControl(self.particle_epicenter_fx, 1, Vector(self.radius, self.radius, 1))    
+        ParticleManager:SetParticleControl(self.particle_epicenter_fx, 1, Vector(self.radius, self.radius, 1))
         ParticleManager:ReleaseParticleIndex(self.particle_epicenter_fx)
 
         -- Find all nearby enemies in the damage radius
         local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-                                          self.caster:GetAbsOrigin(),
-                                          nil,
-                                          self.radius,
-                                          DOTA_UNIT_TARGET_TEAM_ENEMY,
-                                          DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-                                          DOTA_UNIT_TARGET_FLAG_NONE,
-                                          FIND_ANY_ORDER,
-                                          false)
+        self.caster:GetAbsOrigin(),
+        nil,
+        self.radius,
+        DOTA_UNIT_TARGET_TEAM_ENEMY,
+        DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+        DOTA_UNIT_TARGET_FLAG_NONE,
+        FIND_ANY_ORDER,
+        false)
 
-        for _,enemy in pairs(enemies) do        
+        for _,enemy in pairs(enemies) do
 
             -- Deal damage
             local damageTable = {victim = enemy,
-                                 attacker = self.caster, 
-                                 damage = self.damage,
-                                 damage_type = DAMAGE_TYPE_MAGICAL,
-                                 ability = self.ability
-                                 }
-            
-            ApplyDamage(damageTable)  
+                attacker = self.caster,
+                damage = self.damage,
+                damage_type = DAMAGE_TYPE_MAGICAL,
+                ability = self.ability
+            }
+
+            ApplyDamage(damageTable)
 
             -- Apply Epicenter slow
-            enemy:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = self.slow_duration})           
+            enemy:AddNewModifier(self.caster, self.ability, self.modifier_slow, {duration = self.slow_duration})
         end
 
         -- Find all nearby enemies in the pull radius
         local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-                                          self.caster:GetAbsOrigin(),
-                                          nil,
-                                          self.pull_radius,
-                                          DOTA_UNIT_TARGET_TEAM_ENEMY,
-                                          DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-                                          DOTA_UNIT_TARGET_FLAG_NONE,
-                                          FIND_ANY_ORDER,
-                                          false)
+        self.caster:GetAbsOrigin(),
+        nil,
+        self.pull_radius,
+        DOTA_UNIT_TARGET_TEAM_ENEMY,
+        DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+        DOTA_UNIT_TARGET_FLAG_NONE,
+        FIND_ANY_ORDER,
+        false)
 
-        for _,enemy in pairs(enemies) do        
+        for _,enemy in pairs(enemies) do
 
             -- Pull enemy towards Sand King
             -- Calculate distance and direction between SK and the enemy
@@ -1132,7 +1162,7 @@ function modifier_imba_epicenter_slow:IsDebuff() return true end
 
 function modifier_imba_epicenter_slow:DeclareFunctions()
     local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-                      MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
+        MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
 
     return decFuncs
 end

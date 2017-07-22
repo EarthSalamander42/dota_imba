@@ -725,18 +725,18 @@ function modifier_imba_return_passive:OnTakeDamage(keys)
 		local attacker = keys.attacker
 		local target = keys.unit
 		local particle_return = "particles/units/heroes/hero_centaur/centaur_return.vpcf"
-		local modifier_damage_block = "modifier_imba_return_damage_block"		
+		local modifier_damage_block = "modifier_imba_return_damage_block"
 		local particle_block_msg = "particles/msg_fx/msg_block.vpcf"
 		-- Ability specials
 		local damage = ability:GetSpecialValueFor("damage")
 		local str_pct_as_damage = ability:GetSpecialValueFor("str_pct_as_damage")
 		local damage_block = ability:GetSpecialValueFor("damage_block")
-		local block_duration = ability:GetSpecialValueFor("block_duration")	
+		local block_duration = ability:GetSpecialValueFor("block_duration")
 
 		-- #1 Talent:Reduced self damage_block
-		str_pct_as_damage = str_pct_as_damage + caster:FindTalentValue("special_bonus_imba_centaur_1")		
+		str_pct_as_damage = str_pct_as_damage + caster:FindTalentValue("special_bonus_imba_centaur_1")
 
-		
+
 
 
 		-- Not inherited by illusions
@@ -748,39 +748,50 @@ function modifier_imba_return_passive:OnTakeDamage(keys)
 		if parent:PassivesDisabled() then
 			return nil
 		end
-		
+
 
 		-- Only commence on enemies attacking Centaur
-		if attacker:GetTeamNumber() ~= parent:GetTeamNumber() and parent == target 
+		if attacker:GetTeamNumber() ~= parent:GetTeamNumber() and parent == target
 		-- Don't affect wards.
 		and not attacker:IsOther() then
-				-- #7 Talent:Return's Bulging Hide gains stacks from all auto attacks, or any kind of damage above 100.
-			if not caster:HasTalent("special_bonus_imba_centaur_7") then 
+			-- #7 Talent:Return's Bulging Hide gains stacks from all auto attacks, or any kind of damage above 100.
+			if not caster:HasTalent("special_bonus_imba_centaur_7") then
 				if keys.inflictor then
-					return 
+					return
 				end
 			else
 				if keys.inflictor and keys.damage < caster:FindTalentValue("special_bonus_imba_centaur_7") then
 					return
 				end
 			end
+
+			-- Centaur-Nyx Carcapace handler
+			if self.reflect_handler then return end
+			-- Note: Might remove this `if` this happens again
+			if attacker:FindModifierByName("modifier_imba_spiked_carapace") then
+				self.reflect_handler = true
+				Timers:CreateTimer(FrameTime(),function()
+					self.reflect_handler = false
+				end)
+			end
+
 			-- Add return particle
 			local particle_return_fx = ParticleManager:CreateParticle(particle_return, PATTACH_ABSORIGIN, parent)
 			ParticleManager:SetParticleControlEnt(particle_return_fx, 0, parent, PATTACH_POINT_FOLLOW, "attach_hitloc", parent:GetAbsOrigin(), true)
-			ParticleManager:SetParticleControlEnt(particle_return_fx, 1, attacker, PATTACH_POINT_FOLLOW, "attach_hitloc", attacker:GetAbsOrigin(), true)			
+			ParticleManager:SetParticleControlEnt(particle_return_fx, 1, attacker, PATTACH_POINT_FOLLOW, "attach_hitloc", attacker:GetAbsOrigin(), true)
 			ParticleManager:ReleaseParticleIndex(particle_return_fx)
 
 			-- Calculate damage using Centaur's strength
-			local final_damage = damage + caster:GetStrength() * (str_pct_as_damage/100)			
+			local final_damage = damage + caster:GetStrength() * (str_pct_as_damage/100)
 
 			-- Apply damage on attacker
 			local damageTable = {victim = attacker,
-								attacker = parent,
-								damage = final_damage,
-								damage_type = DAMAGE_TYPE_PHYSICAL,
-								ability = ability}
-										
-			ApplyDamage(damageTable)	
+				attacker = parent,
+				damage = final_damage,
+				damage_type = DAMAGE_TYPE_PHYSICAL,
+				ability = ability}
+
+			ApplyDamage(damageTable)
 
 			-- If this is a building, do not grant Bulging Hide stack.
 			if attacker:IsBuilding() then
@@ -797,8 +808,8 @@ function modifier_imba_return_passive:OnTakeDamage(keys)
 			if modifier_damage_block_handler then
 				modifier_damage_block_handler:IncrementStackCount()
 				modifier_damage_block_handler:ForceRefresh()
-			end			
-		end		
+			end
+		end
 	end
 end
 
@@ -845,7 +856,7 @@ end
 
 ---------------------------------
 -- 		   Stampede            --
----------------------------------	
+---------------------------------
 
 
 imba_centaur_stampede = class({})
@@ -854,7 +865,7 @@ LinkLuaModifier("modifier_imba_stampede_trample_stun", "hero/hero_centaur", LUA_
 LinkLuaModifier("modifier_imba_stampede_trample_slow", "hero/hero_centaur", LUA_MODIFIER_MOTION_NONE)
 
 function imba_centaur_stampede:GetAbilityTextureName()
-   return "centaur_stampede"
+	return "centaur_stampede"
 end
 
 function imba_centaur_stampede:IsHiddenWhenStolen()
@@ -866,35 +877,35 @@ function imba_centaur_stampede:OnSpellStart()
 		-- Ability properties
 		local caster = self:GetCaster()
 		local ability = self
-		local sound_cast = "Hero_Centaur.Stampede.Cast" 
-		local cast_animation = ACT_DOTA_CENTAUR_STAMPEDE		
+		local sound_cast = "Hero_Centaur.Stampede.Cast"
+		local cast_animation = ACT_DOTA_CENTAUR_STAMPEDE
 		local modifier_haste = "modifier_imba_stampede_haste"
 
 		-- Ability specials
 		local duration = ability:GetSpecialValueFor("duration")
 
 		-- Play cast sound
-		EmitSoundOn(sound_cast, caster)		
-		
+		EmitSoundOn(sound_cast, caster)
+
 		-- Play cast animation
-		caster:StartGesture(cast_animation)	
+		caster:StartGesture(cast_animation)
 
 		-- Should we inform the bitches they need to move?
 		local bitch_be_gone = 15
 		if RollPercentage(bitch_be_gone) then
 			EmitSoundOn("Imba.CentaurMoveBitch", caster)
 		end
-		
+
 		-- Find all enemies and clear trample marks from them
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-			           					  caster:GetAbsOrigin(),
-			              				  nil,
-			              				  25000, -- global
-			              				  DOTA_UNIT_TARGET_TEAM_ENEMY,
-			              				  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-			              				  DOTA_UNIT_TARGET_FLAG_NONE,
-			              				  FIND_ANY_ORDER,
-			              				  false)
+		caster:GetAbsOrigin(),
+		nil,
+		25000, -- global
+		DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		DOTA_UNIT_TARGET_FLAG_NONE,
+		FIND_ANY_ORDER,
+		false)
 
 		for _,enemy in pairs(enemies) do
 			enemy.trampled_in_stampede = nil
@@ -902,26 +913,26 @@ function imba_centaur_stampede:OnSpellStart()
 
 		-- Find all allied heroes and player controlled creeps
 		local allies = FindUnitsInRadius(caster:GetTeamNumber(),
-			           					 caster:GetAbsOrigin(),
-			              				nil,
-			              				25000, -- global
-			              				DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-			              				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-			              				DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
-			              				FIND_ANY_ORDER,
-			              				false)
+		caster:GetAbsOrigin(),
+		nil,
+		25000, -- global
+		DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
+		FIND_ANY_ORDER,
+		false)
 
 		-- Give them haste buff
 		for _,ally in pairs (allies) do
 			ally:AddNewModifier(caster, ability, modifier_haste, {duration = duration})
-		end		
+		end
 	end
 end
 
 -- Haste modifier
 modifier_imba_stampede_haste = class({})
 
-function modifier_imba_stampede_haste:OnCreated()	
+function modifier_imba_stampede_haste:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
@@ -938,7 +949,7 @@ function modifier_imba_stampede_haste:OnCreated()
 	self.damage_reduction_scepter = self.ability:GetSpecialValueFor("damage_reduction_scepter")
 	self.absolute_move_speed = self.ability:GetSpecialValueFor("absolute_move_speed")
 	self.slow_duration = self.ability:GetSpecialValueFor("slow_duration")
-	self.tree_destruction_radius = self.ability:GetSpecialValueFor("tree_destruction_radius")	
+	self.tree_destruction_radius = self.ability:GetSpecialValueFor("tree_destruction_radius")
 	self.nether_ward_damage = self.ability:GetSpecialValueFor("nether_ward_damage")
 
 	if IsServer() then
@@ -964,14 +975,14 @@ function modifier_imba_stampede_haste:OnIntervalThink()
 	if IsServer() then
 		-- Look for nearby enemies
 		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-										  self.parent:GetAbsOrigin(),
-										  nil,
-										  self.radius,
-										  DOTA_UNIT_TARGET_TEAM_ENEMY,
-										  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-										  DOTA_UNIT_TARGET_FLAG_NONE,
-										  FIND_ANY_ORDER,
-										  false)
+		self.parent:GetAbsOrigin(),
+		nil,
+		self.radius,
+		DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		DOTA_UNIT_TARGET_FLAG_NONE,
+		FIND_ANY_ORDER,
+		false)
 
 		-- If enemy wasn't trampled before, trample it now
 		for _,enemy in pairs(enemies) do
@@ -981,12 +992,12 @@ function modifier_imba_stampede_haste:OnIntervalThink()
 
 				-- Deal damage
 				local damageTable = {victim = enemy,
-									 attacker = self.parent,
-									 damage = self.trample_damage,
-									 damage_type = DAMAGE_TYPE_MAGICAL,
-									 ability = self.ability}
-											
-				ApplyDamage(damageTable)	
+					attacker = self.parent,
+					damage = self.trample_damage,
+					damage_type = DAMAGE_TYPE_MAGICAL,
+					ability = self.ability}
+
+				ApplyDamage(damageTable)
 
 				-- Add stun and slow modifiers to the enemy
 				enemy:AddNewModifier(self.caster, self.ability, self.modifier_trample_stun, {duration = self.stun_duration})
@@ -999,14 +1010,14 @@ function modifier_imba_stampede_haste:OnIntervalThink()
 
 					-- Find all allies
 					local allies = FindUnitsInRadius(self.caster:GetTeamNumber(),
-										  			self.parent:GetAbsOrigin(),
-										  			nil,
-										  			50000, -- global
-										  			DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-										  			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-										  			DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
-										  			FIND_ANY_ORDER,
-										  			false)
+					self.parent:GetAbsOrigin(),
+					nil,
+					50000, -- global
+					DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+					DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+					DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
+					FIND_ANY_ORDER,
+					false)
 
 					-- Find their Stampede modifier and increase its duration
 					for _,ally in pairs(allies) do
@@ -1028,7 +1039,7 @@ end
 
 function modifier_imba_stampede_haste:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE,
-					  MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE}
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE}
 
 	return decFuncs
 end
@@ -1042,7 +1053,7 @@ function modifier_imba_stampede_haste:GetModifierIncomingDamage_Percentage()
 	if self.scepter then
 		return self.damage_reduction_scepter * (-1)
 	end
-	
+
 	return nil
 end
 
@@ -1056,7 +1067,7 @@ function modifier_imba_stampede_haste:CheckState()
 	-- Gain cliffwalk if the caster has scepter
 	if self.scepter then
 		state = {[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
-		         [MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true}
+			[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true}
 	else
 		state = {[MODIFIER_STATE_NO_UNIT_COLLISION] = true}
 	end
@@ -1065,8 +1076,8 @@ function modifier_imba_stampede_haste:CheckState()
 end
 
 function modifier_imba_stampede_haste:GetEffectName()
- 	return "particles/units/heroes/hero_centaur/centaur_stampede_overhead.vpcf"
-end 
+	return "particles/units/heroes/hero_centaur/centaur_stampede_overhead.vpcf"
+end
 
 function modifier_imba_stampede_haste:GetEffectAttachType()
 	return PATTACH_OVERHEAD_FOLLOW

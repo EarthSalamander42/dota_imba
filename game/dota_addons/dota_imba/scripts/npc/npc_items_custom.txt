@@ -7491,11 +7491,12 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2101"
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"items/item_veil_of_discord.lua"
 		"AbilityTextureName" 			"custom/imba_veil_of_discord"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -7520,12 +7521,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"900"
+				"bonus_int"				"14"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_resist"			"-20"
+				"bonus_str"				"6"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_agi"				"6"
 			}
 			"03"
 			{
@@ -7540,107 +7546,46 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_int"				"14"
+				"bonus_attack_damage"	"6"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"debuff_duration"		"8"
+				"active_aoe"			"600"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"target_damage"			"100"
-				"CalculateSpellDamageTooltip"	"1"
+				"active_resis"			"-10"
 			}
-		}
-
-		"OnSpellStart"
-		{
-			"FireEffect"
+			"08"
 			{
-				"EffectName"			"particles/generic_gameplay/generic_manaburn.vpcf"
-				"EffectAttachType"		"follow_origin"
-				"Target"				"TARGET"
+				"var_type"				"FIELD_INTEGER"
+				"active_spell_power"	"10"
 			}
-
-			"FireSound"
+			"09"
 			{
-				"EffectName"			"DOTA_Item.VeilofDiscord.Activate"
-				"Target" 				"TARGET"
+				"var_type"				"FIELD_INTEGER"
+				"debuff_duration"		"8"
 			}
-
-			"ApplyModifier"
+			"10"
 			{
-				"ModifierName"			"modifier_item_imba_veil_of_discord_target_debuff"
-				"Target" 				"TARGET"
+				"var_type"				"FIELD_INTEGER"
+				"buff_duration"			"8"
 			}
-
-			"Damage"
+			"11"
 			{
-				"Target"				"TARGET"
-				"Type"					"DAMAGE_TYPE_MAGICAL"
-				"Damage"				"%target_damage"
+				"var_type"				"FIELD_INTEGER"
+				"aura_radius"			"900"
 			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_veil_of_discord"
+			"12"
 			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"				"%bonus_health_regen"
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"				"%bonus_armor"
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"				"%bonus_int"
-				}
-			}
-
-			"modifier_item_imba_veil_of_discord_aura"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-
-				"Aura"          		"modifier_item_imba_veil_of_discord_aura_debuff"
-				"Aura_Radius"   		"%aura_radius"
-				"Aura_Teams"    		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Aura_Types"    		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_ApplyToCaster" 	"0"
-			}
-
-			"modifier_item_imba_veil_of_discord_aura_debuff"
-			{
-				"IsDebuff"				"1"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS" 			"%aura_resist"
-				}
-			}
-
-			"modifier_item_imba_veil_of_discord_target_debuff"
-			{
-				"IsDebuff"				"1"
-				"IsPurgable"			"1"
-
-				"EffectName"			"particles/items2_fx/veil_of_discord_debuff.vpcf"
-				"EffectAttachType"		"follow_origin"
-
-				"Duration"				"%debuff_duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS" 			"%aura_resist"
-				}
+				"var_type"				"FIELD_INTEGER"
+				"aura_resist"			"-25"
 			}
 		}
 	}
-
+	
 	//=================================================================================================================
 	// Recipe: Heaven's Halberd
 	//=================================================================================================================
