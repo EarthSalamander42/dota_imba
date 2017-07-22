@@ -218,7 +218,7 @@
     "Dota_Tooltip_Talent_special_bonus_imba_clinkz_7_title"						"死亡契约"
 	"Dota_Tooltip_Talent_special_bonus_imba_clinkz_7_Description"				"+50% 死亡契约增益"
     "Dota_Tooltip_Talent_special_bonus_imba_clinkz_8_title"						"死亡契约"
-	"Dota_Tooltip_Talent_special_bonus_imba_clinkz_8_Description"				"5秒内杀死死亡契约的目标则永久获得增益的10%"
+	"Dota_Tooltip_Talent_special_bonus_imba_clinkz_8_Description"				"5秒内杀死死亡契约的目标则获得增益的10%,持续到克林克兹死亡"
 
 	// Crystal Maiden	
     "Dota_Tooltip_Talent_special_bonus_imba_crystal_maiden_1_title"             "极寒领域"
