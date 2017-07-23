@@ -19,6 +19,9 @@ function item_imba_veil_of_discord:OnSpellStart()
     local buff_duration     =   self:GetSpecialValueFor("buff_duration")
     local debuff_duration   =   self:GetSpecialValueFor("debuff_duration")
 
+    -- Emit sound
+    caster:EmitSound("DOTA_Item.VeilofDiscord.Activate")
+    
     -- Emit the particle
     local particle_fx = ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN, caster)
     ParticleManager:SetParticleControl(particle_fx, 0, target_loc)
@@ -126,19 +129,22 @@ function modifier_veil_passive:IsHidden() return true end
 function modifier_veil_passive:IsDebuff() return false end
 function modifier_veil_passive:IsPurgable() return false end
 function modifier_veil_passive:IsPermanent() return true end
+function modifier_veil_passive:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 function modifier_veil_passive:IsAura() return true end
 
 function modifier_veil_passive:OnCreated()
     local ability   =   self:GetAbility()
 
     -- Ability parameters
-    self.int_bonus              =   ability:GetSpecialValueFor("bonus_int")
-    self.str_bonus              =   ability:GetSpecialValueFor("bonus_str")
-    self.agi_bonus              =   ability:GetSpecialValueFor("bonus_agi")
-    self.hp_regen_bonus         =   ability:GetSpecialValueFor("bonus_health_regen")
-    self.armor_bonus            =   ability:GetSpecialValueFor("bonus_armor")
-    self.attack_damage_bonus    =   ability:GetSpecialValueFor("bonus_attack_damage")
-
+    if self:GetParent():IsHero() and ability then
+        self.int_bonus              =   ability:GetSpecialValueFor("bonus_int")
+        self.str_bonus              =   ability:GetSpecialValueFor("bonus_str")
+        self.agi_bonus              =   ability:GetSpecialValueFor("bonus_agi")
+        self.hp_regen_bonus         =   ability:GetSpecialValueFor("bonus_health_regen")
+        self.armor_bonus            =   ability:GetSpecialValueFor("bonus_armor")
+        self.attack_damage_bonus    =   ability:GetSpecialValueFor("bonus_attack_damage")
+        self:CheckUnique(true)
+    end
 end
 
 -- Various stat bonuses
