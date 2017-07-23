@@ -806,7 +806,9 @@ end
 function modifier_imba_silencer_last_word_debuff:OnIntervalThink()
 	local target = self:GetParent()
 	if IsServer() then
+		if not target:IsMagicImmune() then --prevent weird interaction such as silencing Juggernaut trought Blade Fury
 		target:AddNewModifier(self.caster, self:GetAbility(), "modifier_silence", {duration = self.silence_duration})
+		end
 	end
 end
 
