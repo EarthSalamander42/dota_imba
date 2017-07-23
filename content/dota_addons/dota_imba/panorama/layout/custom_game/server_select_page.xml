@@ -2,7 +2,7 @@
 
 	<styles>
 		<include src="file://{resources}/styles/custom_game/server_part_select.css" />
-		<include src="s2r://panorama/styles/dotastyles.css" />
+		<include src="s2r://panorama/styles/hud/dota_hud_menu_buttons.vcss_c" />
     </styles>
 	
 	<scripts>
