@@ -696,7 +696,7 @@ function InsertPartSelectButton()
 	var newButton = $.CreatePanel("Panel", baseUI, "hahaha");
     newButton.BLoadLayout("file://{resources}/layout/custom_game/server_part_select.xml", false, false);
     baseUI.MoveChildAfter(newButton, targetButton);
-	UpdateTooltipUI();
+
 	
 }
 
