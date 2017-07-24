@@ -696,7 +696,17 @@ function InsertPartSelectButton()
 	var newButton = $.CreatePanel("Panel", baseUI, "hahaha");
     newButton.BLoadLayout("file://{resources}/layout/custom_game/server_part_select.xml", false, false);
     baseUI.MoveChildAfter(newButton, targetButton);
+
 	
+}
+
+function UpdateTooltipUI()
+{
+    var tooltips = GetHUDRootUI_Server().FindChildTraverse("DOTAAbilityTooltip")
+    if(tooltips != null){
+        tooltips.FindChildTraverse("AbilityCosts").style.flowChildren = "down";
+    }
+    $.Schedule(0.1, UpdateTooltipUI);
 }
 
 function InsertIMBATalentButton(){
