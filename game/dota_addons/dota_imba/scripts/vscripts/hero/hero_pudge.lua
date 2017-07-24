@@ -565,7 +565,7 @@ function imba_pudge_meat_hook:OnSpellStart()
 			Source = self:GetCaster(),
 			iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_BOTH,
 			iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_TREE,
-			iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
+			iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,
 			EffectName = "particles/units/heroes/hero_pudge/pudge_meathook.vpcf",
 			ExtraData = 
 			{
