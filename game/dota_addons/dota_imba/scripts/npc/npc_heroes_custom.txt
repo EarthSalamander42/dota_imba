@@ -750,14 +750,14 @@
 		"Ability4"					"imba_drow_ranger_deadeye"
 		"Ability5"					"imba_drow_ranger_marksmanship"
 
-		"Ability10"					"special_bonus_imba_drow_ranger_1"
-		"Ability11"					"special_bonus_imba_drow_ranger_2"
-		"Ability12"					"special_bonus_imba_drow_ranger_3"
-		"Ability13"					"special_bonus_imba_drow_ranger_4"
-		"Ability14"					"special_bonus_imba_drow_ranger_5"
-		"Ability15"					"special_bonus_imba_drow_ranger_6"
-		"Ability16"					"special_bonus_imba_drow_ranger_7"
-		"Ability17"					"special_bonus_imba_drow_ranger_8"
+		"Ability10"					"special_bonus_imba_drow_ranger_1" //Gust can be self cast, making a wave that moves Drow Ranger herself forward. This wave silences all enemies that it comes in contact with normally.
+		"Ability11"					"special_bonus_imba_drow_ranger_2" //Chance to kill creeps instantly
+		"Ability12"					"special_bonus_imba_drow_ranger_3" //After casting Gust, all auto attacks hitting a target casts a small Gust for 5 seconds. This small gust wave pushes the main target back 50 units, deals no damage, and does not silence.
+		"Ability13"					"special_bonus_imba_drow_ranger_4" //Each Chilled enemy grants drow +10 flat movespeed bonus for the duration. Stacks with itself, depending on amounts of Chill stacks on enemies.
+		"Ability14"					"special_bonus_imba_drow_ranger_5" //While Marksmanship is active (not disabled by nearby enemies), Drow Ranger emits an aura on nearby allies that makes their attack chill their targets, slowing them by 15%.
+		"Ability15"					"special_bonus_imba_drow_ranger_6" //While Trueshot Aura is active, Drow gains agility equal to 5% of every allied hero's agility.
+		"Ability16"					"special_bonus_imba_drow_ranger_7" //Deadeye becomes an aura
+		"Ability17"					"special_bonus_imba_drow_ranger_8" //Marksmanship no longer disables itself
 
 		"ProjectileModel"			"particles/units/heroes/hero_drow/drow_base_attack.vpcf"
 	}
