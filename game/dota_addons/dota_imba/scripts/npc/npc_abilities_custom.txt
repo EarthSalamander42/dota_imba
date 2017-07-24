@@ -8714,8 +8714,7 @@
 			"03"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"hero_duration"					"1.5"
-				"LinkedSpecialBonus"			"special_bonus_imba_drow_ranger_1"
+				"hero_duration"					"1.5"				
 			}
 
 			"04"
