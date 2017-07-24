@@ -506,14 +506,14 @@
 		"Ability3"					"imba_clinkz_skeleton_walk"
 		"Ability4"					"imba_clinkz_death_pact"
 
-		"Ability10"					"special_bonus_imba_clinkz_1"
-		"Ability11"					"special_bonus_imba_clinkz_2"
-		"Ability12"					"special_bonus_imba_clinkz_3"
-		"Ability13"					"special_bonus_imba_clinkz_4"
-		"Ability14"					"special_bonus_imba_clinkz_5"
-		"Ability15"					"special_bonus_imba_clinkz_6"
-		"Ability16"					"special_bonus_imba_clinkz_7"
-		"Ability17"					"special_bonus_imba_clinkz_8"
+		"Ability10"					"special_bonus_imba_clinkz_1" //Death Pact Spirits can now attack with spirit strikes
+		"Ability11"					"special_bonus_imba_clinkz_2" //Clinkz gains extra move speed when Skeleton Walking close to enemies
+		"Ability12"					"special_bonus_imba_clinkz_3" //Skeleton Walking through an enemy causes Clinkz to lose his invisibility, but roots the target
+		"Ability13"					"special_bonus_imba_clinkz_4" //Searing Arrow active hits in an AoE  
+		"Ability14"					"special_bonus_imba_clinkz_5" //Strafe can be self cast to root Clinkz for the duration but grant him a huge range bonus
+		"Ability15"					"special_bonus_imba_clinkz_6" //Skeleton Walk move speed persists for a small period
+		"Ability16"					"special_bonus_imba_clinkz_7" //Searing Arrows has a chance to attack the same target again
+		"Ability17"					"special_bonus_imba_clinkz_8" //Death Pact bonuses stay permanently if target dies quickly
 
 		"ProjectileModel"			"particles/units/heroes/hero_clinkz/clinkz_base_attack.vpcf"
 	}

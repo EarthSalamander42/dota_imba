@@ -670,8 +670,7 @@ function SpawnImbaRunes()
 	local game_time = GameRules:GetDOTATime(false, false)
 	for _, bounty_loc in pairs(bounty_rune_locations) do
 		local bounty_rune = CreateItem("item_imba_rune_bounty", nil, nil)
-		rune = CreateItemOnPositionForLaunch(bounty_loc, bounty_rune)
-		print("rune:", rune, rune:GetName(), rune:IsItemContainer(), rune:GetContainedItem())
+		rune = CreateItemOnPositionForLaunch(bounty_loc, bounty_rune)		
 		RegisterRune(rune)
 
 		-- If these are the 00:00 runes, double their worth
@@ -689,8 +688,7 @@ function SpawnImbaRunes()
 
 	-- Spawn a random powerup rune in a random powerup location
 	if game_time > 1 and game_time < 40 then		
-		rune = CreateItemOnPositionForLaunch(powerup_rune_locations[RandomInt(1, #powerup_rune_locations)], CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))
-		print("rune:", rune, rune:GetName(), rune:IsItemContainer())
+		rune = CreateItemOnPositionForLaunch(powerup_rune_locations[RandomInt(1, #powerup_rune_locations)], CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))		
 		RegisterRune(rune)
 
 	-- After 40 minutes, spawn powerup runes on both locations
