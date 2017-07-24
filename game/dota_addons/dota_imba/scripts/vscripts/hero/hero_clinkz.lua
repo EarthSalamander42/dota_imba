@@ -289,7 +289,6 @@ end
 imba_clinkz_searing_arrows = class({})
 LinkLuaModifier("modifier_imba_searing_arrows_passive", "hero/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_searing_arrows_active", "hero/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_searing_arrow_haste", "hero/hero_clinkz", LUA_MODIFIER_MOTION_NONE)
 
 function imba_clinkz_searing_arrows:GetAbilityTextureName()
    return "clinkz_searing_arrows"
@@ -636,7 +635,6 @@ function modifier_imba_searing_arrows_active:IsPurgable() return true end
 function modifier_imba_searing_arrows_active:IsDebuff() return true end
 
 function modifier_imba_searing_arrows_active:OnCreated()
-    if IsServer() then
         -- Ability properties
         self.caster = self:GetCaster()
         self.ability = self:GetAbility()
@@ -645,7 +643,10 @@ function modifier_imba_searing_arrows_active:OnCreated()
 
         -- Ability specials
         self.vision_radius = self.ability:GetSpecialValueFor("vision_radius")
-		
+        self.active_tick_interval = self.ability:GetSpecialValueFor("active_tick_interval")        
+        self.armor_burn_per_stack = self.ability:GetSpecialValueFor("armor_burn_per_stack")
+
+    if IsServer() then
         -- Add and attach flaming particle
         self.particle_flame_fx = ParticleManager:CreateParticle(self.particle_flame, PATTACH_POINT_FOLLOW, self.parent)
         ParticleManager:SetParticleControlEnt(self.particle_flame_fx, 0, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
@@ -656,10 +657,10 @@ function modifier_imba_searing_arrows_active:OnCreated()
         self:StartIntervalThink(FrameTime())		
 
         -- Strengthen the armor reduction by adding stacks once every second
-        Timers:CreateTimer(1, function()
+        Timers:CreateTimer(self.active_tick_interval, function()
             if not self:IsNull() then
                 self:IncrementStackCount()
-                return 1
+                return self.active_tick_interval
             end
 
             return nil
@@ -676,7 +677,7 @@ function modifier_imba_searing_arrows_active:DeclareFunctions()
 end
 
 function modifier_imba_searing_arrows_active:GetModifierPhysicalArmorBonus()
-	return self:GetStackCount() * (-1)
+	return self:GetStackCount() * self.armor_burn_per_stack (-1)
 end
 
 	
@@ -1793,7 +1794,7 @@ end
 -- Spirit-to-be debuff marker
 modifier_imba_death_pact_hero_debuff = class({})
 
-function modifier_imba_death_pact_hero_debuff:IsHidden() return false end
+function modifier_imba_death_pact_hero_debuff:IsHidden() return true end
 function modifier_imba_death_pact_hero_debuff:IsPurgable() return false end
 function modifier_imba_death_pact_hero_debuff:IsDebuff() return true end
 
