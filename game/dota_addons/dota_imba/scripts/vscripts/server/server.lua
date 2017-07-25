@@ -129,7 +129,9 @@ function Server_GetPlayerLevelAndTitle(nPlayerID)
 					XP_need_to_next_level[nPlayerID] = table_rankXP[i+1] - tonumber(table_XP_has[nPlayerID])
 				end
 				XP_has_this_level[nPlayerID] = tonumber(table_XP_has[nPlayerID]) - table_rankXP[i]
-				CustomNetTables:SetTableValue("player_table", "ImbaXP", {number = tonumber(XP_has_this_level[nPlayerID]), MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]), Lvl = tonumber(XP_level[nPlayerID]), ID = nPlayerID})
+				print("PlayerID:", nPlayerID)
+				CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {XP = tonumber(XP_has_this_level[nPlayerID]), MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]), Lvl = tonumber(XP_level[nPlayerID]), ID = nPlayerID})
+				print("GetTableValue (player_table):", CustomNetTables:GetTableValue("player_table", tostring(nPlayerID)))
 				break
 			end
 		end

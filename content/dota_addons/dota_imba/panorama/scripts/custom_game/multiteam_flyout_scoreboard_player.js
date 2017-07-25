@@ -146,21 +146,29 @@ function UpdatePlayerImbaXP()
 {
 	$.Msg("Updating Player Data...")
 	var localPlayerId = GetLocalPlayerId();
-	var plyData = CustomNetTables.GetTableValue("player_table", "ImbaXP");
-
-	if (plyData !== null)
+	for(var i = 0; i < Game.GetAllPlayerIDs().length; i++)
 	{
-		var ID = plyData.ID
-		var MaxExp = plyData.MaxXP
-		var Lvl = plyData.Lvl;
-		var Exp = plyData.XP;
-		var bShowXP = Exp == 0 ? false : true;
-		$.Msg("Player ID: " + ID)
-		$.Msg("Imba XP: " + Exp)
-		$.Msg("Max Imba XP: " + MaxExp)
-		$("#XPProgressBar").value = Exp / MaxExp;
-		$("#ImbaLvl").text = "Lvl:  " + Lvl
-		$("#ImbaXP").text = Exp + "/" + MaxExp
+		if(i == Game.GetAllPlayerIDs().length)
+		{
+			continue;
+		}
+		var plyData = CustomNetTables.GetTableValue("player_table", i);
+
+		$.Msg("Player ID: " + i)
+		$.Msg("Player Data: " + i)
+		if (plyData !== null)
+		{
+			var Exp = plyData.XP;
+			var MaxExp = plyData.MaxXP
+			var Lvl = plyData.Lvl;
+			var bShowXP = Exp == 0 ? false : true;
+			$.Msg("Imba XP: " + Exp)
+			$.Msg("Max Imba XP: " + MaxExp)
+			$("#XPProgressBar").value = Exp / MaxExp;
+			$("#ImbaLvl").text = "Lvl:  " + Lvl
+			$("#ImbaXP").text = Exp + "/" + MaxExp
+		}
+
 	}
 }
 
