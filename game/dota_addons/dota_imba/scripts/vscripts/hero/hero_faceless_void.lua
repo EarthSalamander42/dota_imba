@@ -962,7 +962,7 @@ function imba_faceless_void_chronosphere:OnSpellStart( mini_chrono, target_locat
 
 	-- Decide which cast sound to play
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), chrono_center, nil, total_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false)
-	if #enemies >= IMBA_PLAYERS_ON_GAME * 0.35 then
+	if #enemies >= IMBA_PLAYERS_ON_GAME * 0.25 then
 		if self:IsStolen() then
 			caster:EmitSound("Imba.StolenZaWarudo")		-- If stolen, Star Platinum ZA WARUDO
 		else
