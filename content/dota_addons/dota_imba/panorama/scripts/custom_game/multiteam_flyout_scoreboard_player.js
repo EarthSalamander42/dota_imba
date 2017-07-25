@@ -3,6 +3,24 @@
 var current_tooltip_timer = null;
 var current_shown_tooltip_id = null;
 
+function GetLocalPlayerId()
+{
+	var localPlayerId = 0;
+	var localPlayerInfo = Game.GetLocalPlayerInfo();
+	if(typeof(localPlayerInfo) !== "undefined")
+	{
+		localPlayerId = localPlayerInfo.player_id;
+	}
+
+/*	if(Players.IsLocalPlayerInPerspectiveCamera())
+	{
+		//get local player info for selected portrait unit
+		localPlayerId = Players.GetPerspectivePlayerId();
+	}
+*/
+	return localPlayerId;
+}
+
 function HideToolTips()
 {
 	if( current_tooltip_timer )
@@ -118,33 +136,35 @@ function ToggleDisableHelp()
 	}
 }
 
-/*
 function OnPlayerDataUpdated( table_name, key, data )
 {
 	UpdatePlayerImbaXP();
 }
-CustomNetTables.SubscribeNetTableListener( "player_table", OnPlayerDataUpdated )
-*/
+CustomNetTables.SubscribeNetTableListener("player_table", OnPlayerDataUpdated)
 
 function UpdatePlayerImbaXP()
 {
 	$.Msg("Updating Player Data...")
-	var key = "ImbaXP"
-	var plyData = CustomNetTables.GetTableValue("player_table", key);
+	var localPlayerId = GetLocalPlayerId();
+	var plyData = CustomNetTables.GetTableValue("player_table", "ImbaXP");
 
-	if ( plyData !== null )
+	if (plyData !== null)
 	{
-		if (plyData.value == "XP")
-		{
-			var nBossHP = plyData.number;
-			var bShowBossHP = plyData.number == 0 ? false : true;
-			$("#XPProgressBar").value = nBossHP / 100;
-//			$("#XPHP").visible = true;
-		}
+		var ID = plyData.ID
+		var MaxExp = plyData.MaxXP
+		var Lvl = plyData.Lvl;
+		var Exp = plyData.XP;
+		var bShowXP = Exp == 0 ? false : true;
+		$.Msg("Player ID: " + ID)
+		$.Msg("Imba XP: " + Exp)
+		$.Msg("Max Imba XP: " + MaxExp)
+		$("#XPProgressBar").value = Exp / MaxExp;
+		$("#ImbaLvl").text = "Lvl:  " + Lvl
+		$("#ImbaXP").text = Exp + "/" + MaxExp
 	}
 }
 
 (function()
 {
-    UpdatePlayerImbaXP();
+	UpdatePlayerImbaXP();
 })();
