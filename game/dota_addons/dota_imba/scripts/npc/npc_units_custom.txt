@@ -2321,6 +2321,77 @@
         "VisionNighttimeRange"      "800"
     }
 
+    //=================================================================================
+    // Clinkz's Death Pact Spirits
+    //=================================================================================
+    "npc_imba_clinkz_spirits"
+    {
+        // General
+        //----------------------------------------------------------------
+        "BaseClass"                 "npc_dota_creature"
+        "Model"                     "models/creeps/neutral_creeps/n_creep_ghost_b/n_creep_ghost_frost.vmdl"        
+        "Level"                     "1"
+        "ModelScale"                "1"
+        "IsAncient"                 "0"
+        "ConsideredHero"            "0"
+        "CanBeDominated"            "0"     
+        "UnitLabel"                 "clinkz_spirits"        
+        
+        // Abilities
+        //----------------------------------------------------------------
+
+        // Armor
+        //----------------------------------------------------------------
+        "ArmorPhysical"             "0"
+        "MagicalResistance"         "0"
+
+        // Attack
+        //----------------------------------------------------------------
+        "AttackCapabilities"        "DOTA_UNIT_CAP_RANGED_ATTACK"
+        "AttackDamageMin"           "0"
+        "AttackDamageMax"           "0"
+        "AttackRate"                "1.5"
+        "AttackAnimationPoint"      "0.26"
+        "AttackAcquisitionRange"    "500"
+        "AttackRange"               "100"
+        "ProjectileModel"           "particles/neutral_fx/ghost_frost_attack.vpcf"
+        "ProjectileSpeed"           "900"
+
+        // Bounds
+        //----------------------------------------------------------------
+        "HealthBarOffset"           "240"
+        "BoundsHullName"            "DOTA_HULL_SIZE_SMALL"
+
+        // Bounty
+        //----------------------------------------------------------------
+        "BountyXP"                  "10"
+        "BountyGoldMin"             "0"
+        "BountyGoldMax"             "0"
+
+        // Movement
+        //----------------------------------------------------------------
+        "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+        "MovementSpeed"             "350"
+        "MovementTurnRate"          "0.5"
+
+        // Status
+        //----------------------------------------------------------------
+        "StatusHealth"              "5"
+        "StatusHealthRegen"         "0"        
+
+        // Team
+        //----------------------------------------------------------------
+        "TeamName"                  "DOTA_TEAM_NEUTRALS"
+        "CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
+        "CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
+        "UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+        
+        // Vision
+        //----------------------------------------------------------------
+        "VisionDaytimeRange"        "1800"
+        "VisionNighttimeRange"      "800"
+    }
+
 	//=================================================================================
 	// Witch Doctor: Death Ward
 	//=================================================================================

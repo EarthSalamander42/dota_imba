@@ -255,6 +255,30 @@
 	color: #acacac;
 }
 
+#ImbaXP
+{
+	margin-top: 3px;
+	margin-left: 55%;
+	width: 100%;
+	font-size: 17px;
+	color: white;
+	vertical-align: center;
+	horizontal-align: center;
+	opacity: 0.75;
+}
+
+#ImbaLvl
+{
+	font-size: 18px;
+	margin-top: 3px;
+	margin-right: 55%;
+	width: 100%;
+	color: white;
+	vertical-align: center;
+	horizontal-align: center;
+	opacity: 1.0;
+}
+
 #PlayerAndHeroName
 {
 	padding-top: 1px;
@@ -380,19 +404,6 @@
 	color: white;
 }
 
-/* Imba XP */
-/*
-#XP_alt
-{
-	width: 500px;
-	height: 64px;
-	horizontal-align: center;
-	vertical-align: center;
-	margin-bottom: 800px;
-	visibility: collapse;
-}
-*/
-
 #XPProgressBar
 {
 	width: 100%;
@@ -414,7 +425,7 @@
 
 #XPProgressBar_Left
 {
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #320000 ), color-stop( 0.3, #ff4A07 ), color-stop( .5, #ff4A07 ), to( #320000 ) );
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #326114 ), color-stop( 0.3, #18BE23 ), color-stop( .5, #18BE23 ), to( #01410E ) );
 }
 
 #XPProgressBar_Right

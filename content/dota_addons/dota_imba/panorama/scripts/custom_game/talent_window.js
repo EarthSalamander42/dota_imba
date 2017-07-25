@@ -706,8 +706,9 @@ function UpdateTooltipUI()
     if(tooltips != null){
         tooltips.FindChildTraverse("AbilityCosts").style.flowChildren = "down";
     }
-    $.Schedule(0.1, UpdateTooltipUI);
 }
+
+$.RegisterEventHandler( 'DOTAShowAbilityTooltip', $.GetContextPanel(), UpdateTooltipUI );
 
 function InsertIMBATalentButton(){
     $.Msg("InsertIMBATalentButton");

@@ -29,6 +29,8 @@
 			<Panel class="ScoreCol_ImbaXP ScoreboardPanel">
 				<Panel id="XPProgressBarContainer" hittest="false">
 					<ProgressBar hittest="false" id="XPProgressBar" value="1.0"/>
+					<Label id="ImbaLvl" text="999" />
+					<Label id="ImbaXP" text="999" />
 				</Panel>
 			</Panel>
 			<Panel class="ScoreCol_Gold ScoreboardPanel">

@@ -506,14 +506,14 @@
 		"Ability3"					"imba_clinkz_skeleton_walk"
 		"Ability4"					"imba_clinkz_death_pact"
 
-		"Ability10"					"special_bonus_imba_clinkz_1"
-		"Ability11"					"special_bonus_imba_clinkz_2"
-		"Ability12"					"special_bonus_imba_clinkz_3"
-		"Ability13"					"special_bonus_imba_clinkz_4"
-		"Ability14"					"special_bonus_imba_clinkz_5"
-		"Ability15"					"special_bonus_imba_clinkz_6"
-		"Ability16"					"special_bonus_imba_clinkz_7"
-		"Ability17"					"special_bonus_imba_clinkz_8"
+		"Ability10"					"special_bonus_imba_clinkz_1" //Death Pact Spirits can now attack with spirit strikes
+		"Ability11"					"special_bonus_imba_clinkz_2" //Clinkz gains extra move speed when Skeleton Walking close to enemies
+		"Ability12"					"special_bonus_imba_clinkz_3" //Skeleton Walking through an enemy causes Clinkz to lose his invisibility, but roots the target
+		"Ability13"					"special_bonus_imba_clinkz_4" //Searing Arrow active hits in an AoE  
+		"Ability14"					"special_bonus_imba_clinkz_5" //Strafe can be self cast to root Clinkz for the duration but grant him a huge range bonus
+		"Ability15"					"special_bonus_imba_clinkz_6" //Skeleton Walk move speed persists for a small period
+		"Ability16"					"special_bonus_imba_clinkz_7" //Searing Arrows has a chance to attack the same target again
+		"Ability17"					"special_bonus_imba_clinkz_8" //Death Pact bonuses stay permanently if target dies quickly
 
 		"ProjectileModel"			"particles/units/heroes/hero_clinkz/clinkz_base_attack.vpcf"
 	}
@@ -750,14 +750,14 @@
 		"Ability4"					"imba_drow_ranger_deadeye"
 		"Ability5"					"imba_drow_ranger_marksmanship"
 
-		"Ability10"					"special_bonus_imba_drow_ranger_1"
-		"Ability11"					"special_bonus_imba_drow_ranger_2"
-		"Ability12"					"special_bonus_imba_drow_ranger_3"
-		"Ability13"					"special_bonus_imba_drow_ranger_4"
-		"Ability14"					"special_bonus_imba_drow_ranger_5"
-		"Ability15"					"special_bonus_imba_drow_ranger_6"
-		"Ability16"					"special_bonus_imba_drow_ranger_7"
-		"Ability17"					"special_bonus_imba_drow_ranger_8"
+		"Ability10"					"special_bonus_imba_drow_ranger_1" //Gust can be self cast, making a wave that moves Drow Ranger herself forward. This wave silences all enemies that it comes in contact with normally.
+		"Ability11"					"special_bonus_imba_drow_ranger_2" //Chance to kill creeps instantly
+		"Ability12"					"special_bonus_imba_drow_ranger_3" //After casting Gust, all auto attacks hitting a target casts a small Gust for 5 seconds. This small gust wave pushes the main target back 50 units, deals no damage, and does not silence.
+		"Ability13"					"special_bonus_imba_drow_ranger_4" //Each Chilled enemy grants drow +10 flat movespeed bonus for the duration. Stacks with itself, depending on amounts of Chill stacks on enemies.
+		"Ability14"					"special_bonus_imba_drow_ranger_5" //While Marksmanship is active (not disabled by nearby enemies), Drow Ranger emits an aura on nearby allies that makes their attack chill their targets, slowing them by 15%.
+		"Ability15"					"special_bonus_imba_drow_ranger_6" //While Trueshot Aura is active, Drow gains agility equal to 5% of every allied hero's agility.
+		"Ability16"					"special_bonus_imba_drow_ranger_7" //Deadeye becomes an aura
+		"Ability17"					"special_bonus_imba_drow_ranger_8" //Marksmanship no longer disables itself
 
 		"ProjectileModel"			"particles/units/heroes/hero_drow/drow_base_attack.vpcf"
 	}
