@@ -31,25 +31,7 @@
 
 #select_button
 {
-	tooltip-position: bottom;
-	background-repeat: no-repeat;
-	height:30px;
-	width:30px;
-	
-	margin-left: 8px;
 
-
-	horizontal-align: center;
-	vertical-align: center;
-	background-position: center;
-	opacity: 0.5;
-	wash-color: #CDF;
-	
-	transition-property: opacity;
-	transition-duration: 0.2s;
-	
-	/*background-color: blue;*/
-	
 	background-image: url("s2r://panorama/images/control_icons/dota_logo_white_png.vtex");
     background-size: 26px;
 }
