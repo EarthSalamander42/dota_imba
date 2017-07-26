@@ -39,18 +39,24 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 		playerPanel.SetAttributeInt( "player_id", playerId );
 		playerPanel.BLoadLayout( scoreboardConfig.playerXmlName, false, false );
 
-		var plyData = CustomNetTables.GetTableValue("player_table", playerId);
 		var ImbaXP_Panel = playerPanel.FindChildInLayoutFile("PanelImbaXP");
+		$.Msg("Player ID: "+playerId)
 		if ( ImbaXP_Panel != null )
 		{
 			$.Msg("IMBA Panel is Valid: XPProgressBarContainer"+playerId)
-			ImbaXP_Panel.BCreateChildren("<Panel id='XPProgressBarContainer" +playerId+ "' value='0.0'/>");
-			var Imbar = ImbaXP_Panel.BCreateChildren("<ProgressBar id='XPProgressBar" +playerId+ "'/>");
-			ImbaXP_Panel.BCreateChildren("<Label id='ImbaLvl" +playerId+ "' text='999'/>");
-			ImbaXP_Panel.BCreateChildren("<Label id='ImbaXP" +playerId+ "' text='999'/>");
-			_ScoreboardUpdater_SetValueSafe( playerPanel, "XPProgressBar"+playerId, plyData.XP / plyData.MaxXP );
-			_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaLvl"+playerId, "Lvl:  " + plyData.Lvl );
-			_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaXP"+playerId, plyData.XP + "/" + plyData.MaxXP );
+
+			var plyData = CustomNetTables.GetTableValue("player_table", playerId);
+			if ( plyData != null )
+			{
+				$.Msg("Imba ply Data: "+plyData)
+				ImbaXP_Panel.BCreateChildren("<Panel id='XPProgressBarContainer" +playerId+ "' value='0.0'/>");
+				var Imbar = ImbaXP_Panel.BCreateChildren("<ProgressBar id='XPProgressBar" +playerId+ "'/>");
+				ImbaXP_Panel.BCreateChildren("<Label id='ImbaLvl" +playerId+ "' text='999'/>");
+				ImbaXP_Panel.BCreateChildren("<Label id='ImbaXP" +playerId+ "' text='999'/>");
+				_ScoreboardUpdater_SetValueSafe( playerPanel, "XPProgressBar"+playerId, plyData.XP / plyData.MaxXP );
+				_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaLvl"+playerId, "Lvl:  " + plyData.Lvl );
+				_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaXP"+playerId, plyData.XP + "/" + plyData.MaxXP );
+			}
 		}
 	}
 
@@ -242,7 +248,7 @@ function _ScoreboardUpdater_UpdateTeamPanel( scoreboardConfig, containerPanel, t
 			}
 		}
 	}
-	
+
 	var localPlayerTeamId = -1;
 	var localPlayer = Game.GetLocalPlayerInfo();
 	if ( localPlayer )
@@ -261,10 +267,10 @@ function _ScoreboardUpdater_UpdateTeamPanel( scoreboardConfig, containerPanel, t
 			_ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContainer, playerId, localPlayerTeamId )
 		}
 	}
-	
+
 	teamPanel.SetHasClass( "no_players", (teamPlayers.length == 0) )
 	teamPanel.SetHasClass( "one_player", (teamPlayers.length == 1) )
-	
+
 	if ( teamsInfo.max_team_players < teamPlayers.length )
 	{
 		teamsInfo.max_team_players = teamPlayers.length;
@@ -272,7 +278,7 @@ function _ScoreboardUpdater_UpdateTeamPanel( scoreboardConfig, containerPanel, t
 
 	_ScoreboardUpdater_SetTextSafe( teamPanel, "TeamScore", teamDetails.team_score )
 	_ScoreboardUpdater_SetTextSafe( teamPanel, "TeamName", $.Localize( teamDetails.team_name ) )
-	
+
 	if ( GameUI.CustomUIConfig().team_colors )
 	{
 		var teamColor = GameUI.CustomUIConfig().team_colors[ teamId ];
