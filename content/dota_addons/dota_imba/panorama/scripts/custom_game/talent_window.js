@@ -708,11 +708,10 @@ function UpdateTooltipUI()
     }
 }
 
-$.RegisterEventHandler( 'DOTAShowAbilityTooltip', $.GetContextPanel(), UpdateTooltipUI );
-
 function InsertIMBATalentButton(){
     $.Msg("InsertIMBATalentButton");
-	InsertPartSelectButton()
+	InsertPartSelectButton();
+	$.RegisterEventHandler( 'DOTAShowAbilityTooltip', $.GetContextPanel(), UpdateTooltipUI );
     var baseUI = GetHUDRootUI();
     baseUI = baseUI.FindChildTraverse("AbilitiesAndStatBranch");
     var newButton = baseUI.FindChildTraverse(IMBA_TALENT_BTN_ID);
