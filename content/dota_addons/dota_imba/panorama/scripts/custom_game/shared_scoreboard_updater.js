@@ -14,6 +14,17 @@ function _ScoreboardUpdater_SetTextSafe( panel, childName, textValue )
 	childPanel.text = textValue;
 }
 
+function _ScoreboardUpdater_SetValueSafe( panel, childName, Value )
+{
+	if ( panel === null )
+		return;
+	var childPanel = panel.FindChildInLayoutFile( childName )
+	if ( childPanel === null )
+		return;
+	
+	childPanel.value = Value;
+}
+
 
 //=============================================================================
 //=============================================================================
@@ -50,15 +61,20 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 		playerPanel.SetHasClass( "local_player_teammate", isTeammate && ( playerId != Game.GetLocalPlayerID() ) );
 		playerPanel.SetHasClass( "spectator_view", isSpectator);
 
+		var plyData = CustomNetTables.GetTableValue("player_table", playerId);
+
 		_ScoreboardUpdater_SetTextSafe( playerPanel, "RespawnTimer", ( playerInfo.player_respawn_seconds + 1 ) ); // value is rounded down so just add one for rounded-up
 		_ScoreboardUpdater_SetTextSafe( playerPanel, "PlayerName", playerInfo.player_name );
 		_ScoreboardUpdater_SetTextSafe( playerPanel, "Level", playerInfo.player_level );
+		_ScoreboardUpdater_SetValueSafe( playerPanel, "XPProgressBar", plyData.XP / plyData.MaxXP );
+		_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaLvl", "Lvl:  " + plyData.Lvl );
+		_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaXP", plyData.XP + "/" + plyData.MaxXP );
 		_ScoreboardUpdater_SetTextSafe( playerPanel, "Kills", playerInfo.player_kills );
 		_ScoreboardUpdater_SetTextSafe( playerPanel, "Deaths", playerInfo.player_deaths );
 		_ScoreboardUpdater_SetTextSafe( playerPanel, "Assists", playerInfo.player_assists );
 
 		var btnMuteVoice = playerPanel.FindChildInLayoutFile("BtnMuteVoice");
-		
+
 		if( btnMuteVoice )
 		{
 			btnMuteVoice.SetHasClass( "Activated", Game.IsPlayerMuted(playerId) );
