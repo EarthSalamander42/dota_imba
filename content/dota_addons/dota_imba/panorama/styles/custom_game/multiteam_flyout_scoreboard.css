@@ -235,15 +235,6 @@
 	font-size: 26px;
 }
 
-#ImbaXP
-{
-	vertical-align: center;
-	horizontal-align: center;
-	color: #acacac;
-	font-weight: bold;
-	font-size: 26px;
-}
-
 #Kills,
 #Deaths,
 #Assists
@@ -255,19 +246,58 @@
 	color: #acacac;
 }
 
-#ImbaXP
+#ImbaXP0,
+#ImbaXP1,
+#ImbaXP2,
+#ImbaXP3,
+#ImbaXP4,
+#ImbaXP5,
+#ImbaXP6,
+#ImbaXP7,
+#ImbaXP8,
+#ImbaXP9,
+#ImbaXP10,
+#ImbaXP11,
+#ImbaXP12,
+#ImbaXP13,
+#ImbaXP14,
+#ImbaXP15,
+#ImbaXP16,
+#ImbaXP17,
+#ImbaXP18,
+#ImbaXP19
 {
 	margin-top: 3px;
 	margin-left: 55%;
 	width: 100%;
 	font-size: 17px;
+	font-weight: bold;
 	color: white;
 	vertical-align: center;
 	horizontal-align: center;
 	opacity: 0.75;
 }
 
-#ImbaLvl
+#ImbaLvl0,
+#ImbaLvl1,
+#ImbaLvl2,
+#ImbaLvl3,
+#ImbaLvl4,
+#ImbaLvl5,
+#ImbaLvl6,
+#ImbaLvl7,
+#ImbaLvl8,
+#ImbaLvl9,
+#ImbaLvl10,
+#ImbaLvl11,
+#ImbaLvl12,
+#ImbaLvl13,
+#ImbaLvl14,
+#ImbaLvl15,
+#ImbaLvl16,
+#ImbaLvl17,
+#ImbaLvl18,
+#ImbaLvl19
 {
 	font-size: 18px;
 	margin-top: 3px;
@@ -404,7 +434,26 @@
 	color: white;
 }
 
-#XPProgressBar
+#XPProgressBar0,
+#XPProgressBar1,
+#XPProgressBar2,
+#XPProgressBar3,
+#XPProgressBar4,
+#XPProgressBar5,
+#XPProgressBar6,
+#XPProgressBar7,
+#XPProgressBar8,
+#XPProgressBar9,
+#XPProgressBar10,
+#XPProgressBar11,
+#XPProgressBar12,
+#XPProgressBar13,
+#XPProgressBar14,
+#XPProgressBar15,
+#XPProgressBar16,
+#XPProgressBar17,
+#XPProgressBar18,
+#XPProgressBar19
 {
 	width: 100%;
 	border-radius: 4px;
@@ -416,24 +465,100 @@
 	box-shadow: fill #000 -3px -3px 6px 6px;
 }
 
-#XPProgressBar_Left
+#XPProgressBar0_Left,
+#XPProgressBar1_Left,
+#XPProgressBar2_Left,
+#XPProgressBar3_Left,
+#XPProgressBar4_Left,
+#XPProgressBar5_Left,
+#XPProgressBar6_Left,
+#XPProgressBar7_Left,
+#XPProgressBar8_Left,
+#XPProgressBar9_Left,
+#XPProgressBar10_Left,
+#XPProgressBar11_Left,
+#XPProgressBar12_Left,
+#XPProgressBar13_Left,
+#XPProgressBar14_Left,
+#XPProgressBar15_Left,
+#XPProgressBar16_Left,
+#XPProgressBar17_Left,
+#XPProgressBar18_Left,
+#XPProgressBar19_Left
 {
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #326114 ), color-stop( 0.3, #54BA07 ), color-stop( .5, #54BA07 ), to( #326114 ) );
 	box-shadow: inset #000 1px 1px 3px 3px;	
 	border-radius: 2px;
 }
 
-#XPProgressBar_Left
+#XPProgressBar0_Left,
+#XPProgressBar1_Left,
+#XPProgressBar2_Left,
+#XPProgressBar3_Left,
+#XPProgressBar4_Left,
+#XPProgressBar5_Left,
+#XPProgressBar6_Left,
+#XPProgressBar7_Left,
+#XPProgressBar8_Left,
+#XPProgressBar9_Left,
+#XPProgressBar10_Left,
+#XPProgressBar11_Left,
+#XPProgressBar12_Left,
+#XPProgressBar13_Left,
+#XPProgressBar14_Left,
+#XPProgressBar15_Left,
+#XPProgressBar16_Left,
+#XPProgressBar17_Left,
+#XPProgressBar18_Left,
+#XPProgressBar19_Left
 {
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #326114 ), color-stop( 0.3, #18BE23 ), color-stop( .5, #18BE23 ), to( #01410E ) );
 }
 
-#XPProgressBar_Right
+#XPProgressBar0_Right,
+#XPProgressBar1_Right,
+#XPProgressBar2_Right,
+#XPProgressBar3_Right,
+#XPProgressBar4_Right,
+#XPProgressBar5_Right,
+#XPProgressBar6_Right,
+#XPProgressBar7_Right,
+#XPProgressBar8_Right,
+#XPProgressBar9_Right,
+#XPProgressBar10_Right,
+#XPProgressBar11_Right,
+#XPProgressBar12_Right,
+#XPProgressBar13_Right,
+#XPProgressBar14_Right,
+#XPProgressBar15_Right,
+#XPProgressBar16_Right,
+#XPProgressBar17_Right,
+#XPProgressBar18_Right,
+#XPProgressBar19_Right
 {
 	background-color: gradient( linear, 0% 0%, 100% 0%, from( #222222FF ), to( black ) );
 }
 
-#XPProgressBarContainer
+#XPProgressBarContainer0,
+#XPProgressBarContainer1,
+#XPProgressBarContainer2,
+#XPProgressBarContainer3,
+#XPProgressBarContainer4,
+#XPProgressBarContainer5,
+#XPProgressBarContainer6,
+#XPProgressBarContainer7,
+#XPProgressBarContainer8,
+#XPProgressBarContainer9,
+#XPProgressBarContainer10,
+#XPProgressBarContainer11,
+#XPProgressBarContainer12,
+#XPProgressBarContainer13,
+#XPProgressBarContainer14,
+#XPProgressBarContainer15,
+#XPProgressBarContainer16,
+#XPProgressBarContainer17,
+#XPProgressBarContainer18,
+#XPProgressBarContainer19
 {
 	vertical-align: bottom;
 	height: 40px;

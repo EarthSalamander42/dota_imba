@@ -1,12 +1,12 @@
 <root>
-    <styles>
-        <include src="file://{resources}/styles/custom_game/shared_scoreboard_styles.css" />
-        <include src="file://{resources}/styles/custom_game/multiteam_flyout_scoreboard.css" />
-    </styles>
+	<styles>
+		<include src="file://{resources}/styles/custom_game/shared_scoreboard_styles.css" />
+		<include src="file://{resources}/styles/custom_game/multiteam_flyout_scoreboard.css" />
+	</styles>
 
 	<scripts>
-        <include src="file://{resources}/scripts/custom_game/multiteam_flyout_scoreboard_player.js" />
-    </scripts>
+		<include src="file://{resources}/scripts/custom_game/multiteam_flyout_scoreboard_player.js" />
+	</scripts>
 
 	<Panel class="PlayerRow">
 		<Panel id="PlayerRowContainer">
@@ -26,12 +26,7 @@
 			<Panel class="ScoreCol_HeroLevel ScoreboardPanel">
 				<Label id="Level" text="999" />
 			</Panel>
-			<Panel class="ScoreCol_ImbaXP ScoreboardPanel">
-				<Panel id="XPProgressBarContainer" hittest="false">
-					<ProgressBar hittest="false" id="XPProgressBar" value="1.0"/>
-					<Label id="ImbaLvl" text="999" />
-					<Label id="ImbaXP" text="999" />
-				</Panel>
+			<Panel id="PanelImbaXP" class="ScoreCol_ImbaXP ScoreboardPanel">
 			</Panel>
 			<Panel class="ScoreCol_Gold ScoreboardPanel">
 				<Label id="TeammateGoldAmount" text="999" />
