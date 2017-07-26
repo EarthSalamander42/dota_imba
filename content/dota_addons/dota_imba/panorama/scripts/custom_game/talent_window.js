@@ -702,10 +702,15 @@ function InsertPartSelectButton()
 
 function UpdateTooltipUI()
 {
-    var tooltips = GetHUDRootUI_Server().FindChildTraverse("DOTAAbilityTooltip")
-    if(tooltips != null){
-        tooltips.FindChildTraverse("AbilityCosts").style.flowChildren = "down";
-    }
+	var tooltips;
+	if(GetHUDRootUI_Server().FindChildTraverse("DOTAAbilityTooltip") != null)
+	{
+		tooltips = GetHUDRootUI_Server().FindChildTraverse("DOTAAbilityTooltip");
+		tooltips.FindChildTraverse("AbilityCosts").style.flowChildren = "down";
+	}else
+	{
+		$.Schedule(0.1, UpdateTooltipUI);
+	}
 }
 
 function InsertIMBATalentButton(){
