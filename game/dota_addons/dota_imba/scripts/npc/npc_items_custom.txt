@@ -4619,7 +4619,8 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2168"
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"items/item_shadow_blade.lua"
 		"AbilityTextureName"			"custom/imba_invis_sword"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"FightRecapLevel"				"1"
@@ -4661,7 +4662,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"invis_ms"					"20"
+				"invis_ms_pct"				"20"
 			}
 			"05"
 			{
@@ -4676,250 +4677,18 @@
 			}
 			"07"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"invis_night_vision"		"300"
+				"var_type"									"FIELD_FLOAT"
+				"invis_flying_damage_disable_duration"		"2.0"
 			}
 			"08"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"invis_phase_cooldown"		"2.0"
+				"var_type"									"FIELD_INTEGER"
+				"turnrate_slow"								"-80"
 			}
 			"09"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"tree_radius"				"175"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"				"items/item_shadow_blade.lua"
-				"Function"					"ShadowBladeFade"
-
-				"modifier_fade"				"modifier_item_imba_shadow_blade_fade"
-				"sound_cast"				"DOTA_Item.InvisibilitySword.Activate"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_shadow_blade"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"			"%bonus_damage"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%bonus_attack_speed"
-				}
-			}
-
-			"modifier_item_imba_shadow_blade_fade"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"Duration"					"%invis_fade_time"
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_shadow_blade.lua"
-						"Function"			"ShadowBladeInvis"
-
-						"modifier_invis"	"modifier_item_imba_shadow_blade_invis"
-						"modifier_phase"	"modifier_item_imba_shadow_blade_phase"
-					}
-				}
-			}
-
-			"modifier_item_imba_shadow_blade_invis"
-			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"TextureName"				"custom/imba_invis_sword"
-
-				"Duration"					"%invis_duration"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"OnAbilityExecuted"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"		"modifier_item_imba_shadow_blade_invis"
-						"Target"
-						{
-							"Center"		"CASTER"
-							"Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-							"Types"			"DOTA_UNIT_TARGET_HERO"
-							"Flags"			"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD"
-						}
-					}
-				}
-
-				"OnAttack"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"		"modifier_item_imba_shadow_blade_invis_hit"
-						"Target"
-						{
-							"Center"		"CASTER"
-							"Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-							"Types"			"DOTA_UNIT_TARGET_HERO"
-							"Flags"			"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD"
-						}
-					}
-
-					"RemoveModifier"
-					{
-						"ModifierName"		"modifier_item_imba_shadow_blade_invis"
-						"Target"
-						{
-							"Center"		"CASTER"
-							"Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-							"Types"			"DOTA_UNIT_TARGET_HERO"
-							"Flags"			"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD"
-						}
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"		"modifier_item_imba_shadow_blade_phase"
-						"Target"
-						{
-							"Center"		"CASTER"
-							"Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-							"Types"			"DOTA_UNIT_TARGET_HERO"
-							"Flags"			"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD"
-						}
-					}
-				}
-
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_shadow_blade.lua"
-						"Function"			"ShadowBladePhaseCooldown"
-
-						"modifier_phase"	"modifier_item_imba_shadow_blade_phase"
-						"modifier_phase_cd"	"modifier_item_imba_shadow_blade_phase_cooldown"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%invis_ms"
-					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"				"%invis_night_vision"
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_CANNOT_MISS"			"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_item_imba_shadow_blade_invis_hit"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_shadow_blade.lua"
-						"Function"			"ShadowBladeHit"
-
-						"sound_hit"			"DOTA_Item.Maim"
-					}
-
-					"RemoveModifier"
-					{
-						"ModifierName"		"modifier_item_imba_shadow_blade_invis_hit"
-						"Target"
-						{
-							"Center"		"CASTER"
-							"Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-							"Types"			"DOTA_UNIT_TARGET_HERO"
-							"Flags"			"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD"
-						}
-					}
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_CANNOT_MISS"			"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_item_imba_shadow_blade_phase"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"OnDestroy"
-				{
-					"DestroyTrees"
-					{
-						"Target"			"CASTER"
-						"Radius"			"%tree_radius"
-					}
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_item_imba_shadow_blade_phase_cooldown"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"Duration"					"%invis_phase_cooldown"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_shadow_blade.lua"
-						"Function"			"ShadowBladePhaseCooldownEnd"
-
-						"modifier_invis"	"modifier_item_imba_shadow_blade_invis"
-						"modifier_phase"	"modifier_item_imba_shadow_blade_phase"
-					}
-				}
+				"var_type"									"FIELD_FLOAT"
+				"turnrate_slow_duration"					"2.0"
 			}
 		}
 	}
@@ -4958,7 +4727,8 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"								"2169"
-		"BaseClass"							"item_datadriven"
+		"BaseClass"							"item_lua"
+		"ScriptFile"						"items/item_silver_edge.lua"
 		"AbilityTextureName"				"custom/imba_silver_edge"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
@@ -4997,17 +4767,17 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_stats"				"15"
+				"bonus_all_stats"			"15"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"invis_duration"			"14"
+				"invis_duration"			"16"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"invis_ms"					"20"
+				"invis_ms_pct"				"20"
 			}
 			"06"
 			{
@@ -5016,329 +4786,52 @@
 			}
 			"07"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"invis_damage"				"175"
-				"CalculateSpellDamageTooltip"	"0"
+				"var_type"						"FIELD_INTEGER"
+				"shadow_rip_damage"				"250"
+				"CalculateSpellDamageTooltip"	"1"
 			}
 			"08"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"invis_night_vision"		"600"
+				"var_type"									"FIELD_FLOAT"
+				"invis_flying_damage_disable_duration"		"1.0"
 			}
 			"09"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"invis_phase_cooldown"		"2.0"
+				"var_type"					"FIELD_INTEGER"
+				"shadow_rip_distance"		"800"
 			}
-			"10"
+			"010"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"tree_radius"				"175"
+				"shadow_rip_start_width"	"250"
 			}
-			"11"
+			"011"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"break_duration"			"5.0"
+				"var_type"					"FIELD_INTEGER"
+				"shadow_rip_end_width"		"500"
 			}
+			
 			"12"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"break_damage_reduction"	"-50"
-				"CalculateSpellDamageTooltip"	"0"
+				"panic_damage_reduction"	"-50"
 			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
+			"13"
 			{
-				"ScriptFile"				"items/item_silver_edge.lua"
-				"Function"					"SilverEdgeFade"
-
-				"modifier_fade"				"modifier_item_imba_silver_edge_fade"
-				"sound_cast"				"DOTA_Item.InvisibilitySword.Activate"
+				"var_type"					"FIELD_INTEGER"
+				"panic_turnrate_slow"		"-80"
 			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_silver_edge"
+			"14"
 			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsDebuff"					"0"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" 		"%bonus_stats"
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" 		"%bonus_stats"
-					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_stats"
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed"
-				}
+				"var_type"					"FIELD_FLOAT"
+				"panic_duration"			"2.0"
 			}
-
-			"modifier_item_imba_silver_edge_proc"
+			"15"
 			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsDebuff"					"0"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"				"internal/util.lua"
-						"Function"					"IllusionPassiveRemover"
-
-						"modifier"					"modifier_item_imba_silver_edge_proc"
-					}
-				}
+				"var_type"					"FIELD_FLOAT"
+				"main_debuff_duration"		"5.0"
 			}
 
-			"modifier_item_imba_silver_edge_fade"
-			{
-				"Passive"							"0"
-				"IsHidden"							"1"
-				"IsBuff"							"1"
-				"IsPurgable"						"0"
-
-				"Duration"							"%invis_fade_time"
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"				"items/item_silver_edge.lua"
-						"Function"					"SilverEdgeInvis"
-
-						"modifier_invis"			"modifier_item_imba_silver_edge_invis"
-						"modifier_phase"			"modifier_item_imba_silver_edge_phase"
-					}
-				}
-			}
-
-			"modifier_item_imba_silver_edge_invis"
-			{
-				"Passive"							"0"
-				"IsHidden"							"0"
-				"IsBuff"							"1"
-				"IsPurgable"						"0"
-
-				"TextureName"						"custom/imba_silver_edge"
-
-				"Duration"							"%invis_duration"
-
-				"Attributes"						"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"OnAbilityExecuted"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"				"modifier_item_imba_silver_edge_invis"
-						"Target"
-						{
-							"Center"				"CASTER"
-							"Teams"					"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-							"Types"					"DOTA_UNIT_TARGET_HERO"
-							"Flags"					"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD"
-						}
-					}
-				}
-
-				"OnAttack"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"				"modifier_item_imba_silver_edge_invis_hit"
-						"Duration"					"3"
-
-						"Target"
-						{
-							"Center"				"CASTER"
-							"Teams"					"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-							"Types"					"DOTA_UNIT_TARGET_HERO"
-							"Flags"					"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD"
-						}
-					}
-
-					"RemoveModifier"
-					{
-						"ModifierName"				"modifier_item_imba_silver_edge_invis"
-						"Target"
-						{
-							"Center"				"CASTER"
-							"Teams"					"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-							"Types"					"DOTA_UNIT_TARGET_HERO"
-							"Flags"					"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD"
-						}
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"				"modifier_item_imba_silver_edge_phase"
-						"Target"
-						{
-							"Center"				"CASTER"
-							"Teams"					"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-							"Types"					"DOTA_UNIT_TARGET_HERO"
-							"Flags"					"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD"
-						}
-					}
-				}
-
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"				"items/item_silver_edge.lua"
-						"Function"					"SilverEdgePhaseCooldown"
-
-						"modifier_phase"			"modifier_item_imba_silver_edge_phase"
-						"modifier_phase_cd"			"modifier_item_imba_silver_edge_phase_cooldown"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%invis_ms"
-					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"				"%invis_night_vision"
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_CANNOT_MISS"			"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_item_imba_silver_edge_invis_hit"
-			{
-				"Passive"							"0"
-				"IsHidden"							"0"
-				"IsBuff"							"1"
-				"IsPurgable"						"0"
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"				"items/item_silver_edge.lua"
-						"Function"					"SilverEdgeHit"
-
-						"sound_hit"					"DOTA_Item.Maim"
-						"particle_hit"				"particles/item/silver_edge/silver_edge.vpcf"
-					}
-
-					"ApplyModifier"
-					{
-						"ModifierName"				"modifier_item_imba_silver_edge_break"
-						"Target"
-						{
-							"Center"				"TARGET"
-							"Teams"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types"					"DOTA_UNIT_TARGET_HERO"
-						}
-					}
-
-					"RemoveModifier"
-					{
-						"ModifierName"				"modifier_item_imba_silver_edge_invis_hit"
-						"Target"
-						{
-							"Center"				"CASTER"
-							"Teams"					"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-							"Types"					"DOTA_UNIT_TARGET_HERO"
-							"Flags"					"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD"
-						}
-					}
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_CANNOT_MISS"			"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_item_imba_silver_edge_phase"
-			{
-				"Passive"							"0"
-				"IsHidden"							"1"
-				"IsBuff"							"1"
-				"IsPurgable"						"0"
-
-				"Duration"							"%invis_duration"
-
-				"Attributes"						"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"OnDestroy"
-				{
-					"DestroyTrees"
-					{
-						"Target"					"CASTER"
-						"Radius"					"%tree_radius"
-					}
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_item_imba_silver_edge_phase_cooldown"
-			{
-				"Passive"							"0"
-				"IsHidden"							"1"
-				"IsBuff"							"1"
-				"IsPurgable"						"0"
-
-				"Duration"							"%invis_phase_cooldown"
-
-				"Attributes"						"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"				"items/item_silver_edge.lua"
-						"Function"					"SilverEdgePhaseCooldownEnd"
-
-						"modifier_invis"			"modifier_item_imba_silver_edge_invis"
-						"modifier_phase"			"modifier_item_imba_silver_edge_phase"
-					}
-				}
-			}
-
-			"modifier_item_imba_silver_edge_break"
-			{
-				"Passive"							"0"
-				"IsHidden"							"0"
-				"IsDebuff"							"1"
-				"IsPurgable"						"0"
-
-				"TextureName"						"custom/imba_silver_edge"
-
-				"Duration"							"%break_duration"
-
-				"EffectName"						"particles/item/silver_edge/silver_edge_break.vpcf"
-				"EffectAttachType"					"follow_overhead"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"		"%break_damage_reduction"
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_PASSIVES_DISABLED"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
 		}
 	}
 

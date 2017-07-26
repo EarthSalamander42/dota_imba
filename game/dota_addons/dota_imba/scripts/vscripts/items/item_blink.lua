@@ -164,15 +164,16 @@ end
 function modifier_imba_blink_dagger_handler:OnTakeDamage( keys )
 	local ability = self:GetAbility()
 	local blink_damage_cooldown = ability:GetSpecialValueFor("blink_damage_cooldown")
-	
+
 	local parent = self:GetParent()					-- Modifier carrier
-	local attacker_name = keys.attacker:GetName()	-- Name of the attacker
 	local unit = keys.unit							-- Who took damage
-	local damage = keys.damage						-- Damage taken
-	
-	if parent == unit and damage > 0 and (attacker_name == "npc_dota_roshan" or keys.attacker:IsControllableByAnyPlayer() or attacker_name == "npc_dota_shadowshaman_serpentward")  and ( keys.attacker:GetTeam() ~= parent:GetTeam() ) then
-		if ability:GetCooldownTimeRemaining() < blink_damage_cooldown then
-			ability:StartCooldown(blink_damage_cooldown)
+
+	if parent == unit then
+		-- Custom function from funcs.lua
+		if IsHeroDamage(keys.attacker, keys.damage) then
+			if ability:GetCooldownTimeRemaining() < blink_damage_cooldown then
+				ability:StartCooldown(blink_damage_cooldown)
+			end
 		end
 	end
 end
@@ -184,29 +185,29 @@ if item_imba_blink_boots == nil then item_imba_blink_boots = class({}) end
 LinkLuaModifier( "modifier_imba_blink_boots_handler", "items/item_blink.lua", LUA_MODIFIER_MOTION_NONE ) -- Check if the target was damaged and set cooldown + item bonuses
 
 function item_imba_blink_boots:GetAbilityTextureName()
-   return "custom/imba_blink_boots"
+	return "custom/imba_blink_boots"
 end
 
 function item_imba_blink_boots:GetBehavior()
 	return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES end
-	
+
 function item_imba_blink_boots:GetIntrinsicModifierName()
 	return "modifier_imba_blink_boots_handler" end
 
 function item_imba_blink_boots:OnSpellStart()
 	local caster = self:GetCaster()
-	local origin_point = caster:GetAbsOrigin()	
-	local target_point = self:GetCursorPosition()					
-	
+	local origin_point = caster:GetAbsOrigin()
+	local target_point = self:GetCursorPosition()
+
 	local distance = (target_point - origin_point):Length2D()
 	local max_blink_range = self:GetSpecialValueFor("max_blink_range")
-	
+
 	local blink_effect = "particles/item/blink/blink_dagger_start_imba.vpcf"
 	local blink_effect_end = "particles/item/blink/blink_dagger_imbaend.vpcf"
-	
+
 	-- Disjointing everything
 	ProjectileManager:ProjectileDodge(caster)
-	
+
 	-- Defining the color, either default or by command
 	local color
 	if caster.blinkcolor then
@@ -214,13 +215,13 @@ function item_imba_blink_boots:OnSpellStart()
 	else
 		color = Vector(0, 20, 255) -- Blueish, just a little brighter
 	end
-	
+
 	-- Creating the particle & sound at the start-location
 	local blink_pfx = ParticleManager:CreateParticle(blink_effect, PATTACH_ABSORIGIN, caster)
 	ParticleManager:SetParticleControl(blink_pfx, 15, color)
 	ParticleManager:ReleaseParticleIndex(blink_pfx)
 	caster:EmitSound("DOTA_Item.BlinkDagger.Activate")
-	
+
 	-- Set distance if targeted destiny is beyond range
 	if distance > max_blink_range then
 
@@ -235,7 +236,7 @@ function item_imba_blink_boots:OnSpellStart()
 				self:StartCooldown(self:GetCooldownTimeRemaining() + max_extra_cooldown * (1 - caster:GetCooldownReduction() * 0.01))
 			end)
 
-		-- Calculate cooldown increase if between the two extremes
+			-- Calculate cooldown increase if between the two extremes
 		else
 			local extra_fraction = (distance - max_blink_range) / (max_extra_distance - max_blink_range)
 			Timers:CreateTimer(0.03, function()
@@ -243,12 +244,12 @@ function item_imba_blink_boots:OnSpellStart()
 			end)
 		end
 	end
-	
+
 	-- Adding an extremely small timer for the particles, else they will only appear at the dest
 	Timers:CreateTimer(0.01, function()
 		caster:SetAbsOrigin(target_point)
 		FindClearSpaceForUnit(caster, target_point, true)
-		
+
 		-- Create Particle on end-point
 		local blink_end_pfx = ParticleManager:CreateParticle(blink_effect_end, PATTACH_ABSORIGIN, caster)
 		ParticleManager:SetParticleControl(blink_end_pfx, 15, color )
@@ -267,7 +268,7 @@ function modifier_imba_blink_boots_handler:GetAttributes() return MODIFIER_ATTRI
 
 function modifier_imba_blink_boots_handler:DeclareFunctions()
 	local funcs = {	MODIFIER_EVENT_ON_TAKEDAMAGE,
-					MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE, }
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE, }
 	return funcs
 end
 
@@ -280,15 +281,16 @@ end
 function modifier_imba_blink_boots_handler:OnTakeDamage( keys )
 	local ability = self:GetAbility()
 	local blink_damage_cooldown = ability:GetSpecialValueFor("blink_damage_cooldown")
-	
+
 	local parent = self:GetParent()					-- Modifier carrier
-	local attacker_name = keys.attacker:GetName()	-- Name of the attacker
 	local unit = keys.unit							-- Who took damage
-	local damage = keys.damage						-- Damage taken
-	
-	if parent == unit and damage > 0 and (attacker_name == "npc_dota_roshan" or keys.attacker:IsControllableByAnyPlayer() or attacker_name == "npc_dota_shadowshaman_serpentward")  and ( keys.attacker:GetTeam() ~= parent:GetTeam() ) then
-		if ability:GetCooldownTimeRemaining() < blink_damage_cooldown then
-			ability:StartCooldown(blink_damage_cooldown)
+
+	if parent == unit then
+		-- Custom function from funcs.lua
+		if IsHeroDamage(keys.attacker, keys.damage) then
+			if ability:GetCooldownTimeRemaining() < blink_damage_cooldown then
+				ability:StartCooldown(blink_damage_cooldown)
+			end
 		end
 	end
 end
