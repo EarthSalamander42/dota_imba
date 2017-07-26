@@ -253,7 +253,7 @@ function modifier_imba_tiny_avalanche_passive:OnAttackLanded(params)
 			return nil
 		end
 
-		if params.attacker == self:GetParent() then
+		if params.attacker == self:GetParent() and not self:GetParent():IsIllusion() then
 			if RollPseudoRandom(self.chance, self) then
 				local vPos = params.target:GetAbsOrigin()
 				local caster = self:GetCaster()
