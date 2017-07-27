@@ -776,11 +776,11 @@ function modifier_imba_skeleton_walk_invis:OnIntervalThink()
             end
         end	
 	
-    	-- Talent: Increases Clinkz Skeleton Walk movement speed if no enemies are nearby.	
+    	-- Talent: Increases Clinkz Skeleton Walk movement speed if enemies are nearby.	
     	local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
 											self.caster:GetAbsOrigin(),
 											nil,
-											self.spook_radius,
+											450,
 											DOTA_UNIT_TARGET_TEAM_ENEMY,
 											DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING,
 											DOTA_UNIT_TARGET_FLAG_NONE,
@@ -849,7 +849,7 @@ function modifier_imba_skeleton_walk_invis:GetModifierInvisibilityLevel()
     return 1
 end
 
-function modifier_imba_skeleton_walk_invis:GetModifierMoveSpeedBonus_Percentage()
+function modifier_imba_skeleton_walk_invis:)GetModifierMoveSpeedBonus_Percentage()
     return self.ms_bonus_pct + self:GetStackCount()
 end
 
@@ -1576,7 +1576,7 @@ end
 
 modifier_imba_death_pact_spirit_attack_range = class({}) 
 
-function modifier_imba_death_pact_spirit_attack_range:IsHidden() return false end
+function modifier_imba_death_pact_spirit_attack_range:IsHidden() return true end
 function modifier_imba_death_pact_spirit_attack_range:IsPurgable() return false end
 function modifier_imba_death_pact_spirit_attack_range:IsDebuff() return false end
 
