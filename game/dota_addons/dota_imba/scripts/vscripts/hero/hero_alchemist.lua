@@ -5,17 +5,6 @@
 CreateEmptyTalents("alchemist")
 local LinkedModifiers = {}
 
-local chemical_rage_reference = nil
-
-function getChemicalRageDummyReference()
-	if IsServer() and _reference == nil then
-		local alchemist_dummy = CreateUnitByName('npc_dummy_unit', Vector(0,0,0), false, nil, nil, DOTA_TEAM_NOTEAM )
-		chemical_rage_reference = alchemist_dummy:AddAbility("imba_alchemist_chemical_rage")
-		chemical_rage_reference:SetLevel(1)		
-	end
-
-	return chemical_rage_reference
-end
 
 -------------------------------------------
 --              ACID SPRAY
@@ -572,10 +561,6 @@ function imba_alchemist_unstable_concoction:OnProjectileHit(target, location)
 		else
 			local total_duration = brew_duration * caster:FindTalentValue("special_bonus_imba_alchemist_2")
 			local chemical_rage = caster:FindAbilityByName("imba_alchemist_chemical_rage")
-	
-			if not chemical_rage then
-				chemical_rage = getChemicalRageDummyReference()
-			end
 		
 				target:AddNewModifier(caster, chemical_rage, "modifier_imba_chemical_rage_buff_haste", { duration = total_duration })
 		end
@@ -1260,9 +1245,7 @@ function modifier_imba_chemical_rage_handler:OnDestroy()
 		-- Apply new aura modifier
 		if caster:HasTalent("special_bonus_imba_alchemist_8") then
 			caster:AddNewModifier(caster, ability, "modifier_imba_chemical_rage_aura_talent", {duration = buff_duration})
-		end
-		
-	
+		end		
     end
 end
 
@@ -1276,15 +1259,17 @@ function modifier_imba_chemical_rage_buff_haste:OnCreated()
     if IsServer() then
         local caster = self:GetCaster()
         local ability = self:GetAbility()
+        local parent = self:GetParent()
+
         local particle_acid_aura = "particles/hero/alchemist/chemical_rage_acid_aura.vpcf"
 		-- Ability paramaters
         self.ability			= 	caster:FindAbilityByName("imba_alchemist_acid_spray")
         self.bat_change			=	self:GetAbility():GetSpecialValueFor("base_attack_time")
         self.radius				=	self.ability:GetSpecialValueFor("radius")
 
-        local particle_acid_aura_fx = ParticleManager:CreateParticle(particle_acid_aura, PATTACH_ABSORIGIN_FOLLOW, caster)
-        ParticleManager:SetParticleControl(particle_acid_aura_fx, 0, caster:GetAbsOrigin())
-        ParticleManager:SetParticleControl(particle_acid_aura_fx, 1, caster:GetAbsOrigin())
+        local particle_acid_aura_fx = ParticleManager:CreateParticle(particle_acid_aura, PATTACH_ABSORIGIN_FOLLOW, parent)
+        ParticleManager:SetParticleControl(particle_acid_aura_fx, 0, parent:GetAbsOrigin())
+        ParticleManager:SetParticleControl(particle_acid_aura_fx, 1, parent:GetAbsOrigin())
         self:AddParticle(particle_acid_aura_fx, false, false, -1, false, false)
 
     end

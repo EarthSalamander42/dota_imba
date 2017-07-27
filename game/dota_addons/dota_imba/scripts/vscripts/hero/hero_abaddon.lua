@@ -3,8 +3,6 @@
 
 CreateEmptyTalents("abaddon")
 local LinkedModifiers = {}
--- Reference of curse of avernus ability to pull values at level 1 (required for nether ward and rubick)
-local _curse_of_avernus_reference = nil
 
 -- Yet Another ShallowCopy Copy...ironic
 local function ShallowCopy(orig)
@@ -13,15 +11,6 @@ local function ShallowCopy(orig)
             copy[orig_key] = orig_value
         end
     return copy
-end
-
-local function getCurseOfAvernusDummyReference()
-	if IsServer() and _curse_of_avernus_reference == nil then
-		local abaddon_dummy = CreateUnitByName('npc_dummy_unit', Vector(0,0,0), false, nil, nil, DOTA_TEAM_NOTEAM )
-		_curse_of_avernus_reference = abaddon_dummy:AddAbility("imba_abaddon_curse_of_avernus")
-		_curse_of_avernus_reference:SetLevel(1)
-	end
-	return _curse_of_avernus_reference
 end
 
 local function getOverChannelDamageIncrease(caster)
@@ -168,15 +157,13 @@ function imba_abaddon_mist_coil:OnProjectileHit_ExtraData( hTarget, vLocation, E
 			-- Apply curse of avernus debuff
 			local curse_of_avernus = caster:FindAbilityByName("imba_abaddon_curse_of_avernus")
 			
-			if not curse_of_avernus then
-				curse_of_avernus = getCurseOfAvernusDummyReference()
-			end
+			if curse_of_avernus then
+				local debuff_duration = curse_of_avernus:GetSpecialValueFor("debuff_duration")
 
-			local debuff_duration = curse_of_avernus:GetSpecialValueFor("debuff_duration")
-
-			-- debuff_duration can be 0 if caster has ability but not learnt it yet
-			if debuff_duration > 0 and not caster:PassivesDisabled() then
-				target:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff_slow", { duration = debuff_duration })
+				-- debuff_duration can be 0 if caster has ability but not learnt it yet
+				if debuff_duration > 0 and not caster:PassivesDisabled() then
+					target:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff_slow", { duration = debuff_duration })
+				end				
 			end
 
 			-- Apply the Mist
@@ -191,6 +178,7 @@ function imba_abaddon_mist_coil:OnProjectileHit_ExtraData( hTarget, vLocation, E
 			target:Heal(heal, caster)
 			target:AddNewModifier(caster, self, "modifier_imba_mist_coil_mist_ally", {duration = mist_duration})
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal, nil)
+
 			-- Refresh health and extend duration of Aphotic Shield
 			local shield_modifier = target:FindModifierByName("modifier_imba_aphotic_shield_buff_block")
 			if shield_modifier and shield_modifier.ResetAndExtendBy then
@@ -473,21 +461,18 @@ function modifier_imba_aphotic_shield_buff_block:OnDestroy()
 		local damage_type = DAMAGE_TYPE_MAGICAL
 		local curse_of_avernus 	= caster:FindAbilityByName("imba_abaddon_curse_of_avernus")
 
-		if not curse_of_avernus then
-			curse_of_avernus = getCurseOfAvernusDummyReference()
+		if curse_of_avernus then
+			local debuff_duration = curse_of_avernus:GetSpecialValueFor("debuff_duration")			
 		end
-
-		local debuff_duration = curse_of_avernus:GetSpecialValueFor("debuff_duration")
 
 		-- Talent : When Aphotic Shield is destroyed, cast Mist Coil in 350 AoE
 		local mist_coil_ability
 		local mist_coil_range
 		if caster:HasTalent("special_bonus_imba_abaddon_1") then
-			mist_coil_ability	= caster:FindAbilityByName("imba_abaddon_mist_coil")
-			if not mist_coil_ability then
-				mist_coil_ability = nil
+			mist_coil_ability = caster:FindAbilityByName("imba_abaddon_mist_coil")
+			if mist_coil_ability then				
+				mist_coil_range = caster:FindTalentValue("special_bonus_imba_abaddon_1")
 			end
-			mist_coil_range = caster:FindTalentValue("special_bonus_imba_abaddon_1")
 		end
 
 		for _, unit in pairs(units) do
@@ -495,10 +480,12 @@ function modifier_imba_aphotic_shield_buff_block:OnDestroy()
 				ApplyDamage({ victim = unit, attacker = caster, damage = damage, damage_type = damage_type })
 				-- Purge buffs from enemies
 				unit:Purge(true, false, false, false, false)
+
 				if debuff_duration > 0 then
-					if not caster:PassivesDisabled() then
+					if not caster:PassivesDisabled() and curse_of_avernus then
 						unit:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff_slow", { duration = debuff_duration })
 					end
+
 					-- Show particle when hit
 					particle = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_hit.vpcf", PATTACH_POINT, unit)
 					ParticleManager:SetParticleControlEnt(particle, 0, unit, PATTACH_POINT, "attach_hitloc", unit:GetAbsOrigin(), true)

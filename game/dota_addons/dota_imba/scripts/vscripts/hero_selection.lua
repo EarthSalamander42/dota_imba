@@ -18,8 +18,8 @@ end
 function HeroSelection:Start()
 
 	-- Play pick music
-	HeroSelection.pick_sound_dummy = Entities:FindByClassname(nil, "ent_dota_fountain")
-	EmitGlobalSound("Imba.PickPhaseDrums")
+	HeroSelection.pick_sound_dummy = CreateUnitByName("npc_dummy_unit", Vector(0,0,0), false, nil, nil, DOTA_TEAM_GOODGUYS)
+	EmitSoundOn("Imba.PickPhaseDrums", HeroSelection.pick_sound_dummy)
 
 	-- Figure out which players have to pick
 	HeroSelection.HorriblyImplementedReconnectDetection = {}
@@ -476,6 +476,9 @@ function HeroSelection:EndPicking()
 
 	-- Stop picking phase music
 	StopSoundOn("Imba.PickPhaseDrums", HeroSelection.pick_sound_dummy)
+
+	-- Destroy dummy!
+	UTIL_Remove(HeroSelection.pick_sound_dummy) 
 end
 
 --[[
@@ -495,19 +498,7 @@ function HeroSelection:AssignHero(player_id, hero_name)
 
 		-- Switch for the new hero
 		PlayerResource:ReplaceHeroWith(player_id, hero_name, 0, 0 )
-		PlayerResource:SetCameraTarget(player_id, nil)
-
-		wisp:Destroy()
-
-		-- If the wisp is still somehow alive, RENUKE
-	    Timers:CreateTimer(FrameTime(), function()
-	      	if not wisp:IsNull() then
-	      		print("in timer", wisp)
-		        UTIL_Remove(wisp)
-		        print("wisp removed again")
-		        return 1
-	      	end
-	    end)
+		PlayerResource:SetCameraTarget(player_id, nil)		
 		
 
 		-------------------------------------------------------------------------------------------------

@@ -1250,3 +1250,33 @@ end
 function SystemMessage(token, vars)
 	CustomGameEventManager:Send_ServerToAllClients("custom_system_message", { token = token or "", vars = vars or {}})
 end
+
+
+-- This function is responsible for cleaning dummy units and wisps that may have accumulated
+function StartGarbageCollector()	
+	-- Find all wisps in the game
+	local wisps = Entities:FindAllByName("npc_dota_hero_wisp")
+
+	-- Cycle each wisp, and see if it has a player owner. If it doesn't, NUKE IT BLYAT!
+	for _, wisp in pairs(wisps) do
+		if not wisp:GetPlayerOwner() then
+			UTIL_Remove(wisp)
+		end			
+	end
+
+	-- Find all dummy units in the game
+	local dummies = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0,0,0), nil, 50000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)	
+
+	-- Cycle each dummy. If it is alive for more than 2 minutes, delete it.
+	local gametime = GameRules:GetGameTime()
+	for _,dummy in pairs(dummies) do
+		if dummy:GetUnitName() == "npc_dummy_unit" then
+
+			local dummy_creation_time = dummy:GetCreationTime()
+
+			if gametime - dummy_creation_time > 120 then			
+				UTIL_Remove(dummy)
+			end
+		end
+	end
+end

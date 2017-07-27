@@ -1446,7 +1446,7 @@ function modifier_imba_rain_cloud_slardar:OnCreated()
 		end
 		
 		-- Summon dummy on current location
-		ability.dummy = CreateUnitByName("npc_dummy_unit", caster:GetAbsOrigin(), false, caster, nil, caster:GetTeamNumber()) 			
+		ability.dummy = CreateUnitByName("npc_dummy_unit_perma", caster:GetAbsOrigin(), false, caster, nil, caster:GetTeamNumber()) 			
 		
 		-- Grant the dummy the dummy modifier
 		ability.dummy:AddNewModifier(caster, ability, modifier_dummy, {})										
