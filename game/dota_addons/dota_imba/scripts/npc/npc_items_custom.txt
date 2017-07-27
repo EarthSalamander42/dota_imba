@@ -4803,12 +4803,12 @@
 			"010"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"shadow_rip_start_width"	"250"
+				"shadow_rip_start_width"	"200"
 			}
 			"011"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"shadow_rip_end_width"		"500"
+				"shadow_rip_end_width"		"700"
 			}
 			
 			"12"

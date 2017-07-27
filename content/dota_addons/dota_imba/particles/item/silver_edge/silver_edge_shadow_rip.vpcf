@@ -254,10 +254,10 @@
 			_class = "C_INIT_RingWave"
 			m_flInitialRadius = 1.0
 			m_bEvenDistribution = true
-			m_flParticlesPerOrbit = 200.0
+			m_flParticlesPerOrbit = 150.0
 			m_flInitialSpeedMin = 5000.0
 			m_flInitialSpeedMax = 5000.0
-			m_flYaw = 315.0
+			m_flYaw = 295.0
 		},
 		{
 			_class = "C_INIT_PositionOffset"

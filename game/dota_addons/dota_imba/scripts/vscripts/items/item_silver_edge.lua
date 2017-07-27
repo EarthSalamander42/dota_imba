@@ -144,7 +144,7 @@ function modifier_item_imba_silver_edge_invis:OnAttackLanded(params)
 
 				-- Create a particle for the cleave effect for ranged heroes
 				CreateModifierThinker(self.parent, ability, "modifier_item_imba_silver_edge_invis_attack_cleave_particle",
-				{direction_x = direction.x, direction_y = direction.y, direction_z = direction.z}, target_pos, self.parent:GetTeamNumber(), false)
+				{duration =1, direction_x = direction.x, direction_y = direction.y, direction_z = direction.z}, target_pos, self.parent:GetTeamNumber(), false)
 			else
 				-- Do Cleave particle for melee heroes
 				local cleave_particle 		= "particles/item/silver_edge/silver_edge_shadow_rip.vpcf"	-- Badass custom shit
@@ -420,10 +420,6 @@ function modifier_item_imba_silver_edge_invis_attack_cleave_particle:OnCreated(p
 		ParticleManager:SetParticleControl(particle_fx, 0, self:GetParent():GetAbsOrigin())
 		ParticleManager:ReleaseParticleIndex(particle_fx)
 
-		-- I have lived my purpose
-		Timers:CreateTimer(1,function()
-			self:Destroy()
-		end)
 	end
 end
 
