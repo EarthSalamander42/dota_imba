@@ -716,7 +716,7 @@ function UpdateTooltipUI()
 function InsertIMBATalentButton(){
     $.Msg("InsertIMBATalentButton");
 	InsertPartSelectButton();
-	$.RegisterEventHandler( 'DOTAShowAbilityTooltip', $.GetContextPanel(), UpdateTooltipUI );
+	$.RegisterEventHandler( 'DOTAShowAbilityTooltip', $.GetContextPanel(), UpdateTooltipUI() );
     var baseUI = GetHUDRootUI();
     baseUI = baseUI.FindChildTraverse("AbilitiesAndStatBranch");
     var newButton = baseUI.FindChildTraverse(IMBA_TALENT_BTN_ID);
