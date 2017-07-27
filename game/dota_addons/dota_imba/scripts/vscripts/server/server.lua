@@ -140,38 +140,48 @@ local _finished = 0
 local is_AFK = {}
 
 function Server_SendAndGetInfoForAll()
-if _finished == 0 then
-	require('libraries/json')
-	Server_SetRankTitle()
+	if _finished == 0 then
+		require('libraries/json')
+		Server_SetRankTitle()
 
-	for nPlayerID=0, DOTA_MAX_TEAM_PLAYERS-1 do
-		if  PlayerResource:IsValidPlayer(nPlayerID)  then
-		if PlayerResource:IsFakeClient(nPlayerID) then
-		else
-
-			table_SteamID64[nPlayerID] = tostring(PlayerResource:GetSteamID(nPlayerID))
-			table_XP[nPlayerID] = tostring(math.random(18,32)) --How many XP will player get in this game
-
-			local jsondata={}
-			local jsontable={}
-			jsontable.SteamID64 = table_SteamID64[nPlayerID]
-			jsontable.XP = table_XP[nPlayerID]
-			table.insert(jsondata,jsontable)
-			local request = CreateHTTPRequestScriptVM( "GET", "http://www.dota2imba.cn/XP_game_to_tmp.php" )
-				request:SetHTTPRequestGetOrPostParameter("data_json",JSON:encode(jsondata))
-				request:SetHTTPRequestGetOrPostParameter("auth",_AuthCode);
-				request:Send(function(result)
-				Adecode=JSON:decode(result.Body)
-				Server_DecodeForPlayer(Adecode, nPlayerID)
-				Server_GetPlayerLevelAndTitle(nPlayerID)
-			end )
-			is_AFK[nPlayerID] = 0
-
+		for nPlayerID=0, DOTA_MAX_TEAM_PLAYERS-1 do
+			Server_SendAndGetInfoForAll_function(nPlayerID)
 		end
-		end
+		_finished = 1
 	end
-	_finished = 1
 end
+
+function Server_SendAndGetInfoForAll_function(nPlayerID)
+	if PlayerResource:IsValidPlayer(nPlayerID)  then
+	if PlayerResource:IsFakeClient(nPlayerID) then
+	else
+
+		table_SteamID64[nPlayerID] = tostring(PlayerResource:GetSteamID(nPlayerID))
+		table_XP[nPlayerID] = tostring(math.random(24,32)) --How many XP will player get in this game
+
+		local jsondata={}
+		local jsontable={}
+		jsontable.SteamID64 = table_SteamID64[nPlayerID]
+		jsontable.XP = table_XP[nPlayerID]
+		table.insert(jsondata,jsontable)
+			local request = CreateHTTPRequestScriptVM( "GET", "http://www.dota2imba.cn/XP_game_to_tmp.php" )
+			request:SetHTTPRequestGetOrPostParameter("data_json",JSON:encode(jsondata))
+			request:SetHTTPRequestGetOrPostParameter("auth",_AuthCode)
+			request:Send(function(result)
+			Adecode=JSON:decode(result.Body)
+			Server_DecodeForPlayer(Adecode, nPlayerID)
+			if result.StatusCode == 200 then
+				Server_GetPlayerLevelAndTitle(nPlayerID)
+			end
+			if result.StatusCode ~= 200 then
+				Server_SendAndGetInfoForAll_function(nPlayerID)
+				return
+			end
+		end )
+		is_AFK[nPlayerID] = 0
+
+	end
+	end
 end
 
 function Server_EnableToGainXPForPlyaer(nPlayerID)
@@ -186,7 +196,7 @@ function Server_EnableToGainXPForPlyaer(nPlayerID)
 		table.insert(jsondata,jsontable)
 		local request = CreateHTTPRequestScriptVM( "GET", "http://www.dota2imba.cn/XP_ability_to_gain.php" )
 			request:SetHTTPRequestGetOrPostParameter("data_json",JSON:encode(jsondata))
-			request:SetHTTPRequestGetOrPostParameter("auth",_AuthCode);
+			request:SetHTTPRequestGetOrPostParameter("auth",_AuthCode)
 			request:Send(function(result)
 		end )
 	end
@@ -203,7 +213,7 @@ function Server_DisableToGainXpForPlayer(nPlayerID)
 		table.insert(jsondata,jsontable)
 		local request = CreateHTTPRequestScriptVM( "GET", "http://www.dota2imba.cn/XP_ability_to_gain.php" )
 			request:SetHTTPRequestGetOrPostParameter("data_json",JSON:encode(jsondata))
-			request:SetHTTPRequestGetOrPostParameter("auth",_AuthCode);
+			request:SetHTTPRequestGetOrPostParameter("auth",_AuthCode)
 			request:Send(function(result)
 		end )
 	end
