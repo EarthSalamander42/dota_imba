@@ -8978,7 +8978,8 @@
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_enigma.vsndevts"
 			"particle"					"particles/status_fx/status_effect_enigma_malefice.vpcf"
-			"particle"					"particles/units/heroes/hero_enigma/enigma_malefice.vpcf"	
+			"particle"					"particles/units/heroes/hero_enigma/enigma_malefice.vpcf"
+			"particle"					"particles/hero/enigma/enigma_blackhole_malefice.vpcf"
 		}
 
 		// Casting
@@ -9053,7 +9054,17 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"eidolon_bonus_duration_percent"				"0.07"
-			}											
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"health_bonus_duration_percent" 		"25"
+			}
+			"12"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"health_bonus_duration" 		"2"
+			}															
 		}
 
 	}
