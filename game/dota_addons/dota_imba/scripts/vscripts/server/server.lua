@@ -168,9 +168,9 @@ function Server_SendAndGetInfoForAll_function(nPlayerID)
 			request:SetHTTPRequestGetOrPostParameter("data_json",JSON:encode(jsondata))
 			request:SetHTTPRequestGetOrPostParameter("auth",_AuthCode)
 			request:Send(function(result)
-			Adecode=JSON:decode(result.Body)
-			Server_DecodeForPlayer(Adecode, nPlayerID)
 			if result.StatusCode == 200 then
+				Adecode=JSON:decode(result.Body)
+				Server_DecodeForPlayer(Adecode, nPlayerID)
 				Server_GetPlayerLevelAndTitle(nPlayerID)
 			end
 			if result.StatusCode ~= 200 then
