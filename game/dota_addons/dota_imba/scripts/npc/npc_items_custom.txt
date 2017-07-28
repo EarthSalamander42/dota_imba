@@ -11652,5 +11652,109 @@
 		}
 	}
 
-	//next free ID: 2251
+	//=================================================================================================================
+	// Recipe : Skull Basher
+	//=================================================================================================================
+	"item_recipe_imba_skull_basher"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2251"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+		"Model"							"models/props_gameplay/recipe.mdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"750"
+		"ItemShopTags"					""
+
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_skull_basher"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_javelin;item_belt_of_strength"
+		}
+	}
+
+	//=================================================================================================================
+	// Skull Basher
+	//=================================================================================================================
+	"item_imba_skull_basher"
+	{
+		"ID"							"2252"
+		"BaseClass"						"item_lua"
+		"AbilityTextureName"			"item_basher"
+		"ScriptFile"					"items/item_skull_basher.lua"		
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost" 						"2200"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemShopTags"					"str;damage"
+		"ItemQuality"					"rare"
+		"ItemAliases"					"skull;basher;"
+		"SideShop" 						"0"
+		"SecretShop" 					"0"		
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"				
+		"AbilityCooldown"				"2.3"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_damage"					"10"
+			}
+
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_strength"				"10"
+			}
+
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_range_melee"				"65"
+			}
+
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bash_chance_melee"				"25"
+			}
+
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bash_chance_ranged"			"10"
+			}
+
+			"06"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"stun_duration"					"1.4"
+			}
+
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bash_damage"					"100"
+			}
+
+			"08"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"skull_break_duration"			"5"
+			}
+		}
+	}
+
+	//next free ID: 2253
 }

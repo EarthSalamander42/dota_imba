@@ -157,7 +157,7 @@
 		"item"		"item_lesser_crit"
 		"item"		"item_imba_armlet"
 		"item"		"item_imba_shadow_blade"
-		"item"		"item_basher"
+		"item"		"item_imba_skull_basher"
 		"item"		"item_bfury"
 		"item"		"item_imba_silver_edge"
 		"item"		"item_imba_radiance"
