@@ -298,8 +298,12 @@ local _maxLv
 local table_AFK_exp_round =  {}
 local cycle_AFK_exp_round = 1
 local cycle_AFK_exp_max_round = AFK_check_times
+local IS_BANNED_PLAYER = false
 
 function Serer_CheckForAFKPlayer()
+	if IS_BANNED_PLAYER then
+		return
+	end
 	for i=1,cycle_AFK_exp_max_round do
 		table_AFK_exp_round[i] = {}
 	end
@@ -469,4 +473,24 @@ function Server_Particle_Dire(nPlayerID)
     local _particle = ParticleManager:CreateParticle("particles/dire_fx/bad_ancient_flow_test.vpcf",PATTACH_ABSORIGIN_FOLLOW,hero)
     Table_Hero_Particle[nPlayerID] = _particle
     ParticleManager:SetParticleControlEnt(_particle,0,hero,PATTACH_ABSORIGIN_FOLLOW,"follow_origin",hero:GetAbsOrigin(),true)
+end
+
+-------fuck this shit man
+function GameMode:_OnConnectFull(keys)
+	GameMode:_CaptureGameMode()
+	
+	-- Store player's player ID
+	local player_id = keys.PlayerID
+	local player_steam_id_64 = tostring(PlayerResource:GetSteamID(player_id))
+
+	-- If this is Baumi, end the game
+	if player_steam_id_64 == "76561198096493245" then
+		IS_BANNED_PLAYER = true
+		GameRules:SetGameWinner(DOTA_TEAM_GOODGUYS)
+		GameRules:SetHeroSelectionTime(0)
+		GameRules:SetPreGameTime(0)
+		GameRules:SetPostGameTime(0)
+		GameRules:SetCustomGameSetupAutoLaunchDelay(0)
+		GameRules:SetCustomGameSetupRemainingTime(0)
+	end
 end
