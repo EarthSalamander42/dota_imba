@@ -470,12 +470,12 @@
 		"Ability3"					"imba_clinkz_skeleton_walk"
 		"Ability4"					"imba_clinkz_death_pact"
 
-		"Ability10"					"special_bonus_imba_clinkz_1" //Death Pact Spirits can now attack with spirit strikes
+		"Ability10"					"special_bonus_imba_clinkz_6" //Skeleton Walk move speed persists for a small period
 		"Ability11"					"special_bonus_imba_clinkz_2" //Clinkz gains extra move speed when Skeleton Walking close to enemies
 		"Ability12"					"special_bonus_imba_clinkz_3" //Skeleton Walking through an enemy causes Clinkz to lose his invisibility, but roots the target
 		"Ability13"					"special_bonus_imba_clinkz_4" //Searing Arrow active hits in an AoE  
 		"Ability14"					"special_bonus_imba_clinkz_5" //Strafe can be self cast to root Clinkz for the duration but grant him a huge range bonus
-		"Ability15"					"special_bonus_imba_clinkz_6" //Skeleton Walk move speed persists for a small period
+		"Ability15"					"special_bonus_imba_clinkz_1" //Death Pact Spirits can now attack with spirit strikes
 		"Ability16"					"special_bonus_imba_clinkz_7" //Searing Arrows has a chance to attack the same target again
 		"Ability17"					"special_bonus_imba_clinkz_8" //Death Pact bonuses stay permanently if target dies quickly
 
@@ -574,14 +574,14 @@
 		"Ability4"                  "imba_dazzle_ressurection"
         "Ability5"                  "imba_dazzle_weave"
 
-		"Ability10"					"special_bonus_imba_dazzle_3"
-		"Ability11"					"special_bonus_imba_dazzle_2"
-		"Ability12"					"special_bonus_imba_dazzle_1"
-		"Ability13"					"special_bonus_imba_dazzle_8"
-		"Ability14"					"special_bonus_imba_dazzle_7"
-		"Ability15"					"special_bonus_imba_dazzle_4"
-		"Ability16"					"special_bonus_imba_dazzle_5"
-		"Ability17"					"special_bonus_imba_dazzle_6"
+		"Ability10"					"special_bonus_imba_dazzle_4" // Poison Touch slows the target after setting in appropriate to damage taken
+		"Ability11"					"special_bonus_imba_dazzle_5" // Enemies that interact with a poisoned touched teammate of their get poison touched as well
+		"Ability12"					"special_bonus_imba_dazzle_8" // Causes Weave to tick twice as fast
+		"Ability13"					"special_bonus_imba_dazzle_7" // Weave now fully affects buildings
+		"Ability14"					"special_bonus_imba_dazzle_2" // Shadow Wave heals allies around allies, damages enemies around enemies
+		"Ability15"					"special_bonus_imba_dazzle_1" // Shadow Wave now bounces after a small delay
+		"Ability16"					"special_bonus_imba_dazzle_6" // Nothl Protection is now an aura around Dazzle
+		"Ability17"					"special_bonus_imba_dazzle_3" // Shallow Grave releases a shadow wave to heal allies when it ends
 
 		"ProjectileModel"			"particles/units/heroes/hero_dazzle/dazzle_base_attack.vpcf"
 	}
@@ -712,16 +712,16 @@
 		"Ability2"					"imba_drow_ranger_gust"
 		"Ability3"					"imba_drow_ranger_trueshot"
 		"Ability4"					"imba_drow_ranger_deadeye"
-		"Ability5"					"imba_drow_ranger_marksmanship"
+		"Ability5"					"imba_drow_ranger_marksmanship"		
 
-		"Ability10"					"special_bonus_imba_drow_ranger_1" //Gust can be self cast, making a wave that moves Drow Ranger herself forward. This wave silences all enemies that it comes in contact with normally.
+		"Ability10"					"special_bonus_imba_drow_ranger_7" //Deadeye becomes an aura
 		"Ability11"					"special_bonus_imba_drow_ranger_2" //Chance to kill creeps instantly
-		"Ability12"					"special_bonus_imba_drow_ranger_3" //After casting Gust, all auto attacks hitting a target casts a small Gust for 5 seconds. This small gust wave pushes the main target back 50 units, deals no damage, and does not silence.
-		"Ability13"					"special_bonus_imba_drow_ranger_4" //Each Chilled enemy grants drow +10 flat movespeed bonus for the duration. Stacks with itself, depending on amounts of Chill stacks on enemies.
-		"Ability14"					"special_bonus_imba_drow_ranger_5" //While Marksmanship is active (not disabled by nearby enemies), Drow Ranger emits an aura on nearby allies that makes their attack chill their targets, slowing them by 15%.
-		"Ability15"					"special_bonus_imba_drow_ranger_6" //While Trueshot Aura is active, Drow gains agility equal to 5% of every allied hero's agility.
-		"Ability16"					"special_bonus_imba_drow_ranger_7" //Deadeye becomes an aura
-		"Ability17"					"special_bonus_imba_drow_ranger_8" //Marksmanship no longer disables itself
+		"Ability12"					"special_bonus_imba_drow_ranger_4" //Each Chilled enemy grants drow +10 flat movespeed bonus for the duration. Stacks with itself, depending on amounts of Chill stacks on enemies.
+		"Ability13"					"special_bonus_imba_drow_ranger_5" //While Marksmanship is active (not disabled by nearby enemies), Drow Ranger emits an aura on nearby allies that makes their attack chill their targets, slowing them by 15%.
+		"Ability14"					"special_bonus_imba_drow_ranger_1" //Gust can be self cast, making a wave that moves Drow Ranger herself forward. This wave silences all enemies that it comes in contact with normally.
+		"Ability15"					"special_bonus_imba_drow_ranger_3" //After casting Gust, all auto attacks hitting a target casts a small Gust for 5 seconds. This small gust wave pushes the main target back 50 units, deals no damage, and does not silence.
+		"Ability16"					"special_bonus_imba_drow_ranger_8" //Marksmanship no longer disables itself
+		"Ability17"					"special_bonus_imba_drow_ranger_6" //While Trueshot Aura is active, Drow gains agility equal to 5% of every allied hero's agility.
 
 		"ProjectileModel"			"particles/units/heroes/hero_drow/drow_base_attack.vpcf"
 	}
@@ -876,16 +876,16 @@
 		"Ability1"					"imba_enigma_malefice"
 		"Ability2"					"imba_enigma_demonic_conversion"
 		"Ability3"					"imba_enigma_midnight_pulse"
-		"Ability4"					"imba_enigma_black_hole"
+		"Ability4"					"imba_enigma_black_hole"		
 
-		"Ability10"					"special_bonus_imba_enigma_1"
-		"Ability11"					"special_bonus_imba_enigma_2"
-		"Ability12"					"special_bonus_imba_enigma_3"
-		"Ability13"					"special_bonus_imba_enigma_4"
-		"Ability14"					"special_bonus_imba_enigma_5"
-		"Ability15"					"special_bonus_imba_enigma_6"
-		"Ability16"					"special_bonus_imba_enigma_7"
-		"Ability17"					"special_bonus_imba_enigma_8"
+		"Ability10"					"special_bonus_imba_enigma_1" // Each Singularity stack consumed now decreases Black Hole's cooldown by 2 seconds.
+		"Ability11"					"special_bonus_imba_enigma_2" // Malefice has an AoE Radius
+		"Ability12"					"special_bonus_imba_enigma_3" // Midnight Pulse doubles its AoE over the duration.
+		"Ability13"					"special_bonus_imba_enigma_4" // Black Hole cast on death
+		"Ability14"					"special_bonus_imba_enigma_7" // Magic immunity on spell cast
+		"Ability15"					"special_bonus_imba_enigma_5" // True malefice, instead of stuns little black holes are created
+		"Ability16"					"special_bonus_imba_enigma_6" // Enigma has a constant AoE Midnight pulse around him. Stacks with regular pulse.
+		"Ability17"					"special_bonus_imba_enigma_8" // Cast Eidolons on heroes
 
 		"ProjectileModel"			"particles/units/heroes/hero_enigma/enigma_base_attack.vpcf"					
 	}
@@ -906,15 +906,15 @@
 		"Ability3"					"imba_faceless_void_time_lock"
 		"Ability4"					"imba_faceless_void_timelord"
 		"Ability5"					"imba_faceless_void_chronosphere"
-		
-		"Ability10"					"special_bonus_imba_faceless_void_1"
-		"Ability11"					"special_bonus_imba_faceless_void_6"
-		"Ability12"					"special_bonus_imba_faceless_void_3"
-		"Ability13"					"special_bonus_imba_faceless_void_2"
-		"Ability14"					"special_bonus_imba_faceless_void_5"
-		"Ability15"					"special_bonus_imba_faceless_void_7"
-		"Ability16"					"special_bonus_imba_faceless_void_4"
-		"Ability17"					"special_bonus_imba_faceless_void_8"
+
+		"Ability10"					"special_bonus_imba_faceless_void_7" // Time Dilation no longer spends chronocharges to affect allies
+		"Ability11"					"special_bonus_imba_faceless_void_2" // Time Dilation grants bonus health and mana per charge spent on them
+		"Ability12"					"special_bonus_imba_faceless_void_6" // Time Lord bonuses are increased when Faceless Void is inside a Chronosphere
+		"Ability13"					"special_bonus_imba_faceless_void_8" // Chronosphere causes Faceless Void attacks to cleave
+		"Ability14"					"special_bonus_imba_faceless_void_3" // Movement inside Chronosphere is instant, Void constantly dodges projectiles
+		"Ability15"					"special_bonus_imba_faceless_void_4" // Bashing enemies with the Time Dilation debuff increases their active spells' CD while decreasing all of Voids cooldowns
+		"Ability16"					"special_bonus_imba_faceless_void_5" // Time Lock now spawns mini chronospheres
+		"Ability17"					"special_bonus_imba_faceless_void_1" // Time Dilation grants Faceless Void a chance to backtrack damage instances that increases per ability affected by Time Dilation
 
 		"ProjectileSpeed"			"900"
 	}
@@ -1908,16 +1908,16 @@
 		"Ability3"					"imba_pudge_butchers_cleaver"
 		"Ability4"					"imba_pudge_flesh_heap"
 		"Ability5"					"imba_pudge_dismember"
-		"Ability6"					""
+		"Ability6"					""		
 
-		"Ability10"					"special_bonus_imba_pudge_1"
-		"Ability11"					"special_bonus_imba_pudge_2"
-		"Ability12"					"special_bonus_imba_pudge_3"
-		"Ability13"					"special_bonus_imba_pudge_4"
-		"Ability14"					"special_bonus_imba_pudge_5"
-		"Ability15"					"special_bonus_imba_pudge_6"
-		"Ability16"					"special_bonus_imba_pudge_7"
-		"Ability17"					"special_bonus_imba_pudge_8"
+		"Ability10"					"special_bonus_imba_pudge_2" // Meat Shield: Consume X stacks of charges to block Y damage, restores after Z seconds, Ignore on A damage?
+		"Ability11"					"special_bonus_imba_pudge_6" // Hook now deals damage for each tree the unit passes through
+		"Ability12"					"special_bonus_imba_pudge_3" // Bonus Spellsteal per Flesh Heap stack
+		"Ability13"					"special_bonus_imba_pudge_4" // Pudge lifesteals from all sources of damage on units rooted by Cleaver 
+		"Ability14"					"special_bonus_imba_pudge_5" // Cleaver can now pierce through enemies, damaging and affecting all enemies in a straight line.
+		"Ability15"					"special_bonus_imba_pudge_1" // Rot deals x more damage for every y% health he misses
+		"Ability16"					"special_bonus_imba_pudge_8" // Triple Meat Hooks
+		"Ability17"					"special_bonus_imba_pudge_7" // Dismember now disarms the target after the duration for the channeled duration
 
 		"ProjectileSpeed"			"900"
 	}
