@@ -746,7 +746,7 @@ end
 modifier_imba_bash_of_the_deep_attack = class({})
 
 function modifier_imba_bash_of_the_deep_attack:DeclareFunctions()	
-		local decFuncs = {MODIFIER_EVENT_ON_ATTACK_LANDED}
+		local decFuncs = {MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_PHYSICAL}
 		
 		return decFuncs	
 end
@@ -763,8 +763,8 @@ function modifier_imba_bash_of_the_deep_attack:IsPurgable()
 	return false
 end
 
-function modifier_imba_bash_of_the_deep_attack:OnAttackLanded( keys )
-	if IsServer() then
+function modifier_imba_bash_of_the_deep_attack:GetModifierProcAttack_BonusDamage_Physical( keys )
+if IsServer() then
 		-- Ability properties
 		local caster = self:GetCaster()
 		local ability = self:GetAbility()
@@ -780,6 +780,7 @@ function modifier_imba_bash_of_the_deep_attack:OnAttackLanded( keys )
 		local creep_duration_mult = ability:GetSpecialValueFor("creep_duration_mult")
 		local extend_duration = ability:GetSpecialValueFor("extend_duration")
 		local damage_smack = ability:GetSpecialValueFor("damage_smack")
+		local total_bonus_damage = 0
 
 		-- #3 Talent: Forceful Smack duration increase
 		extend_duration = extend_duration + caster:FindTalentValue("special_bonus_imba_slardar_3")
@@ -857,12 +858,7 @@ function modifier_imba_bash_of_the_deep_attack:OnAttackLanded( keys )
 				
 				if smack_target then
 					-- Deal bonus smack damage
-					local damageTable = {victim = target,
-										attacker = caster,
-										damage = damage_smack,
-										damage_type = DAMAGE_TYPE_PHYSICAL}
-				
-					ApplyDamage(damageTable)
+					total_bonus_damage = total_bonus_damage + damage_smack
 				end
 			end		
 
@@ -882,19 +878,13 @@ function modifier_imba_bash_of_the_deep_attack:OnAttackLanded( keys )
 						target:AddNewModifier(caster, ability, modifier_stun, {duration = (hero_stun_duration * creep_duration_mult)})
 					end
 					
-					-- Apply bonus damage
-					local damageTable = {victim = target,
-										attacker = caster,
-										damage = bash_damage,
-										damage_type = DAMAGE_TYPE_PHYSICAL}
-				
-					ApplyDamage(damageTable)					
+					total_bonus_damage = total_bonus_damage + bash_damage					
 				end
 			end		
 		end
+		return total_bonus_damage
 	end
 end
-
 
 -- Bash stun modifier
 modifier_imba_bash_of_the_deep_stun = class({})
@@ -1446,7 +1436,7 @@ function modifier_imba_rain_cloud_slardar:OnCreated()
 		end
 		
 		-- Summon dummy on current location
-		ability.dummy = CreateUnitByName("npc_dummy_unit_perma", caster:GetAbsOrigin(), false, caster, nil, caster:GetTeamNumber()) 			
+		ability.dummy = CreateUnitByName("npc_dummy_unit", caster:GetAbsOrigin(), false, caster, nil, caster:GetTeamNumber()) 			
 		
 		-- Grant the dummy the dummy modifier
 		ability.dummy:AddNewModifier(caster, ability, modifier_dummy, {})										
