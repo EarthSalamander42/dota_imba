@@ -62,7 +62,6 @@
 	[
 		{
 			_class = "C_OP_InstantaneousEmitter"
-			m_flStartTime = 0.29
 			m_nParticlesToEmit = 1
 		},
 	]

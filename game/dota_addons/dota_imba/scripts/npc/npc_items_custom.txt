@@ -7814,13 +7814,12 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2177"
-		"BaseClass"						"item_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"BaseClass"						"item_lua"		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE"
 		"AbilityTextureName" 			"custom/imba_shotgun"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"ScriptFile"					"items/item_starfury.lua"
 
 		// Item Info
@@ -11691,7 +11690,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost" 						"2200"
+		"ItemCost" 						"2700"
 		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
 		"ItemShopTags"					"str;damage"
 		"ItemQuality"					"rare"
@@ -11756,5 +11755,151 @@
 		}
 	}
 
-	//next free ID: 2253
+	//=================================================================================================================
+	// Recipe : Abyssal Blade
+	//=================================================================================================================
+	"item_recipe_imba_abyssal_blade"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2253"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+		"Model"							"models/props_gameplay/recipe.mdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1550"
+		"ItemShopTags"					""
+
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_abyssal_blade"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_skull_basher;item_imba_vanguard"
+		}
+	}
+
+	//=================================================================================================================
+	// Abyssal Blade
+	//=================================================================================================================
+	"item_imba_abyssal_blade"
+	{
+		"ID"							"2254"
+		"BaseClass"						"item_lua"
+		"AbilityTextureName"			"item_abyssal_blade"
+		"ScriptFile"					"items/item_abyssal_blade.lua"		
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost" 						"6300"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemShopTags"					"str;damage;hp;hp_regen"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"abyssal;abyssal blade;"
+		"SideShop" 						"0"
+		"SecretShop" 					"0"		
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"				
+
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		
+		"AbilityCastRange"				"200"
+		"AbilityCooldown"				"35"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_damage"					"10"
+			}
+
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_strength"				"10"
+			}
+
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_range_melee"				"80"
+			}
+
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bash_chance_melee"				"25"
+			}
+
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bash_chance_ranged"			"10"
+			}
+
+			"06"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"stun_duration"					"1.4"
+			}
+
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bash_damage"					"120"
+			}
+
+			"08"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"skull_break_duration"			"5"
+			}
+
+			"09"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_hp_regen"				"18"
+			}
+
+			"10"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_health"					"425"
+			}
+
+			"11"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"insta_skull_break_chance_pct"	"40"
+			}
+
+			"12"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_block"					"45"
+			}
+
+			"13"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"internal_bash_cd"				"2"
+			}
+
+			"14"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"active_stun_duration"			"2"
+			}
+		}
+	}
+
+	//next free ID: 2255
 }

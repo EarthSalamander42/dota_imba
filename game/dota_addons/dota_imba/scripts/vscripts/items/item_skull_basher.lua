@@ -117,13 +117,6 @@ function modifier_imba_skull_basher_unique:OnAttack(keys)
 
         -- Only apply if the attacker is the caster
         if attacker == self.caster then
-            -- Check if this is a ranged or melee attacker
-            local chance
-            if self.caster:IsRangedAttacker() then
-                chance = self.bash_chance_ranged
-            else
-                chance = self.bash_chance_melee
-            end
 
             -- If the attacker is an illusion, do nothing
             if self.caster:IsIllusion() then
@@ -143,6 +136,19 @@ function modifier_imba_skull_basher_unique:OnAttack(keys)
             -- If the Skull Basher is on cooldown, do nothing
             if not self.ability:IsCooldownReady() then
                 return nil
+            end
+
+            -- If the caster has an Abyssal Blade, do nothing
+            if self.caster:HasModifier("modifier_imba_abyssal_blade_unique") then
+                return nil
+            end
+
+            -- Check if this is a ranged or melee attacker
+            local chance
+            if self.caster:IsRangedAttacker() then
+                chance = self.bash_chance_ranged
+            else
+                chance = self.bash_chance_melee
             end
 
             -- Roll for a bash!

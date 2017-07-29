@@ -51,8 +51,8 @@
 	[
 		{
 			_class = "C_INIT_RandomRadius"
-			m_flRadiusMin = 80.0
-			m_flRadiusMax = 160.0
+			m_flRadiusMin = 60.0
+			m_flRadiusMax = 120.0
 		},
 		{
 			_class = "C_INIT_CreateWithinSphere"
@@ -85,7 +85,6 @@
 	[
 		{
 			_class = "C_OP_InstantaneousEmitter"
-			m_flStartTime = 0.3
 			m_nParticlesToEmit = 2
 		},
 	]

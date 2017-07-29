@@ -107,7 +107,6 @@
 		{
 			_class = "C_OP_InstantaneousEmitter"
 			m_nParticlesToEmit = 64
-			m_flStartTime = 0.3
 		},
 	]
 	m_controlPointConfigurations = 
