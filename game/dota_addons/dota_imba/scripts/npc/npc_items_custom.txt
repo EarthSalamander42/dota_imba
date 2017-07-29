@@ -8385,6 +8385,10 @@
 		"ItemAliases"					"tranquils; tranquil boots; ironleaf boots"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
 
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"5"
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -8416,7 +8420,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_magic_resistance"	"35"
+				"base_magic_resistance"	"25"
 			}
 
 			"06"
@@ -8427,86 +8431,80 @@
 
 			"07"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"meditate_movespeed_bonus_pct"	"1"
+				"var_type"						"FIELD_FLOAT"
+				"meditate_movespeed_bonus_pct"	"1.25"
 			}
 
 			"08"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"meditate_health_regen"		"4"
+				"var_type"					"FIELD_FLOAT"
+				"meditate_health_regen"		"4.5"
 			}
 
 			"09"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"meditate_magic_resistance_pct"	"1"
+				"var_type"					"FIELD_INTEGER"
+				"leafwalk_magic_res"		"80"
 			}
 
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_stacks"			"30"
+				"max_stacks"			"25"
 			}
 
 			"11"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"meditate_stacks_loss_creep"	"3"
-			}
+			}			
 
 			"12"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"meditate_stack_break_duration"	"5"
-			}
-
-			"13"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"iron_body_thrshold"		"150"
 			}
 
-			"14"
+			"13"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"iron_body_high_reduction"		"150"
 			}
 
-			"15"
+			"14"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"iron_body_normal_reduction"	"40"
 			}
 
-			"16"
+			"15"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"iron_body_min_stacks_req"		"1"
 			}
 
+			"16"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"leafwalk_hold_time"		"2.25"
+			}
+
 			"17"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"leafwalk_hold_time"		"3"
+				"leafwalk_duration"			"12"
 			}
 
 			"18"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"leafwalk_duration"			"15"
+				"meditate_stacks_loss_hero"	"5"
 			}
 
 			"19"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"meditate_stacks_loss_hero"	"5"
-			}
-
-			"20"
-			{
 				"var_type"					 		"FIELD_INTEGER"
-				"broken_meditate_efficiency_pct"	"50"
+				"broken_meditate_efficiency_pct"	"25"
 			}
 		}		
 	}

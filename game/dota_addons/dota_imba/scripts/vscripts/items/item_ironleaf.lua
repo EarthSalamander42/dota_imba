@@ -7,13 +7,10 @@ LinkLuaModifier("modifier_imba_ironleaf_boots", "items/item_ironleaf", LUA_MODIF
 LinkLuaModifier("modifier_imba_ironleaf_boots_unique", "items/item_ironleaf", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ironleaf_boots_meditate", "items/item_ironleaf", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_ironleaf_boots_leafwalk", "items/item_ironleaf", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ironleaf_boots_magic_res", "items/item_ironleaf", LUA_MODIFIER_MOTION_NONE)
 
 function item_imba_ironleaf_boots:GetIntrinsicModifierName()
     return "modifier_imba_ironleaf_boots"
-end
-
-function item_imba_ironleaf_boots:GetCooldown(level)
-    return self:GetSpecialValueFor("meditate_stack_break_duration")
 end
 
 -- STACKABLE IRONLEAF BOOTS STATS MODIFIER
@@ -102,6 +99,7 @@ function modifier_imba_ironleaf_boots_unique:OnCreated()
         self.ability = self:GetAbility()
         self.modifier_meditate = "modifier_imba_ironleaf_boots_meditate"
         self.modifier_leafwalk = "modifier_imba_ironleaf_boots_leafwalk"
+        self.modifier_mres = "modifier_imba_ironleaf_boots_magic_res"
 
         -- Ability specials
         self.iron_body_thrshold = self.ability:GetSpecialValueFor("iron_body_thrshold")
@@ -146,9 +144,10 @@ function modifier_imba_ironleaf_boots_unique:OnIntervalThink()
             return nil
         end
 
-        -- If the last movement was above the threshold, apply Leafwalk
+        -- If the last movement was above the threshold, apply Leafwalk and its magic resistance modifier
         if GameRules:GetGameTime() - self.last_movement >= self.leafwalk_hold_time then
             self.caster:AddNewModifier(self.caster, self.ability, self.modifier_leafwalk, {duration = self.leafwalk_duration})
+            self.caster:AddNewModifier(self.caster, self.ability, self.modifier_mres, {duration = self.leafwalk_duration})
         end
     end
 end
@@ -275,8 +274,7 @@ function modifier_imba_ironleaf_boots_meditate:OnCreated()
     -- Ability specials
     self.meditate_interval = self.ability:GetSpecialValueFor("meditate_interval")
     self.meditate_movespeed_bonus_pct = self.ability:GetSpecialValueFor("meditate_movespeed_bonus_pct")
-    self.meditate_health_regen = self.ability:GetSpecialValueFor("meditate_health_regen")
-    self.meditate_magic_resistance_pct = self.ability:GetSpecialValueFor("meditate_magic_resistance_pct")
+    self.meditate_health_regen = self.ability:GetSpecialValueFor("meditate_health_regen")    
     self.max_stacks = self.ability:GetSpecialValueFor("max_stacks")
     self.meditate_stacks_loss_creep = self.ability:GetSpecialValueFor("meditate_stacks_loss_creep")    
     self.meditate_stacks_loss_hero = self.ability:GetSpecialValueFor("meditate_stacks_loss_hero")
@@ -307,8 +305,7 @@ end
 function modifier_imba_ironleaf_boots_meditate:DeclareFunctions()
     local decFuncs = {MODIFIER_EVENT_ON_ATTACK_LANDED,
                       MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-                      MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
-                      MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS}
+                      MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT}
 
     return decFuncs
 end
@@ -327,14 +324,6 @@ function modifier_imba_ironleaf_boots_meditate:GetModifierConstantHealthRegen()
     end
 
     return self.meditate_health_regen * self:GetStackCount()
-end
-
-function modifier_imba_ironleaf_boots_meditate:GetModifierMagicalResistanceBonus()
-    if self.caster:GetModifierStackCount(self.modifier_unique, self.caster) == 1 then        
-        return self.meditate_magic_resistance_pct * self:GetStackCount() * self.broken_meditate_efficiency_pct * 0.01
-    end
-
-    return self.meditate_magic_resistance_pct * self:GetStackCount()
 end
 
 function modifier_imba_ironleaf_boots_meditate:OnAttackLanded(keys)
@@ -436,16 +425,30 @@ function modifier_imba_ironleaf_boots_leafwalk:CheckState()
     return state
 end
 
-function modifier_imba_ironleaf_boots_leafwalk:OnDestroy()
-    if IsServer() then
-        -- Check if it was destroyed because of it simply expiring out
-        if self.caster:HasModifier("modifier_imba_ironleaf_boots_unique") then
 
-            -- If so, set the last movement to this moment
-            local ironleaf_modifier_handler = self.caster:FindModifierByName("modifier_imba_ironleaf_boots_unique")
-            if ironleaf_modifier_handler then
-                ironleaf_modifier_handler.last_movement = GameRules:GetGameTime()
-            end
-        end
-    end 
+
+-- Leafwalk Magic Resistance modifier 
+modifier_imba_ironleaf_boots_magic_res = modifier_imba_ironleaf_boots_magic_res or class({})
+
+function modifier_imba_ironleaf_boots_magic_res:IsHidden() return false end
+function modifier_imba_ironleaf_boots_magic_res:IsPurgable() return true end
+function modifier_imba_ironleaf_boots_magic_res:IsDebuff() return false end
+
+function modifier_imba_ironleaf_boots_magic_res:OnCreated()    
+    -- Ability properties
+    self.caster = self:GetCaster()
+    self.ability = self:GetAbility()
+    
+    -- Ability specials
+    self.leafwalk_magic_res = self.ability:GetSpecialValueFor("leafwalk_magic_res")
+end
+
+function modifier_imba_ironleaf_boots_magic_res:DeclareFunctions()
+    local decFuncs = {MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS}
+
+    return decFuncs
+end
+
+function modifier_imba_ironleaf_boots_magic_res:GetModifierMagicalResistanceBonus()
+    return self.leafwalk_magic_res
 end
