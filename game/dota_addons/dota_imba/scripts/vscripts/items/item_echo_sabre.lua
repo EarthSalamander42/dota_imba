@@ -221,7 +221,6 @@ function modifier_imba_echo_rapier_haste:OnCreated()
 			current_speed = current_speed * 2
 		end
 		local max_hits = item:GetSpecialValueFor("max_hits")
-		self:SetDuration(3.0,true)
 		self:SetStackCount(max_hits)
 		self.attack_speed_buff = math.max(item:GetSpecialValueFor("attack_speed_buff"), current_speed)
 	end
