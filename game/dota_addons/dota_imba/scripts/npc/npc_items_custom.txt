@@ -10340,7 +10340,7 @@
 			"01"
 			{
 				"var_type"              "FIELD_INTEGER"
-				"mana_cost"             "50"
+				"mana_cost"             "100"
 			}
 			"02"
 			{
@@ -10360,7 +10360,7 @@
 			"05"
 			{
 				"var_type"              "FIELD_INTEGER"
-				"armor_change"          "20"
+				"armor_change"          "15"
 			}
 			"06"
 			{
@@ -10380,7 +10380,7 @@
 			"09"
 			{
 				"var_type"              "FIELD_INTEGER"
-				"passive_disarm_chance" "20"
+				"passive_disarm_chance" "15"
 			}
 			"10"
 			{
