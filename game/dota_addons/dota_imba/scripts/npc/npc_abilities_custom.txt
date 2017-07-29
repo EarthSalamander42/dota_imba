@@ -4882,8 +4882,8 @@
 
 			"07"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"max_mana_blast"				"5 5 5 5 10 15 20"
+				"var_type"						"FIELD_FLOAT"
+				"max_mana_blast"				"5 5 5 5 6.5 8 9.5"
 				"CalculateSpellDamageTooltip"   "1"
 			}
 
@@ -4959,6 +4959,12 @@
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"400"
 			}
+
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mana_burn_limit"			"150 150 150 150 300 450 600"
+			}
 		}
 	}
 
@@ -4979,7 +4985,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"24.0"
+		"AbilityCooldown"				"10"
 		"AbilityCastPoint"				"0.0"
 
 		// Precache
@@ -5005,13 +5011,13 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"active_duration"		"1.5 1.5 1.5 1.5 2.0 2.5 3.0"				
+				"active_duration"		"1.5"				
 			}
 
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"internal_cooldown"		"12"
+				"internal_cooldown"		"6"
 			}
 
 			"04"
@@ -5063,7 +5069,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"70.0"
+		"AbilityCooldown"				"70"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -5268,7 +5274,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"mana_point_worth"			"2"
+				"mana_point_worth"			"3"
 			}
 		}
 	}
@@ -6733,13 +6739,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_reduction_pct"		"10"
+				"damage_reduction_pct"		"5"
 			}
 
-			"02" // Hardcoded in modifierfilter in imba.lua
+			"02" 
 			{
 				"var_type"					"FIELD_INTEGER"
-				"debuff_duration_red_pct"	"10"
+				"debuff_duration_red_pct"	"20"
 			}
 		}
 	}
@@ -6786,14 +6792,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"315"
-				"LinkedSpecialBonus"	"special_bonus_imba_centaur_4"
+				"radius"				"315"				
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"2.0 2.25 2.5 2.75 2.75 2.75 2.75"
-				"LinkedSpecialBonus"	"special_bonus_imba_centaur_5"
+				"stun_duration"			"2.0 2.25 2.5 2.75 2.75 2.75 2.75"				
 			}
 			"03"
 			{
@@ -6808,8 +6812,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pit_dmg_reduction"		"10 10 10 10 15 20 25"
-				"LinkedSpecialBonus"	"special_bonus_imba_centaur_2"
+				"pit_dmg_reduction"		"10 10 10 10 15 20 25"				
 			}
 			"06"
 			{
@@ -6869,8 +6872,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"str_damage_reduction"	"100"
-				"LinkedSpecialBonus"	"special_bonus_imba_centaur_1"
+				"str_damage_reduction"	"100"				
 			}
 		}
 	}
@@ -6914,19 +6916,17 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_block"			"1 1 1 2 3 4 5"
-				"LinkedSpecialBonus"	"special_bonus_imba_centaur_7"
+				"damage_block"			"3 3 3 3 6 9 12"				
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"block_duration"		"3.5"
+				"block_duration"		"5"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"900"
-				"LinkedSpecialBonus"	"special_bonus_imba_centaur_6"
+				"aura_radius"			"900"				
 			}
 		}
 	}
@@ -6952,7 +6952,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"90 75 60 57 54 50"
+		"AbilityCooldown"				"90 75 60 60 60 60"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -6983,8 +6983,8 @@
 			}
 			"03"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"stun_duration"				"1"
+				"var_type"					"FIELD_FLOAT"
+				"stun_duration"				"0.75"
 			}
 			"04"
 			{
@@ -6994,7 +6994,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_reduction_scepter"	"75"
+				"damage_reduction_scepter"	"40"
 			}
 			"06"
 			{
@@ -8978,8 +8978,7 @@
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_enigma.vsndevts"
 			"particle"					"particles/status_fx/status_effect_enigma_malefice.vpcf"
-			"particle"					"particles/units/heroes/hero_enigma/enigma_malefice.vpcf"
-			"particle"					"particles/hero/enigma/enigma_blackhole_malefice.vpcf"
+			"particle"					"particles/units/heroes/hero_enigma/enigma_malefice.vpcf"	
 		}
 
 		// Casting
@@ -9054,17 +9053,7 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"eidolon_bonus_duration_percent"				"0.07"
-			}
-			"11"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"health_bonus_duration_percent" 		"25"
-			}
-			"12"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"health_bonus_duration" 		"2"
-			}															
+			}											
 		}
 
 	}
@@ -10047,7 +10036,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"					"1200 1400 1600 1800 1800 1800 1800"
+		"AbilityCastRange"					"1200"
 		"AbilityCastPoint"					"0.5"
 		"AbilityCastAnimation"				"ACT_DOTA_CAST_ABILITY_2"
 
@@ -10092,7 +10081,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"path_radius"			"200"
+				"path_radius"			"150"
 			}
 			"05"
 			{
@@ -10288,7 +10277,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"path_radius"				"180"
+				"path_radius"				"120"
 			}
 			"07"
 			{
@@ -10298,12 +10287,12 @@
 			"08"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"trail_angle"				"10.5"
+				"trail_angle"				"8"
 			}
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"trail_amount"				"4"
+				"trail_amount"				"3"
 			}
 			"10"
 			{
@@ -20535,7 +20524,6 @@
 			{
 				"var_type"							"FIELD_INTEGER"
 				"big_remnant_damage_radius"			"260"
-				"CalculateSpellDamageTooltip"		"0"
 			}
 			"03"
 			{
@@ -20713,9 +20701,6 @@
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"hero/hero_storm_spirit"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NONE"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
@@ -20732,7 +20717,6 @@
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_stormspirit.vsndevts"
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_vo_stormspirit.vsndevts"
 			"particle"					"particles/units/heroes/hero_stormspirit/stormspirit_ball_lightning.vpcf"
-			"particle"					"particles/hero/storm_spirit/no_particle_particle.vpcf"
 		}
 		
 		// Special
@@ -20768,7 +20752,6 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"damage_radius"							"125 200 275 350 400 450"		
-				"CalculateSpellDamageTooltip"			"0"
 			}
 			"07"
 			{

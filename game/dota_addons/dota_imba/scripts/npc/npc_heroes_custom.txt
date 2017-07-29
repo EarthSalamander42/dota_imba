@@ -40,16 +40,7 @@
 		"Ability2"					"imba_alchemist_unstable_concoction"
 		"Ability3"					"imba_alchemist_goblins_greed"		
 		"Ability4"					"imba_alchemist_mammonite"	
-		"Ability5"					"imba_alchemist_chemical_rage"	
-
-		"Ability10"					"special_bonus_imba_alchemist_1" // Sticky Acid slows by 15%
-		"Ability11"					"special_bonus_imba_alchemist_3" // Bounty runes spawn gold bags
-		"Ability12"					"special_bonus_imba_alchemist_8" // Chemical Rage grants a damage aura
-		"Ability13"					"special_bonus_imba_alchemist_5" // Greed stacks increase Acid Spray damage
-		"Ability14"					"special_bonus_imba_alchemist_7" // Alchemist now gains 4x gold from bounty runes
-		"Ability15"					"special_bonus_imba_alchemist_2" // Unstable Concoction can grant allies Chemical Rage
-		"Ability16"					"special_bonus_imba_alchemist_6" // When in Chemical Rage, Alchemist brews Unstable Concoction faster.
-		"Ability17"					"special_bonus_imba_alchemist_4" // Enemies affected by Acid Spray have a chance to drop gold bags on death.
+		"Ability5"					"imba_alchemist_chemical_rage"			
 
 		"Ability10"					"special_bonus_imba_alchemist_7" // Alchemist now gains 4x gold from bounty runes
 		"Ability11"					"special_bonus_imba_alchemist_1" // Sticky Acid slows by 15%
@@ -100,16 +91,7 @@
 		"Ability1"					"imba_antimage_mana_break"
 		"Ability2"					"imba_antimage_blink"
 		"Ability3"					"imba_antimage_spell_shield"
-		"Ability4"					"imba_antimage_mana_void"
-
-		"Ability10"					"special_bonus_imba_antimage_1" //Blink now has charges
-		"Ability11"					"special_bonus_imba_antimage_2" //Spell Shield can be used even while stunned.
-		"Ability12"					"special_bonus_imba_antimage_3" //Blink cast point decrease
-		"Ability13"					"special_bonus_imba_antimage_4" //% of target's missing mana added to Mana Break damage
-		"Ability14"					"special_bonus_imba_antimage_5" //Blinking grants a 1 second magic immunity shield.
-		"Ability15"					"special_bonus_imba_antimage_6" //Mana Void explosion is delayed. Each point of mana lost is worth as 2 missing mana points
-		"Ability16"					"special_bonus_imba_antimage_7" //Mana Break attacks burn mana of nearby enemies in AoE, equal to a portion of the mana burned.
-		"Ability17"					"special_bonus_imba_antimage_8" //Mana Void counts missing mana from all targets in the AOE
+		"Ability4"					"imba_antimage_mana_void"		
 
 		"Ability10"					"special_bonus_imba_antimage_3" //Blink cast point decrease
 		"Ability11"					"special_bonus_imba_antimage_7" //Mana Break attacks burn mana of nearby enemies in AoE, equal to a portion of the mana burned.
@@ -161,16 +143,7 @@
 		"Ability1"					"imba_axe_berserkers_call"
 		"Ability2"					"imba_axe_battle_hunger"
 		"Ability3"					"imba_axe_counter_helix"
-		"Ability4"					"imba_axe_culling_blade"
-
-		"Ability10"					"special_bonus_imba_axe_4" // +30% of your strength added to Counter Helix damage.
-		"Ability11"					"special_bonus_imba_axe_2" // +1 armor with every hit taken during Berserker's Call, lasts for 3 seconds after it ends.
-		"Ability12"					"special_bonus_imba_axe_3" // Allows self-casting of Battle Hunger - applies it to everyone affected by Berserker's Call.
-		"Ability13"					"special_bonus_imba_axe_1" // If an enemy unit with Battle Hunger attacks an ally, that ally also gains the Battle Hunger debuff
-		"Ability14"					"special_bonus_imba_axe_5" // Counter Helix chance doubles, but each Counter Helix deals 66% of the original base damage.
-		"Ability15"					"special_bonus_imba_axe_6" // When Counter Helix procs, it has 25% chance to immediately proc again. Psuedo Random chance. The extra proc cannot trigger this again.
-		"Ability16"					"special_bonus_imba_axe_7" // Counter Helix's damage is increased by 1 for each point of Armor Axe has.
-		"Ability17"					"special_bonus_imba_axe_8" // +650 Culling Blade cast range (leaps into the target to execute it).
+		"Ability4"					"imba_axe_culling_blade"		
 
 		"Ability10"					"special_bonus_imba_axe_2" // +1 armor with every hit taken during Berserker's Call, lasts for 3 seconds after it ends.
 		"Ability11"					"special_bonus_imba_axe_7" // Counter Helix's damage is increased by 1 for each point of Armor Axe has.
@@ -199,16 +172,7 @@
 		"Ability2"					"imba_bane_brain_sap"
 		"Ability3"					"imba_bane_nightmare"
 		"Ability4"					"imba_bane_nightmare_end"
-		"Ability5"					"imba_bane_fiends_grip"
-
-		"Ability10"					"special_bonus_imba_bane_1" //Grants Enfeeble stacks when Nightmaring a target.
-		"Ability11"					"special_bonus_imba_bane_2" //Enfeeble is now cast in a AoE to all targets around the main target.
-		"Ability12"					"special_bonus_imba_bane_3" //Fiend's Grip is no longer channeled
-		"Ability13"					"special_bonus_imba_bane_4" //Enfeeble causes the target to lose his stats. This effect increases for each Enfeeble stack it has.
-		"Ability14"					"special_bonus_imba_bane_5" //Brain Sap casts summons a Baby Bane which applies a Baby Fiend's Grip on the target.
-		"Ability15"					"special_bonus_imba_bane_6" //Nightmare also mutes items for enemies affected.
-		"Ability16"					"special_bonus_imba_bane_7" //Nightmare invulnerability duration increase for allies
-		"Ability17"					"special_bonus_imba_bane_8" //Fiend's Grip spread during channeling
+		"Ability5"					"imba_bane_fiends_grip"		
 
 		"Ability10"					"special_bonus_imba_bane_1" //Grants Enfeeble stacks when Nightmaring a target.
 		"Ability11"					"special_bonus_imba_bane_4" //Enfeeble causes the target to lose his stats. This effect increases for each Enfeeble stack it has.

@@ -300,12 +300,10 @@ function imba_antimage_blink:OnSpellStart()
     local distance = target_point - caster_position
     
     self.blink_range = self:GetSpecialValueFor("blink_range")
-    self.percent_mana_burn = self:GetSpecialValueFor("percent_mana_burn")
-    if caster:HasTalent("special_bonus_imba_antimage_1") then
-      self.percent_mana_burn = self.percent_mana_burn
-    end
+    self.percent_mana_burn = self:GetSpecialValueFor("percent_mana_burn")    
     self.percent_damage = self:GetSpecialValueFor("percent_damage")
     self.radius = self:GetSpecialValueFor("radius")
+    local mana_burn_limit = self:GetSpecialValueFor("mana_burn_limit")
 
     -- #1 Talent: Blink has charges
     if caster:HasTalent("special_bonus_imba_antimage_1") then
@@ -357,10 +355,17 @@ function imba_antimage_blink:OnSpellStart()
         local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
         for _,enemy in pairs(nearby_enemies) do
           -- Calculate this enemy's damage contribution
-          local mana_burn = enemy:GetMana() * (self.percent_mana_burn / 100)
-          -- only continue if target has mana
+          local mana_burn = enemy:GetMana() * (self.percent_mana_burn * 0.01)
+
+
+          -- Only continue if target has mana
           if mana_burn > 0 then
-            local this_enemy_damage = mana_burn * (self.percent_damage / 100)
+            local this_enemy_damage = mana_burn * (self.percent_damage * 0.01)
+
+            -- The damage cannot go over the limit
+            if this_enemy_damage > mana_burn_limit then
+                this_enemy_damage = mana_burn_limit
+            end
             
             -- Add hit particle effects
             local manaburn_pfx = ParticleManager:CreateParticle("particles/generic_gameplay/generic_manaburn.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy)

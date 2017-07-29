@@ -829,25 +829,65 @@ end
 modifier_imba_return_damage_block = class({})
 
 
+function modifier_imba_return_damage_block:IsHidden() return false end
+function modifier_imba_return_damage_block:IsPurgable()	return false end
+function modifier_imba_return_damage_block:IsDebuff() return false end
+
 function modifier_imba_return_damage_block:OnCreated()
-	-- Ability properties
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
+        -- Ability properties
+        self.caster = self:GetCaster()
+        self.ability = self:GetAbility()
+        self.parent = self:GetParent()        
 
-	-- Ability specials
-	self.damage_block = self.ability:GetSpecialValueFor("damage_block")
+        -- Ability specials
+        self.block_duration = self.ability:GetSpecialValueFor("block_duration")
+		self.damage_block = self.ability:GetSpecialValueFor("damage_block")        
+
+		print(self.damage_block)
+
+    if IsServer() then
+        -- Initialize table
+        self.stacks_table = {}        
+
+        -- Start thinking
+        self:StartIntervalThink(0.1)
+    end
 end
 
-function modifier_imba_return_damage_block:IsHidden()
-	return false
+function modifier_imba_return_damage_block:OnIntervalThink()
+    if IsServer() then
+
+        -- Check if there are any stacks left on the table
+        if #self.stacks_table > 0 then
+
+            -- For each stack, check if it is past its expiration time. If it is, remove it from the table
+            for i = #self.stacks_table, 1, -1 do
+                if self.stacks_table[i] + self.block_duration < GameRules:GetGameTime() then
+                    table.remove(self.stacks_table, i)                          
+                end
+            end
+            
+            -- If after removing the stacks, the table is empty, remove the modifier.
+            if #self.stacks_table == 0 then
+                self:Destroy()
+
+            -- Otherwise, set its stack count
+            else
+                self:SetStackCount(#self.stacks_table)
+            end            
+
+        -- If there are no stacks on the table, just remove the modifier.
+        else
+            self:Destroy()
+        end
+    end
 end
 
-function modifier_imba_return_damage_block:IsPurgable()
-	return false
-end
-
-function modifier_imba_return_damage_block:IsDebuff()
-	return false
+function modifier_imba_return_damage_block:OnRefresh()
+    if IsServer() then
+        -- Insert new stack values
+        table.insert(self.stacks_table, GameRules:GetGameTime())
+    end
 end
 
 function modifier_imba_return_damage_block:GetCustomDamageBlock()

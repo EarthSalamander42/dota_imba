@@ -581,7 +581,7 @@ end
 -- For the talent that releases a shadow wave
 function modifier_imba_dazzle_nothl_protection:ShadowWave(ability, caster, oldTarget, heal)
 	oldTarget:Heal(heal, caster)
-	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, oldTarget, self.heal, nil)
+	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, oldTarget, heal, nil)
 	local bounceDistance = ability:GetSpecialValueFor("talent_wave_bounce_distance")
 
 	-- Prioritize injured heroes, then heroes, then injured creeps, then creeps
