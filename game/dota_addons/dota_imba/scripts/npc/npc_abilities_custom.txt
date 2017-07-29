@@ -20535,6 +20535,7 @@
 			{
 				"var_type"							"FIELD_INTEGER"
 				"big_remnant_damage_radius"			"260"
+				"CalculateSpellDamageTooltip"		"0"
 			}
 			"03"
 			{
@@ -20712,6 +20713,9 @@
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"hero/hero_storm_spirit"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NONE"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
@@ -20728,6 +20732,7 @@
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_stormspirit.vsndevts"
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_vo_stormspirit.vsndevts"
 			"particle"					"particles/units/heroes/hero_stormspirit/stormspirit_ball_lightning.vpcf"
+			"particle"					"particles/hero/storm_spirit/no_particle_particle.vpcf"
 		}
 		
 		// Special
@@ -20763,6 +20768,7 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"damage_radius"							"125 200 275 350 400 450"		
+				"CalculateSpellDamageTooltip"			"0"
 			}
 			"07"
 			{
