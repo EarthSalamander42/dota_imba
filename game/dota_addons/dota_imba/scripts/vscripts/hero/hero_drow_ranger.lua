@@ -933,8 +933,7 @@ function modifier_imba_gust_buff:OnCreated()
 end
 
 function modifier_imba_gust_buff:OnAttackLanded(kv)
-	if IsServer() then
-		--print("called OnAttackLanded")
+	if IsServer() then		
 		local sound_cast = "Hero_DrowRanger.Silence" 
 		local knockback_particle = "particles/units/heroes/hero_spirit_breaker/spirit_breaker_greater_bash.vpcf"
 
@@ -975,93 +974,8 @@ function modifier_imba_gust_buff:OnAttackLanded(kv)
 	    	target:RemoveModifierByName("modifier_knockback")
 	    end	
 	 	target:AddNewModifier(caster, ability, "modifier_knockback", knockbackProperties)
-
-
-		--[[local projectile_speed = self.ability:GetSpecialValueFor("wave_speed") --(((target:GetAbsOrigin() - attacker:GetAbsOrigin()) * Vector(1, 1, 0)):Normalized()) * self.ability:GetSpecialValueFor("wave_speed")
-		self.mini_gust_target = kv.target  --tracks who is the primary target
-
-	 	local mini_gust_projectile = 	{hTarget = target,
-										hCaster = self.caster,
-										hAbility = self.ability,
-										iMoveSpeed = projectile_speed,
-										EffectName = particle_gust,
-										SoundName = sound_cast,
-										flRadius = 1,
-										bDodgeable = false,
-										bDestroyOnDodge = false,
-										iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION,
-										OnProjectileHitUnit = function(params, projectileID)																		
-																  MiniGustHit(params, projectileID, self)
-															  end
-										}
-
-		print(mini_gust_projectile)	
-
-		TrackingProjectiles:Projectile(mini_gust_projectile)	]]
-	
 	end
-
 end
-
---[[function MiniGustHit(keys, projectileID, modifier)
-	print("called MiniGustHit")
-	local caster = modifier.caster
-	local target = keys.hTarget
-	local knockback_duration = modifier.knockback_duration
-	local distance = modifier.knockback_distance 
-
-	-- Knockback properties
-	 	local knockbackProperties =
-	    {
-	        center_x = caster:GetAbsOrigin()[1]+1,
-	        center_y = caster:GetAbsOrigin()[2]+1,
-	        center_z = caster:GetAbsOrigin()[3],
-	        duration = knockback_duration,
-	        knockback_duration = knockback_duration,
-	        knockback_distance = distance,
-	        knockback_height = 0,
-	        should_stun = 0
-	    }
-
-	    -- if it's not the primary target, do nothing
-	 	if target ~= modifier.mini_gust_target then
-	 		return nil
-	 	end
-	 		-- Apply knockback on the primary target
-	 	target:AddNewModifier(caster, ability, "modifier_knockback", knockbackProperties)
-end--]]
---[[function modifier_imba_gust_buff:OnProjectileHit(target, location)
-	if IsServer() then
-		-- Ability properties
-	 	local caster = self.caster
-	 	local ability = self.ability	 		 	
-
-	 	-- Ability specials 	
-	 	local knockback_duration = self.knockback_duration
-	 	local distance = self.knockback_distance
-
-	 	-- Knockback properties
-	 	local knockbackProperties =
-	    {
-	        center_x = caster:GetAbsOrigin()[1]+1,
-	        center_y = caster:GetAbsOrigin()[2]+1,
-	        center_z = caster:GetAbsOrigin()[3],
-	        duration = knockback_duration,
-	        knockback_duration = knockback_duration,
-	        knockback_distance = distance,
-	        knockback_height = 0,
-	        should_stun = 0
-	    }
-
-	    -- if it's not the primary target, do nothing
-	 	if target ~= self.mini_gust_target then
-	 		return nil
-	 	end
-	 		-- Apply knockback on enemies hit
-	 	target:AddNewModifier(caster, ability, "modifier_knockback", knockbackProperties)	 	
-	 	
-	end
-end]]
 
 
 ----------------------------
@@ -1680,59 +1594,23 @@ function modifier_imba_markmanship_buff:OnCreated()
  	self.caster = self:GetCaster()
  	self.ability = self:GetAbility()
  	self.parent = self:GetParent()
- 	self.modifier = "modifier_imba_markmanship_slow"
-
- 	--[[print("in function \"OnCreated()\"")
- 	print("self.caster = ", self.caster)
- 	print("self.ability = ", self.ability)
- 	print("self.parent = ", self.parent)
- 	print("self.modifier = ", self.modifier)]]
+ 	self.modifier = "modifier_imba_markmanship_slow" 	
 
  	-- Ability specials
- 	self.duration = self.caster:FindTalentValue("special_bonus_imba_drow_ranger_5", "duration")
- 	--print("self.duration = ", self.duration)
+ 	self.duration = self.caster:FindTalentValue("special_bonus_imba_drow_ranger_5", "duration") 	
 end
-
---[[-function modifier_imba_markmanship_buff:OnAttackStart(keys)
-	if IsServer() then	
-		local attacker = keys.attacker
-		local target = keys.target	
-
-		-- Only apply on parent's attacks
-		if self.parent == attacker then
-
-			-- Initialize attack table
-			if not self.attack_table then
-				self.attack_table = {}
-			end	
-		end
-	end
-end ]]
 
 function modifier_imba_markmanship_buff:OnAttackLanded(keys)
 	if IsServer() then
 		local attacker = keys.attacker
 		local target = keys.target
 
-		--[[print("in function \"OnAttackLanded(keys)\"")
-		print("local attacker = ", attacker)
-		print("local target = ", target)
-		print("self.caster = ", self.caster)
- 		print("self.ability = ", self.ability)
- 		print("self.parent = ", self.parent)
- 		print("self.modifier = ", self.modifier)
- 		print("self.duration = ", self.duration)]]
-
-
-
 		-- Only apply on the hero attack
 		if self.parent == attacker then		
 
 			-- Only apply if the target isn't magic immune or a building
-			if not target:IsMagicImmune() and not target:IsBuilding() then 
-				--print("trying to apply debuff on enemy")
-				target:AddNewModifier(self.caster, self.ability, self.modifier, {duration = self.duration})
-				--print("After trying to apply debuff to enemy: target:FindModifierByName(self.modifier) = ", target:FindModifierByName(self.modifier))
+			if not target:IsMagicImmune() and not target:IsBuilding() then 				
+				target:AddNewModifier(self.caster, self.ability, self.modifier, {duration = self.duration})				
 			end
 		end
 	end	
@@ -1751,11 +1629,6 @@ function modifier_imba_markmanship_buff:IsDebuff()
 end
 
 
-
-
-
-
-
 -- talent aura slow modifier
 modifier_imba_markmanship_slow = class({})
 
@@ -1764,8 +1637,7 @@ function modifier_imba_markmanship_slow:OnCreated()
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
 	self.parent = self:GetParent()
-	self.duration = self:GetDuration()	
-	--print("debuff applied to enemy! self.duration = ", self.duration)	
+	self.duration = self:GetDuration()		
 
 	-- Ability specials
 	self.slow_pct = self.caster:FindTalentValue("special_bonus_imba_drow_ranger_5", "slow_pct")

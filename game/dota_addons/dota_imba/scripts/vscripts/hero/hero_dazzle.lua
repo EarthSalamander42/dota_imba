@@ -1196,8 +1196,7 @@ function modifier_imba_dazzle_shadow_wave_delayed_bounce:OnDestroy()
 	end
 end
 
-function modifier_imba_dazzle_shadow_wave_delayed_bounce:DestroyCustom()
-	print("custom destroyed")
+function modifier_imba_dazzle_shadow_wave_delayed_bounce:DestroyCustom()	
 	self.destroyNoJump = true
 	self:Destroy()
 end

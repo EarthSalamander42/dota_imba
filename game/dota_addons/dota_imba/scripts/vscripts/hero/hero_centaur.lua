@@ -841,9 +841,7 @@ function modifier_imba_return_damage_block:OnCreated()
 
         -- Ability specials
         self.block_duration = self.ability:GetSpecialValueFor("block_duration")
-		self.damage_block = self.ability:GetSpecialValueFor("damage_block")        
-
-		print(self.damage_block)
+		self.damage_block = self.ability:GetSpecialValueFor("damage_block")        		
 
     if IsServer() then
         -- Initialize table

@@ -1132,7 +1132,8 @@ function imba_clinkz_death_pact:CastFilterResultTarget(target)
         if caster == target then
             return UF_FAIL_CUSTOM
         end
-		if target:GetName() == "npc_imba_clinkz_spirits" then
+
+		if target:GetUnitName() == "npc_imba_clinkz_spirits" then
 			return UF_FAIL_CUSTOM
 		end
 
@@ -1150,8 +1151,8 @@ function imba_clinkz_death_pact:GetCustomCastErrorTarget(target)
             return "dota_hud_error_cant_cast_on_self"
         end
 
-        if target:GetName() == "npc_imba_clinkz_spirits" then
-            return "dota_hud_error_cant_cast_on_spirits"
+        if target:GetUnitName() == "npc_imba_clinkz_spirits" then
+            return "#dota_hud_error_cant_cast_on_spirits"
         end
     end
 end

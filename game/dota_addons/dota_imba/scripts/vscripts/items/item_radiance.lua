@@ -190,8 +190,7 @@ function modifier_imba_radiance_burn:OnIntervalThink()
 			local real_hero_finder = FindUnitsInRadius(parent:GetTeamNumber(), parent:GetAbsOrigin(), nil, self.aura_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD , FIND_ANY_ORDER , false) 
 			for _,hero in pairs(real_hero_finder) do
 				if hero:FindModifierByName("modifier_imba_radiance_aura") then
-					real_hero_nearby = true
-					print("found real hero nearby", real_hero_nearby)
+					real_hero_nearby = true					
 					break
 				end
 			end
