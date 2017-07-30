@@ -9053,7 +9053,17 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"eidolon_bonus_duration_percent"				"0.07"
-			}											
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"health_bonus_duration_percent" 		"25"
+			}		
+			"12"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"health_bonus_duration"				"2"
+			}														
 		}
 
 	}
