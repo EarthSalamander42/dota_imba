@@ -1023,7 +1023,8 @@ function modifier_imba_faceless_void_chronosphere_aura:IsNetherWardStealable() r
 
 function modifier_imba_faceless_void_chronosphere_aura:GetAuraDuration()
 	if self:GetAbility():GetCaster():HasTalent("special_bonus_imba_faceless_void_3") then return 0.01 end
-	return 0.1 end
+	return 0.1 
+end
 
 function modifier_imba_faceless_void_chronosphere_aura:GetAuraSearchTeam()
 	return DOTA_UNIT_TARGET_TEAM_BOTH end
@@ -1172,8 +1173,12 @@ end
 
 function modifier_imba_faceless_void_chronosphere_handler:OnIntervalThink()
 	if IsServer() then
+
 		-- Normal frozen enemy gets interrupted all the time
 		if self:GetStackCount() == 0 then
+		
+			-- Make certain people are stunned 
+			self.parent:AddNewModifier(self.caster, self:GetAbility(), "modifier_stunned", {duration = FrameTime()}) 
 
 			-- Non-IMBA handling
 			self.parent:InterruptMotionControllers(true)
@@ -1236,8 +1241,9 @@ end
 -- #3 TALENT: Void gains infinite movement speed in Chrono
 function modifier_imba_faceless_void_chronosphere_handler:GetModifierMoveSpeed_Absolute()
 	if self:GetStackCount() == 1 or self:GetStackCount() == 4 then
-		if not self:GetStackCount() == 4 then
-			if self:GetAbility():GetCaster():HasTalent("special_bonus_imba_faceless_void_3") then
+		-- This section does not work with mini-chronos
+		if self:GetStackCount() ~= 4 then
+			if self:GetCaster():HasTalent("special_bonus_imba_faceless_void_3") then
 				return 3000
 			end
 		end
