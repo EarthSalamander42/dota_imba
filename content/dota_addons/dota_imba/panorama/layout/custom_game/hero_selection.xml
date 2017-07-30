@@ -396,9 +396,9 @@
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_enchantress.png');" />
 							</Panel>
 							<Panel class="ClassOptionRow">
-								<!-- <Panel id="npc_dota_hero_enigma" class="ClassImbaOption"
+								<Panel id="npc_dota_hero_enigma" class="ClassImbaOption"
 									onactivate="SelectHero('npc_dota_hero_enigma')" 
-									style="background-image: url('file://{images}/heroes/npc_dota_hero_enigma.png');" /> -->
+									style="background-image: url('file://{images}/heroes/npc_dota_hero_enigma.png');" />
 								<Panel id="npc_dota_hero_invoker" class="ClassNormalOption" 
 									onactivate="SelectHero('npc_dota_hero_invoker')" 
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_invoker.png');" />

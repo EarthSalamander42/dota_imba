@@ -103,6 +103,7 @@ function modifier_imba_enigma_malefice:OnCreated()
     self.mini_black_hole_radius = self:GetCaster():FindTalentValue("special_bonus_imba_enigma_5")
     self.eidolon_bonus_duration_percent = ability:GetSpecialValueFor("eidolon_bonus_duration_percent")
     self.health_bonus_duration_percent = ability:GetSpecialValueFor("health_bonus_duration_percent")
+    if self.health_bonus_duration_percent == 0 then self.health_bonus_duration_percent = 25 end
     self.health_bonus_duration = ability:GetSpecialValueFor("health_bonus_duration")
 
     local health_pct = self:GetParent():GetHealthPercent()
@@ -341,7 +342,7 @@ function modifier_imba_enigma_midnight_pulse_aura_talent:OnIntervalThink()
   -- Damage everyone inside
 
   -- We need to refresh this value
-  self.damage_per_tick = self:GetAbility():GetSpecialValueFor("damage_per_tick")
+  self.damage_per_tick = self:GetAbility():GetSpecialValueFor("damage_per_tick") * caster:GetMaxHealth() * 0.01
 
   local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.auraRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
   for _,enemy in pairs(enemies) do
@@ -485,7 +486,7 @@ end
 LinkLuaModifier("modifier_imba_enigma_midnight_pulse_force","hero/hero_enigma", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_enigma_midnight_pulse_force = class({})
 function modifier_imba_enigma_midnight_pulse_force:IsDebuff() return true end
-function modifier_imba_enigma_midnight_pulse_force:IsHidden() return true end
+function modifier_imba_enigma_midnight_pulse_force:IsHidden() return false end
 function modifier_imba_enigma_midnight_pulse_force:IsPurgable() return false end
 function modifier_imba_enigma_midnight_pulse_force:IsPurgeException()return true end
 function modifier_imba_enigma_midnight_pulse_force:IsStunDebuff() return false end
@@ -494,14 +495,14 @@ function modifier_imba_enigma_midnight_pulse_force:GetMotionControllerPriority()
 
 function modifier_imba_enigma_midnight_pulse_force:OnCreated()
   if IsServer() then
-    self:GetParent():StartGesture(ACT_DOTA_FLAIL)
+    --self:GetParent():StartGesture(ACT_DOTA_FLAIL)
     self:StartIntervalThink(FrameTime())
   end
 end
 
 function modifier_imba_enigma_midnight_pulse_force:OnDestroy()
   if IsServer() then
-    self:GetParent():FadeGesture(ACT_DOTA_FLAIL)
+    --self:GetParent():FadeGesture(ACT_DOTA_FLAIL)
     self:GetParent():SetUnitOnClearGround()
   end
 end
@@ -609,6 +610,7 @@ function imba_enigma_black_hole:OnSpellStart()
     end
   end
 
+  caster:FindModifierByName("modifier_imba_singularity"):SetStackCount(0)
   -- Dummy unit to handle force and broadcast aura
   --caster.hBlackHoleDummyUnit = CreateUnitByName("npc_dummy_unit",point,false,caster,caster:GetOwner(),caster:GetTeamNumber())
   --caster.hBlackHoleDummyUnit:FindAbilityByName("dummy_unit_state"):SetLevel(1)
@@ -638,6 +640,8 @@ end
 
 LinkLuaModifier("modifier_imba_singularity","hero/hero_enigma", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_singularity = class({})
+function modifier_imba_singularity:IsHidden() return true end
+function modifier_imba_singularity:IsPermanent() return true end
 
 function modifier_imba_singularity:DeclareFunctions()
   return {MODIFIER_EVENT_ON_DEATH}
@@ -957,15 +961,17 @@ function imba_enigma_demonic_conversion:OnSpellStart()
 
   if not target:IsHero() then
     target:Kill(self,caster)
+    target = nil
   end
   -- Create 3 eidolons
   for i=1,3 do
-    self:CreateEidolons(location)
+    self:CreateEidolons(location,0,self:GetSpecialValueFor("duration"),target)
   end
 end
 
-function imba_enigma_demonic_conversion:CreateEidolons(vLocation,nTimesRecycled,flDuration)
+function imba_enigma_demonic_conversion:CreateEidolons(vLocation,nTimesRecycled,flDuration,hHero)
   nTimesRecycled = nTimesRecycled or 0
+  hHero = hHero or self:GetCaster()
   hCaster = self:GetCaster()
   if flDuration then
     flDuration = flDuration + self:GetSpecialValueFor("child_duration")
@@ -977,7 +983,7 @@ function imba_enigma_demonic_conversion:CreateEidolons(vLocation,nTimesRecycled,
   eidolon:SetOwner(hCaster)
   eidolon:SetControllableByPlayer(hCaster:GetPlayerID(),true)
   
-  eidolon:AddNewModifier(hCaster,self,"modifier_imba_enigma_eidolon",{duration = duration}).count = attacks_needed
+  eidolon:AddNewModifier(hCaster,self,"modifier_imba_enigma_eidolon",{duration = duration,parent = hHero:entindex()}).count = attacks_needed
   eidolon:AddNewModifier(hCaster,self,"modifier_kill",{duration = duration})
   eidolon.nTimesRecycled = nTimesRecycled + 1
   eidolon:SetUnitOnClearGround()
@@ -990,7 +996,9 @@ function modifier_imba_enigma_eidolon:IsDebuff() return false end
 function modifier_imba_enigma_eidolon:IsHidden() return true end
 function modifier_imba_enigma_eidolon:IsPurgable() return false end
 
-function modifier_imba_enigma_eidolon:OnCreated()
+function modifier_imba_enigma_eidolon:OnCreated(keys)
+  if keys.parent then self.parent = EntIndexToHScript(keys.parent) end
+  self.parent = self.parent or self:GetCaster()
   self.shard_percentage = self:GetAbility():GetSpecialValueFor("shard_percentage")
   self.child_duration = self:GetAbility():GetSpecialValueFor("child_duration")
   self.increased_mass_duration  = self:GetAbility():GetSpecialValueFor("increased_mass_duration")
@@ -1018,8 +1026,8 @@ function modifier_imba_enigma_eidolon:OnAttack(keys)
   -- "The 7th attack will trigger this, doesnt have to be a valid target"
   if self.count <= 0 then
     -- Make 2 new eidolons
-    self:GetAbility():CreateEidolons(self:GetParent():GetAbsOrigin(),self:GetParent().nTimesRecycled,self:GetRemainingTime())
-    self:GetAbility():CreateEidolons(self:GetParent():GetAbsOrigin(),self:GetParent().nTimesRecycled,self:GetRemainingTime())
+    self:GetAbility():CreateEidolons(self:GetParent():GetAbsOrigin(),self:GetParent().nTimesRecycled,self:GetRemainingTime(),self.parent)
+    self:GetAbility():CreateEidolons(self:GetParent():GetAbsOrigin(),self:GetParent().nTimesRecycled,self:GetRemainingTime(),self.parent)
     self:GetParent():ForceKill(false)
     return
   end
@@ -1060,17 +1068,17 @@ end
 function modifier_imba_enigma_eidolon:GetModifierExtraHealthBonus()
   -- Syncs perfectly
   if IsServer() then
-    return self.shard_percentage * self:GetCaster():GetMaxHealth() * 0.01
+    return self.shard_percentage * self.parent:GetMaxHealth() * 0.01
   end
 end
 
 function modifier_imba_enigma_eidolon:GetModifierPhysicalArmorBonus()
-  return self.shard_percentage * self:GetCaster():GetPhysicalArmorValue() * 0.01
+  return self.shard_percentage * self.parent:GetPhysicalArmorValue() * 0.01
 end
 
 function modifier_imba_enigma_eidolon:GetModifierPreAttack_BonusDamage()
   if IsServer() then
-    local attack = self.shard_percentage * self:GetCaster():GetAverageTrueAttackDamage(self:GetCaster())
+    local attack = self.shard_percentage * self.parent:GetAverageTrueAttackDamage(self.parent)
     self:SetStackCount(attack)
   end
   local number = self:GetStackCount() * 0.01
@@ -1078,25 +1086,25 @@ function modifier_imba_enigma_eidolon:GetModifierPreAttack_BonusDamage()
 end
 
 function modifier_imba_enigma_eidolon:GetModifierAttackSpeedBonus_Constant()
-  return self.shard_percentage * self:GetCaster():GetAttackSpeed()
+  return self.shard_percentage * self.parent:GetAttackSpeed()
 end
 
 function modifier_imba_enigma_eidolon:GetModifierMoveSpeedBonus_Constant()
-  return self.shard_percentage * self:GetCaster():GetIdealSpeed()  * 0.01
+  return self.shard_percentage * self.parent:GetIdealSpeed()  * 0.01
 end
 
 LinkLuaModifier("modifier_imba_enigma_eidolon_attack_counter","hero/hero_enigma", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_enigma_eidolon_attack_counter = class({})
 
 function modifier_imba_enigma_eidolon_attack_counter:IsDebuff() return false end
-function modifier_imba_enigma_eidolon_attack_counter:IsHidden() return true end
+function modifier_imba_enigma_eidolon_attack_counter:IsHidden() return false end
 function modifier_imba_enigma_eidolon_attack_counter:IsPurgable() return false end
 
 LinkLuaModifier("modifier_enigma_magic_immunity","hero/hero_enigma",LUA_MODIFIER_MOTION_NONE)
 modifier_enigma_magic_immunity = class({})
 
 function modifier_enigma_magic_immunity:IsDebuff() return false end
-function modifier_enigma_magic_immunity:IsHidden() return true end
+function modifier_enigma_magic_immunity:IsHidden() return false end
 
 function modifier_enigma_magic_immunity:CheckState()
   return {[MODIFIER_STATE_MAGIC_IMMUNE] = true}
@@ -1106,5 +1114,5 @@ function modifier_enigma_magic_immunity:GetEffectName()
   return "particles/hero/enigma/enigma_magic_immunity.vpcf"
 end
 function modifier_enigma_magic_immunity:GetEffectAttachType()
-  return PATTACH_ABSORIGIN
+  return PATTACH_ABSORIGIN_FOLLOW
 end
