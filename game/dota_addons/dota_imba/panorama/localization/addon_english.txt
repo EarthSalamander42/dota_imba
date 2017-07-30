@@ -472,6 +472,24 @@
 	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_8_title"                  "Magnetic Forces"					
     "DOTA_Tooltip_Talent_special_bonus_imba_magnataur_8_Description"            "Increases Reverse Polarity's pull distance effect on Polarized enemies by 250.<br><br><i>Magnus is capable of sending his entire magnetic force to the ends of the world, then call them in, pushing polarized units further towards him.</i>"
 
+    // Pudge
+    "DOTA_Tooltip_Talent_special_bonus_imba_pudge_1_title"                      "Rottest Rot"
+    "DOTA_Tooltip_Talent_special_bonus_imba_pudge_1_Description"                "For every 5% health Pudge misses Rot deals 40 damage per second extra."
+    "DOTA_Tooltip_Talent_special_bonus_imba_pudge_2_title"                      "Meat Shield"
+    "DOTA_Tooltip_Talent_special_bonus_imba_pudge_2_Description"                "Pudge temporarily uses 5 stacks of Flesh Heap to block 100 damage from attacks. Theyr return in 10 seconds."
+    "DOTA_Tooltip_Talent_special_bonus_imba_pudge_3_title"                      "Magic Rumination"
+    "DOTA_Tooltip_Talent_special_bonus_imba_pudge_3_Description"                "Pudge gains 0.75% spell lifesteal per Flesh Heap stack."
+    "DOTA_Tooltip_Talent_special_bonus_imba_pudge_4_title"                      "Cleaver Feeder"
+    "DOTA_Tooltip_Talent_special_bonus_imba_pudge_4_Description"                "All damage dealt to a unit under the cleaver effect is fully lifestealed by Pudge. Stacks with other sources of lifesteal."
+    "DOTA_Tooltip_Talent_special_bonus_imba_pudge_5_title"                      "True Cleaver"
+    "DOTA_Tooltip_Talent_special_bonus_imba_pudge_5_Description"                "Pudge throws his cleaver so hard it doesn't stop at the first unit it hits."
+    "DOTA_Tooltip_Talent_special_bonus_imba_pudge_6_title"                      "Weapon Butchery"
+    "DOTA_Tooltip_Talent_special_bonus_imba_pudge_6_Description"                "Dismember disarms the target after being released for as long as it was butchered."
+    "DOTA_Tooltip_Talent_special_bonus_imba_pudge_7_title"                      "Eco Butcher"
+    "DOTA_Tooltip_Talent_special_bonus_imba_pudge_7_Description"                "Meat hook now destroys trees, for every tree a unit passes through it deals 120 bonus physical damage."
+    "DOTA_Tooltip_Talent_special_bonus_imba_pudge_8_title"                      "Triple Hook"
+    "DOTA_Tooltip_Talent_special_bonus_imba_pudge_8_Description"                "Pudge throws 3 hooks instead of one, with 30 degrees between them. Those hooks can't thit the same target."
+
 	// Venomancer
 	"Dota_Tooltip_Talent_special_bonus_imba_venomancer_1_title"						"Vicious Gale"
 	"Dota_Tooltip_Talent_special_bonus_imba_venomancer_1_Description"				"Increases Venomous Gale's initial movement slow by 15%.<br><br><i>Concentrating more poison on Venomancer's glands before spitting results in a large burst of toxicity.</i>"
