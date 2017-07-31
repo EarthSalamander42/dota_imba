@@ -426,7 +426,7 @@ function modifier_imba_enigma_midnight_pulse_aura:OnIntervalThink()
     {
       victim = enemy,
       attacker = self:GetCaster(),
-      damage = self.damage_per_tick,
+      damage = self.damage_per_tick * caster:GetMaxHealth() * 0.01,
       damage_type = DAMAGE_TYPE_MAGICAL,
       ability = self:GetAbility()
     }
@@ -530,6 +530,7 @@ function modifier_imba_enigma_midnight_pulse_force:HorizontalMotion()
       local direction = (FindStrongestForce(self:GetCaster()):GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Normalized()
       local set_point = self:GetParent():GetAbsOrigin() + direction * self.pull_strength
       self:GetParent():SetAbsOrigin(Vector(set_point.x, set_point.y, GetGroundPosition(set_point, self:GetParent()).z))
+      self:GetParent():SetUnitOnClearGround()
     end
   end
 end
@@ -610,7 +611,7 @@ function imba_enigma_black_hole:OnSpellStart()
     end
   end
 
-  caster:FindModifierByName("modifier_imba_singularity"):SetStackCount(0)
+  
   -- Dummy unit to handle force and broadcast aura
   --caster.hBlackHoleDummyUnit = CreateUnitByName("npc_dummy_unit",point,false,caster,caster:GetOwner(),caster:GetTeamNumber())
   --caster.hBlackHoleDummyUnit:FindAbilityByName("dummy_unit_state"):SetLevel(1)
@@ -675,11 +676,15 @@ function modifier_imba_enigma_black_hole_aura:OnCreated(keys)
     -- Storing values
     self.damage_per_tick  = keys.damage or ability:GetSpecialValueFor("damage_per_tick")
     self.singularity_stun_radius_increment_per_stack = ability:GetSpecialValueFor("stun_radius")
+    self.singularity_pull_radius_increment_per_stack = ability:GetSpecialValueFor("stun_radius")
     self.stun_radius = ability:GetSpecialValueFor("radius") + (caster:FindModifierByName("modifier_imba_singularity"):GetStackCount() * self.singularity_stun_radius_increment_per_stack)
-    
+    self.radius = ability:GetSpecialValueFor("pull_radius") + (caster:FindModifierByName("modifier_imba_singularity"):GetStackCount() * self.singularity_pull_radius_increment_per_stack)
     
     self.stun_radius = keys.radius or self.stun_radius
     self.radius = keys.radius or self.radius
+    -- Clear modifiers
+    caster:FindModifierByName("modifier_imba_singularity"):SetStackCount(0)
+
     if ability == self:GetAbility() then
       ability:CreateVisibilityNode(self:GetParent():GetAbsOrigin(),self.stun_radius,1.5)
       Timers:CreateTimer(1,function()
@@ -731,7 +736,7 @@ function modifier_imba_enigma_black_hole_aura:OnIntervalThink()
   local caster = self:GetCaster()
   local ability = caster:FindAbilityByName("imba_enigma_black_hole")
 
-  local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.stun_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+  local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
   for _,enemy in pairs(enemies) do
     local modifier = enemy:AddNewModifier(caster,ability,"modifier_imba_enigma_black_hole_aura_modifier",{duration = 0.5,parent = self:GetParent():entindex()})
   end
@@ -836,7 +841,9 @@ function modifier_imba_enigma_black_hole_aura_modifier:OnIntervalThink()
   --if caster.hBlackHoleDummyUnit and IsValidEntity(caster.hBlackHoleDummyUnit) then
     -- Calculate pull force in here
     -- First % of the distance they are from the center
-    if not self.parent or self.parent:IsNull() then return end
+
+    if not self.parent or self.parent:IsNull() then self.parent = caster.hBlackHoleDummyUnit end
+    if self.parent:IsNull() then return end
 
     local distance = (self:GetParent():GetAbsOrigin()-self.parent:GetAbsOrigin()):Length2D()
     local pct_distance = 1- (distance / self.radius)
@@ -894,10 +901,12 @@ end
 
 function modifier_imba_enigma_black_hole_force:HorizontalMotion()
   if IsServer() then
-    if not self.parent or self.parent:IsNull() then return end
+    if not self.parent or self.parent:IsNull() then self.parent = self:GetCaster().hBlackHoleDummyUnit end
+    if self.parent:IsNull() then return end
     local eidolon_bonus_duration = 0
     local ab = self:GetCaster():FindAbilityByName("imba_enigma_demonic_conversion")
-    local pull_strength = self.pull_strength 
+    local pull_strength = self.pull_strength
+
     local modifier = self:GetParent():FindModifierByName("modifier_imba_enigma_eidolon_attack_counter")
     if modifier then
       pull_strength = pull_strength + (modifier:GetStackCount() * (1+ab:GetSpecialValueFor("increased_mass_pull_pct")))
