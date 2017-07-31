@@ -472,6 +472,24 @@
 	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_8_title"					"两极反转"
 	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_8_Description"			"+250 两级反转对磁化单位牵引距离"		
 
+    // Pudge
+    "DOTA_Tooltip_Talent_special_bonus_imba_pudge_1_title"                      "腐烂"
+    "DOTA_Tooltip_Talent_special_bonus_imba_pudge_1_Description"                "帕吉每缺失5%生命值，腐烂的伤害就提高40点"
+    "DOTA_Tooltip_Talent_special_bonus_imba_pudge_2_title"                      "腐肉堆积"
+    "DOTA_Tooltip_Talent_special_bonus_imba_pudge_2_Description"                "消耗5层腐肉堆积来阻挡100伤害，10秒后归还"
+    "DOTA_Tooltip_Talent_special_bonus_imba_pudge_3_title"                      "腐肉堆积"
+    "DOTA_Tooltip_Talent_special_bonus_imba_pudge_3_Description"                "每层腐肉堆积提供0.75%技能吸血"
+    "DOTA_Tooltip_Talent_special_bonus_imba_pudge_4_title"                      "血腥投掷"
+    "DOTA_Tooltip_Talent_special_bonus_imba_pudge_4_Description"                "被血腥投掷缠绕的单位受到的所有伤害治疗帕吉"
+    "DOTA_Tooltip_Talent_special_bonus_imba_pudge_5_title"                      "血腥投掷"
+    "DOTA_Tooltip_Talent_special_bonus_imba_pudge_5_Description"                "血腥投掷对路径上的所有单位生效"
+    "DOTA_Tooltip_Talent_special_bonus_imba_pudge_6_title"                      "肢解"
+    "DOTA_Tooltip_Talent_special_bonus_imba_pudge_6_Description"                "肢解在施法完成后缴械目标，缴械的时间与肢解的施法时间相同"
+    "DOTA_Tooltip_Talent_special_bonus_imba_pudge_7_title"                      "肉钩"
+    "DOTA_Tooltip_Talent_special_bonus_imba_pudge_7_Description"                "肉钩摧毁树木，被钩中的目标每经过一棵树木就受到120物理伤害"
+    "DOTA_Tooltip_Talent_special_bonus_imba_pudge_8_title"                      "肉钩"
+    "DOTA_Tooltip_Talent_special_bonus_imba_pudge_8_Description"                "肉钩一次投掷3个钩子"
+
 	// Venomancer
 	"Dota_Tooltip_Talent_special_bonus_imba_venomancer_1_title"						"瘴气"
 	"Dota_Tooltip_Talent_special_bonus_imba_venomancer_1_Description"				"+15% 瘴气减速"
