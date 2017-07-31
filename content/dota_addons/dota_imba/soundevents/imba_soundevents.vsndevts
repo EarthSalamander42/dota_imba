@@ -2305,7 +2305,7 @@
 	}
 }
 
-"Imba.DazzleRessurection"
+"Imba.reincarnationGlobal"
 {
 	"operator_stacks"
 	{
@@ -2321,46 +2321,18 @@
 					{
 						"value"
 						{
-							"value0"    "sounds/hero/dazzle/ressurection.vsnd"
+							"value0"	"sounds/music/stingers/reincarnate_03.vsnd"
 						}
 					}
-					"memory_type"
-					{
-						"value"     "0"
-					}
-					
-					"volume"			{   "value"     "2.00000"  }
-				}
-			}
-		}
-	}
-}
-
-"Imba.DazzleRessurectionFail"
-{
-	"operator_stacks"
-	{
-		"update_stack"
-		{
-			"reference_operator"
-			{
-				"operator"				"sos_reference_stack"
-				"reference_stack"		"dota_update_default"
-				"operator_variables"
-				{
-					"vsnd_files"
-					{
-						"value"
-						{
-							"value0"    "sounds/hero/dazzle/ressurection_fail.vsnd"
-						}
-					}
-					"memory_type"
-					{
-						"value"     "0"
-					}
-					
-					"volume"			{   "value"     "2.00000"  }
+					"volume"			{   "value"     "2.000000"  }
+					"pitch_rand_min"	{   "value"     "-0.00000"  }
+					"pitch_rand_max"	{   "value"     "0.000000"  }
+					"pitch"				{   "value"     "1.000000"  }
+					"soundlevel"		{   "value"     "100.00000" }
+					"distance_max"		{   "value"     "30000.000" }
+					"volume_falloff_max"{	"value"		"30000.000"	}
+					"event_type"		{   "value"     "1.000000"  }
+					"spread_radius"		{	"value"		"1200.0000"	}
 				}
 			}
 		}
