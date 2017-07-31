@@ -426,7 +426,7 @@ function modifier_imba_enigma_midnight_pulse_aura:OnIntervalThink()
     {
       victim = enemy,
       attacker = self:GetCaster(),
-      damage = self.damage_per_tick * caster:GetMaxHealth() * 0.01,
+      damage = self.damage_per_tick * enemy:GetMaxHealth() * 0.01,
       damage_type = DAMAGE_TYPE_MAGICAL,
       ability = self:GetAbility()
     }
@@ -486,7 +486,7 @@ end
 LinkLuaModifier("modifier_imba_enigma_midnight_pulse_force","hero/hero_enigma", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_enigma_midnight_pulse_force = class({})
 function modifier_imba_enigma_midnight_pulse_force:IsDebuff() return true end
-function modifier_imba_enigma_midnight_pulse_force:IsHidden() return false end
+function modifier_imba_enigma_midnight_pulse_force:IsHidden() return true end
 function modifier_imba_enigma_midnight_pulse_force:IsPurgable() return false end
 function modifier_imba_enigma_midnight_pulse_force:IsPurgeException()return true end
 function modifier_imba_enigma_midnight_pulse_force:IsStunDebuff() return false end

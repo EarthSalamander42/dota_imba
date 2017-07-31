@@ -9416,7 +9416,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_per_tick"					"50 100 150 175 200 225"
+				"damage_per_tick"			"50 100 150 175 200 225"
 			}			
 
 			"05"
