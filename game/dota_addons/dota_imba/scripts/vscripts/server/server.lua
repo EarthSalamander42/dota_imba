@@ -35,23 +35,39 @@ function Server_SetRankTitle()
 			XP_level_title[ni]=''
 		end
 		if ni>=2 and ni<=6 then
-			XP_level_title[ni]='#imba_rank_title_rookie'
+			XP_level_title[ni]="imba_rank_title_rookie"
 		end
 		if ni>=7 and ni<=11 then
-			XP_level_title[ni]='#imba_rank_title_amateur'
+			XP_level_title[ni]="imba_rank_title_amateur"
 		end
 		if ni>=12 and ni<=16 then
-			XP_level_title[ni]='#imba_rank_title_warrior'
+			XP_level_title[ni]="imba_rank_title_warrior"
 		end
 		if ni>=17 and ni<=21 then
-			XP_level_title[ni]='#imba_rank_title_general'
+			XP_level_title[ni]="imba_rank_title_general"
 		end
 		if ni>=22 and ni<=26 then
-			XP_level_title[ni]='#imba_rank_title_master'
+			XP_level_title[ni]="imba_rank_title_master"
 		end
 		if ni>=27 and ni<=31 then
-			XP_level_title[ni]='#imba_rank_title_legendary'
+			XP_level_title[ni]="imba_rank_title_legendary"
 		end
+	end
+end
+
+function Server_GetTitle(level)
+	if level <= 5 then
+		return "#imba_rank_title_rookie"
+	elseif level <= 10 then
+		return "#imba_rank_title_amateur"
+	elseif level <= 15 then
+		return "#imba_rank_title_warrior"
+	elseif level <= 20 then
+		return "#imba_rank_title_general"
+	elseif level <= 25 then
+		return "#imba_rank_title_master"
+	else 
+		return "#imba_rank_title_legendary"
 	end
 end
 
@@ -121,7 +137,7 @@ function Server_GetPlayerLevelAndTitle(nPlayerID)
 		if table_XP_has and table_XP_has[nPlayerID] and table_rankXP and table_rankXP[i] then
 			if tonumber(table_XP_has[nPlayerID]) >= table_rankXP[i] then
 				XP_level[nPlayerID] = i-1
-				XP_level_title_player[nPlayerID] = XP_level_title[i]
+				XP_level_title_player[nPlayerID] = Server_GetTitle(XP_level[nPlayerID])
 				XP_this_level[nPlayerID] = table_rankXP[i]
 				if i == 31 then
 					XP_need_to_next_level[nPlayerID] = 0
@@ -129,7 +145,7 @@ function Server_GetPlayerLevelAndTitle(nPlayerID)
 					XP_need_to_next_level[nPlayerID] = table_rankXP[i+1] - tonumber(table_XP_has[nPlayerID])
 				end
 				XP_has_this_level[nPlayerID] = tonumber(table_XP_has[nPlayerID]) - table_rankXP[i]
-				CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {XP = tonumber(XP_has_this_level[nPlayerID]), MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]), Lvl = tonumber(XP_level[nPlayerID]), ID = nPlayerID})
+				CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {XP = tonumber(XP_has_this_level[nPlayerID]), MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]), Lvl = tonumber(XP_level[nPlayerID]), ID = nPlayerID, title = XP_level_title_player[nPlayerID]})
 				break
 			end
 		end
@@ -348,6 +364,29 @@ function Serer_CheckForAFKPlayer()
 end
 
 
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------Useful Functions-----------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
+
+function Server_GetPlayerLevel(playerID)
+	if CustomNetTables:GetTableValue("player_table", tostring(playerID)) then
+		return CustomNetTables:GetTableValue("player_table", tostring(playerID)).Lvl
+	end
+end
+
+function Server_GetPlayerXP(playerID)
+	if CustomNetTables:GetTableValue("player_table", tostring(playerID)) then
+		return CustomNetTables:GetTableValue("player_table", tostring(playerID)).XP
+	end
+end
+
+function Server_GetPlayerTitle(playerID)
+	if CustomNetTables:GetTableValue("player_table", tostring(playerID)) then
+		return CustomNetTables:GetTableValue("player_table", tostring(playerID)).title
+	end
+end
 
 
 ----------------------------------------------------------------------------------------------------------------

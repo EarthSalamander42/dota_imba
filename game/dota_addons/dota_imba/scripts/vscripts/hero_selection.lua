@@ -575,6 +575,11 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		-- Set up player color
 		PlayerResource:SetCustomPlayerColor(player_id, PLAYER_COLORS[player_id][1], PLAYER_COLORS[player_id][2], PLAYER_COLORS[player_id][3])
 
+		Timers:CreateTimer(3, function()			
+			local title = Server_GetPlayerTitle(player_id)			
+			hero:SetCustomHealthLabel(title, 255, 0, 0)
+		end)
+
 		-- Set initial spawn setup as having been done
 		PlayerResource:IncrementTeamPlayerCount(player_id)
 		CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(player_id), "picking_done", {})
