@@ -393,8 +393,10 @@ function modifier_imba_silencer_glaives_of_wisdom:OnAttackLanded(keys)
 				if not int_damage then
 					int_damage = target:AddNewModifier(self.caster, self.ability, self.modifier_int_damage, {int_reduction = self.int_reduction_pct})
 				end
-				int_damage:IncrementStackCount()
-				int_damage:SetDuration(self.int_reduction_duration, true)
+				if int_damage then
+					int_damage:IncrementStackCount()
+					int_damage:SetDuration(self.int_reduction_duration, true)
+				end
 				
 				EmitSoundOn(self.sound_hit, target)
 			end
