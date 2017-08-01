@@ -577,7 +577,8 @@ function HeroSelection:AssignHero(player_id, hero_name)
 
 		Timers:CreateTimer(3, function()			
 			local title = Server_GetPlayerTitle(player_id)			
-			hero:SetCustomHealthLabel(title, 255, 0, 0)
+			local rgb = Server_GetTitleColor(title)
+			hero:SetCustomHealthLabel(title, rgb[1], rgb[2], rgb[3])
 		end)
 
 		-- Set initial spawn setup as having been done
