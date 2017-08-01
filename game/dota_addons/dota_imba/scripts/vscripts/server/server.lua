@@ -44,6 +44,22 @@ function Server_GetTitle(level)
 	end
 end
 
+function Server_GetTitleColor(title)
+    if title == "#imba_rank_title_rookie" then
+        return {255, 255, 255}
+    elseif title == "#imba_rank_title_amateur" then
+        return {102, 204, 0}
+    elseif title == "#imba_rank_title_warrior" then
+        return {0, 76, 153}
+    elseif title == "#imba_rank_title_general" then
+        return {102, 0, 204}
+    elseif title == "#imba_rank_title_master" then
+        return {255, 0, 0}
+    else -- it's legendaaaary 
+        return {255, 153, 51}
+    end
+end
+
 function Server_DecodeForPlayer ( t, nPlayerID )   --To deep-decode the Json code...
 	local print_r_cache={}
 	local function sub_print_r(t,indent)
