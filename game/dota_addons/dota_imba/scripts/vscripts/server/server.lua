@@ -220,8 +220,6 @@ function Server_AbilityToGainXPForPlyaer_function(nPlayerID)
 	end )
 end
 
-function Server_DisableToGainXpForPlayer_function(nPlayerID)
-
 	-- GetConnectionState values:
 	-- 0 - no connection
 	-- 1 - bot connected
