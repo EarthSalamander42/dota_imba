@@ -28,33 +28,6 @@ local XP_this_level = {}
 local XP_has_this_level = {}
 --Level table for IMBA XP
 
-function Server_SetRankTitle()
-
-	for ni = 1 , 31 do
-		if ni==1 then
-			XP_level_title[ni]=''
-		end
-		if ni>=2 and ni<=6 then
-			XP_level_title[ni]="imba_rank_title_rookie"
-		end
-		if ni>=7 and ni<=11 then
-			XP_level_title[ni]="imba_rank_title_amateur"
-		end
-		if ni>=12 and ni<=16 then
-			XP_level_title[ni]="imba_rank_title_warrior"
-		end
-		if ni>=17 and ni<=21 then
-			XP_level_title[ni]="imba_rank_title_general"
-		end
-		if ni>=22 and ni<=26 then
-			XP_level_title[ni]="imba_rank_title_master"
-		end
-		if ni>=27 and ni<=31 then
-			XP_level_title[ni]="imba_rank_title_legendary"
-		end
-	end
-end
-
 function Server_GetTitle(level)
 	if level <= 5 then
 		return "#imba_rank_title_rookie"
@@ -157,8 +130,7 @@ local is_AFK = {}
 
 function Server_SendAndGetInfoForAll()
 	if _finished == 0 then
-		require('libraries/json')
-		Server_SetRankTitle()
+		require('libraries/json')		
 
 		for nPlayerID=0, DOTA_MAX_TEAM_PLAYERS-1 do
 			Server_SendAndGetInfoForAll_function(nPlayerID)
