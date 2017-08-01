@@ -173,39 +173,38 @@ function Server_SendAndGetInfoForAll_function(nPlayerID)
 end
 
 function Server_EnableToGainXPForPlyaer(nPlayerID)
-	--print("player key:"..table_player_key[nPlayerID])
 	if EnnDisEnabled == 1 and is_AFK[nPlayerID] == 0 then
 		table_able[nPlayerID] = 1
-		local jsondata={}
-		local jsontable={}
-		jsontable.player_key = table_player_key[nPlayerID]
-		jsontable._able = table_able[nPlayerID]
-		jsontable.SteamID64 = table_SteamID64[nPlayerID]
-		table.insert(jsondata,jsontable)
-		local request = CreateHTTPRequestScriptVM( "GET", "http://www.dota2imba.cn/XP_ability_to_gain.php" )
-			request:SetHTTPRequestGetOrPostParameter("data_json",JSON:encode(jsondata))
-			request:SetHTTPRequestGetOrPostParameter("auth",_AuthCode)
-			request:Send(function(result)
-		end )
+		Server_AbilityToGainXPForPlyaer_function(nPlayerID)
 	end
 end
 
 function Server_DisableToGainXpForPlayer(nPlayerID)
 	if EnnDisEnabled == 1 then
 		table_able[nPlayerID] = 0
-		local jsondata={}
-		local jsontable={}
-		jsontable.player_key = table_player_key[nPlayerID]
-		jsontable._able = table_able[nPlayerID]
-		jsontable.SteamID64 = table_SteamID64[nPlayerID]
-		table.insert(jsondata,jsontable)
-		local request = CreateHTTPRequestScriptVM( "GET", "http://www.dota2imba.cn/XP_ability_to_gain.php" )
-			request:SetHTTPRequestGetOrPostParameter("data_json",JSON:encode(jsondata))
-			request:SetHTTPRequestGetOrPostParameter("auth",_AuthCode)
-			request:Send(function(result)
-		end )
+		Server_AbilityToGainXPForPlyaer_function(nPlayerID)
 	end
 end
+
+function Server_AbilityToGainXPForPlyaer_function(nPlayerID)
+	local jsondata={}
+	local jsontable={}
+	jsontable.player_key = table_player_key[nPlayerID]
+	jsontable._able = table_able[nPlayerID]
+	jsontable.SteamID64 = table_SteamID64[nPlayerID]
+	table.insert(jsondata,jsontable)
+	local request = CreateHTTPRequestScriptVM( "GET", "http://www.dota2imba.cn/XP_ability_to_gain.php" )
+		request:SetHTTPRequestGetOrPostParameter("data_json",JSON:encode(jsondata))
+		request:SetHTTPRequestGetOrPostParameter("auth",_AuthCode)
+		request:Send(function(result)
+		if result.StatusCode ~= 200 then
+			Server_AbilityToGainXPForPlyaer_function(nPlayerID)
+			return
+		end
+	end )
+end
+
+function Server_DisableToGainXpForPlayer_function(nPlayerID)
 
 	-- GetConnectionState values:
 	-- 0 - no connection
