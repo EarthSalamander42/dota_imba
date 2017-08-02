@@ -43,6 +43,11 @@ function item_imba_angelic_alliance:OnSpellStart()
 		end
 	end
 
+	-- If the target is magic immune (Lotus Orb/Anti Mage), do nothing
+	if target:IsMagicImmune() then
+		return nil
+	end
+
 	if target:GetTeamNumber() == caster:GetTeamNumber() then
 		target:EmitSound("Imba.AngelicAllianceCast")
 		target:AddNewModifier(caster, self, "modifier_imba_angelic_alliance_buff", {duration = duration})

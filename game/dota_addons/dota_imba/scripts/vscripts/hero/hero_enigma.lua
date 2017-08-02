@@ -341,8 +341,7 @@ end
 function modifier_imba_enigma_midnight_pulse_aura_talent:OnIntervalThink()
   -- Damage everyone inside
 
-  -- We need to refresh this value (THIS WAS WRONG, was counting enigma hp for the damage instead of the target ones)
-  --self.damage_per_tick = self:GetAbility():GetSpecialValueFor("damage_per_tick") * self:GetCaster():GetMaxHealth() * 0.01
+  -- We need to refresh this value   
 
   local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.auraRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
   for _,enemy in pairs(enemies) do
@@ -355,13 +354,7 @@ function modifier_imba_enigma_midnight_pulse_aura_talent:OnIntervalThink()
       ability = self:GetAbility(),
       flags = DOTA_DAMAGE_FLAG_DONT_DISPLAY_DAMAGE_IF_SOURCE_HIDDEN,
     }
-    ApplyDamage(damage)
-    -- I do not think this should apply force, uncomment if someone thinks it should
-    
-    --[[
-    local modifier = enemy:AddNewModifier(self:GetCaster(),self:GetAbility(),"modifier_imba_enigma_midnight_pulse_force",{duration = self.pull_duration})
-    modifier.pull_strength = FrameTime() * self:GetAbility():GetSpecialValueFor("pull_strength")
-    ]]
+    ApplyDamage(damage)    
   end
 
   -- Apply modifier for eidolons
@@ -468,17 +461,12 @@ function modifier_imba_enigma_midnight_pulse_eidolon_regen:IsDebuff() return sel
 function modifier_imba_enigma_midnight_pulse_eidolon_regen:IsHidden() return false end
 function modifier_imba_enigma_midnight_pulse_eidolon_regen:IsPurgable() return false end
 
-function modifier_imba_enigma_midnight_pulse_eidolon_regen:GetAttributes()
-  return {MODIFIER_ATTRIBUTE_MULTIPLE}
-end
-
 function modifier_imba_enigma_midnight_pulse_eidolon_regen:DeclareFunctions()
-  return {MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE}
+  return {MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT}
 end
 
-function modifier_imba_enigma_midnight_pulse_eidolon_regen:GetModifierHealthRegenPercentage()
-  self.regen = self.regen or self:GetAbility():GetSpecialValueFor("damage_per_tick")
-  return self.regen
+function modifier_imba_enigma_midnight_pulse_eidolon_regen:GetModifierConstantHealthRegen()
+  return self:GetAbility():GetSpecialValueFor("eidolon_hp_regen")  
 end
 
 

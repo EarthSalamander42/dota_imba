@@ -44,6 +44,11 @@ function item_imba_hellblade:OnSpellStart()
 				return nil
 			end
 		end	
+
+		-- If the target is magic immune (Lotus Orb/Anti Mage), do nothing
+		if target:IsMagicImmune() then
+			return nil
+		end
 	end
 end		
 

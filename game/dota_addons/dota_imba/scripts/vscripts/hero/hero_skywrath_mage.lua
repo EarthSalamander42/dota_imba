@@ -405,14 +405,7 @@ function imba_skywrath_mage_concussive_shot:OnProjectileHit_ExtraData(target, lo
                  location,
                  vision_radius,
                  impact_vision_duration,
-                 false)
-
-    -- If target has Linken's Sphere off cooldown, do nothing
-    if target:GetTeam() ~= caster:GetTeam() then
-        if target:TriggerSpellAbsorb(ability) then
-            return nil
-        end
-    end
+                 false)    
 
     -- Play impact sound
     EmitSoundOn(sound_impact, caster)

@@ -461,8 +461,9 @@ function modifier_imba_aphotic_shield_buff_block:OnDestroy()
 		local damage_type = DAMAGE_TYPE_MAGICAL
 		local curse_of_avernus 	= caster:FindAbilityByName("imba_abaddon_curse_of_avernus")
 
+		local debuff_duration
 		if curse_of_avernus then
-			local debuff_duration = curse_of_avernus:GetSpecialValueFor("debuff_duration")			
+			 debuff_duration = curse_of_avernus:GetSpecialValueFor("debuff_duration")			
 		end
 
 		-- Talent : When Aphotic Shield is destroyed, cast Mist Coil in 350 AoE
@@ -481,7 +482,7 @@ function modifier_imba_aphotic_shield_buff_block:OnDestroy()
 				-- Purge buffs from enemies
 				unit:Purge(true, false, false, false, false)
 
-				if debuff_duration > 0 then
+				if debuff_duration and debuff_duration > 0 then
 					if not caster:PassivesDisabled() and curse_of_avernus then
 						unit:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff_slow", { duration = debuff_duration })
 					end

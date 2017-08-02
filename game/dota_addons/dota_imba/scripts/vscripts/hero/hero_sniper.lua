@@ -1383,8 +1383,22 @@ function imba_sniper_assassinate:AssassinateHit(target)
                 -- Imitate a critical by sending an overhead message
                 SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, target, damage, nil)
 
+                -- See if Take Aim is ready before the attack
+                local take_aim_ability_handler = caster:FindAbilityByName("imba_sniper_take_aim")
+                local take_aim_ready = false
+                if take_aim_ability_handler then
+                    if take_aim_ability_handler:IsCooldownReady() then
+                        take_aim_ready = true
+                    end
+                end
+
                 -- Perform a fake attack to proc on-hit effects
                 caster:PerformAttack(target, false, true, true, true, false, true, true)
+
+                -- If after the fake attack Take Aim got reset, refresh its cooldown quickly
+                if take_aim_ready then
+                    take_aim_ability_handler:EndCooldown()                                        
+                end
 
                 -- Perfectshot stun the target, and headshot slow it
                 target:AddNewModifier(caster, ability, modifier_headshot, {duration = headshot_duration})

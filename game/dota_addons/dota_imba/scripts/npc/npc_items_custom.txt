@@ -7763,18 +7763,7 @@
 				"Passive"				"1"
 				"IsHidden"				"1"
 				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"internal/util.lua"
-						"Function"		"IllusionPassiveRemover"
-
-						"modifier"		"modifier_imba_cheese_death_prevention"
-					}
-				}
+				"IsPurgable"			"0"				
 			}
 		}
 	}

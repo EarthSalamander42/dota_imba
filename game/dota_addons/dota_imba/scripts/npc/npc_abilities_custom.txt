@@ -4057,7 +4057,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"										"ability_lua"
 		"ScriptFile"									"hero/hero_abaddon.lua"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 		"AbilityTextureName"							"custom/abaddon_over_channel"
 		"MaxLevel"										"7"
 
@@ -9242,7 +9242,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"damage_per_tick"			"3.0 3.75 4.5 5.25 6.0 6.75 7.5"
+				"damage_per_tick"			"3.0 3.75 4.5 5.25 5.5 5.75 6"
 			}
 
 			"03"
@@ -9254,29 +9254,35 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"pull_strength"		"45 45 45 45 60 75 90"
+				"pull_strength"				"45 45 45 45 65 85 105"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"eidolon_heal_duration"			"3.0"
+				"eidolon_heal_duration"		"3.0"
 			}			
 			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"pull_duration"			"1"
+				"pull_duration"				"1"
 			}
 			"07"
 			{
 				"var_type"     				"FIELD_INTEGER"
-				"cast_range" 	"700"
-			}		
+				"cast_range" 				"700"
+			}
 
 			"08"
 			{
 				"var_type"     				"FIELD_FLOAT"
-				"cast_point"	"0.3"
+				"cast_point"				"0.3"
 			}									
+
+			"09"
+			{
+				"var_type"     				"FIELD_INTEGER"
+				"eidolon_hp_regen"			"20 20 20 20 30 40 50"
+			}
 		}
 	}
 
@@ -17249,7 +17255,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
 		"FightRecapLevel"				"1"
@@ -22757,7 +22763,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"ward_hp_tooltip"		"2 2 2 3 4 5"
+				"ward_hp_tooltip"		"2 2 2 3 3 3"
 				"LinkedSpecialBonus"	"special_bonus_imba_shadow_shaman_2"
 				
 			}
@@ -29023,13 +29029,13 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"grab_radius"			"275"
+				"grab_radius"			"350"
 			}
 
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"275"
+				"radius"				"350"
 			}
 
 			"04"

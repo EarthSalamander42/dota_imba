@@ -70,7 +70,7 @@ function imba_witch_doctor_paralyzing_cask:OnProjectileHit_ExtraData(hTarget, vL
 	EmitSoundOn("Hero_WitchDoctor.Paralyzing_Cask_Bounce", hTarget)
 	local hCaster = self:GetCaster()
 	if hTarget then
-		if hTarget:IsRealHero() then
+		if hTarget:IsRealHero() or hTarget:IsConsideredHero() or IsRoshan(hTarget) then
 			if hTarget:GetTeamNumber() ~= hCaster:GetTeamNumber() then
 				if not hTarget:IsMagicImmune() and not hTarget:TriggerSpellAbsorb(self) then
 					hTarget:AddNewModifier(hTarget, self, "modifier_stunned", {duration = ExtraData.hero_duration})

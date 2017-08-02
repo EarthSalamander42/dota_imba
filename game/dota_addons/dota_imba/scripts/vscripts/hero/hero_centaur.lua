@@ -161,16 +161,12 @@ function imba_centaur_hoof_stomp:OnSpellStart()
 		end	
 
 		-- Add arena particles for the duration
-		self.particle_arena_fx = ParticleManager:CreateParticle(particle_arena, PATTACH_ABSORIGIN, caster)
-		ParticleManager:SetParticleControl(self.particle_arena_fx, 0, caster:GetAbsOrigin())
-		ParticleManager:SetParticleControl(self.particle_arena_fx, 1, Vector(radius+45, 1, 1))
-		--[[ParticleManager:SetParticleControl(self.particle_arena_fx, 5, caster:GetAbsOrigin())
-		ParticleManager:SetParticleControl(self.particle_arena_fx, 6, caster:GetAbsOrigin())
-		ParticleManager:SetParticleControl(self.particle_arena_fx, 7, caster:GetAbsOrigin())
-		ParticleManager:SetParticleControl(self.particle_arena_fx, 8, caster:GetAbsOrigin())]]
+		local particle_arena_fx = ParticleManager:CreateParticle(particle_arena, PATTACH_ABSORIGIN, caster)
+		ParticleManager:SetParticleControl(particle_arena_fx, 0, caster:GetAbsOrigin())
+		ParticleManager:SetParticleControl(particle_arena_fx, 1, Vector(radius+45, 1, 1))		
 		Timers:CreateTimer(pit_duration, function()
-			ParticleManager:DestroyParticle(self.particle_arena_fx, false)
-			ParticleManager:ReleaseParticleIndex(self.particle_arena_fx)
+			ParticleManager:DestroyParticle(particle_arena_fx, false)
+			ParticleManager:ReleaseParticleIndex(particle_arena_fx)
 		end)
 
 

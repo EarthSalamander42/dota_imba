@@ -17,6 +17,11 @@ function Dagon( keys )
 		end
 	end
 
+	-- If the target is magic immune (Lotus Orb/Anti Mage), do nothing
+	if target:IsMagicImmune() then
+		return nil
+	end
+
 	-- Parameters
 	local damage = ability:GetSpecialValueFor("damage")
 	local bounce_damage = ability:GetSpecialValueFor("bounce_damage")

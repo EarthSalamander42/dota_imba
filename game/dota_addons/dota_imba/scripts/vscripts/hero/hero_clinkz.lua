@@ -677,7 +677,7 @@ function modifier_imba_searing_arrows_active:DeclareFunctions()
 end
 
 function modifier_imba_searing_arrows_active:GetModifierPhysicalArmorBonus()
-	return self:GetStackCount() * self.armor_burn_per_stack (-1)
+	return self:GetStackCount() * self.armor_burn_per_stack * (-1)
 end
 
 	
@@ -927,6 +927,11 @@ function modifier_imba_skeleton_walk_invis:OnRemoved()
             return nil
         end
 
+        -- If Clinkz died, when it was removed, do nothing
+        if not self.caster:IsAlive() then
+            return nil
+        end
+
         -- Play cast sound, yes, again
         EmitSoundOn(self.sound_cast, self.parent)
 		
@@ -1136,6 +1141,10 @@ function imba_clinkz_death_pact:CastFilterResultTarget(target)
 		if target:GetUnitName() == "npc_imba_clinkz_spirits" then
 			return UF_FAIL_CUSTOM
 		end
+
+        if target:IsConsideredHero() then
+            return UF_FAIL_CONSIDERED_HERO
+        end
 
         local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
         return nResult
@@ -1915,11 +1924,9 @@ function modifier_imba_death_pact_talent_buff:GetModifierBaseAttack_BonusDamage(
     return bonus_damage
 end
 
-function modifier_imba_death_pact_talent_buff:GetModifierExtraHealthBonus()
-    if IsServer() then
-        local stacks = self:GetStackCount()
-        local bonus_hp = self.hero_bonus_hp_dmg_mult * stacks
+function modifier_imba_death_pact_talent_buff:GetModifierExtraHealthBonus()    
+    local stacks = self:GetStackCount()
+    local bonus_hp = self.hero_bonus_hp_dmg_mult * stacks
 
-        return bonus_hp
-    end
+    return bonus_hp    
 end

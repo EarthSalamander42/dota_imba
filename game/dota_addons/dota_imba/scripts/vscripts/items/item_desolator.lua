@@ -148,6 +148,10 @@ function item_imba_desolator:OnSpellStart()
 
 		-- Launch projectile
 		local projectile_direction = (target_loc - caster_loc):Normalized()
+		if target_loc == caster_loc then
+			projectile_direction = caster:GetForwardVector()
+		end
+
 		local desolator_projectile = {
 			Ability				= self,
 			EffectName			= "particles/item/desolator/desolator_active.vpcf",
@@ -326,65 +330,65 @@ end
 function item_imba_desolator_2:GetIntrinsicModifierName()
 	return "modifier_item_imba_desolator_2" end
 
-function item_imba_desolator_2:OnSpellStart()
-	if IsServer() then
+function item_imba_desolator_2:OnSpellStart()	
+	-- Parameters
+	local caster = self:GetCaster()
+	local caster_loc = caster:GetAbsOrigin()
+	local target_loc = self:GetCursorPosition()
+	local projectile_radius = self:GetSpecialValueFor("projectile_radius")
+	local projectile_length = self:GetSpecialValueFor("projectile_length")
+	local projectile_speed = self:GetSpecialValueFor("projectile_speed")
+	local projectile_cone = self:GetSpecialValueFor("projectile_cone")
+	local projectile_amount = self:GetSpecialValueFor("projectile_amount")
 
-		-- Parameters
-		local caster = self:GetCaster()
-		local caster_loc = caster:GetAbsOrigin()
-		local target_loc = self:GetCursorPosition()
-		local projectile_radius = self:GetSpecialValueFor("projectile_radius")
-		local projectile_length = self:GetSpecialValueFor("projectile_length")
-		local projectile_speed = self:GetSpecialValueFor("projectile_speed")
-		local projectile_cone = self:GetSpecialValueFor("projectile_cone")
-		local projectile_amount = self:GetSpecialValueFor("projectile_amount")
-
-		-- Determine projectile geometry
-		local projectile_directions = {}
-		local main_direction = (target_loc - caster_loc):Normalized()
-		local angle_step = projectile_cone / (projectile_amount - 1)
-		for i = 1, projectile_amount do
-			projectile_directions[i] = RotatePosition(caster_loc, QAngle(0, (i - 1) * angle_step - projectile_cone * 0.5, 0), caster_loc + main_direction * 50)
-		end
-
-		-- Base projectile information
-		local desolator_projectile = {
-			Ability				= self,
-			EffectName			= "particles/item/desolator/desolator2_active.vpcf",
-			vSpawnOrigin		= caster_loc + main_direction * 50 + Vector(0, 0, 100),
-			fDistance			= projectile_length,
-			fStartRadius		= projectile_radius,
-			fEndRadius			= projectile_radius,
-			Source				= caster,
-			bHasFrontalCone		= false,
-			bReplaceExisting	= false,
-			iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
-			iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
-			iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-		--	fExpireTime			= ,
-			bDeleteOnHit		= false,
-			vVelocity			= main_direction * projectile_speed,
-			bProvidesVision		= false,
-			iVisionRadius		= 0,
-			iVisionTeamNumber	= caster:GetTeamNumber(),
-		}
-
-		-- Launch projectiles
-		local projectiles_launched = 0
-		Timers:CreateTimer(0.00, function()
-			caster:EmitSound("Imba.DesolatorCast")
-			desolator_projectile.vSpawnOrigin = projectile_directions[projectiles_launched + 1] + Vector(0, 0, 100)
-			desolator_projectile.vVelocity = (projectile_directions[projectiles_launched + 1] - caster_loc):Normalized() * projectile_speed
-			desolator_projectile.vVelocity.z = 0
-			ProjectileManager:CreateLinearProjectile(desolator_projectile)
-
-			-- Stop looping if the proper amount was reached
-			projectiles_launched = projectiles_launched + 1
-			if projectiles_launched < projectile_amount then
-				return 0.1
-			end
-		end)
+	-- Determine projectile geometry
+	local projectile_directions = {}
+	local main_direction = (target_loc - caster_loc):Normalized()
+	if target_loc == caster_loc then
+		main_direction = caster:GetForwardVector()		
 	end
+	local angle_step = projectile_cone / (projectile_amount - 1)
+	for i = 1, projectile_amount do
+		projectile_directions[i] = RotatePosition(caster_loc, QAngle(0, (i - 1) * angle_step - projectile_cone * 0.5, 0), caster_loc + main_direction * 50)
+	end
+
+	-- Base projectile information
+	local desolator_projectile = {
+		Ability				= self,
+		EffectName			= "particles/item/desolator/desolator2_active.vpcf",
+		vSpawnOrigin		= caster_loc + main_direction * 50 + Vector(0, 0, 100),
+		fDistance			= projectile_length,
+		fStartRadius		= projectile_radius,
+		fEndRadius			= projectile_radius,
+		Source				= caster,
+		bHasFrontalCone		= false,
+		bReplaceExisting	= false,
+		iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
+		iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
+		iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+	--	fExpireTime			= ,
+		bDeleteOnHit		= false,
+		vVelocity			= main_direction * projectile_speed,
+		bProvidesVision		= false,
+		iVisionRadius		= 0,
+		iVisionTeamNumber	= caster:GetTeamNumber(),
+	}
+
+	-- Launch projectiles
+	local projectiles_launched = 0
+	Timers:CreateTimer(function()
+		caster:EmitSound("Imba.DesolatorCast")
+		desolator_projectile.vSpawnOrigin = projectile_directions[projectiles_launched + 1] + Vector(0, 0, 100)
+		desolator_projectile.vVelocity = (projectile_directions[projectiles_launched + 1] - caster_loc):Normalized() * projectile_speed
+		desolator_projectile.vVelocity.z = 0
+		ProjectileManager:CreateLinearProjectile(desolator_projectile)
+
+		-- Stop looping if the proper amount was reached
+		projectiles_launched = projectiles_launched + 1
+		if projectiles_launched < projectile_amount then
+			return 0.1
+		end
+	end)	
 end
 
 function item_imba_desolator_2:OnProjectileThink(projectile_location)

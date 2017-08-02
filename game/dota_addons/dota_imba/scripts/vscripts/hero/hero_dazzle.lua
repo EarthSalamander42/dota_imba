@@ -350,6 +350,8 @@ function modifier_imba_dazzle_shallow_grave:OnDestroy()
 			
 			local ability = self:GetAbility()
 			local caster = ability:GetCaster()
+			
+			parent:Heal(self.shallowDamage, caster)
 			if caster:HasTalent("special_bonus_imba_dazzle_3") then
 				self.targetsHit = {}
 				table.insert(self.targetsHit, parent:entindex(), true)
@@ -516,6 +518,7 @@ function modifier_imba_dazzle_nothl_protection:OnTakeDamage( keys )
 								modifier:SetStackCount(self.shallowDamageInstances)
 							end
 							
+							parent:Heal(self.shallowDamage, parent)
 							if parent:HasTalent("special_bonus_imba_dazzle_3") then
 								self.targetsHit = {}
 								table.insert(self.targetsHit, parent:entindex(), true)

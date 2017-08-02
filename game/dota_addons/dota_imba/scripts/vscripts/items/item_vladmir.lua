@@ -129,6 +129,7 @@ function modifier_item_imba_vladmir_aura:OnCreated(keys)
 	self.armor_aura = self:GetAbility():GetSpecialValueFor("armor_aura")
 	self.hp_regen_aura = self:GetAbility():GetSpecialValueFor("hp_regen_aura")
 	self.mana_regen_aura = self:GetAbility():GetSpecialValueFor("mana_regen_aura")
+
 	if IsServer() and self:GetParent():IsHero() then
 		ChangeAttackProjectileImba(self:GetParent())
 	end
@@ -162,7 +163,9 @@ function modifier_item_imba_vladmir_aura:GetModifierBaseDamageOutgoing_Percentag
 	if self:GetParent():HasModifier("modifier_item_imba_vladmir_blood_aura") then
 		return 0
 	else
-		return self.damage_aura
+		if self.damage_aura then
+			return self.damage_aura
+		end
 	end
 end
 
@@ -173,7 +176,9 @@ function modifier_item_imba_vladmir_aura:GetModifierConstantHealthRegen()
 	if self:GetParent():HasModifier("modifier_item_imba_vladmir_blood_aura") then
 		return 0
 	else
-		return self.hp_regen_aura
+		if self.hp_regen_aura then
+			return self.hp_regen_aura
+		end
 	end
 end
 
@@ -181,7 +186,9 @@ function modifier_item_imba_vladmir_aura:GetModifierConstantManaRegen()
 	if self:GetParent():HasModifier("modifier_item_imba_vladmir_blood_aura") then
 		return 0
 	else
-		return self.mana_regen_aura
+		if self.mana_regen_aura then
+			return self.mana_regen_aura
+		end
 	end
 end
 
