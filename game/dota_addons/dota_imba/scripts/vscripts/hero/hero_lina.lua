@@ -501,20 +501,21 @@ function imba_lina_laguna_blade:OnSpellStart()
 		local blade_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_lina/lina_spell_laguna_blade.vpcf", PATTACH_CUSTOMORIGIN, caster)
 		ParticleManager:SetParticleControlEnt(blade_pfx, 0, caster, PATTACH_POINT_FOLLOW, "attach_attack1", caster_loc, true)
 		ParticleManager:SetParticleControlEnt(blade_pfx, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target_loc, true)
-		
 		ParticleManager:ReleaseParticleIndex(blade_pfx)
-		Timers:CreateTimer(effect_delay, function()
-			-- If the target possesses a ready Spell-Counter, do nothing further
-			if target:GetTeam() ~= caster:GetTeam() then
-				if target:TriggerSpellAbsorb(self) then
-					return nil
-				end
+		
+		-- If the target possesses a ready Spell-Counter, do nothing further
+		if target:GetTeam() ~= caster:GetTeam() then
+			if target:TriggerSpellAbsorb(self) then
+				return nil
 			end
+		end
+		
+		Timers:CreateTimer(effect_delay, function()
 			ApplyDamage({victim = target, attacker = caster, ability = self, damage = damage, damage_type = damage_type})
 			target:RemoveModifierByName("modifier_imba_blazing_strike")
 			if caster:HasTalent("special_bonus_imba_lina_6") then
 				target:AddNewModifier(caster, self, "modifier_stunned", { duration = caster:FindTalentValue("special_bonus_imba_lina_6") })
-			end
+			end		
 			-- Bouncing --
 			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target_loc, nil, bounce_range, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 			-- Remove main-target from list
@@ -530,7 +531,7 @@ function imba_lina_laguna_blade:OnSpellStart()
 				ParticleManager:SetParticleControlEnt(bounce_pfx, 1, enemies[i], PATTACH_POINT_FOLLOW, "attach_hitloc", enemies[i]:GetAbsOrigin(), true)
 				ParticleManager:ReleaseParticleIndex(bounce_pfx)
 				ApplyDamage({victim = enemies[i], attacker = caster, ability = self, damage = damage, damage_type = damage_type})
-				enemies[i]:RemoveModifierByName("modifier_imba_blazing_strike")
+		 		enemies[i]:RemoveModifierByName("modifier_imba_blazing_strike")
 				if caster:HasTalent("special_bonus_imba_lina_6") then
 					enemies[i]:AddNewModifier(caster, self, "modifier_stunned", { duration = caster:FindTalentValue("special_bonus_imba_lina_6") })
 				end
