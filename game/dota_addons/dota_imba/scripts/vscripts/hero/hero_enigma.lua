@@ -289,7 +289,7 @@ function imba_enigma_midnight_pulse:OnSpellStart()
 end
 
 -- This checks whether the hero skilled the talent, to give the aura
--- #6 Talent: Permanent Malifice around caster
+-- #6 Talent: Permanent Midnight Pulse around caster
 LinkLuaModifier("modifier_imba_enigma_midnight_pulse_checker","hero/hero_enigma", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_enigma_midnight_pulse_checker = class({})
 function modifier_imba_enigma_midnight_pulse_checker:IsHidden() return true end
@@ -341,8 +341,8 @@ end
 function modifier_imba_enigma_midnight_pulse_aura_talent:OnIntervalThink()
   -- Damage everyone inside
 
-  -- We need to refresh this value
-  self.damage_per_tick = self:GetAbility():GetSpecialValueFor("damage_per_tick") * caster:GetMaxHealth() * 0.01
+  -- We need to refresh this value (THIS WAS WRONG, was counting enigma hp for the damage instead of the target ones)
+  --self.damage_per_tick = self:GetAbility():GetSpecialValueFor("damage_per_tick") * self:GetCaster():GetMaxHealth() * 0.01
 
   local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.auraRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
   for _,enemy in pairs(enemies) do
@@ -350,8 +350,8 @@ function modifier_imba_enigma_midnight_pulse_aura_talent:OnIntervalThink()
     {
       victim = enemy,
       attacker = self:GetCaster(),
-      damage = self.damage_per_tick,
-      damage_type = DAMAGE_TYPE_MAGICAL,
+      damage = self:GetAbility():GetSpecialValueFor("damage_per_tick") * enemy:GetMaxHealth() * 0.01,
+      damage_type = DAMAGE_TYPE_PURE,
       ability = self:GetAbility(),
       flags = DOTA_DAMAGE_FLAG_DONT_DISPLAY_DAMAGE_IF_SOURCE_HIDDEN,
     }
@@ -427,7 +427,7 @@ function modifier_imba_enigma_midnight_pulse_aura:OnIntervalThink()
       victim = enemy,
       attacker = self:GetCaster(),
       damage = self.damage_per_tick * enemy:GetMaxHealth() * 0.01,
-      damage_type = DAMAGE_TYPE_MAGICAL,
+      damage_type = DAMAGE_TYPE_PURE,
       ability = self:GetAbility()
     }
     ApplyDamage(damage)
@@ -723,7 +723,7 @@ function modifier_imba_enigma_black_hole_aura:DealDamage()
         victim = enemy,
         attacker = self:GetCaster(),
         damage = self.damage_per_tick,
-        damage_type = DAMAGE_TYPE_MAGICAL,
+        damage_type = DAMAGE_TYPE_PURE,
         ability = self:GetAbility()
       }
       ApplyDamage(damage)
