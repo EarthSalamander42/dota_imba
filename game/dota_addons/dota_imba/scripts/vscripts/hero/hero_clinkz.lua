@@ -1142,7 +1142,7 @@ function imba_clinkz_death_pact:CastFilterResultTarget(target)
 			return UF_FAIL_CUSTOM
 		end
 
-        if target:IsConsideredHero() then
+        if target:IsConsideredHero() and not target:IsHero() then
             return UF_FAIL_CONSIDERED_HERO
         end
 
