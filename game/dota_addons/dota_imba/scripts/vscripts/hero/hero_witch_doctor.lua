@@ -100,8 +100,8 @@ function imba_witch_doctor_paralyzing_cask:OnProjectileHit_ExtraData(hTarget, vL
 	if ExtraData.bounces >= 1 then
 		Timers:CreateTimer(ExtraData.bounce_delay, function()
 			-- Finds all units in the area, prioritizing enemies
-			local enemies = FindUnitsInRadius(hCaster:GetTeamNumber(), hTarget:GetAbsOrigin(), nil, ExtraData.bounce_range, DOTA_UNIT_TARGET_TEAM_ENEMY, self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), 0, false)
-			local allies = FindUnitsInRadius(hCaster:GetTeamNumber(), hTarget:GetAbsOrigin(), nil, ExtraData.bounce_range, DOTA_UNIT_TARGET_TEAM_FRIENDLY, self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), 0, false)
+			local enemies = FindUnitsInRadius(hCaster:GetTeamNumber(), hTarget:GetAbsOrigin(), nil, ExtraData.bounce_range, DOTA_UNIT_TARGET_TEAM_ENEMY, self:GetAbilityTargetType(), DOTA_UNIT_TARGET_FLAG_NO_INVIS, 0, false)
+			local allies = FindUnitsInRadius(hCaster:GetTeamNumber(), hTarget:GetAbsOrigin(), nil, ExtraData.bounce_range, DOTA_UNIT_TARGET_TEAM_FRIENDLY, self:GetAbilityTargetType(), DOTA_UNIT_TARGET_FLAG_NONE, 0, false)
 			
 			-- Go through the target tables, checking for the first one that isn't the same as the target
 			local tJumpTargets = {}
