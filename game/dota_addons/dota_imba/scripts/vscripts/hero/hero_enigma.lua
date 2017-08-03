@@ -148,33 +148,7 @@ function modifier_imba_enigma_malefice:OnIntervalThink()
   }
   ApplyDamage( damage )
 end
---[[ This one doesnt show the default one does.
-LinkLuaModifier("modifier_imba_enigma_malefice_stun","hero/hero_enigma", LUA_MODIFIER_MOTION_NONE)
-modifier_imba_enigma_malefice_stun = class({})
 
-function modifier_imba_enigma_malefice_stun:IsDebuff() return true end
-function modifier_imba_enigma_malefice_stun:IsHidden() return true end
-function modifier_imba_enigma_malefice_stun:IsPurgable() return false end
-function modifier_imba_enigma_malefice_stun:IsPurgeException()return true end
-function modifier_imba_enigma_malefice_stun:IsStunDebuff() return true end
-
-function modifier_imba_enigma_malefice_stun:GetStatusEffectName()
-  return "particles/status_fx/status_effect_enigma_malefice.vpcf"
-end
-function modifier_imba_enigma_malefice_stun:GetEffectName()
-  return "particles/generic_gameplay/generic_stunned.vpcf" 
-end
-function modifier_imba_enigma_malefice_stun:GetEffectName()
-  return PATTACH_OVERHEAD_FOLLOW
-end
-function modifier_imba_enigma_malefice_stun:CheckState()
-  local states = 
-  {
-    [MODIFIER_STATE_STUNNED] = true,
-  }
-  return states
-end
-]]
 -- Modifier applying force
 LinkLuaModifier("modifier_imba_enigma_malefice_force","hero/hero_enigma", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_enigma_malefice_force = class({})
@@ -274,11 +248,7 @@ function imba_enigma_midnight_pulse:OnSpellStart()
   local damage_per_tick = self:GetSpecialValueFor("damage_per_tick")
   local radius = self:GetSpecialValueFor("radius")
   local pull_strength = self:GetSpecialValueFor("pull_strength")
-
-  -- Dummy unit to handle force and broadcast aura
-  --[[caster.hMidnightPulseDummyUnit = CreateUnitByName("npc_dummy_unit",point,false,caster,caster:GetOwner(),caster:GetTeamNumber())
-  caster.hMidnightPulseDummyUnit:FindAbilityByName("dummy_unit_state"):SetLevel(1)
-  caster.hMidnightPulseDummyUnit:AddNewModifier(caster,self,"modifier_imba_enigma_midnight_pulse_aura",{duration = duration})]]
+  
 
   caster.hMidnightPulseDummyUnit = CreateModifierThinker(caster,self,"modifier_imba_enigma_midnight_pulse_aura",{duration = duration},point,caster:GetTeamNumber(),false)
   
@@ -597,14 +567,7 @@ function imba_enigma_black_hole:OnSpellStart()
     if modifier and caster:IsAlive() then
       self.consumedSingularityCharges = (self.consumedSingularityCharges or 0) + modifier:GetStackCount()
     end
-  end
-
-  
-  -- Dummy unit to handle force and broadcast aura
-  --caster.hBlackHoleDummyUnit = CreateUnitByName("npc_dummy_unit",point,false,caster,caster:GetOwner(),caster:GetTeamNumber())
-  --caster.hBlackHoleDummyUnit:FindAbilityByName("dummy_unit_state"):SetLevel(1)
-  --local modifier = caster.hBlackHoleDummyUnit:AddNewModifier(caster,self,"modifier_imba_enigma_black_hole_aura",{duration = duration})
-  --modifier.radius = self.radius
+  end  
 
   caster.hBlackHoleDummyUnit = CreateModifierThinker(caster,self,"modifier_imba_enigma_black_hole_aura",{duration = duration,radius = radius},point,caster:GetTeamNumber(),false)
   
@@ -641,6 +604,8 @@ function modifier_imba_singularity:OnDeath(keys)
   if keys.unit ~= self:GetParent() then return end
 
   if not self:GetParent():HasTalent("special_bonus_imba_enigma_4") then return end
+
+  if self:GetParent():IsIllusion() then return end
 
   local ability = self:GetAbility()
   ability.duration = ability:GetSpecialValueFor("duration") /2
@@ -825,10 +790,7 @@ end
 function modifier_imba_enigma_black_hole_aura_modifier:OnIntervalThink()
   local caster = self:GetCaster()
 
-  local ability = caster:FindAbilityByName("imba_enigma_black_hole")
-  --if caster.hBlackHoleDummyUnit and IsValidEntity(caster.hBlackHoleDummyUnit) then
-    -- Calculate pull force in here
-    -- First % of the distance they are from the center
+  local ability = caster:FindAbilityByName("imba_enigma_black_hole") 
 
     if not self.parent or self.parent:IsNull() then self.parent = caster.hBlackHoleDummyUnit end
     if self.parent:IsNull() then return end
