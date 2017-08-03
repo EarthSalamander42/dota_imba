@@ -565,7 +565,7 @@ function imba_enigma_black_hole:OnSpellStart()
   if caster:HasTalent("special_bonus_imba_enigma_1") then
     local modifier = self:GetCaster():FindModifierByName(self:GetIntrinsicModifierName())
     if modifier and caster:IsAlive() then
-      self.consumedSingularityCharges = (self.consumedSingularityCharges or 0) + modifier:GetStackCount()
+      self.consumedSingularityCharges = modifier:GetStackCount()
     end
   end  
 
@@ -628,8 +628,8 @@ function modifier_imba_enigma_black_hole_aura:OnCreated(keys)
     local ability = caster:FindAbilityByName("imba_enigma_black_hole")
     -- Storing values
     self.damage_per_tick  = keys.damage or ability:GetSpecialValueFor("damage_per_tick")
-    self.singularity_stun_radius_increment_per_stack = ability:GetSpecialValueFor("stun_radius")
-    self.singularity_pull_radius_increment_per_stack = ability:GetSpecialValueFor("stun_radius")
+    self.singularity_stun_radius_increment_per_stack = ability:GetSpecialValueFor("singularity_stun_radius_increment_per_stack")
+    self.singularity_pull_radius_increment_per_stack = ability:GetSpecialValueFor("singularity_pull_radius_increment_per_stack")
     self.stun_radius = ability:GetSpecialValueFor("radius") + (caster:FindModifierByName("modifier_imba_singularity"):GetStackCount() * self.singularity_stun_radius_increment_per_stack)
     self.radius = ability:GetSpecialValueFor("pull_radius") + (caster:FindModifierByName("modifier_imba_singularity"):GetStackCount() * self.singularity_pull_radius_increment_per_stack)
     
