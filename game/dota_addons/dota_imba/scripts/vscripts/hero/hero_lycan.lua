@@ -187,6 +187,11 @@ function modifier_imba_lycan_wolf_charge:AllowIllusionDuplicate()
 end
 
 function modifier_imba_lycan_wolf_charge:RemoveOnDeath()
+	--remove if the ability was stolen via Rubick's ulti. 
+	--Needed to prevent a bug where the buff would stay on permanently even after losing the ability on death
+	if self.ability:IsStolen() then
+		return true
+	end
 	return false
 end
 

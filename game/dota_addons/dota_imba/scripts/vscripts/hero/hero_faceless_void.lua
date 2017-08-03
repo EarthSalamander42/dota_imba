@@ -720,16 +720,17 @@ function modifier_imba_faceless_void_time_lock:IsDebuff()			return false end
 function modifier_imba_faceless_void_time_lock:IsHidden()			return true end
 
 function modifier_imba_faceless_void_time_lock:DeclareFunctions()
-	local funcs = { MODIFIER_EVENT_ON_ATTACK_LANDED, }
+	local funcs = { MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_MAGICAL, }
 	return funcs
 end
 
-function modifier_imba_faceless_void_time_lock:OnAttackLanded( keys )
+function modifier_imba_faceless_void_time_lock:GetModifierProcAttack_BonusDamage_Magical( keys )
 	if IsServer() then
 		local target = keys.target		-- Unit getting hit
 		local attacker = keys.attacker	-- Unit landing the hit
 		local parent = self:GetParent()	-- Unit holding this modifier
 		local ability = self:GetAbility()
+		local bonus_damage_to_main_target = 0
 
 		-- See if the passive owner is the attacker, and that they're not broken
 		if parent == attacker and not target:IsBuilding() and not parent:PassivesDisabled() and parent:GetTeamNumber() ~= target:GetTeamNumber() then
@@ -741,6 +742,9 @@ function modifier_imba_faceless_void_time_lock:OnAttackLanded( keys )
 
 			-- See if the chance passed
 			if math.random() <= bashChance then
+				-- Deal damage
+				bonus_damage_to_main_target = bonus_damage_to_main_target + bashDamage
+
 				-- If the target is not in a Chronosphere, apply bash normally.
 				if not target:FindModifierByName("modifier_imba_faceless_void_chronosphere_handler") then
 
@@ -766,8 +770,9 @@ function modifier_imba_faceless_void_time_lock:OnAttackLanded( keys )
 						attacker:FindAbilityByName("imba_faceless_void_chronosphere"):OnSpellStart(true, target:GetAbsOrigin())
 					end
 
+					-- Stun
 					target:AddNewModifier(parent, ability, "modifier_imba_faceless_void_time_lock_stun", { duration = bashDuration })
-					ApplyDamage({attacker = parent, victim = target, ability = ability, damage = bashDamage, damage_type = DAMAGE_TYPE_MAGICAL})
+					-- Emit sound
 					EmitSoundOn("Hero_FacelessVoid.TimeLockImpact", target)
 
 					-- Add a chronocharge if a hero was bashed
@@ -800,11 +805,11 @@ function modifier_imba_faceless_void_time_lock:OnAttackLanded( keys )
 					false)
 
 					-- Bash them
-					for _,target in pairs(enemies) do
-						if target:FindModifierByName("modifier_imba_faceless_void_chronosphere_handler") then
+					for _,enemy in pairs(enemies) do
+						if enemy:FindModifierByName("modifier_imba_faceless_void_chronosphere_handler") then
 
 							-- #4 TALENT: Increases the cd increase on bash on enemies affected by time dilation and reduces his own
-							if target:FindModifierByName("modifier_imba_faceless_void_time_dilation_slow") then
+							if enemy:FindModifierByName("modifier_imba_faceless_void_time_dilation_slow") then
 								talent_cd_increase			=	attacker:FindTalentValue("special_bonus_imba_faceless_void_4", "target_increase")
 								local caster_cd_decrease	=	attacker:FindTalentValue("special_bonus_imba_faceless_void_4", "self_reduction")
 
@@ -822,27 +827,32 @@ function modifier_imba_faceless_void_time_lock:OnAttackLanded( keys )
 
 							-- #5 TALENT: Bash spawns Chronospheres
 							if attacker:HasTalent("special_bonus_imba_faceless_void_5") then
-								attacker:FindAbilityByName("imba_faceless_void_chronosphere"):OnSpellStart(true, target:GetAbsOrigin())
+								attacker:FindAbilityByName("imba_faceless_void_chronosphere"):OnSpellStart(true, enemy:GetAbsOrigin())
 							end
 
-							target:AddNewModifier(parent, ability, "modifier_imba_faceless_void_time_lock_stun", { duration = bashDuration })
-							ApplyDamage({attacker = parent, victim = target, ability = ability, damage = bashDamage, damage_type = DAMAGE_TYPE_MAGICAL})
-							EmitSoundOn("Hero_FacelessVoid.TimeLockImpact", target)
+							-- Stun
+							enemy:AddNewModifier(parent, ability, "modifier_imba_faceless_void_time_lock_stun", { duration = bashDuration })
+							-- Bonus damage to main target is already bundled in "GetModifierProcAttack_BonusDamage_Magical", so no need to damage the main target.s
+							if target ~= enemy then
+								-- Deal damage
+								ApplyDamage({attacker = parent, victim = enemy, ability = ability, damage = bashDamage, damage_type = DAMAGE_TYPE_MAGICAL})
+							end
+							-- Emit sound
+							EmitSoundOn("Hero_FacelessVoid.TimeLockImpact", enemy)
 
 							-- Add a chronocharge if a hero was bashed
-							if target:IsRealHero() then
+							if enemy:IsRealHero() then
 								AddStacksLua(ability, parent, parent, "modifier_imba_faceless_void_chronocharges", 1, false)
 							end
 
 							-- Iterate through all victims abilities
 							for i = 0, 23 do
-								local targetAbility = target:GetAbilityByIndex(i)
-
+								local enemyAbility = enemy:GetAbilityByIndex(i)
 								-- If there is an ability, it's learned, not a passive, not a talent/attribute bonus, and on cooldown, apply cooldown increase
-								if targetAbility and targetAbility:GetLevel() > 0 and not targetAbility:IsPassive() and not targetAbility:IsAttributeBonus() and not targetAbility:IsCooldownReady() then
-									local newCooldown = targetAbility:GetCooldownTimeRemaining() + talent_cd_increase
-									targetAbility:EndCooldown()
-									targetAbility:StartCooldown(newCooldown)
+								if enemyAbility and enemyAbility:GetLevel() > 0 and not enemyAbility:IsPassive() and not enemyAbility:IsAttributeBonus() and not enemyAbility:IsCooldownReady() then
+									local newCooldown = enemyAbility:GetCooldownTimeRemaining() + cdIncrease + talent_cd_increase
+									enemyAbility:EndCooldown()
+									enemyAbility:StartCooldown(newCooldown)
 								end
 							end
 
@@ -851,6 +861,7 @@ function modifier_imba_faceless_void_time_lock:OnAttackLanded( keys )
 				end
 			end
 		end
+		return bonus_damage_to_main_target
 	end
 end
 
@@ -1012,7 +1023,8 @@ function modifier_imba_faceless_void_chronosphere_aura:IsNetherWardStealable() r
 
 function modifier_imba_faceless_void_chronosphere_aura:GetAuraDuration()
 	if self:GetAbility():GetCaster():HasTalent("special_bonus_imba_faceless_void_3") then return 0.01 end
-	return 0.1 end
+	return 0.1 
+end
 
 function modifier_imba_faceless_void_chronosphere_aura:GetAuraSearchTeam()
 	return DOTA_UNIT_TARGET_TEAM_BOTH end
@@ -1161,8 +1173,12 @@ end
 
 function modifier_imba_faceless_void_chronosphere_handler:OnIntervalThink()
 	if IsServer() then
+
 		-- Normal frozen enemy gets interrupted all the time
 		if self:GetStackCount() == 0 then
+		
+			-- Make certain people are stunned 
+			self.parent:AddNewModifier(self.caster, self:GetAbility(), "modifier_stunned", {duration = FrameTime()}) 
 
 			-- Non-IMBA handling
 			self.parent:InterruptMotionControllers(true)
@@ -1225,8 +1241,9 @@ end
 -- #3 TALENT: Void gains infinite movement speed in Chrono
 function modifier_imba_faceless_void_chronosphere_handler:GetModifierMoveSpeed_Absolute()
 	if self:GetStackCount() == 1 or self:GetStackCount() == 4 then
-		if not self:GetStackCount() == 4 then
-			if self:GetAbility():GetCaster():HasTalent("special_bonus_imba_faceless_void_3") then
+		-- This section does not work with mini-chronos
+		if self:GetStackCount() ~= 4 then
+			if self:GetCaster():HasTalent("special_bonus_imba_faceless_void_3") then
 				return 3000
 			end
 		end

@@ -723,6 +723,25 @@ function modifier_imba_crystal_maiden_brilliance_aura:OnCreated()
 
 	self.bonus_self = self.ability:GetSpecialValueFor("bonus_self")
 	self.spellpower_threshold_pct = self.ability:GetSpecialValueFor("spellpower_threshold_pct")
+
+	if IsServer() then
+		self:StartIntervalThink(0.2)
+	end
+end
+
+function modifier_imba_crystal_maiden_brilliance_aura:OnIntervalThink()
+	if IsServer() then
+		-- Only apply if the parent has more than the spellpower threshold
+		if self.parent and self.parent:GetManaPercent() > self.spellpower_threshold_pct then			
+			if self.parent == self.caster then
+				self:SetStackCount(self:GetAbility():GetSpecialValueFor("bonus_spellpower") * self.bonus_self)
+			else
+				self:SetStackCount(self:GetAbility():GetSpecialValueFor("bonus_spellpower"))
+			end
+		else
+			self:SetStackCount(0)
+		end
+	end
 end
 
 function modifier_imba_crystal_maiden_brilliance_aura:OnRefresh()
@@ -755,18 +774,7 @@ function modifier_imba_crystal_maiden_brilliance_aura:GetModifierBonusStats_Inte
 end
 
 function modifier_imba_crystal_maiden_brilliance_aura:GetModifierSpellAmplify_Percentage()
-	-- Only apply if the parent has more than the spellpower threshold
-	if self.parent and IsServer() and self.parent:GetManaPercent() > self.spellpower_threshold_pct then
-
-		if self.parent == self.caster then
-			return self:GetAbility():GetSpecialValueFor("bonus_spellpower") * self.bonus_self 
-		else
-			return self:GetAbility():GetSpecialValueFor("bonus_spellpower")
-		end
-	else
-
-		return 0
-	end
+	return self:GetStackCount()	
 end
 
 function modifier_imba_crystal_maiden_brilliance_aura:IsHidden() return false end

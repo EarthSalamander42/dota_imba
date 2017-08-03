@@ -18,8 +18,8 @@ end
 function HeroSelection:Start()
 
 	-- Play pick music
-	HeroSelection.pick_sound_dummy = Entities:FindByClassname(nil, "ent_dota_fountain")
-	EmitGlobalSound("Imba.PickPhaseDrums")
+	HeroSelection.pick_sound_dummy = CreateUnitByName("npc_dummy_unit", Vector(0,0,0), false, nil, nil, DOTA_TEAM_GOODGUYS)
+	EmitSoundOn("Imba.PickPhaseDrums", HeroSelection.pick_sound_dummy)
 
 	-- Figure out which players have to pick
 	HeroSelection.HorriblyImplementedReconnectDetection = {}
@@ -112,7 +112,7 @@ local id = event.PlayerID
 		"npc_dota_hero_crystal_maiden",
 		"npc_dota_hero_dazzle",
 		"npc_dota_hero_drow_ranger",
-		"npc_dota_hero_enigma",
+		--"npc_dota_hero_enigma",
 		"npc_dota_hero_faceless_void",
 		"npc_dota_hero_juggernaut",
 		"npc_dota_hero_kunkka",
@@ -262,7 +262,7 @@ local id = event.PlayerID
 		"npc_dota_hero_crystal_maiden",
 		"npc_dota_hero_dazzle",
 		"npc_dota_hero_drow_ranger",
-		"npc_dota_hero_enigma",
+		--"npc_dota_hero_enigma",
 		"npc_dota_hero_faceless_void",
 		"npc_dota_hero_juggernaut",
 		"npc_dota_hero_kunkka",
@@ -476,6 +476,9 @@ function HeroSelection:EndPicking()
 
 	-- Stop picking phase music
 	StopSoundOn("Imba.PickPhaseDrums", HeroSelection.pick_sound_dummy)
+
+	-- Destroy dummy!
+	UTIL_Remove(HeroSelection.pick_sound_dummy) 
 end
 
 --[[
@@ -495,19 +498,7 @@ function HeroSelection:AssignHero(player_id, hero_name)
 
 		-- Switch for the new hero
 		PlayerResource:ReplaceHeroWith(player_id, hero_name, 0, 0 )
-		PlayerResource:SetCameraTarget(player_id, nil)
-
-		wisp:Destroy()
-
-		-- If the wisp is still somehow alive, RENUKE
-	    Timers:CreateTimer(FrameTime(), function()
-	      	if not wisp:IsNull() then
-	      		print("in timer", wisp)
-		        UTIL_Remove(wisp)
-		        print("wisp removed again")
-		        return 1
-	      	end
-	    end)
+		PlayerResource:SetCameraTarget(player_id, nil)		
 		
 
 		-------------------------------------------------------------------------------------------------
@@ -583,6 +574,12 @@ function HeroSelection:AssignHero(player_id, hero_name)
 
 		-- Set up player color
 		PlayerResource:SetCustomPlayerColor(player_id, PLAYER_COLORS[player_id][1], PLAYER_COLORS[player_id][2], PLAYER_COLORS[player_id][3])
+
+		-- Timers:CreateTimer(3, function()			
+		-- 	local title = Server_GetPlayerTitle(player_id)			
+		-- 	local rgb = Server_GetTitleColor(title)
+		-- 	hero:SetCustomHealthLabel(title, rgb[1], rgb[2], rgb[3])
+		-- end)
 
 		-- Set initial spawn setup as having been done
 		PlayerResource:IncrementTeamPlayerCount(player_id)

@@ -702,16 +702,21 @@ function InsertPartSelectButton()
 
 function UpdateTooltipUI()
 {
-    var tooltips = GetHUDRootUI_Server().FindChildTraverse("DOTAAbilityTooltip")
-    if(tooltips != null){
-        tooltips.FindChildTraverse("AbilityCosts").style.flowChildren = "down";
-    }
-    $.Schedule(0.1, UpdateTooltipUI);
+	var tooltips;
+	if(GetHUDRootUI_Server().FindChildTraverse("DOTAAbilityTooltip") != null)
+	{
+		tooltips = GetHUDRootUI_Server().FindChildTraverse("DOTAAbilityTooltip");
+		tooltips.FindChildTraverse("AbilityCosts").style.flowChildren = "down";
+	}else
+	{
+		$.Schedule(0.1, UpdateTooltipUI);
+	}
 }
 
 function InsertIMBATalentButton(){
     $.Msg("InsertIMBATalentButton");
-	InsertPartSelectButton()
+	InsertPartSelectButton();
+	$.RegisterEventHandler( 'DOTAShowAbilityTooltip', $.GetContextPanel(), UpdateTooltipUI() );
     var baseUI = GetHUDRootUI();
     baseUI = baseUI.FindChildTraverse("AbilitiesAndStatBranch");
     var newButton = baseUI.FindChildTraverse(IMBA_TALENT_BTN_ID);

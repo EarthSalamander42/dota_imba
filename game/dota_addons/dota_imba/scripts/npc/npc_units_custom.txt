@@ -97,6 +97,100 @@
  		"AttackDesire"				"1.5"		// How much bots want to attack them vs other non-hero things
  	}
 
+ 	//=================================================================================
+ 	// Permanent Basic dummy unit (doesn't get deleted by garbage collector)
+ 	//=================================================================================
+ 	"npc_dummy_unit_perma"
+ 	{
+ 		// General
+ 		//----------------------------------------------------------------
+ 		"BaseClass"					"npc_dota_creep_neutral"	// Class of entity of link to.
+ 		"Model"						"models/development/invisiblebox.vmdl"	// Model.
+ 		"SoundSet"					"Creep_Good_Range"					// Name of sound set.
+ 		"Level"						"0"
+ 		"UnitLabel"					"healing_ward"
+ 		
+ 		// Abilities
+ 		//----------------------------------------------------------------
+ 		
+ 		"Ability1"					"dummy_unit_state"			// Ability 1.
+ 		"Ability2"					""			// Ability 2.
+ 		"Ability3"					""			// Ability 3.
+ 		"Ability4"					""			// Ability 4.
+ 		"Ability5"					""			// Ability 5.
+ 		"Ability6"					""			// Ability 6 - Extra.
+ 		"Ability7"					""			// Ability 7 - Extra.
+ 		"Ability8"					""			// Ability 8 - Extra.
+ 
+ 		// Armor
+ 		//----------------------------------------------------------------
+ 		"ArmorPhysical"				"0"			// Physical protection.
+ 		"MagicalResistance"			"0"			// Magical protection.
+ 
+ 		// Attack
+ 		//----------------------------------------------------------------
+ 		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"			// Type of attack - melee, ranged, etc.
+ 		"AttackDamageMin"			"0"			// Damage range min.
+ 		"AttackDamageMax"			"0"			// Damage range max.
+ 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+ 		"AttackRate"				"1"			// Speed of attack.
+ 		"AttackAnimationPoint"		"0.5"		// Normalized time in animation cycle to attack.
+ 		"AttackAcquisitionRange"	"800"		// Range within a target can be acquired.
+ 		"AttackRange"				"500"		// Range within a target can be attacked.
+ 		"ProjectileModel"			"" // Particle system model for projectile.
+ 		"ProjectileSpeed"			"900"		// Speed of projectile.
+ 
+ 		// Attributes
+ 		//----------------------------------------------------------------
+ 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+ 		"AttributeBaseStrength"		"0"			// Base strength
+ 		"AttributeStrengthGain"		"0"			// Strength bonus per level.
+ 		"AttributeBaseIntelligence"	"0"			// Base intelligence
+ 		"AttributeIntelligenceGain"	"0"			// Intelligence bonus per level.
+ 		"AttributeBaseAgility"		"0"			// Base agility
+ 		"AttributeAgilityGain"		"0"			// Agility bonus per level.
+ 
+ 		// Bounty
+ 		//----------------------------------------------------------------
+ 		"BountyXP"					"0"			// Experience earn.
+ 		"BountyGoldMin"				"0"			// Gold earned min.
+ 		"BountyGoldMax"				"0"			// Gold earned max.
+ 
+ 		// Bounds
+ 		//----------------------------------------------------------------
+ 		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"			// Hull type used for navigation/locomotion.
+ 
+ 		// Movement
+ 		//----------------------------------------------------------------
+ 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air
+ 		"MovementSpeed"				"450"		// Speed
+ 		"MovementTurnRate"			"1.0"		// Turning rate.
+ 		"FollowRange"				"250"		// Distance to keep when following
+ 
+ 		// Status
+ 		//----------------------------------------------------------------
+ 		"StatusHealth"				"1"			// Base health.
+ 		"StatusHealthRegen"			"0"			// Health regeneration rate.
+ 		"StatusMana"				"0"			// Base mana.
+ 		"StatusManaRegen"			"0"			// Mana regeneration rate.
+ 
+ 		// Team
+ 		//----------------------------------------------------------------
+ 		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
+ 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+ 		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+ 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+ 		
+ 		// Vision
+ 		//----------------------------------------------------------------
+ 		"VisionDaytimeRange"		"0"		// Range of vision during day light.
+ 		"VisionNighttimeRange"		"0"		// Range of vision at night time.
+ 
+ 		// Bots
+ 		//----------------------------------------------------------------
+ 		"AttackDesire"				"1.5"		// How much bots want to attack them vs other non-hero things
+ 	}
+
 	//=================================================================================
 	// Enigma: Eidolon I
 	//=================================================================================
@@ -2306,6 +2400,78 @@
         // Status
         //----------------------------------------------------------------
         "StatusHealth"              "1"
+        "StatusHealthRegen"         "0"        
+
+        // Team
+        //----------------------------------------------------------------
+        "TeamName"                  "DOTA_TEAM_NEUTRALS"
+        "CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
+        "CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
+        "UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+        
+        // Vision
+        //----------------------------------------------------------------
+        "VisionDaytimeRange"        "1800"
+        "VisionNighttimeRange"      "800"
+    }
+
+    //=================================================================================
+    // Clinkz's Death Pact Spirits
+    //=================================================================================
+    "npc_imba_clinkz_spirits"
+    {
+        // General
+        //----------------------------------------------------------------
+        "BaseClass"                 "npc_dota_creature"
+        "Model"                     "models/creeps/neutral_creeps/n_creep_ghost_b/n_creep_ghost_frost.vmdl"        
+        "Level"                     "1"
+        "ModelScale"                "1"
+        "IsAncient"                 "0"
+        "ConsideredHero"            "0"
+        "CanBeDominated"            "0"     
+        "UnitLabel"                 "clinkz_spirits"        
+        
+        // Abilities
+        //----------------------------------------------------------------
+        "Ability1"					"neutral_spell_immunity"
+
+        // Armor
+        //----------------------------------------------------------------
+        "ArmorPhysical"             "0"
+        "MagicalResistance"         "0"
+
+        // Attack
+        //----------------------------------------------------------------
+        "AttackCapabilities"        "DOTA_UNIT_CAP_RANGED_ATTACK"
+        "AttackDamageMin"           "0"
+        "AttackDamageMax"           "0"
+        "AttackRate"                "1.5"
+        "AttackAnimationPoint"      "0.26"
+        "AttackAcquisitionRange"    "500"
+        "AttackRange"               "100"
+        "ProjectileModel"           "particles/neutral_fx/ghost_frost_attack.vpcf"
+        "ProjectileSpeed"           "900"
+
+        // Bounds
+        //----------------------------------------------------------------
+        "HealthBarOffset"           "240"
+        "BoundsHullName"            "DOTA_HULL_SIZE_SMALL"
+
+        // Bounty
+        //----------------------------------------------------------------
+        "BountyXP"                  "10"
+        "BountyGoldMin"             "0"
+        "BountyGoldMax"             "0"
+
+        // Movement
+        //----------------------------------------------------------------
+        "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+        "MovementSpeed"             "350"
+        "MovementTurnRate"          "0.5"
+
+        // Status
+        //----------------------------------------------------------------
+        "StatusHealth"              "5"
         "StatusHealthRegen"         "0"        
 
         // Team

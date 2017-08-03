@@ -3,8 +3,8 @@
 
 function Cheese( keys )
 	local caster = keys.caster
-	local ability = keys.ability
-	local sound_cast = keys.sound_cast
+	local ability = keys.ability	
+	local sound_cast = keys.sound_cast	
 
 	-- Play sound
 	caster:EmitSound(sound_cast)

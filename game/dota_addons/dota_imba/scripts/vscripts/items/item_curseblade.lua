@@ -41,6 +41,11 @@ function item_imba_curseblade:OnSpellStart()
 			end
 		end	
 
+		-- If the target is magic immune (Lotus Orb/Anti Mage), do nothing
+		if target:IsMagicImmune() then
+			return nil
+		end
+
 		-- Add the curse debuff to the target
 		target:AddNewModifier(caster, ability, debuff, {duration = duration})	
 		

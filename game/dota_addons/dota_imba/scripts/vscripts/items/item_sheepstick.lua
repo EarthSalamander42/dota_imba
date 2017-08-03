@@ -65,6 +65,11 @@ function item_imba_sheepstick:OnSpellStart()
 			end
 		end
 
+		-- If the target is magic immune (Lotus Orb/Anti Mage), do nothing
+		if target:IsMagicImmune() then
+			return nil
+		end
+
 		-- Play the cast sound
 		target:EmitSound("DOTA_Item.Sheepstick.Activate")
 

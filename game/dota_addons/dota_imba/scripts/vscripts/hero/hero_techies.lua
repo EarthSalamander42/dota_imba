@@ -1091,15 +1091,26 @@ function modifier_imba_statis_trap_electrocharge:OnCreated()
         self.parent = self:GetParent()
         self.owner = self.caster:GetOwner()
         self.teamnumber = self.caster:GetTeamNumber()
+        self.parent_teamnumber = self.parent:GetTeamNumber()
 
         -- Ability specials
         self.base_magnetic_radius = self.ability:GetSpecialValueFor("base_magnetic_radius")
         self.base_magnetic_movespeed = self.ability:GetSpecialValueFor("base_magnetic_movespeed")
         self.magnetic_stack_radius = self.ability:GetSpecialValueFor("magnetic_stack_radius")
-        self.magnetic_stack_movespeed = self.ability:GetSpecialValueFor("magnetic_stack_movespeed")
+        self.magnetic_stack_movespeed = self.ability:GetSpecialValueFor("magnetic_stack_movespeed")        
+
+        -- If this is not the Stasis Trap casting it, do nothing (hellblade/curseblade interactions)
+        if self.caster:GetUnitName() ~= "npc_imba_techies_stasis_trap" then
+            return nil
+        end
+
+        -- If the parent is in the same team as the caster, do nothing (don't pull mines towards it)         
+        if self.teamnumber == self.parent_teamnumber then
+            return nil
+        end
 
         -- #3 Talent: Electrocharge mines pull radius increase
-        if self.owner then
+        if self.owner then            
             self.base_magnetic_radius = self.base_magnetic_radius + self.owner:FindTalentValue("special_bonus_imba_techies_3")
         end
 
@@ -1113,11 +1124,13 @@ function modifier_imba_statis_trap_electrocharge:IsPurgable() return true end
 function modifier_imba_statis_trap_electrocharge:IsDebuff() return true end
 
 function modifier_imba_statis_trap_electrocharge:OnIntervalThink()
-    if IsServer() then
+    if IsServer() then        
+
         -- Determine movespeed and radius for this tick
         local stacks = self:GetStackCount()
         local movespeed = self.base_magnetic_movespeed + self.magnetic_stack_movespeed * stacks
         local radius = self.base_magnetic_radius + self.magnetic_stack_radius * stacks
+
 
         local parentAbsOrigin = self.parent:GetAbsOrigin()
 
@@ -1135,6 +1148,7 @@ function modifier_imba_statis_trap_electrocharge:OnIntervalThink()
         -- Move each mine towards the parent of the debuff
         for _,mine in pairs(mines) do
             local mineUnitName = mine:GetUnitName()
+
             if mineUnitName == "npc_imba_techies_proximity_mine" or mineUnitName == "npc_imba_techies_proximity_mine_big_boom" or mineUnitName == "npc_imba_techies_stasis_trap" or mineUnitName == "npc_imba_techies_remote_mine" then
                 local mineAbsOrigin = mine:GetAbsOrigin()
 

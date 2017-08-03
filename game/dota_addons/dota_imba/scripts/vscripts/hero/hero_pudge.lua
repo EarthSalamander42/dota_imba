@@ -565,7 +565,7 @@ function imba_pudge_meat_hook:OnSpellStart()
 			Source = self:GetCaster(),
 			iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_BOTH,
 			iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_TREE,
-			iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
+			iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,
 			EffectName = "particles/units/heroes/hero_pudge/pudge_meathook.vpcf",
 			ExtraData = 
 			{
@@ -640,10 +640,7 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData( hTarget, vLocation,keys
 	-- Here the hook always moves forward and has a target. The impact is handled here.
 	if hTarget then
 		if not self.targets[hTarget] then -- Storing the targets so it won't get handled again
-			if hTarget.IsStanding then -- It is a treea
-			--[[	self.treeTargets[i] = self.treeTargets[i] + 1 -- Doesn't work, using OnProjectileThink
-				print("Trees hit:", self.treeTargets[i])
-				return]]
+			if hTarget.IsStanding then -- It is a tree			
 			else
 				EmitSoundOn( "Hero_Pudge.AttackHookImpact", hTarget )
 				hTarget:AddNewModifier( self:GetCaster(), self, "modifier_meat_hook", {duration = 1.5} )

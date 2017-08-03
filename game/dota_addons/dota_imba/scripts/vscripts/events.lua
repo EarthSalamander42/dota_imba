@@ -131,8 +131,17 @@ function GameMode:OnGameRulesStateChange(keys)
 		end)
 	end
 
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Game started (horn sounded)
+	-------------------------------------------------------------------------------------------------
+
 	if new_state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS  then
-		Server_WaitToEnableXpGain()
+		Server_WaitToEnableXpGain()		
+
+		Timers:CreateTimer(120, function()
+			StartGarbageCollector()
+			return 120
+		end)
 	end
 
 	if new_state == DOTA_GAMERULES_STATE_POST_GAME then

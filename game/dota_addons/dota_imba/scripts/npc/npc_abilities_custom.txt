@@ -4057,7 +4057,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"										"ability_lua"
 		"ScriptFile"									"hero/hero_abaddon.lua"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 		"AbilityTextureName"							"custom/abaddon_over_channel"
 		"MaxLevel"										"7"
 
@@ -4882,8 +4882,8 @@
 
 			"07"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"max_mana_blast"				"5 5 5 5 10 15 20"
+				"var_type"						"FIELD_FLOAT"
+				"max_mana_blast"				"5 5 5 5 6.5 8 9.5"
 				"CalculateSpellDamageTooltip"   "1"
 			}
 
@@ -4959,6 +4959,12 @@
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"400"
 			}
+
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mana_burn_limit"			"150 150 150 150 300 450 600"
+			}
 		}
 	}
 
@@ -4979,7 +4985,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"24.0"
+		"AbilityCooldown"				"10"
 		"AbilityCastPoint"				"0.0"
 
 		// Precache
@@ -5005,13 +5011,13 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"active_duration"		"1.5 1.5 1.5 1.5 2.0 2.5 3.0"				
+				"active_duration"		"1.5"				
 			}
 
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"internal_cooldown"		"12"
+				"internal_cooldown"		"6"
 			}
 
 			"04"
@@ -5063,7 +5069,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"70.0"
+		"AbilityCooldown"				"70"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -5268,7 +5274,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"mana_point_worth"			"2"
+				"mana_point_worth"			"3"
 			}
 		}
 	}
@@ -6733,13 +6739,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_reduction_pct"		"10"
+				"damage_reduction_pct"		"5"
 			}
 
-			"02" // Hardcoded in modifierfilter in imba.lua
+			"02" 
 			{
 				"var_type"					"FIELD_INTEGER"
-				"debuff_duration_red_pct"	"10"
+				"debuff_duration_red_pct"	"20"
 			}
 		}
 	}
@@ -6786,14 +6792,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"315"
-				"LinkedSpecialBonus"	"special_bonus_imba_centaur_4"
+				"radius"				"315"				
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"2.0 2.25 2.5 2.75 2.75 2.75 2.75"
-				"LinkedSpecialBonus"	"special_bonus_imba_centaur_5"
+				"stun_duration"			"2.0 2.25 2.5 2.75 2.75 2.75 2.75"				
 			}
 			"03"
 			{
@@ -6808,8 +6812,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pit_dmg_reduction"		"10 10 10 10 15 20 25"
-				"LinkedSpecialBonus"	"special_bonus_imba_centaur_2"
+				"pit_dmg_reduction"		"10 10 10 10 15 20 25"				
 			}
 			"06"
 			{
@@ -6869,8 +6872,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"str_damage_reduction"	"100"
-				"LinkedSpecialBonus"	"special_bonus_imba_centaur_1"
+				"str_damage_reduction"	"100"				
 			}
 		}
 	}
@@ -6914,19 +6916,17 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_block"			"1 1 1 2 3 4 5"
-				"LinkedSpecialBonus"	"special_bonus_imba_centaur_7"
+				"damage_block"			"3 3 3 3 6 9 12"				
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"block_duration"		"3.5"
+				"block_duration"		"5"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"900"
-				"LinkedSpecialBonus"	"special_bonus_imba_centaur_6"
+				"aura_radius"			"900"				
 			}
 		}
 	}
@@ -6952,7 +6952,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"90 75 60 57 54 50"
+		"AbilityCooldown"				"90 75 60 60 60 60"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -6983,8 +6983,8 @@
 			}
 			"03"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"stun_duration"				"1"
+				"var_type"					"FIELD_FLOAT"
+				"stun_duration"				"0.75"
 			}
 			"04"
 			{
@@ -6994,7 +6994,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_reduction_scepter"	"75"
+				"damage_reduction_scepter"	"40"
 			}
 			"06"
 			{
@@ -7025,306 +7025,333 @@
 	}
 
 	//=================================================================================================================
-	// Clinkz's Strafe
-	//=================================================================================================================
-	"imba_clinkz_strafe"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityTextureName"			"clinkz_strafe"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"ScriptFile"					"hero/hero_clinkz.lua"
-		"MaxLevel"						"7"
-		"LevelsBetweenUpgrades"			"2"
+    // Clinkz's Strafe
+    //=================================================================================================================
+    "imba_clinkz_strafe"
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "ability_lua"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+        "AbilityTextureName"            "clinkz_strafe"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO"
+        "ScriptFile"                    "hero/hero_clinkz.lua"
+        "MaxLevel"                      "7"
+        "LevelsBetweenUpgrades"         "2"
 
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"40 35 30 25 25 25 25"
+        // Time
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "40 35 30 25 25 25 25"
 
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"300"
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "300"
 
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"90"
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "90"
 
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"particle"					"particles/units/heroes/hero_clinkz/clinkz_strafe_fire.vpcf"
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
-		}
+        // Precache
+        //-------------------------------------------------------------------------------------------------------------
+        "precache"
+        {
+            "particle"                  "particles/units/heroes/hero_clinkz/clinkz_strafe_fire.vpcf"
+            "soundfile"                 "soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
+        }
 
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"as_bonus"					"130"
-				"LinkedSpecialBonus"		"special_bonus_imba_clinkz_5"
-			}
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "as_bonus"                  "130 150 170 190 200 210 220"
 
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"4 6 8 10 12 14 16"
-			}
+            }
+            "02"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "duration"                  "4 6 8 10 11 12 13"
+            }
 
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_attack_range"		"100 100 100 100 150 200 250"
-				"LinkedSpecialBonus"		"special_bonus_imba_clinkz_1"
-			}
-		}
-	}
+            "03"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "bonus_attack_range"        "100 150 200 250 250 250 250"    
+            }
+        }
+    }
 
-	//=================================================================================================================
-	// Clinkz's Searing Arrows
-	//=================================================================================================================
-	"imba_clinkz_searing_arrows"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_lua"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
-		"AbilityUnitDamageType"				"DAMAGE_TYPE_PHYSICAL"
-		"AbilityTextureName"				"clinkz_searing_arrows"
-		"AbilityCastAnimation"				"ACT_DOTA_ATTACK"
-		"ScriptFile"						"hero/hero_clinkz.lua"
-		"MaxLevel"							"7"
-		"LevelsBetweenUpgrades"				"2"
+    //=================================================================================================================
+    // Clinkz's Searing Arrows
+    //=================================================================================================================
+    "imba_clinkz_searing_arrows"
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                         "ability_lua"
+        "AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+        "AbilityUnitTargetTeam"             "DOTA_UNIT_TARGET_TEAM_ENEMY"
+        "AbilityUnitTargetType"             "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitTargetFlags"            "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+        "SpellImmunityType"                 "SPELL_IMMUNITY_ENEMIES_YES"
+        "AbilityUnitDamageType"             "DAMAGE_TYPE_PHYSICAL"
+        "AbilityTextureName"                "clinkz_searing_arrows"
+        "AbilityCastAnimation"              "ACT_DOTA_ATTACK"
+        "ScriptFile"                        "hero/hero_clinkz.lua"
+        "MaxLevel"                          "7"
+        "LevelsBetweenUpgrades"             "2"
 
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"36 33 30 27 24 21 18"
-		"AbilityCastPoint"					"0.2"
+        // Time
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"                   "24"
+        "AbilityCastPoint"                  "0.2"
 
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"					"50"
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"                   "50"
 
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"particle"						"particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
-			"particle"						"particles/hero/clinkz/searing_lifesteal/searing_lifesteal_arrow.vpcf"
-			"particle"						"particles/hero/clinkz/searing_skadi/searing_skadi_arrow.vpcf"
-			"particle"						"particles/hero/clinkz/searing_desolator/searing_desolator_arrow.vpcf"
-			"particle"						"particles/hero/clinkz/searing_skadi_desolator/searing_skadi_desolator_arrow.vpcf"
-			"particle"						"particles/hero/clinkz/searing_skadi_lifesteal/searing_skadi_steal_arrow.vpcf"
-			"particle"						"particles/hero/clinkz/searing_deso_lifesteal/searing_deso_lifesteal.vpcf"
-			"particle"						"particles/hero/clinkz/searing_skadi_deso_steal/searing_skadi_deso_steal_arrow.vpcf"
-			"particle"						"particles/hero/clinkz/searing_flames_active/clinkz_searing_arrow.vpcf"
-			"particle"						"particles/hero/clinkz/searing_flames_active/burn_effect.vpcf"
-			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
-		}
+        // Precache
+        //-------------------------------------------------------------------------------------------------------------
+        "precache"
+        {
+            "particle"                      "particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
+            "particle"                      "particles/hero/clinkz/searing_lifesteal/searing_lifesteal_arrow.vpcf"
+            "particle"                      "particles/hero/clinkz/searing_skadi/searing_skadi_arrow.vpcf"
+            "particle"                      "particles/hero/clinkz/searing_desolator/searing_desolator_arrow.vpcf"
+            "particle"                      "particles/hero/clinkz/searing_skadi_desolator/searing_skadi_desolator_arrow.vpcf"
+            "particle"                      "particles/hero/clinkz/searing_skadi_lifesteal/searing_skadi_steal_arrow.vpcf"
+            "particle"                      "particles/hero/clinkz/searing_deso_lifesteal/searing_deso_lifesteal.vpcf"
+            "particle"                      "particles/hero/clinkz/searing_skadi_deso_steal/searing_skadi_deso_steal_arrow.vpcf"
+            "particle"                      "particles/hero/clinkz/searing_flames_active/clinkz_searing_arrow.vpcf"
+            "particle"                      "particles/hero/clinkz/searing_flames_active/burn_effect.vpcf"
+            "soundfile"                     "soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
+        }
 
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"30 40 50 60 65 70 75"
-				"LinkedSpecialBonus"		"special_bonus_imba_clinkz_3"
-			}
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "bonus_damage"              "30 45 60 75 100 125 150"    
+            }
 
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"active_duration"			"3.5 4 4.5 5 6 7 8"
-			}
+            "02"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "active_duration"           "10"
+            }
 
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"projectile_speed"			"900"
-			}
+            "03"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "projectile_speed"          "900"
+            }
 
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"vision_radius"				"600"
-			}
-		}
-	}
+            "04"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "vision_radius"             "600"
+            }
 
-	//=================================================================================================================
-	// Clinkz's Skeleton Walk
-	//=================================================================================================================
-	"imba_clinkz_skeleton_walk"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_lua"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"				"clinkz_wind_walk"
-		"ScriptFile"						"hero/hero_clinkz.lua"
-		"MaxLevel"							"7"
-		"LevelsBetweenUpgrades"				"2"
-		"HasScepterUpgrade"					"1"
+            "05"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "active_tick_interval"      "1"
+            }
 
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"20 19 18 17 16 15 14"
+            "06"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "armor_burn_per_stack"      "1"
+            }
+        }
+    }
 
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"					"75"
+    //=================================================================================================================
+    // Clinkz's Skeleton Walk
+    //=================================================================================================================
+    "imba_clinkz_skeleton_walk"
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                         "ability_lua"
+        "AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+        "AbilityTextureName"                "clinkz_wind_walk"
+        "ScriptFile"                        "hero/hero_clinkz.lua"
+        "MaxLevel"                          "7"
+        "LevelsBetweenUpgrades"             "2"
+        "HasScepterUpgrade"                 "1"
 
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"particle"						"particles/units/heroes/hero_clinkz/clinkz_windwalk.vpcf"
-			"particle"						"particles/hero/clinkz/spooked/spooky_skull.vpcf"
-			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
-		}
+        // Time
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"                   "20 19 18 17 16 15 14"
 
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"ms_bonus_pct"			"11 22 33 44 46 48 50"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"20 25 30 35 35 35 35"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"spook_radius"			"350"
-				"LinkedSpecialBonus"	"special_bonus_imba_clinkz_2"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"base_spook_duration"	"1.75"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"spook_distance_inc"	"30"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"spook_added_duration"	"0.25"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"max_spook_duration"	"3 3 3 3 3.5 4 4.5"
-			}
-		}
-	}
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"                   "75"
 
-	//=================================================================================================================
-	// Clinkz's Death Pact
-	//=================================================================================================================
-	"imba_clinkz_death_pact"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityTextureName"			"clinkz_death_pact"
-		"ScriptFile"					"hero/hero_clinkz.lua"
-		"MaxLevel"						"6"
-		"LevelsBetweenUpgrades"			"6"
+        // Precache
+        //-------------------------------------------------------------------------------------------------------------
+        "precache"
+        {
+            "particle"                      "particles/units/heroes/hero_clinkz/clinkz_windwalk.vpcf"
+            "particle"                      "particles/hero/clinkz/spooked/spooky_skull.vpcf"
+            "soundfile"                     "soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
+        }
 
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"400"
-		"AbilityCastPoint"				"0.5"
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "ms_bonus_pct"          "11 22 33 44 46 48 50"
+            }
 
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"45 30 15 15 15 15"
+            "02"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "duration"              "20 25 30 35 35 35 35"
+            }
 
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100"
+            "03"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "spook_radius"          "350"
+            }
 
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"particle"					"particles/units/heroes/hero_clinkz/clinkz_death_pact.vpcf"
-			"particle"					"particles/units/heroes/hero_clinkz/clinkz_death_pact_buff.vpcf"
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
-			"soundfile"					"soundevents/voscripts/game_sounds_vo_clinkz.vsndevts"
-		}
+            "04"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "base_spook_duration"   "1.75"
+            }
 
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"duration"							"35"
-			}
-			"02"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"creep_bonus_hp_pct"				"50 65 80 90 100 110"
-			}
-			"03"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"creep_bonus_dmg_pct"				"5 6.5 8 9 10 11"
-			}
-			"04"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"hero_current_hp_damage_pct"		"10"
-			}
-			"05"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"hero_bonus_hp_dmg_mult"			"2.5 3 3.5 4 4.5 5"
-			}
-			"06"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"hero_bonus_dmg_pct"				"25 30 35 40 45 50"
-			}
-			"07"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"hero_bonus_hp_tooltip"				"25 30 35 40 45 50"
-			}
-			"08"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"hero_bonus_dmg_tooltip"			"2.5 3.0 3.5 4.0 4.5 5.0"
-			}
-		}
-	}
+            "05"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "spook_distance_inc"    "30"
+            }
+
+            "06"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "spook_added_duration"  "0.25"
+            }
+
+            "07"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "max_spook_duration"    "3 3 3 3 3.5 4 4.5"
+            }
+        }
+    }
+
+    //=================================================================================================================
+    // Clinkz's Death Pact
+    //=================================================================================================================
+    "imba_clinkz_death_pact"
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "ability_lua"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+        "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_BOTH"
+        "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+        "AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
+        "AbilityTextureName"            "clinkz_death_pact"
+        "ScriptFile"                    "hero/hero_clinkz.lua"
+        "MaxLevel"                      "6"
+        "LevelsBetweenUpgrades"         "6"
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "400"
+        "AbilityCastPoint"              "0.5"
+
+        // Time
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "45 30 15 15 15 15"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "100"
+
+        // Precache
+        //-------------------------------------------------------------------------------------------------------------
+        "precache"
+        {
+            "particle"                  "particles/units/heroes/hero_clinkz/clinkz_death_pact.vpcf"
+            "particle"                  "particles/units/heroes/hero_clinkz/clinkz_death_pact_buff.vpcf"
+            "soundfile"                 "soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
+            "soundfile"                 "soundevents/voscripts/game_sounds_vo_clinkz.vsndevts"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                          "FIELD_INTEGER"
+                "duration"                          "35"
+            }
+
+            "02"
+            {
+                "var_type"                          "FIELD_INTEGER"
+                "creep_bonus_hp_pct"                "50 65 80 90 100 110"
+            }
+
+            "03"
+            {
+                "var_type"                          "FIELD_FLOAT"
+                "creep_bonus_dmg_pct"               "5 6.5 8 9 10 11"
+            }
+
+            "04"
+            {
+                "var_type"                          "FIELD_INTEGER"
+                "hero_current_hp_damage_pct"        "10"
+            }
+
+            "05"
+            {
+                "var_type"                          "FIELD_FLOAT"
+                "hero_bonus_hp_dmg_mult"            "2.5 3 3.5 4 4.5 5"
+            }
+
+            "06"
+            {
+                "var_type"                          "FIELD_INTEGER"
+                "hero_bonus_dmg_pct"                "25 30 35 40 45 50"
+            }
+
+            "07"
+            {
+                "var_type"                          "FIELD_INTEGER"
+                "hero_bonus_hp_tooltip"             "25 30 35 40 45 50"
+            }
+
+            "08"
+            {
+                "var_type"                          "FIELD_FLOAT"
+                "hero_bonus_dmg_tooltip"            "2.5 3.0 3.5 4.0 4.5 5.0"
+            }
+
+            "09"
+            {
+                "var_type"                          "FIELD_INTEGER"
+                "spirit_health_tooltip"             "5"
+            }
+        }
+    }
 
 	//=================================================================================================================
 	// Crystal Maiden's Arcane Dynamo
@@ -8246,6 +8273,188 @@
 	}
 
 	//=================================================================================================================
+	// Dazzle's Poison Touch
+	//=================================================================================================================
+	"imba_dazzle_poison_touch"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"AbilityTextureName"							"dazzle_poison_touch"
+		"ScriptFile"									"hero/hero_dazzle.lua"
+		"FightRecapLevel"								"1"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"									"soundevents/game_sounds_heroes/game_sounds_dazzle.vsndevts"
+			"particle"									"particles/units/heroes/hero_dazzle/dazzle_poison_touch.vpcf"
+			"particle"									"particles/units/heroes/hero_dazzle/dazzle_poison_debuff.vpcf"
+			"particle"									"particles/status_fx/status_effect_poison_dazzle.vpcf"
+		}
+
+		// Ability
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"								"SPELL_IMMUNITY_ENEMIES_NO"		
+		"AbilityCastPoint"								"0.2"
+		"AbilityManaCost"								"70"
+		"MaxLevel"										"7"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"cooldown"								"12 11 10 9 8 7 6"
+			}
+
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"set_in_time"							"3"
+			}
+
+			"03"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"minimum_slow"							"33"
+			}
+
+			"04"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"maximum_slow"							"66"
+			}
+
+			"05"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"poison_duration"						"7"
+			}
+
+			"06"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"poison_base_damage"					"14 20 26 32 38 44 50"
+			}
+
+			"07"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"poison_stack_damage"					"1.0 2.0 3.0 4.0 5.0 6.0 7.0"
+			}
+
+			"08"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"stack_armor_reduction"					"1.0"
+			}
+
+			"09"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"projectile_speed"						"1300"
+			}
+
+			"10"
+ 			{
+ 				"var_type"								"FIELD_INTEGER"
+ 				"cast_range"							"600 650 700 750 775 800 825"
+ 			}
+		}
+	}
+
+	//=================================================================================================================
+	// Dazzle's Shallow Grave
+	//=================================================================================================================
+	"imba_dazzle_shallow_grave"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"AbilityTextureName"							"dazzle_shallow_grave"
+		"ScriptFile"									"hero/hero_dazzle.lua"
+		"FightRecapLevel"								"1"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"									"soundevents/game_sounds_heroes/game_sounds_dazzle.vsndevts"
+			"particle"									"particles/units/heroes/hero_dazzle/dazzle_shallow_grave.vpcf"
+			"particle"									"particles/hero/dazzle/dazzle_shallow_grave_3.vpcf"
+		}
+
+		// Ability
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"SpellImmunityType"								"SPELL_IMMUNITY_ALLIES_YES"
+		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO"		
+		"AbilityCooldown"								"60 45 30 15 14 13 12"
+		"AbilityCastPoint"								"0.35"
+		"MaxLevel"										"7"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"mana_cost"								"150"
+			}
+
+			"02"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"duration"								"5.0"
+			}
+
+			"03"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"nothl_protection_duration"				"3.0"
+			}
+
+			"04"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"nothl_protection_cooldown"				"30"
+			}
+
+			"05"
+ 			{
+ 				"var_type"								"FIELD_INTEGER"
+ 				"cast_range"							"550 700 850 1000 1000 1000 1000"
+ 			}
+			
+			"06"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"post_grave_duration"					"5"
+			}
+			
+			"07"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"post_grave_armor_per_hit"				"1"
+			}
+			
+			"08"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"post_grave_resist_per_hit"				"2"
+			}	
+		}
+	}
+
+	//=================================================================================================================
 	// Dazzle's Shadow Wave
 	//=================================================================================================================
 	"imba_dazzle_shadow_wave"
@@ -8299,22 +8508,7 @@
  			{
  				"var_type"								"FIELD_INTEGER"
  				"cast_range"							"800 800 800 900 1000 1100 1200"
- 			}
-			"05"
- 			{
- 				"var_type"								"FIELD_INTEGER"
- 				"talent_delayed_wave_max_waves"			"3"
- 			}
-			"06"
- 			{
- 				"var_type"								"FIELD_INTEGER"
- 				"talent_delayed_wave_delay"				"1"
- 			}
-			"07"
- 			{
- 				"var_type"								"FIELD_INTEGER"
- 				"talent_delayed_wave_rehit_cd"			"5"
- 			}
+ 			}			
 		}
 	}
 
@@ -8454,6 +8648,7 @@
 				"var_type"								"FIELD_INTEGER"
 				"search_radius"							"300"				
 			}
+            
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
@@ -8551,8 +8746,7 @@
 			"03"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"hero_duration"					"1.5"
-				"LinkedSpecialBonus"			"special_bonus_imba_drow_ranger_1"
+				"hero_duration"					"1.5"				
 			}
 
 			"04"
@@ -8891,7 +9085,17 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"eidolon_bonus_duration_percent"				"0.07"
-			}											
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"health_bonus_duration_percent" 		"25"
+			}		
+			"12"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"health_bonus_duration"				"2"
+			}														
 		}
 
 	}
@@ -9070,7 +9274,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"damage_per_tick"			"3.0 3.75 4.5 5.25 5.25 5.25 5.25"
+				"damage_per_tick"			"3.0 3.75 4.5 5.25 5.5 5.75 6"
 			}
 
 			"03"
@@ -9082,29 +9286,35 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"pull_strength"		"45 45 45 45 60 75 90"
+				"pull_strength"				"45 45 45 45 65 85 105"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"eidolon_heal_duration"			"3.0"
+				"eidolon_heal_duration"		"3.0"
 			}			
 			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"pull_duration"			"1"
+				"pull_duration"				"1"
 			}
 			"07"
 			{
 				"var_type"     				"FIELD_INTEGER"
-				"cast_range" 	"700"
-			}		
+				"cast_range" 				"700"
+			}
 
 			"08"
 			{
 				"var_type"     				"FIELD_FLOAT"
-				"cast_point"	"0.3"
+				"cast_point"				"0.3"
 			}									
+
+			"09"
+			{
+				"var_type"     				"FIELD_INTEGER"
+				"eidolon_hp_regen"			"20 20 20 20 30 40 50"
+			}
 		}
 	}
 
@@ -9244,7 +9454,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_per_tick"					"50 100 150 175 200 225"
+				"damage_per_tick"			"50 100 150 175 200 225"
 			}			
 
 			"05"
@@ -9574,6 +9784,7 @@
 			"particle"					"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
 			"particle"					"particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf"
 			"particle"					"particles/units/heroes/hero_faceless_void/faceless_void_chrono_speed.vpcf"
+			"particle"					"particles/econ/items/faceless_void/faceless_void_weapon_bfury/faceless_void_weapon_bfury_cleave.vpcf"
 		}
 
 		// Casting
@@ -9627,29 +9838,35 @@
 
 			"06"
 			{
-				"var_type"							"FIELD_INTEGER"
-				"scepter_cooldown"					"60"
+				"var_type"							"FIELD_FLOAT"
+				"cd_increase_per_enemy"				"1.0"
 			}
-
-			"06"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"scepter_ally_as_slow"				"150"
-			}
-
+			
 			"07"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"scepter_ally_ms_slow_pcnt"			"50"
+				"scepter_cooldown"					"60"
 			}
 
 			"08"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"scepter_ally_projectile_slow"		"50"
+				"scepter_ally_as_slow"				"150"
 			}
 
 			"09"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"scepter_ally_ms_slow_pcnt"			"50"
+			}
+
+			"10"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"scepter_ally_projectile_slow"		"50"
+			}
+
+			"11"
 			{
 				"var_type"							"FIELD_INTEGER"
 				"scepter_ally_casttime_pcnt_debuff"	"50"
@@ -9874,7 +10091,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"					"1200 1400 1600 1800 1800 1800 1800"
+		"AbilityCastRange"					"1200"
 		"AbilityCastPoint"					"0.5"
 		"AbilityCastAnimation"				"ACT_DOTA_CAST_ABILITY_2"
 
@@ -9919,7 +10136,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"path_radius"			"200"
+				"path_radius"			"150"
 			}
 			"05"
 			{
@@ -10115,7 +10332,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"path_radius"				"180"
+				"path_radius"				"120"
 			}
 			"07"
 			{
@@ -10125,12 +10342,12 @@
 			"08"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"trail_angle"				"10.5"
+				"trail_angle"				"8"
 			}
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"trail_amount"				"4"
+				"trail_amount"				"3"
 			}
 			"10"
 			{
@@ -17070,7 +17287,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
 		"FightRecapLevel"				"1"
@@ -17633,7 +17850,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"hook_distance"			"1000 1100 1200 1300 1350 1400 1450"
-				"LinkedSpecialBonus" 	"special_bonus_imba_pudge_2"
 			}
 			"04"
 			{
@@ -17681,6 +17897,16 @@
 				"var_type"				"FIELD_INTEGER"
 				"number_of_hooks"		"1"
 				"LinkedSpecialBonus" 	"special_bonus_imba_pudge_8"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stack_bonus_damage"			"5"
+			}
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stack_max_bonus_damage"			"200"
 			}
 		}
 	}
@@ -17810,7 +18036,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"rot_damage"			"30 60 90 120 130 140 150"
-				"LinkedSpecialBonus"	"special_bonus_imba_pudge_6"
 			}
 			"05"
 			{
@@ -17825,7 +18050,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_radius_tooltip"	"400"
+				"max_radius_tooltip"	"500"
 			}
 		}
 
@@ -17859,13 +18084,11 @@
 			{
 				"var_type"							"FIELD_INTEGER"
 				"base_magic_resist"					"12"
-				"LinkedSpecialBonus"				"special_bonus_imba_pudge_1"
 			}
 			"02"
 			{
 				"var_type"							"FIELD_FLOAT"
 				"stack_str"							"2.5"
-				"LinkedSpecialBonus"				"special_bonus_imba_pudge_5"
 			}
 			"03"
 			{
@@ -17881,6 +18104,16 @@
 			{
 				"var_type"							"FIELD_FLOAT"
 				"max_size"							"75"
+			}
+			"06"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"stack_magic_resistance"	"2"
+			}
+			"07"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"max_stack_resist"					"30"
 			}
 		}
 	}
@@ -17943,13 +18176,11 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"hero_duration"				"2.95"
-				"LinkedSpecialBonus" 		"special_bonus_imba_pudge_7"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"creep_duration"			"5.95"
-				"LinkedSpecialBonus" 		"special_bonus_imba_pudge_7"
 			}
 			"05"
 			{
@@ -17964,7 +18195,37 @@
 		}
 	}
 
-	"special_bonus_imba_pudge_1" // Bonus Flesh Heaps magic resistance.
+	"special_bonus_imba_pudge_1" // Rot deals x more damage for every y% health he misses
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_pudge_rot"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"						"40"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"hp_treshhold_percent"		"0.05"
+			}
+		}
+	}
+
+	"special_bonus_imba_pudge_2" // Meat Shield: Consume X stacks of charges to block Y damage, restores after Z seconds, Ignore on A damage?
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -17984,32 +18245,22 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"20"
+				"stacks_needed"						"5"
 			}
-		}
-	}
-
-	"special_bonus_imba_pudge_2" // bonus Meat Hook range
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_pudge_meat_hook"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
+			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"200"
+				"damage_block"						"100"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"return_time"						"10"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"min_damage"						"20"
 			}
 		}
 	}
@@ -18064,7 +18315,7 @@
 		}
 	}
 
-	"special_bonus_imba_pudge_5" // Bonus strength per Flesh Heaps stack
+	"special_bonus_imba_pudge_5" // Cleaver can now pierce through enemies, damaging and affecting all enemies in a straight line.
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -18074,7 +18325,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_pudge_flesh_heap"
+			"01" 	"imba_pudge_butchers_cleaver"
 			
 		}
 
@@ -18085,12 +18336,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"value"						"1.75"
+				"value"						"1"
 			}
 		}
 	}
 
-	"special_bonus_imba_pudge_6" // Bonus Rot damage per second
+	"special_bonus_imba_pudge_6" // Hook now deals damage for each tree the unit passes through
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -18100,7 +18351,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_pudge_rot"
+			"01" 	"imba_pudge_meat_hook"
 			
 		}
 
@@ -18110,13 +18361,13 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_FLOAT"
+				"var_type"					"FIELD_INTEGER"
 				"value"						"120"
 			}
 		}
 	}
 
-	"special_bonus_imba_pudge_7" // Bonus Dismember duration
+	"special_bonus_imba_pudge_7" // Dismember now disarms the target after the duration for the channeled duration
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -18136,8 +18387,8 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"value"						"2"
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
 			}
 		}
 	}
@@ -19319,8 +19570,7 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE | DOTA_UNIT_TARGET_FLAG_NO_INVIS"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"		
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
@@ -20539,6 +20789,9 @@
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"hero/hero_storm_spirit"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NONE"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
@@ -22541,7 +22794,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"ward_hp_tooltip"		"2 2 2 3 4 5"
+				"ward_hp_tooltip"		"2 2 2 3 3 3"
 				"LinkedSpecialBonus"	"special_bonus_imba_shadow_shaman_2"
 				
 			}
@@ -27148,8 +27401,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE | DOTA_UNIT_TARGET_FLAG_NO_INVIS"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"		
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES_STRONG"
 		"AbilityTextureName"			"witch_doctor_paralyzing_cask"
@@ -28807,13 +29059,13 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"grab_radius"			"275"
+				"grab_radius"			"350"
 			}
 
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"275"
+				"radius"				"350"
 			}
 
 			"04"
@@ -30698,7 +30950,69 @@
 	//=================================================================================================================
 	// Dazzle Talents
 	//=================================================================================================================
-	"special_bonus_imba_dazzle_1"		// Reduces Shallow Grave mana cost to 0
+	"special_bonus_imba_dazzle_1"		// Shadow Wave now bounces after a small delay
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_dazzle_shadow_wave"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				              "FIELD_INTEGER"
+				"talent_delayed_wave_delay"			  "1"
+			}
+
+            "02"
+            {
+                "var_type"                            "FIELD_INTEGER"
+                "talent_delayed_wave_max_waves"       "3"
+            }
+
+            "03"
+            {
+                "var_type"                            "FIELD_INTEGER"
+                "talent_delayed_wave_rehit_cd"        "5"
+            }
+		}
+	}
+
+	"special_bonus_imba_dazzle_2"		// Shadow Wave heals allies around allies, damages enemies around enemies
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_dazzle_shadow_wave"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_dazzle_3"		// Shallow Grave releases a shadow wave to heal allies when it ends
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -30716,14 +31030,20 @@
 		"AbilitySpecial"
 		{
 			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"-150"
-			}
+            {
+                "var_type"                              "FIELD_INTEGER"
+                "talent_wave_bounce_distance"           "475"
+            }
+
+            "02"
+            {
+                "var_type"                              "FIELD_INTEGER"
+                "shallow_wave_damage_pct"               "50"
+            }
 		}
 	}
 
-	"special_bonus_imba_dazzle_2"		// Increases Shadow Wave bounce distance
+	"special_bonus_imba_dazzle_4"		// Poison Touch slows the target after setting in appropriate to damage taken
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -30733,7 +31053,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_dazzle_shadow_wave"
+			"01" 	"imba_dazzle_poison_touch"
 		}
 
 		// Special
@@ -30741,64 +31061,26 @@
 		"AbilitySpecial"
 		{
 			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"175"
-			}
+            {
+                "var_type"                              "FIELD_INTEGER"
+                "talent_slow_per_damage"                "3"
+            }
+            
+            "02"
+            {
+                "var_type"                              "FIELD_INTEGER"
+                "talent_slow_max"                       "80"
+            }
+            
+            "03"
+            {
+                "var_type"                              "FIELD_INTEGER"
+                "talent_damage_for_slow_proc"           "3"
+            }
 		}
 	}
 
-	"special_bonus_imba_dazzle_3"		// Increases Shadow Wave damage AoE
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_dazzle_shadow_wave"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"65"
-			}
-		}
-	}
-
-	"special_bonus_imba_dazzle_4"		// Increases Shadow Wave heal/damage
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_dazzle_shadow_wave"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"60"
-			}
-		}
-	}
-
-	"special_bonus_imba_dazzle_5"		// Reduces Poison Touch cooldown
+	"special_bonus_imba_dazzle_5"		// Enemies that interact with a poisoned touched teammate of their get poison touched as well
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -30818,12 +31100,44 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"-5"
+				"value"					"1"
 			}
 		}
 	}
 
-	"special_bonus_imba_dazzle_6"		// Weave ticks and decays faster
+	"special_bonus_imba_dazzle_6"		// Nothl Protection is now an aura around Dazzle
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_dazzle_shallow_grave"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"10"
+            {
+                "var_type"                              "FIELD_FLOAT"
+                "talent_aura_nothl_duration"            "1.5"
+            }
+            
+            
+            "11"
+            {
+                "var_type"                              "FIELD_INTEGER"
+                "talent_aura_radius"                    "900"
+            }
+		}
+	}
+
+	"special_bonus_imba_dazzle_7"		// Weave now fully affects buildings
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -30848,32 +31162,7 @@
 		}
 	}
 
-	"special_bonus_imba_dazzle_7"		// Reduces Nothl Protection cooldown
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_dazzle_shallow_grave"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"-15"
-			}
-		}
-	}
-
-	"special_bonus_imba_dazzle_8"		// Reduces Weave cooldown
+	"special_bonus_imba_dazzle_8"		// Causes Weave to tick twice as fast
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -30893,7 +31182,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"-15"
+				"value"					"2"
 			}
 		}
 	}
@@ -32033,7 +32322,7 @@
 	//=================================================================================================================
     // Clinkz Talents
     //=================================================================================================================
-    "special_bonus_imba_clinkz_1" // Strafe Bonus attack range when mounted
+    "special_bonus_imba_clinkz_1" // Death Pact Spirits can now attack with spirit strikes
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
@@ -32043,7 +32332,7 @@
 
         "LinkedAbility"
 		{
-			"01" 	"imba_clinkz_strafe"
+			"01" 	"imba_clinkz_death_pact"
 		}
 
 
@@ -32054,12 +32343,12 @@
             "01"
             {
                 "var_type"                  "FIELD_INTEGER"
-                "value"	                    "150"
+                "value"	                    "1"
             }
         }
     }
 
-    "special_bonus_imba_clinkz_2" // Spook search radius increase
+    "special_bonus_imba_clinkz_2" // Clinkz gains extra move speed when Skeleton Walking close to enemies
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
@@ -32079,12 +32368,12 @@
             "01"
             {
                 "var_type"                  "FIELD_INTEGER"
-                "value"	                    "200"
+                "value"	                    "25"
             }
         }
     }
 
-    "special_bonus_imba_clinkz_3" // Searing arrows damage increase
+    "special_bonus_imba_clinkz_3" // Skeleton Walking through an enemy causes Clinkz to lose his invisibility, but roots the target
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
@@ -32094,7 +32383,7 @@
 
         "LinkedAbility"
 		{
-			"01" 	"imba_clinkz_searing_arrows"
+			"01" 	"imba_clinkz_skeleton_walk"
 		}
 
         // Special
@@ -32104,7 +32393,7 @@
             "01"
             {
                 "var_type"                  "FIELD_INTEGER"
-                "value"	                    "35"
+                "value"	                    "3"
             }
         }
     }
@@ -32134,7 +32423,7 @@
         }
     }
 
-    "special_bonus_imba_clinkz_5" // Strafe bonus attack speed
+    "special_bonus_imba_clinkz_5" // Strafe can be self cast to root Clinkz for the duration but grant him a huge range bonus
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
@@ -32154,7 +32443,7 @@
             "01"
             {
                 "var_type"                  "FIELD_INTEGER"
-                "value"	                    "80"
+                "value"	                    "4"
             }
         }
     }
@@ -32184,7 +32473,7 @@
         }
     }
 
-    "special_bonus_imba_clinkz_7" // Death Pact bonuses increase
+    "special_bonus_imba_clinkz_7" // Searing Arrows has a chance to attack the same target again
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
@@ -32194,7 +32483,7 @@
 
         "LinkedAbility"
 		{
-			"01" 	"imba_clinkz_death_pact"
+			"01" 	"imba_clinkz_searing_arrows"
 		}
 
         // Special
@@ -32204,7 +32493,7 @@
             "01"
             {
                 "var_type"                  "FIELD_INTEGER"
-                "value"	                    "50"
+                "value"	                    "20"
             }
         }
     }
@@ -35966,7 +36255,7 @@
 		}
 	}
 
-	"special_bonus_imba_enigma_2"	// Malefice Effect Radius
+	"special_bonus_imba_enigma_2"	// Malefice has an AoE Radius
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -36784,9 +37073,15 @@
 	}
 
 	//=================================================================================================================
+	//=================================================================================================================
 	// Faceless Void's Talents 
 	//=================================================================================================================
-	"special_bonus_imba_faceless_void_1" // Time Dilation grants bonus move/attack speed per charge spent
+	//=================================================================================================================
+	
+	//=================================================================================================================================
+	// Time Dilation grants Faceless Void a chance to backtrack damage instances that increases per ability affected by Time Dilation
+	//=================================================================================================================================
+	"special_bonus_imba_faceless_void_1" 
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -36806,12 +37101,25 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"5"
+				"backtrack_pct_per_enemy"	"5"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_pct"					"50"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"duration"					"6"
 			}
 		}
 	}
 
-	"special_bonus_imba_faceless_void_2" // Time Dilation grants bonus health and mana per charge spent on them
+	//=================================================================================================================
+	// Time Dilation grants bonus health and mana per charge spent on them
+	//=================================================================================================================
+	"special_bonus_imba_faceless_void_2"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -36842,7 +37150,10 @@
 		}
 	}
 
-	"special_bonus_imba_faceless_void_3" // Movement inside Chronosphere is instant, Void constantly dodges projectiles
+	//=================================================================================================================
+	// Movement inside Chronosphere is instant, Void constantly dodges projectiles
+	//=================================================================================================================
+	"special_bonus_imba_faceless_void_3" 
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -36866,8 +37177,11 @@
 			}			
 		}
 	}
-
-	"special_bonus_imba_faceless_void_4" // Chronosphere duration increase per point of spell power 
+	
+	//==========================================================================================================================
+	// Bashing enemies with the Time Dilation debuff increases their active spells' CD while decreasing all of Voids cooldowns
+	//==========================================================================================================================
+	"special_bonus_imba_faceless_void_4" 
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -36877,7 +37191,8 @@
 
         "LinkedAbility"
         {
-            "01"        "imba_faceless_void_chronosphere"
+            "01"        "imba_faceless_void_time_dilation"
+			"02"        "imba_faceless_void_time_lock"
         }
 		
 		// Special
@@ -36887,12 +37202,20 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"value"					"0.05"
-			}			
+				"target_increase"		"0.5"
+			}		
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"self_reduction"		"0.5"
+			}					
 		}
 	}
 
-	"special_bonus_imba_faceless_void_5" // Time walk cast range increase
+	//=================================================================================================================
+	// Time Lock now spawns mini chronospheres
+	//=================================================================================================================
+	"special_bonus_imba_faceless_void_5" 
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -36902,7 +37225,8 @@
 
         "LinkedAbility"
         {
-            "01"        "imba_faceless_void_time_walk"
+            "01"        "imba_faceless_void_time_lock"
+			"02"        "imba_faceless_void_chronosphere"
         }
 		
 		// Special
@@ -36911,13 +37235,21 @@
 		{
 			"01"
 			{
+				"var_type"				"FIELD_INTEGER"
+				"aoe"					"180"
+			}
+			"02"
+			{
 				"var_type"				"FIELD_FLOAT"
-				"value"					"600"
+				"duration"				"1.0"
 			}			
 		}
 	}
 
-	"special_bonus_imba_faceless_void_6" // Time walk backtracks further
+	//=================================================================================================================
+	// Time Lord bonuses are increased when Faceless Void is inside a Chronosphere
+	//=================================================================================================================
+	"special_bonus_imba_faceless_void_6"  
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -36927,7 +37259,8 @@
 
         "LinkedAbility"
         {
-            "01"        "imba_faceless_void_time_walk"
+            "01"        "imba_faceless_void_timelord"
+			"02"        "imba_faceless_void_chronosphere"
         }
 		
 		// Special
@@ -36937,12 +37270,15 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"value"					"1"
+				"value"					"2.0"
 			}			
 		}
 	}
 
-	"special_bonus_imba_faceless_void_7" // Time Dilation no longer spends chronocharges to affect allies
+	//=================================================================================================================
+	// Time Dilation no longer spends chronocharges to affect allies
+	//=================================================================================================================
+	"special_bonus_imba_faceless_void_7" 
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -36967,7 +37303,10 @@
 		}
 	}
 
-	"special_bonus_imba_faceless_void_8" // Chronosphere effects per chronocharge increase
+	//=================================================================================================================
+	// Chronosphere causes Faceless Void attacks to cleave
+	//=================================================================================================================
+	"special_bonus_imba_faceless_void_8" 
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -36986,8 +37325,23 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"value"					"50"
+				"var_type"					"FIELD_INTEGER"
+				"cleave_damage_pct"			"50"
+			}	
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cleave_starting_width"		"150"
+			}		
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cleave_ending_width"		"300"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cleave_distance"			"600"
 			}			
 		}
 	}

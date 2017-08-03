@@ -1201,14 +1201,14 @@ modifier_imba_life_drain = class({})
 function modifier_imba_life_drain:GetPriority()
 	return MODIFIER_PRIORITY_HIGH
 end
+
 function modifier_imba_life_drain:OnCreated()
     -- Ability properties
     self.caster = self:GetCaster()
     self.ability = self:GetAbility()
-    self.parent = self:GetParent()
-    self.sound_target_imba = "Imba.PugnaLifeDrainTarget"
+    self.parent = self:GetParent()    
     self.sound_target = "Hero_Pugna.LifeDrain.Target"
-    self.sound_loop = "Imba.PugnaLifeDrainLoop"
+    self.sound_loop = "Hero_Pugna.LifeDrain.Loop"
     self.particle_drain = "particles/units/heroes/hero_pugna/pugna_life_drain.vpcf"
     self.particle_give = "particles/units/heroes/hero_pugna/pugna_life_give.vpcf"
     self.scepter = self.caster:HasScepter()
@@ -1220,13 +1220,12 @@ function modifier_imba_life_drain:OnCreated()
     self.base_slow_pct = self.ability:GetSpecialValueFor("base_slow_pct")
     self.slow_per_second = self.ability:GetSpecialValueFor("slow_per_second")
     self.tick_rate = self.ability:GetSpecialValueFor("tick_rate")
-    self.break_distance_extend = self.ability:GetSpecialValueFor("break_distance_extend")
+    self.break_distance_extend = self.ability:GetSpecialValueFor("break_distance_extend")    
 
     -- #7 Talent: Life Drain base slow increase
     self.base_slow_pct = self.base_slow_pct + self.caster:FindTalentValue("special_bonus_imba_pugna_7")
 
-    -- Play target sounds
-    EmitSoundOn(self.sound_target_imba, self.parent)
+    -- Play target sounds    
     EmitSoundOn(self.sound_target, self.parent)
 
     -- Stop any ongoing looping sound on the target
@@ -1262,6 +1261,9 @@ function modifier_imba_life_drain:OnCreated()
     end
 
     if IsServer() then
+        -- Extend break range by caster's Cast Range
+        self.break_distance_extend = self.break_distance_extend + GetCastRangeIncrease(self.caster)
+
         -- Wait for the first tick, then start thinking    
         Timers:CreateTimer(self.tick_rate, function()
             self:StartIntervalThink(self.tick_rate)
@@ -1476,7 +1478,15 @@ function imba_pugna_life_drain_end:OnSpellStart()
     -- Remove all allied lifedrain modifiers
     for _,ally in pairs(allies) do
         if ally:HasModifier(modifier_lifedrain) then
-            ally:RemoveModifierByName(modifier_lifedrain)
+            local modifier_lifedrain_handler = ally:FindModifierByName(modifier_lifedrain)
+
+            if modifier_lifedrain_handler then
+                -- Only remove if the allied lifedrain is from the same caster (Rubick/AM interactions)
+                local modifier_caster = modifier_lifedrain_handler:GetCaster()
+                if caster == modifier_caster then
+                    ally:RemoveModifierByName(modifier_lifedrain)
+                end
+            end
         end
     end
 end

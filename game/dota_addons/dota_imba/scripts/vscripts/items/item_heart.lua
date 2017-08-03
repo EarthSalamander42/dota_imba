@@ -7,10 +7,9 @@ function HeartDamage( keys )
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local modifier_regen = keys.modifier_regen
-	
-	-- If the attacker is a hero or roshan, and not an ally, put the heart on cooldown
-	if (attacker:IsHero() or IsRoshan(attacker) or attacker:GetName() == "npc_dota_shadowshaman_serpentward")  and attacker:GetTeam() ~= caster:GetTeam() then
 
+	-- Custom function from funcs.lua
+	if IsHeroDamage(attacker, 1) then
 		-- Parameters
 		local cooldown = ability:GetLevelSpecialValueFor("regen_cooldown", ability_level)
 

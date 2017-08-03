@@ -28,31 +28,36 @@ local XP_this_level = {}
 local XP_has_this_level = {}
 --Level table for IMBA XP
 
-function Server_SetRankTitle()
-
-	for ni = 1 , 31 do
-		if ni==1 then
-			XP_level_title[ni]=''
-		end
-		if ni>=2 and ni<=6 then
-			XP_level_title[ni]='#imba_rank_title_rookie'
-		end
-		if ni>=7 and ni<=11 then
-			XP_level_title[ni]='#imba_rank_title_amateur'
-		end
-		if ni>=12 and ni<=16 then
-			XP_level_title[ni]='#imba_rank_title_warrior'
-		end
-		if ni>=17 and ni<=21 then
-			XP_level_title[ni]='#imba_rank_title_general'
-		end
-		if ni>=22 and ni<=26 then
-			XP_level_title[ni]='#imba_rank_title_master'
-		end
-		if ni>=27 and ni<=31 then
-			XP_level_title[ni]='#imba_rank_title_legendary'
-		end
+function Server_GetTitle(level)
+	if level <= 5 then
+		return "#imba_rank_title_rookie"
+	elseif level <= 10 then
+		return "#imba_rank_title_amateur"
+	elseif level <= 15 then
+		return "#imba_rank_title_warrior"
+	elseif level <= 20 then
+		return "#imba_rank_title_general"
+	elseif level <= 25 then
+		return "#imba_rank_title_master"
+	else 
+		return "#imba_rank_title_legendary"
 	end
+end
+
+function Server_GetTitleColor(title)
+    if title == "#imba_rank_title_rookie" then
+        return {255, 255, 255}
+    elseif title == "#imba_rank_title_amateur" then
+        return {102, 204, 0}
+    elseif title == "#imba_rank_title_warrior" then
+        return {0, 76, 153}
+    elseif title == "#imba_rank_title_general" then
+        return {102, 0, 204}
+    elseif title == "#imba_rank_title_master" then
+        return {255, 0, 0}
+    else -- it's legendaaaary 
+        return {255, 153, 51}
+    end
 end
 
 function Server_DecodeForPlayer ( t, nPlayerID )   --To deep-decode the Json code...
@@ -121,7 +126,7 @@ function Server_GetPlayerLevelAndTitle(nPlayerID)
 		if table_XP_has and table_XP_has[nPlayerID] and table_rankXP and table_rankXP[i] then
 			if tonumber(table_XP_has[nPlayerID]) >= table_rankXP[i] then
 				XP_level[nPlayerID] = i-1
-				XP_level_title_player[nPlayerID] = XP_level_title[i]
+				XP_level_title_player[nPlayerID] = Server_GetTitle(XP_level[nPlayerID])
 				XP_this_level[nPlayerID] = table_rankXP[i]
 				if i == 31 then
 					XP_need_to_next_level[nPlayerID] = 0
@@ -129,8 +134,7 @@ function Server_GetPlayerLevelAndTitle(nPlayerID)
 					XP_need_to_next_level[nPlayerID] = table_rankXP[i+1] - tonumber(table_XP_has[nPlayerID])
 				end
 				XP_has_this_level[nPlayerID] = tonumber(table_XP_has[nPlayerID]) - table_rankXP[i]
-				CustomNetTables:SetTableValue("player_table", "ImbaXP", {value = "XP", number = XP_has_this_level[nPlayerID]})
-				--print("Setup Imba XP Bar:", XP_has_this_level[nPlayerID])
+				CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {XP = tonumber(XP_has_this_level[nPlayerID]), MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]), Lvl = tonumber(XP_level[nPlayerID]), ID = nPlayerID, title = XP_level_title_player[nPlayerID]})
 				break
 			end
 		end
@@ -141,73 +145,79 @@ local _finished = 0
 local is_AFK = {}
 
 function Server_SendAndGetInfoForAll()
-if _finished == 0 then
-	require('libraries/json')
-	Server_SetRankTitle()
+	if _finished == 0 then
+		require('libraries/json')		
 
-	for nPlayerID=0, DOTA_MAX_TEAM_PLAYERS-1 do
-		if  PlayerResource:IsValidPlayer(nPlayerID)  then
-		if PlayerResource:IsFakeClient(nPlayerID) then
-		else
+		for nPlayerID=0, DOTA_MAX_TEAM_PLAYERS-1 do
+			Server_SendAndGetInfoForAll_function(nPlayerID)
+		end
+		_finished = 1
+	end
+end
 
-			table_SteamID64[nPlayerID] = tostring(PlayerResource:GetSteamID(nPlayerID))
-			table_XP[nPlayerID] = tostring(math.random(18,32)) --How many XP will player get in this game
+function Server_SendAndGetInfoForAll_function(nPlayerID)
+	if PlayerResource:IsValidPlayer(nPlayerID)  then
+	if PlayerResource:IsFakeClient(nPlayerID) then
+	else
 
-			local jsondata={}
-			local jsontable={}
-			jsontable.SteamID64 = table_SteamID64[nPlayerID]
-			jsontable.XP = table_XP[nPlayerID]
-			table.insert(jsondata,jsontable)
+		table_SteamID64[nPlayerID] = tostring(PlayerResource:GetSteamID(nPlayerID))
+		table_XP[nPlayerID] = tostring(math.random(24,32)) --How many XP will player get in this game
+
+		local jsondata={}
+		local jsontable={}
+		jsontable.SteamID64 = table_SteamID64[nPlayerID]
+		jsontable.XP = table_XP[nPlayerID]
+		table.insert(jsondata,jsontable)
 			local request = CreateHTTPRequestScriptVM( "GET", "http://www.dota2imba.cn/XP_game_to_tmp.php" )
-				request:SetHTTPRequestGetOrPostParameter("data_json",JSON:encode(jsondata))
-				request:SetHTTPRequestGetOrPostParameter("auth",_AuthCode);
-				request:Send(function(result)
+			request:SetHTTPRequestGetOrPostParameter("data_json",JSON:encode(jsondata))
+			request:SetHTTPRequestGetOrPostParameter("auth",_AuthCode)
+			request:Send(function(result)
+			if result.StatusCode == 200 then
 				Adecode=JSON:decode(result.Body)
 				Server_DecodeForPlayer(Adecode, nPlayerID)
 				Server_GetPlayerLevelAndTitle(nPlayerID)
-			end )
-			is_AFK[nPlayerID] = 0
+			end
+			if result.StatusCode ~= 200 then
+				Server_SendAndGetInfoForAll_function(nPlayerID)
+				return
+			end
+		end )
+		is_AFK[nPlayerID] = 0
 
-		end
-		end
 	end
-	_finished = 1
-end
+	end
 end
 
 function Server_EnableToGainXPForPlyaer(nPlayerID)
-	--print("player key:"..table_player_key[nPlayerID])
 	if EnnDisEnabled == 1 and is_AFK[nPlayerID] == 0 then
 		table_able[nPlayerID] = 1
-		local jsondata={}
-		local jsontable={}
-		jsontable.player_key = table_player_key[nPlayerID]
-		jsontable._able = table_able[nPlayerID]
-		jsontable.SteamID64 = table_SteamID64[nPlayerID]
-		table.insert(jsondata,jsontable)
-		local request = CreateHTTPRequestScriptVM( "GET", "http://www.dota2imba.cn/XP_ability_to_gain.php" )
-			request:SetHTTPRequestGetOrPostParameter("data_json",JSON:encode(jsondata))
-			request:SetHTTPRequestGetOrPostParameter("auth",_AuthCode);
-			request:Send(function(result)
-		end )
+		Server_AbilityToGainXPForPlyaer_function(nPlayerID)
 	end
 end
 
 function Server_DisableToGainXpForPlayer(nPlayerID)
 	if EnnDisEnabled == 1 then
 		table_able[nPlayerID] = 0
-		local jsondata={}
-		local jsontable={}
-		jsontable.player_key = table_player_key[nPlayerID]
-		jsontable._able = table_able[nPlayerID]
-		jsontable.SteamID64 = table_SteamID64[nPlayerID]
-		table.insert(jsondata,jsontable)
-		local request = CreateHTTPRequestScriptVM( "GET", "http://www.dota2imba.cn/XP_ability_to_gain.php" )
-			request:SetHTTPRequestGetOrPostParameter("data_json",JSON:encode(jsondata))
-			request:SetHTTPRequestGetOrPostParameter("auth",_AuthCode);
-			request:Send(function(result)
-		end )
+		Server_AbilityToGainXPForPlyaer_function(nPlayerID)
 	end
+end
+
+function Server_AbilityToGainXPForPlyaer_function(nPlayerID)
+	local jsondata={}
+	local jsontable={}
+	jsontable.player_key = table_player_key[nPlayerID]
+	jsontable._able = table_able[nPlayerID]
+	jsontable.SteamID64 = table_SteamID64[nPlayerID]
+	table.insert(jsondata,jsontable)
+	local request = CreateHTTPRequestScriptVM( "GET", "http://www.dota2imba.cn/XP_ability_to_gain.php" )
+		request:SetHTTPRequestGetOrPostParameter("data_json",JSON:encode(jsondata))
+		request:SetHTTPRequestGetOrPostParameter("auth",_AuthCode)
+		request:Send(function(result)
+		if result.StatusCode ~= 200 then
+			Server_AbilityToGainXPForPlyaer_function(nPlayerID)
+			return
+		end
+	end )
 end
 
 	-- GetConnectionState values:
@@ -339,6 +349,29 @@ function Serer_CheckForAFKPlayer()
 end
 
 
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------Useful Functions-----------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
+
+function Server_GetPlayerLevel(playerID)
+	if CustomNetTables:GetTableValue("player_table", tostring(playerID)) then
+		return CustomNetTables:GetTableValue("player_table", tostring(playerID)).Lvl
+	end
+end
+
+function Server_GetPlayerXP(playerID)
+	if CustomNetTables:GetTableValue("player_table", tostring(playerID)) then
+		return CustomNetTables:GetTableValue("player_table", tostring(playerID)).XP
+	end
+end
+
+function Server_GetPlayerTitle(playerID)
+	if CustomNetTables:GetTableValue("player_table", tostring(playerID)) then
+		return CustomNetTables:GetTableValue("player_table", tostring(playerID)).title
+	end
+end
 
 
 ----------------------------------------------------------------------------------------------------------------

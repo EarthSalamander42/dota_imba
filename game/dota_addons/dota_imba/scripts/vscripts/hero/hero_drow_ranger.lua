@@ -407,32 +407,34 @@ function modifier_imba_frost_arrows_slow:GetStatusEffectName()
 end
 
 function modifier_imba_frost_arrows_slow:OnStackCountChanged()
-	local stacks = self:GetStackCount()
+	if IsServer() then
+		local stacks = self:GetStackCount()
 
-	-- If the stacks should freeze an enemy, reset the stack count and freeze it!
-	if stacks >= self.stacks_to_freeze then
-		self:SetStackCount(self:GetStackCount()-self.stacks_to_freeze)
-		-- #4 talent: decrease the stack count on the movespeed buff accordingly, remove it if no more stacks are left
-		if self.caster:HasTalent("special_bonus_imba_drow_ranger_4") then
-			if (self.caster:GetModifierStackCount(self.caster_modifier, self.caster) <= self.stacks_to_freeze) then
-				self.caster:RemoveModifierByName(self.caster_modifier)
-			else
-				local stack_count = self.caster:GetModifierStackCount(self.caster_modifier, self.caster)
-				self.caster:SetModifierStackCount(self.caster_modifier, self.caster, stack_count - self.stacks_to_freeze)
-			end
-		end 
-		self.parent:AddNewModifier(self.caster, self.ability, self.modifier_freeze, {duration = self.freeze_duration})
-	else --target not frozen
-		--talent buff: if Drow doesn't have the buff, apply it
-		if self.caster:HasTalent("special_bonus_imba_drow_ranger_4") and not self.caster:HasModifier(self.caster_modifier)  then
-    		self.caster:AddNewModifier(self.caster, self.ability, self.caster_modifier, {})
-  			self.caster:SetModifierStackCount(self.caster_modifier, self, 1)
-  		else
-  			--talent buff: increase the buff stack count
-    		local stack_count = self.caster:GetModifierStackCount(self.caster_modifier, self)
-    		self.caster:SetModifierStackCount(self.caster_modifier, self, stack_count + 1)
-    	end
-  	end
+		-- If the stacks should freeze an enemy, reset the stack count and freeze it!
+		if stacks >= self.stacks_to_freeze then
+			self:SetStackCount(self:GetStackCount()-self.stacks_to_freeze)
+			-- #4 talent: decrease the stack count on the movespeed buff accordingly, remove it if no more stacks are left
+			if self.caster:HasTalent("special_bonus_imba_drow_ranger_4") then
+				if (self.caster:GetModifierStackCount(self.caster_modifier, self.caster) <= self.stacks_to_freeze) then
+					self.caster:RemoveModifierByName(self.caster_modifier)
+				else
+					local stack_count = self.caster:GetModifierStackCount(self.caster_modifier, self.caster)
+					self.caster:SetModifierStackCount(self.caster_modifier, self.caster, stack_count - self.stacks_to_freeze)
+				end
+			end 
+			self.parent:AddNewModifier(self.caster, self.ability, self.modifier_freeze, {duration = self.freeze_duration})
+		else --target not frozen
+			--talent buff: if Drow doesn't have the buff, apply it
+			if self.caster:HasTalent("special_bonus_imba_drow_ranger_4") and not self.caster:HasModifier(self.caster_modifier)  then
+	    		self.caster:AddNewModifier(self.caster, self.ability, self.caster_modifier, {})
+	  			self.caster:SetModifierStackCount(self.caster_modifier, self, 1)
+	  		else
+	  			--talent buff: increase the buff stack count
+	    		local stack_count = self.caster:GetModifierStackCount(self.caster_modifier, self)
+	    		self.caster:SetModifierStackCount(self.caster_modifier, self, stack_count + 1)
+	    	end
+	  	end
+	end
 end
 
 function modifier_imba_frost_arrows_slow:DeclareFunctions()
@@ -681,37 +683,6 @@ function imba_drow_ranger_gust:GetBehavior()
 	return DOTA_ABILITY_BEHAVIOR_POINT
 end
 
---[[function imba_drow_ranger_gust:CastFilterResultTarget(target)
-	if IsServer() then
-		local caster = self:GetCaster()
-		local casterID = caster:GetPlayerID()
-		local targetID
-		if target:IsHero() then			
-			targetID = target:GetPlayerID()
-		end
-			
-		-- #1 Talent: Gust can be cast on herself, making her "fly" along with gust and silencing any enemy hit by it
-		if (target == caster) and caster:HasTalent("special_bonus_imba_drow_ranger_1") then
-			return UF_SUCCESS
-		elseif (target == caster) and not caster:HasTalent("special_bonus_imba_drow_ranger_1") then
-			return UF_FAIL_CUSTOM
-		end
-
-        local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
-        return nResult
-	end
-end
-
-function imba_drow_ranger_gust:GetCustomCastErrorTarget(target)
-    local caster = self:GetCaster()
-
-    -- Cannot be cast on self without the talent
-    if target == caster and not caster:HasTalent("special_bonus_imba_drow_ranger_1") then
-        return "dota_hud_error_cant_cast_on_self"
-    end
-end]]
-
-
 function imba_drow_ranger_gust:OnSpellStart()
 	-- Ability properties
  	local caster = self:GetCaster()
@@ -754,24 +725,27 @@ function imba_drow_ranger_gust:OnSpellStart()
    	if caster == target then
    		target_point = caster:GetAbsOrigin() + (caster:GetForwardVector() * wave_distance)
    	end
- 	-- Send Gust!
- 	local gust_projectile = {	Ability = ability,
-								EffectName = particle_gust,
-								vSpawnOrigin = caster:GetAbsOrigin(),
-								fDistance = wave_distance,
-								fStartRadius = wave_width,
-								fEndRadius = wave_width,
-								Source = caster,
-								bHasFrontalCone = false,
-								bReplaceExisting = false,
-								iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,							
-								iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,							
-								bDeleteOnHit = false,
-								vVelocity = (((target_point - caster:GetAbsOrigin()) * Vector(1, 1, 0)):Normalized()) * wave_speed,
-								bProvidesVision = false,							
-							}
 
- 	ProjectileManager:CreateLinearProjectile(gust_projectile)
+   	Timers:CreateTimer(FrameTime(), function()
+	 	-- Send Gust!
+	 	local gust_projectile = {	Ability = ability,
+									EffectName = particle_gust,
+									vSpawnOrigin = caster:GetAbsOrigin(),
+									fDistance = wave_distance,
+									fStartRadius = wave_width,
+									fEndRadius = wave_width,
+									Source = caster,
+									bHasFrontalCone = false,
+									bReplaceExisting = false,
+									iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,							
+									iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,							
+									bDeleteOnHit = false,
+									vVelocity = (((target_point - caster:GetAbsOrigin()) * Vector(1, 1, 0)):Normalized()) * wave_speed,
+									bProvidesVision = false,							
+								}
+
+	 	ProjectileManager:CreateLinearProjectile(gust_projectile)
+   	end)
  end 
 
 function imba_drow_ranger_gust:OnProjectileHit(target, location)
@@ -874,8 +848,7 @@ function modifier_imba_gust_movement:OnCreated()
         self.ability = self:GetAbility()
 
         -- Ability specials
-        self.jump_speed = self.caster:FindTalentValue("special_bonus_imba_drow_ranger_1","jump_speed")
-        self.max_height = self.caster:FindTalentValue("special_bonus_imba_drow_ranger_1","max_height")
+        self.jump_speed = self.caster:FindTalentValue("special_bonus_imba_drow_ranger_1","jump_speed")        
 
         -- Variables
         self.time_elapsed = 0
@@ -900,10 +873,7 @@ function modifier_imba_gust_movement:OnIntervalThink()
     if not self:CheckMotionControllers() then
         self:Destroy()
         return nil
-    end
-
-    -- Vertical Motion
-    self:VerticalMotion(self.caster, self.frametime)
+    end    
 
     -- Horizontal Motion
     self:HorizontalMotion(self.caster, self.frametime)
@@ -916,34 +886,9 @@ function modifier_imba_gust_movement:IgnoreTenacity() return true end
 function modifier_imba_gust_movement:IsMotionController() return true end
 function modifier_imba_gust_movement:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
-function modifier_imba_gust_movement:VerticalMotion(me, dt)
-    if IsServer() then
-
-        -- Check if we're still jumping
-        if self.time_elapsed < self.jump_time then
-
-            -- Check if we should be going up or down
-            if self.time_elapsed <= self.jump_time / 2 then
-                -- Going up                
-                self.leap_z = self.leap_z + 30                
-                
-
-                self.caster:SetAbsOrigin(GetGroundPosition(self.caster:GetAbsOrigin(), self.caster) + Vector(0,0,self.leap_z))                
-            else
-                -- Going down
-                self.leap_z = self.leap_z - 30
-                if self.leap_z > 0 then
-                    self.caster:SetAbsOrigin(GetGroundPosition(self.caster:GetAbsOrigin(), self.caster) + Vector(0,0,self.leap_z))
-                end
-                
-            end 
-        end
-    end
-end
-
 function modifier_imba_gust_movement:HorizontalMotion(me, dt)
    if IsServer() then
-        -- Check if we're still jumping
+        -- Check if we're still moving
         self.time_elapsed = self.time_elapsed + dt
         if self.time_elapsed < self.jump_time then
 
@@ -988,8 +933,7 @@ function modifier_imba_gust_buff:OnCreated()
 end
 
 function modifier_imba_gust_buff:OnAttackLanded(kv)
-	if IsServer() then
-		--print("called OnAttackLanded")
+	if IsServer() then		
 		local sound_cast = "Hero_DrowRanger.Silence" 
 		local knockback_particle = "particles/units/heroes/hero_spirit_breaker/spirit_breaker_greater_bash.vpcf"
 
@@ -1030,93 +974,8 @@ function modifier_imba_gust_buff:OnAttackLanded(kv)
 	    	target:RemoveModifierByName("modifier_knockback")
 	    end	
 	 	target:AddNewModifier(caster, ability, "modifier_knockback", knockbackProperties)
-
-
-		--[[local projectile_speed = self.ability:GetSpecialValueFor("wave_speed") --(((target:GetAbsOrigin() - attacker:GetAbsOrigin()) * Vector(1, 1, 0)):Normalized()) * self.ability:GetSpecialValueFor("wave_speed")
-		self.mini_gust_target = kv.target  --tracks who is the primary target
-
-	 	local mini_gust_projectile = 	{hTarget = target,
-										hCaster = self.caster,
-										hAbility = self.ability,
-										iMoveSpeed = projectile_speed,
-										EffectName = particle_gust,
-										SoundName = sound_cast,
-										flRadius = 1,
-										bDodgeable = false,
-										bDestroyOnDodge = false,
-										iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION,
-										OnProjectileHitUnit = function(params, projectileID)																		
-																  MiniGustHit(params, projectileID, self)
-															  end
-										}
-
-		print(mini_gust_projectile)	
-
-		TrackingProjectiles:Projectile(mini_gust_projectile)	]]
-	
 	end
-
 end
-
---[[function MiniGustHit(keys, projectileID, modifier)
-	print("called MiniGustHit")
-	local caster = modifier.caster
-	local target = keys.hTarget
-	local knockback_duration = modifier.knockback_duration
-	local distance = modifier.knockback_distance 
-
-	-- Knockback properties
-	 	local knockbackProperties =
-	    {
-	        center_x = caster:GetAbsOrigin()[1]+1,
-	        center_y = caster:GetAbsOrigin()[2]+1,
-	        center_z = caster:GetAbsOrigin()[3],
-	        duration = knockback_duration,
-	        knockback_duration = knockback_duration,
-	        knockback_distance = distance,
-	        knockback_height = 0,
-	        should_stun = 0
-	    }
-
-	    -- if it's not the primary target, do nothing
-	 	if target ~= modifier.mini_gust_target then
-	 		return nil
-	 	end
-	 		-- Apply knockback on the primary target
-	 	target:AddNewModifier(caster, ability, "modifier_knockback", knockbackProperties)
-end--]]
---[[function modifier_imba_gust_buff:OnProjectileHit(target, location)
-	if IsServer() then
-		-- Ability properties
-	 	local caster = self.caster
-	 	local ability = self.ability	 		 	
-
-	 	-- Ability specials 	
-	 	local knockback_duration = self.knockback_duration
-	 	local distance = self.knockback_distance
-
-	 	-- Knockback properties
-	 	local knockbackProperties =
-	    {
-	        center_x = caster:GetAbsOrigin()[1]+1,
-	        center_y = caster:GetAbsOrigin()[2]+1,
-	        center_z = caster:GetAbsOrigin()[3],
-	        duration = knockback_duration,
-	        knockback_duration = knockback_duration,
-	        knockback_distance = distance,
-	        knockback_height = 0,
-	        should_stun = 0
-	    }
-
-	    -- if it's not the primary target, do nothing
-	 	if target ~= self.mini_gust_target then
-	 		return nil
-	 	end
-	 		-- Apply knockback on enemies hit
-	 	target:AddNewModifier(caster, ability, "modifier_knockback", knockbackProperties)	 	
-	 	
-	end
-end]]
 
 
 ----------------------------
@@ -1714,7 +1573,7 @@ function modifier_imba_markmanship_aura:IsDebuff()
 end
 
 function modifier_imba_markmanship_aura:IsHidden()
-	return false
+	return true
 end
 
 function modifier_imba_markmanship_aura:IsPurgable()
@@ -1722,7 +1581,7 @@ function modifier_imba_markmanship_aura:IsPurgable()
 end
 
 -- Markmanship talent aura modifier for allies
-modifier_imba_markmanship_buff= class({})
+modifier_imba_markmanship_buff = class({})
 
 function modifier_imba_markmanship_buff:DeclareFunctions()
 	local decfunc = {MODIFIER_EVENT_ON_ATTACK_LANDED}
@@ -1735,59 +1594,23 @@ function modifier_imba_markmanship_buff:OnCreated()
  	self.caster = self:GetCaster()
  	self.ability = self:GetAbility()
  	self.parent = self:GetParent()
- 	self.modifier = "modifier_imba_markmanship_slow"
-
- 	--[[print("in function \"OnCreated()\"")
- 	print("self.caster = ", self.caster)
- 	print("self.ability = ", self.ability)
- 	print("self.parent = ", self.parent)
- 	print("self.modifier = ", self.modifier)]]
+ 	self.modifier = "modifier_imba_markmanship_slow" 	
 
  	-- Ability specials
- 	self.duration = self.caster:FindTalentValue("special_bonus_imba_drow_ranger_5", "duration")
- 	--print("self.duration = ", self.duration)
+ 	self.duration = self.caster:FindTalentValue("special_bonus_imba_drow_ranger_5", "duration") 	
 end
-
---[[-function modifier_imba_markmanship_buff:OnAttackStart(keys)
-	if IsServer() then	
-		local attacker = keys.attacker
-		local target = keys.target	
-
-		-- Only apply on parent's attacks
-		if self.parent == attacker then
-
-			-- Initialize attack table
-			if not self.attack_table then
-				self.attack_table = {}
-			end	
-		end
-	end
-end ]]
 
 function modifier_imba_markmanship_buff:OnAttackLanded(keys)
 	if IsServer() then
 		local attacker = keys.attacker
 		local target = keys.target
 
-		--[[print("in function \"OnAttackLanded(keys)\"")
-		print("local attacker = ", attacker)
-		print("local target = ", target)
-		print("self.caster = ", self.caster)
- 		print("self.ability = ", self.ability)
- 		print("self.parent = ", self.parent)
- 		print("self.modifier = ", self.modifier)
- 		print("self.duration = ", self.duration)]]
-
-
-
 		-- Only apply on the hero attack
 		if self.parent == attacker then		
 
 			-- Only apply if the target isn't magic immune or a building
-			if not target:IsMagicImmune() and not target:IsBuilding() then 
-				--print("trying to apply debuff on enemy")
-				target:AddNewModifier(self.caster, self.ability, self.modifier, {duration = self.duration})
-				--print("After trying to apply debuff to enemy: target:FindModifierByName(self.modifier) = ", target:FindModifierByName(self.modifier))
+			if not target:IsMagicImmune() and not target:IsBuilding() then 				
+				target:AddNewModifier(self.caster, self.ability, self.modifier, {duration = self.duration})				
 			end
 		end
 	end	
@@ -1806,11 +1629,6 @@ function modifier_imba_markmanship_buff:IsDebuff()
 end
 
 
-
-
-
-
-
 -- talent aura slow modifier
 modifier_imba_markmanship_slow = class({})
 
@@ -1819,8 +1637,7 @@ function modifier_imba_markmanship_slow:OnCreated()
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
 	self.parent = self:GetParent()
-	self.duration = self:GetDuration()	
-	--print("debuff applied to enemy! self.duration = ", self.duration)	
+	self.duration = self:GetDuration()		
 
 	-- Ability specials
 	self.slow_pct = self.caster:FindTalentValue("special_bonus_imba_drow_ranger_5", "slow_pct")

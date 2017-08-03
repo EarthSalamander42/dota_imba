@@ -14,6 +14,18 @@ function _ScoreboardUpdater_SetTextSafe( panel, childName, textValue )
 	childPanel.text = textValue;
 }
 
+function _ScoreboardUpdater_SetValueSafe( panel, childName, Value )
+{
+	if ( panel === null )
+		return;
+	var childPanel = panel.FindChildInLayoutFile( childName )
+
+	if ( childPanel === null )
+		return;
+
+	childPanel.value = Value;
+}
+
 
 //=============================================================================
 //=============================================================================
@@ -26,10 +38,30 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 		playerPanel = $.CreatePanel( "Panel", playersContainer, playerPanelName );
 		playerPanel.SetAttributeInt( "player_id", playerId );
 		playerPanel.BLoadLayout( scoreboardConfig.playerXmlName, false, false );
+
+		var ImbaXP_Panel = playerPanel.FindChildInLayoutFile("PanelImbaXP");
+		$.Msg("Player ID: "+playerId)
+		if ( ImbaXP_Panel != null )
+		{
+			$.Msg("IMBA Panel is Valid: XPProgressBarContainer"+playerId)
+
+			var plyData = CustomNetTables.GetTableValue("player_table", playerId);
+			if ( plyData != null )
+			{
+				$.Msg("Imba ply Data: "+plyData)
+				ImbaXP_Panel.BCreateChildren("<Panel id='XPProgressBarContainer" +playerId+ "' value='0.0'/>");
+				var Imbar = ImbaXP_Panel.BCreateChildren("<ProgressBar id='XPProgressBar" +playerId+ "'/>");
+				ImbaXP_Panel.BCreateChildren("<Label id='ImbaLvl" +playerId+ "' text='999'/>");
+				ImbaXP_Panel.BCreateChildren("<Label id='ImbaXP" +playerId+ "' text='999'/>");
+				_ScoreboardUpdater_SetValueSafe( playerPanel, "XPProgressBar"+playerId, plyData.XP / plyData.MaxXP );
+				_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaLvl"+playerId, "Lvl:  " + plyData.Lvl );
+				_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaXP"+playerId, plyData.XP + "/" + plyData.MaxXP );
+			}
+		}
 	}
 
 	playerPanel.SetHasClass( "is_local_player", ( playerId == Game.GetLocalPlayerID() ) );
-	
+
 	var ultStateOrTime = PlayerUltimateStateOrTime_t.PLAYER_ULTIMATE_STATE_HIDDEN; // values > 0 mean on cooldown for that many seconds
 	var goldValue = -1;
 	var isTeammate = false;
@@ -45,7 +77,7 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 			ultStateOrTime = Game.GetPlayerUltimateStateOrTime( playerId );
 		}
 		goldValue = playerInfo.player_gold;
-		
+
 		playerPanel.SetHasClass( "player_dead", ( playerInfo.player_respawn_seconds >= 0 ) );
 		playerPanel.SetHasClass( "local_player_teammate", isTeammate && ( playerId != Game.GetLocalPlayerID() ) );
 		playerPanel.SetHasClass( "spectator_view", isSpectator);
@@ -58,7 +90,7 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 		_ScoreboardUpdater_SetTextSafe( playerPanel, "Assists", playerInfo.player_assists );
 
 		var btnMuteVoice = playerPanel.FindChildInLayoutFile("BtnMuteVoice");
-		
+
 		if( btnMuteVoice )
 		{
 			btnMuteVoice.SetHasClass( "Activated", Game.IsPlayerMuted(playerId) );
@@ -216,7 +248,7 @@ function _ScoreboardUpdater_UpdateTeamPanel( scoreboardConfig, containerPanel, t
 			}
 		}
 	}
-	
+
 	var localPlayerTeamId = -1;
 	var localPlayer = Game.GetLocalPlayerInfo();
 	if ( localPlayer )
@@ -235,10 +267,10 @@ function _ScoreboardUpdater_UpdateTeamPanel( scoreboardConfig, containerPanel, t
 			_ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContainer, playerId, localPlayerTeamId )
 		}
 	}
-	
+
 	teamPanel.SetHasClass( "no_players", (teamPlayers.length == 0) )
 	teamPanel.SetHasClass( "one_player", (teamPlayers.length == 1) )
-	
+
 	if ( teamsInfo.max_team_players < teamPlayers.length )
 	{
 		teamsInfo.max_team_players = teamPlayers.length;
@@ -246,7 +278,7 @@ function _ScoreboardUpdater_UpdateTeamPanel( scoreboardConfig, containerPanel, t
 
 	_ScoreboardUpdater_SetTextSafe( teamPanel, "TeamScore", teamDetails.team_score )
 	_ScoreboardUpdater_SetTextSafe( teamPanel, "TeamName", $.Localize( teamDetails.team_name ) )
-	
+
 	if ( GameUI.CustomUIConfig().team_colors )
 	{
 		var teamColor = GameUI.CustomUIConfig().team_colors[ teamId ];

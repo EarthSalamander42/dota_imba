@@ -3,6 +3,24 @@
 var current_tooltip_timer = null;
 var current_shown_tooltip_id = null;
 
+function GetLocalPlayerId()
+{
+	var localPlayerId = 0;
+	var localPlayerInfo = Game.GetLocalPlayerInfo();
+	if(typeof(localPlayerInfo) !== "undefined")
+	{
+		localPlayerId = localPlayerInfo.player_id;
+	}
+
+/*	if(Players.IsLocalPlayerInPerspectiveCamera())
+	{
+		//get local player info for selected portrait unit
+		localPlayerId = Players.GetPerspectivePlayerId();
+	}
+*/
+	return localPlayerId;
+}
+
 function HideToolTips()
 {
 	if( current_tooltip_timer )
@@ -117,34 +135,3 @@ function ToggleDisableHelp()
 		ShowToolTipDisableHelp();
 	}
 }
-
-/*
-function OnPlayerDataUpdated( table_name, key, data )
-{
-	UpdatePlayerImbaXP();
-}
-CustomNetTables.SubscribeNetTableListener( "player_table", OnPlayerDataUpdated )
-*/
-
-function UpdatePlayerImbaXP()
-{
-	$.Msg("Updating Player Data...")
-	var key = "ImbaXP"
-	var plyData = CustomNetTables.GetTableValue("player_table", key);
-
-	if ( plyData !== null )
-	{
-		if (plyData.value == "XP")
-		{
-			var nBossHP = plyData.number;
-			var bShowBossHP = plyData.number == 0 ? false : true;
-			$("#XPProgressBar").value = nBossHP / 100;
-//			$("#XPHP").visible = true;
-		}
-	}
-}
-
-(function()
-{
-    UpdatePlayerImbaXP();
-})();

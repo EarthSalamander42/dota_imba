@@ -43,6 +43,11 @@ function item_imba_angelic_alliance:OnSpellStart()
 		end
 	end
 
+	-- If the target is magic immune (Lotus Orb/Anti Mage), do nothing
+	if target:IsMagicImmune() then
+		return nil
+	end
+
 	if target:GetTeamNumber() == caster:GetTeamNumber() then
 		target:EmitSound("Imba.AngelicAllianceCast")
 		target:AddNewModifier(caster, self, "modifier_imba_angelic_alliance_buff", {duration = duration})
@@ -149,20 +154,13 @@ function modifier_imba_angelic_alliance_passive_effect:OnAttackLanded( keys )
 		-- Don't disarm towers
 		if attacker:IsBuilding() or target:IsBuilding() then
 			return nil
-		end
-		
+		end		
 
-		if caster == target and RollPercentage(chance) then				-- Disarm attacker when the wielder is the one getting hit
+		if caster == target and RollPseudoRandom(chance, self) then				-- Disarm attacker when the wielder is the one getting hit
 			if attacker:IsMagicImmune() then return end
 			if attacker:HasModifier("modifier_imba_angelic_alliance_passive_disarm") then return end
 			attacker:AddNewModifier(caster, ability, "modifier_imba_angelic_alliance_passive_disarm", {duration = duration})
 			attacker:EmitSound("DOTA_Item.HeavensHalberd.Activate")
-		
-		elseif caster == attacker and RollPercentage(chance) then			-- Disarm target when the wielder is the one hitting
-			if target:IsMagicImmune() then return end
-			if target:HasModifier("modifier_imba_angelic_alliance_passive_disarm") then return end
-			target:AddNewModifier(caster, ability, "modifier_imba_angelic_alliance_passive_disarm", {duration = duration})
-			target:EmitSound("DOTA_Item.HeavensHalberd.Activate")
 		end
 	end
 end

@@ -123,6 +123,10 @@ function modifier_imba_power_treads_2:OnIntervalThink()
 	if IsClient() then
 		local state = self:GetStackCount()
 		local ability = self:GetAbility()
+		if not ability then
+			return nil
+		end
+
 		ability.state = state
 		
 	elseif IsServer() then

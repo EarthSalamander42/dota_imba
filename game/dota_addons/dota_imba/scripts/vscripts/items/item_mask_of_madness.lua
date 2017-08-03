@@ -24,9 +24,13 @@ function item_imba_mask_of_madness:OnSpellStart()
     local caster = self:GetCaster()
     local ability = self
     local modifier_berserk = "modifier_imba_mask_of_madness_berserk"
+    local sound_cast = "DOTA_Item.MaskOfMadness.Activate"
 
     -- Ability specials
     local berserk_duration = ability:GetSpecialValueFor("berserk_duration")
+
+    -- Play cast sound
+    EmitSoundOn(sound_cast, caster)
 
     -- Berserk!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     caster:AddNewModifier(caster, ability, modifier_berserk, {duration = berserk_duration})

@@ -40,16 +40,7 @@
 		"Ability2"					"imba_alchemist_unstable_concoction"
 		"Ability3"					"imba_alchemist_goblins_greed"		
 		"Ability4"					"imba_alchemist_mammonite"	
-		"Ability5"					"imba_alchemist_chemical_rage"	
-
-		"Ability10"					"special_bonus_imba_alchemist_1" // Sticky Acid slows by 15%
-		"Ability11"					"special_bonus_imba_alchemist_3" // Bounty runes spawn gold bags
-		"Ability12"					"special_bonus_imba_alchemist_8" // Chemical Rage grants a damage aura
-		"Ability13"					"special_bonus_imba_alchemist_5" // Greed stacks increase Acid Spray damage
-		"Ability14"					"special_bonus_imba_alchemist_7" // Alchemist now gains 4x gold from bounty runes
-		"Ability15"					"special_bonus_imba_alchemist_2" // Unstable Concoction can grant allies Chemical Rage
-		"Ability16"					"special_bonus_imba_alchemist_6" // When in Chemical Rage, Alchemist brews Unstable Concoction faster.
-		"Ability17"					"special_bonus_imba_alchemist_4" // Enemies affected by Acid Spray have a chance to drop gold bags on death.
+		"Ability5"					"imba_alchemist_chemical_rage"			
 
 		"Ability10"					"special_bonus_imba_alchemist_7" // Alchemist now gains 4x gold from bounty runes
 		"Ability11"					"special_bonus_imba_alchemist_1" // Sticky Acid slows by 15%
@@ -100,16 +91,7 @@
 		"Ability1"					"imba_antimage_mana_break"
 		"Ability2"					"imba_antimage_blink"
 		"Ability3"					"imba_antimage_spell_shield"
-		"Ability4"					"imba_antimage_mana_void"
-
-		"Ability10"					"special_bonus_imba_antimage_1" //Blink now has charges
-		"Ability11"					"special_bonus_imba_antimage_2" //Spell Shield can be used even while stunned.
-		"Ability12"					"special_bonus_imba_antimage_3" //Blink cast point decrease
-		"Ability13"					"special_bonus_imba_antimage_4" //% of target's missing mana added to Mana Break damage
-		"Ability14"					"special_bonus_imba_antimage_5" //Blinking grants a 1 second magic immunity shield.
-		"Ability15"					"special_bonus_imba_antimage_6" //Mana Void explosion is delayed. Each point of mana lost is worth as 2 missing mana points
-		"Ability16"					"special_bonus_imba_antimage_7" //Mana Break attacks burn mana of nearby enemies in AoE, equal to a portion of the mana burned.
-		"Ability17"					"special_bonus_imba_antimage_8" //Mana Void counts missing mana from all targets in the AOE
+		"Ability4"					"imba_antimage_mana_void"		
 
 		"Ability10"					"special_bonus_imba_antimage_3" //Blink cast point decrease
 		"Ability11"					"special_bonus_imba_antimage_7" //Mana Break attacks burn mana of nearby enemies in AoE, equal to a portion of the mana burned.
@@ -161,16 +143,7 @@
 		"Ability1"					"imba_axe_berserkers_call"
 		"Ability2"					"imba_axe_battle_hunger"
 		"Ability3"					"imba_axe_counter_helix"
-		"Ability4"					"imba_axe_culling_blade"
-
-		"Ability10"					"special_bonus_imba_axe_4" // +30% of your strength added to Counter Helix damage.
-		"Ability11"					"special_bonus_imba_axe_2" // +1 armor with every hit taken during Berserker's Call, lasts for 3 seconds after it ends.
-		"Ability12"					"special_bonus_imba_axe_3" // Allows self-casting of Battle Hunger - applies it to everyone affected by Berserker's Call.
-		"Ability13"					"special_bonus_imba_axe_1" // If an enemy unit with Battle Hunger attacks an ally, that ally also gains the Battle Hunger debuff
-		"Ability14"					"special_bonus_imba_axe_5" // Counter Helix chance doubles, but each Counter Helix deals 66% of the original base damage.
-		"Ability15"					"special_bonus_imba_axe_6" // When Counter Helix procs, it has 25% chance to immediately proc again. Psuedo Random chance. The extra proc cannot trigger this again.
-		"Ability16"					"special_bonus_imba_axe_7" // Counter Helix's damage is increased by 1 for each point of Armor Axe has.
-		"Ability17"					"special_bonus_imba_axe_8" // +650 Culling Blade cast range (leaps into the target to execute it).
+		"Ability4"					"imba_axe_culling_blade"		
 
 		"Ability10"					"special_bonus_imba_axe_2" // +1 armor with every hit taken during Berserker's Call, lasts for 3 seconds after it ends.
 		"Ability11"					"special_bonus_imba_axe_7" // Counter Helix's damage is increased by 1 for each point of Armor Axe has.
@@ -199,16 +172,7 @@
 		"Ability2"					"imba_bane_brain_sap"
 		"Ability3"					"imba_bane_nightmare"
 		"Ability4"					"imba_bane_nightmare_end"
-		"Ability5"					"imba_bane_fiends_grip"
-
-		"Ability10"					"special_bonus_imba_bane_1" //Grants Enfeeble stacks when Nightmaring a target.
-		"Ability11"					"special_bonus_imba_bane_2" //Enfeeble is now cast in a AoE to all targets around the main target.
-		"Ability12"					"special_bonus_imba_bane_3" //Fiend's Grip is no longer channeled
-		"Ability13"					"special_bonus_imba_bane_4" //Enfeeble causes the target to lose his stats. This effect increases for each Enfeeble stack it has.
-		"Ability14"					"special_bonus_imba_bane_5" //Brain Sap casts summons a Baby Bane which applies a Baby Fiend's Grip on the target.
-		"Ability15"					"special_bonus_imba_bane_6" //Nightmare also mutes items for enemies affected.
-		"Ability16"					"special_bonus_imba_bane_7" //Nightmare invulnerability duration increase for allies
-		"Ability17"					"special_bonus_imba_bane_8" //Fiend's Grip spread during channeling
+		"Ability5"					"imba_bane_fiends_grip"		
 
 		"Ability10"					"special_bonus_imba_bane_1" //Grants Enfeeble stacks when Nightmaring a target.
 		"Ability11"					"special_bonus_imba_bane_4" //Enfeeble causes the target to lose his stats. This effect increases for each Enfeeble stack it has.
@@ -506,14 +470,14 @@
 		"Ability3"					"imba_clinkz_skeleton_walk"
 		"Ability4"					"imba_clinkz_death_pact"
 
-		"Ability10"					"special_bonus_imba_clinkz_1"
-		"Ability11"					"special_bonus_imba_clinkz_2"
-		"Ability12"					"special_bonus_imba_clinkz_3"
-		"Ability13"					"special_bonus_imba_clinkz_4"
-		"Ability14"					"special_bonus_imba_clinkz_5"
-		"Ability15"					"special_bonus_imba_clinkz_6"
-		"Ability16"					"special_bonus_imba_clinkz_7"
-		"Ability17"					"special_bonus_imba_clinkz_8"
+		"Ability10"					"special_bonus_imba_clinkz_6" //Skeleton Walk move speed persists for a small period
+		"Ability11"					"special_bonus_imba_clinkz_2" //Clinkz gains extra move speed when Skeleton Walking close to enemies
+		"Ability12"					"special_bonus_imba_clinkz_3" //Skeleton Walking through an enemy causes Clinkz to lose his invisibility, but roots the target
+		"Ability13"					"special_bonus_imba_clinkz_4" //Searing Arrow active hits in an AoE  
+		"Ability14"					"special_bonus_imba_clinkz_5" //Strafe can be self cast to root Clinkz for the duration but grant him a huge range bonus
+		"Ability15"					"special_bonus_imba_clinkz_1" //Death Pact Spirits can now attack with spirit strikes
+		"Ability16"					"special_bonus_imba_clinkz_7" //Searing Arrows has a chance to attack the same target again
+		"Ability17"					"special_bonus_imba_clinkz_8" //Death Pact bonuses stay permanently if target dies quickly
 
 		"ProjectileModel"			"particles/units/heroes/hero_clinkz/clinkz_base_attack.vpcf"
 	}
@@ -610,14 +574,14 @@
 		"Ability4"                  "imba_dazzle_ressurection"
         "Ability5"                  "imba_dazzle_weave"
 
-		"Ability10"					"special_bonus_imba_dazzle_3"
-		"Ability11"					"special_bonus_imba_dazzle_2"
-		"Ability12"					"special_bonus_imba_dazzle_1"
-		"Ability13"					"special_bonus_imba_dazzle_8"
-		"Ability14"					"special_bonus_imba_dazzle_7"
-		"Ability15"					"special_bonus_imba_dazzle_4"
-		"Ability16"					"special_bonus_imba_dazzle_5"
-		"Ability17"					"special_bonus_imba_dazzle_6"
+		"Ability10"					"special_bonus_imba_dazzle_4" // Poison Touch slows the target after setting in appropriate to damage taken
+		"Ability11"					"special_bonus_imba_dazzle_5" // Enemies that interact with a poisoned touched teammate of their get poison touched as well
+		"Ability12"					"special_bonus_imba_dazzle_8" // Causes Weave to tick twice as fast
+		"Ability13"					"special_bonus_imba_dazzle_7" // Weave now fully affects buildings
+		"Ability14"					"special_bonus_imba_dazzle_2" // Shadow Wave heals allies around allies, damages enemies around enemies
+		"Ability15"					"special_bonus_imba_dazzle_1" // Shadow Wave now bounces after a small delay
+		"Ability16"					"special_bonus_imba_dazzle_6" // Nothl Protection is now an aura around Dazzle
+		"Ability17"					"special_bonus_imba_dazzle_3" // Shallow Grave releases a shadow wave to heal allies when it ends
 
 		"ProjectileModel"			"particles/units/heroes/hero_dazzle/dazzle_base_attack.vpcf"
 	}
@@ -748,16 +712,16 @@
 		"Ability2"					"imba_drow_ranger_gust"
 		"Ability3"					"imba_drow_ranger_trueshot"
 		"Ability4"					"imba_drow_ranger_deadeye"
-		"Ability5"					"imba_drow_ranger_marksmanship"
+		"Ability5"					"imba_drow_ranger_marksmanship"		
 
-		"Ability10"					"special_bonus_imba_drow_ranger_1"
-		"Ability11"					"special_bonus_imba_drow_ranger_2"
-		"Ability12"					"special_bonus_imba_drow_ranger_3"
-		"Ability13"					"special_bonus_imba_drow_ranger_4"
-		"Ability14"					"special_bonus_imba_drow_ranger_5"
-		"Ability15"					"special_bonus_imba_drow_ranger_6"
-		"Ability16"					"special_bonus_imba_drow_ranger_7"
-		"Ability17"					"special_bonus_imba_drow_ranger_8"
+		"Ability10"					"special_bonus_imba_drow_ranger_7" //Deadeye becomes an aura
+		"Ability11"					"special_bonus_imba_drow_ranger_2" //Chance to kill creeps instantly
+		"Ability12"					"special_bonus_imba_drow_ranger_4" //Each Chilled enemy grants drow +10 flat movespeed bonus for the duration. Stacks with itself, depending on amounts of Chill stacks on enemies.
+		"Ability13"					"special_bonus_imba_drow_ranger_5" //While Marksmanship is active (not disabled by nearby enemies), Drow Ranger emits an aura on nearby allies that makes their attack chill their targets, slowing them by 15%.
+		"Ability14"					"special_bonus_imba_drow_ranger_1" //Gust can be self cast, making a wave that moves Drow Ranger herself forward. This wave silences all enemies that it comes in contact with normally.
+		"Ability15"					"special_bonus_imba_drow_ranger_3" //After casting Gust, all auto attacks hitting a target casts a small Gust for 5 seconds. This small gust wave pushes the main target back 50 units, deals no damage, and does not silence.
+		"Ability16"					"special_bonus_imba_drow_ranger_8" //Marksmanship no longer disables itself
+		"Ability17"					"special_bonus_imba_drow_ranger_6" //While Trueshot Aura is active, Drow gains agility equal to 5% of every allied hero's agility.
 
 		"ProjectileModel"			"particles/units/heroes/hero_drow/drow_base_attack.vpcf"
 	}
@@ -912,16 +876,16 @@
 		"Ability1"					"imba_enigma_malefice"
 		"Ability2"					"imba_enigma_demonic_conversion"
 		"Ability3"					"imba_enigma_midnight_pulse"
-		"Ability4"					"imba_enigma_black_hole"
+		"Ability4"					"imba_enigma_black_hole"		
 
-		"Ability10"					"special_bonus_imba_enigma_1"
-		"Ability11"					"special_bonus_imba_enigma_2"
-		"Ability12"					"special_bonus_imba_enigma_3"
-		"Ability13"					"special_bonus_imba_enigma_4"
-		"Ability14"					"special_bonus_imba_enigma_5"
-		"Ability15"					"special_bonus_imba_enigma_6"
-		"Ability16"					"special_bonus_imba_enigma_7"
-		"Ability17"					"special_bonus_imba_enigma_8"
+		"Ability10"					"special_bonus_imba_enigma_1" // Each Singularity stack consumed now decreases Black Hole's cooldown by 2 seconds.
+		"Ability11"					"special_bonus_imba_enigma_2" // Malefice has an AoE Radius
+		"Ability12"					"special_bonus_imba_enigma_3" // Midnight Pulse doubles its AoE over the duration.
+		"Ability13"					"special_bonus_imba_enigma_4" // Black Hole cast on death
+		"Ability14"					"special_bonus_imba_enigma_7" // Magic immunity on spell cast
+		"Ability15"					"special_bonus_imba_enigma_5" // True malefice, instead of stuns little black holes are created
+		"Ability16"					"special_bonus_imba_enigma_6" // Enigma has a constant AoE Midnight pulse around him. Stacks with regular pulse.
+		"Ability17"					"special_bonus_imba_enigma_8" // Cast Eidolons on heroes
 
 		"ProjectileModel"			"particles/units/heroes/hero_enigma/enigma_base_attack.vpcf"					
 	}
@@ -942,15 +906,15 @@
 		"Ability3"					"imba_faceless_void_time_lock"
 		"Ability4"					"imba_faceless_void_timelord"
 		"Ability5"					"imba_faceless_void_chronosphere"
-		
-		"Ability10"					"special_bonus_imba_faceless_void_1"
-		"Ability11"					"special_bonus_imba_faceless_void_6"
-		"Ability12"					"special_bonus_imba_faceless_void_3"
-		"Ability13"					"special_bonus_imba_faceless_void_2"
-		"Ability14"					"special_bonus_imba_faceless_void_5"
-		"Ability15"					"special_bonus_imba_faceless_void_7"
-		"Ability16"					"special_bonus_imba_faceless_void_4"
-		"Ability17"					"special_bonus_imba_faceless_void_8"
+
+		"Ability10"					"special_bonus_imba_faceless_void_7" // Time Dilation no longer spends chronocharges to affect allies
+		"Ability11"					"special_bonus_imba_faceless_void_2" // Time Dilation grants bonus health and mana per charge spent on them
+		"Ability12"					"special_bonus_imba_faceless_void_6" // Time Lord bonuses are increased when Faceless Void is inside a Chronosphere
+		"Ability13"					"special_bonus_imba_faceless_void_8" // Chronosphere causes Faceless Void attacks to cleave
+		"Ability14"					"special_bonus_imba_faceless_void_3" // Movement inside Chronosphere is instant, Void constantly dodges projectiles
+		"Ability15"					"special_bonus_imba_faceless_void_4" // Bashing enemies with the Time Dilation debuff increases their active spells' CD while decreasing all of Voids cooldowns
+		"Ability16"					"special_bonus_imba_faceless_void_5" // Time Lock now spawns mini chronospheres
+		"Ability17"					"special_bonus_imba_faceless_void_1" // Time Dilation grants Faceless Void a chance to backtrack damage instances that increases per ability affected by Time Dilation
 
 		"ProjectileSpeed"			"900"
 	}
@@ -1944,16 +1908,16 @@
 		"Ability3"					"imba_pudge_butchers_cleaver"
 		"Ability4"					"imba_pudge_flesh_heap"
 		"Ability5"					"imba_pudge_dismember"
-		"Ability6"					""
+		"Ability6"					""		
 
-		"Ability10"					"special_bonus_imba_pudge_1"
-		"Ability11"					"special_bonus_imba_pudge_2"
-		"Ability12"					"special_bonus_imba_pudge_3"
-		"Ability13"					"special_bonus_imba_pudge_4"
-		"Ability14"					"special_bonus_imba_pudge_5"
-		"Ability15"					"special_bonus_imba_pudge_6"
-		"Ability16"					"special_bonus_imba_pudge_7"
-		"Ability17"					"special_bonus_imba_pudge_8"
+		"Ability10"					"special_bonus_imba_pudge_2" // Meat Shield: Consume X stacks of charges to block Y damage, restores after Z seconds, Ignore on A damage?
+		"Ability11"					"special_bonus_imba_pudge_6" // Hook now deals damage for each tree the unit passes through
+		"Ability12"					"special_bonus_imba_pudge_3" // Bonus Spellsteal per Flesh Heap stack
+		"Ability13"					"special_bonus_imba_pudge_4" // Pudge lifesteals from all sources of damage on units rooted by Cleaver 
+		"Ability14"					"special_bonus_imba_pudge_5" // Cleaver can now pierce through enemies, damaging and affecting all enemies in a straight line.
+		"Ability15"					"special_bonus_imba_pudge_1" // Rot deals x more damage for every y% health he misses
+		"Ability16"					"special_bonus_imba_pudge_8" // Triple Meat Hooks
+		"Ability17"					"special_bonus_imba_pudge_7" // Dismember now disarms the target after the duration for the channeled duration
 
 		"ProjectileSpeed"			"900"
 	}
