@@ -658,7 +658,9 @@ function modifier_imba_enigma_black_hole_aura:OnCreated(keys)
     ParticleManager:SetParticleControl( self.particle, 0, self:GetParent():GetAbsOrigin())
     ParticleManager:SetParticleControl( self.particle, 1, Vector(self.stun_radius, self.stun_radius, self.stun_radius))
     -- Sound
-    EmitSoundOn("Hero_Enigma.Black_Hole",self:GetCaster())
+    if not caster:IsSilenced() then
+      EmitSoundOn("Hero_Enigma.Black_Hole", caster)
+    end
   end
 end
 -- Damage everyone via this to deal damage at the right time
