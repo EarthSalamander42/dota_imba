@@ -275,8 +275,7 @@ function modifier_imba_enigma_midnight_pulse_aura:OnCreated()
   self.duration = self:GetAbility():GetSpecialValueFor("duration")
   self.damage_per_tick = self:GetAbility():GetSpecialValueFor("damage_per_tick")
   self.pull_duration = self:GetAbility():GetSpecialValueFor("pull_duration")
-  if IsServer() then
-    --self.particle = ParticleManager:CreateParticle("particles/hero/enigma/enigma_midnight_pulse.vpcf",PATTACH_ABSORIGIN_FOLLOW,self:GetParent())
+  if IsServer() then    
     self.particle = ParticleManager:CreateParticle("particles/units/heroes/hero_enigma/enigma_midnight_pulse.vpcf",PATTACH_ABSORIGIN_FOLLOW,self:GetParent())
     ParticleManager:SetParticleControl(self.particle,0,self:GetParent():GetAbsOrigin())
     ParticleManager:SetParticleControl(self.particle,1,Vector(self.auraRadius,0,0))
@@ -308,7 +307,9 @@ function modifier_imba_enigma_midnight_pulse_aura:OnIntervalThink()
     ApplyDamage(damage)
 
     local modifier = enemy:AddNewModifier(self:GetCaster(),self:GetAbility(),"modifier_imba_enigma_midnight_pulse_force",{duration = self.pull_duration})
-    modifier.pull_strength = FrameTime() * self:GetAbility():GetSpecialValueFor("pull_strength")
+    if modifier then
+      modifier.pull_strength = FrameTime() * self:GetAbility():GetSpecialValueFor("pull_strength")
+    end
   end
   -- Apply modifier for eidolons
   local allies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.auraRadius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC,DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
@@ -318,9 +319,14 @@ function modifier_imba_enigma_midnight_pulse_aura:OnIntervalThink()
       ally:AddNewModifier(self:GetCaster(),self:GetAbility(),"modifier_imba_enigma_midnight_pulse_eidolon_regen",{duration = duration})
     end
   end
+
+  if self:GetCaster():HasTalent("special_bonus_imba_enigma_3") then
+    -- Update the particle for expanding midnight talent, if neccesary.
+    ParticleManager:SetParticleControl(self.particle,1,Vector(self.auraRadius,0,0))
+  end
 end
 
--- Control the aura radius, could be based on the duration. Also update the particle for that
+-- Control the aura radius, could be based on the duration. 
 function modifier_imba_enigma_midnight_pulse_aura:GetAuraRadius()
   -- #3 Talent: Increasing the radius based on the duration
   if self:GetCaster():HasTalent("special_bonus_imba_enigma_3")  then
@@ -329,10 +335,7 @@ function modifier_imba_enigma_midnight_pulse_aura:GetAuraRadius()
   else
     self.auraRadius = self.radius
   end
-
-  if IsServer() then
-    ParticleManager:SetParticleControl(self.particle,1,Vector(self.auraRadius,0,0))
-  end
+  
   return self.auraRadius
 end
 
@@ -1057,11 +1060,12 @@ function modifier_special_bonus_imba_enigma_6:OnIntervalThink()
       ally:AddNewModifier(self:GetCaster(),self.ability,"modifier_imba_enigma_midnight_pulse_eidolon_regen",{duration = duration})
     end
   end
+
+  if self:GetCaster():HasTalent("special_bonus_imba_enigma_3") then
+    ParticleManager:SetParticleControl(self.particle,1,Vector(self.auraRadius,0,0))
+  end
 end
 
 function modifier_special_bonus_imba_enigma_6:GetAuraRadius()
-  if IsServer() then
-    ParticleManager:SetParticleControl(self.particle,1,Vector(self.auraRadius,0,0))
-  end
   return self.auraRadius
 end
