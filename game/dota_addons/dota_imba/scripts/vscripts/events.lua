@@ -263,46 +263,7 @@ function GameMode:OnNPCSpawned(keys)
 				end
 			end
 		end
-	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Remote Mine ability setup
-	-------------------------------------------------------------------------------------------------
-
-	if string.find(npc:GetUnitName(), "npc_dota_techies_remote_mine") then
-		npc.needs_remote_mine_setup = true
-	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Random OMG on-respawn skill randomization
-	-------------------------------------------------------------------------------------------------
-
-	if IMBA_ABILITY_MODE_RANDOM_OMG then
-		if npc:IsRealHero() then
-			
-			-- Randomize abilities
-			ApplyAllRandomOmgAbilities(npc)
-
-			-- Clean-up undesired permanent modifiers
-			RemovePermanentModifiersRandomOMG(npc)
-
-			-- If the hero is level 25 or above, max out all its abilities
-			if npc:GetLevel() >= 25 then
-
-				npc:SetAbilityPoints(0)
-				for i = 0, 16 do
-					local current_ability = npc:GetAbilityByIndex(i)
-					if current_ability then
-						current_ability:SetLevel(current_ability:GetMaxLevel())
-					end
-				end
-				
-			-- Else, grant unspent skill points equal to the hero's level
-			else
-				npc:SetAbilityPoints( math.min(npc:GetLevel(), 25) )
-			end
-		end
-	end
+	end		
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Buyback penalty removal
@@ -331,9 +292,10 @@ function GameMode:OnNPCSpawned(keys)
 
 		-- Add passive buff to lane creeps
 		if string.find(npc:GetUnitName(), "dota_creep") then
-			npc:AddAbility("imba_creep_buffs")
-			local creep_ability = npc:FindAbilityByName("imba_creep_buffs")
-			creep_ability:SetLevel(1)
+			local ability = npc:GetAbilityByIndex(0)
+			if ability then
+				ability:SetLevel(1)
+			end
 		end
 	end
 

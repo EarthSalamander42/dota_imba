@@ -192,7 +192,7 @@
         // Abilities
         //----------------------------------------------------------------
         
-        "Ability1"                  ""          // Ability 1.
+        "Ability1"                  "imba_creep_ranged_bonuses"          // Ability 1.
         "Ability2"                  ""          // Ability 2.
         "Ability3"                  ""          // Ability 3.
         "Ability4"                  ""          // Ability 4.
@@ -285,7 +285,7 @@
         // Abilities
         //----------------------------------------------------------------
         
-        "Ability1"                  ""          // Ability 1.
+        "Ability1"                  "imba_super_creep_ranged_bonuses"          // Ability 1.
         "Ability2"                  ""          // Ability 2.
         "Ability3"                  ""          // Ability 3.
         "Ability4"                  ""          // Ability 4.
@@ -378,7 +378,7 @@
         // Abilities
         //----------------------------------------------------------------
         
-        "Ability1"                  ""          // Ability 1.
+        "Ability1"                  "imba_mega_creep_ranged_bonuses"          // Ability 1.
         "Ability2"                  ""          // Ability 2.
         "Ability3"                  ""          // Ability 3.
         "Ability4"                  ""          // Ability 4.
@@ -471,7 +471,7 @@
         // Abilities
         //----------------------------------------------------------------
         
-        "Ability1"                  ""          // Ability 1.
+        "Ability1"                  "imba_creep_ranged_bonuses"          // Ability 1.
         "Ability2"                  ""          // Ability 2.
         "Ability3"                  ""          // Ability 3.
         "Ability4"                  ""          // Ability 4.
@@ -564,7 +564,7 @@
         // Abilities
         //----------------------------------------------------------------
         
-        "Ability1"                  ""          // Ability 1.
+        "Ability1"                  "imba_super_creep_ranged_bonuses"          // Ability 1.
         "Ability2"                  ""          // Ability 2.
         "Ability3"                  ""          // Ability 3.
         "Ability4"                  ""          // Ability 4.
@@ -657,7 +657,7 @@
         // Abilities
         //----------------------------------------------------------------
         
-        "Ability1"                  ""          // Ability 1.
+        "Ability1"                  "imba_mega_creep_ranged_bonuses"          // Ability 1.
         "Ability2"                  ""          // Ability 2.
         "Ability3"                  ""          // Ability 3.
         "Ability4"                  ""          // Ability 4.
@@ -750,7 +750,7 @@
         // Abilities
         //----------------------------------------------------------------
         
-        "Ability1"                  ""          // Ability 1.
+        "Ability1"                  "imba_creep_melee_bonuses"          // Ability 1.
         "Ability2"                  ""          // Ability 2.
         "Ability3"                  ""          // Ability 3.
         "Ability4"                  ""          // Ability 4.
@@ -843,7 +843,7 @@
         // Abilities
         //----------------------------------------------------------------
         
-        "Ability1"                  ""          // Ability 1.
+        "Ability1"                  "imba_super_creep_melee_bonuses"          // Ability 1.
         "Ability2"                  ""          // Ability 2.
         "Ability3"                  ""          // Ability 3.
         "Ability4"                  ""          // Ability 4.
@@ -936,7 +936,7 @@
         // Abilities
         //----------------------------------------------------------------
         
-        "Ability1"                  ""          // Ability 1.
+        "Ability1"                  "imba_mega_creep_melee_bonuses"          // Ability 1.
         "Ability2"                  ""          // Ability 2.
         "Ability3"                  ""          // Ability 3.
         "Ability4"                  ""          // Ability 4.
@@ -1029,7 +1029,7 @@
         // Abilities
         //----------------------------------------------------------------
         
-        "Ability1"                  ""          // Ability 1.
+        "Ability1"                  "imba_creep_melee_bonuses"          // Ability 1.
         "Ability2"                  ""          // Ability 2.
         "Ability3"                  ""          // Ability 3.
         "Ability4"                  ""          // Ability 4.
@@ -1122,7 +1122,7 @@
             // Abilities
         //----------------------------------------------------------------
         
-        "Ability1"                  ""          // Ability 1.
+        "Ability1"                  "imba_super_creep_melee_bonuses"          // Ability 1.
         "Ability2"                  ""          // Ability 2.
         "Ability3"                  ""          // Ability 3.
         "Ability4"                  ""          // Ability 4.
@@ -1215,7 +1215,7 @@
             // Abilities
         //----------------------------------------------------------------
         
-        "Ability1"                  ""          // Ability 1.
+        "Ability1"                  "imba_mega_creep_melee_bonuses"          // Ability 1.
         "Ability2"                  ""          // Ability 2.
         "Ability3"                  ""          // Ability 3.
         "Ability4"                  ""          // Ability 4.

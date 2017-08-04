@@ -142,16 +142,17 @@
 	}
 
 	//=================================================================================================================
-	// Creep passive buffs
+	// Normal Melee Lane Creep Upgrade
 	//=================================================================================================================
-	"imba_creep_buffs"
+	"imba_creep_melee_bonuses"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_datadriven"
+		"BaseClass"										"ability_lua"
 		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityTextureName"							"rubick_empty1"
 		"MaxLevel"										"1"
+		"ScriptFile"									"hero/npc_upgrades.lua"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -160,90 +161,172 @@
 			"01"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"bonus_damage_per_minute"				"2"
+				"bonus_damage_per_minute"				"3"
 			}
+
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"bonus_health_per_minute"				"2"
-			}
-			"03"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"mega_armor"							"25"
-			}
-			"04"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"mega_magic_armor"						"50"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_creep_buffs_base"
-			{
-				"Passive"								"1"
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-
-				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/npc_upgrades.lua"
-						"Function"						"CreepUpgrade"
-
-						"modifier_damage"				"modifier_imba_creep_time_damage"
-						"modifier_armor"				"modifier_imba_mega_creep_armor"
-						"modifier_magic_resist"			"modifier_imba_mega_creep_magic_resist"
-					}
-				}
-			}
-
-			"modifier_imba_creep_time_damage"
-			{
-				"Passive"								"0"
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%bonus_damage_per_minute"
-				}
-			}
-
-			"modifier_imba_mega_creep_armor"
-			{
-				"Passive"								"0"
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%mega_armor"
-				}
-			}
-
-			"modifier_imba_mega_creep_magic_resist"
-			{
-				"Passive"								"0"
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"		"%mega_magic_armor"
-				}
+				"bonus_health_per_minute"				"22"
 			}
 		}
 	}
+
+	//=================================================================================================================
+	// Normal Ranged Lane Creep Upgrade
+	//=================================================================================================================
+	"imba_creep_ranged_bonuses"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityTextureName"							"rubick_empty1"
+		"MaxLevel"										"1"
+		"ScriptFile"									"hero/npc_upgrades.lua"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"bonus_damage_per_minute"				"5"
+			}
+
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"bonus_health_per_minute"				"16"
+			}			
+		}		
+	}
+
+	//=================================================================================================================
+	// Super Melee Lane Creep Upgrade
+	//=================================================================================================================
+	"imba_super_creep_melee_bonuses"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityTextureName"							"rubick_empty1"
+		"MaxLevel"										"1"
+		"ScriptFile"									"hero/npc_upgrades.lua"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"bonus_damage_per_minute"				"6"
+			}
+
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"bonus_health_per_minute"				"44"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Super Ranged Lane Creep Upgrade
+	//=================================================================================================================
+	"imba_super_creep_ranged_bonuses"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityTextureName"							"rubick_empty1"
+		"MaxLevel"										"1"
+		"ScriptFile"									"hero/npc_upgrades.lua"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"bonus_damage_per_minute"				"10"
+			}
+
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"bonus_health_per_minute"				"32"
+			}			
+		}		
+	}
+
+	//=================================================================================================================
+	// Mega Melee Lane Creep Upgrade
+	//=================================================================================================================
+	"imba_mega_creep_melee_bonuses"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityTextureName"							"rubick_empty1"
+		"MaxLevel"										"1"
+		"ScriptFile"									"hero/npc_upgrades.lua"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"bonus_damage_per_minute"				"12"
+			}
+
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"bonus_health_per_minute"				"88"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Mega Ranged Lane Creep Upgrade
+	//=================================================================================================================
+	"imba_mega_creep_ranged_bonuses"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityTextureName"							"rubick_empty1"
+		"MaxLevel"										"1"
+		"ScriptFile"									"hero/npc_upgrades.lua"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"bonus_damage_per_minute"				"20"
+			}
+
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"bonus_health_per_minute"				"64"
+			}			
+		}		
+	}
+
 
 	//=================================================================================================================
 	// Tower passive buffs
@@ -7446,6 +7529,7 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"nova_radius"					"425"
+				"LinkedSpecialBonus"			"special_bonus_imba_crystal_maiden_3"
 			}
 
 			"03"
@@ -7494,12 +7578,14 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"snowfield_radius"				"425"
+				"LinkedSpecialBonus"			"special_bonus_imba_crystal_maiden_3"
 			}
 
 			"11"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"nova_damage"					"100 150 200 250 280 310 340"
+				"LinkedSpecialBonus"			"special_bonus_imba_crystal_maiden_7"
 			}
 		}
 	}
@@ -7558,6 +7644,7 @@
 			{
 				"var_type"								"FIELD_FLOAT"
 				"duration"								"1.5 2.0 2.5 3.0 3.0 3.0 3.0"
+				"LinkedSpecialBonus"					"special_bonus_imba_crystal_maiden_5"
 			}			
 
 			"03"
@@ -7713,7 +7800,6 @@
 			"particle"									"particles/generic_gameplay/generic_slowed_cold.vpcf"
 			"particle"									"particles/status_fx/status_effect_frost_lich.vpcf"
 			"particle"									"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
-			"particle"									"particles/units/heroes/hero_winter_wyvern/wyvern_splinter_blast.vpcf"
 		}
 		
 		// Special
@@ -7742,6 +7828,7 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"slow"									"30"
+				"LinkedSpecialBonus"					"special_bonus_imba_crystal_maiden_1"
 			}
 
 			"05"
@@ -7793,9 +7880,8 @@
 			}			
 		}
 	}
-
 	//=================================================================================================================
-	// Crystal Maiden Talent 1 (Level 10): Icy Touch causes a 100% movement speed slow that is slowly regained over 6 seconds.
+	// Crystal Maiden Talent 1 (Level 10): +20% Freezing Field slow 
 	//=================================================================================================================
 	"special_bonus_imba_crystal_maiden_1"
 	{
@@ -7807,7 +7893,7 @@
 
 		"LinkedAbility"
 		{
-			"01"		"imba_crystal_maiden_frostbite"
+			"01"		"imba_crystal_maiden_freezing_field"
 		}
 		
 		// Special
@@ -7816,18 +7902,8 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"6.0"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"speed_update_rate"			"1.0"
-			}
-			"03"
-			{
 				"var_type"					"FIELD_INTEGER"
-				"initial_slow_pct"			"100"
+				"value"						"20"
 			}
 		}
 	}
@@ -7861,7 +7937,7 @@
 	}
 	
 	//=================================================================================================================
-	// Crystal Maiden Talent 3 (Level 20): Crystal Nova's Snowfield grants 10% damage reduction and increases health regeneration by 20. 
+	// Crystal Maiden Talent 3 (Level 20): +175 Crystal Nova radius 
 	//=================================================================================================================
 	"special_bonus_imba_crystal_maiden_3"
 	{
@@ -7883,12 +7959,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_reduction_pct"		"10"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"health_regen"				"20"
+				"value"						"175"
 			}
 		}
 	}
@@ -7922,7 +7993,7 @@
 	}
 	
 	//=================================================================================================================
-	// Crystal Maiden Talent 5 (Level 30): Enemies hit by Crystal Maiden's abilities gain a debuff that slows them by 15%/15 move/attack speed for 3 seconds. Can be refreshed.
+	// Crystal Maiden Talent 5 (Level 30): +1.5sec Frostbite duration
 	//=================================================================================================================
 	"special_bonus_imba_crystal_maiden_5"
 	{
@@ -7934,7 +8005,7 @@
 
 		"LinkedAbility"
 		{
-			"01"		"imba_crystal_maiden_arcane_dynamo"
+			"01"		"imba_crystal_maiden_frostbite"
 		}
 		
 		// Special
@@ -7944,19 +8015,14 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"3.0"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"slow"						"15"
+				"value"						"1.5"
 			}
 		}
 	}
 
 	
 	//=================================================================================================================
-	// Crystal Maiden Talent 6 (Level 30): Freezing Field constantly Frostbites enemies in it during the duration of the spell - a unit is Frostbitten once every 3 seconds after the effect on it ended. Additional Frostbites procced by this talent have their duration halved.
+	// Crystal Maiden Talent 6 (Level 30): -6sec Icy Touch effect cooldown
 	//=================================================================================================================
 	"special_bonus_imba_crystal_maiden_6"
 	{
@@ -7968,7 +8034,7 @@
 
 		"LinkedAbility"
 		{
-			"01"		"imba_crystal_maiden_freezing_field"
+			"01"		"imba_crystal_maiden_frostbite"
 		}
 		
 		// Special
@@ -7977,24 +8043,14 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"delay"						"3.0"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration_multiplier"		"0.5"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"tick_rate"					"0.5"
+				"var_type"					"FIELD_INTEGER"
+				"value"						"6"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Crystal Maiden Talent 7 (Level 40): Freezing Field's no longer drops projectiles - instead, Crystal Maiden channels for up to 10 seconds. When the channel ends (or interrupted), a huge icicle arrives at the cast area. The icicle explodes violenty, breaking into shards that are evenly distributed between all nearby enemies in range, dealing usual damage in the target's AoE. Each 0.1 seconds of a channel generates one shard.
+	// Crystal Maiden Talent 7 (Level 40): +260 Crystal Nova damage
 	//=================================================================================================================
 	"special_bonus_imba_crystal_maiden_7"
 	{
@@ -8006,22 +8062,17 @@
 
 		"LinkedAbility"
 		{
-			"01"		"imba_crystal_maiden_freezing_field"
+			"01"		"imba_crystal_maiden_crystal_nova"
 		}
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01" //How many seconds each shard takes to generate
+			"01"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"shard_rate"				"0.1"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"shard_damage_mul"			"1"
+				"var_type"					"FIELD_INTEGER"
+				"value"						"260"
 			}
 		}
 	}

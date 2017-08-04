@@ -22,7 +22,7 @@ end
 -- Stats modifier (stackable)
 modifier_item_imba_heart = modifier_item_imba_heart or class({})
 
-function modifier_item_imba_heart:IsHidden() return false end
+function modifier_item_imba_heart:IsHidden() return true end
 function modifier_item_imba_heart:IsPurgable() return false end
 function modifier_item_imba_heart:IsDebuff() return false end
 function modifier_item_imba_heart:RemoveOnDeath() return false end
@@ -73,7 +73,7 @@ end
 -- Strength aura modifier, regenerations
 modifier_item_imba_heart_unique = modifier_item_imba_heart_unique or class({})
 
-function modifier_item_imba_heart_unique:IsHidden() return false end
+function modifier_item_imba_heart_unique:IsHidden() return true end
 function modifier_item_imba_heart_unique:IsPurgable() return false end
 function modifier_item_imba_heart_unique:IsDebuff() return false end
 function modifier_item_imba_heart_unique:RemoveOnDeath() return false end
