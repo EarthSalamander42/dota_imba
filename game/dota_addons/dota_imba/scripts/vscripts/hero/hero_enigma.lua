@@ -554,30 +554,45 @@ function imba_enigma_black_hole:OnSpellStart()
   end
   -- Store variables
   local duration = self.duration or self:GetSpecialValueFor("duration")
+  local stun_radius = self:GetAOERadius()
   -- self.duration should only have a value when used with the cast on death talent
   self.duration = nil
   local damage_per_tick = self:GetSpecialValueFor("damage_per_tick")
-  self.radius = self:GetAOERadius()
   local pull_strength = self:GetSpecialValueFor("pull_strength")
   self.heroesHit = {}
 
-  -- #Talent 1. Singularity stack cooldown reduction 
-  if caster:HasTalent("special_bonus_imba_enigma_1") then
-    local modifier = self:GetCaster():FindModifierByName(self:GetIntrinsicModifierName())
-    if modifier and caster:IsAlive() then
-      self.consumedSingularityCharges = (self.consumedSingularityCharges or 0) + modifier:GetStackCount()
-    end
-  end  
+  local enemies = FindUnitsInRadius(
+                self:GetCaster():GetTeamNumber(),
+                point,
+                nil,
+        stun_radius,
+                DOTA_UNIT_TARGET_TEAM_ENEMY,
+                DOTA_UNIT_TARGET_HERO,
+                DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
+                FIND_ANY_ORDER,
+                false)
 
+  for _, unit in pairs(enemies) do
+    if unit:IsRealHero() and self.heroesHit then
+      table.insert(self.heroesHit, unit)
+    end
+  end
+
+  
   caster.hBlackHoleDummyUnit = CreateModifierThinker(caster,self,"modifier_imba_enigma_black_hole_aura",{duration = duration,radius = radius},point,caster:GetTeamNumber(),false)
   
   if caster:HasScepter() then
     CreateModifierThinker(caster,caster:FindAbilityByName("imba_enigma_midnight_pulse"),"modifier_imba_enigma_midnight_pulse_aura",{duration = duration},point,caster:GetTeamNumber(),false)
   end
 
+  -- Decreases cooldown of the current black hole based on heroes hit
+  if caster:HasTalent("special_bonus_imba_enigma_1") then
+    self.consumedSingularityCharges = #self.heroesHit or 0
+    self:EndCooldown()
+    self:StartCooldown(self:GetCooldown(-1))
+  end
   -- Sound
   EmitSoundOnLocationWithCaster(point,"Hero_Enigma.BlackHole.Cast",caster)
-
 end
 
 -- Reset the singularity stacks
@@ -628,8 +643,8 @@ function modifier_imba_enigma_black_hole_aura:OnCreated(keys)
     local ability = caster:FindAbilityByName("imba_enigma_black_hole")
     -- Storing values
     self.damage_per_tick  = keys.damage or ability:GetSpecialValueFor("damage_per_tick")
-    self.singularity_stun_radius_increment_per_stack = ability:GetSpecialValueFor("stun_radius")
-    self.singularity_pull_radius_increment_per_stack = ability:GetSpecialValueFor("stun_radius")
+    self.singularity_stun_radius_increment_per_stack = ability:GetSpecialValueFor("singularity_stun_radius_increment_per_stack")
+    self.singularity_pull_radius_increment_per_stack = ability:GetSpecialValueFor("singularity_pull_radius_increment_per_stack")
     self.stun_radius = ability:GetSpecialValueFor("radius") + (caster:FindModifierByName("modifier_imba_singularity"):GetStackCount() * self.singularity_stun_radius_increment_per_stack)
     self.radius = ability:GetSpecialValueFor("pull_radius") + (caster:FindModifierByName("modifier_imba_singularity"):GetStackCount() * self.singularity_pull_radius_increment_per_stack)
     
@@ -658,7 +673,9 @@ function modifier_imba_enigma_black_hole_aura:OnCreated(keys)
     ParticleManager:SetParticleControl( self.particle, 0, self:GetParent():GetAbsOrigin())
     ParticleManager:SetParticleControl( self.particle, 1, Vector(self.stun_radius, self.stun_radius, self.stun_radius))
     -- Sound
-    EmitSoundOn("Hero_Enigma.Black_Hole",self:GetCaster())
+    if not caster:IsSilenced() then
+      EmitSoundOn("Hero_Enigma.Black_Hole", caster)
+    end
   end
 end
 -- Damage everyone via this to deal damage at the right time
@@ -771,11 +788,6 @@ function modifier_imba_enigma_black_hole_aura_modifier:OnCreated(keys)
     -- Means malefice
     if not self:GetAbility() then
       self.stun_radius = caster:FindTalentValue("special_bonus_imba_enigma_5")
-    else
-      -- Mark the hero as hit by black hole
-      if self:GetParent():IsRealHero() and self:GetAbility().heroesHit then
-        table.insert(self:GetAbility().heroesHit, self:GetParent())
-      end
     end
     self:StartIntervalThink(FrameTime())
   end
