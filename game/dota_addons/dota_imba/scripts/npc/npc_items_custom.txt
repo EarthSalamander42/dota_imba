@@ -8157,55 +8157,25 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"str_bonus_max_health"		"10"
+				"bonus_attackspeed"			"35"
 			}
 
 			"04"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"str_bonus_hp_regen"		"0.015"
+				"var_type"					"FIELD_INTEGER"
+				"str_mode_tenacity"			"20"
 			}
 
 			"05"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"agi_bonus_attack_speed"	"0.5"
+				"var_type"					"FIELD_INTEGER"
+				"agi_mode_evasion"			"20"
 			}
 
 			"06"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"agi_bonus_armor"			"0.035"
-			}
-
-			"07"
-			{
 				"var_type"					"FIELD_INTEGER"
-				"int_bonus_max_mp"			"10"
-			}
-
-			"08"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"int_bonus_mp_regen"		"0.015"
-			}
-
-			"09"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"int_bonus_spell_power"		"0.01"
-			}			
-
-			"10"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_attackspeed"			"35"
-			}
-
-			"11"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"effectiveness_boost"		"50"
+				"int_mode_cast_range"		"200"
 			}
 		}
 	}
