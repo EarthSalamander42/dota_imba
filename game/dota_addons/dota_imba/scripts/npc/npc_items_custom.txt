@@ -2914,9 +2914,10 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2185"
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
 		"AbilityTextureName" 			"custom/imba_heart"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"ScriptFile"					"items/item_heart.lua"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -2924,11 +2925,7 @@
 		"ItemShopTags"					"str;regen_health;health_pool"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"hot;heart of tarrasque"
-		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
-
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"5"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"		
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -2937,7 +2934,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"40"
+				"bonus_strength"		"30"
 			}
 			"02"
 			{
@@ -2947,7 +2944,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_str"				"10"
+				"aura_str"				"12"
 			}
 			"04"
 			{
@@ -2957,7 +2954,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"base_regen"			"1.5"
+				"base_regen"			"0.5"
 			}
 			"06"
 			{
@@ -2967,115 +2964,15 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"regen_cooldown"		"5"
+				"regen_cooldown_melee"	"5"
 			}
+
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"regen_tooltip"			"7"
+				"regen_cooldown_ranged"	"7"
 			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_heart_passive"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-				"IsBuff"						"1"
-				"IsPurgable"					"0"
-
-				"Attributes"					"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_BONUS"				"%bonus_health"
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_strength"
-				}
-			}
-
-			"modifier_item_heart_unique"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-				"IsBuff"						"1"
-				"IsPurgable"					"0"
-
-				"Aura"							"modifier_item_heart_aura_effect"
-				"Aura_Radius"					"%aura_radius"
-				"Aura_Teams"					"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types"					"DOTA_UNIT_TARGET_HERO"
-				"Aura_ApplyToCaster"			"1"
-
-				"ThinkInterval"					"0.2"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_heart.lua"
-						"Function"				"HeartRegen"
-
-						"modifier_regen"		"modifier_item_heart_extra_regen"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"internal/util.lua"
-						"Function"				"IllusionPassiveRemover"
-
-						"modifier"				"modifier_item_heart_unique"
-					}
-				}
-
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_heart.lua"
-						"Function"				"HeartDamage"
-
-						"modifier_regen"		"modifier_item_heart_extra_regen"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE"		"%base_regen"
-				}
-			}
-
-			"modifier_item_heart_aura_effect"
-			{
-				"Passive"						"0"
-				"IsHidden"						"0"
-				"IsBuff"						"1"
-				"IsPurgable"					"0"
-
-				"TextureName"				"custom/imba_heart"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%aura_str"
-				}
-			}
-
-			"modifier_item_heart_extra_regen"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-				"IsBuff"						"1"
-				"IsPurgable"					"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE"		"%noncombat_regen"
-				}
-			}
-		}
+		}		
 	}
 
 	//=================================================================================================================
