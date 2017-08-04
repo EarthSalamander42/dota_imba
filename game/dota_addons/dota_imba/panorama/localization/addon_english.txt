@@ -240,7 +240,7 @@
 
     // Dazzle    
     "Dota_Tooltip_Talent_special_bonus_imba_dazzle_1_title"                     "Patient Shadow"
-    "Dota_Tooltip_Talent_special_bonus_imba_dazzle_1_Description"               "Shadow wave can now bounce to the same unit 5 times, but the jumps have a 1 second delay between them. Up to 3 waves can exist at one time.<br><br><i>A hasty job often means a lower quality one.</i>"
+    "Dota_Tooltip_Talent_special_bonus_imba_dazzle_1_Description"               "Shadow Wave bounces have a delay of 1 second. If a unit was hit by a delayed Shadow Wave, it has a 5 second cooldown before it can be hit by one again. Up to 3 waves can exist at once.<br><br><i>A hasty job often means a lower quality one.</i>"
     "Dota_Tooltip_Talent_special_bonus_imba_dazzle_2_title"                     "Indiscriminate Shadow"
     "Dota_Tooltip_Talent_special_bonus_imba_dazzle_2_Description"               "Shadow Wave now also heals allies around the bounce targets, in addition to damaging enemies around them. (same radius as the damage) <br><br><i> Friend or foe, it matters not to the shadows.</i>"
     "Dota_Tooltip_Talent_special_bonus_imba_dazzle_3_title"                     "Grave Robber"
