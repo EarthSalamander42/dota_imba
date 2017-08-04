@@ -353,7 +353,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"4"
+				"bonus_health_regen"	"3"
 			}
 		}
 	}
@@ -368,7 +368,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"8"
+				"bonus_health_regen"	"7"
 			}
 		}
 	}
@@ -471,7 +471,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"400"
+				"bonus_mana"			"325"
 			}
 		}
 	}
@@ -486,7 +486,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"400"
+				"bonus_health"			"325"
 			}
 		}
 	}
@@ -522,7 +522,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_regen"			"5"
+				"health_regen"			"4"
 			}
 			"02"
 			{
@@ -590,12 +590,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"250"
+				"bonus_health"			"225"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"250"
+				"bonus_mana"			"225"
 			}
 		}
 	}
@@ -1149,7 +1149,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"8"
+				"bonus_health_regen"	"7"
 			}
 			"03"
 			{
@@ -1201,7 +1201,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"8"
+				"bonus_health_regen"	"7"
 			}
 			"03"
 			{
@@ -1309,7 +1309,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_regen"			"5"
+				"bonus_regen"			"4"
 			}
 		}
 	}
@@ -1339,7 +1339,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hp_regen_aura"			"14"
+				"hp_regen_aura"			"12"
 			}
 			"05"
 			{
@@ -1384,7 +1384,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_health_regen"		"5"
+				"aura_health_regen"		"4"
 			}
 			"03"
 			{
@@ -1759,7 +1759,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"8"
+				"bonus_health_regen"	"7"
 			}
 			"03"
 			{
@@ -1876,7 +1876,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"10"
+				"bonus_health_regen"	"9"
 			}
 			"03"
 			{

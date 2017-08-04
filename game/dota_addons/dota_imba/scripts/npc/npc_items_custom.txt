@@ -546,7 +546,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_health_regen"		"6"
+				"aura_health_regen"		"5"
 			}
 			"05"
 			{
@@ -661,7 +661,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_regen"			"6"
+				"aura_regen"			"5"
 			}
 			"06"
 			{
@@ -833,7 +833,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hp_regen_aura"			"5"
+				"hp_regen_aura"			"4"
 			}
 			"07"
 			{
@@ -907,7 +907,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hp_regen_aura"			"13"
+				"hp_regen_aura"			"11"
 			}
 			"07"
 			{
@@ -2942,7 +2942,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"500"
+				"bonus_health"			"575"
 			}
 			"03"
 			{
@@ -3390,12 +3390,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_health"				"700"
+				"bonus_health"				"625"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_mana"				"700"
+				"bonus_mana"				"625"
 			}
 			"03"
 			{
@@ -3757,12 +3757,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health"				"400"
+				"health"				"325"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_regen"			"10"
+				"health_regen"			"9"
 			}
 			"03"
 			{
@@ -3838,7 +3838,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health"				"425"
+				"health"				"350"
 			}
 			"02"
 			{
@@ -3951,12 +3951,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health"				"600"
+				"health"				"525"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_regen"			"15"
+				"health_regen"			"13"
 			}
 			"03"
 			{
@@ -4537,7 +4537,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_health_regen"		"7"
+				"bonus_health_regen"		"8"
 			}
 			"05"
 			{
@@ -7029,7 +7029,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"6"
+				"bonus_health_regen"	"5"
 			}
 			"04"
 			{
@@ -7628,12 +7628,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"800"
+				"bonus_health"			"725"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"800"
+				"bonus_mana"			"725"
 			}
 			"04"
 			{
@@ -9121,17 +9121,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"14"
+				"bonus_all_stats"		"12"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"300"
+				"bonus_health"			"225"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"250"
+				"bonus_mana"			"225"
 			}
 		}
 
@@ -9243,7 +9243,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"400"
+				"bonus_mana"			"325"
 			}
 			"02"
 			{
@@ -9422,7 +9422,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"450"
+				"bonus_mana"			"375"
 			}
 			"05"
 			{
@@ -11297,7 +11297,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_health_regen"			"8"
+				"bonus_health_regen"			"7"
 			}
 			"02"
 			{
@@ -11397,7 +11397,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_health_regen"			"8"
+				"bonus_health_regen"			"7"
 			}
 			"02"
 			{
@@ -11853,13 +11853,13 @@
 			"09"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_hp_regen"				"18"
+				"bonus_hp_regen"				"16"
 			}
 
 			"10"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_health"					"425"
+				"bonus_health"					"350"
 			}
 
 			"11"
