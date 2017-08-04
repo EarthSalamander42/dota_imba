@@ -607,7 +607,7 @@ end
 
 LinkLuaModifier("modifier_imba_singularity","hero/hero_enigma", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_singularity = class({})
-function modifier_imba_singularity:IsHidden() return true end
+function modifier_imba_singularity:IsHidden() return false end
 function modifier_imba_singularity:IsPermanent() return true end
 
 function modifier_imba_singularity:DeclareFunctions()
