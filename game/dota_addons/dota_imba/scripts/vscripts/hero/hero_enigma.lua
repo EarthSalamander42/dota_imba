@@ -576,7 +576,14 @@ function modifier_imba_enigma_black_hole_aura:OnCreated(keys)
           return 1
         end
       end)
-      
+      -- Sound
+      if not caster:IsSilenced() then
+        EmitSoundOn("Hero_Enigma.Black_Hole", caster)
+      end
+    else 
+      if not caster:IsSilenced() then
+        caster:EmitSoundParams("Hero_Enigma.Black_Hole",1,0.01,0)
+      end
     end
     self:StartIntervalThink(FrameTime())
     -- Particle stuff
@@ -587,10 +594,7 @@ function modifier_imba_enigma_black_hole_aura:OnCreated(keys)
     end
     ParticleManager:SetParticleControl( self.particle, 0, self:GetParent():GetAbsOrigin())
     ParticleManager:SetParticleControl( self.particle, 1, Vector(self.stun_radius, self.stun_radius, self.stun_radius))
-    -- Sound
-    if not caster:IsSilenced() then
-      EmitSoundOn("Hero_Enigma.Black_Hole", caster)
-    end
+    
   end
 end
 -- Damage everyone via this to deal damage at the right time
@@ -621,7 +625,7 @@ function modifier_imba_enigma_black_hole_aura:OnIntervalThink()
   local caster = self:GetCaster()
   local ability = caster:FindAbilityByName("imba_enigma_black_hole")
 
-  local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+  local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_COURIER, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
   for _,enemy in pairs(enemies) do
     local modifier = enemy:AddNewModifier(caster,ability,"modifier_imba_enigma_black_hole_aura_modifier",{duration = 0.5,parent = self:GetParent():entindex()})
   end
@@ -720,7 +724,7 @@ function modifier_imba_enigma_black_hole_aura_modifier:OnIntervalThink()
   local ability = caster:FindAbilityByName("imba_enigma_black_hole") 
 
     if not self.parent or self.parent:IsNull() then self.parent = caster.hBlackHoleDummyUnit end
-    if self.parent:IsNull() then return end
+    if not self.parent or self.parent:IsNull() then return end
 
     local distance = (self:GetParent():GetAbsOrigin()-self.parent:GetAbsOrigin()):Length2D()
     local pct_distance = 1- (distance / self.radius)
