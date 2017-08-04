@@ -112,7 +112,7 @@ local id = event.PlayerID
 		"npc_dota_hero_crystal_maiden",
 		"npc_dota_hero_dazzle",
 		"npc_dota_hero_drow_ranger",
-		--"npc_dota_hero_enigma",
+		"npc_dota_hero_enigma",
 		"npc_dota_hero_faceless_void",
 		"npc_dota_hero_juggernaut",
 		"npc_dota_hero_kunkka",
@@ -262,7 +262,7 @@ local id = event.PlayerID
 		"npc_dota_hero_crystal_maiden",
 		"npc_dota_hero_dazzle",
 		"npc_dota_hero_drow_ranger",
-		--"npc_dota_hero_enigma",
+		"npc_dota_hero_enigma",
 		"npc_dota_hero_faceless_void",
 		"npc_dota_hero_juggernaut",
 		"npc_dota_hero_kunkka",
@@ -550,18 +550,10 @@ function HeroSelection:AssignHero(player_id, hero_name)
 			PlayerResource:SetGold(player_id, HERO_RANDOM_GOLD, false)
 		else
 			PlayerResource:SetGold(player_id, HERO_INITIAL_GOLD, false)
-		end
-
-		-- Randomize abilities
-		if IMBA_ABILITY_MODE_RANDOM_OMG then
-			ApplyAllRandomOmgAbilities(hero)
-		end
+		end		
 
 		-- Apply generic talents handler
 		hero:AddNewModifier(hero, nil, "modifier_imba_generic_talents_handler", {})
-
-		-- Apply War Veteran buff
-		hero:AddNewModifier(hero, nil, "modifier_imba_war_veteran", {})
 
 		-- Initialize innate hero abilities
 		InitializeInnateAbilities(hero)

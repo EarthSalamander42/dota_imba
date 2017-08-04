@@ -197,8 +197,7 @@ function GameMode:OnNPCSpawned(keys)
 	if npc:HasModifier("modifier_arc_warden_tempest_double") then
 
 		-- List of modifiers which carry over from the main hero to the clone
-		local clone_shared_buffs = {
-			"modifier_imba_war_veteran",
+		local clone_shared_buffs = {			
 			"modifier_imba_moon_shard_stacks_dummy",
 			"modifier_imba_moon_shard_consume_1",
 			"modifier_imba_moon_shard_consume_2",
