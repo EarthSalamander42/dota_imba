@@ -7446,7 +7446,6 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"nova_radius"					"425"
-				"LinkedSpecialBonus"			"special_bonus_imba_crystal_maiden_3"
 			}
 
 			"03"
@@ -7495,14 +7494,12 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"snowfield_radius"				"425"
-				"LinkedSpecialBonus"			"special_bonus_imba_crystal_maiden_3"
 			}
 
 			"11"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"nova_damage"					"100 150 200 250 280 310 340"
-				"LinkedSpecialBonus"			"special_bonus_imba_crystal_maiden_7"
 			}
 		}
 	}
@@ -7561,7 +7558,6 @@
 			{
 				"var_type"								"FIELD_FLOAT"
 				"duration"								"1.5 2.0 2.5 3.0 3.0 3.0 3.0"
-				"LinkedSpecialBonus"					"special_bonus_imba_crystal_maiden_5"
 			}			
 
 			"03"
@@ -7717,6 +7713,7 @@
 			"particle"									"particles/generic_gameplay/generic_slowed_cold.vpcf"
 			"particle"									"particles/status_fx/status_effect_frost_lich.vpcf"
 			"particle"									"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
+			"particle"									"particles/units/heroes/hero_winter_wyvern/wyvern_splinter_blast.vpcf"
 		}
 		
 		// Special
@@ -7745,7 +7742,6 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"slow"									"30"
-				"LinkedSpecialBonus"					"special_bonus_imba_crystal_maiden_1"
 			}
 
 			"05"
@@ -7797,8 +7793,9 @@
 			}			
 		}
 	}
+
 	//=================================================================================================================
-	// Crystal Maiden Talent 1 (Level 10): +20% Freezing Field slow 
+	// Crystal Maiden Talent 1 (Level 10): Icy Touch causes a 100% movement speed slow that is slowly regained over 6 seconds.
 	//=================================================================================================================
 	"special_bonus_imba_crystal_maiden_1"
 	{
@@ -7810,7 +7807,7 @@
 
 		"LinkedAbility"
 		{
-			"01"		"imba_crystal_maiden_freezing_field"
+			"01"		"imba_crystal_maiden_frostbite"
 		}
 		
 		// Special
@@ -7819,8 +7816,18 @@
 		{
 			"01"
 			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"6.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"speed_update_rate"			"1.0"
+			}
+			"03"
+			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"20"
+				"initial_slow_pct"			"100"
 			}
 		}
 	}
@@ -7854,7 +7861,7 @@
 	}
 	
 	//=================================================================================================================
-	// Crystal Maiden Talent 3 (Level 20): +175 Crystal Nova radius 
+	// Crystal Maiden Talent 3 (Level 20): Crystal Nova's Snowfield grants 10% damage reduction and increases health regeneration by 20. 
 	//=================================================================================================================
 	"special_bonus_imba_crystal_maiden_3"
 	{
@@ -7876,7 +7883,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"175"
+				"damage_reduction_pct"		"10"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"health_regen"				"20"
 			}
 		}
 	}
@@ -7910,7 +7922,7 @@
 	}
 	
 	//=================================================================================================================
-	// Crystal Maiden Talent 5 (Level 30): +1.5sec Frostbite duration
+	// Crystal Maiden Talent 5 (Level 30): Enemies hit by Crystal Maiden's abilities gain a debuff that slows them by 15%/15 move/attack speed for 3 seconds. Can be refreshed.
 	//=================================================================================================================
 	"special_bonus_imba_crystal_maiden_5"
 	{
@@ -7922,7 +7934,7 @@
 
 		"LinkedAbility"
 		{
-			"01"		"imba_crystal_maiden_frostbite"
+			"01"		"imba_crystal_maiden_arcane_dynamo"
 		}
 		
 		// Special
@@ -7932,14 +7944,19 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"value"						"1.5"
+				"duration"					"3.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"slow"						"15"
 			}
 		}
 	}
 
 	
 	//=================================================================================================================
-	// Crystal Maiden Talent 6 (Level 30): -6sec Icy Touch effect cooldown
+	// Crystal Maiden Talent 6 (Level 30): Freezing Field constantly Frostbites enemies in it during the duration of the spell - a unit is Frostbitten once every 3 seconds after the effect on it ended. Additional Frostbites procced by this talent have their duration halved.
 	//=================================================================================================================
 	"special_bonus_imba_crystal_maiden_6"
 	{
@@ -7951,7 +7968,7 @@
 
 		"LinkedAbility"
 		{
-			"01"		"imba_crystal_maiden_frostbite"
+			"01"		"imba_crystal_maiden_freezing_field"
 		}
 		
 		// Special
@@ -7960,14 +7977,24 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"6"
+				"var_type"					"FIELD_FLOAT"
+				"delay"						"3.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration_multiplier"		"0.5"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"tick_rate"					"0.5"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Crystal Maiden Talent 7 (Level 40): +260 Crystal Nova damage
+	// Crystal Maiden Talent 7 (Level 40): Freezing Field's no longer drops projectiles - instead, Crystal Maiden channels for up to 10 seconds. When the channel ends (or interrupted), a huge icicle arrives at the cast area. The icicle explodes violenty, breaking into shards that are evenly distributed between all nearby enemies in range, dealing usual damage in the target's AoE. Each 0.1 seconds of a channel generates one shard.
 	//=================================================================================================================
 	"special_bonus_imba_crystal_maiden_7"
 	{
@@ -7979,17 +8006,22 @@
 
 		"LinkedAbility"
 		{
-			"01"		"imba_crystal_maiden_crystal_nova"
+			"01"		"imba_crystal_maiden_freezing_field"
 		}
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
+			"01" //How many seconds each shard takes to generate
 			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"260"
+				"var_type"					"FIELD_FLOAT"
+				"shard_rate"				"0.1"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"shard_damage_mul"			"1"
 			}
 		}
 	}
