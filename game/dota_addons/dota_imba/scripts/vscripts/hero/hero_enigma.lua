@@ -224,10 +224,6 @@ function imba_enigma_midnight_pulse:GetAOERadius()
   return self:GetSpecialValueFor("radius")
 end
 
-function imba_enigma_midnight_pulse:GetIntrinsicModifierName()
-  return "modifier_imba_enigma_midnight_pulse_checker"
-end
-
 function imba_enigma_midnight_pulse:OnSpellStart()
   local caster = self:GetCaster()
   local point = self:GetCursorPosition()
@@ -257,90 +253,6 @@ function imba_enigma_midnight_pulse:OnSpellStart()
 
   GridNav:DestroyTreesAroundPoint(point, radius, false)
 end
-
--- This checks whether the hero skilled the talent, to give the aura
--- #6 Talent: Permanent Midnight Pulse around caster
-LinkLuaModifier("modifier_imba_enigma_midnight_pulse_checker","hero/hero_enigma", LUA_MODIFIER_MOTION_NONE)
-modifier_imba_enigma_midnight_pulse_checker = class({})
-function modifier_imba_enigma_midnight_pulse_checker:IsHidden() return true end
-function modifier_imba_enigma_midnight_pulse_checker:IsPurgable() return false end
-function modifier_imba_enigma_midnight_pulse_checker:RemoveOnDeath() return false end
-function modifier_imba_enigma_midnight_pulse_checker:OnCreated()
-  if IsServer() then
-    self:StartIntervalThink(1)
-  end
-end
-function modifier_imba_enigma_midnight_pulse_checker:OnIntervalThink()
-  if self:GetCaster():HasTalent("special_bonus_imba_enigma_6") then
-    self:GetCaster():AddNewModifier(self:GetCaster(),self:GetAbility(),"modifier_imba_enigma_midnight_pulse_aura_talent",{})
-    self:Destroy()
-  end
-end
-
-LinkLuaModifier("modifier_imba_enigma_midnight_pulse_aura_talent","hero/hero_enigma", LUA_MODIFIER_MOTION_NONE)
-modifier_imba_enigma_midnight_pulse_aura_talent = class({})
-function modifier_imba_enigma_midnight_pulse_aura_talent:IsDebuff() return false end
-function modifier_imba_enigma_midnight_pulse_aura_talent:IsHidden() return true end
-function modifier_imba_enigma_midnight_pulse_aura_talent:IsPurgable() return false end
-function modifier_imba_enigma_midnight_pulse_aura_talent:RemoveOnDeath() return false end
-function modifier_imba_enigma_midnight_pulse_aura_talent:IsAura() return true end
-
-function modifier_imba_enigma_midnight_pulse_aura_talent:OnCreated()
-  self.radius = self:GetAbility():GetSpecialValueFor("radius")
-  self.auraRadius = self.radius 
-  self.duration = self:GetAbility():GetSpecialValueFor("duration")
-  self.damage_per_tick = self:GetAbility():GetSpecialValueFor("damage_per_tick")
-  self.pull_duration = self:GetAbility():GetSpecialValueFor("pull_duration")
-
-  if IsServer() then
-    self.particle = ParticleManager:CreateParticle("particles/hero/enigma/enigma_midnight_pulse_c.vpcf",PATTACH_ABSORIGIN_FOLLOW,self:GetParent())
-    ParticleManager:SetParticleControlEnt(self.particle,0,self:GetParent(),PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true )
-    ParticleManager:SetParticleControl(self.particle,1,Vector(self.auraRadius,0,0))
-    ParticleManager:ReleaseParticleIndex(self.particle)
-
-    self:StartIntervalThink(1)
-  end
-
-end
-function modifier_imba_enigma_midnight_pulse_aura_talent:OnDestroy()
-  if IsServer() then
-    ParticleManager:DestroyParticle(self.particle,true)
-    ParticleManager:ReleaseParticleIndex(self.particle)
-  end
-end
-function modifier_imba_enigma_midnight_pulse_aura_talent:OnIntervalThink()
-  -- Damage everyone inside
-
-  -- We need to refresh this value   
-
-  local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.auraRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-  for _,enemy in pairs(enemies) do
-    local damage = 
-    {
-      victim = enemy,
-      attacker = self:GetCaster(),
-      damage = self:GetAbility():GetSpecialValueFor("damage_per_tick") * enemy:GetMaxHealth() * 0.01,
-      damage_type = DAMAGE_TYPE_PURE,
-      ability = self:GetAbility(),
-      flags = DOTA_DAMAGE_FLAG_DONT_DISPLAY_DAMAGE_IF_SOURCE_HIDDEN,
-    }
-    ApplyDamage(damage)    
-  end
-
-  -- Apply modifier for eidolons
-  local allies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.auraRadius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC,DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-  for _,ally in pairs(allies) do
-    if ally:GetOwner() == self:GetCaster():GetOwner() and ally:HasModifier("modifier_imba_enigma_eidolon") then
-      duration = self:GetAbility():GetSpecialValueFor("eidolon_heal_duration")
-      ally:AddNewModifier(self:GetCaster(),self:GetAbility(),"modifier_imba_enigma_midnight_pulse_eidolon_regen",{duration = duration})
-    end
-  end
-end
-
-function modifier_imba_enigma_midnight_pulse_aura_talent:GetAuraRadius()
-  return self:GetAbility():GetSpecialValueFor("radius")
-end
-
 
 ---------------------------------------------------------------
 
@@ -1086,4 +998,70 @@ function modifier_enigma_magic_immunity:GetEffectName()
 end
 function modifier_enigma_magic_immunity:GetEffectAttachType()
   return PATTACH_ABSORIGIN_FOLLOW
+end
+-----------------------------------------------------------
+-- Talent modifier stuff overrides
+-- Namely, Midnight Pulse aura talent thing
+-----------------------------------------------------------
+function modifier_special_bonus_imba_enigma_6:IsDebuff() return false end
+function modifier_special_bonus_imba_enigma_6:IsHidden() return true end
+function modifier_special_bonus_imba_enigma_6:IsPurgable() return false end
+function modifier_special_bonus_imba_enigma_6:RemoveOnDeath() return false end
+function modifier_special_bonus_imba_enigma_6:IsAura() return true end
+
+function modifier_special_bonus_imba_enigma_6:OnCreated()
+  if IsServer() then
+    self.ability = self:GetParent():FindAbilityByName("imba_enigma_midnight_pulse")
+    if not self.ability then
+      return
+    end
+    self.auraRadius = self.ability:GetSpecialValueFor("radius")
+
+    self.particle = ParticleManager:CreateParticle("particles/hero/enigma/enigma_midnight_pulse_c.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+    ParticleManager:SetParticleControlEnt(self.particle,0,self:GetParent(),PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true )
+    ParticleManager:SetParticleControl(self.particle,1,Vector(self.auraRadius,0,0))
+
+    self:StartIntervalThink(1)
+  end
+end
+
+function modifier_special_bonus_imba_enigma_6:OnDestroy()
+  if IsServer() then
+    ParticleManager:DestroyParticle(self.particle,true)
+    ParticleManager:ReleaseParticleIndex(self.particle)
+  end
+end
+
+function modifier_special_bonus_imba_enigma_6:OnIntervalThink()
+  -- Damage everyone inside
+  -- We need to refresh this value   
+  local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.auraRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+  for _,enemy in pairs(enemies) do
+    local damage = 
+    {
+      victim = enemy,
+      attacker = self:GetCaster(),
+      damage = self.ability:GetSpecialValueFor("damage_per_tick") * enemy:GetMaxHealth() * 0.01,
+      damage_type = DAMAGE_TYPE_PURE,
+      ability = self.ability,
+      flags = DOTA_DAMAGE_FLAG_DONT_DISPLAY_DAMAGE_IF_SOURCE_HIDDEN,
+    }
+    ApplyDamage(damage)
+  end
+
+  -- Apply modifier for eidolons
+  local allies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.auraRadius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC,DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+  for _,ally in pairs(allies) do
+    if ally:GetOwner() == self:GetCaster():GetOwner() and ally:HasModifier("modifier_imba_enigma_eidolon") then
+      duration = self.ability:GetSpecialValueFor("eidolon_heal_duration")
+      ally:AddNewModifier(self:GetCaster(),self.ability,"modifier_imba_enigma_midnight_pulse_eidolon_regen",{duration = duration})
+    end
+  end
+end
+
+function modifier_special_bonus_imba_enigma_6:GetAuraRadius()
+  if IsServer() then
+    ParticleManager:SetParticleControl(self.particle,1,Vector(self.auraRadius,0,0))
+  end
+  return self.auraRadius
 end
