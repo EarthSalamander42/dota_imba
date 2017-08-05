@@ -70,7 +70,7 @@ function imba_witch_doctor_paralyzing_cask:OnProjectileHit_ExtraData(hTarget, vL
 	EmitSoundOn("Hero_WitchDoctor.Paralyzing_Cask_Bounce", hTarget)
 	local hCaster = self:GetCaster()
 	if hTarget then
-		if hTarget:IsRealHero() then
+		if hTarget:IsRealHero() or hTarget:IsConsideredHero() or IsRoshan(hTarget) then
 			if hTarget:GetTeamNumber() ~= hCaster:GetTeamNumber() then
 				if not hTarget:IsMagicImmune() and not hTarget:TriggerSpellAbsorb(self) then
 					hTarget:AddNewModifier(hTarget, self, "modifier_stunned", {duration = ExtraData.hero_duration})
@@ -100,8 +100,8 @@ function imba_witch_doctor_paralyzing_cask:OnProjectileHit_ExtraData(hTarget, vL
 	if ExtraData.bounces >= 1 then
 		Timers:CreateTimer(ExtraData.bounce_delay, function()
 			-- Finds all units in the area, prioritizing enemies
-			local enemies = FindUnitsInRadius(hCaster:GetTeamNumber(), hTarget:GetAbsOrigin(), nil, ExtraData.bounce_range, DOTA_UNIT_TARGET_TEAM_ENEMY, self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), 0, false)
-			local allies = FindUnitsInRadius(hCaster:GetTeamNumber(), hTarget:GetAbsOrigin(), nil, ExtraData.bounce_range, DOTA_UNIT_TARGET_TEAM_FRIENDLY, self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), 0, false)
+			local enemies = FindUnitsInRadius(hCaster:GetTeamNumber(), hTarget:GetAbsOrigin(), nil, ExtraData.bounce_range, DOTA_UNIT_TARGET_TEAM_ENEMY, self:GetAbilityTargetType(), DOTA_UNIT_TARGET_FLAG_NO_INVIS, 0, false)
+			local allies = FindUnitsInRadius(hCaster:GetTeamNumber(), hTarget:GetAbsOrigin(), nil, ExtraData.bounce_range, DOTA_UNIT_TARGET_TEAM_FRIENDLY, self:GetAbilityTargetType(), DOTA_UNIT_TARGET_FLAG_NONE, 0, false)
 			
 			-- Go through the target tables, checking for the first one that isn't the same as the target
 			local tJumpTargets = {}

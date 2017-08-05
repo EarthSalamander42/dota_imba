@@ -4,12 +4,12 @@
 		Updated:  27.05.2017
 	]]
 
-LinkLuaModifier( "modifier_imba_soul_of_truth_buff", "items/item_soul_of_truth.lua", LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier( "modifier_imba_soul_of_truth_vision", "items/item_soul_of_truth.lua", LUA_MODIFIER_MOTION_NONE )
+
 -------------------------------------------
 --			  SOUL OF TRUTH
 -------------------------------------------
 item_imba_soul_of_truth = item_imba_soul_of_truth or class({})
+LinkLuaModifier("modifier_imba_soul_of_truth_buff","items/item_soul_of_truth", LUA_MODIFIER_MOTION_NONE)
 
 function item_imba_soul_of_truth:GetAbilityTextureName()
    return "custom/imba_soul_of_truth"
@@ -23,9 +23,11 @@ function item_imba_soul_of_truth:OnSpellStart()
 		local duration = self:GetSpecialValueFor("duration")
 		
 		hCaster:AddNewModifier(hCaster, self, "modifier_imba_soul_of_truth_buff", {duration = duration})
+		hCaster:AddNewModifier(hCaster, self, "modifier_item_gem_of_true_sight", {duration = duration})
 		self:Destroy()
 	end
 end
+
 
 -------------------------------------------
 modifier_imba_soul_of_truth_buff = modifier_imba_soul_of_truth_buff or class({})
@@ -71,10 +73,6 @@ function modifier_imba_soul_of_truth_buff:GetModifierConstantHealthRegen()
 	return self.health_regen
 end
 
-function modifier_imba_soul_of_truth_buff:GetAuraRadius()
-	return self.radius
-end
-
 function modifier_imba_soul_of_truth_buff:OnDeath(keys)
 	if (keys.unit == self:GetParent()) and (not keys.reincarnate) then
 		ParticleManager:DestroyParticle( self.eye_pfx, false )
@@ -93,42 +91,6 @@ function modifier_imba_soul_of_truth_buff:OnRespawn(keys)
 	end
 end
 
-function modifier_imba_soul_of_truth_buff:GetAuraSearchFlags()
-	return DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE
-end
-
-function modifier_imba_soul_of_truth_buff:GetAuraSearchTeam()
-	return DOTA_UNIT_TARGET_TEAM_ENEMY
-end
-
-function modifier_imba_soul_of_truth_buff:GetAuraSearchType()
-	return DOTA_UNIT_TARGET_ALL + DOTA_UNIT_TARGET_CUSTOM + DOTA_UNIT_TARGET_TREE
-end
-
 function modifier_imba_soul_of_truth_buff:GetTexture()
 	return "custom/imba_soul_of_truth"
 end
-
-function modifier_imba_soul_of_truth_buff:GetModifierAura()
-	return "modifier_imba_soul_of_truth_vision"
-end
-
-function modifier_imba_soul_of_truth_buff:IsAura() return true end
-
-modifier_imba_soul_of_truth_vision = modifier_imba_soul_of_truth_vision or class({})
-function modifier_imba_soul_of_truth_vision:CheckState()
-	if self:GetParent():HasModifier("modifier_slark_shadow_dance") then
-		return nil
-	end
-
-	local state = {[MODIFIER_STATE_INVISIBLE] = false}
-	return state
-end
-
-function modifier_imba_soul_of_truth_vision:GetPriority()
-	return MODIFIER_PRIORITY_HIGH
-end
-
-function modifier_imba_soul_of_truth_vision:IsHidden() return true end
-function modifier_imba_soul_of_truth_vision:IsPurgable() return false end
-function modifier_imba_soul_of_truth_vision:IsDebuff() return true end

@@ -1008,7 +1008,7 @@ function imba_ursa_territorial_hunter:OnSpellStart()
 		ability.territorial_tree = target
 
 		-- Create dummy
-		ability.territorial_dummy = CreateUnitByName("npc_dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
+		ability.territorial_dummy = CreateUnitByName("npc_dummy_unit_perma", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
 		ability.territorial_dummy:AddRangeIndicator(caster, ability, "vision_range", nil, 200, 160, 100, true, true, false)
 		ability.territorial_dummy:AddNewModifier(caster, ability, aura, {})
 		ability.territorial_dummy:SetAbsOrigin(ability.territorial_tree:GetAbsOrigin())			 

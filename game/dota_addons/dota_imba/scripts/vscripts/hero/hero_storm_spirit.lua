@@ -579,15 +579,122 @@ function imba_storm_spirit_ball_lightning:OnSpellStart()
 		local target_loc = self:GetCursorPosition()
 		local caster_loc = caster:GetAbsOrigin()
 		-- Ability parameters
-		local distance = (target_loc - caster_loc):Length2D()
-		local direction = (target_loc - caster_loc):Normalized()
+		local speed 			=	self:GetSpecialValueFor("ball_speed")
+		local damage_radius 	= 	self:GetSpecialValueFor("damage_radius")
+		local vision 			= 	self:GetSpecialValueFor("ball_vision_radius")
+		local tree_radius 		= 	100
+		local damage 			= 	self:GetSpecialValueFor("damage_per_100_units")
+		local base_mana_cost	= 	self:GetSpecialValueFor("travel_mana_cost_base")
+		local pct_mana_cost		= 	self:GetSpecialValueFor("travel_mana_cost_pct") * caster:GetMaxMana()
+		local total_mana_cost 	=	base_mana_cost + pct_mana_cost
+
+		-- Motion control properties
+		self.traveled 	= 0
+		self.distance 	= (target_loc - caster_loc):Length2D()
+		self.direction 	= (target_loc - caster_loc):Normalized()
 
 		-- Play the cast sound
 		caster:EmitSound("Hero_StormSpirit.BallLightning")
 		caster:EmitSound("Hero_StormSpirit.BallLightning.Loop")
 
+		-- Fire the ball of death!
+		local projectile = 
+		{
+			Ability				= self,
+			EffectName			= "particles/hero/storm_spirit/no_particle_particle.vpcf",
+			vSpawnOrigin		= caster_loc,
+			fDistance			= self.distance,
+			fStartRadius		= damage_radius,
+			fEndRadius			= damage_radius,
+			Source				= caster,
+			bHasFrontalCone		= false,
+			bReplaceExisting	= false,
+			iUnitTargetTeam		= self:GetAbilityTargetTeam(),
+			iUnitTargetFlags	= self:GetAbilityTargetFlags(),
+			iUnitTargetType		= self:GetAbilityTargetType(),
+			bDeleteOnHit		= false,
+			vVelocity 			= self.direction * speed * Vector(1, 1, 0),
+			bProvidesVision		= true,
+			iVisionRadius 		= vision,
+			iVisionTeamNumber 	= caster:GetTeamNumber(),
+			ExtraData			= {damage = damage, tree_radius = tree_radius, base_mana_cost = base_mana_cost, pct_mana_cost = pct_mana_cost,
+									 total_mana_cost = total_mana_cost,	speed = speed * FrameTime()}
+		}
+		self.projectileID = ProjectileManager:CreateLinearProjectile(projectile)
+                  
 		-- Add Motion-Controller Modifier
-		caster:AddNewModifier(caster, self, "modifier_imba_ball_lightning", {distance = distance, direction_x = direction.x, direction_y = direction.y, direction_z = direction.z})
+		caster:AddNewModifier(caster, self, "modifier_imba_ball_lightning", {})
+	end
+end
+
+function imba_storm_spirit_ball_lightning:OnProjectileThink_ExtraData(location, ExtraData)
+	-- Move the caster as long as he has not reached the distance he wants to go to, and he still has enough mana
+	local caster = self:GetCaster()
+	if (self.traveled + ExtraData.speed < self.distance) and caster:IsAlive() and (caster:GetMana() > ExtraData.total_mana_cost * 0.01 ) then
+
+		-- Destroy the trees in the way
+		GridNav:DestroyTreesAroundPoint(location, ExtraData.tree_radius, false)
+
+		-- Set the caster slightly forwards
+		caster:SetAbsOrigin(Vector(location.x, location.y, GetGroundPosition(location, caster).z))
+
+		-- Calculate the new travel distance
+		self.traveled = self.traveled + ExtraData.speed
+
+		self.units_traveled_in_last_tick = ExtraData.speed
+
+		-- Use up mana for traveling
+		caster:ReduceMana(( (ExtraData.pct_mana_cost * 0.01) + ExtraData.base_mana_cost ) * self.units_traveled_in_last_tick * 0.01)
+		-- Note: the last *0.01 in the calculation is because the manacost is calculated for every 100 units.
+
+		-- Once the caster can no longer travel, remove this projectile
+	else
+		-- Emit end response
+		local responses = {"stormspirit_ss_ability_lightning_04", "stormspirit_ss_ability_lightning_05", "stormspirit_ss_ability_lightning_06", "stormspirit_ss_ability_lightning_07",
+			"stormspirit_ss_ability_lightning_08", "stormspirit_ss_ability_lightning_09", "stormspirit_ss_ability_lightning_10", "stormspirit_ss_ability_lightning_13",
+			"stormspirit_ss_ability_lightning_14", "stormspirit_ss_ability_lightning_18", "stormspirit_ss_ability_lightning_20", "stormspirit_ss_ability_lightning_21",
+			"stormspirit_ss_ability_lightning_22", "stormspirit_ss_ability_lightning_23", "stormspirit_ss_ability_lightning_24", "stormspirit_ss_ability_lightning_25",
+			"stormspirit_ss_ability_lightning_26", "stormspirit_ss_ability_lightning_27", "stormspirit_ss_ability_lightning_28", "stormspirit_ss_ability_lightning_29",
+			"stormspirit_ss_ability_lightning_30", "stormspirit_ss_ability_lightning_31", "stormspirit_ss_ability_lightning_32",
+		}
+		if caster:GetName() == "npc_dota_hero_storm_spirit" then
+			caster:EmitCasterSound("npc_dota_hero_storm_spirit",responses, 100, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, nil, nil)
+		end
+
+		-- Find a clear space to stand on
+		caster:SetUnitOnClearGround()
+
+		caster:StopSound("Hero_StormSpirit.BallLightning.Loop")
+
+		-- Get rid of the Ball
+		caster:FindModifierByName("modifier_imba_ball_lightning"):Destroy()
+		ProjectileManager:DestroyLinearProjectile(self.projectileID)
+			
+	end
+end
+
+function imba_storm_spirit_ball_lightning:OnProjectileHit_ExtraData(target, location, ExtraData)
+	if target then 
+
+	 	local caster	=	self:GetCaster()
+
+		-- Deal damage
+		local damageTable = {victim = target,
+							damage = ExtraData.damage * math.floor(self.traveled * 0.01),
+							damage_type = self:GetAbilityDamageType(),
+							attacker = caster,
+							ability = ability
+							}
+
+		ApplyDamage(damageTable)
+
+		-- Emit rare kill response
+		if not target:IsAlive() then
+			local responses = {"stormspirit_ss_ability_lightning_01", "stormspirit_ss_ability_lightning_03"}
+			if caster:GetName() == "npc_dota_hero_storm_spirit" and RollPercentage(10) then
+				caster:EmitCasterSound("npc_dota_hero_storm_spirit",responses, 100, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, nil, nil)
+			end
+		end
 	end
 end
 
@@ -607,154 +714,6 @@ modifier_imba_ball_lightning = modifier_imba_ball_lightning or class({})
 function modifier_imba_ball_lightning:IsDebuff() 	return false end
 function modifier_imba_ball_lightning:IsHidden() 	return false end
 function modifier_imba_ball_lightning:IsPurgable() return false end
-function modifier_imba_ball_lightning:IsMotionController() return true end
-function modifier_imba_ball_lightning:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_HIGH end
-
-function modifier_imba_ball_lightning:OnCreated( params )
-	if IsServer() then
-
-		-- Ability properties
-		local caster	 = self:GetCaster()
-		local ability 	 = self:GetAbility()
-
-		-- Ability parameters
-		self.speed 				= ability:GetSpecialValueFor("ball_speed") * FrameTime()
-		self.damage_radius 		= ability:GetSpecialValueFor("damage_radius")
-		self.tree_radius 		= 100
-		self.damage 			= ability:GetSpecialValueFor("damage_per_100_units")
-		self.base_mana_cost		= ability:GetSpecialValueFor("travel_mana_cost_base")
-		self.pct_mana_cost		= ability:GetSpecialValueFor("travel_mana_cost_pct") * caster:GetMaxMana()
-		self.total_mana_cost	= self.base_mana_cost + self.pct_mana_cost
-		self.vision 			= ability:GetSpecialValueFor("ball_vision_radius")
-
-		-- Motion controller properties
-		self.distance 			= params.distance
-		self.direction 			= Vector(params.direction_x, params.direction_y, params.direction_z)
-		self.traveled 			= 0
-		self.final 				= false
-
-		-- Creating a unique list of hit-Targets.
-		self.zapped_list = {}
-
-		self.frametime = FrameTime()
-		self:StartIntervalThink(self.frametime)
-	end
-end
-
-function modifier_imba_ball_lightning:OnIntervalThink()
-	if IsServer() then
-		-- Check motion controllers
-		if not self:CheckMotionControllers() then
-			self:Destroy()
-			return nil
-		end
-
-		-- Horizontal Motion
-		self:HorizontalMotion(self:GetParent(), self.frametime)
-	end
-end
-
-function modifier_imba_ball_lightning:HorizontalMotion( unit, time )
-	if IsServer() then
-		local caster 		= self:GetCaster()
-		local caster_loc 	= caster:GetAbsOrigin()
-		local ability 		= self:GetAbility()
-
-		-- Move the caster as long as he has not reached the distance he wants to go to, and he still has enough mana
-		if (self.traveled + self.speed < self.distance) and caster:IsAlive() and (caster:GetMana() > self.total_mana_cost * 0.01 ) then
-
-			-- Destroy the trees in the way
-			GridNav:DestroyTreesAroundPoint(caster_loc, self.tree_radius, false)
-
-			-- Find nearby enemies to damage
-			self.enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-			caster_loc,
-			nil,
-			self.damage_radius,
-			DOTA_UNIT_TARGET_TEAM_ENEMY,
-			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP,
-			0,
-			FIND_ANY_ORDER,
-			false)
-
-			for _,enemy in pairs(self.enemies) do
-				-- If the enemy was not already struck by Ball lightning (CheckIfInTable Is a CUSTOM function from funcs.lua)
-				if not CheckIfInTable(self.zapped_list, enemy) then
-					-- Mark enemy as struck
-					table.insert(self.zapped_list, enemy)
-
-					-- Deal damage
-					local damageTable = {victim = enemy,
-						damage = self.damage * math.floor(self.traveled * 0.01),
-						damage_type = DAMAGE_TYPE_MAGICAL,
-						attacker = caster,
-						ability = ability
-					}
-
-					ApplyDamage(damageTable)
-
-					-- Emit rare kill response
-					if not enemy:IsAlive() then
-						local responses = {"stormspirit_ss_ability_lightning_01", "stormspirit_ss_ability_lightning_03"}
-						if caster:GetName() == "npc_dota_hero_storm_spirit" and RollPercentage(10) then
-							caster:EmitCasterSound("npc_dota_hero_storm_spirit",responses, 100, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, nil, nil)
-						end
-					end
-				end
-			end
-
-			-- Set the caster slightly forwards
-			local set_point =  caster:GetAbsOrigin() + self.direction * self.speed
-			caster:SetAbsOrigin(Vector(set_point.x, set_point.y, GetGroundPosition(set_point, caster).z))
-
-			self.previously_traveled = self.traveled
-
-			-- Calculate the new travel distance
-			self.traveled = self.traveled + self.speed
-
-			self.units_traveled_in_last_tick = self.traveled - self.previously_traveled
-
-			-- Use up mana for traveling
-			caster:ReduceMana(( (self.pct_mana_cost * 0.01) + self.base_mana_cost ) * self.units_traveled_in_last_tick * 0.01)
-			-- Note: the last *0.01 in the calculation is because the manacost is calculated for every 100 units.
-
-			-- Create a vision node for the flying vision while zipping
-			AddFOWViewer(caster:GetTeamNumber(), caster:GetAbsOrigin(), self.vision, FrameTime(), false)
-			-- Once the caster can no longer travel, remove this modifier
-		else
-			self:Destroy()
-		end
-	end
-end
-
-function modifier_imba_ball_lightning:OnDestroy()
-	if IsServer() then
-		local caster	=	self:GetCaster()
-
-		-- Emit end response
-		local responses = {"stormspirit_ss_ability_lightning_04", "stormspirit_ss_ability_lightning_05", "stormspirit_ss_ability_lightning_06", "stormspirit_ss_ability_lightning_07",
-			"stormspirit_ss_ability_lightning_08", "stormspirit_ss_ability_lightning_09", "stormspirit_ss_ability_lightning_10", "stormspirit_ss_ability_lightning_13",
-			"stormspirit_ss_ability_lightning_14", "stormspirit_ss_ability_lightning_18", "stormspirit_ss_ability_lightning_20", "stormspirit_ss_ability_lightning_21",
-			"stormspirit_ss_ability_lightning_22", "stormspirit_ss_ability_lightning_23", "stormspirit_ss_ability_lightning_24", "stormspirit_ss_ability_lightning_25",
-			"stormspirit_ss_ability_lightning_26", "stormspirit_ss_ability_lightning_27", "stormspirit_ss_ability_lightning_28", "stormspirit_ss_ability_lightning_29",
-			"stormspirit_ss_ability_lightning_30", "stormspirit_ss_ability_lightning_31", "stormspirit_ss_ability_lightning_32",
-		}
-		if caster:GetName() == "npc_dota_hero_storm_spirit" then
-			caster:EmitCasterSound("npc_dota_hero_storm_spirit",responses, 100, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, nil, nil)
-		end
-
-		-- Find a clear space to stand on
-		caster:SetUnitOnClearGround()
-
-		-- Declare the enemies struck as valid targets for the next Ball lightning
-		for k,v in pairs(self.zapped_list) do
-			-- Mark enemy as unstruck
-			self.zapped_list[k] = nil
-		end
-
-		caster:StopSound("Hero_StormSpirit.BallLightning.Loop")
-	end
-end
 
 function modifier_imba_ball_lightning:GetEffectName()
 	return "particles/units/heroes/hero_stormspirit/stormspirit_ball_lightning.vpcf"

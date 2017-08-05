@@ -508,7 +508,7 @@ function modifier_imba_blink_strike_thinker:OnIntervalThink()
 			local current_distance = CalcDistanceBetweenEntityOBB(self.hCaster, self.hTarget)
 			-- No need for calculations if they already exceed max-range
 			if (current_distance <= self.max_range) or (current_distance < self.cast_range) then
-				local tJumpableUnits = FindUnitsInRadius(self.hCaster:GetTeamNumber(), self.hCaster:GetAbsOrigin(), nil, self.max_range, self.hAbility:GetAbilityTargetTeam(), self.hAbility:GetAbilityTargetType(), self.hAbility:GetAbilityTargetFlags(), FIND_FARTHEST, false)
+				local tJumpableUnits = FindUnitsInRadius(self.hCaster:GetTeamNumber(), self.hCaster:GetAbsOrigin(), nil, self.max_range, self.hAbility:GetAbilityTargetTeam(), self.hAbility:GetAbilityTargetType(), DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_FARTHEST, false)
 				-- Creating nodes for A*, a 2D-graph for calculations, using x and y coordinates
 				local graph = {}
 				local caster_index = false

@@ -32,6 +32,11 @@ function item_imba_orchid:OnSpellStart()
 			end
 		end
 
+		-- If the target is magic immune (Lotus Orb/Anti Mage), do nothing
+		if target:IsMagicImmune() then
+			return nil
+		end
+
 		-- Play the cast sound
 		target:EmitSound("DOTA_Item.Orchid.Activate")
 
@@ -211,6 +216,11 @@ function item_imba_bloodthorn:OnSpellStart()
 			if target:TriggerSpellAbsorb(self) then
 				return nil
 			end
+		end
+
+		-- If the target is magic immune (Lotus Orb/Anti Mage), do nothing
+		if target:IsMagicImmune() then
+			return nil
 		end
 
 		-- Play the cast sound

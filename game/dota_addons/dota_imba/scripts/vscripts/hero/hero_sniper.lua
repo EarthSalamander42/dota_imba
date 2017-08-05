@@ -928,13 +928,13 @@ function imba_sniper_take_aim:GetCastRange(location, target)
 
     -- Get caster's base attack range
     -- Valve pls, no function for base attack range? really? *sigh* hardcoded it is then
-    base_range = 550    
+    local base_range = 550
     
     -- Passive range
     local range = self:GetSpecialValueFor("passive_bonus_range")
 
-    -- #7 Talent: Take Aim Aimed Assault attack range
-    local aim_bonus_range = self:GetSpecialValueFor("aim_bonus_range") + caster:FindTalentValue("special_bonus_imba_sniper_7")   
+    -- #7 Talent: Take Aim Aimed Assault attack range.
+    aim_bonus_range = self:GetSpecialValueFor("aim_bonus_range") + caster:FindTalentValue("special_bonus_imba_sniper_7")  
     
     range = range + aim_bonus_range + base_range
     return range
@@ -954,7 +954,8 @@ function imba_sniper_take_aim:OnSpellStart()
     end
 
     -- Move to attack, mark as forced Aimed Assault
-    caster:MoveToTargetToAttack(target)    
+    caster:MoveToTargetToAttack(target) 
+    caster:PerformAttack(target, false, true, false, false, true, false, false)
 end
 
 -- Bonus range modifier
@@ -965,6 +966,7 @@ function modifier_imba_take_aim_range:OnCreated()
     self.caster = self:GetCaster()
     self.ability = self:GetAbility()
     self.modifier_headshot = "modifier_imba_headshot_attacks"
+    self.forced_aimed_assault = false
 
     -- Ability specials
     self.passive_bonus_range = self.ability:GetSpecialValueFor("passive_bonus_range")
@@ -997,12 +999,6 @@ function modifier_imba_take_aim_range:OnIntervalThink()
 
         self.caster:SetAcquisitionRange(self.caster:GetAttackRange() + 100)        
 
-        -- If the attacker manually forced an Aimed Shot, set stacks to 0
-        if self.forced_aimed_assault then            
-            self:SetStackCount(0)
-            return nil
-        end
-
         -- If the next shot should be an Aimed Shot, set stacks to 0, otherwise set to 1
         if self.ability:IsCooldownReady() and self.ability:GetAutoCastState() and self.caster:IsRealHero() then        
             self:SetStackCount(0)
@@ -1032,7 +1028,7 @@ function modifier_imba_take_aim_range:OnAttack(keys)
             end
 
             -- If the attacker fired an Aimed Shot, go on cooldown
-            if self:GetStackCount() == 0 then                
+            if self:GetStackCount() == 0 and self.ability:IsCooldownReady() then                
                 self.ability:UseResources(false, false, true) 
             end
         end
@@ -1040,13 +1036,14 @@ function modifier_imba_take_aim_range:OnAttack(keys)
 end
 
 function modifier_imba_take_aim_range:GetModifierAttackRangeBonus()    
-    -- If caster is broken, no range is given
-    if self.caster:PassivesDisabled() then
-        return nil
-    end
 
-    -- Passive range
+    --Passive range
     local range = self.passive_bonus_range
+
+    -- If caster is broken, no passive range is given
+    if self.caster:PassivesDisabled() then
+        range = 0
+    end
 
     -- #7 Talent: Take Aim Aimed Assault attack range
     local aim_bonus_range = self.aim_bonus_range + self.caster:FindTalentValue("special_bonus_imba_sniper_7")
@@ -1386,8 +1383,22 @@ function imba_sniper_assassinate:AssassinateHit(target)
                 -- Imitate a critical by sending an overhead message
                 SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, target, damage, nil)
 
+                -- See if Take Aim is ready before the attack
+                local take_aim_ability_handler = caster:FindAbilityByName("imba_sniper_take_aim")
+                local take_aim_ready = false
+                if take_aim_ability_handler then
+                    if take_aim_ability_handler:IsCooldownReady() then
+                        take_aim_ready = true
+                    end
+                end
+
                 -- Perform a fake attack to proc on-hit effects
                 caster:PerformAttack(target, false, true, true, true, false, true, true)
+
+                -- If after the fake attack Take Aim got reset, refresh its cooldown quickly
+                if take_aim_ready then
+                    take_aim_ability_handler:EndCooldown()                                        
+                end
 
                 -- Perfectshot stun the target, and headshot slow it
                 target:AddNewModifier(caster, ability, modifier_headshot, {duration = headshot_duration})

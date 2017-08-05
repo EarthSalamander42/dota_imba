@@ -21,9 +21,7 @@ function imba_dazzle_poison_touch:GetCastRange()
 end
 
 function imba_dazzle_poison_touch:GetCooldown()
-	local cooldown = self:GetSpecialValueFor("cooldown")
-	
-	return cooldown
+	return self:GetSpecialValueFor("cooldown")
 end
 
 function imba_dazzle_poison_touch:GetBehavior()
@@ -79,7 +77,6 @@ function modifier_imba_dazzle_poison_touch_setin:OnDestroy()
 		if parent:IsAlive() and not parent:IsMagicImmune() then
 			local ability = self:GetAbility()
 			
-			-- Fun times with not having 'GetMaxHealth' for client \o/
 			if ability:GetCaster():HasTalent("special_bonus_imba_dazzle_4") then
 				local slowMod = parent:AddNewModifier(ability:GetCaster(), ability, "modifier_imba_dazzle_poison_touch_talent_slow", {duration = ability:GetSpecialValueFor("poison_duration")})
 				slowMod:SetStackCount(parent:GetMaxHealth())
@@ -87,7 +84,6 @@ function modifier_imba_dazzle_poison_touch_setin:OnDestroy()
 			
 			local mod = parent:AddNewModifier(ability:GetCaster(), ability, "modifier_imba_dazzle_poison_touch_debuff", {duration = ability:GetSpecialValueFor("poison_duration")})
 			mod:SetStackCount(self:GetStackCount())
-			
 		end
 	end
 end
@@ -221,7 +217,7 @@ end
 
 if modifier_imba_dazzle_poison_touch_talent_slow == nil then modifier_imba_dazzle_poison_touch_talent_slow = class({}) end
 function modifier_imba_dazzle_poison_touch_talent_slow:IsPurgable() return true end
-function modifier_imba_dazzle_poison_touch_talent_slow:IsHidden() return false end
+function modifier_imba_dazzle_poison_touch_talent_slow:IsHidden() return true end
 function modifier_imba_dazzle_poison_touch_talent_slow:IsDebuff() return true end
 function modifier_imba_dazzle_poison_touch_talent_slow:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
@@ -354,6 +350,8 @@ function modifier_imba_dazzle_shallow_grave:OnDestroy()
 			
 			local ability = self:GetAbility()
 			local caster = ability:GetCaster()
+			
+			parent:Heal(self.shallowDamage, caster)
 			if caster:HasTalent("special_bonus_imba_dazzle_3") then
 				self.targetsHit = {}
 				table.insert(self.targetsHit, parent:entindex(), true)
@@ -520,6 +518,7 @@ function modifier_imba_dazzle_nothl_protection:OnTakeDamage( keys )
 								modifier:SetStackCount(self.shallowDamageInstances)
 							end
 							
+							parent:Heal(self.shallowDamage, parent)
 							if parent:HasTalent("special_bonus_imba_dazzle_3") then
 								self.targetsHit = {}
 								table.insert(self.targetsHit, parent:entindex(), true)
@@ -581,7 +580,7 @@ end
 -- For the talent that releases a shadow wave
 function modifier_imba_dazzle_nothl_protection:ShadowWave(ability, caster, oldTarget, heal)
 	oldTarget:Heal(heal, caster)
-	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, oldTarget, self.heal, nil)
+	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, oldTarget, heal, nil)
 	local bounceDistance = ability:GetSpecialValueFor("talent_wave_bounce_distance")
 
 	-- Prioritize injured heroes, then heroes, then injured creeps, then creeps
@@ -1177,7 +1176,7 @@ function modifier_imba_dazzle_shadow_wave_delayed_bounce:OnDestroy()
 			end
 				
 			if newTarget then
-				local mod = newTarget:AddNewModifier(caster, ability, "modifier_imba_dazzle_shadow_wave_delayed_bounce", {duration = ability:GetSpecialValueFor("talent_delayed_wave_delay")})
+				local mod = newTarget:AddNewModifier(caster, ability, "modifier_imba_dazzle_shadow_wave_delayed_bounce", {duration = caster:FindTalentValue("special_bonus_imba_dazzle_1", "talent_delayed_wave_delay")})
 				mod:SetStackCount(self:GetStackCount())
 				
 				self.data.handler = mod
@@ -1219,15 +1218,14 @@ LinkLuaModifier( "modifier_imba_dazzle_weave_debuff", "hero/hero_dazzle.lua", LU
 LinkLuaModifier( "modifier_imba_dazzle_ressurection_layout", "hero/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )-- Ressurection ability layout modifier
 
 function imba_dazzle_weave:GetAbilityTextureName()
-   return "dazzle_weave"
-end
+   return "dazzle_weave" end
 
 function imba_dazzle_weave:GetCooldown()
-	local cooldown = self:GetSpecialValueFor("cooldown")
-	
-	return cooldown
-end
+	return self:GetSpecialValueFor("cooldown") end
 
+function imba_dazzle_weave:GetCastAnimation()
+	return ACT_DOTA_CAST_ABILITY_4 end
+ 
 function imba_dazzle_weave:GetBehavior()
 	return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_AOE end
 
@@ -1256,7 +1254,7 @@ function imba_dazzle_weave:OnSpellStart()
 		end
 		
 		Timers:CreateTimer(0, function()
-			local targets = FindUnitsInRadius(caster:GetTeamNumber(), target_point, nil, area_of_effect, DOTA_UNIT_TARGET_TEAM_BOTH, targetType, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE , FIND_ANY_ORDER , false)
+			local targets = FindUnitsInRadius(caster:GetTeamNumber(), target_point, nil, area_of_effect, DOTA_UNIT_TARGET_TEAM_BOTH, targetType, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
 			for _,target in pairs(targets) do
 				if not affected[target:GetEntityIndex()] then
 					if target:GetTeamNumber() == caster:GetTeamNumber() then
@@ -1271,7 +1269,7 @@ function imba_dazzle_weave:OnSpellStart()
 						if not caster:HasTalent("special_bonus_imba_dazzle_8") then
 							mod:SetStackCount(times_repeated * repeat_delay / tick_interval)
 						else
-							mod:SetStackCount(times_repeated * repeat_delay / (tick_interval / 2))
+							mod:SetStackCount(times_repeated * repeat_delay / (tick_interval / caster:FindTalentValue("special_bonus_imba_dazzle_8")))
 						end
 					end
 					
@@ -1343,13 +1341,13 @@ function modifier_imba_dazzle_weave_buff:OnCreated()
 		if parent:IsBuilding() then
 			if caster:HasTalent("special_bonus_imba_dazzle_7") then
 				if self:GetAbility():GetCaster():HasTalent("special_bonus_imba_dazzle_8") then
-					tick_interval = tick_interval / 2
+					tick_interval = tick_interval / caster:FindTalentValue("special_bonus_imba_dazzle_8")
 				end
 				self:StartIntervalThink(tick_interval)
 			end
 		else
 			if self:GetAbility():GetCaster():HasTalent("special_bonus_imba_dazzle_8") then
-				tick_interval = tick_interval / 2
+				tick_interval = tick_interval / caster:FindTalentValue("special_bonus_imba_dazzle_8")
 			end
 			self:StartIntervalThink(tick_interval)
 		end
@@ -1376,7 +1374,7 @@ function modifier_imba_dazzle_weave_buff:GetModifierPhysicalArmorBonus()
     local base = self:GetAbility():GetSpecialValueFor("base_shift")
     local stacked = self:GetAbility():GetSpecialValueFor("stack_shift")
     
-    return (stacked * self:GetStackCount() + base)
+    return stacked * self:GetStackCount() + base
 end
 
 ---------------------------------
@@ -1403,13 +1401,13 @@ function modifier_imba_dazzle_weave_debuff:OnCreated()
 		if parent:IsBuilding() then
 			if caster:HasTalent("special_bonus_imba_dazzle_7") then
 				if self:GetAbility():GetCaster():HasTalent("special_bonus_imba_dazzle_8") then
-					tick_interval = tick_interval / 2
+					tick_interval = tick_interval / caster:FindTalentValue("special_bonus_imba_dazzle_8")
 				end
 				self:StartIntervalThink(tick_interval)
 			end
 		else
 			if self:GetAbility():GetCaster():HasTalent("special_bonus_imba_dazzle_8") then
-				tick_interval = tick_interval / 2
+				tick_interval = tick_interval / caster:FindTalentValue("special_bonus_imba_dazzle_8")
 			end
 			self:StartIntervalThink(tick_interval)
 		end
@@ -1436,11 +1434,7 @@ function modifier_imba_dazzle_weave_debuff:GetModifierPhysicalArmorBonus()
 	local base = self:GetAbility():GetSpecialValueFor("base_shift")
 	local stacked = self:GetAbility():GetSpecialValueFor("stack_shift")
 	
-	if self:GetParent():IsBuilding() then
-		return base * -1
-	else
-		return (stacked * self:GetStackCount() + base) * -1
-	end
+	return (stacked * self:GetStackCount() + base) * -1
 end
 
 -------------------------------------------------------------------------
@@ -1448,6 +1442,9 @@ end
 -------------------------------------------------------------------------
 
 if imba_dazzle_ressurection == nil then imba_dazzle_ressurection = class({}) end
+
+function imba_dazzle_ressurection:GetCastAnimation()
+	return ACT_DOTA_SHALLOW_GRAVE end
 
 function imba_dazzle_ressurection:OnAbilityPhaseStart()
 	if IsServer() then
@@ -1471,29 +1468,44 @@ function imba_dazzle_ressurection:OnSpellStart()
 	if IsServer() then
 		local target = self.target
 		local caster = self:GetCaster()
+		local delay = self:GetSpecialValueFor("delay")
 		
 		self:SetActivated(false)
 		
 		local castParticle = ParticleManager:CreateParticle("particles/hero/dazzle/dazzle_ressurection_cast.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 		ParticleManager:ReleaseParticleIndex(castParticle)
 		
-		Timers:CreateTimer(self:GetSpecialValueFor("delay"), function()
+		local screenParticle = ParticleManager:CreateParticleForPlayer("particles/hero/dazzle/dazzle_ressurection_screen.vpcf", PATTACH_MAIN_VIEW, target, PlayerResource:GetPlayer(target:GetPlayerID()))        
+		
+		Timers:CreateTimer(delay, function()
 			if target:IsAlive() then
 				self:SetActivated(true)
 				EmitSoundOn("Imba.DazzleRessurectionFail", target)
+				
+				ParticleManager:DestroyParticle(screenParticle, true)
+				ParticleManager:ReleaseParticleIndex(screenParticle)
+				
+				self:EndCooldown()
+				self:RefundManaCost()
 			else
 				self:SetActivated(true)
 				target:RespawnHero(false, false, false)
 				FindClearSpaceForUnit(target, caster:GetAbsOrigin(), true)
 				
+				ParticleManager:DestroyParticle(screenParticle, true)
+				ParticleManager:ReleaseParticleIndex(screenParticle)
+				
 				local targetParticle = ParticleManager:CreateParticle("particles/hero/dazzle/dazzle_ressurection_target.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
 				ParticleManager:ReleaseParticleIndex(targetParticle)
-				EmitSoundOn("Imba.DazzleRessurection", target)
+				EmitGlobalSound("Imba.reincarnationGlobal")
 			end
 		end)
 	end
 end
 
+---------------------------------
+-----	Skill Layout fix	-----
+---------------------------------
 modifier_imba_dazzle_ressurection_layout = modifier_imba_dazzle_ressurection_layout or class({})
 
 function modifier_imba_dazzle_ressurection_layout:IsHidden() return true end
@@ -1501,16 +1513,13 @@ function modifier_imba_dazzle_ressurection_layout:IsDebuff() return false end
 function modifier_imba_dazzle_ressurection_layout:IsPurgable() return false end
 function modifier_imba_dazzle_ressurection_layout:RemoveOnDeath() return false end
 	
+function modifier_imba_dazzle_ressurection_layout:GetModifierAbilityLayout()
+	return 5 end
+	
 function modifier_imba_dazzle_ressurection_layout:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_ABILITY_LAYOUT}
-
 	return decFuncs
 end
-
-function modifier_imba_dazzle_ressurection_layout:GetModifierAbilityLayout()
-	return 5
-end
-
 
 ----------------------
 -----	Talents	 -----

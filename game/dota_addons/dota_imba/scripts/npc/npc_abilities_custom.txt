@@ -142,16 +142,17 @@
 	}
 
 	//=================================================================================================================
-	// Creep passive buffs
+	// Normal Melee Lane Creep Upgrade
 	//=================================================================================================================
-	"imba_creep_buffs"
+	"imba_creep_melee_bonuses"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_datadriven"
+		"BaseClass"										"ability_lua"
 		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityTextureName"							"rubick_empty1"
 		"MaxLevel"										"1"
+		"ScriptFile"									"hero/npc_upgrades.lua"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -160,90 +161,172 @@
 			"01"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"bonus_damage_per_minute"				"2"
+				"bonus_damage_per_minute"				"3"
 			}
+
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"bonus_health_per_minute"				"2"
-			}
-			"03"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"mega_armor"							"25"
-			}
-			"04"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"mega_magic_armor"						"50"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_creep_buffs_base"
-			{
-				"Passive"								"1"
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-
-				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/npc_upgrades.lua"
-						"Function"						"CreepUpgrade"
-
-						"modifier_damage"				"modifier_imba_creep_time_damage"
-						"modifier_armor"				"modifier_imba_mega_creep_armor"
-						"modifier_magic_resist"			"modifier_imba_mega_creep_magic_resist"
-					}
-				}
-			}
-
-			"modifier_imba_creep_time_damage"
-			{
-				"Passive"								"0"
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%bonus_damage_per_minute"
-				}
-			}
-
-			"modifier_imba_mega_creep_armor"
-			{
-				"Passive"								"0"
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%mega_armor"
-				}
-			}
-
-			"modifier_imba_mega_creep_magic_resist"
-			{
-				"Passive"								"0"
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"		"%mega_magic_armor"
-				}
+				"bonus_health_per_minute"				"22"
 			}
 		}
 	}
+
+	//=================================================================================================================
+	// Normal Ranged Lane Creep Upgrade
+	//=================================================================================================================
+	"imba_creep_ranged_bonuses"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityTextureName"							"rubick_empty1"
+		"MaxLevel"										"1"
+		"ScriptFile"									"hero/npc_upgrades.lua"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"bonus_damage_per_minute"				"5"
+			}
+
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"bonus_health_per_minute"				"16"
+			}			
+		}		
+	}
+
+	//=================================================================================================================
+	// Super Melee Lane Creep Upgrade
+	//=================================================================================================================
+	"imba_super_creep_melee_bonuses"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityTextureName"							"rubick_empty1"
+		"MaxLevel"										"1"
+		"ScriptFile"									"hero/npc_upgrades.lua"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"bonus_damage_per_minute"				"6"
+			}
+
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"bonus_health_per_minute"				"44"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Super Ranged Lane Creep Upgrade
+	//=================================================================================================================
+	"imba_super_creep_ranged_bonuses"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityTextureName"							"rubick_empty1"
+		"MaxLevel"										"1"
+		"ScriptFile"									"hero/npc_upgrades.lua"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"bonus_damage_per_minute"				"10"
+			}
+
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"bonus_health_per_minute"				"32"
+			}			
+		}		
+	}
+
+	//=================================================================================================================
+	// Mega Melee Lane Creep Upgrade
+	//=================================================================================================================
+	"imba_mega_creep_melee_bonuses"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityTextureName"							"rubick_empty1"
+		"MaxLevel"										"1"
+		"ScriptFile"									"hero/npc_upgrades.lua"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"bonus_damage_per_minute"				"12"
+			}
+
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"bonus_health_per_minute"				"88"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Mega Ranged Lane Creep Upgrade
+	//=================================================================================================================
+	"imba_mega_creep_ranged_bonuses"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityTextureName"							"rubick_empty1"
+		"MaxLevel"										"1"
+		"ScriptFile"									"hero/npc_upgrades.lua"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"bonus_damage_per_minute"				"20"
+			}
+
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"bonus_health_per_minute"				"64"
+			}			
+		}		
+	}
+
 
 	//=================================================================================================================
 	// Tower passive buffs
@@ -556,20 +639,39 @@
 		{
 			"01"
 			{
-				"var_type"						"FIELD_FLOAT"
-				"tenacity"						"50"
+				"var_type"						"FIELD_INTEGER"
+				"tenacity"						"75"
 			}
+
 			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_reduction"				"75"
+			}
+
+			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"aura_radius"					"1200"
 			}
 
-			"03"
+			"04"
 			{
-				"var_type"						"FIELD_FLOAT"
+				"var_type"						"FIELD_INTEGER"
 				"aura_stickyness"				"1"
-			}			
+			}
+
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"disconnected_dmg_reduction"	"100"
+			}
+
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_reject_time"				"10"
+			}
 		}
 	}
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -4057,7 +4159,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"										"ability_lua"
 		"ScriptFile"									"hero/hero_abaddon.lua"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 		"AbilityTextureName"							"custom/abaddon_over_channel"
 		"MaxLevel"										"7"
 
@@ -4882,8 +4984,8 @@
 
 			"07"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"max_mana_blast"				"5 5 5 5 10 15 20"
+				"var_type"						"FIELD_FLOAT"
+				"max_mana_blast"				"5 5 5 5 6.5 8 9.5"
 				"CalculateSpellDamageTooltip"   "1"
 			}
 
@@ -4959,6 +5061,12 @@
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"400"
 			}
+
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mana_burn_limit"			"150 150 150 150 300 450 600"
+			}
 		}
 	}
 
@@ -4979,7 +5087,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"24.0"
+		"AbilityCooldown"				"10"
 		"AbilityCastPoint"				"0.0"
 
 		// Precache
@@ -5005,13 +5113,13 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"active_duration"		"1.5 1.5 1.5 1.5 2.0 2.5 3.0"				
+				"active_duration"		"1.5"				
 			}
 
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"internal_cooldown"		"12"
+				"internal_cooldown"		"6"
 			}
 
 			"04"
@@ -5063,7 +5171,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"70.0"
+		"AbilityCooldown"				"70"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -5268,7 +5376,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"mana_point_worth"			"2"
+				"mana_point_worth"			"3"
 			}
 		}
 	}
@@ -6733,13 +6841,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_reduction_pct"		"10"
+				"damage_reduction_pct"		"5"
 			}
 
-			"02" // Hardcoded in modifierfilter in imba.lua
+			"02" 
 			{
 				"var_type"					"FIELD_INTEGER"
-				"debuff_duration_red_pct"	"10"
+				"debuff_duration_red_pct"	"20"
 			}
 		}
 	}
@@ -6786,14 +6894,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"315"
-				"LinkedSpecialBonus"	"special_bonus_imba_centaur_4"
+				"radius"				"315"				
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"2.0 2.25 2.5 2.75 2.75 2.75 2.75"
-				"LinkedSpecialBonus"	"special_bonus_imba_centaur_5"
+				"stun_duration"			"2.0 2.25 2.5 2.75 2.75 2.75 2.75"				
 			}
 			"03"
 			{
@@ -6808,8 +6914,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pit_dmg_reduction"		"10 10 10 10 15 20 25"
-				"LinkedSpecialBonus"	"special_bonus_imba_centaur_2"
+				"pit_dmg_reduction"		"10 10 10 10 15 20 25"				
 			}
 			"06"
 			{
@@ -6869,8 +6974,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"str_damage_reduction"	"100"
-				"LinkedSpecialBonus"	"special_bonus_imba_centaur_1"
+				"str_damage_reduction"	"100"				
 			}
 		}
 	}
@@ -6914,19 +7018,17 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_block"			"1 1 1 2 3 4 5"
-				"LinkedSpecialBonus"	"special_bonus_imba_centaur_7"
+				"damage_block"			"3 3 3 3 6 9 12"				
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"block_duration"		"3.5"
+				"block_duration"		"5"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"900"
-				"LinkedSpecialBonus"	"special_bonus_imba_centaur_6"
+				"aura_radius"			"900"				
 			}
 		}
 	}
@@ -6952,7 +7054,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"90 75 60 57 54 50"
+		"AbilityCooldown"				"90 75 60 60 60 60"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -6983,8 +7085,8 @@
 			}
 			"03"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"stun_duration"				"1"
+				"var_type"					"FIELD_FLOAT"
+				"stun_duration"				"0.75"
 			}
 			"04"
 			{
@@ -6994,7 +7096,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_reduction_scepter"	"75"
+				"damage_reduction_scepter"	"40"
 			}
 			"06"
 			{
@@ -9053,7 +9155,17 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"eidolon_bonus_duration_percent"				"0.07"
-			}											
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"health_bonus_duration_percent" 		"25"
+			}		
+			"12"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"health_bonus_duration"				"2"
+			}														
 		}
 
 	}
@@ -9232,7 +9344,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"damage_per_tick"			"3.0 3.75 4.5 5.25 5.25 5.25 5.25"
+				"damage_per_tick"			"3.0 3.75 4.5 5.25 5.5 5.75 6"
 			}
 
 			"03"
@@ -9244,29 +9356,35 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"pull_strength"		"45 45 45 45 60 75 90"
+				"pull_strength"				"45 45 45 45 65 85 105"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"eidolon_heal_duration"			"3.0"
+				"eidolon_heal_duration"		"3.0"
 			}			
 			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"pull_duration"			"1"
+				"pull_duration"				"1"
 			}
 			"07"
 			{
 				"var_type"     				"FIELD_INTEGER"
-				"cast_range" 	"700"
-			}		
+				"cast_range" 				"700"
+			}
 
 			"08"
 			{
 				"var_type"     				"FIELD_FLOAT"
-				"cast_point"	"0.3"
+				"cast_point"				"0.3"
 			}									
+
+			"09"
+			{
+				"var_type"     				"FIELD_INTEGER"
+				"eidolon_hp_regen"			"20 20 20 20 30 40 50"
+			}
 		}
 	}
 
@@ -9406,7 +9524,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_per_tick"					"50 100 150 175 200 225"
+				"damage_per_tick"			"50 100 150 175 200 225"
 			}			
 
 			"05"
@@ -9736,6 +9854,7 @@
 			"particle"					"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
 			"particle"					"particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf"
 			"particle"					"particles/units/heroes/hero_faceless_void/faceless_void_chrono_speed.vpcf"
+			"particle"					"particles/econ/items/faceless_void/faceless_void_weapon_bfury/faceless_void_weapon_bfury_cleave.vpcf"
 		}
 
 		// Casting
@@ -9789,29 +9908,35 @@
 
 			"06"
 			{
-				"var_type"							"FIELD_INTEGER"
-				"scepter_cooldown"					"60"
+				"var_type"							"FIELD_FLOAT"
+				"cd_increase_per_enemy"				"1.0"
 			}
-
-			"06"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"scepter_ally_as_slow"				"150"
-			}
-
+			
 			"07"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"scepter_ally_ms_slow_pcnt"			"50"
+				"scepter_cooldown"					"60"
 			}
 
 			"08"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"scepter_ally_projectile_slow"		"50"
+				"scepter_ally_as_slow"				"150"
 			}
 
 			"09"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"scepter_ally_ms_slow_pcnt"			"50"
+			}
+
+			"10"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"scepter_ally_projectile_slow"		"50"
+			}
+
+			"11"
 			{
 				"var_type"							"FIELD_INTEGER"
 				"scepter_ally_casttime_pcnt_debuff"	"50"
@@ -10036,7 +10161,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"					"1200 1400 1600 1800 1800 1800 1800"
+		"AbilityCastRange"					"1200"
 		"AbilityCastPoint"					"0.5"
 		"AbilityCastAnimation"				"ACT_DOTA_CAST_ABILITY_2"
 
@@ -10081,7 +10206,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"path_radius"			"200"
+				"path_radius"			"150"
 			}
 			"05"
 			{
@@ -10277,7 +10402,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"path_radius"				"180"
+				"path_radius"				"120"
 			}
 			"07"
 			{
@@ -10287,12 +10412,12 @@
 			"08"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"trail_angle"				"10.5"
+				"trail_angle"				"8"
 			}
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"trail_amount"				"4"
+				"trail_amount"				"3"
 			}
 			"10"
 			{
@@ -17232,7 +17357,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
 		"FightRecapLevel"				"1"
@@ -17795,7 +17920,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"hook_distance"			"1000 1100 1200 1300 1350 1400 1450"
-				"LinkedSpecialBonus" 	"special_bonus_imba_pudge_2"
 			}
 			"04"
 			{
@@ -17843,6 +17967,16 @@
 				"var_type"				"FIELD_INTEGER"
 				"number_of_hooks"		"1"
 				"LinkedSpecialBonus" 	"special_bonus_imba_pudge_8"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stack_bonus_damage"			"5"
+			}
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stack_max_bonus_damage"			"200"
 			}
 		}
 	}
@@ -17972,7 +18106,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"rot_damage"			"30 60 90 120 130 140 150"
-				"LinkedSpecialBonus"	"special_bonus_imba_pudge_6"
 			}
 			"05"
 			{
@@ -17987,7 +18120,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_radius_tooltip"	"400"
+				"max_radius_tooltip"	"500"
 			}
 		}
 
@@ -18021,13 +18154,11 @@
 			{
 				"var_type"							"FIELD_INTEGER"
 				"base_magic_resist"					"12"
-				"LinkedSpecialBonus"				"special_bonus_imba_pudge_1"
 			}
 			"02"
 			{
 				"var_type"							"FIELD_FLOAT"
 				"stack_str"							"2.5"
-				"LinkedSpecialBonus"				"special_bonus_imba_pudge_5"
 			}
 			"03"
 			{
@@ -18043,6 +18174,16 @@
 			{
 				"var_type"							"FIELD_FLOAT"
 				"max_size"							"75"
+			}
+			"06"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"stack_magic_resistance"	"2"
+			}
+			"07"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"max_stack_resist"					"30"
 			}
 		}
 	}
@@ -18105,13 +18246,11 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"hero_duration"				"2.95"
-				"LinkedSpecialBonus" 		"special_bonus_imba_pudge_7"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"creep_duration"			"5.95"
-				"LinkedSpecialBonus" 		"special_bonus_imba_pudge_7"
 			}
 			"05"
 			{
@@ -18126,7 +18265,37 @@
 		}
 	}
 
-	"special_bonus_imba_pudge_1" // Bonus Flesh Heaps magic resistance.
+	"special_bonus_imba_pudge_1" // Rot deals x more damage for every y% health he misses
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_pudge_rot"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"						"40"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"hp_treshhold_percent"		"0.05"
+			}
+		}
+	}
+
+	"special_bonus_imba_pudge_2" // Meat Shield: Consume X stacks of charges to block Y damage, restores after Z seconds, Ignore on A damage?
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -18146,32 +18315,22 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"20"
+				"stacks_needed"						"5"
 			}
-		}
-	}
-
-	"special_bonus_imba_pudge_2" // bonus Meat Hook range
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_pudge_meat_hook"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
+			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"200"
+				"damage_block"						"100"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"return_time"						"10"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"min_damage"						"20"
 			}
 		}
 	}
@@ -18226,7 +18385,7 @@
 		}
 	}
 
-	"special_bonus_imba_pudge_5" // Bonus strength per Flesh Heaps stack
+	"special_bonus_imba_pudge_5" // Cleaver can now pierce through enemies, damaging and affecting all enemies in a straight line.
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -18236,7 +18395,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_pudge_flesh_heap"
+			"01" 	"imba_pudge_butchers_cleaver"
 			
 		}
 
@@ -18247,12 +18406,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"value"						"1.75"
+				"value"						"1"
 			}
 		}
 	}
 
-	"special_bonus_imba_pudge_6" // Bonus Rot damage per second
+	"special_bonus_imba_pudge_6" // Hook now deals damage for each tree the unit passes through
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -18262,7 +18421,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_pudge_rot"
+			"01" 	"imba_pudge_meat_hook"
 			
 		}
 
@@ -18272,13 +18431,13 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_FLOAT"
+				"var_type"					"FIELD_INTEGER"
 				"value"						"120"
 			}
 		}
 	}
 
-	"special_bonus_imba_pudge_7" // Bonus Dismember duration
+	"special_bonus_imba_pudge_7" // Dismember now disarms the target after the duration for the channeled duration
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -18298,8 +18457,8 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"value"						"2"
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
 			}
 		}
 	}
@@ -19481,8 +19640,7 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE | DOTA_UNIT_TARGET_FLAG_NO_INVIS"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"		
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
@@ -20701,6 +20859,9 @@
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"hero/hero_storm_spirit"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NONE"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
@@ -22703,7 +22864,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"ward_hp_tooltip"		"2 2 2 3 4 5"
+				"ward_hp_tooltip"		"2 2 2 3 3 3"
 				"LinkedSpecialBonus"	"special_bonus_imba_shadow_shaman_2"
 				
 			}
@@ -27310,8 +27471,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE | DOTA_UNIT_TARGET_FLAG_NO_INVIS"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"		
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES_STRONG"
 		"AbilityTextureName"			"witch_doctor_paralyzing_cask"
@@ -28969,13 +29129,13 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"grab_radius"			"275"
+				"grab_radius"			"350"
 			}
 
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"275"
+				"radius"				"350"
 			}
 
 			"04"
@@ -36165,7 +36325,7 @@
 		}
 	}
 
-	"special_bonus_imba_enigma_2"	// Malefice Effect Radius
+	"special_bonus_imba_enigma_2"	// Malefice has an AoE Radius
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -36983,9 +37143,15 @@
 	}
 
 	//=================================================================================================================
+	//=================================================================================================================
 	// Faceless Void's Talents 
 	//=================================================================================================================
-	"special_bonus_imba_faceless_void_1" // Time Dilation grants bonus move/attack speed per charge spent
+	//=================================================================================================================
+	
+	//=================================================================================================================================
+	// Time Dilation grants Faceless Void a chance to backtrack damage instances that increases per ability affected by Time Dilation
+	//=================================================================================================================================
+	"special_bonus_imba_faceless_void_1" 
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -37005,12 +37171,25 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"5"
+				"backtrack_pct_per_enemy"	"5"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_pct"					"50"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"duration"					"6"
 			}
 		}
 	}
 
-	"special_bonus_imba_faceless_void_2" // Time Dilation grants bonus health and mana per charge spent on them
+	//=================================================================================================================
+	// Time Dilation grants bonus health and mana per charge spent on them
+	//=================================================================================================================
+	"special_bonus_imba_faceless_void_2"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -37041,7 +37220,10 @@
 		}
 	}
 
-	"special_bonus_imba_faceless_void_3" // Movement inside Chronosphere is instant, Void constantly dodges projectiles
+	//=================================================================================================================
+	// Movement inside Chronosphere is instant, Void constantly dodges projectiles
+	//=================================================================================================================
+	"special_bonus_imba_faceless_void_3" 
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -37065,8 +37247,11 @@
 			}			
 		}
 	}
-
-	"special_bonus_imba_faceless_void_4" // Chronosphere duration increase per point of spell power 
+	
+	//==========================================================================================================================
+	// Bashing enemies with the Time Dilation debuff increases their active spells' CD while decreasing all of Voids cooldowns
+	//==========================================================================================================================
+	"special_bonus_imba_faceless_void_4" 
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -37076,7 +37261,8 @@
 
         "LinkedAbility"
         {
-            "01"        "imba_faceless_void_chronosphere"
+            "01"        "imba_faceless_void_time_dilation"
+			"02"        "imba_faceless_void_time_lock"
         }
 		
 		// Special
@@ -37086,12 +37272,20 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"value"					"0.05"
-			}			
+				"target_increase"		"0.5"
+			}		
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"self_reduction"		"0.5"
+			}					
 		}
 	}
 
-	"special_bonus_imba_faceless_void_5" // Time walk cast range increase
+	//=================================================================================================================
+	// Time Lock now spawns mini chronospheres
+	//=================================================================================================================
+	"special_bonus_imba_faceless_void_5" 
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -37101,7 +37295,8 @@
 
         "LinkedAbility"
         {
-            "01"        "imba_faceless_void_time_walk"
+            "01"        "imba_faceless_void_time_lock"
+			"02"        "imba_faceless_void_chronosphere"
         }
 		
 		// Special
@@ -37110,13 +37305,21 @@
 		{
 			"01"
 			{
+				"var_type"				"FIELD_INTEGER"
+				"aoe"					"180"
+			}
+			"02"
+			{
 				"var_type"				"FIELD_FLOAT"
-				"value"					"600"
+				"duration"				"1.0"
 			}			
 		}
 	}
 
-	"special_bonus_imba_faceless_void_6" // Time walk backtracks further
+	//=================================================================================================================
+	// Time Lord bonuses are increased when Faceless Void is inside a Chronosphere
+	//=================================================================================================================
+	"special_bonus_imba_faceless_void_6"  
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -37126,7 +37329,8 @@
 
         "LinkedAbility"
         {
-            "01"        "imba_faceless_void_time_walk"
+            "01"        "imba_faceless_void_timelord"
+			"02"        "imba_faceless_void_chronosphere"
         }
 		
 		// Special
@@ -37136,12 +37340,15 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"value"					"1"
+				"value"					"2.0"
 			}			
 		}
 	}
 
-	"special_bonus_imba_faceless_void_7" // Time Dilation no longer spends chronocharges to affect allies
+	//=================================================================================================================
+	// Time Dilation no longer spends chronocharges to affect allies
+	//=================================================================================================================
+	"special_bonus_imba_faceless_void_7" 
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -37166,7 +37373,10 @@
 		}
 	}
 
-	"special_bonus_imba_faceless_void_8" // Chronosphere effects per chronocharge increase
+	//=================================================================================================================
+	// Chronosphere causes Faceless Void attacks to cleave
+	//=================================================================================================================
+	"special_bonus_imba_faceless_void_8" 
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -37185,8 +37395,23 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"value"					"50"
+				"var_type"					"FIELD_INTEGER"
+				"cleave_damage_pct"			"50"
+			}	
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cleave_starting_width"		"150"
+			}		
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cleave_ending_width"		"300"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cleave_distance"			"600"
 			}			
 		}
 	}

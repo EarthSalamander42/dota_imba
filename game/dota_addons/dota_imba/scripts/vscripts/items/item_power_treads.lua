@@ -123,6 +123,10 @@ function modifier_imba_power_treads_2:OnIntervalThink()
 	if IsClient() then
 		local state = self:GetStackCount()
 		local ability = self:GetAbility()
+		if not ability then
+			return nil
+		end
+
 		ability.state = state
 		
 	elseif IsServer() then
@@ -194,156 +198,52 @@ end
 
 
 -----------------------------------------------------------------------------------------------------------
---	Strength multiplier modifier
+--	Strength tenacity bonus modifier
 -----------------------------------------------------------------------------------------------------------
 if modifier_imba_mega_treads_stat_multiplier_00 == nil then modifier_imba_mega_treads_stat_multiplier_00 = class({}) end
 function modifier_imba_mega_treads_stat_multiplier_00:IsHidden() return true end
 function modifier_imba_mega_treads_stat_multiplier_00:IsDebuff() return false end
 function modifier_imba_mega_treads_stat_multiplier_00:IsPurgable() return false end
+function modifier_imba_mega_treads_stat_multiplier_00:RemoveOnDeath() return false end
 
-function modifier_imba_mega_treads_stat_multiplier_00:OnCreated()
-	if IsServer() then
-		self:StartIntervalThink(0.2)
-	end
+function modifier_imba_mega_treads_stat_multiplier_00:GetCustomTenacity()
+	return self:GetAbility():GetSpecialValueFor("str_mode_tenacity")
 end
 
-function modifier_imba_mega_treads_stat_multiplier_00:OnIntervalThink()
-	if IsServer() then
-		local strength = self:GetParent():GetStrength()
-		self:SetStackCount(strength)
-		self:GetParent():CalculateStatBonus()
-	end
-end
-
-function modifier_imba_mega_treads_stat_multiplier_00:DeclareFunctions()
-	local funcs = {	MODIFIER_PROPERTY_HEALTH_BONUS,			
-					MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,					
-					}
-	return funcs
-end
-
-function modifier_imba_mega_treads_stat_multiplier_00:GetModifierHealthBonus()	
-	
-	local ability = self:GetAbility()
-	local parent = self:GetParent()
-	if not parent:IsHero() then return end
-	
-	local strength = self:GetStackCount()
-	local health_bonus = ability:GetSpecialValueFor("str_bonus_max_health")	
-	return strength * health_bonus
-end
-
-function modifier_imba_mega_treads_stat_multiplier_00:GetModifierConstantHealthRegen()	
-	
-	local ability = self:GetAbility()
-	local parent = self:GetParent()
-	if not parent:IsHero() then return end
-	
-	local strength = self:GetStackCount()
-	local regen_bonus = ability:GetSpecialValueFor("str_bonus_hp_regen")	
-	return strength * regen_bonus
-end
 
 -----------------------------------------------------------------------------------------------------------
---	Agility multiplier modifier
+--	Agility evasion bonus modifier
 -----------------------------------------------------------------------------------------------------------
 if modifier_imba_mega_treads_stat_multiplier_01 == nil then modifier_imba_mega_treads_stat_multiplier_01 = class({}) end
 function modifier_imba_mega_treads_stat_multiplier_01:IsHidden() return true end
 function modifier_imba_mega_treads_stat_multiplier_01:IsDebuff() return false end
 function modifier_imba_mega_treads_stat_multiplier_01:IsPurgable() return false end
+function modifier_imba_mega_treads_stat_multiplier_01:RemoveOnDeath() return false end
 
 function modifier_imba_mega_treads_stat_multiplier_01:DeclareFunctions()
-	local funcs = {	MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-					MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,					
-					}
+	local funcs = {MODIFIER_PROPERTY_EVASION_CONSTANT}
 	return funcs
 end
 
-function modifier_imba_mega_treads_stat_multiplier_01:OnCreated()
-	if IsServer() then
-		self:StartIntervalThink(0.2)
-	end
+function modifier_imba_mega_treads_stat_multiplier_01:GetModifierEvasion_Constant()
+	return self:GetAbility():GetSpecialValueFor("agi_mode_evasion")
 end
 
-function modifier_imba_mega_treads_stat_multiplier_01:OnIntervalThink()
-	if IsServer() then
-		local agility = self:GetParent():GetAgility()
-		self:SetStackCount(agility)
-		self:GetParent():CalculateStatBonus()
-	end
-end
-
-function modifier_imba_mega_treads_stat_multiplier_01:GetModifierAttackSpeedBonus_Constant()		
-	local ability = self:GetAbility()
-	local parent = self:GetParent()
-	if not parent:IsHero() then return end
-	
-	local agility = self:GetStackCount()
-	local attack_speed_bonus = ability:GetSpecialValueFor("agi_bonus_attack_speed")	
-	return agility * attack_speed_bonus	
-end
-
-function modifier_imba_mega_treads_stat_multiplier_01:GetModifierPhysicalArmorBonus()			
-	local ability = self:GetAbility()
-	local parent = self:GetParent()
-	if not parent:IsHero() then return end
-	
-	local agility = self:GetStackCount()
-	local armor_bonus = ability:GetSpecialValueFor("agi_bonus_armor")	
-
-	return agility * armor_bonus	
-end
 
 -----------------------------------------------------------------------------------------------------------
---	Intelliegence multiplier modifier (Stacks are used to calculate bonus spell power)
+--	Intelliegence cast range bonus modifier 
 -----------------------------------------------------------------------------------------------------------
 if modifier_imba_mega_treads_stat_multiplier_02 == nil then modifier_imba_mega_treads_stat_multiplier_02 = class({}) end
 function modifier_imba_mega_treads_stat_multiplier_02:IsHidden() return true end
 function modifier_imba_mega_treads_stat_multiplier_02:IsDebuff() return false end
 function modifier_imba_mega_treads_stat_multiplier_02:IsPurgable() return false end
+function modifier_imba_mega_treads_stat_multiplier_02:RemoveOnDeath() return false end
 
 function modifier_imba_mega_treads_stat_multiplier_02:DeclareFunctions()
-	local funcs = {	MODIFIER_PROPERTY_MANA_BONUS,	
-					MODIFIER_PROPERTY_BASE_MANA_REGEN,					
-					}
+	local funcs = {	MODIFIER_PROPERTY_CAST_RANGE_BONUS_STACKING}
 	return funcs
 end
 
-function modifier_imba_mega_treads_stat_multiplier_02:OnCreated()
-	if IsServer() then
-		self:StartIntervalThink(0.2)
-	end
-end
-
-function modifier_imba_mega_treads_stat_multiplier_02:OnIntervalThink()
-	if IsServer() then
-		local parent = self:GetParent()
-		local int = parent:GetIntellect()
-		self:SetStackCount(int)
-		self:GetParent():CalculateStatBonus()
-	end
-end
-
-function modifier_imba_mega_treads_stat_multiplier_02:GetModifierManaBonus()	
-	
-	local ability = self:GetAbility()
-	local parent = self:GetParent()
-	if not parent:IsHero() then return end
-	
-	local intellect = self:GetStackCount()
-	local mana_bonus = ability:GetSpecialValueFor("int_bonus_max_mp")
-	
-	return intellect * mana_bonus
-end
-
-function modifier_imba_mega_treads_stat_multiplier_02:GetModifierBaseRegen()	
-	
-	local ability = self:GetAbility()
-	local parent = self:GetParent()
-	if not parent:IsHero() then return end
-	
-	local intellect = self:GetStackCount()
-	local regen_bonus = ability:GetSpecialValueFor("int_bonus_mp_regen")
-	
-	return intellect * regen_bonus
+function modifier_imba_mega_treads_stat_multiplier_02:GetModifierCastRangeBonusStacking()
+	return self:GetAbility():GetSpecialValueFor("int_mode_cast_range")
 end

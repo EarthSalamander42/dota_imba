@@ -158,8 +158,8 @@
 	"item_butterfly"				"REMOVE"
 	"item_recipe_greater_crit"		"REMOVE"
 	"item_greater_crit"				"REMOVE"
-	//"item_recipe_basher"			"REMOVE"
-	//"item_basher"					"REMOVE"
+	"item_recipe_basher"			"REMOVE"
+	"item_basher"					"REMOVE"
 	//"item_recipe_bfury"				"REMOVE"
 	//"item_bfury"					"REMOVE"
 	//"item_recipe_manta"				"REMOVE"
@@ -210,8 +210,8 @@
 	"item_veil_of_discord"			"REMOVE"
 	//"item_recipe_rod_of_atos"		"REMOVE"
 	//"item_rod_of_atos"				"REMOVE"
-	//"item_recipe_abyssal_blade"		"REMOVE"
-	//"item_abyssal_blade"			"REMOVE"
+	"item_recipe_abyssal_blade"		"REMOVE"
+	"item_abyssal_blade"			"REMOVE"
 	"item_recipe_heavens_halberd"	"REMOVE"
 	"item_heavens_halberd"			"REMOVE"
 	//"item_recipe_ring_of_aquila"	"REMOVE"
@@ -353,7 +353,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"4"
+				"bonus_health_regen"	"3"
 			}
 		}
 	}
@@ -368,7 +368,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"8"
+				"bonus_health_regen"	"7"
 			}
 		}
 	}
@@ -471,7 +471,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"400"
+				"bonus_mana"			"325"
 			}
 		}
 	}
@@ -486,7 +486,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"400"
+				"bonus_health"			"325"
 			}
 		}
 	}
@@ -522,7 +522,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_regen"			"5"
+				"health_regen"			"4"
 			}
 			"02"
 			{
@@ -590,12 +590,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"250"
+				"bonus_health"			"225"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"250"
+				"bonus_mana"			"225"
 			}
 		}
 	}
@@ -1149,7 +1149,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"8"
+				"bonus_health_regen"	"7"
 			}
 			"03"
 			{
@@ -1201,7 +1201,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"8"
+				"bonus_health_regen"	"7"
 			}
 			"03"
 			{
@@ -1249,106 +1249,7 @@
 				"bonus_attack_speed"	"100"
 			}
 		}
-	}
-
-	//=================================================================================================================
-	// Recipe: Basher
-	//=================================================================================================================
-	"item_recipe_basher"
-	{
-		"ItemRequirements"
-		{
-			"01"						"item_belt_of_strength;item_imba_javelin"
-		}
-	}
-
-	//=================================================================================================================
-	// Recipe: Abyssal Blade
-	//=================================================================================================================
-	"item_recipe_abyssal_blade"
-	{
-		"ItemRequirements"
-		{
-			"01"						"item_basher;item_imba_vanguard"
-		}
-	}
-
-	//=================================================================================================================
-	// Abyssal Blade
-	//=================================================================================================================
-	"item_abyssal_blade"
-	{
-		"AbilityManaCost"				"0"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"425"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"18"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"block_damage_melee"	"70"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"block_damage_ranged"	"35"
-			}			
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"block_chance"			"50"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"10"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"10"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bash_chance_melee"		"25"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bash_chance_ranged"	"10"
-			}
-			"10"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"bash_duration"			"1.4"
-			}
-			"11"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_chance_damage"	"85"
-			}	
-			"12"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"bash_cooldown"			"2.3"
-			}
-			"13"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"2"
-			}
-		}
-	}
+	}	
 
 	//=================================================================================================================
 	// Glimmer Cape
@@ -1408,7 +1309,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_regen"			"5"
+				"bonus_regen"			"4"
 			}
 		}
 	}
@@ -1438,7 +1339,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hp_regen_aura"			"14"
+				"hp_regen_aura"			"12"
 			}
 			"05"
 			{
@@ -1483,7 +1384,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_health_regen"		"5"
+				"aura_health_regen"		"4"
 			}
 			"03"
 			{
@@ -1858,7 +1759,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"8"
+				"bonus_health_regen"	"7"
 			}
 			"03"
 			{
@@ -1975,7 +1876,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"10"
+				"bonus_health_regen"	"9"
 			}
 			"03"
 			{

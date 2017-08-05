@@ -222,6 +222,17 @@ function GameMode:ExperienceFilter( keys )
 	local game_time = math.max(GameRules:GetDOTATime(false, false), 0)
 	keys.experience = keys.experience * (1 + CUSTOM_XP_BONUS * 0.01) * (1 + game_time * BOUNTY_RAMP_PER_SECOND * 0.01)
 
+	-- Losing team gets huge EXP bonus.
+	if hero and CustomNetTables:GetTableValue("gamerules", "losing_team") then
+		if CustomNetTables:GetTableValue("gamerules", "losing_team").losing_team then
+			local losing_team = CustomNetTables:GetTableValue("gamerules", "losing_team").losing_team
+			
+			if hero:GetTeamNumber() == losing_team then
+				keys.experience = keys.experience * (1 + COMEBACK_EXP_BONUS * 0.01)
+			end
+		end
+	end
+			
 	return true
 end
 
@@ -867,40 +878,45 @@ function GameMode:DamageFilter( keys )
 
 		-- Cheese auto-healing
 		if victim:HasModifier("modifier_imba_cheese_death_prevention") then
-			
-			-- Check if death is imminent
-			local victim_health = victim:GetHealth()
-			if keys.damage >= victim_health and not ( victim:HasModifier("modifier_imba_dazzle_shallow_grave") or victim:HasModifier("modifier_imba_dazzle_nothl_protection") ) then
 
-				-- Find the cheese item handle
-				local cheese_modifier = victim:FindModifierByName("modifier_imba_cheese_death_prevention")
-				local item = cheese_modifier:GetAbility()
+			-- Only apply if it was a real hero
+			if victim:IsRealHero() then
+				
+				-- Check if death is imminent
+				local victim_health = victim:GetHealth()
+				if keys.damage >= victim_health and not ( victim:HasModifier("modifier_imba_dazzle_shallow_grave") or victim:HasModifier("modifier_imba_dazzle_nothl_protection") ) then
 
-				-- Spend a charge of Cheese if the cooldown is ready
-				if item:IsCooldownReady() then
-					
-					-- Reduce damage by your remaining amount of health
-					keys.damage = keys.damage - victim_health
+					-- Find the cheese item handle
+					local cheese_modifier = victim:FindModifierByName("modifier_imba_cheese_death_prevention")
+					local item = cheese_modifier:GetAbility()
 
-					-- Play sound
-					victim:EmitSound("DOTA_Item.Cheese.Activate")
+					-- Spend a charge of Cheese if the cooldown is ready
+					if item:IsCooldownReady() then
+						
+						-- Reduce damage by your remaining amount of health
+						keys.damage = keys.damage - victim_health
 
-					-- Fully heal yourself
-					victim:Heal(victim:GetMaxHealth(), victim)
-					victim:GiveMana(victim:GetMaxMana())
+						-- Play sound
+						victim:EmitSound("DOTA_Item.Cheese.Activate")
 
-					-- Spend a charge
-					item:SetCurrentCharges( item:GetCurrentCharges() - 1 )
+						-- Fully heal yourself
+						victim:Heal(victim:GetMaxHealth(), victim)
+						victim:GiveMana(victim:GetMaxMana())
 
-					-- Trigger cooldown
-					item:StartCooldown( item:GetCooldown(1) * (1 - victim:GetCooldownReduction() * 0.01) )
+						-- Spend a charge
+						item:SetCurrentCharges( item:GetCurrentCharges() - 1 )
 
-					-- If this was the last charge, remove the item
-					if item:GetCurrentCharges() == 0 then
-						victim:RemoveItem(item)
+						-- Trigger cooldown
+						item:StartCooldown( item:GetCooldown(1) * (1 - victim:GetCooldownReduction() * 0.01) )
+
+						-- If this was the last charge, remove the item
+						if item:GetCurrentCharges() == 0 then
+							victim:RemoveItem(item)
+						end
 					end
 				end
 			end
+			
 		end
 
 		-- Mirana's Sacred Arrow On The Prowl guaranteed critical
@@ -1110,8 +1126,8 @@ function GameMode:OnGameInProgress()
 		-- Set up control points
 		local radiant_control_point_loc = Entities:FindByName(nil, "radiant_capture_point"):GetAbsOrigin()
 		local dire_control_point_loc = Entities:FindByName(nil, "dire_capture_point"):GetAbsOrigin()
-		RADIANT_CONTROL_POINT_DUMMY = CreateUnitByName("npc_dummy_unit", radiant_control_point_loc, false, nil, nil, DOTA_TEAM_NOTEAM)
-		DIRE_CONTROL_POINT_DUMMY = CreateUnitByName("npc_dummy_unit", dire_control_point_loc, false, nil, nil, DOTA_TEAM_NOTEAM)
+		RADIANT_CONTROL_POINT_DUMMY = CreateUnitByName("npc_dummy_unit_perma", radiant_control_point_loc, false, nil, nil, DOTA_TEAM_NOTEAM)
+		DIRE_CONTROL_POINT_DUMMY = CreateUnitByName("npc_dummy_unit_perma", dire_control_point_loc, false, nil, nil, DOTA_TEAM_NOTEAM)
 		RADIANT_CONTROL_POINT_DUMMY.score = 20
 		DIRE_CONTROL_POINT_DUMMY.score = 20
 		ArenaControlPointThinkRadiant(RADIANT_CONTROL_POINT_DUMMY)

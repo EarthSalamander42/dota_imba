@@ -67,18 +67,23 @@ function item_imba_hand_of_midas:GetAbilityTextureName()
 	local caster_name = caster:GetUnitName()
 
 	local animal_heroes = {
-		"npc_dota_hero_brewmaster",
-		"npc_dota_hero_magnataur",
-		"npc_dota_hero_lone_druid",
-		"npc_dota_hero_broodmother",
-		"npc_dota_hero_lycan",
-		"npc_dota_hero_ursa"
+		["npc_dota_hero_brewmaster"] = true,
+		["npc_dota_hero_magnataur"] = true,
+		["npc_dota_hero_lone_druid"] = true,
+		["npc_dota_lone_druid_bear1"] = true,
+		["npc_dota_lone_druid_bear2"] = true,
+		["npc_dota_lone_druid_bear3"] = true,
+		["npc_dota_lone_druid_bear4"] = true,
+		["npc_dota_lone_druid_bear5"] = true,
+		["npc_dota_lone_druid_bear6"] = true,
+		["npc_dota_lone_druid_bear7"] = true,
+		["npc_dota_hero_broodmother"] = true,
+		["npc_dota_hero_lycan"] = true,
+		["npc_dota_hero_ursa"] = true
 	}
 
-	for _, hero_name in pairs (animal_heroes) do
-		if caster_name == hero_name then
-			return "custom/item_paw_of_midas"
-		end
+	if animal_heroes[caster_name] then
+		return "custom/item_paw_of_midas"
 	end
 
 	return "custom/imba_hand_of_midas"
@@ -88,7 +93,7 @@ function item_imba_hand_of_midas:OnSpellStart()
 	local caster = self:GetCaster()
 	local target = self:GetCursorTarget()
 	local ability = self
-	local sound_cast = "DOTA_Item.Hand_Of_Midas"
+	local sound_cast = "DOTA_Item.Hand_Of_Midas"	
 
 	-- Parameters and calculations
 	local bonus_gold = ability:GetSpecialValueFor("bonus_gold")
@@ -102,7 +107,7 @@ function item_imba_hand_of_midas:OnSpellStart()
 
 	-- Play sound and show gold gain message to the owner
 	target:EmitSound(sound_cast)
-	SendOverheadEventMessage(PlayerResource:GetPlayer(caster:GetPlayerID()), OVERHEAD_ALERT_GOLD, target, bonus_gold, nil)
+	SendOverheadEventMessage(PlayerResource:GetPlayer(caster:GetPlayerOwnerID()), OVERHEAD_ALERT_GOLD, target, bonus_gold, nil)
 
 	-- Draw the midas gold conversion particle
 	local midas_particle = ParticleManager:CreateParticle("particles/items2_fx/hand_of_midas.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)	
@@ -113,6 +118,12 @@ function item_imba_hand_of_midas:OnSpellStart()
 	target:SetMinimumGoldBounty(0)
 	target:SetMaximumGoldBounty(0)
 	target:Kill(ability, caster)
+
+	-- If this is not a hero, get the player's hero
+	if not caster:IsHero() then
+		caster = caster:GetPlayerOwner():GetAssignedHero()
+	end
+
 	caster:AddExperience(bonus_xp, false, false)
 	caster:ModifyGold(bonus_gold, true, 0)
 end
@@ -130,8 +141,11 @@ function modifier_item_imba_hand_of_midas:DeclareFunctions()
 end
 
 function modifier_item_imba_hand_of_midas:GetModifierAttackSpeedBonus_Constant()
-	local ability = self:GetAbility()	
-	local bonus_attack_speed = ability:GetSpecialValueFor("bonus_attack_speed")
+	local ability = self:GetAbility()
+	local bonus_attack_speed
+	if ability then
+		bonus_attack_speed = ability:GetSpecialValueFor("bonus_attack_speed")
+	end	
 
 	return bonus_attack_speed
 end

@@ -546,7 +546,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_health_regen"		"6"
+				"aura_health_regen"		"5"
 			}
 			"05"
 			{
@@ -661,7 +661,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_regen"			"6"
+				"aura_regen"			"5"
 			}
 			"06"
 			{
@@ -833,7 +833,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hp_regen_aura"			"5"
+				"hp_regen_aura"			"4"
 			}
 			"07"
 			{
@@ -907,7 +907,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hp_regen_aura"			"13"
+				"hp_regen_aura"			"11"
 			}
 			"07"
 			{
@@ -2914,9 +2914,10 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2185"
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
 		"AbilityTextureName" 			"custom/imba_heart"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"ScriptFile"					"items/item_heart.lua"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -2924,11 +2925,7 @@
 		"ItemShopTags"					"str;regen_health;health_pool"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"hot;heart of tarrasque"
-		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
-
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"5"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"		
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -2937,17 +2934,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"40"
+				"bonus_strength"		"30"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"500"
+				"bonus_health"			"575"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_str"				"10"
+				"aura_str"				"12"
 			}
 			"04"
 			{
@@ -2957,7 +2954,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"base_regen"			"1.5"
+				"base_regen"			"0.5"
 			}
 			"06"
 			{
@@ -2967,115 +2964,15 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"regen_cooldown"		"5"
+				"regen_cooldown_melee"	"5"
 			}
+
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"regen_tooltip"			"7"
+				"regen_cooldown_ranged"	"7"
 			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_heart_passive"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-				"IsBuff"						"1"
-				"IsPurgable"					"0"
-
-				"Attributes"					"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_BONUS"				"%bonus_health"
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_strength"
-				}
-			}
-
-			"modifier_item_heart_unique"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-				"IsBuff"						"1"
-				"IsPurgable"					"0"
-
-				"Aura"							"modifier_item_heart_aura_effect"
-				"Aura_Radius"					"%aura_radius"
-				"Aura_Teams"					"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types"					"DOTA_UNIT_TARGET_HERO"
-				"Aura_ApplyToCaster"			"1"
-
-				"ThinkInterval"					"0.2"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_heart.lua"
-						"Function"				"HeartRegen"
-
-						"modifier_regen"		"modifier_item_heart_extra_regen"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"internal/util.lua"
-						"Function"				"IllusionPassiveRemover"
-
-						"modifier"				"modifier_item_heart_unique"
-					}
-				}
-
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_heart.lua"
-						"Function"				"HeartDamage"
-
-						"modifier_regen"		"modifier_item_heart_extra_regen"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE"		"%base_regen"
-				}
-			}
-
-			"modifier_item_heart_aura_effect"
-			{
-				"Passive"						"0"
-				"IsHidden"						"0"
-				"IsBuff"						"1"
-				"IsPurgable"					"0"
-
-				"TextureName"				"custom/imba_heart"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%aura_str"
-				}
-			}
-
-			"modifier_item_heart_extra_regen"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-				"IsBuff"						"1"
-				"IsPurgable"					"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE"		"%noncombat_regen"
-				}
-			}
-		}
+		}		
 	}
 
 	//=================================================================================================================
@@ -3390,12 +3287,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_health"				"700"
+				"bonus_health"				"625"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_mana"				"700"
+				"bonus_mana"				"625"
 			}
 			"03"
 			{
@@ -3757,12 +3654,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health"				"400"
+				"health"				"325"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_regen"			"10"
+				"health_regen"			"9"
 			}
 			"03"
 			{
@@ -3838,7 +3735,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health"				"425"
+				"health"				"350"
 			}
 			"02"
 			{
@@ -3951,12 +3848,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health"				"600"
+				"health"				"525"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_regen"			"15"
+				"health_regen"			"13"
 			}
 			"03"
 			{
@@ -4537,7 +4434,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_health_regen"		"7"
+				"bonus_health_regen"		"8"
 			}
 			"05"
 			{
@@ -4803,12 +4700,12 @@
 			"010"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"shadow_rip_start_width"	"250"
+				"shadow_rip_start_width"	"200"
 			}
 			"011"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"shadow_rip_end_width"		"500"
+				"shadow_rip_end_width"		"700"
 			}
 			
 			"12"
@@ -6209,8 +6106,8 @@
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"1200"
-		"AbilityCooldown"				"70"
-		"AbilityManaCost"				"0"
+		"AbilityCooldown"				"18"
+		"AbilityManaCost"				"75"
 		"AbilitySharedCooldown"			"desolator"
 
 		// Item Info
@@ -6249,22 +6146,22 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"projectile_radius"		"225"
+				"projectile_radius"		"275"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"projectile_length"		"1200"
+				"projectile_length"		"1600"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"projectile_speed"		"600"
+				"projectile_speed"		"400"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_damage"			"160"
+				"active_damage"			"180"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 		}
@@ -6316,8 +6213,8 @@
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"1200"
-		"AbilityCooldown"				"70"
-		"AbilityManaCost"				"0"
+		"AbilityCooldown"				"18"
+		"AbilityManaCost"				"75"
 		"AbilitySharedCooldown"			"desolator"
     
 		// Precache
@@ -6348,12 +6245,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"armor_reduction"		"11"
+				"armor_reduction"		"12"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"vision_reduction"		"350"
+				"vision_reduction"		"500"
 			}
 			"04"
 			{
@@ -6363,17 +6260,17 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"projectile_radius"		"225"
+				"projectile_radius"		"275"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"projectile_length"		"1200"
+				"projectile_length"		"1600"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"projectile_speed"		"600"
+				"projectile_speed"		"400"
 			}
 			"08"
 			{
@@ -6388,7 +6285,7 @@
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_damage"			"200"
+				"active_damage"			"180"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 		}
@@ -7029,7 +6926,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"6"
+				"bonus_health_regen"	"5"
 			}
 			"04"
 			{
@@ -7628,12 +7525,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"800"
+				"bonus_health"			"725"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"800"
+				"bonus_mana"			"725"
 			}
 			"04"
 			{
@@ -7763,18 +7660,7 @@
 				"Passive"				"1"
 				"IsHidden"				"1"
 				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"internal/util.lua"
-						"Function"		"IllusionPassiveRemover"
-
-						"modifier"		"modifier_imba_cheese_death_prevention"
-					}
-				}
+				"IsPurgable"			"0"				
 			}
 		}
 	}
@@ -7814,13 +7700,12 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2177"
-		"BaseClass"						"item_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"BaseClass"						"item_lua"		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE"
 		"AbilityTextureName" 			"custom/imba_shotgun"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"ScriptFile"					"items/item_starfury.lua"
 
 		// Item Info
@@ -8169,55 +8054,25 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"str_bonus_max_health"		"10"
+				"bonus_attackspeed"			"35"
 			}
 
 			"04"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"str_bonus_hp_regen"		"0.015"
+				"var_type"					"FIELD_INTEGER"
+				"str_mode_tenacity"			"20"
 			}
 
 			"05"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"agi_bonus_attack_speed"	"0.5"
+				"var_type"					"FIELD_INTEGER"
+				"agi_mode_evasion"			"20"
 			}
 
 			"06"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"agi_bonus_armor"			"0.035"
-			}
-
-			"07"
-			{
 				"var_type"					"FIELD_INTEGER"
-				"int_bonus_max_mp"			"10"
-			}
-
-			"08"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"int_bonus_mp_regen"		"0.015"
-			}
-
-			"09"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"int_bonus_spell_power"		"0.01"
-			}			
-
-			"10"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_attackspeed"			"35"
-			}
-
-			"11"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"effectiveness_boost"		"50"
+				"int_mode_cast_range"		"200"
 			}
 		}
 	}
@@ -8386,6 +8241,10 @@
 		"ItemAliases"					"tranquils; tranquil boots; ironleaf boots"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
 
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"5"
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -8417,7 +8276,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_magic_resistance"	"35"
+				"base_magic_resistance"	"25"
 			}
 
 			"06"
@@ -8428,86 +8287,80 @@
 
 			"07"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"meditate_movespeed_bonus_pct"	"1"
+				"var_type"						"FIELD_FLOAT"
+				"meditate_movespeed_bonus_pct"	"1.25"
 			}
 
 			"08"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"meditate_health_regen"		"4"
+				"var_type"					"FIELD_FLOAT"
+				"meditate_health_regen"		"4.5"
 			}
 
 			"09"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"meditate_magic_resistance_pct"	"1"
+				"var_type"					"FIELD_INTEGER"
+				"leafwalk_magic_res"		"80"
 			}
 
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_stacks"			"30"
+				"max_stacks"			"25"
 			}
 
 			"11"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"meditate_stacks_loss_creep"	"3"
-			}
+			}			
 
 			"12"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"meditate_stack_break_duration"	"5"
-			}
-
-			"13"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"iron_body_thrshold"		"150"
 			}
 
-			"14"
+			"13"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"iron_body_high_reduction"		"150"
 			}
 
-			"15"
+			"14"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"iron_body_normal_reduction"	"40"
 			}
 
-			"16"
+			"15"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"iron_body_min_stacks_req"		"1"
 			}
 
+			"16"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"leafwalk_hold_time"		"2.25"
+			}
+
 			"17"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"leafwalk_hold_time"		"3"
+				"leafwalk_duration"			"12"
 			}
 
 			"18"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"leafwalk_duration"			"15"
+				"meditate_stacks_loss_hero"	"5"
 			}
 
 			"19"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"meditate_stacks_loss_hero"	"5"
-			}
-
-			"20"
-			{
 				"var_type"					 		"FIELD_INTEGER"
-				"broken_meditate_efficiency_pct"	"50"
+				"broken_meditate_efficiency_pct"	"25"
 			}
 		}		
 	}
@@ -9135,17 +8988,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"14"
+				"bonus_all_stats"		"12"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"300"
+				"bonus_health"			"225"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"250"
+				"bonus_mana"			"225"
 			}
 		}
 
@@ -9257,7 +9110,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"400"
+				"bonus_mana"			"325"
 			}
 			"02"
 			{
@@ -9436,7 +9289,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"450"
+				"bonus_mana"			"375"
 			}
 			"05"
 			{
@@ -10341,7 +10194,7 @@
 			"01"
 			{
 				"var_type"              "FIELD_INTEGER"
-				"mana_cost"             "50"
+				"mana_cost"             "100"
 			}
 			"02"
 			{
@@ -10361,7 +10214,7 @@
 			"05"
 			{
 				"var_type"              "FIELD_INTEGER"
-				"armor_change"          "20"
+				"armor_change"          "15"
 			}
 			"06"
 			{
@@ -10381,7 +10234,7 @@
 			"09"
 			{
 				"var_type"              "FIELD_INTEGER"
-				"passive_disarm_chance" "20"
+				"passive_disarm_chance" "15"
 			}
 			"10"
 			{
@@ -11311,7 +11164,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_health_regen"			"8"
+				"bonus_health_regen"			"7"
 			}
 			"02"
 			{
@@ -11411,7 +11264,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_health_regen"			"8"
+				"bonus_health_regen"			"7"
 			}
 			"02"
 			{
@@ -11652,5 +11505,255 @@
 		}
 	}
 
-	//next free ID: 2251
+	//=================================================================================================================
+	// Recipe : Skull Basher
+	//=================================================================================================================
+	"item_recipe_imba_skull_basher"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2251"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+		"Model"							"models/props_gameplay/recipe.mdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"750"
+		"ItemShopTags"					""
+
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_skull_basher"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_javelin;item_belt_of_strength"
+		}
+	}
+
+	//=================================================================================================================
+	// Skull Basher
+	//=================================================================================================================
+	"item_imba_skull_basher"
+	{
+		"ID"							"2252"
+		"BaseClass"						"item_lua"
+		"AbilityTextureName"			"item_basher"
+		"ScriptFile"					"items/item_skull_basher.lua"		
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost" 						"2700"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemShopTags"					"str;damage"
+		"ItemQuality"					"rare"
+		"ItemAliases"					"skull;basher;"
+		"SideShop" 						"0"
+		"SecretShop" 					"0"		
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"				
+		"AbilityCooldown"				"2.3"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_damage"					"10"
+			}
+
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_strength"				"10"
+			}
+
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_range_melee"				"65"
+			}
+
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bash_chance_melee"				"25"
+			}
+
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bash_chance_ranged"			"10"
+			}
+
+			"06"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"stun_duration"					"1.4"
+			}
+
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bash_damage"					"100"
+			}
+
+			"08"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"skull_break_duration"			"5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Recipe : Abyssal Blade
+	//=================================================================================================================
+	"item_recipe_imba_abyssal_blade"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2253"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+		"Model"							"models/props_gameplay/recipe.mdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1550"
+		"ItemShopTags"					""
+
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_abyssal_blade"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_skull_basher;item_imba_vanguard"
+		}
+	}
+
+	//=================================================================================================================
+	// Abyssal Blade
+	//=================================================================================================================
+	"item_imba_abyssal_blade"
+	{
+		"ID"							"2254"
+		"BaseClass"						"item_lua"
+		"AbilityTextureName"			"item_abyssal_blade"
+		"ScriptFile"					"items/item_abyssal_blade.lua"		
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost" 						"6300"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemShopTags"					"str;damage;hp;hp_regen"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"abyssal;abyssal blade;"
+		"SideShop" 						"0"
+		"SecretShop" 					"0"		
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"				
+
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		
+		"AbilityCastRange"				"200"
+		"AbilityCooldown"				"35"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_damage"					"10"
+			}
+
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_strength"				"10"
+			}
+
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_range_melee"				"80"
+			}
+
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bash_chance_melee"				"25"
+			}
+
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bash_chance_ranged"			"10"
+			}
+
+			"06"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"stun_duration"					"1.4"
+			}
+
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bash_damage"					"120"
+			}
+
+			"08"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"skull_break_duration"			"5"
+			}
+
+			"09"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_hp_regen"				"16"
+			}
+
+			"10"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_health"					"350"
+			}
+
+			"11"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"insta_skull_break_chance_pct"	"40"
+			}
+
+			"12"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_block"					"45"
+			}
+
+			"13"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"internal_bash_cd"				"2"
+			}
+
+			"14"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"active_stun_duration"			"2"
+			}
+		}
+	}
+
+	//next free ID: 2255
 }

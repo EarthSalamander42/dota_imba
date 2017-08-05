@@ -1250,3 +1250,93 @@ end
 function SystemMessage(token, vars)
 	CustomGameEventManager:Send_ServerToAllClients("custom_system_message", { token = token or "", vars = vars or {}})
 end
+
+
+-- This function is responsible for cleaning dummy units and wisps that may have accumulated
+function StartGarbageCollector()	
+	-- Find all wisps in the game
+	local wisps = Entities:FindAllByName("npc_dota_hero_wisp")
+
+	-- Cycle each wisp, and see if it has a player owner. If it doesn't, NUKE IT BLYAT!
+	for _, wisp in pairs(wisps) do
+		if not wisp:GetPlayerOwner() then
+			UTIL_Remove(wisp)
+		end			
+	end
+
+	-- Find all dummy units in the game
+	local dummies = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0,0,0), nil, 50000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)	
+
+	-- Cycle each dummy. If it is alive for more than 2 minutes, delete it.
+	local gametime = GameRules:GetGameTime()
+	for _,dummy in pairs(dummies) do
+		if dummy:GetUnitName() == "npc_dummy_unit" then
+
+			local dummy_creation_time = dummy:GetCreationTime()
+
+			if gametime - dummy_creation_time > 120 then			
+				UTIL_Remove(dummy)
+			end
+		end
+	end
+end
+
+-- This function is responsible for deciding which team is behind, if any, and store it at a nettable.
+function DefineLosingTeam()
+	-- Losing team is defined as a team that is both behind in both the sums of networth and levels.
+	local radiant_networth = 0
+	local radiant_levels = 0
+	local dire_networth = 0
+	local dire_levels = 0
+
+	for i = 0, DOTA_MAX_TEAM_PLAYERS-1 do
+		if PlayerResource:IsValidPlayer(i) then
+
+			-- Only count connected players or bots
+			if PlayerResource:GetConnectionState(i) == 1 or PlayerResource:GetConnectionState(i) == 2 then
+
+			-- Get player
+			local player = PlayerResource:GetPlayer(i)
+			
+				if player then				
+					-- Get team
+					local team = player:GetTeam()				
+
+					-- Get level, add it to the sum
+					local level = player:GetAssignedHero():GetLevel()				
+
+					-- Get networth
+					local hero_networth = 0
+					for i = 0, 8 do
+						local item = player:GetAssignedHero():GetItemInSlot(i)
+						if item then
+							hero_networth = hero_networth + GetItemCost(item:GetName())						
+						end
+					end
+
+					-- Add to the relevant team
+					if team == DOTA_TEAM_GOODGUYS then					
+						radiant_networth = radiant_networth + hero_networth					
+						radiant_levels = radiant_levels + level					
+					else					
+						dire_networth = dire_networth + hero_networth					
+						dire_levels = dire_levels + level					
+					end				
+				end
+			end
+		end
+	end	
+
+	-- Check for the losing team. A team must be behind in both levels and networth.
+	if (radiant_networth < dire_networth) and (radiant_levels < dire_levels) then
+		-- Radiant is losing		
+		CustomNetTables:SetTableValue("gamerules", "losing_team", {losing_team = DOTA_TEAM_GOODGUYS})
+
+	elseif (radiant_networth > dire_networth) and (radiant_levels > dire_levels) then
+		-- Dire is losing		
+		CustomNetTables:SetTableValue("gamerules", "losing_team", {losing_team = DOTA_TEAM_BADGUYS})
+
+	else -- No team is losing - one of the team is better on levels, the other on gold. No experience bonus in this case		
+		CustomNetTables:SetTableValue("gamerules", "losing_team", {losing_team = 0})		
+	end
+end

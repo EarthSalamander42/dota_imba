@@ -456,10 +456,14 @@ function modifier_imba_vampiric_aura_buff:OnTakeDamage(keys)
 
             -- If the damage was magical or pure, use the skeletonking particle instead, and heal using the spellsteal values
             else
-                local particle_spellsteal_fx = ParticleManager:CreateParticle(self.particle_spellsteal, PATTACH_CUSTOMORIGIN_FOLLOW, attacker)
-                ParticleManager:SetParticleControlEnt(particle_spellsteal_fx, 0, attacker, PATTACH_POINT_FOLLOW, "attach_hitloc", attacker:GetAbsOrigin(), true)                
-                ParticleManager:SetParticleControlEnt(particle_spellsteal_fx, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)                
-                ParticleManager:ReleaseParticleIndex(particle_spellsteal_fx)
+                if not self.delay_particle_time or (GameRules:GetGameTime() - self.delay_particle_time > 1) then
+                    local particle_spellsteal_fx = ParticleManager:CreateParticle(self.particle_spellsteal, PATTACH_CUSTOMORIGIN_FOLLOW, attacker)
+                    ParticleManager:SetParticleControlEnt(particle_spellsteal_fx, 0, attacker, PATTACH_POINT_FOLLOW, "attach_hitloc", attacker:GetAbsOrigin(), true)                
+                    ParticleManager:SetParticleControlEnt(particle_spellsteal_fx, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)                
+                    ParticleManager:ReleaseParticleIndex(particle_spellsteal_fx)
+
+                    self.delay_particle_time = GameRules:GetGameTime()
+                end
 
                 -- If it was an illusion, no heal is done (fakes lifesteal)
                 if attacker:IsIllusion() then

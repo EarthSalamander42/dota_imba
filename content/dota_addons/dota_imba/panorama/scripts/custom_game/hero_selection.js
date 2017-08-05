@@ -31,14 +31,14 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 
 /* Picking phase is done, start loading heroes */
 function OnPickingDone( data ) {
-	$("#EnterGameBtnTxt").text = $.Localize( "#imba_loading_heroes_button" );
+	$("#EnterGameBtnTxt").text = $.Localize( "#imba_enter_game_button" );
 	$("#RepickBtn").AddClass( "disabled" );
 }
 
 /* Hero loading is done, allow the player to enter the game */
 function OnHeroLoadingDone( data ) {
 	$("#EnterGameBtn").RemoveClass( "disabled" );
-	$("#EnterGameBtnTxt").text = $.Localize( "#imba_enter_game_button" );
+	$("#EnterGameBtnTxt").text = $.Localize( "#imba_loading_heroes_button" );
 	canEnter = true;
 }
 
