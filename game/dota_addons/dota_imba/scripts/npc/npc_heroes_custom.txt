@@ -3046,10 +3046,10 @@
 		"Ability4"					"imba_witch_doctor_death_ward"
 
 		"Ability10"					"special_bonus_imba_witch_doctor_5" //Enemies dying from a death ward will spawn a mini death ward that deal part of the damage
-		"Ability11"					"special_bonus_imba_witch_doctor_4" //Paralyzing Cask spreads Maledict if it bounces from a cursed unit.		
+		"Ability11"					"special_bonus_imba_witch_doctor_7" //When Maledict's curse bursts, health regen is completely disabled for a period.
 		"Ability12"					"special_bonus_imba_witch_doctor_2" //When toggling Voodoo Restoration on, it applies the basic purge effect immediately.
 		"Ability13"					"special_bonus_imba_witch_doctor_6" //Voodoo Restoration turns into a aura
-		"Ability14"					"special_bonus_imba_witch_doctor_7" //When Maledict's curse bursts, health regen is completely disabled for a period.
+		"Ability14"					"special_bonus_imba_witch_doctor_4" //Paralyzing Cask spreads Maledict if it bounces from a cursed unit.		
 		"Ability15"					"special_bonus_imba_witch_doctor_1" //Every Maledict burst deals it's damage around the target (spreads between enemies)
 		"Ability16"					"special_bonus_imba_witch_doctor_3" //Voodoo Restoration's purge is now a strong purge.
 		"Ability17"					"special_bonus_imba_witch_doctor_8" //Now spawns two Death Wards; if channeling is broken, only one of them disappears.
