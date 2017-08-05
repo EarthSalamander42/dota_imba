@@ -222,6 +222,17 @@ function GameMode:ExperienceFilter( keys )
 	local game_time = math.max(GameRules:GetDOTATime(false, false), 0)
 	keys.experience = keys.experience * (1 + CUSTOM_XP_BONUS * 0.01) * (1 + game_time * BOUNTY_RAMP_PER_SECOND * 0.01)
 
+	-- Losing team gets huge EXP bonus.
+	if hero and CustomNetTables:GetTableValue("gamerules", "losing_team") then
+		if CustomNetTables:GetTableValue("gamerules", "losing_team").losing_team then
+			local losing_team = CustomNetTables:GetTableValue("gamerules", "losing_team").losing_team
+			
+			if hero:GetTeamNumber() == losing_team then
+				keys.experience = keys.experience * (1 + COMEBACK_EXP_BONUS * 0.01)
+			end
+		end
+	end
+			
 	return true
 end
 

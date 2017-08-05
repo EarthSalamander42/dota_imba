@@ -97,6 +97,8 @@ COMEBACK_BOUNTY_BONUS = {}													-- Extra comeback gold based on hero and 
 COMEBACK_BOUNTY_BONUS[DOTA_TEAM_GOODGUYS] = 0
 COMEBACK_BOUNTY_BONUS[DOTA_TEAM_BADGUYS] = 0
 
+COMEBACK_EXP_BONUS = 100
+
 HERO_RESPAWN_TIME_PER_LEVEL = {}											-- Hero respawn time per level
 HERO_RESPAWN_TIME_PER_LEVEL[1] = 6
 HERO_RESPAWN_TIME_PER_LEVEL[2] = 8
@@ -221,9 +223,6 @@ IMBA_HERO_PICK_RULE = 0                                                     -- 0
 IMBA_PICK_MODE_ALL_RANDOM = false											-- Activates All Random mode when true
 IMBA_ALL_RANDOM_HERO_SELECTION_TIME = 5.0									-- Time we need to wait before the game starts when all heroes are randomed
 
-IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT = 5									-- Number of regular abilities in Random OMG mode
-IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT = 1									-- Number of ultimate abilities in Random OMG mode
-
 CUSTOM_GOLD_BONUS = 30														-- Amount of bonus gold gained (in %)
 CUSTOM_XP_BONUS = 30														-- Amount of bonus XP gained (in %)
 
@@ -282,7 +281,7 @@ if GetMapName() == "imba_standard" then										-- Standard map defaults
 	HERO_RANDOM_GOLD = 1400
 	HERO_RERANDOM_GOLD = 1300
 	HERO_STARTING_LEVEL = 3
-	MAX_LEVEL = 60
+	MAX_LEVEL = 40
 elseif GetMapName() == "imba_custom" then									-- Custom map defaults
 	END_GAME_ON_KILLS = false
 	CUSTOM_GOLD_BONUS = 150
@@ -296,7 +295,7 @@ elseif GetMapName() == "imba_custom" then									-- Custom map defaults
 	HERO_RANDOM_GOLD = 2400
 	HERO_RERANDOM_GOLD = 2200
 	HERO_STARTING_LEVEL = 5
-	MAX_LEVEL = 60
+	MAX_LEVEL = 40
 elseif GetMapName() == "imba_10v10" then									-- 10v10 map defaults
 	END_GAME_ON_KILLS = false
 	CUSTOM_GOLD_BONUS = 60
@@ -310,7 +309,7 @@ elseif GetMapName() == "imba_10v10" then									-- 10v10 map defaults
 	HERO_RANDOM_GOLD = 2400
 	HERO_RERANDOM_GOLD = 2200
 	HERO_STARTING_LEVEL = 5
-	MAX_LEVEL = 60
+	MAX_LEVEL = 40
 elseif GetMapName() == "imba_arena" then									-- Arena map defaults
 	END_GAME_ON_KILLS = true
 	TOWER_ABILITY_MODE = false
@@ -329,7 +328,7 @@ elseif GetMapName() == "imba_arena" then									-- Arena map defaults
 	HERO_RANDOM_GOLD = 1250
 	HERO_RERANDOM_GOLD = 1125
 	HERO_STARTING_LEVEL = 3
-	MAX_LEVEL = 60
+	MAX_LEVEL = 40
 	RUNE_SPAWN_TIME = 15
 	FOUNTAIN_PERCENTAGE_MANA_REGEN = 15
 	FOUNTAIN_PERCENTAGE_HEALTH_REGEN = 15
@@ -415,6 +414,8 @@ end
 for i = 21, 100 do
 	HERO_XP_BOUNTY_PER_LEVEL[i] = HERO_XP_BOUNTY_PER_LEVEL[i-1] + 135 + i * 3
 end
+
+
 
 USE_MEME_SOUNDS = true														-- Should we use meme/fun sounds on abilities occasionally?
 

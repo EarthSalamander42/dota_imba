@@ -142,6 +142,11 @@ function GameMode:OnGameRulesStateChange(keys)
 			StartGarbageCollector()
 			return 120
 		end)
+
+		Timers:CreateTimer(60, function()
+			DefineLosingTeam()
+			return 60
+		end)
 	end
 
 	if new_state == DOTA_GAMERULES_STATE_POST_GAME then
