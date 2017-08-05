@@ -639,20 +639,39 @@
 		{
 			"01"
 			{
-				"var_type"						"FIELD_FLOAT"
-				"tenacity"						"50"
+				"var_type"						"FIELD_INTEGER"
+				"tenacity"						"75"
 			}
+
 			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_reduction"				"75"
+			}
+
+			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"aura_radius"					"1200"
 			}
 
-			"03"
+			"04"
 			{
-				"var_type"						"FIELD_FLOAT"
+				"var_type"						"FIELD_INTEGER"
 				"aura_stickyness"				"1"
-			}			
+			}
+
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"disconnected_dmg_reduction"	"100"
+			}
+
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_reject_time"				"10"
+			}
 		}
 	}
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
