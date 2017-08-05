@@ -528,11 +528,11 @@
 
 	// Witch Doctor
     "Dota_Tooltip_Talent_special_bonus_imba_witch_doctor_1_title"                   "Sweeping Curse"
-    "Dota_Tooltip_Talent_special_bonus_imba_witch_doctor_1_Description"             "Whenever Maledict ticks, it also deals it's damage to enemies around the target, spread evenly amongst them.<br><br><i>The curse becomes so extensive, that even walking next to it is debilitating.</i>"
+    "Dota_Tooltip_Talent_special_bonus_imba_witch_doctor_1_Description"             "Whenever Maledict ticks, it also deals its damage to enemies around the target, spread evenly amongst them.<br><br><i>The curse becomes so extensive, that even walking next to it is debilitating.</i>"
     "Dota_Tooltip_Talent_special_bonus_imba_witch_doctor_2_title"                   "Voodo Mastery"
-    "Dota_Tooltip_Talent_special_bonus_imba_witch_doctor_2_Description"             "When toggling Voodoo Restoration on, it applies the dispell effect immediately. This effect can only occur once per 5 seconds.<br><br><i>Zharvakko is practiced in his art of of Hocus Pocus. </i>"
+    "Dota_Tooltip_Talent_special_bonus_imba_witch_doctor_2_Description"             "When toggling Voodoo Restoration on, it applies the dispel effect immediately. This effect can only occur once per 5 seconds.<br><br><i>Zharvakko is practiced in his art of of Hocus Pocus. </i>"
     "Dota_Tooltip_Talent_special_bonus_imba_witch_doctor_3_title"                   "Strong Medicine"
-    "Dota_Tooltip_Talent_special_bonus_imba_witch_doctor_3_Description"             "Voodoo Restoration's dispell can now dispell stuns.<br><br><i>Coconuts and your your fallen brothers' skulls make for strong medicine.</i>"
+    "Dota_Tooltip_Talent_special_bonus_imba_witch_doctor_3_Description"             "Voodoo Restoration's dispel can now dispel stuns.<br><br><i>Coconuts and your your fallen brothers' skulls make for strong medicine.</i>"
     "Dota_Tooltip_Talent_special_bonus_imba_witch_doctor_4_title"                   "Cursed Casket"
     "Dota_Tooltip_Talent_special_bonus_imba_witch_doctor_4_Description"             "Paralyzing Cask applies Maledict if it bounced on a enemy affected by Maledict beforehand.<br><br><i>Witch Doctor fills the casket with special ointment that can transfer curses.</i>"
     "Dota_Tooltip_Talent_special_bonus_imba_witch_doctor_5_title"                   "Death's Party"
