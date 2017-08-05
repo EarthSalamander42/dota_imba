@@ -180,34 +180,11 @@ function GetRandomUltimateAbility()
 end
 
 -- Picks a random tower ability of level in the interval [level - 1, level]
-function GetRandomTowerAbility(tier)
+function GetRandomTowerAbility(tier, ability_table)
 
-	local ability
+	local ability = RandomFromTable(ability_table[tier])	
 
-	if tier == 1 then		
-			ability = RandomFromTable(TOWER_ABILITIES.tier_one)		
-		
-	elseif tier == 2 then		
-			ability = RandomFromTable(TOWER_ABILITIES.tier_two)			
-		
-	elseif tier == 3 then		
-			ability = RandomFromTable(TOWER_ABILITIES.tier_three)					
-	
-	elseif tier == 4 then		
-			ability = RandomFromTable(TOWER_ABILITIES.active)		
-	end
-
-	return ability.ability_name
-end
-
--- Returns the upgrade cost to a specific tower ability
-function GetTowerAbilityUpgradeCost(ability_name, level)
-
-	if level == 1 then
-		return TOWER_ABILITIES[ability_name].cost1
-	elseif level == 2 then
-		return TOWER_ABILITIES[ability_name].cost2
-	end
+	return ability
 end
 
 -- Grants a given hero an appropriate amount of Random OMG abilities
@@ -484,115 +461,47 @@ function InitializeInnateAbilities( hero )
 	end
 end
 
--- Upgrades a tower's abilities
-function UpgradeTower( tower )
 
-	local abilities = {}
+function IndexAllTowerAbilities()
+	local ability_table = {}
+	local tier_one_abilities = {}
+	local tier_two_abilities = {}
+	local tier_three_abilities = {}
+	local tier_active_abilities = {}
 
-	-- Fetch tower abilities
-	for i = 0, 15 do
-		local current_ability = tower:GetAbilityByIndex(i)
-		if current_ability and current_ability:GetName() ~= "backdoor_protection" and current_ability:GetName() ~= "backdoor_protection_in_base" and current_ability:GetName() ~= "imba_tower_buffs" then
-			abilities[#abilities+1] = current_ability
+	for _,tier in pairs(TOWER_ABILITIES) do		
+
+		for _,ability in pairs(tier) do
+			if tier == TOWER_ABILITIES.tier_one then
+				table.insert(tier_one_abilities, ability.ability_name)
+			elseif tier == TOWER_ABILITIES.tier_two then
+				table.insert(tier_two_abilities, ability.ability_name)
+			elseif tier == TOWER_ABILITIES.tier_three then
+				table.insert(tier_three_abilities, ability.ability_name)
+			else
+				table.insert(tier_active_abilities, ability.ability_name)
+			end			
 		end
 	end
 
-	-- Iterate through abilities to identify the upgradable one
-	for i = 1,4 do
+	table.insert(ability_table, tier_one_abilities)
+	table.insert(ability_table, tier_two_abilities)
+	table.insert(ability_table, tier_three_abilities)
+	table.insert(ability_table, tier_active_abilities)
 
-		-- If this ability is not maxed, try to upgrade it
-		if abilities[i] and abilities[i]:GetLevel() < 3 then
+	return ability_table
+end
 
-			-- Upgrade ability
-			abilities[i]:SetLevel( abilities[i]:GetLevel() + 1 )
-
-			return nil
-
-		-- If this ability is maxed and the last one, then add a new one
-		elseif abilities[i] and abilities[i]:GetLevel() == 3 and #abilities == i then
-
-			-- If there are no more abilities on the tree for this tower, do nothing
-			if (tower.tower_tier <= 3 and i >= 3) or i >= 4 then
-				return nil
-			end
-
-			-- Else, add a new ability from this game's ability tree
-			local new_ability = false
-			if tower.tower_tier == 1 then
-				if tower.tower_lane == "safelane" then
-					new_ability = TOWER_UPGRADE_TREE["safelane"]["tier_1"][i+1]
-				elseif tower.tower_lane == "midlane" then
-					new_ability = TOWER_UPGRADE_TREE["midlane"]["tier_1"][i+1]
-				elseif tower.tower_lane == "hardlane" then
-					new_ability = TOWER_UPGRADE_TREE["hardlane"]["tier_1"][i+1]
-				end
-			elseif tower.tower_tier == 2 then
-				if tower.tower_lane == "safelane" then
-					new_ability = TOWER_UPGRADE_TREE["safelane"]["tier_2"][i+1]
-				elseif tower.tower_lane == "midlane" then
-					new_ability = TOWER_UPGRADE_TREE["midlane"]["tier_2"][i+1]
-				elseif tower.tower_lane == "hardlane" then
-					new_ability = TOWER_UPGRADE_TREE["hardlane"]["tier_2"][i+1]
-				end
-			elseif tower.tower_tier == 3 then
-				if tower.tower_lane == "safelane" then
-					new_ability = TOWER_UPGRADE_TREE["safelane"]["tier_3"][i+1]
-				elseif tower.tower_lane == "midlane" then
-					new_ability = TOWER_UPGRADE_TREE["midlane"]["tier_3"][i+1]
-				elseif tower.tower_lane == "hardlane" then
-					new_ability = TOWER_UPGRADE_TREE["hardlane"]["tier_3"][i+1]
-				end
-			elseif tower.tower_tier == 41 then
-				new_ability = TOWER_UPGRADE_TREE["midlane"]["tier_41"][i+1]
-			elseif tower.tower_tier == 42 then
-				new_ability = TOWER_UPGRADE_TREE["midlane"]["tier_42"][i+1]
-			end
-
-			-- Add the new ability
-			if new_ability then
-				tower:AddAbility(new_ability)
-				new_ability = tower:FindAbilityByName(new_ability)
-				new_ability:SetLevel(1)
-			end
-
-			return nil
+-- Upgrades a tower's abilities
+function UpgradeTower(tower)
+	for i = 0, tower:GetAbilityCount()-1 do
+		local ability = tower:GetAbilityByIndex(i)
+		if ability and ability:GetLevel() < ability:GetMaxLevel() then			
+			ability:SetLevel(ability:GetLevel() + 1)
+			break
 		end
 	end
 end
-
-
--- Skeleton king cosmetics
--- function SkeletonKingWearables( hero )
-
--- 	-- Cape
--- 	Attachments:AttachProp(hero, "attach_head", "models/heroes/skeleton_king/wraith_king_cape.vmdl", 1.0)
-
--- 	-- Shoulderpiece
--- 	Attachments:AttachProp(hero, "attach_head", "models/heroes/skeleton_king/wraith_king_shoulder.vmdl", 1.0)
-
--- 	-- Crown
--- 	Attachments:AttachProp(hero, "attach_head", "models/heroes/skeleton_king/wraith_king_head.vmdl", 1.0)
-
--- 	-- Gauntlet
--- 	Attachments:AttachProp(hero, "attach_attack1", "models/heroes/skeleton_king/wraith_king_gauntlet.vmdl", 1.0)
-
--- 	-- Weapon (randomly chosen)
--- 	local random_weapon = {
--- 		"models/items/skeleton_king/spine_splitter/spine_splitter.vmdl",
--- 		"models/items/skeleton_king/regalia_of_the_bonelord_sword/regalia_of_the_bonelord_sword.vmdl",
--- 		"models/items/skeleton_king/weapon_backbone.vmdl",
--- 		"models/items/skeleton_king/the_blood_shard/the_blood_shard.vmdl",
--- 		"models/items/skeleton_king/sk_dragon_jaw/sk_dragon_jaw.vmdl",
--- 		"models/items/skeleton_king/weapon_spine_sword.vmdl",
--- 		"models/items/skeleton_king/shattered_destroyer/shattered_destroyer.vmdl"
--- 	}
--- 	Attachments:AttachProp(hero, "attach_attack1", random_weapon[RandomInt(1, #random_weapon)], 1.0)
-
--- 	-- Eye particles
--- 	local eye_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_skeletonking/skeletonking_eyes.vpcf", PATTACH_ABSORIGIN, hero)
--- 	ParticleManager:SetParticleControlEnt(eye_pfx, 0, hero, PATTACH_POINT_FOLLOW, "attach_eyeL", hero:GetAbsOrigin(), true)
--- 	ParticleManager:SetParticleControlEnt(eye_pfx, 1, hero, PATTACH_POINT_FOLLOW, "attach_eyeR", hero:GetAbsOrigin(), true)
--- end
 
 -- Randoms an ability of a certain tier for the Ancient
 function GetAncientAbility( tier )

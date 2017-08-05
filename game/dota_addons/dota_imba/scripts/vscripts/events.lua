@@ -677,12 +677,10 @@ function GameMode:OnTeamKillCredit(keys)
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Deathstreak logic
-	-------------------------------------------------------------------------------------------------
-
-	if PlayerResource:IsImbaPlayer(killer_id) and PlayerResource:IsImbaPlayer(victim_id) then
-		
+	-------------------------------------------------------------------------------------------------		
+	if PlayerResource:IsValidPlayerID(killer_id) and PlayerResource:IsValidPlayerID(victim_id) then
 		-- Reset the killer's deathstreak
-		PlayerResource:ResetDeathstreak(killer_id)
+		PlayerResource:ResetDeathstreak(killer_id)		
 
 		-- Increment the victim's deathstreak
 		PlayerResource:IncrementDeathstreak(victim_id)
@@ -690,30 +688,33 @@ function GameMode:OnTeamKillCredit(keys)
 		-- Show Deathstreak message
 		local victim_hero_name = PlayerResource:GetPickedHeroName(victim_id)
 		local victim_player_name = PlayerResource:GetPlayerName(victim_id)
-		local victim_death_streak = PlayerResource:GetDeathstreak(victim_id)
+		local victim_death_streak = PlayerResource:GetDeathstreak(victim_id)		
 		local line_duration = 7
 
-		if victim_death_streak >= 3 then
-			Notifications:BottomToAll({hero = victim_hero_name, duration = line_duration})
-			Notifications:BottomToAll({text = victim_player_name.." ", duration = line_duration, continue = true})
-		end
+		if victim_death_streak then
 
-		if victim_death_streak == 3 then
-			Notifications:BottomToAll({text = "#imba_deathstreak_3", duration = line_duration, continue = true})
-		elseif victim_death_streak == 4 then
-			Notifications:BottomToAll({text = "#imba_deathstreak_4", duration = line_duration, continue = true})
-		elseif victim_death_streak == 5 then
-			Notifications:BottomToAll({text = "#imba_deathstreak_5", duration = line_duration, continue = true})
-		elseif victim_death_streak == 6 then
-			Notifications:BottomToAll({text = "#imba_deathstreak_6", duration = line_duration, continue = true})
-		elseif victim_death_streak == 7 then
-			Notifications:BottomToAll({text = "#imba_deathstreak_7", duration = line_duration, continue = true})
-		elseif victim_death_streak == 8 then
-			Notifications:BottomToAll({text = "#imba_deathstreak_8", duration = line_duration, continue = true})
-		elseif victim_death_streak == 9 then
-			Notifications:BottomToAll({text = "#imba_deathstreak_9", duration = line_duration, continue = true})
-		elseif victim_death_streak >= 10 then
-			Notifications:BottomToAll({text = "#imba_deathstreak_10", duration = line_duration, continue = true})
+			if victim_death_streak >= 3 then
+				Notifications:BottomToAll({hero = victim_hero_name, duration = line_duration})
+				Notifications:BottomToAll({text = victim_player_name.." ", duration = line_duration, continue = true})
+			end
+
+			if victim_death_streak == 3 then
+				Notifications:BottomToAll({text = "#imba_deathstreak_3", duration = line_duration, continue = true})
+			elseif victim_death_streak == 4 then
+				Notifications:BottomToAll({text = "#imba_deathstreak_4", duration = line_duration, continue = true})
+			elseif victim_death_streak == 5 then
+				Notifications:BottomToAll({text = "#imba_deathstreak_5", duration = line_duration, continue = true})
+			elseif victim_death_streak == 6 then
+				Notifications:BottomToAll({text = "#imba_deathstreak_6", duration = line_duration, continue = true})
+			elseif victim_death_streak == 7 then
+				Notifications:BottomToAll({text = "#imba_deathstreak_7", duration = line_duration, continue = true})
+			elseif victim_death_streak == 8 then
+				Notifications:BottomToAll({text = "#imba_deathstreak_8", duration = line_duration, continue = true})
+			elseif victim_death_streak == 9 then
+				Notifications:BottomToAll({text = "#imba_deathstreak_9", duration = line_duration, continue = true})
+			elseif victim_death_streak >= 10 then
+				Notifications:BottomToAll({text = "#imba_deathstreak_10", duration = line_duration, continue = true})
+			end	
 		end
 	end
 
@@ -977,32 +978,31 @@ end
 function GameMode:OnTowerKill(keys)
 	local gold = keys.gold
 	local killerPlayer = PlayerResource:GetPlayer(keys.killer_userid)
-	local tower_team = keys.teamnumber
-	PrintTable(keys)
+	local tower_team = keys.teamnumber	
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Attack of the Ancients tower upgrade logic
 	-------------------------------------------------------------------------------------------------
-
-	if TOWER_UPGRADE_MODE then
+	
+	if TOWER_UPGRADE_MODE then		
 		
-		-- Find all radiant towers on the map
+		-- Find all friendly towers on the map
 		local towers = FindUnitsInRadius(tower_team, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
-
+		
 		-- Upgrade each tower
-		for _, tower in pairs(towers) do
-			if tower.tower_tier then
-				UpgradeTower(tower)
-			end
+		for _, tower in pairs(towers) do						
+			UpgradeTower(tower)			
 		end
 
+		Notifications:TopToAll({text="Top Notification for 5 seconds ", duration=5.0})
+		
 		-- Display upgrade message and play ominous sound
-		if tower_team == DOTA_TEAM_GOODGUYS then
+		if tower_team == DOTA_TEAM_GOODGUYS then			
 			Notifications:BottomToAll({text = "#tower_abilities_radiant_upgrade", duration = 7, style = {color = "DodgerBlue"}})
-			EmitGlobalSound("powerup_01")
-		else
+			EmitGlobalSound("powerup_01")			
+		else			
 			Notifications:BottomToAll({text = "#tower_abilities_dire_upgrade", duration = 7, style = {color = "DodgerBlue"}})
-			EmitGlobalSound("powerup_02")
+			EmitGlobalSound("powerup_02")			
 		end
 	end
 

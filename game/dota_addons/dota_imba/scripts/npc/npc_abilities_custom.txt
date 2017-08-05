@@ -2469,6 +2469,51 @@
 
 	}
 
+	//=================================================================================================================
+	// Tower ability: Tenacity Aura (Tier 2)
+	//=================================================================================================================
+	"imba_tower_tenacity"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_lua"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"custom/tower_tenacity"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
+		"AbilityCastRange"						"900"
+		"ScriptFile"							"hero/tower_abilities"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"base_tenacity_pct"				"15 20 25"
+			}			
+
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"tenacity_per_protective"		"3"
+			}
+
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_radius"					"900"
+			}
+
+			"05"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"aura_stickyness"				"0.5"
+			}
+		}
+	}
+
 
 	//=================================================================================================================
 	// Tower ability: Spellmastery Aura (Tier 2)
