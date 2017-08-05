@@ -11606,6 +11606,12 @@
 				"var_type"						"FIELD_INTEGER"
 				"skull_break_duration"			"5"
 			}
+
+			"09"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"actual_break_duration"			"3"
+			}
 		}
 	}
 
@@ -11751,6 +11757,12 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"active_stun_duration"			"2"
+			}
+
+			"15"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"actual_break_duration"			"3"
 			}
 		}
 	}

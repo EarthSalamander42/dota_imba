@@ -26,6 +26,7 @@ function item_imba_abyssal_blade:OnSpellStart()
 
     -- Ability specials
     local active_stun_duration = ability:GetSpecialValueFor("active_stun_duration")
+    local actual_break_duration = ability:GetSpecialValueFor("actual_break_duration")
 
     -- Play cast sound
     EmitSoundOn(sound_cast, target)
@@ -44,7 +45,7 @@ function item_imba_abyssal_blade:OnSpellStart()
 
     -- Stun and break the target for the duration
     target:AddNewModifier(caster, ability, modifier_bash, {duration = active_stun_duration})
-    target:AddNewModifier(caster, ability, modifier_break, {duration = active_stun_duration})
+    target:AddNewModifier(caster, ability, modifier_break, {duration = actual_break_duration})
 end
 
 
@@ -147,6 +148,7 @@ function modifier_imba_abyssal_blade_unique:OnCreated()
     self.skull_break_duration = self.ability:GetSpecialValueFor("skull_break_duration")
     self.internal_bash_cd = self.ability:GetSpecialValueFor("internal_bash_cd")
     self.insta_skull_break_chance_pct = self.ability:GetSpecialValueFor("insta_skull_break_chance_pct")
+    self.actual_break_duration = self.ability:GetSpecialValueFor("actual_break_duration")
 end
 
 function modifier_imba_abyssal_blade_unique:DeclareFunctions()
@@ -236,7 +238,7 @@ function modifier_imba_abyssal_blade_unique:OnAttackLanded(keys)
                 -- If the target is not skull crashed yet, try to immediately CRUSH IT!
                 if not target:HasModifier(self.modifier_skull_crash) then
                     if RollPseudoRandom(self.insta_skull_break_chance_pct, self) then
-                        target:AddNewModifier(self.caster, self.ability, self.modifier_skull_break, {duration = self.stun_duration})    
+                        target:AddNewModifier(self.caster, self.ability, self.modifier_skull_break, {duration = self.actual_break_duration})    
                     else
                         target:AddNewModifier(self.caster, self.ability, self.modifier_skull_crash, {duration = self.skull_break_duration})
                     end
@@ -246,7 +248,7 @@ function modifier_imba_abyssal_blade_unique:OnAttackLanded(keys)
                     target:RemoveModifierByName(self.modifier_skull_crash)
 
                     -- Apply BREAK!
-                    target:AddNewModifier(self.caster, self.ability, self.modifier_skull_break, {duration = self.stun_duration})
+                    target:AddNewModifier(self.caster, self.ability, self.modifier_skull_break, {duration = self.actual_break_duration})
                 end
             end            
                 
