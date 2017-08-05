@@ -226,7 +226,7 @@
     "Dota_Tooltip_Talent_special_bonus_imba_crystal_maiden_2_title"             "Icy Embrace"
     "Dota_Tooltip_Talent_special_bonus_imba_crystal_maiden_2_Description"       "Frostbite can be cast on allies to regen health and mana and reduce damage taken. While Frostbite is affecting an ally, it is rooted, taking 50% reduced damage, and quickly regenerates 50 health and 15 mana every tick.<br><br><i>Cold can also be used to conserve the heat inside a living creature, rapidly restoring its fatigue.</i>"
     "Dota_Tooltip_Talent_special_bonus_imba_crystal_maiden_3_title"             "Winter Bringer"
-    "Dota_Tooltip_Talent_special_bonus_imba_crystal_maiden_3_Description"       "Crystal Nova's Snowfield now also grants 10% damage reduction and increases health regeneration by 20 to allies. <br><br><i>In the heat of battle, nothing refreshes the body more than a cool breeze.</i>"
+    "Dota_Tooltip_Talent_special_bonus_imba_crystal_maiden_3_Description"       "Crystal Nova's Snowfield now also grants 25% damage reduction and increases health regeneration by 50 to allies. <br><br><i>In the heat of battle, nothing refreshes the body more than a cool breeze.</i>"
     "Dota_Tooltip_Talent_special_bonus_imba_crystal_maiden_4_title"             "Arcane Master"
     "Dota_Tooltip_Talent_special_bonus_imba_crystal_maiden_4_Description"       "Gains double the stacks for Arcane Dynamo based on the current health, effectively increasing the stack count to 20 stacks.<br><br><i>The bond between Crystal Maiden and the cold is one bond you cannot shatter.</i>"
     "Dota_Tooltip_Talent_special_bonus_imba_crystal_maiden_5_title"             "Icewrack Chill"
@@ -240,7 +240,7 @@
 
     // Dazzle    
     "Dota_Tooltip_Talent_special_bonus_imba_dazzle_1_title"                     "Patient Shadow"
-    "Dota_Tooltip_Talent_special_bonus_imba_dazzle_1_Description"               "Shadow Wave bounces have a delay of 1 second. If a unit was hit by a delayed Shadow Wave, it has a 5 second cooldown before it can be hit by one again. Up to 3 waves can exist at once.<br><br><i>A hasty job often means a lower quality one.</i>"
+    "Dota_Tooltip_Talent_special_bonus_imba_dazzle_1_Description"               "Shadow Wave bounces have a delay of 1 second. If a unit was hit by a delayed Shadow Wave, it has a 3 second cooldown before it can be hit by one again. Up to 3 waves can exist at once.<br><br><i>A hasty job often means a lower quality one.</i>"
     "Dota_Tooltip_Talent_special_bonus_imba_dazzle_2_title"                     "Indiscriminate Shadow"
     "Dota_Tooltip_Talent_special_bonus_imba_dazzle_2_Description"               "Shadow Wave now also heals allies around the bounce targets, in addition to damaging enemies around them. (same radius as the damage) <br><br><i> Friend or foe, it matters not to the shadows.</i>"
     "Dota_Tooltip_Talent_special_bonus_imba_dazzle_3_title"                     "Grave Robber"

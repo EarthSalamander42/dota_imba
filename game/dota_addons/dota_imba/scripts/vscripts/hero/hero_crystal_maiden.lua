@@ -981,7 +981,7 @@ function imba_crystal_maiden_freezing_field:OnChannelFinish(bInterrupted)
 				if #enemies > 0 then
 					local shard_shares = {}
 					local random_number
-					--Distribute the shard shares aka "It's All Ogre Now, CM Edition"
+					--Distribute the shard shares aka "It's All Ogre Now, CM Edition"self.shards
 					for i=1,self.shards do
 						random_number = math.random(1, #enemies)
 						if shard_shares[random_number] == nil then
@@ -992,28 +992,29 @@ function imba_crystal_maiden_freezing_field:OnChannelFinish(bInterrupted)
 					local index = 0
 					for _, unit in pairs(enemies) do
 						index = index + 1
-						if shard_shares[index] then
-							local extra_data = { damage = self.damage * self.shard_damage_mul * shard_shares[index] }
-							local projectile =
-							{
-								Target 				= unit,
-								Source 				= self.freezing_field_center,
-								Ability 			= self,
-								EffectName 			= "particles/units/heroes/hero_winter_wyvern/wyvern_splinter_blast.vpcf",
-								iMoveSpeed			= 800,
-								vSourceLoc 			= self.freezing_field_center,
-								bDrawsOnMinimap 	= false,
-								bDodgeable 			= false,
-								bIsAttack 			= false,
-								bVisibleToEnemies 	= true,
-								bReplaceExisting 	= false,
-								flExpireTime 		= GameRules:GetGameTime() + 10,
-								bProvidesVision 	= true,
-								iVisionRadius 		= 400,
-								iVisionTeamNumber 	= self.caster:GetTeamNumber(),
-								ExtraData = extra_data
-							}
-							ProjectileManager:CreateTrackingProjectile(projectile)
+						if shard_shares[index] then							
+								local extra_data = { damage = self.damage * self.shard_damage_mul * shard_shares[index] }
+								local projectile =
+								{
+									Target 				= unit,
+									Source 				= self.freezing_field_center,
+									Ability 			= self,
+									EffectName 			= "particles/units/heroes/hero_winter_wyvern/wyvern_splinter_blast.vpcf",
+									iMoveSpeed			= 800,
+									vSourceLoc 			= self.freezing_field_center,
+									bDrawsOnMinimap 	= false,
+									bDodgeable 			= false,
+									bIsAttack 			= false,
+									bVisibleToEnemies 	= true,
+									bReplaceExisting 	= false,
+									flExpireTime 		= GameRules:GetGameTime() + 10,
+									bProvidesVision 	= true,
+									iVisionRadius 		= 400,
+									iVisionTeamNumber 	= self.caster:GetTeamNumber(),
+									ExtraData = extra_data
+								}
+								ProjectileManager:CreateTrackingProjectile(projectile)								
+							end)
 						end
 					end
 				end

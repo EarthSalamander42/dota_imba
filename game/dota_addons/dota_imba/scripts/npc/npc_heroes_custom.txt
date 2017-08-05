@@ -521,16 +521,16 @@
 		"Ability2"					"imba_crystal_maiden_frostbite"
 		"Ability3"					"imba_crystal_maiden_brilliance_aura"
 		"Ability4"					"imba_crystal_maiden_arcane_dynamo"
-		"Ability5"					"imba_crystal_maiden_freezing_field"
+		"Ability5"					"imba_crystal_maiden_freezing_field"		
 
-		"Ability10"					"special_bonus_imba_crystal_maiden_1"
-		"Ability11"					"special_bonus_imba_crystal_maiden_2"
-		"Ability12"					"special_bonus_imba_crystal_maiden_3"
-		"Ability13"					"special_bonus_imba_crystal_maiden_4"
-		"Ability14"					"special_bonus_imba_crystal_maiden_5"
-		"Ability15"					"special_bonus_imba_crystal_maiden_6"
-		"Ability16"					"special_bonus_imba_crystal_maiden_7"
-		"Ability17"					"special_bonus_imba_crystal_maiden_8"
+		"Ability10"					"special_bonus_imba_crystal_maiden_2" //Frostbite can be cast on allies to regen health and mana and reduce damage taken
+		"Ability11"					"special_bonus_imba_crystal_maiden_5" //Enemies hit by Crystal Maiden's abilities gain a debuff that slows them by 15%/15 move/attack speed for 3 seconds
+		"Ability12"					"special_bonus_imba_crystal_maiden_4" //Double Arcane Dynamo's bonuses
+		"Ability13"					"special_bonus_imba_crystal_maiden_1" //Icy Touch causes a 100% movement speed slow that is slowly regained over 6 seconds
+		"Ability14"					"special_bonus_imba_crystal_maiden_7" //Freezing Field no longer drops projectiles - instead, at the end of channel, the damage (based on channeled time) is distributed randomly amongst enemies in Freezing Field's AoE
+		"Ability15"					"special_bonus_imba_crystal_maiden_8" //+50% Freezing Field explosion rate
+		"Ability16"					"special_bonus_imba_crystal_maiden_6" //Freezing Field constantly Frostbites enemies in it during the duration of the spell
+		"Ability17"					"special_bonus_imba_crystal_maiden_3" //Crystal Nova's Snowfield grants damage reduction and increases health regeneration. 
 
 		"ProjectileModel"			"particles/units/heroes/hero_crystalmaiden/maiden_base_attack.vpcf"
 	}

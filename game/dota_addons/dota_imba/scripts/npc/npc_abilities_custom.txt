@@ -8009,7 +8009,7 @@
 	}
 	
 	//=================================================================================================================
-	// Crystal Maiden Talent 3 (Level 20): Crystal Nova's Snowfield grants 10% damage reduction and increases health regeneration by 20. 
+	// Crystal Maiden Talent 3 (Level 20): Crystal Nova's Snowfield grants damage reduction and increases health regeneration. 
 	//=================================================================================================================
 	"special_bonus_imba_crystal_maiden_3"
 	{
@@ -8031,13 +8031,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_reduction_pct"      "10"
+				"damage_reduction_pct"      "25"
 			}
 
             "02"
             {
                 "var_type"                  "FIELD_INTEGER"
-                "health_regen"              "20"
+                "health_regen"              "50"
             }
 		}
 	}
@@ -24080,8 +24080,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hamstring_chance"		"10"
-				"LinkedSpecialBonus"	"special_bonus_imba_troll_warlord_7"
+				"hamstring_chance"		"10"				
 			}
 			"02"
 			{
@@ -24116,8 +24115,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bash_chance"			"10"
-				"LinkedSpecialBonus"	"special_bonus_imba_troll_warlord_7"
+				"bash_chance"			"10"				
 			}
 			"09"
 			{
@@ -24213,12 +24211,13 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"axe_spread"				"25"
+				"axe_spread"				"25"				
 			}
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"axe_count"					"5"
+				"LinkedSpecialBonus"		"special_bonus_imba_troll_warlord_7"
 			}
 			"09"
 			{
@@ -24604,7 +24603,7 @@
 	}
 
 	//=================================================================================================================
-	// Troll Warlord Talent 7 (Level 40): +% Bash/Hamstring chance
+	// Troll Warlord Talent 7 (Level 40): +Ranged Whirling Axe axes count, and drastically increases the spread
 	//=================================================================================================================
 	"special_bonus_imba_troll_warlord_7"
 	{
@@ -24616,7 +24615,7 @@
 		
 		"LinkedAbility"
 		{
-			"01" 	"imba_troll_warlord_berserkers_rage"
+			"01" 	"imba_troll_warlord_whirling_axes_ranged"
 		}
 
 		// Special
@@ -24626,7 +24625,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"10"
+				"axe_count_increase"		"10"
+			}
+
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"axe_spread_increase"		"80"
 			}
 		}
 	}
@@ -31141,7 +31146,7 @@
             "03"
             {
                 "var_type"                            "FIELD_INTEGER"
-                "talent_delayed_wave_rehit_cd"        "5"
+                "talent_delayed_wave_rehit_cd"        "3"
             }
 		}
 	}

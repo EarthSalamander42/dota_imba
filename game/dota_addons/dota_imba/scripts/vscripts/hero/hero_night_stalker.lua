@@ -913,7 +913,7 @@ function modifier_imba_darkness_night:GetAuraSearchTeam()
 end
 
 function modifier_imba_darkness_night:GetAuraSearchType()
-    return DOTA_UNIT_TARGET_ALL
+    return DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BUILDING
 end
 
 function modifier_imba_darkness_night:GetModifierAura()
