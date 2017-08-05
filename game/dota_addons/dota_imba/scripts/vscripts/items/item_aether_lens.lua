@@ -48,7 +48,7 @@ end
 function modifier_imba_aether_lens_passive:DeclareFunctions()
     local decFuns =
     {
-		MODIFIER_PROPERTY_CAST_RANGE_BONUS,
+		MODIFIER_PROPERTY_CAST_RANGE_BONUS_STACKING,
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
 		MODIFIER_PROPERTY_MANA_BONUS,
 		MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE
@@ -68,6 +68,6 @@ function modifier_imba_aether_lens_passive:GetModifierManaBonus()
 	return self.bonus_mana
 end
 
-function modifier_imba_aether_lens_passive:GetModifierCastRangeBonus()
+function modifier_imba_aether_lens_passive:GetModifierCastRangeBonusStacking()
 	return self:CheckUniqueValue(self.cast_range_bonus, {"modifier_imba_elder_staff"})
 end

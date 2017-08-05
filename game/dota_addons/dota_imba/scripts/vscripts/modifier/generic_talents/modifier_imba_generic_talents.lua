@@ -348,11 +348,11 @@ end
 -----------------------------
 modifier_imba_generic_talent_cast_range = ShallowCopy(modifier_imba_generic_talent_base)
 function modifier_imba_generic_talent_cast_range:DeclareFunctions()
-    local funcs = { MODIFIER_PROPERTY_CAST_RANGE_BONUS }
+    local funcs = { MODIFIER_PROPERTY_CAST_RANGE_BONUS_STACKING }
 	return funcs
 end
 
-function modifier_imba_generic_talent_cast_range:GetModifierCastRangeBonus()
+function modifier_imba_generic_talent_cast_range:GetModifierCastRangeBonusStacking()
     return self.value
 end
 
