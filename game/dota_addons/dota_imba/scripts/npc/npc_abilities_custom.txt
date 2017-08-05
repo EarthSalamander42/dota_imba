@@ -27630,7 +27630,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bounces"				"2 4 6 8 9 10 11"
-				"LinkedSpecialBonus"	"special_bonus_imba_witch_doctor_5"
 			}
 			"07"
 			{
@@ -27704,7 +27703,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"heal"						"16 24 32 40 43 46 50"
-				"LinkedSpecialBonus"		"special_bonus_imba_witch_doctor_3"
 			}
 			"04"
 			{
@@ -27776,13 +27774,11 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"180"
-				"LinkedSpecialBonus"		"special_bonus_imba_witch_doctor_2"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"duration"					"12.0"
-				"LinkedSpecialBonus"		"special_bonus_imba_witch_doctor_7"
 			}
 			"03"
 			{
@@ -27879,8 +27875,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_range_tooltip"	"700"
-				"LinkedSpecialBonus"	"special_bonus_imba_witch_doctor_4"
+				"attack_range"			"700 750 800 825 850 875"		
 			}
 			"05"
 			{
@@ -27901,37 +27896,9 @@
 	}
 	
 	//=================================================================================================================
-	// Witch Doctor Talent 1 (Level 10): Additional Paralyzing Cask heal when bouncing to allies 
+	// Witch Doctor Talent 1: Every Maledict burst deals it's damage around the target (spreads between enemies)
 	//=================================================================================================================
 	"special_bonus_imba_witch_doctor_1"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_witch_doctor_paralyzing_cask"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"50"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Witch Doctor Talent 2 (Level 10): + Maledict effect radius
-	//=================================================================================================================
-	"special_bonus_imba_witch_doctor_2"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -27951,13 +27918,41 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"70"
+				"value"						"400"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Witch Doctor Talent 3 (Level 20): Additional Voodoo Restoration healing per second
+	// Witch Doctor Talent 2 (level 20): When toggling Voodoo Restoration on, it applies the basic purge effect immediately.
+	//=================================================================================================================
+	"special_bonus_imba_witch_doctor_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_witch_doctor_voodoo_restoration"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Witch Doctor Talent 3: Voodoo Restoration's purge is now a strong purge.
 	//=================================================================================================================
 	"special_bonus_imba_witch_doctor_3"
 	{
@@ -27979,15 +27974,44 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"20"
+				"value"						"1"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Witch Doctor Talent 4 (Level 20):  Increased Death Ward attack range
+	// Witch Doctor Talent 4: Paralyzing Cask spreads Maledict if it bounces from a cursed unit.
 	//=================================================================================================================
 	"special_bonus_imba_witch_doctor_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_witch_doctor_paralyzing_cask"
+			"02"	"imba_witch_doctor_maledict"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+
+	//===================================================================================================================
+	// Witch Doctor Talent 5:  Enemies dying from a death ward will spawn a mini death ward that deal part of the damage
+	//===================================================================================================================
+	"special_bonus_imba_witch_doctor_5"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -28007,41 +28031,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"175"
+				"value"						"50"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Witch Doctor Talent 5 (Level 30):  + Paralyzing Cask max bounces
-	//=================================================================================================================
-	"special_bonus_imba_witch_doctor_5"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_witch_doctor_paralyzing_cask"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"4"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Witch Doctor Talent 6 (Level 30): Voodoo Restoration no longer costs mana
+	// Witch Doctor Talent 6 (Level 20): Voodoo Restoration turns into a aura
 	//=================================================================================================================
 	"special_bonus_imba_witch_doctor_6"
 	{
@@ -28069,7 +28065,7 @@
 	}
 
 	//=================================================================================================================
-	// Witch Doctor Talent 7 (Level 40): + Maledict duration
+	// Witch Doctor Talent 7: When Maledict's curse bursts, health regen is completely disabled for a period.
 	//=================================================================================================================
 	"special_bonus_imba_witch_doctor_7"
 	{
@@ -28091,13 +28087,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"value"						"8.0"
+				"value"						"1.0"				// duration
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Witch Doctor Talent 8 (Level 40): Now spawns two Death Wards; if channeling is broken, only one of them disappears.
+	// Witch Doctor Talent 8: Now spawns two Death Wards; if channeling is broken, only one of them disappears.
 	//=================================================================================================================
 	"special_bonus_imba_witch_doctor_8"
 	{

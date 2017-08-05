@@ -55,7 +55,7 @@ function imba_witch_doctor_paralyzing_cask:OnSpellStart()
 				hero_damage = self:GetSpecialValueFor("hero_damage"),
 				creep_damage = self:GetSpecialValueFor("creep_damage"),
 				bounce_range = self:GetSpecialValueFor("bounce_range"),
-				bounces = self:GetTalentSpecialValueFor("bounces"),
+				bounces = self:GetSpecialValueFor("bounces"),
 				speed = speed,
 				bounce_delay = self:GetSpecialValueFor("bounce_delay"),
 				index = index
@@ -73,11 +73,24 @@ function imba_witch_doctor_paralyzing_cask:OnProjectileHit_ExtraData(hTarget, vL
 		if hTarget:IsRealHero() or hTarget:IsConsideredHero() or IsRoshan(hTarget) then
 			if hTarget:GetTeamNumber() ~= hCaster:GetTeamNumber() then
 				if not hTarget:IsMagicImmune() and not hTarget:TriggerSpellAbsorb(self) then
+
+					-- #4 TALENT: Casket applies maledict if previous target was maledicted
+					if IsServer() then
+						local maledict_ability	=	hCaster:FindAbilityByName("imba_witch_doctor_maledict")
+						if hTarget:FindModifierByName("modifier_imba_maledict") then
+							self.cursed_casket = true 
+						else
+							self.cursed_casket = false 
+						end
+						if ExtraData.cursed_casket == 1 then
+							hTarget:AddNewModifier(hCaster, maledict_ability, "modifier_imba_maledict", {duration = maledict_ability:GetSpecialValueFor("duration") + FrameTime()} )
+						end
+					end
 					hTarget:AddNewModifier(hTarget, self, "modifier_stunned", {duration = ExtraData.hero_duration})
 					ApplyDamage({victim = hTarget, attacker = hCaster, damage = ExtraData.hero_damage, damage_type = self:GetAbilityDamageType()})
 				end
 			else
-				local heal = ExtraData.hero_damage + hCaster:FindTalentValue("special_bonus_imba_witch_doctor_1")
+				local heal = ExtraData.hero_damage 
 				hTarget:Heal(heal, hCaster)
 				SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, hTarget, heal, nil)
 			end
@@ -88,7 +101,7 @@ function imba_witch_doctor_paralyzing_cask:OnProjectileHit_ExtraData(hTarget, vL
 					ApplyDamage({victim = hTarget, attacker = hCaster, damage = ExtraData.creep_damage, damage_type = self:GetAbilityDamageType()})
 				end
 			else
-				local heal = ExtraData.creep_damage + hCaster:FindTalentValue("special_bonus_imba_witch_doctor_1")
+				local heal = ExtraData.creep_damage 
 				hTarget:Heal(heal, hCaster)
 				SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, hTarget, heal, nil)
 			end
@@ -105,30 +118,36 @@ function imba_witch_doctor_paralyzing_cask:OnProjectileHit_ExtraData(hTarget, vL
 			
 			-- Go through the target tables, checking for the first one that isn't the same as the target
 			local tJumpTargets = {}
-			for _,unit in pairs(enemies) do
-				if hTarget then
-					if (unit ~= hTarget) and (not unit:IsOther()) and ((self["split_" .. ExtraData.index] >= 1) or #tJumpTargets == 0) then
-						table.insert(tJumpTargets, unit)
-						if #tJumpTargets == 2 then
-							self[ExtraData.index] = self[ExtraData.index] + 1
-							break
-						end
-					end
-				end
-			end
-			-- If no enemy was found, search allies
-			if #tJumpTargets == 0 then
-				for _,unit in pairs(allies) do
+			-- If the target is an enemy, bounce on an enemy.
+			if hTarget:GetTeamNumber() ~= hCaster:GetTeamNumber() then
+				for _,unit in pairs(enemies) do
 					if hTarget then
-						if (unit ~= hTarget) and (not unit:IsOther()) then
+						if (unit ~= hTarget) and (not unit:IsOther()) and ((self["split_" .. ExtraData.index] >= 1) or #tJumpTargets == 0) then
 							table.insert(tJumpTargets, unit)
-							break
+							if #tJumpTargets == 2 then
+								self[ExtraData.index] = self[ExtraData.index] + 1
+								break
+							end
+						end
+					end
+				end
+			-- If the target is an ally, bounce on an ally.
+			else
+				if #tJumpTargets == 0 then
+					for _,unit in pairs(allies) do
+						if hTarget then
+							if (unit ~= hTarget) and (not unit:IsOther()) then
+								table.insert(tJumpTargets, unit)
+								break
+							end
 						end
 					end
 				end
 			end
+
 			if #tJumpTargets == 0 then
 				-- End of spell
+				self.cursed_casket = false
 				if self[ExtraData.index] == 1 then
 					self[ExtraData.index] = nil
 					self["split_" .. ExtraData.index] = nil
@@ -159,7 +178,8 @@ function imba_witch_doctor_paralyzing_cask:OnProjectileHit_ExtraData(hTarget, vL
 						bounces = ExtraData.bounces - 1,
 						speed = ExtraData.speed,
 						bounce_delay = ExtraData.bounce_delay,
-						index = ExtraData.index
+						index = ExtraData.index,
+						cursed_casket = self.cursed_casket
 					}
 				}
 				ProjectileManager:CreateTrackingProjectile(projectile)
@@ -169,6 +189,7 @@ function imba_witch_doctor_paralyzing_cask:OnProjectileHit_ExtraData(hTarget, vL
 			end
 		end)
 	else
+		self.cursed_casket = false
 		if self[ExtraData.index] == 1 then
 			self[ExtraData.index] = nil
 			self["split_" .. ExtraData.index] = nil
@@ -195,14 +216,23 @@ function imba_witch_doctor_voodoo_restoration:GetCastRange()
 	return self:GetSpecialValueFor("radius")
 end
 
+function imba_witch_doctor_voodoo_restoration:GetBehavior() 
+	-- #6 TALENT : Voodo restoration turns into a passive.
+	if self:GetCaster():HasTalent("special_bonus_imba_witch_doctor_6") then
+		return DOTA_ABILITY_BEHAVIOR_PASSIVE
+	else
+		return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_TOGGLE + DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL
+	end
+end
+
 function imba_witch_doctor_voodoo_restoration:GetManaCost( hTarget )
+	--#6 TALENT: Voodo restoration doesn't cost mana to activate.
 	if self:GetCaster():HasTalent("special_bonus_imba_witch_doctor_6") then
 		return 0
 	else
 		return self.BaseClass.GetManaCost(self, hTarget)
 	end
 end
-
 
 function imba_witch_doctor_voodoo_restoration:OnToggle()
 	local hCaster = self:GetCaster()
@@ -217,10 +247,67 @@ function imba_witch_doctor_voodoo_restoration:OnToggle()
 				_G.VOODOO = nil
 			end)
 		end
+
+		-- #2 TALENT: When Voodo Restoration is toggled on it applies the dispell immediately. 
+		if hCaster:HasTalent("special_bonus_imba_witch_doctor_2")  then 
+			-- Special handling for first cast
+			if not self.previous_dispell_time then self.previous_dispell_time = GameRules:GetGameTime() + hCaster:FindTalentValue("special_bonus_imba_witch_doctor_2") end
+
+			-- This can only happen every so often.
+			if GameRules:GetGameTime() >= self.previous_dispell_time + hCaster:FindTalentValue("special_bonus_imba_witch_doctor_2") then
+				-- Remember what time the dispell happened
+				self.previous_dispell_time = GameRules:GetGameTime() 
+				-- Find allies to dispell 
+				local allies = FindUnitsInRadius(hCaster:GetTeamNumber(),
+				 hCaster:GetAbsOrigin(),
+				 nil,
+				 self:GetSpecialValueFor("radius"),
+				 self:GetAbilityTargetTeam(),
+				 self:GetAbilityTargetType(),
+				 self:GetAbilityTargetFlags(),
+				 0,
+				 false)
+				-- Dispell them
+				for _,hAlly in pairs(allies) do
+					local bRemoveStuns		= false 
+					local bRemoveExceptions = false
+
+					-- #3 TALENT: Voodo restoration now purges stuns/exceptions
+					if hCaster:HasTalent("special_bonus_imba_witch_doctor_3") then
+						bRemoveStuns 	  = true 
+						bRemoveExceptions = true 
+					end
+
+					hAlly:Purge(false, true, false, bRemoveStuns, bRemoveExceptions)
+					local cleanse_pfc = ParticleManager:CreateParticle("particles/hero/witch_doctor/voodoo_cleanse.vpcf", PATTACH_POINT_FOLLOW, hCaster)
+					ParticleManager:SetParticleControlEnt(cleanse_pfc, 0, hAlly, PATTACH_POINT_FOLLOW, "attach_hitloc", hAlly:GetAbsOrigin(), true)
+					ParticleManager:ReleaseParticleIndex(cleanse_pfc)
+					if hAlly == hCaster then
+						EmitSoundOn("Imba.WitchDoctorDispel", hCaster)
+					end
+				end
+			end
+		end
+
 	else
 		EmitSoundOn("Hero_WitchDoctor.Voodoo_Restoration.Off", hCaster)
 		StopSoundEvent("Hero_WitchDoctor.Voodoo_Restoration.Loop", hCaster)
 		hCaster:RemoveModifierByName("modifier_imba_voodoo_restoration")
+	end
+end
+
+-- #6 TALENT: Applies Voodoo restoration if it has not been activated before.
+function modifier_special_bonus_imba_witch_doctor_6:OnCreated()
+	if IsServer() then
+		local voodoo_restoration = self:GetCaster():FindAbilityByName("imba_witch_doctor_voodoo_restoration")
+		-- Turn off the visual indicator on the spell
+		if voodoo_restoration:GetToggleState() then
+			voodoo_restoration:ToggleAbility()
+		end
+		-- Apply the modifier
+		if not self:GetCaster():FindModifierByName("modifier_imba_voodoo_restoration") then
+			self:GetCaster():AddNewModifier(self:GetCaster(), voodoo_restoration, "modifier_imba_voodoo_restoration", {})
+		end
 	end
 end
 
@@ -254,12 +341,22 @@ function modifier_imba_voodoo_restoration:OnIntervalThink()
 	local hAbility = self:GetAbility()
 	-- Counter for purge effect
 	self.cleanse_counter = self.cleanse_counter or 0
+
 	self.cleanse_counter = self.cleanse_counter + self.interval
 	if self.cleanse_counter >= self.cleanse_interval then
 		self.cleanse_counter = 0
 		local allies = FindUnitsInRadius(hCaster:GetTeamNumber(), hCaster:GetAbsOrigin(), nil, self.radius, hAbility:GetAbilityTargetTeam(), hAbility:GetAbilityTargetType(), hAbility:GetAbilityTargetFlags(), 0, false)
 		for _,hAlly in pairs(allies) do
-			hAlly:Purge(false, true, false, false, false)
+			local bRemoveStuns		= false 
+			local bRemoveExceptions = false
+
+			-- #3 TALENT: Voodo restoration now purges stuns/exceptions
+			if hCaster:HasTalent("special_bonus_imba_witch_doctor_3") then
+				bRemoveStuns      = true 
+				bRemoveExceptions = true 
+			end
+					
+			hAlly:Purge(false, true, false, bRemoveStuns, bRemoveExceptions)
 			local cleanse_pfc = ParticleManager:CreateParticle("particles/hero/witch_doctor/voodoo_cleanse.vpcf", PATTACH_POINT_FOLLOW, hCaster)
 			ParticleManager:SetParticleControlEnt(cleanse_pfc, 0, hAlly, PATTACH_POINT_FOLLOW, "attach_hitloc", hAlly:GetAbsOrigin(), true)
 			ParticleManager:ReleaseParticleIndex(cleanse_pfc)
@@ -268,7 +365,7 @@ function modifier_imba_voodoo_restoration:OnIntervalThink()
 			end
 		end
 	end
-	-- Drain mana if no talent
+	-- #6 TALENT: Voodo restoration doesn't cost mana to maintain.
 	if not hCaster:HasTalent("special_bonus_imba_witch_doctor_6") then
 		if hCaster:GetMana() >= hAbility:GetManaCost(-1) then
 			hCaster:SpendMana(self.manacost, hAbility)
@@ -319,7 +416,7 @@ function modifier_imba_voodoo_restoration_heal:OnCreated()
 	if IsServer() then
 		local hAbility = self:GetAbility()
 		self.interval = hAbility:GetSpecialValueFor("heal_interval")
-		self.heal = hAbility:GetTalentSpecialValueFor("heal")
+		self.heal = hAbility:GetSpecialValueFor("heal")
 		self.int_to_heal = hAbility:GetSpecialValueFor("int_to_heal") * 0.01
 		self:StartIntervalThink( self.interval )
 	end
@@ -339,6 +436,7 @@ end
 --				MALEDICT
 -------------------------------------------
 LinkLuaModifier("modifier_imba_maledict", "hero/hero_witch_doctor", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_maledict_talent", "hero/hero_witch_doctor", LUA_MODIFIER_MOTION_NONE)
 
 imba_witch_doctor_maledict = class({})
 function imba_witch_doctor_maledict:IsHiddenWhenStolen() return false end
@@ -354,8 +452,8 @@ end
 function imba_witch_doctor_maledict:OnSpellStart()
 	local vPosition = self:GetCursorPosition()
 	local hCaster = self:GetCaster()
-	local radius = self:GetTalentSpecialValueFor("radius")
-	local duration = self:GetTalentSpecialValueFor("duration")
+	local radius = self:GetSpecialValueFor("radius")
+	local duration = self:GetSpecialValueFor("duration")
 	local enemies = FindUnitsInRadius(hCaster:GetTeamNumber(), vPosition, nil, radius, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), 0, false)
 	local aoe_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_witchdoctor/witchdoctor_maledict_aoe.vpcf", PATTACH_ABSORIGIN, hCaster)
 		ParticleManager:SetParticleControl( aoe_pfx, 0, vPosition )
@@ -363,7 +461,7 @@ function imba_witch_doctor_maledict:OnSpellStart()
 	if #enemies > 0 then
 		EmitSoundOn("Hero_WitchDoctor.Maledict_Cast", hCaster)
 		for _, enemy in pairs(enemies) do
-			enemy:AddNewModifier(hCaster, self, "modifier_imba_maledict", {duration = duration+FrameTime()})
+			enemy:AddNewModifier(hCaster, self, "modifier_imba_maledict", {duration = duration + (FrameTime())})
 		end
 	else
 		EmitSoundOn("Hero_WitchDoctor.Maledict_CastFail", hCaster)
@@ -371,7 +469,7 @@ function imba_witch_doctor_maledict:OnSpellStart()
 end
 
 function imba_witch_doctor_maledict:GetAOERadius()
-	return self:GetTalentSpecialValueFor("radius")
+	return self:GetSpecialValueFor("radius")
 end
 
 -------------------------------------------
@@ -384,17 +482,26 @@ function modifier_imba_maledict:IsStunDebuff() return false end
 function modifier_imba_maledict:RemoveOnDeath() return true end
 -------------------------------------------
 function modifier_imba_maledict:OnCreated()
-	local hAbility = self:GetAbility()
-	local hParent = self:GetParent()
+	local hAbility 	 = self:GetAbility()
+	local hCaster	 = self:GetCaster()
+	local hParent	 = self:GetParent()
 	self.main_damage = hAbility:GetSpecialValueFor("main_damage")
 	self.bonus_damage_pct = hAbility:GetSpecialValueFor("bonus_damage_pct") * 0.01
 	self.tick_time_sec = hAbility:GetSpecialValueFor("tick_time_sec")
 	self.tick_time_main = hAbility:GetSpecialValueFor("tick_time_main")
 	self.heal_reduce_pct = hAbility:GetSpecialValueFor("heal_reduce_pct") * (-1)
 	self.counter = 0
-	self.burstParticle = ParticleManager:CreateParticle("particles/units/heroes/hero_witchdoctor/witchdoctor_maledict.vpcf", PATTACH_POINT_FOLLOW, self:GetCaster())
-		ParticleManager:SetParticleControlEnt(self.burstParticle, 0, hParent, PATTACH_POINT_FOLLOW, "attach_hitloc", hParent:GetAbsOrigin(), true)
-		ParticleManager:SetParticleControl(self.burstParticle, 1, Vector(self.tick_time_sec, 0, 0))
+	self.burstParticle = ParticleManager:CreateParticle("particles/hero/witch_doctor/imba_witchdoctor_maledict.vpcf", PATTACH_POINT_FOLLOW, self:GetCaster())
+	ParticleManager:SetParticleControlEnt(self.burstParticle, 0, hParent, PATTACH_POINT_FOLLOW, "attach_hitloc", hParent:GetAbsOrigin(), true)
+	ParticleManager:SetParticleControl(self.burstParticle, 1, Vector(self.tick_time_sec, 0, 0))
+	if not hCaster:HasTalent("special_bonus_imba_witch_doctor_1") then
+		ParticleManager:SetParticleControl(self.burstParticle, 2, Vector(128, 1, 1))
+		-- #1 TALENT: Maledict affects an area around the target.
+	else
+		ParticleManager:SetParticleControl(self.burstParticle, 2, Vector(hCaster:FindTalentValue("special_bonus_imba_witch_doctor_1"), 1, 1))
+	end
+
+
 	if IsServer() then
 		self.healthComparator = hParent:GetHealth()
 		self:StartIntervalThink( self.tick_time_main )
@@ -414,6 +521,15 @@ function modifier_imba_maledict:OnDestroy()
 	if IsServer() then
 		self:StartIntervalThink(-1)
 	end
+
+	-- Activate the damage in the case that it has not activated the required amount of times.
+	if self.soundcount then 
+		if self.soundcount < self:GetAbility():GetSpecialValueFor("duration") / self.tick_time_sec then
+			self:DealHPBurstDamage(self:GetParent())
+			EmitSoundOn("Hero_WitchDoctor.Maledict_Tick", hTarget)
+		end
+	end
+
 	StopSoundEvent("Hero_WitchDoctor.Maledict_Loop", self:GetParent())
 	ParticleManager:DestroyParticle(self.burstParticle, false)
 	ParticleManager:ReleaseParticleIndex(self.burstParticle)
@@ -469,19 +585,72 @@ function modifier_imba_maledict:DealHPBurstDamage(hTarget)
 	self.soundcount = self.soundcount or 0
 	self.soundcount = self.soundcount + 1
 	
+	local hCaster	= self:GetCaster()
+	local hAbility	= self:GetAbility()
 	local newHP = hTarget:GetHealth()
 	local maxHP_pct = newHP / hTarget:GetMaxHealth()
 	if newHP > self.healthComparator then return end
-	if (not _G.MALEDICT_POP) and (maxHP_pct < 0.2) and (self.soundcount == 2) and (self:GetCaster():GetName() == "npc_dota_hero_witch_doctor") then
+	if (not _G.MALEDICT_POP) and (maxHP_pct < 0.2) and (self.soundcount == 2) and (hCaster:GetName() == "npc_dota_hero_witch_doctor") then
 		_G.MALEDICT_POP = true
-		self:GetCaster():EmitSound("witchdoctor_wdoc_killspecial_0"..math.random(1,3))
+		hCaster:EmitSound("witchdoctor_wdoc_killspecial_0"..math.random(1,3))
 		Timers:CreateTimer(30,function()
 			_G.MALEDICT_POP = nil
 		end)
 	end
 	local hpDiffDamage = (self.healthComparator - newHP) * self.bonus_damage_pct
-	ApplyDamage({victim = hTarget, attacker = self:GetCaster(), damage = hpDiffDamage, damage_type = self:GetAbility():GetAbilityDamageType()})
+	ApplyDamage({victim = hTarget, attacker = hCaster, damage = hpDiffDamage, damage_type = hAbility:GetAbilityDamageType()})
 	EmitSoundOn("Hero_WitchDoctor.Maledict_Tick", hTarget)
+
+	-- #1 TALENT: Maledict deals additional damage based on it's own damage, spread between enemies around the target.
+	if hCaster:HasTalent("special_bonus_imba_witch_doctor_1") then
+		-- Find enemies near the target
+		local enemies = FindUnitsInRadius(hCaster:GetTeamNumber(),
+		 hTarget:GetAbsOrigin(),
+		 nil,
+		 hCaster:FindTalentValue("special_bonus_imba_witch_doctor_1"),
+		 hAbility:GetAbilityTargetTeam(),
+		 hAbility:GetAbilityTargetType(),
+		 hAbility:GetAbilityTargetFlags(),
+		 FIND_ANY_ORDER,
+		 false)
+
+		-- Deal damage to each enemy
+    	for _,enemy in pairs(enemies) do
+    		if enemy ~= hTarget then 
+    			local DamageTable = {
+    			victim = enemy,
+    			attacker = hCaster,
+    			damage = hpDiffDamage / (#enemies - 1),
+    			damage_type = hAbility:GetAbilityDamageType()
+    			}
+    			ApplyDamage(DamageTable)
+    		end
+    	end 
+	end
+
+	-- #7 TALENT: Maledict applies a no healing debuff briefly
+	if hCaster:HasTalent("special_bonus_imba_witch_doctor_7") then
+		hTarget:AddNewModifier(hCaster, hAbility, "modifier_imba_maledict_talent", {duration = hCaster:FindTalentValue("special_bonus_imba_witch_doctor_7")} )
+	end
+end
+
+--- NO HEALING MODIFIER FROM #7 TALENT
+modifier_imba_maledict_talent = modifier_imba_maledict_talent or class({})
+
+-- Modifier properties
+function modifier_imba_maledict_talent:IsDebuff() return true end
+function modifier_imba_maledict_talent:IsHidden() return false end
+function modifier_imba_maledict_talent:IsPurgable() return false end
+
+function modifier_imba_maledict_talent:DeclareFunctions()
+	local funcs ={
+	MODIFIER_PROPERTY_HEAL_AMPLIFY_PERCENTAGE
+}
+	return funcs
+end
+
+function modifier_imba_maledict_talent:GetModifierHealAmplify_Percentage()
+	return -100
 end
 
 -------------------------------------------
@@ -530,9 +699,13 @@ function imba_witch_doctor_death_ward:OnSpellStart()
 	end
 end
 
-function imba_witch_doctor_death_ward:CreateWard(vPosition)
+function imba_witch_doctor_death_ward:CreateWard(vPosition, bIsMiniWard)
 	local hCaster = self:GetCaster()
 	local damage = self:GetSpecialValueFor("damage") + hCaster:GetIntellect()*self:GetSpecialValueFor("int_to_dmg_pct")/100
+	-- #5 TALENT: Mini death ward deal less damage
+	if bIsMiniWard then
+		damage = damage * hCaster:FindTalentValue("special_bonus_imba_witch_doctor_5") * 0.01
+	end
 	local death_ward = CreateUnitByName("imba_witch_doctor_death_ward", vPosition, true, hCaster, nil, hCaster:GetTeam())
 
 	-- Set on a clear space
@@ -590,6 +763,26 @@ function imba_witch_doctor_death_ward:OnChannelFinish()
 		StopSoundOn("Hero_WitchDoctor.Death_WardBuild", self.death_ward)
 		StopSoundOn("Imba.WitchDoctorSingsASong", self.death_ward)
 		UTIL_Remove(self.death_ward)		
+		-- #5 TALENT: Mini death wards need to be removed at the end of channel.
+		local hCaster = self:GetCaster() 
+		if hCaster:HasTalent("special_bonus_imba_witch_doctor_5") then
+			-- Find mini death wards
+			local units = FindUnitsInRadius(hCaster:GetTeamNumber(), 
+			hCaster:GetAbsOrigin(), 
+			nil, 
+			5000, 
+			DOTA_UNIT_TARGET_TEAM_FRIENDLY, 
+			DOTA_UNIT_TARGET_OTHER, 
+			DOTA_UNIT_TARGET_FLAG_INVULNERABLE, 
+			FIND_ANY_ORDER,
+			false) 
+			-- Remove mini death wards
+			for _,unit in pairs(units) do 
+				if unit.bIsMiniDeathWard then
+					UTIL_Remove(unit)
+				end
+			end 
+		end
 		if self.mod_caster then self.mod_caster:Destroy() end
 	end
 end
@@ -654,6 +847,9 @@ function modifier_imba_death_ward:OnCreated()
 	self.wardParticle = ParticleManager:CreateParticle("particles/units/heroes/hero_witchdoctor/witchdoctor_ward_skull.vpcf", PATTACH_POINT_FOLLOW, self:GetParent()) 
 		ParticleManager:SetParticleControlEnt(self.wardParticle, 0, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_attack1", self:GetParent():GetAbsOrigin(), true)
 		ParticleManager:SetParticleControl(self.wardParticle, 2, self:GetParent():GetAbsOrigin())
+
+	self.attack_range_bonus	=	self:GetAbility():GetSpecialValueFor("attack_range") - self:GetParent():GetAttackRange() 
+
 	if IsServer() then
 		self:StartIntervalThink( self:GetParent():GetBaseAttackTime() )
 	end
@@ -674,7 +870,7 @@ function modifier_imba_death_ward:OnIntervalThink()
 		if hCaster:HasScepter() then 
 			bounces = hAbility:GetSpecialValueFor("bounces_scepter") + 1
 		end
-		local range = hCaster:GetAttackRange() + hCaster:FindTalentValue("special_bonus_imba_witch_doctor_4")
+		local range = hParent:GetAttackRange()
 		if self.attack_target then
 			if not ((((self.attack_target:GetAbsOrigin() - hParent:GetAbsOrigin()):Length2D()) <= range) and UnitFilter( self.attack_target, hAbility:GetAbilityTargetTeam(), hAbility:GetAbilityTargetType(), hAbility:GetAbilityTargetFlags(), hCaster:GetTeamNumber()) == 0) then
 				self.attack_target = nil
@@ -704,6 +900,33 @@ function modifier_imba_death_ward:OnIntervalThink()
 			ProjectileManager:CreateTrackingProjectile(projectile)
 		end
 	end
+end
+
+function modifier_imba_death_ward:DeclareFunctions()
+	local funcs ={
+	MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
+	MODIFIER_EVENT_ON_TAKEDAMAGE
+	}
+	return funcs
+end
+
+-- #5 TALENT: Death ward spawns another death ward when it's attacks kill the target
+function modifier_imba_death_ward:OnTakeDamage(params)
+	if params.attacker == self:GetParent() then
+		if self:GetCaster():HasTalent("special_bonus_imba_witch_doctor_5") then
+			-- If the target is dead
+			if not params.unit:IsAlive() then
+			-- Spawn a Death Ward (marked true for a mini death ward).
+			local talent_ward = self:GetAbility():CreateWard(params.unit:GetAbsOrigin(), true)
+			talent_ward.bIsMiniDeathWard = true
+			talent_ward:EmitSound("Hero_WitchDoctor.Death_WardBuild")
+			end
+		end
+	end
+end
+
+function modifier_imba_death_ward:GetModifierAttackRangeBonus()
+	return self.attack_range_bonus
 end
 
 function modifier_imba_death_ward:CheckState()
