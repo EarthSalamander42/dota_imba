@@ -299,12 +299,14 @@ end
 -- #6 TALENT: Levels up the aura when the ability is leveled up.
 function imba_witch_doctor_voodoo_restoration:OnUpgrade()
 	if IsServer() then
-		local hCaster = self:GetCaster() 
-		if hCaster:FindModifierByName("modifier_imba_voodoo_restoration") then
-			hCaster:RemoveModifierByName("modifier_imba_voodoo_restoration") 
-			hCaster:RemoveModifierByName("modifier_imba_voodoo_restoration_heal")
+		if hCaster:HasTalent("special_bonus_imba_witch_doctor_6") then
+			local hCaster = self:GetCaster() 
+			if hCaster:FindModifierByName("modifier_imba_voodoo_restoration") then
+				hCaster:RemoveModifierByName("modifier_imba_voodoo_restoration") 
+				hCaster:RemoveModifierByName("modifier_imba_voodoo_restoration_heal")
+			end
+			hCaster:AddNewModifier(hCaster, self, "modifier_imba_voodoo_restoration", {})
 		end
-		hCaster:AddNewModifier(hCaster, self, "modifier_imba_voodoo_restoration", {})
 	end
 end
 
