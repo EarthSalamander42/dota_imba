@@ -296,17 +296,31 @@ function imba_witch_doctor_voodoo_restoration:OnToggle()
 	end
 end
 
+-- #6 TALENT: Levels up the aura when the ability is leveled up.
+function imba_witch_doctor_voodoo_restoration:OnUpgrade()
+	if IsServer() then
+		local hCaster = self:GetCaster() 
+		if hCaster:FindModifierByName("modifier_imba_voodoo_restoration") then
+			hCaster:RemoveModifierByName("modifier_imba_voodoo_restoration") 
+			hCaster:RemoveModifierByName("modifier_imba_voodoo_restoration_heal")
+		end
+		hCaster:AddNewModifier(hCaster, self, "modifier_imba_voodoo_restoration", {})
+	end
+end
+
 -- #6 TALENT: Applies Voodoo restoration if it has not been activated before.
 function modifier_special_bonus_imba_witch_doctor_6:OnCreated()
 	if IsServer() then
 		local voodoo_restoration = self:GetCaster():FindAbilityByName("imba_witch_doctor_voodoo_restoration")
-		-- Turn off the visual indicator on the spell
-		if voodoo_restoration:GetToggleState() then
-			voodoo_restoration:ToggleAbility()
-		end
-		-- Apply the modifier
-		if not self:GetCaster():FindModifierByName("modifier_imba_voodoo_restoration") then
-			self:GetCaster():AddNewModifier(self:GetCaster(), voodoo_restoration, "modifier_imba_voodoo_restoration", {})
+		if voodoo_restoration:GetLevel() > 0 then
+			-- Turn off the visual indicator on the spell
+			if voodoo_restoration:GetToggleState() then
+				voodoo_restoration:ToggleAbility()
+			end
+			-- Apply the modifier
+			if not self:GetCaster():FindModifierByName("modifier_imba_voodoo_restoration") then
+				self:GetCaster():AddNewModifier(self:GetCaster(), voodoo_restoration, "modifier_imba_voodoo_restoration", {})
+			end
 		end
 	end
 end
@@ -684,6 +698,26 @@ function imba_witch_doctor_death_ward:OnSpellStart()
 			-- Remove it after a delay, not by channeltime
 			Timers:CreateTimer(self:GetChannelTime(),function()
 				UTIL_Remove(talent_ward)
+				-- #5 TALENT: Mini death wards need to be removed at the end of channel.
+				local hCaster = self:GetCaster() 
+				if hCaster:HasTalent("special_bonus_imba_witch_doctor_5") then
+					-- Find mini death wards
+					local units = FindUnitsInRadius(hCaster:GetTeamNumber(), 
+					hCaster:GetAbsOrigin(), 
+					nil, 
+					25000, 
+					DOTA_UNIT_TARGET_TEAM_FRIENDLY, 
+					DOTA_UNIT_TARGET_OTHER, 
+					DOTA_UNIT_TARGET_FLAG_INVULNERABLE, 
+					FIND_ANY_ORDER,
+					false) 
+					-- Remove mini death wards
+					for _,unit in pairs(units) do 
+						if unit.bIsMiniDeathWard then
+							UTIL_Remove(unit)
+						end
+					end 
+				end
 			end)
 			vPosition = vPosition + ((distance / 2) * spawn_line_direction)
 			talent_ward:EmitSound("Hero_WitchDoctor.Death_WardBuild")
@@ -770,7 +804,7 @@ function imba_witch_doctor_death_ward:OnChannelFinish()
 			local units = FindUnitsInRadius(hCaster:GetTeamNumber(), 
 			hCaster:GetAbsOrigin(), 
 			nil, 
-			5000, 
+			25000, 
 			DOTA_UNIT_TARGET_TEAM_FRIENDLY, 
 			DOTA_UNIT_TARGET_OTHER, 
 			DOTA_UNIT_TARGET_FLAG_INVULNERABLE, 
@@ -916,10 +950,13 @@ function modifier_imba_death_ward:OnTakeDamage(params)
 		if self:GetCaster():HasTalent("special_bonus_imba_witch_doctor_5") then
 			-- If the target is dead
 			if not params.unit:IsAlive() then
-			-- Spawn a Death Ward (marked true for a mini death ward).
-			local talent_ward = self:GetAbility():CreateWard(params.unit:GetAbsOrigin(), true)
-			talent_ward.bIsMiniDeathWard = true
-			talent_ward:EmitSound("Hero_WitchDoctor.Death_WardBuild")
+				-- Doesn't spawn off of ilussions.
+				if params.unit:IsRealHero() then  
+					-- Spawn a Death Ward (marked true for a mini death ward).
+					local talent_ward = self:GetAbility():CreateWard(params.unit:GetAbsOrigin(), true)
+					talent_ward.bIsMiniDeathWard = true
+					talent_ward:EmitSound("Hero_WitchDoctor.Death_WardBuild")
+				end
 			end
 		end
 	end
