@@ -2376,10 +2376,10 @@
 	{
 		"override_hero"				"npc_dota_hero_storm_spirit"
 
-		"Ability1"					"imba_storm_spirit_static_remnant"
-		"Ability2"					"imba_storm_spirit_electric_vortex"
-		"Ability3"					"imba_storm_spirit_overload"
-		"Ability4"					"imba_storm_spirit_ball_lightning"
+		//"Ability1"					"imba_storm_spirit_static_remnant"
+		//"Ability2"					"imba_storm_spirit_electric_vortex"
+		//"Ability3"					"imba_storm_spirit_overload"
+		//"Ability4"					"imba_storm_spirit_ball_lightning"
 
 		"Ability18"					"special_bonus_imba_storm_spirit_1"
 		"Ability17"					"special_bonus_imba_storm_spirit_2"

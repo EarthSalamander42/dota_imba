@@ -418,7 +418,7 @@ function modifier_imba_tower_protective_instinct:OnIntervalThink()
 										self.radius,
 										DOTA_UNIT_TARGET_TEAM_FRIENDLY,
 										DOTA_UNIT_TARGET_HERO,
-										DOTA_UNIT_TARGET_FLAG_NONE,
+										DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS,
 										FIND_ANY_ORDER,
 										false)
 

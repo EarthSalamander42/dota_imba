@@ -16642,6 +16642,12 @@
 				"var_type"					"FIELD_INTEGER"
 				"enemy_vision_duration"		"3 3 3 5 7 9"
 			}
+
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"ward_vision"				"900"
+			}
 		}
 	}
 
