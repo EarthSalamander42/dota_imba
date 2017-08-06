@@ -507,10 +507,6 @@ function modifier_imba_crystal_maiden_frostbite_enemy:OnCreated( kv )
 	end
 end
 
-function modifier_imba_crystal_maiden_frostbite_enemy:OnRefresh( kv )
-	self:OnCreated(kv)
-end
-
 function modifier_imba_crystal_maiden_frostbite_enemy:OnDestroy()
 	local icy_touch_slow_modifier = "modifier_imba_crystal_maiden_frostbite_enemy_talent"
 
