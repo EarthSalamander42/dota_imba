@@ -213,10 +213,10 @@ function Server_AbilityToGainXPForPlyaer_function(nPlayerID)
 		request:SetHTTPRequestGetOrPostParameter("data_json",JSON:encode(jsondata))
 		request:SetHTTPRequestGetOrPostParameter("auth",_AuthCode)
 		request:Send(function(result)
-		--if result.StatusCode ~= 200 then
-		--	Server_AbilityToGainXPForPlyaer_function(nPlayerID)
-		--	return
-		--end
+		if result.StatusCode ~= 200 then
+			Server_AbilityToGainXPForPlyaer_function(nPlayerID)
+			return
+		end
 	end )
 end
 
