@@ -16565,14 +16565,12 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_duration"		"2"
-				"LinkedSpecialBonus"	"special_bonus_imba_nyx_assassin_4"
 			}
 
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage"				"80 140 200 260 290 320 350"
-				"LinkedSpecialBonus"	"special_bonus_imba_nyx_assassin_1"
 			}
 
 			"10"
@@ -16629,6 +16627,7 @@
 			"particle"					"particles/hero/nyx_assassin/mana_burn_parasite_flames.vpcf"
 			"particle"					"particles/hero/nyx_assassin/mana_burn_parasite_charged.vpcf"
 			"particle"					"particles/hero/nyx_assassin/mana_burn_parasite_explosion.vpcf"
+			"particle"					"particles/hero/nyx_assassin/mana_burn_parasite_flames_self.vpcf"
 		}
 
 		// Special
@@ -16639,7 +16638,6 @@
 			{
 				"var_type"						"FIELD_FLOAT"
 				"intelligence_mult"				"3.5 4 4.5 5 5 5 5"
-				"LinkedSpecialBonus"			"special_bonus_imba_nyx_assassin_5"
 			}
 
 			"02"
@@ -16736,7 +16734,6 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"reflect_duration"			"2.25"
-				"LinkedSpecialBonus"		"special_bonus_imba_nyx_assassin_7"
 			}
 
 			"02"
@@ -16767,7 +16764,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage_reflection_pct"		"100"
-				"LinkedSpecialBonus"		"special_bonus_imba_nyx_assassin_3"
 			}
 		}
 	}
@@ -16823,7 +16819,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"movement_speed_pct"	"16 18 20 22 24 26"
-				"LinkedSpecialBonus"	"special_bonus_imba_nyx_assassin_6"
 			}
 
 			"03"
@@ -16836,7 +16831,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"maximum_vendetta_stacks"	"150 200 250 325 400 475"
-				"LinkedSpecialBonus"		"special_bonus_imba_nyx_assassin_8"
 			}
 		}
 	}
@@ -34551,7 +34545,7 @@
     //=================================================================================================================
     // Nyx Assassin's Talents
     //=================================================================================================================
-    "special_bonus_imba_nyx_assassin_1" // Impale damage increase
+    "special_bonus_imba_nyx_assassin_1" // If Vendetta kills an enemy unit, it doesn't consume the Eye for Eye stacks.
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
@@ -34561,82 +34555,7 @@
 
         "LinkedAbility"
         {
-        	"01"	"imba_nyx_assassin_impale"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "value"	                    "50"
-            }
-        }
-    }
-
-    "special_bonus_imba_nyx_assassin_2" // Scarab Parasite activation delay decrease
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01"	"imba_nyx_assassin_mana_burn"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "value"	                    "3"
-            }
-        }
-    }
-
-    "special_bonus_imba_nyx_assassin_3" // Spiked Carapace damage reflection increase (percentage)
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01"	"imba_nyx_assassin_spiked_carapace"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "value"	                    "100"
-            }
-        }
-    }
-
-    "special_bonus_imba_nyx_assassin_4" // Impale Relive Suffering duration increase
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01"	"imba_nyx_assassin_impale"
+        	"01"	"imba_nyx_assassin_vendetta"
         }
 
         // Special
@@ -34651,7 +34570,32 @@
         }
     }
 
-    "special_bonus_imba_nyx_assassin_5" // Mana Burn Int multiplier increase
+    "special_bonus_imba_nyx_assassin_2" // When hitting out of Vendetta, Mana Burn is instantly applied on the target.
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"	"imba_nyx_assassin_vendetta"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "1"
+            }
+        }
+    }
+
+    "special_bonus_imba_nyx_assassin_3" // Mana Burn multiplies the main attribute of the target instead Intelligence
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
@@ -34676,32 +34620,7 @@
         }
     }
 
-    "special_bonus_imba_nyx_assassin_6" // Vendetta movement speed increase
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01"	"imba_nyx_assassin_vendetta"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "value"	                    "20"
-            }
-        }
-    }
-
-    "special_bonus_imba_nyx_assassin_7" // Spiked Carapace duration increase
+    "special_bonus_imba_nyx_assassin_4" // Spiked Carapace now returns all instances over its duration
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
@@ -34726,7 +34645,7 @@
         }
     }
 
-    "special_bonus_imba_nyx_assassin_8" // Maximum Vendetta stored damage increase
+    "special_bonus_imba_nyx_assassin_5" // Falling below 30% procs Spiked Carapace automatically if the skill is off cooldown
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
@@ -34736,7 +34655,7 @@
 
         "LinkedAbility"
         {
-        	"01"	"imba_nyx_assassin_vendetta"
+        	"01"	"imba_nyx_assassin_spiked_carapace"
         }
 
         // Special
@@ -34746,7 +34665,147 @@
             "01"
             {
                 "var_type"                  "FIELD_FLOAT"
-                "value"	                    "475"
+                "value"	                    "30"
+            }
+        }
+    }
+
+    "special_bonus_imba_nyx_assassin_6" // Impale now bursts in random locations around targets hit. Each mini-impale deals 75 damage and stuns for 0.75 seconds. Lasts 3 seconds. Mini spikes do not apply Relive Suffering
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"	"imba_nyx_assassin_impale"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "duration"	                "0.5"
+            }
+            "02"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "air_time"	                "0.25"
+            }
+            "03"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "air_height"	            "50"
+            }
+            "04"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "damage"	                "75"
+            }
+            "05"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "repeat_duration"	        "3.0"
+            }
+            "06"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "spike_rate"	        	"0.2"
+            }
+            "07"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "spike_chance"	        	"50"
+            }
+            "08"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "spike_spawn_min_range"	    "75"
+            }
+            "09"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "spike_spawn_max_range"	    "300"
+            }
+            "10"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "spike_aoe"	    			"75"
+            }
+        }
+    }
+
+    "special_bonus_imba_nyx_assassin_7" // Enemies that were hit by Impale get their movespeed reduced by 1% for each 50 distance they travel. Lasts 5 seconds
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"	"imba_nyx_assassin_impale"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "duration"	                "5"
+            }
+            "02"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "slow_per_movedistance"	    "1"
+            }
+            "02"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "movedistance"	    		"50"
+            }
+        }
+    }
+
+    "special_bonus_imba_nyx_assassin_8" // Units dying while the Mana Burn debuff has their scarabs coming out of them, and hop into Nyx for 20 seconds. If an enemy unit comes within 400 AoE of Nyx, it invades it and procs Mana Burn on it
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"	"imba_nyx_assassin_mana_burn"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "duration"	                "20"
+            }
+            "02"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "search_rate"                "0.25"
+            }
+            "03"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "search_radius"             "400"
             }
         }
     }
