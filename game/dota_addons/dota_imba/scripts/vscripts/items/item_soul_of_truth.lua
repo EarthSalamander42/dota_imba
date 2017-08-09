@@ -91,6 +91,13 @@ function modifier_imba_soul_of_truth_buff:OnRespawn(keys)
 	end
 end
 
+function modifier_imba_soul_of_truth_buff:OnDestroy()
+	if IsServer() then
+		-- If this is destroyed, it means the user died for real. Remove gem modifier
+		self:GetCaster():RemoveModifierByName("modifier_item_gem_of_true_sight")
+	end
+end
+
 function modifier_imba_soul_of_truth_buff:GetTexture()
 	return "custom/imba_soul_of_truth"
 end
