@@ -74,9 +74,14 @@ StoreCurrentDayCycle()
 ]]
 
 function GameMode:OnItemPickedUp(event)
-	local owner = EntIndexToHScript( event.HeroEntityIndex )
-	if owner:IsHero() and event.itemname == "item_bag_of_gold" then
-		GoldPickup(event)
+	-- If this is a hero
+	if event.HeroEntityIndex then
+		local owner = EntIndexToHScript( event.HeroEntityIndex )
+		-- And you've picked up a gold bag
+		if owner:IsHero() and event.itemname == "item_bag_of_gold" then
+			-- Pick up the gold
+			GoldPickup(event)
+		end
 	end
 end
 
@@ -712,12 +717,11 @@ function GameMode:OrderFilter( keys )
             unit:AddNewModifier(unit, ability, "modifier_imba_focused_detonate", {duration = 0.2})            
         end
     end
-	
-	
+
 	-- Divine Rapier undropable
 	if (keys.order_type == DOTA_UNIT_ORDER_DROP_ITEM) or (keys.order_type == DOTA_UNIT_ORDER_MOVE_ITEM) or (keys.order_type == DOTA_UNIT_ORDER_GIVE_ITEM) or (keys.order_type == DOTA_UNIT_ORDER_PICKUP_ITEM) then
 		local item
-		if keys.order_type == DOTA_UNIT_ORDER_PICKUP_ITEM then
+		if keys.order_type == DOTA_UNIT_ORDER_PICKUP_ITEM and EntIndexToHScript(keys.entindex_target) then
 			item = EntIndexToHScript(keys.entindex_target):GetContainedItem()
 		else
 			item = EntIndexToHScript(keys.entindex_ability)
