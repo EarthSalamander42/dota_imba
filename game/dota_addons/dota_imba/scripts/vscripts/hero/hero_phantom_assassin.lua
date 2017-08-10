@@ -840,8 +840,8 @@ function modifier_imba_coup_de_grace:OnCreated()
 	self.modifier_stacks = "modifier_imba_coup_de_grace_crit"
 
 	-- Ability specials
-	self.crit_chance = self.ability:GetSpecialValueFor("crit_chance")	
-	self.crit_increase_duration = self.ability:GetSpecialValueFor("crit_increase_duration")	
+	self.crit_chance = self.ability:GetSpecialValueFor("crit_chance")								
+	self.crit_increase_duration = self.ability:GetSpecialValueFor("crit_increase_duration")		 			
 	self.crit_bonus = self.ability:GetSpecialValueFor("crit_bonus")
 end
 
@@ -856,8 +856,8 @@ end
 
 function modifier_imba_coup_de_grace:GetModifierPreAttack_CriticalStrike(keys)	
 	if IsServer() then		
-		local target = keys.target		
-		local crit_duration = self.crit_increase_duration
+		local target = keys.target							-- TALENT: +8 sec Coup de Grace bonus damage duration
+		local crit_duration = self.crit_increase_duration + self.caster:FindTalentValue("special_bonus_imba_phantom_assassin_7")
 		local crit_chance_total = self.crit_chance
 
 		-- Ignore crit for buildings
@@ -892,9 +892,6 @@ function modifier_imba_coup_de_grace:GetModifierPreAttack_CriticalStrike(keys)
 				"phantom_assassin_phass_ability_coupdegrace_04"
 			}
 			self.caster:EmitCasterSound("npc_dota_hero_phantom_assassin",responses, 50, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, 20,"coup_de_grace")
-
-			--TALENT: +8 sec Coup de Grace bonus damage duration			
-			crit_duration = crit_duration + self.caster:FindTalentValue("special_bonus_imba_phantom_assassin_7")			
 
 			-- If the caster doesn't have the stacks modifier, give it to him 
 			if not self.caster:HasModifier(self.modifier_stacks) then
@@ -931,14 +928,14 @@ end
 
 modifier_imba_coup_de_grace_crit = class({})
 
-function modifier_imba_coup_de_grace_crit:OnCreated()    
+function modifier_imba_coup_de_grace_crit:OnCreated(params)    
         -- Ability properties
         self.caster = self:GetCaster()
         self.ability = self:GetAbility()
         self.parent = self:GetParent()        
 
         -- Ability specials
-        self.crit_increase_duration = self.ability:GetSpecialValueFor("crit_increase_duration")
+        self.crit_increase_duration = params.duration
         self.crit_increase_damage = self.ability:GetSpecialValueFor("crit_increase_damage")        
 
     if IsServer() then
