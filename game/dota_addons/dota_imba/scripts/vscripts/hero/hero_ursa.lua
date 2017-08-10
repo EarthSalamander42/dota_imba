@@ -773,7 +773,7 @@ function EnrageCast(caster, ability)
 	caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_4)
 	
 	-- Apply strong purge
-	caster:Purge(false, true, false, true, false) --don't remove buffs, remove debuffs, not only on this frame, purges stuns, don't remove exceptions
+	caster:Purge(false, true, false, true, true) --don't remove buffs, remove debuffs, not only on this frame, purges stuns.
 	
 	-- Play cast sound
 	EmitSoundOn(sound_cast, caster)

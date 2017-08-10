@@ -357,7 +357,7 @@ function imba_abaddon_aphotic_shield:OnSpellStart()
 		end
 
 		-- Strong Dispel
-		target:Purge(false, true, false, true, false)
+		target:Purge(false, true, false, true, true)
 
 		local modifier_name_aphotic_shield = "modifier_imba_aphotic_shield_buff_block"
 
