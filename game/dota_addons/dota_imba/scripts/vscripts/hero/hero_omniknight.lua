@@ -151,6 +151,7 @@ function Purification(caster, ability, target)
                                  attacker = caster, 
                                  damage = damage,
                                  damage_type = DAMAGE_TYPE_PURE,
+                                 damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
                                  ability = ability
                                 }
         
