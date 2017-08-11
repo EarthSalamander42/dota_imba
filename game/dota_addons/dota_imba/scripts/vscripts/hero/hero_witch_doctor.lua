@@ -885,7 +885,9 @@ function modifier_imba_death_ward:OnCreated()
 		ParticleManager:SetParticleControl(self.wardParticle, 2, self:GetParent():GetAbsOrigin())
 
 	self.attack_range_bonus	=	self:GetAbility():GetSpecialValueFor("attack_range") - self:GetParent():GetAttackRange() 
-
+	self.damage = self:GetAbility():GetSpecialValueFor("") --[[Returns:table
+	No Description Set
+	]]
 	if IsServer() then
 		self:StartIntervalThink( self:GetParent():GetBaseAttackTime() )
 	end
@@ -913,11 +915,8 @@ function modifier_imba_death_ward:OnIntervalThink()
 			end
 		end
 		if not self.attack_target then
-			local units = FindUnitsInRadius(hCaster:GetTeamNumber(), hParent:GetAbsOrigin(), nil, range, hAbility:GetAbilityTargetTeam(), hAbility:GetAbilityTargetType(), hAbility:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
-			for _, unit in pairs(units) do
-				self.attack_target = unit
-				break
-			end
+			local units = FindUnitsInRadius(hCaster:GetTeamNumber(), hParent:GetAbsOrigin(), nil, range, hAbility:GetAbilityTargetTeam(), hAbility:GetAbilityTargetType(), hAbility:GetAbilityTargetFlags(), FIND_CLOSEST, false)
+			self.attack_target = units[1]
 		end
 		if self.attack_target then
 			local projectile = 
@@ -930,7 +929,11 @@ function modifier_imba_death_ward:OnIntervalThink()
 				bProvidesVision = false,
 				iMoveSpeed = hParent:GetProjectileSpeed(),
 				iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_ATTACK_1,
-				ExtraData = {index = hParent.index, bounces_left = bounces, [tostring(self.attack_target:GetEntityIndex())] = 1, bIsTalentWard = hParent.bIsTalentWard}
+				ExtraData = {index = hParent.index,
+				bounces_left = bounces,
+				[tostring(self.attack_target:GetEntityIndex())] = 1,
+				bIsTalentWard = hParent.bIsTalentWard, 
+			}
 			}
 			EmitSoundOn("Hero_WitchDoctor_Ward.Attack", hParent)
 			ProjectileManager:CreateTrackingProjectile(projectile)
