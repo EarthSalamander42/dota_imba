@@ -9478,12 +9478,14 @@
 		"ItemAliases"							"divine rapier"
 		"ItemSellable"							"0"
 		"ItemKillable"							"0"
-		"ItemDroppable" 						"1"
+		"ItemDroppable" 						"0"
 		"ItemDeclarations"						"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
 		"ItemContributesToNetWorthWhenDropped"	"0"
 		"ItemStackable"							"0"
 		"ItemRequiresCharges"					"0"
 		"ItemDisassembleRule"					"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"AllowedInBackpack"						"0"
+		"IsTempestDoubleClonable"				"0"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -9520,12 +9522,14 @@
 		"ItemAliases"							"divine rapier;trinity rapier"
 		"ItemSellable"							"0"
 		"ItemKillable"							"0"
-		"ItemDroppable" 						"1"
+		"ItemDroppable" 						"0"
 		"ItemDeclarations"						"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
 		"ItemContributesToNetWorthWhenDropped"	"0"
 		"ItemStackable"							"0"
 		"ItemRequiresCharges"					"0"
 		"ItemDisassembleRule"					"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"AllowedInBackpack"						"0"
+		"IsTempestDoubleClonable"				"0"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -9562,12 +9566,14 @@
 		"ItemAliases"							"divine rapier;arcane rapier"
 		"ItemSellable"							"0"
 		"ItemKillable"							"0"
-		"ItemDroppable" 						"1"
+		"ItemDroppable" 						"0"
 		"ItemDeclarations"						"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
 		"ItemContributesToNetWorthWhenDropped"	"0"
 		"ItemStackable"							"0"
 		"ItemRequiresCharges"					"0"
 		"ItemDisassembleRule"					"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"AllowedInBackpack"						"0"
+		"IsTempestDoubleClonable"				"0"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -9603,12 +9609,14 @@
 		"ItemAliases"							"divine rapier;arcane rapier;archmage rapier"
 		"ItemSellable"							"0"
 		"ItemKillable"							"0"
-		"ItemDroppable" 						"1"
+		"ItemDroppable" 						"0"
 		"ItemDeclarations"						"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
 		"ItemContributesToNetWorthWhenDropped"	"0"
 		"ItemStackable"							"0"
 		"ItemRequiresCharges"					"0"
 		"ItemDisassembleRule"					"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"AllowedInBackpack"						"0"
+		"IsTempestDoubleClonable"				"0"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -9644,12 +9652,14 @@
 		"ItemAliases"							"divine rapier;arcane rapier;archmage rapier"
 		"ItemSellable"							"0"
 		"ItemKillable"							"0"
-		"ItemDroppable" 						"1"
+		"ItemDroppable" 						"0"
 		"ItemDeclarations"						"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
 		"ItemContributesToNetWorthWhenDropped"	"0"
 		"ItemStackable"							"0"
 		"ItemRequiresCharges"					"0"
 		"ItemDisassembleRule"					"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"AllowedInBackpack"						"0"
+		"IsTempestDoubleClonable"				"0"
 		
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------

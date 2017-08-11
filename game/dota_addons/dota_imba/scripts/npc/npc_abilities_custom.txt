@@ -17922,6 +17922,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"crit_increase_duration"	"5"
+				"LinkedSpecialBonus"		"special_bonus_imba_phantom_assassin_7"
 			}
 		}
 	}

@@ -170,16 +170,16 @@ function imba_witch_doctor_paralyzing_cask:OnProjectileHit_ExtraData(hTarget, vL
 					iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION,
 					ExtraData =
 					{
-						hero_duration = ExtraData.hero_duration,
-						creep_duration = ExtraData.creep_duration,
-						hero_damage = ExtraData.hero_damage,
-						creep_damage = ExtraData.creep_damage,
-						bounce_range = ExtraData.bounce_range,
-						bounces = ExtraData.bounces - 1,
-						speed = ExtraData.speed,
-						bounce_delay = ExtraData.bounce_delay,
-						index = ExtraData.index,
-						cursed_casket = self.cursed_casket
+						hero_duration 		= ExtraData.hero_duration,
+						creep_duration 		= ExtraData.creep_duration,
+						hero_damage 		= ExtraData.hero_damage,
+						creep_damage 		= ExtraData.creep_damage,
+						bounce_range 		= ExtraData.bounce_range,
+						bounces 			= ExtraData.bounces - 1,
+						speed				= ExtraData.speed,
+						bounce_delay 		= ExtraData.bounce_delay,
+						index 				= ExtraData.index,
+						cursed_casket 		= self.cursed_casket,
 					}
 				}
 				ProjectileManager:CreateTrackingProjectile(projectile)
@@ -299,8 +299,8 @@ end
 -- #6 TALENT: Levels up the aura when the ability is leveled up.
 function imba_witch_doctor_voodoo_restoration:OnUpgrade()
 	if IsServer() then
+		local hCaster = self:GetCaster() 
 		if hCaster:HasTalent("special_bonus_imba_witch_doctor_6") then
-			local hCaster = self:GetCaster() 
 			if hCaster:FindModifierByName("modifier_imba_voodoo_restoration") then
 				hCaster:RemoveModifierByName("modifier_imba_voodoo_restoration") 
 				hCaster:RemoveModifierByName("modifier_imba_voodoo_restoration_heal")
@@ -914,10 +914,7 @@ function modifier_imba_death_ward:OnIntervalThink()
 		end
 		if not self.attack_target then
 			local units = FindUnitsInRadius(hCaster:GetTeamNumber(), hParent:GetAbsOrigin(), nil, range, hAbility:GetAbilityTargetTeam(), hAbility:GetAbilityTargetType(), hAbility:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
-			for _, unit in pairs(units) do
-				self.attack_target = unit
-				break
-			end
+			self.attack_target = units[1]
 		end
 		if self.attack_target then
 			local projectile = 
