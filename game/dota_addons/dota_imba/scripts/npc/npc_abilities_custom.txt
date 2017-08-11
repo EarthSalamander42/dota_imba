@@ -36470,7 +36470,7 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"value"			"225"
+				"value"			"3"
 			}
 		}
 	}
@@ -36519,8 +36519,8 @@
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"1"
+				"var_type"		"FIELD_FLOAT"
+				"value"			"1.5"
 			}
 		}
 	}
