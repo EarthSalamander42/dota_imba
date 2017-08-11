@@ -171,7 +171,7 @@ end
 function modifier_imba_enigma_malefice_force:OnDestroy()
   if IsServer() then
     self:GetParent():FadeGesture(ACT_DOTA_FLAIL)
-    self:GetParent():SetUnitOnClearGround()
+    ResolveNPCPositions(self:GetParent():GetAbsOrigin(), 128)
   end
 end
 function modifier_imba_enigma_malefice_force:OnIntervalThink()
@@ -294,7 +294,7 @@ end
 
 function modifier_imba_enigma_midnight_pulse_aura:OnIntervalThink()
   -- Damage everyone inside and apply force
-  local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.auraRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+  local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.auraRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
   for _,enemy in pairs(enemies) do
     local damage = 
     {
@@ -367,20 +367,18 @@ function modifier_imba_enigma_midnight_pulse_force:IsMotionController()  return 
 function modifier_imba_enigma_midnight_pulse_force:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_imba_enigma_midnight_pulse_force:OnCreated()
-  if IsServer() then
-    --self:GetParent():StartGesture(ACT_DOTA_FLAIL)
+  if IsServer() then    
     self:StartIntervalThink(FrameTime())
   end
 end
 
 function modifier_imba_enigma_midnight_pulse_force:OnDestroy()
-  if IsServer() then
-    --self:GetParent():FadeGesture(ACT_DOTA_FLAIL)
-    self:GetParent():SetUnitOnClearGround()
+  if IsServer() then    
+    ResolveNPCPositions(self:GetParent():GetAbsOrigin(), 128)
   end
 end
 function modifier_imba_enigma_midnight_pulse_force:OnIntervalThink()
-  -- Remove force if conflicting
+  --Remove force if conflicting
   if not self:CheckMotionControllers() then
     self:Destroy()
     return nil
@@ -402,8 +400,8 @@ function modifier_imba_enigma_midnight_pulse_force:HorizontalMotion()
       if (FindStrongestForce(self:GetCaster()):GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length2D() < 10 then self.pull_strength = 0 end
       local direction = (FindStrongestForce(self:GetCaster()):GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Normalized()
       local set_point = self:GetParent():GetAbsOrigin() + direction * self.pull_strength
-      self:GetParent():SetAbsOrigin(Vector(set_point.x, set_point.y, GetGroundPosition(set_point, self:GetParent()).z))
-      self:GetParent():SetUnitOnClearGround()
+      self:GetParent():SetAbsOrigin(Vector(set_point.x, set_point.y, GetGroundPosition(set_point, self:GetParent()).z))            
+      ResolveNPCPositions(self:GetParent():GetAbsOrigin(), 128)
     end
   end
 end
@@ -424,12 +422,9 @@ function imba_enigma_black_hole:GetIntrinsicModifierName()
   return "modifier_imba_singularity"
 end
 
-function imba_enigma_black_hole:GetCooldown(nLevel)
-  if IsServer() then
-    local charges = self.consumedSingularityCharges or 0
-    return self.BaseClass.GetCooldown( self, nLevel ) - charges * self:GetCaster():FindTalentValue("special_bonus_imba_enigma_1")
-  end
-  return self.BaseClass.GetCooldown( self, nLevel )
+function imba_enigma_black_hole:GetCooldown(nLevel)  
+  local charges = self:GetCaster():GetModifierStackCount("modifier_imba_singularity", self:GetCaster())
+  return self.BaseClass.GetCooldown( self, nLevel ) - charges * self:GetCaster():FindTalentValue("special_bonus_imba_enigma_1")    
 end
 
 function imba_enigma_black_hole:GetCastPoint()
@@ -454,15 +449,18 @@ end
 
 -- Like midnight pulse, create dummy that transmits aura
 function imba_enigma_black_hole:OnSpellStart()
+  self:BeginBlackHole(false)
+end
+
+function imba_enigma_black_hole:BeginBlackHole(black_death)
   local caster = self:GetCaster()
   local point = self:GetCursorPosition()
 
-  if caster:IsAlive() and caster:HasTalent("special_bonus_imba_enigma_7") then
+  if not black_death and caster:IsAlive() and caster:HasTalent("special_bonus_imba_enigma_7") then
     local modifier = caster:FindModifierByName("modifier_enigma_magic_immunity")
     if modifier then
       local time = modifier:GetRemainingTime() + caster:FindTalentValue("special_bonus_imba_enigma_7")
-      modifier:SetDuration(time,true)
-      
+      modifier:SetDuration(time,true)      
     else
       caster:AddNewModifier(caster,nil,"modifier_enigma_magic_immunity",{duration = caster:FindTalentValue("special_bonus_imba_enigma_7")})
     end
@@ -480,7 +478,7 @@ function imba_enigma_black_hole:OnSpellStart()
                 self:GetCaster():GetTeamNumber(),
                 point,
                 nil,
-        stun_radius,
+                stun_radius,
                 DOTA_UNIT_TARGET_TEAM_ENEMY,
                 DOTA_UNIT_TARGET_HERO,
                 DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
@@ -492,31 +490,42 @@ function imba_enigma_black_hole:OnSpellStart()
       table.insert(self.heroesHit, unit)
     end
   end
-
   
   caster.hBlackHoleDummyUnit = CreateModifierThinker(caster,self,"modifier_imba_enigma_black_hole_aura",{duration = duration,radius = radius},point,caster:GetTeamNumber(),false)
   
-  if caster:HasScepter() then
+  if not black_death and caster:HasScepter() then
     CreateModifierThinker(caster,caster:FindAbilityByName("imba_enigma_midnight_pulse"),"modifier_imba_enigma_midnight_pulse_aura",{duration = duration},point,caster:GetTeamNumber(),false)
   end
 
-  -- Decreases cooldown of the current black hole based on heroes hit
-  if caster:HasTalent("special_bonus_imba_enigma_1") then
-    self.consumedSingularityCharges = #self.heroesHit or 0
+  if not black_death then
+    -- Increase stacks based on heroes hit
+    local stacks = #self.heroesHit or 0    
+    local modifier_singularity_handler = self:GetCaster():FindModifierByName("modifier_imba_singularity")
+    if modifier_singularity_handler then      
+      modifier_singularity_handler:SetStackCount(modifier_singularity_handler:GetStackCount() + stacks)
+    end
+  end
+
+  -- Decreases cooldown of the current black hole based on singularity stacks
+  if not black_death and caster:HasTalent("special_bonus_imba_enigma_1") then
     self:EndCooldown()
-    self:StartCooldown(self:GetCooldown(-1))
+    self:UseResources(false, false, true)
   end
   -- Sound
-  EmitSoundOnLocationWithCaster(point,"Hero_Enigma.BlackHole.Cast",caster)
+  EmitSoundOnLocationWithCaster(point,"Hero_Enigma.BlackHole.Cast",caster)  
 end
 
 -- Reset the singularity stacks
-function imba_enigma_black_hole:OnChannelFinish()
-  --self:GetCaster():RemoveModifierByName("modifier_imba_enigma_black_hole_aura")
+function imba_enigma_black_hole:OnChannelFinish(interrupted) 
+
+  -- If Enigma was interrupted, remove Singularity stacks accumulated so far  
+  if interrupted then
+      self:GetCaster():FindModifierByName("modifier_imba_singularity"):SetStackCount(0)
+  end
+
   if IsValidEntity(self:GetCaster().hBlackHoleDummyUnit) then
     self:GetCaster().hBlackHoleDummyUnit:RemoveModifierByName("modifier_imba_enigma_black_hole_aura")
-  end
-  self:GetCaster():FindModifierByName("modifier_imba_singularity"):SetStackCount(#self.heroesHit)
+  end  
   
 end
 
@@ -538,9 +547,9 @@ function modifier_imba_singularity:OnDeath(keys)
   if self:GetParent():IsIllusion() then return end
 
   local ability = self:GetAbility()
-  ability.duration = ability:GetSpecialValueFor("duration") /2
+  ability.duration = ability:GetSpecialValueFor("duration") / self:GetParent():FindTalentValue("special_bonus_imba_enigma_4")
   self:GetParent():SetCursorPosition(self:GetParent():GetAbsOrigin())
-  ability:OnSpellStart()
+  ability:BeginBlackHole(true)
 end
 
 LinkLuaModifier("modifier_imba_enigma_black_hole_aura","hero/hero_enigma", LUA_MODIFIER_MOTION_NONE)
@@ -564,9 +573,7 @@ function modifier_imba_enigma_black_hole_aura:OnCreated(keys)
     self.radius = ability:GetSpecialValueFor("pull_radius") + (caster:FindModifierByName("modifier_imba_singularity"):GetStackCount() * self.singularity_pull_radius_increment_per_stack)
     
     self.stun_radius = keys.radius or self.stun_radius
-    self.radius = keys.radius or self.radius
-    -- Clear modifiers
-    caster:FindModifierByName("modifier_imba_singularity"):SetStackCount(0)
+    self.radius = keys.radius or self.radius    
 
     if ability == self:GetAbility() then
       ability:CreateVisibilityNode(self:GetParent():GetAbsOrigin(),self.stun_radius,1.5)
@@ -1023,6 +1030,7 @@ function modifier_special_bonus_imba_enigma_6:OnCreated()
       return
     end
     self.auraRadius = self.ability:GetSpecialValueFor("radius")
+    self.damage_per_tick = self:GetCaster():FindTalentValue("special_bonus_imba_enigma_6")
 
     self.particle = ParticleManager:CreateParticle("particles/hero/enigma/enigma_midnight_pulse_c.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
     ParticleManager:SetParticleControlEnt(self.particle,0,self:GetParent(),PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true )
@@ -1042,13 +1050,13 @@ end
 function modifier_special_bonus_imba_enigma_6:OnIntervalThink()
   -- Damage everyone inside
   -- We need to refresh this value   
-  local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.auraRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+  local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.auraRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
   for _,enemy in pairs(enemies) do
     local damage = 
     {
       victim = enemy,
       attacker = self:GetCaster(),
-      damage = self.ability:GetSpecialValueFor("damage_per_tick") * enemy:GetMaxHealth() * 0.01,
+      damage = self.damage_per_tick * enemy:GetMaxHealth() * 0.01,
       damage_type = DAMAGE_TYPE_PURE,
       ability = self.ability,
       flags = DOTA_DAMAGE_FLAG_DONT_DISPLAY_DAMAGE_IF_SOURCE_HIDDEN,
