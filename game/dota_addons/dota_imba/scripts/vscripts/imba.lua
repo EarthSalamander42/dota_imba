@@ -74,14 +74,9 @@ StoreCurrentDayCycle()
 ]]
 
 function GameMode:OnItemPickedUp(event)
-	-- If this is a hero
-	if event.HeroEntityIndex then
-		local owner = EntIndexToHScript( event.HeroEntityIndex )
-		-- And you've picked up a gold bag
-		if owner:IsHero() and event.itemname == "item_bag_of_gold" then
-			-- Pick up the gold
-			GoldPickup(event)
-		end
+	local owner = EntIndexToHScript( event.HeroEntityIndex )
+	if owner:IsHero() and event.itemname == "item_bag_of_gold" then
+		GoldPickup(event)
 	end
 end
 
@@ -123,23 +118,64 @@ function GameMode:OnFirstPlayerLoaded()
 		"npc_imba_contributor_anees",
 		"npc_imba_contributor_swizard",
 		"npc_imba_contributor_phroureo",
-		"npc_imba_contributor_catchy",
-		"npc_imba_contributor_hewdraw",
-		"npc_imba_contributor_zimber",
+		"npc_imba_contributor_catchy",		
 		"npc_imba_contributor_matt",
 		"npc_imba_contributor_maxime",
 		"npc_imba_contributor_poly",
-		"npc_imba_contributor_firstlady"
+		"npc_imba_contributor_firstlady",
+		"npc_imba_contributor_wally_chan"
 	}
 
-	-- Add 8 random contributor statues
+	-- Add 4 random contributor statues
 	local current_location
 	local current_statue
 	local statue_entity
-	for i = 1, 8 do
+	for i = 1, 4 do
 		current_location = Entities:FindByName(nil, "contributor_location_0"..i):GetAbsOrigin()
 		current_statue = table.remove(contributor_statues, RandomInt(1, #contributor_statues))
-		if i <= 4 then
+		if i <= 2 then
+			statue_entity = CreateUnitByName(current_statue, current_location, true, nil, nil, DOTA_TEAM_GOODGUYS)
+			statue_entity:SetForwardVector(Vector(1, 1, 0):Normalized())
+		else
+			statue_entity = CreateUnitByName(current_statue, current_location, true, nil, nil, DOTA_TEAM_BADGUYS)
+			statue_entity:SetForwardVector(Vector(-1, -1, 0):Normalized())
+		end
+		statue_entity:AddNewModifier(statue_entity, nil, "modifier_imba_contributor_statue", {})
+	end
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: developer models
+	-------------------------------------------------------------------------------------------------
+
+	-- Developer statue list
+	local developer_statues = {
+		"npc_imba_developer_shush",
+		"npc_imba_developer_firetoad",
+		"npc_imba_developer_xthedark",
+		"npc_imba_developer_zimber",
+		"npc_imba_developer_hewdraw",
+		"npc_imba_developer_iaminnocent",
+		"npc_imba_developer_noobsauce",
+		"npc_imba_developer_seinken",
+		"npc_imba_developer_mouji",
+		"npc_imba_developer_atrocty",
+		"npc_imba_developer_broccoli",
+		"npc_imba_developer_cookies",
+		"npc_imba_developer_dewouter",
+		"npc_imba_developer_fudge",
+		"npc_imba_developer_lindbrum",
+		"npc_imba_developer_sercankd",
+		"npc_imba_developer_yahnich",
+	}
+
+	-- Add 4 random developer statues
+	local current_location
+	local current_statue
+	local statue_entity
+	for i = 1, 4 do
+		current_location = Entities:FindByName(nil, "developer_location_0"..i):GetAbsOrigin()
+		current_statue = table.remove(developer_statues, RandomInt(1, #developer_statues))
+		if i <= 2 then
 			statue_entity = CreateUnitByName(current_statue, current_location, true, nil, nil, DOTA_TEAM_GOODGUYS)
 			statue_entity:SetForwardVector(Vector(1, 1, 0):Normalized())
 		else
@@ -717,7 +753,57 @@ function GameMode:OrderFilter( keys )
             unit:AddNewModifier(unit, ability, "modifier_imba_focused_detonate", {duration = 0.2})            
         end
     end
-    
+	
+	
+	-- Divine Rapier undropable
+	if (keys.order_type == DOTA_UNIT_ORDER_DROP_ITEM) or (keys.order_type == DOTA_UNIT_ORDER_MOVE_ITEM) or (keys.order_type == DOTA_UNIT_ORDER_GIVE_ITEM) or (keys.order_type == DOTA_UNIT_ORDER_PICKUP_ITEM) then
+		local item
+		if keys.order_type == DOTA_UNIT_ORDER_PICKUP_ITEM then
+			item = EntIndexToHScript(keys.entindex_target):GetContainedItem()
+		else
+			item = EntIndexToHScript(keys.entindex_ability)
+		end
+		if item.IsRapier then
+			local player_ID
+			-- Courier handling
+			if unit:IsCourier() then
+				player_ID = keys.issuer_player_id_const
+				if (keys.order_type == DOTA_UNIT_ORDER_PICKUP_ITEM) then
+					DisplayError(player_ID,"#dota_hud_error_cant_item_courier")
+					return false
+				end
+				if keys.entindex_target	and (keys.order_type == DOTA_UNIT_ORDER_GIVE_ITEM) then
+					local hTarget = EntIndexToHScript(keys.entindex_target)
+					if item:GetPurchaser():GetPlayerID() == hTarget:GetPlayerID() then
+						return true
+					end
+				end
+			elseif unit:IsHero() then
+				player_ID 	= 	unit:GetPlayerID()
+			
+			-- This is essentialy just bears
+			else
+				player_ID	=	keys.issuer_player_id_const
+			end
+			-- Player handling
+			if (keys.order_type == DOTA_UNIT_ORDER_GIVE_ITEM) then
+				DisplayError(player_ID,"#dota_hud_error_cant_item_give")
+				return false
+			end
+			if  (keys.entindex_target >= DOTA_STASH_SLOT_1) and (keys.entindex_target <= DOTA_STASH_SLOT_6) then
+				DisplayError(player_ID,"#dota_hud_error_cant_item_stash")
+				return false
+			end
+			if not ((keys.position_x == 0) and (keys.position_y == 0) and (keys.position_z == 0)) then
+				DisplayError(player_ID,"#dota_hud_error_cant_item_drop")
+				return false
+			end
+			if (keys.entindex_target >= DOTA_ITEM_SLOT_7) and (keys.entindex_target <= DOTA_ITEM_SLOT_9) then
+				DisplayError(player_ID,"#dota_hud_error_cant_item_backpack")
+				return false
+			end
+		end	
+	end
 	return true
 end
 
