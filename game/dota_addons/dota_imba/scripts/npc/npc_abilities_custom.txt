@@ -2089,7 +2089,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_range"					"100 125 150"
+				"bonus_range"					"125 165 205"
 			}
 
 			"02"
@@ -2134,7 +2134,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"splash_damage_pct"				"15 20 25"
+				"splash_damage_pct"				"25 35 45"
 			}
 
 			"02"
@@ -2152,13 +2152,13 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_splash_per_protective"	"5"
+				"bonus_splash_per_protective"	"3"
 			}
 
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"splash_radius"					"225"
+				"splash_radius"					"285"
 			}
 		}
 	}
@@ -2186,7 +2186,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"cooldown_reduction_pct"		"10 15 20"
+				"cooldown_reduction_pct"		"15 20 25"
 			}
 
 			"02"
@@ -2231,7 +2231,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_armor"					"2 4 6"
+				"bonus_armor"					"6 10 14"
 			}
 			"02"
 			{
@@ -2246,7 +2246,7 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"armor_per_protective"			"2"
+				"armor_per_protective"			"3"
 			}
 		}
 	}
@@ -2273,7 +2273,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_health"					"150 300 450"
+				"bonus_health"					"300 500 700"
 			}
 			"02"
 			{
@@ -2288,7 +2288,7 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"health_per_protective"			"150"
+				"health_per_protective"			"100"
 			}
 		}
 	}
@@ -2315,7 +2315,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"additional_vision_per_hero"	"150"
+				"additional_vision_per_hero"	"200 250 300"
 			}
 		}
 	}
@@ -2342,7 +2342,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_as"						"10 20 30"
+				"bonus_as"						"40 60 80"
 			}
 
 			"02"
@@ -2360,7 +2360,7 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"as_per_protective_instinct"	"10"
+				"as_per_protective_instinct"	"20"
 			}
 		}
 	}
@@ -2394,7 +2394,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"return_damage_pct"				"20 25 30"
+				"return_damage_pct"				"30 35 40"
 			}
 
 			"02"
@@ -2412,13 +2412,13 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"return_damage_per_stack"		"5"
+				"return_damage_per_stack"		"3"
 			}
 
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"minimum_damage"				"15 20 25"
+				"minimum_damage"				"40 80 120"
 			}
 		}
 	}
@@ -2445,7 +2445,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"magic_resistance"				"10 15 20"
+				"magic_resistance"				"30 35 40"
 			}
 
 			"02"
@@ -2463,10 +2463,55 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_mr_per_protective"		"5"
+				"bonus_mr_per_protective"		"3"
 			}
 		}
 
+	}
+
+	//=================================================================================================================
+	// Tower ability: Tenacity Aura (Tier 2)
+	//=================================================================================================================
+	"imba_tower_tenacity"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_lua"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"custom/tower_tenacity"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
+		"AbilityCastRange"						"900"
+		"ScriptFile"							"hero/tower_abilities"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"base_tenacity_pct"				"15 20 25"
+			}			
+
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"tenacity_per_protective"		"3"
+			}
+
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_radius"					"900"
+			}
+
+			"05"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"aura_stickyness"				"0.5"
+			}
+		}
 	}
 
 
@@ -2588,7 +2633,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"crit_chance"					"15"
+				"crit_chance"					"20 25 30"
 			}
 			"02"
 			{
@@ -2611,7 +2656,7 @@
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"crit_chance_per_protective"	"5"
+				"crit_chance_per_protective"	"3"
 			}
 		}
 	}
@@ -2638,7 +2683,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_reduction"				"-15 -20 -25"
+				"damage_reduction"				"25 30 35"
 			}
 
 			"02"
@@ -2650,7 +2695,7 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"additional_dr_per_protective"	"-5"
+				"additional_dr_per_protective"	"-3"
 			}
 		}
 
@@ -2678,7 +2723,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"mana_burn"						"15 25 35"
+				"mana_burn"						"40 55 70"
 			}
 
 			"02"
@@ -2710,28 +2755,7 @@
 				"var_type"						"FIELD_INTEGER"
 				"illusion_mana_burn_pct"		"33"
 			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_tower_mana_burn"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/tower_abilities.lua"
-						"Function"				"ManaBurn"
-
-						"particle_burn"			"particles/generic_gameplay/generic_manaburn.vpcf"
-						"sound_burn"			"Hero_Antimage.ManaBreak"
-					}
-				}
-			}
-		}
+		}		
 	}
 
 	//=================================================================================================================
@@ -2756,13 +2780,13 @@
 			"01"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"ms_slow"							"-15 -20 -25"
+				"ms_slow"							"-25 -30 -35"
 			}
 
 			"02"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"as_slow"							"-15 -20 -25"
+				"as_slow"							"-25 -30 -35"
 			}
 
 			"03"
@@ -2774,7 +2798,7 @@
 			"04"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"additional_slow_per_protective"	"-5"
+				"additional_slow_per_protective"	"-3"
 			}
 		}
 	}
@@ -2803,7 +2827,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bash_damage"					"20"
+				"bash_damage"					"30 50 70"
 			}
 			"02"
 			{
@@ -2826,7 +2850,7 @@
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bash_damage_per_protective"	"15"
+				"bash_damage_per_protective"	"30"
 			}
 
 			"06"
@@ -2936,13 +2960,13 @@
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"duration" 						"8 12 16"
+				"duration" 						"20 30 40"
 			}
 
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"duration_per_protective"		"4"
+				"duration_per_protective"		"10"
 			}
 		}
 	}
@@ -3028,7 +3052,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_reduction"				"-12 -16 -20"
+				"damage_reduction"				"-18 -22 -26"
 			}
 
 			"02"
@@ -3074,7 +3098,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"stat_reduction"				"-8 -14 -20"
+				"stat_reduction"				"-10 -20 -30"
 			}
 			"02"
 			{
@@ -3091,7 +3115,7 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"additional_sr_per_protective"	"-5"
+				"additional_sr_per_protective"	"-3"
 			}
 		}
 	}
@@ -3214,13 +3238,13 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"base_maxdamage"				"100 130 160"
+				"base_maxdamage"				"200 300 400"
 			}
 
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"maxdamage_per_protective"		"25"
+				"maxdamage_per_protective"		"50"
 			}
 
 			"05"
@@ -3271,7 +3295,7 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"leech_per_protective"			"2"
+				"leech_per_protective"			"4"
 			}
 
 			"05"
@@ -3312,7 +3336,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"frost_shroud_chance"			"15"
+				"frost_shroud_chance"			"25"
 			}
 
 			"02"
@@ -3330,19 +3354,19 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"frost_shroud_duration"			"3 4 5"
+				"frost_shroud_duration"			"6 8 10"
 			}
 
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"as_slow"						"-10"
+				"as_slow"						"-15"
 			}
 
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"ms_slow"						"-10"
+				"ms_slow"						"-15"
 			}
 
 			"07"
@@ -3901,13 +3925,13 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bounce_radius"				"600"
+				"bounce_radius"				"700"
 			}
 
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"heal_amount"				"150"
+				"heal_amount"				"250 400 550"
 			}
 
 			"05"
@@ -7547,8 +7571,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"nova_radius"					"425"
-				"LinkedSpecialBonus"			"special_bonus_imba_crystal_maiden_3"
+				"nova_radius"					"425"				
 			}
 
 			"03"
@@ -7596,15 +7619,13 @@
 			"10"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"snowfield_radius"				"425"
-				"LinkedSpecialBonus"			"special_bonus_imba_crystal_maiden_3"
+				"snowfield_radius"				"425"				
 			}
 
 			"11"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"nova_damage"					"100 150 200 250 280 310 340"
-				"LinkedSpecialBonus"			"special_bonus_imba_crystal_maiden_7"
+				"nova_damage"					"100 150 200 250 280 310 340"				
 			}
 		}
 	}
@@ -7662,8 +7683,7 @@
 			"02"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"duration"								"1.5 2.0 2.5 3.0 3.0 3.0 3.0"
-				"LinkedSpecialBonus"					"special_bonus_imba_crystal_maiden_5"
+				"duration"								"1.5 2.0 2.5 3.0 3.0 3.0 3.0"				
 			}			
 
 			"03"
@@ -7819,6 +7839,7 @@
 			"particle"									"particles/generic_gameplay/generic_slowed_cold.vpcf"
 			"particle"									"particles/status_fx/status_effect_frost_lich.vpcf"
 			"particle"									"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
+            "particle"                                  "particles/units/heroes/hero_winter_wyvern/wyvern_splinter_blast.vpcf"
 		}
 		
 		// Special
@@ -7846,8 +7867,7 @@
 			"04"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"slow"									"30"
-				"LinkedSpecialBonus"					"special_bonus_imba_crystal_maiden_1"
+				"slow"									"30"				
 			}
 
 			"05"
@@ -7900,7 +7920,7 @@
 		}
 	}
 	//=================================================================================================================
-	// Crystal Maiden Talent 1 (Level 10): +20% Freezing Field slow 
+	// Crystal Maiden Talent 1 (Level 10): Icy Touch causes a 100% movement speed slow that is slowly regained over 6 seconds.
 	//=================================================================================================================
 	"special_bonus_imba_crystal_maiden_1"
 	{
@@ -7912,7 +7932,7 @@
 
 		"LinkedAbility"
 		{
-			"01"		"imba_crystal_maiden_freezing_field"
+			"01"		"imba_crystal_maiden_frostbite"
 		}
 		
 		// Special
@@ -7920,10 +7940,22 @@
 		"AbilitySpecial"
 		{
 			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"20"
-			}
+            {
+               "var_type"                  "FIELD_FLOAT"
+               "duration"                  "6.0"
+            }
+
+            "02"
+            {
+               "var_type"                  "FIELD_FLOAT"
+               "speed_update_rate"         "0.5"
+            }
+
+            "03"
+            {
+               "var_type"                  "FIELD_INTEGER"               
+               "initial_slow_pct"          "100"
+            }
 		}
 	}
 	
@@ -7956,7 +7988,7 @@
 	}
 	
 	//=================================================================================================================
-	// Crystal Maiden Talent 3 (Level 20): +175 Crystal Nova radius 
+	// Crystal Maiden Talent 3 (Level 20): Crystal Nova's Snowfield grants damage reduction and increases health regeneration. 
 	//=================================================================================================================
 	"special_bonus_imba_crystal_maiden_3"
 	{
@@ -7978,8 +8010,14 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"175"
+				"damage_reduction_pct"      "25"
 			}
+
+            "02"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "health_regen"              "50"
+            }
 		}
 	}
 	
@@ -8012,7 +8050,7 @@
 	}
 	
 	//=================================================================================================================
-	// Crystal Maiden Talent 5 (Level 30): +1.5sec Frostbite duration
+	// Crystal Maiden Talent 5 (Level 30): Enemies hit by Crystal Maiden's abilities gain a debuff that slows them by 15%/15 move/attack speed for 3 seconds. Can be refreshed.
 	//=================================================================================================================
 	"special_bonus_imba_crystal_maiden_5"
 	{
@@ -8024,7 +8062,7 @@
 
 		"LinkedAbility"
 		{
-			"01"		"imba_crystal_maiden_frostbite"
+			"01"		"imba_crystal_maiden_arcane_dynamo"
 		}
 		
 		// Special
@@ -8034,14 +8072,20 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"value"						"1.5"
+				"duration"                  "3.0"
 			}
+
+            "02"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "slow"                      "15"
+            }
 		}
 	}
 
 	
 	//=================================================================================================================
-	// Crystal Maiden Talent 6 (Level 30): -6sec Icy Touch effect cooldown
+	// Crystal Maiden Talent 6 (Level 30): Freezing Field constantly Frostbites enemies in it during the duration of the spell - a unit is Frostbitten once every 3 seconds after the effect on it ended. Additional Frostbites procced by this talent have their duration halved.
 	//=================================================================================================================
 	"special_bonus_imba_crystal_maiden_6"
 	{
@@ -8053,23 +8097,35 @@
 
 		"LinkedAbility"
 		{
-			"01"		"imba_crystal_maiden_frostbite"
+			"01"		"imba_crystal_maiden_freezing_field"
 		}
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"6"
-			}
+    		"01"
+            { 
+               "var_type"                  "FIELD_FLOAT"
+               "delay"                     "3.0"
+            }
+
+            "02"
+            {
+               "var_type"                  "FIELD_FLOAT"
+               "duration_multiplier"       "0.5"
+            }
+
+            "03"
+            {
+               "var_type"                  "FIELD_FLOAT"
+               "tick_rate"                 "0.5"
+            }
 		}
 	}
 
 	//=================================================================================================================
-	// Crystal Maiden Talent 7 (Level 40): +260 Crystal Nova damage
+	// Crystal Maiden Talent 7 (Level 40): Freezing Field's no longer drops projectiles - instead, Crystal Maiden channels for up to 10 seconds. When the channel ends (or interrupted), a huge icicle arrives at the cast area. The icicle explodes violenty, breaking into shards that are evenly distributed between all nearby enemies in range, dealing usual damage in the target's AoE. Each 0.1 seconds of a channel generates one shard.
 	//=================================================================================================================
 	"special_bonus_imba_crystal_maiden_7"
 	{
@@ -8081,18 +8137,30 @@
 
 		"LinkedAbility"
 		{
-			"01"		"imba_crystal_maiden_crystal_nova"
+			"01"		"imba_crystal_maiden_freezing_field"
 		}
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"260"
-			}
+			"01" //How many seconds each shard takes to generate
+            { 
+                "var_type"                  "FIELD_FLOAT"
+                "shard_rate"                "0.1"
+            }
+
+            "02"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "shard_damage_mul"          "1"
+            }
+
+            "03"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "meteor_delay"               "0.8"
+            }
 		}
 	}
 	
@@ -16574,6 +16642,12 @@
 				"var_type"					"FIELD_INTEGER"
 				"enemy_vision_duration"		"3 3 3 5 7 9"
 			}
+
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"ward_vision"				"900"
+			}
 		}
 	}
 
@@ -16667,14 +16741,12 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_duration"		"2"
-				"LinkedSpecialBonus"	"special_bonus_imba_nyx_assassin_4"
 			}
 
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage"				"80 140 200 260 290 320 350"
-				"LinkedSpecialBonus"	"special_bonus_imba_nyx_assassin_1"
 			}
 
 			"10"
@@ -16731,6 +16803,7 @@
 			"particle"					"particles/hero/nyx_assassin/mana_burn_parasite_flames.vpcf"
 			"particle"					"particles/hero/nyx_assassin/mana_burn_parasite_charged.vpcf"
 			"particle"					"particles/hero/nyx_assassin/mana_burn_parasite_explosion.vpcf"
+			"particle"					"particles/hero/nyx_assassin/mana_burn_parasite_flames_self.vpcf"
 		}
 
 		// Special
@@ -16741,7 +16814,6 @@
 			{
 				"var_type"						"FIELD_FLOAT"
 				"intelligence_mult"				"3.5 4 4.5 5 5 5 5"
-				"LinkedSpecialBonus"			"special_bonus_imba_nyx_assassin_5"
 			}
 
 			"02"
@@ -16838,7 +16910,6 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"reflect_duration"			"2.25"
-				"LinkedSpecialBonus"		"special_bonus_imba_nyx_assassin_7"
 			}
 
 			"02"
@@ -16869,7 +16940,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage_reflection_pct"		"100"
-				"LinkedSpecialBonus"		"special_bonus_imba_nyx_assassin_3"
 			}
 		}
 	}
@@ -16925,7 +16995,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"movement_speed_pct"	"16 18 20 22 24 26"
-				"LinkedSpecialBonus"	"special_bonus_imba_nyx_assassin_6"
 			}
 
 			"03"
@@ -16938,7 +17007,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"maximum_vendetta_stacks"	"150 200 250 325 400 475"
-				"LinkedSpecialBonus"		"special_bonus_imba_nyx_assassin_8"
 			}
 		}
 	}
@@ -17803,6 +17871,7 @@
 			}
 		}
 	}
+	
 	//=================================================================================================================
 	// Phantom Assassin's Coup de Grace
 	//=================================================================================================================
@@ -17854,10 +17923,893 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"crit_increase_duration"	"5"
+				"LinkedSpecialBonus"		"special_bonus_imba_phantom_assassin_7"
+			}
+		}
+	}
+//=================================================================================================================
+	// Phoenix: Icarus Dive
+	//=================================================================================================================
+	"imba_phoenix_icarus_dive"
+	{
+		"BaseClass"					"ability_lua"
+		"ScriptFile"				"hero/hero_phoenix.lua"
+		"AbilityTextureName"		"phoenix_icarus_dive"
+
+		"MaxLevel"						"7"
+		"FightRecapLevel"				"1"
+
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"AbilitySound"					"Hero_Phoenix.IcarusDive.Cast"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"36 33 30 27 24 21 18"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_phoenix.vsndevts"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_icarus_dive.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_icarus_dive_burn_debuff.vpcf"
+			"particle"					"particles/econ/courier/courier_greevil_red/courier_greevil_red_ambient_3.vpcf"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hp_cost_perc"			"15"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"dash_length"			"1400"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"dash_width"			"500"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hit_radius"			"200"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"burn_duration"			"4.0 4.0 4.0 4.0 4.5 5.0 5.5"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_per_second"		"20 40 60 80 80 80 80"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"burn_tick_interval"	"0.5"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow_movement_speed_pct"	"28 28 28 28 30 32 34"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"dash_duration"			"2.0"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stop_dmg_heal_max"			"200 300 400 500 600 700 800"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stop_radius"			"300"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"extend_burn_duration"	"4.0"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"cast_point"			"0.1"
 			}
 		}
 	}
 
+	//=================================================================================================================
+	// Phoenix: Icarus Dive Stop
+	//=================================================================================================================
+	"imba_phoenix_icarus_dive_stop"
+	{
+		"BaseClass"					"ability_lua"
+		"ScriptFile"				"hero/hero_phoenix.lua"
+		"AbilityTextureName"		"phoenix_icarus_dive_stop"
+
+		"MaxLevel"						"1"
+		"FightRecapLevel"				"1"
+
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0"
+	}
+
+	//=================================================================================================================
+	// Phoenix: Fire Spirits
+	//=================================================================================================================
+	"imba_phoenix_fire_spirits"
+	{
+		"BaseClass"					"ability_lua"
+		"ScriptFile"				"hero/hero_phoenix.lua"
+		"AbilityTextureName"		"phoenix_fire_spirits"
+
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"FightRecapLevel"				"1"
+		"AbilitySound"					"Hero_Phoenix.FireSpirits.Cast"
+
+		"MaxLevel"					"7"
+		"FightRecapLevel"			"1"
+
+		"AbilityCastRange"				"1400"
+		"AbilityCastPoint"				"0.01"
+		
+		"AbilityCooldown"			"45 40 35 30 30 30 30"
+
+		"AbilityManaCost"			"80 90 100 110 115 120 125"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_phoenix.vsndevts"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_fire_spirits.vpcf"
+			"particle"					"particles/hero/phoenix/phoenix_fire_spirit_launch.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_burn.vpcf"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"hp_cost_perc"		"20"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"spirit_duration"	"20"
+			}
+			"03"
+			{	
+				"var_type"			"FIELD_INTEGER"
+				"spirit_speed"		"900 900 900 900 1000 1100 1200"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"175 175 175 175 205 235 265"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"4.0"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"attackspeed_slow"	"80 100 120 140 160 180 200"
+			}
+			"07"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage_per_second"	"16 34 52 70 70 70 70"
+			}
+			"08"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"spirit_count"		"4"
+			}
+			"09"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"tick_interval"		"0.5"
+			}
+			"10"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"cast_range"		"1400"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Phoenix: Launch Fire Spirit
+	//=================================================================================================================
+	"imba_phoenix_launch_fire_spirit"
+	{
+		"BaseClass"					"ability_lua"
+		"ScriptFile"				"hero/hero_phoenix.lua"
+		"AbilityTextureName"		"phoenix_launch_fire_spirit"
+
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+
+		"AbilitySound"					"Hero_Phoenix.FireSpirits.Launch"
+
+		"MaxLevel"					"7"
+		"FightRecapLevel"			"1"
+
+		"AbilityCastRange"				"1400"
+		"AbilityCastPoint"				"0.01"
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_phoenix.vsndevts"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_fire_spirits.vpcf"
+			"particle"					"particles/hero/phoenix/phoenix_fire_spirit_launch.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_burn.vpcf"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"hp_cost_perc"		"20"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"spirit_duration"	"20"
+			}
+			"03"
+			{	
+				"var_type"			"FIELD_INTEGER"
+				"spirit_speed"		"900 900 900 900 1000 1100 1200"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"175 175 175 175 205 235 265"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"4.0"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"attackspeed_slow"	"80 100 120 140 160 180 200"
+			}
+			"07"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage_per_second"	"16 34 52 70 70 70 70"
+			}
+			"08"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"spirit_count"		"4"
+			}
+			"09"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"tick_interval"		"0.5"
+			}
+			"10"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"cast_range"		"1400"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Phoenix: Sun Ray
+	//=================================================================================================================
+	"imba_phoenix_sun_ray"
+	{
+		"BaseClass"					"ability_lua"
+		"ScriptFile"				"hero/hero_phoenix.lua"
+		"AbilityTextureName"		"phoenix_sun_ray"
+
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"AbilitySound"					"Hero_Phoenix.SunRay.Cast"
+
+		"MaxLevel"						"7"
+		"FightRecapLevel"				"1"
+
+		"AbilityCastRange"					"1300 1300 1300 1300 1500 1700 1900"
+
+		"AbilityCooldown"					"26 25 24 23 22 21 20"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_phoenix.vsndevts"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_sunray.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_sunray_mane.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_sunray_flare.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_sunray_debuff.vpcf"
+			"particle" 					"particles/units/heroes/hero_phoenix/phoenix_sunray_beam_friend.vpcf"
+			"particle" 					"particles/hero/phoenix/phoenix_sun_ray_explode.vpcf"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hp_cost_perc_per_second"	"6"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"base_damage"				"14 20 26 32 33 34 35"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"hp_perc_damage"			"2.25 2.75 3.25 3.75 4.25 4.5 4.75"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"base_heal"					"10 14 18 22 26 30 34"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"hp_perc_heal"				"2.0 3.0 4.0 5.0 5.5 5.75 5.875"
+			}			
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"130 130 130 130 150 170 190"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"tick_interval"				"0.2"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"forward_move_speed"		"250"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"beam_range"				"1300 1300 1300 1300 1500 1700 1900"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"move_speed"				"250"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"turn_rate"					"25"
+			}
+			"12"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"turn_rate_initial"			"250"
+			}
+			"13"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"duration"					"6"
+			}
+			"14"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"initial_turn_max_duration"	"0.75"
+			}
+			"15"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"explode_min_time"			"3"
+			}
+			"16"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"explode_radius"			"450"
+			}
+			"17"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"explode_dmg"				"100"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Phoenix: Sun Ray Stop
+	//=================================================================================================================
+	"imba_phoenix_sun_ray_stop"
+	{
+		"BaseClass"					"ability_lua"
+		"ScriptFile"				"hero/hero_phoenix.lua"
+		"AbilityTextureName"		"phoenix_sun_ray_stop"
+
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0"
+	}
+
+	//=================================================================================================================
+	// Phoenix: Sun Ray Toggle Move
+	//=================================================================================================================
+	"imba_phoenix_sun_ray_toggle_move"
+	{
+		"BaseClass"					"ability_lua"
+		"ScriptFile"				"hero/hero_phoenix.lua"
+		"AbilityTextureName"		"phoenix_sun_ray_toggle_move"
+
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"MaxLevel"						"1"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0"
+	}
+
+	//=================================================================================================================
+	// Phoenix: Supernova
+	//=================================================================================================================
+	"imba_phoenix_supernova"
+	{
+		"BaseClass"					"ability_lua"
+		"ScriptFile"				"hero/hero_phoenix.lua"
+		"AbilityTextureName"		"phoenix_supernova"
+
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO | DOTA_UNIT_TARGET_FLAG_CHECK_DISABLE_HELP"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"FightRecapLevel"				"2"
+		"HasScepterUpgrade"				"1"
+		"AbilitySound"					"Hero_Phoenix.SuperNova.Begin"
+		"MaxLevel"						"6"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"500"
+		"AbilityCastPoint"				"0.01"
+		"AbilityManaCost"				"250 200 150 100 50 0"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"110.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_phoenix.vsndevts"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_supernova_egg.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_supernova_reborn.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_supernova_reborn_shockwave.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_supernova_death.vpcf"
+			"particle" 					"particles/units/heroes/hero_phoenix/phoenix_supernova_radiance.vpcf"
+			"particle" 					"particles/units/heroes/hero_phoenix/phoenix_supernova_hit.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_supernova_radiance_streak_light.vpcf"
+			"particle"					"particles/hero/phoenix/phoenix_super_nova_double_egg.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_radius"					"1200"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_per_sec"				"70 100 130 140 150 160"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"stun_duration"					"1.5 2.0 2.5 2.5 2.5 2.5"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"max_hero_attacks"				"6 8 10 12 13 14"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"duration"						"6"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"cast_range"					"500"
+			}
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"miss_angle"					"45"
+			}
+			"08"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"miss_pct_perHit"				"5"
+			}
+			"09"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"miss_pct_base"					"20"
+			}
+			"10"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bird_num"						"4 5 6 7 7 7"
+			}
+			"11"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"scepter_additional_duration"	"6 5 4 3 2 1"
+			}
+			"12"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"scepter_cooldown"				"30"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Phoenix: Bruning Wings
+	//=================================================================================================================
+	"imba_phoenix_burning_wings"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_phoenix"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"custom/phoenix_burningwings"
+
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_phoenix.vsndevts"
+			"particle"					"particles/hero/phoenix/phoenix_burning_wings.vpcf"
+			"particle"					"particles/hero/phoenix/phoenix_burning_wings_2.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_hp_cost"			"10"				
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hp_cost_per_sec"		"10"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"dmg_heal_pct"			"100"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hit_ally_heal"			"100"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tick_rate"				"0.1"
+			}
+		}
+	}
+
+	"special_bonus_imba_phoenix_1" // havle dive duration and doubles hp cost
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_phoenix_icarus_dive"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"talent_trained"			"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_phoenix_2" // dive stun enemies for %stun_duration% secs
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_phoenix_icarus_dive"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"talent_trained"			"1"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"stun_duration"				"0.5"
+			}
+		}
+	}
+
+	"special_bonus_imba_phoenix_3" // birds stack up tp %max_stacks%
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_phoenix_fire_spirits"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"talent_trained"			"1"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_stacks"				"3"
+			}
+		}
+	}
+
+	"special_bonus_imba_phoenix_4" // After sun ray cast give allies strong dispel
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_phoenix_sun_ray"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"talent_trained"			"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_phoenix_5" // reborn from a killed egg with %reborn_pct%%% mp and hp
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_phoenix_supernova"
+			
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"talent_trained"			"1"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"reborn_pct"				"10"
+			}
+		}
+	}
+
+	"special_bonus_imba_phoenix_6" // Double Super Nova
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_phoenix_supernova"
+			
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"talent_trained"			"1"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"attack_reduce_pct"			"25"
+			}
+		}
+	}
+
+	"special_bonus_imba_phoenix_7" // Unlimited birds
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_phoenix_fire_spirits"
+			
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"talent_trained"			"1"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mana_cost"					"100"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"duration_pct"				"50"
+			}
+		}
+	}
+
+	"special_bonus_imba_phoenix_8" // Sun Ray move freely
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_phoenix_sun_ray"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"talent_trained"			"1"
+			}
+		}
+	}
+	
 	//=================================================================================================================
 	// Pudge's Meat Hook
 	//=================================================================================================================
@@ -20866,7 +21818,7 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"MaxLevel"						"7"
-		"LevelsBetweenUpgrades"			"2"
+		"LevelsBetweenUpgrades"			"6"
 		"AbilityTextureName"			"storm_spirit_ball_lightning"
 
 		// Casting
@@ -23991,8 +24943,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hamstring_chance"		"10"
-				"LinkedSpecialBonus"	"special_bonus_imba_troll_warlord_7"
+				"hamstring_chance"		"10"				
 			}
 			"02"
 			{
@@ -24027,8 +24978,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bash_chance"			"10"
-				"LinkedSpecialBonus"	"special_bonus_imba_troll_warlord_7"
+				"bash_chance"			"10"				
 			}
 			"09"
 			{
@@ -24124,12 +25074,13 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"axe_spread"				"25"
+				"axe_spread"				"25"				
 			}
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"axe_count"					"5"
+				"LinkedSpecialBonus"		"special_bonus_imba_troll_warlord_7"
 			}
 			"09"
 			{
@@ -24515,7 +25466,7 @@
 	}
 
 	//=================================================================================================================
-	// Troll Warlord Talent 7 (Level 40): +% Bash/Hamstring chance
+	// Troll Warlord Talent 7 (Level 40): +Ranged Whirling Axe axes count, and drastically increases the spread
 	//=================================================================================================================
 	"special_bonus_imba_troll_warlord_7"
 	{
@@ -24527,7 +25478,7 @@
 		
 		"LinkedAbility"
 		{
-			"01" 	"imba_troll_warlord_berserkers_rage"
+			"01" 	"imba_troll_warlord_whirling_axes_ranged"
 		}
 
 		// Special
@@ -24537,7 +25488,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"10"
+				"axe_count_increase"		"10"
+			}
+
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"axe_spread_increase"		"80"
 			}
 		}
 	}
@@ -27536,7 +28493,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bounces"				"2 4 6 8 9 10 11"
-				"LinkedSpecialBonus"	"special_bonus_imba_witch_doctor_5"
 			}
 			"07"
 			{
@@ -27610,7 +28566,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"heal"						"16 24 32 40 43 46 50"
-				"LinkedSpecialBonus"		"special_bonus_imba_witch_doctor_3"
 			}
 			"04"
 			{
@@ -27682,13 +28637,11 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"180"
-				"LinkedSpecialBonus"		"special_bonus_imba_witch_doctor_2"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"duration"					"12.0"
-				"LinkedSpecialBonus"		"special_bonus_imba_witch_doctor_7"
 			}
 			"03"
 			{
@@ -27785,8 +28738,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_range_tooltip"	"700"
-				"LinkedSpecialBonus"	"special_bonus_imba_witch_doctor_4"
+				"attack_range"			"700 750 800 825 850 875"		
 			}
 			"05"
 			{
@@ -27807,37 +28759,9 @@
 	}
 	
 	//=================================================================================================================
-	// Witch Doctor Talent 1 (Level 10): Additional Paralyzing Cask heal when bouncing to allies 
+	// Witch Doctor Talent 1: Every Maledict burst deals it's damage around the target (spreads between enemies)
 	//=================================================================================================================
 	"special_bonus_imba_witch_doctor_1"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_witch_doctor_paralyzing_cask"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"50"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Witch Doctor Talent 2 (Level 10): + Maledict effect radius
-	//=================================================================================================================
-	"special_bonus_imba_witch_doctor_2"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -27857,13 +28781,41 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"70"
+				"value"						"400"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Witch Doctor Talent 3 (Level 20): Additional Voodoo Restoration healing per second
+	// Witch Doctor Talent 2 (level 20): When toggling Voodoo Restoration on, it applies the basic purge effect immediately.
+	//=================================================================================================================
+	"special_bonus_imba_witch_doctor_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_witch_doctor_voodoo_restoration"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Witch Doctor Talent 3: Voodoo Restoration's purge is now a strong purge.
 	//=================================================================================================================
 	"special_bonus_imba_witch_doctor_3"
 	{
@@ -27885,15 +28837,44 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"20"
+				"value"						"1"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Witch Doctor Talent 4 (Level 20):  Increased Death Ward attack range
+	// Witch Doctor Talent 4: Paralyzing Cask spreads Maledict if it bounces from a cursed unit.
 	//=================================================================================================================
 	"special_bonus_imba_witch_doctor_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_witch_doctor_paralyzing_cask"
+			"02"	"imba_witch_doctor_maledict"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+
+	//===================================================================================================================
+	// Witch Doctor Talent 5:  Enemies dying from a death ward will spawn a mini death ward that deal part of the damage
+	//===================================================================================================================
+	"special_bonus_imba_witch_doctor_5"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -27913,41 +28894,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"175"
+				"value"						"50"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Witch Doctor Talent 5 (Level 30):  + Paralyzing Cask max bounces
-	//=================================================================================================================
-	"special_bonus_imba_witch_doctor_5"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_witch_doctor_paralyzing_cask"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"4"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Witch Doctor Talent 6 (Level 30): Voodoo Restoration no longer costs mana
+	// Witch Doctor Talent 6 (Level 20): Voodoo Restoration turns into a aura
 	//=================================================================================================================
 	"special_bonus_imba_witch_doctor_6"
 	{
@@ -27975,7 +28928,7 @@
 	}
 
 	//=================================================================================================================
-	// Witch Doctor Talent 7 (Level 40): + Maledict duration
+	// Witch Doctor Talent 7: When Maledict's curse bursts, health regen is completely disabled for a period.
 	//=================================================================================================================
 	"special_bonus_imba_witch_doctor_7"
 	{
@@ -27997,13 +28950,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"value"						"8.0"
+				"value"						"1.0"				// duration
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Witch Doctor Talent 8 (Level 40): Now spawns two Death Wards; if channeling is broken, only one of them disappears.
+	// Witch Doctor Talent 8: Now spawns two Death Wards; if channeling is broken, only one of them disappears.
 	//=================================================================================================================
 	"special_bonus_imba_witch_doctor_8"
 	{
@@ -31052,7 +32005,7 @@
             "03"
             {
                 "var_type"                            "FIELD_INTEGER"
-                "talent_delayed_wave_rehit_cd"        "5"
+                "talent_delayed_wave_rehit_cd"        "3"
             }
 		}
 	}
@@ -34653,7 +35606,7 @@
     //=================================================================================================================
     // Nyx Assassin's Talents
     //=================================================================================================================
-    "special_bonus_imba_nyx_assassin_1" // Impale damage increase
+    "special_bonus_imba_nyx_assassin_1" // If Vendetta kills an enemy unit, it doesn't consume the Eye for Eye stacks.
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
@@ -34663,82 +35616,7 @@
 
         "LinkedAbility"
         {
-        	"01"	"imba_nyx_assassin_impale"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "value"	                    "50"
-            }
-        }
-    }
-
-    "special_bonus_imba_nyx_assassin_2" // Scarab Parasite activation delay decrease
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01"	"imba_nyx_assassin_mana_burn"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "value"	                    "3"
-            }
-        }
-    }
-
-    "special_bonus_imba_nyx_assassin_3" // Spiked Carapace damage reflection increase (percentage)
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01"	"imba_nyx_assassin_spiked_carapace"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "value"	                    "100"
-            }
-        }
-    }
-
-    "special_bonus_imba_nyx_assassin_4" // Impale Relive Suffering duration increase
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01"	"imba_nyx_assassin_impale"
+        	"01"	"imba_nyx_assassin_vendetta"
         }
 
         // Special
@@ -34753,7 +35631,32 @@
         }
     }
 
-    "special_bonus_imba_nyx_assassin_5" // Mana Burn Int multiplier increase
+    "special_bonus_imba_nyx_assassin_2" // When hitting out of Vendetta, Mana Burn is instantly applied on the target.
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"	"imba_nyx_assassin_vendetta"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "1"
+            }
+        }
+    }
+
+    "special_bonus_imba_nyx_assassin_3" // Mana Burn multiplies the main attribute of the target instead Intelligence
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
@@ -34778,32 +35681,7 @@
         }
     }
 
-    "special_bonus_imba_nyx_assassin_6" // Vendetta movement speed increase
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01"	"imba_nyx_assassin_vendetta"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "value"	                    "20"
-            }
-        }
-    }
-
-    "special_bonus_imba_nyx_assassin_7" // Spiked Carapace duration increase
+    "special_bonus_imba_nyx_assassin_4" // Spiked Carapace now returns all instances over its duration
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
@@ -34828,7 +35706,7 @@
         }
     }
 
-    "special_bonus_imba_nyx_assassin_8" // Maximum Vendetta stored damage increase
+    "special_bonus_imba_nyx_assassin_5" // Falling below 30% procs Spiked Carapace automatically if the skill is off cooldown
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
@@ -34838,7 +35716,7 @@
 
         "LinkedAbility"
         {
-        	"01"	"imba_nyx_assassin_vendetta"
+        	"01"	"imba_nyx_assassin_spiked_carapace"
         }
 
         // Special
@@ -34848,7 +35726,147 @@
             "01"
             {
                 "var_type"                  "FIELD_FLOAT"
-                "value"	                    "475"
+                "value"	                    "30"
+            }
+        }
+    }
+
+    "special_bonus_imba_nyx_assassin_6" // Impale now bursts in random locations around targets hit. Each mini-impale deals 75 damage and stuns for 0.75 seconds. Lasts 3 seconds. Mini spikes do not apply Relive Suffering
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"	"imba_nyx_assassin_impale"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "duration"	                "0.5"
+            }
+            "02"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "air_time"	                "0.25"
+            }
+            "03"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "air_height"	            "50"
+            }
+            "04"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "damage"	                "75"
+            }
+            "05"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "repeat_duration"	        "3.0"
+            }
+            "06"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "spike_rate"	        	"0.2"
+            }
+            "07"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "spike_chance"	        	"50"
+            }
+            "08"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "spike_spawn_min_range"	    "75"
+            }
+            "09"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "spike_spawn_max_range"	    "300"
+            }
+            "10"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "spike_aoe"	    			"75"
+            }
+        }
+    }
+
+    "special_bonus_imba_nyx_assassin_7" // Enemies that were hit by Impale get their movespeed reduced by 1% for each 50 distance they travel. Lasts 5 seconds
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"	"imba_nyx_assassin_impale"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "duration"	                "5"
+            }
+            "02"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "slow_per_movedistance"	    "1"
+            }
+            "02"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "movedistance"	    		"50"
+            }
+        }
+    }
+
+    "special_bonus_imba_nyx_assassin_8" // Units dying while the Mana Burn debuff has their scarabs coming out of them, and hop into Nyx for 20 seconds. If an enemy unit comes within 400 AoE of Nyx, it invades it and procs Mana Burn on it
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"	"imba_nyx_assassin_mana_burn"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "duration"	                "20"
+            }
+            "02"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "search_rate"                "0.25"
+            }
+            "03"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "search_radius"             "400"
             }
         }
     }
@@ -36395,7 +37413,7 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"value"			"225"
+				"value"			"3"
 			}
 		}
 	}
@@ -36444,8 +37462,8 @@
 		{
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"1"
+				"var_type"		"FIELD_FLOAT"
+				"value"			"1.5"
 			}
 		}
 	}

@@ -895,7 +895,8 @@ function RollPseudoRandom(base_chance, entity)
 							{40, 20.20},
 							{50, 30.20},
 							{60, 42.30},
-							{70, 57.10}
+							{70, 57.10},
+							{100, 100}
 						  }
 
 	entity.pseudoRandomModifier = entity.pseudoRandomModifier or 0

@@ -950,12 +950,18 @@ function modifier_imba_darkness_vision:OnCreated()
 
         -- Ability specials
         self.vision_radius = self.ability:GetSpecialValueFor("vision_radius")
+        self.ward_vision = self.ability:GetSpecialValueFor("ward_vision")
 
         -- #7 Talent: Darkness maximum vision range reduction
         self.vision_radius = self.vision_radius - self.caster:FindTalentValue("special_bonus_imba_night_stalker_7")
 
         -- Keep the original base night vision
         self.original_base_night_vision = self.parent:GetBaseNightTimeVisionRange()
+
+        -- If this is a ward, set the vision as the ward vision.
+        if self.parent:IsOther() then
+            self.vision_radius = self.ward_vision
+        end
 
         -- Override the base night vision
         self.parent:SetNightTimeVisionRange(self.vision_radius)

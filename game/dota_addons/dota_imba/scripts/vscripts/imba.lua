@@ -73,12 +73,17 @@ StoreCurrentDayCycle()
 	This function should generally only be used if the Precache() function in addon_game_mode.lua is not working.
 ]]
 
-function GameMode:OnItemPickedUp(event)
-	local owner = EntIndexToHScript( event.HeroEntityIndex )
-	if owner:IsHero() and event.itemname == "item_bag_of_gold" then
-		GoldPickup(event)
-	end
-end
+ function GameMode:OnItemPickedUp(event) 
+   -- If this is a hero
+   if event.HeroEntityIndex then
+       local owner = EntIndexToHScript( event.HeroEntityIndex )
+       -- And you've picked up a gold bag
+       if owner:IsHero() and event.itemname == "item_bag_of_gold" then
+           -- Pick up the gold
+           GoldPickup(event)
+       end
+    end
+  end
 
 function GameMode:PostLoadPrecache()
 
@@ -118,23 +123,64 @@ function GameMode:OnFirstPlayerLoaded()
 		"npc_imba_contributor_anees",
 		"npc_imba_contributor_swizard",
 		"npc_imba_contributor_phroureo",
-		"npc_imba_contributor_catchy",
-		"npc_imba_contributor_hewdraw",
-		"npc_imba_contributor_zimber",
+		"npc_imba_contributor_catchy",		
 		"npc_imba_contributor_matt",
 		"npc_imba_contributor_maxime",
 		"npc_imba_contributor_poly",
-		"npc_imba_contributor_firstlady"
+		"npc_imba_contributor_firstlady",
+		"npc_imba_contributor_wally_chan"
 	}
 
-	-- Add 8 random contributor statues
+	-- Add 4 random contributor statues
 	local current_location
 	local current_statue
 	local statue_entity
-	for i = 1, 8 do
+	for i = 1, 4 do
 		current_location = Entities:FindByName(nil, "contributor_location_0"..i):GetAbsOrigin()
 		current_statue = table.remove(contributor_statues, RandomInt(1, #contributor_statues))
-		if i <= 4 then
+		if i <= 2 then
+			statue_entity = CreateUnitByName(current_statue, current_location, true, nil, nil, DOTA_TEAM_GOODGUYS)
+			statue_entity:SetForwardVector(Vector(1, 1, 0):Normalized())
+		else
+			statue_entity = CreateUnitByName(current_statue, current_location, true, nil, nil, DOTA_TEAM_BADGUYS)
+			statue_entity:SetForwardVector(Vector(-1, -1, 0):Normalized())
+		end
+		statue_entity:AddNewModifier(statue_entity, nil, "modifier_imba_contributor_statue", {})
+	end
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: developer models
+	-------------------------------------------------------------------------------------------------
+
+	-- Developer statue list
+	local developer_statues = {
+		"npc_imba_developer_shush",
+		"npc_imba_developer_firetoad",
+		"npc_imba_developer_xthedark",
+		"npc_imba_developer_zimber",
+		"npc_imba_developer_hewdraw",
+		"npc_imba_developer_iaminnocent",
+		"npc_imba_developer_noobsauce",
+		"npc_imba_developer_seinken",
+		"npc_imba_developer_mouji",
+		"npc_imba_developer_atrocty",
+		"npc_imba_developer_broccoli",
+		"npc_imba_developer_cookies",
+		"npc_imba_developer_dewouter",
+		"npc_imba_developer_fudge",
+		"npc_imba_developer_lindbrum",
+		"npc_imba_developer_sercankd",
+		"npc_imba_developer_yahnich",
+	}
+
+	-- Add 4 random developer statues
+	local current_location
+	local current_statue
+	local statue_entity
+	for i = 1, 4 do
+		current_location = Entities:FindByName(nil, "developer_location_0"..i):GetAbsOrigin()
+		current_statue = table.remove(developer_statues, RandomInt(1, #developer_statues))
+		if i <= 2 then
 			statue_entity = CreateUnitByName(current_statue, current_location, true, nil, nil, DOTA_TEAM_GOODGUYS)
 			statue_entity:SetForwardVector(Vector(1, 1, 0):Normalized())
 		else
@@ -713,56 +759,6 @@ function GameMode:OrderFilter( keys )
         end
     end
 	
-	
-	-- Divine Rapier undropable
-	if (keys.order_type == DOTA_UNIT_ORDER_DROP_ITEM) or (keys.order_type == DOTA_UNIT_ORDER_MOVE_ITEM) or (keys.order_type == DOTA_UNIT_ORDER_GIVE_ITEM) or (keys.order_type == DOTA_UNIT_ORDER_PICKUP_ITEM) then
-		local item
-		if keys.order_type == DOTA_UNIT_ORDER_PICKUP_ITEM then
-			item = EntIndexToHScript(keys.entindex_target):GetContainedItem()
-		else
-			item = EntIndexToHScript(keys.entindex_ability)
-		end
-		if item.IsRapier then
-			local player_ID
-			-- Courier handling
-			if unit:IsCourier() then
-				player_ID = keys.issuer_player_id_const
-				if (keys.order_type == DOTA_UNIT_ORDER_PICKUP_ITEM) then
-					DisplayError(player_ID,"#dota_hud_error_cant_item_courier")
-					return false
-				end
-				if keys.entindex_target	and (keys.order_type == DOTA_UNIT_ORDER_GIVE_ITEM) then
-					local hTarget = EntIndexToHScript(keys.entindex_target)
-					if item:GetPurchaser():GetPlayerID() == hTarget:GetPlayerID() then
-						return true
-					end
-				end
-			elseif unit:IsHero() then
-				player_ID 	= 	unit:GetPlayerID()
-			
-			-- This is essentialy just bears
-			else
-				player_ID	=	keys.issuer_player_id_const
-			end
-			-- Player handling
-			if (keys.order_type == DOTA_UNIT_ORDER_GIVE_ITEM) then
-				DisplayError(player_ID,"#dota_hud_error_cant_item_give")
-				return false
-			end
-			if  (keys.entindex_target >= DOTA_STASH_SLOT_1) and (keys.entindex_target <= DOTA_STASH_SLOT_6) then
-				DisplayError(player_ID,"#dota_hud_error_cant_item_stash")
-				return false
-			end
-			if not ((keys.position_x == 0) and (keys.position_y == 0) and (keys.position_z == 0)) then
-				DisplayError(player_ID,"#dota_hud_error_cant_item_drop")
-				return false
-			end
-			if (keys.entindex_target >= DOTA_ITEM_SLOT_7) and (keys.entindex_target <= DOTA_ITEM_SLOT_9) then
-				DisplayError(player_ID,"#dota_hud_error_cant_item_backpack")
-				return false
-			end
-		end	
-	end
 	return true
 end
 
@@ -1242,274 +1238,122 @@ function GameMode:OnGameInProgress()
 	-------------------------------------------------------------------------------------------------
 
 	if TOWER_ABILITY_MODE then
+		local ability_table = IndexAllTowerAbilities()		
 		local protective_instict = "imba_tower_protective_instinct"		
-		
-		-- Roll the random tower abilities for this game
-		TOWER_UPGRADE_TREE["safelane"]["tier_1"][1] = GetRandomTowerAbility(1)		
 
-		TOWER_UPGRADE_TREE["safelane"]["tier_2"][1] = GetRandomTowerAbility(2)
+		-- Find all towers
+		local towers = Entities:FindAllByClassname("npc_dota_tower")
 
-		TOWER_UPGRADE_TREE["safelane"]["tier_3"][1] = GetRandomTowerAbility(3)		
-		
-		TOWER_UPGRADE_TREE["hardlane"]["tier_1"][1] = GetRandomTowerAbility(1)
-		
-		TOWER_UPGRADE_TREE["hardlane"]["tier_2"][1] = GetRandomTowerAbility(2)
-		
-		TOWER_UPGRADE_TREE["hardlane"]["tier_3"][1] = GetRandomTowerAbility(3)
+		for _,radiant_tower in pairs(towers) do
 
-		TOWER_UPGRADE_TREE["midlane"]["tier_1"][1] = GetRandomTowerAbility(1)
-		
-		TOWER_UPGRADE_TREE["midlane"]["tier_2"][1] = GetRandomTowerAbility(2)
-		
-		TOWER_UPGRADE_TREE["midlane"]["tier_3"][1] = GetRandomTowerAbility(3)
+			-- Check if it is indeed a radiant tower
+			if radiant_tower:GetTeamNumber() == DOTA_TEAM_GOODGUYS then
 
-		TOWER_UPGRADE_TREE["midlane"]["tier_41"][1] = GetRandomTowerAbility(3)	
-		
-		TOWER_UPGRADE_TREE["midlane"]["tier_42"][1] = GetRandomTowerAbility(3)
-		
-		-- Make sure tier 3 abilities are unique between themselves. Includes tier 4 towers
-		local tier_3_and_4_towers = {} -- towers to index
-		local tier_3_abilities = {} -- distinct abilities		
-		local is_distinct = false	
-		local tower_ability_found = false
-		
-		-- Insert all tower upgrade trees into the table for easy looping		
-		table.insert(tier_3_and_4_towers, TOWER_UPGRADE_TREE["hardlane"]["tier_3"][1])
-		table.insert(tier_3_and_4_towers, TOWER_UPGRADE_TREE["midlane"]["tier_3"][1])
-		table.insert(tier_3_and_4_towers, TOWER_UPGRADE_TREE["midlane"]["tier_41"][1])
-		table.insert(tier_3_and_4_towers, TOWER_UPGRADE_TREE["midlane"]["tier_42"][1])
-		
-		
-		-- First T3 tower ability is used for sure, no checking needed
-		table.insert(tier_3_abilities, TOWER_UPGRADE_TREE["safelane"]["tier_3"][1])
-		
-		-- Roll unique abilities for each tower. 
-		-- i resembles the current ability that was picked for a certain tower.
-		-- j resembles the current ability that former towers have already picked.
-		for i=1, #tier_3_and_4_towers do			
-			is_distinct = false		
-			while not is_distinct do
-				tower_ability_found = false
-				for j=1, #tier_3_abilities do				
-					if tier_3_and_4_towers[i] == tier_3_abilities[j] then						
-						tower_ability_found = true
-						tier_3_and_4_towers[i] = GetRandomTowerAbility(3)						
+				-- Find its dire equivalent
+				local dire_tower_name = string.gsub(radiant_tower:GetUnitName(), "goodguys", "badguys")				
+				local dire_tower				
+
+				for _,tower in pairs(towers) do
+					if tower:GetUnitName() == dire_tower_name and not tower.initially_upgraded then
+						dire_tower = tower
 						break
-					end				
+					end
 				end
-				
-				if not tower_ability_found then
-					is_distinct = true
-					table.insert(tier_3_abilities, tier_3_and_4_towers[i])
-				end			
+
+				-- Add protective instincts to both radiant and dire towers
+				local ability = radiant_tower:AddAbility(protective_instict)
+				ability:SetLevel(1)
+
+				local ability = dire_tower:AddAbility(protective_instict)
+				ability:SetLevel(1)
+
+				if string.find(radiant_tower:GetUnitName(), "tower1") then
+					-- Tier 1 tower found. Add tier 1 ability
+					local ability_name = GetRandomTowerAbility(1, ability_table)
+					local ability = radiant_tower:AddAbility(ability_name)
+					ability:SetLevel(1)
+					
+					-- Add the same ability to the equivalent tower in dire
+					local ability = dire_tower:AddAbility(ability_name)
+					ability:SetLevel(1)
+
+					-- After the ability has been set, remove it from the table.
+					for j = 1, #ability_table[1] do					
+						if ability_table[1][j] == ability_name then
+							table.remove(ability_table[1], j)
+							break
+						end
+					end
+				end
+
+				if string.find(radiant_tower:GetUnitName(), "tower2") then
+					-- Tier 2 tower found. Add tier 1 and 2 abilities
+					for i = 1, 2 do
+						local ability_name = GetRandomTowerAbility(i, ability_table)
+						local ability = radiant_tower:AddAbility(ability_name)
+						ability:SetLevel(1)
+						
+						-- Add the same ability to the equivalent tower in dire
+						local ability = dire_tower:AddAbility(ability_name)
+						ability:SetLevel(1)
+
+						-- After the ability has been set, remove it from the table.
+						for j = 1, #ability_table[i] do					
+							if ability_table[i][j] == ability_name then
+								table.remove(ability_table[i], j)
+								break
+							end
+						end
+					end
+				end
+
+				if string.find(radiant_tower:GetUnitName(), "tower3") then
+					-- Tier 3 tower found. Add tier 1, 2 and 3 abilities
+					for i = 1, 3 do
+						local ability_name = GetRandomTowerAbility(i, ability_table)
+						local ability = radiant_tower:AddAbility(ability_name)
+						ability:SetLevel(1)
+						
+						-- Add the same ability to the equivalent tower in dire
+						local ability = dire_tower:AddAbility(ability_name)
+						ability:SetLevel(1)
+
+						-- After the ability has been set, remove it from the table.
+						for j = 1, #ability_table[i] do					
+							if ability_table[i][j] == ability_name then
+								table.remove(ability_table[i], j)
+								break
+							end
+						end
+					end
+				end
+
+				if string.find(radiant_tower:GetUnitName(), "tower4") then
+					-- Tier 3 tower found. Add tier 1, 2 and 3 abilities
+					for i = 2, 4 do
+						local ability_name = GetRandomTowerAbility(i, ability_table)
+						local ability = radiant_tower:AddAbility(ability_name)
+						ability:SetLevel(1)
+						
+						-- Add the same ability to the equivalent tower in dire
+						local ability = dire_tower:AddAbility(ability_name)
+						ability:SetLevel(1)
+
+						-- After the ability has been set, remove it from the table.
+						for j = 1, #ability_table[i] do					
+							if ability_table[i][j] == ability_name then
+								table.remove(ability_table[i], j)
+								break
+							end
+						end
+
+						-- Mark tower as upgraded, so it could identify the other dire tower to upgrade.
+						dire_tower.initially_upgraded = true
+					end
+				end
 			end
-		end
-
-		-- Assign final tower abilities from the table
-		TOWER_UPGRADE_TREE["hardlane"]["tier_3"][1] = tier_3_and_4_towers[1]
-		TOWER_UPGRADE_TREE["midlane"]["tier_3"][1] = tier_3_and_4_towers[2]
-		TOWER_UPGRADE_TREE["midlane"]["tier_41"][1] = tier_3_and_4_towers[3]
-		TOWER_UPGRADE_TREE["midlane"]["tier_42"][1] = tier_3_and_4_towers[4]
-
-		-- Make sure that Tier 4 towers are distinct in the actives they get
-		TOWER_UPGRADE_TREE["midlane"]["tier_41"][2] = GetRandomTowerAbility(4)
-		TOWER_UPGRADE_TREE["midlane"]["tier_42"][2] = GetRandomTowerAbility(4)
-		while TOWER_UPGRADE_TREE["midlane"]["tier_42"][2] == TOWER_UPGRADE_TREE["midlane"]["tier_41"][2] do
-			TOWER_UPGRADE_TREE["midlane"]["tier_42"][2] = GetRandomTowerAbility(4)
-		end
-
-		-- Safelane towers
-		for i = 1, 3 do
-			
-			-- Find safelane towers
-			local radiant_tower_loc = Entities:FindByName(nil, "radiant_safe_tower_t"..i):GetAbsOrigin()
-			local dire_tower_loc = Entities:FindByName(nil, "dire_safe_tower_t"..i):GetAbsOrigin()
-			local radiant_tower = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, radiant_tower_loc, nil, 50, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
-			local dire_tower = FindUnitsInRadius(DOTA_TEAM_BADGUYS, dire_tower_loc, nil, 50, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
-			radiant_tower = radiant_tower[1]
-			dire_tower = dire_tower[1]
-			
-			-- Grant Protective Instinct ability to each tower
-			radiant_tower:AddAbility(protective_instict)
-			dire_tower:AddAbility(protective_instict)
-			local radiant_protective = radiant_tower:FindAbilityByName(protective_instict)
-			local dire_protective = dire_tower:FindAbilityByName(protective_instict)
-			radiant_protective:SetLevel(1)
-			dire_protective:SetLevel(1)
-
-			-- Store the towers' tier and lane
-			radiant_tower.tower_tier = i
-			dire_tower.tower_tier = i
-			radiant_tower.tower_lane = "safelane"
-			dire_tower.tower_lane = "safelane"
-
-			-- Fetch the corresponding ability's name
-			local ability_name
-			if i == 1 then
-				ability_name = TOWER_UPGRADE_TREE["safelane"]["tier_1"][1]
-			elseif i == 2 then
-				ability_name = TOWER_UPGRADE_TREE["safelane"]["tier_2"][1]
-			elseif i == 3 then
-				ability_name = TOWER_UPGRADE_TREE["safelane"]["tier_3"][1]
-			end
-
-			
-			-- Add and level up the ability
-			radiant_tower:AddAbility(ability_name)
-			dire_tower:AddAbility(ability_name)
-			local radiant_ability = radiant_tower:FindAbilityByName(ability_name)
-			local dire_ability = dire_tower:FindAbilityByName(ability_name)
-			radiant_ability:SetLevel(1)
-			dire_ability:SetLevel(1)
-		end
-
-		-- Mid towers
-		for i = 1, 3 do
-			
-			-- Find mid towers
-			local radiant_tower_loc = Entities:FindByName(nil, "radiant_mid_tower_t"..i):GetAbsOrigin()
-			local dire_tower_loc = Entities:FindByName(nil, "dire_mid_tower_t"..i):GetAbsOrigin()
-			local radiant_tower = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, radiant_tower_loc, nil, 50, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
-			local dire_tower = FindUnitsInRadius(DOTA_TEAM_BADGUYS, dire_tower_loc, nil, 50, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
-			radiant_tower = radiant_tower[1]
-			dire_tower = dire_tower[1]
-
-			-- Grant Protective Instinct ability to each tower
-			radiant_tower:AddAbility(protective_instict)
-			dire_tower:AddAbility(protective_instict)
-			local radiant_protective = radiant_tower:FindAbilityByName(protective_instict)
-			local dire_protective = dire_tower:FindAbilityByName(protective_instict)
-			radiant_protective:SetLevel(1)
-			dire_protective:SetLevel(1)
-			
-			-- Store the towers' tier and lane
-			radiant_tower.tower_tier = i
-			dire_tower.tower_tier = i
-			radiant_tower.tower_lane = "midlane"
-			dire_tower.tower_lane = "midlane"
-
-			-- Fetch the corresponding ability's name
-			local ability_name
-			if i == 1 then
-				ability_name = TOWER_UPGRADE_TREE["midlane"]["tier_1"][1]
-			elseif i == 2 then
-				ability_name = TOWER_UPGRADE_TREE["midlane"]["tier_2"][1]
-			elseif i == 3 then
-				ability_name = TOWER_UPGRADE_TREE["midlane"]["tier_3"][1]
-			end			
-
-			-- Add and level up the ability
-			radiant_tower:AddAbility(ability_name)
-			dire_tower:AddAbility(ability_name)
-			local radiant_ability = radiant_tower:FindAbilityByName(ability_name)
-			local dire_ability = dire_tower:FindAbilityByName(ability_name)
-			radiant_ability:SetLevel(1)
-			dire_ability:SetLevel(1)
-		end
-
-		-- Hardlane towers
-		for i = 1, 3 do
-			
-			-- Find hardlane towers
-			local radiant_tower_loc = Entities:FindByName(nil, "radiant_hard_tower_t"..i):GetAbsOrigin()
-			local dire_tower_loc = Entities:FindByName(nil, "dire_hard_tower_t"..i):GetAbsOrigin()
-			local radiant_tower = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, radiant_tower_loc, nil, 50, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
-			local dire_tower = FindUnitsInRadius(DOTA_TEAM_BADGUYS, dire_tower_loc, nil, 50, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
-			radiant_tower = radiant_tower[1]
-			dire_tower = dire_tower[1]
-
-			-- Grant Protective Instinct ability to each tower
-			radiant_tower:AddAbility(protective_instict)
-			dire_tower:AddAbility(protective_instict)
-			local radiant_protective = radiant_tower:FindAbilityByName(protective_instict)
-			local dire_protective = dire_tower:FindAbilityByName(protective_instict)
-			radiant_protective:SetLevel(1)
-			dire_protective:SetLevel(1)
-			
-			-- Store the towers' tier and lane
-			radiant_tower.tower_tier = i
-			dire_tower.tower_tier = i
-			radiant_tower.tower_lane = "hardlane"
-			dire_tower.tower_lane = "hardlane"
-
-			-- Fetch the corresponding ability's name
-			local ability_name
-			if i == 1 then
-				ability_name = TOWER_UPGRADE_TREE["hardlane"]["tier_1"][1]
-			elseif i == 2 then
-				ability_name = TOWER_UPGRADE_TREE["hardlane"]["tier_2"][1]
-			elseif i == 3 then
-				ability_name = TOWER_UPGRADE_TREE["hardlane"]["tier_3"][1]
-			end			
-			
-			
-			-- Add and level up the ability
-			radiant_tower:AddAbility(ability_name)
-			dire_tower:AddAbility(ability_name)
-			local radiant_ability = radiant_tower:FindAbilityByName(ability_name)
-			local dire_ability = dire_tower:FindAbilityByName(ability_name)
-			radiant_ability:SetLevel(1)
-			dire_ability:SetLevel(1)
-		end
-
-		-- Tier 4s
-		local radiant_left_t4_loc = Entities:FindByName(nil, "radiant_left_tower_t4"):GetAbsOrigin()
-		local radiant_right_t4_loc = Entities:FindByName(nil, "radiant_right_tower_t4"):GetAbsOrigin()
-		local dire_left_t4_loc = Entities:FindByName(nil, "dire_left_tower_t4"):GetAbsOrigin()
-		local dire_right_t4_loc = Entities:FindByName(nil, "dire_right_tower_t4"):GetAbsOrigin()
-		local radiant_left_t4 = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, radiant_left_t4_loc, nil, 50, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
-		local radiant_right_t4 = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, radiant_right_t4_loc, nil, 50, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
-		local dire_left_t4 = FindUnitsInRadius(DOTA_TEAM_BADGUYS, dire_left_t4_loc, nil, 50, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
-		local dire_right_t4 = FindUnitsInRadius(DOTA_TEAM_BADGUYS, dire_right_t4_loc, nil, 50, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
-		radiant_left_t4 = radiant_left_t4[1]
-		radiant_right_t4 = radiant_right_t4[1]
-		dire_left_t4 = dire_left_t4[1]
-		dire_right_t4 = dire_right_t4[1]
-
-		-- Store the towers' tier and lane
-		radiant_left_t4.tower_tier = 41
-		radiant_right_t4.tower_tier = 42
-		dire_left_t4.tower_tier = 41
-		dire_right_t4.tower_tier = 42
-		radiant_left_t4.tower_lane = "midlane"
-		radiant_right_t4.tower_lane = "midlane"
-		dire_left_t4.tower_lane = "midlane"
-		dire_right_t4.tower_lane = "midlane"
-
-		-- Grant Protective Instinct ability to each tower
-		radiant_left_t4:AddAbility(protective_instict)
-		radiant_right_t4:AddAbility(protective_instict)
-		dire_left_t4:AddAbility(protective_instict)
-		dire_right_t4:AddAbility(protective_instict)
-		local radiant_protective_left = radiant_left_t4:FindAbilityByName(protective_instict)
-		local radiant_protective_right = radiant_right_t4:FindAbilityByName(protective_instict)
-		local dire_protective_left = dire_left_t4:FindAbilityByName(protective_instict)
-		local dire_protective_right = dire_right_t4:FindAbilityByName(protective_instict)
-		radiant_protective_left:SetLevel(1)
-		radiant_protective_right:SetLevel(1)
-		dire_protective_left:SetLevel(1)
-		dire_protective_right:SetLevel(1)
-		
-		-- Add and level up the aura and active
-		
-		for i = 1, 2 do
-			local ability_name_1 = TOWER_UPGRADE_TREE["midlane"]["tier_41"][i]
-			local ability_name_2 = TOWER_UPGRADE_TREE["midlane"]["tier_42"][i]
-			radiant_left_t4:AddAbility(ability_name_1)
-			dire_left_t4:AddAbility(ability_name_1)
-			radiant_right_t4:AddAbility(ability_name_2)
-			dire_right_t4:AddAbility(ability_name_2)
-			local radiant_left_ability = radiant_left_t4:FindAbilityByName(ability_name_1)
-			local dire_left_ability = dire_left_t4:FindAbilityByName(ability_name_1)
-			local radiant_right_ability = radiant_right_t4:FindAbilityByName(ability_name_2)
-			local dire_right_ability = dire_right_t4:FindAbilityByName(ability_name_2)
-			radiant_left_ability:SetLevel(1)
-			dire_left_ability:SetLevel(1)
-			radiant_right_ability:SetLevel(1)
-			dire_right_ability:SetLevel(1)
 		end
 	end
-
 end
 
 -- This function initializes the game mode and is called before anyone loads into the game

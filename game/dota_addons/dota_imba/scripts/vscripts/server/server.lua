@@ -213,10 +213,10 @@ function Server_AbilityToGainXPForPlyaer_function(nPlayerID)
 		request:SetHTTPRequestGetOrPostParameter("data_json",JSON:encode(jsondata))
 		request:SetHTTPRequestGetOrPostParameter("auth",_AuthCode)
 		request:Send(function(result)
-		if result.StatusCode ~= 200 then
-			Server_AbilityToGainXPForPlyaer_function(nPlayerID)
-			return
-		end
+		--if result.StatusCode ~= 200 then
+		--	Server_AbilityToGainXPForPlyaer_function(nPlayerID)
+		--	return
+		--end
 	end )
 end
 
@@ -371,6 +371,41 @@ function Server_GetPlayerTitle(playerID)
 	if CustomNetTables:GetTableValue("player_table", tostring(playerID)) then
 		return CustomNetTables:GetTableValue("player_table", tostring(playerID)).title
 	end
+end
+
+
+function print_r ( t )  
+    local print_r_cache={}
+    local function sub_print_r(t,indent)
+        if (print_r_cache[tostring(t)]) then
+            print(indent.."*"..tostring(t))
+        else
+            print_r_cache[tostring(t)]=true
+            if (type(t)=="table") then
+                for pos,val in pairs(t) do
+                    if (type(val)=="table") then
+                        print(indent.."["..pos.."] => "..tostring(t).." {")
+                        sub_print_r(val,indent..string.rep(" ",string.len(pos)+8))
+                        print(indent..string.rep(" ",string.len(pos)+6).."}")
+                    elseif (type(val)=="string") then
+                        print(indent.."["..pos..'] => "'..val..'"')
+                    else
+                        print(indent.."["..pos.."] => "..tostring(val))
+                    end
+                end
+            else
+                print(indent..tostring(t))
+            end
+        end
+    end
+    if (type(t)=="table") then
+        print(tostring(t).." {")
+        sub_print_r(t,"  ")
+        print("}")
+    else
+        sub_print_r(t,"  ")
+    end
+    print()
 end
 
 

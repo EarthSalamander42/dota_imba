@@ -143,7 +143,7 @@ function modifier_imba_item_elder_staff_passive:DeclareFunctions()
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
-		MODIFIER_PROPERTY_CAST_RANGE_BONUS,
+		MODIFIER_PROPERTY_CAST_RANGE_BONUS_STACKING,
 		MODIFIER_PROPERTY_MANA_BONUS,
 		MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE
     }
@@ -174,7 +174,7 @@ function modifier_imba_item_elder_staff_passive:GetModifierManaBonus()
 	return self.bonus_mana
 end
 
-function modifier_imba_item_elder_staff_passive:GetModifierCastRangeBonus()
+function modifier_imba_item_elder_staff_passive:GetModifierCastRangeBonusStacking()
 	return self:CheckUniqueValue(self.cast_range_bonus,nil)
 end
 

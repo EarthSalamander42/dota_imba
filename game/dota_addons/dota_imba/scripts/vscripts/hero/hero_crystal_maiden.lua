@@ -507,10 +507,6 @@ function modifier_imba_crystal_maiden_frostbite_enemy:OnCreated( kv )
 	end
 end
 
-function modifier_imba_crystal_maiden_frostbite_enemy:OnRefresh( kv )
-	self:OnCreated(kv)
-end
-
 function modifier_imba_crystal_maiden_frostbite_enemy:OnDestroy()
 	local icy_touch_slow_modifier = "modifier_imba_crystal_maiden_frostbite_enemy_talent"
 
@@ -542,18 +538,16 @@ function modifier_imba_crystal_maiden_frostbite_enemy_talent:OnCreated( kv )
 	self.speed_update_rate = self.caster:FindTalentValue("special_bonus_imba_crystal_maiden_1", "speed_update_rate") or -1
 	self.initial_slow_pct = self.caster:FindTalentValue("special_bonus_imba_crystal_maiden_1", "initial_slow_pct") or 0
 	self.move_slow_pct = self.initial_slow_pct
-	self.move_slow_change_per_update = self.initial_slow_pct / self:GetDuration()
+	self.move_slow_change_per_update = self.initial_slow_pct * self.speed_update_rate / self:GetDuration()
 	
-	if IsServer() then
-		self:StartIntervalThink(self.speed_update_rate)
-	end
+	self:StartIntervalThink(self.speed_update_rate)	
 end
 
 function modifier_imba_crystal_maiden_frostbite_enemy_talent:OnRefresh( kv )
 	self:OnCreated( kv )
 end
 
-function modifier_imba_crystal_maiden_frostbite_enemy_talent:OnIntervalThink()
+function modifier_imba_crystal_maiden_frostbite_enemy_talent:OnIntervalThink()	
 	self.move_slow_pct = self.move_slow_pct - self.move_slow_change_per_update
 end
 
@@ -561,7 +555,7 @@ function modifier_imba_crystal_maiden_frostbite_enemy_talent:DeclareFunctions()
 	return {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
 end
 
-function modifier_imba_crystal_maiden_frostbite_enemy_talent:GetModifierMoveSpeedBonus_Percentage()
+function modifier_imba_crystal_maiden_frostbite_enemy_talent:GetModifierMoveSpeedBonus_Percentage()	
 	return -self.move_slow_pct
 end
 
@@ -952,24 +946,21 @@ function imba_crystal_maiden_freezing_field:OnChannelFinish(bInterrupted)
 		ParticleManager:ReleaseParticleIndex(self.freezing_field_particle)
 
 		if self.are_we_nuclear then
+			local meteor_delay = self.caster:FindTalentValue("special_bonus_imba_crystal_maiden_7", "meteor_delay")
+
 			self:StopSound("Imba.CrystalMaidenTacticalNuke")
-			local particle_name =  "particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_explosion.vpcf"
+			local particle_name =  "particles/hero/crystal_maiden/maiden_freezing_field_explosion.vpcf"
 
-			self.shards = math.floor(self.frametime / self.shard_rate)
-
-			local explosion_dummy = CreateUnitByName("npc_dummy_unit", self.freezing_field_center, false, nil, nil, self.caster:GetTeamNumber())
+			self.shards = math.floor(self.frametime / self.shard_rate)			
 		
 			-- Fire effect
-			local fxIndex = ParticleManager:CreateParticle(particle_name, PATTACH_CUSTOMORIGIN, self.caster)
-			ParticleManager:SetParticleControl(fxIndex, 0, explosion_dummy:GetAbsOrigin())
-			ParticleManager:SetParticleControl(fxIndex, 1, explosion_dummy:GetAbsOrigin())
+			local fxIndex = ParticleManager:CreateParticle(particle_name, PATTACH_WORLDORIGIN, nil)
+			ParticleManager:SetParticleControl(fxIndex, 0, self.freezing_field_center)
+			ParticleManager:SetParticleControl(fxIndex, 1, self.freezing_field_center)
 			ParticleManager:ReleaseParticleIndex(fxIndex)
 			
 			-- Fire sound at the center position
-			explosion_dummy:EmitSound("hero_Crystal.freezingField.explosion")
-
-			-- Destroy dummy
-			explosion_dummy:Destroy()
+			EmitSoundOnLocationForAllies(self.freezing_field_center, "hero_Crystal.freezingField.explosion", self.caster)						
 
 			local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
 										  self.freezing_field_center,
@@ -981,52 +972,54 @@ function imba_crystal_maiden_freezing_field:OnChannelFinish(bInterrupted)
 										  FIND_ANY_ORDER,
 										  false)
 			
-			if #enemies > 0 then
-				local shard_shares = {}
-				local random_number
-				--Distribute the shard shares aka "It's All Ogre Now, CM Edition"
-				for i=1,self.shards do
-					random_number = math.random(1, #enemies)
-					if shard_shares[random_number] == nil then
-						shard_shares[random_number] = 0
-					end
-					shard_shares[random_number] = shard_shares[random_number] + 1
-				end
-				local index = 0
-				for _, unit in pairs(enemies) do
-					index = index + 1
-					if shard_shares[index] then
-						local extra_data = { damage = self.damage * self.shard_damage_mul * shard_shares[index] }
-						local projectile =
-						{
-							Target 				= unit,
-							Source 				= self.freezing_field_center,
-							Ability 			= self,
-							EffectName 			= "particles/units/heroes/hero_winter_wyvern/wyvern_splinter_blast.vpcf",
-							iMoveSpeed			= 1000,
-							vSourceLoc 			= self.freezing_field_center,
-							bDrawsOnMinimap 	= false,
-							bDodgeable 			= false,
-							bIsAttack 			= false,
-							bVisibleToEnemies 	= true,
-							bReplaceExisting 	= false,
-							flExpireTime 		= GameRules:GetGameTime() + 10,
-							bProvidesVision 	= true,
-							iVisionRadius 		= 400,
-							iVisionTeamNumber 	= self.caster:GetTeamNumber(),
-							ExtraData = extra_data
-						}
-						ProjectileManager:CreateTrackingProjectile(projectile)
-					end
-				end
-			end
-		end
+			Timers:CreateTimer(meteor_delay, function()
 
-		--Reset positions
-		self.freezing_field_center = nil
-		if self.freezing_field_aura and not self.freezing_field_aura:IsNull() then
-			UTIL_Remove(self.freezing_field_aura)
-			self.freezing_field_aura = nil
+				if #enemies > 0 then
+					local shard_shares = {}
+					local random_number
+					--Distribute the shard shares aka "It's All Ogre Now, CM Edition"self.shards
+					for i=1,self.shards do
+						random_number = math.random(1, #enemies)
+						if shard_shares[random_number] == nil then
+							shard_shares[random_number] = 0
+						end
+						shard_shares[random_number] = shard_shares[random_number] + 1
+					end
+					local index = 0
+					for _, unit in pairs(enemies) do
+						index = index + 1
+						if shard_shares[index] then							
+							local extra_data = { damage = self.damage * self.shard_damage_mul * shard_shares[index] }
+							local projectile =
+							{
+								Target 				= unit,
+								Source 				= self.freezing_field_center,
+								Ability 			= self,
+								EffectName 			= "particles/units/heroes/hero_winter_wyvern/wyvern_splinter_blast.vpcf",
+								iMoveSpeed			= 800,
+								vSourceLoc 			= self.freezing_field_center,
+								bDrawsOnMinimap 	= false,
+								bDodgeable 			= false,
+								bIsAttack 			= false,
+								bVisibleToEnemies 	= true,
+								bReplaceExisting 	= false,
+								flExpireTime 		= GameRules:GetGameTime() + 10,
+								bProvidesVision 	= true,
+								iVisionRadius 		= 400,
+								iVisionTeamNumber 	= self.caster:GetTeamNumber(),
+								ExtraData = extra_data
+							}
+							ProjectileManager:CreateTrackingProjectile(projectile)															
+						end
+					end
+				end
+				--Reset positions
+				self.freezing_field_center = nil
+				if self.freezing_field_aura and not self.freezing_field_aura:IsNull() then
+					UTIL_Remove(self.freezing_field_aura)
+					self.freezing_field_aura = nil
+				end
+			end)
 		end
 	end
 end

@@ -5563,7 +5563,7 @@
 
         // Status
         //----------------------------------------------------------------
-        "StatusHealth"              "4"     	// Base health.
+        "StatusHealth"              "3"     	// Base health.
         "StatusHealthRegen"         "0"     	// Health regeneration rate.
         "StatusMana"                "0"         // Base mana.
         "StatusManaRegen"           "0"         // Mana regeneration rate.
@@ -5633,7 +5633,7 @@
 
         // Status
         //----------------------------------------------------------------
-        "StatusHealth"              "5"     	// Base health.
+        "StatusHealth"              "3"     	// Base health.
         "StatusHealthRegen"         "0"     	// Health regeneration rate.
         "StatusMana"                "0"         // Base mana.
         "StatusManaRegen"           "0"         // Mana regeneration rate.
@@ -6380,143 +6380,7 @@
 		//Inventory
 		//----------------------------------------------------------------
 		"HasInventory"				"0"
-	}
-
-	"npc_imba_contributor_hewdraw"
-	{
-		// General
-		//----------------------------------------------------------------
-		"BaseClass"					"npc_dota_ward_base"
-		"Model"						"models/heroes/phoenix/phoenix_bird.vmdl"
-		"Level"						"1"
-		"ModelScale" 				"0.85"
-
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"					""
-		"Ability2"					""
-		"Ability3"					""
-		"Ability4"					""
-		"Ability5"					""
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"0"
-		"MagicalResistance"			"0"
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"			"0"
-		"AttackDamageMax"			"0"	
-		"AttackRate"				"1.0"
-		"AttackAnimationPoint"		"0.0"
-		"AttackAcquisitionRange"	"0"
-		"AttackRange"				"0"
-		"ProjectileModel"			""
-		"ProjectileSpeed"			"0"
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_REGULAR"
-		"HealthBarOffset"			"170"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
-		"MovementSpeed"				"0"
-		"MovementTurnRate"			"0"
-	
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"					"0"
-		"BountyGoldMin"				"0"
-		"BountyGoldMax"				"0"
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"1"
-		"StatusHealthRegen"			"0.0"
-		"StatusMana"				"0"
-		"StatusManaRegen"			"0"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"0"
-		"VisionNighttimeRange"		"0"
-
-		//Inventory
-		//----------------------------------------------------------------
-		"HasInventory"				"0"
-	}
-
-	"npc_imba_contributor_zimber"
-	{
-		// General
-		//----------------------------------------------------------------
-		"BaseClass"					"npc_dota_ward_base"
-		"Model"						"models/courier/f2p_courier/f2p_courier.vmdl"
-		"Level"						"1"
-		"ModelScale" 				"1.1"
-
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"					""
-		"Ability2"					""
-		"Ability3"					""
-		"Ability4"					""
-		"Ability5"					""
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"0"
-		"MagicalResistance"			"0"
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"			"0"
-		"AttackDamageMax"			"0"	
-		"AttackRate"				"1.0"
-		"AttackAnimationPoint"		"0.0"
-		"AttackAcquisitionRange"	"0"
-		"AttackRange"				"0"
-		"ProjectileModel"			""
-		"ProjectileSpeed"			"0"
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_REGULAR"
-		"HealthBarOffset"			"170"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
-		"MovementSpeed"				"0"
-		"MovementTurnRate"			"0"
-	
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"					"0"
-		"BountyGoldMin"				"0"
-		"BountyGoldMax"				"0"
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"1"
-		"StatusHealthRegen"			"0.0"
-		"StatusMana"				"0"
-		"StatusManaRegen"			"0"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"0"
-		"VisionNighttimeRange"		"0"
-
-		//Inventory
-		//----------------------------------------------------------------
-		"HasInventory"				"0"
-	}
+	}	
 
 	"npc_imba_contributor_matt"
 	{
@@ -6789,4 +6653,1228 @@
 		//----------------------------------------------------------------
 		"HasInventory"				"0"
 	}
+
+    "npc_imba_contributor_wally_chan"
+    {
+        // General
+        //----------------------------------------------------------------
+        "BaseClass"                 "npc_dota_ward_base"
+        "Model"                     "models/items/courier/bearzky/bearzky.vmdl"
+        "Level"                     "1"
+        "ModelScale"                "1.3"
+
+        // Abilities
+        //----------------------------------------------------------------
+        "Ability1"                  ""
+        "Ability2"                  ""
+        "Ability3"                  ""
+        "Ability4"                  ""
+        "Ability5"                  ""
+
+        // Armor
+        //----------------------------------------------------------------
+        "ArmorPhysical"             "0"
+        "MagicalResistance"         "0"
+
+        // Attack
+        //----------------------------------------------------------------
+        "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+        "AttackDamageMin"           "0"
+        "AttackDamageMax"           "0" 
+        "AttackRate"                "1.0"
+        "AttackAnimationPoint"      "0.0"
+        "AttackAcquisitionRange"    "0"
+        "AttackRange"               "0"
+        "ProjectileModel"           ""
+        "ProjectileSpeed"           "0"
+
+        // Bounds
+        //----------------------------------------------------------------
+        "BoundsHullName"            "DOTA_HULL_SIZE_REGULAR"
+        "HealthBarOffset"           "170"
+
+        // Movement
+        //----------------------------------------------------------------
+        "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"
+        "MovementSpeed"             "0"
+        "MovementTurnRate"          "0"
+    
+        // Bounty
+        //----------------------------------------------------------------
+        "BountyXP"                  "0"
+        "BountyGoldMin"             "0"
+        "BountyGoldMax"             "0"
+
+        // Status
+        //----------------------------------------------------------------
+        "StatusHealth"              "1"
+        "StatusHealthRegen"         "0.0"
+        "StatusMana"                "0"
+        "StatusManaRegen"           "0"
+        
+        // Vision
+        //----------------------------------------------------------------
+        "VisionDaytimeRange"        "0"
+        "VisionNighttimeRange"      "0"
+
+        //Inventory
+        //----------------------------------------------------------------
+        "HasInventory"              "0"
+    }
+
+    "npc_imba_developer_shush"
+    {
+        // General
+        //----------------------------------------------------------------
+        "BaseClass"                 "npc_dota_ward_base"
+        "Model"                     "models/items/disruptor/gwanji_the_thunder_lizard/gwanji_the_thunder_lizard.vmdl"
+        "Level"                     "1"
+        "ModelScale"                "0.8"
+
+        // Abilities
+        //----------------------------------------------------------------
+        "Ability1"                  ""
+        "Ability2"                  ""
+        "Ability3"                  ""
+        "Ability4"                  ""
+        "Ability5"                  ""
+
+        // Armor
+        //----------------------------------------------------------------
+        "ArmorPhysical"             "0"
+        "MagicalResistance"         "0"
+
+        // Attack
+        //----------------------------------------------------------------
+        "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+        "AttackDamageMin"           "0"
+        "AttackDamageMax"           "0" 
+        "AttackRate"                "1.0"
+        "AttackAnimationPoint"      "0.0"
+        "AttackAcquisitionRange"    "0"
+        "AttackRange"               "0"
+        "ProjectileModel"           ""
+        "ProjectileSpeed"           "0"
+
+        // Bounds
+        //----------------------------------------------------------------
+        "BoundsHullName"            "DOTA_HULL_SIZE_REGULAR"
+        "HealthBarOffset"           "170"
+
+        // Movement
+        //----------------------------------------------------------------
+        "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"
+        "MovementSpeed"             "0"
+        "MovementTurnRate"          "0"
+    
+        // Bounty
+        //----------------------------------------------------------------
+        "BountyXP"                  "0"
+        "BountyGoldMin"             "0"
+        "BountyGoldMax"             "0"
+
+        // Status
+        //----------------------------------------------------------------
+        "StatusHealth"              "1"
+        "StatusHealthRegen"         "0.0"
+        "StatusMana"                "0"
+        "StatusManaRegen"           "0"
+        
+        // Vision
+        //----------------------------------------------------------------
+        "VisionDaytimeRange"        "0"
+        "VisionNighttimeRange"      "0"
+
+        //Inventory
+        //----------------------------------------------------------------
+        "HasInventory"              "0"
+    }
+
+    "npc_imba_developer_firetoad"
+    {
+        // General
+        //----------------------------------------------------------------
+        "BaseClass"                 "npc_dota_ward_base"
+        "Model"                     "models/courier/frog/frog.vmdl"
+        "Level"                     "1"
+        "ModelScale"                "1.3"
+
+        // Abilities
+        //----------------------------------------------------------------
+        "Ability1"                  ""
+        "Ability2"                  ""
+        "Ability3"                  ""
+        "Ability4"                  ""
+        "Ability5"                  ""
+
+        // Armor
+        //----------------------------------------------------------------
+        "ArmorPhysical"             "0"
+        "MagicalResistance"         "0"
+
+        // Attack
+        //----------------------------------------------------------------
+        "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+        "AttackDamageMin"           "0"
+        "AttackDamageMax"           "0" 
+        "AttackRate"                "1.0"
+        "AttackAnimationPoint"      "0.0"
+        "AttackAcquisitionRange"    "0"
+        "AttackRange"               "0"
+        "ProjectileModel"           ""
+        "ProjectileSpeed"           "0"
+
+        // Bounds
+        //----------------------------------------------------------------
+        "BoundsHullName"            "DOTA_HULL_SIZE_REGULAR"
+        "HealthBarOffset"           "170"
+
+        // Movement
+        //----------------------------------------------------------------
+        "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"
+        "MovementSpeed"             "0"
+        "MovementTurnRate"          "0"
+    
+        // Bounty
+        //----------------------------------------------------------------
+        "BountyXP"                  "0"
+        "BountyGoldMin"             "0"
+        "BountyGoldMax"             "0"
+
+        // Status
+        //----------------------------------------------------------------
+        "StatusHealth"              "1"
+        "StatusHealthRegen"         "0.0"
+        "StatusMana"                "0"
+        "StatusManaRegen"           "0"
+        
+        // Vision
+        //----------------------------------------------------------------
+        "VisionDaytimeRange"        "0"
+        "VisionNighttimeRange"      "0"
+
+        //Inventory
+        //----------------------------------------------------------------
+        "HasInventory"              "0"
+    }
+
+    "npc_imba_developer_xthedark"
+    {
+        // General
+        //----------------------------------------------------------------
+        "BaseClass"                 "npc_dota_ward_base"
+        "Model"                     "models/heroes/chen/chen.vmdl"
+        "Level"                     "1"
+        "ModelScale"                "1.3"
+
+        // Abilities
+        //----------------------------------------------------------------
+        "Ability1"                  ""
+        "Ability2"                  ""
+        "Ability3"                  ""
+        "Ability4"                  ""
+        "Ability5"                  ""
+
+        // Armor
+        //----------------------------------------------------------------
+        "ArmorPhysical"             "0"
+        "MagicalResistance"         "0"
+
+        // Attack
+        //----------------------------------------------------------------
+        "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+        "AttackDamageMin"           "0"
+        "AttackDamageMax"           "0" 
+        "AttackRate"                "1.0"
+        "AttackAnimationPoint"      "0.0"
+        "AttackAcquisitionRange"    "0"
+        "AttackRange"               "0"
+        "ProjectileModel"           ""
+        "ProjectileSpeed"           "0"
+
+        // Bounds
+        //----------------------------------------------------------------
+        "BoundsHullName"            "DOTA_HULL_SIZE_REGULAR"
+        "HealthBarOffset"           "170"
+
+        // Movement
+        //----------------------------------------------------------------
+        "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"
+        "MovementSpeed"             "0"
+        "MovementTurnRate"          "0"
+    
+        // Bounty
+        //----------------------------------------------------------------
+        "BountyXP"                  "0"
+        "BountyGoldMin"             "0"
+        "BountyGoldMax"             "0"
+
+        // Status
+        //----------------------------------------------------------------
+        "StatusHealth"              "1"
+        "StatusHealthRegen"         "0.0"
+        "StatusMana"                "0"
+        "StatusManaRegen"           "0"
+        
+        // Vision
+        //----------------------------------------------------------------
+        "VisionDaytimeRange"        "0"
+        "VisionNighttimeRange"      "0"
+
+        //Inventory
+        //----------------------------------------------------------------
+        "HasInventory"              "0"
+    }
+
+    "npc_imba_developer_zimber"
+    {
+        // General
+        //----------------------------------------------------------------
+        "BaseClass"                 "npc_dota_ward_base"
+        "Model"                     "models/courier/f2p_courier/f2p_courier.vmdl"
+        "Level"                     "1"
+        "ModelScale"                "1.1"
+
+        // Abilities
+        //----------------------------------------------------------------
+        "Ability1"                  ""
+        "Ability2"                  ""
+        "Ability3"                  ""
+        "Ability4"                  ""
+        "Ability5"                  ""
+
+        // Armor
+        //----------------------------------------------------------------
+        "ArmorPhysical"             "0"
+        "MagicalResistance"         "0"
+
+        // Attack
+        //----------------------------------------------------------------
+        "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+        "AttackDamageMin"           "0"
+        "AttackDamageMax"           "0" 
+        "AttackRate"                "1.0"
+        "AttackAnimationPoint"      "0.0"
+        "AttackAcquisitionRange"    "0"
+        "AttackRange"               "0"
+        "ProjectileModel"           ""
+        "ProjectileSpeed"           "0"
+
+        // Bounds
+        //----------------------------------------------------------------
+        "BoundsHullName"            "DOTA_HULL_SIZE_REGULAR"
+        "HealthBarOffset"           "170"
+
+        // Movement
+        //----------------------------------------------------------------
+        "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"
+        "MovementSpeed"             "0"
+        "MovementTurnRate"          "0"
+    
+        // Bounty
+        //----------------------------------------------------------------
+        "BountyXP"                  "0"
+        "BountyGoldMin"             "0"
+        "BountyGoldMax"             "0"
+
+        // Status
+        //----------------------------------------------------------------
+        "StatusHealth"              "1"
+        "StatusHealthRegen"         "0.0"
+        "StatusMana"                "0"
+        "StatusManaRegen"           "0"
+        
+        // Vision
+        //----------------------------------------------------------------
+        "VisionDaytimeRange"        "0"
+        "VisionNighttimeRange"      "0"
+
+        //Inventory
+        //----------------------------------------------------------------
+        "HasInventory"              "0"
+    }
+
+    "npc_imba_developer_hewdraw"
+    {
+        // General
+        //----------------------------------------------------------------
+        "BaseClass"                 "npc_dota_ward_base"
+        "Model"                     "models/heroes/phoenix/phoenix_bird.vmdl"
+        "Level"                     "1"
+        "ModelScale"                "0.85"
+
+        // Abilities
+        //----------------------------------------------------------------
+        "Ability1"                  ""
+        "Ability2"                  ""
+        "Ability3"                  ""
+        "Ability4"                  ""
+        "Ability5"                  ""
+
+        // Armor
+        //----------------------------------------------------------------
+        "ArmorPhysical"             "0"
+        "MagicalResistance"         "0"
+
+        // Attack
+        //----------------------------------------------------------------
+        "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+        "AttackDamageMin"           "0"
+        "AttackDamageMax"           "0" 
+        "AttackRate"                "1.0"
+        "AttackAnimationPoint"      "0.0"
+        "AttackAcquisitionRange"    "0"
+        "AttackRange"               "0"
+        "ProjectileModel"           ""
+        "ProjectileSpeed"           "0"
+
+        // Bounds
+        //----------------------------------------------------------------
+        "BoundsHullName"            "DOTA_HULL_SIZE_REGULAR"
+        "HealthBarOffset"           "170"
+
+        // Movement
+        //----------------------------------------------------------------
+        "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"
+        "MovementSpeed"             "0"
+        "MovementTurnRate"          "0"
+    
+        // Bounty
+        //----------------------------------------------------------------
+        "BountyXP"                  "0"
+        "BountyGoldMin"             "0"
+        "BountyGoldMax"             "0"
+
+        // Status
+        //----------------------------------------------------------------
+        "StatusHealth"              "1"
+        "StatusHealthRegen"         "0.0"
+        "StatusMana"                "0"
+        "StatusManaRegen"           "0"
+        
+        // Vision
+        //----------------------------------------------------------------
+        "VisionDaytimeRange"        "0"
+        "VisionNighttimeRange"      "0"
+
+        //Inventory
+        //----------------------------------------------------------------
+        "HasInventory"              "0"
+    }   
+
+    "npc_imba_developer_iaminnocent"
+    {
+        // General
+        //----------------------------------------------------------------
+        "BaseClass"                 "npc_dota_ward_base"
+        "Model"                     "models/courier/frog/frog.vmdl"
+        "Level"                     "1"
+        "ModelScale"                "1.3"
+
+        // Abilities
+        //----------------------------------------------------------------
+        "Ability1"                  ""
+        "Ability2"                  ""
+        "Ability3"                  ""
+        "Ability4"                  ""
+        "Ability5"                  ""
+
+        // Armor
+        //----------------------------------------------------------------
+        "ArmorPhysical"             "0"
+        "MagicalResistance"         "0"
+
+        // Attack
+        //----------------------------------------------------------------
+        "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+        "AttackDamageMin"           "0"
+        "AttackDamageMax"           "0" 
+        "AttackRate"                "1.0"
+        "AttackAnimationPoint"      "0.0"
+        "AttackAcquisitionRange"    "0"
+        "AttackRange"               "0"
+        "ProjectileModel"           ""
+        "ProjectileSpeed"           "0"
+
+        // Bounds
+        //----------------------------------------------------------------
+        "BoundsHullName"            "DOTA_HULL_SIZE_REGULAR"
+        "HealthBarOffset"           "170"
+
+        // Movement
+        //----------------------------------------------------------------
+        "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"
+        "MovementSpeed"             "0"
+        "MovementTurnRate"          "0"
+    
+        // Bounty
+        //----------------------------------------------------------------
+        "BountyXP"                  "0"
+        "BountyGoldMin"             "0"
+        "BountyGoldMax"             "0"
+
+        // Status
+        //----------------------------------------------------------------
+        "StatusHealth"              "1"
+        "StatusHealthRegen"         "0.0"
+        "StatusMana"                "0"
+        "StatusManaRegen"           "0"
+        
+        // Vision
+        //----------------------------------------------------------------
+        "VisionDaytimeRange"        "0"
+        "VisionNighttimeRange"      "0"
+
+        //Inventory
+        //----------------------------------------------------------------
+        "HasInventory"              "0"
+    }
+
+    "npc_imba_developer_noobsauce"
+    {
+        // General
+        //----------------------------------------------------------------
+        "BaseClass"                 "npc_dota_ward_base"
+        "Model"                     "models/courier/frog/frog.vmdl"
+        "Level"                     "1"
+        "ModelScale"                "1.3"
+
+        // Abilities
+        //----------------------------------------------------------------
+        "Ability1"                  ""
+        "Ability2"                  ""
+        "Ability3"                  ""
+        "Ability4"                  ""
+        "Ability5"                  ""
+
+        // Armor
+        //----------------------------------------------------------------
+        "ArmorPhysical"             "0"
+        "MagicalResistance"         "0"
+
+        // Attack
+        //----------------------------------------------------------------
+        "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+        "AttackDamageMin"           "0"
+        "AttackDamageMax"           "0" 
+        "AttackRate"                "1.0"
+        "AttackAnimationPoint"      "0.0"
+        "AttackAcquisitionRange"    "0"
+        "AttackRange"               "0"
+        "ProjectileModel"           ""
+        "ProjectileSpeed"           "0"
+
+        // Bounds
+        //----------------------------------------------------------------
+        "BoundsHullName"            "DOTA_HULL_SIZE_REGULAR"
+        "HealthBarOffset"           "170"
+
+        // Movement
+        //----------------------------------------------------------------
+        "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"
+        "MovementSpeed"             "0"
+        "MovementTurnRate"          "0"
+    
+        // Bounty
+        //----------------------------------------------------------------
+        "BountyXP"                  "0"
+        "BountyGoldMin"             "0"
+        "BountyGoldMax"             "0"
+
+        // Status
+        //----------------------------------------------------------------
+        "StatusHealth"              "1"
+        "StatusHealthRegen"         "0.0"
+        "StatusMana"                "0"
+        "StatusManaRegen"           "0"
+        
+        // Vision
+        //----------------------------------------------------------------
+        "VisionDaytimeRange"        "0"
+        "VisionNighttimeRange"      "0"
+
+        //Inventory
+        //----------------------------------------------------------------
+        "HasInventory"              "0"
+    }
+
+    "npc_imba_developer_seinken"
+    {
+        // General
+        //----------------------------------------------------------------
+        "BaseClass"                 "npc_dota_ward_base"
+        "Model"                     "models/courier/frog/frog.vmdl"
+        "Level"                     "1"
+        "ModelScale"                "1.3"
+
+        // Abilities
+        //----------------------------------------------------------------
+        "Ability1"                  ""
+        "Ability2"                  ""
+        "Ability3"                  ""
+        "Ability4"                  ""
+        "Ability5"                  ""
+
+        // Armor
+        //----------------------------------------------------------------
+        "ArmorPhysical"             "0"
+        "MagicalResistance"         "0"
+
+        // Attack
+        //----------------------------------------------------------------
+        "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+        "AttackDamageMin"           "0"
+        "AttackDamageMax"           "0" 
+        "AttackRate"                "1.0"
+        "AttackAnimationPoint"      "0.0"
+        "AttackAcquisitionRange"    "0"
+        "AttackRange"               "0"
+        "ProjectileModel"           ""
+        "ProjectileSpeed"           "0"
+
+        // Bounds
+        //----------------------------------------------------------------
+        "BoundsHullName"            "DOTA_HULL_SIZE_REGULAR"
+        "HealthBarOffset"           "170"
+
+        // Movement
+        //----------------------------------------------------------------
+        "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"
+        "MovementSpeed"             "0"
+        "MovementTurnRate"          "0"
+    
+        // Bounty
+        //----------------------------------------------------------------
+        "BountyXP"                  "0"
+        "BountyGoldMin"             "0"
+        "BountyGoldMax"             "0"
+
+        // Status
+        //----------------------------------------------------------------
+        "StatusHealth"              "1"
+        "StatusHealthRegen"         "0.0"
+        "StatusMana"                "0"
+        "StatusManaRegen"           "0"
+        
+        // Vision
+        //----------------------------------------------------------------
+        "VisionDaytimeRange"        "0"
+        "VisionNighttimeRange"      "0"
+
+        //Inventory
+        //----------------------------------------------------------------
+        "HasInventory"              "0"
+    }
+
+    "npc_imba_developer_mouji"
+    {
+        // General
+        //----------------------------------------------------------------
+        "BaseClass"                 "npc_dota_ward_base"
+        "Model"                     "models/courier/frog/frog.vmdl"
+        "Level"                     "1"
+        "ModelScale"                "1.3"
+
+        // Abilities
+        //----------------------------------------------------------------
+        "Ability1"                  ""
+        "Ability2"                  ""
+        "Ability3"                  ""
+        "Ability4"                  ""
+        "Ability5"                  ""
+
+        // Armor
+        //----------------------------------------------------------------
+        "ArmorPhysical"             "0"
+        "MagicalResistance"         "0"
+
+        // Attack
+        //----------------------------------------------------------------
+        "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+        "AttackDamageMin"           "0"
+        "AttackDamageMax"           "0" 
+        "AttackRate"                "1.0"
+        "AttackAnimationPoint"      "0.0"
+        "AttackAcquisitionRange"    "0"
+        "AttackRange"               "0"
+        "ProjectileModel"           ""
+        "ProjectileSpeed"           "0"
+
+        // Bounds
+        //----------------------------------------------------------------
+        "BoundsHullName"            "DOTA_HULL_SIZE_REGULAR"
+        "HealthBarOffset"           "170"
+
+        // Movement
+        //----------------------------------------------------------------
+        "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"
+        "MovementSpeed"             "0"
+        "MovementTurnRate"          "0"
+    
+        // Bounty
+        //----------------------------------------------------------------
+        "BountyXP"                  "0"
+        "BountyGoldMin"             "0"
+        "BountyGoldMax"             "0"
+
+        // Status
+        //----------------------------------------------------------------
+        "StatusHealth"              "1"
+        "StatusHealthRegen"         "0.0"
+        "StatusMana"                "0"
+        "StatusManaRegen"           "0"
+        
+        // Vision
+        //----------------------------------------------------------------
+        "VisionDaytimeRange"        "0"
+        "VisionNighttimeRange"      "0"
+
+        //Inventory
+        //----------------------------------------------------------------
+        "HasInventory"              "0"
+    }
+
+    "npc_imba_developer_atrocty"
+    {
+        // General
+        //----------------------------------------------------------------
+        "BaseClass"                 "npc_dota_ward_base"
+        "Model"                     "models/courier/frog/frog.vmdl"
+        "Level"                     "1"
+        "ModelScale"                "1.3"
+
+        // Abilities
+        //----------------------------------------------------------------
+        "Ability1"                  ""
+        "Ability2"                  ""
+        "Ability3"                  ""
+        "Ability4"                  ""
+        "Ability5"                  ""
+
+        // Armor
+        //----------------------------------------------------------------
+        "ArmorPhysical"             "0"
+        "MagicalResistance"         "0"
+
+        // Attack
+        //----------------------------------------------------------------
+        "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+        "AttackDamageMin"           "0"
+        "AttackDamageMax"           "0" 
+        "AttackRate"                "1.0"
+        "AttackAnimationPoint"      "0.0"
+        "AttackAcquisitionRange"    "0"
+        "AttackRange"               "0"
+        "ProjectileModel"           ""
+        "ProjectileSpeed"           "0"
+
+        // Bounds
+        //----------------------------------------------------------------
+        "BoundsHullName"            "DOTA_HULL_SIZE_REGULAR"
+        "HealthBarOffset"           "170"
+
+        // Movement
+        //----------------------------------------------------------------
+        "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"
+        "MovementSpeed"             "0"
+        "MovementTurnRate"          "0"
+    
+        // Bounty
+        //----------------------------------------------------------------
+        "BountyXP"                  "0"
+        "BountyGoldMin"             "0"
+        "BountyGoldMax"             "0"
+
+        // Status
+        //----------------------------------------------------------------
+        "StatusHealth"              "1"
+        "StatusHealthRegen"         "0.0"
+        "StatusMana"                "0"
+        "StatusManaRegen"           "0"
+        
+        // Vision
+        //----------------------------------------------------------------
+        "VisionDaytimeRange"        "0"
+        "VisionNighttimeRange"      "0"
+
+        //Inventory
+        //----------------------------------------------------------------
+        "HasInventory"              "0"
+    }
+
+    "npc_imba_developer_broccoli"
+    {
+        // General
+        //----------------------------------------------------------------
+        "BaseClass"                 "npc_dota_ward_base"
+        "Model"                     "models/courier/frog/frog.vmdl"
+        "Level"                     "1"
+        "ModelScale"                "1.3"
+
+        // Abilities
+        //----------------------------------------------------------------
+        "Ability1"                  ""
+        "Ability2"                  ""
+        "Ability3"                  ""
+        "Ability4"                  ""
+        "Ability5"                  ""
+
+        // Armor
+        //----------------------------------------------------------------
+        "ArmorPhysical"             "0"
+        "MagicalResistance"         "0"
+
+        // Attack
+        //----------------------------------------------------------------
+        "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+        "AttackDamageMin"           "0"
+        "AttackDamageMax"           "0" 
+        "AttackRate"                "1.0"
+        "AttackAnimationPoint"      "0.0"
+        "AttackAcquisitionRange"    "0"
+        "AttackRange"               "0"
+        "ProjectileModel"           ""
+        "ProjectileSpeed"           "0"
+
+        // Bounds
+        //----------------------------------------------------------------
+        "BoundsHullName"            "DOTA_HULL_SIZE_REGULAR"
+        "HealthBarOffset"           "170"
+
+        // Movement
+        //----------------------------------------------------------------
+        "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"
+        "MovementSpeed"             "0"
+        "MovementTurnRate"          "0"
+    
+        // Bounty
+        //----------------------------------------------------------------
+        "BountyXP"                  "0"
+        "BountyGoldMin"             "0"
+        "BountyGoldMax"             "0"
+
+        // Status
+        //----------------------------------------------------------------
+        "StatusHealth"              "1"
+        "StatusHealthRegen"         "0.0"
+        "StatusMana"                "0"
+        "StatusManaRegen"           "0"
+        
+        // Vision
+        //----------------------------------------------------------------
+        "VisionDaytimeRange"        "0"
+        "VisionNighttimeRange"      "0"
+
+        //Inventory
+        //----------------------------------------------------------------
+        "HasInventory"              "0"
+    }
+
+    "npc_imba_developer_cookies"
+    {
+        // General
+        //----------------------------------------------------------------
+        "BaseClass"                 "npc_dota_ward_base"
+        "Model"                     "models/courier/frog/frog.vmdl"
+        "Level"                     "1"
+        "ModelScale"                "1.3"
+
+        // Abilities
+        //----------------------------------------------------------------
+        "Ability1"                  ""
+        "Ability2"                  ""
+        "Ability3"                  ""
+        "Ability4"                  ""
+        "Ability5"                  ""
+
+        // Armor
+        //----------------------------------------------------------------
+        "ArmorPhysical"             "0"
+        "MagicalResistance"         "0"
+
+        // Attack
+        //----------------------------------------------------------------
+        "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+        "AttackDamageMin"           "0"
+        "AttackDamageMax"           "0" 
+        "AttackRate"                "1.0"
+        "AttackAnimationPoint"      "0.0"
+        "AttackAcquisitionRange"    "0"
+        "AttackRange"               "0"
+        "ProjectileModel"           ""
+        "ProjectileSpeed"           "0"
+
+        // Bounds
+        //----------------------------------------------------------------
+        "BoundsHullName"            "DOTA_HULL_SIZE_REGULAR"
+        "HealthBarOffset"           "170"
+
+        // Movement
+        //----------------------------------------------------------------
+        "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"
+        "MovementSpeed"             "0"
+        "MovementTurnRate"          "0"
+    
+        // Bounty
+        //----------------------------------------------------------------
+        "BountyXP"                  "0"
+        "BountyGoldMin"             "0"
+        "BountyGoldMax"             "0"
+
+        // Status
+        //----------------------------------------------------------------
+        "StatusHealth"              "1"
+        "StatusHealthRegen"         "0.0"
+        "StatusMana"                "0"
+        "StatusManaRegen"           "0"
+        
+        // Vision
+        //----------------------------------------------------------------
+        "VisionDaytimeRange"        "0"
+        "VisionNighttimeRange"      "0"
+
+        //Inventory
+        //----------------------------------------------------------------
+        "HasInventory"              "0"
+    }
+
+    "npc_imba_developer_dewouter"
+    {
+        // General
+        //----------------------------------------------------------------
+        "BaseClass"                 "npc_dota_ward_base"
+        "Model"                     "models/courier/frog/frog.vmdl"
+        "Level"                     "1"
+        "ModelScale"                "1.3"
+
+        // Abilities
+        //----------------------------------------------------------------
+        "Ability1"                  ""
+        "Ability2"                  ""
+        "Ability3"                  ""
+        "Ability4"                  ""
+        "Ability5"                  ""
+
+        // Armor
+        //----------------------------------------------------------------
+        "ArmorPhysical"             "0"
+        "MagicalResistance"         "0"
+
+        // Attack
+        //----------------------------------------------------------------
+        "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+        "AttackDamageMin"           "0"
+        "AttackDamageMax"           "0" 
+        "AttackRate"                "1.0"
+        "AttackAnimationPoint"      "0.0"
+        "AttackAcquisitionRange"    "0"
+        "AttackRange"               "0"
+        "ProjectileModel"           ""
+        "ProjectileSpeed"           "0"
+
+        // Bounds
+        //----------------------------------------------------------------
+        "BoundsHullName"            "DOTA_HULL_SIZE_REGULAR"
+        "HealthBarOffset"           "170"
+
+        // Movement
+        //----------------------------------------------------------------
+        "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"
+        "MovementSpeed"             "0"
+        "MovementTurnRate"          "0"
+    
+        // Bounty
+        //----------------------------------------------------------------
+        "BountyXP"                  "0"
+        "BountyGoldMin"             "0"
+        "BountyGoldMax"             "0"
+
+        // Status
+        //----------------------------------------------------------------
+        "StatusHealth"              "1"
+        "StatusHealthRegen"         "0.0"
+        "StatusMana"                "0"
+        "StatusManaRegen"           "0"
+        
+        // Vision
+        //----------------------------------------------------------------
+        "VisionDaytimeRange"        "0"
+        "VisionNighttimeRange"      "0"
+
+        //Inventory
+        //----------------------------------------------------------------
+        "HasInventory"              "0"
+    }
+
+    "npc_imba_developer_fudge"
+    {
+        // General
+        //----------------------------------------------------------------
+        "BaseClass"                 "npc_dota_ward_base"
+        "Model"                     "models/courier/frog/frog.vmdl"
+        "Level"                     "1"
+        "ModelScale"                "1.3"
+
+        // Abilities
+        //----------------------------------------------------------------
+        "Ability1"                  ""
+        "Ability2"                  ""
+        "Ability3"                  ""
+        "Ability4"                  ""
+        "Ability5"                  ""
+
+        // Armor
+        //----------------------------------------------------------------
+        "ArmorPhysical"             "0"
+        "MagicalResistance"         "0"
+
+        // Attack
+        //----------------------------------------------------------------
+        "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+        "AttackDamageMin"           "0"
+        "AttackDamageMax"           "0" 
+        "AttackRate"                "1.0"
+        "AttackAnimationPoint"      "0.0"
+        "AttackAcquisitionRange"    "0"
+        "AttackRange"               "0"
+        "ProjectileModel"           ""
+        "ProjectileSpeed"           "0"
+
+        // Bounds
+        //----------------------------------------------------------------
+        "BoundsHullName"            "DOTA_HULL_SIZE_REGULAR"
+        "HealthBarOffset"           "170"
+
+        // Movement
+        //----------------------------------------------------------------
+        "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"
+        "MovementSpeed"             "0"
+        "MovementTurnRate"          "0"
+    
+        // Bounty
+        //----------------------------------------------------------------
+        "BountyXP"                  "0"
+        "BountyGoldMin"             "0"
+        "BountyGoldMax"             "0"
+
+        // Status
+        //----------------------------------------------------------------
+        "StatusHealth"              "1"
+        "StatusHealthRegen"         "0.0"
+        "StatusMana"                "0"
+        "StatusManaRegen"           "0"
+        
+        // Vision
+        //----------------------------------------------------------------
+        "VisionDaytimeRange"        "0"
+        "VisionNighttimeRange"      "0"
+
+        //Inventory
+        //----------------------------------------------------------------
+        "HasInventory"              "0"
+    }
+
+    "npc_imba_developer_lindbrum"
+    {
+        // General
+        //----------------------------------------------------------------
+        "BaseClass"                 "npc_dota_ward_base"
+        "Model"                     "models/courier/frog/frog.vmdl"
+        "Level"                     "1"
+        "ModelScale"                "1.3"
+
+        // Abilities
+        //----------------------------------------------------------------
+        "Ability1"                  ""
+        "Ability2"                  ""
+        "Ability3"                  ""
+        "Ability4"                  ""
+        "Ability5"                  ""
+
+        // Armor
+        //----------------------------------------------------------------
+        "ArmorPhysical"             "0"
+        "MagicalResistance"         "0"
+
+        // Attack
+        //----------------------------------------------------------------
+        "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+        "AttackDamageMin"           "0"
+        "AttackDamageMax"           "0" 
+        "AttackRate"                "1.0"
+        "AttackAnimationPoint"      "0.0"
+        "AttackAcquisitionRange"    "0"
+        "AttackRange"               "0"
+        "ProjectileModel"           ""
+        "ProjectileSpeed"           "0"
+
+        // Bounds
+        //----------------------------------------------------------------
+        "BoundsHullName"            "DOTA_HULL_SIZE_REGULAR"
+        "HealthBarOffset"           "170"
+
+        // Movement
+        //----------------------------------------------------------------
+        "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"
+        "MovementSpeed"             "0"
+        "MovementTurnRate"          "0"
+    
+        // Bounty
+        //----------------------------------------------------------------
+        "BountyXP"                  "0"
+        "BountyGoldMin"             "0"
+        "BountyGoldMax"             "0"
+
+        // Status
+        //----------------------------------------------------------------
+        "StatusHealth"              "1"
+        "StatusHealthRegen"         "0.0"
+        "StatusMana"                "0"
+        "StatusManaRegen"           "0"
+        
+        // Vision
+        //----------------------------------------------------------------
+        "VisionDaytimeRange"        "0"
+        "VisionNighttimeRange"      "0"
+
+        //Inventory
+        //----------------------------------------------------------------
+        "HasInventory"              "0"
+    }
+
+    "npc_imba_developer_sercankd"
+    {
+        // General
+        //----------------------------------------------------------------
+        "BaseClass"                 "npc_dota_ward_base"
+        "Model"                     "models/courier/frog/frog.vmdl"
+        "Level"                     "1"
+        "ModelScale"                "1.3"
+
+        // Abilities
+        //----------------------------------------------------------------
+        "Ability1"                  ""
+        "Ability2"                  ""
+        "Ability3"                  ""
+        "Ability4"                  ""
+        "Ability5"                  ""
+
+        // Armor
+        //----------------------------------------------------------------
+        "ArmorPhysical"             "0"
+        "MagicalResistance"         "0"
+
+        // Attack
+        //----------------------------------------------------------------
+        "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+        "AttackDamageMin"           "0"
+        "AttackDamageMax"           "0" 
+        "AttackRate"                "1.0"
+        "AttackAnimationPoint"      "0.0"
+        "AttackAcquisitionRange"    "0"
+        "AttackRange"               "0"
+        "ProjectileModel"           ""
+        "ProjectileSpeed"           "0"
+
+        // Bounds
+        //----------------------------------------------------------------
+        "BoundsHullName"            "DOTA_HULL_SIZE_REGULAR"
+        "HealthBarOffset"           "170"
+
+        // Movement
+        //----------------------------------------------------------------
+        "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"
+        "MovementSpeed"             "0"
+        "MovementTurnRate"          "0"
+    
+        // Bounty
+        //----------------------------------------------------------------
+        "BountyXP"                  "0"
+        "BountyGoldMin"             "0"
+        "BountyGoldMax"             "0"
+
+        // Status
+        //----------------------------------------------------------------
+        "StatusHealth"              "1"
+        "StatusHealthRegen"         "0.0"
+        "StatusMana"                "0"
+        "StatusManaRegen"           "0"
+        
+        // Vision
+        //----------------------------------------------------------------
+        "VisionDaytimeRange"        "0"
+        "VisionNighttimeRange"      "0"
+
+        //Inventory
+        //----------------------------------------------------------------
+        "HasInventory"              "0"
+    }
+
+    "npc_imba_developer_yahnich"
+    {
+        // General
+        //----------------------------------------------------------------
+        "BaseClass"                 "npc_dota_ward_base"
+        "Model"                     "models/courier/frog/frog.vmdl"
+        "Level"                     "1"
+        "ModelScale"                "1.3"
+
+        // Abilities
+        //----------------------------------------------------------------
+        "Ability1"                  ""
+        "Ability2"                  ""
+        "Ability3"                  ""
+        "Ability4"                  ""
+        "Ability5"                  ""
+
+        // Armor
+        //----------------------------------------------------------------
+        "ArmorPhysical"             "0"
+        "MagicalResistance"         "0"
+
+        // Attack
+        //----------------------------------------------------------------
+        "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+        "AttackDamageMin"           "0"
+        "AttackDamageMax"           "0" 
+        "AttackRate"                "1.0"
+        "AttackAnimationPoint"      "0.0"
+        "AttackAcquisitionRange"    "0"
+        "AttackRange"               "0"
+        "ProjectileModel"           ""
+        "ProjectileSpeed"           "0"
+
+        // Bounds
+        //----------------------------------------------------------------
+        "BoundsHullName"            "DOTA_HULL_SIZE_REGULAR"
+        "HealthBarOffset"           "170"
+
+        // Movement
+        //----------------------------------------------------------------
+        "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"
+        "MovementSpeed"             "0"
+        "MovementTurnRate"          "0"
+    
+        // Bounty
+        //----------------------------------------------------------------
+        "BountyXP"                  "0"
+        "BountyGoldMin"             "0"
+        "BountyGoldMax"             "0"
+
+        // Status
+        //----------------------------------------------------------------
+        "StatusHealth"              "1"
+        "StatusHealthRegen"         "0.0"
+        "StatusMana"                "0"
+        "StatusManaRegen"           "0"
+        
+        // Vision
+        //----------------------------------------------------------------
+        "VisionDaytimeRange"        "0"
+        "VisionNighttimeRange"      "0"
+
+        //Inventory
+        //----------------------------------------------------------------
+        "HasInventory"              "0"
+    }
 }

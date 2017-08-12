@@ -93,6 +93,7 @@ function modifier_imba_skull_basher_unique:OnCreated()
     self.stun_duration = self.ability:GetSpecialValueFor("stun_duration")
     self.bash_damage = self.ability:GetSpecialValueFor("bash_damage")
     self.skull_break_duration = self.ability:GetSpecialValueFor("skull_break_duration")
+    self.actual_break_duration = self.ability:GetSpecialValueFor("actual_break_duration")
 end
 
 function modifier_imba_skull_basher_unique:DeclareFunctions()
@@ -193,7 +194,7 @@ function modifier_imba_skull_basher_unique:OnAttackLanded(keys)
                     target:RemoveModifierByName(self.modifier_skull_crash)
 
                     -- Apply BREAK!
-                    target:AddNewModifier(self.caster, self.ability, self.modifier_skull_break, {duration = self.stun_duration})
+                    target:AddNewModifier(self.caster, self.ability, self.modifier_skull_break, {duration = self.actual_break_duration})
                 end
             end            
                 

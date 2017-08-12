@@ -129,7 +129,7 @@ function modifier_imba_berserkers_rage_melee:OnAttackLanded( params )
 		local parent = self:GetParent()
 		if (parent == params.attacker) and (parent:IsRealHero() or parent:IsClone()) and not params.target:IsBuilding() then
 			local ability = self:GetAbility()
-			if RollPseudoRandom(ability:GetTalentSpecialValueFor("bash_chance"), ability) then
+			if RollPseudoRandom(ability:GetSpecialValueFor("bash_chance"), ability) then
 				local bash_damage = ability:GetSpecialValueFor("bash_damage")
 				local bash_duration = ability:GetSpecialValueFor("bash_duration")
 				ApplyDamage({victim = params.target, attacker = parent, ability = ability, damage = bash_damage, damage_type = ability:GetAbilityDamageType()})
@@ -234,7 +234,7 @@ function modifier_imba_berserkers_rage_ranged:OnAttackLanded( params )
 		end
 		if (parent == params.attacker) and (parent:IsRealHero() or parent:IsClone()) then
 			local ability = self:GetAbility()
-			if RollPseudoRandom(ability:GetTalentSpecialValueFor("hamstring_chance"), ability) then
+			if RollPseudoRandom(ability:GetSpecialValueFor("hamstring_chance"), ability) then
 				local hamstring_duration = ability:GetSpecialValueFor("hamstring_duration")
 				params.target:AddNewModifier(parent, ability, "modifier_imba_berserkers_rage_slow", {duration = hamstring_duration})
 				params.target:EmitSound("DOTA_Item.Daedelus.Crit")
@@ -321,6 +321,11 @@ function imba_troll_warlord_whirling_axes_ranged:OnSpellStart()
 		else
 			direction = (target_loc - caster_loc):Normalized()
 		end
+
+		-- #7 Talent: Ranged Whirling Axe axes count
+		axe_count = axe_count + caster:FindTalentValue("special_bonus_imba_troll_warlord_7", "axe_count_increase")
+		axe_spread = axe_spread + caster:FindTalentValue("special_bonus_imba_troll_warlord_7", "axe_spread_increase")
+
 		-- Emit sounds
 		caster:EmitSound("Hero_TrollWarlord.WhirlingAxes.Ranged")
 		-- Randomly play a cast line

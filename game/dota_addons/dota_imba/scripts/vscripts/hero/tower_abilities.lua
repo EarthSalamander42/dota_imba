@@ -418,7 +418,7 @@ function modifier_imba_tower_protective_instinct:OnIntervalThink()
 										self.radius,
 										DOTA_UNIT_TARGET_TEAM_FRIENDLY,
 										DOTA_UNIT_TARGET_HERO,
-										DOTA_UNIT_TARGET_FLAG_NONE,
+										DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS,
 										FIND_ANY_ORDER,
 										false)
 
@@ -4529,3 +4529,111 @@ function modifier_tower_healing_think:IsPurgable()
 end
 
 
+---------------------------------------------------
+---------------------------------------------------
+---------------------------------------------------
+--			Tower's Tenacity Aura
+---------------------------------------------------
+---------------------------------------------------
+---------------------------------------------------
+
+imba_tower_tenacity = imba_tower_tenacity or class({})
+LinkLuaModifier("modifier_imba_tower_tenacity_aura", "hero/tower_abilities", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_tower_tenacity_aura_buff", "hero/tower_abilities", LUA_MODIFIER_MOTION_NONE)
+
+function imba_tower_tenacity:GetAbilityTextureName()
+   return "custom/tower_tenacity"
+end
+
+function imba_tower_tenacity:GetIntrinsicModifierName()
+	return "modifier_imba_tower_tenacity_aura"
+end
+
+-- Tower Aura
+modifier_imba_tower_tenacity_aura = modifier_imba_tower_tenacity_aura or class({})
+
+function modifier_imba_tower_tenacity_aura:OnCreated()
+	-- Ability properties
+	self.caster = self:GetCaster()
+	self.ability = self:GetAbility()
+	if not self.ability then
+		self:Destroy()
+		return nil
+	end
+
+	-- Ability specials
+	self.aura_radius = self.ability:GetSpecialValueFor("aura_radius")
+	self.aura_stickyness = self.ability:GetSpecialValueFor("aura_stickyness")
+end
+
+function modifier_imba_tower_tenacity_aura:OnRefresh()
+	self:OnCreated()
+end
+
+function modifier_imba_tower_tenacity_aura:GetAuraDuration()
+	return self.aura_stickyness
+end
+
+function modifier_imba_tower_tenacity_aura:GetAuraRadius()
+	return self.aura_radius
+end
+
+function modifier_imba_tower_tenacity_aura:GetAuraSearchFlags()
+	return DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED
+end
+
+function modifier_imba_tower_tenacity_aura:GetAuraSearchTeam()
+	return DOTA_UNIT_TARGET_TEAM_FRIENDLY
+end
+
+function modifier_imba_tower_tenacity_aura:GetAuraSearchType()
+	return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+end
+
+function modifier_imba_tower_tenacity_aura:GetModifierAura()
+	return "modifier_imba_tower_tenacity_aura_buff"
+end
+
+function modifier_imba_tower_tenacity_aura:IsAura()
+	return true
+end
+
+function modifier_imba_tower_tenacity_aura:IsDebuff()
+	return false
+end
+
+function modifier_imba_tower_tenacity_aura:IsHidden()
+	return true
+end
+
+-- Tenacity Modifier
+modifier_imba_tower_tenacity_aura_buff = modifier_imba_tower_tenacity_aura_buff or class({})
+
+function modifier_imba_tower_tenacity_aura_buff:OnCreated()
+	-- Ability properties
+	self.caster = self:GetCaster()
+	self.ability = self:GetAbility()
+	if not self.ability then
+		self:Destroy()
+		return nil
+	end
+	self.parent = self:GetParent()
+
+	-- Ability specials
+	self.base_tenacity_pct = self.ability:GetSpecialValueFor("base_tenacity_pct")
+	self.tenacity_per_protective = self.ability:GetSpecialValueFor("tenacity_per_protective")		
+end
+
+function modifier_imba_tower_tenacity_aura_buff:OnRefresh()
+	self:OnCreated()
+end
+
+function modifier_imba_tower_tenacity_aura_buff:IsHidden()
+	return false
+end
+
+function modifier_imba_tower_tenacity_aura_buff:GetCustomTenacity()
+	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)
+	local tenacity = self.base_tenacity_pct + self.tenacity_per_protective * protective_instinct_stacks	
+    return tenacity
+end

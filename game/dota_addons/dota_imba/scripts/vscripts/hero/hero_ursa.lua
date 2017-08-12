@@ -773,7 +773,7 @@ function EnrageCast(caster, ability)
 	caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_4)
 	
 	-- Apply strong purge
-	caster:Purge(false, true, false, true, false) --don't remove buffs, remove debuffs, not only on this frame, purges stuns, don't remove exceptions
+	caster:Purge(false, true, false, true, true) --don't remove buffs, remove debuffs, not only on this frame, purges stuns.
 	
 	-- Play cast sound
 	EmitSoundOn(sound_cast, caster)
@@ -1112,29 +1112,31 @@ function modifier_terrorital_hunter_fogvision:OnCreated()
 	end
 end
 
-function modifier_terrorital_hunter_fogvision:OnIntervalThink()
-	if IsServer() then
-		local caster = self:GetCaster()
-		local parent = self:GetParent()
-		AddFOWViewer(caster:GetTeamNumber(), parent:GetAbsOrigin(), 10, FrameTime(), false)
-	end
+function modifier_terrorital_hunter_fogvision:DeclareFunctions()
+	local funcs ={
+	MODIFIER_PROPERTY_PROVIDES_FOW_POSITION,
+	MODIFIER_EVENT_ON_STATE_CHANGED
+}
+	return funcs 
 end
 
+-- Reveal from fog
+function modifier_terrorital_hunter_fogvision:GetModifierProvidesFOWVision()
+	return 1
+end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+-- Invis particle handling
+function modifier_terrorital_hunter_fogvision:OnStateChanged()
+	if self:GetParent():IsInvisible() and not self.applied_particle then
+		self.invis_particle_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_ursa/ursa_fury_swipes_debuff.vpcf", PATTACH_OVERHEAD_FOLLOW, self:GetParent()) 
+		ParticleManager:SetParticleControlEnt(self.invis_particle_fx, 0, caster, PATTACH_OVERHEAD_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
+		self.applied_particle = true
+	elseif not self:GetParent():IsInvisible() and self.invis_particle_fx then
+		ParticleManager:DestroyParticle(self.invis_particle_fx, false)
+		ParticleManager:ReleaseParticleIndex(self.invis_particle_fx)
+		self.applied_particle = false
+	end
+end
 
 
 

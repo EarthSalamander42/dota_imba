@@ -521,16 +521,16 @@
 		"Ability2"					"imba_crystal_maiden_frostbite"
 		"Ability3"					"imba_crystal_maiden_brilliance_aura"
 		"Ability4"					"imba_crystal_maiden_arcane_dynamo"
-		"Ability5"					"imba_crystal_maiden_freezing_field"
+		"Ability5"					"imba_crystal_maiden_freezing_field"		
 
-		"Ability10"					"special_bonus_imba_crystal_maiden_1"
-		"Ability11"					"special_bonus_imba_crystal_maiden_2"
-		"Ability12"					"special_bonus_imba_crystal_maiden_3"
-		"Ability13"					"special_bonus_imba_crystal_maiden_4"
-		"Ability14"					"special_bonus_imba_crystal_maiden_5"
-		"Ability15"					"special_bonus_imba_crystal_maiden_6"
-		"Ability16"					"special_bonus_imba_crystal_maiden_7"
-		"Ability17"					"special_bonus_imba_crystal_maiden_8"
+		"Ability10"					"special_bonus_imba_crystal_maiden_2" //Frostbite can be cast on allies to regen health and mana and reduce damage taken
+		"Ability11"					"special_bonus_imba_crystal_maiden_5" //Enemies hit by Crystal Maiden's abilities gain a debuff that slows them by 15%/15 move/attack speed for 3 seconds
+		"Ability12"					"special_bonus_imba_crystal_maiden_4" //Double Arcane Dynamo's bonuses
+		"Ability13"					"special_bonus_imba_crystal_maiden_1" //Icy Touch causes a 100% movement speed slow that is slowly regained over 6 seconds
+		"Ability14"					"special_bonus_imba_crystal_maiden_7" //Freezing Field no longer drops projectiles - instead, at the end of channel, the damage (based on channeled time) is distributed randomly amongst enemies in Freezing Field's AoE
+		"Ability15"					"special_bonus_imba_crystal_maiden_8" //+50% Freezing Field explosion rate
+		"Ability16"					"special_bonus_imba_crystal_maiden_6" //Freezing Field constantly Frostbites enemies in it during the duration of the spell
+		"Ability17"					"special_bonus_imba_crystal_maiden_3" //Crystal Nova's Snowfield grants damage reduction and increases health regeneration. 
 
 		"ProjectileModel"			"particles/units/heroes/hero_crystalmaiden/maiden_base_attack.vpcf"
 	}
@@ -1660,14 +1660,14 @@
 		"Ability5"					"nyx_assassin_unburrow"
 		"Ability6"					"imba_nyx_assassin_vendetta"
 		
-		"Ability10"					"special_bonus_imba_nyx_assassin_1"
-		"Ability11"					"special_bonus_imba_nyx_assassin_2"
-		"Ability12"					"special_bonus_imba_nyx_assassin_3"
-		"Ability13"					"special_bonus_imba_nyx_assassin_4"
-		"Ability14"					"special_bonus_imba_nyx_assassin_5"
-		"Ability15"					"special_bonus_imba_nyx_assassin_6"
-		"Ability16"					"special_bonus_imba_nyx_assassin_7"
-		"Ability17"					"special_bonus_imba_nyx_assassin_8"
+		"Ability10"					"special_bonus_imba_nyx_assassin_4" //Spiked Carapace returns all damage instances
+		"Ability11"					"special_bonus_imba_nyx_assassin_5" //Spiked Carapace auto-casts < 30% HP
+		"Ability12"					"special_bonus_imba_nyx_assassin_3" //Mana Burn uses targets main attribute
+		"Ability13"					"special_bonus_imba_nyx_assassin_8" //If unit dies during Mana Burn, Nyx gets the parasite
+		"Ability14"					"special_bonus_imba_nyx_assassin_7" //Impale slows people down the more they move
+		"Ability15"					"special_bonus_imba_nyx_assassin_1" //Vendetta kill doesn't use Eye for Eye stacks
+		"Ability16"					"special_bonus_imba_nyx_assassin_6" //Impale causes random spikes to appear around targets hit
+		"Ability17"					"special_bonus_imba_nyx_assassin_2" //Vendetta hits apply Mana Burn
 
 		"ProjectileSpeed"			"900"
 	}
@@ -1843,24 +1843,28 @@
 	{
 		"override_hero"				"npc_dota_hero_phoenix"
 
-		//"Ability1"					"imba_phoenix_icarus_dive"
-		//"Ability2"					"imba_phoenix_fire_spirits"
-		//"Ability3"					"imba_phoenix_sun_ray"
-		//"Ability4"					"imba_phoenix_sun_ray_toggle_move_empty"
-		//"Ability5"					"imba_phoenix_supernova"
-		//"Ability6"					"imba_phoenix_launch_fire_spirit"
-		//"Ability7"					"imba_phoenix_icarus_dive_stop"
-		//"Ability8"					"imba_phoenix_sun_ray_stop"
-		//"Ability9"					"imba_phoenix_sun_ray_toggle_move"
+		"IsImba"					"1"
 
-		"Ability10"					"special_bonus_exp_boost_15"
-		"Ability11"					"special_bonus_hp_150"
-		"Ability12"					"special_bonus_unique_phoenix_3"
-		"Ability13"					"special_bonus_gold_income_25"
-		"Ability14"					"special_bonus_armor_6"
-		"Ability15"					"special_bonus_spell_amplify_8"
-		"Ability16"					"special_bonus_unique_phoenix_1"
-		"Ability17"					"special_bonus_unique_phoenix_2"
+		"AbilityLayout"				"6"
+
+		"Ability1"					"imba_phoenix_icarus_dive"
+		"Ability2"					"imba_phoenix_fire_spirits"
+		"Ability3"					"imba_phoenix_sun_ray"
+		"Ability4"					"imba_phoenix_sun_ray_toggle_move"
+		"Ability5"					"imba_phoenix_burning_wings"
+		"Ability6"					"imba_phoenix_supernova"
+		"Ability7"					"imba_phoenix_launch_fire_spirit"
+		"Ability8"					"imba_phoenix_icarus_dive_stop"
+		"Ability9"					"imba_phoenix_sun_ray_stop"
+
+		"Ability10"					"special_bonus_imba_phoenix_1" // 
+		"Ability11"					"special_bonus_imba_phoenix_2" // 
+		"Ability12"					"special_bonus_imba_phoenix_7" // 
+		"Ability13"					"special_bonus_imba_phoenix_4" // 
+		"Ability14"					"special_bonus_imba_phoenix_5" //
+		"Ability15"					"special_bonus_imba_phoenix_6" //
+		"Ability16"					"special_bonus_imba_phoenix_3" // 
+		"Ability17"					"special_bonus_imba_phoenix_8" // 
 
 		"ProjectileModel"			"particles/units/heroes/hero_phoenix/phoenix_base_attack.vpcf"
 	}
@@ -3045,14 +3049,14 @@
 		"Ability3"					"imba_witch_doctor_maledict"
 		"Ability4"					"imba_witch_doctor_death_ward"
 
-		"Ability10"					"special_bonus_imba_witch_doctor_1"
-		"Ability11"					"special_bonus_imba_witch_doctor_2"
-		"Ability12"					"special_bonus_imba_witch_doctor_3"
-		"Ability13"					"special_bonus_imba_witch_doctor_4"
-		"Ability14"					"special_bonus_imba_witch_doctor_5"
-		"Ability15"					"special_bonus_imba_witch_doctor_6"
-		"Ability16"					"special_bonus_imba_witch_doctor_7"
-		"Ability17"					"special_bonus_imba_witch_doctor_8"
+		"Ability10"					"special_bonus_imba_witch_doctor_5" //Enemies dying from a death ward will spawn a mini death ward that deal part of the damage
+		"Ability11"					"special_bonus_imba_witch_doctor_7" //When Maledict's curse bursts, health regen is completely disabled for a period.
+		"Ability12"					"special_bonus_imba_witch_doctor_2" //When toggling Voodoo Restoration on, it applies the basic purge effect immediately.
+		"Ability13"					"special_bonus_imba_witch_doctor_6" //Voodoo Restoration turns into a aura
+		"Ability14"					"special_bonus_imba_witch_doctor_4" //Paralyzing Cask spreads Maledict if it bounces from a cursed unit.		
+		"Ability15"					"special_bonus_imba_witch_doctor_1" //Every Maledict burst deals it's damage around the target (spreads between enemies)
+		"Ability16"					"special_bonus_imba_witch_doctor_3" //Voodoo Restoration's purge is now a strong purge.
+		"Ability17"					"special_bonus_imba_witch_doctor_8" //Now spawns two Death Wards; if channeling is broken, only one of them disappears.
 
 		"ProjectileModel"			"particles/units/heroes/hero_witchdoctor/witchdoctor_base_attack.vpcf"
 	}
