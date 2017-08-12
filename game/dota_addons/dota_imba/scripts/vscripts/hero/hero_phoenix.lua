@@ -482,9 +482,10 @@ function imba_phoenix_icarus_dive_stop:OnSpellStart()
 	local cdr_pct = ability.progress / 2
 	local cd_now = ability:GetCooldownTimeRemaining()
 	local cd_toSet = cd_now * (1 - cdr_pct)
-	ability:EndCooldown()
-	ability:StartCooldown(cd_toSet)
-
+	if cd_toSet > 0 then
+		ability:EndCooldown()
+		ability:StartCooldown(cd_toSet)
+	end
 end
 
 function imba_phoenix_icarus_dive_stop:GetCastAnimation()
