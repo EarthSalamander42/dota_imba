@@ -29199,7 +29199,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"vision_duration"			"3.34"
+				"vision_duration"		"3.34"
 			}
 
 			"06"
@@ -29295,6 +29295,7 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"field_radius"		"340"
+				"LinkedSpecialBonus""special_bonus_imba_disruptor_5"
 			}
 
 			"02"
@@ -29307,7 +29308,6 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"duration"				"2.6 3.2 3.8 4.4 4.6 4.8 5.0"
-				"LinkedSpecialBonus"	"special_bonus_imba_disruptor_6"
 			}
 
 			"04"
@@ -29378,6 +29378,7 @@
 		"precache"
 		{
 			"particle"		"particles/units/heroes/hero_disruptor/disruptor_static_storm.vpcf"
+			"particle"		"particles/generic_gameplay/generic_stunned.vpcf"
 			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_disruptor.vsndevts"
 			"soundfile"		"soundevents/voscripts/game_sounds_vo_disruptor.vsndevts"
 		}
@@ -29405,6 +29406,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"radius"				"450 465 480 500 520 540"
+				"LinkedSpecialBonus"	"special_bonus_imba_disruptor_7"
 			}
 			"02"
 			{
@@ -29425,19 +29427,16 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"damage_increase_pulse"	"2 2.5 3 3.25 3.5 3.75"
-				"LinkedSpecialBonus"	"special_bonus_imba_disruptor_7"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"max_damage"			"200 250 300 300 300 300"
-				"LinkedSpecialBonus"	"special_bonus_imba_disruptor_5"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"scepter_max_damage"	"250 300 350 350 350 350"
-				"LinkedSpecialBonus"	"special_bonus_imba_disruptor_5"
 			}
 			"08"
 			{
@@ -32263,7 +32262,7 @@
 		}
 	}
 
-	"special_bonus_imba_disruptor_3"	// Increased movespeed per Stormbearer stack
+	"special_bonus_imba_disruptor_3"	// Chance to launch chain lightning
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -32273,7 +32272,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_disruptor_stormbearer"
+			"01" 	"imba_disruptor_thunder_strike"
 		}
 
 		// Special
@@ -32283,7 +32282,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"value"					"0.5"
+				"value"					"25"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_targets"			"5"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bounce_radius"			"600"
 			}
 		}
 	}
@@ -32313,7 +32322,32 @@
 		}
 	}
 
-	"special_bonus_imba_disruptor_5"	// Maximum Static Storm damage increase
+	"special_bonus_imba_disruptor_5"	// Glimpse into Kinetic Field causes Glimpse Storm inside the Kinetic Field
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_disruptor_glimpse"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value"					"0"
+			}
+		}
+	}
+
+	"special_bonus_imba_disruptor_6"	// Units exiting Static Storm gets ministunned. 
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -32333,12 +32367,22 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"value"					"50"
+				"value"					"1.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"interval"				"0.5"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"			"0.1"
 			}
 		}
 	}
 
-	"special_bonus_imba_disruptor_6"	// Kinetic Field duration increase
+	"special_bonus_imba_disruptor_7"	// Thunder Strike counts twice for heroes inside Static Storm
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -32348,7 +32392,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_disruptor_kinetic_field"
+			"01" 	"imba_disruptor_thunder_strike"
 		}
 
 		// Special
@@ -32358,32 +32402,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"value"					"1.5"
-			}
-		}
-	}
-
-	"special_bonus_imba_disruptor_7"	// Static Storm damage per pulse increase
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_disruptor_static_storm"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"value"					"1.25"
+				"value"					"0"
 			}
 		}
 	}
