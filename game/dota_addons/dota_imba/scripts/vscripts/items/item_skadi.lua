@@ -24,12 +24,15 @@ end
 
 -- Dynamic cast range
 function item_imba_skadi:GetCastRange()
+	if IsServer() then
+		return
+	end
 	local caster = self:GetCaster()	
 	if caster and caster:HasModifier("modifier_item_imba_skadi") then
 		return caster:GetModifierStackCount("modifier_item_imba_skadi", caster) 
+	else
+		return 0
 	end
-
-	return 0	
 end
 
 -- Root active
@@ -139,10 +142,10 @@ end
 function modifier_item_imba_skadi:UpdateCastRange()
 	if IsServer() then						
 		if self.parent:IsRealHero() then
-			self.radius = self.radius + self.parent:GetStrength() * self.ability:GetSpecialValueFor("radius_per_str")
+			local iradius = self.radius + self.parent:GetStrength() * self.ability:GetSpecialValueFor("radius_per_str")
 		end		
 
-		self:SetStackCount(self.radius)
+		self:SetStackCount(( self.radius + self.parent:GetStrength() * self.ability:GetSpecialValueFor("radius_per_str")))
 	end	
 end
 
