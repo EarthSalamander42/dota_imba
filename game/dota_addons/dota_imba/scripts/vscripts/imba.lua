@@ -73,12 +73,17 @@ StoreCurrentDayCycle()
 	This function should generally only be used if the Precache() function in addon_game_mode.lua is not working.
 ]]
 
-function GameMode:OnItemPickedUp(event)
-	local owner = EntIndexToHScript( event.HeroEntityIndex )
-	if owner:IsHero() and event.itemname == "item_bag_of_gold" then
-		GoldPickup(event)
-	end
-end
+ function GameMode:OnItemPickedUp(event) 
+   -- If this is a hero
+   if event.HeroEntityIndex then
+       local owner = EntIndexToHScript( event.HeroEntityIndex )
+       -- And you've picked up a gold bag
+       if owner:IsHero() and event.itemname == "item_bag_of_gold" then
+           -- Pick up the gold
+           GoldPickup(event)
+       end
+    end
+  end
 
 function GameMode:PostLoadPrecache()
 
@@ -754,56 +759,6 @@ function GameMode:OrderFilter( keys )
         end
     end
 	
-	
-	-- Divine Rapier undropable
-	if (keys.order_type == DOTA_UNIT_ORDER_DROP_ITEM) or (keys.order_type == DOTA_UNIT_ORDER_MOVE_ITEM) or (keys.order_type == DOTA_UNIT_ORDER_GIVE_ITEM) or (keys.order_type == DOTA_UNIT_ORDER_PICKUP_ITEM) then
-		local item
-		if keys.order_type == DOTA_UNIT_ORDER_PICKUP_ITEM then
-			item = EntIndexToHScript(keys.entindex_target):GetContainedItem()
-		else
-			item = EntIndexToHScript(keys.entindex_ability)
-		end
-		if item.IsRapier then
-			local player_ID
-			-- Courier handling
-			if unit:IsCourier() then
-				player_ID = keys.issuer_player_id_const
-				if (keys.order_type == DOTA_UNIT_ORDER_PICKUP_ITEM) then
-					DisplayError(player_ID,"#dota_hud_error_cant_item_courier")
-					return false
-				end
-				if keys.entindex_target	and (keys.order_type == DOTA_UNIT_ORDER_GIVE_ITEM) then
-					local hTarget = EntIndexToHScript(keys.entindex_target)
-					if item:GetPurchaser():GetPlayerID() == hTarget:GetPlayerID() then
-						return true
-					end
-				end
-			elseif unit:IsHero() then
-				player_ID 	= 	unit:GetPlayerID()
-			
-			-- This is essentialy just bears
-			else
-				player_ID	=	keys.issuer_player_id_const
-			end
-			-- Player handling
-			if (keys.order_type == DOTA_UNIT_ORDER_GIVE_ITEM) then
-				DisplayError(player_ID,"#dota_hud_error_cant_item_give")
-				return false
-			end
-			if  (keys.entindex_target >= DOTA_STASH_SLOT_1) and (keys.entindex_target <= DOTA_STASH_SLOT_6) then
-				DisplayError(player_ID,"#dota_hud_error_cant_item_stash")
-				return false
-			end
-			if not ((keys.position_x == 0) and (keys.position_y == 0) and (keys.position_z == 0)) then
-				DisplayError(player_ID,"#dota_hud_error_cant_item_drop")
-				return false
-			end
-			if (keys.entindex_target >= DOTA_ITEM_SLOT_7) and (keys.entindex_target <= DOTA_ITEM_SLOT_9) then
-				DisplayError(player_ID,"#dota_hud_error_cant_item_backpack")
-				return false
-			end
-		end	
-	end
 	return true
 end
 
