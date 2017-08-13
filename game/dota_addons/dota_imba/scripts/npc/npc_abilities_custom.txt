@@ -29199,7 +29199,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"vision_duration"		"3.34"
+				"vision_duration"			"3.34"
 			}
 
 			"06"

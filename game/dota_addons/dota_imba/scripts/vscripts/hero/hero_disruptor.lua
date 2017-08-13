@@ -569,7 +569,7 @@ function modifier_imba_glimpse_thinker:EndGlimpse(caster, ability, hUnit, old_po
 		-- #5 Talent: Glimpse into Kinetic Field expands Glimpse Storm inside the Kinetic Field
 		-- Check if the target is glimpsed into Kinetic Field
 		if caster:HasTalent("special_bonus_imba_disruptor_5") then
-			hUnit:AddNewModifier(caster, ability, "modifier_glimpse_talent_indicator", {duration = 0.01})
+			hUnit:AddNewModifier(caster, ability, "modifier_glimpse_talent_indicator", {duration = 0.1})
 		end
 		
 		-- Wait a game tick so we can check for the modifier
@@ -982,8 +982,8 @@ function modifier_imba_kinetic_field:OnIntervalThink()
 									false)
 		for _,enemy_in_field in pairs(enemies_inside_field) do
 		
-		enemy_in_field:AddNewModifier(self.caster, self.ability, "modifier_imba_kinetic_field_check_inside_field", {duration = self:GetRemainingTime(), target_point_x = self.target_point.x, target_point_y = self.target_point.y, target_point_z = self.target_point.z})
-		
+		enemy_in_field:AddNewModifier(self.caster, self.ability, "modifier_imba_kinetic_field_check_inside_field", {duration = 0.01})
+			
 			-- Check if the target is Glimpsed into here.
 			if enemy_in_field:HasModifier("modifier_glimpse_talent_indicator") then
 			
