@@ -121,12 +121,13 @@ function modifier_imba_enigma_malefice:OnIntervalThink()
   local parent = self:GetParent()
 
   -- Get the duration boost caused by eidolons
-  local eidolon_bonus_duration = 0
+  -- Multiplies the duration of the base modifier
+  local duration_multiplier = 1
   local modifier = parent:FindModifierByName("modifier_imba_enigma_eidolon_attack_counter")
   if modifier and self.eidolon_bonus_duration_percent then
-    eidolon_bonus_duration =  1+(modifier:GetStackCount() *self.eidolon_bonus_duration_percent)
+    duration_multiplier = duration_multiplier + (modifier:GetStackCount() *self.eidolon_bonus_duration_percent)
   end
-  local duration = self.stun_duration + eidolon_bonus_duration
+  local duration = self.stun_duration * duration_multiplier
 
   parent:AddNewModifier(self:GetCaster(),self:GetAbility(),"modifier_stunned",{duration = duration})
   -- #5 Talent Mini black hole on intervals. Store the right values to use in the black hole
