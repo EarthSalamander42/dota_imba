@@ -827,10 +827,7 @@ end
 
 modifier_imba_phoenix_fire_spirits_debuff = modifier_imba_phoenix_fire_spirits_debuff or class({})
 
-function modifier_imba_phoenix_fire_spirits_debuff:IsDebuff()			
-	return true
-end
-
+function modifier_imba_phoenix_fire_spirits_debuff:IsDebuff()			return true  end
 function modifier_imba_phoenix_fire_spirits_debuff:IsHidden() 			return false end
 function modifier_imba_phoenix_fire_spirits_debuff:IsPurgable() 		return true  end
 function modifier_imba_phoenix_fire_spirits_debuff:IsPurgeException() 	return true  end
