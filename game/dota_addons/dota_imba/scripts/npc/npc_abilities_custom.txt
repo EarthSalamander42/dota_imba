@@ -17871,6 +17871,7 @@
 			}
 		}
 	}
+	
 	//=================================================================================================================
 	// Phantom Assassin's Coup de Grace
 	//=================================================================================================================
@@ -17926,7 +17927,889 @@
 			}
 		}
 	}
+//=================================================================================================================
+	// Phoenix: Icarus Dive
+	//=================================================================================================================
+	"imba_phoenix_icarus_dive"
+	{
+		"BaseClass"					"ability_lua"
+		"ScriptFile"				"hero/hero_phoenix.lua"
+		"AbilityTextureName"		"phoenix_icarus_dive"
 
+		"MaxLevel"						"7"
+		"FightRecapLevel"				"1"
+
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"AbilitySound"					"Hero_Phoenix.IcarusDive.Cast"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"36 33 30 27 24 21 18"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_phoenix.vsndevts"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_icarus_dive.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_icarus_dive_burn_debuff.vpcf"
+			"particle"					"particles/econ/courier/courier_greevil_red/courier_greevil_red_ambient_3.vpcf"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hp_cost_perc"			"15"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"dash_length"			"1400"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"dash_width"			"500"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hit_radius"			"200"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"burn_duration"			"4.0 4.0 4.0 4.0 4.5 5.0 5.5"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_per_second"		"20 40 60 80 80 80 80"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"burn_tick_interval"	"0.5"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow_movement_speed_pct"	"28 28 28 28 30 32 34"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"dash_duration"			"2.0"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stop_dmg_heal_max"			"200 300 400 500 600 700 800"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stop_radius"			"300"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"extend_burn_duration"	"4.0"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"cast_point"			"0.1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Phoenix: Icarus Dive Stop
+	//=================================================================================================================
+	"imba_phoenix_icarus_dive_stop"
+	{
+		"BaseClass"					"ability_lua"
+		"ScriptFile"				"hero/hero_phoenix.lua"
+		"AbilityTextureName"		"phoenix_icarus_dive_stop"
+
+		"MaxLevel"						"1"
+		"FightRecapLevel"				"1"
+
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0"
+	}
+
+	//=================================================================================================================
+	// Phoenix: Fire Spirits
+	//=================================================================================================================
+	"imba_phoenix_fire_spirits"
+	{
+		"BaseClass"					"ability_lua"
+		"ScriptFile"				"hero/hero_phoenix.lua"
+		"AbilityTextureName"		"phoenix_fire_spirits"
+
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"FightRecapLevel"				"1"
+		"AbilitySound"					"Hero_Phoenix.FireSpirits.Cast"
+
+		"MaxLevel"					"7"
+		"FightRecapLevel"			"1"
+
+		"AbilityCastRange"				"1400"
+		"AbilityCastPoint"				"0.01"
+		
+		"AbilityCooldown"			"45 40 35 30 30 30 30"
+
+		"AbilityManaCost"			"80 90 100 110 115 120 125"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_phoenix.vsndevts"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_fire_spirits.vpcf"
+			"particle"					"particles/hero/phoenix/phoenix_fire_spirit_launch.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_burn.vpcf"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"hp_cost_perc"		"20"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"spirit_duration"	"20"
+			}
+			"03"
+			{	
+				"var_type"			"FIELD_INTEGER"
+				"spirit_speed"		"900 900 900 900 1000 1100 1200"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"175 175 175 175 205 235 265"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"4.0"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"attackspeed_slow"	"80 100 120 140 160 180 200"
+			}
+			"07"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage_per_second"	"16 34 52 70 70 70 70"
+			}
+			"08"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"spirit_count"		"4"
+			}
+			"09"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"tick_interval"		"0.5"
+			}
+			"10"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"cast_range"		"1400"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Phoenix: Launch Fire Spirit
+	//=================================================================================================================
+	"imba_phoenix_launch_fire_spirit"
+	{
+		"BaseClass"					"ability_lua"
+		"ScriptFile"				"hero/hero_phoenix.lua"
+		"AbilityTextureName"		"phoenix_launch_fire_spirit"
+
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+
+		"AbilitySound"					"Hero_Phoenix.FireSpirits.Launch"
+
+		"MaxLevel"					"7"
+		"FightRecapLevel"			"1"
+
+		"AbilityCastRange"				"1400"
+		"AbilityCastPoint"				"0.01"
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_phoenix.vsndevts"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_fire_spirits.vpcf"
+			"particle"					"particles/hero/phoenix/phoenix_fire_spirit_launch.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_burn.vpcf"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"hp_cost_perc"		"20"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"spirit_duration"	"20"
+			}
+			"03"
+			{	
+				"var_type"			"FIELD_INTEGER"
+				"spirit_speed"		"900 900 900 900 1000 1100 1200"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"175 175 175 175 205 235 265"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"4.0"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"attackspeed_slow"	"80 100 120 140 160 180 200"
+			}
+			"07"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage_per_second"	"16 34 52 70 70 70 70"
+			}
+			"08"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"spirit_count"		"4"
+			}
+			"09"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"tick_interval"		"0.5"
+			}
+			"10"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"cast_range"		"1400"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Phoenix: Sun Ray
+	//=================================================================================================================
+	"imba_phoenix_sun_ray"
+	{
+		"BaseClass"					"ability_lua"
+		"ScriptFile"				"hero/hero_phoenix.lua"
+		"AbilityTextureName"		"phoenix_sun_ray"
+
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"AbilitySound"					"Hero_Phoenix.SunRay.Cast"
+
+		"MaxLevel"						"7"
+		"FightRecapLevel"				"1"
+
+		"AbilityCastRange"					"1300 1300 1300 1300 1500 1700 1900"
+
+		"AbilityCooldown"					"26 25 24 23 22 21 20"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_phoenix.vsndevts"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_sunray.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_sunray_mane.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_sunray_flare.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_sunray_debuff.vpcf"
+			"particle" 					"particles/units/heroes/hero_phoenix/phoenix_sunray_beam_friend.vpcf"
+			"particle" 					"particles/hero/phoenix/phoenix_sun_ray_explode.vpcf"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hp_cost_perc_per_second"	"6"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"base_damage"				"14 20 26 32 33 34 35"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"hp_perc_damage"			"2.25 2.75 3.25 3.75 4.25 4.5 4.75"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"base_heal"					"10 14 18 22 26 30 34"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"hp_perc_heal"				"2.0 3.0 4.0 5.0 5.5 5.75 5.875"
+			}			
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"130 130 130 130 150 170 190"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"tick_interval"				"0.2"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"forward_move_speed"		"250"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"beam_range"				"1300 1300 1300 1300 1500 1700 1900"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"move_speed"				"250"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"turn_rate"					"25"
+			}
+			"12"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"turn_rate_initial"			"250"
+			}
+			"13"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"duration"					"6"
+			}
+			"14"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"initial_turn_max_duration"	"0.75"
+			}
+			"15"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"explode_min_time"			"3"
+			}
+			"16"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"explode_radius"			"450"
+			}
+			"17"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"explode_dmg"				"100"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Phoenix: Sun Ray Stop
+	//=================================================================================================================
+	"imba_phoenix_sun_ray_stop"
+	{
+		"BaseClass"					"ability_lua"
+		"ScriptFile"				"hero/hero_phoenix.lua"
+		"AbilityTextureName"		"phoenix_sun_ray_stop"
+
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0"
+	}
+
+	//=================================================================================================================
+	// Phoenix: Sun Ray Toggle Move
+	//=================================================================================================================
+	"imba_phoenix_sun_ray_toggle_move"
+	{
+		"BaseClass"					"ability_lua"
+		"ScriptFile"				"hero/hero_phoenix.lua"
+		"AbilityTextureName"		"phoenix_sun_ray_toggle_move"
+
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"MaxLevel"						"1"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0"
+	}
+
+	//=================================================================================================================
+	// Phoenix: Supernova
+	//=================================================================================================================
+	"imba_phoenix_supernova"
+	{
+		"BaseClass"					"ability_lua"
+		"ScriptFile"				"hero/hero_phoenix.lua"
+		"AbilityTextureName"		"phoenix_supernova"
+
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO | DOTA_UNIT_TARGET_FLAG_CHECK_DISABLE_HELP"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"FightRecapLevel"				"2"
+		"HasScepterUpgrade"				"1"
+		"AbilitySound"					"Hero_Phoenix.SuperNova.Begin"
+		"MaxLevel"						"6"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"500"
+		"AbilityCastPoint"				"0.01"
+		"AbilityManaCost"				"250 200 150 100 50 0"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"110.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_phoenix.vsndevts"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_supernova_egg.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_supernova_reborn.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_supernova_reborn_shockwave.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_supernova_death.vpcf"
+			"particle" 					"particles/units/heroes/hero_phoenix/phoenix_supernova_radiance.vpcf"
+			"particle" 					"particles/units/heroes/hero_phoenix/phoenix_supernova_hit.vpcf"
+			"particle"					"particles/units/heroes/hero_phoenix/phoenix_supernova_radiance_streak_light.vpcf"
+			"particle"					"particles/hero/phoenix/phoenix_super_nova_double_egg.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_radius"					"1200"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_per_sec"				"70 100 130 140 150 160"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"stun_duration"					"1.5 2.0 2.5 2.5 2.5 2.5"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"max_hero_attacks"				"6 8 10 12 13 14"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"duration"						"6"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"cast_range"					"500"
+			}
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"miss_angle"					"45"
+			}
+			"08"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"miss_pct_perHit"				"5"
+			}
+			"09"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"miss_pct_base"					"20"
+			}
+			"10"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bird_num"						"4 5 6 7 7 7"
+			}
+			"11"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"scepter_additional_duration"	"6 5 4 3 2 1"
+			}
+			"12"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"scepter_cooldown"				"30"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Phoenix: Bruning Wings
+	//=================================================================================================================
+	"imba_phoenix_burning_wings"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_phoenix"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"custom/phoenix_burningwings"
+
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_phoenix.vsndevts"
+			"particle"					"particles/hero/phoenix/phoenix_burning_wings.vpcf"
+			"particle"					"particles/hero/phoenix/phoenix_burning_wings_2.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_hp_cost"			"10"				
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hp_cost_per_sec"		"10"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"dmg_heal_pct"			"100"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hit_ally_heal"			"100"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tick_rate"				"0.1"
+			}
+		}
+	}
+
+	"special_bonus_imba_phoenix_1" // havle dive duration and doubles hp cost
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_phoenix_icarus_dive"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"talent_trained"			"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_phoenix_2" // dive stun enemies for %stun_duration% secs
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_phoenix_icarus_dive"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"talent_trained"			"1"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"stun_duration"				"0.5"
+			}
+		}
+	}
+
+	"special_bonus_imba_phoenix_3" // birds stack up tp %max_stacks%
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_phoenix_fire_spirits"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"talent_trained"			"1"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_stacks"				"3"
+			}
+		}
+	}
+
+	"special_bonus_imba_phoenix_4" // After sun ray cast give allies strong dispel
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_phoenix_sun_ray"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"talent_trained"			"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_phoenix_5" // reborn from a killed egg with %reborn_pct%%% mp and hp
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_phoenix_supernova"
+			
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"talent_trained"			"1"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"reborn_pct"				"10"
+			}
+		}
+	}
+
+	"special_bonus_imba_phoenix_6" // Double Super Nova
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_phoenix_supernova"
+			
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"talent_trained"			"1"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"attack_reduce_pct"			"25"
+			}
+		}
+	}
+
+	"special_bonus_imba_phoenix_7" // Unlimited birds
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_phoenix_fire_spirits"
+			
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"talent_trained"			"1"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mana_cost"					"100"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"duration_pct"				"50"
+			}
+		}
+	}
+
+	"special_bonus_imba_phoenix_8" // Sun Ray move freely
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_phoenix_sun_ray"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"talent_trained"			"1"
+			}
+		}
+	}
+	
 	//=================================================================================================================
 	// Pudge's Meat Hook
 	//=================================================================================================================
