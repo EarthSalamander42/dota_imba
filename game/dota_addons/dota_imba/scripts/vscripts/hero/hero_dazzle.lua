@@ -370,6 +370,49 @@ function modifier_imba_dazzle_shallow_grave:OnTakeDamage( keys )
 		local damage = keys.damage
 		
 		if parent == victim and math.floor(health) <= 1 then
+			if not self.triggered_meme_count then 
+				-- Prepares a table to store the times in which the hero was graved
+				parent.shallow_grave_meme_table = parent.shallow_grave_meme_table or {}
+
+				local current_time = GameRules:GetGameTime()
+				-- Remove old time stamps
+				for i= #parent.shallow_grave_meme_table, 1, -1 do 
+					if current_time - 30 > parent.shallow_grave_meme_table[i] then
+						table.remove(parent.shallow_grave_meme_table, i)
+					end
+				end
+
+				-- Inserts a timestamp
+				table.insert(parent.shallow_grave_meme_table,  current_time)
+
+				if #parent.shallow_grave_meme_table > 3 then 
+					-- Nil handling
+					parent.time_of_triggered_rare_shallow_grave_meme = parent.time_of_triggered_rare_shallow_grave_meme or 0
+					parent.time_of_triggered_shallow_grave_meme = parent.time_of_triggered_shallow_grave_meme or 0
+					-- Normal trigger									-- Make sure the sounds don't overlap
+					if not parent.has_triggered_shallow_grave_meme  and  current_time - 23 > parent.time_of_triggered_rare_shallow_grave_meme and current_time -6 > parent.time_of_triggered_shallow_grave_meme then 
+						parent:EmitSound("Imba.DazzleShallowGraveIWillSurvive1") 
+						parent.time_of_triggered_shallow_grave_meme = current_time
+					-- Possible rare trigger:
+					else
+						-- Super rare sound 	-- Make sure the sounds don't overlap
+						if RollPercentage(50) and current_time - 23 > parent.time_of_triggered_rare_shallow_grave_meme and current_time -6 > parent.time_of_triggered_shallow_grave_meme then
+							parent:EmitSound("Imba.DazzleShallowGraveIWillSurvive2")
+							parent.time_of_triggered_rare_shallow_grave_meme =  current_time
+
+							-- Make sure the sounds don't overlap
+						elseif  current_time - 23 > parent.time_of_triggered_rare_shallow_grave_meme and current_time -6 > parent.time_of_triggered_shallow_grave_meme then
+							parent:EmitSound("Imba.DazzleShallowGraveIWillSurvive1")
+						end
+					end
+					-- A check for the rare sound
+					parent.has_triggered_shallow_grave_meme = true
+				else 
+					parent.has_triggered_shallow_grave_meme = false
+				end
+				self.triggered_meme_count = true
+			end
+
 			self.shallowDamage = self.shallowDamage + damage
 			self.shallowDamageInstances = self.shallowDamageInstances + 1
 		end
@@ -528,6 +571,7 @@ function modifier_imba_dazzle_nothl_protection:OnTakeDamage( keys )
 						end
 						
 						self.isActive = false
+						self.triggered_meme_count = false
 						self.shallowDamage = 0
 						self.shallowDamageInstances = 0
 						
@@ -542,6 +586,48 @@ function modifier_imba_dazzle_nothl_protection:OnTakeDamage( keys )
 				
 				-- If the modifier is active
 				elseif self.isActive and not parent:PassivesDisabled() then
+					if not self.triggered_meme_count then 
+						-- Prepares a table to store the times in which the hero was graved
+						parent.shallow_grave_meme_table = parent.shallow_grave_meme_table or {}
+
+						local current_time = GameRules:GetGameTime()
+						-- Remove old time stamps
+						for i= #parent.shallow_grave_meme_table, 1, -1 do 
+							if current_time - 30 > parent.shallow_grave_meme_table[i] then
+								table.remove(parent.shallow_grave_meme_table, i)
+							end
+						end
+
+						-- Inserts a timestamp
+						table.insert(parent.shallow_grave_meme_table,  current_time)
+
+						if #parent.shallow_grave_meme_table > 3 then 
+							-- Nil handling
+							parent.time_of_triggered_rare_shallow_grave_meme = parent.time_of_triggered_rare_shallow_grave_meme or 0
+							parent.time_of_triggered_shallow_grave_meme = parent.time_of_triggered_shallow_grave_meme or 0
+							-- Normal trigger									-- Make sure the sounds don't overlap
+							if not parent.has_triggered_shallow_grave_meme  and  current_time - 23 > parent.time_of_triggered_rare_shallow_grave_meme and current_time -6 > parent.time_of_triggered_shallow_grave_meme then 
+								parent:EmitSound("Imba.DazzleShallowGraveIWillSurvive1") 
+								parent.time_of_triggered_shallow_grave_meme = current_time
+							-- Possible rare trigger:
+							else
+								-- Super rare sound 	-- Make sure the sounds don't overlap
+								if RollPercentage(50) and current_time - 23 > parent.time_of_triggered_rare_shallow_grave_meme and current_time -6 > parent.time_of_triggered_shallow_grave_meme then
+									parent:EmitSound("Imba.DazzleShallowGraveIWillSurvive2")
+									parent.time_of_triggered_rare_shallow_grave_meme =  current_time
+
+									-- Make sure the sounds don't overlap
+								elseif  current_time - 23 > parent.time_of_triggered_rare_shallow_grave_meme and current_time -6 > parent.time_of_triggered_shallow_grave_meme then
+									parent:EmitSound("Imba.DazzleShallowGraveIWillSurvive1")
+								end
+							end
+							-- A check for the rare sound
+							parent.has_triggered_shallow_grave_meme = true
+						else 
+							parent.has_triggered_shallow_grave_meme = false
+						end
+						self.triggered_meme_count = true
+					end
 					self.shallowDamage = self.shallowDamage + damage
 					self.shallowDamageInstances = self.shallowDamageInstances + 1
 				end
@@ -777,6 +863,50 @@ function modifier_imba_dazzle_nothl_protection_aura_talent:OnTakeDamage( keys )
 		if parent == victim and math.floor(health) <= 1 then
 			self.shallowDamage = self.shallowDamage + damage
 			self.shallowDamageInstances = self.shallowDamageInstances + 1
+
+			if not self.triggered_meme_count then 
+				-- Prepares a table to store the times in which the hero was graved
+				parent.shallow_grave_meme_table = parent.shallow_grave_meme_table or {}
+
+				local current_time = GameRules:GetGameTime()
+				-- Remove old time stamps
+				for i= #parent.shallow_grave_meme_table, 1, -1 do 
+					if current_time - 30 > parent.shallow_grave_meme_table[i] then
+						table.remove(parent.shallow_grave_meme_table, i)
+					end
+				end
+
+				-- Inserts a timestamp
+				table.insert(parent.shallow_grave_meme_table,  current_time)
+
+				if #parent.shallow_grave_meme_table > 3 then 
+					-- Nil handling
+					parent.time_of_triggered_rare_shallow_grave_meme = parent.time_of_triggered_rare_shallow_grave_meme or 0
+					parent.time_of_triggered_shallow_grave_meme = parent.time_of_triggered_shallow_grave_meme or 0
+					-- Normal trigger									-- Make sure the sounds don't overlap
+					if not parent.has_triggered_shallow_grave_meme  and  current_time - 23 > parent.time_of_triggered_rare_shallow_grave_meme and current_time -6 > parent.time_of_triggered_shallow_grave_meme then 
+						parent:EmitSound("Imba.DazzleShallowGraveIWillSurvive1") 
+						parent.time_of_triggered_shallow_grave_meme = current_time
+					-- Possible rare trigger:
+					else
+						-- Super rare sound 	-- Make sure the sounds don't overlap
+						if RollPercentage(50) and current_time - 23 > parent.time_of_triggered_rare_shallow_grave_meme and current_time -6 > parent.time_of_triggered_shallow_grave_meme then
+							parent:EmitSound("Imba.DazzleShallowGraveIWillSurvive2")
+							parent.time_of_triggered_rare_shallow_grave_meme =  current_time
+
+							-- Make sure the sounds don't overlap
+						elseif  current_time - 23 > parent.time_of_triggered_rare_shallow_grave_meme and current_time -6 > parent.time_of_triggered_shallow_grave_meme then
+							parent:EmitSound("Imba.DazzleShallowGraveIWillSurvive1")
+						end
+					end
+					-- A check for the rare sound
+					parent.has_triggered_shallow_grave_meme = true
+				else 
+					parent.has_triggered_shallow_grave_meme = false
+				end
+				self.triggered_meme_count = true
+			end
+
 			if not self.triggered then
 				self.triggered = true
 				local particle = ParticleManager:CreateParticle("particles/hero/dazzle/dazzle_shallow_grave_talent.vpcf", PATTACH_ABSORIGIN_FOLLOW , parent)
