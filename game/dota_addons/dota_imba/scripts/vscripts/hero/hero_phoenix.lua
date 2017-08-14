@@ -1735,6 +1735,7 @@ function modifier_imba_phoenix_supernova_caster_dummy:DeclareFunctions()
     local decFuns =
     {
         MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+        MODIFIER_EVENT_ON_DEATH,
     }
     return decFuns
 end
@@ -1775,6 +1776,32 @@ function modifier_imba_phoenix_supernova_caster_dummy:OnCreated()
 	if innate then
 		if innate:GetToggleState() then
 			innate:ToggleAbility()
+		end
+	end
+end
+
+function modifier_imba_phoenix_supernova_caster_dummy:OnDeath( keys )
+	if not IsServer() then
+		return
+	end
+	if keys.unit == self:GetParent() then
+		if keys.unit ~= self:GetCaster() then
+			local caster = self:GetCaster()
+			caster.ally = nil
+		end
+		local eggs = FindUnitsInRadius(self:GetParent():GetTeamNumber(),
+									self:GetParent():GetAbsOrigin(),
+									nil,
+									2500,
+									DOTA_UNIT_TARGET_TEAM_BOTH,
+									DOTA_UNIT_TARGET_ALL,
+									DOTA_UNIT_TARGET_FLAG_NONE,
+									FIND_ANY_ORDER,
+									false )
+		for _, egg in pairs(eggs) do
+			if egg:GetUnitName() == "npc_dota_phoenix_sun" and egg:GetTeamNumber() == self:GetParent():GetTeamNumber() and egg:GetOwner() == self:GetParent():GetOwner() then
+				egg:Kill(self:GetAbility(), keys.attacker)
+			end
 		end
 	end
 end
@@ -2091,7 +2118,7 @@ function modifier_imba_phoenix_supernova_egg_thinker:OnDeath( keys )
 		self:ResetUnit(caster)
 		caster:SetHealth( caster:GetMaxHealth() )
 		caster:SetMana( caster:GetMaxMana() )
-		if caster.ally and not caster.HasDoubleEgg then
+		if caster.ally and not caster.HasDoubleEgg and caster.ally:IsAlive() then
 			self:ResetUnit(caster.ally)
 			caster.ally:SetHealth( caster.ally:GetMaxHealth() )
 			caster.ally:SetMana( caster.ally:GetMaxMana() )
@@ -2114,11 +2141,11 @@ function modifier_imba_phoenix_supernova_egg_thinker:OnDeath( keys )
 		-- Phoenix killed
 		StartSoundEventFromPosition( "Hero_Phoenix.SuperNova.Death", egg:GetAbsOrigin())
 		if caster:FindTalentValue("special_bonus_imba_phoenix_5","talent_trained") == 0 then
-			caster:Kill(ability, killer)
-			if caster.ally and not caster.HasDoubleEgg then
+			if caster:IsAlive() then  caster:Kill(ability, killer) end
+			if caster.ally and not caster.HasDoubleEgg and caster.ally:IsAlive() then
 				caster.ally:Kill(ability, killer)
 			end
-		else
+		elseif caster:IsAlive() then
 			self:ResetUnit(caster)
 			caster:SetHealth( caster:GetMaxHealth() * caster:FindTalentValue("special_bonus_imba_phoenix_5","reborn_pct") / 100 )
 			caster:SetMana( caster:GetMaxMana() * caster:FindTalentValue("special_bonus_imba_phoenix_5","reborn_pct") / 100)
@@ -2126,7 +2153,7 @@ function modifier_imba_phoenix_supernova_egg_thinker:OnDeath( keys )
 			if egg_buff then
 				egg_buff:Destroy()
 			end
-			if caster.ally then
+			if caster.ally and caster.ally:IsAlive() then
 				self:ResetUnit(caster.ally)
 				caster.ally:SetHealth( caster.ally:GetMaxHealth() * caster:FindTalentValue("special_bonus_imba_phoenix_5","reborn_pct") / 100 )
 				caster.ally:SetMana( caster.ally:GetMaxMana() * caster:FindTalentValue("special_bonus_imba_phoenix_5","reborn_pct") / 100 )
