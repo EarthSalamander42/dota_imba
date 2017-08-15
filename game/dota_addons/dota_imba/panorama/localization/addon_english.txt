@@ -60,7 +60,7 @@
 	//=================================================================================================================
 	// Abaddon
 	"Dota_Tooltip_Talent_special_bonus_imba_abaddon_1_title"                    "Coil Unleashed"
-    "Dota_Tooltip_Talent_special_bonus_imba_abaddon_1_Description"              "When Aphotic Shield breaks, applies Mist Coil to all allies and enemies within 350 radius.<br><br><i>Abaddon's control over the Mist increases, allowing the shield to apply deathly Mist on dissipation.</i>"
+    "Dota_Tooltip_Talent_special_bonus_imba_abaddon_1_Description"              "When Aphotic Shield breaks, applies Mist Coil to all allies and enemies within 425 radius.<br><br><i>Abaddon's control over the Mist increases, allowing the shield to apply deathly Mist on dissipation.</i>"
     "Dota_Tooltip_Talent_special_bonus_imba_abaddon_2_title"                    "Curse of the Seer"
     "Dota_Tooltip_Talent_special_bonus_imba_abaddon_2_Description"              "Consecutives hits of Curse of Avernus refreshes the buff/debuff and increases the duration of the buff/debuff by 1 second.<br><br><i>Abaddon's Mistshaping ability increases, allowing his curse to seep deeper on each hit.</i>"
     "Dota_Tooltip_Talent_special_bonus_imba_abaddon_3_title"                    "Aphotic Bulwark"
@@ -80,7 +80,7 @@
 	"Dota_Tooltip_Talent_special_bonus_imba_alchemist_1_title"                  "Acidic Stickyness" 
     "Dota_Tooltip_Talent_special_bonus_imba_alchemist_1_Description"            "Sticky Acid now also slows targets affected by 15%. <br><br><i>Evaporating glue into the mix of chemicals allows even something like acid to become sticky.</i>"   
     "Dota_Tooltip_Talent_special_bonus_imba_alchemist_2_title"                  "Brewing Drugs"
-    "Dota_Tooltip_Talent_special_bonus_imba_alchemist_2_Description"            "Unstable Concoction can now be cast on allies to grant them Chemical Rage. The closer it was to exploding, the higher Chemical Rage's duration becomes. <br><br><i>Who ever said chemicals can only be used on your own pet?</i>"   
+    "Dota_Tooltip_Talent_special_bonus_imba_alchemist_2_Description"            "Unstable Concoction can now be cast on allies to grant them Chemical Rage. The closer it was to exploding, the higher Chemical Rage's duration becomes. The Chemical Rage duration is equal to the brewing time multiplied by 3. <br><br><i>Who ever said chemicals can only be used on your own pet?</i>"   
     "Dota_Tooltip_Talent_special_bonus_imba_alchemist_3_title"                  "Rain of Money" 
     "Dota_Tooltip_Talent_special_bonus_imba_alchemist_3_Description"            "Whenever Alchemist activates a bounty rune, it spawns five gold bags which, in total, gives gold equal to his current Greed stacks when picked up. Can be picked up by allies and enemies. <br><br><i>When trying to transmute gold, the result is, of course, more gold!</i>"    
     "Dota_Tooltip_Talent_special_bonus_imba_alchemist_4_title"                  "The Recipe for Money"
@@ -92,7 +92,7 @@
     "Dota_Tooltip_Talent_special_bonus_imba_alchemist_7_title"                  "Beyond Gold"   
     "Dota_Tooltip_Talent_special_bonus_imba_alchemist_7_Description"            "Doubles the gold bounty gained from Bounty Runes.<br><br><i>Turns out, gold is not the most valuable compound bounty runes can be transmuted into.</i>"    
     "Dota_Tooltip_Talent_special_bonus_imba_alchemist_8_title"                  "Extra Incentive"   
-    "Dota_Tooltip_Talent_special_bonus_imba_alchemist_8_Description"            "Chemical Rage now grants an aura which increases the damage of all allied heroes within 700 AoE. The damage granted through the aura is equal to Alchemist's Greed stacks. <br><br><i>The rage of the ogre increases the moral of his teammates, causing them to charge and attack their foes relentlessly.</i>"
+    "Dota_Tooltip_Talent_special_bonus_imba_alchemist_8_Description"            "Chemical Rage now grants an aura which increases the damage of all allied heroes within 900 AoE. The damage granted through the aura is equal to Alchemist's Greed stacks. <br><br><i>The rage of the ogre increases the moral of his teammates, causing them to charge and attack their foes relentlessly.</i>"
 
 	// Anti Mage
 	"Dota_Tooltip_Talent_special_bonus_imba_antimage_1_title"                   "Blink Affinity"
@@ -108,7 +108,7 @@
     "Dota_Tooltip_Talent_special_bonus_imba_antimage_6_title"                   "Magic Overload"
     "Dota_Tooltip_Talent_special_bonus_imba_antimage_6_Description"             "Delays Mana Void's damage instance by 2 seconds. During this delay, any mana point that the target loses is considered three mana points. All mana lost during this period is added to the damage, even if the target has recovered those points of mana.<br><br><i>Extensive training allows Anti Mage to channel more of his opponent's mana against themselves.</i>"
     "Dota_Tooltip_Talent_special_bonus_imba_antimage_7_title"                   "Devoid of Essence"
-    "Dota_Tooltip_Talent_special_bonus_imba_antimage_7_Description"             "Causes Anti Mage's Mana Break's mana burn to splash in a 500 radius around the main target, burning mana of nearby enemies equal to 30% of mana burned. <br>This effect ignores the main target of the attack, and does nothing if the main target has no mana. It also does not affects magic immune targets. <br><br><i>Anti Mage's hatred to magic can be felt so well by his adversaries, that when they're close enough, they feel their own magical energy fleeing before them.</i>"
+    "Dota_Tooltip_Talent_special_bonus_imba_antimage_7_Description"             "Causes Anti Mage's Mana Break's mana burn to splash in a 400 radius around the main target, burning mana of nearby enemies equal to 45% of mana burned. <br>This effect ignores the main target of the attack, and does nothing if the main target has no mana. It also does not affects magic immune targets. <br><br><i>Anti Mage's hatred to magic can be felt so well by his adversaries, that when they're close enough, they feel their own magical energy fleeing before them.</i>"
     "Dota_Tooltip_Talent_special_bonus_imba_antimage_8_title"                   "Nirvana"
     "Dota_Tooltip_Talent_special_bonus_imba_antimage_8_Description"             "Mana Void's damage includes missing mana from all targets in the area of effect.<br><br> It first calculates missing mana from nearby enemies, then deals damage to them accordingly. The search radius is the same as the explosion radius. <br><br><i>Anti Mage taps into the power of his fury to unleash the true horror of Mana Void against his sworn enemies.</i>"
 
@@ -132,7 +132,7 @@
 
 	// Bane
     "Dota_Tooltip_Talent_special_bonus_imba_bane_1_title"                       "Feeble Mind"
-    "Dota_Tooltip_Talent_special_bonus_imba_bane_1_Description"                 "Casting Nightmare on an enemy will apply 2 stacks of enfeeble on them.<br><br><i>Inside the dream world, everyone becomes weak, powerless. This goes on after waking up from such an experience, as well.</i>"
+    "Dota_Tooltip_Talent_special_bonus_imba_bane_1_Description"                 "Casting Nightmare on an enemy will apply 3 stacks of enfeeble on them.<br><br><i>Inside the dream world, everyone becomes weak, powerless. This goes on after waking up from such an experience, as well.</i>"
     "Dota_Tooltip_Talent_special_bonus_imba_bane_2_title"                       "Spreading Fear"
     "Dota_Tooltip_Talent_special_bonus_imba_bane_2_Description"                 "Enfeeble is now cast in a 450 AoE to all targets around the main target.<br><br><i>A master of true terror can easily spread the effect of panic around him.</i>"
     "Dota_Tooltip_Talent_special_bonus_imba_bane_3_title"                       "Devil's Grip"
@@ -142,7 +142,7 @@
     "Dota_Tooltip_Talent_special_bonus_imba_bane_5_title"                       "Children of the Void"
     "Dota_Tooltip_Talent_special_bonus_imba_bane_5_Description"                 "Brain Sap casts summon a Baby Bane which applies a Baby Fiend's Grip on the target. Baby Grip deals 25% damage, mana, and lasts for 0.5 seconds.<br><br><i>Sapping the brain of its target, Bane is capable of giving life to a small clone of himself, which uses that slice of energy to do what he can.</i>"
     "Dota_Tooltip_Talent_special_bonus_imba_bane_6_title"                       "Undesired Awakening"
-    "Dota_Tooltip_Talent_special_bonus_imba_bane_6_Description"                 "Nightmare also mutes items for enemies affected for 3 seconds after they wake up. <br><br><i>TOO SOON! You have awakened me too soon Executus! </i>"
+    "Dota_Tooltip_Talent_special_bonus_imba_bane_6_Description"                 "Nightmare also mutes items for enemies affected for 2 seconds after they wake up. <br><br><i>TOO SOON! You have awakened me too soon Executus! </i>"
     "Dota_Tooltip_Talent_special_bonus_imba_bane_7_title"                       "Sacred Slumber"
     "Dota_Tooltip_Talent_special_bonus_imba_bane_7_Description"                 "Causes allies being afflicted with Nightmare to become fully invulnerable for 6 seconds.<br><br><i>Even the most cold-blooded man wouldn't disturb a child in deep slumber.</i>"
     "Dota_Tooltip_Talent_special_bonus_imba_bane_8_title"                       "The Abyss Stares Back"
@@ -172,7 +172,7 @@
 	"DOTA_Tooltip_Talent_special_bonus_imba_bounty_hunter_2_title"        		"I See You!"
 	"DOTA_Tooltip_Talent_special_bonus_imba_bounty_hunter_2_Description" 		"Tracked targets now show their location in a normal vision instead of the usual fog vision. The provided vision is flying vision in 600 radius around the tracked targets. <br><br><i>Bounty Hunter's ability to track his opponents down becomes like a second nature to him, allowing him to gather more than just his target's current location.</i>" 
 	"DOTA_Tooltip_Talent_special_bonus_imba_bounty_hunter_3_title"        		"Jinada, De Nada"
-	"DOTA_Tooltip_Talent_special_bonus_imba_bounty_hunter_3_Description" 		"Jinada can now be cast on allies, granting them the Jinada critical buff. <br>The buff lasts up to 10 seconds, or until the buffed unit attacks once.<br> Casting Jinada causes the ability to go into cooldown. <br><br><i>Bounty Hunter is capable of enchanting the weapon of his allies, causing it to be aimed right at a weak point of their target.</i>" 
+	"DOTA_Tooltip_Talent_special_bonus_imba_bounty_hunter_3_Description" 		"Jinada can now be cast on allies, granting them the Jinada critical buff. <br>The buff lasts up to 20 seconds, or until the buffed unit attacks once.<br> Casting Jinada causes the ability to go into cooldown. <br><br><i>Bounty Hunter is capable of enchanting the weapon of his allies, causing it to be aimed right at a weak point of their target.</i>" 
 	"DOTA_Tooltip_Talent_special_bonus_imba_bounty_hunter_4_title"        		"Spiral Enchantments"
 	"DOTA_Tooltip_Talent_special_bonus_imba_bounty_hunter_4_Description" 		"Whenever Jinada is ready, throwing a Shuriken applies Jinada to it, adding critical damage and maim to all targets it hits, including targets that the shuriken bounced to.<br>If Bounty Hunter holds a scepter, the enchantment applies to both his shurikens. <br><br><i>Bounty Hunter can choose to enchant his trusty shuriken instead of his own weapon, adding deadly spiraling speed to it which deals damage and slows his targets.</i>" 
 	"DOTA_Tooltip_Talent_special_bonus_imba_bounty_hunter_5_title"        		"Home Run"
@@ -180,7 +180,7 @@
 	"DOTA_Tooltip_Talent_special_bonus_imba_bounty_hunter_6_title"        		"Move With The Wind"
 	"DOTA_Tooltip_Talent_special_bonus_imba_bounty_hunter_6_Description" 		"While Bounty Hunter is in Shadow Walk, moving constantly increases his move speed by 1% every second. Staying in the same spot for more than one second resets the move speed bonus buff. <br><br><i>Bounty Hunter learn to glide alongside the wind, allowing him to gain light steps, as long as he keeps moving.</i>" 
 	"DOTA_Tooltip_Talent_special_bonus_imba_bounty_hunter_7_title"        		"Target, Marked"
-	"DOTA_Tooltip_Talent_special_bonus_imba_bounty_hunter_7_Description" 		"Allows Shadow Jaunt to be cast on Headhunter's contract targets up to 2500 range away.<br> This talent also removes the requirement to apply Track on a contracted target in order to Shadow Jaunt to it.<br><br><i>Bounty Hunter becomes so good at what he does, that almost all of his hits strike their target's weak spots.</i>" 
+	"DOTA_Tooltip_Talent_special_bonus_imba_bounty_hunter_7_Description" 		"Allows Shadow Jaunt to be cast on Headhunter's contract targets up to 3500 range away.<br> This talent also removes the requirement to apply Track on a contracted target in order to Shadow Jaunt to it.<br><br><i>Bounty Hunter becomes so good at what he does, that almost all of his hits strike their target's weak spots.</i>" 
 	"DOTA_Tooltip_Talent_special_bonus_imba_bounty_hunter_8_title"        		"You Can Run, But You Cannot Hide"
 	"DOTA_Tooltip_Talent_special_bonus_imba_bounty_hunter_8_Description" 		"Track is now hidden on enemy heroes and cannot be purged by any means.<br><br><i>Bounty Hunter tracking abilities are perfect, allowing him to track enemies without them even being aware of it.</i>"
 
