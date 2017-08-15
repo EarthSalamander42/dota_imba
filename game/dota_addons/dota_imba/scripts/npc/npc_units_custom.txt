@@ -7611,7 +7611,7 @@
         // General
         //----------------------------------------------------------------
         "BaseClass"                 "npc_dota_ward_base"
-        "Model"                     "models/courier/mech_donkey/mech_donkey.vmdl"
+        "Model"                     "models/items/courier/el_gato_hero/el_gato_hero_flying.vmdl"
         "Level"                     "1"
         "ModelScale"                "1.3"
 
