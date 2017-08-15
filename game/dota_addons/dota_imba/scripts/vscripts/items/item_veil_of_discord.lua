@@ -5,8 +5,9 @@
 ------------------------------------
 item_imba_veil_of_discord = item_imba_veil_of_discord or class({})
 LinkLuaModifier("modifier_veil_passive", "items/item_veil_of_discord.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_veil_aura", "items/item_veil_of_discord.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_veil_active_buff", "items/item_veil_of_discord.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_veil_debuff_aura_modifier", "items/item_veil_of_discord.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_veil_buff_aura", "items/item_veil_of_discord.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_veil_buff_aura_modifier", "items/item_veil_of_discord.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_veil_active_debuff", "items/item_veil_of_discord.lua", LUA_MODIFIER_MOTION_NONE)
 
 function item_imba_veil_of_discord:OnSpellStart()
@@ -16,7 +17,6 @@ function item_imba_veil_of_discord:OnSpellStart()
     local particle      =   "particles/items2_fx/veil_of_discord.vpcf"
     -- Ability parameters
     local radius            =   self:GetSpecialValueFor("active_aoe")
-    local buff_duration     =   self:GetSpecialValueFor("buff_duration")
     local debuff_duration   =   self:GetSpecialValueFor("debuff_duration")
 
     -- Emit sound
@@ -29,25 +29,20 @@ function item_imba_veil_of_discord:OnSpellStart()
     ParticleManager:ReleaseParticleIndex(particle_fx)
 
     -- Find units around the target point
-    local units =   FindUnitsInRadius(caster:GetTeamNumber(),
+    local enemies =   FindUnitsInRadius(caster:GetTeamNumber(),
     target_loc,
     nil,
     radius,
-    DOTA_UNIT_TARGET_TEAM_BOTH,
+    DOTA_UNIT_TARGET_TEAM_ENEMY,
     DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP,
     0,
     FIND_ANY_ORDER,
     false)
 
     -- Iterate through the unit table and give each unit its respective modifier
-    for _,unit in pairs(units) do
-        -- Give allies a buff
-        if unit:GetTeamNumber() == caster:GetTeamNumber() then
-            unit:AddNewModifier(caster, self, "modifier_veil_active_buff", {duration = buff_duration})
-        else
-            -- Give enemies a debuff
-            unit:AddNewModifier(caster, self, "modifier_veil_active_debuff", {duration = debuff_duration})
-        end
+    for _,enemy in pairs(enemies) do
+         -- Give enemies a debuff
+         enemy:AddNewModifier(caster, self, "modifier_veil_active_debuff", {duration = debuff_duration})
     end
 end
 
@@ -57,37 +52,6 @@ end
 
 function item_imba_veil_of_discord:GetIntrinsicModifierName()
     return "modifier_veil_passive"
-end
-
---- ACTIVE BUFF MODIFIER
-modifier_veil_active_buff = modifier_veil_active_buff or class({})
-
--- Modifier properties
-function modifier_veil_active_buff:IsDebuff() return false end
-function modifier_veil_active_buff:IsHidden() return false end
-function modifier_veil_active_buff:IsPurgable() return true end
-
-function modifier_veil_active_buff:OnCreated()
-    self.spell_power    =   self:GetAbility():GetSpecialValueFor("active_spell_power")
-end
-
-function modifier_veil_active_buff:DeclareFunctions()
-    local funcs =   {
-        MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE
-    }
-    return funcs
-end
-
-function modifier_veil_active_buff:GetModifierSpellAmplify_Percentage()
-    return self.spell_power
-end
-
-function modifier_veil_active_buff:GetEffectName()
-    return "particles/item/veil_of_discord/veil_arcane_buff.vpcf"
-end
-
-function modifier_veil_active_buff:GetEffectAttachType()
-    return PATTACH_ABSORIGIN_FOLLOW
 end
 
 --- ACTIVE DEBUFF MODIFIER
@@ -101,6 +65,7 @@ function modifier_veil_active_debuff:IsPurgable() return true end
 function modifier_veil_active_debuff:OnCreated()
     self.magic_resis    =   self:GetAbility():GetSpecialValueFor("active_resis")
 end
+
 function modifier_veil_active_debuff:DeclareFunctions()
     local funcs =   {
         MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS
@@ -119,9 +84,10 @@ end
 function modifier_veil_active_debuff:GetEffectAttachType()
     return PATTACH_ABSORIGIN_FOLLOW
 end
-----------------------------------
---- PASSIVE STAT/AURA MODIFIER ---
-----------------------------------
+
+------------------------------
+--- PASSIVE STAT/BUFF AURA ---
+------------------------------
 modifier_veil_passive = modifier_veil_passive or class({})
 
 -- Modifier properties
@@ -134,6 +100,10 @@ function modifier_veil_passive:IsAura() return true end
 
 function modifier_veil_passive:OnCreated()
     local ability   =   self:GetAbility()
+    if IsServer() then
+         -- Give buff aura modifier
+        self:GetParent():AddNewModifier(self:GetParent(), ability, "modifier_veil_buff_aura", {})
+    end
 
     -- Ability parameters
     if self:GetParent():IsHero() and ability then
@@ -160,6 +130,7 @@ function modifier_veil_passive:DeclareFunctions()
     return funcs
 end
 
+-- Stats
 function modifier_veil_passive:GetModifierBonusStats_Intellect() return self.int_bonus end
 function modifier_veil_passive:GetModifierBonusStats_Agility() return self.agi_bonus end
 function modifier_veil_passive:GetModifierBonusStats_Strength() return self.str_bonus end
@@ -167,37 +138,98 @@ function modifier_veil_passive:GetModifierConstantHealthRegen() return self.hp_r
 function modifier_veil_passive:GetModifierPhysicalArmorBonus() return self.armor_bonus end
 function modifier_veil_passive:GetModifierPreAttack_BonusDamage() return self.attack_damage_bonus end
 
---- AURA
+--- DEBUFF AURA
 function modifier_veil_passive:GetAuraSearchTeam()
-    return DOTA_UNIT_TARGET_TEAM_ENEMY end
+    return DOTA_UNIT_TARGET_TEAM_ENEMY 
+end
 
 function modifier_veil_passive:GetAuraSearchType()
-    return DOTA_UNIT_TARGET_CREEP + DOTA_UNIT_TARGET_HERO end
+    return DOTA_UNIT_TARGET_CREEP + DOTA_UNIT_TARGET_HERO
+end
 
 function modifier_veil_passive:GetModifierAura()
-    return "modifier_veil_aura" end
+    return "modifier_veil_debuff_aura_modifier" 
+end
 
 function modifier_veil_passive:GetAuraRadius()
-    return self:GetAbility():GetSpecialValueFor("aura_radius") end
+    return self:GetAbility():GetSpecialValueFor("aura_radius")
+ end
 
---- AURA MODIFIER
-modifier_veil_aura = modifier_veil_aura or class({})
+function modifier_veil_passive:OnDestroy()
+    if IsServer() then
+        self:GetParent():RemoveModifierByName("modifier_veil_buff_aura")
+    end
+end
+
+--- AURA DEBUFF MODIFIER
+modifier_veil_debuff_aura_modifier = modifier_veil_debuff_aura_modifier or class({})
 
 -- Modifier properties
-function modifier_veil_aura:IsDebuff() return true end
-function modifier_veil_aura:IsHidden() return false end
-function modifier_veil_aura:IsPurgable() return false end
+function modifier_veil_debuff_aura_modifier:IsDebuff() return true end
+function modifier_veil_debuff_aura_modifier:IsHidden() return false end
+function modifier_veil_debuff_aura_modifier:IsPurgable() return false end
 
-function modifier_veil_aura:OnCreated()
+function modifier_veil_debuff_aura_modifier:OnCreated()
     self.magic_resis    =   self:GetAbility():GetSpecialValueFor("aura_resist")
 end
-function modifier_veil_aura:DeclareFunctions()
+function modifier_veil_debuff_aura_modifier:DeclareFunctions()
     local funcs =   {
-        MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS
+        MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
     }
     return funcs
 end
 
-function modifier_veil_aura:GetModifierMagicalResistanceBonus()
+function modifier_veil_debuff_aura_modifier:GetModifierMagicalResistanceBonus()
     return self.magic_resis
+end
+
+-----------------
+--- BUFF AURA ---
+-----------------
+modifier_veil_buff_aura = modifier_veil_buff_aura or class({})
+
+-- Modifier properties
+function modifier_veil_buff_aura:IsHidden() return true end
+function modifier_veil_buff_aura:IsDebuff() return false end
+function modifier_veil_buff_aura:IsPurgable() return false end
+function modifier_veil_buff_aura:IsPermanent() return true end
+function modifier_veil_buff_aura:IsAura() return true end
+
+function modifier_veil_buff_aura:GetAuraSearchTeam()
+    return DOTA_UNIT_TARGET_TEAM_FRIENDLY 
+end
+
+function modifier_veil_buff_aura:GetAuraSearchType()
+    return DOTA_UNIT_TARGET_HERO
+end
+
+function modifier_veil_buff_aura:GetModifierAura()
+    return "modifier_veil_buff_aura_modifier" 
+end
+
+function modifier_veil_buff_aura:GetAuraRadius()
+    return self:GetAbility():GetSpecialValueFor("aura_radius")
+ end
+
+--- AURA BUFF MODIFIER
+modifier_veil_buff_aura_modifier = modifier_veil_buff_aura_modifier or class({})
+
+-- Modifier properties
+function modifier_veil_buff_aura_modifier:IsDebuff() return false end
+function modifier_veil_buff_aura_modifier:IsHidden() return false end
+function modifier_veil_buff_aura_modifier:IsPurgable() return true end
+
+function modifier_veil_buff_aura_modifier:OnCreated()
+    self.spell_power    =   self:GetAbility():GetSpecialValueFor("aura_spell_power")
+end
+
+function modifier_veil_buff_aura_modifier:DeclareFunctions()
+    local funcs =   {
+        MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE
+    }
+    return funcs
+end
+
+function modifier_veil_buff_aura_modifier:GetModifierSpellAmplify_Percentage()
+    return self.spell_power
 end
