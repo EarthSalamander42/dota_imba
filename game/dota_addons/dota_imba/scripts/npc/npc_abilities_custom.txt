@@ -18003,7 +18003,7 @@
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"slow_movement_speed_pct"	"28 28 28 28 30 32 34"
+				"slow_movement_speed_pct"	"28 32 36 40 42 44 46"
 			}
 			"09"
 			{
@@ -18074,9 +18074,9 @@
 		"AbilityCastRange"				"1400"
 		"AbilityCastPoint"				"0.01"
 		
-		"AbilityCooldown"			"45 40 35 30 30 30 30"
+		"AbilityCooldown"			"45"
 
-		"AbilityManaCost"			"80 90 100 110 115 120 125"
+		"AbilityManaCost"			"125"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -18119,7 +18119,7 @@
 			"06"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"attackspeed_slow"	"80 100 120 140 160 180 200"
+				"attackspeed_slow"	"100 120 140 160 180 200 220"
 			}
 			"07"
 			{
@@ -18209,7 +18209,7 @@
 			"06"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"attackspeed_slow"	"80 100 120 140 160 180 200"
+				"attackspeed_slow"	"100 120 140 160 180 200 220"
 			}
 			"07"
 			{
@@ -18354,7 +18354,7 @@
 			"17"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"explode_dmg"				"100"
+				"explode_dmg"				"100 140 180 220 240 260 280"
 			}
 		}
 	}
@@ -18429,7 +18429,7 @@
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"110.0"
+		"AbilityCooldown"				"110 100 90 80 80 80"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -18467,12 +18467,12 @@
 			"03"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"stun_duration"					"1.5 2.0 2.5 2.5 2.5 2.5"
+				"stun_duration"					"1.5 2.0 2.5 2.5 2.75 3.0"
 			}
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"max_hero_attacks"				"6 8 10 12 13 14"
+				"max_hero_attacks"				"6 8 10 11 12 13"
 			}
 			"05"
 			{
@@ -18507,12 +18507,12 @@
 			"11"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"scepter_additional_duration"	"6 5 4 3 2 1"
+				"scepter_additional_duration"	"4 3 2 1 0 0"
 			}
 			"12"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"scepter_cooldown"				"30"
+				"scepter_cooldown"				"20"
 			}
 		}
 	}
@@ -25535,7 +25535,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
@@ -25602,7 +25602,6 @@
 			{
 				"var_type"							"FIELD_INTEGER"
 				"debuff_duration"					"4"
-				"LinkedSpecialBonus"				"special_bonus_imba_skeleton_king_1"
 			}
 
 			"06"
@@ -25637,6 +25636,7 @@
 		}
 	}
 
+	
 	//=================================================================================================================
 	// Wraith King's Vampiric Aura
 	//=================================================================================================================
@@ -25679,14 +25679,12 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"lifesteal_pct"			"15 20 25 30 30 30 30"
-				"LinkedSpecialBonus"	"special_bonus_imba_skeleton_king_3"
 			}
 
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"spellsteal_pct"		"5 5 5 5 10 15 20"
-				"LinkedSpecialBonus"	"special_bonus_imba_skeleton_king_3"
 			}
 
 			"04"
@@ -25727,7 +25725,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"crit_chance"			"15"
-				"LinkedSpecialBonus" 	"special_bonus_imba_skeleton_king_2"
 			}
 
 			"02"
@@ -25746,7 +25743,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_health_pct"	  	"20"
-				"LinkedSpecialBonus"	"special_bonus_imba_skeleton_king_5"
 			}
 
 			"05"
@@ -25864,8 +25860,8 @@
 		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_NONE"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_NONE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"skeleton_king_reincarnation"
@@ -25925,7 +25921,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"max_wraith_form_heroes"	"4"
+				"scepter_hp_pct_threhold"	"15"
 			}
 		}
 	}
@@ -36897,60 +36893,11 @@
         }
     }
 
+    
     //=================================================================================================================
     // Wraith King's Talents
     //=================================================================================================================
-    "special_bonus_imba_skeleton_king_1" // Wraithfire Blast debuff duration increase
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01"	"imba_wraith_king_wraithfire_blast"
-        }
-        
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "value"	                    "2"
-            }
-        }
-    }
-
-    "special_bonus_imba_skeleton_king_2" // Mortal Strike chance increase
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01"	"imba_wraith_king_mortal_strike"
-        }
-        
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "value"	                    "5"
-            }
-        }
-    }
-
-    "special_bonus_imba_skeleton_king_3" // Vampiric Aura lifesteal/spellsteal increase
+    "special_bonus_imba_skeleton_king_1" // Whenever an ally in Vampiric Aura's range takes damage, Wraith King is healed for 10% of the damage. 
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
@@ -36970,7 +36917,87 @@
             "01"
             {
                 "var_type"                  "FIELD_INTEGER"
-                "value"	                    "15"
+                "talent_trained"	        "1"
+            }
+            "02"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "dmg_drain_pct"	        	"10"
+            }
+        }
+    }
+
+    "special_bonus_imba_skeleton_king_2" // Kingdom come can cast, x secs cd
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"	"imba_wraith_king_kingdom_come"
+        }
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "talent_trained"	        "1"
+            }
+            "02"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "cooldown"	        		"100"
+            }
+        }
+    }
+
+    "special_bonus_imba_skeleton_king_3" // When the main target is hit by Wraithfire Blast
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"	"imba_wraith_king_wraithfire_blast"
+        }
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "talent_trained"	        "1"
+            }
+            "02"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "base_damge_per_sec"	    "80"
+            }
+            "03"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "add_target_dmg"	        "40"
+            }
+            "04"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "radius"	        		"600"
+            }
+            "05"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "duration"	        		"4"
             }
         }
     }
@@ -37006,7 +37033,7 @@
         }
     }
 
-    "special_bonus_imba_skeleton_king_5" // Mortal Strike bonus health per damage
+    "special_bonus_imba_skeleton_king_5" // Reincarnation can now be set to auto cast.
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
@@ -37016,7 +37043,7 @@
 
         "LinkedAbility"
         {
-        	"01"	"imba_wraith_king_mortal_strike"
+        	"01"	"imba_wraith_king_reincarnation"
         }
         
         // Special
@@ -37026,7 +37053,12 @@
             "01"
             {
                 "var_type"                  "FIELD_INTEGER"
-                "value"			            "20"
+                "talent_trained"			"1"
+            }
+            "02"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "radius"					"900"
             }
         }
     }

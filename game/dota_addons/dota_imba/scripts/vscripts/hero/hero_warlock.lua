@@ -1075,6 +1075,9 @@ end
 
 -- Demon Link modifier (placed on golem)
 modifier_imba_rain_of_chaos_demon_link = class({})
+function modifier_imba_rain_of_chaos_demon_link:IsPurgable()               return false end
+function modifier_imba_rain_of_chaos_demon_link:IsPurgeException()         return false end
+function modifier_imba_rain_of_chaos_demon_link:RemoveOnDeath()            return true end
 
 function modifier_imba_rain_of_chaos_demon_link:OnCreated()
     -- Ability properties
