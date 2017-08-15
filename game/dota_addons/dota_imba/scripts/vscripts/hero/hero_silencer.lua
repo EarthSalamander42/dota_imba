@@ -190,6 +190,10 @@ function modifier_imba_arcane_curse_debuff:OnAbilityExecuted( params )
 						return nil
 					end
 				end
+				-- Special Telekinesis interaction
+				if params.ability:GetName() == "imba_rubick_telekinesis" and self.parent:FindModifierByName("modifier_imba_telekinesis_caster") then
+					return nil 
+				end
 
 				self:SetDuration( self:GetRemainingTime() + self.penalty_duration, true )
 				self:IncrementStackCount()
