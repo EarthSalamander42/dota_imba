@@ -8601,6 +8601,231 @@
 	}
 
 	//=================================================================================================================
+	// Centaur Warrunner Talent 1 (Level 10): Double Edge self-damage reduction
+	//=================================================================================================================
+	"special_bonus_imba_centaur_1"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_centaur_double_edge"
+        }
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Centaur Warrunner Talent 2 (Level 10): Arena damage reduction extends to allies
+	//=================================================================================================================
+	"special_bonus_imba_centaur_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_centaur_hoof_stomp"
+        }
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Centaur Warrunner Talent 3 (Level 20): Centaur hoof stomp arena moves along with hero
+	//=================================================================================================================
+	"special_bonus_imba_centaur_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_centaur_hoof_stomp"
+        }
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"600"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Centaur Warrunner Talent 4 (Level 20): Double edge damage in increased by x * strength
+	//=================================================================================================================
+	"special_bonus_imba_centaur_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_centaur_double_edge"
+        }
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"2"
+			}
+		}
+	}
+
+
+	//=================================================================================================================
+	// Centaur Warrunner Talent 5 (Level 30): Heroes with Stampede haste get 75% tenacity.
+	//=================================================================================================================
+	"special_bonus_imba_centaur_5"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_centaur_stampede"
+        }
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"75"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Centaur Warrunner Talent 6 (Level 30): Return becomes an aura
+	//=================================================================================================================
+	"special_bonus_imba_centaur_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_centaur_return"
+        }
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Centaur Warrunner Talent 7 (Level 40): Return's Bulging Hide gains stacks from all auto attacks, or any kind of damage above 100.
+	//=================================================================================================================
+	"special_bonus_imba_centaur_7"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_centaur_return"
+        }
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"175"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Centaur Warrunner Talent 8 (Level 40): Stampede duration increase per trampled enemy
+	//=================================================================================================================
+	"special_bonus_imba_centaur_8"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_centaur_stampede"
+        }
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
     // Clinkz's Strafe
     //=================================================================================================================
     "imba_clinkz_strafe"
@@ -8643,7 +8868,7 @@
             "01"
             {
                 "var_type"                  "FIELD_INTEGER"
-                "as_bonus"                  "130 150 170 190 200 210 220"
+                "as_bonus"                  "130 130 130 130 160 190 220"
 
             }
             "02"
@@ -8655,7 +8880,7 @@
             "03"
             {
                 "var_type"                  "FIELD_INTEGER"
-                "bonus_attack_range"        "100 150 200 250 250 250 250"    
+                "bonus_attack_range"        "100 100 100 100 150 200 250"    
             }
         }
     }
@@ -8713,13 +8938,13 @@
             "01"
             {
                 "var_type"                  "FIELD_INTEGER"
-                "bonus_damage"              "30 45 60 75 100 125 150"    
+                "bonus_damage"              "30 40 50 60 90 120 150"    
             }
 
             "02"
             {
                 "var_type"                  "FIELD_INTEGER"
-                "active_duration"           "10"
+                "active_duration"           "5"
             }
 
             "03"
@@ -8743,7 +8968,7 @@
             "06"
             {
                 "var_type"                  "FIELD_INTEGER"
-                "armor_burn_per_stack"      "1"
+                "armor_burn_per_stack"      "2"
             }
         }
     }
@@ -8787,7 +9012,7 @@
             "01"
             {
                 "var_type"              "FIELD_INTEGER"
-                "ms_bonus_pct"          "11 22 33 44 46 48 50"
+                "ms_bonus_pct"          "15 25 35 45 47 49 51"
             }
 
             "02"
@@ -8882,13 +9107,13 @@
             "02"
             {
                 "var_type"                          "FIELD_INTEGER"
-                "creep_bonus_hp_pct"                "50 65 80 90 100 110"
+                "creep_bonus_hp_pct"                "50 70 90 100 110 120"
             }
 
             "03"
             {
                 "var_type"                          "FIELD_FLOAT"
-                "creep_bonus_dmg_pct"               "5 6.5 8 9 10 11"
+                "creep_bonus_dmg_pct"               "5 7 9 10 11 12"
             }
 
             "04"
@@ -8925,6 +9150,216 @@
             {
                 "var_type"                          "FIELD_INTEGER"
                 "spirit_health_tooltip"             "5"
+            }
+        }
+    }
+
+    //=================================================================================================================
+    // Clinkz Talents
+    //=================================================================================================================
+    "special_bonus_imba_clinkz_1" // Death Pact Spirits can now attack with spirit strikes
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+		{
+			"01" 	"imba_clinkz_death_pact"
+		}
+
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "1"
+            }
+        }
+    }
+
+    "special_bonus_imba_clinkz_2" // Clinkz gains extra move speed when Skeleton Walking close to enemies
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+		{
+			"01" 	"imba_clinkz_skeleton_walk"
+		}
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "25"
+            }
+        }
+    }
+
+    "special_bonus_imba_clinkz_3" // Skeleton Walking through an enemy causes Clinkz to lose his invisibility, but roots the target
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+		{
+			"01" 	"imba_clinkz_skeleton_walk"
+		}
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "3"
+            }
+        }
+    }
+
+    "special_bonus_imba_clinkz_4" // Searing Arrow active hits in an AoE
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+		{
+			"01" 	"imba_clinkz_searing_arrows"
+		}
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "400"
+            }
+        }
+    }
+
+    "special_bonus_imba_clinkz_5" // Strafe can be self cast to root Clinkz for the duration but grant him a huge range bonus
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+		{
+			"01" 	"imba_clinkz_strafe"
+		}
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "4"
+            }
+        }
+    }
+
+    "special_bonus_imba_clinkz_6" // Skeleton Walk move speed persists for a small period
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+		{
+			"01" 	"imba_clinkz_skeleton_walk"
+		}
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "7"
+            }
+        }
+    }
+
+    "special_bonus_imba_clinkz_7" // Searing Arrows has a chance to attack the same target again
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+		{
+			"01" 	"imba_clinkz_searing_arrows"
+		}
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "20"
+            }
+        }
+    }
+
+    "special_bonus_imba_clinkz_8" // Death Pact bonuses stay permanently if target dies quickly
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+		{
+			"01" 	"imba_clinkz_death_pact"
+		}
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "mark_duration"	            "5"
+            }
+
+            "02"
+            {
+            	"var_type"					"FIELD_INTEGER"
+            	"stacks_pct"				"10"
             }
         }
     }
@@ -8987,8 +9422,8 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"						"800"
-		"AbilityCastPoint"						"0.2"
+		"AbilityCastRange"						"700"
+		"AbilityCastPoint"						"0.3"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -9039,7 +9474,7 @@
 			"05"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"snowfield_damage_per_tick"		"10 10 10 10 15 20 25"
+				"snowfield_damage_per_tick"		"20 20 20 20 30 40 50"
 			}			
 
 			"06"
@@ -9100,8 +9535,8 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"								"625"
-		"AbilityCastPoint"								"0.2"
+		"AbilityCastRange"								"525"
+		"AbilityCastPoint"								"0.3"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -9109,7 +9544,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"								"115 125 135 145 150 155 160"
+		"AbilityManaCost"								"140 145 150 155 155 155 155"
 
 		// Pre Cache
 		//-------------------------------------------------------------------------------------------------------------
@@ -9264,10 +9699,9 @@
 		
 		//Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"								"700"
-		"AbilityRadius"									"500"
+		"AbilityCastRange"								"835"		
 		"AbilityChannelTime"							"10.0"
-		"AbilityCastPoint"								"0.2"
+		"AbilityCastPoint"								"0.3"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -9299,7 +9733,7 @@
 			"01"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"radius"								"1000"
+				"radius"								"835"
 			}
 
 			"02"
@@ -9341,7 +9775,7 @@
 			"08"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"damage"								"105 170 325 270 305 340"
+				"damage"								"105 170 250 285 320 355"
 			}
 
 			"09"
@@ -9500,7 +9934,7 @@
 	}
 	
 	//=================================================================================================================
-	// Crystal Maiden Talent 5 (Level 30): Enemies hit by Crystal Maiden's abilities gain a debuff that slows them by 15%/15 move/attack speed for 3 seconds. Can be refreshed.
+	// Crystal Maiden Talent 5 (Level 30): Enemies hit by Crystal Maiden's abilities gain a debuff that slows them by for a small duration.
 	//=================================================================================================================
 	"special_bonus_imba_crystal_maiden_5"
 	{
@@ -9597,7 +10031,7 @@
 			"01" //How many seconds each shard takes to generate
             { 
                 "var_type"                  "FIELD_FLOAT"
-                "shard_rate"                "0.1"
+                "shard_rate"                "0.25"
             }
 
             "02"
@@ -33792,215 +34226,7 @@
 		}
 	}
 
-	//=================================================================================================================
-    // Clinkz Talents
-    //=================================================================================================================
-    "special_bonus_imba_clinkz_1" // Death Pact Spirits can now attack with spirit strikes
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-		{
-			"01" 	"imba_clinkz_death_pact"
-		}
-
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "value"	                    "1"
-            }
-        }
-    }
-
-    "special_bonus_imba_clinkz_2" // Clinkz gains extra move speed when Skeleton Walking close to enemies
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-		{
-			"01" 	"imba_clinkz_skeleton_walk"
-		}
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "value"	                    "25"
-            }
-        }
-    }
-
-    "special_bonus_imba_clinkz_3" // Skeleton Walking through an enemy causes Clinkz to lose his invisibility, but roots the target
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-		{
-			"01" 	"imba_clinkz_skeleton_walk"
-		}
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "value"	                    "3"
-            }
-        }
-    }
-
-    "special_bonus_imba_clinkz_4" // Searing Arrow active hits in an AoE
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-		{
-			"01" 	"imba_clinkz_searing_arrows"
-		}
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "value"	                    "400"
-            }
-        }
-    }
-
-    "special_bonus_imba_clinkz_5" // Strafe can be self cast to root Clinkz for the duration but grant him a huge range bonus
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-		{
-			"01" 	"imba_clinkz_strafe"
-		}
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "value"	                    "4"
-            }
-        }
-    }
-
-    "special_bonus_imba_clinkz_6" // Skeleton Walk move speed persists for a small period
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-		{
-			"01" 	"imba_clinkz_skeleton_walk"
-		}
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "value"	                    "5"
-            }
-        }
-    }
-
-    "special_bonus_imba_clinkz_7" // Searing Arrows has a chance to attack the same target again
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-		{
-			"01" 	"imba_clinkz_searing_arrows"
-		}
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "value"	                    "20"
-            }
-        }
-    }
-
-    "special_bonus_imba_clinkz_8" // Death Pact bonuses stay permanently if target dies quickly
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-		{
-			"01" 	"imba_clinkz_death_pact"
-		}
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "mark_duration"	            "5"
-            }
-
-            "02"
-            {
-            	"var_type"					"FIELD_INTEGER"
-            	"stacks_pct"				"10"
-            }
-        }
-    }
+	
 
     //=================================================================================================================
     // Lich Talents
@@ -37799,230 +38025,7 @@
 	}
 	
 
-	//=================================================================================================================
-	// Centaur Warrunner Talent 1 (Level 10): Double Edge self-damage reduction
-	//=================================================================================================================
-	"special_bonus_imba_centaur_1"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-            "01"        "imba_centaur_double_edge"
-        }
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"1"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Centaur Warrunner Talent 2 (Level 10): Arena damage reduction extends to allies
-	//=================================================================================================================
-	"special_bonus_imba_centaur_2"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-            "01"        "imba_centaur_hoof_stomp"
-        }
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"1"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Centaur Warrunner Talent 3 (Level 20): Centaur hoof stomp arena moves along with hero
-	//=================================================================================================================
-	"special_bonus_imba_centaur_3"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-            "01"        "imba_centaur_hoof_stomp"
-        }
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"600"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Centaur Warrunner Talent 4 (Level 20): Double edge damage in increased by x * strength
-	//=================================================================================================================
-	"special_bonus_imba_centaur_4"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-            "01"        "imba_centaur_double_edge"
-        }
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"2"
-			}
-		}
-	}
-
-
-	//=================================================================================================================
-	// Centaur Warrunner Talent 5 (Level 30): Heroes with Stampede haste get 75% tenacity.
-	//=================================================================================================================
-	"special_bonus_imba_centaur_5"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-            "01"        "imba_centaur_stampede"
-        }
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"75"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Centaur Warrunner Talent 6 (Level 30): Return becomes an aura
-	//=================================================================================================================
-	"special_bonus_imba_centaur_6"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-            "01"        "imba_centaur_return"
-        }
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"1"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Centaur Warrunner Talent 7 (Level 40): Return's Bulging Hide gains stacks from all auto attacks, or any kind of damage above 100.
-	//=================================================================================================================
-	"special_bonus_imba_centaur_7"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-            "01"        "imba_centaur_return"
-        }
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"100"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Centaur Warrunner Talent 8 (Level 40): Stampede duration increase per trampled enemy
-	//=================================================================================================================
-	"special_bonus_imba_centaur_8"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-            "01"        "imba_centaur_stampede"
-        }
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"1"
-			}
-		}
-	}
+	
 
 
 
