@@ -48,8 +48,8 @@ function modifier_imba_arcane_curse_debuff:OnCreated( kv )
 	self.talent_learned = self.caster:HasTalent("special_bonus_imba_silencer_1")
 
 	if IsServer() then
-		self.penalty_duration = self.penalty_duration + self.caster:FindTalentValue("special_bonus_imba_silencer_2")
-		self.curse_slow = self.curse_slow + self.caster:FindTalentValue("special_bonus_imba_silencer_7")
+		self.penalty_duration = self.penalty_duration
+		self.curse_slow = self.curse_slow
 
 		if self.caster:HasScepter() then
 			self.aghs_upgraded = true
@@ -87,40 +87,42 @@ end
 function modifier_imba_arcane_curse_debuff:OnIntervalThink()
 	if IsServer() then
 		local target = self.parent
-
-		if target:IsSilenced() then
-			self:SetDuration( self:GetRemainingTime() + self.tick_rate, true )
-		end
-
-		if ( not target:IsSilenced() ) or self.aghs_upgraded then
-			local damage_dealt = self.curse_damage * self.tick_rate			
-			local stack_count = self:GetStackCount()
-
-			if stack_count then
-				damage_dealt = damage_dealt + (self.damage_per_stack * stack_count)
+		
+		if target:IsAlive() then
+			if target:IsSilenced() or target:HasModifier("modifier_imba_silencer_global_silence") then
+				self:SetDuration( self:GetRemainingTime() + self.tick_rate, true )
 			end
 
-			local damage_table = {
-					victim = target,
-					attacker = self.caster,
-					damage = damage_dealt,
-					damage_type = self:GetAbility():GetAbilityDamageType(),
-					ability = self:GetAbility()
-				}
+			if ( not target:IsSilenced() or not target:FindModifierByName("modifier_imba_silencer_global_silence") ) or self.aghs_upgraded then
+				local damage_dealt = self.curse_damage * self.tick_rate			
+				local stack_count = self:GetStackCount()
 
-			local actual_Damage = ApplyDamage( damage_table )
+				if stack_count then
+					damage_dealt = damage_dealt + (self.damage_per_stack * stack_count)
+				end
 
-			-- #1 Talent: Silencer heals from Arcane Curse damage
-			if self.talent_learned then
-				local heal_amount = actual_Damage * self.caster:FindTalentValue("special_bonus_imba_silencer_1") * 0.01
-				self.caster:Heal(heal_amount, self.caster)
+				local damage_table = {
+						victim = target,
+						attacker = self.caster,
+						damage = damage_dealt,
+						damage_type = self:GetAbility():GetAbilityDamageType(),
+						ability = self:GetAbility()
+					}
 
-				-- Show heal particles on the caster
-				local particle_lifesteal = "particles/generic_gameplay/generic_lifesteal.vpcf"
-				local particle_lifesteal_fx = ParticleManager:CreateParticle(particle_lifesteal, PATTACH_ABSORIGIN_FOLLOW, self.caster)
-				ParticleManager:SetParticleControl(particle_lifesteal_fx, 0, self.caster:GetAbsOrigin())
-				ParticleManager:ReleaseParticleIndex(particle_lifesteal_fx)
-			end			
+				local actual_Damage = ApplyDamage( damage_table )
+
+				-- #1 Talent: Silencer heals from Arcane Curse damage
+				if self.talent_learned then
+					local heal_amount = actual_Damage * self.caster:FindTalentValue("special_bonus_imba_silencer_1") * 0.01
+					self.caster:Heal(heal_amount, self.caster)
+
+					-- Show heal particles on the caster
+					local particle_lifesteal = "particles/generic_gameplay/generic_lifesteal.vpcf"
+					local particle_lifesteal_fx = ParticleManager:CreateParticle(particle_lifesteal, PATTACH_ABSORIGIN_FOLLOW, self.caster)
+					ParticleManager:SetParticleControl(particle_lifesteal_fx, 0, self.caster:GetAbsOrigin())
+					ParticleManager:ReleaseParticleIndex(particle_lifesteal_fx)
+				end			
+			end
 		end
 	end
 end
@@ -190,10 +192,6 @@ function modifier_imba_arcane_curse_debuff:OnAbilityExecuted( params )
 						return nil
 					end
 				end
-				-- Special Telekinesis interaction
-				if params.ability:GetName() == "imba_rubick_telekinesis" and self.parent:FindModifierByName("modifier_imba_telekinesis_caster") then
-					return nil 
-				end
 
 				self:SetDuration( self:GetRemainingTime() + self.penalty_duration, true )
 				self:IncrementStackCount()
@@ -204,6 +202,26 @@ end
 
 function modifier_imba_arcane_curse_debuff:GetModifierMoveSpeedBonus_Percentage( params )
 	return -self.curse_slow
+end
+
+function modifier_imba_arcane_curse_debuff:OnDestroy()
+	if IsServer() then
+		local parent = self:GetParent()
+		if not parent:IsAlive() then
+			local ability = self:GetAbility()
+			local caster = ability:GetCaster()
+			local AoE = caster:FindTalentValue("special_bonus_imba_silencer_2")
+			
+			if AoE > 0 then
+				local base_duration = ability:GetSpecialValueFor("base_duration")
+				local enemies = FindUnitsInRadius(caster:GetTeamNumber(), parent:GetAbsOrigin(), nil, AoE, DOTA_UNIT_TARGET_TEAM_ENEMY, ability:GetAbilityTargetType(), DOTA_UNIT_TARGET_FLAG_NONE , FIND_ANY_ORDER, false)
+				for _, unit in ipairs(enemies) do
+					unit:AddNewModifier(caster, ability, "modifier_imba_arcane_curse_debuff", {duration = base_duration})
+					EmitSoundOn("Hero_Silencer.Curse.Impact", unit)
+				end
+			end
+		end
+	end
 end
 
 ----------------------------------------------------
@@ -225,7 +243,6 @@ end
 function imba_silencer_glaives_of_wisdom:GetIntrinsicModifierName()
 	return "modifier_imba_silencer_glaives_of_wisdom"
 end
-
 
 function imba_silencer_glaives_of_wisdom:OnSpellStart()
 	if IsServer() then
@@ -268,6 +285,7 @@ function modifier_imba_silencer_glaives_of_wisdom:OnCreated()
 	self.sound_hit = "Hero_Silencer.GlaivesOfWisdom.Damage"
 	self.modifier_int_damage = "modifier_imba_silencer_glaives_int_damage"
 	self.modifier_hit_counter = "modifier_imba_silencer_glaives_hit_counter"
+	self.scepter_damage_multiplier = self.ability:GetSpecialValueFor("scepter_damage_multiplier")
 end
 
 function modifier_imba_silencer_glaives_of_wisdom:OnAttackStart(keys)
@@ -276,17 +294,15 @@ function modifier_imba_silencer_glaives_of_wisdom:OnAttackStart(keys)
 		local target = keys.target		
 
 		-- Do absolutely nothing if the attacker is an illusion
-		if attacker:IsIllusion() then
-			return nil
-		end
+		if attacker:IsIllusion() then return nil end
 
 		-- Only apply on caster's attacks
 		if self.caster == attacker then						
 			-- Ability specials
-			self.intellect_damage_pct = self.ability:GetSpecialValueFor("intellect_damage_pct") + self.caster:FindTalentValue("special_bonus_imba_silencer_6")
+			self.intellect_damage_pct = self.ability:GetSpecialValueFor("intellect_damage_pct")
 			self.hits_to_silence = self.ability:GetSpecialValueFor("hits_to_silence")
 			self.hit_count_duration = self.ability:GetSpecialValueFor("hit_count_duration")
-			self.silence_duration = self.ability:GetSpecialValueFor("silence_duration") + self.caster:FindTalentValue("special_bonus_imba_silencer_5")
+			self.silence_duration = self.ability:GetSpecialValueFor("silence_duration")
 			self.int_reduction_pct = self.ability:GetSpecialValueFor("int_reduction_pct")
 			self.int_reduction_duration = self.ability:GetSpecialValueFor("int_reduction_duration")
 
@@ -294,9 +310,7 @@ function modifier_imba_silencer_glaives_of_wisdom:OnAttackStart(keys)
 			local glaive_attack = true
 
 			-- Initialize attack table
-			if not self.attack_table then
-				self.attack_table = {}
-			end
+			if not self.attack_table then self.attack_table = {} end
 
 			-- Get variables
 			self.auto_cast = self.ability:GetAutoCastState()
@@ -304,14 +318,13 @@ function modifier_imba_silencer_glaives_of_wisdom:OnAttackStart(keys)
 			self.mana_cost = self.ability:GetManaCost(-1)			
 
 			-- If the caster is silenced, mark attack as non-frost arrow
-			if self.caster:IsSilenced() then
-				glaive_attack = false
-			end
+			if self.caster:IsSilenced() then glaive_attack = false end
 
 			-- If the target is a building or is magic immune, mark attack as non-frost arrow
-			if target:IsBuilding() or target:IsMagicImmune() then
-				glaive_attack = false				
-			end
+			if target:IsBuilding() then glaive_attack = false end
+			
+			-- If the target is magic immune, and the attacker has no scepter, mark attack as non-frost arrow
+			if target:IsMagicImmune() and not attacker:HasScepter() then glaive_attack = false end
 
 			-- If it wasn't a forced frost attack (through ability cast), or
 			-- auto cast is off, change projectile to non-frost and return 
@@ -349,9 +362,7 @@ function modifier_imba_silencer_glaives_of_wisdom:OnAttack(keys)
 			self.ability.force_glaive = nil						
 
 			-- If it wasn't a frost arrow, do nothing
-			if not self.glaive_attack then
-				return nil
-			end							
+			if not self.glaive_attack then return nil end							
 
 			-- Emit sound
 			EmitSoundOn(self.sound_cast, self.caster)
@@ -371,8 +382,12 @@ function modifier_imba_silencer_glaives_of_wisdom:OnAttackLanded(keys)
 		if self.caster == attacker then	
 
 			if target:IsAlive() and self.glaive_attack then 
-				local glaive_pure_damage = self.caster:GetIntellect() * self.intellect_damage_pct / 100
-
+				local glaive_pure_damage = attacker:GetIntellect() * self.intellect_damage_pct / 100
+				
+				if attacker:HasScepter() and (target:IsSilenced() or target:HasModifier("modifier_imba_silencer_global_silence")) then
+					glaive_pure_damage = glaive_pure_damage * (1 + (self.scepter_damage_multiplier * 0.01))
+				end
+				
 				local damage_table = {
 					victim = target,
 					attacker = attacker,
@@ -381,24 +396,54 @@ function modifier_imba_silencer_glaives_of_wisdom:OnAttackLanded(keys)
 					ability = self.ability
 				}
 
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, glaive_pure_damage, nil)
 				ApplyDamage( damage_table )
-
+				if not target:IsAlive() then return end
+				
+				if target:HasModifier("modifier_imba_silencer_global_silence") then
+					local global_silence_duration_increase = attacker:FindTalentValue("special_bonus_imba_silencer_5")
+					if global_silence_duration_increase > 0 then
+						local modifier = target:FindModifierByName("modifier_imba_silencer_global_silence")
+						modifier:SetDuration(modifier:GetRemainingTime() + global_silence_duration_increase, true)
+					end
+				end
+				
 				local hit_counter = target:FindModifierByName(self.modifier_hit_counter)
 				if not hit_counter then
-					hit_counter = target:AddNewModifier(self.caster, self.ability, self.modifier_hit_counter, {req_hits = self.hits_to_silence, silence_dur = self.silence_duration})
+					hit_counter = target:AddNewModifier(attacker, self.ability, self.modifier_hit_counter, {req_hits = self.hits_to_silence, silence_dur = self.silence_duration})
 				end
 
 				if hit_counter then
 					hit_counter:IncrementStackCount()
 					hit_counter:SetDuration(self.hit_count_duration, true)
 				end
-
-				local int_damage = target:FindModifierByName(self.modifier_int_damage)
-				if not int_damage then
-					int_damage = target:AddNewModifier(self.caster, self.ability, self.modifier_int_damage, {int_reduction = self.int_reduction_pct})
+				
+				if attacker:HasTalent("special_bonus_imba_silencer_6") then
+					if not target:HasModifier("modifier_imba_silencer_glaives_talent_effect_procced") then
+						local arcaneSupremacy = attacker:FindModifierByName("modifier_imba_silencer_arcane_supremacy")
+						if arcaneSupremacy then
+							local stolenInt = arcaneSupremacy:GetStackCount()
+							if stolenInt > 0 then
+								local talentEffectModifier = target:FindModifierByName("modifier_imba_silencer_glaives_talent_effect")
+								if talentEffectModifier then
+									talentEffectModifier:SetStackCount(talentEffectModifier:GetStackCount() + stolenInt)
+									talentEffectModifier:SetDuration(attacker:FindTalentValue("special_bonus_imba_silencer_6", "duration"), true)
+								else
+									talentEffectModifier = target:AddNewModifier(attacker, self.ability, "modifier_imba_silencer_glaives_talent_effect", {duration = attacker:FindTalentValue("special_bonus_imba_silencer_6", "duration")})
+									talentEffectModifier:SetStackCount(stolenInt)
+								end
+							end
+						end
+					end
+				else
+					local int_damage = target:FindModifierByName(self.modifier_int_damage)
+					if not int_damage then
+						int_damage = target:AddNewModifier(attacker, self.ability, self.modifier_int_damage, {int_reduction = self.int_reduction_pct})
+					end
+					
+					int_damage:IncrementStackCount()
+					int_damage:SetDuration(self.int_reduction_duration, true)
 				end
-				int_damage:IncrementStackCount()
-				int_damage:SetDuration(self.int_reduction_duration, true)
 				
 				EmitSoundOn(self.sound_hit, target)
 			end
@@ -583,10 +628,7 @@ function modifier_imba_silencer_glaives_int_damage:OnStackCountChanged(old_stack
 			else
 				int_taken = -(1 - target_intelligence)
 			end
-			-- Calculate the amount of mana to remove, based on int-based max mana
-			local mana_to_burn = self.int_reduction_pct / 100 * target:GetMana() * ( target_intelligence * 12 + 50 ) / target:GetMaxMana()
 			self.total_int_reduced = self.total_int_reduced + int_taken
-			target:ReduceMana(mana_to_burn)
 			target:CalculateStatBonus()
 		end
 	end
@@ -607,6 +649,70 @@ end
 function modifier_imba_silencer_glaives_int_damage:GetModifierBonusStats_Intellect()
 	return -self.total_int_reduced
 end
+
+---------------------------------
+-- Glaives of Wisdom int reduction override talent modifier
+---------------------------------
+LinkLuaModifier("modifier_imba_silencer_glaives_talent_effect", "hero/hero_silencer", LUA_MODIFIER_MOTION_NONE)
+modifier_imba_silencer_glaives_talent_effect = modifier_imba_silencer_glaives_talent_effect or class({})
+function modifier_imba_silencer_glaives_talent_effect:IsDebuff() return true end
+
+function modifier_imba_silencer_glaives_talent_effect:GetTexture()
+	return "silencer_glaives_of_wisdom" end
+
+function modifier_imba_silencer_glaives_talent_effect:OnStackCountChanged( oldStacks )
+	if IsServer() then
+		local parent = self:GetParent()
+		if parent:GetIntellect() <= 1 then
+			local ability = self:GetAbility()
+			local caster = ability:GetCaster()
+			local damage = caster:GetIntellect() + self:GetStackCount()
+			local damageTable = {
+				victim = parent,
+				attacker = caster,
+				damage = damage,
+				damage_type = DAMAGE_TYPE_PURE,
+				ability = ability
+			}
+			ApplyDamage( damageTable )
+			
+			parent:AddNewModifier(caster, ability, "modifier_imba_silencer_glaives_talent_effect_procced", {duration = caster:FindTalentValue("special_bonus_imba_silencer_6", "noIntDuration")})
+			self:Destroy()
+		end
+	end
+end
+
+function modifier_imba_silencer_glaives_talent_effect:DeclareFunctions()
+	local funcs = { MODIFIER_PROPERTY_STATS_INTELLECT_BONUS, }
+	return funcs
+end
+
+function modifier_imba_silencer_glaives_talent_effect:GetModifierBonusStats_Intellect()
+	return self:GetStackCount() * -1
+end
+
+---------------------------------
+-- Glaives of Wisdom int reduction override procced talent modifier
+---------------------------------
+LinkLuaModifier("modifier_imba_silencer_glaives_talent_effect_procced", "hero/hero_silencer", LUA_MODIFIER_MOTION_NONE)
+modifier_imba_silencer_glaives_talent_effect_procced = modifier_imba_silencer_glaives_talent_effect_procced or class({})
+function modifier_imba_silencer_glaives_talent_effect_procced:IsDebuff() return true end
+
+function modifier_imba_silencer_glaives_talent_effect_procced:GetTexture()
+	return "silencer_glaives_of_wisdom" end
+	
+function modifier_imba_silencer_glaives_talent_effect_procced:OnCreated()
+	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_silencer/silencer_last_word_dmg.vpcf", PATTACH_POINT_FOLLOW, self:GetParent() )
+	ParticleManager:ReleaseParticleIndex(particle)
+end
+	
+function modifier_imba_silencer_glaives_talent_effect_procced:DeclareFunctions()
+	local funcs = { MODIFIER_PROPERTY_STATS_INTELLECT_BONUS, }
+	return funcs
+end
+
+function modifier_imba_silencer_glaives_talent_effect_procced:GetModifierBonusStats_Intellect()
+	return -9999999999 end
 
 --------------------------------------------------
 -- Last Word
@@ -810,9 +916,7 @@ end
 function modifier_imba_silencer_last_word_debuff:OnIntervalThink()
 	local target = self:GetParent()
 	if IsServer() then
-		if not target:IsMagicImmune() then --prevent weird interaction such as silencing Juggernaut trought Blade Fury
 		target:AddNewModifier(self.caster, self:GetAbility(), "modifier_silence", {duration = self.silence_duration})
-		end
 	end
 end
 
@@ -892,8 +996,7 @@ function modifier_imba_silencer_arcane_supremacy:IsPermanent() return true end
 function modifier_imba_silencer_arcane_supremacy:IsPurgeable() return false end
 
 function imba_silencer_arcane_supremacy:GetIntrinsicModifierName()
-	return "modifier_imba_silencer_arcane_supremacy"
-end
+	return "modifier_imba_silencer_arcane_supremacy" end
 
 function modifier_imba_silencer_arcane_supremacy:GetTexture()
     return "custom/arcane_supremacy"
@@ -903,13 +1006,13 @@ end
 function modifier_imba_silencer_arcane_supremacy:OnCreated( kv )
 	self.steal_range = self:GetAbility():GetSpecialValueFor("int_steal_range")
 	self.steal_amount = self:GetAbility():GetSpecialValueFor("int_steal_amount")
+	self.global_silence_steal = self:GetAbility():GetSpecialValueFor("global_silence_steal")
 	self.silence_reduction_pct = self:GetAbility():GetSpecialValueFor("silence_reduction_pct")
 	self.caster = self:GetCaster()
 end
 
 function modifier_imba_silencer_arcane_supremacy:GetSilenceReductionPct()
 	local reduction = self.silence_reduction_pct + self.caster:FindTalentValue("special_bonus_imba_silencer_4")
-
 	return reduction
 end
 
@@ -923,43 +1026,49 @@ end
 
 function modifier_imba_silencer_arcane_supremacy:OnDeath( params )
 	if IsServer() then		
-		if self.caster:PassivesDisabled() then
-			return nil
-		end
-		if params.unit:IsRealHero() and ( params.unit ~= self.caster ) and ( params.unit:GetTeam() ~= self.caster:GetTeam() ) then
-
-			-- If the dead unit is reincarnating, do nothing
-			if params.reincarnate then
-				return nil
-			end
-
-			local distance = ( self.caster:GetAbsOrigin() - params.unit:GetAbsOrigin() ):Length2D()
-			if ( distance <= self.steal_range ) or ( params.attacker == self.caster ) or ( params.unit:HasModifier("modifier_imba_silencer_global_silence") ) then
-				local enemy_min_int = 1
-				local enemy_intelligence = params.unit:GetBaseIntellect()
-				local enemy_intelligence_taken = 0
-				local steal_amount = self.steal_amount + self.caster:FindTalentValue("special_bonus_imba_silencer_3")
-
-				if enemy_intelligence > enemy_min_int then
-					if ( (enemy_intelligence - steal_amount) >= enemy_min_int ) then
-						enemy_intelligence_taken = steal_amount
-					else
-						enemy_intelligence_taken = -(enemy_min_int - enemy_intelligence)
+		if not self.caster:PassivesDisabled() then
+			if params.unit:IsRealHero() and params.unit ~= self.caster and params.unit:GetTeam() ~= self.caster:GetTeam() and not params.reincarnate then
+				
+				local stealType = nil
+				local distance = (self.caster:GetAbsOrigin() - params.unit:GetAbsOrigin()):Length2D()
+				if distance <= self.steal_range or params.attacker == self.caster then
+					stealType = "full"
+				elseif params.unit:HasModifier("modifier_imba_silencer_global_silence") then
+					stealType = "underUlt"
+				end
+				
+				if stealType then
+					local enemy_min_int = 1
+					local enemy_intelligence = params.unit:GetBaseIntellect()
+					local enemy_intelligence_taken = 0
+					local steal_amount = self.steal_amount
+					
+					if stealType == "underUlt" then
+						steal_amount = self.global_silence_steal
 					end
-					params.unit:SetBaseIntellect( enemy_intelligence - enemy_intelligence_taken )
-					params.unit:CalculateStatBonus()
+					
+					if enemy_intelligence > enemy_min_int then
+						if ( (enemy_intelligence - steal_amount) >= enemy_min_int ) then
+							enemy_intelligence_taken = steal_amount
+						else
+							enemy_intelligence_taken = -(enemy_min_int - enemy_intelligence)
+						end
+						
+						params.unit:SetBaseIntellect( enemy_intelligence - enemy_intelligence_taken )
+						params.unit:CalculateStatBonus()
 
-					self.caster:SetBaseIntellect(self.caster:GetBaseIntellect() + enemy_intelligence_taken)
-					self:SetStackCount(self:GetStackCount() + enemy_intelligence_taken)
-					self.caster:CalculateStatBonus()
+						self.caster:SetBaseIntellect(self.caster:GetBaseIntellect() + enemy_intelligence_taken)
+						self:SetStackCount(self:GetStackCount() + enemy_intelligence_taken)
+						self.caster:CalculateStatBonus()
 
-					-- Copied from https://moddota.com/forums/discussion/1156/modifying-silencers-int-steal
-					local life_time = 2.0
-					local digits = string.len( math.floor( enemy_intelligence_taken ) ) + 1
-					local numParticle = ParticleManager:CreateParticle( "particles/msg_fx/msg_miss.vpcf", PATTACH_OVERHEAD_FOLLOW, self.caster )
-					ParticleManager:SetParticleControl( numParticle, 1, Vector( 10, enemy_intelligence_taken, 0 ) )
-					ParticleManager:SetParticleControl( numParticle, 2, Vector( life_time, digits, 0 ) )
-					ParticleManager:SetParticleControl( numParticle, 3, Vector( 100, 100, 255 ) )
+						-- Copied from https://moddota.com/forums/discussion/1156/modifying-silencers-int-steal
+						local life_time = 2.0
+						local digits = string.len( math.floor( enemy_intelligence_taken ) ) + 1
+						local numParticle = ParticleManager:CreateParticle( "particles/msg_fx/msg_miss.vpcf", PATTACH_OVERHEAD_FOLLOW, self.caster )
+						ParticleManager:SetParticleControl( numParticle, 1, Vector( 10, enemy_intelligence_taken, 0 ) )
+						ParticleManager:SetParticleControl( numParticle, 2, Vector( life_time, digits, 0 ) )
+						ParticleManager:SetParticleControl( numParticle, 3, Vector( 100, 100, 255 ) )
+					end
 				end
 			end
 		end
@@ -971,23 +1080,44 @@ end
 ---------------------------------------------------------
 imba_silencer_global_silence = imba_silencer_global_silence or class({})
 
+function imba_silencer_global_silence:IsHiddenWhenStolen() return false end
+
 function imba_silencer_global_silence:GetAbilityTextureName()
-   return "silencer_global_silence"
+   return "silencer_global_silence" end
+
+function imba_silencer_global_silence:OnUpgrade()
+	if IsServer() then
+		if self:IsStolen() and self:GetLevel() == 1 then
+			local caster = self:GetCaster()
+			
+			-- If the caster has a 'legit copy' (aka not stolen (ROMG and such)) or the ability, do nothing.
+			local lastWord = caster:FindAbilityByName("imba_silencer_last_word")
+			if lastWord and not lastWord:IsStolen() then return end
+			
+			-- Otherwise sue his ass, confiscate it, and have him steal it again as hidden, and marked as stolen
+			caster:RemoveAbility("imba_silencer_last_word")
+			local origCaster = caster.spellStealTarget
+			local origLastWord = origCaster:FindAbilityByName("imba_silencer_last_word")
+			if origLastWord and origLastWord:IsTrained() then
+				lastWord = caster:AddAbility("imba_silencer_last_word")
+				lastWord:SetLevel(origLastWord:GetLevel())
+				lastWord:SetHidden(true)
+				lastWord:SetStolen(true)
+			end
+		end
+	end
 end
 
 function imba_silencer_global_silence:OnSpellStart()
 	local caster = self:GetCaster()
-	local curse_ability = caster:FindAbilityByName("imba_silencer_arcane_curse")
 	if IsServer() then
-		EmitSoundOn("Hero_Silencer.GlobalSilence.Cast", caster)
 		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_silencer/silencer_global_silence.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-			ParticleManager:SetParticleControl( particle, 0, caster:GetAbsOrigin() )
+		ParticleManager:SetParticleControl( particle, 0, caster:GetAbsOrigin() )
+		EmitSoundOn("Hero_Silencer.GlobalSilence.Cast", caster)
+		
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 		for _, enemy in pairs(enemies) do
 			enemy:AddNewModifier(caster, self, "modifier_imba_silencer_global_silence", {duration = self:GetDuration()})
-			if curse_ability and curse_ability:IsTrained() then
-				enemy:AddNewModifier(caster, curse_ability, "modifier_imba_arcane_curse_debuff", {duration = self:GetDuration()})
-			end
 			EmitSoundOnClient("Hero_Silencer.GlobalSilence.Effect", enemy:GetPlayerOwner())
 		end
 	end
@@ -997,26 +1127,129 @@ end
 ------------------------------------------------
 LinkLuaModifier("modifier_imba_silencer_global_silence", "hero/hero_silencer", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_silencer_global_silence = modifier_imba_silencer_global_silence or class({})
-
-function modifier_imba_silencer_global_silence:IsPurgable() return true end
 function modifier_imba_silencer_global_silence:IsDebuff() return true end
 
-function modifier_imba_silencer_global_silence:GetEffectName()
-	return "particles/generic_gameplay/generic_silence.vpcf"
+function modifier_imba_silencer_global_silence:IsPurgable()
+	if self.tickInterval > 0 then return false end
+	return true
 end
 
-function modifier_imba_silencer_global_silence:GetEffectAttachType()
-	return PATTACH_OVERHEAD_FOLLOW
-end
-
-function modifier_imba_silencer_global_silence:CheckState()
-	local state = {
-	[MODIFIER_STATE_SILENCED] = true,
-	}
-
-	return state
+function modifier_imba_silencer_global_silence:IsPurgeException()
+	if self.tickInterval > 0 then return false end
+	return true
 end
 
 function modifier_imba_silencer_global_silence:GetTexture()
-	return "silencer_global_silence"
+	return "silencer_global_silence" end
+
+function modifier_imba_silencer_global_silence:OnCreated()
+	if IsServer() then
+		self.tickInterval = self:GetAbility():GetCaster():FindTalentValue("special_bonus_imba_silencer_7")
+		self.preSilenceParticle = "particles/generic_gameplay/generic_has_quest.vpcf"
+		self.silenceParticle = "particles/generic_gameplay/generic_silence.vpcf"
+		self.parent = self:GetParent()
+		self.isDisabled = false
+		self.spellCast = false
+		self.particleState = 0 -- 0 = preSilenceParticle | 1 = silenceParticle
+		
+		if self.tickInterval > 0 then self:StartIntervalThink(self.tickInterval) end
+		
+		if self.parent:IsChanneling() or self.parent:GetCurrentActiveAbility() then
+			self.particle = ParticleManager:CreateParticle(self.silenceParticle, PATTACH_OVERHEAD_FOLLOW, self.parent)
+			self.particleState = 1
+			self.spellCast = true
+			self:LastWord()
+		else
+			self.particle = ParticleManager:CreateParticle(self.preSilenceParticle, PATTACH_OVERHEAD_FOLLOW, self.parent)
+		end
+	end
+end
+
+function modifier_imba_silencer_global_silence:OnIntervalThink()
+	if IsServer() then
+		if self.parent:IsMagicImmune() then
+			self:SetDuration(self:GetRemainingTime() + self.tickInterval, true)
+			
+			self.isDisabled = true
+			if self.spellCast and self.particleState == 1 then
+				self.particleState = 0
+				ParticleManager:DestroyParticle(self.particle, false)
+				ParticleManager:ReleaseParticleIndex(self.particle)
+				self.particle = ParticleManager:CreateParticle(self.preSilenceParticle, PATTACH_OVERHEAD_FOLLOW, self.parent)
+			end
+		else
+			self.isDisabled = false
+			if self.spellCast and self.particleState == 0 then
+				self.particleState = 1
+				ParticleManager:DestroyParticle(self.particle, false)
+				ParticleManager:ReleaseParticleIndex(self.particle)
+				self.particle = ParticleManager:CreateParticle(self.silenceParticle, PATTACH_OVERHEAD_FOLLOW, self.parent)
+			end
+		end
+	end
+end
+
+function modifier_imba_silencer_global_silence:DeclareFunctions()
+	local funcs = { MODIFIER_EVENT_ON_ORDER, }
+	return funcs
+end
+
+function modifier_imba_silencer_global_silence:CheckState()
+	if self.isDisabled then return {} end
+	
+	local state = {} 
+	if self.spellCast then
+		state = { [MODIFIER_STATE_SILENCED] = true, }
+	end
+	
+	return state
+end
+
+function modifier_imba_silencer_global_silence:OnDestroy()
+	if IsServer() then
+		ParticleManager:DestroyParticle(self.particle, false)
+		ParticleManager:ReleaseParticleIndex(self.particle)
+	end
+end
+
+function modifier_imba_silencer_global_silence:OnOrder(keys)
+	if IsServer() then
+		local victim = keys.unit
+		if self.parent == victim then
+			if keys.ability and not keys.ability:IsItem() then
+				local order_type = keys.order_type
+				if order_type == DOTA_UNIT_ORDER_CAST_POSITION or order_type == DOTA_UNIT_ORDER_CAST_TARGET or order_type == DOTA_UNIT_ORDER_CAST_TARGET_TREE or order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET or order_type == DOTA_UNIT_ORDER_CAST_TOGGLE  then
+					
+					-- Apply Last Word
+					if not self.isDisabled then self:LastWord() end
+					
+					-- If first time proccing, modify particle
+					if not self.spellCast then
+						self.spellCast = true
+						
+						if not self.isDisabled then
+							self.particleState = 1
+							ParticleManager:DestroyParticle(self.particle, false)
+							ParticleManager:ReleaseParticleIndex(self.particle)
+							self.particle = ParticleManager:CreateParticle(self.silenceParticle, PATTACH_OVERHEAD_FOLLOW, victim)
+						end
+					end
+				end
+			end
+		end
+	end
+end
+
+function modifier_imba_silencer_global_silence:LastWord()
+	if IsServer() then
+		if not self.isDisabled then
+			local caster = self:GetAbility():GetCaster()
+			if caster then
+				local lastWord = caster:FindAbilityByName("imba_silencer_last_word")
+				if lastWord and lastWord:IsTrained() then
+					self.parent:AddNewModifier(caster, lastWord, "modifier_imba_silencer_last_word_debuff", {duration = lastWord:GetSpecialValueFor("duration")})
+				end
+			end
+		end
+	end
 end

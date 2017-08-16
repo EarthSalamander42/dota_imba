@@ -262,7 +262,7 @@
     "DOTA_Tooltip_Talent_special_bonus_imba_disruptor_2_title"                  "Deep Forecast"
     "DOTA_Tooltip_Talent_special_bonus_imba_disruptor_2_Description"            "Glimpse Storm's effects lingers for an additional 1.25 seconds after leaving the storm area.<br><br><i>Even after exiting such a storm, those affected by it still cannot control themselves quite right for a few seconds.</i>"
     "DOTA_Tooltip_Talent_special_bonus_imba_disruptor_3_title"                  "Chain Lightning"
-    "DOTA_Tooltip_Talent_special_bonus_imba_disruptor_3_Description"            "Thunder Strikes have 25% chance to launch a Chain Lightning at the closest enemy in 600 AoE, bouncing up to 5 times.<br><br><i>By creating lightning rods made of hand-crafted metals, Disruptor channels thunder into its sparks, unleashing a powerful stroke upon its foes.</i>"
+    "DOTA_Tooltip_Talent_special_bonus_imba_disruptor_3_Description"            "Thunder Strike bolts have 25% chance to launch a Chain Lightning at the closest enemy in 600 AoE, bouncing up to 5 times.<br><br><i>By creating lightning rods made of hand-crafted metals, Disruptor channels thunder into its sparks, unleashing a powerful stroke upon its foes.</i>"
     "DOTA_Tooltip_Talent_special_bonus_imba_disruptor_4_title"                  "Numb Strike"
     "DOTA_Tooltip_Talent_special_bonus_imba_disruptor_4_Description"            "Every time a Thunder Strike lightning bolt strike the target, it is slowed by 100% for 0.25 seconds. This has no effect on nearby targets taking damage from those bolts. <br><br><i>Precise thunderbolts numb the muscles of the target enemy, rendering it unable to move briefly.</i>"  
     "DOTA_Tooltip_Talent_special_bonus_imba_disruptor_5_title"                  "Kinetic Turbulence"
@@ -270,7 +270,7 @@
     "DOTA_Tooltip_Talent_special_bonus_imba_disruptor_6_title"                  "Electrostatic Discharge"
     "DOTA_Tooltip_Talent_special_bonus_imba_disruptor_6_Description"            "For every second inside the Static Storm, the unit gets ministunned once every 0.5 seconds after exiting the storm.<br><br><i>Generates static electricity into its enemies, causing them to become paralyzed after exiting the static storm.</i>"
     "DOTA_Tooltip_Talent_special_bonus_imba_disruptor_7_title"                  "Squallcraft"
-    "DOTA_Tooltip_Talent_special_bonus_imba_disruptor_7_Description"            "When a Thunder Strike is searching for strike count, heroes that are currently inside a Static Storm are counted twice.<br><br><i>Each pulse of the electromangetic currents is tackled with each other, generating a deadly electrical response with thunderbolt and lightning.</i>"
+    "DOTA_Tooltip_Talent_special_bonus_imba_disruptor_7_Description"            "When a Thunder Strike is counting units for that strike, heroes that are currently inside a Static Storm are counted twice.<br><br><i>Each pulse of the electromangetic currents is tackled with each other, generating a deadly electrical response with thunderbolt and lightning.</i>"
     "DOTA_Tooltip_Talent_special_bonus_imba_disruptor_8_title"                  "Return Stroke"
     "DOTA_Tooltip_Talent_special_bonus_imba_disruptor_8_Description"            "Increases the duration of Thunder Strike by 4 additional seconds, and causes Thunder Strikes to occur 20% faster.<br><br><i>The skies are full of electrical currents just waiting to rain down on their target, and Disruptor is capable of using them exactly for this purpose.</i>"
 
@@ -507,6 +507,24 @@
     "DOTA_Tooltip_Talent_special_bonus_imba_pudge_7_Description"                "Meat hook now destroys trees, for every tree a unit passes through it deals 120 bonus physical damage."
     "DOTA_Tooltip_Talent_special_bonus_imba_pudge_8_title"                      "Triple Hook"
     "DOTA_Tooltip_Talent_special_bonus_imba_pudge_8_Description"                "Pudge throws 3 hooks instead of one, with 30 degrees between them. Those hooks can't thit the same target."
+
+    // Silencer
+    "DOTA_Tooltip_Talent_special_bonus_imba_silencer_1_title"                   "Leeching Curse"
+    "DOTA_Tooltip_Talent_special_bonus_imba_silencer_1_Description"             "Arcane Curse now heals its caster for 25% of damage it deals every tick.<br><br><i>Why waste drained energies when you can consume them?</i>"
+    "DOTA_Tooltip_Talent_special_bonus_imba_silencer_2_title"                   "Contagious Curse"
+    "DOTA_Tooltip_Talent_special_bonus_imba_silencer_2_Description"             "Arcane Curse will spread to enemies in a 900 unit radius should its bearer die.<br><br><i>Curses are like herpes - If you caught em' might as well spread em'.</i>"
+    "DOTA_Tooltip_Talent_special_bonus_imba_silencer_3_title"                   "Gagger"
+    "DOTA_Tooltip_Talent_special_bonus_imba_silencer_3_Description"             "Increases the duration of all silences inflicted by Silencer by +25%.<br><br><i>After being silenced by the Silencer, some people feel... desecrated...</i>"
+    "DOTA_Tooltip_Talent_special_bonus_imba_silencer_4_title"                   "Prolonged Exposure"
+    "DOTA_Tooltip_Talent_special_bonus_imba_silencer_4_Description"             "Silences applied on Silencer are immediately dispelled.<br><br><i>Casting a spell does not require uttering a word once you've mastered your craft..</i>"
+    "DOTA_Tooltip_Talent_special_bonus_imba_silencer_5_title"                   "Mid-Sentence Interruption"
+    "DOTA_Tooltip_Talent_special_bonus_imba_silencer_5_Description"             "Glaives of Wisdom prolong Global Silence on an afflicted unit by 0.2 seconds every hit.<br><br><i>Nothing shuts your foes up better than constantly interrupting them mid sentence.</i>"
+    "DOTA_Tooltip_Talent_special_bonus_imba_silencer_6_title"                   "Mind Bomb"
+    "DOTA_Tooltip_Talent_special_bonus_imba_silencer_6_Description"             "Glaives of Wisdom's 'Debate Me' now reduces flat intelligence based on the total intelligence stolen by Silencer. Once a target loses all of its intelligence, its mind explode, dealing pure damage to them equal to the amount of intelligence lost + Silencer's total intelligence. After a Mind Bomb procced, the target is left with no intelligence for 3 seconds.<br><br><i>Knowledge is power - But only if your adversaries are dumber than you.</i>"
+    "DOTA_Tooltip_Talent_special_bonus_imba_silencer_7_title"                   "Silenced Minds"
+    "DOTA_Tooltip_Talent_special_bonus_imba_silencer_7_Description"             "Global Silence cannot be purged, and its duration is paused as long as the affected unit is spell immune.<br><br><i>Silence... So deep, you do not hear yourself think.</i>"
+    "DOTA_Tooltip_Talent_special_bonus_imba_silencer_8_title"                   "SHUT UP!"
+    "DOTA_Tooltip_Talent_special_bonus_imba_silencer_8_Description"             "Enemies who attempt to cast a spell in a 1200 unit radius around Silencer are immediately silenced for 3 seconds. Has a 6 second cooldown before another target can be silenced by the aura. Does not affect spell immune enemies.<br><br><i>A small hush near the Silencer - The last sound to escape your throat.</i>"
 
 	// Venomancer
 	"Dota_Tooltip_Talent_special_bonus_imba_venomancer_1_title"						"Vicious Gale"
