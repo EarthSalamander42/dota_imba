@@ -244,8 +244,8 @@ end
 
 function ThunderStrikeBoltStrike(self)
 	local sound_impact = "Hero_Disruptor.ThunderStrike.Target"
-	local strike_particle = "particles/hero/disruptor/disruptor_thunder_strike_bolt.vpcf"
-	local aoe_particle = "particles/hero/disruptor/disruptor_thuderstrike_aoe_area.vpcf"
+	local strike_particle = "particles/units/heroes/hero_disruptor/disruptor_thunder_strike_bolt.vpcf"
+	local aoe_particle = "particles/units/heroes/hero_disruptor/disruptor_thunder_strike_aoe.vpcf"
 	local stormbearer_buff = "modifier_imba_stormbearer"
 	local scepter = self.caster:HasScepter()
 	
@@ -254,9 +254,8 @@ function ThunderStrikeBoltStrike(self)
 
 	-- #3 Talent: Thunder Strike has a chance to launch Chain Lightning
 	if self.caster:HasTalent("special_bonus_imba_disruptor_3") then 
-		if RollPercentage(self.caster:FindTalentValue("special_bonus_imba_disruptor_3")) then
-		
-		LaunchLightning(self.caster, self.target, self.ability, self.damage, self.caster:FindTalentValue("special_bonus_imba_disruptor_3", "bounce_radius"), self.caster:FindTalentValue("special_bonus_imba_disruptor_3", "max_targets"))
+		if RollPercentage(self.caster:FindTalentValue("special_bonus_imba_disruptor_3")) then		
+			LaunchLightning(self.caster, self.target, self.ability, self.damage, self.caster:FindTalentValue("special_bonus_imba_disruptor_3", "bounce_radius"), self.caster:FindTalentValue("special_bonus_imba_disruptor_3", "max_targets"))
 		end
 	end
 	
@@ -368,9 +367,8 @@ function LaunchLightning(caster, target, ability, damage, bounce_radius, max_tar
 						already_hit = true
 						break
 					end
-				end
+				end				
 				
-				--createhero npc_dota_hero_sniper
 				-- If not, zap it from this source, and mark it as a hit target and potential future source
 				if not already_hit then
 				
@@ -781,8 +779,7 @@ function modifier_imba_glimpse_storm_debuff:OnCreated()
     -- Ability properties
     self.target = self:GetParent()
     self.caster = self:GetCaster()
-    self.ability = self:GetAbility()
-    self.scepter = self.caster:HasScepter()
+    self.ability = self:GetAbility()    
 
     -- Ability specials
 	self.storm_damage = self.ability:GetSpecialValueFor("storm_damage")
@@ -829,13 +826,7 @@ function modifier_imba_glimpse_storm_debuff:OnIntervalThink()
 end
 
 function modifier_imba_glimpse_storm_debuff:CheckState()            
-    local state 
-    if self.scepter then
-        state = { [MODIFIER_STATE_SILENCED] = true,
-                  [MODIFIER_STATE_MUTED] = true}
-    else
-        state = { [MODIFIER_STATE_SILENCED] = true} 
-    end     
+    local state = {[MODIFIER_STATE_SILENCED] = true}     
     return state    
 end
 
