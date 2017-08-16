@@ -585,7 +585,6 @@ function modifier_imba_vampiric_aura_buff:OnTakeDamage(keys)
             end)
         end
 
-
         if self.caster:FindTalentValue("special_bonus_imba_skeleton_king_1", "talent_trained") == 1 and self.parent == target and target ~= self.caster then
             local heal_amount = 0
 
@@ -609,7 +608,7 @@ function modifier_imba_vampiric_aura_buff:OnTakeDamage(keys)
 
             -- After a small delay, find both illusions and the real aura bearer
             Timers:CreateTimer(self.heal_delay, function()
-                if not caster:IsAlive() then
+                if not self.caster:IsAlive() then
                     return nil
                 end
                 local casters = FindUnitsInRadius(self.parent:GetTeamNumber(),
@@ -1492,12 +1491,10 @@ function imba_wraith_king_kingdom_come:GetCooldown()
     end
 end
 
-function imba_wraith_king_kingdom_come:OnSpellStart()
-    if not IsServer() then 
-        return
-    end
+function imba_wraith_king_kingdom_come:OnSpellStart()    
     local keys = self:GetCaster():FindModifierByNameAndCaster("modifier_imba_kingdom_come", self:GetCaster())
     -- Create Kingdom
+
     imba_wraith_king_create_kingdom(keys)
 end
 
