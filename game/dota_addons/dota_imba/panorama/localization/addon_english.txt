@@ -472,6 +472,24 @@
 	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_8_title"                  "Magnetic Forces"					
     "DOTA_Tooltip_Talent_special_bonus_imba_magnataur_8_Description"            "Increases Reverse Polarity's pull distance effect on Polarized enemies by 250.<br><br><i>Magnus is capable of sending his entire magnetic force to the ends of the world, then call them in, pushing polarized units further towards him.</i>"
 
+    // Nyx
+    "DOTA_Tooltip_Talent_special_bonus_imba_nyx_assassin_1_title"             "Everlasting Vendetta"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nyx_assassin_1_Description"       "If Vendetta kills an enemy unit, it doesn't consume the Eye for Eye stacks.<br><br><i>A successful hunt does not mean the end of Nyx's Vendetta.</i>"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nyx_assassin_2_title"             "Burning Vendetta"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nyx_assassin_2_Description"       "When hitting out of Vendetta, Mana Burn is instantly applied on the target.<br><br><i>As Nyx stalks his next prey, he's ever ready to devour his enemy's mind.</i>"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nyx_assassin_3_title"             "Adaptive Burn"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nyx_assassin_3_Description"       "Mana Burn multiplies the main attribute of the target.<br><br><i>Nyx has learned to adapt his mindflaying, if the enemy has not much for intelligence.</i>"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nyx_assassin_4_title"             "Spiked Spikes"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nyx_assassin_4_Description"       "Spiked Carapace now returns all instances over its duration.<br><br><i>As Nyx's shell hardens, so his ability to pay pain onto pain.</i>"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nyx_assassin_5_title"             "Preservation Carapace"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nyx_assassin_5_Description"       "Falling below 30% procs Spiked Carapace automatically if the skill is off cooldown. Triggers cooldown.<br>Spiked Carapace only activates if you would survive the damage dealt.<br><br><i>Sometimes, you can miss the opportunity to save your life...not anymore.</i>"    
+    "DOTA_Tooltip_Talent_special_bonus_imba_nyx_assassin_6_title"             "Impaling Earthquake"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nyx_assassin_6_Description"       "Impale now bursts in random locations around targets hit. Each mini-impale deals 75 damage and stuns for 0.75 seconds. Lasts 3 seconds. Mini spikes do not apply Relive Suffering or Dazing Impale.<br><br><i>As Nyx impales the ground, the strike causes the very ground to erupt around the targets.</i>"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nyx_assassin_7_title"             "Dazing Impale"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nyx_assassin_7_Description"       "Enemies that were hit by Impale get their movespeed reduced by 1% for each 50 distance they travel. Lasts 5 seconds.<br><br><i>The spikes leave deep wounds that only get worse as the target tries to run.</i>"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nyx_assassin_8_title"             "Evolving Parasites"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nyx_assassin_8_Description"       "Units dying while the Mana Burn debuff has their scarabs coming out of them, and hop into Nyx for 20 seconds. If an enemy unit comes within 400 AoE of Nyx, it invades it and procs Mana Burn on it.<br>Does not cost mana or put Mana Burn on cooldown.<br><br><i>Parasites improve their survivability, in case the host cannot feed them before their end.</i>"
+
     // Pudge
     "DOTA_Tooltip_Talent_special_bonus_imba_pudge_1_title"                      "Rottest Rot"
     "DOTA_Tooltip_Talent_special_bonus_imba_pudge_1_Description"                "For every 5% health Pudge misses Rot deals 40 damage per second extra."

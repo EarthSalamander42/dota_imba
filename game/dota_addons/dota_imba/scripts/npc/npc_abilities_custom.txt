@@ -19314,8 +19314,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"475"
-		"AbilityCastPoint"				"0.0"
+		"AbilityCastRange"				"475"		
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
 
 		// Time
@@ -19349,7 +19348,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"sec_heal_pct"			"0.5 0.75 1.0 1.25 1.25 1.25 1.25"
+				"sec_heal_pct"			"1 1.5 2 2.5 2.5 2.5 2.5"
 			}
 			"05"
 			{
@@ -19394,8 +19393,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"600"
-		"AbilityCastPoint"				"0.0"
+		"AbilityCastRange"				"750"		
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
@@ -19412,7 +19410,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"600"
+				"radius"				"750"
 				"LinkedSpecialBonus"	"special_bonus_imba_necrolyte_5"
 			}
 			"02"
@@ -19428,7 +19426,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"healing_amp_pct"		"50 50 50 50 60 70 80"
+				"healing_amp_pct"		"75 75 75 75 90 105 120"
 			}
 			"05"
 			{
@@ -19438,7 +19436,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"healing_amp_tooltip"	"25 25 25 25 30 35 40"
+				"healing_amp_tooltip"	"37.5 37.5 37.5 37.5 45 52.5 60"
 			}
 		}
 	}
@@ -19491,7 +19489,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"heal_reduce_pct"			"16 16 16 16 24 32 40"
+				"heal_reduce_pct"			"30 30 30 30 45 60 75"
 				"LinkedSpecialBonus"		"special_bonus_imba_necrolyte_4"
 			}
 		}
@@ -19537,11 +19535,11 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"100 85 70 66 63 60"
+		"AbilityCooldown"				"90 80 70 66 62 58"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"175 325 475 525 575 625"
+		"AbilityManaCost"				"175 340 500 550 600 650"
 
 		// Cast Range
 		//-------------------------------------------------------------------------------------------------------------
@@ -19564,7 +19562,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"respawn_increase"			"10 14 18 22 26 30"
+				"respawn_increase"			"10 20 30 32 34 36"
 			}
 			"04"
 			{
@@ -19754,7 +19752,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"10"
+				"value"						"1"
 			}
 		}
 	}
@@ -20236,13 +20234,13 @@
 			"07"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"temporary_soul_duration"		"30"
+				"temporary_soul_duration"		"18 18 18 18 22 26 30"
 			}
 
 			"08"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"max_temporary_souls_pct"		"25 25 25 25 50 75 100"
+				"max_temporary_souls_pct"		"100"
 			}
 
 			"09"
@@ -20305,7 +20303,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"raze_armor_reduction"		"0 0 0 0 1 2 3"
+				"raze_armor_reduction"		"1 1 1 1 2 3 4"
 				"LinkedSpecialBonus"		"special_bonus_imba_nevermore_2"
 			}
 
@@ -20436,10 +20434,223 @@
 			"12"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"scepter_line_damage_pct"	"50"
+				"scepter_line_damage_pct"	"40"
 			}
 		}
 	}
+
+	//=================================================================================================================
+    // Shadow Fiend's Talents
+    //=================================================================================================================
+    "special_bonus_imba_nevermore_1" // Shadowraze mana cost reduction
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"	"imba_nevermore_shadowraze_close"
+        	"02"	"imba_nevermore_shadowraze_medium"
+        	"03"	"imba_nevermore_shadowraze_far"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "20"
+            }
+        }
+    }
+
+    "special_bonus_imba_nevermore_2" // Presence of the Dark Lord Armor reduction increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01" 	"imba_nevermore_dark_lord"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "armor_reduction"           "2"
+            }
+
+            "02"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "raze_armor_reduction"      "1"
+            }
+        }
+    }
+
+    "special_bonus_imba_nevermore_3" // Shadowraze cooldown reduction
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"	"imba_nevermore_shadowraze_close"
+        	"02"	"imba_nevermore_shadowraze_medium"
+        	"03"	"imba_nevermore_shadowraze_far"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "3"
+            }
+        }
+    }
+
+    "special_bonus_imba_nevermore_4" // Souls now also grant lifesteal
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"	"imba_nevermore_necromastery"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "0.4"
+            }
+        }
+    }
+
+    "special_bonus_imba_nevermore_5" // Presence of the Lord gain a soul from nearby enemies
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"	"imba_nevermore_dark_lord"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "1"
+            }
+        }
+    }
+
+    "special_bonus_imba_nevermore_6" // Maximum Necromastery soul increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"	"imba_nevermore_necromastery"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "10"
+            }
+        }
+    }
+
+    "special_bonus_imba_nevermore_7" // Necromastery souls are not lost on death
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"	"imba_nevermore_necromastery"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "10"
+            }
+        }
+    }
+
+    "special_bonus_imba_nevermore_8" // Necromastery soul grant additional damage
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"	"imba_nevermore_necromastery"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "2"
+            }
+        }
+    }
 
 	//=================================================================================================================
 	// Night Stalker's Stalker in the Night
@@ -20518,7 +20729,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"110 185 260 335 370 405 440"
+				"damage"				"90 160 255 335 370 405 440"
 			}
 
 			"02"
@@ -20541,14 +20752,14 @@
 
 			"05"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"day_duration"			"2"
+				"var_type"				"FIELD_FLOAT"
+				"day_duration"			"1.25"
 			}
 
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"night_pull"			"2 2 2 2 3 4 5"
+				"night_pull"			"4"
 			}
 
 			"07"
@@ -20560,7 +20771,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"night_extend"			"2 2 2 2 3 4 5"
+				"night_extend"			"4"
 			}
 
 			"09"
@@ -20647,7 +20858,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"fear_duartion"			"1 1 1 1 1.5 2 2.5"
+				"fear_duartion"			"3 3 3 3 4 5 6"
 				"LinkedSpecialBonus"	"special_bonus_imba_night_stalker_4"
 			}
 		}
@@ -20779,6 +20990,215 @@
 	}
 
 	//=================================================================================================================
+	// Night Stalker's Talents
+	//=================================================================================================================
+	"special_bonus_imba_night_stalker_1" // Void vision reduction increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_night_stalker_void"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"200"
+			}
+		}
+	}
+
+	"special_bonus_imba_night_stalker_2" // Crippling Fear miss chance increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_night_stalker_crippling_fear"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"25"
+			}
+		}
+	}
+
+	"special_bonus_imba_night_stalker_3" // Hunter in the Night bonuses
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_night_stalker_hunter_in_the_night"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"ms_bonus_pct"				"10"
+			}
+
+			"02"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"as_bonus"					"20"
+			}
+		}
+	}
+
+	"special_bonus_imba_night_stalker_4" // Crippling Fear On-kill effect duration
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_night_stalker_crippling_fear"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_night_stalker_5" // Stalker in the Night night vision bonus
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_night_stalker_stalker_in_the_night"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"400"
+			}
+		}
+	}
+
+	"special_bonus_imba_night_stalker_6" // Crippling Fear now mutes the target as well
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_night_stalker_crippling_fear"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_night_stalker_7" // Darkness maximum vision range reduction
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_night_stalker_darkness"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"150"
+			}
+		}
+	}
+
+	"special_bonus_imba_night_stalker_8" // Crippling Fear cooldown decrease
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_night_stalker_crippling_fear"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"8"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Nyx Assassin's Impale
 	//=================================================================================================================
 	"imba_nyx_assassin_impale"
@@ -20803,7 +21223,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"13"
+		"AbilityCooldown"				"14"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -20879,7 +21299,7 @@
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"burrow_cd_reduction"	"6"
+				"burrow_cd_reduction"	"7"
 			}
 
 			"11"
@@ -21013,7 +21433,7 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"20"
+		"AbilityCooldown"				"25 20 15 10 10 10 10"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -21137,6 +21557,274 @@
 			}
 		}
 	}
+
+	//=================================================================================================================
+    // Nyx Assassin's Talents
+    //=================================================================================================================
+    "special_bonus_imba_nyx_assassin_1" // If Vendetta kills an enemy unit, it doesn't consume the Eye for Eye stacks.
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"	"imba_nyx_assassin_vendetta"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "1"
+            }
+        }
+    }
+
+    "special_bonus_imba_nyx_assassin_2" // When hitting out of Vendetta, Mana Burn is instantly applied on the target.
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"	"imba_nyx_assassin_vendetta"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "1"
+            }
+        }
+    }
+
+    "special_bonus_imba_nyx_assassin_3" // Mana Burn multiplies the main attribute of the target instead Intelligence
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"	"imba_nyx_assassin_mana_burn"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "1"
+            }
+        }
+    }
+
+    "special_bonus_imba_nyx_assassin_4" // Spiked Carapace now returns all instances over its duration
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"	"imba_nyx_assassin_spiked_carapace"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "1"
+            }
+        }
+    }
+
+    "special_bonus_imba_nyx_assassin_5" // Falling below 30% procs Spiked Carapace automatically if the skill is off cooldown
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"	"imba_nyx_assassin_spiked_carapace"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "30"
+            }
+        }
+    }
+
+    "special_bonus_imba_nyx_assassin_6" // Impale now bursts in random locations around targets hit. Each mini-impale deals 75 damage and stuns for 0.75 seconds. Lasts 3 seconds. Mini spikes do not apply Relive Suffering
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"	"imba_nyx_assassin_impale"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "duration"	                "0.5"
+            }
+            "02"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "air_time"	                "0.25"
+            }
+            "03"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "air_height"	            "50"
+            }
+            "04"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "damage"	                "75"
+            }
+            "05"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "repeat_duration"	        "3.0"
+            }
+            "06"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "spike_rate"	        	"0.2"
+            }
+            "07"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "spike_chance"	        	"50"
+            }
+            "08"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "spike_spawn_min_range"	    "75"
+            }
+            "09"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "spike_spawn_max_range"	    "300"
+            }
+            "10"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "spike_aoe"	    			"75"
+            }
+        }
+    }
+
+    "special_bonus_imba_nyx_assassin_7" // Enemies that were hit by Impale get their movespeed reduced by 1% for each 50 distance they travel. Lasts 5 seconds
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"	"imba_nyx_assassin_impale"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "duration"	                "5"
+            }
+            "02"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "slow_per_movedistance"	    "1"
+            }
+            "02"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "movedistance"	    		"50"
+            }
+        }
+    }
+
+    "special_bonus_imba_nyx_assassin_8" // Units dying while the Mana Burn debuff has their scarabs coming out of them, and hop into Nyx for 20 seconds. If an enemy unit comes within 400 AoE of Nyx, it invades it and procs Mana Burn on it
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"	"imba_nyx_assassin_mana_burn"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "duration"	                "20"
+            }
+            "02"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "search_rate"                "0.25"
+            }
+            "03"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "search_radius"             "400"
+            }
+        }
+    }
 
 	//=================================================================================================================
 	// Outworld Devourer's Arcane Orb
@@ -35246,214 +35934,7 @@
         }
     }
 
-	//=================================================================================================================
-	// Night Stalker's Talents
-	//=================================================================================================================
-	"special_bonus_imba_night_stalker_1" // Void vision reduction increase
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_night_stalker_void"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-					"var_type"                  "FIELD_INTEGER"
-				"value"						"200"
-			}
-		}
-	}
-
-	"special_bonus_imba_night_stalker_2" // Crippling Fear miss chance increase
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_night_stalker_crippling_fear"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"value"						"25"
-			}
-		}
-	}
-
-	"special_bonus_imba_night_stalker_3" // Hunter in the Night bonuses
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_night_stalker_hunter_in_the_night"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"ms_bonus_pct"				"10"
-			}
-
-			"02"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"as_bonus"					"20"
-			}
-		}
-	}
-
-	"special_bonus_imba_night_stalker_4" // Crippling Fear On-kill effect duration
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_night_stalker_crippling_fear"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"value"						"1"
-			}
-		}
-	}
-
-	"special_bonus_imba_night_stalker_5" // Stalker in the Night night vision bonus
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_night_stalker_stalker_in_the_night"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"value"						"400"
-			}
-		}
-	}
-
-	"special_bonus_imba_night_stalker_6" // Crippling Fear now mutes the target as well
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_night_stalker_crippling_fear"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"value"						"1"
-			}
-		}
-	}
-
-	"special_bonus_imba_night_stalker_7" // Darkness maximum vision range reduction
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_night_stalker_darkness"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"value"						"150"
-			}
-		}
-	}
-
-	"special_bonus_imba_night_stalker_8" // Crippling Fear cooldown decrease
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_night_stalker_crippling_fear"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"value"						"8"
-			}
-		}
-	}
+	
 	
 
 	//=================================================================================================================
@@ -36466,486 +36947,9 @@
         }
     }
 
-    //=================================================================================================================
-    // Nyx Assassin's Talents
-    //=================================================================================================================
-    "special_bonus_imba_nyx_assassin_1" // If Vendetta kills an enemy unit, it doesn't consume the Eye for Eye stacks.
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    
 
-        "LinkedAbility"
-        {
-        	"01"	"imba_nyx_assassin_vendetta"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "value"	                    "1"
-            }
-        }
-    }
-
-    "special_bonus_imba_nyx_assassin_2" // When hitting out of Vendetta, Mana Burn is instantly applied on the target.
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01"	"imba_nyx_assassin_vendetta"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "value"	                    "1"
-            }
-        }
-    }
-
-    "special_bonus_imba_nyx_assassin_3" // Mana Burn multiplies the main attribute of the target instead Intelligence
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01"	"imba_nyx_assassin_mana_burn"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "value"	                    "1"
-            }
-        }
-    }
-
-    "special_bonus_imba_nyx_assassin_4" // Spiked Carapace now returns all instances over its duration
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01"	"imba_nyx_assassin_spiked_carapace"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "value"	                    "1"
-            }
-        }
-    }
-
-    "special_bonus_imba_nyx_assassin_5" // Falling below 30% procs Spiked Carapace automatically if the skill is off cooldown
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01"	"imba_nyx_assassin_spiked_carapace"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "value"	                    "30"
-            }
-        }
-    }
-
-    "special_bonus_imba_nyx_assassin_6" // Impale now bursts in random locations around targets hit. Each mini-impale deals 75 damage and stuns for 0.75 seconds. Lasts 3 seconds. Mini spikes do not apply Relive Suffering
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01"	"imba_nyx_assassin_impale"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "duration"	                "0.5"
-            }
-            "02"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "air_time"	                "0.25"
-            }
-            "03"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "air_height"	            "50"
-            }
-            "04"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "damage"	                "75"
-            }
-            "05"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "repeat_duration"	        "3.0"
-            }
-            "06"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "spike_rate"	        	"0.2"
-            }
-            "07"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "spike_chance"	        	"50"
-            }
-            "08"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "spike_spawn_min_range"	    "75"
-            }
-            "09"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "spike_spawn_max_range"	    "300"
-            }
-            "10"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "spike_aoe"	    			"75"
-            }
-        }
-    }
-
-    "special_bonus_imba_nyx_assassin_7" // Enemies that were hit by Impale get their movespeed reduced by 1% for each 50 distance they travel. Lasts 5 seconds
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01"	"imba_nyx_assassin_impale"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "duration"	                "5"
-            }
-            "02"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "slow_per_movedistance"	    "1"
-            }
-            "02"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "movedistance"	    		"50"
-            }
-        }
-    }
-
-    "special_bonus_imba_nyx_assassin_8" // Units dying while the Mana Burn debuff has their scarabs coming out of them, and hop into Nyx for 20 seconds. If an enemy unit comes within 400 AoE of Nyx, it invades it and procs Mana Burn on it
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01"	"imba_nyx_assassin_mana_burn"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "duration"	                "20"
-            }
-            "02"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "search_rate"                "0.25"
-            }
-            "03"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "search_radius"             "400"
-            }
-        }
-    }
-
-    //=================================================================================================================
-    // Shadow Fiend's Talents
-    //=================================================================================================================
-    "special_bonus_imba_nevermore_1" // Shadowraze mana cost reduction
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01"	"imba_nevermore_shadowraze_close"
-        	"02"	"imba_nevermore_shadowraze_medium"
-        	"03"	"imba_nevermore_shadowraze_far"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "value"	                    "20"
-            }
-        }
-    }
-
-    "special_bonus_imba_nevermore_2" // Presence of the Dark Lord Armor reduction increase
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01" 	"imba_nevermore_dark_lord"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "armor_reduction"           "2"
-            }
-
-            "02"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "raze_armor_reduction"      "1"
-            }
-        }
-    }
-
-    "special_bonus_imba_nevermore_3" // Shadowraze cooldown reduction
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01"	"imba_nevermore_shadowraze_close"
-        	"02"	"imba_nevermore_shadowraze_medium"
-        	"03"	"imba_nevermore_shadowraze_far"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "value"	                    "3"
-            }
-        }
-    }
-
-    "special_bonus_imba_nevermore_4" // Souls now also grant lifesteal
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01"	"imba_nevermore_necromastery"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "value"	                    "0.4"
-            }
-        }
-    }
-
-    "special_bonus_imba_nevermore_5" // Presence of the Lord gain a soul from nearby enemies
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01"	"imba_nevermore_dark_lord"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "value"	                    "1"
-            }
-        }
-    }
-
-    "special_bonus_imba_nevermore_6" // Maximum Necromastery soul increase
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01"	"imba_nevermore_necromastery"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "value"	                    "10"
-            }
-        }
-    }
-
-    "special_bonus_imba_nevermore_7" // Necromastery souls are not lost on death
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01"	"imba_nevermore_necromastery"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "value"	                    "10"
-            }
-        }
-    }
-
-    "special_bonus_imba_nevermore_8" // Necromastery soul grant additional damage
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01"	"imba_nevermore_necromastery"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "value"	                    "2"
-            }
-        }
-    }
+    
 
     //=================================================================================================================
     // Outworld Devourer's Talents

@@ -409,6 +409,7 @@ function modifier_imba_impale_stun:IsStunDebuff() return true end
 modifier_imba_impale_talent_slow = modifier_imba_impale_talent_slow or class({})
 
 function modifier_imba_impale_talent_slow:OnCreated()
+
     self.max_distance = 200 -- to detect blink movement so as to not apply the slow
     self.caster = self:GetCaster()
     self.target = self:GetParent()
@@ -422,12 +423,12 @@ end
 
 function modifier_imba_impale_talent_slow:DeclareFunctions()
     local decFuncs = {MODIFIER_EVENT_ON_UNIT_MOVED,
-                    MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
+                      MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
 
     return decFuncs
 end
 
-function modifier_imba_impale_talent_slow:OnUnitMoved()
+function modifier_imba_impale_talent_slow:OnUnitMoved()    -- THIS IS SERVERSIDE ONLY
     self.current_position = self.target:GetAbsOrigin()
     self.distance_moved = self.distance_moved + (self.last_position - self.current_position):Length2D()
     self.last_position = self.current_position
@@ -439,11 +440,14 @@ function modifier_imba_impale_talent_slow:OnUnitMoved()
         self.denominator = math.floor(self.distance_moved / self.movedistance)
         self.movement_slow_pct = self.movement_slow_pct + self.denominator
         self.distance_moved = self.distance_moved - self.movedistance * self.denominator
+
+        -- Update stack count to show slow for clientside
+        self:SetStackCount(self.movement_slow_pct)
     end
 end
 
 function modifier_imba_impale_talent_slow:GetModifierMoveSpeedBonus_Percentage()
-    return -self.movement_slow_pct
+    return -self:GetStackCount()
 end
 
 function modifier_imba_impale_talent_slow:IsHidden() return false end
