@@ -358,7 +358,8 @@ function LaunchLightning(caster, target, ability, damage, bounce_radius, max_tar
 			
 			-- Iterate through potential targets near this source
 			local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), potential_source:GetAbsOrigin(), nil, bounce_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
-			
+			local source_removed = false
+
 			for _, potential_target in pairs(nearby_enemies) do
 				-- Check if this target was already hit
 				local already_hit = false
@@ -377,14 +378,20 @@ function LaunchLightning(caster, target, ability, damage, bounce_radius, max_tar
 					search_sources[#search_sources+1] = potential_target
 					
 					if #targets_hit == max_targets then
-					return
+						return
 					end
 					
+					-- On successful hit, delete the potential source and stop the inner loop
+					table.remove(search_sources, potential_source_index)
+					source_removed = true
+					break
 				end
 			end
 
-			-- Remove this potential source
-			table.remove(search_sources, potential_source_index)
+			if not source_removed then
+				-- Remove this potential source
+				table.remove(search_sources, potential_source_index)
+			end
 		end
 	end
 end
