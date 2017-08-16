@@ -414,7 +414,7 @@
 	"DOTA_Tooltip_Talent_special_bonus_imba_lina_6_title"						"Volatile Lightning"
 	"DOTA_Tooltip_Talent_special_bonus_imba_lina_6_Description"					"Laguna Blade stuns targets for 0.75 seconds. This effect applies for any target the Laguna Blade bounces to.<br><br><i>Focusing concentrated traces of magical energies into her lightning shaped magic, Lina is capable to stop anyone in its tracks.</i>"		
 	"DOTA_Tooltip_Talent_special_bonus_imba_lina_7_title"						"Hotfoot"
-	"DOTA_Tooltip_Talent_special_bonus_imba_lina_7_Description"					"Increases the maximum stacks limit of Fiery Soul by 1.<br><br><i>Breaking her limit, Lina uses all of her magic to conduct immense fireballs to be hurled at her enemies with no delay in between, almost burning herself in the process.</i>"
+	"DOTA_Tooltip_Talent_special_bonus_imba_lina_7_Description"					"Increases the maximum stacks limit of Fiery Soul by 3.<br><br><i>Breaking her limit, Lina uses all of her magic to conduct immense fireballs to be hurled at her enemies with no delay in between, almost burning herself in the process.</i>"
 	"DOTA_Tooltip_Talent_special_bonus_imba_lina_8_title"						"Blazing Strike"
 	"DOTA_Tooltip_Talent_special_bonus_imba_lina_8_Description"					"Imbues Lina's auto attacks with flames so strong, burning her targets for 10 seconds. Each second the debuff ticks, dealing damage equal to 10% of Lina's intelligence. Being hit by one of Lina's spells consumes the debuff, immediately dealing all its remaining damage to the target. Successive attacks on the target only refresh the debuff.<br><br><i>Lina reaches her ultimate form, consuming her enemies in a continuous bursts of flames.</i>"
 
