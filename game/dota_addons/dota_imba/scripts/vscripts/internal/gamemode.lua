@@ -322,12 +322,7 @@ function OnSetGameMode( eventSourceIndex, args )
 		CustomNetTables:SetTableValue("game_options", "initial_level", {HERO_STARTING_LEVEL})
 		CustomNetTables:SetTableValue("game_options", "max_level", {MAX_LEVEL})
 		print("Hero power set to high")
-	end
-
-	-- Allow heroes to level up further than normal
-	for i = 25, MAX_LEVEL do
-		XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + 5000
-	end
+	end	
 
     -- Hero pick rule
     -- Ignore HeroPickRuleOption1 because that is the default
