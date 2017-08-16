@@ -10103,7 +10103,7 @@
 		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"								"SPELL_IMMUNITY_ENEMIES_NO"		
-		"AbilityCastPoint"								"0.2"
+		"AbilityCastPoint"								"0.3"
 		"AbilityManaCost"								"70"
 		"MaxLevel"										"7"
 
@@ -10114,7 +10114,7 @@
 			"01"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"cooldown"								"12 11 10 9 8 7 6"
+				"cooldown"								"15 13 11 7 7 7 7"
 			}
 
 			"02"
@@ -10144,7 +10144,7 @@
 			"06"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"poison_base_damage"					"14 20 26 32 38 44 50"
+				"poison_base_damage"					"14 20 26 36 40 44 48"
 			}
 
 			"07"
@@ -10219,7 +10219,7 @@
 		"SpellImmunityType"								"SPELL_IMMUNITY_ALLIES_YES"
 		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO"		
 		"AbilityCooldown"								"60 45 30 15 14 13 12"
-		"AbilityCastPoint"								"0.35"
+		"AbilityCastPoint"								"0.4"
 		"MaxLevel"										"7"
 
 		// Special
@@ -10283,8 +10283,7 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"talent_aura_nothl_duration"			"1.5"
-			}
-			
+			}			
 			
 			"11"
 			{
@@ -10292,189 +10291,7 @@
 				"talent_aura_radius"					"900"
 			}
 		}
-	}
-
-	//=================================================================================================================
-	// Dazzle's Poison Touch
-	//=================================================================================================================
-	"imba_dazzle_poison_touch"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_lua"
-		"AbilityTextureName"							"dazzle_poison_touch"
-		"ScriptFile"									"hero/hero_dazzle.lua"
-		"FightRecapLevel"								"1"
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"									"soundevents/game_sounds_heroes/game_sounds_dazzle.vsndevts"
-			"particle"									"particles/units/heroes/hero_dazzle/dazzle_poison_touch.vpcf"
-			"particle"									"particles/units/heroes/hero_dazzle/dazzle_poison_debuff.vpcf"
-			"particle"									"particles/status_fx/status_effect_poison_dazzle.vpcf"
-		}
-
-		// Ability
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"SpellImmunityType"								"SPELL_IMMUNITY_ENEMIES_NO"		
-		"AbilityCastPoint"								"0.2"
-		"AbilityManaCost"								"70"
-		"MaxLevel"										"7"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"cooldown"								"12 11 10 9 8 7 6"
-			}
-
-			"02"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"set_in_time"							"3"
-			}
-
-			"03"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"minimum_slow"							"33"
-			}
-
-			"04"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"maximum_slow"							"66"
-			}
-
-			"05"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"poison_duration"						"7"
-			}
-
-			"06"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"poison_base_damage"					"14 20 26 32 38 44 50"
-			}
-
-			"07"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"poison_stack_damage"					"1.0 2.0 3.0 4.0 5.0 6.0 7.0"
-			}
-
-			"08"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"stack_armor_reduction"					"1.0"
-			}
-
-			"09"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"projectile_speed"						"1300"
-			}
-
-			"10"
- 			{
- 				"var_type"								"FIELD_INTEGER"
- 				"cast_range"							"600 650 700 750 775 800 825"
- 			}
-		}
-	}
-
-	//=================================================================================================================
-	// Dazzle's Shallow Grave
-	//=================================================================================================================
-	"imba_dazzle_shallow_grave"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_lua"
-		"AbilityTextureName"							"dazzle_shallow_grave"
-		"ScriptFile"									"hero/hero_dazzle.lua"
-		"FightRecapLevel"								"1"
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"									"soundevents/game_sounds_heroes/game_sounds_dazzle.vsndevts"
-			"particle"									"particles/units/heroes/hero_dazzle/dazzle_shallow_grave.vpcf"
-			"particle"									"particles/hero/dazzle/dazzle_shallow_grave_3.vpcf"
-		}
-
-		// Ability
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"SpellImmunityType"								"SPELL_IMMUNITY_ALLIES_YES"
-		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO"		
-		"AbilityCooldown"								"60 45 30 15 14 13 12"
-		"AbilityCastPoint"								"0.35"
-		"MaxLevel"										"7"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"mana_cost"								"150"
-			}
-
-			"02"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"duration"								"5.0"
-			}
-
-			"03"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"nothl_protection_duration"				"3.0"
-			}
-
-			"04"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"nothl_protection_cooldown"				"30"
-			}
-
-			"05"
- 			{
- 				"var_type"								"FIELD_INTEGER"
- 				"cast_range"							"550 700 850 1000 1000 1000 1000"
- 			}
-			
-			"06"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"post_grave_duration"					"5"
-			}
-			
-			"07"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"post_grave_armor_per_hit"				"1"
-			}
-			
-			"08"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"post_grave_resist_per_hit"				"2"
-			}	
-		}
-	}
+	}	
 
 	//=================================================================================================================
 	// Dazzle's Shadow Wave
@@ -10503,7 +10320,7 @@
 		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityManaCost"								"90 100 110 120 125 130 135"
 		"AbilityCooldown"								"12 10 8 6 6 6 6"		
-		"AbilityCastPoint"								"0.2"
+		"AbilityCastPoint"								"0.3"
 		"MaxLevel"										"7"
 
 		// Special
@@ -10513,7 +10330,7 @@
 			"01"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"bounce_distance"						"475"
+				"bounce_distance"						"475 475 475 475 525 575 625"
 			}
 			"02"
 			{
@@ -10529,7 +10346,7 @@
 			"04"
  			{
  				"var_type"								"FIELD_INTEGER"
- 				"cast_range"							"800 800 800 900 1000 1100 1200"
+ 				"cast_range"							"900"
  			}			
 		}
 	}
@@ -10562,7 +10379,7 @@
 		"AbilityType"									"DOTA_ABILITY_TYPE_ULTIMATE"
 		"SpellImmunityType"								"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityCastRange"								"2000"
-		"AbilityCastPoint"								"0.2"
+		"AbilityCastPoint"								"0.3"
 		"AbilityManaCost"								"100"
 		"MaxLevel"										"6"
 
@@ -10579,7 +10396,7 @@
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"area_of_effect"						"575 650 725 800 875 950"
+				"area_of_effect"						"575 575 575 625 675 725"
 			}
 
 			"03"
@@ -10656,9 +10473,9 @@
 		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityType"									"DOTA_ABILITY_TYPE_BASIC"
 		"AbilityCastRange"								"0"
-		"AbilityCastPoint"								"0.2"
-		"AbilityManaCost"								"250"
-		"AbilityCooldown"								"100"
+		"AbilityCastPoint"								"0.4"
+		"AbilityManaCost"								"400"
+		"AbilityCooldown"								"180"
 		"MaxLevel"										"1"
 
 		// Special
@@ -10680,6 +10497,944 @@
 	}
 
 	//=================================================================================================================
+	// Dazzle Talents
+	//=================================================================================================================
+	"special_bonus_imba_dazzle_1"		// Shadow Wave now bounces after a small delay
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_dazzle_shadow_wave"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				              "FIELD_INTEGER"
+				"talent_delayed_wave_delay"			  "1"
+			}
+
+            "02"
+            {
+                "var_type"                            "FIELD_INTEGER"
+                "talent_delayed_wave_max_waves"       "3"
+            }
+
+            "03"
+            {
+                "var_type"                            "FIELD_INTEGER"
+                "talent_delayed_wave_rehit_cd"        "4"
+            }
+		}
+	}
+
+	"special_bonus_imba_dazzle_2"		// Shadow Wave heals allies around allies, damages enemies around enemies
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_dazzle_shadow_wave"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_dazzle_3"		// Shallow Grave releases a shadow wave to heal allies when it ends
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_dazzle_shallow_grave"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+            {
+                "var_type"                              "FIELD_INTEGER"
+                "talent_wave_bounce_distance"           "700"
+            }
+
+            "02"
+            {
+                "var_type"                              "FIELD_INTEGER"
+                "shallow_wave_damage_pct"               "50"
+            }
+		}
+	}
+
+	"special_bonus_imba_dazzle_4"		// Poison Touch slows the target after setting in appropriate to damage taken
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_dazzle_poison_touch"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+            {
+                "var_type"                              "FIELD_INTEGER"
+                "talent_slow_per_damage"                "3"
+            }
+            
+            "02"
+            {
+                "var_type"                              "FIELD_INTEGER"
+                "talent_slow_max"                       "80"
+            }
+            
+            "03"
+            {
+                "var_type"                              "FIELD_INTEGER"
+                "talent_damage_for_slow_proc"           "3"
+            }
+		}
+	}
+
+	"special_bonus_imba_dazzle_5"		// Enemies that interact with a poisoned touched teammate of their get poison touched as well
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_dazzle_poison_touch"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_dazzle_6"		// Nothl Protection is now an aura around Dazzle
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_dazzle_shallow_grave"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"10"
+            {
+                "var_type"                              "FIELD_FLOAT"
+                "talent_aura_nothl_duration"            "1.5"
+            }
+            
+            
+            "11"
+            {
+                "var_type"                              "FIELD_INTEGER"
+                "talent_aura_radius"                    "900"
+            }
+		}
+	}
+
+	"special_bonus_imba_dazzle_7"		// Weave now fully affects buildings
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_dazzle_weave"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_dazzle_8"		// Causes Weave to tick twice as fast
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_dazzle_weave"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"2"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Disruptor's Stormbearer
+	//=================================================================================================================
+	"imba_disruptor_stormbearer"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"custom/disruptor_stormbearer"
+		"ScriptFile"					"hero/hero_disruptor"
+		"FightRecapLevel"				"1"
+		"MaxLevel"						"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"ms_per_stack"				"0.25"
+			}
+		}
+	}
+
+
+	//=================================================================================================================
+	// Disruptor's Thunder Strike
+	//=================================================================================================================
+	"imba_disruptor_thunder_strike"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"disruptor_thunder_strike"
+		"ScriptFile"					"hero/hero_disruptor"
+		"FightRecapLevel"				"1"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"		
+
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_disruptor/disruptor_thunder_strike_buff.vpcf"
+			"particle"    	"particles/units/heroes/hero_disruptor/disruptor_thunder_strike_bolt.vpcf"			
+			"particle"		"particles/units/heroes/hero_disruptor/disruptor_thunder_strike_aoe.vpcf"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_disruptor.vsndevts"
+			"soundfile"		"soundevents/voscripts/game_sounds_vo_disruptor.vsndevts"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.05"
+		"AbilityCastAnimation"			"ACT_DOTA_THUNDER_STRIKE"
+		"AbilityCastRange"				"800"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"12 11 10 9 8 7 6"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"130"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"240"
+			}
+
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"6"
+				"LinkedSpecialBonus"	"special_bonus_imba_disruptor_8"
+			}
+
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"40 60 80 100 110 120 130"
+			}
+
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"fow_radius"		"400"
+			}
+
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"fow_linger_duration"	"3.34"
+			}
+
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"strike_interval"		"2"
+			}
+
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"add_strikes_interval"	"0.2"
+			}
+
+			"08"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"talent_4_slow_duration"	"0.25"
+			}
+
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"talent_4_slow_pct"			"100"
+			}			
+		}
+	}
+
+	//=================================================================================================================
+	// Disruptor's Glimpse
+	//=================================================================================================================
+	"imba_disruptor_glimpse"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO | DOTA_UNIT_TARGET_FLAG_DEAD"
+		"AbilityTextureName"			"disruptor_glimpse"
+		"ScriptFile"					"hero/hero_disruptor"
+		"FightRecapLevel"				"1"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"		
+
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_disruptor/disruptor_glimpse_targetstart.vpcf"
+			"particle"		"particles/units/heroes/hero_disruptor/disruptor_glimpse_targetend.vpcf"
+			"particle"		"particles/units/heroes/hero_disruptor/disruptor_glimpse_travel.vpcf"
+			"particle"		"particles/hero/disruptor/disruptor_static_storm.vpcf"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_disruptor.vsndevts"
+			"soundfile"		"soundevents/voscripts/game_sounds_vo_disruptor.vsndevts"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.05"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"		
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"60 46 32 18 16 14 12"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100"
+
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"backtrack_time"		"4"
+			}
+
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"		"600"
+			}
+
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"move_delay"			"1.8"
+			}
+
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_radius"			"300"
+			}
+
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"vision_duration"			"3.34"
+			}
+
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"storm_damage"			"10 15 20 25 30 35 40"
+			}
+
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"storm_radius"			"420"
+			}
+
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"storm_duration"		"3"
+			}
+
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"storm_interval"		"0.25"
+			}
+
+			"10"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"storm_linger"			"0.35"
+			}
+
+			"11"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"cast_range"			"600 1000 1400 1800 2000 2200 2400"
+			}
+
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"global_radius"			"25000"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Disruptor's Kinetic Field
+	//=================================================================================================================
+	"imba_disruptor_kinetic_field"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityTextureName"			"disruptor_kinetic_field"
+		"ScriptFile"					"hero/hero_disruptor"
+		"FightRecapLevel"				"1"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
+
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_disruptor/disruptor_kineticdischarge_aoe_discharge_c.vpcf"
+			"particle"		"particles/units/heroes/hero_disruptor/disruptor_kineticfield.vpcf"
+			"particle"		"particles/units/heroes/hero_disruptor/disruptor_kineticfield_formation.vpcf"
+			"particle"		"particles/hero/disruptor/disruptor_kinetic_field_attack.vpcf"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_disruptor.vsndevts"
+			"soundfile"		"soundevents/voscripts/game_sounds_vo_disruptor.vsndevts"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.05"
+		"AbilityCastAnimation"			"ACT_DOTA_KINETIC_FIELD"
+		"AbilityCastRange"				"900"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"13 12 11 10"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"70"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"field_radius"		"340"
+				"LinkedSpecialBonus""special_bonus_imba_disruptor_5"
+			}
+
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"formation_delay"	"1.2"
+			}
+
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"2.6 3.2 3.8 4.4 4.6 4.8 5.0"
+			}
+
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"vision_aoe"		"325"
+			}
+
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"edge_damage_hero"	"25 50 75 100 125 150 175"
+			}
+
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"edge_damage_creep"		"15 30 45 60 75 90 105"
+			}
+
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"knockback_duration"	"0.5"
+			}
+
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"knockback_distance"		"25"
+			}
+
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"cooldown_reduction"	"0.5"
+			}
+
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"stormbearer_stack_amount"	"5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Disruptor's Static Storm
+	//=================================================================================================================
+	"imba_disruptor_static_storm"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityTextureName"			"disruptor_static_storm"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"ScriptFile"					"hero/hero_disruptor"
+		"FightRecapLevel"				"1"
+		"MaxLevel"						"6"
+		"LevelsBetweenUpgrades"			"6"
+
+		"HasScepterUpgrade"				"1"
+
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_disruptor/disruptor_static_storm.vpcf"
+			"particle"		"particles/generic_gameplay/generic_stunned.vpcf"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_disruptor.vsndevts"
+			"soundfile"		"soundevents/voscripts/game_sounds_vo_disruptor.vsndevts"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.05"
+		"AbilityCastAnimation"			"ACT_DOTA_STATIC_STORM"
+		"AbilityCastRange"				"800"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"90 80 70 65 60 55"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"125 175 225 250 275 300"
+
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"450 450 450 475 500 525"
+				"LinkedSpecialBonus"	"special_bonus_imba_disruptor_7"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"5"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"scepter_duration"		"7"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"initial_damage"		"2 3 4 4.5 5"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_increase_pulse"	"2 2.5 3 3.25 3.5 3.75"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_damage"			"200 250 300 300 300 300"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"scepter_max_damage"	"250 300 350 350 350 350"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"interval"				"0.25"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"damage_increase_enemy"		"1 1 1 1 2 3"
+			}
+
+			"10"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"linger_time"				"1 1.5 2 2 2 2"
+			}
+
+			"11"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"stormbearer_stack_damage"	"0.05"
+			}			
+		}
+	}
+	
+	//=================================================================================================================
+	// Disruptor Talents
+	//=================================================================================================================
+	"special_bonus_imba_disruptor_1"	// Units are pulled from outside Kinetic Field
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_disruptor_kinetic_field"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_disruptor_2"	// Glimpse Storm lingers longer
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_disruptor_glimpse"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value"					"1.25"
+			}
+		}
+	}
+
+	"special_bonus_imba_disruptor_3"	// Chance to launch chain lightning
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_disruptor_thunder_strike"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value"					"25"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_targets"			"5"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bounce_radius"			"600"
+			}
+		}
+	}
+
+	"special_bonus_imba_disruptor_4"	// Thunder Strikes slows the main target
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_disruptor_thunder_strike"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value"					"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_disruptor_5"	// Glimpse into Kinetic Field causes Glimpse Storm inside the Kinetic Field
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_disruptor_glimpse"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value"					"0"
+			}
+		}
+	}
+
+	"special_bonus_imba_disruptor_6"	// Units exiting Static Storm gets ministunned. 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_disruptor_static_storm"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value"					"1.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"interval"				"0.5"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"			"0.1"
+			}
+		}
+	}
+
+	"special_bonus_imba_disruptor_7"	// Thunder Strike counts twice for heroes inside Static Storm
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_disruptor_thunder_strike"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value"					"0"
+			}
+		}
+	}
+
+	"special_bonus_imba_disruptor_8"	// Thunder Strike duration increase and interval reduction
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_disruptor_thunder_strike"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"4"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value2"				"0.35"
+			}
+		}
+	}
+
+
+	//=================================================================================================================
 	// Drow Ranger's Deadeye
 	//=================================================================================================================
 	"imba_drow_ranger_deadeye"
@@ -10699,7 +11454,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"day_vision"					"200"
+				"day_vision"					"250"
 			}
 
 			"02"
@@ -10747,7 +11502,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"						"9"
+		"AbilityManaCost"						"12"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -10762,7 +11517,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"as_slow"						"10 10 10 10 30 50 70"
+				"as_slow"						"10 25 40 55 60 65 70"
 			}
 
 			"03"
@@ -10812,7 +11567,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"						"1100"
+		"AbilityCastRange"						"900"
 		"AbilityCastPoint"						"0.25"
 
 		// Time
@@ -10858,13 +11613,13 @@
 			"04"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"knockback_duration"			"0.9"
+				"knockback_duration"			"0.6 0.7 0.8 0.9 0.9 0.9 0.9"
 			}
 
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"max_distance"					"625"
+				"max_distance"					"350"
 			}
 
 			"06"
@@ -10890,9 +11645,6 @@
 				"var_type"						"FIELD_INTEGER"
 				"silence_duration"				"3 4 5 6 6 6 6"
 			}
-
-			
-
 		}
 	}
 
@@ -10941,8 +11693,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"active_bonus_agi_pct"		"5 5 5 5 10 20 30"
 			}
-
-
 		}
 	}
 
@@ -11009,6 +11759,277 @@
 	}
 
 	//=================================================================================================================
+	// Drow Ranger Talents
+	//=================================================================================================================
+	"special_bonus_imba_drow_ranger_1"	// Gust can be self cast, making a wave that moves Drow Ranger herself forward. This wave silences all enemies that it comes in contact with normally.
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_drow_ranger_gust"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"1"
+			}
+
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"jump_speed"			"2000"
+			}
+			
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"leap_range"			"900"
+			}
+
+		}
+	}
+
+	"special_bonus_imba_drow_ranger_2"	// Chance to kill creeps instantly
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"25"
+			}
+		}
+	}
+
+	"special_bonus_imba_drow_ranger_3"	// After casting Gust, all auto attacks hitting a target casts a small Gust for 5 seconds. This small gust wave pushes the main target back 50 units, deals no damage, and does not silence.
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_drow_ranger_gust"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"value"								"1"
+			}
+
+			"02"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"buff_duration"						"5"
+			}
+
+			"03"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"wave_width"						"150"
+			}
+
+			"04"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"wave_distance"						"900"
+			}
+
+			"05"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"knockback_duration"				"0.4"
+			}
+
+			"06"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"knockback_distance"				"50"
+			}
+		}
+	}
+
+	"special_bonus_imba_drow_ranger_4"	// Each Chilled enemy grants drow +10 flat movespeed bonus for the duration. Stacks with itself, depending on amounts of Chill stacks on enemies.
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_drow_ranger_frost_arrows"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"1"
+			}
+
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movespeed"		"10"
+			}
+		}
+	}
+
+	"special_bonus_imba_drow_ranger_5"	// While Marksmanship is active (not disabled by nearby enemies), Drow Ranger emits an aura on nearby allies that makes their attack chill their targets, slowing them by 15%.
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_drow_ranger_marksmanship"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"1"
+			}
+
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow_pct"				"15"
+			}
+
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"1.5"
+			}
+
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_radius"			"900"
+			}
+
+		}
+	}
+
+	"special_bonus_imba_drow_ranger_6"	// While Trueshot Aura is active, Drow gains agility equal to 5% of every allied hero's agility.
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_drow_ranger_trueshot"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"agility_bonus_percent"		"5"
+			}
+		}
+	}
+
+	"special_bonus_imba_drow_ranger_7"	// Deadeye becomes an aura
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_drow_ranger_deadeye"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_drow_ranger_8"	// Marksmanship no longer disables itself
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_drow_ranger_marksmanship"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Enigma's Malefice
 	//=================================================================================================================
 	"imba_enigma_malefice"
@@ -11033,12 +12054,7 @@
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_enigma.vsndevts"
 			"particle"					"particles/status_fx/status_effect_enigma_malefice.vpcf"
 			"particle"					"particles/units/heroes/hero_enigma/enigma_malefice.vpcf"	
-		}
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		//"AbilityCastRange"				"600" // Done in lua
-		//"AbilityCastPoint"				"0.3" // Done in lua
+		}		
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -11046,7 +12062,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"110 120 130 140 150 160 170"
+		"AbilityManaCost"				"110 130 150 160 170 180 190"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -11145,12 +12161,7 @@
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_enigma.vsndevts"
-		}
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		//"AbilityCastRange"				"700"
-		//"AbilityCastPoint"				"0.3"
+		}		
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -11270,9 +12281,7 @@
 		}
 
 		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		//"AbilityCastRange"				"700"
-		//"AbilityCastPoint"				"0.1"
+		//-------------------------------------------------------------------------------------------------------------		
 		"AbilityCastAnimation"			"ACT_DOTA_MIDNIGHT_PULSE"
 		
 		// Time		
@@ -11329,7 +12338,7 @@
 			"08"
 			{
 				"var_type"     				"FIELD_FLOAT"
-				"cast_point"				"0.3"
+				"cast_point"				"0.1"
 			}									
 
 			"09"
@@ -11338,68 +12347,7 @@
 				"eidolon_hp_regen"			"20 20 20 20 30 40 50"
 			}
 		}
-	}
-
-	//=================================================================================================================
-	// Enigma's Gravity Well
-	//=================================================================================================================
-	"imba_enigma_gravity_well"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_lua"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
-		"AbilityTextureName"				"custom/imba_enigma_gravity"
-		"MaxLevel"							"1"
-    	"ScriptFile" 						"hero/hero_enigma"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"					"900"
-    	"AbilityManaCost"		            "25"
-
-    	// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"60"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"900"
-			}
-
-	    	"02"
-	        {
-	        	"var_type"  				"FIELD_INTEGER"
-	        	"duration"   				"30"
-	      	}
-
-			"03"
-			{
-				"var_type" 					"FIELD_INTEGER"
-				"stack_bonus_radius" 		"20"
-			}
-
-			"04"
-			{
-				"var_type" 					"FIELD_INTEGER"
-				"stack_bonus_pull" 			"5"			
-			}
-
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"pull_strength" 			"60 70 80 90 90 90 90"			
-			}	
-		}
-	}
+	}	
 
 	//=================================================================================================================
 	// Enigma's Black Hole
@@ -11437,9 +12385,7 @@
 		}
 
 		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		//"AbilityCastRange"					"300"
-		//"AbilityCastPoint"					"0.3"
+		//-------------------------------------------------------------------------------------------------------------		
 		"AbilityChannelTime"				"4.0"
 		"AbilityCastAnimation"				"ACT_DOTA_CAST_ABILITY_4"
 		
@@ -11464,7 +12410,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"pull_radius"		"1200"
+				"pull_radius"				"1200"
 			}
 
 			"03"
@@ -11482,7 +12428,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"min_pull_power" 		"75"			
+				"min_pull_power" 			"75"			
 			}		
 
 			"06"
@@ -11503,18 +12449,221 @@
 			}
 			"09"
 			{
-				"var_type" 		"FIELD_INTEGER"
-				"singularity_stun_radius_increment_per_stack" "25"
+				"var_type" 										"FIELD_INTEGER"
+				"singularity_stun_radius_increment_per_stack" 	"25"
 			}
 			"10"
 			{
 				"var_type" 		"FIELD_INTEGER"
-				"cast_range" "300"
+				"cast_range" 	"275"
 			}
 			"11"
 			{
 				"var_type" 		"FIELD_INTEGER"
-				"cast_point" "0.3"
+				"cast_point" 	"0.3"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Enigma Talents
+	//=================================================================================================================
+	"special_bonus_imba_enigma_1"	// Each Singularity stack consumed now decreases Black Hole's cooldown by 2 seconds.
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_enigma_black_hole"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"2"
+			}
+		}
+	}
+
+	"special_bonus_imba_enigma_2"	// Malefice has an AoE Radius
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_enigma_malefice"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"400"
+			}
+		}
+	}
+		
+	"special_bonus_imba_enigma_3"	// Midnight Pulse doubles its AoE over the duration.
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_enigma_midnight_pulse"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_enigma_4"	// Black Hole cast on death
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_enigma_black_hole"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"3"
+			}
+		}
+	}
+
+	"special_bonus_imba_enigma_5"	// True malefice, instead of stuns little black holes are created
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_enigma_malefice"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"150"
+			}
+		}
+	}
+
+	"special_bonus_imba_enigma_6"	// Enigma has a constant AoE Midnight pulse around him. Stacks with regular pulse.
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_enigma_midnight_pulse"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"3"
+			}
+		}
+	}
+
+	"special_bonus_imba_enigma_7"	// Magic immunity on spell cast
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_enigma_black_hole"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"1.0"
+			}
+		}
+	}
+
+	"special_bonus_imba_enigma_8"	// Cast Eidolons on heroes
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_enigma_demonic_conversion"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"1"
 			}
 		}
 	}
@@ -11545,7 +12694,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"0"
-		"AbilityCastPoint"				"0.2"
+		"AbilityCastPoint"				"0.3"
 		"AbilityCooldown"				"24 18 12 6 6 6 6"
 		"AbilityManaCost"				"40"
 		"MaxLevel"						"7"
@@ -11580,8 +12729,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range"					"675"
-				"LinkedSpecialBonus"	"special_bonus_imba_faceless_void_5"
+				"range"					"675"				
 			}
 
 			"05"
@@ -11599,8 +12747,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_time"			"2"
-				"LinkedSpecialBonus"	"special_bonus_imba_faceless_void_6"
+				"damage_time"			"2"				
 			}
 		}
 	}
@@ -11671,13 +12818,13 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"as_debuff"				"10"
+				"as_debuff"				"14"
 			}
 
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"ms_debuff"				"10"
+				"ms_debuff"				"14"
 			}
 
 			"07"
@@ -11754,6 +12901,12 @@
 				"var_type"					"FIELD_FLOAT"
 				"cd_increase"				"0.3 0.3 0.3 0.3 0.7 1.1 1.5"
 			}
+
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"creep_bash_duration"		"2"
+			}
 		}
 	}
 
@@ -11812,7 +12965,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"600"
-		"AbilityCastPoint"				"0.3"
+		"AbilityCastPoint"				"0.35"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
 		"AbilityCooldown"				"140 125 110 100 95 90"
 		"AbilityManaCost"				"150 225 300 300 300 300"
@@ -11897,6 +13050,280 @@
 	}
 
 	//=================================================================================================================
+	//=================================================================================================================
+	// Faceless Void's Talents 
+	//=================================================================================================================
+	//=================================================================================================================
+	
+	//=================================================================================================================================
+	// Time Dilation grants Faceless Void a chance to backtrack damage instances that increases per ability affected by Time Dilation
+	//=================================================================================================================================
+	"special_bonus_imba_faceless_void_1" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_faceless_void_time_dilation"
+        }
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"backtrack_pct_per_enemy"	"5"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_pct"					"50"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"duration"					"6"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Time Dilation grants bonus health and mana per charge spent on them
+	//=================================================================================================================
+	"special_bonus_imba_faceless_void_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_faceless_void_time_dilation"
+        }
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hp_regen"					"12"
+			}
+
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mp_regen"					"6"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Movement inside Chronosphere is instant, Void constantly dodges projectiles
+	//=================================================================================================================
+	"special_bonus_imba_faceless_void_3" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_faceless_void_chronosphere"
+        }
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"move_speed"			"3000"
+			}			
+		}
+	}
+	
+	//==========================================================================================================================
+	// Bashing enemies with the Time Dilation debuff increases their active spells' CD while decreasing all of Voids cooldowns
+	//==========================================================================================================================
+	"special_bonus_imba_faceless_void_4" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_faceless_void_time_dilation"
+			"02"        "imba_faceless_void_time_lock"
+        }
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"target_increase"		"0.5"
+			}		
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"self_reduction"		"0.5"
+			}					
+		}
+	}
+
+	//=================================================================================================================
+	// Time Lock now spawns mini chronospheres
+	//=================================================================================================================
+	"special_bonus_imba_faceless_void_5" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_faceless_void_time_lock"
+			"02"        "imba_faceless_void_chronosphere"
+        }
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aoe"					"180"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"1.0"
+			}			
+		}
+	}
+
+	//=================================================================================================================
+	// Time Lord bonuses are increased when Faceless Void is inside a Chronosphere
+	//=================================================================================================================
+	"special_bonus_imba_faceless_void_6"  
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_faceless_void_timelord"
+			"02"        "imba_faceless_void_chronosphere"
+        }
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value"					"2.0"
+			}			
+		}
+	}
+
+	//=================================================================================================================
+	// Time Dilation no longer spends chronocharges to affect allies
+	//=================================================================================================================
+	"special_bonus_imba_faceless_void_7" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_faceless_void_time_dilation"
+        }
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value"					"1"
+			}			
+		}
+	}
+
+	//=================================================================================================================
+	// Chronosphere causes Faceless Void attacks to cleave
+	//=================================================================================================================
+	"special_bonus_imba_faceless_void_8" 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_faceless_void_chronosphere"
+        }
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cleave_damage_pct"			"50"
+			}	
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cleave_starting_width"		"150"
+			}		
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cleave_ending_width"		"300"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cleave_distance"			"600"
+			}			
+		}
+	}
+
+	//=================================================================================================================
 	// Jakiro's Fire Breath
 	//=================================================================================================================
 	"imba_jakiro_fire_breath"
@@ -11916,15 +13343,15 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"					"0.15"
+		"AbilityCastPoint"					"0.35"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"10.0"
+		"AbilityCooldown"					"10"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"					"90 100 110 120 125 130 135"
+		"AbilityManaCost"					"65 70 75 85 85 85 85"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -11941,7 +13368,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"path_radius"				"180"
+				"path_radius"				"225"
 			}
 
 			"02"
@@ -11960,7 +13387,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"20 35 50 65 70 75 80"
+				"damage"					"20 40 60 80 85 90 95"
 				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
 			}
 
@@ -12011,15 +13438,15 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"					"0.15"
+		"AbilityCastPoint"					"0.35"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"10.0"
+		"AbilityCooldown"					"10"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"					"50"
+		"AbilityManaCost"					"65 70 75 85 85 85 85"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -12036,7 +13463,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"path_radius"				"180"
+				"path_radius"				"225"
 			}
 
 			"02"
@@ -12067,14 +13494,14 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"move_slow"					"32"
+				"move_slow"					"28 32 36 40 42 46 48"
 				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
 			}
 
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_slow"				"32"
+				"attack_slow"				"28 32 36 40 42 46 48"
 				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
 			}
 
@@ -12119,7 +13546,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"20"
+		"AbilityCooldown"					"12 11 10 9 9 9 9"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -12141,7 +13568,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"path_delay"			"0.3"
+				"path_delay"			"0.5"
 			}
 			"02"
 			{
@@ -12168,17 +13595,17 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"move_slow"				"15 15 15 15 20 25 30"
+				"move_slow"				"10 10 10 10 12 14 16"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_slow"			"15 15 15 15 20 25 30"
+				"attack_slow"			"10 10 10 10 20 30 40"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range"					"1200 1400 1600 1800 1800 1800 1800"
+				"range"					"1200"
 			}
 			"09"
 			{
@@ -12237,7 +13664,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"360"
+				"radius"					"300"
 			}
 
 			"03"
@@ -12300,9 +13727,8 @@
 		"HasScepterUpgrade"				"1"
 
 		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"0"
-		"AbilityCastPoint"				"0.5"
+		//-------------------------------------------------------------------------------------------------------------		
+		"AbilityCastPoint"				"0.65"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
 
 		// Time
@@ -12465,7 +13891,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"value"						"6.0"
+				"value"						"4"
 			}
 		}
 	}
@@ -30861,487 +32287,7 @@
 				"value"						"180"		//Distance between wards
 			}
 		}
-	}
-
-	//=================================================================================================================
-	// Disruptor's Stormbearer
-	//=================================================================================================================
-	"imba_disruptor_stormbearer"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"custom/disruptor_stormbearer"
-		"ScriptFile"					"hero/hero_disruptor"
-		"FightRecapLevel"				"1"
-		"MaxLevel"						"1"
-
-		"HasScepterUpgrade"				"1"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"ms_per_stack"				"0.25"
-			}
-
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"scepter_ms_per_stack"		"0.75"
-			}
-		}
-	}
-
-
-	//=================================================================================================================
-	// Disruptor's Thunder Strike
-	//=================================================================================================================
-	"imba_disruptor_thunder_strike"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"disruptor_thunder_strike"
-		"ScriptFile"					"hero/hero_disruptor"
-		"FightRecapLevel"				"1"
-		"MaxLevel"						"7"
-		"LevelsBetweenUpgrades"			"2"		
-
-		"precache"
-		{
-			"particle"		"particles/units/heroes/hero_disruptor/disruptor_thunder_strike_buff.vpcf"
-			"particle"    	"particles/hero/disruptor/disruptor_thunder_strike_bolt.vpcf"
-			"particle"		"particles/hero/disruptor/disruptor_thuderstrike_aoe_area.vpcf"
-			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_disruptor.vsndevts"
-			"soundfile"		"soundevents/voscripts/game_sounds_vo_disruptor.vsndevts"
-		}
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.05"
-		"AbilityCastAnimation"			"ACT_DOTA_THUNDER_STRIKE"
-		"AbilityCastRange"				"800"
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"12 11 10 9 8 7 6"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"130"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"radius"			"420"
-			}
-
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"8"
-				"LinkedSpecialBonus"	"special_bonus_imba_disruptor_8"
-			}
-
-			"03"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"damage"			"40 60 80 100 110 120 130"
-			}
-
-			"04"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"fow_radius"		"400"
-			}
-
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"fow_linger_duration"	"3.34"
-			}
-
-			"06"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"strike_interval"		"2"
-			}
-
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"add_strikes_interval"	"0.2"
-			}
-
-			"08"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"talent_4_slow_duration"	"0.25"
-			}
-
-			"09"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"talent_4_slow_pct"			"100"
-			}			
-		}
-	}
-
-
-
-	//=================================================================================================================
-	// Disruptor's Glimpse
-	//=================================================================================================================
-	"imba_disruptor_glimpse"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO | DOTA_UNIT_TARGET_FLAG_DEAD"
-		"AbilityTextureName"			"disruptor_glimpse"
-		"ScriptFile"					"hero/hero_disruptor"
-		"FightRecapLevel"				"1"
-		"MaxLevel"						"7"
-		"LevelsBetweenUpgrades"			"2"
-
-		"HasScepterUpgrade"				"1"
-
-		"precache"
-		{
-			"particle"		"particles/units/heroes/hero_disruptor/disruptor_glimpse_targetstart.vpcf"
-			"particle"		"particles/units/heroes/hero_disruptor/disruptor_glimpse_targetend.vpcf"
-			"particle"		"particles/units/heroes/hero_disruptor/disruptor_glimpse_travel.vpcf"
-			"particle"		"particles/hero/disruptor/disruptor_static_storm.vpcf"
-			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_disruptor.vsndevts"
-			"soundfile"		"soundevents/voscripts/game_sounds_vo_disruptor.vsndevts"
-		}
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.05"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"		
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"60 46 32 18 16 14 12"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100"
-
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"backtrack_time"		"4"
-			}
-
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"projectile_speed"		"600"
-			}
-
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"move_delay"			"1.8"
-			}
-
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"vision_radius"			"300"
-			}
-
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"vision_duration"			"3.34"
-			}
-
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"storm_damage"			"10 15 20 25 30 35 40"
-			}
-
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"storm_radius"			"420"
-			}
-
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"storm_duration"		"3"
-			}
-
-			"09"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"storm_interval"		"0.25"
-			}
-
-			"10"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"storm_linger"			"0.35"
-			}
-
-			"11"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"cast_range"	"800 1200 1500 1800 2000 2200 2400"
-			}
-			"12"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"global_radius"		"100000"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Disruptor's Kinetic Field
-	//=================================================================================================================
-	"imba_disruptor_kinetic_field"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityTextureName"			"disruptor_kinetic_field"
-		"ScriptFile"					"hero/hero_disruptor"
-		"FightRecapLevel"				"1"
-		"MaxLevel"						"7"
-		"LevelsBetweenUpgrades"			"2"
-
-		"precache"
-		{
-			"particle"		"particles/units/heroes/hero_disruptor/disruptor_kineticdischarge_aoe_discharge_c.vpcf"
-			"particle"		"particles/units/heroes/hero_disruptor/disruptor_kineticfield.vpcf"
-			"particle"		"particles/units/heroes/hero_disruptor/disruptor_kineticfield_formation.vpcf"
-			"particle"		"particles/hero/disruptor/disruptor_kinetic_field_attack.vpcf"
-			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_disruptor.vsndevts"
-			"soundfile"		"soundevents/voscripts/game_sounds_vo_disruptor.vsndevts"
-		}
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.05"
-		"AbilityCastAnimation"			"ACT_DOTA_KINETIC_FIELD"
-		"AbilityCastRange"				"900"
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"13 12 11 10"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"70"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"field_radius"		"340"
-				"LinkedSpecialBonus""special_bonus_imba_disruptor_5"
-			}
-
-			"02"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"formation_delay"	"1.2"
-			}
-
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"2.6 3.2 3.8 4.4 4.6 4.8 5.0"
-			}
-
-			"04"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"vision_aoe"		"325"
-			}
-
-			"05"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"edge_damage_hero"	"25 50 75 100 125 150 175"
-			}
-
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"edge_damage_creep"		"15 30 45 60 75 90 105"
-			}
-
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"knockback_duration"	"0.5"
-			}
-
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"knockback_distance"		"25"
-			}
-
-			"09"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"cooldown_reduction"	"0.5"
-			}
-
-			"10"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"stormbearer_stack_amount"	"5"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Disruptor's Static Storm
-	//=================================================================================================================
-	"imba_disruptor_static_storm"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityTextureName"			"disruptor_static_storm"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"ScriptFile"					"hero/hero_disruptor"
-		"FightRecapLevel"				"1"
-		"MaxLevel"						"6"
-		"LevelsBetweenUpgrades"			"6"
-
-		"HasScepterUpgrade"				"1"
-
-		"precache"
-		{
-			"particle"		"particles/units/heroes/hero_disruptor/disruptor_static_storm.vpcf"
-			"particle"		"particles/generic_gameplay/generic_stunned.vpcf"
-			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_disruptor.vsndevts"
-			"soundfile"		"soundevents/voscripts/game_sounds_vo_disruptor.vsndevts"
-		}
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.05"
-		"AbilityCastAnimation"			"ACT_DOTA_STATIC_STORM"
-		"AbilityCastRange"				"800"
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"90 80 70 65 60 55"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"125 175 225 250 275 300"
-
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"450 465 480 500 520 540"
-				"LinkedSpecialBonus"	"special_bonus_imba_disruptor_7"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"5"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"scepter_duration"		"7"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"initial_damage"		"2 3 4 4.5 5"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_increase_pulse"	"2 2.5 3 3.25 3.5 3.75"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_damage"			"200 250 300 300 300 300"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"scepter_max_damage"	"250 300 350 350 350 350"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"interval"				"0.25"
-			}
-			"09"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"damage_increase_enemy"		"1 1 1 1 2 3"
-			}
-
-			"10"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"linger_time"				"1 1.5 2 2 2 2"
-			}
-
-			"11"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"stormbearer_stack_damage"	"0.05"
-			}			
-		}
-	}
+	}	
 
 	//=================================================================================================================
 	// Ursa's Earthshock
@@ -32832,746 +33778,8 @@
 			}
 		}
 	}
+
 	
-
-	//=================================================================================================================
-	// Dazzle Talents
-	//=================================================================================================================
-	"special_bonus_imba_dazzle_1"		// Shadow Wave now bounces after a small delay
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_dazzle_shadow_wave"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				              "FIELD_INTEGER"
-				"talent_delayed_wave_delay"			  "1"
-			}
-
-            "02"
-            {
-                "var_type"                            "FIELD_INTEGER"
-                "talent_delayed_wave_max_waves"       "3"
-            }
-
-            "03"
-            {
-                "var_type"                            "FIELD_INTEGER"
-                "talent_delayed_wave_rehit_cd"        "3"
-            }
-		}
-	}
-
-	"special_bonus_imba_dazzle_2"		// Shadow Wave heals allies around allies, damages enemies around enemies
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_dazzle_shadow_wave"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"1"
-			}
-		}
-	}
-
-	"special_bonus_imba_dazzle_3"		// Shallow Grave releases a shadow wave to heal allies when it ends
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_dazzle_shallow_grave"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-            {
-                "var_type"                              "FIELD_INTEGER"
-                "talent_wave_bounce_distance"           "475"
-            }
-
-            "02"
-            {
-                "var_type"                              "FIELD_INTEGER"
-                "shallow_wave_damage_pct"               "50"
-            }
-		}
-	}
-
-	"special_bonus_imba_dazzle_4"		// Poison Touch slows the target after setting in appropriate to damage taken
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_dazzle_poison_touch"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-            {
-                "var_type"                              "FIELD_INTEGER"
-                "talent_slow_per_damage"                "3"
-            }
-            
-            "02"
-            {
-                "var_type"                              "FIELD_INTEGER"
-                "talent_slow_max"                       "80"
-            }
-            
-            "03"
-            {
-                "var_type"                              "FIELD_INTEGER"
-                "talent_damage_for_slow_proc"           "3"
-            }
-		}
-	}
-
-	"special_bonus_imba_dazzle_5"		// Enemies that interact with a poisoned touched teammate of their get poison touched as well
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_dazzle_poison_touch"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"1"
-			}
-		}
-	}
-
-	"special_bonus_imba_dazzle_6"		// Nothl Protection is now an aura around Dazzle
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_dazzle_shallow_grave"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"10"
-            {
-                "var_type"                              "FIELD_FLOAT"
-                "talent_aura_nothl_duration"            "1.5"
-            }
-            
-            
-            "11"
-            {
-                "var_type"                              "FIELD_INTEGER"
-                "talent_aura_radius"                    "900"
-            }
-		}
-	}
-
-	"special_bonus_imba_dazzle_7"		// Weave now fully affects buildings
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_dazzle_weave"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"1"
-			}
-		}
-	}
-
-	"special_bonus_imba_dazzle_8"		// Causes Weave to tick twice as fast
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_dazzle_weave"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"2"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Disruptor Talents
-	//=================================================================================================================
-	"special_bonus_imba_disruptor_1"	// Units are pulled from outside Kinetic Field
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_disruptor_kinetic_field"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"1"
-			}
-		}
-	}
-
-	"special_bonus_imba_disruptor_2"	// Glimpse Storm lingers longer
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_disruptor_glimpse"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"value"					"1.25"
-			}
-		}
-	}
-
-	"special_bonus_imba_disruptor_3"	// Chance to launch chain lightning
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_disruptor_thunder_strike"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"value"					"25"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_targets"			"5"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bounce_radius"			"600"
-			}
-		}
-	}
-
-	"special_bonus_imba_disruptor_4"	// Thunder Strikes slows the main target
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_disruptor_thunder_strike"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"value"					"1"
-			}
-		}
-	}
-
-	"special_bonus_imba_disruptor_5"	// Glimpse into Kinetic Field causes Glimpse Storm inside the Kinetic Field
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_disruptor_glimpse"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"value"					"0"
-			}
-		}
-	}
-
-	"special_bonus_imba_disruptor_6"	// Units exiting Static Storm gets ministunned. 
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_disruptor_static_storm"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"value"					"1.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"interval"				"0.5"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"0.1"
-			}
-		}
-	}
-
-	"special_bonus_imba_disruptor_7"	// Thunder Strike counts twice for heroes inside Static Storm
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_disruptor_thunder_strike"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"value"					"0"
-			}
-		}
-	}
-
-	"special_bonus_imba_disruptor_8"	// Thunder Strike duration increase and interval reduction
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_disruptor_thunder_strike"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"4"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"value2"				"0.35"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Drow Ranger Talents
-	//=================================================================================================================
-	"special_bonus_imba_drow_ranger_1"	// Gust can be self cast, making a wave that moves Drow Ranger herself forward. This wave silences all enemies that it comes in contact with normally.
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_drow_ranger_gust"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"1"
-			}
-
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"jump_speed"			"2000"
-			}
-			
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"leap_range"			"900"
-			}
-
-		}
-	}
-
-	"special_bonus_imba_drow_ranger_2"	// Chance to kill creeps instantly
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"25"
-			}
-		}
-	}
-
-	"special_bonus_imba_drow_ranger_3"	// After casting Gust, all auto attacks hitting a target casts a small Gust for 5 seconds. This small gust wave pushes the main target back 50 units, deals no damage, and does not silence.
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_drow_ranger_gust"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"value"								"1"
-			}
-
-			"02"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"buff_duration"						"5"
-			}
-
-			"03"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"wave_width"						"150"
-			}
-
-			"04"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"wave_distance"						"900"
-			}
-
-			"05"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"knockback_duration"				"0.4"
-			}
-
-			"06"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"knockback_distance"				"50"
-			}
-		}
-	}
-
-	"special_bonus_imba_drow_ranger_4"	// Each Chilled enemy grants drow +10 flat movespeed bonus for the duration. Stacks with itself, depending on amounts of Chill stacks on enemies.
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_drow_ranger_frost_arrows"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"1"
-			}
-
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_movespeed"		"10"
-			}
-		}
-	}
-
-	"special_bonus_imba_drow_ranger_5"	// While Marksmanship is active (not disabled by nearby enemies), Drow Ranger emits an aura on nearby allies that makes their attack chill their targets, slowing them by 15%.
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_drow_ranger_marksmanship"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"1"
-			}
-
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"slow_pct"				"15"
-			}
-
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"1.5"
-			}
-
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"900"
-			}
-
-		}
-	}
-
-	"special_bonus_imba_drow_ranger_6"	// While Trueshot Aura is active, Drow gains agility equal to 5% of every allied hero's agility.
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_drow_ranger_trueshot"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"1"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"agility_bonus_percent"		"5"
-			}
-		}
-	}
-
-	"special_bonus_imba_drow_ranger_7"	// Deadeye becomes an aura
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_drow_ranger_deadeye"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"1"
-			}
-		}
-	}
-
-	"special_bonus_imba_drow_ranger_8"	// Marksmanship no longer disables itself
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_drow_ranger_marksmanship"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"1"
-			}
-		}
-	}
 
 	//=================================================================================================================
 	// Lycan Talents
@@ -37821,208 +38029,7 @@
 
     
 
-    //=================================================================================================================
-	// Enigma Talents
-	//=================================================================================================================
-	"special_bonus_imba_enigma_1"	// Each Singularity stack consumed now decreases Black Hole's cooldown by 2 seconds.
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
-		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"		"imba_enigma_black_hole"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_FLOAT"
-				"value"			"2"
-			}
-		}
-	}
-
-	"special_bonus_imba_enigma_2"	// Malefice has an AoE Radius
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
-		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"		"imba_enigma_malefice"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"400"
-			}
-		}
-	}
-		
-	"special_bonus_imba_enigma_3"	// Midnight Pulse doubles its AoE over the duration.
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
-		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"		"imba_enigma_midnight_pulse"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"1"
-			}
-		}
-	}
-
-	"special_bonus_imba_enigma_4"	// Black Hole cast on death
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
-		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"		"imba_enigma_black_hole"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"3"
-			}
-		}
-	}
-
-	"special_bonus_imba_enigma_5"	// True malefice, instead of stuns little black holes are created
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
-		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"		"imba_enigma_malefice"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"150"
-			}
-		}
-	}
-
-	"special_bonus_imba_enigma_6"	// Enigma has a constant AoE Midnight pulse around him. Stacks with regular pulse.
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
-		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"		"imba_enigma_midnight_pulse"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_FLOAT"
-				"value"			"1.5"
-			}
-		}
-	}
-
-	"special_bonus_imba_enigma_7"	// Magic immunity on spell cast
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
-		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"		"imba_enigma_black_hole"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_FLOAT"
-				"value"			"1.0"
-			}
-		}
-	}
-
-	"special_bonus_imba_enigma_8"	// Cast Eidolons on heroes
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
-		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"		"imba_enigma_demonic_conversion"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"		"FIELD_INTEGER"
-				"value"			"1"
-			}
-		}
-	}
+    
 	
 
 	
@@ -38227,277 +38234,5 @@
 		}
 	}
 
-	//=================================================================================================================
-	//=================================================================================================================
-	// Faceless Void's Talents 
-	//=================================================================================================================
-	//=================================================================================================================
 	
-	//=================================================================================================================================
-	// Time Dilation grants Faceless Void a chance to backtrack damage instances that increases per ability affected by Time Dilation
-	//=================================================================================================================================
-	"special_bonus_imba_faceless_void_1" 
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-            "01"        "imba_faceless_void_time_dilation"
-        }
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"backtrack_pct_per_enemy"	"5"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"max_pct"					"50"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"6"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Time Dilation grants bonus health and mana per charge spent on them
-	//=================================================================================================================
-	"special_bonus_imba_faceless_void_2"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-            "01"        "imba_faceless_void_time_dilation"
-        }
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"hp_regen"					"12"
-			}
-
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"mp_regen"					"6"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Movement inside Chronosphere is instant, Void constantly dodges projectiles
-	//=================================================================================================================
-	"special_bonus_imba_faceless_void_3" 
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-            "01"        "imba_faceless_void_chronosphere"
-        }
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"1"
-			}			
-		}
-	}
-	
-	//==========================================================================================================================
-	// Bashing enemies with the Time Dilation debuff increases their active spells' CD while decreasing all of Voids cooldowns
-	//==========================================================================================================================
-	"special_bonus_imba_faceless_void_4" 
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-            "01"        "imba_faceless_void_time_dilation"
-			"02"        "imba_faceless_void_time_lock"
-        }
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"target_increase"		"0.5"
-			}		
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"self_reduction"		"0.5"
-			}					
-		}
-	}
-
-	//=================================================================================================================
-	// Time Lock now spawns mini chronospheres
-	//=================================================================================================================
-	"special_bonus_imba_faceless_void_5" 
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-            "01"        "imba_faceless_void_time_lock"
-			"02"        "imba_faceless_void_chronosphere"
-        }
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"aoe"					"180"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"1.0"
-			}			
-		}
-	}
-
-	//=================================================================================================================
-	// Time Lord bonuses are increased when Faceless Void is inside a Chronosphere
-	//=================================================================================================================
-	"special_bonus_imba_faceless_void_6"  
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-            "01"        "imba_faceless_void_timelord"
-			"02"        "imba_faceless_void_chronosphere"
-        }
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"value"					"2.0"
-			}			
-		}
-	}
-
-	//=================================================================================================================
-	// Time Dilation no longer spends chronocharges to affect allies
-	//=================================================================================================================
-	"special_bonus_imba_faceless_void_7" 
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-            "01"        "imba_faceless_void_time_dilation"
-        }
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"value"					"1"
-			}			
-		}
-	}
-
-	//=================================================================================================================
-	// Chronosphere causes Faceless Void attacks to cleave
-	//=================================================================================================================
-	"special_bonus_imba_faceless_void_8" 
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-            "01"        "imba_faceless_void_chronosphere"
-        }
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cleave_damage_pct"			"50"
-			}	
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cleave_starting_width"		"150"
-			}		
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cleave_ending_width"		"300"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cleave_distance"			"600"
-			}			
-		}
-	}
 }
