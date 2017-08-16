@@ -15886,6 +15886,215 @@
 	}
 
 	//=================================================================================================================
+    // Lich Talents
+    //=================================================================================================================
+    "special_bonus_imba_lich_1" // Chain Frost bounce delay decrease
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01" 	"imba_lich_chain_frost"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "75"
+            }
+        }
+    }
+
+    "special_bonus_imba_lich_2" // Sacrifice bonuses increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01" 	"imba_lich_dark_ritual"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "50"
+            }
+        }
+    }
+
+    "special_bonus_imba_lich_3" //Chain Frost bounce range increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01" 	"imba_lich_chain_frost"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "175"
+            }
+        }
+    }
+
+    "special_bonus_imba_lich_4" // Frost Nova cooldown decrease
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01" 	"imba_lich_frost_nova"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "4"
+            }
+        }
+    }
+
+    "special_bonus_imba_lich_5" // Cold Front duration increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01" 	"imba_lich_cold_front"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "1"
+            }
+        }
+    }
+
+    "special_bonus_imba_lich_6" // Massive Ice Armor armor increase when cast on buildings
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01" 	"imba_lich_frost_armor"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "36"
+            }
+        }
+    }
+
+    "special_bonus_imba_lich_7" // Chain Frost bounces now procs two little Mini Frosts when bouncing
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01" 	"imba_lich_chain_frost"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "bonus_projectiles"			"2"
+            }
+
+            "02"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "projectiles_damage_pct"	"25"
+            }
+        }
+    }
+
+    "special_bonus_imba_lich_8" // Cold Front gains additional stack from skills
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01" 	"imba_lich_cold_front"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "1"
+            }
+        }
+    }
+
+	//=================================================================================================================
 	// Lina's Dragon Slave
 	//=================================================================================================================
 	"imba_lina_dragon_slave"
@@ -16500,7 +16709,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100 120 140 160"
+		"AbilityManaCost"				"100 120 140 160 170 180 190"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -16546,13 +16755,13 @@
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"1.1 1.6 2.1 2.6"
+				"stun_duration"			"1.1 1.6 2.1 2.6 2.6 2.6 2.6"
 			}
 
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"extra_spike_AOE"		"800"
+				"extra_spike_AOE"		"500"
 			}
 
 			"09"
@@ -16564,7 +16773,7 @@
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_bounces_per_cast"	"1 1 1 1 2 3 4"
+				"max_bounces_per_cast"	"2 2 2 2 3 4 5"
 			}
 		}
 	}
@@ -16608,7 +16817,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"			"125 150 175 200 205 210 215"
+		"AbilityManaCost"			"125 150 175 200 220 240 260"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -16645,7 +16854,6 @@
 				"maximum_hex_enemies"	"1"
 				"LinkedSpecialBonus"	"special_bonus_imba_lion_6"
 			}
-
 		}
 	}
 
@@ -16711,7 +16919,7 @@
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"mana_drain_sec" 	"20 40 60 120 130 140 150"
+				"mana_drain_sec" 	"20 40 60 120 145 170 205"
 			}
 
 			"04"
@@ -16771,6 +16979,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"			"160 100 40 40 40 40"
 		"AbilityManaCost"			"200 425 650 700 750 800"
 
 		// Special
@@ -16829,28 +17038,225 @@
 			"09"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"enemies_frog_duration"			"0.4 0.4 0.4 0.6 0.8 1"
-			}
+				"enemies_frog_duration"			"1.5 1.5 1.5 1.5 1.65 1.8 1.95"
+			}			
 
 			"10"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"cooldown"						"160 100 40 40 40 40"
-			}
-
-			"11"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"scepter_cooldown"				"100 60 20 20 20 20"
 			}
 
-			"12"
+			"11"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"hex_move_speed"				"140"
 			}
 		}
 	}
+
+	//=================================================================================================================
+    // Lion's Talents
+    //=================================================================================================================
+    "special_bonus_imba_lion_1" // Earth Spike now branches from creeps as well
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01" 	"imba_lion_earth_spike"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "1"
+            }
+        }
+    }
+
+    "special_bonus_imba_lion_2" // Earth Spike damage increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01" 	"imba_lion_earth_spike"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "70"
+            }
+        }
+    }
+
+    "special_bonus_imba_lion_3" // Hex bounce radius increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01" 	"imba_lion_hex"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "150"
+            }
+        }
+    }
+
+    "special_bonus_imba_lion_4" // Mana drain slows the target according to missing mana
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01" 	"imba_lion_mana_drain"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "1"
+            }
+        }
+    }
+
+    "special_bonus_imba_lion_5" // Trigger Finger duration decrease
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01" 	"imba_lion_finger_of_death"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "3.5"
+            }
+        }
+    }
+
+    "special_bonus_imba_lion_6" // Hex bounces to a second enemy
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01" 	"imba_lion_hex"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "1"
+            }
+        }
+    }
+
+    "special_bonus_imba_lion_7" // Finger of Death Hex radius increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"	"imba_lion_finger_of_death"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "300"
+            }
+        }
+    }
+
+    "special_bonus_imba_lion_8" // Mana Drain now targets all units in aura radius
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01" 	"imba_lion_mana_drain"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "1"
+            }
+        }
+    }
 
 	//=================================================================================================================
 	// Lycan's Summon Wolves
@@ -16924,14 +17330,14 @@
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"max_charges"					"4"
+				"max_charges"					"2 2 2 2 3 4 5"
 				"LinkedSpecialBonus"			"special_bonus_imba_lycan_5"
 			}
 
 			"06"
 			{
 				"var_type" 						"FIELD_INTEGER"
-				"charge_cooldown"				"25"
+				"charge_cooldown"				"32"
 			}
 		}
 	}
@@ -16958,8 +17364,6 @@
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_lycan.vsndevts"
 		}
-
-
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -17026,11 +17430,11 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"55 50 45 40 40 40 40"
+		"AbilityCooldown"				"60 55 50 45 42 39 36"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"30"
+		"AbilityManaCost"				"40"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -17107,7 +17511,7 @@
 		"AbilityTextureName"     	"lycan_feral_impulse"
 		"MaxLevel"					"7"
 		"LevelsBetweenUpgrades"		"2"
-		"AbilityCastRange"		 	"1200"
+		"AbilityCastRange"		 	"900"
 
 
 		// Precache
@@ -17136,8 +17540,8 @@
 
 			"03"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_inc_per_unit"		"1 1 1 1 2 3 4"
+				"var_type"					"FIELD_FLOAT"
+				"damage_inc_per_unit"		"1 1 1 1 1.5 2 2.5"
 				"LinkedSpecialBonus"		"special_bonus_imba_lycan_2"
 			}
 
@@ -17157,7 +17561,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"aura_radius"				"1200"
+				"aura_radius"				"900"
 			}
 		}
 	}
@@ -17231,13 +17635,13 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_damage"				"140 160 180 190 200 210"
+				"crit_damage"				"160 180 200 210 220 230"
 			}
 
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"duration"					"18 18 18 20 22 24"
+				"duration"					"18"
 				"LinkedSpecialBonus"		"special_bonus_imba_lycan_8"
 			}
 
@@ -17275,7 +17679,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_bonus_per_stack"		"6 10 14 18 22 26"
+				"damage_bonus_per_stack"		"3 6 9 12 16 20"
 			}
 
 			"02"
@@ -17287,7 +17691,7 @@
 			"03"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"duration"						"8"
+				"duration"						"4"
 			}
 
 			"04"
@@ -17331,7 +17735,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"evasion"					"20 25 30 35 40 45"
+				"evasion"					"15 15 15 20 25 30"
 			}
 		}
 	}
@@ -17358,6 +17762,234 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"fade_time"					"5 4 3 2 1.5 1.2"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Lycan Talents
+	//=================================================================================================================
+	"special_bonus_imba_lycan_1"	// Wolf level increases
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_lycan_summon_wolves"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_lycan_2"	// Feral Impulse damage and HP regen increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_lycan_feral_impulse"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"2"
+			}
+		}
+	}
+
+	"special_bonus_imba_lycan_3"	// Howl duration increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_lycan_howl"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"12"
+			}
+		}
+	}
+
+	"special_bonus_imba_lycan_4"	// Wolfsbane damage increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_lycan_wolfsbane"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"2"
+			}
+		}
+	}
+
+	"special_bonus_imba_lycan_5"	// Increased maximum summoned Wolves
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_lycan_summon_wolves"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"2"
+			}
+		}
+	}
+
+	"special_bonus_imba_lycan_6"	// Double Wicked Crunch max stacks, Wolves generate two on hit
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_summoned_wolf_wicked_crunch"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"12"
+			}
+		}
+	}
+
+	"special_bonus_imba_lycan_7"	// Howl potency increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_lycan_howl"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_hero"			"25"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_creep"			"25"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ms_hero"				"5"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ms_creep"				"15"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health_hero"			"250"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health_creep"			"125"
+			}
+		}
+	}
+
+	"special_bonus_imba_lycan_8"	// Shapeshift duration increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_lycan_shapeshift"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"15"
 			}
 		}
 	}
@@ -17418,7 +18050,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"secondary_damage"			"50"
+				"secondary_damage"			"50 75 100 125 150 175 200"
 			}
 			"03"
 			{
@@ -17491,7 +18123,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1000"
+		"AbilityCastRange"				"800"
 		"AbilityCastPoint"				"0.3"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
 
@@ -17501,7 +18133,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"30 40 50 60 60 60 60"
+		"AbilityManaCost"				"30 50 70 90 90 90 90"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -17550,17 +18182,17 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"supercharge_duration"	"5 6 7 8 10 12 14"
+				"supercharge_duration"	"16 16 16 16 20 24 28"
 			}
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"supercharge_as"		"50"
+				"supercharge_as"		"50 50 50 50 75 100 125"
 			}
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"supercharge_ms"		"12"
+				"supercharge_ms"		"12 12 12 12 14 16 18"
 			}
 			"12"
 			{
@@ -17607,8 +18239,7 @@
 		}
 
 		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"25000"
+		//-------------------------------------------------------------------------------------------------------------		
 		"AbilityCastPoint"				"0.3"
 
 		// Time
@@ -17661,7 +18292,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"entangle_dur"			"1.0 1.0 1.0 1.0 1.5 2.0 2.5"
+				"entangle_dur"			"3 3 3 3 3.5 4 4.5"
 			}
 			"09"
 			{
@@ -17676,7 +18307,7 @@
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pardon_extra_dmg"		"30 40 50 60 60 60 60"
+				"pardon_extra_dmg"		"80 80 80 80 100 120 140"
 			}
 			"13"
 			{
@@ -17765,7 +18396,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pull_per_stack"		"200 200 200 300 400 500"
+				"pull_per_stack"		"400 400 400 500 600 700"
 				"LinkedSpecialBonus"	"special_bonus_imba_magnataur_8"
 			}
 			"07"
@@ -18086,7 +18717,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"90 160 230 300 325 350 375"
+				"damage"					"75 150 225 300 325 350 375"
 			}
 			"04"
 			{
@@ -18211,7 +18842,7 @@
 			"09"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"on_prow_crit_damage_pct"			"130 130 130 130 140 150 160"
+				"on_prow_crit_damage_pct"			"140 140 140 140 160 180 200"
 			}
 			"10"
 			{
@@ -18299,23 +18930,23 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_aoe"				"900"
+				"aura_aoe"				"775"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"move_speed_pct"		"4 8 12 16 18 20 22"
+				"move_speed_pct"		"8 12 16 20 22 24 26"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_speed"			"8 16 24 32 36 40 44"
+				"attack_speed"			"16 32 48 64 70 76 82"
 				"LinkedSpecialBonus"	"special_bonus_imba_mirana_5"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_duration"			"10"
+				"aura_duration"			"5"
 			}
 			"07"
 			{
@@ -18400,6 +19031,209 @@
 	}
 
 	//=================================================================================================================
+	// Mirana's Talents
+	//=================================================================================================================
+	"special_bonus_imba_mirana_1" // Starfall search radius increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_mirana_starfall"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"	                    "100"
+			}
+		}
+	}
+
+	"special_bonus_imba_mirana_2" // Leap Aura linger duration increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_mirana_leap"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+					"var_type"                  "FIELD_INTEGER"
+					"value"	                    "7"
+			}
+		}
+	}
+
+	"special_bonus_imba_mirana_3" // Sacred Arrow's stun duration increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_mirana_arrow"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+					"var_type"                  "FIELD_INTEGER"
+					"value"	                    "1"
+			}
+		}
+	}
+
+	"special_bonus_imba_mirana_4" // Two additional Sacred Arrows to the sides
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_mirana_arrow"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+					"var_type"                  "FIELD_INTEGER"
+					"value"	                    "2"
+			}
+		}
+	}
+
+	"special_bonus_imba_mirana_5" // Leap Aura attack speed increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_mirana_leap"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+					"var_type"                  "FIELD_INTEGER"
+					"value"	                    "100"
+			}
+		}
+	}
+
+	"special_bonus_imba_mirana_6" // Free Sacred Arrow after Leap ends
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_mirana_leap"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+					"var_type"                  "FIELD_INTEGER"
+					"value"	                    "1"
+			}
+		}
+	}
+
+	"special_bonus_imba_mirana_7" // Starfall wave interval decrease
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_mirana_starfall"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+					"var_type"                  "FIELD_FLOAT"
+					"value"	                    "-1.25"
+			}
+		}
+	}
+
+	"special_bonus_imba_mirana_8" // Moonlight Shadow cooldown decrease
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_mirana_moonlight_shadow"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+					"var_type"                  "FIELD_INTEGER"
+					"value"	                    "40"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Necrolyte's Sadist
 	//=================================================================================================================
 	"imba_necrolyte_sadist"
@@ -18420,28 +19254,34 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"mana_regen"			"7"
+				"var_type"				"FIELD_FLOAT"
+				"mana_regen"			"0.5"
 				"LinkedSpecialBonus"	"special_bonus_imba_necrolyte_6"
 			}
 
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"health_regen"			"7"
+				"var_type"				"FIELD_FLOAT"
+				"health_regen"			"0.5"
 				"LinkedSpecialBonus"	"special_bonus_imba_necrolyte_6"
 			}
 
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hero_multiplier"		"10"
+				"hero_multiplier"		"5"
 			}
 			
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"regen_duration"		"7"
+			}
+
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"regen_minimum"			"7"
 			}
 		}
 	}
@@ -33758,233 +34598,7 @@
 
 	
 
-	//=================================================================================================================
-	// Lycan Talents
-	//=================================================================================================================
-	"special_bonus_imba_lycan_1"	// Wolf level increases
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_lycan_summon_wolves"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"1"
-			}
-		}
-	}
-
-	"special_bonus_imba_lycan_2"	// Feral Impulse damage and HP regen increase
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_lycan_feral_impulse"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"2"
-			}
-		}
-	}
-
-	"special_bonus_imba_lycan_3"	// Howl duration increase
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_lycan_howl"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"12"
-			}
-		}
-	}
-
-	"special_bonus_imba_lycan_4"	// Wolfsbane damage increase
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_lycan_wolfsbane"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"2"
-			}
-		}
-	}
-
-	"special_bonus_imba_lycan_5"	// Increased maximum summoned Wolves
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_lycan_summon_wolves"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"2"
-			}
-		}
-	}
-
-	"special_bonus_imba_lycan_6"	// Double Wicked Crunch max stacks, Wolves generate two on hit
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_summoned_wolf_wicked_crunch"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"12"
-			}
-		}
-	}
-
-	"special_bonus_imba_lycan_7"	// Howl potency increase
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_lycan_howl"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_hero"			"25"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_creep"			"25"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"ms_hero"				"5"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"ms_creep"				"15"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"health_hero"			"250"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"health_creep"			"125"
-			}
-		}
-	}
-
-	"special_bonus_imba_lycan_8"	// Shapeshift duration increase
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_lycan_shapeshift"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"15"
-			}
-		}
-	}
+	
 
 	//=================================================================================================================
 	// Slardar Talents
@@ -34413,214 +35027,7 @@
 
 	
 
-    //=================================================================================================================
-    // Lich Talents
-    //=================================================================================================================
-    "special_bonus_imba_lich_1" // Chain Frost bounce delay decrease
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01" 	"imba_lich_chain_frost"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "value"	                    "75"
-            }
-        }
-    }
-
-    "special_bonus_imba_lich_2" // Sacrifice bonuses increase
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01" 	"imba_lich_dark_ritual"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "value"	                    "50"
-            }
-        }
-    }
-
-    "special_bonus_imba_lich_3" //Chain Frost bounce range increase
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01" 	"imba_lich_chain_frost"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "value"	                    "175"
-            }
-        }
-    }
-
-    "special_bonus_imba_lich_4" // Frost Nova cooldown decrease
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01" 	"imba_lich_frost_nova"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "value"	                    "4"
-            }
-        }
-    }
-
-    "special_bonus_imba_lich_5" // Cold Front duration increase
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01" 	"imba_lich_cold_front"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "value"	                    "1"
-            }
-        }
-    }
-
-    "special_bonus_imba_lich_6" // Massive Ice Armor armor increase when cast on buildings
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01" 	"imba_lich_frost_armor"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "value"	                    "36"
-            }
-        }
-    }
-
-    "special_bonus_imba_lich_7" // Chain Frost bounces now procs two little Mini Frosts when bouncing
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01" 	"imba_lich_chain_frost"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "bonus_projectiles"			"2"
-            }
-
-            "02"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "projectiles_damage_pct"	"25"
-            }
-        }
-    }
-
-    "special_bonus_imba_lich_8" // Cold Front gains additional stack from skills
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01" 	"imba_lich_cold_front"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "value"	                    "1"
-            }
-        }
-    }
+    
 
     //=================================================================================================================
     // Omniknight's Talents
@@ -35047,412 +35454,7 @@
 			}
 		}
 	}
-
-    //=================================================================================================================
-    // Lion's Talents
-    //=================================================================================================================
-    "special_bonus_imba_lion_1" // Earth Spike now branches from creeps as well
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01" 	"imba_lion_earth_spike"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "value"	                    "40"
-            }
-        }
-    }
-
-    "special_bonus_imba_lion_2" // Earth Spike damage increase
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01" 	"imba_lion_earth_spike"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "value"	                    "70"
-            }
-        }
-    }
-
-    "special_bonus_imba_lion_3" // Hex bounce radius increase
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01" 	"imba_lion_hex"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "value"	                    "150"
-            }
-        }
-    }
-
-    "special_bonus_imba_lion_4" // Mana drain slows the target according to missing mana
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01" 	"imba_lion_mana_drain"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "value"	                    "1"
-            }
-        }
-    }
-
-    "special_bonus_imba_lion_5" // Trigger Finger duration decrease
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01" 	"imba_lion_finger_of_death"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "value"	                    "3.5"
-            }
-        }
-    }
-
-    "special_bonus_imba_lion_6" // Hex bounces to a second enemy
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01" 	"imba_lion_hex"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "value"	                    "1"
-            }
-        }
-    }
-
-    "special_bonus_imba_lion_7" // Finger of Death Hex radius increase
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01"	"imba_lion_finger_of_death"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "value"	                    "300"
-            }
-        }
-    }
-
-    "special_bonus_imba_lion_8" // Mana Drain now targets all units in aura radius
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01" 	"imba_lion_mana_drain"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "value"	                    "1"
-            }
-        }
-    }
-
-	//=================================================================================================================
-	// Mirana's Talents
-	//=================================================================================================================
-	"special_bonus_imba_mirana_1" // Starfall search radius increase
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_mirana_starfall"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"value"	                    "100"
-			}
-		}
-	}
-
-	"special_bonus_imba_mirana_2" // Leap Aura linger duration increase
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_mirana_leap"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-					"var_type"                  "FIELD_INTEGER"
-					"value"	                    "4"
-			}
-		}
-	}
-
-	"special_bonus_imba_mirana_3" // Sacred Arrow's stun duration increase
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_mirana_arrow"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-					"var_type"                  "FIELD_INTEGER"
-					"value"	                    "1"
-			}
-		}
-	}
-
-	"special_bonus_imba_mirana_4" // Two additional Sacred Arrows to the sides
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"	"imba_mirana_arrow"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-					"var_type"                  "FIELD_INTEGER"
-					"value"	                    "2"
-			}
-		}
-	}
-
-	"special_bonus_imba_mirana_5" // Leap Aura attack speed increase
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"	"imba_mirana_leap"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-					"var_type"                  "FIELD_INTEGER"
-					"value"	                    "100"
-			}
-		}
-	}
-
-	"special_bonus_imba_mirana_6" // Free Sacred Arrow after Leap ends
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"	"imba_mirana_leap"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-					"var_type"                  "FIELD_INTEGER"
-					"value"	                    "1"
-			}
-		}
-	}
-
-	"special_bonus_imba_mirana_7" // Starfall wave interval decrease
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_mirana_starfall"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-					"var_type"                  "FIELD_FLOAT"
-					"value"	                    "-1.25"
-			}
-		}
-	}
-
-	"special_bonus_imba_mirana_8" // Moonlight Shadow cooldown decrease
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"	"imba_mirana_moonlight_shadow"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-					"var_type"                  "FIELD_INTEGER"
-					"value"	                    "40"
-			}
-		}
-	}
+	
 
 	//=================================================================================================================
 	// Silencer Talents
