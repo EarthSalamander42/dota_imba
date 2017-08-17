@@ -161,13 +161,13 @@
 			"01"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"bonus_damage_per_minute"				"3"
+				"bonus_damage_per_minute"				"2"
 			}
 
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"bonus_health_per_minute"				"45"
+				"bonus_health_per_minute"				"20"
 			}
 		}
 	}
@@ -192,13 +192,13 @@
 			"01"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"bonus_damage_per_minute"				"5"
+				"bonus_damage_per_minute"				"4"
 			}
 
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"bonus_health_per_minute"				"38"
+				"bonus_health_per_minute"				"12"
 			}			
 		}		
 	}
@@ -36559,25 +36559,25 @@
 			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_hp_per_str"		"20 20 20 30 40 50"
+				"bonus_hp_per_str"		"10 10 10 15 20 25"
 			}
 
 			"13"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_armor_per_agi"	"0.25"
+				"bonus_armor_per_agi"	"0.15"
 			}
 
 			"14"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_aspeed_per_agi"	"2"
+				"bonus_aspeed_per_agi"	"1.25"
 			}
 
 			"15"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_damage_per_int"	"1 1 1 1 2.5 4 5.5"
+				"bonus_damage_per_int"	"1 1 1 1 1.5 2 2.5"
 			}
 
 			"14"
