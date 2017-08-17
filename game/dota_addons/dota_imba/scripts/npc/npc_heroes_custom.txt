@@ -1847,24 +1847,27 @@
 
 		"AbilityLayout"				"6"
 
-		"Ability1"					"imba_phoenix_icarus_dive"
-		"Ability2"					"imba_phoenix_fire_spirits"
-		"Ability3"					"imba_phoenix_sun_ray"
-		"Ability4"					"imba_phoenix_sun_ray_toggle_move"
-		"Ability5"					"imba_phoenix_burning_wings"
-		"Ability6"					"imba_phoenix_supernova"
-		"Ability7"					"imba_phoenix_launch_fire_spirit"
-		"Ability8"					"imba_phoenix_icarus_dive_stop"
-		"Ability9"					"imba_phoenix_sun_ray_stop"
+		//"Ability1"					"imba_phoenix_icarus_dive"
+		//"Ability2"					"imba_phoenix_fire_spirits"
+		//"Ability3"					"imba_phoenix_sun_ray"
+		//"Ability4"					"imba_phoenix_sun_ray_toggle_move"
+		//"Ability5"					"imba_phoenix_burning_wings"
+		//"Ability6"					"imba_phoenix_supernova"
+		//"Ability7"					"imba_phoenix_launch_fire_spirit"
+		//"Ability8"					"imba_phoenix_icarus_dive_stop"
+		//"Ability9"					"imba_phoenix_sun_ray_stop"
 
-		"Ability10"					"special_bonus_imba_phoenix_1" // 
-		"Ability11"					"special_bonus_imba_phoenix_2" // 
-		"Ability12"					"special_bonus_imba_phoenix_7" // 
-		"Ability13"					"special_bonus_imba_phoenix_4" // 
-		"Ability14"					"special_bonus_imba_phoenix_5" //
-		"Ability15"					"special_bonus_imba_phoenix_6" //
-		"Ability16"					"special_bonus_imba_phoenix_3" // 
-		"Ability17"					"special_bonus_imba_phoenix_8" // 
+		//"Ability10"					"special_bonus_imba_phoenix_1" // 
+		//"Ability11"					"special_bonus_imba_phoenix_2" // 
+		//"Ability12"					"special_bonus_imba_phoenix_7" // 
+		//"Ability13"					"special_bonus_imba_phoenix_4" // 
+		//"Ability14"					"special_bonus_imba_phoenix_5" //
+		//"Ability15"					"special_bonus_imba_phoenix_6" //
+		//"Ability16"					"special_bonus_imba_phoenix_3" // 
+		//"Ability17"					"special_bonus_imba_phoenix_8" // 
+		"Ability15"						"special_bonus_unique_phoenix_3"
+		"Ability16"						"special_bonus_unique_phoenix_2"
+		"Ability17"						"special_bonus_unique_phoenix_1"
 
 		"ProjectileModel"			"particles/units/heroes/hero_phoenix/phoenix_base_attack.vpcf"
 	}

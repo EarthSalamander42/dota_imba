@@ -368,7 +368,50 @@ function modifier_imba_dazzle_shallow_grave:OnTakeDamage( keys )
 		local health = parent:GetHealth()
 		local victim = keys.unit
 		local damage = keys.damage
-		
+
+		if not self.triggered_meme_count and USE_MEME_SOUNDS then 
+			-- Prepares a table to store the times in which the hero was graved
+			parent.shallow_grave_meme_table = parent.shallow_grave_meme_table or {}
+
+			local current_time = GameRules:GetGameTime()
+			-- Remove old time stamps
+			for i= #parent.shallow_grave_meme_table, 1, -1 do 
+				if current_time - 30 > parent.shallow_grave_meme_table[i] then
+					table.remove(parent.shallow_grave_meme_table, i)
+				end
+			end
+
+			-- Inserts a timestamp
+			table.insert(parent.shallow_grave_meme_table,  current_time)
+
+			if #parent.shallow_grave_meme_table > 3 then 
+				-- Nil handling
+				parent.time_of_triggered_rare_shallow_grave_meme = parent.time_of_triggered_rare_shallow_grave_meme or 0
+				parent.time_of_triggered_shallow_grave_meme = parent.time_of_triggered_shallow_grave_meme or 0
+				-- Normal trigger									-- Make sure the sounds don't overlap
+				if not parent.has_triggered_shallow_grave_meme  and  current_time - 23 > parent.time_of_triggered_rare_shallow_grave_meme and current_time -6 > parent.time_of_triggered_shallow_grave_meme then 
+					parent:EmitSound("Imba.DazzleShallowGraveIWillSurvive1") 
+					parent.time_of_triggered_shallow_grave_meme = current_time
+				-- Possible rare trigger:
+				else
+					-- Super rare sound 	-- Make sure the sounds don't overlap
+					if RollPercentage(50) and current_time - 23 > parent.time_of_triggered_rare_shallow_grave_meme and current_time -6 > parent.time_of_triggered_shallow_grave_meme then
+						parent:EmitSound("Imba.DazzleShallowGraveIWillSurvive2")
+						parent.time_of_triggered_rare_shallow_grave_meme =  current_time
+
+						-- Make sure the sounds don't overlap
+					elseif  current_time - 23 > parent.time_of_triggered_rare_shallow_grave_meme and current_time -6 > parent.time_of_triggered_shallow_grave_meme then
+						parent:EmitSound("Imba.DazzleShallowGraveIWillSurvive1")
+					end
+				end
+				-- A check for the rare sound
+				parent.has_triggered_shallow_grave_meme = true
+			else 
+				parent.has_triggered_shallow_grave_meme = false
+			end
+			self.triggered_meme_count = true
+		end
+
 		if parent == victim and math.floor(health) <= 1 then
 			self.shallowDamage = self.shallowDamage + damage
 			self.shallowDamageInstances = self.shallowDamageInstances + 1
@@ -542,6 +585,48 @@ function modifier_imba_dazzle_nothl_protection:OnTakeDamage( keys )
 				
 				-- If the modifier is active
 				elseif self.isActive and not parent:PassivesDisabled() then
+					if not self.triggered_meme_count and USE_MEME_SOUNDS then 
+						-- Prepares a table to store the times in which the hero was graved
+						parent.shallow_grave_meme_table = parent.shallow_grave_meme_table or {}
+
+						local current_time = GameRules:GetGameTime()
+						-- Remove old time stamps
+						for i= #parent.shallow_grave_meme_table, 1, -1 do 
+							if current_time - 30 > parent.shallow_grave_meme_table[i] then
+								table.remove(parent.shallow_grave_meme_table, i)
+							end
+						end
+
+						-- Inserts a timestamp
+						table.insert(parent.shallow_grave_meme_table,  current_time)
+
+						if #parent.shallow_grave_meme_table > 3 then 
+							-- Nil handling
+							parent.time_of_triggered_rare_shallow_grave_meme = parent.time_of_triggered_rare_shallow_grave_meme or 0
+							parent.time_of_triggered_shallow_grave_meme = parent.time_of_triggered_shallow_grave_meme or 0
+							-- Normal trigger									-- Make sure the sounds don't overlap
+							if not parent.has_triggered_shallow_grave_meme  and  current_time - 23 > parent.time_of_triggered_rare_shallow_grave_meme and current_time -6 > parent.time_of_triggered_shallow_grave_meme then 
+								parent:EmitSound("Imba.DazzleShallowGraveIWillSurvive1") 
+								parent.time_of_triggered_shallow_grave_meme = current_time
+							-- Possible rare trigger:
+							else
+								-- Super rare sound 	-- Make sure the sounds don't overlap
+								if RollPercentage(50) and current_time - 23 > parent.time_of_triggered_rare_shallow_grave_meme and current_time -6 > parent.time_of_triggered_shallow_grave_meme then
+									parent:EmitSound("Imba.DazzleShallowGraveIWillSurvive2")
+									parent.time_of_triggered_rare_shallow_grave_meme =  current_time
+
+									-- Make sure the sounds don't overlap
+								elseif  current_time - 23 > parent.time_of_triggered_rare_shallow_grave_meme and current_time -6 > parent.time_of_triggered_shallow_grave_meme then
+									parent:EmitSound("Imba.DazzleShallowGraveIWillSurvive1")
+								end
+							end
+							-- A check for the rare sound
+							parent.has_triggered_shallow_grave_meme = true
+						else 
+							parent.has_triggered_shallow_grave_meme = false
+						end
+						self.triggered_meme_count = true
+					end					
 					self.shallowDamage = self.shallowDamage + damage
 					self.shallowDamageInstances = self.shallowDamageInstances + 1
 				end
@@ -777,6 +862,50 @@ function modifier_imba_dazzle_nothl_protection_aura_talent:OnTakeDamage( keys )
 		if parent == victim and math.floor(health) <= 1 then
 			self.shallowDamage = self.shallowDamage + damage
 			self.shallowDamageInstances = self.shallowDamageInstances + 1
+
+			if not self.triggered_meme_count and USE_MEME_SOUNDS then 
+				-- Prepares a table to store the times in which the hero was graved
+				parent.shallow_grave_meme_table = parent.shallow_grave_meme_table or {}
+
+				local current_time = GameRules:GetGameTime()
+				-- Remove old time stamps
+				for i= #parent.shallow_grave_meme_table, 1, -1 do 
+					if current_time - 30 > parent.shallow_grave_meme_table[i] then
+						table.remove(parent.shallow_grave_meme_table, i)
+					end
+				end
+
+				-- Inserts a timestamp
+				table.insert(parent.shallow_grave_meme_table,  current_time)
+
+				if #parent.shallow_grave_meme_table > 3 then 
+					-- Nil handling
+					parent.time_of_triggered_rare_shallow_grave_meme = parent.time_of_triggered_rare_shallow_grave_meme or 0
+					parent.time_of_triggered_shallow_grave_meme = parent.time_of_triggered_shallow_grave_meme or 0
+					-- Normal trigger									-- Make sure the sounds don't overlap
+					if not parent.has_triggered_shallow_grave_meme  and  current_time - 23 > parent.time_of_triggered_rare_shallow_grave_meme and current_time -6 > parent.time_of_triggered_shallow_grave_meme then 
+						parent:EmitSound("Imba.DazzleShallowGraveIWillSurvive1") 
+						parent.time_of_triggered_shallow_grave_meme = current_time
+					-- Possible rare trigger:
+					else
+						-- Super rare sound 	-- Make sure the sounds don't overlap
+						if RollPercentage(50) and current_time - 23 > parent.time_of_triggered_rare_shallow_grave_meme and current_time -6 > parent.time_of_triggered_shallow_grave_meme then
+							parent:EmitSound("Imba.DazzleShallowGraveIWillSurvive2")
+							parent.time_of_triggered_rare_shallow_grave_meme =  current_time
+
+							-- Make sure the sounds don't overlap
+						elseif  current_time - 23 > parent.time_of_triggered_rare_shallow_grave_meme and current_time -6 > parent.time_of_triggered_shallow_grave_meme then
+							parent:EmitSound("Imba.DazzleShallowGraveIWillSurvive1")
+						end
+					end
+					-- A check for the rare sound
+					parent.has_triggered_shallow_grave_meme = true
+				else 
+					parent.has_triggered_shallow_grave_meme = false
+				end
+				self.triggered_meme_count = true
+			end
+						
 			if not self.triggered then
 				self.triggered = true
 				local particle = ParticleManager:CreateParticle("particles/hero/dazzle/dazzle_shallow_grave_talent.vpcf", PATTACH_ABSORIGIN_FOLLOW , parent)
@@ -907,6 +1036,17 @@ function imba_dazzle_shadow_wave:OnSpellStart()
 			
 			if self.talentWaveDelayed and self.talentWaveDelayed[oldest] and self.talentWaveDelayed[oldest].handler and not self.talentWaveDelayed[oldest].handler:IsNull() then
 				self.talentWaveDelayed[oldest].handler:DestroyCustom()
+				
+				-- Destroy all bounce cooldowns
+				local units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_CLOSEST, false)
+				for _, unit in ipairs(units) do
+					local cooldownMods = unit:FindAllModifiersByName("modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown")
+					for _, mod in ipairs(cooldownMods) do
+						if mod:GetStackCount() == oldest then
+							mod:Destroy()
+						end
+					end
+				end
 			end
 			
 			self:WaveHit(target, isAlly, poisonTouched)
@@ -1097,17 +1237,18 @@ if modifier_imba_dazzle_shadow_wave_delayed_bounce == nil then modifier_imba_daz
 function modifier_imba_dazzle_shadow_wave_delayed_bounce:IsPurgable() return false end
 function modifier_imba_dazzle_shadow_wave_delayed_bounce:IsHidden() return true end
 function modifier_imba_dazzle_shadow_wave_delayed_bounce:IsDebuff() return false end
+function modifier_imba_dazzle_shadow_wave_delayed_bounce:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_dazzle_shadow_wave_delayed_bounce:OnCreated()
 	if IsServer() then
 		local parent = self:GetParent()
 		local ability = self:GetAbility()
 		local caster = ability:GetCaster()
-		
-		parent:AddNewModifier(caster, ability, "modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown", {duration = caster:FindTalentValue("special_bonus_imba_dazzle_1", "talent_delayed_wave_rehit_cd") + caster:FindTalentValue("special_bonus_imba_dazzle_1", "talent_delayed_wave_delay")})
+		local cooldownMod = parent:AddNewModifier(caster, ability, "modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown", {duration = caster:FindTalentValue("special_bonus_imba_dazzle_1", "talent_delayed_wave_rehit_cd") + caster:FindTalentValue("special_bonus_imba_dazzle_1", "talent_delayed_wave_delay")})
 		
 		Timers:CreateTimer(0.01, function()
 			self.data = ability:GetDelayedWaveData(self:GetStackCount())
+			cooldownMod:SetStackCount(self:GetStackCount())
 		end)
 	end
 end
@@ -1140,17 +1281,20 @@ function modifier_imba_dazzle_shadow_wave_delayed_bounce:OnDestroy()
 			-- Priority changed from vanilla since the skill now applies a buff, which you'd probably prefer hitting heroes over creeps
 			local heroTable = FindUnitsInRadius(caster:GetTeamNumber(), parent:GetAbsOrigin(), nil, bounceDistance, targetTeam, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
 			local creepTable = FindUnitsInRadius(caster:GetTeamNumber(), parent:GetAbsOrigin(), nil, bounceDistance, targetTeam, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+			local stacks = self:GetStackCount()
 			
 			for _,hero in pairs(heroTable) do
-				if hero ~= parent and hero:GetHealth() < hero:GetMaxHealth() and not hero:HasModifier("modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown") then
-					newTarget = hero
-					break
-				end
-			end
-			
-			if not newTarget then
-				for _,hero in pairs(heroTable) do
-					if hero ~= parent and not hero:HasModifier("modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown") then
+				if hero ~= parent and hero:GetHealth() < hero:GetMaxHealth() then
+					local cooldownMods = hero:FindAllModifiersByName("modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown")
+					local hasCD = false
+					for _,mod in ipairs(cooldownMods) do
+						if mod:GetStackCount() == stacks then
+							hasCD = true
+							break
+						end
+					end
+					
+					if not hasCD then
 						newTarget = hero
 						break
 					end
@@ -1158,19 +1302,61 @@ function modifier_imba_dazzle_shadow_wave_delayed_bounce:OnDestroy()
 			end
 			
 			if not newTarget then
-				for _,creep in pairs(creepTable) do
-					if creep ~= parent and creep:GetHealth() < creep:GetMaxHealth() and not creep:HasModifier("modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown")  then
-						newTarget = creep
-						break
+				for _,hero in pairs(heroTable) do
+					if hero ~= parent then
+						local cooldownMods = hero:FindAllModifiersByName("modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown")
+						local hasCD = false
+						for _,mod in ipairs(cooldownMods) do
+							if mod:GetStackCount() == stacks then
+								hasCD = true
+								break
+							end
+						end
+						
+						if not hasCD then
+							newTarget = hero
+							break
+						end
 					end
 				end
 			end
 			
 			if not newTarget then
 				for _,creep in pairs(creepTable) do
-					if creep ~= parent and not creep:HasModifier("modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown")  then
-						newTarget = creep
-						break
+					if creep ~= parent and creep:GetHealth() < creep:GetMaxHealth() then
+						local cooldownMods = creep:FindAllModifiersByName("modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown")
+						local hasCD = false
+						for _,mod in ipairs(cooldownMods) do
+							if mod:GetStackCount() == stacks then
+								hasCD = true
+								break
+							end
+						end
+						
+						if not hasCD then
+							newTarget = creep
+							break
+						end
+					end
+				end
+			end
+			
+			if not newTarget then
+				for _,creep in pairs(creepTable) do
+					if creep ~= parent then
+						local cooldownMods = creep:FindAllModifiersByName("modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown")
+						local hasCD = false
+						for _,mod in ipairs(cooldownMods) do
+							if mod:GetStackCount() == stacks then
+								hasCD = true
+								break
+							end
+						end
+						
+						if not hasCD then
+							newTarget = creep
+							break
+						end
 					end
 				end
 			end
@@ -1196,7 +1382,6 @@ function modifier_imba_dazzle_shadow_wave_delayed_bounce:OnDestroy()
 end
 
 function modifier_imba_dazzle_shadow_wave_delayed_bounce:DestroyCustom()
-	print("custom destroyed")
 	self.destroyNoJump = true
 	self:Destroy()
 end
@@ -1208,14 +1393,15 @@ if modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown == nil then modifier
 function modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown:IsPurgable() return false end
 function modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown:IsHidden() return true end
 function modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown:IsDebuff() return true end
+function modifier_imba_dazzle_shadow_wave_delayed_bounce_cooldown:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -------------------------------------------------------------
 -------------------------	Weave	-------------------------
 -------------------------------------------------------------
 if imba_dazzle_weave == nil then imba_dazzle_weave = class({}) end
-LinkLuaModifier( "modifier_imba_dazzle_weave_buff", "hero/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )	-- Allied bonus armor
-LinkLuaModifier( "modifier_imba_dazzle_weave_debuff", "hero/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )-- Allied bonus armor
-LinkLuaModifier( "modifier_imba_dazzle_ressurection_layout", "hero/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )-- Ressurection ability layout modifier
+LinkLuaModifier( "modifier_imba_dazzle_weave_buff", "hero/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )			-- Allied bonus armor
+LinkLuaModifier( "modifier_imba_dazzle_weave_debuff", "hero/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )		-- Allied bonus armor
+LinkLuaModifier( "modifier_imba_dazzle_ressurection_layout", "hero/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )	-- Ressurection ability layout modifier
 
 function imba_dazzle_weave:GetAbilityTextureName()
    return "dazzle_weave" end
@@ -1475,7 +1661,8 @@ function imba_dazzle_ressurection:OnSpellStart()
 		local castParticle = ParticleManager:CreateParticle("particles/hero/dazzle/dazzle_ressurection_cast.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 		ParticleManager:ReleaseParticleIndex(castParticle)
 		
-		local screenParticle = ParticleManager:CreateParticleForPlayer("particles/hero/dazzle/dazzle_ressurection_screen.vpcf", PATTACH_MAIN_VIEW, target, PlayerResource:GetPlayer(target:GetPlayerID()))        
+		local screenParticle = ParticleManager:CreateParticleForPlayer("particles/hero/dazzle/dazzle_ressurection_screen.vpcf", PATTACH_MAIN_VIEW, target, PlayerResource:GetPlayer(target:GetPlayerID()))
+		ParticleManager:ReleaseParticleIndex(screenParticle)
 		
 		Timers:CreateTimer(delay, function()
 			if target:IsAlive() then
