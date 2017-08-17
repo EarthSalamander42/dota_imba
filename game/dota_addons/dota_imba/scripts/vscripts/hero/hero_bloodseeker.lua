@@ -782,7 +782,7 @@ function modifier_imba_rupture_charges:OnCreated()
 
         -- Ability specials
         self.max_charge_count = self.ability:GetSpecialValueFor("rupture_charges")
-        self.charge_replenish_rate = self.ability:GetSpecialValueFor("scepter_charge_replenish_rate")
+        self.charge_replenish_rate = self.ability.BaseClass.GetCooldown(self.ability, -1)
 
         -- If it the real one, set max charges
         if self.caster:IsRealHero() then

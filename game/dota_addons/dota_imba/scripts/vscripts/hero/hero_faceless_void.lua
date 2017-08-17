@@ -734,15 +734,14 @@ function modifier_imba_faceless_void_time_lock:GetModifierProcAttack_BonusDamage
 
 		-- See if the passive owner is the attacker, and that they're not broken
 		if parent == attacker and not target:IsBuilding() and not parent:PassivesDisabled() and parent:GetTeamNumber() ~= target:GetTeamNumber() then
-			local bashChance = ability:GetSpecialValueFor("bash_chance")
+			local bashChance = ability:GetSpecialValueFor("bash_chance") * 0.01
 			local bashDamage = ability:GetSpecialValueFor("bash_damage")
 			local bashDuration = ability:GetSpecialValueFor("bash_duration")
-			local creep_bash_duration = ability:GetSpecialValueFor("creep_bash_duration")
 			local cdIncrease = ability:GetSpecialValueFor("cd_increase")
 			local talent_cd_increase = 0
 
 			-- See if the chance passed
-			if RollPseudoRandom(bashChance, self) then
+			if math.random() <= bashChance then
 				-- Deal damage
 				bonus_damage_to_main_target = bonus_damage_to_main_target + bashDamage
 
@@ -771,13 +770,8 @@ function modifier_imba_faceless_void_time_lock:GetModifierProcAttack_BonusDamage
 						attacker:FindAbilityByName("imba_faceless_void_chronosphere"):OnSpellStart(true, target:GetAbsOrigin())
 					end
 
-					-- Stun, based on if it's a hero or a creep
-					if target:IsHero() then
-						target:AddNewModifier(parent, ability, "modifier_imba_faceless_void_time_lock_stun", { duration = bashDuration })
-					else
-						target:AddNewModifier(parent, ability, "modifier_imba_faceless_void_time_lock_stun", { duration = creep_bash_duration})
-					end
-
+					-- Stun
+					target:AddNewModifier(parent, ability, "modifier_imba_faceless_void_time_lock_stun", { duration = bashDuration })
 					-- Emit sound
 					EmitSoundOn("Hero_FacelessVoid.TimeLockImpact", target)
 
@@ -836,14 +830,9 @@ function modifier_imba_faceless_void_time_lock:GetModifierProcAttack_BonusDamage
 								attacker:FindAbilityByName("imba_faceless_void_chronosphere"):OnSpellStart(true, enemy:GetAbsOrigin())
 							end
 
-							-- Stun, based on if it's a hero or a creep
-							if target:IsHero() then
-								target:AddNewModifier(parent, ability, "modifier_imba_faceless_void_time_lock_stun", { duration = bashDuration })
-							else
-								target:AddNewModifier(parent, ability, "modifier_imba_faceless_void_time_lock_stun", { duration = creep_bash_duration})
-							end
-
-							-- Bonus damage to main target is already bundled in "GetModifierProcAttack_BonusDamage_Magical", so no need to damage the main target.
+							-- Stun
+							enemy:AddNewModifier(parent, ability, "modifier_imba_faceless_void_time_lock_stun", { duration = bashDuration })
+							-- Bonus damage to main target is already bundled in "GetModifierProcAttack_BonusDamage_Magical", so no need to damage the main target.s
 							if target ~= enemy then
 								-- Deal damage
 								ApplyDamage({attacker = parent, victim = enemy, ability = ability, damage = bashDamage, damage_type = DAMAGE_TYPE_MAGICAL})
@@ -1255,10 +1244,11 @@ function modifier_imba_faceless_void_chronosphere_handler:GetModifierMoveSpeed_A
 		-- This section does not work with mini-chronos
 		if self:GetStackCount() ~= 4 then
 			if self:GetCaster():HasTalent("special_bonus_imba_faceless_void_3") then
-				return self:GetCaster():FindTalentValue("special_bonus_imba_faceless_void_3", "move_speed")
+				return 3000
 			end
 		end
 		return self:GetAbility():GetSpecialValueFor("movement_speed")
+
 	end
 end
 

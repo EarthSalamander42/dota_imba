@@ -371,17 +371,6 @@ function imba_bane_brain_sap:GetCooldown(level)
 	end
 end
 
-function imba_bane_brain_sap:CastFilterResultTarget(target)
-	local caster = self:GetCaster()
-
-	if caster:HasScepter() and caster:GetTeamNumber() ~= target:GetTeamNumber() and target:IsMagicImmune() then
-		return UF_SUCCESS
-	end
-
-	local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), caster:GetTeamNumber() )
-	return nResult
-end
-
 function imba_bane_brain_sap:GetAbilityTextureName()
    return "bane_brain_sap"
 end

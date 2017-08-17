@@ -393,6 +393,10 @@ XP_PER_LEVEL_TABLE[38] = 58710
 XP_PER_LEVEL_TABLE[39] = 63110
 XP_PER_LEVEL_TABLE[40] = 67810
 
+for i = 25, MAX_LEVEL do
+	XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + 5000
+end
+
 -- XP AWARDED per level table (how much bounty heroes are worth beyond level 25)
 HERO_XP_BOUNTY_PER_LEVEL = {}
 HERO_XP_BOUNTY_PER_LEVEL[1] = 125

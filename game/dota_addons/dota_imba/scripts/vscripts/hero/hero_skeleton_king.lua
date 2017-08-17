@@ -585,6 +585,7 @@ function modifier_imba_vampiric_aura_buff:OnTakeDamage(keys)
             end)
         end
 
+
         if self.caster:FindTalentValue("special_bonus_imba_skeleton_king_1", "talent_trained") == 1 and self.parent == target and target ~= self.caster then
             local heal_amount = 0
 
@@ -608,7 +609,7 @@ function modifier_imba_vampiric_aura_buff:OnTakeDamage(keys)
 
             -- After a small delay, find both illusions and the real aura bearer
             Timers:CreateTimer(self.heal_delay, function()
-                if not self.caster:IsAlive() then
+                if not caster:IsAlive() then
                     return nil
                 end
                 local casters = FindUnitsInRadius(self.parent:GetTeamNumber(),
@@ -630,7 +631,7 @@ function modifier_imba_vampiric_aura_buff:OnTakeDamage(keys)
                         if heal_amount > 0 and caster ~= attacker then
                             local particle_lifesteal_fx = ParticleManager:CreateParticle(self.particle_lifesteal, PATTACH_CUSTOMORIGIN_FOLLOW, caster)
                             ParticleManager:SetParticleControlEnt(particle_lifesteal_fx, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)                
-                            ParticleManager:SetParticleControlEnt(particle_lifesteal_fx, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)                                
+                            ParticleManager:SetParticleControlEnt(particle_lifesteal_fx, 1, attacker, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)                                
                             ParticleManager:ReleaseParticleIndex(particle_lifesteal_fx)                                        
 
                             -- Heal the aura bearer, if it's a real hero
@@ -1491,10 +1492,12 @@ function imba_wraith_king_kingdom_come:GetCooldown()
     end
 end
 
-function imba_wraith_king_kingdom_come:OnSpellStart()    
+function imba_wraith_king_kingdom_come:OnSpellStart()
+    if not IsServer() then 
+        return
+    end
     local keys = self:GetCaster():FindModifierByNameAndCaster("modifier_imba_kingdom_come", self:GetCaster())
     -- Create Kingdom
-
     imba_wraith_king_create_kingdom(keys)
 end
 
@@ -1632,7 +1635,7 @@ function modifier_imba_kingdom_come_slow:OnDestroy()
 
         -- If it is a creep or an illusion, instantly kill it
         else          
-            if not IsRoshan(self.parent) and not self.parent:IsConsideredHero() then
+            if not IsRoshan(self.parent) then  
                 self.parent:Kill(self.ability, self.caster)
             end
         end

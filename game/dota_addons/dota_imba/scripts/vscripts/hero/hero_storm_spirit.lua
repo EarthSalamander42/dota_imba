@@ -715,12 +715,6 @@ function modifier_imba_ball_lightning:IsDebuff() 	return false end
 function modifier_imba_ball_lightning:IsHidden() 	return false end
 function modifier_imba_ball_lightning:IsPurgable() return false end
 
-function modifier_imba_ball_lightning:OnCreated()
-	if IsServer() then
-		ProjectileManager:ProjectileDodge(self:GetCaster())
-	end
-end
-
 function modifier_imba_ball_lightning:GetEffectName()
 	return "particles/units/heroes/hero_stormspirit/stormspirit_ball_lightning.vpcf"
 end

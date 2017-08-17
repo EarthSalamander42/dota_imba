@@ -975,7 +975,7 @@ function imba_lion_finger_of_death:GetCooldown(level)
     local scepter = caster:HasScepter()
 
     -- Ability specials
-    local cooldown = self.BaseClass.GetCooldown(self, level)
+    local cooldown = ability:GetSpecialValueFor("cooldown")
     local scepter_cooldown = ability:GetSpecialValueFor("scepter_cooldown")
 
     -- Assign correct cooldown based on whether or not caster has a scepter

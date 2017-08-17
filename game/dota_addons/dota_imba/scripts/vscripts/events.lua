@@ -992,7 +992,9 @@ function GameMode:OnTowerKill(keys)
 		-- Upgrade each tower
 		for _, tower in pairs(towers) do						
 			UpgradeTower(tower)			
-		end		
+		end
+
+		Notifications:TopToAll({text="Top Notification for 5 seconds ", duration=5.0})
 		
 		-- Display upgrade message and play ominous sound
 		if tower_team == DOTA_TEAM_GOODGUYS then			

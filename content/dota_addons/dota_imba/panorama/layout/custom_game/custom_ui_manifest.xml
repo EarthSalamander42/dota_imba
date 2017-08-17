@@ -22,7 +22,7 @@
 	//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_BAR_BACKGROUND, false );			//Top-left menu buttons in the HUD.
 
 	GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_HEROES, false );						//Heroes and team score at the top of the HUD.
-	GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_FLYOUT_SCOREBOARD, false );				//Lefthand flyout scoreboard.
+    GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_FLYOUT_SCOREBOARD, false );				//Lefthand flyout scoreboard.
 	GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_TEAMS, false );			//Hero selection Radiant and Dire player lists.
 	GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_GAME_NAME, false );		//Hero selection game mode name display.
 	GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_CLOCK, false );			//Hero selection clock.
@@ -69,18 +69,19 @@
 	$.GetContextPanel().GetParent().GetParent().FindChildTraverse("PreGame").style.visibility = "collapse";
 
 	//Buff Bar
-		var hudElements = $.GetContextPanel().GetParent().GetParent().FindChildTraverse("HUDElements");
-		var BuffBar = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("buffs")
-		BuffBar.style.width = "30%";
-		BuffBar.style.marginLeft = "40%";
+        var hudElements = $.GetContextPanel().GetParent().GetParent().FindChildTraverse("HUDElements");
+        var BuffBar = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("buffs")
+        BuffBar.style.width = "30%";
+        BuffBar.style.marginLeft = "38.5%";
 
-		//DeBuff Bar
-		var DeBuffBar = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("debuffs")
-		DeBuffBar.style.width = "30%";
-		DeBuffBar.style.marginBottom = "40.5%";
-		DeBuffBar.style.marginRight = "30%";
-		DeBuffBar.style.flowChildren = "right";
-
+        //DeBuff Bar
+        var DeBuffBar = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("debuffs")
+        DeBuffBar.style.width = "30%";
+        DeBuffBar.style.marginBottom = "40.5%";
+        DeBuffBar.style.marginRight = "31.5%";
+        DeBuffBar.style.flowChildren = "right";
+        
+ 
 	</script>
 
 	<Panel>

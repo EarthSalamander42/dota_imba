@@ -974,58 +974,51 @@ function imba_crystal_maiden_freezing_field:OnChannelFinish(bInterrupted)
 			
 			Timers:CreateTimer(meteor_delay, function()
 
-				if #enemies > 0 then										
-					-- Distribute the shard shares aka "It's All Ogre Now, CM Edition" 
-					local shards = 0
-					Timers:CreateTimer(function()
-						shards = shards + 1
-
-						-- Decide which enemy is going to become that shard's target
-						local enemy = enemies[math.random(1, #enemies)]
-
-						local extra_data = { damage = self.damage * self.shard_damage_mul}
-						local projectile =
-						{
-							Target 				= enemy,
-							Source 				= self.freezing_field_center,
-							Ability 			= self,
-							EffectName 			= "particles/units/heroes/hero_winter_wyvern/wyvern_splinter_blast.vpcf",
-							iMoveSpeed			= 800,
-							vSourceLoc 			= self.freezing_field_center,
-							bDrawsOnMinimap 	= false,
-							bDodgeable 			= false,
-							bIsAttack 			= false,
-							bVisibleToEnemies 	= true,
-							bReplaceExisting 	= false,
-							flExpireTime 		= GameRules:GetGameTime() + 10,
-							bProvidesVision 	= true,
-							iVisionRadius 		= 400,
-							iVisionTeamNumber 	= self.caster:GetTeamNumber(),
-							ExtraData = extra_data
-						}
-						ProjectileManager:CreateTrackingProjectile(projectile)						
-
-						-- Do we need to fire another shard?
-						if shards < self.shards then
-							return 0.1
-						else
-							-- Reset positions
-							self.freezing_field_center = nil
-							if self.freezing_field_aura and not self.freezing_field_aura:IsNull() then
-								UTIL_Remove(self.freezing_field_aura)
-								self.freezing_field_aura = nil
-							end												
-							return nil
+				if #enemies > 0 then
+					local shard_shares = {}
+					local random_number
+					--Distribute the shard shares aka "It's All Ogre Now, CM Edition"self.shards
+					for i=1,self.shards do
+						random_number = math.random(1, #enemies)
+						if shard_shares[random_number] == nil then
+							shard_shares[random_number] = 0
 						end
-					end)
-				else
-					-- Reset positions
-					self.freezing_field_center = nil
-					if self.freezing_field_aura and not self.freezing_field_aura:IsNull() then
-						UTIL_Remove(self.freezing_field_aura)
-						self.freezing_field_aura = nil
-					end					
-				end				
+						shard_shares[random_number] = shard_shares[random_number] + 1
+					end
+					local index = 0
+					for _, unit in pairs(enemies) do
+						index = index + 1
+						if shard_shares[index] then							
+							local extra_data = { damage = self.damage * self.shard_damage_mul * shard_shares[index] }
+							local projectile =
+							{
+								Target 				= unit,
+								Source 				= self.freezing_field_center,
+								Ability 			= self,
+								EffectName 			= "particles/units/heroes/hero_winter_wyvern/wyvern_splinter_blast.vpcf",
+								iMoveSpeed			= 800,
+								vSourceLoc 			= self.freezing_field_center,
+								bDrawsOnMinimap 	= false,
+								bDodgeable 			= false,
+								bIsAttack 			= false,
+								bVisibleToEnemies 	= true,
+								bReplaceExisting 	= false,
+								flExpireTime 		= GameRules:GetGameTime() + 10,
+								bProvidesVision 	= true,
+								iVisionRadius 		= 400,
+								iVisionTeamNumber 	= self.caster:GetTeamNumber(),
+								ExtraData = extra_data
+							}
+							ProjectileManager:CreateTrackingProjectile(projectile)															
+						end
+					end
+				end
+				--Reset positions
+				self.freezing_field_center = nil
+				if self.freezing_field_aura and not self.freezing_field_aura:IsNull() then
+					UTIL_Remove(self.freezing_field_aura)
+					self.freezing_field_aura = nil
+				end
 			end)
 		end
 	end

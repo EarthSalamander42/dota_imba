@@ -379,96 +379,20 @@ function GameMode:ModifierFilter( keys )
 	-- Silencer Arcane Supremacy silence duration reduction
 	-------------------------------------------------------------------------------------------------
 
-		local vanilla_silences = 
-		{["modifier_silence"] = true,
-		 ["modifier_earth_spirit_geomagnetic_grip"] = true}
-
 		if modifier_owner:HasModifier("modifier_imba_silencer_arcane_supremacy") then
 			if not modifier_owner:PassivesDisabled() then
 				local arcane_supremacy = modifier_owner:FindModifierByName("modifier_imba_silencer_arcane_supremacy")
-				local silence_reduction_pct = arcane_supremacy:GetSilenceReductionPct() * 0.01
-				if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
-					
-					-- If the modifier is a vanilla one, reduce duration directly
-					if vanilla_silences[modifier_name] then
-					
-						-- if reduction is 1 (or more), set duration to FrameTime() so `OnDstroy` effects still proc
-						if silence_reduction_pct >= 1 then
-							keys.duration = FrameTime()
-						else
-							keys.duration = keys.duration * (1 - silence_reduction_pct)
-						end
-						
-					else
-						Timers:CreateTimer(FrameTime(), function()
-							if modifier_owner:IsNull() then return false end
-							
-							local modifiers = modifier_owner:FindAllModifiersByName(modifier_name)
-							local testMod = modifiers[1]
-							
-							-- Stop if not a lua or a silence skill (global silence is an exception)
-							if not testMod.CheckState or not testMod:CheckState()[MODIFIER_STATE_SILENCED] then
-								if not modifier_name == "modifier_imba_silencer_global_silence" then
-									return false
-								end
-							end
-							
-							for _, modifier in ipairs(modifiers) do
-								if not modifier.ArcaneSupremacyReduction then
-									modifier.ArcaneSupremacyReduction = true
-									if silence_reduction_pct >= 1 then
-										modifier:SetDuration(0, true) -- a frame already passed
-									else
-										modifier:SetDuration(keys.duration * (1 - silence_reduction_pct), true)
-									end
-								end
-							end
-						end)
+				local silence_reduction_pct = arcane_supremacy:GetSilenceReductionPct()
+				if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 and arcane_supremacy_eligible_debuffs[modifier_name] then
+					-- if more than 100 reduction, don't even apply the modifier
+					if silence_reduction_pct >= 100 then
+						return false
 					end
-				end
-			end
-		end
-		
-	-------------------------------------------------------------------------------------------------
-	-- Silencer Arcane Supremacy talent silence duration increase
-	-------------------------------------------------------------------------------------------------
-		if modifier_caster:HasModifier("modifier_imba_silencer_arcane_supremacy") and not modifier_owner:PassivesDisabled() then
-			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
-			
-				durationIncreasePcnt = modifier_caster:FindTalentValue("special_bonus_imba_silencer_3") * 0.01
-				if durationIncreasePcnt > 0 then
-				
-					-- If the modifier is a vanilla one, increase duration directly
-					if vanilla_silences[modifier_name] then
-						keys.duration = keys.duration * (1 + durationIncreasePcnt)
-						
-					else
-						Timers:CreateTimer(FrameTime(), function()
-							if modifier_owner:IsNull() then return false end
-							
-							local modifiers = modifier_owner:FindAllModifiersByName(modifier_name)
-							local testMod = modifiers[1]
-							
-							-- Stop if not a lua or a silence skill (global silence is an exception)
-							if not testMod.CheckState or not testMod:CheckState()[MODIFIER_STATE_SILENCED] then
-								if not modifier_name == "modifier_imba_silencer_global_silence" then
-									return false
-								end
-							end
-							
-							for _, modifier in ipairs(modifiers) do
-								if not modifier.ArcaneSupremacyIncrease then
-									modifier.ArcaneSupremacyIncrease = true
-									modifier:SetDuration(keys.duration * (1 + durationIncreasePcnt), true)
-								end
-							end
-						end)
-					end
+					keys.duration = keys.duration * (1 - silence_reduction_pct/100)
 				end
 			end
 		end
 	end
-
 	return true
 end
 

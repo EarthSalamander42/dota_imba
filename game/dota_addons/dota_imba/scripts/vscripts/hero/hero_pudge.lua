@@ -1022,7 +1022,11 @@ end
 modifier_butchers_cleaver = class({})
 function modifier_butchers_cleaver:IsDebuff() return true end
 function modifier_butchers_cleaver:IsHidden() return false end
-function modifier_butchers_cleaver:IsPurgable() return true end
+function modifier_butchers_cleaver:IsPurgable() return false end
+function modifier_butchers_cleaver:IsPurgeException() return false end
+function modifier_butchers_cleaver:IsStunDebuff() return false end
+function modifier_butchers_cleaver:RemoveOnDeath() return true end
+function modifier_butchers_cleaver:AllowIllusionDuplicate() return false end
 
 function modifier_butchers_cleaver:OnCreated()
 	self.caster = self:GetCaster()
