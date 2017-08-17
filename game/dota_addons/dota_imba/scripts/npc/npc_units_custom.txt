@@ -2577,14 +2577,14 @@
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"1"
-		"MagicalResistance"			"40"
+		"MagicalResistance"			"80"
 
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackDamageMin"			"15"
 		"AttackDamageMax"			"20"
-		"AttackRate"				"1"
+		"AttackRate"				"1.2"
 		"AttackAnimationPoint"		"0.33"
 		"AttackAcquisitionRange"	"500"
 		"AttackRange"				"90"
@@ -2657,14 +2657,14 @@
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"2"
-		"MagicalResistance"			"50"
+		"MagicalResistance"			"80"
 
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackDamageMin"			"25"
 		"AttackDamageMax"			"30"
-		"AttackRate"				"1"
+		"AttackRate"				"1.1"
 		"AttackAnimationPoint"		"0.33"
 		"AttackAcquisitionRange"	"500"
 		"AttackRange"				"90"
@@ -2737,14 +2737,14 @@
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"3"
-		"MagicalResistance"			"60"
+		"MagicalResistance"			"80"
 
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackDamageMin"			"33"
 		"AttackDamageMax"			"39"
-		"AttackRate"				"1"
+		"AttackRate"				"1.0"
 		"AttackAnimationPoint"		"0.33"
 		"AttackAcquisitionRange"	"500"
 		"AttackRange"				"90"
@@ -2818,14 +2818,14 @@
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"4"
-		"MagicalResistance"			"70"
+		"MagicalResistance"			"80"
 
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackDamageMin"			"42"
 		"AttackDamageMax"			"48"
-		"AttackRate"				"0.97"
+		"AttackRate"				"0.9"
 		"AttackAnimationPoint"		"0.33"
 		"AttackAcquisitionRange"	"500"
 		"AttackRange"				"90"
@@ -2907,7 +2907,7 @@
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackDamageMin"			"52"
 		"AttackDamageMax"			"56"
-		"AttackRate"				"0.97"
+		"AttackRate"				"0.9"
 		"AttackAnimationPoint"		"0.33"
 		"AttackAcquisitionRange"	"500"
 		"AttackRange"				"90"
@@ -2981,14 +2981,14 @@
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"6"
-		"MagicalResistance"			"80"
+		"MagicalResistance"			"90"
 
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"60"
-		"AttackDamageMax"			"66"
-		"AttackRate"				"1"
+		"AttackDamageMin"			"70"
+		"AttackDamageMax"			"70"
+		"AttackRate"				"0.8"
 		"AttackAnimationPoint"		"0.33"
 		"AttackAcquisitionRange"	"500"
 		"AttackRange"				"90"
@@ -3015,6 +3015,86 @@
 		// Status
 		//----------------------------------------------------------------
 		"StatusHealth"				"400"
+		"StatusHealthRegen"			"0.5"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1200"
+		"VisionNighttimeRange"		"800"
+	}	
+
+	//=================================================================================
+	// Lycan talent Alpha Wolf
+	//=================================================================================
+	"npc_lycan_summoned_wolf_talent"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/items/lycan/wolves/alpha_summon_01/alpha_summon_01.vmdl"
+		"SoundSet"					"Hero_Lycan.SummonWolves"
+		"Level"						"6"
+		"ModelScale"				"1.2"
+		"IsAncient"					"0"
+		"ConsideredHero"			"0"
+		"CanBeDominated"			"0"
+		"HasInventory"				"0"
+		"UnitLabel"					"lycan_alpha_wolf"		
+		"IsSummoned"                "1"
+		"SelectionGroup"            "wolves"
+		
+		// Abilities
+		//----------------------------------------------------------------				
+		"Ability1"					"imba_summoned_wolf_wicked_crunch"
+		"Ability2"					"imba_summoned_wolf_pack_leader"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"6"
+		"MagicalResistance"			"90"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"70"
+		"AttackDamageMax"			"70"
+		"AttackRate"				"0.8"
+		"AttackAnimationPoint"		"0.33"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"90"
+		"ProjectileModel"			""
+		"ProjectileSpeed"			"0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"HealthBarOffset"			"225"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"35"
+		"BountyGoldMin"				"46"
+		"BountyGoldMax"				"55"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"500"
+		"MovementTurnRate"			"0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"800"
 		"StatusHealthRegen"			"0.5"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
