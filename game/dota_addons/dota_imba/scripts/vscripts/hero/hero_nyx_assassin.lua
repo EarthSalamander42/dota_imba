@@ -481,7 +481,7 @@ function modifier_imba_impale_talent_thinker:OnCreated( kv )
 end
 
 function modifier_imba_impale_talent_thinker:OnIntervalThink()
-    if RollPseudoRandom(self.spike_chance, self) then
+    if RollPercentage(self.spike_chance)  then 
         -- Shameless copy-paste of Freezing Field code
         local castDistance = RandomInt( self.spike_spawn_min_range, self.spike_spawn_max_range )
         local angle = RandomInt( 0, 90 )

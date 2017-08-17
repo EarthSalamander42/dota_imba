@@ -630,7 +630,7 @@ function modifier_imba_vampiric_aura_buff:OnTakeDamage(keys)
                         if heal_amount > 0 and caster ~= attacker then
                             local particle_lifesteal_fx = ParticleManager:CreateParticle(self.particle_lifesteal, PATTACH_CUSTOMORIGIN_FOLLOW, caster)
                             ParticleManager:SetParticleControlEnt(particle_lifesteal_fx, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)                
-                            ParticleManager:SetParticleControlEnt(particle_lifesteal_fx, 1, attacker, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)                                
+                            ParticleManager:SetParticleControlEnt(particle_lifesteal_fx, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)                                
                             ParticleManager:ReleaseParticleIndex(particle_lifesteal_fx)                                        
 
                             -- Heal the aura bearer, if it's a real hero
@@ -1632,7 +1632,7 @@ function modifier_imba_kingdom_come_slow:OnDestroy()
 
         -- If it is a creep or an illusion, instantly kill it
         else          
-            if not IsRoshan(self.parent) then  
+            if not IsRoshan(self.parent) and not self.parent:IsConsideredHero() then
                 self.parent:Kill(self.ability, self.caster)
             end
         end

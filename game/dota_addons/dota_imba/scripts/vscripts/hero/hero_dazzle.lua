@@ -1662,7 +1662,7 @@ function imba_dazzle_ressurection:OnSpellStart()
 		ParticleManager:ReleaseParticleIndex(castParticle)
 		
 		local screenParticle = ParticleManager:CreateParticleForPlayer("particles/hero/dazzle/dazzle_ressurection_screen.vpcf", PATTACH_MAIN_VIEW, target, PlayerResource:GetPlayer(target:GetPlayerID()))
-		ParticleManager:ReleaseParticleIndex(targetParticle)
+		ParticleManager:ReleaseParticleIndex(screenParticle)
 		
 		Timers:CreateTimer(delay, function()
 			if target:IsAlive() then

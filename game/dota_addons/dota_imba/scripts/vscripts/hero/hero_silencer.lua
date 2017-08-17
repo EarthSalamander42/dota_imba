@@ -212,7 +212,7 @@ function modifier_imba_arcane_curse_debuff:OnDestroy()
 			local caster = ability:GetCaster()
 			local AoE = caster:FindTalentValue("special_bonus_imba_silencer_2")
 			
-			if AoE > 0 then
+			if AoE > 0 and parent:IsRealHero() and not parent:IsClone() then
 				local base_duration = ability:GetSpecialValueFor("base_duration")
 				local enemies = FindUnitsInRadius(caster:GetTeamNumber(), parent:GetAbsOrigin(), nil, AoE, DOTA_UNIT_TARGET_TEAM_ENEMY, ability:GetAbilityTargetType(), DOTA_UNIT_TARGET_FLAG_NONE , FIND_ANY_ORDER, false)
 				for _, unit in ipairs(enemies) do

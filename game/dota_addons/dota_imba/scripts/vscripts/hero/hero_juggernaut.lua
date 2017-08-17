@@ -765,6 +765,10 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 	caster:EmitSound("Hero_Juggernaut.OmniSlash")
 
 	StartAnimation(caster, {activity = ACT_DOTA_OVERRIDE_ABILITY_4, rate = 1.0})
+
+	Timers:CreateTimer(FrameTime(), function()
+		PlayerResource:SetCameraTarget(caster:GetPlayerID(), nil)
+	end)
 	
 	if target:TriggerSpellAbsorb(self) then
 		return nil
@@ -876,8 +880,7 @@ function modifier_imba_omni_slash_caster:OnDestroy()
 end
 
 function modifier_imba_omni_slash_caster:CheckState()
-    local state = {
-    	[MODIFIER_STATE_ROOTED] = true,
+    local state = {    	
 		[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
 		[MODIFIER_STATE_INVULNERABLE] = true,
 		[MODIFIER_STATE_NO_HEALTH_BAR] = true,
