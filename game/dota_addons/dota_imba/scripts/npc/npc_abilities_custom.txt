@@ -17346,13 +17346,12 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"max_charges"					"4"
+				"max_charges"					"2 2 2 2 3 4 5"
 			}
-
 			"05"
 			{
 				"var_type" 						"FIELD_INTEGER"
-				"charge_cooldown"				"25"
+				"charge_cooldown"				"30"
 			}
 			"06"
 			{
@@ -17451,11 +17450,11 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"55 50 45 40 40 40 40"
+		"AbilityCooldown"				"60 55 50 45 42 39 36"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"30"
+		"AbilityManaCost"				"40"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -17531,7 +17530,7 @@
 		"AbilityTextureName"     	"lycan_feral_impulse"
 		"MaxLevel"					"7"
 		"LevelsBetweenUpgrades"		"2"
-		"AbilityCastRange"		 	"1200"
+		"AbilityCastRange"		 	"900"
 
 
 		// Precache
@@ -17653,13 +17652,13 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_damage"				"140 160 180 190 200 210"
+				"crit_damage"				"160 180 200 210 220 230"
 			}
 
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"duration"					"18 18 18 20 22 24"
+				"duration"					"18"
 			}
 
 			"07"
