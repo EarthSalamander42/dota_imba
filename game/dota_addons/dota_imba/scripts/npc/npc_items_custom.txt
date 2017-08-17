@@ -6951,27 +6951,22 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_spell_power"	"10"
+				"debuff_duration"		"16"
 			}
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"debuff_duration"		"16"
+				"aura_radius"			"900"
 			}
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"buff_duration"			"16"
+				"aura_resist"			"-10"
 			}
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"900"
-			}
-			"12"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"aura_resist"			"-10"
+				"aura_spell_power"		"10"
 			}
 		}
 	}

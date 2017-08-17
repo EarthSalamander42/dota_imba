@@ -153,7 +153,8 @@ end
 
 function modifier_imba_fountain_relief_aura_buff:DeclareFunctions()
     local decFuncs = {MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
-                      MODIFIER_EVENT_ON_TAKEDAMAGE}
+                      MODIFIER_EVENT_ON_ATTACK,
+                      MODIFIER_EVENT_ON_ABILITY_FULLY_CAST}
 
     return decFuncs
 end
@@ -169,21 +170,33 @@ function modifier_imba_fountain_relief_aura_buff:GetModifierIncomingDamage_Perce
     end
 end
 
-function modifier_imba_fountain_relief_aura_buff:OnTakeDamage(keys)
+function modifier_imba_fountain_relief_aura_buff:OnAttack(keys)
     if IsServer() then
-        local unit = keys.unit
+        local target = keys.target
         local attacker = keys.attacker
 
         -- Only apply if the attacker is the parent
         if self.parent == attacker then
 
             -- If the attacker attacked one from his team or himself, do nothing
-            if attacker:GetTeamNumber() == unit:GetTeamNumber() then
+            if attacker:GetTeamNumber() == target:GetTeamNumber() then
                 return nil
             end
 
             -- Reject him from the aura
             self.parent:AddNewModifier(self.caster, self.ability, "modifier_imba_fountain_relief_aura_reject", {duration = self.aura_reject_time})
+        end
+    end
+end
+
+function modifier_imba_fountain_relief_aura_buff:OnAbilityFullyCast(keys)
+    if IsServer() then
+        local unit = keys.unit
+
+        -- Only apply if the user of the ability is the parent
+        if self.parent == unit then
+            -- Reject him from the aura
+            self.parent:AddNewModifier(self.caster, self.ability, "modifier_imba_fountain_relief_aura_reject", {duration = self.aura_reject_time})            
         end
     end
 end
@@ -211,25 +224,37 @@ function modifier_imba_fountain_relief_aura_reject:OnCreated()
 end
 
 function modifier_imba_fountain_relief_aura_reject:DeclareFunctions()
-    local decFuncs = {MODIFIER_EVENT_ON_TAKEDAMAGE}
+    local decFuncs = {MODIFIER_EVENT_ON_ATTACK,
+                      MODIFIER_EVENT_ON_ABILITY_FULLY_CAST}
 
     return decFuncs
 end
 
-function modifier_imba_fountain_relief_aura_reject:OnTakeDamage(keys)
+function modifier_imba_fountain_relief_aura_reject:OnAttack(keys)
     if IsServer() then
-        local unit = keys.unit
+        local target = keys.target
         local attacker = keys.attacker
 
         -- Only apply if the attacker is the parent
         if self.parent == attacker then
 
             -- If the attacker attacked one from his team or himself, do nothing
-            if attacker:GetTeamNumber() == unit:GetTeamNumber() then
+            if attacker:GetTeamNumber() == target:GetTeamNumber() then
                 return nil
             end
 
             -- Refresh aura
+            self:ForceRefresh()
+        end
+    end
+end
+
+function modifier_imba_fountain_relief_aura_reject:OnAbilityFullyCast(keys)
+    if IsServer() then
+        local unit = keys.unit
+
+        -- Only apply if the user of the ability is the parent
+        if self.parent == unit then            
             self:ForceRefresh()
         end
     end

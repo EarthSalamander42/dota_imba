@@ -2,10 +2,10 @@
 .IMBA_Talent_Window
 {
 	horizontal-align: left;
-	vertical-align: top;
-	margin-top: 55px;
+	vertical-align: middle;
+	margin-bottom: 6%;
 	width: fit-children;
-	height: 775px;
+	height: fit-children;
 	flow-children: down;
 	background-color: #000000da;
 //	background-image: url("s2r://panorama/images/backgrounds/dashboard_background_png.vtex"); 
@@ -28,7 +28,7 @@
 
 .IMBA_Talent_Window > Label.header
 {
-	font-size : 30px;
+	font-size : 26px;
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
@@ -49,7 +49,7 @@
 {
 	flow-children: right;
 	width: fit-children;
-	height : 80px;
+	height : 60px;
 	margin-left: 10px;
 	margin-right: 10px;
 	margin-top: 4px;
@@ -59,7 +59,7 @@
 
 .IMBA_Talent_Row.six_choices
 {
-	height : 70px;
+	height : 60px;
 }
 
 .IMBA_Talent_Level_Container
@@ -100,15 +100,15 @@
 .IMBA_Talent_Row.two_choices .IMBA_Talent_Choice
 {
 	margin-left: 10px;
-	width: 230px;
+	width: 200px;
 }
 
 .IMBA_Talent_Row.six_choices .IMBA_Talent_Choice,
 .IMBA_Talent_Row.eight_choices .IMBA_Talent_Choice
 {
 	margin-left: 10px;
-	width: 70px;
-	height: 70px;
+	width: 60px;
+	height: 60px;
 	vertical-align: middle;
 }
 

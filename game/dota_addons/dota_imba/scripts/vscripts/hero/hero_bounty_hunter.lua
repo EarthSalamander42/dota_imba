@@ -1515,6 +1515,7 @@ modifier_imba_headhunter_debuff_handler = modifier_imba_headhunter_debuff_handle
 
 function modifier_imba_headhunter_debuff_handler:OnCreated()
 	if IsServer() then
+		-- Ability properties
 		self.caster = self:GetCaster()
 		self.ability = self:GetAbility()
 		self.parent = self:GetParent()
@@ -1522,11 +1523,14 @@ function modifier_imba_headhunter_debuff_handler:OnCreated()
 		self.modifier_contract_buff = "modifier_imba_headhunter_buff_handler"
 		self.track_debuff = "modifier_imba_track_debuff_mark"
 		self.track_ability_name = "imba_bounty_hunter_track"
+		self.modifier_dummy = "modifier_imba_headhunter_debuff_illu"
+
+		-- Ability specials
 		self.gold_minimum = self.ability:GetSpecialValueFor("gold_minimum")
 		self.contract_vision_timer = self.ability:GetSpecialValueFor("contract_vision_timer")
 		self.contract_vision_linger = self.ability:GetSpecialValueFor("contract_vision_linger")
 		self.vision_radius = self.ability:GetSpecialValueFor("vision_radius")
-		self.modifier_dummy = "modifier_imba_headhunter_debuff_illu"
+		self.contract_gold_mult = self.ability:GetSpecialValueFor("contract_gold_mult")
 
 		-- Apply particles visible only to the caster's team
 		self.particle_contract_fx = ParticleManager:CreateParticleForTeam(self.particle_contract, PATTACH_OVERHEAD_FOLLOW, self.parent, self.caster:GetTeamNumber())
@@ -1612,6 +1616,9 @@ function modifier_imba_headhunter_debuff_handler:OnHeroKilled(keys)
 				if not self.contract_gold then
 					self.contract_gold = self.gold_minimum
 				end
+
+				-- Multiply the gold on the contract multiplier
+				self.contract_gold = self.contract_gold * self.contract_gold_mult
 
 				-- Grant Bounty Hunter the gold for completing the contract
 				self.caster:ModifyGold(self.contract_gold, true, 0)

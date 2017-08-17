@@ -50,8 +50,6 @@ function modifier_imba_sadist:OnCreated()
 	self.hero_multiplier = self.ability:GetSpecialValueFor("hero_multiplier")
 end
 
-
-
 function modifier_imba_sadist:IsHidden()    
 	return true
 end
@@ -142,6 +140,7 @@ function modifier_imba_sadist_stack:OnCreated()
         self.regen_duration = self.ability:GetSpecialValueFor("regen_duration")        
         self.mana_regen = self.ability:GetSpecialValueFor("mana_regen")
         self.health_regen = self.ability:GetSpecialValueFor("health_regen")
+        self.regen_minimum = self.ability:GetSpecialValueFor("regen_minimum")
 
         -- Initialize table
         self.stacks_table = {}        
@@ -199,13 +198,20 @@ function modifier_imba_sadist_stack:DeclareFunctions()
 end
 
 function modifier_imba_sadist_stack:GetModifierConstantManaRegen()	
-	local mana_regen = self.mana_regen + self.caster:FindTalentValue("special_bonus_imba_necrolyte_6")
-	return mana_regen * self:GetStackCount()
+	local mana_regen = self.mana_regen + self.caster:FindTalentValue("special_bonus_imba_necrolyte_6")	
+	mana_regen = mana_regen * self:GetStackCount() * self:GetParent():GetMaxMana() * 0.01	
+	local regen_minimum = self.regen_minimum * self:GetStackCount()
+	return math.max(mana_regen, regen_minimum)
 end
 
 function modifier_imba_sadist_stack:GetModifierConstantHealthRegen()
-	local health_regen = self.health_regen + self.caster:FindTalentValue("special_bonus_imba_necrolyte_6")
-	return health_regen * self:GetStackCount()
+	if IsServer() then
+		local health_regen = self.health_regen + self.caster:FindTalentValue("special_bonus_imba_necrolyte_6")
+		local expected_health_regen = health_regen * self:GetStackCount() * self:GetParent():GetMaxHealth() * 0.01
+		local regen_minimum = self.regen_minimum * self:GetStackCount()
+
+		return math.max(expected_health_regen, regen_minimum)
+	end
 end
 
 
