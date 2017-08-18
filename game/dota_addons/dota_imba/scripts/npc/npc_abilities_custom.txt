@@ -28132,7 +28132,7 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"MaxLevel"						"7"
+		"MaxLevel"						"6"
 		"LevelsBetweenUpgrades"			"6"
 		"AbilityTextureName"			"storm_spirit_ball_lightning"
 
