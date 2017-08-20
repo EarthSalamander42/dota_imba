@@ -17311,33 +17311,52 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"wolves_count"					"2 2 2 3 3 3 4"
-				"LinkedSpecialBonus"			"special_bonus_imba_lycan_5"
 			}
-
 			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"HP_bonus_per_lycan_level"		"10"
-			}
-
-			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"wolf_type"						"1 2 3 3 4 5 5"
 				"LinkedSpecialBonus"			"special_bonus_imba_lycan_1"
 			}
-
+			"04"
+			{
+				"var_type" 						"FIELD_INTEGER"
+				"wolf_damage_tooltip"			"17 27 36 36 45 54 54"
+			}
 			"05"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"max_charges"					"2 2 2 2 3 4 5"
-				"LinkedSpecialBonus"			"special_bonus_imba_lycan_5"
+				"var_type" 						"FIELD_FLOAT"
+				"wolf_bat_tooltip"				"1.2 1.1 1.0 1.0 0.9 0.9 0.9"
 			}
-
 			"06"
 			{
 				"var_type" 						"FIELD_INTEGER"
-				"charge_cooldown"				"32"
+				"wolf_health_tooltip"			"200 240 280 280 320 360 360"
+			}
+			"07"
+			{
+				"var_type" 						"FIELD_INTEGER"
+				"wolf_speed_tooltip"			"400 420 440 440 460 480 480"
+			}
+			"08"
+			{
+				"var_type" 						"FIELD_INTEGER"
+				"wolf_armor_tooltip"			"1 2 3 3 4 5 5"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"max_charges"					"2 2 2 2 3 4 5"
+			}
+			"05"
+			{
+				"var_type" 						"FIELD_INTEGER"
+				"charge_cooldown"				"30"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"HP_bonus_per_lycan_level"		"10"
 			}
 		}
 	}
@@ -17365,6 +17384,8 @@
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_lycan.vsndevts"
 		}
 
+
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -17373,7 +17394,6 @@
 			{
 				"var_type"							"FIELD_INTEGER"
 				"damage_bonus"						"3"
-				"LinkedSpecialBonus"				"special_bonus_imba_lycan_4"
 			}
 
 			"02"
@@ -17417,7 +17437,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"              	"ability_lua"
 		"ScriptFile"				"hero/hero_lycan.lua"
-		"AbilityBehavior"        	"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityBehavior"        	"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 		"FightRecapLevel"			"1"
 		"AbilityTextureName"     	"lycan_howl"
 		"MaxLevel"					"7"
@@ -17492,7 +17512,6 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"duration"						"13"
-				"LinkedSpecialBonus"			"special_bonus_imba_lycan_3"
 			}
 		}
 	}
@@ -17540,16 +17559,14 @@
 
 			"03"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"damage_inc_per_unit"		"1 1 1 1 1.5 2 2.5"
-				"LinkedSpecialBonus"		"special_bonus_imba_lycan_2"
+				"var_type"					"FIELD_INTEGER"
+				"damage_inc_per_unit"		"1 1 1 1 2 3 4"
 			}
 
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"regen_inc_per_unit"		"1 1 1 1 2 3 4"
-				"LinkedSpecialBonus"		"special_bonus_imba_lycan_2"
 			}
 
 			"05"
@@ -17561,7 +17578,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"aura_radius"				"900"
+				"aura_radius"				"1200"
 			}
 		}
 	}
@@ -17642,7 +17659,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"duration"					"18"
-				"LinkedSpecialBonus"		"special_bonus_imba_lycan_8"
 			}
 
 			"07"
@@ -17679,37 +17695,22 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_bonus_per_stack"		"3 6 9 12 16 20"
+				"damage_bonus_per_stack"		"4 4 4 4 8 16"
 			}
-
 			"02"
 			{
-				"var_type"						"FIELD_FLOAT"
-				"lycan_lifesteal"				"1"
+				"var_type"						"FIELD_INTEGER"
+				"max_stacks"					"6 8 10 12 12 14"
 			}
-
 			"03"
 			{
-				"var_type"						"FIELD_FLOAT"
-				"duration"						"4"
+				"var_type"						"FIELD_INTEGER"
+				"attack_speed_reduction"		"4 8 12 16 20 28"
 			}
-
 			"04"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"max_stacks"					"12"
-			}
-
-			"05"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"attack_speed_reduction"		"40 50 60 70 80 100"
-			}
-
-			"06"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"fixed_lifesteal"				"15 20 25 30 35 40"
+				"var_type"						"FIELD_FLOAT"
+				"duration"						"8"
 			}
 		}
 	}
@@ -17735,7 +17736,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"evasion"					"15 15 15 20 25 30"
+				"evasion"					"20 25 30 35 40 45"
 			}
 		}
 	}
@@ -17767,9 +17768,15 @@
 	}
 
 	//=================================================================================================================
+	//=================================================================================================================
 	// Lycan Talents
 	//=================================================================================================================
-	"special_bonus_imba_lycan_1"	// Wolf level increases
+	//=================================================================================================================
+
+	//=================================================================================================================
+	// Increases the level of wolves 
+	//=================================================================================================================
+	"special_bonus_imba_lycan_1"	
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -17794,82 +17801,10 @@
 		}
 	}
 
-	"special_bonus_imba_lycan_2"	// Feral Impulse damage and HP regen increase
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_lycan_feral_impulse"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"2"
-			}
-		}
-	}
-
-	"special_bonus_imba_lycan_3"	// Howl duration increase
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_lycan_howl"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"12"
-			}
-		}
-	}
-
-	"special_bonus_imba_lycan_4"	// Wolfsbane damage increase
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_lycan_wolfsbane"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"2"
-			}
-		}
-	}
-
-	"special_bonus_imba_lycan_5"	// Increased maximum summoned Wolves
+	//=================================================================================================================
+	// Wolves gain a % of Lycan's bonus damage as damage 
+	//=================================================================================================================
+	"special_bonus_imba_lycan_2"	
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -17889,12 +17824,15 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"2"
+				"value"					"15"
 			}
 		}
 	}
 
-	"special_bonus_imba_lycan_6"	// Double Wicked Crunch max stacks, Wolves generate two on hit
+	//=================================================================================================================
+	// Summons an Alpha Wolf
+	//=================================================================================================================
+	"special_bonus_imba_lycan_3"	
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -17904,7 +17842,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_summoned_wolf_wicked_crunch"
+			"01" 	"imba_lycan_summon_wolves"
 		}
 
 		// Special
@@ -17914,12 +17852,47 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"12"
+				"value"					"1"
 			}
 		}
 	}
 
-	"special_bonus_imba_lycan_7"	// Howl potency increase
+	//=================================================================================================================
+	// Alpha Wolf's Packleader Aura
+	//=================================================================================================================
+	"imba_summoned_wolf_pack_leader"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityTextureName"			"alpha_wolf_command_aura"
+		"ScriptFile"					"hero/hero_lycan"
+		"MaxLevel"						"1"
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_bonus_damage_pct"	"15"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_radius"			"900"
+			}
+		}
+	}
+	
+
+	//=================================================================================================================
+	// Howl grants flying movement to Lycan and his wolves
+	//=================================================================================================================
+	"special_bonus_imba_lycan_4"	
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -17939,37 +17912,71 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_hero"			"25"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_creep"			"25"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"ms_hero"				"5"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"ms_creep"				"15"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"health_hero"			"250"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"health_creep"			"125"
+				"value"					"8"
 			}
 		}
 	}
 
-	"special_bonus_imba_lycan_8"	// Shapeshift duration increase
+	//=================================================================================================================
+	// Having an amount of Wicked Crunch stacks grants fog vision of the target
+	//=================================================================================================================
+	"special_bonus_imba_lycan_5"	
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_summoned_wolf_wicked_crunch"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"6"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//  Increased maximum Wicked Crunch stacks and stacks dealt on hit
+	//=================================================================================================================
+	"special_bonus_imba_lycan_6"	
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_summoned_wolf_wicked_crunch"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"200"  // %
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Shapeshift increases maximum movement speed
+	//=================================================================================================================
+	"special_bonus_imba_lycan_7"	
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -17989,7 +17996,55 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"15"
+				"base_movespeed_bonus"	"400"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_movespeed"			"1200"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Gaining a Wolfsbane stack gives Lycan and his units bonus move speed attack speed and damage
+	//=================================================================================================================
+	"special_bonus_imba_lycan_8"	
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_lycan_wolfsbane"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movespeed_pct"	"20"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attackspeed"		"75"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage_pct"		"20"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"20"
 			}
 		}
 	}
@@ -28077,7 +28132,7 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"MaxLevel"						"7"
+		"MaxLevel"						"6"
 		"LevelsBetweenUpgrades"			"6"
 		"AbilityTextureName"			"storm_spirit_ball_lightning"
 
@@ -28135,6 +28190,11 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"ball_vision_radius"					"1000"		
+			}
+			"09"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"max_spell_amp_range"					"2500"
 			}
 		}
 	}

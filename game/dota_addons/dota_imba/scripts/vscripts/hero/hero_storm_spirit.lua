@@ -281,7 +281,6 @@ end
 function modifier_imba_vortex_pull:OnIntervalThink()
 	-- Check for motion controllers
 	if not self:CheckMotionControllers() then
-		self:Destroy()
 		return nil
 	end
 
@@ -587,6 +586,7 @@ function imba_storm_spirit_ball_lightning:OnSpellStart()
 		local base_mana_cost	= 	self:GetSpecialValueFor("travel_mana_cost_base")
 		local pct_mana_cost		= 	self:GetSpecialValueFor("travel_mana_cost_pct") * caster:GetMaxMana()
 		local total_mana_cost 	=	base_mana_cost + pct_mana_cost
+		local max_spell_amp_range	=	self:GetSpecialValueFor("max_spell_amp_range")
 
 		-- Motion control properties
 		self.traveled 	= 0
@@ -617,8 +617,14 @@ function imba_storm_spirit_ball_lightning:OnSpellStart()
 			bProvidesVision		= true,
 			iVisionRadius 		= vision,
 			iVisionTeamNumber 	= caster:GetTeamNumber(),
-			ExtraData			= {damage = damage, tree_radius = tree_radius, base_mana_cost = base_mana_cost, pct_mana_cost = pct_mana_cost,
-									 total_mana_cost = total_mana_cost,	speed = speed * FrameTime()}
+			ExtraData			= {damage = damage,
+								   tree_radius = tree_radius,
+								   base_mana_cost = base_mana_cost,
+								   pct_mana_cost = pct_mana_cost,
+								   total_mana_cost = total_mana_cost,
+								   speed = speed * FrameTime(),
+								   max_spell_amp_range = max_spell_amp_range
+								}
 		}
 		self.projectileID = ProjectileManager:CreateLinearProjectile(projectile)
                   
@@ -678,12 +684,20 @@ function imba_storm_spirit_ball_lightning:OnProjectileHit_ExtraData(target, loca
 
 	 	local caster	=	self:GetCaster()
 
+	 	local damage_flags = DOTA_DAMAGE_FLAG_NONE
+
+	 	-- Prevent spell amp at large distances
+	 	if self.traveled >= ExtraData.max_spell_amp_range then
+	 		damage_flags = damage_flags + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION
+	 	end
+
 		-- Deal damage
 		local damageTable = {victim = target,
 							damage = ExtraData.damage * math.floor(self.traveled * 0.01),
 							damage_type = self:GetAbilityDamageType(),
 							attacker = caster,
-							ability = ability
+							ability = ability,
+							damage_flags = damage_flags
 							}
 
 		ApplyDamage(damageTable)
@@ -714,12 +728,6 @@ modifier_imba_ball_lightning = modifier_imba_ball_lightning or class({})
 function modifier_imba_ball_lightning:IsDebuff() 	return false end
 function modifier_imba_ball_lightning:IsHidden() 	return false end
 function modifier_imba_ball_lightning:IsPurgable() return false end
-
-function modifier_imba_ball_lightning:OnCreated()
-	if IsServer() then
-		ProjectileManager:ProjectileDodge(self:GetCaster())
-	end
-end
 
 function modifier_imba_ball_lightning:GetEffectName()
 	return "particles/units/heroes/hero_stormspirit/stormspirit_ball_lightning.vpcf"
