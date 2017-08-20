@@ -383,7 +383,7 @@ function GameMode:ModifierFilter( keys )
 				 ["modifier_imba_blast_off_silence"] = true,
 				 ["modifier_item_imba_orchid_debuff"] = true,
 				 ["modifier_item_imba_bloodthorn_debuff"] = true,
-				 ["modifier_item_imba_azura_silence"] = true
+				 ["modifier_item_imba_azura_silence"] = true,
 				 ["modifier_item_imba_sange_azura_proc"] = true,
 				 ["modifier_item_imba_azura_yasha_silence"] = true,
 				 ["modifier_item_imba_triumvirate_proc_debuff"] = true}
