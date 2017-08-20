@@ -28191,6 +28191,11 @@
 				"var_type"								"FIELD_INTEGER"
 				"ball_vision_radius"					"1000"		
 			}
+			"09"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"max_spell_amp_range"					"2500"
+			}
 		}
 	}
 	
