@@ -644,8 +644,8 @@ end
 -- Spell power
 function CDOTA_BaseNPC:GetSpellPower()
 
-	-- If this is not a hero, or the unit is invulnerable, do nothing
-	if not self:IsHero() or self:IsInvulnerable() then
+	-- If this is not a hero, do nothing
+	if not self:IsHero() then
 		return 0
 	end
 

@@ -630,6 +630,7 @@ function imba_storm_spirit_ball_lightning:OnSpellStart()
                   
 		-- Add Motion-Controller Modifier
 		caster:AddNewModifier(caster, self, "modifier_imba_ball_lightning", {})
+
 	end
 end
 
@@ -680,33 +681,42 @@ function imba_storm_spirit_ball_lightning:OnProjectileThink_ExtraData(location, 
 end
 
 function imba_storm_spirit_ball_lightning:OnProjectileHit_ExtraData(target, location, ExtraData)
-	if target then 
+	if IsServer() then
+		if target then 
 
-	 	local caster	=	self:GetCaster()
+	 		local caster	=	self:GetCaster()
+	 		local damage		=	ExtraData.damage * math.floor(self.traveled * 0.01)
+	 		local damage_flags 	= 	DOTA_DAMAGE_FLAG_NONE
 
-	 	local damage_flags = DOTA_DAMAGE_FLAG_NONE
+	 		-- Prevent spell amp at large distances
+	 		if self.traveled > ExtraData.max_spell_amp_range then
+	 			damage_flags = damage_flags + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION
 
-	 	-- Prevent spell amp at large distances
-	 	if self.traveled >= ExtraData.max_spell_amp_range then
-	 		damage_flags = damage_flags + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION
-	 	end
+	 			local damage_at_max_distance =  ExtraData.damage * ExtraData.max_spell_amp_range * 0.01 * (1 + (caster:GetSpellPower() * 0.01))
+	 			
+	 			-- If you are doing less damage because you went slightly more than the max range, set the damage to how much it would be at max range.
+	 			if damage < damage_at_max_distance then
+	 				damage	= damage_at_max_distance
+	 			end
+	 		end
 
-		-- Deal damage
-		local damageTable = {victim = target,
-							damage = ExtraData.damage * math.floor(self.traveled * 0.01),
-							damage_type = self:GetAbilityDamageType(),
-							attacker = caster,
-							ability = ability,
-							damage_flags = damage_flags
-							}
+			-- Deal damage
+			local damageTable = {victim = target,
+								damage = damage,
+								damage_type = self:GetAbilityDamageType(),
+								attacker = caster,
+								ability = ability,
+								damage_flags = damage_flags
+								}
 
-		ApplyDamage(damageTable)
+			ApplyDamage(damageTable)
 
-		-- Emit rare kill response
-		if not target:IsAlive() then
-			local responses = {"stormspirit_ss_ability_lightning_01", "stormspirit_ss_ability_lightning_03"}
-			if caster:GetName() == "npc_dota_hero_storm_spirit" and RollPercentage(10) then
-				caster:EmitCasterSound("npc_dota_hero_storm_spirit",responses, 100, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, nil, nil)
+			-- Emit rare kill response
+				if not target:IsAlive() then
+				local responses = {"stormspirit_ss_ability_lightning_01", "stormspirit_ss_ability_lightning_03"}
+				if caster:GetName() == "npc_dota_hero_storm_spirit" and RollPercentage(10) then
+					caster:EmitCasterSound("npc_dota_hero_storm_spirit",responses, 100, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, nil, nil)
+				end
 			end
 		end
 	end
