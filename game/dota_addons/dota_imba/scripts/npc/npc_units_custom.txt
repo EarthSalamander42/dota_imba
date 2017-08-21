@@ -1674,7 +1674,7 @@
 		
 		// Vision
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1200"
+		"VisionDaytimeRange"		"800"
 		"VisionNighttimeRange"		"800"
 
 		//	Inventory

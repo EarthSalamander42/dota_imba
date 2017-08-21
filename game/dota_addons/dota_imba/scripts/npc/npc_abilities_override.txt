@@ -2528,7 +2528,7 @@
 		
 		"AbilityDamage"					"250 350 450 500 550 600"
 
-		"AbilityManaCost"				"100 125 150 160 170 180"
+		"AbilityManaCost"				"150"
 
 		"MaxLevel"						"6"
 
@@ -2890,7 +2890,7 @@
 	{
 		"AbilityCooldown"				"40"
 
-		"AbilityManaCost"				"100"
+		"AbilityManaCost"				"125"
 
 		"MaxLevel"						"7"
 
@@ -4400,7 +4400,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"heal_amount"				"300 450 600 800 1000 1200"
+				"heal_amount"				"400 550 700 900 1100 1300"
 				"LinkedSpecialBonus"		"special_bonus_unique_chen_2"
 			}
 			"02"
@@ -5495,7 +5495,7 @@
 	"earthshaker_fissure"
 	{
 
-		"AbilityCooldown"				"15 15 15 13 11 9"
+		"AbilityCooldown"				"18 17 16 15 13 11 9"
 		"AbilityCastRange"				"1400 1400 1400 1400 1575 1750 1925"
 
 		"AbilityDuration"				"1.0 1.25 1.5 1.75 1.9 2.05 2.2"
@@ -10286,7 +10286,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"vision_range"			"750"
+				"vision_range"			"500"
 			}
 			"02"
 			{
@@ -11566,7 +11566,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"orb_vision"				"550"
+				"orb_vision"				"450"
 			}
 			"05"
 			{

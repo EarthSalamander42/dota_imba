@@ -6414,7 +6414,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_agi"					"25"
+				"bonus_agi"					"20"
 			}
 
 			"02"
@@ -6641,7 +6641,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_agi"					"55"
+				"bonus_agi"					"60"
 			}
 
 			"02"
@@ -10663,7 +10663,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityCooldown"				"20"
+		"AbilityCooldown"				"22"
         "AbilityManaCost"				"25"
 
 		// Precache
@@ -10693,7 +10693,7 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"berserk_attack_speed"			"160"
+				"berserk_attack_speed"			"200"
 			}
 			"04"
 			{
@@ -10703,7 +10703,7 @@
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"berserk_armor_reduction"		"5"
+				"berserk_armor_reduction"		"6"
 			}
 			"06"
 			{
