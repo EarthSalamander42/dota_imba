@@ -610,6 +610,7 @@ function modifier_imba_silencer_glaives_int_damage:IsDebuff() return true end
 
 function modifier_imba_silencer_glaives_int_damage:OnCreated( kv )
 	if IsServer() then
+		if not self:GetParent():IsRealHero() then return end
 		self.caster = self:GetCaster()
 		self.int_reduction_pct = kv.int_reduction
 		self.total_int_reduced = 0
