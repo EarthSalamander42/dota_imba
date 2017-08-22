@@ -118,31 +118,37 @@ local time = 0.0
 	-------------------------------------------------------------------------------------------------
 
 	if new_state == DOTA_GAMERULES_STATE_PRE_GAME then
-		Timers:CreateTimer(0.0, function()
-			for _, hero in pairs(HeroList:GetAllHeroes()) do
-				if not hero:HasModifier("modifier_imba_prevent_actions_game_start") then
-					hero:AddNewModifier(hero, nil, "modifier_imba_prevent_actions_game_start", {})
-					hero:AddEffects(EF_NODRAW)
-					hero:SetDayTimeVisionRange(450)
-					hero:SetNightTimeVisionRange(450)
+		if IMBA_PICK_MODE_ALL_RANDOM == false then
+			Timers:CreateTimer(0.0, function()
+				for _, hero in pairs(HeroList:GetAllHeroes()) do
+					if not hero:HasModifier("modifier_imba_prevent_actions_game_start") then
+						hero:AddNewModifier(hero, nil, "modifier_imba_prevent_actions_game_start", {})
+						hero:AddEffects(EF_NODRAW)
+						hero:SetDayTimeVisionRange(475)
+						hero:SetNightTimeVisionRange(475)
+						if hero:GetTeamNumber() == 2 then
+							PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), GoodCamera)
+							FindClearSpaceForUnit(hero, GoodCamera:GetAbsOrigin(), false)
+						else
+							PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), BadCamera)					
+							FindClearSpaceForUnit(hero, BadCamera:GetAbsOrigin(), false)
+						end
+					end
 				end
-			end
-			if time < 1.4 then
-				time = time + 0.1
-			else
-				time = nil
-			end
-			return time
-		end)
-		Timers:CreateTimer(2.0, function()
-			if IMBA_PICK_MODE_ALL_RANDOM == false then
-				
-			else
+				if time < 1.0 then
+					time = time + 0.1
+				else
+					time = nil
+				end
+				return time
+			end)
+		else
+			Timers:CreateTimer(2.0, function()
 				for _, hero in pairs(HeroList:GetAllHeroes()) do
 					HeroSelection:RandomHero({PlayerID = hero:GetPlayerID()})
 				end
-			end
-		end)
+			end)
+		end
 	end
 
 	-------------------------------------------------------------------------------------------------

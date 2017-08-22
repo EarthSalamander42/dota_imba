@@ -33,8 +33,7 @@ local schemaVersion = 5
 -- Constants used for pretty formatting, as well as strings
 local printPrefix = 'Stat Collection: '
 
-local errorFailedToContactServer = 'Failed to contact the master server! Bad status code!'
-local errorEmptyServerResponse = 'Master server returned empty response!'
+local errorFailedToContactServer = 'Failed to contact the master server! Bad status code, or no body!'
 local errorMissingModIdentifier = 'Please ensure you have a settings.kv in your statcollection folder! Missing modID!'
 local errorDefaultModIdentifier = 'Please change your settings.kv with a valid modID, acquired after registration of your mod on the site!'
 local errorMissingSchemaIdentifier = 'Please ensure you have a settings.kv in your statcollection folder! Missing schemaID!'
@@ -535,7 +534,7 @@ function statCollection:sendStage(stageName, payload, callback, override_host)
     local host = override_host or postLocation
 
     -- Create the request
-    local req = CreateHTTPRequestScriptVM('POST', host .. stageName)
+    local req = CreateHTTPRequest('POST', host .. stageName)
     local encoded = json.encode(payload)
     if self.TESTING then
         statCollection:print(encoded)
@@ -546,16 +545,10 @@ function statCollection:sendStage(stageName, payload, callback, override_host)
 
     -- Send the request
     req:Send(function(res)
-        if res.StatusCode ~= 200 then
+        if res.StatusCode ~= 200 or not res.Body then
             statCollection:print(errorFailedToContactServer)
             statCollection:print("Status Code", res.StatusCode or "nil")
-            statCollection:print("Body", res.Body or "nil")
-            return
-        end
-         
-        if not res.Body then
-            statCollection:print(errorEmptyServerResponse)
-            statCollection:print("Status Code", res.StatusCode or "nil")
+            statCollection:print("Body", res.StatusCode or "nil")
             return
         end
 
