@@ -1336,11 +1336,14 @@ function modifier_imba_vendetta:OnAttackLanded(keys)
             -- Create alert
             SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, target, damage, nil)
 
-            if modifier_charged_handler then
-                if not self.dont_consume_stacks or target:IsAlive() then
-                    modifier_charged_handler:Destroy()
+            -- IsAlive doesn't register death if ApplyDamage is lethal...need to wait a frame
+            Timers:CreateTimer(FrameTime(), function()
+                if modifier_charged_handler then
+                    if not self.dont_consume_stacks or target:IsAlive() then
+                        modifier_charged_handler:Destroy()
+                    end
                 end
-            end
+            end)
 
             -- Remove modifier
             self:Destroy()
