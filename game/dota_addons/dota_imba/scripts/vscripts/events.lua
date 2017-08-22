@@ -135,12 +135,13 @@ local time = 0.0
 						end
 					end
 				end
-				if time < 1.0 then
+				if time < 0.9 then
 					time = time + 0.1
 				else
 					time = nil
+					return nil
 				end
-				return time
+				return 0.1
 			end)
 		else
 			Timers:CreateTimer(2.0, function()

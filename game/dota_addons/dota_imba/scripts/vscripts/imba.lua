@@ -394,6 +394,7 @@ function GameMode:ModifierFilter( keys )
 						-- if reduction is 1 (or more), set duration to FrameTime() so `OnDstroy` effects still proc
 						if silence_reduction_pct >= 1 then
 							keys.duration = FrameTime()
+							SendOverheadEventMessage(nil, OVERHEAD_ALERT_LAST_HIT_MISS, modifier_owner, 0, nil)
 						else
 							keys.duration = keys.duration * (1 - silence_reduction_pct)
 						end
@@ -454,7 +455,7 @@ function GameMode:ModifierFilter( keys )
 									return false
 								end
 							end
-							
+
 							for _, modifier in ipairs(modifiers) do
 								if not modifier.ArcaneSupremacyIncrease then
 									modifier.ArcaneSupremacyIncrease = true
