@@ -1160,15 +1160,16 @@ function SystemMessage(token, vars)
 	CustomGameEventManager:Send_ServerToAllClients("custom_system_message", { token = token or "", vars = vars or {}})
 end
 
-
 -- This function is responsible for cleaning dummy units and wisps that may have accumulated
 function StartGarbageCollector()	
 	-- Find all wisps in the game
 	local wisps = Entities:FindAllByName("npc_dota_hero_wisp")
+	print("Finding wisp...")
 
 	-- Cycle each wisp, and see if it has a player owner. If it doesn't, NUKE IT BLYAT!
 	for _, wisp in pairs(wisps) do
 		if not wisp:GetPlayerOwner() then
+			print("WISP-O-NUKE LAUNCHED!")
 			UTIL_Remove(wisp)
 		end			
 	end
@@ -1183,7 +1184,8 @@ function StartGarbageCollector()
 
 			local dummy_creation_time = dummy:GetCreationTime()
 
-			if gametime - dummy_creation_time > 120 then			
+			if gametime - dummy_creation_time > 120 then
+				print("NUKING A LOST DUMMY!")
 				UTIL_Remove(dummy)
 			end
 		end

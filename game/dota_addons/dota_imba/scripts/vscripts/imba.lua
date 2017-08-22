@@ -96,12 +96,17 @@ end
 function GameMode:OnFirstPlayerLoaded()
 
 	-------------------------------------------------------------------------------------------------
-	-- IMBA: Roshan initialization
+	-- IMBA: Roshan and Picking Screen camera initialization
 	-------------------------------------------------------------------------------------------------
 
 	if GetMapName() ~= "imba_arena" then
 		local roshan_spawn_loc = Entities:FindByName(nil, "roshan_spawn_point"):GetAbsOrigin()
 		local roshan = CreateUnitByName("npc_imba_roshan", roshan_spawn_loc, true, nil, nil, DOTA_TEAM_NEUTRALS)
+		GoodCamera = Entities:FindByName(nil, "good_healer_7")
+		BadCamera = Entities:FindByName(nil, "bad_healer_7")
+	else
+		GoodCamera = Entities:FindByName(nil, "radiant_capture_point")
+		BadCamera = Entities:FindByName(nil, "dire_capture_point")
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -435,26 +440,32 @@ function GameMode:ItemAddedFilter( keys )
 	-------------------------------------------------------------------------------------------------
 
 	if item_name == "item_imba_rune_bounty" or item_name == "item_imba_rune_bounty_arena" or item_name == "item_imba_rune_double_damage" or item_name == "item_imba_rune_haste" or item_name == "item_imba_rune_regeneration" then
-		
-			if item_name == "item_imba_rune_bounty" or item_name == "item_imba_rune_bounty_arena" then
-				PickupBountyRune(item, unit)
-				return false
-			end
+--		local gameEvent = {}
+--		gameEvent["player_id"] = unit:GetPlayerID()
+--		gameEvent["team_number"] = unit:GetTeamNumber()
+--		gameEvent["locstring_value"] = "#DOTA_Tooltip_Ability_" .. item:GetAbilityName()
+--		gameEvent["message"] = "#imba_player_rune_pickup"
+--		FireGameEvent("dota_combat_event_message", gameEvent)
 
-			if item_name == "item_imba_rune_double_damage" then
-				PickupDoubleDamageRune(item, unit)
-				return false
-			end
+		if item_name == "item_imba_rune_bounty" or item_name == "item_imba_rune_bounty_arena" then
+			PickupBountyRune(item, unit)
+			return false
+		end
 
-			if item_name == "item_imba_rune_haste" then
-				PickupHasteRune(item, unit)
-				return false
-			end
+		if item_name == "item_imba_rune_double_damage" then
+			PickupDoubleDamageRune(item, unit)
+			return false
+		end
 
-			if item_name == "item_imba_rune_regeneration" then
-				PickupRegenerationRune(item, unit)
-				return false
-			end					
+		if item_name == "item_imba_rune_haste" then
+			PickupHasteRune(item, unit)
+			return false
+		end
+
+		if item_name == "item_imba_rune_regeneration" then
+			PickupRegenerationRune(item, unit)
+			return false
+		end					
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -1070,7 +1081,16 @@ end
 	The hero parameter is the hero entity that just spawned in
 ]]
 function GameMode:OnHeroInGame(hero)
-
+	if not hero.FirstSpawn then
+		if hero:GetTeamNumber() == 2 then
+			PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), GoodCamera)
+			FindClearSpaceForUnit(hero, GoodCamera:GetAbsOrigin(), false)
+		else
+			PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), BadCamera)					
+			FindClearSpaceForUnit(hero, BadCamera:GetAbsOrigin(), false)
+		end
+	end
+	hero.FirstSpawn = true
 end
 
 --[[	This function is called once and only once when the game completely begins (about 0:00 on the clock).  At this point,

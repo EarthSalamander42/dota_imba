@@ -96,8 +96,9 @@ end
 
 -- The overall game state has changed
 function GameMode:OnGameRulesStateChange(keys)
-	DebugPrint("[BAREBONES] GameRules State Changed")
-	DebugPrintTable(keys)
+DebugPrint("[BAREBONES] GameRules State Changed")
+DebugPrintTable(keys)
+local time = 0.0
 
 	-- This internal handling is used to set up main barebones functions
 	GameMode:_OnGameRulesStateChange(keys)
@@ -117,15 +118,28 @@ function GameMode:OnGameRulesStateChange(keys)
 	-------------------------------------------------------------------------------------------------
 
 	if new_state == DOTA_GAMERULES_STATE_PRE_GAME then
-		Timers:CreateTimer(1.5, function()
-			if IMBA_PICK_MODE_ALL_RANDOM == false then
-				for _, hero in pairs(HeroList:GetAllHeroes()) do
+		Timers:CreateTimer(0.0, function()
+			for _, hero in pairs(HeroList:GetAllHeroes()) do
+				if not hero:HasModifier("modifier_imba_prevent_actions_game_start") then
 					hero:AddNewModifier(hero, nil, "modifier_imba_prevent_actions_game_start", {})
+					hero:AddEffects(EF_NODRAW)
+					hero:SetDayTimeVisionRange(450)
+					hero:SetNightTimeVisionRange(450)
 				end
+			end
+			if time < 1.4 then
+				time = time + 0.1
+			else
+				time = nil
+			end
+			return time
+		end)
+		Timers:CreateTimer(2.0, function()
+			if IMBA_PICK_MODE_ALL_RANDOM == false then
+				
 			else
 				for _, hero in pairs(HeroList:GetAllHeroes()) do
 					HeroSelection:RandomHero({PlayerID = hero:GetPlayerID()})
-					hero:AddNewModifier(hero, nil, "modifier_imba_prevent_actions_game_start", {})
 				end
 			end
 		end)
@@ -135,7 +149,7 @@ function GameMode:OnGameRulesStateChange(keys)
 	-- IMBA: Game started (horn sounded)
 	-------------------------------------------------------------------------------------------------
 
-	if new_state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS  then
+	if new_state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		Server_WaitToEnableXpGain()		
 
 		Timers:CreateTimer(120, function()
@@ -150,15 +164,10 @@ function GameMode:OnGameRulesStateChange(keys)
 	end
 
 	if new_state == DOTA_GAMERULES_STATE_POST_GAME then
-    	local winning_team = GAME_WINNER_TEAM
-    	Server_CalculateXPForWinnerAndAll(winning_team)
+		CustomGameEventManager:Send_ServerToAllClients("end_game", {})
+		local winning_team = GAME_WINNER_TEAM
+		Server_CalculateXPForWinnerAndAll(winning_team)
 	end
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Stat collection stuff
-	-------------------------------------------------------------------------------------------------
-
-	--if new_state == DOTA_GAMERULES_STATE_POST_GAME then
-	--end
 end
 
 -- An NPC has spawned somewhere in game. This includes heroes
@@ -351,32 +360,32 @@ function GameMode:OnPlayerReconnect(keys)
 				local pick_state = HeroSelection.playerPickState[player_id].pick_state
 				local repick_state = HeroSelection.playerPickState[player_id].repick_state
 
-                local data = {
-                    PlayerID = player_id,
-                    PlayerPicks = HeroSelection.playerPicks,
-                    pickState = pick_state,
-                    repickState = repick_state
-                }
+				local data = {
+					PlayerID = player_id,
+					PlayerPicks = HeroSelection.playerPicks,
+					pickState = pick_state,
+					repickState = repick_state
+				}
 
-                if IMBA_HERO_PICK_RULE == 0 then
-                    data.PickedHeroes = {}
-                    -- Set as all of the heroes that were selected
-                    for _,v in pairs(HeroSelection.radiantPicks) do
-                        table.insert(data.PickedHeroes, v)
-                    end
-                    for _,v in pairs(HeroSelection.direPicks) do
-                        table.insert(data.PickedHeroes, v)
-                    end
-                elseif IMBA_HERO_PICK_RULE == 1 then
-                    -- Set as the team's pick to prevent same hero on the same team
-                    if PlayerResource:GetTeam(player_id) == DOTA_TEAM_GOODGUYS then
-                        data.PickedHeroes = HeroSelection.radiantPicks
-                    else
-                        data.PickedHeroes = HeroSelection.direPicks
-                    end
-                else
-                    data.PickedHeroes = {} --Set as empty, to allow all heroes to be selected
-                end
+				if IMBA_HERO_PICK_RULE == 0 then
+					data.PickedHeroes = {}
+					-- Set as all of the heroes that were selected
+					for _,v in pairs(HeroSelection.radiantPicks) do
+						table.insert(data.PickedHeroes, v)
+					end
+					for _,v in pairs(HeroSelection.direPicks) do
+						table.insert(data.PickedHeroes, v)
+					end
+				elseif IMBA_HERO_PICK_RULE == 1 then
+					-- Set as the team's pick to prevent same hero on the same team
+					if PlayerResource:GetTeam(player_id) == DOTA_TEAM_GOODGUYS then
+						data.PickedHeroes = HeroSelection.radiantPicks
+					else
+						data.PickedHeroes = HeroSelection.direPicks
+					end
+				else
+					data.PickedHeroes = {} --Set as empty, to allow all heroes to be selected
+				end
 
 				if PlayerResource:GetTeam(player_id) == DOTA_TEAM_GOODGUYS then
 					CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.radiantPicks, PlayerPicks = HeroSelection.playerPicks, pickState = pick_state, repickState = repick_state})
@@ -403,7 +412,6 @@ function GameMode:OnPlayerReconnect(keys)
 		-- Stop redistributing gold to allies, if applicable
 		PlayerResource:StopAbandonGoldRedistribution(player_id)
 	end
-
 end
 
 -- An item was purchased by a player

@@ -912,7 +912,9 @@ end
 
 function modifier_imba_tower_toughness_aura_buff:OnIntervalThink()
 	if IsServer() then
-		self.parent:CalculateStatBonus()
+		if not self.parent:IsNull() then
+			self.parent:CalculateStatBonus()
+		end
 	end
 end
 

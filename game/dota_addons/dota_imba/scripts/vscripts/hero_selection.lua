@@ -18,8 +18,10 @@ end
 function HeroSelection:Start()
 
 	-- Play pick music
-	HeroSelection.pick_sound_dummy = CreateUnitByName("npc_dummy_unit", Vector(0,0,0), false, nil, nil, DOTA_TEAM_GOODGUYS)
-	EmitSoundOn("Imba.PickPhaseDrums", HeroSelection.pick_sound_dummy)
+	HeroSelection.pick_sound_dummy_good = CreateUnitByName("npc_dummy_unit", GoodCamera:GetAbsOrigin(), false, nil, nil, DOTA_TEAM_GOODGUYS)
+	EmitSoundOn("Imba.PickPhaseDrums", HeroSelection.pick_sound_dummy_good)
+	HeroSelection.pick_sound_dummy_bad = CreateUnitByName("npc_dummy_unit", BadCamera:GetAbsOrigin(), false, nil, nil, DOTA_TEAM_GOODGUYS)
+	EmitSoundOn("Imba.PickPhaseDrums", HeroSelection.pick_sound_dummy_bad)
 
 	-- Figure out which players have to pick
 	HeroSelection.HorriblyImplementedReconnectDetection = {}
@@ -475,10 +477,12 @@ function HeroSelection:EndPicking()
 	CustomGameEventManager:Send_ServerToAllClients("hero_loading_done", {} )
 
 	-- Stop picking phase music
-	StopSoundOn("Imba.PickPhaseDrums", HeroSelection.pick_sound_dummy)
+	StopSoundOn("Imba.PickPhaseDrums", HeroSelection.pick_sound_dummy_good)
+	StopSoundOn("Imba.PickPhaseDrums", HeroSelection.pick_sound_dummy_bad)
 
 	-- Destroy dummy!
-	UTIL_Remove(HeroSelection.pick_sound_dummy) 
+	UTIL_Remove(HeroSelection.pick_sound_dummy_good) 
+	UTIL_Remove(HeroSelection.pick_sound_dummy_bad) 
 end
 
 --[[
@@ -498,7 +502,7 @@ function HeroSelection:AssignHero(player_id, hero_name)
 
 		-- Switch for the new hero
 		PlayerResource:ReplaceHeroWith(player_id, hero_name, 0, 0 )
-		PlayerResource:SetCameraTarget(player_id, nil)		
+		PlayerResource:SetCameraTarget(player_id, nil)
 		
 
 		-------------------------------------------------------------------------------------------------
@@ -507,6 +511,7 @@ function HeroSelection:AssignHero(player_id, hero_name)
 
 		-- Fetch this player's hero entity
 		local hero = PlayerResource:GetPlayer(player_id):GetAssignedHero()
+		hero:RespawnHero(false, false, false)
 
 		-- Set the picked hero for this player
 		PlayerResource:SetPickedHero(player_id, hero)

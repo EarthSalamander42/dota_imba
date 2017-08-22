@@ -25,6 +25,7 @@ GameEvents.Subscribe( "hero_picked", OnHeroPicked );
 GameEvents.Subscribe( "hero_unpicked", OnHeroUnpicked );
 GameEvents.Subscribe( "player_reconnected", OnPlayerReconnect );
 GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
+GameEvents.Subscribe( "end_game", OnGameEnded );
 
 /* Event Handlers
 =========================================================================*/
@@ -283,13 +284,13 @@ function SelectRandomImbaHero() {
 function EnterGame() {
 	if ( canEnter ) {
 		$('#Background').GetParent().DeleteAsync( 0.0 );
-		$.GetContextPanel().GetParent().GetParent().FindChildTraverse("ScoreboardContainer").style.visibility = "visible";
 
 		//COOKIES: Re-enable HUD parts when 1 player enter in the game, might need to find a way to show these HUD parts for player only rather than global
 		var parent_panel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
 		parent_panel.FindChildTraverse("lower_hud").style.visibility = "visible";
 		parent_panel.FindChildTraverse("topbar").style.visibility = "visible";
 		parent_panel.FindChildTraverse("minimap_container").style.visibility = "visible";
+		parent_panel.FindChildTraverse("ScoreboardContainer").style.visibility = "visible";
 	}
 }
 
@@ -336,6 +337,16 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 			}
 		}
 	}
+}
+
+function OnGameEnded() {
+	//COOKIES: Disable HUD
+	$.Msg("Disabling HUD...")
+	var parent_panel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
+	parent_panel.FindChildTraverse("ScoreboardContainer").style.visibility = "collapse";
+	parent_panel.FindChildTraverse("lower_hud").style.visibility = "collapse";
+	parent_panel.FindChildTraverse("topbar").style.visibility = "collapse";
+	parent_panel.FindChildTraverse("minimap_container").style.visibility = "collapse";
 }
 
 /* Initialisation - runs when the element is created
