@@ -1583,21 +1583,14 @@ function IsVanillaSilence(modifier_name)
 end
 
 function IsImbaSilence(modifier_name)
-	local silence_modifiers = 
-		{["modifier_silence"] = true,
-		 ["modifier_earth_spirit_geomagnetic_grip"] = true,
-		 ["modifier_imba_blood_bath_debuff_silence"] = true,					
-		 ["modifier_imba_glimpse_storm_debuff"] = true,
-		 ["modifier_imba_static_storm_debuff"] = true,
-		 ["modifier_imba_static_storm_debuff_linger"] = true,
+	local silence_modifiers = 		
+		{["modifier_imba_blood_bath_debuff_silence"] = true,							 
 		 ["modifier_imba_gust_silence"] = true,
 		 ["modifier_imba_crippling_fear_silence"] = true,
-		 ["modifier_imba_stifling_dagger_silence"] = true,
-		 ["modifier_imba_smoke_screen_debuff_miss"] = true,
+		 ["modifier_imba_stifling_dagger_silence"] = true,		 
 		 ["modifier_imba_silencer_last_word_repeat_thinker"] = true,
 		 ["modifier_imba_silencer_global_silence"] = true,
-		 ["modifier_imba_ancient_seal_main"] = true,				 
-		 ["modifier_imba_ancient_seal_secondary"] = true,
+		 ["modifier_imba_ancient_seal_main"] = true,				 		 
 		 ["modifier_imba_blast_off_silence"] = true,
 		 ["modifier_item_imba_orchid_debuff"] = true,
 		 ["modifier_item_imba_bloodthorn_debuff"] = true,
