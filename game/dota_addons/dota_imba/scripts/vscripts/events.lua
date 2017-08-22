@@ -127,11 +127,11 @@ local time = 0.0
 						hero:SetDayTimeVisionRange(475)
 						hero:SetNightTimeVisionRange(475)
 						if hero:GetTeamNumber() == 2 then
-							PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), GoodCamera)
+--							PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), GoodCamera)
 							FindClearSpaceForUnit(hero, GoodCamera:GetAbsOrigin(), false)
 							print("Goodguy camera shrine")
 						else
-							PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), BadCamera)					
+--							PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), BadCamera)					
 							FindClearSpaceForUnit(hero, BadCamera:GetAbsOrigin(), false)
 							print("Badguy camera shrine")
 						end

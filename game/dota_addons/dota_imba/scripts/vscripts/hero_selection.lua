@@ -514,7 +514,8 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		wisp:SetRespawnsDisabled(true)				
 
 		-- Switch for the new hero
-		PlayerResource:ReplaceHeroWith(player_id, hero_name, 0, 0 )		
+		PlayerResource:SetCameraTarget(player_id, nil)
+		PlayerResource:ReplaceHeroWith(player_id, hero_name, 0, 0 )
 
 		-------------------------------------------------------------------------------------------------
 		-- IMBA: First hero spawn initialization
@@ -524,6 +525,7 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		local hero = PlayerResource:GetPlayer(player_id):GetAssignedHero()
 		hero:RespawnHero(false, false, false)
 		PlayerResource:SetCameraTarget(player_id, hero)
+		PlayerResource:SetCameraTarget(player_id, nil)
 
 		-- Set the picked hero for this player
 		PlayerResource:SetPickedHero(player_id, hero)
