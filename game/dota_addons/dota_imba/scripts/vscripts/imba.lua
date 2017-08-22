@@ -287,6 +287,16 @@ function GameMode:ExperienceFilter( keys )
 	return true
 end
 
+
+local vanilla_silences = 
+	{["modifier_silence"] = true,
+	["modifier_earth_spirit_geomagnetic_grip"] = true}
+
+-- Modifiers that containt the SILENCED modifier state but aren't actually silences
+local silence_blacklist =
+	{["modifier_item_imba_sheepstick_debuff"] = true,
+	["modifier_imba_lion_hex"] = true}
+
 -- Modifier gained filter function
 function GameMode:ModifierFilter( keys )
 	-- entindex_parent_const	215
@@ -370,28 +380,6 @@ function GameMode:ModifierFilter( keys )
 
 		if modifier_owner:HasModifier("modifier_imba_silencer_arcane_supremacy") then
 			if not modifier_owner:PassivesDisabled() then
-				local silence_modifiers = 
-				{["modifier_silence"] = true,
-				 ["modifier_earth_spirit_geomagnetic_grip"] = true,
-				 ["modifier_imba_blood_bath_debuff_silence"] = true,					
-				 ["modifier_imba_glimpse_storm_debuff"] = true,
-				 ["modifier_imba_static_storm_debuff"] = true,
-				 ["modifier_imba_static_storm_debuff_linger"] = true,
-				 ["modifier_imba_gust_silence"] = true,
-				 ["modifier_imba_crippling_fear_silence"] = true,
-				 ["modifier_imba_stifling_dagger_silence"] = true,
-				 ["modifier_imba_smoke_screen_debuff_miss"] = true,
-				 ["modifier_imba_silencer_last_word_repeat_thinker"] = true,
-				 ["modifier_imba_silencer_global_silence"] = true,
-				 ["modifier_imba_ancient_seal_main"] = true,				 
-				 ["modifier_imba_ancient_seal_secondary"] = true,
-				 ["modifier_imba_blast_off_silence"] = true,
-				 ["modifier_item_imba_orchid_debuff"] = true,
-				 ["modifier_item_imba_bloodthorn_debuff"] = true,
-				 ["modifier_item_imba_azura_silence"] = true,
-				 ["modifier_item_imba_sange_azura_proc"] = true,
-				 ["modifier_item_imba_azura_yasha_silence"] = true,
-				 ["modifier_item_imba_triumvirate_proc_debuff"] = true}
 
 				local arcane_supremacy = modifier_owner:FindModifierByName("modifier_imba_silencer_arcane_supremacy")
 				local silence_reduction_pct
@@ -401,16 +389,79 @@ function GameMode:ModifierFilter( keys )
 
 				if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
 					
-					-- If the modifier is a silence modifier, reduce duration directly
-					if silence_modifiers[modifier_name] then					
+					if vanilla_silences[modifier_name] then
 					
-						-- If Silencer is fully immune, ignore modifier
+						-- if reduction is 1 (or more), set duration to FrameTime() so `OnDstroy` effects still proc
 						if silence_reduction_pct >= 1 then
-							return false
+							keys.duration = FrameTime()
 						else
-							-- Reduce its duration
 							keys.duration = keys.duration * (1 - silence_reduction_pct)
-						end												
+						end
+						
+					else
+						Timers:CreateTimer(FrameTime(), function()
+							if modifier_owner:IsNull() then return false end
+							
+							local modifiers = modifier_owner:FindAllModifiersByName(modifier_name)
+							local testMod = modifiers[1]
+							
+							-- Stop if not a lua or a silence skill (global silence is an exception)
+							if not testMod.CheckState or not testMod:CheckState()[MODIFIER_STATE_SILENCED] or silence_blacklist[modifier_name] then
+								if not ( modifier_name == "modifier_imba_silencer_global_silence" ) then
+									return false
+								end
+							end
+							
+							for _, modifier in ipairs(modifiers) do
+								if not modifier.ArcaneSupremacyReduction then
+									modifier.ArcaneSupremacyReduction = true
+									if silence_reduction_pct >= 1 then
+										modifier:SetDuration(0, true) -- a frame already passed
+									else
+										modifier:SetDuration(keys.duration * (1 - silence_reduction_pct), true)
+									end
+								end
+							end
+						end)
+					end
+				end
+			end
+		end
+
+	-------------------------------------------------------------------------------------------------
+	-- Silencer Arcane Supremacy silence duration increase for Silencer's applied silences
+	-------------------------------------------------------------------------------------------------	
+		if modifier_caster:HasModifier("modifier_imba_silencer_arcane_supremacy") and not modifier_owner:PassivesDisabled() then
+			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
+
+				durationIncreasePcnt = modifier_caster:FindTalentValue("special_bonus_imba_silencer_3") * 0.01
+				if durationIncreasePcnt > 0 then
+				
+					-- If the modifier is a vanilla one, increase duration directly
+					if vanilla_silences[modifier_name] then
+						keys.duration = keys.duration * (1 + durationIncreasePcnt)
+						
+					else
+						Timers:CreateTimer(FrameTime(), function()
+							if modifier_owner:IsNull() then return false end
+							
+							local modifiers = modifier_owner:FindAllModifiersByName(modifier_name)
+							local testMod = modifiers[1]
+							
+							-- Stop if not a lua or a silence skill (global silence is an exception)
+							if not testMod.CheckState or not testMod:CheckState()[MODIFIER_STATE_SILENCED] or silence_blacklist[modifier_name] then
+								if not ( modifier_name == "modifier_imba_silencer_global_silence" ) then
+									return false
+								end
+							end
+							
+							for _, modifier in ipairs(modifiers) do
+								if not modifier.ArcaneSupremacyIncrease then
+									modifier.ArcaneSupremacyIncrease = true
+									modifier:SetDuration(keys.duration * (1 + durationIncreasePcnt), true)
+								end
+							end
+						end)
 					end
 				end
 			end
