@@ -67,6 +67,11 @@ function item_imba_hellblade:TransferAllDebuffs(caster, target)
 				end
 			end
 
+			-- Check via vanilla modifiers list
+			if IsVanillaDebuff(modifier_name) then
+				modifier_found = true
+			end
+
 			-- If the modifier was not found yet, search it in the debuff list
 			if not modifier_found then				
 
@@ -296,6 +301,13 @@ function modifier_item_imba_hellblade_unique:OnAttacked(keys)
 				end
 
 				local modifier_name = modifier:GetName()		
+
+				-- Check via vanilla modifiers list
+				if not debuff_found then
+					if IsVanillaDebuff(modifier_name) then
+						debuff_found = true
+					end
+				end
 				
 				-- If it wasn't found yet, compare debuff to try and find it in the KV debuff list
 				if not debuff_found then

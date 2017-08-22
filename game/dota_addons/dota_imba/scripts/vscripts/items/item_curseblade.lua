@@ -62,6 +62,11 @@ function item_imba_curseblade:OnSpellStart()
 				end
 			end
 
+			-- Check via vanilla modifiers list
+			if IsVanillaDebuff(modifier_name) then
+				modifier_found = true
+			end
+
 			-- If the modifier was not found yet, search it in the debuff list
 			if not modifier_found then				
 
