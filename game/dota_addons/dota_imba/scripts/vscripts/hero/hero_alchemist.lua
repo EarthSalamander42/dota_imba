@@ -792,7 +792,7 @@ function modifier_imba_unstable_concoction_stunned:GetOverrideAnimation()
 end
 
 function modifier_imba_unstable_concoction_stunned:IsPurgable() return false end
-function modifier_imba_unstable_concoction_stunned:IsPurgeException() return false end
+function modifier_imba_unstable_concoction_stunned:IsPurgeException() return true end
 function modifier_imba_unstable_concoction_stunned:IsStunDebuff() return true end
 function modifier_imba_unstable_concoction_stunned:IsHidden() return false end
 function modifier_imba_unstable_concoction_stunned:GetEffectName() return "particles/generic_gameplay/generic_stunned.vpcf" end
