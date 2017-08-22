@@ -458,6 +458,7 @@ end
 	to disappear.
 ]]
 function HeroSelection:EndPicking()
+local time = 0.0
 
 	--Stop listening to events (except picks)
 	CustomGameEventManager:UnregisterListener( self.listener_repick )
@@ -470,6 +471,18 @@ function HeroSelection:EndPicking()
 		if HeroSelection.playerPicks[player_id] and HeroSelection.playerPickState[player_id].pick_state ~= "in_game" then
 			HeroSelection:AssignHero(player_id, HeroSelection.playerPicks[player_id])
 			HeroSelection.playerPickState[player_id].pick_state = "in_game"
+			StartGarbageCollector()
+			Timers:CreateTimer(1.0, function()
+				PlayerResource:SetCameraTarget(player_id, nil)
+				if time < 15.0 then -- Cookies: Shit fix because when you pick Monkey King, everytime a monkey appears on map it locks camera on Shrine (ONLY WITH MK, BLACK MAGIC YOLO)
+					time = time + 1.0
+				else
+					time = nil
+					return nil
+				end
+				print(time)
+				return 1.0
+			end)
 		end
 	end
 
@@ -501,9 +514,7 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		wisp:SetRespawnsDisabled(true)				
 
 		-- Switch for the new hero
-		PlayerResource:ReplaceHeroWith(player_id, hero_name, 0, 0 )
-		PlayerResource:SetCameraTarget(player_id, nil)
-		
+		PlayerResource:ReplaceHeroWith(player_id, hero_name, 0, 0 )		
 
 		-------------------------------------------------------------------------------------------------
 		-- IMBA: First hero spawn initialization
@@ -512,6 +523,7 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		-- Fetch this player's hero entity
 		local hero = PlayerResource:GetPlayer(player_id):GetAssignedHero()
 		hero:RespawnHero(false, false, false)
+		PlayerResource:SetCameraTarget(player_id, hero)
 
 		-- Set the picked hero for this player
 		PlayerResource:SetPickedHero(player_id, hero)

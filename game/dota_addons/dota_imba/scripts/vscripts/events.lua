@@ -129,9 +129,11 @@ local time = 0.0
 						if hero:GetTeamNumber() == 2 then
 							PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), GoodCamera)
 							FindClearSpaceForUnit(hero, GoodCamera:GetAbsOrigin(), false)
+							print("Goodguy camera shrine")
 						else
 							PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), BadCamera)					
 							FindClearSpaceForUnit(hero, BadCamera:GetAbsOrigin(), false)
+							print("Badguy camera shrine")
 						end
 					end
 				end
