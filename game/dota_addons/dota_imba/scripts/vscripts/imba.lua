@@ -370,31 +370,6 @@ function GameMode:ModifierFilter( keys )
 
 		if modifier_owner:HasModifier("modifier_imba_silencer_arcane_supremacy") then
 			if not modifier_owner:PassivesDisabled() then
-<<<<<<< HEAD
-=======
-				local silence_modifiers = 
-				{["modifier_silence"] = true,
-				 ["modifier_earth_spirit_geomagnetic_grip"] = true,
-				 ["modifier_imba_blood_bath_debuff_silence"] = true,					
-				 ["modifier_imba_glimpse_storm_debuff"] = true,
-				 ["modifier_imba_static_storm_debuff"] = true,
-				 ["modifier_imba_static_storm_debuff_linger"] = true,
-				 ["modifier_imba_gust_silence"] = true,
-				 ["modifier_imba_crippling_fear_silence"] = true,
-				 ["modifier_imba_stifling_dagger_silence"] = true,
-				 ["modifier_imba_smoke_screen_debuff_miss"] = true,
-				 ["modifier_imba_silencer_last_word_repeat_thinker"] = true,
-				 ["modifier_imba_silencer_global_silence"] = true,
-				 ["modifier_imba_ancient_seal_main"] = true,				 
-				 ["modifier_imba_ancient_seal_secondary"] = true,
-				 ["modifier_imba_blast_off_silence"] = true,
-				 ["modifier_item_imba_orchid_debuff"] = true,
-				 ["modifier_item_imba_bloodthorn_debuff"] = true,
-				 ["modifier_item_imba_azura_silence"] = true
-				 ["modifier_item_imba_sange_azura_proc"] = true,
-				 ["modifier_item_imba_azura_yasha_silence"] = true,
-				 ["modifier_item_imba_triumvirate_proc_debuff"] = true}
->>>>>>> parent of 73a8391c... WK fix, small Silencer fix
 
 				local arcane_supremacy = modifier_owner:FindModifierByName("modifier_imba_silencer_arcane_supremacy")
 				local silence_reduction_pct
