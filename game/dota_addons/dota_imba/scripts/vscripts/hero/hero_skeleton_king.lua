@@ -1414,7 +1414,11 @@ function modifier_imba_reincarnation_wraith_form:OnDestroy()
             local damageTable = {
             victim = self.parent,
             attacker = self.original_killer,
+<<<<<<< HEAD
             damage = 999999999,
+=======
+            damage = 100000000,
+>>>>>>> parent of 2d943405... Revert "WK wraith form kill enemies fix"
             damage_type = DAMAGE_TYPE_PURE,
             ability = self.ability_killer,
             }
