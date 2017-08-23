@@ -720,7 +720,7 @@ function modifier_imba_mortal_strike:GetModifierPreAttack_CriticalStrike(keys)
             end
 
             -- Psuedo Roll for a critical            
-            if RollPseudoRandom(self.crit_chance, self) then
+            if RollPseudoRandom(crit_chance, self) then
 
                 -- Mark this attack as a critical for a small duration
                 self.mortal_critical_strike = true
@@ -1414,13 +1414,10 @@ function modifier_imba_reincarnation_wraith_form:OnDestroy()
             local damageTable = {
             victim = self.parent,
             attacker = self.original_killer,
-<<<<<<< HEAD
-            damage = 999999999,
-=======
             damage = 100000000,
->>>>>>> parent of 2d943405... Revert "WK wraith form kill enemies fix"
             damage_type = DAMAGE_TYPE_PURE,
             ability = self.ability_killer,
+            damage_flags = DOTA_DAMAGE_FLAG_BYPASSES_INVULNERABILITY + DOTA_DAMAGE_FLAG_BYPASSES_BLOCK + DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NO_DAMAGE_MULTIPLIERS + DOTA_DAMAGE_FLAG_REFLECTION,
             }
             ApplyDamage(damageTable)
         end
