@@ -720,7 +720,7 @@ function modifier_imba_mortal_strike:GetModifierPreAttack_CriticalStrike(keys)
             end
 
             -- Psuedo Roll for a critical            
-            if RollPseudoRandom(crit_chance, self) then
+            if RollPseudoRandom(self.crit_chance, self) then
 
                 -- Mark this attack as a critical for a small duration
                 self.mortal_critical_strike = true
