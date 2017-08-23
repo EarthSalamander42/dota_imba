@@ -45,19 +45,48 @@ function GetWinningHeroName(playerID)
     elseif winning_team == "Dire" then
         winning_team = DOTA_TEAM_BADGUYS    
     end    
-
-    if playerID then
-        local hero = PlayerResource:GetPlayer(playerID):GetAssignedHero()
-        if hero:GetTeamNumber() == winning_team then
-            local hero_name = PlayerResource:GetSelectedHeroName(playerID)
-            hero_name = string.gsub(hero_name, "npc_dota_hero_", "") -- Removes the npc_dota_hero_ perfix
-        else
-            return ""
-        end
-    else
-        print("no player id passed to function")
-        return ""
+    
+    local hero = PlayerResource:GetPlayer(playerID):GetAssignedHero()
+    if not hero then
+        print("no hero found. Check passed player ID")
+        return nil
     end
+
+    -- Check winning team
+    if hero:GetTeamNumber() == winning_team then
+        local hero_name = PlayerResource:GetSelectedHeroName(playerID)
+        hero_name = string.gsub(hero_name, "npc_dota_hero_", "") -- Removes the npc_dota_hero_ perfix
+    else
+        -- If it is not a hero that won, return an empty string
+        return ""
+    end    
+end
+
+function GetPickedTalents(playerID)
+    local hero = PlayerResource:GetPlayer(playerID):GetAssignedHero()
+
+    if not hero then
+        print("no hero found. Check passed player ID")
+        return nil
+    end
+
+    -- Get the partial hero name
+    local hero_name = PlayerResource:GetSelectedHeroName(playerID)
+    hero_name = string.gsub(hero_name, "npc_dota_hero_", "")    
+
+    -- Get talent partial names
+    local talent_prefix = "special_bonus_imba_"..hero_name    
+
+    -- Get picked talents
+    local picked_talents = {}
+    for i = 1, 8 do
+        print(talent_prefix.."_"..i)
+        if hero:HasTalent(talent_prefix.."_"..i) then            
+            table.insert(picked_talents, talent_prefix.."_"..i)
+        end
+    end
+
+    return picked_talents    
 end
 
 -- Current gold and item net worth
