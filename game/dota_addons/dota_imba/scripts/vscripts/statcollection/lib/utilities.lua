@@ -36,6 +36,30 @@ function GetHeroName(playerID)
     return heroName
 end
 
+function GetWinningHeroName(playerID)
+    local winning_team = GAME_WINNER_TEAM
+
+    -- Convert winning team. If no team has won (disconnect) the game winners will be "none".
+    if winning_team == "Radiant" then
+        winning_team = DOTA_TEAM_GOODGUYS
+    elseif winning_team == "Dire" then
+        winning_team = DOTA_TEAM_BADGUYS    
+    end    
+
+    if playerID then
+        local hero = PlayerResource:GetPlayer(playerID):GetAssignedHero()
+        if hero:GetTeamNumber() == winning_team then
+            local hero_name = PlayerResource:GetSelectedHeroName(playerID)
+            hero_name = string.gsub(hero_name, "npc_dota_hero_", "") -- Removes the npc_dota_hero_ perfix
+        else
+            return ""
+        end
+    else
+        print("no player id passed to function")
+        return ""
+    end
+end
+
 -- Current gold and item net worth
 function GetNetworth(hero)
     local networth = hero:GetGold()
