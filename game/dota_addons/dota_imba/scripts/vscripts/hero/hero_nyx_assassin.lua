@@ -195,9 +195,6 @@ function imba_nyx_assassin_impale:OnProjectileHit_ExtraData(target, location, Ex
     -- Hurl target in the air
     local knockbackProperties =
     {
-        center_x = target.x,
-        center_y = target.y,
-        center_z = target.z,
         duration = air_time,
         knockback_duration = air_time,
         knockback_distance = 0,
@@ -206,6 +203,10 @@ function imba_nyx_assassin_impale:OnProjectileHit_ExtraData(target, location, Ex
 
     target:RemoveModifierByName("modifier_knockback")
     target:AddNewModifier(target, nil, "modifier_knockback", knockbackProperties)
+     -- We need to do this because the gesture takes it's fucking time to stop
+    Timers:CreateTimer(0.5, function()
+        target:RemoveGesture(ACT_DOTA_FLAIL)
+    end)
 
     if impale_repeater and IsServer() then
         CreateModifierThinker(caster, ability, "modifier_imba_impale_talent_thinker", { duration = repeat_duration }, target:GetAbsOrigin(), caster:GetTeamNumber(), false)
@@ -395,9 +396,28 @@ function modifier_imba_impale_stun:OnDestroy()
     end
 end
 
+function modifier_imba_impale_stun:DeclareFunctions()
+    local funcs =   {
+    MODIFIER_PROPERTY_OVERRIDE_ANIMATION
+}
+    return funcs 
+end
+
+function modifier_imba_impale_stun:GetOverrideAnimation()
+    return ACT_DOTA_DISABLED
+end
+
 function modifier_imba_impale_stun:CheckState()
     local state = {[MODIFIER_STATE_STUNNED] = true}
     return state
+end
+
+function modifier_imba_impale_stun:GetEffectName()
+    return "particles/generic_gameplay/generic_stunned.vpcf"
+end
+
+function modifier_imba_impale_stun:GetEffectAttachType()
+    return PATTACH_OVERHEAD_FOLLOW
 end
 
 function modifier_imba_impale_stun:IsHidden() return false end
@@ -1336,14 +1356,11 @@ function modifier_imba_vendetta:OnAttackLanded(keys)
             -- Create alert
             SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, target, damage, nil)
 
-            -- IsAlive doesn't register death if ApplyDamage is lethal...need to wait a frame
-            Timers:CreateTimer(FrameTime(), function()
-                if modifier_charged_handler then
-                    if not self.dont_consume_stacks or target:IsAlive() then
-                        modifier_charged_handler:Destroy()
-                    end
+            if modifier_charged_handler then
+                if not self.dont_consume_stacks or target:IsAlive() then
+                    modifier_charged_handler:Destroy()
                 end
-            end)
+            end
 
             -- Remove modifier
             self:Destroy()

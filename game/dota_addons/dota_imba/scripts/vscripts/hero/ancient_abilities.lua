@@ -44,10 +44,10 @@ function AncientThink( keys )
 	
 	-- Ancient abilities logic
 	local behemoth_adjustment = 0
-	if SPAWN_ANCIENT_BEHEMOTHS then behemoth_adjustment = -1 end
-	local tier_1_ability = caster:GetAbilityByIndex(4 + behemoth_adjustment)
-	local tier_2_ability = caster:GetAbilityByIndex(5 + behemoth_adjustment)
-	local tier_3_ability = caster:GetAbilityByIndex(6 + behemoth_adjustment)
+	if SPAWN_ANCIENT_BEHEMOTHS then behemoth_adjustment = 1 end
+	local tier_1_ability = caster:GetAbilityByIndex(3 + behemoth_adjustment)
+	local tier_2_ability = caster:GetAbilityByIndex(4 + behemoth_adjustment)
+	local tier_3_ability = caster:GetAbilityByIndex(5 + behemoth_adjustment)
 
 	-- If health < 40%, refresh abilities once
 	if (( ancient_health < 0.40 and IMBA_PLAYERS_ON_GAME == 20 ) and not caster.abilities_refreshed ) then
@@ -69,6 +69,16 @@ function AncientThink( keys )
 		tier_3_ability:OnSpellStart()
 		tier_3_ability:SetActivated(false)
 		caster.tier_3_cast = true
+
+		-- Fix to having people stuck under the ancient
+		if tier_3_ability:GetName() == "phoenix_supernova" then
+			Timers:CreateTimer(6.1, function() 
+				local units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 600, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+				for _,unit in pairs(units) do 
+					unit:SetUnitOnClearGround()
+				end
+			end)
+		end
 		return nil
 	end
 
@@ -106,10 +116,10 @@ function AncientAttacked( keys )
 	
 	-- Ancient abilities logic
 	local behemoth_adjustment = 0
-	if SPAWN_ANCIENT_BEHEMOTHS then behemoth_adjustment = -1 end
-	local tier_1_ability = caster:GetAbilityByIndex(4 + behemoth_adjustment)
-	local tier_2_ability = caster:GetAbilityByIndex(5 + behemoth_adjustment)
-	local tier_3_ability = caster:GetAbilityByIndex(6 + behemoth_adjustment)
+	if SPAWN_ANCIENT_BEHEMOTHS then behemoth_adjustment = 1 end
+	local tier_1_ability = caster:GetAbilityByIndex(3 + behemoth_adjustment)
+	local tier_2_ability = caster:GetAbilityByIndex(4 + behemoth_adjustment)
+	local tier_3_ability = caster:GetAbilityByIndex(5 + behemoth_adjustment)
 
 	-- If health < 40%, refresh abilities once
 	if (( ancient_health < 0.40 and IMBA_PLAYERS_ON_GAME == 20 ) and not caster.abilities_refreshed ) then
@@ -370,3 +380,5 @@ function StalwartDefenseParticleEnd( keys )
 		unit.stalwart_defense_buff_pfx = nil
 	end
 end
+
+

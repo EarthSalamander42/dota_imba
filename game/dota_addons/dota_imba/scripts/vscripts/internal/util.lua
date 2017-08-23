@@ -509,7 +509,9 @@ function GetAncientAbility( tier )
 	-- Tier 1 abilities
 	if tier == 1 then
 		local ability_list = {
-			"venomancer_poison_nova"
+			--"venomancer_poison_nova"
+			"juggernaut_blade_fury",
+			
 		}
 
 		return ability_list[RandomInt(1, #ability_list)]
@@ -527,9 +529,9 @@ function GetAncientAbility( tier )
 	-- Tier 3 abilities
 	elseif tier == 3 then
 		local ability_list = {
-			"treant_overgrowth",
 			"tidehunter_ravage",
-			"magnataur_reverse_polarity"
+			"magnataur_reverse_polarity",
+			"phoenix_supernova",
 		}
 
 		return ability_list[RandomInt(1, #ability_list)]
