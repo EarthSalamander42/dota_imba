@@ -568,7 +568,7 @@ function GameMode:ItemAddedFilter( keys )
 			ParticleManager:ReleaseParticleIndex(item.x_pfx)
 			item.x_pfx = nil
 		end
-		if unit:IsRealHero() then
+		if unit:IsRealHero() or ( unit:GetClassname() == "npc_dota_lone_druid_bear" ) then
 			item:SetPurchaser(nil)
 			item:SetPurchaseTime(0)
 			local rapier_amount = 0
