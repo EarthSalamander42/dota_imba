@@ -167,10 +167,14 @@ if IsServer() then
 	
 	function imba_tiny_avalanche:OnProjectileHit_ExtraData(hTarget, vLocation, extradata)
 		local caster = self:GetCaster()
+		local grow_ability = caster:FindAbilityByName("imba_tiny_grow")
 		
 		local duration = self:GetSpecialValueFor("stun_duration")
 		local toss_mult = self:GetSpecialValueFor("toss_damage_multiplier")
-		local radius = self:GetSpecialValueFor("radius") + caster:FindModifierByName("modifier_imba_tiny_rolling_stone"):GetStackCount() * caster:FindAbilityByName("imba_tiny_grow"):GetSpecialValueFor("rolling_stones_aoe")
+		local radius = self:GetSpecialValueFor("radius")
+		if grow_ability then
+			radius = radius + caster:FindModifierByName("modifier_imba_tiny_rolling_stone"):GetStackCount() * caster:FindAbilityByName("imba_tiny_grow"):GetSpecialValueFor("rolling_stones_aoe")
+		end
 		local interval = self:GetSpecialValueFor("tick_interval")
 		local damage = self:GetTalentSpecialValueFor("avalanche_damage") * self:GetSpecialValueFor("tick_interval")		
 		self.repeat_increase = false
@@ -471,9 +475,10 @@ function modifier_tiny_toss_movement:TossLand()
 		self.toss_land_commenced = true
 
 		local caster = self:GetCaster()
+		local rolling_stone_modifier = caster:FindModifierByName("modifier_imba_tiny_rolling_stone")
 		local radius = self:GetAbility():GetSpecialValueFor("radius")
-		if caster:HasModifier("modifier_imba_tiny_rolling_stone") and caster:HasAbility("imba_tiny_grow") then
-		 	radius = radius + caster:FindModifierByName("modifier_imba_tiny_rolling_stone"):GetStackCount() * caster:FindAbilityByName("imba_tiny_grow"):GetSpecialValueFor("rolling_stones_aoe")
+		if rolling_stone_modifier and caster:HasAbility("imba_tiny_grow") then
+		 	radius = radius + rolling_stone_modifier:GetStackCount() * caster:FindAbilityByName("imba_tiny_grow"):GetSpecialValueFor("rolling_stones_aoe")
 		end
 
 		-- Destroy trees at the target point
@@ -483,7 +488,11 @@ function modifier_tiny_toss_movement:TossLand()
 		for _, victim in pairs(victims) do
 			local damage = self.ability:GetSpecialValueFor("toss_damage")
 			if victim == self.parent then
-				damage = damage * (1 + (self.ability:GetSpecialValueFor("bonus_damage_pct") + caster:FindModifierByName("modifier_imba_tiny_rolling_stone"):GetStackCount()) / 100)
+				local damage_multiplier = 1 + self.ability:GetSpecialValueFor("bonus_damage_pct") / 100
+				if rolling_stone_modifier then
+					damage_multiplier = damage_multiplier + rolling_stone_modifier:GetStackCount() / 100
+				end
+				damage = damage * damage_multiplier
 			end
 			if victim:IsBuilding() then
 				damage = damage * self.ability:GetSpecialValueFor("building_dmg") * 0.01

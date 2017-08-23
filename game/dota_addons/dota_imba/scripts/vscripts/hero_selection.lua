@@ -18,10 +18,13 @@ end
 function HeroSelection:Start()
 
 	-- Play pick music
-	HeroSelection.pick_sound_dummy_good = CreateUnitByName("npc_dummy_unit", GoodCamera:GetAbsOrigin(), false, nil, nil, DOTA_TEAM_GOODGUYS)
-	EmitSoundOn("Imba.PickPhaseDrums", HeroSelection.pick_sound_dummy_good)
-	HeroSelection.pick_sound_dummy_bad = CreateUnitByName("npc_dummy_unit", BadCamera:GetAbsOrigin(), false, nil, nil, DOTA_TEAM_GOODGUYS)
-	EmitSoundOn("Imba.PickPhaseDrums", HeroSelection.pick_sound_dummy_bad)
+--	HeroSelection.pick_sound_dummy_good = CreateUnitByName("npc_dummy_unit", GoodCamera:GetAbsOrigin(), false, nil, nil, DOTA_TEAM_GOODGUYS)
+--	EmitSoundOn("Imba.PickPhaseDrums", HeroSelection.pick_sound_dummy_good)
+	EmitSoundOnLocationWithCaster(GoodCamera:GetAbsOrigin(), "Imba.PickPhaseDrums", nil)
+
+--	HeroSelection.pick_sound_dummy_bad = CreateUnitByName("npc_dummy_unit", BadCamera:GetAbsOrigin(), false, nil, nil, DOTA_TEAM_GOODGUYS)
+--	EmitSoundOn("Imba.PickPhaseDrums", HeroSelection.pick_sound_dummy_bad)
+	EmitSoundOnLocationWithCaster(GoodCamera:GetAbsOrigin(), "Imba.PickPhaseDrums", nil)
 
 	-- Figure out which players have to pick
 	HeroSelection.HorriblyImplementedReconnectDetection = {}
@@ -458,6 +461,7 @@ end
 	to disappear.
 ]]
 function HeroSelection:EndPicking()
+local time = 0.0
 
 	--Stop listening to events (except picks)
 	CustomGameEventManager:UnregisterListener( self.listener_repick )
@@ -470,6 +474,7 @@ function HeroSelection:EndPicking()
 		if HeroSelection.playerPicks[player_id] and HeroSelection.playerPickState[player_id].pick_state ~= "in_game" then
 			HeroSelection:AssignHero(player_id, HeroSelection.playerPicks[player_id])
 			HeroSelection.playerPickState[player_id].pick_state = "in_game"
+			StartGarbageCollector()
 		end
 	end
 
@@ -495,6 +500,7 @@ end
 ]]
 function HeroSelection:AssignHero(player_id, hero_name)
 	PrecacheUnitByNameAsync(hero_name, function()
+		print("Assign Hero")
 
 		-- Fetch wisp entity
 		local wisp = PlayerResource:GetSelectedHeroEntity(player_id)
@@ -502,8 +508,6 @@ function HeroSelection:AssignHero(player_id, hero_name)
 
 		-- Switch for the new hero
 		PlayerResource:ReplaceHeroWith(player_id, hero_name, 0, 0 )
-		PlayerResource:SetCameraTarget(player_id, nil)
-		
 
 		-------------------------------------------------------------------------------------------------
 		-- IMBA: First hero spawn initialization
@@ -512,6 +516,13 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		-- Fetch this player's hero entity
 		local hero = PlayerResource:GetPlayer(player_id):GetAssignedHero()
 		hero:RespawnHero(false, false, false)
+		PlayerResource:SetCameraTarget(player_id, hero)
+		Timers:CreateTimer(FrameTime(), function()
+			PlayerResource:SetCameraTarget(player_id, nil)
+		end)
+		Timers:CreateTimer(2.0, function() -- I'm shit scared camera still stays locked up so...
+			PlayerResource:SetCameraTarget(player_id, nil)
+		end)
 
 		-- Set the picked hero for this player
 		PlayerResource:SetPickedHero(player_id, hero)

@@ -37,7 +37,7 @@ function imba_slardar_guardian_sprint:GetCooldown()
 	local caster = self:GetCaster()
 	local ability = self
 	local sprint_buff = "modifier_imba_guardian_sprint_buff"	
-	
+
 	-- Ability specials	
 	local rip_current_cd = ability:GetSpecialValueFor("rip_current_cd")
 	local sprint_cd = ability:GetSpecialValueFor("sprint_cd")
@@ -1422,6 +1422,7 @@ end
 
 function modifier_imba_rain_cloud_slardar:OnCreated()
 	if IsServer() then
+		print("Rain Cloud")
 		-- Ability properties	
 		local caster = self:GetCaster()
 		local ability = self:GetAbility()

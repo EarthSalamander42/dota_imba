@@ -427,8 +427,7 @@ function imba_kunkka_torrent:OnSpellStart()
 				end
 
 				-- Creates the post-ability sound effect
-				local dummy = CreateUnitByName("npc_dummy_unit", target, false, caster, caster, caster:GetTeamNumber() )
-				dummy:EmitSound("Ability.Torrent")
+				EmitSoundOnLocationWithCaster(target, "Ability.Torrent", caster)
 
 				-- Draws the particle
 				local particle = "particles/hero/kunkka/torrent_splash.vpcf"
@@ -458,10 +457,6 @@ function imba_kunkka_torrent:OnSpellStart()
 						end)
 					end
 				end
-
-				Timers:CreateTimer(stun_duration, function()
-					dummy:ForceKill( true )
-				end)
 			end)
 		end
 	end
@@ -1313,12 +1308,7 @@ function imba_kunkka_ghostship:OnSpellStart()
 			crash_pos = caster_pos + boat_direction * crash_distance
 			spawn_pos = caster_pos + boat_direction * start_distance * (-1)
 		end
-		
-		local dummy = CreateUnitByName("npc_dummy_unit", crash_pos, true, caster, caster, caster:GetTeamNumber() )
-		crash_pos = dummy:GetAbsOrigin()
-		dummy:Destroy()
-		dummy = nil
-		
+
 		travel_time = ((start_distance + crash_distance - radius ) / speed )
 		local bubbles_pfx
 		-- Aghanims crushing down
@@ -1362,11 +1352,6 @@ function imba_kunkka_ghostship:OnSpellStart()
                         -- Deal crash damage to enemies hit
                         ApplyDamage({victim = enemy, attacker = caster, ability = self, damage = damage, damage_type = self:GetAbilityDamageType()})
 					end
-
-					local dummy = CreateUnitByName("npc_dummy_unit", crash_pos, true, caster, caster, caster:GetTeamNumber() )
-					crash_pos = dummy:GetAbsOrigin()
-					dummy:EmitSound("Ability.Ghostship.crash")
-					dummy:Destroy()
 
 					-- Setting ship underneath the world + deleting it
 					ParticleManager:SetParticleControl(boat_pfx, 3, ( float_boat - Vector(0,0,500)) )
@@ -1419,9 +1404,7 @@ function imba_kunkka_ghostship:OnSpellStart()
 				ParticleManager:ReleaseParticleIndex(crash_pfx)
 
 				-- Fire sound on crash point
-				local dummy = CreateUnitByName("npc_dummy_unit", crash_pos, false, caster, caster, caster:GetTeamNumber() )
-				dummy:EmitSound("Ability.Ghostship.crash")
-				dummy:Destroy()
+				EmitSoundOnLocationWithCaster(crash_pos, "Ability.Ghostship.crash", caster)
 
 				-- Stun and damage enemies
 				local enemies = FindUnitsInRadius(caster:GetTeam(), crash_pos, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, self:GetAbilityTargetType(), 0, 0, false)

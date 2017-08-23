@@ -75,11 +75,9 @@ end
 function imba_sven_storm_bolt:OnProjectileHit_ExtraData(target, location, ExtraData)
 	if IsServer() then
 		local caster = self:GetCaster()
-		local dummy = CreateUnitByName("npc_dummy_unit", location, false, caster, caster, caster:GetTeamNumber() )
 		
 		-- Play sound
-		dummy:EmitSound("Hero_Sven.StormBoltImpact")
-		dummy:Destroy()
+		EmitSoundOnLocationWithCaster(location, "Hero_Sven.StormBoltImpact", caster)
 		caster:RemoveModifierByName("modifier_imba_storm_bolt_caster")
 		caster:RemoveNoDraw()
 		if target then
@@ -758,22 +756,17 @@ function imba_sven_colossal_slash:OnSpellStart()
 			iVisionTeamNumber 	= caster:GetTeamNumber()
 		}
 		ProjectileManager:CreateLinearProjectile(projectile)
-		-- Create sound dummy
-		local dummy = CreateUnitByName("npc_dummy_unit", caster_loc, false, caster, caster, caster:GetTeamNumber() )
-		EmitSoundOn("Imba.SvenShockWave",dummy)
+
+		EmitSoundOnLocationWithCaster(caster_loc, "Imba.SvenShockWave", caster)
 		local current_distance = 0
 		local rate = 0.3
 		-- Provide vision along the projectile's path
 		Timers:CreateTimer(0, function()
 			local location = caster_loc + direction * current_distance
-			dummy:SetAbsOrigin(location)
 			current_distance = current_distance + (proj_speed * rate)
 			if current_distance < total_range then
 				return rate
 			end
-		end)
-		Timers:CreateTimer(3, function()
-			dummy:Destroy()
 		end)
 	end
 end

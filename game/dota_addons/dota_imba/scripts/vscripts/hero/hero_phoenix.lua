@@ -714,14 +714,14 @@ function imba_phoenix_launch_fire_spirit:OnSpellStart()
 		Ability = ability,	
 		EffectName = "particles/hero/phoenix/phoenix_fire_spirit_launch.vpcf",
         iMoveSpeed = self:GetSpecialValueFor("spirit_speed"),
-		vSourceLoc= direction,                -- Optional (HOW)
-		bDrawsOnMinimap = false,                          -- Optional
-        bDodgeable = false,                                -- Optional
-        bIsAttack = false,                                -- Optional
-        bVisibleToEnemies = true,                         -- Optional
-        bReplaceExisting = false,                         -- Optional
-        flExpireTime = GameRules:GetGameTime() + 10,      -- Optional but recommended
-		bProvidesVision = false,                           -- Optional
+		vSourceLoc = direction,							-- Optional (HOW)
+		bDrawsOnMinimap = false,						-- Optional
+        bDodgeable = false,								-- Optional
+        bIsAttack = false,								-- Optional
+        bVisibleToEnemies = true,						-- Optional
+        bReplaceExisting = false,						-- Optional
+        flExpireTime = GameRules:GetGameTime() + 10,	-- Optional but recommended
+		bProvidesVision = false,						-- Optional
 		iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
 	}
 	ProjectileManager:CreateTrackingProjectile(info)

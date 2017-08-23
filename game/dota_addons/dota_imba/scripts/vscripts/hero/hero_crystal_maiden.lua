@@ -882,7 +882,7 @@ function imba_crystal_maiden_freezing_field:OnChannelThink()
 	self.frametime = self.frametime + FrameTime()
 	if not self.are_we_nuclear and self.frametime >= self.explosion_interval then
 		self.frametime = 0
-		
+
 		-- Get random point
 		local castDistance = RandomInt( self:GetSpecialValueFor("explosion_min_dist"), self:GetSpecialValueFor("explosion_max_dist") )
 		local angle = RandomInt( 0, 90 )
@@ -891,7 +891,7 @@ function imba_crystal_maiden_freezing_field:OnChannelThink()
 		local attackPoint = Vector( 0, 0, 0 )
 		local particle_name =  "particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_explosion.vpcf"
 		local target_loc = self.freezing_field_center
-		
+
 		if self.quadrant == 1 then			-- NW
 			attackPoint = Vector( target_loc.x - dx, target_loc.y + dy, target_loc.z )
 		elseif self.quadrant == 2 then		-- NE
@@ -901,7 +901,7 @@ function imba_crystal_maiden_freezing_field:OnChannelThink()
 		else								-- SW
 			attackPoint = Vector( target_loc.x - dx, target_loc.y - dy, target_loc.z )
 		end
-		
+
 		--Increment quadrant for next think
 		self.quadrant = 4 % (self.quadrant + 1)			
 
@@ -912,20 +912,14 @@ function imba_crystal_maiden_freezing_field:OnChannelThink()
 			ApplyDamage({victim =  v, attacker = self.caster, damage = self.damage, damage_type = DAMAGE_TYPE_MAGICAL, ability = self})
 		end
 		
-		-- Create particle/sound dummy unit
-		local explosion_dummy = CreateUnitByName("npc_dummy_unit", attackPoint, false, nil, nil, self.caster:GetTeamNumber())
-		
 		-- Fire effect
 		local fxIndex = ParticleManager:CreateParticle(particle_name, PATTACH_CUSTOMORIGIN, caster)
-		ParticleManager:SetParticleControl(fxIndex, 0, explosion_dummy:GetAbsOrigin())
-		ParticleManager:SetParticleControl(fxIndex, 1, explosion_dummy:GetAbsOrigin())
+		ParticleManager:SetParticleControl(fxIndex, 0, attackPoint)
+		ParticleManager:SetParticleControl(fxIndex, 1, attackPoint)
 		ParticleManager:ReleaseParticleIndex(fxIndex)
 
 		-- Fire sound at the center position
-		explosion_dummy:EmitSound("hero_Crystal.freezingField.explosion")
-
-		-- Destroy dummy
-		explosion_dummy:Destroy()
+		EmitSoundOnLocationWithCaster(attackPoint, "hero_Crystal.freezingField.explosion", self:GetCaster())
 	end
 	
 end
@@ -937,10 +931,10 @@ function imba_crystal_maiden_freezing_field:OnChannelFinish(bInterrupted)
 		self:StopSound("Imba.CrystalMaidenLetItGo01")
 		self:StopSound("Imba.CrystalMaidenLetItGo02")
 		self:StopSound("Imba.CrystalMaidenLetItGo03")
-		
+
 		-- Stop animation
 		EndAnimation(self.caster)
-		
+
 		--Kill Particles
 		ParticleManager:DestroyParticle(self.freezing_field_particle, true)
 		ParticleManager:ReleaseParticleIndex(self.freezing_field_particle)
