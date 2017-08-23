@@ -1074,8 +1074,34 @@ end
 
 	The hero parameter is the hero entity that just spawned in
 ]]
-function GameMode:OnHeroInGame(hero)
+function GameMode:OnHeroInGame(hero)	
+	local time_elapsed = 0
 
+	Timers:CreateTimer(function()		
+		if not hero.is_real_wisp and hero:GetUnitName() == "npc_dota_hero_wisp"  then
+			if not hero:HasModifier("modifier_imba_prevent_actions_game_start") then
+				hero:AddNewModifier(hero, nil, "modifier_imba_prevent_actions_game_start", {})
+				hero:AddEffects(EF_NODRAW)
+				hero:SetDayTimeVisionRange(475)
+				hero:SetNightTimeVisionRange(475)				
+				if hero:GetTeamNumber() == DOTA_TEAM_GOODGUYS then
+					PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), GoodCamera)
+					FindClearSpaceForUnit(hero, GoodCamera:GetAbsOrigin(), false)
+					print("Goodguy camera shrine")
+				else
+					PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), BadCamera)					
+					FindClearSpaceForUnit(hero, BadCamera:GetAbsOrigin(), false)
+					print("Badguy camera shrine")
+				end
+			end
+		end
+		if time_elapsed < 0.9 then
+			time_elapsed = time_elapsed + 0.1
+		else			
+			return nil
+		end
+		return 0.1
+	end)
 end
 
 --[[	This function is called once and only once when the game completely begins (about 0:00 on the clock).  At this point,

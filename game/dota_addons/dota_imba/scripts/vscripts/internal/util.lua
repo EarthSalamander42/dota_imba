@@ -1163,12 +1163,12 @@ end
 -- This function is responsible for cleaning dummy units and wisps that may have accumulated
 function StartGarbageCollector()	
 	-- Find all wisps in the game
-	local wisps = Entities:FindAllByName("npc_dota_hero_wisp")
-	print("Finding wisp...")
+	local wisps = Entities:FindAllByName("npc_dota_hero_wisp")	
+	print("finding wisps")
 
-	-- Cycle each wisp, and see if it has a player owner. If it doesn't, NUKE IT BLYAT!
+	-- Cycle each wisp, and see if it has a player owner. If it doesn't, NUKE IT!
 	for _, wisp in pairs(wisps) do
-		if not wisp:GetPlayerOwner() then
+		if not wisp.is_real_wisp then
 			print("WISP-O-NUKE LAUNCHED!")
 			UTIL_Remove(wisp)
 		end			
@@ -1184,7 +1184,7 @@ function StartGarbageCollector()
 
 			local dummy_creation_time = dummy:GetCreationTime()
 
-			if gametime - dummy_creation_time > 120 then
+			if gametime - dummy_creation_time > 60 then
 				print("NUKING A LOST DUMMY!")
 				UTIL_Remove(dummy)
 			end
