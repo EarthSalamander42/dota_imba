@@ -1108,7 +1108,7 @@ function modifier_imba_reincarnation:OnIntervalThink()
         self:Destroy()
     end
 
-    if self:GetParent():FindTalentValue("special_bonus_imba_skeleton_king_5", "talent_trained") == 1 then
+    if self:GetParent():FindTalentValue("special_bonus_imba_skeleton_king_5", "talent_trained") == 1 and self:GetCaster():IsAlive() then
         if self:GetAbility():GetAutoCastState() and self:GetAbility():IsCooldownReady()  then
             local units = FindUnitsInRadius(self.caster:GetTeamNumber(),
                                     self.caster:GetAbsOrigin(),
