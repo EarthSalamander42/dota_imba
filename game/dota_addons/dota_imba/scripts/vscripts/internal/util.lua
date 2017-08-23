@@ -509,7 +509,7 @@ function GetAncientAbility( tier )
 	-- Tier 1 abilities
 	if tier == 1 then
 		local ability_list = {
-			--"venomancer_poison_nova"
+			"venomancer_poison_nova"
 			"juggernaut_blade_fury",
 			
 		}
