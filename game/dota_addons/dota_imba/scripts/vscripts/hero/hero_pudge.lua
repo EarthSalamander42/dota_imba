@@ -940,17 +940,12 @@ function imba_pudge_butchers_cleaver:OnProjectileHit(hTarget,vLocation)
 				cleaver:RemoveEffects(EF_NODRAW)		
 			end
 		end
-		UTIL_Remove(self.cleaver)
 		return 
 	end
 	
 	local nFXIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_pudge/pudge_meathook_impact.vpcf", PATTACH_CUSTOMORIGIN, hTarget )
 	ParticleManager:SetParticleControlEnt( nFXIndex, 0, hTarget, PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true )
 	ParticleManager:ReleaseParticleIndex( nFXIndex )
-	
-	self.cleaver = CreateUnitByName("npc_dummy_unit",self:GetCaster():GetAbsOrigin(),false,nil,nil,self:GetCaster():GetTeamNumber())
-	self.cleaver:AddNewModifier(self:GetCaster(),self,"modifier_butchers_cleaver_dummy",{duration = self:GetSpecialValueFor("root_duration")})
-	self.cleaver.parentUnit = hTarget
 
 	hTarget:AddNewModifier(self:GetCaster(),self,"modifier_butchers_cleaver",{duration = self:GetSpecialValueFor("root_duration")})
 

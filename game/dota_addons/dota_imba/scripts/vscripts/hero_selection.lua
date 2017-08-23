@@ -18,10 +18,13 @@ end
 function HeroSelection:Start()
 
 	-- Play pick music
-	HeroSelection.pick_sound_dummy_good = CreateUnitByName("npc_dummy_unit", GoodCamera:GetAbsOrigin(), false, nil, nil, DOTA_TEAM_GOODGUYS)
-	EmitSoundOn("Imba.PickPhaseDrums", HeroSelection.pick_sound_dummy_good)
-	HeroSelection.pick_sound_dummy_bad = CreateUnitByName("npc_dummy_unit", BadCamera:GetAbsOrigin(), false, nil, nil, DOTA_TEAM_GOODGUYS)
-	EmitSoundOn("Imba.PickPhaseDrums", HeroSelection.pick_sound_dummy_bad)
+--	HeroSelection.pick_sound_dummy_good = CreateUnitByName("npc_dummy_unit", GoodCamera:GetAbsOrigin(), false, nil, nil, DOTA_TEAM_GOODGUYS)
+--	EmitSoundOn("Imba.PickPhaseDrums", HeroSelection.pick_sound_dummy_good)
+	EmitSoundOnLocationWithCaster(GoodCamera:GetAbsOrigin(), "Imba.PickPhaseDrums", nil)
+
+--	HeroSelection.pick_sound_dummy_bad = CreateUnitByName("npc_dummy_unit", BadCamera:GetAbsOrigin(), false, nil, nil, DOTA_TEAM_GOODGUYS)
+--	EmitSoundOn("Imba.PickPhaseDrums", HeroSelection.pick_sound_dummy_bad)
+	EmitSoundOnLocationWithCaster(GoodCamera:GetAbsOrigin(), "Imba.PickPhaseDrums", nil)
 
 	-- Figure out which players have to pick
 	HeroSelection.HorriblyImplementedReconnectDetection = {}
@@ -472,17 +475,6 @@ local time = 0.0
 			HeroSelection:AssignHero(player_id, HeroSelection.playerPicks[player_id])
 			HeroSelection.playerPickState[player_id].pick_state = "in_game"
 			StartGarbageCollector()
-			Timers:CreateTimer(1.0, function()
-				PlayerResource:SetCameraTarget(player_id, nil)
-				if time < 15.0 then -- Cookies: Shit fix because when you pick Monkey King, everytime a monkey appears on map it locks camera on Shrine (ONLY WITH MK, BLACK MAGIC YOLO)
-					time = time + 1.0
-				else
-					time = nil
-					return nil
-				end
-				print(time)
-				return 1.0
-			end)
 		end
 	end
 
@@ -508,13 +500,13 @@ end
 ]]
 function HeroSelection:AssignHero(player_id, hero_name)
 	PrecacheUnitByNameAsync(hero_name, function()
+		print("Assign Hero")
 
 		-- Fetch wisp entity
 		local wisp = PlayerResource:GetSelectedHeroEntity(player_id)
 		wisp:SetRespawnsDisabled(true)				
 
 		-- Switch for the new hero
-		PlayerResource:SetCameraTarget(player_id, nil)
 		PlayerResource:ReplaceHeroWith(player_id, hero_name, 0, 0 )
 
 		-------------------------------------------------------------------------------------------------
@@ -525,7 +517,12 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		local hero = PlayerResource:GetPlayer(player_id):GetAssignedHero()
 		hero:RespawnHero(false, false, false)
 		PlayerResource:SetCameraTarget(player_id, hero)
-		PlayerResource:SetCameraTarget(player_id, nil)
+		Timers:CreateTimer(FrameTime(), function()
+			PlayerResource:SetCameraTarget(player_id, nil)
+		end)
+		Timers:CreateTimer(2.0, function() -- I'm shit scared camera still stays locked up so...
+			PlayerResource:SetCameraTarget(player_id, nil)
+		end)
 
 		-- Set the picked hero for this player
 		PlayerResource:SetPickedHero(player_id, hero)
