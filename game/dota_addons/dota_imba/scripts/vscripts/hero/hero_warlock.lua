@@ -1269,7 +1269,19 @@ function modifier_imba_flaming_fists:DeclareFunctions()
     return decFuncs
 end
 
-function modifier_imba_flaming_fists:GetModifierProcAttack_BonusDamage_Pure()
+function modifier_imba_flaming_fists:GetModifierProcAttack_BonusDamage_Pure(keys)
+    local target = keys.target
+
+    -- If the unit is not a hero or a creep, do nothing
+    if not target:IsHero() and not target:IsCreep() then
+        return nil
+    end
+
+    -- If the caster is broken, do nothing
+    if self.caster:PassivesDisabled() then
+        return nil
+    end
+
     return self.damage
 end
 
@@ -1284,12 +1296,13 @@ function modifier_imba_flaming_fists:OnAttackLanded(keys)
             -- If the unit is not a hero or a creep, do nothing
             if not target:IsHero() and not target:IsCreep() then
                 return nil
-            end            
+            end
 
             -- If the caster is broken, do nothing
             if self.caster:PassivesDisabled() then
                 return nil
             end
+
 
             local radius = self.radius
 
