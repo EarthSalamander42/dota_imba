@@ -1105,10 +1105,11 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_datadriven"
+		"BaseClass"										"ability_lua"
 		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"							"custom/imba_roshan_rage"
 		"MaxLevel"										"1"
+        "ScriptFile"                                    "hero/neutral_roshan.lua"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -1134,45 +1135,7 @@
 				"var_type"								"FIELD_FLOAT"
 				"armor_bonus"							"1"
 			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_roshan_rage"
-			{
-				"Passive"								"1"
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-
-				"ThinkInterval"							"0.1"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/neutral_roshan.lua"
-						"Function"						"RoshanRage"
-
-						"modifier_stack"				"modifier_imba_roshan_rage_stack"
-					}
-				}
-			}
-
-			"modifier_imba_roshan_rage_stack"
-			{
-				"Passive"								"0"
-				"IsHidden"								"0"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%as_bonus"
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%armor_bonus"
-				}
-			}
-		}
+		}		
 	}
 
 	//=================================================================================================================

@@ -161,24 +161,6 @@ function RoshlingBash( keys )
 	AddStacks(ability, caster, target, modifier_debuff, 1, true)
 end
 
-function RoshanRage( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local modifier_stack = keys.modifier_stack
-
-	-- Parameters
-	local base_hp_threshold = ability:GetSpecialValueFor("base_hp_threshold")
-	local stacking_hp_threshold_perc = ability:GetSpecialValueFor("stacking_hp_threshold_perc")
-
-	-- Calculate total buff stacks
-	local hp_per_stack = base_hp_threshold * (stacking_hp_threshold_perc ^ GAME_ROSHAN_KILLS)
-	local total_stacks = math.floor( (caster:GetMaxHealth() - caster:GetHealth()) / hp_per_stack )
-
-	-- Update the stacks buff
-	caster:RemoveModifierByName(modifier_stack)
-	AddStacks(ability, caster, caster, modifier_stack, total_stacks, true)
-end
-
 function RoshanFury( keys )
 	local caster = keys.caster
 	local target = keys.target
@@ -462,3 +444,62 @@ function RoshanAIthink( keys )
 		return nil
 	end
 end
+
+
+
+
+-- Roshan's Rage of the Immortal
+imba_roshan_rage = imba_roshan_rage or class({})
+LinkLuaModifier("modifier_imba_roshan_rage", "hero/neutral_roshan", LUA_MODIFIER_MOTION_NONE)
+
+function imba_roshan_rage:GetIntrinsicModifierName()
+	return "modifier_imba_roshan_rage"
+end
+
+modifier_imba_roshan_rage = modifier_imba_roshan_rage or class({})
+
+function modifier_imba_roshan_rage:IsHidden() return false end
+function modifier_imba_roshan_rage:IsPurgable() return false end
+function modifier_imba_roshan_rage:IsDebuff() return false end
+function modifier_imba_roshan_rage:IsPermanent() return true end
+
+function modifier_imba_roshan_rage:OnCreated()
+	-- Ability properties
+	self.caster = self:GetCaster()
+	self.ability = self:GetAbility()		
+
+	-- Ability specials
+	self.base_hp_threshold = self.ability:GetSpecialValueFor("base_hp_threshold")
+	self.stacking_hp_threshold_perc = self.ability:GetSpecialValueFor("stacking_hp_threshold_perc")
+	self.as_bonus = self.ability:GetSpecialValueFor("as_bonus")
+	self.armor_bonus = self.ability:GetSpecialValueFor("armor_bonus")
+
+	self:StartIntervalThink(2)
+end
+
+function modifier_imba_roshan_rage:OnIntervalThink()
+	if IsServer() then
+		-- Calculate total buff stacks
+		local hp_per_stack = self.base_hp_threshold * (self.stacking_hp_threshold_perc ^ GAME_ROSHAN_KILLS)
+		local total_stacks = math.floor( (self.caster:GetMaxHealth() - self.caster:GetHealth()) / hp_per_stack )	
+
+		-- Set Stacks
+		self:SetStackCount(total_stacks)
+	end
+end
+
+function modifier_imba_roshan_rage:DeclareFunctions()
+	local decFuncs = {MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+					  MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
+
+	return decFuncs
+end
+
+function modifier_imba_roshan_rage:GetModifierPhysicalArmorBonus()
+	return self.armor_bonus * self:GetStackCount()
+end
+
+function modifier_imba_roshan_rage:GetModifierAttackSpeedBonus_Constant()
+	return self.as_bonus * self:GetStackCount()
+end
+	
