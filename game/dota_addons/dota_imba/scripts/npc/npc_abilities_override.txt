@@ -2102,6 +2102,43 @@
 	//=================================================================================================================
 
 	//=================================================================================================================
+	// Ancient: Ravage
+	//=================================================================================================================
+	"tidehunter_ravage"
+	{
+		"MaxLevel"					"1"
+
+		"AbilityCastRange"			"3000"
+
+		"AbilityCastPoint"			"0.0"
+		
+		"AbilityCooldown"			"10"
+
+		"AbilityDamage"				"500"
+
+		"AbilityManaCost"			"0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"3000"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"speed"				"2270"
+			}
+			"03"
+			{	
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"3.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Ancient: Reverse Polarity
 	//=================================================================================================================
 	"magnataur_reverse_polarity"
@@ -2131,12 +2168,12 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"hero_stun_duration"	"2.0"
+				"hero_stun_duration"	"3.0"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"creep_stun_duration"	"3.0"
+				"creep_stun_duration"	"5.0"
 			}
 			"05"
 			{
@@ -2188,6 +2225,68 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"redirect_range_tooltip_scepter"	"1200"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ancient: Supernova
+	//=================================================================================================================
+	"phoenix_supernova"
+	{
+
+		"AbilityCastRange"				"1000"
+
+		"AbilityCastPoint"				"0"
+
+		"AbilityCooldown"				"10"
+
+		"AbilityDuration"				"6.0"
+
+		"AbilityManaCost"				"0"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"aura_radius"		"1000"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage_per_sec"	"200"
+			}
+			
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"stun_duration"		"3.0"
+				"LinkedSpecialBonus"	"special_bonus_unique_phoenix_2"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"max_hero_attacks"	"1000"
+				"LinkedSpecialBonus"	"special_bonus_unique_phoenix_1"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"max_hero_attacks_scepter"	"1000"
+				"LinkedSpecialBonus"	"special_bonus_unique_phoenix_1"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"tooltip_duration"	"6"
+			}
+			"07"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"cast_range_tooltip_scepter"	"500"
 			}
 		}
 	}
@@ -2273,6 +2372,57 @@
 				"var_type"						"FIELD_INTEGER"
 				"damage_reflect_pct_tooltip"	"100"
 				"LinkedSpecialBonus"			"special_bonus_unique_nyx"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Blade Fury
+	//=================================================================================================================
+	"juggernaut_blade_fury"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"FightRecapLevel"				"1"
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0 "
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"10"
+		"AbilityDuration"				"10.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"		
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"blade_fury_damage_tick"	"0.2"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"blade_fury_radius"			"1500"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"blade_fury_damage"			"200"
+				"LinkedSpecialBonus"		"special_bonus_unique_juggernaut"
 			}
 		}
 	}
@@ -11446,60 +11596,6 @@
 	}
 
 	//=================================================================================================================
-	// Phoenix: Supernova
-	//=================================================================================================================
-	"phoenix_supernova"
-	{
-		"MaxLevel"								"6"
-
-		"AbilityCastRange"						"500"
-
-		"AbilityManaCost"						"0"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"aura_radius"					"1000 1000 1000 1200 1400 1600"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"damage_per_sec"				"70 100 130 140 150 160"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"stun_duration"					"1.5 2.0 2.5 2.75 3.0 3.25"
-				"LinkedSpecialBonus"			"special_bonus_unique_phoenix_2"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"max_hero_attacks"				"6 10 14 16 18 20"
-				"LinkedSpecialBonus"			"special_bonus_unique_phoenix_1"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"max_hero_attacks_scepter"		"8 12 16 18 20 22"
-				"LinkedSpecialBonus"			"special_bonus_unique_phoenix_1"
-			}
-			"06"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"tooltip_duration"				"6"
-			}
-			"07"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"cast_range_tooltip_scepter"	"500"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	//	Phoenix: bonus Supernova HP
 	//=================================================================================================================
 	"special_bonus_unique_phoenix_1"
@@ -13576,43 +13672,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"radius"				"375 375 375 375 410 445 480"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Tidehunter: Ravage
-	//=================================================================================================================
-	"tidehunter_ravage"
-	{
-		"MaxLevel"					"6"
-
-		"AbilityCastRange"			"1025 1025 1025 1175 1325 1475"
-
-		"AbilityCastPoint"			"0.0"
-		
-		"AbilityCooldown"			"150 140 130 110 90 70"
-
-		"AbilityDamage"				"240 330 420 460 500 540"
-
-		"AbilityManaCost"			"150 225 325 340 355 370"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"radius"			"1025 1025 1025 1175 1325 1475"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"speed"				"775 775 775 1000 1225 1450"
-			}
-			"03"
-			{	
-				"var_type"			"FIELD_FLOAT"
-				"duration"			"2.2 2.5 2.8 3.0 3.2 3.4"
 			}
 		}
 	}

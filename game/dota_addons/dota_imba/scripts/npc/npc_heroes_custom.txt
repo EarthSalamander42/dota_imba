@@ -2518,7 +2518,7 @@
 		//"Ability1"					"imba_tidehunter_gush"
 		//"Ability2"					"imba_tidehunter_kraken_shell"
 		//"Ability3"					"imba_tidehunter_anchor_smash"
-		//"Ability4"					"imba_tidehunter_ravage"
+		"Ability4"					"imba_tidehunter_ravage"
 
 		"Ability10"					"special_bonus_attack_damage_30"
 		"Ability11"					"special_bonus_hp_150"
