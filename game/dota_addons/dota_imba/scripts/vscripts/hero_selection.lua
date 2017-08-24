@@ -474,12 +474,6 @@ local time = 0.0
 		if HeroSelection.playerPicks[player_id] and HeroSelection.playerPickState[player_id].pick_state ~= "in_game" then
 			HeroSelection:AssignHero(player_id, HeroSelection.playerPicks[player_id])
 			HeroSelection.playerPickState[player_id].pick_state = "in_game"
-
-			Timers:CreateTimer(1, function()
-				StartGarbageCollector()
-
-				return 60
-			end)
 		end
 	end
 
@@ -505,7 +499,8 @@ end
 ]]
 function HeroSelection:AssignHero(player_id, hero_name)
 	PrecacheUnitByNameAsync(hero_name, function()
-
+		-- Dummy invisible wisp
+		local wisp = PlayerResource:GetPlayer(player_id):GetAssignedHero()
 		-- Switch for the new hero
 		local hero = PlayerResource:ReplaceHeroWith(player_id, hero_name, 0, 0 )
 
@@ -517,9 +512,7 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		-------------------------------------------------------------------------------------------------
 		-- IMBA: First hero spawn initialization
 		-------------------------------------------------------------------------------------------------
-
-		-- Fetch this player's hero entity
-		local hero = PlayerResource:GetPlayer(player_id):GetAssignedHero()
+		
 		hero:RespawnHero(false, false, false)
 		PlayerResource:SetCameraTarget(player_id, hero)
 		Timers:CreateTimer(FrameTime(), function()
@@ -527,6 +520,8 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		end)
 		Timers:CreateTimer(2.0, function() -- I'm shit scared camera still stays locked up so...
 			PlayerResource:SetCameraTarget(player_id, nil)
+			-- Destroy your old dummy wisp
+			UTIL_Remove(wisp)
 		end)
 
 		-- Set the picked hero for this player

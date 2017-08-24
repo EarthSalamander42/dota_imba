@@ -1163,34 +1163,26 @@ end
 
 -- This function is responsible for cleaning dummy units and wisps that may have accumulated
 function StartGarbageCollector()	
-	-- Find all wisps in the game
-	local wisps = Entities:FindAllByName("npc_dota_hero_wisp")	
-	print("finding wisps")
+local gametime = GameRules:GetGameTime()
+local dummies = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)	
+local particles = Entities:FindAllByClassname("dota_world_particle_system")	
+print("Garbage Collector:")
 
-	-- Cycle each wisp, and see if it has a player owner. If it doesn't, NUKE IT!
-	for _, wisp in pairs(wisps) do
-		if not wisp.is_real_wisp then
-			print("WISP-O-NUKE LAUNCHED!")
-			UTIL_Remove(wisp)
-		end			
-	end
-
-	-- Find all dummy units in the game
-	local dummies = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0,0,0), nil, 50000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)	
-
-	-- Cycle each dummy. If it is alive for more than 2 minutes, delete it.
-	local gametime = GameRules:GetGameTime()
-	for _,dummy in pairs(dummies) do
+	print("Dummies:")
+	for _, dummy in pairs(dummies) do
 		if dummy:GetUnitName() == "npc_dummy_unit" then
-
 			local dummy_creation_time = dummy:GetCreationTime()
-
 			if gametime - dummy_creation_time > 60 then
 				print("NUKING A LOST DUMMY!")
 				UTIL_Remove(dummy)
 			end
 		end
 	end
+
+--	print("Particles:")
+--	for _, particle in pairs(particles) do
+--		print("particle_name:", particle:GetEntityIndex())
+--	end
 end
 
 -- This function is responsible for deciding which team is behind, if any, and store it at a nettable.

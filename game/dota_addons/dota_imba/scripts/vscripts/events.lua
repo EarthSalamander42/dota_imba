@@ -135,6 +135,7 @@ local time = 0.0
 		Server_WaitToEnableXpGain()				
 
 		Timers:CreateTimer(60, function()
+			StartGarbageCollector()
 			DefineLosingTeam()
 			return 60
 		end)
