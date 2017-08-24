@@ -510,7 +510,7 @@ function GetAncientAbility( tier )
 	if tier == 1 then
 		local ability_list = {
 			"venomancer_poison_nova",
-			"juggernaut_blade_fury"
+			"juggernaut_blade_fury"			
 		}
 
 		return ability_list[RandomInt(1, #ability_list)]
@@ -530,7 +530,7 @@ function GetAncientAbility( tier )
 		local ability_list = {
 			"tidehunter_ravage",
 			"magnataur_reverse_polarity",
-			"phoenix_supernova"
+			"phoenix_supernova",
 		}
 
 		return ability_list[RandomInt(1, #ability_list)]
@@ -1163,26 +1163,42 @@ end
 
 -- This function is responsible for cleaning dummy units and wisps that may have accumulated
 function StartGarbageCollector()	
-local gametime = GameRules:GetGameTime()
-local dummies = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)	
-local particles = Entities:FindAllByClassname("dota_world_particle_system")	
-print("Garbage Collector:")
+	print("started collector")
+	-- Find all wisps in the game
+	local wisps = Entities:FindAllByName("npc_dota_hero_wisp")	
+	print("finding wisps. Checking between this amount of wisps:", #wisps)
 
-	print("Dummies:")
-	for _, dummy in pairs(dummies) do
-		if dummy:GetUnitName() == "npc_dummy_unit" then
-			local dummy_creation_time = dummy:GetCreationTime()
-			if gametime - dummy_creation_time > 60 then
-				print("NUKING A LOST DUMMY!")
-				UTIL_Remove(dummy)
-			end
+	-- Cycle each wisp, and see if it has a player owner. If it doesn't, NUKE IT!
+	for _, wisp in pairs(wisps) do
+
+		if not wisp.is_real_wisp then
+			print("WISP-O-NUKE LAUNCHED!")
+			UTIL_Remove(wisp)
+		else
+			print("that wisps was a real one")
 		end
 	end
 
---	print("Particles:")
---	for _, particle in pairs(particles) do
---		print("particle_name:", particle:GetEntityIndex())
---	end
+	-- Find all dummy units in the game
+	local dummies = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0,0,0), nil, 50000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)		
+
+	-- Cycle each dummy. If it is alive for more than 2 minutes, delete it.
+	local gametime = GameRules:GetGameTime()
+	for _,dummy in pairs(dummies) do
+		if dummy:GetUnitName() == "npc_dummy_unit" then			
+			print("found a dummy")
+
+			local dummy_creation_time = dummy:GetCreationTime()
+			print("dummy was created in", dummy_creation_time)
+
+			if gametime - dummy_creation_time > 60 then
+				print("NUKING A LOST DUMMY!")
+				UTIL_Remove(dummy)
+			else
+				print("dummy is still kinda new. Not removing it!")
+			end
+		end
+	end
 end
 
 -- This function is responsible for deciding which team is behind, if any, and store it at a nettable.
@@ -1243,4 +1259,26 @@ function DefineLosingTeam()
 	else -- No team is losing - one of the team is better on levels, the other on gold. No experience bonus in this case		
 		CustomNetTables:SetTableValue("gamerules", "losing_team", {losing_team = 0})		
 	end
+end
+
+
+function OverrideCreateParticle()
+	local CreateParticleFunc = ParticleManager.CreateParticle
+
+	ParticleManager.CreateParticle = 
+	function(manager, path, int, handle) 		 
+		 local handle = CreateParticleFunc(manager, path, int, handle)		 
+
+		 -- Index in a big, fat table. Only works in tools mode!
+		 if IsInToolsMode() then
+			 PARTICLE_TABLE = PARTICLE_TABLE or {}
+			 table.insert(PARTICLE_TABLE, path)
+		end
+		
+		return handle
+	end
+end
+
+function PrintParticleTable()
+	PrintTable(PARTICLE_TABLE)	
 end

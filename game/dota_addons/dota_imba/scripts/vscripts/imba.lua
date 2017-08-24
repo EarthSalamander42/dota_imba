@@ -50,6 +50,7 @@ require('addon_init')
 
 ApplyAllTalentModifiers()
 StoreCurrentDayCycle()
+OverrideCreateParticle()
 
 -- storage API
 --require('libraries/json')
@@ -102,6 +103,11 @@ function GameMode:OnFirstPlayerLoaded()
 	if GetMapName() ~= "imba_arena" then
 		local roshan_spawn_loc = Entities:FindByName(nil, "roshan_spawn_point"):GetAbsOrigin()
 		local roshan = CreateUnitByName("npc_imba_roshan", roshan_spawn_loc, true, nil, nil, DOTA_TEAM_NEUTRALS)
+		local roshan_rage_ability = roshan:FindAbilityByName("imba_roshan_rage")
+		if roshan_rage_ability then
+			roshan_rage_ability:SetLevel(1)
+		end
+
 		GoodCamera = Entities:FindByName(nil, "good_healer_7")
 		BadCamera = Entities:FindByName(nil, "bad_healer_7")
 	else
@@ -1087,9 +1093,11 @@ function GameMode:OnHeroInGame(hero)
 				if hero:GetTeamNumber() == DOTA_TEAM_GOODGUYS then
 					PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), GoodCamera)
 					FindClearSpaceForUnit(hero, GoodCamera:GetAbsOrigin(), false)
+					print("Goodguy camera shrine")
 				else
 					PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), BadCamera)					
 					FindClearSpaceForUnit(hero, BadCamera:GetAbsOrigin(), false)
+					print("Badguy camera shrine")
 				end
 			end
 		end
@@ -1419,6 +1427,7 @@ function GameMode:InitGameMode()
 
 	-- IMBA testbed command
 	Convars:RegisterCommand("imba_test", Dynamic_Wrap(GameMode, 'StartImbaTest'), "Spawns several units to help with testing", FCVAR_CHEAT)
+	Convars:RegisterCommand("particle_table_print", PrintParticleTable, "Prints a huge table of all used particles", FCVAR_CHEAT)
 
 	-- Panorama event stuff
 	initScoreBoardEvents()

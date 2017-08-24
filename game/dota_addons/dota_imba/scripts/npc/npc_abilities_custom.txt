@@ -496,16 +496,14 @@
 				"IsBuff"								"1"
 				"IsPurgable"							"0"
 
-				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"				
 
-				"ThinkInterval"							"0.9"
-
-				"OnIntervalThink"
+				"OnCreated"
 				{
 					"RunScript"
 					{
 						"ScriptFile"					"hero/npc_upgrades.lua"
-						"Function"						"FountainThink"
+						"Function"						"FountainMarker"
 
 						"particle_danger"				"particles/ambient/fountain_danger_circle.vpcf"
 					}

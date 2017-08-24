@@ -219,6 +219,7 @@ function SpawnRadiantBehemoth( keys )
 			-- Play ambient particle
 			local ambient_pfx = ParticleManager:CreateParticle(particle_ambient, PATTACH_CUSTOMORIGIN, behemoth)
 			ParticleManager:SetParticleControlEnt(ambient_pfx, 0, behemoth, PATTACH_POINT_FOLLOW, "attach_mane1", behemoth:GetAbsOrigin(), true)
+			ParticleManager:ReleaseParticleIndex(ambient_pfx)
 
 			-- Make Behemoth attack-move the opposing ancient
 			local target_loc = Entities:FindByName(nil, "dire_reinforcement_spawn_mid"):GetAbsOrigin()
@@ -290,6 +291,7 @@ function SpawnDireBehemoth( keys )
 			-- Play ambient particle
 			local ambient_pfx = ParticleManager:CreateParticle(particle_ambient, PATTACH_CUSTOMORIGIN, behemoth)
 			ParticleManager:SetParticleControlEnt(ambient_pfx, 0, behemoth, PATTACH_POINT_FOLLOW, "attach_mane1", behemoth:GetAbsOrigin(), true)
+			ParticleManager:ReleaseParticleIndex(ambient_pfx)
 
 			-- Make Behemoth move to the opposing ancient
 			local target_loc = Entities:FindByName(nil, "radiant_reinforcement_spawn_mid"):GetAbsOrigin()
@@ -373,10 +375,12 @@ function StalwartDefenseParticleEnd( keys )
 	-- Destroy buff particles
 	if unit.stalwart_defense_light_pfx then
 		ParticleManager:DestroyParticle(unit.stalwart_defense_light_pfx, false)
+		ParticleManager:ReleaseParticleIndex(unit.stalwart_defense_light_pfx)
 		unit.stalwart_defense_light_pfx = nil
 	end
 	if unit.stalwart_defense_buff_pfx then
 		ParticleManager:DestroyParticle(unit.stalwart_defense_buff_pfx, false)
+		ParticleManager:ReleaseParticleIndex(unit.stalwart_defense_buff_pfx)
 		unit.stalwart_defense_buff_pfx = nil
 	end
 end
