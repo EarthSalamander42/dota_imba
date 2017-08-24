@@ -1267,12 +1267,12 @@ function OverrideCreateParticle()
 
 	ParticleManager.CreateParticle = 
 	function(manager, path, int, handle) 		 
-		 local handle = CreateParticleFunc(manager, path, int, handle)		 
+		local handle = CreateParticleFunc(manager, path, int, handle)		 
 
-		 -- Index in a big, fat table. Only works in tools mode!
-		 if IsInToolsMode() then
-			 PARTICLE_TABLE = PARTICLE_TABLE or {}
-			 table.insert(PARTICLE_TABLE, path)
+		-- Index in a big, fat table. Only works in tools mode!
+		if IsInToolsMode() then
+			PARTICLE_TABLE = PARTICLE_TABLE or {}
+			table.insert(PARTICLE_TABLE, path)
 		end
 		
 		return handle
