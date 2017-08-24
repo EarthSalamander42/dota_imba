@@ -496,14 +496,16 @@
 				"IsBuff"								"1"
 				"IsPurgable"							"0"
 
-				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"				
+				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 
-				"OnCreated"
+				"ThinkInterval"							"0.9"
+
+				"OnIntervalThink"
 				{
 					"RunScript"
 					{
 						"ScriptFile"					"hero/npc_upgrades.lua"
-						"Function"						"FountainMarker"
+						"Function"						"FountainThink"
 
 						"particle_danger"				"particles/ambient/fountain_danger_circle.vpcf"
 					}
@@ -677,101 +679,6 @@
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 	//=================================================================================================================
-	// Roshan: Bash
-	//=================================================================================================================
-	"imba_roshan_bash"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_datadriven"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitTargetFlags"						"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		"AbilityUnitDamageType"							"DAMAGE_TYPE_PHYSICAL"
-		"AbilityTextureName"							"roshan_bash"
-		"MaxLevel"										"1"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"								"6.0"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"debuff_duration"						"6.0"
-			}
-			"02"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"base_damage"							"60"
-			}
-			"03"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"stacking_damage"						"30"
-			}
-			"04"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"base_armor"							"8"
-			}
-			"05"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"stacking_armor"						"4"
-			}
-			"06"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"bash_duration"							"1.35"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_roshan_bash"
-			{
-				"Passive"								"1"
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-
-				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/neutral_roshan.lua"
-						"Function"						"RoshanBash"
-
-						"modifier_debuff"				"modifier_imba_roshan_bash_debuff"
-						"sound_bash"					"RoshanDT.Bash"
-					}
-				}
-			}
-
-			"modifier_imba_roshan_bash_debuff"
-			{
-				"Passive"								"0"
-				"IsHidden"								"0"
-				"IsDebuff"								"1"
-				"IsPurgable"							"0"
-
-				"Duration"								"%debuff_duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"-1"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Roshan: Slam
 	//=================================================================================================================
 	"imba_roshan_slam"
@@ -834,7 +741,7 @@
 			"07"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"debuff_duration"						"5.5"
+				"debuff_duration"						"5.0"
 			}
 		}
 
@@ -1103,11 +1010,10 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_lua"
+		"BaseClass"										"ability_datadriven"
 		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"							"custom/imba_roshan_rage"
 		"MaxLevel"										"1"
-        "ScriptFile"                                    "hero/neutral_roshan.lua"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -1133,7 +1039,45 @@
 				"var_type"								"FIELD_FLOAT"
 				"armor_bonus"							"1"
 			}
-		}		
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_roshan_rage"
+			{
+				"Passive"								"1"
+				"IsHidden"								"1"
+				"IsBuff"								"1"
+				"IsPurgable"							"0"
+
+				"ThinkInterval"							"0.1"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"hero/neutral_roshan.lua"
+						"Function"						"RoshanRage"
+
+						"modifier_stack"				"modifier_imba_roshan_rage_stack"
+					}
+				}
+			}
+
+			"modifier_imba_roshan_rage_stack"
+			{
+				"Passive"								"0"
+				"IsHidden"								"0"
+				"IsBuff"								"1"
+				"IsPurgable"							"0"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%as_bonus"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%armor_bonus"
+				}
+			}
+		}
 	}
 
 	//=================================================================================================================

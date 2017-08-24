@@ -3098,7 +3098,6 @@
 		"StatusHealthRegen"			"0.5"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
-		
 
 		// Team
 		//----------------------------------------------------------------
@@ -3123,17 +3122,17 @@
 		"BaseClass"					"npc_dota_roshan"
 		"Model"						"models\creeps\roshan\roshan.mdl"
 		"SoundSet"					"Roshan"
-		"ModelScale"				"1.2"
+		"ModelScale"				"1.1"
 		"Level"						"50"
 		"IsAncient"					"1"
 				
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"imba_roshan_bash"
-		"Ability2"					"imba_roshan_slam"
-		"Ability3"					"imba_roshan_summon"
-		"Ability4"					"imba_roshan_rage"
-		"Ability5"					"imba_roshan_fury"
+		"Ability1"					"roshan_spell_block"
+		"Ability2"					"roshan_bash"
+		"Ability3"					"imba_roshan_slam"
+		"Ability4"					"imba_roshan_summon"
+		"Ability5"					"imba_roshan_rage"
 		"Ability6"					"imba_roshan_immortal_strength"
 		"Ability7"					"imba_roshan_ai"
 
@@ -3170,15 +3169,15 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"400"
+		"MovementSpeed"				"350"
 		"MovementTurnRate"			"1.0"
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"7000"
-		"StatusHealthRegen"			"50"
+		"StatusHealth"				"10000"
+		"StatusHealthRegen"			"50.0"
 		"StatusMana"				"0"
-		"StatusManaRegen"			"0"
+		"StatusManaRegen"			"0.0"
 
 		// Team
 		//----------------------------------------------------------------
