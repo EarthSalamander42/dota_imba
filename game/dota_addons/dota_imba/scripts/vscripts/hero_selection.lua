@@ -505,16 +505,12 @@ end
 ]]
 function HeroSelection:AssignHero(player_id, hero_name)
 	PrecacheUnitByNameAsync(hero_name, function()
-		print("Assign Hero")
-		print(player_id)
-		print(hero_name)
 
 		-- Switch for the new hero
 		local hero = PlayerResource:ReplaceHeroWith(player_id, hero_name, 0, 0 )
 
 		-- If this is a "real" wisp, tag it
 		if hero:GetUnitName() == "npc_dota_hero_wisp" then
-			print("real wisp")
 			hero.is_real_wisp = true
 		end
 

@@ -69,18 +69,39 @@
 	$.GetContextPanel().GetParent().GetParent().FindChildTraverse("PreGame").style.visibility = "collapse";
 
 	//Buff Bar
-		var hudElements = $.GetContextPanel().GetParent().GetParent().FindChildTraverse("HUDElements");
-		var BuffBar = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("buffs")
-		BuffBar.style.width = "30%";
-		BuffBar.style.marginLeft = "40%";
+	var hudElements = $.GetContextPanel().GetParent().GetParent().FindChildTraverse("HUDElements");
+	var BuffBar = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("buffs")
+	BuffBar.style.width = "30%";
+	BuffBar.style.marginLeft = "40%";
 
-		//DeBuff Bar
-		var DeBuffBar = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("debuffs")
-		DeBuffBar.style.width = "30%";
-		DeBuffBar.style.marginBottom = "40.5%";
-		DeBuffBar.style.marginRight = "30%";
-		DeBuffBar.style.flowChildren = "right";
+	//DeBuff Bar
+	var DeBuffBar = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("debuffs")
+	DeBuffBar.style.width = "30%";
+	DeBuffBar.style.marginBottom = "40.5%";
+	DeBuffBar.style.marginRight = "30%";
+	DeBuffBar.style.flowChildren = "right";
 
+	//Shop (Fixing last item in advanced tab not being fully visible)
+	var Shop = hudElements.FindChildTraverse("shop")
+	Shop.style.width = "320px";
+	Shop.style.height = "100%";
+	Shop.style.marginBottom = "18%";
+	Shop.style.marginTop = "4%";
+
+	var MainShop = hudElements.FindChildTraverse("shop").FindChildTraverse("Main")
+	MainShop.style.height = "100%";
+
+	var HeightLimiter = MainShop.FindChildTraverse("HeightLimiter")
+	HeightLimiter.style.height = "100%";
+
+	var GridMainShop = MainShop.FindChildTraverse("GridMainShop")
+	GridMainShop.style.marginTop = "52px";
+
+	var GridMainShopContents = MainShop.FindChildTraverse("GridMainShopContents")
+	GridMainShopContents.style.marginTop = "30px";
+
+	var Stash = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("shop_launcher_block").FindChildTraverse("stash")
+	Stash.style.height = "150px";
 	</script>
 
 	<Panel>
