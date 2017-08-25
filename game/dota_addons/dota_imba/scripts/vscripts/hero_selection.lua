@@ -59,7 +59,7 @@ function HeroSelection:Start()
 	HeroSelection.listener_abilities_requested = CustomGameEventManager:RegisterListener("pick_abilities_requested", HeroSelection.PickAbilitiesRequested )
 
 	-- Play relevant pick lines
-	if IMBA_PICK_MODE_ALL_RANDOM then
+	if IMBA_PICK_MODE_ALL_RANDOM or IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
 		EmitGlobalSound("announcer_announcer_type_all_random")	
 	elseif IMBA_PICK_MODE_ARENA_MODE then
 		EmitGlobalSound("announcer_announcer_type_death_match")
@@ -242,7 +242,14 @@ local id = event.PlayerID
 	PlayerResource:SetHasRandomed(id)
 
 	-- If it's a valid hero, allow the player to select it
-	HeroSelection:HeroSelect({PlayerID = id, HeroName = random_hero, HasRandomed = true})
+	if IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
+		print("All Random Same Hero-ing!")
+		for _, hero in pairs(HeroList:GetAllHeroes()) do
+			HeroSelection:HeroSelect({PlayerID = hero:GetPlayerID(), HeroName = random_hero, HasRandomed = true})
+		end
+	else
+		HeroSelection:HeroSelect({PlayerID = id, HeroName = random_hero, HasRandomed = true})
+	end
 
 	-- The person has randomed (separate from Set/HasRandomed, because those cannot be unset)
 	HeroSelection.playerPickState[id].random_state = true
@@ -344,7 +351,7 @@ end
 function HeroSelection:HeroSelect( event )
 
 	-- If this is All Random and the player picked a hero manually, refuse it
-	if IMBA_PICK_MODE_ALL_RANDOM and (not event.HasRandomed) then
+	if IMBA_PICK_MODE_ALL_RANDOM or IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO and (not event.HasRandomed) then
 		return nil
 	end
 
@@ -562,7 +569,7 @@ function HeroSelection:AssignHero(player_id, hero_name)
 			PlayerResource:SetGold(player_id, HERO_RERANDOM_GOLD, false)
 		elseif has_repicked then
 			PlayerResource:SetGold(player_id, HERO_REPICK_GOLD, false)
-		elseif has_randomed or IMBA_PICK_MODE_ALL_RANDOM then
+		elseif has_randomed or IMBA_PICK_MODE_ALL_RANDOM or IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
 			PlayerResource:SetGold(player_id, HERO_RANDOM_GOLD, false)
 		else
 			PlayerResource:SetGold(player_id, HERO_INITIAL_GOLD, false)

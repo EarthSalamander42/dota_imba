@@ -10091,7 +10091,7 @@
 		"ID"							"2223"
 		"BaseClass"						"item_lua"
 		"FightRecapLevel"				"1"
-		"AbilityTextureName" 			"item_dust"
+		"AbilityTextureName" 			"custom/imba_dust_of_appearance"
 		"ScriptFile"					"items/item_dust_of_appearance.lua"
 		"Model"							"models/props_gameplay/dust.vmdl"
 

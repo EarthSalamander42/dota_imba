@@ -118,7 +118,7 @@ local time = 0.0
 	-------------------------------------------------------------------------------------------------
 
 	if new_state == DOTA_GAMERULES_STATE_PRE_GAME then
-		if IMBA_PICK_MODE_ALL_RANDOM then
+		if IMBA_PICK_MODE_ALL_RANDOM or IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
 			Timers:CreateTimer(2.0, function()
 				for _, hero in pairs(HeroList:GetAllHeroes()) do
 					HeroSelection:RandomHero({PlayerID = hero:GetPlayerID()})
@@ -132,7 +132,16 @@ local time = 0.0
 	-------------------------------------------------------------------------------------------------
 
 	if new_state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-		Server_WaitToEnableXpGain()				
+		Server_WaitToEnableXpGain()
+		ImbaNetGraph(1.0)	
+
+		for _, hero in pairs(HeroList:GetAllHeroes()) do
+			if hero.is_dev and not hero.has_graph then
+				print("Sending Net Graph stats ...")
+				hero.has_graph = true
+				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph", {})
+			end
+		end
 
 		Timers:CreateTimer(60, function()
 			StartGarbageCollector()
@@ -156,14 +165,19 @@ function GameMode:OnNPCSpawned(keys)
 
 	local npc = EntIndexToHScript(keys.entindex)
 
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Remove Silencers innate intelligence steal
-	--
-	-- Unfortunately, needs to be done every time Silencer spawns as his modifier is permanently
-	-- embedded into his character and he'll gain it every time he spawns
-	-------------------------------------------------------------------------------------------------
 	if npc:IsRealHero() then
-		Timers:CreateTimer(1, function()
+	for i = 1, #IMBA_DEVS do
+			-- Granting access to admin stuff for Imba Devs
+			if PlayerResource:GetSteamAccountID(npc:GetPlayerID()) == IMBA_DEVS[i] then
+--				npc:SetCustomHealthLabel("Mod Creator", 200, 45, 45)	-- We don't want to get flame, do we?
+				if not npc.is_dev then
+					npc.is_dev = true
+					print("Found a developer! Granting Dev access...")
+				end
+			end
+		end
+
+		Timers:CreateTimer(1, function() -- Silencer fix
 			if npc:HasModifier("modifier_silencer_int_steal") then
 				npc:RemoveModifierByName("modifier_silencer_int_steal")
 			end
@@ -842,7 +856,7 @@ function GameMode:OnEntityKilled( keys )
 		-- 	buyback_cooldown = math.min(BUYBACK_COOLDOWN_GROW_FACTOR * (game_time - BUYBACK_COOLDOWN_START_POINT), BUYBACK_COOLDOWN_MAXIMUM)
 		-- end
 		buyback_cooldown = 60
-		
+
 		-- #7 Talent Vengeful Spirit - Decreased respawn time & cost
 		if killed_unit:HasTalent("special_bonus_imba_vengefulspirit_7") then
 			buyback_cost = buyback_cost * (1 - (killed_unit:FindSpecificTalentValue("special_bonus_imba_vengefulspirit_7", "buyback_cost_pct") * 0.01))

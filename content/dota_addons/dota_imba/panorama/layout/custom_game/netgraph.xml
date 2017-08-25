@@ -1,0 +1,25 @@
+<root>
+	<styles>
+		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
+		<include src="file://{resources}/styles/custom_game/netgraph.css" />
+	</styles>
+
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/netgraph.js" />
+	</scripts>
+
+	<Panel class="ScoreboardLeft">
+		<Panel id="UnitPanel" class="EntryPanel">
+			<Label class="OnValue" text="Units:" />
+			<Label class="Value" id="Units" text="0" />
+		</Panel>
+		<Panel id="DummyPanel" class="EntryPanel">
+			<Label class="OnValue" text="Dummies:" />
+			<Label class="Value" id="Dummies" text="0" />	
+		</Panel>
+<!--	<Panel class="EntryPanel">
+			<Label class="OnValue" id="OnMulticast" text="Wisps:" />
+			<Label class="Value" id="Wisps" text="999" />	
+		</Panel> -->
+	</Panel>
+</root>

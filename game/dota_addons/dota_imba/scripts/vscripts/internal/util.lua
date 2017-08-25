@@ -1163,34 +1163,16 @@ end
 
 -- This function is responsible for cleaning dummy units and wisps that may have accumulated
 function StartGarbageCollector()	
-	print("started collector")
-	-- Find all wisps in the game
-	local wisps = Entities:FindAllByName("npc_dota_hero_wisp")	
-	print("finding wisps. Checking between this amount of wisps:", #wisps)
-
-	-- Cycle each wisp, and see if it has a player owner. If it doesn't, NUKE IT!
-	for _, wisp in pairs(wisps) do
-
-		if not wisp.is_real_wisp then
-			print("WISP-O-NUKE LAUNCHED!")
-			UTIL_Remove(wisp)
-		else
-			print("that wisps was a real one")
-		end
-	end
+print("started collector")
 
 	-- Find all dummy units in the game
-	local dummies = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0,0,0), nil, 50000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)		
+	local dummies = FindUnitsInRadius(DOTA_TEAM_BADGUYS, Vector(0,0,0), nil, 50000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)		
 
-	-- Cycle each dummy. If it is alive for more than 2 minutes, delete it.
+	-- Cycle each dummy. If it is alive for more than 1 minute, delete it.
 	local gametime = GameRules:GetGameTime()
-	for _,dummy in pairs(dummies) do
-		if dummy:GetUnitName() == "npc_dummy_unit" then			
-			print("found a dummy")
-
+	for _, dummy in pairs(dummies) do
+		if dummy:GetUnitName() == "npc_dummy_unit" or dummy:GetUnitName() == "npc_dummy_unit_perma" then			
 			local dummy_creation_time = dummy:GetCreationTime()
-			print("dummy was created in", dummy_creation_time)
-
 			if gametime - dummy_creation_time > 60 then
 				print("NUKING A LOST DUMMY!")
 				UTIL_Remove(dummy)
@@ -1281,4 +1263,22 @@ end
 
 function PrintParticleTable()
 	PrintTable(PARTICLE_TABLE)	
+end
+
+function ImbaNetGraph(tick)
+	Timers:CreateTimer(function()
+		local units = FindUnitsInRadius(DOTA_TEAM_BADGUYS, Vector(0,0,0), nil, 50000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)		
+		local dummy_count = 0
+	
+		for _, unit in pairs(units) do
+			if unit:GetUnitName() == "npc_dummy_unit" or unit:GetUnitName() == "npc_dummy_unit_perma" then			
+				dummy_count = dummy_count +1
+			end
+		end
+	
+		CustomNetTables:SetTableValue("netgraph", "unit_number", {value = #units})
+		CustomNetTables:SetTableValue("netgraph", "dummy_number", {value = dummy_count})
+	--	CustomNetTables:SetTableValue("netgraph", "wisp_number", {value = wisp_count})
+	return tick
+	end)
 end
