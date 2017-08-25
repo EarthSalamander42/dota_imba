@@ -213,10 +213,10 @@ function Server_AbilityToGainXPForPlyaer_function(nPlayerID)
 		request:SetHTTPRequestGetOrPostParameter("data_json",JSON:encode(jsondata))
 		request:SetHTTPRequestGetOrPostParameter("auth",_AuthCode)
 		request:Send(function(result)
-		--if result.StatusCode ~= 200 then
-		--	Server_AbilityToGainXPForPlyaer_function(nPlayerID)
-		--	return
-		--end
+		if result.StatusCode ~= 200 then
+			Server_AbilityToGainXPForPlyaer_function(nPlayerID)
+			return
+		end
 	end )
 end
 
@@ -274,8 +274,11 @@ function Server_CalculateXPForWinnerAndAll(winning_team)
 			local jsontable={}
 			jsontable.SteamID64 = table_SteamID64[nPlayerID]
 			jsontable.XP = table_XP[nPlayerID]
+			jsontable.WIN = tostring(0)
+			jsontable.MMR = tostring(0)
 			if PlayerResource:GetTeam(nPlayerID) == Winner then
 				jsontable.XP = tostring(math.ceil(table_XP[nPlayerID] * 1.2))
+				jsontable.WIN = tostring(1)
 			end
 			jsontable.player_key = table_player_key[nPlayerID]
 			table.insert(jsondata,jsontable)
