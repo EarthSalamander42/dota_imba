@@ -47,17 +47,15 @@ function imba_riki_smoke_screen:OnSpellStart()
 
 		EmitSoundOnLocationWithCaster(target_point, smoke_sound, caster)
 		
-		local dummy = CreateUnitByName("npc_dummy_unit", target_point, false, caster, caster, caster:GetTeamNumber())
-		dummy:AddNewModifier(caster, self, smoke_handler, {duration = duration})
+		local thinker = CreateModifierThinker(caster, self, smoke_handler, {duration = duration}, target_point, caster:GetTeamNumber(), false)
 		
-		local particle = ParticleManager:CreateParticle(smoke_particle, PATTACH_WORLDORIGIN, dummy)
-			ParticleManager:SetParticleControl(particle, 0, dummy:GetAbsOrigin())
+		local particle = ParticleManager:CreateParticle(smoke_particle, PATTACH_WORLDORIGIN, thinker)
+			ParticleManager:SetParticleControl(particle, 0, thinker:GetAbsOrigin())
 			ParticleManager:SetParticleControl(particle, 1, Vector(aoe, 0, aoe))
 			
 		Timers:CreateTimer(duration, function()
 			ParticleManager:DestroyParticle(particle, false)
 			ParticleManager:ReleaseParticleIndex(particle)
-			dummy:Destroy()
 		end)
 	end
 end

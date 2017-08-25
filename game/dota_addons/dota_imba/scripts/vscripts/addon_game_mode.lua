@@ -1,5 +1,3 @@
--- This is the entry-point to your game mode and should be used primarily to precache models/particles/sounds/etc
-
 require('statcollection/init')
 require('internal/util')
 require('internal/funcs')
@@ -7,21 +5,8 @@ require('player_resource')
 require('imba')
 require('hero_selection')
 
-function Precache( context )
---[[
-	This function is used to precache resources/units/items/abilities that will be needed
-	for sure in your game and that will not be precached by hero selection.  When a hero
-	is selected from the hero selection screen, the game will precache that hero's assets,
-	any equipped cosmetics, and perform the data-driven precaching defined in that hero's
-	precache{} block, as well as the precache{} block for any equipped abilities.
-
-	See GameMode:PostLoadPrecache() in gamemode.lua for more information
-	]]
-
-	DebugPrint("[IMBA] Performing pre-load precache")
-
-	-- Particles can be precached individually or by folder
-	-- It it likely that precaching a single particle system will precache all of its children, but this may not be guaranteed
+function Precache(context)
+DebugPrint("[IMBA] Performing pre-load precache")
 
 	-- Lua modifiers activation
 	LinkLuaModifier("modifier_imba_speed_limit_break", "modifier/modifier_imba_speed_limit_break.lua", LUA_MODIFIER_MOTION_NONE )
@@ -136,7 +121,6 @@ function Precache( context )
     PrecacheResource("particle", "particles/creeps/lane_creeps/creep_dire_hulk_swipe_left.vpcf", context)
     PrecacheResource("particle", "particles/creeps/lane_creeps/creep_dire_hulk_swipe_right.vpcf", context)    
 
-
 	-- Stuff
 	PrecacheResource("particle_folder", "particles/hero", context)
 	PrecacheResource("particle_folder", "particles/ambient", context)
@@ -163,7 +147,7 @@ function Precache( context )
   	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_spirit_breaker.vsndevts", context)
   	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts", context)
   	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_roshan_halloween.vsndevts", context)
-	
+
   	-- Rapier sounds
   	--PrecacheResource("sound", "sounds/vo/announcer_dlc_bastion/announcer_event_store_rapier.vsnd", context)
   	--PrecacheResource("sound", "sounds/vo/announcer_dlc_pflax/announcer_divine_rapier_one.vsnd", context)
@@ -172,17 +156,9 @@ function Precache( context )
   	--PrecacheResource("sound", "sounds/physics/items/weapon_drop_common_02.vsnd", context)
   	--PrecacheResource("sound", "sounds/ui/inventory/metalblade_equip_01.vsnd", context)
 
-	-- Entire items can be precached by name
-	-- Abilities can also be precached in this way despite the name
-	--PrecacheItemByNameSync("example_ability", context)
-	--PrecacheItemByNameSync("item_example_item", context)
-
-	-- Entire heroes (sound effects/voice/models/particles) can be precached with PrecacheUnitByNameSync
-	-- Custom units from npc_units_custom.txt can also have all of their abilities and precache{} blocks precached in this way
 	PrecacheUnitByNameSync("npc_dota_hero_wisp", context) --Precaching dummy wisp
 end
 
--- Create the game mode when we activate
 function Activate()
 	GameRules.GameMode = GameMode()
 	GameRules.GameMode:InitGameMode()

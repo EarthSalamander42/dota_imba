@@ -2,9 +2,25 @@
 -- IMBA: custom utility functions
 -------------------------------------------------------------------------------------------------
 
+-- Finds units only on the outer layer of a ring
+function FindUnitsInRing(teamNumber, position, cacheUnit, ring_radius, ring_width, teamFilter, typeFilter, flagFilter, order, canGrowCache)
+	-- First checks all of the units in a radius
+	local all_units	= FindUnitsInRadius(teamNumber, position, cacheUnit, ring_radius, teamFilter, typeFilter, flagFilter, order, canGrowCache)
+	
+	-- Then builds a table composed of the units that are in the outer ring, but not in the inner one.
+	local outer_ring_units	=	{}
+
+	for _,unit in pairs(all_units) do
+		-- Custom function, checks if the unit is far enough away from the inner radius
+		if CalculateDistance(unit:GetAbsOrigin(), position) >= ring_radius - ring_width then
+			table.insert(outer_ring_units, unit)
+		end
+	end
+
+	return outer_ring_units
+end
 
 -- Cleave-like cone search - returns the units in front of the caster in a cone.
-
 function FindUnitsInCone(teamNumber, vDirection, vPosition, startRadius, endRadius, flLength, hCacheUnit, targetTeam, targetUnit, targetFlags, findOrder, bCache)
 	local vDirectionCone = Vector( vDirection.y, -vDirection.x, 0.0 )
 	local enemies = FindUnitsInRadius(teamNumber, vPosition, hCacheUnit, endRadius + flLength, targetTeam, targetUnit, targetFlags, findOrder, bCache )

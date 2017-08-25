@@ -1,45 +1,5 @@
 --[[	Author: Firetoad
 		Date: 12.08.2015	]]
-
-function RoshanBash( keys )
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
-	local modifier_debuff = keys.modifier_debuff
-	local sound_bash = keys.sound_bash
-
-	-- If the ability is on cooldown, do nothing
-	if not ability:IsCooldownReady() then
-		return nil
-	end
-
-	-- Parameters
-	local base_damage = ability:GetSpecialValueFor("base_damage")
-	local stacking_damage = ability:GetSpecialValueFor("stacking_damage")
-	local base_armor = ability:GetSpecialValueFor("base_armor")
-	local stacking_armor = ability:GetSpecialValueFor("stacking_armor")
-	local bash_duration = ability:GetSpecialValueFor("bash_duration")
-
-	-- Calculate updated parameters
-	local total_damage = base_damage + stacking_damage * GAME_ROSHAN_KILLS
-	local total_armor = base_armor + stacking_armor * GAME_ROSHAN_KILLS
-
-	-- Start ability cooldown
-	ability:StartCooldown(ability:GetCooldown(1))
-
-	-- Play sound
-	target:EmitSound(sound_bash)
-
-	-- Stun target
-	target:AddNewModifier(caster, ability, "modifier_stunned", {duration = bash_duration})
-
-	-- Apply debuff modifier
-	AddStacks(ability, caster, target, modifier_debuff, total_armor, true)
-
-	-- Deal damage
-	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = total_damage, damage_type = DAMAGE_TYPE_PHYSICAL})
-end
-
 function RoshanSlam( keys )
 	local caster = keys.caster
 	local ability = keys.ability
@@ -276,18 +236,15 @@ function RoshanUpgrade( keys )
 	local ability = keys.ability
 	local modifier_stack = keys.modifier_stack
 
-	-- Calculate total buff stacks
-	local total_stacks = GAME_ROSHAN_KILLS
-
 	-- Update health
 	local bonus_health = ability:GetSpecialValueFor("bonus_health")
 	Timers:CreateTimer(0.5, function()
-		SetCreatureHealth(caster, 7000 + bonus_health * total_stacks, true)
+		SetCreatureHealth(caster, 10000 + bonus_health * GAME_ROSHAN_KILLS, true)
 	end)
 
 	-- Update the stacks buff
-	if total_stacks > 0 then
-		AddStacks(ability, caster, caster, modifier_stack, total_stacks, true)
+	if GAME_ROSHAN_KILLS > 0 then
+		AddStacks(ability, caster, caster, modifier_stack, GAME_ROSHAN_KILLS, true)
 	end
 end
 
@@ -373,7 +330,6 @@ function RoshanAIthink( keys )
 	local spawn_loc = Entities:FindByName(nil, "roshan_spawn_point"):GetAbsOrigin()
 	local ability_slam = caster:FindAbilityByName("imba_roshan_slam")
 	local ability_roshling = caster:FindAbilityByName("imba_roshan_summon")
-	local ability_fury = caster:FindAbilityByName("imba_roshan_fury")
 
 	-- Condition variables
 	local roshan_hp = caster:GetHealth() / caster:GetMaxHealth()
@@ -409,7 +365,7 @@ function RoshanAIthink( keys )
 	end
 
 	-- Check if an ability cast is underway
-	if ability_slam:IsInAbilityPhase() or ability_roshling:IsInAbilityPhase() or ability_fury:IsInAbilityPhase() then
+	if ability_slam:IsInAbilityPhase() or ability_roshling:IsInAbilityPhase() then
 		return nil
 	end
 		
@@ -440,20 +396,11 @@ function RoshanAIthink( keys )
 		return nil
 	end
 
-	-- Check for Fury of the Immortal cast conditions
-	if roshan_hp <= fury_pct and ability_fury and ability_fury:IsCooldownReady() and caster.closest_attack_target then
-		
-		-- Cast Fury of the Immortal on the current target
-		caster:CastAbilityOnTarget(caster.closest_attack_target, ability_fury, 0)
-		return nil
-
-	-- Check for Summon Roshlings cast conditions
-	elseif roshan_hp <= roshling_pct and ability_roshling and ability_roshling:IsCooldownReady() then
+	if roshan_hp <= roshling_pct and ability_roshling and ability_roshling:IsCooldownReady() then
 		
 		-- Summon Roshlings
 		caster:CastAbilityNoTarget(ability_roshling, 0)
 		return nil
-
 	-- Check for Slam cast conditions
 	elseif ability_slam and ability_slam:IsCooldownReady() then
 		

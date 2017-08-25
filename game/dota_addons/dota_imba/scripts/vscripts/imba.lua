@@ -50,6 +50,7 @@ require('addon_init')
 
 ApplyAllTalentModifiers()
 StoreCurrentDayCycle()
+OverrideCreateParticle()
 
 -- storage API
 --require('libraries/json')
@@ -102,6 +103,11 @@ function GameMode:OnFirstPlayerLoaded()
 	if GetMapName() ~= "imba_arena" then
 		local roshan_spawn_loc = Entities:FindByName(nil, "roshan_spawn_point"):GetAbsOrigin()
 		local roshan = CreateUnitByName("npc_imba_roshan", roshan_spawn_loc, true, nil, nil, DOTA_TEAM_NEUTRALS)
+		local roshan_rage_ability = roshan:FindAbilityByName("imba_roshan_rage")
+		if roshan_rage_ability then
+			roshan_rage_ability:SetLevel(1)
+		end
+
 		GoodCamera = Entities:FindByName(nil, "good_healer_7")
 		BadCamera = Entities:FindByName(nil, "bad_healer_7")
 	else
@@ -510,7 +516,7 @@ function GameMode:ItemAddedFilter( keys )
 			ParticleManager:ReleaseParticleIndex(item.x_pfx)
 			item.x_pfx = nil
 		end
-		if unit:IsRealHero() then
+		if unit:IsRealHero() or ( unit:GetClassname() == "npc_dota_lone_druid_bear" ) then
 			item:SetPurchaser(nil)
 			item:SetPurchaseTime(0)
 			local rapier_amount = 0
@@ -1074,8 +1080,32 @@ end
 
 	The hero parameter is the hero entity that just spawned in
 ]]
-function GameMode:OnHeroInGame(hero)
+function GameMode:OnHeroInGame(hero)	
+	local time_elapsed = 0
 
+	Timers:CreateTimer(function()		
+		if not hero.is_real_wisp and hero:GetUnitName() == "npc_dota_hero_wisp"  then
+			if not hero:HasModifier("modifier_imba_prevent_actions_game_start") then
+				hero:AddNewModifier(hero, nil, "modifier_imba_prevent_actions_game_start", {})
+				hero:AddEffects(EF_NODRAW)
+				hero:SetDayTimeVisionRange(475)
+				hero:SetNightTimeVisionRange(475)				
+				if hero:GetTeamNumber() == DOTA_TEAM_GOODGUYS then
+					PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), GoodCamera)
+					FindClearSpaceForUnit(hero, GoodCamera:GetAbsOrigin(), false)
+				else
+					PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), BadCamera)					
+					FindClearSpaceForUnit(hero, BadCamera:GetAbsOrigin(), false)
+				end
+			end
+		end
+		if time_elapsed < 0.9 then
+			time_elapsed = time_elapsed + 0.1
+		else			
+			return nil
+		end
+		return 0.1
+	end)
 end
 
 --[[	This function is called once and only once when the game completely begins (about 0:00 on the clock).  At this point,
@@ -1395,6 +1425,7 @@ function GameMode:InitGameMode()
 
 	-- IMBA testbed command
 	Convars:RegisterCommand("imba_test", Dynamic_Wrap(GameMode, 'StartImbaTest'), "Spawns several units to help with testing", FCVAR_CHEAT)
+	Convars:RegisterCommand("particle_table_print", PrintParticleTable, "Prints a huge table of all used particles", FCVAR_CHEAT)
 
 	-- Panorama event stuff
 	initScoreBoardEvents()

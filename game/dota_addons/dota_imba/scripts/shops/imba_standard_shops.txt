@@ -109,7 +109,7 @@
 		"item"		"item_helm_of_the_dominator"
 		"item"		"item_imba_mekansm"
 		"item"		"item_imba_vladmir"
-		"item"		"item_imba_pipe"		
+		"item"		"item_imba_pipe"
 	}
 				
 	"magics"			
@@ -150,7 +150,7 @@
 		"item"		"item_imba_greatwyrm_plate"
 		"item"		"item_imba_guardian_greaves"
 	}
-			
+	
 	"weapons"
 	{
 		"item"		"item_dragon_lance"
@@ -168,7 +168,7 @@
 		"item"		"item_imba_rapier"
 		"item"		"item_imba_starfury"
 	}
-		
+
 	// Level 4 - Orange / Orb / Artifacts				
 	"artifacts"
 	{
@@ -185,7 +185,7 @@
 		"item"		"item_imba_triumvirate"
 		"item"		"item_imba_mjollnir"
 		"item"		"item_imba_satanic"
-		"item"		"item_imba_skadi"		
+		"item"		"item_imba_skadi"
 		"item"		"item_lotus_orb"
 	}
 

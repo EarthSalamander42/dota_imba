@@ -118,34 +118,7 @@ local time = 0.0
 	-------------------------------------------------------------------------------------------------
 
 	if new_state == DOTA_GAMERULES_STATE_PRE_GAME then
-		if IMBA_PICK_MODE_ALL_RANDOM == false then
-			Timers:CreateTimer(0.0, function()
-				for _, hero in pairs(HeroList:GetAllHeroes()) do
-					if not hero:HasModifier("modifier_imba_prevent_actions_game_start") then
-						hero:AddNewModifier(hero, nil, "modifier_imba_prevent_actions_game_start", {})
-						hero:AddEffects(EF_NODRAW)
-						hero:SetDayTimeVisionRange(475)
-						hero:SetNightTimeVisionRange(475)
-						if hero:GetTeamNumber() == 2 then
-							PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), GoodCamera)
-							FindClearSpaceForUnit(hero, GoodCamera:GetAbsOrigin(), false)
-							print("Goodguy camera shrine")
-						else
-							PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), BadCamera)					
-							FindClearSpaceForUnit(hero, BadCamera:GetAbsOrigin(), false)
-							print("Badguy camera shrine")
-						end
-					end
-				end
-				if time < 0.9 then
-					time = time + 0.1
-				else
-					time = nil
-					return nil
-				end
-				return 0.1
-			end)
-		else
+		if IMBA_PICK_MODE_ALL_RANDOM then
 			Timers:CreateTimer(2.0, function()
 				for _, hero in pairs(HeroList:GetAllHeroes()) do
 					HeroSelection:RandomHero({PlayerID = hero:GetPlayerID()})
@@ -159,14 +132,10 @@ local time = 0.0
 	-------------------------------------------------------------------------------------------------
 
 	if new_state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-		Server_WaitToEnableXpGain()		
-
-		Timers:CreateTimer(120, function()
-			StartGarbageCollector()
-			return 120
-		end)
+		Server_WaitToEnableXpGain()				
 
 		Timers:CreateTimer(60, function()
+			StartGarbageCollector()
 			DefineLosingTeam()
 			return 60
 		end)
@@ -321,7 +290,6 @@ function GameMode:OnNPCSpawned(keys)
 			end
 		end
 	end
-
 end
 
 -- An entity somewhere has been hurt.  This event fires very often with many units so don't do too many expensive

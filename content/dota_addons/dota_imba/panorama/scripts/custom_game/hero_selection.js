@@ -15,17 +15,8 @@ var abilityPanels = [
 	$('#PickedHeroAbility3'),
 	$('#PickedHeroAbility4'),
 	$('#PickedHeroAbility5'),
-	$('#PickedHeroAbility6') ]
-
-//Subscribe to events
-GameEvents.Subscribe( "picking_done", OnPickingDone );
-GameEvents.Subscribe( "hero_loading_done", OnHeroLoadingDone );
-GameEvents.Subscribe( "picking_time_update", OnTimeUpdate );
-GameEvents.Subscribe( "hero_picked", OnHeroPicked );
-GameEvents.Subscribe( "hero_unpicked", OnHeroUnpicked );
-GameEvents.Subscribe( "player_reconnected", OnPlayerReconnect );
-GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
-GameEvents.Subscribe( "end_game", OnGameEnded );
+	$('#PickedHeroAbility6')
+]
 
 /* Event Handlers
 =========================================================================*/
@@ -342,15 +333,14 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 	}
 }
 
-function OnGameEnded() {
-	//COOKIES: Disable HUD
-	$.Msg("Disabling HUD...")
-	var parent_panel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
-	parent_panel.FindChildTraverse("ScoreboardContainer").style.visibility = "collapse";
-	parent_panel.FindChildTraverse("lower_hud").style.visibility = "collapse";
-	parent_panel.FindChildTraverse("topbar").style.visibility = "collapse";
-	parent_panel.FindChildTraverse("minimap_container").style.visibility = "collapse";
-}
+//Subscribe to events
+GameEvents.Subscribe( "picking_done", OnPickingDone );
+GameEvents.Subscribe( "hero_loading_done", OnHeroLoadingDone );
+GameEvents.Subscribe( "picking_time_update", OnTimeUpdate );
+GameEvents.Subscribe( "hero_picked", OnHeroPicked );
+GameEvents.Subscribe( "hero_unpicked", OnHeroUnpicked );
+GameEvents.Subscribe( "player_reconnected", OnPlayerReconnect );
+GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 
 /* Initialisation - runs when the element is created
 =========================================================================*/

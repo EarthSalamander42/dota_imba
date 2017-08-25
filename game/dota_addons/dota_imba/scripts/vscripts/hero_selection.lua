@@ -474,7 +474,6 @@ local time = 0.0
 		if HeroSelection.playerPicks[player_id] and HeroSelection.playerPickState[player_id].pick_state ~= "in_game" then
 			HeroSelection:AssignHero(player_id, HeroSelection.playerPicks[player_id])
 			HeroSelection.playerPickState[player_id].pick_state = "in_game"
-			StartGarbageCollector()
 		end
 	end
 
@@ -500,21 +499,20 @@ end
 ]]
 function HeroSelection:AssignHero(player_id, hero_name)
 	PrecacheUnitByNameAsync(hero_name, function()
-		print("Assign Hero")
-
-		-- Fetch wisp entity
-		local wisp = PlayerResource:GetSelectedHeroEntity(player_id)
-		wisp:SetRespawnsDisabled(true)				
-
+		-- Dummy invisible wisp
+		local wisp = PlayerResource:GetPlayer(player_id):GetAssignedHero()
 		-- Switch for the new hero
-		PlayerResource:ReplaceHeroWith(player_id, hero_name, 0, 0 )
+		local hero = PlayerResource:ReplaceHeroWith(player_id, hero_name, 0, 0 )
+
+		-- If this is a "real" wisp, tag it
+		if hero:GetUnitName() == "npc_dota_hero_wisp" then
+			hero.is_real_wisp = true
+		end
 
 		-------------------------------------------------------------------------------------------------
 		-- IMBA: First hero spawn initialization
 		-------------------------------------------------------------------------------------------------
-
-		-- Fetch this player's hero entity
-		local hero = PlayerResource:GetPlayer(player_id):GetAssignedHero()
+		
 		hero:RespawnHero(false, false, false)
 		PlayerResource:SetCameraTarget(player_id, hero)
 		Timers:CreateTimer(FrameTime(), function()
@@ -522,6 +520,8 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		end)
 		Timers:CreateTimer(2.0, function() -- I'm shit scared camera still stays locked up so...
 			PlayerResource:SetCameraTarget(player_id, nil)
+			-- Destroy your old dummy wisp
+			UTIL_Remove(wisp)
 		end)
 
 		-- Set the picked hero for this player

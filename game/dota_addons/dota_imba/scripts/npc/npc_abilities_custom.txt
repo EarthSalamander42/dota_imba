@@ -679,101 +679,6 @@
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 	//=================================================================================================================
-	// Roshan: Bash
-	//=================================================================================================================
-	"imba_roshan_bash"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_datadriven"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitTargetFlags"						"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		"AbilityUnitDamageType"							"DAMAGE_TYPE_PHYSICAL"
-		"AbilityTextureName"							"roshan_bash"
-		"MaxLevel"										"1"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"								"6.0"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"debuff_duration"						"6.0"
-			}
-			"02"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"base_damage"							"60"
-			}
-			"03"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"stacking_damage"						"30"
-			}
-			"04"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"base_armor"							"8"
-			}
-			"05"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"stacking_armor"						"4"
-			}
-			"06"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"bash_duration"							"1.35"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_roshan_bash"
-			{
-				"Passive"								"1"
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-
-				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/neutral_roshan.lua"
-						"Function"						"RoshanBash"
-
-						"modifier_debuff"				"modifier_imba_roshan_bash_debuff"
-						"sound_bash"					"RoshanDT.Bash"
-					}
-				}
-			}
-
-			"modifier_imba_roshan_bash_debuff"
-			{
-				"Passive"								"0"
-				"IsHidden"								"0"
-				"IsDebuff"								"1"
-				"IsPurgable"							"0"
-
-				"Duration"								"%debuff_duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"-1"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Roshan: Slam
 	//=================================================================================================================
 	"imba_roshan_slam"
@@ -836,7 +741,7 @@
 			"07"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"debuff_duration"						"5.5"
+				"debuff_duration"						"5.0"
 			}
 		}
 
@@ -34374,6 +34279,71 @@
 		}
 	}
 
+	//=================================================================================================================
+	// Tidehunter: Ravage
+	//=================================================================================================================
+	"imba_tidehunter_ravage"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_tidehunter.lua"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NONE"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES_STRONG"
+		"AbilityTextureName"			"tidehunter_ravage"
+		"FightRecapLevel"				"2"
+		"LevelsBetweenUpgrades"			"6"
+		"MaxLevel"						"6"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3 0.3 0.3 0.2 0.1 0.05"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"100 90 80 70 60 50"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"150 225 325 350 375 400"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_tidehunter.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_tidehunter.vsndevts"
+			"particle"					"particles/units/heroes/hero_tidehunter/tidehunter_spell_ravage.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"1025 1025 1025 1200 1400 1600"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"200 290 380 440 500 560"
+			}
+			"04"
+			{	
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"2.4 2.6 2.8 2.9 3.0 3.1"
+			}
+		}
+	}
+	
 	//=================================================================================================================
 	// Tiny: Rolling Stone
 	//=================================================================================================================

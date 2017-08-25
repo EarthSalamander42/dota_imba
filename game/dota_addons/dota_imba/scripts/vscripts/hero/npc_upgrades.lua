@@ -114,25 +114,14 @@ function TowerUpgrade( keys )
 	AddStacks(ability, caster, caster, modifier_buffs, tower_tier_multiplier * TOWER_POWER_FACTOR, true)
 end
 
-function FountainThink( keys )
+function FountainMarker( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local particle_danger = keys.particle_danger
 
 	local danger_pfx = ParticleManager:CreateParticle(particle_danger, PATTACH_CUSTOMORIGIN, nil)
 	ParticleManager:SetParticleControl(danger_pfx, 0, caster:GetAbsOrigin())
-	ParticleManager:ReleaseParticleIndex(danger_pfx)
-
-	-- If mega creeps are nearby on arena mode, disable fountain protection
-	if END_GAME_ON_KILLS and not caster.fountain_disabled then
-		local enemy_creeps = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 5000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-		for	_,enemy in pairs(enemy_creeps) do
-			if enemy:GetTeam() ~= caster:GetTeam() and string.find(enemy:GetUnitName(), "mega") then
-				ability:ApplyDataDrivenModifier(caster, caster, "modifier_imba_fountain_disabled", {})
-				caster.fountain_disabled = true
-			end
-		end
-	end
+	ParticleManager:ReleaseParticleIndex(danger_pfx)	
 end
 
 function FountainBash( keys )

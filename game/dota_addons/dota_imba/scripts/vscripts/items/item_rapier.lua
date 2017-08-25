@@ -25,10 +25,11 @@ LinkLuaModifier("modifier_imba_rapier_cursed_curse", "items/item_rapier.lua", LU
 rapier_base_class = class({})
 
 function rapier_base_class:OnOwnerDied(params)
-	local hCaster = self:GetCaster()
-	if not hCaster:IsReincarnating() then
-		self:GetCaster():DropRapier(self, true)
+	local hOwner = self:GetOwner()
+	if hOwner.IsReincarnating and hOwner:IsReincarnating() then
+		return nil
 	end
+	hOwner:DropRapier(self, true)
 end
 
 function rapier_base_class:IsRapier()

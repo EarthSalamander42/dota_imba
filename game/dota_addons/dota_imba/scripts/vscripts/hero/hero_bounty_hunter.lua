@@ -298,14 +298,10 @@ function modifier_imba_shuriken_toss_debuff_pull:OnCreated()
 		ParticleManager:SetParticleControl(self.particle_leash_fx, 3, self.parent:GetAbsOrigin())
 		ParticleManager:SetParticleControlEnt(self.particle_leash_fx, 1, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
 
-		-- Create a dummy for the ground hook particle
-		self.shuriken_toss_dummy = CreateUnitByName("npc_dummy_unit", self.parent:GetAbsOrigin(), false, nil, nil, self.parent:GetTeamNumber())
-		self.shuriken_toss_dummy:SetAbsOrigin(self.parent:GetAbsOrigin())
-
 		-- Attach the ground hook to the dummy
 		self.particle_hook_fx = ParticleManager:CreateParticle(self.particle_hook, PATTACH_CUSTOMORIGIN, self.parent)
-		ParticleManager:SetParticleControl(self.particle_hook_fx, 0, Vector(self.shuriken_toss_dummy:GetAbsOrigin().x, self.shuriken_toss_dummy:GetAbsOrigin().y, 2000))
-		ParticleManager:SetParticleControl(self.particle_hook_fx, 6, self.shuriken_toss_dummy:GetAbsOrigin())
+		ParticleManager:SetParticleControl(self.particle_hook_fx, 0, Vector(self.parent:GetAbsOrigin().x, self.parent:GetAbsOrigin().y, 2000))
+		ParticleManager:SetParticleControl(self.particle_hook_fx, 6, self.parent:GetAbsOrigin())
 
 		self:StartIntervalThink(FrameTime())
 	end
@@ -344,9 +340,6 @@ function modifier_imba_shuriken_toss_debuff_pull:OnRemoved()
 
 		ParticleManager:DestroyParticle(self.particle_hook_fx, true)
 		ParticleManager:ReleaseParticleIndex(self.particle_hook_fx)
-
-		-- Destroy dummy
-		self.shuriken_toss_dummy:Destroy()
 	end
 end
 
