@@ -9,6 +9,7 @@ local table_player_key = {}
 local table_able = {}
 local table_XP_has = {}
 local table_XP = {}
+local table_MMR = {}
 
 local SteamID64
 local player_key
@@ -86,6 +87,11 @@ function Server_DecodeForPlayer ( t, nPlayerID )   --To deep-decode the Json cod
 							table_XP_has[nPlayerID] = tostring(XP_has)
 							--print("XP_has="..table_XP_has[nPlayerID])
 						end
+						if pos == "MMR" then
+							MMR = val
+							table_MMR[nPlayerID] = tostring(MMR)
+							--print("MMR="..table_MMR[nPlayerID])
+						end
 						table_able[nPlayerID] = tostring(0)
 					end
 				end
@@ -107,6 +113,7 @@ function Server_PrintInfo()
 			print("SteamID64:"..table_SteamID64[nPlayerID])
 			print("Level:"..XP_level[nPlayerID])
 			print("Rank_title:"..XP_level_title_player[nPlayerID])
+			print("MMR="..table_MMR[nPlayerID])
 			print("XP this level need:"..XP_this_level[nPlayerID])
 			print("XP has in this level:"..XP_has_this_level[nPlayerID])
 			print("XP need to level up:"..XP_need_to_next_level[nPlayerID])
