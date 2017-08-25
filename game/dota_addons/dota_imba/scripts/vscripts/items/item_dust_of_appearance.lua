@@ -9,10 +9,6 @@ LinkLuaModifier( "modifier_imba_dust_of_appearance", "items/item_dust_of_appeara
 if item_imba_dust_of_appearance == nil then item_imba_dust_of_appearance = class({}) end
 function item_imba_dust_of_appearance:GetBehavior() return DOTA_ABILITY_BEHAVIOR_IMMEDIATE + DOTA_ABILITY_BEHAVIOR_NO_TARGET end
 
-function item_imba_dust_of_appearance:GetAbilityTextureName()
-   return "custom/imba_dust_of_appearance"
-end
-
 function item_imba_dust_of_appearance:OnSpellStart()
 	local caster = 		self:GetCaster()
 	local aoe = 		self:GetSpecialValueFor("area_of_effect")
