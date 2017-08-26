@@ -530,7 +530,7 @@ function GetAncientAbility( tier )
 		local ability_list = {
 			"tidehunter_ravage",
 			"magnataur_reverse_polarity",
-			"phoenix_supernova",
+--			"phoenix_supernova",
 		}
 
 		return ability_list[RandomInt(1, #ability_list)]
