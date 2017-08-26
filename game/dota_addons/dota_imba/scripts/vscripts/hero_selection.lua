@@ -525,11 +525,6 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		Timers:CreateTimer(FrameTime(), function()
 			PlayerResource:SetCameraTarget(player_id, nil)
 		end)
-		Timers:CreateTimer(2.0, function() -- I'm shit scared camera still stays locked up so...
-			PlayerResource:SetCameraTarget(player_id, nil)
-			-- Destroy your old dummy wisp
-			UTIL_Remove(wisp)
-		end)
 
 		-- Set the picked hero for this player
 		PlayerResource:SetPickedHero(player_id, hero)
@@ -590,11 +585,13 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		-- Set up player color
 		PlayerResource:SetCustomPlayerColor(player_id, PLAYER_COLORS[player_id][1], PLAYER_COLORS[player_id][2], PLAYER_COLORS[player_id][3])
 
-		-- Timers:CreateTimer(3, function()			
-		-- 	local title = Server_GetPlayerTitle(player_id)			
-		-- 	local rgb = Server_GetTitleColor(title)
-		-- 	hero:SetCustomHealthLabel(title, rgb[1], rgb[2], rgb[3])
-		-- end)
+		Timers:CreateTimer(3.0, function()
+			PlayerResource:SetCameraTarget(player_id, nil)
+			UTIL_Remove(wisp)	
+--			local title = Server_GetPlayerTitle(player_id)
+--			local rgb = Server_GetTitleColor(title)
+--			hero:SetCustomHealthLabel(title, rgb[1], rgb[2], rgb[3])
+		end)
 
 		-- Set initial spawn setup as having been done
 		PlayerResource:IncrementTeamPlayerCount(player_id)

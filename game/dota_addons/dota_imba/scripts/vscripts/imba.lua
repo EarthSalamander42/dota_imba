@@ -1073,13 +1073,6 @@ function GameMode:OnAllPlayersLoaded()
 	end	
 end
 
---[[
-	This function is called once and only once for every player when they spawn into the game for the first time.  It is also called
-	if the player's hero is replaced with a new hero for any reason.  This function is useful for initializing heroes, such as adding
-	levels, changing the starting gold, removing/adding abilities, adding physics, etc.
-
-	The hero parameter is the hero entity that just spawned in
-]]
 function GameMode:OnHeroInGame(hero)	
 	local time_elapsed = 0
 

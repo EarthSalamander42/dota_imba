@@ -40,9 +40,9 @@ function InitializeUI() {
 			$('#RespawnTimeOptionsPanel').style.visibility = 'collapse';
 			$('#TowerUpgradesToggle').style.visibility = 'collapse';
 			$('#HeroPickRulePanel').style.visibility = 'collapse';
-			$('#AllPickToggle').style.visibility = 'collapse';
+//			$('#AllPickToggle').style.visibility = 'collapse';
 			$('#AllRandomToggle').style.visibility = 'collapse';
-			$('#AllRandomSameHeroToggle').style.visibility = 'collapse';
+//			$('#AllRandomSameHeroToggle').style.visibility = 'collapse';
 		} else if (map_info.map_display_name == "imba_10v10") {
 			$('#game_options_game_mode_title').text = $.Localize( "#imba_gamemode_name_10v10" );
 			$('#QuickOptionsPanel').style.visibility = 'collapse';
@@ -52,9 +52,9 @@ function InitializeUI() {
 			$('#RespawnTimeOptionsPanel').style.visibility = 'collapse';
 			$('#TowerUpgradesToggle').style.visibility = 'collapse';
 			$('#HeroPickRulePanel').style.visibility = 'collapse';
-			$('#AllPickToggle').style.visibility = 'collapse';
+//			$('#AllPickToggle').style.visibility = 'collapse';
 			$('#AllRandomToggle').style.visibility = 'collapse';
-			$('#AllRandomSameHeroToggle').style.visibility = 'collapse';
+//			$('#AllRandomSameHeroToggle').style.visibility = 'collapse';
 		} else if (map_info.map_display_name == "imba_custom") {
 			$('#TowerUpgradesToggle').SetSelected(true);
 			$('#FranticToggle').style.visibility = 'visible';
@@ -68,9 +68,9 @@ function InitializeUI() {
 			$('#RespawnTimeOptionsPanel').style.visibility = 'collapse';
 			$('#TowerUpgradesToggle').style.visibility = 'collapse';
 			$('#HeroPickRulePanel').style.visibility = 'collapse';
-			$('#AllPickToggle').style.visibility = 'collapse';
+//			$('#AllPickToggle').style.visibility = 'collapse';
 			$('#AllRandomToggle').style.visibility = 'collapse';
-			$('#AllRandomSameHeroToggle').style.visibility = 'collapse';
+//			$('#AllRandomSameHeroToggle').style.visibility = 'collapse';
 		}
 	}
 }
