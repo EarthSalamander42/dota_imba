@@ -17,15 +17,6 @@ end
 ]]
 function HeroSelection:Start()
 
-	-- Play pick music
---	HeroSelection.pick_sound_dummy_good = CreateUnitByName("npc_dummy_unit", GoodCamera:GetAbsOrigin(), false, nil, nil, DOTA_TEAM_GOODGUYS)
---	EmitSoundOn("Imba.PickPhaseDrums", HeroSelection.pick_sound_dummy_good)
-	EmitSoundOnLocationWithCaster(GoodCamera:GetAbsOrigin(), "Imba.PickPhaseDrums", nil)
-
---	HeroSelection.pick_sound_dummy_bad = CreateUnitByName("npc_dummy_unit", BadCamera:GetAbsOrigin(), false, nil, nil, DOTA_TEAM_GOODGUYS)
---	EmitSoundOn("Imba.PickPhaseDrums", HeroSelection.pick_sound_dummy_bad)
-	EmitSoundOnLocationWithCaster(GoodCamera:GetAbsOrigin(), "Imba.PickPhaseDrums", nil)
-
 	-- Figure out which players have to pick
 	HeroSelection.HorriblyImplementedReconnectDetection = {}
 	HeroSelection.radiantPicks = {}

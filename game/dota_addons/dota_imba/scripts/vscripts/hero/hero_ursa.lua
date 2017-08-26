@@ -49,15 +49,21 @@ function imba_ursa_earthshock:OnSpellStart()
 		local bonus_effects_radius = ability:GetSpecialValueFor("bonus_effects_radius")
 		local bonus_damage_pct = ability:GetSpecialValueFor("bonus_damage_pct")
 		local bonus_slow_pct = ability:GetSpecialValueFor("bonus_slow_pct")
-		local enrage_bonus_radius = enrage_ability:GetSpecialValueFor("bonus_radius_skills")
+		if enrage_ability then
+			local enrage_bonus_radius = enrage_ability:GetSpecialValueFor("bonus_radius_skills")
+		else
+			local enrage_bonus_radius = 0
+		end
 		local enrage_bonus_dmg_pct = ability:GetSpecialValueFor("enrage_bonus_dmg_pct")		
 		
 		-- #1 Talent: Increased point blank damage
 		bonus_damage_pct = bonus_damage_pct + caster:FindTalentValue("special_bonus_imba_ursa_1")		
 		
-		-- #6 Talent: Enrage Earthshock/Overpower radius increase		
-		enrage_bonus_radius = enrage_bonus_radius + caster:FindTalentValue("special_bonus_imba_ursa_6")		
-		
+		-- #6 Talent: Enrage Earthshock/Overpower radius increase
+		if caster:HasAbility("special_bonus_imba_ursa_6") then	
+			enrage_bonus_radius = enrage_bonus_radius + caster:FindTalentValue("special_bonus_imba_ursa_6")		
+		end
+
 		-- Check if Ursa has Enrage buff active, increase radius, damage percents and set Enrage particles
 		if caster:HasModifier(enrage_buff) then
 			radius = radius + enrage_bonus_radius
@@ -380,7 +386,11 @@ function imba_ursa_overpower:OnSpellStart()
 		local aspd_duration = ability:GetSpecialValueFor("aspd_duration")
 		local disarm_radius = ability:GetSpecialValueFor("disarm_radius")
 		local disarm_duration = ability:GetSpecialValueFor("disarm_duration")
-		local enrage_disarm_radius = enrage_ability:GetSpecialValueFor("bonus_radius_skills")		
+		if enrage_ability then
+			local enrage_disarm_radius = enrage_ability:GetSpecialValueFor("bonus_radius_skills")
+		else
+			local enrage_disarm_radius = 0
+		end
 		
 		-- #4 Talent: Additional Overpower attacks		
 		attacks_num = attacks_num + caster:FindTalentValue("special_bonus_imba_ursa_4")		
@@ -388,9 +398,11 @@ function imba_ursa_overpower:OnSpellStart()
 		-- #5 Talent: Overpower's Disarm duration increase
 		disarm_duration = disarm_duration + caster:FindTalentValue("special_bonus_imba_ursa_5")		
 		
-		-- #6 Talent: Enrage Earthshock/Overpower radius increase		
-		enrage_disarm_radius = enrage_disarm_radius + caster:FindTalentValue("special_bonus_imba_ursa_6")
-		
+		-- #6 Talent: Enrage Earthshock/Overpower radius increase
+		if caster:HasAbility("special_bonus_imba_ursa_6") then
+			enrage_disarm_radius = enrage_disarm_radius + caster:FindTalentValue("special_bonus_imba_ursa_6")
+		end
+
 		-- Play cast sound
 		EmitSoundOn(sound_cast, caster)
 		

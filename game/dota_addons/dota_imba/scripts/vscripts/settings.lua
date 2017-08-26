@@ -443,7 +443,6 @@ IMBA_DEVS = {
 	142818979,	-- Luxcerv
 	65988826,	-- Noobsauce
 	137344217,	-- Moujiaozi
-	65419767	-- AtroCty
+	65419767,	-- AtroCty
+	16914370	-- sercankd
 }
-
-timers = {}
