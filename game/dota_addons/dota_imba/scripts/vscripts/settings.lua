@@ -440,5 +440,8 @@ IMBA_DEVS = {
 	34067920,	-- Shush
 	95496383,	-- ZimberZimber
 	137997646,	-- Fudge
-	142818979	-- Luxcerv
+	142818979,	-- Luxcerv
+	65988826,	-- Noobsauce
+	137344217,	-- Moujiaozi
+	65419767	-- AtroCty
 }
