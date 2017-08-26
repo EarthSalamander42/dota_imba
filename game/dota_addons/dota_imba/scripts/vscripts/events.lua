@@ -98,7 +98,7 @@ end
 function GameMode:OnGameRulesStateChange(keys)
 DebugPrint("[BAREBONES] GameRules State Changed")
 DebugPrintTable(keys)
-local time = 0.0
+local i = 10
 
 	-- This internal handling is used to set up main barebones functions
 	GameMode:_OnGameRulesStateChange(keys)
@@ -125,6 +125,28 @@ local time = 0.0
 				end
 			end)
 		end
+
+		-- Play Announcer sounds in Picking Screen until a hero is picked
+		Timers:CreateTimer(function()
+			for _, hero in pairs(HeroList:GetAllHeroes()) do
+				if hero.picked == true then print("Hero Picked! Aborting...") return nil end
+				if GameRules:GetDOTATime(false, true) >= -PRE_GAME_TIME + HERO_SELECTION_TIME -30 and GameRules:GetDOTATime(false, true) <= -PRE_GAME_TIME + HERO_SELECTION_TIME -29 then
+					EmitAnnouncerSoundForPlayer("announcer_announcer_count_battle_30", hero:GetPlayerID())
+				elseif GameRules:GetDOTATime(false, true) >= -PRE_GAME_TIME + HERO_SELECTION_TIME -10 and GameRules:GetDOTATime(false, true) <= -PRE_GAME_TIME + HERO_SELECTION_TIME then
+					if i == 10 then
+						EmitAnnouncerSoundForPlayer("announcer_ann_custom_countdown_"..i, hero:GetPlayerID())
+						i = i -1
+					elseif i <= 10 then
+						EmitAnnouncerSoundForPlayer("announcer_ann_custom_countdown_0"..i, hero:GetPlayerID())
+						i = i -1
+					elseif i == 1 then
+						print("NIL")
+						return nil
+					end
+				end
+			end
+			return 1.0
+		end)
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -133,7 +155,7 @@ local time = 0.0
 
 	if new_state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		Server_WaitToEnableXpGain()
-		ImbaNetGraph(1.0)	
+		ImbaNetGraph(1.0)
 
 		for _, hero in pairs(HeroList:GetAllHeroes()) do
 			if hero.is_dev and not hero.has_graph then

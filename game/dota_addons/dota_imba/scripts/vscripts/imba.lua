@@ -1083,6 +1083,17 @@ end
 function GameMode:OnHeroInGame(hero)	
 	local time_elapsed = 0
 
+	-- Disabling announcer for the player who picked a hero
+	Timers:CreateTimer(0.1, function()
+		if hero:GetUnitName() ~= "npc_dota_hero_wisp" then
+			print("A hero non-wisp spawned")
+			hero.picked = true
+		elseif hero.is_real_wisp then
+			print("REAL WISP")
+			hero.picked = true
+		end
+	end)
+
 	Timers:CreateTimer(function()		
 		if not hero.is_real_wisp and hero:GetUnitName() == "npc_dota_hero_wisp"  then
 			if not hero:HasModifier("modifier_imba_prevent_actions_game_start") then

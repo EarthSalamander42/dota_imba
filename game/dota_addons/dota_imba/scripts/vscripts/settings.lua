@@ -445,3 +445,5 @@ IMBA_DEVS = {
 	137344217,	-- Moujiaozi
 	65419767	-- AtroCty
 }
+
+timers = {}
