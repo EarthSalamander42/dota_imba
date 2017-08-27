@@ -9,6 +9,7 @@ local table_player_key = {}
 local table_able = {}
 local table_XP_has = {}
 local table_XP = {}
+local table_MMR = {}
 
 local SteamID64
 local player_key
@@ -86,6 +87,11 @@ function Server_DecodeForPlayer ( t, nPlayerID )   --To deep-decode the Json cod
 							table_XP_has[nPlayerID] = tostring(XP_has)
 							--print("XP_has="..table_XP_has[nPlayerID])
 						end
+						if pos == "MMR" then
+							MMR = val
+							table_MMR[nPlayerID] = tostring(MMR)
+							--print("MMR="..table_MMR[nPlayerID])
+						end
 						table_able[nPlayerID] = tostring(0)
 					end
 				end
@@ -107,6 +113,7 @@ function Server_PrintInfo()
 			print("SteamID64:"..table_SteamID64[nPlayerID])
 			print("Level:"..XP_level[nPlayerID])
 			print("Rank_title:"..XP_level_title_player[nPlayerID])
+			print("MMR="..table_MMR[nPlayerID])
 			print("XP this level need:"..XP_this_level[nPlayerID])
 			print("XP has in this level:"..XP_has_this_level[nPlayerID])
 			print("XP need to level up:"..XP_need_to_next_level[nPlayerID])
@@ -213,10 +220,10 @@ function Server_AbilityToGainXPForPlyaer_function(nPlayerID)
 		request:SetHTTPRequestGetOrPostParameter("data_json",JSON:encode(jsondata))
 		request:SetHTTPRequestGetOrPostParameter("auth",_AuthCode)
 		request:Send(function(result)
-		--if result.StatusCode ~= 200 then
-		--	Server_AbilityToGainXPForPlyaer_function(nPlayerID)
-		--	return
-		--end
+		if result.StatusCode ~= 200 then
+			Server_AbilityToGainXPForPlyaer_function(nPlayerID)
+			return
+		end
 	end )
 end
 
@@ -274,8 +281,15 @@ function Server_CalculateXPForWinnerAndAll(winning_team)
 			local jsontable={}
 			jsontable.SteamID64 = table_SteamID64[nPlayerID]
 			jsontable.XP = table_XP[nPlayerID]
+			jsontable.WIN = tostring(0)
 			if PlayerResource:GetTeam(nPlayerID) == Winner then
 				jsontable.XP = tostring(math.ceil(table_XP[nPlayerID] * 1.2))
+			else
+				if GetConnectionState(nPlayerID) ~= 2 then
+					jsontable.XP = tostring( 0 - table_XP[nPlayerID])
+				else
+					jsontable.XP = tostring(0)
+				end
 			end
 			jsontable.player_key = table_player_key[nPlayerID]
 			table.insert(jsondata,jsontable)
