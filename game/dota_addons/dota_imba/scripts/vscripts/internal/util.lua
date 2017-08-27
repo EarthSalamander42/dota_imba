@@ -1253,7 +1253,7 @@ function OverrideCreateParticle()
 		-- Index in a big, fat table. Only works in tools mode!
 		if IsInToolsMode() then
 			PARTICLE_TABLE = PARTICLE_TABLE or {}
-			table.insert(PARTICLE_TABLE, path)
+			table.insert(PARTICLE_TABLE, handle)
 		end
 
 		total_particles_created = total_particles_created +1
@@ -1264,6 +1264,25 @@ end
 
 function PrintParticleTable()
 	PrintTable(PARTICLE_TABLE)	
+end
+
+function OverrideReleaseIndex()
+	local ReleaseIndexFunc = ParticleManager.ReleaseParticleIndex
+
+	ParticleManager.ReleaseParticleIndex = 
+	function(manager, int)		
+		-- Find handle in table
+		print(#PARTICLE_TABLE)
+		for i = 1, #PARTICLE_TABLE do
+			if int == PARTICLE_TABLE[i] then				
+				table.remove(PARTICLE_TABLE, i)				
+				break
+			end
+		end
+
+		-- Release normally
+		ReleaseIndexFunc(manager, int)
+	end
 end
 
 function ImbaNetGraph(tick)
