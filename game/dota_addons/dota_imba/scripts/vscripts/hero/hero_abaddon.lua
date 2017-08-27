@@ -193,7 +193,6 @@ function imba_abaddon_mist_coil:OnProjectileHit_ExtraData( hTarget, vLocation, E
 
 			over_channel_particle = ParticleManager:CreateParticle("particles/dev/library/base_dust_hit_smoke.vpcf", PATTACH_POINT, target)
 			ParticleManager:ReleaseParticleIndex(over_channel_particle)
-
 		end
 		
 		-- Cast response

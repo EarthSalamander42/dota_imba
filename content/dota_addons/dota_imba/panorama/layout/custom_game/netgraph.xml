@@ -26,11 +26,15 @@
 			<Label class="Value" id="TotalDummies" text="0" />	
 		</Panel>
 		<Panel id="TotalDummyCreatedPanel" class="EntryPanel">
-			<Label class="OnValue" id="OnMulticast" text="Dummies Created:" />
+			<Label class="OnValue" text="Dummies Created:" />
 			<Label class="Value" id="TotalDummiesCreated" text="0" />	
 		</Panel>
+		<Panel id="TotalParticlesPanel" class="EntryPanel">
+			<Label class="OnValue" text="Particles:" />
+			<Label class="Value" id="TotalParticles" text="0" />	
+		</Panel>
 		<Panel id="TotalParticlesCreatedPanel" class="EntryPanel">
-			<Label class="OnValue" id="OnMulticast" text="Particles Created:" />
+			<Label class="OnValue" text="Particles Created:" />
 			<Label class="Value" id="TotalParticlesCreated" text="0" />	
 		</Panel>
 	</Panel>

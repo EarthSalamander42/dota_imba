@@ -2,7 +2,7 @@
 {
 	margin-top: 12%;
 	background-color: gradient(linear, 0% 0%, 100% 0%, from(#425663cc), color-stop(.5, #42566355), to(#0000));
-	width: 11%;
+	width: 12%;
 	height: fit-children;
 	flow-children: down;
 }
@@ -12,6 +12,7 @@
 #TotalUnitPanel,
 #TotalDummyPanel,
 #TotalDummyCreatedPanel,
+#TotalParticlesPanel,
 #TotalParticlesCreatedPanel
 {
 	visibility: collapse;
@@ -19,13 +20,13 @@
 
 .EntryPanel
 {
-	width: 100%;
+	width: 90%;
 	flow-children: right;
 }
 
 .OnValue
 {
-	margin-left: 12%;
+	margin-left: 7%;
 	font-size: 15.0px;
 	font-weight: thin;
 	color: #A3B5D0cc;

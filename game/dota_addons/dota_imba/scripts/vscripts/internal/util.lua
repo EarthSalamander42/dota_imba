@@ -1242,6 +1242,7 @@ function DefineLosingTeam()
 	end
 end
 
+total_particles = 0
 total_particles_created = 0
 function OverrideCreateParticle()
 	local CreateParticleFunc = ParticleManager.CreateParticle
@@ -1256,6 +1257,7 @@ function OverrideCreateParticle()
 			table.insert(PARTICLE_TABLE, handle)
 		end
 
+		total_particles = total_particles +1
 		total_particles_created = total_particles_created +1
 
 		return handle
@@ -1272,7 +1274,7 @@ function OverrideReleaseIndex()
 	ParticleManager.ReleaseParticleIndex = 
 	function(manager, int)		
 		-- Find handle in table
-		print(#PARTICLE_TABLE)
+--		print(#PARTICLE_TABLE)
 		for i = 1, #PARTICLE_TABLE do
 			if int == PARTICLE_TABLE[i] then				
 				table.remove(PARTICLE_TABLE, i)				
@@ -1281,6 +1283,7 @@ function OverrideReleaseIndex()
 		end
 
 		-- Release normally
+		total_particles = total_particles -1
 		ReleaseIndexFunc(manager, int)
 	end
 end
@@ -1308,6 +1311,7 @@ function ImbaNetGraph(tick)
 		CustomNetTables:SetTableValue("netgraph", "total_unit_number", {value = #units})
 		CustomNetTables:SetTableValue("netgraph", "total_dummy_number", {value = dummy_count})
 		CustomNetTables:SetTableValue("netgraph", "total_dummy_created_number", {value = dummy_created_count})
+		CustomNetTables:SetTableValue("netgraph", "total_particle_number", {value = total_particles})
 		CustomNetTables:SetTableValue("netgraph", "total_particle_created_number", {value = total_particles_created})
 	return tick
 	end)

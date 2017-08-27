@@ -7,6 +7,7 @@ function UpdateNetGraph()
 	var total_units = CustomNetTables.GetTableValue("netgraph", "total_unit_number");
 	var total_dummies = CustomNetTables.GetTableValue("netgraph", "total_dummy_number");
 	var total_dummies_created = CustomNetTables.GetTableValue("netgraph", "total_dummy_created_number");
+	var total_particles = CustomNetTables.GetTableValue("netgraph", "total_particle_number");
 	var total_particles_created = CustomNetTables.GetTableValue("netgraph", "total_particle_created_number");
 
 //	$.Msg("Goodguys Units: ", good_units)
@@ -21,6 +22,7 @@ function UpdateNetGraph()
 		$("#TotalUnits").text = total_units.value;
 		$("#TotalDummies").text = total_dummies.value;
 		$("#TotalDummiesCreated").text = total_dummies_created.value;
+		$("#TotalParticles").text = total_particles.value;
 		$("#TotalParticlesCreated").text = total_particles_created.value;
 	}
 }
@@ -34,6 +36,7 @@ function ShowNetgraph()
 	$("#TotalUnitPanel").style.visibility = "visible";
 	$("#TotalDummyPanel").style.visibility = "visible";
 	$("#TotalDummyCreatedPanel").style.visibility = "visible";
+	$("#TotalParticlesPanel").style.visibility = "visible";
 	$("#TotalParticlesCreatedPanel").style.visibility = "visible";
 }
 
