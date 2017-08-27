@@ -17,7 +17,7 @@
 	"DOTA_Custom8"    								"粉色"
 	
 	"addonname"										"Dota IMBA"
-
+	
 	"custom_scoreboard_hero_name_and_desc"			"{s:hero_name}"
 	"scoreboard_tool_tip_mute_player"				"屏蔽聊天和语音"
 	"scoreboard_tool_tip_active_mute_player"		"（已生效）"
@@ -437,23 +437,25 @@
 	"Dota_Tooltip_Talent_special_bonus_imba_lion_8_title"							"法力汲取"
 	"Dota_Tooltip_Talent_special_bonus_imba_lion_8_Description"						"法力汲取对光环内所有目标生效"
 
-	// Lycan
-	"DOTA_Tooltip_Talent_special_bonus_imba_lycan_1_title"						"精灵狼"	
+	////===============================================================================================================
+    // Lycan's Talents
+    ////===============================================================================================================
+	"DOTA_Tooltip_Talent_special_bonus_imba_lycan_1_title"						"召狼"	
 	"DOTA_Tooltip_Talent_special_bonus_imba_lycan_1_Description"				"+1 精灵狼等级"
-	"DOTA_Tooltip_Talent_special_bonus_imba_lycan_2_title"						"野性驱使"
-	"DOTA_Tooltip_Talent_special_bonus_imba_lycan_2_Description"				"+2%/2 野性驱使狼群攻击力/生命回复速度"
-	"DOTA_Tooltip_Talent_special_bonus_imba_lycan_3_title"						"嗥叫"
-	"DOTA_Tooltip_Talent_special_bonus_imba_lycan_3_Description"				"+12秒 嗥叫持续时间"
-	"DOTA_Tooltip_Talent_special_bonus_imba_lycan_4_title"						"群狼战术"	
-	"DOTA_Tooltip_Talent_special_bonus_imba_lycan_4_Description"				"+2 群狼战术攻击力加成"	
+	"DOTA_Tooltip_Talent_special_bonus_imba_lycan_2_title"						"召狼"
+	"DOTA_Tooltip_Talent_special_bonus_imba_lycan_2_Description"				"精灵狼的攻击力提高狼人攻击力的15%"
+	"DOTA_Tooltip_Talent_special_bonus_imba_lycan_3_title"						"召狼"
+	"DOTA_Tooltip_Talent_special_bonus_imba_lycan_3_Description"				"召狼额外召唤一只强力精灵狼，这只精灵狼拥有15%攻击力的光环，没有隐身和闪避，也不会被群狼之力复活"
+	"DOTA_Tooltip_Talent_special_bonus_imba_lycan_4_title"						"嗥叫"	
+	"DOTA_Tooltip_Talent_special_bonus_imba_lycan_4_Description"				"嗥叫给予狼人和精灵狼8秒的飞行移动"	
 	"DOTA_Tooltip_Talent_special_bonus_imba_lycan_5_title"						"精灵狼"
-	"DOTA_Tooltip_Talent_special_bonus_imba_lycan_5_Description"				"+2 精灵狼数量/充能上限"
+	"DOTA_Tooltip_Talent_special_bonus_imba_lycan_5_Description"			    "6层精灵狼致残后将获得目标的视野"
 	"DOTA_Tooltip_Talent_special_bonus_imba_lycan_6_title"						"精灵狼"
-	"DOTA_Tooltip_Talent_special_bonus_imba_lycan_6_Description"				"双倍精灵狼致残叠加数/最大层数"
-	"DOTA_Tooltip_Talent_special_bonus_imba_lycan_7_title"						"嗥叫"
-	"DOTA_Tooltip_Talent_special_bonus_imba_lycan_7_Description"				"嗥叫额外提高25攻击力、5移动速度、250生命值"
-	"DOTA_Tooltip_Talent_special_bonus_imba_lycan_8_title"						"变身"
-	"DOTA_Tooltip_Talent_special_bonus_imba_lycan_8_Description"				"+15秒 变身持续时间"
+	"DOTA_Tooltip_Talent_special_bonus_imba_lycan_6_Description"				"精灵狼攻击施加双倍负面状态，负面状态叠加上限翻倍"
+	"DOTA_Tooltip_Talent_special_bonus_imba_lycan_7_title"						"变身"
+	"DOTA_Tooltip_Talent_special_bonus_imba_lycan_7_Description"				"变身移动速度额外提高400，同时将最高移动速度提高至1200"
+	"DOTA_Tooltip_Talent_special_bonus_imba_lycan_8_title"						"群狼战术"
+	"DOTA_Tooltip_Talent_special_bonus_imba_lycan_8_Description"				"触发群狼战术时获得额外加成，狼人玩家控制的所有单位移动速度提高20%，攻击力提高20%，攻击速度提高75，持续30秒"
 
 	// Magnus
 	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_1_title"					"震荡波"			
