@@ -24,6 +24,7 @@
 			<Panel id="AssistsContainer" class="ScoreCol_Assists ScoreboardPanel">
 				<Label id="Assists" text="999" />
 			</Panel>
+			<Panel id="PanelImbaXP" class="ScoreCol_ImbaXP ScoreboardPanel" />
 			<Panel id="PlayerItemsContainer" class="ScoreCol_Items ScoreboardPanel" />
 			<Panel id="GoldContainer" class="ScoreCol_Gold ScoreboardPanel">
 				<Label id="PlayerGoldAmount" text="999" />

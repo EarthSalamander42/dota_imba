@@ -92,7 +92,7 @@
 					</Panel>
 
 					<Panel id="TowerUpgradeOptionsPanel">
-<!--						<RadioButton id="AllPickToggle" group="GameLength" text="#imba_gamemode_name_all_pick" onmouseover="UIShowTextTooltip( imba_gamemode_name_all_pick_tooltip )" onmouseout="UIHideTextTooltip()" />	-->
+						<RadioButton id="AllPickToggle" group="GameLength" text="#imba_gamemode_name_all_pick" onmouseover="UIShowTextTooltip( imba_gamemode_name_all_pick_tooltip )" onmouseout="UIHideTextTooltip()" />
 						<RadioButton id="AllRandomToggle" class="GameOptionsToggle" group="GameLength" text="#imba_gamemode_name_all_random" onmouseover="UIShowTextTooltip( imba_gamemode_name_all_random_tooltip )" onmouseout="UIHideTextTooltip()" />
 <!--						<RadioButton id="AllRandomSameHeroToggle" class="GameOptionsToggle" group="GameLength" text="#imba_gamemode_name_all_random_same_hero" onmouseover="UIShowTextTooltip( imba_gamemode_name_all_random_same_hero_tooltip )" onmouseout="UIHideTextTooltip()" />	-->
 						<ToggleButton id="AllRandomToggle" text="#imba_gamemode_name_all_random" class="GameOptionsToggle" onmouseover="UIShowTextTooltip( imba_gamemode_name_all_random_tooltip )" onmouseout="UIHideTextTooltip()"/>

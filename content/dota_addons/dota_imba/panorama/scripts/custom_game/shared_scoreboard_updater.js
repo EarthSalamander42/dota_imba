@@ -147,7 +147,7 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 			{
 				heroNameAndDescription.SetDialogVariable( "hero_name", $.Localize( "#"+playerInfo.player_selected_hero ) );
 			}
-			heroNameAndDescription.SetDialogVariableInt( "hero_level",  playerInfo.player_level );
+//			heroNameAndDescription.SetDialogVariableInt( "hero_level",  playerInfo.player_level );
 		}		
 
 		playerPanel.SetHasClass( "player_connection_abandoned", playerInfo.player_connection_state == DOTAConnectionState_t.DOTA_CONNECTION_STATE_ABANDONED );
