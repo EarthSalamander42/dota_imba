@@ -282,10 +282,14 @@ function Server_CalculateXPForWinnerAndAll(winning_team)
 			jsontable.SteamID64 = table_SteamID64[nPlayerID]
 			jsontable.XP = table_XP[nPlayerID]
 			jsontable.WIN = tostring(0)
-			jsontable.MMR = tostring(0)
 			if PlayerResource:GetTeam(nPlayerID) == Winner then
 				jsontable.XP = tostring(math.ceil(table_XP[nPlayerID] * 1.2))
-				jsontable.WIN = tostring(1)
+			else
+				if GetConnectionState(nPlayerID) ~= 2 then
+					jsontable.XP = tostring( 1 - table_XP[nPlayerID])
+				else
+					jsontable.XP = tostring(0)
+				end
 			end
 			jsontable.player_key = table_player_key[nPlayerID]
 			table.insert(jsondata,jsontable)
