@@ -530,7 +530,7 @@ function GetAncientAbility( tier )
 		local ability_list = {
 			"tidehunter_ravage",
 			"magnataur_reverse_polarity",
-			"phoenix_supernova",
+--			"phoenix_supernova",
 		}
 
 		return ability_list[RandomInt(1, #ability_list)]
@@ -1154,7 +1154,6 @@ function Chat:PlayerRandomed(id, hero, teamLocal, name)
 	localArgs.name = name
 
 	CustomGameEventManager:Send_ServerToAllClients("custom_randomed_message", localArgs)
-	print("CHAT: PlayerRandomed, success!")
 end
 
 function SystemMessage(token, vars)
@@ -1163,34 +1162,16 @@ end
 
 -- This function is responsible for cleaning dummy units and wisps that may have accumulated
 function StartGarbageCollector()	
-	print("started collector")
-	-- Find all wisps in the game
-	local wisps = Entities:FindAllByName("npc_dota_hero_wisp")	
-	print("finding wisps. Checking between this amount of wisps:", #wisps)
-
-	-- Cycle each wisp, and see if it has a player owner. If it doesn't, NUKE IT!
-	for _, wisp in pairs(wisps) do
-
-		if not wisp.is_real_wisp then
-			print("WISP-O-NUKE LAUNCHED!")
-			UTIL_Remove(wisp)
-		else
-			print("that wisps was a real one")
-		end
-	end
+print("started collector")
 
 	-- Find all dummy units in the game
-	local dummies = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0,0,0), nil, 50000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)		
+	local dummies = FindUnitsInRadius(DOTA_TEAM_BADGUYS, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)		
 
-	-- Cycle each dummy. If it is alive for more than 2 minutes, delete it.
+	-- Cycle each dummy. If it is alive for more than 1 minute, delete it.
 	local gametime = GameRules:GetGameTime()
-	for _,dummy in pairs(dummies) do
+	for _, dummy in pairs(dummies) do
 		if dummy:GetUnitName() == "npc_dummy_unit" then			
-			print("found a dummy")
-
 			local dummy_creation_time = dummy:GetCreationTime()
-			print("dummy was created in", dummy_creation_time)
-
 			if gametime - dummy_creation_time > 60 then
 				print("NUKING A LOST DUMMY!")
 				UTIL_Remove(dummy)
@@ -1261,7 +1242,7 @@ function DefineLosingTeam()
 	end
 end
 
-
+total_particles_created = 0
 function OverrideCreateParticle()
 	local CreateParticleFunc = ParticleManager.CreateParticle
 
@@ -1272,13 +1253,62 @@ function OverrideCreateParticle()
 		-- Index in a big, fat table. Only works in tools mode!
 		if IsInToolsMode() then
 			PARTICLE_TABLE = PARTICLE_TABLE or {}
-			table.insert(PARTICLE_TABLE, path)
+			table.insert(PARTICLE_TABLE, handle)
 		end
-		
+
+		total_particles_created = total_particles_created +1
+
 		return handle
 	end
 end
 
 function PrintParticleTable()
 	PrintTable(PARTICLE_TABLE)	
+end
+
+function OverrideReleaseIndex()
+	local ReleaseIndexFunc = ParticleManager.ReleaseParticleIndex
+
+	ParticleManager.ReleaseParticleIndex = 
+	function(manager, int)		
+		-- Find handle in table
+		print(#PARTICLE_TABLE)
+		for i = 1, #PARTICLE_TABLE do
+			if int == PARTICLE_TABLE[i] then				
+				table.remove(PARTICLE_TABLE, i)				
+				break
+			end
+		end
+
+		-- Release normally
+		ReleaseIndexFunc(manager, int)
+	end
+end
+
+function ImbaNetGraph(tick)
+	Timers:CreateTimer(function()
+		local units = FindUnitsInRadius(DOTA_TEAM_BADGUYS, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)		
+		local good_unit_count = 0
+		local bad_unit_count = 0
+		local dummy_count = 0
+
+		for _, unit in pairs(units) do
+			if unit:GetTeamNumber() == 2 then
+				good_unit_count = good_unit_count +1
+			elseif unit:GetTeamNumber() == 3 then
+				bad_unit_count = bad_unit_count +1
+			end
+			if unit:GetUnitName() == "npc_dummy_unit" or unit:GetUnitName() == "npc_dummy_unit_perma" then			
+				dummy_count = dummy_count +1
+			end
+		end
+
+		CustomNetTables:SetTableValue("netgraph", "good_unit_number", {value = good_unit_count})
+		CustomNetTables:SetTableValue("netgraph", "bad_unit_number", {value = bad_unit_count})
+		CustomNetTables:SetTableValue("netgraph", "total_unit_number", {value = #units})
+		CustomNetTables:SetTableValue("netgraph", "total_dummy_number", {value = dummy_count})
+		CustomNetTables:SetTableValue("netgraph", "total_dummy_created_number", {value = dummy_created_count})
+		CustomNetTables:SetTableValue("netgraph", "total_particle_created_number", {value = total_particles_created})
+	return tick
+	end)
 end

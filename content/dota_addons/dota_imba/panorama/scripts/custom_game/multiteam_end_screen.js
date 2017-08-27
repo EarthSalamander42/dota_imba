@@ -43,16 +43,16 @@
 		}
 	}
 
-	var winningTeamLogo = $( "#WinningTeamLogo" );
-	if ( winningTeamLogo )
-	{
-		var logo_xml = GameUI.CustomUIConfig().team_logo_large_xml;
-		if ( logo_xml )
-		{
-			winningTeamLogo.SetAttributeInt( "team_id", winningTeamId );
-			winningTeamLogo.BLoadLayout( logo_xml, false, false );
-		}
-	}
+//	var winningTeamLogo = $( "#WinningTeamLogo" );
+//	if ( winningTeamLogo )
+//	{
+//		var logo_xml = GameUI.CustomUIConfig().team_logo_large_xml;
+//		if ( logo_xml )
+//		{
+//			winningTeamLogo.SetAttributeInt( "team_id", winningTeamId );
+//			winningTeamLogo.BLoadLayout( logo_xml, false, false );
+//		}
+//	}
 
 	//COOKIES: Disable HUD
 	$.Msg("Disabling HUD...")

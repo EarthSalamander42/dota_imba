@@ -339,7 +339,13 @@ function modifier_item_imba_hellblade_unique:OnAttacked(keys)
 						if modifier:IsDebuff() and modifier:IsPurgable() then
 							is_valid_debuff = true							
 						end
-					end					
+					end			
+
+					if not is_valid_debuff then
+						if IsVanillaDebuff(modifier_name) then
+							is_valid_debuff = true
+						end
+					end
 
 					-- if it wasn't found, compare debuffs to try and find it in the KV debuff list
 					if not is_valid_debuff then

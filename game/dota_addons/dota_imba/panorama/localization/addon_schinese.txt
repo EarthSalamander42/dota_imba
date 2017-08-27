@@ -18,6 +18,7 @@
 	
 	"addonname"										"Dota IMBA"
 
+	"custom_scoreboard_hero_name_and_desc"			"{s:hero_name}"
 	"scoreboard_tool_tip_mute_player"				"屏蔽聊天和语音"
 	"scoreboard_tool_tip_active_mute_player"		"（已生效）"
 	"scoreboard_tool_tip_share_unit"				"共享小兵操作"

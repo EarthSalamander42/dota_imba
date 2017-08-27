@@ -220,7 +220,9 @@ IMBA_HYPER_MODE_ON = false													-- Is Hyper mode activated?
 IMBA_FRANTIC_MODE_ON = false												-- Is Frantic mode activated?
 IMBA_HERO_PICK_RULE = 0                                                     -- 0 : All Unique Heroes, 1 : Allow teams to pick same hero, 2 : Allow all to pick same hero
 
+IMBA_PICK_MODE_ALL_PICK = false												-- Activates All Pick mode when true
 IMBA_PICK_MODE_ALL_RANDOM = false											-- Activates All Random mode when true
+IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO = false									-- Activates All Random Same Hero mode when true
 IMBA_ALL_RANDOM_HERO_SELECTION_TIME = 5.0									-- Time we need to wait before the game starts when all heroes are randomed
 
 CUSTOM_GOLD_BONUS = 30														-- Amount of bonus gold gained (in %)
@@ -336,7 +338,9 @@ elseif GetMapName() == "imba_arena" then									-- Arena map defaults
 end
 
 -- Update game mode net tables
+CustomNetTables:SetTableValue("game_options", "all_pick", {IMBA_PICK_MODE_ALL_PICK})
 CustomNetTables:SetTableValue("game_options", "all_random", {IMBA_PICK_MODE_ALL_RANDOM})
+CustomNetTables:SetTableValue("game_options", "all_random_same_hero", {IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO})
 CustomNetTables:SetTableValue("game_options", "tower_upgrades", {TOWER_UPGRADE_MODE})
 CustomNetTables:SetTableValue("game_options", "kills_to_end", {KILLS_TO_END_GAME_FOR_TEAM})
 CustomNetTables:SetTableValue("game_options", "bounty_multiplier", {100 + CUSTOM_GOLD_BONUS})
@@ -411,8 +415,6 @@ for i = 21, 100 do
 	HERO_XP_BOUNTY_PER_LEVEL[i] = HERO_XP_BOUNTY_PER_LEVEL[i-1] + 135 + i * 3
 end
 
-
-
 USE_MEME_SOUNDS = true														-- Should we use meme/fun sounds on abilities occasionally?
 
 -------------------------------------------------------------------------------------------------
@@ -431,3 +433,16 @@ PURGE_BUFF_LIST = LoadKeyValues("scripts/npc/KV/purge_buffs_list.kv")
 IMBA_GENERIC_TALENT_LIST = LoadKeyValues("scripts/npc/KV/imba_generic_talent_list.kv")
 IMBA_HERO_TALENTS_LIST = LoadKeyValues("scripts/npc/KV/imba_hero_talents_list.kv")
 DISPELLABLE_DEBUFF_LIST = LoadKeyValues("scripts/npc/KV/dispellable_debuffs_list.kv")
+
+IMBA_DEVS = {
+	54896080,	-- Cookies
+	46875732,	-- Firetoad
+	34067920,	-- Shush
+	95496383,	-- ZimberZimber
+	137997646,	-- Fudge
+	142818979,	-- Luxcerv
+	65988826,	-- Noobsauce
+	137344217,	-- Moujiaozi
+	65419767,	-- AtroCty
+	16914370	-- sercankd
+}

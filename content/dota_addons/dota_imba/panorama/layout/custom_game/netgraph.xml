@@ -1,0 +1,37 @@
+<root>
+	<styles>
+		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
+		<include src="file://{resources}/styles/custom_game/netgraph.css" />
+	</styles>
+
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/netgraph.js" />
+	</scripts>
+
+	<Panel class="ScoreboardLeft">
+		<Panel id="GoodUnitPanel" class="EntryPanel">
+			<Label class="OnValue" text="Good Units:" />
+			<Label class="Value" id="GoodUnits" text="0" />
+		</Panel>
+		<Panel id="BadUnitPanel" class="EntryPanel">
+			<Label class="OnValue" text="Bad Units:" />
+			<Label class="Value" id="BadUnits" text="0" />
+		</Panel>
+		<Panel id="TotalUnitPanel" class="EntryPanel">
+			<Label class="OnValue" text="Total Units:" />
+			<Label class="Value" id="TotalUnits" text="0" />
+		</Panel>
+		<Panel id="TotalDummyPanel" class="EntryPanel">
+			<Label class="OnValue" text="Total Dummies:" />
+			<Label class="Value" id="TotalDummies" text="0" />	
+		</Panel>
+		<Panel id="TotalDummyCreatedPanel" class="EntryPanel">
+			<Label class="OnValue" id="OnMulticast" text="Dummies Created:" />
+			<Label class="Value" id="TotalDummiesCreated" text="0" />	
+		</Panel>
+		<Panel id="TotalParticlesCreatedPanel" class="EntryPanel">
+			<Label class="OnValue" id="OnMulticast" text="Particles Created:" />
+			<Label class="Value" id="TotalParticlesCreated" text="0" />	
+		</Panel>
+	</Panel>
+</root>

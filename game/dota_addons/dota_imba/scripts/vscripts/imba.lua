@@ -50,7 +50,11 @@ require('addon_init')
 
 ApplyAllTalentModifiers()
 StoreCurrentDayCycle()
-OverrideCreateParticle()
+
+if IsInToolsMode() then
+	OverrideCreateParticle()
+	OverrideReleaseIndex()
+end
 
 -- storage API
 --require('libraries/json')
@@ -1073,15 +1077,19 @@ function GameMode:OnAllPlayersLoaded()
 	end	
 end
 
---[[
-	This function is called once and only once for every player when they spawn into the game for the first time.  It is also called
-	if the player's hero is replaced with a new hero for any reason.  This function is useful for initializing heroes, such as adding
-	levels, changing the starting gold, removing/adding abilities, adding physics, etc.
-
-	The hero parameter is the hero entity that just spawned in
-]]
 function GameMode:OnHeroInGame(hero)	
 	local time_elapsed = 0
+
+	-- Disabling announcer for the player who picked a hero
+	Timers:CreateTimer(0.1, function()
+		if hero:GetUnitName() ~= "npc_dota_hero_wisp" then
+			print("A hero non-wisp spawned")
+			hero.picked = true
+		elseif hero.is_real_wisp then
+			print("REAL WISP")
+			hero.picked = true
+		end
+	end)
 
 	Timers:CreateTimer(function()		
 		if not hero.is_real_wisp and hero:GetUnitName() == "npc_dota_hero_wisp"  then
@@ -1425,7 +1433,7 @@ function GameMode:InitGameMode()
 
 	-- IMBA testbed command
 	Convars:RegisterCommand("imba_test", Dynamic_Wrap(GameMode, 'StartImbaTest'), "Spawns several units to help with testing", FCVAR_CHEAT)
-	Convars:RegisterCommand("particle_table_print", PrintParticleTable, "Prints a huge table of all used particles", FCVAR_CHEAT)
+	Convars:RegisterCommand("particle_table_print", PrintParticleTable, "Prints a huge table of all used particles", FCVAR_CHEAT)	
 
 	-- Panorama event stuff
 	initScoreBoardEvents()

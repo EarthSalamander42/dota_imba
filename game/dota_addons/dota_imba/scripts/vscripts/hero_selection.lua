@@ -17,15 +17,6 @@ end
 ]]
 function HeroSelection:Start()
 
-	-- Play pick music
---	HeroSelection.pick_sound_dummy_good = CreateUnitByName("npc_dummy_unit", GoodCamera:GetAbsOrigin(), false, nil, nil, DOTA_TEAM_GOODGUYS)
---	EmitSoundOn("Imba.PickPhaseDrums", HeroSelection.pick_sound_dummy_good)
-	EmitSoundOnLocationWithCaster(GoodCamera:GetAbsOrigin(), "Imba.PickPhaseDrums", nil)
-
---	HeroSelection.pick_sound_dummy_bad = CreateUnitByName("npc_dummy_unit", BadCamera:GetAbsOrigin(), false, nil, nil, DOTA_TEAM_GOODGUYS)
---	EmitSoundOn("Imba.PickPhaseDrums", HeroSelection.pick_sound_dummy_bad)
-	EmitSoundOnLocationWithCaster(GoodCamera:GetAbsOrigin(), "Imba.PickPhaseDrums", nil)
-
 	-- Figure out which players have to pick
 	HeroSelection.HorriblyImplementedReconnectDetection = {}
 	HeroSelection.radiantPicks = {}
@@ -59,7 +50,7 @@ function HeroSelection:Start()
 	HeroSelection.listener_abilities_requested = CustomGameEventManager:RegisterListener("pick_abilities_requested", HeroSelection.PickAbilitiesRequested )
 
 	-- Play relevant pick lines
-	if IMBA_PICK_MODE_ALL_RANDOM then
+	if IMBA_PICK_MODE_ALL_RANDOM or IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
 		EmitGlobalSound("announcer_announcer_type_all_random")	
 	elseif IMBA_PICK_MODE_ARENA_MODE then
 		EmitGlobalSound("announcer_announcer_type_death_match")
@@ -242,7 +233,14 @@ local id = event.PlayerID
 	PlayerResource:SetHasRandomed(id)
 
 	-- If it's a valid hero, allow the player to select it
-	HeroSelection:HeroSelect({PlayerID = id, HeroName = random_hero, HasRandomed = true})
+	if IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
+		print("All Random Same Hero-ing!")
+		for _, hero in pairs(HeroList:GetAllHeroes()) do
+			HeroSelection:HeroSelect({PlayerID = hero:GetPlayerID(), HeroName = random_hero, HasRandomed = true})
+		end
+	else
+		HeroSelection:HeroSelect({PlayerID = id, HeroName = random_hero, HasRandomed = true})
+	end
 
 	-- The person has randomed (separate from Set/HasRandomed, because those cannot be unset)
 	HeroSelection.playerPickState[id].random_state = true
@@ -344,7 +342,7 @@ end
 function HeroSelection:HeroSelect( event )
 
 	-- If this is All Random and the player picked a hero manually, refuse it
-	if IMBA_PICK_MODE_ALL_RANDOM and (not event.HasRandomed) then
+	if IMBA_PICK_MODE_ALL_RANDOM or IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO and (not event.HasRandomed) then
 		return nil
 	end
 
@@ -518,11 +516,6 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		Timers:CreateTimer(FrameTime(), function()
 			PlayerResource:SetCameraTarget(player_id, nil)
 		end)
-		Timers:CreateTimer(2.0, function() -- I'm shit scared camera still stays locked up so...
-			PlayerResource:SetCameraTarget(player_id, nil)
-			-- Destroy your old dummy wisp
-			UTIL_Remove(wisp)
-		end)
 
 		-- Set the picked hero for this player
 		PlayerResource:SetPickedHero(player_id, hero)
@@ -562,7 +555,7 @@ function HeroSelection:AssignHero(player_id, hero_name)
 			PlayerResource:SetGold(player_id, HERO_RERANDOM_GOLD, false)
 		elseif has_repicked then
 			PlayerResource:SetGold(player_id, HERO_REPICK_GOLD, false)
-		elseif has_randomed or IMBA_PICK_MODE_ALL_RANDOM then
+		elseif has_randomed or IMBA_PICK_MODE_ALL_RANDOM or IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
 			PlayerResource:SetGold(player_id, HERO_RANDOM_GOLD, false)
 		else
 			PlayerResource:SetGold(player_id, HERO_INITIAL_GOLD, false)
@@ -583,11 +576,13 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		-- Set up player color
 		PlayerResource:SetCustomPlayerColor(player_id, PLAYER_COLORS[player_id][1], PLAYER_COLORS[player_id][2], PLAYER_COLORS[player_id][3])
 
-		-- Timers:CreateTimer(3, function()			
-		-- 	local title = Server_GetPlayerTitle(player_id)			
-		-- 	local rgb = Server_GetTitleColor(title)
-		-- 	hero:SetCustomHealthLabel(title, rgb[1], rgb[2], rgb[3])
-		-- end)
+		Timers:CreateTimer(3.0, function()
+			PlayerResource:SetCameraTarget(player_id, nil)
+			UTIL_Remove(wisp)	
+--			local title = Server_GetPlayerTitle(player_id)
+--			local rgb = Server_GetTitleColor(title)
+--			hero:SetCustomHealthLabel(title, rgb[1], rgb[2], rgb[3])
+		end)
 
 		-- Set initial spawn setup as having been done
 		PlayerResource:IncrementTeamPlayerCount(player_id)
