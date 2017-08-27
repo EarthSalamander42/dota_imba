@@ -282,7 +282,7 @@ function Server_CalculateXPForWinnerAndAll(winning_team)
 			jsontable.SteamID64 = table_SteamID64[nPlayerID]
 			jsontable.XP = table_XP[nPlayerID]
 			jsontable.WIN = tostring(0)
-			if PlayerResource:GetTeam(nPlayerID) == Winner then
+			if PlayerResource:GetTeam(nPlayerID) == Winner and GetConnectionState(nPlayerID) == 2 then
 				jsontable.XP = tostring(math.ceil(table_XP[nPlayerID] * 1.2))
 			else
 				if GetConnectionState(nPlayerID) ~= 2 then
