@@ -81,7 +81,6 @@ function GameMode:OnDisconnect(keys)
 						end
 					end)
 				end
-				
 			-- If the player has reconnected, stop tracking connection state every second
 			elseif PlayerResource:GetConnectionState(player_id) == 2 then
 
@@ -185,13 +184,15 @@ local i = 10
 end
 
 dummy_created_count = 0
--- An NPC has spawned somewhere in game. This includes heroes
+
 function GameMode:OnNPCSpawned(keys)
+GameMode:_OnNPCSpawned(keys)
+local npc = EntIndexToHScript(keys.entindex)
+local normal_xp = npc:GetDeathXP()
 
-	-- This internal handling is used to set up main barebones functions
-	GameMode:_OnNPCSpawned(keys)
-
-	local npc = EntIndexToHScript(keys.entindex)
+	if npc then
+		npc:SetDeathXP(normal_xp*0.8)
+	end
 
 	if npc:GetUnitName() == "npc_dummy_unit" or npc:GetUnitName() == "npc_dummy_unit_perma" then
 		dummy_created_count = dummy_created_count +1

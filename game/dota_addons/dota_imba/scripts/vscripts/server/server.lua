@@ -268,40 +268,43 @@ end
 function Server_CalculateXPForWinnerAndAll(winning_team)
 	local Winner
 	for nPlayerID=0, DOTA_MAX_TEAM_PLAYERS-1 do
-		if  PlayerResource:IsValidPlayer(nPlayerID)  then
-		if PlayerResource:IsFakeClient(nPlayerID) then
-		else
-			if winning_team == "Radiant" then
-				Winner = DOTA_TEAM_GOODGUYS
-			end
-			if winning_team == "Dire" then
-				Winner = DOTA_TEAM_BADGUYS
-			end
-			local jsondata={}
-			local jsontable={}
-			jsontable.SteamID64 = table_SteamID64[nPlayerID]
-			jsontable.XP = table_XP[nPlayerID]
-			jsontable.WIN = tostring(0)
-			if PlayerResource:GetTeam(nPlayerID) == Winner and GetConnectionState(nPlayerID) == 2 then
-				jsontable.XP = tostring(math.ceil(table_XP[nPlayerID] * 1.2))
+		if  PlayerResource:IsValidPlayer(nPlayerID) then
+			if PlayerResource:IsFakeClient(nPlayerID) then
 			else
-				if GetConnectionState(nPlayerID) ~= 2 then
-					jsontable.XP = tostring( 0 - table_XP[nPlayerID])
-				else
-					jsontable.XP = tostring(0)
+				if winning_team == "Radiant" then
+					Winner = DOTA_TEAM_GOODGUYS
 				end
+				if winning_team == "Dire" then
+					Winner = DOTA_TEAM_BADGUYS
+				end
+				local jsondata={}
+				local jsontable={}
+				jsontable.SteamID64 = table_SteamID64[nPlayerID]
+				jsontable.XP = table_XP[nPlayerID]
+				jsontable.WIN = tostring(0)
+				print("SERVER XP: Testing XP earned...")
+				if PlayerResource:GetTeam(nPlayerID) == Winner and PlayerResource:GetConnectionState(nPlayerID) == 2 then
+					jsontable.XP = tostring(math.ceil(table_XP[nPlayerID] * 1.2))
+					CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {XP = tonumber(XP_has_this_level[nPlayerID]), MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]), Lvl = tonumber(XP_level[nPlayerID]), ID = nPlayerID, title = XP_level_title_player[nPlayerID], XP_change = tonumber(math.ceil(table_XP[nPlayerID] * 1.2))})
+				else
+					if PlayerResource:GetConnectionState(nPlayerID) ~= 2 then
+						jsontable.XP = tostring(0 - table_XP[nPlayerID])
+						CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {XP = tonumber(XP_has_this_level[nPlayerID]), MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]), Lvl = tonumber(XP_level[nPlayerID]), ID = nPlayerID, title = XP_level_title_player[nPlayerID], XP_change = tonumber(0 - table_XP[nPlayerID])})
+					else
+						jsontable.XP = tostring(0)
+						CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {XP = tonumber(XP_has_this_level[nPlayerID]), MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]), Lvl = tonumber(XP_level[nPlayerID]), ID = nPlayerID, title = XP_level_title_player[nPlayerID], XP_change = tonumber(0)})
+					end
+				end
+				jsontable.player_key = table_player_key[nPlayerID]
+				table.insert(jsondata,jsontable)
+				local request = CreateHTTPRequestScriptVM( "GET", "http://www.dota2imba.cn/XP_game_end_tmp_to_perm.php" )
+					request:SetHTTPRequestGetOrPostParameter("data_json",JSON:encode(jsondata))
+					request:SetHTTPRequestGetOrPostParameter("auth",_AuthCode);
+					request:Send(function(result)
+				end)
 			end
-			jsontable.player_key = table_player_key[nPlayerID]
-			table.insert(jsondata,jsontable)
-			local request = CreateHTTPRequestScriptVM( "GET", "http://www.dota2imba.cn/XP_game_end_tmp_to_perm.php" )
-				request:SetHTTPRequestGetOrPostParameter("data_json",JSON:encode(jsondata))
-				request:SetHTTPRequestGetOrPostParameter("auth",_AuthCode);
-				request:Send(function(result)
-			end )
-
 		end
-		end
-	end 
+	end
 end
 
 

@@ -39,8 +39,8 @@
 
 		// These lines set up the panorama colors used by each team (for game select/setup, etc)
 		GameUI.CustomUIConfig().team_colors = {}
-		GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_GOODGUYS] = "#001050;";
-		GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_BADGUYS ] = "#500000;";
+		GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_GOODGUYS] = "#08640E;";
+		GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_BADGUYS ] = "#640808;";
 
 		// These lines set up the panorama colors used by each player on the top scoreboard
 		GameUI.CustomUIConfig().player_colors = {}

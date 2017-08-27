@@ -43,8 +43,6 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 		$.Msg("Player ID: "+playerId)
 		if ( ImbaXP_Panel != null )
 		{
-			$.Msg("IMBA Panel is Valid: XPProgressBarContainer"+playerId)
-
 			var plyData = CustomNetTables.GetTableValue("player_table", playerId);
 			if ( plyData != null )
 			{
@@ -53,9 +51,29 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 				var Imbar = ImbaXP_Panel.BCreateChildren("<ProgressBar id='XPProgressBar" +playerId+ "'/>");
 				ImbaXP_Panel.BCreateChildren("<Label id='ImbaLvl" +playerId+ "' text='999'/>");
 				ImbaXP_Panel.BCreateChildren("<Label id='ImbaXP" +playerId+ "' text='999'/>");
+				ImbaXP_Panel.BCreateChildren("<Label id='ImbaXPEarned" +playerId+ "' text='+25'/>");
 				_ScoreboardUpdater_SetValueSafe( playerPanel, "XPProgressBar"+playerId, plyData.XP / plyData.MaxXP );
-				_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaLvl"+playerId, "Lvl:  " + plyData.Lvl );
+				_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaLvl"+playerId, "Lvl: " + plyData.Lvl );
 				_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaXP"+playerId, plyData.XP + "/" + plyData.MaxXP );
+
+				if (plyData.XP_change >= 1)
+				{
+					$.Msg("Positive change! " + plyData.XP_change)
+					_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaXPEarned"+playerId, "+" + plyData.XP_change );
+					ImbaXP_Panel.FindChildTraverse("ImbaXPEarned"+playerId).style.color = 'green';
+				}
+				else if (plyData.XP_change == 0)
+				{
+					$.Msg("No change! " + plyData.XP_change)
+					_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaXPEarned"+playerId, "+" + plyData.XP_change );
+					ImbaXP_Panel.FindChildTraverse("ImbaXPEarned"+playerId).style.color = 'yellow';
+				}
+				else if (plyData.XP_change < 0)
+				{
+					$.Msg("Negative change! " + plyData.XP_change)
+					_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaXPEarned"+playerId, "-" + plyData.XP_change );
+					ImbaXP_Panel.FindChildTraverse("ImbaXPEarned"+playerId).style.color = 'red';
+				}
 			}
 		}
 	}

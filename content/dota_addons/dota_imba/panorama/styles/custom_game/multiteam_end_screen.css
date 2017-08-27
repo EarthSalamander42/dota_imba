@@ -469,7 +469,7 @@
 #ImbaXP19
 {
 	margin-top: 3px;
-	margin-left: 55%;
+	margin-left: 47%;
 	width: 100%;
 	font-size: 17px;
 	font-weight: bold;
@@ -608,4 +608,37 @@
 	vertical-align: bottom;
 	height: 40px;
 	width: 100%;
+}
+
+#ImbaXPEarned0,
+#ImbaXPEarned1,
+#ImbaXPEarned2,
+#ImbaXPEarned3,
+#ImbaXPEarned4,
+#ImbaXPEarned5,
+#ImbaXPEarned6,
+#ImbaXPEarned7,
+#ImbaXPEarned8,
+#ImbaXPEarned9,
+#ImbaXPEarned10,
+#ImbaXPEarned11,
+#ImbaXPEarned12,
+#ImbaXPEarned13,
+#ImbaXPEarned14,
+#ImbaXPEarned15,
+#ImbaXPEarned16,
+#ImbaXPEarned17,
+#ImbaXPEarned18,
+#ImbaXPEarned19
+{
+	margin-top: 3px;
+	margin-left: 80%;
+	width: 100%;
+	font-size: 17px;
+	font-weight: bold;
+	color: white;
+	vertical-align: center;
+	horizontal-align: center;
+	opacity: 0.75;
+//	visibility: collapse;
 }

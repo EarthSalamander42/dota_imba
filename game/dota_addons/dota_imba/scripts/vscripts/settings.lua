@@ -356,6 +356,33 @@ CustomNetTables:SetTableValue("game_options", "hero_pick_rule", {IMBA_HERO_PICK_
 -- XP per level table (only active if custom hero levels are enabled) 
 XP_PER_LEVEL_TABLE = {}
 
+-- Vanilla
+-- Level :1		0			+0
+-- Level :2		240			+240
+-- Level :3		600			+360
+-- Level :4		1080		+480
+-- Level :5		1680		+600
+-- Level :6		2300		+620
+-- Level :7		2940		+640
+-- Level :8		3600		+660
+-- Level :9		4280		+680
+-- Level :10	5080		+800
+-- Level :11	5900		+820
+-- Level :12	6740		+840
+-- Level :13	7640		+900
+-- Level :14	8865		+1225
+-- Level :15	10115		+1250
+-- Level :16	11390		+1275
+-- Level :17	12690		+1300
+-- Level :18	14015		+1325
+-- Level :19	15415		+1400
+-- Level :20	16905		+1490
+-- Level :21	18405		+1500
+-- Level :22	20155		+1750
+-- Level :23	20155		+2000
+-- Level :24	24405		+2250
+-- Level :25	26905		+2500
+
 XP_PER_LEVEL_TABLE[1] = 0
 XP_PER_LEVEL_TABLE[2] = 120
 XP_PER_LEVEL_TABLE[3] = 270
