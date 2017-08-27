@@ -286,7 +286,7 @@ function Server_CalculateXPForWinnerAndAll(winning_team)
 				jsontable.XP = tostring(math.ceil(table_XP[nPlayerID] * 1.2))
 			else
 				if GetConnectionState(nPlayerID) ~= 2 then
-					jsontable.XP = tostring( 0 - table_XP[nPlayerID])
+					jsontable.XP = tostring( 1 - table_XP[nPlayerID])
 				else
 					jsontable.XP = tostring(0)
 				end
