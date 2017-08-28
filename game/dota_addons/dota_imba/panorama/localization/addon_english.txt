@@ -26,6 +26,9 @@
 	"scoreboard_tool_tip_active_share_unit_hero"	"(SHARED)"
 	"scoreboard_tool_tip_disable_help"				"Disable Help"
 	"scoreboard_tool_tip_active_disable_help"		"(DISABLED)"
+	"column_str_disabled"							"Strength heroes are disabled for a lag issue test, they will be back in 12 hours"
+	"column_agi_disabled"							"Agility heroes are disabled for a lag issue test, they will be back in 12 hours"
+	"column_int_disabled"							"Intelligence heroes are disabled for a lag issue test, they will be back in 12 hours"
 
 	//=================================================================================================================
 	// Generic talent names

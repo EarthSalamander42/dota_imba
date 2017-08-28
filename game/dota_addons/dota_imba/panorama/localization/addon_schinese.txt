@@ -26,6 +26,10 @@
 	"scoreboard_tool_tip_active_share_unit_hero"	"（已生效）"
 	"scoreboard_tool_tip_disable_help"				"禁用帮助"
 	"scoreboard_tool_tip_active_disable_help"		"（已生效）"
+	"column_str_disabled"							"所有力量英雄将在接下来的12小时内被禁用，以此来寻找卡顿原因，尤其带来的不便，还请各位谅解"
+	"column_agi_disabled"							"所有力量英雄将在接下来的12小时内被禁用，以此来寻找卡顿原因，尤其带来的不便，还请各位谅解"
+	"column_int_disabled"							"所有力量英雄将在接下来的12小时内被禁用，以此来寻找卡顿原因，尤其带来的不便，还请各位谅解"
+
 
 	//=================================================================================================================
 	// Generic talent names

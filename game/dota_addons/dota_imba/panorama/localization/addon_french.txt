@@ -1,0 +1,6 @@
+"addon"
+{
+	"column_str_disabled"					"Les héros Force seront désactivé pendant 12 hours pour trouver la cause des lags."
+	"column_agi_disabled"					"Les héros Agilité seront désactivé pendant 12 hours pour trouver la cause des lags."
+	"column_int_disabled"					"Les héros Intelligence seront désactivé pendant 12 hours pour trouver la cause des lags."
+}
