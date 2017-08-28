@@ -287,8 +287,8 @@ function GameMode:ExperienceFilter( keys )
 			
 			if hero:GetTeamNumber() == losing_team then
 				keys.experience = keys.experience * (1 + COMEBACK_EXP_BONUS * 0.01)
-				print("XP: "..keys.experience)
-				print("XP Earning: "..keys.experience * (1 + COMEBACK_EXP_BONUS * 0.01))
+--				print("XP: "..keys.experience)
+--				print("XP Earning: "..keys.experience * (1 + COMEBACK_EXP_BONUS * 0.01))
 			end
 		end
 	end
