@@ -40,10 +40,18 @@
 					<Label class="LegendPanel ScoreCol_Gold" text="#custom_end_screen_legend_gold" />
 				</Panel>
 			</Panel>
+
 			<Panel id="TeamsContainer" />
-			<Button id="CloseButton" onactivate="Game.FinishGame();">
-				<Label text="#CustomEndScreenClose" />
-			</Button>
+
+			<Panel id="ButtonsContainer">
+				<Button id="FeedButton" onactivate="DOTADisplayURL('https://goo.gl/forms/nIqedrEqoacqT00F2');">
+					<Label text="#lag_issues" />
+				</Button>
+			
+				<Button id="CloseButton" onactivate="Game.FinishGame();">
+					<Label text="#CustomEndScreenClose" />
+				</Button>
+			</Panel>
 		</Panel>
 	</Panel>
 </root>

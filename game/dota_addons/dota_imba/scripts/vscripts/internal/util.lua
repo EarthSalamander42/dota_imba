@@ -1180,15 +1180,41 @@ print("started collector")
 			end
 		end
 	end
+
+--	local particle_removed = 0
+
+--	for _, particle in pairs(PARTICLE_TABLE) do
+--		print("Particle:", particle)
+--		print("Amount:", gametime - particle.lifetime)
+
+--		if gametime - particle.lifetime > 0 then
+--			if particle then
+--				particle_removed = particle_removed +1
+--				table.remove(PARTICLE_TABLE, particle.name)
+--			end
+--		end
+--	end
+
+--	for i = 1, #PARTICLE_TABLE do
+--		if manager == PARTICLE_TABLE[i] then
+--			particle_removed = particle_removed+1		
+--			table.remove(PARTICLE_TABLE, i)
+--			break
+--		end
+--	end
+
+--	if particle_removed > 0 then
+--		print("Removed "..particle_removed.." particle.")			
+--	end
 end
 
 -- This function is responsible for deciding which team is behind, if any, and store it at a nettable.
 function DefineLosingTeam()
-	-- Losing team is defined as a team that is both behind in both the sums of networth and levels.
-	local radiant_networth = 0
-	local radiant_levels = 0
-	local dire_networth = 0
-	local dire_levels = 0
+-- Losing team is defined as a team that is both behind in both the sums of networth and levels.
+local radiant_networth = 0
+local radiant_levels = 0
+local dire_networth = 0
+local dire_levels = 0
 
 	for i = 0, DOTA_MAX_TEAM_PLAYERS-1 do
 		if PlayerResource:IsValidPlayer(i) then
@@ -1242,27 +1268,49 @@ function DefineLosingTeam()
 	end
 end
 
-particles_created = {}
-particles_created[0] = 0
-particles_created[1] = 0
-particles_created[2] = 0
-particles_created[3] = 0
-particles_created[4] = 0
-particles_created[5] = 0
-particles_created[6] = 0
-particles_created[7] = 0
-particles_created[8] = 0
-particles_created[9] = 0
-particles_created[10] = 0
-particles_created[11] = 0
-particles_created[12] = 0
-particles_created[13] = 0
-particles_created[14] = 0
-particles_created[15] = 0
-particles_created[16] = 0
-particles_created[17] = 0
-particles_created[18] = 0
-particles_created[19] = 0
+hero_particles = {}
+hero_particles[0] = 0
+hero_particles[1] = 0
+hero_particles[2] = 0
+hero_particles[3] = 0
+hero_particles[4] = 0
+hero_particles[5] = 0
+hero_particles[6] = 0
+hero_particles[7] = 0
+hero_particles[8] = 0
+hero_particles[9] = 0
+hero_particles[10] = 0
+hero_particles[11] = 0
+hero_particles[12] = 0
+hero_particles[13] = 0
+hero_particles[14] = 0
+hero_particles[15] = 0
+hero_particles[16] = 0
+hero_particles[17] = 0
+hero_particles[18] = 0
+hero_particles[19] = 0
+
+total_hero_particles = {}
+total_hero_particles[0] = 0
+total_hero_particles[1] = 0
+total_hero_particles[2] = 0
+total_hero_particles[3] = 0
+total_hero_particles[4] = 0
+total_hero_particles[5] = 0
+total_hero_particles[6] = 0
+total_hero_particles[7] = 0
+total_hero_particles[8] = 0
+total_hero_particles[9] = 0
+total_hero_particles[10] = 0
+total_hero_particles[11] = 0
+total_hero_particles[12] = 0
+total_hero_particles[13] = 0
+total_hero_particles[14] = 0
+total_hero_particles[15] = 0
+total_hero_particles[16] = 0
+total_hero_particles[17] = 0
+total_hero_particles[18] = 0
+total_hero_particles[19] = 0
 
 total_particles = 0
 total_particles_created = 0
@@ -1271,20 +1319,30 @@ function OverrideCreateParticle()
 
 	ParticleManager.CreateParticle = 
 	function(manager, path, int, handle) 		 
-		local particle = CreateParticleFunc(manager, path, int, handle)		 
+		local particle = CreateParticleFunc(manager, path, int, handle)
+		local time = GameRules:GetGameTime()
+
+		manager.lifetime = time
+		manager.name = path
+
+--		print("Manager:", manager)
+--		print("Manager Time:", manager.lifetime)
+--		print("Path:", path)
+--		print("Int:", int)
+--		print("Handle:", handle)
+--		print("------------------------")
 
 		-- Index in a big, fat table. Only works in tools mode!
-		if IsInToolsMode() then
+--		if IsInToolsMode() then
 			PARTICLE_TABLE = PARTICLE_TABLE or {}
-			table.insert(PARTICLE_TABLE, particle)
-		end
+			table.insert(PARTICLE_TABLE, manager)
+--		end
 
 		local id = handle.pID
 		if id == nil then
 		else
---			print("Particle Hero ID:", id)
---			print("Particle Hero ID Number:", particles_created[id])
-			particles_created[id] = particles_created[id] +1
+			hero_particles[id] = hero_particles[id] +1
+			total_hero_particles[id] = total_hero_particles[id] +1
 		end
 
 		total_particles = total_particles +1
@@ -1307,15 +1365,17 @@ function OverrideCreateLinearProjectile()
 end
 
 function OverrideReleaseIndex()
-	local ReleaseIndexFunc = ParticleManager.ReleaseParticleIndex
+local ReleaseIndexFunc = ParticleManager.ReleaseParticleIndex
+local released_particles = 0
 
 	ParticleManager.ReleaseParticleIndex = 
 	function(manager, int)		
 		-- Find handle in table
 --		print(#PARTICLE_TABLE)
 		for i = 1, #PARTICLE_TABLE do
-			if int == PARTICLE_TABLE[i] then				
-				table.remove(PARTICLE_TABLE, i)				
+			if manager == PARTICLE_TABLE[i] then
+				released_particles = released_particles+1		
+				table.remove(PARTICLE_TABLE, i)
 				break
 			end
 		end
@@ -1324,6 +1384,7 @@ function OverrideReleaseIndex()
 		total_particles = total_particles -1
 		ReleaseIndexFunc(manager, int)
 	end
+--	print("Released "..released_particles.." particles.")
 end
 
 function PrintParticleTable()
@@ -1358,8 +1419,8 @@ function ImbaNetGraph(tick)
 
 --		for i = 1, PlayerResource:GetPlayerCount() do
 		for i = 1, 20 do
-			CustomNetTables:SetTableValue("netgraph", "hero_particle_"..i-1, {value = particles_created[i-1]})
---			print("Particle Hero ID (2):", particles_created[i-1])
+			CustomNetTables:SetTableValue("netgraph", "hero_particle_"..i-1, {particle = hero_particles[i-1], pID = i-1})
+--			CustomNetTables:SetTableValue("netgraph", "hero_total_particle_"..i-1, {particle = total_hero_particles[i-1], pID = i-1})
 		end
 	return tick
 	end)

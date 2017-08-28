@@ -47,7 +47,7 @@
 
 		<Panel id="UniqueStats">
 			<Panel id="Hero0ParticlesPanel" class="EntryPanel">
-				<Label class="OnValue" text="Hero 0 Particles:" />
+				<Label class="OnValue" id="HeroName0" text="Hero 0 Particles:" />
 				<Label class="Value" id="Hero0Particles" text="0" />	
 			</Panel>
 			<Panel id="Hero1ParticlesPanel" class="EntryPanel">

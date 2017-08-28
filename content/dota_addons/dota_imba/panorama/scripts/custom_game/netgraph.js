@@ -6,7 +6,6 @@ function ShowNetgraph()
 
 	$("#GlobalStats").style.visibility = "visible";
 	$("#ToggleUniqueStats").style.visibility = "visible";
-	$("#UniqueStats").style.visibility = "visible";
 }
 
 var toggle = false
@@ -51,17 +50,40 @@ function UpdateNetGraph()
 		$("#TotalParticlesCreated").text = total_particles_created.value;
 	}
 
-	for (var i = 0; i < 19; i++)
+	for (var i = 0; i < 20; i++)
 	{
+		var particle = CustomNetTables.GetTableValue("netgraph", "hero_particle_"+i).particle;
+//		var particle_total = CustomNetTables.GetTableValue("netgraph", "hero_total_particle_"+i).particle;
+//		var ID = CustomNetTables.GetTableValue("netgraph", "hero_particle_"+i).pID;
+
+		var playerInfo = Game.GetPlayerInfo( i );
 		var heroPanel = $("#Hero"+i+"Particles")
-		if (heroPanel)
+
+		if (heroPanel && particle)
 		{
-			heroPanel.text = CustomNetTables.GetTableValue("netgraph", "hero_particle_"+i).value;
+			heroPanel.text = particle;
 		}
-		else
+		else if (heroPanel == null)
 		{
-			$.Msg("Invalid value.")
+			$.Msg("Invalid Hero.")
 		}
+		else if (particle == null)
+		{
+			$.Msg("Invalid Particle.")
+		}
+//		else if (ID == null)
+//		{
+//			$.Msg("Invalid ID.")
+//		}
+
+//		if (playerInfo)
+//		{
+//			$("#HeroName"+i).text = playerInfo.player_selected_hero+"Particles"
+//		}
+//		else
+//		{
+//			$.Msg("Invalid player.")
+//		}
 	}
 }
 

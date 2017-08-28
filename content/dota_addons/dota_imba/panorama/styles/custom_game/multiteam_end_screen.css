@@ -51,15 +51,30 @@
 	width: 100%;
 }
 
+#ButtonsContainer
+{
+	flow-children: right;
+	width: 800px;
+	height: 90px;
+	horizontal-align: center;
+}
+
+#FeedButton,
 #CloseButton
 {
-	background-color: #121618;
+	width: 45%;
+	margin-top: 60%;
+	margin-left: 5%;
+	background-color: #000000da;
 	border: 3px solid #4d5051;
 	border-radius: 5px;
-	margin-top: 50px;
 	horizontal-align: center;
-	vertical-align: bottom;
-	width: 50%;
+	vertical-align: top;
+}
+
+#FeedButton:hover
+{
+	border: 3px solid orange;
 }
 
 #CloseButton:hover
@@ -67,14 +82,17 @@
 	border: 3px solid white;
 }
 
+#FeedButton Label,
 #CloseButton Label
 {
 	horizontal-align: center;
 	vertical-align: center;
 	color: #6f6f6f;
 	text-transform: uppercase;
+	text-align: center center;
 }
 
+#FeedButton:hover Label,
 #CloseButton:hover Label
 {
 	color: white;
@@ -469,7 +487,7 @@
 #ImbaXP19
 {
 	margin-top: 3px;
-	margin-left: 47%;
+	margin-left: 40%;
 	width: 100%;
 	font-size: 17px;
 	font-weight: bold;

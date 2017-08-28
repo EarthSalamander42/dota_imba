@@ -27,6 +27,8 @@
 	"scoreboard_tool_tip_disable_help"				"Disable Help"
 	"scoreboard_tool_tip_active_disable_help"		"(DISABLED)"
 
+	"lag_issues"									"Experienced lag issues? Please click here."
+
 	//=================================================================================================================
 	// Generic talent names
 	//=================================================================================================================
