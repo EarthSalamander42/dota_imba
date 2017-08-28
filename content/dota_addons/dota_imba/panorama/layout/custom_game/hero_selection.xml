@@ -96,7 +96,7 @@
 							<Panel id="PickListSeparator1" class="PickListTitlePanel" />
 
 							<Panel class="ClassOptionRow">
-								<Label id="BanTabMessage" text="#column_heroes_disabled" />
+								<Label id="BanTabMessage" text="#column_str_disabled" />
 <!--
 								<Panel id="npc_dota_hero_abaddon" class="ClassImbaOption" 
 									onactivate="SelectHero('npc_dota_hero_abaddon')" 

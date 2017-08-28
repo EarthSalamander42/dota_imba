@@ -296,7 +296,6 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 		// If the player is already in-game, destroy the pick interface and ignore the rest
 		if (pick_state == "in_game") {
 			$('#Background').GetParent().DeleteAsync( 0.0 );
-			$.GetContextPanel().GetParent().GetParent().FindChildTraverse("topbar").style.visibility = "visible";
 			//COOKIES: Re-enable HUD parts when 1 player enter in the game, might need to find a way to show these HUD parts for player only rather than global
 			var parent_panel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
 			parent_panel.FindChildTraverse("lower_hud").style.visibility = "visible";
