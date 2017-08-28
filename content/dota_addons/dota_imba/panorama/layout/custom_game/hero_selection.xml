@@ -216,9 +216,9 @@
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_abyssal_underlord.png');" />								
 							</Panel>														
 							<Panel class="ClassOptionRow"> <!-- 20-25 -->
-								<Panel id="npc_dota_hero_undying" class="ClassNormalOption" 
+							<!--	<Panel id="npc_dota_hero_undying" class="ClassNormalOption" 
 									onactivate="SelectHero('npc_dota_hero_undying')" 
-									style="background-image: url('file://{images}/heroes/npc_dota_hero_undying.png');" />
+									style="background-image: url('file://{images}/heroes/npc_dota_hero_undying.png');" /> -->
 								<Panel id="npc_dota_hero_skeleton_king" class="ClassImbaOption" 
 									onactivate="SelectHero('npc_dota_hero_skeleton_king')" 
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_skeleton_king.png');" />
@@ -470,23 +470,25 @@
 								<Panel id="npc_dota_hero_storm_spirit" class="ClassNormalOption" 
 									onactivate="SelectHero('npc_dota_hero_storm_spirit')" 
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_storm_spirit.png');" />
-								<Panel id="npc_dota_hero_techies" class="ClassImbaOption" 
+							<!--	<Panel id="npc_dota_hero_techies" class="ClassImbaOption" 
 									onactivate="SelectHero('npc_dota_hero_techies')" 
-									style="background-image: url('file://{images}/heroes/npc_dota_hero_techies.png');" />
+									style="background-image: url('file://{images}/heroes/npc_dota_hero_techies.png');" /> -->
 								<!-- <Panel id="npc_dota_hero_tinker" class="ClassImbaOption" 
 									onactivate="SelectHero('npc_dota_hero_tinker')" 
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_tinker.png');" /> -->
 								<Panel id="npc_dota_hero_visage" class="ClassNormalOption" 
 									onactivate="SelectHero('npc_dota_hero_visage')" 
-									style="background-image: url('file://{images}/heroes/npc_dota_hero_visage.png');" />								
-							</Panel>
-							<Panel class="ClassOptionRow">
+									style="background-image: url('file://{images}/heroes/npc_dota_hero_visage.png');" />
 								<Panel id="npc_dota_hero_warlock" class="ClassImbaOption" 
 									onactivate="SelectHero('npc_dota_hero_warlock')" 
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_warlock.png');" />
 								<Panel id="npc_dota_hero_windrunner" class="ClassNormalOption" 
 									onactivate="SelectHero('npc_dota_hero_windrunner')" 
-									style="background-image: url('file://{images}/heroes/npc_dota_hero_windrunner.png');" />
+									style="background-image: url('file://{images}/heroes/npc_dota_hero_windrunner.png');" />								
+							</Panel>
+							<Panel class="ClassOptionRow">
+								
+								
 								<Panel id="npc_dota_hero_winter_wyvern" class="ClassNormalOption" 
 									onactivate="SelectHero('npc_dota_hero_winter_wyvern')" 
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_winter_wyvern.png');" />

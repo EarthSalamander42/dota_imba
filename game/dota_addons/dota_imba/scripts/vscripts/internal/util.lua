@@ -1264,8 +1264,16 @@ function OverrideCreateParticle()
 	end
 end
 
-function PrintParticleTable()
-	PrintTable(PARTICLE_TABLE)	
+function OverrideCreateLinearProjectile()
+    local CreateProjectileFunc = ProjectileManager.CreateLinearProjectile
+
+    ProjectileManager.CreateProjectileFunc = 
+    function(manager, handle)                  
+
+        -- Do things here to override
+
+        return CreateProjectileFunc(manager, handle)
+    end
 end
 
 function OverrideReleaseIndex()
@@ -1286,6 +1294,10 @@ function OverrideReleaseIndex()
 		total_particles = total_particles -1
 		ReleaseIndexFunc(manager, int)
 	end
+end
+
+function PrintParticleTable()
+	PrintTable(PARTICLE_TABLE)	
 end
 
 function ImbaNetGraph(tick)

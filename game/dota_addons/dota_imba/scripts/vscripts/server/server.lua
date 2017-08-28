@@ -284,8 +284,13 @@ function Server_CalculateXPForWinnerAndAll(winning_team)
 				jsontable.WIN = tostring(0)
 				print("SERVER XP: Testing XP earned...")
 				if PlayerResource:GetTeam(nPlayerID) == Winner and PlayerResource:GetConnectionState(nPlayerID) == 2 then
-					jsontable.XP = tostring(math.ceil(table_XP[nPlayerID] * 1.2))
-					CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {XP = tonumber(XP_has_this_level[nPlayerID]), MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]), Lvl = tonumber(XP_level[nPlayerID]), ID = nPlayerID, title = XP_level_title_player[nPlayerID], XP_change = tonumber(math.ceil(table_XP[nPlayerID] * 1.2))})
+					if GetMapName() == "imba_standard" then
+						jsontable.XP = tostring(math.ceil(table_XP[nPlayerID] * 2.0))
+						CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {XP = tonumber(XP_has_this_level[nPlayerID]), MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]), Lvl = tonumber(XP_level[nPlayerID]), ID = nPlayerID, title = XP_level_title_player[nPlayerID], XP_change = tonumber(math.ceil(table_XP[nPlayerID] * 2.0))})
+					else
+						jsontable.XP = tostring(math.ceil(table_XP[nPlayerID] * 1.2))
+						CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {XP = tonumber(XP_has_this_level[nPlayerID]), MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]), Lvl = tonumber(XP_level[nPlayerID]), ID = nPlayerID, title = XP_level_title_player[nPlayerID], XP_change = tonumber(math.ceil(table_XP[nPlayerID] * 1.2))})
+					end
 				else
 					if PlayerResource:GetConnectionState(nPlayerID) ~= 2 then
 						jsontable.XP = tostring(0 - table_XP[nPlayerID])

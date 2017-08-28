@@ -71,7 +71,7 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 				else if (plyData.XP_change < 0)
 				{
 					$.Msg("Negative change! " + plyData.XP_change)
-					_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaXPEarned"+playerId, "-" + plyData.XP_change );
+					_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaXPEarned"+playerId, plyData.XP_change );
 					ImbaXP_Panel.FindChildTraverse("ImbaXPEarned"+playerId).style.color = 'red';
 				}
 			}

@@ -81,6 +81,10 @@
 		DeBuffBar.style.marginRight = "30%";
 		DeBuffBar.style.flowChildren = "right";
 
+		//Recommended Talent
+		var TalentGuide = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("center_with_stats")
+		TalentGuide.FindChildTraverse("RecommendedUpgradeOverlay").style.visibility = "collapse";
+
 		//Shop (Fixing last item in advanced tab not being fully visible)
 		var Shop = hudElements.FindChildTraverse("shop")
 		Shop.style.width = "320px";

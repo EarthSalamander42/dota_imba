@@ -51,10 +51,8 @@ require('addon_init')
 ApplyAllTalentModifiers()
 StoreCurrentDayCycle()
 
-if IsInToolsMode() then
 	OverrideCreateParticle()
-	OverrideReleaseIndex()
-end
+--	OverrideReleaseIndex()
 
 -- storage API
 --require('libraries/json')
