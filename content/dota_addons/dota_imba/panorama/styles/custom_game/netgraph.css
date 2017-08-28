@@ -2,20 +2,24 @@
 {
 	margin-top: 12%;
 	background-color: gradient(linear, 0% 0%, 100% 0%, from(#425663cc), color-stop(.5, #42566355), to(#0000));
-	width: 12%;
+	width: fit-children;
 	height: fit-children;
 	flow-children: down;
 }
 
-#GoodUnitPanel,
-#BadUnitPanel,
-#TotalUnitPanel,
-#TotalDummyPanel,
-#TotalDummyCreatedPanel,
-#TotalParticlesPanel,
-#TotalParticlesCreatedPanel
+#GlobalStats,
+#UniqueStats
 {
+	width: 250px;
+	height: fit-children;
+	flow-children: down;
 	visibility: collapse;
+}
+
+#UniqueStats
+{
+	margin-top: 2%;
+	margin-bottom: 0%;
 }
 
 .EntryPanel
@@ -37,12 +41,31 @@
 
 .Value
 {
-	margin-left: 7%;
-	width: 40px;
+	margin-left: 0%;
+	width: 50px;
 	color: white;
 	font-size: 16.0px;
 	font-weight: thin;
 
 	horizontal-align: right;
 	background-repeat: no-repeat;
+}
+
+#ToggleUniqueStats
+{
+	width: 160px;
+	height: 40px;
+	margin-top: 2%;
+	margin-left: 4%;
+	border-radius: 4px;
+	background-color: black;
+	visibility: collapse;
+}
+
+#UniqueStatsButtonText
+{
+	color: white;
+	font-size: 16.0px;
+	font-weight: thin;
+	align: center center;
 }

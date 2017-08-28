@@ -96,8 +96,8 @@
 							<Panel id="PickListSeparator1" class="PickListTitlePanel" />
 
 							<Panel class="ClassOptionRow">
-								<Label id="BanTabMessage" text="#column_str_disabled" />
-<!--
+<!--							<Label id="BanTabMessage" text="#column_str_disabled" /> -->
+
 								<Panel id="npc_dota_hero_abaddon" class="ClassImbaOption" 
 									onactivate="SelectHero('npc_dota_hero_abaddon')" 
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_abaddon.png');" />
@@ -218,15 +218,12 @@
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_abyssal_underlord.png');" />								
 							</Panel>														
 							<Panel class="ClassOptionRow">
-							-->
 							<!--	<Panel id="npc_dota_hero_undying" class="ClassNormalOption" 
 									onactivate="SelectHero('npc_dota_hero_undying')" 
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_undying.png');" /> -->
-							<!--
 								<Panel id="npc_dota_hero_skeleton_king" class="ClassImbaOption" 
 									onactivate="SelectHero('npc_dota_hero_skeleton_king')" 
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_skeleton_king.png');" />
-							-->
 							</Panel>	
 						</Panel>
 

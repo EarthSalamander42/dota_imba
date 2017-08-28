@@ -303,9 +303,9 @@ local id = event.PlayerID
 		"npc_dota_hero_nyx_assassin",
 		"npc_dota_hero_magnataur",
 		"npc_dota_hero_centaur",
-		"npc_dota_hero_troll_warlord",
 		"npc_dota_hero_skywrath_mage",
-		"npc_dota_hero_techies",
+--		"npc_dota_hero_techies",
+		"npc_dota_hero_troll_warlord"
 	}
 
 	local random_hero = imba_heroes[RandomInt(1, #imba_heroes)]
@@ -501,6 +501,7 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		local wisp = PlayerResource:GetPlayer(player_id):GetAssignedHero()
 		-- Switch for the new hero
 		local hero = PlayerResource:ReplaceHeroWith(player_id, hero_name, 0, 0 )
+		hero.pID = player_id
 
 		-- If this is a "real" wisp, tag it
 		if hero:GetUnitName() == "npc_dota_hero_wisp" then

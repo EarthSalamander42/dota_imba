@@ -1,5 +1,32 @@
 "use strict";
 
+function ShowNetgraph()
+{
+	$.Msg("Showing up NetGraph for developer!")
+
+	$("#GlobalStats").style.visibility = "visible";
+	$("#ToggleUniqueStats").style.visibility = "visible";
+	$("#UniqueStats").style.visibility = "visible";
+}
+
+var toggle = false
+function ToggleUniqueStats()
+{
+	$.Msg("Toggling Unique Stats...")
+	if (toggle == false)
+	{
+		$.Msg("True")
+		toggle = true
+		$("#UniqueStats").style.visibility = "visible";
+	}
+	else
+	{
+		$.Msg("False")
+		toggle = false
+		$("#UniqueStats").style.visibility = "collapse";
+	}
+}
+
 function UpdateNetGraph()
 {
 	var good_units = CustomNetTables.GetTableValue("netgraph", "good_unit_number");
@@ -10,11 +37,9 @@ function UpdateNetGraph()
 	var total_particles = CustomNetTables.GetTableValue("netgraph", "total_particle_number");
 	var total_particles_created = CustomNetTables.GetTableValue("netgraph", "total_particle_created_number");
 
-//	$.Msg("Goodguys Units: ", good_units)
-//	$.Msg("Badguys Units: ", bad_units)
-//	$.Msg("Total Units: ", total_units)
-//	$.Msg("Dummy Units: ", total_dummies)
-//	$.Msg("Total Dummy Units: ", total_dummies_created)
+//	$.Msg("#Hero" + i + "Particles")
+//	$.Msg(CustomNetTables.GetTableValue("netgraph", "hero_particle_0").value)
+//	$("#Hero" + i + "Particles").text = CustomNetTables.GetTableValue("netgraph", "hero_particle_" + i).value;
 
 	if (good_units && bad_units && total_units && total_dummies && total_dummies_created && total_particles_created) {
 		$("#GoodUnits").text = good_units.value;
@@ -25,19 +50,19 @@ function UpdateNetGraph()
 		$("#TotalParticles").text = total_particles.value;
 		$("#TotalParticlesCreated").text = total_particles_created.value;
 	}
-}
 
-function ShowNetgraph()
-{
-	$.Msg("Showing up NetGraph for developer!")
-
-	$("#GoodUnitPanel").style.visibility = "visible";
-	$("#BadUnitPanel").style.visibility = "visible";
-	$("#TotalUnitPanel").style.visibility = "visible";
-	$("#TotalDummyPanel").style.visibility = "visible";
-	$("#TotalDummyCreatedPanel").style.visibility = "visible";
-	$("#TotalParticlesPanel").style.visibility = "visible";
-	$("#TotalParticlesCreatedPanel").style.visibility = "visible";
+	for (var i = 0; i < 19; i++)
+	{
+		var heroPanel = $("#Hero"+i+"Particles")
+		if (heroPanel)
+		{
+			heroPanel.text = CustomNetTables.GetTableValue("netgraph", "hero_particle_"+i).value;
+		}
+		else
+		{
+			$.Msg("Invalid value.")
+		}
+	}
 }
 
 (function()
@@ -45,3 +70,4 @@ function ShowNetgraph()
 	CustomNetTables.SubscribeNetTableListener("netgraph", UpdateNetGraph);
 	GameEvents.Subscribe("show_netgraph", ShowNetgraph);
 })();
+

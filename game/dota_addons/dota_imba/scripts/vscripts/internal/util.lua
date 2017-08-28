@@ -1242,6 +1242,28 @@ function DefineLosingTeam()
 	end
 end
 
+particles_created = {}
+particles_created[0] = 0
+particles_created[1] = 0
+particles_created[2] = 0
+particles_created[3] = 0
+particles_created[4] = 0
+particles_created[5] = 0
+particles_created[6] = 0
+particles_created[7] = 0
+particles_created[8] = 0
+particles_created[9] = 0
+particles_created[10] = 0
+particles_created[11] = 0
+particles_created[12] = 0
+particles_created[13] = 0
+particles_created[14] = 0
+particles_created[15] = 0
+particles_created[16] = 0
+particles_created[17] = 0
+particles_created[18] = 0
+particles_created[19] = 0
+
 total_particles = 0
 total_particles_created = 0
 function OverrideCreateParticle()
@@ -1249,18 +1271,26 @@ function OverrideCreateParticle()
 
 	ParticleManager.CreateParticle = 
 	function(manager, path, int, handle) 		 
-		local handle = CreateParticleFunc(manager, path, int, handle)		 
+		local particle = CreateParticleFunc(manager, path, int, handle)		 
 
 		-- Index in a big, fat table. Only works in tools mode!
 		if IsInToolsMode() then
 			PARTICLE_TABLE = PARTICLE_TABLE or {}
-			table.insert(PARTICLE_TABLE, handle)
+			table.insert(PARTICLE_TABLE, particle)
+		end
+
+		local id = handle.pID
+		if id == nil then
+		else
+--			print("Particle Hero ID:", id)
+--			print("Particle Hero ID Number:", particles_created[id])
+			particles_created[id] = particles_created[id] +1
 		end
 
 		total_particles = total_particles +1
 		total_particles_created = total_particles_created +1
 
-		return handle
+		return particle
 	end
 end
 
@@ -1325,6 +1355,12 @@ function ImbaNetGraph(tick)
 		CustomNetTables:SetTableValue("netgraph", "total_dummy_created_number", {value = dummy_created_count})
 		CustomNetTables:SetTableValue("netgraph", "total_particle_number", {value = total_particles})
 		CustomNetTables:SetTableValue("netgraph", "total_particle_created_number", {value = total_particles_created})
+
+--		for i = 1, PlayerResource:GetPlayerCount() do
+		for i = 1, 20 do
+			CustomNetTables:SetTableValue("netgraph", "hero_particle_"..i-1, {value = particles_created[i-1]})
+--			print("Particle Hero ID (2):", particles_created[i-1])
+		end
 	return tick
 	end)
 end

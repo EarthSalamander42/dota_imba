@@ -52,7 +52,7 @@ ApplyAllTalentModifiers()
 StoreCurrentDayCycle()
 
 	OverrideCreateParticle()
---	OverrideReleaseIndex()
+	OverrideReleaseIndex()
 
 -- storage API
 --require('libraries/json')
@@ -1076,7 +1076,9 @@ function GameMode:OnAllPlayersLoaded()
 end
 
 function GameMode:OnHeroInGame(hero)	
-	local time_elapsed = 0
+local time_elapsed = 0
+
+	hero.pID = hero:GetPlayerID()
 
 	-- Disabling announcer for the player who picked a hero
 	Timers:CreateTimer(0.1, function()
