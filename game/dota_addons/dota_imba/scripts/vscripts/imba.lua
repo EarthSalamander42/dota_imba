@@ -50,9 +50,8 @@ require('addon_init')
 
 ApplyAllTalentModifiers()
 StoreCurrentDayCycle()
-
-	OverrideCreateParticle()
---	OverrideReleaseIndex()
+OverrideCreateParticle()
+OverrideReleaseIndex()
 
 -- storage API
 --require('libraries/json')
