@@ -610,39 +610,6 @@ function PickupBountyRune(unit)
 	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Bounty", unit)
 end
 
--- Picks up a haste rune
-function PickupHasteRune(unit)
-
-	-- Apply the aura modifier to the owner
-	unit:AddNewModifier(unit, unit, "modifier_imba_rune_haste_owner", {})
-
-	-- Apply the movement speed increase modifier to the owner
-	unit:AddNewModifier(unit, unit, "modifier_imba_haste_rune_speed_limit_break", {duration = 22})
-
-	-- Play the haste rune activation sound to the unit's team
-	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Haste", unit)	
-end
-
--- Picks up a double damage rune
-function PickupDoubleDamageRune(unit)
-
-	-- Apply the aura modifier to the owner
-	unit:AddNewModifier(unit, unit, "modifier_imba_rune_double_damage_owner", {duration = 45})
-
-	-- Play the double damage rune activation sound to the unit's team
-	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.DD", unit)	
-end
-
--- Picks up a regeneration rune
-function PickupRegenerationRune(unit)
-
-	-- Apply the aura modifier to the owner
-	unit:AddNewModifier(unit, unit, "modifier_imba_rune_regeneration_owner", {duration = 30})
-
-	-- Play the double damage rune activation sound to the unit's team
-	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Regen", unit)	
-end
-
 -- Gold bag pickup event function
 function GoldPickup(event)
 	if IsServer() then

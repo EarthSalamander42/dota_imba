@@ -639,12 +639,12 @@ function modifier_imba_fervor:RemoveOnDeath() return false end
 function modifier_imba_fervor:DeclareFunctions()
     local decFuns =
     {
-		MODIFIER_EVENT_ON_ATTACK
+		MODIFIER_EVENT_ON_ATTACK_LANDED
     }
     return decFuns
 end
 
-function modifier_imba_fervor:OnAttack(params)
+function modifier_imba_fervor:OnAttackLanded(params)
 	local parent = self:GetParent()
 	if (
 	(params.attacker == parent) or 

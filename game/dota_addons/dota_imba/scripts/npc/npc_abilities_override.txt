@@ -1106,10 +1106,8 @@
 	//=================================================================================================================
 	"item_tome_of_knowledge"
 	{
-		"ItemCost"						"50"
-
+		"ItemCost"						"75"
 		"ItemInitialStockTime"			"270.0"
-
 		"ItemStockTime"					"60.0"
 
 		"AbilitySpecial"

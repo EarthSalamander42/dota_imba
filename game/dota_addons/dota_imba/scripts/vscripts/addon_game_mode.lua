@@ -20,9 +20,12 @@ DebugPrint("[IMBA] Performing pre-load precache")
 	LinkLuaModifier("modifier_command_restricted", "modifier/modifier_command_restricted.lua", LUA_MODIFIER_MOTION_NONE )	
 
 	-- Runes modifiers
-	LinkLuaModifier("modifier_imba_rune_haste_owner", "modifier/runes/modifier_imba_rune_haste_owner.lua", LUA_MODIFIER_MOTION_NONE )	
-	LinkLuaModifier("modifier_imba_rune_haste_aura", "modifier/runes/modifier_imba_rune_haste_owner.lua", LUA_MODIFIER_MOTION_NONE )	
-
+	LinkLuaModifier("modifier_imba_double_damage_rune", "modifier/runes/modifier_imba_double_damage_rune.lua", LUA_MODIFIER_MOTION_NONE)
+	LinkLuaModifier("modifier_imba_rune_double_damage_aura", "modifier/runes/modifier_imba_double_damage_rune.lua", LUA_MODIFIER_MOTION_NONE)
+	LinkLuaModifier("modifier_imba_haste_rune", "modifier/runes/modifier_imba_haste_rune", LUA_MODIFIER_MOTION_NONE)
+	LinkLuaModifier("modifier_imba_haste_rune_aura", "modifier/runes/modifier_imba_haste_rune", LUA_MODIFIER_MOTION_NONE)
+	LinkLuaModifier("modifier_imba_regen_rune", "modifier/runes/modifier_imba_regen_rune", LUA_MODIFIER_MOTION_NONE)
+	LinkLuaModifier("modifier_imba_regen_rune_aura", "modifier/runes/modifier_imba_regen_rune", LUA_MODIFIER_MOTION_NONE)
 
 	-- Generic talent modifiers
 	LinkLuaModifier("modifier_imba_generic_talents_handler", "modifier/generic_talents/modifier_imba_generic_talents_handler.lua", LUA_MODIFIER_MOTION_NONE )

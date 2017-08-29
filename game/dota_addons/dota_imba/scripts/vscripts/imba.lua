@@ -420,17 +420,21 @@ function GameMode:ModifierFilter( keys )
 			end
 		end
 
+		-------------------------------------------------------------------------------------------------
+		-- Rune pickup logic
+		-------------------------------------------------------------------------------------------------	
+
 		if modifier_caster:HasModifier("modifier_rune_doubledamage") then
-			PickupDoubleDamageRune(modifier_caster)
+			modifier_caster:AddNewModifier(modifier_caster, nil, "modifier_imba_double_damage_rune", {duration = 30})
 			return false
 		elseif modifier_caster:HasModifier("modifier_rune_haste") then
-			PickupHasteRune(modifier_caster)
+			modifier_caster:AddNewModifier(modifier_caster, nil, "modifier_imba_haste_rune", {duration = 22})
 			return false
 		elseif modifier_caster:HasModifier("modifier_rune_invis") then
 --			PickupInvisibleRune(modifier_caster)
 --			return false
 		elseif modifier_caster:HasModifier("modifier_rune_regen") then
-			PickupRegenerationRune(modifier_caster)
+			modifier_caster:AddNewModifier(modifier_caster, nil, "modifier_imba_regen_rune", {duration = 30})
 			return false
 		end
 
@@ -451,39 +455,6 @@ function GameMode:ItemAddedFilter( keys )
 	local item_name = 0
 	if item:GetName() then
 		item_name = item:GetName()
-	end
-	
-	-------------------------------------------------------------------------------------------------
-	-- Rune pickup logic
-	-------------------------------------------------------------------------------------------------
-
-	if item_name == "item_imba_rune_bounty" or item_name == "item_imba_rune_bounty_arena" or item_name == "item_imba_rune_double_damage" or item_name == "item_imba_rune_haste" or item_name == "item_imba_rune_regeneration" then
---		local gameEvent = {}
---		gameEvent["player_id"] = unit:GetPlayerID()
---		gameEvent["team_number"] = unit:GetTeamNumber()
---		gameEvent["locstring_value"] = "#DOTA_Tooltip_Ability_" .. item:GetAbilityName()
---		gameEvent["message"] = "#imba_player_rune_pickup"
---		FireGameEvent("dota_combat_event_message", gameEvent)
-
-		if item_name == "item_imba_rune_bounty" or item_name == "item_imba_rune_bounty_arena" then
-			PickupBountyRune(item, unit)
-			return false
-		end
-
-		if item_name == "item_imba_rune_double_damage" then
-			PickupDoubleDamageRune(item, unit)
-			return false
-		end
-
-		if item_name == "item_imba_rune_haste" then
-			PickupHasteRune(item, unit)
-			return false
-		end
-
-		if item_name == "item_imba_rune_regeneration" then
-			PickupRegenerationRune(item, unit)
-			return false
-		end					
 	end
 
 	-------------------------------------------------------------------------------------------------
