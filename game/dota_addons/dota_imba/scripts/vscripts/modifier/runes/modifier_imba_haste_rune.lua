@@ -64,19 +64,15 @@ function modifier_imba_haste_rune:GetAuraRadius()
 end
 
 function modifier_imba_haste_rune:GetAuraSearchTeam()
-	local funcs = {
-	DOTA_UNIT_TARGET_HERO,
-	DOTA_UNIT_TARGET_CREEP
-}
-	return funcs
+	return DOTA_UNIT_TARGET_TEAM_FRIENDLY
 end
 
 function modifier_imba_haste_rune:GetAuraSearchType()
-	return self.ability:GetAbilityTargetType()
+	return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
 end
 
 function modifier_imba_haste_rune:GetAuraSearchFlags()
-	return self.ability:GetAbilityTargetFlags()
+	return DOTA_UNIT_TARGET_FLAG_NONE
 end
 
 function modifier_imba_haste_rune:GetModifierAura()
@@ -87,6 +83,7 @@ function modifier_imba_haste_rune:GetAuraEntityReject(target)
 	if target == self.caster then
         return true
     end
+	return false
 end
 
 -- Haste particle
@@ -109,11 +106,9 @@ function modifier_imba_haste_rune_aura:IsDebuff() 	return false end
 
 
 function modifier_imba_haste_rune_aura:OnCreated()
-	-- Ability properties
-	self.ability	=	self:GetAbility()
 	-- Ability parameters
-	self.movespeed_pct	=	self.ability:GetSpecialValueFor("bonus_ms_aura")
-	self.attackspeed	=	self.ability:GetSpecialValueFor("bonus_as_aura")
+	self.movespeed_pct	=	30
+	self.attackspeed	=	40
 end
 
 -- Function declarations
