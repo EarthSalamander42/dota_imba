@@ -880,7 +880,7 @@
 	//=================================================================================================================
 	"item_ward_observer"
 	{
-		"AbilityCastRange"				"1000"
+		"AbilityCastRange"				"800"
 		
 		"ItemCost"						"20"
 
@@ -891,6 +891,15 @@
 		"ItemStockInitial"				"2"
 
 		"ItemStockTime"					"45.0"
+
+		"AbilitySpecial"
+		{
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_range"			"800"
+			}
+		}
 	}
 	
 	//=================================================================================================================
@@ -898,7 +907,7 @@
 	//=================================================================================================================
 	"item_ward_sentry"
 	{
-		"AbilityCastRange"				"1000"
+		"AbilityCastRange"				"800"
 
 		"ItemCost"						"75"
 
@@ -930,6 +939,11 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"duration_minutes_tooltip"	"4"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_range"			"800"
 			}
 		}
 	}
@@ -1096,9 +1110,40 @@
 	{
 		"ItemCost"						"125"
 		"ItemStockInitial" 				"3"
-		"ItemInitialStockTime"			"0"
-		"ItemStockTime" 				"60"
-		"ItemStockMax" 					"3" 
+		"ItemInitialStockTime"			"0.0"
+		"ItemStockTime" 				"60.0"
+		"ItemStockMax" 					"3"
+
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"			"2"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_magical_armor"	"5"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"magic_damage_block"	"140"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"min_damage"			"65"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"initial_charges"		"5"
+			}
+		}
 	}
 
 	//=================================================================================================================
@@ -1767,7 +1812,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cleave_damage_percent"	"55"
+				"cleave_damage_percent"	"50"
 			}
 			"05"
 			{
@@ -1852,7 +1897,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"model_scale"			"60"
+				"model_scale"			"60 58 56 52 50"
 			}
 		}
 	}
@@ -5588,7 +5633,7 @@
 
 		"AbilityDamage"					"110 160 210 260 290 320 350"
 
-		"AbilityManaCost"				"125 140 155 170 175 180 185"
+		"AbilityManaCost"				"120 130 140 150 160 170 180"
 
 		"MaxLevel"						"7"
 

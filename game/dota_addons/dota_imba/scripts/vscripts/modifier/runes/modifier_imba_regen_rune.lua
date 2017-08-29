@@ -38,13 +38,13 @@ function modifier_imba_regen_rune:OnCreated()
 	self.parent = self:GetParent()
 
 	-- Set the amount of damage instances we can take as stacks
-	self:SetStackCount(self:GetAbility():GetSpecialValueFor("damage_instances"))
+	self:SetStackCount(25)
 	
-	self.aura_radius = self:GetAbility():GetSpecialValueFor("aura_radius")
-	self.hp_regen_base_owner = self:GetAbility():GetSpecialValueFor("hp_regen_base_owner")
-	self.hp_regen_perc_owner = self:GetAbility():GetSpecialValueFor("hp_regen_perc_owner")
-	self.mp_regen_base_owner = self:GetAbility():GetSpecialValueFor("mp_regen_base_owner")
-	self.mp_regen_perc_owner = self:GetAbility():GetSpecialValueFor("mp_regen_perc_owner")
+	self.aura_radius = 900
+	self.hp_regen_base_owner = 50
+	self.hp_regen_perc_owner = 5
+	self.mp_regen_base_owner = 20
+	self.mp_regen_perc_owner = 2
 end
 
 function modifier_imba_regen_rune:DeclareFunctions()
@@ -110,10 +110,10 @@ function modifier_imba_regen_rune_aura:GetEffectAttachType()
 end
 
 function modifier_imba_regen_rune_aura:OnCreated()
-	self.hp_regen_base_aura = self:GetAbility():GetSpecialValueFor("hp_regen_base_aura")
-	self.hp_regen_perc_aura = self:GetAbility():GetSpecialValueFor("hp_regen_perc_aura")
-	self.mp_regen_base_aura = self:GetAbility():GetSpecialValueFor("mp_regen_base_aura")
-	self.mp_regen_perc_aura = self:GetAbility():GetSpecialValueFor("mp_regen_perc_aura")
+	self.hp_regen_base_aura = 50	/2
+	self.hp_regen_perc_aura = 5		/2
+	self.mp_regen_base_aura = 20	/2
+	self.mp_regen_perc_aura = 2		/2
 end
 
 function modifier_imba_regen_rune_aura:DeclareFunctions()

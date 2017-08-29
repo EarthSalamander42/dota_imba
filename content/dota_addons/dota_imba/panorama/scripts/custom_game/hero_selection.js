@@ -349,7 +349,7 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 	//STR
 	$("#npc_dota_hero_undying").AddClass( "taken" );
 	///AGI
-	$("#npc_dota_hero_meepo").AddClass( "taken" );
+//	$("#npc_dota_hero_meepo").AddClass( "taken" );
 	$("#npc_dota_hero_phantom_lancer").AddClass( "taken" );
 	$("#npc_dota_hero_spectre").AddClass( "taken" );
 	//INT
@@ -434,6 +434,12 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 		}
 
 		if (map_info.map_display_name == "imba_custom") {
+			if(frantic_mode) {
+				$("#FranticModeValue").text = $.Localize( '#imba_gamemode_game_options_frantic_enabled' );
+			}
+		}
+
+		if (map_info.map_display_name == "imba_custom_10v10") {
 			if(frantic_mode) {
 				$("#FranticModeValue").text = $.Localize( '#imba_gamemode_game_options_frantic_enabled' );
 			}

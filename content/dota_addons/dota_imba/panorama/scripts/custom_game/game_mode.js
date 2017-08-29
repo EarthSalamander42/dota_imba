@@ -58,6 +58,9 @@ function InitializeUI() {
 		} else if (map_info.map_display_name == "imba_custom") {
 			$('#TowerUpgradesToggle').SetSelected(true);
 			$('#FranticToggle').style.visibility = 'visible';
+		} else if (map_info.map_display_name == "imba_custom_10v10") {
+			$('#TowerUpgradesToggle').SetSelected(true);
+			$('#FranticToggle').style.visibility = 'visible';
 		} else if (map_info.map_display_name == "imba_arena") {
 			$('#game_options_game_mode_title').text = $.Localize( "#imba_gamemode_name_arena_mode" );
 			$('#KillsToEndOptionsPanel').style.visibility = 'visible';

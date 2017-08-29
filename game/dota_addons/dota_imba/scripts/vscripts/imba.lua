@@ -424,18 +424,23 @@ function GameMode:ModifierFilter( keys )
 		-- Rune pickup logic
 		-------------------------------------------------------------------------------------------------	
 
-		if modifier_caster:HasModifier("modifier_rune_doubledamage") then
-			modifier_caster:AddNewModifier(modifier_caster, nil, "modifier_imba_double_damage_rune", {duration = 30})
-			return false
-		elseif modifier_caster:HasModifier("modifier_rune_haste") then
-			modifier_caster:AddNewModifier(modifier_caster, nil, "modifier_imba_haste_rune", {duration = 22})
-			return false
-		elseif modifier_caster:HasModifier("modifier_rune_invis") then
---			PickupInvisibleRune(modifier_caster)
---			return false
-		elseif modifier_caster:HasModifier("modifier_rune_regen") then
-			modifier_caster:AddNewModifier(modifier_caster, nil, "modifier_imba_regen_rune", {duration = 30})
-			return false
+		if modifier_caster == modifier_owner then
+			if modifier_caster:HasModifier("modifier_rune_doubledamage") then
+				local duration = modifier_caster:FindModifierByName("modifier_rune_doubledamage"):GetDuration()
+				modifier_caster:RemoveModifierByName("modifier_rune_doubledamage")
+				modifier_caster:AddNewModifier(modifier_caster, nil, "modifier_imba_double_damage_rune", {duration = duration})
+			elseif modifier_caster:HasModifier("modifier_rune_haste") then
+				local duration = modifier_caster:FindModifierByName("modifier_rune_haste"):GetDuration()
+				modifier_caster:RemoveModifierByName("modifier_rune_haste")
+				modifier_caster:AddNewModifier(modifier_caster, nil, "modifier_imba_haste_rune", {duration = duration})
+			elseif modifier_caster:HasModifier("modifier_rune_invis") then
+--				PickupInvisibleRune(modifier_caster)
+--				return false
+			elseif modifier_caster:HasModifier("modifier_rune_regen") then
+				local duration = modifier_caster:FindModifierByName("modifier_rune_regen"):GetDuration()
+				modifier_caster:RemoveModifierByName("modifier_rune_regen")
+				modifier_caster:AddNewModifier(modifier_caster, nil, "modifier_imba_regen_rune", {duration = duration})
+			end
 		end
 
 		return true
@@ -461,8 +466,7 @@ function GameMode:ItemAddedFilter( keys )
 	-- Aegis of the Immortal pickup logic
 	-------------------------------------------------------------------------------------------------
 
-	if item_name == "item_imba_aegis" then
-		
+	if item_name == "item_aegis" then
 		-- If this is a player, do Aegis stuff
 		if unit:IsRealHero() then
 
@@ -475,7 +479,6 @@ function GameMode:ItemAddedFilter( keys )
 
 			-- Destroy the item
 			return false
-
 		-- If this is not a player, do nothing and drop another Aegis
 		else
 			local drop = CreateItem("item_imba_aegis", nil, nil)
@@ -488,6 +491,7 @@ function GameMode:ItemAddedFilter( keys )
 			-- Destroy the item
 			return false
 		end
+		return false
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -1077,15 +1081,13 @@ function GameMode:OnAllPlayersLoaded()
 	end	
 end
 
+random_time = 1.0
 function GameMode:OnHeroInGame(hero)	
 local time_elapsed = 0
-
-	hero.pID = hero:GetPlayerID()
 
 	-- Disabling announcer for the player who picked a hero
 	Timers:CreateTimer(0.1, function()
 		if hero:GetUnitName() ~= "npc_dota_hero_wisp" then
-			print("A hero non-wisp spawned")
 			hero.picked = true
 		elseif hero.is_real_wisp then
 			print("REAL WISP")
@@ -1093,8 +1095,14 @@ local time_elapsed = 0
 		end
 	end)
 
-	Timers:CreateTimer(function()		
-		if not hero.is_real_wisp and hero:GetUnitName() == "npc_dota_hero_wisp"  then
+	if not hero.is_real_wisp and hero:GetUnitName() == "npc_dota_hero_wisp" then
+		if IMBA_PICK_MODE_ALL_RANDOM or IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
+			Timers:CreateTimer(2.0, function()
+				HeroSelection:RandomHero({PlayerID = hero:GetPlayerID()})
+			end)
+		end
+
+		Timers:CreateTimer(function()
 			if not hero:HasModifier("modifier_imba_prevent_actions_game_start") then
 				hero:AddNewModifier(hero, nil, "modifier_imba_prevent_actions_game_start", {})
 				hero:AddEffects(EF_NODRAW)
@@ -1108,14 +1116,14 @@ local time_elapsed = 0
 					FindClearSpaceForUnit(hero, BadCamera:GetAbsOrigin(), false)
 				end
 			end
-		end
-		if time_elapsed < 0.9 then
-			time_elapsed = time_elapsed + 0.1
-		else			
-			return nil
-		end
-		return 0.1
-	end)
+			if time_elapsed < 0.9 then
+				time_elapsed = time_elapsed + 0.1
+			else			
+				return nil
+			end
+			return 0.1
+		end)
+	end
 end
 
 --[[	This function is called once and only once when the game completely begins (about 0:00 on the clock).  At this point,

@@ -117,19 +117,11 @@ local i = 10
 	-------------------------------------------------------------------------------------------------
 
 	if new_state == DOTA_GAMERULES_STATE_PRE_GAME then
-		if IMBA_PICK_MODE_ALL_RANDOM or IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
-			Timers:CreateTimer(2.0, function()
-				for _, hero in pairs(HeroList:GetAllHeroes()) do
-					HeroSelection:RandomHero({PlayerID = hero:GetPlayerID()})
-				end
-			end)
-		end
-
 		-- Play Announcer sounds in Picking Screen until a hero is picked
 		Timers:CreateTimer(function()
 			local i2 = false
 			for _, hero in pairs(HeroList:GetAllHeroes()) do
-				if hero.picked == true then print("Hero Picked! Aborting...") return nil end
+				if hero.picked == true then print("Hero Picked! Aborting Announcer...") return nil end
 				if GameRules:GetDOTATime(false, true) >= -PRE_GAME_TIME + HERO_SELECTION_TIME -30 and GameRules:GetDOTATime(false, true) <= -PRE_GAME_TIME + HERO_SELECTION_TIME -29 then
 					EmitAnnouncerSoundForPlayer("announcer_announcer_count_battle_30", hero:GetPlayerID())
 				elseif GameRules:GetDOTATime(false, true) >= -PRE_GAME_TIME + HERO_SELECTION_TIME -10 and GameRules:GetDOTATime(false, true) <= -PRE_GAME_TIME + HERO_SELECTION_TIME then

@@ -2,7 +2,7 @@
 -- IMBA: Game settings
 -------------------------------------------------------------------------------------------------
 
-IMBA_VERSION = "7.00"						-- Tracks game version
+IMBA_VERSION = "7.01"						-- Tracks game version
 
 -------------------------------------------------------------------------------------------------
 -- Barebones basics
@@ -187,9 +187,9 @@ CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_8] = 0
 
 if GetMapName() == "imba_standard" then
 	IMBA_PICK_MODE_ALL_PICK = true
-elseif GetMapName() == "imba_random_omg" then
-	IMBA_ABILITY_MODE_RANDOM_OMG = true
 elseif GetMapName() == "imba_custom" then
+	IMBA_PICK_MODE_ALL_PICK = true
+elseif GetMapName() == "imba_custom_10v10" then
 	IMBA_PICK_MODE_ALL_PICK = true
 	IMBA_PLAYERS_ON_GAME = 20
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 10
@@ -284,7 +284,7 @@ if GetMapName() == "imba_standard" then										-- Standard map defaults
 	HERO_RERANDOM_GOLD = 1300
 	HERO_STARTING_LEVEL = 3
 	MAX_LEVEL = 40
-elseif GetMapName() == "imba_custom" then									-- Custom map defaults
+elseif GetMapName() == "imba_custom" or GetMapName() == "imba_custom_10v10" then									-- Custom map defaults
 	END_GAME_ON_KILLS = false
 	CUSTOM_GOLD_BONUS = 150
 	CUSTOM_XP_BONUS = 150
