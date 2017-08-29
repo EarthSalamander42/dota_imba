@@ -30,11 +30,9 @@ function modifier_imba_double_damage_rune:GetAuraEntityReject(entity)
 end
 
 function modifier_imba_double_damage_rune:OnCreated()
-	print("DD Rune: OnCreated")
 	self.parent = self:GetParent()
 	self.aura_radius = 900
-	self.bonus_damage_pct_owner = 100
-	self.bonus_main_attribute_pct_owner = 100
+	self.bonus_main_attribute_multiplier = 1
 
 	self.strength_bonus = 0
 	self.agility_bonus = 0
@@ -44,22 +42,18 @@ function modifier_imba_double_damage_rune:OnCreated()
 
 	-- Strength
 	if primary_attribute == 0 then
-		self.strength_bonus = self.parent:GetBaseStrength() * self.bonus_main_attribute_pct_owner
-		print("Strength")
+		self.strength_bonus = self.parent:GetBaseStrength() * self.bonus_main_attribute_multiplier
 	-- Agility
 	elseif primary_attribute == 1 then
-		self.agility_bonus = self.parent:GetBaseAgility() * self.bonus_main_attribute_pct_owner
-		print("Agility")
+		self.agility_bonus = self.parent:GetBaseAgility() * self.bonus_main_attribute_multiplier
 	-- Intelligence
 	else
-		self.intellect_bonus = self.parent:GetBaseIntellect() * self.bonus_main_attribute_pct_owner
-		print("Intelligence")
+		self.intellect_bonus = self.parent:GetBaseIntellect() * self.bonus_main_attribute_multiplier
 	end
 end
 
 function modifier_imba_double_damage_rune:DeclareFunctions()
-	local funcs = { MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
-				MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+	local funcs = {MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 				MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 				MODIFIER_PROPERTY_STATS_INTELLECT_BONUS}
 	return funcs
@@ -70,18 +64,12 @@ function modifier_imba_double_damage_rune:GetModifierBonusStats_Strength()
 end
 
 function modifier_imba_double_damage_rune:GetModifierBonusStats_Agility()
-	print("Bonus Agility", self.agility_bonus)
 	return self.agility_bonus
 end
 
 function modifier_imba_double_damage_rune:GetModifierBonusStats_Intellect()
 	return self.intellect_bonus
 end
-
-function modifier_imba_double_damage_rune:GetModifierBaseDamageOutgoing_Percentage()
-	return self.bonus_damage_pct_owner
-end
-
 ----------------------------------------------------------------------
 -- Double Damage team aura
 ----------------------------------------------------------------------
@@ -103,7 +91,7 @@ end
 function modifier_imba_rune_double_damage_aura:OnCreated()
 	self.parent = self:GetParent()
 	self.bonus_damage_pct_aura = 50
-	self.bonus_main_attribute_pct_aura = 50
+	self.bonus_main_attribute_multiplier = 0.5
 	
 	self.strength_bonus = 0
 	self.agility_bonus = 0
@@ -113,13 +101,13 @@ function modifier_imba_rune_double_damage_aura:OnCreated()
 	
 	-- Strength
 	if primary_attribute == 0 then
-		self.strength_bonus = self.parent:GetBaseStrength() * self.bonus_main_attribute_pct_aura
+		self.strength_bonus = self.parent:GetBaseStrength() * self.bonus_main_attribute_multiplier
 	-- Agility
 	elseif primary_attribute == 1 then
-		self.agility_bonus = self.parent:GetBaseAgility() * self.bonus_main_attribute_pct_aura
+		self.agility_bonus = self.parent:GetBaseAgility() * self.bonus_main_attribute_multiplier
 	-- Intelligence
 	else
-		self.intellect_bonus = self.parent:GetBaseIntellect() * self.bonus_main_attribute_pct_aura
+		self.intellect_bonus = self.parent:GetBaseIntellect() * self.bonus_main_attribute_multiplier
 	end
 end
 

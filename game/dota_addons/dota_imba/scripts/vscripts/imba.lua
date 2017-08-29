@@ -424,18 +424,20 @@ function GameMode:ModifierFilter( keys )
 		-- Rune pickup logic
 		-------------------------------------------------------------------------------------------------	
 
-		if modifier_caster:HasModifier("modifier_rune_doubledamage") then
-			modifier_caster:AddNewModifier(modifier_caster, nil, "modifier_imba_double_damage_rune", {duration = 30})
-			return false
-		elseif modifier_caster:HasModifier("modifier_rune_haste") then
-			modifier_caster:AddNewModifier(modifier_caster, nil, "modifier_imba_haste_rune", {duration = 22})
-			return false
-		elseif modifier_caster:HasModifier("modifier_rune_invis") then
---			PickupInvisibleRune(modifier_caster)
---			return false
-		elseif modifier_caster:HasModifier("modifier_rune_regen") then
-			modifier_caster:AddNewModifier(modifier_caster, nil, "modifier_imba_regen_rune", {duration = 30})
-			return false
+		if modifier_caster == modifier_owner then
+			if modifier_caster:HasModifier("modifier_rune_doubledamage") then
+				local duration = modifier_caster:FindModifierByName("modifier_rune_doubledamage"):GetDuration()
+				modifier_caster:AddNewModifier(modifier_caster, nil, "modifier_imba_double_damage_rune", {duration = duration})
+			elseif modifier_caster:HasModifier("modifier_rune_haste") then
+				local duration = modifier_caster:FindModifierByName("modifier_rune_haste"):GetDuration()
+				modifier_caster:AddNewModifier(modifier_caster, nil, "modifier_imba_haste_rune", {duration = duration})
+			elseif modifier_caster:HasModifier("modifier_rune_invis") then
+	--			PickupInvisibleRune(modifier_caster)
+	--			return false
+			elseif modifier_caster:HasModifier("modifier_rune_regen") then
+				local duration = modifier_caster:FindModifierByName("modifier_rune_regen"):GetDuration()
+				modifier_caster:AddNewModifier(modifier_caster, nil, "modifier_imba_regen_rune", {duration = duration})
+			end
 		end
 
 		return true
