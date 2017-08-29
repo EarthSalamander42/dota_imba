@@ -580,9 +580,9 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		Timers:CreateTimer(3.0, function()
 			PlayerResource:SetCameraTarget(player_id, nil)
 			UTIL_Remove(wisp)	
---			local title = Server_GetPlayerTitle(player_id)
---			local rgb = Server_GetTitleColor(title)
---			hero:SetCustomHealthLabel(title, rgb[1], rgb[2], rgb[3])
+			local title = Server_GetPlayerTitle(player_id)
+			local rgb = Server_GetTitleColor(title)
+			hero:SetCustomHealthLabel(title, rgb[1], rgb[2], rgb[3])
 		end)
 
 		-- Set initial spawn setup as having been done

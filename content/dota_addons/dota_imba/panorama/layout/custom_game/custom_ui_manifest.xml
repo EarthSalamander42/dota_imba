@@ -108,31 +108,41 @@
 		Stash.style.height = "150px";
 
 		//TopBar
+		var map_info = Game.GetMapInfo();
 		var topbar = hudElements.FindChildTraverse("topbar");
-		topbar.style.width = "76%";
-
 		var topbarRadiant = topbar.FindChildTraverse("TopBarRadiantTeam");
-		topbarRadiant.style.width = "50%";
-		topbarRadiant.style.marginLeft = "0px";
-
 		var topbarRadiantContainer = topbarRadiant.FindChildTraverse("TopBarRadiantPlayersContainer");
-		topbarRadiantContainer.style.marginTop = "-1px";
-		topbarRadiantContainer.style.width = "630px";
-		topbarRadiantContainer.style.flowChildren = "left";
-
 		var topbarDire = topbar.FindChildTraverse("TopBarDireTeam");
-		topbarDire.style.width = "50%";
-		topbarDire.style.marginRight = "0px";
-
 		var topbarDireContainer = topbarDire.FindChildTraverse("TopBarDirePlayersContainer");
-		topbarDireContainer.style.marginTop = "-1px";
-		topbarDireContainer.style.width = "630px";
+
+		if (map_info.map_display_name == "imba_standard")
+		{
+			
+		}
+		else
+		{
+			topbar.style.width = "76%";
+
+			topbarRadiant.style.width = "50%";
+			topbarRadiant.style.marginLeft = "0px";
+
+			topbarRadiantContainer.style.marginTop = "-1px";
+			topbarRadiantContainer.style.width = "630px";
+			topbarRadiantContainer.style.flowChildren = "left";
+
+			topbarDire.style.width = "50%";
+			topbarDire.style.marginRight = "0px";
+
+			topbarDireContainer.style.marginTop = "-1px";
+			topbarDireContainer.style.width = "630px";
+		}
 
 		for (var tbg of topbarRadiant.FindChildrenWithClassTraverse("TeamBackground")) {
 			for (var tbbg of tbg.FindChildrenWithClassTraverse("TopBarBackground")) {
 				tbbg.style.height = "44px"
 				tbbg.style.backgroundSize = '0%';
-				tbbg.style.backgroundColor = '#000000da';
+//				tbbg.style.backgroundColor = '#000000da';
+				tbbg.style.backgroundColor = '#08640Eda';
 				tbbg.style.borderRadius = "6px";
 				tbbg.style.marginTop = "-1px";
 			}
@@ -142,7 +152,8 @@
 			for (var tbbg of tbg.FindChildrenWithClassTraverse("TopBarBackground")) {
 				tbbg.style.height = "44px"
 				tbbg.style.backgroundSize = '0%';
-				tbbg.style.backgroundColor = '#000000da';
+//				tbbg.style.backgroundColor = '#000000da';
+				tbbg.style.backgroundColor = '#640808da';
 				tbbg.style.borderRadius = "6px";
 				tbbg.style.marginTop = "-1px";
 			}

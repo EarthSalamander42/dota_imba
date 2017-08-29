@@ -29,36 +29,68 @@ local XP_this_level = {}
 local XP_has_this_level = {}
 --Level table for IMBA XP
 
+--	"imba_rank_title_rookie"
+--	"imba_rank_title_amateur"
+--	"imba_rank_title_captain"
+--	"imba_rank_title_warrior"
+--	"imba_rank_title_commander"
+--	"imba_rank_title_general"
+--	"imba_rank_title_master"
+--	"imba_rank_title_epic"
+--	"imba_rank_title_legendary"
+--	"imba_rank_title_icefrog"
+--	"imba_rank_title_firetoad"
+
 function Server_GetTitle(level)
-	if level <= 5 then
+	if level <= 9 then
 		return "#imba_rank_title_rookie"
-	elseif level <= 10 then
+	elseif level <= 19 then
 		return "#imba_rank_title_amateur"
-	elseif level <= 15 then
+	elseif level <= 29 then
+		return "#imba_rank_title_captain"
+	elseif level <= 39 then
 		return "#imba_rank_title_warrior"
-	elseif level <= 20 then
+	elseif level <= 49 then
+		return "#imba_rank_title_commander"
+	elseif level <= 59 then
 		return "#imba_rank_title_general"
-	elseif level <= 25 then
+	elseif level <= 69 then
 		return "#imba_rank_title_master"
-	else 
+	elseif level <= 79 then
+		return "#imba_rank_title_epic"
+	elseif level <= 89 then
 		return "#imba_rank_title_legendary"
+	elseif level <= 99 then
+		return "#imba_rank_title_icefrog"
+	else 
+		return "#imba_rank_title_firetoad"
 	end
 end
 
 function Server_GetTitleColor(title)
-    if title == "#imba_rank_title_rookie" then
-        return {255, 255, 255}
-    elseif title == "#imba_rank_title_amateur" then
-        return {102, 204, 0}
-    elseif title == "#imba_rank_title_warrior" then
-        return {0, 76, 153}
-    elseif title == "#imba_rank_title_general" then
-        return {102, 0, 204}
-    elseif title == "#imba_rank_title_master" then
-        return {255, 0, 0}
-    else -- it's legendaaaary 
-        return {255, 153, 51}
-    end
+	if title == "#imba_rank_title_rookie" then
+		return {255, 255, 255}
+	elseif title == "#imba_rank_title_amateur" then
+		return {102, 204, 0}
+	elseif title == "#imba_rank_title_captain" then
+		return {76, 139, 202}
+	elseif title == "#imba_rank_title_warrior" then
+		return {0, 76, 153}
+	elseif title == "#imba_rank_title_commander" then
+		return {152, 95, 209}
+	elseif title == "#imba_rank_title_general" then
+		return {70, 5, 135}
+	elseif title == "#imba_rank_title_master" then
+		return {250, 83, 83}
+	elseif title == "#imba_rank_title_epic" then
+		return {142, 12, 12}
+	elseif title == "#imba_rank_title_legendary" then
+		return {239, 188, 20}
+	elseif title == "#imba_rank_title_icefrog" then
+		return {20, 86, 239}
+	else -- it's Firetoaaaaaaaaaaad! 
+		return {199, 81, 2}
+	end
 end
 
 function Server_DecodeForPlayer ( t, nPlayerID )   --To deep-decode the Json code...
@@ -397,37 +429,37 @@ end
 
 
 function print_r ( t )  
-    local print_r_cache={}
-    local function sub_print_r(t,indent)
-        if (print_r_cache[tostring(t)]) then
-            print(indent.."*"..tostring(t))
-        else
-            print_r_cache[tostring(t)]=true
-            if (type(t)=="table") then
-                for pos,val in pairs(t) do
-                    if (type(val)=="table") then
-                        print(indent.."["..pos.."] => "..tostring(t).." {")
-                        sub_print_r(val,indent..string.rep(" ",string.len(pos)+8))
-                        print(indent..string.rep(" ",string.len(pos)+6).."}")
-                    elseif (type(val)=="string") then
-                        print(indent.."["..pos..'] => "'..val..'"')
-                    else
-                        print(indent.."["..pos.."] => "..tostring(val))
-                    end
-                end
-            else
-                print(indent..tostring(t))
-            end
-        end
-    end
-    if (type(t)=="table") then
-        print(tostring(t).." {")
-        sub_print_r(t,"  ")
-        print("}")
-    else
-        sub_print_r(t,"  ")
-    end
-    print()
+	local print_r_cache={}
+	local function sub_print_r(t,indent)
+		if (print_r_cache[tostring(t)]) then
+			print(indent.."*"..tostring(t))
+		else
+			print_r_cache[tostring(t)]=true
+			if (type(t)=="table") then
+				for pos,val in pairs(t) do
+					if (type(val)=="table") then
+						print(indent.."["..pos.."] => "..tostring(t).." {")
+						sub_print_r(val,indent..string.rep(" ",string.len(pos)+8))
+						print(indent..string.rep(" ",string.len(pos)+6).."}")
+					elseif (type(val)=="string") then
+						print(indent.."["..pos..'] => "'..val..'"')
+					else
+						print(indent.."["..pos.."] => "..tostring(val))
+					end
+				end
+			else
+				print(indent..tostring(t))
+			end
+		end
+	end
+	if (type(t)=="table") then
+		print(tostring(t).." {")
+		sub_print_r(t,"  ")
+		print("}")
+	else
+		sub_print_r(t,"  ")
+	end
+	print()
 end
 
 
@@ -438,116 +470,116 @@ end
 ----------------------------------------------------------------------------------------------------------------
 
 function Server_findHeroByPlayerID(nPlayerID)
-    local _Hero = PlayerResource:GetSelectedHeroEntity(nPlayerID)
-    return _Hero
+	local _Hero = PlayerResource:GetSelectedHeroEntity(nPlayerID)
+	return _Hero
 end
 
 
 local Table_Hero_Particle = {}
 
 function Server_DestroyParticle(_particle)
-    ParticleManager:DestroyParticle(_particle, true)
-    ParticleManager:ReleaseParticleIndex(_particle)
-    _particle = nil
+	ParticleManager:DestroyParticle(_particle, true)
+	ParticleManager:ReleaseParticleIndex(_particle)
+	_particle = nil
 end
 
 function Server_Particle_Darkmoon(nPlayerID)
-    if Table_Hero_Particle[nPlayerID] then
-        Server_DestroyParticle(Table_Hero_Particle[nPlayerID])
-    end
-    local hero = Server_findHeroByPlayerID(nPlayerID)
-    local _particle = ParticleManager:CreateParticle("particles/econ/courier/courier_roshan_darkmoon/courier_roshan_darkmoon.vpcf",PATTACH_ABSORIGIN_FOLLOW,hero)
-    Table_Hero_Particle[nPlayerID] = _particle
-    ParticleManager:SetParticleControlEnt(_particle,0,hero,PATTACH_ABSORIGIN_FOLLOW,"follow_origin",hero:GetAbsOrigin(),true)
+	if Table_Hero_Particle[nPlayerID] then
+		Server_DestroyParticle(Table_Hero_Particle[nPlayerID])
+	end
+	local hero = Server_findHeroByPlayerID(nPlayerID)
+	local _particle = ParticleManager:CreateParticle("particles/econ/courier/courier_roshan_darkmoon/courier_roshan_darkmoon.vpcf",PATTACH_ABSORIGIN_FOLLOW,hero)
+	Table_Hero_Particle[nPlayerID] = _particle
+	ParticleManager:SetParticleControlEnt(_particle,0,hero,PATTACH_ABSORIGIN_FOLLOW,"follow_origin",hero:GetAbsOrigin(),true)
 end
 
 function Server_Particle_Sands(nPlayerID)
-    if Table_Hero_Particle[nPlayerID] then
-        Server_DestroyParticle(Table_Hero_Particle[nPlayerID])
-    end
-    local hero = Server_findHeroByPlayerID(nPlayerID)
-    local _particle = ParticleManager:CreateParticle("particles/econ/courier/courier_roshan_desert_sands/baby_roshan_desert_sands_ambient.vpcf",PATTACH_ABSORIGIN_FOLLOW,hero)
-    Table_Hero_Particle[nPlayerID] = _particle
-    ParticleManager:SetParticleControlEnt(_particle,0,hero,PATTACH_ABSORIGIN_FOLLOW,"follow_origin",hero:GetAbsOrigin(),true)
+	if Table_Hero_Particle[nPlayerID] then
+		Server_DestroyParticle(Table_Hero_Particle[nPlayerID])
+	end
+	local hero = Server_findHeroByPlayerID(nPlayerID)
+	local _particle = ParticleManager:CreateParticle("particles/econ/courier/courier_roshan_desert_sands/baby_roshan_desert_sands_ambient.vpcf",PATTACH_ABSORIGIN_FOLLOW,hero)
+	Table_Hero_Particle[nPlayerID] = _particle
+	ParticleManager:SetParticleControlEnt(_particle,0,hero,PATTACH_ABSORIGIN_FOLLOW,"follow_origin",hero:GetAbsOrigin(),true)
 end
 
 
 function Server_Particle_Frost(nPlayerID)
-    if Table_Hero_Particle[nPlayerID] then
-        Server_DestroyParticle(Table_Hero_Particle[nPlayerID])
-    end
-    local hero = Server_findHeroByPlayerID(nPlayerID)
-    local _particle = ParticleManager:CreateParticle("particles/econ/courier/courier_roshan_frost/courier_roshan_frost_ambient.vpcf",PATTACH_ABSORIGIN_FOLLOW,hero)
-    Table_Hero_Particle[nPlayerID] = _particle
-    ParticleManager:SetParticleControlEnt(_particle,0,hero,PATTACH_ABSORIGIN_FOLLOW,"follow_origin",hero:GetAbsOrigin(),true)
+	if Table_Hero_Particle[nPlayerID] then
+		Server_DestroyParticle(Table_Hero_Particle[nPlayerID])
+	end
+	local hero = Server_findHeroByPlayerID(nPlayerID)
+	local _particle = ParticleManager:CreateParticle("particles/econ/courier/courier_roshan_frost/courier_roshan_frost_ambient.vpcf",PATTACH_ABSORIGIN_FOLLOW,hero)
+	Table_Hero_Particle[nPlayerID] = _particle
+	ParticleManager:SetParticleControlEnt(_particle,0,hero,PATTACH_ABSORIGIN_FOLLOW,"follow_origin",hero:GetAbsOrigin(),true)
 end
 
 function Server_Particle_Lava(nPlayerID)
-    if Table_Hero_Particle[nPlayerID] then
-        Server_DestroyParticle(Table_Hero_Particle[nPlayerID])
-    end
-    local hero = Server_findHeroByPlayerID(nPlayerID)
-    local _particle = ParticleManager:CreateParticle("particles/econ/courier/courier_roshan_lava/courier_roshan_lava.vpcf",PATTACH_ABSORIGIN_FOLLOW,hero)
-    Table_Hero_Particle[nPlayerID] = _particle
-    ParticleManager:SetParticleControlEnt(_particle,0,hero,PATTACH_ABSORIGIN_FOLLOW,"follow_origin",hero:GetAbsOrigin(),true)
+	if Table_Hero_Particle[nPlayerID] then
+		Server_DestroyParticle(Table_Hero_Particle[nPlayerID])
+	end
+	local hero = Server_findHeroByPlayerID(nPlayerID)
+	local _particle = ParticleManager:CreateParticle("particles/econ/courier/courier_roshan_lava/courier_roshan_lava.vpcf",PATTACH_ABSORIGIN_FOLLOW,hero)
+	Table_Hero_Particle[nPlayerID] = _particle
+	ParticleManager:SetParticleControlEnt(_particle,0,hero,PATTACH_ABSORIGIN_FOLLOW,"follow_origin",hero:GetAbsOrigin(),true)
 end
 
 function Server_Particle_Platinum(nPlayerID)
-    if Table_Hero_Particle[nPlayerID] then
-        Server_DestroyParticle(Table_Hero_Particle[nPlayerID])
-    end
-    local hero = Server_findHeroByPlayerID(nPlayerID)
-    local _particle = ParticleManager:CreateParticle("particles/econ/courier/courier_platinum_roshan/platinum_roshan_ambient.vpcf",PATTACH_ABSORIGIN_FOLLOW,hero)
-    Table_Hero_Particle[nPlayerID] = _particle
-    ParticleManager:SetParticleControlEnt(_particle,0,hero,PATTACH_ABSORIGIN_FOLLOW,"follow_origin",hero:GetAbsOrigin(),true)
+	if Table_Hero_Particle[nPlayerID] then
+		Server_DestroyParticle(Table_Hero_Particle[nPlayerID])
+	end
+	local hero = Server_findHeroByPlayerID(nPlayerID)
+	local _particle = ParticleManager:CreateParticle("particles/econ/courier/courier_platinum_roshan/platinum_roshan_ambient.vpcf",PATTACH_ABSORIGIN_FOLLOW,hero)
+	Table_Hero_Particle[nPlayerID] = _particle
+	ParticleManager:SetParticleControlEnt(_particle,0,hero,PATTACH_ABSORIGIN_FOLLOW,"follow_origin",hero:GetAbsOrigin(),true)
 end
 
 function Server_Particle_FlameHaze(nPlayerID)
-    if Table_Hero_Particle[nPlayerID] then
-        Server_DestroyParticle(Table_Hero_Particle[nPlayerID])
-    end
-    local hero = Server_findHeroByPlayerID(nPlayerID)
-    local _particle = ParticleManager:CreateParticle("particles/econ/courier/courier_greevil_orange/courier_greevil_orange_ambient_3.vpcf",PATTACH_ABSORIGIN_FOLLOW,hero)
-    Table_Hero_Particle[nPlayerID] = _particle
-    ParticleManager:SetParticleControlEnt(_particle,0,hero,PATTACH_ABSORIGIN_FOLLOW,"follow_origin",hero:GetAbsOrigin(),true)
+	if Table_Hero_Particle[nPlayerID] then
+		Server_DestroyParticle(Table_Hero_Particle[nPlayerID])
+	end
+	local hero = Server_findHeroByPlayerID(nPlayerID)
+	local _particle = ParticleManager:CreateParticle("particles/econ/courier/courier_greevil_orange/courier_greevil_orange_ambient_3.vpcf",PATTACH_ABSORIGIN_FOLLOW,hero)
+	Table_Hero_Particle[nPlayerID] = _particle
+	ParticleManager:SetParticleControlEnt(_particle,0,hero,PATTACH_ABSORIGIN_FOLLOW,"follow_origin",hero:GetAbsOrigin(),true)
 end
 
 function Server_Particle_HellFire(nPlayerID)
-    if Table_Hero_Particle[nPlayerID] then
-        Server_DestroyParticle(Table_Hero_Particle[nPlayerID])
-    end
-    local hero = Server_findHeroByPlayerID(nPlayerID)
-    local _particle = ParticleManager:CreateParticle("particles/econ/courier/courier_greevil_red/courier_greevil_red_ambient_3.vpcf",PATTACH_ABSORIGIN_FOLLOW,hero)
-    Table_Hero_Particle[nPlayerID] = _particle
-    ParticleManager:SetParticleControlEnt(_particle,0,hero,PATTACH_ABSORIGIN_FOLLOW,"follow_origin",hero:GetAbsOrigin(),true)
+	if Table_Hero_Particle[nPlayerID] then
+		Server_DestroyParticle(Table_Hero_Particle[nPlayerID])
+	end
+	local hero = Server_findHeroByPlayerID(nPlayerID)
+	local _particle = ParticleManager:CreateParticle("particles/econ/courier/courier_greevil_red/courier_greevil_red_ambient_3.vpcf",PATTACH_ABSORIGIN_FOLLOW,hero)
+	Table_Hero_Particle[nPlayerID] = _particle
+	ParticleManager:SetParticleControlEnt(_particle,0,hero,PATTACH_ABSORIGIN_FOLLOW,"follow_origin",hero:GetAbsOrigin(),true)
 end
 
 function Server_Particle_Sakura(nPlayerID)
-    if Table_Hero_Particle[nPlayerID] then
-        Server_DestroyParticle(Table_Hero_Particle[nPlayerID])
-    end
-    local hero = Server_findHeroByPlayerID(nPlayerID)
-    local _particle = ParticleManager:CreateParticle("particles/econ/courier/courier_trail_blossoms/courier_trail_blossoms.vpcf",PATTACH_ABSORIGIN_FOLLOW,hero)
-    Table_Hero_Particle[nPlayerID] = _particle
-    ParticleManager:SetParticleControlEnt(_particle,0,hero,PATTACH_ABSORIGIN_FOLLOW,"follow_origin",hero:GetAbsOrigin(),true)
+	if Table_Hero_Particle[nPlayerID] then
+		Server_DestroyParticle(Table_Hero_Particle[nPlayerID])
+	end
+	local hero = Server_findHeroByPlayerID(nPlayerID)
+	local _particle = ParticleManager:CreateParticle("particles/econ/courier/courier_trail_blossoms/courier_trail_blossoms.vpcf",PATTACH_ABSORIGIN_FOLLOW,hero)
+	Table_Hero_Particle[nPlayerID] = _particle
+	ParticleManager:SetParticleControlEnt(_particle,0,hero,PATTACH_ABSORIGIN_FOLLOW,"follow_origin",hero:GetAbsOrigin(),true)
 end
 
 function Server_Particle_Radiant(nPlayerID)
-    if Table_Hero_Particle[nPlayerID] then
-        Server_DestroyParticle(Table_Hero_Particle[nPlayerID])
-    end
-    local hero = Server_findHeroByPlayerID(nPlayerID)
-    local _particle = ParticleManager:CreateParticle("particles/radiant_fx2/good_ancient001_ambient.vpcf",PATTACH_ABSORIGIN_FOLLOW,hero)
-    Table_Hero_Particle[nPlayerID] = _particle
-    ParticleManager:SetParticleControlEnt(_particle,0,hero,PATTACH_ABSORIGIN_FOLLOW,"follow_origin",hero:GetAbsOrigin(),true)
+	if Table_Hero_Particle[nPlayerID] then
+		Server_DestroyParticle(Table_Hero_Particle[nPlayerID])
+	end
+	local hero = Server_findHeroByPlayerID(nPlayerID)
+	local _particle = ParticleManager:CreateParticle("particles/radiant_fx2/good_ancient001_ambient.vpcf",PATTACH_ABSORIGIN_FOLLOW,hero)
+	Table_Hero_Particle[nPlayerID] = _particle
+	ParticleManager:SetParticleControlEnt(_particle,0,hero,PATTACH_ABSORIGIN_FOLLOW,"follow_origin",hero:GetAbsOrigin(),true)
 end
 
 function Server_Particle_Dire(nPlayerID)
-    if Table_Hero_Particle[nPlayerID] then
-        Server_DestroyParticle(Table_Hero_Particle[nPlayerID])
-    end
-    local hero = Server_findHeroByPlayerID(nPlayerID)
-    local _particle = ParticleManager:CreateParticle("particles/dire_fx/bad_ancient_flow_test.vpcf",PATTACH_ABSORIGIN_FOLLOW,hero)
-    Table_Hero_Particle[nPlayerID] = _particle
-    ParticleManager:SetParticleControlEnt(_particle,0,hero,PATTACH_ABSORIGIN_FOLLOW,"follow_origin",hero:GetAbsOrigin(),true)
+	if Table_Hero_Particle[nPlayerID] then
+		Server_DestroyParticle(Table_Hero_Particle[nPlayerID])
+	end
+	local hero = Server_findHeroByPlayerID(nPlayerID)
+	local _particle = ParticleManager:CreateParticle("particles/dire_fx/bad_ancient_flow_test.vpcf",PATTACH_ABSORIGIN_FOLLOW,hero)
+	Table_Hero_Particle[nPlayerID] = _particle
+	ParticleManager:SetParticleControlEnt(_particle,0,hero,PATTACH_ABSORIGIN_FOLLOW,"follow_origin",hero:GetAbsOrigin(),true)
 end

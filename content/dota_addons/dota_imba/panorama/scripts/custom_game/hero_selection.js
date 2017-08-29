@@ -345,6 +345,19 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 =========================================================================*/
 (function () {
 
+	// Banned Heroes
+	//STR
+	$("#npc_dota_hero_undying").AddClass( "taken" );
+	///AGI
+	$("#npc_dota_hero_meepo").AddClass( "taken" );
+	$("#npc_dota_hero_phantom_lancer").AddClass( "taken" );
+	$("#npc_dota_hero_spectre").AddClass( "taken" );
+	//INT
+	$("#npc_dota_hero_enigma").AddClass( "taken" );
+	$("#npc_dota_hero_techies").AddClass( "taken" );
+	$("#npc_dota_hero_tinker").AddClass( "taken" );
+	$("#npc_dota_hero_venomancer").AddClass( "taken" );
+
 	// If this player is a spectator, just kill the whole pick screen
 	var localTeam = Players.GetTeam(Players.GetLocalPlayer())
 	if ( localTeam != 2 && localTeam != 3 ) {

@@ -550,132 +550,8 @@ function InitializePhysicsParameters(unit)
 	end
 end
 
--- Spawns runes on the map
-function SpawnImbaRunes()
-
-	-- Remove any existing runes, if any
-	RemoveRunes()
-
-	-- Locate the rune spots on the map
-	local bounty_rune_spawner_a = Entities:FindAllByName("bounty_rune_location_dire_bot")
-	local bounty_rune_spawner_b = Entities:FindAllByName("bounty_rune_location_dire_top")
-	local bounty_rune_spawner_c = Entities:FindAllByName("bounty_rune_location_radiant_bot")
-	local bounty_rune_spawner_d = Entities:FindAllByName("bounty_rune_location_radiant_top")
-	local powerup_rune_spawner_a = Entities:FindAllByName("powerup_rune_location_bot")
-	local powerup_rune_spawner_b = Entities:FindAllByName("powerup_rune_location_top")
-	local bounty_rune_locations = {
-		bounty_rune_spawner_a[1]:GetAbsOrigin(),
-		bounty_rune_spawner_b[1]:GetAbsOrigin(),
-		bounty_rune_spawner_c[1]:GetAbsOrigin(),
-		bounty_rune_spawner_d[1]:GetAbsOrigin()
-	}
-	local powerup_rune_locations = {
-		powerup_rune_spawner_a[1]:GetAbsOrigin(),
-		powerup_rune_spawner_b[1]:GetAbsOrigin()
-	}
-
-	local rune
-
-	-- Spawn bounty runes
-	local game_time = GameRules:GetDOTATime(false, false)
-	for _, bounty_loc in pairs(bounty_rune_locations) do
-		local bounty_rune = CreateItem("item_imba_rune_bounty", nil, nil)
-		rune = CreateItemOnPositionForLaunch(bounty_loc, bounty_rune)		
-		RegisterRune(rune)
-
-		-- If these are the 00:00 runes, double their worth
-		if game_time < 1 then
-			bounty_rune.is_initial_bounty_rune = true
-		end
-	end
-
-	-- List of powerup rune types
-	local powerup_rune_types = {
-		"item_imba_rune_double_damage",
-		"item_imba_rune_haste",
-		"item_imba_rune_regeneration"
-	}
-
-	-- Spawn a random powerup rune in a random powerup location
-	if game_time > 1 and game_time < 40 then		
-		rune = CreateItemOnPositionForLaunch(powerup_rune_locations[RandomInt(1, #powerup_rune_locations)], CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))		
-		RegisterRune(rune)
-
-	-- After 40 minutes, spawn powerup runes on both locations
-	elseif game_time >= 40 then
-		rune = CreateItemOnPositionForLaunch(powerup_rune_locations[1], CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))
-		RegisterRune(rune)
-		rune = CreateItemOnPositionForLaunch(powerup_rune_locations[2], CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))
-		RegisterRune(rune)
-	end
-end
-
-function RegisterRune(rune)
-
-	-- Initialize table
-	if not rune_spawn_table then
-		rune_spawn_table = {}
-	end
-
-	-- Register rune into table
-	table.insert(rune_spawn_table, rune)
-end
-
-function RemoveRunes()
-	if rune_spawn_table then
-
-		-- Remove existing runes
-		for _,rune in pairs(rune_spawn_table) do
-			if not rune:IsNull() then								
-				local item = rune:GetContainedItem()
-				UTIL_Remove(item)
-				UTIL_Remove(rune)
-			end
-		end
-
-		-- Clear the table
-		rune_spawn_table = {}
-	end
-end
-
--- Spawns runes on the arena map
-function SpawnArenaRunes()
-
-	-- Locate the rune spots on the map
-	local powerup_rune_spawner = Entities:FindAllByName("powerup_rune_spawner")
-	powerup_rune_spawner = powerup_rune_spawner[1]:GetAbsOrigin()
-
-	-- Decide what type of rune to spawn
-	if not ARENA_RUNE_COUNTER then
-		ARENA_RUNE_COUNTER = 3
-	end
-	ARENA_RUNE_COUNTER = ARENA_RUNE_COUNTER + 1
-
-	-- Spawn bounty rune
-	if ARENA_RUNE_COUNTER < 4 then
-	
-		local bounty_rune = CreateItem("item_imba_rune_bounty_arena", nil, nil)
-		CreateItemOnPositionForLaunch(powerup_rune_spawner, bounty_rune)
-		bounty_rune:LaunchLoot(false, 200, 0.4, powerup_rune_spawner + RandomVector(1) * RandomInt(200, 400))
-
-	-- Spawn powerup rune
-	else
-
-		-- List of powerup rune types
-		local powerup_rune_types = {
-			"item_imba_rune_double_damage",
-			"item_imba_rune_haste",
-			"item_imba_rune_regeneration"
-		}
-
-		-- Spawn a random powerup rune
-		CreateItemOnPositionForLaunch(powerup_rune_spawner, CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))
-		ARENA_RUNE_COUNTER = 0
-	end
-end
-
 -- Picks up a bounty rune
-function PickupBountyRune(item, unit)
+function PickupBountyRune(unit)
 
 	-- Bounty rune parameters
 	local base_bounty = 50
@@ -703,9 +579,6 @@ function PickupBountyRune(item, unit)
 			current_bounty = current_bounty * unit:FindTalentValue("special_bonus_imba_alchemist_7")
 		end		
 	end
-
-	UTIL_Remove(item)
-
 	
 	-- #3 Talent: Bounty runes give gold bags
     if unit:HasTalent("special_bonus_imba_alchemist_3") then
@@ -738,46 +611,36 @@ function PickupBountyRune(item, unit)
 end
 
 -- Picks up a haste rune
-function PickupHasteRune(item, unit)
+function PickupHasteRune(unit)
 
 	-- Apply the aura modifier to the owner
-	item:ApplyDataDrivenModifier(unit, unit, "modifier_imba_rune_haste_owner", {})
+	unit:AddNewModifier(unit, unit, "modifier_imba_rune_haste_owner", {})
 
 	-- Apply the movement speed increase modifier to the owner
-	local duration = item:GetSpecialValueFor("duration")
-	unit:AddNewModifier(unit, item, "modifier_imba_haste_rune_speed_limit_break", {duration = duration})
+	unit:AddNewModifier(unit, unit, "modifier_imba_haste_rune_speed_limit_break", {duration = 22})
 
 	-- Play the haste rune activation sound to the unit's team
 	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Haste", unit)	
-
-	UTIL_Remove(item:GetContainer())
-	UTIL_Remove(item)
 end
 
 -- Picks up a double damage rune
-function PickupDoubleDamageRune(item, unit)
+function PickupDoubleDamageRune(unit)
 
 	-- Apply the aura modifier to the owner
-	item:ApplyDataDrivenModifier(unit, unit, "modifier_imba_rune_double_damage_owner", {})
+	unit:AddNewModifier(unit, unit, "modifier_imba_rune_double_damage_owner", {duration = 45})
 
 	-- Play the double damage rune activation sound to the unit's team
 	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.DD", unit)	
-
-	UTIL_Remove(item:GetContainer())
-	UTIL_Remove(item)
 end
 
 -- Picks up a regeneration rune
-function PickupRegenerationRune(item, unit)
+function PickupRegenerationRune(unit)
 
 	-- Apply the aura modifier to the owner
-	item:ApplyDataDrivenModifier(unit, unit, "modifier_imba_rune_regeneration_owner", {})
+	unit:AddNewModifier(unit, unit, "modifier_imba_rune_regeneration_owner", {duration = 30})
 
 	-- Play the double damage rune activation sound to the unit's team
 	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Regen", unit)	
-
-	UTIL_Remove(item:GetContainer())
-	UTIL_Remove(item)
 end
 
 -- Gold bag pickup event function
@@ -1327,7 +1190,7 @@ function OverrideCreateParticle()
 
 --		print("Manager:", manager)
 --		print("Manager Time:", manager.lifetime)
---		print("Path:", path)
+		print("Path:", path)
 --		print("Int:", int)
 --		print("Handle:", handle)
 --		print("------------------------")
@@ -1338,12 +1201,33 @@ function OverrideCreateParticle()
 			table.insert(PARTICLE_TABLE, manager)
 --		end
 
-		local id = handle.pID
-		if id == nil then
+--		if path == "particles/units/heroes/hero_pudge/pudge_meathook.vpcf" then
+--			print("HOOK!")
+--			print("Manager:", manager)
+--			print("Int:", int)
+--			print("Handle:", handle)
+--			return particle
+--		end
+
+		if handle and handle:IsRealHero() then
+			if handle.pID then
+				print("Valid pID")
+				hero_particles[handle.pID] = hero_particles[handle.pID] +1
+				total_hero_particles[handle.pID] = total_hero_particles[handle.pID] +1
+			end
 		else
-			hero_particles[id] = hero_particles[id] +1
-			total_hero_particles[id] = total_hero_particles[id] +1
+			print("non-Hero Handle:", handle)
 		end
+
+--		if handle:GetOwnerEntity() == nil then
+--			print("Owner Handle:", handle:GetOwnerEntity())
+--		else
+--			if handle:GetOwnerEntity().pID then
+--				print("Valid pID")
+--				hero_particles[handle:GetOwnerEntity().pID] = hero_particles[handle:GetOwnerEntity().pID] +1
+--				total_hero_particles[handle:GetOwnerEntity().pID] = total_hero_particles[handle:GetOwnerEntity().pID] +1
+--			end
+--		end
 
 		total_particles = total_particles +1
 		total_particles_created = total_particles_created +1

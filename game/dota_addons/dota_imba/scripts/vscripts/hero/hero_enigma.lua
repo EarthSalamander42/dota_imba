@@ -596,9 +596,9 @@ function modifier_imba_enigma_black_hole_aura:OnCreated(keys)
 		self:StartIntervalThink(FrameTime())
 		-- Particle stuff
 		if ability == self:GetAbility() then
-			self.particle = ParticleManager:CreateParticle('particles/units/heroes/hero_enigma/enigma_blackhole.vpcf', PATTACH_CUSTOMORIGIN, nil)
+			self.particle = ParticleManager:CreateParticle('particles/units/heroes/hero_enigma/enigma_blackhole.vpcf', PATTACH_CUSTOMORIGIN, self:GetParent())
 		else
-			self.particle = ParticleManager:CreateParticle('particles/hero/enigma/enigma_blackhole_malefice.vpcf', PATTACH_CUSTOMORIGIN, nil)
+			self.particle = ParticleManager:CreateParticle('particles/hero/enigma/enigma_blackhole_malefice.vpcf', PATTACH_CUSTOMORIGIN, self:GetParent())
 		end
 		ParticleManager:SetParticleControl( self.particle, 0, self:GetParent():GetAbsOrigin())
 		ParticleManager:SetParticleControl( self.particle, 1, Vector(self.stun_radius, self.stun_radius, self.stun_radius))

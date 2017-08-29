@@ -51,8 +51,10 @@ require('addon_init')
 ApplyAllTalentModifiers()
 StoreCurrentDayCycle()
 
-	OverrideCreateParticle()
-	OverrideReleaseIndex()
+--	if IsInToolsMode() then
+--		OverrideCreateParticle()
+--		OverrideReleaseIndex()
+--	end
 
 -- storage API
 --require('libraries/json')
@@ -103,12 +105,9 @@ function GameMode:OnFirstPlayerLoaded()
 	-------------------------------------------------------------------------------------------------
 
 	if GetMapName() ~= "imba_arena" then
-		local roshan_spawn_loc = Entities:FindByName(nil, "roshan_spawn_point"):GetAbsOrigin()
-		local roshan = CreateUnitByName("npc_imba_roshan", roshan_spawn_loc, true, nil, nil, DOTA_TEAM_NEUTRALS)
-		local roshan_rage_ability = roshan:FindAbilityByName("imba_roshan_rage")
-		if roshan_rage_ability then
-			roshan_rage_ability:SetLevel(1)
-		end
+--		local roshan_spawn_loc = Entities:FindByName(nil, "roshan_spawn_point"):GetAbsOrigin()
+--		local roshan = CreateUnitByName("npc_imba_roshan", roshan_spawn_loc, true, nil, nil, DOTA_TEAM_NEUTRALS)
+--		roshan:FindAbilityByName("imba_roshan_rage"):SetLevel(1)
 
 		GoodCamera = Entities:FindByName(nil, "good_healer_7")
 		BadCamera = Entities:FindByName(nil, "bad_healer_7")
@@ -200,7 +199,10 @@ function GameMode:OnFirstPlayerLoaded()
 			statue_entity = CreateUnitByName(current_statue, current_location, true, nil, nil, DOTA_TEAM_BADGUYS)
 			statue_entity:SetForwardVector(Vector(-1, -1, 0):Normalized())
 		end
-		statue_entity:AddNewModifier(statue_entity, nil, "modifier_imba_contributor_statue", {})
+		if current_statue == "npc_imba_developer_cookies" then
+		else
+			statue_entity:AddNewModifier(statue_entity, nil, "modifier_imba_contributor_statue", {})
+		end
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -418,6 +420,20 @@ function GameMode:ModifierFilter( keys )
 			end
 		end
 
+		if modifier_caster:HasModifier("modifier_rune_doubledamage") then
+			PickupDoubleDamageRune(modifier_caster)
+			return false
+		elseif modifier_caster:HasModifier("modifier_rune_haste") then
+			PickupHasteRune(modifier_caster)
+			return false
+		elseif modifier_caster:HasModifier("modifier_rune_invis") then
+--			PickupInvisibleRune(modifier_caster)
+--			return false
+		elseif modifier_caster:HasModifier("modifier_rune_regen") then
+			PickupRegenerationRune(modifier_caster)
+			return false
+		end
+
 		return true
 	end
 end
@@ -580,6 +596,21 @@ function GameMode:ItemAddedFilter( keys )
 		for _, forbidden_item in pairs(clone_forbidden_items) do
 			if item_name == forbidden_item then
 				return false
+			end
+		end
+	end
+
+	local meepo_extra_boots = {
+		"item_imba_ironleaf_boots",
+		"item_imba_blink_boots",
+		"item_imba_power_treads_2",
+		"item_imba_haste_boots"
+	}
+
+	if unit:GetUnitName() == "npc_dota_hero_meepo" then
+		for _, boots in pairs(meepo_extra_boots) do
+			if item_name == boots then
+				print("Those boots are special!")
 			end
 		end
 	end
@@ -1206,19 +1237,6 @@ function GameMode:OnGameInProgress()
 			GameRules:GetGameModeEntity():SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
 		end
 	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Rune timers setup
-	-------------------------------------------------------------------------------------------------
-
-	Timers:CreateTimer(0, function()
-		if GetMapName() == "imba_arena" then
-			SpawnArenaRunes()
-		else
-			SpawnImbaRunes()
-		end
-		return RUNE_SPAWN_TIME
-	end)
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Structure stats setup
