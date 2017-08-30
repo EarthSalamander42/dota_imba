@@ -1965,11 +1965,6 @@ modifier_imba_juggernaut_omni_slash_cdr = modifier_imba_juggernaut_omni_slash_cd
 function modifier_imba_juggernaut_omni_slash_cdr:OnCreated()
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
-	self.cdr = self.ability:GetTalentSpecialValueFor("cdr_per_attack")
-end
-
-function modifier_imba_juggernaut_omni_slash_cdr:OnRefresh()
-	self.cdr = self.ability:GetTalentSpecialValueFor("cdr_per_attack")
 end
 
 function modifier_imba_juggernaut_omni_slash_cdr:IsHidden()
@@ -1986,7 +1981,7 @@ end
 
 function modifier_imba_juggernaut_omni_slash_cdr:OnAttackLanded(params) -- health handling
 	if params.attacker == self:GetParent() and params.target:IsRealHero() and not self.ability:IsCooldownReady() then
-		local cd = self.ability:GetCooldownTimeRemaining() - self.cdr
+		local cd = self.ability:GetCooldownTimeRemaining()
 		self.ability:EndCooldown()
 		self.ability:StartCooldown(cd)
 	end
