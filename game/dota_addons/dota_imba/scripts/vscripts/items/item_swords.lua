@@ -252,9 +252,9 @@ function modifier_item_imba_heavens_halberd:OnAttackLanded( keys )
 
 		-- If the target is not valid, do nothing either
 		local target = keys.target
-		if target:IsMagicImmune() or (not IsHeroOrCreep(target)) or owner:GetTeam() == target:GetTeam() then
+		if target:IsMagicImmune() or (not IsHeroOrCreep(target)) then -- or owner:GetTeam() == target:GetTeam() then
 			return end
-
+			
 		-- Stack the maim up
 		local ability = self:GetAbility()
 		local modifier_maim = target:AddNewModifier(owner, ability, "modifier_item_imba_sange_maim", {duration = ability:GetSpecialValueFor("maim_duration")})
@@ -262,7 +262,7 @@ function modifier_item_imba_heavens_halberd:OnAttackLanded( keys )
 			modifier_maim:SetStackCount(modifier_maim:GetStackCount() + 1)
 			target:EmitSound("Imba.SangeStack")
 		end
-
+		
 		-- If the target does not have the disarm cooldown modifier, roll for a proc
 		if (not target:HasModifier("modifier_item_imba_heavens_halberd_disarm_cooldown")) and RollPercentage(ability:GetSpecialValueFor("disarm_chance")) then
 
@@ -364,11 +364,16 @@ function modifier_item_imba_yasha:GetModifierBonusStats_Agility()
 function modifier_item_imba_yasha:OnAttackLanded( keys )
 	if IsServer() then
 		local owner = self:GetParent()
-
+		local target = keys.target
+		
 		-- If this attack was not performed by the modifier's owner, do nothing
 		if owner ~= keys.attacker then
 			return end
-
+		
+		-- If the target is a deflector, do nothing either
+		if target:HasModifier("modifier_imba_juggernaut_blade_fury") and owner:IsRangedAttacker() then
+			return end
+		
 		-- If a higher-priority sword is present, do nothing either
 		local priority_sword_modifiers = {
 			"modifier_item_imba_sange_yasha",
@@ -532,11 +537,16 @@ function modifier_item_imba_azura:GetModifierBonusStats_Intellect()
 function modifier_item_imba_azura:OnAttackLanded( keys )
 	if IsServer() then
 		local owner = self:GetParent()
-
+		local target = keys.target
+		
 		-- If this attack was not performed by the modifier's owner, do nothing
 		if owner ~= keys.attacker then
 			return end
-
+		
+		-- If the target is a deflector, do nothing either
+		if target:HasModifier("modifier_imba_juggernaut_blade_fury") and owner:IsRangedAttacker() then
+			return end
+		
 		-- If a higher-priority sword is present, do nothing either
 		local priority_sword_modifiers = {
 			"modifier_item_imba_sange_azura",
@@ -696,11 +706,16 @@ function modifier_item_imba_sange_yasha:GetModifierBonusStats_Strength()
 function modifier_item_imba_sange_yasha:OnAttackLanded( keys )
 	if IsServer() then
 		local owner = self:GetParent()
+		local target = keys.target
 
 		-- If this attack was not performed by the modifier's owner, do nothing
 		if owner ~= keys.attacker then
 			return end
 
+		-- If the target is a deflector, do nothing either
+		if target:HasModifier("modifier_imba_juggernaut_blade_fury") and owner:IsRangedAttacker() then
+			return end
+		
 		-- If a higher-priority sword is present, do nothing either
 		local priority_sword_modifiers = {
 			"modifier_item_imba_sange_azura",
@@ -988,11 +1003,16 @@ function modifier_item_imba_sange_azura:GetModifierBonusStats_Strength()
 function modifier_item_imba_sange_azura:OnAttackLanded( keys )
 	if IsServer() then
 		local owner = self:GetParent()
+		local target = keys.target
 
 		-- If this attack was not performed by the modifier's owner, do nothing
 		if owner ~= keys.attacker then
 			return end
 
+		-- If the target is a deflector, do nothing either
+		if target:HasModifier("modifier_imba_juggernaut_blade_fury") and owner:IsRangedAttacker() then
+			return end
+		
 		-- If a higher-priority sword is present, do nothing either
 		local priority_sword_modifiers = {
 			"modifier_item_imba_triumvirate"
@@ -1176,11 +1196,16 @@ function modifier_item_imba_azura_yasha:GetModifierBonusStats_Intellect()
 function modifier_item_imba_azura_yasha:OnAttackLanded( keys )
 	if IsServer() then
 		local owner = self:GetParent()
+		local target = keys.target
 
 		-- If this attack was not performed by the modifier's owner, do nothing
 		if owner ~= keys.attacker then
 			return end
 
+		-- If the target is a deflector, do nothing either
+		if target:HasModifier("modifier_imba_juggernaut_blade_fury") and owner:IsRangedAttacker() then
+			return end
+		
 		-- If a higher-priority sword is present, do nothing either
 		local priority_sword_modifiers = {
 			"modifier_item_imba_sange_yasha",
@@ -1482,11 +1507,16 @@ function modifier_item_imba_triumvirate:GetModifierBonusStats_Intellect()
 function modifier_item_imba_triumvirate:OnAttackLanded( keys )
 	if IsServer() then
 		local owner = self:GetParent()
+		local target = keys.target
 
 		-- If this attack was not performed by the modifier's owner, do nothing
 		if owner ~= keys.attacker then
 			return end
 
+		-- If the target is a deflector, do nothing either
+		if target:HasModifier("modifier_imba_juggernaut_blade_fury") and owner:IsRangedAttacker() then
+			return end
+		
 		-- All conditions met, perform a Triumvirate attack
 		TriumAttack(owner, keys.target, self:GetAbility(), "modifier_item_imba_triumvirate_stacks_debuff", "modifier_item_imba_triumvirate_stacks_buff", "modifier_item_imba_triumvirate_proc_debuff", "modifier_item_imba_triumvirate_proc_buff")
 	end
@@ -1705,7 +1735,7 @@ function SangeAttack(attacker, target, ability, modifier_stacks, modifier_proc)
 		return end
 
 	-- If the target is not valid, do nothing either
-	if target:IsMagicImmune() or (not IsHeroOrCreep(target)) or attacker:GetTeam() == target:GetTeam() then
+	if target:IsMagicImmune() or (not IsHeroOrCreep(target)) then -- or attacker:GetTeam() == target:GetTeam() then
 		return end
 
 	-- Stack the maim up
@@ -1737,7 +1767,7 @@ function YashaAttack(attacker, ability, modifier_stacks, modifier_proc)
 	-- If this is an illusion, do nothing else
 	if attacker:IsIllusion() then
 		return end
-
+	
 	-- If the ability is not on cooldown, roll for a proc
 	if ability:IsCooldownReady() and RollPercentage(ability:GetSpecialValueFor("proc_chance")) then
 
@@ -1755,7 +1785,7 @@ function AzuraAttack(attacker, target, ability, modifier_stacks, modifier_proc)
 		return end
 
 	-- If the target is not valid, do nothing either
-	if target:IsMagicImmune() or (not IsHeroOrCreep(target)) or attacker:GetTeam() == target:GetTeam() then
+	if target:IsMagicImmune() or (not IsHeroOrCreep(target)) then -- or attacker:GetTeam() == target:GetTeam() then
 		return end
 
 	-- Stack the magic amp up
@@ -1789,7 +1819,7 @@ function SangeYashaAttack(attacker, target, ability, modifier_enemy_stacks, modi
 		return end
 
 	-- If the target is not valid, do nothing else
-	if target:IsMagicImmune() or (not IsHeroOrCreep(target)) or attacker:GetTeam() == target:GetTeam() then
+	if target:IsMagicImmune() or (not IsHeroOrCreep(target)) then -- or attacker:GetTeam() == target:GetTeam() then
 		return end
 
 	-- If the ability is not on cooldown, roll for a proc
@@ -1820,7 +1850,7 @@ function SangeAzuraAttack(attacker, target, ability, modifier_stacks, modifier_p
 		return end
 
 	-- If the target is not valid, do nothing either
-	if target:IsMagicImmune() or (not IsHeroOrCreep(target)) or attacker:GetTeam() == target:GetTeam() then
+	if target:IsMagicImmune() or (not IsHeroOrCreep(target)) then -- or attacker:GetTeam() == target:GetTeam() then
 		return end
 
 	-- Stack the maim/amp up
@@ -1856,7 +1886,7 @@ function AzuraYashaAttack(attacker, target, ability, modifier_enemy_stacks, modi
 		return end
 
 	-- If the target is not valid, do nothing else
-	if target:IsMagicImmune() or (not IsHeroOrCreep(target)) or attacker:GetTeam() == target:GetTeam() then
+	if target:IsMagicImmune() or (not IsHeroOrCreep(target)) then -- or attacker:GetTeam() == target:GetTeam() then
 		return end
 
 	-- If the ability is not on cooldown, roll for a proc
@@ -1894,7 +1924,7 @@ function TriumAttack(attacker, target, ability, modifier_enemy_stacks, modifier_
 		return end
 
 	-- If the target is not valid, do nothing else
-	if target:IsMagicImmune() or (not IsHeroOrCreep(target)) or attacker:GetTeam() == target:GetTeam() then
+	if target:IsMagicImmune() or (not IsHeroOrCreep(target)) then -- or attacker:GetTeam() == target:GetTeam() then
 		return end
 
 	-- If the ability is not on cooldown, roll for a proc

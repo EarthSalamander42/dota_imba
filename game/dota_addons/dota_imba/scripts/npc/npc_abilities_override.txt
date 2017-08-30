@@ -165,7 +165,7 @@
 	//"item_recipe_manta"					"REMOVE"
 	//"item_manta"							"REMOVE"
 	//"item_recipe_lesser_crit"				"REMOVE"
-	//"item_lesser_crit"					"REMOVE"
+	"item_lesser_crit"						"REMOVE"
 	"item_recipe_armlet"					"REMOVE"
 	"item_armlet"							"REMOVE"
 	"item_recipe_invis_sword"				"REMOVE"

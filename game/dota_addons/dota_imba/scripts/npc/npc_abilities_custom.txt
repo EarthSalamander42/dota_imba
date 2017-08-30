@@ -13991,22 +13991,30 @@
 				"var_type"				"FIELD_INTEGER"
 				"effect_radius"			"250 250 250 250 275 300 325"
 			}
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"deflect_radius"		"800"
+			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_per_sec"		"80 105 130 155 160 165 170"
-				"LinkedSpecialBonus"	"special_bonus_imba_juggernaut_4"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"damage_tick"			"0.2"
 			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"succ_tick"				"0.2"
+			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"evasion"				"10 10 10 10 20 30 40"
-				"LinkedSpecialBonus"	"special_bonus_imba_juggernaut_3"
 			}
 			"04"
 			{
@@ -14069,7 +14077,6 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"heal_per_sec"			"2 3 4 5 5.25 5.5 5.75"
-				"LinkedSpecialBonus"	"special_bonus_imba_juggernaut_2"
 			}
 			"03"
 			{
@@ -14129,7 +14136,6 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"heal_per_sec"			"2 3 4 5 5.25 5.5 5.75"
-				"LinkedSpecialBonus"	"special_bonus_imba_juggernaut_2"
 			}
 			"03"
 			{
@@ -14145,7 +14151,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"heal_per_sec_totem"	"4 5 6 7 7 7 7"
-				"LinkedSpecialBonus"	"special_bonus_imba_juggernaut_2"
 			}
 			"06"
 			{
@@ -14188,12 +14193,12 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"crit_chance"			"20 25 30 35 35 35 35"
-				"LinkedSpecialBonus"	"special_bonus_imba_juggernaut_1"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"crit_damage"			"200"
+				"LinkedSpecialBonus"	"special_bonus_imba_juggernaut_6"
 			}
 			"03"
 			{
@@ -14230,7 +14235,16 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"active_cooldown"		"3"
-				"LinkedSpecialBonus"	"special_bonus_imba_juggernaut_8"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"secret_blade_duration"	"3.5"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"secret_blade_max_hits"	"3"
 			}
 		}
 	}
@@ -14283,7 +14297,8 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"80"
+				"bonus_damage_att"		"35"
+				"LinkedSpecialBonus"	"special_bonus_imba_juggernaut_8"
 			}
 
 			"02"
@@ -14321,70 +14336,19 @@
 				"var_type"				"FIELD_INTEGER"
 				"scepter_jump_amt"  	"6 9 12 13 14 15"
 			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"min_damage"  			"225"
+			}
 		}
 	}
 
 	
 	//=================================================================================================================
-	// Juggernaut Talent 1 (Level 10): +5% Blade Dance crit chance
+	// Juggernaut Talent 1 (Level 10): Blade Fury acts as a vaccum
 	//=================================================================================================================
 	"special_bonus_imba_juggernaut_1"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_juggernaut_blade_dance"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"5"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Juggernaut Talent 2 (Level 10): +1% Healing Ward heal per second
-	//=================================================================================================================
-	"special_bonus_imba_juggernaut_2"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_juggernaut_healing_ward"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"1"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Juggernaut Talent 3 (Level 20): +40% Blade Fury evasion
-	//=================================================================================================================
-	"special_bonus_imba_juggernaut_3"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -14404,13 +14368,74 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"40"
+				"value"						"4"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Juggernaut Talent 4 (Level 20): +170 Blade Fury DPS
+	// Juggernaut Talent 2 (Level 10): Blade Fury slowly increases in size
+	//=================================================================================================================
+	"special_bonus_imba_juggernaut_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_juggernaut_blade_fury"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"16"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Juggernaut Talent 3 (Level 20): Healing Ward gives 50 attack speed, 100 when fortified
+	//=================================================================================================================
+	"special_bonus_imba_juggernaut_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_juggernaut_healing_ward"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"50"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"totem_value"				"100"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Juggernaut Talent 4 (Level 20): Secret Blade strikes 3 times, once forward, and twice to the sides
 	//=================================================================================================================
 	"special_bonus_imba_juggernaut_4"
 	{
@@ -14422,7 +14447,7 @@
 
 		"LinkedAbility"
 		{
-			"01" "imba_juggernaut_blade_fury"
+			"01" 	"imba_juggernaut_blade_dance"
 		}
 
 		// Special
@@ -14432,7 +14457,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"170"
+				"value"						"0"
 			}
 		}
 	}
@@ -14488,13 +14513,18 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"1"
+				"value"						"0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"dps"						"10"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Juggernaut Talent 7 (Level 40): -4sec Blade Fury cooldown
+	// Juggernaut Talent 7 (Level 40): Omnislash sends an image to commit the slashes
 	//=================================================================================================================
 	"special_bonus_imba_juggernaut_7"
 	{
@@ -14506,7 +14536,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_juggernaut_blade_fury"
+			"01" 	"imba_juggernaut_omni_slash"
 		}
 
 		// Special
@@ -14516,13 +14546,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"-3"
+				"value"						"0"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Juggernaut Talent 8 (Level 40): -2sec Blade Dance cooldown
+	// Juggernaut Talent 8 (Level 40): Blade Dance Crit creates Blade Blossom stacks
 	//=================================================================================================================
 	"special_bonus_imba_juggernaut_8"
 	{
@@ -14544,7 +14574,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"-2"
+				"value"						"0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"duration"					"12"
 			}
 		}
 	}

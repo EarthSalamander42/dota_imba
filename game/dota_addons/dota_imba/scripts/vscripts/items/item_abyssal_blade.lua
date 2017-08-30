@@ -26,7 +26,7 @@ function item_imba_abyssal_blade:OnSpellStart()
 
     -- Ability specials
     local active_stun_duration = ability:GetSpecialValueFor("active_stun_duration")
-    local actual_break_duration = ability:GetSpecialValueFor("actual_break_duration")
+	local actual_break_duration = ability:GetSpecialValueFor("actual_break_duration")
 
     -- Play cast sound
     EmitSoundOn(sound_cast, target)
@@ -55,7 +55,7 @@ modifier_imba_abyssal_blade = modifier_imba_abyssal_blade or class({})
 function modifier_imba_abyssal_blade:IsHidden() return true end
 function modifier_imba_abyssal_blade:IsPurgable() return false end
 function modifier_imba_abyssal_blade:IsDebuff() return false end
-function modifier_imba_abyssal_blade:RemoveOnDeath() return false end
+function modifier_imba_abyssal_blade:IsPermanent() return true end
 function modifier_imba_abyssal_blade:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end 
 
 function modifier_imba_abyssal_blade:OnCreated()
@@ -127,7 +127,7 @@ modifier_imba_abyssal_blade_unique = modifier_imba_abyssal_blade_unique or class
 function modifier_imba_abyssal_blade_unique:IsHidden() return true end
 function modifier_imba_abyssal_blade_unique:IsPurgable() return false end
 function modifier_imba_abyssal_blade_unique:IsDebuff() return false end
-function modifier_imba_abyssal_blade_unique:RemoveOnDeath() return false end
+function modifier_imba_abyssal_blade_unique:IsPermanent() return true end
 
 function modifier_imba_abyssal_blade_unique:OnCreated()
     -- Ability properties
@@ -148,7 +148,7 @@ function modifier_imba_abyssal_blade_unique:OnCreated()
     self.skull_break_duration = self.ability:GetSpecialValueFor("skull_break_duration")
     self.internal_bash_cd = self.ability:GetSpecialValueFor("internal_bash_cd")
     self.insta_skull_break_chance_pct = self.ability:GetSpecialValueFor("insta_skull_break_chance_pct")
-    self.actual_break_duration = self.ability:GetSpecialValueFor("actual_break_duration")
+	self.actual_break_duration = self.ability:GetSpecialValueFor("actual_break_duration")
 end
 
 function modifier_imba_abyssal_blade_unique:DeclareFunctions()
@@ -192,10 +192,16 @@ function modifier_imba_abyssal_blade_unique:OnAttack(keys)
                 return nil                
             end
 
+			-- If the target is a deflector, do nothing either
+			if target:HasModifier("modifier_imba_juggernaut_blade_fury") and attacker:IsRangedAttacker() then
+				return nil
+			end
+		
             -- If the target is on the same team as the attacker, do nothing (WW R for instace)
-            if attacker:GetTeamNumber() == target:GetTeamNumber() then
-                return nil
-            end
+			-- On behalf of Jugg's deflecting function, disabling this. ~IamInnocentX3
+            -- if attacker:GetTeamNumber() == target:GetTeamNumber() then
+            --    return nil
+            -- end
 
             -- If the Abyssal Blade is on cooldown (internal), do nothing
             if self.caster:HasModifier(self.modifier_internal_cd) then                
@@ -238,9 +244,9 @@ function modifier_imba_abyssal_blade_unique:OnAttackLanded(keys)
                 -- If the target is not skull crashed yet, try to immediately CRUSH IT!
                 if not target:HasModifier(self.modifier_skull_crash) then
                     if RollPseudoRandom(self.insta_skull_break_chance_pct, self) then
-                        target:AddNewModifier(self.caster, self.ability, self.modifier_skull_break, {duration = self.actual_break_duration})    
+                        target:AddNewModifier(self.caster, self.ability, self.modifier_skull_break, {duration = self.stun_duration})    
                     else
-                        target:AddNewModifier(self.caster, self.ability, self.modifier_skull_crash, {duration = self.skull_break_duration})
+                        target:AddNewModifier(self.caster, self.ability, self.modifier_skull_break, {duration = self.actual_break_duration})
                     end
                 else
                     -- Otherwise, it was ALREADY CRUSHED! BREAK IT!!!!!!!!!!!! BREAK IT!!!!!!!!!!!!!!!
