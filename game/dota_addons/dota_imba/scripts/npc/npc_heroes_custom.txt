@@ -1194,14 +1194,14 @@
 		"Ability4"					"imba_lich_cold_front"
 		"Ability5"					"imba_lich_chain_frost"
 		
-		"Ability10"					"special_bonus_imba_lich_1"
-		"Ability11"					"special_bonus_imba_lich_2"
-		"Ability12"					"special_bonus_imba_lich_3"
-		"Ability13"					"special_bonus_imba_lich_4"
-		"Ability14"					"special_bonus_imba_lich_5"
-		"Ability15"					"special_bonus_imba_lich_6"
-		"Ability16"					"special_bonus_imba_lich_7"
-		"Ability17"					"special_bonus_imba_lich_8"
+		"Ability10"					"special_bonus_imba_lich_1" // Chain Frost bounces instantly after hitting a target
+		"Ability11"					"special_bonus_imba_lich_2" // Sacrifice can now be used on self, granting you and nearby allies the damage reduction buff.
+		"Ability12"					"special_bonus_imba_lich_3" // Frost Nova now deals a portion of the main target's current health as damage
+		"Ability13"					"special_bonus_imba_lich_4" // Frost Nova draws a line of exploding Frost Novas that explode after a small delay
+		"Ability14"					"special_bonus_imba_lich_5" // Frost Armor adds a portion of the Lich's intelligence to the armor bonus
+		"Ability15"					"special_bonus_imba_lich_6" // Chain Frost can be cast on allies to give them a orb that spins around them. Taking damage from an enemy hero causes the Chain Frost to bounce to the attacker.
+		"Ability16"					"special_bonus_imba_lich_7" // Chain Frost bounces now procs two little Mini Frosts when bouncing
+		"Ability17"					"special_bonus_imba_lich_8" // Frost Armor is now an aura that slows nearby enemies in a small range around the target. The slow gets stronger each time the target is attacked.
 
 		"ProjectileModel"			"particles/units/heroes/hero_lich/lich_base_attack.vpcf"
 	}
