@@ -244,9 +244,9 @@ function modifier_imba_abyssal_blade_unique:OnAttackLanded(keys)
                 -- If the target is not skull crashed yet, try to immediately CRUSH IT!
                 if not target:HasModifier(self.modifier_skull_crash) then
                     if RollPseudoRandom(self.insta_skull_break_chance_pct, self) then
-                        target:AddNewModifier(self.caster, self.ability, self.modifier_skull_break, {duration = self.stun_duration})    
+                        target:AddNewModifier(self.caster, self.ability, self.modifier_skull_break, {duration = self.actual_break_duration})  
                     else
-                        target:AddNewModifier(self.caster, self.ability, self.modifier_skull_break, {duration = self.actual_break_duration})
+                        target:AddNewModifier(self.caster, self.ability, self.modifier_skull_crash, {duration = self.skull_break_duration})
                     end
                 else
                     -- Otherwise, it was ALREADY CRUSHED! BREAK IT!!!!!!!!!!!! BREAK IT!!!!!!!!!!!!!!!
