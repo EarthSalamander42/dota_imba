@@ -309,6 +309,13 @@ function Server_CalculateXPForWinnerAndAll(winning_team)
 				if winning_team == "Dire" then
 					Winner = DOTA_TEAM_BADGUYS
 				end
+				if EnnDisEnabled == 1 then
+					for nPlayerID=0, DOTA_MAX_TEAM_PLAYERS-1 do
+						if PlayerResource:IsValidPlayer(nPlayerID) and not PlayerResource:IsFakeClient(nPlayerID) then
+							Server_EnableToGainXPForPlyaer(nPlayerID)
+						end
+					end
+				end
 				local jsondata={}
 				local jsontable={}
 				jsontable.SteamID64 = table_SteamID64[nPlayerID]
