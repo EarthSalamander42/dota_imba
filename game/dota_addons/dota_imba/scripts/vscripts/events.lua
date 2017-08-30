@@ -219,7 +219,6 @@ local normal_xp = npc:GetDeathXP()
 	--	for i = 1, #IMBA_DEVS do
 	--		-- Granting access to admin stuff for Imba Devs
 	--		if PlayerResource:GetSteamAccountID(npc:GetPlayerID()) == IMBA_DEVS[i] then
---	--			npc:SetCustomHealthLabel("Mod Creator", 200, 45, 45)	-- We don't want to get flame, do we?
 	--			if not npc.is_dev then
 	--				npc.is_dev = true
 	--				print("Found a developer! Granting Dev access...")

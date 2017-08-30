@@ -581,7 +581,7 @@ function HeroSelection:AssignHero(player_id, hero_name)
 
 		Timers:CreateTimer(3.0, function()
 			PlayerResource:SetCameraTarget(player_id, nil)
-			UTIL_Remove(wisp)	
+			UTIL_Remove(wisp)
 		end)
 
 		-- Set initial spawn setup as having been done
