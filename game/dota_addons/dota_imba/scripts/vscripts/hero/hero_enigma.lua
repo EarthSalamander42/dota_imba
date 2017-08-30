@@ -1041,6 +1041,22 @@ function modifier_special_bonus_imba_enigma_6:OnCreated()
 	end
 end
 
+function modifier_special_bonus_imba_enigma_6:DeclareFunctions()
+	return  {MODIFIER_EVENT_ON_DEATH}
+end
+
+function modifier_special_bonus_imba_enigma_6:OnDeath(keys)
+	if IsServer() then
+		if keys.unit == self:GetParent() then
+		-- Slowly fades away the midnight pulse
+		Timers:CreateTimer(5.0, function()
+		ParticleManager:DestroyParticle(self.particle,true)
+		ParticleManager:ReleaseParticleIndex(self.particle)
+		self.auraRadius = 0
+		end)
+	end
+end
+
 function modifier_special_bonus_imba_enigma_6:OnDestroy()
 	if IsServer() then
 		ParticleManager:DestroyParticle(self.particle,true)
@@ -1051,6 +1067,18 @@ end
 function modifier_special_bonus_imba_enigma_6:OnIntervalThink()
 	-- Damage everyone inside
 	-- We need to refresh this value   
+	
+	-- Get if the caster is respawned, re-create the particle
+	if self:GetCaster():IsAlive() and (not self.particle) then
+		self.auraRadius = self.ability:GetSpecialValueFor("radius")
+		self.particle = ParticleManager:CreateParticle("particles/hero/enigma/enigma_midnight_pulse_c.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
+		ParticleManager:SetParticleControlEnt(self.particle,0,self:GetParent(),PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true )
+		ParticleManager:SetParticleControl(self.particle,1,Vector(self.auraRadius,0,0))
+	end
+	-- If there is no radius, do nothing
+	if self.auraRadius < 1 then
+		return nil
+	end
 	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.auraRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 	for _,enemy in pairs(enemies) do
 		local damage = 
