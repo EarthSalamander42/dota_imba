@@ -132,7 +132,7 @@ local id = event.PlayerID
 		--"npc_dota_hero_tinker",
 		"npc_dota_hero_tiny",
 		"npc_dota_hero_vengefulspirit",
-		"npc_dota_hero_venomancer",
+--		"npc_dota_hero_venomancer",
 		"npc_dota_hero_witch_doctor",
 		"npc_dota_hero_skeleton_king",
 		"npc_dota_hero_queenofpain",
@@ -283,15 +283,16 @@ local id = event.PlayerID
 		"npc_dota_hero_pugna",
 		"npc_dota_hero_riki",
 		"npc_dota_hero_sand_king",
+		"npc_dota_hero_skeleton_king",
 		"npc_dota_hero_slardar",
 		"npc_dota_hero_sniper",
 		"npc_dota_hero_sven",
+--		"npc_dota_hero_techies",
 		--"npc_dota_hero_tinker",
 		"npc_dota_hero_tiny",
 		"npc_dota_hero_vengefulspirit",
-		"npc_dota_hero_venomancer",
+--		"npc_dota_hero_venomancer",
 		"npc_dota_hero_witch_doctor",
-		"npc_dota_hero_skeleton_king",
 		"npc_dota_hero_queenofpain",
 		"npc_dota_hero_jakiro",
 		"npc_dota_hero_warlock",
@@ -306,7 +307,6 @@ local id = event.PlayerID
 		"npc_dota_hero_magnataur",
 		"npc_dota_hero_centaur",
 		"npc_dota_hero_skywrath_mage",
---		"npc_dota_hero_techies",
 		"npc_dota_hero_troll_warlord"
 	}
 
@@ -581,10 +581,7 @@ function HeroSelection:AssignHero(player_id, hero_name)
 
 		Timers:CreateTimer(3.0, function()
 			PlayerResource:SetCameraTarget(player_id, nil)
-			UTIL_Remove(wisp)	
-			local title = Server_GetPlayerTitle(player_id)
-			local rgb = Server_GetTitleColor(title)
-			hero:SetCustomHealthLabel(title, rgb[1], rgb[2], rgb[3])
+			UTIL_Remove(wisp)
 		end)
 
 		-- Set initial spawn setup as having been done

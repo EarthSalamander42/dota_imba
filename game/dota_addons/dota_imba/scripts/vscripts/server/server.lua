@@ -19,8 +19,13 @@ local EnnDisEnabled = 0
 
 
 --Level table for IMBA XP
-local table_rankXP = {0,100,200,300,400,500,600,800,1000,1200,1400,1700,2000,2300,2600,2900,3400,3800,4200,4600,5000,5500,6000,6500,7000,7500,8500,9000,9500,10000,10500}
---------------------  0  1   2   3   4   5   6   7    8    9    10  11    12  13    14  15   16   17   18   19   20   21   22   23   24   25   26   27   28   29    30 
+local table_rankXP = {0,100,200,300,400,500,700,900,1100,1300,1500,1800,2100,2400,2700,3000,3400,3800,4200,4600,5000}
+--------------------  0  1   2   3   4   5   6   7    8    9   10   11   12   13   14   15   16   17   18   19   20
+
+for i = 21, 200 do
+	table_rankXP[i] = table_rankXP[i-1] +500
+end
+
 local XP_level_title= {}
 local XP_level = {}
 local XP_level_title_player = {}
@@ -63,7 +68,7 @@ function Server_GetTitle(level)
 	elseif level <= 99 then
 		return "#imba_rank_title_icefrog"
 	else 
-		return "#imba_rank_title_firetoad"
+		return "#imba_rank_title_firetoad "..level-100
 	end
 end
 

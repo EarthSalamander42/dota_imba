@@ -94,7 +94,7 @@
 
 .ScoreCol_ImbaXP
 {
-	width: 160px;
+	width: 220px;
 }
 
 .ScoreCol_Gold
@@ -268,7 +268,7 @@
 #ImbaXP19
 {
 	margin-top: 3px;
-	margin-left: 55%;
+	margin-left: 35%;
 	width: 100%;
 	font-size: 17px;
 	font-weight: bold;
@@ -325,7 +325,7 @@
 {
 	font-size: 18px;
 	margin-top: 3px;
-	margin-right: 55%;
+	margin-right: 70%;
 	width: 100%;
 	color: white;
 	vertical-align: center;
