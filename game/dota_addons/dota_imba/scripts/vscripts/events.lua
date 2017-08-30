@@ -847,13 +847,6 @@ function GameMode:OnEntityKilled( keys )
 		end
 
 		-------------------------------------------------------------------------------------------------
-		-- IMBA: Meepo redirect to Meepo Prime
-		-------------------------------------------------------------------------------------------------
---		if killed_unit:GetUnitName() == "npc_dota_hero_meepo" then
---			killed_unit = killed_unit:GetCloneSource()
---		end
-
-		-------------------------------------------------------------------------------------------------
 		-- IMBA: Respawn timer setup
 		-------------------------------------------------------------------------------------------------
 		local reincarnation_death = false
@@ -862,10 +855,33 @@ function GameMode:OnEntityKilled( keys )
 			reincarnation_death = (wk_mod.can_die == false)
 		end
 
-		if killed_unit:HasModifier("modifier_item_imba_aegis") then
-			killed_unit:SetTimeUntilRespawn(killed_unit:FindModifierByName("modifier_item_imba_aegis").reincarnate_time)
-		elseif reincarnation_death then
+		if killed_unit:GetUnitName() == "npc_dota_hero_meepo" then
+			if killed_unit:GetCloneSource():HasModifier("modifier_item_imba_aegis") then
+				print("Meepo is dead")
+				local meepo_table = Entities:FindAllByName("npc_dota_hero_meepo")
+				if meepo_table then
+					for i = 1, #meepo_table do
+						if meepo_table[i]:IsClone() then
+							print("Clone")
+							meepo_table[i]:SetRespawnsDisabled(true)
+							meepo_table[i]:GetCloneSource():SetTimeUntilRespawn(killed_unit:GetCloneSource():FindModifierByName("modifier_item_imba_aegis").reincarnate_time)
+							meepo_table[i]:GetCloneSource():RemoveModifierByName("modifier_item_imba_aegis")
+						else
+							print("Real")
+							meepo_table[i]:SetTimeUntilRespawn(killed_unit:FindModifierByName("modifier_item_imba_aegis").reincarnate_time)
+							return
+						end
+					end
+				end
+			elseif killed_unit:HasModifier("modifier_item_imba_aegis") then
+				killed_unit:SetTimeUntilRespawn(killed_unit:FindModifierByName("modifier_item_imba_aegis").reincarnate_time)
+			end
+		end
+
+		if reincarnation_death then
 			killed_unit:SetTimeUntilRespawn(killed_unit:FindModifierByName("modifier_imba_reincarnation").reincarnate_delay)
+		elseif killed_unit:HasModifier("modifier_item_imba_aegis") then
+			killed_unit:SetTimeUntilRespawn(killed_unit:FindModifierByName("modifier_item_imba_aegis").reincarnate_time)
 		elseif killed_unit:IsRealHero() and killed_unit:GetPlayerID() and (PlayerResource:IsImbaPlayer(killed_unit:GetPlayerID()) or (GameRules:IsCheatMode() == true) ) then
 			-- Calculate base respawn timer, capped at 60 seconds
 			local hero_level = math.min(killed_unit:GetLevel(), 25)
@@ -881,8 +897,20 @@ function GameMode:OnEntityKilled( keys )
 			respawn_time = math.max( respawn_time * HERO_RESPAWN_TIME_MULTIPLIER * 0.01, 1)
 
 			-- Set up the respawn timer, include meepo fix
-			killed_unit:SetTimeUntilRespawn(respawn_time)
-			MeepoFixes:ShareRespawnTime(killed_unit, respawn_time)
+			if killed_unit:GetUnitName() == "npc_dota_hero_meepo" then
+				local meepo_table = Entities:FindAllByName("npc_dota_hero_meepo")
+				if meepo_table then
+					for i = 1, #meepo_table do
+						if meepo_table[i]:IsClone() then
+							meepo_table[i]:SetRespawnsDisabled(true)
+						else
+							meepo_table[i]:SetTimeUntilRespawn(respawn_time)
+						end
+					end
+				end
+			else
+				killed_unit:SetTimeUntilRespawn(respawn_time)
+			end
 		end
 
 		-------------------------------------------------------------------------------------------------

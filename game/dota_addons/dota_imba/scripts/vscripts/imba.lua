@@ -203,10 +203,7 @@ function GameMode:OnFirstPlayerLoaded()
 			statue_entity = CreateUnitByName(current_statue, current_location, true, nil, nil, DOTA_TEAM_BADGUYS)
 			statue_entity:SetForwardVector(Vector(-1, -1, 0):Normalized())
 		end
-		if current_statue == "npc_imba_developer_cookies" then
-		else
-			statue_entity:AddNewModifier(statue_entity, nil, "modifier_imba_contributor_statue", {})
-		end
+		statue_entity:AddNewModifier(statue_entity, nil, "modifier_imba_contributor_statue", {})
 	end
 
 	-------------------------------------------------------------------------------------------------
