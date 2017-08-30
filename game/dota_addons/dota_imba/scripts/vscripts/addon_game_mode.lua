@@ -19,6 +19,17 @@ DebugPrint("[IMBA] Performing pre-load precache")
 	LinkLuaModifier("modifier_imba_range_indicator", "modifier/modifier_imba_range_indicator.lua", LUA_MODIFIER_MOTION_NONE )	
 	LinkLuaModifier("modifier_command_restricted", "modifier/modifier_command_restricted.lua", LUA_MODIFIER_MOTION_NONE )	
 
+	-- Runes modifiers
+	LinkLuaModifier("modifier_imba_double_damage_rune", "modifier/runes/modifier_imba_double_damage_rune.lua", LUA_MODIFIER_MOTION_NONE)
+	LinkLuaModifier("modifier_imba_rune_double_damage_aura", "modifier/runes/modifier_imba_double_damage_rune.lua", LUA_MODIFIER_MOTION_NONE)
+	LinkLuaModifier("modifier_imba_haste_rune", "modifier/runes/modifier_imba_haste_rune", LUA_MODIFIER_MOTION_NONE)
+	LinkLuaModifier("modifier_imba_haste_rune_aura", "modifier/runes/modifier_imba_haste_rune", LUA_MODIFIER_MOTION_NONE)
+	LinkLuaModifier("modifier_imba_regen_rune", "modifier/runes/modifier_imba_regen_rune", LUA_MODIFIER_MOTION_NONE)
+	LinkLuaModifier("modifier_imba_regen_rune_aura", "modifier/runes/modifier_imba_regen_rune", LUA_MODIFIER_MOTION_NONE)
+
+	-- Aegis
+	LinkLuaModifier("modifier_item_imba_aegis", "items/item_aegis.lua", LUA_MODIFIER_MOTION_NONE)
+
 	-- Generic talent modifiers
 	LinkLuaModifier("modifier_imba_generic_talents_handler", "modifier/generic_talents/modifier_imba_generic_talents_handler.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_generic_talent_damage", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )

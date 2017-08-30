@@ -115,6 +115,7 @@ local id = event.PlayerID
 		"npc_dota_hero_lich",
 		"npc_dota_hero_lina",
 		"npc_dota_hero_lion",
+--		"npc_dota_hero_meepo",
 		"npc_dota_hero_mirana",
 		"npc_dota_hero_necrolyte",
 		"npc_dota_hero_nevermore",
@@ -126,6 +127,7 @@ local id = event.PlayerID
 		"npc_dota_hero_sand_king",
 		"npc_dota_hero_slardar",
 		"npc_dota_hero_sniper",
+--		"npc_dota_hero_spectre",
 		"npc_dota_hero_sven",
 		--"npc_dota_hero_tinker",
 		"npc_dota_hero_tiny",
@@ -148,7 +150,7 @@ local id = event.PlayerID
 		"npc_dota_hero_centaur",
 		"npc_dota_hero_troll_warlord",
 		"npc_dota_hero_skywrath_mage",
-		"npc_dota_hero_techies",
+--		"npc_dota_hero_techies",
 		"npc_dota_hero_ancient_apparition",
 		"npc_dota_hero_beastmaster",
 		"npc_dota_hero_chen",
@@ -185,7 +187,7 @@ local id = event.PlayerID
 		"npc_dota_hero_rubick",
 		"npc_dota_hero_luna",
 		"npc_dota_hero_wisp",
-		"npc_dota_hero_undying",
+--		"npc_dota_hero_undying",
 		"npc_dota_hero_templar_assassin",
 		"npc_dota_hero_naga_siren",
 		"npc_dota_hero_keeper_of_the_light",
@@ -233,14 +235,14 @@ local id = event.PlayerID
 	PlayerResource:SetHasRandomed(id)
 
 	-- If it's a valid hero, allow the player to select it
-	if IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
-		print("All Random Same Hero-ing!")
-		for _, hero in pairs(HeroList:GetAllHeroes()) do
-			HeroSelection:HeroSelect({PlayerID = hero:GetPlayerID(), HeroName = random_hero, HasRandomed = true})
-		end
-	else
+--	if IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
+--		print("All Random Same Hero-ing!")
+--		for _, hero in pairs(HeroList:GetAllHeroes()) do
+--			HeroSelection:HeroSelect({PlayerID = hero:GetPlayerID(), HeroName = random_hero, HasRandomed = true})
+--		end
+--	else
 		HeroSelection:HeroSelect({PlayerID = id, HeroName = random_hero, HasRandomed = true})
-	end
+--	end
 
 	-- The person has randomed (separate from Set/HasRandomed, because those cannot be unset)
 	HeroSelection.playerPickState[id].random_state = true
@@ -303,9 +305,9 @@ local id = event.PlayerID
 		"npc_dota_hero_nyx_assassin",
 		"npc_dota_hero_magnataur",
 		"npc_dota_hero_centaur",
-		"npc_dota_hero_troll_warlord",
 		"npc_dota_hero_skywrath_mage",
-		"npc_dota_hero_techies",
+--		"npc_dota_hero_techies",
+		"npc_dota_hero_troll_warlord"
 	}
 
 	local random_hero = imba_heroes[RandomInt(1, #imba_heroes)]
@@ -501,6 +503,7 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		local wisp = PlayerResource:GetPlayer(player_id):GetAssignedHero()
 		-- Switch for the new hero
 		local hero = PlayerResource:ReplaceHeroWith(player_id, hero_name, 0, 0 )
+		hero.pID = player_id
 
 		-- If this is a "real" wisp, tag it
 		if hero:GetUnitName() == "npc_dota_hero_wisp" then
@@ -579,9 +582,9 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		Timers:CreateTimer(3.0, function()
 			PlayerResource:SetCameraTarget(player_id, nil)
 			UTIL_Remove(wisp)	
---			local title = Server_GetPlayerTitle(player_id)
---			local rgb = Server_GetTitleColor(title)
---			hero:SetCustomHealthLabel(title, rgb[1], rgb[2], rgb[3])
+			local title = Server_GetPlayerTitle(player_id)
+			local rgb = Server_GetTitleColor(title)
+			hero:SetCustomHealthLabel(title, rgb[1], rgb[2], rgb[3])
 		end)
 
 		-- Set initial spawn setup as having been done

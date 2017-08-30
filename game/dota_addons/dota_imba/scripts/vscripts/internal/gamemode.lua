@@ -121,7 +121,7 @@ function GameMode:_CaptureGameMode()
 	if mode == nil then
 
 		-- Set GameMode parameters
-		mode = GameRules:GetGameModeEntity()        
+		mode = GameRules:GetGameModeEntity()
 		mode:SetRecommendedItemsDisabled( RECOMMENDED_BUILDS_DISABLED )
 		mode:SetCameraDistanceOverride( CAMERA_DISTANCE_OVERRIDE )
 		mode:SetCustomBuybackCostEnabled( CUSTOM_BUYBACK_COST_ENABLED )
@@ -152,6 +152,10 @@ function GameMode:_CaptureGameMode()
 		mode:SetMaximumAttackSpeed( MAXIMUM_ATTACK_SPEED )
 		mode:SetMinimumAttackSpeed( MINIMUM_ATTACK_SPEED )
 		mode:SetStashPurchasingDisabled ( DISABLE_STASH_PURCHASING )
+
+		for rune, spawn in pairs(ENABLED_RUNES) do
+			mode:SetRuneEnabled(rune, spawn)
+		end
 
 		mode:SetUnseenFogOfWarEnabled(USE_UNSEEN_FOG_OF_WAR)
 
@@ -237,7 +241,7 @@ function OnSetGameMode( eventSourceIndex, args )
 	if tostring(mode_info.bounty_multiplier) == "GoldOption2" then
 		if map_name == "imba_standard" or map_name == "imba_random_omg" then
 			CUSTOM_GOLD_BONUS = 75
-		elseif map_name == "imba_custom" then
+		elseif map_name == "imba_custom" or map_name == "imba_custom_10v10" then
 			CUSTOM_GOLD_BONUS = 300
 		elseif map_name == "imba_10v10" then
 			CUSTOM_GOLD_BONUS = 125
@@ -252,7 +256,7 @@ function OnSetGameMode( eventSourceIndex, args )
 	if tostring(mode_info.exp_multiplier) == "ExpOption2" then
 		if map_name == "imba_standard" or map_name == "imba_random_omg" then
 			CUSTOM_XP_BONUS = 75
-		elseif map_name == "imba_custom" then
+		elseif map_name == "imba_custom" or map_name == "imba_custom_10v10" then
 			CUSTOM_XP_BONUS = 300
 		elseif map_name == "imba_10v10" then
 			CUSTOM_XP_BONUS = 125
@@ -267,7 +271,7 @@ function OnSetGameMode( eventSourceIndex, args )
 	if tostring(mode_info.creep_power) == "CreepPowerOption2" then
 		if map_name == "imba_standard" or map_name == "imba_random_omg" then
 			CREEP_POWER_FACTOR = 2
-		elseif map_name == "imba_custom" then
+		elseif map_name == "imba_custom" or map_name == "imba_custom_10v10" then
 			CREEP_POWER_FACTOR = 3
 		elseif map_name == "imba_10v10" then
 			CREEP_POWER_FACTOR = 2
@@ -280,7 +284,7 @@ function OnSetGameMode( eventSourceIndex, args )
 	if tostring(mode_info.tower_power) == "TowerPowerOption2" then
 		if map_name == "imba_standard" or map_name == "imba_random_omg" then
 			TOWER_POWER_FACTOR = 1
-		elseif map_name == "imba_custom" then
+		elseif map_name == "imba_custom" or map_name == "imba_custom_10v10" then
 			TOWER_POWER_FACTOR = 2
 		elseif map_name == "imba_10v10" then
 			TOWER_POWER_FACTOR = 2
@@ -293,7 +297,7 @@ function OnSetGameMode( eventSourceIndex, args )
 	if tostring(mode_info.respawn_reduction) == "RespawnTimeOption2" then
 		if map_name == "imba_standard" or map_name == "imba_random_omg" then
 			HERO_RESPAWN_TIME_MULTIPLIER = 75
-		elseif map_name == "imba_custom" then
+		elseif map_name == "imba_custom" or map_name == "imba_custom_10v10" then
 			HERO_RESPAWN_TIME_MULTIPLIER = 50
 		elseif map_name == "imba_10v10" then
 			HERO_RESPAWN_TIME_MULTIPLIER = 50
@@ -311,7 +315,7 @@ function OnSetGameMode( eventSourceIndex, args )
 			HERO_RERANDOM_GOLD = 1350
 			HERO_STARTING_LEVEL = 1
 			MAX_LEVEL = 50
-		elseif map_name == "imba_custom" then
+		elseif map_name == "imba_custom" or map_name == "imba_custom_10v10" then
 			HERO_INITIAL_GOLD = 5000
 			HERO_REPICK_GOLD = 4000
 			HERO_RANDOM_GOLD = 6000
@@ -339,15 +343,15 @@ function OnSetGameMode( eventSourceIndex, args )
 		print("Hero power set to high")
 	end	
 
-    -- Hero pick rule
-    -- Ignore HeroPickRuleOption1 because that is the default
-    if tostring(mode_info.hero_pick_rule) == "HeroPickRuleOption2" then
-        IMBA_HERO_PICK_RULE = 1
-    elseif tostring(mode_info.hero_pick_rule) == "HeroPickRuleOption3" then
-        IMBA_HERO_PICK_RULE = 2
+	-- Hero pick rule
+	-- Ignore HeroPickRuleOption1 because that is the default
+	if tostring(mode_info.hero_pick_rule) == "HeroPickRuleOption2" then
+		IMBA_HERO_PICK_RULE = 1
+	elseif tostring(mode_info.hero_pick_rule) == "HeroPickRuleOption3" then
+		IMBA_HERO_PICK_RULE = 2
 	end
 
-    CustomNetTables:SetTableValue("game_options", "hero_pick_rule", {IMBA_HERO_PICK_RULE})
+	CustomNetTables:SetTableValue("game_options", "hero_pick_rule", {IMBA_HERO_PICK_RULE})
 
 	-- Set the game options as being chosen
 	GAME_OPTIONS_SET = true

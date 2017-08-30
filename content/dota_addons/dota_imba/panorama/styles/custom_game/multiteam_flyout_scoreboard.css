@@ -278,6 +278,30 @@
 	opacity: 0.75;
 }
 
+#ImbaXPEarned0,
+#ImbaXPEarned1,
+#ImbaXPEarned2,
+#ImbaXPEarned3,
+#ImbaXPEarned4,
+#ImbaXPEarned5,
+#ImbaXPEarned6,
+#ImbaXPEarned7,
+#ImbaXPEarned8,
+#ImbaXPEarned9,
+#ImbaXPEarned10,
+#ImbaXPEarned11,
+#ImbaXPEarned12,
+#ImbaXPEarned13,
+#ImbaXPEarned14,
+#ImbaXPEarned15,
+#ImbaXPEarned16,
+#ImbaXPEarned17,
+#ImbaXPEarned18,
+#ImbaXPEarned19
+{
+	visibility: collapse;
+}
+
 #ImbaLvl0,
 #ImbaLvl1,
 #ImbaLvl2,

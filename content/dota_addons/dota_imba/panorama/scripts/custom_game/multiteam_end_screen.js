@@ -57,7 +57,7 @@
 	//COOKIES: Disable HUD
 	$.Msg("Disabling HUD...")
 	var parent_panel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
-	parent_panel.FindChildTraverse("ScoreboardContainer").style.visibility = "collapse";
+	parent_panel.FindChildTraverse("topbar").style.visibility = "collapse";
 	parent_panel.FindChildTraverse("lower_hud").style.visibility = "collapse";
 	parent_panel.FindChildTraverse("topbar").style.visibility = "collapse";
 	parent_panel.FindChildTraverse("minimap_container").style.visibility = "collapse";

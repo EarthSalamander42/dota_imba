@@ -40,8 +40,8 @@ function InitializeUI() {
 			$('#RespawnTimeOptionsPanel').style.visibility = 'collapse';
 			$('#TowerUpgradesToggle').style.visibility = 'collapse';
 			$('#HeroPickRulePanel').style.visibility = 'collapse';
-			$('#AllPickToggle').style.visibility = 'collapse';
-			$('#AllRandomToggle').style.visibility = 'collapse';
+//			$('#AllPickToggle').style.visibility = 'collapse';
+//			$('#AllRandomToggle').style.visibility = 'collapse';
 //			$('#AllRandomSameHeroToggle').style.visibility = 'collapse';
 		} else if (map_info.map_display_name == "imba_10v10") {
 			$('#game_options_game_mode_title').text = $.Localize( "#imba_gamemode_name_10v10" );
@@ -52,10 +52,13 @@ function InitializeUI() {
 			$('#RespawnTimeOptionsPanel').style.visibility = 'collapse';
 			$('#TowerUpgradesToggle').style.visibility = 'collapse';
 			$('#HeroPickRulePanel').style.visibility = 'collapse';
-			$('#AllPickToggle').style.visibility = 'collapse';
-			$('#AllRandomToggle').style.visibility = 'collapse';
+//			$('#AllPickToggle').style.visibility = 'collapse';
+//			$('#AllRandomToggle').style.visibility = 'collapse';
 //			$('#AllRandomSameHeroToggle').style.visibility = 'collapse';
 		} else if (map_info.map_display_name == "imba_custom") {
+			$('#TowerUpgradesToggle').SetSelected(true);
+			$('#FranticToggle').style.visibility = 'visible';
+		} else if (map_info.map_display_name == "imba_custom_10v10") {
 			$('#TowerUpgradesToggle').SetSelected(true);
 			$('#FranticToggle').style.visibility = 'visible';
 		} else if (map_info.map_display_name == "imba_arena") {
@@ -68,8 +71,8 @@ function InitializeUI() {
 			$('#RespawnTimeOptionsPanel').style.visibility = 'collapse';
 			$('#TowerUpgradesToggle').style.visibility = 'collapse';
 			$('#HeroPickRulePanel').style.visibility = 'collapse';
-			$('#AllPickToggle').style.visibility = 'collapse';
-			$('#AllRandomToggle').style.visibility = 'collapse';
+//			$('#AllPickToggle').style.visibility = 'collapse';
+//			$('#AllRandomToggle').style.visibility = 'collapse';
 //			$('#AllRandomSameHeroToggle').style.visibility = 'collapse';
 		}
 	}
@@ -127,8 +130,8 @@ function SetGameOptions()
 	GameEvents.SendCustomGameEventToServer( "set_game_mode", {
 		"is_host": CheckForHostPrivileges(),
 		"modes": {
-			"all_pick": $('#AllPickToggle').checked,
-			"all_random": $('#AllRandomToggle').checked,
+//			"all_pick": $('#AllPickToggle').checked,
+//			"all_random": $('#AllRandomToggle').checked,
 //			"all_random_same_hero": $('#AllRandomSameHeroToggle').checked,
 			"frantic_mode": $('#FranticToggle').checked,
 			"tower_upgrades": $('#TowerUpgradesToggle').checked,

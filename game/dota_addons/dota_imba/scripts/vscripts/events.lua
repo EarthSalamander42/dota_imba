@@ -81,7 +81,6 @@ function GameMode:OnDisconnect(keys)
 						end
 					end)
 				end
-				
 			-- If the player has reconnected, stop tracking connection state every second
 			elseif PlayerResource:GetConnectionState(player_id) == 2 then
 
@@ -118,40 +117,47 @@ local i = 10
 	-------------------------------------------------------------------------------------------------
 
 	if new_state == DOTA_GAMERULES_STATE_PRE_GAME then
+		-- Play Announcer sounds in Picking Screen until a hero is picked
+--		Timers:CreateTimer(function()
+--			local i2 = false
+--			for _, hero in pairs(HeroList:GetAllHeroes()) do
+--				if hero.picked == true then print("Hero Picked! Aborting Announcer...") return nil end
+--				if GameRules:GetDOTATime(false, true) >= -PRE_GAME_TIME + HERO_SELECTION_TIME -30 and GameRules:GetDOTATime(false, true) <= -PRE_GAME_TIME + HERO_SELECTION_TIME -29 then
+--					EmitAnnouncerSoundForPlayer("announcer_announcer_count_battle_30", hero:GetPlayerID())
+--				elseif GameRules:GetDOTATime(false, true) >= -PRE_GAME_TIME + HERO_SELECTION_TIME -10 and GameRules:GetDOTATime(false, true) <= -PRE_GAME_TIME + HERO_SELECTION_TIME then
+--					if i2 == false then
+--						if i == 10 then
+--							EmitAnnouncerSoundForPlayer("announcer_ann_custom_countdown_"..i, hero:GetPlayerID())
+--							i = i -1
+--							i2 = true
+--						elseif i <= 10 then
+--							EmitAnnouncerSoundForPlayer("announcer_ann_custom_countdown_0"..i, hero:GetPlayerID())
+--							i = i -1
+--							i2 = true
+--						elseif i == 1 then
+--							print("NIL")
+--							return nil
+--						end
+--					end
+--				end
+--			end
+--			return 1.0
+--		end)
+
+--		Timers:CreateTimer(function()
+--			for _, hero in pairs(HeroList:GetAllHeroes()) do
+--				MeepoFixes:ShareItems(hero)
+--			end
+--			return 0.5
+--		end)
+
 		if IMBA_PICK_MODE_ALL_RANDOM or IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
-			Timers:CreateTimer(2.0, function()
+			Timers:CreateTimer(3.0, function()
 				for _, hero in pairs(HeroList:GetAllHeroes()) do
 					HeroSelection:RandomHero({PlayerID = hero:GetPlayerID()})
 				end
 			end)
 		end
-
-		-- Play Announcer sounds in Picking Screen until a hero is picked
-		Timers:CreateTimer(function()
-			local i2 = false
-			for _, hero in pairs(HeroList:GetAllHeroes()) do
-				if hero.picked == true then print("Hero Picked! Aborting...") return nil end
-				if GameRules:GetDOTATime(false, true) >= -PRE_GAME_TIME + HERO_SELECTION_TIME -30 and GameRules:GetDOTATime(false, true) <= -PRE_GAME_TIME + HERO_SELECTION_TIME -29 then
-					EmitAnnouncerSoundForPlayer("announcer_announcer_count_battle_30", hero:GetPlayerID())
-				elseif GameRules:GetDOTATime(false, true) >= -PRE_GAME_TIME + HERO_SELECTION_TIME -10 and GameRules:GetDOTATime(false, true) <= -PRE_GAME_TIME + HERO_SELECTION_TIME then
-					if i2 == false then
-						if i == 10 then
-							EmitAnnouncerSoundForPlayer("announcer_ann_custom_countdown_"..i, hero:GetPlayerID())
-							i = i -1
-							i2 = true
-						elseif i <= 10 then
-							EmitAnnouncerSoundForPlayer("announcer_ann_custom_countdown_0"..i, hero:GetPlayerID())
-							i = i -1
-							i2 = true
-						elseif i == 1 then
-							print("NIL")
-							return nil
-						end
-					end
-				end
-			end
-			return 1.0
-		end)
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -160,15 +166,16 @@ local i = 10
 
 	if new_state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		Server_WaitToEnableXpGain()
-		ImbaNetGraph(1.0)
+		-- Shows various info to devs in pub-game to find lag issues
+--		ImbaNetGraph(1.0)
 
-		for _, hero in pairs(HeroList:GetAllHeroes()) do
-			if hero.is_dev and not hero.has_graph then
-				print("Sending Net Graph stats ...")
-				hero.has_graph = true
-				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph", {})
-			end
-		end
+--		for _, hero in pairs(HeroList:GetAllHeroes()) do
+--			if hero.is_dev and not hero.has_graph then
+--				print("Sending Net Graph stats ...")
+--				hero.has_graph = true
+--				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph", {})
+--			end
+--		end
 
 		Timers:CreateTimer(60, function()
 			StartGarbageCollector()
@@ -185,29 +192,31 @@ local i = 10
 end
 
 dummy_created_count = 0
--- An NPC has spawned somewhere in game. This includes heroes
+
 function GameMode:OnNPCSpawned(keys)
+GameMode:_OnNPCSpawned(keys)
+local npc = EntIndexToHScript(keys.entindex)
+local normal_xp = npc:GetDeathXP()
 
-	-- This internal handling is used to set up main barebones functions
-	GameMode:_OnNPCSpawned(keys)
-
-	local npc = EntIndexToHScript(keys.entindex)
+	if npc then
+		npc:SetDeathXP(normal_xp*0.8)
+	end
 
 	if npc:GetUnitName() == "npc_dummy_unit" or npc:GetUnitName() == "npc_dummy_unit_perma" then
 		dummy_created_count = dummy_created_count +1
 	end
 
 	if npc:IsRealHero() then
-	for i = 1, #IMBA_DEVS do
-			-- Granting access to admin stuff for Imba Devs
-			if PlayerResource:GetSteamAccountID(npc:GetPlayerID()) == IMBA_DEVS[i] then
---				npc:SetCustomHealthLabel("Mod Creator", 200, 45, 45)	-- We don't want to get flame, do we?
-				if not npc.is_dev then
-					npc.is_dev = true
-					print("Found a developer! Granting Dev access...")
-				end
-			end
-		end
+	--	for i = 1, #IMBA_DEVS do
+	--		-- Granting access to admin stuff for Imba Devs
+	--		if PlayerResource:GetSteamAccountID(npc:GetPlayerID()) == IMBA_DEVS[i] then
+--	--			npc:SetCustomHealthLabel("Mod Creator", 200, 45, 45)	-- We don't want to get flame, do we?
+	--			if not npc.is_dev then
+	--				npc.is_dev = true
+	--				print("Found a developer! Granting Dev access...")
+	--			end
+	--		end
+	--	end
 
 		Timers:CreateTimer(1, function() -- Silencer fix
 			if npc:HasModifier("modifier_silencer_int_steal") then
@@ -576,21 +585,30 @@ function GameMode:OnPlayerLevelUp(keys)
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Missing/Extra ability points correction
 	-------------------------------------------------------------------------------------------------
-
 	local missing_point_levels = {17, 19, 21, 22, 23, 24}
 	local extra_point_levels = {33, 34, 37, 38, 39}
+	local missing_point_levels_meepo = {17, 32, 33, 34, 36, 37, 38, 39}
+
+	if hero:GetUnitName() == "npc_dota_hero_meepo" then
+		-- Remove extra point on the appropriate levels for Meepo only
+		for _, current_level in pairs(missing_point_levels_meepo) do
+			if hero_level == current_level then
+				hero:SetAbilityPoints(hero:GetAbilityPoints() - 1)
+			end
+		end
+	else
+		-- Remove extra point on the appropriate levels
+		for _, current_level in pairs(extra_point_levels) do
+			if hero_level == current_level then
+				hero:SetAbilityPoints(hero:GetAbilityPoints() - 1)
+			end
+		end
+	end
 
 	-- Add missing point on the appropriate levels
 	for _, current_level in pairs(missing_point_levels) do
 		if hero_level == current_level then
 			hero:SetAbilityPoints(hero:GetAbilityPoints() + 1)
-		end
-	end
-
-	-- Remove extra point on the appropriate levels
-	for _, current_level in pairs(extra_point_levels) do
-		if hero_level == current_level then
-			hero:SetAbilityPoints(hero:GetAbilityPoints() - 1)
 		end
 	end
 
@@ -629,6 +647,8 @@ function GameMode:OnRuneActivated (keys)
 
 	local player = PlayerResource:GetPlayer(keys.PlayerID)
 	local rune = keys.rune
+
+	PrintTable(rune)
 
 	--[[ Rune Can be one of the following types
 	DOTA_RUNE_DOUBLEDAMAGE
@@ -815,89 +835,92 @@ function GameMode:OnEntityKilled( keys )
 		killer = EntIndexToHScript( keys.entindex_attacker )
 	end
 
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Ancient destruction detection
-	-------------------------------------------------------------------------------------------------
+	if killed_unit then
 
-	if killed_unit:GetUnitName() == "npc_dota_badguys_fort" then
-		GAME_WINNER_TEAM = "Radiant"
-	elseif killed_unit:GetUnitName() == "npc_dota_goodguys_fort" then
-		GAME_WINNER_TEAM = "Dire"
-	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Meepo redirect to Meepo Prime
-	-------------------------------------------------------------------------------------------------
-	if killed_unit:GetUnitName() == "npc_dota_hero_meepo" then
-		killed_unit = killed_unit:GetCloneSource()
-	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Respawn timer setup
-	-------------------------------------------------------------------------------------------------
-	local reincarnation_death = false
-	if killed_unit:HasModifier("modifier_imba_reincarnation") then
-		local wk_mod = killed_unit:FindModifierByName("modifier_imba_reincarnation")
-		reincarnation_death = (wk_mod.can_die == false)
-	end
-	
-	if killed_unit:HasModifier("modifier_item_imba_aegis") then
-		killed_unit:SetTimeUntilRespawn(killed_unit:FindModifierByName("modifier_item_imba_aegis").reincarnate_time)
-	elseif reincarnation_death then
-		killed_unit:SetTimeUntilRespawn(killed_unit:FindModifierByName("modifier_imba_reincarnation").reincarnate_delay)
-	elseif killed_unit:IsRealHero() and killed_unit:GetPlayerID() and (PlayerResource:IsImbaPlayer(killed_unit:GetPlayerID()) or (GameRules:IsCheatMode() == true) ) then
-		-- Calculate base respawn timer, capped at 60 seconds
-		local hero_level = math.min(killed_unit:GetLevel(), 25)
-		local respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[hero_level]
-		-- Calculate respawn timer reduction due to talents and modifiers
-		respawn_time = respawn_time * killed_unit:GetRespawnTimeModifier_Pct() * 0.01
-		respawn_time = math.max(respawn_time + killed_unit:GetRespawnTimeModifier(),0)
-		-- Fetch decreased respawn timer due to Bloodstone charges
-		if killed_unit.bloodstone_respawn_reduction and (respawn_time > 0) then
-			respawn_time = math.max( respawn_time - killed_unit.bloodstone_respawn_reduction, 0)
+		-------------------------------------------------------------------------------------------------
+		-- IMBA: Ancient destruction detection
+		-------------------------------------------------------------------------------------------------
+		if killed_unit:GetUnitName() == "npc_dota_badguys_fort" then
+			GAME_WINNER_TEAM = "Radiant"
+		elseif killed_unit:GetUnitName() == "npc_dota_goodguys_fort" then
+			GAME_WINNER_TEAM = "Dire"
 		end
-		-- Multiply respawn timer by the lobby options
-		respawn_time = math.max( respawn_time * HERO_RESPAWN_TIME_MULTIPLIER * 0.01, 1)
-		-- Set up the respawn timer
-		killed_unit:SetTimeUntilRespawn(respawn_time)
-	end
 
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Buyback setup
-	-------------------------------------------------------------------------------------------------
+		-------------------------------------------------------------------------------------------------
+		-- IMBA: Meepo redirect to Meepo Prime
+		-------------------------------------------------------------------------------------------------
+--		if killed_unit:GetUnitName() == "npc_dota_hero_meepo" then
+--			killed_unit = killed_unit:GetCloneSource()
+--		end
 
-	-- Check if the dying unit was a player-controlled hero
-	if killed_unit:IsRealHero() and killed_unit:GetPlayerID() and PlayerResource:IsImbaPlayer(killed_unit:GetPlayerID()) then
-
-		-- Buyback parameters
-		local player_id = killed_unit:GetPlayerID()
-		local hero_level = killed_unit:GetLevel()
-		local game_time = GameRules:GetDOTATime(false, false)
-
-		-- Calculate buyback cost
-		local level_based_cost = math.min(hero_level * hero_level, 625) * BUYBACK_COST_PER_LEVEL
-		if hero_level > 25 then
-			level_based_cost = level_based_cost + BUYBACK_COST_PER_LEVEL_AFTER_25 * (hero_level - 25)
+		-------------------------------------------------------------------------------------------------
+		-- IMBA: Respawn timer setup
+		-------------------------------------------------------------------------------------------------
+		local reincarnation_death = false
+		if killed_unit:HasModifier("modifier_imba_reincarnation") then
+			local wk_mod = killed_unit:FindModifierByName("modifier_imba_reincarnation")
+			reincarnation_death = (wk_mod.can_die == false)
 		end
-		local buyback_cost = BUYBACK_BASE_COST + level_based_cost + game_time * BUYBACK_COST_PER_SECOND		
-		buyback_cost = buyback_cost * (1 + CUSTOM_GOLD_BONUS * 0.01)
 
-		-- Setup buyback cooldown
-		local buyback_cooldown = 0
-		-- if BUYBACK_COOLDOWN_ENABLED and game_time > BUYBACK_COOLDOWN_START_POINT then
-		-- 	buyback_cooldown = math.min(BUYBACK_COOLDOWN_GROW_FACTOR * (game_time - BUYBACK_COOLDOWN_START_POINT), BUYBACK_COOLDOWN_MAXIMUM)
-		-- end
-		buyback_cooldown = 60
+		if killed_unit:HasModifier("modifier_item_imba_aegis") then
+			killed_unit:SetTimeUntilRespawn(killed_unit:FindModifierByName("modifier_item_imba_aegis").reincarnate_time)
+		elseif reincarnation_death then
+			killed_unit:SetTimeUntilRespawn(killed_unit:FindModifierByName("modifier_imba_reincarnation").reincarnate_delay)
+		elseif killed_unit:IsRealHero() and killed_unit:GetPlayerID() and (PlayerResource:IsImbaPlayer(killed_unit:GetPlayerID()) or (GameRules:IsCheatMode() == true) ) then
+			-- Calculate base respawn timer, capped at 60 seconds
+			local hero_level = math.min(killed_unit:GetLevel(), 25)
+			local respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[hero_level]
+			-- Calculate respawn timer reduction due to talents and modifiers
+			respawn_time = respawn_time * killed_unit:GetRespawnTimeModifier_Pct() * 0.01
+			respawn_time = math.max(respawn_time + killed_unit:GetRespawnTimeModifier(),0)
+			-- Fetch decreased respawn timer due to Bloodstone charges
+			if killed_unit.bloodstone_respawn_reduction and (respawn_time > 0) then
+				respawn_time = math.max( respawn_time - killed_unit.bloodstone_respawn_reduction, 0)
+			end
+			-- Multiply respawn timer by the lobby options
+			respawn_time = math.max( respawn_time * HERO_RESPAWN_TIME_MULTIPLIER * 0.01, 1)
 
-		-- #7 Talent Vengeful Spirit - Decreased respawn time & cost
-		if killed_unit:HasTalent("special_bonus_imba_vengefulspirit_7") then
-			buyback_cost = buyback_cost * (1 - (killed_unit:FindSpecificTalentValue("special_bonus_imba_vengefulspirit_7", "buyback_cost_pct") * 0.01))
-			buyback_cooldown = buyback_cooldown * (1 - (killed_unit:FindSpecificTalentValue("special_bonus_imba_vengefulspirit_7", "buyback_cooldown_pct") * 0.01))			
+			-- Set up the respawn timer, include meepo fix
+			killed_unit:SetTimeUntilRespawn(respawn_time)
+			MeepoFixes:ShareRespawnTime(killed_unit, respawn_time)
 		end
-		
-		-- Update buyback cost
-		PlayerResource:SetCustomBuybackCost(player_id, buyback_cost)
-		PlayerResource:SetCustomBuybackCooldown(player_id, buyback_cooldown)
+
+		-------------------------------------------------------------------------------------------------
+		-- IMBA: Buyback setup
+		-------------------------------------------------------------------------------------------------
+
+		-- Check if the dying unit was a player-controlled hero
+		if killed_unit:IsRealHero() and killed_unit:GetPlayerID() and PlayerResource:IsImbaPlayer(killed_unit:GetPlayerID()) then
+			-- Buyback parameters
+			local player_id = killed_unit:GetPlayerID()
+			local hero_level = killed_unit:GetLevel()
+			local game_time = GameRules:GetDOTATime(false, false)
+
+			-- Calculate buyback cost
+			local level_based_cost = math.min(hero_level * hero_level, 625) * BUYBACK_COST_PER_LEVEL
+			if hero_level > 25 then
+				level_based_cost = level_based_cost + BUYBACK_COST_PER_LEVEL_AFTER_25 * (hero_level - 25)
+			end
+			local buyback_cost = BUYBACK_BASE_COST + level_based_cost + game_time * BUYBACK_COST_PER_SECOND		
+			buyback_cost = buyback_cost * (1 + CUSTOM_GOLD_BONUS * 0.01)
+
+			-- Setup buyback cooldown
+			local buyback_cooldown = 0
+			-- if BUYBACK_COOLDOWN_ENABLED and game_time > BUYBACK_COOLDOWN_START_POINT then
+			-- 	buyback_cooldown = math.min(BUYBACK_COOLDOWN_GROW_FACTOR * (game_time - BUYBACK_COOLDOWN_START_POINT), BUYBACK_COOLDOWN_MAXIMUM)
+			-- end
+			buyback_cooldown = 60
+
+			-- #7 Talent Vengeful Spirit - Decreased respawn time & cost
+			if killed_unit:HasTalent("special_bonus_imba_vengefulspirit_7") then
+				buyback_cost = buyback_cost * (1 - (killed_unit:FindSpecificTalentValue("special_bonus_imba_vengefulspirit_7", "buyback_cost_pct") * 0.01))
+				buyback_cooldown = buyback_cooldown * (1 - (killed_unit:FindSpecificTalentValue("special_bonus_imba_vengefulspirit_7", "buyback_cooldown_pct") * 0.01))			
+			end
+			
+			-- Update buyback cost
+			PlayerResource:SetCustomBuybackCost(player_id, buyback_cost)
+			PlayerResource:SetCustomBuybackCooldown(player_id, buyback_cooldown)
+		end
 	end
 end
 

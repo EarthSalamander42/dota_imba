@@ -40,6 +40,10 @@ require('internal/scoreboard_events')
 -- This library used to handle custom IMBA talent UI (hero_selection will need to use a function in this)
 require('internal/imba_talent_events')
 
+-- Meepo Vanilla fix (from Angel Arena Black Star)
+require('libraries/meepo/data')
+require('libraries/meepo/meepo')
+
 -- settings.lua is where you can specify many different properties for your game mode and is one of the core barebones files.
 require('settings')
 -- events.lua is where you can specify the actions to be taken when any event occurs and is one of the core barebones files.
@@ -51,10 +55,10 @@ require('addon_init')
 ApplyAllTalentModifiers()
 StoreCurrentDayCycle()
 
-if IsInToolsMode() then
-	OverrideCreateParticle()
-	OverrideReleaseIndex()
-end
+--	if IsInToolsMode() then
+--		OverrideCreateParticle()
+--		OverrideReleaseIndex()
+--	end
 
 -- storage API
 --require('libraries/json')
@@ -105,12 +109,9 @@ function GameMode:OnFirstPlayerLoaded()
 	-------------------------------------------------------------------------------------------------
 
 	if GetMapName() ~= "imba_arena" then
-		local roshan_spawn_loc = Entities:FindByName(nil, "roshan_spawn_point"):GetAbsOrigin()
-		local roshan = CreateUnitByName("npc_imba_roshan", roshan_spawn_loc, true, nil, nil, DOTA_TEAM_NEUTRALS)
-		local roshan_rage_ability = roshan:FindAbilityByName("imba_roshan_rage")
-		if roshan_rage_ability then
-			roshan_rage_ability:SetLevel(1)
-		end
+--		local roshan_spawn_loc = Entities:FindByName(nil, "roshan_spawn_point"):GetAbsOrigin()
+--		local roshan = CreateUnitByName("npc_imba_roshan", roshan_spawn_loc, true, nil, nil, DOTA_TEAM_NEUTRALS)
+--		roshan:FindAbilityByName("imba_roshan_rage"):SetLevel(1)
 
 		GoodCamera = Entities:FindByName(nil, "good_healer_7")
 		BadCamera = Entities:FindByName(nil, "bad_healer_7")
@@ -202,7 +203,10 @@ function GameMode:OnFirstPlayerLoaded()
 			statue_entity = CreateUnitByName(current_statue, current_location, true, nil, nil, DOTA_TEAM_BADGUYS)
 			statue_entity:SetForwardVector(Vector(-1, -1, 0):Normalized())
 		end
-		statue_entity:AddNewModifier(statue_entity, nil, "modifier_imba_contributor_statue", {})
+		if current_statue == "npc_imba_developer_cookies" then
+		else
+			statue_entity:AddNewModifier(statue_entity, nil, "modifier_imba_contributor_statue", {})
+		end
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -420,6 +424,29 @@ function GameMode:ModifierFilter( keys )
 			end
 		end
 
+		-------------------------------------------------------------------------------------------------
+		-- Rune pickup logic
+		-------------------------------------------------------------------------------------------------	
+
+		if modifier_caster == modifier_owner then
+			if modifier_caster:HasModifier("modifier_rune_doubledamage") then
+				local duration = modifier_caster:FindModifierByName("modifier_rune_doubledamage"):GetDuration()
+				modifier_caster:RemoveModifierByName("modifier_rune_doubledamage")
+				modifier_caster:AddNewModifier(modifier_caster, nil, "modifier_imba_double_damage_rune", {duration = duration})
+			elseif modifier_caster:HasModifier("modifier_rune_haste") then
+				local duration = modifier_caster:FindModifierByName("modifier_rune_haste"):GetDuration()
+				modifier_caster:RemoveModifierByName("modifier_rune_haste")
+				modifier_caster:AddNewModifier(modifier_caster, nil, "modifier_imba_haste_rune", {duration = duration})
+			elseif modifier_caster:HasModifier("modifier_rune_invis") then
+--				PickupInvisibleRune(modifier_caster)
+--				return false
+			elseif modifier_caster:HasModifier("modifier_rune_regen") then
+				local duration = modifier_caster:FindModifierByName("modifier_rune_regen"):GetDuration()
+				modifier_caster:RemoveModifierByName("modifier_rune_regen")
+				modifier_caster:AddNewModifier(modifier_caster, nil, "modifier_imba_regen_rune", {duration = duration})
+			end
+		end
+
 		return true
 	end
 end
@@ -438,48 +465,14 @@ function GameMode:ItemAddedFilter( keys )
 	if item:GetName() then
 		item_name = item:GetName()
 	end
-	
-	-------------------------------------------------------------------------------------------------
-	-- Rune pickup logic
-	-------------------------------------------------------------------------------------------------
-
-	if item_name == "item_imba_rune_bounty" or item_name == "item_imba_rune_bounty_arena" or item_name == "item_imba_rune_double_damage" or item_name == "item_imba_rune_haste" or item_name == "item_imba_rune_regeneration" then
---		local gameEvent = {}
---		gameEvent["player_id"] = unit:GetPlayerID()
---		gameEvent["team_number"] = unit:GetTeamNumber()
---		gameEvent["locstring_value"] = "#DOTA_Tooltip_Ability_" .. item:GetAbilityName()
---		gameEvent["message"] = "#imba_player_rune_pickup"
---		FireGameEvent("dota_combat_event_message", gameEvent)
-
-		if item_name == "item_imba_rune_bounty" or item_name == "item_imba_rune_bounty_arena" then
-			PickupBountyRune(item, unit)
-			return false
-		end
-
-		if item_name == "item_imba_rune_double_damage" then
-			PickupDoubleDamageRune(item, unit)
-			return false
-		end
-
-		if item_name == "item_imba_rune_haste" then
-			PickupHasteRune(item, unit)
-			return false
-		end
-
-		if item_name == "item_imba_rune_regeneration" then
-			PickupRegenerationRune(item, unit)
-			return false
-		end					
-	end
 
 	-------------------------------------------------------------------------------------------------
 	-- Aegis of the Immortal pickup logic
 	-------------------------------------------------------------------------------------------------
 
 	if item_name == "item_imba_aegis" then
-		
 		-- If this is a player, do Aegis stuff
-		if unit:IsRealHero() then
+		if unit:IsRealHero() and not unit:HasModifier("modifier_item_imba_aegis") then
 
 			-- Display aegis pickup message for all players
 			unit:AddNewModifier(unit, item, "modifier_item_imba_aegis",{})
@@ -490,7 +483,6 @@ function GameMode:ItemAddedFilter( keys )
 
 			-- Destroy the item
 			return false
-
 		-- If this is not a player, do nothing and drop another Aegis
 		else
 			local drop = CreateItem("item_imba_aegis", nil, nil)
@@ -503,6 +495,7 @@ function GameMode:ItemAddedFilter( keys )
 			-- Destroy the item
 			return false
 		end
+		return false
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -582,6 +575,21 @@ function GameMode:ItemAddedFilter( keys )
 		for _, forbidden_item in pairs(clone_forbidden_items) do
 			if item_name == forbidden_item then
 				return false
+			end
+		end
+	end
+
+	local meepo_extra_boots = {
+		"item_imba_ironleaf_boots",
+		"item_imba_blink_boots",
+		"item_imba_power_treads_2",
+		"item_imba_haste_boots"
+	}
+
+	if unit:GetUnitName() == "npc_dota_hero_meepo" then
+		for _, boots in pairs(meepo_extra_boots) do
+			if item_name == boots then
+				print("Those boots are special!")
 			end
 		end
 	end
@@ -1077,13 +1085,13 @@ function GameMode:OnAllPlayersLoaded()
 	end	
 end
 
+random_time = 1.0
 function GameMode:OnHeroInGame(hero)	
-	local time_elapsed = 0
+local time_elapsed = 0
 
 	-- Disabling announcer for the player who picked a hero
 	Timers:CreateTimer(0.1, function()
 		if hero:GetUnitName() ~= "npc_dota_hero_wisp" then
-			print("A hero non-wisp spawned")
 			hero.picked = true
 		elseif hero.is_real_wisp then
 			print("REAL WISP")
@@ -1091,8 +1099,8 @@ function GameMode:OnHeroInGame(hero)
 		end
 	end)
 
-	Timers:CreateTimer(function()		
-		if not hero.is_real_wisp and hero:GetUnitName() == "npc_dota_hero_wisp"  then
+	if not hero.is_real_wisp and hero:GetUnitName() == "npc_dota_hero_wisp" then
+		Timers:CreateTimer(function()
 			if not hero:HasModifier("modifier_imba_prevent_actions_game_start") then
 				hero:AddNewModifier(hero, nil, "modifier_imba_prevent_actions_game_start", {})
 				hero:AddEffects(EF_NODRAW)
@@ -1106,14 +1114,14 @@ function GameMode:OnHeroInGame(hero)
 					FindClearSpaceForUnit(hero, BadCamera:GetAbsOrigin(), false)
 				end
 			end
-		end
-		if time_elapsed < 0.9 then
-			time_elapsed = time_elapsed + 0.1
-		else			
-			return nil
-		end
-		return 0.1
-	end)
+			if time_elapsed < 0.9 then
+				time_elapsed = time_elapsed + 0.1
+			else			
+				return nil
+			end
+			return 0.1
+		end)
+	end
 end
 
 --[[	This function is called once and only once when the game completely begins (about 0:00 on the clock).  At this point,
@@ -1206,19 +1214,6 @@ function GameMode:OnGameInProgress()
 			GameRules:GetGameModeEntity():SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
 		end
 	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Rune timers setup
-	-------------------------------------------------------------------------------------------------
-
-	Timers:CreateTimer(0, function()
-		if GetMapName() == "imba_arena" then
-			SpawnArenaRunes()
-		else
-			SpawnImbaRunes()
-		end
-		return RUNE_SPAWN_TIME
-	end)
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Structure stats setup

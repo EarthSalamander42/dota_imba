@@ -23,14 +23,12 @@ var abilityPanels = [
 
 /* Picking phase is done, start loading heroes */
 function OnPickingDone( data ) {
-	$.Msg("OnPickingDone")
 	$("#EnterGameBtnTxt").text = $.Localize( "#imba_enter_game_button" );
 	$("#RepickBtn").AddClass( "disabled" );
 }
 
 /* Hero loading is done, allow the player to enter the game */
 function OnHeroLoadingDone( data ) {
-	$.Msg("OnHeroLoadingDone")
 	$("#EnterGameBtn").RemoveClass( "disabled" );
 	$("#EnterGameBtnTxt").text = $.Localize( "#imba_loading_heroes_button" );
 	canEnter = true;
@@ -277,14 +275,13 @@ function SelectRandomImbaHero() {
 function EnterGame() {
 	if ( canEnter ) {
 		$('#Background').GetParent().DeleteAsync( 0.0 );
-		$.Msg("Button Enter Game")
 
 		//COOKIES: Re-enable HUD parts when 1 player enter in the game, might need to find a way to show these HUD parts for player only rather than global
 		var parent_panel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
 		parent_panel.FindChildTraverse("lower_hud").style.visibility = "visible";
 		parent_panel.FindChildTraverse("topbar").style.visibility = "visible";
 		parent_panel.FindChildTraverse("minimap_container").style.visibility = "visible";
-		parent_panel.FindChildTraverse("ScoreboardContainer").style.visibility = "visible";
+		parent_panel.FindChildTraverse("topbar").style.visibility = "visible";
 	}
 }
 
@@ -296,7 +293,6 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 		// If the player is already in-game, destroy the pick interface and ignore the rest
 		if (pick_state == "in_game") {
 			$('#Background').GetParent().DeleteAsync( 0.0 );
-			$.GetContextPanel().GetParent().GetParent().FindChildTraverse("ScoreboardContainer").style.visibility = "visible";
 			//COOKIES: Re-enable HUD parts when 1 player enter in the game, might need to find a way to show these HUD parts for player only rather than global
 			var parent_panel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
 			parent_panel.FindChildTraverse("lower_hud").style.visibility = "visible";
@@ -346,6 +342,19 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 =========================================================================*/
 (function () {
 
+	// Banned Heroes
+	//STR
+	$("#npc_dota_hero_undying").AddClass( "taken" );
+	///AGI
+//	$("#npc_dota_hero_meepo").AddClass( "taken" );
+	$("#npc_dota_hero_phantom_lancer").AddClass( "taken" );
+	$("#npc_dota_hero_spectre").AddClass( "taken" );
+	//INT
+	$("#npc_dota_hero_enigma").AddClass( "taken" );
+	$("#npc_dota_hero_techies").AddClass( "taken" );
+	$("#npc_dota_hero_tinker").AddClass( "taken" );
+	$("#npc_dota_hero_venomancer").AddClass( "taken" );
+
 	// If this player is a spectator, just kill the whole pick screen
 	var localTeam = Players.GetTeam(Players.GetLocalPlayer())
 	if ( localTeam != 2 && localTeam != 3 ) {
@@ -365,14 +374,13 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 		var parent_panel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
 		var map_info = Game.GetMapInfo();
 
-		if (map_info.map_display_name == "imba_random_omg") {
-			$('#GameModeSelectText').text = $.Localize( '#imba_gamemode_name_random_omg' );
-		} else if (map_info.map_display_name == "imba_arena") {
+		
+		if (map_info.map_display_name == "imba_arena") {
 			$('#GameModeSelectText').text = $.Localize( '#imba_gamemode_name_arena_mode' );
 		}
 
 		// Hide the top scoreboard during the pick phase
-		parent_panel.FindChildTraverse("ScoreboardContainer").style.visibility = "collapse";
+		parent_panel.FindChildTraverse("topbar").style.visibility = "collapse";
 		parent_panel.FindChildTraverse("lower_hud").style.visibility = "collapse";
 		parent_panel.FindChildTraverse("topbar").style.visibility = "collapse";
 		parent_panel.FindChildTraverse("minimap_container").style.visibility = "collapse";
@@ -422,6 +430,12 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 		}
 
 		if (map_info.map_display_name == "imba_custom") {
+			if(frantic_mode) {
+				$("#FranticModeValue").text = $.Localize( '#imba_gamemode_game_options_frantic_enabled' );
+			}
+		}
+
+		if (map_info.map_display_name == "imba_custom_10v10") {
 			if(frantic_mode) {
 				$("#FranticModeValue").text = $.Localize( '#imba_gamemode_game_options_frantic_enabled' );
 			}

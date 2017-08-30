@@ -5,104 +5,160 @@
 	</scripts>
 
 	<script>
+		// Uncomment any of the following lines in order to disable that portion of the default UI
+		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_TIMEOFDAY, false );				//Time of day (clock).
+		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ACTION_PANEL, false );					//Hero actions UI.
+		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ACTION_MINIMAP, false );				//Minimap.
+		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_PANEL, false );				//Entire Inventory UI
+		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_SHOP, false );				//Shop portion of the Inventory.
+		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_ITEMS, false );				//Player items.
+		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_QUICKBUY, false );			//Quickbuy.
+		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_COURIER, false );			//Courier controls.
+		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_PROTECT, false );			//Glyph.
+		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_GOLD, false );				//Gold display.
+		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_SHOP_SUGGESTEDITEMS, false );			//Suggested items shop panel.
+		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_MENU_BUTTONS, false );				//Top-left menu buttons in the HUD.
+		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_BAR_BACKGROUND, false );			//Top-left menu buttons in the HUD.
 
-	// Uncomment any of the following lines in order to disable that portion of the default UI
-	//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_TIMEOFDAY, false );				//Time of day (clock).
-	//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ACTION_PANEL, false );					//Hero actions UI.
-	//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ACTION_MINIMAP, false );				//Minimap.
-	//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_PANEL, false );				//Entire Inventory UI
-	//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_SHOP, false );				//Shop portion of the Inventory.
-	//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_ITEMS, false );				//Player items.
-	//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_QUICKBUY, false );			//Quickbuy.
-	//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_COURIER, false );			//Courier controls.
-	//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_PROTECT, false );			//Glyph.
-	//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_GOLD, false );				//Gold display.
-	//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_SHOP_SUGGESTEDITEMS, false );			//Suggested items shop panel.
-	//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_MENU_BUTTONS, false );				//Top-left menu buttons in the HUD.
-	//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_BAR_BACKGROUND, false );			//Top-left menu buttons in the HUD.
+		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_HEROES, false );						//Heroes and team score at the top of the HUD.
+		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_FLYOUT_SCOREBOARD, false );				//Lefthand flyout scoreboard.
+		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_TEAMS, false );			//Hero selection Radiant and Dire player lists.
+		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_GAME_NAME, false );		//Hero selection game mode name display.
+		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_CLOCK, false );			//Hero selection clock.
+		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ENDGAME, false );						//Endgame scoreboard.
 
-	GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_HEROES, false );						//Heroes and team score at the top of the HUD.
-	GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_FLYOUT_SCOREBOARD, false );				//Lefthand flyout scoreboard.
-	GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_TEAMS, false );			//Hero selection Radiant and Dire player lists.
-	GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_GAME_NAME, false );		//Hero selection game mode name display.
-	GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_CLOCK, false );			//Hero selection clock.
-	GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ENDGAME, false );						//Endgame scoreboard.
-
-	GameEvents.Subscribe("CreateIngameErrorMessage", function(data) 
-	{
-		GameEvents.SendEventClientSide("dota_hud_error_message", 
+		GameEvents.Subscribe("CreateIngameErrorMessage", function(data) 
 		{
-			"splitscreenplayer": 0,
-			"reason": data.reason || 80,
-			"message": data.message
+			GameEvents.SendEventClientSide("dota_hud_error_message", 
+			{
+				"splitscreenplayer": 0,
+				"reason": data.reason || 80,
+				"message": data.message
+			})
 		})
-	})
 
-	// These lines set up the panorama colors used by each team (for game select/setup, etc)
-	GameUI.CustomUIConfig().team_colors = {}
-	GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_GOODGUYS] = "#001050;";
-	GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_BADGUYS ] = "#500000;";
+		// These lines set up the panorama colors used by each team (for game select/setup, etc)
+		GameUI.CustomUIConfig().team_colors = {}
+		GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_GOODGUYS] = "#08640E;";
+		GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_BADGUYS ] = "#640808;";
 
-	// These lines set up the panorama colors used by each player on the top scoreboard
-	GameUI.CustomUIConfig().player_colors = {}
-	GameUI.CustomUIConfig().player_colors[0] = "#4385FF;";
-	GameUI.CustomUIConfig().player_colors[1] = "#AAFFC3;";
-	GameUI.CustomUIConfig().player_colors[2] = "#820096;";
-	GameUI.CustomUIConfig().player_colors[3] = "#FFEA00;";
-	GameUI.CustomUIConfig().player_colors[4] = "#FF9900;";
-	GameUI.CustomUIConfig().player_colors[5] = "#BEFF00;";
-	GameUI.CustomUIConfig().player_colors[6] = "#FF0000;";
-	GameUI.CustomUIConfig().player_colors[7] = "#008080;";
-	GameUI.CustomUIConfig().player_colors[8] = "#FFFAC8;";
-	GameUI.CustomUIConfig().player_colors[9] = "#010101;";
-	GameUI.CustomUIConfig().player_colors[10] = "#FF00FF;";
-	GameUI.CustomUIConfig().player_colors[11] = "#808000;";
-	GameUI.CustomUIConfig().player_colors[12] = "#64FFFF;";
-	GameUI.CustomUIConfig().player_colors[13] = "#00BE00;";
-	GameUI.CustomUIConfig().player_colors[14] = "#AA6E28;";
-	GameUI.CustomUIConfig().player_colors[15] = "#000080;";
-	GameUI.CustomUIConfig().player_colors[16] = "#E6BEFF;";
-	GameUI.CustomUIConfig().player_colors[17] = "#800000;";
-	GameUI.CustomUIConfig().player_colors[18] = "#808080;";
-	GameUI.CustomUIConfig().player_colors[19] = "#FEFEFE;";
+		// These lines set up the panorama colors used by each player on the top scoreboard
+		GameUI.CustomUIConfig().player_colors = {}
+		GameUI.CustomUIConfig().player_colors[0] = "#4385FF;";
+		GameUI.CustomUIConfig().player_colors[1] = "#AAFFC3;";
+		GameUI.CustomUIConfig().player_colors[2] = "#820096;";
+		GameUI.CustomUIConfig().player_colors[3] = "#FFEA00;";
+		GameUI.CustomUIConfig().player_colors[4] = "#FF9900;";
+		GameUI.CustomUIConfig().player_colors[5] = "#BEFF00;";
+		GameUI.CustomUIConfig().player_colors[6] = "#FF0000;";
+		GameUI.CustomUIConfig().player_colors[7] = "#008080;";
+		GameUI.CustomUIConfig().player_colors[8] = "#FFFAC8;";
+		GameUI.CustomUIConfig().player_colors[9] = "#010101;";
+		GameUI.CustomUIConfig().player_colors[10] = "#FF00FF;";
+		GameUI.CustomUIConfig().player_colors[11] = "#808000;";
+		GameUI.CustomUIConfig().player_colors[12] = "#64FFFF;";
+		GameUI.CustomUIConfig().player_colors[13] = "#00BE00;";
+		GameUI.CustomUIConfig().player_colors[14] = "#AA6E28;";
+		GameUI.CustomUIConfig().player_colors[15] = "#000080;";
+		GameUI.CustomUIConfig().player_colors[16] = "#E6BEFF;";
+		GameUI.CustomUIConfig().player_colors[17] = "#800000;";
+		GameUI.CustomUIConfig().player_colors[18] = "#808080;";
+		GameUI.CustomUIConfig().player_colors[19] = "#FEFEFE;";
 
-	// Hide normal picking screen
-	$.GetContextPanel().GetParent().GetParent().FindChildTraverse("PreGame").style.visibility = "collapse";
+		// HUD Hack, made by Cookies #42 [EarthSalamander]
+		// Hide normal picking screen
+		$.GetContextPanel().GetParent().GetParent().FindChildTraverse("PreGame").style.visibility = "collapse";
 
-	//Buff Bar
-	var hudElements = $.GetContextPanel().GetParent().GetParent().FindChildTraverse("HUDElements");
-	var BuffBar = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("buffs")
-	BuffBar.style.width = "30%";
-	BuffBar.style.marginLeft = "40%";
+		//Buff Bar
+		var hudElements = $.GetContextPanel().GetParent().GetParent().FindChildTraverse("HUDElements");
+		var BuffBar = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("buffs")
+		BuffBar.style.width = "30%";
+		BuffBar.style.marginLeft = "40%";
 
-	//DeBuff Bar
-	var DeBuffBar = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("debuffs")
-	DeBuffBar.style.width = "30%";
-	DeBuffBar.style.marginBottom = "40.5%";
-	DeBuffBar.style.marginRight = "30%";
-	DeBuffBar.style.flowChildren = "right";
+		//DeBuff Bar
+		var DeBuffBar = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("debuffs")
+		DeBuffBar.style.width = "30%";
+		DeBuffBar.style.marginBottom = "40.5%";
+		DeBuffBar.style.marginRight = "30%";
+		DeBuffBar.style.flowChildren = "right";
 
-	//Shop (Fixing last item in advanced tab not being fully visible)
-	var Shop = hudElements.FindChildTraverse("shop")
-	Shop.style.width = "320px";
-	Shop.style.height = "100%";
-	Shop.style.marginBottom = "18%";
-	Shop.style.marginTop = "4%";
+		//Recommended Talent
+		var TalentGuide = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("center_with_stats")
+		TalentGuide.FindChildTraverse("RecommendedUpgradeOverlay").style.visibility = "collapse";
 
-	var MainShop = hudElements.FindChildTraverse("shop").FindChildTraverse("Main")
-	MainShop.style.height = "100%";
+		//Shop (Fixing last item in advanced tab not being fully visible)
+		var Shop = hudElements.FindChildTraverse("shop")
+		Shop.style.width = "320px";
+		Shop.style.height = "100%";
+		Shop.style.marginBottom = "18%";
+		Shop.style.marginTop = "4%";
 
-	var HeightLimiter = MainShop.FindChildTraverse("HeightLimiter")
-	HeightLimiter.style.height = "100%";
+		var MainShop = hudElements.FindChildTraverse("shop").FindChildTraverse("Main")
+		MainShop.style.height = "100%";
 
-	var GridMainShop = MainShop.FindChildTraverse("GridMainShop")
-	GridMainShop.style.marginTop = "52px";
+		var HeightLimiter = MainShop.FindChildTraverse("HeightLimiter")
+		HeightLimiter.style.height = "100%";
 
-	var GridMainShopContents = MainShop.FindChildTraverse("GridMainShopContents")
-	GridMainShopContents.style.marginTop = "30px";
+		var GridMainShop = MainShop.FindChildTraverse("GridMainShop")
+		GridMainShop.style.marginTop = "52px";
 
-	var Stash = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("shop_launcher_block").FindChildTraverse("stash")
-	Stash.style.height = "150px";
+		var GridMainShopContents = MainShop.FindChildTraverse("GridMainShopContents")
+		GridMainShopContents.style.marginTop = "30px";
+
+		var Stash = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("shop_launcher_block").FindChildTraverse("stash")
+		Stash.style.height = "150px";
+
+		//TopBar
+		var map_info = Game.GetMapInfo();
+		var topbar = hudElements.FindChildTraverse("topbar");
+		var topbarRadiant = topbar.FindChildTraverse("TopBarRadiantTeam");
+		var topbarRadiantContainer = topbarRadiant.FindChildTraverse("TopBarRadiantPlayersContainer");
+		var topbarDire = topbar.FindChildTraverse("TopBarDireTeam");
+		var topbarDireContainer = topbarDire.FindChildTraverse("TopBarDirePlayersContainer");
+
+		if (map_info.map_display_name == "imba_standard")
+		{
+			
+		}
+		else if (map_info.map_display_name == "imba_custom")
+		{
+			
+		}
+		else
+		{
+			topbar.style.width = "76%";
+
+			topbarRadiant.style.width = "50%";
+			topbarRadiant.style.marginLeft = "0px";
+
+			topbarRadiantContainer.style.marginTop = "-1px";
+			topbarRadiantContainer.style.width = "630px";
+			topbarRadiantContainer.style.flowChildren = "left";
+
+			topbarDire.style.width = "50%";
+			topbarDire.style.marginRight = "0px";
+
+			topbarDireContainer.style.marginTop = "-1px";
+			topbarDireContainer.style.width = "630px";
+		}
+
+		for (var tbg of topbarRadiant.FindChildrenWithClassTraverse("TeamBackground")) {
+			for (var tbbg of tbg.FindChildrenWithClassTraverse("TopBarBackground")) {
+				tbbg.style.height = "44px"
+				tbbg.style.backgroundSize = '0%';
+//				tbbg.style.backgroundColor = '#000000da';
+				tbbg.style.backgroundColor = '#08640Eda';
+			}
+		}
+
+		for (var tbg of topbarDire.FindChildrenWithClassTraverse("TeamBackground")) {
+			for (var tbbg of tbg.FindChildrenWithClassTraverse("TopBarBackground")) {
+				tbbg.style.height = "44px"
+				tbbg.style.backgroundSize = '0%';
+//				tbbg.style.backgroundColor = '#000000da';
+				tbbg.style.backgroundColor = '#640808da';
+			}
+		}
 	</script>
 
 	<Panel>
@@ -111,7 +167,7 @@
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_attachments.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_notifications.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/hero_selection.xml" />
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/multiteam_top_scoreboard.xml" />
+//		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/multiteam_top_scoreboard.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/arena_topbar.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/talent_window.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/simple_chat.xml" />

@@ -550,132 +550,8 @@ function InitializePhysicsParameters(unit)
 	end
 end
 
--- Spawns runes on the map
-function SpawnImbaRunes()
-
-	-- Remove any existing runes, if any
-	RemoveRunes()
-
-	-- Locate the rune spots on the map
-	local bounty_rune_spawner_a = Entities:FindAllByName("bounty_rune_location_dire_bot")
-	local bounty_rune_spawner_b = Entities:FindAllByName("bounty_rune_location_dire_top")
-	local bounty_rune_spawner_c = Entities:FindAllByName("bounty_rune_location_radiant_bot")
-	local bounty_rune_spawner_d = Entities:FindAllByName("bounty_rune_location_radiant_top")
-	local powerup_rune_spawner_a = Entities:FindAllByName("powerup_rune_location_bot")
-	local powerup_rune_spawner_b = Entities:FindAllByName("powerup_rune_location_top")
-	local bounty_rune_locations = {
-		bounty_rune_spawner_a[1]:GetAbsOrigin(),
-		bounty_rune_spawner_b[1]:GetAbsOrigin(),
-		bounty_rune_spawner_c[1]:GetAbsOrigin(),
-		bounty_rune_spawner_d[1]:GetAbsOrigin()
-	}
-	local powerup_rune_locations = {
-		powerup_rune_spawner_a[1]:GetAbsOrigin(),
-		powerup_rune_spawner_b[1]:GetAbsOrigin()
-	}
-
-	local rune
-
-	-- Spawn bounty runes
-	local game_time = GameRules:GetDOTATime(false, false)
-	for _, bounty_loc in pairs(bounty_rune_locations) do
-		local bounty_rune = CreateItem("item_imba_rune_bounty", nil, nil)
-		rune = CreateItemOnPositionForLaunch(bounty_loc, bounty_rune)		
-		RegisterRune(rune)
-
-		-- If these are the 00:00 runes, double their worth
-		if game_time < 1 then
-			bounty_rune.is_initial_bounty_rune = true
-		end
-	end
-
-	-- List of powerup rune types
-	local powerup_rune_types = {
-		"item_imba_rune_double_damage",
-		"item_imba_rune_haste",
-		"item_imba_rune_regeneration"
-	}
-
-	-- Spawn a random powerup rune in a random powerup location
-	if game_time > 1 and game_time < 40 then		
-		rune = CreateItemOnPositionForLaunch(powerup_rune_locations[RandomInt(1, #powerup_rune_locations)], CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))		
-		RegisterRune(rune)
-
-	-- After 40 minutes, spawn powerup runes on both locations
-	elseif game_time >= 40 then
-		rune = CreateItemOnPositionForLaunch(powerup_rune_locations[1], CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))
-		RegisterRune(rune)
-		rune = CreateItemOnPositionForLaunch(powerup_rune_locations[2], CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))
-		RegisterRune(rune)
-	end
-end
-
-function RegisterRune(rune)
-
-	-- Initialize table
-	if not rune_spawn_table then
-		rune_spawn_table = {}
-	end
-
-	-- Register rune into table
-	table.insert(rune_spawn_table, rune)
-end
-
-function RemoveRunes()
-	if rune_spawn_table then
-
-		-- Remove existing runes
-		for _,rune in pairs(rune_spawn_table) do
-			if not rune:IsNull() then								
-				local item = rune:GetContainedItem()
-				UTIL_Remove(item)
-				UTIL_Remove(rune)
-			end
-		end
-
-		-- Clear the table
-		rune_spawn_table = {}
-	end
-end
-
--- Spawns runes on the arena map
-function SpawnArenaRunes()
-
-	-- Locate the rune spots on the map
-	local powerup_rune_spawner = Entities:FindAllByName("powerup_rune_spawner")
-	powerup_rune_spawner = powerup_rune_spawner[1]:GetAbsOrigin()
-
-	-- Decide what type of rune to spawn
-	if not ARENA_RUNE_COUNTER then
-		ARENA_RUNE_COUNTER = 3
-	end
-	ARENA_RUNE_COUNTER = ARENA_RUNE_COUNTER + 1
-
-	-- Spawn bounty rune
-	if ARENA_RUNE_COUNTER < 4 then
-	
-		local bounty_rune = CreateItem("item_imba_rune_bounty_arena", nil, nil)
-		CreateItemOnPositionForLaunch(powerup_rune_spawner, bounty_rune)
-		bounty_rune:LaunchLoot(false, 200, 0.4, powerup_rune_spawner + RandomVector(1) * RandomInt(200, 400))
-
-	-- Spawn powerup rune
-	else
-
-		-- List of powerup rune types
-		local powerup_rune_types = {
-			"item_imba_rune_double_damage",
-			"item_imba_rune_haste",
-			"item_imba_rune_regeneration"
-		}
-
-		-- Spawn a random powerup rune
-		CreateItemOnPositionForLaunch(powerup_rune_spawner, CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))
-		ARENA_RUNE_COUNTER = 0
-	end
-end
-
 -- Picks up a bounty rune
-function PickupBountyRune(item, unit)
+function PickupBountyRune(unit)
 
 	-- Bounty rune parameters
 	local base_bounty = 50
@@ -703,9 +579,6 @@ function PickupBountyRune(item, unit)
 			current_bounty = current_bounty * unit:FindTalentValue("special_bonus_imba_alchemist_7")
 		end		
 	end
-
-	UTIL_Remove(item)
-
 	
 	-- #3 Talent: Bounty runes give gold bags
     if unit:HasTalent("special_bonus_imba_alchemist_3") then
@@ -735,49 +608,6 @@ function PickupBountyRune(item, unit)
 
 	-- Play the bounty rune activation sound to the unit's team
 	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Bounty", unit)
-end
-
--- Picks up a haste rune
-function PickupHasteRune(item, unit)
-
-	-- Apply the aura modifier to the owner
-	item:ApplyDataDrivenModifier(unit, unit, "modifier_imba_rune_haste_owner", {})
-
-	-- Apply the movement speed increase modifier to the owner
-	local duration = item:GetSpecialValueFor("duration")
-	unit:AddNewModifier(unit, item, "modifier_imba_haste_rune_speed_limit_break", {duration = duration})
-
-	-- Play the haste rune activation sound to the unit's team
-	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Haste", unit)	
-
-	UTIL_Remove(item:GetContainer())
-	UTIL_Remove(item)
-end
-
--- Picks up a double damage rune
-function PickupDoubleDamageRune(item, unit)
-
-	-- Apply the aura modifier to the owner
-	item:ApplyDataDrivenModifier(unit, unit, "modifier_imba_rune_double_damage_owner", {})
-
-	-- Play the double damage rune activation sound to the unit's team
-	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.DD", unit)	
-
-	UTIL_Remove(item:GetContainer())
-	UTIL_Remove(item)
-end
-
--- Picks up a regeneration rune
-function PickupRegenerationRune(item, unit)
-
-	-- Apply the aura modifier to the owner
-	item:ApplyDataDrivenModifier(unit, unit, "modifier_imba_rune_regeneration_owner", {})
-
-	-- Play the double damage rune activation sound to the unit's team
-	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Regen", unit)	
-
-	UTIL_Remove(item:GetContainer())
-	UTIL_Remove(item)
 end
 
 -- Gold bag pickup event function
@@ -1180,15 +1010,41 @@ print("started collector")
 			end
 		end
 	end
+
+--	local particle_removed = 0
+
+--	for _, particle in pairs(PARTICLE_TABLE) do
+--		print("Particle:", particle)
+--		print("Amount:", gametime - particle.lifetime)
+
+--		if gametime - particle.lifetime > 0 then
+--			if particle then
+--				particle_removed = particle_removed +1
+--				table.remove(PARTICLE_TABLE, particle.name)
+--			end
+--		end
+--	end
+
+--	for i = 1, #PARTICLE_TABLE do
+--		if manager == PARTICLE_TABLE[i] then
+--			particle_removed = particle_removed+1		
+--			table.remove(PARTICLE_TABLE, i)
+--			break
+--		end
+--	end
+
+--	if particle_removed > 0 then
+--		print("Removed "..particle_removed.." particle.")			
+--	end
 end
 
 -- This function is responsible for deciding which team is behind, if any, and store it at a nettable.
 function DefineLosingTeam()
-	-- Losing team is defined as a team that is both behind in both the sums of networth and levels.
-	local radiant_networth = 0
-	local radiant_levels = 0
-	local dire_networth = 0
-	local dire_levels = 0
+-- Losing team is defined as a team that is both behind in both the sums of networth and levels.
+local radiant_networth = 0
+local radiant_levels = 0
+local dire_networth = 0
+local dire_levels = 0
 
 	for i = 0, DOTA_MAX_TEAM_PLAYERS-1 do
 		if PlayerResource:IsValidPlayer(i) then
@@ -1242,47 +1098,148 @@ function DefineLosingTeam()
 	end
 end
 
+hero_particles = {}
+hero_particles[0] = 0
+hero_particles[1] = 0
+hero_particles[2] = 0
+hero_particles[3] = 0
+hero_particles[4] = 0
+hero_particles[5] = 0
+hero_particles[6] = 0
+hero_particles[7] = 0
+hero_particles[8] = 0
+hero_particles[9] = 0
+hero_particles[10] = 0
+hero_particles[11] = 0
+hero_particles[12] = 0
+hero_particles[13] = 0
+hero_particles[14] = 0
+hero_particles[15] = 0
+hero_particles[16] = 0
+hero_particles[17] = 0
+hero_particles[18] = 0
+hero_particles[19] = 0
+
+total_hero_particles = {}
+total_hero_particles[0] = 0
+total_hero_particles[1] = 0
+total_hero_particles[2] = 0
+total_hero_particles[3] = 0
+total_hero_particles[4] = 0
+total_hero_particles[5] = 0
+total_hero_particles[6] = 0
+total_hero_particles[7] = 0
+total_hero_particles[8] = 0
+total_hero_particles[9] = 0
+total_hero_particles[10] = 0
+total_hero_particles[11] = 0
+total_hero_particles[12] = 0
+total_hero_particles[13] = 0
+total_hero_particles[14] = 0
+total_hero_particles[15] = 0
+total_hero_particles[16] = 0
+total_hero_particles[17] = 0
+total_hero_particles[18] = 0
+total_hero_particles[19] = 0
+
+total_particles = 0
 total_particles_created = 0
 function OverrideCreateParticle()
 	local CreateParticleFunc = ParticleManager.CreateParticle
 
 	ParticleManager.CreateParticle = 
 	function(manager, path, int, handle) 		 
-		local handle = CreateParticleFunc(manager, path, int, handle)		 
+		local particle = CreateParticleFunc(manager, path, int, handle)
+		local time = GameRules:GetGameTime()
+
+		manager.lifetime = time
+		manager.name = path
+
+--		print("Manager:", manager)
+--		print("Manager Time:", manager.lifetime)
+		print("Path:", path)
+--		print("Int:", int)
+--		print("Handle:", handle)
+--		print("------------------------")
 
 		-- Index in a big, fat table. Only works in tools mode!
-		if IsInToolsMode() then
+--		if IsInToolsMode() then
 			PARTICLE_TABLE = PARTICLE_TABLE or {}
-			table.insert(PARTICLE_TABLE, handle)
+			table.insert(PARTICLE_TABLE, manager)
+--		end
+
+--		if path == "particles/units/heroes/hero_pudge/pudge_meathook.vpcf" then
+--			print("HOOK!")
+--			print("Manager:", manager)
+--			print("Int:", int)
+--			print("Handle:", handle)
+--			return particle
+--		end
+
+		if handle and handle:IsRealHero() then
+			if handle.pID then
+				print("Valid pID")
+				hero_particles[handle.pID] = hero_particles[handle.pID] +1
+				total_hero_particles[handle.pID] = total_hero_particles[handle.pID] +1
+			end
+		else
+			print("non-Hero Handle:", handle)
 		end
 
+--		if handle:GetOwnerEntity() == nil then
+--			print("Owner Handle:", handle:GetOwnerEntity())
+--		else
+--			if handle:GetOwnerEntity().pID then
+--				print("Valid pID")
+--				hero_particles[handle:GetOwnerEntity().pID] = hero_particles[handle:GetOwnerEntity().pID] +1
+--				total_hero_particles[handle:GetOwnerEntity().pID] = total_hero_particles[handle:GetOwnerEntity().pID] +1
+--			end
+--		end
+
+		total_particles = total_particles +1
 		total_particles_created = total_particles_created +1
 
-		return handle
+		return particle
 	end
 end
 
-function PrintParticleTable()
-	PrintTable(PARTICLE_TABLE)	
+function OverrideCreateLinearProjectile()
+    local CreateProjectileFunc = ProjectileManager.CreateLinearProjectile
+
+    ProjectileManager.CreateProjectileFunc = 
+    function(manager, handle)                  
+
+        -- Do things here to override
+
+        return CreateProjectileFunc(manager, handle)
+    end
 end
 
 function OverrideReleaseIndex()
-	local ReleaseIndexFunc = ParticleManager.ReleaseParticleIndex
+local ReleaseIndexFunc = ParticleManager.ReleaseParticleIndex
+local released_particles = 0
 
 	ParticleManager.ReleaseParticleIndex = 
 	function(manager, int)		
 		-- Find handle in table
-		print(#PARTICLE_TABLE)
+--		print(#PARTICLE_TABLE)
 		for i = 1, #PARTICLE_TABLE do
-			if int == PARTICLE_TABLE[i] then				
-				table.remove(PARTICLE_TABLE, i)				
+			if manager == PARTICLE_TABLE[i] then
+				released_particles = released_particles+1		
+				table.remove(PARTICLE_TABLE, i)
 				break
 			end
 		end
 
 		-- Release normally
+		total_particles = total_particles -1
 		ReleaseIndexFunc(manager, int)
 	end
+--	print("Released "..released_particles.." particles.")
+end
+
+function PrintParticleTable()
+	PrintTable(PARTICLE_TABLE)	
 end
 
 function ImbaNetGraph(tick)
@@ -1308,7 +1265,14 @@ function ImbaNetGraph(tick)
 		CustomNetTables:SetTableValue("netgraph", "total_unit_number", {value = #units})
 		CustomNetTables:SetTableValue("netgraph", "total_dummy_number", {value = dummy_count})
 		CustomNetTables:SetTableValue("netgraph", "total_dummy_created_number", {value = dummy_created_count})
+		CustomNetTables:SetTableValue("netgraph", "total_particle_number", {value = total_particles})
 		CustomNetTables:SetTableValue("netgraph", "total_particle_created_number", {value = total_particles_created})
+
+--		for i = 1, PlayerResource:GetPlayerCount() do
+		for i = 1, 20 do
+			CustomNetTables:SetTableValue("netgraph", "hero_particle_"..i-1, {particle = hero_particles[i-1], pID = i-1})
+--			CustomNetTables:SetTableValue("netgraph", "hero_total_particle_"..i-1, {particle = total_hero_particles[i-1], pID = i-1})
+		end
 	return tick
 	end)
 end

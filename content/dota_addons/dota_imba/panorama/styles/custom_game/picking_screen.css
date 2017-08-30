@@ -667,3 +667,23 @@
 	width: 20%;
 	height: 18%;
 }
+
+#BanTabMessage
+{
+	width: 365px;
+	margin-top: 30%;
+	color: #FFFFFF;
+	font-size: 30px;
+	font-family: "Radiance";
+	text-align: center;
+}
+
+.AspectRatio16x10 #BanTabMessage
+{
+	width: 330px;
+}
+
+.AspectRatio4x3 #BanTabMessage
+{
+	width: 230px;
+}

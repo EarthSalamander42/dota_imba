@@ -9,29 +9,126 @@
 	</scripts>
 
 	<Panel class="ScoreboardLeft">
-		<Panel id="GoodUnitPanel" class="EntryPanel">
-			<Label class="OnValue" text="Good Units:" />
-			<Label class="Value" id="GoodUnits" text="0" />
+
+		<Panel id="GlobalStats">
+			<Panel id="GoodUnitPanel" class="EntryPanel">
+				<Label class="OnValue" text="Good Units:" />
+				<Label class="Value" id="GoodUnits" text="0" />
+			</Panel>
+			<Panel id="BadUnitPanel" class="EntryPanel">
+				<Label class="OnValue" text="Bad Units:" />
+				<Label class="Value" id="BadUnits" text="0" />
+			</Panel>
+			<Panel id="TotalUnitPanel" class="EntryPanel">
+				<Label class="OnValue" text="Total Units:" />
+				<Label class="Value" id="TotalUnits" text="0" />
+			</Panel>
+			<Panel id="TotalDummyPanel" class="EntryPanel">
+				<Label class="OnValue" text="Total Dummies:" />
+				<Label class="Value" id="TotalDummies" text="0" />	
+			</Panel>
+			<Panel id="TotalDummyCreatedPanel" class="EntryPanel">
+				<Label class="OnValue" text="Dummies Created:" />
+				<Label class="Value" id="TotalDummiesCreated" text="0" />	
+			</Panel>
+			<Panel id="TotalParticlesPanel" class="EntryPanel">
+				<Label class="OnValue" text="Particles Alive:" />
+				<Label class="Value" id="TotalParticles" text="0" />	
+			</Panel>
+			<Panel id="TotalParticlesCreatedPanel" class="EntryPanel">
+				<Label class="OnValue" text="Particles Created:" />
+				<Label class="Value" id="TotalParticlesCreated" text="0" />	
+			</Panel>
 		</Panel>
-		<Panel id="BadUnitPanel" class="EntryPanel">
-			<Label class="OnValue" text="Bad Units:" />
-			<Label class="Value" id="BadUnits" text="0" />
+
+		<Button id="ToggleUniqueStats" onmouseactivate="ToggleUniqueStats();" >
+			<Label id="UniqueStatsButtonText" class="Event1_Title" text="Toggle Unique Stats"/>
+		</Button>
+
+		<Panel id="UniqueStats">
+			<Panel id="Hero0ParticlesPanel" class="EntryPanel">
+				<Label class="OnValue" id="HeroName0" text="Hero 0 Particles:" />
+				<Label class="Value" id="Hero0Particles" text="0" />	
+			</Panel>
+			<Panel id="Hero1ParticlesPanel" class="EntryPanel">
+				<Label class="OnValue" text="Hero 1 Particles:" />
+				<Label class="Value" id="Hero1Particles" text="0" />	
+			</Panel>
+			<Panel id="Hero2ParticlesPanel" class="EntryPanel">
+				<Label class="OnValue" text="Hero 2 Particles:" />
+				<Label class="Value" id="Hero2Particles" text="0" />	
+			</Panel>
+			<Panel id="Hero3ParticlesPanel" class="EntryPanel">
+				<Label class="OnValue" text="Hero 3 Particles:" />
+				<Label class="Value" id="Hero3Particles" text="0" />	
+			</Panel>
+			<Panel id="Hero4ParticlesPanel" class="EntryPanel">
+				<Label class="OnValue" text="Hero 4 Particles:" />
+				<Label class="Value" id="Hero4Particles" text="0" />	
+			</Panel>
+			<Panel id="Hero5ParticlesPanel" class="EntryPanel">
+				<Label class="OnValue" text="Hero 5 Particles:" />
+				<Label class="Value" id="Hero5Particles" text="0" />	
+			</Panel>
+			<Panel id="Hero6ParticlesPanel" class="EntryPanel">
+				<Label class="OnValue" text="Hero 6 Particles:" />
+				<Label class="Value" id="Hero6Particles" text="0" />	
+			</Panel>
+			<Panel id="Hero7ParticlesPanel" class="EntryPanel">
+				<Label class="OnValue" text="Hero 7 Particles:" />
+				<Label class="Value" id="Hero7Particles" text="0" />	
+			</Panel>
+			<Panel id="Hero8ParticlesPanel" class="EntryPanel">
+				<Label class="OnValue" text="Hero 8 Particles:" />
+				<Label class="Value" id="Hero8Particles" text="0" />	
+			</Panel>
+			<Panel id="Hero9ParticlesPanel" class="EntryPanel">
+				<Label class="OnValue" text="Hero 9 Particles:" />
+				<Label class="Value" id="Hero9Particles" text="0" />	
+			</Panel>
 		</Panel>
-		<Panel id="TotalUnitPanel" class="EntryPanel">
-			<Label class="OnValue" text="Total Units:" />
-			<Label class="Value" id="TotalUnits" text="0" />
-		</Panel>
-		<Panel id="TotalDummyPanel" class="EntryPanel">
-			<Label class="OnValue" text="Total Dummies:" />
-			<Label class="Value" id="TotalDummies" text="0" />	
-		</Panel>
-		<Panel id="TotalDummyCreatedPanel" class="EntryPanel">
-			<Label class="OnValue" id="OnMulticast" text="Dummies Created:" />
-			<Label class="Value" id="TotalDummiesCreated" text="0" />	
-		</Panel>
-		<Panel id="TotalParticlesCreatedPanel" class="EntryPanel">
-			<Label class="OnValue" id="OnMulticast" text="Particles Created:" />
-			<Label class="Value" id="TotalParticlesCreated" text="0" />	
+
+		<Panel id="UniqueStats">
+			<Panel id="Hero10ParticlesPanel" class="EntryPanel">
+				<Label class="OnValue" text="Hero 10 Particles:" />
+				<Label class="Value" id="Hero10Particles" text="0" />	
+			</Panel>
+			<Panel id="Hero11ParticlesPanel" class="EntryPanel">
+				<Label class="OnValue" text="Hero 11 Particles:" />
+				<Label class="Value" id="Hero11Particles" text="0" />	
+			</Panel>
+			<Panel id="Hero12ParticlesPanel" class="EntryPanel">
+				<Label class="OnValue" text="Hero 12 Particles:" />
+				<Label class="Value" id="Hero12Particles" text="0" />	
+			</Panel>
+			<Panel id="Hero13ParticlesPanel" class="EntryPanel">
+				<Label class="OnValue" text="Hero 13 Particles:" />
+				<Label class="Value" id="Hero13Particles" text="0" />	
+			</Panel>
+			<Panel id="Hero14ParticlesPanel" class="EntryPanel">
+				<Label class="OnValue" text="Hero 14 Particles:" />
+				<Label class="Value" id="Hero14Particles" text="0" />	
+			</Panel>
+			<Panel id="Hero15ParticlesPanel" class="EntryPanel">
+				<Label class="OnValue" text="Hero 15 Particles:" />
+				<Label class="Value" id="Hero15Particles" text="0" />	
+			</Panel>
+			<Panel id="Hero16ParticlesPanel" class="EntryPanel">
+				<Label class="OnValue" text="Hero 16 Particles:" />
+				<Label class="Value" id="Hero16Particles" text="0" />	
+			</Panel>
+			<Panel id="Hero17ParticlesPanel" class="EntryPanel">
+				<Label class="OnValue" text="Hero 17 Particles:" />
+				<Label class="Value" id="Hero17Particles" text="0" />	
+			</Panel>
+			<Panel id="Hero18ParticlesPanel" class="EntryPanel">
+				<Label class="OnValue" text="Hero 18 Particles:" />
+				<Label class="Value" id="Hero18Particles" text="0" />	
+			</Panel>
+			<Panel id="Hero19ParticlesPanel" class="EntryPanel">
+				<Label class="OnValue" text="Hero 19 Particles:" />
+				<Label class="Value" id="Hero19Particles" text="0" />	
+			</Panel>
 		</Panel>
 	</Panel>
 </root>

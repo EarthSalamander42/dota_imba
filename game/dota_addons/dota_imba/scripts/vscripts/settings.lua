@@ -2,7 +2,7 @@
 -- IMBA: Game settings
 -------------------------------------------------------------------------------------------------
 
-IMBA_VERSION = "7.00"						-- Tracks game version
+IMBA_VERSION = "7.01"						-- Tracks game version
 
 -------------------------------------------------------------------------------------------------
 -- Barebones basics
@@ -187,9 +187,9 @@ CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_8] = 0
 
 if GetMapName() == "imba_standard" then
 	IMBA_PICK_MODE_ALL_PICK = true
-elseif GetMapName() == "imba_random_omg" then
-	IMBA_ABILITY_MODE_RANDOM_OMG = true
 elseif GetMapName() == "imba_custom" then
+	IMBA_PICK_MODE_ALL_PICK = true
+elseif GetMapName() == "imba_custom_10v10" then
 	IMBA_PICK_MODE_ALL_PICK = true
 	IMBA_PLAYERS_ON_GAME = 20
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 10
@@ -205,6 +205,21 @@ elseif GetMapName() == "imba_arena" then
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 6
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 6
 end
+
+-- NOTE: You always need at least 2 non-bounty type runes to be able to spawn or your game will crash!
+ENABLED_RUNES = {}                      -- Which runes should be enabled to spawn in our game mode?
+ENABLED_RUNES[DOTA_RUNE_DOUBLEDAMAGE] = true
+ENABLED_RUNES[DOTA_RUNE_HASTE] = true
+ENABLED_RUNES[DOTA_RUNE_ILLUSION] = true
+ENABLED_RUNES[DOTA_RUNE_INVISIBILITY] = true
+ENABLED_RUNES[DOTA_RUNE_REGENERATION] = true
+ENABLED_RUNES[DOTA_RUNE_BOUNTY] = true
+ENABLED_RUNES[DOTA_RUNE_ARCANE] = true
+--	ENABLED_RUNES[DOTA_RUNE_HAUNTED] = true
+--	ENABLED_RUNES[DOTA_RUNE_MYSTERY] = true
+--	ENABLED_RUNES[DOTA_RUNE_RAPIER] = true
+--	ENABLED_RUNES[DOTA_RUNE_SPOOKY] = true
+--	ENABLED_RUNES[DOTA_RUNE_TURBO] = true
 
 -------------------------------------------------------------------------------------------------
 -- IMBA: game mode globals
@@ -284,7 +299,7 @@ if GetMapName() == "imba_standard" then										-- Standard map defaults
 	HERO_RERANDOM_GOLD = 1300
 	HERO_STARTING_LEVEL = 3
 	MAX_LEVEL = 40
-elseif GetMapName() == "imba_custom" then									-- Custom map defaults
+elseif GetMapName() == "imba_custom" or GetMapName() == "imba_custom_10v10" then									-- Custom map defaults
 	END_GAME_ON_KILLS = false
 	CUSTOM_GOLD_BONUS = 150
 	CUSTOM_XP_BONUS = 150
@@ -355,6 +370,33 @@ CustomNetTables:SetTableValue("game_options", "hero_pick_rule", {IMBA_HERO_PICK_
 
 -- XP per level table (only active if custom hero levels are enabled) 
 XP_PER_LEVEL_TABLE = {}
+
+-- Vanilla
+-- Level :1		0			+0
+-- Level :2		240			+240
+-- Level :3		600			+360
+-- Level :4		1080		+480
+-- Level :5		1680		+600
+-- Level :6		2300		+620
+-- Level :7		2940		+640
+-- Level :8		3600		+660
+-- Level :9		4280		+680
+-- Level :10	5080		+800
+-- Level :11	5900		+820
+-- Level :12	6740		+840
+-- Level :13	7640		+900
+-- Level :14	8865		+1225
+-- Level :15	10115		+1250
+-- Level :16	11390		+1275
+-- Level :17	12690		+1300
+-- Level :18	14015		+1325
+-- Level :19	15415		+1400
+-- Level :20	16905		+1490
+-- Level :21	18405		+1500
+-- Level :22	20155		+1750
+-- Level :23	20155		+2000
+-- Level :24	24405		+2250
+-- Level :25	26905		+2500
 
 XP_PER_LEVEL_TABLE[1] = 0
 XP_PER_LEVEL_TABLE[2] = 120

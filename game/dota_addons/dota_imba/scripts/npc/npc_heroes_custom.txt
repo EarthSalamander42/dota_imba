@@ -1429,20 +1429,18 @@
 	{
 		"override_hero"				"npc_dota_hero_meepo"
 
-		"IsDisabled"				"1"
-
-		//"Ability1"					"imba_meepo_earthbind"
-		//"Ability2"					"imba_meepo_poof"
-		//"Ability3"					"imba_meepo_geostrike"
-		//"Ability4"					"imba_meepo_divided_we_stand"
+		//"Ability1"				"imba_meepo_earthbind"
+		//"Ability2"				"imba_meepo_poof"
+		//"Ability3"				"imba_meepo_geostrike"
+		//"Ability4"				"imba_meepo_divided_we_stand"
 
 		"Ability10"					"special_bonus_armor_4"
 		"Ability11"					"special_bonus_attack_damage_15"
 		"Ability12"					"special_bonus_lifesteal_15"
-		"Ability13"					"special_bonus_movement_speed_20"
-		"Ability14"					"special_bonus_evasion_15"
+		"Ability13"					"special_bonus_movement_speed_25"
+		"Ability14"					"special_bonus_evasion_10"
 		"Ability15"					"special_bonus_attack_speed_25"
-		"Ability16"					"special_bonus_hp_350"
+		"Ability16"					"special_bonus_hp_400"
 		"Ability17"					"special_bonus_unique_meepo"
 
 		"ProjectileSpeed"			"900"
@@ -2153,11 +2151,10 @@
 	{
 		"override_hero"				"npc_dota_hero_shadow_shaman"
 
-		"IsDisabled"				"0"
 
-		//"Ability1"					"imba_shadow_shaman_ether_shock"
-		//"Ability2"					"imba_shadow_shaman_voodoo"
-		//"Ability3"					"imba_shadow_shaman_shackles"
+		//"Ability1"				"imba_shadow_shaman_ether_shock"
+		//"Ability2"				"imba_shadow_shaman_voodoo"
+		//"Ability3"				"imba_shadow_shaman_shackles"
 		"Ability4"					"imba_shadow_shaman_mass_serpent_ward"
 
 		"Ability14"					"special_bonus_cooldown_reduction_15"

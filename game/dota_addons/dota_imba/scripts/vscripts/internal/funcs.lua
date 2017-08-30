@@ -1624,104 +1624,157 @@ end
 
 
 function IsVanillaDebuff(modifier_name)		
-	local vanilla_debuffs = 
+local vanilla_debuffs = 
 	{["modifier_cold_feet"] = true,
- 	 ["modifier_arc_warden_flux"] = true,
- 	 ["modifier_batrider_sticky_napalm"] = true,
- 	 ["modifier_flamebreak_damage"] = true,
- 	 ["modifier_beastmaster_primal_roar_slow"] = true,
- 	 ["modifier_brewmaster_thunder_clap"] = true,
- 	 ["modifier_brewmaster_drunken_haze"] = true,
- 	 ["modifier_bristleback_viscous_nasal_goo"] = true,
- 	 ["modifier_broodmother_spawn_spiderlings"] = true,
- 	 ["modifier_broodmother_incapacitating_bite_orb"] = true,
- 	 ["modifier_chaos_knight_reality_rift"] = true,
- 	 ["modifier_chen_penitence"] = true, 	 
- 	 ["modifier_silence"] = true,
- 	 ["modifier_doom_bringer_infernal_blade_burn"] = true,
- 	 ["modifier_dragonknight_breathefire_reduction"] = true,
- 	 ["modifier_dragon_knight_corrosive_breath_dot"] = true,
- 	 ["modifier_dragon_knight_frost_breath_slow"] = true,
- 	 ["modifier_earth_spirit_rolling_boulder_slow"] = true,
- 	 ["modifier_earth_spirit_geomagnetic_grip_debuff"] = true,
- 	 ["modifier_earth_spirit_magnetize"] = true,
- 	 ["modifier_elder_titan_earth_splitter"] = true,
- 	 ["modifier_ember_spirit_searing_chains"] = true,
- 	 ["modifier_enchantress_untouchable_slow"] = true,
- 	 ["modifier_enchantress_enchant_slow"] = true,
- 	 ["modifier_gyrocopter_call_down_slow"] = true,
- 	 ["modifier_huskar_life_break_slow"] = true,
- 	 ["modifier_invoker_cold_snap"] = true,
- 	 ["modifier_invoker_tornado"] = true,
- 	 ["modifier_invoker_chaos_meteor_burn"] = true,
- 	 ["modifier_wisp_tether_slow"] = true,
- 	 ["modifier_keeper_of_the_light_mana_leak"] = true,
- 	 ["modifier_keeper_of_the_light_blinding_light"] = true,
- 	 ["modifier_leshrac_lightning_storm_slow"] = true,
- 	 ["modifier_life_stealer_open_wounds"] = true,
- 	 ["modifier_lone_druid_savage_roar"] = true,
- 	 ["modifier_meepo_earthbind"] = true,
- 	 ["modifier_meepo_geostrike_debuff"] = true,
- 	 ["modifier_monkey_king_spring_slow"] = true,
- 	 ["modifier_naga_siren_ensnare"] = true,
- 	 ["modifier_naga_siren_rip_tide"] = true,
- 	 ["modifier_furion_wrathofnature_spawn"] = true,
- 	 ["modifier_ogre_magi_ignite"] = true,
- 	 ["modifier_oracle_fates_edict"] = true,
- 	 ["modifier_oracle_fortunes_end_purge"] = true,
- 	 ["modifier_phantom_lancer_spirit_lance"] = true,
- 	 ["modifier_phoenix_icarus_dive_burn"] = true,
- 	 ["modifier_phoenix_fire_spirit_burn"] = true,
- 	 ["modifier_razor_unstablecurrent_slow"] = true,
- 	 ["modifier_rubick_fade_bolt_debuff"] = true,
- 	 ["modifier_shadow_demon_soul_catcher"] = true,
- 	 ["modifier_shadow_demon_shadow_poison"] = true,
- 	 ["modifier_shadow_shaman_voodoo"] = true,
- 	 ["modifier_templar_assassin_meld_armor"] = true,
- 	 ["modifier_templar_assassin_trap_slow"] = true,
- 	 ["modifier_terrorblade_reflection_slow"] = true,
- 	 ["modifier_tidehunter_gush"] = true,
- 	 ["modifier_tidehunter_anchor_smash"] = true,
- 	 ["modifier_whirling_death_debuff"] = true,
- 	 ["modifier_shredder_chakram_debuff"] = true,
- 	 ["modifier_tinker_laser_blind"] = true,
- 	 ["modifier_treant_natures_guise_root"] = true,
- 	 ["modifier_greevil_leech_seed"] = true,
- 	 ["modifier_treant_overgrowth"] = true,
- 	 ["modifier_tusk_walrus_punch_slow"] = true,
- 	 ["modifier_tusk_walrus_kick_slow"] = true,
- 	 ["modifier_abyssal_underlord_pit_of_malice_ensare"] = true,
- 	 ["modifier_viper_poison_attack_slow"] = true,
- 	 ["modifier_viper_corrosive_skin_slow"] = true,
- 	 ["modifier_visage_grave_chill_debuff"] = true,
- 	 ["modifier_winter_wyvern_arctic_burn_slow"] = true,
- 	 ["modifier_winter_wyvern_splinter_blast_slow"] = true,
- 	 ["modifier_big_thunder_lizard_slam"] = true,
- 	 ["modifier_dark_troll_warlord_ensnare"] = true,
- 	 ["modifier_ghost_frost_attack_slow"] = true,
- 	 ["modifier_polar_furbolg_ursa_warrior_thunder_clap"] = true,
- 	 ["modifier_ogre_magi_frost_armor_slow"] = true,
- 	 ["modifier_imba_roshan_slam"] = true,
- 	 ["modifier_imba_roshan_slam_armor"] = true,
- 	 ["modifier_satyr_trickster_purge"] = true,
- 	 ["modifier_broodmother_poison_sting_debuff"] = true,
- 	 ["modifier_broodmother_poison_sting_dps_debuff"] = true,
- 	 ["modifier_lone_druid_spirit_bear_entangle_effect"] = true,
- 	 ["modifier_brewmaster_storm_cyclone"] = true,
- 	 ["modifier_undying_tombstone_zombie_deathlust"] = true,
- 	 ["modifier_gnoll_assassin_envenomed_weapon_poison"] = true,
- 	 ["modifier_item_ethereal_blade_ethereal"] = true,
- 	 ["modifier_item_ethereal_blade_slow"] = true,
- 	 ["modifier_cyclone"] = true,
- 	 ["modifier_item_medallion_of_courage_armor_reduction"] = true,
- 	 ["modifier_item_orb_of_venom_slow"] = true,
- 	 ["modifier_rod_of_atos_debuff"] = true,
- 	 ["modifier_item_imba_shivas_blast_slow"] = true,
- 	 ["modifier_item_solar_crest_armor_reduction"] = true}
+	["modifier_arc_warden_flux"] = true,
+	["modifier_batrider_sticky_napalm"] = true,
+	["modifier_flamebreak_damage"] = true,
+	["modifier_beastmaster_primal_roar_slow"] = true,
+	["modifier_brewmaster_thunder_clap"] = true,
+	["modifier_brewmaster_drunken_haze"] = true,
+	["modifier_bristleback_viscous_nasal_goo"] = true,
+	["modifier_broodmother_spawn_spiderlings"] = true,
+	["modifier_broodmother_incapacitating_bite_orb"] = true,
+	["modifier_chaos_knight_reality_rift"] = true,
+	["modifier_chen_penitence"] = true, 	 
+	["modifier_silence"] = true,
+	["modifier_doom_bringer_infernal_blade_burn"] = true,
+	["modifier_dragonknight_breathefire_reduction"] = true,
+	["modifier_dragon_knight_corrosive_breath_dot"] = true,
+	["modifier_dragon_knight_frost_breath_slow"] = true,
+	["modifier_earth_spirit_rolling_boulder_slow"] = true,
+	["modifier_earth_spirit_geomagnetic_grip_debuff"] = true,
+	["modifier_earth_spirit_magnetize"] = true,
+	["modifier_elder_titan_earth_splitter"] = true,
+	["modifier_ember_spirit_searing_chains"] = true,
+	["modifier_enchantress_untouchable_slow"] = true,
+	["modifier_enchantress_enchant_slow"] = true,
+	["modifier_gyrocopter_call_down_slow"] = true,
+	["modifier_huskar_life_break_slow"] = true,
+	["modifier_invoker_cold_snap"] = true,
+	["modifier_invoker_tornado"] = true,
+	["modifier_invoker_chaos_meteor_burn"] = true,
+	["modifier_wisp_tether_slow"] = true,
+	["modifier_keeper_of_the_light_mana_leak"] = true,
+	["modifier_keeper_of_the_light_blinding_light"] = true,
+	["modifier_leshrac_lightning_storm_slow"] = true,
+	["modifier_life_stealer_open_wounds"] = true,
+	["modifier_lone_druid_savage_roar"] = true,
+	["modifier_meepo_earthbind"] = true,
+	["modifier_meepo_geostrike_debuff"] = true,
+	["modifier_monkey_king_spring_slow"] = true,
+	["modifier_naga_siren_ensnare"] = true,
+	["modifier_naga_siren_rip_tide"] = true,
+	["modifier_furion_wrathofnature_spawn"] = true,
+	["modifier_ogre_magi_ignite"] = true,
+	["modifier_oracle_fates_edict"] = true,
+	["modifier_oracle_fortunes_end_purge"] = true,
+	["modifier_phantom_lancer_spirit_lance"] = true,
+	["modifier_phoenix_icarus_dive_burn"] = true,
+	["modifier_phoenix_fire_spirit_burn"] = true,
+	["modifier_razor_unstablecurrent_slow"] = true,
+	["modifier_rubick_fade_bolt_debuff"] = true,
+	["modifier_shadow_demon_soul_catcher"] = true,
+	["modifier_shadow_demon_shadow_poison"] = true,
+	["modifier_shadow_shaman_voodoo"] = true,
+	["modifier_templar_assassin_meld_armor"] = true,
+	["modifier_templar_assassin_trap_slow"] = true,
+	["modifier_terrorblade_reflection_slow"] = true,
+	["modifier_tidehunter_gush"] = true,
+	["modifier_tidehunter_anchor_smash"] = true,
+	["modifier_whirling_death_debuff"] = true,
+	["modifier_shredder_chakram_debuff"] = true,
+	["modifier_tinker_laser_blind"] = true,
+	["modifier_treant_natures_guise_root"] = true,
+	["modifier_greevil_leech_seed"] = true,
+	["modifier_treant_overgrowth"] = true,
+	["modifier_tusk_walrus_punch_slow"] = true,
+	["modifier_tusk_walrus_kick_slow"] = true,
+	["modifier_abyssal_underlord_pit_of_malice_ensare"] = true,
+	["modifier_viper_poison_attack_slow"] = true,
+	["modifier_viper_corrosive_skin_slow"] = true,
+	["modifier_visage_grave_chill_debuff"] = true,
+	["modifier_winter_wyvern_arctic_burn_slow"] = true,
+	["modifier_winter_wyvern_splinter_blast_slow"] = true,
+	["modifier_big_thunder_lizard_slam"] = true,
+	["modifier_dark_troll_warlord_ensnare"] = true,
+	["modifier_ghost_frost_attack_slow"] = true,
+	["modifier_polar_furbolg_ursa_warrior_thunder_clap"] = true,
+	["modifier_ogre_magi_frost_armor_slow"] = true,
+	["modifier_imba_roshan_slam"] = true,
+	["modifier_imba_roshan_slam_armor"] = true,
+	["modifier_satyr_trickster_purge"] = true,
+	["modifier_broodmother_poison_sting_debuff"] = true,
+	["modifier_broodmother_poison_sting_dps_debuff"] = true,
+	["modifier_lone_druid_spirit_bear_entangle_effect"] = true,
+	["modifier_brewmaster_storm_cyclone"] = true,
+	["modifier_undying_tombstone_zombie_deathlust"] = true,
+	["modifier_gnoll_assassin_envenomed_weapon_poison"] = true,
+	["modifier_item_ethereal_blade_ethereal"] = true,
+	["modifier_item_ethereal_blade_slow"] = true,
+	["modifier_cyclone"] = true,
+	["modifier_item_medallion_of_courage_armor_reduction"] = true,
+	["modifier_item_orb_of_venom_slow"] = true,
+	["modifier_rod_of_atos_debuff"] = true,
+	["modifier_item_imba_shivas_blast_slow"] = true,
+	["modifier_item_solar_crest_armor_reduction"] = true}
 
- 	 if vanilla_debuffs[modifier_name] then
- 	 	return true
- 	 end
+	if vanilla_debuffs[modifier_name] then
+		return true
+	end
 
- 	 return false
+	return false
+end
+
+function CDOTA_BaseNPC:GetFullName()
+	return self.UnitName or (self.GetUnitName and self:GetUnitName()) or self:GetName()
+end
+
+function ClearSlotsFromDummy(unit, bNoStash)
+	for i = 0, bNoStash and DOTA_ITEM_SLOT_9 or DOTA_STASH_SLOT_6 do
+		local current_item = unit:GetItemInSlot(i)
+		if current_item and current_item:GetAbilityName() == "item_dummy" then
+			unit:RemoveItem(current_item)
+			UTIL_Remove(current_item)
+		end
+	end
+end
+
+function string.starts(s, start)
+	return string.sub(s, 1, string.len(start)) == start
+end
+
+function string.ends(s, e)
+	return e == "" or string.sub(s, -string.len(e)) == e
+end
+
+function string.split(inputstr, sep)
+	local t = {}
+	for str in string.gmatch(inputstr, "([^" .. (sep or "%s") .. "]+)") do
+		table.insert(t, str)
+	end
+	return t
+end
+
+function string.splitQuoted(inputstr)
+	local t = {}
+	local spat, epat, buf, quoted = [=[^(['"])]=], [=[(['"])$]=]
+	for str in inputstr:gmatch("%S+") do
+		local squoted = str:match(spat)
+		local equoted = str:match(epat)
+		local escaped = str:match([=[(\*)['"]$]=])
+		if squoted and not quoted and not equoted then
+			buf, quoted = str, squoted
+		elseif buf and equoted == quoted and #escaped % 2 == 0 then
+			str, buf, quoted = buf .. ' ' .. str, nil, nil
+		elseif buf then
+			buf = buf .. ' ' .. str
+		end
+		if not buf then
+			local newString = str:gsub(spat,""):gsub(epat,"")
+			table.insert(t, newString)
+		end
+	end
+	if buf then error("Missing matching quote for "..buf) end
+	return t
 end
