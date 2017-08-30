@@ -121,7 +121,7 @@ function GameMode:_CaptureGameMode()
 	if mode == nil then
 
 		-- Set GameMode parameters
-		mode = GameRules:GetGameModeEntity()        
+		mode = GameRules:GetGameModeEntity()
 		mode:SetRecommendedItemsDisabled( RECOMMENDED_BUILDS_DISABLED )
 		mode:SetCameraDistanceOverride( CAMERA_DISTANCE_OVERRIDE )
 		mode:SetCustomBuybackCostEnabled( CUSTOM_BUYBACK_COST_ENABLED )
@@ -152,6 +152,10 @@ function GameMode:_CaptureGameMode()
 		mode:SetMaximumAttackSpeed( MAXIMUM_ATTACK_SPEED )
 		mode:SetMinimumAttackSpeed( MINIMUM_ATTACK_SPEED )
 		mode:SetStashPurchasingDisabled ( DISABLE_STASH_PURCHASING )
+
+		for rune, spawn in pairs(ENABLED_RUNES) do
+			mode:SetRuneEnabled(rune, spawn)
+		end
 
 		mode:SetUnseenFogOfWarEnabled(USE_UNSEEN_FOG_OF_WAR)
 
@@ -339,15 +343,15 @@ function OnSetGameMode( eventSourceIndex, args )
 		print("Hero power set to high")
 	end	
 
-    -- Hero pick rule
-    -- Ignore HeroPickRuleOption1 because that is the default
-    if tostring(mode_info.hero_pick_rule) == "HeroPickRuleOption2" then
-        IMBA_HERO_PICK_RULE = 1
-    elseif tostring(mode_info.hero_pick_rule) == "HeroPickRuleOption3" then
-        IMBA_HERO_PICK_RULE = 2
+	-- Hero pick rule
+	-- Ignore HeroPickRuleOption1 because that is the default
+	if tostring(mode_info.hero_pick_rule) == "HeroPickRuleOption2" then
+		IMBA_HERO_PICK_RULE = 1
+	elseif tostring(mode_info.hero_pick_rule) == "HeroPickRuleOption3" then
+		IMBA_HERO_PICK_RULE = 2
 	end
 
-    CustomNetTables:SetTableValue("game_options", "hero_pick_rule", {IMBA_HERO_PICK_RULE})
+	CustomNetTables:SetTableValue("game_options", "hero_pick_rule", {IMBA_HERO_PICK_RULE})
 
 	-- Set the game options as being chosen
 	GAME_OPTIONS_SET = true

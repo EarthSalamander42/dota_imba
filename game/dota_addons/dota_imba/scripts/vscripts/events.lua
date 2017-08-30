@@ -118,31 +118,46 @@ local i = 10
 
 	if new_state == DOTA_GAMERULES_STATE_PRE_GAME then
 		-- Play Announcer sounds in Picking Screen until a hero is picked
-		Timers:CreateTimer(function()
-			local i2 = false
-			for _, hero in pairs(HeroList:GetAllHeroes()) do
-				if hero.picked == true then print("Hero Picked! Aborting Announcer...") return nil end
-				if GameRules:GetDOTATime(false, true) >= -PRE_GAME_TIME + HERO_SELECTION_TIME -30 and GameRules:GetDOTATime(false, true) <= -PRE_GAME_TIME + HERO_SELECTION_TIME -29 then
-					EmitAnnouncerSoundForPlayer("announcer_announcer_count_battle_30", hero:GetPlayerID())
-				elseif GameRules:GetDOTATime(false, true) >= -PRE_GAME_TIME + HERO_SELECTION_TIME -10 and GameRules:GetDOTATime(false, true) <= -PRE_GAME_TIME + HERO_SELECTION_TIME then
-					if i2 == false then
-						if i == 10 then
-							EmitAnnouncerSoundForPlayer("announcer_ann_custom_countdown_"..i, hero:GetPlayerID())
-							i = i -1
-							i2 = true
-						elseif i <= 10 then
-							EmitAnnouncerSoundForPlayer("announcer_ann_custom_countdown_0"..i, hero:GetPlayerID())
-							i = i -1
-							i2 = true
-						elseif i == 1 then
-							print("NIL")
-							return nil
-						end
-					end
+--		Timers:CreateTimer(function()
+--			local i2 = false
+--			for _, hero in pairs(HeroList:GetAllHeroes()) do
+--				if hero.picked == true then print("Hero Picked! Aborting Announcer...") return nil end
+--				if GameRules:GetDOTATime(false, true) >= -PRE_GAME_TIME + HERO_SELECTION_TIME -30 and GameRules:GetDOTATime(false, true) <= -PRE_GAME_TIME + HERO_SELECTION_TIME -29 then
+--					EmitAnnouncerSoundForPlayer("announcer_announcer_count_battle_30", hero:GetPlayerID())
+--				elseif GameRules:GetDOTATime(false, true) >= -PRE_GAME_TIME + HERO_SELECTION_TIME -10 and GameRules:GetDOTATime(false, true) <= -PRE_GAME_TIME + HERO_SELECTION_TIME then
+--					if i2 == false then
+--						if i == 10 then
+--							EmitAnnouncerSoundForPlayer("announcer_ann_custom_countdown_"..i, hero:GetPlayerID())
+--							i = i -1
+--							i2 = true
+--						elseif i <= 10 then
+--							EmitAnnouncerSoundForPlayer("announcer_ann_custom_countdown_0"..i, hero:GetPlayerID())
+--							i = i -1
+--							i2 = true
+--						elseif i == 1 then
+--							print("NIL")
+--							return nil
+--						end
+--					end
+--				end
+--			end
+--			return 1.0
+--		end)
+
+--		Timers:CreateTimer(function()
+--			for _, hero in pairs(HeroList:GetAllHeroes()) do
+--				MeepoFixes:ShareItems(hero)
+--			end
+--			return 0.5
+--		end)
+
+		if IMBA_PICK_MODE_ALL_RANDOM or IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
+			Timers:CreateTimer(3.0, function()
+				for _, hero in pairs(HeroList:GetAllHeroes()) do
+					HeroSelection:RandomHero({PlayerID = hero:GetPlayerID()})
 				end
-			end
-			return 1.0
-		end)
+			end)
+		end
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -633,6 +648,8 @@ function GameMode:OnRuneActivated (keys)
 	local player = PlayerResource:GetPlayer(keys.PlayerID)
 	local rune = keys.rune
 
+	PrintTable(rune)
+
 	--[[ Rune Can be one of the following types
 	DOTA_RUNE_DOUBLEDAMAGE
 	DOTA_RUNE_HASTE
@@ -819,6 +836,7 @@ function GameMode:OnEntityKilled( keys )
 	end
 
 	if killed_unit then
+
 		-------------------------------------------------------------------------------------------------
 		-- IMBA: Ancient destruction detection
 		-------------------------------------------------------------------------------------------------
@@ -843,7 +861,7 @@ function GameMode:OnEntityKilled( keys )
 			local wk_mod = killed_unit:FindModifierByName("modifier_imba_reincarnation")
 			reincarnation_death = (wk_mod.can_die == false)
 		end
-		
+
 		if killed_unit:HasModifier("modifier_item_imba_aegis") then
 			killed_unit:SetTimeUntilRespawn(killed_unit:FindModifierByName("modifier_item_imba_aegis").reincarnate_time)
 		elseif reincarnation_death then
@@ -863,20 +881,8 @@ function GameMode:OnEntityKilled( keys )
 			respawn_time = math.max( respawn_time * HERO_RESPAWN_TIME_MULTIPLIER * 0.01, 1)
 
 			-- Set up the respawn timer, include meepo fix
-			if killed_unit:GetUnitName() == "npc_dota_hero_meepo" then
-				local meepo_table = Entities:FindAllByName("npc_dota_hero_meepo")
-				if meepo_table then
-					for i = 1, #meepo_table do
-						if meepo_table[i]:IsClone() then
-						else
---							print(respawn_time)
---							killed_unit:SetTimeUntilRespawn(respawn_time)
-						end
-					end
-				end
-			else
-				killed_unit:SetTimeUntilRespawn(respawn_time)
-			end
+			killed_unit:SetTimeUntilRespawn(respawn_time)
+			MeepoFixes:ShareRespawnTime(killed_unit, respawn_time)
 		end
 
 		-------------------------------------------------------------------------------------------------

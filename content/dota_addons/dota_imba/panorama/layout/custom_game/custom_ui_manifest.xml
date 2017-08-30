@@ -65,6 +65,7 @@
 		GameUI.CustomUIConfig().player_colors[18] = "#808080;";
 		GameUI.CustomUIConfig().player_colors[19] = "#FEFEFE;";
 
+		// HUD Hack, made by Cookies #42 [EarthSalamander]
 		// Hide normal picking screen
 		$.GetContextPanel().GetParent().GetParent().FindChildTraverse("PreGame").style.visibility = "collapse";
 
@@ -147,8 +148,6 @@
 				tbbg.style.backgroundSize = '0%';
 //				tbbg.style.backgroundColor = '#000000da';
 				tbbg.style.backgroundColor = '#08640Eda';
-				tbbg.style.borderRadius = "6px";
-				tbbg.style.marginTop = "-1px";
 			}
 		}
 
@@ -158,8 +157,6 @@
 				tbbg.style.backgroundSize = '0%';
 //				tbbg.style.backgroundColor = '#000000da';
 				tbbg.style.backgroundColor = '#640808da';
-				tbbg.style.borderRadius = "6px";
-				tbbg.style.marginTop = "-1px";
 			}
 		}
 	</script>

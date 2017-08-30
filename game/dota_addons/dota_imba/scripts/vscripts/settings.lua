@@ -206,6 +206,21 @@ elseif GetMapName() == "imba_arena" then
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 6
 end
 
+-- NOTE: You always need at least 2 non-bounty type runes to be able to spawn or your game will crash!
+ENABLED_RUNES = {}                      -- Which runes should be enabled to spawn in our game mode?
+ENABLED_RUNES[DOTA_RUNE_DOUBLEDAMAGE] = true
+ENABLED_RUNES[DOTA_RUNE_HASTE] = true
+ENABLED_RUNES[DOTA_RUNE_ILLUSION] = true
+ENABLED_RUNES[DOTA_RUNE_INVISIBILITY] = true
+ENABLED_RUNES[DOTA_RUNE_REGENERATION] = true
+ENABLED_RUNES[DOTA_RUNE_BOUNTY] = true
+ENABLED_RUNES[DOTA_RUNE_ARCANE] = true
+--	ENABLED_RUNES[DOTA_RUNE_HAUNTED] = true
+--	ENABLED_RUNES[DOTA_RUNE_MYSTERY] = true
+--	ENABLED_RUNES[DOTA_RUNE_RAPIER] = true
+--	ENABLED_RUNES[DOTA_RUNE_SPOOKY] = true
+--	ENABLED_RUNES[DOTA_RUNE_TURBO] = true
+
 -------------------------------------------------------------------------------------------------
 -- IMBA: game mode globals
 -------------------------------------------------------------------------------------------------

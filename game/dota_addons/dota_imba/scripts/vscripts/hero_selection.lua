@@ -235,14 +235,14 @@ local id = event.PlayerID
 	PlayerResource:SetHasRandomed(id)
 
 	-- If it's a valid hero, allow the player to select it
-	if IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
-		print("All Random Same Hero-ing!")
-		for _, hero in pairs(HeroList:GetAllHeroes()) do
-			HeroSelection:HeroSelect({PlayerID = hero:GetPlayerID(), HeroName = random_hero, HasRandomed = true})
-		end
-	else
+--	if IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
+--		print("All Random Same Hero-ing!")
+--		for _, hero in pairs(HeroList:GetAllHeroes()) do
+--			HeroSelection:HeroSelect({PlayerID = hero:GetPlayerID(), HeroName = random_hero, HasRandomed = true})
+--		end
+--	else
 		HeroSelection:HeroSelect({PlayerID = id, HeroName = random_hero, HasRandomed = true})
-	end
+--	end
 
 	-- The person has randomed (separate from Set/HasRandomed, because those cannot be unset)
 	HeroSelection.playerPickState[id].random_state = true

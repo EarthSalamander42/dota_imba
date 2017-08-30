@@ -40,6 +40,10 @@ require('internal/scoreboard_events')
 -- This library used to handle custom IMBA talent UI (hero_selection will need to use a function in this)
 require('internal/imba_talent_events')
 
+-- Meepo Vanilla fix (from Angel Arena Black Star)
+require('libraries/meepo/data')
+require('libraries/meepo/meepo')
+
 -- settings.lua is where you can specify many different properties for your game mode and is one of the core barebones files.
 require('settings')
 -- events.lua is where you can specify the actions to be taken when any event occurs and is one of the core barebones files.
@@ -466,9 +470,9 @@ function GameMode:ItemAddedFilter( keys )
 	-- Aegis of the Immortal pickup logic
 	-------------------------------------------------------------------------------------------------
 
-	if item_name == "item_aegis" then
+	if item_name == "item_imba_aegis" then
 		-- If this is a player, do Aegis stuff
-		if unit:IsRealHero() then
+		if unit:IsRealHero() and not unit:HasModifier("modifier_item_imba_aegis") then
 
 			-- Display aegis pickup message for all players
 			unit:AddNewModifier(unit, item, "modifier_item_imba_aegis",{})
@@ -1096,12 +1100,6 @@ local time_elapsed = 0
 	end)
 
 	if not hero.is_real_wisp and hero:GetUnitName() == "npc_dota_hero_wisp" then
-		if IMBA_PICK_MODE_ALL_RANDOM or IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
-			Timers:CreateTimer(2.0, function()
-				HeroSelection:RandomHero({PlayerID = hero:GetPlayerID()})
-			end)
-		end
-
 		Timers:CreateTimer(function()
 			if not hero:HasModifier("modifier_imba_prevent_actions_game_start") then
 				hero:AddNewModifier(hero, nil, "modifier_imba_prevent_actions_game_start", {})

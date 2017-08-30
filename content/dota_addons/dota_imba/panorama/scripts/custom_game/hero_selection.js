@@ -23,14 +23,12 @@ var abilityPanels = [
 
 /* Picking phase is done, start loading heroes */
 function OnPickingDone( data ) {
-	$.Msg("OnPickingDone")
 	$("#EnterGameBtnTxt").text = $.Localize( "#imba_enter_game_button" );
 	$("#RepickBtn").AddClass( "disabled" );
 }
 
 /* Hero loading is done, allow the player to enter the game */
 function OnHeroLoadingDone( data ) {
-	$.Msg("OnHeroLoadingDone")
 	$("#EnterGameBtn").RemoveClass( "disabled" );
 	$("#EnterGameBtnTxt").text = $.Localize( "#imba_loading_heroes_button" );
 	canEnter = true;
@@ -277,7 +275,6 @@ function SelectRandomImbaHero() {
 function EnterGame() {
 	if ( canEnter ) {
 		$('#Background').GetParent().DeleteAsync( 0.0 );
-		$.Msg("Button Enter Game")
 
 		//COOKIES: Re-enable HUD parts when 1 player enter in the game, might need to find a way to show these HUD parts for player only rather than global
 		var parent_panel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
@@ -377,9 +374,8 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 		var parent_panel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
 		var map_info = Game.GetMapInfo();
 
-		if (map_info.map_display_name == "imba_random_omg") {
-			$('#GameModeSelectText').text = $.Localize( '#imba_gamemode_name_random_omg' );
-		} else if (map_info.map_display_name == "imba_arena") {
+		
+		if (map_info.map_display_name == "imba_arena") {
 			$('#GameModeSelectText').text = $.Localize( '#imba_gamemode_name_arena_mode' );
 		}
 

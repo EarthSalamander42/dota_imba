@@ -15,7 +15,7 @@ function modifier_imba_regen_rune:GetAuraSearchFlags() return DOTA_UNIT_TARGET_F
 function modifier_imba_regen_rune:GetModifierAura() return "modifier_imba_regen_rune_aura" end
 
 function modifier_imba_regen_rune:GetTextureName()
-	return "custom/imba_rune_regeneration"
+	return "rune_regen"
 end
 
 function modifier_imba_regen_rune:GetEffectName()
@@ -98,7 +98,7 @@ modifier_imba_regen_rune_aura = modifier_imba_regen_rune_aura or class({})
 function modifier_imba_regen_rune_aura:IsDebuff() return false end
 
 function modifier_imba_regen_rune_aura:GetTextureName()
-	return "custom/imba_rune_regeneration"
+	return "rune_regen"
 end
 
 function modifier_imba_regen_rune_aura:GetEffectName()
