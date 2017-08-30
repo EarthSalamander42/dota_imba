@@ -63,7 +63,7 @@ function Server_GetTitle(level)
 	elseif level <= 99 then
 		return "#imba_rank_title_icefrog"
 	else 
-		return "#imba_rank_title_firetoad"
+		return "#imba_rank_title_firetoad "..level-100
 	end
 end
 
