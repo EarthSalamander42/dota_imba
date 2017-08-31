@@ -246,6 +246,37 @@
 	color: #acacac;
 }
 
+#ImbaXPRank0,
+#ImbaXPRank1,
+#ImbaXPRank2,
+#ImbaXPRank3,
+#ImbaXPRank4,
+#ImbaXPRank5,
+#ImbaXPRank6,
+#ImbaXPRank7,
+#ImbaXPRank8,
+#ImbaXPRank9,
+#ImbaXPRank10,
+#ImbaXPRank11,
+#ImbaXPRank12,
+#ImbaXPRank13,
+#ImbaXPRank14,
+#ImbaXPRank15,
+#ImbaXPRank16,
+#ImbaXPRank17,
+#ImbaXPRank18,
+#ImbaXPRank19
+{
+	margin-top: 3px;
+	width: 100%;
+	font-size: 17px;
+	font-weight: bold;
+	color: white;
+	vertical-align: center;
+	horizontal-align: center;
+	opacity: 0.75;
+}
+
 #ImbaXP0,
 #ImbaXP1,
 #ImbaXP2,
@@ -268,7 +299,7 @@
 #ImbaXP19
 {
 	margin-top: 3px;
-	margin-left: 35%;
+	margin-left: 70%;
 	width: 100%;
 	font-size: 17px;
 	font-weight: bold;
@@ -323,14 +354,15 @@
 #ImbaLvl18,
 #ImbaLvl19
 {
-	font-size: 18px;
+	font-size: 17px;
+	font-weight: bold;
 	margin-top: 3px;
 	margin-right: 70%;
 	width: 100%;
 	color: white;
 	vertical-align: center;
 	horizontal-align: center;
-	opacity: 1.0;
+	opacity: 0.75;
 }
 
 #PlayerAndHeroName
