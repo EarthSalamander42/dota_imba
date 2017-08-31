@@ -11,6 +11,14 @@ function MeepoFixes:FindMeepos(main, includeMain)
 	return meepos
 end
 
+function MeepoFixes:ShareRespawnTime(unit, respawnTime)
+	if unit:GetFullName() == "npc_dota_hero_meepo" then
+		for _,clone in ipairs(MeepoFixes:FindMeepos(unit)) do
+			clone:SetTimeUntilRespawn(respawnTime)
+		end
+	end
+end
+
 function MeepoFixes:IsMeepoClone(unit)
 	return unit:GetFullName() == "npc_dota_hero_meepo" and unit:IsTrueHero() and not unit:IsMainHero()
 end
@@ -21,29 +29,21 @@ function MeepoFixes:ShareItems(unit)
 		for _,clone in ipairs(MeepoFixes:FindMeepos(unit)) do
 			if MeepoFixes:GetFilteredInventoryHash(clone, MEEPO_SHARED_ITEMS) ~= mainItemHash then
 				for i,v in ipairs(mainItemHash:split()) do
+					print(i)
+					print(v)
 					local oldItem = clone:GetItemInSlot(i - 1)
 					--Mostly uselss, because Dota's clears inventory, but should work with default boots
 					if oldItem then
+						print("Olditem!")
 						local oldItemName = oldItem:GetAbilityName()
 						if oldItemName ~= v then
-							if v and not v == "nil" then
-								print("Item valid")
-								UTIL_Remove(oldItem)
---								clone:AddItemByName(v ~= "nil" and v or "item_dummy"):SetSellable(false)
-								clone:AddItemByName(v):SetSellable(false)
-								print("Item added:", oldItemName)
-							else
---								print("Nil item!")
-							end
+							print("Removing!")
+							UTIL_Remove(oldItem)
+							clone:AddItemByName(v ~= "nil" and v or "item_dummy"):SetSellable(false)
 						end
 					else
---						clone:AddItemByName(v ~= "nil" and v or "item_dummy"):SetSellable(false)
-						if v and not v == "nil" then
-							print("Item is valid!")
-							clone:AddItemByName(v):SetSellable(false)
-						else
---							print("Nil item!")
-						end
+						print("Adding item...")
+						clone:AddItemByName(v ~= "nil" and v or "item_dummy"):SetSellable(false)
 					end
 				end
 				ClearSlotsFromDummy(clone, true)

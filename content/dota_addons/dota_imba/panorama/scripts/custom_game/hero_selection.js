@@ -293,6 +293,7 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 		// If the player is already in-game, destroy the pick interface and ignore the rest
 		if (pick_state == "in_game") {
 			$('#Background').GetParent().DeleteAsync( 0.0 );
+			parent_panel.FindChildTraverse("HUDElements").style.visibility = "visible";
 		// Else, repopulate player pick panels
 		} else {
 			var i = 1;
@@ -338,6 +339,7 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 
 	// Banned Heroes
 	//STR
+	$("#npc_dota_hero_chaos_knight").AddClass( "taken" );
 	$("#npc_dota_hero_undying").AddClass( "taken" );
 	///AGI
 	$("#npc_dota_hero_phantom_lancer").AddClass( "taken" );
@@ -353,7 +355,6 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 	var localTeam = Players.GetTeam(Players.GetLocalPlayer())
 	if ( localTeam != 2 && localTeam != 3 ) {
 		$('#Background').GetParent().DeleteAsync( 0.0 );
-
 	// Else, do pick screen stuff
 	} else {
 
