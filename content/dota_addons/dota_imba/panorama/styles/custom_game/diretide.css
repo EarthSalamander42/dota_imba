@@ -1,0 +1,93 @@
+
+.DiretidePanel
+{
+	horizontal-align: center;
+}
+
+#Diretide
+{
+	width: fit-children;
+	height: fit-children;
+	margin-top: 20%;
+	flow-children: right;
+	horizontal-align: center;
+	visibility: collapse;
+}
+
+.ScorePanel
+{
+	flow-children: right;
+	width: 120px;
+	height: 90px;
+
+	background-image: url("file://{images}/custom_game/game_info/roshan.png");
+//	background-color: black;
+	background-repeat: no-repeat;
+	background-position: 50% 0%;
+	background-size: 80% 80%;
+}
+
+#Timer
+{
+	margin-top: 70px;
+	font-size: 20px;
+	font-weight: bolder;
+	color: #ffffff;
+	text-shadow: 2px 2px 2px #7b612b;
+	text-align: center;
+	width: 100%;
+	text-overflow: clip;
+}
+
+#Timer.timer_visible
+{
+	opacity: 1;
+}
+
+#Timer.timer_hidden
+{
+	opacity: 0;
+}
+
+#Timer.timer_alert
+{
+	color: red;
+}
+
+#RadiantScore,
+#DireScore
+{
+	flow-children: down;
+	width: 120px;
+	height: 110px;
+
+	background-image: url("file://{images}/custom_game/game_info/pumpkin.png");
+	background-repeat: no-repeat;
+	background-position: 50% 0%;
+	background-size: 70% 70%;
+}
+
+#RadiantScoreText,
+#DireScoreText
+{
+	margin-left: 49px;
+	margin-top: -30px;
+	
+	color: green;
+	text-align: center;
+}
+
+#DireScoreText
+{
+	color: red;
+}
+
+.QuestGenericText
+{
+	font-family: TH Sarabun New,YDYGO 540,Gulim,MingLiU;
+	text-shadow: 2px 2px 1px 3.0 #333333b0;
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 40px;
+	text-align: center;
+}

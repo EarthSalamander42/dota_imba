@@ -22,7 +22,7 @@ local EnnDisEnabled = 0
 local table_rankXP = {0,100,200,300,400,500,700,900,1100,1300,1500,1800,2100,2400,2700,3000,3400,3800,4200,4600,5000}
 --------------------  0  1   2   3   4   5   6   7    8    9   10   11   12   13   14   15   16   17   18   19   20
 
-for i = 21, 200 do
+for i = 21 +1, 200 do
 	table_rankXP[i] = table_rankXP[i-1] +500
 end
 
@@ -142,7 +142,7 @@ end
 
 function Server_PrintInfo()
 	for nPlayerID=0, DOTA_MAX_TEAM_PLAYERS-1 do
-		if  PlayerResource:IsValidPlayer(nPlayerID)  then
+		if  PlayerResource:IsValidPlayer(nPlayerID) then
 		if PlayerResource:IsFakeClient(nPlayerID) then
 		else
 			print("=============================")
@@ -150,7 +150,7 @@ function Server_PrintInfo()
 			print("SteamID64:"..table_SteamID64[nPlayerID])
 			print("Level:"..XP_level[nPlayerID])
 			print("Rank_title:"..XP_level_title_player[nPlayerID])
-			print("MMR="..table_MMR[nPlayerID])
+--			print("MMR="..table_MMR[nPlayerID])
 			print("XP this level need:"..XP_this_level[nPlayerID])
 			print("XP has in this level:"..XP_has_this_level[nPlayerID])
 			print("XP need to level up:"..XP_need_to_next_level[nPlayerID])
@@ -166,13 +166,16 @@ function Server_PrintInfo()
 end
 
 function Server_GetPlayerLevelAndTitle(nPlayerID)
-	for i=31,1,-1 do
+	for i = #table_rankXP, 1, -1 do
 		if table_XP_has and table_XP_has[nPlayerID] and table_rankXP and table_rankXP[i] then
 			if tonumber(table_XP_has[nPlayerID]) >= table_rankXP[i] then
+				if tonumber(table_XP_has[nPlayerID]) < 0 then
+					print("XP below 0!")
+				end
 				XP_level[nPlayerID] = i-1
 				XP_level_title_player[nPlayerID] = Server_GetTitle(XP_level[nPlayerID])
 				XP_this_level[nPlayerID] = table_rankXP[i]
-				if i == 31 then
+				if i == #table_rankXP then
 					XP_need_to_next_level[nPlayerID] = 0
 				else
 					XP_need_to_next_level[nPlayerID] = table_rankXP[i+1] - tonumber(table_XP_has[nPlayerID])
@@ -205,7 +208,7 @@ function Server_SendAndGetInfoForAll_function(nPlayerID)
 	else
 
 		table_SteamID64[nPlayerID] = tostring(PlayerResource:GetSteamID(nPlayerID))
-		table_XP[nPlayerID] = tostring(math.random(24,32)) --How many XP will player get in this game
+		table_XP[nPlayerID] = tostring(25) --How many XP will player get in this game
 
 		local jsondata={}
 		local jsontable={}
@@ -264,13 +267,11 @@ function Server_AbilityToGainXPForPlyaer_function(nPlayerID)
 	end )
 end
 
-	-- GetConnectionState values:
-	-- 0 - no connection
-	-- 1 - bot connected
-	-- 2 - player connected
-	-- 3 - bot/player disconnected.
-
-
+-- GetConnectionState values:
+-- 0 - no connection
+-- 1 - bot connected
+-- 2 - player connected
+-- 3 - bot/player disconnected.
 
 function Server_WaitToEnableXpGain()
 	Serer_CheckForAFKPlayer()
@@ -332,7 +333,7 @@ function Server_CalculateXPForWinnerAndAll(winning_team)
 						jsontable.XP = tostring(math.ceil(table_XP[nPlayerID] * 2.0))
 						CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {XP = tonumber(XP_has_this_level[nPlayerID]), MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]), Lvl = tonumber(XP_level[nPlayerID]), ID = nPlayerID, title = XP_level_title_player[nPlayerID], XP_change = tonumber(math.ceil(table_XP[nPlayerID] * 2.0))})
 					else
-						jsontable.XP = tostring(math.ceil(table_XP[nPlayerID] * 1.2))
+						jsontable.XP = tostring(math.ceil(table_XP[nPlayerID] +20000))
 						CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {XP = tonumber(XP_has_this_level[nPlayerID]), MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]), Lvl = tonumber(XP_level[nPlayerID]), ID = nPlayerID, title = XP_level_title_player[nPlayerID], XP_change = tonumber(math.ceil(table_XP[nPlayerID] * 1.2))})
 					end
 				else
@@ -355,7 +356,6 @@ function Server_CalculateXPForWinnerAndAll(winning_team)
 		end
 	end
 end
-
 
 local table_AFK_check_allHeroes = {}
 local cycle_AFK_check_interval = 60

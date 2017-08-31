@@ -60,6 +60,68 @@
 		}
 	}
 
+	//-------------------
+	// Diretide stuff
+	//-------------------
+
+	//=====================================================================================================
+	// Candy Box: Immune
+	//=====================================================================================================
+	"diretide_pumpkin_immune"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityTextureName"			"roshan_bash"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"MaxLevel"						"1"
+
+		"Modifiers"
+		{
+			"modifier_pumpkin_immune"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"		"1"
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL"		"1"
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"			"1"
+				}
+			}
+		}
+	}
+
+	//=====================================================================================================
+	// Candy Box: Candy Drop
+	//=====================================================================================================
+	"diretide_pumpkin_candy_drop"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityTextureName"			"roshan_bash"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"MaxLevel"						"1"
+
+		"Modifiers"
+		{
+			"modifier_candy_drop"
+			{
+				"Passive"	"1"
+				"OnAttacked"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"internal/diretide.lua"
+						"Function"		"Pumpkin"
+					}
+				}
+			}
+		}
+	}
+
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	//	[BUFF]		PASSIVE UPGRADES
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

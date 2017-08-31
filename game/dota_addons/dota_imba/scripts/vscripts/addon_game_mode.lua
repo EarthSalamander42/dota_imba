@@ -2,6 +2,9 @@ require('statcollection/init')
 require('internal/util')
 require('internal/funcs')
 require('player_resource')
+if GetMapName() == "imba_diretide" then
+	require('internal/diretide')
+end
 require('imba')
 require('hero_selection')
 

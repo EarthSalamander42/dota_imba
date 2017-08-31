@@ -177,6 +177,10 @@ local i = 10
 --			end
 --		end
 
+		if GetMapName() == "imba_diretide" then
+			Diretide()
+		end
+
 		Timers:CreateTimer(60, function()
 			StartGarbageCollector()
 			DefineLosingTeam()
@@ -201,14 +205,23 @@ local normal_xp = npc:GetDeathXP()
 	if npc then
 		npc:SetDeathXP(normal_xp*0.8)
 
-		if (npc:IsRealHero() or npc:IsIllusion()) and npc:GetUnitName() ~= "npc_dota_hero_wisp" or npc.is_real_wisp then
-			if not npc.has_label then
-				local title = Server_GetPlayerTitle(npc:GetPlayerID())
-				local rgb = Server_GetTitleColor(title)
-				npc:SetCustomHealthLabel(title, rgb[1], rgb[2], rgb[3])
-				npc.has_label = true
-			end
-		end
+--		if npc:IsRealHero() and npc:GetUnitName() ~= "npc_dota_hero_wisp" or npc.is_real_wisp then
+--			if not npc.has_label then
+--				Timers:CreateTimer(5.0, function()
+--					local title = Server_GetPlayerTitle(npc:GetPlayerID())
+--					local rgb = Server_GetTitleColor(title)
+--					npc:SetCustomHealthLabel(title, rgb[1], rgb[2], rgb[3])
+--				end)
+--				npc.has_label = true
+--			end
+--		elseif npc:IsIllusion() then
+--			if not npc.has_label then
+--				local title = Server_GetPlayerTitle(npc:GetPlayerID())
+--				local rgb = Server_GetTitleColor(title)
+--				npc:SetCustomHealthLabel(title, rgb[1], rgb[2], rgb[3])
+--				npc.has_label = true
+--			end
+--		end
 	end
 
 	if npc:GetUnitName() == "npc_dummy_unit" or npc:GetUnitName() == "npc_dummy_unit_perma" then
