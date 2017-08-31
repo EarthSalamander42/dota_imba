@@ -144,12 +144,12 @@ local i = 10
 --			return 1.0
 --		end)
 
-		Timers:CreateTimer(function()
-			for _, hero in pairs(HeroList:GetAllHeroes()) do
-				MeepoFixes:ShareItems(hero)
-			end
-			return 0.5
-		end)
+--		Timers:CreateTimer(function()
+--			for _, hero in pairs(HeroList:GetAllHeroes()) do
+--				MeepoFixes:ShareItems(hero)
+--			end
+--			return 0.5
+--		end)
 
 		if IMBA_PICK_MODE_ALL_RANDOM or IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
 			Timers:CreateTimer(3.0, function()
