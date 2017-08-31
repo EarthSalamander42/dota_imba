@@ -132,7 +132,10 @@ function modifier_imba_cold_front_debuff:OnCreated()
     self.max_stacks = self.ability:GetSpecialValueFor("max_stacks")
     self.ms_slow_pct = self.ability:GetSpecialValueFor("ms_slow_pct")
     self.as_slow = self.ability:GetSpecialValueFor("as_slow")
-    self.freeze_duration = self.ability:GetSpecialValueFor("freeze_duration")        
+    self.freeze_duration = self.ability:GetSpecialValueFor("freeze_duration")    
+
+    -- #5 Talent: Cold Front duration increase
+    self.freeze_duration = self.freeze_duration + self.caster:FindTalentValue("special_bonus_imba_lich_5")
 end
 
 function modifier_imba_cold_front_debuff:DeclareFunctions()
@@ -211,6 +214,15 @@ function imba_lich_frost_nova:GetAbilityTextureName()
    return "lich_frost_nova"
 end
 
+function imba_lich_frost_nova:GetCooldown(level)   
+    local caster = self:GetCaster()
+    local cd = self.BaseClass.GetCooldown(self, level)
+
+    -- #4 Talent: Frost Nova cooldown decrease
+    cd = cd - caster:FindTalentValue("special_bonus_imba_lich_4")
+    return cd   
+end
+
 function imba_lich_frost_nova:IsHiddenWhenStolen()
     return false
 end
@@ -224,7 +236,7 @@ function imba_lich_frost_nova:OnSpellStart()
     -- Ability properties
     local caster = self:GetCaster()
     local ability = self
-    local target = self:GetCursorTarget()
+    local target = self:GetCursorTarget()    
     local cast_response = "lich_lich_ability_chain_1"..math.random(1,4)
     local kill_response = "lich_lich_ability_nova_0"..math.random(1,5)
     local cm_kill_response = "lich_lich_ability_nova_06"
@@ -293,14 +305,8 @@ function FrostNova(caster, ability, target, cold_front)
     local main_cold_front_stacks = ability:GetSpecialValueFor("main_cold_front_stacks")
     local area_cold_front_stacks = ability:GetSpecialValueFor("area_cold_front_stacks")    
 
-    -- #3 Talent: Frost Nova now deals a portion of the main target's current health as damage    
-    if caster:HasTalent("special_bonus_imba_lich_3") then
-        -- Calculate target's current health
-        local damage_current_health = target:GetHealth() * caster:FindTalentValue("special_bonus_imba_lich_3") * 0.01
-
-        -- Increase damage on main target
-        target_damage = target_damage + damage_current_health
-    end    
+    -- #8 Talent: Cold Front gains additional stack from skills
+    area_cold_front_stacks = area_cold_front_stacks + caster:FindTalentValue("special_bonus_imba_lich_8")
 
     -- Play cast sound
     EmitSoundOn(sound_cast, target)
@@ -315,7 +321,7 @@ function FrostNova(caster, ability, target, cold_front)
     -- If the source is Cold Front, don't add stacks
     if cold_front then
         should_add_cold_front_stacks = false
-    end    
+    end
 
     -- Add particle effect
     local particle_nova_fx = ParticleManager:CreateParticle(particle_nova, PATTACH_ABSORIGIN_FOLLOW, target)
@@ -332,7 +338,7 @@ function FrostNova(caster, ability, target, cold_front)
                         ability = ability
                         }
                             
-    ApplyDamage(damageTable)
+    ApplyDamage(damageTable)    
 
     -- Add stacks to Cold Front, if appropriate
     if should_add_cold_front_stacks then
@@ -372,86 +378,6 @@ function FrostNova(caster, ability, target, cold_front)
 
             -- Apply Frost Nova debuff
             enemy:AddNewModifier(caster, ability, modifier_nova, {duration = slow_duration})            
-        end
-    end
-
-    -- #4 Talent: Frost Nova draws a line of exploding Frost Novas that explode after a small delay    
-    if caster:HasTalent("special_bonus_imba_lich_4") and not cold_front then
-        -- Talent properties
-        local caster_loc = caster:GetAbsOrigin()
-        local particle_nova_flower = "particles/hero/lich/nova_explosions_main.vpcf"        
-
-        -- Talent specials
-        local distance_per_nova = caster:FindTalentValue("special_bonus_imba_lich_4", "distance_per_nova")
-        local damage_radius = caster:FindTalentValue("special_bonus_imba_lich_4", "damage_radius")
-        local nova_damage = caster:FindTalentValue("special_bonus_imba_lich_4", "nova_damage")
-        local cold_front_stacks = caster:FindTalentValue("special_bonus_imba_lich_4", "cold_front_stacks")
-        local explosion_delay = caster:FindTalentValue("special_bonus_imba_lich_4", "explosion_delay")
-        local creation_delay = caster:FindTalentValue("special_bonus_imba_lich_4", "creation_delay")        
-
-        -- Determine how many Novas should be created
-        local distance = (target:GetAbsOrigin() - caster_loc):Length2D()
-        local direction = (target:GetAbsOrigin() - caster_loc):Normalized()
-        local novas = math.floor(distance / distance_per_nova)
-
-        -- Create each nova with increasing delays        
-        for i = 1, novas do            
-            Timers:CreateTimer(creation_delay * i, function()
-
-                -- Determine location of nova                
-                local location = caster_loc + direction * distance_per_nova * i
-
-                -- Apply particle effect
-                local particle_nova_flower_fx = ParticleManager:CreateParticle(particle_nova_flower, PATTACH_WORLDORIGIN, nil)
-                ParticleManager:SetParticleControl(particle_nova_flower_fx, 0, location)
-                ParticleManager:SetParticleControl(particle_nova_flower_fx, 3, location)
-
-                -- Start a timer for destruction
-                Timers:CreateTimer(explosion_delay, function()
-
-                    -- Emit sound
-                    EmitSoundOnLocationWithCaster(location, sound_cast, caster)
-
-                    -- Remove flower particle
-                    ParticleManager:DestroyParticle(particle_nova_flower_fx, false)
-                    ParticleManager:ReleaseParticleIndex(particle_nova_flower_fx)
-
-                    -- Apply explosion particle
-                    local particle_nova_fx = ParticleManager:CreateParticle(particle_nova, PATTACH_WORLDORIGIN, nil)
-                    ParticleManager:SetParticleControl(particle_nova_fx, 0, location)
-                    ParticleManager:SetParticleControl(particle_nova_fx, 1, Vector(radius, radius, radius))
-                    ParticleManager:SetParticleControl(particle_nova_fx, 2, location)
-                    ParticleManager:ReleaseParticleIndex(particle_nova_fx)
-
-                    -- Find all enemies in radius
-                    local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-                                                      location,
-                                                      nil,
-                                                      damage_radius,
-                                                      DOTA_UNIT_TARGET_TEAM_ENEMY,
-                                                      DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO,
-                                                      DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,
-                                                      FIND_ANY_ORDER,
-                                                      false)
-
-                    for _, enemy in pairs(enemies) do
-                        -- Deal damage to each
-                        if not enemy:IsMagicImmune() then
-                            local damageTable = {victim = enemy,
-                                                damage = aoe_damage,
-                                                damage_type = DAMAGE_TYPE_MAGICAL,
-                                                attacker = caster,
-                                                ability = ability
-                                                }
-                                
-                            ApplyDamage(damageTable) 
-
-                            -- Add one stack of Cold Front to each enemy hit
-                            IncreaseStacksColdFront(caster, enemy, cold_front_stacks)
-                        end
-                    end
-                end)
-            end)
         end
     end
 end
@@ -495,7 +421,7 @@ end
 
 
 -----------------------------------
---          FROST ARMOR          --
+--          ICE ARMOR            --
 -----------------------------------
 
 imba_lich_frost_armor = class({})
@@ -503,7 +429,6 @@ LinkLuaModifier("modifier_imba_frost_armor_buff", "hero/hero_lich", LUA_MODIFIER
 LinkLuaModifier("modifier_imba_frost_armor_debuff", "hero/hero_lich", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_frost_armor_freeze", "hero/hero_lich", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_frost_armor_auto_cast", "hero/hero_lich", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_frost_armor_freezing_point", "hero/hero_lich", LUA_MODIFIER_MOTION_NONE)
 
 function imba_lich_frost_armor:GetAbilityTextureName()
    return "lich_frost_armor"
@@ -583,26 +508,6 @@ function imba_lich_frost_armor:OnSpellStart()
     target:AddNewModifier(caster, ability, modifier_armor, {duration = armor_duration})
 end
 
--- #5 Talent: Frost Armor adds a portion of the Lich's intelligence to the armor bonus
-modifier_special_bonus_imba_lich_5 = modifier_special_bonus_imba_lich_5 or class({})
-
-function modifier_special_bonus_imba_lich_5:OnCreated()    
-    if IsServer() then
-        self:StartIntervalThink(1)
-    end
-end
-
-function modifier_special_bonus_imba_lich_5:OnIntervalThink()
-    if IsServer() then
-        -- Calculate intelligence bonus
-        local intelligence = self:GetParent():GetIntellect()
-        local armor_bonus = math.floor(intelligence * self:GetParent():FindTalentValue("special_bonus_imba_lich_5") * 0.01)
-
-        self:SetStackCount(armor_bonus)        
-    end
-end
-
-
 -- Frost Armor buff
 modifier_imba_frost_armor_buff = class({})
 
@@ -618,55 +523,20 @@ function modifier_imba_frost_armor_buff:OnCreated()
     self.armor_bonus = self.ability:GetSpecialValueFor("armor_bonus")
     self.frost_duration = self.ability:GetSpecialValueFor("frost_duration")
     self.freeze_attacks = self.ability:GetSpecialValueFor("freeze_attacks")
-    self.cold_front_stacks = self.ability:GetSpecialValueFor("cold_front_stacks")    
+    self.cold_front_stacks = self.ability:GetSpecialValueFor("cold_front_stacks")
+
+    -- #6 Talent: Massive Ice Armor armor increase when cast on buildings
+    if self.parent:IsBuilding() then
+        self.armor_bonus = self.armor_bonus + self.caster:FindTalentValue("special_bonus_imba_lich_6")
+    end    
 
     -- Add particle
     self.particle_frost_armor_fx = ParticleManager:CreateParticle(self.particle_frost_armor, PATTACH_OVERHEAD_FOLLOW, self.parent)
     ParticleManager:SetParticleControl(self.particle_frost_armor_fx, 0, self.parent:GetAbsOrigin())
     ParticleManager:SetParticleControl(self.particle_frost_armor_fx, 1, Vector(1,1,1))
     ParticleManager:SetParticleControlEnt(self.particle_frost_armor_fx, 2, self.parent, PATTACH_ABSORIGIN_FOLLOW, "attach_origin", self.parent:GetAbsOrigin(), true)
-    self:AddParticle(self.particle_frost_armor_fx, false, false, -1, false, false)        
-
-    -- #8 Talent: Frost Armor is now an aura that slows nearby enemies in a small range around the target. The slow gets stronger each time the target is attacked.
-    -- Aura starts with base stacks    
-    if IsServer() then
-        if self.caster:HasTalent("special_bonus_imba_lich_8") then
-            local base_slow = self.caster:FindTalentValue("special_bonus_imba_lich_8", "base_slow")
-            self:SetStackCount(base_slow)
-
-            self:StartIntervalThink(0.5)
-        end
-    end
-end
-
-function modifier_imba_frost_armor_buff:OnRefresh()
-    self:OnCreated()
-end
-
-function modifier_imba_frost_armor_buff:OnIntervalThink()
-    -- #8 Talent: Frost Armor is now an aura that slows nearby enemies in a small range around the target. The slow gets stronger each time the target is attacked.
-    -- Thinks updates stack counts for nearby enemies
-    local enemies = FindUnitsInRadius(self.parent:GetTeamNumber(),
-                                      self.parent:GetAbsOrigin(),
-                                      nil,
-                                      self.caster:FindTalentValue("special_bonus_imba_lich_8", "aura_range"),
-                                      DOTA_UNIT_TARGET_TEAM_ENEMY,
-                                      DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-                                      DOTA_UNIT_TARGET_FLAG_NONE,
-                                      FIND_ANY_ORDER,
-                                      false)
-
-    for _, enemy in pairs(enemies) do
-
-        -- Check if the enemy has the aura modifier. If it does, get the handle and set its stack count to be the same as this aura
-        if enemy:HasModifier("modifier_imba_frost_armor_freezing_point") then
-            local modifier_handler = enemy:FindModifierByName("modifier_imba_frost_armor_freezing_point")
-            if modifier_handler then
-                modifier_handler:SetStackCount(self:GetStackCount())
-            end
-        end
-    end
-end
+    self:AddParticle(self.particle_frost_armor_fx, false, false, -1, false, false)    
+end 
 
 function modifier_imba_frost_armor_buff:IsHidden() return false end
 function modifier_imba_frost_armor_buff:IsDebuff() return false end
@@ -688,13 +558,7 @@ function modifier_imba_frost_armor_buff:DeclareFunctions()
 end
 
 function modifier_imba_frost_armor_buff:GetModifierPhysicalArmorBonus()
-    local armor_bonus = self.armor_bonus
-    if self.caster:HasModifier("modifier_special_bonus_imba_lich_5") then
-        local armor_bonus_talent = self.caster:GetModifierStackCount("modifier_special_bonus_imba_lich_5", self.caster)
-        armor_bonus = armor_bonus + armor_bonus_talent
-    end
-
-    return armor_bonus
+    return self.armor_bonus
 end
 
 function modifier_imba_frost_armor_buff:OnAttackLanded(keys)
@@ -732,18 +596,9 @@ function modifier_imba_frost_armor_buff:OnAttackLanded(keys)
             modifier_debuff_handler:ForceRefresh()            
         end        
 
-        -- Apply Cold Front stacks                
-        IncreaseStacksColdFront(self.caster, attacker, self.cold_front_stacks)    
-
-        -- #8 Talent: Frost Armor is now an aura that slows nearby enemies in a small range around the target. The slow gets stronger each time the target is attacked.
-        if self.caster:HasTalent("special_bonus_imba_lich_8") then
-            -- Strengthen aura
-            local max_slow = self.caster:FindTalentValue('special_bonus_imba_lich_8', "max_slow") 
-            local slow_increase_per_hit = self.caster:FindTalentValue("special_bonus_imba_lich_8", "slow_increase_per_hit")
-            if self:GetStackCount() < max_slow then
-                self:SetStackCount(math.min(self:GetStackCount() + slow_increase_per_hit, max_slow))
-            end
-        end
+        -- Apply Cold Front stacks        
+        -- #8 Talent: Cold Front gains additional stack from skills
+        IncreaseStacksColdFront(self.caster, attacker, self.cold_front_stacks + self.caster:FindTalentValue("special_bonus_imba_lich_8"))    
     end
 end
 
@@ -751,75 +606,7 @@ function modifier_imba_frost_armor_buff:GetStatusEffectName()
     return "particles/status_fx/status_effect_frost_armor.vpcf"
 end
 
-function modifier_imba_frost_armor_buff:IsAura()
-    -- #8 Talent: Frost Armor is now an aura that slows nearby enemies in a small range around the target. The slow gets stronger each time the target is attacked.
-    if self:GetCaster():HasTalent("special_bonus_imba_lich_8") then
-        return true
-    end
 
-    return false
-end
-
-function modifier_imba_frost_armor_buff:GetAuraRadius()
-    return self:GetCaster():FindTalentValue("special_bonus_imba_lich_8", "aura_range")
-end
-
-function modifier_imba_frost_armor_buff:GetAuraSearchFlags()
-    return DOTA_UNIT_TARGET_FLAG_NONE
-end
-
-function modifier_imba_frost_armor_buff:GetAuraSearchTeam()
-    return DOTA_UNIT_TARGET_TEAM_ENEMY
-end
-
-function modifier_imba_frost_armor_buff:GetAuraSearchType()
-    return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
-end
-
-function modifier_imba_frost_armor_buff:GetModifierAura()
-    return "modifier_imba_frost_armor_freezing_point"
-end
-
-
--- Freezing Point talent aura slow
-modifier_imba_frost_armor_freezing_point = modifier_imba_frost_armor_freezing_point or class({})
-
-function modifier_imba_frost_armor_freezing_point:IsHidden() return false end
-function modifier_imba_frost_armor_freezing_point:IsPurgable() return false end
-function modifier_imba_frost_armor_freezing_point:IsDebuff() return true end
-
-function modifier_imba_frost_armor_freezing_point:DeclareFunctions()
-    local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-                      MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
-
-    return decFuncs
-end
-
-function modifier_imba_frost_armor_freezing_point:GetStatusEffectName()
-    return "particles/status_fx/status_effect_frost.vpcf"
-end
-
-function modifier_imba_frost_armor_freezing_point:GetModifierMoveSpeedBonus_Percentage()
-    return self:GetStackCount() * (-1)
-end
-
-function modifier_imba_frost_armor_freezing_point:GetModifierAttackSpeedBonus_Constant()
-    return self:GetStackCount() * (-1)
-end
-
--- Talent Modifier trigger
-modifier_special_bonus_imba_lich_8 = modifier_special_bonus_imba_lich_8 or class({})
-
-function modifier_special_bonus_imba_lich_8:OnCreated()
-    if IsServer() then
-        if self:GetParent():HasModifier("modifier_imba_frost_armor_buff") then
-            local modifier_handler = self:GetParent():FindModifierByName("modifier_imba_frost_armor_buff")
-            if modifier_handler then
-                modifier_handler:ForceRefresh()
-            end
-        end
-    end
-end
 
 -- Frost debuff on attacker
 modifier_imba_frost_armor_debuff = class({})
@@ -893,8 +680,6 @@ function modifier_imba_frost_armor_freeze:OnCreated()
     ParticleManager:SetParticleControlEnt(self.particle_hand_freeze_fx, 0, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
     ParticleManager:SetParticleControlEnt(self.particle_hand_freeze_fx, 1, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
     self:AddParticle(self.particle_hand_freeze_fx, false, false, -1, false, false)
-
-
 end
 
 function modifier_imba_frost_armor_freeze:IsHidden() return false end
@@ -998,20 +783,6 @@ function imba_lich_dark_ritual:GetAbilityTextureName()
    return "lich_dark_ritual"
 end
 
-function imba_lich_dark_ritual:CastFilterResultTarget(target)
-    if IsServer() then
-        -- If Lich has the #2 Talent: Sacrifice can now be used on self, granting you and nearby allies the damage reduction buff
-        -- He can target himself
-        if self:GetCaster() == target and self:GetCaster():HasTalent("special_bonus_imba_lich_2") then
-            return UF_SUCCESS
-        end
-
-        -- Otherwise, normal filtering
-        local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber())
-        return nResult
-    end
-end
-
 function imba_lich_dark_ritual:OnSpellStart()
     -- Ability properties
     local caster = self:GetCaster()
@@ -1049,6 +820,51 @@ function imba_lich_dark_ritual:OnSpellStart()
     -- Play cast sound    
     EmitSoundOn(sound_cast, caster)
 
+    -- Get the target's XP bounty and current HP
+    local creep_xp = target:GetDeathXP()
+    local creep_hp = target:GetHealth()
+
+    -- Kill target
+    target:Kill(ability, caster)
+
+    -- Restore mana to Lich based on current HP
+    local mana_gained = creep_hp * mana_conversion_pct * 0.01
+    caster:GiveMana(mana_gained)    
+
+    -- XP Overhead message
+    local particleName = "particles/msg_fx/msg_xp.vpcf"
+    local particle = ParticleManager:CreateParticle(particleName, PATTACH_OVERHEAD_FOLLOW, target)
+
+    local digits = 0
+    if mana_gained then
+        digits = #tostring(mana_gained)
+    end
+
+    ParticleManager:SetParticleControl(particle, 1, Vector(9, mana_gained, 6))
+    ParticleManager:SetParticleControl(particle, 2, Vector(1, digits+1, 0))
+    ParticleManager:SetParticleControl(particle, 3, Vector(170, 0, 250))
+
+    -- Find all nearby allied creeps
+    local allied_creeps = FindUnitsInRadius(caster:GetTeamNumber(),
+                                            target:GetAbsOrigin(),
+                                            nil,
+                                            allied_creeps_radius,
+                                            DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+                                            DOTA_UNIT_TARGET_BASIC,
+                                            DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO + DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_NOT_SUMMONED,
+                                            FIND_ANY_ORDER,
+                                            false)
+
+    for _,creep in pairs (allied_creeps) do
+        -- Give all nearby creeps the creep bonus modifier
+        local modifier_creeps_handler = creep:AddNewModifier(caster, ability, modifier_creeps, {})        
+
+        if modifier_creeps_handler then
+            -- For client interactions
+            modifier_creeps_handler:SetStackCount(creep_hp)
+        end
+    end    
+
     -- Find all nearby heroes (including Lich himself)
     local heroes = FindUnitsInRadius(caster:GetTeamNumber(),
                                      target:GetAbsOrigin(),
@@ -1060,62 +876,8 @@ function imba_lich_dark_ritual:OnSpellStart()
                                      FIND_ANY_ORDER,
                                      false)
 
-    -- If it was a sacrifice, continue. 
-    if target ~= caster then
-
-        -- Get the target's XP bounty and current HP
-        local creep_xp = target:GetDeathXP()
-        local creep_hp = target:GetHealth()
-
-        -- Kill target
-        target:Kill(ability, caster)
-
-        -- Restore mana to Lich based on current HP
-        local mana_gained = creep_hp * mana_conversion_pct * 0.01
-        caster:GiveMana(mana_gained)    
-
-        -- XP Overhead message
-        local particleName = "particles/msg_fx/msg_xp.vpcf"
-        local particle = ParticleManager:CreateParticle(particleName, PATTACH_OVERHEAD_FOLLOW, target)
-
-        local digits = 0
-        if mana_gained then
-            digits = #tostring(mana_gained)
-        end
-
-        ParticleManager:SetParticleControl(particle, 1, Vector(9, mana_gained, 6))
-        ParticleManager:SetParticleControl(particle, 2, Vector(1, digits+1, 0))
-        ParticleManager:SetParticleControl(particle, 3, Vector(170, 0, 250))
-
-        -- Find all nearby allied creeps
-        local allied_creeps = FindUnitsInRadius(caster:GetTeamNumber(),
-                                                target:GetAbsOrigin(),
-                                                nil,
-                                                allied_creeps_radius,
-                                                DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-                                                DOTA_UNIT_TARGET_BASIC,
-                                                DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO + DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_NOT_SUMMONED,
-                                                FIND_ANY_ORDER,
-                                                false)
-
-        for _,creep in pairs (allied_creeps) do
-            -- Give all nearby creeps the creep bonus modifier
-            local modifier_creeps_handler = creep:AddNewModifier(caster, ability, modifier_creeps, {})        
-
-            if modifier_creeps_handler then
-                -- For client interactions
-                modifier_creeps_handler:SetStackCount(creep_hp)
-            end
-        end        
-
-        -- Divide target's XP bounty between all heroes in the AoE
-        local xp_per_hero = creep_xp / #heroes
-
-        for _,hero in pairs(heroes) do
-            -- Increase all heroes' XP by the divided amount             
-            hero:AddExperience(xp_per_hero, false, false)        
-        end
-    end
+    -- Divide target's XP bounty between all heroes in the AoE
+    local xp_per_hero = creep_xp / #heroes    
 
     -- Check if the sacrificed unit was an ally or an enemy        
     local ally_creep
@@ -1127,6 +889,8 @@ function imba_lich_dark_ritual:OnSpellStart()
     end
 
     for _,hero in pairs(heroes) do      
+        -- Increase all heroes' XP by the divided amount             
+        hero:AddExperience(xp_per_hero, false, false)        
 
         -- Give heroes appropriate modifier, 
         if ally_creep then
@@ -1146,7 +910,7 @@ function imba_lich_dark_ritual:OnSpellStart()
             ParticleManager:SetParticleControlEnt(particle_sacrifice_enemy_fx, 1, hero, PATTACH_POINT_FOLLOW, "attach_hitloc", hero:GetAbsOrigin(), true)
             ParticleManager:ReleaseParticleIndex(particle_sacrifice_enemy_fx)
         end
-    end
+    end    
 end
 
 -- Allied creeps bonuses modifier
@@ -1161,7 +925,12 @@ function modifier_imba_dark_ritual_creeps:OnCreated()
     -- Ability specials
     self.creeps_bonus_as = self.ability:GetSpecialValueFor("creeps_bonus_as")
     self.creeps_bonus_hp_pct = self.ability:GetSpecialValueFor("creeps_bonus_hp_pct")
-    self.creeps_bonus_dmg_pct = self.ability:GetSpecialValueFor("creeps_bonus_dmg_pct")    
+    self.creeps_bonus_dmg_pct = self.ability:GetSpecialValueFor("creeps_bonus_dmg_pct")
+
+    -- #2 Talent: Sacrifice bonuses increase
+    self.creeps_bonus_as = self.creeps_bonus_as * (1 + self.caster:FindTalentValue("special_bonus_imba_lich_2") * 0.01)
+    self.creeps_bonus_hp_pct = self.creeps_bonus_hp_pct * (1 + self.caster:FindTalentValue("special_bonus_imba_lich_2") * 0.01)
+    self.creeps_bonus_dmg_pct = self.creeps_bonus_dmg_pct * (1 + self.caster:FindTalentValue("special_bonus_imba_lich_2") * 0.01)
 
     if IsServer() then        
         -- Force adjust HP
@@ -1204,7 +973,10 @@ function modifier_imba_dark_ritual_allied_sacrifice:OnCreated()
     self.ability = self:GetAbility()    
 
     -- Ability specials
-    self.allied_kill_dmg_red_pct = self.ability:GetSpecialValueFor("allied_kill_dmg_red_pct")    
+    self.allied_kill_dmg_red_pct = self.ability:GetSpecialValueFor("allied_kill_dmg_red_pct")
+
+    -- #2 Talent: Sacrifice bonuses increase
+    self.allied_kill_dmg_red_pct = self.allied_kill_dmg_red_pct * (1 + self.caster:FindTalentValue("special_bonus_imba_lich_2") * 0.01)
 end
 
 function modifier_imba_dark_ritual_allied_sacrifice:IsHidden() return false end
@@ -1235,7 +1007,11 @@ function modifier_imba_dark_ritual_enemy_sacrifice:OnCreated()
 
     -- Ability specials
     self.enemy_kill_bonus_dmg_pct = self.ability:GetSpecialValueFor("enemy_kill_bonus_dmg_pct")
-    self.enemy_kill_bonus_spell_amp = self.ability:GetSpecialValueFor("enemy_kill_bonus_spell_amp")    
+    self.enemy_kill_bonus_spell_amp = self.ability:GetSpecialValueFor("enemy_kill_bonus_spell_amp")
+
+    -- #2 Talent: Sacrifice bonuses increase
+    self.enemy_kill_bonus_dmg_pct = self.enemy_kill_bonus_dmg_pct * (1 + self.caster:FindTalentValue("special_bonus_imba_lich_2") * 0.01)
+    self.enemy_kill_bonus_spell_amp = self.enemy_kill_bonus_spell_amp * (1 + self.caster:FindTalentValue("special_bonus_imba_lich_2") * 0.01)
 end
 
 function modifier_imba_dark_ritual_enemy_sacrifice:IsHidden() return false end
@@ -1269,7 +1045,7 @@ end
 
 imba_lich_chain_frost = class({})
 LinkLuaModifier("modifier_imba_chain_frost_slow", "hero/hero_lich", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_chain_frost_talent_buff", "hero/hero_lich", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_chain_frost_ministun", "hero/hero_lich", LUA_MODIFIER_MOTION_NONE)
 
 function imba_lich_chain_frost:GetAbilityTextureName()
    return "lich_chain_frost"
@@ -1279,61 +1055,41 @@ function imba_lich_chain_frost:IsHiddenWhenStolen()
     return false
 end
 
-function imba_lich_chain_frost:CastFilterResultTarget(target)
-    if IsServer() then
-        if self:GetCaster():HasTalent("special_bonus_imba_lich_6") then
-            if target:GetTeamNumber() == self:GetCaster():GetTeamNumber() then
-                return UF_SUCCESS
-            end
-        end
-
-        local nResult = UnitFilter(target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber())
-        return nResult
-    end
-end
-
 function imba_lich_chain_frost:OnSpellStart()
     -- Ability properties
     local caster = self:GetCaster()
     local ability = self
     local target = self:GetCursorTarget()
-
-    -- #6 Talent: Chain Frost can be cast on allies to give them a orb that spins around them. Taking damage from an enemy hero causes the Chain Frost to bounce to the attacker.   
-    if caster:HasTalent("special_bonus_imba_lich_6") and target:GetTeamNumber() == caster:GetTeamNumber() then
-        local buff_duration = caster:FindTalentValue("special_bonus_imba_lich_6", "buff_duration")
-        target:AddNewModifier(caster, ability, "modifier_imba_chain_frost_talent_buff", {duration = buff_duration})
-    else
-        self:LaunchProjectile(caster, target)
-    end
-
-
-end
-
-function imba_lich_chain_frost:LaunchProjectile(source, target) 
-    -- Ability properties
-    local caster = self:GetCaster()
-    local ability = self
-    local sound_cast = "Hero_Lich.ChainFrost"            
     local particle_projectile = "particles/units/heroes/hero_lich/lich_chain_frost.vpcf"
-    local scepter = caster:HasScepter()        
+    local sound_cast = "Hero_Lich.ChainFrost"
+    local modifier_ministun = "modifier_imba_chain_frost_ministun"
+    local scepter = caster:HasScepter()
 
-    -- Ability specials    
+    -- Ability specials
+    local ministun_duration = ability:GetSpecialValueFor("ministun_duration")
     local projectile_base_speed = ability:GetSpecialValueFor("projectile_base_speed")
     local projectile_vision = ability:GetSpecialValueFor("projectile_vision")
     local num_bounces = ability:GetSpecialValueFor("num_bounces")    
-
-    -- Play cast sound
-    EmitSoundOn(sound_cast, caster)        
 
     -- If the caster has Scepter, increase bounces to infinity (well, almost, but you get the point)
     if scepter then        
        num_bounces = num_bounces + 99999
     end
 
+    -- Play cast sound
+    EmitSoundOn(sound_cast, caster)
+
+    -- Ministun the main target, unless the target has Linken sphere    
+    if target:GetTeam() ~= caster:GetTeam() then
+        if not target:TriggerSpellAbsorb(ability) then
+            target:AddNewModifier(caster, ability, modifier_ministun, {duration = ministun_duration})
+        end
+    end
+
     -- Launch the projectile
     local chain_frost_projectile
     chain_frost_projectile = {Target = target,
-                              Source = source,
+                              Source = caster,
                               Ability = ability,
                               EffectName = particle_projectile,
                               iMoveSpeed = projectile_base_speed,
@@ -1374,10 +1130,14 @@ function imba_lich_chain_frost:OnProjectileHit_ExtraData(target, location, extra
         return nil
     end
 
-    -- #1 Talent: Chain Frost bounces almost instantly after hitting a target
-    if caster:HasTalent("special_bonus_imba_lich_1") then
-        projectile_delay = caster:FindTalentValue("special_bonus_imba_lich_1")
-    end    
+    -- #1 Talent: Chain Frost bounce delay decrease
+    projectile_delay = projectile_delay * (1-(caster:FindTalentValue("special_bonus_imba_lich_1") * 0.01))
+
+    -- #3 Talent: Chain Frost bounce range increase
+    bounce_range = bounce_range + caster:FindTalentValue("special_bonus_imba_lich_3")
+
+    -- #8 Talent: Cold Front gains additional stack from skills
+    cold_front_stacks = cold_front_stacks + caster:FindTalentValue("special_bonus_imba_lich_8")
 
     -- Check if this is a main chain frost (not talent mini frosts)
     if extradata.main_chain_frost == 1 then       
@@ -1506,6 +1266,8 @@ function imba_lich_chain_frost:OnProjectileHit_ExtraData(target, location, extra
 end
 
 
+
+
 -- Slow modifier
 modifier_imba_chain_frost_slow = class({})
 
@@ -1539,67 +1301,14 @@ function modifier_imba_chain_frost_slow:GetModifierAttackSpeedBonus_Constant()
 end
 
 
--- #6 Talent: Chain Frost can be cast on allies to give them a orb that spins around them. Taking damage from an enemy hero causes the Chain Frost to bounce to the attacker.
-modifier_imba_chain_frost_talent_buff = modifier_imba_chain_frost_talent_buff or class({})
+-- Ministun modifier
+modifier_imba_chain_frost_ministun = class({})
 
-function modifier_imba_chain_frost_talent_buff:IsHidden() return false end
-function modifier_imba_chain_frost_talent_buff:IsPurgable() return false end
-function modifier_imba_chain_frost_talent_buff:IsDebuff() return false end
+function modifier_imba_chain_frost_ministun:IsHidden() return false end
+function modifier_imba_chain_frost_ministun:IsStunDebuff() return true end
+function modifier_imba_chain_frost_ministun:IsDebuff() return true end
 
-function modifier_imba_chain_frost_talent_buff:OnCreated()
-    if IsServer() then
-        -- Talent properties
-        self.caster = self:GetCaster()
-        self.ability = self:GetAbility()
-        self.parent = self:GetParent()
-        self.particle_orb = "particles/hero/lich/lich_frost_ally_spin.vpcf"
-
-        -- Talent specials
-        self.max_distance = self.caster:FindTalentValue("special_bonus_imba_lich_6", "max_distance")
-
-        -- Apply orb effect
-        local particle_orb_fx = ParticleManager:CreateParticle(self.particle_orb, PATTACH_ABSORIGIN_FOLLOW, self.parent)
-        ParticleManager:SetParticleControl(particle_orb_fx, 0, self.parent:GetAbsOrigin())        
-        ParticleManager:SetParticleControl(particle_orb_fx, 2, Vector(1,0,0))
-        ParticleManager:SetParticleControl(particle_orb_fx, 3, self.parent:GetAbsOrigin())
-        ParticleManager:SetParticleControl(particle_orb_fx, 5, Vector(self.parent:GetHullRadius()*3, 1,1))    
-        self:AddParticle(particle_orb_fx, false, false, -1, false, false)
-    end
-end
-
-function modifier_imba_chain_frost_talent_buff:DeclareFunctions()
-    local decFuncs = {MODIFIER_EVENT_ON_TAKEDAMAGE}
-
-    return decFuncs
-end
-
-function modifier_imba_chain_frost_talent_buff:OnTakeDamage(keys)
-    local unit = keys.unit
-    local attacker = keys.attacker
-
-    -- Only apply if the target unit is the parent
-    if self.parent == unit then
-
-        -- If the attacker was not a hero, do nothing
-        if not attacker:IsHero() then
-            return nil
-        end
-
-        -- If the attacker is too far away, do nothing
-        local distance = (unit:GetAbsOrigin() - attacker:GetAbsOrigin()):Length2D()
-        if distance > self.max_distance then
-            return nil
-        end
-
-        -- If the attacker is on the same team as the caster, do nothing
-        if unit:GetTeamNumber() == attacker:GetTeamNumber() then
-            return nil
-        end
-
-        -- That's a valid enemy hero, fire the Chain Frost at it!
-        self.ability:LaunchProjectile(self.parent, attacker)
-
-        -- Remove the buff immediately after
-        self:Destroy()
-    end
+function modifier_imba_chain_frost_ministun:CheckState()
+    local state = {[MODIFIER_STATE_STUNNED] = true}
+    return state
 end

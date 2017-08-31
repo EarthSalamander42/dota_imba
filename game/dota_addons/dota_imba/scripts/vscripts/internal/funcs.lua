@@ -1730,6 +1730,18 @@ function CDOTA_BaseNPC:GetFullName()
 	return self.UnitName or (self.GetUnitName and self:GetUnitName()) or self:GetName()
 end
 
+function CDOTA_BaseNPC:IsTrueHero()
+    return self:IsRealHero() and not self:IsTempestDouble() and not self:IsWukongsSummon()
+end
+
+function CDOTA_BaseNPC:IsMainHero()
+    return self:IsRealHero() and self == PlayerResource:GetSelectedHeroEntity(self:GetPlayerID())
+end
+
+function CDOTA_BaseNPC_Hero:IsWukongsSummon()
+    return self:HasModifier("modifier_monkey_king_fur_army_soldier") or self:HasModifier("modifier_monkey_king_fur_army_soldier_inactive") or self:HasModifier("modifier_monkey_king_fur_army_soldier_hidden")
+end
+
 function ClearSlotsFromDummy(unit, bNoStash)
 	for i = 0, bNoStash and DOTA_ITEM_SLOT_9 or DOTA_STASH_SLOT_6 do
 		local current_item = unit:GetItemInSlot(i)
