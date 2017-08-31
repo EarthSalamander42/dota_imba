@@ -74,6 +74,8 @@ function InitializeUI() {
 //			$('#AllPickToggle').style.visibility = 'collapse';
 //			$('#AllRandomToggle').style.visibility = 'collapse';
 //			$('#AllRandomSameHeroToggle').style.visibility = 'collapse';
+		} else if (map_info.map_display_name == "imba_diretide") {
+			$('#game_options_container').style.visibility = 'collapse';
 		}
 	}
 }

@@ -108,16 +108,19 @@ function GameMode:OnFirstPlayerLoaded()
 	-- IMBA: Roshan and Picking Screen camera initialization
 	-------------------------------------------------------------------------------------------------
 
-	if GetMapName() ~= "imba_arena" then
+	if GetMapName() == "imba_arena" then
+		GoodCamera = Entities:FindByName(nil, "radiant_capture_point")
+		BadCamera = Entities:FindByName(nil, "dire_capture_point")
+	elseif GetMapName() == "imba_diretide" then
+		GoodCamera = Entities:FindByName(nil, "dota_goodguys_fort")
+		BadCamera = Entities:FindByName(nil, "dota_badguys_fort")
+	else
 --		local roshan_spawn_loc = Entities:FindByName(nil, "roshan_spawn_point"):GetAbsOrigin()
 --		local roshan = CreateUnitByName("npc_imba_roshan", roshan_spawn_loc, true, nil, nil, DOTA_TEAM_NEUTRALS)
 --		roshan:FindAbilityByName("imba_roshan_rage"):SetLevel(1)
 
 		GoodCamera = Entities:FindByName(nil, "good_healer_7")
 		BadCamera = Entities:FindByName(nil, "bad_healer_7")
-	else
-		GoodCamera = Entities:FindByName(nil, "radiant_capture_point")
-		BadCamera = Entities:FindByName(nil, "dire_capture_point")
 	end
 
 	-------------------------------------------------------------------------------------------------

@@ -23,12 +23,14 @@ var abilityPanels = [
 
 /* Picking phase is done, start loading heroes */
 function OnPickingDone( data ) {
+	$.Msg("OnPickingDone")
 	$("#EnterGameBtnTxt").text = $.Localize( "#imba_enter_game_button" );
 	$("#RepickBtn").AddClass( "disabled" );
 }
 
 /* Hero loading is done, allow the player to enter the game */
 function OnHeroLoadingDone( data ) {
+	$.Msg("OnHeroLoadingDone")
 	$("#EnterGameBtn").RemoveClass( "disabled" );
 	$("#EnterGameBtnTxt").text = $.Localize( "#imba_loading_heroes_button" );
 	canEnter = true;
@@ -37,6 +39,7 @@ function OnHeroLoadingDone( data ) {
 /* Visual timer update */
 function OnTimeUpdate( data ) {
 	$("#TimerTxt").text = data.time;
+	$("#EnterGameBtnTxt").text = data.time;
 }
 
 /* A player has picked a hero */
@@ -346,7 +349,6 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 	//STR
 	$("#npc_dota_hero_undying").AddClass( "taken" );
 	///AGI
-//	$("#npc_dota_hero_meepo").AddClass( "taken" );
 	$("#npc_dota_hero_phantom_lancer").AddClass( "taken" );
 	$("#npc_dota_hero_spectre").AddClass( "taken" );
 	//INT
@@ -354,6 +356,7 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 	$("#npc_dota_hero_techies").AddClass( "taken" );
 	$("#npc_dota_hero_tinker").AddClass( "taken" );
 	$("#npc_dota_hero_venomancer").AddClass( "taken" );
+	$("#npc_dota_hero_zuus").AddClass( "taken" );
 
 	// If this player is a spectator, just kill the whole pick screen
 	var localTeam = Players.GetTeam(Players.GetLocalPlayer())
@@ -377,6 +380,8 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 		
 		if (map_info.map_display_name == "imba_arena") {
 			$('#GameModeSelectText').text = $.Localize( '#imba_gamemode_name_arena_mode' );
+		} else if (map_info.map_display_name == "imba_diretide") {
+			$('#GameModeSelectText').text = $.Localize( '#imba_gamemode_name_diretide' );
 		}
 
 		// Hide the top scoreboard during the pick phase

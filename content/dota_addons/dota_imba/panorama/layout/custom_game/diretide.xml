@@ -1,0 +1,25 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/dotastyles.css" />
+		<include src="file://{resources}/styles/custom_game/diretide.css" />
+	</styles>
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/diretide.js" />
+	</scripts>
+	<Panel class="DiretidePanel">
+		<Panel id="Diretide">
+			<Panel hittest="false" id="RadiantScore">
+				<Label hittest="false" class="QuestGenericText" id="RadiantScoreText" text="999"/>
+			</Panel>
+			<Panel class="ScorePanel">
+				<Label id="Timer" text="--:--" />
+			</Panel>
+			<Panel hittest="false" id="ScoreboardCenter">
+				<Label hittest="false" id="ScoreboardCurrentTime" class="MonoNumbersFont" text="" />
+			</Panel>
+			<Panel hittest="false" id="DireScore">
+				<Label hittest="false" class="QuestGenericText" id="DireScoreText" text="999"/>
+			</Panel>
+		</Panel>
+	</Panel>
+</root>

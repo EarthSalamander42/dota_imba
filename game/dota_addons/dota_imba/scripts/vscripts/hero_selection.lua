@@ -81,7 +81,6 @@ function HeroSelection:Tick()
 	-- Tick away a second of time
 	HeroSelection.TimeLeft = HeroSelection.TimeLeft - 1
 	if HeroSelection.TimeLeft < 0 then
-
 		-- End picking phase
 		HeroSelection:EndPicking()
 		return nil
@@ -108,7 +107,7 @@ local id = event.PlayerID
 		"npc_dota_hero_crystal_maiden",
 		"npc_dota_hero_dazzle",
 		"npc_dota_hero_drow_ranger",
-		"npc_dota_hero_enigma",
+--		"npc_dota_hero_enigma",
 		"npc_dota_hero_faceless_void",
 		"npc_dota_hero_juggernaut",
 		"npc_dota_hero_kunkka",
@@ -171,7 +170,6 @@ local id = event.PlayerID
 		"npc_dota_hero_viper",
 		"npc_dota_hero_weaver",
 		"npc_dota_hero_windrunner",
-		"npc_dota_hero_zuus",
 		"npc_dota_hero_broodmother",
 		"npc_dota_hero_huskar",
 		"npc_dota_hero_batrider",
@@ -182,7 +180,7 @@ local id = event.PlayerID
 		--"npc_dota_hero_phantom_lancer",
 		"npc_dota_hero_treant",
 		"npc_dota_hero_ogre_magi",
-		"npc_dota_hero_chaos_knight",
+--		"npc_dota_hero_chaos_knight",
 		"npc_dota_hero_gyrocopter",
 		"npc_dota_hero_rubick",
 		"npc_dota_hero_luna",
@@ -208,6 +206,7 @@ local id = event.PlayerID
 		"npc_dota_hero_winter_wyvern",
 		"npc_dota_hero_arc_warden",
 		"npc_dota_hero_abyssal_underlord",
+--		"npc_dota_hero_zuus",
 		"npc_dota_hero_monkey_king"
 	}
 
@@ -267,7 +266,7 @@ local id = event.PlayerID
 		"npc_dota_hero_crystal_maiden",
 		"npc_dota_hero_dazzle",
 		"npc_dota_hero_drow_ranger",
-		"npc_dota_hero_enigma",
+--		"npc_dota_hero_enigma",
 		"npc_dota_hero_faceless_void",
 		"npc_dota_hero_juggernaut",
 		"npc_dota_hero_kunkka",
@@ -408,11 +407,11 @@ function HeroSelection:HeroSelect( event )
 	end
 
 	--Check if all heroes have been picked
-	if HeroSelection.playersPicked >= HeroSelection.numPickers then
+--	if HeroSelection.playersPicked >= HeroSelection.numPickers then
 
 		--End picking
-		HeroSelection.TimeLeft = 0
-	end
+--		HeroSelection.TimeLeft = 0
+--	end
 end
 
 -- Handles player repick

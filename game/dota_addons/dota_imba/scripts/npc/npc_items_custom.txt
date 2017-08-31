@@ -43,6 +43,72 @@
         "ItemCastOnPickup"                "1"
     }
 
+    //================================================================================================================
+	// Halloween Candy Corn
+	//=================================================================================================================
+	"item_diretide_candy"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"3000"
+		"BaseClass"						"item_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityTextureName"			"item_halloween_candy_corn"
+		"ScriptFile"					"items/item_candy.lua"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BUILDING"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_INVULNERABLE"
+		"Model"							"models/props_gameplay/halloween_candy.mdl"
+		"Effect"						"particles/generic_gameplay/dropped_gem.vpcf"
+
+		// Sound
+		//-------------------------------------------------------------------------------------------------------------			
+		"UIPickupSound"					"Item.PickUpGemShop"
+		"UIDropSound"					"Item.DropGemShop"
+		"WorldDropSound"				"Item.DropGemWorld"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"350"
+		"AbilityCastPoint"				"0.0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.0"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemStackable"					"1"
+		"ItemShareability"				"ITEM_FULLY_SHAREABLE_STACKING"
+		"ItemPermanent"					"0"
+		"ItemInitialCharges"			"1"
+		"ItemPurchasable"				"0"
+		"ItemKillable"					"0"
+		"ItemDroppable"					"1"
+		"ItemSellable"					"0"
+		"ItemDisplayCharges"			"1"
+		"ItemRequiresCharges"			"1"
+		"AllowedInBackpack"				"0"
+		"IsTempestDoubleClonable"		"0"
+
+		// Sound
+		//-------------------------------------------------------------------------------------------------------------			
+		"UIPickupSound"					"Item.PickUpGemShop"
+		"UIDropSound"					"Item.DropGemShop"
+		"WorldDropSound"				"Item.DropGemWorld"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"hp_loss_pct"		"7.5"
+			}
+		}
+	}
+
 	//=================================================================================================================
 	// Magic Stick
 	//=================================================================================================================

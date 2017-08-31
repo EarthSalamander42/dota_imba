@@ -547,7 +547,7 @@
 					<!-- Post-pick screen (hero view) -->
 					<Panel id="PostPickScreen">
 						<Button id="EnterGameBtn" class="disabled" onactivate="EnterGame()" >
-							<Label id="EnterGameBtnTxt" text="#imba_waiting_for_other_players_button" />
+							<Label id="EnterGameBtnTxt" text="" />
 						</Button>
 						<Button id="RepickBtn" onactivate="RepickHero()" >
 							<Label id="RepickBtnTxt" text="#imba_repick_button" />
