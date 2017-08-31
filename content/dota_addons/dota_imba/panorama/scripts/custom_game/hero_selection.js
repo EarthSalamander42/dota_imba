@@ -293,7 +293,10 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 		// If the player is already in-game, destroy the pick interface and ignore the rest
 		if (pick_state == "in_game") {
 			$('#Background').GetParent().DeleteAsync( 0.0 );
-			parent_panel.FindChildTraverse("HUDElements").style.visibility = "visible";
+			$.Schedule(1,
+				parent_panel.FindChildTraverse("HUDElements").style.visibility = "visible"
+			);
+
 		// Else, repopulate player pick panels
 		} else {
 			var i = 1;
