@@ -191,6 +191,54 @@
  		"AttackDesire"				"1.5"		// How much bots want to attack them vs other non-hero things
  	}
 
+ 	//=================================================================================
+	// Building: Candy Pumpkin
+	//=================================================================================
+	"npc_dota_candy_pumpkin"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_tower"	// Class of entity of link to.
+		"Model"						"models/props_gameplay/pumpkin_bucket.vmdl"// Model.
+		"SoundSet"					"0"
+		"MinimapIcon"				"minimap_candybucket"
+		"MinimapIconSize"			"500"
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+		"VisionDaytimeRange"		"1200"		// Range of vision during day light.
+		"VisionNighttimeRange"		"1200"		// Range of vision at night time.
+		"ModelScale"				"1"
+		"MovementSpeed"				"0"			// Speed
+		"MovementTurnRate"			"1.0"		// Turning rate.
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"diretide_pumpkin_immune"			// Ability 1.
+		"Ability2"					"diretide_pumpkin_candy_drop"		// Ability 2.
+
+		// Bounds
+		//----------------------------------------------------------------
+		"ProjectileCollisionSize"	"50"
+		"RingRadius"				"120"
+		"HealthBarOffset"			"150"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"150"			// Base health.
+		"StatusHealthRegen"			"0.0"			// Health regeneration rate.
+		"StatusMana"				"0.0"			// Base mana.
+		"StatusStartingMana"		"0.0"			// Base mana.
+		"StatusManaRegen"			"0.0"			// Mana regeneration rate.
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_SIEGE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+	}
+
 	//=================================================================================
 	// Enigma: Eidolon I
 	//=================================================================================

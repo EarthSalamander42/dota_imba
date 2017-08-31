@@ -108,16 +108,19 @@ function GameMode:OnFirstPlayerLoaded()
 	-- IMBA: Roshan and Picking Screen camera initialization
 	-------------------------------------------------------------------------------------------------
 
-	if GetMapName() ~= "imba_arena" then
+	if GetMapName() == "imba_arena" then
+		GoodCamera = Entities:FindByName(nil, "radiant_capture_point")
+		BadCamera = Entities:FindByName(nil, "dire_capture_point")
+	elseif GetMapName() == "imba_diretide" then
+		GoodCamera = Entities:FindByName(nil, "dota_goodguys_fort")
+		BadCamera = Entities:FindByName(nil, "dota_badguys_fort")
+	else
 --		local roshan_spawn_loc = Entities:FindByName(nil, "roshan_spawn_point"):GetAbsOrigin()
 --		local roshan = CreateUnitByName("npc_imba_roshan", roshan_spawn_loc, true, nil, nil, DOTA_TEAM_NEUTRALS)
 --		roshan:FindAbilityByName("imba_roshan_rage"):SetLevel(1)
 
 		GoodCamera = Entities:FindByName(nil, "good_healer_7")
 		BadCamera = Entities:FindByName(nil, "bad_healer_7")
-	else
-		GoodCamera = Entities:FindByName(nil, "radiant_capture_point")
-		BadCamera = Entities:FindByName(nil, "dire_capture_point")
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -203,10 +206,7 @@ function GameMode:OnFirstPlayerLoaded()
 			statue_entity = CreateUnitByName(current_statue, current_location, true, nil, nil, DOTA_TEAM_BADGUYS)
 			statue_entity:SetForwardVector(Vector(-1, -1, 0):Normalized())
 		end
-		if current_statue == "npc_imba_developer_cookies" then
-		else
-			statue_entity:AddNewModifier(statue_entity, nil, "modifier_imba_contributor_statue", {})
-		end
+		statue_entity:AddNewModifier(statue_entity, nil, "modifier_imba_contributor_statue", {})
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -1099,29 +1099,42 @@ local time_elapsed = 0
 		end
 	end)
 
-	if not hero.is_real_wisp and hero:GetUnitName() == "npc_dota_hero_wisp" then
-		Timers:CreateTimer(function()
-			if not hero:HasModifier("modifier_imba_prevent_actions_game_start") then
-				hero:AddNewModifier(hero, nil, "modifier_imba_prevent_actions_game_start", {})
-				hero:AddEffects(EF_NODRAW)
-				hero:SetDayTimeVisionRange(475)
-				hero:SetNightTimeVisionRange(475)				
-				if hero:GetTeamNumber() == DOTA_TEAM_GOODGUYS then
-					PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), GoodCamera)
-					FindClearSpaceForUnit(hero, GoodCamera:GetAbsOrigin(), false)
-				else
-					PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), BadCamera)					
-					FindClearSpaceForUnit(hero, BadCamera:GetAbsOrigin(), false)
-				end
+	Timers:CreateTimer(0.1, function()
+		if hero.is_real_wisp then
+			print("REAL WISP")
+			hero.picked = true
+			return
+		elseif hero:GetUnitName() ~= "npc_dota_hero_wisp" then
+			hero.picked = true
+			return
+		elseif not hero.is_real_wisp then
+			print("FAKE WISP")
+			if hero:GetUnitName() == "npc_dota_hero_wisp" then
+				Timers:CreateTimer(function()
+					if not hero:HasModifier("modifier_imba_prevent_actions_game_start") then
+						hero:AddNewModifier(hero, nil, "modifier_imba_prevent_actions_game_start", {})
+						hero:AddEffects(EF_NODRAW)
+						hero:SetDayTimeVisionRange(475)
+						hero:SetNightTimeVisionRange(475)				
+						if hero:GetTeamNumber() == DOTA_TEAM_GOODGUYS then
+							PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), GoodCamera)
+							FindClearSpaceForUnit(hero, GoodCamera:GetAbsOrigin(), false)
+						else
+							PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), BadCamera)					
+							FindClearSpaceForUnit(hero, BadCamera:GetAbsOrigin(), false)
+						end
+					end
+					if time_elapsed < 0.9 then
+						time_elapsed = time_elapsed + 0.1
+					else			
+						return nil
+					end
+					return 0.1
+				end)
 			end
-			if time_elapsed < 0.9 then
-				time_elapsed = time_elapsed + 0.1
-			else			
-				return nil
-			end
-			return 0.1
-		end)
-	end
+			return
+		end
+	end)
 end
 
 --[[	This function is called once and only once when the game completely begins (about 0:00 on the clock).  At this point,

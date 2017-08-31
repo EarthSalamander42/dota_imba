@@ -497,6 +497,30 @@
 	opacity: 0.75;
 }
 
+#ImbaXPRank0,
+#ImbaXPRank1,
+#ImbaXPRank2,
+#ImbaXPRank3,
+#ImbaXPRank4,
+#ImbaXPRank5,
+#ImbaXPRank6,
+#ImbaXPRank7,
+#ImbaXPRank8,
+#ImbaXPRank9,
+#ImbaXPRank10,
+#ImbaXPRank11,
+#ImbaXPRank12,
+#ImbaXPRank13,
+#ImbaXPRank14,
+#ImbaXPRank15,
+#ImbaXPRank16,
+#ImbaXPRank17,
+#ImbaXPRank18,
+#ImbaXPRank19
+{
+	visibility: collapse;
+}
+
 #XPProgressBar0,
 #XPProgressBar1,
 #XPProgressBar2,

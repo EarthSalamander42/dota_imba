@@ -25,7 +25,7 @@ function imba_witch_doctor_paralyzing_cask:OnSpellStart()
 	if IsServer() then
 		local hCaster = self:GetCaster()
 		local hTarget = self:GetCursorTarget()
-		
+
 		-- Parameters
 		local speed = self:GetSpecialValueFor("speed")
 		-- Creating a unique ID for each cast
@@ -33,11 +33,11 @@ function imba_witch_doctor_paralyzing_cask:OnSpellStart()
 		self["split_" .. index] = self:GetSpecialValueFor("split_amount")
 		-- Cask count
 		self[index] = 1
-		
+
 		if (hCaster:GetName() == "npc_dota_hero_witch_doctor") then
 			hCaster:EmitSound("witchdoctor_wdoc_ability_cask_0"..math.random(1,8))
 		end
-		
+
 		local projectile = 
 		{
 			Target = hTarget,
