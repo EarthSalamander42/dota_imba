@@ -20,7 +20,7 @@ modifier_imba_skull_basher = modifier_imba_skull_basher or class({})
 function modifier_imba_skull_basher:IsHidden() return true end
 function modifier_imba_skull_basher:IsPurgable() return false end
 function modifier_imba_skull_basher:IsDebuff() return false end
-function modifier_imba_skull_basher:RemoveOnDeath() return false end
+function modifier_imba_skull_basher:IsPermanent() return true end
 function modifier_imba_skull_basher:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end 
 
 function modifier_imba_skull_basher:OnCreated()
@@ -75,7 +75,7 @@ modifier_imba_skull_basher_unique = modifier_imba_skull_basher_unique or class({
 function modifier_imba_skull_basher_unique:IsHidden() return true end
 function modifier_imba_skull_basher_unique:IsPurgable() return false end
 function modifier_imba_skull_basher_unique:IsDebuff() return false end
-function modifier_imba_skull_basher_unique:RemoveOnDeath() return false end
+function modifier_imba_skull_basher_unique:IsPermanent() return true end
 
 function modifier_imba_skull_basher_unique:OnCreated()
     -- Ability properties
@@ -93,7 +93,7 @@ function modifier_imba_skull_basher_unique:OnCreated()
     self.stun_duration = self.ability:GetSpecialValueFor("stun_duration")
     self.bash_damage = self.ability:GetSpecialValueFor("bash_damage")
     self.skull_break_duration = self.ability:GetSpecialValueFor("skull_break_duration")
-    self.actual_break_duration = self.ability:GetSpecialValueFor("actual_break_duration")
+	self.actual_break_duration = self.ability:GetSpecialValueFor("actual_break_duration")
 end
 
 function modifier_imba_skull_basher_unique:DeclareFunctions()
@@ -129,10 +129,16 @@ function modifier_imba_skull_basher_unique:OnAttack(keys)
                 return nil                
             end
 
+			-- If the target is a deflector, do nothing either
+			if target:HasModifier("modifier_imba_juggernaut_blade_fury") and attacker:IsRangedAttacker() then
+				return nil
+			end
+		
             -- If the target is on the same team as the attacker, do nothing (WW R for instace)
-            if attacker:GetTeamNumber() == target:GetTeamNumber() then
-                return nil
-            end
+			-- On behalf of Jugg's deflecting function, disabling this. ~IamInnocentX3
+            -- if attacker:GetTeamNumber() == target:GetTeamNumber() then
+            --    return nil
+            -- end
 
             -- If the Skull Basher is on cooldown, do nothing
             if not self.ability:IsCooldownReady() then
@@ -194,7 +200,7 @@ function modifier_imba_skull_basher_unique:OnAttackLanded(keys)
                     target:RemoveModifierByName(self.modifier_skull_crash)
 
                     -- Apply BREAK!
-                    target:AddNewModifier(self.caster, self.ability, self.modifier_skull_break, {duration = self.actual_break_duration})
+                     target:AddNewModifier(self.caster, self.ability, self.modifier_skull_break, {duration = self.actual_break_duration})
                 end
             end            
                 

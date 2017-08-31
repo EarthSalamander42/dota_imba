@@ -83,7 +83,7 @@ function modifier_item_imba_diffusal:GetAttributes() return MODIFIER_ATTRIBUTE_M
 function modifier_item_imba_diffusal:IsHidden() return true end
 function modifier_item_imba_diffusal:IsDebuff() return false end
 function modifier_item_imba_diffusal:IsPurgable() return false end
-function modifier_item_imba_diffusal:RemoveOnDeath() return false end
+function modifier_item_imba_diffusal:IsPermanent() return true end
 
 function modifier_item_imba_diffusal:OnCreated()    
     -- Ability properties
@@ -136,7 +136,7 @@ modifier_item_imba_diffusal_unique = modifier_item_imba_diffusal_unique or class
 function modifier_item_imba_diffusal_unique:IsHidden() return true end
 function modifier_item_imba_diffusal_unique:IsDebuff() return false end
 function modifier_item_imba_diffusal_unique:IsPurgable() return false end
-function modifier_item_imba_diffusal_unique:RemoveOnDeath() return false end
+function modifier_item_imba_diffusal_unique:IsPermanent() return true end
 
 function modifier_item_imba_diffusal_unique:OnCreated()
     -- Ability properties
@@ -167,11 +167,17 @@ function modifier_item_imba_diffusal_unique:GetModifierProcAttack_BonusDamage_Ph
             if self.caster:HasModifier("modifier_item_imba_diffusal_2_unique") or self.caster:HasModifier("modifier_item_imba_diffusal_3_unique") then
                 return nil
             end
-
+			
+			-- If the target is a deflector, do nothing either
+			if target:HasModifier("modifier_imba_juggernaut_blade_fury") and attacker:IsRangedAttacker() then
+				return nil
+			end
+			
             -- Don't apply when attacking teammates
-            if attacker:GetTeamNumber() == target:GetTeamNumber() then
-                return nil
-            end
+			-- Removed for Juggernaut's Deflect to be effective
+            --if attacker:GetTeamNumber() == target:GetTeamNumber() then
+            --    return nil
+            --end
 
             -- Don't apply on anything that is not a hero or a creep
             if not target:IsHero() and not target:IsCreep() then
@@ -413,7 +419,7 @@ function modifier_item_imba_diffusal_2:GetAttributes() return MODIFIER_ATTRIBUTE
 function modifier_item_imba_diffusal_2:IsHidden() return true end
 function modifier_item_imba_diffusal_2:IsDebuff() return false end
 function modifier_item_imba_diffusal_2:IsPurgable() return false end
-function modifier_item_imba_diffusal_2:RemoveOnDeath() return false end
+function modifier_item_imba_diffusal_2:IsPermanent() return true end
 
 function modifier_item_imba_diffusal_2:OnCreated()
     -- Ability properties
@@ -467,7 +473,7 @@ modifier_item_imba_diffusal_2_unique = modifier_item_imba_diffusal_2_unique or c
 function modifier_item_imba_diffusal_2_unique:IsHidden() return true end
 function modifier_item_imba_diffusal_2_unique:IsDebuff() return false end
 function modifier_item_imba_diffusal_2_unique:IsPurgable() return false end
-function modifier_item_imba_diffusal_2_unique:RemoveOnDeath() return false end
+function modifier_item_imba_diffusal_2_unique:IsPermanent() return true end
 
 function modifier_item_imba_diffusal_2_unique:OnCreated()
     -- Ability properties
@@ -503,10 +509,16 @@ function modifier_item_imba_diffusal_2_unique:GetModifierProcAttack_BonusDamage_
                 return nil
             end
 
+			-- If the target is a deflector, do nothing either
+			if target:HasModifier("modifier_imba_juggernaut_blade_fury") and attacker:IsRangedAttacker() then
+				return nil
+			end
+			
             -- Don't apply when attacking teammates
-            if attacker:GetTeamNumber() == target:GetTeamNumber() then
-                return nil
-            end
+			-- Removed for Juggernaut's Deflect to be effective
+            --if attacker:GetTeamNumber() == target:GetTeamNumber() then
+            --    return nil
+            --end
 
             -- Don't apply on anything that is not a hero or a creep
             if not target:IsHero() and not target:IsCreep() then
@@ -569,10 +581,16 @@ function modifier_item_imba_diffusal_2_unique:OnAttackLanded(keys)
                 return nil
             end
 
+			-- If the target is a deflector, do nothing either
+			if target:HasModifier("modifier_imba_juggernaut_blade_fury") and attacker:IsRangedAttacker() then
+				return nil
+			end
+			
             -- Don't apply when attacking teammates
-            if attacker:GetTeamNumber() == target:GetTeamNumber() then
-                return nil
-            end
+			-- Removed for Juggernaut's Deflect to be effective
+            --if attacker:GetTeamNumber() == target:GetTeamNumber() then
+            --    return nil
+            --end
 
             -- Don't apply on anything that is not a hero or a creep
             if not target:IsHero() and not target:IsCreep() then
@@ -804,7 +822,7 @@ function modifier_item_imba_diffusal_3:GetAttributes() return MODIFIER_ATTRIBUTE
 function modifier_item_imba_diffusal_3:IsHidden() return true end
 function modifier_item_imba_diffusal_3:IsDebuff() return false end
 function modifier_item_imba_diffusal_3:IsPurgable() return false end
-function modifier_item_imba_diffusal_3:RemoveOnDeath() return false end
+function modifier_item_imba_diffusal_3:IsPermanent() return true end
 
 function modifier_item_imba_diffusal_3:OnCreated()
     -- Ability properties
@@ -857,7 +875,7 @@ modifier_item_imba_diffusal_3_unique = modifier_item_imba_diffusal_3_unique or c
 function modifier_item_imba_diffusal_3_unique:IsHidden() return true end
 function modifier_item_imba_diffusal_3_unique:IsDebuff() return false end
 function modifier_item_imba_diffusal_3_unique:IsPurgable() return false end
-function modifier_item_imba_diffusal_3_unique:RemoveOnDeath() return false end
+function modifier_item_imba_diffusal_3_unique:IsPermanent() return true end
 
 function modifier_item_imba_diffusal_3_unique:OnCreated()
     -- Ability properties
@@ -871,6 +889,7 @@ function modifier_item_imba_diffusal_3_unique:OnCreated()
     self.illusion_mana_burn = self.ability:GetSpecialValueFor("illusion_mana_burn")
     self.steal_chance_pct = self.ability:GetSpecialValueFor("steal_chance_pct")
     self.steal_burn = self.ability:GetSpecialValueFor("steal_burn")
+	self.deflector  = self.caster -- Set the default as attacker
 end
 
 function modifier_item_imba_diffusal_3_unique:DeclareFunctions()
@@ -888,10 +907,16 @@ function modifier_item_imba_diffusal_3_unique:GetModifierProcAttack_BonusDamage_
         -- Only apply if the attacker is the caster
         if attacker == self.caster then
 
+			-- If the target is a deflector, do nothing
+			if target:HasModifier("modifier_imba_juggernaut_blade_fury") and attacker:IsRangedAttacker() then
+				return nil
+			end
+			
             -- Don't apply when attacking teammates
-            if attacker:GetTeamNumber() == target:GetTeamNumber() then
-                return nil
-            end
+			-- Removed for Juggernaut's Deflect to be effective
+            --if attacker:GetTeamNumber() == target:GetTeamNumber() then
+            --    return nil
+            --end
 
             -- Don't apply on anything that is not a hero or a creep
             if not target:IsHero() and not target:IsCreep() then
@@ -948,11 +973,18 @@ function modifier_item_imba_diffusal_3_unique:OnAttackLanded(keys)
 
         -- Only apply if the attacker is the caster
         if attacker == self.caster then
-
+			
+			-- If the target is a deflector, set the deflector to steal the buff
+			if target:HasModifier("modifier_imba_juggernaut_blade_fury") and attacker:IsRangedAttacker() then
+				self.deflector = target
+			else
+			-- Proceed as normal
+			
             -- Don't apply when attacking teammates
-            if attacker:GetTeamNumber() == target:GetTeamNumber() then
-                return nil
-            end
+			-- Removed for Juggernaut's Deflect to be effective
+            --if attacker:GetTeamNumber() == target:GetTeamNumber() then
+            --    return nil
+            --end
 
             -- Don't apply on anything that is not a hero or a creep
             if not target:IsHero() and not target:IsCreep() then
@@ -994,9 +1026,14 @@ function modifier_item_imba_diffusal_3_unique:OnAttackLanded(keys)
                         -- Check if it is a buff
                         if modifier.IsDebuff and modifier.IsPurgable then
                             if not modifier:IsDebuff() and modifier:IsPurgable() then
-                                -- Add the buff to yourself
+                                -- Add to the deflector
+								if self.deflector then
+								self.deflector:AddNewModifier(self.caster, modifier:GetAbility(), modifier:GetName(), {duration = modifier:GetRemainingTime()})
+								else
+								-- Add the buff to yourself
                                 self.caster:AddNewModifier(self.caster, modifier:GetAbility(), modifier:GetName(), {duration = modifier:GetRemainingTime()})
-
+								end
+								
                                 -- Remove buff from enemy                                
                                 target:RemoveModifierByName(modifier:GetName())
                                 buff_stolen = true
@@ -1039,6 +1076,7 @@ function modifier_item_imba_diffusal_3_unique:OnAttackLanded(keys)
                     end
                 end
             end        
-        end
-    end
+			end
+		end
+	end
 end
