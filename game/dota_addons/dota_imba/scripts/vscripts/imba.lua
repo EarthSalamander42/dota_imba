@@ -1099,29 +1099,42 @@ local time_elapsed = 0
 		end
 	end)
 
-	if not hero.is_real_wisp and hero:GetUnitName() == "npc_dota_hero_wisp" then
-		Timers:CreateTimer(function()
-			if not hero:HasModifier("modifier_imba_prevent_actions_game_start") then
-				hero:AddNewModifier(hero, nil, "modifier_imba_prevent_actions_game_start", {})
-				hero:AddEffects(EF_NODRAW)
-				hero:SetDayTimeVisionRange(475)
-				hero:SetNightTimeVisionRange(475)				
-				if hero:GetTeamNumber() == DOTA_TEAM_GOODGUYS then
-					PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), GoodCamera)
-					FindClearSpaceForUnit(hero, GoodCamera:GetAbsOrigin(), false)
-				else
-					PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), BadCamera)					
-					FindClearSpaceForUnit(hero, BadCamera:GetAbsOrigin(), false)
-				end
+	Timers:CreateTimer(0.1, function()
+		if hero.is_real_wisp then
+			print("REAL WISP")
+			hero.picked = true
+			return
+		elseif hero:GetUnitName() ~= "npc_dota_hero_wisp" then
+			hero.picked = true
+			return
+		elseif not hero.is_real_wisp then
+			print("FAKE WISP")
+			if hero:GetUnitName() == "npc_dota_hero_wisp" then
+				Timers:CreateTimer(function()
+					if not hero:HasModifier("modifier_imba_prevent_actions_game_start") then
+						hero:AddNewModifier(hero, nil, "modifier_imba_prevent_actions_game_start", {})
+						hero:AddEffects(EF_NODRAW)
+						hero:SetDayTimeVisionRange(475)
+						hero:SetNightTimeVisionRange(475)				
+						if hero:GetTeamNumber() == DOTA_TEAM_GOODGUYS then
+							PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), GoodCamera)
+							FindClearSpaceForUnit(hero, GoodCamera:GetAbsOrigin(), false)
+						else
+							PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), BadCamera)					
+							FindClearSpaceForUnit(hero, BadCamera:GetAbsOrigin(), false)
+						end
+					end
+					if time_elapsed < 0.9 then
+						time_elapsed = time_elapsed + 0.1
+					else			
+						return nil
+					end
+					return 0.1
+				end)
 			end
-			if time_elapsed < 0.9 then
-				time_elapsed = time_elapsed + 0.1
-			else			
-				return nil
-			end
-			return 0.1
-		end)
-	end
+			return
+		end
+	end)
 end
 
 --[[	This function is called once and only once when the game completely begins (about 0:00 on the clock).  At this point,

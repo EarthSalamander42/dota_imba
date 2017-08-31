@@ -16,6 +16,23 @@ function item_diretide_candy:OnSpellStart()
 			CustomNetTables:SetTableValue("game_options", "dire", {score = CustomNetTables:GetTableValue("game_options", "dire").score +1})
 		end
 
+		-- Create the projectile
+		local info = {
+			Target = target,
+			Source = caster,
+			Ability = self,
+			EffectName = "particles/hw_fx/hw_candy_drop.vpcf",
+			bDodgeable = false,
+			bProvidesVision = true,
+			bVisibleToEnemies = true,
+			bReplaceExisting = false,
+			iMoveSpeed = self:GetSpecialValueFor("projectile_speed"),
+			iVisionRadius = 0,
+			iVisionTeamNumber = caster:GetTeamNumber(),
+			ExtraData = {special_cast = special_cast}
+		}
+		ProjectileManager:CreateTrackingProjectile( info )
+
 		self:SetCurrentCharges(self:GetCurrentCharges()-1)
 		if self:GetCurrentCharges() <= 0 then self:RemoveSelf() end
 	end
@@ -37,7 +54,8 @@ function modifier_diretide_candy_hp_loss:OnCreated()
 		self.hp_loss_pct = self.ability:GetSpecialValueFor("hp_loss_pct")
 
 		-- Start thinking
-		self:StartIntervalThink(0.3)
+		self:StartIntervalThink(0.1)
+
 	end
 end
 
@@ -51,6 +69,18 @@ function modifier_diretide_candy_hp_loss:OnIntervalThink()
 
 		-- Re-calculate health stats
 		self.caster:CalculateStatBonus()
+
+		if not self.caster.OverHeadJingu then 
+			self.caster.OverHeadJingu = ParticleManager:CreateParticle("particles/hw_fx/candy_carrying_overhead.vpcf", PATTACH_OVERHEAD_FOLLOW, self.caster)
+			ParticleManager:SetParticleControl(self.caster.OverHeadJingu, 0, self.caster:GetAbsOrigin())
+		end
+		if self:GetStackCount() < 10 then
+			ParticleManager:SetParticleControl(self.caster.OverHeadJingu, 2, Vector(0, self:GetStackCount(), 0))
+		elseif self:GetStackCount() >= 10 and self:GetStackCount() < 20 then
+			ParticleManager:SetParticleControl(self.caster.OverHeadJingu, 2, Vector(1, self:GetStackCount()-10, 0))
+		elseif self:GetStackCount() >= 20 and self:GetStackCount() < 30 then
+			ParticleManager:SetParticleControl(self.caster.OverHeadJingu, 2, Vector(2, self:GetStackCount()-20, 0))
+		end
 	end
 end
 
@@ -64,8 +94,8 @@ function modifier_diretide_candy_hp_loss:GetModifierExtraHealthPercentage()
 	if IsServer() then
 		local hp_to_reduce = self.hp_loss_pct * 0.01 * self:GetStackCount() * (-1)
 		-- Make sure you don't go over 100%
-		if hp_to_reduce > 99 then
-			return 99
+		if hp_to_reduce < -0.99 then
+			return -0.99
 		end
 
 		return hp_to_reduce
@@ -74,15 +104,25 @@ end
 
 function modifier_diretide_candy_hp_loss:CastFilterResultTarget(target)
 	if IsServer() then
-		if target:GetUnitName() == "npc_dota_candy_pumpkin" then
-			return UF_SUCCESS
+		if not target:GetUnitName() == "npc_dota_candy_pumpkin" then
+			return UF_FAIL_CUSTOM
 		end
-		return UF_FAIL_CUSTOM
+		print("Wrong Target!")
+		return UF_SUCCESS
 	end
 end
 
 function modifier_diretide_candy_hp_loss:GetCustomCastErrorTarget(target) 
 	if IsServer() then
+		print("Wrong target message..")
 		return "#dota_hud_error_cast_only_pumpkin"
 	end
+end
+
+function modifier_diretide_candy_hp_loss:OnDestroy()
+	self.caster = self:GetCaster()
+
+	ParticleManager:DestroyParticle(self.caster.OverHeadJingu, false)
+	ParticleManager:ReleaseParticleIndex(self.caster.OverHeadJingu)
+	self.caster.OverHeadJingu = nil
 end

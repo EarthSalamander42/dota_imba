@@ -15420,7 +15420,8 @@
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"freeze_duration"				"1"				
+				"freeze_duration"				"1"
+				"LinkedSpecialBonus"			"special_bonus_imba_lich_5"
 			}
 
 			"06"
@@ -15468,7 +15469,6 @@
 		{
 			"particle" 					"particles/units/heroes/hero_lich/lich_frost_nova.vpcf"
 			"particle"					"particles/status_fx/status_effect_frost_lich.vpcf"
-			"particle"					"particles/hero/lich/nova_explosions_main.vpcf"
 			"soundfile" 				"soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
 			"soundfile"					"soundevents/voscripts/game_sounds_vo_lich.vsndevts"
 		}
@@ -15704,19 +15704,19 @@
 			"07"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"allied_kill_dmg_red_pct"		"10 10 10 10 12 14 16"
+				"allied_kill_dmg_red_pct"		"10"
 			}
 
 			"08"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"enemy_kill_bonus_dmg_pct"		"10 10 10 10 12 14 16"
+				"enemy_kill_bonus_dmg_pct"		"10"
 			}
 
 			"09"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"enemy_kill_bonus_spell_amp"	"10 10 10 10 12 14 16"
+				"enemy_kill_bonus_spell_amp"	"10"
 			}
 
 			"10"
@@ -15776,50 +15776,57 @@
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
-		{			
+		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"ms_slow_pct"				"30"
+				"var_type"					"FIELD_FLOAT"
+				"ministun_duration"			"0.1"
 			}
 
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"as_slow"					"30"
+				"ms_slow_pct"				"30"
 			}
 
 			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"as_slow"					"30"
+			}
+
+			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"slow_duration"				"2.5"
 			}
 
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bounce_range"				"600 600 600 650 700 750"				
-			}
-
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"280 370 460 490 520 550"
+				"bounce_range"				"600 600 600 650 700 750"
+				"LinkedSpecialBonus"		"special_bonus_imba_lich_3"
 			}
 
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"num_bounces"				"10"
+				"damage"					"280 370 460 490 520 550"
 			}
 
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"projectile_base_speed"		"850"
+				"num_bounces"				"10"
 			}
 
 			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"projectile_base_speed"		"850"
+			}
+
+			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"speed_increase_per_bounce"	"20 20 20 25 30 35"
@@ -15848,7 +15855,7 @@
 	//=================================================================================================================
     // Lich Talents
     //=================================================================================================================
-    "special_bonus_imba_lich_1" // Chain Frost bounces instantly after hitting a target
+    "special_bonus_imba_lich_1" // Chain Frost bounce delay decrease
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
@@ -15867,13 +15874,13 @@
         {
             "01"
             {
-                "var_type"                  "FIELD_FLOAT"
-                "value"	                    "0.01"
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "75"
             }
         }
     }
 
-    "special_bonus_imba_lich_2" // Sacrifice can now be used on self, granting you and nearby allies the damage reduction buff.
+    "special_bonus_imba_lich_2" // Sacrifice bonuses increase
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
@@ -15893,118 +15900,12 @@
             "01"
             {
                 "var_type"                  "FIELD_INTEGER"
-                "value"	                    "1"
+                "value"	                    "50"
             }
         }
     }
 
-    "special_bonus_imba_lich_3" // Frost Nova now deals a portion of the main target's current health as damage
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01" 	"imba_lich_frost_nova"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "value"	                    "10"
-            }
-        }
-    }
-
-    "special_bonus_imba_lich_4" // Frost Nova draws a line of exploding Frost Novas that explode after a small delay
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01" 	"imba_lich_frost_nova"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "distance_per_nova"         "100"
-            }
-           	
-           	"02"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "damage_radius"	  	        "250"
-            }
-
-            "03"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "nova_damage"	  	        "100"
-            }
-
-            "04"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "cold_front_stacks"  	    "1"
-            }
-
-            "05"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "explosion_delay"	  	    "2"
-            }
-
-            "06"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "creation_delay"	  	    "0.15"
-            }
-
-        }
-    }
-
-    "special_bonus_imba_lich_5" // Frost Armor adds a portion of the Lich's intelligence to the armor bonus
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-        "LinkedAbility"
-        {
-        	"01" 	"imba_lich_frost_armor"
-        }
-
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "value"	                    "10"
-            }
-        }
-    }
-
-    "special_bonus_imba_lich_6" // Chain Frost can be cast on allies to give them a orb that spins around them. Taking damage from an enemy hero causes the Chain Frost to bounce to the attacker.
+    "special_bonus_imba_lich_3" //Chain Frost bounce range increase
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
@@ -16024,14 +15925,83 @@
             "01"
             {
                 "var_type"                  "FIELD_INTEGER"
-                "max_distance"              "1000"
+                "value"	                    "175"
             }
+        }
+    }
 
-            "02"
+    "special_bonus_imba_lich_4" // Frost Nova cooldown decrease
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01" 	"imba_lich_frost_nova"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
             {
                 "var_type"                  "FIELD_INTEGER"
-                "buff_duration"             "30"
-            }            
+                "value"	                    "4"
+            }
+        }
+    }
+
+    "special_bonus_imba_lich_5" // Cold Front duration increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01" 	"imba_lich_cold_front"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "1"
+            }
+        }
+    }
+
+    "special_bonus_imba_lich_6" // Massive Ice Armor armor increase when cast on buildings
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01" 	"imba_lich_frost_armor"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "36"
+            }
         }
     }
 
@@ -16066,7 +16036,7 @@
         }
     }
 
-    "special_bonus_imba_lich_8" // Frost Armor is now an aura that slows nearby enemies in a small range around the target. The slow gets stronger each time the target is attacked.
+    "special_bonus_imba_lich_8" // Cold Front gains additional stack from skills
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
@@ -16076,7 +16046,7 @@
 
         "LinkedAbility"
         {
-        	"01" 	"imba_lich_frost_armor"
+        	"01" 	"imba_lich_cold_front"
         }
 
         // Special
@@ -16086,25 +16056,7 @@
             "01"
             {
                 "var_type"                  "FIELD_INTEGER"
-                "base_slow"			        "15"
-            }            
-
-            "03"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "slow_increase_per_hit"     "1"
-            }
-
-            "04"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "aura_range"			    "400"
-            }
-
-            "05"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "max_slow"					"30"
+                "value"	                    "1"
             }
         }
     }

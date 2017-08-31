@@ -48,55 +48,133 @@ local XP_has_this_level = {}
 
 function Server_GetTitle(level)
 	if level <= 9 then
-		return "#imba_rank_title_rookie"
+		return "Rookie"
 	elseif level <= 19 then
-		return "#imba_rank_title_amateur"
+		return "Amateur"
 	elseif level <= 29 then
-		return "#imba_rank_title_captain"
+		return "Captain"
 	elseif level <= 39 then
-		return "#imba_rank_title_warrior"
+		return "Warrior"
 	elseif level <= 49 then
-		return "#imba_rank_title_commander"
+		return "Commander"
 	elseif level <= 59 then
-		return "#imba_rank_title_general"
+		return "General"
 	elseif level <= 69 then
-		return "#imba_rank_title_master"
+		return "Master"
 	elseif level <= 79 then
-		return "#imba_rank_title_epic"
+		return "Epic"
 	elseif level <= 89 then
-		return "#imba_rank_title_legendary"
+		return "Legendary"
 	elseif level <= 99 then
-		return "#imba_rank_title_icefrog"
+		return "Icefrog"
 	else 
-		return "#imba_rank_title_firetoad "..level-100
+		return "Firetoad "..level-100
 	end
 end
 
-function Server_GetTitleColor(title)
-	if title == "#imba_rank_title_rookie" then
-		return {255, 255, 255}
-	elseif title == "#imba_rank_title_amateur" then
-		return {102, 204, 0}
-	elseif title == "#imba_rank_title_captain" then
-		return {76, 139, 202}
-	elseif title == "#imba_rank_title_warrior" then
-		return {0, 76, 153}
-	elseif title == "#imba_rank_title_commander" then
-		return {152, 95, 209}
-	elseif title == "#imba_rank_title_general" then
-		return {70, 5, 135}
-	elseif title == "#imba_rank_title_master" then
-		return {250, 83, 83}
-	elseif title == "#imba_rank_title_epic" then
-		return {142, 12, 12}
-	elseif title == "#imba_rank_title_legendary" then
-		return {239, 188, 20}
-	elseif title == "#imba_rank_title_icefrog" then
-		return {20, 86, 239}
-	else -- it's Firetoaaaaaaaaaaad! 
-		return {199, 81, 2}
+--	function Server_GetTitle(level)
+--		if level <= 9 then
+--			return "#imba_rank_title_rookie"
+--		elseif level <= 19 then
+--			return "#imba_rank_title_amateur"
+--		elseif level <= 29 then
+--			return "#imba_rank_title_captain"
+--		elseif level <= 39 then
+--			return "#imba_rank_title_warrior"
+--		elseif level <= 49 then
+--			return "#imba_rank_title_commander"
+--		elseif level <= 59 then
+--			return "#imba_rank_title_general"
+--		elseif level <= 69 then
+--			return "#imba_rank_title_master"
+--		elseif level <= 79 then
+--			return "#imba_rank_title_epic"
+--		elseif level <= 89 then
+--			return "#imba_rank_title_legendary"
+--		elseif level <= 99 then
+--			return "#imba_rank_title_icefrog"
+--		else 
+--			return "#imba_rank_title_firetoad "..level-100
+--		end
+--	end
+
+function Server_GetTitleColor(title, js)
+	if js == true then
+		if title == "Rookie" then
+			return "#FFFFFF"
+		elseif title == "Amateur" then
+			return "#66CC00"
+		elseif title == "Captain" then
+			return "#4C8BCA"
+		elseif title == "Warrior" then
+			return "#004C99"
+		elseif title == "Commander" then
+			return "#985FD1"
+		elseif title == "General" then
+			return "#460587"
+		elseif title == "Master" then
+			return "#FA5353"
+		elseif title == "Epic" then
+			return "#8E0C0C"
+		elseif title == "Legendary" then
+			return "#EFBC14"
+		elseif title == "Icefrog" then
+			return "#1456EF"
+		else -- it's Firetoaaaaaaaaaaad! 
+			return "#C75102"
+		end
+	else
+		if title == "Rookie" then
+			return {255, 255, 255}
+		elseif title == "Amateur" then
+			return {102, 204, 0}
+		elseif title == "Captain" then
+			return {76, 139, 202}
+		elseif title == "Warrior" then
+			return {0, 76, 153}
+		elseif title == "Commander" then
+			return {152, 95, 209}
+		elseif title == "General" then
+			return {70, 5, 135}
+		elseif title == "Master" then
+			return {250, 83, 83}
+		elseif title == "Epic" then
+			return {142, 12, 12}
+		elseif title == "Legendary" then
+			return {239, 188, 20}
+		elseif title == "Icefrog" then
+			return {20, 86, 239}
+		else -- it's Firetoaaaaaaaaaaad! 
+			return {199, 81, 2}
+		end
 	end
 end
+
+--	function Server_GetTitleColor(title)
+--		if title == "#imba_rank_title_rookie" then
+--			return {255, 255, 255}
+--		elseif title == "#imba_rank_title_amateur" then
+--			return {102, 204, 0}
+--		elseif title == "#imba_rank_title_captain" then
+--			return {76, 139, 202}
+--		elseif title == "#imba_rank_title_warrior" then
+--			return {0, 76, 153}
+--		elseif title == "#imba_rank_title_commander" then
+--			return {152, 95, 209}
+--		elseif title == "#imba_rank_title_general" then
+--			return {70, 5, 135}
+--		elseif title == "#imba_rank_title_master" then
+--			return {250, 83, 83}
+--		elseif title == "#imba_rank_title_epic" then
+--			return {142, 12, 12}
+--		elseif title == "#imba_rank_title_legendary" then
+--			return {239, 188, 20}
+--		elseif title == "#imba_rank_title_icefrog" then
+--			return {20, 86, 239}
+--		else -- it's Firetoaaaaaaaaaaad! 
+--			return {199, 81, 2}
+--		end
+--	end
 
 function Server_DecodeForPlayer ( t, nPlayerID )   --To deep-decode the Json code...
 	local print_r_cache={}
@@ -166,12 +244,14 @@ function Server_PrintInfo()
 end
 
 function Server_GetPlayerLevelAndTitle(nPlayerID)
+	print("Max levels:", #table_rankXP)
 	for i = #table_rankXP, 1, -1 do
 		if table_XP_has and table_XP_has[nPlayerID] and table_rankXP and table_rankXP[i] then
 			if tonumber(table_XP_has[nPlayerID]) >= table_rankXP[i] then
 				if tonumber(table_XP_has[nPlayerID]) < 0 then
-					print("XP below 0!")
+					print("What did you do! Negative value!")
 				end
+				print("Color:", Server_GetTitleColor(XP_level_title_player[nPlayerID], true))
 				XP_level[nPlayerID] = i-1
 				XP_level_title_player[nPlayerID] = Server_GetTitle(XP_level[nPlayerID])
 				XP_this_level[nPlayerID] = table_rankXP[i]
@@ -181,11 +261,18 @@ function Server_GetPlayerLevelAndTitle(nPlayerID)
 					XP_need_to_next_level[nPlayerID] = table_rankXP[i+1] - tonumber(table_XP_has[nPlayerID])
 				end
 				XP_has_this_level[nPlayerID] = tonumber(table_XP_has[nPlayerID]) - table_rankXP[i]
-				CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {XP = tonumber(XP_has_this_level[nPlayerID]), MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]), Lvl = tonumber(XP_level[nPlayerID]), ID = nPlayerID, title = XP_level_title_player[nPlayerID]})
+				CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {
+					XP = tonumber(XP_has_this_level[nPlayerID]),
+					MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]),
+					Lvl = tonumber(XP_level[nPlayerID]),
+					ID = nPlayerID,
+					title = XP_level_title_player[nPlayerID],
+					title_color = Server_GetTitleColor(XP_level_title_player[nPlayerID], true)})
 				break
 			end
 		end
 	end
+	print("Max possible XP:", table_rankXP[#table_rankXP])
 end
 
 local _finished = 0
@@ -208,7 +295,7 @@ function Server_SendAndGetInfoForAll_function(nPlayerID)
 	else
 
 		table_SteamID64[nPlayerID] = tostring(PlayerResource:GetSteamID(nPlayerID))
-		table_XP[nPlayerID] = tostring(25) --How many XP will player get in this game
+		table_XP[nPlayerID] = tostring(24) --How many XP will player get in this game
 
 		local jsondata={}
 		local jsontable={}
@@ -331,18 +418,46 @@ function Server_CalculateXPForWinnerAndAll(winning_team)
 				if PlayerResource:GetTeam(nPlayerID) == Winner and PlayerResource:GetConnectionState(nPlayerID) == 2 then
 					if GetMapName() == "imba_standard" then
 						jsontable.XP = tostring(math.ceil(table_XP[nPlayerID] * 2.0))
-						CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {XP = tonumber(XP_has_this_level[nPlayerID]), MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]), Lvl = tonumber(XP_level[nPlayerID]), ID = nPlayerID, title = XP_level_title_player[nPlayerID], XP_change = tonumber(math.ceil(table_XP[nPlayerID] * 2.0))})
+						CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {
+							XP = tonumber(XP_has_this_level[nPlayerID]),
+							MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]),
+							Lvl = tonumber(XP_level[nPlayerID]),
+							ID = nPlayerID,
+							title = XP_level_title_player[nPlayerID],
+							XP_change = tonumber(math.ceil(table_XP[nPlayerID] * 2.0)),
+							title_color = Server_GetTitleColor(XP_level_title_player[nPlayerID], true)})
 					else
-						jsontable.XP = tostring(math.ceil(table_XP[nPlayerID] +20000))
-						CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {XP = tonumber(XP_has_this_level[nPlayerID]), MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]), Lvl = tonumber(XP_level[nPlayerID]), ID = nPlayerID, title = XP_level_title_player[nPlayerID], XP_change = tonumber(math.ceil(table_XP[nPlayerID] * 1.2))})
+						jsontable.XP = tostring(math.ceil(table_XP[nPlayerID] * 1.0))
+						CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {
+							XP = tonumber(XP_has_this_level[nPlayerID]),
+							MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]),
+							Lvl = tonumber(XP_level[nPlayerID]),
+							ID = nPlayerID,
+							title = XP_level_title_player[nPlayerID],
+							XP_change = tonumber(math.ceil(table_XP[nPlayerID] * 1.0)),
+							title_color = Server_GetTitleColor(XP_level_title_player[nPlayerID], true)})
 					end
 				else
 					if PlayerResource:GetConnectionState(nPlayerID) ~= 2 then
-						jsontable.XP = tostring(0 - table_XP[nPlayerID])
-						CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {XP = tonumber(XP_has_this_level[nPlayerID]), MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]), Lvl = tonumber(XP_level[nPlayerID]), ID = nPlayerID, title = XP_level_title_player[nPlayerID], XP_change = tonumber(0 - table_XP[nPlayerID])})
+						jsontable.XP = tostring(0 - table_XP[nPlayerID] / 2)
+						CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {
+							XP = tonumber(XP_has_this_level[nPlayerID]),
+							MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]),
+							Lvl = tonumber(XP_level[nPlayerID]),
+							ID = nPlayerID,
+							title = XP_level_title_player[nPlayerID],
+							XP_change = tonumber(0 - table_XP[nPlayerID] / 2),
+							title_color = Server_GetTitleColor(XP_level_title_player[nPlayerID], true)})
 					else
 						jsontable.XP = tostring(0)
-						CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {XP = tonumber(XP_has_this_level[nPlayerID]), MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]), Lvl = tonumber(XP_level[nPlayerID]), ID = nPlayerID, title = XP_level_title_player[nPlayerID], XP_change = tonumber(0)})
+						CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {
+							XP = tonumber(XP_has_this_level[nPlayerID]),
+							MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]),
+							Lvl = tonumber(XP_level[nPlayerID]),
+							ID = nPlayerID,
+							title = XP_level_title_player[nPlayerID],
+							XP_change = tonumber(0),
+							title_color = Server_GetTitleColor(XP_level_title_player[nPlayerID], true)})
 					end
 				end
 				jsontable.player_key = table_player_key[nPlayerID]

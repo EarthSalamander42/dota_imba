@@ -281,10 +281,7 @@ function EnterGame() {
 
 		//COOKIES: Re-enable HUD parts when 1 player enter in the game, might need to find a way to show these HUD parts for player only rather than global
 		var parent_panel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
-		parent_panel.FindChildTraverse("lower_hud").style.visibility = "visible";
-		parent_panel.FindChildTraverse("topbar").style.visibility = "visible";
-		parent_panel.FindChildTraverse("minimap_container").style.visibility = "visible";
-		parent_panel.FindChildTraverse("topbar").style.visibility = "visible";
+		parent_panel.FindChildTraverse("HUDElements").style.visibility = "visible";
 	}
 }
 
@@ -296,12 +293,6 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 		// If the player is already in-game, destroy the pick interface and ignore the rest
 		if (pick_state == "in_game") {
 			$('#Background').GetParent().DeleteAsync( 0.0 );
-			//COOKIES: Re-enable HUD parts when 1 player enter in the game, might need to find a way to show these HUD parts for player only rather than global
-			var parent_panel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
-			parent_panel.FindChildTraverse("lower_hud").style.visibility = "visible";
-			parent_panel.FindChildTraverse("topbar").style.visibility = "visible";
-			parent_panel.FindChildTraverse("minimap_container").style.visibility = "visible";
-
 		// Else, repopulate player pick panels
 		} else {
 			var i = 1;
@@ -385,10 +376,7 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 		}
 
 		// Hide the top scoreboard during the pick phase
-		parent_panel.FindChildTraverse("topbar").style.visibility = "collapse";
-		parent_panel.FindChildTraverse("lower_hud").style.visibility = "collapse";
-		parent_panel.FindChildTraverse("topbar").style.visibility = "collapse";
-		parent_panel.FindChildTraverse("minimap_container").style.visibility = "collapse";
+		parent_panel.FindChildTraverse("HUDElements").style.visibility = "collapse";
 
 		// Update the game options display
 		var bounty_multiplier = CustomNetTables.GetTableValue("game_options", "bounty_multiplier");

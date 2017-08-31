@@ -50,11 +50,14 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 				ImbaXP_Panel.BCreateChildren("<Panel id='XPProgressBarContainer" +playerId+ "' value='0.0'/>");
 				var Imbar = ImbaXP_Panel.BCreateChildren("<ProgressBar id='XPProgressBar" +playerId+ "'/>");
 				ImbaXP_Panel.BCreateChildren("<Label id='ImbaLvl" +playerId+ "' text='999'/>");
+				ImbaXP_Panel.BCreateChildren("<Label id='ImbaXPRank" +playerId+ "' text='999'/>");
 				ImbaXP_Panel.BCreateChildren("<Label id='ImbaXP" +playerId+ "' text='999'/>");
 				ImbaXP_Panel.BCreateChildren("<Label id='ImbaXPEarned" +playerId+ "' text='+25'/>");
 				_ScoreboardUpdater_SetValueSafe( playerPanel, "XPProgressBar"+playerId, plyData.XP / plyData.MaxXP );
 				_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaLvl"+playerId, "Lvl: " + plyData.Lvl );
+				_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaXPRank"+playerId, plyData.title );
 				_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaXP"+playerId, plyData.XP + "/" + plyData.MaxXP );
+				playerPanel.FindChildTraverse("ImbaXPRank" +playerId).style.color = plyData.title_color;
 
 				if (plyData.XP_change >= 1)
 				{
