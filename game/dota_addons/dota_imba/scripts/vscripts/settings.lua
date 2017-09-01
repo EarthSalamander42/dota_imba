@@ -486,7 +486,7 @@ IMBA_DEVS = {
 	65988826,	-- Noobsauce
 	137344217,	-- Moujiaozi
 	65419767,	-- AtroCty
-	16914370	-- sercankd
+	33828741	-- sercankd
 }
 
 STOREGGA = true
