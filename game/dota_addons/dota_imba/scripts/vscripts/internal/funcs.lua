@@ -1742,16 +1742,6 @@ function CDOTA_BaseNPC_Hero:IsWukongsSummon()
     return self:HasModifier("modifier_monkey_king_fur_army_soldier") or self:HasModifier("modifier_monkey_king_fur_army_soldier_inactive") or self:HasModifier("modifier_monkey_king_fur_army_soldier_hidden")
 end
 
-function ClearSlotsFromDummy(unit, bNoStash)
-	for i = 0, bNoStash and DOTA_ITEM_SLOT_9 or DOTA_STASH_SLOT_6 do
-		local current_item = unit:GetItemInSlot(i)
-		if current_item and current_item:GetAbilityName() == "item_dummy" then
-			unit:RemoveItem(current_item)
-			UTIL_Remove(current_item)
-		end
-	end
-end
-
 function string.starts(s, start)
 	return string.sub(s, 1, string.len(start)) == start
 end
