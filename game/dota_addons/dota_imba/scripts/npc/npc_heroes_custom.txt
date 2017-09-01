@@ -2776,14 +2776,14 @@
 		"Ability5"					"imba_ursa_enrage"
 		"Ability6"					""
 
-		"Ability10"					"special_bonus_imba_ursa_1"
-		"Ability11"					"special_bonus_imba_ursa_2"
-		"Ability12"					"special_bonus_imba_ursa_3"
-		"Ability13"					"special_bonus_imba_ursa_4"
-		"Ability14"					"special_bonus_imba_ursa_5"
-		"Ability15"					"special_bonus_imba_ursa_6"
-		"Ability16"					"special_bonus_imba_ursa_7"
-		"Ability17"					"special_bonus_imba_ursa_8"
+		"Ability10"					"special_bonus_imba_ursa_1" // Enrage is activated automatically after taking enough damage. Resets after a few seconds
+		"Ability11"					"special_bonus_imba_ursa_2" // Every x points in Strength improves the cooldown of Earthshock's Trembling Steps cooldown.
+		"Ability12"					"special_bonus_imba_ursa_3" // Territorial Hunter grants 25% Tenacity to Ursa in its AoE, and has its cooldown refreshed if Ursa kills an enemy hero in it
+		"Ability13"					"special_bonus_imba_ursa_4" // Fury Swipes' Devastating Blow reduces the armor of the target. Stackable and refreshable.
+		"Ability14"					"special_bonus_imba_ursa_5" // If the target has more than the threshold, Devastating Blow deals a bonus of the target's maximum health.
+		"Ability15"					"special_bonus_imba_ursa_6" // Overpower also roots targets in addition to disarming them.
+		"Ability16"					"special_bonus_imba_ursa_7" // Enrage adds a portion of your current health as damage.
+		"Ability17"					"special_bonus_imba_ursa_8" // Overpower becomes a passive, granting Ursa free attacks for 4 seconds whenever he starts an attack and Overpower is off cooldown.
 
 		"ProjectileSpeed"			"900"
 	}
