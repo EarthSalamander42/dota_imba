@@ -17,7 +17,7 @@
 		}
 
 		function AddChatLine(token, vars, team, wasTopPlayer, system) {
-			$.Msg("CHAT: AddChatLine check.")
+//			$.Msg("CHAT: AddChatLine check.")
 			var lineParent = $.CreatePanel("Panel", $("#ChatContent"), "");
 			lineParent.AddClass("ChatLine");
 			lineParent.AddClass("ChatLineAppear");
@@ -54,7 +54,7 @@
 		}
 
 		function OnChatSay(args) {
-			$.Msg("CHAT: Sending Custom Chat Message")
+//			$.Msg("CHAT: Sending Custom Chat Message")
 			AddChatLine(args.hasPass ? "#ChatLinePass" : "#ChatLine", {
 				name: EscapeHtml(Players.GetPlayerName(args.player)),
 				color:  LuaColor(args.color),
@@ -90,7 +90,7 @@
 	<Panel class="Chat" hittest="false">
 		<Panel id="ChatContent" hittest="false">
 		</Panel>
-		<TextEntry id="ChatEntry" multiline="false" textmode="normal" oninputsubmit="SubmitChat()" oncancel="DropInputFocus()" maxchars="256" placeholder="#ChatPlaceholder">
+		<TextEntry id="ChatEntry" multiline="false" textmode="normal" oninputsubmit="SubmitChat()" oncancel="DropInputFocus()" maxchars="128" placeholder="#ChatPlaceholder">
 			<Label id="ChatTarget" />
 		</TextEntry>
 	</Panel>

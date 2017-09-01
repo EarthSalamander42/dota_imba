@@ -78,6 +78,9 @@ DebugPrint("[IMBA] Performing pre-load precache")
 	PrecacheResource("soundfile", "soundevents/imba_soundevents.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/imba_item_soundevents.vsndevts", context)
 
+	-- Storegga
+	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_tiny.vsndevts", context)
+
 	-- Roshan
 	PrecacheResource("particle", "particles/units/heroes/hero_invoker/invoker_deafening_blast.vpcf", context)
 	PrecacheResource("particle", "particles/neutral_fx/roshan_slam.vpcf", context)

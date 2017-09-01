@@ -426,6 +426,16 @@ function Server_CalculateXPForWinnerAndAll(winning_team)
 							title = XP_level_title_player[nPlayerID],
 							XP_change = tonumber(math.ceil(table_XP[nPlayerID] * 2.0)),
 							title_color = Server_GetTitleColor(XP_level_title_player[nPlayerID], true)})
+					elseif STOREGGA_ACTIVE then
+						jsontable.XP = tostring(math.ceil(table_XP[nPlayerID] * 4.2))
+						CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {
+							XP = tonumber(XP_has_this_level[nPlayerID]),
+							MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]),
+							Lvl = tonumber(XP_level[nPlayerID]),
+							ID = nPlayerID,
+							title = XP_level_title_player[nPlayerID],
+							XP_change = tonumber(math.ceil(table_XP[nPlayerID] * 4.2)),
+							title_color = Server_GetTitleColor(XP_level_title_player[nPlayerID], true)})
 					else
 						jsontable.XP = tostring(math.ceil(table_XP[nPlayerID] * 1.0))
 						CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {
@@ -447,6 +457,16 @@ function Server_CalculateXPForWinnerAndAll(winning_team)
 							ID = nPlayerID,
 							title = XP_level_title_player[nPlayerID],
 							XP_change = tonumber(0 - table_XP[nPlayerID] / 2),
+							title_color = Server_GetTitleColor(XP_level_title_player[nPlayerID], true)})
+					elseif STOREGGA_ACTIVE then
+						jsontable.XP = tostring(math.ceil(table_XP[nPlayerID] * 2.1))
+						CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {
+							XP = tonumber(XP_has_this_level[nPlayerID]),
+							MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]),
+							Lvl = tonumber(XP_level[nPlayerID]),
+							ID = nPlayerID,
+							title = XP_level_title_player[nPlayerID],
+							XP_change = tonumber(math.ceil(table_XP[nPlayerID] * 2.1)),
 							title_color = Server_GetTitleColor(XP_level_title_player[nPlayerID], true)})
 					else
 						jsontable.XP = tostring(0)

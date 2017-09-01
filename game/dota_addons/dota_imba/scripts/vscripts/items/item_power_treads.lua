@@ -21,7 +21,7 @@ function item_imba_power_treads_2:OnSpellStart()
 	if IsServer() then
 		
 		local caster = self:GetCaster()
-		if not caster:IsHero() then return end
+		if not caster:IsHero() or caster:IsClone() then return end
 		
 		-- Switch tread attribute
 		local modifiers = caster:FindAllModifiersByName("modifier_imba_power_treads_2")
@@ -47,7 +47,7 @@ function item_imba_power_treads_2:GetAbilityTextureName()
 	if IsClient() then
 		local caster = self:GetCaster()
 		if not caster:IsHero() or not self.state then return "custom/imba_power_treads" end
-		
+
 		return "custom/imba_mega_treads_"..self.state
 	end
 end
@@ -73,7 +73,8 @@ function modifier_imba_power_treads_2:DeclareFunctions()
 end
 
 function modifier_imba_power_treads_2:OnCreated()
-	if IsServer() then		
+	if IsServer() then
+		if self:GetParent():IsClone() then return end
 		if self:GetParent():IsHero() then
 			local ability = self:GetAbility()
 			local parent = self:GetParent()
@@ -160,7 +161,7 @@ function modifier_imba_power_treads_2:GetModifierBonusStats_Strength()
 	if self:GetStackCount() ~= DOTA_ATTRIBUTE_STRENGTH then return end
 	
 	local parent = self:GetParent()
-	if not parent:IsHero() then return end
+	if not parent:IsHero() or parent:IsClone() then return end
 	
 	local ability = self:GetAbility()
 	local stat_bonus = ability:GetSpecialValueFor("bonus_stat")
@@ -172,7 +173,7 @@ function modifier_imba_power_treads_2:GetModifierBonusStats_Agility()
 	
 	local ability = self:GetAbility()
 	local parent = self:GetParent()
-	if not parent:IsHero() then return end
+	if not parent:IsHero() or parent:IsClone() then return end
 	
 	local stat_bonus = ability:GetSpecialValueFor("bonus_stat")
 	return stat_bonus
@@ -182,7 +183,7 @@ function modifier_imba_power_treads_2:GetModifierBonusStats_Intellect()
 	if self:GetStackCount() ~= DOTA_ATTRIBUTE_INTELLECT then return end
 	
 	local parent = self:GetParent()
-	if not parent:IsHero() then return end
+	if not parent:IsHero() or parent:IsClone() then return end
 	
 	local ability = self:GetAbility()
 	local stat_bonus = ability:GetSpecialValueFor("bonus_stat")

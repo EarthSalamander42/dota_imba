@@ -45,7 +45,7 @@
 		opacity: 0.0;
 	}
 
-	70%
+	50%
 	{
 		opacity: 0.0;
 	}
@@ -53,6 +53,24 @@
 	100%
 	{
 		opacity: 1.0;
+	}
+}
+
+@keyframes 'fade_out'
+{
+	0%
+	{
+		opacity: 1.0;
+	}
+
+	70%
+	{
+		opacity: 0.0;
+	}
+
+	100%
+	{
+		opacity: 0.0;
 	}
 }
 
@@ -104,9 +122,10 @@
 	width: 100%;
 	height: 100%;
 	animation-name: fade_in;
-	animation-duration: 4.0s;
+	animation-duration: 2.0s;
 	animation-timing-function: ease-in;
 	animation-iteration-count: 1;
+	background-color: #000000da;
 }
 
 #PickList {
@@ -219,6 +238,7 @@
 }
 
 .ClassNormalOption,
+.ClassCustomOption,
 .ClassImbaOption {
 	margin-left: 2.5px;
 	margin-right: 2.5px;
@@ -234,6 +254,7 @@
 }
 
 .AspectRatio16x10 .ClassNormalOption,
+.AspectRatio16x10 .ClassCustomOption,
 .AspectRatio16x10 .ClassImbaOption {
 	margin-left: 2.5px;
 	margin-right: 2.5px;
@@ -248,6 +269,7 @@
 }
 
 .AspectRatio4x3 .ClassNormalOption,
+.AspectRatio4x3 .ClassCustomOption,
 .AspectRatio4x3 .ClassImbaOption {
 	margin-left: 2.5px;
 	margin-right: 2.5px;
@@ -265,11 +287,16 @@
 	border: 2px solid #656565;
 }
 
+.ClassCustomOption {
+	border: 2px solid ##0040FF;
+}
+
 .ClassImbaOption {
 	border: 2px solid #FF7800FF;
 }
 
 .ClassNormalOption:hover,
+.ClassCustomOption:hover,
 .ClassImbaOption:hover
 {
 	saturation: 1.0;
@@ -279,16 +306,9 @@
 }
 
 .ClassNormalOption.taken,
+.ClassCustomOption.taken,
 .ClassImbaOption.taken
 {
-	saturation: 0.0;
-	transform: none;
-	opacity: 0.2;
-	wash-color: #00000000;
-}
-
-
-.ClassImbaOption.taken {
 	saturation: 0.0;
 	transform: none;
 	opacity: 0.2;
@@ -654,12 +674,14 @@
 ===============================================================*/
 #HeroSelectionChat
 {
-	margin-left: -127%;
+	margin-left: -130%;
 	margin-bottom: 7%;
 	align: center bottom;
-	width: 23%;
-	height: 20.5%;
-//	background-color: #000000da;
+	width: 30%;
+	height: 22.5%;
+	background-color: #000000da;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
 }
 
 .AspectRatio4x3 #HeroSelectionChat
@@ -686,4 +708,21 @@
 .AspectRatio4x3 #BanTabMessage
 {
 	width: 230px;
+}
+
+#LoadingPanel {
+	vertical-align: center;
+	horizontal-align: center;
+	background-color: #000000da;
+	border-radius: 10px;
+	padding: 4px 4px 4px 4px;
+	animation-name: fade_out;
+	animation-duration: 2.0s;
+	animation-direction: alternate;
+}
+
+#LoadingLabel {
+	font-size: 40px;
+	font-family: "Radiance";
+	color: white;
 }

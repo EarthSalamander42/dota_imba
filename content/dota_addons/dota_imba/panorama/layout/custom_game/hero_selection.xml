@@ -224,6 +224,9 @@
 								<Panel id="npc_dota_hero_skeleton_king" class="ClassImbaOption" 
 									onactivate="SelectHero('npc_dota_hero_skeleton_king')" 
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_skeleton_king.png');" />
+						<!--	<Panel id="npc_dota_hero_storegga" class="ClassCustomOption" 
+									onactivate="SelectHero('npc_dota_hero_storegga')" 
+									style="background-image: url('file://{images}/heroes/npc_dota_hero_tiny.png');" /> -->
 							</Panel>	
 						</Panel>
 
@@ -564,6 +567,10 @@
 
 				<Panel id="HeroSelectionChat"/>
 			</Panel>
+
+<!--		<Panel id="LoadingPanel">
+				<Label id="LoadingLabel" text="#loading_imba"/>
+			</Panel> -->
 		</Panel>
 	</Panel>	
 </root>

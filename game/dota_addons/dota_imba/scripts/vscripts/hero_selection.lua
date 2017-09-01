@@ -501,7 +501,12 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		-- Dummy invisible wisp
 		local wisp = PlayerResource:GetPlayer(player_id):GetAssignedHero()
 		-- Switch for the new hero
-		local hero = PlayerResource:ReplaceHeroWith(player_id, hero_name, 0, 0 )
+		if hero_name == "npc_dota_hero_storegga" then
+			hero = PlayerResource:ReplaceHeroWith(player_id, "npc_dota_hero_tiny", 0, 0 )
+			Storegga(hero)			
+		else
+			hero = PlayerResource:ReplaceHeroWith(player_id, hero_name, 0, 0 )
+		end
 		hero.pID = player_id
 
 		-- If this is a "real" wisp, tag it
@@ -600,6 +605,10 @@ end
 -- Returns an array with the hero's non-hidden abilities
 function HeroSelection:GetPickScreenAbilities(hero_name)
 	local hero_abilities = {}
+	if hero_name == "npc_dota_hero_storegga" then
+		print('lol')
+		return
+	end
 	for index, ability in pairs(HERO_ABILITY_LIST[hero_name]) do
 		hero_abilities[index] = ability
 	end

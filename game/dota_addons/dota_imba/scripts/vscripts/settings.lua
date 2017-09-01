@@ -13,7 +13,7 @@ START_GAME_AUTOMATICALLY = true				-- Should the game start automatically
 ENABLE_HERO_RESPAWN = true					-- Should the heroes automatically respawn on a timer or stay dead until manually respawned
 UNIVERSAL_SHOP_MODE = false					-- Should the main shop contain Secret Shop items as well as regular items
 
-HERO_SELECTION_TIME = 45.0					-- How long should we let people select their hero?
+HERO_SELECTION_TIME = 45.0 + 10.0			-- How long should we let people select their hero?
 PRE_GAME_TIME = 90.0 + HERO_SELECTION_TIME + 10.0	-- How long after people select their heroes should the horn blow and the game start?
 POST_GAME_TIME = 60.0						-- How long should we let people look at the scoreboard before closing the server automatically?
 AUTO_LAUNCH_DELAY = 20.0					-- How long should we wait for the host to setup the game, after all players have loaded in?
@@ -488,3 +488,5 @@ IMBA_DEVS = {
 	65419767,	-- AtroCty
 	16914370	-- sercankd
 }
+
+STOREGGA = true
