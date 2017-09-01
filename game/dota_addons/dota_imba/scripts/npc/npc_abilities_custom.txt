@@ -38259,7 +38259,7 @@
 		}
 	}
 
-	"meepo_divided_we_stand_arena"
+	"imba_meepo_divided_we_stand"
 	{
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
@@ -38301,7 +38301,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"heroes/hero_meepo/divided_we_stand.lua"
+				"ScriptFile"	"hero/hero_meepo.lua"
 				"Function"		"CreateMeepo"
 			}
 		}
@@ -38312,27 +38312,21 @@
 			{
 				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
 
-				"ThinkInterval"  "0.1"
+				"ThinkInterval"  "1.0"
 				"OnIntervalThink"
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"heroes/hero_meepo/divided_we_stand.lua"
+						"ScriptFile"	"hero/hero_meepo.lua"
 						"Function"		"TrackMeepos"
 					}
 				}
-			}
-
-			"modifier_divided_we_stand_clone"
-			{
-				"Passive"			"0"
-				"IsHidden"			"1"
 
 				"OnDeath"
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"heroes/hero_meepo/divided_we_stand.lua"
+						"ScriptFile"	"hero/hero_meepo.lua"
 						"Function"		"KillMeepos"
 					}
 				}
