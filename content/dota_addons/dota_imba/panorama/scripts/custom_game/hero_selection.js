@@ -104,11 +104,11 @@ function HeroPicked(player, hero, team, has_randomed) {
 
 	// Disable the hero button according to hero pick rule
 	var LocalPlayer = Players.GetLocalPlayer()
-    var hero_pick_rule = CustomNetTables.GetTableValue("game_options", "hero_pick_rule");
-    if(hero_pick_rule[1] == 0 || (hero_pick_rule[1] == 1 && Players.GetTeam(LocalPlayer) == team)){
-        //If 'no same hero' or 'allow team pick same hero'
-        $('#'+hero).AddClass("taken");
-    }
+	var hero_pick_rule = CustomNetTables.GetTableValue("game_options", "hero_pick_rule");
+	if(hero_pick_rule[1] == 0 || (hero_pick_rule[1] == 1 && Players.GetTeam(LocalPlayer) == team)){
+		//If 'no same hero' or 'allow team pick same hero'
+		$('#'+hero).AddClass("taken");
+	}
 
 	// Check if the pick was by the local player
 	if ( player == LocalPlayer ) {
@@ -129,7 +129,7 @@ function HeroPicked(player, hero, team, has_randomed) {
 function HeroUnpicked(player, hero, team) {
 
 	// Re-enable the hero button for the player's team
-    var hero_pick_rule = CustomNetTables.GetTableValue("game_options", "hero_pick_rule");
+	var hero_pick_rule = CustomNetTables.GetTableValue("game_options", "hero_pick_rule");
 	if (hero_pick_rule[1] == 0 || (hero_pick_rule[1] == 1 && Players.GetTeam(Players.GetLocalPlayer()) == team)) {
 		var parent_panel = $.GetContextPanel().GetParent().GetParent()
 		parent_panel.FindChildTraverse(hero).RemoveClass( "taken" );
@@ -145,10 +145,10 @@ function HeroUnpicked(player, hero, team) {
  * pickable heroes. */
 function SwitchToHeroPreview( heroName ) {
 
-    var previewPanel = $.CreatePanel("Panel", $('#PostPickScreen'), "HeroPreview");
-    previewPanel.BLoadLayoutFromString('<root><Panel><DOTAScenePanel style="width:100%; height:100%;" particleonly="false" unit="'+heroName+'"/></Panel></root>', false, false );
+	var previewPanel = $.CreatePanel("Panel", $('#PostPickScreen'), "HeroPreview");
+	previewPanel.BLoadLayoutFromString('<root><Panel><DOTAScenePanel style="width:100%; height:100%;" particleonly="false" unit="'+heroName+'"/></Panel></root>', false, false );
 
-    $('#PostPickScreen').MoveChildBefore( previewPanel, $("#EnterGameBtn") );
+	$('#PostPickScreen').MoveChildBefore( previewPanel, $("#EnterGameBtn") );
 
 	// Hide/show relevant panels
 	$("#PickHeroBtn").style.visibility = 'collapse';
@@ -181,7 +181,7 @@ function SelectHero( heroName ) {
 
 	// Make the abilities panel visible
 	$("#HeroAbilitiesParentPanel").style.visibility = 'visible';
-    $("#PickHeroBtn").style.visibility = 'visible';
+	$("#PickHeroBtn").style.visibility = 'visible';
 
 	// Request the hero's abilities table to the server 
 	GameEvents.SendCustomGameEventToServer("pick_abilities_requested", { HeroName: heroName} );
@@ -210,11 +210,11 @@ function UpdateAbilities(abilityList) {
 		}
 	}
 
-    var numOfAbilities = Object.keys(abilityList).length
-    var abilityParentPanel = $("#HeroAbilitiesParentPanel");
-    abilityParentPanel.SetHasClass("six_abilities", numOfAbilities==6);
-    abilityParentPanel.SetHasClass("five_abilities", numOfAbilities==5);
-    abilityParentPanel.SetHasClass("four_abilities", numOfAbilities==4);
+	var numOfAbilities = Object.keys(abilityList).length
+	var abilityParentPanel = $("#HeroAbilitiesParentPanel");
+	abilityParentPanel.SetHasClass("six_abilities", numOfAbilities==6);
+	abilityParentPanel.SetHasClass("five_abilities", numOfAbilities==5);
+	abilityParentPanel.SetHasClass("four_abilities", numOfAbilities==4);
 }
 
 /* Pick a hero, called when a player confirms his hero selection */
@@ -250,7 +250,7 @@ function RepickHero() {
 
 		// Make the abilities panel invisible
 		$("#HeroAbilitiesParentPanel").style.visibility = 'collapse';
-        $("#PickHeroBtn").style.visibility = 'collapse';
+		$("#PickHeroBtn").style.visibility = 'collapse';
 
 		// Disable the repick button
 		$("#RepickBtn").AddClass("disabled");
@@ -284,6 +284,7 @@ function EnterGame() {
 		parent_panel.FindChildTraverse("topbar").style.visibility = "visible";
 		parent_panel.FindChildTraverse("minimap_container").style.visibility = "visible";
 		parent_panel.FindChildTraverse("lower_hud").style.visibility = "visible";
+		parent_panel.FindChildTraverse("HudChat").style.visibility = "visible";
 	}
 }
 
@@ -299,6 +300,7 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 			parent_panel.FindChildTraverse("topbar").style.visibility = "visible";
 			parent_panel.FindChildTraverse("minimap_container").style.visibility = "visible";
 			parent_panel.FindChildTraverse("lower_hud").style.visibility = "visible";
+			parent_panel.FindChildTraverse("HudChat").style.visibility = "visible";
 		// Else, repopulate player pick panels
 		} else {
 			var i = 1;
@@ -384,6 +386,7 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 		parent_panel.FindChildTraverse("topbar").style.visibility = "collapse";
 		parent_panel.FindChildTraverse("minimap_container").style.visibility = "collapse";
 		parent_panel.FindChildTraverse("lower_hud").style.visibility = "collapse";
+		parent_panel.FindChildTraverse("HudChat").style.visibility = "collapse";
 
 		// Update the game options display
 		var bounty_multiplier = CustomNetTables.GetTableValue("game_options", "bounty_multiplier");
@@ -396,7 +399,7 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 		var max_level = CustomNetTables.GetTableValue("game_options", "max_level");
 		var kills_to_end = CustomNetTables.GetTableValue("game_options", "kills_to_end");
 		var frantic_mode = CustomNetTables.GetTableValue("game_options", "frantic_mode");
-        var hero_pick_rule = CustomNetTables.GetTableValue("game_options", "hero_pick_rule");
+		var hero_pick_rule = CustomNetTables.GetTableValue("game_options", "hero_pick_rule");
 		$("#BountyMultiplierValue").text = bounty_multiplier[1] + "%";
 		$("#ExpMultiplierValue").text = exp_multiplier[1] + "%";
 		$("#RespawnTimerValue").text = respawn_multiplier[1] + "%";
@@ -441,13 +444,13 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 			}
 		}
 
-        if(hero_pick_rule[1] == 0){
-            $("#HeroPickRuleValue").text = $.Localize( '#imba_gamemode_settings_hero_pick_all_unique' );
-        } else if(hero_pick_rule[1] == 1){
-            $("#HeroPickRuleValue").text = $.Localize( '#imba_gamemode_settings_hero_pick_team_unique' );
-        } else if(hero_pick_rule[1] == 2){
-            $("#HeroPickRuleValue").text = $.Localize( '#imba_gamemode_settings_hero_pick_no_unique' );
-        }
+		if(hero_pick_rule[1] == 0){
+			$("#HeroPickRuleValue").text = $.Localize( '#imba_gamemode_settings_hero_pick_all_unique' );
+		} else if(hero_pick_rule[1] == 1){
+			$("#HeroPickRuleValue").text = $.Localize( '#imba_gamemode_settings_hero_pick_team_unique' );
+		} else if(hero_pick_rule[1] == 2){
+			$("#HeroPickRuleValue").text = $.Localize( '#imba_gamemode_settings_hero_pick_no_unique' );
+		}
 
 		// If All Random is enabled, pick a random hero
 		var all_random_enabled = CustomNetTables.GetTableValue("game_options", "all_random" );

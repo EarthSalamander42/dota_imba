@@ -52,6 +52,10 @@ require('events')
 -- clientside KV loading
 require('addon_init')
 
+if STOREGGA == true then
+	require('internal/storegga')
+end
+
 ApplyAllTalentModifiers()
 StoreCurrentDayCycle()
 
@@ -85,13 +89,13 @@ StoreCurrentDayCycle()
  function GameMode:OnItemPickedUp(event) 
    -- If this is a hero
    if event.HeroEntityIndex then
-       local owner = EntIndexToHScript( event.HeroEntityIndex )
-       -- And you've picked up a gold bag
-       if owner:IsHero() and event.itemname == "item_bag_of_gold" then
-           -- Pick up the gold
-           GoldPickup(event)
-       end
-    end
+	   local owner = EntIndexToHScript( event.HeroEntityIndex )
+	   -- And you've picked up a gold bag
+	   if owner:IsHero() and event.itemname == "item_bag_of_gold" then
+		   -- Pick up the gold
+		   GoldPickup(event)
+	   end
+	end
   end
 
 function GameMode:PostLoadPrecache()
@@ -111,16 +115,12 @@ function GameMode:OnFirstPlayerLoaded()
 	if GetMapName() == "imba_arena" then
 		GoodCamera = Entities:FindByName(nil, "radiant_capture_point")
 		BadCamera = Entities:FindByName(nil, "dire_capture_point")
-	elseif GetMapName() == "imba_diretide" then
+	else
 		GoodCamera = Entities:FindByName(nil, "dota_goodguys_fort")
 		BadCamera = Entities:FindByName(nil, "dota_badguys_fort")
-	else
 --		local roshan_spawn_loc = Entities:FindByName(nil, "roshan_spawn_point"):GetAbsOrigin()
 --		local roshan = CreateUnitByName("npc_imba_roshan", roshan_spawn_loc, true, nil, nil, DOTA_TEAM_NEUTRALS)
 --		roshan:FindAbilityByName("imba_roshan_rage"):SetLevel(1)
-
-		GoodCamera = Entities:FindByName(nil, "good_healer_7")
-		BadCamera = Entities:FindByName(nil, "bad_healer_7")
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -579,21 +579,6 @@ function GameMode:ItemAddedFilter( keys )
 		end
 	end
 
-	local meepo_extra_boots = {
-		"item_imba_ironleaf_boots",
-		"item_imba_blink_boots",
-		"item_imba_power_treads_2",
-		"item_imba_haste_boots"
-	}
-
-	if unit:GetUnitName() == "npc_dota_hero_meepo" then
-		for _, boots in pairs(meepo_extra_boots) do
-			if item_name == boots then
-				print("Those boots are special!")
-			end
-		end
-	end
-
 	return true
 end
 
@@ -757,10 +742,10 @@ function GameMode:OrderFilter( keys )
 			end
 		end
 	end
-	
+
 	if keys.order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
 		local ability = EntIndexToHScript(keys.entindex_ability)
-		
+
 		-- Kunkka Torrent cast-handling
 		if ability:GetAbilityName() == "imba_kunkka_torrent" then
 			local range = ability.BaseClass.GetCastRange(ability,ability:GetCursorPosition(),unit) + GetCastRangeIncrease(unit)
@@ -794,13 +779,58 @@ function GameMode:OrderFilter( keys )
 	
 	-- Techies' Focused Detonate cast-handlign
 	if keys.order_type == DOTA_UNIT_ORDER_CAST_POSITION then
-        local ability = EntIndexToHScript(keys.entindex_ability)        
-        
-        if ability:GetAbilityName() == "imba_techies_focused_detonate" then                        
-            unit:AddNewModifier(unit, ability, "modifier_imba_focused_detonate", {duration = 0.2})            
-        end
-    end
-	
+		local ability = EntIndexToHScript(keys.entindex_ability)        
+		
+		if ability:GetAbilityName() == "imba_techies_focused_detonate" then                        
+			unit:AddNewModifier(unit, ability, "modifier_imba_focused_detonate", {duration = 0.2})            
+		end
+	end
+
+
+	-- Meepo item handle
+	local meepo_table = Entities:FindAllByName("npc_dota_hero_meepo")
+	local ability = EntIndexToHScript(keys.entindex_ability)
+	for m = 1, #meepo_table do
+		if keys.order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
+			if ability:GetName() == "item_black_king_bar" then
+				local duration = ability:GetLevelSpecialValueFor("duration", ability:GetLevel() -1)					
+				meepo_table[m]:AddNewModifier(meepo_table[m], ability, "modifier_black_king_bar_immune", {duration = duration})
+			elseif ability:GetName() == "item_imba_white_queen_cape" then
+				local duration = ability:GetLevelSpecialValueFor("duration", ability:GetLevel() -1)					
+				meepo_table[m]:AddNewModifier(meepo_table[m], ability, "modifier_black_king_bar_immune", {duration = duration})
+--			elseif ability:GetName() == "item_imba_power_treads_2" then
+--				if meepo_table[m]:IsClone() then
+--					ability:CastAbility()
+--					print("LOLZ")
+--				end
+			end
+		elseif keys.order_type == DOTA_UNIT_ORDER_CAST_TARGET then
+			if ability:GetName() == "item_imba_black_queen_cape" then
+				local duration = ability:GetLevelSpecialValueFor("bkb_duration", ability:GetLevel() -1)					
+				meepo_table[m]:AddNewModifier(meepo_table[m], nil, "modifier_imba_black_queen_cape_active_bkb", {duration = duration})
+			end
+		end
+	end
+
+--[[
+	local target_ent = Entities:FindByName(nil, EntIndexToHScript(keys.entindex_target):GetName())
+	local target = EntIndexToHScript(keys.entindex_target):GetName()
+	if target == "npc_dota_hero_meepo" then
+		if unit:GetTeamNumber() ~= target_ent:GetTeamNumber() and target_ent:IsClone() then
+			for itemSlot = 0, 5 do
+				local item = target_ent:GetCloneSource():GetItemInSlot(itemSlot)
+				if item and item:GetName() == "item_sphere" then
+					if item:IsCooldownReady() then
+						print("Linken")
+						target_ent:AddNewModifier(target_ent, item, "modifier_item_sphere_target", {duration = 8.5})
+						item:CastAbility()
+					end
+				end
+			end
+		end
+	end
+	]]
+
 	return true
 end
 
@@ -1047,7 +1077,7 @@ function GameMode:OnAllPlayersLoaded()
 
 	-- CHAT
 	self.chat = Chat(self.Players, self.Users, TEAM_COLORS)
-    --	Chat:constructor(players, users, teamColors)
+	--	Chat:constructor(players, users, teamColors)
 	print("Constructing Chat!")
 
 	-------------------------------------------------------------------------------------------------

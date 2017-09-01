@@ -151,6 +151,13 @@ local i = 10
 --			return 0.5
 --		end)
 
+		Timers:CreateTimer(function()
+			for _, hero in pairs(HeroList:GetAllHeroes()) do
+				TrackMeepos()
+			end
+			return 0.5
+		end)
+
 		if IMBA_PICK_MODE_ALL_RANDOM or IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
 			Timers:CreateTimer(3.0, function()
 				for _, hero in pairs(HeroList:GetAllHeroes()) do
@@ -486,22 +493,33 @@ end
 
 -- An ability was used by a player
 function GameMode:OnAbilityUsed(keys)
-	DebugPrint('[BAREBONES] AbilityUsed')
-	DebugPrintTable(keys)
+local player = keys.PlayerID
+local abilityname = keys.abilityname
+if not abilityname then return end
 
-	local player = keys.PlayerID
-	local abilityname = keys.abilityname
-	if not abilityname then return end
-	
-	local hero = PlayerResource:GetSelectedHeroEntity(player)
-	if not hero then return end
-	
-	local abilityUsed = hero:FindAbilityByName(abilityname)
-	if not abilityUsed then return end
-	
+local hero = PlayerResource:GetSelectedHeroEntity(player)
+if not hero then return end
+
+--	local abilityUsed = hero:FindAbilityByName(abilityname)
+--	if not abilityUsed then return end
+
 	if abilityname == "rubick_spell_steal" then
 		local target = abilityUsed:GetCursorTarget()
 		hero.spellStealTarget = target
+	end
+
+	local meepo_table = Entities:FindAllByName("npc_dota_hero_meepo")
+	if hero:GetUnitName() == "npc_dota_hero_meepo" then
+		for m = 1, #meepo_table do
+			if meepo_table[m]:IsClone() then
+				if abilityname == "item_sphere" then
+					print("Linken!")
+					local duration = abilityname:GetSpecialValueFor("block_cooldown")					
+					print("Duration", duration)
+					meepo_table[m]:AddNewModifier(meepo_table[m], ability, "modifier_item_sphere_target", {duration = duration})
+				end
+			end
+		end
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -517,7 +535,7 @@ function GameMode:OnAbilityUsed(keys)
 
 	-- 			-- Only operate on remotes which need setup
 	-- 			if unit.needs_remote_mine_setup then
-					
+	
 	-- 				-- Add extra abilities
 	-- 				unit:AddAbility("imba_techies_minefield_teleport")
 	-- 				unit:AddAbility("imba_techies_remote_auto_creep")

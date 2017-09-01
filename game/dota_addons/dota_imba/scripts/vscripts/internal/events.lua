@@ -124,10 +124,17 @@ function GameMode:OnPlayerChat(keys)
 			caster.norange = nil
 		end
 
-		if str == "-printxpinfo" then
-		Server_PrintInfo() --print the XP system info
+		for i = 1, #IMBA_DEVS do
+			if PlayerResource:GetSteamAccountID(caster:GetPlayerID()) == IMBA_DEVS[i] then
+				if str == "-storegga" then
+					Storegga(caster)
+				end
+			end
 		end
 
+		if str == "-printxpinfo" then
+			Server_PrintInfo() --print the XP system info
+		end
 
 		if str == "-blink" then
 			blink_command = true
