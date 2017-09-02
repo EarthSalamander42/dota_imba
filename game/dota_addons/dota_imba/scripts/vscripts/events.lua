@@ -158,6 +158,19 @@ local i = 10
 			return 0.5
 		end)
 
+		-- Shows various info to devs in pub-game to find lag issues
+		ImbaNetGraph(10.0)
+
+		Timers:CreateTimer(10.0, function()
+			for _, hero in pairs(HeroList:GetAllHeroes()) do
+				if hero.is_dev and not hero.has_graph then
+					print("Sending Net Graph stats ...")
+					hero.has_graph = true
+					CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph", {})
+				end
+			end
+		end)
+
 		if IMBA_PICK_MODE_ALL_RANDOM or IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
 			Timers:CreateTimer(3.0, function()
 				for _, hero in pairs(HeroList:GetAllHeroes()) do
@@ -173,16 +186,6 @@ local i = 10
 
 	if new_state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		Server_WaitToEnableXpGain()
-		-- Shows various info to devs in pub-game to find lag issues
---		ImbaNetGraph(1.0)
-
---		for _, hero in pairs(HeroList:GetAllHeroes()) do
---			if hero.is_dev and not hero.has_graph then
---				print("Sending Net Graph stats ...")
---				hero.has_graph = true
---				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph", {})
---			end
---		end
 
 		if GetMapName() == "imba_diretide" then
 			Diretide()
@@ -236,15 +239,14 @@ local normal_xp = npc:GetDeathXP()
 	end
 
 	if npc:IsRealHero() then
-	--	for i = 1, #IMBA_DEVS do
-	--		-- Granting access to admin stuff for Imba Devs
-	--		if PlayerResource:GetSteamAccountID(npc:GetPlayerID()) == IMBA_DEVS[i] then
-	--			if not npc.is_dev then
-	--				npc.is_dev = true
-	--				print("Found a developer! Granting Dev access...")
-	--			end
-	--		end
-	--	end
+		for i = 1, #IMBA_DEVS do
+			-- Granting access to admin stuff for Imba Devs
+			if PlayerResource:GetSteamAccountID(npc:GetPlayerID()) == IMBA_DEVS[i] then
+				if not npc.is_dev then
+					npc.is_dev = true
+				end
+			end
+		end
 
 		Timers:CreateTimer(1, function() -- Silencer fix
 			if npc:HasModifier("modifier_silencer_int_steal") then

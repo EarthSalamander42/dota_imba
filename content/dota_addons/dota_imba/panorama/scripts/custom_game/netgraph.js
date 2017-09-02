@@ -1,11 +1,9 @@
 "use strict";
 
-function ShowNetgraph()
+function ShowNetgraph() /*Show NetGraph for devs only*/
 {
-	$.Msg("Showing up NetGraph for developer!")
-
 	$("#GlobalStats").style.visibility = "visible";
-	$("#ToggleUniqueStats").style.visibility = "visible";
+	$("#Buttons").style.visibility = "visible";
 }
 
 var toggle = false
@@ -24,6 +22,18 @@ function ToggleUniqueStats()
 		toggle = false
 		$("#UniqueStats").style.visibility = "collapse";
 	}
+}
+
+function RemoveUnits()
+{
+	$.Msg("Removing units...")
+	GameEvents.SendCustomGameEventToServer("remove_units", {});
+}
+
+function RemoveParticles()
+{
+	$.Msg("Removing particles...")
+	GameEvents.SendCustomGameEventToServer("remove_particles", {});
 }
 
 function UpdateNetGraph()
@@ -53,16 +63,21 @@ function UpdateNetGraph()
 	for (var i = 0; i < 20; i++)
 	{
 		var particle = CustomNetTables.GetTableValue("netgraph", "hero_particle_"+i).particle;
-//		var particle_total = CustomNetTables.GetTableValue("netgraph", "hero_total_particle_"+i).particle;
-//		var ID = CustomNetTables.GetTableValue("netgraph", "hero_particle_"+i).pID;
+		var particle_total = CustomNetTables.GetTableValue("netgraph", "hero_total_particle_"+i).particle;
+		var ID = CustomNetTables.GetTableValue("netgraph", "hero_particle_"+i).pID;
 
 		var playerInfo = Game.GetPlayerInfo( i );
+		var heroMainPanel = $("#Hero"+i+"ParticlesPanel")
 		var heroPanel = $("#Hero"+i+"Particles")
+		var player_name = 0
 
-		if (heroPanel && particle)
+		if (particle)
 		{
-			heroPanel.text = particle;
+			heroMainPanel.style.visibility = "visible";
+			heroPanel.text = particle_total;
+			heroPanel.text = particle + "/" + particle_total;
 		}
+		/*
 		else if (heroPanel == null)
 		{
 			$.Msg("Invalid Hero.")
@@ -71,19 +86,25 @@ function UpdateNetGraph()
 		{
 			$.Msg("Invalid Particle.")
 		}
-//		else if (ID == null)
-//		{
-//			$.Msg("Invalid ID.")
-//		}
+		else if (ID == null)
+		{
+			$.Msg("Invalid ID.")
+		}	*/
 
-//		if (playerInfo)
-//		{
-//			$("#HeroName"+i).text = playerInfo.player_selected_hero+"Particles"
-//		}
-//		else
-//		{
-//			$.Msg("Invalid player.")
-//		}
+		if (playerInfo != null && player_name == 0)
+		{
+			player_name = 1
+			$("#HeroName"+i).text = playerInfo.player_selected_hero;
+			if (playerInfo.player_team_id == 2)
+			{
+				$("#HeroName"+i).style.color = "#08640Eda";
+			}
+			else if (playerInfo.player_team_id == 3)
+			{
+				$("#HeroName"+i).style.color = "#640808da";
+			}
+
+		}
 	}
 }
 
