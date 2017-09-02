@@ -10,16 +10,16 @@
 #GlobalStats,
 #UniqueStats
 {
-	width: 250px;
+	width: 300px;
 	height: fit-children;
 	flow-children: down;
 	visibility: collapse;
 }
 
-#UniqueStats
+#Buttons
 {
-	margin-top: 2%;
-	margin-bottom: 0%;
+	flow-children: right;
+	visibility: collapse;
 }
 
 .EntryPanel
@@ -51,15 +51,21 @@
 	background-repeat: no-repeat;
 }
 
+#RemoveUnits,
+#RemoveParticles,
 #ToggleUniqueStats
 {
-	width: 160px;
-	height: 40px;
+	width: fit-children;
+	padding: 5px 5px 5px 5px;
+	height: 35px;
 	margin-top: 2%;
-	margin-left: 4%;
 	border-radius: 4px;
 	background-color: black;
-	visibility: collapse;
+}
+
+#ToggleUniqueStats
+{
+	margin-left: 4%;
 }
 
 #UniqueStatsButtonText
@@ -68,4 +74,28 @@
 	font-size: 16.0px;
 	font-weight: thin;
 	align: center center;
+}
+
+#Hero0ParticlesPanel,
+#Hero1ParticlesPanel,
+#Hero2ParticlesPanel,
+#Hero3ParticlesPanel,
+#Hero4ParticlesPanel,
+#Hero5ParticlesPanel,
+#Hero6ParticlesPanel,
+#Hero7ParticlesPanel,
+#Hero8ParticlesPanel,
+#Hero9ParticlesPanel,
+#Hero10ParticlesPanel,
+#Hero11ParticlesPanel,
+#Hero12ParticlesPanel,
+#Hero13ParticlesPanel,
+#Hero14ParticlesPanel,
+#Hero15ParticlesPanel,
+#Hero16ParticlesPanel,
+#Hero17ParticlesPanel,
+#Hero18ParticlesPanel,
+#Hero19ParticlesPanel
+{
+	visibility: collapse;
 }

@@ -60,7 +60,7 @@ ApplyAllTalentModifiers()
 StoreCurrentDayCycle()
 
 --	if IsInToolsMode() then
---		OverrideCreateParticle()
+		OverrideCreateParticle()
 --		OverrideReleaseIndex()
 --	end
 
@@ -1131,14 +1131,12 @@ local time_elapsed = 0
 
 	Timers:CreateTimer(0.1, function()
 		if hero.is_real_wisp then
-			print("REAL WISP")
 			hero.picked = true
 			return
 		elseif hero:GetUnitName() ~= "npc_dota_hero_wisp" then
 			hero.picked = true
 			return
 		elseif not hero.is_real_wisp then
-			print("FAKE WISP")
 			if hero:GetUnitName() == "npc_dota_hero_wisp" then
 				Timers:CreateTimer(function()
 					if not hero:HasModifier("modifier_imba_prevent_actions_game_start") then
@@ -1473,6 +1471,9 @@ function GameMode:InitGameMode()
 	Convars:RegisterCommand("imba_test", Dynamic_Wrap(GameMode, 'StartImbaTest'), "Spawns several units to help with testing", FCVAR_CHEAT)
 	Convars:RegisterCommand("particle_table_print", PrintParticleTable, "Prints a huge table of all used particles", FCVAR_CHEAT)	
 
+	CustomGameEventManager:RegisterListener("remove_units", Dynamic_Wrap(GameMode, "RemoveUnits"))
+--	CustomGameEventManager:RegisterListener("remove_units", function(id, ...) Dynamic_Wrap(self, "RemoveUnits")(self, ...) end)
+
 	-- Panorama event stuff
 	initScoreBoardEvents()
 	InitPlayerHeroImbaTalents();
@@ -1635,4 +1636,40 @@ function GameMode:StartImbaTest()
 
 	-- Flag testbed as having been initialized
 	IMBA_TESTBED_INITIALIZED = true
+end
+
+--	function GameMode:RemoveUnits(good, bad, neutral)
+function GameMode:RemoveUnits()
+local units = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0, 0, 0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_INVULNERABLE , FIND_ANY_ORDER, false )
+local units2 = FindUnitsInRadius(DOTA_TEAM_BADGUYS, Vector(0, 0, 0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_INVULNERABLE , FIND_ANY_ORDER, false )
+local units3 = FindUnitsInRadius(DOTA_TEAM_NEUTRALS, Vector(0, 0, 0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_INVULNERABLE , FIND_ANY_ORDER, false )
+local count = 0
+
+--	if good == true then
+		for _,v in pairs(units) do
+			if v:HasMovementCapability() then
+				count = count +1
+				v:RemoveSelf()
+			end
+		end
+--	end
+
+--	if bad == true then
+		for _,v in pairs(units2) do
+			if v:HasMovementCapability() then
+				count = count +1
+				v:RemoveSelf()
+			end
+		end
+--	end
+
+--	if neutral == true then
+		for _,v in pairs(units3) do
+			if v:HasMovementCapability() then
+				count = count +1
+				v:RemoveSelf()
+			end
+		end
+--	end
+	Notifications:TopToAll({text="Critical lags! All creeps have been removed: "..count, duration=10.0})
 end

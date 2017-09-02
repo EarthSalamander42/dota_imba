@@ -26,7 +26,6 @@ function _ScoreboardUpdater_SetValueSafe( panel, childName, Value )
 	childPanel.value = Value;
 }
 
-
 //=============================================================================
 //=============================================================================
 function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContainer, playerId, localPlayerTeamId )
@@ -52,7 +51,7 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 				ImbaXP_Panel.BCreateChildren("<Label id='ImbaLvl" +playerId+ "' text='999'/>");
 				ImbaXP_Panel.BCreateChildren("<Label id='ImbaXPRank" +playerId+ "' text='999'/>");
 				ImbaXP_Panel.BCreateChildren("<Label id='ImbaXP" +playerId+ "' text='999'/>");
-				ImbaXP_Panel.BCreateChildren("<Label id='ImbaXPEarned" +playerId+ "' text='+25'/>");
+				ImbaXP_Panel.BCreateChildren("<Label id='ImbaXPEarned" +playerId+ "' text='+0'/>");
 				_ScoreboardUpdater_SetValueSafe( playerPanel, "XPProgressBar"+playerId, plyData.XP / plyData.MaxXP );
 				_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaLvl"+playerId, "Lvl: " + plyData.Lvl );
 				_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaXPRank"+playerId, plyData.title );

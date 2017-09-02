@@ -116,20 +116,22 @@ function GameMode:OnPlayerChat(keys)
 	-- Check for Blink-Colorcode
 	local blink_command = false
 	for str in string.gmatch(text, "%S+") do
+		for i = 1, #IMBA_DEVS do
+			if PlayerResource:GetSteamAccountID(caster:GetPlayerID()) == IMBA_DEVS[i] then
+				if str == "-storegga" then
+					Storegga(caster)
+				elseif str == "-dev_remove_units" then
+					GameMode:RemoveUnits(true, true, true)
+				end
+			end
+		end
+
 		if str == "-rangeoff" then
 			caster.norange = true
 		end
 
 		if str == "-rangeon" then
 			caster.norange = nil
-		end
-
-		for i = 1, #IMBA_DEVS do
-			if PlayerResource:GetSteamAccountID(caster:GetPlayerID()) == IMBA_DEVS[i] then
-				if str == "-storegga" then
-					Storegga(caster)
-				end
-			end
 		end
 
 		if str == "-printxpinfo" then
@@ -159,7 +161,7 @@ function GameMode:OnPlayerChat(keys)
 	end
 	
 	if blink_command == true then
-		caster.blinkcolor = Vector ( color[1], color[2], color[3])
+		caster.blinkcolor = Vector(color[1], color[2], color[3])
 		return nil
 	end
 end

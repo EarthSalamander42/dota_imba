@@ -1157,7 +1157,7 @@ function OverrideCreateParticle()
 
 --		print("Manager:", manager)
 --		print("Manager Time:", manager.lifetime)
-		print("Path:", path)
+--		print("Path:", path)
 --		print("Int:", int)
 --		print("Handle:", handle)
 --		print("------------------------")
@@ -1178,23 +1178,13 @@ function OverrideCreateParticle()
 
 		if handle and handle:IsRealHero() then
 			if handle.pID then
-				print("Valid pID")
-				hero_particles[handle.pID] = hero_particles[handle.pID] +1
+--				print("Valid pID")
+--				hero_particles[handle.pID] = hero_particles[handle.pID] +1 -- Need to filter ReleaseParticleIndex for hero to get only active particles
 				total_hero_particles[handle.pID] = total_hero_particles[handle.pID] +1
 			end
 		else
-			print("non-Hero Handle:", handle)
+--			print("non-Hero Handle:", handle)
 		end
-
---		if handle:GetOwnerEntity() == nil then
---			print("Owner Handle:", handle:GetOwnerEntity())
---		else
---			if handle:GetOwnerEntity().pID then
---				print("Valid pID")
---				hero_particles[handle:GetOwnerEntity().pID] = hero_particles[handle:GetOwnerEntity().pID] +1
---				total_hero_particles[handle:GetOwnerEntity().pID] = total_hero_particles[handle:GetOwnerEntity().pID] +1
---			end
---		end
 
 		total_particles = total_particles +1
 		total_particles_created = total_particles_created +1
@@ -1272,8 +1262,9 @@ function ImbaNetGraph(tick)
 --		for i = 1, PlayerResource:GetPlayerCount() do
 		for i = 1, 20 do
 			CustomNetTables:SetTableValue("netgraph", "hero_particle_"..i-1, {particle = hero_particles[i-1], pID = i-1})
---			CustomNetTables:SetTableValue("netgraph", "hero_total_particle_"..i-1, {particle = total_hero_particles[i-1], pID = i-1})
+			CustomNetTables:SetTableValue("netgraph", "hero_total_particle_"..i-1, {particle = total_hero_particles[i-1], pID = i-1})
 		end
+		CustomGameEventManager:RegisterListener("remove_units", RemoveUnits)
 	return tick
 	end)
 end
