@@ -91,124 +91,7 @@ end
 
 function HeroSelection:RandomHero(event)
 local id = event.PlayerID
-
-	if HeroSelection.playerPickState[id].pick_state ~= "selecting_hero" then
-		return nil
-	end
-
-	-- Fetch a list of valid heroes to random
-	local normal_heroes = {
-		"npc_dota_hero_abaddon",
-		"npc_dota_hero_alchemist",
-		"npc_dota_hero_antimage",
-		"npc_dota_hero_axe",
-		"npc_dota_hero_bane",
-		"npc_dota_hero_bloodseeker",
-		"npc_dota_hero_crystal_maiden",
-		"npc_dota_hero_dazzle",
-		"npc_dota_hero_drow_ranger",
---		"npc_dota_hero_enigma",
-		"npc_dota_hero_faceless_void",
-		"npc_dota_hero_juggernaut",
-		"npc_dota_hero_kunkka",
-		"npc_dota_hero_lich",
-		"npc_dota_hero_lina",
-		"npc_dota_hero_lion",
---		"npc_dota_hero_meepo",
-		"npc_dota_hero_mirana",
-		"npc_dota_hero_necrolyte",
-		"npc_dota_hero_nevermore",
-		"npc_dota_hero_night_stalker",
-		"npc_dota_hero_omniknight",
-		"npc_dota_hero_pudge",
-		"npc_dota_hero_pugna",
-		"npc_dota_hero_riki",
-		"npc_dota_hero_sand_king",
-		"npc_dota_hero_slardar",
-		"npc_dota_hero_sniper",
---		"npc_dota_hero_spectre",
-		"npc_dota_hero_sven",
-		--"npc_dota_hero_tinker",
-		"npc_dota_hero_tiny",
-		"npc_dota_hero_vengefulspirit",
---		"npc_dota_hero_venomancer",
-		"npc_dota_hero_witch_doctor",
-		"npc_dota_hero_skeleton_king",
-		"npc_dota_hero_queenofpain",
-		"npc_dota_hero_jakiro",
-		"npc_dota_hero_warlock",
-		"npc_dota_hero_ursa",
-		"npc_dota_hero_bounty_hunter",
-		"npc_dota_hero_silencer",
-		"npc_dota_hero_clinkz",
-		"npc_dota_hero_obsidian_destroyer",
-		"npc_dota_hero_phantom_assassin",
-		"npc_dota_hero_disruptor",
-		"npc_dota_hero_nyx_assassin",
-		"npc_dota_hero_magnataur",
-		"npc_dota_hero_centaur",
-		"npc_dota_hero_troll_warlord",
-		"npc_dota_hero_skywrath_mage",
---		"npc_dota_hero_techies",
-		"npc_dota_hero_ancient_apparition",
-		"npc_dota_hero_beastmaster",
-		"npc_dota_hero_chen",
-		"npc_dota_hero_dark_seer",
-		"npc_dota_hero_dragon_knight",
-		"npc_dota_hero_doom_bringer",
-		"npc_dota_hero_earthshaker",
-		"npc_dota_hero_enchantress",
-		"npc_dota_hero_furion",
-		"npc_dota_hero_leshrac",
-		"npc_dota_hero_life_stealer",
-		"npc_dota_hero_morphling",
-		"npc_dota_hero_puck",
-		"npc_dota_hero_rattletrap",
-		"npc_dota_hero_razor",
-		"npc_dota_hero_storm_spirit",
-		"npc_dota_hero_tidehunter",
-		"npc_dota_hero_viper",
-		"npc_dota_hero_weaver",
-		"npc_dota_hero_windrunner",
-		"npc_dota_hero_broodmother",
-		"npc_dota_hero_huskar",
-		"npc_dota_hero_batrider",
-		"npc_dota_hero_death_prophet",
-		"npc_dota_hero_spirit_breaker",
-		"npc_dota_hero_invoker",
-		"npc_dota_hero_shadow_demon",
-		--"npc_dota_hero_phantom_lancer",
-		"npc_dota_hero_treant",
-		"npc_dota_hero_ogre_magi",
---		"npc_dota_hero_chaos_knight",
-		"npc_dota_hero_gyrocopter",
-		"npc_dota_hero_rubick",
-		"npc_dota_hero_luna",
-		"npc_dota_hero_wisp",
---		"npc_dota_hero_undying",
-		"npc_dota_hero_templar_assassin",
-		"npc_dota_hero_naga_siren",
-		"npc_dota_hero_keeper_of_the_light",
-		"npc_dota_hero_visage",
-		"npc_dota_hero_slark",
-		"npc_dota_hero_shredder",
-		"npc_dota_hero_medusa",
-		"npc_dota_hero_tusk",
-		"npc_dota_hero_bristleback",
-		"npc_dota_hero_elder_titan",
-		"npc_dota_hero_abaddon",
-		"npc_dota_hero_earth_spirit",
-		"npc_dota_hero_ember_spirit",
-		"npc_dota_hero_legion_commander",
-		"npc_dota_hero_phoenix",
-		"npc_dota_hero_terrorblade",
-		"npc_dota_hero_oracle",
-		"npc_dota_hero_winter_wyvern",
-		"npc_dota_hero_arc_warden",
-		"npc_dota_hero_abyssal_underlord",
---		"npc_dota_hero_zuus",
-		"npc_dota_hero_monkey_king"
-	}
+if id ~= -1 and HeroSelection.playerPickState[id].pick_state ~= "selecting_hero" then return end
 
 	-- Roll a random hero
 	local random_hero = normal_heroes[RandomInt(1, #normal_heroes)]
@@ -234,14 +117,7 @@ local id = event.PlayerID
 	PlayerResource:SetHasRandomed(id)
 
 	-- If it's a valid hero, allow the player to select it
---	if IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
---		print("All Random Same Hero-ing!")
---		for _, hero in pairs(HeroList:GetAllHeroes()) do
---			HeroSelection:HeroSelect({PlayerID = hero:GetPlayerID(), HeroName = random_hero, HasRandomed = true})
---		end
---	else
-		HeroSelection:HeroSelect({PlayerID = id, HeroName = random_hero, HasRandomed = true})
---	end
+	HeroSelection:HeroSelect({PlayerID = id, HeroName = random_hero, HasRandomed = true})
 
 	-- The person has randomed (separate from Set/HasRandomed, because those cannot be unset)
 	HeroSelection.playerPickState[id].random_state = true
@@ -254,60 +130,6 @@ function HeroSelection:RandomImbaHero(event)
 local id = event.PlayerID
 
 	if HeroSelection.playerPickState[id].pick_state ~= "selecting_hero" then return nil end
-
-	-- Fetch a list of valid IMBA heroes to random
-	local imba_heroes = {
-		"npc_dota_hero_abaddon",
-		"npc_dota_hero_alchemist",
-		"npc_dota_hero_antimage",
-		"npc_dota_hero_axe",
-		"npc_dota_hero_bane",
-		"npc_dota_hero_bloodseeker",
-		"npc_dota_hero_crystal_maiden",
-		"npc_dota_hero_dazzle",
-		"npc_dota_hero_drow_ranger",
---		"npc_dota_hero_enigma",
-		"npc_dota_hero_faceless_void",
-		"npc_dota_hero_juggernaut",
-		"npc_dota_hero_kunkka",
-		"npc_dota_hero_lich",
-		"npc_dota_hero_lina",
-		"npc_dota_hero_lion",
-		"npc_dota_hero_mirana",
-		"npc_dota_hero_necrolyte",
-		"npc_dota_hero_nevermore",
-		"npc_dota_hero_night_stalker",
-		"npc_dota_hero_omniknight",
-		"npc_dota_hero_pudge",
-		"npc_dota_hero_pugna",
-		"npc_dota_hero_riki",
-		"npc_dota_hero_sand_king",
-		"npc_dota_hero_skeleton_king",
-		"npc_dota_hero_slardar",
-		"npc_dota_hero_sniper",
-		"npc_dota_hero_sven",
---		"npc_dota_hero_techies",
-		--"npc_dota_hero_tinker",
-		"npc_dota_hero_tiny",
-		"npc_dota_hero_vengefulspirit",
---		"npc_dota_hero_venomancer",
-		"npc_dota_hero_witch_doctor",
-		"npc_dota_hero_queenofpain",
-		"npc_dota_hero_jakiro",
-		"npc_dota_hero_warlock",
-		"npc_dota_hero_ursa",
-		"npc_dota_hero_bounty_hunter",
-		"npc_dota_hero_silencer",
-		"npc_dota_hero_clinkz",
-		"npc_dota_hero_obsidian_destroyer",
-		"npc_dota_hero_phantom_assassin",
-		"npc_dota_hero_disruptor",
-		"npc_dota_hero_nyx_assassin",
-		"npc_dota_hero_magnataur",
-		"npc_dota_hero_centaur",
-		"npc_dota_hero_skywrath_mage",
-		"npc_dota_hero_troll_warlord"
-	}
 
 	local random_hero = imba_heroes[RandomInt(1, #imba_heroes)]
 
@@ -333,6 +155,20 @@ local id = event.PlayerID
 	Chat:PlayerRandomed(id, PlayerResource:GetPlayer(id), PlayerResource:GetTeam(id), random_hero)
 end
 
+function HeroSelection:RandomSameHero(event)
+local id = event.PlayerID
+--	if id ~= -1 and HeroSelection.playerPickState[id].pick_state ~= "selecting_hero" then return end
+
+	-- Roll a random hero, and keep it stored
+	if not random_hero then random_hero = normal_heroes[RandomInt(1, #normal_heroes)] end
+	print(random_hero)
+
+	PlayerResource:SetHasRandomed(id)
+	HeroSelection:HeroSelect({PlayerID = id, HeroName = random_hero, HasRandomed = true})
+	HeroSelection.playerPickState[id].random_state = true
+	Chat:PlayerRandomed(id, PlayerResource:GetPlayer(id), PlayerResource:GetTeam(id), random_hero)
+end
+
 --[[
 	HeroSelect
 	A player has selected a hero. This function is caled by the CustomGameEventManager
@@ -340,7 +176,7 @@ end
 	Params:
 		- event {table} - A table containing PlayerID and HeroID.
 ]]
-function HeroSelection:HeroSelect( event )
+function HeroSelection:HeroSelect(event)
 
 	-- If this is All Random and the player picked a hero manually, refuse it
 	if IMBA_PICK_MODE_ALL_RANDOM or IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO and (not event.HasRandomed) then
@@ -560,7 +396,7 @@ function HeroSelection:AssignHero(player_id, hero_name)
 			PlayerResource:SetGold(player_id, HERO_RANDOM_GOLD, false)
 		else
 			PlayerResource:SetGold(player_id, HERO_INITIAL_GOLD, false)
-		end		
+		end
 
 		-- Apply generic talents handler
 		hero:AddNewModifier(hero, nil, "modifier_imba_generic_talents_handler", {})

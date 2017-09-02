@@ -55,7 +55,6 @@ function modifier_diretide_candy_hp_loss:OnCreated()
 
 		-- Start thinking
 		self:StartIntervalThink(0.1)
-
 	end
 end
 

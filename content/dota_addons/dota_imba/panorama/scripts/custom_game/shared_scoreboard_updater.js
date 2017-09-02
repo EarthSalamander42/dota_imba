@@ -39,13 +39,11 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 		playerPanel.BLoadLayout( scoreboardConfig.playerXmlName, false, false );
 
 		var ImbaXP_Panel = playerPanel.FindChildInLayoutFile("PanelImbaXP");
-		$.Msg("Player ID: "+playerId)
 		if ( ImbaXP_Panel != null )
 		{
 			var plyData = CustomNetTables.GetTableValue("player_table", playerId);
 			if ( plyData != null )
 			{
-				$.Msg("Imba ply Data: "+plyData)
 				ImbaXP_Panel.BCreateChildren("<Panel id='XPProgressBarContainer" +playerId+ "' value='0.0'/>");
 				var Imbar = ImbaXP_Panel.BCreateChildren("<ProgressBar id='XPProgressBar" +playerId+ "'/>");
 				ImbaXP_Panel.BCreateChildren("<Label id='ImbaLvl" +playerId+ "' text='999'/>");

@@ -1119,6 +1119,16 @@ random_time = 1.0
 function GameMode:OnHeroInGame(hero)	
 local time_elapsed = 0
 
+	if IMBA_PICK_MODE_ALL_RANDOM then
+		Timers:CreateTimer(3.0, function()
+			HeroSelection:RandomHero({PlayerID = hero:GetPlayerID()})
+		end)
+	elseif IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
+		Timers:CreateTimer(3.0, function()
+			HeroSelection:RandomSameHero({PlayerID = hero:GetPlayerID()})
+		end)
+	end
+
 	-- Disabling announcer for the player who picked a hero
 	Timers:CreateTimer(0.1, function()
 		if hero:GetUnitName() ~= "npc_dota_hero_wisp" then
@@ -1472,7 +1482,6 @@ function GameMode:InitGameMode()
 	Convars:RegisterCommand("particle_table_print", PrintParticleTable, "Prints a huge table of all used particles", FCVAR_CHEAT)	
 
 	CustomGameEventManager:RegisterListener("remove_units", Dynamic_Wrap(GameMode, "RemoveUnits"))
---	CustomGameEventManager:RegisterListener("remove_units", function(id, ...) Dynamic_Wrap(self, "RemoveUnits")(self, ...) end)
 
 	-- Panorama event stuff
 	initScoreBoardEvents()

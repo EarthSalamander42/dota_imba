@@ -3178,14 +3178,14 @@
 		"Ability3"					"roshan_slam"			// Ability 3.
 		"Ability4"					"roshan_inherent_buffs"	// Ability 4.
 		"Ability5"					"roshan_devotion"		// Ability 5.
-		"Ability6"					"imba_roshan_rage"		// Ability 6 - Extra.
-		"Ability7"					"imba_roshan_immortal_strength"	// Ability 7 - Extra.
+//		"Ability6"					"imba_roshan_rage"		// Ability 6 - Extra.
+//		"Ability7"					"imba_roshan_immortal_strength"	// Ability 7 - Extra.
 		"Ability8"					""						// Ability 8 - Extra.
 
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"15.0"			// Physical protection.
-		"MagicalResistance"				"55"									// Magical protection (percentage).
+		"MagicalResistance"			"55"			// Magical protection (percentage).
 
 		// Attack
 		//----------------------------------------------------------------
