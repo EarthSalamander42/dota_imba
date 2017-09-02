@@ -27433,8 +27433,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"max_charge_count"			"3"
-				"LinkedSpecialBonus"		"special_bonus_imba_sniper_5"
+				"max_charge_count"			"3"				
 			}
 
 			"08"
@@ -27513,8 +27512,7 @@
 			"07"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"perfectshot_critical_dmg_pct"	"125 150 175 200 200 200 200"
-				"LinkedSpecialBonus"			"special_bonus_imba_sniper_6"
+				"perfectshot_critical_dmg_pct"	"125 150 175 200 200 200 200"				
 			}
 
 			"01"
@@ -27543,7 +27541,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"21 18 15 12 12 12 12"
+		"AbilityCooldown"					"16 14 12 11 10 9"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -27558,8 +27556,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"aim_bonus_range"			"1000"
-				"LinkedSpecialBonus"		"special_bonus_imba_sniper_7"
+				"aim_bonus_range"			"1000"				
 			}
 		}
 	}
@@ -27659,6 +27656,12 @@
 				"var_type"					"FIELD_INTEGER"
 				"cast_range"				"2000 2500 3000 3300 3600 3900"
 			}
+
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"projectiles"				"1"
+			}
 		}
 	}
 
@@ -27685,7 +27688,7 @@
 			"01"
 			{
 				"var_type"                  "FIELD_FLOAT"
-				"value"	                    "1800"
+				"value"	                    "2"
 			}
 		}
 	}
@@ -27715,7 +27718,7 @@
 		}
 	}
 
-	"special_bonus_imba_sniper_3" // Headshot slow/Perfectshot stun duration increase
+	"special_bonus_imba_sniper_3" // Enemy units under Shrapnel's lose armor and can miss attacks.
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -27725,7 +27728,7 @@
 
 		"LinkedAbility"
 		{
-			"01"	"imba_sniper_headshot"
+			"01"	"imba_sniper_shrapnel"
 		}
 
 		// Special
@@ -27734,38 +27737,19 @@
 		{
 			"01"
 			{
-				"var_type"                  "FIELD_FLOAT"
-				"value"	                    "50"
+				"var_type"                  "FIELD_INTEGER"
+				"armor_reduction"           "5"
 			}
-		}
-	}
 
-	"special_bonus_imba_sniper_4" // Take Aim cooldown decrease
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"	"imba_sniper_take_aim"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
+			"02"
 			{
-				"var_type"                  "FIELD_FLOAT"
-				"value"	                    "2"
+				"var_type"                  "FIELD_INTEGER"
+				"miss_chance_pct"           "30"
 			}
 		}
 	}
 
-	"special_bonus_imba_sniper_5" // Max Shrapnel charges increase
+	"special_bonus_imba_sniper_4" // Double max Shrapnel charges. Each recharge grants twice as much
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -27785,12 +27769,18 @@
 			"01"
 			{
 				"var_type"                  "FIELD_FLOAT"
-				"value"	                    "4"
+				"max_charge_mult"	        "2"
+			}
+
+			"02"
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"charges_per_recharge"      "2"
 			}
 		}
 	}
 
-	"special_bonus_imba_sniper_6" // Perfectshot critical damage increase
+	"special_bonus_imba_sniper_5" // Normal headshots have a chance to become Perfectshots
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -27810,12 +27800,49 @@
 			"01"
 			{
 				"var_type"                  "FIELD_FLOAT"
-				"value"	                    "80"
+				"value"	                    "30"
 			}
 		}
 	}
 
-	"special_bonus_imba_sniper_7" // Take Aim Aimed Assault attack range
+	"special_bonus_imba_sniper_6" // Assassination's cast point increases. When executed, it launches three projectiles towards the target. 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_sniper_assassinate"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"cast_point_increase"       "2"
+			}
+
+			"02"
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"total_projectiles"	        "3"
+			}
+
+			"03"
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"refire_delay"		        "0.2"
+			}
+		}
+	}
+
+	"special_bonus_imba_sniper_7" // Take Aim's Aimed Assaults cause the target to bleed and lose vision.
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -27834,8 +27861,26 @@
 		{
 			"01"
 			{
+				"var_type"                  "FIELD_INTEGER"
+				"damage_per_second"         "80"
+			}
+
+			"02"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"vision_loss"	         	"500"
+			}
+
+			"03"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"duration"			        "5"
+			}
+
+			"04"
+			{
 				"var_type"                  "FIELD_FLOAT"
-				"value"	                    "1000"
+				"damage_interval"	        "0.5"
 			}
 		}
 	}
