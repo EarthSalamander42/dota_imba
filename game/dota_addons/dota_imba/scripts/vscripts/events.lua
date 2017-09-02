@@ -144,48 +144,34 @@ local i = 10
 --			return 1.0
 --		end)
 
---		Timers:CreateTimer(function()
---			for _, hero in pairs(HeroList:GetAllHeroes()) do
---				MeepoFixes:ShareItems(hero)
---			end
---			return 0.5
---		end)
-
-		Timers:CreateTimer(function()
-			for _, hero in pairs(HeroList:GetAllHeroes()) do
-				TrackMeepos()
-			end
-			return 0.5
-		end)
-
 		-- Shows various info to devs in pub-game to find lag issues
 		ImbaNetGraph(10.0)
 
-		Timers:CreateTimer(10.0, function()
+		local meepo_track = 0
+		Timers:CreateTimer(function()
 			for _, hero in pairs(HeroList:GetAllHeroes()) do
-				if hero.is_dev and not hero.has_graph then
-					print("Sending Net Graph stats ...")
-					hero.has_graph = true
-					CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph", {})
+				if hero:GetUnitName() == "npc_dota_hero_meepo" and meepo_track == 0 then
+					meepo_track = 1
+					TrackMeepos()
 				end
 			end
+			return 0.5
 		end)
-
-		if IMBA_PICK_MODE_ALL_RANDOM or IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
-			Timers:CreateTimer(3.0, function()
-				for _, hero in pairs(HeroList:GetAllHeroes()) do
-					HeroSelection:RandomHero({PlayerID = hero:GetPlayerID()})
-				end
-			end)
-		end
 	end
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Game started (horn sounded)
 	-------------------------------------------------------------------------------------------------
-
 	if new_state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		Server_WaitToEnableXpGain()
+
+		for _, hero in pairs(HeroList:GetAllHeroes()) do
+			if hero.is_dev and not hero.has_graph then
+				hero.has_graph = true
+				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph", {})
+				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
+			end
+		end
 
 		if GetMapName() == "imba_diretide" then
 			Diretide()

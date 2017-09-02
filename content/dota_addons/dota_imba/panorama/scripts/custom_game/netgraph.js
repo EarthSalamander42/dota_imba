@@ -1,5 +1,7 @@
 "use strict";
 
+var player_name = 0
+
 function ShowNetgraph() /*Show NetGraph for devs only*/
 {
 	$("#GlobalStats").style.visibility = "visible";
@@ -27,32 +29,31 @@ function ToggleUniqueStats()
 function RemoveUnits()
 {
 	$.Msg("Removing units...")
-	GameEvents.SendCustomGameEventToServer("remove_units", {});
+	GameEvents.SendCustomGameEventToServer( "remove_units", {} );
 }
 
-function RemoveParticles()
-{
-	$.Msg("Removing particles...")
-	GameEvents.SendCustomGameEventToServer("remove_particles", {});
-}
+//	function RemoveParticles()
+//	{
+//		$.Msg("Removing particles...")
+//		GameEvents.SendCustomGameEventToServer( "remove_particles", {} );
+//	}
 
 function UpdateNetGraph()
 {
+	var hero_number = CustomNetTables.GetTableValue("netgraph", "hero_number");
 	var good_units = CustomNetTables.GetTableValue("netgraph", "good_unit_number");
 	var bad_units = CustomNetTables.GetTableValue("netgraph", "bad_unit_number");
+	var good_build = CustomNetTables.GetTableValue("netgraph", "good_build_number");
+	var bad_build = CustomNetTables.GetTableValue("netgraph", "bad_build_number");
 	var total_units = CustomNetTables.GetTableValue("netgraph", "total_unit_number");
 	var total_dummies = CustomNetTables.GetTableValue("netgraph", "total_dummy_number");
 	var total_dummies_created = CustomNetTables.GetTableValue("netgraph", "total_dummy_created_number");
 	var total_particles = CustomNetTables.GetTableValue("netgraph", "total_particle_number");
 	var total_particles_created = CustomNetTables.GetTableValue("netgraph", "total_particle_created_number");
 
-//	$.Msg("#Hero" + i + "Particles")
-//	$.Msg(CustomNetTables.GetTableValue("netgraph", "hero_particle_0").value)
-//	$("#Hero" + i + "Particles").text = CustomNetTables.GetTableValue("netgraph", "hero_particle_" + i).value;
-
 	if (good_units && bad_units && total_units && total_dummies && total_dummies_created && total_particles_created) {
-		$("#GoodUnits").text = good_units.value;
-		$("#BadUnits").text = bad_units.value;
+		$("#GoodUnits").text = good_build.value + "/" + good_units.value;
+		$("#BadUnits").text = bad_build.value + "/" + bad_units.value;
 		$("#TotalUnits").text = total_units.value;
 		$("#TotalDummies").text = total_dummies.value;
 		$("#TotalDummiesCreated").text = total_dummies_created.value;
@@ -60,20 +61,18 @@ function UpdateNetGraph()
 		$("#TotalParticlesCreated").text = total_particles_created.value;
 	}
 
-	for (var i = 0; i < 20; i++)
+	for (var i = 0; i < hero_number.value; i++)
 	{
+//		$.Msg("Particle: " + CustomNetTables.GetTableValue("netgraph", "hero_particle_1").particle)
 		var particle = CustomNetTables.GetTableValue("netgraph", "hero_particle_"+i).particle;
 		var particle_total = CustomNetTables.GetTableValue("netgraph", "hero_total_particle_"+i).particle;
-		var ID = CustomNetTables.GetTableValue("netgraph", "hero_particle_"+i).pID;
+//		var ID = CustomNetTables.GetTableValue("netgraph", "hero_particle_"+i).pID;
 
 		var playerInfo = Game.GetPlayerInfo( i );
-		var heroMainPanel = $("#Hero"+i+"ParticlesPanel")
 		var heroPanel = $("#Hero"+i+"Particles")
-		var player_name = 0
 
 		if (particle)
-		{
-			heroMainPanel.style.visibility = "visible";
+		{			
 			heroPanel.text = particle_total;
 			heroPanel.text = particle + "/" + particle_total;
 		}
@@ -89,11 +88,24 @@ function UpdateNetGraph()
 		else if (ID == null)
 		{
 			$.Msg("Invalid ID.")
-		}	*/
+		}
+		*/
+	}
+}
 
-		if (playerInfo != null && player_name == 0)
+function UpdateNetGraphHeroNames()
+{
+	var hero_number = CustomNetTables.GetTableValue("netgraph", "hero_number");
+
+	for (var i = 0; i < hero_number.value; i++)
+	{
+		var playerInfo = Game.GetPlayerInfo( i );
+		var heroMainPanel = $("#Hero"+i+"ParticlesPanel")
+		if (player_name == 0)
 		{
 			player_name = 1
+			$.Msg(playerInfo.player_selected_hero)
+			heroMainPanel.style.visibility = "visible";
 			$("#HeroName"+i).text = playerInfo.player_selected_hero;
 			if (playerInfo.player_team_id == 2)
 			{
@@ -103,7 +115,6 @@ function UpdateNetGraph()
 			{
 				$("#HeroName"+i).style.color = "#640808da";
 			}
-
 		}
 	}
 }
@@ -112,5 +123,5 @@ function UpdateNetGraph()
 {
 	CustomNetTables.SubscribeNetTableListener("netgraph", UpdateNetGraph);
 	GameEvents.Subscribe("show_netgraph", ShowNetgraph);
+	GameEvents.Subscribe("show_netgraph_heronames", UpdateNetGraphHeroNames);
 })();
-

@@ -12,11 +12,11 @@
 
 		<Panel id="GlobalStats">
 			<Panel id="GoodUnitPanel" class="EntryPanel">
-				<Label class="OnValue" text="Good Units:" />
+				<Label class="OnValue" text="Good Buildings/Units:" />
 				<Label class="Value" id="GoodUnits" text="0" />
 			</Panel>
 			<Panel id="BadUnitPanel" class="EntryPanel">
-				<Label class="OnValue" text="Bad Units:" />
+				<Label class="OnValue" text="Bad Buildings/Units:" />
 				<Label class="Value" id="BadUnits" text="0" />
 			</Panel>
 			<Panel id="TotalUnitPanel" class="EntryPanel">

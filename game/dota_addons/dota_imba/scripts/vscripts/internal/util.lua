@@ -1140,7 +1140,6 @@ total_hero_particles[15] = 0
 total_hero_particles[16] = 0
 total_hero_particles[17] = 0
 total_hero_particles[18] = 0
-total_hero_particles[19] = 0
 
 total_particles = 0
 total_particles_created = 0
@@ -1232,35 +1231,47 @@ function PrintParticleTable()
 	PrintTable(PARTICLE_TABLE)	
 end
 
--- Creator: Cookies [Earth Salamander]
+-- Custom NetGraph. Creator: Cookies [Earth Salamander]
 function ImbaNetGraph(tick)
 	Timers:CreateTimer(function()
 		local units = FindUnitsInRadius(DOTA_TEAM_BADGUYS, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)		
 		local good_unit_count = 0
 		local bad_unit_count = 0
+		local good_build_count = 0
+		local bad_build_count = 0
 		local dummy_count = 0
 
 		for _, unit in pairs(units) do
 			if unit:GetTeamNumber() == 2 then
-				good_unit_count = good_unit_count +1
+				if unit:IsBuilding() then
+					good_build_count = good_build_count+1
+				else
+					good_unit_count = good_unit_count +1
+				end
 			elseif unit:GetTeamNumber() == 3 then
-				bad_unit_count = bad_unit_count +1
+				if unit:IsBuilding() then
+					bad_build_count = bad_build_count+1
+				else
+					bad_unit_count = bad_unit_count +1
+				end
 			end
 			if unit:GetUnitName() == "npc_dummy_unit" or unit:GetUnitName() == "npc_dummy_unit_perma" then			
 				dummy_count = dummy_count +1
 			end
 		end
 
-		CustomNetTables:SetTableValue("netgraph", "good_unit_number", {value = good_unit_count})
-		CustomNetTables:SetTableValue("netgraph", "bad_unit_number", {value = bad_unit_count})
+		CustomNetTables:SetTableValue("netgraph", "hero_number", {value = PlayerResource:GetPlayerCount()})
+		CustomNetTables:SetTableValue("netgraph", "good_unit_number", {value = good_unit_count -4}) -- developer statues
+		CustomNetTables:SetTableValue("netgraph", "bad_unit_number", {value = bad_unit_count -4}) -- developer statues
+		CustomNetTables:SetTableValue("netgraph", "good_build_number", {value = good_build_count})
+		CustomNetTables:SetTableValue("netgraph", "bad_build_number", {value = bad_build_count})
 		CustomNetTables:SetTableValue("netgraph", "total_unit_number", {value = #units})
 		CustomNetTables:SetTableValue("netgraph", "total_dummy_number", {value = dummy_count})
 		CustomNetTables:SetTableValue("netgraph", "total_dummy_created_number", {value = dummy_created_count})
 		CustomNetTables:SetTableValue("netgraph", "total_particle_number", {value = total_particles})
 		CustomNetTables:SetTableValue("netgraph", "total_particle_created_number", {value = total_particles_created})
 
---		for i = 1, PlayerResource:GetPlayerCount() do
-		for i = 1, 20 do
+		for i = 0, PlayerResource:GetPlayerCount() -1 do
 			CustomNetTables:SetTableValue("netgraph", "hero_particle_"..i-1, {particle = hero_particles[i-1], pID = i-1})
 			CustomNetTables:SetTableValue("netgraph", "hero_total_particle_"..i-1, {particle = total_hero_particles[i-1], pID = i-1})
 		end

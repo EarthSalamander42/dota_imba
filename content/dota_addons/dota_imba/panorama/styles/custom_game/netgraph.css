@@ -56,9 +56,9 @@
 #ToggleUniqueStats
 {
 	width: fit-children;
-	padding: 5px 5px 5px 5px;
+	padding: 4px 4px 4px 4px;
 	height: 35px;
-	margin-top: 2%;
+	margin-top: 1%;
 	border-radius: 4px;
 	background-color: black;
 }
@@ -68,10 +68,11 @@
 	margin-left: 4%;
 }
 
+
 #UniqueStatsButtonText
 {
 	color: white;
-	font-size: 16.0px;
+	font-size: 14.0px;
 	font-weight: thin;
 	align: center center;
 }
