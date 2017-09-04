@@ -1233,16 +1233,6 @@ end
 
 -- Custom NetGraph. Creator: Cookies [Earth Salamander]
 function ImbaNetGraph(tick)
-	if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-		for _, hero in pairs(HeroList:GetAllHeroes()) do
-			if hero.is_dev and not hero.has_graph then
-				hero.has_graph = true
-				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph", {})
-				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
-			end
-		end
-	end
-
 	Timers:CreateTimer(function()
 		local units = FindUnitsInRadius(DOTA_TEAM_BADGUYS, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)		
 		local good_unit_count = 0
