@@ -48,22 +48,21 @@ function UpdateNetGraph()
 	var total_units = CustomNetTables.GetTableValue("netgraph", "total_unit_number");
 	var total_dummies = CustomNetTables.GetTableValue("netgraph", "total_dummy_number");
 	var total_dummies_created = CustomNetTables.GetTableValue("netgraph", "total_dummy_created_number");
-	var total_particles = CustomNetTables.GetTableValue("netgraph", "total_particle_number");
-	var total_particles_created = CustomNetTables.GetTableValue("netgraph", "total_particle_created_number");
+//	var total_particles = CustomNetTables.GetTableValue("netgraph", "total_particle_number");
+//	var total_particles_created = CustomNetTables.GetTableValue("netgraph", "total_particle_created_number");
 
-	if (good_units && bad_units && total_units && total_dummies && total_dummies_created && total_particles_created) {
+	if (good_units && bad_units && total_units && total_dummies && total_dummies_created) {
 		$("#GoodUnits").text = good_build.value + "/" + good_units.value;
 		$("#BadUnits").text = bad_build.value + "/" + bad_units.value;
 		$("#TotalUnits").text = total_units.value;
 		$("#TotalDummies").text = total_dummies.value;
 		$("#TotalDummiesCreated").text = total_dummies_created.value;
-		$("#TotalParticles").text = total_particles.value;
-		$("#TotalParticlesCreated").text = total_particles_created.value;
+//		$("#TotalParticles").text = total_particles.value;
+//		$("#TotalParticlesCreated").text = total_particles_created.value;
 	}
-
+/*
 	for (var i = 0; i < hero_number.value; i++)
 	{
-//		$.Msg("Particle: " + CustomNetTables.GetTableValue("netgraph", "hero_particle_1").particle)
 		var particle = CustomNetTables.GetTableValue("netgraph", "hero_particle_"+i).particle;
 		var particle_total = CustomNetTables.GetTableValue("netgraph", "hero_total_particle_"+i).particle;
 //		var ID = CustomNetTables.GetTableValue("netgraph", "hero_particle_"+i).pID;
@@ -76,21 +75,8 @@ function UpdateNetGraph()
 			heroPanel.text = particle_total;
 			heroPanel.text = particle + "/" + particle_total;
 		}
-		/*
-		else if (heroPanel == null)
-		{
-			$.Msg("Invalid Hero.")
-		}
-		else if (particle == null)
-		{
-			$.Msg("Invalid Particle.")
-		}
-		else if (ID == null)
-		{
-			$.Msg("Invalid ID.")
-		}
-		*/
 	}
+	*/
 }
 
 function UpdateNetGraphHeroNames()

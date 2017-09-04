@@ -946,14 +946,21 @@ function imba_tiny_grow:OnUpgrade()
 			self.rarm:FollowEntity(self:GetCaster(), true)
 			self.larm:FollowEntity(self:GetCaster(), true)
 			self.body:FollowEntity(self:GetCaster(), true)
+		else
+			self:GetCaster():SetOriginalModel("models/creeps/ice_biome/storegga/storegga.vmdl")
+			self:GetCaster():SetModel("models/creeps/ice_biome/storegga/storegga.vmdl")
+			-- Remove old wearables
+			UTIL_Remove(self.head)
+			UTIL_Remove(self.rarm)
+			UTIL_Remove(self.larm)
+			UTIL_Remove(self.body)
 		end
 		-- Effects
 		self:GetCaster():StartGesture(ACT_TINY_GROWL)
 		EmitSoundOn("Tiny.Grow", self:GetCaster())
 		local grow = ParticleManager:CreateParticle("particles/units/heroes/hero_tiny/tiny_transform.vpcf", PATTACH_POINT_FOLLOW, self:GetCaster()) 
-			ParticleManager:SetParticleControl(grow, 0, self:GetCaster():GetAbsOrigin())
-			ParticleManager:ReleaseParticleIndex(grow)
-		
+		ParticleManager:SetParticleControl(grow, 0, self:GetCaster():GetAbsOrigin())
+		ParticleManager:ReleaseParticleIndex(grow)
 	end
 end
 

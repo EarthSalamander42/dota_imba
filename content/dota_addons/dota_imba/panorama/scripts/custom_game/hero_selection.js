@@ -346,13 +346,14 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 
 	// Banned Heroes
 	//STR
-	$("#npc_dota_hero_chaos_knight").AddClass( "taken" );
+//	$("#npc_dota_hero_chaos_knight").AddClass( "taken" );
 	$("#npc_dota_hero_undying").AddClass( "taken" );
 	///AGI
 	$("#npc_dota_hero_phantom_lancer").AddClass( "taken" );
 	$("#npc_dota_hero_spectre").AddClass( "taken" );
 	//INT
 	$("#npc_dota_hero_enigma").AddClass( "taken" );
+	$("#npc_dota_hero_furion").AddClass( "taken" );
 	$("#npc_dota_hero_techies").AddClass( "taken" );
 	$("#npc_dota_hero_tinker").AddClass( "taken" );
 	$("#npc_dota_hero_venomancer").AddClass( "taken" );

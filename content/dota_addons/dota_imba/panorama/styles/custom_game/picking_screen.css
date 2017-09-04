@@ -129,7 +129,7 @@
 }
 
 #PickList {
-	width: fit-children;
+	width: 100%;
 	height: fit-children;
 	flow-children: right;
 	visibility: visible;
@@ -220,7 +220,7 @@
 }
 
 .PickTypePanel {
-	width: fit-children;
+	width: 33.3%;
 	height: fit-children;
 	flow-children: down;
 }
@@ -232,20 +232,18 @@
 	height: fit-children;
 	horizontal-align: middle;
 	vertical-align: top;
-	margin-left: 3.3%;
-	margin-right: 3.3%;
 	flow-children: right;
 }
 
 .ClassNormalOption,
 .ClassCustomOption,
 .ClassImbaOption {
+	width: 75px;
+	height: 48px;
 	margin-left: 2.5px;
 	margin-right: 2.5px;
 	margin-top: 5px;
 	margin-bottom: 5px;
-	width: 75px;
-	height: 48px;
 	horizontal-align: left;
 	saturation: 0.6;
 	wash-color: #7090B060;
@@ -675,7 +673,7 @@
 #HeroSelectionChat
 {
 	margin-left: -127.5%;
-	margin-bottom: 7%;
+	margin-bottom: 5%;
 	align: center bottom;
 	width: 28%;
 	height: 22.5%;
@@ -686,7 +684,8 @@
 
 .AspectRatio4x3 #HeroSelectionChat
 {
-	width: 20%;
+	margin-left: -128.5%;
+	width: 26%;
 	height: 18%;
 }
 

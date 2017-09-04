@@ -73,7 +73,10 @@ end
 function imba_abaddon_mist_coil:GetCastRange() 
 	return self:GetSpecialValueFor("cast_range")
 end
-function imba_abaddon_mist_coil:IsHiddenWhenStolen()	return false end
+
+function imba_abaddon_mist_coil:IsHiddenWhenStolen()
+	return false
+end
 
 function imba_abaddon_mist_coil:OnSpellStart(unit, special_cast)
 	if IsServer() then

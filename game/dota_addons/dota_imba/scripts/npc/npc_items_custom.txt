@@ -21,29 +21,29 @@
 	// Bag of Gold
 	//=================================================================================================================
 	"item_bag_of_gold"
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                        "item_datadriven"
-        "Model"                            "models/props_gameplay/gold_bag.vmdl"
-        "ItemKillable"                    "0"
-        "AbilityCastAnimation"            "ACT_DOTA_VICTORY"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                        "item_datadriven"
+		"Model"                            "models/props_gameplay/gold_bag.vmdl"
+		"ItemKillable"                    "0"
+		"AbilityCastAnimation"            "ACT_DOTA_VICTORY"
 		
-        // Item Info
-        //-------------------------------------------------------------------------------------------------------------
-        "ItemCost"                        "99999"
-        "ItemPurchasable"                "0"
-        "ItemShopTags"                    "consumable"
-        "ItemQuality"                    "consumable"
-        "ItemStackable"                    "1"
-        "ItemShareability"                "ITEM_NOT_SHAREABLE"
-        "ItemPermanent"                    "0"
-        "ItemInitialCharges"            "0"
-        "ItemKillable"                    "0"
-        "ItemCastOnPickup"                "1"
-    }
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"                        "99999"
+		"ItemPurchasable"                "0"
+		"ItemShopTags"                    "consumable"
+		"ItemQuality"                    "consumable"
+		"ItemStackable"                    "1"
+		"ItemShareability"                "ITEM_NOT_SHAREABLE"
+		"ItemPermanent"                    "0"
+		"ItemInitialCharges"            "0"
+		"ItemKillable"                    "0"
+		"ItemCastOnPickup"                "1"
+	}
 
-    //================================================================================================================
+	//================================================================================================================
 	// Halloween Candy Corn
 	//=================================================================================================================
 	"item_diretide_candy"
@@ -283,7 +283,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"4"
+				"bonus_all_stats"		"6"
 			}
 			"04"
 			{
@@ -6282,7 +6282,7 @@
 		"AbilityCooldown"				"18"
 		"AbilityManaCost"				"75"
 		"AbilitySharedCooldown"			"desolator"
-    
+	
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
@@ -7572,7 +7572,7 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"5"
+		"AbilityCooldown"				"5.0"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -9921,7 +9921,7 @@
 				"IsBuff"						"1"
 				"IsPurgable"					"0"
 
-                "TextureName"			        "custom/imba_rune_regeneration"
+				"TextureName"			        "custom/imba_rune_regeneration"
 
 				"EffectName"					"particles/generic_gameplay/rune_regen_owner.vpcf"
 				"EffectAttachType"				"follow_origin"
@@ -10520,7 +10520,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityCooldown"				"22"
-        "AbilityManaCost"				"25"
+		"AbilityManaCost"				"25"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -10757,9 +10757,9 @@
 		"ItemQuality"					"artifact"
 		"ItemAliases"					"urn"
 		"ItemInitialCharges"            "0"
-        "ItemPermanent"                 "1"
-        "ItemRequiresCharges"           "1"
-        "ItemDisplayCharges"            "1"
+		"ItemPermanent"                 "1"
+		"ItemRequiresCharges"           "1"
+		"ItemDisplayCharges"            "1"
 		"SideShop" 						"0"
 		"SecretShop" 					"0"
 
@@ -10877,9 +10877,9 @@
 		"ItemQuality"					"artifact"
 		"ItemAliases"					"urn;bkb"
 		"ItemInitialCharges"            "0"
-        "ItemPermanent"                 "1"
-        "ItemRequiresCharges"           "0"
-        "ItemDisplayCharges"            "1"
+		"ItemPermanent"                 "1"
+		"ItemRequiresCharges"           "0"
+		"ItemDisplayCharges"            "1"
 		"SideShop" 						"0"
 		"SecretShop" 					"0"
 
@@ -11627,6 +11627,210 @@
 			}
 		}
 	}
+
+	"item_manta_datadriven"
+{
+	// General
+	//-------------------------------------------------------------------------------------------------------------
+	"BaseClass"						"item_datadriven"
+	"ID"							"1147"  //Valve's version of this item uses the ID "147".
+	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+	"Model"							"models/props_gameplay/red_box.vmdl" 
+	"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+	"AbilityTextureName"			"item_manta"
+	
+	// Stats		
+	//-------------------------------------------------------------------------------------------------------------
+	"AbilityCooldown"				"50.0"  //This is the cooldown when used by ranged units.
+	"AbilityCastPoint"				"0.0"
+	"AbilityManaCost"				"165"
+	
+	// Item Info
+	//-------------------------------------------------------------------------------------------------------------
+	"ItemCost"						"4950"
+	"ItemShopTags"					"agi;str;int;attack_speed;move_speed;hard_to_tag"
+	"ItemQuality"					"epic"
+	"ItemAliases"					"manta style"
+	"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+	
+	"AbilitySpecial"
+	{
+		"01"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_strength"		"10"
+		}
+		"02"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_agility"			"26"
+		}
+		"03"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_intellect"		"10"
+		}
+		"04"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_attack_speed"	"15"
+		}
+		"05"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"bonus_movement_speed"	"10"
+		}
+		"06"
+		{
+			"var_type"				"FIELD_INTEGER"
+			"images_count"			"3"
+		}			
+		"07"
+		{
+			"var_type"						"FIELD_INTEGER"
+			"tooltip_illusion_duration"		"20"
+		}
+		"08"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"images_do_damage_percent_melee"	"-67"
+		}
+		"09"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"tooltip_damage_outgoing_melee"		"33"
+		}	
+		"10"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"images_take_damage_percent_melee"	"250"
+		}
+		"11"
+		{
+			"var_type"									"FIELD_INTEGER"
+			"tooltip_damage_incoming_melee_total_pct"	"350"
+		}			
+		"12"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"images_do_damage_percent_ranged"	"-72"
+		}
+		"13"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"tooltip_damage_outgoing_ranged"	"28"
+		}
+		"14"
+		{
+			"var_type"							"FIELD_INTEGER"
+			"images_take_damage_percent_ranged"	"300"
+		}
+		"15"
+		{
+			"var_type"									"FIELD_INTEGER"
+			"tooltip_damage_incoming_ranged_total_pct"	"400"
+		}
+		"16"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"cooldown_melee"			"30"
+		}
+		"17"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"cooldown_ranged_tooltip"	"45"
+		}
+		"18"
+		{
+			"var_type"					"FIELD_FLOAT"
+			"invuln_duration"			"0.1"
+		}
+		"19"
+		{
+			"var_type"					"FIELD_INTEGER"
+			"vision_radius"				"1000"
+		}
+		"20"
+		{
+			"var_type"							"FIELD_FLOAT"
+			"tooltip_ranged_cooldown_increase"	"15"
+		}
+	}
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"					"items/item_manta.lua"
+			"Function"						"item_manta_datadriven_on_spell_start"
+			"CooldownMelee"					"%cooldown_melee"
+			"InvulnerabilityDuration"		"%invulnerability_duration"
+			"VisionRadius"					"%vision_radius"
+		}
+	}
+	
+	"Modifiers"
+	{
+		"modifier_item_manta_datadriven"
+		{
+			"Passive"			"1"
+			"IsHidden"			"1"
+			"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+			
+			"Properties"
+			{
+				"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"						"%bonus_strength"
+				"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"							"%bonus_agility"
+				"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"						"%bonus_intelligence"
+				
+				//Attack speed from Yasha-derived items affect your illusions.
+				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT_SECONDARY"		"%bonus_attack_speed"
+				
+				//Movement speed from Yasha-derived items does not stack with itself but does stack with other percentage-based movement speed bonuses.
+				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE_UNIQUE"			"%bonus_movement_speed_percentage"
+			}
+		}
+		
+		"modifier_item_manta_datadriven_spawning_animation"
+		{
+			"Duration"			".1"
+			"Passive"			"0"
+			"IsHidden"			"1"
+			
+			"OverrideAnimation"     "ACT_DOTA_SPAWN"
+		}
+
+		"modifier_item_manta_datadriven_invulnerability"
+		{
+			"Duration"	"%invulnerability_duration"
+			"Passive"	"0"
+			"IsHidden"	"1"
+
+			"States"
+			{
+				"MODIFIER_STATE_OUT_OF_GAME"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+				"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+			}
+
+			"OnDestroy"
+			{
+				"RunScript"
+				{
+					"ScriptFile"		"items/item_manta.lua"
+					"Function"			"modifier_item_manta_datadriven_invulnerability_on_destroy"
+					"IllusionOutgoingDamageMelee"	"%illusion_damage_percent_outgoing_melee"
+					"IllusionIncomingDamageMelee"	"%illusion_damage_percent_incoming_melee"
+					"IllusionOutgoingDamageRanged"	"%illusion_damage_percent_outgoing_ranged"
+					"IllusionIncomingDamageRanged"	"%illusion_damage_percent_incoming_ranged"
+					"IllusionDuration"				"%illusion_duration"
+				}
+			}				
+		}
+	}
+}
 
 	//next free ID: 2255
 }

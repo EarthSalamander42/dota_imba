@@ -159,7 +159,7 @@ function imba_bounty_hunter_shuriken_toss:OnProjectileHit_ExtraData(target, loca
 
 			if jinada_ability and jinada_ability:GetLevel() > 0 then
 				-- Get Jinada's critical rate and maim duration
-				local crit_damage = jinada_ability:GetSpecialValueFor("crit_damage")
+				local crit_damage = jinada_ability:GetSpecialValueFor("crit_damage") /2
 				local slow_duration = jinada_ability:GetSpecialValueFor("slow_duration")
 
 				damage = damage * crit_damage * 0.01
