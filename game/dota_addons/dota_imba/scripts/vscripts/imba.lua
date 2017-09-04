@@ -26,6 +26,8 @@ require('libraries/animations')
 require('libraries/attachments')
 -- A*-Path-finding logic
 require('libraries/astar')
+-- Illusion manager, created by Seinken!
+require('libraries/illusionmanager')
 
 -- These internal libraries set up barebones's events and processes.  Feel free to inspect them/change them if you need to.
 require('internal/gamemode')
@@ -60,7 +62,7 @@ ApplyAllTalentModifiers()
 StoreCurrentDayCycle()
 
 --	if IsInToolsMode() then
-		OverrideCreateParticle()
+--		OverrideCreateParticle()
 --		OverrideReleaseIndex()
 --	end
 
@@ -790,24 +792,26 @@ function GameMode:OrderFilter( keys )
 	-- Meepo item handle
 	local meepo_table = Entities:FindAllByName("npc_dota_hero_meepo")
 	local ability = EntIndexToHScript(keys.entindex_ability)
-	for m = 1, #meepo_table do
-		if keys.order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
-			if ability:GetName() == "item_black_king_bar" then
-				local duration = ability:GetLevelSpecialValueFor("duration", ability:GetLevel() -1)					
-				meepo_table[m]:AddNewModifier(meepo_table[m], ability, "modifier_black_king_bar_immune", {duration = duration})
-			elseif ability:GetName() == "item_imba_white_queen_cape" then
-				local duration = ability:GetLevelSpecialValueFor("duration", ability:GetLevel() -1)					
-				meepo_table[m]:AddNewModifier(meepo_table[m], ability, "modifier_black_king_bar_immune", {duration = duration})
---			elseif ability:GetName() == "item_imba_power_treads_2" then
---				if meepo_table[m]:IsClone() then
---					ability:CastAbility()
---					print("LOLZ")
---				end
-			end
-		elseif keys.order_type == DOTA_UNIT_ORDER_CAST_TARGET then
-			if ability:GetName() == "item_imba_black_queen_cape" then
-				local duration = ability:GetLevelSpecialValueFor("bkb_duration", ability:GetLevel() -1)					
-				meepo_table[m]:AddNewModifier(meepo_table[m], nil, "modifier_imba_black_queen_cape_active_bkb", {duration = duration})
+	if unit:GetUnitName() == "npc_dota_hero_meepo" then
+		for m = 1, #meepo_table do
+			if keys.order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
+				if ability:GetName() == "item_black_king_bar" then
+					local duration = ability:GetLevelSpecialValueFor("duration", ability:GetLevel() -1)					
+					meepo_table[m]:AddNewModifier(meepo_table[m], ability, "modifier_black_king_bar_immune", {duration = duration})
+				elseif ability:GetName() == "item_imba_white_queen_cape" then
+					local duration = ability:GetLevelSpecialValueFor("duration", ability:GetLevel() -1)					
+					meepo_table[m]:AddNewModifier(meepo_table[m], ability, "modifier_black_king_bar_immune", {duration = duration})
+--				elseif ability:GetName() == "item_imba_power_treads_2" then
+--					if meepo_table[m]:IsClone() then
+--						ability:CastAbility()
+--						print("LOLZ")
+--					end
+				end
+			elseif keys.order_type == DOTA_UNIT_ORDER_CAST_TARGET then
+				if ability:GetName() == "item_imba_black_queen_cape" then
+					local duration = ability:GetLevelSpecialValueFor("bkb_duration", ability:GetLevel() -1)					
+					meepo_table[m]:AddNewModifier(meepo_table[m], nil, "modifier_imba_black_queen_cape_active_bkb", {duration = duration})
+				end
 			end
 		end
 	end
@@ -1118,6 +1122,17 @@ end
 random_time = 1.0
 function GameMode:OnHeroInGame(hero)	
 local time_elapsed = 0
+
+	local meepo_track = 0
+	Timers:CreateTimer(function()
+		for _, hero in pairs(HeroList:GetAllHeroes()) do
+			if hero:GetUnitName() == "npc_dota_hero_meepo" and meepo_track == 0 then
+				meepo_track = 1
+				TrackMeepos()
+			end
+		end
+		return 0.5
+	end)
 
 	if IMBA_PICK_MODE_ALL_RANDOM then
 		Timers:CreateTimer(3.0, function()

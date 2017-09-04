@@ -1233,6 +1233,16 @@ end
 
 -- Custom NetGraph. Creator: Cookies [Earth Salamander]
 function ImbaNetGraph(tick)
+	if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+		for _, hero in pairs(HeroList:GetAllHeroes()) do
+			if hero.is_dev and not hero.has_graph then
+				hero.has_graph = true
+				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph", {})
+				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
+			end
+		end
+	end
+
 	Timers:CreateTimer(function()
 		local units = FindUnitsInRadius(DOTA_TEAM_BADGUYS, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)		
 		local good_unit_count = 0
@@ -1268,14 +1278,13 @@ function ImbaNetGraph(tick)
 		CustomNetTables:SetTableValue("netgraph", "total_unit_number", {value = #units})
 		CustomNetTables:SetTableValue("netgraph", "total_dummy_number", {value = dummy_count})
 		CustomNetTables:SetTableValue("netgraph", "total_dummy_created_number", {value = dummy_created_count})
-		CustomNetTables:SetTableValue("netgraph", "total_particle_number", {value = total_particles})
-		CustomNetTables:SetTableValue("netgraph", "total_particle_created_number", {value = total_particles_created})
+--		CustomNetTables:SetTableValue("netgraph", "total_particle_number", {value = total_particles})
+--		CustomNetTables:SetTableValue("netgraph", "total_particle_created_number", {value = total_particles_created})
 
-		for i = 0, PlayerResource:GetPlayerCount() -1 do
-			CustomNetTables:SetTableValue("netgraph", "hero_particle_"..i-1, {particle = hero_particles[i-1], pID = i-1})
-			CustomNetTables:SetTableValue("netgraph", "hero_total_particle_"..i-1, {particle = total_hero_particles[i-1], pID = i-1})
-		end
-		CustomGameEventManager:RegisterListener("remove_units", RemoveUnits)
+--		for i = 0, PlayerResource:GetPlayerCount() -1 do
+--			CustomNetTables:SetTableValue("netgraph", "hero_particle_"..i-1, {particle = hero_particles[i-1], pID = i-1})
+--			CustomNetTables:SetTableValue("netgraph", "hero_total_particle_"..i-1, {particle = total_hero_particles[i-1], pID = i-1})
+--		end
 	return tick
 	end)
 end

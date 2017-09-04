@@ -1031,6 +1031,7 @@ function modifier_imba_kinetic_field_check_position:IsHidden()	return true end
 function modifier_imba_kinetic_field_check_position:OnCreated(keys)
 	--fuck you vectors
 	self.target_point = Vector(keys.target_point_x, keys.target_point_y, keys.target_point_z)
+	print("Created modifier_imba_kinetic_field_check_position")
 end
 function modifier_imba_kinetic_field_check_position:DeclareFunctions()
   local funcs = { MODIFIER_EVENT_ON_UNIT_MOVED }
@@ -1042,6 +1043,7 @@ function modifier_imba_kinetic_field_check_position:OnUnitMoved(keys)
 		local parent = self:GetParent()
 		local caster =  self:GetCaster()
 		local ability = self:GetAbility()
+		print("Unit has moved!")
 		--OnUnitMoved actually responds to ALL units. Return immediately if not the modifier's parent.
 		if keys.unit then
 			if keys.unit:GetEntityIndex() ~= parent:GetEntityIndex() then

@@ -144,19 +144,30 @@ local i = 10
 --			return 1.0
 --		end)
 
+
+		local max_players = 10
+		if GetMapName() == "imba_10v10" or GetMapName() == "imba_custom_10v10" then
+			max_players = 20
+		end
+
+		-- Eanble bots and fill empty slots
+		if IsInToolsMode() and IsServer() and 10 - PlayerResource:GetPlayerCount() > 0 then
+			print("Adding bots in empty slots")
+
+			for i = 1, 4 do
+				Tutorial:AddBot(normal_heroes[RandomInt(1, #normal_heroes)], "", "", true)
+			end
+			for i = 1, 5 do
+				Tutorial:AddBot(normal_heroes[RandomInt(1, #normal_heroes)], "", "", false)
+			end
+
+			GameRules:GetGameModeEntity():SetBotThinkingEnabled(true)
+			SendToServerConsole("dota_bot_set_difficulty 4")
+			SendToServerConsole("dota_bot_populate")
+		end
+
 		-- Shows various info to devs in pub-game to find lag issues
 		ImbaNetGraph(10.0)
-
-		local meepo_track = 0
-		Timers:CreateTimer(function()
-			for _, hero in pairs(HeroList:GetAllHeroes()) do
-				if hero:GetUnitName() == "npc_dota_hero_meepo" and meepo_track == 0 then
-					meepo_track = 1
-					TrackMeepos()
-				end
-			end
-			return 0.5
-		end)
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -199,8 +210,11 @@ local npc = EntIndexToHScript(keys.entindex)
 local normal_xp = npc:GetDeathXP()
 
 	if npc then
-		npc:SetDeathXP(normal_xp*0.8)
-
+		if GetMapName() == "imba_10v10" or GetMapName() == "imba_custom_10v10" then
+			npc:SetDeathXP(normal_xp*0.7)
+		else
+			npc:SetDeathXP(normal_xp*1.1)
+		end
 --		if npc:IsRealHero() and npc:GetUnitName() ~= "npc_dota_hero_wisp" or npc.is_real_wisp then
 --			if not npc.has_label then
 --				Timers:CreateTimer(5.0, function()

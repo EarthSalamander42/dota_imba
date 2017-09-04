@@ -7644,81 +7644,67 @@
 				"var_type"				"FIELD_INTEGER"
 				"damage"				"150 225 300 375 400 425 450"				
 			}
-
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bounce_radius"			"1200"				
 			}
-
 			"03"
 			{
 				"var_type"			"FIELD_FLOAT"
 				"stun_duration"		"0.1"
 			}
-
 			"04"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"projectile_speed"	"1000"
 			}
-
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"scepter_stun_duration"	"0.75"
 			}
-
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"pull_duration"			"1.25 1.25 1.25 1.25 2.0 2.75 3.5"
 			}
-
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"minimum_pull_power"	"30"
 			}
-
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"minimum_pull_distance"	"120"
 			}
-
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"maximum_pull_power"	"400"
 			}
-
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"pull_power_increase"	"50"
 			}
-
 			"11"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"pull_increase_distance"	"75"
 			}
-
 			"12"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"scepter_throw_delay"		"1"
 			}
-
 			"13"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"cast_range"				"400 400 400 400 500 600 700"
 			}
-
 		}
-
 	}
 
 	//=================================================================================================================
@@ -7768,25 +7754,21 @@
 				"var_type"				"FIELD_INTEGER"
 				"crit_damage"			"150 175 200 225 240 255 270"
 			}
-
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"slow_duration"			"3"
 			}
-
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"ms_slow_pct"			"15 20 25 30 30 30 30"				
 			}
-
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"as_slow"				"15 20 25 30 30 30 30"
 			}
-
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -15370,23 +15352,23 @@
 		}
 	}
 
-	//=================================================================================================================
+		//=================================================================================================================
 	// Lich's Cold Front
 	//=================================================================================================================
 	"imba_lich_cold_front"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_lua"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"custom/lich_cold_front"
-		"MaxLevel"								"1"
-		"ScriptFile"							"hero/hero_lich.lua"
+		"BaseClass"                             "ability_lua"
+		"AbilityBehavior"                       "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"                    "custom/lich_cold_front"
+		"MaxLevel"                              "1"
+		"ScriptFile"                            "hero/hero_lich.lua"
 
 		"precache"
 		{
-			"particle"					"particles/status_fx/status_effect_frost_lich.vpcf"
-			"particle"					"particles/hero/lich/cold_front_freeze.vpcf"
+			"particle"                  "particles/status_fx/status_effect_frost_lich.vpcf"
+			"particle"                  "particles/hero/lich/cold_front_freeze.vpcf"
 		}
 
 		// Special
@@ -15395,39 +15377,38 @@
 		{
 			"01"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"max_stacks"					"10"
+				"var_type"                      "FIELD_INTEGER"
+				"max_stacks"                    "10"
 			}
 
 			"02"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"ms_slow_pct"					"10"
+				"var_type"                      "FIELD_INTEGER"
+				"ms_slow_pct"                   "10"
 			}
 
 			"03"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"as_slow"						"10"
+				"var_type"                      "FIELD_INTEGER"
+				"as_slow"                       "10"
 			}
 
 			"04"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"duration"						"7"
+				"var_type"                      "FIELD_INTEGER"
+				"duration"                      "7"
 			}
 
 			"05"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"freeze_duration"				"1"
-				"LinkedSpecialBonus"			"special_bonus_imba_lich_5"
+				"var_type"                      "FIELD_INTEGER"
+				"freeze_duration"               "1"             
 			}
 
 			"06"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"stacks_per_attack"				"1"
+				"var_type"                      "FIELD_INTEGER"
+				"stacks_per_attack"             "1"
 			}
 		}
 	}
@@ -15439,38 +15420,39 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"lich_frost_nova"
-		"ScriptFile"					"hero/hero_lich.lua"
-		"MaxLevel"						"7"
+		"BaseClass"                     "ability_lua"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"               "1"
+		"AbilityTextureName"            "lich_frost_nova"
+		"ScriptFile"                    "hero/hero_lich.lua"
+		"MaxLevel"                      "7"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"600"
-		"AbilityCastPoint"				"0.4"
+		"AbilityCastRange"              "600"
+		"AbilityCastPoint"              "0.4"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"8"
+		"AbilityCooldown"               "8"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"125 150 170 190 195 200 205"
+		"AbilityManaCost"               "125 150 170 190 195 200 205"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"particle" 					"particles/units/heroes/hero_lich/lich_frost_nova.vpcf"
-			"particle"					"particles/status_fx/status_effect_frost_lich.vpcf"
-			"soundfile" 				"soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
-			"soundfile"					"soundevents/voscripts/game_sounds_vo_lich.vsndevts"
+			"particle"                  "particles/units/heroes/hero_lich/lich_frost_nova.vpcf"
+			"particle"                  "particles/status_fx/status_effect_frost_lich.vpcf"
+			"particle"                  "particles/hero/lich/nova_explosions_main.vpcf"
+			"soundfile"                 "soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
+			"soundfile"                 "soundevents/voscripts/game_sounds_vo_lich.vsndevts"
 		}
 
 		// Special
@@ -15479,50 +15461,50 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"200 200 200 200 250 300 350"
+				"var_type"                  "FIELD_INTEGER"
+				"radius"                    "200 200 200 200 250 300 350"
 			}
 
 			"02"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"ms_slow_pct"				"30"
+				"var_type"                  "FIELD_INTEGER"
+				"ms_slow_pct"               "30"
 			}
 
 			"03"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"as_slow"					"30"
+				"var_type"                  "FIELD_INTEGER"
+				"as_slow"                   "30"
 			}
 
 			"04"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"aoe_damage"				"75 100 125 150 175 200 225"
+				"var_type"                  "FIELD_INTEGER"
+				"aoe_damage"                "75 100 125 150 175 200 225"
 			}
 
 			"05"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"target_damage"				"50 100 150 200 200 200 200"
+				"var_type"                  "FIELD_INTEGER"
+				"target_damage"             "50 100 150 200 200 200 200"
 			}
 
 			"06"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"slow_duration"				"4"
+				"var_type"                  "FIELD_INTEGER"
+				"slow_duration"             "4"
 			}
 
 			"07"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"main_cold_front_stacks"	"2"
+				"var_type"                  "FIELD_INTEGER"
+				"main_cold_front_stacks"    "2"
 			}
 
 			"08"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"area_cold_front_stacks"	"1"
+				"var_type"                  "FIELD_INTEGER"
+				"area_cold_front_stacks"    "1"
 			}
 		}
 	}
@@ -15534,39 +15516,39 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
-		"AbilityTextureName"			"lich_frost_armor"
-		"ScriptFile"					"hero/hero_lich.lua"
-		"MaxLevel"						"7"
+		"BaseClass"                     "ability_lua"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+		"AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+		"SpellImmunityType"             "SPELL_IMMUNITY_ALLIES_YES"
+		"AbilityTextureName"            "lich_frost_armor"
+		"ScriptFile"                    "hero/hero_lich.lua"
+		"MaxLevel"                      "7"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1000"
-		"AbilityCastPoint"				"0.4"
+		"AbilityCastRange"              "1000"
+		"AbilityCastPoint"              "0.4"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"5"
+		"AbilityCooldown"               "5"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"particle"					"particles/units/heroes/hero_lich/lich_frost_armor.vpcf"
-			"particle"					"particles/status_fx/status_effect_frost_armor.vpcf"
-			"particle"					"particles/status_fx/status_effect_frost.vpcf"
-			"particle"					"particles/hero/lich/lich_ice_armor_freeze.vpcf"
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
-			"soundfile"					"soundevents/voscripts/game_sounds_vo_lich.vsndevts"
+			"particle"                  "particles/units/heroes/hero_lich/lich_frost_armor.vpcf"
+			"particle"                  "particles/status_fx/status_effect_frost_armor.vpcf"
+			"particle"                  "particles/status_fx/status_effect_frost.vpcf"
+			"particle"                  "particles/hero/lich/lich_ice_armor_freeze.vpcf"
+			"soundfile"                 "soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
+			"soundfile"                 "soundevents/voscripts/game_sounds_vo_lich.vsndevts"
 		}
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"50"
+		"AbilityManaCost"               "50"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -15574,48 +15556,48 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"armor_bonus"			"3 5 7 9 10 11 12"
+				"var_type"              "FIELD_INTEGER"
+				"armor_bonus"           "3 5 7 9 10 11 12"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"ms_slow_pct"			"24 26 28 30 32 34 36"
+				"var_type"              "FIELD_INTEGER"
+				"ms_slow_pct"           "24 26 28 30 32 34 36"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"as_slow"				"30"
+				"var_type"              "FIELD_INTEGER"
+				"as_slow"               "30"
 			}
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"frost_duration" 		"2"
+				"var_type"              "FIELD_INTEGER"
+				"frost_duration"        "2"
 			}
 			"05"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"armor_duration"		"40"
+				"var_type"              "FIELD_INTEGER"
+				"armor_duration"        "40"
 			}
 			"06"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"freeze_attacks"		"8 8 8 8 7 6 5"
+				"var_type"              "FIELD_INTEGER"
+				"freeze_attacks"        "8 8 8 8 7 6 5"
 			}
 			"07"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"disarm_duration"		"1.25"
+				"var_type"              "FIELD_FLOAT"
+				"disarm_duration"       "1.25"
 			}
 			"08"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"cold_front_stacks"		"1"
+				"var_type"              "FIELD_INTEGER"
+				"cold_front_stacks"     "1"
 			}
 			"09"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"autocast_radius"		"1100"
+				"var_type"              "FIELD_INTEGER"
+				"autocast_radius"       "1100"
 			}
 		}
 	}
@@ -15627,38 +15609,38 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO | DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
-		"AbilityTextureName"			"lich_dark_ritual"
-		"ScriptFile"					"hero/hero_lich.lua"
-		"MaxLevel"						"7"
+		"BaseClass"                     "ability_lua"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"         "DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO | DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+		"AbilityTextureName"            "lich_dark_ritual"
+		"ScriptFile"                    "hero/hero_lich.lua"
+		"MaxLevel"                      "7"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"400"
-		"AbilityCastPoint"				"0.4"
+		"AbilityCastRange"              "400"
+		"AbilityCastPoint"              "0.4"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"60 48 32 18 18 18 18"
+		"AbilityCooldown"               "60 48 32 18 18 18 18"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"25"
+		"AbilityManaCost"               "25"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"particle"					"particles/units/heroes/hero_lich/lich_dark_ritual.vpcf"
-			"particle"					"particles/hero/lich/lich_dark_ritual_enemy.vpcf"
-			"particle"					"particles/hero/lich/lich_dark_ritual_buff_ally.vpcf"
-			"particle"					"particles/hero/lich/lich_dark_ritual_buff_enemy.vpcf"
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
-			"soundfile"					"soundevents/voscripts/game_sounds_vo_lich.vsndevts"
+			"particle"                  "particles/units/heroes/hero_lich/lich_dark_ritual.vpcf"
+			"particle"                  "particles/hero/lich/lich_dark_ritual_enemy.vpcf"
+			"particle"                  "particles/hero/lich/lich_dark_ritual_buff_ally.vpcf"
+			"particle"                  "particles/hero/lich/lich_dark_ritual_buff_enemy.vpcf"
+			"soundfile"                 "soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
+			"soundfile"                 "soundevents/voscripts/game_sounds_vo_lich.vsndevts"
 		}
 
 		// Special
@@ -15667,62 +15649,62 @@
 		{
 			"01"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"mana_conversion_pct"			"30 50 70 90 100 110 120"
+				"var_type"                      "FIELD_INTEGER"
+				"mana_conversion_pct"           "30 50 70 90 100 110 120"
 			}
 
 			"02"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"xp_bonus_radius"				"1300"
+				"var_type"                      "FIELD_INTEGER"
+				"xp_bonus_radius"               "1300"
 			}
 
 			"03"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"allied_creeps_radius"			"600"
+				"var_type"                      "FIELD_INTEGER"
+				"allied_creeps_radius"          "600"
 			}
 
 			"04"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"creeps_bonus_as"				"20"
+				"var_type"                      "FIELD_INTEGER"
+				"creeps_bonus_as"               "20"
 			}
 
 			"05"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"creeps_bonus_hp_pct"			"15 15 15 15 20 25 30"
+				"var_type"                      "FIELD_INTEGER"
+				"creeps_bonus_hp_pct"           "15 15 15 15 20 25 30"
 			}
 
 			"06"
 			{
-				"var_type"						"FIELD_FLOAT"
-				"creeps_bonus_dmg_pct"			"1.5 1.5 1.5 1.5 2 2.5 3"
+				"var_type"                      "FIELD_FLOAT"
+				"creeps_bonus_dmg_pct"          "1.5 1.5 1.5 1.5 2 2.5 3"
 			}
 
 			"07"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"allied_kill_dmg_red_pct"		"10"
+				"var_type"                      "FIELD_INTEGER"
+				"allied_kill_dmg_red_pct"       "10 10 10 10 12 14 16"
 			}
 
 			"08"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"enemy_kill_bonus_dmg_pct"		"10"
+				"var_type"                      "FIELD_INTEGER"
+				"enemy_kill_bonus_dmg_pct"      "10 10 10 10 12 14 16"
 			}
 
 			"09"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"enemy_kill_bonus_spell_amp"	"10"
+				"var_type"                      "FIELD_INTEGER"
+				"enemy_kill_bonus_spell_amp"    "10 10 10 10 12 14 16"
 			}
 
 			"10"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"sacrifice_duration"			"25"
+				"var_type"                      "FIELD_INTEGER"
+				"sacrifice_duration"            "25"
 			}
 		}
 	}
@@ -15734,120 +15716,113 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"FightRecapLevel"				"2"
-		"AbilityTextureName"			"lich_chain_frost"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
-		"MaxLevel"						"6"
-		"LevelsBetweenUpgrades"			"6"
-		"ScriptFile"					"hero/hero_lich.lua"
-		"HasScepterUpgrade"				"1"
+		"BaseClass"                     "ability_lua"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"        "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+		"FightRecapLevel"               "2"
+		"AbilityTextureName"            "lich_chain_frost"
+		"AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_4"
+		"MaxLevel"                      "6"
+		"LevelsBetweenUpgrades"         "6"
+		"ScriptFile"                    "hero/hero_lich.lua"
+		"HasScepterUpgrade"             "1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"750"
-		"AbilityCastPoint"				"0.4"
+		"AbilityCastRange"              "750"
+		"AbilityCastPoint"              "0.4"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"100 80 60 60 60 60"
+		"AbilityCooldown"               "100 80 60 60 60 60"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"200 325 500 525 550 575"
+		"AbilityManaCost"               "200 325 500 525 550 575"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"particle"					"particles/units/heroes/hero_lich/lich_chain_frost.vpcf"
-			"particle"					"particles/status_fx/status_effect_frost_lich.vpcf"
-			"particle"					"particles/hero/lich/lich_mini_frosts.vpcf"
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
+			"particle"                  "particles/units/heroes/hero_lich/lich_chain_frost.vpcf"
+			"particle"                  "particles/status_fx/status_effect_frost_lich.vpcf"
+			"particle"                  "particles/hero/lich/lich_mini_frosts.vpcf"
+			"soundfile"                 "soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
 		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
-		{
+		{           
 			"01"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"ministun_duration"			"0.1"
+				"var_type"                  "FIELD_INTEGER"
+				"ms_slow_pct"               "30"
 			}
 
 			"02"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"ms_slow_pct"				"30"
+				"var_type"                  "FIELD_INTEGER"
+				"as_slow"                   "30"
 			}
 
 			"03"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"as_slow"					"30"
+				"var_type"                  "FIELD_FLOAT"
+				"slow_duration"             "2.5"
 			}
 
 			"04"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"slow_duration"				"2.5"
+				"var_type"                  "FIELD_INTEGER"
+				"bounce_range"              "600 600 600 650 700 750"               
 			}
 
 			"05"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"bounce_range"				"600 600 600 650 700 750"
-				"LinkedSpecialBonus"		"special_bonus_imba_lich_3"
+				"var_type"                  "FIELD_INTEGER"
+				"damage"                    "280 370 460 490 520 550"
 			}
 
 			"06"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"280 370 460 490 520 550"
+				"var_type"                  "FIELD_INTEGER"
+				"num_bounces"               "10"
 			}
 
 			"07"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"num_bounces"				"10"
+				"var_type"                  "FIELD_INTEGER"
+				"projectile_base_speed"     "850"
 			}
 
 			"08"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"projectile_base_speed"		"850"
+				"var_type"                  "FIELD_INTEGER"
+				"speed_increase_per_bounce" "20 20 20 25 30 35"
 			}
 
 			"09"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"speed_increase_per_bounce"	"20 20 20 25 30 35"
-			}
-
-			"09"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"projectile_delay"			"0.2"
+				"var_type"                  "FIELD_FLOAT"
+				"projectile_delay"          "0.2"
 			}
 
 			"10"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"projectile_vision"			"800"
-			}			
+				"var_type"                  "FIELD_INTEGER"
+				"projectile_vision"         "800"
+			}           
 
 			"11"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"cold_front_stacks"			"2"
+				"var_type"                  "FIELD_INTEGER"
+				"cold_front_stacks"         "2"
 			}
 		}
 	}
@@ -15855,7 +15830,7 @@
 	//=================================================================================================================
 	// Lich Talents
 	//=================================================================================================================
-	"special_bonus_imba_lich_1" // Chain Frost bounce delay decrease
+	"special_bonus_imba_lich_1" // Chain Frost bounces instantly after hitting a target
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -15865,7 +15840,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_lich_chain_frost"
+			"01"    "imba_lich_chain_frost"
 		}
 
 		// Special
@@ -15874,13 +15849,13 @@
 		{
 			"01"
 			{
-				"var_type"                  "FIELD_INTEGER"
-				"value"	                    "75"
+				"var_type"                  "FIELD_FLOAT"
+				"value"                     "0.01"
 			}
 		}
 	}
 
-	"special_bonus_imba_lich_2" // Sacrifice bonuses increase
+	"special_bonus_imba_lich_2" // Sacrifice can now be used on self, granting you and nearby allies the damage reduction buff.
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -15890,7 +15865,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_lich_dark_ritual"
+			"01"    "imba_lich_dark_ritual"
 		}
 
 		// Special
@@ -15900,12 +15875,12 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"value"	                    "50"
+				"value"                     "1"
 			}
 		}
 	}
 
-	"special_bonus_imba_lich_3" //Chain Frost bounce range increase
+	"special_bonus_imba_lich_3" // Frost Nova now deals a portion of the main target's current health as damage
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -15915,7 +15890,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_lich_chain_frost"
+			"01"    "imba_lich_frost_nova"
 		}
 
 		// Special
@@ -15925,12 +15900,12 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"value"	                    "175"
+				"value"                     "10"
 			}
 		}
 	}
 
-	"special_bonus_imba_lich_4" // Frost Nova cooldown decrease
+	"special_bonus_imba_lich_4" // Frost Nova draws a line of exploding Frost Novas that explode after a small delay
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -15940,7 +15915,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_lich_frost_nova"
+			"01"    "imba_lich_frost_nova"
 		}
 
 		// Special
@@ -15950,12 +15925,68 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"value"	                    "4"
+				"distance_per_nova"         "100"
+			}
+			
+			"02"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"damage_radius"             "250"
+			}
+
+			"03"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"nova_damage"               "100"
+			}
+
+			"04"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"cold_front_stacks"         "1"
+			}
+
+			"05"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"explosion_delay"           "2"
+			}
+
+			"06"
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"creation_delay"            "0.15"
+			}
+
+		}
+	}
+
+	"special_bonus_imba_lich_5" // Frost Armor adds a portion of the Lich's intelligence to the armor bonus
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"    "imba_lich_frost_armor"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"                     "10"
 			}
 		}
 	}
 
-	"special_bonus_imba_lich_5" // Cold Front duration increase
+	"special_bonus_imba_lich_6" // Chain Frost can be cast on allies to give them a orb that spins around them. Taking damage from an enemy hero causes the Chain Frost to bounce to the attacker.
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -15965,7 +15996,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_lich_cold_front"
+			"01"    "imba_lich_chain_frost"
 		}
 
 		// Special
@@ -15975,33 +16006,14 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"value"	                    "1"
+				"max_distance"              "1000"
 			}
-		}
-	}
 
-	"special_bonus_imba_lich_6" // Massive Ice Armor armor increase when cast on buildings
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_lich_frost_armor"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
+			"02"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"value"	                    "36"
-			}
+				"buff_duration"             "30"
+			}            
 		}
 	}
 
@@ -16015,7 +16027,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_lich_chain_frost"
+			"01"    "imba_lich_chain_frost"
 		}
 
 		// Special
@@ -16025,18 +16037,18 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"bonus_projectiles"			"2"
+				"bonus_projectiles"         "2"
 			}
 
 			"02"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"projectiles_damage_pct"	"25"
+				"projectiles_damage_pct"    "25"
 			}
 		}
 	}
 
-	"special_bonus_imba_lich_8" // Cold Front gains additional stack from skills
+	"special_bonus_imba_lich_8" // Frost Armor is now an aura that slows nearby enemies in a small range around the target. The slow gets stronger each time the target is attacked.
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -16046,7 +16058,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_lich_cold_front"
+			"01"    "imba_lich_frost_armor"
 		}
 
 		// Special
@@ -16056,7 +16068,25 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"value"	                    "1"
+				"base_slow"                 "15"
+			}            
+
+			"03"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"slow_increase_per_hit"     "1"
+			}
+
+			"04"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"aura_range"                "400"
+			}
+
+			"05"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"max_slow"                  "30"
 			}
 		}
 	}
@@ -38754,6 +38784,145 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
+		}
+	}
+
+	//=================================================================================================================
+	// Chaos Knight: Reality Rift
+	//=================================================================================================================
+	"imba_chaos_knight_reality_rift"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_chaos_knight.lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"AbilityTextureName"			"chaos_knight_reality_rift"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"FightRecapLevel"				"1"
+		"MaxLevel"						"7"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"550 600 650 700 800 900 1000"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"18 14 10 6 6 6 6"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"	//0 Mana cost allow nice escapes if enemy has mana removal
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range"				"550 600 650 700 800 900 1000"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"armor_reduction"			"-1 -3 -5 -7 -8 -9 -10"
+			}		
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"armor_duration"			"8"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Chaos Knight's Phantasm
+	//=================================================================================================================
+	"imba_chaos_knight_phantasm"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_chaos_knight.lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"FightRecapLevel"				"2"
+
+		"AbilityTextureName"			"chaos_knight_phantasm"
+		"MaxLevel"						"6"
+		"AbilityCooldown"				"130.0"
+		"AbilityManaCost"				"125 160 195 230 265 300"
+		"AbilityCastPoint"				"0.4"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+//		"precache"
+//		{
+//			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts"
+//			"soundfile"					"soundevents/voscripts/game_sounds_vo_centaur.vsndevts"
+//			"particle"					"particles/units/heroes/hero_centaur/centaur_warstomp.vpcf"
+//			"particle"					"particles/hero/centaur/centaur_hoof_stomp_arena.vpcf"
+//		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"images_count"				"1 2 3 4 5 6"
+			}
+			"02"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"extra_phantasm_chance_pct_tooltip"	"50"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"illusion_duration"			"42"
+			}	
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"outgoing_damage"			"0"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"outgoing_damage_tooltip"	"100"
+			}	
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"incoming_damage"			"150 150 140 130 120 110"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"incoming_damage_tooltip"	"250 240 230 220 210 200"
+			}		
+			"08"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"invuln_duration"			"0.5"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"vision_radius"				"400"
+			}	
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cooldown_scepter"			"90"
+			}
 		}
 	}
 }
