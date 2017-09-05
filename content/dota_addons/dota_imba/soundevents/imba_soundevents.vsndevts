@@ -2010,6 +2010,36 @@
 	}
 }
 
+"Imba.JuggernautLightsaber"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/hero/juggernaut/juggernaut_blade_dance_lightsaber.vsnd"
+						}
+					}
+					"memory_type"
+					{
+						"value"			"0"
+					}
+					"volume"			{   "value"     "2.00000"  }
+				}
+			}
+		}
+	}
+}
+
 "Imba.JuggernautGenji"
 {
 	"operator_stacks"
