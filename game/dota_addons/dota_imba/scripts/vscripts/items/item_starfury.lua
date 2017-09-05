@@ -79,6 +79,12 @@ function modifier_imba_shotgun_passive:OnAttack(params)
 	if IsServer() then
 		-- Only for real heroes & clones
 		if params.attacker == self.parent and self.parent:IsRealHero() then
+			
+		-- If the target is a deflector, do nothing
+		if params.target:HasModifier("modifier_imba_juggernaut_blade_fury") and self.parent:IsRangedAttacker() then
+			return nil
+		end
+		
 			-- Cooldown check and lookup for Starfury
 			if self.item:IsCooldownReady() and (self:CheckUniqueValue(1,{"modifier_imba_starfury_passive"}) == 1) then
 				-- Parameters
@@ -224,6 +230,7 @@ function modifier_imba_starfury_passive:OnCreated()
 		self.agility_pct = self.item:GetSpecialValueFor("agility_pct") * 0.01
 		self:CheckUnique(true)
 	end
+	-- self.deflector = self:GetParent() -- Set the default attacker
 end
 
 function modifier_imba_starfury_passive:DeclareFunctions()
@@ -253,6 +260,12 @@ end
 function modifier_imba_starfury_passive:OnAttackLanded(params)
 	if IsServer() then
 		if params.attacker == self.parent then
+			
+			-- If the target is a deflector, set the deflector and end
+			if params.target:HasModifier("modifier_imba_juggernaut_blade_fury") and self.parent:IsRangedAttacker() then
+				self.deflector = params.target
+				return end
+		
 			if (RollPseudoRandom(self.proc_chance, self.item) and (self:CheckUniqueValue(1,{}) == 1) and (self.parent:IsClone() or self.parent:IsRealHero())) then
 				self.parent:AddNewModifier(self.parent, self.item, "modifier_imba_starfury_buff_increase", {duration = self.proc_duration})
 			end
@@ -264,14 +277,26 @@ function modifier_imba_starfury_passive:OnAttackLanded(params)
 				if self.parent:HasItemInInventory("item_imba_spell_fencer") then
 					damage_type = DAMAGE_TYPE_MAGICAL
 				end
-				local enemies = FindUnitsInRadius(self.parent:GetTeamNumber(), target_loc, nil, self.range, self.item:GetAbilityTargetTeam(), self.item:GetAbilityTargetType(), self.item:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
+				local enemies
+				-- If the projectile is deflected
+				if params.target:GetTeamNumber() == self.parent:GetTeamNumber() and self.deflector then
+				enemies = FindUnitsInRadius(self.deflector:GetTeamNumber(), target_loc, nil, self.range, self.item:GetAbilityTargetTeam(), self.item:GetAbilityTargetType(), self.item:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
+				else
+				enemies = FindUnitsInRadius(self.parent:GetTeamNumber(), target_loc, nil, self.range, self.item:GetAbilityTargetTeam(), self.item:GetAbilityTargetType(), self.item:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
+				end
 				-- If enemies found, start cooldown
 				local bFound = false
 				for _, enemy in pairs(enemies) do
 					if enemy ~= params.target then
+						local damager
+						if enemy:GetTeamNumber() == self.parent:GetTeamNumber() and self.deflector then
+						damager = self.deflector
+						else
+						damager = self.parent
+						end
 						projectile = {
 							hTarget = enemy,
-							hCaster = self.parent,
+							hCaster = damager,
 							vColor = self.parent:GetFittingColor(),
 							vColor2 = self.parent:GetHeroColorSecondary(),
 							hAbility = self.ability,

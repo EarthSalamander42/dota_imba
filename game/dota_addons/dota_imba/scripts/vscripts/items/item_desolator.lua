@@ -61,7 +61,7 @@ function modifier_item_imba_blight_stone:OnAttackLanded( keys )
 
 		-- If this is an illusion, or the wrong team to attack, do nothing either
 		local target = keys.target
-		if owner:IsIllusion() or (owner:GetTeam() == target:GetTeam())then
+		if owner:IsIllusion() then -- or (owner:GetTeam() == target:GetTeam())then
 			return end
 
 		-- If a higher-priority modifier is present, still do nothing
@@ -262,7 +262,7 @@ function modifier_item_imba_desolator:OnAttackLanded( keys )
 
 		-- If this is an illusion, or the wrong team to attack, do nothing either
 		local target = keys.target
-		if owner:IsIllusion() or (owner:GetTeam() == target:GetTeam())then
+		if owner:IsIllusion() then -- or (owner:GetTeam() == target:GetTeam())then
 			return end
 
 		-- If a higher-priority modifier is present, still do nothing
@@ -474,7 +474,7 @@ function modifier_item_imba_desolator_2:OnAttackLanded( keys )
 
 		-- If this is an illusion, or the wrong team to attack, do nothing either
 		local target = keys.target
-		if owner:IsIllusion() or (owner:GetTeam() == target:GetTeam())then
+		if owner:IsIllusion() then -- or (owner:GetTeam() == target:GetTeam())then
 			return end
 
 		-- If a lower-priority modifier is present, remove it

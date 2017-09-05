@@ -48,7 +48,7 @@ function modifier_item_imba_maelstrom:GetModifierAttackSpeedBonus_Constant()
 function modifier_item_imba_maelstrom:OnAttackLanded( keys )
 	if IsServer() then
 		local attacker = self:GetParent()
-
+		
 		-- If this attack is irrelevant, do nothing
 		if attacker ~= keys.attacker then
 			return end
@@ -59,16 +59,21 @@ function modifier_item_imba_maelstrom:OnAttackLanded( keys )
 
 		-- If the target is invalid, still do nothing
 		local target = keys.target
-		if (not IsHeroOrCreep(target)) or attacker:GetTeam() == target:GetTeam() then
+		if (not IsHeroOrCreep(target)) then -- or attacker:GetTeam() == target:GetTeam() then
 			return end
 
+		-- If the target is a deflector, set to do nothing
+		if target:HasModifier("modifier_imba_juggernaut_blade_fury") and attacker:IsRangedAttacker() then
+			self.deflector = target
+			return end
+		
 		-- All conditions met, stack the proc counter up
-		local ability = self:GetAbility()		
-
+		local ability = self:GetAbility()
+		
 		-- zap the target's ass
-		local proc_chance = ability:GetSpecialValueFor("proc_chance")
+		local proc_chance = ability:GetSpecialValueFor("proc_chance")		
 		if RollPseudoRandom(proc_chance, ability) then
-			LaunchLightning(attacker, target, ability, ability:GetSpecialValueFor("bounce_damage"), ability:GetSpecialValueFor("bounce_radius"))
+			LaunchLightning(attacker, target, ability, ability:GetSpecialValueFor("bounce_damage"), ability:GetSpecialValueFor("bounce_radius"), self.deflector)
 		end
 	end
 end
@@ -142,16 +147,21 @@ function modifier_item_imba_mjollnir:OnAttackLanded( keys )
 
 		-- If the target is invalid, still do nothing
 		local target = keys.target
-		if (not IsHeroOrCreep(target)) or attacker:GetTeam() == target:GetTeam() then
+		if (not IsHeroOrCreep(target)) then -- or attacker:GetTeam() == target:GetTeam() then
 			return end
-
+		
+		-- If the target is a deflector, set to do nothing
+		if target:HasModifier("modifier_imba_juggernaut_blade_fury") and attacker:IsRangedAttacker() then
+			self.deflector = target
+			return end
+		
 		-- All conditions met, stack the proc counter up
 		local ability = self:GetAbility()
 		
 		-- zap the target's ass
 		local proc_chance = ability:GetSpecialValueFor("proc_chance")		
 		if RollPseudoRandom(proc_chance, ability) then
-			LaunchLightning(attacker, target, ability, ability:GetSpecialValueFor("bounce_damage"), ability:GetSpecialValueFor("bounce_radius"))
+			LaunchLightning(attacker, target, ability, ability:GetSpecialValueFor("bounce_damage"), ability:GetSpecialValueFor("bounce_radius"), self.deflector)
 		end
 	end
 end
@@ -274,12 +284,12 @@ function modifier_item_imba_mjollnir_slow:GetModifierAttackSpeedBonus_Constant()
 -----------------------------------------------------------------------------------------------------------
 
 -- Initial launch + main loop
-function LaunchLightning(caster, target, ability, damage, bounce_radius)
+function LaunchLightning(caster, target, ability, damage, bounce_radius, deflector)
 
 	-- Parameters
 	local targets_hit = { target }
 	local search_sources = { target	}
-
+	
 	-- Play initial sound
 	caster:EmitSound("Item.Maelstrom.Chain_Lightning")
 
@@ -287,7 +297,11 @@ function LaunchLightning(caster, target, ability, damage, bounce_radius)
 	target:EmitSound("Item.Maelstrom.Chain_Lightning.Jump")
 
 	-- Zap initial target
+	if target:GetTeamNumber() == caster:GetTeamNumber() or target == attacker then
+	ZapThem(deflector, ability, caster, target, damage)
+	else
 	ZapThem(caster, ability, caster, target, damage)
+	end
 
 	-- While there are potential sources, keep looping
 	while #search_sources > 0 do
@@ -296,7 +310,14 @@ function LaunchLightning(caster, target, ability, damage, bounce_radius)
 		for potential_source_index, potential_source in pairs(search_sources) do
 
 			-- Iterate through potential targets near this source
-			local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), potential_source:GetAbsOrigin(), nil, bounce_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
+			local nearby_enemies
+			-- If the target is the same team, get the targets from same team.
+			if target:GetTeamNumber() == caster:GetTeamNumber() then
+			nearby_enemies = FindUnitsInRadius(deflector:GetTeamNumber(), potential_source:GetAbsOrigin(), nil, bounce_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
+			else
+			nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), potential_source:GetAbsOrigin(), nil, bounce_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
+			end
+			
 			for _, potential_target in pairs(nearby_enemies) do
 				
 				-- Check if this target was already hit
@@ -307,10 +328,14 @@ function LaunchLightning(caster, target, ability, damage, bounce_radius)
 						break
 					end
 				end
-
+				
 				-- If not, zap it from this source, and mark it as a hit target and potential future source
 				if not already_hit then
+					if potential_target:GetTeamNumber() == caster:GetTeamNumber() then
+					ZapThem(deflector, ability, potential_source, potential_target, damage)
+					else
 					ZapThem(caster, ability, potential_source, potential_target, damage)
+					end
 					targets_hit[#targets_hit+1] = potential_target
 					search_sources[#search_sources+1] = potential_target
 				end
@@ -331,7 +356,7 @@ function ZapThem(caster, ability, source, target, damage)
 	ParticleManager:SetParticleControlEnt(bounce_pfx, 1, source, PATTACH_POINT_FOLLOW, "attach_hitloc", source:GetAbsOrigin(), true)
 	ParticleManager:SetParticleControl(bounce_pfx, 2, Vector(1, 1, 1))
 	ParticleManager:ReleaseParticleIndex(bounce_pfx)
-
-	-- Damage target
+	
 	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+	
 end

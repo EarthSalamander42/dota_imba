@@ -358,8 +358,14 @@ function modifier_item_imba_bloodthorn_crit:DeclareFunctions()
 end
 
 -- Grant the crit damage multiplier
-function modifier_item_imba_bloodthorn_crit:GetModifierPreAttack_CriticalStrike()
+function modifier_item_imba_bloodthorn_crit:GetModifierPreAttack_CriticalStrike(params)
 	if IsServer() then
+	
+		-- If the target is a deflector, do nothing
+		if params.target:HasModifier("modifier_imba_juggernaut_blade_fury") and params.attacker:IsRangedAttacker() then
+			return nil
+		end
+		
 		return self.crit_damage
 	end
 end
@@ -367,10 +373,16 @@ end
 -- Remove the crit modifier when the attack is concluded
 function modifier_item_imba_bloodthorn_crit:OnAttackLanded(keys)
 	if IsServer() then
-		-- If this unit is the attacker, remove its crit modifier
-		if self:GetParent() == keys.attacker then
-			self:GetParent():RemoveModifierByName("modifier_item_imba_bloodthorn_crit")
+	
+		-- If the target is a deflector, do nothing
+		if keys.target:HasModifier("modifier_imba_juggernaut_blade_fury") and keys.attacker:IsRangedAttacker() then
+			return nil
 		end
+		-- If this unit is the attacker, remove its crit modifier
+		-- Removed so that Juggernaut's deflect procs crit to its attacker
+		--if self:GetParent() == keys.attacker then
+		--	self:GetParent():RemoveModifierByName("modifier_item_imba_bloodthorn_crit")
+		--end
 	end
 end
 
