@@ -10,6 +10,7 @@ CreateEmptyTalents("lion")
 
 imba_lion_earth_spike = class({})
 LinkLuaModifier("modifier_imba_earthspike_stun", "hero/hero_lion", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_earthspike_death_spike", "hero/hero_lion", LUA_MODIFIER_MOTION_NONE)
 
 function imba_lion_earth_spike:GetAbilityTextureName()
    return "lion_impale"
@@ -101,6 +102,7 @@ function imba_lion_earth_spike:OnProjectileHit_ExtraData(target, location, extra
     local sound_cast = "Hero_Lion.Impale"
     local particle_projectile = "particles/units/heroes/hero_lion/lion_spell_impale.vpcf"
     local modifier_stun = "modifier_imba_earthspike_stun"
+	local modifier_death_spike = "modifier_imba_earthspike_death_spike"
 
     -- Extra data
     local hit_targets_index = extra_data.hit_targets_index
@@ -117,9 +119,6 @@ function imba_lion_earth_spike:OnProjectileHit_ExtraData(target, location, extra
     local spikes_radius = ability:GetSpecialValueFor("spikes_radius")   
     local extra_spike_AOE = ability:GetSpecialValueFor("extra_spike_AOE")
     local wait_interval = ability:GetSpecialValueFor("wait_interval")    
-
-    -- #2 Talent: Earth Spike damage increase
-    damage = damage + caster:FindTalentValue("special_bonus_imba_lion_2")
 
     -- If the target was already hit by spikes this cast, do nothing
     for _, hit_target in pairs(self[hit_targets_index]) do
@@ -217,7 +216,7 @@ function imba_lion_earth_spike:OnProjectileHit_ExtraData(target, location, extra
                     local spikes_projectile = { Ability = ability,
                                                 EffectName = particle_projectile,
                                                 vSpawnOrigin = target:GetAbsOrigin(),
-                                                fDistance = travel_distance,
+                                                fDistance = travel_distance/2,
                                                 fStartRadius = spikes_radius,
                                                 fEndRadius = spikes_radius,
                                                 Source = caster,
@@ -256,6 +255,11 @@ function imba_lion_earth_spike:OnProjectileHit_ExtraData(target, location, extra
     
     -- Immediately apply stun
     target:AddNewModifier(caster, ability, modifier_stun, {duration = stun_duration})
+	
+	-- #7 Talent: Earth Spikes slows target by 25% and they take 30% more damage from Finger of Death
+	if caster:HasTalent("special_bonus_imba_lion_7") then
+	target:AddNewModifier(caster, ability, modifier_death_spike, {duration = knock_up_time + caster:FindTalentValue("special_bonus_imba_lion_7","duration")})
+	end
 
     
         
@@ -309,7 +313,20 @@ function modifier_imba_earthspike_stun:GetEffectAttachType()
     return PATTACH_OVERHEAD_FOLLOW
 end
 
+-- Earthspike talent modifier
+modifier_imba_earthspike_death_spike = class({})
 
+function modifier_imba_earthspike_death_spike:IsHidden() return false end
+function modifier_imba_earthspike_death_spike:IsPurgable() return true end
+
+function modifier_imba_earthspike_death_spike:DeclareFunctions()
+    local funcs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE}
+    return funcs
+end
+
+function modifier_imba_earthspike_death_spike:GetModifierMoveSpeedBonus_Percentage()
+	return self:GetCaster():FindTalentValue("special_bonus_imba_lion_7","slow") * (-1)
+end
 ------------------------------------------
 --                HEX                   --
 ------------------------------------------
@@ -385,9 +402,6 @@ function modifier_imba_lion_hex:OnCreated()
     self.move_speed = self.ability:GetSpecialValueFor("move_speed")
     self.hex_bounce_radius = self.ability:GetSpecialValueFor("hex_bounce_radius")
     self.maximum_hex_enemies = self.ability:GetSpecialValueFor("maximum_hex_enemies")
-
-    -- #3 Talent: Hex bounce radius increase
-    self.hex_bounce_radius = self.hex_bounce_radius + self.caster:FindTalentValue("special_bonus_imba_lion_3")
 
     -- #6 Talent: Hex bounces to a second enemy
     self.maximum_hex_enemies = self.maximum_hex_enemies + self.caster:FindTalentValue("special_bonus_imba_lion_6")
@@ -474,10 +488,21 @@ function modifier_imba_lion_hex:IsPurgable() return true end
 function modifier_imba_lion_hex:IsDebuff() return true end
 
 function modifier_imba_lion_hex:CheckState()
-    local state = {[MODIFIER_STATE_HEXED] = true,
-                   [MODIFIER_STATE_DISARMED] = true,
-                   [MODIFIER_STATE_SILENCED] = true,
-                   [MODIFIER_STATE_MUTED] = true}
+    local state
+	-- #2 Talent: Hexed targets have break applied to them
+	if self:GetCaster():HasTalent("special_bonus_imba_lion_2") then
+		state = {[MODIFIER_STATE_HEXED] = true,
+				 [MODIFIER_STATE_DISARMED] = true,
+				 [MODIFIER_STATE_SILENCED] = true,
+				 [MODIFIER_STATE_MUTED] = true,
+				 [MODIFIER_STATE_PASSIVES_DISABLED] = true}
+	else
+		state = {[MODIFIER_STATE_HEXED] = true,
+				 [MODIFIER_STATE_DISARMED] = true,
+				 [MODIFIER_STATE_SILENCED] = true,
+				 [MODIFIER_STATE_MUTED] = true}
+	end
+				   
     return state
 end
 
@@ -498,7 +523,11 @@ end
 
 function modifier_imba_lion_hex:OnDestroy()
     if IsServer() then
+		-- Prevent conflict with Lina's Talent. REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE !
+		if self.parent:HasModifier("modifier_imba_fiery_soul_blaze_burn") then
+		else
         self.parent:SetRenderColor(255,255,255)        
+		end
     end
 end
 
@@ -512,6 +541,7 @@ LinkLuaModifier("modifier_imba_manadrain_aura", "hero/hero_lion", LUA_MODIFIER_M
 LinkLuaModifier("modifier_imba_manadrain_aura_debuff", "hero/hero_lion", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_manadrain_debuff", "hero/hero_lion", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_manadrain_buff", "hero/hero_lion", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_manadrain_manaovercharge", "hero/hero_lion", LUA_MODIFIER_MOTION_NONE)
 
 function imba_lion_mana_drain:GetAbilityTextureName()
    return "lion_mana_drain"
@@ -855,6 +885,19 @@ function modifier_imba_manadrain_debuff:OnIntervalThink()
                                 }
 
         ApplyDamage(damageTable)
+		
+		local mana_over_drain = math.floor(self.mana_drained - (self.caster:GetMaxMana() - self.caster:GetMana()))
+		-- #3 Talent: Draining Mana while mana pool is full grants Mana Overcharge
+		if self.caster:HasTalent("special_bonus_imba_lion_3") and mana_over_drain > 0 then
+			local mana_overcharge = self.caster:FindModifierByName("modifier_imba_manadrain_manaovercharge")
+			if not mana_overcharge then
+				mana_overcharge = self.caster:AddNewModifier(self.caster,self.ability,"modifier_imba_manadrain_manaovercharge",{duration = self.caster:FindTalentValue("special_bonus_imba_lion_3","duration")})
+			end
+			if mana_overcharge then
+			mana_overcharge_stacks = mana_overcharge:GetStackCount()
+			mana_overcharge:SetStackCount(mana_overcharge_stacks + mana_over_drain)
+			end
+		end
     end
 end
 
@@ -874,6 +917,10 @@ function modifier_imba_manadrain_debuff:GetModifierMoveSpeedBonus_Percentage()
     end
 end
 
+modifier_imba_manadrain_manaovercharge = class({})
+
+function modifier_imba_manadrain_manaovercharge:IsHidden() return false end
+function modifier_imba_manadrain_manaovercharge:IsPurgable() return false end
 
 -- Active Mana Drain buff modifier (allies)
 modifier_imba_manadrain_buff = class({})
@@ -942,9 +989,6 @@ function imba_lion_finger_of_death:GetAOERadius()
     local ability = self
     local enemies_frog_radius = ability:GetSpecialValueFor("enemies_frog_radius")
 
-    -- #7 Talent: Finger of Death Hex radius increase
-    enemies_frog_radius = enemies_frog_radius + caster:FindTalentValue("special_bonus_imba_lion_7")
-
     return enemies_frog_radius
 end
 
@@ -1007,12 +1051,6 @@ function imba_lion_finger_of_death:OnSpellStart()
     local projectile_speed = ability:GetSpecialValueFor("projectile_speed")        
     local enemies_frog_radius = ability:GetSpecialValueFor("enemies_frog_radius")        
 
-    -- #5 Talent: Trigger Finger duration decrease
-    triggerfinger_duration = triggerfinger_duration - caster:FindTalentValue("special_bonus_imba_lion_5")    
-
-    -- #7 Talent: Finger of Death Hex radius increase
-    enemies_frog_radius = enemies_frog_radius + caster:FindTalentValue("special_bonus_imba_lion_7")
-
     -- Enemy killed variable
     ability.enemy_killed = false
 
@@ -1023,7 +1061,15 @@ function imba_lion_finger_of_death:OnSpellStart()
     if scepter then
         damage = scepter_damage
     end
-
+	
+	-- #3 Talent: Assign Mana Overcharge damage
+	local mana_overcharge = caster:FindModifierByName("modifier_imba_manadrain_manaovercharge")
+	if mana_overcharge then
+		mana_overcharge_stacks = mana_overcharge:GetStackCount()
+		damage = damage + mana_overcharge_stacks
+		caster:RemoveModifierByName("modifier_imba_manadrain_manaovercharge")
+	end
+	
     -- If target has Linken's Sphere off cooldown, do nothing
     if target:GetTeam() ~= caster:GetTeam() then
         if target:TriggerSpellAbsorb(ability) then
@@ -1094,17 +1140,35 @@ function imba_lion_finger_of_death:OnSpellStart()
             -- Apply and/or Grant stack of Trigger Finger
             if not caster:HasModifier(modifier_finger) then
                 caster:AddNewModifier(caster, ability, modifier_finger, {duration = triggerfinger_duration})
-            end
+			end
 
             local modifier_finger_handler = caster:FindModifierByName(modifier_finger)
+			if modifier_finger_handler:GetDuration() > triggerfinger_duration then
+			modifier_finger_handler:SetDuration(triggerfinger_duration,true)
+			end
             modifier_finger_handler:IncrementStackCount()
             modifier_finger_handler:ForceRefresh()
 
             -- Refresh cooldown completely            
             Timers:CreateTimer(FrameTime(), function()
                 ability:EndCooldown()
-            end)            
-        end
+            end)      
+		-- #5 Talent: Trigger Finger always triggers
+        elseif caster:HasTalent("special_bonus_imba_lion_5") then
+			if not caster:HasModifier(modifier_finger) then
+				caster:AddNewModifier(caster, ability, modifier_finger, {duration = caster:FindTalentValue("special_bonus_imba_lion_5")})
+			end
+				
+            local modifier_finger_handler = caster:FindModifierByName(modifier_finger)
+			modifier_finger_handler:SetDuration(caster:FindTalentValue("special_bonus_imba_lion_5"),true)
+            modifier_finger_handler:IncrementStackCount()
+            modifier_finger_handler:ForceRefresh()
+
+            -- Refresh cooldown completely            
+            Timers:CreateTimer(FrameTime(), function()
+                ability:EndCooldown()
+            end)		
+		end
     end)
 end 
 
@@ -1160,6 +1224,9 @@ function FingerOfDeath(caster, ability, main_target, target, damage, enemies_fro
         EmitSoundOn(sound_impact, target)
 
         -- Deal damage to the main target
+		if target:HasModifier("modifier_imba_earthspike_death_spike") then
+		damage = damage * (1+(caster:FindTalentValue("special_bonus_imba_lion_7","bonus_damage")*0.01))
+		end
         local damageTable = {victim = target,
                              attacker = caster, 
                              damage = damage,

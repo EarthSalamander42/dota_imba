@@ -154,7 +154,7 @@
 	"weapons"
 	{
 		"item"		"item_dragon_lance"
-		"item"		"item_lesser_crit"
+		"item"		"item_imba_lesser_crit"
 		"item"		"item_imba_armlet"
 		"item"		"item_imba_shadow_blade"
 		"item"		"item_imba_skull_basher"

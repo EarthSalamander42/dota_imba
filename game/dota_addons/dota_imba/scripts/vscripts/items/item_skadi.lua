@@ -220,12 +220,15 @@ function modifier_item_imba_skadi_unique:OnTakeDamage( keys )
 		if attacker:IsIllusion() then
 			return end
 		
-		-- If there's no valid target, do nothing
+		-- If the target is a deflector, do nothing either
 		local target = keys.unit
-		if (not IsHeroOrCreep(target)) or attacker:GetTeam() == target:GetTeam() then
+		if target:HasModifier("modifier_imba_juggernaut_blade_fury") and attacker:IsRangedAttacker() then
 			return end
-
-
+		
+		-- If there's no valid target, do nothing
+		if (not IsHeroOrCreep(target)) then -- or attacker:GetTeam() == target:GetTeam() then
+			return end
+			
 
 		-- Calculate actual slow duration
 		local target_distance = (target:GetAbsOrigin() - attacker:GetAbsOrigin()):Length2D()
@@ -234,7 +237,7 @@ function modifier_item_imba_skadi_unique:OnTakeDamage( keys )
 		if target_distance >= self.max_distance then
 			return nil
 		end
-
+		
 		local slow_duration = self.min_duration + (self.max_duration - self.min_duration) * math.max( self.slow_range_cap - target_distance, 0) / self.slow_range_cap
 
 		-- Apply the slow

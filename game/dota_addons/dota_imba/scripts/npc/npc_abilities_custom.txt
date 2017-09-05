@@ -14035,22 +14035,30 @@
 				"var_type"				"FIELD_INTEGER"
 				"effect_radius"			"250 250 250 250 275 300 325"
 			}
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"deflect_radius"		"800"
+			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_per_sec"		"80 105 130 155 160 165 170"
-				"LinkedSpecialBonus"	"special_bonus_imba_juggernaut_4"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"damage_tick"			"0.2"
 			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"succ_tick"				"0.2"
+			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"evasion"				"10 10 10 10 20 30 40"
-				"LinkedSpecialBonus"	"special_bonus_imba_juggernaut_3"
 			}
 			"04"
 			{
@@ -14113,7 +14121,6 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"heal_per_sec"			"2 3 4 5 5.25 5.5 5.75"
-				"LinkedSpecialBonus"	"special_bonus_imba_juggernaut_2"
 			}
 			"03"
 			{
@@ -14173,7 +14180,6 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"heal_per_sec"			"2 3 4 5 5.25 5.5 5.75"
-				"LinkedSpecialBonus"	"special_bonus_imba_juggernaut_2"
 			}
 			"03"
 			{
@@ -14189,7 +14195,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"heal_per_sec_totem"	"4 5 6 7 7 7 7"
-				"LinkedSpecialBonus"	"special_bonus_imba_juggernaut_2"
 			}
 			"06"
 			{
@@ -14207,10 +14212,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"hero/hero_juggernaut.lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityTextureName"			"juggernaut_blade_dance"
 		"MaxLevel"						"7"		
 
@@ -14232,12 +14234,12 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"crit_chance"			"20 25 30 35 35 35 35"
-				"LinkedSpecialBonus"	"special_bonus_imba_juggernaut_1"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"crit_damage"			"200"
+				"LinkedSpecialBonus"	"special_bonus_imba_juggernaut_6"
 			}
 			"03"
 			{
@@ -14274,7 +14276,16 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"active_cooldown"		"3"
-				"LinkedSpecialBonus"	"special_bonus_imba_juggernaut_8"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"secret_blade_duration"	"3.5"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"secret_blade_max_hits"	"3"
 			}
 		}
 	}
@@ -14327,7 +14338,8 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"80"
+				"bonus_damage_att"		"35"
+				"LinkedSpecialBonus"	"special_bonus_imba_juggernaut_8"
 			}
 
 			"02"
@@ -14365,70 +14377,18 @@
 				"var_type"				"FIELD_INTEGER"
 				"scepter_jump_amt"  	"6 9 12 13 14 15"
 			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"min_damage"  			"225"
+			}
 		}
 	}
 
-	
 	//=================================================================================================================
-	// Juggernaut Talent 1 (Level 10): +5% Blade Dance crit chance
+	// Juggernaut Talent 1 (Level 10): Blade Fury acts as a vaccum
 	//=================================================================================================================
 	"special_bonus_imba_juggernaut_1"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_juggernaut_blade_dance"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"5"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Juggernaut Talent 2 (Level 10): +1% Healing Ward heal per second
-	//=================================================================================================================
-	"special_bonus_imba_juggernaut_2"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_juggernaut_healing_ward"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"1"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Juggernaut Talent 3 (Level 20): +40% Blade Fury evasion
-	//=================================================================================================================
-	"special_bonus_imba_juggernaut_3"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -14448,13 +14408,74 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"40"
+				"value"						"4"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Juggernaut Talent 4 (Level 20): +170 Blade Fury DPS
+	// Juggernaut Talent 2 (Level 10): Blade Fury slowly increases in size
+	//=================================================================================================================
+	"special_bonus_imba_juggernaut_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_juggernaut_blade_fury"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"20"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Juggernaut Talent 3 (Level 20): Healing Ward gives 50 attack speed, 100 when fortified
+	//=================================================================================================================
+	"special_bonus_imba_juggernaut_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_juggernaut_healing_ward"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"50"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"totem_value"				"100"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Juggernaut Talent 4 (Level 20): Secret Blade strikes 3 times, once forward, and twice to the sides
 	//=================================================================================================================
 	"special_bonus_imba_juggernaut_4"
 	{
@@ -14466,7 +14487,7 @@
 
 		"LinkedAbility"
 		{
-			"01" "imba_juggernaut_blade_fury"
+			"01" 	"imba_juggernaut_blade_dance"
 		}
 
 		// Special
@@ -14476,7 +14497,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"170"
+				"value"						"0"
 			}
 		}
 	}
@@ -14532,13 +14553,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"1"
+				"value"						"0"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Juggernaut Talent 7 (Level 40): -4sec Blade Fury cooldown
+	// Juggernaut Talent 7 (Level 40): Omnislash sends an image to commit the slashes
 	//=================================================================================================================
 	"special_bonus_imba_juggernaut_7"
 	{
@@ -14550,7 +14571,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_juggernaut_blade_fury"
+			"01" 	"imba_juggernaut_omni_slash"
 		}
 
 		// Special
@@ -14560,13 +14581,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"-3"
+				"value"						"0"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Juggernaut Talent 8 (Level 40): -2sec Blade Dance cooldown
+	// Juggernaut Talent 8 (Level 40): Blade Dance Crit creates Blade Blossom stacks
 	//=================================================================================================================
 	"special_bonus_imba_juggernaut_8"
 	{
@@ -14588,7 +14609,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"-2"
+				"value"						"0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"duration"					"12"
 			}
 		}
 	}
@@ -14628,7 +14654,6 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"tsunami_chance"				"20"
-				"LinkedSpecialBonus"			"special_bonus_imba_kunkka_6"
 			}
 		}
 	}
@@ -14683,7 +14708,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"225"
-				"LinkedSpecialBonus"		"special_bonus_imba_kunkka_3"
+				"LinkedSpecialBonus"		"special_bonus_imba_kunkka_7"
 			}
 			"02"
 			{
@@ -14719,7 +14744,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"sec_torrent_damage"		"50"
-				"LinkedSpecialBonus"		"special_bonus_imba_kunkka_4"
 			}
 			"09"
 			{
@@ -15069,6 +15093,7 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"buff_duration"					"10"
+				"LinkedSpecialBonus"			"special_bonus_imba_kunkka_2"
 			}
 			"10"
 			{
@@ -15130,36 +15155,18 @@
 				"var_type"						"FIELD_FLOAT"
 				"scepter_tide_wave_delay"		"0.1"
 			}
-		}
-	}
-
-	//=================================================================================================================
-	// Kunkka Talent 1 (Level 10): Gold gained with each last hit
-	//=================================================================================================================
-	"special_bonus_imba_kunkka_1"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
+			"22"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"7"
+				"var_type"						"FIELD_FLOAT"
+				"scepter_cast_range"			"2000"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Kunkka Talent 2 (Level 10): Ebb & Flow CDR
+	// Kunkka Talent 1 (Level 10): Add Tsunami to Ebb & Flow cycle
 	//=================================================================================================================
-	"special_bonus_imba_kunkka_2"
+	"special_bonus_imba_kunkka_1"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -15179,13 +15186,41 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"2"
+				"value"						"1"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Kunkka Talent 3 (Level 20): Torrent AoE increase
+	// Kunkka Talent 2 (Level 10): While Kunkka has rum buff, Tidebringer has no cooldown
+	//=================================================================================================================
+	"special_bonus_imba_kunkka_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_kunkka_tidebringer"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Kunkka Talent 3 (Level 20): Allies returned from X mark gains 10% movespeed, enemies are slowed by 10% instead
 	//=================================================================================================================
 	"special_bonus_imba_kunkka_3"
 	{
@@ -15197,7 +15232,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_kunkka_torrent"
+			"01" 	"imba_kunkka_x_marks_the_spot"
 		}
 
 		// Special
@@ -15207,13 +15242,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"200"
+				"value"						"10"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Kunkka Talent 4 (Level 20): Secoundary Torrent damage increase
+	// Kunkka Talent 4 (Level 20): Random secondary GEYSERS appears at random intervals and locations around the main torrent!
 	//=================================================================================================================
 	"special_bonus_imba_kunkka_4"
 	{
@@ -15235,7 +15270,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"75"
+				"value"						"1"
 			}
 		}
 	}
@@ -15269,7 +15304,7 @@
 	}
 
 	//=================================================================================================================
-	// Kunkka Talent 6 (Level 30): Increased Tsunami Chance
+	// Kunkka Talent 6 (Level 30): Ghost Ship now drags Kunkka as well to the target locatio
 	//=================================================================================================================
 	"special_bonus_imba_kunkka_6"
 	{
@@ -15281,7 +15316,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_kunkka_ebb_and_flow"
+			"01" 	"imba_kunkka_ghostship"
 		}
 
 		// Special
@@ -15291,13 +15326,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"15"
+				"value"						"1"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Kunkka Talent 7 (Level 40): Tidebringer CDR
+	// Kunkka Talent 7 (Level 40): Enemies affected by Torrent debuff will always get hit by Tidebringer
 	//=================================================================================================================
 	"special_bonus_imba_kunkka_7"
 	{
@@ -15319,7 +15354,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"2"
+				"value"						"0"
 			}
 		}
 	}
@@ -16279,7 +16314,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage"				"80 120 160 200 220 240 260"
-				"LinkedSpecialBonus"	"special_bonus_imba_lina_2"
 			}
 			"05"
 			{
@@ -16289,12 +16323,17 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"array_count"			"3 3 3 3 5 7 9"
+				"array_count"			"1 1 1 1 2 3 4"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"array_count_tooltip"	"2 2 2 2 4 6 8"
+				"array_rings_count"		"6"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"rings_delay"			"0.5"
 			}
 		}
 	}
@@ -16308,7 +16347,8 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"              		"ability_lua"
 		"ScriptFile"					"hero/hero_lina.lua"
-		"AbilityBehavior"       	 	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"    	 	"lina_fiery_soul"
 		"MaxLevel"						"7"
@@ -16320,6 +16360,9 @@
 		{
 			"particle" 					"particles/hero/lina/fiery_soul.vpcf"
 			"particle" 					"particles/units/heroes/hero_lina/lina_fiery_soul.vpcf"
+			"particle"					"particles/hero/lina/lina_immolation.vpcf"
+			"particle"                  "particles/hero/clinkz/searing_flames_active/burn_effect.vpcf"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_phoenix.vsndevts"
 		}
 
 		// Special
@@ -16330,7 +16373,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_as"				"40 55 70 85 85 85 85"
-				"LinkedSpecialBonus"	"special_bonus_imba_lina_5"
 			}
 			"02"
 			{
@@ -16341,7 +16383,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"max_stacks"			"3"
-				"LinkedSpecialBonus"	"special_bonus_imba_lina_7"
 			}
 			"04"
 			{
@@ -16357,6 +16398,11 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"duration"				"10"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"active_cooldown"		"5"
 			}
 		}
 	}
@@ -16421,7 +16467,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_amount"			"1 1 1 2 3 4"
+				"bounce_amount"			"2 2 2 4 6 8"
 			}
 			"04"
 			{
@@ -16454,43 +16500,15 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"2"
+				"value"						"4"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Lina Talent 2 (Level 10): Light Strike Array damage
+	// Lina Talent 2 (Level 10): Spawns a main Dragon Slave at the end of the second Dragon Slave
 	//=================================================================================================================
 	"special_bonus_imba_lina_2"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_lina_light_strike_array"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"80"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Lina Talent 3 (Level 20): Dragon Slave CDR
-	//=================================================================================================================
-	"special_bonus_imba_lina_3"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -16510,13 +16528,61 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"4"
+				"value"						"1"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Lina Talent 4 (Level 20): Light Strike Arrays spawn to the sides of the main one
+	// Lina Talent 3 (Level 20): Reaching 3 Fiery Soul stacks allows Lina to unleash a blast of hot shockwave
+	//=================================================================================================================
+	"special_bonus_imba_lina_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_lina_fiery_soul"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"100"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value2"					"450"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"aoe"						"800"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"min_damage_aoe"			"750"
+			}
+			"5"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_damage_aoe"			"200"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Lina Talent 4 (Level 20): When a Light Strike Array occurs, the previous explosion also occurs, if applicable
 	//=================================================================================================================
 	"special_bonus_imba_lina_4"
 	{
@@ -16538,13 +16604,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"6"
+				"value"						"1"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Lina Talent 5 (Level 30): Additional move/attack speed per Fiery Soul stack
+	// Lina Talent 5 (Level 30): Lina's Spells causes DoT based on Fiery Soul stacks
 	//=================================================================================================================
 	"special_bonus_imba_lina_5"
 	{
@@ -16571,7 +16637,12 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value2"					"4"
+				"tick"						"1"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"duration"					"5"
 			}
 		}
 	}
@@ -16605,7 +16676,7 @@
 	}
 
 	//=================================================================================================================
-	// Lina Talent 7 (Level 40): Additional Fiery Soul Stack(s)
+	// Lina Talent 7 (Level 40): Main Light Strike Array's explosion is repeated 3 times
 	//=================================================================================================================
 	"special_bonus_imba_lina_7"
 	{
@@ -16617,7 +16688,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_lina_fiery_soul"
+			"01" 	"imba_lina_light_strike_array"
 		}
 
 		// Special
@@ -16633,7 +16704,7 @@
 	}
 
 	//=================================================================================================================
-	// Lina Talent 8 (Level 40): Blazing Strike
+	// Lina Talent 8 (Level 40): Blazing Fire
 	//=================================================================================================================
 	"special_bonus_imba_lina_8"
 	{
@@ -16746,7 +16817,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage"				"80 140 200 260 290 320 350"
-				"LinkedSpecialBonus"	"special_bonus_imba_lion_2"
 			}
 
 			"07"
@@ -16842,7 +16912,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"hex_bounce_radius"		"325 325 325 325 375 425 475"
-				"LinkedSpecialBonus"	"special_bonus_imba_lion_3"
 			}
 
 			"05"
@@ -16987,6 +17056,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage"					"600 725 850 925 1000 1075"
+				"LinkedSpecialBonus"		"special_bonus_imba_lion_7"
 			}
 
 			"02"
@@ -17005,8 +17075,9 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"damage_delay"				"0.25"
+				"LinkedSpecialBonus"		"special_bonus_imba_lion_3"
+				
 			}
-
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -17029,13 +17100,12 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"enemies_frog_radius"			"325"
-				"LinkedSpecialBonus"			"special_bonus_imba_lion_7"
 			}
 
 			"09"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"enemies_frog_duration"			"1.5 1.5 1.5 1.5 1.65 1.8 1.95"
+				"enemies_frog_duration"			"1.5 1.5 1.5 1.5 1.65 1.8 2.0"
 			}			
 
 			"10"
@@ -17053,207 +17123,227 @@
 	}
 
 	//=================================================================================================================
-	// Lion's Talents
-	//=================================================================================================================
-	"special_bonus_imba_lion_1" // Earth Spike now branches from creeps as well
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    // Lion's Talents
+    //=================================================================================================================
+    "special_bonus_imba_lion_1" // Earth Spike now branches from creeps as well
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-		"LinkedAbility"
-		{
-			"01" 	"imba_lion_earth_spike"
-		}
+        "LinkedAbility"
+        {
+        	"01" 	"imba_lion_earth_spike"
+        }
 
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"value"	                    "1"
-			}
-		}
-	}
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "1"
+            }
+        }
+    }
 
-	"special_bonus_imba_lion_2" // Earth Spike damage increase
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "special_bonus_imba_lion_2" // Hexed targets have Break applied to them.
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-		"LinkedAbility"
-		{
-			"01" 	"imba_lion_earth_spike"
-		}
+        "LinkedAbility"
+        {
+        	"01" 	"imba_lion_hex"
+        }
 
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"value"	                    "70"
-			}
-		}
-	}
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "1"
+            }
+        }
+    }
 
-	"special_bonus_imba_lion_3" // Hex bounce radius increase
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "special_bonus_imba_lion_3" // Draining Mana while mana pool is full grants Mana Overcharge
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-		"LinkedAbility"
-		{
-			"01" 	"imba_lion_hex"
-		}
+        "LinkedAbility"
+        {
+        	"01" 	"imba_lion_mana_drain"
+        }
 
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"value"	                    "150"
-			}
-		}
-	}
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "0"
+            }
+			"02"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "duration"	                "8"
+            }
+        }
+    }
 
-	"special_bonus_imba_lion_4" // Mana drain slows the target according to missing mana
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "special_bonus_imba_lion_4" // Mana drain slows the target according to missing mana
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-		"LinkedAbility"
-		{
-			"01" 	"imba_lion_mana_drain"
-		}
+        "LinkedAbility"
+        {
+        	"01" 	"imba_lion_mana_drain"
+        }
 
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"value"	                    "1"
-			}
-		}
-	}
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "1"
+            }
+        }
+    }
 
-	"special_bonus_imba_lion_5" // Trigger Finger duration decrease
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "special_bonus_imba_lion_5" // Trigger Finger always triggers
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-		"LinkedAbility"
-		{
-			"01" 	"imba_lion_finger_of_death"
-		}
+        "LinkedAbility"
+        {
+        	"01" 	"imba_lion_finger_of_death"
+        }
 
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"                  "FIELD_FLOAT"
-				"value"	                    "3.5"
-			}
-		}
-	}
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "15"
+            }
+        }
+    }
 
-	"special_bonus_imba_lion_6" // Hex bounces to a second enemy
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "special_bonus_imba_lion_6" // Hex bounces to a second enemy
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-		"LinkedAbility"
-		{
-			"01" 	"imba_lion_hex"
-		}
+        "LinkedAbility"
+        {
+        	"01" 	"imba_lion_hex"
+        }
 
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"                  "FIELD_FLOAT"
-				"value"	                    "1"
-			}
-		}
-	}
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "1"
+            }
+        }
+    }
 
-	"special_bonus_imba_lion_7" // Finger of Death Hex radius increase
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "special_bonus_imba_lion_7" // Earth Spike slows and target receives damage addition to Finger of Death
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-		"LinkedAbility"
-		{
-			"01"	"imba_lion_finger_of_death"
-		}
+        "LinkedAbility"
+        {
+        	"01"	"imba_lion_earth_spike"
+        }
 
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"                  "FIELD_FLOAT"
-				"value"	                    "300"
-			}
-		}
-	}
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "0"
+            }
+			"02"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "slow"	                    "25"
+            }
+			"03"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "bonus_damage"	            "30"
+            }
+			"04"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "duration"	                "3"
+            }
+        }
+    }
 
-	"special_bonus_imba_lion_8" // Mana Drain now targets all units in aura radius
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "special_bonus_imba_lion_8" // Mana Drain now targets all units in aura radius
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-		"LinkedAbility"
-		{
-			"01" 	"imba_lion_mana_drain"
-		}
+        "LinkedAbility"
+        {
+        	"01" 	"imba_lion_mana_drain"
+        }
 
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"                  "FIELD_FLOAT"
-				"value"	                    "1"
-			}
-		}
-	}
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "1"
+            }
+        }
+    }
 
 	//=================================================================================================================
 	// Lycan's Summon Wolves

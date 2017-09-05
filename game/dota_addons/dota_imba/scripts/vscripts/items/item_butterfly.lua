@@ -140,8 +140,8 @@ function modifier_item_imba_butterfly_unique:OnAttackFail(keys)
 	local attacker = keys.attacker
 	local target = keys.target
 
-	-- Only apply if the evading unit is the caster, from another team
-	if self.caster == target and self.caster:GetTeamNumber() ~= attacker:GetTeamNumber() then
+	-- Only apply if the evading unit is the caster
+	if self.caster == target then -- and self.caster:GetTeamNumber() ~= attacker:GetTeamNumber() then
 
 		-- Cannot generate stacks when Wind Song is active
 		if self.caster:HasModifier(self.modifier_active_song) then
