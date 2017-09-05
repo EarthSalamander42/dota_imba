@@ -112,9 +112,16 @@ function modifier_item_imba_shadow_blade_invis:OnAttack(params)
 
             local ability          =   self:GetAbility()
             local debuff_duration  =   ability:GetSpecialValueFor("turnrate_slow_duration")
+			
+			-- If the target is a deflector, do nothing and remove invis
+			if params.target:HasModifier("modifier_imba_juggernaut_blade_fury") and self.parent:IsRangedAttacker() then
+				self:Destroy()
+				return nil
+			end
+			
             -- Apply turnrate debuff modifier
             params.target:AddNewModifier(params.attacker, ability, "modifier_item_imba_shadow_blade_invis_turnrate_debuff", {duration = debuff_duration})
-
+			
             -- Remove the invis on attack
             self:Destroy()
         end
