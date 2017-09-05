@@ -142,7 +142,7 @@
 		"item"		"item_imba_assault"
 		"item"		"item_hurricane_pike"
 		"item"		"item_imba_shivas_guard"
-		"item"		"item_manta"
+		"item"		"item_imba_manta"
 		"item"		"item_sphere"
 		"item"		"item_imba_bloodstone"
 		"item"		"item_imba_heart"

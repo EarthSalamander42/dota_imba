@@ -42,8 +42,7 @@ require('internal/scoreboard_events')
 -- This library used to handle custom IMBA talent UI (hero_selection will need to use a function in this)
 require('internal/imba_talent_events')
 
--- Meepo Vanilla fix (from Angel Arena Black Star)
-require('libraries/meepo/data')
+-- Meepo Vanilla fix
 require('libraries/meepo/meepo')
 
 -- settings.lua is where you can specify many different properties for your game mode and is one of the core barebones files.
@@ -801,11 +800,6 @@ function GameMode:OrderFilter( keys )
 				elseif ability:GetName() == "item_imba_white_queen_cape" then
 					local duration = ability:GetLevelSpecialValueFor("duration", ability:GetLevel() -1)					
 					meepo_table[m]:AddNewModifier(meepo_table[m], ability, "modifier_black_king_bar_immune", {duration = duration})
---				elseif ability:GetName() == "item_imba_power_treads_2" then
---					if meepo_table[m]:IsClone() then
---						ability:CastAbility()
---						print("LOLZ")
---					end
 				end
 			elseif keys.order_type == DOTA_UNIT_ORDER_CAST_TARGET then
 				if ability:GetName() == "item_imba_black_queen_cape" then
@@ -815,25 +809,6 @@ function GameMode:OrderFilter( keys )
 			end
 		end
 	end
-
---[[
-	local target_ent = Entities:FindByName(nil, EntIndexToHScript(keys.entindex_target):GetName())
-	local target = EntIndexToHScript(keys.entindex_target):GetName()
-	if target == "npc_dota_hero_meepo" then
-		if unit:GetTeamNumber() ~= target_ent:GetTeamNumber() and target_ent:IsClone() then
-			for itemSlot = 0, 5 do
-				local item = target_ent:GetCloneSource():GetItemInSlot(itemSlot)
-				if item and item:GetName() == "item_sphere" then
-					if item:IsCooldownReady() then
-						print("Linken")
-						target_ent:AddNewModifier(target_ent, item, "modifier_item_sphere_target", {duration = 8.5})
-						item:CastAbility()
-					end
-				end
-			end
-		end
-	end
-	]]
 
 	return true
 end
@@ -1123,11 +1098,9 @@ random_time = 1.0
 function GameMode:OnHeroInGame(hero)	
 local time_elapsed = 0
 
-	local meepo_track = 0
 	Timers:CreateTimer(function()
-		for _, hero in pairs(HeroList:GetAllHeroes()) do
-			if hero:GetUnitName() == "npc_dota_hero_meepo" and meepo_track == 0 then
-				meepo_track = 1
+		if hero:GetUnitName() == "npc_dota_hero_meepo" then
+			if not hero:IsClone() then
 				TrackMeepos()
 			end
 		end
@@ -1529,7 +1502,7 @@ function GameMode:StartImbaTest()
 	for _, hero in pairs(player_heroes) do
 		hero:SetAbsOrigin(testbed_center + Vector(-250, 0, 0))
 		hero:AddItemByName("item_imba_diffusal_blade_3")
-		hero:AddItemByName("item_manta")
+		hero:AddItemByName("item_imba_manta")
 		hero:AddItemByName("item_imba_blink")
 		hero:AddItemByName("item_imba_silver_edge")
 		hero:AddItemByName("item_black_king_bar")
@@ -1557,7 +1530,7 @@ function GameMode:StartImbaTest()
 
 		-- Add specific items to each dummy hero
 		if i == 1 then
-			dummy_hero:AddItemByName("item_manta")
+			dummy_hero:AddItemByName("item_imba_manta")
 			dummy_hero:AddItemByName("item_imba_diffusal_blade_3")
 		elseif i == 2 then
 			dummy_hero:AddItemByName("item_imba_silver_edge")
@@ -1578,7 +1551,7 @@ function GameMode:StartImbaTest()
 
 		-- Add specific items to each dummy hero
 		if i == 1 then
-			dummy_hero:AddItemByName("item_manta")
+			dummy_hero:AddItemByName("item_imba_manta")
 			dummy_hero:AddItemByName("item_imba_diffusal_blade_3")
 		elseif i == 2 then
 			dummy_hero:AddItemByName("item_imba_silver_edge")
