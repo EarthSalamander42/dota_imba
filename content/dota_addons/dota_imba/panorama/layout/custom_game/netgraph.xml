@@ -42,15 +42,15 @@
 		</Panel>
 
 		<Panel id="Buttons">
-			<Button id="ToggleUniqueStats" onmouseactivate="ToggleUniqueStats();" >
+<!--			<Button id="ToggleUniqueStats" onmouseactivate="ToggleUniqueStats();" >
 				<Label id="UniqueStatsButtonText" class="Event1_Title" text="Toggle Stats"/>
-			</Button>
+			</Button> -->
 			<Button id="RemoveUnits" onmouseactivate="RemoveUnits();" >
 				<Label id="UniqueStatsButtonText" class="Event1_Title" text="Remove Units"/>
 			</Button>
-			<Button id="RemoveParticles" onmouseactivate="RemoveParticles();" >
+<!--			<Button id="RemoveParticles" onmouseactivate="RemoveParticles();" >
 				<Label id="UniqueStatsButtonText" class="Event1_Title" text="Remove Particles"/>
-			</Button>
+			</Button> -->
 		</Panel>
 
 		<Panel id="UniqueStats">
