@@ -33,11 +33,6 @@ function InitializeUI() {
 		// Update other elements according to the current map
 		var map_info = Game.GetMapInfo();
 
-		//Disables All Random options
-		$('#AllPickToggle').style.visibility = 'collapse';
-		$('#AllRandomToggle').style.visibility = 'collapse';
-		$('#AllRandomSameHeroToggle').style.visibility = 'collapse';
-
 		if (map_info.map_display_name == "imba_standard") {
 			$('#QuickOptionsPanel').style.visibility = 'collapse';
 			$('#HeroPowerOptionsPanel').style.visibility = 'collapse';
