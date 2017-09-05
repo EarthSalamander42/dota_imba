@@ -45,7 +45,6 @@ function modifier_imba_mana_break_passive:OnCreated()
   if IsServer() then
 	self.ability = self:GetAbility()
 	self.parent = self:GetParent()
-	if self.parent:IsIllusion() then return end
 	self.particle_blast = "particles/hero/antimage/mana_break_blast.vpcf"
 	self.sound_blast = "tutorial_smallfence_smash"
 	self.particle_aoe_mana_burn = "particles/hero/antimage/mana_break_aoe_burn.vpcf"
