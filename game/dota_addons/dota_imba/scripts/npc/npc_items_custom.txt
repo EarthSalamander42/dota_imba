@@ -11798,7 +11798,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2255"
+		"ID"							"2257"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
 		"Model"							"models/props_gameplay/recipe.mdl"
@@ -11825,7 +11825,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2256"
+		"ID"							"2258"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"items/item_crit.lua"
 		"AbilityTextureName" 			"item_lesser_crit"
