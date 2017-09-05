@@ -2,7 +2,6 @@ local statInfo = LoadKeyValues('scripts/vscripts/server/auth.kv')
 
 local _AuthCode = statInfo._auth --The auth code for game and http server
 
-
 local table_PlayerID = {}
 local table_SteamID64 = {}
 local table_player_key = {}
@@ -17,6 +16,12 @@ local XP_has
 
 local EnnDisEnabled = 0
 
+XP_WIN = 24
+-- imba_standard win = +48
+-- imba_standard lose = +24
+-- else win = +24
+-- else lose = +12
+-- abandon = 0
 
 --Level table for IMBA XP
 local table_rankXP = {0,100,200,300,400,500,700,900,1100,1300,1500,1800,2100,2400,2700,3000,3400,3800,4200,4600,5000}
@@ -295,7 +300,7 @@ function Server_SendAndGetInfoForAll_function(nPlayerID)
 	else
 
 		table_SteamID64[nPlayerID] = tostring(PlayerResource:GetSteamID(nPlayerID))
-		table_XP[nPlayerID] = tostring(24) --How many XP will player get in this game
+		table_XP[nPlayerID] = tostring(XP_WIN) --How many XP will player get in this game
 
 		local jsondata={}
 		local jsontable={}
@@ -363,7 +368,7 @@ end
 function Server_WaitToEnableXpGain()
 	Serer_CheckForAFKPlayer()
 	Timers:CreateTimer({
-	endTime = 600, -- Plyaer can gain XP from this game after 10 mins later the creep spwans
+	endTime = 10, -- Plyaer can gain XP from this game after 10 mins later the creep spwans
 	callback = function()
 		EnnDisEnabled = 1
 		--print("Enable Xp gain system....")
@@ -414,30 +419,21 @@ function Server_CalculateXPForWinnerAndAll(winning_team)
 				jsontable.SteamID64 = table_SteamID64[nPlayerID]
 				jsontable.XP = table_XP[nPlayerID]
 				jsontable.WIN = tostring(0)
-				
-				-- WIN
-				-- imba_standard = 2.0
-				-- storegga = 4.2
-				-- other maps = 1.0
-				-- LOSE
-				-- imba_standard = 0.0
-				-- storegga = 2.1
-				-- other maps = 0
-				-- Abandon = -24 / 2
+
 				print("SERVER XP: Testing XP earned...")
 				if PlayerResource:GetTeam(nPlayerID) == Winner and PlayerResource:GetConnectionState(nPlayerID) == 2 then
 					local multiplier = 1.0
 					if GetMapName() == "imba_standard" then multiplier = 2.0 end
 					if STOREGGA_ACTIVE then multiplier = 4.2 end
 					if PlayerResource:GetConnectionState(nPlayerID) ~= 2 then
-						jsontable.XP = tostring(0 - table_XP[nPlayerID] / 2)
+						jsontable.XP = tostring(0)
 						CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {
 							XP = tonumber(XP_has_this_level[nPlayerID]),
 							MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]),
 							Lvl = tonumber(XP_level[nPlayerID]),
 							ID = nPlayerID,
 							title = XP_level_title_player[nPlayerID],
-							XP_change = tonumber(0 - table_XP[nPlayerID] / 2),
+							XP_change = tonumber(0),
 							title_color = Server_GetTitleColor(XP_level_title_player[nPlayerID], true)
 						})
 					else
@@ -454,17 +450,6 @@ function Server_CalculateXPForWinnerAndAll(winning_team)
 					end
 				else
 					if PlayerResource:GetConnectionState(nPlayerID) ~= 2 then
-						jsontable.XP = tostring(0 - table_XP[nPlayerID] / 2)
-						CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {
-							XP = tonumber(XP_has_this_level[nPlayerID]),
-							MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]),
-							Lvl = tonumber(XP_level[nPlayerID]),
-							ID = nPlayerID,
-							title = XP_level_title_player[nPlayerID],
-							XP_change = tonumber(0 - table_XP[nPlayerID] / 2),
-							title_color = Server_GetTitleColor(XP_level_title_player[nPlayerID], true)
-						})
-					else
 						jsontable.XP = tostring(0)
 						CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {
 							XP = tonumber(XP_has_this_level[nPlayerID]),
@@ -473,6 +458,17 @@ function Server_CalculateXPForWinnerAndAll(winning_team)
 							ID = nPlayerID,
 							title = XP_level_title_player[nPlayerID],
 							XP_change = tonumber(0),
+							title_color = Server_GetTitleColor(XP_level_title_player[nPlayerID], true)
+						})
+					else
+						jsontable.XP = tostring(table_XP[nPlayerID] / 2)
+						CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {
+							XP = tonumber(XP_has_this_level[nPlayerID]),
+							MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]),
+							Lvl = tonumber(XP_level[nPlayerID]),
+							ID = nPlayerID,
+							title = XP_level_title_player[nPlayerID],
+							XP_change = tonumber(table_XP[nPlayerID] / 2),
 							title_color = Server_GetTitleColor(XP_level_title_player[nPlayerID], true)
 						})
 					end

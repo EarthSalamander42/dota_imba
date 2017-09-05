@@ -176,7 +176,7 @@ local i = 10
 			if hero.is_dev and not hero.has_graph then
 				hero.has_graph = true
 				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph", {})
-				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
+--				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
 			end
 		end
 
@@ -404,6 +404,14 @@ function GameMode:OnPlayerReconnect(keys)
 
 	local player_id = keys.PlayerID
 	Server_EnableToGainXPForPlyaer(player_id)
+
+	for _, hero in pairs(HeroList:GetAllHeroes()) do
+		if hero.is_dev and not hero.has_graph then
+			hero.has_graph = true
+			CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph", {})
+--			CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
+		end
+	end
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Player reconnect logic
@@ -893,18 +901,15 @@ function GameMode:OnEntityKilled( keys )
 		end
 
 		if killed_unit:GetUnitName() == "npc_dota_hero_meepo" then
-			if killed_unit:GetCloneSource():HasModifier("modifier_item_imba_aegis") then
-				print("Meepo is dead")
+			if killed_unit:GetCloneSource() and killed_unit:GetCloneSource():HasModifier("modifier_item_imba_aegis") then
 				local meepo_table = Entities:FindAllByName("npc_dota_hero_meepo")
 				if meepo_table then
 					for i = 1, #meepo_table do
 						if meepo_table[i]:IsClone() then
-							print("Clone")
 							meepo_table[i]:SetRespawnsDisabled(true)
 							meepo_table[i]:GetCloneSource():SetTimeUntilRespawn(killed_unit:GetCloneSource():FindModifierByName("modifier_item_imba_aegis").reincarnate_time)
 							meepo_table[i]:GetCloneSource():RemoveModifierByName("modifier_item_imba_aegis")
 						else
-							print("Real")
 							meepo_table[i]:SetTimeUntilRespawn(killed_unit:FindModifierByName("modifier_item_imba_aegis").reincarnate_time)
 							return
 						end
@@ -935,16 +940,7 @@ function GameMode:OnEntityKilled( keys )
 
 			-- Set up the respawn timer, include meepo fix
 			if killed_unit:GetUnitName() == "npc_dota_hero_meepo" then
-				local meepo_table = Entities:FindAllByName("npc_dota_hero_meepo")
-				if meepo_table then
-					for i = 1, #meepo_table do
-						if meepo_table[i]:IsClone() then
-							meepo_table[i]:SetRespawnsDisabled(true)
-						else
-							meepo_table[i]:SetTimeUntilRespawn(respawn_time)
-						end
-					end
-				end
+				KillMeepos()
 			else
 				killed_unit:SetTimeUntilRespawn(respawn_time)
 			end

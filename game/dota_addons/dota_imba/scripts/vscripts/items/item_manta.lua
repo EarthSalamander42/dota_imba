@@ -1,4 +1,5 @@
 LinkLuaModifier( "modifier_item_manta_passive", "items/item_manta.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_manta_invulnerable", "items/item_manta.lua", LUA_MODIFIER_MOTION_NONE )
 
 if item_imba_manta == nil then item_imba_manta = class({}) end
 

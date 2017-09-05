@@ -45,6 +45,7 @@ function modifier_imba_mana_break_passive:OnCreated()
   if IsServer() then
 	self.ability = self:GetAbility()
 	self.parent = self:GetParent()
+	if self.parent:IsIllusion() then return end
 	self.particle_blast = "particles/hero/antimage/mana_break_blast.vpcf"
 	self.sound_blast = "tutorial_smallfence_smash"
 	self.particle_aoe_mana_burn = "particles/hero/antimage/mana_break_aoe_burn.vpcf"
@@ -725,7 +726,11 @@ function modifier_imba_spell_shield_buff_passive:DeclareFunctions()
 end
 
 function modifier_imba_spell_shield_buff_passive:OnCreated()
-if self:GetCaster():IsIllusion() then return end
+--	if self:GetCaster():IsIllusion() then
+--		print("Removing buff from an illusion..") -- CRASH WITH NEW MANTA LUA
+--		self:Destroy()
+--		return
+--	end
 self.magic_resistance = self:GetAbility():GetSpecialValueFor("magic_resistance")
 
   if IsServer() then
@@ -1050,6 +1055,7 @@ function modifier_imba_mana_void_delay_counter:IsPurgable() return false end
 
 function modifier_imba_mana_void_delay_counter:OnCreated()
 	self.caster = self:GetCaster()
+	if self.caster:IsIllusion() then return end
 	self.parent = self:GetParent()
 	self.mana_point_worth = self.caster:FindTalentValue("special_bonus_imba_antimage_6", "mana_point_worth")
 	self.particle_bubble = "particles/hero/antimage/mana_void_delay_bubble.vpcf"

@@ -27463,7 +27463,8 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"max_charge_count"			"3"				
+				"max_charge_count"			"3"
+				"LinkedSpecialBonus"		"special_bonus_imba_sniper_5"
 			}
 
 			"08"
@@ -27542,7 +27543,8 @@
 			"07"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"perfectshot_critical_dmg_pct"	"125 150 175 200 200 200 200"				
+				"perfectshot_critical_dmg_pct"	"125 150 175 200 200 200 200"
+				"LinkedSpecialBonus"			"special_bonus_imba_sniper_6"
 			}
 
 			"01"
@@ -27571,7 +27573,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"16 14 12 11 10 9"
+		"AbilityCooldown"					"21 18 15 12 12 12 12"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -27586,7 +27588,8 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"aim_bonus_range"			"1000"				
+				"aim_bonus_range"			"1000"
+				"LinkedSpecialBonus"		"special_bonus_imba_sniper_7"
 			}
 		}
 	}
@@ -27686,12 +27689,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"cast_range"				"2000 2500 3000 3300 3600 3900"
 			}
-
-			"09"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"projectiles"				"1"
-			}
 		}
 	}
 
@@ -27718,7 +27715,7 @@
 			"01"
 			{
 				"var_type"                  "FIELD_FLOAT"
-				"value"	                    "2"
+				"value"	                    "1800"
 			}
 		}
 	}
@@ -27748,69 +27745,7 @@
 		}
 	}
 
-	"special_bonus_imba_sniper_3" // Enemy units under Shrapnel's lose armor and can miss attacks.
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"	"imba_sniper_shrapnel"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"armor_reduction"           "5"
-			}
-
-			"02"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"miss_chance_pct"           "30"
-			}
-		}
-	}
-
-	"special_bonus_imba_sniper_4" // Double max Shrapnel charges. Each recharge grants twice as much
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"	"imba_sniper_shrapnel"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"                  "FIELD_FLOAT"
-				"max_charge_mult"	        "2"
-			}
-
-			"02"
-			{
-				"var_type"                  "FIELD_FLOAT"
-				"charges_per_recharge"      "2"
-			}
-		}
-	}
-
-	"special_bonus_imba_sniper_5" // Normal headshots have a chance to become Perfectshots
+	"special_bonus_imba_sniper_3" // Headshot slow/Perfectshot stun duration increase
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -27830,49 +27765,12 @@
 			"01"
 			{
 				"var_type"                  "FIELD_FLOAT"
-				"value"	                    "30"
+				"value"	                    "50"
 			}
 		}
 	}
 
-	"special_bonus_imba_sniper_6" // Assassination's cast point increases. When executed, it launches three projectiles towards the target. 
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"	"imba_sniper_assassinate"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"                  "FIELD_FLOAT"
-				"cast_point_increase"       "2"
-			}
-
-			"02"
-			{
-				"var_type"                  "FIELD_FLOAT"
-				"total_projectiles"	        "3"
-			}
-
-			"03"
-			{
-				"var_type"                  "FIELD_FLOAT"
-				"refire_delay"		        "0.2"
-			}
-		}
-	}
-
-	"special_bonus_imba_sniper_7" // Take Aim's Aimed Assaults cause the target to bleed and lose vision.
+	"special_bonus_imba_sniper_4" // Take Aim cooldown decrease
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -27891,26 +27789,83 @@
 		{
 			"01"
 			{
-				"var_type"                  "FIELD_INTEGER"
-				"damage_per_second"         "80"
+				"var_type"                  "FIELD_FLOAT"
+				"value"	                    "2"
 			}
+		}
+	}
 
-			"02"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"vision_loss"	         	"500"
-			}
+	"special_bonus_imba_sniper_5" // Max Shrapnel charges increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-			"03"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"duration"			        "5"
-			}
+		"LinkedAbility"
+		{
+			"01"	"imba_sniper_shrapnel"
+		}
 
-			"04"
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
 			{
 				"var_type"                  "FIELD_FLOAT"
-				"damage_interval"	        "0.5"
+				"value"	                    "4"
+			}
+		}
+	}
+
+	"special_bonus_imba_sniper_6" // Perfectshot critical damage increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_sniper_headshot"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"value"	                    "80"
+			}
+		}
+	}
+
+	"special_bonus_imba_sniper_7" // Take Aim Aimed Assault attack range
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_sniper_take_aim"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"value"	                    "1000"
 			}
 		}
 	}
@@ -33250,13 +33205,13 @@
 			"10"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"trembling_steps_damage"	"30 60 90 120 140 160 180"
+				"trembling_steps_damage"	"60 60 60 60 90 120 150"
 			}
 
 			"11"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"trembling_steps_cooldown"	"0.4"
+				"trembling_steps_cooldown"	"0.5 0.45 0.4 0.36 0.32 0.28 0.25"
 			}
 
 			"12"
@@ -33268,7 +33223,8 @@
 			"13"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"bonus_damage_pct"			"50"				
+				"bonus_damage_pct"			"50"
+				"LinkedSpecialBonus"        "special_bonus_imba_ursa_1"
 			}
 
 			"14"
@@ -33335,7 +33291,8 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attacks_num"			"3 4 5 6 7 8 9"				
+				"attacks_num"			"3 4 5 6 7 8 9"
+				"LinkedSpecialBonus"    "special_bonus_imba_ursa_4"
 			}
 
 			"03"
@@ -33353,7 +33310,8 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"disarm_duration"		"2.0 2.5 3 3.5 3.75 4.0 4.25"				
+				"disarm_duration"		"2.0 2.5 3 3.5 3.75 4.0 4.25"
+				"LinkedSpecialBonus"    "special_bonus_imba_ursa_5"
 			}
 		}
 	}
@@ -33393,7 +33351,8 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_stack"		"15 20 25 30 33 36 40"				
+				"damage_per_stack"		"15 20 25 30 33 36 40"
+				"LinkedSpecialBonus"    "special_bonus_imba_ursa_3"
 			}
 
 			"02"
@@ -33411,7 +33370,8 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"deep_stack_multiplier"	"150"				
+				"deep_stack_multiplier"	"150"
+				"LinkedSpecialBonus"    "special_bonus_imba_ursa_2"
 			}
 
 			"05"
@@ -33480,7 +33440,8 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_radius_skills"	"100 120 140 160 180 200"				
+				"bonus_radius_skills"	"100 120 140 160 180 200"
+				"LinkedSpecialBonus"    "special_bonus_imba_ursa_6"
 			}
 
 			"07"
@@ -33492,8 +33453,27 @@
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"reduce_cd_amount"		"0.5"				
-			}			
+				"reduce_cd_amount"		"0.5"
+				"LinkedSpecialBonus"    "special_bonus_imba_ursa_8"
+			}
+
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_damage_threshold"	"1000"
+			}
+
+			"10"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"scepter_damage_reset"		"3"
+			}
+
+			"11"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"scepter_enrage_cooldown"	"20"
+			}
 		}
 	}
 
@@ -33544,50 +33524,13 @@
 	//=================================================================================================================
 	// Ursa Talents
 	//=================================================================================================================
-	"special_bonus_imba_ursa_1"	// Enrage is activated automatically after taking enough damage. Resets after a few seconds
+	"special_bonus_imba_ursa_1"	// Earthshock Point Blank bonus damage
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_ursa_enrage"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"09"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "damage_threshold"  "750"
-            }
-
-            "10"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "damage_reset"      "3"
-            }
-
-            "11"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "enrage_cooldown"   "20"
-            }
-		}
-	}
-
-	"special_bonus_imba_ursa_2"	// Every x points in Strength improves the cooldown of Earthshock's Trembling Steps cooldown.
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"special_bonus_unique_centaur_2"
-		"AbilityType"						"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 		"LinkedAbility"
 		{
@@ -33600,25 +33543,139 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"cooldown_improvement"	"0.01"
-			}
-
-			"02"
-			{
 				"var_type"				"FIELD_INTEGER"
-				"strength_per_cd"		"10"
-			}
-
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"threshold"				"0.2"
+				"value"					"50"
 			}
 		}
 	}
 
-	"special_bonus_imba_ursa_3"	// Territorial Hunter grants Tenacity to Ursa in its AoE, and has its cooldown refreshed if Ursa kills an enemy hero in it
+	"special_bonus_imba_ursa_2"	// Fury Swipes Deep Wound stack damage
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"							"special_bonus_unique_centaur_2"
+		"AbilityType"						"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_ursa_fury_swipes"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"50"
+			}
+		}
+	}
+
+	"special_bonus_imba_ursa_3"	// Fury Swipes damage bonus per stack
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"							"special_bonus_unique_centaur_2"
+		"AbilityType"						"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_ursa_fury_swipes"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"10"
+			}
+		}
+	}
+
+	"special_bonus_imba_ursa_4"	// Additional Overpower attacks
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"							"special_bonus_unique_centaur_2"
+		"AbilityType"						"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_ursa_overpower"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"3"
+			}
+		}
+	}
+
+	"special_bonus_imba_ursa_5"	// Overpower's Disarm duration increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"							"special_bonus_unique_centaur_2"
+		"AbilityType"						"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_ursa_overpower"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_ursa_6"	// Enrage Earthshock/Overpower radius increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"							"special_bonus_unique_centaur_2"
+		"AbilityType"						"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_ursa_earthshock"
+			"02" 	"imba_ursa_overpower"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"100"
+			}
+		}
+	}	
+
+	"special_bonus_imba_ursa_7"	// Territorial Hunter cooldown reduction
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -33638,99 +33695,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"tenacity_bonus"		"25"
+				"value"					"120"
 			}
 		}
 	}
 
-	"special_bonus_imba_ursa_4"	// Fury Swipes' Devastating Blow reduces the armor of the target. Stackable and refreshable.
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"special_bonus_unique_centaur_2"
-		"AbilityType"						"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_ursa_fury_swipes"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"armor_reduction"		"2"
-			}
-
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"3"
-			}
-		}
-	}
-
-	"special_bonus_imba_ursa_5"	// If the target has more than the threshold, Devastating Blow deals a bonus of the target's maximum health.
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"special_bonus_unique_centaur_2"
-		"AbilityType"						"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_ursa_fury_swipes"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"maximum_health_dmg"	"3.5"
-			}
-
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"health_threshold_pct"	"50"
-			}
-		}
-	}
-
-	"special_bonus_imba_ursa_6"	// Overpower also roots targets in addition to disarming them.
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"special_bonus_unique_centaur_2"
-		"AbilityType"						"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{			
-			"01" 	"imba_ursa_overpower"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"1"
-			}
-		}
-	}	
-
-	"special_bonus_imba_ursa_7"	// Enrage adds a portion of your current health as damage.
+	"special_bonus_imba_ursa_8"	// Skill cooldowns tick faster when Enrage is active
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -33749,36 +33719,11 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"value"					"8"
-			}
-		}
-	}
-
-	"special_bonus_imba_ursa_8"	// Overpower becomes a passive, granting Ursa free attacks for 4 seconds whenever he starts an attack and Overpower is off cooldown.
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"special_bonus_unique_centaur_2"
-		"AbilityType"						"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_ursa_overpower"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"4"
+				"value"					"0.5"
 			}
 		}
-	}
+	}	
 
 	//=================================================================================================================
 	// Tinker's Rearm

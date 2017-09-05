@@ -834,6 +834,7 @@ modifier_imba_coup_de_grace = class({})
 function modifier_imba_coup_de_grace:OnCreated()	
 	-- Ability properties
 	self.caster = self:GetCaster()
+	if self.caster:IsIllusion() then return end
 	self.ability = self:GetAbility()
 	self.parent = self:GetParent()
 	self.ps_coup_modifier = "modifier_imba_phantom_strike_coup_de_grace"			
