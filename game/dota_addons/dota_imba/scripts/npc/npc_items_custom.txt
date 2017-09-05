@@ -11629,14 +11629,42 @@
 	}
 
 	//=================================================================================================================
+	// Recipe: Manta
+	//=================================================================================================================
+	"item_recipe_imba_manta"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2255"
+		"BaseClass"						"item_datadriven"
+		"Model"							"models/props_gameplay/recipe.vmdl"
+		"FightRecapLevel"				"1"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"900"	
+		"ItemShopTags"					""
+
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_manta"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_yasha;item_ultimate_orb"
+		}
+	}
+
+	//=================================================================================================================
 	// Manta Style
 	//=================================================================================================================
 	"item_imba_manta"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"item_datadriven"
-		"ID"							"1147"  //Valve's version of this item uses the ID "147".
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"items/item_manta"
+		"ID"							"2256"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"Model"							"models/props_gameplay/red_box.vmdl" 
 		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
@@ -11644,13 +11672,13 @@
 
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"50.0"  //This is the cooldown when used by ranged units.
+		"AbilityCooldown"				"45.0"
 		"AbilityCastPoint"				"0.0"
-		"AbilityManaCost"				"165"
+		"AbilityManaCost"				"125"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"4950"
+		"ItemCost"						"4800"
 		"ItemShopTags"					"agi;str;int;attack_speed;move_speed;hard_to_tag"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"manta style"
@@ -11760,79 +11788,6 @@
 				"tooltip_ranged_cooldown_increase"	"15"
 			}
 		}
-		
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"					"items/item_manta.lua"
-				"Function"						"item_manta_datadriven_on_spell_start"
-				"CooldownMelee"					"%cooldown_melee"
-				"InvulnerabilityDuration"		"%invulnerability_duration"
-				"VisionRadius"					"%vision_radius"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_item_manta_datadriven"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"						"%bonus_strength"
-					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"							"%bonus_agility"
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"						"%bonus_intelligence"
-					
-					//Attack speed from Yasha-derived items affect your illusions.
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT_SECONDARY"		"%bonus_attack_speed"
-					
-					//Movement speed from Yasha-derived items does not stack with itself but does stack with other percentage-based movement speed bonuses.
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE_UNIQUE"			"%bonus_movement_speed_percentage"
-				}
-			}
-			
-			"modifier_item_manta_datadriven_spawning_animation"
-			{
-				"Duration"			".1"
-				"Passive"			"0"
-				"IsHidden"			"1"
-				
-				"OverrideAnimation"     "ACT_DOTA_SPAWN"
-			}
-
-			"modifier_item_manta_datadriven_invulnerability"
-			{
-				"Duration"	"%invulnerability_duration"
-				"Passive"	"0"
-				"IsHidden"	"1"
-
-				"States"
-				{
-					"MODIFIER_STATE_OUT_OF_GAME"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_manta.lua"
-						"Function"			"modifier_item_manta_datadriven_invulnerability_on_destroy"
-						"IllusionOutgoingDamageMelee"	"%illusion_damage_percent_outgoing_melee"
-						"IllusionIncomingDamageMelee"	"%illusion_damage_percent_incoming_melee"
-						"IllusionOutgoingDamageRanged"	"%illusion_damage_percent_outgoing_ranged"
-						"IllusionIncomingDamageRanged"	"%illusion_damage_percent_incoming_ranged"
-						"IllusionDuration"				"%illusion_duration"
-					}
-				}				
-			}
-		}
 	}
-	//next free ID: 2255
+	//next free ID: 2257
 }
