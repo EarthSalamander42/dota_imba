@@ -162,7 +162,7 @@ function IllusionManager:CreateIllusion(tEntity,tSkill,vSpawnLocation,tIllusionB
 		return tIllusion -- this will returns execution with a 'completed' unit, should be ready to receive commands now
 	end																																				 -- xxxxxxxxxxxxxxxxxxxxxxxxxx
 	local illusion = CreateUnitByNameAsync(illusion_name, vSpawnLocation, true, tEntity, nil, tEntity:GetTeamNumber(),illucallback) -- Use an async operation to allow the game to perform other ops while we're waiting for this
-	illusion.IsCustomIllusion = true
+--	illusion.IsCustomIllusion = true
 	-- We are still requesting illusions but no available ones exist! do the really shitty createbyname func to lag the fuck out of everyone for no reason!
 end	
 
@@ -199,12 +199,12 @@ function IllusionManager:ResetIllusion(tEntity,tIllusion)  -- Wipe AND re-add sk
 	--start at baseline, we have no ability points... add and skill up requisite skills.
 	for ability_slot = 0, 15 do
 		local ability = tEntity:GetAbilityByIndex(ability_slot)
-		if ability ~= nil then 
+		if ability then 
 			local abilityLevel = ability:GetLevel()
 			local abilityName = ability:GetAbilityName()
 			local illusionAbility = tIllusion:FindAbilityByName(abilityName)
 --			print("WTFFF")
-			if illusionAbility ~= nil then 
+			if illusionAbility then 
 				illusionAbility:SetLevel(abilityLevel) 
 			else
 				local newability = tIllusion:AddAbility(abilityName)
@@ -219,11 +219,11 @@ function IllusionManager:ResetIllusion(tEntity,tIllusion)  -- Wipe AND re-add sk
 	for i=1,leveldifference do
 		tIllusion:HeroLevelUp(false)
 	end	
-	tIllusion:SetAbilityPoints(0)	
+	tIllusion:SetAbilityPoints(0)
 	--Recreate the caster's items for the illusion.
 	for item_slot = 0, 5 do
 		local individual_item = tEntity:GetItemInSlot(item_slot)
-		if individual_item ~= nil then
+		if individual_item then
 			local illusion_duplicate_item = CreateItem(individual_item:GetName(), tIllusion, tIllusion)
 			local illusion_individual_item = tIllusion:AddItem(illusion_duplicate_item)
 			if individual_item.activestate then
@@ -237,7 +237,7 @@ function IllusionManager:WipeIllusion(tIllusion)  -- Wipe illusion of any notabl
 	if not IsServer() then return end	
 	for ability_slot = 0, 15 do
 		local wipe_ability_index = tIllusion:GetAbilityByIndex(ability_slot)
-		if wipe_ability_index ~= nil then
+		if wipe_ability_index then
 			local abilityName = wipe_ability_index:GetAbilityName()
 			tIllusion:RemoveAbility(abilityName)
 		end
@@ -245,7 +245,7 @@ function IllusionManager:WipeIllusion(tIllusion)  -- Wipe illusion of any notabl
 	if tIllusion:IsCreep() then return end	
 	for item_slot = 0, 5 do	
 		local wipe_item_index = tIllusion:GetItemInSlot(item_slot)
-		if wipe_item_index ~= nil then
+		if wipe_item_index then
 			tIllusion:RemoveItem(wipe_item_index)
 		end		
 	end
@@ -253,7 +253,7 @@ end
 
 function IllusionManager:SetModifiers(tEntity,tIllusionBase,tIllusion,tSkill,tSpecialKeys) -- damage percents, durations... etc
 	local duration,damagein,damageout
-	if tSkill ~= nil and not type(tSkill) == 'string' then
+	if tSkill and not type(tSkill) == 'string' then
 		duration,damagein,damageout = getkvValues(tSkill,"duration","damage_in","damage_out")
 	elseif tSkill == 'dummy' then
 		duration,damagein,damageout = FrameTime(),1000,-100

@@ -145,22 +145,22 @@ local i = 10
 --		end)
 
 		-- Eanble bots and fill empty slots
-		if IsInToolsMode() and IsServer() and 10 - PlayerResource:GetPlayerCount() > 0 then
-			local max_players = 10
-			if GetMapName() == "imba_10v10" or GetMapName() == "imba_custom_10v10" then
-				max_players = 20
-			end
-			print("Adding bots in empty slots")
-			for i = 1, 4 do
-				Tutorial:AddBot(normal_heroes[RandomInt(1, #normal_heroes)], "", "", true)
-			end
-			for i = 1, 5 do
-				Tutorial:AddBot(normal_heroes[RandomInt(1, #normal_heroes)], "", "", false)
-			end
-			GameRules:GetGameModeEntity():SetBotThinkingEnabled(true)
-			SendToServerConsole("dota_bot_set_difficulty 4")
-			SendToServerConsole("dota_bot_populate")
-		end
+--		if IsInToolsMode() and IsServer() and 10 - PlayerResource:GetPlayerCount() > 0 then
+--			local max_players = 10
+--			if GetMapName() == "imba_10v10" or GetMapName() == "imba_custom_10v10" then
+--				max_players = 20
+--			end
+--			print("Adding bots in empty slots")
+--			for i = 1, 4 do
+--				Tutorial:AddBot(normal_heroes[RandomInt(1, #normal_heroes)], "", "", true)
+--			end
+--			for i = 1, 5 do
+--				Tutorial:AddBot(normal_heroes[RandomInt(1, #normal_heroes)], "", "", false)
+--			end
+--			GameRules:GetGameModeEntity():SetBotThinkingEnabled(true)
+--			SendToServerConsole("dota_bot_set_difficulty 4")
+--			SendToServerConsole("dota_bot_populate")
+--		end
 
 		-- Shows various info to devs in pub-game to find lag issues
 		ImbaNetGraph(10.0)

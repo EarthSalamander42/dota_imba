@@ -7,19 +7,6 @@ LinkLuaModifier("modifier_reality_rift_armor_reduction_debuff", "hero/hero_chaos
 
 imba_chaos_knight_reality_rift = class({})
 
-function imba_chaos_knight_reality_rift:CastFilterResultTarget( hTarget )
-	if IsServer() then
-	local nResult = UnitFilter( hTarget, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
-		return nResult
-	end
-
-	return UF_SUCCESS
-end
-
-function imba_chaos_knight_reality_rift:GetCastRange( vLocation, hTarget )
-	return self.BaseClass.GetCastRange( self, vLocation, hTarget )
-end
-
 function imba_chaos_knight_reality_rift:OnAbilityPhaseStart()
 	if IsServer() then
 		local caster = self:GetCaster()
@@ -178,7 +165,6 @@ function imba_chaos_knight_phantasm:OnSpellStart()
 
 		local chance = RandomInt(1, 100)
 		local casterOrigin = caster:GetAbsOrigin()
-		local casterAngles = caster:GetAngles()
 
 		-- Stop any actions of the caster otherwise its obvious which unit is real
 		local phantasm_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_chaos_knight/chaos_knight_phantasm.vpcf", PATTACH_ABSORIGIN, caster)
@@ -230,7 +216,6 @@ function imba_chaos_knight_phantasm:OnSpellStart()
 			for i=1, images_count do
 				local origin = casterOrigin + table.remove( vRandomSpawnPos, 1 )
 				local illusion = IllusionManager:CreateIllusion(caster, ability, origin, caster, {damagein=incomingDamage, damageout=outcomingDamage, unique="phantasm_"..i, duration=duration})
---				illusion:SetAngles(casterAngles.x, casterAngles.y, casterAngles.z)
 				table.insert(caster.phantasm_illusions, illusion)
 			end
 			ParticleManager:DestroyParticle(phantasm_particle, false)
@@ -255,9 +240,8 @@ function modifier_chaos_knight_phantasm_cast:CheckState()
 		[MODIFIER_STATE_INVULNERABLE] = true,
 		[MODIFIER_STATE_NO_HEALTH_BAR] = true,
 		[MODIFIER_STATE_STUNNED] = true,
+		[MODIFIER_STATE_OUT_OF_GAME] = true,
 	}
 	
 	return state
 end
-
-
