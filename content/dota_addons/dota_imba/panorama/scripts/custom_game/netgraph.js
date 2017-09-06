@@ -4,23 +4,19 @@ var player_name = 0
 
 function ShowNetgraph() /*Show NetGraph for devs only*/
 {
-	$("#GlobalStats").style.visibility = "visible";
 	$("#Buttons").style.visibility = "visible";
 }
 
 var toggle_graph = false
 function ToggleNetGraph()
 {
-	$.Msg("Toggling Unique Stats...")
 	if (toggle_graph == false)
 	{
-		$.Msg("True")
 		toggle_graph = true
 		$("#GlobalStats").style.visibility = "visible";
 	}
 	else
 	{
-		$.Msg("False")
 		toggle_graph = false
 		$("#GlobalStats").style.visibility = "collapse";
 	}
@@ -29,16 +25,13 @@ function ToggleNetGraph()
 var toggle_stats = false
 function ToggleUniqueStats()
 {
-	$.Msg("Toggling Unique Stats...")
 	if (toggle_stats == false)
 	{
-		$.Msg("True")
 		toggle_stats = true
 		$("#UniqueStats").style.visibility = "visible";
 	}
 	else
 	{
-		$.Msg("False")
 		toggle_stats = false
 		$("#UniqueStats").style.visibility = "collapse";
 	}
