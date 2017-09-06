@@ -1144,9 +1144,11 @@ function GameMode:OnHeroInGame(hero)
 local time_elapsed = 0
 
 	Timers:CreateTimer(function()
-		if hero:GetUnitName() == "npc_dota_hero_meepo" then
+		if not hero:IsNull() then
+			if hero:GetUnitName() == "npc_dota_hero_meepo" then
 			if not hero:IsClone() then
 				TrackMeepos()
+			end
 			end
 		end
 		return 0.5
