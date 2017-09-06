@@ -199,7 +199,7 @@ function IllusionManager:ResetIllusion(tEntity,tIllusion)  -- Wipe AND re-add sk
 	--start at baseline, we have no ability points... add and skill up requisite skills.
 	for ability_slot = 0, 15 do
 		local ability = tEntity:GetAbilityByIndex(ability_slot)
-		if ability then 
+		if ability then
 			local abilityLevel = ability:GetLevel()
 			local abilityName = ability:GetAbilityName()
 			local illusionAbility = tIllusion:FindAbilityByName(abilityName)
