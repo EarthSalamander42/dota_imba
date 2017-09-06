@@ -1635,6 +1635,8 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 		omnislash_modifier_handler.original_caster = self.caster
 		end
 		
+		self:SetActivated(false)
+		
 		FindClearSpaceForUnit(omnislash_image, self.target:GetAbsOrigin() + RandomVector(128), false)
 		
 		omnislash_image:EmitSound("Hero_Juggernaut.OmniSlash")
