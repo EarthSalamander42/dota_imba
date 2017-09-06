@@ -25,7 +25,11 @@ end
 
 function imba_juggernaut_blade_fury:OnSpellStart()
 	local caster = self:GetCaster()
-	caster:Purge(false, true, false, false, false)	
+	caster:Purge(false, true, false, false, false)
+	if caster:HasModifier("modifier_imba_juggernaut_blade_fury") then
+		local buff = caster:FindModifierByName("modifier_imba_juggernaut_blade_fury")
+		buff:Destroy()
+	end
 	caster:AddNewModifier(caster, self, "modifier_imba_juggernaut_blade_fury", {duration = self:GetSpecialValueFor("duration")})
 
 	-- Play cast lines
