@@ -1794,7 +1794,7 @@ function modifier_imba_omni_slash_caster:OnCreated()
 		end
 	
 		self.hero_agility = self.original_caster:GetAgility()
-		-- What does this actually do? Is it necessary?
+		-- What does this actually do? Is it necessary? ~IamInnocentX3
 		-- self.ability:SetRefCountsModifiers(false)
 		self:StartIntervalThink(self.ability:GetSpecialValueFor("bounce_delay"))
 		end
