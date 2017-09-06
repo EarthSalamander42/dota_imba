@@ -600,32 +600,37 @@ LinkLuaModifier("modifier_imba_juggernaut_healing_ward_aura", "hero/hero_juggern
 modifier_imba_juggernaut_healing_ward_aura = modifier_imba_juggernaut_healing_ward_aura or class({})
 
 function modifier_imba_juggernaut_healing_ward_aura:OnCreated()
+	if IsServer() then	
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
 	self.attack_speed = 0
-	if IsTotem(self.caster) then
-		self.healing = self.ability:GetTalentSpecialValueFor("heal_per_sec_totem")
-		if self.caster:GetOwner():HasTalent("special_bonus_imba_juggernaut_3") then
-		self.attack_speed = self.caster:GetOwner():FindTalentValue("special_bonus_imba_juggernaut_3","totem_value")
-		end
-	else
-		self.healing = self.ability:GetTalentSpecialValueFor("heal_per_sec")
-		if self.caster:GetOwner():HasTalent("special_bonus_imba_juggernaut_3") then
-		self.attack_speed = self.caster:GetOwner():FindTalentValue("special_bonus_imba_juggernaut_3")
+	
+		if IsTotem(self.caster) then
+			self.healing = self.ability:GetTalentSpecialValueFor("heal_per_sec_totem")
+			if self.caster:GetOwner():HasTalent("special_bonus_imba_juggernaut_3") then
+			self.attack_speed = self.caster:GetOwner():FindTalentValue("special_bonus_imba_juggernaut_3","totem_value")
+			end
+		else
+			self.healing = self.ability:GetTalentSpecialValueFor("heal_per_sec")
+			if self.caster:GetOwner():HasTalent("special_bonus_imba_juggernaut_3") then
+			self.attack_speed = self.caster:GetOwner():FindTalentValue("special_bonus_imba_juggernaut_3")
+			end
 		end
 	end
 end
 
 function modifier_imba_juggernaut_healing_ward_aura:OnRefresh()
-	if IsTotem(self.caster) then
-		self.healing = self.ability:GetTalentSpecialValueFor("heal_per_sec_totem")
-		if self.caster:GetOwner():HasTalent("special_bonus_imba_juggernaut_3") then
-		self.attack_speed = self.caster:GetOwner():FindTalentValue("special_bonus_imba_juggernaut_3","totem_value")
-		end
-	else
-		self.healing = self.ability:GetTalentSpecialValueFor("heal_per_sec")
-		if self.caster:GetOwner():HasTalent("special_bonus_imba_juggernaut_3") then
-		self.attack_speed = self.caster:GetOwner():FindTalentValue("special_bonus_imba_juggernaut_3")
+	if IsServer() then
+		if IsTotem(self.caster) then
+			self.healing = self.ability:GetTalentSpecialValueFor("heal_per_sec_totem")
+			if self.caster:GetOwner():HasTalent("special_bonus_imba_juggernaut_3") then
+			self.attack_speed = self.caster:GetOwner():FindTalentValue("special_bonus_imba_juggernaut_3","totem_value")
+			end
+		else
+			self.healing = self.ability:GetTalentSpecialValueFor("heal_per_sec")
+			if self.caster:GetOwner():HasTalent("special_bonus_imba_juggernaut_3") then
+			self.attack_speed = self.caster:GetOwner():FindTalentValue("special_bonus_imba_juggernaut_3")
+			end
 		end
 	end
 end
