@@ -1635,6 +1635,8 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 		omnislash_modifier_handler.original_caster = self.caster
 		end
 		
+		self:SetActivated(false)
+		
 		FindClearSpaceForUnit(omnislash_image, self.target:GetAbsOrigin() + RandomVector(128), false)
 		
 		omnislash_image:EmitSound("Hero_Juggernaut.OmniSlash")
@@ -1794,7 +1796,8 @@ function modifier_imba_omni_slash_caster:OnCreated()
 		end
 	
 		self.hero_agility = self.original_caster:GetAgility()
-		self.ability:SetRefCountsModifiers(false)
+		-- What does this actually do? Is it necessary? ~IamInnocentX3
+		-- self.ability:SetRefCountsModifiers(false)
 		self:StartIntervalThink(self.ability:GetSpecialValueFor("bounce_delay"))
 		end
 		end)
@@ -1832,11 +1835,15 @@ function modifier_imba_omni_slash_caster:BounceAndSlaughter()
 			-- Perform the slash
 			self.slash = true
 			
+			-- If only the enemy can be physically harmed, then commit the slash
+			if (not enemy:IsAttackImmune()) then
 			self.caster:PerformAttack(enemy, true, true, true, true, true, false, false)
+			end
 
 			-- If the target is not Roshan or a hero, instantly kill it
 			if not ( enemy:IsHero() or IsRoshan(enemy) ) then
-				enemy:Kill(self.ability, self.caster)
+				-- The image gives exp and gold to the original Juggernaut
+				enemy:Kill(self.ability, self.original_caster)
 			end
 
 			-- Count down amount of slashes
