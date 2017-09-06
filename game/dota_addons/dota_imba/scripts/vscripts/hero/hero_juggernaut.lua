@@ -1835,6 +1835,7 @@ function modifier_imba_omni_slash_caster:BounceAndSlaughter()
 			-- Perform the slash
 			self.slash = true
 			
+			-- If only the enemy can be physically harmed, then commit the slash
 			if (not enemy:IsAttackImmune()) then
 			self.caster:PerformAttack(enemy, true, true, true, true, true, false, false)
 			end
