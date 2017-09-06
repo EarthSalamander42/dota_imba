@@ -1224,7 +1224,7 @@
 		"ItemResult"					"item_imba_bloodthorn"
 		"ItemRequirements"
 		{
-			"01"						"item_imba_orchid;item_lesser_crit"
+			"01"						"item_imba_orchid;item_imba_lesser_crit"
 		}
 	}
 
@@ -4374,7 +4374,7 @@
 		"ItemResult"					"item_imba_greater_crit"
 		"ItemRequirements"
 		{
-			"01"						"item_lesser_crit;item_demon_edge"
+			"01"						"item_imba_lesser_crit;item_demon_edge"
 		}
 	}
 
