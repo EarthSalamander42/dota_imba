@@ -42,7 +42,10 @@
 		</Panel>
 
 		<Panel id="Buttons">
-<!--			<Button id="ToggleUniqueStats" onmouseactivate="ToggleUniqueStats();" >
+			<Button id="ToggleNetGraph" onmouseactivate="ToggleNetGraph();" >
+				<Label id="UniqueStatsButtonText" class="Event1_Title" text="Toggle Stats"/>
+			</Button> -->
+<!--			<Button id="ToggleNetGraph" onmouseactivate="ToggleNetGraph();" >
 				<Label id="UniqueStatsButtonText" class="Event1_Title" text="Toggle Stats"/>
 			</Button> -->
 			<Button id="RemoveUnits" onmouseactivate="RemoveUnits();" >

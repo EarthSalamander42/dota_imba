@@ -1689,7 +1689,7 @@ local count = 0
 
 --	if good == true then
 		for _,v in pairs(units) do
-			if v:HasMovementCapability() then
+			if v:HasMovementCapability() and not v:GetUnitName() == "npc_dota_creep_goodguys_melee" then
 				count = count +1
 				v:RemoveSelf()
 			end
@@ -1698,7 +1698,7 @@ local count = 0
 
 --	if bad == true then
 		for _,v in pairs(units2) do
-			if v:HasMovementCapability() then
+			if v:HasMovementCapability() and not v:GetUnitName() == "npc_dota_creep_badguys_melee" then
 				count = count +1
 				v:RemoveSelf()
 			end

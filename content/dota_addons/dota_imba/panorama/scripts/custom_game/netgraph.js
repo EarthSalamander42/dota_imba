@@ -8,20 +8,38 @@ function ShowNetgraph() /*Show NetGraph for devs only*/
 	$("#Buttons").style.visibility = "visible";
 }
 
-var toggle = false
+var toggle_graph = false
+function ToggleNetGraph()
+{
+	$.Msg("Toggling Unique Stats...")
+	if (toggle_graph == false)
+	{
+		$.Msg("True")
+		toggle_graph = true
+		$("#GlobalStats").style.visibility = "visible";
+	}
+	else
+	{
+		$.Msg("False")
+		toggle_graph = false
+		$("#GlobalStats").style.visibility = "collapse";
+	}
+}
+
+var toggle_stats = false
 function ToggleUniqueStats()
 {
 	$.Msg("Toggling Unique Stats...")
-	if (toggle == false)
+	if (toggle_stats == false)
 	{
 		$.Msg("True")
-		toggle = true
+		toggle_stats = true
 		$("#UniqueStats").style.visibility = "visible";
 	}
 	else
 	{
 		$.Msg("False")
-		toggle = false
+		toggle_stats = false
 		$("#UniqueStats").style.visibility = "collapse";
 	}
 }
