@@ -1884,9 +1884,24 @@ function modifier_imba_omni_slash_caster:OnDestroy()
 			if self.caster:HasModifier("modifier_imba_juggernaut_blade_fury") then
 				self.caster:RemoveModifierByName("modifier_imba_juggernaut_blade_fury")
 			end
-			self.caster:SetTeam(5)
-			self.caster:SetOwner(nil)
 			self.caster:MakeIllusion()
+
+		for item_id=0, 5 do
+			local item_in_caster = self.caster:GetItemInSlot(item_id)
+			if item_in_caster ~= nil then
+				UTIL_Remove(item_in_caster)
+			end
+		end
+
+        -- Search for buffs and debuffs
+        local caster_modifiers = self.caster:FindAllModifiers()
+		
+		for _,modifier in pairs(caster_modifiers) do
+			if modifier then
+				UTIL_Remove(modifier)
+			end
+		end
+
 			self.caster:ForceKill(false)
 			self.caster:SetAbsOrigin(Vector(0,0,99999))
 			self:GetCaster():AddNoDraw()
