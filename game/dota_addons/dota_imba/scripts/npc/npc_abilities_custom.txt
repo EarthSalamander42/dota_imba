@@ -27813,7 +27813,7 @@
 			"01"
 			{
 				"var_type"                  "FIELD_FLOAT"
-				"value"	                    "1"
+				"value"	                    "0"
 			}
 		}
 	}
