@@ -36,7 +36,11 @@ function imba_sniper_shrapnel:GetCastRange(location, target)
     local base_range = self.BaseClass.GetCastRange(self, location, target)
 
     -- #1 Talent: Doubles Shrapnel cast range
-    base_range = math.max(base_range, base_range * caster:FindTalentValue("special_bonus_imba_sniper_1"))
+	if caster:HasTalent("special_bonus_imba_sniper_1") then
+    base_range = math.max(base_range, 25000)
+	else
+	base_range = math.max(base_range, base_range)
+	end
 
     return base_range
 end
@@ -360,7 +364,7 @@ function modifier_imba_shrapnel_charges:OnStackCountChanged(old_stack_count)
         local true_replenish_cooldown = self.charge_replenish_rate * (1 - self.caster:GetCooldownReduction() * 0.01)
 
         -- If the stacks are now 0, start the ability's cooldown
-        if stacks == 0 then
+        if stacks < 1 then
             self.ability:EndCooldown()
             self.ability:StartCooldown(self:GetRemainingTime())
         end
