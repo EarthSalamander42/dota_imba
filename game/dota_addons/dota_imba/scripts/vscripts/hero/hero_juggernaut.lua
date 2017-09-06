@@ -1571,26 +1571,25 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 	-- #7 Talent: Omnislash sends an image to commit the slashes, Juggernaut is free to continue as normal
 	-- Senbonzakura Kageyoshi
 	if self.caster:HasTalent("special_bonus_imba_juggernaut_7") then
-	
 		if self.target:TriggerSpellAbsorb(self) then
 			return nil
 		end
 		
 		-- Superclone Credits: igo95862 & Freeman322
 		local omnislash_image = CreateUnitByName(self.caster:GetUnitName(), self.caster:GetAbsOrigin(), true, self.caster, self.caster:GetOwner(), self.caster:GetTeamNumber())
-		
+
 		local caster_level = self.caster:GetLevel()
 		for i=2, caster_level do
 			omnislash_image:HeroLevelUp(false)
 		end
-		
+
 		for ability_id=0, 15 do
 			local ability = omnislash_image:GetAbilityByIndex(ability_id)
 			if ability then
-				ability:SetLevel(self.caster:GetAbilityByIndex(ability_id):GetLevel())
+				ability:SetLevel(self.caster:FindAbilityByName(ability:GetAbilityName()):GetLevel())
 			end
 		end
-		
+
 		for item_id=0, 5 do
 			local item_in_caster = self.caster:GetItemInSlot(item_id)
 			if item_in_caster ~= nil then
@@ -1602,7 +1601,7 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 				end
 			end
 		end
-		
+
         -- Search for buffs and debuffs
         local caster_modifiers = self.caster:FindAllModifiers()
 		
@@ -1614,25 +1613,25 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 				blade_fury_modifier.original_caster = self.caster
 				blade_fury_modifier.radius = caster_blade_fury_modifier.radius
 				end
-			elseif modifier.IsPurgable then
-				if modifier:IsPurgable() then
-				omnislash_image:AddNewModifier(omnislash_image, modifier:GetAbility(), modifier:GetName(), {duration = modifier:GetRemainingTime()})
+			elseif modifier then
+				if modifier:GetAbility() and not modifier:GetAbility():IsPassive() then
+					omnislash_image:AddNewModifier(modifier:GetCaster(), modifier:GetAbility(), modifier:GetName(), {duration = modifier:GetRemainingTime()})
 				end
 			end
 		end
-		
+
 		omnislash_image:SetAbilityPoints(0)
 
 		omnislash_image:SetHasInventory(false)
 		omnislash_image:SetCanSellItems(false)
 		
 		-- Add the image indicator
-		omnislash_image:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_image", {})
+		omnislash_image:AddNewModifier(omnislash_image, self, "modifier_imba_omni_slash_image", {})
 		
 		local omnislash_modifier_handler = omnislash_image:AddNewModifier(omnislash_image, self, "modifier_imba_omni_slash_caster", {})
 		
 		if omnislash_modifier_handler then
-		omnislash_modifier_handler.original_caster = self.caster
+			omnislash_modifier_handler.original_caster = self.caster
 		end
 		
 		FindClearSpaceForUnit(omnislash_image, self.target:GetAbsOrigin() + RandomVector(128), false)
@@ -1696,18 +1695,6 @@ end
 
 modifier_imba_omni_slash_image = modifier_imba_omni_slash_image or class ({})
 
-function modifier_imba_omni_slash_image:DeclareFunctions()
-	local funcs = {MODIFIER_PROPERTY_SUPER_ILLUSION,
-				   MODIFIER_PROPERTY_ILLUSION_LABEL,
-				   MODIFIER_PROPERTY_IS_ILLUSION,
-				   MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-				   MODIFIER_PROPERTY_ATTACKSPEED_BASE_OVERRIDE,
-				   MODIFIER_PROPERTY_ATTACK_POINT_CONSTANT,
-				   MODIFIER_EVENT_ON_DEATH}
-	
-	return funcs
-end
-
 function modifier_imba_omni_slash_image:CheckState()
 	local state = {[MODIFIER_STATE_UNSELECTABLE] = true,
 				   [MODIFIER_STATE_COMMAND_RESTRICTED] = true,
@@ -1719,37 +1706,6 @@ function modifier_imba_omni_slash_image:CheckState()
 					}
 				   
     return state
-end
-
-function modifier_imba_omni_slash_image:GetIsIllusion()
-	return true
-end
-
-function modifier_imba_omni_slash_image:GetModifierSuperIllusion()
-	return true
-end
-
-function modifier_imba_omni_slash_image:GetModifierIllusionLabel()
-	return true
-end
-
-function modifier_imba_omni_slash_image:OnDeath(keys)
-	if keys.unit == self:GetParent() then
-		self:GetParent():AddNoDraw()
-	end
-end
-
--- Enough for 15 slashes. Lol
-function modifier_imba_omni_slash_image:GetModifierAttackSpeedBonus_Constant()
-	return -99999999
-end
-
-function modifier_imba_omni_slash_image:GetModifierAttackSpeedBaseOverride()
-	return -99999999
-end
-
-function modifier_imba_omni_slash_image:GetModifierAttackPointConstant()
-	return 99999999
 end
 
 function modifier_imba_omni_slash_image:IsHidden()
@@ -1836,7 +1792,7 @@ function modifier_imba_omni_slash_caster:BounceAndSlaughter()
 
 			-- If the target is not Roshan or a hero, instantly kill it
 			if not ( enemy:IsHero() or IsRoshan(enemy) ) then
-				enemy:Kill(self.ability, self.caster)
+				enemy:Kill(self.ability, self.original_caster)
 			end
 
 			-- Count down amount of slashes
@@ -1928,17 +1884,15 @@ function modifier_imba_omni_slash_caster:OnDestroy()
 			if self.caster:HasModifier("modifier_imba_juggernaut_blade_fury") then
 				self.caster:RemoveModifierByName("modifier_imba_juggernaut_blade_fury")
 			end
+			self.caster:SetTeam(5)
+			self.caster:SetOwner(nil)
 			self.caster:MakeIllusion()
-			
-			Timers:CreateTimer(0.12, function()
-			if self.caster:IsAlive() and (not self.caster:IsNull()) then
-				self.caster:SetModel("models/development/invisiblebox.vmdl")
-			end
-			end)
-			Timers:CreateTimer(0.6, function()
-			if self.caster:IsAlive() and (not self.caster:IsNull()) then
-				self.caster:ForceKill(false)
-			end
+			self.caster:ForceKill(false)
+			self.caster:SetAbsOrigin(Vector(0,0,99999))
+			self:GetCaster():AddNoDraw()
+			local icaster = self.caster
+			Timers:CreateTimer(0.1, function()
+				UTIL_Remove(icaster)
 			end)
 		end
 	end
