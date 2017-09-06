@@ -791,71 +791,63 @@ end
 -- Chikara ga minagitte kuru!
 function modifier_imba_juggernaut_blade_dance_empowered_slice:SeekAndDestroy()
 	if IsServer() then
-		local sliceEnemies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.caster:GetAbsOrigin(), nil, 150, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
+		local sliceEnemies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.caster:GetAbsOrigin(), nil, 150, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE, FIND_ANY_ORDER, false)
 		local enemy_hit = false
 		
 			for _,enemy in pairs(sliceEnemies) do
-				
-				-- If no hits were left, exit
-				if self.attack_count < 1 then
-					self:Destroy()
-					return nil
-				end
-						
-				-- If this enemy was already hit by this cast, do nothing
-				enemy_hit = false
-				
-				for _,hit_enemy in pairs(self.enemies_hit) do
-					-- If the enemy is hit once, do nothing
-					if hit_enemy == enemy then
-						enemy_hit = true
+				while true do
+					-- If no hits were left, exit
+					if self.attack_count < 1 then
+						self:Destroy()
+						return nil
 					end
+							
+					-- If this enemy was already hit by this cast, do nothing
+					enemy_hit = false
 					
-					-- If the enemy is gone, do nothing either
-					if enemy:IsInvisible() or enemy:IsOutOfGame() then
-						enemy_hit = true
-					end
-					
-					-- If this enemy is attack immune, still do nothing
-					if enemy:IsAttackImmune() then
-					enemy_hit = true
-					end
-				end
-				
-				-- If the target is valid
-				if not enemy_hit then
-					
-					-- Play hit sound
-					enemy:EmitSound("Hero_Juggernaut.BladeFury.Impact")
-					-- Play hit particle
-					local slash_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_juggernaut/juggernaut_blade_fury_tgt.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy)
-					ParticleManager:SetParticleControl(slash_pfx, 0, enemy:GetAbsOrigin())
-					ParticleManager:ReleaseParticleIndex(slash_pfx)
-
-					-- Deal damage
-					self.caster:PerformAttack(enemy, true, true, true, true, false, false, true)
-					
-					-- There are enemies being hit haha now you cant bug me with Stack Overflow :3
-					self.has_slice_enemy = true
-					
-					-- #4 Talent. Indicating Blade Dance's active strikes three times: once in a straight line forward, and twice to the sides. 
-					if self.caster:HasTalent("special_bonus_imba_juggernaut_4") then
-					self.targetted_enemy = enemy
-					end
-					
-					-- Add a modifier to indicate the amount of times hit
-					if (not enemy:HasModifier("modifier_imba_juggernaut_blade_dance_empowered_slice_count")) then
-					sliced_count = enemy:AddNewModifier(self.caster,self.ability,"modifier_imba_juggernaut_blade_dance_empowered_slice_count",{duration = 1.0})
-						if sliced_count then
-						sliced_count:IncrementStackCount()
+					for _,hit_enemy in pairs(self.enemies_hit) do
+						-- If the enemy is hit once, do nothing
+						if hit_enemy == enemy then
+							enemy_hit = true
 						end
 					end
 					
-					-- Minus one attack count
-					self.attack_count = self.attack_count - 1
-					
-					-- Add this enemy to the hit table
-					table.insert(self.enemies_hit, enemy)
+					-- If the target is valid
+					if not enemy_hit then
+						
+						-- Play hit sound
+						enemy:EmitSound("Hero_Juggernaut.BladeFury.Impact")
+						-- Play hit particle
+						local slash_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_juggernaut/juggernaut_blade_fury_tgt.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy)
+						ParticleManager:SetParticleControl(slash_pfx, 0, enemy:GetAbsOrigin())
+						ParticleManager:ReleaseParticleIndex(slash_pfx)
+
+						-- Deal damage
+						self.caster:PerformAttack(enemy, true, true, true, true, false, false, true)
+						
+						-- There are enemies being hit haha now you cant bug me with Stack Overflow :3
+						self.has_slice_enemy = true
+						
+						-- #4 Talent. Indicating Blade Dance's active strikes three times: once in a straight line forward, and twice to the sides. 
+						if self.caster:HasTalent("special_bonus_imba_juggernaut_4") then
+							self.targetted_enemy = enemy
+						end
+						
+						-- Add a modifier to indicate the amount of times hit
+						if (not enemy:HasModifier("modifier_imba_juggernaut_blade_dance_empowered_slice_count")) then
+						sliced_count = enemy:AddNewModifier(self.caster,self.ability,"modifier_imba_juggernaut_blade_dance_empowered_slice_count",{duration = 1.0})
+							if sliced_count then
+								sliced_count:IncrementStackCount()
+							end
+						end
+						
+						-- Minus one attack count
+						self.attack_count = self.attack_count - 1
+						
+						-- Add this enemy to the hit table
+						table.insert(self.enemies_hit, enemy)
+					end
+					break
 				end
 			end
 	end
@@ -909,7 +901,7 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:HorizontalMotion( 
 			
 			-- If no hits were left, destroy itself
 			if self.attack_count < 1 then
-			self:Destroy()
+				self:Destroy()
 			end
 			
 			-- If there were no valid targets, proceeds to destroy itself
@@ -922,15 +914,15 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:HorizontalMotion( 
 					-- Third Dash checking has a higher priority than second dash, because self.second_dash is initialized first, then comes self.third_dash
 					-- If this is the end of the second dash, commence the third dash
 					if self.third_dash then
-					self:SeekAndDestroyPtTweeDecimation()
-					return
+						self:SeekAndDestroyPtTweeDecimation()
+						return
 					end
 						
 					-- If this is the end of the initial dash, commence the second dash
 					if not self.second_dash then
-					self.second_dash = true
-					self:SeekAndDestroyPtTweeDecimation()
-					return
+						self.second_dash = true
+						self:SeekAndDestroyPtTweeDecimation()
+						return
 					end
 						
 				else
@@ -941,8 +933,8 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:HorizontalMotion( 
 				end
 				
 			else
-			-- If there are more, proceed to Annihilation Phase
-			self:SeekAndDestroyPtTooAnnihilation()
+				-- If there are more, proceed to Annihilation Phase
+				self:SeekAndDestroyPtTooAnnihilation()
 			end
 		end       
 	end
@@ -970,60 +962,53 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:SeekAndDestroyPtTo
 		
 		-- If there were no enemies in the list, proceed to self-destruct
 		if (not self.has_slice_enemy) then
-		self:Destroy()
-		return nil
+			self:Destroy()
+			return nil
 		end
 		
 		for _,enemy in pairs(self.enemies_hit) do
-			
-			-- If no hits were left, finish the finale
-			if self.attack_count < 1 then
-				self:Destroy()
-				return nil
-			end
-			
-			-- If this enemy is not a valid target, do nothing
-			if enemy:IsInvisible() or enemy:IsOutOfGame() then
-				enemy_hit = true
-			end
-			
-			-- If this enemy is attack immune, do nothing either
-			if enemy:IsAttackImmune() then
-				enemy_hit = true
-			end
-			
-			-- If enemy is already stroke 3 times, still do nothing
-			if enemy:HasModifier("modifier_imba_juggernaut_blade_dance_empowered_slice_count") then
-				sliced_enemy = enemy:FindModifierByName("modifier_imba_juggernaut_blade_dance_empowered_slice_count")
-				sliced_enemy_stack = sliced_enemy:GetStackCount()
-					if sliced_enemy_stack >= self.ability:GetTalentSpecialValueFor("secret_blade_max_hits") then
+			while true do
+				-- If no hits were left, finish the finale
+				if self.attack_count < 1 then
+					self:Destroy()
+					return nil
+				end
+
+				-- If enemy is already stroke 3 times, still do nothing
+				if enemy:HasModifier("modifier_imba_juggernaut_blade_dance_empowered_slice_count") then
+					sliced_enemy = enemy:FindModifierByName("modifier_imba_juggernaut_blade_dance_empowered_slice_count")
+					sliced_enemy_stack = sliced_enemy:GetStackCount()
+					if sliced_enemy_stack >= self.ability:GetSpecialValueFor("secret_blade_max_hits") then
 						enemy_hit = true
+						break
 					end
-			end
-			
-			-- If the target is valid
-			if not enemy_hit then
+				end
+				
+				-- If the target is valid
+				if not enemy_hit then
 
-			-- Play hit sound
-			enemy:EmitSound("Hero_Juggernaut.BladeFury.Impact")
-			-- Play hit particle
-			local slash_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_juggernaut/juggernaut_blade_fury_tgt.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy)
-			ParticleManager:SetParticleControl(slash_pfx, 0, enemy:GetAbsOrigin())
-			ParticleManager:ReleaseParticleIndex(slash_pfx)
+					-- Play hit sound
+					enemy:EmitSound("Hero_Juggernaut.BladeFury.Impact")
+					-- Play hit particle
+					local slash_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_juggernaut/juggernaut_blade_fury_tgt.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy)
+					ParticleManager:SetParticleControl(slash_pfx, 0, enemy:GetAbsOrigin())
+					ParticleManager:ReleaseParticleIndex(slash_pfx)
 
-			-- Deal damage
-			self.caster:PerformAttack(enemy, true, true, true, true, false, false, true)
+					-- Deal damage
+					self.caster:PerformAttack(enemy, true, true, true, true, false, false, true)
 
-			-- Add a modifier to indicate the amount of times hit
-			if enemy:HasModifier("modifier_imba_juggernaut_blade_dance_empowered_slice_count") then
-			enemy_sliced = enemy:FindModifierByName("modifier_imba_juggernaut_blade_dance_empowered_slice_count")
-			enemy_sliced:IncrementStackCount()
-			end
+					-- Add a modifier to indicate the amount of times hit
+					if enemy:HasModifier("modifier_imba_juggernaut_blade_dance_empowered_slice_count") then
+						enemy_sliced = enemy:FindModifierByName("modifier_imba_juggernaut_blade_dance_empowered_slice_count")
+						enemy_sliced:IncrementStackCount()
+					end
+							
+					-- Minus one attack count
+					self.attack_count = self.attack_count - 1
 					
-			-- Minus one attack count
-			self.attack_count = self.attack_count - 1
-			
-			end	
+				end	
+				break
+			end
 		end
 		
 		for _,enemy in pairs(self.enemies_hit) do
@@ -1031,7 +1016,7 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:SeekAndDestroyPtTo
 			if enemy:HasModifier("modifier_imba_juggernaut_blade_dance_empowered_slice_count") then
 			sliced_enemy = enemy:FindModifierByName("modifier_imba_juggernaut_blade_dance_empowered_slice_count")
 			sliced_enemy_stack = sliced_enemy:GetStackCount()
-				if sliced_enemy_stack >= self.ability:GetTalentSpecialValueFor("secret_blade_max_hits") then
+				if sliced_enemy_stack >= self.ability:GetSpecialValueFor("secret_blade_max_hits") then
 				
 					-- #4 Talent. Blade Dance's active strikes three times: once in a straight line forward, and twice to the sides. 
 					if self.caster:HasTalent("special_bonus_imba_juggernaut_4") and (not self.third_dash_finale) and self.attack_count > 0 then
@@ -1039,15 +1024,15 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:SeekAndDestroyPtTo
 						-- Third Dash checking has a higher priority than second dash, because self.second_dash is initialized first, then comes self.third_dash
 						-- If this is the end of the second dash, commence the third dash
 						if self.third_dash then
-						self:SeekAndDestroyPtTweeDecimation()
-						return
+							self:SeekAndDestroyPtTweeDecimation()
+							return
 						end
 						
 						-- If this is the end of the initial dash, commence the second dash
 						if not self.second_dash then
-						self.second_dash = true
-						self:SeekAndDestroyPtTweeDecimation()
-						return
+							self.second_dash = true
+							self:SeekAndDestroyPtTweeDecimation()
+							return
 						end
 						
 					else
@@ -1061,7 +1046,7 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:SeekAndDestroyPtTo
 		end
 		
 		-- Repeat the Annihilation Phase
-		self:SeekAndDestroyPtTooAnnihilation()
+		--self:SeekAndDestroyPtTooAnnihilation()
 	end
 end
 
@@ -1072,9 +1057,9 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:SeekAndDestroyPtTw
 		if self.attack_count < 1 then
 			-- If no enemies were slashed yet, set the caster to the original point
 			if self.second_dash or self.third_dash then
-			self.caster:SetAbsOrigin(self.newPoint)
-			self.second_dash = false
-			self.third_dash = false
+				self.caster:SetAbsOrigin(self.newPoint)
+				self.second_dash = false
+				self.third_dash = false
 			end
 		self.caster:SetUnitOnClearGround()
 		self:Destroy()
@@ -1180,6 +1165,7 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:OnDestroy()
 			self.caster:SetUnitOnClearGround()
 			end
 		end
+		self.enemies_hit = nil
 	end
 end
 
@@ -1228,7 +1214,7 @@ end
 
 if IsServer() then
 	function modifier_imba_juggernaut_blade_dance_passive:GetModifierPreAttack_CriticalStrike(params)
-		if self:GetParent():PassivesDisabled() then return nil end
+		if self:GetParent():PassivesDisabled() or not self:GetAbility():IsTrained()	then return nil end
 		if RollPseudoRandom(self.chance, self) then
 			
 			local crit_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_juggernaut/jugg_crit_blur.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
@@ -1886,21 +1872,20 @@ function modifier_imba_omni_slash_caster:OnDestroy()
 			end
 			self.caster:MakeIllusion()
 
-		for item_id=0, 5 do
-			local item_in_caster = self.caster:GetItemInSlot(item_id)
-			if item_in_caster ~= nil then
-				UTIL_Remove(item_in_caster)
+			for item_id=0, 5 do
+				local item_in_caster = self.caster:GetItemInSlot(item_id)
+				if item_in_caster ~= nil then
+					UTIL_Remove(item_in_caster)
+				end
 			end
-		end
 
-        -- Search for buffs and debuffs
-        local caster_modifiers = self.caster:FindAllModifiers()
-		
-		for _,modifier in pairs(caster_modifiers) do
-			if modifier then
-				UTIL_Remove(modifier)
+        	-- Search for buffs and debuffs
+        	local caster_modifiers = self.caster:FindAllModifiers()
+			for _,modifier in pairs(caster_modifiers) do
+				if modifier then
+					UTIL_Remove(modifier)
+				end
 			end
-		end
 
 			self.caster:ForceKill(false)
 			self.caster:SetAbsOrigin(Vector(0,0,99999))
