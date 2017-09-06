@@ -1794,7 +1794,8 @@ function modifier_imba_omni_slash_caster:OnCreated()
 		end
 	
 		self.hero_agility = self.original_caster:GetAgility()
-		self.ability:SetRefCountsModifiers(false)
+		-- What does this actually do? Is it necessary?
+		-- self.ability:SetRefCountsModifiers(false)
 		self:StartIntervalThink(self.ability:GetSpecialValueFor("bounce_delay"))
 		end
 		end)
@@ -1832,11 +1833,14 @@ function modifier_imba_omni_slash_caster:BounceAndSlaughter()
 			-- Perform the slash
 			self.slash = true
 			
+			if (not enemy:IsAttackImmune()) then
 			self.caster:PerformAttack(enemy, true, true, true, true, true, false, false)
+			end
 
 			-- If the target is not Roshan or a hero, instantly kill it
 			if not ( enemy:IsHero() or IsRoshan(enemy) ) then
-				enemy:Kill(self.ability, self.caster)
+				-- The image gives exp and gold to the original Juggernaut
+				enemy:Kill(self.ability, self.original_caster)
 			end
 
 			-- Count down amount of slashes
