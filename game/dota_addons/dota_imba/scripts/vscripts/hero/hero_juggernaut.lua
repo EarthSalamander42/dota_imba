@@ -178,10 +178,13 @@ function modifier_imba_juggernaut_blade_fury_succ:OnIntervalThink()
 			newPosition = enemy_position + direction * self.succ_tick * (succ_radius - distance) * 0.2
 			-- Set the new point
 			self.target:SetAbsOrigin(newPosition)
-			self.target:SetUnitOnClearGround()
-		else
-			self.target:SetUnitOnClearGround()
 		end
+	end
+end
+
+function modifier_imba_juggernaut_blade_fury_succ:OnDestroy()
+	if IsServer() then
+		self.target:SetUnitOnClearGround()
 	end
 end
 
