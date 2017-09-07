@@ -28,7 +28,7 @@ function imba_juggernaut_blade_fury:OnSpellStart()
 	caster:Purge(false, true, false, false, false)
 	if caster:HasModifier("modifier_imba_juggernaut_blade_fury") then
 		local buff = caster:FindModifierByName("modifier_imba_juggernaut_blade_fury")
-		buff:Destroy()
+		buff.radius = self:GetTalentSpecialValueFor("effect_radius")
 	end
 	caster:AddNewModifier(caster, self, "modifier_imba_juggernaut_blade_fury", {duration = self:GetSpecialValueFor("duration")})
 
@@ -1867,8 +1867,8 @@ function modifier_imba_omni_slash_caster:OnDestroy()
 		self.caster:FadeGesture(ACT_DOTA_OVERRIDE_ABILITY_4)
 		end
 
-		self.ability:SetActivated(true)	
-		
+		self.ability:SetActivated(true)
+
 		-- Create the delay effect before the image destroys itself.
 		if self.caster:HasModifier("modifier_imba_omni_slash_image") then
 			if self.caster:HasModifier("modifier_imba_juggernaut_blade_fury") then
@@ -1891,7 +1891,6 @@ function modifier_imba_omni_slash_caster:OnDestroy()
 				end
 			end
 
-			self.caster:ForceKill(false)
 			self.caster:SetAbsOrigin(Vector(0,0,99999))
 			self:GetCaster():AddNoDraw()
 			local icaster = self.caster
