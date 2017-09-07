@@ -86,7 +86,7 @@ function modifier_imba_item_nether_wand_passive:OnTakeDamage(params)
 			(params.inflictor ~= self.item) and
 			-- Edited for Juggernaut's Deflect to work
 			-- (params.unit:GetTeam() ~= self.parent:GetTeam()) and
-			((not params.unit:HasModifier("modifier_imba_juggernaut_blade_fury")) and self.parent:IsRangedAttacker()) and
+			((not params.unit:HasModifier("modifier_imba_juggernaut_blade_fury"))) and
 			not (params.unit:IsBuilding() or params.unit:IsOther()) then
 				if (self.parent:GetAbsOrigin() - params.unit:GetAbsOrigin()):Length2D() <= IMBA_DAMAGE_EFFECTS_DISTANCE_CUTOFF then
 					params.unit:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_item_elder_nether_debuff_dot", {duration = self.burn_duration})
@@ -187,7 +187,7 @@ function modifier_imba_item_elder_staff_passive:OnTakeDamage(params)
 			(params.inflictor ~= self.item) and
 			-- Edited for Juggernaut's Deflect to work
 			-- (params.unit:GetTeam() ~= self.parent:GetTeam()) and
-			((not params.unit:HasModifier("modifier_imba_juggernaut_blade_fury")) and self.parent:IsRangedAttacker()) and
+			((not params.unit:HasModifier("modifier_imba_juggernaut_blade_fury"))) and
 			not (params.unit:IsBuilding() or params.unit:IsOther()) then
 				if (self.parent:GetAbsOrigin() - params.unit:GetAbsOrigin()):Length2D() <= IMBA_DAMAGE_EFFECTS_DISTANCE_CUTOFF then
 					params.unit:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_item_elder_nether_debuff_dot", {duration = self.burn_duration})
