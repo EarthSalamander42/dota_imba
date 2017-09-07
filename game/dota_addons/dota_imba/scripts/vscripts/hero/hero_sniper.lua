@@ -35,7 +35,7 @@ function imba_sniper_shrapnel:GetCastRange(location, target)
     local caster = self:GetCaster()
     local base_range = self.BaseClass.GetCastRange(self, location, target)
 
-    -- #1 Talent: Doubles Shrapnel cast range
+    -- #1 Talent: Shrapnel's cast range becomes global
 	if caster:HasTalent("special_bonus_imba_sniper_1") then
     base_range = math.max(base_range, 25000)
 	else
