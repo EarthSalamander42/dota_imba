@@ -115,6 +115,7 @@ function HeroPicked(player, hero, team, has_randomed) {
 
 		// If the player has randomed, set up hero portrait/ability information
 		if (has_randomed) {
+			$.Msg("PLAYER RANDOMED!")
 			SelectHero(hero)
 		}
 

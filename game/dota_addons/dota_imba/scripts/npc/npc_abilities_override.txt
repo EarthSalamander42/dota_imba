@@ -2237,7 +2237,7 @@
 			"07"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_reflect_pct_tooltip"	"100"
+				"damage_reflect_pct"			"100"
 				"LinkedSpecialBonus"			"special_bonus_unique_nyx"
 			}
 		}
