@@ -11,7 +11,7 @@ end
 imba_juggernaut_blade_fury = imba_juggernaut_blade_fury or class({})
 function imba_juggernaut_blade_fury:IsNetherWardStealable() return true end
 function imba_juggernaut_blade_fury:GetCastRange()
-	return self:GetTalentSpecialValueFor("effect_radius")
+	return self:GetSpecialValueFor("effect_radius")
 end
 
 function imba_juggernaut_blade_fury:GetAbilityTextureName()
@@ -26,10 +26,10 @@ end
 function imba_juggernaut_blade_fury:OnSpellStart()
 	local caster = self:GetCaster()
 	caster:Purge(false, true, false, false, false)
-	--if caster:HasModifier("modifier_imba_juggernaut_blade_fury") then
-	--	local buff = caster:FindModifierByName("modifier_imba_juggernaut_blade_fury")
-	--	buff:Destroy()
-	--end
+	if caster:HasModifier("modifier_imba_juggernaut_blade_fury") then
+		local buff = caster:FindModifierByName("modifier_imba_juggernaut_blade_fury")
+		buff.radius = self.ability:GetSpecialValueFor("effect_radius")
+	end
 	caster:AddNewModifier(caster, self, "modifier_imba_juggernaut_blade_fury", {duration = self:GetSpecialValueFor("duration")})
 
 	-- Play cast lines
@@ -1855,13 +1855,10 @@ function modifier_imba_omni_slash_caster:OnDestroy()
 				end
 			end
 
-			self.caster:ForceKill(false)
-			Timers:CreateTimer(0.11, function()
 			self:GetCaster():SetAbsOrigin(Vector(0,0,99999))
 			self:GetCaster():AddNoDraw()
-			end)
 			local icaster = self.caster
-			Timers:CreateTimer(0.21, function()
+			Timers:CreateTimer(0.1, function()
 				UTIL_Remove(icaster)
 			end)
 		end
