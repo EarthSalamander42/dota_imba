@@ -1017,50 +1017,7 @@ end
 
 -- This function is called whenever illusions are created and tells you which was/is the original entity
 function GameMode:OnIllusionsCreated(keys)
-	DebugPrint('[BAREBONES] OnIllusionsCreated')
-	DebugPrintTable(keys)
-
 	local originalEntity = EntIndexToHScript(keys.original_entindex)
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Random OMG illusion ability adjustment
-	-------------------------------------------------------------------------------------------------
-
-	if IMBA_ABILITY_MODE_RANDOM_OMG then
-
-		-- Find all Illusions
-		local illusions_on_world = Entities:FindAllByName(originalEntity:GetName())
-		for k,illusion in pairs(illusions_on_world) do
-
-			-- Check if this illusion has already been adjusted
-			if illusion:IsIllusion() and not illusion.illusion_skills_adjusted then
-				local player_id = illusion:GetPlayerID()
-				local hero = originalEntity
-
-				-- Remove previously existing abilities
-				for i = 0, 15 do
-					local old_ability = illusion:GetAbilityByIndex(i)
-					if old_ability then
-						illusion:RemoveAbility(old_ability:GetAbilityName())
-					end
-				end
-
-				-- Add and level owner's abilities
-				for i = 0, 15 do
-					if hero.random_omg_abilities[i] then
-						illusion:AddAbility(hero.random_omg_abilities[i])
-						local ability = illusion:FindAbilityByName(hero.random_omg_abilities[i])
-						local ability_level = hero:FindAbilityByName(hero.random_omg_abilities[i]):GetLevel()
-						ability:SetLevel(ability_level)
-					end
-				end
-
-				-- Mark this illusion as already adjusted
-				illusion.illusion_skills_adjusted = true
-			end
-		end
-	end
-
 end
 
 -- This function is called whenever an item is combined to create a new item
