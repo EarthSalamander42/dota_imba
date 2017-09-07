@@ -80,7 +80,7 @@ function modifier_imba_juggernaut_blade_fury:OnIntervalThink()
 	
 	-- #1 Talent: Blade Fury acts as a vacuum, sucking enemies toward Juggernaut
 	if self.original_caster:HasTalent("special_bonus_imba_juggernaut_1") then
-		local nearbyEnemies = FindUnitsInRadius(self.caster:GetTeamNumber(), caster_loc, nil, self.radius * self.original_caster:FindTalentValue("special_bonus_imba_juggernaut_1"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		local nearbyEnemies = FindUnitsInRadius(self.caster:GetTeamNumber(), caster_loc, nil, self.radius * 2, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 	
 		for _,nearbyEnemy in pairs(nearbyEnemies) do	
 			-- How many layers of irony are you on?
@@ -178,7 +178,7 @@ function modifier_imba_juggernaut_blade_fury_succ:OnIntervalThink()
 		-- If it's not hugged by Juggernaut, SUCC IT IN!
 		if distance > 100 then
 			-- Pull Strength. The closer the enemy gets, the closer they get
-			newPosition = enemy_position + direction * self.succ_tick * (succ_radius - distance) * 0.2
+			newPosition = enemy_position + direction * self.succ_tick * (succ_radius - distance) * 0.1
 			-- Set the new point
 			self.target:SetAbsOrigin(newPosition)
 		end
