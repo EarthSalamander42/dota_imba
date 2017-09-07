@@ -792,7 +792,7 @@ end
 -- Chikara ga minagitte kuru!
 function modifier_imba_juggernaut_blade_dance_empowered_slice:SeekAndDestroy()
 	if IsServer() then
-		local sliceEnemies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.caster:GetAbsOrigin(), nil, 150, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
+		local sliceEnemies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.caster:GetAbsOrigin(), nil, 150, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE, FIND_ANY_ORDER, false)
 		local enemy_hit = false
 		
 			for _,enemy in pairs(sliceEnemies) do
@@ -810,16 +810,6 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:SeekAndDestroy()
 					-- If the enemy is hit once, do nothing
 					if hit_enemy == enemy then
 						enemy_hit = true
-					end
-					
-					-- If the enemy is gone, do nothing either
-					if enemy:IsInvisible() or enemy:IsOutOfGame() then
-						enemy_hit = true
-					end
-					
-					-- If this enemy is attack immune, still do nothing
-					if enemy:IsAttackImmune() then
-					enemy_hit = true
 					end
 				end
 				
