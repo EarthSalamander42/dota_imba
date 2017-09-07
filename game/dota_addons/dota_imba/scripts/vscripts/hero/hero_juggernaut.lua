@@ -1582,7 +1582,7 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 		omnislash_image:SetCanSellItems(false)
 		
 		-- Add the image indicator
-		-- Set the caster as the original caster, else it Juggernaut won't receive Wind Dance and Secret Blade
+		-- Set the original caster as the image caster, or else Juggernaut won't receive Wind Dance and Secret Blade stacks
 		omnislash_image:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_image", {})
 		
 		local omnislash_modifier_handler = omnislash_image:AddNewModifier(omnislash_image, self, "modifier_imba_omni_slash_caster", {})
