@@ -677,7 +677,7 @@ function imba_juggernaut_blade_dance:CastFilterResultLocation(position)
 	end
 end
 
-function imba_juggernaut_blade_dance:GetCustomCastErrorTarget(target)
+function imba_juggernaut_blade_dance:GetCustomCastErrorLocation(position)
 	return "dota_hud_error_cant_use_disarmed"	
 end
 
