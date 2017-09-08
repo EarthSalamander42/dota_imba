@@ -533,7 +533,7 @@
 
 	// Sniper
 	"DOTA_Tooltip_Talent_special_bonus_imba_sniper_1_title"                   "Mortar Ammo"
-	"DOTA_Tooltip_Talent_special_bonus_imba_sniper_1_Description"             "Allows Sniper to cast Shrapnel globally. <br><br><i>Firing a mortar shell is usually a lot more fun. And of course, it can reach almost anywhere!</i>"
+	"DOTA_Tooltip_Talent_special_bonus_imba_sniper_1_Description"             "Allows Sniper to cast Shrapnel globally. The bonus is reduced to double the cast range if Sniper is within the fountain's safe zone. <br><br><i>Firing a mortar shell is usually a lot more fun. And of course, it can reach almost anywhere!</i>"
 	"DOTA_Tooltip_Talent_special_bonus_imba_sniper_2_title"                   "Jet Propelled Shell"
 	"DOTA_Tooltip_Talent_special_bonus_imba_sniper_2_Description"             "Assassinate knockbacks all enemy units hit by the projectile 500 units. <br><br><i>So powerful, even the mightiest enemies cannot resist the powerful jet propulsion of this shell.</i>"
 	"DOTA_Tooltip_Talent_special_bonus_imba_sniper_3_title"                   "Bulletstorm"
