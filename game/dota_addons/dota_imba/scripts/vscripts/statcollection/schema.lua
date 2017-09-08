@@ -26,7 +26,9 @@ end
 function BuildGameArray()
 local game = {}
 
-	game.mp = GetMapName()
+	game.md = GetMode()
+	game.gl = GetGameLength()
+	game.tp = GetTowerUpgrades()
 
 	return game
 end
