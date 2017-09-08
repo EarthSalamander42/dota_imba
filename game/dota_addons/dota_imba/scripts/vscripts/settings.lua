@@ -13,14 +13,12 @@ START_GAME_AUTOMATICALLY = true				-- Should the game start automatically
 ENABLE_HERO_RESPAWN = true					-- Should the heroes automatically respawn on a timer or stay dead until manually respawned
 UNIVERSAL_SHOP_MODE = false					-- Should the main shop contain Secret Shop items as well as regular items
 
-if IsInToolsMode() then
-	HERO_SELECTION_TIME = 5.0				-- How long should we let people select their hero?
-else
-	HERO_SELECTION_TIME = 45.0 + 10.0		-- How long should we let people select their hero?
-end
+HERO_SELECTION_TIME = 45.0 + 10.0		-- How long should we let people select their hero?
+if IsInToolsMode() then HERO_SELECTION_TIME = 5.0 end
+
 PRE_GAME_TIME = 90.0 + HERO_SELECTION_TIME + 10.0	-- How long after people select their heroes should the horn blow and the game start?
 POST_GAME_TIME = 60.0						-- How long should we let people look at the scoreboard before closing the server automatically?
-AUTO_LAUNCH_DELAY = 20.0					-- How long should we wait for the host to setup the game, after all players have loaded in?
+AUTO_LAUNCH_DELAY = 15.0					-- How long should we wait for the host to setup the game, after all players have loaded in?
 TREE_REGROW_TIME = 180.0					-- How long should it take individual trees to respawn after being cut down/destroyed?
 SHOWCASE_TIME = 0.0							-- How long should showcase time last?
 STRATEGY_TIME = 0.0							-- How long should strategy time last?
@@ -130,7 +128,6 @@ HERO_RESPAWN_TIME_PER_LEVEL[23] = 56
 HERO_RESPAWN_TIME_PER_LEVEL[24] = 58
 HERO_RESPAWN_TIME_PER_LEVEL[25] = 60
 
-
 -------------------------------------------------------------------------------------------------
 -- IMBA: map-based settings
 -------------------------------------------------------------------------------------------------
@@ -139,7 +136,6 @@ MAX_NUMBER_OF_TEAMS = 2														-- How many potential teams can be in this 
 IMBA_PLAYERS_ON_GAME = 10													-- Number of players in the game
 USE_CUSTOM_TEAM_COLORS = false												-- Should we use custom team colors?
 USE_CUSTOM_TEAM_COLORS_FOR_PLAYERS = false									-- Should we use custom team colors to color the players/minimap?
-
 
 TEAM_COLORS = {}															-- If USE_CUSTOM_TEAM_COLORS is set, use these colors.
 TEAM_COLORS[DOTA_TEAM_GOODGUYS] = { 61, 210, 150 }							-- Teal
@@ -305,8 +301,8 @@ if GetMapName() == "imba_standard" then										-- Standard map defaults
 	MAX_LEVEL = 40
 elseif GetMapName() == "imba_custom" or GetMapName() == "imba_custom_10v10" then									-- Custom map defaults
 	END_GAME_ON_KILLS = false
-	CUSTOM_GOLD_BONUS = 0
-	CUSTOM_XP_BONUS = 0
+	CUSTOM_GOLD_BONUS = 100
+	CUSTOM_XP_BONUS = 100
 	CREEP_POWER_FACTOR = 2
 	TOWER_UPGRADE_MODE = true
 	TOWER_POWER_FACTOR = 1

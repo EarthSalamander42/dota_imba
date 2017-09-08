@@ -43,6 +43,7 @@ local incomingDamage = self:GetSpecialValueFor("images_take_damage_percent_range
 		local incomingDamage = self:GetSpecialValueFor("images_take_damage_percent_melee")
 	end
 
+	caster:Purge(false, true, false, false, false)
 	caster:AddNewModifier(caster, self, "modifier_manta_invulnerable", {duration=invulnerability_duration})
 
 	if not caster.manta then

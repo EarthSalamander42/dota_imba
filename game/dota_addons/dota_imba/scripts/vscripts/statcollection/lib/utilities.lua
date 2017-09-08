@@ -94,3 +94,66 @@ function GetItemList(hero)
 
 	return itemList
 end
+
+function GetGameLength()
+local time = GameRules:GetDOTATime(false, false)
+local minutes = time / 60
+
+	if minutes < 1 then
+		time = "0 minutes"
+	elseif minutes >= 1 and minutes <= 5 then
+		time = "0-5 minutes"
+	elseif minutes > 5 and minutes <= 10 then
+		time = "5-10 minutes"
+	elseif minutes > 10 and minutes <= 15 then
+		time = "10-15 minutes"
+	elseif minutes > 15 and minutes <= 20 then
+		time = "15-20 minutes"
+	elseif minutes > 20 and minutes <= 25 then
+		time = "20-25 minutes"
+	elseif minutes > 25 and minutes <= 30 then
+		time = "25-30 minutes"
+	elseif minutes > 30 and minutes <= 35 then
+		time = "30-35 minutes"
+	elseif minutes > 35 and minutes <= 40 then
+		time = "35-40 minutes"
+	elseif minutes > 40 and minutes <= 45 then
+		time = "40-45 minutes"
+	elseif minutes > 45 and minutes <= 50 then
+		time = "45-50 minutes"
+	elseif minutes > 50 and minutes <= 55 then
+		time = "50-55 minutes"
+	elseif minutes > 55 and minutes <= 60 then
+		time = "55-60 minutes"
+	elseif minutes > 60 then
+		time = "60+ minutes"
+	end
+
+	return time
+end
+
+function GetMode()
+local mode = ""
+
+	if mode == "" or IMBA_PICK_MODE_ALL_PICK then
+		mode = "All Pick"
+	elseif IMBA_PICK_MODE_ALL_RANDOM then
+		mode = "All Random"
+	elseif IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
+		mode = "All Random Same Hero"
+	end
+
+	return mode
+end
+
+function GetTowerUpgrades()
+local mode = ""
+
+	if mode == "" then
+		mode = "Tower Upgrade: Off"
+	elseif TOWER_UPGRADE_MODE then
+		mode = "Tower Upgrade: On"
+	end
+
+	return mode
+end
