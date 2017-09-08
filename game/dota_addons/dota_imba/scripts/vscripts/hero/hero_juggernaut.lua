@@ -1565,6 +1565,7 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 			elseif modifier then
 				if modifier:GetAbility() and not modifier:GetAbility():IsPassive() then
 					omnislash_image:AddNewModifier(modifier:GetCaster(), modifier:GetAbility(), modifier:GetName(), {duration = modifier:GetRemainingTime()})
+					modifier:SetStackCount(modifier:GetStackCount())
 				end
 			end
 		end
