@@ -8171,4 +8171,90 @@
 			}
 		}
 	}
+
+	//=================================================================================
+	// Diretide Roshan
+	//=================================================================================
+	"npc_diretide_roshan"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_roshan"
+		"Model"						"models/creeps/roshan_halloween/roshan_halloween.vmdl"
+		"GameSoundsFile"			"soundevents/game_sounds_roshan_halloween.vsndevts"
+		"SoundSet"					"RoshanDT"
+		"ModelScale"				"1.1"
+		"Level"						"50"
+		"IsAncient"					"1"
+		"UnitLabel"					""
+				
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"imba_roshan_diretide_summon_roshlings"
+		"Ability2"					"imba_roshan_diretide_apocalypse"
+		"Ability3"					"tiny_toss"
+		"Ability4"					"creature_fire_breath"
+		"Ability5"					""
+		"Ability6"					""
+		"Ability7"					"imba_roshan_ai_diretide"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"14"
+		"MagicalResistance"			"60"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"100"
+		"AttackDamageMax"			"100"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"1.0"
+		"AttackAnimationPoint"		"0.3"
+		"AttackAcquisitionRange"	"600"
+		"AttackRange"				"200"
+		"ProjectileModel"			"ranged_goodguy"
+		"ProjectileSpeed"			"1000"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"0"
+		"BountyGoldMin"				"0"
+		"BountyGoldMax"				"0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"110"
+		"HealthBarOffset"			"400"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"350"
+		"MovementTurnRate"			"1.0"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"10000"
+		"StatusHealthRegen"			"50.0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0.0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"1400"
+
+		// Inventory
+		//----------------------------------------------------------------
+		"HasInventory"				"1"
+	}
 }

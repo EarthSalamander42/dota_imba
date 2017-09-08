@@ -409,3 +409,699 @@ function RoshanAIthink( keys )
 		return nil
 	end
 end
+
+
+--------------------------------------------------
+--				DIRETIDE Roshan AI
+--------------------------------------------------
+-- Author:	zimberzimber
+-- Date:	30.8.2017
+
+if imba_roshan_ai_diretide == nil then imba_roshan_ai_diretide = class({}) end
+LinkLuaModifier("modifier_imba_roshan_ai_diretide", "hero/neutral_roshan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_roshan_ai_beg", "hero/neutral_roshan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_roshan_ai_eat", "hero/neutral_roshan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_roshan_eaten_candy", "hero/neutral_roshan", LUA_MODIFIER_MOTION_NONE)
+
+function imba_roshan_ai_diretide:GetIntrinsicModifierName()
+	return "modifier_imba_roshan_ai_diretide" end
+
+------------------------------------------
+--				Modifiers				--
+------------------------------------------
+
+if modifier_imba_roshan_ai_diretide == nil then modifier_imba_roshan_ai_diretide = class({}) end
+function modifier_imba_roshan_ai_diretide:GetAttributes() return MODIFIER_ATTRIBUTE_PERMANENT + MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE end
+function modifier_imba_roshan_ai_diretide:IsPurgeException() return false end
+function modifier_imba_roshan_ai_diretide:IsPurgable() return false end
+function modifier_imba_roshan_ai_diretide:IsDebuff() return false end
+function modifier_imba_roshan_ai_diretide:IsHidden() return true end
+
+--	GENERAL
+
+function modifier_imba_roshan_ai_diretide:GetPriority()
+    return MODIFIER_PRIORITY_SUPER_ULTRA end
+
+function modifier_imba_roshan_ai_diretide:DeclareFunctions()
+	return { MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
+			 MODIFIER_PROPERTY_PROVIDES_FOW_POSITION,
+			 MODIFIER_EVENT_ON_TAKEDAMAGE,					}
+end
+	
+function modifier_imba_roshan_ai_diretide:GetActivityTranslationModifiers()
+	if self:GetStackCount() == 3 then
+		return "sugarrush"
+	elseif self.isTransitioning and self.atStartPoint then
+		return "transition"
+	else
+		return "trickortreat"
+	end
+end
+	
+function modifier_imba_roshan_ai_diretide:CheckState()
+	local state = {}
+	
+	if self:GetStackCount() == 2 then
+		state = {
+			[MODIFIER_STATE_ATTACK_IMMUNE]	= true,
+			[MODIFIER_STATE_INVULNERABLE]	= true,
+			[MODIFIER_STATE_MAGIC_IMMUNE]	= true,
+			[MODIFIER_STATE_CANNOT_MISS]	= true,
+			[MODIFIER_STATE_NO_HEALTH_BAR]	= true,
+			[MODIFIER_STATE_ROOTED]			= false,
+			[MODIFIER_STATE_DISARMED]		= false,
+			[MODIFIER_STATE_SILENCED]		= false,
+			[MODIFIER_STATE_MUTED]			= false,
+			[MODIFIER_STATE_STUNNED]		= false,
+			[MODIFIER_STATE_HEXED]			= false,
+			[MODIFIER_STATE_INVISIBLE]		= false,
+		}
+		
+		if self.isEatingCandy then
+			state[MODIFIER_STATE_UNSELECTABLE] = true
+			state[MODIFIER_STATE_DISARMED] = true
+			state[MODIFIER_STATE_ROOTED] = true
+			
+		elseif self.begState == 1 then
+			state[MODIFIER_STATE_DISARMED] = true
+			state[MODIFIER_STATE_ROOTED] = true
+		end
+		
+	elseif self:GetStackCount() == 3 then
+		if self.isTransitioning then
+			state = { [MODIFIER_STATE_INVULNERABLE]		= true,
+					  [MODIFIER_STATE_NO_HEALTH_BAR]	= true,
+					  [MODIFIER_STATE_UNSELECTABLE]		= true,
+					  [MODIFIER_STATE_ATTACK_IMMUNE]	= true, }
+		else
+			state = { [MODIFIER_STATE_INVULNERABLE]		= false,
+					  [MODIFIER_STATE_ATTACK_IMMUNE]	= false, }
+		end
+	end
+	
+	return state
+end
+
+function modifier_imba_roshan_ai_diretide:GetModifierProvidesFOWVision()
+	return 1 end
+
+function modifier_imba_roshan_ai_diretide:OnCreated()
+	if IsServer() then
+		
+		-- common keys
+		local ability = self:GetAbility()
+		self.roshan = self:GetParent()	-- Roshans entity for easier handling
+		self.AItarget = nil				-- Targeted hero
+		
+		-- phase 2 keys
+		self.targetTeam		= math.random(DOTA_TEAM_GOODGUYS, DOTA_TEAM_BADGUYS)	-- Team Roshan is currently targeting
+		self.begState		= 0														-- 0 = not begged | 1 = begging | anything else = has begged
+		self.isEatingCandy	= false													-- Is Roshan eating a candy right now?
+		self.begDistance	= ability:GetSpecialValueFor("begDistance")				-- Distance from target to start begging
+		
+		-- phase 3 keys
+		self.isTransitioning	= false												-- Is Roshan playing the transition animation?
+		self.atStartPoint		= false												-- Has Roshan reached the start point?
+		self.acquisitionRange	= ability:GetSpecialValueFor("acquisitionRange")	-- Acquisition range for phase 3
+		self.leashDistance		= ability:GetSpecialValueFor("leashDistance")		-- How far is Roshan allowed to walk away from the starting point
+		self.leashHealPcnt		= ability:GetSpecialValueFor("leashHealPcnt")		-- Percent of max health Roshan will heal should he get leashed
+
+		-- Ability handlers
+		self.forceWave	= self.roshan:FindAbilityByName("imba_roshan_diretide_force_wave")
+		self.roshlings	= self.roshan:FindAbilityByName("imba_roshan_diretide_summon_roshlings")
+		self.breath		= self.roshan:FindAbilityByName("imba_roshan_diretide_fire_breath")
+		self.apocalypse	= self.roshan:FindAbilityByName("imba_roshan_diretide_apocalypse")
+		self.fireBall	= self.roshan:FindAbilityByName("imba_roshan_diretide_fireball")
+		self.toss		= self.roshan:FindAbilityByName("tiny_toss")
+
+		-- Create a dummy for global vision
+		AddFOWViewer(self.roshan:GetTeamNumber(), Vector(0,0,0), 250000, 999999, false)
+
+		-- Turn on brain
+		self.targetTeam = DOTA_TEAM_GOODGUYS
+		self:SetStackCount(1)
+	end
+end
+
+function modifier_imba_roshan_ai_diretide:OnStackCountChanged(stacks)
+	if IsServer() then
+		-- Get new stacks, and start thinking if its 2 or 3, or become idle if its 1 or anything else
+		local stacks = self:GetStackCount()
+		if stacks < 1 or stacks > 3 then
+			stacks = 1
+		end
+		self:StartPhase(stacks)
+	end
+end
+
+function modifier_imba_roshan_ai_diretide:OnIntervalThink()
+	local stacks = self:GetStackCount()
+	
+	if not self.roshan:IsAlive() then
+		self:StartIntervalThink(-1)
+		
+		local deathParticle = ParticleManager:CreateParticle("particles/hw_fx/hw_roshan_death.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(deathParticle, 0, self.roshan:GetAbsOrigin())
+		ParticleManager:ReleaseParticleIndex(deathParticle)
+		
+		-- trigger game end
+		
+	elseif stacks ~= 1 then
+		if stacks == 2 and not self.isEatingCandy then
+			if self.targetTeam ~= DOTA_TEAM_GOODGUYS and self.targetTeam ~= DOTA_TEAM_BADGUYS then
+				self.targetTeam = math.random(DOTA_TEAM_GOODGUYS, DOTA_TEAM_BADGUYS)
+			end
+			self:ThinkPhase2(self.roshan)
+			
+		elseif stacks == 3 then
+			-- Dont think if taunted
+			if self.roshan:GetForceAttackTarget() == self.AItarget then
+				self:ThinkPhase3(self.roshan)
+			end
+		end
+	end
+end
+
+function modifier_imba_roshan_ai_diretide:StartPhase(phase)
+	-- Reset values
+	self.begState = 0
+	self.AItarget = nil
+	self.targetTeam = 0
+	self.isEatingCandy = false
+	self.isTransitioning = false
+	self.atStartPoint = false
+	self.wait = 0
+	
+	-- Reset behavior
+	self.roshan:SetForceAttackTarget(nil)
+	self.roshan:Interrupt()
+	
+	-- Destroy candy eaten count
+	local candyMod = self.roshan:FindModifierByName("modifier_imba_roshan_eaten_candy")
+	if candyMod then candyMod:Destroy() end
+	
+	if phase == 1 then			-- Halts thinking, and resets keys
+		self:StartIntervalThink(-1)
+	else						-- Starts thinking
+		if phase == 2 then
+			EmitGlobalSound("diretide_eventstart_Stinger")
+			self.roshan:SetAcquisitionRange(-1000)
+			
+			Timers:CreateTimer(5.8, function() -- Timer so music ends first
+				self:StartIntervalThink(0.1)
+			end)
+		elseif phase == 3 then
+			EmitGlobalSound("diretide_sugarrush_Stinger")
+			self.roshan:SetAcquisitionRange(self.acquisitionRange)
+			self.isTransitioning = true
+			self:StartIntervalThink(0.1)
+		end
+	end
+end
+
+--	PHASE II
+function modifier_imba_roshan_ai_diretide:ThinkPhase2(roshan)
+	if not self.AItarget then		-- If no target
+		local heroes = FindUnitsInRadius(roshan:GetTeamNumber(), roshan:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+		for _, hero in ipairs(heroes) do
+			if hero:GetTeamNumber() == self.targetTeam and hero:IsAlive() then
+				self.AItarget = hero
+				self.roshan:SetForceAttackTarget(hero)
+				EmitSoundOnClient("diretide_select_target_Stinger", hero:GetPlayerOwner())
+				break
+			end
+		end
+		
+	else
+		if self.begState == 0 then		-- If haven't begged
+			if CalcDistanceBetweenEntityOBB(roshan, self.AItarget) <= self.begDistance then
+				self.begState = 1
+				roshan:AddNewModifier(roshan, nil, "modifier_imba_roshan_ai_beg", {duration = 5})
+				
+				-- sound
+				Timers:CreateTimer(0.5, function()
+					EmitSoundOnLocationWithCaster(roshan:GetAbsOrigin(), "Diretide.RoshanBeg", roshan)
+				end)
+			end
+			
+		elseif self.begState == 1 then
+			
+		else							-- If has begged
+			if self.AItarget and self.AItarget:IsAlive() then 
+				if not self.roshan:IsAttackingEntity(self.AItarget) then
+					self.roshan:SetForceAttackTarget(self.AItarget)
+				end
+			else
+				self:ChangeTagret(self.roshan)
+			end
+		end
+	end
+end
+
+function modifier_imba_roshan_ai_diretide:Candy(roshan)
+	self.isEatingCandy = true
+	roshan:SetForceAttackTarget(nil)
+	roshan:Interrupt()
+	
+	local begMod = roshan:FindModifierByName("modifier_imba_roshan_ai_beg")
+	if begMod then begMod:DestroyNoAggro() end
+	
+	-- Timer because if an animation modifying modifier gets removed and another gets added at the same moment, the new animation will not apply
+	Timers:CreateTimer(FrameTime(), function()
+		roshan:AddNewModifier(roshan, nil, "modifier_imba_roshan_ai_eat", {duration = 7})
+		
+		-- Sounds
+		Timers:CreateTimer(0.15, function()
+			EmitSoundOnLocationWithCaster(roshan:GetAbsOrigin(), "Diretide.RoshanEatCandy", roshan)
+		end)
+		
+		Timers:CreateTimer(3.33, function()
+			EmitSoundOnLocationWithCaster(roshan:GetAbsOrigin(), "Diretide.RoshanSniff", roshan)
+		end)
+		
+		Timers:CreateTimer(5.9, function()
+			EmitSoundOnLocationWithCaster(roshan:GetAbsOrigin(), "Diretide.RoshanRoar", roshan)
+		end)
+	end)
+	
+	local candyMod = roshan:FindModifierByName("modifier_imba_roshan_eaten_candy")
+	if not candyMod then
+		candyMod = roshan:AddNewModifier(roshan, self:GetAbility(), "modifier_imba_roshan_eaten_candy", {})
+	end
+	
+	candyMod:IncrementStackCount()
+end
+
+function modifier_imba_roshan_ai_diretide:ChangeTagret(roshan)
+	self.AItarget = nil
+	self.begState = 0
+	self.isEatingCandy = false
+	
+	roshan:SetForceAttackTarget(nil)
+	roshan:Interrupt()
+	
+	local begMod = roshan:FindModifierByName("modifier_imba_roshan_ai_beg")
+	if begMod then begMod:DestroyNoAggro() end
+	
+	if self.targetTeam == DOTA_TEAM_GOODGUYS then
+		self.targetTeam = DOTA_TEAM_BADGUYS
+	else
+		self.targetTeam = DOTA_TEAM_GOODGUYS
+	end
+end
+
+--	PHASE III
+function modifier_imba_roshan_ai_diretide:ThinkPhase3(roshan)
+	-- Don't think while being stunned, hexed, or casting spells
+	if roshan:IsStunned() or roshan:IsHexed() or roshan:IsChanneling() or roshan:GetCurrentActiveAbility() then return end
+	local hero = FindUnitsInRadius(roshan:GetTeamNumber(), roshan:GetAbsOrigin(), nil, 700, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+	if #hero > 0 then
+		COUNT_DOWN = 1
+	end
+
+	-- Transitioning from Phase 2 to 3
+	if self.isTransitioning then
+		self.leashPoint			= Entities:FindByName(nil, "roshan_arena_"..DIRETIDE_WINNER):GetAbsOrigin()										-- Phase 3 starting point
+		local distanceFromLeash = (roshan:GetAbsOrigin() - self.leashPoint):Length2D()
+		if distanceFromLeash > 100 then
+			roshan:SetForceAttackTarget(nil)
+			roshan:MoveToPosition(self.leashPoint)
+		else
+			roshan:SetForceAttackTarget(nil)
+			roshan:Interrupt()
+			self.atStartPoint = true
+			
+			Timers:CreateTimer(8, function()
+				self.atStartPoint = false
+				self.isTransitioning = false
+			end)
+			
+			EmitSoundOnLocationWithCaster(roshan:GetAbsOrigin(), "RoshanDT.Gobble", roshan)
+			
+			Timers:CreateTimer(8, function()
+				self.atStartPoint = false
+				self.isTransitioning = false
+			end)
+		end
+	
+		return
+	end
+	
+	-- Wait. No reason to decrement negative values
+	if self.wait < 0 then
+		return
+	elseif self.wait > 0 then
+		self.wait = self.wait - 1
+		return
+	end
+	
+	-- Check if Roshan too far away from the leashing point
+	local distanceFromLeash = (roshan:GetAbsOrigin() - self.leashPoint):Length2D()
+	if not self.returningToLeash and distanceFromLeash >= self.leashDistance then
+		self.returningToLeash = true
+		roshan:SetHealth(roshan:GetHealth() + roshan:GetMaxHealth() * (self.leashHealPcnt * 0.01)) -- To bypass shit like AAs ult or Malediction healing reduction
+	elseif self.returningToLeash and distanceFromLeash < 100 then
+		roshan:Interrupt()
+		self.returningToLeash = false
+	end
+	
+	-- Return to the leashing point if he should
+	if self.returningToLeash then
+		roshan:SetForceAttackTarget(nil)
+		roshan:MoveToPosition(self.leashPoint)
+		return
+	end
+	
+	-- If can summon Roshlings, summon them and keep thinking
+	if self.roshlings and self.roshlings:IsCooldownReady() then
+		roshan:CastAbilityNoTarget(self.roshlings, 1)
+	end
+	
+	-- Cast Force Wave if its available
+	if self.forceWave and self.forceWave:IsCooldownReady() then
+		local radius = self.forceWave:GetSpecialValueFor("radius")
+		local minTargets = self.forceWave:GetSpecialValueFor("min_targets")
+		
+		local nearbyHeroes = FindUnitsInRadius(roshan:GetTeamNumber(), roshan:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+		if #nearbyHeroes >= minTargets then
+			roshan:CastAbilityNoTarget(self.apocalypse, 1)
+			return
+		end
+	end
+	
+	-- Cast apocalypse if its available
+	if self.apocalypse and self.apocalypse:IsCooldownReady() then
+		local maxRange = self.apocalypse:GetSpecialValueFor("max_range")
+		local minRange = self.apocalypse:GetSpecialValueFor("min_range")
+		local minTargets = self.apocalypse:GetSpecialValueFor("min_targets")
+		local inRange = 0
+		
+		local nearbyHeroes = FindUnitsInRadius(roshan:GetTeamNumber(), roshan:GetAbsOrigin(), nil, maxRange, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
+		for _, hero in ipairs(nearbyHeroes) do
+			if CalcDistanceBetweenEntityOBB(roshan, hero) >= minRange then
+				inRange = inRange + 1
+			end
+		end
+		
+		if inRange >= minTargets then
+			roshan:CastAbilityNoTarget(self.apocalypse, 1)
+			return
+		end
+	end
+	
+	-- Cast Fire Breath if its available
+	if self.breath and self.breath:IsCooldownReady() then
+		local range = self.breath:GetSpecialValueFor("range")
+		
+		if CalcDistanceBetweenEntityOBB(roshan, self.AItarget) <= range then
+			roshan:CastAbilityOnPosition(self.AItarget:GetAbsOrigin(), self.breath, nil) 
+			return
+		end
+	end
+	
+	-- Cast Fire Ball if its available
+	if self.fireBall and self.fireBall:IsCooldownReady() then
+		local range = self.fireBall:GetSpecialValueFor("range")
+		local minTargets = self.fireBall:GetSpecialValueFor("min_targets")
+		
+		local nearbyHeroes = FindUnitsInRadius(roshan:GetTeamNumber(), roshan:GetAbsOrigin(), nil, range, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+		if #nearbyHeroes >= minTargets then
+			roshan:CastAbilityNoTarget(self.fireBall, 1)
+			return
+		end
+	end
+	
+	-- Cast Toss if its available
+	if self.toss and self.toss:IsCooldownReady() then
+		local maxRange = self.toss:GetSpecialValueFor("tooltip_range")
+		local pickupRadius = self.toss:GetSpecialValueFor("grab_radius")
+		local pickupUnit = nil
+		local throwTarget = nil
+		
+		local units = FindUnitsInRadius(roshan:GetTeamNumber(), roshan:GetAbsOrigin(), nil, pickupRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_CLOSEST, false) 
+		for _, unit in ipairs(units) do
+			if unit and unit:IsAlive() then
+				pickupUnit = unit
+				break
+			end
+		end
+		
+		if pickupUnit then
+			units = FindUnitsInRadius(roshan:GetTeamNumber(), roshan:GetAbsOrigin(), nil, maxRange, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_FARTHEST, false) 
+			for _, unit in ipairs(units) do
+				if unit and unit:IsAlive() then
+					throwTarget = unit
+					break
+				end
+			end
+			
+			if throwTarget then
+				roshan:CastAbilityOnTarget(throwTarget, self.toss, 1)
+				return
+			end
+		end
+	end
+	
+	-- If no spell was cast, attack the target.
+	roshan:SetForceAttackTarget(self.AItarget)
+end
+
+---------- Modifier for handling begging
+if modifier_imba_roshan_ai_beg == nil then modifier_imba_roshan_ai_beg = class({}) end
+function modifier_imba_roshan_ai_beg:GetAttributes() return MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE end
+function modifier_imba_roshan_ai_beg:IsPurgeException() return false end
+function modifier_imba_roshan_ai_beg:IsPurgable() return false end
+function modifier_imba_roshan_ai_beg:IsDebuff() return false end
+function modifier_imba_roshan_ai_beg:IsHidden() return true end
+
+function modifier_imba_roshan_ai_beg:GetEffectName()
+	return "particles/generic_gameplay/generic_has_quest.vpcf" end
+	
+function modifier_imba_roshan_ai_beg:GetEffectAttachType()
+	return PATTACH_OVERHEAD_FOLLOW end
+
+function modifier_imba_roshan_ai_beg:OnDestroy()
+	if IsServer() then
+		if not self.noAggro then	-- Go ape shit if the modifier expired on its own (not by candy-ing Roshan or through 'ChangeTagret)
+			local roshan = self:GetParent()
+			local AImod = roshan:FindModifierByName("modifier_imba_roshan_ai_diretide")
+			if AImod then
+				AImod.begState = 2
+			end
+		end
+	end
+end
+
+function modifier_imba_roshan_ai_beg:DestroyNoAggro()
+	self.noAggro = true
+	self:Destroy()
+end
+
+function modifier_imba_roshan_ai_beg:DeclareFunctions()
+	return { MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
+			 MODIFIER_PROPERTY_OVERRIDE_ANIMATION_WEIGHT,}
+end
+
+function modifier_imba_roshan_ai_beg:GetOverrideAnimation()
+	return ACT_DOTA_CHANNEL_ABILITY_5 end
+
+function modifier_imba_roshan_ai_beg:GetOverrideAnimationWeight()
+	return 100 end
+
+---------- Modifier for when eating a candy
+if modifier_imba_roshan_ai_eat == nil then modifier_imba_roshan_ai_eat = class({}) end
+function modifier_imba_roshan_ai_eat:GetAttributes() return MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE end
+function modifier_imba_roshan_ai_eat:IsPurgeException() return false end
+function modifier_imba_roshan_ai_eat:IsPurgable() return false end
+function modifier_imba_roshan_ai_eat:IsDebuff() return false end
+function modifier_imba_roshan_ai_eat:IsHidden() return true end
+	
+function modifier_imba_roshan_ai_eat:OnDestroy()
+	if IsServer() then
+		local roshan = self:GetParent()
+		local AImod = roshan:FindModifierByName("modifier_imba_roshan_ai_diretide")
+		
+		if AImod then
+			AImod:ChangeTagret(roshan)
+		end
+	end
+end
+
+function modifier_imba_roshan_ai_eat:DeclareFunctions()
+	return { MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
+			 MODIFIER_PROPERTY_OVERRIDE_ANIMATION_WEIGHT,}
+end
+
+function modifier_imba_roshan_ai_eat:GetOverrideAnimation()
+	return ACT_DOTA_CHANNEL_ABILITY_6 end
+
+function modifier_imba_roshan_ai_eat:GetOverrideAnimationWeight()
+	return 1000 end
+
+---------- Candy modifier
+if modifier_imba_roshan_eaten_candy == nil then modifier_imba_roshan_eaten_candy = class({}) end
+function modifier_imba_roshan_eaten_candy:GetAttributes() return MODIFIER_ATTRIBUTE_PERMANENT + MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE end
+function modifier_imba_roshan_eaten_candy:IsPurgeException() return false end
+function modifier_imba_roshan_eaten_candy:IsPurgable() return false end
+function modifier_imba_roshan_eaten_candy:IsDebuff() return false end
+function modifier_imba_roshan_eaten_candy:IsHidden() return false end
+
+function modifier_imba_roshan_eaten_candy:GetTexture()
+	return "item_halloween_candy_corn" end
+
+function modifier_imba_roshan_eaten_candy:DeclareFunctions()
+	return { MODIFIER_PROPERTY_MOVESPEED_MAX,
+			 MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+			 MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT, }
+end
+
+function modifier_imba_roshan_eaten_candy:OnCreated()
+	local ability = self:GetAbility()
+	if not ability then
+		print("ERROR - NO ABILITY FOR CANDY MODIFIER!")
+		self:Destroy()
+		return
+	end
+	
+	self.speedPerCandy = ability:GetSpecialValueFor("speedPerCandy")
+	self.damagePerCandy = ability:GetSpecialValueFor("damagePerCandy")
+end
+
+function modifier_imba_roshan_eaten_candy:GetModifierPreAttack_BonusDamage()
+	return self.speedPerCandy * self:GetStackCount() end
+
+function modifier_imba_roshan_eaten_candy:GetModifierMoveSpeedBonus_Constant()
+	return self.damagePerCandy * self:GetStackCount() end
+
+function modifier_imba_roshan_eaten_candy:GetModifierMoveSpeed_Max()
+	return 3000 end
+
+------------------------------------------
+--				apocalypse				--
+------------------------------------------
+if imba_roshan_diretide_apocalypse == nil then imba_roshan_diretide_apocalypse = class({}) end
+function imba_roshan_diretide_apocalypse:GetCastAnimation()
+	return ACT_DOTA_CAST_ABILITY_1 end
+
+function imba_roshan_diretide_apocalypse:OnSpellStart()
+	local roshan = self:GetCaster()
+	local minRange = self:GetSpecialValueFor("min_range")
+	local maxRange = self:GetSpecialValueFor("max_range")
+	local delay = self:GetSpecialValueFor("delay")
+	local damage = self:GetSpecialValueFor("damage")
+	local radius = self:GetSpecialValueFor("radius")
+	
+	local positions = {}
+	local heroes = FindUnitsInRadius(roshan:GetTeamNumber(), roshan:GetAbsOrigin(), nil, maxRange, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
+	for _, hero in ipairs(heroes) do
+		if CalcDistanceBetweenEntityOBB(roshan, hero) >= minRange then
+			local pos = hero:GetAbsOrigin()
+			table.insert(positions, pos)
+			
+			EmitSoundOnLocationWithCaster(pos, "RoshanDT.SunStrike.Charge", roshan) 
+			local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_sun_strike_team.vpcf", PATTACH_CUSTOMORIGIN, roshan)
+			ParticleManager:SetParticleControl(particle, 0, pos)
+			ParticleManager:ReleaseParticleIndex(particle)
+		end
+	end
+	
+	Timers:CreateTimer(delay, function()
+		
+		-- loop through the positions and deal damage to all units caught in the explosions AoE
+		for _, position in ipairs(positions) do
+			local units = FindUnitsInRadius(roshan:GetTeamNumber(), position, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
+			local damageTable = {victim = nil, attacker = roshan, damage = damage / #units, damage_type = DAMAGE_TYPE_PURE}
+			
+			for _, unit in ipairs(units) do
+				damageTable.victim = unit
+				ApplyDamage(damageTable)
+			end
+			
+			EmitSoundOnLocationWithCaster(position, "RoshanDT.SunStrike.Ignite", roshan) 
+			local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_sun_strike.vpcf", PATTACH_CUSTOMORIGIN, roshan)
+			ParticleManager:SetParticleControl(particle, 0, position)
+			ParticleManager:ReleaseParticleIndex(particle)
+		end
+	end)
+end
+
+--------------------------------------
+--				SLAM				--
+--------------------------------------
+if imba_roshan_diretide_force_wave == nil then imba_roshan_diretide_force_wave = class({}) end
+
+function imba_roshan_diretide_force_wave:GetBehavior()
+	return DOTA_ABILITY_BEHAVIOR_NO_TARGET end
+
+function imba_roshan_diretide_force_wave:GetCastAnimation()
+	return ACT_DOTA_CAST_ABILITY_2 end
+
+function imba_roshan_diretide_force_wave:OnSpellStart()	-- Parameters
+	local roshan = self:GetCaster()
+	local castPoint = roshan:GetAbsOrigin()
+	local waveDistance = 2000
+	local waveSize = 200
+	local waveSpeed = 500
+	local waves = 8
+	local angleStep = 360 / waves
+	local hitUnits = {}
+
+	roshan:EmitSound("RoshanDT.WaveOfForce.Cast")
+	
+	-- Base projectile information
+	local waveProjectile = {
+		Ability				= self,
+		EffectName			= "particles/units/heroes/hero_invoker/invoker_deafening_blast.vpcf",
+		vSpawnOrigin		= castPoint + Vector(0, 0, 50),
+		fDistance			= waveDistance,
+		fStartRadius		= waveRadius,
+		fEndRadius			= waveRadius,
+		Source				= roshan,
+		bHasFrontalCone		= false,
+		bReplaceExisting	= false,
+		iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
+		iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
+		iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		bDeleteOnHit		= false,
+		vVelocity			= 0,
+		bProvidesVision		= false,
+		iVisionRadius		= 0,
+		iVisionTeamNumber	= roshan:GetTeamNumber(),
+	}
+	
+	for i = 1, waves do
+--		waveProjectile.vVelocity = roshans direction + angleStep
+		waveProjectile.vVelocity.z = 0	-- So it doesn't move upwards
+		ProjectileManager:CreateLinearProjectile(waveProjectile)
+	end
+end
+
+function imba_roshan_diretide_force_wave:OnProjectileHit(unit, unitPos)
+
+end
+
+
+------------------------------------------
+--				ROSHLINGS				--
+------------------------------------------
+if imba_roshan_diretide_summon_roshlings == nil then imba_roshan_diretide_summon_roshlings = class({}) end
+function imba_roshan_diretide_summon_roshlings:OnSpellStart()
+	local roshan = self:GetCaster()
+	local roshanPos = roshan:GetAbsOrigin()
+	local summonCount = self:GetSpecialValueFor("summon_count")
+	local summon = "npc_imba_roshling"
+	local summonAbilities = { "imba_roshling_bash", "imba_roshling_aura" }
+	
+	local roshling = nil
+	GridNav:DestroyTreesAroundPoint(roshanPos, 250, false)
+	for i = 1, summonCount do
+		roshling = CreateUnitByName(summon, roshanPos, true, roshan, roshan, roshan:GetTeam())
+		roshling:SetForwardVector(roshan:GetForwardVector())
+		
+		for _, abilityName in ipairs(summonAbilities) do
+			local ability = roshling:FindAbilityByName(abilityName)
+			if ability then ability:SetLevel(1) end
+		end
+	end
+end
+
