@@ -10,10 +10,25 @@ function item_diretide_candy:OnSpellStart()
 		local target = self:GetCursorTarget()
 		local modifier_candy = caster:FindModifierByName("modifier_diretide_candy_hp_loss")
 
-		if target:GetTeam() == DOTA_TEAM_GOODGUYS then
-			CustomNetTables:SetTableValue("game_options", "radiant", {score = CustomNetTables:GetTableValue("game_options", "radiant").score +1})
-		elseif target:GetTeam() == DOTA_TEAM_BADGUYS then
-			CustomNetTables:SetTableValue("game_options", "dire", {score = CustomNetTables:GetTableValue("game_options", "dire").score +1})
+		if target:IsBuilding() then
+			print("Candy: Building!")
+			if target:GetTeam() == DOTA_TEAM_GOODGUYS then
+				CustomNetTables:SetTableValue("game_options", "radiant", {score = CustomNetTables:GetTableValue("game_options", "radiant").score +1})
+			elseif target:GetTeam() == DOTA_TEAM_BADGUYS then
+				CustomNetTables:SetTableValue("game_options", "dire", {score = CustomNetTables:GetTableValue("game_options", "dire").score +1})
+			end
+		elseif target:GetUnitName() == "npc_diretide_roshan" then
+			print("Candy: Roshan!")
+			local units = FindUnitsInRadius(1, Vector(0,0,0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+			for _, unit in ipairs(units) do
+				if unit:GetName() == "npc_dota_roshan" then
+					local AImod = unit:FindModifierByName("modifier_imba_roshan_ai_diretide")
+					if AImod then AImod:Candy(unit) end
+				end
+			end
+		elseif target:IsRealHero() then
+			print("Candy: Real Hero!")
+			-- make give a candy or a charge
 		end
 
 		-- Create the projectile

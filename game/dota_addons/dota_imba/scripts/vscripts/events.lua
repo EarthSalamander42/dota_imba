@@ -162,6 +162,11 @@ local i = 10
 --			SendToServerConsole("dota_bot_populate")
 --		end
 
+		if GetMapName() == "imba_diretide" then
+			local roshan_spawner = Entities:FindByName(nil, "roshan_diretide"):GetAbsOrigin()
+			CreateUnitByName("npc_diretide_roshan", roshan_spawner, true, nil, nil, DOTA_TEAM_NEUTRALS)
+		end
+
 		-- Shows various info to devs in pub-game to find lag issues
 		ImbaNetGraph(10.0)
 	end
