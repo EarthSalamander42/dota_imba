@@ -37,7 +37,11 @@ function imba_sniper_shrapnel:GetCastRange(location, target)
 
     -- #1 Talent: Shrapnel's cast range becomes global
 	if caster:HasTalent("special_bonus_imba_sniper_1") then
-    base_range = math.max(base_range, 25000)
+		if caster:HasModifier("modifier_imba_fountain_relief_aura") then
+		base_range = math.max(base_range, base_range * 2)
+		else
+		base_range = math.max(base_range, 25000)
+		end
 	else
 	base_range = math.max(base_range, base_range)
 	end
