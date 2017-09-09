@@ -399,7 +399,7 @@ function imba_rubick_spell_steal_controller:GetIntrinsicModifierName()	return "m
 modifier_imba_rubick_spell_steal_controller = modifier_imba_rubick_spell_steal_controller or class({})
 
 function modifier_imba_rubick_spell_steal_controller:IsDebuff()					return false end
-function modifier_imba_rubick_spell_steal_controller:IsHidden() 				return false end
+function modifier_imba_rubick_spell_steal_controller:IsHidden() 				return true end
 function modifier_imba_rubick_spell_steal_controller:IsPurgable() 				return false end
 function modifier_imba_rubick_spell_steal_controller:IsPurgeException() 		return false end
 function modifier_imba_rubick_spell_steal_controller:IsStunDebuff() 			return false end

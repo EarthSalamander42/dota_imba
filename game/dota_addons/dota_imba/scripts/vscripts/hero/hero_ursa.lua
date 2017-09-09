@@ -49,10 +49,11 @@ function imba_ursa_earthshock:OnSpellStart()
 		local bonus_effects_radius = ability:GetSpecialValueFor("bonus_effects_radius")
 		local bonus_damage_pct = ability:GetSpecialValueFor("bonus_damage_pct")
 		local bonus_slow_pct = ability:GetSpecialValueFor("bonus_slow_pct")
+		local enrage_bonus_radius = 0
 		if enrage_ability then
-			local enrage_bonus_radius = enrage_ability:GetSpecialValueFor("bonus_radius_skills")
+			enrage_bonus_radius = enrage_ability:GetSpecialValueFor("bonus_radius_skills")
 		else
-			local enrage_bonus_radius = 0
+			enrage_bonus_radius = 0
 		end
 		local enrage_bonus_dmg_pct = ability:GetSpecialValueFor("enrage_bonus_dmg_pct")				
 
@@ -1299,8 +1300,8 @@ function modifier_terrorital_hunter_aura:OnIntervalThink()
 
 		-- Check if tree is cut down, kill dummy if it is
 		if not self.ability.territorial_tree:IsStanding() then
-			self.ability.territorial_aura_modifier = nil
 			self.ability.territorial_aura_modifier:Destroy()
+			self.ability.territorial_aura_modifier = nil
 		end
 
 		-- #3 Talent: Territorial Hunter grants Tenacity to Ursa in its AoE, and has its cooldown refreshed if Ursa kills an enemy hero in it
