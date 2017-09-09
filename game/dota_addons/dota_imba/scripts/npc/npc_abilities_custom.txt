@@ -26916,116 +26916,6 @@
 	}
 
 	//=================================================================================================================
-	// Rubick Spell Steal Contorller
-	//=================================================================================================================
-	"imba_rubick_spell_steal_controller"
-	{
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"hero/hero_rubick.lua"
-		
-		"AbilityTextureName"			"rubick_empty1"
-		"MaxLevel"						"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-
-
-	}
-
-	//=================================================================================================================
-	// Rubick: Spell Steal
-	//=================================================================================================================
-	"rubick_spell_steal"
-	{
-		"MaxLevel"						"6"
-
-		"AbilityCooldown"				"0"
-
-		"AbilityCastRange"				"999999"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"180 240 300 300 300 300"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"projectile_speed"			"900 900 900 1200 1500 1800"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cast_range_scepter"		"1400"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cooldown_scepter"			"10 8 6 4 2 0"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Rubick: Spell Steal
-	//=================================================================================================================
-	"imba_rubick_spell_steal"
-	{
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"hero/hero_rubick.lua"
-		
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
-		"AbilitySound"					"Hero_Rubick.SpellSteal.Cast"
-
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-
-		"HasScepterUpgrade"				"1"
-		
-		"MaxLevel"						"6"
-
-		"AbilityTextureName"			"rubick_spell_steal"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"180 240 300 300 300 300"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"projectile_speed"			"900 900 900 1200 1500 1800"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cast_range_scepter"		"1400"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cooldown_scepter"			"10 8 6 4 2 0"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cast_range"				"1000"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cooldown"					"16 14 12 8 4 0"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Silencer's Arcane Curse
 	//=================================================================================================================
 	"imba_silencer_arcane_curse"
@@ -39061,7 +38951,7 @@
 		"AbilityTextureName"			"chaos_knight_reality_rift"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		//"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 		"FightRecapLevel"				"1"
 		"MaxLevel"						"7"
@@ -39186,33 +39076,4 @@
 			}
 		}
 	}
-	
-	//=================================================================================================================
-	// Chaos Knight Talent: Reality Rift Piece Spell Immunity
-	//=================================================================================================================
-	"special_bonus_imba_chaos_knight"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_chaos_knight_reality_rift"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"1"
-			}
-		}
-	}
-
 }
