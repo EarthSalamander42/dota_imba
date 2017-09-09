@@ -26916,6 +26916,21 @@
 	}
 
 	//=================================================================================================================
+	// Rubick Spell Steal Contorller
+	//=================================================================================================================
+	"imba_rubick_spell_steal_controller"
+	{
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_rubick.lua"
+		
+		"AbilityTextureName"			"rubick_empty1"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+
+
+	}
+
+	//=================================================================================================================
 	// Silencer's Arcane Curse
 	//=================================================================================================================
 	"imba_silencer_arcane_curse"
