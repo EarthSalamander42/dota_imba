@@ -67,8 +67,8 @@ HIT_COUNT = HIT_COUNT + 1
 			Notifications:BottomToAll({text="No more Candy in Dire Pumpkin!", duration=6.0})
 			CustomNetTables:SetTableValue("game_options", "dire", {score = 0})
 		end
-		print("Radiant Score:"..CustomNetTables:GetTableValue("game_options", "radiant").score)
-		print("Dire Score:"..CustomNetTables:GetTableValue("game_options", "dire").score)
+--		print("Radiant Score:"..CustomNetTables:GetTableValue("game_options", "radiant").score)
+--		print("Dire Score:"..CustomNetTables:GetTableValue("game_options", "dire").score)
 	end
 end
 

@@ -29,6 +29,8 @@ local game = {}
 	game.md = GetMode()
 	game.gl = GetGameLength()
 	game.tp = GetTowerUpgrades()
+	game.wt = GetWinningTeam()
+	game.wh = GetWinningHeroName(playerID)
 
 	return game
 end
@@ -40,12 +42,19 @@ local players = {}
 		if PlayerResource:IsValidPlayerID(playerID) then
 			if not PlayerResource:IsBroadcaster(playerID) then
 				local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+                local player_team = ""
+                if hero:GetTeam() == DOTA_TEAM_GOODGUYS then
+                    player_team = "Radiant"
+                else
+                    player_team = "Dire"
+                end
 
 				table.insert(players, {
 					steamID32 = PlayerResource:GetSteamAccountID(playerID),
 
 					hn = GetHeroName(playerID), -- Hero name
-					wh = GetWinningHeroName(playerID)
+					pt = player_team, -- Team this hero belongs to
+					pb = hero.buyback_count, -- Amount of buybacks performed during the game
 				})
 			end
 		end
@@ -60,13 +69,4 @@ function PrintSchema(gameArray, playerArray)
 	print("\n-------- PLAYER DATA --------")
 	DeepPrintTable(playerArray)
 	print("-------------------------------------")
-end
-
-function customSchema:submitRound()
-
-	local winners = BuildRoundWinnerArray()
-	local game = BuildGameArray()
-	local players = BuildPlayersArray()
-
-	statCollection:sendCustom({ game = game, players = players })
 end

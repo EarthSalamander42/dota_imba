@@ -39200,6 +39200,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"roshan_halloween_apocalypse"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
 		"AbilityTextureName"			"invoker_sunstrike"
 		"AbilityCooldown"				"25"

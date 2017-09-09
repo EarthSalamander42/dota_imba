@@ -8187,7 +8187,7 @@
 		"Level"						"50"
 		"IsAncient"					"1"
 		"UnitLabel"					""
-				
+
 		// Abilities
 		//----------------------------------------------------------------
 		"Ability1"					"imba_roshan_diretide_summon_roshlings"
@@ -8256,5 +8256,18 @@
 		// Inventory
 		//----------------------------------------------------------------
 		"HasInventory"				"1"
+
+		"MinimapIcon"					"minimap_roshancamp"
+		"MinimapIconSize"				"450"
+
+		"Creature"
+		{
+			"AttachWearables"
+			{
+				"Wearable1" { "ItemDef" "10092" } // Roshan's Costume - Frankenstein
+//				"Wearable1" { "ItemDef" "10093" } // Roshan's Costume - Dracula
+//				"Wearable1" { "ItemDef" "10094" } // Roshan's Costume - Angel
+			}
+		}
 	}
 }
