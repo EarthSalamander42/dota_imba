@@ -157,3 +157,12 @@ local mode = ""
 
 	return mode
 end
+
+function GetWinningTeam()
+local winning_team = GAME_WINNER_TEAM
+
+	if winning_team == "" then
+		return
+	end
+	return winning_team
+end
