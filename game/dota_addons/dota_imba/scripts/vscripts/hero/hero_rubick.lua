@@ -379,3 +379,70 @@ function modifier_imba_telekinesis_root:CheckState()
 	}
     return state
 end
+
+
+  --[[	
+		Author: MouJiaoZi
+		Date: 09.09.2017	
+	]]
+
+-------------------------------------------
+--			SPELL STEAL
+-------------------------------------------
+
+imba_rubick_spell_steal_controller = imba_rubick_spell_steal_controller or class({})
+LinkLuaModifier("modifier_imba_rubick_spell_steal_controller", "hero/hero_rubick", LUA_MODIFIER_MOTION_NONE)
+
+function imba_rubick_spell_steal_controller:IsInnateAbility()	return true end
+function imba_rubick_spell_steal_controller:GetIntrinsicModifierName()	return "modifier_imba_rubick_spell_steal_controller" end
+
+modifier_imba_rubick_spell_steal_controller = modifier_imba_rubick_spell_steal_controller or class({})
+
+function modifier_imba_rubick_spell_steal_controller:IsDebuff()					return false end
+function modifier_imba_rubick_spell_steal_controller:IsHidden() 				return true end
+function modifier_imba_rubick_spell_steal_controller:IsPurgable() 				return false end
+function modifier_imba_rubick_spell_steal_controller:IsPurgeException() 		return false end
+function modifier_imba_rubick_spell_steal_controller:IsStunDebuff() 			return false end
+function modifier_imba_rubick_spell_steal_controller:RemoveOnDeath() 			return false end
+
+function modifier_imba_rubick_spell_steal_controller:OnCreated()
+	if not IsServer() then
+		return
+	end
+	self.talent_ability = {}
+end
+
+function modifier_imba_rubick_spell_steal_controller:DeclareFunctions()
+	local funcs = {MODIFIER_EVENT_ON_ABILITY_FULLY_CAST}
+	return funcs
+end
+
+function modifier_imba_rubick_spell_steal_controller:OnAbilityFullyCast(keys)
+	if not IsServer() then
+		return
+	end
+	if keys.unit ~= self:GetParent() then
+		return
+	end
+	local ability = keys.ability
+	if ability:GetAbilityName() ~= "rubick_spell_steal" then
+		return
+	end
+	local target = keys.target
+	for _, ex_talent in pairs(self.talent_ability) do
+		if not ex_talent:IsNull() then
+			keys.unit:RemoveAbility(ex_talent:GetAbilityName())
+		end
+	end
+	for i=0, 23 do
+		local talent = target:GetAbilityByIndex(i)
+		if talent ~= nil then
+			local name = talent:GetAbilityName()
+			if string.find(name, "special_bonus_") ~= nil then
+				keys.unit:AddAbility(name)
+				keys.unit:FindAbilityByName(name):SetLevel(talent:GetLevel())
+				table.insert(self.talent_ability, keys.unit:FindAbilityByName(name))
+			end
+		end
+	end
+end

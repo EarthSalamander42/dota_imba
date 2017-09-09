@@ -8,7 +8,6 @@ local table_player_key = {}
 local table_able = {}
 local table_XP_has = {}
 local table_XP = {}
-local table_MMR = {}
 
 local SteamID64
 local player_key
@@ -17,6 +16,7 @@ local XP_has
 local EnnDisEnabled = 0
 
 XP_WIN = 24
+ABANDON_CHARGE = 200
 -- imba_standard win = +48
 -- imba_standard lose = +24
 -- else win = +24
@@ -207,11 +207,6 @@ function Server_DecodeForPlayer ( t, nPlayerID )   --To deep-decode the Json cod
 							table_XP_has[nPlayerID] = tostring(XP_has)
 							--print("XP_has="..table_XP_has[nPlayerID])
 						end
-						if pos == "MMR" then
-							MMR = val
-							table_MMR[nPlayerID] = tostring(MMR)
-							--print("MMR="..table_MMR[nPlayerID])
-						end
 						table_able[nPlayerID] = tostring(0)
 					end
 				end
@@ -233,7 +228,6 @@ function Server_PrintInfo()
 			print("SteamID64:"..table_SteamID64[nPlayerID])
 			print("Level:"..XP_level[nPlayerID])
 			print("Rank_title:"..XP_level_title_player[nPlayerID])
---			print("MMR="..table_MMR[nPlayerID])
 			print("XP this level need:"..XP_this_level[nPlayerID])
 			print("XP has in this level:"..XP_has_this_level[nPlayerID])
 			print("XP need to level up:"..XP_need_to_next_level[nPlayerID])
@@ -295,9 +289,7 @@ function Server_SendAndGetInfoForAll()
 end
 
 function Server_SendAndGetInfoForAll_function(nPlayerID)
-	if PlayerResource:IsValidPlayer(nPlayerID)  then
-	if PlayerResource:IsFakeClient(nPlayerID) then
-	else
+	if PlayerResource:IsValidPlayer(nPlayerID) and not PlayerResource:IsFakeClient(nPlayerID) then
 
 		table_SteamID64[nPlayerID] = tostring(PlayerResource:GetSteamID(nPlayerID))
 		table_XP[nPlayerID] = tostring(XP_WIN) --How many XP will player get in this game
@@ -323,7 +315,6 @@ function Server_SendAndGetInfoForAll_function(nPlayerID)
 		end )
 		is_AFK[nPlayerID] = 0
 
-	end
 	end
 end
 
@@ -373,9 +364,7 @@ function Server_WaitToEnableXpGain()
 		EnnDisEnabled = 1
 		--print("Enable Xp gain system....")
 		for nPlayerID=0, DOTA_MAX_TEAM_PLAYERS-1 do
-			if PlayerResource:IsValidPlayer(nPlayerID)  then
-			if PlayerResource:IsFakeClient(nPlayerID) then
-			else
+			if PlayerResource:IsValidPlayer(nPlayerID) and not PlayerResource:IsFakeClient(nPlayerID) then
 				-- Determain if this guy could gain XP
 				if PlayerResource:GetConnectionState(nPlayerID) == 2 then
 					table_able[nPlayerID] = 1
@@ -387,7 +376,6 @@ function Server_WaitToEnableXpGain()
 				end
 				-- Determain if this guy could gain XP
 			end
-			end
 		end
 	end
 	})
@@ -397,92 +385,87 @@ end
 
 function Server_CalculateXPForWinnerAndAll(winning_team)
 	local Winner
+	local dis_player = 0
 	for nPlayerID=0, DOTA_MAX_TEAM_PLAYERS-1 do
-		if  PlayerResource:IsValidPlayer(nPlayerID) then
-			if PlayerResource:IsFakeClient(nPlayerID) then
-			else
-				if winning_team == "Radiant" then
-					Winner = DOTA_TEAM_GOODGUYS
-				end
-				if winning_team == "Dire" then
-					Winner = DOTA_TEAM_BADGUYS
-				end
-				if EnnDisEnabled == 1 then
-					for nPlayerID=0, DOTA_MAX_TEAM_PLAYERS-1 do
-						if PlayerResource:IsValidPlayer(nPlayerID) and not PlayerResource:IsFakeClient(nPlayerID) then
-							Server_EnableToGainXPForPlyaer(nPlayerID)
-						end
-					end
-				end
-				local jsondata={}
-				local jsontable={}
-				jsontable.SteamID64 = table_SteamID64[nPlayerID]
-				jsontable.XP = table_XP[nPlayerID]
-				jsontable.WIN = tostring(0)
-
-				print("SERVER XP: Testing XP earned...")
-				if PlayerResource:GetTeam(nPlayerID) == Winner and PlayerResource:GetConnectionState(nPlayerID) == 2 then
-					local multiplier = 1.0
-					if GetMapName() == "imba_standard" then multiplier = 2.0 end
-					if STOREGGA_ACTIVE then multiplier = 4.2 end
-					if PlayerResource:GetConnectionState(nPlayerID) ~= 2 then
-						jsontable.XP = tostring(0)
-						CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {
-							XP = tonumber(XP_has_this_level[nPlayerID]),
-							MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]),
-							Lvl = tonumber(XP_level[nPlayerID]),
-							ID = nPlayerID,
-							title = XP_level_title_player[nPlayerID],
-							XP_change = tonumber(0),
-							title_color = Server_GetTitleColor(XP_level_title_player[nPlayerID], true)
-						})
-					else
-						jsontable.XP = tostring(math.ceil(table_XP[nPlayerID] * multiplier))
-						CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {
-							XP = tonumber(XP_has_this_level[nPlayerID]),
-							MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]),
-							Lvl = tonumber(XP_level[nPlayerID]),
-							ID = nPlayerID,
-							title = XP_level_title_player[nPlayerID],
-							XP_change = tonumber(math.ceil(table_XP[nPlayerID] * multiplier)),
-							title_color = Server_GetTitleColor(XP_level_title_player[nPlayerID], true)
-						})
-					end
-				else
-					if PlayerResource:GetConnectionState(nPlayerID) ~= 2 then
-						jsontable.XP = tostring(0)
-						CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {
-							XP = tonumber(XP_has_this_level[nPlayerID]),
-							MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]),
-							Lvl = tonumber(XP_level[nPlayerID]),
-							ID = nPlayerID,
-							title = XP_level_title_player[nPlayerID],
-							XP_change = tonumber(0),
-							title_color = Server_GetTitleColor(XP_level_title_player[nPlayerID], true)
-						})
-					else
-						jsontable.XP = tostring(table_XP[nPlayerID] / 2)
-						CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {
-							XP = tonumber(XP_has_this_level[nPlayerID]),
-							MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]),
-							Lvl = tonumber(XP_level[nPlayerID]),
-							ID = nPlayerID,
-							title = XP_level_title_player[nPlayerID],
-							XP_change = tonumber(table_XP[nPlayerID] / 2),
-							title_color = Server_GetTitleColor(XP_level_title_player[nPlayerID], true)
-						})
-					end
-				end
-				jsontable.player_key = table_player_key[nPlayerID]
-				table.insert(jsondata,jsontable)
-				local request = CreateHTTPRequestScriptVM( "GET", "http://www.dota2imba.cn/XP_game_end_tmp_to_perm.php" )
-					request:SetHTTPRequestGetOrPostParameter("data_json",JSON:encode(jsondata))
-					request:SetHTTPRequestGetOrPostParameter("auth",_AuthCode);
-					request:Send(function(result)
-				end)
-			end
+		if  PlayerResource:IsValidPlayer(nPlayerID) and not PlayerResource:IsFakeClient(nPlayerID) and PlayerResource:GetConnectionState(nPlayerID) ~= 2 then
+			dis_player = dis_player + 1
 		end
 	end
+	local abandon_xp = 0 - (ABANDON_CHARGE / dis_player)
+	for nPlayerID=0, DOTA_MAX_TEAM_PLAYERS-1 do
+		if  PlayerResource:IsValidPlayer(nPlayerID) and not PlayerResource:IsFakeClient(nPlayerID) then
+			if winning_team == "Radiant" then
+				Winner = DOTA_TEAM_GOODGUYS
+			end
+			if winning_team == "Dire" then
+				Winner = DOTA_TEAM_BADGUYS
+			end
+			if EnnDisEnabled ~= 1 then
+				return
+			end
+			local jsondata={}
+			local jsontable={}
+			jsontable.SteamID64 = table_SteamID64[nPlayerID]
+			jsontable.XP = table_XP[nPlayerID]
+			jsontable.WIN = tostring(0)
+
+			print("SERVER XP: Testing XP earned...")
+			if PlayerResource:GetTeam(nPlayerID) == Winner and PlayerResource:GetConnectionState(nPlayerID) == 2 then
+				local multiplier = 1.0
+				if GetMapName() == "imba_standard" then multiplier = 2.0 end
+				if STOREGGA_ACTIVE then multiplier = 4.2 end
+				jsontable.XP = tostring(math.ceil(table_XP[nPlayerID] * multiplier))
+				CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {
+					XP = tonumber(XP_has_this_level[nPlayerID]),
+					MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]),
+					Lvl = tonumber(XP_level[nPlayerID]),
+					ID = nPlayerID,
+					title = XP_level_title_player[nPlayerID],
+					XP_change = tonumber(math.ceil(table_XP[nPlayerID] * multiplier)),
+					title_color = Server_GetTitleColor(XP_level_title_player[nPlayerID], true)
+				})
+			else
+				if PlayerResource:GetConnectionState(nPlayerID) ~= 2 then
+					jsontable.XP = tostring(math.ceil(abandon_xp))
+					CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {
+						XP = tonumber(XP_has_this_level[nPlayerID]),
+						MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]),
+						Lvl = tonumber(XP_level[nPlayerID]),
+						ID = nPlayerID,
+						title = XP_level_title_player[nPlayerID],
+						XP_change = tonumber(math.ceil(abandon_xp)),
+						title_color = Server_GetTitleColor(XP_level_title_player[nPlayerID], true)
+					})
+				else
+					jsontable.XP = tostring(table_XP[nPlayerID] / 2)
+					CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {
+						XP = tonumber(XP_has_this_level[nPlayerID]),
+						MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]),
+						Lvl = tonumber(XP_level[nPlayerID]),
+						ID = nPlayerID,
+						title = XP_level_title_player[nPlayerID],
+						XP_change = tonumber(table_XP[nPlayerID] / 2),
+						title_color = Server_GetTitleColor(XP_level_title_player[nPlayerID], true)
+					})
+				end
+			end
+			jsontable.player_key = table_player_key[nPlayerID]
+			table.insert(jsondata,jsontable)
+			Server_SendEndGameInfo(jsondata)
+		end
+	end
+end
+
+function Server_SendEndGameInfo(json)
+	local request = CreateHTTPRequestScriptVM( "GET", "http://www.dota2imba.cn/XP_game_end_tmp_to_perm.php" )
+			request:SetHTTPRequestGetOrPostParameter("data_json",JSON:encode(json))
+			request:SetHTTPRequestGetOrPostParameter("auth",_AuthCode);
+			request:Send(function(result)
+				if result.StatusCode ~= 200 then
+					Server_SendEndGameInfo(json)
+					return
+				end
+			end)
 end
 
 local table_AFK_check_allHeroes = {}
@@ -503,11 +486,9 @@ function Serer_CheckForAFKPlayer()
 	end
 	Timers(function()
 			for nPlayerID=0, DOTA_MAX_TEAM_PLAYERS-1 do
-				if PlayerResource:IsValidPlayer(nPlayerID)  then
-				if PlayerResource:IsFakeClient(nPlayerID) then
-				else
-					table_AFK_check_allHeroes[nPlayerID]=PlayerResource:GetSelectedHeroEntity(nPlayerID)   
+				if PlayerResource:IsValidPlayer(nPlayerID) and not PlayerResource:IsFakeClient(nPlayerID) then
 
+					table_AFK_check_allHeroes[nPlayerID]=PlayerResource:GetSelectedHeroEntity(nPlayerID)   
 					if PlayerResource:GetLevel(nPlayerID) ~= _maxLv then
 						table_AFK_exp_round[cycle_AFK_exp_round][nPlayerID]=CDOTA_BaseNPC_Hero.GetCurrentXP(table_AFK_check_allHeroes[nPlayerID])
 						if cycle_AFK_exp_round == cycle_AFK_exp_max_round then
@@ -535,7 +516,6 @@ function Serer_CheckForAFKPlayer()
 						Server_DisableToGainXpForPlayer(nPlayerID)
 					end
 
-				end
 				end
 			end
 	return cycle_AFK_check_interval --cycle_AFK_check_interval

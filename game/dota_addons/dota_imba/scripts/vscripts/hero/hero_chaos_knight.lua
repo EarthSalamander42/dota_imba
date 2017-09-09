@@ -167,72 +167,17 @@ function imba_chaos_knight_phantasm:OnSpellStart()
 		local casterOrigin = caster:GetAbsOrigin()
 
 		-- Stop any actions of the caster otherwise its obvious which unit is real
-		local phantasm_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_chaos_knight/chaos_knight_phantasm.vpcf", PATTACH_ABSORIGIN, caster)
-		caster:AddNewModifier(caster, nil, "modifier_chaos_knight_phantasm_cast", {duration=invulnerability_duration})
-		caster:Stop()
+		caster:AddNewModifier(caster, ability, "modifier_chaos_knight_phantasm_cast", {duration=invulnerability_duration})
 		EmitSoundOn("Hero_ChaosKnight.Phantasm", caster)
 
-		-- Initialize the illusion table to keep track of the units created by the spell
-		if not caster.phantasm_illusions then
-			caster.phantasm_illusions = {}
-		end
-
-		-- Kill the old images
-		for k,v in pairs(caster.phantasm_illusions) do
-			if v and IsValidEntity(v) then 
-				v:ForceKill(false)
-			end
-		end
-
-		-- Start a clean illusion table
-		caster.phantasm_illusions = {}
-
-		-- Setup a table of potential spawn positions
-		local vRandomSpawnPos = {
-			Vector( 72, 0, 0 ),		-- North
-			Vector( 0, 72, 0 ),		-- East
-			Vector( -72, 0, 0 ),	-- South
-			Vector( 0, -72, 0 ),	-- West
-		}
-
-		for i=#vRandomSpawnPos, 2, -1 do	-- Simply shuffle them
-			local j = RandomInt( 1, i )
-			vRandomSpawnPos[i], vRandomSpawnPos[j] = vRandomSpawnPos[j], vRandomSpawnPos[i]
-		end
-
-		-- Insert the center position and make sure that at least one of the units will be spawned on there.
-		table.insert( vRandomSpawnPos, RandomInt( 1, images_count+1 ), Vector( 0, 0, 0 ) )
-
-		Timers:CreateTimer(invulnerability_duration, function()
-			-- At first, move the main hero to one of the random spawn positions.
-			FindClearSpaceForUnit( caster, casterOrigin + table.remove( vRandomSpawnPos, 1 ), true )
-
-			-- Spawn illusions
-			if chance <= extra_illusion_chance then
-				images_count = images_count +1
-				EmitSoundOn("Hero_ChaosKnight.Phantasm.Plus", caster)
-			end
-
-			for i=1, images_count do
-				local origin = casterOrigin + table.remove( vRandomSpawnPos, 1 )
-				local illusion = IllusionManager:CreateIllusion(caster, ability, origin, caster, {damagein=incomingDamage, damageout=outcomingDamage, unique="phantasm_"..i, duration=duration})
-				table.insert(caster.phantasm_illusions, illusion)
-			end
-			ParticleManager:DestroyParticle(phantasm_particle, false)
-			ParticleManager:ReleaseParticleIndex(phantasm_particle)
-		end)
 	end
 end
 
 modifier_chaos_knight_phantasm_cast = class({})
 
---------------------------------------------------------------------------------
-
 function modifier_chaos_knight_phantasm_cast:IsHidden()
 	return true
 end
-
---------------------------------------------------------------------------------
 
 function modifier_chaos_knight_phantasm_cast:CheckState()
 	local state = 
@@ -244,4 +189,70 @@ function modifier_chaos_knight_phantasm_cast:CheckState()
 	}
 	
 	return state
+end
+
+function modifier_chaos_knight_phantasm_cast:OnCreated()
+	if not IsServer() then
+		return
+	end
+	local caster = self:GetCaster()
+	self.phantasm_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_chaos_knight/chaos_knight_phantasm.vpcf", PATTACH_ABSORIGIN, caster)
+end
+
+function modifier_chaos_knight_phantasm_cast:OnDestroy()
+	if not IsServer() then
+		return
+	end
+
+	local caster = self:GetCaster()
+	local ability = self:GetAbility()
+
+	-- Ability variables
+	local unit_name = caster:GetUnitName()
+	local images_count = ability:GetSpecialValueFor("images_count")
+	local duration = ability:GetSpecialValueFor("illusion_duration")
+	local outgoingDamage = ability:GetSpecialValueFor("outgoing_damage")
+	local incomingDamage = ability:GetSpecialValueFor("incoming_damage")
+	local invulnerability_duration = ability:GetSpecialValueFor("invuln_duration")
+	local extra_illusion_chance = ability:GetSpecialValueFor("extra_phantasm_chance_pct_tooltip")
+
+	local chance = RandomInt(1, 100)
+	local casterOrigin = caster:GetAbsOrigin()
+
+	-- Initialize the illusion table to keep track of the units created by the spell
+	if not caster.phantasm_illusions then
+		caster.phantasm_illusions = {}
+	end
+
+	-- Kill the old images
+	for k,v in pairs(caster.phantasm_illusions) do
+		if v and IsValidEntity(v) then 
+			v:ForceKill(false)
+		end
+	end
+
+	-- Start a clean illusion table
+	caster.phantasm_illusions = {}
+
+	-- Spawn illusions
+	if chance <= extra_illusion_chance then
+		images_count = images_count +1
+		EmitSoundOn("Hero_ChaosKnight.Phantasm.Plus", caster)
+	end
+
+	for i=1, images_count do
+		local illusion = IllusionManager:CreateIllusion(caster, ability, casterOrigin, caster, {damagein=incomingDamage, damageout=outgoingDamage, unique="chaos_knight_phantasm_"..i, duration=duration})
+		table.insert(caster.phantasm_illusions, illusion)
+	end
+
+	for i=1, #caster.phantasm_illusions+1 do
+		if i ~= #caster.phantasm_illusions+1 then
+			FindClearSpaceForUnit( caster.phantasm_illusions[i], casterOrigin, true )
+		else
+			FindClearSpaceForUnit( caster, casterOrigin, true )
+		end
+	end
+	ParticleManager:DestroyParticle(self.phantasm_particle, true)
+	ParticleManager:ReleaseParticleIndex(self.phantasm_particle)
+	self.phantasm_particle = nil
 end
