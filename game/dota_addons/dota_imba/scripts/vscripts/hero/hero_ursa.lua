@@ -388,18 +388,27 @@ function imba_ursa_overpower:GetBehavior()
 	-- #8 Talent: Overpower becomes a passive, allowing Ursa to use it as he attacks.
 	if self:GetCaster():HasTalent("special_bonus_imba_ursa_8") then
 		return DOTA_ABILITY_BEHAVIOR_PASSIVE
+	else
+		return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING
 	end
+end
 
-	return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING
+function imba_ursa_overpower:GetIntrinsicModifierName()
+	-- #8 Talent: Overpower becomes a passive, allowing Ursa to use it as he attacks.
+	if self:GetCaster():HasTalent("special_bonus_imba_ursa_8") then
+		return "modifier_imba_overpower_talent_fangs"
+	else
+		return nil
+	end
 end
 
 function imba_ursa_overpower:GetManaCost(level)
 	-- #8 Talent: Overpower becomes a passive, allowing Ursa to use it as he attacks.
 	if self:GetCaster():HasTalent("special_bonus_imba_ursa_8") then
 		return nil
+	else
+		return self.BaseClass.GetManaCost(self, level)
 	end
-
-	return self.BaseClass.GetManaCost(self, level)
 end
 
 function imba_ursa_overpower:GetAbilityTextureName()
