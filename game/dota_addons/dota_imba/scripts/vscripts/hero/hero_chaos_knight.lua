@@ -110,13 +110,22 @@ function modifier_reality_rift_armor_reduction_debuff:DeclareFunctions()
 	return decFuncs
 end
 
+function modifier_reality_rift_armor_reduction_debuff:OnCreated()
+local parent = self:GetParent()
+
+	parent.ArmorDebuff = ParticleManager:CreateParticle("particles/econ/items/templar_assassin/templar_assassin_focal/templar_meld_focal_overhead_model.vpcf", PATTACH_OVERHEAD_FOLLOW, parent)
+end
+
+function modifier_reality_rift_armor_reduction_debuff:OnDestroy()
+local parent = self:GetParent()
+
+	ParticleManager:DestroyParticle(parent.ArmorDebuff, false)
+	ParticleManager:ReleaseParticleIndex(parent.ArmorDebuff)
+end
+
 function modifier_reality_rift_armor_reduction_debuff:GetModifierPhysicalArmorBonus()
 	return self:GetAbility():GetSpecialValueFor("armor_reduction")
 end
-
---	function modifier_reality_rift_armor_reduction_debuff:GetStatusEffectName()
---		return "particles/status_fx/status_effect_slardar_amp_damage.vpcf"
---	end
 
 function modifier_reality_rift_armor_reduction_debuff:IsDebuff()
 	return true
