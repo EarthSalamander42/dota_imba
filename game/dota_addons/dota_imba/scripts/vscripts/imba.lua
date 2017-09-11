@@ -1515,6 +1515,7 @@ function GameMode:InitGameMode()
 	-- IMBA testbed command
 	Convars:RegisterCommand("imba_test", Dynamic_Wrap(GameMode, 'StartImbaTest'), "Spawns several units to help with testing", FCVAR_CHEAT)
 	Convars:RegisterCommand("particle_table_print", PrintParticleTable, "Prints a huge table of all used particles", FCVAR_CHEAT)	
+	Convars:RegisterCommand("game_time", GetGameLength, "Print the game time.", FCVAR_CHEAT)	
 
 	CustomGameEventManager:RegisterListener("remove_units", Dynamic_Wrap(GameMode, "RemoveUnits"))
 
