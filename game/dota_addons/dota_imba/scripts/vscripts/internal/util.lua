@@ -992,7 +992,7 @@ end
 
 -- This function is responsible for cleaning dummy units and wisps that may have accumulated
 function StartGarbageCollector()	
-print("started collector")
+--	print("started collector")
 
 	-- Find all dummy units in the game
 	local dummies = FindUnitsInRadius(DOTA_TEAM_BADGUYS, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)		
