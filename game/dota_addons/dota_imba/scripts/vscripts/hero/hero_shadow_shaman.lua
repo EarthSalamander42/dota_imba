@@ -109,6 +109,9 @@ function modifier_imba_mass_serpent_ward:OnAttackLanded(params) -- health handli
     if IsServer() then
         if params.target == self:GetParent() then
             local damage = 1
+            if params.unit:IsRealHero() then
+            	damage = 2
+            end
 
             if self:GetParent():GetHealth() > damage then
                 self:GetParent():SetHealth( self:GetParent():GetHealth() - damage)
