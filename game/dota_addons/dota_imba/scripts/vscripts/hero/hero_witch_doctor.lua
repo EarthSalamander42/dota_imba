@@ -212,6 +212,15 @@ function imba_witch_doctor_voodoo_restoration:GetAbilityTextureName()
    return "witch_doctor_voodoo_restoration"
 end
 
+function imba_witch_doctor_voodoo_restoration:GetIntrinsicModifierName()
+    -- #6 TALENT : Voodo restoration turns into a passive.
+	if self:GetCaster():HasTalent("special_bonus_imba_witch_doctor_6") then
+		return "modifier_imba_voodoo_restoration"
+	else
+		return nil
+	end
+end
+
 function imba_witch_doctor_voodoo_restoration:GetCastRange()
 	return self:GetSpecialValueFor("radius")
 end
@@ -293,37 +302,6 @@ function imba_witch_doctor_voodoo_restoration:OnToggle()
 		EmitSoundOn("Hero_WitchDoctor.Voodoo_Restoration.Off", hCaster)
 		StopSoundEvent("Hero_WitchDoctor.Voodoo_Restoration.Loop", hCaster)
 		hCaster:RemoveModifierByName("modifier_imba_voodoo_restoration")
-	end
-end
-
--- #6 TALENT: Levels up the aura when the ability is leveled up.
-function imba_witch_doctor_voodoo_restoration:OnUpgrade()
-	if IsServer() then
-		local hCaster = self:GetCaster() 
-		if hCaster:HasTalent("special_bonus_imba_witch_doctor_6") then
-			if hCaster:FindModifierByName("modifier_imba_voodoo_restoration") then
-				hCaster:RemoveModifierByName("modifier_imba_voodoo_restoration") 
-				hCaster:RemoveModifierByName("modifier_imba_voodoo_restoration_heal")
-			end
-			hCaster:AddNewModifier(hCaster, self, "modifier_imba_voodoo_restoration", {})
-		end
-	end
-end
-
--- #6 TALENT: Applies Voodoo restoration if it has not been activated before.
-function modifier_special_bonus_imba_witch_doctor_6:OnCreated()
-	if IsServer() then
-		local voodoo_restoration = self:GetCaster():FindAbilityByName("imba_witch_doctor_voodoo_restoration")
-		if voodoo_restoration:GetLevel() > 0 then
-			-- Turn off the visual indicator on the spell
-			if voodoo_restoration:GetToggleState() then
-				voodoo_restoration:ToggleAbility()
-			end
-			-- Apply the modifier
-			if not self:GetCaster():FindModifierByName("modifier_imba_voodoo_restoration") then
-				self:GetCaster():AddNewModifier(self:GetCaster(), voodoo_restoration, "modifier_imba_voodoo_restoration", {})
-			end
-		end
 	end
 end
 
