@@ -55,9 +55,9 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityTextureName"			"item_halloween_candy_corn"
 		"ScriptFile"					"items/item_candy.lua"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BUILDING"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_INVULNERABLE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"Model"							"models/props_gameplay/halloween_candy.mdl"
 		"Effect"						"particles/generic_gameplay/dropped_gem.vpcf"
 

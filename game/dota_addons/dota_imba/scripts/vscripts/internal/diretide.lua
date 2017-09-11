@@ -2,6 +2,8 @@ nCOUNTDOWNTIMER = 0
 PHASE = 0
 GAME_ROSHAN_KILLS = 0
 HIT_COUNT = 0
+DIRETIDE_WINNER = 2
+COUNT_DOWN = 1
 
 function Diretide()
 	EmitGlobalSound("announcer_diretide_2012_announcer_welcome_05")
@@ -11,8 +13,24 @@ function Diretide()
 	CustomNetTables:SetTableValue("game_options", "radiant", {score = 25})
 	CustomNetTables:SetTableValue("game_options", "dire", {score = 25})
 	CustomGameEventManager:Send_ServerToAllClients("show_timer", {})
-
+	DiretidePhase(PHASE)
 	CountdownDiretide(1.0)
+end
+
+function DiretidePhase(PHASE)
+	local units = FindUnitsInRadius(1, Vector(0,0,0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+	for _, unit in ipairs(units) do
+		if unit:GetName() == "npc_dota_roshan" then
+			local AImod = unit:FindModifierByName("modifier_imba_roshan_ai_diretide")
+			if AImod then
+				AImod:SetStackCount(PHASE)
+				unit:Interrupt()
+			else
+				print("ERROR - Could not find Roshans AI modifier")
+			end
+		--	break (Do we want multiple Roshans roaming the map? :nofun:)
+		end
+	end
 end
 
 -- Pumpkin
@@ -49,14 +67,17 @@ HIT_COUNT = HIT_COUNT + 1
 			Notifications:BottomToAll({text="No more Candy in Dire Pumpkin!", duration=6.0})
 			CustomNetTables:SetTableValue("game_options", "dire", {score = 0})
 		end
-		print("Radiant Score:"..CustomNetTables:GetTableValue("game_options", "radiant").score)
-		print("Dire Score:"..CustomNetTables:GetTableValue("game_options", "dire").score)
+--		print("Radiant Score:"..CustomNetTables:GetTableValue("game_options", "radiant").score)
+--		print("Dire Score:"..CustomNetTables:GetTableValue("game_options", "dire").score)
 	end
 end
 
 function CountdownDiretide(tick)
 	Timers:CreateTimer(function()
-		nCOUNTDOWNTIMER = nCOUNTDOWNTIMER - 1
+		if COUNT_DOWN == 1 then
+			nCOUNTDOWNTIMER = nCOUNTDOWNTIMER - 1
+		else
+		end
 		local t = nCOUNTDOWNTIMER
 		local minutes = math.floor(t / 60)
 		local seconds = t - (minutes * 60)
@@ -77,22 +98,25 @@ function CountdownDiretide(tick)
 --			CustomGameEventManager:Send_ServerToAllClients("time_remaining", broadcast_gametimer)
 --		end
 
---		print("nCOUNTDOWNTIMER:", nCOUNTDOWNTIMER)
---		print("Radiant Score:", CustomNetTables:GetTableValue("game_options", "radiant").score)
---		print("Dire Score:", CustomNetTables:GetTableValue("game_options", "dire").score)
 		if nCOUNTDOWNTIMER < 1 then
---			PHASE = PHASE + 1
---			nCOUNTDOWNTIMER = 481
---			print("Phase:", PHASE)
-			if CustomNetTables:GetTableValue("game_options", "radiant").score > CustomNetTables:GetTableValue("game_options", "dire").score then
-				GameRules:SetGameWinner(DOTA_TEAM_GOODGUYS)
-				return nil
-			elseif CustomNetTables:GetTableValue("game_options", "dire").score > CustomNetTables:GetTableValue("game_options", "radiant").score then
-				GameRules:SetGameWinner(DOTA_TEAM_BADGUYS)
-				return nil
-			else
---				print("TIE!")
---				GameRules:Defeated()
+			PHASE = PHASE + 1
+			DiretidePhase(PHASE)
+			print("Phase:", PHASE)
+			if PHASE == 2 then
+				if CustomNetTables:GetTableValue("game_options", "radiant").score == CustomNetTables:GetTableValue("game_options", "dire").score then
+					nCOUNTDOWNTIMER = 481
+					COUNT_DOWN = 0
+				elseif CustomNetTables:GetTableValue("game_options", "dire").score > CustomNetTables:GetTableValue("game_options", "radiant").score then
+					DIRETIDE_WINNER = 3
+					nCOUNTDOWNTIMER = 481
+					COUNT_DOWN = 1
+				else
+					nCOUNTDOWNTIMER = 481
+					COUNT_DOWN = 1
+				end
+			elseif PHASE == 3 then
+				nCOUNTDOWNTIMER = 120
+				COUNT_DOWN = 0
 			end
 		end
 		return tick

@@ -1,0 +1,144 @@
+"Diretide.RoshanBeg"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/events/Roshan_beg.vsnd"
+						}
+					}
+					"memory_type"
+					{
+						"value"			"0"
+					}
+				"volume"			{ "value"		"1.000000"	}
+				"pitch_rand_min"	{ "value"		"-0.050000"	}
+				"pitch_rand_max"	{ "value"		"0.050000"	}
+				"pitch"				{ "value"		"1.000000"	}
+				"soundlevel"		{ "value"		"81.000000"	}
+				"mixgroup"			{ "value"		"Weapons"	}
+				"spread_radius"		{ "value"		"300.000000"}
+				}
+			}
+		}
+	}
+}
+
+"Diretide.RoshanEatCandy"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/events/Roshan_eat_candy.vsnd"
+						}
+					}
+					"memory_type"
+					{
+						"value"			"0"
+					}
+					"volume"			{ "value"		"1.000000"	}
+					"pitch_rand_min"	{ "value"		"-0.050000"	}
+					"pitch_rand_max"	{ "value"		"0.050000"	}
+					"pitch"				{ "value"		"1.000000"	}
+					"soundlevel"		{ "value"		"81.000000"	}
+					"mixgroup"			{ "value"		"Weapons"	}
+					"spread_radius"		{ "value"		"300.000000"}
+				}
+			}
+		}
+	}
+}
+
+"Diretide.RoshanRoar"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/events/Roshan_roar.vsnd"
+						}
+					}
+					"memory_type"
+					{
+						"value"			"0"
+					}
+					"volume"				{ "value"		"1.000000"		}
+					"pitch_rand_min"		{ "value"		"-0.050000"		}
+					"pitch_rand_max"		{ "value"		"0.050000"		}
+					"pitch"					{ "value"		"1.000000"		}
+					"soundlevel"			{ "value"		"81.000000"		}
+					"mixgroup"				{ "value"		"Weapons"		}
+					"volume_falloff_max"	{ "value"		"15000.000000"	}
+					"spread_radius"			{ "value"		"600.000000"	}
+				}
+			}
+		}
+	}
+}
+
+"Diretide.RoshanSniff"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/events/Roshan_sniff.vsnd"
+						}
+					}
+					"memory_type"
+					{
+						"value"			"0"
+					}
+					"volume"			{ "value"		"0.500000"	}
+					"pitch_rand_min"	{ "value"		"-0.050000"	}
+					"pitch_rand_max"	{ "value"		"0.050000"	}
+					"pitch"				{ "value"		"1.000000"	}
+					"soundlevel"		{ "value"		"81.000000"	}
+					"mixgroup"			{ "value"		"Weapons"	}
+					"spread_radius"		{ "value"		"100.000000"}
+				}
+			}
+		}
+	}
+}

@@ -162,6 +162,11 @@ local i = 10
 --			SendToServerConsole("dota_bot_populate")
 --		end
 
+		if GetMapName() == "imba_diretide" then
+			local roshan_spawner = Entities:FindByName(nil, "roshan_diretide"):GetAbsOrigin()
+			CreateUnitByName("npc_diretide_roshan", roshan_spawner, true, nil, nil, DOTA_TEAM_NEUTRALS)
+		end
+
 		-- Shows various info to devs in pub-game to find lag issues
 		ImbaNetGraph(10.0)
 	end
@@ -207,9 +212,9 @@ local normal_xp = npc:GetDeathXP()
 
 	if npc then
 		if GetMapName() == "imba_10v10" or GetMapName() == "imba_custom_10v10" then
-			npc:SetDeathXP(normal_xp*0.7)
+			npc:SetDeathXP(normal_xp)
 		else
-			npc:SetDeathXP(normal_xp*1.1)
+			npc:SetDeathXP(normal_xp*1.5)
 		end
 --		if npc:IsRealHero() and npc:GetUnitName() ~= "npc_dota_hero_wisp" or npc.is_real_wisp then
 --			if not npc.has_label then
