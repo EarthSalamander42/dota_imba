@@ -1931,7 +1931,7 @@ function imba_magnataur_reverse_polarity:OnSpellStart()
 				
 				-- #2 Talent: All Polarized enemy pulled towards Magnus that did not end up in the stun area are slowed
 				if caster:HasTalent("special_bonus_imba_magnataur_2") and pull_distance > radius then
-				enemy:AddNewModifier(caster, self, "modifier_imba_reverse_polarity_slow", {duration = hero_stun_duration})
+				enemy:AddNewModifier(caster, self, "modifier_imba_reverse_polarity_slow", {duration = caster:FindTalentValue("special_bonus_imba_magnataur_2")})
 				end
 			else
 				pull_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_magnataur/magnataur_reverse_polarity_pull.vpcf", PATTACH_CUSTOMORIGIN, caster)
