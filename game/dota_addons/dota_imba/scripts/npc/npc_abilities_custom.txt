@@ -14425,12 +14425,12 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"pull_strength"				"0.45"
+				"pull_strength"				"0.3"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"pull_strength_fury"		"0.6"
+				"pull_strength_fury"		"0.45"
 			}
 		}
 	}
