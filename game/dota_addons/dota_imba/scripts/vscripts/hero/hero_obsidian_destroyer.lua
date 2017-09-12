@@ -199,11 +199,8 @@ function modifier_imba_arcane_orb_thinker:ApplyArcaneOrbAttack(target)
     -- Apply effect if the target didn't suddenly become magic immune              
     if not target:IsMagicImmune() then
 
-        -- #1 Talent: Arcane Orb max mana as damage increase
-        local mana_pool_damage_pct = self.mana_pool_damage_pct + self.caster:FindTalentValue("special_bonus_imba_obsidian_destroyer_1")
-
         -- Calculate bonus pure damage according to a percent of current mana
-        local damage = self.caster:GetMana() * mana_pool_damage_pct * 0.01
+        local damage = self.caster:GetMana() * self.mana_pool_damage_pct * 0.01
 
         -- Add damage if the target is a summoned unit or an illusion
         if target:IsSummoned() or target:IsIllusion() then
@@ -277,11 +274,51 @@ function modifier_imba_arcane_orb_thinker:ApplyArcaneOrbAttack(target)
             return nil
         end
 
-        -- #3 Talent: Arcane Orb int steal count increase
-        local int_steal_count = self.int_steal_count + self.caster:FindTalentValue("special_bonus_imba_obsidian_destroyer_3")
+        local int_steal_count = self.int_steal_count
 
         -- Steal intelligence from target
         ApplyIntelligenceSteal(self.caster, self.ability, target, int_steal_count, self.int_steal_duration)
+		
+		-- #1 Talent: Arcane Orb now explodes the difference between the target's and caster's INT in 300 AOE
+		if self.caster:HasTalent("special_bonus_imba_obsidian_destroyer_1") and self.caster:GetIntellect() > target:GetIntellect() then
+		
+		Timers:CreateTimer(FrameTime(), function()
+			local damage = self.caster:GetIntellect() - target:GetIntellect()
+				
+			-- Add main particle                            
+			self.particle_explosion_fx = ParticleManager:CreateParticle(self.particle_explosion, PATTACH_ABSORIGIN_FOLLOW, target)
+			ParticleManager:SetParticleControl(self.particle_explosion_fx, 0, Vector(self.caster:FindTalentValue("special_bonus_imba_obsidian_destroyer_1"), 0, 0))
+			ParticleManager:SetParticleControl(self.particle_explosion_fx, 1, target:GetAbsOrigin())
+			ParticleManager:ReleaseParticleIndex(self.particle_explosion_fx)
+
+			-- Find all units in radius
+			local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
+												  target:GetAbsOrigin(),
+												  nil,
+												  self.caster:FindTalentValue("special_bonus_imba_obsidian_destroyer_1"),
+												  DOTA_UNIT_TARGET_TEAM_ENEMY,
+												  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+												  DOTA_UNIT_TARGET_FLAG_NONE,
+												  FIND_ANY_ORDER,
+												  false)
+
+			-- Deal the pure damage it dealt to that unit to all enemies
+			for _,enemy in pairs(enemies) do
+				-- Deal damage
+				local damageTable = {victim = enemy,
+				damage = damage,
+				damage_type = DAMAGE_TYPE_PURE,
+				attacker = self.caster,
+				ability = self.ability
+				}
+														
+				ApplyDamage(damageTable)
+
+				-- Show damage alert
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, enemy, damage, nil)
+			end  
+		end)
+		end
     end 
 end
 
@@ -428,9 +465,6 @@ function ApplyIntelligenceSteal(caster, ability, target, stack_count, duration)
     local modifier_buff = "modifier_imba_arcane_orb_buff"  
     local modifier_debuff = "modifier_imba_arcane_orb_debuff"           
 
-    -- #4 Talent: Stolen intelligence duration increased
-    duration = duration * (1 + (caster:FindTalentValue("special_bonus_imba_obsidian_destroyer_4") * 0.01))    
-
     if not target:HasModifier(modifier_debuff) then
         target:AddNewModifier(caster, ability, modifier_debuff, {duration = duration})                                                   
     end            
@@ -479,9 +513,6 @@ function modifier_imba_arcane_orb_buff:OnCreated()
 
         -- Ability specials
         self.int_steal_duration = self.ability:GetSpecialValueFor("int_steal_duration")
-
-        -- #4 Talent: Stolen intelligence duration increased
-        self.int_steal_duration = self.int_steal_duration * (1 + (self.caster:FindTalentValue("special_bonus_imba_obsidian_destroyer_4") * 0.01))
 
         -- Initialize table
         self.stacks_table = {}        
@@ -564,9 +595,6 @@ function modifier_imba_arcane_orb_debuff:OnCreated()
         -- Ability specials
         self.int_steal_duration = self.ability:GetSpecialValueFor("int_steal_duration")
 
-        -- #4 Talent: Stolen intelligence duration increased
-        self.int_steal_duration = self.int_steal_duration * (1 + (self.caster:FindTalentValue("special_bonus_imba_obsidian_destroyer_4") * 0.01))
-
         -- Initialize table
         self.stacks_table = {}        
 
@@ -640,6 +668,7 @@ end
 imba_obsidian_destroyer_astral_imprisonment = class({})
 LinkLuaModifier("modifier_imba_astral_imprisonment", "hero/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_astral_imprisonment_buff", "hero/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_astral_imprisonment_sucked", "hero/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_obsidian_destroyer_astral_imprisonment:GetAbilityTextureName()
    return "obsidian_destroyer_astral_imprisonment"
@@ -696,8 +725,6 @@ function imba_obsidian_destroyer_astral_imprisonment:GetCastRange(location, targ
     -- Otherwise, normal cast range
     local cast_range = self:GetSpecialValueFor("cast_range")
 
-    -- #2 Talent: Astral Imprisonment cast range increase
-    cast_range = cast_range + caster:FindTalentValue("special_bonus_imba_obsidian_destroyer_2")
     return cast_range    
 end
 
@@ -859,10 +886,23 @@ function modifier_imba_astral_imprisonment:IsPurgable() return false end
 function modifier_imba_astral_imprisonment:IsDebuff() return true end
 
 function modifier_imba_astral_imprisonment:CheckState()
-    local state = {[MODIFIER_STATE_INVULNERABLE] = true,
-                   [MODIFIER_STATE_OUT_OF_GAME] = true,
-                   [MODIFIER_STATE_NO_HEALTH_BAR] = true,
-                   [MODIFIER_STATE_STUNNED] = true}
+    local state 
+	
+	-- Prevent the caster from being stunned, so he will able to move his prison
+	if self.parent == self.caster then
+	state = {[MODIFIER_STATE_INVULNERABLE] = true,
+             [MODIFIER_STATE_OUT_OF_GAME] = true,
+             [MODIFIER_STATE_NO_HEALTH_BAR] = true,
+             [MODIFIER_STATE_ROOTED] = true,
+			 [MODIFIER_STATE_MUTED] = true,
+			 [MODIFIER_STATE_DISARMED] = true}
+	else
+	state = {[MODIFIER_STATE_INVULNERABLE] = true,
+             [MODIFIER_STATE_OUT_OF_GAME] = true,
+             [MODIFIER_STATE_NO_HEALTH_BAR] = true,
+             [MODIFIER_STATE_STUNNED] = true}
+	end
+			 
     return state
 end
 
@@ -873,7 +913,8 @@ function modifier_imba_astral_imprisonment:OnDestroy()
 
         -- Bring the model back
         self.parent:RemoveNoDraw()
-
+		
+		Timers:CreateTimer(FrameTime(), function()
         -- Find all units in radius
         local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
                                           self.parent:GetAbsOrigin(),
@@ -886,11 +927,12 @@ function modifier_imba_astral_imprisonment:OnDestroy()
                                           false)
 
         for _,enemy in pairs(enemies) do
+			-- Remove the Talent modifier from nearby enemies, if any.
             if not enemy:IsMagicImmune() and not enemy.astral_imprisonment_immunity then
                 -- Add prison end particle on each enemy
                 self.particle_prison_end_fx = ParticleManager:CreateParticle(self.particle_prison_end, PATTACH_ABSORIGIN, self.caster)
                 ParticleManager:SetParticleControl(self.particle_prison_end_fx, 0, enemy:GetAbsOrigin())
-
+				
                 -- Deal damage
                 local damageTable = {victim = enemy,
                                     damage = self.damage,
@@ -909,7 +951,8 @@ function modifier_imba_astral_imprisonment:OnDestroy()
                     enemy.astral_imprisonment_immunity = false
                 end)
             end
-        end                
+        end
+		end)
 
         -- Resolve positions for everyone so they won't get stuck
         ResolveNPCPositions(self.parent:GetAbsOrigin(), self.radius)
@@ -930,9 +973,6 @@ function modifier_imba_astral_imprisonment_buff:OnCreated()
         -- Ability specials
         self.prison_movespeed = self.ability:GetSpecialValueFor("prison_movespeed")        
 
-        -- #6 Talent: Astral Imprisonment movespeed increase
-        self.prison_movespeed = self.prison_movespeed + self.caster:FindTalentValue("special_bonus_imba_obsidian_destroyer_6")
-
         -- Allow the game to index the target location, then start thinking
         Timers:CreateTimer(0.1, function()
             self.current_location = self.target:GetAbsOrigin()
@@ -950,7 +990,40 @@ function modifier_imba_astral_imprisonment_buff:OnCreated()
 end
 
 function modifier_imba_astral_imprisonment_buff:OnIntervalThink()
-    -- If the target or the target point aren't indexed, do nothing
+
+	-- #4 Talent: Astral Imprisonment now sucks in nearby units
+	if self.caster:HasTalent("special_bonus_imba_obsidian_destroyer_4") then
+			
+		-- Find all units in radius
+		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
+										  self.target:GetAbsOrigin(),
+										  nil,
+										  self.caster:FindTalentValue("special_bonus_imba_obsidian_destroyer_4") + self.caster:GetIntellect(),
+										  DOTA_UNIT_TARGET_TEAM_ENEMY,
+										  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+										  DOTA_UNIT_TARGET_FLAG_NONE,
+										  FIND_ANY_ORDER,
+										  false)
+
+		for _,enemy in pairs(enemies) do
+			-- Only applies to enemies near the target
+			if enemy == self.target then
+			else
+			if (not enemy:HasModifier("modifier_imba_astral_imprisonment_sucked")) then
+				-- Add prison end particle on each enemy
+                local particle_prison_end_fx = ParticleManager:CreateParticle(self.particle_prison_end, PATTACH_ABSORIGIN, self.caster)
+                ParticleManager:SetParticleControl(particle_prison_end_fx, 0, enemy:GetAbsOrigin())
+				
+				-- Remove the model and apply the sucked modifier
+				enemy:AddNoDraw()
+				enemy:AddNewModifier(self.caster,self.ability,"modifier_imba_astral_imprisonment_sucked",{duration = self:GetRemainingTime()}) -- Reduce the duration by a minimal delay to apply the damage
+			end
+			end
+		end                
+				
+	end
+	
+	-- If the target or the target point aren't indexed, do nothing
     if not self.target or not self.target_point then
         return nil
     end
@@ -980,6 +1053,31 @@ function modifier_imba_astral_imprisonment_buff:OnIntervalThink()
     ParticleManager:SetParticleControl(self.particle_prison_fx, 0, self.target:GetAbsOrigin())
     ParticleManager:SetParticleControl(self.particle_prison_fx, 2, self.target:GetAbsOrigin())
     ParticleManager:SetParticleControl(self.particle_prison_fx, 3, self.target:GetAbsOrigin())
+	
+	
+	-- #4 Talent: Moving the disabled units along with the prison
+	if self.caster:HasTalent("special_bonus_imba_obsidian_destroyer_4") then
+			
+		-- Find all units in radius
+		local enemies_sucked = FindUnitsInRadius(self.caster:GetTeamNumber(),
+										  self.target:GetAbsOrigin(),
+										  nil,
+										  FIND_UNITS_EVERYWHERE,
+										  DOTA_UNIT_TARGET_TEAM_ENEMY,
+										  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+										  DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
+										  FIND_ANY_ORDER,
+										  false)
+
+		-- Set the new path
+		for _,enemy in pairs(enemies_sucked) do
+			if enemy:HasModifier("modifier_imba_astral_imprisonment_sucked") then
+			enemy:SetAbsOrigin(self.current_location)
+			end
+		end                
+				
+	end
+	
 end
 
 function modifier_imba_astral_imprisonment_buff:OnDestroy()
@@ -994,7 +1092,35 @@ function modifier_imba_astral_imprisonment_buff:IsPurgable() return false end
 function modifier_imba_astral_imprisonment_buff:IsDebuff() return false end
 
 
+modifier_imba_astral_imprisonment_sucked = class({})
 
+function modifier_imba_astral_imprisonment_sucked:IsHidden() return true end
+function modifier_imba_astral_imprisonment_sucked:IsPurgable() return false end
+function modifier_imba_astral_imprisonment_sucked:IsDebuff() return true end
+
+function modifier_imba_astral_imprisonment_sucked:CheckState()
+    local state = {[MODIFIER_STATE_INVULNERABLE] = true,
+				   [MODIFIER_STATE_NOT_ON_MINIMAP] = true,
+				   [MODIFIER_STATE_NO_UNIT_COLLISION] = true,
+				   [MODIFIER_STATE_NO_HEALTH_BAR] = true,
+				   [MODIFIER_STATE_STUNNED] = true}
+    return state
+end
+
+function modifier_imba_astral_imprisonment_sucked:OnDestroy()
+    if IsServer() then
+        -- Add prison end particle on each enemy
+        local particle_prison_end_fx = ParticleManager:CreateParticle(self.particle_prison_end, PATTACH_ABSORIGIN, self:GetCaster())
+        ParticleManager:SetParticleControl(particle_prison_end_fx, 0, self:GetParent():GetAbsOrigin())
+		
+		-- Bring the model back
+        self:GetParent():RemoveNoDraw()
+
+        -- Resolve positions for everyone so they won't get stuck
+        ResolveNPCPositions(self:GetParent():GetAbsOrigin(), self:GetAbility():GetSpecialValueFor("radius"))
+		self:GetParent():SetUnitOnClearGround()
+    end
+end
 
 
 
@@ -1034,7 +1160,7 @@ function modifier_imba_essence_aura:OnCreated()
             local casters = FindUnitsInRadius(self.caster:GetTeamNumber(),
                                               self.caster:GetAbsOrigin(),
                                               nil,
-                                              25000, --global
+                                              FIND_UNITS_EVERYWHERE, --global
                                               DOTA_UNIT_TARGET_TEAM_FRIENDLY,
                                               DOTA_UNIT_TARGET_HERO,
                                               DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_DEAD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD,
@@ -1077,7 +1203,12 @@ function modifier_imba_essence_aura:GetAuraSearchFlags()
 end
 
 function modifier_imba_essence_aura:GetAuraSearchTeam()
-    return DOTA_UNIT_TARGET_TEAM_FRIENDLY
+	-- #3 Talent: Essence Synergy now procs from enemies
+	if self:GetCaster():HasTalent("special_bonus_imba_obsidian_destroyer_3") then
+	return DOTA_UNIT_TARGET_TEAM_BOTH
+	else
+	return DOTA_UNIT_TARGET_TEAM_FRIENDLY
+	end
 end
 
 function modifier_imba_essence_aura:GetAuraSearchType()
@@ -1181,48 +1312,57 @@ end
 function modifier_imba_essence_aura_buff:ProcEssenceAura()
     if IsServer() then
         -- Roll for a random proc. Pseudo distribution
-        if RollPseudoRandom(self.restore_chance_pct, self) then            
+        if RollPseudoRandom(self.restore_chance_pct, self) then     
+			-- Only applied to the heroes on the same team
+			if self.parent:GetTeamNumber() == self.caster:GetTeamNumber() then
+				-- Restore % of maximum mana to the parent
+				local max_mana = self.parent:GetMaxMana()
+				local mana_restore = max_mana * (self.restore_mana_pct * 0.01)
 
-            -- Restore % of maximum mana to the parent
-            local max_mana = self.parent:GetMaxMana()
-            local mana_restore = max_mana * (self.restore_mana_pct * 0.01)
+				-- #8 Talent: Essence Aura can go beyond maximum mana temporarily (caster only)
+				if self.caster:HasTalent("special_bonus_imba_obsidian_destroyer_8") and self.caster == self.parent then
+					-- Get current mana
+					local current_mana = self.caster:GetMana()
 
-            -- #8 Talent: Essence Aura can go beyond maximum mana temporarily (caster only)
-            if self.caster:HasTalent("special_bonus_imba_obsidian_destroyer_8") and self.caster == self.parent then
-                -- Get current mana
-                local current_mana = self.caster:GetMana()
+					-- Calculate how much the excess mana this proc has
+					local excess_mana = (current_mana + mana_restore) - max_mana
+					if excess_mana > 0 then
+						if not self.caster:HasModifier(self.modifier_overmana) then
+							local overmana_duration = self.caster:FindTalentValue("special_bonus_imba_obsidian_destroyer_8")
+							self.caster:AddNewModifier(self.caster, self.ability, self.modifier_overmana, {duration = overmana_duration})
+						end
 
-                -- Calculate how much the excess mana this proc has
-                local excess_mana = (current_mana + mana_restore) - max_mana
-                if excess_mana > 0 then
-                    if not self.caster:HasModifier(self.modifier_overmana) then
-                        local overmana_duration = self.caster:FindTalentValue("special_bonus_imba_obsidian_destroyer_8")
-                        self.caster:AddNewModifier(self.caster, self.ability, self.modifier_overmana, {duration = overmana_duration})
-                    end
+						local modifier_overmana_handler = self.caster:FindModifierByName(self.modifier_overmana)
+						if modifier_overmana_handler then
+							for i = 1, excess_mana do
+								modifier_overmana_handler:IncrementStackCount()
+								modifier_overmana_handler:ForceRefresh()
+							end                        
+						end
+					end
+				end
 
-                    local modifier_overmana_handler = self.caster:FindModifierByName(self.modifier_overmana)
-                    if modifier_overmana_handler then
-                        for i = 1, excess_mana do
-                            modifier_overmana_handler:IncrementStackCount()
-                            modifier_overmana_handler:ForceRefresh()
-                        end                        
-                    end
-                end
-            end
+				self.parent:GiveMana(mana_restore)
 
-            self.parent:GiveMana(mana_restore)
+				-- Apply particle effect on parent
+				self.particle_essence_fx = ParticleManager:CreateParticle(self.particle_essence, PATTACH_ABSORIGIN_FOLLOW, self.parent)
+				ParticleManager:SetParticleControl(self.particle_essence_fx, 0, self.parent:GetAbsOrigin())
+				ParticleManager:ReleaseParticleIndex(self.particle_essence_fx)
 
-            -- Apply particle effect on parent
+				-- #5 Talent: Essence Aura now heals when proccing
+				if self.caster:HasTalent("special_bonus_imba_obsidian_destroyer_5") then
+					local heal_amount = self.caster:GetIntellect()
+					self.parent:Heal(heal_amount, self.caster)
+				end
+			else
+			
+            -- If the hero is not on the same team, only apply the particle effect on parent
             self.particle_essence_fx = ParticleManager:CreateParticle(self.particle_essence, PATTACH_ABSORIGIN_FOLLOW, self.parent)
             ParticleManager:SetParticleControl(self.particle_essence_fx, 0, self.parent:GetAbsOrigin())
             ParticleManager:ReleaseParticleIndex(self.particle_essence_fx)
-
-            -- #5 Talent: Essence Aura now heals when proccing
-            if self.caster:HasTalent("special_bonus_imba_obsidian_destroyer_5") then
-                local heal_amount = self.caster:GetIntellect()
-                self.parent:Heal(heal_amount, self.caster)
-            end
-
+			
+			end
+			
             -- If the one proccing the aura wasn't the caster, give the caster a proc stack
             if self.caster ~= self.parent then
 
@@ -1492,6 +1632,12 @@ function imba_obsidian_destroyer_sanity_eclipse:OnSpellStart()
             if enemy:GetMana() > 0 then
                 local max_mana = enemy:GetMaxMana()
                 local mana_burn = max_mana * (max_mana_burn_pct * 0.01)
+				-- #6 Talent: Heroes with INT less than 50% of Obsidian Destroyer's INT receives doubled the mana burn and 50% more damage from Sanity Eclipse
+				if caster:HasTalent("special_bonus_imba_obsidian_destroyer_6") then
+					if enemy:IsHero() and enemy:GetIntellect() < caster_int*caster:FindTalentValue("special_bonus_imba_obsidian_destroyer_6")*0.01 then
+						mana_burn = max_mana * (caster:FindTalentValue("special_bonus_imba_obsidian_destroyer_6","mana_burn") * 0.01) 
+					end
+				end
                 enemy:ReduceMana(mana_burn)
             end
 
@@ -1514,7 +1660,14 @@ function imba_obsidian_destroyer_sanity_eclipse:OnSpellStart()
                 if int_difference > 0 then
                     damage = int_difference * int_multiplier
                 end
-
+				
+				-- #6 Talent: Heroes with INT less than 50% of Obsidian Destroyer's INT receives doubled the mana burn and 50% more damage from Sanity Eclipse
+				if caster:HasTalent("special_bonus_imba_obsidian_destroyer_6") then
+					if enemy_int < caster_int*caster:FindTalentValue("special_bonus_imba_obsidian_destroyer_6")*0.01 then
+						damage = damage * (1+caster:FindTalentValue("special_bonus_imba_obsidian_destroyer_6","bonus_incoming_damage")*0.01)
+					end
+				end
+				
                 -- Deal damage. If the target has Astral Prison, remove its invulnerablity and return it after applying damage                
                 if damage > 0 then
                     local damage_type = DAMAGE_TYPE_MAGICAL
@@ -1560,4 +1713,14 @@ function imba_obsidian_destroyer_sanity_eclipse:OnSpellStart()
             end
         end        
     end
+	
+	-- #2 Talent: Sanity Eclipse's cooldown is reduced by 1 second for every point of stolen INT Obsidian Destroyer currently has
+	if caster:HasTalent("special_bonus_imba_obsidian_destroyer_2") then
+		local int_buff = caster:FindModifierByName("modifier_imba_arcane_orb_buff")
+		if int_buff then
+			local new_cooldown = ability:GetCooldownTimeRemaining() - int_buff:GetStackCount()
+			ability:EndCooldown()
+			ability:StartCooldown(new_cooldown)
+		end
+	end
 end

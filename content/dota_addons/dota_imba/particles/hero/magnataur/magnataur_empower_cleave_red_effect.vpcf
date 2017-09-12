@@ -16,7 +16,7 @@
 			m_hTexture = resource:"materials/particle/bendibeam2.vtex"
 			m_nScaleCP2 = 1
 			m_nScaleCP1 = 0
-			m_flRadiusScale = 0.5
+			m_flRadiusScale = 0.75
 			m_flFinalTextureScaleU = -1.0
 			m_flFinalTextureOffsetU = 1.0
 			m_flTextureVWorldSize = 400.0
@@ -40,19 +40,19 @@
 			_class = "C_OP_ControlpointLight"
 			m_nControlPoint1 = 1
 			m_LightColor1 = [ 255, 96, 123, 255 ]
-			m_LightFiftyDist1 = 32.0
-			m_LightZeroDist1 = 64.0
+			m_LightFiftyDist1 = 64.0
+			m_LightZeroDist1 = 96.0
 			m_nControlPoint2 = 2
 			m_LightColor2 = [ 255, 96, 123, 255 ]
 			m_LightFiftyDist2 = 32.0
 			m_LightZeroDist2 = 64.0
 			m_nControlPoint3 = 3
 			m_LightColor3 = [ 255, 96, 123, 255 ]
-			m_LightFiftyDist3 = 32.0
-			m_LightZeroDist3 = 64.0
+			m_LightFiftyDist3 = 40.0
+			m_LightZeroDist3 = 48.0
 			m_nControlPoint4 = 4
 			m_LightColor4 = [ 255, 96, 123, 255 ]
-			m_LightFiftyDist4 = 32.0
+			m_LightFiftyDist4 = 56.0
 			m_LightZeroDist4 = 64.0
 		},
 		{
@@ -177,8 +177,8 @@
 		},
 		{
 			_class = "C_INIT_RingWave"
-			m_flInitialSpeedMax = 2200.0
-			m_flInitialSpeedMin = 2200.0
+			m_flInitialSpeedMax = 4620.0
+			m_flInitialSpeedMin = 4600.0
 			m_flParticlesPerOrbit = 126.0
 			m_bEvenDistribution = true
 			m_flInitialRadius = 1.0

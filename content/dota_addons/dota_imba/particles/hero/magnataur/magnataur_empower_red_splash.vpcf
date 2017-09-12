@@ -16,7 +16,7 @@
 			m_hTexture = resource:"materials/particle/bendibeam2.vtex"
 			m_nScaleCP2 = 1
 			m_nScaleCP1 = 0
-			m_flRadiusScale = 0.5
+			m_flRadiusScale = 0.75
 			m_flFinalTextureScaleU = -1.0
 			m_flFinalTextureOffsetU = 1.0
 			m_flTextureVWorldSize = 400.0
@@ -100,12 +100,12 @@
 		{
 			_class = "C_INIT_RandomAlpha"
 			m_nAlphaMin = 15
-			m_nAlphaMax = 30
+			m_nAlphaMax = 25
 		},
 		{
 			_class = "C_INIT_RingWave"
-			m_flInitialSpeedMax = 2200.0
-			m_flInitialSpeedMin = 2200.0
+			m_flInitialSpeedMax = 2450.0
+			m_flInitialSpeedMin = 2445.0
 			m_flParticlesPerOrbit = 126.0
 			m_bEvenDistribution = true
 			m_flInitialRadius = 1.0

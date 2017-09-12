@@ -14040,6 +14040,11 @@
 				"var_type"				"FIELD_INTEGER"
 				"deflect_radius"		"800"
 			}
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"deflect_chance"		"22 22 22 22 28 34 40"
+			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -14216,6 +14221,14 @@
 		"AbilityTextureName"			"juggernaut_blade_dance"
 		"MaxLevel"						"7"		
 
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"3"
+
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
@@ -14245,7 +14258,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_agi"				"2 2 2 2 4 6 8"
-				"LinkedSpecialBonus"	"special_bonus_imba_juggernaut_5"
 			}
 			"04"
 			{
@@ -14410,6 +14422,16 @@
 				"var_type"					"FIELD_INTEGER"
 				"value"						"4"
 			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"pull_strength"				"0.45"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"pull_strength_fury"		"0.6"
+			}
 		}
 	}
 
@@ -14503,7 +14525,7 @@
 	}
 
 	//=================================================================================================================
-	// Juggernaut Talent 5 (Level 30): +4 Blade Dance Agi On Crit
+	// Juggernaut Talent 5 (Level 30): Wind Dance stacks are consumed when activating Secret Blade, increasing its max hit count
 	//=================================================================================================================
 	"special_bonus_imba_juggernaut_5"
 	{
@@ -14525,7 +14547,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"4"
+				"value"						"3"
 			}
 		}
 	}
@@ -14586,7 +14608,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"0"
+				"value"						"75"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"caster_outgoing_damage"	"25"
 			}
 		}
 	}
@@ -16338,7 +16365,17 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"rings_delay"			"0.5"
+				"rings_radius"			"150"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"rings_delay"			"0.3"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"rings_distance"		"0.25"
 			}
 		}
 	}
@@ -16391,8 +16428,8 @@
 			}
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"cdr_pct"				"4 4 4 4 6 8 10"
+				"var_type"				"FIELD_FLOAT"
+				"cdr_pct"				"0.5"
 			}
 			"05"
 			{
@@ -16478,6 +16515,11 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bounce_range"			"600"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bounce_delay"			"0.25"
 			}
 		}
 	}
@@ -16704,6 +16746,16 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"value"						"3"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"add_radius"				"75"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"stun_reduct"				"2"
 			}
 		}
 	}
@@ -18168,7 +18220,9 @@
 			"particle"					"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
 			"particle"					"particles/units/heroes/hero_magnataur/magnataur_shockwave_hit.vpcf"
 			"particle"					"particles/units/heroes/hero_magnataur/magnataur_shockwave_cast.vpcf"
+			"particle"					"particles/units/heroes/hero_magnataur/magnataur_reverse_polarity_pull.vpcf"
 			"particle"					"particles/econ/items/magnataur/seismic_berserker/seismic_berserker_weapon_horn_b.vpcf"
+			"particle" 					"particles/hero/magnataur/magnataur_ubercharge.vpcf"
 		}
 
 		// Casting
@@ -18202,7 +18256,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"secondary_amount"			"2"
+				"secondary_amount"			"4"
 			}
 			"04"
 			{
@@ -18213,12 +18267,11 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"polarize_duration"			"12"
-				"LinkedSpecialBonus"		"special_bonus_imba_magnataur_1"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"spread_angle"				"36"
+				"spread_angle"				"180"
 			}
 			"07"
 			{
@@ -18229,6 +18282,16 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"150"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"magnetize_duration"		"3"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range"				"1150"
 			}
 		}
 	}
@@ -18261,10 +18324,15 @@
 			"particle" 					"particles/units/heroes/hero_magnataur/magnataur_empower_cleave_effect.vpcf"
 			"particle"					"particles/econ/items/magnataur/seismic_berserker/seismic_berserker_weapon_horn_b.vpcf"
 			"particle" 					"particles/hero/magnataur/magnataur_empower_cleave_red_effect.vpcf"
+			"particle" 					"particles/hero/magnataur/magnataur_empower_cleave_red_effect_plus.vpcf"
 			"particle" 					"particles/hero/magnataur/magnataur_empower_red.vpcf"
 			"particle" 					"particles/hero/magnataur/magnataur_empower_red_splash.vpcf"
+			"particle" 					"particles/hero/magnataur/magnataur_empower_red_splash_plus.vpcf"
 			"particle" 					"particles/hero/magnataur/magnataur_empower_splash.vpcf"
 			"particle" 					"particles/hero/magnataur/magnataur_supercharge.vpcf"
+			"particle" 					"particles/hero/magnataur/magnataur_empower_cleave_splash_effect.vpcf"
+			"particle" 					"particles/hero/magnataur/magnataur_empower_cleave_splash_red_effect.vpcf"
+			"particle" 					"particles/hero/magnataur/magnataur_empower_cleave_splash_red_effect_plus.vpcf"
 			"particle" 					"particles/auras/aura_empower.vpcf"
 		}
 
@@ -18329,7 +18397,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"supercharge_duration"	"16 16 16 16 20 24 28"
+				"supercharge_duration"	"20"
 			}
 			"10"
 			{
@@ -18344,12 +18412,47 @@
 			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius_scepter"		"900"
+				"super_cleave_start"	"180"
 			}
 			"13"
 			{
 				"var_type"				"FIELD_INTEGER"
+				"super_cleave_end"		"320"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"super_cleave_distance"	"620"
+			}
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"super_splash_radius"	"360"
+			}
+			"16"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius_scepter"		"900"
+			}
+			"17"
+			{
+				"var_type"				"FIELD_INTEGER"
 				"linger_duration"		"12"
+			}
+			"18"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"search_radius"			"900"
+			}
+			"19"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"polarize_duration"		"5"
+			}
+			"20"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"refresh_interval"		"1"
 			}
 		}
 	}
@@ -18380,6 +18483,8 @@
 			"particle" 					"particles/units/heroes/hero_magnataur/magnataur_skewer.vpcf"
 			"particle" 					"particles/units/heroes/hero_magnataur/magnataur_skewer_debuff.vpcf"
 			"particle"					"particles/units/heroes/hero_magnataur/magnataur_skewer_horn.vpcf"
+			"particle"					"particles/units/heroes/hero_magnataur/magnataur_reverse_polarity.vpcf"
+			"particle"					"particles/units/heroes/hero_magnataur/magnataur_reverse_polarity_pull.vpcf"
 			"particle"					"particles/hero/magnataur/skewer_entangle_debuff.vpcf"
 			"particle"					"particles/econ/items/magnataur/seismic_berserker/seismic_berserker_weapon_horn_b.vpcf"
 			"soundfile" 				"sounds/weapons/hero/magnataur/skewer_cast.vsnd"
@@ -18439,7 +18544,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"entangle_dur"			"3 3 3 3 3.5 4 4.5"
+				"entangle_dur"			"2 2 2 2 2.5 3 3.5"
 			}
 			"09"
 			{
@@ -18517,13 +18622,11 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage"				"50 125 200 250 300 350"
-				"LinkedSpecialBonus"	"special_bonus_imba_magnataur_2"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"main_radius"			"410"
-				"LinkedSpecialBonus"	"special_bonus_imba_magnataur_7"
 			}
 			"03"
 			{
@@ -18543,29 +18646,23 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pull_per_stack"		"400 400 400 500 600 700"
-				"LinkedSpecialBonus"	"special_bonus_imba_magnataur_8"
+				"pull_per_stack"		"300 300 300 400 500 600"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"global_pull"			"200"
+				"global_pull"			"500"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"polarize_duration"		"12"
 			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"polarize_slow_pct"		"60"
-			}
 		}
 	}
 
 	//=================================================================================================================
-	// Magnus Talent 1 (Level 10): Shockwave polarize duration
+	// Magnus Talent 1 (Level 10): Shockwave spawns secondary shockwave halfway through
 	//=================================================================================================================
 	"special_bonus_imba_magnataur_1"
 	{
@@ -18587,13 +18684,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"12"
+				"value"						"1"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Magnus Talent 2 (Level 10): Reverse Polarity damage
+	// Magnus Talent 2 (Level 10): Reverse Polarity adds slow to polarized targets that didn't pulled into Reverse Polarity's radius
 	//=================================================================================================================
 	"special_bonus_imba_magnataur_2"
 	{
@@ -18617,11 +18714,16 @@
 				"var_type"					"FIELD_INTEGER"
 				"value"						"125"
 			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"polarize_slow"			"60"
+			}
 		}
 	}
 
 	//=================================================================================================================
-	// Magnus Talent 3 (Level 20): Empower damage/cleave/splash extra pct
+	// Magnus Talent 3 (Level 20): Supercharge grants the target's 30% main attribute as bonus damage
 	//=================================================================================================================
 	"special_bonus_imba_magnataur_3"
 	{
@@ -18643,23 +18745,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_damage_pct"			"15"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cleave_damage_ranged"		"15"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cleave_damage_pct"			"15"
+				"value"						"30"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Magnus Talent 4 (Level 20): Skewer cooldown reduction
+	// Magnus Talent 4 (Level 20): Skewer creates a mini Reverse Polarity on casting, pulling all enemies within 375 radius
 	//=================================================================================================================
 	"special_bonus_imba_magnataur_4"
 	{
@@ -18681,13 +18773,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"11"
+				"value"						"375"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Magnus Talent 5 (Level 30): Shockwave cooldown reduction
+	// Magnus Talent 5 (Level 30): Shockwave roots the target briefly for 1 second, secondary Shockwave roots for 0.5 seconds
 	//=================================================================================================================
 	"special_bonus_imba_magnataur_5"
 	{
@@ -18709,13 +18801,18 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"4"
+				"value"						"1"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"secondary_duration"		"0.5"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Magnus Talent 6 (Level 30): Supercharged move/attack speed
+	// Magnus Talent 6 (Level 30): Empower grants the melee targets 360 cleave radius
 	//=================================================================================================================
 	"special_bonus_imba_magnataur_6"
 	{
@@ -18737,18 +18834,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_ms"					"8"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_as"					"50"
+				"value"						"1"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Magnus Talent 7 (Level 40): Reverse Polarity radius
+	// Magnus Talent 7 (Level 40): Polarized enemy are constantly pulled towards their closest ally
 	//=================================================================================================================
 	"special_bonus_imba_magnataur_7"
 	{
@@ -18758,11 +18850,6 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-		"LinkedAbility"
-		{
-			"01" 	"imba_magnataur_reverse_polarity"
-		}
-
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -18770,13 +18857,18 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"100"
+				"value"						"1"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"pull_strength"				"10"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Magnus Talent 8 (Level 40): Reverse Polarity polarized pull distance
+	// Magnus Talent 8 (Level 40): Applying Empower on an already Supercharged target makes it Ubercharged
 	//=================================================================================================================
 	"special_bonus_imba_magnataur_8"
 	{
@@ -18788,7 +18880,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_magnataur_reverse_polarity"
+			"01" 	"imba_magnataur_empower"
 		}
 
 		// Special
@@ -18798,7 +18890,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"250"
+				"value"						"8"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"refresh_interval"			"1"
 			}
 		}
 	}
@@ -22032,14 +22129,12 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"int_steal_count"			"1 2 3 4 4 5 5"
-				"LinkedSpecialBonus"		"special_bonus_imba_obsidian_destroyer_3"
 			}
 
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"int_steal_duration"		"80"
-				"LinkedSpecialBonus"		"special_bonus_imba_obsidian_destroyer_4"
 			}
 
 			"05"
@@ -22051,7 +22146,7 @@
 	}
 
 	//=================================================================================================================
-	// Outworld Devourer's Astral Imprisoment
+	// Outworld Devourer's Astral Imprisonment
 	//=================================================================================================================
 	"imba_obsidian_destroyer_astral_imprisonment"
 	{
@@ -22116,7 +22211,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"prison_movespeed"		"300 300 300 300 360 420 480"
-				"LinkedSpecialBonus"	"special_bonus_imba_obsidian_destroyer_6"
 			}
 
 			"05"
@@ -22129,7 +22223,6 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"scepter_int_steal_duration"	"80"
-				"LinkedSpecialBonus"			"special_bonus_imba_obsidian_destroyer_4"
 			}
 
 			"07"
@@ -22287,7 +22380,6 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"int_steal_duration"			"80"
-				"LinkedSpecialBonus"			"special_bonus_imba_obsidian_destroyer_4"
 			}
 		}
 	}
@@ -22295,7 +22387,7 @@
 	//=================================================================================================================
 	// Outworld Devourer's Talents
 	//=================================================================================================================
-	"special_bonus_imba_obsidian_destroyer_1" // Arcane Orb max mana as damage increase
+	"special_bonus_imba_obsidian_destroyer_1" // Arcane Orb now explodes the difference between the target and caster's INT in 300 AOE
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -22306,6 +22398,31 @@
 		"LinkedAbility"
 		{
 			"01"	"imba_obsidian_destroyer_arcane_orb"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"300"
+			}
+		}
+	}
+
+	"special_bonus_imba_obsidian_destroyer_2" // Sanity Eclipse cooldown is reduced by 1 second for every stolen INT Obsidian Destroyer currently has
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_obsidian_destroyer_sanity_eclipse"
 		}
 
 		// Special
@@ -22320,7 +22437,32 @@
 		}
 	}
 
-	"special_bonus_imba_obsidian_destroyer_2" // Astral Imprisonment cast range increase
+	"special_bonus_imba_obsidian_destroyer_3" // Essence Synergy now procs from enemies
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_obsidian_destroyer_essence_aura"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_obsidian_destroyer_4" // Astral Imprisonment now sucks in nearby units
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -22331,56 +22473,6 @@
 		"LinkedAbility"
 		{
 			"01"	"imba_obsidian_destroyer_astral_imprisonment"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"value"						"200"
-			}
-		}
-	}
-
-	"special_bonus_imba_obsidian_destroyer_3" // Arcane Orb int steal count increase
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"	"imba_obsidian_destroyer_arcane_orb"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"value"						"2"
-			}
-		}
-	}
-
-	"special_bonus_imba_obsidian_destroyer_4" // Stolen intelligence duration increased
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"	"imba_obsidian_destroyer_arcane_orb"
 		}
 
 		// Special
@@ -22420,7 +22512,7 @@
 		}
 	}
 
-	"special_bonus_imba_obsidian_destroyer_6" // Astral Imprisonment movespeed increase
+	"special_bonus_imba_obsidian_destroyer_6" // If heroes under Sanity Eclipse has INT less than Obsidian Destroyer suffers doubled the mana burn and received 50% more damage 
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -22430,7 +22522,7 @@
 
 		"LinkedAbility"
 		{
-			"01"	"imba_obsidian_destroyer_astral_imprisonment"
+			"01"	"imba_obsidian_destroyer_sanity_eclipse"
 		}
 
 		// Special
@@ -22440,7 +22532,17 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"value"						"100"
+				"value"						"50"
+			}
+			"02"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"mana_burn"					"80"
+			}
+			"03"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"bonus_incoming_damage"		"50"
 			}
 		}
 	}
@@ -25860,7 +25962,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"60"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -25883,11 +25985,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"scream_damage_pct"		"20 20 20 20 40 60 80"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"mana_cost"				"60"
+				"LinkedSpecialBonus"	"special_bonus_imba_queenofpain_2"
 			}
 		}
 	}
@@ -25913,8 +26011,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"475"
-		"AbilityCastPoint"				"0.0"
+		"AbilityCastRange"				"475"		
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_3"
 
 		// Time
@@ -25947,17 +26044,21 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"radius"				"475"
+				"LinkedSpecialBonus"	"special_bonus_imba_queenofpain_3"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"pain_duration"			"2 2 2 2 3 3 3"
 			}
+
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"pain_reflect_pct"		"20 30 40 50 50 50 50"
+				"LinkedSpecialBonus"	"special_bonus_imba_queenofpain_5"
 			}
+
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -26040,6 +26141,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"absorb_pct"			"30 30 30 50 70 90"
+				"LinkedSpecialBonus"	"special_bonus_imba_queenofpain_4"
 			}
 			"06"
 			{
@@ -26065,7 +26167,7 @@
 	}
 
 	//=================================================================================================================
-	// Queen of Pain Talent 1 (Level 10): Shadow Struck targets can be seen through fog
+	// Queen of Pain Talent 1 (Level 10): %-Extra Delightful Torment effect on Sonic Wave
 	//=================================================================================================================
 	"special_bonus_imba_queenofpain_1"
 	{
@@ -26077,7 +26179,8 @@
 
 		"LinkedAbility"
 		{
-			"01"	"imba_queenofpain_shadow_strike"
+			"01" 	"imba_queenofpain_sonic_wave"
+			"02" 	"imba_queenofpain_delightful_torment"
 		}
 
 		// Special
@@ -26087,13 +26190,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"1"
+				"value"						"100"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Queen of Pain Talent 2 (Level 10): Sonic Wave deals damage in 5 instances
+	// Queen of Pain Talent 2 (Level 10): %-Extra Blink scream of pain damage
 	//=================================================================================================================
 	"special_bonus_imba_queenofpain_2"
 	{
@@ -26105,7 +26208,8 @@
 
 		"LinkedAbility"
 		{
-			"01"	"imba_queenofpain_sonic_wave"
+			"01" 	"imba_queenofpain_blink"
+			"02" 	"imba_queenofpain_scream_of_pain"
 		}
 
 		// Special
@@ -26115,13 +26219,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"5"
+				"value"						"20"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Queen of Pain Talent 3 (Level 20): Damaging an enemy causes Shadow Strike to deal its tick damage
+	// Queen of Pain Talent 3 (Level 20): Additional Scream of Pain radius
 	//=================================================================================================================
 	"special_bonus_imba_queenofpain_3"
 	{
@@ -26133,7 +26237,7 @@
 
 		"LinkedAbility"
 		{
-			"01"	"imba_queenofpain_shadow_strike"
+			"01" 	"imba_queenofpain_scream_of_pain"
 		}
 
 		// Special
@@ -26143,13 +26247,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"1"
+				"value"						"100"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Queen of Pain Talent 4 (Level 20): Delightful Torment procs also grant bonus attack speed
+	// Queen of Pain Talent 4 (Level 20): %-based Sonic Wave spell-lifesteal
 	//=================================================================================================================
 	"special_bonus_imba_queenofpain_4"
 	{
@@ -26161,7 +26265,7 @@
 
 		"LinkedAbility"
 		{
-			"01"	"imba_queenofpain_delightful_torment"	
+			"01" 	"imba_queenofpain_sonic_wave"	
 		}
 
 		// Special
@@ -26171,18 +26275,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"10"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"5.0"
+				"value"						"35"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Queen of Pain Talent 5 (Level 30): Blink can be used twice in quick succession, with increased mana cost
+	// Queen of Pain Talent 5 (Level 30): %-based additional Scream of Pain damage reflected
 	//=================================================================================================================
 	"special_bonus_imba_queenofpain_5"
 	{
@@ -26194,7 +26293,7 @@
 
 		"LinkedAbility"
 		{
-			"01"	"imba_queenofpain_blink"
+			"01" 	"imba_queenofpain_scream_of_pain"
 		}
 
 		// Special
@@ -26203,14 +26302,14 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"value"						"1.5"
+				"var_type"					"FIELD_INTEGER"
+				"value"						"50"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Queen of Pain Talent 6 (Level 30): Enemies affected by Shadow Strike release Screams of Pain every damage tick
+	// Queen of Pain Talent 6 (Level 30): %-based additional Sonic Wave end radius/travel distance
 	//=================================================================================================================
 	"special_bonus_imba_queenofpain_6"
 	{
@@ -26222,8 +26321,7 @@
 
 		"LinkedAbility"
 		{
-			"01"	"imba_queenofpain_shadow_strike"
-			"02"	"imba_queenofpain_scream_of_pain"
+			"01" 	"imba_queenofpain_sonic_wave"
 		}
 
 		// Special
@@ -26233,13 +26331,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_pct"				"75"
+				"value"						"50"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Queen of Pain Talent 7 (Level 40): Scream of Pain now causes confusion
+	// Queen of Pain Talent 7 (Level 40): Scream of Pain now applies Shadow Strike on enemies hit
 	//=================================================================================================================
 	"special_bonus_imba_queenofpain_7"
 	{
@@ -26251,7 +26349,7 @@
 
 		"LinkedAbility"
 		{
-			"01"	"imba_queenofpain_scream_of_pain"
+			"01" 	"imba_queenofpain_shadow_strike"
 		}
 
 		// Special
@@ -26260,14 +26358,14 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"2"
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Queen of Pain Talent 8 (Level 40): Your abilities apply Shadow Strike to all enemies hit
+	// Queen of Pain Talent 8 (Level 40): Reduced Blink cooldown
 	//=================================================================================================================
 	"special_bonus_imba_queenofpain_8"
 	{
@@ -26279,8 +26377,7 @@
 
 		"LinkedAbility"
 		{
-			"01"	"imba_queenofpain_scream_of_pain"
-			"02"	"imba_queenofpain_sonic_wave"
+			"01" 	"imba_queenofpain_blink"
 		}
 
 		// Special
@@ -26289,8 +26386,8 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"1"
+				"var_type"				"FIELD_INTEGER"
+				"value"					"2"
 			}
 		}
 	}
@@ -27813,7 +27910,7 @@
 	//=================================================================================================================
 	// Sniper's Talents
 	//=================================================================================================================
-	"special_bonus_imba_sniper_1" // Globalfied Cast Range
+	"special_bonus_imba_sniper_1" // Globalfied Cast Range... not. Shhhhhhh
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -27833,7 +27930,7 @@
 			"01"
 			{
 				"var_type"                  "FIELD_FLOAT"
-				"value"	                    "0"
+				"value"	                    "2"
 			}
 		}
 	}
