@@ -14227,7 +14227,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"3"
+		"AbilityCooldown"				"5"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -14272,12 +14272,12 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_distance"		"1200"
+				"active_distance"		"800"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_speed"			"3000"
+				"active_speed"			"2250"
 			}
 			"08"
 			{
@@ -14287,7 +14287,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"active_cooldown"		"3"
+				"active_cooldown"		"5"
 			}
 			"10"
 			{
@@ -16429,7 +16429,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"cdr_pct"				"0.5"
+				"cdr_pct"				"0.4"
 			}
 			"05"
 			{
@@ -39165,11 +39165,11 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"outgoing_damage_tooltip"	"100"
-			}	
+			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"incoming_damage"			"150 150 140 130 120 110"
+				"incoming_damage"			"150 140 130 120 110 100"
 			}
 			"07"
 			{
@@ -39482,6 +39482,114 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"toss_damage"				"500"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Doom Bringer: Doom
+	//=================================================================================================================
+	"imba_doom_bringer_doom"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_doom_bringer.lua"
+		"AbilityTextureName"			"doom_bringer_doom"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_AURA"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+		"FightRecapLevel"				"2"
+		"HasScepterUpgrade"				"1"
+		"MaxLevel"						"6"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.45"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"600"
+		"AbilityCooldown"				"145.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"150 175 200 225 250"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"16.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"25 35 45 55 65 75"
+				"LinkedSpecialBonus"	"special_bonus_unique_doom_5"				
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration_scepter"		"20.0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_scepter"		"45 60 75 90 105 120"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"deniable_pct"			"25"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_radius"			"600"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Journal Note Ability
+	//=================================================================================================================
+	"ability_journal_note"
+	{
+		"BaseClass"                         "ability_datadriven"
+		"AbilityName"                       "ability_journal_note"
+		"AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"IsOnCastBar"                   "0"
+
+		"Modifiers"
+		{
+			"modifier_ability_journal_note"
+			{
+				"IsHidden"              "1"
+				"Passive"               "1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"		"1"
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL"		"1"
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"			"1"
+				}
+
+				"States"
+				{
+					"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_BLIND"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 		}
 	}

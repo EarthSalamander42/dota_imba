@@ -1,15 +1,19 @@
 nCOUNTDOWNTIMER = 0
 PHASE = 0
 GAME_ROSHAN_KILLS = 0
-HIT_COUNT = 0
+HIT_COUNT = {}
+HIT_COUNT[2] = 0
+HIT_COUNT[3] = 0
+
 DIRETIDE_WINNER = 2
 COUNT_DOWN = 1
+PHASE_TIME = 61 -- 481
 
 function Diretide()
 	EmitGlobalSound("announcer_diretide_2012_announcer_welcome_05")
 	EmitGlobalSound("DireTideGameStart.DireSide")
 	PHASE = 1
-	nCOUNTDOWNTIMER = 481 -- 481 / 8 Min
+	nCOUNTDOWNTIMER = PHASE_TIME -- 481 / 8 Min
 	CustomNetTables:SetTableValue("game_options", "radiant", {score = 25})
 	CustomNetTables:SetTableValue("game_options", "dire", {score = 25})
 	CustomGameEventManager:Send_ServerToAllClients("show_timer", {})
@@ -38,10 +42,11 @@ function Pumpkin(keys)
 local caster = keys.caster
 local target = keys.target
 local ability = keys.ability
-HIT_COUNT = HIT_COUNT + 1
 
-	if HIT_COUNT >= 2 then
-		HIT_COUNT = 0
+HIT_COUNT[caster:GetTeamNumber()] = HIT_COUNT[caster:GetTeamNumber()] + 1
+
+	if HIT_COUNT[caster:GetTeamNumber()] >= 2 then
+		HIT_COUNT[caster:GetTeamNumber()] = 0
 		if caster:GetName() == "npc_dota_candy_pumpkin_good" and CustomNetTables:GetTableValue("game_options", "radiant").score > 0 then
 			-- Create the item
 			local item = CreateItem( "item_diretide_candy", nil, nil)
@@ -73,6 +78,8 @@ HIT_COUNT = HIT_COUNT + 1
 end
 
 function CountdownDiretide(tick)
+local roshan_spawner = Entities:FindByName(nil, "roshan_diretide"):GetAbsOrigin()
+
 	Timers:CreateTimer(function()
 		if COUNT_DOWN == 1 then
 			nCOUNTDOWNTIMER = nCOUNTDOWNTIMER - 1
@@ -99,24 +106,30 @@ function CountdownDiretide(tick)
 --		end
 
 		if nCOUNTDOWNTIMER < 1 then
-			PHASE = PHASE + 1
-			DiretidePhase(PHASE)
-			print("Phase:", PHASE)
+			if CustomNetTables:GetTableValue("game_options", "radiant").score == CustomNetTables:GetTableValue("game_options", "dire").score then -- TIE
+				print("TIE")
+				nCOUNTDOWNTIMER = 1
+			else
+				COUNT_DOWN = 1
+				nCOUNTDOWNTIMER = PHASE_TIME
+				PHASE = PHASE + 1
+				DiretidePhase(PHASE)
+				print("Phase:", PHASE)
+			end
 			if PHASE == 2 then
-				if CustomNetTables:GetTableValue("game_options", "radiant").score == CustomNetTables:GetTableValue("game_options", "dire").score then
-					nCOUNTDOWNTIMER = 481
-					COUNT_DOWN = 0
-				elseif CustomNetTables:GetTableValue("game_options", "dire").score > CustomNetTables:GetTableValue("game_options", "radiant").score then
+				CreateUnitByName("npc_diretide_roshan", roshan_spawner, true, nil, nil, DOTA_TEAM_NEUTRALS)
+				if CustomNetTables:GetTableValue("game_options", "dire").score > CustomNetTables:GetTableValue("game_options", "radiant").score then
 					DIRETIDE_WINNER = 3
-					nCOUNTDOWNTIMER = 481
-					COUNT_DOWN = 1
-				else
-					nCOUNTDOWNTIMER = 481
-					COUNT_DOWN = 1
 				end
 			elseif PHASE == 3 then
 				nCOUNTDOWNTIMER = 120
 				COUNT_DOWN = 0
+			end
+		elseif nCOUNTDOWNTIMER == 120 and PHASE == 3 then
+			local hero = FindUnitsInRadius(2, Entities:FindByName(nil, "roshan_arena_"..DIRETIDE_WINNER):GetAbsOrigin(), nil, 700, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+			if #hero > 0 then
+				print("A hero is near...")
+				COUNT_DOWN = 1
 			end
 		end
 		return tick
