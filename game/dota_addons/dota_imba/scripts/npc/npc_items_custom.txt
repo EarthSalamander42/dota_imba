@@ -4310,7 +4310,7 @@
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"wind_song_active_stacks"	"3"
+				"wind_song_active_stacks"	"5"
 			}
 
 			"09"
@@ -4495,12 +4495,12 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_armor"				"5"
+				"bonus_armor"				"8"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_health_regen"		"8"
+				"bonus_health_regen"		"4"
 			}
 			"05"
 			{
@@ -4699,7 +4699,7 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"24"
+		"AbilityCooldown"					"24.0"
 		"AbilityManaCost"					"75"
 		"AbilitySharedCooldown"				"shadow_blade"
 
@@ -5863,7 +5863,6 @@
 				"damage_tooltip"			"125"
 				"CalculateSpellDamageTooltip"	"1"
 			}
-
 			"17"
 			{
 				"var_type"					"FIELD_INTEGER"

@@ -39505,7 +39505,7 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
 		"FightRecapLevel"				"2"
-		"HasScepterUpgrade"				"1"
+		"HasScepterUpgrade"				"0"
 		"MaxLevel"						"6"
 
 		// Casting
@@ -39533,19 +39533,19 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"25 35 45 55 65 75"
+				"damage"				"30 50 70 90 110 130"
 				"LinkedSpecialBonus"	"special_bonus_unique_doom_5"				
 			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration_scepter"		"20.0"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_scepter"		"45 60 75 90 105 120"
-			}
+//			"03"
+//			{
+//				"var_type"				"FIELD_FLOAT"
+//				"duration_scepter"		"20.0"
+//			}
+//			"04"
+//			{
+//				"var_type"				"FIELD_INTEGER"
+//				"damage_scepter"		"45 60 75 90 105 120"
+//			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -39554,7 +39554,12 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"600"
+				"aura_radius"			"600 600 600 700 800 900"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"armor_bonus"			"666"
 			}
 		}
 	}

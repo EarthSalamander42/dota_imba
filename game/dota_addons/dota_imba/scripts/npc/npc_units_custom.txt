@@ -8283,7 +8283,8 @@
 		"Model"						"models/props_gameplay/pumpkin_bucket.vmdl"
 		"SoundSet"					"Creep_Good_Melee"
 		"ModelScale" 				"1.0"
-		"Level"						"3"
+		"Level"						"2013"
+		"IsAncient"					"1"
 		
 		// Abilities
 		//----------------------------------------------------------------

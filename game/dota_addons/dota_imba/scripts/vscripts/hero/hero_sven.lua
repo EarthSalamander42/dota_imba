@@ -25,7 +25,7 @@ end
 -------------------------------------------
 
 function imba_sven_storm_bolt:OnSpellStart()
-    if IsServer() then
+	if IsServer() then
 		local caster = self:GetCaster()
 		self.target = self:GetCursorTarget()
 		
@@ -149,12 +149,12 @@ function modifier_imba_storm_bolt_crit:RemoveOnDeath() return true end
 -------------------------------------------
 
 function modifier_imba_storm_bolt_crit:DeclareFunctions()
-    local decFuns =
-    {
+	local decFuns =
+	{
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 		MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE
-    }
-    return decFuns
+	}
+	return decFuns
 end
 
 function modifier_imba_storm_bolt_crit:OnAttackLanded( params )
@@ -192,7 +192,7 @@ end
 -------------------------------------------
 
 function imba_sven_great_cleave:GetIntrinsicModifierName()
-    return "modifier_imba_great_cleave"
+	return "modifier_imba_great_cleave"
 end
 
 function imba_sven_great_cleave:OnSpellStart()
@@ -356,13 +356,13 @@ function modifier_imba_warcry:RemoveOnDeath() return true end
 -------------------------------------------
 
 function modifier_imba_warcry:DeclareFunctions()
-    local decFuns =
-    {
+	local decFuns =
+	{
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
 		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS
-    }
-    return decFuns
+	}
+	return decFuns
 end
 
 function modifier_imba_warcry:GetActivityTranslationModifiers()
@@ -832,11 +832,11 @@ function modifier_imba_colossal_slash_animation:RemoveOnDeath() return true end
 -------------------------------------------
 
 function modifier_imba_colossal_slash_animation:DeclareFunctions()
-    local decFuns =
-    {
-        MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
-    }
-    return decFuns
+	local decFuns =
+	{
+		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
+	}
+	return decFuns
 end
 
 function modifier_imba_colossal_slash_animation:GetActivityTranslationModifiers()
