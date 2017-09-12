@@ -18712,12 +18712,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"125"
+				"value"						"3"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"polarize_slow"			"60"
+				"var_type"					"FIELD_INTEGER"
+				"polarize_slow"				"60"
 			}
 		}
 	}
