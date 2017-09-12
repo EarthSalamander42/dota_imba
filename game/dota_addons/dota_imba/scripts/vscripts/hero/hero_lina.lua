@@ -313,7 +313,9 @@ function imba_lina_light_strike_array:OnSpellStart()
 		local secondary_delay = self:GetSpecialValueFor("secondary_delay")
 		local array_count = self:GetSpecialValueFor("array_count")
 		local array_rings_count = self:GetSpecialValueFor("array_rings_count")
+		local rings_radius = self:GetSpecialValueFor("rings_radius")
 		local rings_delay = self:GetSpecialValueFor("rings_delay")
+		local rings_distance = self:GetSpecialValueFor("rings_distance")
 
 		-- Distances
 		local direction = (target_loc - caster_loc):Normalized()
@@ -339,8 +341,8 @@ function imba_lina_light_strike_array:OnSpellStart()
 			local nuclear_radius = radius
 			local nuclear_stun_duration = stun_duration
 			for k=1, caster:FindTalentValue("special_bonus_imba_lina_7")-1, 1 do
-				nuclear_radius = nuclear_radius + 75 * k
-				nuclear_stun_duration = nuclear_stun_duration * (1/(2*k))
+				nuclear_radius = nuclear_radius + caster:FindTalentValue("special_bonus_imba_lina_7","add_radius") * k
+				nuclear_stun_duration = nuclear_stun_duration * (1/(caster:FindTalentValue("special_bonus_imba_lina_7","stun_reduction")*k))
 				self:CreateStrike( target_loc, (cast_delay * k), cast_delay, nuclear_radius, damage, nuclear_stun_duration )
 							
 				-- #4 Talent, When a Light Strike Array explosion occurs, the previous explosions also occurs
@@ -366,8 +368,8 @@ function imba_lina_light_strike_array:OnSpellStart()
 			local next_distance = i+1
 			local array_strike = i+1
 			
-			distance = radius * (distance + 0.25)
-			next_distance = radius * (next_distance + 0.25)
+			distance = radius * (distance + rings_distance)
+			next_distance = radius * (next_distance + rings_distance)
 			
 			--if i == 0 then
 			--	distance = 0
@@ -389,18 +391,18 @@ function imba_lina_light_strike_array:OnSpellStart()
 			for j=1, array_rings_count, 1 do
 				rings_direction = RotateVector2D(rings_direction,((360/array_rings_count)),true)
 				-- new_rings_direction = RotateVector2D(rings_direction,30,true) -- Determines the Hexagon angle
-				local ring_distance = radius * (array_strike + 1)
-				local ring_delay = math.abs((radius * (i + cast_delay + 0.25)) / (radius * 2)) * cast_delay
+				local ring_distance = rings_radius * (array_strike + 1)
+				local ring_delay = math.abs((radius * (i + cast_delay + rings_distance)) / (rings_radius * 2)) * cast_delay
 				local ring_position = target_loc + ring_distance * rings_direction
-				self:CreateStrike( ring_position, (rings_delay + ring_delay), cast_delay , radius, damage, stun_duration )
+				self:CreateStrike( ring_position, (cast_delay + ring_delay), (cast_delay + rings_delay), rings_radius, damage, stun_duration )
 						
 				-- #4 Talent, previous explosions also occurs
 				if caster:HasTalent("special_bonus_imba_lina_4") then 
 					-- Only the previous explosion occurs, does not create additional explosions
 					if count == (array_count-1) then
 					else
-						local ring_next_delay = (math.abs(next_distance / (radius * 2)) * cast_delay) - ring_delay
-						self:CreateStrike( ring_position, (rings_delay + ring_delay + 0.01), (cast_delay + ring_next_delay), radius, damage, stun_duration )
+						local ring_next_delay = (math.abs(next_distance / (rings_radius * 2)) * cast_delay) - ring_delay
+						self:CreateStrike( ring_position, (cast_delay + ring_delay + 0.01), (cast_delay + rings_delay + ring_next_delay), rings_radius, damage, stun_duration )
 					end
 				end
 			end
@@ -594,8 +596,34 @@ function modifier_imba_fiery_soul:OnAbilityFullyCast( params )
 			return
 		end
 		local parent = self:GetParent()
-		if (params.ability:GetCaster() == parent) then
+		local caster = params.ability:GetCaster()
+		if (caster == parent) then
 			parent:AddNewModifier(parent, self:GetAbility(), "modifier_imba_fiery_soul_counter", {duration = self:GetAbility():GetSpecialValueFor("duration")})
+			
+			-- Fiery Soul ability cooldown reduction
+			for ability_id = 0, 15 do
+				local caster_ability = caster:GetAbilityByIndex(ability_id)
+				if caster_ability then
+					local ability_name = caster_ability:GetAbilityName()
+					-- Does not reduce the cooldown of the current ability being casted
+					if params.ability:GetName() == ability_name then
+					else
+						-- Get the modifier
+						local fiery_counter = caster:FindModifierByName("modifier_imba_fiery_soul_counter")
+						if fiery_counter then
+							-- Get the ability cooldown
+							local cooldown_remaining = caster_ability:GetCooldownTimeRemaining()
+							local cooldown_reduction = self:GetAbility():GetSpecialValueFor("cdr_pct") * fiery_counter:GetStackCount()
+							
+							caster_ability:EndCooldown()
+							if cooldown_remaining > cooldown_reduction then
+								caster_ability:StartCooldown( cooldown_remaining - cooldown_reduction )
+							end
+						end
+					end
+				end
+			end
+			
 		end
 		return true
 	end
@@ -707,9 +735,9 @@ function modifier_imba_fiery_soul_counter:GetModifierPercentageCasttime()
 	return self:GetAbility():GetSpecialValueFor("animation_pct") * self:GetStackCount()
 end
 
-function modifier_imba_fiery_soul_counter:GetCustomCooldownReductionStacking()
-	return self:GetAbility():GetSpecialValueFor("cdr_pct") * self:GetStackCount()
-end
+--function modifier_imba_fiery_soul_counter:GetCustomCooldownReductionStacking()
+--	return self:GetAbility():GetSpecialValueFor("cdr_pct") * self:GetStackCount()
+--end
 
 modifier_imba_fiery_soul_blaze_burn = class({})
 
@@ -786,6 +814,7 @@ function imba_lina_laguna_blade:OnSpellStart()
 		local effect_delay = self:GetSpecialValueFor("effect_delay")
 		local bounce_amount = self:GetSpecialValueFor("bounce_amount")
 		local bounce_range = self:GetSpecialValueFor("bounce_range")
+		local bounce_delay = self:GetSpecialValueFor("bounce_delay")
 
 		-- Play the cast sound + fire particle
 		caster:EmitSound("Ability.LagunaBlade")
@@ -830,11 +859,13 @@ function imba_lina_laguna_blade:OnSpellStart()
 				end
 			end
 			-- Bounce on remaining targets
+			Timers:CreateTimer(bounce_delay, function()
 			for i=1, math.min(#enemies,bounce_amount),1 do
 				local bounce_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_lina/lina_spell_laguna_blade.vpcf", PATTACH_CUSTOMORIGIN, caster)
 				ParticleManager:SetParticleControlEnt(bounce_pfx, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target_loc, true)
 				ParticleManager:SetParticleControlEnt(bounce_pfx, 1, enemies[i], PATTACH_POINT_FOLLOW, "attach_hitloc", enemies[i]:GetAbsOrigin(), true)
 				ParticleManager:ReleaseParticleIndex(bounce_pfx)
+				Timers:CreateTimer(effect_delay, function()
 				ApplyDamage({victim = enemies[i], attacker = caster, ability = self, damage = damage, damage_type = damage_type})
 		 		-- #5 Talent: Lina's Spells causes DoT based on Fiery Soul stacks
 				if caster:HasTalent("special_bonus_imba_lina_5") then
@@ -852,7 +883,9 @@ function imba_lina_laguna_blade:OnSpellStart()
 				if caster:HasTalent("special_bonus_imba_lina_6") then
 					enemies[i]:AddNewModifier(caster, self, "modifier_stunned", { duration = caster:FindTalentValue("special_bonus_imba_lina_6") })
 				end
+				end)
 			end
+			end)
 		end)
 	end
 end

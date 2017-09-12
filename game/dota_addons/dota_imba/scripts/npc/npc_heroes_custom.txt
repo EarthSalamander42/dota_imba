@@ -1047,14 +1047,14 @@
 		"Ability3"					"imba_juggernaut_blade_dance"
 		"Ability4"					"imba_juggernaut_omni_slash"
 
-		"Ability10"					"special_bonus_imba_juggernaut_1"
-		"Ability11"					"special_bonus_imba_juggernaut_2"
-		"Ability12"					"special_bonus_imba_juggernaut_3"
-		"Ability13"					"special_bonus_imba_juggernaut_4"
-		"Ability14"					"special_bonus_imba_juggernaut_5"
-		"Ability15"					"special_bonus_imba_juggernaut_6"
-		"Ability16"					"special_bonus_imba_juggernaut_7"
-		"Ability17"					"special_bonus_imba_juggernaut_8"
+		"Ability10"					"special_bonus_imba_juggernaut_2" // Blade Fury slowly increases in size
+		"Ability11"					"special_bonus_imba_juggernaut_4" // Secret Blade strikes 3 times, once forward, twice from the sides
+		"Ability12"					"special_bonus_imba_juggernaut_3" // Healing Ward aura also gives attack speed
+		"Ability13"					"special_bonus_imba_juggernaut_8" // Landing a Blade Dance Crit grants a Jade Blossom stack
+		"Ability14"					"special_bonus_imba_juggernaut_7" // Omnislash sends a doppelganger to commit the slashes
+		"Ability15"					"special_bonus_imba_juggernaut_6" // Blade Fury receives benefits from Blade Dance
+		"Ability16"					"special_bonus_imba_juggernaut_1" // Blade Fury acts as a vacuum, SUCCing nearby enemies
+		"Ability17"					"special_bonus_imba_juggernaut_5" // Wind Dance stacks are consumed to increase Secret Blade max hit count
 
 		"ProjectileSpeed"			"900"
 	}
