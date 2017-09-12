@@ -657,7 +657,7 @@
 		//"Ability3"					"imba_doom_bringer_lvl_death"
 		//"Ability4"					"imba_doom_bringer_empty1"
 		//"Ability5"					"imba_doom_bringer_empty2"
-		"Ability6"					"imba_doom_bringer_doom"
+		//"Ability6"					"imba_doom_bringer_doom"
 
 		"Ability10"					"special_bonus_hp_150"
 		"Ability11"					"special_bonus_unique_doom_3"
