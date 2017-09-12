@@ -1132,6 +1132,7 @@ LinkLuaModifier("modifier_imba_essence_aura", "hero/hero_obsidian_destroyer.lua"
 LinkLuaModifier("modifier_imba_essence_aura_buff", "hero/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_essence_aura_proc", "hero/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_essence_aura_over_maximum", "hero/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_essence_aura_over_maximum_indicator", "hero/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_obsidian_destroyer_essence_aura:GetAbilityTextureName()
    return "obsidian_destroyer_essence_aura"
@@ -1266,6 +1267,7 @@ function modifier_imba_essence_aura_buff:OnCreated()
     self.particle_essence = "particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_essence_effect.vpcf"
     self.modifier_proc = "modifier_imba_essence_aura_proc"
     self.modifier_overmana = "modifier_imba_essence_aura_over_maximum"
+	self.modifier_overmana_indicator = "modifier_imba_essence_aura_over_maximum_indicator"
 
     -- Ability specials
     self.restore_chance_pct = self.ability:GetSpecialValueFor("restore_chance_pct")
@@ -1319,6 +1321,11 @@ function modifier_imba_essence_aura_buff:ProcEssenceAura()
 				local max_mana = self.parent:GetMaxMana()
 				local mana_restore = max_mana * (self.restore_mana_pct * 0.01)
 
+				-- #5 Talent: Essence Aura now heals when proccing
+				if self.caster:HasTalent("special_bonus_imba_obsidian_destroyer_5") then
+					local heal_amount = self.caster:GetIntellect()
+					self.parent:Heal(heal_amount, self.caster)
+				end
 				-- #8 Talent: Essence Aura can go beyond maximum mana temporarily (caster only)
 				if self.caster:HasTalent("special_bonus_imba_obsidian_destroyer_8") and self.caster == self.parent then
 					-- Get current mana
@@ -1330,14 +1337,20 @@ function modifier_imba_essence_aura_buff:ProcEssenceAura()
 						if not self.caster:HasModifier(self.modifier_overmana) then
 							local overmana_duration = self.caster:FindTalentValue("special_bonus_imba_obsidian_destroyer_8")
 							self.caster:AddNewModifier(self.caster, self.ability, self.modifier_overmana, {duration = overmana_duration})
+							self.caster:AddNewModifier(self.caster, self.ability, self.modifier_overmana_indicator, {duration = overmana_duration})
 						end
 
 						local modifier_overmana_handler = self.caster:FindModifierByName(self.modifier_overmana)
+						local modifier_overmana_indicator = self.caster:FindModifierByName(self.modifier_overmana_indicator)
 						if modifier_overmana_handler then
 							for i = 1, excess_mana do
 								modifier_overmana_handler:IncrementStackCount()
 								modifier_overmana_handler:ForceRefresh()
 							end                        
+						end
+						if modifier_overmana_indicator then
+							modifier_overmana_indicator:IncrementStackCount()
+							modifier_overmana_indicator:ForceRefresh()                     
 						end
 					end
 				end
@@ -1348,12 +1361,6 @@ function modifier_imba_essence_aura_buff:ProcEssenceAura()
 				self.particle_essence_fx = ParticleManager:CreateParticle(self.particle_essence, PATTACH_ABSORIGIN_FOLLOW, self.parent)
 				ParticleManager:SetParticleControl(self.particle_essence_fx, 0, self.parent:GetAbsOrigin())
 				ParticleManager:ReleaseParticleIndex(self.particle_essence_fx)
-
-				-- #5 Talent: Essence Aura now heals when proccing
-				if self.caster:HasTalent("special_bonus_imba_obsidian_destroyer_5") then
-					local heal_amount = self.caster:GetIntellect()
-					self.parent:Heal(heal_amount, self.caster)
-				end
 			else
 			
             -- If the hero is not on the same team, only apply the particle effect on parent
@@ -1539,6 +1546,70 @@ function modifier_imba_essence_aura_over_maximum:GetModifierExtraManaBonus()
     return stacks
 end
 
+
+-- #8 Talent: Indicator
+modifier_imba_essence_aura_over_maximum_indicator = class({})
+
+function modifier_imba_essence_aura_over_maximum_indicator:IsHidden() return false end    
+function modifier_imba_essence_aura_over_maximum_indicator:IsPurgable() return false end
+function modifier_imba_essence_aura_over_maximum_indicator:IsDebuff() return false end
+
+function modifier_imba_essence_aura_over_maximum_indicator:OnCreated()
+    if IsServer() then
+        -- Ability properties
+        self.caster = self:GetCaster()
+        self.ability = self:GetAbility()
+        self.parent = self:GetParent()        
+
+        -- Overmana duration
+        self.overmana_duration = self.caster:FindTalentValue("special_bonus_imba_obsidian_destroyer_8")
+
+        -- Initialize table
+        self.stacks_table = {}        
+
+        -- Start thinking
+        self:StartIntervalThink(0.1)
+    end
+end
+
+function modifier_imba_essence_aura_over_maximum_indicator:OnIntervalThink()
+    if IsServer() then
+
+        -- Check if there are any stacks left on the table
+        if #self.stacks_table > 0 then
+
+            -- For each stack, check if it is past its expiration time. If it is, remove it from the table
+            for i = #self.stacks_table, 1, -1 do
+                if self.stacks_table[i] + self.overmana_duration < GameRules:GetGameTime() then
+                    table.remove(self.stacks_table, i)                          
+                end
+            end
+            
+            -- If after removing the stacks, the table is empty, remove the modifier.
+            if #self.stacks_table == 0 then
+                self:Destroy()
+
+            -- Otherwise, set its stack count
+            else
+                self:SetStackCount(#self.stacks_table)
+            end
+
+            -- Recalculate bonus based on new stack count
+            self:GetParent():CalculateStatBonus()
+
+        -- If there are no stacks on the table, just remove the modifier.
+        else
+            self:Destroy()
+        end
+    end
+end
+
+function modifier_imba_essence_aura_over_maximum_indicator:OnRefresh()
+    if IsServer() then
+        -- Insert new stack values
+        table.insert(self.stacks_table, GameRules:GetGameTime())
+    end
+end
 
 ---------------------------
 --    SANITY ECLIPSE     --
