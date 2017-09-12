@@ -19,9 +19,8 @@ function imba_doom_bringer_doom:OnSpellStart()
 		local caster = self:GetCaster()
 		local duration = self:GetSpecialValueFor("duration")
 		caster:AddNewModifier(caster, self, "modifier_imba_doom_bringer_doom", {duration = duration})
-		caster:EmitSound("Hero_Sven.GodsStrength")
+		caster:EmitSound("Hero_DoomBringer.Doom")
 		caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_4)
-
 	end
 end
 -------------------------------------------
@@ -33,6 +32,10 @@ function modifier_imba_doom_bringer_doom:IsPurgeException() return false end
 function modifier_imba_doom_bringer_doom:IsStunDebuff() return false end
 function modifier_imba_doom_bringer_doom:RemoveOnDeath() return true end
 -------------------------------------------
+
+function modifier_imba_doom_bringer_doom:IsAura()
+	return true
+end
 
 function modifier_imba_doom_bringer_doom:GetAuraSearchTeam()
 	return self:GetAbility():GetAbilityTargetTeam()
@@ -74,6 +77,18 @@ local caster = self:GetCaster()
 --	end
 end
 
+function modifier_imba_doom_bringer_doom:DeclareFunctions()
+	local decFuns =
+	{
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+	}
+	return decFuns
+end
+
+function modifier_imba_doom_bringer_doom:GetModifierPhysicalArmorBonus()
+	return self:GetAbility():GetSpecialValueFor("armor_bonus")
+end
+
 function modifier_imba_doom_bringer_doom:OnDestroy()
 local caster = self:GetCaster()
 
@@ -92,10 +107,13 @@ function modifier_imba_doom_bringer_doom_enemies:RemoveOnDeath() return true end
 -------------------------------------------
 
 function modifier_imba_doom_bringer_doom_enemies:OnCreated()
-	-- particles/units/heroes/hero_doom_bringer/doom_bringer_doom.vpcf
-	print("Apply doom on enemies..")
-	self:GetParent().DoomEffect = ParticleManager:CreateParticle( "particles/units/heroes/hero_sven/sven_spell_gods_strength_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent() )
-	ParticleManager:SetParticleControlEnt( nFXIndex, 4, self:GetParent(), PATTACH_ABSORIGIN_FOLLOW , self:GetParent():GetOrigin(), true )
+local parent = self:GetParent()
+
+	parent.DoomEffect = ParticleManager:CreateParticle( "particles/units/heroes/hero_doom_bringer/doom_bringer_doom.vpcf", PATTACH_ABSORIGIN_FOLLOW, parent )
+	self:AddParticle(parent.DoomEffect, false, false, -1, false, false)
+	ParticleManager:SetParticleControlEnt( parent.DoomEffect, 4, parent, PATTACH_ABSORIGIN_FOLLOW, nil, parent:GetAbsOrigin(), true )
+	parent:Purge( true, false, false, false, false)
+	self:StartIntervalThink(1.0)
 end
 
 function modifier_imba_doom_bringer_doom_enemies:OnRefresh()
@@ -110,7 +128,23 @@ function modifier_imba_doom_bringer_doom_enemies:StatusEffectPriority()
 	return 10
 end
 
-function modifier_imba_doom_bringer_doom_enemies:OnDestroy()
-	ParticleManager:ReleaseParticleIndex(self:GetParent().DoomEffect)
-	ParticleManager:DestroyParticle(self:GetParent().DoomEffect, true)
+function modifier_imba_doom_bringer_doom_enemies:CheckState()	
+	local state = {} 
+	state = {
+		[MODIFIER_STATE_MUTED] = true,
+		[MODIFIER_STATE_SILENCED] = true,
+	}
+	
+	return state
+end
+
+function modifier_imba_doom_bringer_doom_enemies:OnIntervalThink()
+	local damage_table = {
+		victim = self:GetParent(),
+		attacker = self:GetCaster(),
+		damage = self:GetAbility():GetSpecialValueFor("damage"),
+		damage_type = self:GetAbility():GetAbilityDamageType(),
+		ability = self:GetAbility()
+	}
+	ApplyDamage(damage_table)
 end

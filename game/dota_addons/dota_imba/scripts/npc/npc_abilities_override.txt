@@ -882,7 +882,7 @@
 	{
 		"AbilityCastRange"				"800"
 		
-		"ItemCost"						"20"
+		"ItemCost"						"40"
 
 		"ItemInitialCharges"			"1"
 
@@ -1887,7 +1887,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration"				"12 11 10 9 8 7"
+				"duration"				"11 10 9 8 7 6"
 			}
 			"04"
 			{
