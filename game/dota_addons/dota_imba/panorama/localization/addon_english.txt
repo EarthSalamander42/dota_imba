@@ -439,9 +439,7 @@
 	"Dota_Tooltip_Talent_special_bonus_imba_lion_8_title"						"Mana Vortex"
 	"Dota_Tooltip_Talent_special_bonus_imba_lion_8_Description"					"Mana Drain targets all enemies in aura range.<br><br><i>Mana is like water - Unclog the pipe and everything flows down the drain.</i>"
 
-	////===============================================================================================================
     // Lycan's Talents
-    ////===============================================================================================================
 	"DOTA_Tooltip_Talent_special_bonus_imba_lycan_1_title"						"Animal Training"	
 	"DOTA_Tooltip_Talent_special_bonus_imba_lycan_1_Description"				"Upgrades the current level of Lycans' wolves. This talent is the only way to unlock Nightclaws, the ultimate wolves, if Summon Wolves is in its highest level. <br><br><i>Lycan's trains his wolves to transform them into the deadliest hunters of nature, capable of bringing down anyone that stands in their way.</i>"
 	"DOTA_Tooltip_Talent_special_bonus_imba_lycan_2_title"						"Lead By Example"
