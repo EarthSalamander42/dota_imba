@@ -361,7 +361,7 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 	$("#npc_dota_hero_magnataur").AddClass( "taken" );
 	$("#npc_dota_hero_undying").AddClass( "taken" );
 	///AGI
-	$("#npc_dota_hero_phantom_lancer").AddClass( "taken" );
+	//$("#npc_dota_hero_phantom_lancer").AddClass( "taken" );
 	$("#npc_dota_hero_spectre").AddClass( "taken" );
 	//INT
 	$("#npc_dota_hero_enigma").AddClass( "taken" );

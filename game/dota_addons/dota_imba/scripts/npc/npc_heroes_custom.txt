@@ -1811,7 +1811,7 @@
 	{
 		"override_hero"				"npc_dota_hero_phantom_lancer"
 
-		"IsDisabled"				"1"
+		"IsDisabled"				"0"
 
 		"AttributeAgilityGain"		"3.5"
 
@@ -1819,6 +1819,7 @@
 
 		//"Ability1"					"imba_phantom_lancer_spirit_lance"
 		//"Ability2"					"imba_phantom_lancer_doppelwalk"
+		"Ability2"					"imba_phantom_lancer_spirit_lance"
 		//"Ability3"					"imba_phantom_lancer_phantom_edge"
 		//"Ability4"					"imba_phantom_lancer_juxtapose"
 
