@@ -295,7 +295,7 @@ function modifier_imba_magnetize_debuff_stack:OnIntervalThink()
 						bDeleteOnHit		= false,
 						vVelocity			= Vector(direction.x,direction.y,0) * self.speed,
 						bProvidesVision		= false,
-						ExtraData			= {damage = self.damage, distance = self.distance, polarize_duration = self.polarize_duration, magnetize_duration = self.magnetize_duration, speed = self.speed, radius = self.radius, magnetize_shockwave = 1, talent = 0}
+						ExtraData			= {damage = self.damage, distance = self.distance, polarize_duration = self.polarize_duration, speed = self.speed, radius = self.radius, magnetize_shockwave = 1, talent = 0}
 					}
 					ProjectileManager:CreateLinearProjectile(projectile)
 					-- Break the loop after launching the shockwave
@@ -512,25 +512,8 @@ function imba_magnataur_shockwave:OnProjectileHit_ExtraData(target, location, Ex
 			else
 				-- Apply damage
 				ApplyDamage({victim = target, attacker = caster, ability = self, damage = ExtraData.damage, damage_type = self:GetAbilityDamageType()})
-				-- Apply Polarize & Magnetize
+				-- Apply Polarize
 				target:AddNewModifier(caster, nil, "modifier_imba_polarize_debuff_stack", {duration = ExtraData.polarize_duration})
-				-- Get if the target already has Magnetize debuff
-				local modifier_magnetize = target:FindModifierByName("modifier_imba_magnetize_debuff")
-				local magnetize_debuff = nil
-				-- If the debuff is present, apply the new magnetize debuff based on the current duration
-				if modifier_magnetize then
-				magnetize_debuff = target:AddNewModifier(caster, self, "modifier_imba_magnetize_debuff_stack", {duration = modifier_magnetize:GetRemainingTime()})
-				else
-				magnetize_debuff = target:AddNewModifier(caster, self, "modifier_imba_magnetize_debuff_stack", {duration = ExtraData.magnetize_duration})
-				end
-				if magnetize_debuff then
-					magnetize_debuff.damage = ExtraData.damage
-					magnetize_debuff.distance = ExtraData.distance
-					magnetize_debuff.polarize_duration = ExtraData.polarize_duration
-					magnetize_debuff.magnetize_duration = ExtraData.magnetize_duration
-					magnetize_debuff.speed = ExtraData.speed
-					magnetize_debuff.radius = ExtraData.radius
-				end
 			end
 			
 		else
@@ -660,6 +643,14 @@ function modifier_imba_shockwave_root:IsDebuff() return true end
 function modifier_imba_shockwave_root:CheckState()
     local state = {[MODIFIER_STATE_ROOTED] = true}
     return state
+end
+
+function modifier_imba_shockwave_root:GetEffectName()
+	return "particles/hero/magnataur/skewer_entangle_debuff.vpcf"
+end
+
+function modifier_imba_shockwave_root:GetEffectAttachType()
+	return PATTACH_OVERHEAD_FOLLOW
 end
 
 -------------------------------------------
