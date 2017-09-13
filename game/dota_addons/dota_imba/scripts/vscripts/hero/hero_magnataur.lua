@@ -517,9 +517,9 @@ function imba_magnataur_shockwave:OnProjectileHit_ExtraData(target, location, Ex
 				-- Get if the target already has Magnetize debuff
 				local modifier_magnetize = target:FindModifierByName("modifier_imba_magnetize_debuff")
 				local magnetize_debuff = nil
-				-- If the debuff is present, apply the new magnetize debuff based on the current duration
+				-- If the debuff is present, apply the don't apply the Magnetize debuff
 				if modifier_magnetize then
-				magnetize_debuff = target:AddNewModifier(caster, self, "modifier_imba_magnetize_debuff_stack", {duration = modifier_magnetize:GetRemainingTime()})
+				-- magnetize_debuff = target:AddNewModifier(caster, self, "modifier_imba_magnetize_debuff_stack", {duration = modifier_magnetize:GetRemainingTime()})
 				else
 				magnetize_debuff = target:AddNewModifier(caster, self, "modifier_imba_magnetize_debuff_stack", {duration = ExtraData.magnetize_duration})
 				end
@@ -549,9 +549,9 @@ function imba_magnataur_shockwave:OnProjectileHit_ExtraData(target, location, Ex
 			-- Get if the target already has Magnetize debuff
 			local modifier_magnetize = target:FindModifierByName("modifier_imba_magnetize_debuff")
 			local magnetize_debuff = nil
-			-- If the debuff is present, apply the new magnetize debuff based on the current duration
+			-- If the debuff is present, apply the don't apply the Magnetize debuff
 			if modifier_magnetize then
-			magnetize_debuff = target:AddNewModifier(caster, self, "modifier_imba_magnetize_debuff_stack", {duration = modifier_magnetize:GetRemainingTime()})
+			-- magnetize_debuff = target:AddNewModifier(caster, self, "modifier_imba_magnetize_debuff_stack", {duration = modifier_magnetize:GetRemainingTime()})
 			else
 			magnetize_debuff = target:AddNewModifier(caster, self, "modifier_imba_magnetize_debuff_stack", {duration = ExtraData.magnetize_duration})
 			end
@@ -621,9 +621,9 @@ function imba_magnataur_shockwave:OnProjectileHit_ExtraData(target, location, Ex
 			-- Get if the target already has Magnetize debuff
 			local modifier_magnetize = target:FindModifierByName("modifier_imba_magnetize_debuff_stack")
 			local magnetize_debuff
-			-- If the debuff is present, apply the new magnetize debuff based on the current duration
+			-- If the debuff is present, apply the don't apply the Magnetize debuff
 			if modifier_magnetize then
-			magnetize_debuff = target:AddNewModifier(caster, self, "modifier_imba_magnetize_debuff_stack", {duration = modifier_magnetize:GetRemainingTime()})
+			-- magnetize_debuff = target:AddNewModifier(caster, self, "modifier_imba_magnetize_debuff_stack", {duration = modifier_magnetize:GetRemainingTime()})
 			else
 			magnetize_debuff = target:AddNewModifier(caster, self, "modifier_imba_magnetize_debuff_stack", {duration = ExtraData.magnetize_duration})
 			end
@@ -660,6 +660,14 @@ function modifier_imba_shockwave_root:IsDebuff() return true end
 function modifier_imba_shockwave_root:CheckState()
     local state = {[MODIFIER_STATE_ROOTED] = true}
     return state
+end
+
+function modifier_imba_shockwave_root:GetEffectName()
+	return "particles/hero/magnataur/skewer_entangle_debuff.vpcf"
+end
+
+function modifier_imba_shockwave_root:GetEffectAttachType()
+	return PATTACH_OVERHEAD_FOLLOW
 end
 
 -------------------------------------------
