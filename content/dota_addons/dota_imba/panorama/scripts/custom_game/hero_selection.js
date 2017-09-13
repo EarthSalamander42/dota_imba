@@ -332,6 +332,7 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 			}
 
 			// Gray out heroes already selected by according to hero pick rule (handled by server)
+			$.Msg(picked_heroes[i])
 			for (j = 1; j <= picked_heroes.length; j++) {
 				if (picked_heroes[i] != null) {
 					$.Msg("Picked heroes" + picked_heroes[i])
