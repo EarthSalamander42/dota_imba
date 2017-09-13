@@ -391,7 +391,10 @@ function Server_CalculateXPForWinnerAndAll(winning_team)
 			dis_player = dis_player + 1
 		end
 	end
-	local abandon_xp = 0 - (ABANDON_CHARGE / dis_player)
+	local multiplier = 1.0
+	if GetMapName() == "imba_standard" then multiplier = 2.0 end
+	if STOREGGA_ACTIVE then multiplier = 4.2 end
+	local abandon_xp = 0 - (ABANDON_CHARGE / dis_player / multiplier)
 	for nPlayerID=0, DOTA_MAX_TEAM_PLAYERS-1 do
 		if  PlayerResource:IsValidPlayer(nPlayerID) and not PlayerResource:IsFakeClient(nPlayerID) then
 			if winning_team == "Radiant" then
@@ -411,10 +414,7 @@ function Server_CalculateXPForWinnerAndAll(winning_team)
 
 			print("SERVER XP: Testing XP earned...")
 			if PlayerResource:GetTeam(nPlayerID) == Winner and PlayerResource:GetConnectionState(nPlayerID) == 2 then
-				local multiplier = 1.0
-				if GetMapName() == "imba_standard" then multiplier = 2.0 end
-				if STOREGGA_ACTIVE then multiplier = 4.2 end
-				jsontable.XP = tostring(math.ceil(table_XP[nPlayerID] * multiplier))
+				jsontable.XP = tostring(math.ceil(table_XP[nPlayerID] * multiplier)) -- WIN
 				CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {
 					XP = tonumber(XP_has_this_level[nPlayerID]),
 					MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]),
@@ -426,7 +426,7 @@ function Server_CalculateXPForWinnerAndAll(winning_team)
 				})
 			else
 				if PlayerResource:GetConnectionState(nPlayerID) ~= 2 then
-					jsontable.XP = tostring(math.ceil(abandon_xp))
+					jsontable.XP = tostring(math.ceil(abandon_xp)) -- ABANDON
 					CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {
 						XP = tonumber(XP_has_this_level[nPlayerID]),
 						MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]),
@@ -437,7 +437,7 @@ function Server_CalculateXPForWinnerAndAll(winning_team)
 						title_color = Server_GetTitleColor(XP_level_title_player[nPlayerID], true)
 					})
 				else
-					jsontable.XP = tostring(table_XP[nPlayerID] / 2)
+					jsontable.XP = tostring(table_XP[nPlayerID] / 2) -- LOSE
 					CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {
 						XP = tonumber(XP_has_this_level[nPlayerID]),
 						MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]),

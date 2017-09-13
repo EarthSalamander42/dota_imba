@@ -481,7 +481,7 @@ function imba_queenofpain_scream_of_pain:OnProjectileHit_ExtraData(target, locat
 			-- Talent #8 handling
 			if caster:HasTalent("special_bonus_imba_queenofpain_8") and caster:HasAbility("imba_queenofpain_shadow_strike") then
 				local shadow_strike_ability = caster:FindAbilityByName("imba_queenofpain_shadow_strike")
-				if shadow_strike_ability:GetLevel > 0 then
+				if shadow_strike_ability:GetLevel() > 0 then
 					local init_damage = shadow_strike_ability:GetSpecialValueFor("damage")
 					local duration = shadow_strike_ability:GetSpecialValueFor("duration")
 					local sec_damage_total = shadow_strike_ability:GetSpecialValueFor("sec_damage_total")
@@ -653,7 +653,7 @@ function imba_queenofpain_sonic_wave:OnProjectileHit_ExtraData(target, location,
 		-- Talent #8 handling
 		if caster:HasTalent("special_bonus_imba_queenofpain_8") and caster:HasAbility("imba_queenofpain_shadow_strike") then
 			local shadow_strike_ability = caster:FindAbilityByName("imba_queenofpain_shadow_strike")
-			if shadow_strike_ability:GetLevel > 0 then
+			if shadow_strike_ability:GetLevel() > 0 then
 				local init_damage = shadow_strike_ability:GetSpecialValueFor("damage")
 				local duration = shadow_strike_ability:GetSpecialValueFor("duration")
 				local sec_damage_total = shadow_strike_ability:GetSpecialValueFor("sec_damage_total")

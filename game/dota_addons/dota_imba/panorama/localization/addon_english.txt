@@ -529,6 +529,25 @@
 	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_8_title"                      "Triple Hook"
 	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_8_Description"                "Pudge throws 3 hooks instead of one, with 30 degrees between them. Those hooks can't thit the same target."
 
+	//QoP
+	// Queen of Pain
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_1_title"				"Painsight"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_1_Description"			"Enemies affected by Shadow Strike can now be seen through the fog of war.<br><br><i>Succubuses have a sixth sense for pain, and can detect suffering as a predator following the scent of blood.</i>"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_2_title"				"Reverberate"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_2_Description"			"Sonic Wave's damage is now dealt over 5 instances. The total damage is unchanged.<br><br><i>As each victim's hope swells, believing the torment over, agony washes over them again and again. Only the Queen of Pain can cause suffering with such sublime cruelty.</i>"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_3_title"				"Resonating Torment"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_3_Description"			"Dealing damage to targets affected by Shadow Strike will cause it to tick one extra time. Does not affect remaining ticks or duration.<br><br><i>Shadow Struck creatures are already in constant, flaring pain. Feeling even more agony is, many times, more than their bodies and minds can take.</i>"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_4_title"				"Thrill of Suffering"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_4_Description"			"Delightful Torment will now also grant 10 bonus attack speed for 5 seconds every time it triggers. Each instance has a separate duration.<br><br><i>The Queen's pleasure brings her into a semi-delirious state, where all she desires is to strike again and again, to feel more of her victims' agony. More, more!</i>"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_5_title"				"Shadow Flash"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_5_Description"			"Allows Blink to be used twice in quick succession, with the second usage costing double the normal mana. There's a 1.5 second grace window where you can choose to blink again or not.<br><br><i>In and out in a flash, the Queen becomes ever more elusive - and deadly.</i>"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_6_title"				"Scream of Agony"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_6_Description"			"Enemies affected by Shadow Strike will now release a 75% damage scream of pain every time it ticks. Does not affect the target itself.<br><br><i>Shadow Strike's suffering becomes so intense, its victims cannot help but continuously scream in agony, piercing their allies' eardrums in the process.</i>"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_7_title"				"Disorienting Scream"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_7_Description"			"Allows Scream of Pain to confuse enemies, mixing up their next 2 orders (same effect as scepter Sonic Wave).<br><br><i>Violent screaming and pierced eardrums cause enemies to briefly become confused and off-balance.</i>"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_8_title"				"Spread the Suffering"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_8_Description"			"Allows your abilities to apply Shadow Strike to all enemies hit by them.<br><br><i>Many say the Queen of Pain's voice is 'like daggers'. Little do they know, at the peak of her power, it is literally as deadly as </i>poisoned<i> daggers.</i>"
+
 	// Silencer
 	"DOTA_Tooltip_Talent_special_bonus_imba_silencer_1_title"                   "Leeching Curse"
 	"DOTA_Tooltip_Talent_special_bonus_imba_silencer_1_Description"             "Arcane Curse now heals its caster for 25% of damage it deals every tick.<br><br><i>Why waste drained energies when you can consume them?</i>"

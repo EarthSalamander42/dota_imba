@@ -291,8 +291,15 @@ function EnterGame() {
 
 function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, repick_state) {
 
+/*	$.Msg("OnPlayerReconnect pID: " + data.PlayerID)
+	$.Msg("OnPlayerReconnect Picked Heroes: " + data.PickedHeroes)
+	$.Msg("OnPlayerReconnect Player Picks: " + data.PlayerPicks)
+	$.Msg("OnPlayerReconnect Pick State: " + data.pickState)
+	$.Msg("OnPlayerReconnect Repick State: " + data.repickState) */
+
 	// If this is not the local player, ignore everything
 	if ( player_id == Players.GetLocalPlayer() ) {
+		$.Msg("Not local player")
 		
 		// If the player is already in-game, destroy the pick interface and ignore the rest
 		if (pick_state == "in_game") {
@@ -302,8 +309,10 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 			parent_panel.FindChildTraverse("minimap_container").style.visibility = "visible";
 			parent_panel.FindChildTraverse("lower_hud").style.visibility = "visible";
 			parent_panel.FindChildTraverse("HudChat").style.visibility = "visible";
+			$.Msg("Pick State: In-Game")
 		// Else, repopulate player pick panels
 		} else {
+			$.Msg("Pick State: Picking..")
 			var i = 1;
 			var j = 1;
 			for (i = 1; i <= player_picks.length; i++) {
@@ -325,6 +334,7 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 			// Gray out heroes already selected by according to hero pick rule (handled by server)
 			for (j = 1; j <= picked_heroes.length; j++) {
 				if (picked_heroes[i] != null) {
+					$.Msg("Picked heroes" + picked_heroes[i])
 					$('#'+picked_heroes[i]).AddClass("taken");
 				}
 			}
@@ -347,7 +357,7 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 
 	// Banned Heroes
 	//STR
-//	$("#npc_dota_hero_chaos_knight").AddClass( "taken" );
+	$("#npc_dota_hero_magnataur").AddClass( "taken" );
 	$("#npc_dota_hero_undying").AddClass( "taken" );
 	///AGI
 	$("#npc_dota_hero_phantom_lancer").AddClass( "taken" );
