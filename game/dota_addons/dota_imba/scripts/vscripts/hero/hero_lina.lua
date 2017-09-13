@@ -342,7 +342,7 @@ function imba_lina_light_strike_array:OnSpellStart()
 			local nuclear_stun_duration = stun_duration
 			for k=1, caster:FindTalentValue("special_bonus_imba_lina_7")-1, 1 do
 				nuclear_radius = nuclear_radius + caster:FindTalentValue("special_bonus_imba_lina_7","add_radius") * k
-				nuclear_stun_duration = nuclear_stun_duration * (1/(caster:FindTalentValue("special_bonus_imba_lina_7","stun_reduction")*k))
+				nuclear_stun_duration = nuclear_stun_duration * (1/(caster:FindTalentValue("special_bonus_imba_lina_7","stun_reduct")*k))
 				self:CreateStrike( target_loc, (cast_delay * k), cast_delay, nuclear_radius, damage, nuclear_stun_duration )
 							
 				-- #4 Talent, When a Light Strike Array explosion occurs, the previous explosions also occurs
