@@ -301,8 +301,8 @@ if GetMapName() == "imba_standard" then										-- Standard map defaults
 	MAX_LEVEL = 40
 elseif GetMapName() == "imba_custom" or GetMapName() == "imba_custom_10v10" then									-- Custom map defaults
 	END_GAME_ON_KILLS = false
-	CUSTOM_GOLD_BONUS = 100
-	CUSTOM_XP_BONUS = 100
+	CUSTOM_GOLD_BONUS = 200
+	CUSTOM_XP_BONUS = 200
 	CREEP_POWER_FACTOR = 2
 	TOWER_UPGRADE_MODE = true
 	TOWER_POWER_FACTOR = 1
@@ -557,7 +557,7 @@ normal_heroes = {
 	"npc_dota_hero_phantom_assassin",
 	"npc_dota_hero_disruptor",
 	"npc_dota_hero_nyx_assassin",
-	"npc_dota_hero_magnataur",
+--	"npc_dota_hero_magnataur",
 	"npc_dota_hero_centaur",
 	"npc_dota_hero_troll_warlord",
 	"npc_dota_hero_skywrath_mage",
@@ -670,7 +670,7 @@ imba_heroes = {
 	"npc_dota_hero_phantom_assassin",
 	"npc_dota_hero_disruptor",
 	"npc_dota_hero_nyx_assassin",
-	"npc_dota_hero_magnataur",
+--	"npc_dota_hero_magnataur",
 	"npc_dota_hero_centaur",
 	"npc_dota_hero_skywrath_mage",
 	"npc_dota_hero_troll_warlord"
