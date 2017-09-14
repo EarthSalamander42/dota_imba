@@ -1817,9 +1817,8 @@
 
 		"AttackRange"				"225"
 
-		//"Ability1"					"imba_phantom_lancer_spirit_lance"
+		"Ability1"					"imba_phantom_lancer_spirit_lance"
 		//"Ability2"					"imba_phantom_lancer_doppelwalk"
-		"Ability2"					"imba_phantom_lancer_spirit_lance"
 		//"Ability3"					"imba_phantom_lancer_phantom_edge"
 		//"Ability4"					"imba_phantom_lancer_juxtapose"
 

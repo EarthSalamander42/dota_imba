@@ -408,7 +408,7 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 	$("#npc_dota_hero_magnataur").AddClass( "taken" );
 	$("#npc_dota_hero_undying").AddClass( "taken" );
 	///AGI
-	//$("#npc_dota_hero_phantom_lancer").AddClass( "taken" );
+	$("#npc_dota_hero_phantom_lancer").AddClass( "taken" );
 	$("#npc_dota_hero_spectre").AddClass( "taken" );
 	//INT
 	$("#npc_dota_hero_enigma").AddClass( "taken" );
@@ -419,6 +419,7 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 	$("#npc_dota_hero_venomancer").AddClass( "taken" );
 	$("#npc_dota_hero_zuus").AddClass( "taken" );
 	//CUSTOM
+	$("#CustomPickList").style.visibility = "collapse";
 	$("#npc_dota_hero_storegga").AddClass( "taken" );
 
 	// If this player is a spectator, just kill the whole pick screen
