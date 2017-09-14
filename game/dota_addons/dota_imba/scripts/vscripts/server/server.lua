@@ -293,11 +293,7 @@ function Server_SendAndGetInfoForAll_function(nPlayerID)
 	if PlayerResource:IsValidPlayer(nPlayerID) and not PlayerResource:IsFakeClient(nPlayerID) then
 
 		table_SteamID64[nPlayerID] = tostring(PlayerResource:GetSteamID(nPlayerID))
-		if CHEAT_ENABLED == true then
-			table_XP[nPlayerID] = tostring(0)
-		else
-			table_XP[nPlayerID] = tostring(XP_WIN) --How many XP will player get in this game
-		end
+		table_XP[nPlayerID] = tostring(XP_WIN) --How many XP will player get in this game
 		local jsondata={}
 		local jsontable={}
 		jsontable.SteamID64 = table_SteamID64[nPlayerID]
@@ -365,7 +361,11 @@ function Server_WaitToEnableXpGain()
 	endTime = 300, -- Plyaer can gain XP from this game after 10 mins later the creep spwans
 	callback = function()
 		EnnDisEnabled = 1
-		CustomNetTables:SetTableValue("game_options", "game_count", {value = 1})
+		if CHEAT_ENABLED == true then
+			print("Game don't count.")
+		else
+			CustomNetTables:SetTableValue("game_options", "game_count", {value = 1})
+		end
 		--print("Enable Xp gain system....")
 		for nPlayerID=0, DOTA_MAX_TEAM_PLAYERS-1 do
 			if PlayerResource:IsValidPlayer(nPlayerID) and not PlayerResource:IsFakeClient(nPlayerID) then

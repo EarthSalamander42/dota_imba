@@ -422,6 +422,7 @@ function GameMode:OnPlayerReconnect(keys)
 
 	local player_id = keys.PlayerID
 	Server_EnableToGainXPForPlyaer(player_id)
+	print("Player has reconnected:", player_id)
 
 	for _, hero in pairs(HeroList:GetAllHeroes()) do
 		if hero.is_dev and not hero.has_graph then
@@ -470,6 +471,8 @@ function GameMode:OnPlayerReconnect(keys)
 				else
 					data.PickedHeroes = {} --Set as empty, to allow all heroes to be selected
 				end
+
+				PrintTable(HeroSelection.playerPicks)
 
 				if PlayerResource:GetTeam(player_id) == DOTA_TEAM_GOODGUYS then
 					CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.radiantPicks, PlayerPicks = HeroSelection.playerPicks, pickState = pick_state, repickState = repick_state})
