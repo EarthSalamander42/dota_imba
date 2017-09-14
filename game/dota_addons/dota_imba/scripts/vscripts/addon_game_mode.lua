@@ -79,6 +79,10 @@ DebugPrint("[IMBA] Performing pre-load precache")
 	PrecacheResource("soundfile", "soundevents/imba_soundevents.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/imba_item_soundevents.vsndevts", context)
 
+	-- Ghost Revenant
+	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts", context)
+	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts", context)
+
 	-- Storegga
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_tiny.vsndevts", context)
 

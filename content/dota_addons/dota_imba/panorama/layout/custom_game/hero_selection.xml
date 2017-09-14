@@ -28,7 +28,7 @@
 
 				<!-- Middle section 
 				==================================================================-->
-				<Panel class="ClassContainer" >
+				<Panel id="ClassContain" class="ClassContainer" >
 					<Panel id="PickInfoPanel">
 						<Panel id="PickTextPanel">
 							<Panel id='GameOptionsPanelContainer'>
@@ -224,10 +224,7 @@
 								<Panel id="npc_dota_hero_skeleton_king" class="ClassImbaOption" 
 									onactivate="SelectHero('npc_dota_hero_skeleton_king')" 
 									style="background-image: url('file://{images}/heroes/npc_dota_hero_skeleton_king.png');" />
-						<!--	<Panel id="npc_dota_hero_storegga" class="ClassCustomOption" 
-									onactivate="SelectHero('npc_dota_hero_storegga')" 
-									style="background-image: url('file://{images}/heroes/npc_dota_hero_tiny.png');" /> -->
-							</Panel>	
+							</Panel>
 						</Panel>
 
 						<!-- Agi Heroes -->
@@ -525,27 +522,47 @@
 						</Panel>
 					</Panel>
 
-					<Panel id="HeroDetailsPanel">
-						<Label id="PickedHeroName" text="#imba_hero_name_filler"/>
-						<Panel id="PickedHeroPanel">
-							<DOTAHeroImage id="PickedHeroImage" heroname="" />
-							<Panel id="HeroAbilitiesParentPanel">
-								<DOTAAbilityImage id="PickedHeroAbility1" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname=""/>
-								<DOTAAbilityImage id="PickedHeroAbility2" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
-								<DOTAAbilityImage id="PickedHeroAbility3" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
-								<DOTAAbilityImage id="PickedHeroAbility4" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
-								<DOTAAbilityImage id="PickedHeroAbility5" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
-								<DOTAAbilityImage id="PickedHeroAbility6" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
-							</Panel>
-						</Panel>
-						<Button id="PickHeroBtn" onactivate="PickHero()" >
-							<Label id="PickHeroBtnTxt" text="#imba_confirm_pick_button" />
-						</Button>
-					</Panel>
+					<Panel id="BottomContainer">
 
-					<Panel id="WelcomePanel">
-						<Label id="WelcomeText" text="#imba_welcome"/>
-					</Panel>
+						<Panel id="HeroSelectionChat"/>
+
+						<Panel id="HeroDetailsPanel">
+							<Label id="PickedHeroName" text="#imba_hero_name_filler"/>
+							<Panel id="PickedHeroPanel">
+								<DOTAHeroImage id="PickedHeroImage" heroname="" />
+								<Panel id="HeroAbilitiesParentPanel">
+									<DOTAAbilityImage id="PickedHeroAbility1" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname=""/>
+									<DOTAAbilityImage id="PickedHeroAbility2" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
+									<DOTAAbilityImage id="PickedHeroAbility3" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
+									<DOTAAbilityImage id="PickedHeroAbility4" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
+									<DOTAAbilityImage id="PickedHeroAbility5" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
+									<DOTAAbilityImage id="PickedHeroAbility6" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
+								</Panel>
+							</Panel>
+							<Button id="PickHeroBtn" onactivate="PickHero()" >
+								<Label id="PickHeroBtnTxt" text="#imba_confirm_pick_button" />
+							</Button>
+						</Panel>
+
+						<!-- Custom Heroes -->
+						<Panel id="CustomPickList" class="PickTypePanel">
+							<Panel id="CustomPickListPanel" class="PickListTitlePanel">
+								<Image src="file://{images}/hud/pip_str.png"/>
+								<Label class="PickListText" text="#imba_custom_hero_pick_list_title" />
+							</Panel>
+
+							<Panel id="PickListSeparator4" class="PickListTitlePanel" />
+
+							<Panel class="ClassOptionRow">
+								<Panel id="npc_dota_hero_ghost_revenant" class="ClassCustomOption" 
+									onactivate="SelectHero('npc_dota_hero_ghost_revenant')" 
+									style="background-image: url('file://{images}/heroes/npc_dota_hero_razor.png');" />									
+								<Panel id="npc_dota_hero_storegga" class="ClassCustomOption" 
+									onactivate="SelectHero('npc_dota_hero_storegga')" 
+									style="background-image: url('file://{images}/heroes/npc_dota_hero_tiny.png');" />
+							</Panel>	
+						</Panel>
+					</Panel> <!-- End of middle section -->
 
 					<!-- Post-pick screen (hero view) -->
 					<Panel id="PostPickScreen">
@@ -556,7 +573,11 @@
 							<Label id="RepickBtnTxt" text="#imba_repick_button" />
 						</Button>
 					</Panel>
-				</Panel> <!-- End of middle section -->
+
+					<Panel id="WelcomePanel">
+						<Label id="WelcomeText" text="#imba_welcome"/>
+					</Panel>
+				</Panel>
 
 				<!-- Right-hand player section
 				==================================================================-->
@@ -564,8 +585,6 @@
 					<Label class="PickScreenTeamTitle" text="#imba_dire_team_title" />
 					<!-- JS Inserts player elements here -->
 				</Panel>
-
-				<Panel id="HeroSelectionChat"/>
 			</Panel>
 
 <!--		<Panel id="LoadingPanel">

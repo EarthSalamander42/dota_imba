@@ -16254,7 +16254,7 @@
 			"10"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"split_delay"				"1 1 1 1 0.75 0.5 0.25"
+				"split_delay"				"1.0"
 			}
 			"11"
 			{
@@ -39595,6 +39595,237 @@
 					"MODIFIER_STATE_BLIND"					"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_NOT_ON_MINIMAP"			"MODIFIER_STATE_VALUE_ENABLED"
 				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ghost Revenant: Wraith
+	//=================================================================================================================
+	"ghost_revenant_wraith"
+	{
+		"BaseClass"					"ability_lua"
+		"ScriptFile"				"hero/hero_ghost_revenant.lua"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+		"AbilityTextureName"    	"custom/ghost_revenant_wraith"
+		"MaxLevel"					"7"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"27 25 23 21 19 17 15"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"60 65 70 75 80 85 90"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"3.0 3.5 4.0 4.5 5.0 5.5 6.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"res_reduction_pct"		"25"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_ms_pct"			"8 10 12 14 16 18 20"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ghost Revenant: Blackjack
+	//=================================================================================================================
+	"ghost_revenant_blackjack"
+	{
+		"BaseClass"					"ability_lua"
+		"ScriptFile"				"hero/hero_ghost_revenant.lua"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityCastRange"			"1600"
+		"AbilityTextureName"    	"custom/ghost_revenant_blackjack"
+		"AOERadius"					"%radius%"
+		"MaxLevel"					"7"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"27 25 23 21 19 17 15"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"90 100 110 120 130 140 150"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"stun_duration"				"1.66 2.0 2.33 2.66 3.0 3.33"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"160 205 250 295 340 385 430"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"projectile_radius"			"120"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"projectile_length"			"1600"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"projectile_speed"			"800"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"projectile_cone"			"60"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"projectile_amount"			"3"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"projectile_vision"			"225"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ghost Revenant: Miasma (Deal damage to all enemy units in an AoE and applies a buff. Bugg reveals invis units and burn damage over time)
+	//=================================================================================================================
+	"ghost_revenant_miasma"
+	{
+		"BaseClass"					"ability_lua"
+		"ScriptFile"				"hero/hero_ghost_revenant.lua"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityCastRange"			"900"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"		"custom/ghost_revenant_miasma"
+		"MaxLevel"					"7"
+		"AOERadius"					"area_of_effect"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"40 40 35 35 30 30 25"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"90 95 100 105 110 115 120"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"area_of_effect"			"900"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"tick"						"1.0"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"dmg_per_sec"				"10 20 30 40 50 60 70"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"13.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ghost Revenant: Ghost Immolation (necro aura but reduces max hp)
+	//=================================================================================================================
+	"ghost_revenant_ghost_immolation"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"					"ability_lua"
+		"ScriptFile"				"hero/hero_ghost_revenant.lua"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityCastRange"			"900"
+		"AbilityTextureName"    	"custom/ghost_revenant_ghost_immolation"
+		"MaxLevel"					"1"
+	}
+
+	//=================================================================================================================
+	// Ghost Revenant: Exhaustion (Aghanim: Remove positive buffs)
+	//=================================================================================================================
+	"ghost_revenant_exhaustion"
+	{
+		"BaseClass"					"ability_datadriven"
+		"ScriptFile"				"hero/hero_ghost_revenant.lua"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"    	"custom/ghost_revenant_exhaustion"
+		"AbilityType"				"DOTA_ABILITY_TYPE_ULTIMATE"
+		"MaxLevel"					"6"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.5"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"110.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"150 180 210 240 270 300"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"ms_reduction_pct"			"10 20 30 40 50 60"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"13.0"
 			}
 		}
 	}

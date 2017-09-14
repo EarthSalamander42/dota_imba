@@ -115,13 +115,15 @@ function HeroPicked(player, hero, team, has_randomed) {
 
 		// If the player has randomed, set up hero portrait/ability information
 		if (has_randomed) {
-			$.Msg("PLAYER RANDOMED!")
 			SelectHero(hero)
 		}
 
 		// Switch to hero preview state
 		SwitchToHeroPreview(hero);
 	}
+
+	$('#BottomContainer').style.width = '500px';
+	$('#HeroDetailsPanel').style.width = '500px';
 }
 
 /* A player on the same team has picked a hero, tell the player's panel a hero was picked,
@@ -140,6 +142,9 @@ function HeroUnpicked(player, hero, team) {
 	if ( player != null ) {
 		playerPanels[player].SetHero(null);
 	}
+
+	$('#HeroDetailsPanel').style.width = '33%';
+	$('#BottomContainer').style.width = '25%';
 }
 
 /* Switch the content of the screen to show the picked hero instead of the
@@ -148,12 +153,16 @@ function SwitchToHeroPreview( heroName ) {
 
 	var previewPanel = $.CreatePanel("Panel", $('#PostPickScreen'), "HeroPreview");
 	previewPanel.BLoadLayoutFromString('<root><Panel><DOTAScenePanel style="width:100%; height:100%;" particleonly="false" unit="'+heroName+'"/></Panel></root>', false, false );
+	previewPanel.style.opacityMask = 'url("s2r://panorama/images/masks/hero_model_opacity_mask_png.vtex");'
 
 	$('#PostPickScreen').MoveChildBefore( previewPanel, $("#EnterGameBtn") );
 
 	// Hide/show relevant panels
 	$("#PickHeroBtn").style.visibility = 'collapse';
 	$('#PickList').style.visibility = 'collapse';
+	$('#PickInfoPanel').style.visibility = 'collapse';
+	$('#CustomPickList').style.visibility = 'collapse';
+	$('#HeroSelectionChat').style.visibility = 'collapse';
 	$('#PostPickScreen').style.visibility = 'visible';
 	$('#RandomButtonContainer').style.visibility = 'collapse';
 	$('#RandomImbaButtonContainer').style.visibility = 'collapse';
@@ -166,15 +175,31 @@ function SelectHero( heroName ) {
 	// Do nothing if this hero is not available for the player's team
 	var all_random_enabled = CustomNetTables.GetTableValue( "game_options", "all_random" );
 	var selected_panel = $("#PickList").FindChildTraverse(heroName)
-	if (selected_panel.BHasClass( "taken" ) || (all_random_enabled != null && all_random_enabled[1] == 1)) {
-		$('#PickHeroBtn').AddClass("disabled");
-	} else {
-		$('#PickHeroBtn').RemoveClass("disabled");
-	}
 
-	// Set the appropriate hero image
-	$("#PickedHeroImage").heroname = heroName;
-	$("#PickedHeroImage").style.visibility = 'visible';
+	if (heroName == "npc_dota_hero_ghost_revenant")
+	{
+		// Set the appropriate hero image
+		$("#PickedHeroImage").heroname = "npc_dota_hero_razor";
+		$("#PickedHeroImage").style.visibility = 'visible';
+	}
+	else if (heroName == "npc_dota_hero_storegga")
+	{
+		// Set the appropriate hero image
+		$("#PickedHeroImage").heroname = "npc_dota_hero_tiny";
+		$("#PickedHeroImage").style.visibility = 'visible';
+	}
+	else
+	{
+		// Set the appropriate hero image
+		$("#PickedHeroImage").heroname = heroName;
+		$("#PickedHeroImage").style.visibility = 'visible';
+
+		if (selected_panel.BHasClass( "taken" ) || (all_random_enabled != null && all_random_enabled[1] == 1)) {
+			$('#PickHeroBtn').AddClass("disabled");
+		} else {
+			$('#PickHeroBtn').RemoveClass("disabled");
+		}
+	}
 
 	// Update the hero name
 	$("#PickedHeroName").text = $.Localize( heroName );
@@ -224,11 +249,32 @@ function PickHero() {
 	// Send the pick to the server, if it is available
 	if ($("#PickHeroBtn").BHasClass( "disabled" ) == false) {
 		var selected_panel = $("#PickList").FindChildTraverse(selectedHero)
+
+		if (selected_panel == null)
+		{
+			var selected_panel = $("#CustomPickList").FindChildTraverse(selectedHero)
+		}
+
 		if (selected_panel.BHasClass( "taken" ) == false) {
 			GameEvents.SendCustomGameEventToServer( "hero_selected", { HeroName: selectedHero, HasRandomed: false} );
 			//Hide the random button
 			$("#RandomButtonContainer").style.visibility = 'collapse';
 			$("#RandomImbaButtonContainer").style.visibility = 'collapse';
+
+			var hudElements = $.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("HUDElements");
+			var CenterBlock = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("center_with_stats").FindChildTraverse("center_block");
+			var UnitName = CenterBlock.FindChildTraverse("UnitNameLabel");
+
+			if (selectedHero == "npc_dota_hero_ghost_revenant")
+			{
+				UnitName.text = $.Localize( selectedHero );
+				UnitName.style.textTransform = "uppercase";
+			}
+			else if (selectedHero == "npc_dota_hero_storegga")
+			{
+				UnitName.text = $.Localize( selectedHero );
+				UnitName.style.textTransform = "uppercase";
+			}
 		}
 	}
 }
@@ -332,10 +378,11 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 			}
 
 			// Gray out heroes already selected by according to hero pick rule (handled by server)
-			$.Msg(picked_heroes[i])
 			for (j = 1; j <= picked_heroes.length; j++) {
 				if (picked_heroes[i] != null) {
 					$.Msg("Picked heroes" + picked_heroes[i])
+					$.Msg("-----")
+					$.Msg("Picked heroes" + picked_heroes[j])
 					$('#'+picked_heroes[i]).AddClass("taken");
 				}
 			}
@@ -366,10 +413,13 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 	//INT
 	$("#npc_dota_hero_enigma").AddClass( "taken" );
 	$("#npc_dota_hero_furion").AddClass( "taken" );
+	$("#npc_dota_hero_queenofpain").AddClass( "taken" );
 	$("#npc_dota_hero_techies").AddClass( "taken" );
 	$("#npc_dota_hero_tinker").AddClass( "taken" );
 	$("#npc_dota_hero_venomancer").AddClass( "taken" );
 	$("#npc_dota_hero_zuus").AddClass( "taken" );
+	//CUSTOM
+	$("#npc_dota_hero_storegga").AddClass( "taken" );
 
 	// If this player is a spectator, just kill the whole pick screen
 	var localTeam = Players.GetTeam(Players.GetLocalPlayer())

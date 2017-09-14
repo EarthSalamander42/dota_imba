@@ -15,20 +15,24 @@ local XP_has
 
 local EnnDisEnabled = 0
 
-XP_WIN = 24
+XP_WIN = 48
 ABANDON_CHARGE = 200
--- imba_standard win = +48
+-- imba_standard win = +96
 -- imba_standard lose = +24
--- else win = +24
+-- else win = +48
 -- else lose = +12
--- abandon = 0
+-- abandon = -200 / disconnected_players
 
 --Level table for IMBA XP
 local table_rankXP = {0,100,200,300,400,500,700,900,1100,1300,1500,1800,2100,2400,2700,3000,3400,3800,4200,4600,5000}
 --------------------  0  1   2   3   4   5   6   7    8    9   10   11   12   13   14   15   16   17   18   19   20
 
+CustomNetTables:SetTableValue("game_options", "game_count", {value = 0})
+
+local bonus = 0
 for i = 21 +1, 200 do
-	table_rankXP[i] = table_rankXP[i-1] +500
+	bonus = bonus +10
+	table_rankXP[i] = table_rankXP[i-1] +500 + bonus
 end
 
 local XP_level_title= {}
@@ -243,14 +247,12 @@ function Server_PrintInfo()
 end
 
 function Server_GetPlayerLevelAndTitle(nPlayerID)
-	print("Max levels:", #table_rankXP)
 	for i = #table_rankXP, 1, -1 do
 		if table_XP_has and table_XP_has[nPlayerID] and table_rankXP and table_rankXP[i] then
 			if tonumber(table_XP_has[nPlayerID]) >= table_rankXP[i] then
 				if tonumber(table_XP_has[nPlayerID]) < 0 then
 					print("What did you do! Negative value!")
 				end
-				print("Color:", Server_GetTitleColor(XP_level_title_player[nPlayerID], true))
 				XP_level[nPlayerID] = i-1
 				XP_level_title_player[nPlayerID] = Server_GetTitle(XP_level[nPlayerID])
 				XP_this_level[nPlayerID] = table_rankXP[i]
@@ -271,7 +273,6 @@ function Server_GetPlayerLevelAndTitle(nPlayerID)
 			end
 		end
 	end
-	print("Max possible XP:", table_rankXP[#table_rankXP])
 end
 
 local _finished = 0
@@ -292,8 +293,11 @@ function Server_SendAndGetInfoForAll_function(nPlayerID)
 	if PlayerResource:IsValidPlayer(nPlayerID) and not PlayerResource:IsFakeClient(nPlayerID) then
 
 		table_SteamID64[nPlayerID] = tostring(PlayerResource:GetSteamID(nPlayerID))
-		table_XP[nPlayerID] = tostring(XP_WIN) --How many XP will player get in this game
-
+		if CHEAT_ENABLED == true then
+			table_XP[nPlayerID] = tostring(0)
+		else
+			table_XP[nPlayerID] = tostring(XP_WIN) --How many XP will player get in this game
+		end
 		local jsondata={}
 		local jsontable={}
 		jsontable.SteamID64 = table_SteamID64[nPlayerID]
@@ -314,7 +318,6 @@ function Server_SendAndGetInfoForAll_function(nPlayerID)
 			end
 		end )
 		is_AFK[nPlayerID] = 0
-
 	end
 end
 
@@ -359,9 +362,10 @@ end
 function Server_WaitToEnableXpGain()
 	Serer_CheckForAFKPlayer()
 	Timers:CreateTimer({
-	endTime = 10, -- Plyaer can gain XP from this game after 10 mins later the creep spwans
+	endTime = 300, -- Plyaer can gain XP from this game after 10 mins later the creep spwans
 	callback = function()
 		EnnDisEnabled = 1
+		CustomNetTables:SetTableValue("game_options", "game_count", {value = 1})
 		--print("Enable Xp gain system....")
 		for nPlayerID=0, DOTA_MAX_TEAM_PLAYERS-1 do
 			if PlayerResource:IsValidPlayer(nPlayerID) and not PlayerResource:IsFakeClient(nPlayerID) then

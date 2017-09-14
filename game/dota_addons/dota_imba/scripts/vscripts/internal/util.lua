@@ -581,21 +581,21 @@ function PickupBountyRune(unit)
 	end
 	
 	-- #3 Talent: Bounty runes give gold bags
-    if unit:HasTalent("special_bonus_imba_alchemist_3") then
-        local stacks_to_gold =( unit:FindTalentValue("special_bonus_imba_alchemist_3")/ 100 )  / 5
-        local gold_per_bag = unit:FindModifierByName("modifier_imba_goblins_greed_passive"):GetStackCount() * stacks_to_gold
-        for i=1, 5 do
-            -- Drop gold bags
-            local newItem = CreateItem( "item_bag_of_gold", nil, nil )
-            newItem:SetPurchaseTime( 0 )
-            newItem:SetCurrentCharges( gold_per_bag )
-            
-            local drop = CreateItemOnPositionSync( unit:GetAbsOrigin(), newItem )
-            local dropTarget = unit:GetAbsOrigin() + RandomVector( RandomFloat( 300, 450 ) )
-            newItem:LaunchLoot( true, 300, 0.75, dropTarget )
-            EmitSoundOn( "Dungeon.TreasureItemDrop", unit )
-        end
-    end
+	if unit:HasTalent("special_bonus_imba_alchemist_3") then
+		local stacks_to_gold =( unit:FindTalentValue("special_bonus_imba_alchemist_3")/ 100 )  / 5
+		local gold_per_bag = unit:FindModifierByName("modifier_imba_goblins_greed_passive"):GetStackCount() * stacks_to_gold
+		for i=1, 5 do
+			-- Drop gold bags
+			local newItem = CreateItem( "item_bag_of_gold", nil, nil )
+			newItem:SetPurchaseTime( 0 )
+			newItem:SetCurrentCharges( gold_per_bag )
+			
+			local drop = CreateItemOnPositionSync( unit:GetAbsOrigin(), newItem )
+			local dropTarget = unit:GetAbsOrigin() + RandomVector( RandomFloat( 300, 450 ) )
+			newItem:LaunchLoot( true, 300, 0.75, dropTarget )
+			EmitSoundOn( "Dungeon.TreasureItemDrop", unit )
+		end
+	end
 		
 	-- Grant the unit gold
 	unit:ModifyGold(current_bounty, false, DOTA_ModifyGold_Unspecified)
@@ -914,19 +914,19 @@ function StoreCurrentDayCycle()
 end
 
 function IsDaytime()
-    if CustomNetTables:GetTableValue("gamerules", "isdaytime") then
-        if CustomNetTables:GetTableValue("gamerules", "isdaytime").is_day then  
-            local is_day = CustomNetTables:GetTableValue("gamerules", "isdaytime").is_day  
+	if CustomNetTables:GetTableValue("gamerules", "isdaytime") then
+		if CustomNetTables:GetTableValue("gamerules", "isdaytime").is_day then  
+			local is_day = CustomNetTables:GetTableValue("gamerules", "isdaytime").is_day  
 
-            if is_day == 1 then
-                return true
-            else
-                return false
-            end
-        end
-    end
+			if is_day == 1 then
+				return true
+			else
+				return false
+			end
+		end
+	end
 
-    return true   
+	return true   
 end
 
 
@@ -1193,15 +1193,15 @@ function OverrideCreateParticle()
 end
 
 function OverrideCreateLinearProjectile()
-    local CreateProjectileFunc = ProjectileManager.CreateLinearProjectile
+	local CreateProjectileFunc = ProjectileManager.CreateLinearProjectile
 
-    ProjectileManager.CreateProjectileFunc = 
-    function(manager, handle)                  
+	ProjectileManager.CreateProjectileFunc = 
+	function(manager, handle)                  
 
-        -- Do things here to override
+		-- Do things here to override
 
-        return CreateProjectileFunc(manager, handle)
-    end
+		return CreateProjectileFunc(manager, handle)
+	end
 end
 
 function OverrideReleaseIndex()
@@ -1277,4 +1277,72 @@ function ImbaNetGraph(tick)
 --		end
 	return tick
 	end)
+end
+
+function OverrideHero(hero, hero_name)
+	for abilitySlot = 0, 23 do
+		local ability = hero:GetAbilityByIndex(abilitySlot)
+		if ability then 
+			hero:RemoveAbility(ability:GetAbilityName())
+		end
+	end
+
+	local hero_abilities = {}
+	local index_count = 1
+	for index, ability in pairs(HERO_ABILITY_LIST[hero_name]) do
+		hero_abilities[index] = ability
+		if tonumber(index) == index_count then
+			index_count = index_count +1
+			hero:AddAbility(hero_abilities[index])
+		end
+--		print(index.."/"..hero_abilities[index])
+	end
+	for index, ability in pairs(HERO_ABILITY_LIST[hero_name]) do
+		hero_abilities[index] = ability
+		if tonumber(index) == index_count then
+			index_count = index_count +1
+			hero:AddAbility(hero_abilities[index])
+		end
+	end
+--	PrintTable(hero_abilities)
+
+	if hero_name == "npc_dota_hero_ghost_revenant" then
+		hero:SetAttackCapability(DOTA_UNIT_CAP_MELEE_ATTACK)
+		hero:SetRenderColor(128, 255, 0)
+
+		Timers:CreateTimer(1.0, function()
+			hero.hiddenWearables = {} -- Keep every wearable handle in a table to show them later
+			local model = hero:FirstMoveChild()
+			while model do
+				if model:GetClassname() == "dota_item_wearable" then
+					model:AddEffects(EF_NODRAW) -- Set model hidden. (EF_NODRAW, EF_ITEM_BLINK, EF_NOSHADOW, EF_BONEMERGE, EF_BONEMERGE_FASTCULL)
+					model:SetRenderColor(128, 255, 0)
+--					print(model)
+--					table.insert(hero.hiddenWearables, model)
+				end
+				model = model:NextMovePeer()
+			end
+			PrintTable(hero.hiddenWearables)
+		end)
+
+		Timers:CreateTimer(2.0, function()
+--			Attachments:AttachProp(hero, "attach_hitloc", "models/items/centaur/chaos_champion_for_centaur_head/chaos_champion_for_centaur_head.vmdl", 1.0)
+			hero.head = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/razor/apostle_of_the_tempest_head/apostle_of_the_tempest_head.vmdl"})
+			hero.head:FollowEntity(hero, true)
+			hero.head:SetRenderColor(128, 255, 0)
+			hero.arms = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/razor/apostle_of_the_tempest_arms/apostle_of_the_tempest_arms.vmdl"})
+			hero.arms:FollowEntity(hero, true)
+			hero.arms:SetRenderColor(128, 255, 0)
+			hero.body = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/razor/apostle_of_the_tempest_armor/apostle_of_the_tempest_armor.vmdl"})
+			hero.body:FollowEntity(hero, true)
+			hero.body:SetRenderColor(128, 255, 0)
+			hero.belt = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/razor/empire_of_the_lightning_lord_belt/empire_of_the_lightning_lord_belt.vmdl"})
+			hero.belt:FollowEntity(hero, true)
+			hero.belt:SetRenderColor(128, 255, 0)
+		end)
+	elseif hero_name == "npc_dota_hero_storegga" then
+		hero:SetModel('models/creeps/ice_biome/storegga/storegga.vmdl')
+		hero:SetOriginalModel('models/creeps/ice_biome/storegga/storegga.vmdl')
+		hero:SetModelScale(1.1)
+	end
 end
