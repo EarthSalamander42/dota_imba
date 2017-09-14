@@ -23702,7 +23702,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"scepter_bounce_range"	"400"
+				"scepter_bounce_range"	"625"
 			}
 
 			"08"
