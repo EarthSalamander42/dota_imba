@@ -284,6 +284,8 @@ HERO_STARTING_LEVEL = 1														-- User-defined starting level
 USE_CUSTOM_HERO_LEVELS = true												-- Should we allow heroes to have custom levels?
 MAX_LEVEL = 40																-- What level should we let heroes get to?
 
+CHEAT_ENABLED = false
+
 -- Changes settings according to the current map
 if GetMapName() == "imba_standard" then										-- Standard map defaults
 	END_GAME_ON_KILLS = false
@@ -506,8 +508,6 @@ IMBA_DEVS = {
 	33828741	-- sercankd
 }
 
-STOREGGA = true
-
 -- HEROLIST
 normal_heroes = {
 	"npc_dota_hero_abaddon",
@@ -546,7 +546,7 @@ normal_heroes = {
 --	"npc_dota_hero_venomancer",
 	"npc_dota_hero_witch_doctor",
 	"npc_dota_hero_skeleton_king",
-	"npc_dota_hero_queenofpain",
+--	"npc_dota_hero_queenofpain",
 	"npc_dota_hero_jakiro",
 	"npc_dota_hero_warlock",
 	"npc_dota_hero_ursa",
@@ -659,7 +659,7 @@ imba_heroes = {
 	"npc_dota_hero_vengefulspirit",
 --	"npc_dota_hero_venomancer",
 	"npc_dota_hero_witch_doctor",
-	"npc_dota_hero_queenofpain",
+--	"npc_dota_hero_queenofpain",
 	"npc_dota_hero_jakiro",
 	"npc_dota_hero_warlock",
 	"npc_dota_hero_ursa",

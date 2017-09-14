@@ -65,7 +65,7 @@
 		GameUI.CustomUIConfig().player_colors[18] = "#808080;";
 		GameUI.CustomUIConfig().player_colors[19] = "#FEFEFE;";
 
-		// HUD Hack, made by Cookies #42 [EarthSalamander]
+		// HUD Hack, made by Cookies #42 [Earth Salamander]
 		// Hide normal picking screen
 		$.GetContextPanel().GetParent().GetParent().FindChildTraverse("PreGame").style.visibility = "collapse";
 
@@ -85,6 +85,9 @@
 		//Recommended Talent
 		var TalentGuide = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("center_with_stats")
 		TalentGuide.FindChildTraverse("RecommendedUpgradeOverlay").style.visibility = "collapse";
+
+		var LevelLabel = TalentGuide.FindChildTraverse("center_block").FindChildTraverse("xp").FindChildTraverse("LevelLabel")
+		LevelLabel.style.width = "50px";
 
 		//Shop (Fixing last item in advanced tab not being fully visible)
 		var Shop = hudElements.FindChildTraverse("shop")

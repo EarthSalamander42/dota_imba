@@ -359,7 +359,7 @@
 	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_4_title"					"剑舞"
 	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_4_Description"			"隐秘之刃先向前冲刺，再两次侧面冲刺"
 	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_5_title"					"剑舞"
-	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_5_Description"			"+4 剑舞风之爆裂敏捷加成"
+	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_5_Description"			"隐秘之刃还会消耗所有风之爆裂，每3层风之爆裂可额外攻击一次目标"
 	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_6_title"					"剑刃风暴"
 	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_6_Description"			"剑刃风暴可触发剑舞暴击，每层风之爆裂提高剑刃风暴10点伤害"
 	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_7_title"					"无敌斩"
@@ -461,21 +461,21 @@
 
 	// Magnus
 	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_1_title"					"震荡波"			
-	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_1_Description"			"+12秒 震荡波磁化持续时间"
+	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_1_Description"			"次级震荡波无视条件总是出现"
 	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_2_title"					"两极反转"
-	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_2_Description"			"+125 两级反转对磁化单位伤害"
+	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_2_Description"			"未被两极反转眩晕的磁化单位将被减速60%，持续3秒"
 	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_3_title"					"授予力量"
-	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_3_Description"			"+15% 授予力量效果"
+	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_3_Description"			"授予力量额外提高目标30%主属性的攻击力"
 	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_4_title"					"巨角冲撞"
-	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_4_Description"			"-11秒 巨角冲撞冷却时间"
+	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_4_Description"			"巨角冲撞在施放时施放375范围的两极反转"
 	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_5_title"					"震荡波"
-	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_5_Description"			"-4秒 震荡波冷却时间"
+	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_5_Description"			"震荡波造成1秒缠绕，次级震荡波为0.5秒"
 	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_6_title"					"授予力量"	
-	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_6_Description"			"+5%/50 极度加强移动/攻击速度加成"
+	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_6_Description"			"授予力量使近战英雄获得360度的分裂攻击"
 	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_7_title"					"两极反转"
-	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_7_Description"			"+100 两级反转对磁化单位作用范围"		
-	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_8_title"					"两极反转"
-	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_8_Description"			"+250 两级反转对磁化单位牵引距离"		
+	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_7_Description"			"被磁化的单位将被最近的盟友吸引"		
+	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_8_title"					"授予力量"
+	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_8_Description"			"对极度加强的单位施放授予力量将使其在接下来的8秒内的攻击发射小型震荡波，只能造成50%的伤害，没有其他效果，每秒只能触发一次"		
 
     // Nyx
     "DOTA_Tooltip_Talent_special_bonus_imba_nyx_assassin_1_title"             "复仇"
@@ -495,6 +495,24 @@
     "DOTA_Tooltip_Talent_special_bonus_imba_nyx_assassin_8_title"             "法力燃烧"
     "DOTA_Tooltip_Talent_special_bonus_imba_nyx_assassin_8_Description"       "如果目标在噬法寄生虫期间死亡，寄生虫将暂时寄生在司夜刺客身上，持续20秒，在持续时间内，寄生虫会转移到400范围内另一个敌方英雄身上，如果法力燃烧可以使用，则还会对其施放一次法力燃烧"
 
+	// Obsidian Destroyer // Outworld Devourer // Outbalanced Demolisher // 
+	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_1_title"         "奥术天球"
+	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_1_Description"   "奥术天球对300范围内的单位造成与目标智力差值的纯粹伤害"
+	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_2_title"         "神智之蚀"
+	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_2_Description"   "每点窃取的智力降低神智之蚀1秒冷却时间"
+	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_3_title"         "精气光环"
+	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_3_Description"   "敌人也可以触发精气协同"
+	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_4_title"         "星体禁锢"
+	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_4_Description"   "星体禁锢还会禁锢附近的敌人，禁锢范围为50+智力"
+	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_5_title"         "精气光环"
+	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_5_Description"   "触发精气光环将基于殁境神蚀者的智力治疗殁境神蚀者"
+	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_6_title"         "神智之蚀"
+	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_6_Description"   "如果目标的智力低于殁境神蚀者50%的智力，则神智之蚀对其造成额外50%的伤害和双倍的魔法燃烧效果"
+	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_7_title"         "神智之蚀"
+	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_7_Description"   "神智之蚀无视技能免疫"
+	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_8_title"         "精气光环"
+	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_8_Description"   "触发精气光环时超出的魔法将暂时提高最大魔法值，持续6秒"
+
     // Pudge
     "DOTA_Tooltip_Talent_special_bonus_imba_pudge_1_title"                      "腐烂"
     "DOTA_Tooltip_Talent_special_bonus_imba_pudge_1_Description"                "帕吉每缺失5%生命值，腐烂的伤害就提高40点"
@@ -512,6 +530,25 @@
     "DOTA_Tooltip_Talent_special_bonus_imba_pudge_7_Description"                "肢解在施法完成后缴械目标，缴械的时间与肢解的施法时间相同"
     "DOTA_Tooltip_Talent_special_bonus_imba_pudge_8_title"                      "肉钩"
     "DOTA_Tooltip_Talent_special_bonus_imba_pudge_8_Description"                "肉钩一次投掷3个钩子"
+
+	//QoP
+	// Queen of Pain
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_1_title"				"暗影突袭"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_1_Description"			"暗影突袭获得目标的迷雾视野"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_2_title"				"超声冲击波"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_2_Description"			"超声冲击波现在造成5段伤害，总伤害不变"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_3_title"				"暗影突袭"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_3_Description"			"对受暗影突袭影响的单位造成伤害会使暗影突袭立刻造成一次伤害"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_4_title"				"愉悦的折磨Thrill of Suffering"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_4_Description"			"触发愉悦的折磨还会提高10攻击速度，持续5秒，可以叠加，分别计时"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_5_title"				"闪烁"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_5_Description"			"闪烁可以在1.5秒内施放两次，第二次闪烁消耗双倍魔法"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_6_title"				"暗影突袭"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_6_Description"			"暗影突袭在造成伤害时还会释放一次75%伤害的痛苦尖叫，这次尖叫不会对目标造成伤害"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_7_title"				"痛苦尖叫"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_7_Description"			"痛苦尖叫造成持续2次的迷惑效果"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_8_title"				"暗影突袭"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_8_Description"			"你的技能对目标施加暗影突袭"
 
     // Silencer
     "DOTA_Tooltip_Talent_special_bonus_imba_silencer_1_title"                   "静默诅咒"
@@ -533,7 +570,7 @@
 
 	// Sniper
 	"DOTA_Tooltip_Talent_special_bonus_imba_sniper_1_title"                   "榴霰弹"
-	"DOTA_Tooltip_Talent_special_bonus_imba_sniper_1_Description"             "榴霰弹全图施法"
+	"DOTA_Tooltip_Talent_special_bonus_imba_sniper_1_Description"             "榴霰弹全图施法，但是如果狙击手处于泉水附近，本天赋改为双倍施法距离"
 	"DOTA_Tooltip_Talent_special_bonus_imba_sniper_2_title"                   "暗杀"
 	"DOTA_Tooltip_Talent_special_bonus_imba_sniper_2_Description"             "暗杀击退所有被击中的单位500距离"
 	"DOTA_Tooltip_Talent_special_bonus_imba_sniper_3_title"                   "榴霰弹"

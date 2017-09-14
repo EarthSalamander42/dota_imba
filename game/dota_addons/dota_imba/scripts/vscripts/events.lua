@@ -170,6 +170,18 @@ local i = 10
 
 		-- Shows various info to devs in pub-game to find lag issues
 		ImbaNetGraph(10.0)
+
+		Timers:CreateTimer(function() -- OnThink
+			if CHEAT_ENABLED == false then
+				if Convars:GetBool("sv_cheats") == true or GameRules:IsCheatMode() then
+					if not IsInToolsMode() then
+						print("Cheats have been enabled, game don't count.")
+						CHEAT_ENABLED = true
+					end
+				end
+			end
+			return 1.0
+		end)
 	end
 
 	-------------------------------------------------------------------------------------------------

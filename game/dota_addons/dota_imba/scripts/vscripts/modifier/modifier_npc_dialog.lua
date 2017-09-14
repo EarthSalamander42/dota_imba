@@ -16,7 +16,6 @@ end
 
 function modifier_npc_dialog:OnCreated( params )
 	if IsServer() then
-
 	end
 end
 
@@ -38,9 +37,16 @@ local target = keys.target
 
 	if IsServer() then
 		if target:GetUnitName() == "npc_dota_diretide_easter_egg" then
-			print("Attacker is near!")
-			attacker:Interrupt()
---			self.hPlayerEnt = nil
+			if attacker:HasModifier("modifier_imba_fervor_stacks") then
+				attacker:SetModifierStackCount("modifier_imba_fervor_stacks", attacker, attacker:GetModifierStackCount("modifier_imba_fervor_stacks", attacker) -1)
+			elseif attacker:HasModifier("modifier_imba_juggernaut_blade_dance_wind_dance") then
+				attacker:SetModifierStackCount("modifier_imba_juggernaut_blade_dance_wind_dance", attacker, attacker:GetModifierStackCount("modifier_imba_juggernaut_blade_dance_wind_dance", attacker) -1)
+			elseif attacker:HasModifier("modifier_imba_juggernaut_blade_dance_secret_blade") then
+				attacker:SetModifierStackCount("modifier_imba_juggernaut_blade_dance_secret_blade", attacker, attacker:GetModifierStackCount("modifier_imba_juggernaut_blade_dance_secret_blade", attacker) -1)
+			elseif attacker:HasModifier("modifier_imba_juggernaut_blade_dance_jade_blossom") then
+				attacker:SetModifierStackCount("modifier_imba_juggernaut_blade_dance_jade_blossom", attacker, attacker:GetModifierStackCount("modifier_imba_juggernaut_blade_dance_jade_blossom", attacker) -1)
+			end
+
 			local netTable = {}
 			netTable["DialogEntIndex"] = target:entindex()
 			netTable["PlayerHeroEntIndex"] = attacker:entindex()

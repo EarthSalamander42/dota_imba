@@ -53,10 +53,6 @@ require('events')
 -- clientside KV loading
 require('addon_init')
 
-if STOREGGA == true then
-	require('internal/storegga')
-end
-
 ApplyAllTalentModifiers()
 StoreCurrentDayCycle()
 

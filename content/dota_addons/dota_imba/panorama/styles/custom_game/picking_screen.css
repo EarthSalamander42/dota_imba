@@ -135,6 +135,14 @@
 	visibility: visible;
 }
 
+#BottomContainer {
+	width: 100%;
+	height: 25%;
+	align: center center;
+	flow-children: right;
+	visibility: visible;
+}
+
 #PostPickScreen {
 	width: 100%;
 	height: 100%;
@@ -287,7 +295,7 @@
 }
 
 .ClassCustomOption {
-	border: 2px solid ##0040FF;
+	border: 2px solid #1852D9;
 }
 
 .ClassImbaOption {
@@ -457,7 +465,8 @@
 
 #PickListSeparator1,
 #PickListSeparator2,
-#PickListSeparator3
+#PickListSeparator3,
+#PickListSeparator4
 {
 	margin: 0% 0% 1% 0%;
 	width: 85%;
@@ -468,14 +477,16 @@
 
 .AspectRatio16x10 #PickListSeparator1,
 .AspectRatio16x10 #PickListSeparator2,
-.AspectRatio16x10 #PickListSeparator3
+.AspectRatio16x10 #PickListSeparator3,
+.AspectRatio16x10 #PickListSeparator4
 {
 	width: 370px;
 }
 
 .AspectRatio4x3 #PickListSeparator1,
 .AspectRatio4x3 #PickListSeparator2,
-.AspectRatio4x3 #PickListSeparator3
+.AspectRatio4x3 #PickListSeparator3,
+.AspectRatio4x3 #PickListSeparator4
 {
 	width: 300px;
 	height: 2px;
@@ -496,13 +507,28 @@
 	background-color: dodgerblue;
 }
 
+#PickListSeparator4 {
+	background-color: gold;
+}
+
 /* Hero details panel
 =================================================================*/
-#HeroDetailsPanel {
+#HeroDetailsPanel,
+#CustomHeroesPanel
+{
+	width: 33%;
+	margin-right: 0.5%;
 	vertical-align: middle;
 	horizontal-align: middle;
-	flow-children: down;
+}
+
+#HeroDetailsPanel {
+	margin-right: 0.5%;
 	width: 33%;
+	margin-right: 0.5%;
+	align: center center;
+	horizontal-align: middle;
+	flow-children: down;
 }
 
 #WelcomePanel {
@@ -523,13 +549,6 @@
 	font-size: 40px;
 	font-family: "Radiance";
 	color: #CE6722;
-}
-
-.AspectRatio4x3 #HeroDetailsPanel {
-	vertical-align: middle;
-	horizontal-align: middle;
-	flow-children: down;
-	width: 40%;
 }
 
 #PickedHeroPanel {
@@ -640,8 +659,8 @@
 =================================================================*/
 #PickHeroBtn {
 	margin-top: 5px;
-	margin-left: 100px;
-	margin-right: 100px;
+	margin-left: 15%;
+	margin-right: 15%;
 	box-shadow: fill #00000066 -4px -4px 8px 8px;
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #5AA15E ), to( #87d69533 ) );
 	background-image: url("s2r://panorama/images/backgrounds/background_play_button_large_2x_png.vtex");
@@ -673,21 +692,14 @@
 ===============================================================*/
 #HeroSelectionChat
 {
-	margin-left: -127.5%;
-	margin-bottom: 5%;
+	margin-top: 5%;
+	margin-right: 0.5%;
 	align: center bottom;
-	width: 28%;
-	height: 22.5%;
+	width: 33%;
+	height: 100%;
 	background-color: #000000da;
 	border-top-left-radius: 8px;
 	border-top-right-radius: 8px;
-}
-
-.AspectRatio4x3 #HeroSelectionChat
-{
-	margin-left: -128.5%;
-	width: 26%;
-	height: 18%;
 }
 
 #BanTabMessage
