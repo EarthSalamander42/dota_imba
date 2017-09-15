@@ -16335,7 +16335,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"cast_delay"			"0.5"
+				"cast_delay"			"0.6"
 			}
 			"03"
 			{
@@ -16355,7 +16355,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"array_count"			"1 1 1 1 2 3 4"
+				"array_count"			"1"
 			}
 			"07"
 			{
@@ -16547,7 +16547,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"4"
+				"value"						"2"
 			}
 		}
 	}
@@ -16657,7 +16657,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"tick_interval"				"0.1"
+				"tick_interval"				"0.25"
 			}
 		}
 	}
