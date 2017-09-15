@@ -1246,16 +1246,16 @@
 		"Ability1"					"imba_lina_dragon_slave"
 		"Ability2"					"imba_lina_light_strike_array"
 		"Ability3"					"imba_lina_fiery_soul"
-		"Ability4"					"imba_lina_laguna_blade"
+		"Ability4"					"imba_lina_laguna_blade"		
 
-		"Ability10"					"special_bonus_imba_lina_1"
-		"Ability11"					"special_bonus_imba_lina_2"
-		"Ability12"					"special_bonus_imba_lina_3"
-		"Ability13"					"special_bonus_imba_lina_4"
-		"Ability14"					"special_bonus_imba_lina_5"
-		"Ability15"					"special_bonus_imba_lina_6"
-		"Ability16"					"special_bonus_imba_lina_7"
-		"Ability17"					"special_bonus_imba_lina_8"
+		"Ability10"					"special_bonus_imba_lina_1" // Additional Dragon Slaves
+		"Ability11"					"special_bonus_imba_lina_3" // Reaching 3 Fiery Soul stacks allows Lina to unleash a blast of hot shockwave
+		"Ability12"					"special_bonus_imba_lina_2" // Spawns a main Dragon Slave at the end of the second Dragon Slave
+		"Ability13"					"special_bonus_imba_lina_5" // Lina's Spells causes DoT based on Fiery Soul stacks
+		"Ability14"					"special_bonus_imba_lina_6" // Laguna Blade stuns targets
+		"Ability15"					"special_bonus_imba_lina_7" // Main Light Strike Array's explosion is repeated 3 times
+		"Ability16"					"special_bonus_imba_lina_4" // After a Light Strike Array hits the ground, magma erupts and damages nearby enemy units
+		"Ability17"					"special_bonus_imba_lina_8" // Blazing Fire
 
 		"ProjectileModel"			"particles/units/heroes/hero_lina/lina_base_attack.vpcf"
 	}

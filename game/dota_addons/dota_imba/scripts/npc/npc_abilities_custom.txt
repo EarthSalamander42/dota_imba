@@ -16629,7 +16629,7 @@
 	}
 
 	//=================================================================================================================
-	// Lina Talent 4 (Level 20): When a Light Strike Array occurs, the previous explosion also occurs, if applicable
+	// Lina Talent 4 (Level 20): After a Light Strike Array hits the ground, magma erupts and damages nearby enemy units
 	//=================================================================================================================
 	"special_bonus_imba_lina_4"
 	{
@@ -16651,7 +16651,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"1"
+				"damage"					"10 20 30 40 50 60 70"
+			}
+
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"tick_interval"				"0.1"
 			}
 		}
 	}
