@@ -39715,51 +39715,6 @@
 	}
 
 	//=================================================================================================================
-	// Ghost Revenant: Wraith
-	//=================================================================================================================
-	"ghost_revenant_wraith"
-	{
-		"BaseClass"					"ability_lua"
-		"ScriptFile"				"hero/hero_ghost_revenant.lua"
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
-		"AbilityTextureName"    	"custom/ghost_revenant_wraith"
-		"MaxLevel"					"7"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.0"
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"27 25 23 21 19 17 15"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"60 65 70 75 80 85 90"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"3.0 3.5 4.0 4.5 5.0 5.5 6.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"res_reduction_pct"		"25"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_ms_pct"			"8 10 12 14 16 18 20"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Ghost Revenant: Blackjack
 	//=================================================================================================================
 	"ghost_revenant_blackjack"
@@ -39835,7 +39790,52 @@
 	}
 
 	//=================================================================================================================
-	// Ghost Revenant: Miasma (Deal damage to all enemy units in an AoE and applies a buff. Bugg reveals invis units and burn damage over time)
+	// Ghost Revenant: Wraith
+	//=================================================================================================================
+	"ghost_revenant_wraith"
+	{
+		"BaseClass"					"ability_lua"
+		"ScriptFile"				"hero/hero_ghost_revenant.lua"
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+		"AbilityTextureName"    	"custom/ghost_revenant_wraith"
+		"MaxLevel"					"7"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"27 25 23 21 19 17 15"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"60 65 70 75 80 85 90"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"3.0 3.5 4.0 4.5 5.0 5.5 6.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"res_reduction_pct"		"25"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_ms_pct"			"8 10 12 14 16 18 20"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ghost Revenant: Miasma (Deal damage to all enemy units in an AoE and applies a buff. Buff reveals invis units and burn damage over time)
 	//=================================================================================================================
 	"ghost_revenant_miasma"
 	{
@@ -39869,7 +39869,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"area_of_effect"			"900"
+				"area_of_effect"			"500"
 			}
 			"02"
 			{
@@ -39940,7 +39940,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"13.0"
+				"duration"					"10.0"
 			}
 		}
 	}

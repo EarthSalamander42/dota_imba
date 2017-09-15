@@ -419,7 +419,7 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 	$("#npc_dota_hero_venomancer").AddClass( "taken" );
 	$("#npc_dota_hero_zuus").AddClass( "taken" );
 	//CUSTOM
-	$("#CustomPickList").style.visibility = "collapse";
+//	$("#CustomPickList").style.visibility = "collapse";
 	$("#npc_dota_hero_storegga").AddClass( "taken" );
 
 	// If this player is a spectator, just kill the whole pick screen
