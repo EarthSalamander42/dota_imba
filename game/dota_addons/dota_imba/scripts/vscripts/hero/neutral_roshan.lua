@@ -59,10 +59,7 @@ function RoshanSummon( keys )
 	local caster_direction = caster:GetForwardVector()
 	local summon_name = "npc_imba_roshling"
 	local summon_amount = 1 + GAME_ROSHAN_KILLS
-	local summon_abilities = {
-		"imba_roshling_bash",
-		"imba_roshling_aura"
-	}
+	local summon_abilities = { "imba_roshling_bash", "imba_roshling_aura" }
 
 	-- Play cast sound
 	caster:EmitSound(sound_summon)
@@ -422,6 +419,9 @@ LinkLuaModifier("modifier_imba_roshan_ai_diretide", "hero/neutral_roshan", LUA_M
 LinkLuaModifier("modifier_imba_roshan_ai_beg", "hero/neutral_roshan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_roshan_ai_eat", "hero/neutral_roshan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_roshan_eaten_candy", "hero/neutral_roshan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_roshan_fury_swipes", "hero/neutral_roshan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_roshan_acceleration", "hero/neutral_roshan", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_roshan_death_buff", "hero/neutral_roshan", LUA_MODIFIER_MOTION_NONE)
 
 function imba_roshan_ai_diretide:GetIntrinsicModifierName()
 	return "modifier_imba_roshan_ai_diretide" end
@@ -442,22 +442,24 @@ function modifier_imba_roshan_ai_diretide:IsHidden() return true end
 function modifier_imba_roshan_ai_diretide:GetPriority()
     return MODIFIER_PRIORITY_SUPER_ULTRA end
 
-function modifier_imba_roshan_ai_diretide:DeclareFunctions()
-	return { MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
-			 MODIFIER_PROPERTY_PROVIDES_FOW_POSITION,
-			 MODIFIER_EVENT_ON_TAKEDAMAGE,					}
-end
+function modifier_imba_roshan_ai_diretide:GetModifierProvidesFOWVision()
+	return 1 end
 	
 function modifier_imba_roshan_ai_diretide:GetActivityTranslationModifiers()
 	if self:GetStackCount() == 3 then
 		return "sugarrush"
-	elseif self.isTransitioning and self.atStartPoint then
-		return "transition"
-	else
-		return "trickortreat"
-	end
+	else return nil end
 end
-	
+
+function modifier_imba_roshan_ai_diretide:DeclareFunctions()
+	return { MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
+			 MODIFIER_PROPERTY_PROVIDES_FOW_POSITION,
+			 MODIFIER_EVENT_ON_ATTACK_LANDED,
+			 MODIFIER_EVENT_ON_ATTACK_START,
+			 MODIFIER_PROPERTY_MIN_HEALTH,
+			 MODIFIER_EVENT_ON_TAKEDAMAGE 			 }
+end
+
 function modifier_imba_roshan_ai_diretide:CheckState()
 	local state = {}
 	
@@ -474,8 +476,7 @@ function modifier_imba_roshan_ai_diretide:CheckState()
 			[MODIFIER_STATE_MUTED]			= false,
 			[MODIFIER_STATE_STUNNED]		= false,
 			[MODIFIER_STATE_HEXED]			= false,
-			[MODIFIER_STATE_INVISIBLE]		= false,
-		}
+			[MODIFIER_STATE_INVISIBLE]		= false, }
 		
 		if self.isEatingCandy then
 			state[MODIFIER_STATE_UNSELECTABLE] = true
@@ -492,18 +493,24 @@ function modifier_imba_roshan_ai_diretide:CheckState()
 			state = { [MODIFIER_STATE_INVULNERABLE]		= true,
 					  [MODIFIER_STATE_NO_HEALTH_BAR]	= true,
 					  [MODIFIER_STATE_UNSELECTABLE]		= true,
+					  [MODIFIER_STATE_DISARMED]			= true,
 					  [MODIFIER_STATE_ATTACK_IMMUNE]	= true, }
-		else
-			state = { [MODIFIER_STATE_INVULNERABLE]		= false,
-					  [MODIFIER_STATE_ATTACK_IMMUNE]	= false, }
+			if self.atStartPoint then	  
+				state[MODIFIER_STATE_ROOTED] = true
+			end
 		end
 	end
 	
 	return state
 end
 
-function modifier_imba_roshan_ai_diretide:GetModifierProvidesFOWVision()
-	return 1 end
+function modifier_imba_roshan_ai_diretide:GetMinHealth()
+	if self:GetStackCount() > 1 then
+		return 1
+	else
+		return 0
+	end
+end
 
 function modifier_imba_roshan_ai_diretide:OnCreated()
 	if IsServer() then
@@ -517,23 +524,51 @@ function modifier_imba_roshan_ai_diretide:OnCreated()
 		self.targetTeam		= math.random(DOTA_TEAM_GOODGUYS, DOTA_TEAM_BADGUYS)	-- Team Roshan is currently targeting
 		self.begState		= 0														-- 0 = not begged | 1 = begging | anything else = has begged
 		self.isEatingCandy	= false													-- Is Roshan eating a candy right now?
-		self.begDistance	= ability:GetSpecialValueFor("begDistance")				-- Distance from target to start begging
+		self.begDistance	= ability:GetSpecialValueFor("beg_distance")				-- Distance from target to start begging
 		
 		-- phase 3 keys
 		self.isTransitioning	= false												-- Is Roshan playing the transition animation?
 		self.atStartPoint		= false												-- Has Roshan reached the start point?
-		self.acquisitionRange	= ability:GetSpecialValueFor("acquisitionRange")	-- Acquisition range for phase 3
-		self.leashDistance		= ability:GetSpecialValueFor("leashDistance")		-- How far is Roshan allowed to walk away from the starting point
-		self.leashHealPcnt		= ability:GetSpecialValueFor("leashHealPcnt")		-- Percent of max health Roshan will heal should he get leashed
+		self.acquisition_range	= ability:GetSpecialValueFor("acquisition_range")	-- Acquisition range for phase 3
+		self.leashPoint			= nil												-- Phase 3 arena mid point (defined in phase 3 thinking function)
+		self.leashDistance		= ability:GetSpecialValueFor("leash_distance")		-- How far is Roshan allowed to walk away from the starting point
+		self.leashHealPcnt		= ability:GetSpecialValueFor("leash_heal_pcnt")		-- Percent of max health Roshan will heal should he get leashed
+		self.isDead				= false												-- Is Roshan 'dead'?
 
+		self.leashPoint			= Vector(0,0,0) -- TEMPORARY!   DON'T FORGET TO REMOVE THIS AND UNCOMMENT THE RESETTING LINE AT THE START PHASE FUNCTION
+		
+		
+		-- Sound delays to sync with animation
+		self.candyBeg		= 0.5
+		self.candyEat		= 0.15
+		self.candySniff		= 3.33
+		self.candyRoar		= 5.9
+		self.pumpkinDrop	= 0
+		self.candyGobble	= 0
+		self.gobbleRoar		= 0
+		
+		-- Aimation durations
+		self.animBeg		= 5
+		self.animGobble		= 9
+		self.animDeath		= 15
+		
 		-- Ability handlers
 		self.forceWave	= self.roshan:FindAbilityByName("imba_roshan_diretide_force_wave")
 		self.roshlings	= self.roshan:FindAbilityByName("imba_roshan_diretide_summon_roshlings")
-		self.breath		= self.roshan:FindAbilityByName("imba_roshan_diretide_fire_breath")
+		self.breath		= self.roshan:FindAbilityByName("creature_fire_breath")
 		self.apocalypse	= self.roshan:FindAbilityByName("imba_roshan_diretide_apocalypse")
 		self.fireBall	= self.roshan:FindAbilityByName("imba_roshan_diretide_fireball")
 		self.toss		= self.roshan:FindAbilityByName("tiny_toss")
-
+		
+		-- Passive effect KVs
+		self.bashChance = ability:GetSpecialValueFor("bash_chance") * 0.01
+		self.bashDamage = ability:GetSpecialValueFor("bash_damage")
+		self.bashDistance = ability:GetSpecialValueFor("bash_distance")
+		self.bashDuration = ability:GetSpecialValueFor("bash_duration")
+		self.furyswipeDamage = ability:GetSpecialValueFor("furyswipe_damage")
+		self.furyswipeDuration = ability:GetSpecialValueFor("furyswipe_duration")
+		self.furyswipeIncreasePerDeath = ability:GetSpecialValueFor("fury_swipe_increase_per_death")
+		
 		-- Create a dummy for global vision
 		AddFOWViewer(self.roshan:GetTeamNumber(), Vector(0,0,0), 250000, 999999, false)
 
@@ -564,8 +599,6 @@ function modifier_imba_roshan_ai_diretide:OnIntervalThink()
 		ParticleManager:SetParticleControl(deathParticle, 0, self.roshan:GetAbsOrigin())
 		ParticleManager:ReleaseParticleIndex(deathParticle)
 		
-		-- trigger game end
-		
 	elseif stacks ~= 1 then
 		if stacks == 2 and not self.isEatingCandy then
 			if self.targetTeam ~= DOTA_TEAM_GOODGUYS and self.targetTeam ~= DOTA_TEAM_BADGUYS then
@@ -574,10 +607,7 @@ function modifier_imba_roshan_ai_diretide:OnIntervalThink()
 			self:ThinkPhase2(self.roshan)
 			
 		elseif stacks == 3 then
-			-- Dont think if taunted
-			if self.roshan:GetForceAttackTarget() == self.AItarget then
-				self:ThinkPhase3(self.roshan)
-			end
+			self:ThinkPhase3(self.roshan)
 		end
 	end
 end
@@ -591,28 +621,47 @@ function modifier_imba_roshan_ai_diretide:StartPhase(phase)
 	self.isTransitioning = false
 	self.atStartPoint = false
 	self.wait = 0
+	-- self.leashPoint = nil
+	
+	if self.isDead then
+		self.isDead = false
+		self:Respawn(self.roshan)
+	end
 	
 	-- Reset behavior
+	self.roshan:SetAcquisitionRange(-1000)
 	self.roshan:SetForceAttackTarget(nil)
 	self.roshan:Interrupt()
+	
+	self.roshan:SetHealth(self.roshan:GetMaxHealth())
 	
 	-- Destroy candy eaten count
 	local candyMod = self.roshan:FindModifierByName("modifier_imba_roshan_eaten_candy")
 	if candyMod then candyMod:Destroy() end
+	
+	-- Destroy all fury swipe modifiers
+	local units = FindUnitsInRadius(self.roshan:GetTeamNumber(), Vector(0,0,0), nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_CLOSEST, false)
+	for _, unit in ipairs(units) do
+		local swipesModifier = unit:FindModifierByName("modifier_imba_roshan_fury_swipes")
+		if swipesModifier then swipesModifier:Destroy() end
+	end
+	
+	-- Destroy acceleration modifier
+	local accelerationMod = self.roshan:FindModifierByName("modifier_imba_roshan_acceleration")
+	if accelerationMod then accelerationMod:Destroy() end
 	
 	if phase == 1 then			-- Halts thinking, and resets keys
 		self:StartIntervalThink(-1)
 	else						-- Starts thinking
 		if phase == 2 then
 			EmitGlobalSound("diretide_eventstart_Stinger")
-			self.roshan:SetAcquisitionRange(-1000)
+			self.roshan:AddNewModifier(self.roshan, self:GetAbility(), "modifier_imba_roshan_eaten_candy", {})
 			
 			Timers:CreateTimer(5.8, function() -- Timer so music ends first
 				self:StartIntervalThink(0.1)
 			end)
 		elseif phase == 3 then
 			EmitGlobalSound("diretide_sugarrush_Stinger")
-			self.roshan:SetAcquisitionRange(self.acquisitionRange)
 			self.isTransitioning = true
 			self:StartIntervalThink(0.1)
 		end
@@ -627,6 +676,8 @@ function modifier_imba_roshan_ai_diretide:ThinkPhase2(roshan)
 			if hero:GetTeamNumber() == self.targetTeam and hero:IsAlive() then
 				self.AItarget = hero
 				self.roshan:SetForceAttackTarget(hero)
+				roshan:AddNewModifier(roshan, self:GetAbility(), "modifier_imba_roshan_acceleration", {})
+				
 				EmitSoundOnClient("diretide_select_target_Stinger", hero:GetPlayerOwner())
 				break
 			end
@@ -636,11 +687,11 @@ function modifier_imba_roshan_ai_diretide:ThinkPhase2(roshan)
 		if self.begState == 0 then		-- If haven't begged
 			if CalcDistanceBetweenEntityOBB(roshan, self.AItarget) <= self.begDistance then
 				self.begState = 1
-				roshan:AddNewModifier(roshan, nil, "modifier_imba_roshan_ai_beg", {duration = 5})
+				roshan:AddNewModifier(roshan, nil, "modifier_imba_roshan_ai_beg", {duration = self.animBeg})
 				
 				-- sound
-				Timers:CreateTimer(0.5, function()
-					EmitSoundOnLocationWithCaster(roshan:GetAbsOrigin(), "Diretide.RoshanBeg", roshan)
+				Timers:CreateTimer(self.candyBeg, function()
+					roshan:EmitSound("RoshanDT.RoshanBeg")
 				end)
 			end
 			
@@ -671,23 +722,21 @@ function modifier_imba_roshan_ai_diretide:Candy(roshan)
 		roshan:AddNewModifier(roshan, nil, "modifier_imba_roshan_ai_eat", {duration = 7})
 		
 		-- Sounds
-		Timers:CreateTimer(0.15, function()
-			EmitSoundOnLocationWithCaster(roshan:GetAbsOrigin(), "Diretide.RoshanEatCandy", roshan)
+		Timers:CreateTimer(self.candyEat, function()
+			roshan:EmitSound("RoshanDT.EatCandy")
 		end)
 		
-		Timers:CreateTimer(3.33, function()
-			EmitSoundOnLocationWithCaster(roshan:GetAbsOrigin(), "Diretide.RoshanSniff", roshan)
+		Timers:CreateTimer(self.candySniff, function()
+			roshan:EmitSound("RoshanDT.Sniff")
 		end)
 		
-		Timers:CreateTimer(5.9, function()
-			EmitSoundOnLocationWithCaster(roshan:GetAbsOrigin(), "Diretide.RoshanRoar", roshan)
+		Timers:CreateTimer(self.candyRoar, function()
+			roshan:EmitSound("RoshanDT.Roar")
 		end)
 	end)
 	
 	local candyMod = roshan:FindModifierByName("modifier_imba_roshan_eaten_candy")
-	if not candyMod then
-		candyMod = roshan:AddNewModifier(roshan, self:GetAbility(), "modifier_imba_roshan_eaten_candy", {})
-	end
+	if not candyMod then candyMod = roshan:AddNewModifier(roshan, self:GetAbility(), "modifier_imba_roshan_eaten_candy", {}) end
 	
 	candyMod:IncrementStackCount()
 end
@@ -699,6 +748,17 @@ function modifier_imba_roshan_ai_diretide:ChangeTagret(roshan)
 	
 	roshan:SetForceAttackTarget(nil)
 	roshan:Interrupt()
+	
+	-- Destroy all fury swipe modifiers
+	local units = FindUnitsInRadius(roshan:GetTeamNumber(), Vector(0,0,0), nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_CLOSEST, false)
+	for _, unit in ipairs(units) do
+		local swipesModifier = unit:FindModifierByName("modifier_imba_roshan_fury_swipes")
+		if swipesModifier then swipesModifier:Destroy() end
+	end
+	
+	-- Destroy acceleration modifier
+	local accelerationMod = roshan:FindModifierByName("modifier_imba_roshan_acceleration")
+	if accelerationMod then accelerationMod:Destroy() end
 	
 	local begMod = roshan:FindModifierByName("modifier_imba_roshan_ai_beg")
 	if begMod then begMod:DestroyNoAggro() end
@@ -715,32 +775,44 @@ function modifier_imba_roshan_ai_diretide:ThinkPhase3(roshan)
 	-- Don't think while being stunned, hexed, or casting spells
 	if roshan:IsStunned() or roshan:IsHexed() or roshan:IsChanneling() or roshan:GetCurrentActiveAbility() then return end
 
+	if not self.leashPoint then
+		if DIRETIDE_WINNER == DOTA_TEAM_BADGUYS or DIRETIDE_WINNER == DOTA_TEAM_GOODGUYS then
+			self.leashPoint = Entities:FindByName(nil, "roshan_arena_"..DIRETIDE_WINNER):GetAbsOrigin()		-- Pick arena based on phase 2 winner
+		else
+			self.leashPoint = Entities:FindByName(nil, "roshan_arena_"..DOTA_TEAM_GOODGUYS):GetAbsOrigin()	-- Default to Radiant
+		end
+	end
+	
 	-- Transitioning from Phase 2 to 3
 	if self.isTransitioning then
-		self.leashPoint			= Entities:FindByName(nil, "roshan_arena_"..DIRETIDE_WINNER):GetAbsOrigin()										-- Phase 3 starting point
+		if self.atStartPoint then return end
+		
 		local distanceFromLeash = (roshan:GetAbsOrigin() - self.leashPoint):Length2D()
 		if distanceFromLeash > 100 then
 			roshan:SetForceAttackTarget(nil)
 			roshan:MoveToPosition(self.leashPoint)
 		else
-			roshan:SetForceAttackTarget(nil)
-			roshan:Interrupt()
 			self.atStartPoint = true
-			
-			Timers:CreateTimer(8, function()
-				self.atStartPoint = false
-				self.isTransitioning = false
-			end)
-			
 			EmitSoundOnLocationWithCaster(roshan:GetAbsOrigin(), "RoshanDT.Gobble", roshan)
 			
-			Timers:CreateTimer(8, function()
+			roshan:SetForceAttackTarget(nil)
+			roshan:Interrupt()
+			roshan:StartGesture(ACT_TRANSITION)
+			
+			Timers:CreateTimer(self.animGobble, function()
 				self.atStartPoint = false
 				self.isTransitioning = false
+				roshan:RemoveGesture(ACT_TRANSITION)
+				roshan:SetAcquisitionRange(self.acquisition_range)
 			end)
 		end
 	
 		return
+	end
+	
+	if COUNT_DOWN and COUNT_DOWN == 0 then
+		local heroDetector = FindUnitsInRadius(roshan:GetTeamNumber(), roshan:GetAbsOrigin(), nil, 700, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+		if #heroDetector > 0 then COUNT_DOWN = 1 end
 	end
 	
 	-- Wait. No reason to decrement negative values
@@ -807,10 +879,10 @@ function modifier_imba_roshan_ai_diretide:ThinkPhase3(roshan)
 	
 	-- Cast Fire Breath if its available
 	if self.breath and self.breath:IsCooldownReady() then
-		local range = self.breath:GetSpecialValueFor("range")
-		
-		if CalcDistanceBetweenEntityOBB(roshan, self.AItarget) <= range then
-			roshan:CastAbilityOnPosition(self.AItarget:GetAbsOrigin(), self.breath, nil) 
+		local searchRange = self.breath:GetSpecialValueFor("search_range")
+		local nearbyHeroes = FindUnitsInRadius(roshan:GetTeamNumber(), roshan:GetAbsOrigin(), nil, searchRange, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+		for _, hero in ipairs(nearbyHeroes) do
+			roshan:CastAbilityOnPosition(hero:GetAbsOrigin(), self.breath, 1)
 			return
 		end
 	end
@@ -857,10 +929,213 @@ function modifier_imba_roshan_ai_diretide:ThinkPhase3(roshan)
 			end
 		end
 	end
-	
-	-- If no spell was cast, attack the target.
-	roshan:SetForceAttackTarget(self.AItarget)
 end
+
+function modifier_imba_roshan_ai_diretide:Die(roshan)
+	self.isDead = true
+	roshan:AddNoDraw()
+	
+	local dummyRoshan = CreateUnitByName("npc_diretide_roshan", roshan:GetAbsOrigin(), false, roshan, roshan, roshan:GetTeamNumber()) 
+	dummyRoshan:ForceKill(true)
+	
+	-- not attached to Roshan or the dummy so it gets drawn (unlike Roshan), and stays until the particle expires (which the dummy would prevent)
+	local deathParticle = ParticleManager:CreateParticle("particles/hw_fx/hw_roshan_death.vpcf", PATTACH_CUSTOMORIGIN, nil)
+	ParticleManager:SetParticleControl(deathParticle, 0, dummyRoshan:GetAbsOrigin())
+	ParticleManager:ReleaseParticleIndex(deathParticle)
+	
+	Timers:CreateTimer(self.animDeath, function()
+		self:Respawn(roshan)
+	end)
+end
+
+function modifier_imba_roshan_ai_diretide:Respawn(roshan)
+	self.isDead = false
+	roshan:SetHealth(roshan:GetMaxHealth())
+	roshan:RemoveNoDraw()
+	
+	-- Refresh cooldowns
+	if self.forceWave	then self.forceWave:EndCooldown()	end
+	if self.roshlings	then self.roshlings:EndCooldown()	end
+	if self.breath		then self.breath:EndCooldown()		end
+	if self.apocalypse	then self.apocalypse:EndCooldown()	end
+	if self.fireBall	then self.fireBall:EndCooldown()	end
+	if self.toss		then self.toss:EndCooldown()		end
+	
+	-- Increase Roshans strength through the modifier
+	local deathMod = roshan:FindModifierByName("modifier_imba_roshan_death_buff")
+	if not deathMod then
+		deathMod = roshan:AddNewModifier(roshan, self:GetAbility(), "modifier_imba_roshan_death_buff", {})
+	end
+	
+	if deathMod then deathMod:IncrementStackCount() end
+end
+
+--	SPECIAL EFFECTS + ATTACK SOUND
+function modifier_imba_roshan_ai_diretide:OnAttackLanded(keys)
+	if IsServer() then
+		local roshan = self:GetParent()
+		local target = keys.target
+		
+		if roshan == keys.attacker then
+			
+			-- Emit hit sound
+			target:EmitSound("Roshan.Attack")
+			target:EmitSound("Roshan.Attack.Post")
+			
+			-- Deal fury swipes increased damage
+			local furySwipesModifier = target:FindModifierByName("modifier_imba_roshan_fury_swipes")
+			if furySwipesModifier then
+				local damageTable = { victim = target,attacker = roshan, damage_type = DAMAGE_TYPE_PURE, -- armor 2 stronk
+									  damage = furySwipesModifier:GetStackCount() * self.furyswipeDamage,	}
+				
+				-- Increase fury swipe damage based on times Roshan died
+				if self:GetStackCount() == 3 then
+					local deathMod = roshan:FindModifierByName("modifier_imba_roshan_death_buff")
+					if deathMod then
+						damageTable.damage = damageTable.damage + deathMod:GetStackCount() * self.furyswipeIncreasePerDeath
+					end
+				end
+				
+				ApplyDamage(damageTable)
+				furySwipesModifier:IncrementStackCount()
+			else
+				-- Does not wear off on phase 2
+				if self:GetStackCount() == 2 then
+					furySwipesModifier = target:AddNewModifier(roshan, self:GetAbility(), "modifier_imba_roshan_fury_swipes", {duration = math.huge})
+					if furySwipesModifier then furySwipesModifier:SetStackCount(1) end
+					
+				elseif self:GetStackCount() == 3 then
+					furySwipesModifier = target:AddNewModifier(roshan, self:GetAbility(), "modifier_imba_roshan_fury_swipes", {duration = self.furyswipeDuration})
+					if furySwipesModifier then furySwipesModifier:SetStackCount(1) end
+				end
+			end
+			
+			-- Bash only in phase 3
+			if self:GetStackCount() == 3 then
+				-- check bash chance
+				if math.random() <= self.bashChance then
+					local knockback = {	center_x = target.x,
+										center_y = target.y,
+										center_z = target.z,
+										duration = self.bashDuration,
+										knockback_distance = 200,
+										knockback_height = self.bashDistance,
+										knockback_duration = self.bashDuration * 0.67,	}
+					target:AddNewModifier(roshan, self:GetAbility(), "modifier_knockback", knockback)
+					target:EmitSound("Roshan.Bash")
+				end
+			end
+		end
+	end
+end
+
+--	PREATTACK SOUND
+function modifier_imba_roshan_ai_diretide:OnAttackStart(keys)
+	if IsServer() then
+		local roshan = self:GetParent()
+		if roshan == keys.attacker then
+			roshan:EmitSound("Roshan.PreAttack")
+			roshan:EmitSound("Roshan.Grunt")
+		end
+	end
+end
+
+--	DEATH CHECK
+function modifier_imba_roshan_ai_diretide:OnTakeDamage(keys)
+	if IsServer() then
+		local roshan = self:GetParent()
+		if roshan == keys.unit then
+			if keys.damage > roshan:GetHealth() then
+				self:Die(roshan)
+			end
+		end
+	end
+end
+
+---------- Roshans Fury Swipes modifier
+if modifier_imba_roshan_fury_swipes == nil then modifier_imba_roshan_fury_swipes = class({}) end
+function modifier_imba_roshan_fury_swipes:IsPurgeException() return false end
+function modifier_imba_roshan_fury_swipes:IsPurgable() return false end
+function modifier_imba_roshan_fury_swipes:IsHidden() return false end
+function modifier_imba_roshan_fury_swipes:IsDebuff() return true end
+
+function modifier_imba_roshan_fury_swipes:GetEffectName()
+	return "particles/units/heroes/hero_ursa/ursa_fury_swipes_debuff.vpcf" end
+
+function modifier_imba_roshan_fury_swipes:GetTexture()
+	return "roshan_bash" end
+
+function modifier_imba_roshan_fury_swipes:GetEffectAttachType()
+	return PATTACH_OVERHEAD_FOLLOW end
+
+---------- Roshans acceleration modifier
+if modifier_imba_roshan_acceleration == nil then modifier_imba_roshan_acceleration = class({}) end
+function modifier_imba_roshan_acceleration:GetAttributes() return MODIFIER_ATTRIBUTE_PERMANENT + MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE end
+function modifier_imba_roshan_acceleration:IsPurgeException() return false end
+function modifier_imba_roshan_acceleration:IsPurgable() return false end
+function modifier_imba_roshan_acceleration:IsDebuff() return false end
+function modifier_imba_roshan_acceleration:IsHidden() return true end
+
+function modifier_imba_roshan_acceleration:DeclareFunctions()
+	return { MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT, MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT} end
+
+function modifier_imba_roshan_acceleration:OnCreated()
+	local ability = self:GetAbility()
+	self.speedIncrease = ability:GetSpecialValueFor("speedup_increase")
+	self.asIncrease	= ability:GetSpecialValueFor("speedup_as_increase")
+	
+	if IsServer() then
+		self:StartIntervalThink(ability:GetSpecialValueFor("speedup_interval"))
+	end
+end
+
+function modifier_imba_roshan_acceleration:OnIntervalThink()
+	self:IncrementStackCount() end
+
+function modifier_imba_roshan_acceleration:GetModifierMoveSpeedBonus_Constant()
+	return self.speedIncrease * self:GetStackCount() end
+
+function modifier_imba_roshan_acceleration:GetModifierAttackSpeedBonus_Constant()
+	return self.asIncrease * self:GetStackCount() end
+
+---------- Roshans death buff
+if modifier_imba_roshan_death_buff == nil then modifier_imba_roshan_death_buff = class({}) end
+function modifier_imba_roshan_death_buff:GetAttributes() return MODIFIER_ATTRIBUTE_PERMANENT + MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE end
+function modifier_imba_roshan_death_buff:IsPurgeException() return false end
+function modifier_imba_roshan_death_buff:IsPurgable() return false end
+function modifier_imba_roshan_death_buff:IsHidden() return true end
+function modifier_imba_roshan_death_buff:IsDebuff() return false end
+
+function modifier_imba_roshan_death_buff:OnCreated()
+	local ability = self:GetAbility()
+	self.bonusSpellAmp = ability:GetSpecialValueFor("spellamp_per_death")
+	self.bonusDamage = ability:GetSpecialValueFor("damage_per_death")
+	self.bonusAttackSpeed = ability:GetSpecialValueFor("attackspeed_per_death")
+	self.bonusHealth = ability:GetSpecialValueFor("health_per_death")
+	self.bonusArmor = ability:GetSpecialValueFor("armor_per_death")
+	self.bonusResist = ability:GetSpecialValueFor("resist_per_death")
+end
+
+function modifier_imba_roshan_death_buff:DeclareFunctions()
+	return { MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE, MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE, MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT, MODIFIER_PROPERTY_HEALTH_BONUS, MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS, MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS } end
+
+function modifier_imba_roshan_death_buff:GetModifierSpellAmplify_Percentage()
+	return self.bonusSpellAmp * self:GetStackCount() end
+	
+function modifier_imba_roshan_death_buff:GetModifierPreAttack_BonusDamage()
+	return self.bonusDamage * self:GetStackCount() end
+	
+function modifier_imba_roshan_death_buff:GetModifierAttackSpeedBonus_Constant()
+	return self.bonusAttackSpeed * self:GetStackCount() end
+	
+function modifier_imba_roshan_death_buff:GetModifierHealthBonus()
+	return self.bonusHealth * self:GetStackCount() end
+	
+function modifier_imba_roshan_death_buff:GetModifierPhysicalArmorBonus()
+	return self.bonusArmor * self:GetStackCount() end
+	
+function modifier_imba_roshan_death_buff:GetModifierMagicalResistanceBonus()
+	return self.bonusResist * self:GetStackCount() end
 
 ---------- Modifier for handling begging
 if modifier_imba_roshan_ai_beg == nil then modifier_imba_roshan_ai_beg = class({}) end
@@ -959,8 +1234,8 @@ function modifier_imba_roshan_eaten_candy:OnCreated()
 		return
 	end
 	
-	self.speedPerCandy = ability:GetSpecialValueFor("speedPerCandy")
-	self.damagePerCandy = ability:GetSpecialValueFor("damagePerCandy")
+	self.speedPerCandy = ability:GetSpecialValueFor("speed_per_candy")
+	self.damagePerCandy = ability:GetSpecialValueFor("damage_per_candy")
 end
 
 function modifier_imba_roshan_eaten_candy:GetModifierPreAttack_BonusDamage()
@@ -970,10 +1245,10 @@ function modifier_imba_roshan_eaten_candy:GetModifierMoveSpeedBonus_Constant()
 	return self.damagePerCandy * self:GetStackCount() end
 
 function modifier_imba_roshan_eaten_candy:GetModifierMoveSpeed_Max()
-	return 3000 end
+	return 99999 end
 
 ------------------------------------------
---				apocalypse				--
+--				APOCALYPSE				--
 ------------------------------------------
 if imba_roshan_diretide_apocalypse == nil then imba_roshan_diretide_apocalypse = class({}) end
 function imba_roshan_diretide_apocalypse:GetCastAnimation()
@@ -1088,6 +1363,11 @@ function imba_roshan_diretide_summon_roshlings:OnSpellStart()
 	local summon = "npc_imba_roshling"
 	local summonAbilities = { "imba_roshling_bash", "imba_roshling_aura" }
 	
+	local deathMod = roshan:FindModifierByName("modifier_imba_roshan_death_buff")
+	if deathMod then
+		summonCount = summonCount + deathMod:GetStackCount() * self:GetSpecialValueFor("extra_per_death")
+	end
+	
 	local roshling = nil
 	GridNav:DestroyTreesAroundPoint(roshanPos, 250, false)
 	for i = 1, summonCount do
@@ -1100,4 +1380,3 @@ function imba_roshan_diretide_summon_roshlings:OnSpellStart()
 		end
 	end
 end
-
