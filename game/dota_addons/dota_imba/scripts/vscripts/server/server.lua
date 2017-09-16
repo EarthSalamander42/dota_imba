@@ -414,7 +414,6 @@ function Server_CalculateXPForWinnerAndAll(winning_team)
 			local jsontable={}
 			jsontable.SteamID64 = table_SteamID64[nPlayerID]
 			jsontable.XP = table_XP[nPlayerID]
-			jsontable.WIN = tostring(0)
 
 			print("SERVER XP: Testing XP earned...")
 			if PlayerResource:GetTeam(nPlayerID) == Winner and PlayerResource:GetConnectionState(nPlayerID) == 2 then
