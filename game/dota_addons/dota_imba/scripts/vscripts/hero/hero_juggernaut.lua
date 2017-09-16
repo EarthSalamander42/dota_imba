@@ -2027,7 +2027,7 @@ function modifier_imba_omni_slash_caster:OnDestroy()
 			self:GetParent():MakeIllusion()
 			self:GetParent():RemoveModifierByName("modifier_imba_omni_slash_image")
 
-			for item_id=0, 8 do
+			for item_id=0, 5 do
 				local item_in_caster = self.caster:GetItemInSlot(item_id)
 				if item_in_caster ~= nil then
 					UTIL_Remove(item_in_caster)
