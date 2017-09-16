@@ -162,13 +162,26 @@ local i = 10
 --			SendToServerConsole("dota_bot_populate")
 --		end
 
-		if GetMapName() == "imba_diretide" then
-			local roshan_spawner = Entities:FindByName(nil, "roshan_diretide"):GetAbsOrigin()
-			CreateUnitByName("npc_diretide_roshan", roshan_spawner, true, nil, nil, DOTA_TEAM_NEUTRALS)
+		if GetMapName() ~= "imba_diretide" then
+			local roshan_easter_egg = Entities:FindByName(nil, "easter_egg_diretide"):GetAbsOrigin()
+			local pumpkin = CreateUnitByName("npc_dota_diretide_easter_egg", roshan_easter_egg, true, nil, nil, DOTA_TEAM_NEUTRALS)
+			pumpkin:AddNewModifier(caster, nil, "modifier_npc_dialog", {})
 		end
 
 		-- Shows various info to devs in pub-game to find lag issues
 		ImbaNetGraph(10.0)
+
+		Timers:CreateTimer(function() -- OnThink
+			if CHEAT_ENABLED == false then
+				if Convars:GetBool("sv_cheats") == true or GameRules:IsCheatMode() then
+					if not IsInToolsMode() then
+						print("Cheats have been enabled, game don't count.")
+						CHEAT_ENABLED = true
+					end
+				end
+			end
+			return 1.0
+		end)
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -409,6 +422,7 @@ function GameMode:OnPlayerReconnect(keys)
 
 	local player_id = keys.PlayerID
 	Server_EnableToGainXPForPlyaer(player_id)
+	print("Player has reconnected:", player_id)
 
 	for _, hero in pairs(HeroList:GetAllHeroes()) do
 		if hero.is_dev and not hero.has_graph then
@@ -457,6 +471,8 @@ function GameMode:OnPlayerReconnect(keys)
 				else
 					data.PickedHeroes = {} --Set as empty, to allow all heroes to be selected
 				end
+
+				PrintTable(HeroSelection.playerPicks)
 
 				if PlayerResource:GetTeam(player_id) == DOTA_TEAM_GOODGUYS then
 					CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.radiantPicks, PlayerPicks = HeroSelection.playerPicks, pickState = pick_state, repickState = repick_state})

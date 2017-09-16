@@ -26,9 +26,12 @@ end
 function imba_juggernaut_blade_fury:OnSpellStart()
 	local caster = self:GetCaster()
 	caster:Purge(false, true, false, false, false)
+	-- Fix the infinite radius in custom, but benefits the use of Refresher
 	if caster:HasModifier("modifier_imba_juggernaut_blade_fury") then
 		local buff = caster:FindModifierByName("modifier_imba_juggernaut_blade_fury")
+		if buff.radius >= (self:GetTalentSpecialValueFor("effect_radius") * 5) then
 		buff.radius = self:GetTalentSpecialValueFor("effect_radius")
+		end
 	end
 	caster:AddNewModifier(caster, self, "modifier_imba_juggernaut_blade_fury", {duration = self:GetSpecialValueFor("duration")})
 
@@ -53,10 +56,11 @@ function modifier_imba_juggernaut_blade_fury:OnCreated()
 	self.original_caster = self.caster
 	self.ability = self:GetAbility()
 	self.dps = self.ability:GetTalentSpecialValueFor("damage_per_sec")
-	-- self.evasion = self.ability:GetTalentSpecialValueFor("evasion")
 	self.radius = self.ability:GetTalentSpecialValueFor("effect_radius")
 	self.tick = self.ability:GetTalentSpecialValueFor("damage_tick")
+	self.deflect_chance = self.ability:GetTalentSpecialValueFor("deflect_chance")
 	self.caster = self:GetCaster()
+	self.deflect = true
 	if IsServer() then
 		if self.caster:IsAlive() then
 			self.blade_fury_spin_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_juggernaut/juggernaut_blade_fury.vpcf", PATTACH_ABSORIGIN_FOLLOW, self.caster)
@@ -81,8 +85,16 @@ function modifier_imba_juggernaut_blade_fury:OnIntervalThink()
 	
 	-- #1 Talent: Blade Fury acts as a vacuum, sucking enemies toward Juggernaut
 	if self.original_caster:HasTalent("special_bonus_imba_juggernaut_1") then
-		local nearbyEnemies = FindUnitsInRadius(self.caster:GetTeamNumber(), caster_loc, nil, self.radius * 1.5, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-	
+		local nearbyEnemies
+		
+		-- If Omni Slash is active, only succ in enemies close to the radius
+		if self.caster:HasModifier("modifier_imba_omni_slash_caster") then
+		nearbyEnemies = FindUnitsInRadius(self.caster:GetTeamNumber(), caster_loc, nil, self.radius * 1.2, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		else
+		-- Else, succ in enemies nearby Juggernaut according to the skill's original radius
+		nearbyEnemies = FindUnitsInRadius(self.caster:GetTeamNumber(), caster_loc, nil, self.ability:GetTalentSpecialValueFor("effect_radius") * self.caster:FindTalentValue("special_bonus_imba_juggernaut_1"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		end
+		
 		for _,nearbyEnemy in pairs(nearbyEnemies) do	
 			-- How many layers of irony are you on?
 			if not nearbyEnemy:HasModifier("modifier_imba_juggernaut_blade_fury_succ") then
@@ -140,19 +152,34 @@ end
 
 -- G I B B D A S U C C
 modifier_imba_juggernaut_blade_fury_succ = modifier_imba_juggernaut_blade_fury_succ or class({})
+function modifier_imba_juggernaut_blade_fury_succ:IsPurgable() return false end
+function modifier_imba_juggernaut_blade_fury_succ:IsPurgeException()return true end
+function modifier_imba_juggernaut_blade_fury_succ:IsStunDebuff() return false end
+function modifier_imba_juggernaut_blade_fury_succ:IsMotionController()  return true end
+function modifier_imba_juggernaut_blade_fury_succ:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_HIGH end
 
 function modifier_imba_juggernaut_blade_fury_succ:OnCreated()
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
 	self.target = self:GetParent()
-	-- I would want to set this to FrameTime, but lags. Sadness.
-	self.succ_tick = self.ability:GetTalentSpecialValueFor("succ_tick")
+	self.succ_tick = FrameTime()
+
 	if IsServer() then
 		self:StartIntervalThink(self.succ_tick)
 	end
 end
 
 function modifier_imba_juggernaut_blade_fury_succ:OnIntervalThink()
+	-- Remove the succ if conflicting
+	if not self:CheckMotionControllers() then
+		self:Destroy()
+		return nil
+	end
+		
+	self:HorizontalMotion(self.target, self.succ_tick)
+end
+
+function modifier_imba_juggernaut_blade_fury_succ:HorizontalMotion()
 	if IsServer() then
 		if (not self.caster:IsAlive()) or (not self.caster:HasModifier("modifier_imba_juggernaut_blade_fury")) then
 			self:Destroy()
@@ -163,23 +190,33 @@ function modifier_imba_juggernaut_blade_fury_succ:OnIntervalThink()
 		enemy_position = self.target:GetAbsOrigin()
 		caster_position = self.caster:GetAbsOrigin()
 		
+		-- The Succ radius 
 		self.radius = self.ability:GetTalentSpecialValueFor("effect_radius")
-		succ_radius = self.radius * self.caster:FindTalentValue("special_bonus_imba_juggernaut_1")
+		local succ_radius = self.radius * self.caster:FindTalentValue("special_bonus_imba_juggernaut_1")
 		
 		-- Direction
-		direction = ( enemy_position - caster_position ):Normalized() * (-1)
-		distance = ( enemy_position - caster_position ):Length2D()
+		local direction = ( enemy_position - caster_position ):Normalized() * (-1)
+		local distance = ( enemy_position - caster_position ):Length2D()
 		
 		-- If the target is over its effect radius, then destroys itself.
 		if distance > succ_radius then
 			self:Destroy()
 			return nil
 		end
-		
+
 		-- If it's not hugged by Juggernaut, SUCC IT IN!
 		if distance > 100 then
 			-- Pull Strength. The closer the enemy gets, the closer they get
-			newPosition = enemy_position + direction * self.succ_tick * (succ_radius - distance) * 0.2
+			local newPosition = enemy_position + direction * self.succ_tick * (succ_radius - distance) * self.caster:FindTalentValue("special_bonus_imba_juggernaut_1","pull_strength")
+				
+			-- If the target is within the radius of Blade Fury, increase the succ force!
+			blade_fury_modifier = self.caster:FindModifierByName("modifier_imba_juggernaut_blade_fury")
+			if blade_fury_modifier then
+				if distance < blade_fury_modifier.radius then
+				newPosition = enemy_position + direction * self.succ_tick * (succ_radius - distance) * self.caster:FindTalentValue("special_bonus_imba_juggernaut_1","pull_strength_fury")
+				end
+			end
+			
 			-- Set the new point
 			self.target:SetAbsOrigin(newPosition)
 		end
@@ -201,7 +238,6 @@ function modifier_imba_juggernaut_blade_fury:DeclareFunctions()
  	local funcs = {
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 		MODIFIER_EVENT_ON_TAKEDAMAGE
--- 		MODIFIER_PROPERTY_EVASION_CONSTANT
  	}
  	return funcs
 end
@@ -209,6 +245,10 @@ end
 -- Mi o sutete mo, myōri wa sutezu.
 function modifier_imba_juggernaut_blade_fury:OnAttackLanded(keys)
 	if IsServer() then
+	
+	-- If it's the first instance, or deflect procs, Deflect it!
+	if self.deflect or RollPercentage(self.deflect_chance) then
+	
 	local target = keys.target
 	local attacker = keys.attacker
 	self.caster = self:GetCaster()
@@ -220,6 +260,9 @@ function modifier_imba_juggernaut_blade_fury:OnAttackLanded(keys)
 	
 		-- Check if the attacker is a ranged attacker.
 		if target == self.caster and check_attack_capability == 2 then
+			
+			-- Sets the confirmed deflect to false
+			self.deflect = false
 			
 			-- Nullifies the attack, FrameTime() does not help.
 			self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_juggernaut_blade_fury_deflect_buff", {duration = 0.01})
@@ -272,6 +315,7 @@ function modifier_imba_juggernaut_blade_fury:OnAttackLanded(keys)
 						-- ProjectileManager:CreateTrackingProjectile(projectile_deflected)
 						
 				end
+			end
 		end
 	end
 end
@@ -681,7 +725,7 @@ function imba_juggernaut_blade_dance:CastFilterResultLocation(position)
 	end
 end
 
-function imba_juggernaut_blade_dance:GetCustomCastErrorTarget(target)
+function imba_juggernaut_blade_dance:GetCustomCastErrorLocation(position)
 	return "dota_hud_error_cant_use_disarmed"	
 end
 
@@ -704,14 +748,10 @@ function imba_juggernaut_blade_dance:GetCastRange()
 end
 
 function imba_juggernaut_blade_dance:GetCooldown()
-	if self:GetBehavior() ~= DOTA_ABILITY_BEHAVIOR_PASSIVE then
-		return self:GetTalentSpecialValueFor("active_cooldown")
-	end
-	return 0
+	return self:GetTalentSpecialValueFor("active_cooldown")
 end
 
 LinkLuaModifier("modifier_imba_juggernaut_blade_dance_empowered_slice", "hero/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_juggernaut_blade_dance_empowered_slice_count", "hero/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_juggernaut_blade_dance_empowered_slice = modifier_imba_juggernaut_blade_dance_empowered_slice or class({})
 
 function modifier_imba_juggernaut_blade_dance_empowered_slice:IsHidden()
@@ -746,7 +786,6 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:OnCreated()
 		
 		EmitSoundOn("Hero_Juggernaut.PreAttack", self.parent)
 		EmitSoundOn("Hero_EarthShaker.Attack", self.parent)
-		self.speed = self.ability:GetTalentSpecialValueFor("active_speed")
 		self.has_slice_enemy = false
 		self.enemies_hit = {}
 		
@@ -758,22 +797,37 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:OnCreated()
 		self.endPoint = self.ability.endPoint
 		end
 		
+		if not self.max_attack_count then
+		self.max_attack_count = self.ability:GetTalentSpecialValueFor("secret_blade_max_hits")
+		end
+		self.speed = self.ability:GetTalentSpecialValueFor("active_speed")
 		self.maxDistance = self.ability:GetTalentSpecialValueFor("active_distance")
 		self.distance_left = ( self.endPoint - self.caster:GetAbsOrigin() ):Length2D()
 		self.direction = ( self.endPoint - self.caster:GetAbsOrigin() ):Normalized()
 		self.distance_limit = self.maxDistance - ( self.endPoint - self.initialPos ):Length2D()		
 		self.traveled = 0		
 		self.secret_blade = self.caster:FindModifierByName("modifier_imba_juggernaut_blade_dance_secret_blade")
+		self.wind_dance = self.caster:FindModifierByName("modifier_imba_juggernaut_blade_dance_wind_dance")
 		self.frametime = FrameTime()
 		self.caster:FaceTowards(self.endPoint)
 		self.initialAngle = self.parent:GetAnglesAsVector()
 		Timers:CreateTimer(0.02, function()
 			self.initialAngle = self.parent:GetAnglesAsVector()
 		end)
+		
+		-- Remove the Secret Blade stacks
 		if self.secret_blade then
 		self.attack_count = self.secret_blade:GetStackCount()
 		self.secret_blade:Destroy()
 		end
+		
+		-- #5 Talent: When casting Secret Blade, Wind Dance stacks are consumed for increasing Secret Blade max hit counts
+		if self.caster:HasTalent("special_bonus_imba_juggernaut_5") and self.wind_dance and self.max_attack_count then
+		local secret_blade_extra_hits = math.min(self.wind_dance:GetStackCount()/self.caster:FindTalentValue("special_bonus_imba_juggernaut_5"))
+		self.max_attack_count = self.max_attack_count + secret_blade_extra_hits
+		self.wind_dance:Destroy()
+		end
+		
 		self:StartIntervalThink(FrameTime())
 	end
 end
@@ -799,59 +853,54 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:SeekAndDestroy()
 		local enemy_hit = false
 		
 			for _,enemy in pairs(sliceEnemies) do
-				while true do
-					-- If no hits were left, exit
-					if self.attack_count < 1 then
-						self:Destroy()
-						return nil
-					end
-							
-					-- If this enemy was already hit by this cast, do nothing
-					enemy_hit = false
-					
+				
+				-- If no hits were left, exit
+				if self.attack_count < 1 then
+					self:Destroy()
+					return nil
+				end
+						
+				-- If this enemy was already hit by this cast, do nothing
+				enemy_hit = false
+				
+				if self.enemies_hit then
 					for _,hit_enemy in pairs(self.enemies_hit) do
 						-- If the enemy is hit once, do nothing
 						if hit_enemy == enemy then
 							enemy_hit = true
 						end
 					end
+				end
+				
+				-- If the target is valid
+				if not enemy_hit then
 					
-					-- If the target is valid
-					if not enemy_hit then
-						
-						-- Play hit sound
-						enemy:EmitSound("Hero_Juggernaut.BladeFury.Impact")
-						-- Play hit particle
-						local slash_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_juggernaut/juggernaut_blade_fury_tgt.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy)
-						ParticleManager:SetParticleControl(slash_pfx, 0, enemy:GetAbsOrigin())
-						ParticleManager:ReleaseParticleIndex(slash_pfx)
+					-- Play hit sound
+					enemy:EmitSound("Hero_Juggernaut.BladeFury.Impact")
+					-- Play hit particle
+					local slash_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_juggernaut/juggernaut_blade_fury_tgt.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy)
+					ParticleManager:SetParticleControl(slash_pfx, 0, enemy:GetAbsOrigin())
+					ParticleManager:ReleaseParticleIndex(slash_pfx)
 
-						-- Deal damage
-						self.caster:PerformAttack(enemy, true, true, true, true, false, false, true)
-						
-						-- There are enemies being hit haha now you cant bug me with Stack Overflow :3
-						self.has_slice_enemy = true
-						
-						-- #4 Talent. Indicating Blade Dance's active strikes three times: once in a straight line forward, and twice to the sides. 
-						if self.caster:HasTalent("special_bonus_imba_juggernaut_4") then
-							self.targetted_enemy = enemy
-						end
-						
-						-- Add a modifier to indicate the amount of times hit
-						if (not enemy:HasModifier("modifier_imba_juggernaut_blade_dance_empowered_slice_count")) then
-						sliced_count = enemy:AddNewModifier(self.caster,self.ability,"modifier_imba_juggernaut_blade_dance_empowered_slice_count",{duration = 1.0})
-							if sliced_count then
-								sliced_count:IncrementStackCount()
-							end
-						end
-						
-						-- Minus one attack count
-						self.attack_count = self.attack_count - 1
-						
-						-- Add this enemy to the hit table
-						table.insert(self.enemies_hit, enemy)
+					-- Deal damage
+					self.caster:PerformAttack(enemy, true, true, true, true, false, false, true)
+					
+					-- There are enemies being hit haha now you cant bug me with Stack Overflow :3
+					self.has_slice_enemy = true
+					
+					-- #4 Talent. Indicating Blade Dance's active strikes three times: once in a straight line forward, and twice to the sides. 
+					-- Indicate the position of the striking target
+					if self.caster:HasTalent("special_bonus_imba_juggernaut_4") then
+					self.targetted_enemy = enemy
 					end
-					break
+					
+					-- Minus one attack count
+					self.attack_count = self.attack_count - 1
+					
+					-- Add this enemy to the hit table
+					if self.enemies_hit then
+					table.insert(self.enemies_hit, enemy)
+					end
 				end
 			end
 	end
@@ -970,87 +1019,70 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:SeekAndDestroyPtTo
 			return nil
 		end
 		
-		for _,enemy in pairs(self.enemies_hit) do
-			while true do
+		-- Apply the aftermath strikes
+		for i=1,self.max_attack_count-1 do
+		
+			for _,enemy in pairs(self.enemies_hit) do
+				
 				-- If no hits were left, finish the finale
 				if self.attack_count < 1 then
 					self:Destroy()
 					return nil
 				end
-
-				-- If enemy is already stroke 3 times, still do nothing
-				if enemy:HasModifier("modifier_imba_juggernaut_blade_dance_empowered_slice_count") then
-					sliced_enemy = enemy:FindModifierByName("modifier_imba_juggernaut_blade_dance_empowered_slice_count")
-					sliced_enemy_stack = sliced_enemy:GetStackCount()
-					if sliced_enemy_stack >= self.ability:GetSpecialValueFor("secret_blade_max_hits") then
-						enemy_hit = true
-						break
-					end
+				
+				-- If this enemy is not a valid target, do nothing
+				if enemy:IsInvisible() or enemy:IsOutOfGame() then
+					enemy_hit = true
+				end
+				
+				-- If this enemy is attack immune, do nothing either
+				if enemy:IsAttackImmune() then
+					enemy_hit = true
 				end
 				
 				-- If the target is valid
 				if not enemy_hit then
 
-					-- Play hit sound
-					enemy:EmitSound("Hero_Juggernaut.BladeFury.Impact")
-					-- Play hit particle
-					local slash_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_juggernaut/juggernaut_blade_fury_tgt.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy)
-					ParticleManager:SetParticleControl(slash_pfx, 0, enemy:GetAbsOrigin())
-					ParticleManager:ReleaseParticleIndex(slash_pfx)
+				-- Play hit sound
+				enemy:EmitSound("Hero_Juggernaut.BladeFury.Impact")
+				-- Play hit particle
+				local slash_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_juggernaut/juggernaut_blade_fury_tgt.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy)
+				ParticleManager:SetParticleControl(slash_pfx, 0, enemy:GetAbsOrigin())
+				ParticleManager:ReleaseParticleIndex(slash_pfx)
 
-					-- Deal damage
-					self.caster:PerformAttack(enemy, true, true, true, true, false, false, true)
+				-- Deal damage
+				self.caster:PerformAttack(enemy, true, true, true, true, false, false, true)
 
-					-- Add a modifier to indicate the amount of times hit
-					if enemy:HasModifier("modifier_imba_juggernaut_blade_dance_empowered_slice_count") then
-						enemy_sliced = enemy:FindModifierByName("modifier_imba_juggernaut_blade_dance_empowered_slice_count")
-						enemy_sliced:IncrementStackCount()
-					end
-							
-					-- Minus one attack count
-					self.attack_count = self.attack_count - 1
-					
-				end	
-				break
-			end
-		end
-		
-		for _,enemy in pairs(self.enemies_hit) do
-			-- If this is the third slice, end the finale
-			if enemy:HasModifier("modifier_imba_juggernaut_blade_dance_empowered_slice_count") then
-			sliced_enemy = enemy:FindModifierByName("modifier_imba_juggernaut_blade_dance_empowered_slice_count")
-			sliced_enemy_stack = sliced_enemy:GetStackCount()
-				if sliced_enemy_stack >= self.ability:GetSpecialValueFor("secret_blade_max_hits") then
+				-- Minus one attack count
+				self.attack_count = self.attack_count - 1
 				
-					-- #4 Talent. Blade Dance's active strikes three times: once in a straight line forward, and twice to the sides. 
-					if self.caster:HasTalent("special_bonus_imba_juggernaut_4") and (not self.third_dash_finale) and self.attack_count > 0 then
-						
-						-- Third Dash checking has a higher priority than second dash, because self.second_dash is initialized first, then comes self.third_dash
-						-- If this is the end of the second dash, commence the third dash
-						if self.third_dash then
-							self:SeekAndDestroyPtTweeDecimation()
-							return
-						end
-						
-						-- If this is the end of the initial dash, commence the second dash
-						if not self.second_dash then
-							self.second_dash = true
-							self:SeekAndDestroyPtTweeDecimation()
-							return
-						end
-						
-					else
-						-- If the caster does not have the talent or it is the third dash, then negates itself
-						self:Destroy()
-						return nil
-						
-					end
-				end
+				end	
 			end
+			
 		end
-		
-		-- Repeat the Annihilation Phase
-		--self:SeekAndDestroyPtTooAnnihilation()
+			
+		-- #4 Talent. Blade Dance's active strikes three times: once in a straight line forward, and twice to the sides. 
+		if self.caster:HasTalent("special_bonus_imba_juggernaut_4") and (not self.third_dash_finale) and self.attack_count > 0 then
+								
+			-- Third Dash checking has a higher priority than second dash, because self.second_dash is initialized first, then comes self.third_dash
+			-- If this is the end of the second dash, commence the third dash
+			if self.third_dash then
+			self:SeekAndDestroyPtTweeDecimation()
+			return
+			end
+								
+			-- If this is the end of the initial dash, commence the second dash
+			if not self.second_dash then
+			self.second_dash = true
+			self:SeekAndDestroyPtTweeDecimation()
+			return
+			end
+							
+		else
+			-- If the caster does not have the talent or it is the third dash, then negates itself
+			self:Destroy()
+			return nil					
+		end
 	end
 end
 
@@ -1069,13 +1101,6 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:SeekAndDestroyPtTw
 		self:Destroy()
 		end
 			
-		-- Remove the sliced modifier for them to be sliced again.
-		for _,enemy in pairs(self.enemies_hit) do
-			if enemy:HasModifier("modifier_imba_juggernaut_blade_dance_empowered_slice_count") then
-				enemy:RemoveModifierByName("modifier_imba_juggernaut_blade_dance_empowered_slice_count")
-			end
-		end
-		
 		-- Get the point of the horizontal slice
 		if (not self.targetted_enemy) then
 			target_position = self.newPoint
@@ -1143,6 +1168,7 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:OnDestroy()
 			second_dash_handler.endPoint = self.endPoint
 			second_dash_handler.target_position = target_position
 			second_dash_handler.qangle_angle = self.qangle_angle
+			second_dash_handler.max_attack_count = self.max_attack_count
 			end
 			return
 		end
@@ -1159,6 +1185,7 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:OnDestroy()
 			third_dash_handler.endPoint = self.endPoint
 			third_dash_handler.target_position = self.target_position
 			third_dash_handler.qangle_angle = self.qangle_angle
+			third_dash_handler.max_attack_count = self.max_attack_count
 			end
 			return
 		end
@@ -1171,12 +1198,6 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:OnDestroy()
 		end
 		self.enemies_hit = nil
 	end
-end
-
-modifier_imba_juggernaut_blade_dance_empowered_slice_count = modifier_imba_juggernaut_blade_dance_empowered_slice_count or class({})
-
-function modifier_imba_juggernaut_blade_dance_empowered_slice_count:IsHidden()
-	return true
 end
 
 LinkLuaModifier("modifier_imba_juggernaut_blade_dance_passive", "hero/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
@@ -1218,7 +1239,7 @@ end
 
 if IsServer() then
 	function modifier_imba_juggernaut_blade_dance_passive:GetModifierPreAttack_CriticalStrike(params)
-		if self:GetParent():PassivesDisabled() or not self:GetAbility():IsTrained()	then return nil end
+		if self:GetParent():PassivesDisabled() 	then return nil end
 		if RollPseudoRandom(self.chance, self) then
 			
 			local crit_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_juggernaut/jugg_crit_blur.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
@@ -1521,6 +1542,8 @@ end
 imba_juggernaut_omni_slash = imba_juggernaut_omni_slash or class({})
 LinkLuaModifier("modifier_imba_omni_slash_caster", "hero/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_omni_slash_image", "hero/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_omni_slash_talent", "hero/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_omnislash_image_afterimage_fade", "hero/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
 
 function imba_juggernaut_omni_slash:IsNetherWardStealable() return false end
 function imba_juggernaut_omni_slash:GetIntrinsicModifierName()
@@ -1561,10 +1584,7 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 	-- #7 Talent: Omnislash sends an image to commit the slashes, Juggernaut is free to continue as normal
 	-- Senbonzakura Kageyoshi
 	if self.caster:HasTalent("special_bonus_imba_juggernaut_7") then
-		if self.target:TriggerSpellAbsorb(self) then
-			return nil
-		end
-		
+
 		-- Superclone Credits: igo95862 & Freeman322
 		local omnislash_image = CreateUnitByName(self.caster:GetUnitName(), self.caster:GetAbsOrigin(), true, self.caster, self.caster:GetOwner(), self.caster:GetTeamNumber())
 
@@ -1618,8 +1638,11 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 		omnislash_image:SetHasInventory(false)
 		omnislash_image:SetCanSellItems(false)
 		
+		-- Gives the caster the invulnerability
+		self.caster:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_talent", {})
+		
 		-- Add the image indicator
-		omnislash_image:AddNewModifier(omnislash_image, self, "modifier_imba_omni_slash_image", {})
+		omnislash_image:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_image", {})
 		
 		local omnislash_modifier_handler = omnislash_image:AddNewModifier(omnislash_image, self, "modifier_imba_omni_slash_caster", {})
 		
@@ -1633,9 +1656,17 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 		
 		Timers:CreateTimer(FrameTime(), function()
 		if (not omnislash_image:IsNull()) then
-		self.current_position = omnislash_image:GetAbsOrigin()
-		
 		StartAnimation(omnislash_image, {activity = ACT_DOTA_OVERRIDE_ABILITY_4, rate = 1.0})
+		end
+		end)
+		
+		if self.target:TriggerSpellAbsorb(self) then
+			return nil
+		end
+		
+		Timers:CreateTimer(FrameTime(), function()
+		if (not omnislash_image:IsNull()) then
+		self.current_position = omnislash_image:GetAbsOrigin()
 		
 		omnislash_image:PerformAttack(self.target, true, true, true, true, false, false, false)
 		
@@ -1688,6 +1719,10 @@ end
 
 modifier_imba_omni_slash_image = modifier_imba_omni_slash_image or class ({})
 
+function modifier_imba_omni_slash_image:DeclareFunctions()
+	return {MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE}
+end
+
 function modifier_imba_omni_slash_image:CheckState()
 	local state = {[MODIFIER_STATE_UNSELECTABLE] = true,
 				   [MODIFIER_STATE_COMMAND_RESTRICTED] = true,
@@ -1701,6 +1736,11 @@ function modifier_imba_omni_slash_image:CheckState()
     return state
 end
 
+function modifier_imba_omni_slash_image:GetModifierDamageOutgoing_Percentage()
+	local image_outgoing_damage_percent = (100 - self:GetCaster():FindTalentValue("special_bonus_imba_juggernaut_7")) * (-1)
+	return image_outgoing_damage_percent
+end
+	
 function modifier_imba_omni_slash_image:IsHidden()
 	return true
 end
@@ -1713,6 +1753,67 @@ function modifier_imba_omni_slash_image:GetAttributes()
 	return MODIFIER_ATTRIBUTE_PERMANENT
 end
 
+modifier_imba_omni_slash_talent = modifier_imba_omni_slash_talent or class ({})
+
+function modifier_imba_omni_slash_talent:DeclareFunctions()
+	return {MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE,
+			MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE}
+end
+
+function modifier_imba_omni_slash_talent:CheckState()
+	local state = {[MODIFIER_STATE_INVULNERABLE] = true,
+				   [MODIFIER_STATE_MAGIC_IMMUNE] = true,
+					}
+				   
+    return state
+end
+
+-- Bonus damage from Omnislash
+function modifier_imba_omni_slash_talent:GetModifierBaseAttack_BonusDamage()
+	self.caster = self:GetCaster()
+	self.ability = self:GetAbility()
+	self.hero_agility = self.caster:GetAgility()
+	self.base_bonus_damage = self.ability:GetTalentSpecialValueFor("bonus_damage_att")
+	
+	if self.hero_agility then
+	local bonus_damage = self.hero_agility * self.base_bonus_damage * 0.01
+	
+	-- In case if the lead dev changes mind and allow 2 of these to stack, use self.original_caster than self.caster for versatility. >:3
+	if self.caster:HasTalent("special_bonus_imba_juggernaut_8") then
+		jade_blossom = self.caster:FindModifierByName("modifier_imba_juggernaut_blade_dance_jade_blossom")
+		if jade_blossom then
+			blossomed_damage = self.hero_agility + jade_blossom:GetStackCount()
+			bonus_damage = blossomed_damage * self.base_bonus_damage * 0.01 
+		end
+	end
+	
+	return bonus_damage
+	end
+    return 0
+end
+
+-- Damage reduction from Omnislash Talent
+function modifier_imba_omni_slash_talent:GetModifierDamageOutgoing_Percentage()
+	local caster_outgoing_damage_percent = (100 - self:GetCaster():FindTalentValue("special_bonus_imba_juggernaut_7","caster_outgoing_damage")) * (-1)
+	return caster_outgoing_damage_percent
+end
+	
+function modifier_imba_omni_slash_talent:IsHidden()
+	return false
+end
+
+function modifier_imba_omni_slash_talent:IsPurgable()
+	return false
+end
+
+function modifier_imba_omni_slash_talent:GetAttributes()
+	return MODIFIER_ATTRIBUTE_PERMANENT
+end
+
+function modifier_imba_omni_slash_talent:GetStatusEffectName()
+	return "particles/status_fx/status_effect_omnislash.vpcf"
+end
+
 modifier_imba_omni_slash_caster = modifier_imba_omni_slash_caster or class({})
 
 function modifier_imba_omni_slash_caster:OnCreated()
@@ -1721,6 +1822,7 @@ function modifier_imba_omni_slash_caster:OnCreated()
 		self.parent = self:GetParent()
 		self.base_bonus_damage = self.ability:GetTalentSpecialValueFor("bonus_damage_att")
 		self.minimum_damage = self.ability:GetTalentSpecialValueFor("min_damage")
+		self.last_enemy = nil
 		
 		if not self.ability then
 			self:Destroy()
@@ -1768,11 +1870,12 @@ function modifier_imba_omni_slash_caster:BounceAndSlaughter()
 												false)	
 	if self.bounce_amt >= 1 and #self.nearby_enemies >= 1 then
 		for _,enemy in pairs(self.nearby_enemies) do
+			
 			local previous_position = self.caster:GetAbsOrigin()
 			FindClearSpaceForUnit(self.caster, enemy:GetAbsOrigin() + RandomVector(128), false)
-			
+				
 			self.caster:MoveToTargetToAttack(enemy)
-			
+				
 			local current_position = self.caster:GetAbsOrigin()			
 
 			-- Provide vision of the target for a short duration
@@ -1780,7 +1883,7 @@ function modifier_imba_omni_slash_caster:BounceAndSlaughter()
 
 			-- Perform the slash
 			self.slash = true
-			
+				
 			self.caster:PerformAttack(enemy, true, true, true, true, true, false, false)
 
 			-- If the target is not Roshan or a hero, instantly kill it
@@ -1804,6 +1907,16 @@ function modifier_imba_omni_slash_caster:BounceAndSlaughter()
 			ParticleManager:SetParticleControl(trail_pfx, 0, previous_position)
 			ParticleManager:SetParticleControl(trail_pfx, 1, current_position)
 			ParticleManager:ReleaseParticleIndex(trail_pfx)
+				
+			self.last_enemy = enemy
+				
+			if self.caster:HasModifier("modifier_imba_omni_slash_image") then
+				if (not self.original_caster:HasModifier("modifier_imba_omni_slash_talent")) then
+				self.original_caster:AddNewModifier(self.original_caster,self.ability,"modifier_imba_omni_slash_talent",{})
+				end
+			self.previous_pos = previous_position
+			self.current_pos = current_position
+			end
 			break
 		end
 	else
@@ -1847,6 +1960,15 @@ function modifier_imba_omni_slash_caster:GetModifierProcAttack_BonusDamage_Physi
 			return nil
 		end
 
+		-- If Omnislash's slash damage is less than minimum damage according to the damage reduction from #7 Talent, add the bonus till minimum threshold
+		if self.caster:HasModifier("modifier_imba_omni_slash_image") then	
+			if kv.attacker == self.caster and kv.damage <= (self.minimum_damage / (100 - self.original_caster:FindTalentValue("special_bonus_imba_juggernaut_7")) * 0.01) then
+				-- Set the slash ability to false so it won't trigger for normal attacks
+				self.slash = false
+				return ((self.minimum_damage - kv.damage) / (100 - self.original_caster:FindTalentValue("special_bonus_imba_juggernaut_7")) * 0.01 )
+			end
+		end
+		
 		-- If Omnislash's slash damage is less than minimum damage, add the bonus till minimum threshold
 		if kv.attacker == self.caster and kv.damage <= self.minimum_damage then
 			-- Set the slash ability to false so it won't trigger for normal attacks
@@ -1871,12 +1993,20 @@ function modifier_imba_omni_slash_caster:OnDestroy()
 		end
 
 		self.ability:SetActivated(true)
-
+		
 		-- Create the delay effect before the image destroys itself.
 		if self.caster:HasModifier("modifier_imba_omni_slash_image") then
 			if self.caster:HasModifier("modifier_imba_juggernaut_blade_fury") then
 				self.caster:RemoveModifierByName("modifier_imba_juggernaut_blade_fury")
 			end
+			
+			if self.original_caster:HasModifier("modifier_imba_omni_slash_talent") then
+			self.original_caster:RemoveModifierByName("modifier_imba_omni_slash_talent")
+			end
+			
+			-- Create the after image before it fades
+			CreateModifierThinker(self.original_caster, self.ability, "modifier_omnislash_image_afterimage_fade" ,{duration = 1.0, previous_position_x = self.previous_pos.x, previous_position_y = self.previous_pos.y, previous_position_z = self.previous_pos.z}, self.current_pos, self.original_caster:GetTeamNumber(), false)
+			
 			self.caster:MakeIllusion()
 
 			for item_id=0, 5 do
@@ -1894,16 +2024,32 @@ function modifier_imba_omni_slash_caster:OnDestroy()
 				end
 			end
 
-			self.caster:SetAbsOrigin(Vector(0,0,99999))
-			self:GetCaster():AddNoDraw()
-			local icaster = self.caster
 			Timers:CreateTimer(0.1, function()
+			if (not self:GetCaster():IsNull()) then
+			self:GetCaster():SetAbsOrigin(Vector(0,0,99999))
+			self:GetCaster():AddNoDraw()
+			end
+			end)
+			local icaster = self.caster
+			Timers:CreateTimer(0.2, function()
 				UTIL_Remove(icaster)
 			end)
 		end
 	end
 end
 	
+modifier_omnislash_image_afterimage_fade = modifier_omnislash_image_afterimage_fade or class({})
+
+function modifier_omnislash_image_afterimage_fade:OnCreated(keys)
+	if IsServer() then
+		local caster = self:GetCaster()
+		local trail_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_juggernaut/juggernaut_omni_slash_trail.vpcf", PATTACH_CUSTOMORIGIN, self:GetCaster())
+		ParticleManager:SetParticleControl(trail_pfx, 0, Vector(keys.previous_position_x, keys.previous_position_y, keys.previous_position_z))
+		ParticleManager:SetParticleControl(trail_pfx, 1, caster:GetAbsOrigin())
+		ParticleManager:ReleaseParticleIndex(trail_pfx)
+	end
+end
+
 function modifier_imba_omni_slash_caster:CheckState()
     local state = {
 		[MODIFIER_STATE_NO_UNIT_COLLISION] = true,

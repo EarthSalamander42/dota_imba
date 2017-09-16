@@ -342,9 +342,14 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		-- Dummy invisible wisp
 		local wisp = PlayerResource:GetPlayer(player_id):GetAssignedHero()
 		-- Switch for the new hero
-		if hero_name == "npc_dota_hero_storegga" then
+		if hero_name == "npc_dota_hero_ghost_revenant" then
+			hero = PlayerResource:ReplaceHeroWith(player_id, "npc_dota_hero_razor", 0, 0 )
+			hero.custom = true
+			OverrideHero(hero, hero_name)
+		elseif hero_name == "npc_dota_hero_storegga" then
 			hero = PlayerResource:ReplaceHeroWith(player_id, "npc_dota_hero_tiny", 0, 0 )
-			Storegga(hero)			
+			hero.custom = true
+			OverrideHero(hero, hero_name)
 		else
 			hero = PlayerResource:ReplaceHeroWith(player_id, hero_name, 0, 0 )
 		end

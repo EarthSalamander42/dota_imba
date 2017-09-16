@@ -294,6 +294,7 @@ end
 -------------------------------------------
 
 imba_lina_light_strike_array = class({})
+LinkLuaModifier("modifier_imba_lsa_talent_magma", "hero/hero_lina", LUA_MODIFIER_MOTION_NONE)
 
 function imba_lina_light_strike_array:GetAbilityTextureName()
    return "lina_light_strike_array"
@@ -313,7 +314,9 @@ function imba_lina_light_strike_array:OnSpellStart()
 		local secondary_delay = self:GetSpecialValueFor("secondary_delay")
 		local array_count = self:GetSpecialValueFor("array_count")
 		local array_rings_count = self:GetSpecialValueFor("array_rings_count")
+		local rings_radius = self:GetSpecialValueFor("rings_radius")
 		local rings_delay = self:GetSpecialValueFor("rings_delay")
+		local rings_distance = self:GetSpecialValueFor("rings_distance")
 
 		-- Distances
 		local direction = (target_loc - caster_loc):Normalized()
@@ -327,36 +330,16 @@ function imba_lina_light_strike_array:OnSpellStart()
 		end
 		
 		-- Only create the main array blast
-		self:CreateStrike( target_loc, 0, cast_delay, radius, damage, stun_duration )
-
-		-- #4 Talent, previous explosions also occurs
-		if caster:HasTalent("special_bonus_imba_lina_4") then
-			self:CreateStrike( target_loc, 0.01, cast_delay + cast_delay, radius, damage, stun_duration )
-		end
+		self:CreateStrike( target_loc, 0, cast_delay, radius, damage, stun_duration )		
 			
 		-- #7 Talent, Main Light Strike Array's explosion is repeated 2 times
 		if caster:HasTalent("special_bonus_imba_lina_7") then
 			local nuclear_radius = radius
 			local nuclear_stun_duration = stun_duration
 			for k=1, caster:FindTalentValue("special_bonus_imba_lina_7")-1, 1 do
-				nuclear_radius = nuclear_radius + 75 * k
-				nuclear_stun_duration = nuclear_stun_duration * (1/(2*k))
+				nuclear_radius = nuclear_radius + caster:FindTalentValue("special_bonus_imba_lina_7","add_radius") * k
+				nuclear_stun_duration = nuclear_stun_duration * (1/(caster:FindTalentValue("special_bonus_imba_lina_7","stun_reduct")*k))
 				self:CreateStrike( target_loc, (cast_delay * k), cast_delay, nuclear_radius, damage, nuclear_stun_duration )
-							
-				-- #4 Talent, When a Light Strike Array explosion occurs, the previous explosions also occurs
-				if caster:HasTalent("special_bonus_imba_lina_4") then
-					-- Only the previous explosion occurs, does not create additional explosions
-					if k == (caster:FindTalentValue("special_bonus_imba_lina_7")) then
-					else
-						-- If this is the secondary explosion, repeat the main explosion
-						if k == 1 then
-							self:CreateStrike( target_loc, secondary_delay, (cast_delay + cast_delay + 0.01), radius, damage, stun_duration )
-						else
-							-- Else, repeat the last explosion
-							self:CreateStrike( target_loc, secondary_delay, (cast_delay + (cast_delay * k) + 0.01), nuclear_radius, damage, nuclear_stun_duration )
-						end
-					end
-				end
 			end
 		end
 			
@@ -366,8 +349,8 @@ function imba_lina_light_strike_array:OnSpellStart()
 			local next_distance = i+1
 			local array_strike = i+1
 			
-			distance = radius * (distance + 0.25)
-			next_distance = radius * (next_distance + 0.25)
+			distance = radius * (distance + rings_distance)
+			next_distance = radius * (next_distance + rings_distance)
 			
 			--if i == 0 then
 			--	distance = 0
@@ -389,35 +372,11 @@ function imba_lina_light_strike_array:OnSpellStart()
 			for j=1, array_rings_count, 1 do
 				rings_direction = RotateVector2D(rings_direction,((360/array_rings_count)),true)
 				-- new_rings_direction = RotateVector2D(rings_direction,30,true) -- Determines the Hexagon angle
-				local ring_distance = radius * (array_strike + 1)
-				local ring_delay = math.abs((radius * (i + cast_delay + 0.25)) / (radius * 2)) * cast_delay
+				local ring_distance = rings_radius * (array_strike + 1)
+				local ring_delay = math.abs((radius * (i + cast_delay + rings_distance)) / (rings_radius * 2)) * cast_delay
 				local ring_position = target_loc + ring_distance * rings_direction
-				self:CreateStrike( ring_position, (rings_delay + ring_delay), cast_delay , radius, damage, stun_duration )
-						
-				-- #4 Talent, previous explosions also occurs
-				if caster:HasTalent("special_bonus_imba_lina_4") then 
-					-- Only the previous explosion occurs, does not create additional explosions
-					if count == (array_count-1) then
-					else
-						local ring_next_delay = (math.abs(next_distance / (radius * 2)) * cast_delay) - ring_delay
-						self:CreateStrike( ring_position, (rings_delay + ring_delay + 0.01), (cast_delay + ring_next_delay), radius, damage, stun_duration )
-					end
-				end
-			end
-		-- Original talent, create 6 rings horizontally. Saved for future reference - IamInnocentX3
-		-- if caster:HasTalent("special_bonus_imba_lina_4") then
-			--direction = RotateVector2D(direction,90,true)
-			--for i=1, caster:FindTalentValue("special_bonus_imba_lina_4"), 1 do
-			--	local distance = i
-			--	if math.mod(i,2) == 1 then
-			--		distance = radius * (distance + 1)
-			--	else
-			--		distance = radius * distance * (-1)
-			--	end
-			--	local delay = math.abs(distance / (radius * 2)) * secondary_delay
-			--	local position = target_loc + distance * direction
-			--	self:CreateStrike( position, delay, cast_delay, radius, damage, stun_duration )
-			--end
+				self:CreateStrike( ring_position, (cast_delay + ring_delay), (cast_delay + rings_delay), rings_radius, damage, stun_duration )										
+			end		
 		end
 	end
 end
@@ -448,6 +407,11 @@ function imba_lina_light_strike_array:CreateStrike( position, delay, cast_delay,
 		for _,enemy in ipairs(enemies) do
 			self:OnHit(enemy, damage, stun_duration)
 		end
+
+		-- #4 Talent: After a Light Strike Array hits the ground, magma erupts and damages nearby enemy units
+		if caster:HasTalent("special_bonus_imba_lina_4") then			
+			CreateModifierThinker(caster, self, "modifier_imba_lsa_talent_magma", {duration = stun_duration, radius = radius}, position, caster:GetTeamNumber(), false)
+		end
 	end)
 end
 
@@ -458,12 +422,12 @@ function imba_lina_light_strike_array:OnHit( target, damage, stun_duration )
 	if caster:HasTalent("special_bonus_imba_lina_5") then
 		local blaze_burn = target:FindModifierByName("modifier_imba_fiery_soul_blaze_burn")
 		if blaze_burn then
-		blaze_burn:ForceRefresh()
+			blaze_burn:ForceRefresh()
 		else
-		local fiery_soul = caster:FindAbilityByName("imba_lina_fiery_soul")
-		if fiery_soul:GetLevel() > 0 then
-		target:AddNewModifier(caster,fiery_soul,"modifier_imba_fiery_soul_blaze_burn",{duration = caster:FindTalentValue("special_bonus_imba_lina_5","duration")})
-		end
+			local fiery_soul = caster:FindAbilityByName("imba_lina_fiery_soul")
+			if fiery_soul:GetLevel() > 0 then
+				target:AddNewModifier(caster,fiery_soul,"modifier_imba_fiery_soul_blaze_burn",{duration = caster:FindTalentValue("special_bonus_imba_lina_5","duration")})
+			end
 		end
 	end
 	target:RemoveModifierByName("modifier_imba_blazing_fire")
@@ -476,6 +440,68 @@ end
 
 function imba_lina_light_strike_array:IsHiddenWhenStolen()
 	return false
+end
+
+
+
+-- From The Ash magma modifier
+modifier_imba_lsa_talent_magma = modifier_imba_lsa_talent_magma or class({})
+
+function modifier_imba_lsa_talent_magma:OnCreated(kv)
+	if IsServer() then
+		-- Talent properties
+		self.caster = self:GetCaster()
+		self.ability = self:GetAbility()
+		self.parent = self:GetParent()
+		self.particle_effect = "particles/hero/lina/from_the_ash.vpcf"
+
+		-- Talent specials
+		self.radius = kv.radius
+		print(self.radius)
+		self.damage = self.caster:FindTalentValue("special_bonus_imba_lina_4", "damage")
+		self.tick_interval = self.caster:FindTalentValue("special_bonus_imba_lina_4", "tick_interval")
+
+		-- Play magma particle effect, assign to modifier
+		local particle_magma = ParticleManager:CreateParticle(self.particle_effect, PATTACH_WORLDORIGIN, nil)
+		ParticleManager:SetParticleControl(particle_magma, 0, self.parent:GetAbsOrigin())
+		ParticleManager:SetParticleControl(particle_magma, 1, self.parent:GetAbsOrigin())
+		ParticleManager:SetParticleControl(particle_magma, 2, Vector(1,0,0))
+		ParticleManager:SetParticleControl(particle_magma, 3, self.parent:GetAbsOrigin())
+
+		self:AddParticle(particle_magma, false, false, -1, false, false)
+
+		-- Calculate damage per tick
+		self.damage_per_tick = self.damage * self.tick_interval
+
+		-- Start thinking
+		self:StartIntervalThink(self.tick_interval)
+	end
+end
+
+function modifier_imba_lsa_talent_magma:OnIntervalThink()
+	if IsServer() then
+		-- Find enemies in AoE
+		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
+										  self.parent:GetAbsOrigin(),
+										  nil,
+										  self.radius,
+										  DOTA_UNIT_TARGET_TEAM_ENEMY,
+										  DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO,
+										  DOTA_UNIT_TARGET_FLAG_NONE,
+										  FIND_ANY_ORDER,
+										  false)
+
+		-- Deal damage per tick to each enemy
+		for _,enemy in pairs(enemies) do
+			damage_table = ({victim = enemy,
+						 attacker = self.caster,
+						 ability = self.ability,
+						 damage = self.damage,
+						 damage_type = DAMAGE_TYPE_MAGICAL})
+
+			ApplyDamage(damage_table)
+		end
+	end
 end
 
 -------------------------------------------
@@ -594,8 +620,34 @@ function modifier_imba_fiery_soul:OnAbilityFullyCast( params )
 			return
 		end
 		local parent = self:GetParent()
-		if (params.ability:GetCaster() == parent) then
+		local caster = params.ability:GetCaster()
+		if (caster == parent) then
 			parent:AddNewModifier(parent, self:GetAbility(), "modifier_imba_fiery_soul_counter", {duration = self:GetAbility():GetSpecialValueFor("duration")})
+			
+			-- Fiery Soul ability cooldown reduction
+			for ability_id = 0, 15 do
+				local caster_ability = caster:GetAbilityByIndex(ability_id)
+				if caster_ability then
+					local ability_name = caster_ability:GetAbilityName()
+					-- Does not reduce the cooldown of the current ability being casted
+					if params.ability:GetName() == ability_name then
+					else
+						-- Get the modifier
+						local fiery_counter = caster:FindModifierByName("modifier_imba_fiery_soul_counter")
+						if fiery_counter then
+							-- Get the ability cooldown
+							local cooldown_remaining = caster_ability:GetCooldownTimeRemaining()
+							local cooldown_reduction = self:GetAbility():GetSpecialValueFor("cdr_pct") * fiery_counter:GetStackCount()
+							
+							caster_ability:EndCooldown()
+							if cooldown_remaining > cooldown_reduction then
+								caster_ability:StartCooldown( cooldown_remaining - cooldown_reduction )
+							end
+						end
+					end
+				end
+			end
+			
 		end
 		return true
 	end
@@ -707,9 +759,9 @@ function modifier_imba_fiery_soul_counter:GetModifierPercentageCasttime()
 	return self:GetAbility():GetSpecialValueFor("animation_pct") * self:GetStackCount()
 end
 
-function modifier_imba_fiery_soul_counter:GetCustomCooldownReductionStacking()
-	return self:GetAbility():GetSpecialValueFor("cdr_pct") * self:GetStackCount()
-end
+--function modifier_imba_fiery_soul_counter:GetCustomCooldownReductionStacking()
+--	return self:GetAbility():GetSpecialValueFor("cdr_pct") * self:GetStackCount()
+--end
 
 modifier_imba_fiery_soul_blaze_burn = class({})
 
@@ -786,6 +838,7 @@ function imba_lina_laguna_blade:OnSpellStart()
 		local effect_delay = self:GetSpecialValueFor("effect_delay")
 		local bounce_amount = self:GetSpecialValueFor("bounce_amount")
 		local bounce_range = self:GetSpecialValueFor("bounce_range")
+		local bounce_delay = self:GetSpecialValueFor("bounce_delay")
 
 		-- Play the cast sound + fire particle
 		caster:EmitSound("Ability.LagunaBlade")
@@ -830,11 +883,13 @@ function imba_lina_laguna_blade:OnSpellStart()
 				end
 			end
 			-- Bounce on remaining targets
+			Timers:CreateTimer(bounce_delay, function()
 			for i=1, math.min(#enemies,bounce_amount),1 do
 				local bounce_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_lina/lina_spell_laguna_blade.vpcf", PATTACH_CUSTOMORIGIN, caster)
 				ParticleManager:SetParticleControlEnt(bounce_pfx, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target_loc, true)
 				ParticleManager:SetParticleControlEnt(bounce_pfx, 1, enemies[i], PATTACH_POINT_FOLLOW, "attach_hitloc", enemies[i]:GetAbsOrigin(), true)
 				ParticleManager:ReleaseParticleIndex(bounce_pfx)
+				Timers:CreateTimer(effect_delay, function()
 				ApplyDamage({victim = enemies[i], attacker = caster, ability = self, damage = damage, damage_type = damage_type})
 		 		-- #5 Talent: Lina's Spells causes DoT based on Fiery Soul stacks
 				if caster:HasTalent("special_bonus_imba_lina_5") then
@@ -852,7 +907,9 @@ function imba_lina_laguna_blade:OnSpellStart()
 				if caster:HasTalent("special_bonus_imba_lina_6") then
 					enemies[i]:AddNewModifier(caster, self, "modifier_stunned", { duration = caster:FindTalentValue("special_bonus_imba_lina_6") })
 				end
+				end)
 			end
+			end)
 		end)
 	end
 end

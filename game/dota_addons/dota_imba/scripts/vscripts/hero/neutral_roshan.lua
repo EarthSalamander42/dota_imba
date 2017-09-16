@@ -714,10 +714,6 @@ end
 function modifier_imba_roshan_ai_diretide:ThinkPhase3(roshan)
 	-- Don't think while being stunned, hexed, or casting spells
 	if roshan:IsStunned() or roshan:IsHexed() or roshan:IsChanneling() or roshan:GetCurrentActiveAbility() then return end
-	local hero = FindUnitsInRadius(roshan:GetTeamNumber(), roshan:GetAbsOrigin(), nil, 700, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
-	if #hero > 0 then
-		COUNT_DOWN = 1
-	end
 
 	-- Transitioning from Phase 2 to 3
 	if self.isTransitioning then

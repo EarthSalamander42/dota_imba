@@ -118,9 +118,7 @@ function GameMode:OnPlayerChat(keys)
 	for str in string.gmatch(text, "%S+") do
 		for i = 1, #IMBA_DEVS do
 			if PlayerResource:GetSteamAccountID(caster:GetPlayerID()) == IMBA_DEVS[i] then
-				if str == "-storegga" then
-					Storegga(caster)
-				elseif str == "-dev_remove_units" then
+				if str == "-dev_remove_units" then
 					GameMode:RemoveUnits(true, true, true)
 				end
 
