@@ -53,10 +53,6 @@ require('events')
 -- clientside KV loading
 require('addon_init')
 
-if STOREGGA == true then
-	require('internal/storegga')
-end
-
 ApplyAllTalentModifiers()
 StoreCurrentDayCycle()
 
@@ -228,6 +224,9 @@ function GameMode:BountyRuneFilter( keys )
 	-- local game_time = math.max(GameRules:GetDOTATime(false, false) / 60, 0)
 	-- keys["gold_bounty"] = ( 1 + CUSTOM_GOLD_BONUS * 0.01 ) * (1 + game_time * BOUNTY_RAMP_PER_MINUTE * 0.01) * keys["gold_bounty"]
 	-- keys["xp_bounty"] = ( 1 + CUSTOM_XP_BONUS * 0.01 ) * (1 + game_time * BOUNTY_RAMP_PER_MINUTE * 0.01) * keys["xp_bounty"]
+
+	keys["gold_bounty"] = keys["gold_bounty"] * 2
+	keys["xp_bounty"] = keys["xp_bounty"] * 3
 
 	return true
 end

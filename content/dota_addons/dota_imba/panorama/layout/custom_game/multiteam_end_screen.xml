@@ -14,6 +14,9 @@
 			<Panel id="VictoryRow">
 				<Label id="EndScreenVictory" text="#custom_end_screen_victory_message" />
 			</Panel>
+			<Panel id="ImbaXPCount">
+				<Label id="ImbaXPAdvertize" text="" />
+			</Panel>
 			<Panel class="Legends">
 				<Panel id="Legend1">
 					<Panel class="LegendPanel ScoreCol_TeamInfo" />

@@ -15,20 +15,24 @@ local XP_has
 
 local EnnDisEnabled = 0
 
-XP_WIN = 24
+XP_WIN = 48
 ABANDON_CHARGE = 200
--- imba_standard win = +48
+-- imba_standard win = +96
 -- imba_standard lose = +24
--- else win = +24
+-- else win = +48
 -- else lose = +12
--- abandon = 0
+-- abandon = -200 / disconnected_players
 
 --Level table for IMBA XP
 local table_rankXP = {0,100,200,300,400,500,700,900,1100,1300,1500,1800,2100,2400,2700,3000,3400,3800,4200,4600,5000}
 --------------------  0  1   2   3   4   5   6   7    8    9   10   11   12   13   14   15   16   17   18   19   20
 
+CustomNetTables:SetTableValue("game_options", "game_count", {value = 0})
+
+local bonus = 0
 for i = 21 +1, 200 do
-	table_rankXP[i] = table_rankXP[i-1] +500
+	bonus = bonus +10
+	table_rankXP[i] = table_rankXP[i-1] +500 + bonus
 end
 
 local XP_level_title= {}
@@ -243,14 +247,12 @@ function Server_PrintInfo()
 end
 
 function Server_GetPlayerLevelAndTitle(nPlayerID)
-	print("Max levels:", #table_rankXP)
 	for i = #table_rankXP, 1, -1 do
 		if table_XP_has and table_XP_has[nPlayerID] and table_rankXP and table_rankXP[i] then
 			if tonumber(table_XP_has[nPlayerID]) >= table_rankXP[i] then
 				if tonumber(table_XP_has[nPlayerID]) < 0 then
 					print("What did you do! Negative value!")
 				end
-				print("Color:", Server_GetTitleColor(XP_level_title_player[nPlayerID], true))
 				XP_level[nPlayerID] = i-1
 				XP_level_title_player[nPlayerID] = Server_GetTitle(XP_level[nPlayerID])
 				XP_this_level[nPlayerID] = table_rankXP[i]
@@ -271,7 +273,6 @@ function Server_GetPlayerLevelAndTitle(nPlayerID)
 			end
 		end
 	end
-	print("Max possible XP:", table_rankXP[#table_rankXP])
 end
 
 local _finished = 0
@@ -293,7 +294,6 @@ function Server_SendAndGetInfoForAll_function(nPlayerID)
 
 		table_SteamID64[nPlayerID] = tostring(PlayerResource:GetSteamID(nPlayerID))
 		table_XP[nPlayerID] = tostring(XP_WIN) --How many XP will player get in this game
-
 		local jsondata={}
 		local jsontable={}
 		jsontable.SteamID64 = table_SteamID64[nPlayerID]
@@ -314,7 +314,6 @@ function Server_SendAndGetInfoForAll_function(nPlayerID)
 			end
 		end )
 		is_AFK[nPlayerID] = 0
-
 	end
 end
 
@@ -359,9 +358,14 @@ end
 function Server_WaitToEnableXpGain()
 	Serer_CheckForAFKPlayer()
 	Timers:CreateTimer({
-	endTime = 10, -- Plyaer can gain XP from this game after 10 mins later the creep spwans
+	endTime = 300, -- Plyaer can gain XP from this game after 10 mins later the creep spwans
 	callback = function()
 		EnnDisEnabled = 1
+		if CHEAT_ENABLED == true then
+			print("Game don't count.")
+		else
+			CustomNetTables:SetTableValue("game_options", "game_count", {value = 1})
+		end
 		--print("Enable Xp gain system....")
 		for nPlayerID=0, DOTA_MAX_TEAM_PLAYERS-1 do
 			if PlayerResource:IsValidPlayer(nPlayerID) and not PlayerResource:IsFakeClient(nPlayerID) then
@@ -391,7 +395,10 @@ function Server_CalculateXPForWinnerAndAll(winning_team)
 			dis_player = dis_player + 1
 		end
 	end
-	local abandon_xp = 0 - (ABANDON_CHARGE / dis_player)
+	local multiplier = 1.0
+	if GetMapName() == "imba_standard" then multiplier = 2.0 end
+	if STOREGGA_ACTIVE then multiplier = 4.2 end
+	local abandon_xp = 0 - (ABANDON_CHARGE / dis_player / multiplier)
 	for nPlayerID=0, DOTA_MAX_TEAM_PLAYERS-1 do
 		if  PlayerResource:IsValidPlayer(nPlayerID) and not PlayerResource:IsFakeClient(nPlayerID) then
 			if winning_team == "Radiant" then
@@ -411,10 +418,7 @@ function Server_CalculateXPForWinnerAndAll(winning_team)
 
 			print("SERVER XP: Testing XP earned...")
 			if PlayerResource:GetTeam(nPlayerID) == Winner and PlayerResource:GetConnectionState(nPlayerID) == 2 then
-				local multiplier = 1.0
-				if GetMapName() == "imba_standard" then multiplier = 2.0 end
-				if STOREGGA_ACTIVE then multiplier = 4.2 end
-				jsontable.XP = tostring(math.ceil(table_XP[nPlayerID] * multiplier))
+				jsontable.XP = tostring(math.ceil(table_XP[nPlayerID] * multiplier)) -- WIN
 				CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {
 					XP = tonumber(XP_has_this_level[nPlayerID]),
 					MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]),
@@ -426,7 +430,7 @@ function Server_CalculateXPForWinnerAndAll(winning_team)
 				})
 			else
 				if PlayerResource:GetConnectionState(nPlayerID) ~= 2 then
-					jsontable.XP = tostring(math.ceil(abandon_xp))
+					jsontable.XP = tostring(math.ceil(abandon_xp)) -- ABANDON
 					CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {
 						XP = tonumber(XP_has_this_level[nPlayerID]),
 						MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]),
@@ -437,7 +441,7 @@ function Server_CalculateXPForWinnerAndAll(winning_team)
 						title_color = Server_GetTitleColor(XP_level_title_player[nPlayerID], true)
 					})
 				else
-					jsontable.XP = tostring(table_XP[nPlayerID] / 2)
+					jsontable.XP = tostring(table_XP[nPlayerID] / 2) -- LOSE
 					CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {
 						XP = tonumber(XP_has_this_level[nPlayerID]),
 						MaxXP = tonumber(XP_need_to_next_level[nPlayerID] + XP_has_this_level[nPlayerID]),

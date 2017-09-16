@@ -6,40 +6,14 @@
 	m_Operators = 
 	[
 		{
-			_class = "C_OP_SetControlPointPositions"
-			m_bUseWorldLocation = true
-			m_nCP1 = 6
-			m_nCP2 = 7
-			m_nCP3 = 7
-			m_nCP4 = 7
-			m_vecCP1Pos = [ -105.0, -105.0, 10.0 ]
-			m_vecCP2Pos = [ -105.0, -105.0, 10.0 ]
-			m_vecCP3Pos = [ -105.0, -105.0, 10.0 ]
-			m_flOpStartFadeOutTime = 0.1
-			m_flOpEndFadeOutTime = 0.1
-		},
-		{
-			_class = "C_OP_SetControlPointPositions"
-			m_bUseWorldLocation = true
-			m_nCP1 = 2
-			m_nCP2 = 3
-			m_nCP3 = 4
-			m_nCP4 = 5
-			m_vecCP1Pos = [ -105.0, -105.0, 10.0 ]
-			m_vecCP2Pos = [ -105.0, 105.0, 10.0 ]
-			m_vecCP3Pos = [ 105.0, 105.0, 10.0 ]
-			m_vecCP4Pos = [ 105.0, -105.0, 10.0 ]
-			m_flOpStartFadeOutTime = 0.1
-			m_flOpEndFadeOutTime = 0.1
-		},
-		{
-			_class = "C_OP_AlphaDecay"
-			m_flMinAlpha = 0.05
-			m_nOpEndCapState = 1
-		},
-		{
 			_class = "C_OP_ColorInterpolate"
 			m_ColorFade = [ 255, 20, 147, 255 ]
+		},
+		{
+			_class = "C_OP_Decay"
+		},
+		{
+			_class = "C_OP_FadeAndKill"
 		},
 	]
 	m_Renderers = 
@@ -70,7 +44,6 @@
 			_class = "C_INIT_RandomLifeTime"
 			m_fLifetimeMin = 4.0
 			m_fLifetimeMax = 4.0
-			m_fLifetimeRandExponent = 0.0001
 		},
 		{
 			_class = "C_INIT_RandomColor"
@@ -88,7 +61,7 @@
 	[
 		{
 			_class = "C_OP_InstantaneousEmitter"
-			m_nParticlesToEmit = 8
+			m_nParticlesToEmit = 10
 		},
 	]
 	m_controlPointConfigurations = 

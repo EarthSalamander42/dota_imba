@@ -54,9 +54,11 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 				_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaLvl"+playerId, "Lvl: " + plyData.Lvl );
 				_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaXPRank"+playerId, plyData.title );
 				_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaXP"+playerId, plyData.XP + "/" + plyData.MaxXP );
-				playerPanel.FindChildTraverse("ImbaXPRank" +playerId).style.color = plyData.title_color;
-
-				if (plyData.XP_change >= 1)
+				if (plyData.title_color != null)
+				{
+					playerPanel.FindChildTraverse("ImbaXPRank" +playerId).style.color = plyData.title_color;
+				}
+				if (plyData.XP_change > 0)
 				{
 					$.Msg("Positive change! " + plyData.XP_change)
 					_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaXPEarned"+playerId, "+" + plyData.XP_change );

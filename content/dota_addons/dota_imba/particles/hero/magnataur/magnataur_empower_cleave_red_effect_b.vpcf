@@ -14,7 +14,6 @@
 			m_hTexture = resource:"materials/particle/beam_edge_04.vtex"
 			m_nScaleCP1 = 0
 			m_nScaleCP2 = 1
-			m_flRadiusScale = 0.5
 			m_flFinalTextureScaleU = -1.0
 			m_flFinalTextureOffsetU = 1.0
 			m_flTextureVWorldSize = 40.000004
@@ -22,6 +21,7 @@
 			m_flTextureVScrollRate = 4.0
 			m_nMaxTesselation = 2
 			m_nMinTesselation = 2
+			m_bFitCycleToLifetime = true
 		},
 	]
 	m_Operators = 
@@ -32,7 +32,7 @@
 		{
 			_class = "C_OP_BasicMovement"
 			m_Gravity = [ 0.0, 0.0, 500.0 ]
-			m_fDrag = 0.2
+			m_fDrag = 0.232
 		},
 		{
 			_class = "C_OP_ControlpointLight"
@@ -45,11 +45,11 @@
 			m_LightColor3 = [ 255, 96, 123, 255 ]
 			m_nControlPoint3 = 3
 			m_LightZeroDist2 = 80.0
-			m_LightFiftyDist2 = 32.0
+			m_LightFiftyDist2 = 40.0
 			m_LightColor2 = [ 255, 96, 123, 255 ]
 			m_nControlPoint2 = 2
 			m_LightZeroDist1 = 80.0
-			m_LightFiftyDist1 = 32.0
+			m_LightFiftyDist1 = 40.0
 			m_LightColor1 = [ 255, 96, 123, 255 ]
 			m_nControlPoint1 = 1
 		},
@@ -123,7 +123,7 @@
 	[
 		{
 			_class = "C_INIT_RandomLifeTime"
-			m_fLifetimeMin = 0.7
+			m_fLifetimeMin = 0.1
 			m_fLifetimeMax = 0.7
 		},
 		{
@@ -134,8 +134,8 @@
 			m_flInitialRadius = 1.0
 			m_bEvenDistribution = true
 			m_flParticlesPerOrbit = 126.0
-			m_flInitialSpeedMin = 2200.0
-			m_flInitialSpeedMax = 2200.0
+			m_flInitialSpeedMin = 3775.0
+			m_flInitialSpeedMax = 3825.0
 		},
 		{
 			_class = "C_INIT_PositionOffset"

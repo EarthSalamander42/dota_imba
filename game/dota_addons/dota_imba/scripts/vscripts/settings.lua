@@ -284,6 +284,8 @@ HERO_STARTING_LEVEL = 1														-- User-defined starting level
 USE_CUSTOM_HERO_LEVELS = true												-- Should we allow heroes to have custom levels?
 MAX_LEVEL = 40																-- What level should we let heroes get to?
 
+CHEAT_ENABLED = false
+
 -- Changes settings according to the current map
 if GetMapName() == "imba_standard" then										-- Standard map defaults
 	END_GAME_ON_KILLS = false
@@ -301,8 +303,8 @@ if GetMapName() == "imba_standard" then										-- Standard map defaults
 	MAX_LEVEL = 40
 elseif GetMapName() == "imba_custom" or GetMapName() == "imba_custom_10v10" then									-- Custom map defaults
 	END_GAME_ON_KILLS = false
-	CUSTOM_GOLD_BONUS = 100
-	CUSTOM_XP_BONUS = 100
+	CUSTOM_GOLD_BONUS = 200
+	CUSTOM_XP_BONUS = 200
 	CREEP_POWER_FACTOR = 2
 	TOWER_UPGRADE_MODE = true
 	TOWER_POWER_FACTOR = 1
@@ -506,8 +508,6 @@ IMBA_DEVS = {
 	33828741	-- sercankd
 }
 
-STOREGGA = true
-
 -- HEROLIST
 normal_heroes = {
 	"npc_dota_hero_abaddon",
@@ -546,7 +546,7 @@ normal_heroes = {
 --	"npc_dota_hero_venomancer",
 	"npc_dota_hero_witch_doctor",
 	"npc_dota_hero_skeleton_king",
-	"npc_dota_hero_queenofpain",
+--	"npc_dota_hero_queenofpain",
 	"npc_dota_hero_jakiro",
 	"npc_dota_hero_warlock",
 	"npc_dota_hero_ursa",
@@ -557,7 +557,7 @@ normal_heroes = {
 	"npc_dota_hero_phantom_assassin",
 	"npc_dota_hero_disruptor",
 	"npc_dota_hero_nyx_assassin",
-	"npc_dota_hero_magnataur",
+--	"npc_dota_hero_magnataur",
 	"npc_dota_hero_centaur",
 	"npc_dota_hero_troll_warlord",
 	"npc_dota_hero_skywrath_mage",
@@ -659,7 +659,7 @@ imba_heroes = {
 	"npc_dota_hero_vengefulspirit",
 --	"npc_dota_hero_venomancer",
 	"npc_dota_hero_witch_doctor",
-	"npc_dota_hero_queenofpain",
+--	"npc_dota_hero_queenofpain",
 	"npc_dota_hero_jakiro",
 	"npc_dota_hero_warlock",
 	"npc_dota_hero_ursa",
@@ -670,7 +670,7 @@ imba_heroes = {
 	"npc_dota_hero_phantom_assassin",
 	"npc_dota_hero_disruptor",
 	"npc_dota_hero_nyx_assassin",
-	"npc_dota_hero_magnataur",
+--	"npc_dota_hero_magnataur",
 	"npc_dota_hero_centaur",
 	"npc_dota_hero_skywrath_mage",
 	"npc_dota_hero_troll_warlord"

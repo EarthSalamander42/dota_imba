@@ -166,7 +166,7 @@ function Attachments:start()
       end
     else
       print("[attachments] RELOADING")
-      --SendToServerConsole("script_reload_code " .. src:sub(2))
+      SendToServerConsole("script_reload_code " .. src:sub(2))
     end
   else
     self.initialized = true

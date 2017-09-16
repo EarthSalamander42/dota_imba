@@ -30,7 +30,8 @@ local game = {}
 	game.gl = GetGameLength()
 	game.tp = GetTowerUpgrades()
 	game.wt = GetWinningTeam()
-	game.wh = GetWinningHeroName(playerID)
+--	game.wh = GetWinningHeroName(playerID)
+	game.wh = ""
 
 	return game
 end

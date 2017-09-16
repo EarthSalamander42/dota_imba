@@ -27,7 +27,7 @@
 		$.Schedule( delay, callback )
 		delay += delay_per_panel;
 	}
-	
+
 	var winningTeamId = Game.GetGameWinner();
 	var winningTeamDetails = Game.GetTeamDetails( winningTeamId );
 	var endScreenVictory = $( "#EndScreenVictory" );
@@ -40,6 +40,20 @@
 			var teamColor = GameUI.CustomUIConfig().team_colors[ winningTeamId ];
 			teamColor = teamColor.replace( ";", "" );
 			endScreenVictory.style.color = teamColor + ";";
+		}
+
+		var ImbaXPLabel = $( "#ImbaXPCount" ).FindChildTraverse("ImbaXPAdvertize");
+		var GameCount = CustomNetTables.GetTableValue("game_options", "game_count").value;
+//		$.Msg(GameCount)
+		if ( GameCount == 1 )
+		{
+			ImbaXPLabel.text = "Imba XP: This game was recorded."
+			ImbaXPLabel.style.color = "green"
+		}
+		else
+		{
+			ImbaXPLabel.text = "Imba XP: This game was not recorded."
+			ImbaXPLabel.style.color = "red"
 		}
 	}
 
@@ -55,7 +69,6 @@
 //	}
 
 	//COOKIES: Disable HUD
-	$.Msg("Disabling HUD...")
 	var parent_panel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
 	parent_panel.FindChildTraverse("topbar").style.visibility = "collapse";
 	parent_panel.FindChildTraverse("lower_hud").style.visibility = "collapse";

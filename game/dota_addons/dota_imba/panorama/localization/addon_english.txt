@@ -358,8 +358,8 @@
 	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_3_Description"			"Healing Ward also increases allies' attack speed by 50. The bonus doubles when the Healing Ward is upgraded to the fortified version.<br><br><i>While perfecting his calligraphy for his scrolls, Juggernaut have encountered a new Zeal, which is more fervent than any Zeal he ever witnessed.</i>"
 	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_4_title"					"Three Blade Style"
 	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_4_Description"			"Activating Secret Blade strikes 3 times towards its target, once forward, and twice from the sides.<br><br><i>Juggernaut mastered his footwork, causing him to slash his targets from all 3 sides, inflicting repeatedly strong swings of his blade.</i>"
-	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_5_title"					"Agile Swordsman"
-	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_5_Description"			"Each stack of Wind Dance grants 4 additional agility. Wind Dance stacks are gained through dealing critical damage from Blade Dance.<br><br><i>When Juggernaut strikes his opponents, he gains momentum, increasing his agility. As long as he doesn't stop himself, there's nothing that can stop him.</i>"
+	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_5_title"					"Forbidden Blade"
+	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_5_Description"			"Activating Secret Blade also consumes all Wind Dance stacks. For every 3 stacks of Wind Dance consumed, Secret Blade gains one extra maximum hit count for it's current attack, allowing Juggernaut to hit past the Secret Blade's attack limit. However, Juggernaut still requires the appropriate amount of Secret Blade stacks to commit the extra hits. The attack count is also increased for Three Blade Style.<br><br><i>Juggernaut masters the final form of Secret Blade, firstly taught by the Forbidden Masters of the Isle of Masks. Revealing this technique would require an act of offering one's honor, in his sense, taking off his own mask.</i>"
 	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_6_title"					"Sword and Fury"
 	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_6_Description"			"Blade Fury receives benefits from Blade Dance. Each of Blade Fury's slashes have a chance to deal critical damage through Blade Fury based on its damage. Each stack of Wind Dance grants Blade Fury 10 bonus damage.<br><br><i>When Juggernaut combines his swift footwork with his immersive strikes, he can achieve the perfect form, allowing him to cut through each of his enemies.</i>"
 	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_7_title"					"Perfect Release"
@@ -405,13 +405,13 @@
 
 	// Lina
 	"DOTA_Tooltip_Talent_special_bonus_imba_lina_1_title"						"Enslaved Flames"
-	"DOTA_Tooltip_Talent_special_bonus_imba_lina_1_Description"					"Adds four additional Dragon Slaves on the secondary explosion. Each of those spawn between the one flying directly forward and the one flying to the side.<br><br><i>Lina is capable of creating as flames of any form, and inducing four more flaming dragons is a mere feat for someone of her caliber.</i>"
+	"DOTA_Tooltip_Talent_special_bonus_imba_lina_1_Description"					"Adds two additional Dragon Slaves on the secondary explosion. Each of those spawn between the one flying directly forward and the one flying to the side.<br><br><i>Lina is capable of creating as flames of any form, and inducing four more flaming dragons is a mere feat for someone of her caliber.</i>"
 	"DOTA_Tooltip_Talent_special_bonus_imba_lina_2_title"						"Dragon's Roar"
 	"DOTA_Tooltip_Talent_special_bonus_imba_lina_2_Description"					"After the secondary explosion finishes, Three-headed Dragon spawns an additional Main Dragon Slave from its finishing point. Dragon Salve spawned by Dragon's Roar cannot proc Three-Headed Dragon. <br><br><i>By using more pressure into her magical energies, Lina can strengthen her concentrated flame, forming another flaming dragon at the end of her Three-headed Dragon show. </i>"
 	"DOTA_Tooltip_Talent_special_bonus_imba_lina_3_title"						"Inferno Blast"
 	"DOTA_Tooltip_Talent_special_bonus_imba_lina_3_Description"					"Fiery Soul can be activated when Lina has 3 Fiery Soul stacks, consuming them and releasing a blast of hot shockwave in a 800 radius, dealing up to 450 damage. The closer Lina is to her target, the more damage the shockwave deals. The blast has a minimum of 100 damage. Has a 5 second cooldown per use. <br><br><i>Drought is a heaven for a firecaster like her. In such a wasteful condition, Lina continually harness the burning heat caused by her magic. The result? Blasting a giant wave of Inferno that engulfs everything around her.</i>"
-	"DOTA_Tooltip_Talent_special_bonus_imba_lina_4_title"						"Array Plus"
-	"DOTA_Tooltip_Talent_special_bonus_imba_lina_4_Description"					"Each circle after the first explosion procs the previous circle that detonated before it, dealing damage and stunning heroes in those two circles. <br><br><i>Wildly flailing her magic, Lina creates a secondary array of flames at the designated position right before the first one.</i>"
+	"DOTA_Tooltip_Talent_special_bonus_imba_lina_4_title"						"From the Ash"
+	"DOTA_Tooltip_Talent_special_bonus_imba_lina_4_Description"					"Each Light Strike Array explosion causes magma to erupt from the ground, dealing 10/20/30/40/50/60/70 damage per second on 0.1 seconds intervals to enemies in the range of the Light Strike Array. Lasts for the same duration as the stun.<br><br><i>Using a focused blast that hits the ground, the ground shatters, causing magma to erupt from it and burn Lina's foes that dare to stand in her way.</i>"
 	"DOTA_Tooltip_Talent_special_bonus_imba_lina_5_title"						"Blaze Burn"
 	"DOTA_Tooltip_Talent_special_bonus_imba_lina_5_Description"					"Lina's spells apply Blaze Burn on her targets. Enemies with Blaze Burn receive damage every second based on Lina's Fiery Soul stacks. Each stack of Fiery Soul deals 40 damage to the target. Last for 5 seconds. <br><br><i>Don't play with fire, or you might get burned, they said. Lina laughes, as she replied, baby, you can't get burned when you're the flame.</i>"
 	"DOTA_Tooltip_Talent_special_bonus_imba_lina_6_title"						"Volatile Lightning"
@@ -439,9 +439,7 @@
 	"Dota_Tooltip_Talent_special_bonus_imba_lion_8_title"						"Mana Vortex"
 	"Dota_Tooltip_Talent_special_bonus_imba_lion_8_Description"					"Mana Drain targets all enemies in aura range.<br><br><i>Mana is like water - Unclog the pipe and everything flows down the drain.</i>"
 
-	////===============================================================================================================
     // Lycan's Talents
-    ////===============================================================================================================
 	"DOTA_Tooltip_Talent_special_bonus_imba_lycan_1_title"						"Animal Training"	
 	"DOTA_Tooltip_Talent_special_bonus_imba_lycan_1_Description"				"Upgrades the current level of Lycans' wolves. This talent is the only way to unlock Nightclaws, the ultimate wolves, if Summon Wolves is in its highest level. <br><br><i>Lycan's trains his wolves to transform them into the deadliest hunters of nature, capable of bringing down anyone that stands in their way.</i>"
 	"DOTA_Tooltip_Talent_special_bonus_imba_lycan_2_title"						"Lead By Example"
@@ -460,22 +458,22 @@
 	"DOTA_Tooltip_Talent_special_bonus_imba_lycan_8_Description"				"Whenever Lycan gains a Wolfsbane stack, all units under his control gain +20% movement speed, +20% damage and +75 attack speed for 30 seconds.<br><br>The pack moves on from target to target with delightfulness unknown to man.<i></i>"
 
 	// Magnus
-	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_1_title"					"Negative and Positive"			
-	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_1_Description"			"Increases Shockwave's Polarize duration by 12 seconds. Does not affects other sources that apply Polarize to enemies. <br><br><i>By combining both the negative and positive currents on Magnus' shockwaves, the polarization effect from it lasts longer on targets hit.</i>"
+	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_1_title"					"Shockwave Wave"			
+	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_1_Description"			"Shockwave now always spawn secondary shockwaves halfway through. <br><br><i>Magnus relentlessly unleashes wave after wave of magnetic energies at his foes.</i>"
 	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_2_title"					"Tackling Polarity"
-	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_2_Description"			"Increase Reverse Polarity's damage by 125. <br><br><i>Magnus increases the impact that pulls enemies in front of him, causing enemies to suffer from the forced repositioning.</i>"
-	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_3_title"					"Magnetic Empowerment"
-	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_3_Description"			"Increases Empower's damage bonus by an additional 15%.<br><br><i>By adding magnetic affinities to Empower, Magnus causes the impact of his allies to be much more.. impactful.</i>"
-	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_4_title"					"Sturdy Horn"
-	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_4_Description"			"Decreases Skewer's cooldown by 11 seconds.<br><br><i>Magnus strengthens his horn, allowing him to perform his skewering moves much more often.</i>"
-	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_5_title"					"Shockwave Wave"
-	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_5_Description"			"Decreases Shockwave's cooldown by 4 seconds.<br><br><i>Magnus relentlessly unleashes wave after wave of magnetic energies at his foes.</i>"
-	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_6_title"					"Turbo Charge"	
-	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_6_Description"			"Increases Empower's Supercharge's move speed bonus by 5% and its attack speed by 50.<br><br><i>Magnus uses the magnetic capabilities of the affected unit's wearables, making them lighter, and thus, faster.</i>"
-	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_7_title"					"Frontal Polarity"
-	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_7_Description"			"Increases Reverse Polarity radius by 100. This bonus includes enemies coming into the bonus range from Polarize' pull effect.<br><br><i>Magnus expels his magnetic forces further before pushing them back in, resulting in an increased effect area.</i>"		
-	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_8_title"                  "Magnetic Forces"					
-	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_8_Description"            "Increases Reverse Polarity's pull distance effect on Polarized enemies by 250.<br><br><i>Magnus is capable of sending his entire magnetic force to the ends of the world, then call them in, pushing polarized units further towards him.</i>"
+	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_2_Description"			"All Polarized enemies that got pulled towards Magnus' Reverse Polarity but didn't end up in the within the Reverse Polarity become 60% slowed for 3 seconds. <br><br><i>Magnus increases the impact that pulls polarized enemies, causing enemies to suffer from the forced repositioning.</i>"
+	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_3_title"					"Turbo Charge"
+	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_3_Description"			"Supercharge grants 30% of the target's main attribute as bonus damage.<br><br><i>Magnus uses the magnetic capabilities of the affected unit's weapon, synchronizes them with the environment, allowing a more powerful feedback.</i>"
+	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_4_title"					"Shining Horn"
+	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_4_Description"			"Skewer causes a mini-Reverse Polarity on cast, gathering all enemy units in 375 radius of Magnus in front of him. Skewer then pushes them forward.<br><br><i>Magnus gathers strong currents upon his horn, allowing him to unleash a fury while performing his skewering.</i>"
+	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_5_title"					"Frontal Polarization"
+	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_5_Description"			"Shockwaves roots the target briefly for 1 second. Secondary shockwaves root for 0.5 seconds.<br><br><i>By combining both the negative and positive currents on Magnus' shockwaves, the target receives additional effects from the polarization.</i>"
+	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_6_title"					"Magnetic Empowerment"	
+	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_6_Description"			"Empower grants 360 degrees Cleave to melee targets. Has no effect on ranged targets.<br><br><i>By adding magnetic affinities to Empower, Magnus causes the impact of his allies to be much more.. impactful.</i>"
+	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_7_title"					"Magnetic Forces"
+	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_7_Description"			"Polarized enemies are constantly pulled towards their closest ally. The pull strength is 10% of their movespeed.<br><br><i>Magnus is capable of sending his entire magnetic force to the ends of the world, then call them in, pushing polarized units towards their nearest ally, allowing easier polarization.</i>"		
+	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_8_title"                  "Ubercharge"					
+	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_8_Description"            "Applying Empower on an already Supercharged target makes it Ubercharged. Ubercharge causes a target's attacks to launch a Mini Shockwave in a straight line. Has an internal cooldown of 1 second. Mini Shockwaves do not split or apply Magnetize stacks, and deal 50% of Shockwave's damage. Lasts 8 seconds.<br><br><i>Magnus expels his magnetic forces further before pushing them back in, resulting in a more powerful magnified weapon.</i>"
 
 	// Nyx
 	"DOTA_Tooltip_Talent_special_bonus_imba_nyx_assassin_1_title"             "Everlasting Vendetta"
@@ -495,6 +493,24 @@
 	"DOTA_Tooltip_Talent_special_bonus_imba_nyx_assassin_8_title"             "Evolving Parasites"
 	"DOTA_Tooltip_Talent_special_bonus_imba_nyx_assassin_8_Description"       "Units dying while the Mana Burn debuff has their scarabs coming out of them, and hop into Nyx for 20 seconds. If an enemy unit comes within 400 AoE of Nyx, it invades it and procs Mana Burn on it.<br>Does not cost mana or put Mana Burn on cooldown.<br><br><i>Parasites improve their survivability, in case the host cannot feed them before their end.</i>"
 
+	// Obsidian Destroyer // Outworld Devourer // Outbalanced Demolisher // 
+	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_1_title"         "Orb Of Destruction"
+	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_1_Description"   "When attacking with Arcane Orb, if Outworld Devourer has more intelligence than its target, the difference in stats explodes in a 300 radius with pure damage.<br><br><i>Balance is a field between antrophy and entrophy. Harnessing excessive energy into the Orb will cause disastrous results.</i>"
+	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_2_title"         "Imminent Eclipse"
+	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_2_Description"   "Sanity's Eclipse cooldown is reduced by 1 second for every intelligence the caster steals while it is off-cooldown.<br><br><i>People's perception are always limited what they see. The Outworld Devourer will show them visions of nigh and terror, opening them towards the conjuction of doom.</i>"
+	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_3_title"         "Dissociative Synergy"
+	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_3_Description"   "Essence Aura's Essence Synergy can be triggered from enemies as well.<br><br><i>Just like happiness and joy, everybody has negative emotions flowing within them, waiting to be expressed. Outworld Devourer channels this source of energy, bringing ill omens.</i>"
+	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_4_title"         "Conjuring Prison"
+	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_4_Description"   "Astral Imprisonment now also imprisons enemies nearby the astral prison, removing them from game for the duration. The range of imprisonment is equal to 50 plus the Outworld Devourer's intelligence. <br><br><i>A prison is for containment, imposing them for being ignorant to the wake of the Harbinger.</i>"
+	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_5_title"         "Essence Carrier"
+	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_5_Description"   "Essence Aura now heals the caster according to Outworld Devourer's intelligence when triggered.<br><br><i>As a forerunner of fate, the Outerdark is able to turn their exhaustion into the essence of hope. The same essence which strings the extraordinaire.</i>"
+	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_6_title"         "Final Judgement"
+	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_6_Description"   "Sanity's Eclipse landing on heroes that have less than 50% of Outworld Devourer's intelligence suffer double the mana burn, and causes them to take 50% more damage from the skill.<br><br><i>The Outworld Demolisher is ever a vigilant. He heralds destruction, impends their doom, and forboden fates, ever since the birth of this universe.</i>"
+	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_7_title"         "Calamity Trigger"
+	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_7_Description"   "Sanity's Eclipse now pierces Magic Immunity.<br><br><i>A major cataclysm would occur, and no one is able to escape from its fate.</i>"
+	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_8_title"         "Obsidiance"
+	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_8_Description"   "When the Mana Restored from Essence Aura exceeds Outworld Devourer's Mana Pool, Outworld Devourer gains Max Mana according to the excess amount of Mana Restored. Each instance of Obsidiance lasts 6 seconds.<br><br><i>Each person's negative essence is linked towards the darkness which the Outworld Devourer resides. The abyss of Obsidiance.</i>"
+
 	// Pudge
 	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_1_title"                      "Rottest Rot"
 	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_1_Description"                "For every 5% health Pudge misses Rot deals 40 damage per second extra."
@@ -512,6 +528,25 @@
 	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_7_Description"                "Meat hook now destroys trees, for every tree a unit passes through it deals 120 bonus physical damage."
 	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_8_title"                      "Triple Hook"
 	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_8_Description"                "Pudge throws 3 hooks instead of one, with 30 degrees between them. Those hooks can't thit the same target."
+
+	//QoP
+	// Queen of Pain
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_1_title"				"Painsight"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_1_Description"			"Enemies affected by Shadow Strike can now be seen through the fog of war.<br><br><i>Succubuses have a sixth sense for pain, and can detect suffering as a predator following the scent of blood.</i>"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_2_title"				"Reverberate"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_2_Description"			"Sonic Wave's damage is now dealt over 5 instances. The total damage is unchanged.<br><br><i>As each victim's hope swells, believing the torment over, agony washes over them again and again. Only the Queen of Pain can cause suffering with such sublime cruelty.</i>"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_3_title"				"Resonating Torment"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_3_Description"			"Dealing damage to targets affected by Shadow Strike will cause it to tick one extra time. Does not affect remaining ticks or duration.<br><br><i>Shadow Struck creatures are already in constant, flaring pain. Feeling even more agony is, many times, more than their bodies and minds can take.</i>"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_4_title"				"Thrill of Suffering"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_4_Description"			"Delightful Torment will now also grant 10 bonus attack speed for 5 seconds every time it triggers. Each instance has a separate duration.<br><br><i>The Queen's pleasure brings her into a semi-delirious state, where all she desires is to strike again and again, to feel more of her victims' agony. More, more!</i>"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_5_title"				"Shadow Flash"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_5_Description"			"Allows Blink to be used twice in quick succession, with the second usage costing double the normal mana. There's a 1.5 second grace window where you can choose to blink again or not.<br><br><i>In and out in a flash, the Queen becomes ever more elusive - and deadly.</i>"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_6_title"				"Scream of Agony"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_6_Description"			"Enemies affected by Shadow Strike will now release a 75% damage scream of pain every time it ticks. Does not affect the target itself.<br><br><i>Shadow Strike's suffering becomes so intense, its victims cannot help but continuously scream in agony, piercing their allies' eardrums in the process.</i>"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_7_title"				"Disorienting Scream"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_7_Description"			"Allows Scream of Pain to confuse enemies, mixing up their next 2 orders (same effect as scepter Sonic Wave).<br><br><i>Violent screaming and pierced eardrums cause enemies to briefly become confused and off-balance.</i>"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_8_title"				"Spread the Suffering"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_8_Description"			"Allows your abilities to apply Shadow Strike to all enemies hit by them.<br><br><i>Many say the Queen of Pain's voice is 'like daggers'. Little do they know, at the peak of her power, it is literally as deadly as </i>poisoned<i> daggers.</i>"
 
 	// Silencer
 	"DOTA_Tooltip_Talent_special_bonus_imba_silencer_1_title"                   "Leeching Curse"

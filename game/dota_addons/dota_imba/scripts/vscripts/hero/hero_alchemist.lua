@@ -493,7 +493,6 @@ function imba_alchemist_unstable_concoction:OnProjectileHit(target, location)
 			if stun_duration > stun then
 				stun_duration = stun
 			end
-			
 	
 			if target then
 				if target == caster then
@@ -564,7 +563,7 @@ function imba_alchemist_unstable_concoction:OnProjectileHit(target, location)
 		
 				target:AddNewModifier(caster, chemical_rage, "modifier_imba_chemical_rage_buff_haste", { duration = total_duration })
 		end
-	end 
+	end
 end
 
 function imba_alchemist_unstable_concoction:GetAbilityTextureName()

@@ -184,8 +184,10 @@ function modifier_imba_fountain_relief_aura_buff:OnAttack(keys)
             end
 
             -- Reject him from the aura
+			if IsNearFriendlyClass(self.parent, 1360, "ent_dota_fountain") then
             self.parent:AddNewModifier(self.caster, self.ability, "modifier_imba_fountain_relief_aura_reject", {duration = self.aura_reject_time})
-        end
+			end
+		end
     end
 end
 
@@ -196,8 +198,10 @@ function modifier_imba_fountain_relief_aura_buff:OnAbilityFullyCast(keys)
         -- Only apply if the user of the ability is the parent
         if self.parent == unit then
             -- Reject him from the aura
+			if IsNearFriendlyClass(self.parent, 1360, "ent_dota_fountain") then
             self.parent:AddNewModifier(self.caster, self.ability, "modifier_imba_fountain_relief_aura_reject", {duration = self.aura_reject_time})            
-        end
+			end
+		end
     end
 end
 
@@ -236,7 +240,7 @@ function modifier_imba_fountain_relief_aura_reject:OnAttack(keys)
         local attacker = keys.attacker
 
         -- Only apply if the attacker is the parent
-        if self.parent == attacker then
+        if self.parent == attacker and IsNearFriendlyClass(attacker, self.ability:GetSpecialValueFor("aura_radius"), "ent_dota_fountain") then
 
             -- If the attacker attacked one from his team or himself, do nothing
             if attacker:GetTeamNumber() == target:GetTeamNumber() then
@@ -254,7 +258,7 @@ function modifier_imba_fountain_relief_aura_reject:OnAbilityFullyCast(keys)
         local unit = keys.unit
 
         -- Only apply if the user of the ability is the parent
-        if self.parent == unit then            
+        if self.parent == unit and IsNearFriendlyClass(unit, self.ability:GetSpecialValueFor("aura_radius"), "ent_dota_fountain") then            
             self:ForceRefresh()
         end
     end

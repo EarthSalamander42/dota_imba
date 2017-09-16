@@ -549,7 +549,7 @@ function modifier_imba_dazzle_nothl_protection:OnTakeDamage( keys )
 					self.shallowDamageInstances = self.shallowDamageInstances + 1
 					self.isActive = true
 					
-					local particle = ParticleManager:CreateParticle("particles/hero/dazzle/dazzle_shallow_grave_3.vpcf", PATTACH_ABSORIGIN_FOLLOW , parent)
+					local particle = ParticleManager:CreateParticle("particles/hero/dazzle/dazzle_shallow_grave_self.vpcf", PATTACH_ABSORIGIN_FOLLOW , parent)
 					
 					local nothl_duration = ability:GetSpecialValueFor("nothl_protection_duration")
 					Timers:CreateTimer(nothl_duration, function()
