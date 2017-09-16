@@ -161,14 +161,13 @@ function imba_centaur_hoof_stomp:OnSpellStart()
 		end	
 
 		-- Add arena particles for the duration
-		local particle_arena_fx = ParticleManager:CreateParticle(particle_arena, PATTACH_ABSORIGIN, caster)
-		ParticleManager:SetParticleControl(particle_arena_fx, 0, caster:GetAbsOrigin())
-		ParticleManager:SetParticleControl(particle_arena_fx, 1, Vector(radius+45, 1, 1))		
+		self.particle_arena_fx = ParticleManager:CreateParticle(particle_arena, PATTACH_ABSORIGIN, caster)
+		ParticleManager:SetParticleControl(self.particle_arena_fx, 0, caster:GetAbsOrigin())
+		ParticleManager:SetParticleControl(self.particle_arena_fx, 1, Vector(radius+45, 1, 1))		
 		Timers:CreateTimer(pit_duration, function()
-			ParticleManager:DestroyParticle(particle_arena_fx, false)
-			ParticleManager:ReleaseParticleIndex(particle_arena_fx)
+			ParticleManager:DestroyParticle(self.particle_arena_fx, false)
+			ParticleManager:ReleaseParticleIndex(self.particle_arena_fx)
 		end)
-
 
 		-- Index a modifier to send the modifier the arena center variable.
 		local modifier
@@ -186,14 +185,15 @@ function imba_centaur_hoof_stomp:OnSpellStart()
 
 			-- Find all nearby allies
 			local allies = FindUnitsInRadius(caster:GetTeamNumber(),
-											 arena_center,
-											 nil,
-											 radius,
-											 DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-											 DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-											 DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD,
-											 FIND_ANY_ORDER,
-											 false)
+				arena_center,
+				nil,
+				radius,
+				DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+				DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD,
+				FIND_ANY_ORDER,
+				false
+			)
 
 			for _,ally in pairs(allies) do
 				modifier = ally:AddNewModifier(caster, ability, modifier_arena_buff, {duration = pit_duration})
@@ -226,7 +226,7 @@ function imba_centaur_hoof_stomp:OnSpellStart()
 				arena_center = caster:GetAbsOrigin()
 				for _,enemy in pairs(enemies) do
 					modifier = enemy:FindModifierByName(modifier_arena_debuff)
-					if modifier then
+					if modifier and not enemy:GetUnitName() == "npc_dota_diretide_easter_egg" then
 						modifier.arena_center = arena_center
 					end
 				end
@@ -243,12 +243,10 @@ function imba_centaur_hoof_stomp:OnSpellStart()
 				self.lastCasterLocation = caster:GetAbsOrigin()
 
 				ParticleManager:SetParticleControl(self.particle_arena_fx, 0, caster:GetAbsOrigin())
-				--[[ParticleManager:SetParticleControl(self.particle_arena_fx, 1, Vector(radius+45, 1, 1))
+				ParticleManager:SetParticleControl(self.particle_arena_fx, 1, Vector(radius+45, 1, 1))
 				ParticleManager:SetParticleControl(self.particle_arena_fx, 5, caster:GetAbsOrigin())
 				ParticleManager:SetParticleControl(self.particle_arena_fx, 6, caster:GetAbsOrigin())
-				ParticleManager:SetParticleControl(self.particle_arena_fx, 7, caster:GetAbsOrigin())]]
-
-
+				ParticleManager:SetParticleControl(self.particle_arena_fx, 7, caster:GetAbsOrigin())
 			end	
 			-- Check caster, if he doesn't have the arena modifier and he's in the arena, give it to him again 
 			if not caster:HasModifier(modifier_arena_buff) then

@@ -8180,23 +8180,24 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_roshan"
-		"Model"						"models/creeps/roshan_halloween/roshan_halloween.vmdl"
-		"GameSoundsFile"			"soundevents/game_sounds_roshan_halloween.vsndevts"
+		"Model"						"models/roshan_halloween.vmdl"
+		"GameSoundsFile"			"soundevents/diretide_soundevents.vsndevts"
 		"SoundSet"					"RoshanDT"
+		"IdleSoundLoop"				"RoshanDT.Idle"
 		"ModelScale"				"1.1"
 		"Level"						"50"
 		"IsAncient"					"1"
 		"UnitLabel"					""
-
+				
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"imba_roshan_diretide_summon_roshlings"
-		"Ability2"					"imba_roshan_diretide_apocalypse"
+		"Ability1"					"imba_roshan_ai_diretide"
+		"Ability2"					"imba_roshan_diretide_summon_roshlings"
 		"Ability3"					"tiny_toss"
 		"Ability4"					"creature_fire_breath"
-		"Ability5"					""
+		"Ability5"					"imba_roshan_diretide_apocalypse"
 		"Ability6"					""
-		"Ability7"					"imba_roshan_ai_diretide"
+		"Ability7"					""
 
 		// Armor
 		//----------------------------------------------------------------
@@ -8210,7 +8211,7 @@
 		"AttackDamageMax"			"100"
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.0"
-		"AttackAnimationPoint"		"0.3"
+		"AttackAnimationPoint"		"0.2"
 		"AttackAcquisitionRange"	"600"
 		"AttackRange"				"200"
 		"ProjectileModel"			"ranged_goodguy"
@@ -8256,19 +8257,6 @@
 		// Inventory
 		//----------------------------------------------------------------
 		"HasInventory"				"1"
-
-		"MinimapIcon"					"minimap_roshancamp"
-		"MinimapIconSize"				"450"
-
-		"Creature"
-		{
-			"AttachWearables"
-			{
-				"Wearable1" { "ItemDef" "10092" } // Roshan's Costume - Frankenstein
-//				"Wearable1" { "ItemDef" "10093" } // Roshan's Costume - Dracula
-//				"Wearable1" { "ItemDef" "10094" } // Roshan's Costume - Angel
-			}
-		}
 	}
 
 	//=================================================================================

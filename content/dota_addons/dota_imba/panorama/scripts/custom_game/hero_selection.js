@@ -176,6 +176,11 @@ function SelectHero( heroName ) {
 	var all_random_enabled = CustomNetTables.GetTableValue( "game_options", "all_random" );
 	var selected_panel = $("#PickList").FindChildTraverse(heroName)
 
+	if (selected_panel == null)
+	{
+		var selected_panel = $("#CustomPickList").FindChildTraverse(heroName)
+	}
+
 	if (heroName == "npc_dota_hero_ghost_revenant")
 	{
 		// Set the appropriate hero image
@@ -193,12 +198,12 @@ function SelectHero( heroName ) {
 		// Set the appropriate hero image
 		$("#PickedHeroImage").heroname = heroName;
 		$("#PickedHeroImage").style.visibility = 'visible';
+	}
 
-		if (selected_panel.BHasClass( "taken" ) || (all_random_enabled != null && all_random_enabled[1] == 1)) {
-			$('#PickHeroBtn').AddClass("disabled");
-		} else {
-			$('#PickHeroBtn').RemoveClass("disabled");
-		}
+	if (selected_panel.BHasClass( "taken" ) || (all_random_enabled != null && all_random_enabled[1] == 1)) {
+		$('#PickHeroBtn').AddClass("disabled");
+	} else {
+		$('#PickHeroBtn').RemoveClass("disabled");
 	}
 
 	// Update the hero name
@@ -419,7 +424,7 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 	$("#npc_dota_hero_venomancer").AddClass( "taken" );
 	$("#npc_dota_hero_zuus").AddClass( "taken" );
 	//CUSTOM
-//	$("#CustomPickList").style.visibility = "collapse";
+	$("#CustomPickList").style.visibility = "collapse";
 	$("#npc_dota_hero_storegga").AddClass( "taken" );
 
 	// If this player is a spectator, just kill the whole pick screen
