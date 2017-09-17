@@ -2340,8 +2340,8 @@
 		//"Ability1"				"imba_spectre_spectral_dagger"
 		//"Ability2"				"imba_spectre_desolate"
 		//"Ability3"				"imba_spectre_dispersion"
-		//"Ability4"				"imba_spectre_reality"
-		//"Ability5"				"imba_spectre_haunt"
+		"Ability4"				"imba_spectre_reality"
+		"Ability5"				"imba_spectre_haunt"
 
 
 		"ProjectileSpeed"			"900"
