@@ -135,7 +135,7 @@ function modifier_illusion_manager_out_of_world:OnDestroy()
 	self:GetParent():RemoveNoDraw()																																   -- place our little guy back into the world
 end
 
-function IllusionManager:CreateIllusion(tEntity,tSkill,vSpawnLocation,tIllusionBase,tSpecialKeys)
+function IllusionManager:CreateIllusion(tEntity,tSkill,vSpawnLocation,tIllusionBase,tSpecialKeys,hAttackTarget)
 	if not IsServer() then return end
 	if not tIllusionBase then print('No unit specified!'); return end
 	local illusion_name = tIllusionBase:GetUnitName()
@@ -145,19 +145,23 @@ function IllusionManager:CreateIllusion(tEntity,tSkill,vSpawnLocation,tIllusionB
 			if tSpecialKeys.unique then															 																		 -- our illusion is 'unique', meaning only one of this kind can exist
 				if tSpecialKeys.unique == v.unique then																										 -- if our found illusion matches the key..
 					IllusionManager:KillIllusion(v)																													 -- poof him !
-					IllusionManager:MoveExistingIllusion(tEntity,tIllusionBase,tSkill,vSpawnLocation,v,tSpecialKeys) -- create him where requested
+					IllusionManager:MoveExistingIllusion(tEntity,tIllusionBase,tSkill,vSpawnLocation,v,tSpecialKeys,hAttackTarget) -- create him where requested
 					return																																									 -- return execution to wherever this was requested from
 				end
 			elseif v.active == 0 then																																		 -- 'dumbfire' illusion, we can have many many types of this illu
-				IllusionManager:MoveExistingIllusion(tEntity,tIllusionBase,tSkill,vSpawnLocation,v,tSpecialKeys)	 -- provided we have a created entity, move him and do expected routines
+				IllusionManager:MoveExistingIllusion(tEntity,tIllusionBase,tSkill,vSpawnLocation,v,tSpecialKeys,hAttackTarget)	 -- provided we have a created entity, move him and do expected routines
 				return
 			end
 		end
 	end
 	local illucallback = function(tIllusion) 																	 -- xxxxxxxxxxxxxxxxxxxxxxxxxx
-		IllusionManager:IllusionCallback(tEntity,tIllusion,tSkill,tSpecialKeys,tIllusionBase)  -- callback for async request
+		IllusionManager:IllusionCallback(tEntity,tIllusion,tSkill,tSpecialKeys,tIllusionBase,hAttackTarget)  -- callback for async request
 		if tSpecialKeys.callback then																						 --
-			tSpecialKeys:callback(tIllusion)																			 -- (callbackception)
+			if tSpecialKeys.callback_table and type(tSpecialKeys.callback_table) == "table" then
+				tSpecialKeys:callback(tIllusion, tSpecialKeys.callback_table)
+			else
+				tSpecialKeys:callback(tIllusion)																			 -- (callbackception)
+			end
 		end																																		 -- 
 		return tIllusion -- this will returns execution with a 'completed' unit, should be ready to receive commands now
 	end																																				 -- xxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -166,7 +170,7 @@ function IllusionManager:CreateIllusion(tEntity,tSkill,vSpawnLocation,tIllusionB
 	-- We are still requesting illusions but no available ones exist! do the really shitty createbyname func to lag the fuck out of everyone for no reason!
 end	
 
-function IllusionManager:MoveExistingIllusion(tEntity,tIllusionBase,tSkill,vSpawnLocation,tFoundIllusion,tSpecialKeys)
+function IllusionManager:MoveExistingIllusion(tEntity,tIllusionBase,tSkill,vSpawnLocation,tFoundIllusion,tSpecialKeys,hAttackTarget)
 	if not IsServer() then return end	
 	local tEntityAngles = tEntity:GetAngles()
 	tFoundIllusion:SetAbsOrigin(vSpawnLocation)
@@ -174,12 +178,19 @@ function IllusionManager:MoveExistingIllusion(tEntity,tIllusionBase,tSkill,vSpaw
 	tFoundIllusion:SetHealth(tEntity:GetHealth())
 	tFoundIllusion:SetAngles(tEntityAngles.x, tEntityAngles.y, tEntityAngles.z)
 	tFoundIllusion:RemoveModifierByName('modifier_illusion_manager_out_of_world')
-	IllusionManager:SetModifiers(tEntity,tIllusionBase,tFoundIllusion,tSkill,tSpecialKeys)
 	IllusionManager:ResetIllusion(tIllusionBase,tFoundIllusion)
+	if hAttackTarget and ( not hAttackTarget:IsNull() ) and hAttackTarget:IsAlive() then
+		tFoundIllusion:MoveToTargetToAttack(hAttackTarget)
+	end
+	IllusionManager:SetModifiers(tEntity,tIllusionBase,tFoundIllusion,tSkill,tSpecialKeys)
 	tFoundIllusion.active = 1
 	if tSpecialKeys.callback then
-		tSpecialKeys:callback(tFoundIllusion)
-	end	
+		if tSpecialKeys.callback_table and type(tSpecialKeys.callback_table) == "table" then
+			tSpecialKeys:callback(tFoundIllusion, tSpecialKeys.callback_table)
+		else
+			tSpecialKeys:callback(tFoundIllusion)
+		end
+	end
 end
 
 function IllusionManager:KillIllusion(tEntity,sName) -- when an illusion is KILLED or DURATION ran out
@@ -309,15 +320,18 @@ function IllusionManager:RemoveIllusion(tEntity,sName)  -- DELETE entity from th
 	UTIL_Remove(tEntity) -- There really is no need for this unless maybe a player dc's and for some reason out of world illusions are causing lag.
 end
 
-function IllusionManager:IllusionCallback(tEntity,tIllusion,tSkill,tSpecialKeys,tIllusionBase) -- Only called when a new entity needs to be produced
+function IllusionManager:IllusionCallback(tEntity,tIllusion,tSkill,tSpecialKeys,tIllusionBase,hAttackTarget) -- Only called when a new entity needs to be produced
 	if not IsServer() then return end	
-	IllusionManager:SetModifiers(tEntity,tIllusionBase,tIllusion,tSkill,tSpecialKeys)
 	if not tIllusion:IsCreep() then
 		tIllusion:SetPlayerID(tEntity:GetPlayerID())
 	end
 	tIllusion:SetControllableByPlayer(tEntity:GetPlayerID(),true)
 	tIllusion:SetOwner(tEntity)	
 	IllusionManager:ResetIllusion(tIllusionBase,tIllusion)
+	if hAttackTarget and ( not hAttackTarget:IsNull() ) and hAttackTarget:IsAlive() then
+		tIllusion.MoveToTargetToAttack(hAttackTarget)
+	end
+	IllusionManager:SetModifiers(tEntity,tIllusionBase,tIllusion,tSkill,tSpecialKeys)
 	tIllusion.active = 1	
 	if tSpecialKeys.unique then
 		tIllusion.unique = tSpecialKeys.unique
