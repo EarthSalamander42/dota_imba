@@ -8273,7 +8273,10 @@
 		"ModelScale" 				"1.0"
 		"Level"						"2013"
 		"IsAncient"					"1"
-		
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+        "UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+        
 		// Abilities
 		//----------------------------------------------------------------
 		"Ability1"					"ability_journal_note"
