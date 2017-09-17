@@ -8267,7 +8267,7 @@
 		// General
 		//----------------------------------------------------------------
 
-		"BaseClass"					"npc_dota_creature"
+		"BaseClass"					"npc_dota_ward_base"
 		"Model"						"models/props_gameplay/pumpkin_bucket.vmdl"
 		"SoundSet"					"Creep_Good_Melee"
 		"ModelScale" 				"1.0"
