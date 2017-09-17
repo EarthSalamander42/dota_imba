@@ -104,8 +104,8 @@ function modifier_illusion_manager:OnDestroy()
 	local illusiontimer = self:GetParent():FindModifierByName("modifier_illusion")	
 	if self.special_modifier then
 		illusiontimer = self:GetParent():FindModifierByName(self.special_modifier)
-		end
-  illusiontimer:SetDuration(1,true) 																															 -- prevent modifier_illusion from running out 
+	end
+	illusiontimer:SetDuration(1,true) 																															 -- prevent modifier_illusion from running out 
 end
 
 function modifier_illusion_manager_out_of_world:OnCreated(params)
@@ -127,7 +127,7 @@ end
 function modifier_illusion_manager_out_of_world:OnIntervalThink()
 	if not IsServer() then return end	
 	self:GetParent():SetAbsOrigin(self:GetParent():GetOwner():GetAbsOrigin())  											 -- this prevents the weird 'teleport' effect from doing setabsorigin.  I could also add a frame delay to the absorigin set but i'm lazy
-  self.illusiontimer:SetDuration(1,true)																													 -- constantly watch modifier_illusion and just keep the duration running
+	self.illusiontimer:SetDuration(1,true)																													 -- constantly watch modifier_illusion and just keep the duration running
 end
 
 function modifier_illusion_manager_out_of_world:OnDestroy()
@@ -147,7 +147,7 @@ function IllusionManager:CreateIllusion(tEntity,tSkill,vSpawnLocation,tIllusionB
 					IllusionManager:KillIllusion(v)																													 -- poof him !
 					IllusionManager:MoveExistingIllusion(tEntity,tIllusionBase,tSkill,vSpawnLocation,v,tSpecialKeys) -- create him where requested
 					return																																									 -- return execution to wherever this was requested from
-					end
+				end
 			elseif v.active == 0 then																																		 -- 'dumbfire' illusion, we can have many many types of this illu
 				IllusionManager:MoveExistingIllusion(tEntity,tIllusionBase,tSkill,vSpawnLocation,v,tSpecialKeys)	 -- provided we have a created entity, move him and do expected routines
 				return
@@ -174,7 +174,7 @@ function IllusionManager:MoveExistingIllusion(tEntity,tIllusionBase,tSkill,vSpaw
 	tFoundIllusion:SetHealth(tEntity:GetHealth())
 	tFoundIllusion:SetAngles(tEntityAngles.x, tEntityAngles.y, tEntityAngles.z)
 	tFoundIllusion:RemoveModifierByName('modifier_illusion_manager_out_of_world')
-	IllusionManager:SetModifiers(tEntity,tIllusionBase,tFoundIllusion,tSkill,tSpecialKeys)	
+	IllusionManager:SetModifiers(tEntity,tIllusionBase,tFoundIllusion,tSkill,tSpecialKeys)
 	IllusionManager:ResetIllusion(tIllusionBase,tFoundIllusion)
 	tFoundIllusion.active = 1
 	if tSpecialKeys.callback then
@@ -267,8 +267,11 @@ function IllusionManager:SetModifiers(tEntity,tIllusionBase,tIllusion,tSkill,tSp
 	if not tIllusion:IsCreep() then
 		tIllusion:SetPlayerID(tEntity:GetPlayerID())
 	end
-	tIllusion:SetControllableByPlayer(tEntity:GetPlayerID(),true)
-	tIllusion:SetOwner(tEntity)	
+	if tSpecialKeys.controllable and tSpecialKeys.controllable == 0 then
+	else
+		tIllusion:SetControllableByPlayer(tEntity:GetPlayerID(),true)
+	end
+	tIllusion:SetOwner(tEntity)
 	IllusionManager:ResetIllusion(tIllusionBase,tIllusion)
 	if tSpecialKeys.modifier_illusion_name then
 		-- do we have a 'special' modifier request for illus?
@@ -283,6 +286,18 @@ function IllusionManager:SetModifiers(tEntity,tIllusionBase,tIllusion,tSkill,tSp
 			tIllusion:FindModifierByName('modifier_illusion'):SetDuration(duration+FrameTime(),true)
 		else
 			tIllusion:AddNewModifier(tEntity, nil, "modifier_illusion", {duration = duration+FrameTime(),DestroyOnExpire = false}) -- blue color and duration ticker for team ONLY
+		end
+	end
+	-- Any additional modifiers to apply to the illusion IN ADDITION TO "modifier_illusion" (or special replacement above)
+	-- Duration is the same as the illusion duration - could be something to expand upon, making the durations independent, if desired
+	if tSpecialKeys.additional_modifiers and type(tSpecialKeys.additional_modifiers) == "table" then
+		local additional_modifiers = tSpecialKeys.additional_modifiers
+		for modifier in additional_modifiers do
+			if tIllusion:HasModifier(tSpecialKeys.modifier) then
+				tIllusion:FindModifierByName(modifier):SetDuration(duration+FrameTime(), true)
+			else
+				tIllusion:AddNewModifier(tEntity, nil, modifier, {duration = duration+FrameTime(),DestroyOnExpire = false})
+			end
 		end
 	end
 	if not tIllusion:IsIllusion() then tIllusion:MakeIllusion() end -- no bounty for you
@@ -306,7 +321,7 @@ function IllusionManager:IllusionCallback(tEntity,tIllusion,tSkill,tSpecialKeys,
 	tIllusion.active = 1	
 	if tSpecialKeys.unique then
 		tIllusion.unique = tSpecialKeys.unique
-		end
+	end
 	tIllusion.illusionname = tIllusionBase:GetUnitName()
 	table.insert(tEntity.illusions,tIllusion)
 	return
