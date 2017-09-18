@@ -46,11 +46,11 @@ modifier_illusion_manager = class({
 	IsDebuff                         				= function(self) return false                  				 	 end,    
 	IsPurgable                       				= function(self) return false                 					 end,  
 	IsHidden										= function(self) return true														 end,
-	GetModifierTotalDamageOutgoing_Percentage 		= function(self) return self.damageout 									 end,
+	GetModifierDamageOutgoing_Percentage 			= function(self) return self.damageout 									 end,
 	GetModifierIncomingDamage_Percentage			= function(self) return self.damagein										 end,
 },
 {
-	funcs = {MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE,
+	funcs = {MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE,
 		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
 		MODIFIER_EVENT_ON_TAKEDAMAGE
 	},
