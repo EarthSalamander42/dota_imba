@@ -28281,7 +28281,7 @@
 	//=================================================================================================================
 	// Spectre's Reality
 	//=================================================================================================================
-	imba_spectre_reality
+	"imba_spectre_reality"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -39850,41 +39850,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"armor_bonus"			"666"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Journal Note Ability
-	//=================================================================================================================
-	"ability_journal_note"
-	{
-		"BaseClass"                         "ability_datadriven"
-		"AbilityName"                       "ability_journal_note"
-		"AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"IsOnCastBar"                   "0"
-
-		"Modifiers"
-		{
-			"modifier_ability_journal_note"
-			{
-				"IsHidden"              "1"
-				"Passive"               "1"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"		"1"
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL"		"1"
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"			"1"
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_BLIND"					"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NOT_ON_MINIMAP"			"MODIFIER_STATE_VALUE_ENABLED"
-				}
 			}
 		}
 	}

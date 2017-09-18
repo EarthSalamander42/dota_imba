@@ -1,35 +1,42 @@
 modifier_npc_dialog = class({})
 
------------------------------------------------------------------------
-
 function modifier_npc_dialog:IsHidden()
 	return true
 end
 
------------------------------------------------------------------------
-
 function modifier_npc_dialog:IsPurgable()
 	return false
 end
-
------------------------------------------------------------------------
 
 function modifier_npc_dialog:OnCreated( params )
 	if IsServer() then
 	end
 end
 
------------------------------------------------------------------------
-
 function modifier_npc_dialog:DeclareFunctions()
 	local funcs = 
 	{
 		MODIFIER_EVENT_ON_ATTACKED,
+		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
+		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL,
+		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE,
 	}
 	return funcs
 end
 
------------------------------------------------------------------------
+function modifier_npc_dialog:CheckState()
+	local state =
+	{
+		[MODIFIER_STATE_NO_HEALTH_BAR] = true,
+		[MODIFIER_STATE_BLIND] = true,
+		[MODIFIER_STATE_NOT_ON_MINIMAP] = true,
+	}
+	return state
+end
+
+function modifier_npc_dialog:GetAbsoluteNoDamagePhysical() return 1 end
+function modifier_npc_dialog:GetAbsoluteNoDamageMagical() return 1 end
+function modifier_npc_dialog:GetAbsoluteNoDamagePure() return 1 end
 
 function modifier_npc_dialog:OnAttacked(keys)
 local attacker = keys.attacker
@@ -55,10 +62,9 @@ local target = keys.target
 			netTable["DialogLine"] = 1
 			netTable["ShowAdvanceButton"] = false
 			netTable["SendToAll"] = false
-			netTable["JournalEntry"] = target:FindAbilityByName( "ability_journal_note" ) ~= nil
+			netTable["JournalEntry"] = target:GetUnitName() == "npc_dota_diretide_easter_egg"
 			CustomGameEventManager:Send_ServerToPlayer(attacker:GetPlayerOwner(), "dialog", netTable)
 		end
 	end
-
 --	return 0
 end

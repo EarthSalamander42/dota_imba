@@ -881,7 +881,7 @@ function modifier_imba_coup_de_grace:GetModifierPreAttack_CriticalStrike(keys)
         end        
 
         if RollPseudoRandom(crit_chance_total, self) then        				
-			
+
 			StartSoundEvent("Hero_PhantomAssassin.CoupDeGrace", target)
 			local responses = {"phantom_assassin_phass_ability_coupdegrace_01",
 				"phantom_assassin_phass_ability_coupdegrace_02",
@@ -898,16 +898,16 @@ function modifier_imba_coup_de_grace:GetModifierPreAttack_CriticalStrike(keys)
 			-- Find the modifier, increase a stack and refresh it
 			local modifier_stacks_handler = self.caster:FindModifierByName(self.modifier_stacks)			
 			if modifier_stacks_handler then
-				modifier_stacks_handler:IncrementStackCount()				
+				modifier_stacks_handler:IncrementStackCount()
 				modifier_stacks_handler:ForceRefresh()
 			end
 
 			-- TALENT: +100% Coup de Grace crit damage			
 			local crit_bonus = self.crit_bonus + self.caster:FindTalentValue("special_bonus_imba_phantom_assassin_5")
-            return crit_bonus
-			
+
 			-- Mark the attack as a critical in order to play the bloody effect on attack landed
 			self.crit_strike = true
+            return crit_bonus
 		else
 			-- If this attack wasn't a critical strike, remove possible markers from it.
 			self.crit_strike = false
