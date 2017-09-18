@@ -26083,7 +26083,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"60"
+		"AbilityManaCost"				"0"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -26106,7 +26106,11 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"scream_damage_pct"		"20 20 20 20 40 60 80"
-				"LinkedSpecialBonus"	"special_bonus_imba_queenofpain_2"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_cost"				"60"
 			}
 		}
 	}
@@ -26132,7 +26136,8 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"475"		
+		"AbilityCastRange"				"475"
+		"AbilityCastPoint"				"0.0"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_3"
 
 		// Time
@@ -26165,21 +26170,17 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"radius"				"475"
-				"LinkedSpecialBonus"	"special_bonus_imba_queenofpain_3"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"pain_duration"			"2 2 2 2 3 3 3"
 			}
-
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"pain_reflect_pct"		"20 30 40 50 50 50 50"
-				"LinkedSpecialBonus"	"special_bonus_imba_queenofpain_5"
 			}
-
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -26262,7 +26263,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"absorb_pct"			"30 30 30 50 70 90"
-				"LinkedSpecialBonus"	"special_bonus_imba_queenofpain_4"
 			}
 			"06"
 			{
@@ -26288,7 +26288,7 @@
 	}
 
 	//=================================================================================================================
-	// Queen of Pain Talent 1 (Level 10): %-Extra Delightful Torment effect on Sonic Wave
+	// Queen of Pain Talent 1 (Level 10): Shadow Struck targets can be seen through fog
 	//=================================================================================================================
 	"special_bonus_imba_queenofpain_1"
 	{
@@ -26300,177 +26300,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_queenofpain_sonic_wave"
-			"02" 	"imba_queenofpain_delightful_torment"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"100"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Queen of Pain Talent 2 (Level 10): %-Extra Blink scream of pain damage
-	//=================================================================================================================
-	"special_bonus_imba_queenofpain_2"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_queenofpain_blink"
-			"02" 	"imba_queenofpain_scream_of_pain"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"20"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Queen of Pain Talent 3 (Level 20): Additional Scream of Pain radius
-	//=================================================================================================================
-	"special_bonus_imba_queenofpain_3"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_queenofpain_scream_of_pain"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"100"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Queen of Pain Talent 4 (Level 20): %-based Sonic Wave spell-lifesteal
-	//=================================================================================================================
-	"special_bonus_imba_queenofpain_4"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_queenofpain_sonic_wave"	
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"35"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Queen of Pain Talent 5 (Level 30): %-based additional Scream of Pain damage reflected
-	//=================================================================================================================
-	"special_bonus_imba_queenofpain_5"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_queenofpain_scream_of_pain"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"50"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Queen of Pain Talent 6 (Level 30): %-based additional Sonic Wave end radius/travel distance
-	//=================================================================================================================
-	"special_bonus_imba_queenofpain_6"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_queenofpain_sonic_wave"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"50"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Queen of Pain Talent 7 (Level 40): Scream of Pain now applies Shadow Strike on enemies hit
-	//=================================================================================================================
-	"special_bonus_imba_queenofpain_7"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_queenofpain_shadow_strike"
+			"01"	"imba_queenofpain_shadow_strike"
 		}
 
 		// Special
@@ -26486,7 +26316,181 @@
 	}
 
 	//=================================================================================================================
-	// Queen of Pain Talent 8 (Level 40): Reduced Blink cooldown
+	// Queen of Pain Talent 2 (Level 10): Sonic Wave deals damage in 5 instances
+	//=================================================================================================================
+	"special_bonus_imba_queenofpain_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_queenofpain_sonic_wave"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Queen of Pain Talent 3 (Level 20): Damaging an enemy causes Shadow Strike to deal its tick damage
+	//=================================================================================================================
+	"special_bonus_imba_queenofpain_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_queenofpain_shadow_strike"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Queen of Pain Talent 4 (Level 20): Delightful Torment procs also grant bonus attack speed
+	//=================================================================================================================
+	"special_bonus_imba_queenofpain_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_queenofpain_delightful_torment"	
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"10"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"5.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Queen of Pain Talent 5 (Level 30): Blink can be used twice in quick succession, with increased mana cost
+	//=================================================================================================================
+	"special_bonus_imba_queenofpain_5"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_queenofpain_blink"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"2.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Queen of Pain Talent 6 (Level 30): Enemies affected by Shadow Strike release Screams of Pain every damage tick
+	//=================================================================================================================
+	"special_bonus_imba_queenofpain_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_queenofpain_shadow_strike"
+			"02"	"imba_queenofpain_scream_of_pain"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_pct"				"50"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Queen of Pain Talent 7 (Level 40): Scream of Pain now causes confusion
+	//=================================================================================================================
+	"special_bonus_imba_queenofpain_7"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_queenofpain_scream_of_pain"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"2"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Queen of Pain Talent 8 (Level 40): Your abilities apply Shadow Strike to all enemies hit
 	//=================================================================================================================
 	"special_bonus_imba_queenofpain_8"
 	{
@@ -26498,7 +26502,8 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_queenofpain_blink"
+			"01"	"imba_queenofpain_scream_of_pain"
+			"02"	"imba_queenofpain_sonic_wave"
 		}
 
 		// Special
@@ -26507,8 +26512,8 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"2"
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
 			}
 		}
 	}
