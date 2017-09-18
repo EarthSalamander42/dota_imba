@@ -48,7 +48,18 @@ function imba_spectre_haunt:OnSpellStart()
 			end
 			local spawn_pos = Vector(enemy_position.x + spawn_dx, enemy_position.y + spawn_dy, enemy_position.z)
 
-			IllusionManager:CreateIllusion(caster, self, spawn_pos, caster, {additional_modifiers =  additional_modifiers, controllable = 0, force_attack = 1}, enemy)
+			IllusionManager:CreateIllusion(caster,
+				self,
+				spawn_pos,
+				caster,
+				{
+				 additional_modifiers =  additional_modifiers,
+				 controllable = 0,
+				 force_attack = 1,
+				 damagein = ( self:GetSpecialValueFor("illusion_dmg_received") - 100),
+				 damageout = ( self:GetSpecialValueFor("illusion_dmg_dealt") - 100 )
+				},
+				enemy)
 
 			EmitSoundOn(haunt_sound_enemy, enemy)
 		end
@@ -65,7 +76,7 @@ function modifier_imba_spectre_haunt_illusion:IsHidden() return true end
 function modifier_imba_spectre_haunt_illusion:OnCreated( kv )
 	-- Ability values
 	self.absolute_min_speed = 400 -- Vanilla Dota 2 has this as absolute speed (cannot be increased), but this is IMBA, so buff
-	self.activation_delay = 1.0 -- Vanilla Doto again
+	self.activation_delay = 1.0 -- Vanilla Dota 2 delay from when illusion spawns to when it gets to move/attack
 	self.tick_rate = 0.5 -- ordering unit to attack/move-to
 
 	if IsServer() then

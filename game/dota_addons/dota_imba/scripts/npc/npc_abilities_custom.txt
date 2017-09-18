@@ -28228,12 +28228,12 @@
 			"02"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"damage_in"							"100"
+				"illusion_dmg_received"				"200"
 			}
 			"03"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"damage_out"						"-60"
+				"illusion_dmg_dealt"				"40"
 			}
 		}
 	}
