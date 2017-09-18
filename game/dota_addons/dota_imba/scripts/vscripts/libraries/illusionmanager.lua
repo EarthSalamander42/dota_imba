@@ -148,6 +148,10 @@ function IllusionManager:CreateIllusion(tEntity,tSkill,vSpawnLocation,tIllusionB
 					IllusionManager:MoveExistingIllusion(tEntity,tIllusionBase,tSkill,vSpawnLocation,v,tSpecialKeys,hAttackTarget) -- create him where requested
 					return																																									 -- return execution to wherever this was requested from
 				end
+			elseif v.unique then
+				-- don't touch unique illusions, because they could conflict with non-unique ones
+				-- example is Spectre's Haunt illusions that don't use unique keys, but they have their own special modifiers
+				-- and Manta having unique illusions fucks it all up
 			elseif v.active == 0 then																																		 -- 'dumbfire' illusion, we can have many many types of this illu
 				IllusionManager:MoveExistingIllusion(tEntity,tIllusionBase,tSkill,vSpawnLocation,v,tSpecialKeys,hAttackTarget)	 -- provided we have a created entity, move him and do expected routines
 				return
@@ -180,7 +184,11 @@ function IllusionManager:MoveExistingIllusion(tEntity,tIllusionBase,tSkill,vSpaw
 	tFoundIllusion:RemoveModifierByName('modifier_illusion_manager_out_of_world')
 	IllusionManager:ResetIllusion(tIllusionBase,tFoundIllusion)
 	if hAttackTarget and ( not hAttackTarget:IsNull() ) and hAttackTarget:IsAlive() then
-		tFoundIllusion:MoveToTargetToAttack(hAttackTarget)
+		if tSpecialKeys.force_attack and tSpecialKeys.force_attack == 1 then
+			tFoundIllusion:SetForceAttackTarget(hAttackTarget)
+		else
+			tFoundIllusion:MoveToTargetToAttack(hAttackTarget)
+		end
 	end
 	IllusionManager:SetModifiers(tEntity,tIllusionBase,tFoundIllusion,tSkill,tSpecialKeys)
 	tFoundIllusion.active = 1
@@ -264,7 +272,7 @@ end
 
 function IllusionManager:SetModifiers(tEntity,tIllusionBase,tIllusion,tSkill,tSpecialKeys) -- damage percents, durations... etc
 	local duration,damagein,damageout
-	if tSkill and not type(tSkill) == 'string' then
+	if tSkill and not ( type(tSkill) == 'string' ) then
 		duration,damagein,damageout = getkvValues(tSkill,"duration","damage_in","damage_out")
 	elseif tSkill == 'dummy' then
 		duration,damagein,damageout = FrameTime(),1000,-100
@@ -303,11 +311,11 @@ function IllusionManager:SetModifiers(tEntity,tIllusionBase,tIllusion,tSkill,tSp
 	-- Duration is the same as the illusion duration - could be something to expand upon, making the durations independent, if desired
 	if tSpecialKeys.additional_modifiers and type(tSpecialKeys.additional_modifiers) == "table" then
 		local additional_modifiers = tSpecialKeys.additional_modifiers
-		for modifier in additional_modifiers do
-			if tIllusion:HasModifier(tSpecialKeys.modifier) then
+		for index, modifier in ipairs(additional_modifiers) do
+			if tIllusion:HasModifier(modifier) then
 				tIllusion:FindModifierByName(modifier):SetDuration(duration+FrameTime(), true)
 			else
-				tIllusion:AddNewModifier(tEntity, nil, modifier, {duration = duration+FrameTime(),DestroyOnExpire = false})
+				tIllusion:AddNewModifier(tEntity, tSkill, modifier, {duration = duration+FrameTime(),DestroyOnExpire = false})
 			end
 		end
 	end
@@ -329,7 +337,11 @@ function IllusionManager:IllusionCallback(tEntity,tIllusion,tSkill,tSpecialKeys,
 	tIllusion:SetOwner(tEntity)	
 	IllusionManager:ResetIllusion(tIllusionBase,tIllusion)
 	if hAttackTarget and ( not hAttackTarget:IsNull() ) and hAttackTarget:IsAlive() then
-		tIllusion.MoveToTargetToAttack(hAttackTarget)
+		if tSpecialKeys.force_attack and tSpecialKeys.force_attack == 1 then
+			tIllusion:SetForceAttackTarget(hAttackTarget)
+		else
+			tIllusion:MoveToTargetToAttack(hAttackTarget)
+		end
 	end
 	IllusionManager:SetModifiers(tEntity,tIllusionBase,tIllusion,tSkill,tSpecialKeys)
 	tIllusion.active = 1	
