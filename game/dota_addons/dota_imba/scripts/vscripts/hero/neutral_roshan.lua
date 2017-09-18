@@ -440,7 +440,7 @@ function modifier_imba_roshan_ai_diretide:IsHidden() return true end
 --	GENERAL
 
 function modifier_imba_roshan_ai_diretide:GetPriority()
-    return MODIFIER_PRIORITY_SUPER_ULTRA end
+	return MODIFIER_PRIORITY_SUPER_ULTRA end
 
 function modifier_imba_roshan_ai_diretide:GetModifierProvidesFOWVision()
 	return 1 end
@@ -547,7 +547,7 @@ function modifier_imba_roshan_ai_diretide:OnCreated()
 		-- Aimation durations
 		self.animBeg		= 5
 		self.animGobble		= 9
-		self.animDeath		= 15
+		self.animDeath		= 8
 		
 		-- Ability handlers
 		self.forceWave	= self.roshan:FindAbilityByName("imba_roshan_diretide_force_wave")
@@ -772,6 +772,14 @@ function modifier_imba_roshan_ai_diretide:ThinkPhase3(roshan)
 	-- Don't think while being stunned, hexed, or casting spells
 	if roshan:IsStunned() or roshan:IsHexed() or roshan:IsChanneling() or roshan:GetCurrentActiveAbility() then return end
 
+	-- Wait. No reason to decrement negative values
+	if self.wait < 0 then
+		return
+	elseif self.wait > 0 then
+		self.wait = self.wait - 1
+		return
+	end
+
 	if not self.leashPoint then
 		if DIRETIDE_WINNER == DOTA_TEAM_BADGUYS then
 			self.leashPoint = Entities:FindByName(nil, "roshan_arena_"..DIRETIDE_WINNER):GetAbsOrigin()		-- Pick arena based on phase 2 winner
@@ -809,7 +817,12 @@ function modifier_imba_roshan_ai_diretide:ThinkPhase3(roshan)
 
 	if COUNT_DOWN and COUNT_DOWN == 0 then
 		local heroDetector = FindUnitsInRadius(roshan:GetTeamNumber(), roshan:GetAbsOrigin(), nil, 700, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
-		if #heroDetector > 0 then COUNT_DOWN = 1 end
+		if #heroDetector > 0 then
+			COUNT_DOWN = 1
+		else
+			self.wait = 5
+			return
+		end
 	end
 	
 	-- Wait. No reason to decrement negative values
@@ -931,10 +944,10 @@ end
 function modifier_imba_roshan_ai_diretide:Die(roshan)
 	self.isDead = true
 	roshan:AddNoDraw()
-	
+
 	local dummyRoshan = CreateUnitByName("npc_diretide_roshan", roshan:GetAbsOrigin(), false, roshan, roshan, roshan:GetTeamNumber()) 
 	dummyRoshan:ForceKill(true)
-	
+
 	-- not attached to Roshan or the dummy so it gets drawn (unlike Roshan), and stays until the particle expires (which the dummy would prevent)
 	local deathParticle = ParticleManager:CreateParticle("particles/hw_fx/hw_roshan_death.vpcf", PATTACH_CUSTOMORIGIN, nil)
 	ParticleManager:SetParticleControl(deathParticle, 0, dummyRoshan:GetAbsOrigin())
@@ -949,7 +962,7 @@ function modifier_imba_roshan_ai_diretide:Respawn(roshan)
 	self.isDead = false
 	roshan:SetHealth(roshan:GetMaxHealth())
 	roshan:RemoveNoDraw()
-	
+
 	-- Refresh cooldowns
 	if self.forceWave	then self.forceWave:EndCooldown()	end
 	if self.roshlings	then self.roshlings:EndCooldown()	end
