@@ -34175,6 +34175,36 @@
 				"var_type"				"FIELD_INTEGER"
 				"base_manacost"			"100"
 			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"scepter_charge"		"12"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"scepter_aoe"			"500"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"scepter_interval"		"8"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"scepter_ms"			"15"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"scepter_duration"		"20"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"scepter_reduction"		"0.75"
+			}
 		}
 	}
 
@@ -34217,6 +34247,7 @@
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
 			"particle"					"particles/units/heroes/hero_tinker/tinker_laser.vpcf"
+			"particle"					"particles/units/heroes/hero_zuus/zuus_arc_lightning_head_c.vpcf"
 		}
 
 		// Special
@@ -34228,20 +34259,34 @@
 				"var_type"				"FIELD_INTEGER"
 				"damage"				"80 160 240 320 330 340 350"
 			}
+
 			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"refract_radius"		"200 200 200 200 350 500 650"
-			}
-			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"blind_duration"		"3.0 3.5 4.0 4.5 4.5 4.5 4.5"
 			}
-			"04"
+			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"miss_chance_pct"		"100"
+			}
+
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"travel_speed"			"2500"
+			}
+
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"100"
+			}			
+
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"secondary_reduction"	"25"
 			}
 		}
 	}
@@ -34284,9 +34329,12 @@
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"	
 			"particle"					"particles/units/heroes/hero_tinker/tinker_missile.vpcf"
 			"particle"					"particles/units/heroes/hero_tinker/tinker_missle_explosion.vpcf"
 			"particle"					"particles/units/heroes/hero_tinker/tinker_missile_dud.vpcf"
+			"particle"					"particles/hero/tinker/tinker_missile_explosive_warhead.vpcf"
+			"particle"					"particles/hero/tinker/tinker_mini_missile_explosive_warhead.vpcf"
 		}
 
 		// Special
@@ -34319,6 +34367,26 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"speed"					"900"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mini_damage"			"50 80 110 140 150 160 170"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mini_speed"			"1800"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"mini_vision_duration"	"3.0"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mini_missile_count"	"1"
 			}
 		}
 	}
@@ -34513,19 +34581,93 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"laser_dmg"				"35 35 35 70 70 70"
+				"var_type"				"FIELD_FLOAT"
+				"vertical_laser_delay"	"0.5"
 			}
+
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"missile_count"			"0 2 2 2 4 4"
+				"var_type"				"FIELD_FLOAT"
+				"diagonal_laser_delay"	"1"
 			}
+
 			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vertical_lasers"		"2"
+			}
+
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"diagonal_lasers"		"0 0 0 2 2 2 2"
+			}
+
+			"20"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"rearm_mana_tooltip"	"50"
 			}
+
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spread_angle"			"180"
+			}
+
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"vertical_laser_distance"	"500"
+			}
+
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"vertical_laser_angle"		"90"
+			}
+
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"diagonal_laser_distance"	"350"
+			}
+
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"diagonal_laser_angle"		"45"
+			}			
+
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"explosion_damage_main"	"200"
+			}
+
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"missile_aoe"			"300"	
+			}
+
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mini_break_extra_dmg"	"15"
+			}
+
+			"12"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"interval_reduction"	"0.25"
+			}
+
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"explosion_damage"		"100"
+			}			
 		}
 	}
 
