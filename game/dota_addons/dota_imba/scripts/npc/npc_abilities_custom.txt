@@ -28235,6 +28235,11 @@
 				"var_type"							"FIELD_INTEGER"
 				"illusion_dmg_dealt"				"40"
 			}
+			"04"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"illusion_base_speed"				"400"
+			}
 		}
 	}
 
