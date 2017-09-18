@@ -75,7 +75,7 @@ function modifier_imba_spectre_haunt_illusion:IsHidden() return true end
 
 function modifier_imba_spectre_haunt_illusion:OnCreated( kv )
 	-- Ability values
-	self.absolute_min_speed = 400 -- Vanilla Dota 2 has this as absolute speed (cannot be increased), but this is IMBA, so buff
+	self.absolute_min_speed = self:GetAbility():GetSpecialValueFor("illusion_base_speed") or 400 -- Vanilla Dota 2 has this as absolute speed (cannot be increased), but this is IMBA, so buff
 	self.activation_delay = 1.0 -- Vanilla Dota 2 delay from when illusion spawns to when it gets to move/attack
 	self.tick_rate = 0.5 -- ordering unit to attack/move-to
 
