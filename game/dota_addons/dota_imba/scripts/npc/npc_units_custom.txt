@@ -8180,7 +8180,7 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_roshan"
-		"Model"						"models/roshan_halloween.vmdl"
+		"Model"						"models/rosh/roshan_halloween.vmdl"
 		"GameSoundsFile"			"soundevents/diretide_soundevents.vsndevts"
 		"SoundSet"					"RoshanDT"
 		"IdleSoundLoop"				"RoshanDT.Idle"

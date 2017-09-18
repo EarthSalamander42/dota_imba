@@ -48,3 +48,7 @@ game/dota_addons/dota_imba/scripts/vscripts/server/auth.kv
 
 #Stat-Collection Shema Key
 game/dota_addons/dota_imba/scripts/vscripts/statcollection/settings.kv
+
+# Roshan
+content/dota_addons/dota_imba/models/rosh*
+game/dota_addons/dota_imba/models/rosh*

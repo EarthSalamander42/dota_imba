@@ -110,7 +110,6 @@ local roshan_spawner = Entities:FindByName(nil, "roshan_diretide"):GetAbsOrigin(
 				print("TIE")
 				nCOUNTDOWNTIMER = 1
 			else
-				COUNT_DOWN = 1
 				nCOUNTDOWNTIMER = PHASE_TIME
 				PHASE = PHASE + 1
 				DiretidePhase(PHASE)
@@ -124,6 +123,8 @@ local roshan_spawner = Entities:FindByName(nil, "roshan_diretide"):GetAbsOrigin(
 			elseif PHASE == 3 then
 				nCOUNTDOWNTIMER = 120
 				COUNT_DOWN = 0
+			elseif PHASE == 4 then
+				GameRules:Defeated()
 			end
 		elseif nCOUNTDOWNTIMER == 120 and PHASE == 3 then
 			local hero = FindUnitsInRadius(2, Entities:FindByName(nil, "roshan_arena_"..DIRETIDE_WINNER):GetAbsOrigin(), nil, 700, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
@@ -134,4 +135,8 @@ local roshan_spawner = Entities:FindByName(nil, "roshan_diretide"):GetAbsOrigin(
 		end
 		return tick
 	end)
+end
+
+function DiretideIncreaseTimer(time)
+	nCOUNTDOWNTIMER = nCOUNTDOWNTIMER + time
 end

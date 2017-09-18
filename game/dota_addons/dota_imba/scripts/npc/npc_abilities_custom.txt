@@ -39419,7 +39419,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityTextureName"			"rubick_empty1"
 		"ScriptFile"					"hero/neutral_roshan.lua"
 		"MaxLevel"						"1"
@@ -39454,7 +39454,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"leash_distance"		"2000"
+				"leash_distance"		"1600"
 			}
 			"05"
 			{
@@ -39524,7 +39524,7 @@
 			"18"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attackspeed_per_death"	"30"
+				"attackspeed_per_death"	"20"
 			}
 			"19"
 			{
