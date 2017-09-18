@@ -18,8 +18,13 @@ function imba_spectre_haunt:OnSpellStart()
 	if not IsServer() then
 		return
 	end
+	-- ability values
+	local haunt_sound_cast = "Hero_Spectre.HauntCast"
+	local haunt_sound_enemy = "Hero_Spectre.Haunt"
+	local additional_modifiers = { "modifier_imba_spectre_haunt_illusion" } -- extra modifiers that are grante to Spectre illusions (contains min speed/flying movement)
+	local spawn_distance = 58 -- illusion spawn distance from enemy
 
-	if not self.spawned_illusion then
+	if not self.spawned_illusions then
 		self.spawned_illusions = {}
 	end
 	self.expire_time = GameRules:GetGameTime() + self:GetSpecialValueFor("duration")
@@ -30,7 +35,6 @@ function imba_spectre_haunt:OnSpellStart()
 	for _, enemy in pairs(enemies) do
 		if enemy:IsRealHero() and enemy:IsAlive() then
 			local enemy_position = enemy:GetAbsOrigin()
-			local spawn_distance = 58 -- Vanilla Dota 2
 			
 			local spawn_angle = RandomInt(0, 90)
 			local spawn_dx = spawn_distance * math.sin(spawn_angle)
@@ -42,15 +46,15 @@ function imba_spectre_haunt:OnSpellStart()
 			if RandomInt(0, 1) == 1 then
 				spawn_dy = -spawn_dy
 			end
-			local spawn_pos = Vector(spawn_dx, spawn_dy, enemy_position.z)
+			local spawn_pos = Vector(enemy_position.x + spawn_dx, enemy_position.y + spawn_dy, enemy_position.z)
 
-			IllusionManager:CreateIllusion(caster, self, spawn_pos, caster, {additional_modifiers={"modifier_imba_spectre_haunt_illusion"}, controllable = 0}, enemy)
+			IllusionManager:CreateIllusion(caster, self, spawn_pos, caster, {additional_modifiers =  additional_modifiers, controllable = 0, force_attack = 1}, enemy)
 
-			EmitSoundOn("Hero_Spectre.Haunt", enemy)
+			EmitSoundOn(haunt_sound_enemy, enemy)
 		end
 	end
 
-	EmitSoundOn("Hero_Spectre.HauntCast", caster)
+	EmitSoundOn(haunt_sound_cast, caster)
 end
 
 -- Spectre Illusion modifier (set absolute speed + command restrict + flying pathing)
@@ -59,60 +63,73 @@ function modifier_imba_spectre_haunt_illusion:IsPurgable() return false end
 function modifier_imba_spectre_haunt_illusion:IsHidden() return true end
 
 function modifier_imba_spectre_haunt_illusion:OnCreated( kv )
-	self.parent = self:GetParent()
-	self.ability = self:GetAbility()
-	-- Target is initialized before modifiers are added/reset
-	self.target = self.parent:GetAttackTarget()
-
-	-- illusion index, since illusions aren't deleted - this is for Reality ability
-	if self.ability.spawned_illusions then
-		self.ability.spawned_illusions[#self.spawned_illusions] = self.parent
-	end
-
-	self.first_activation = true
+	-- Ability values
 	self.absolute_min_speed = 400 -- Vanilla Dota 2 has this as absolute speed (cannot be increased), but this is IMBA, so buff
 	self.activation_delay = 1.0 -- Vanilla Doto again
-	self.tick_rate = 1.0 -- ordering unit to attack/move-to once a second seems fair enough
-	self.expire_time = GameRules:GetGameTime() + self:GetDuration()
+	self.tick_rate = 0.5 -- ordering unit to attack/move-to
 
 	if IsServer() then
-		self:StartIntervalThink(self.activation_delay)
-	end
-end
+		--print("modifier_imba_spectre_haunt_illusion:OnCreated")
+		self.parent = self:GetParent()
+		self.caster = self:GetCaster()
+		--print("Parent's entindex : ", self.parent:entindex())
+		self.ability = self:GetAbility()
+		self.caster_attack_cap = self.caster:GetAttackCapability() -- Fucking Rubick
 
-function modifier_imba_spectre_haunt_illusion:OnRefresh( kv )
-	if IsServer() then
-		-- If the cast happened before the previous one expired, don't delay the illusion activation (Refresher Orb shenanigans)
-		-- Technically, this buffs dead illusions, because, if they are respawned via Refresher Orb, they won't have the delay
-		if GameRules:GetGameTime() < self.expire_time then
-			self.expire_time = GameRules:GetGameTime() + self:GetDuration()
-			self:OnIntervalThink()
-		else
-			self.expire_time = GameRules:GetGameTime() + self:GetDuration()
-			self:StartIntervalThink(-1)
+		-- illusion index, since illusions aren't deleted - this is for Reality ability
+		if self.ability.spawned_illusions and self.ability.spawned_illusions[self.parent:entindex()] == nil then
+			--print("Adding ourselves to illusion table")
+			self.ability.spawned_illusions[self.parent:entindex()] = self.parent
+		end
+
+		--print(self.parent:GetForceAttackTarget():GetName())
+
+		-- Target is initialized before modifiers are added/reset
+		self.target = self.parent:GetForceAttackTarget()
+		if not self.expire_time or GameRules:GetGameTime() > self.expire_time then
+			-- Ability tracking stuff
+			self.first_activation = true -- for different first OnIntervalThink delay
+			self.expire_time = GameRules:GetGameTime() + self:GetDuration() -- To buff Refresher Orb - doesn't cause the activation delay
+
+			--self.parent:SetAcquisitionRange(0)
+			self.parent:SetForceAttackTarget(nil)
+			--self.parent:SetIdleAcquire(false)
+			self.parent:SetAttackCapability(DOTA_UNIT_CAP_NO_ATTACK)
+			self.parent:Stop()
+
 			self:StartIntervalThink(self.activation_delay)
-			self.first_activation = true
 		end
 	end
 end
 
 function modifier_imba_spectre_haunt_illusion:OnIntervalThink()
-	print("modifier_imba_spectre_haunt_illusion:OnIntervalThink() called")
-
 	if IsServer() then
-		-- Just in case something weird happens, I'm not sure if modifiers stop intervalthinking if their duration expires, but they have DestroyOnExpire = false
-		if self.expire_time < GameRules:GetGameTime() then
+		if self.parent:GetAttackCapability() ~= self.caster_attack_cap then
+			self.parent:SetAttackCapability(self.caster_attack_cap)
+		end
+		-- If illusion becomes inactive (dead/expired), then stop everything
+		if self.parent.active == 0 then
+			--print("Deactivating illusion")
+			self.parent:SetForceAttackTarget(nil)
+			self.parent:SetAttackCapability(DOTA_UNIT_CAP_NO_ATTACK)
+			self.parent:Stop()
 			self:StartIntervalThink(-1)
 			return
 		end
 
 		if self.target and self.target:IsAlive() then
 			if self.target:IsInvisible() then
+				--print("Moving to invisible unit")
 				self.parent:MoveToNPC(self.target)
 			else
-				self.parent:MoveToTargetToAttack(self.target)
+				if self.parent:GetForceAttackTarget() ~= self.target then
+					--print("Setting attack target")
+					self.parent:SetForceAttackTarget(self.target)
+				end
 			end
 		else
+			--print("Stopping parent")
+			self.parent:SetForceAttackTarget(nil)
 			self.parent:Stop()
 		end
 		--[[
@@ -158,35 +175,47 @@ function imba_spectre_reality:OnSpellStart()
 	if not IsServer() then
 		return
 	end
+	-- ability values
+	local reality_sound = "Hero_Spectre.Reality"
 
 	local caster = self:GetCaster()
 
 	local haunt_ability = caster:FindAbilityByName("imba_spectre_haunt")
 	-- if we don't have the haunt ability (somehow), or the ability isn't currently active, don't do anything
-	if not haunt_ability or haunt_ability.self.expire_time < GameRules:GetGameTime() then
+	if not haunt_ability or not haunt_ability.expire_time or haunt_ability.expire_time < GameRules:GetGameTime() then
+		--print("Ability not found or expired")
 		return
 	end
 
 	-- if haunt has spawned illusions, we loop through them to find active ones and check their distance to us
 	-- to find the closest one
-	if haunt_ability.spawned_illusions and #haunt_ability.spawned_illusions > 0 then
+	if haunt_ability.spawned_illusions then
 		local cursor_pos = self:GetCursorPosition()
 		local closest_illusion
-		for illusion in haunt_ability.spawned_illusions do
+		local illusion_count = 0
+		for entindex, illusion in pairs(haunt_ability.spawned_illusions) do
+			illusion_count = illusion_count + 1
 			if illusion.active == 1 then
 				local distance = (cursor_pos - illusion:GetAbsOrigin()):Length2D()
-				if ( not closest_illusion ) or distance < (cursor_pos - closest_illusion:GetAbsOrigin()):Length2D() then
+				if ( not closest_illusion ) or ( distance < (cursor_pos - closest_illusion:GetAbsOrigin()):Length2D() ) then
 					closest_illusion = illusion
 				end
 			end
 		end
 
+		--print("Illusion Count: ", illusion_count)
+
 		-- If we found a closest illusion, swap our positions
 		if closest_illusion then
-			caster:SetAbsOrigin(closest_illusion:GetAbsOrigin())
-			closest_illusion:SetAbsOrigin(cursor_pos)
+			-- You're about to get shanked!
+			local temp_pos = closest_illusion:GetAbsOrigin()
+			EmitSoundOnLocationWithCaster(temp_pos, reality_sound, caster)
+			closest_illusion:SetAbsOrigin(caster:GetAbsOrigin())
+			caster:SetAbsOrigin(temp_pos)
 			-- ...also set our attack target to the illusions target, for Quality of Life and less clicking
-			caster:MoveToTargetToAttack(closest_illusion:GetAttackTarget())
+			caster:MoveToTargetToAttack(closest_illusion:GetForceAttackTarget())
 		end	
+	else
+		--print("Haunt ability illusion table not found")
 	end
 end
