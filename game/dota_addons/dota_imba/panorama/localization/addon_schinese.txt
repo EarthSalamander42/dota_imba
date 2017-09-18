@@ -405,13 +405,13 @@
 
 	// Lina
 	"DOTA_Tooltip_Talent_special_bonus_imba_lina_1_title"						"龙破斩"
-	"DOTA_Tooltip_Talent_special_bonus_imba_lina_1_Description"					"+4 次级龙破斩数量"
+	"DOTA_Tooltip_Talent_special_bonus_imba_lina_1_Description"					"+2 次级龙破斩数量"
 	"DOTA_Tooltip_Talent_special_bonus_imba_lina_2_title"						"龙破斩"
 	"DOTA_Tooltip_Talent_special_bonus_imba_lina_2_Description"					"中间的次级龙破斩尾端还会再生成一次主龙破斩"
 	"DOTA_Tooltip_Talent_special_bonus_imba_lina_3_title"						"炽魂"
 	"DOTA_Tooltip_Talent_special_bonus_imba_lina_3_Description"					"炽魂达到3层后可主动使用，消耗所有炽魂效果，爆发范围伤害，作用范围800，距离越近，伤害越高，最高450伤害，最低100伤害"
 	"DOTA_Tooltip_Talent_special_bonus_imba_lina_4_title"						"光击阵"
-	"DOTA_Tooltip_Talent_special_bonus_imba_lina_4_Description"					"每个光击阵爆炸时还会使前一个光击阵再次爆炸"
+	"DOTA_Tooltip_Talent_special_bonus_imba_lina_4_Description"					"光击阵会引燃地面，每秒对敌人造成10/20/30/40/50/60/70点伤害，持续时间与眩晕时间相同"
 	"DOTA_Tooltip_Talent_special_bonus_imba_lina_5_title"						"莉娜"
 	"DOTA_Tooltip_Talent_special_bonus_imba_lina_5_Description"					"莉娜的技能对敌人施加持续性伤害效果，基于炽魂的层数，每层每秒造成40伤害，持续5秒"
 	"DOTA_Tooltip_Talent_special_bonus_imba_lina_6_title"						"神灭斩"
@@ -570,7 +570,7 @@
 
 	// Sniper
 	"DOTA_Tooltip_Talent_special_bonus_imba_sniper_1_title"                   "榴霰弹"
-	"DOTA_Tooltip_Talent_special_bonus_imba_sniper_1_Description"             "榴霰弹全图施法，但是如果狙击手处于泉水附近，本天赋改为双倍施法距离"
+	"DOTA_Tooltip_Talent_special_bonus_imba_sniper_1_Description"             "榴霰弹双倍施法距离"
 	"DOTA_Tooltip_Talent_special_bonus_imba_sniper_2_title"                   "暗杀"
 	"DOTA_Tooltip_Talent_special_bonus_imba_sniper_2_Description"             "暗杀击退所有被击中的单位500距离"
 	"DOTA_Tooltip_Talent_special_bonus_imba_sniper_3_title"                   "榴霰弹"

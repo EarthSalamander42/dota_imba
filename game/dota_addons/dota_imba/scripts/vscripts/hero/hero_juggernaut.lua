@@ -1736,6 +1736,23 @@ function modifier_imba_omni_slash_image:CheckState()
     return state
 end
 
+function modifier_imba_omni_slash_image:OnCreated()
+	if not IsServer() then
+		return
+	end
+	self:StartIntervalThink(0.5)
+end
+
+function modifier_imba_omni_slash_image:OnIntervalThink()
+	if not IsServer() then
+		return
+	end
+	local caster = self:GetParent()
+	if not caster:HasModifier("modifier_imba_omni_slash_caster") then
+		self:Destroy()
+	end
+end
+
 function modifier_imba_omni_slash_image:GetModifierDamageOutgoing_Percentage()
 	local image_outgoing_damage_percent = (100 - self:GetCaster():FindTalentValue("special_bonus_imba_juggernaut_7")) * (-1)
 	return image_outgoing_damage_percent
@@ -2001,13 +2018,14 @@ function modifier_imba_omni_slash_caster:OnDestroy()
 			end
 			
 			if self.original_caster:HasModifier("modifier_imba_omni_slash_talent") then
-			self.original_caster:RemoveModifierByName("modifier_imba_omni_slash_talent")
+				self.original_caster:RemoveModifierByName("modifier_imba_omni_slash_talent")
 			end
 			
 			-- Create the after image before it fades
 			CreateModifierThinker(self.original_caster, self.ability, "modifier_omnislash_image_afterimage_fade" ,{duration = 1.0, previous_position_x = self.previous_pos.x, previous_position_y = self.previous_pos.y, previous_position_z = self.previous_pos.z}, self.current_pos, self.original_caster:GetTeamNumber(), false)
 			
-			self.caster:MakeIllusion()
+			self:GetParent():MakeIllusion()
+			self:GetParent():RemoveModifierByName("modifier_imba_omni_slash_image")
 
 			for item_id=0, 5 do
 				local item_in_caster = self.caster:GetItemInSlot(item_id)
@@ -2024,16 +2042,13 @@ function modifier_imba_omni_slash_caster:OnDestroy()
 				end
 			end
 
-			Timers:CreateTimer(0.1, function()
 			if (not self:GetCaster():IsNull()) then
-			self:GetCaster():SetAbsOrigin(Vector(0,0,99999))
-			self:GetCaster():AddNoDraw()
-			end
-			end)
-			local icaster = self.caster
-			Timers:CreateTimer(0.2, function()
+				self:GetCaster():SetAbsOrigin(Vector(0,0,99999))
+				self:GetCaster():AddNoDraw()
+
+				local icaster = self:GetCaster()
 				UTIL_Remove(icaster)
-			end)
+			end
 		end
 	end
 end
