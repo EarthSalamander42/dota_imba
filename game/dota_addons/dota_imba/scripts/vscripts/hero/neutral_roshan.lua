@@ -1059,6 +1059,8 @@ function modifier_imba_roshan_ai_diretide:OnTakeDamage(keys)
 		if roshan == keys.unit then
 			if keys.damage > roshan:GetHealth() then
 				self:Die(roshan)
+			else
+				CustomNetTables:SetTableValue("game_options", "roshan_hp", {HP = roshan:GetHealth(), HP_alt = roshan:GetHealthPercent(), maxHP = roshan:GetMaxHealth()})
 			end
 		end
 	end
