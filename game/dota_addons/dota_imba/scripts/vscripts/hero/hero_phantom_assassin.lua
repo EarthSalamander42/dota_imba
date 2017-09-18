@@ -851,7 +851,8 @@ function modifier_imba_coup_de_grace:OnRefresh()
 end
 
 function modifier_imba_coup_de_grace:DeclareFunctions()
-  local funcs = {MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE}
+  local funcs = {MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE,
+		 MODIFIER_EVENT_ON_ATTACK_LANDED}
   return funcs
 end
 
@@ -879,12 +880,7 @@ function modifier_imba_coup_de_grace:GetModifierPreAttack_CriticalStrike(keys)
             end            
         end        
 
-        if RollPseudoRandom(crit_chance_total, self) then        	
-
-			local coup_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_phantom_assassin/phantom_assassin_crit_impact.vpcf", PATTACH_CUSTOMORIGIN, caster)			
-			ParticleManager:SetParticleControlEnt(coup_pfx, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
-			ParticleManager:SetParticleControlEnt(coup_pfx, 1, target, PATTACH_ABSORIGIN_FOLLOW, "attach_origin", target:GetAbsOrigin(), true)
-			ParticleManager:ReleaseParticleIndex(coup_pfx)
+        if RollPseudoRandom(crit_chance_total, self) then        				
 			
 			StartSoundEvent("Hero_PhantomAssassin.CoupDeGrace", target)
 			local responses = {"phantom_assassin_phass_ability_coupdegrace_01",
@@ -909,9 +905,32 @@ function modifier_imba_coup_de_grace:GetModifierPreAttack_CriticalStrike(keys)
 			-- TALENT: +100% Coup de Grace crit damage			
 			local crit_bonus = self.crit_bonus + self.caster:FindTalentValue("special_bonus_imba_phantom_assassin_5")
             return crit_bonus
+			
+			-- Mark the attack as a critical in order to play the bloody effect on attack landed
+			self.crit_strike = true
+		else
+			-- If this attack wasn't a critical strike, remove possible markers from it.
+			self.crit_strike = false
         end
 
         return nil        
+	end
+end
+
+function modifier_imba_coup_de_grace:OnAttackLanded(keys)
+	if IsServer() then
+		local target = keys.target
+		local attacker = keys.attacker
+		
+		-- Only apply if the attacker is the caster and it was a critical strike
+		if self:GetCaster() == attacker and self.crit_strike then
+			
+			-- If that attack was marked as a critical strike, apply the particles
+			local coup_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_phantom_assassin/phantom_assassin_crit_impact.vpcf", PATTACH_CUSTOMORIGIN, attacker)			
+			ParticleManager:SetParticleControlEnt(coup_pfx, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControlEnt(coup_pfx, 1, target, PATTACH_ABSORIGIN_FOLLOW, "attach_origin", target:GetAbsOrigin(), true)
+			ParticleManager:ReleaseParticleIndex(coup_pfx)
+		end			
 	end
 end
 
