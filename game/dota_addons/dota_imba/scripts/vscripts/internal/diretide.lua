@@ -10,6 +10,14 @@ COUNT_DOWN = 1
 PHASE_TIME = 61 -- 481
 
 function Diretide()
+
+	local units = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)		
+	for _, unit in pairs(units) do
+		if unit:IsBuilding() then
+			unit:AddNewModifier(unit, nil, "modifier_invulnerable", {})
+		end
+	end
+
 	EmitGlobalSound("announcer_diretide_2012_announcer_welcome_05")
 	EmitGlobalSound("DireTideGameStart.DireSide")
 	PHASE = 1
@@ -32,9 +40,9 @@ function DiretidePhase(PHASE)
 			else
 				print("ERROR - Could not find Roshans AI modifier")
 			end
-		--	break (Do we want multiple Roshans roaming the map? :nofun:)
 		end
 	end
+	CustomGameEventManager:Send_ServerToAllClients("diretide_phase", {Phase = tostring(PHASE)})
 end
 
 -- Pumpkin
@@ -123,8 +131,16 @@ local roshan_spawner = Entities:FindByName(nil, "roshan_diretide"):GetAbsOrigin(
 			elseif PHASE == 3 then
 				nCOUNTDOWNTIMER = 120
 				COUNT_DOWN = 0
+				local units = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)		
+				for _, unit in pairs(units) do
+					if unit:IsCreep() then
+						unit:RemoveSelf()
+					elseif unit:GetUnitName() == "lane_mid_goodguys_melee_spawner" then
+						print("Spawner!")
+					end
+				end
 			elseif PHASE == 4 then
-				GameRules:Defeated()
+				GameRules:SetGameWinner(DOTA_TEAM_NEUTRALS)
 			end
 		elseif nCOUNTDOWNTIMER == 120 and PHASE == 3 then
 			local hero = FindUnitsInRadius(2, Entities:FindByName(nil, "roshan_arena_"..DIRETIDE_WINNER):GetAbsOrigin(), nil, 700, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)

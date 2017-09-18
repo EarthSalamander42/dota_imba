@@ -2,13 +2,23 @@
 .DiretidePanel
 {
 	horizontal-align: center;
+	flow-children: down;
 }
 
 #Diretide
 {
 	width: fit-children;
 	height: fit-children;
-	margin-top: 20%;
+	margin-top: 60px;
+	flow-children: down;
+	horizontal-align: center;
+	visibility: collapse;
+}
+
+#Diretide2
+{
+	width: fit-children;
+	height: fit-children;
 	flow-children: right;
 	horizontal-align: center;
 	visibility: collapse;
@@ -42,11 +52,6 @@
 #Timer.timer_visible
 {
 	opacity: 1;
-}
-
-#Timer.timer_hidden
-{
-	opacity: 0;
 }
 
 #Timer.timer_alert
@@ -90,4 +95,95 @@
 	font-weight: bold;
 	font-size: 40px;
 	text-align: center;
+}
+
+#PhaseLabel
+{
+	font-size: 20px;
+	font-weight: bolder;
+	color: green;
+	text-shadow: 1px 1px 1px #7b612b;
+	text-align: center;
+	text-overflow: clip;
+}
+
+//XHS BOSS BARS
+.HoldoutLabelSmall
+{
+	color: white;
+    font-weight: bold;
+    text-align: center;
+    text-shadow: 1px 1px 2px 2.0 #00000011;
+
+    font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+    font-size: 14px;
+    letter-spacing: 2px;
+	text-overflow: clip;
+	margin-bottom: -3px;
+
+	horizontal-align: center;
+	text-align: center;	
+	margin-top: 12px;
+	text-shadow: 1px 1px 2px 3.0 #000000;
+	font-size: 16px;
+}
+
+.HoldoutLabelSmall.Header
+{
+	width: 95px;
+}
+
+#RoshanHP
+{
+	width: 500px;
+	height: 64px;
+	visibility: collapse;
+}
+
+#RoshanProgressBar
+{
+	width: 90%;
+	height: 24px;
+	border-radius: 4px;
+	border: 3px solid #444;
+	background-color: black;
+	vertical-align: middle;
+	horizontal-align: right;
+	box-shadow: fill #000 -3px -3px 6px 6px;	
+}
+
+#RoshanProgressBar_Left
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #326114 ), color-stop( 0.3, #54BA07 ), color-stop( .5, #54BA07 ), to( #326114 ) );
+	box-shadow: inset #000 1px 1px 3px 3px;	
+	border-radius: 2px;
+}
+
+#RoshanProgressBar_Left
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #320000 ), color-stop( 0.3, #ff4A07 ), color-stop( .5, #ff4A07 ), to( #320000 ) );
+}
+
+#RoshanProgressBar_Right
+{
+	background-color: gradient( linear, 0% 0%, 100% 0%, from( #222222FF ), to( black ) );
+}
+
+#RoshanProgressBarContainer
+{
+	width: 100%;
+	height: 40px;
+	margin-right: 6%;
+	vertical-align: bottom;
+}
+
+#BossIcon
+{
+	height: 48px;
+	width: 48px;
+}
+
+#RoshanHealth
+{
+	margin-left: 6%;
 }
