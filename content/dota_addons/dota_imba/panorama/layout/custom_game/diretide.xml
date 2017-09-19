@@ -8,6 +8,10 @@
 	</scripts>
 	<Panel class="DiretidePanel">
 		<Panel id="Diretide">
+			<Label id="PhaseLabel" text="#diretide_phase_1" />
+		</Panel>
+
+		<Panel id="Diretide2">
 			<Panel hittest="false" id="RadiantScore">
 				<Label hittest="false" class="QuestGenericText" id="RadiantScoreText" text="999"/>
 			</Panel>
@@ -19,6 +23,15 @@
 			</Panel>
 			<Panel hittest="false" id="DireScore">
 				<Label hittest="false" class="QuestGenericText" id="DireScoreText" text="999"/>
+			</Panel>
+		</Panel>
+
+		<Panel id="RoshanHP" hittest="false">
+			<Label id="RoshanLabel" class="HoldoutLabelSmall" hittest="false" text="#npc_dota_hero_roshan_halloween"/>
+			<Panel id="RoshanProgressBarContainer" hittest="false">
+				<DOTAHeroImage id="BossIcon" heroname="npc_dota_hero_roshan" heroimagestyle="icon" hittest="false"/>
+				<ProgressBar id="RoshanProgressBar" hittest="false" value="1.0"/>
+				<Label id="RoshanHealth" class="HoldoutLabelSmall" hittest="false" text="0"/>
 			</Panel>
 		</Panel>
 	</Panel>

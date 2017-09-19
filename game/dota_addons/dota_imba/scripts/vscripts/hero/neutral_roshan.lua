@@ -440,7 +440,7 @@ function modifier_imba_roshan_ai_diretide:IsHidden() return true end
 --	GENERAL
 
 function modifier_imba_roshan_ai_diretide:GetPriority()
-    return MODIFIER_PRIORITY_SUPER_ULTRA end
+	return MODIFIER_PRIORITY_SUPER_ULTRA end
 
 function modifier_imba_roshan_ai_diretide:GetModifierProvidesFOWVision()
 	return 1 end
@@ -534,9 +534,6 @@ function modifier_imba_roshan_ai_diretide:OnCreated()
 		self.leashDistance		= ability:GetSpecialValueFor("leash_distance")		-- How far is Roshan allowed to walk away from the starting point
 		self.leashHealPcnt		= ability:GetSpecialValueFor("leash_heal_pcnt")		-- Percent of max health Roshan will heal should he get leashed
 		self.isDead				= false												-- Is Roshan 'dead'?
-
-		self.leashPoint			= Vector(0,0,0) -- TEMPORARY!   DON'T FORGET TO REMOVE THIS AND UNCOMMENT THE RESETTING LINE AT THE START PHASE FUNCTION
-		
 		
 		-- Sound delays to sync with animation
 		self.candyBeg		= 0.5
@@ -550,7 +547,7 @@ function modifier_imba_roshan_ai_diretide:OnCreated()
 		-- Aimation durations
 		self.animBeg		= 5
 		self.animGobble		= 9
-		self.animDeath		= 15
+		self.animDeath		= 8
 		
 		-- Ability handlers
 		self.forceWave	= self.roshan:FindAbilityByName("imba_roshan_diretide_force_wave")
@@ -621,7 +618,7 @@ function modifier_imba_roshan_ai_diretide:StartPhase(phase)
 	self.isTransitioning = false
 	self.atStartPoint = false
 	self.wait = 0
-	-- self.leashPoint = nil
+	self.leashPoint = nil
 	
 	if self.isDead then
 		self.isDead = false
@@ -775,14 +772,22 @@ function modifier_imba_roshan_ai_diretide:ThinkPhase3(roshan)
 	-- Don't think while being stunned, hexed, or casting spells
 	if roshan:IsStunned() or roshan:IsHexed() or roshan:IsChanneling() or roshan:GetCurrentActiveAbility() then return end
 
+	-- Wait. No reason to decrement negative values
+	if self.wait < 0 then
+		return
+	elseif self.wait > 0 then
+		self.wait = self.wait - 1
+		return
+	end
+
 	if not self.leashPoint then
-		if DIRETIDE_WINNER == DOTA_TEAM_BADGUYS or DIRETIDE_WINNER == DOTA_TEAM_GOODGUYS then
+		if DIRETIDE_WINNER == DOTA_TEAM_BADGUYS then
 			self.leashPoint = Entities:FindByName(nil, "roshan_arena_"..DIRETIDE_WINNER):GetAbsOrigin()		-- Pick arena based on phase 2 winner
 		else
 			self.leashPoint = Entities:FindByName(nil, "roshan_arena_"..DOTA_TEAM_GOODGUYS):GetAbsOrigin()	-- Default to Radiant
 		end
 	end
-	
+
 	-- Transitioning from Phase 2 to 3
 	if self.isTransitioning then
 		if self.atStartPoint then return end
@@ -809,10 +814,15 @@ function modifier_imba_roshan_ai_diretide:ThinkPhase3(roshan)
 	
 		return
 	end
-	
+
 	if COUNT_DOWN and COUNT_DOWN == 0 then
 		local heroDetector = FindUnitsInRadius(roshan:GetTeamNumber(), roshan:GetAbsOrigin(), nil, 700, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
-		if #heroDetector > 0 then COUNT_DOWN = 1 end
+		if #heroDetector > 0 then
+			COUNT_DOWN = 1
+		else
+			self.wait = 5
+			return
+		end
 	end
 	
 	-- Wait. No reason to decrement negative values
@@ -934,10 +944,10 @@ end
 function modifier_imba_roshan_ai_diretide:Die(roshan)
 	self.isDead = true
 	roshan:AddNoDraw()
-	
+
 	local dummyRoshan = CreateUnitByName("npc_diretide_roshan", roshan:GetAbsOrigin(), false, roshan, roshan, roshan:GetTeamNumber()) 
 	dummyRoshan:ForceKill(true)
-	
+
 	-- not attached to Roshan or the dummy so it gets drawn (unlike Roshan), and stays until the particle expires (which the dummy would prevent)
 	local deathParticle = ParticleManager:CreateParticle("particles/hw_fx/hw_roshan_death.vpcf", PATTACH_CUSTOMORIGIN, nil)
 	ParticleManager:SetParticleControl(deathParticle, 0, dummyRoshan:GetAbsOrigin())
@@ -952,7 +962,7 @@ function modifier_imba_roshan_ai_diretide:Respawn(roshan)
 	self.isDead = false
 	roshan:SetHealth(roshan:GetMaxHealth())
 	roshan:RemoveNoDraw()
-	
+
 	-- Refresh cooldowns
 	if self.forceWave	then self.forceWave:EndCooldown()	end
 	if self.roshlings	then self.roshlings:EndCooldown()	end
@@ -960,7 +970,9 @@ function modifier_imba_roshan_ai_diretide:Respawn(roshan)
 	if self.apocalypse	then self.apocalypse:EndCooldown()	end
 	if self.fireBall	then self.fireBall:EndCooldown()	end
 	if self.toss		then self.toss:EndCooldown()		end
-	
+
+	DiretideIncreaseTimer(30)
+
 	-- Increase Roshans strength through the modifier
 	local deathMod = roshan:FindModifierByName("modifier_imba_roshan_death_buff")
 	if not deathMod then
@@ -1047,6 +1059,8 @@ function modifier_imba_roshan_ai_diretide:OnTakeDamage(keys)
 		if roshan == keys.unit then
 			if keys.damage > roshan:GetHealth() then
 				self:Die(roshan)
+			else
+				CustomNetTables:SetTableValue("game_options", "roshan_hp", {HP = roshan:GetHealth(), HP_alt = roshan:GetHealthPercent(), maxHP = roshan:GetMaxHealth()})
 			end
 		end
 	end
@@ -1318,7 +1332,7 @@ function imba_roshan_diretide_force_wave:OnSpellStart()	-- Parameters
 	local hitUnits = {}
 
 	roshan:EmitSound("RoshanDT.WaveOfForce.Cast")
-	
+
 	-- Base projectile information
 	local waveProjectile = {
 		Ability				= self,
@@ -1351,7 +1365,6 @@ function imba_roshan_diretide_force_wave:OnProjectileHit(unit, unitPos)
 
 end
 
-
 ------------------------------------------
 --				ROSHLINGS				--
 ------------------------------------------
@@ -1362,12 +1375,12 @@ function imba_roshan_diretide_summon_roshlings:OnSpellStart()
 	local summonCount = self:GetSpecialValueFor("summon_count")
 	local summon = "npc_imba_roshling"
 	local summonAbilities = { "imba_roshling_bash", "imba_roshling_aura" }
-	
+
 	local deathMod = roshan:FindModifierByName("modifier_imba_roshan_death_buff")
 	if deathMod then
 		summonCount = summonCount + deathMod:GetStackCount() * self:GetSpecialValueFor("extra_per_death")
 	end
-	
+
 	local roshling = nil
 	GridNav:DestroyTreesAroundPoint(roshanPos, 250, false)
 	for i = 1, summonCount do

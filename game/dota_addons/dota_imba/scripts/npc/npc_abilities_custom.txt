@@ -1,4 +1,4 @@
-// Dota Abilities Override File
+﻿// Dota Abilities Override File
 // DataDriven Ability Guide: https://moddota.com/forums/discussion/14/datadriven-ability-breakdown-documentation
 
 "DOTAAbilities"
@@ -26083,7 +26083,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"60"
+		"AbilityManaCost"				"0"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -26106,7 +26106,11 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"scream_damage_pct"		"20 20 20 20 40 60 80"
-				"LinkedSpecialBonus"	"special_bonus_imba_queenofpain_2"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_cost"				"60"
 			}
 		}
 	}
@@ -26132,7 +26136,8 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"475"		
+		"AbilityCastRange"				"475"
+		"AbilityCastPoint"				"0.0"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_3"
 
 		// Time
@@ -26165,21 +26170,17 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"radius"				"475"
-				"LinkedSpecialBonus"	"special_bonus_imba_queenofpain_3"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"pain_duration"			"2 2 2 2 3 3 3"
 			}
-
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"pain_reflect_pct"		"20 30 40 50 50 50 50"
-				"LinkedSpecialBonus"	"special_bonus_imba_queenofpain_5"
 			}
-
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -26262,7 +26263,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"absorb_pct"			"30 30 30 50 70 90"
-				"LinkedSpecialBonus"	"special_bonus_imba_queenofpain_4"
 			}
 			"06"
 			{
@@ -26288,7 +26288,7 @@
 	}
 
 	//=================================================================================================================
-	// Queen of Pain Talent 1 (Level 10): %-Extra Delightful Torment effect on Sonic Wave
+	// Queen of Pain Talent 1 (Level 10): Shadow Struck targets can be seen through fog
 	//=================================================================================================================
 	"special_bonus_imba_queenofpain_1"
 	{
@@ -26300,177 +26300,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_queenofpain_sonic_wave"
-			"02" 	"imba_queenofpain_delightful_torment"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"100"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Queen of Pain Talent 2 (Level 10): %-Extra Blink scream of pain damage
-	//=================================================================================================================
-	"special_bonus_imba_queenofpain_2"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_queenofpain_blink"
-			"02" 	"imba_queenofpain_scream_of_pain"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"20"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Queen of Pain Talent 3 (Level 20): Additional Scream of Pain radius
-	//=================================================================================================================
-	"special_bonus_imba_queenofpain_3"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_queenofpain_scream_of_pain"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"100"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Queen of Pain Talent 4 (Level 20): %-based Sonic Wave spell-lifesteal
-	//=================================================================================================================
-	"special_bonus_imba_queenofpain_4"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_queenofpain_sonic_wave"	
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"35"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Queen of Pain Talent 5 (Level 30): %-based additional Scream of Pain damage reflected
-	//=================================================================================================================
-	"special_bonus_imba_queenofpain_5"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_queenofpain_scream_of_pain"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"50"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Queen of Pain Talent 6 (Level 30): %-based additional Sonic Wave end radius/travel distance
-	//=================================================================================================================
-	"special_bonus_imba_queenofpain_6"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_queenofpain_sonic_wave"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"50"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Queen of Pain Talent 7 (Level 40): Scream of Pain now applies Shadow Strike on enemies hit
-	//=================================================================================================================
-	"special_bonus_imba_queenofpain_7"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_queenofpain_shadow_strike"
+			"01"	"imba_queenofpain_shadow_strike"
 		}
 
 		// Special
@@ -26486,7 +26316,181 @@
 	}
 
 	//=================================================================================================================
-	// Queen of Pain Talent 8 (Level 40): Reduced Blink cooldown
+	// Queen of Pain Talent 2 (Level 10): Sonic Wave deals damage in 5 instances
+	//=================================================================================================================
+	"special_bonus_imba_queenofpain_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_queenofpain_sonic_wave"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Queen of Pain Talent 3 (Level 20): Damaging an enemy causes Shadow Strike to deal its tick damage
+	//=================================================================================================================
+	"special_bonus_imba_queenofpain_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_queenofpain_shadow_strike"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Queen of Pain Talent 4 (Level 20): Delightful Torment procs also grant bonus attack speed
+	//=================================================================================================================
+	"special_bonus_imba_queenofpain_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_queenofpain_delightful_torment"	
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"10"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"5.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Queen of Pain Talent 5 (Level 30): Blink can be used twice in quick succession, with increased mana cost
+	//=================================================================================================================
+	"special_bonus_imba_queenofpain_5"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_queenofpain_blink"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"2.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Queen of Pain Talent 6 (Level 30): Enemies affected by Shadow Strike release Screams of Pain every damage tick
+	//=================================================================================================================
+	"special_bonus_imba_queenofpain_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_queenofpain_shadow_strike"
+			"02"	"imba_queenofpain_scream_of_pain"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_pct"				"50"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Queen of Pain Talent 7 (Level 40): Scream of Pain now causes confusion
+	//=================================================================================================================
+	"special_bonus_imba_queenofpain_7"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_queenofpain_scream_of_pain"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"2"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Queen of Pain Talent 8 (Level 40): Your abilities apply Shadow Strike to all enemies hit
 	//=================================================================================================================
 	"special_bonus_imba_queenofpain_8"
 	{
@@ -26498,7 +26502,8 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_queenofpain_blink"
+			"01"	"imba_queenofpain_scream_of_pain"
+			"02"	"imba_queenofpain_sonic_wave"
 		}
 
 		// Special
@@ -26507,8 +26512,8 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"2"
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
 			}
 		}
 	}
@@ -28269,6 +28274,97 @@
 			{
 				"var_type"                  "FIELD_FLOAT"
 				"value"	                    "1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Spectre's Reality
+	//=================================================================================================================
+	imba_spectre_reality
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_spectre"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"FightRecapLevel"				"1"
+		"MaxLevel"						"1"
+
+		// Time 
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_spectre.vsndevts"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_vo_spectre.vsndevts"
+		}
+	}
+
+	//=================================================================================================================
+	// Spectre's Haunt
+	//=================================================================================================================
+	"imba_spectre_haunt"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_spectre"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"FightRecapLevel"				"1"
+		"MaxLevel"						"6"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"180 150 120 120 120 120"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"150"
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_spectre.vsndevts"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_vo_spectre.vsndevts"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+		
+			"01"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"duration" 							"5 6 7 7.3 7.6 8"
+			}
+			"02"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"illusion_dmg_received"				"200"
+			}
+			"03"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"illusion_dmg_dealt"				"40"
+			}
+			"04"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"illusion_base_speed"				"400"
 			}
 		}
 	}
@@ -39323,7 +39419,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityTextureName"			"rubick_empty1"
 		"ScriptFile"					"hero/neutral_roshan.lua"
 		"MaxLevel"						"1"
@@ -39358,7 +39454,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"leash_distance"		"2000"
+				"leash_distance"		"1600"
 			}
 			"05"
 			{
@@ -39428,7 +39524,7 @@
 			"18"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attackspeed_per_death"	"30"
+				"attackspeed_per_death"	"20"
 			}
 			"19"
 			{
@@ -40020,6 +40116,257 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"duration"					"10.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Hell Empress: Eleven Curses
+	//=================================================================================================================
+	"imba_empress_eleven_curses"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_hell_empress"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"AbilityTextureName"			"vengefulspirit_magic_missile"
+		"MaxLevel"						"7"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1200"
+		"AbilityCastPoint"				"0.1"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"10"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_shadow_demon.vsndevts"
+			"particle"					"particles/econ/items/shadow_demon/sd_ti7_shadow_poison/sd_ti7_shadow_poison_release.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_amp"			"3.0 3.5 4.0 4.5 5.0 5.5 6.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stack_duration"		"6.6"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_stacks"			"11"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Hell Empress: Hellbolt
+	//=================================================================================================================
+	"imba_empress_hellbolt"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_hell_empress"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"skywrath_mage_concussive_shot"
+		"MaxLevel"						"7"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.25"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"12"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"110"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_skywrath_mage.vsndevts"
+			"particle"					"particles/hero/hell_empress/empress_hellbolt.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"base_damage"			"90 160 230 300 325 350 375"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_damage"			"1.5 1.5 1.5 1.5 2.0 2.5 3.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"target_radius"			"1000"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bolt_speed"			"700"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Hell Empress: Royal Wrath
+	//=================================================================================================================
+	"imba_empress_royal_wrath"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_hell_empress"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"AbilityTextureName"			"custom/vengeful_rancor"
+		"MaxLevel"						"7"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"7 6 5 4 3 2 1"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cooldown"				"7 6 5 4 3 2 1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Hell Empress: Hurl Through Hell
+	//=================================================================================================================
+	"imba_empress_hurl_through_hell"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_hell_empress"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"obsidian_destroyer_sanity_eclipse"
+		"MaxLevel"						"6"
+		"AOERadius"						"%hurl_radius%"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"400"
+		"AbilityCastPoint"				"0.4"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"100 95 90 85 80 75"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"200"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_obsidian_destroyer.vsndevts"
+			"particle"					"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_area.vpcf"
+			"particle"					"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_prison.vpcf"
+			"particle"					"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_prison_end.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hurl_radius"			"425"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"hurl_duration"			"4.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hurl_damage"			"175 200 225 250 275 300"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"curse_stacks"			"1 2 3 4 5 6"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"debuff_duration"		"1.5 1.75 2.0 2.25 2.5 2.75"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow_pct"				"-60"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"debuff_duration_scepter"	"2.5 2.75 3.0 3.25 3.5 3.75"
 			}
 		}
 	}

@@ -1,23 +1,9 @@
 "use strict";
 
+var roshan_phase_3 = false
+
 function UpdateTimer( data )
 {
-	//$.Msg( "UpdateTimer: ", data );
-	//var timerValue = Game.GetDOTATime( false, false );
-
-	//var sec = Math.floor( timerValue % 60 );
-	//var min = Math.floor( timerValue / 60 );
-
-	//var timerText = "";
-	//timerText += min;
-	//timerText += ":";
-
-	//if ( sec < 10 )
-	//{
-	//	timerText += "0";
-	//}
-	//timerText += sec;
-
 	var timerText = "";
 	timerText += data.timer_minute_10;
 	timerText += data.timer_minute_01;
@@ -31,6 +17,7 @@ function UpdateTimer( data )
 function ShowTimer()
 {
 	$("#Diretide").style.visibility = "visible";
+	$("#Diretide2").style.visibility = "visible";
 }
 
 function OnUIUpdated(table_name, key, data)
@@ -44,20 +31,47 @@ function UpdateScoreUI()
 	var RadiantScore = CustomNetTables.GetTableValue("game_options", "radiant").score;
 	var DireScore = CustomNetTables.GetTableValue("game_options", "dire").score;
 
-	$.Msg("Radiant Score:", RadiantScore)
-	$.Msg("Dire Score:", DireScore)
-
 	$("#RadiantScoreText").SetDialogVariableInt("radiant_score", RadiantScore);
 	$("#RadiantScoreText").text = RadiantScore;
 
 	$("#DireScoreText").SetDialogVariableInt("dire_score", DireScore);
 	$("#DireScoreText").text = DireScore;
+
+	var RoshanTable = CustomNetTables.GetTableValue("game_options", "roshan_hp");
+
+	if (roshan_phase_3 == true)
+	{
+		if (RoshanTable !== null)
+		{
+			var RoshanHP = RoshanTable.HP;
+			var RoshanHP_percent = RoshanTable.HP_alt;
+			var RoshanMaxHP = RoshanTable.maxHP;
+			var bShowBossHP = RoshanTable.HP == 0 ? false : true;
+			$("#RoshanProgressBar").value = RoshanHP / 100;
+
+			$.Msg("Roshan HP: " + RoshanHP_percent / 100)
+			$("#RoshanHealth").text = RoshanHP + "/" + RoshanMaxHP;
+		}
+	}
+}
+
+function Phase(args)
+{
+	var Label = "#diretide_phase_" + args.Phase
+	$("#PhaseLabel").text = Label;
+
+	if (args.Phase == "3")
+	{
+		$.Msg("Phase 3!")
+		roshan_phase_3 = true
+		$("#RoshanHP").style.visibility = "visible";
+	}
 }
 
 (function()
 {
-	GameEvents.Subscribe( "countdown", UpdateTimer );
-	GameEvents.Subscribe( "update_score", UpdateScoreUI );
-	GameEvents.Subscribe( "show_timer", ShowTimer );
-//	ShowTimer()
+	GameEvents.Subscribe("countdown", UpdateTimer);
+	GameEvents.Subscribe("update_score", UpdateScoreUI);
+	GameEvents.Subscribe("show_timer", ShowTimer);
+	GameEvents.Subscribe("diretide_phase", Phase);
 })();
