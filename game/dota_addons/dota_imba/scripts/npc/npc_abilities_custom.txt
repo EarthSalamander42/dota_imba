@@ -28279,97 +28279,6 @@
 	}
 
 	//=================================================================================================================
-	// Spectre's Reality
-	//=================================================================================================================
-	"imba_spectre_reality"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"hero/hero_spectre"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"FightRecapLevel"				"1"
-		"MaxLevel"						"1"
-
-		// Time 
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0"
-		
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
-		
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_spectre.vsndevts"
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_vo_spectre.vsndevts"
-		}
-	}
-
-	//=================================================================================================================
-	// Spectre's Haunt
-	//=================================================================================================================
-	"imba_spectre_haunt"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"hero/hero_spectre"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"FightRecapLevel"				"1"
-		"MaxLevel"						"6"
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"180 150 120 120 120 120"
-		
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"150"
-		
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_spectre.vsndevts"
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_vo_spectre.vsndevts"
-		}
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-		
-			"01"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"duration" 							"5 6 7 7.3 7.6 8"
-			}
-			"02"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"illusion_dmg_received"				"200"
-			}
-			"03"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"illusion_dmg_dealt"				"40"
-			}
-			"04"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"illusion_base_speed"				"400"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Storm Spirit's Static Remnant
 	//=================================================================================================================
 	"imba_storm_spirit_static_remnant"
@@ -39419,7 +39328,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"rubick_empty1"
 		"ScriptFile"					"hero/neutral_roshan.lua"
 		"MaxLevel"						"1"
@@ -39454,7 +39363,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"leash_distance"		"1600"
+				"leash_distance"		"2000"
 			}
 			"05"
 			{
@@ -39524,7 +39433,7 @@
 			"18"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attackspeed_per_death"	"20"
+				"attackspeed_per_death"	"30"
 			}
 			"19"
 			{
@@ -39855,6 +39764,41 @@
 	}
 
 	//=================================================================================================================
+	// Journal Note Ability
+	//=================================================================================================================
+	"ability_journal_note"
+	{
+		"BaseClass"                         "ability_datadriven"
+		"AbilityName"                       "ability_journal_note"
+		"AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"IsOnCastBar"                   "0"
+
+		"Modifiers"
+		{
+			"modifier_ability_journal_note"
+			{
+				"IsHidden"              "1"
+				"Passive"               "1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"		"1"
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL"		"1"
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"			"1"
+				}
+
+				"States"
+				{
+					"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_BLIND"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Ghost Revenant: Blackjack
 	//=================================================================================================================
 	"ghost_revenant_blackjack"
@@ -40081,6 +40025,257 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"duration"					"10.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Hell Empress: Eleven Curses
+	//=================================================================================================================
+	"imba_empress_eleven_curses"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_hell_empress"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"AbilityTextureName"			"vengefulspirit_magic_missile"
+		"MaxLevel"						"7"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1200"
+		"AbilityCastPoint"				"0.1"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"10"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_shadow_demon.vsndevts"
+			"particle"					"particles/econ/items/shadow_demon/sd_ti7_shadow_poison/sd_ti7_shadow_poison_release.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_amp"			"3.0 3.5 4.0 4.5 5.0 5.5 6.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stack_duration"		"6.6"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_stacks"			"11"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Hell Empress: Hellbolt
+	//=================================================================================================================
+	"imba_empress_hellbolt"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_hell_empress"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"skywrath_mage_concussive_shot"
+		"MaxLevel"						"7"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.25"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"12"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"110"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_skywrath_mage.vsndevts"
+			"particle"					"particles/hero/hell_empress/empress_hellbolt.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"base_damage"			"90 160 230 300 325 350 375"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_damage"			"1.5 1.5 1.5 1.5 2.0 2.5 3.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"target_radius"			"1000"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bolt_speed"			"700"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Hell Empress: Royal Wrath
+	//=================================================================================================================
+	"imba_empress_royal_wrath"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_hell_empress"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"AbilityTextureName"			"custom/vengeful_rancor"
+		"MaxLevel"						"7"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"7 6 5 4 3 2 1"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cooldown"				"7 6 5 4 3 2 1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Hell Empress: Hurl Through Hell
+	//=================================================================================================================
+	"imba_empress_hurl_through_hell"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_hell_empress"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"obsidian_destroyer_sanity_eclipse"
+		"MaxLevel"						"6"
+		"AOERadius"						"%hurl_radius%"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"400"
+		"AbilityCastPoint"				"0.4"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"100 95 90 85 80 75"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"200"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_obsidian_destroyer.vsndevts"
+			"particle"					"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_area.vpcf"
+			"particle"					"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_prison.vpcf"
+			"particle"					"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_prison_end.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hurl_radius"			"425"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"hurl_duration"			"4.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hurl_damage"			"175 200 225 250 275 300"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"curse_stacks"			"1 2 3 4 5 6"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"debuff_duration"		"1.5 1.75 2.0 2.25 2.5 2.75"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow_pct"				"-60"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"debuff_duration_scepter"	"2.5 2.75 3.0 3.25 3.5 3.75"
 			}
 		}
 	}
