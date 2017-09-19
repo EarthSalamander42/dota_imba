@@ -1,6 +1,5 @@
 -- This is the primary barebones gamemode script and should be used to assist in initializing your game mode
 
-
 -- Set this to true if you want to see a complete debug output of all events/processes done by barebones
 -- You can also change the cvar 'barebones_spew' at any time to 1 or 0 for output/no output
 
