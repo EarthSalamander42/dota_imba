@@ -182,7 +182,7 @@ function imba_phantom_lancer_spirit_lance:OnProjectileHit_ExtraData(target, loca
 	local spawn_point = target:GetAbsOrigin() + RandomVector(illusion_spawn_distance)		
 
 	-- Create illusion	
-	local illusion = IllusionManager:CreateIllusion(caster, ability, target:GetAbsOrigin(), caster, {damagein = illusion_in_damage, damageout = illusion_out_damage, duration = illusion_duration, callback = attack_callback_func})		
+	local illusion = IllusionManager:CreateIllusion(caster, ability, target:GetAbsOrigin(), caster, {damagein = illusion_in_damage, damageout = illusion_out_damage, duration = illusion_duration, callback = attack_callback_func}, target)		
 
 	-- If caster has scepter, bounce, if applicable
     if scepter and bounces_left > 0 then      
