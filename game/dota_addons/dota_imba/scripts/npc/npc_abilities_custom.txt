@@ -1,4 +1,4 @@
-// Dota Abilities Override File
+﻿// Dota Abilities Override File
 // DataDriven Ability Guide: https://moddota.com/forums/discussion/14/datadriven-ability-breakdown-documentation
 
 "DOTAAbilities"
@@ -28279,6 +28279,97 @@
 	}
 
 	//=================================================================================================================
+	// Spectre's Reality
+	//=================================================================================================================
+	imba_spectre_reality
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_spectre"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"FightRecapLevel"				"1"
+		"MaxLevel"						"1"
+
+		// Time 
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_spectre.vsndevts"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_vo_spectre.vsndevts"
+		}
+	}
+
+	//=================================================================================================================
+	// Spectre's Haunt
+	//=================================================================================================================
+	"imba_spectre_haunt"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_spectre"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"FightRecapLevel"				"1"
+		"MaxLevel"						"6"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"180 150 120 120 120 120"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"150"
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_spectre.vsndevts"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_vo_spectre.vsndevts"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+		
+			"01"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"duration" 							"5 6 7 7.3 7.6 8"
+			}
+			"02"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"illusion_dmg_received"				"200"
+			}
+			"03"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"illusion_dmg_dealt"				"40"
+			}
+			"04"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"illusion_base_speed"				"400"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Storm Spirit's Static Remnant
 	//=================================================================================================================
 	"imba_storm_spirit_static_remnant"
@@ -39328,7 +39419,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityTextureName"			"rubick_empty1"
 		"ScriptFile"					"hero/neutral_roshan.lua"
 		"MaxLevel"						"1"
@@ -39363,7 +39454,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"leash_distance"		"2000"
+				"leash_distance"		"1600"
 			}
 			"05"
 			{
@@ -39433,7 +39524,7 @@
 			"18"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attackspeed_per_death"	"30"
+				"attackspeed_per_death"	"20"
 			}
 			"19"
 			{
