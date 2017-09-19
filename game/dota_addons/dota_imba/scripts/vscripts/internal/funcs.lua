@@ -541,16 +541,21 @@ end
 
 -- Returns an unit's existing increased cast range modifiers
 function GetCastRangeIncrease( unit )
-	local cast_range_increase = 0
-	-- Only the greatefd st increase counts for items, they do not stack
-	for _, parent_modifier in pairs(unit:FindAllModifiers()) do
-		-- Vanguard-based damage reduction does not stack
-		if parent_modifier.GetModifierCastRangeBonus then
-			cast_range_increase = math.max(cast_range_increase,parent_modifier:GetModifierCastRangeBonus())
-		end
-	end	
+    local cast_range_increase = 0
+    -- Only the greatefd st increase counts for items, they do not stack
+    for _, parent_modifier in pairs(unit:FindAllModifiers()) do        
+        if parent_modifier.GetModifierCastRangeBonus then
+            cast_range_increase = math.max(cast_range_increase,parent_modifier:GetModifierCastRangeBonus())
+        end        
+    end    
 
-	return cast_range_increase
+    for _, parent_modifier in pairs(unit:FindAllModifiers()) do        
+        if parent_modifier.GetModifierCastRangeBonusStacking then
+            cast_range_increase = cast_range_increase + parent_modifier:GetModifierCastRangeBonusStacking()
+        end
+    end        
+
+    return cast_range_increase
 end
 
 -- Talent handling

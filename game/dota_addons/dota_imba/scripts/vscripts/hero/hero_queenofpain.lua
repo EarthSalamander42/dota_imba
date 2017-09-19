@@ -95,7 +95,7 @@ end
 
 function modifier_imba_delightful_torment_as_bonus:GetModifierAttackSpeedBonus_Constant()
 	if IsServer() then
-		return self:GetCaster():FindTalentValue("special_bonus_imba_queenofpain_4")
+		return 10
 	end
 end
 
@@ -237,7 +237,7 @@ function modifier_imba_shadow_strike_debuff:OnIntervalThink()
 
 			-- Talent #6 handling
 			local caster = self:GetCaster()
-			if caster:HasAbility("imba_queenofpain_scream_of_pain") and caster:HasTalent("special_bonus_imba_queenofpain_6") then
+			if caster:HasAbility("imba_queenofpain_scream_of_pain") and caster:HasTalent("special_bonus_imba_queenofpain_6") and parent:IsHero() then
 				local scream = caster:FindAbilityByName("imba_queenofpain_scream_of_pain")
 				if scream:GetLevel() >= 1 then
 					scream:OnSpellStart(caster:FindTalentValue("special_bonus_imba_queenofpain_6", "damage_pct"), parent)
@@ -263,7 +263,7 @@ function modifier_imba_shadow_strike_debuff:OnTakeDamage( keys )
 		local caster = self:GetCaster()
 		local parent = self:GetParent()
 		local ability = self:GetAbility()
-		if caster:HasTalent("special_bonus_imba_queenofpain_3") and keys.attacker == caster and keys.unit == parent and caster:GetTeam() ~= parent:GetTeam() and keys.ability ~= ability then
+		if caster:HasTalent("special_bonus_imba_queenofpain_3") and keys.attacker == caster and keys.unit == parent and caster:GetTeam() ~= parent:GetTeam() and keys.inflictor ~= ability then
 			local damage = self.damage_per_interval
 			if damage > 0 then
 				ApplyDamage({victim = parent, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL, damage_flags = nil})
@@ -349,7 +349,7 @@ function imba_queenofpain_blink:OnSpellStart()
 		if caster:HasAbility("imba_queenofpain_scream_of_pain") then
 			local scream = caster:FindAbilityByName("imba_queenofpain_scream_of_pain")
 			if scream:GetLevel() >= 1 then
-				scream:OnSpellStart(scream_damage_pct, caster)
+				scream:OnSpellStart(scream_damage_pct)
 			end
 		end
 
@@ -383,7 +383,9 @@ function modifier_imba_queenofpain_blink_decision_time:IsStunDebuff() return fal
 
 function modifier_imba_queenofpain_blink_decision_time:OnDestroy()
 	if IsServer() then
-		self:GetAbility():StartCooldown(self:GetAbility():GetCooldown(self:GetAbility():GetLevel()) - self:GetCaster():FindTalentValue("special_bonus_imba_queenofpain_5"))
+		if self:GetAbility():IsCooldownReady() then
+			self:GetAbility():StartCooldown(self:GetAbility():GetCooldown(self:GetAbility():GetLevel()) - self:GetCaster():FindTalentValue("special_bonus_imba_queenofpain_5"))
+		end
 	end
 end
 
@@ -412,8 +414,10 @@ function imba_queenofpain_scream_of_pain:OnSpellStart(scream_damage_pct, source_
 		local scream_source
 		if source_unit then
 			scream_source = source_unit
+			scream_source:EmitSound("Imba.QueenOfPainSecondaryScreamOfPain")
 		else
 			scream_source = caster
+			scream_source:EmitSound("Hero_QueenOfPain.ScreamOfPain")
 		end
 		local scream_loc = scream_source:GetAbsOrigin()
 		
@@ -427,7 +431,6 @@ function imba_queenofpain_scream_of_pain:OnSpellStart(scream_damage_pct, source_
 		local radius = self:GetSpecialValueFor("radius")
 		local pain_reflect_pct = self:GetSpecialValueFor("pain_reflect_pct")
 		
-		scream_source:EmitSound("Hero_QueenOfPain.ScreamOfPain")
 		local scream_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_queenofpain/queen_scream_of_pain_owner.vpcf", PATTACH_ABSORIGIN, scream_source)
 		ParticleManager:SetParticleControl(scream_pfx, 0, scream_loc )
 		
