@@ -3366,9 +3366,9 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"100"
-		"BountyGoldMin"				"100"
-		"BountyGoldMax"				"100"
+		"BountyXP"					"0"
+		"BountyGoldMin"				"0"
+		"BountyGoldMax"				"0"
 
 		// Bounds
 		//----------------------------------------------------------------
@@ -8185,7 +8185,7 @@
 		"SoundSet"					"RoshanDT"
 		"IdleSoundLoop"				"RoshanDT.Idle"
 		"ModelScale"				"1.1"
-		"Level"						"50"
+		"Level"						"1"
 		"IsAncient"					"1"
 		"UnitLabel"					""
 				
