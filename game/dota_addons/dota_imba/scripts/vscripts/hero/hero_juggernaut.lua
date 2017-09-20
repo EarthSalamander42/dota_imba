@@ -2022,7 +2022,11 @@ function modifier_imba_omni_slash_caster:OnDestroy()
 			end
 			
 			-- Create the after image before it fades
-			CreateModifierThinker(self.original_caster, self.ability, "modifier_omnislash_image_afterimage_fade" ,{duration = 1.0, previous_position_x = self.previous_pos.x, previous_position_y = self.previous_pos.y, previous_position_z = self.previous_pos.z}, self.current_pos, self.original_caster:GetTeamNumber(), false)
+			if self.previous_pos then
+				CreateModifierThinker(self.original_caster, self.ability, "modifier_omnislash_image_afterimage_fade" ,{duration = 1.0, previous_position_x = self.previous_pos.x, previous_position_y = self.previous_pos.y, previous_position_z = self.previous_pos.z}, self.current_pos, self.original_caster:GetTeamNumber(), false)
+			else -- not a real fix, just unallow an uncontrollable jugg to spawn
+				print("No previous pos!")
+			end
 			
 			self:GetParent():MakeIllusion()
 			self:GetParent():RemoveModifierByName("modifier_imba_omni_slash_image")

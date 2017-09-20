@@ -10,10 +10,13 @@ COUNT_DOWN = 1
 PHASE_TIME = 61 -- 481
 
 function Diretide()
+local roshan_spawner = Entities:FindByName(nil, "roshan_diretide"):GetAbsOrigin()
+local units = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)		
 
-	local units = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)		
+	CreateUnitByName("npc_diretide_roshan", roshan_spawner, true, nil, nil, DOTA_TEAM_NEUTRALS)
+
 	for _, unit in pairs(units) do
-		if unit:IsBuilding() then
+		if unit:IsBuilding() and not unit:GetUnitName() == "npc_dota_candy_pumpkin_good" or not unit:GetUnitName() == "npc_dota_candy_pumpkin_bad" then
 			unit:AddNewModifier(unit, nil, "modifier_invulnerable", {})
 		end
 	end
@@ -30,7 +33,8 @@ function Diretide()
 end
 
 function DiretidePhase(PHASE)
-	local units = FindUnitsInRadius(1, Vector(0,0,0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+local units = FindUnitsInRadius(1, Vector(0,0,0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+
 	for _, unit in ipairs(units) do
 		if unit:GetName() == "npc_dota_roshan" then
 			local AImod = unit:FindModifierByName("modifier_imba_roshan_ai_diretide")
@@ -51,7 +55,7 @@ local caster = keys.caster
 local target = keys.target
 local ability = keys.ability
 
-HIT_COUNT[caster:GetTeamNumber()] = HIT_COUNT[caster:GetTeamNumber()] + 1
+	HIT_COUNT[caster:GetTeamNumber()] = HIT_COUNT[caster:GetTeamNumber()] + 1
 
 	if HIT_COUNT[caster:GetTeamNumber()] >= 2 then
 		HIT_COUNT[caster:GetTeamNumber()] = 0
@@ -86,8 +90,6 @@ HIT_COUNT[caster:GetTeamNumber()] = HIT_COUNT[caster:GetTeamNumber()] + 1
 end
 
 function CountdownDiretide(tick)
-local roshan_spawner = Entities:FindByName(nil, "roshan_diretide"):GetAbsOrigin()
-
 	Timers:CreateTimer(function()
 		if COUNT_DOWN == 1 then
 			nCOUNTDOWNTIMER = nCOUNTDOWNTIMER - 1
@@ -115,7 +117,7 @@ local roshan_spawner = Entities:FindByName(nil, "roshan_diretide"):GetAbsOrigin(
 
 		if nCOUNTDOWNTIMER < 1 then
 			if CustomNetTables:GetTableValue("game_options", "radiant").score == CustomNetTables:GetTableValue("game_options", "dire").score then -- TIE
-				print("TIE")
+--				print("TIE")
 				nCOUNTDOWNTIMER = 1
 			else
 				nCOUNTDOWNTIMER = PHASE_TIME
@@ -124,7 +126,6 @@ local roshan_spawner = Entities:FindByName(nil, "roshan_diretide"):GetAbsOrigin(
 				print("Phase:", PHASE)
 			end
 			if PHASE == 2 then
-				CreateUnitByName("npc_diretide_roshan", roshan_spawner, true, nil, nil, DOTA_TEAM_NEUTRALS)
 				if CustomNetTables:GetTableValue("game_options", "dire").score > CustomNetTables:GetTableValue("game_options", "radiant").score then
 					DIRETIDE_WINNER = 3
 				end
@@ -133,11 +134,17 @@ local roshan_spawner = Entities:FindByName(nil, "roshan_diretide"):GetAbsOrigin(
 				COUNT_DOWN = 0
 				local units = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)		
 				for _, unit in pairs(units) do
-					if unit:IsCreep() then
-						unit:RemoveSelf()
-					elseif unit:GetUnitName() == "lane_mid_goodguys_melee_spawner" then
-						print("Spawner!")
+					if unit:GetUnitName() == "npc_diretide_roshan" then
+--						UpdateRoshanBar(unit, 0.03)
+					else
+						if unit:IsCreep() then
+							unit:RemoveSelf()						
+						end
 					end
+				end
+				local ents = Entities:FindAllByName("lane_*")
+				for _, ent in pairs(ents) do
+					ent:RemoveSelf()
 				end
 			elseif PHASE == 4 then
 				GameRules:SetGameWinner(DOTA_TEAM_NEUTRALS)
@@ -155,4 +162,16 @@ end
 
 function DiretideIncreaseTimer(time)
 	nCOUNTDOWNTIMER = nCOUNTDOWNTIMER + time
+end
+
+function UpdateRoshanBar(roshan, level, time)
+	Timers:CreateTimer(function()
+		CustomNetTables:SetTableValue("game_options", "roshan", {
+			level = level,
+			HP = roshan:GetHealth(),
+			HP_alt = roshan:GetHealthPercent(),
+			maxHP = roshan:GetMaxHealth()
+		})
+		return time
+	end)
 end
