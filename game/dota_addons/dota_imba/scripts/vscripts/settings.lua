@@ -317,8 +317,8 @@ elseif GetMapName() == "imba_custom" or GetMapName() == "imba_custom_10v10" then
 	MAX_LEVEL = 40
 elseif GetMapName() == "imba_10v10" then									-- 10v10 map defaults
 	END_GAME_ON_KILLS = false
-	CUSTOM_GOLD_BONUS = 0
-	CUSTOM_XP_BONUS = 0
+	CUSTOM_GOLD_BONUS = 35
+	CUSTOM_XP_BONUS = 35
 	CREEP_POWER_FACTOR = 1
 	TOWER_UPGRADE_MODE = true
 	TOWER_POWER_FACTOR = 1
@@ -526,7 +526,7 @@ normal_heroes = {
 	"npc_dota_hero_lich",
 	"npc_dota_hero_lina",
 	"npc_dota_hero_lion",
---	"npc_dota_hero_meepo",
+	"npc_dota_hero_meepo",
 	"npc_dota_hero_mirana",
 	"npc_dota_hero_necrolyte",
 	"npc_dota_hero_nevermore",
@@ -538,7 +538,7 @@ normal_heroes = {
 	"npc_dota_hero_sand_king",
 	"npc_dota_hero_slardar",
 	"npc_dota_hero_sniper",
---	"npc_dota_hero_spectre",
+	"npc_dota_hero_spectre",
 	"npc_dota_hero_sven",
 	--"npc_dota_hero_tinker",
 	"npc_dota_hero_tiny",
@@ -546,7 +546,7 @@ normal_heroes = {
 --	"npc_dota_hero_venomancer",
 	"npc_dota_hero_witch_doctor",
 	"npc_dota_hero_skeleton_king",
---	"npc_dota_hero_queenofpain",
+	"npc_dota_hero_queenofpain",
 	"npc_dota_hero_jakiro",
 	"npc_dota_hero_warlock",
 	"npc_dota_hero_ursa",
@@ -659,7 +659,7 @@ imba_heroes = {
 	"npc_dota_hero_vengefulspirit",
 --	"npc_dota_hero_venomancer",
 	"npc_dota_hero_witch_doctor",
---	"npc_dota_hero_queenofpain",
+	"npc_dota_hero_queenofpain",
 	"npc_dota_hero_jakiro",
 	"npc_dota_hero_warlock",
 	"npc_dota_hero_ursa",
