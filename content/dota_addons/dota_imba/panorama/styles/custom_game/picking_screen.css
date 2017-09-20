@@ -568,8 +568,8 @@
 */
 #PickedHeroImage {
 	horizontal-align: center;
-	width: 155px;
-	height: 92px;
+	width: 128px;
+	height: 72px;
 	border-radius: 20px;
 }
 
@@ -594,7 +594,7 @@
 }
 
 .PickedHeroAbility {
-	height: width-percentage(98%);
+	height: width-percentage(80%);
 	margin-left: 1px;
 	margin-right: 1px;
 	border-radius: 10px;
@@ -697,7 +697,7 @@
 	align: center bottom;
 	width: 33%;
 	height: 100%;
-	background-color: #000000da;
+	background-color: #000000ba;
 	border-top-left-radius: 8px;
 	border-top-right-radius: 8px;
 }

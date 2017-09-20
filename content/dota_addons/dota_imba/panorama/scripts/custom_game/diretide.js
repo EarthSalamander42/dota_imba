@@ -46,11 +46,12 @@ function UpdateScoreUI()
 			var RoshanHP = RoshanTable.HP;
 			var RoshanHP_percent = RoshanTable.HP_alt;
 			var RoshanMaxHP = RoshanTable.maxHP;
-			var bShowBossHP = RoshanTable.HP == 0 ? false : true;
+			var RoshanLvl = RoshanTable.level;
 			$("#RoshanProgressBar").value = RoshanHP / 100;
 
 			$.Msg("Roshan HP: " + RoshanHP_percent / 100)
 			$("#RoshanHealth").text = RoshanHP + "/" + RoshanMaxHP;
+			$("#RoshanLevel").text = "Level: " + RoshanLvl;
 		}
 	}
 }

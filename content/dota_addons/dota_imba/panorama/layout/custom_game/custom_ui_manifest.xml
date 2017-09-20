@@ -70,6 +70,13 @@
 		// Hide normal picking screen
 		$.GetContextPanel().GetParent().GetParent().FindChildTraverse("PreGame").style.visibility = "collapse";
 
+		//Chat
+		var Chat = $.GetContextPanel().GetParent().GetParent().FindChildTraverse("HUDElements").FindChildTraverse("HudChat");
+//		Chat.style.marginBottom = "9.1%";
+//		Chat.style.width = "552px";
+//		Chat.FindChildTraverse("ChatControls").style.opacity = "1";
+		Chat.style.zIndex = "10";
+
 		//Buff Bar
 		var hudElements = $.GetContextPanel().GetParent().GetParent().FindChildTraverse("HUDElements");
 		var BuffBar = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("buffs")
