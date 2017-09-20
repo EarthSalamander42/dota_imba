@@ -363,7 +363,7 @@
 	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_6_title"					"剑刃风暴"
 	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_6_Description"			"剑刃风暴可触发剑舞暴击，每层风之爆裂提高剑刃风暴10点伤害"
 	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_7_title"					"无敌斩"
-	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_7_Description"			"无敌斩不再需要主宰本身参与，由一个镜像进行无敌斩"
+	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_7_Description"			"无敌斩不再需要主宰本身参与，由一个镜像进行无敌斩，在无敌斩期间，主宰和镜像都是无敌的，镜像造成75%伤害，主宰造成25%伤害"
 	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_8_title"					"剑舞"
 	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_8_Description"			"剑舞触发致命一击时还会获得1层英魂之刃，持续12秒，独立计时，每层英魂之刃使无敌斩的敏捷伤害系数提高1%"			
 
