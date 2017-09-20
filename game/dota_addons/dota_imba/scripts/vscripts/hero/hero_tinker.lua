@@ -397,99 +397,182 @@ function imba_tinker_laser:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
 		local target = self:GetCursorTarget()
+		local technomancy_ability_name = "imba_tinker_technomancy"
 		
 		if target:TriggerSpellAbsorb(self) then
 			return nil
 		end
 		
-		local target_loc = target:GetAbsOrigin()
-		local caster_loc = caster:GetAbsOrigin()
-		
-		if (math.random(1,100) <= 15) and (caster:GetName() == "npc_dota_hero_tinker") then
+		if RollPercentage(15) and (caster:GetName() == "npc_dota_hero_tinker") then
 			caster:EmitSound("tinker_tink_ability_laser_0"..math.random(1,4))
 		end
-		
-		local targets_hit = {target}
-		local search_sources = {target}
-		
-		local refract_radius = self:GetSpecialValueFor("refract_radius")
-		
-		self:LaserRefraction(caster, target)
+
 		caster:EmitSound("Hero_Tinker.Laser")
-		
-		-- While there are potential sources, keep looping
-		while #search_sources > 0 do
 
-			-- Loop through every potential source this iteration
-			for potential_source_index, potential_source in pairs(search_sources) do
+		-- initalize tables		
+		self.cast_table = {}		
 
-				-- Iterate through potential targets near this source
-				local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), potential_source:GetAbsOrigin(), nil, refract_radius, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
-				for _, potential_target in pairs(nearby_enemies) do
-					
-					-- Check if this target was already hit
-					local already_hit = false
-					for _, hit_target in pairs(targets_hit) do
-						if potential_target == hit_target then
-							already_hit = true
-							break
+		-- Create initial laser
+		local start_pos = caster:GetAbsOrigin()
+		local direction = (target:GetAbsOrigin() - caster:GetAbsOrigin()):Normalized()		
+		self:CreateLaser(start_pos, direction)
+
+		-- Technomancy laser upgrades
+		local technomancy_ability
+		if caster:HasAbility(technomancy_ability_name) then
+			technomancy_ability = caster:FindAbilityByName(technomancy_ability_name)			
+		end
+
+		if technomancy_ability and technomancy_ability:GetLevel() > 0 then
+			-- Technomancy specials
+			local vertical_laser_distance = technomancy_ability:GetSpecialValueFor("vertical_laser_distance")
+			local diagonal_laser_distance = technomancy_ability:GetSpecialValueFor("diagonal_laser_distance")
+			local vertical_lasers = technomancy_ability:GetSpecialValueFor("vertical_lasers")
+			local diagonal_lasers = technomancy_ability:GetSpecialValueFor("diagonal_lasers")
+			local vertical_laser_delay = technomancy_ability:GetSpecialValueFor("vertical_laser_delay")
+			local diagonal_laser_delay = technomancy_ability:GetSpecialValueFor("diagonal_laser_delay")
+			local vertical_laser_angle = technomancy_ability:GetSpecialValueFor("vertical_laser_angle")
+			local diagonal_laser_angle = technomancy_ability:GetSpecialValueFor("diagonal_laser_angle")
+
+			-- Vertical lasers!
+			if vertical_lasers > 0 then
+				Timers:CreateTimer(vertical_laser_delay, function()
+					for i = 1, vertical_lasers do
+						local qangle_vertical_left = QAngle(0, vertical_laser_angle, 0)
+						local qangle_vertical_right = QAngle(0, -vertical_laser_angle, 0)								
+						local target_caster_direction = (target:GetAbsOrigin() - caster:GetAbsOrigin()):Normalized()
+						
+						-- Define start point of the laser
+						local laser_start_point = target:GetAbsOrigin() + target_caster_direction * vertical_laser_distance
+						if (i+1) % 2 == 0 then --to the left							
+							laser_start_point = RotatePosition(target:GetAbsOrigin(),qangle_vertical_left,laser_start_point)						
+						else --to the right
+							laser_start_point = RotatePosition(target:GetAbsOrigin(),qangle_vertical_right,laser_start_point)
 						end
-					end
 
-					-- If not, LAZOR it from this source, and mark it as a hit target and potential future source
-					if not already_hit then
-						self:LaserRefraction(potential_source, potential_target)
-						targets_hit[#targets_hit+1] = potential_target
-						search_sources[#search_sources+1] = potential_target
-					end
-				end
+						-- Define direction of the laser (towards the target)
+						local vertical_direction = (target:GetAbsOrigin() - laser_start_point):Normalized()						
 
-				-- Remove this potential source
-				table.remove(search_sources, potential_source_index)
+						self:CreateLaser(laser_start_point, vertical_direction)
+					end
+				end)
+			end
+
+			-- Diagonal lasers!
+			if diagonal_lasers > 0 then
+				Timers:CreateTimer(diagonal_laser_delay, function()
+					for i = 1, vertical_lasers do
+						local qangle_diagonal_left = QAngle(0, diagonal_laser_angle, 0)
+						local qangle_diagonal_right = QAngle(0, -diagonal_laser_angle, 0)								
+						local target_caster_direction = (target:GetAbsOrigin() - caster:GetAbsOrigin()):Normalized()
+						
+						-- Define start point of the laser
+						local laser_start_point = target:GetAbsOrigin() + target_caster_direction * 350
+						if (i+1) % 2 == 0 then --to the left							
+							laser_start_point = RotatePosition(target:GetAbsOrigin(),qangle_diagonal_left,laser_start_point)						
+						else --to the right
+							laser_start_point = RotatePosition(target:GetAbsOrigin(),qangle_diagonal_right,laser_start_point)
+						end
+
+						-- Define direction of the laser (towards the target)
+						local diagonal_direction = (target:GetAbsOrigin() - laser_start_point):Normalized()						
+
+						self:CreateLaser(laser_start_point, diagonal_direction)
+					end
+				end)
 			end
 		end
 	end
 end
 
-function imba_tinker_laser:LaserRefraction(source, target)
-	local caster = self:GetCaster()
-	local caster_loc = caster:GetAbsOrigin()
-	local target_loc = target:GetAbsOrigin()
-	local source_loc = source:GetAbsOrigin()
-	local damage_type = self:GetAbilityDamageType()
-	
-	-- Parameters
-	local damage = self:GetSpecialValueFor("damage")
-	local blind_duration = self:GetSpecialValueFor("blind_duration")
-	
-	-- Technomancy handling
-	if caster:HasAbility("imba_tinker_technomancy") then
-		local technomancy = caster:FindAbilityByName("imba_tinker_technomancy")
-		damage = damage + technomancy:GetSpecialValueFor("laser_dmg")
+function imba_tinker_laser:CreateLaser(start_pos, laser_direction)
+	if IsServer() then		
+		local caster = self:GetCaster()		
+		
+		local travel_speed = self:GetSpecialValueFor("travel_speed")
+		local radius = self:GetSpecialValueFor("radius")
+		local distance = self:GetCastRange(caster:GetAbsOrigin(),caster) + GetCastRangeIncrease(caster) 		
+
+		-- Create the particle index
+		local laser_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_tinker/tinker_laser.vpcf", PATTACH_CUSTOMORIGIN, caster)	
+		
+		-- Create Laser Projectile
+		local laser_projectile = 
+			{
+				Ability				= self,
+				EffectName			= "particles/units/heroes/hero_tinker/tinker_laser.vpcf",
+				Source 				= caster,
+				vSpawnOrigin		= start_pos,
+				fDistance			= distance,
+				fStartRadius		= radius,
+				fEndRadius			= radius,				
+				bHasFrontalCone		= false,
+				bReplaceExisting	= false,
+				iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
+				iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
+				iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+				fExpireTime 		= GameRules:GetGameTime() + 10.0,
+				bDeleteOnHit		= false,
+				vVelocity			= Vector(laser_direction.x,laser_direction.y,0) * travel_speed,
+				bProvidesVision		= false,
+				ExtraData			= {source_loc_x = start_pos.x, source_loc_y = start_pos.y, source_loc_z = start_pos.z, particle_index = laser_pfx, distance = distance}
+			}
+			
+		ProjectileManager:CreateLinearProjectile(laser_projectile)
 	end
-	
-	-- Particle & sound
-	local laser_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_tinker/tinker_laser.vpcf", PATTACH_CUSTOMORIGIN, caster)
-	ParticleManager:SetParticleControlEnt(laser_pfx, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target_loc, true)
-	if source == caster then
-		ParticleManager:SetParticleControlEnt(laser_pfx, 0, caster, PATTACH_POINT_FOLLOW, "attach_attack2", caster_loc, true)
-		ParticleManager:SetParticleControlEnt(laser_pfx, 3, caster, PATTACH_POINT_FOLLOW, "attach_attack2", caster_loc, true)
-		ParticleManager:SetParticleControlEnt(laser_pfx, 9, caster, PATTACH_POINT_FOLLOW, "attach_attack2", caster_loc, true)
-	else
-		ParticleManager:SetParticleControlEnt(laser_pfx, 0, source, PATTACH_POINT_FOLLOW, "attach_hitloc", source_loc, true)
-		ParticleManager:SetParticleControlEnt(laser_pfx, 3, source, PATTACH_POINT_FOLLOW, "attach_hitloc", source_loc, true)
-		ParticleManager:SetParticleControlEnt(laser_pfx, 9, source, PATTACH_POINT_FOLLOW, "attach_hitloc", source_loc, true)
-	end
-	Timers:CreateTimer(0.3, function()
-		ParticleManager:DestroyParticle(laser_pfx, false)
-		ParticleManager:ReleaseParticleIndex(laser_pfx)
-	end)
-	target:EmitSound("Hero_Tinker.LaserImpact")
-	
-	-- Damage & blind
-	ApplyDamage({attacker = caster, victim = target, ability = self, damage = damage, damage_type = damage_type})
-	target:AddNewModifier(caster, self, "modifier_imba_laser_blind", { duration = blind_duration })
 end
+
+function imba_tinker_laser:OnProjectileThink_ExtraData(location, extradata)
+	if IsServer() then
+		local caster = self:GetCaster()
+		local ability = self		
+		local start_pos = Vector(extradata.source_loc_x, extradata.source_loc_y, extradata.source_loc_z)
+		local laser_pfx = extradata.particle_index
+		local distance = extradata.distance
+
+		-- Particle 
+		ParticleManager:SetParticleControl(laser_pfx, 0, start_pos)
+		ParticleManager:SetParticleControl(laser_pfx, 1, location)
+		ParticleManager:SetParticleControl(laser_pfx, 3, start_pos)
+		ParticleManager:SetParticleControl(laser_pfx, 9, start_pos)
+
+		-- If the projectile is far enough, release its particle effect.		
+		local projectile_distance = (location - start_pos):Length2D()
+		if projectile_distance > (distance - 50) then
+			ParticleManager:ReleaseParticleIndex(laser_pfx)
+		end
+	end
+end
+
+function imba_tinker_laser:OnProjectileHit(target, location)
+	if IsServer() then		
+		if not target then
+			return nil
+		end
+
+		local caster = self:GetCaster()
+
+		target:EmitSound("Hero_Tinker.LaserImpact")
+			
+		-- Parameters
+		local damage = self:GetSpecialValueFor("damage")
+		local damage_type = self:GetAbilityDamageType()
+		local secondary_reduction = self:GetSpecialValueFor("secondary_reduction")
+		local blind_duration = self:GetSpecialValueFor("blind_duration")		
+		
+		-- If the target is hit by the laser once, reduce the damage property
+		if self.cast_table[target] then			
+			ApplyDamage({attacker = caster, victim = target, ability = self, damage = damage * secondary_reduction * 0.01, damage_type = damage_type})
+			target:AddNewModifier(caster, self, "modifier_imba_laser_blind", { duration = blind_duration })					
+		else
+			-- Damage & blind
+			ApplyDamage({attacker = caster, victim = target, ability = self, damage = damage, damage_type = damage_type})
+			target:AddNewModifier(caster, self, "modifier_imba_laser_blind", { duration = blind_duration })	
+			self.cast_table[target] = true
+		end
+	end
+end
+	
 
 function imba_tinker_laser:IsNetherWardStealable()
 	return true
@@ -525,9 +608,18 @@ function modifier_imba_laser_blind:DeclareFunctions()
 	return decFuncs	
 end
 
+function modifier_imba_laser_blind:GetEffectName()
+	return "particles/ambient/tower_laser_blind.vpcf"
+end
+
+function modifier_imba_laser_blind:GetEffectAttachType()
+	return PATTACH_OVERHEAD_FOLLOW
+end
+
 -------------------------------------------
 --		HEAT-SEEKING MISSILES
 -------------------------------------------
+LinkLuaModifier("modifier_imba_heat_seeking_missile_break", "hero/hero_tinker", LUA_MODIFIER_MOTION_NONE)
 imba_tinker_heat_seeking_missile = class({})
 
 function imba_tinker_heat_seeking_missile:GetAbilityTextureName()
@@ -546,12 +638,10 @@ function imba_tinker_heat_seeking_missile:OnSpellStart()
 		local vision_duration = self:GetTalentSpecialValueFor("vision_duration")
 		local speed = self:GetSpecialValueFor("speed")
 		local range = self:GetCastRange(caster_loc,caster) + GetCastRangeIncrease(caster)
-		
-		-- Technomancy handling
-		if caster:HasAbility("imba_tinker_technomancy") then
-			local technomancy = caster:FindAbilityByName("imba_tinker_technomancy")
-			missile_count = missile_count + technomancy:GetSpecialValueFor("missile_count")
-		end
+		local mini_damage = self:GetSpecialValueFor("mini_damage")
+		local mini_vision_duration = self:GetTalentSpecialValueFor("mini_vision_duration")
+		local mini_speed = self:GetSpecialValueFor("mini_speed")
+		local mini_missile_count = self:GetSpecialValueFor("mini_missile_count")
 		
 		if (math.random(1,100) <= 50) and (caster:GetName() == "npc_dota_hero_tinker") then
 			caster:EmitSound("tinker_tink_ability_heatseekingmissile_0"..math.random(1,4))
@@ -587,7 +677,7 @@ function imba_tinker_heat_seeking_missile:OnSpellStart()
 			--	iVisionRadius = vision_radius,
 			--	iVisionTeamNumber = caster:GetTeamNumber(),
 				iSourceAttachment	= caster:ScriptLookupAttachment("attach_attack3"),
-				ExtraData			= {damage = damage, vision_radius = vision_radius, vision_duration = vision_duration}
+				ExtraData			= {damage = damage, vision_radius = vision_radius, vision_duration = vision_duration, range = range, speed = speed, mini_damage = mini_damage, mini_vision_duration = mini_vision_duration, mini_speed = mini_speed, mini_missile_count = mini_missile_count, cast_origin_x = caster_loc.x, cast_origin_y = caster_loc.y}
 			}
 			ProjectileManager:CreateTrackingProjectile(hero_projectile)
 		end
@@ -608,7 +698,7 @@ function imba_tinker_heat_seeking_missile:OnSpellStart()
 				--	iVisionRadius = vision_radius,
 				--	iVisionTeamNumber = caster:GetTeamNumber(),
 					iSourceAttachment 	= caster:ScriptLookupAttachment("attach_attack3"),
-					ExtraData			= {damage = damage, vision_radius = vision_radius, vision_duration = vision_duration}
+					ExtraData			= {damage = damage, vision_radius = vision_radius, vision_duration = vision_duration, range = range, speed = speed, mini_damage = mini_damage, mini_vision_duration = mini_vision_duration, mini_speed = mini_speed, mini_missile_count = mini_missile_count, cast_origin_x = caster_loc.x, cast_origin_y = caster_loc.y, is_main_missile = 1}
 				}
 				ProjectileManager:CreateTrackingProjectile(random_projectile)
 			end
@@ -616,10 +706,165 @@ function imba_tinker_heat_seeking_missile:OnSpellStart()
 	end
 end
 
+function imba_tinker_heat_seeking_missile:OnProjectileThink_ExtraData(location, ExtraData)
+	local caster = self:GetCaster()
+
+	if ExtraData.mini_missile_count and ExtraData.mini_missile_count > 0 then
+	local distance = (location - Vector(ExtraData.cast_origin_x, ExtraData.cast_origin_y, 0)):Length2D()
+	local interval = math.floor(ExtraData.speed)
+	
+	local technomancy
+	if caster:HasAbility("imba_tinker_technomancy") then
+		 technomancy = caster:FindAbilityByName("imba_tinker_technomancy")
+	end
+	if technomancy and technomancy:GetLevel() >= 2 then
+	interval = math.floor(interval * (1 - technomancy:GetSpecialValueFor("interval_reduction")))
+	end
+	
+	-- Spawn once every second, determines whether the missile has travelled for a second by it's distance
+	if (math.mod(math.floor(distance),interval)) < math.floor(interval * FrameTime()) and (math.floor(distance - interval * FrameTime())) > math.floor(interval * FrameTime()) then		
+		
+		-- Find valid targets
+		local heroes = FindUnitsInRadius(caster:GetTeamNumber(), location, nil, ExtraData.range, self:GetAbilityTargetTeam(), DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
+		local units = FindUnitsInRadius(caster:GetTeamNumber(), location, nil, ExtraData.range, self:GetAbilityTargetTeam(), DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
+		
+		-- If no valid units are found, dududududu
+		if #heroes == 0 and #units == 0 then
+			local dud_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_tinker/tinker_missile_dud.vpcf", PATTACH_ABSORIGIN, caster)
+			ParticleManager:SetParticleControlEnt(dud_pfx, 0, caster, PATTACH_POINT_FOLLOW, "attach_attack3", caster_loc, true)
+			ParticleManager:ReleaseParticleIndex(dud_pfx)
+			caster:EmitSound("Hero_Tinker.Heat-Seeking_Missile_Dud")
+			return nil
+		end
+		
+		-- Else, shoot missiles at heroes
+		local hero_missiles = math.min(#heroes, ExtraData.mini_missile_count)
+		for i = 1, hero_missiles do
+			local hero_projectile = 
+			{
+				Target 				= heroes[i],
+				--Source 				= caster,
+				vSourceLoc			= location,
+				Ability 			= self,
+				EffectName 			= "particles/units/heroes/hero_tinker/tinker_missile.vpcf",
+				bDodgeable 			= true,
+				bProvidesVision 	= false,
+				bReplaceExisting	= false,
+				iMoveSpeed 			= ExtraData.mini_speed,
+				ExtraData			= {damage = ExtraData.mini_damage, vision_radius = ExtraData.vision_radius, vision_duration = ExtraData.mini_vision_duration, is_mini_missile = 1}
+			}
+			ProjectileManager:CreateTrackingProjectile(hero_projectile)
+		end
+
+		-- Shoot the remaining missiles at random units in range
+		local remaining_missiles = ExtraData.mini_missile_count
+		remaining_missiles = remaining_missiles - hero_missiles
+		if #units > 0 then
+			for i = 1,remaining_missiles do
+				local random_projectile = 
+				{
+					Target				= units[i],
+					--Source 				= caster,
+					vSourceLoc			= location,
+					Ability 			= self,
+					EffectName			= "particles/units/heroes/hero_tinker/tinker_missile.vpcf",
+					bDodgeable 			= true,
+					bProvidesVision 	= false,
+					bReplaceExisting	= false,
+					iMoveSpeed 			= ExtraData.mini_speed,
+					ExtraData			= {damage = ExtraData.mini_damage, vision_radius = ExtraData.vision_radius, vision_duration = ExtraData.mini_vision_duration, is_mini_missile = 1}
+				}
+				ProjectileManager:CreateTrackingProjectile(random_projectile)
+			end
+		end
+	end
+	end
+end
+
 function imba_tinker_heat_seeking_missile:OnProjectileHit_ExtraData(target, location, ExtraData)
 	local caster = self:GetCaster()
 	if target then
-		ApplyDamage({attacker = caster, victim = target, ability = self, damage = ExtraData.damage, damage_type = self:GetAbilityDamageType()})
+		-- Get Technomancy
+		local technomancy
+		if caster:HasAbility("imba_tinker_technomancy") then
+			technomancy = caster:FindAbilityByName("imba_tinker_technomancy")
+		end
+		
+		-- Technomancy level 3, mini missiles now apply an explosive warhead, aimed at breaking defences
+		if technomancy and technomancy:GetLevel() >= 3 and ExtraData.is_mini_missile == 1 then
+			
+			-- Particle & Sound
+			local particle_explosion_fx = ParticleManager:CreateParticle("particles/hero/tinker/tinker_mini_missile_explosive_warhead.vpcf", PATTACH_WORLDORIGIN, caster)
+			ParticleManager:SetParticleControl(particle_explosion_fx, 0, target:GetAbsOrigin())
+			ParticleManager:SetParticleControl(particle_explosion_fx, 1, location)
+			ParticleManager:SetParticleControl(particle_explosion_fx, 3, target:GetAbsOrigin())
+			ParticleManager:ReleaseParticleIndex(particle_explosion_fx)
+			
+			EmitSoundOn("Hero_Techies.LandMine.Detonate", target)
+
+			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, technomancy:GetSpecialValueFor("missile_aoe"), self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+			for _,enemy in pairs (enemies) do
+				-- Find the defence break modifier
+				local modifier_defence_break = enemy:FindModifierByName("modifier_imba_heat_seeking_missile_break")
+				-- If the target already has the debuff, refresh it
+				if modifier_defence_break then
+				modifier_defence_break:ForceRefresh()
+				else
+				-- Else, create the debuff and refresh it
+				modifier_defence_break = enemy:AddNewModifier(caster,self,"modifier_imba_heat_seeking_missile_break",{duration = ExtraData.vision_duration})
+				modifier_defence_break:ForceRefresh()
+				end
+			end
+		end
+		
+		-- Technomancy level 2, apply main explosive damage on each main missile
+		if technomancy and technomancy:GetLevel() >= 2 and ExtraData.is_main_missile == 1 then
+			
+			-- Particle & Sound
+			local particle_explosion_fx = ParticleManager:CreateParticle("particles/hero/tinker/tinker_missile_explosive_warhead.vpcf", PATTACH_WORLDORIGIN, caster)
+			ParticleManager:SetParticleControl(particle_explosion_fx, 0, caster:GetAbsOrigin())
+			ParticleManager:SetParticleControl(particle_explosion_fx, 1, location)
+			ParticleManager:SetParticleControl(particle_explosion_fx, 3, caster:GetAbsOrigin())
+			ParticleManager:ReleaseParticleIndex(particle_explosion_fx)
+			
+			EmitSoundOn("Hero_Techies.RemoteMine.Detonate", target)
+
+			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, technomancy:GetSpecialValueFor("missile_aoe"), self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+			for _,enemy in pairs (enemies) do
+				
+				-- Get the damage parameters
+				local explosion_damage = technomancy:GetSpecialValueFor("explosion_damage")
+				local explosion_damage_main = technomancy:GetSpecialValueFor("explosion_damage_main")
+				
+				-- Get the missile break modifier
+				local modifier_defence_break = enemy:FindModifierByName("modifier_imba_heat_seeking_missile_break")
+				-- If the target is break by a missile, amplify the damage
+				if modifier_defence_break then
+				explosion_damage = explosion_damage * (1+modifier_defence_break:GetStackCount()*technomancy:GetSpecialValueFor("mini_break_extra_dmg")*0.01)
+				explosion_damage_main = explosion_damage_main * (1+modifier_defence_break:GetStackCount()*technomancy:GetSpecialValueFor("mini_break_extra_dmg")*0.01)
+				end
+				
+				-- If it's the main target, apply double damage
+				if enemy == target then
+				ApplyDamage({attacker = caster, victim = enemy, ability = self, damage = explosion_damage_main, damage_type = self:GetAbilityDamageType()})
+				-- Else apply normal damage
+				else
+				ApplyDamage({attacker = caster, victim = enemy, ability = self, damage = explosion_damage, damage_type = self:GetAbilityDamageType()})
+				end
+			end
+		end
+		
+		local missile_damage = ExtraData.damage
+		
+		-- Get the missile break modifier
+		local modifier_defence_break = target:FindModifierByName("modifier_imba_heat_seeking_missile_break")
+
+		-- If the target is break by a missile, amplify the damage
+		if modifier_defence_break then
+			missile_damage = missile_damage * (1 + modifier_defence_break:GetStackCount()* technomancy:GetSpecialValueFor("mini_break_extra_dmg")* 0.01)
+		end
+				
+		ApplyDamage({attacker = caster, victim = target, ability = self, damage = missile_damage, damage_type = self:GetAbilityDamageType()})
 		local explosion_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_tinker/tinker_missle_explosion.vpcf", PATTACH_ABSORIGIN, caster)
 		ParticleManager:SetParticleControlEnt(explosion_pfx, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", location, true)
 		ParticleManager:ReleaseParticleIndex(explosion_pfx)
@@ -642,6 +887,39 @@ end
 
 function imba_tinker_heat_seeking_missile:IsHiddenWhenStolen()
 	return false
+end
+
+modifier_imba_heat_seeking_missile_break = class ({})
+
+function modifier_imba_heat_seeking_missile_break:IsHidden()
+	return false
+end
+
+function modifier_imba_heat_seeking_missile_break:IsDebuff()
+	return true
+end
+
+function modifier_imba_heat_seeking_missile_break:IsPurgable()
+	return true
+end
+
+function modifier_imba_heat_seeking_missile_break:OnRefresh()
+	if IsServer() then
+	local ability = self:GetCaster():FindAbilityByName("imba_tinker_heat_seeking_missile")
+	
+		if ability then
+		self:SetDuration(ability:GetSpecialValueFor("mini_vision_duration"),true)
+		self:IncrementStackCount()
+		end
+	end
+end
+
+function modifier_imba_heat_seeking_missile_break:GetEffectName()
+	return "particles/items2_fx/medallion_of_courage_b.vpcf"
+end
+
+function modifier_imba_heat_seeking_missile_break:GetEffectAttachType()
+	return PATTACH_OVERHEAD_FOLLOW
 end
 
 -------------------------------------------
@@ -1034,11 +1312,7 @@ function imba_tinker_march_of_the_machines:OnProjectileThink_ExtraData(location,
 		if ExtraData.flame_duration then
 			self[ExtraData.index].counter = self[ExtraData.index].counter or 0
 			if self[ExtraData.index].counter == 0 then
-				local dummy = CreateUnitByName("npc_dummy_unit", location, false, caster, caster, caster:GetTeamNumber() )
-				dummy:AddNewModifier(caster, self, "modifier_imba_march_flame_aura", {duration = ExtraData.flame_duration, flame_radius = ExtraData.flame_radius})
-				Timers:CreateTimer(ExtraData.flame_duration, function()
-					dummy:ForceKill( true )
-				end)
+				CreateModifierThinker(caster, self, "modifier_imba_march_flame_aura", {duration = ExtraData.flame_duration, flame_radius = ExtraData.flame_radius}, location, caster:GetTeamNumber(), false)
 			end
 			self[ExtraData.index].counter = self[ExtraData.index].counter + 1
 			-- Do this every 10 frames
