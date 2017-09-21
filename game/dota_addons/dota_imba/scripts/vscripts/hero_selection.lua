@@ -17,6 +17,12 @@ end
 ]]
 function HeroSelection:Start()
 
+	-- Play pick music
+	HeroSelection.pick_sound_dummy_good = CreateUnitByName("npc_dummy_unit", GoodCamera:GetAbsOrigin(), false, nil, nil, DOTA_TEAM_GOODGUYS)
+	EmitSoundOn("Imba.PickPhaseDrums", HeroSelection.pick_sound_dummy_good)
+	HeroSelection.pick_sound_dummy_bad = CreateUnitByName("npc_dummy_unit", BadCamera:GetAbsOrigin(), false, nil, nil, DOTA_TEAM_GOODGUYS)
+	EmitSoundOn("Imba.PickPhaseDrums", HeroSelection.pick_sound_dummy_bad)
+
 	-- Figure out which players have to pick
 	HeroSelection.HorriblyImplementedReconnectDetection = {}
 	HeroSelection.radiantPicks = {}
@@ -44,13 +50,13 @@ function HeroSelection:Start()
 	-- Listen for pick and repick events
 	HeroSelection.listener_select = CustomGameEventManager:RegisterListener("hero_selected", HeroSelection.HeroSelect )
 	HeroSelection.listener_random = CustomGameEventManager:RegisterListener("hero_randomed", HeroSelection.RandomHero )
-	HeroSelection.listener_imba_random = CustomGameEventManager:RegisterListener("hero_imba_randomed", HeroSelection.RandomImbaHero )
+	HeroSelection.listener_random = CustomGameEventManager:RegisterListener("hero_imba_randomed", HeroSelection.RandomImbaHero )
 	HeroSelection.listener_repick = CustomGameEventManager:RegisterListener("hero_repicked", HeroSelection.HeroRepicked )
 	HeroSelection.listener_ui_initialize = CustomGameEventManager:RegisterListener("ui_initialized", HeroSelection.UiInitialized )
 	HeroSelection.listener_abilities_requested = CustomGameEventManager:RegisterListener("pick_abilities_requested", HeroSelection.PickAbilitiesRequested )
 
 	-- Play relevant pick lines
-	if IMBA_PICK_MODE_ALL_RANDOM or IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
+	if IMBA_PICK_MODE_ALL_RANDOM then
 		EmitGlobalSound("announcer_announcer_type_all_random")	
 	elseif IMBA_PICK_MODE_ARENA_MODE then
 		EmitGlobalSound("announcer_announcer_type_death_match")
@@ -81,6 +87,7 @@ function HeroSelection:Tick()
 	-- Tick away a second of time
 	HeroSelection.TimeLeft = HeroSelection.TimeLeft - 1
 	if HeroSelection.TimeLeft < 0 then
+
 		-- End picking phase
 		HeroSelection:EndPicking()
 		return nil
@@ -91,7 +98,10 @@ end
 
 function HeroSelection:RandomHero(event)
 local id = event.PlayerID
-if HeroSelection.playerPickState[id].pick_state ~= "selecting_hero" then return nil end
+
+	if HeroSelection.playerPickState[id].pick_state ~= "selecting_hero" then
+		return nil
+	end
 
 	-- Roll a random hero
 	local random_hero = normal_heroes[RandomInt(1, #normal_heroes)]
@@ -123,7 +133,6 @@ if HeroSelection.playerPickState[id].pick_state ~= "selecting_hero" then return 
 	HeroSelection.playerPickState[id].random_state = true
 
 	-- Send a Custom Message in PreGame Chat to tell other players this player has randomed
-	print("Hero Randomed", id)
 	Chat:PlayerRandomed(id, PlayerResource:GetPlayer(id), PlayerResource:GetTeam(id), random_hero)
 end
 
@@ -156,24 +165,6 @@ local id = event.PlayerID
 	Chat:PlayerRandomed(id, PlayerResource:GetPlayer(id), PlayerResource:GetTeam(id), random_hero)
 end
 
-global_chat_randomed = 0
-function HeroSelection:RandomSameHero(event)
-local id = event.PlayerID
---	if id ~= -1 and HeroSelection.playerPickState[id].pick_state ~= "selecting_hero" then return end
-
-	-- Roll a random hero, and keep it stored
-	if not random_hero then random_hero = normal_heroes[RandomInt(1, #normal_heroes)] end
-	print(random_hero)
-
-	PlayerResource:SetHasRandomed(id)
-	HeroSelection:HeroSelect({PlayerID = id, HeroName = random_hero, HasRandomed = true})
-	HeroSelection.playerPickState[id].random_state = true
-	if global_chat_randomed == 0 then
-		global_chat_randomed = 1
-		Chat:PlayerRandomed(id, PlayerResource:GetPlayer(id), PlayerResource:GetTeam(id), random_hero)
-	end
-end
-
 --[[
 	HeroSelect
 	A player has selected a hero. This function is caled by the CustomGameEventManager
@@ -181,39 +172,10 @@ end
 	Params:
 		- event {table} - A table containing PlayerID and HeroID.
 ]]
-function HeroSelection:HeroSelect(event)
-
-	-- If this player has not picked yet give him the hero
-	if not HeroSelection.playerPicks[ event.PlayerID ] then
-		HeroSelection.playersPicked = HeroSelection.playersPicked + 1
-		HeroSelection.playerPicks[ event.PlayerID ] = event.HeroName
-
-		-- Add the picked hero to the list of picks of the relevant team
-		if PlayerResource:GetTeam(event.PlayerID) == DOTA_TEAM_GOODGUYS then
-			HeroSelection.radiantPicks[#HeroSelection.radiantPicks + 1] = event.HeroName
-		else
-			HeroSelection.direPicks[#HeroSelection.direPicks + 1] = event.HeroName
-		end
-
-		-- Send a pick event to all clients
-		local has_randomed = false
-		if event.HasRandomed then has_randomed = true end
-		CustomGameEventManager:Send_ServerToAllClients("hero_picked", {PlayerID = event.PlayerID, HeroName = event.HeroName, Team = PlayerResource:GetTeam(event.PlayerID), HasRandomed = has_randomed})
-		HeroSelection.playerPickState[event.PlayerID].pick_state = "selected_hero"
-
-		-- Assign the hero if picking is over
-		if HeroSelection.TimeLeft <= 0 and HeroSelection.playerPickState[event.PlayerID].pick_state ~= "in_game" then
-			HeroSelection:AssignHero( event.PlayerID, event.HeroName )
-			HeroSelection.playerPickState[event.PlayerID].pick_state = "in_game"
-			CustomGameEventManager:Send_ServerToAllClients("hero_loading_done", {} )
-		end
-
-		-- Play pick sound to the player
-		EmitSoundOnClient("HeroPicker.Selected", PlayerResource:GetPlayer(event.PlayerID))
-	end
+function HeroSelection:HeroSelect( event )
 
 	-- If this is All Random and the player picked a hero manually, refuse it
-	if IMBA_PICK_MODE_ALL_RANDOM or IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO and (not event.HasRandomed) then
+	if IMBA_PICK_MODE_ALL_RANDOM and (not event.HasRandomed) then
 		return nil
 	end
 
@@ -247,12 +209,45 @@ function HeroSelection:HeroSelect(event)
         end
     end
 
+	-- If this player has not picked yet give him the hero
+	if not HeroSelection.playerPicks[ event.PlayerID ] then
+		HeroSelection.playersPicked = HeroSelection.playersPicked + 1
+		HeroSelection.playerPicks[ event.PlayerID ] = event.HeroName
+
+		-- Add the picked hero to the list of picks of the relevant team
+		if PlayerResource:GetTeam(event.PlayerID) == DOTA_TEAM_GOODGUYS then
+			print("Adding "..event.HeroName.." to the picked list." )
+			HeroSelection.radiantPicks[#HeroSelection.radiantPicks + 1] = event.HeroName
+			PrintTable(HeroSelection.radiantPicks)
+		else
+			print("Adding "..event.HeroName.." to the picked list." )
+			HeroSelection.direPicks[#HeroSelection.direPicks + 1] = event.HeroName
+			PrintTable(HeroSelection.direPicks)
+		end
+
+		-- Send a pick event to all clients
+		local has_randomed = false
+		if event.HasRandomed then has_randomed = true end
+		CustomGameEventManager:Send_ServerToAllClients("hero_picked", {PlayerID = event.PlayerID, HeroName = event.HeroName, Team = PlayerResource:GetTeam(event.PlayerID), HasRandomed = has_randomed})
+		HeroSelection.playerPickState[event.PlayerID].pick_state = "selected_hero"
+
+		-- Assign the hero if picking is over
+		if HeroSelection.TimeLeft <= 0 and HeroSelection.playerPickState[event.PlayerID].pick_state ~= "in_game" then
+			HeroSelection:AssignHero( event.PlayerID, event.HeroName )
+			HeroSelection.playerPickState[event.PlayerID].pick_state = "in_game"
+			CustomGameEventManager:Send_ServerToAllClients("hero_loading_done", {} )
+		end
+
+		-- Play pick sound to the player
+		EmitSoundOnClient("HeroPicker.Selected", PlayerResource:GetPlayer(event.PlayerID))
+	end
+
 	--Check if all heroes have been picked
---	if HeroSelection.playersPicked >= HeroSelection.numPickers then
+	if HeroSelection.playersPicked >= HeroSelection.numPickers then
 
 		--End picking
---		HeroSelection.TimeLeft = 0
---	end
+		HeroSelection.TimeLeft = 0
+	end
 end
 
 -- Handles player repick
@@ -314,6 +309,18 @@ local time = 0.0
 		if HeroSelection.playerPicks[player_id] and HeroSelection.playerPickState[player_id].pick_state ~= "in_game" then
 			HeroSelection:AssignHero(player_id, HeroSelection.playerPicks[player_id])
 			HeroSelection.playerPickState[player_id].pick_state = "in_game"
+			StartGarbageCollector()
+			Timers:CreateTimer(1.0, function()
+				PlayerResource:SetCameraTarget(player_id, nil)
+				if time < 15.0 then -- Cookies: Shit fix because when you pick Monkey King, everytime a monkey appears on map it locks camera on Shrine (ONLY WITH MK, BLACK MAGIC YOLO)
+					time = time + 1.0
+				else
+					time = nil
+					return nil
+				end
+				print(time)
+				return 1.0
+			end)
 		end
 	end
 
@@ -339,36 +346,22 @@ end
 ]]
 function HeroSelection:AssignHero(player_id, hero_name)
 	PrecacheUnitByNameAsync(hero_name, function()
-		-- Dummy invisible wisp
-		local wisp = PlayerResource:GetPlayer(player_id):GetAssignedHero()
-		-- Switch for the new hero
-		if hero_name == "npc_dota_hero_ghost_revenant" then
-			hero = PlayerResource:ReplaceHeroWith(player_id, "npc_dota_hero_razor", 0, 0 )
-			hero.custom = true
-			OverrideHero(hero, hero_name)
-		elseif hero_name == "npc_dota_hero_storegga" then
-			hero = PlayerResource:ReplaceHeroWith(player_id, "npc_dota_hero_tiny", 0, 0 )
-			hero.custom = true
-			OverrideHero(hero, hero_name)
-		else
-			hero = PlayerResource:ReplaceHeroWith(player_id, hero_name, 0, 0 )
-		end
-		hero.pID = player_id
 
-		-- If this is a "real" wisp, tag it
-		if hero:GetUnitName() == "npc_dota_hero_wisp" then
-			hero.is_real_wisp = true
-		end
+		-- Fetch wisp entity
+		local wisp = PlayerResource:GetSelectedHeroEntity(player_id)
+		wisp:SetRespawnsDisabled(true)				
+
+		-- Switch for the new hero
+		PlayerResource:ReplaceHeroWith(player_id, hero_name, 0, 0 )		
 
 		-------------------------------------------------------------------------------------------------
 		-- IMBA: First hero spawn initialization
 		-------------------------------------------------------------------------------------------------
-		
+
+		-- Fetch this player's hero entity
+		local hero = PlayerResource:GetPlayer(player_id):GetAssignedHero()
 		hero:RespawnHero(false, false, false)
 		PlayerResource:SetCameraTarget(player_id, hero)
-		Timers:CreateTimer(FrameTime(), function()
-			PlayerResource:SetCameraTarget(player_id, nil)
-		end)
 
 		-- Set the picked hero for this player
 		PlayerResource:SetPickedHero(player_id, hero)
@@ -389,7 +382,13 @@ function HeroSelection:AssignHero(player_id, hero_name)
 
 		-- Set up initial level
 		if HERO_STARTING_LEVEL > 1 then
-			hero:AddExperience(XP_PER_LEVEL_TABLE[HERO_STARTING_LEVEL], DOTA_ModifyXP_CreepKill, false, true)
+			Timers:CreateTimer(1, function()
+				local ability_points_now = hero:GetAbilityPoints()
+				hero:AddExperience(XP_PER_LEVEL_TABLE[HERO_STARTING_LEVEL], DOTA_ModifyXP_CreepKill, false, true)
+				-- Avoid player getting extra 1 skill point if they learn an ability before the timer runs
+				-- -1 Because players are level 1 before the timer starts
+				hero:SetAbilityPoints(HERO_STARTING_LEVEL - 1 + ability_points_now)
+			end)
 		end
 
 		-- Set up initial gold
@@ -402,11 +401,11 @@ function HeroSelection:AssignHero(player_id, hero_name)
 			PlayerResource:SetGold(player_id, HERO_RERANDOM_GOLD, false)
 		elseif has_repicked then
 			PlayerResource:SetGold(player_id, HERO_REPICK_GOLD, false)
-		elseif has_randomed or IMBA_PICK_MODE_ALL_RANDOM or IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
+		elseif has_randomed or IMBA_PICK_MODE_ALL_RANDOM then
 			PlayerResource:SetGold(player_id, HERO_RANDOM_GOLD, false)
 		else
 			PlayerResource:SetGold(player_id, HERO_INITIAL_GOLD, false)
-		end
+		end		
 
 		-- Apply generic talents handler
 		hero:AddNewModifier(hero, nil, "modifier_imba_generic_talents_handler", {})
@@ -423,10 +422,11 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		-- Set up player color
 		PlayerResource:SetCustomPlayerColor(player_id, PLAYER_COLORS[player_id][1], PLAYER_COLORS[player_id][2], PLAYER_COLORS[player_id][3])
 
-		Timers:CreateTimer(3.0, function()
-			PlayerResource:SetCameraTarget(player_id, nil)
-			UTIL_Remove(wisp)
-		end)
+		-- Timers:CreateTimer(3, function()			
+		-- 	local title = Server_GetPlayerTitle(player_id)			
+		-- 	local rgb = Server_GetTitleColor(title)
+		-- 	hero:SetCustomHealthLabel(title, rgb[1], rgb[2], rgb[3])
+		-- end)
 
 		-- Set initial spawn setup as having been done
 		PlayerResource:IncrementTeamPlayerCount(player_id)

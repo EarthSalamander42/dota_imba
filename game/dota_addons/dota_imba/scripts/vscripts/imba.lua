@@ -22,7 +22,7 @@ require('libraries/notifications')
 -- This library can be used for starting customized animations on units from lua
 require('libraries/animations')
 -- This library can be used for creating frankenstein monsters
-require('libraries/attachments')
+--	require('libraries/attachments')
 -- A*-Path-finding logic
 require('libraries/astar')
 -- Illusion manager, created by Seinken!
@@ -1514,12 +1514,24 @@ function GameMode:InitGameMode()
 	Convars:RegisterCommand("imba_test", Dynamic_Wrap(GameMode, 'StartImbaTest'), "Spawns several units to help with testing", FCVAR_CHEAT)
 	Convars:RegisterCommand("particle_table_print", PrintParticleTable, "Prints a huge table of all used particles", FCVAR_CHEAT)	
 	Convars:RegisterCommand("game_time", GetGameLength, "Print the game time.", FCVAR_CHEAT)	
+	Convars:RegisterCommand("test_picking_screen", InitPickScreen, "schnizzle", FCVAR_CHEAT)
 
 	CustomGameEventManager:RegisterListener("remove_units", Dynamic_Wrap(GameMode, "RemoveUnits"))
 
 	-- Panorama event stuff
 	initScoreBoardEvents()
 	InitPlayerHeroImbaTalents();
+end
+
+function InitPickScreen()
+local picked_hero = {}
+picked_hero[1] = "npc_dota_hero_axe"
+picked_hero[2] = "npc_dota_hero_troll_warlord"
+
+	print("Checking table...")
+	PrintTable("Player Picks:", HeroSelection.radiantPicks)
+
+	CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = 0, PickedHeroes = HeroSelection.radiantPicks, PlayerPicks = HeroSelection.playerPicks, pickState = "selecting_hero", repickState = "false"})
 end
 
 -- Starts the testbed if in tools mode

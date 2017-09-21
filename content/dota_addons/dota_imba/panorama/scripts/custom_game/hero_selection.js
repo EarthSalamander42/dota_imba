@@ -350,6 +350,7 @@ function EnterGame() {
 }
 
 function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, repick_state) {
+	$.Msg("Player has reconnected")
 	// If this is not the local player, ignore everything
 	if ( player_id == Players.GetLocalPlayer() ) {
 		// If the player is already in-game, destroy the pick interface and ignore the rest
@@ -364,11 +365,23 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 		// Else, repopulate player pick panels
 		} else {
 			$.Msg("Pick State: Picking..")
+			$.Msg(player_id)
+			$.Msg(picked_heroes)
+			$.Msg(player_picks)
 			var i = 1;
 			var j = 1;
+			$.Msg("Table size: " + player_picks.length)
 			for (i = 1; i <= player_picks.length; i++) {
 				if (player_picks[i] != null) {
+					$.Msg(player_picks.length)
+					$.Msg(player_picks[i])
 					playerPanels[i].SetHero(player_picks[i])
+				}
+				else if (player_picks[i] == null) {
+					$.Msg("NIL Player Picks!")
+				}
+				else {
+					$.Msg("NIL")
 				}
 			}
 

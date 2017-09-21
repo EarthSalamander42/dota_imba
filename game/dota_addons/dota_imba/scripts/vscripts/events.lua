@@ -959,7 +959,7 @@ function GameMode:OnConnectFull(keys)
 	-- Reinitialize the player's pick screen panorama, if necessary
 	if HeroSelection.HorriblyImplementedReconnectDetection then
 		HeroSelection.HorriblyImplementedReconnectDetection[player_id] = false
-		Timers:CreateTimer(0.1, function()
+		Timers:CreateTimer(1.0, function()
 			if HeroSelection.HorriblyImplementedReconnectDetection[player_id] then
 				Server_EnableToGainXPForPlyaer(player_id)
 				print("updating player "..player_id.."'s pick screen state")
