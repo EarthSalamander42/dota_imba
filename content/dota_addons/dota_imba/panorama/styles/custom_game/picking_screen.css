@@ -58,13 +58,11 @@
 
 @keyframes 'fade_out'
 {
-	0%
-	{
+	0% {
 		opacity: 1.0;
 	}
 
-	70%
-	{
+	70% {
 		opacity: 0.0;
 	}
 
@@ -72,6 +70,10 @@
 	{
 		opacity: 0.0;
 	}
+}
+
+.selected {
+	box-shadow: fill white -3px -3px 6px 6px;
 }
 
 #PickingScreen {
@@ -145,7 +147,8 @@
 
 #PostPickScreen {
 	width: 100%;
-	height: 100%;
+	height: 90%;
+	margin-top: 5%;
 	visibility: collapse;
 	flow-children: down;
 }
@@ -160,24 +163,27 @@
 }
 
 #HeroPreview {
-	width: 600px;
-	height: 600px;
+	width: 800px;
+	height: 800px;
 	horizontal-align: center;
 }
 
 /* 'Enter game' button
 =================================================================*/
-#EnterGameBtn {
-	horizontal-align: center;
-	margin-top: 20px;
 
-	box-shadow: fill #00000066 -4px -4px 8px 8px;
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #5AA15E ), to( #87d69533 ) );
-	background-image: url("s2r://panorama/images/backgrounds/background_play_button_large_2x_png.vtex");
+#PostPickButtonContainer {
+	width: 30%;
+	height: 20%;
+	horizontal-align: center;
+	flow-children: right;
+}
+
+#EnterGameBtn {
+	width: 50%;
+	height: 35%;
+	horizontal-align: center;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #066319 ), to( #103F19 ) );
 	background-size: 320px 120px;
-	height: 55px;
-	width: 420px;
-	border-radius: 4px;
 }
 
 #EnterGameBtn.disabled, #EnterGameBtn.disabled:Hover {
@@ -185,45 +191,40 @@
 }
 
 #EnterGameBtn:Hover {
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #6FDE75 ), to( #87d69533 ) );
+	saturation: 0.8;
 }
 
 #EnterGameBtn Label {
 	horizontal-align: center;
 	vertical-align: center;
 	color: #fff;
-	font-size: 36px;
+	font-size: 28px;
 	font-family: "Radiance";
 }
 
 /* 'Repick hero' button
 =================================================================*/
 #RepickBtn {
+	width: 50%;
+	height: 35%;
 	horizontal-align: center;
-	margin-top: 20px;
-
-	box-shadow: fill #00000066 -4px -4px 8px 8px;
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #5AA15E ), to( #87d69533 ) );
-	background-image: url("s2r://panorama/images/backgrounds/background_play_button_large_2x_png.vtex");
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #066319 ), to( #103F19 ) );
 	background-size: 320px 120px;
-	height: 55px;
-	width: 420px;
-	border-radius: 4px;
 }
 
 #RepickBtn.disabled, #RepickBtn.disabled:Hover {
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #9C9C9C ), to( #D1D1D133 ) );
+	saturation: 0.0;
 }
 
 #RepickBtn:Hover {
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #6FDE75 ), to( #87d69533 ) );
+	saturation: 0.0;
 }
 
 #RepickBtn Label {
 	horizontal-align: center;
 	vertical-align: center;
 	color: #fff;
-	font-size: 36px;
+	font-size: 28px;
 	font-family: "Radiance";
 }
 
@@ -513,21 +514,24 @@
 
 /* Hero details panel
 =================================================================*/
-#HeroDetailsPanel,
 #CustomHeroesPanel
 {
 	width: 33%;
 	margin-right: 0.5%;
-	vertical-align: middle;
-	horizontal-align: middle;
+	align: center center;
+}
+
+#HeroDetailsContainer {
+	width: 33.3%;
+	height: 100%;
+	margin-right: 0.5%;
+	flow-children: down;
 }
 
 #HeroDetailsPanel {
-	margin-right: 0.5%;
-	width: 33%;
-	margin-right: 0.5%;
+	width: 95%;
+	height: 100%;
 	align: center center;
-	horizontal-align: middle;
 	flow-children: down;
 }
 
@@ -552,6 +556,18 @@
 }
 
 #PickedHeroPanel {
+	width: 80%;
+	height: 24%;
+	margin-top: 3.9%;
+	horizontal-align: center;
+	flow-children: right;
+}
+
+#PickedHeroAbilitiesPanel {
+	width: 80%;
+	height: 27%;
+	margin-top: 10%;
+	horizontal-align: center;
 	flow-children: right;
 }
 
@@ -568,16 +584,15 @@
 */
 #PickedHeroImage {
 	horizontal-align: center;
-	width: 128px;
-	height: 72px;
-	border-radius: 20px;
+	width: 30%;
+	height: 100%;
 }
 
 #HeroAbilitiesParentPanel {
+	width: 100%;
 	height: 100%;
-	width: fill-parent-flow(1);
+	margin-top: 20%;
 	flow-children: right;
-	padding: 10px 0px 10px 10px;
 	visibility: collapse;
 }
 
@@ -594,7 +609,7 @@
 }
 
 .PickedHeroAbility {
-	height: width-percentage(80%);
+	height: width-percentage(85%);
 	margin-left: 1px;
 	margin-right: 1px;
 	border-radius: 10px;
@@ -658,44 +673,43 @@
 /* 'Confirm pick' button
 =================================================================*/
 #PickHeroBtn {
-	margin-top: 5px;
-	margin-left: 15%;
-	margin-right: 15%;
 	box-shadow: fill #00000066 -4px -4px 8px 8px;
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #5AA15E ), to( #87d69533 ) );
-	background-image: url("s2r://panorama/images/backgrounds/background_play_button_large_2x_png.vtex");
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #066319 ), to( #103F19 ) );
 	background-size: 320px 120px;
-	height: 70px;
-	width: 100%;
+	height: 100%;
+	width: 70%;
 	horizontal-align: middle;
-	border-radius: 2px;
 	visibility: collapse;
 }
 
 #PickHeroBtn:Hover {
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #6FDE75 ), to( #87d69533 ) );
+	saturation: 0.8;
 }
 #PickHeroBtn.disabled, #PickHeroBtn.disabled:Hover {
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #9C9C9C ), to( #D1D1D133 ) );
 }
 
 #PickHeroBtn Label {
-	vertical-align: middle;
-	horizontal-align: center;
 	color: #FFFFFF;
-	font-size: 32px;
+	font-size: 24px;
+	align: center center;
 	font-family: "Radiance";
-	margin-top: 2px;
+	text-transform: uppercase;
 }
 
 /* COOKIES: Custom Chat, all credits to Mahou Shoujo (CIA Creator)
 ===============================================================*/
+#ChatContainer {
+	width: 33.3%;
+	height: 100%;
+}
+
 #HeroSelectionChat
 {
 	margin-top: 5%;
 	margin-right: 0.5%;
 	align: center bottom;
-	width: 33%;
+	width: 95%;
 	height: 100%;
 	background-color: #000000ba;
 	border-top-left-radius: 8px;
