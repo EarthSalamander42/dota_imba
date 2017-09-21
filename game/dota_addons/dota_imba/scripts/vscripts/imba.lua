@@ -1525,13 +1525,16 @@ end
 
 function InitPickScreen()
 local picked_hero = {}
-picked_hero[1] = "npc_dota_hero_axe"
+picked_hero[0] = "npc_dota_hero_axe"
+picked_hero[1] = "npc_dota_hero_brewmaster"
 picked_hero[2] = "npc_dota_hero_troll_warlord"
 
 	print("Checking table...")
-	PrintTable("Player Picks:", HeroSelection.radiantPicks)
+	PrintTable(HeroSelection.radiantPicks)
+	PrintTable(HeroSelection.direPicks)
+	PrintTable(HeroSelection.playerPicks)
 
-	CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = 0, PickedHeroes = HeroSelection.radiantPicks, PlayerPicks = HeroSelection.playerPicks, pickState = "selecting_hero", repickState = "false"})
+	CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = 0, PickedHeroes = HeroSelection.radiantPicks, PlayerPicks = picked_hero, pickState = "selecting_hero", repickState = "false"})
 end
 
 -- Starts the testbed if in tools mode
