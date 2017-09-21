@@ -107,6 +107,11 @@
 	text-overflow: clip;
 }
 
+#PhaseLevel
+{
+	horizontal-align: left;
+}
+
 //XHS BOSS BARS
 .HoldoutLabelSmall
 {

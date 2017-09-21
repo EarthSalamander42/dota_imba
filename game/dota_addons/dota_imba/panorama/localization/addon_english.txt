@@ -542,7 +542,7 @@
 	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_5_title"				"Shadow Flash"
 	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_5_Description"			"Allows Blink to be used twice in quick succession, with the second usage costing double the normal mana. There's a 1.5 second grace window where you can choose to blink again or not.<br><br><i>In and out in a flash, the Queen becomes ever more elusive - and deadly.</i>"
 	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_6_title"				"Scream of Agony"
-	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_6_Description"			"Enemies affected by Shadow Strike will now release a 75% damage scream of pain every time it ticks. Does not affect the target itself.<br><br><i>Shadow Strike's suffering becomes so intense, its victims cannot help but continuously scream in agony, piercing their allies' eardrums in the process.</i>"
+	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_6_Description"			"Enemies affected by Shadow Strike will now release a 50% damage scream of pain every time it ticks. Does not affect the target itself.<br><br><i>Shadow Strike's suffering becomes so intense, its victims cannot help but continuously scream in agony, piercing their allies' eardrums in the process.</i>"
 	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_7_title"				"Disorienting Scream"
 	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_7_Description"			"Allows Scream of Pain to confuse enemies, mixing up their next 2 orders (same effect as scepter Sonic Wave).<br><br><i>Violent screaming and pierced eardrums cause enemies to briefly become confused and off-balance.</i>"
 	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_8_title"				"Spread the Suffering"

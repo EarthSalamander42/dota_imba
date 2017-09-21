@@ -5,11 +5,9 @@
 
 .IMBA_Talent_HUD_Panel
 {
-	width : 70px;
-	height : 70px;
-	margin-right : -1px;
-	margin-left: -4px;
-	padding: 5px;
+	width : 64px;
+	height : 64px;
+	padding: 3px;
 	margin-top: 95px;
 }
 
