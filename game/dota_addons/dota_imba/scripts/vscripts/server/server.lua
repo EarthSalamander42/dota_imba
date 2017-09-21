@@ -208,6 +208,11 @@ function Server_DecodeForPlayer ( t, nPlayerID )   --To deep-decode the Json cod
 						end
 						if pos == "XP_has" then
 							XP_has = val
+							if tonumber(XP_has) < 0 then
+                                table_XP_has[nPlayerID] = 0
+                            else
+                                table_XP_has[nPlayerID] = tostring(XP_has)
+                            end
 							table_XP_has[nPlayerID] = tostring(XP_has)
 							--print("XP_has="..table_XP_has[nPlayerID])
 						end
