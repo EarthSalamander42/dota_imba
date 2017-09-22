@@ -10,6 +10,7 @@ imba_obsidian_destroyer_arcane_orb = class({})
 LinkLuaModifier("modifier_imba_arcane_orb_thinker", "hero/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_arcane_orb_buff", "hero/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_arcane_orb_debuff", "hero/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_arcane_orb_instance", "hero/hero_obsidian_destroyer.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_obsidian_destroyer_arcane_orb:GetAbilityTextureName()
    return "obsidian_destroyer_arcane_orb"
@@ -494,6 +495,22 @@ function ApplyIntelligenceSteal(caster, ability, target, stack_count, duration)
 			modifier_buff_handler:ForceRefresh()
 		end
 	end
+	
+	-- #2 Talent: Sanity Eclipse's cooldown is reduced by 1 second for each instance of INT steal Obsidian Destroyer applies
+	if caster:HasTalent("special_bonus_imba_obsidian_destroyer_2") then
+		local modifier_stack = "modifier_imba_arcane_orb_instance"
+		-- Apply int the steal modifier on caster        
+		if not caster:HasModifier(modifier_stack) then
+			caster:AddNewModifier(caster, ability, modifier_stack, {duration = duration})                                   
+		end
+		
+		local modifier_stack_handler = caster:FindModifierByName(modifier_stack)                     
+		if modifier_stack_handler then
+		-- Increment the stack count
+			modifier_stack_handler:IncrementStackCount()
+			modifier_stack_handler:ForceRefresh()
+		end
+	end
 end
 
 -- Arcane Orb int steal buff
@@ -659,6 +676,74 @@ function modifier_imba_arcane_orb_debuff:GetModifierBonusStats_Intellect()
 	return stacks * (-1)
 end
 
+
+-- Arcane Orb int steal instance
+modifier_imba_arcane_orb_instance = class({})
+
+function modifier_imba_arcane_orb_instance:GetTexture()
+    return "obsidian_destroyer_sanity_eclipse"
+end
+
+function modifier_imba_arcane_orb_instance:OnCreated()
+    if IsServer() then
+        -- Ability properties
+        self.caster = self:GetCaster()
+        self.ability = self:GetAbility()
+        self.parent = self:GetParent()        
+
+        -- Ability specials
+        self.int_steal_duration = self.ability:GetSpecialValueFor("int_steal_duration")
+
+        -- Initialize table
+        self.stacks_table = {}        
+
+        -- Start thinking
+        self:StartIntervalThink(0.1)
+    end
+end
+
+function modifier_imba_arcane_orb_instance:OnIntervalThink()
+    if IsServer() then
+
+        -- Check if there are any stacks left on the table
+        if #self.stacks_table > 0 then
+
+            -- For each stack, check if it is past its expiration time. If it is, remove it from the table
+            for i = #self.stacks_table, 1, -1 do
+                if self.stacks_table[i] + self.int_steal_duration < GameRules:GetGameTime() then
+                    table.remove(self.stacks_table, i)                          
+                end
+            end
+            
+            -- If after removing the stacks, the table is empty, remove the modifier.
+            if #self.stacks_table == 0 then
+                self:Destroy()
+
+            -- Otherwise, set its stack count
+            else
+                self:SetStackCount(#self.stacks_table)
+            end
+
+            -- Recalculate bonus based on new stack count
+            self:GetParent():CalculateStatBonus()
+
+        -- If there are no stacks on the table, just remove the modifier.
+        else
+            self:Destroy()
+        end
+    end
+end
+
+function modifier_imba_arcane_orb_instance:OnRefresh()
+    if IsServer() then
+        -- Insert new stack values
+        table.insert(self.stacks_table, GameRules:GetGameTime())
+    end
+end
+
+function modifier_imba_arcane_orb_instance:IsHidden() return false end
+function modifier_imba_arcane_orb_instance:IsPurgable() return false end
+function modifier_imba_arcane_orb_instance:IsDebuff() return false end
 
 
 ---------------------------
@@ -1784,26 +1869,13 @@ function imba_obsidian_destroyer_sanity_eclipse:OnSpellStart()
 		end        
 	end
 	
-	-- #2 Talent: Sanity Eclipse's cooldown is reduced by 1 second for every point of stolen INT Obsidian Destroyer currently has
+	-- #2 Talent: Sanity Eclipse's cooldown is reduced by 1 second for each instance of INT steal Obsidian Destroyer applies
 	if caster:HasTalent("special_bonus_imba_obsidian_destroyer_2") then
-		local int_buff = caster:FindModifierByName("modifier_imba_arcane_orb_buff")
-		if int_buff then
-			print(ability:GetCooldownTimeRemaining())
-			local int_stacks = int_buff:GetStackCount()
-			local cooldown = ability:GetCooldownTimeRemaining()
-			local new_cooldown = cooldown - int_stacks
-			print("Int Count:", int_stacks)
-			print("CD:", cooldown)
-			print("New CD:", new_cooldown)
-			if int_stacks > cooldown /2 then
-				print("Stack was higher than cd.")
-				ability:EndCooldown()
-				ability:StartCooldown(cooldown/2)
-			else
-				print("Stack was lower than cd.")
-				ability:EndCooldown()
-				ability:StartCooldown(new_cooldown)
-			end
+		local talent_modifier = caster:FindModifierByName("modifier_imba_arcane_orb_instance")
+		if talent_modifier then
+			local new_cooldown = ability:GetCooldownTimeRemaining() - talent_modifier:GetStackCount()
+			ability:EndCooldown()
+			ability:StartCooldown(new_cooldown)
 		end
 	end
 end
