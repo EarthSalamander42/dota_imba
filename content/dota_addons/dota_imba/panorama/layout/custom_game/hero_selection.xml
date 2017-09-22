@@ -523,25 +523,30 @@
 					</Panel>
 
 					<Panel id="BottomContainer">
+						<Panel id="ChatContainer">
+							<Panel id="HeroSelectionChat"/>
+						</Panel>
 
-						<Panel id="HeroSelectionChat"/>
+						<Panel id="HeroDetailsContainer">
+							<Panel id="HeroDetailsPanel">
+								<Panel id="PickedHeroAbilitiesPanel">
+									<Panel id="HeroAbilitiesParentPanel">
+										<DOTAAbilityImage id="PickedHeroAbility1" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname=""/>
+										<DOTAAbilityImage id="PickedHeroAbility2" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
+										<DOTAAbilityImage id="PickedHeroAbility3" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
+										<DOTAAbilityImage id="PickedHeroAbility4" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
+										<DOTAAbilityImage id="PickedHeroAbility5" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
+										<DOTAAbilityImage id="PickedHeroAbility6" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
+									</Panel>
+								</Panel>
 
-						<Panel id="HeroDetailsPanel">
-							<Label id="PickedHeroName" text="#imba_hero_name_filler"/>
-							<Panel id="PickedHeroPanel">
-								<DOTAHeroImage id="PickedHeroImage" heroname="" />
-								<Panel id="HeroAbilitiesParentPanel">
-									<DOTAAbilityImage id="PickedHeroAbility1" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname=""/>
-									<DOTAAbilityImage id="PickedHeroAbility2" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
-									<DOTAAbilityImage id="PickedHeroAbility3" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
-									<DOTAAbilityImage id="PickedHeroAbility4" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
-									<DOTAAbilityImage id="PickedHeroAbility5" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
-									<DOTAAbilityImage id="PickedHeroAbility6" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
+								<Panel id="PickedHeroPanel">
+									<Button id="PickHeroBtn" onactivate="PickHero()" >
+										<Label id="PickHeroBtnTxt" text="#imba_confirm_pick_button" />
+									</Button>
+									<DOTAHeroImage id="PickedHeroImage" heroname="" />
 								</Panel>
 							</Panel>
-							<Button id="PickHeroBtn" onactivate="PickHero()" >
-								<Label id="PickHeroBtnTxt" text="#imba_confirm_pick_button" />
-							</Button>
 						</Panel>
 
 						<!-- Custom Heroes -->
@@ -566,12 +571,14 @@
 
 					<!-- Post-pick screen (hero view) -->
 					<Panel id="PostPickScreen">
-						<Button id="EnterGameBtn" class="disabled" onactivate="EnterGame()" >
-							<Label id="EnterGameBtnTxt" text="" />
-						</Button>
-						<Button id="RepickBtn" onactivate="RepickHero()" >
-							<Label id="RepickBtnTxt" text="#imba_repick_button" />
-						</Button>
+						<Panel id="PostPickButtonContainer">
+							<Button id="EnterGameBtn" class="disabled" onactivate="EnterGame()" >
+								<Label id="EnterGameBtnTxt" text="" />
+							</Button>
+							<Button id="RepickBtn" onactivate="RepickHero()" >
+								<Label id="RepickBtnTxt" text="#imba_repick_button" />
+							</Button>
+						</Panel>
 					</Panel>
 
 					<Panel id="WelcomePanel">
