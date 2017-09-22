@@ -419,86 +419,6 @@ end
 -- state as necessary
 function GameMode:OnPlayerReconnect(keys)
 	PrintTable(keys)
-
-	local player_id = keys.PlayerID
-	Server_EnableToGainXPForPlyaer(player_id)
-	print("Player has reconnected:", player_id)
-
-	for _, hero in pairs(HeroList:GetAllHeroes()) do
-		if hero.is_dev and not hero.has_graph then
-			hero.has_graph = true
-			CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph", {})
---			CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
-		end
-	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Player reconnect logic
-	-------------------------------------------------------------------------------------------------
-
-	-- Reinitialize the player's pick screen panorama, if necessary
-	if HeroSelection.HorriblyImplementedReconnectDetection then
-		HeroSelection.HorriblyImplementedReconnectDetection[player_id] = false
-		Timers:CreateTimer(0.1, function()
-			if HeroSelection.HorriblyImplementedReconnectDetection[player_id] then
-				print("updating player "..player_id.."'s pick screen state")
-				local pick_state = HeroSelection.playerPickState[player_id].pick_state
-				local repick_state = HeroSelection.playerPickState[player_id].repick_state
-
-				local data = {
-					PlayerID = player_id,
-					PlayerPicks = HeroSelection.playerPicks,
-					pickState = pick_state,
-					repickState = repick_state
-				}
-
-				if IMBA_HERO_PICK_RULE == 0 then
-					data.PickedHeroes = {}
-					-- Set as all of the heroes that were selected
-					for _,v in pairs(HeroSelection.radiantPicks) do
-						table.insert(data.PickedHeroes, v)
-					end
-					for _,v in pairs(HeroSelection.direPicks) do
-						table.insert(data.PickedHeroes, v)
-					end
-				elseif IMBA_HERO_PICK_RULE == 1 then
-					-- Set as the team's pick to prevent same hero on the same team
-					if PlayerResource:GetTeam(player_id) == DOTA_TEAM_GOODGUYS then
-						data.PickedHeroes = HeroSelection.radiantPicks
-					else
-						data.PickedHeroes = HeroSelection.direPicks
-					end
-				else
-					data.PickedHeroes = {} --Set as empty, to allow all heroes to be selected
-				end
-
-				PrintTable(HeroSelection.playerPicks)
-
-				if PlayerResource:GetTeam(player_id) == DOTA_TEAM_GOODGUYS then
-					CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.radiantPicks, PlayerPicks = HeroSelection.playerPicks, pickState = pick_state, repickState = repick_state})
-				else
-					CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.direPicks, PlayerPicks = HeroSelection.playerPicks, pickState = pick_state, repickState = repick_state})
-				end
-			else
-				return 0.1
-			end
-		end)
-	end
-
-	-- If this is a reconnect from abandonment due to a long disconnect, remove the abandon state
-	if PlayerResource:GetHasAbandonedDueToLongDisconnect(player_id) then
-		local player_name = keys.name
-		local hero = PlayerResource:GetPickedHero(player_id)
-		local hero_name = PlayerResource:GetPickedHeroName(player_id)
-		local line_duration = 7
-		Notifications:BottomToAll({hero = hero_name, duration = line_duration})
-		Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
-		Notifications:BottomToAll({text = "#imba_player_reconnect_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
-		PlayerResource:IncrementTeamPlayerCount(player_id)
-
-		-- Stop redistributing gold to allies, if applicable
-		PlayerResource:StopAbandonGoldRedistribution(player_id)
-	end
 end
 
 -- An item was purchased by a player
@@ -1010,6 +930,7 @@ end
 function GameMode:PlayerConnect(keys)
 	DebugPrint('[BAREBONES] PlayerConnect')
 	DebugPrintTable(keys)
+
 end
 
 -- This function is called once when the player fully connects and becomes "Ready" during Loading
@@ -1021,19 +942,94 @@ function GameMode:OnConnectFull(keys)
 	GameMode:_OnConnectFull(keys)
 	
 	local entIndex = keys.index+1
-
-	-- The Player entity of the joining user
 	local ply = EntIndexToHScript(entIndex)
-	
-	-- The Player ID of the joining player
 	local player_id = ply:GetPlayerID()
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Player data initialization
 	-------------------------------------------------------------------------------------------------
+	print("Player has fully connected:", player_id)
+
+--	if player.is_dev then
+--		CustomGameEventManager:Send_ServerToPlayer(player:GetPlayerOwner(), "show_netgraph", {})
+--	end
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Player reconnect logic
+	-------------------------------------------------------------------------------------------------
+	-- Reinitialize the player's pick screen panorama, if necessary
+	if HeroSelection.HorriblyImplementedReconnectDetection then
+		HeroSelection.HorriblyImplementedReconnectDetection[player_id] = false
+		Timers:CreateTimer(1.0, function()
+			if HeroSelection.HorriblyImplementedReconnectDetection[player_id] then
+				Server_EnableToGainXPForPlyaer(player_id)
+				print("updating player "..player_id.."'s pick screen state")
+				local pick_state = HeroSelection.playerPickState[player_id].pick_state
+				local repick_state = HeroSelection.playerPickState[player_id].repick_state
+
+				local data = {
+					PlayerID = player_id,
+					PlayerPicks = HeroSelection.playerPicks,
+					pickState = pick_state,
+					repickState = repick_state
+				}
+
+				if IMBA_HERO_PICK_RULE == 0 then
+					data.PickedHeroes = {}
+					-- Set as all of the heroes that were selected
+					for _,v in pairs(HeroSelection.radiantPicks) do
+						table.insert(data.PickedHeroes, v)
+					end
+					for _,v in pairs(HeroSelection.direPicks) do
+						table.insert(data.PickedHeroes, v)
+					end
+				elseif IMBA_HERO_PICK_RULE == 1 then
+					-- Set as the team's pick to prevent same hero on the same team
+					if PlayerResource:GetTeam(player_id) == DOTA_TEAM_GOODGUYS then
+						data.PickedHeroes = HeroSelection.radiantPicks
+					else
+						data.PickedHeroes = HeroSelection.direPicks
+					end
+				else
+					data.PickedHeroes = {} --Set as empty, to allow all heroes to be selected
+				end
+
+				print("HERO SELECTION ARGS:")
+				print(player_id)
+				PrintTable(HeroSelection.radiantPicks)
+				PrintTable(HeroSelection.direPicks)
+				PrintTable(HeroSelection.playerPicks)
+				print(pick_state)
+				print(repick_state)
+
+				if PlayerResource:GetTeam(player_id) == DOTA_TEAM_GOODGUYS then
+					print("Running Radiant picks...")
+					CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.radiantPicks, PlayerPicks = HeroSelection.playerPicks, pickState = pick_state, repickState = repick_state})
+				else
+					print("Running Dire picks...")
+					CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.direPicks, PlayerPicks = HeroSelection.playerPicks, pickState = pick_state, repickState = repick_state})
+				end
+			else
+				return 0.1
+			end
+		end)
+
+		-- If this is a reconnect from abandonment due to a long disconnect, remove the abandon state
+		if PlayerResource:GetHasAbandonedDueToLongDisconnect(player_id) then
+			local player_name = keys.name
+			local hero = PlayerResource:GetPickedHero(player_id)
+			local hero_name = PlayerResource:GetPickedHeroName(player_id)
+			local line_duration = 7
+			Notifications:BottomToAll({hero = hero_name, duration = line_duration})
+			Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
+			Notifications:BottomToAll({text = "#imba_player_reconnect_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
+			PlayerResource:IncrementTeamPlayerCount(player_id)
+
+			-- Stop redistributing gold to allies, if applicable
+			PlayerResource:StopAbandonGoldRedistribution(player_id)
+		end
+	end
 
 	PlayerResource:InitPlayerData(player_id)
-
 end
 
 -- This function is called whenever illusions are created and tells you which was/is the original entity
