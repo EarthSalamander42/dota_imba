@@ -41,6 +41,7 @@
 			m_flInputMax = 64.0
 			m_nStartCP = 3
 			m_bActiveRange = true
+			m_bDisableOperator = true
 		},
 	]
 	m_Initializers = 
