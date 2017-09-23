@@ -62,7 +62,6 @@ function OnReceiveAbilities( data ) {
 	UpdateAbilities( data.heroAbilities);
 }
 
-
 /* Functionality
 =========================================================================*/
 
@@ -121,9 +120,6 @@ function HeroPicked(player, hero, team, has_randomed) {
 		// Switch to hero preview state
 		SwitchToHeroPreview(hero);
 	}
-
-	$('#BottomContainer').style.width = '500px';
-	$('#HeroDetailsPanel').style.width = '500px';
 }
 
 /* A player on the same team has picked a hero, tell the player's panel a hero was picked,
@@ -142,9 +138,6 @@ function HeroUnpicked(player, hero, team) {
 	if ( player != null ) {
 		playerPanels[player].SetHero(null);
 	}
-
-	$('#HeroDetailsPanel').style.width = '33%';
-	$('#BottomContainer').style.width = '25%';
 }
 
 /* Switch the content of the screen to show the picked hero instead of the
@@ -155,7 +148,7 @@ function SwitchToHeroPreview( heroName ) {
 	previewPanel.BLoadLayoutFromString('<root><Panel><DOTAScenePanel style="width:100%; height:100%;" particleonly="false" unit="'+heroName+'"/></Panel></root>', false, false );
 	previewPanel.style.opacityMask = 'url("s2r://panorama/images/masks/hero_model_opacity_mask_png.vtex");'
 
-	$('#PostPickScreen').MoveChildBefore( previewPanel, $("#EnterGameBtn") );
+	$('#PostPickScreen').MoveChildBefore( previewPanel, $("#PostPickButtonContainer") );
 
 	// Hide/show relevant panels
 	$("#PickHeroBtn").style.visibility = 'collapse';
@@ -166,7 +159,8 @@ function SwitchToHeroPreview( heroName ) {
 	$('#PostPickScreen').style.visibility = 'visible';
 	$('#RandomButtonContainer').style.visibility = 'collapse';
 	$('#RandomImbaButtonContainer').style.visibility = 'collapse';
-	$('#WelcomePanel').style.visibility = 'collapse';	
+	$('#WelcomePanel').style.visibility = 'collapse';
+	$('#BottomContainer').style.visibility = 'collapse';
 }
 
 /* Select a hero, called when a player clicks a hero panel in the layout */
@@ -200,6 +194,13 @@ function SelectHero( heroName ) {
 		$("#PickedHeroImage").style.visibility = 'visible';
 	}
 
+	var panel_table = $("#PickList").FindChildrenWithClassTraverse("selected");
+	for (var i = 0; i < panel_table.length; i++) {
+		panel_table[i].RemoveClass("selected")
+	}
+
+	selected_panel.AddClass("selected");
+
 	if (selected_panel.BHasClass( "taken" ) || (all_random_enabled != null && all_random_enabled[1] == 1)) {
 		$('#PickHeroBtn').AddClass("disabled");
 	} else {
@@ -207,12 +208,13 @@ function SelectHero( heroName ) {
 	}
 
 	// Update the hero name
-	$("#PickedHeroName").text = $.Localize( heroName );
+//	$("#PickedHeroName").text = $.Localize( heroName );
 	selectedHero = heroName;
 
 	// Make the abilities panel visible
 	$("#HeroAbilitiesParentPanel").style.visibility = 'visible';
 	$("#PickHeroBtn").style.visibility = 'visible';
+	$("#PickHeroBtnTxt").text = $.Localize("imba_hero_name_filler") + $.Localize( heroName );
 
 	// Request the hero's abilities table to the server 
 	GameEvents.SendCustomGameEventToServer("pick_abilities_requested", { HeroName: heroName} );
@@ -297,7 +299,7 @@ function RepickHero() {
 		$("#PickedHeroImage").heroname = null;
 
 		// Update the hero name
-		$("#PickedHeroName").text = $.Localize( "imba_hero_name_filler" );
+		$("#PickHeroBtnTxt").text = $.Localize("imba_hero_name_filler");
 		selectedHero = null;
 
 		// Make the abilities panel invisible
@@ -341,17 +343,8 @@ function EnterGame() {
 }
 
 function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, repick_state) {
-
-/*	$.Msg("OnPlayerReconnect pID: " + data.PlayerID)
-	$.Msg("OnPlayerReconnect Picked Heroes: " + data.PickedHeroes)
-	$.Msg("OnPlayerReconnect Player Picks: " + data.PlayerPicks)
-	$.Msg("OnPlayerReconnect Pick State: " + data.pickState)
-	$.Msg("OnPlayerReconnect Repick State: " + data.repickState) */
-
 	// If this is not the local player, ignore everything
 	if ( player_id == Players.GetLocalPlayer() ) {
-		$.Msg("Not local player")
-		
 		// If the player is already in-game, destroy the pick interface and ignore the rest
 		if (pick_state == "in_game") {
 			$('#Background').GetParent().DeleteAsync( 0.0 );
@@ -360,15 +353,13 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 			parent_panel.FindChildTraverse("minimap_container").style.visibility = "visible";
 			parent_panel.FindChildTraverse("lower_hud").style.visibility = "visible";
 			parent_panel.FindChildTraverse("HudChat").style.visibility = "visible";
-			$.Msg("Pick State: In-Game")
 		// Else, repopulate player pick panels
 		} else {
-			$.Msg("Pick State: Picking..")
-			var i = 1;
-			var j = 1;
-			for (i = 1; i <= player_picks.length; i++) {
-				if (player_picks[i] != null) {
-					playerPanels[i].SetHero(player_picks[i])
+			var index = 1;
+
+			for (index in player_picks) {
+				if (player_picks[index] != null) {
+					$('#'+player_picks[index]).AddClass("taken");
 				}
 			}
 
@@ -380,16 +371,6 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 			// If the player has already selected a hero, go to the hero preview screen
 			if (pick_state == "selected_hero" && player_picks[player_id] != null) {
 				SwitchToHeroPreview(player_picks[player_id])
-			}
-
-			// Gray out heroes already selected by according to hero pick rule (handled by server)
-			for (j = 1; j <= picked_heroes.length; j++) {
-				if (picked_heroes[i] != null) {
-					$.Msg("Picked heroes" + picked_heroes[i])
-					$.Msg("-----")
-					$.Msg("Picked heroes" + picked_heroes[j])
-					$('#'+picked_heroes[i]).AddClass("taken");
-				}
 			}
 		}
 	}

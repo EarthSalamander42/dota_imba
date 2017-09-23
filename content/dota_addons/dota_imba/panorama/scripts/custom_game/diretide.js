@@ -43,6 +43,7 @@ function UpdateScoreUI()
 	{
 		if (RoshanTable !== null)
 		{
+			$.Msg(RoshanTable.HP)
 			var RoshanHP = RoshanTable.HP;
 			var RoshanHP_percent = RoshanTable.HP_alt;
 			var RoshanMaxHP = RoshanTable.maxHP;
