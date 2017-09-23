@@ -29,7 +29,7 @@ function imba_juggernaut_blade_fury:OnSpellStart()
 	-- Fix the infinite radius in custom, but benefits the use of Refresher
 	if caster:HasModifier("modifier_imba_juggernaut_blade_fury") then
 		local buff = caster:FindModifierByName("modifier_imba_juggernaut_blade_fury")
-		if buff.radius >= (self:GetTalentSpecialValueFor("effect_radius") * 5) then
+		if buff.radius >= (self:GetTalentSpecialValueFor("effect_radius") * 2) then
 		buff.radius = self:GetTalentSpecialValueFor("effect_radius")
 		end
 	end
@@ -50,6 +50,18 @@ LinkLuaModifier("modifier_imba_juggernaut_blade_fury_deflect_buff", "hero/hero_j
 LinkLuaModifier("modifier_imba_juggernaut_blade_fury_deflect_on_kill_credit", "hero/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_juggernaut_blade_fury_succ", "hero/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_juggernaut_blade_fury = modifier_imba_juggernaut_blade_fury or class({})
+
+function modifier_imba_juggernaut_blade_fury:IsAura()
+	if self.original_caster:HasTalent("special_bonus_imba_juggernaut_1") then
+		return true
+	else
+		return false
+	end
+end
+function modifier_imba_juggernaut_blade_fury:GetAuraSearchTeam() 		return DOTA_UNIT_TARGET_TEAM_ENEMY end
+function modifier_imba_juggernaut_blade_fury:GetAuraSearchType() 		return DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO end
+function modifier_imba_juggernaut_blade_fury:GetAuraRadius() 			return self.radius + 200 end
+function modifier_imba_juggernaut_blade_fury:GetModifierAura()			return "modifier_imba_juggernaut_blade_fury_succ" end
 
 function modifier_imba_juggernaut_blade_fury:OnCreated()
 	self.caster = self:GetCaster()
@@ -83,26 +95,6 @@ function modifier_imba_juggernaut_blade_fury:OnIntervalThink()
 	-- Iterate through nearby enemies
 	local furyEnemies = FindUnitsInRadius(self.caster:GetTeamNumber(), caster_loc, nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 	
-	-- #1 Talent: Blade Fury acts as a vacuum, sucking enemies toward Juggernaut
-	if self.original_caster:HasTalent("special_bonus_imba_juggernaut_1") then
-		local nearbyEnemies
-		
-		-- If Omni Slash is active, only succ in enemies close to the radius
-		if self.caster:HasModifier("modifier_imba_omni_slash_caster") then
-		nearbyEnemies = FindUnitsInRadius(self.caster:GetTeamNumber(), caster_loc, nil, self.radius * 1.2, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-		else
-		-- Else, succ in enemies nearby Juggernaut according to the skill's original radius
-		nearbyEnemies = FindUnitsInRadius(self.caster:GetTeamNumber(), caster_loc, nil, self.ability:GetTalentSpecialValueFor("effect_radius") * self.caster:FindTalentValue("special_bonus_imba_juggernaut_1"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-		end
-		
-		for _,nearbyEnemy in pairs(nearbyEnemies) do	
-			-- How many layers of irony are you on?
-			if not nearbyEnemy:HasModifier("modifier_imba_juggernaut_blade_fury_succ") then
-				nearbyEnemy:AddNewModifier(self.caster,self.ability,"modifier_imba_juggernaut_blade_fury_succ",{})
-			end
-		end
-	end
-
 	-- #2 Talent: Blade Fury slowly increases in sizes
 	if self.original_caster:HasTalent("special_bonus_imba_juggernaut_2") then
 		self.radius = self.radius + self.original_caster:FindTalentValue("special_bonus_imba_juggernaut_2")
@@ -152,7 +144,7 @@ end
 
 -- G I B B D A S U C C
 modifier_imba_juggernaut_blade_fury_succ = modifier_imba_juggernaut_blade_fury_succ or class({})
-function modifier_imba_juggernaut_blade_fury_succ:IsPurgable() return false end
+function modifier_imba_juggernaut_blade_fury_succ:IsPurgable() return true end
 function modifier_imba_juggernaut_blade_fury_succ:IsPurgeException()return true end
 function modifier_imba_juggernaut_blade_fury_succ:IsStunDebuff() return false end
 function modifier_imba_juggernaut_blade_fury_succ:IsMotionController()  return true end
@@ -181,11 +173,12 @@ end
 
 function modifier_imba_juggernaut_blade_fury_succ:HorizontalMotion()
 	if IsServer() then
-		if (not self.caster:IsAlive()) or (not self.caster:HasModifier("modifier_imba_juggernaut_blade_fury")) then
+
+		if not self.caster:HasModifier("modifier_imba_juggernaut_blade_fury") then
 			self:Destroy()
-			return nil
+			return
 		end
-		
+
 		-- Ability Specials
 		enemy_position = self.target:GetAbsOrigin()
 		caster_position = self.caster:GetAbsOrigin()
@@ -197,12 +190,6 @@ function modifier_imba_juggernaut_blade_fury_succ:HorizontalMotion()
 		-- Direction
 		local direction = ( enemy_position - caster_position ):Normalized() * (-1)
 		local distance = ( enemy_position - caster_position ):Length2D()
-		
-		-- If the target is over its effect radius, then destroys itself.
-		if distance > succ_radius then
-			self:Destroy()
-			return nil
-		end
 
 		-- If it's not hugged by Juggernaut, SUCC IT IN!
 		if distance > 100 then
@@ -213,7 +200,7 @@ function modifier_imba_juggernaut_blade_fury_succ:HorizontalMotion()
 			blade_fury_modifier = self.caster:FindModifierByName("modifier_imba_juggernaut_blade_fury")
 			if blade_fury_modifier then
 				if distance < blade_fury_modifier.radius then
-				newPosition = enemy_position + direction * self.succ_tick * (succ_radius - distance) * self.caster:FindTalentValue("special_bonus_imba_juggernaut_1","pull_strength_fury")
+					newPosition = enemy_position + direction * self.succ_tick * (succ_radius - distance) * self.caster:FindTalentValue("special_bonus_imba_juggernaut_1","pull_strength_fury")
 				end
 			end
 			
@@ -769,14 +756,14 @@ function modifier_imba_juggernaut_blade_dance_empowered_slice:GetModifierTurnRat
 end
 
 function modifier_imba_juggernaut_blade_dance_empowered_slice:RemoveOnDeath()
-	return false
+	return true
 end
 
 function modifier_imba_juggernaut_blade_dance_empowered_slice:IsMotionController()
 	return true
 end
 function modifier_imba_juggernaut_blade_dance_empowered_slice:GetMotionControllerPriority()
-	return DOTA_MOTION_CONTROLLER_PRIORITY_HIGH
+	return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM
 end
 function modifier_imba_juggernaut_blade_dance_empowered_slice:OnCreated()
 	if IsServer() then
@@ -1210,7 +1197,7 @@ end
 function modifier_imba_juggernaut_blade_dance_passive:OnCreated()
 	self:StartIntervalThink(1)
 	self.ability = self:GetAbility()
-	self.caster = self:GetCaster()
+	self.caster = self:GetParent()
 	self.crit = self.ability:GetTalentSpecialValueFor("crit_damage")
 	self.chance = self.ability:GetTalentSpecialValueFor("crit_chance")
 	self.critProc = false	
@@ -1274,41 +1261,7 @@ function modifier_imba_juggernaut_blade_dance_passive:HandleWindDance(bCrit)
 		if self.caster:HasModifier("modifier_imba_juggernaut_blade_dance_empowered_slice") then			
 			return nil
 		end
-		
-		-- If the attacker is an image, proc Wind Dance for Juggernaut himself
-		if self.caster:HasModifier("modifier_imba_omni_slash_image") then
-		
-		-- Juggernaut's image has it's original caster set as it's caster  
-		omnislash_talent_modifier = self.caster:FindModifierByName("modifier_imba_omni_slash_image")
-		local true_caster = omnislash_talent_modifier:GetCaster()
-			
-			-- If the caster is valid, then proceed
-			if true_caster then
-			
-				-- Get the original caster's Blade Dance Ability
-				local true_caster_blade_dance = true_caster:FindAbilityByName("imba_juggernaut_blade_dance")
-				
-				-- Get the original caster's Wind Dance
-				local true_caster_wind_dance = true_caster:FindModifierByName("modifier_imba_juggernaut_blade_dance_wind_dance")
-				
-				-- Get if the attacker crits
-				if bCrit then
-				
-					-- If original caster's Wind Dance is not found, create Wind Dance based on its original caster
-					if not true_caster_wind_dance then true_caster_wind_dance = true_caster:AddNewModifier(true_caster, true_caster_blade_dance, "modifier_imba_juggernaut_blade_dance_wind_dance", {duration = true_caster_blade_dance:GetTalentSpecialValueFor("bonus_duration")}) end
-					
-					-- Refresh it
-					true_caster_wind_dance:ForceRefresh()
-				
-				-- If the attacker does not crit and the original caster's Wind Dance is found, set the new duration	
-				elseif true_caster_wind_dance then
-					true_caster_wind_dance:SetDuration(true_caster_wind_dance:GetDuration(), true) -- does not roll refresh
-				end
-			
-			end
-		
-		end
-			
+
 		local wind_dance = self.caster:FindModifierByName("modifier_imba_juggernaut_blade_dance_wind_dance")
 		if bCrit then
 			if not wind_dance then wind_dance = self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_juggernaut_blade_dance_wind_dance", {duration = self.ability:GetTalentSpecialValueFor("bonus_duration")}) end
@@ -1325,33 +1278,7 @@ function modifier_imba_juggernaut_blade_dance_passive:HandleSecretBlade()
 		if self.caster:HasModifier("modifier_imba_juggernaut_blade_dance_empowered_slice") then			
 			return nil
 		end
-		
-		-- If the attacker is an image, proc Secret Blade for Juggernaut himself
-		if self.caster:HasModifier("modifier_imba_omni_slash_image") then
-		
-		-- Juggernaut's image has it's original caster set as it's caster 
-		omnislash_talent_modifier = self.caster:FindModifierByName("modifier_imba_omni_slash_image") 
-		local true_caster = omnislash_talent_modifier:GetCaster()
-			
-			-- If the caster is valid, then proceed
-			if true_caster then
-				
-				-- Get the original caster's Blade Dance Ability
-				local true_caster_blade_dance = true_caster:FindAbilityByName("imba_juggernaut_blade_dance")
-				
-				-- Get the original caster's Secret Blade
-				local true_caster_secret_blade = true_caster:FindModifierByName("modifier_imba_juggernaut_blade_dance_secret_blade")
-				
-				-- If not found, create Secret Blade based on its original caster
-				if not true_caster_secret_blade then true_caster_secret_blade = true_caster:AddNewModifier(true_caster, true_caster_blade_dance, "modifier_imba_juggernaut_blade_dance_secret_blade", {duration = true_caster_blade_dance:GetTalentSpecialValueFor("secret_blade_duration")}) end
-				
-				-- Refresh it
-				true_caster_secret_blade:ForceRefresh()
-				
-				end
-			
-			end
-		
+
 		local secret_blade = self.caster:FindModifierByName("modifier_imba_juggernaut_blade_dance_secret_blade")
 		
 		if not secret_blade then secret_blade = self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_juggernaut_blade_dance_secret_blade", {duration = self.ability:GetTalentSpecialValueFor("secret_blade_duration")}) end
@@ -1364,39 +1291,6 @@ function modifier_imba_juggernaut_blade_dance_passive:HandleJadeBlossom(bCrit)
 	if self.caster:IsRealHero() then
 		-- Only procs if the attacker crits
 		if bCrit then
-			-- If the attacker is an image, proc Jade Blossom for Juggernaut himself
-			if self.caster:HasModifier("modifier_imba_omni_slash_image") then
-				
-				-- Juggernaut's image has it's original caster set as it's caster 
-				omnislash_talent_modifier = self.caster:FindModifierByName("modifier_imba_omni_slash_image")
-				local true_caster = omnislash_talent_modifier:GetCaster()
-				
-				-- If the caster is valid, then proceed
-				if true_caster then
-					
-					-- Get the original caster's Blade Dance Ability
-					local true_caster_blade_dance = true_caster:FindAbilityByName("imba_juggernaut_blade_dance")
-					
-					-- Check if the original caster has this talent
-					if true_caster:HasTalent("special_bonus_imba_juggernaut_8") then
-						
-						-- If so, get the modifier name
-						local true_caster_jade_blossom = true_caster:FindModifierByName("modifier_imba_juggernaut_blade_dance_jade_blossom")
-						
-						-- If the modifier exists, refresh it
-						if true_caster_jade_blossom then
-							true_caster_jade_blossom:ForceRefresh()
-						else
-							-- If not, create Jade Blossom based on its original caster
-							true_caster_jade_blossom = true_caster:AddNewModifier(true_caster, true_caster_blade_dance, "modifier_imba_juggernaut_blade_dance_jade_blossom", {duration = true_caster:FindTalentValue("special_bonus_imba_juggernaut_8","duration")})
-						end
-					
-					end
-				
-				end
-			
-			end
-				
 			-- If the attacker is Juggernaut himself, also proc Jade Blossom
 			if self.caster:HasTalent("special_bonus_imba_juggernaut_8") then
 				-- Get the modifier name
@@ -1422,8 +1316,6 @@ function modifier_imba_juggernaut_blade_dance_wind_dance:GetTexture()
 function modifier_imba_juggernaut_blade_dance_wind_dance:OnCreated()
 	self.agi = self:GetAbility():GetTalentSpecialValueFor("bonus_agi")
 	self.ms = self:GetAbility():GetTalentSpecialValueFor("bonus_ms")
-	
-	self:StartIntervalThink(1)
 end
 
 function modifier_imba_juggernaut_blade_dance_wind_dance:OnRefresh()
@@ -1454,12 +1346,7 @@ end
 LinkLuaModifier("modifier_imba_juggernaut_blade_dance_secret_blade", "hero/hero_juggernaut", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_juggernaut_blade_dance_secret_blade = modifier_imba_juggernaut_blade_dance_secret_blade or class({})
 
-function modifier_imba_juggernaut_blade_dance_secret_blade:GetTexture()
-	return "custom/juggernaut_secret_blade" end
-
-function modifier_imba_juggernaut_blade_dance_secret_blade:OnCreated()
-	self:StartIntervalThink(1)
-end
+function modifier_imba_juggernaut_blade_dance_secret_blade:GetTexture()	return "custom/juggernaut_secret_blade" end
 
 function modifier_imba_juggernaut_blade_dance_secret_blade:OnRefresh()
 	if IsServer() then
@@ -1644,7 +1531,7 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 		-- Add the image indicator
 		omnislash_image:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_image", {})
 		
-		local omnislash_modifier_handler = omnislash_image:AddNewModifier(omnislash_image, self, "modifier_imba_omni_slash_caster", {})
+		local omnislash_modifier_handler = omnislash_image:AddNewModifier(omnislash_image, self, "modifier_imba_omni_slash_caster", {duration = 15.0})
 		
 		if omnislash_modifier_handler then
 			omnislash_modifier_handler.original_caster = self.caster
@@ -1656,7 +1543,7 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 		
 		Timers:CreateTimer(FrameTime(), function()
 		if (not omnislash_image:IsNull()) then
-		StartAnimation(omnislash_image, {activity = ACT_DOTA_OVERRIDE_ABILITY_4, rate = 1.0})
+			StartAnimation(omnislash_image, {activity = ACT_DOTA_OVERRIDE_ABILITY_4, rate = 1.0})
 		end
 		end)
 		
@@ -1680,10 +1567,10 @@ function imba_juggernaut_omni_slash:OnSpellStart()
 		end)
 	else
 	
-		local omnislash_modifier_handler = self.caster:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_caster", {original_caster = self.caster})
+		local omnislash_modifier_handler = self.caster:AddNewModifier(self.caster, self, "modifier_imba_omni_slash_caster", {duration = 15.0})
 
 		if omnislash_modifier_handler then
-		omnislash_modifier_handler.original_caster = self.caster
+			omnislash_modifier_handler.original_caster = self.caster
 		end
 		
 		self:SetActivated(false)
@@ -1816,7 +1703,7 @@ function modifier_imba_omni_slash_talent:GetModifierDamageOutgoing_Percentage()
 end
 	
 function modifier_imba_omni_slash_talent:IsHidden()
-	return false
+	return true
 end
 
 function modifier_imba_omni_slash_talent:IsPurgable()
@@ -1834,7 +1721,7 @@ end
 modifier_imba_omni_slash_caster = modifier_imba_omni_slash_caster or class({})
 
 function modifier_imba_omni_slash_caster:OnCreated()
-		self.caster = self:GetCaster()
+		self.caster = self:GetParent()
 		self.ability = self:GetAbility()
 		self.parent = self:GetParent()
 		self.base_bonus_damage = self.ability:GetTalentSpecialValueFor("bonus_damage_att")
@@ -1929,7 +1816,7 @@ function modifier_imba_omni_slash_caster:BounceAndSlaughter()
 				
 			if self.caster:HasModifier("modifier_imba_omni_slash_image") then
 				if (not self.original_caster:HasModifier("modifier_imba_omni_slash_talent")) then
-				self.original_caster:AddNewModifier(self.original_caster,self.ability,"modifier_imba_omni_slash_talent",{})
+					self.original_caster:AddNewModifier(self.original_caster,self.ability,"modifier_imba_omni_slash_talent",{})
 				end
 			self.previous_pos = previous_position
 			self.current_pos = current_position
@@ -1943,8 +1830,7 @@ end
 
 function modifier_imba_omni_slash_caster:DeclareFunctions()
     local decFuncs = {MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE,
-					MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_PHYSICAL,
-					MODIFIER_PROPERTY_PRE_ATTACK}
+					MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_PHYSICAL,}
 
     return decFuncs
 end
