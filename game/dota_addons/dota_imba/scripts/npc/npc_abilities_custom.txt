@@ -14257,7 +14257,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_agi"				"2 2 2 2 4 6 8"
+				"bonus_agi"				"2 2 2 2 3 4 5"
 			}
 			"04"
 			{
@@ -14272,7 +14272,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_distance"		"800"
+				"active_distance"		"400"
 			}
 			"07"
 			{
