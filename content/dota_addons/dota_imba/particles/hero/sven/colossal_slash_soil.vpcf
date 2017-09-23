@@ -64,7 +64,6 @@
 		},
 		{
 			_class = "C_INIT_PositionWarp"
-			m_bDisableOperator = true
 			m_vecWarpMin = [ 1.0, 1.0, 0.0 ]
 			m_flWarpTime = 0.5
 		},
