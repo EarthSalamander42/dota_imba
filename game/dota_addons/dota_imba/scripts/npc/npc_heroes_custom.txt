@@ -1944,14 +1944,14 @@
 		"Ability4"					"imba_pugna_life_drain_end"
 		"Ability5"					"imba_pugna_life_drain"
 		
-		"Ability10"					"special_bonus_imba_pugna_1"			
-		"Ability11"					"special_bonus_imba_pugna_2"			
-		"Ability12"					"special_bonus_imba_pugna_3"
-		"Ability13"					"special_bonus_imba_pugna_4"
-		"Ability14"					"special_bonus_imba_pugna_5"
-		"Ability15"					"special_bonus_imba_pugna_6"
-		"Ability16"					"special_bonus_imba_pugna_7"
-		"Ability17"					"special_bonus_imba_pugna_8"
+		"Ability10"					"special_bonus_imba_pugna_1"		//Life Drain cannot be broken by distance for the first 4 seconds of Life Drain.			
+		"Ability11"					"special_bonus_imba_pugna_2"		//Whenever Nether Ward zaps a target, it becomes briefly decrepified for 1 second. This occurs before zap damage is applied.	
+		"Ability12"					"special_bonus_imba_pugna_3"		//Nether Ward zaps triples the mana degeneration effect on a target for 5 seconds. Non-stackable.
+		"Ability13"					"special_bonus_imba_pugna_4"		//Life Drain deals 3% current health per tick as bonus damage.
+		"Ability14"					"special_bonus_imba_pugna_5"		//Nether Blast secondary blasts deal 33% of original damage.
+		"Ability15"					"special_bonus_imba_pugna_6"		//Nether Ward doesn't take damage from casting spells, but has a 2 seconds cooldown between cast.
+		"Ability16"					"special_bonus_imba_pugna_7"		//Decrepify decreases the target's Tenacity by 15%.
+		"Ability17"					"special_bonus_imba_pugna_8"		//Nether Blasts' Nether Weakness is not reset when a new blast affects an already affected target. Instead, it refreshes the duration and stacks upon it.
 
 		"ProjectileModel"			"particles/units/heroes/hero_pugna/pugna_base_attack.vpcf"
 	}
