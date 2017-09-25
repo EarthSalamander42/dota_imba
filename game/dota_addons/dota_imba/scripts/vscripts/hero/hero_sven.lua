@@ -78,8 +78,9 @@ function imba_sven_storm_bolt:OnProjectileThink_ExtraData(location, ExtraData)
 	local caster = self:GetCaster()
 	if caster:HasTalent("special_bonus_imba_sven_6") then
 		local drag_radius = caster:FindTalentValue("special_bonus_imba_sven_6","drag_radius")
-		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), location, nil, drag_radius, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
+		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), location, nil, drag_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 		for _,enemy in ipairs(enemies) do
+                        if not enemy:IsMagicImmune() then
 			enemy:AddNewModifier(caster, self, "modifier_stunned", {duration = ExtraData.stun_duration})
 			local drag_mod = enemy:FindModifierByName("modifier_imba_storm_bolt_talent_drag")
 			if not drag_mod then
@@ -91,6 +92,7 @@ function imba_sven_storm_bolt:OnProjectileThink_ExtraData(location, ExtraData)
 			drag_mod.pos_z = ExtraData.target_pos_z
 			drag_mod.speed = ExtraData.speed
 			end
+                        end
 		end
 	end
 end
@@ -120,9 +122,7 @@ function modifier_imba_storm_bolt_talent_drag:OnIntervalThink()
 		return nil
 	end
 	
-	if not self.destination then
 	self.destination = Vector(self.pos_x,self.pos_y,self.pos_z)
-	end
 	
 	self:HorizontalMotion(self.target, self.frametime)
 end
