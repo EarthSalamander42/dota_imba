@@ -375,7 +375,7 @@ end
 -- Talent #5 handling
 -------------------------------------------
 modifier_imba_queenofpain_blink_decision_time = class({})
- modifier_imba_queenofpain_blink_decision_time:IsDebuff() return false end
+function modifier_imba_queenofpain_blink_decision_time:IsDebuff() return false end
 function modifier_imba_queenofpain_blink_decision_time:IsHidden() return true end
 function modifier_imba_queenofpain_blink_decision_time:IsPurgable() return false end
 function modifier_imba_queenofpain_blink_decision_time:IsPurgeException() return false end
@@ -549,8 +549,7 @@ function modifier_imba_scream_of_pain_reflect:OnTakeDamage( params )
 	end
 end
 
--- Prevent reclusive instances of Talent 6 & 7 overlap
-
+-- Prevent reclusive instances of Talent 6 & 8 overlap
 -------------------------------------------
 modifier_scream_of_pain_talent_instance = class({})
 function modifier_scream_of_pain_talent_instance:IsDebuff() return false end
