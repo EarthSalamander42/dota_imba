@@ -712,7 +712,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"250"
+				"bonus_mana"			"400"
 			}
 			"03"
 			{
@@ -762,7 +762,7 @@
 			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"mend_mana_pct"			"7"
+				"mend_mana_pct"			"10"
 			}
 			"13"
 			{
