@@ -34,9 +34,4 @@
 	{
 		"MaxPlayers"				"20"
 	}
-
-//	"imba_arena"
-//	{
-//		"MaxPlayers"				"12"
-//	}
 }

@@ -30,57 +30,58 @@
 				==================================================================-->
 				<Panel id="ClassContain" class="ClassContainer" >
 					<Panel id="PickInfoPanel">
-						<Panel id="PickTextPanel">
-							<Panel id='GameOptionsPanelContainer'>
-								<Panel id='PickTimerPanel'>
-									<Panel id='PickTimer'>
-										<Label id='TimerTxt' text="" />
-									</Panel>
-									<Label id="GameModeSelectText" class="GameModeSelectText" text="#imba_gamemode_name_all_pick" />
-									</Panel>
-									<Panel class="GameModeLabelPanel">
-										<Label id="BountyMultiplierLabel" class="GameModeLabel" text="#imba_gamemode_settings_gold_multiplier" />
-										<Label id="ExpMultiplierLabel" class="GameModeLabel" text="#imba_gamemode_settings_exp_multiplier" />
-										<Label id="CreepPowerLabel" class="GameModeLabel" text="#imba_gamemode_settings_creep_power_title" />
-										<Label id="TowerPowerLabel" class="GameModeLabel" text="#imba_gamemode_settings_tower_power_title" />
-										<Label id="RespawnTimerLabel" class="GameModeLabel" text="#imba_gamemode_settings_respawn_time" />
-									</Panel>
+						<Panel id='GameOptionsPanelContainerLeft'>								
+							<Panel class="GameModeLabelPanel">
+								<Label id="BountyMultiplierLabel" class="GameModeLabel" text="#imba_gamemode_settings_gold_multiplier" />
+								<Label id="ExpMultiplierLabel" class="GameModeLabel" text="#imba_gamemode_settings_exp_multiplier" />
+								<Label id="CreepPowerLabel" class="GameModeLabel" text="#imba_gamemode_settings_creep_power_title" />
+								<Label id="TowerPowerLabel" class="GameModeLabel" text="#imba_gamemode_settings_tower_power_title" />
+								<Label id="RespawnTimerLabel" class="GameModeLabel" text="#imba_gamemode_settings_respawn_time" />
+							</Panel>
 
-								<Panel class="GameModeValuePanel">
-									<Label id="BountyMultiplierValue" class="GameModeValue" text="135%" />
-									<Label id="ExpMultiplierValue" class="GameModeValue" text="135%" />
-									<Label id="CreepPowerValue" class="GameModeValue" text="0" />
-									<Label id="TowerPowerValue" class="GameModeValue" text="0" />
-									<Label id="RespawnTimerValue" class="GameModeValue" text="0%" />
-								</Panel>
+							<Panel class="GameModeValuePanel">
+								<Label id="BountyMultiplierValue" class="GameModeValue" text="135%" />
+								<Label id="ExpMultiplierValue" class="GameModeValue" text="135%" />
+								<Label id="CreepPowerValue" class="GameModeValue" text="0" />
+								<Label id="TowerPowerValue" class="GameModeValue" text="0" />
+								<Label id="RespawnTimerValue" class="GameModeValue" text="0%" />
+							</Panel>
 
-								<Panel class="GameModeLabelPanel">
-									<Label id="HeroPickRuleLabel" class="GameModeLabel" text="#imba_gamemode_settings_hero_pick_rule" />
-									<Label id="FranticModeLabel" class="GameModeLabel" text="#imba_gamemode_game_options_frantic" />
-									<Label id="InitialGoldLabel" class="GameModeLabel" text="#imba_gamemode_settings_initial_gold" />
-									<Label id="InitialLevelLabel" class="GameModeLabel" text="#imba_gamemode_settings_initial_level" />
-									<Label id="MaxLevelLabel" class="GameModeLabel" text="#imba_gamemode_settings_max_level" />
-								</Panel>
+							<Panel class="GameModeLabelPanel">
+								<Label id="HeroPickRuleLabel" class="GameModeLabel" text="#imba_gamemode_settings_hero_pick_rule" />
+								<Label id="FranticModeLabel" class="GameModeLabel" text="#imba_gamemode_game_options_frantic" />
+								<Label id="InitialGoldLabel" class="GameModeLabel" text="#imba_gamemode_settings_initial_gold" />
+								<Label id="InitialLevelLabel" class="GameModeLabel" text="#imba_gamemode_settings_initial_level" />
+								<Label id="MaxLevelLabel" class="GameModeLabel" text="#imba_gamemode_settings_max_level" />
+							</Panel>
 
-								<Panel class="GameModeValuePanel">
-									<Label id="HeroPickRuleValue" class="GameModeValue" text="" />
-									<Label id="FranticModeValue" class="GameModeValue" text="#imba_gamemode_game_options_frantic_disabled" />
-									<Label id="InitialGoldValue" class="GameModeValue" text="625" />
-									<Label id="InitialLevelValue" class="GameModeValue" text="1" />
-									<Label id="MaxLevelValue" class="GameModeValue" text="40" />
-								</Panel>
+							<Panel class="GameModeValuePanel">
+								<Label id="HeroPickRuleValue" class="GameModeValue" text="" />
+								<Label id="FranticModeValue" class="GameModeValue" text="#imba_gamemode_game_options_frantic_disabled" />
+								<Label id="InitialGoldValue" class="GameModeValue" text="625" />
+								<Label id="InitialLevelValue" class="GameModeValue" text="1" />
+								<Label id="MaxLevelValue" class="GameModeValue" text="40" />
+							</Panel>
+						</Panel>
 
-								<Panel id="RandomButtonContainer">
-									<Button id="RandomPickBtn" onactivate="SelectRandomHero()"/>
-									<Label id="RandomPickBtnTxt" text="#imba_random_pick_button" />
-								</Panel>
+						<Panel id='PickTimerPanel'>
+							<Panel id='PickTimer'>
+								<Label id='TimerTxt' text="" />
+							</Panel>
+							<Label id="GameModeSelectText" class="GameModeSelectText" text="#imba_gamemode_name_all_pick" />
+						</Panel>
 
-								<Panel id="RandomImbaButtonContainer">
-									<Button id="RandomImbaPickBtn" onactivate="SelectRandomImbaHero()"/>
-									<Label id="RandomImbaPickBtnTxt" text="#imba_random_imba_pick_button" />
-								</Panel>
-							</Panel><!-- End of GameOptionsPanelContainer -->
-						</Panel> <!-- End of PickTextPanel -->
+						<Panel id='GameOptionsPanelContainerRight'>			
+							<Panel id="RandomButtonContainer">
+								<Button id="RandomPickBtn" onactivate="SelectRandomHero()"/>
+								<Label id="RandomPickBtnTxt" text="#imba_random_pick_button" />
+							</Panel>
+
+							<Panel id="RandomImbaButtonContainer">
+								<Button id="RandomImbaPickBtn" onactivate="SelectRandomImbaHero()"/>
+								<Label id="RandomImbaPickBtnTxt" text="#imba_random_imba_pick_button" />
+							</Panel>
+						</Panel>								
 					</Panel>
 
 					<!-- Pick list (showing options) -->
@@ -89,7 +90,7 @@
 						<!-- Strength Heroes -->
 						<Panel class="PickTypePanel">
 							<Panel id="StrPickListPanel" class="PickListTitlePanel">
-								<Image src="file://{images}/hud/pip_str.png"/>
+								<Image class="AttributeImage" src="file://{images}/hud/pip_str.png"/>
 								<Label class="PickListText" text="#imba_strength_hero_pick_list_title" />
 							</Panel>
 
@@ -230,7 +231,7 @@
 						<!-- Agi Heroes -->
 						<Panel class="PickTypePanel">
 							<Panel id="AgiPickListPanel" class="PickListTitlePanel">
-								<Image src="file://{images}/hud/pip_agi.png"/>
+								<Image class="AttributeImage" src="file://{images}/hud/pip_agi.png"/>
 								<Label class="PickListText" text="#imba_agility_hero_pick_list_title" />
 							</Panel>
 
@@ -370,7 +371,7 @@
 						<!-- Int Heroes -->
 						<Panel class="PickTypePanel">
 							<Panel id="IntPickListPanel" class="PickListTitlePanel">
-								<Image src="file://{images}/hud/pip_int.png"/>
+								<Image class="AttributeImage" src="file://{images}/hud/pip_int.png"/>
 								<Label class="PickListText" text="#imba_intelligence_hero_pick_list_title" />
 							</Panel>
 
@@ -552,7 +553,7 @@
 						<!-- Custom Heroes -->
 						<Panel id="CustomPickList" class="PickTypePanel">
 							<Panel id="CustomPickListPanel" class="PickListTitlePanel">
-								<Image src="file://{images}/hud/pip_str.png"/>
+								<Image class="AttributeImage" src="file://{images}/hud/pip_str.png"/>
 								<Label class="PickListText" text="#imba_custom_hero_pick_list_title" />
 							</Panel>
 

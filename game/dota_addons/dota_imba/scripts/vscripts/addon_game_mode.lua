@@ -55,7 +55,7 @@ DebugPrint("[IMBA] Performing pre-load precache")
 	LinkLuaModifier("modifier_imba_generic_talent_attack_life_steal", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_generic_talent_spell_life_steal", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_generic_talent_spell_power", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_imba_generic_talent_cd_reduction", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )
+--	LinkLuaModifier("modifier_imba_generic_talent_cd_reduction", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_generic_talent_bonus_xp", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_generic_talent_respawn_reduction", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )
 
