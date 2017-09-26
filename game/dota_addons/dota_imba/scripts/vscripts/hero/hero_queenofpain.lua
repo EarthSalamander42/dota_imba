@@ -241,6 +241,7 @@ function modifier_imba_shadow_strike_debuff:OnIntervalThink()
 				local scream = caster:FindAbilityByName("imba_queenofpain_scream_of_pain")
 				if scream:GetLevel() >= 1 then
 					scream:OnSpellStart(caster:FindTalentValue("special_bonus_imba_queenofpain_6", "damage_pct"), parent)
+                                        parent:AddNewModifier(caster,ability,"modifier_scream_of_pain_talent_instance)",{duration = ability:GetSpecialValueFor("duration")})
 				end
 			end
 		end
@@ -374,7 +375,7 @@ end
 -- Talent #5 handling
 -------------------------------------------
 modifier_imba_queenofpain_blink_decision_time = class({})
-function modifier_imba_queenofpain_blink_decision_time:IsDebuff() return false end
+ modifier_imba_queenofpain_blink_decision_time:IsDebuff() return false end
 function modifier_imba_queenofpain_blink_decision_time:IsHidden() return true end
 function modifier_imba_queenofpain_blink_decision_time:IsPurgable() return false end
 function modifier_imba_queenofpain_blink_decision_time:IsPurgeException() return false end
@@ -389,10 +390,12 @@ function modifier_imba_queenofpain_blink_decision_time:OnDestroy()
 	end
 end
 
+
 -------------------------------------------
 --			SCREAM OF PAIN
 -------------------------------------------
 LinkLuaModifier("modifier_imba_scream_of_pain_reflect", "hero/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_scream_of_pain_talent_instance", "hero/hero_queenofpain", LUA_MODIFIER_MOTION_NONE)
 imba_queenofpain_scream_of_pain = class({})
 
 function imba_queenofpain_scream_of_pain:GetAbilityTextureName()
@@ -482,7 +485,7 @@ function imba_queenofpain_scream_of_pain:OnProjectileHit_ExtraData(target, locat
 			end
 
 			-- Talent #8 handling
-			if caster:HasTalent("special_bonus_imba_queenofpain_8") and caster:HasAbility("imba_queenofpain_shadow_strike") then
+			if caster:HasTalent("special_bonus_imba_queenofpain_8") and caster:HasAbility("imba_queenofpain_shadow_strike") and (not target:HasModifier("modifier_scream_of_pain_talent_instance")) then
 				local shadow_strike_ability = caster:FindAbilityByName("imba_queenofpain_shadow_strike")
 				if shadow_strike_ability:GetLevel() > 0 then
 					local init_damage = shadow_strike_ability:GetSpecialValueFor("damage")
@@ -545,6 +548,17 @@ function modifier_imba_scream_of_pain_reflect:OnTakeDamage( params )
 		end
 	end
 end
+
+-- Prevent reclusive instances of Talent 6 & 7 overlap
+
+-------------------------------------------
+modifier_scream_of_pain_talent_instance = class({})
+function modifier_scream_of_pain_talent_instance:IsDebuff() return false end
+function modifier_scream_of_pain_talent_instance:IsHidden() return true end
+function modifier_scream_of_pain_talent_instance:IsPurgable() return false end
+function modifier_scream_of_pain_talent_instance:IsPurgeException() return false end
+function modifier_scream_of_pain_talent_instance:IsStunDebuff() return false end
+-------------------------------------------
 
 -------------------------------------------
 --            SONIC WAVE
