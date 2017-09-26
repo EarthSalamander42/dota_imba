@@ -531,7 +531,6 @@ end
 
 function modifier_imba_roshan_ai_diretide:OnCreated()
 	if IsServer() then
-		
 		-- common keys
 		local ability = self:GetAbility()
 		self.roshan = self:GetParent()	-- Roshans entity for easier handling
@@ -730,7 +729,7 @@ function modifier_imba_roshan_ai_diretide:StartPhase(phase)
 			self.isTransitioning = true
 			self:StartIntervalThink(0.1)
 			
-			UpdateRoshanBar(self.roshan, self.roshan:GetLevel(), FrameTime()*2)
+			UpdateRoshanBar(self.roshan, FrameTime()*2)
 		end
 	end
 end

@@ -3184,8 +3184,8 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"15.0"			// Physical protection.
-		"MagicalResistance"			"55"			// Magical protection (percentage).
+		"ArmorPhysical"				"0.0"			// Physical protection.
+		"MagicalResistance"			"0"			// Magical protection (percentage).
 
 		// Attack
 		//----------------------------------------------------------------
