@@ -368,6 +368,7 @@ function Server_WaitToEnableXpGain()
 		EnnDisEnabled = 1
 		if CHEAT_ENABLED == true then
 			print("Game don't count.")
+			return
 		else
 			CustomNetTables:SetTableValue("game_options", "game_count", {value = 1})
 		end
@@ -402,7 +403,7 @@ function Server_CalculateXPForWinnerAndAll(winning_team)
 	end
 	local multiplier = 1.0
 	if GetMapName() == "imba_standard" then multiplier = 2.0 end
-	if STOREGGA_ACTIVE then multiplier = 4.2 end
+	if GetMapName() == "imba_diretide" then multiplier = 4.0 end
 	local abandon_xp = 0 - (ABANDON_CHARGE / dis_player / multiplier)
 	for nPlayerID=0, DOTA_MAX_TEAM_PLAYERS-1 do
 		if  PlayerResource:IsValidPlayer(nPlayerID) and not PlayerResource:IsFakeClient(nPlayerID) then

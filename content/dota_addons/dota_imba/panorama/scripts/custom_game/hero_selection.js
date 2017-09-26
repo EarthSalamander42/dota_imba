@@ -311,7 +311,9 @@ function RepickHero() {
 
 		// Show the hero pick menu again
 		$('#HeroPreview').DeleteAsync( 0.0 );
+		$('#PickInfoPanel').style.visibility = 'visible';
 		$('#PickList').style.visibility = 'visible';
+		$('#BottomContainer').style.visibility = 'visible';
 		$('#PostPickScreen').style.visibility = 'collapse';
 		$('#RandomButtonContainer').style.visibility = 'visible';
 		$('#RandomImbaButtonContainer').style.visibility = 'visible';
@@ -430,6 +432,19 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 			$('#GameModeSelectText').text = $.Localize( '#imba_gamemode_name_arena_mode' );
 		} else if (map_info.map_display_name == "imba_diretide") {
 			$('#GameModeSelectText').text = $.Localize( '#imba_gamemode_name_diretide' );
+			//STR
+			$("#npc_dota_hero_ursa").style.visibility = "collapse";
+			$("#npc_dota_hero_magnataur").style.visibility = "collapse";
+			$("#npc_dota_hero_undying").style.visibility = "collapse";
+			///AGI
+			$("#npc_dota_hero_phantom_lancer").style.visibility = "collapse";
+			//INT
+			$("#npc_dota_hero_enigma").style.visibility = "collapse";
+			$("#npc_dota_hero_furion").style.visibility = "collapse";
+			$("#npc_dota_hero_techies").style.visibility = "collapse";
+			$("#npc_dota_hero_tinker").style.visibility = "collapse";
+			$("#npc_dota_hero_venomancer").style.visibility = "collapse";
+			$("#npc_dota_hero_zuus").style.visibility = "collapse";
 		}
 
 		// Hide the top scoreboard during the pick phase
