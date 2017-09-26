@@ -437,7 +437,9 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 			$("#npc_dota_hero_magnataur").style.visibility = "collapse";
 			$("#npc_dota_hero_undying").style.visibility = "collapse";
 			///AGI
+			$("#npc_dota_hero_juggernaut").style.visibility = "collapse";
 			$("#npc_dota_hero_phantom_lancer").style.visibility = "collapse";
+			$("#npc_dota_hero_troll_warlord").style.visibility = "collapse";
 			//INT
 			$("#npc_dota_hero_enigma").style.visibility = "collapse";
 			$("#npc_dota_hero_furion").style.visibility = "collapse";

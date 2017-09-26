@@ -227,6 +227,7 @@ ENABLED_RUNES[DOTA_RUNE_ARCANE] = true
 
 GAME_WINNER_TEAM = "none"													-- Tracks game winner
 GAME_ROSHAN_KILLS = 0														-- Tracks amount of Roshan kills
+DIRETIDE_REINCARNATING = false
 
 END_GAME_ON_KILLS = false													-- Should the game end after a certain number of kills?
 KILLS_TO_END_GAME_FOR_TEAM = 70												-- How many kills for a team should signify the end of the game?
@@ -352,6 +353,20 @@ elseif GetMapName() == "imba_arena" then									-- Arena map defaults
 	FOUNTAIN_PERCENTAGE_MANA_REGEN = 15
 	FOUNTAIN_PERCENTAGE_HEALTH_REGEN = 15
 	PRE_GAME_TIME = 15.0 + HERO_SELECTION_TIME + 10.0
+elseif GetMapName() == "imba_diretide" then										-- Diretide map defaults
+	END_GAME_ON_KILLS = false
+	CUSTOM_GOLD_BONUS = 60
+	CUSTOM_XP_BONUS = 60
+	CREEP_POWER_FACTOR = 1
+	TOWER_UPGRADE_MODE = false
+	TOWER_POWER_FACTOR = 1
+	HERO_RESPAWN_TIME_MULTIPLIER = 60
+	HERO_INITIAL_GOLD = 1200
+	HERO_REPICK_GOLD = 1100
+	HERO_RANDOM_GOLD = 1400
+	HERO_RERANDOM_GOLD = 1300
+	HERO_STARTING_LEVEL = 3
+	MAX_LEVEL = 40
 end
 
 -- Update game mode net tables
