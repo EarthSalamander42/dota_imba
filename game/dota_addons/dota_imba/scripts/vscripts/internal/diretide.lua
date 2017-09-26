@@ -7,13 +7,10 @@ HIT_COUNT[3] = 0
 
 DIRETIDE_WINNER = 2
 COUNT_DOWN = 1
-PHASE_TIME = 61 -- 481
+PHASE_TIME = 481 -- 481
 
 function Diretide()
-local roshan_spawner = Entities:FindByName(nil, "roshan_diretide"):GetAbsOrigin()
 local units = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)		
-
-	CreateUnitByName("npc_diretide_roshan", roshan_spawner, true, nil, nil, DOTA_TEAM_NEUTRALS)
 
 	for _, unit in pairs(units) do
 		if unit:IsBuilding() and not unit:GetUnitName() == "npc_dota_candy_pumpkin_good" or not unit:GetUnitName() == "npc_dota_candy_pumpkin_bad" then
@@ -33,12 +30,13 @@ local units = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0,0,0), nil, FIND_UNI
 end
 
 function DiretidePhase(PHASE)
-local units = FindUnitsInRadius(1, Vector(0,0,0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+local units = FindUnitsInRadius(1, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
 
 	for _, unit in ipairs(units) do
-		if unit:GetName() == "npc_dota_roshan" then
+		if unit:GetUnitLabel() == "npc_diretide_roshan" then
 			local AImod = unit:FindModifierByName("modifier_imba_roshan_ai_diretide")
 			if AImod then
+				print()
 				AImod:SetStackCount(PHASE)
 				unit:Interrupt()
 			else
@@ -161,17 +159,24 @@ function CountdownDiretide(tick)
 end
 
 function DiretideIncreaseTimer(time)
+	print("Time increased:", time)
 	nCOUNTDOWNTIMER = nCOUNTDOWNTIMER + time
 end
 
 function UpdateRoshanBar(roshan, level, time)
-	Timers:CreateTimer(function()
-		CustomNetTables:SetTableValue("game_options", "roshan", {
-			level = level,
-			HP = roshan:GetHealth(),
-			HP_alt = roshan:GetHealthPercent(),
-			maxHP = roshan:GetMaxHealth()
-		})
+	if GameRules:IsGamePaused() then
 		return time
-	end)
+	else
+		print("Launching Roshan's Health Bar")
+		print(level)
+		Timers:CreateTimer(function()
+			CustomNetTables:SetTableValue("game_options", "roshan", {
+				level = level,
+				HP = roshan:GetHealth(),
+				HP_alt = roshan:GetHealthPercent(),
+				maxHP = roshan:GetMaxHealth()
+			})
+			return time
+		end)
+	end
 end

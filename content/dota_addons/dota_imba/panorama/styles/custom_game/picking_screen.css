@@ -133,6 +133,7 @@
 #PickList {
 	width: 100%;
 	height: fit-children;
+	margin-top: 2%;
 	flow-children: right;
 	visibility: visible;
 }
@@ -221,8 +222,6 @@
 }
 
 #RepickBtn Label {
-	horizontal-align: center;
-	vertical-align: center;
 	color: #fff;
 	font-size: 28px;
 	font-family: "Radiance";
@@ -253,8 +252,8 @@
 	margin-right: 2px;
 	margin-top: 4px;
 	margin-bottom: 4px;
+	border-radius: 4px;
 	horizontal-align: left;
-	saturation: 0.6;
 	wash-color: #7090B060;
 	background-size: 100% 100%;
 	background-position: 0px 0px;
@@ -272,35 +271,33 @@
 	height: 44px;
 	horizontal-align: left;
 	background-position: center;
-	saturation: 0.6;
 	wash-color: #7090B060;
 }
 
 .AspectRatio4x3 .ClassNormalOption,
 .AspectRatio4x3 .ClassCustomOption,
 .AspectRatio4x3 .ClassImbaOption {
-	margin-left: 2.5px;
-	margin-right: 2.5px;
+	margin-left: 1px;
+	margin-right: 1px;
 	margin-top: 5px;
 	margin-bottom: 5px;
-	width: 56px;
-	height: 48px;
+	width: 60px;
+	height: 42px;
 	horizontal-align: left;
 	background-position: center;
-	saturation: 0.6;
 	wash-color: #7090B060;
 }
 
 .ClassNormalOption {
-	border: 2px solid #656565;
+	border: 1px solid #656565;
 }
 
 .ClassCustomOption {
-	border: 2px solid #1852D9;
+	border: 1px solid #1852D9;
 }
 
 .ClassImbaOption {
-	border: 2px solid #FF7800FF;
+	border: 1px solid #FF7800FF;
 }
 
 .ClassNormalOption:hover,
@@ -327,18 +324,15 @@
 =================================================================*/
 #PickInfoPanel {
 	width: 100%;
-	height: fit-children;
+	height: 16%;
 	horizontal-align: center;
 	vertical-align: middle;
 	flow-children: right;
-	padding-left: 10px;
-	padding-right: 10px;
-	margin-bottom: 1%;
 }
 
 .GameModeSelectText {
 	horizontal-align: middle;
-	font-size: 48px;
+	font-size: 40px;
 	font-family: "Goudy Trajan Medium";
 	color: #fff;
 	vertical-align: middle;
@@ -349,31 +343,26 @@
 }
 
 #PickTextPanel {
+	width: 100%;
+	height: 100%;
 	horizontal-align: left;
 	vertical-align: center;
 	flow-children: down;
 }
 
 #PickTimerPanel {
+	width: 18%;
 	horizontal-align: middle;
 	vertical-align: middle;
 	flow-children: right;
 	margin-right: 2%;
-}
-
-.AspectRatio4x3 #PickTimerPanel {
 	flow-children: down;
-	margin-right: 2%;
 }
 
 #PickTimer {
 	width: 60px;
 	height: 60px;
-	border: 3px solid #fff;
-	border-radius: 30px;
-	margin: 0px 20px 0px 0px;
-	vertical-align: middle;
-	horizontal-align: middle;
+	align: center center;
 }
 
 #TimerTxt {
@@ -385,24 +374,26 @@
 	margin: 4px 0px 0px 2px;
 }
 
-#GameOptionsPanelContainer {
+#GameOptionsPanelContainerLeft,
+#GameOptionsPanelContainerRight {
+	width: 41%;
+	height: 100%;
 	margin-top: 10px;
-	horizontal-align: center;
-	vertical-align: bottom;
+	align: center center;
 	flow-children: right;
 }
 
 .GameModeLabelPanel,
 .GameModeValuePanel,
 {
-	margin-top: 5px;
+	align: center center;
 	flow-children: down;
 }
 
 .GameModeValuePanel
 {
 	margin-left: 10px;
-	margin-right: 50px;
+	margin-right: 30px;
 }
 
 .AspectRatio4x3 .GameModeValuePanel
@@ -422,11 +413,16 @@
 	font-family: "Radiance";
 }
 
+.AspectRatio16x10 .GameModeValue,
+.AspectRatio16x10 .GameModeLabel
+{
+	font-size: 20px;
+}
+
+.AspectRatio4x3 .GameModeValue,
 .AspectRatio4x3 .GameModeLabel
 {
-	text-align: center;
-	font-size: 20px;
-	font-family: "Radiance";
+	font-size: 17px;
 }
 
 .GameModeLabel {
@@ -450,7 +446,7 @@
 }
 
 .PickListTitlePanel {
-	margin-left: 6%;
+	margin-left: 10%;
 	horizontal-align: left;
 	flow-children: right;
 }
@@ -464,13 +460,19 @@
 	color: #ffffff;
 }
 
+.AttributeImage
+{
+	width: 50px;
+	height: 50px;
+}
+
 #PickListSeparator1,
 #PickListSeparator2,
 #PickListSeparator3,
 #PickListSeparator4
 {
 	margin: 0% 0% 1% 0%;
-	width: 85%;
+	width: 78%;
 	height: 2px;
 	opacity: 0.2;
 	horizontal-align: middle;
@@ -622,34 +624,25 @@
 #RandomImbaButtonContainer
 {
 	margin-top: 0%;
-	margin-left: 2%;
 	width: fit-children;
 	height: fit-children;
 	flow-children: down;
-	horizontal-align: center;
 }
 
-#RandomPickBtn
+#RandomPickBtn,
+#RandomImbaPickBtn
 {
 	width: 128px;
 	height: 72px;
 	border-radius: 4px;
-	horizontal-align: center;
-	vertical-align: middle;
-	saturation: 0.7;
+	align: center center;
+	saturation: 0.8;
 	background-color: gradient(linear, 0% 0%, 0% 100%, from(grey), to (black));
 	background-image: url("file://{images}/custom_game/random_button.png");
 }
 
 #RandomImbaPickBtn
 {
-	width: 128px;
-	height: 72px;
-	border-radius: 4px;
-	horizontal-align: center;
-	vertical-align: middle;
-	saturation: 0.7;
-	background-color: gradient(linear, 0% 0%, 0% 100%, from(grey), to (black));
 	background-image: url("file://{images}/custom_game/random_button_IMBA.png");
 }
 
