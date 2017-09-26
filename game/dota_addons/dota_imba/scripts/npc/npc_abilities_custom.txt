@@ -14252,12 +14252,11 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"crit_damage"			"200"
-				"LinkedSpecialBonus"	"special_bonus_imba_juggernaut_6"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_agi"				"2 2 2 2 4 6 8"
+				"bonus_agi"				"2 2 2 2 3 4 5"
 			}
 			"04"
 			{
@@ -14277,7 +14276,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_speed"			"2000"
+				"active_speed"			"1500"
 			}
 			"08"
 			{
@@ -14327,7 +14326,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"130 120 110 100 90 80"
+		"AbilityCooldown"				"130 120 110 110 110 110"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -14357,7 +14356,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"jump_amount"			"3 6 9 10 11 12"
+				"jump_amount"			"3 5 7 9 9 9"
 			}
 
 			"03"
@@ -14387,7 +14386,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"scepter_jump_amt"  	"6 9 12 13 14 15"
+				"scepter_jump_amt"  	"6 8 10 12 12 12"
 			}
 			"08"
 			{
@@ -14398,7 +14397,7 @@
 	}
 
 	//=================================================================================================================
-	// Juggernaut Talent 1 (Level 10): Blade Fury acts as a vaccum
+	// Juggernaut Talent 1 (Level 40): Blade Fury acts as a vaccum
 	//=================================================================================================================
 	"special_bonus_imba_juggernaut_1"
 	{
@@ -14425,12 +14424,12 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"pull_strength"				"0.3"
+				"pull_strength"				"0.1"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"pull_strength_fury"		"0.45"
+				"pull_strength_fury"		"0.2"
 			}
 		}
 	}
@@ -14646,7 +14645,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"duration"					"12"
+				"duration"					"6"
 			}
 		}
 	}
