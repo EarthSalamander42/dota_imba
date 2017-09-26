@@ -3327,81 +3327,6 @@
 	}
 
 	//=================================================================================
-	// Roshling
-	//=================================================================================
-	"npc_imba_roshling"
-	{
-		// General
-		//----------------------------------------------------------------
-		"BaseClass"					"npc_dota_creep"
-		"Model"						"models/creeps/baby_rosh_halloween/baby_rosh_dire/baby_rosh_dire.vmdl"
-		"SoundSet"					"Undying_Zombie"
-		"MinimapIcon"				"minimap_siege"
-		"MinimapIconSize"			"250"
-		"ModelScale" 				"1.25"
-		"Level"						"20"
-		"IsAncient"					"1"
-		
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"					"imba_roshling_bash"
-		"Ability2"					"imba_roshling_aura"
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"10"
-		"MagicalResistance"			"40"
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"50"
-		"AttackDamageMax"			"50"
-		"AttackRate"				"1.0"
-		"AttackAnimationPoint"		"0.26"
-		"AttackAcquisitionRange"	"500"
-		"AttackRange"				"150"
-		"ProjectileModel"			"ranged_goodguy"
-		"ProjectileSpeed"			"1000"   
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"					"0"
-		"BountyGoldMin"				"0"
-		"BountyGoldMax"				"0"
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
-		"RingRadius"				"80"
-		"HealthBarOffset"			"160"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"550"
-		"MovementTurnRate"			"0.5"
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"1000"
-		"StatusHealthRegen"			"25"
-		"StatusMana"				"0"
-		"StatusManaRegen"			"0"
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_NEUTRALS"
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1400"
-		"VisionNighttimeRange"		"1400"
-	}
-
-	//=================================================================================
 	// Necronomicon Warrior Level 1
 	//=================================================================================
 	"npc_imba_necronomicon_warrior_1"
@@ -8179,7 +8104,7 @@
 	{
 		// General
 		//----------------------------------------------------------------
-		"BaseClass"					"npc_dota_roshan"
+		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/rosh/roshan_halloween.vmdl"
 		"GameSoundsFile"			"soundevents/diretide_soundevents.vsndevts"
 		"SoundSet"					"RoshanDT"
@@ -8187,7 +8112,7 @@
 		"ModelScale"				"1.1"
 		"Level"						"1"
 		"IsAncient"					"1"
-		"UnitLabel"					""
+		"UnitLabel"					"npc_diretide_roshan"
 				
 		// Abilities
 		//----------------------------------------------------------------
@@ -8237,7 +8162,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"10000"
+		"StatusHealth"				"15000"
 		"StatusHealthRegen"			"50.0"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0.0"
@@ -8257,6 +8182,104 @@
 		// Inventory
 		//----------------------------------------------------------------
 		"HasInventory"				"1"
+
+		"Creature"
+		{
+			"EquippedItems"
+			{
+				"MKB"
+				{
+					"Item"			"item_imba_monkey_king_bar"
+				}
+				"Gem"
+				{
+					"Item"			"item_gem"
+				}
+			}
+
+		   "AttachWearables"   
+			{
+//				"Wearable1" { "ItemDef" "10092" } // Roshan's Costume - Frankenstein
+//				"Wearable2" { "ItemDef" "10093" } // Roshan's Costume - Dracula
+//				"Wearable3" { "ItemDef" "10094" } // Roshan's Costume - Angel
+			} 
+		}
+	}
+
+	//=================================================================================
+	// Roshling
+	//=================================================================================
+	"npc_imba_roshling"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creep"
+		"Model"						"models/creeps/baby_rosh_halloween/baby_rosh_dire/baby_rosh_dire.vmdl"
+		"SoundSet"					"Undying_Zombie"
+		"MinimapIcon"				"minimap_siege"
+		"MinimapIconSize"			"250"
+		"ModelScale" 				"1.25"
+		"Level"						"20"
+		"IsAncient"					"1"
+		"UnitLabel"					"npc_imba_roshling"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"imba_roshling_bash"
+		"Ability2"					"imba_roshling_aura"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"10"
+		"MagicalResistance"			"40"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"50"
+		"AttackDamageMax"			"50"
+		"AttackRate"				"1.0"
+		"AttackAnimationPoint"		"0.26"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"150"
+		"ProjectileModel"			"ranged_goodguy"
+		"ProjectileSpeed"			"1000"   
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"0"
+		"BountyGoldMin"				"0"
+		"BountyGoldMax"				"0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"80"
+		"HealthBarOffset"			"160"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"550"
+		"MovementTurnRate"			"0.5"
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1000"
+		"StatusHealthRegen"			"25"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"1400"
 	}
 
 	//=================================================================================
@@ -8348,11 +8371,5 @@
 		//----------------------------------------------------------------
 		"VisionDaytimeRange"		"1000"
 		"VisionNighttimeRange"		"800"
-		"HasInventory"				"1"
-
-		"Creature"
-		{
-
-		}
 	}
 }

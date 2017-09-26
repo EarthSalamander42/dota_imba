@@ -28,11 +28,11 @@
 
 		<Panel id="RoshanHP" hittest="false">
 			<Label id="RoshanLabel" class="HoldoutLabelSmall" hittest="false" text="#npc_dota_hero_roshan_halloween"/>
-			<Label id="RoshanLevel" class="HoldoutLabelSmall" hittest="false" text="Level: 1"/>
+			<Label id="RoshanLevel" class="HoldoutLabelSmall" hittest="false" text=""/>
 			<Panel id="RoshanProgressBarContainer" hittest="false">
 				<DOTAHeroImage id="BossIcon" heroname="npc_dota_hero_roshan" heroimagestyle="icon" hittest="false"/>
 				<ProgressBar id="RoshanProgressBar" hittest="false" value="1.0"/>
-				<Label id="RoshanHealth" class="HoldoutLabelSmall" hittest="false" text="5500/5500"/>
+				<Label id="RoshanHealth" class="HoldoutLabelSmall" hittest="false" text=""/>
 			</Panel>
 		</Panel>
 	</Panel>

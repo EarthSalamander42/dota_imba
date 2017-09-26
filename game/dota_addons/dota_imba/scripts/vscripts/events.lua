@@ -162,11 +162,8 @@ local i = 10
 --			SendToServerConsole("dota_bot_populate")
 --		end
 
-		if GetMapName() ~= "imba_diretide" then
-			local roshan_easter_egg = Entities:FindByName(nil, "easter_egg_diretide"):GetAbsOrigin()
-			local pumpkin = CreateUnitByName("npc_dota_diretide_easter_egg", roshan_easter_egg, true, nil, nil, DOTA_TEAM_NEUTRALS)
-			pumpkin:AddNewModifier(caster, nil, "modifier_npc_dialog", {})
-		end
+		local roshan_easter_egg = Entities:FindByName(nil, "easter_egg_diretide"):GetAbsOrigin()
+		CreateUnitByName("npc_diretide_roshan", roshan_easter_egg, true, nil, nil, DOTA_TEAM_NEUTRALS)
 
 		-- Shows various info to devs in pub-game to find lag issues
 		ImbaNetGraph(10.0)

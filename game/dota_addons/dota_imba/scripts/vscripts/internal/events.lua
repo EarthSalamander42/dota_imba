@@ -126,7 +126,7 @@ function GameMode:OnPlayerChat(keys)
 					if text == "-diretide "..i then
 						local units = FindUnitsInRadius(1, Vector(0,0,0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
 						for _, unit in ipairs(units) do
-							if unit:GetName() == "npc_dota_roshan" then
+							if unit:GetUnitLabel() == "npc_diretide_roshan" then
 								local AImod = unit:FindModifierByName("modifier_imba_roshan_ai_diretide")
 								if AImod then
 									AImod:SetStackCount(i)
@@ -143,7 +143,7 @@ function GameMode:OnPlayerChat(keys)
 				if text == "-killrosh" then
 					local units = FindUnitsInRadius(1, Vector(0,0,0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
 					for _, unit in ipairs(units) do
-						if unit:GetName() == "npc_dota_roshan" then
+						if unit:GetUnitLabel() == "npc_diretide_roshan" then
 							unit:Kill(nil, unit)
 						end
 					end
@@ -152,7 +152,7 @@ function GameMode:OnPlayerChat(keys)
 				if text == "-candy" then
 					local units = FindUnitsInRadius(1, Vector(0,0,0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
 					for _, unit in ipairs(units) do
-						if unit:GetName() == "npc_dota_roshan" then
+						if unit:GetUnitLabel() == "npc_diretide_roshan" then
 							local AImod = unit:FindModifierByName("modifier_imba_roshan_ai_diretide")
 							if AImod then AImod:Candy(unit) end
 						end
