@@ -1,3 +1,4 @@
+
 // Dota Units File
 "DOTAUnits"
 {
@@ -563,6 +564,7 @@
 		"SoundSet"					"Creep_Good_Range"
 		"Level"						"0"
 		"ModelScale"				"1"
+		"UnitLabel"					"healing_ward"
 		"wearable"					"8365"
 
 		// Abilities
