@@ -277,8 +277,13 @@ function RoshanDeath( keys )
 		end
 	end
 
+--	DIRETIDE_REINCARNATING = true
+--	print("Roshan Reincarnate:", DIRETIDE_REINCARNATING)
+
 	-- After the respawn timer elapses, spawn another Roshan
 	Timers:CreateTimer(respawn_time, function()
+--		DIRETIDE_REINCARNATING = false
+--		print("Roshan Reincarnate:", DIRETIDE_REINCARNATING)
 		local roshan_spawn_loc = Entities:FindByName(nil, "roshan_spawn_point"):GetAbsOrigin()
 		local roshan = CreateUnitByName("npc_imba_roshan", roshan_spawn_loc, true, nil, nil, DOTA_TEAM_NEUTRALS)
 	end)
@@ -443,7 +448,12 @@ function modifier_imba_roshan_ai_diretide:GetPriority()
     return MODIFIER_PRIORITY_SUPER_ULTRA end
 
 function modifier_imba_roshan_ai_diretide:GetModifierProvidesFOWVision()
-	return 1 end
+	if self:GetStackCount() == 3 then
+		return 0
+	else
+		return 1
+	end
+end
 	
 function modifier_imba_roshan_ai_diretide:GetActivityTranslationModifiers()
 	if self:GetStackCount() == 3 then
@@ -620,15 +630,15 @@ local stacks = self:GetStackCount()
 			self.deathPoint = self.roshan:GetAbsOrigin()
 			self.isDead = true
 			self.deathCounter = self.deathCounter + 1
-			
+
 			-- Play sounds
 			self.roshan:EmitSound("Diretide.RoshanDeathLava")
 			self.roshan:EmitSound("Diretide.RoshanDeath1")
-			
+
 			Timers:CreateTimer(self.deathRoar, function()
 				self.roshan:EmitSound("Diretide.RoshanDeath2")
 			end)
-			
+
 			-- Play particle
 			local deathParticle = ParticleManager:CreateParticle("particles/hw_fx/hw_roshan_death.vpcf", PATTACH_CUSTOMORIGIN, nil)
 			ParticleManager:SetParticleControl(deathParticle, 0, self.roshan:GetAbsOrigin())
@@ -675,19 +685,19 @@ function modifier_imba_roshan_ai_diretide:StartPhase(phase)
 	self.leashPoint = nil
 	self.deathPoint = self.roshan:GetAbsOrigin()
 	self.deathCounter = 0
-	
+
 	if self.isDead then
 		self.isDead = false
 		self.roshan:RespawnUnit()
 	end
-	
+
 	-- Reset behavior
 	self.roshan:SetAcquisitionRange(-1000)
 	self.roshan:SetForceAttackTarget(nil)
 	self.roshan:Interrupt()
-	
+
 	self.roshan:SetHealth(self.roshan:GetMaxHealth())
-	
+
 	-- Destroy candy eaten count
 	local candyMod = self.roshan:FindModifierByName("modifier_imba_roshan_eaten_candy")
 	if candyMod then candyMod:Destroy() end
@@ -720,7 +730,7 @@ function modifier_imba_roshan_ai_diretide:StartPhase(phase)
 			self.isTransitioning = true
 			self:StartIntervalThink(0.1)
 			
-			UpdateRoshanBar(self.roshan, 3, FrameTime()*2)
+			UpdateRoshanBar(self.roshan, self.roshan:GetLevel(), FrameTime()*2)
 		end
 	end
 end
@@ -773,7 +783,7 @@ function modifier_imba_roshan_ai_diretide:Candy(roshan)
 	
 	local begMod = roshan:FindModifierByName("modifier_imba_roshan_ai_beg")
 	if begMod then begMod:DestroyNoAggro() end
-	
+
 	-- Timer because if an animation modifying modifier gets removed and another gets added at the same moment, the new animation will not apply
 	Timers:CreateTimer(FrameTime(), function()
 		roshan:AddNewModifier(roshan, nil, "modifier_imba_roshan_ai_eat", {duration = 7})
@@ -829,10 +839,10 @@ end
 
 --	PHASE III
 function modifier_imba_roshan_ai_diretide:ThinkPhase3(roshan)
-	
+
 	-- Don't think while being stunned, hexed, or casting spells
 	if roshan:IsStunned() or roshan:IsHexed() or roshan:IsChanneling() or roshan:GetCurrentActiveAbility() then return end
-	
+
 	-- Wait. No reason to decrement negative values
 	if self.wait < 0 then
 		return
@@ -842,13 +852,9 @@ function modifier_imba_roshan_ai_diretide:ThinkPhase3(roshan)
 	end
 
 	if not self.leashPoint then
-		if DIRETIDE_WINNER == DOTA_TEAM_BADGUYS then
-			self.leashPoint = Entities:FindByName(nil, "roshan_arena_"..DIRETIDE_WINNER):GetAbsOrigin()		-- Pick arena based on phase 2 winner
-		else
-			self.leashPoint = Entities:FindByName(nil, "roshan_arena_"..DOTA_TEAM_GOODGUYS):GetAbsOrigin()	-- Default to Radiant
-		end
+		self.leashPoint = Entities:FindByName(nil, "roshan_arena_"..DIRETIDE_WINNER):GetAbsOrigin()		-- Pick arena based on phase 2 winner
 	end
-	
+
 	-- Transitioning from Phase 2 to 3
 	if self.isTransitioning then
 		if self.atStartPoint then return end
@@ -891,7 +897,7 @@ function modifier_imba_roshan_ai_diretide:ThinkPhase3(roshan)
 	if COUNT_DOWN and COUNT_DOWN == 0 then
 		local heroDetector = FindUnitsInRadius(roshan:GetTeamNumber(), roshan:GetAbsOrigin(), nil, 700, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
 		if #heroDetector > 0 then
-			COUNT_DOWN = 1
+--			COUNT_DOWN = 1
 		else
 			self.wait = 5
 			return

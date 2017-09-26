@@ -223,6 +223,35 @@ local normal_xp = npc:GetDeathXP()
 	if npc then
 		if GetMapName() == "imba_10v10" or GetMapName() == "imba_custom_10v10" then
 			npc:SetDeathXP(normal_xp)
+		elseif GetMapName() == "imba_diretide" then
+			if npc:GetUnitName() == "npc_dota_creep_goodguys_melee" then
+				npc:SetModel("models/creeps/lane_creeps/creep_radiant_melee_diretide/creep_radiant_melee_diretide.vmdl")
+				npc:SetOriginalModel("models/creeps/lane_creeps/creep_radiant_melee_diretide/creep_radiant_melee_diretide.vmdl")
+			elseif npc:GetUnitName() == "npc_dota_creep_goodguys_ranged" then
+				npc:SetModel("models/creeps/lane_creeps/creep_radiant_ranged_diretide/creep_radiant_ranged_diretide.vmdl")
+				npc:SetOriginalModel("models/creeps/lane_creeps/creep_radiant_ranged_diretide/creep_radiant_ranged_diretide.vmdl")
+			elseif npc:GetUnitName() == "npc_dota_creep_badguys_melee" then
+				npc:SetModel("models/creeps/lane_creeps/creep_bad_melee_diretide/creep_bad_melee_diretide.vmdl")
+				npc:SetOriginalModel("models/creeps/lane_creeps/creep_bad_melee_diretide/creep_bad_melee_diretide.vmdl")
+			elseif npc:GetUnitName() == "npc_dota_creep_badguys_ranged" then
+				npc:SetModel("models/creeps/lane_creeps/creep_bad_ranged_diretide/creep_bad_ranged_diretide.vmdl")
+				npc:SetOriginalModel("models/creeps/lane_creeps/creep_bad_ranged_diretide/creep_bad_ranged_diretide.vmdl")
+			elseif npc:GetUnitName() == "npc_dota_goodguys_siege" then
+				npc:SetModel("models/creeps/baby_rosh_halloween/baby_rosh_radiant/baby_rosh_radiant.vmdl")
+				npc:SetOriginalModel("models/creeps/baby_rosh_halloween/baby_rosh_radiant/baby_rosh_radiant.vmdl")
+				npc:SetBaseDamageMin(100)
+				npc:SetBaseDamageMax(125)
+				npc:SetPhysicalArmorBaseValue(5)
+				npc:SetBaseMagicalResistanceValue(33)
+				npc:SetAttackCapability(DOTA_UNIT_CAP_MELEE_ATTACK)
+				npc:SetBaseAttackTime(1.0)
+				npc:SetMaxHealth(3000)
+				npc:SetMana(1000)
+			elseif npc:GetUnitName() == "npc_dota_badguys_siege" then
+				npc:SetModel("models/creeps/baby_rosh_halloween/baby_rosh_dire/baby_rosh_dire.vmdl")
+				npc:SetOriginalModel("models/creeps/baby_rosh_halloween/baby_rosh_dire/baby_rosh_dire.vmdl")
+			end
+			npc:SetDeathXP(normal_xp*1.5)
 		else
 			npc:SetDeathXP(normal_xp*1.5)
 		end
@@ -819,7 +848,6 @@ function GameMode:OnEntityKilled( keys )
 	end
 
 	if killed_unit then
-
 		-------------------------------------------------------------------------------------------------
 		-- IMBA: Ancient destruction detection
 		-------------------------------------------------------------------------------------------------
@@ -919,6 +947,22 @@ function GameMode:OnEntityKilled( keys )
 			-- Update buyback cost
 			PlayerResource:SetCustomBuybackCost(player_id, buyback_cost)
 			PlayerResource:SetCustomBuybackCooldown(player_id, buyback_cooldown)
+		end
+
+		-- Diretide candy drop on death
+		if killed_unit:HasItemInInventory("item_diretide_candy") then
+			for i = 0, 8 do
+				if killed_unit:GetItemInSlot(i) and killed_unit:GetItemInSlot(i):GetName() == "item_diretide_candy" then
+					local stack_count = killed_unit:GetItemInSlot(i):GetCurrentCharges()
+					for v = 0, stack_count do
+						local item = CreateItem("item_diretide_candy", nil, nil)
+						local pos = killed_unit:GetAbsOrigin()
+						local drop = CreateItemOnPositionSync( pos, item )
+						item:LaunchLoot(false, 300, 0.5, pos)
+						killed_unit:RemoveItem(killed_unit:GetItemInSlot(i))
+					end
+				end
+			end
 		end
 	end
 end

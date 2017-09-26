@@ -7,7 +7,7 @@ HIT_COUNT[3] = 0
 
 DIRETIDE_WINNER = 2
 COUNT_DOWN = 1
-PHASE_TIME = 481 -- 481
+PHASE_TIME = 31 -- 481
 
 function Diretide()
 local units = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)		
@@ -114,14 +114,16 @@ function CountdownDiretide(tick)
 --		end
 
 		if nCOUNTDOWNTIMER < 1 then
+--			print("Roshan Reincarnate:", DIRETIDE_REINCARNATING)
 			if CustomNetTables:GetTableValue("game_options", "radiant").score == CustomNetTables:GetTableValue("game_options", "dire").score then -- TIE
 --				print("TIE")
 				nCOUNTDOWNTIMER = 1
+--			elseif DIRETIDE_REINCARNATING == true then
+--				nCOUNTDOWNTIMER = nCOUNTDOWNTIMER +1
 			else
 				nCOUNTDOWNTIMER = PHASE_TIME
 				PHASE = PHASE + 1
 				DiretidePhase(PHASE)
-				print("Phase:", PHASE)
 			end
 			if PHASE == 2 then
 				if CustomNetTables:GetTableValue("game_options", "dire").score > CustomNetTables:GetTableValue("game_options", "radiant").score then
@@ -130,10 +132,10 @@ function CountdownDiretide(tick)
 			elseif PHASE == 3 then
 				nCOUNTDOWNTIMER = 120
 				COUNT_DOWN = 0
+				SwapTeam(DIRETIDE_WINNER)
 				local units = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)		
 				for _, unit in pairs(units) do
-					if unit:GetUnitName() == "npc_diretide_roshan" then
---						UpdateRoshanBar(unit, 0.03)
+					if unit:GetUnitLabel() == "npc_diretide_roshan" then
 					else
 						if unit:IsCreep() then
 							unit:RemoveSelf()						
@@ -159,7 +161,6 @@ function CountdownDiretide(tick)
 end
 
 function DiretideIncreaseTimer(time)
-	print("Time increased:", time)
 	nCOUNTDOWNTIMER = nCOUNTDOWNTIMER + time
 end
 
@@ -177,6 +178,37 @@ function UpdateRoshanBar(roshan, level, time)
 				maxHP = roshan:GetMaxHealth()
 			})
 			return time
+		end)
+	end
+end
+
+--	function OverrideDiretideCreeps()
+--		ListenToGameEvent("npc_spawned", function(event)
+--			local npc = EntIndexToHScript(keys.entindex)
+--			if npc then
+--				
+--			end
+--		end, nil)
+--	end
+
+function SwapTeam(team)
+	for _, hero in pairs(HeroList:GetAllHeroes()) do
+		local player_id = hero:GetPlayerOwnerID()
+		if hero:GetTeamNumber() == team then
+		else
+			local Gold = hero:GetGold()
+			hero:SetTeam(team)
+			hero:GetPlayerOwner():SetTeam(team)
+			hero:SetGold(Gold, false)
+			PlayerResource:UpdateTeamSlot(player_id, team, 1)
+			PlayerResource:SetCustomTeamAssignment(player_id, team)
+		end
+		FindClearSpaceForUnit(hero, Entities:FindByName(nil, "courier_spawn_"..team):GetAbsOrigin(), true)
+		PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), hero)
+		hero:Stop()
+		hero:SetGold(hero:GetGold() + 20000, true)
+		Timers:CreateTimer(0.1, function()
+			PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), nil)
 		end)
 	end
 end

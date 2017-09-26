@@ -402,8 +402,8 @@ function Server_CalculateXPForWinnerAndAll(winning_team)
 		end
 	end
 	local multiplier = 1.0
-	if GetMapName() == "imba_standard" then multiplier = 2.0 end
-	if GetMapName() == "imba_diretide" then multiplier = 4.0 end
+	if GetMapName() == "imba_standard" then multiplier = 2.0
+	elseif GetMapName() == "imba_diretide" then multiplier = 4.0 end
 	local abandon_xp = 0 - (ABANDON_CHARGE / dis_player / multiplier)
 	for nPlayerID=0, DOTA_MAX_TEAM_PLAYERS-1 do
 		if  PlayerResource:IsValidPlayer(nPlayerID) and not PlayerResource:IsFakeClient(nPlayerID) then
