@@ -71,6 +71,9 @@ DebugPrint("[IMBA] Performing pre-load precache")
 		print("Precaching Diretide particles...")
 		PrecacheResource("particle", "particles/hw_fx/hw_candy_drop.vpcf", context)
 		PrecacheResource("particle", "particles/hw_fx/candy_carrying_overhead.vpcf", context)
+		PrecacheResource("particle", "particles/units/heroes/hero_invoker/invoker_deafening_blast.vpcf", context) -- Apocalypse
+		PrecacheUnitByNameSync("npc_dota_hero_invoker", context) -- Apocalypse
+		PrecacheUnitByNameSync("npc_dota_hero_tiny", context) -- Toss
 	end
 
 	PrecacheResource("particle", "particles/econ/items/effigies/status_fx_effigies/gold_effigy_ambient_dire_lvl2.vpcf", context)
@@ -83,11 +86,7 @@ DebugPrint("[IMBA] Performing pre-load precache")
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts", context)
 
-	-- Storegga
-	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_tiny.vsndevts", context)
-
 	-- Roshan
-	PrecacheResource("particle", "particles/units/heroes/hero_invoker/invoker_deafening_blast.vpcf", context)
 	PrecacheResource("particle", "particles/neutral_fx/roshan_slam.vpcf", context)
 
 	-- Fountain

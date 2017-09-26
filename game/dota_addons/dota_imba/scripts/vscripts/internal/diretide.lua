@@ -7,7 +7,10 @@ HIT_COUNT[3] = 0
 
 DIRETIDE_WINNER = 2
 COUNT_DOWN = 1
-PHASE_TIME = 31 -- 481
+PHASE_TIME = 481
+if IsInToolsMode() then
+	PHASE_TIME = 31
+end
 
 function Diretide()
 local units = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)		
@@ -118,8 +121,9 @@ function CountdownDiretide(tick)
 			if CustomNetTables:GetTableValue("game_options", "radiant").score == CustomNetTables:GetTableValue("game_options", "dire").score then -- TIE
 --				print("TIE")
 				nCOUNTDOWNTIMER = 1
---			elseif DIRETIDE_REINCARNATING == true then
---				nCOUNTDOWNTIMER = nCOUNTDOWNTIMER +1
+			elseif DIRETIDE_REINCARNATING == true then
+				print("Game doesn't end, roshan is reincarnating...")
+				nCOUNTDOWNTIMER = nCOUNTDOWNTIMER +1
 			else
 				nCOUNTDOWNTIMER = PHASE_TIME
 				PHASE = PHASE + 1
@@ -164,15 +168,13 @@ function DiretideIncreaseTimer(time)
 	nCOUNTDOWNTIMER = nCOUNTDOWNTIMER + time
 end
 
-function UpdateRoshanBar(roshan, level, time)
+function UpdateRoshanBar(roshan, time)
 	if GameRules:IsGamePaused() then
 		return time
 	else
-		print("Launching Roshan's Health Bar")
-		print(level)
 		Timers:CreateTimer(function()
 			CustomNetTables:SetTableValue("game_options", "roshan", {
-				level = level,
+				level = roshan:GetLevel(),
 				HP = roshan:GetHealth(),
 				HP_alt = roshan:GetHealthPercent(),
 				maxHP = roshan:GetMaxHealth()
