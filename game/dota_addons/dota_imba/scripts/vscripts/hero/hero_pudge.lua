@@ -595,11 +595,7 @@ end
 --------------------------------------------------------------------------------
 
 function imba_pudge_meat_hook:OnProjectileHit_ExtraData( hTarget, vLocation,keys )
-	-- You can't pull yourself.
-	if hTarget == self:GetCaster() then
-		return
-	end
-
+	
 	local i = keys.nProjectileNumber
 	if not self.hooks[i] then return end	
 	
@@ -639,8 +635,13 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData( hTarget, vLocation,keys
 
 	-- Here the hook always moves forward and has a target. The impact is handled here.
 	if hTarget then
+		-- You can't pull yourself or Juggernaut ward.
+		if hTarget == self:GetCaster() or hTarget:GetUnitName() == "npc_imba_juggernaut_healing_ward" then
+			return
+		end
+
 		if not self.targets[hTarget] then -- Storing the targets so it won't get handled again
-			if hTarget.IsStanding then -- It is a tree			
+			if hTarget.IsStanding then -- It is a tree	or Jugg's healing ward		
 			else
 				EmitSoundOn( "Hero_Pudge.AttackHookImpact", hTarget )
 				hTarget:AddNewModifier( self:GetCaster(), self, "modifier_meat_hook", {duration = 1.5} )
