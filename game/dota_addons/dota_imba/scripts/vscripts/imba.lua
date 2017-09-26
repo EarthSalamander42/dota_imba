@@ -912,9 +912,10 @@ function GameMode:DamageFilter( keys )
 
 					-- Find the Reaper's Scythe ability
 					local ability = scythe_caster:FindAbilityByName("imba_necrolyte_reapers_scythe")
-					if not ability then return nil end
-					local mod = victim:AddNewModifier(scythe_caster, ability, "modifier_imba_reapers_scythe_respawn", {})
+					if not ability then return nil end					
 					scythe_modifier:Destroy()
+					victim:AddNewModifier(scythe_caster, ability, "modifier_imba_reapers_scythe_respawn", {})
+
 					-- Attempt to kill the target, crediting it to the caster of Reaper's Scythe
 					ApplyDamage({attacker = scythe_caster, victim = victim, ability = ability, damage = victim:GetHealth() + 10, damage_type = DAMAGE_TYPE_PURE, damage_flag = DOTA_DAMAGE_FLAG_NO_DAMAGE_MULTIPLIERS + DOTA_DAMAGE_FLAG_BYPASSES_BLOCK})
 				end
