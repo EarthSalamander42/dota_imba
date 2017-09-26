@@ -802,8 +802,7 @@ function modifier_imba_reapers_scythe:OnCreated( params )
 			-- Calculates damage
 			if target:IsAlive() and self.ability then
 				self.damage = self.damage * (target:GetMaxHealth() - target:GetHealth())
-				-- Deals damage
-				target:AddNewModifier(self:GetCaster(), self.ability, "modifier_imba_reapers_scythe_respawn", {duration = 2*FrameTime()})
+				-- Deals damage				
 				ApplyDamage({attacker = caster, victim = target, ability = self.ability, damage = self.damage, damage_type = DAMAGE_TYPE_MAGICAL})
 				SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, target, self.damage, nil)
 				self:Destroy()
@@ -845,10 +844,6 @@ function modifier_imba_reapers_scythe:CheckState()
 	return state
 end
 
-function modifier_imba_reapers_scythe:GetAttributes()
-	return MODIFIER_ATTRIBUTE_MULTIPLE
-end
-
 function modifier_imba_reapers_scythe:IsPurgable() return false end
 function modifier_imba_reapers_scythe:IsPurgeException() return false end
 
@@ -857,25 +852,13 @@ function modifier_imba_reapers_scythe:IsPurgeException() return false end
 function modifier_imba_reapers_scythe:DeclareFunctions()
 	local decFuncs = 
 	{
-		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
-		MODIFIER_EVENT_ON_DEATH,
+		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,		
 	}
 	return decFuncs
 end
 
 function modifier_imba_reapers_scythe:GetOverrideAnimation()
 	return ACT_DOTA_DISABLED
-end
-
-function modifier_imba_reapers_scythe:OnDeath( params )
-	if params.unit == self:GetParent() then
-		if self.ability and params.inflictor then
-			if self.ability == params.inflictor then
-				params.unit:FindModifierByName("modifier_imba_reapers_scythe_respawn"):SetDuration(-1,true)
-			end
-		end
-	end
-	return true
 end
 
 function modifier_imba_reapers_scythe:OnRemoved()
@@ -894,6 +877,11 @@ function modifier_imba_reapers_scythe_respawn:OnCreated()
 		self.ability = self:GetAbility()
 		if self.ability then
 			self.respawn_increase = self.ability:GetSpecialValueFor("respawn_increase")
+
+			-- Check if the parent will reincarnate
+			if self:GetParent():WillReincarnate() then				
+				self.reincarnate_respawn = true				
+			end
 		end
 	end
 end
@@ -908,10 +896,6 @@ end
 
 function modifier_imba_reapers_scythe_respawn:IsPurgable()
 	return false
-end
-
-function modifier_imba_reapers_scythe_respawn:GetAttributes()
-	return MODIFIER_ATTRIBUTE_MULTIPLE
 end
 
 function modifier_imba_reapers_scythe_respawn:IsDebuff()
@@ -930,13 +914,14 @@ function modifier_imba_reapers_scythe_respawn:DeclareFunctions()
 	return decFuncs	
 end
 
-function modifier_imba_reapers_scythe_respawn:OnRespawn( params )
+function modifier_imba_reapers_scythe_respawn:OnRespawn( params )	
 	if IsServer() then
 		if (self:GetParent() == params.unit) then
-			if self.ability then
+			if self.ability and not self.reincarnate_respawn then
 				local debuff_duration = self.ability:GetSpecialValueFor("debuff_duration")
 				params.unit:AddNewModifier(params.unit, self.ability, "modifier_imba_reapers_scythe_debuff", {duration = debuff_duration})
 			end
+
 			self:Destroy()
 		end
 	end

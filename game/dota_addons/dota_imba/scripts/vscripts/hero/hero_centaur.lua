@@ -220,13 +220,13 @@ function imba_centaur_hoof_stomp:OnSpellStart()
 			elapsed_time = elapsed_time + FrameTime()
 
 			-- Resolve NPCs stuck into one another
-			ResolveNPCPositions(arena_center, radius)
+			ResolveNPCPositions(arena_center, radius)			
 
 			if caster:HasTalent("special_bonus_imba_centaur_3") then
-				arena_center = caster:GetAbsOrigin()
-				for _,enemy in pairs(enemies) do
+				local arena_center = caster:GetAbsOrigin()
+				for _,enemy in pairs(enemies) do					
 					modifier = enemy:FindModifierByName(modifier_arena_debuff)
-					if modifier and not enemy:GetUnitName() == "npc_dota_diretide_easter_egg" then
+					if modifier and enemy:GetUnitName() ~= "npc_dota_diretide_easter_egg" then						
 						modifier.arena_center = arena_center
 					end
 				end
@@ -237,6 +237,7 @@ function imba_centaur_hoof_stomp:OnSpellStart()
 					if distance > caster:FindTalentValue("special_bonus_imba_centaur_3") then
 						caster:RemoveModifierByName(modifier_arena_buff)
 						ParticleManager:DestroyParticle(self.particle_arena_fx,true)
+						ParticleManager:ReleaseParticleIndex(self.particle_arena_fx)
 						return nil
 					end
 				end
@@ -248,6 +249,7 @@ function imba_centaur_hoof_stomp:OnSpellStart()
 				ParticleManager:SetParticleControl(self.particle_arena_fx, 6, caster:GetAbsOrigin())
 				ParticleManager:SetParticleControl(self.particle_arena_fx, 7, caster:GetAbsOrigin())
 			end	
+
 			-- Check caster, if he doesn't have the arena modifier and he's in the arena, give it to him again 
 			if not caster:HasModifier(modifier_arena_buff) then
 				local distance = (caster:GetAbsOrigin() - arena_center):Length2D()
