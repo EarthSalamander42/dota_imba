@@ -804,7 +804,12 @@ end
 function imba_witch_doctor_death_ward:OnProjectileHit_ExtraData(target, vLocation, ExtraData)
 	if self[ExtraData.index] then
 		if not self[ExtraData.index]:IsNull() then
-			self[ExtraData.index]:PerformAttack(target, false, true, true, true, false, false, false)
+			if self:GetCaster():HasScepter() then
+				self[ExtraData.index]:PerformAttack(target, false, true, true, true, false, false, true)
+			else
+				self[ExtraData.index]:PerformAttack(target, false, true, true, true, false, false, false)
+			end
+			
 			if ExtraData.bounces_left >= 0 and self:GetCaster():HasScepter() then
 				ExtraData.bounces_left = ExtraData.bounces_left - 1
 				ExtraData[tostring(target:GetEntityIndex())] = 1
