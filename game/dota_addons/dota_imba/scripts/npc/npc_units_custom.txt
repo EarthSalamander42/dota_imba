@@ -8118,18 +8118,17 @@
 				
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"imba_roshan_ai_diretide"
-		"Ability2"					"imba_roshan_diretide_summon_roshlings"
-		"Ability3"					"tiny_toss"
-		"Ability4"					"creature_fire_breath"
-		"Ability5"					"imba_roshan_diretide_apocalypse"
-		"Ability6"					""
-		"Ability7"					""
+		"Ability1"					"imba_roshan_diretide_summon_roshlings"
+		"Ability2"					"tiny_toss"
+		"Ability3"					"creature_fire_breath"
+		"Ability4"					"imba_roshan_diretide_apocalypse"
+		"Ability5"					"necronomicon_warrior_sight"
+		"Ability6"					"imba_roshan_ai_diretide"
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"14"
-		"MagicalResistance"			"60"
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
 
 		// Attack
 		//----------------------------------------------------------------
@@ -8192,10 +8191,6 @@
 				"MKB"
 				{
 					"Item"			"item_imba_monkey_king_bar"
-				}
-				"Gem"
-				{
-					"Item"			"item_gem"
 				}
 			}
 
