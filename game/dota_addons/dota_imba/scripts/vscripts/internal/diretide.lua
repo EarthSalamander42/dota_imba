@@ -137,6 +137,7 @@ function CountdownDiretide(tick)
 				nCOUNTDOWNTIMER = 120
 				COUNT_DOWN = 0
 				SwapTeam(DIRETIDE_WINNER)
+				AddFOWViewer(DIRETIDE_WINNER, Entities:FindByName(nil, "roshan_arena_"..DIRETIDE_WINNER):GetAbsOrigin(), 500, 99999, false)
 				local units = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)		
 				for _, unit in pairs(units) do
 					if unit:GetUnitLabel() == "npc_diretide_roshan" then
@@ -154,7 +155,7 @@ function CountdownDiretide(tick)
 				GameRules:SetGameWinner(DOTA_TEAM_NEUTRALS)
 			end
 		elseif nCOUNTDOWNTIMER == 120 and PHASE == 3 then
-			local hero = FindUnitsInRadius(2, Entities:FindByName(nil, "roshan_arena_"..DIRETIDE_WINNER):GetAbsOrigin(), nil, 700, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+			local hero = FindUnitsInRadius(2, Entities:FindByName(nil, "roshan_arena_"..DIRETIDE_WINNER):GetAbsOrigin(), nil, 1000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
 			if #hero > 0 then
 				print("A hero is near...")
 				COUNT_DOWN = 1

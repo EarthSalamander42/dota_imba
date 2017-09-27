@@ -39588,7 +39588,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_candy"		"30"
+				"damage_per_candy"		"40"
 			}
 			"04"
 			{
@@ -39608,7 +39608,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bash_chance"			"17"
+				"bash_chance"			"14"
 			}
 			"08"
 			{
@@ -39618,7 +39618,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bash_distance"			"200"
+				"bash_distance"			"300"
 			}
 			"10"
 			{
@@ -39643,12 +39643,12 @@
 			"14"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"furyswipe_damage"		"25"
+				"furyswipe_damage"		"20"
 			}
 			"15"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"furyswipe_duration"	"25"
+				"furyswipe_duration"	"20"
 			}
 			"17"
 			{
@@ -39663,17 +39663,17 @@
 			"20"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_death"		"25"
+				"damage_per_death"		"20"
 			}
 			"21"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attackspeed_per_death"	"25"
+				"attackspeed_per_death"	"20"
 			}
 			"22"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"armor_per_death"		"25"
+				"armor_per_death"		"20"
 			}
 			"23"
 			{
