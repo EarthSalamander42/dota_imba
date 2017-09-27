@@ -241,7 +241,7 @@ function modifier_imba_shadow_strike_debuff:OnIntervalThink()
 				local scream = caster:FindAbilityByName("imba_queenofpain_scream_of_pain")
 				if scream:GetLevel() >= 1 then
 					scream:OnSpellStart(caster:FindTalentValue("special_bonus_imba_queenofpain_6", "damage_pct"), parent)
-                                        parent:AddNewModifier(caster,ability,"modifier_scream_of_pain_talent_instance)",{duration = ability:GetSpecialValueFor("duration")})
+                                        parent:AddNewModifier(caster,ability,"modifier_scream_of_pain_talent_instance",{duration = ability:GetSpecialValueFor("duration")})
 				end
 			end
 		end
