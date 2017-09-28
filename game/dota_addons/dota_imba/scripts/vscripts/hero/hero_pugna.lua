@@ -588,12 +588,11 @@ function modifier_imba_nether_ward_aura:OnIntervalThink()
 	local ability = nil
 	for i=0,23 do
 		local iAbility = ward:GetAbilityByIndex(i)
-		if not iAbility then
-			return
-		end
-		if not iAbility:IsPassive() and not iAbility:IsToggle() and iAbility:IsActivated() and iAbility:IsCooldownReady() then
-			ability = iAbility
-			break
+		if iAbility then
+			if not iAbility:IsPassive() and not iAbility:IsToggle() and iAbility:IsActivated() and iAbility:IsCooldownReady() then
+				ability = iAbility
+				break
+			end
 		end
 	end
 	if not ability then
@@ -602,6 +601,8 @@ function modifier_imba_nether_ward_aura:OnIntervalThink()
 	if ward:IsSilenced() then
 		return
 	end
+
+	ability:SetHidden(false)
 
 	local caster = ward
 	local ability_range = ability:GetCastRange(ward:GetAbsOrigin(), ward)
@@ -759,6 +760,10 @@ function modifier_imba_nether_ward_aura:OnIntervalThink()
 	if ability_behavior == DOTA_ABILITY_BEHAVIOR_NONE then
 		--Do nothing, not suppose to happen
 
+	elseif ability_behavior % DOTA_ABILITY_BEHAVIOR_NO_TARGET == 0 then
+		ExecuteOrderFromTable({ UnitIndex = ward:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_NO_TARGET, Position = nil, AbilityIndex = ability:GetEntityIndex(), Queue = queue})
+		ability_was_used = true
+
 	-- Toggle ability
 	elseif ability_behavior % DOTA_ABILITY_BEHAVIOR_TOGGLE == 0 then
 		ability:ToggleAbility()
@@ -839,9 +844,13 @@ function modifier_imba_nether_ward_aura:OnAbilityFullyCast(keys)
 	if keys.unit ~= self:GetParent() then
 		return
 	end
+	if not self.caster:GetOwner():HasTalent("special_bonus_imba_pugna_6") then
+		return
+	end
 	local ability = keys.ability
 	ability:EndCooldown()
 	ability:SetActivated(false)
+	ability:SetHidden(true)
 	keys.unit:AddNewModifier(keys.unit, self:GetAbility(), "modifier_silence", {duration = self.cooldown})
 end
 
