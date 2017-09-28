@@ -287,6 +287,11 @@ function modifier_item_imba_hellblade_unique:OnAttacked(keys)
 		
 		-- Only apply on the caster being attacked, if the roll is in the range
 		if keys.target == self.caster and RollPseudoRandom(self.transfer_chance, self) then					
+			
+			-- If the attacker is magic immune, we cannot transfer debuffs to him. Do nothing!
+			if target:IsMagicImmune() then
+				return nil	
+			end
 
 			-- Find all modifiers on caster, check if it has at least one purgable debuff
 			local modifiers = self.caster:FindAllModifiers()		

@@ -12,8 +12,6 @@ CreateEmptyTalents("sven")
 -------------------------------------------
 LinkLuaModifier("modifier_imba_storm_bolt_caster", "hero/hero_sven", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_storm_bolt_crit", "hero/hero_sven", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_storm_bolt_talent_drag", "hero/hero_sven", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_storm_bolt_talent_reduction", "hero/hero_sven", LUA_MODIFIER_MOTION_NONE)
 
 imba_sven_storm_bolt = class({})
 function imba_sven_storm_bolt:IsHiddenWhenStolen() return false end
@@ -68,98 +66,9 @@ function imba_sven_storm_bolt:OnSpellStart()
 			iSourceAttachment 	= DOTA_PROJECTILE_ATTACHMENT_ATTACK_2,
 			iVisionRadius 		= vision_radius,
 			iVisionTeamNumber 	= caster:GetTeamNumber(),
-			ExtraData			= {damage = damage, stun_duration = stun_duration, radius = radius, speed = bolt_speed, target_pos_x = self.target:GetAbsOrigin().x, target_pos_y = self.target:GetAbsOrigin().y, target_pos_z = self.target:GetAbsOrigin().z}
+			ExtraData			= {damage = damage, stun_duration = stun_duration, radius = radius}
 		}
 		ProjectileManager:CreateTrackingProjectile(projectile)
-	end
-end
-
-function imba_sven_storm_bolt:OnProjectileThink_ExtraData(location, ExtraData)
-	local caster = self:GetCaster()
-	if caster:HasTalent("special_bonus_imba_sven_6") then
-		local drag_radius = caster:FindTalentValue("special_bonus_imba_sven_6","drag_radius")
-		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), location, nil, drag_radius, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
-		for _,enemy in ipairs(enemies) do
-			enemy:AddNewModifier(caster, self, "modifier_stunned", {duration = ExtraData.stun_duration})
-			local drag_mod = enemy:FindModifierByName("modifier_imba_storm_bolt_talent_drag")
-			if not drag_mod then
-			drag_mod = enemy:AddNewModifier(enemy,self,"modifier_imba_storm_bolt_talent_drag",{})
-			end
-			if drag_mod then
-			drag_mod.pos_x = ExtraData.target_pos_x
-			drag_mod.pos_y = ExtraData.target_pos_y
-			drag_mod.pos_z = ExtraData.target_pos_z
-			drag_mod.speed = ExtraData.speed
-			end
-		end
-	end
-end
-
-modifier_imba_storm_bolt_talent_drag = class({})
-function modifier_imba_storm_bolt_talent_drag:IsHidden() return false end
-function modifier_imba_storm_bolt_talent_drag:IsDebuff() return true end
-function modifier_imba_storm_bolt_talent_drag:IsPurgable() return false end
-function modifier_imba_storm_bolt_talent_drag:IsPurgeException()return true end
-function modifier_imba_storm_bolt_talent_drag:IsMotionController()  return true end
-function modifier_imba_storm_bolt_talent_drag:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_HIGH end
-
-function modifier_imba_storm_bolt_talent_drag:OnCreated()
-	if IsServer() then
-	self.target = self:GetParent()
-	self.caster = self:GetCaster()
-	self.frametime = FrameTime()
-	
-	self:StartIntervalThink(self.frametime)
-	end
-end
-
-function modifier_imba_storm_bolt_talent_drag:OnIntervalThink()
-	-- Remove the motion controllers if there aren't any
-	if not self:CheckMotionControllers() then
-		self:Destroy()
-		return nil
-	end
-	
-	if not self.destination then
-	self.destination = Vector(self.pos_x,self.pos_y,self.pos_z)
-	end
-	
-	self:HorizontalMotion(self.target, self.frametime)
-end
-
-function modifier_imba_storm_bolt_talent_drag:HorizontalMotion()
-	if IsServer() then
-		-- Check if the target is alive
-		if not self.target:IsAlive() then
-			self:Destroy()
-			return nil
-		end
-		
-		-- Ability Specials
-		local target_position = self.target:GetAbsOrigin()
-		
-		-- Direction
-		local direction = ( self.destination - target_position ):Normalized()
-		
-		-- Distance
-		local distance = ( self.destination - target_position ):Length2D()
-		
-		-- Destroys itself when it reached the destination
-		if distance <= FrameTime() * self.speed then
-			self:Destroy()
-		else
-			-- DRAG IT!
-			local newPosition = target_position + direction * FrameTime() * self.speed
-				
-			-- Set the new point
-			self.target:SetAbsOrigin(newPosition)
-		end
-	end
-end
-
-function modifier_imba_storm_bolt_talent_drag:OnDestroy()
-	if IsServer() then
-		self.target:SetUnitOnClearGround()
 	end
 end
 
@@ -181,11 +90,6 @@ function imba_sven_storm_bolt:OnProjectileHit_ExtraData(target, location, ExtraD
 			-- Randomly play a cast line
 			if (( target_pos - caster_pos ):Length2D() > 600) and (RandomInt(1, 100) <= 20) and (caster:GetName() == "npc_dota_hero_sven") then
 				caster:EmitSound("sven_sven_ability_teleport_0"..math.random(1,3))
-			end
-			
-			-- #3 Talent: Grants Sven 4 second damage reduction after reaching the target
-			if caster:HasTalent("special_bonus_imba_sven_3") then
-			caster:AddNewModifier(caster, self, "modifier_imba_storm_bolt_talent_reduction", {duration = caster:FindTalentValue("special_bonus_imba_sven_3","duration")})
 			end
 			
 			-- Start attacking the target + apply crit
@@ -210,57 +114,7 @@ function imba_sven_storm_bolt:GetAOERadius()
 end
 
 function imba_sven_storm_bolt:GetCooldown( nLevel )
-	return self.BaseClass.GetCooldown( self, nLevel )
-end
-
-modifier_imba_storm_bolt_talent_reduction = class({})
-
-function modifier_imba_storm_bolt_talent_reduction:IsDebuff() return false end
-function modifier_imba_storm_bolt_talent_reduction:IsHidden() return false end
-function modifier_imba_storm_bolt_talent_reduction:IsPurgable() return true end
-function modifier_imba_storm_bolt_talent_reduction:IsStunDebuff() return false end
-function modifier_imba_storm_bolt_talent_reduction:RemoveOnDeath() return true end
-
-function modifier_imba_storm_bolt_talent_reduction:DeclareFunctions()
-	local funcs =
-	{
-		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
-	}
-	return funcs
-end
-
-function modifier_imba_storm_bolt_talent_reduction:GetModifierIncomingDamage_Percentage()
-	return self:GetCaster():FindTalentValue("special_bonus_imba_sven_3") * (-1)
-end
-
--- Warcry particles
-function modifier_imba_storm_bolt_talent_reduction:OnCreated()
-	local caster = self:GetCaster()
-	local parent = self:GetParent()
-	local caster_loc = caster:GetAbsOrigin()
-	
-	if self.cast_fx then
-		ParticleManager:DestroyParticle(self.cast_fx, false)
-		ParticleManager:ReleaseParticleIndex(self.cast_fx)
-	end
-	self.cast_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_sven/sven_spell_warcry.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-	ParticleManager:SetParticleControlEnt(self.cast_fx, 0, caster, PATTACH_POINT_FOLLOW, nil, caster_loc, true)
-	ParticleManager:SetParticleControlEnt(self.cast_fx, 1, caster, PATTACH_POINT_FOLLOW, nil, caster_loc, true)
-	ParticleManager:SetParticleControlEnt(self.cast_fx, 2, caster, PATTACH_POINT_FOLLOW, nil, caster_loc, true)
-	ParticleManager:SetParticleControlEnt(self.cast_fx, 4, caster, PATTACH_POINT_FOLLOW, nil, caster_loc, true)
-	self:AddParticle(self.cast_fx, false, false, -1, false, false)
-	if self.buff_fx then
-		ParticleManager:DestroyParticle(self.buff_fx, false)
-		ParticleManager:ReleaseParticleIndex(self.buff_fx)
-	end
-	self.buff_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_sven/sven_warcry_buff.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-	ParticleManager:SetParticleControlEnt(self.buff_fx, 0, parent, PATTACH_POINT_FOLLOW, nil, parent:GetAbsOrigin(), true)
-	ParticleManager:SetParticleControlEnt(self.buff_fx, 1, parent, PATTACH_OVERHEAD_FOLLOW, nil, parent:GetAbsOrigin(), true)
-	self:AddParticle(self.buff_fx, false, false, -1, false, false)
-end
-
-function modifier_imba_storm_bolt_talent_reduction:OnRefresh()
-	self:OnCreated()
+	return self.BaseClass.GetCooldown( self, nLevel ) - self:GetCaster():FindTalentValue("special_bonus_imba_sven_5")
 end
 
 -------------------------------------------
@@ -376,26 +230,7 @@ function modifier_imba_great_cleave:OnAttackLanded( params )
 			local cleave_radius_start = ability:GetSpecialValueFor("cleave_starting_width")
 			local cleave_radius_end = ability:GetTalentSpecialValueFor("cleave_ending_width")
 			local cleave_distance = ability:GetTalentSpecialValueFor("cleave_distance")
-			-- #4 Talent: Great Cleave cleaves at double the cleave values
-			if caster:HasTalent("special_bonus_imba_sven_4") then
-			cleave_particle = "particles/hero/sven/sven_spell_grand_cleave.vpcf"
-			cleave_radius_start = cleave_radius_start * caster:FindTalentValue("special_bonus_imba_sven_4")
-			cleave_radius_end = cleave_radius_end * caster:FindTalentValue("special_bonus_imba_sven_4")
-			cleave_distance = cleave_distance * caster:FindTalentValue("special_bonus_imba_sven_4")
-			end
 			DoCleaveAttack( params.attacker, params.target, ability, (params.damage * cleave_damage_pct), cleave_radius_start, cleave_radius_end, cleave_distance, cleave_particle )
-			-- #2 Talent: Great Cleave cleaves twice when the God's Strength is active
-			if caster:HasTalent("special_bonus_imba_sven_1") and caster:HasModifier("modifier_imba_god_strength") then
-				local cleave_particle_talent = "particles/hero/sven/sven_spell_great_cleave_gods_strength.vpcf"
-				if caster:HasTalent("special_bonus_imba_sven_4") then
-				cleave_particle_talent = "particles/hero/sven/sven_spell_grand_cleave_gods_strength.vpcf"
-				end
-				Timers:CreateTimer(caster:FindTalentValue("special_bonus_imba_sven_1"), function()
-				if caster then
-				DoCleaveAttack( params.attacker, params.target, ability, (params.damage * cleave_damage_pct), cleave_radius_start, cleave_radius_end, cleave_distance, cleave_particle_talent )
-				end
-				end)
-			end
 		end
 	end
 end
@@ -480,16 +315,6 @@ function imba_sven_warcry:GetAbilityTextureName()
 end
 -------------------------------------------
 
-function imba_sven_warcry:GetBehavior()
-	-- #8 Talent: Allows WarCry to be activated while Sven is disabled
-	local caster = self:GetCaster()
-	if not caster:HasTalent("special_bonus_imba_sven_8") then
-		return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_IMMEDIATE
-	else
-		return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_IMMEDIATE + DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE
-	end
-end
-
 function imba_sven_warcry:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
@@ -513,14 +338,7 @@ function imba_sven_warcry:OnSpellStart()
 			end
 		end
 		caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_3)
-
-	-- #8 Talent: Allows WarCry to be activated while Sven is disabled + apply strong purge
-		if caster:HasTalent("special_bonus_imba_sven_8") then
-		caster:Purge(false, true, false, true, true) --don't remove buffs, remove debuffs, not only on this frame, purges stuns.
-		else
-		-- Else Apply normal purge
 		caster:Purge(false,true,false,false,false)
-		end
 	end
 end
 
@@ -650,7 +468,7 @@ function imba_sven_gods_strength:GetAbilityTextureName()
 end
 -------------------------------------------
 function imba_sven_gods_strength:GetCooldown( nLevel )
-	return self.BaseClass.GetCooldown( self, nLevel )
+	return self.BaseClass.GetCooldown( self, nLevel ) - self:GetCaster():FindTalentValue("special_bonus_imba_sven_4")
 end
 
 function imba_sven_gods_strength:GetAssociatedSecondaryAbilities()
@@ -820,7 +638,6 @@ end
 -------------------------------------------
 LinkLuaModifier("modifier_imba_colossal_slash_animation", "hero/hero_sven", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_colossal_slash_crit", "hero/hero_sven", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_colossal_slash_talent_pierce", "hero/hero_sven", LUA_MODIFIER_MOTION_NONE)
 imba_sven_colossal_slash = class({})
 function imba_sven_colossal_slash:IsHiddenWhenStolen() return false end
 function imba_sven_colossal_slash:IsRefreshable() return true end
@@ -859,8 +676,8 @@ function imba_sven_colossal_slash:OnAbilityPhaseStart()
 			ParticleManager:DestroyParticle(swing_fx, false)
 			ParticleManager:ReleaseParticleIndex(swing_fx)
 		end)
-		--caster:FadeGesture(ACT_DOTA_OVERRIDE_ABILITY_3)
-		--caster:FadeGesture(ACT_DOTA_OVERRIDE_ABILITY_4)
+		caster:FadeGesture(ACT_DOTA_OVERRIDE_ABILITY_3)
+		caster:FadeGesture(ACT_DOTA_OVERRIDE_ABILITY_4)
 		caster:StartGestureWithPlaybackRate(ACT_DOTA_VICTORY,3)
 		Timers:CreateTimer(0.4, function()
 			if self.animation then
@@ -899,36 +716,33 @@ function imba_sven_colossal_slash:OnSpellStart()
 		-- Parameters
 		local proj_speed = self:GetSpecialValueFor("proj_speed")
 		local radius = self:GetSpecialValueFor("radius")
-		local start_radius = self:GetSpecialValueFor("start_radius")
-		local end_radius = self:GetSpecialValueFor("end_radius")
 		local crit_bonus_pct = self:GetSpecialValueFor("crit_bonus_pct")
 		local base_range = self:GetSpecialValueFor("base_range")
 		local range_multiplier = self:GetSpecialValueFor("range_multiplier")
 		local direction = (target_loc - caster_loc):Normalized()
 		
 		local modifier = caster:FindModifierByName("modifier_imba_god_strength")
-		local gods_strength_ability = caster:FindAbilityByName("imba_sven_gods_strength")
 		ScreenShake(caster_loc, 10, 0.3, 0.5, 1000, 0, true)
 		local remaining_time = 0
 		if modifier then
 			remaining_time = modifier:GetRemainingTime()
 			modifier:Destroy()
 		end
-
+		
 		local total_range = base_range + (remaining_time * range_multiplier)
 
-		--local caster_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_earth_spirit/espirit_spawn_ground.vpcf", PATTACH_ABSORIGIN, caster)
-		--ParticleManager:SetParticleControl(caster_pfx, 0, (caster:GetAbsOrigin() + direction*100))
-		
+		local caster_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_earth_spirit/espirit_spawn_ground.vpcf", PATTACH_ABSORIGIN, caster)
+		ParticleManager:SetParticleControl(caster_pfx, 0, (caster:GetAbsOrigin() + direction*100))
+
 		-- Launch projectile
 		local projectile =
 		{
 			Ability				= self,
-			EffectName			= "particles/hero/sven/colossal_slash_new.vpcf",
+			EffectName			= "particles/hero/sven/colossal_slash.vpcf",
 			vSpawnOrigin		= caster_loc,
 			fDistance			= total_range,
-			fStartRadius		= start_radius,
-			fEndRadius			= end_radius,
+			fStartRadius		= radius,
+			fEndRadius			= radius,
 			Source				= caster,
 			bHasFrontalCone		= false,
 			bReplaceExisting	= false,
@@ -939,8 +753,7 @@ function imba_sven_colossal_slash:OnSpellStart()
 			vVelocity			= Vector(direction.x,direction.y,0) * proj_speed,
 			bProvidesVision		= true,
 			iVisionRadius 		= radius,
-			iVisionTeamNumber 	= caster:GetTeamNumber(),
-			ExtraData			= {remaining_time = remaining_time}
+			iVisionTeamNumber 	= caster:GetTeamNumber()
 		}
 		ProjectileManager:CreateLinearProjectile(projectile)
 
@@ -958,23 +771,11 @@ function imba_sven_colossal_slash:OnSpellStart()
 	end
 end
 
-function imba_sven_colossal_slash:OnProjectileHit_ExtraData(target, location, ExtraData)
+function imba_sven_colossal_slash:OnProjectileHit(target, location)
 	if target then
 		local caster = self:GetCaster()
-		local talent_mod = target:FindModifierByName("modifier_imba_colossal_slash_talent_pierce")
-		-- #5 Talent: Colossal Slash penetrates a portion of the target's armor.
-		if caster:HasTalent("special_bonus_imba_sven_5") and (not talent_mod) then
-			local talent_modifier = target:AddNewModifier(caster, self, "modifier_imba_colossal_slash_talent_pierce", {})
-			-- Get the remaining duration of God's Strength
-			if talent_modifier then
-				talent_modifier.remaining_time = math.floor(ExtraData.remaining_time)
-			end
-		end
-		-- Add the crit modifier
 		local mod = caster:AddNewModifier(caster, self, "modifier_imba_colossal_slash_crit", {})
-		-- Attack on target
 		caster:PerformAttack(target, true, false, true, true, true, false, true)
-		-- After the attack, destroy both modifiers
 		mod:Destroy()
 	end
 end
@@ -993,7 +794,6 @@ function modifier_imba_colossal_slash_crit:DeclareFunctions()
 		MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
 		MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE,
 		MODIFIER_PROPERTY_TRANSLATE_ATTACK_SOUND,
-		MODIFIER_EVENT_ON_HERO_KILLED,
 	}
 	return decFuncs
 end
@@ -1021,55 +821,6 @@ function modifier_imba_colossal_slash_crit:GetModifierTotalDamageOutgoing_Percen
 	return self.crit_bonus_pct
 end
 
--- #1 Talent: God's Strength Cooldown reduced by 20% for each Colossal Slash hero kill.
-function modifier_imba_colossal_slash_crit:OnHeroKilled(params)
-	if IsServer() then
-		local caster = self:GetCaster()
-		local attacker = params.attacker
-		if attacker == caster and caster:HasTalent("special_bonus_imba_sven_2") then
-			local god_strength_ability = caster:FindAbilityByName("imba_sven_gods_strength")
-			if god_strength_ability then
-				local current_cooldown = god_strength_ability:GetCooldownTimeRemaining()
-				god_strength_ability:EndCooldown()
-				god_strength_ability:StartCooldown(current_cooldown - (current_cooldown * caster:FindTalentValue("special_bonus_imba_sven_2") * 0.01))
-			end
-		end
-	end
-end
-
--- #5 Talent: Colossal Slash penetrates a portion of the target's armor.
--------------------------------------------
-modifier_imba_colossal_slash_talent_pierce = class({})
-function modifier_imba_colossal_slash_talent_pierce:IsDebuff() return false end
-function modifier_imba_colossal_slash_talent_pierce:IsHidden() return true end
-function modifier_imba_colossal_slash_talent_pierce:IsPurgable() return false end
-function modifier_imba_colossal_slash_talent_pierce:IsPurgeException() return false end
-function modifier_imba_colossal_slash_talent_pierce:IsStunDebuff() return false end
-function modifier_imba_colossal_slash_talent_pierce:RemoveOnDeath() return true end
--------------------------------------------
-function modifier_imba_colossal_slash_talent_pierce:DeclareFunctions()
-	local decFuncs = 
-	{
-		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS
-	}
-	return decFuncs
-end
-
-function modifier_imba_colossal_slash_talent_pierce:GetModifierPhysicalArmorBonus()
-	if self.remaining_time then
-	return self:GetCaster():FindTalentValue("special_bonus_imba_sven_5") * (-1) * self.remaining_time
-	else
-	return 0
-	end
-end
-
--- Create the particle effects
-function modifier_imba_colossal_slash_talent_pierce:OnCreated()
-	if IsServer() then
-		-- Destroys itself after an instance
-		self:Destroy()
-	end
-end
 -------------------------------------------
 modifier_imba_colossal_slash_animation = class({})
 function modifier_imba_colossal_slash_animation:IsDebuff() return false end

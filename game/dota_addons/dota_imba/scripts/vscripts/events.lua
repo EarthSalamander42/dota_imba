@@ -162,11 +162,8 @@ local i = 10
 --			SendToServerConsole("dota_bot_populate")
 --		end
 
-		if GetMapName() ~= "imba_diretide" then
-			local roshan_easter_egg = Entities:FindByName(nil, "easter_egg_diretide"):GetAbsOrigin()
-			local pumpkin = CreateUnitByName("npc_dota_diretide_easter_egg", roshan_easter_egg, true, nil, nil, DOTA_TEAM_NEUTRALS)
-			pumpkin:AddNewModifier(caster, nil, "modifier_npc_dialog", {})
-		end
+		local roshan_easter_egg = Entities:FindByName(nil, "easter_egg_diretide"):GetAbsOrigin()
+		CreateUnitByName("npc_diretide_roshan", roshan_easter_egg, true, nil, nil, DOTA_TEAM_NEUTRALS)
 
 		-- Shows various info to devs in pub-game to find lag issues
 		ImbaNetGraph(10.0)
@@ -226,6 +223,47 @@ local normal_xp = npc:GetDeathXP()
 	if npc then
 		if GetMapName() == "imba_10v10" or GetMapName() == "imba_custom_10v10" then
 			npc:SetDeathXP(normal_xp)
+		elseif GetMapName() == "imba_diretide" then
+			if npc:GetUnitName() == "npc_dota_creep_goodguys_melee" then
+				npc:SetModel("models/creeps/lane_creeps/creep_radiant_melee_diretide/creep_radiant_melee_diretide.vmdl")
+				npc:SetOriginalModel("models/creeps/lane_creeps/creep_radiant_melee_diretide/creep_radiant_melee_diretide.vmdl")
+			elseif npc:GetUnitName() == "npc_dota_creep_goodguys_ranged" then
+				npc:SetModel("models/creeps/lane_creeps/creep_radiant_ranged_diretide/creep_radiant_ranged_diretide.vmdl")
+				npc:SetOriginalModel("models/creeps/lane_creeps/creep_radiant_ranged_diretide/creep_radiant_ranged_diretide.vmdl")
+			elseif npc:GetUnitName() == "npc_dota_creep_badguys_melee" then
+				npc:SetModel("models/creeps/lane_creeps/creep_bad_melee_diretide/creep_bad_melee_diretide.vmdl")
+				npc:SetOriginalModel("models/creeps/lane_creeps/creep_bad_melee_diretide/creep_bad_melee_diretide.vmdl")
+			elseif npc:GetUnitName() == "npc_dota_creep_badguys_ranged" then
+				npc:SetModel("models/creeps/lane_creeps/creep_bad_ranged_diretide/creep_bad_ranged_diretide.vmdl")
+				npc:SetOriginalModel("models/creeps/lane_creeps/creep_bad_ranged_diretide/creep_bad_ranged_diretide.vmdl")
+			elseif npc:GetUnitName() == "npc_dota_goodguys_siege" then
+				npc:SetModel("models/creeps/baby_rosh_halloween/baby_rosh_radiant/baby_rosh_radiant.vmdl")
+				npc:SetOriginalModel("models/creeps/baby_rosh_halloween/baby_rosh_radiant/baby_rosh_radiant.vmdl")
+				npc:SetModelScale(1.5)
+				npc:SetBaseDamageMin(100)
+				npc:SetBaseDamageMax(125)
+				npc:SetPhysicalArmorBaseValue(5)
+				npc:SetBaseMagicalResistanceValue(33)
+				npc:SetAttackCapability(DOTA_UNIT_CAP_MELEE_ATTACK)
+				npc:SetBaseAttackTime(1.0)
+				npc:SetMaxHealth(3000)
+				npc:SetHealth(3000)
+				npc:SetMana(1000)
+			elseif npc:GetUnitName() == "npc_dota_badguys_siege" then
+				npc:SetModel("models/creeps/baby_rosh_halloween/baby_rosh_dire/baby_rosh_dire.vmdl")
+				npc:SetOriginalModel("models/creeps/baby_rosh_halloween/baby_rosh_dire/baby_rosh_dire.vmdl")
+				npc:SetModelScale(1.5)
+				npc:SetBaseDamageMin(100)
+				npc:SetBaseDamageMax(125)
+				npc:SetPhysicalArmorBaseValue(5)
+				npc:SetBaseMagicalResistanceValue(33)
+				npc:SetAttackCapability(DOTA_UNIT_CAP_MELEE_ATTACK)
+				npc:SetBaseAttackTime(1.0)
+				npc:SetMaxHealth(3000)
+				npc:SetHealth(3000)
+				npc:SetMana(1000)
+			end
+			npc:SetDeathXP(normal_xp*1.5)
 		else
 			npc:SetDeathXP(normal_xp*1.5)
 		end
@@ -822,7 +860,6 @@ function GameMode:OnEntityKilled( keys )
 	end
 
 	if killed_unit then
-
 		-------------------------------------------------------------------------------------------------
 		-- IMBA: Ancient destruction detection
 		-------------------------------------------------------------------------------------------------
@@ -922,6 +959,26 @@ function GameMode:OnEntityKilled( keys )
 			-- Update buyback cost
 			PlayerResource:SetCustomBuybackCost(player_id, buyback_cost)
 			PlayerResource:SetCustomBuybackCooldown(player_id, buyback_cooldown)
+		end
+
+		if killed_unit:GetUnitName() == "npc_dota_goodguys_siege" or killed_unit:GetUnitName() == "npc_dota_badguys_siege" then
+			local item = CreateItem("item_diretide_candy", nil, nil)
+			local pos = killed_unit:GetAbsOrigin()
+			local drop = CreateItemOnPositionSync( pos, item )
+			item:LaunchLoot(false, 300, 0.5, pos)
+		elseif killed_unit:HasItemInInventory("item_diretide_candy") then
+			for i = 0, 8 do
+				if killed_unit:GetItemInSlot(i) and killed_unit:GetItemInSlot(i):GetName() == "item_diretide_candy" then
+					local stack_count = killed_unit:GetItemInSlot(i):GetCurrentCharges()
+					for v = 0, stack_count do
+						local item = CreateItem("item_diretide_candy", nil, nil)
+						local pos = killed_unit:GetAbsOrigin()
+						local drop = CreateItemOnPositionSync( pos, item )
+						item:LaunchLoot(false, 300, 0.5, pos)
+						killed_unit:RemoveItem(killed_unit:GetItemInSlot(i))
+					end
+				end
+			end
 		end
 	end
 end

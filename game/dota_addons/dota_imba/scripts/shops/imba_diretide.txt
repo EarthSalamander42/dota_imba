@@ -1,4 +1,4 @@
-"imba_standard_shops"
+"imba_diretide_shops"
 {
 	"consumables"
 	{
