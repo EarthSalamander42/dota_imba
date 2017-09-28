@@ -10,6 +10,7 @@ CreateEmptyTalents("nevermore")
 imba_nevermore_shadowraze_close = imba_nevermore_shadowraze_close or class({})
 LinkLuaModifier("modifier_shadow_raze_combo", "hero/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_shadow_raze_prevention", "hero/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_shadow_raze_pool", "hero/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_nevermore_shadowraze_close:GetAbilityTextureName()
    return "nevermore_shadowraze1"
@@ -23,8 +24,8 @@ function imba_nevermore_shadowraze_close:GetManaCost(level)
     local caster = self:GetCaster()
     local manacost = self.BaseClass.GetManaCost(self, level)
 
-    -- #1 Talent: Shadowraze mana cost reduction
-    manacost = manacost - caster:FindTalentValue("special_bonus_imba_nevermore_1")
+    -- Talent: Shadowraze mana cost reduction (REMOVED)
+    --manacost = manacost - caster:FindTalentValue("special_bonus_imba_nevermore_1")
 
     return manacost
 end
@@ -41,15 +42,26 @@ function imba_nevermore_shadowraze_close:GetCooldown(level)
     -- Otherwise, return normal cooldown
     local cooldown = self.BaseClass.GetCooldown(self, level)
 
-    -- #3 Talent: Shadowraze cooldown reduction
-    cooldown = cooldown - caster:FindTalentValue("special_bonus_imba_nevermore_3")
+    -- Talent: Shadowraze cooldown reduction (REMOVED)
+    --cooldown = cooldown - caster:FindTalentValue("special_bonus_imba_nevermore_3")
 
     return cooldown
 end
 
+
 function imba_nevermore_shadowraze_close:OnUpgrade()
     local caster = self:GetCaster()
     UpgradeShadowRazes(caster, self)
+end
+
+function imba_nevermore_shadowraze_close:GetCastPoint()
+	local cast_point = self.BaseClass.GetCastPoint(self)
+	local caster = self:GetCaster()
+	--Talent #8: Cast point is halved when in soul frenzy
+	if caster:HasTalent("special_bonus_imba_nevermore_8") and caster:HasModifier("modifier_imba_reqiuem_harvest") then
+		cast_point = cast_point / 2
+	end
+	return cast_point
 end
 
 function imba_nevermore_shadowraze_close:OnSpellStart()
@@ -73,6 +85,7 @@ function imba_nevermore_shadowraze_close:OnSpellStart()
     local raze_point = caster:GetAbsOrigin() + caster:GetForwardVector() * raze_distance
 
     CastShadowRazeOnPoint(caster, ability, raze_point, raze_radius)
+
 end
 
 
@@ -93,8 +106,8 @@ function imba_nevermore_shadowraze_medium:GetManaCost(level)
     local caster = self:GetCaster()
     local manacost = self.BaseClass.GetManaCost(self, level)
 
-    -- #1 Talent: Shadowraze mana cost reduction
-    manacost = manacost - caster:FindTalentValue("special_bonus_imba_nevermore_1")
+    -- Talent: Shadowraze mana cost reduction (REMOVED)
+   -- manacost = manacost - caster:FindTalentValue("special_bonus_imba_nevermore_1")
 
     return manacost
 end
@@ -111,8 +124,8 @@ function imba_nevermore_shadowraze_medium:GetCooldown(level)
     -- Otherwise, return normal cooldown
     local cooldown = self.BaseClass.GetCooldown(self, level)
 
-    -- #3 Talent: Shadowraze cooldown reduction
-    cooldown = cooldown - caster:FindTalentValue("special_bonus_imba_nevermore_3")
+    -- Talent: Shadowraze cooldown reduction (REMOVED)
+  --  cooldown = cooldown - caster:FindTalentValue("special_bonus_imba_nevermore_3")
 
     return cooldown
 end
@@ -120,6 +133,16 @@ end
 function imba_nevermore_shadowraze_medium:OnUpgrade()
     local caster = self:GetCaster()
     UpgradeShadowRazes(caster, self)
+end
+
+function imba_nevermore_shadowraze_medium:GetCastPoint()
+	local caster = self:GetCaster()
+	local cast_point = self.BaseClass.GetCastPoint(self)
+	--Talent #8: Cast point is halved when in soul frenzy
+	if caster:HasTalent("special_bonus_imba_nevermore_8") and caster:HasModifier("modifier_imba_reqiuem_harvest") then
+		cast_point = cast_point / 2
+	end
+	return cast_point
 end
 
 function imba_nevermore_shadowraze_medium:OnSpellStart()
@@ -149,6 +172,7 @@ function imba_nevermore_shadowraze_medium:OnSpellStart()
     local main_raze_point = caster:GetAbsOrigin() + caster:GetForwardVector() * raze_distance
 
     CastShadowRazeOnPoint(caster, ability, main_raze_point, raze_radius)
+
 
     -- Additional razes, if feasible
     if additional_raze_count > 0 then
@@ -185,8 +209,8 @@ function imba_nevermore_shadowraze_far:GetManaCost(level)
     local caster = self:GetCaster()
     local manacost = self.BaseClass.GetManaCost(self, level)
 
-    -- #1 Talent: Shadowraze mana cost reduction
-    manacost = manacost - caster:FindTalentValue("special_bonus_imba_nevermore_1")
+    --Talent: Shadowraze mana cost reduction (REMOVED)
+    --manacost = manacost - caster:FindTalentValue("special_bonus_imba_nevermore_1")
 
     return manacost
 end
@@ -203,10 +227,20 @@ function imba_nevermore_shadowraze_far:GetCooldown(level)
     -- Otherwise, return normal cooldown
     local cooldown = self.BaseClass.GetCooldown(self,level)
 
-    -- #3 Talent: Shadowraze cooldown reduction
-    cooldown = cooldown - caster:FindTalentValue("special_bonus_imba_nevermore_3")
+    --Talent: Shadowraze cooldown reduction (REMOVED)
+   -- cooldown = cooldown - caster:FindTalentValue("special_bonus_imba_nevermore_3")
 
     return cooldown
+end
+
+function imba_nevermore_shadowraze_far:GetCastPoint()
+	local caster = self:GetCaster()
+	local cast_point = self.BaseClass.GetCastPoint(self)
+	--Talent #8: Cast point is halved when in soul frenzy
+	if caster:HasTalent("special_bonus_imba_nevermore_8") and caster:HasModifier("modifier_imba_reqiuem_harvest") then
+		cast_point = cast_point / 2
+	end
+	return cast_point
 end
 
 function imba_nevermore_shadowraze_far:OnUpgrade()
@@ -278,6 +312,12 @@ function CastShadowRazeOnPoint(caster, ability, point, radius)
     -- Ability properties
     local particle_raze = "particles/hero/nevermore/nevermore_shadowraze.vpcf"
     local modifier_harvest = "modifier_imba_reqiuem_harvest"
+    local requiem_debuff = "modifier_imba_reqiuem_debuff"
+    local pool_modifier = "modifier_imba_shadow_raze_pool"
+
+    --Ability attributes
+    local pool_duration = caster:FindTalentValue("special_bonus_imba_nevermore_1","duration")
+    local pool_radius = caster:FindTalentValue("special_bonus_imba_nevermore_1","radius")
 
     -- Add particle effects. CP0 is location, CP1 is radius
     local particle_raze_fx = ParticleManager:CreateParticle(particle_raze, PATTACH_WORLDORIGIN, nil)
@@ -317,12 +357,27 @@ function CastShadowRazeOnPoint(caster, ability, point, radius)
                 -- If enemy was NOT marked yet, deal damage to it
                 if not enemy_marked then
                     ApplyShadowRazeDamage(caster, ability, enemy)
+                    --#6 Talent: Shadowraze refresh Requiem of Souls' debuff
+                    if caster:HasTalent("special_bonus_imba_nevermore_6") and enemy:HasModifier("modifier_imba_reqiuem_debuff") then
+                    	local modifier_handler = enemy:FindModifierByName(requiem_debuff)
+                    	if modifier_handler then
+                    	 	local new_duration = modifier_handler.duration
+                    	 	enemy:RemoveModifierByName(requiem_debuff)
+                    	 	enemy:AddNewModifier(caster, modifier_handler.ability, requiem_debuff, {duration = new_duration})
+                    	end
+                    end
+
                 end
 
             else --If there was no table, just damage enemy
                 ApplyShadowRazeDamage(caster, ability, enemy)
             end
         end
+    end
+
+    --#1 Talent: apply a damaging pool on the area hit by the shadowraze
+    if caster:HasTalent("special_bonus_imba_nevermore_1") then
+    	CreateModifierThinker(caster, ability, pool_modifier, {duration = pool_duration, radius = pool_radius}, point, caster:GetTeamNumber(), false)
     end
 
     -- If there are no enemy heroes in a raze and the caster is in a Soul Harvest, remove the modifier
@@ -355,7 +410,7 @@ function ApplyShadowRazeDamage(caster, ability, enemy)
     -- Ability specials
     local damage = ability:GetSpecialValueFor("damage")
     local shadow_combo_duration = ability:GetSpecialValueFor("shadow_combo_duration")
-    local damage_per_soul = ability:GetSpecialValueFor("damage_per_soul")
+   -- local damage_per_soul = ability:GetSpecialValueFor("damage_per_soul")
     local souls_per_raze = ability:GetSpecialValueFor("souls_per_raze")
     local soul_projectile_speed = ability:GetSpecialValueFor("soul_projectile_speed")
 
@@ -364,11 +419,11 @@ function ApplyShadowRazeDamage(caster, ability, enemy)
         local stacks = caster:GetModifierStackCount(modifier_souls, caster)
 
 
-        -- #8 Talent: Necromastery soul grant additional damage
-        damage_per_soul = damage_per_soul + caster:FindTalentValue("special_bonus_imba_nevermore_8")
+        -- #8 Talent: Necromastery soul grant additional damage (REMOVED)
+       -- damage_per_soul = damage_per_soul + caster:FindTalentValue("special_bonus_imba_nevermore_8")
 
         -- Adjust damage
-        damage = damage + stacks * damage_per_soul
+       -- damage = damage + stacks * damage_per_soul
 
         -- Add a Necromastery stack if it was a hero
         if enemy:IsRealHero() then
@@ -529,6 +584,62 @@ function modifier_shadow_raze_prevention:IsPurgable() return false end
 function modifier_shadow_raze_prevention:IsDebuff() return false end
 
 
+-- Shadow pool modifier (copied from Lina, please feel free to improve it as needed)
+modifier_imba_shadow_raze_pool = modifier_imba_shadow_raze_pool or class({})
+
+function modifier_imba_shadow_raze_pool:OnCreated(kv)
+	if IsServer() then
+		-- Talent properties
+		self.caster = self:GetCaster()
+		self.ability = self:GetAbility()
+		self.parent = self:GetParent()
+		self.particle_effect = "particles/hero/nevermore/nevermore_shadowraze_talent_pool.vpcf"
+
+		-- Talent specials
+		self.radius = kv.radius
+		print(self.radius)
+		self.damage = self.caster:FindTalentValue("special_bonus_imba_nevermore_1", "dmg_per_sec")
+		self.tick_interval = self.caster:FindTalentValue("special_bonus_imba_nevermore_1", "tick_interval")
+
+		-- Play shadow pool particle effect, assign to modifier
+		local particle_pool = ParticleManager:CreateParticle(self.particle_effect, PATTACH_WORLDORIGIN, nil)
+		ParticleManager:SetParticleControl(particle_pool, 2, (self.parent:GetAbsOrigin()+ Vector(0,0,10)))
+
+		self:AddParticle(particle_pool, false, false, -1, false, false)
+
+		-- Calculate damage per tick
+		self.damage_per_tick = self.damage * self.tick_interval
+
+		-- Start thinking
+		self:StartIntervalThink(self.tick_interval)
+	end
+end
+
+function modifier_imba_shadow_raze_pool:OnIntervalThink()
+	if IsServer() then
+		-- Find enemies in AoE
+		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
+										  self.parent:GetAbsOrigin(),
+										  nil,
+										  self.radius,
+										  DOTA_UNIT_TARGET_TEAM_ENEMY,
+										  DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO,
+										  DOTA_UNIT_TARGET_FLAG_NONE,
+										  FIND_ANY_ORDER,
+										  false)
+
+		-- Deal damage per tick to each enemy
+		for _,enemy in pairs(enemies) do
+			damage_table = ({victim = enemy,
+						 attacker = self.caster,
+						 ability = self.ability,
+						 damage = self.damage_per_tick,
+						 damage_type = DAMAGE_TYPE_MAGICAL})
+
+			ApplyDamage(damage_table)
+		end
+	end
+end
 
 ------------------------------------
 --           NECROMASTERY         --
@@ -542,6 +653,15 @@ end
 
 function imba_nevermore_necromastery:GetIntrinsicModifierName()
     return "modifier_imba_necromastery_souls"
+end
+
+function imba_nevermore_necromastery:GetBehavior()
+	--Talent #2: Necromastery can be activated to consume souls in order to heal. Will spare some souls if Nevermore heal to max before consuming all of them
+	if self:GetCaster():HasTalent("special_bonus_imba_nevermore_2") then
+		return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL
+	end
+	-- Default behavior, without talent #2
+	return DOTA_ABILITY_BEHAVIOR_PASSIVE
 end
 
 function imba_nevermore_necromastery:IsHiddenWhenStolen()
@@ -563,6 +683,79 @@ function imba_nevermore_necromastery:OnUpgrade()
 
     -- Play upgrade response sound
     EmitSoundOn(upgrade_response, caster)
+end
+
+function imba_nevermore_necromastery:GetManaCost(level)
+    return 0
+end
+
+function imba_nevermore_necromastery:GetCooldown(level)
+    
+    local cooldown = self:GetCaster():FindTalentValue("special_bonus_imba_nevermore_2", "cooldown")
+
+    return cooldown
+end
+
+
+function imba_nevermore_necromastery:OnSpellStart()
+    -- Ability properties
+    local caster = self:GetCaster()
+    local ability = self
+    local particle_one = "particles/hero/nevermore/nevermore_necromastery_heal_1.vpcf"
+    local particle_two = "particles/hero/nevermore/nevermore_necromastery_heal_2.vpcf"
+    local necromastery_heal_one = nil
+    local necromastery_heal_two = nil
+    local souls_modifier = "modifier_imba_necromastery_souls"
+
+    -- Ability specials
+    local heal_per_soul = caster:FindTalentValue("special_bonus_imba_nevermore_2", "heal_per_soul")
+
+    if IsServer() then
+
+        --calculate the number of souls to consume
+        local max_health = caster:GetMaxHealth()
+        local current_health = caster:GetHealth()
+        local missing_health = max_health - current_health
+        --max health: do nothing
+        if missing_health <= 0 then
+        	return
+        end
+
+        --particle effects
+
+        necromastery_heal_one = ParticleManager:CreateParticle(particle_one, PATTACH_WORLDORIGIN, nil)
+        necromastery_heal_two = ParticleManager:CreateParticle(particle_two, PATTACH_WORLDORIGIN, nil)
+        ParticleManager:SetParticleControl(necromastery_heal_one, 0, (caster:GetAbsOrigin() + Vector (0,0,-290)))
+        ParticleManager:SetParticleControl(necromastery_heal_two, 0, caster:GetAbsOrigin())
+        ParticleManager:SetParticleControl(necromastery_heal_two, 1, (caster:GetAbsOrigin() + (caster:GetForwardVector():Normalized() * caster:GetBaseMoveSpeed()) + Vector (0,0,30)))
+        ParticleManager:ReleaseParticleIndex(necromastery_heal_one)
+        ParticleManager:ReleaseParticleIndex(necromastery_heal_two)
+
+        local souls_needed = (missing_health / heal_per_soul) + 1
+        local soul_stacks = 0
+
+        --retrieve the current soul stacks on Nevermore
+        if not caster:HasModifier(souls_modifier) then
+        	soul_stacks = 0
+        else
+        	soul_stacks = caster:GetModifierStackCount(souls_modifier, caster)
+        end
+
+        --remove soul stacks and heal Nevermore
+        if soul_stacks < souls_needed then
+        	--not enough souls to heal to max: remove them all and heal accordingly
+        	caster:SetHealth(current_health + (soul_stacks * heal_per_soul))
+        	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, soul_stacks * heal_per_soul, nil)
+        	caster:SetModifierStackCount(souls_modifier, caster, 0)
+        else
+        	--enough souls to heal to max. remove only the souls needed
+        	caster:SetHealth(max_health)
+        	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, souls_needed * heal_per_soul, nil)
+        	caster:SetModifierStackCount(souls_modifier, caster, soul_stacks - souls_needed)
+        end
+
+    end
+
 end
 
 -- Necromastery souls modifier
@@ -849,6 +1042,10 @@ function modifier_imba_necromastery_souls:OnDeath(keys)
             -- Decide how many souls should the caster get
             local soul_count = 0
             if target:IsRealHero() then
+            	--Talent #3: Increase souls cap permanently on hero kills
+            	if self.caster:HasTalent("special_bonus_imba_nevermore_3") then
+            		self.max_souls = self.max_souls + 1
+            	end
                 soul_count = self.hero_kill_soul_count
             else
                 soul_count = self.creep_kill_soul_count
@@ -1503,6 +1700,7 @@ function modifier_imba_reqiuem_debuff:OnCreated()
     self.caster = self:GetCaster()
     self.ability = self:GetAbility()
     self.parent = self:GetParent()
+    self.duration = self:GetDuration()
     self.particle_black_screen = "particles/hero/nevermore/screen_requiem_indicator.vpcf"
 
     -- Ability specials
