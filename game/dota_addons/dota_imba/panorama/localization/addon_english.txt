@@ -365,7 +365,7 @@
 	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_7_title"					"Perfect Release"
 	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_7_Description"			"Omnislash sends an image of Juggernaut to commit the slashes. Juggernaut is free to continue as normal. <br><br><i>Perfecting the art of Omnislash, he can harness his soul energy to create a doppelgänger to eradicate his enemies.</i>"
 	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_8_title"					"Jade Blossom"
-	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_8_Description"			"Landing a Blade Dance critical also procs a stack of Jade Blossom. Each Jade Blossom stack has independent duration, and lasts for 12 seconds. Each stack grants 1% additional agility bonus damage to Omnislash.<br><br><i>By learning the arts of the Forbidden Masters, Juggernaut has perfected his Blade, allowing Omnislash to reach its utmost potential.</i>"			
+	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_8_Description"			"Landing a Blade Dance critical also procs a stack of Jade Blossom. Each Jade Blossom stack has independent duration, and lasts for 6 seconds. Each stack grants 1% additional agility bonus damage to Omnislash.<br><br><i>By learning the arts of the Forbidden Masters, Juggernaut has perfected his Blade, allowing Omnislash to reach its utmost potential.</i>"			
 
 	// Kunkka
 	"Dota_Tooltip_Talent_special_bonus_imba_kunkka_1_title"						"Raging Seas"
@@ -497,7 +497,7 @@
 	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_1_title"         "Orb Of Destruction"
 	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_1_Description"   "When attacking with Arcane Orb, if Outworld Devourer has more intelligence than its target, the difference in stats explodes in a 300 radius with pure damage.<br><br><i>Balance is a field between antrophy and entrophy. Harnessing excessive energy into the Orb will cause disastrous results.</i>"
 	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_2_title"         "Imminent Eclipse"
-	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_2_Description"   "Sanity's Eclipse cooldown is reduced by 1 second for every intelligence the caster steals while it is off-cooldown.<br><br><i>People's perception are always limited what they see. The Outworld Devourer will show them visions of nigh and terror, opening them towards the conjuction of doom.</i>"
+	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_2_Description"   "Sanity's Eclipse cooldown is reduced by 1 second for every active instance of stolen Intelligence applied by Outworld Devourer while it is off-cooldown.<br><br><i>People's perception are always limited what they see. The Outworld Devourer will show them visions of nigh and terror, opening them towards the conjuction of doom.</i>"
 	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_3_title"         "Dissociative Synergy"
 	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_3_Description"   "Essence Aura's Essence Synergy can be triggered from enemies as well.<br><br><i>Just like happiness and joy, everybody has negative emotions flowing within them, waiting to be expressed. Outworld Devourer channels this source of energy, bringing ill omens.</i>"
 	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_4_title"         "Conjuring Prison"
@@ -583,6 +583,24 @@
 	"DOTA_Tooltip_Talent_special_bonus_imba_sniper_7_Description"             "Take Aim's Aimed Assault pierces through the target's eye, causing it to bleed heavily, afflicting the target with vision loss and dealing 80 damage per second for 5 seconds.<br><br><i>Extreme accuracy is lethal, especially on the right hands, and especially if those hands are holding a sniper rifle.</i>"
 	"DOTA_Tooltip_Talent_special_bonus_imba_sniper_8_title"                   "Out of Reach"
 	"DOTA_Tooltip_Talent_special_bonus_imba_sniper_8_Description"             "When Sniper attacks a target inside a Shrapnel's Rain of Cloud that is too far for Sniper's normal attacks, the damage is amplified by the Out of Range value instead of being lowered to it.<br><br><i>Nothing can be out of reach for Sniper, given the right circumanstances.</i>"
+
+	//Sven
+//	"Dota_Tooltip_Talent_special_bonus_imba_sven_1_title"						"Ares's Might"
+//	"Dota_Tooltip_Talent_special_bonus_imba_sven_1_Description"					"Great Cleave cleaves a second time in quick succession while God's Strength is active.<br><br><i>The god of war is an admiral figure. Blessed by his honor, the legendary sword allows Sven to cleave at his foes twice.</i>"	
+//	"Dota_Tooltip_Talent_special_bonus_imba_sven_2_title"						"Enter The Colosseum"
+//	"Dota_Tooltip_Talent_special_bonus_imba_sven_2_Description"					"When Colossal Slash kills an enemy hero, God's Strength cooldown is reduced by 20% of its remaining time.<br><br><i>The Rogue Knight slashes his way through the arena, becoming stronger and mightier with every succession!</i>"
+//	"Dota_Tooltip_Talent_special_bonus_imba_sven_3_title"						"Grand Cleave"
+//	"Dota_Tooltip_Talent_special_bonus_imba_sven_3_Description"					"Great Cleave now cleaves at double of its cleaving reach.<br><br><i>The Outcast Blade listens to Sven's cry, answering him by giving him new strength.</i>"
+//	"Dota_Tooltip_Talent_special_bonus_imba_sven_4_title"						"Titan's Fist"
+//	"Dota_Tooltip_Talent_special_bonus_imba_sven_4_Description"					"Storm Hammer now drags nearby enemies to its destination.<br><br><i>Dropping down the hammer isn't enough, the Rogue Knight knows this very well, so he drags all of them into the hammer!</i>"
+//	"Dota_Tooltip_Talent_special_bonus_imba_sven_5_title"						"All-In-One"
+//	"Dota_Tooltip_Talent_special_bonus_imba_sven_5_Description"					"Colossal Slash penetrates a portion of the target's armor based on the remaining duration of God's Strength at the moment of cast.<br><br><i>Well manifested strength is on it's first sign.</i>"
+//	"Dota_Tooltip_Talent_special_bonus_imba_sven_6_title"						"Might of the Hammer"
+//	"Dota_Tooltip_Talent_special_bonus_imba_sven_6_Description"					"Storm Hammer grants Sven 75% damage reduction for 4 seconds after the impact.<br><br><i>Sven once met Colossus along his journey. He taught him wisdom, granting Sven the knowledge of using his sword and hammer.</i>"
+//	"Dota_Tooltip_Talent_special_bonus_imba_sven_7_title"						"300"
+//	"Dota_Tooltip_Talent_special_bonus_imba_sven_7_Description"					"Warcry also grants Sven Spell Immunity for 4 seconds.<br><br><i>A cry of victory is often used to dominate the balance of the battlefield. (Tonight. We dine. In TANGOES!)</i>"
+//	"Dota_Tooltip_Talent_special_bonus_imba_sven_8_title"						"Hero's Will"
+//	"Dota_Tooltip_Talent_special_bonus_imba_sven_8_Description"					"Warcry can be activated while Sven is disabled, applying a strong purge on him.<br><br><i>The will of a hero is so strong, that this abominable will is known to overturn all mighty situations.</i>"
 
 	// Ursa
 	"DOTA_Tooltip_Talent_special_bonus_imba_ursa_1_title"                   	"Frenzy of the Beast"

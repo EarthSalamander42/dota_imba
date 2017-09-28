@@ -66,33 +66,17 @@ StoreCurrentDayCycle()
 
 --Storage:SetApiKey("35c56d290cbd168b6a58aabc43c87aff8d6b39cb")
 
---[[
-	This function should be used to set up Async precache calls at the beginning of the gameplay.
-
-	In this function, place all of your PrecacheItemByNameAsync and PrecacheUnitByNameAsync.  These calls will be made
-	after all players have loaded in, but before they have selected their heroes. PrecacheItemByNameAsync can also
-	be used to precache dynamically-added datadriven abilities instead of items.  PrecacheUnitByNameAsync will 
-	precache the precache{} block statement of the unit and all precache{} block statements for every Ability# 
-	defined on the unit.
-
-	This function should only be called once.  If you want to/need to precache more items/abilities/units at a later
-	time, you can call the functions individually (for example if you want to precache units in a new wave of
-	holdout).
-
-	This function should generally only be used if the Precache() function in addon_game_mode.lua is not working.
-]]
-
- function GameMode:OnItemPickedUp(event) 
-   -- If this is a hero
-   if event.HeroEntityIndex then
-	   local owner = EntIndexToHScript( event.HeroEntityIndex )
-	   -- And you've picked up a gold bag
-	   if owner:IsHero() and event.itemname == "item_bag_of_gold" then
-		   -- Pick up the gold
-		   GoldPickup(event)
-	   end
+function GameMode:OnItemPickedUp(event) 
+	-- If this is a hero
+	if event.HeroEntityIndex then
+		local owner = EntIndexToHScript( event.HeroEntityIndex )
+		-- And you've picked up a gold bag
+		if owner:IsHero() and event.itemname == "item_bag_of_gold" then
+			-- Pick up the gold
+			GoldPickup(event)
+		end
 	end
-  end
+end
 
 function GameMode:PostLoadPrecache()
 
@@ -912,9 +896,10 @@ function GameMode:DamageFilter( keys )
 
 					-- Find the Reaper's Scythe ability
 					local ability = scythe_caster:FindAbilityByName("imba_necrolyte_reapers_scythe")
-					if not ability then return nil end
-					local mod = victim:AddNewModifier(scythe_caster, ability, "modifier_imba_reapers_scythe_respawn", {})
+					if not ability then return nil end					
 					scythe_modifier:Destroy()
+					victim:AddNewModifier(scythe_caster, ability, "modifier_imba_reapers_scythe_respawn", {})
+
 					-- Attempt to kill the target, crediting it to the caster of Reaper's Scythe
 					ApplyDamage({attacker = scythe_caster, victim = victim, ability = ability, damage = victim:GetHealth() + 10, damage_type = DAMAGE_TYPE_PURE, damage_flag = DOTA_DAMAGE_FLAG_NO_DAMAGE_MULTIPLIERS + DOTA_DAMAGE_FLAG_BYPASSES_BLOCK})
 				end

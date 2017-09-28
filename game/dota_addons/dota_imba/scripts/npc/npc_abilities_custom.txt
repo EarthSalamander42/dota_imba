@@ -14252,12 +14252,11 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"crit_damage"			"200"
-				"LinkedSpecialBonus"	"special_bonus_imba_juggernaut_6"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_agi"				"2 2 2 2 4 6 8"
+				"bonus_agi"				"2 2 2 2 3 4 5"
 			}
 			"04"
 			{
@@ -14277,7 +14276,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_speed"			"2000"
+				"active_speed"			"1500"
 			}
 			"08"
 			{
@@ -14327,7 +14326,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"130 120 110 100 90 80"
+		"AbilityCooldown"				"130 120 110 110 110 110"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -14357,7 +14356,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"jump_amount"			"3 6 9 10 11 12"
+				"jump_amount"			"3 5 7 9 9 9"
 			}
 
 			"03"
@@ -14387,7 +14386,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"scepter_jump_amt"  	"6 9 12 13 14 15"
+				"scepter_jump_amt"  	"6 8 10 12 12 12"
 			}
 			"08"
 			{
@@ -14398,7 +14397,7 @@
 	}
 
 	//=================================================================================================================
-	// Juggernaut Talent 1 (Level 10): Blade Fury acts as a vaccum
+	// Juggernaut Talent 1 (Level 40): Blade Fury acts as a vaccum
 	//=================================================================================================================
 	"special_bonus_imba_juggernaut_1"
 	{
@@ -14425,12 +14424,12 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"pull_strength"				"0.3"
+				"pull_strength"				"0.1"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"pull_strength_fury"		"0.45"
+				"pull_strength_fury"		"0.2"
 			}
 		}
 	}
@@ -14646,7 +14645,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"duration"					"12"
+				"duration"					"6"
 			}
 		}
 	}
@@ -28775,8 +28774,6 @@
 			"particle"					"particles/units/heroes/hero_sven/sven_storm_bolt_projectile_explosion.vpcf"
 			"particle"					"particles/generic_gameplay/generic_stunned.vpcf"
 			"particle"					"particles/units/heroes/hero_sven/sven_attack_blur.vpcf"
-			"particle"					"particles/units/heroes/hero_sven/sven_spell_warcry.vpcf"
-			"particle"					"particles/units/heroes/hero_sven/sven_warcry_buff.vpcf"
 		}
 
 		// Special
@@ -28797,6 +28794,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"radius"				"255"
+				"LinkedSpecialBonus"	"special_bonus_imba_sven_1"
 			}
 			"04"
 			{
@@ -28854,9 +28852,6 @@
 			"soundfile"						"soundevents/imba_soundevents.vsndevts"
 			"particle"						"particles/units/heroes/hero_sven/sven_spell_great_cleave.vpcf"
 			"particle"						"particles/hero/sven/great_cleave_glow_base.vpcf"
-			"particle"						"particles/hero/sven/sven_spell_great_cleave_gods_strength.vpcf"
-			"particle"						"particles/hero/sven/sven_spell_grand_cleave.vpcf"
-			"particle"						"particles/hero/sven/sven_spell_grand_cleave_gods_strength.vpcf"
 		}
 
 		// Special
@@ -28872,11 +28867,13 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"cleave_ending_width"		"300"
+				"LinkedSpecialBonus"		"special_bonus_imba_sven_2"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"cleave_distance"			"570"
+				"LinkedSpecialBonus"		"special_bonus_imba_sven_2"
 			}
 			"04"
 			{
@@ -28887,6 +28884,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"armor_ignore"				"3 3 3 3 7 11 15"
+				"LinkedSpecialBonus"		"special_bonus_imba_sven_6"
 			}
 			"06"
 			{
@@ -28944,6 +28942,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"ms_bonus_pct"			"12"
+				"LinkedSpecialBonus"	"special_bonus_imba_sven_3"
 			}
 
 			"02"
@@ -29028,6 +29027,7 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"bonus_dmg_pct"					"80 120 160 180 200 220"
+				"LinkedSpecialBonus"			"special_bonus_imba_sven_8"
 			}
 			"02"
 			{
@@ -29068,7 +29068,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"					"25000"
 		"AbilityCastPoint"					"0.6"
-		"AbilityCastAnimation"				"ACT_DOTA_ATTACK"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -29077,9 +29076,7 @@
 			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_sven.vsndevts"
 			"soundfile"						"soundevents/imba_soundevents.vsndevts"
 			"particle"						"particles/hero/sven/colossal_slash.vpcf"
-			"particle"						"particles/hero/sven/colossal_slash_new.vpcf"
 			"particle"						"particles/hero/sven/colossal_slash_cast.vpcf"
-			"particle"						"particles/hero/sven/colossal_slash_armor_pierce.vpcf"
 			"particle"						"particles/units/heroes/hero_earth_spirit/espirit_spawn_ground.vpcf.vpcf"
 		}
 
@@ -29096,49 +29093,38 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"350"
+				"radius"					"450"
 			}
 
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"start_radius"				"350"
-			}
-			
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"end_radius"				"100"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"crit_bonus_pct"			"150 175 200 225 250 275"
+				"crit_bonus_pct"			"175 175 175 200 225 250"
 			}
 
-			"06"
+			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"base_range"				"300"
 			}
 
-			"07"
+			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"range_multiplier"			"20 20 20 40 60 80"
 			}
 
-			"08"
+			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_dmg_pct"				"100 150 200 225 250 275"
+				"LinkedSpecialBonus"		"special_bonus_imba_sven_8"
 			}
-			
 		}
 	}
 
 	//=================================================================================================================
-	// Sven Talent 1 (Level 10): God's Strength causes Sven to Cleave twice
+	// Sven Talent 1 (Level 10): Additional Storm Hammer effect radius
 	//=================================================================================================================
 	"special_bonus_imba_sven_1"
 	{
@@ -29150,8 +29136,7 @@
 
 		"LinkedAbility"
 		{
-			"01"	"imba_sven_great_cleave"
-			"02"	"imba_sven_gods_strength"
+			"01"	"imba_sven_storm_bolt"
 		}
 
 		// Special
@@ -29160,14 +29145,14 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"value"							"0.1"
+				"var_type"					"FIELD_INTEGER"
+				"value"						"70"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Sven Talent 2 (Level 10): Colossal Slash kill reduces cooldown
+	// Sven Talent 2 (Level 10): Great Cleave length/end radius
 	//=================================================================================================================
 	"special_bonus_imba_sven_2"
 	{
@@ -29179,7 +29164,7 @@
 
 		"LinkedAbility"
 		{
-			"01"	"imba_sven_colossal_slash"
+			"01"	"imba_sven_great_cleave"
 		}
 
 		// Special
@@ -29189,13 +29174,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"20"
+				"value"						"100"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Sven Talent 3 (Level 20): Storm Hammer grants Sven Damage Reduction after hitting the target
+	// Sven Talent 3 (Level 20): %-based Warcry movement speed
 	//=================================================================================================================
 	"special_bonus_imba_sven_3"
 	{
@@ -29207,7 +29192,7 @@
 
 		"LinkedAbility"
 		{
-			"01"	"imba_sven_storm_bolt"
+			"01"	"imba_sven_warcry"
 		}
 
 		// Special
@@ -29217,18 +29202,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"75"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"4"
+				"value"						"9"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Sven Talent 4 (Level 20): Great Cleave cleaves at double it's cleave value
+	// Sven Talent 4 (Level 20): God's Strength cooldown reduction
 	//=================================================================================================================
 	"special_bonus_imba_sven_4"
 	{
@@ -29240,7 +29220,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_sven_great_cleave"
+			"01" 	"imba_sven_gods_strength"
 		}
 
 		// Special
@@ -29250,43 +29230,15 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"2"
+				"value"					"15"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Sven Talent 5 (Level 30): Colossal Slash penetrates a portion of the target's armor
+	// Sven Talent 5 (Level 30): Storm Hammer cooldown reduction
 	//=================================================================================================================
 	"special_bonus_imba_sven_5"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"	"imba_sven_colossal_slash"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"1"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Sven Talent 6 (Level 30): Storm Hammer now drags enemies along the way, hitting them in the process
-	//=================================================================================================================
-	"special_bonus_imba_sven_6"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -29306,12 +29258,35 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"1"
+				"value"						"8"
 			}
-			"02"
+		}
+	}
+
+	//=================================================================================================================
+	// Sven Talent 6 (Level 30): Increased Great Cleave armor ignore
+	//=================================================================================================================
+	"special_bonus_imba_sven_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_sven_great_cleave"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"drag_radius"				"150"
+				"value"						"15"
 			}
 		}
 	}
@@ -29345,7 +29320,7 @@
 	}
 
 	//=================================================================================================================
-	// Sven Talent 8 (Level 40): War Cry can be used while Sven is disabled
+	// Sven Talent 8 (Level 40): Additional God's Strength damage bonus
 	//=================================================================================================================
 	"special_bonus_imba_sven_8"
 	{
@@ -29357,7 +29332,7 @@
 
 		"LinkedAbility"
 		{
-			"01"	"imba_sven_warcry"
+			"01"	"imba_sven_gods_strength"
 		}
 
 		// Special
@@ -29367,7 +29342,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"1"
+				"value"					"100"
 			}
 		}
 	}
@@ -39583,7 +39558,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"rubick_empty1"
 		"ScriptFile"					"hero/neutral_roshan.lua"
 		"MaxLevel"						"1"
@@ -39613,12 +39588,12 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_candy"		"30"
+				"damage_per_candy"		"40"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"leash_distance"		"1600"
+				"leash_distance"		"1400"
 			}
 			"05"
 			{
@@ -39633,7 +39608,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bash_chance"			"20"
+				"bash_chance"			"14"
 			}
 			"08"
 			{
@@ -39643,12 +39618,12 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bash_distance"			"150"
+				"bash_distance"			"300"
 			}
 			"10"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bash_duration"			"1.25"
+				"var_type"				"FIELD_FLOAT"
+				"bash_duration"			"0.75"
 			}
 			"11"
 			{
@@ -39668,47 +39643,57 @@
 			"14"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"furyswipe_damage"		"30"
+				"furyswipe_damage"		"20"
 			}
 			"15"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"furyswipe_duration"	"20"
 			}
-			"16"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"spellamp_per_death"	"15"
-			}
 			"17"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_death"		"50"
-			}
-			"18"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"attackspeed_per_death"	"20"
+				"health_per_death"		"15000"
 			}
 			"19"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_per_death"		"1500"
+				"spellamp_per_death"	"5"
 			}
 			"20"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"armor_per_death"		"10"
+				"damage_per_death"		"20"
 			}
 			"21"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"resist_per_death"		"7.5"
+				"var_type"				"FIELD_INTEGER"
+				"attackspeed_per_death"	"20"
 			}
 			"22"
 			{
-				"var_type"							"FIELD_FLOAT"
+				"var_type"				"FIELD_INTEGER"
+				"armor_per_death"		"20"
+			}
+			"23"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"resist_per_death"		"5.0"
+			}
+			"24"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tenacity_per_death"	"5.0"
+			}
+			"25"
+			{
+				"var_type"							"FIELD_INTEGER"
 				"fury_swipe_increase_per_death"		"20"
+			}
+			"26"	// Cooldown for attempting to spawn Roshlings when living ones were found 
+			{
+				"var_type"					"FIELD_INTEGER"
+				"spawn_think_cooldown"		"3"
 			}
 		}
 	}

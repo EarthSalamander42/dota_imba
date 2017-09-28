@@ -999,13 +999,13 @@ end
 function modifier_imba_juggernaut_blade_dance_empowered_slice:SeekAndDestroyPtTooAnnihilation()
 	if IsServer() then
 		local enemy_hit = false
-		
+
 		-- If there were no enemies in the list, proceed to self-destruct
 		if (not self.has_slice_enemy) then
 			self:Destroy()
 			return nil
 		end
-		
+
 		-- Apply the aftermath strikes
 		for i=1,self.max_attack_count-1 do
 		
@@ -1735,24 +1735,27 @@ function modifier_imba_omni_slash_caster:OnCreated()
 		
 		-- Add the first instance of Omnislash to proc the minimum damage
 		self.slash = true
+		if self.caster:HasAbility("imba_juggernaut_blade_dance") then
+			self.caster:FindAbilityByName("imba_juggernaut_blade_dance"):SetActivated(false)
+		end
 		
 		-- Seriously!? Took me 2 hours to fix this. >:(
 		if IsServer() then
-		Timers:CreateTimer(FrameTime(), function()
-		if (not self.caster:IsNull()) then
-		if not self.original_caster:HasScepter() then
-			self.bounce_range = self.ability:GetTalentSpecialValueFor("bounce_range")
-			self.bounce_amt = self.ability:GetTalentSpecialValueFor("jump_amount")
-		else
-			self.bounce_range = self.ability:GetTalentSpecialValueFor("scepter_bounce_range")
-			self.bounce_amt = self.ability:GetTalentSpecialValueFor("scepter_jump_amt")
-		end
+			Timers:CreateTimer(FrameTime(), function()
+				if (not self.caster:IsNull()) then
+				if not self.original_caster:HasScepter() then
+					self.bounce_range = self.ability:GetTalentSpecialValueFor("bounce_range")
+					self.bounce_amt = self.ability:GetTalentSpecialValueFor("jump_amount")
+				else
+					self.bounce_range = self.ability:GetTalentSpecialValueFor("scepter_bounce_range")
+					self.bounce_amt = self.ability:GetTalentSpecialValueFor("scepter_jump_amt")
+				end
 	
-		self.hero_agility = self.original_caster:GetAgility()
-		self.ability:SetRefCountsModifiers(false)
-		self:StartIntervalThink(self.ability:GetSpecialValueFor("bounce_delay"))
-		end
-		end)
+				self.hero_agility = self.original_caster:GetAgility()
+				self.ability:SetRefCountsModifiers(false)
+				self:StartIntervalThink(self.ability:GetSpecialValueFor("bounce_delay"))
+				end
+			end)
 		end
 end
 
@@ -1896,6 +1899,9 @@ function modifier_imba_omni_slash_caster:OnDestroy()
 		end
 
 		self.ability:SetActivated(true)
+		if self.caster:HasAbility("imba_juggernaut_blade_dance") then
+			self.caster:FindAbilityByName("imba_juggernaut_blade_dance"):SetActivated(true)
+		end
 		
 		-- Create the delay effect before the image destroys itself.
 		if self.caster:HasModifier("modifier_imba_omni_slash_image") then
