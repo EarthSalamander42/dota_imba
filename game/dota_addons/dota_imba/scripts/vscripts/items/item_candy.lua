@@ -10,20 +10,19 @@ function item_diretide_candy:OnSpellStart()
 		local target = self:GetCursorTarget()
 		local modifier_candy = caster:FindModifierByName("modifier_diretide_candy_hp_loss")
 
-		if target:IsBuilding() then
-			print("Candy: Building!")
-			if target:GetTeam() == DOTA_TEAM_GOODGUYS then
-				CustomNetTables:SetTableValue("game_options", "radiant", {score = CustomNetTables:GetTableValue("game_options", "radiant").score +1})
-			elseif target:GetTeam() == DOTA_TEAM_BADGUYS then
-				CustomNetTables:SetTableValue("game_options", "dire", {score = CustomNetTables:GetTableValue("game_options", "dire").score +1})
-			end
+		if target:GetUnitName() == "npc_dota_good_candy_pumpkin" then
+			CustomNetTables:SetTableValue("game_options", "radiant", {score = CustomNetTables:GetTableValue("game_options", "radiant").score +1})
+		elseif target:GetUnitName() == "npc_dota_bad_candy_pumpkin" then
+			CustomNetTables:SetTableValue("game_options", "dire", {score = CustomNetTables:GetTableValue("game_options", "dire").score +1})
 		elseif target:GetUnitLabel() == "npc_diretide_roshan" then
-			print("Candy: Roshan!")
 			local AImod = target:FindModifierByName("modifier_imba_roshan_ai_diretide")
 			if AImod then AImod:Candy(target) end
 		elseif target:IsRealHero() then
-			print("Candy: Real Hero!")
 			-- make give a candy or a charge
+			return
+		else
+			print("NIL target, do nothing.")
+			return
 		end
 
 		-- Create the projectile
@@ -39,7 +38,7 @@ function item_diretide_candy:OnSpellStart()
 			iMoveSpeed = self:GetSpecialValueFor("projectile_speed"),
 			iVisionRadius = 0,
 			iVisionTeamNumber = caster:GetTeamNumber(),
-			ExtraData = {special_cast = special_cast}
+--			ExtraData = {special_cast = special_cast}
 		}
 		ProjectileManager:CreateTrackingProjectile( info )
 
@@ -113,7 +112,7 @@ end
 
 function modifier_diretide_candy_hp_loss:CastFilterResultTarget(target)
 	if IsServer() then
-		if not target:GetUnitName() == "npc_dota_candy_pumpkin" then
+		if not target:GetUnitName() == "npc_dota_good_candy_pumpkin" or not target:GetUnitName() == "npc_dota_bad_candy_pumpkin" then
 			return UF_FAIL_CUSTOM
 		end
 		print("Wrong Target!")

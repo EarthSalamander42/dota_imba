@@ -83,33 +83,6 @@
 				"Passive"	"1"
 				"IsHidden"	"1"
 
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"		"1"
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL"		"1"
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"			"1"
-				}
-			}
-		}
-	}
-
-	//=====================================================================================================
-	// Candy Box: Candy Drop
-	//=====================================================================================================
-	"diretide_pumpkin_candy_drop"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityTextureName"			"roshan_bash"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"MaxLevel"						"1"
-
-		"Modifiers"
-		{
-			"modifier_candy_drop"
-			{
-				"Passive"	"1"
 				"OnAttacked"
 				{
 					"RunScript"
@@ -117,6 +90,13 @@
 						"ScriptFile"	"internal/diretide.lua"
 						"Function"		"Pumpkin"
 					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"		"1"
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL"		"1"
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"			"1"
 				}
 			}
 		}
@@ -39593,7 +39573,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"leash_distance"		"1400"
+				"leash_distance"		"1200"
 			}
 			"05"
 			{
@@ -39713,13 +39693,13 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"30"
-		"AbilityChannelTime"			"2.3"
+		"AbilityCooldown"				"30.0"
+		"AbilityChannelTime"			"2.5"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"500 600 700 800 900"
-		"AbilityCastPoint"				"2.3"
+		"AbilityCastRange"				"800"
+		"AbilityCastPoint"				"1.5"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -39752,7 +39732,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"projectile_count"		"24"
+				"projectile_count"		"20"
 			}
 			"06"
 			{
@@ -39773,9 +39753,9 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
 		"AbilityTextureName"			"custom/imba_roshan_megaton_punch"
-		"AbilityCooldown"				"25"
+		"AbilityCooldown"				"20.0"
 		"AbilityCastRange"				"0"
-		"AbilityCastPoint"				"1.3"
+		"AbilityCastPoint"				"1.0"
 		"AbilityManaCost"				"0"
 		"MaxLevel"						"1"
 		"ScriptFile"					"hero/neutral_roshan.lua"
@@ -39787,7 +39767,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"min_range"				"200"
+				"min_range"				"0"
 			}
 			"02"
 			{
@@ -39797,12 +39777,12 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"min_targets"			"4"
+				"min_targets"			"3"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"delay"					"1.7"
+				"delay"					"2.0"
 			}
 			"05"
 			{
@@ -39921,7 +39901,88 @@
 				"var_type"					"FIELD_INTEGER"
 				"toss_damage"				"500"
 			}
+		}
+	}
 
+	//=================================================================================================================
+	// Roshan: Spell Block
+	//=================================================================================================================
+	"roshan_spell_block"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"5213"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"10.0"
+	}
+
+	//=================================================================================================================
+	// Roshan Halloween: Wave of Force
+	//=================================================================================================================
+	"imba_roshan_diretide_force_wave"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/neutral_roshan.lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"3.0"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"12.0"
+
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"600"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"800"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"speed"				"775"
+			}
+			"03"
+			{	
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"2.0"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"mana_burn"			"50"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"game_end_radius"	"3000"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"game_end_damage"	"100000"
+			}
 		}
 	}
 

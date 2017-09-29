@@ -363,7 +363,7 @@ end
 function Server_WaitToEnableXpGain()
 	Serer_CheckForAFKPlayer()
 	Timers:CreateTimer({
-	endTime = 300, -- Plyaer can gain XP from this game after 10 mins later the creep spwans
+	endTime = 300, -- Plyaer can gain XP from this game after 5 mins later the creep spwans
 	callback = function()
 		EnnDisEnabled = 1
 		if CHEAT_ENABLED == true then
@@ -402,8 +402,12 @@ function Server_CalculateXPForWinnerAndAll(winning_team)
 		end
 	end
 	local multiplier = 1.0
-	if GetMapName() == "imba_standard" then multiplier = 2.0
-	elseif GetMapName() == "imba_diretide" then multiplier = 4.0 end
+	if GetMapName() == "imba_standard" then
+		multiplier = 2.0
+	elseif GetMapName() == "imba_diretide" or DIRETIDE_COMMAND == true then
+		print("Diretide, bonus XP.")
+		multiplier = 4.0
+	end
 	local abandon_xp = 0 - (ABANDON_CHARGE / dis_player / multiplier)
 	for nPlayerID=0, DOTA_MAX_TEAM_PLAYERS-1 do
 		if  PlayerResource:IsValidPlayer(nPlayerID) and not PlayerResource:IsFakeClient(nPlayerID) then

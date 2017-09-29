@@ -121,7 +121,7 @@ function GameMode:OnPlayerChat(keys)
 				if str == "-dev_remove_units" then
 					GameMode:RemoveUnits(true, true, true)
 				end
-
+--[[
 				for i = 1,3 do
 					if text == "-diretide "..i then
 						local units = FindUnitsInRadius(1, Vector(0,0,0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
@@ -161,6 +161,20 @@ function GameMode:OnPlayerChat(keys)
 
 				if text == "-spawnrosh" then
 					CreateUnitByName("npc_diretide_roshan", Vector(0,0,0), true, nil, nil, DOTA_TEAM_NEUTRALS) 
+				end
+--]]
+				if text == "-diretide" then
+					if GetMapName() == "imba_custom" or GetMapName() == "imba_custom_10v10" then return end
+					DIRETIDE_COMMAND = true
+					Notifications:TopToAll({text="#diretide_advert", style={color="red"}, duration=10.0})
+					Entities:FindByName(nil, "good_healer_6"):RemoveSelf()
+					Entities:FindByName(nil, "bad_healer_6"):RemoveSelf()
+					good_pumpkin = CreateUnitByName("npc_dota_good_candy_pumpkin", Vector(-4224, 1279, 384), true, nil, nil, DOTA_TEAM_GOODGUYS) 
+					good_pumpkin:SetAbsOrigin(Vector(-4224, 1279, 384))
+					bad_pumpkin = CreateUnitByName("npc_dota_bad_candy_pumpkin", Vector(4191, -1599, 385), true, nil, nil, DOTA_TEAM_BADGUYS) 
+					bad_pumpkin:SetAbsOrigin(Vector(4191, -1599, 385))
+					good_pumpkin:AddNewModifier(good_pumpkin, nil, "modifier_invulnerable", {})
+					bad_pumpkin:AddNewModifier(bad_pumpkin, nil, "modifier_invulnerable", {})
 				end
 			end
 		end

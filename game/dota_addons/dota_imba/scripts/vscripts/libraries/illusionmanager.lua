@@ -253,7 +253,7 @@ function IllusionManager:ResetIllusion(tEntity,tIllusion)  -- Wipe AND re-add sk
 end
 
 function IllusionManager:WipeIllusion(tIllusion)  -- Wipe illusion of any notable characteristics (skills, items, etc)
-	if not IsServer() then return end	
+	if not IsServer() then return end
 	for ability_slot = 0, 15 do
 		local wipe_ability_index = tIllusion:GetAbilityByIndex(ability_slot)
 		if wipe_ability_index then

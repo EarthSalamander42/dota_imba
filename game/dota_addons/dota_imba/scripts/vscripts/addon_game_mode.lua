@@ -2,9 +2,9 @@ require('statcollection/init')
 require('internal/util')
 require('internal/funcs')
 require('player_resource')
-if GetMapName() == "imba_diretide" then
-	require('internal/diretide')
-end
+--	if GetMapName() == "imba_diretide" then
+require('internal/diretide')
+--	end
 require('imba')
 require('hero_selection')
 
@@ -55,7 +55,7 @@ DebugPrint("[IMBA] Performing pre-load precache")
 	LinkLuaModifier("modifier_imba_generic_talent_attack_life_steal", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_generic_talent_spell_life_steal", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_generic_talent_spell_power", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )
---	LinkLuaModifier("modifier_imba_generic_talent_cd_reduction", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_imba_generic_talent_cd_reduction", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_generic_talent_bonus_xp", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_generic_talent_respawn_reduction", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )
 
@@ -67,14 +67,14 @@ DebugPrint("[IMBA] Performing pre-load precache")
 	LinkLuaModifier("modifier_imba_silencer_int_steal", "modifier/modifier_imba_silencer_int_steal.lua", LUA_MODIFIER_MOTION_NONE )
 
 	-- Items
-	if GetMapName() == "imba_diretide" then
-		print("Precaching Diretide particles...")
+--	if GetMapName() == "imba_diretide" then
+--		print("Precaching Diretide particles...")
 		PrecacheResource("particle", "particles/hw_fx/hw_candy_drop.vpcf", context)
 		PrecacheResource("particle", "particles/hw_fx/candy_carrying_overhead.vpcf", context)
 		PrecacheResource("particle", "particles/units/heroes/hero_invoker/invoker_deafening_blast.vpcf", context) -- Apocalypse
 		PrecacheUnitByNameSync("npc_dota_hero_invoker", context) -- Apocalypse
 		PrecacheUnitByNameSync("npc_dota_hero_tiny", context) -- Toss
-	end
+--	end
 
 	PrecacheResource("particle", "particles/econ/items/effigies/status_fx_effigies/gold_effigy_ambient_dire_lvl2.vpcf", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts", context)
