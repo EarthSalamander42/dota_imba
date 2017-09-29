@@ -18935,8 +18935,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"650"
-				"LinkedSpecialBonus"		"special_bonus_imba_mirana_1"
+				"radius"					"650"				
 			}
 			"02"
 			{
@@ -19060,8 +19059,7 @@
 			"07"
 			{
 				"var_type"							"FIELD_FLOAT"
-				"max_stun_duration"					"5.0"
-				"LinkedSpecialBonus"				"special_bonus_imba_mirana_3"
+				"max_stun_duration"					"5.0"				
 			}
 			"08"
 			{
@@ -19101,8 +19099,7 @@
 			"15"
 			{
 				"var_type"							"FIELD_FLOAT"
-				"base_stun"							"0.01"
-				"LinkedSpecialBonus"				"special_bonus_imba_mirana_3"
+				"base_stun"							"0.01"				
 			}
 			"16"
 			{
@@ -19169,8 +19166,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_speed"			"16 32 48 64 70 76 82"
-				"LinkedSpecialBonus"	"special_bonus_imba_mirana_5"
+				"attack_speed"			"16 32 48 64 70 76 82"				
 			}
 			"06"
 			{
@@ -19180,8 +19176,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_linger_duration"	"3"
-				"LinkedSpecialBonus"	"special_bonus_imba_mirana_2"
+				"aura_linger_duration"	"3"				
 			}
 			"09"
 			{
@@ -19262,7 +19257,7 @@
 	//=================================================================================================================
 	// Mirana's Talents
 	//=================================================================================================================
-	"special_bonus_imba_mirana_1" // Starfall search radius increase
+	"special_bonus_imba_mirana_1" // Upon using Moonlight Shadow, allies are given a stack of Starstorm which will proc when they go out of invisibility near an enemy unit.
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -19273,6 +19268,7 @@
 		"LinkedAbility"
 		{
 			"01" 	"imba_mirana_starfall"
+            "02"    "imba_mirana_moonlight_shadow"
 		}
 
 		// Special
@@ -19282,37 +19278,12 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"value"	                    "100"
+				"delay_time"	            "3"
 			}
 		}
 	}
 
-	"special_bonus_imba_mirana_2" // Leap Aura linger duration increase
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_mirana_leap"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-					"var_type"                  "FIELD_INTEGER"
-					"value"	                    "7"
-			}
-		}
-	}
-
-	"special_bonus_imba_mirana_3" // Sacred Arrow's stun duration increase
+	"special_bonus_imba_mirana_2" // Sacred Arrows allow allies to trigger On The Prowls' critical as long as there is at least enough seconds remaining to the stun.
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -19332,7 +19303,32 @@
 			"01"
 			{
 					"var_type"                  "FIELD_INTEGER"
-					"value"	                    "1"
+					"value"	                    "2"
+			}
+		}
+	}
+
+	"special_bonus_imba_mirana_3" // Moonlight Shadow grants bonus move speed to invisible allies.
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_mirana_moonlight_shadow"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"	                    "20"
 			}
 		}
 	}
@@ -19362,18 +19358,13 @@
 		}
 	}
 
-	"special_bonus_imba_mirana_5" // Leap Aura attack speed increase
+	"special_bonus_imba_mirana_5" // Standing in the same spot for a few seconds grants Mirana invisibility until she moves or attack. Casting spells does not break the invisibility.
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"                     "special_bonus_unique_centaur_2"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"	"imba_mirana_leap"
-		}
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"		
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -19382,7 +19373,7 @@
 			"01"
 			{
 					"var_type"                  "FIELD_INTEGER"
-					"value"	                    "100"
+					"value"                     "3"
 			}
 		}
 	}
@@ -19412,7 +19403,7 @@
 		}
 	}
 
-	"special_bonus_imba_mirana_7" // Starfall wave interval decrease
+	"special_bonus_imba_mirana_7" // Leap can now be cast without needing to turn. Makes Mirana invisible for the duration of the jump, causing her to dodge projectiles.
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -19422,7 +19413,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_mirana_starfall"
+			"01" 	"imba_mirana_leap"
 		}
 
 		// Special
@@ -19432,12 +19423,12 @@
 			"01"
 			{
 					"var_type"                  "FIELD_FLOAT"
-					"value"	                    "-1.25"
+					"value"	                    "1"
 			}
 		}
 	}
 
-	"special_bonus_imba_mirana_8" // Moonlight Shadow cooldown decrease
+	"special_bonus_imba_mirana_8" // Each Starstorm wave marks the target. If Mirana lands an attack on the target, she drops an additional secondary star on it.
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -19447,7 +19438,7 @@
 
 		"LinkedAbility"
 		{
-			"01"	"imba_mirana_moonlight_shadow"
+			"01"	"imba_mirana_starfall"
 		}
 
 		// Special
@@ -19457,7 +19448,7 @@
 			"01"
 			{
 					"var_type"                  "FIELD_INTEGER"
-					"value"	                    "40"
+					"value"	                    "1"
 			}
 		}
 	}
