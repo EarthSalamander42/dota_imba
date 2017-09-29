@@ -770,7 +770,7 @@ function GameMode:OrderFilter( keys )
 
 		-- Mirana's Leap talent cast-handling
 		if ability:GetAbilityName() == "imba_mirana_leap" and unit:HasTalent("special_bonus_imba_mirana_7") then
-			unit:AddNewModifier(unit, abilit, "modifier_imba_leap_talent_cast_angle_handler", {duration = FrameTime()})
+			unit:AddNewModifier(unit, ability, "modifier_imba_leap_talent_cast_angle_handler", {duration = FrameTime()})
 		end
 	end
 
