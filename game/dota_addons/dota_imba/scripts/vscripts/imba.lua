@@ -760,12 +760,17 @@ function GameMode:OrderFilter( keys )
 		return false
 	end
 	
-	-- Techies' Focused Detonate cast-handlign
 	if keys.order_type == DOTA_UNIT_ORDER_CAST_POSITION then
 		local ability = EntIndexToHScript(keys.entindex_ability)        
 		
+		-- Techies' Focused Detonate cast-handling
 		if ability:GetAbilityName() == "imba_techies_focused_detonate" then                        
 			unit:AddNewModifier(unit, ability, "modifier_imba_focused_detonate", {duration = 0.2})            
+		end
+
+		-- Mirana's Leap talent cast-handling
+		if ability:GetAbilityName() == "imba_mirana_leap" and unit:HasTalent("special_bonus_imba_mirana_7") then
+			unit:AddNewModifier(unit, abilit, "modifier_imba_leap_talent_cast_angle_handler", {duration = FrameTime()})
 		end
 	end
 
@@ -951,29 +956,51 @@ function GameMode:DamageFilter( keys )
 
 		-- Mirana's Sacred Arrow On The Prowl guaranteed critical
 		if victim:HasModifier("modifier_imba_sacred_arrow_stun") then
-			local modifier_stun_handler = victim:FindModifierByName("modifier_imba_sacred_arrow_stun")
-			if modifier_stun_handler then
+			local modifier_stun_handler = victim:FindModifierByName("modifier_imba_sacred_arrow_stun")			
+			if modifier_stun_handler then				
 
-				-- If the table doesn't exist yet, initialize it
-				if not modifier_stun_handler.enemy_attackers then
-					modifier_stun_handler.enemy_attackers = {}
-				end
+				-- Get the modifier's ability and caster
+				local stun_ability = modifier_stun_handler:GetAbility()
+				local caster = modifier_stun_handler:GetCaster()
+				if stun_ability and caster then					
+					local should_crit = false
 
-				-- Cycle through the attackers table
-				local attacker_found = false
-				for _,enemy in pairs(modifier_stun_handler.enemy_attackers) do
-					if enemy == attacker then
-						attacker_found = true
+					-- If the table doesn't exist yet, initialize it
+					if not modifier_stun_handler.enemy_attackers then
+						modifier_stun_handler.enemy_attackers = {}
 					end
-				end
 
-				-- If this attacker haven't attacked the stunned target yet, guarantee a critical
-				if not attacker_found then
-					
-					-- Get the modifier's ability
-					local stun_ability = modifier_stun_handler:GetAbility()
-					if stun_ability then
+					-- Check for the attacker in the attackers table
+					local attacker_found = false
 
+					if modifier_stun_handler.enemy_attackers[attacker:entindex()] then						
+						attacker_found = true						
+					end
+
+					-- If this attacker haven't attacked the stunned target yet, guarantee a critical
+					if not attacker_found then
+
+						should_crit = true
+
+						-- Add the attacker to the attackers table
+						modifier_stun_handler.enemy_attackers[attacker:entindex()] = true						
+					end
+
+					-- #2 Talent: Sacred Arrows allow allies to trigger On The Prowls' critical as long as there is at least enough seconds remaining to the stun
+					if caster:HasTalent("special_bonus_imba_mirana_2") and not should_crit then
+
+						-- Talent specials
+						local allow_crit_time = caster:FindTalentValue("special_bonus_imba_mirana_2")
+
+						-- Check if the remaining time is above the threshold
+						local remaining_stun_time = modifier_stun_handler:GetRemainingTime()
+
+						if remaining_stun_time >= allow_crit_time then
+							should_crit = true
+						end
+					end
+
+					if should_crit then						
 						-- Get the critical damage count
 						local on_prow_crit_damage_pct = stun_ability:GetSpecialValueFor("on_prow_crit_damage_pct")
 
@@ -982,9 +1009,6 @@ function GameMode:DamageFilter( keys )
 
 						-- Overhead critical event
 						SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, victim, keys.damage, nil)
-
-						-- Add the attacker to the attackers table
-						table.insert(modifier_stun_handler.enemy_attackers, attacker)
 					end
 				end
 			end

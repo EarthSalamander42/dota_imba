@@ -1459,15 +1459,15 @@
 		"Ability2"					"imba_mirana_arrow"
 		"Ability3"					"imba_mirana_leap"		
 		"Ability4"					"imba_mirana_moonlight_shadow"
-		
-		"Ability10"					"special_bonus_imba_mirana_1"
-		"Ability11"					"special_bonus_imba_mirana_2"
-		"Ability12"					"special_bonus_imba_mirana_3"
-		"Ability13"					"special_bonus_imba_mirana_4"
-		"Ability14"					"special_bonus_imba_mirana_5"
-		"Ability15"					"special_bonus_imba_mirana_6"
-		"Ability16"					"special_bonus_imba_mirana_7"
-		"Ability17"					"special_bonus_imba_mirana_8"
+
+		"Ability10"					"special_bonus_imba_mirana_3" // Moonlight Shadow grants bonus move speed to invisible allies.
+		"Ability11"					"special_bonus_imba_mirana_7" // Leap can now be cast without needing to turn. Makes Mirana invisible for the duration of the jump, causing her to dodge projectiles. 
+		"Ability12"					"special_bonus_imba_mirana_4" // Two additional Sacred Arrows to the sides
+		"Ability13"					"special_bonus_imba_mirana_5" // Standing in the same spot for a few seconds grants Mirana invisibility until she moves or attack. Casting spells does not break the invisibility.
+		"Ability14"					"special_bonus_imba_mirana_2" // Sacred Arrows allow allies to trigger On The Prowls' critical as long as there is at least enough seconds remaining to the stun.
+		"Ability15"					"special_bonus_imba_mirana_6" // Free Sacred Arrow after Leap ends
+		"Ability16"					"special_bonus_imba_mirana_1" // Upon using Moonlight Shadow, allies are given a stack of Starstorm which will proc when they go out of invisibility near an enemy unit.
+		"Ability17"					"special_bonus_imba_mirana_8" // Each Starstorm wave marks the target. If Mirana lands an attack on the target, she drops an additional secondary star on it.
 
 		"ProjectileModel"			"particles/units/heroes/hero_mirana/mirana_base_attack.vpcf"
 	}
