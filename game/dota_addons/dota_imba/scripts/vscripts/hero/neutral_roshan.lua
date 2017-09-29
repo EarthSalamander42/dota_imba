@@ -498,17 +498,14 @@ function modifier_imba_roshan_ai_diretide:CheckState()
 			[MODIFIER_STATE_STUNNED]		= false,
 			[MODIFIER_STATE_HEXED]			= false,
 			[MODIFIER_STATE_INVISIBLE]		= false, }
-		
 		if self.isEatingCandy then
 			state[MODIFIER_STATE_UNSELECTABLE] = true
 			state[MODIFIER_STATE_DISARMED] = true
 			state[MODIFIER_STATE_ROOTED] = true
-			
 		elseif self.begState == 1 then
 			state[MODIFIER_STATE_DISARMED] = true
 			state[MODIFIER_STATE_ROOTED] = true
 		end
-		
 	elseif self:GetStackCount() == 3 then
 		if self.isTransitioning then
 			state = { [MODIFIER_STATE_INVULNERABLE]		= true,
@@ -522,7 +519,7 @@ function modifier_imba_roshan_ai_diretide:CheckState()
 			state[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true -- Because fuck those Overused Dildos and their Astral Prisons
 		end
 	end
-	
+
 	-- Always phased, and hidden health bar
 	state[MODIFIER_STATE_NO_UNIT_COLLISION]	= true	-- Obvious reasons
 	state[MODIFIER_STATE_NO_HEALTH_BAR]		= true	-- Either not needed, or shown in the HUD
@@ -720,7 +717,7 @@ function modifier_imba_roshan_ai_diretide:StartPhase(phase)
 		if phase == 2 then
 			EmitGlobalSound("diretide_eventstart_Stinger")
 			self.roshan:AddNewModifier(self.roshan, self:GetAbility(), "modifier_imba_roshan_eaten_candy", {})
-			
+
 			Timers:CreateTimer(5.8, function() -- Timer so music ends first
 				self:StartIntervalThink(0.1)
 			end)
@@ -728,7 +725,7 @@ function modifier_imba_roshan_ai_diretide:StartPhase(phase)
 			EmitGlobalSound("diretide_sugarrush_Stinger")
 			self.isTransitioning = true
 			self:StartIntervalThink(0.1)
-			
+
 			UpdateRoshanBar(self.roshan, FrameTime()*2)
 		end
 	end
@@ -743,27 +740,25 @@ function modifier_imba_roshan_ai_diretide:ThinkPhase2(roshan)
 				self.AItarget = hero
 				self.roshan:SetForceAttackTarget(hero)
 				roshan:AddNewModifier(roshan, self:GetAbility(), "modifier_imba_roshan_acceleration", {})
-				
 				EmitSoundOnClient("diretide_select_target_Stinger", hero:GetPlayerOwner())
+				CustomGameEventManager:Send_ServerToAllClients("roshan_target", {target = hero:GetUnitName(), team_target = hero:GetTeamNumber()})
 				break
 			end
 		end
-		
 	else
-		if self.begState == 0 then		-- If haven't begged
+		if self.begState == 0 then -- If haven't begged
 			if CalcDistanceBetweenEntityOBB(roshan, self.AItarget) <= self.begDistance then
 				self.begState = 1
 				roshan:AddNewModifier(roshan, nil, "modifier_imba_roshan_ai_beg", {duration = self.animBeg})
-				
+
 				-- sound
 				Timers:CreateTimer(self.candyBeg, function()
 					roshan:EmitSound("Diretide.RoshanBeg")
 				end)
 			end
-			
 		elseif self.begState == 1 then
-			
-		else							-- If has begged
+
+		else -- If has begged
 			if self.AItarget and self.AItarget:IsAlive() then 
 				if not self.roshan:IsAttackingEntity(self.AItarget) then
 					self.roshan:SetForceAttackTarget(self.AItarget)
@@ -887,6 +882,7 @@ function modifier_imba_roshan_ai_diretide:ThinkPhase3(roshan)
 				self.isTransitioning = false
 				roshan:RemoveGesture(ACT_TRANSITION)
 				roshan:SetAcquisitionRange(self.acquisition_range)
+				EndRoshanCamera()
 			end)
 		end
 	
@@ -896,7 +892,7 @@ function modifier_imba_roshan_ai_diretide:ThinkPhase3(roshan)
 	if COUNT_DOWN and COUNT_DOWN == 0 then
 		local heroDetector = FindUnitsInRadius(roshan:GetTeamNumber(), roshan:GetAbsOrigin(), nil, 700, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
 		if #heroDetector > 0 then
---			COUNT_DOWN = 1
+--			EnableCountdown(true)
 		else
 			self.wait = 5
 			return
@@ -945,6 +941,7 @@ function modifier_imba_roshan_ai_diretide:ThinkPhase3(roshan)
 		
 		-- Cast Force Wave if its available
 		if self.forceWave and self.forceWave:IsCooldownReady() then
+			print("Casting Wave of Force...")
 			local radius = self.forceWave:GetSpecialValueFor("radius")
 			local minTargets = self.forceWave:GetSpecialValueFor("min_targets")
 			
@@ -954,14 +951,14 @@ function modifier_imba_roshan_ai_diretide:ThinkPhase3(roshan)
 				return
 			end
 		end
-		
+
 		-- Cast apocalypse if its available
 		if self.apocalypse and self.apocalypse:IsCooldownReady() then
 			local maxRange = self.apocalypse:GetSpecialValueFor("max_range")
 			local minRange = self.apocalypse:GetSpecialValueFor("min_range")
 			local minTargets = self.apocalypse:GetSpecialValueFor("min_targets")
 			local inRange = 0
-			
+
 			local nearbyHeroes = FindUnitsInRadius(roshan:GetTeamNumber(), roshan:GetAbsOrigin(), nil, maxRange, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
 			for _, hero in ipairs(nearbyHeroes) do
 				if CalcDistanceBetweenEntityOBB(roshan, hero) >= minRange then
@@ -974,7 +971,7 @@ function modifier_imba_roshan_ai_diretide:ThinkPhase3(roshan)
 				return
 			end
 		end
-		
+
 		-- Cast Fire Breath if its available
 		if self.breath and self.breath:IsCooldownReady() then
 			local searchRange = self.breath:GetSpecialValueFor("search_range")
@@ -1011,7 +1008,7 @@ function modifier_imba_roshan_ai_diretide:ThinkPhase3(roshan)
 					break
 				end
 			end
-			
+
 			if pickupUnit then
 				units = FindUnitsInRadius(roshan:GetTeamNumber(), roshan:GetAbsOrigin(), nil, maxRange, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_FARTHEST, false) 
 				for _, unit in ipairs(units) do
@@ -1025,6 +1022,25 @@ function modifier_imba_roshan_ai_diretide:ThinkPhase3(roshan)
 					roshan:CastAbilityOnTarget(throwTarget, self.toss, 1)
 					return
 				end
+			end
+		end
+	end
+end
+
+function modifier_imba_roshan_ai_diretide:OnTakeDamage(keys)
+	if IsServer() then
+		local unit = keys.unit
+		local attacker = keys.attacker
+
+		-- Only apply if the unit taking damage is the caster
+		if unit == self.roshan then
+			if COUNT_DOWN == 0 then
+				EnableCountdown(true)
+			end
+
+			-- If the damage came from ourselves (e.g. Rot, Double Edge), do nothing
+			if attacker == unit then
+				return nil
 			end
 		end
 	end
@@ -1361,7 +1377,7 @@ function imba_roshan_diretide_apocalypse:OnSpellStart()
 end
 
 --------------------------------------
---				SLAM				--
+--			Wave of Force			--
 --------------------------------------
 if imba_roshan_diretide_force_wave == nil then imba_roshan_diretide_force_wave = class({}) end
 
@@ -1374,14 +1390,18 @@ function imba_roshan_diretide_force_wave:GetCastAnimation()
 function imba_roshan_diretide_force_wave:OnSpellStart()	-- Parameters
 	local roshan = self:GetCaster()
 	local castPoint = roshan:GetAbsOrigin()
-	local waveDistance = 2000
-	local waveSize = 200
-	local waveSpeed = 500
+	local waveDistance = self:GetSpecialValueFor("radius")
+	local waveRadius = 200
+	local waveSpeed = self:GetSpecialValueFor("speed")
 	local waves = 8
 	local angleStep = 360 / waves
 	local hitUnits = {}
 
 	roshan:EmitSound("RoshanDT.WaveOfForce.Cast")
+
+	print(waveDistance)
+	print(waveRadius)
+	print()
 	
 	-- Base projectile information
 	local waveProjectile = {
@@ -1398,21 +1418,21 @@ function imba_roshan_diretide_force_wave:OnSpellStart()	-- Parameters
 		iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
 		iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 		bDeleteOnHit		= false,
-		vVelocity			= 0,
+		vVelocity			= roshan:GetForwardVector() * waveSpeed,
 		bProvidesVision		= false,
 		iVisionRadius		= 0,
 		iVisionTeamNumber	= roshan:GetTeamNumber(),
 	}
 	
 	for i = 1, waves do
---		waveProjectile.vVelocity = roshans direction + angleStep
+		waveProjectile.vVelocity = roshan:GetForwardVector() + angleStep
 		waveProjectile.vVelocity.z = 0	-- So it doesn't move upwards
 		ProjectileManager:CreateLinearProjectile(waveProjectile)
 	end
 end
 
 function imba_roshan_diretide_force_wave:OnProjectileHit(unit, unitPos)
-
+	print("Target hit!")
 end
 
 

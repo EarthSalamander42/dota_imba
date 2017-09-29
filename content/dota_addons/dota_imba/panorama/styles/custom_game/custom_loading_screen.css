@@ -53,7 +53,7 @@
 
 #game_options_container
 {
-	width: 350px;
+	width: 22%;
 	height: 100%;
 	background-color: gradient( linear, 100% 0%, 100% 100%, from( #111111 ), color-stop( 0.02, #202327 ), color-stop( 0.3, #141619 ), to( #000000B0 ) );
 	box-shadow: #000000 0px 0px 20px 0px;
@@ -65,7 +65,7 @@
 #community_stuff_container
 {
 	height: 100%;
-	position: 400px 0px 0px;
+	margin-left: 23%;
 }
 
 #CommunityPanel
@@ -81,6 +81,11 @@
 	transition-timing-function: ease-in-out;
 }
 
+.AspectRatio4x3 #CommunityPanel
+{
+	width: 300px;
+}
+
 /* Show community button */
 #show_community_panel_button
 {
@@ -93,6 +98,11 @@
 	box-shadow: #000000 0px 0px 18px 0px;
 	transition-property: background-color;
 	transition-duration: 0.2s;
+}
+
+.AspectRatio4x3 #show_community_panel_button
+{
+	width: 300px;
 }
 
 #show_community_panel_button:hover

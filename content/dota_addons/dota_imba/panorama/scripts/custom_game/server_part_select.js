@@ -1,6 +1,3 @@
-
-
-
 function GetHUDRootUI_Server()
 {
     var rootUI = $.GetContextPanel();
@@ -15,7 +12,6 @@ function GetUI_Server()
 	return GetHUDRootUI_Server().FindChildTraverse("CustomUIRoot");
 }
 
-
 var PartSelectPage= null;
 
 function Server_Show_Select_Page()
@@ -23,8 +19,8 @@ function Server_Show_Select_Page()
 	if(!PartSelectPage)
 	{
 		var parentPanel = GetUI_Server(); // the root panel of the current XML context
-		PartSelectPage = $.CreatePanel( "Panel", parentPanel, "ChildPanelID" );
-		PartSelectPage.BLoadLayout( "file://{resources}/layout/custom_game/server_select_page.xml", false, false );
+//		PartSelectPage = $.CreatePanel( "Panel", parentPanel, "ChildPanelID" );
+//		PartSelectPage.BLoadLayout( "file://{resources}/layout/custom_game/server_select_page.xml", false, false );
 	}
 	else
 	{
@@ -42,7 +38,6 @@ function Server_Show_Select_Page()
 		}
 	}
 }
-
 
 function Server_Part_Select_Show_Tooltip()
 {

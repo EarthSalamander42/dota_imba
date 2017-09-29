@@ -65,8 +65,12 @@ Modular.Extend = function( panel, extension ) {
  * Returns:
  *	The created module instance.
  */
-Modular.Spawn = function( name, parent ) {
+Modular.Spawn = function( name, parent, extra ) {
 	var newPanel = $.CreatePanel( "Panel", parent, "player_root" );
+	if (extra == "HoF")
+	{
+		newPanel.AddClass("HoF")
+	}
 	newPanel.BLoadLayout( MODULE_BASE_PATH + name + ".xml", false, false );
 
 	//Wrap into module functionality before returning

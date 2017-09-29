@@ -97,12 +97,13 @@ end
 function GameMode:OnGameRulesStateChange(keys)
 DebugPrint("[BAREBONES] GameRules State Changed")
 DebugPrintTable(keys)
-local i = 10
+--	local i = 10
 
 	-- This internal handling is used to set up main barebones functions
 	GameMode:_OnGameRulesStateChange(keys)
 
 	local new_state = GameRules:State_Get()
+	CustomNetTables:SetTableValue("game_options", "game_state", {state = new_state})
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Pick screen stuff
@@ -163,7 +164,7 @@ local i = 10
 --		end
 
 		local roshan_easter_egg = Entities:FindByName(nil, "easter_egg_diretide"):GetAbsOrigin()
-		CreateUnitByName("npc_diretide_roshan", roshan_easter_egg, true, nil, nil, DOTA_TEAM_NEUTRALS)
+		ROSHAN_ENT = CreateUnitByName("npc_diretide_roshan", roshan_easter_egg, true, nil, nil, DOTA_TEAM_NEUTRALS)
 
 		-- Shows various info to devs in pub-game to find lag issues
 		ImbaNetGraph(10.0)
@@ -195,7 +196,7 @@ local i = 10
 			end
 		end
 
-		if GetMapName() == "imba_diretide" then
+		if GetMapName() == "imba_diretide" or DIRETIDE_COMMAND == true then
 			Diretide()
 		end
 
@@ -223,7 +224,7 @@ local normal_xp = npc:GetDeathXP()
 	if npc then
 		if GetMapName() == "imba_10v10" or GetMapName() == "imba_custom_10v10" then
 			npc:SetDeathXP(normal_xp)
-		elseif GetMapName() == "imba_diretide" then
+		elseif GetMapName() == "imba_diretide" or DIRETIDE_COMMAND == true then
 			if npc:GetUnitName() == "npc_dota_creep_goodguys_melee" then
 				npc:SetModel("models/creeps/lane_creeps/creep_radiant_melee_diretide/creep_radiant_melee_diretide.vmdl")
 				npc:SetOriginalModel("models/creeps/lane_creeps/creep_radiant_melee_diretide/creep_radiant_melee_diretide.vmdl")
@@ -298,6 +299,13 @@ local normal_xp = npc:GetDeathXP()
 					npc.is_dev = true
 				end
 			end
+		end
+
+		-- fix for killed with candies in inventory
+		if GetMapName() == "imba_diretide" or DIRETIDE_COMMAND == true then
+			Timers:CreateTimer(0.1, function()
+				npc:SetHealth(100000)
+			end)
 		end
 
 		Timers:CreateTimer(1, function() -- Silencer fix

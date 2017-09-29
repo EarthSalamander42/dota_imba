@@ -11,10 +11,6 @@
 
 
 	<Panel require-composition-layer="true">
-
         <Button id="select_button" onactivate="Server_Show_Select_Page()" onmouseover="Server_Part_Select_Show_Tooltip()" onmouseout="Server_Part_Select_Hide_Tooltip()"  />
-
     </Panel>
-	
-	
 </root>

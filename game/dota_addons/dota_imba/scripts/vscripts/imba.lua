@@ -1498,14 +1498,36 @@ function GameMode:InitGameMode()
 	-- IMBA testbed command
 	Convars:RegisterCommand("imba_test", Dynamic_Wrap(GameMode, 'StartImbaTest'), "Spawns several units to help with testing", FCVAR_CHEAT)
 	Convars:RegisterCommand("particle_table_print", PrintParticleTable, "Prints a huge table of all used particles", FCVAR_CHEAT)	
-	Convars:RegisterCommand("game_time", GetGameLength, "Print the game time.", FCVAR_CHEAT)	
 	Convars:RegisterCommand("test_picking_screen", InitPickScreen, "schnizzle", FCVAR_CHEAT)
+	Convars:RegisterCommand("hall_of_fame", HoF, "WOAW!", FCVAR_CHEAT)
 
 	CustomGameEventManager:RegisterListener("remove_units", Dynamic_Wrap(GameMode, "RemoveUnits"))
 
 	-- Panorama event stuff
 	initScoreBoardEvents()
 	InitPlayerHeroImbaTalents();
+end
+
+function HoF()
+local ents = Entities:FindAllByName("lane_*")
+local jungles = Entities:FindAllByName("jungle_*")
+local units = FindUnitsInRadius(1, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+
+	for _, ent in pairs(ents) do
+		ent:RemoveSelf()
+	end
+	for _, ent in pairs(jungles) do
+		ent:RemoveSelf()
+	end
+	for _, unit in pairs(units) do
+		if not unit:GetUnitLabel() == "npc_diretide_roshan" and unit:IsCreep() then
+			unit:RemoveSelf()						
+		end
+	end
+
+--	PHASE = 4
+	COUNT_DOWN = 0
+	CustomGameEventManager:Send_ServerToAllClients("hall_of_fame", {})
 end
 
 function InitPickScreen()

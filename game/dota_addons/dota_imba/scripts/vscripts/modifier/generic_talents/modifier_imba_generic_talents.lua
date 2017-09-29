@@ -389,11 +389,11 @@ end
 -----------------------------
 --	  Cooldown Reduction   --
 -----------------------------
---	modifier_imba_generic_talent_cd_reduction = ShallowCopy(modifier_imba_generic_talent_base)
+modifier_imba_generic_talent_cd_reduction = ShallowCopy(modifier_imba_generic_talent_base)
 
---	function modifier_imba_generic_talent_cd_reduction:GetCustomCooldownReductionStacking()
---		return self.value
---	end
+function modifier_imba_generic_talent_cd_reduction:GetCustomCooldownReductionStacking()
+	return self.value
+end
 
 -----------------------------
 --	     Bonus EXP         --
