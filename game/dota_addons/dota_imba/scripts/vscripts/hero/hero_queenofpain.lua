@@ -422,8 +422,7 @@ function imba_queenofpain_scream_of_pain:OnSpellStart(scream_damage_pct, source_
 		end
 		
 		-- Prevent reclusive instances of Talent 6 & 8 overlapping with each other
-		if is_talent then
-		else
+		if not is_talent then
 			is_talent = 0
 		end
 		
