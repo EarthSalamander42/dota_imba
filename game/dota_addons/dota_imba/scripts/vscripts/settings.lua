@@ -228,6 +228,7 @@ ENABLED_RUNES[DOTA_RUNE_ARCANE] = true
 GAME_WINNER_TEAM = "none"													-- Tracks game winner
 GAME_ROSHAN_KILLS = 0														-- Tracks amount of Roshan kills
 DIRETIDE_REINCARNATING = false
+DIRETIDE_COMMAND = false
 
 END_GAME_ON_KILLS = false													-- Should the game end after a certain number of kills?
 KILLS_TO_END_GAME_FOR_TEAM = 70												-- How many kills for a team should signify the end of the game?

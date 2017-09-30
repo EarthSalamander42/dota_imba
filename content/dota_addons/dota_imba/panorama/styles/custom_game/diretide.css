@@ -1,6 +1,13 @@
-
-.DiretidePanel
+.Diretide
 {
+	width: 100%;
+	height: 100%;
+	z-index: -10;
+}
+
+#DiretidePanel
+{
+	margin-top: 67%;
 	horizontal-align: center;
 	flow-children: down;
 }
@@ -9,7 +16,6 @@
 {
 	width: fit-children;
 	height: fit-children;
-	margin-top: 60px;
 	flow-children: down;
 	horizontal-align: center;
 	visibility: collapse;
@@ -24,28 +30,29 @@
 	visibility: collapse;
 }
 
-.ScorePanel
+#ScorePanel
 {
-	flow-children: right;
-	width: 120px;
-	height: 90px;
-
-	background-image: url("file://{images}/custom_game/game_info/roshan.png");
-//	background-color: black;
-	background-repeat: no-repeat;
-	background-position: 50% 0%;
-	background-size: 80% 80%;
+	flow-children: down;
+	width: fit-children;
+	height: fit-children;
 }
 
-#Timer
+#Timer,
+#Timer_alt
 {
-	margin-top: 70px;
 	font-size: 20px;
 	font-weight: bolder;
 	color: #ffffff;
 	text-shadow: 2px 2px 2px #7b612b;
 	text-align: center;
 	width: 100%;
+	text-overflow: clip;
+}
+
+#Timer_alt
+{
+	margin-right: 6%;
+	text-align: right;
 	text-overflow: clip;
 }
 
@@ -65,6 +72,7 @@
 	flow-children: down;
 	width: 120px;
 	height: 110px;
+	align: center center;
 
 	background-image: url("file://{images}/custom_game/game_info/pumpkin.png");
 	background-repeat: no-repeat;
@@ -77,7 +85,7 @@
 {
 	margin-left: 49px;
 	margin-top: -30px;
-	
+
 	color: green;
 	text-align: center;
 }
@@ -99,7 +107,7 @@
 
 #PhaseLabel
 {
-	font-size: 20px;
+	font-size: 18px;
 	font-weight: bolder;
 	color: green;
 	text-shadow: 1px 1px 1px #7b612b;
@@ -116,19 +124,37 @@
 .HoldoutLabelSmall
 {
 	color: white;
-    font-weight: bold;
-    text-align: center;
-    text-shadow: 1px 1px 2px 2.0 #00000011;
+	font-weight: bold;
+	text-align: center;
+	text-shadow: 1px 1px 2px 2.0 #00000011;
 
-    font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
-    font-size: 14px;
-    letter-spacing: 2px;
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-size: 14px;
+	letter-spacing: 2px;
 	text-overflow: clip;
-	margin-bottom: -3px;
 
 	horizontal-align: center;
 	text-align: center;	
 	margin-top: 12px;
+	text-shadow: 1px 1px 2px 3.0 #000000;
+	font-size: 16px;
+}
+
+.HoldoutLabelSmall_alt
+{
+	color: white;
+	font-weight: bold;
+	text-align: center;
+	text-shadow: 1px 1px 2px 2.0 #00000011;
+
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-size: 14px;
+	letter-spacing: 2px;
+	text-overflow: clip;
+
+	horizontal-align: center;
+	text-align: center;	
+	margin-bottom: 12px;
 	text-shadow: 1px 1px 2px 3.0 #000000;
 	font-size: 16px;
 }
@@ -140,7 +166,7 @@
 
 #RoshanHP
 {
-	width: 500px;
+	width: 750px;
 	height: 64px;
 	visibility: collapse;
 }
@@ -149,8 +175,8 @@
 {
 	width: 90%;
 	height: 24px;
-	border-radius: 4px;
-	border: 3px solid #444;
+	border-radius: 1px;
+	border: 0px;
 	background-color: black;
 	vertical-align: middle;
 	horizontal-align: right;
@@ -166,7 +192,7 @@
 
 #RoshanProgressBar_Left
 {
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #320000 ), color-stop( 0.3, #ff4A07 ), color-stop( .5, #ff4A07 ), to( #320000 ) );
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #320000 ), color-stop( 0.3, #D71414 ), color-stop( .5, #D71414 ), to( #320000 ) );
 }
 
 #RoshanProgressBar_Right
@@ -184,8 +210,14 @@
 
 #BossIcon
 {
-	height: 48px;
 	width: 48px;
+	height: 48px;
+	margin-left: 5%;	
+	background-image: url("file://{images}/custom_game/game_info/roshan.png");
+	background-repeat: no-repeat;
+	background-position: 50% 0%;
+	background-size: 90% 90%;
+	z-index: 10;
 }
 
 #RoshanHealth
@@ -195,5 +227,168 @@
 
 #RoshanLevel
 {
+	margin-left: 6%;
 	horizontal-align: left;
+	color: white;
+	font-weight: bold;
+	text-align: center;
+	text-shadow: 1px 1px 2px 2.0 #00000011;
+
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-size: 14px;
+	letter-spacing: 2px;
+	text-overflow: clip;
+
+	text-align: center;
+	text-shadow: 1px 1px 2px 3.0 #000000;
+	font-size: 18px;
+}
+
+#RoshanLevel_alt
+{
+	margin-top: 5%;
+	margin-left: 2%;
+	horizontal-align: left;
+	color: white;
+	font-weight: bold;
+	text-align: center;
+	text-shadow: 1px 1px 2px 2.0 #00000011;
+
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-size: 14px;
+	letter-spacing: 2px;
+	text-overflow: clip;
+
+	text-align: center;
+	text-shadow: 1px 1px 2px 3.0 #000000;
+	font-size: 18px;
+}
+
+
+#Roshan
+{
+	width: 100px;
+	height: 70px;
+	align: center center;
+	background-image: url("file://{images}/custom_game/game_info/roshan.png");
+	background-repeat: no-repeat;
+	background-position: 50% 0%;
+	background-size: 100% 100%;
+}
+
+#RoshanTarget
+{
+	width: 100%;
+	font-size: 17px;
+	font-weight: bolder;
+	color: #ffffff;
+	text-shadow: 2px 2px 2px #7b612b;
+	text-align: center;
+	text-overflow: clip;
+	visibility: collapse;
+}
+
+#RoshanTarget.visible
+{
+	opacity: 1;
+}
+
+#RoshanTarget.alert
+{
+	color: red;
+}
+
+#HallOfFame
+{
+	width: 800px;
+	height: fit-children;
+	border-radius: 25px;
+	background-color: #000000da;
+	align: center center;
+	flow-children: down;
+	visibility: collapse;
+}
+
+#InfoContent
+{
+	width: 100%;
+	height: 200px;
+}
+
+#PlayerContent
+{
+	width: 100%;
+	height: fit-children;
+	flow-children: right;
+}
+
+#RadiantPlayers
+{
+	width: 50%;
+	height: fit-children;
+	background-color: green;
+	flow-children: down;
+}
+
+#DirePlayers
+{
+	width: 50%;
+	height: fit-children;
+	background-color: red;
+	flow-children: down;
+}
+
+.TeamTitle {
+	width: 100%;
+	height: 40px;
+	text-align: center;
+	font-size: 24px;
+	font-weight: bolder;
+	color:#fff;
+}
+
+#ButtonContent
+{
+	flow-children: right;
+	width: 800px;
+	height: 90px;
+	horizontal-align: center;
+}
+
+#FeedButton,
+#CloseButton
+{
+	width: 40%;
+	margin-top: 60%;
+	margin-left: 5%;
+	margin-right: 5%;
+	background-color: #000000da;
+	border: 2px solid #4d5051;
+	border-radius: 5px;
+}
+
+#FeedButton:hover
+{
+	border: 2px solid orange;
+}
+
+#CloseButton:hover
+{
+	border: 2px solid white;
+}
+
+#FeedButton Label,
+#CloseButton Label
+{
+	align: center center;
+	color: #6f6f6f;
+	text-transform: uppercase;
+	text-align: center center;
+	font-size: 16px;
+}
+
+#FeedButton:hover Label,
+#CloseButton:hover Label
+{
+	color: white;
 }
