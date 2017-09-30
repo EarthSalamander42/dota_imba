@@ -76,7 +76,7 @@ function modifier_imba_generic_talents_handler:GetModifierConstantHealthRegen()
 		return self.health_regen_amp
 	end
 end
---[[
+
 -- Custom cooldown reduction handler (uses stacks to communicate CDR to client)
 function modifier_imba_generic_talents_handler:GetModifierPercentageCooldown()
 	if IsServer() then
@@ -85,7 +85,7 @@ function modifier_imba_generic_talents_handler:GetModifierPercentageCooldown()
 	end
 	return self:GetStackCount()
 end
---]]
+
 -- Spell lifesteal handler
 function modifier_imba_generic_talents_handler:OnTakeDamage( keys )
 	if IsServer() then
