@@ -8591,43 +8591,41 @@
 	//=================================================================================================================
 	"lone_druid_spirit_bear"
 	{
-		"MaxLevel"						"7"		
-		
-		"AbilityCooldown"				"120 120 120 120 90 60 30"
-		
+		"MaxLevel"						"7"
+		"AbilityCooldown"				"120.0"
 		"AbilityManaCost"				"75"
-		
+
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bear_hp"					"1400 1800 2300 2700 3500 4200 4900"
+				"bear_hp"					"1400 1800 2300 2700 3200 3700 4200"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bear_regen_tooltip"		"2 3 4 5 7 9 11"
+				"bear_regen_tooltip"		"2 3 4 5 6 7 8"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"bear_bat"					"1.65 1.55 1.45 1.35 1.32 1.3 1.28"
+				"bear_bat"					"1.65 1.55 1.45 1.35 1.25 1.15 1.05"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bear_armor"				"3 4 5 6 8 10 12"
+				"bear_armor"				"3 4 5 6 7 8 9"
 			}
 			"05"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"backlash_damage"			"10.0"
+				"var_type"					"FIELD_INTEGER"
+				"backlash_damage"			"10"
 			}
 			"06"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"cooldown_scepter"			"120 120 120 120 90 60 30"
+				"var_type"					"FIELD_INTEGER"
+				"cooldown_scepter"			"60"
 			}
 		}
 	}

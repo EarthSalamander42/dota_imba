@@ -1,7 +1,7 @@
 -- Global vars init
 DIRETIDE_BONUS_GOLD = 20000
 nCOUNTDOWNTIMER = 0
-PHASE = 0
+DIRETIDE_PHASE = 0
 DIRETIDE_WINNER = 2
 COUNT_DOWN = 1
 PHASE_TIME = 481
@@ -19,8 +19,8 @@ function Diretide()
 	nCOUNTDOWNTIMER = PHASE_TIME -- 481 / 8 Min
 	CustomNetTables:SetTableValue("game_options", "radiant", {score = 25})
 	CustomNetTables:SetTableValue("game_options", "dire", {score = 25})
-	PHASE = PHASE + 1
-	DiretidePhase(PHASE)
+	DIRETIDE_PHASE = DIRETIDE_PHASE + 1
+	DiretidePhase(DIRETIDE_PHASE)
 	CountdownDiretide(1.0)
 
 	if GetMapName() ~= "imba_diretide" then
@@ -30,15 +30,15 @@ function Diretide()
 	end
 end
 
-function DiretidePhase(PHASE)
+function DiretidePhase(DIRETIDE_PHASE)
 local units = FindUnitsInRadius(1, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
 
-	if PHASE == 2 then
+	if DIRETIDE_PHASE == 2 then
 		nCOUNTDOWNTIMER = PHASE_TIME
 		if CustomNetTables:GetTableValue("game_options", "dire").score > CustomNetTables:GetTableValue("game_options", "radiant").score then
 			DIRETIDE_WINNER = 3
 		end
-	elseif PHASE == 3 then
+	elseif DIRETIDE_PHASE == 3 then
 		nCOUNTDOWNTIMER = 120
 		EnableCountdown(false)
 		SwapTeam(DIRETIDE_WINNER)
@@ -53,18 +53,18 @@ local units = FindUnitsInRadius(1, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DO
 		for _, ent in pairs(jungles) do
 			ent:RemoveSelf()
 		end
-	elseif PHASE == 4 then
+	elseif DIRETIDE_PHASE == 4 then
 		DiretideEnd()
 	end
 
 	local AImod = ROSHAN_ENT:FindModifierByName("modifier_imba_roshan_ai_diretide")
 	if AImod then
-		AImod:SetStackCount(PHASE)
+		AImod:SetStackCount(DIRETIDE_PHASE)
 		ROSHAN_ENT:Interrupt()
 	end
 
 	for _, unit in pairs(units) do
-		if PHASE == 3 then
+		if DIRETIDE_PHASE == 3 then
 			if unit:GetUnitLabel() == "npc_diretide_roshan" then
 				print("Hi rosh!")
 			elseif unit:IsCreep() then
@@ -72,7 +72,7 @@ local units = FindUnitsInRadius(1, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DO
 			end
 		end
 	end
-	CustomGameEventManager:Send_ServerToAllClients("diretide_phase", {Phase = PHASE})
+	CustomGameEventManager:Send_ServerToAllClients("diretide_phase", {Phase = DIRETIDE_PHASE})
 end
 
 -- Pumpkin
@@ -146,10 +146,10 @@ function CountdownDiretide(tick)
 				print("Game doesn't end, roshan is reincarnating...")
 				nCOUNTDOWNTIMER = nCOUNTDOWNTIMER +1
 			else
-				PHASE = PHASE + 1
-				DiretidePhase(PHASE)
+				DIRETIDE_PHASE = DIRETIDE_PHASE + 1
+				DiretidePhase(DIRETIDE_PHASE)
 			end
-		elseif nCOUNTDOWNTIMER == 120 and PHASE == 3 then
+		elseif nCOUNTDOWNTIMER == 120 and DIRETIDE_PHASE == 3 then
 			local hero = FindUnitsInRadius(2, Entities:FindByName(nil, "roshan_arena_"..DIRETIDE_WINNER):GetAbsOrigin(), nil, 1000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
 			if #hero > 0 and COUNT_DOWN == 0 then
 				print("A hero is near...")

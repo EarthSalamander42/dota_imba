@@ -28258,7 +28258,7 @@
 	//=================================================================================================================
 	// Spectre's Reality
 	//=================================================================================================================
-	imba_spectre_reality
+	"imba_spectre_reality"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -39404,7 +39404,8 @@
 		"AbilityTextureName"			"chaos_knight_reality_rift"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 		"FightRecapLevel"				"1"
 		"MaxLevel"						"7"

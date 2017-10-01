@@ -7,6 +7,19 @@ LinkLuaModifier("modifier_reality_rift_armor_reduction_debuff", "hero/hero_chaos
 
 imba_chaos_knight_reality_rift = class({})
 
+function imba_chaos_knight_reality_rift:CastFilterResultTarget(target)
+local caster = self:GetCaster()
+
+	if target:IsMagicImmune() then
+		local ability = caster:FindAbilityByName("special_bonus_unique_chaos_knight")
+		if ability and ability:GetLevel() > 0 then
+			return UF_SUCCESS
+		else
+			return UF_FAIL_MAGIC_IMMUNE_ENEMY
+		end
+	end
+end
+
 function imba_chaos_knight_reality_rift:OnAbilityPhaseStart()
 	if IsServer() then
 		local caster = self:GetCaster()
