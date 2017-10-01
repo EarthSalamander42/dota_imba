@@ -573,7 +573,7 @@ normal_heroes = {
 	"npc_dota_hero_phantom_assassin",
 	"npc_dota_hero_disruptor",
 	"npc_dota_hero_nyx_assassin",
---	"npc_dota_hero_magnataur",
+	"npc_dota_hero_magnataur",
 	"npc_dota_hero_centaur",
 	"npc_dota_hero_troll_warlord",
 	"npc_dota_hero_skywrath_mage",
@@ -686,7 +686,7 @@ imba_heroes = {
 	"npc_dota_hero_phantom_assassin",
 	"npc_dota_hero_disruptor",
 	"npc_dota_hero_nyx_assassin",
---	"npc_dota_hero_magnataur",
+	"npc_dota_hero_magnataur",
 	"npc_dota_hero_centaur",
 	"npc_dota_hero_skywrath_mage",
 	"npc_dota_hero_troll_warlord"

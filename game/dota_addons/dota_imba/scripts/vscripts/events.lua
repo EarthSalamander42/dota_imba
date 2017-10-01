@@ -1059,12 +1059,7 @@ function GameMode:OnConnectFull(keys)
 				end
 
 				print("HERO SELECTION ARGS:")
-				print(player_id)
-				PrintTable(HeroSelection.radiantPicks)
-				PrintTable(HeroSelection.direPicks)
-				PrintTable(HeroSelection.playerPicks)
 				print(pick_state)
-				print(repick_state)
 
 				if PlayerResource:GetTeam(player_id) == DOTA_TEAM_GOODGUYS then
 					print("Running Radiant picks...")
@@ -1072,6 +1067,15 @@ function GameMode:OnConnectFull(keys)
 				else
 					print("Running Dire picks...")
 					CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.direPicks, PlayerPicks = HeroSelection.playerPicks, pickState = pick_state, repickState = repick_state})
+				end
+
+				if GetMapName() == "imba_diretide" or DIRETIDE_COMMAND == true then
+					if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+						print("Diretde HUD show again")
+						CustomGameEventManager:Send_ServerToAllClients("diretide_player_reconnected", {PlayerID = player_id, Phase = DIRETIDE_PHASE, pickState = pick_state})
+					else
+						print("Game didn't started, no need to show the HUD yet.")
+					end
 				end
 			else
 				return 0.1

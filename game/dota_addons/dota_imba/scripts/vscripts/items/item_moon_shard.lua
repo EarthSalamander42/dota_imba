@@ -12,7 +12,12 @@ function MoonShardActive( keys )
 	local modifier_stacks = keys.modifier_stacks
 
 	-- If this unit is not a real hero, do nothing
-	if ( not target:IsRealHero() ) or target:HasModifier("modifier_arc_warden_tempest_double") then
+	if string.find(target:GetUnitName(), "lone_druid") then
+		print("BEAR!")
+	end
+	if ( not target:IsRealHero() or not string.find(target:GetUnitName(), "lone_druid") ) or target:HasModifier("modifier_arc_warden_tempest_double") then
+		print(target:GetUnitName())
+		print("NIL unit")
 		return nil
 	end
 
@@ -34,6 +39,14 @@ function MoonShardActive( keys )
 		local caster_id = caster:GetPlayerID()
 		if caster_id then
 			EmitSoundOnClient(sound_consume, PlayerResource:GetPlayer(caster_id))
+		end
+	elseif caster:IsConsideredHero() then
+		if string.find(target:GetUnitName(), "lone_druid") then
+			print("Play sound based on bear")
+			local caster_id = caster:GetPlayerOwnerID()
+			if caster_id then
+				EmitSoundOnClient(sound_consume, PlayerResource:GetPlayer(caster_id))
+			end
 		end
 	end
 	local target_id = target:GetPlayerID()
