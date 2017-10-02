@@ -365,7 +365,7 @@
 	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_7_title"					"无敌斩"
 	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_7_Description"			"无敌斩不再需要主宰本身参与，由一个镜像进行无敌斩，在无敌斩期间，主宰和镜像都是无敌的，镜像造成75%伤害，主宰造成25%伤害"
 	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_8_title"					"剑舞"
-	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_8_Description"			"剑舞触发致命一击时还会获得1层英魂之刃，持续12秒，独立计时，每层英魂之刃使无敌斩的敏捷伤害系数提高1%"			
+	"Dota_Tooltip_Talent_special_bonus_imba_juggernaut_8_Description"			"剑舞触发致命一击时还会获得1层英魂之刃，持续6秒，独立计时，每层英魂之刃使无敌斩的敏捷伤害系数提高1%"			
 
 	// Kunkka
 	"Dota_Tooltip_Talent_special_bonus_imba_kunkka_1_title"						"潮汐效应"
@@ -499,7 +499,7 @@
 	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_1_title"         "奥术天球"
 	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_1_Description"   "奥术天球对300范围内的单位造成与目标智力差值的纯粹伤害"
 	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_2_title"         "神智之蚀"
-	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_2_Description"   "每点窃取的智力将减少下一次神智之蚀1秒冷却时间，最多减少50%"
+	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_2_Description"   "每次窃取的智力将减少下一次神智之蚀1秒冷却时间，最多减少50%"
 	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_3_title"         "精气光环"
 	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_3_Description"   "敌人也可以触发精气协同"
 	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_4_title"         "星体禁锢"
