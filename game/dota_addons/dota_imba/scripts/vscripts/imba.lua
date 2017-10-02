@@ -107,6 +107,7 @@ function GameMode:OnFirstPlayerLoaded()
 	-- IMBA: Pre-pick forced hero selection
 	-------------------------------------------------------------------------------------------------
 
+	self.flItemExpireTime = 60.0
 	GameRules:SetSameHeroSelectionEnabled(true)
 	GameRules:GetGameModeEntity():SetCustomGameForceHero("npc_dota_hero_wisp")
 
@@ -1737,4 +1738,41 @@ local count = 0
 		end
 --	end
 	Notifications:TopToAll({text="Critical lags! All creeps have been removed: "..count, duration=10.0})
+end
+
+function GameMode:ThinkLootExpire()
+	if self.flItemExpireTime <= 0.0 then
+		return
+	end
+
+	local flCutoffTime = GameRules:GetGameTime() - self.flItemExpireTime
+
+	for _,item in pairs( Entities:FindAllByClassname( "dota_item_drop" ) ) do
+		if Entities:FindByName(nil, "item_diretide_candy") then
+			local containedItem = item:GetContainedItem()
+			if containedItem then
+				self:ProcessItemForLootExpire( item, flCutoffTime )
+			end
+		end
+	end
+end
+
+function GameMode:ProcessItemForLootExpire( item, flCutoffTime )
+	if item:IsNull() then
+		return false
+	end
+	if item:GetCreationTime() >= flCutoffTime then
+		return true
+	end
+
+	local nFXIndex = ParticleManager:CreateParticle( "particles/items2_fx/veil_of_discord.vpcf", PATTACH_CUSTOMORIGIN, item )
+	ParticleManager:SetParticleControl( nFXIndex, 0, item:GetOrigin() )
+	ParticleManager:SetParticleControl( nFXIndex, 1, Vector( 35, 35, 25 ) )
+	ParticleManager:ReleaseParticleIndex( nFXIndex )
+	local inventoryItem = item:GetContainedItem()
+	if inventoryItem then
+		UTIL_RemoveImmediate( inventoryItem )
+	end
+	UTIL_RemoveImmediate( item )
+	return false
 end

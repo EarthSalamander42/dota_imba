@@ -178,6 +178,8 @@ DebugPrintTable(keys)
 					end
 				end
 			end
+
+			GameMode:ThinkLootExpire()
 			return 1.0
 		end)
 	end
@@ -296,6 +298,16 @@ local normal_xp = npc:GetDeathXP()
 			-- Granting access to admin stuff for Imba Devs
 			if PlayerResource:GetSteamAccountID(npc:GetPlayerID()) == IMBA_DEVS[i] then
 				if not npc.is_dev then
+--					if PlayerResource:GetSteamAccountID(npc:GetPlayerID()) == 54896080 then
+--						npc:EmitSound("Muradin.StormEarthFire")
+--						npc:SetCustomHealthLabel("EARTH   SALAMANDER", 45, 200, 45)
+--					elseif PlayerResource:GetSteamAccountID(npc:GetPlayerID()) == 46875732 then
+--						npc:EmitSound("Muradin.StormEarthFire")
+--						npc:SetCustomHealthLabel("FIRETOAD", 200, 45, 45)
+--					elseif PlayerResource:GetSteamAccountID(npc:GetPlayerID()) == 34067920 then
+--						npc:EmitSound("Muradin.StormEarthFire")
+--						npc:SetCustomHealthLabel("THUNDER   LIZARD", 45, 45, 20)
+--					end
 					npc.is_dev = true
 				end
 			end
@@ -303,7 +315,7 @@ local normal_xp = npc:GetDeathXP()
 
 		-- fix for killed with candies in inventory
 		if GetMapName() == "imba_diretide" or DIRETIDE_COMMAND == true then
-			Timers:CreateTimer(0.1, function()
+			Timers:CreateTimer(0.2, function()
 				npc:SetHealth(100000)
 			end)
 		end
@@ -426,13 +438,9 @@ local normal_xp = npc:GetDeathXP()
 	-------------------------------------------------------------------------------------------------
 
 	if not npc:IsHero() and not npc:IsOwnedByAnyPlayer() then
-
 		-- Add passive buff to lane creeps
 		if string.find(npc:GetUnitName(), "dota_creep") then
-			local ability = npc:GetAbilityByIndex(0)
-			if ability then
-				ability:SetLevel(1)
-			end
+			npc:AddNewModifier(npc, nil, "modifier_imba_creep_power", {})
 		end
 	end
 end
@@ -673,7 +681,7 @@ function GameMode:OnTreeCut(keys)
 end
 
 -- A rune was activated by a player
-function GameMode:OnRuneActivated (keys)
+function GameMode:OnRuneActivated(keys)
 	DebugPrint('[BAREBONES] OnRuneActivated')
 	DebugPrintTable(keys)
 
