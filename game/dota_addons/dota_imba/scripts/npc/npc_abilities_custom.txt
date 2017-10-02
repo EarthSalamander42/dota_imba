@@ -184,68 +184,6 @@
 	}
 
 	//=================================================================================================================
-	// Normal Melee Lane Creep Upgrade
-	//=================================================================================================================
-	"imba_creep_melee_bonuses"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_lua"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"AbilityTextureName"							"rubick_empty1"
-		"MaxLevel"										"1"
-		"ScriptFile"									"hero/npc_upgrades.lua"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"bonus_damage_per_minute"				"2"
-			}
-
-			"02"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"bonus_health_per_minute"				"20"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Normal Ranged Lane Creep Upgrade
-	//=================================================================================================================
-	"imba_creep_ranged_bonuses"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_lua"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"AbilityTextureName"							"rubick_empty1"
-		"MaxLevel"										"1"
-		"ScriptFile"									"hero/npc_upgrades.lua"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"bonus_damage_per_minute"				"4"
-			}
-
-			"02"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"bonus_health_per_minute"				"12"
-			}			
-		}		
-	}
-
-	//=================================================================================================================
 	// Super Melee Lane Creep Upgrade
 	//=================================================================================================================
 	"imba_super_creep_melee_bonuses"
