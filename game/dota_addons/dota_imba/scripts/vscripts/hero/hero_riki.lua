@@ -788,7 +788,7 @@ function modifier_imba_blink_strike_cmd:GetModifierDisableTurning()
 	return 1
 end
 ---------------------------------------------------------------------
---------------------	  Cloak and Dagger		 --------------------
+--------------------	  Cloak and Dagger	 --------------------
 ---------------------------------------------------------------------
 imba_riki_cloak_and_dagger = imba_riki_cloak_and_dagger or class({})
 LinkLuaModifier( "modifier_imba_riki_cloak_and_dagger", "hero/hero_riki.lua", LUA_MODIFIER_MOTION_NONE )	-- Backstab and invisibility handler
@@ -1196,9 +1196,9 @@ function modifier_imba_riki_peek_a_boo:IsPurgable() return false end
 function modifier_imba_riki_peek_a_boo:IsDebuff() return false end
 function modifier_imba_riki_peek_a_boo:IsHidden() return false end
 
--------------------------------------------------------------------------------------
---------------------	Cloak and Dagger Peek Backbreaker	  -----------------------
--------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+--------------------	Cloak and Dagger Backbreaker	  -----------------------
+---------------------------------------------------------------------------------
 
 modifier_imba_riki_backbreaker = modifier_imba_riki_backbreaker or class({})
 function modifier_imba_riki_backbreaker:IsPurgable() return false end
