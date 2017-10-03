@@ -26739,13 +26739,13 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"scepter_cast_range"	"1250"
+				"scepter_cast_range"	"1000"
 			}
 			
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"scepter_duration"		"10"
+				"scepter_duration"		"9"
 			}
 			
 		}
