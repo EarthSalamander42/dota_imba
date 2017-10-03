@@ -169,7 +169,7 @@ function modifier_imba_smoke_screen_handler:OnIntervalThink()
 	for index, modifier in pairs(parent.afflicted) do
 		local unit = EntIndexToHScript(index)
 		local distance = CalcDistanceBetweenEntityOBB(parent, unit)
-		if modifier then
+		if not modifier:IsNull() then
 			if distance > aoe then modifier:SetStackCount(0) end
 		end
 	end
