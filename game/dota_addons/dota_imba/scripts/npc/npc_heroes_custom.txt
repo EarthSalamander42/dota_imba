@@ -1845,27 +1845,24 @@
 
 		"AbilityLayout"				"6"
 
-		//"Ability1"					"imba_phoenix_icarus_dive"
-		//"Ability2"					"imba_phoenix_fire_spirits"
-		//"Ability3"					"imba_phoenix_sun_ray"
-		//"Ability4"					"imba_phoenix_sun_ray_toggle_move"
-		//"Ability5"					"imba_phoenix_burning_wings"
-		//"Ability6"					"imba_phoenix_supernova"
-		//"Ability7"					"imba_phoenix_launch_fire_spirit"
-		//"Ability8"					"imba_phoenix_icarus_dive_stop"
-		//"Ability9"					"imba_phoenix_sun_ray_stop"
+		"Ability1"					"imba_phoenix_icarus_dive"
+		"Ability2"					"imba_phoenix_fire_spirits"
+		"Ability3"					"imba_phoenix_sun_ray"
+		"Ability4"					"imba_phoenix_sun_ray_toggle_move"
+		"Ability5"					"imba_phoenix_burning_wings"
+		"Ability6"					"imba_phoenix_supernova"
+		"Ability7"					"imba_phoenix_launch_fire_spirit"
+		"Ability8"					"imba_phoenix_icarus_dive_stop"
+		"Ability9"					"imba_phoenix_sun_ray_stop"
 
-		//"Ability10"					"special_bonus_imba_phoenix_1" // 
-		//"Ability11"					"special_bonus_imba_phoenix_2" // 
-		//"Ability12"					"special_bonus_imba_phoenix_7" // 
-		//"Ability13"					"special_bonus_imba_phoenix_4" // 
-		//"Ability14"					"special_bonus_imba_phoenix_5" //
-		//"Ability15"					"special_bonus_imba_phoenix_6" //
-		//"Ability16"					"special_bonus_imba_phoenix_3" // 
-		//"Ability17"					"special_bonus_imba_phoenix_8" // 
-		"Ability15"						"special_bonus_unique_phoenix_3"
-		"Ability16"						"special_bonus_unique_phoenix_2"
-		"Ability17"						"special_bonus_unique_phoenix_1"
+		"Ability10"					"special_bonus_imba_phoenix_1" // Double Dive speed, removed cast point, and doubled hp cost on Icarus Dive
+		"Ability11"					"special_bonus_imba_phoenix_2" // Icarus Dive stuns for 0.5 seconds
+		"Ability12"					"special_bonus_imba_phoenix_7" // Fire Spirits duration halved, maximum charges removed, costs 100 mana to cast.
+		"Ability13"					"special_bonus_imba_phoenix_4" // Sun Ray applies a strong dispell on allies on end
+		"Ability14"					"special_bonus_imba_phoenix_5" // If egg dies, Phoenix and the ally will rebirth at 10% of max HP and MP with refreshed abilities
+		"Ability15"					"special_bonus_imba_phoenix_6" // Creates another egg with allies, egg health decreased by 25%
+		"Ability16"					"special_bonus_imba_phoenix_3" // Fire spirits can stack up to 3
+		"Ability17"					"special_bonus_imba_phoenix_8" // Can move freely when casting Sun Ray
 
 		"ProjectileModel"			"particles/units/heroes/hero_phoenix/phoenix_base_attack.vpcf"
 	}

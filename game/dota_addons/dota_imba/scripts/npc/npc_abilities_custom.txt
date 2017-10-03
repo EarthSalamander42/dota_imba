@@ -23711,7 +23711,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_second"		"20 40 60 80 80 80 80"
+				"damage_per_second"		"20 40 60 80 85 90 95"
 			}
 			"07"
 			{
@@ -23792,7 +23792,7 @@
 		"AbilityCastRange"				"1400"
 		"AbilityCastPoint"				"0.01"
 		
-		"AbilityCooldown"			"45"
+		"AbilityCooldown"			"45 40 35 30 29 28 27"
 
 		"AbilityManaCost"			"125"
 
@@ -23842,7 +23842,7 @@
 			"07"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage_per_second"	"16 34 52 70 70 70 70"
+				"damage_per_second"	"20 40 60 80 85 90 95"
 			}
 			"08"
 			{
@@ -23927,12 +23927,13 @@
 			"06"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"attackspeed_slow"	"100 120 140 160 180 200 220"
+				"damage_per_second"	"16 34 52 70 70 70 70"
+
 			}
 			"07"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage_per_second"	"16 34 52 70 70 70 70"
+				"attackspeed_slow"	"100 120 140 160 180 200 220"
 			}
 			"08"
 			{
@@ -23973,6 +23974,7 @@
 		"AbilityCastRange"					"1300 1300 1300 1300 1500 1700 1900"
 
 		"AbilityCooldown"					"26 25 24 23 22 21 20"
+		"AbilityManaCost"				"80 90 100 110 120 130 140"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -24143,7 +24145,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"500"
 		"AbilityCastPoint"				"0.01"
-		"AbilityManaCost"				"250 200 150 100 50 0"
+		"AbilityManaCost"				"200 150 100 66 33 0"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -24180,12 +24182,12 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_per_sec"				"70 100 130 140 150 160"
+				"duration"						"6"
 			}
 			"03"
 			{
-				"var_type"						"FIELD_FLOAT"
-				"stun_duration"					"1.5 2.0 2.5 2.5 2.75 3.0"
+				"var_type"						"FIELD_INTEGER"
+				"damage_per_sec"				"70 100 130 140 150 160"
 			}
 			"04"
 			{
@@ -24194,8 +24196,8 @@
 			}
 			"05"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"duration"						"6"
+				"var_type"						"FIELD_FLOAT"
+				"stun_duration"					"1.5 2.0 2.5 2.5 2.75 3.0"
 			}
 			"06"
 			{
@@ -24236,7 +24238,7 @@
 	}
 
 	//=================================================================================================================
-	// Phoenix: Bruning Wings
+	// Phoenix: Burning Wings
 	//=================================================================================================================
 	"imba_phoenix_burning_wings"
 	{
@@ -24275,7 +24277,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hp_cost_per_sec"		"10"
+				"hp_cost_per_sec"		"5"
 			}
 			"03"
 			{
