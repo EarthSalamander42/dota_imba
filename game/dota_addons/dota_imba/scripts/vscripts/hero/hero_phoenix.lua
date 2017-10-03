@@ -1613,6 +1613,7 @@ LinkLuaModifier("modifier_imba_phoenix_supernova_dmg", "hero/hero_phoenix", LUA_
 LinkLuaModifier("modifier_imba_phoenix_supernova_scepter_passive", "hero/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_phoenix_supernova_scepter_passive_cooldown", "hero/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_phoenix_supernova_egg_double", "hero/hero_phoenix", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_kill_no_timer", "modifier/modifier_kill_no_timer", LUA_MODIFIER_MOTION_NONE)
 
 imba_phoenix_supernova = imba_phoenix_supernova or class({})
 
@@ -1652,7 +1653,7 @@ function imba_phoenix_supernova:OnSpellStart()
 	caster:AddNoDraw()
 
 	local egg = CreateUnitByName("npc_dota_phoenix_sun",location,false,caster,caster:GetOwner(),caster:GetTeamNumber())
-	egg:AddNewModifier(caster, ability, "modifier_kill", {duration = egg_duration })
+	egg:AddNewModifier(caster, ability, "modifier_kill_no_timer", {duration = egg_duration })
 	egg:AddNewModifier(caster, ability, "modifier_imba_phoenix_supernova_egg_thinker", {duration = egg_duration })
 
 	egg:SetHealth( (4 * max_attack) )
@@ -1682,7 +1683,7 @@ function imba_phoenix_supernova:OnSpellStart()
 			local loaction = caster:GetForwardVector() * 192 + caster:GetAbsOrigin()
 			local egg2 = CreateUnitByName("npc_dota_phoenix_sun", loaction, false, ally, ally:GetOwner(), ally:GetTeamNumber())
 			
-			egg2:AddNewModifier(ally, ability, "modifier_kill", {duration = egg_duration })
+			egg2:AddNewModifier(ally, ability, "modifier_kill_no_timer", {duration = egg_duration })
 			egg2:AddNewModifier(caster, ability, "modifier_imba_phoenix_supernova_egg_double", { } )
 			egg2:AddNewModifier(ally, ability, "modifier_imba_phoenix_supernova_egg_thinker", {duration = egg_duration })
 
@@ -2374,7 +2375,7 @@ function modifier_imba_phoenix_supernova_scepter_passive:OnTakeDamage( keys )
 		caster:AddNoDraw()
 
 		local egg = CreateUnitByName("npc_dota_phoenix_sun",location,false,caster,caster:GetOwner(),caster:GetTeamNumber())
-		egg:AddNewModifier(caster, ability, "modifier_kill", {duration = egg_duration + extend_duration })
+		egg:AddNewModifier(caster, ability, "modifier_kill_no_timer", {duration = egg_duration + extend_duration })
 		egg:AddNewModifier(caster, ability, "modifier_imba_phoenix_supernova_egg_thinker", {duration = egg_duration + extend_duration })
 
 		egg:SetHealth( (4 * max_attack) )
