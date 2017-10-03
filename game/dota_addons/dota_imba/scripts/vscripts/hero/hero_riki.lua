@@ -169,7 +169,9 @@ function modifier_imba_smoke_screen_handler:OnIntervalThink()
 	for index, modifier in pairs(parent.afflicted) do
 		local unit = EntIndexToHScript(index)
 		local distance = CalcDistanceBetweenEntityOBB(parent, unit)
-		if distance > aoe then modifier:SetStackCount(0) end
+		if modifier then
+			if distance > aoe then modifier:SetStackCount(0) end
+		end
 	end
 end
 
@@ -788,7 +790,7 @@ function modifier_imba_blink_strike_cmd:GetModifierDisableTurning()
 	return 1
 end
 ---------------------------------------------------------------------
---------------------	  Cloak and Dagger	 --------------------
+--------------------	  Cloak and Dagger		 --------------------
 ---------------------------------------------------------------------
 imba_riki_cloak_and_dagger = imba_riki_cloak_and_dagger or class({})
 LinkLuaModifier( "modifier_imba_riki_cloak_and_dagger", "hero/hero_riki.lua", LUA_MODIFIER_MOTION_NONE )	-- Backstab and invisibility handler
@@ -1196,9 +1198,9 @@ function modifier_imba_riki_peek_a_boo:IsPurgable() return false end
 function modifier_imba_riki_peek_a_boo:IsDebuff() return false end
 function modifier_imba_riki_peek_a_boo:IsHidden() return false end
 
----------------------------------------------------------------------------------
---------------------	Cloak and Dagger Backbreaker	  -----------------------
----------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+--------------------	Cloak and Dagger Peek Backbreaker	  -----------------------
+-------------------------------------------------------------------------------------
 
 modifier_imba_riki_backbreaker = modifier_imba_riki_backbreaker or class({})
 function modifier_imba_riki_backbreaker:IsPurgable() return false end
@@ -1471,7 +1473,7 @@ function modifier_imba_riki_tricks_of_the_trade_primary:OnIntervalThink()
 						if backbreaker_mod then
 							backbreaker_mod:ForceRefresh()
 						else
-							backbreaker_mod = unit:AddNewModifier(caster,ability,"modifier_imba_riki_backbreaker",{duration = caster:FindTalentValue("special_bonus_imba_riki_7","duration")})
+							backbreaker_mod = unit:AddNewModifier(caster,backstab_ability,"modifier_imba_riki_backbreaker",{duration = caster:FindTalentValue("special_bonus_imba_riki_7","duration")})
 						end	
 					end
 				end
@@ -1624,7 +1626,7 @@ function modifier_imba_riki_tricks_of_the_trade_secondary:ProcTricks(caster,abil
 			if backbreaker_mod then
 				backbreaker_mod:ForceRefresh()
 			else
-				backbreaker_mod = target:AddNewModifier(caster,ability,"modifier_imba_riki_backbreaker",{duration = caster:FindTalentValue("special_bonus_imba_riki_7","duration")})
+				backbreaker_mod = target:AddNewModifier(caster,backstab_ability,"modifier_imba_riki_backbreaker",{duration = caster:FindTalentValue("special_bonus_imba_riki_7","duration")})
 			end	
 		end
 	end
