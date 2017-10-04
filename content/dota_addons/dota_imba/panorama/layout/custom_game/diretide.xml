@@ -15,7 +15,7 @@
 
 			<Panel id="Diretide2">
 				<Panel hittest="false" id="RadiantScore">
-					<Label hittest="false" class="QuestGenericText" id="RadiantScoreText" text="999"/>
+					<Label hittest="false" class="QuestGenericText" id="RadiantScoreText" text="25"/>
 				</Panel>
 				<Panel id="ScorePanel">
 					<Panel id="Roshan"/>
@@ -23,7 +23,7 @@
 					<Label id="RoshanTarget" text=""/>
 				</Panel>
 				<Panel hittest="false" id="DireScore">
-					<Label hittest="false" class="QuestGenericText" id="DireScoreText" text="999"/>
+					<Label hittest="false" class="QuestGenericText" id="DireScoreText" text="25"/>
 				</Panel>
 			</Panel>
 

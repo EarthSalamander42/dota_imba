@@ -2,6 +2,7 @@
 
 var JS_PHASE = 0
 var playerPanels = {};
+var hudElements = $.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("HUDElements");
 
 function UpdateTimer( data )
 {
@@ -59,6 +60,16 @@ function Phase(args)
 	{
 		$("#Diretide").style.visibility = "visible";
 		$("#Diretide2").style.visibility = "visible";
+		//Chat
+		var Chat = hudElements.FindChildTraverse("HudChat");
+		Chat.style.marginBottom = "11%";
+//		Chat.style.width = "35%";
+//		Chat.FindChildTraverse("ChatControls").style.opacity = "1";
+		Chat.style.zIndex = "10";
+
+		//Channel Bar
+		var ChannelBar = Parent.FindChildTraverse("ChannelBar");
+		ChannelBar.style.zIndex = "10";
 	}
 	if (args.Phase == 2)
 	{
@@ -92,8 +103,6 @@ function DiretideInfo()
 
 function HallOfFame()
 {
-	var hudElements = $.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("HUDElements");
-
 	hudElements.FindChildTraverse("topbar").style.visibility = "collapse";
 	hudElements.FindChildTraverse("shop").style.visibility = "collapse";
 	hudElements.FindChildTraverse("minimap_container").style.visibility = "collapse";
