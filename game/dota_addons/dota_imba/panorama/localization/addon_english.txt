@@ -475,6 +475,24 @@
 	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_8_title"                  "Ubercharge"					
 	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_8_Description"            "Applying Empower on an already Supercharged target makes it Ubercharged. Ubercharge causes a target's attacks to launch a Mini Shockwave in a straight line. Has an internal cooldown of 1 second. Mini Shockwaves do not split or apply Magnetize stacks, and deal 50% of Shockwave's damage. Lasts 8 seconds.<br><br><i>Magnus expels his magnetic forces further before pushing them back in, resulting in a more powerful magnified weapon.</i>"
 
+	// Mirana
+	"DOTA_Tooltip_Talent_special_bonus_imba_mirana_1_title"						"Storm of the Moonlight"			
+	"DOTA_Tooltip_Talent_special_bonus_imba_mirana_1_Description"				"Upon using Moonlight Shadow, all allies get one charge of Starstorm. When near an enemy unit and can be seen by them, the charge procs, casting a Starstorm at the ally's location.<br>This effect only procs after 3 seconds of Moonlight Shadow's cast. The charge procs one wave of both the primary and secondary starstorms.<br>Killing an enemy gives credit to the ally proccing the charge. <br><br><i>Mirana uses her powers to communicate with her night goddess, convincing her to arm her allies in battle with shooting stars.</i>"
+	"DOTA_Tooltip_Talent_special_bonus_imba_mirana_2_title"						"Prowling Upon a Prey"
+	"DOTA_Tooltip_Talent_special_bonus_imba_mirana_2_Description"				"Enemies that are stunned by a Sacred Arrow take critical damage from all damage as long as the remaining stun duration is longer than 2 seconds. <br><br><i>The prey, paralyzed by the lunar energies inside the Sacred Arrow, has no chance against its predators' merciless strikes.</i>"
+	"DOTA_Tooltip_Talent_special_bonus_imba_mirana_3_title"						"Swift Night"
+	"DOTA_Tooltip_Talent_special_bonus_imba_mirana_3_Description"				"Moonlight Shadow grants allies 20% movespeed bonus as long as they're under Moonlight Shadow's invisibility effect. <br><br><i>Leading her allies in the night, they become capable of swift, silent movement, even on the toughest surfaces.</i>"
+	"DOTA_Tooltip_Talent_special_bonus_imba_mirana_4_title"						"Silver Lotus"
+	"DOTA_Tooltip_Talent_special_bonus_imba_mirana_4_Description"				"Mirana fires two additional Sacred Arrows diagonally, in addition to her straight arrow. <br><br><i>Mastering her bow proficiency, Mirana is able to fire three of her strongest arrows simultaneously, covering much wider range.</i>"
+	"DOTA_Tooltip_Talent_special_bonus_imba_mirana_5_title"						"Silent Stance"
+	"DOTA_Tooltip_Talent_special_bonus_imba_mirana_5_Description"				"Standing for 3 seconds without moving at night allows Mirana to become invisible until she moves or attacks.<br>Casting spells does not breaks her invisibility.<br>The invisibility automatically ends when the day comes. <br><br><i>Standing still, Mirana blends so well in the shadows of the night, becoming invisible to the naked eye until she makes a move.</i>"
+	"DOTA_Tooltip_Talent_special_bonus_imba_mirana_6_title"						"Leaping Shoot"	
+	"DOTA_Tooltip_Talent_special_bonus_imba_mirana_6_Description"				"Mirana fires a free Sacred Arrow forward when she leaps. The direction of the arrow is the same direction as the leap itself.<br>This Sacred Arrow procs regardless of her Sacred Arrow's cooldown, and does not trigger it. Leaping Shoot does not trigger Silver Lotus.<br><br><i>Firing her Sacred Arrow while her beast leaps into battle is one of the many feats Mirana is able to perform, allowing her to surprise her opponents from within the night.</i>"
+	"DOTA_Tooltip_Talent_special_bonus_imba_mirana_7_title"						"Beastiary Expertise"
+	"DOTA_Tooltip_Talent_special_bonus_imba_mirana_7_Description"				"Mirana can use Leap without rotating to look at the target location. While the leaping is in effect, Mirana becomes briefly invisible, dodging projectiles in the process.<br><br><i>Training day and night with her beast, they become as one, allowing them to leap so masterfully, that's the moon itself hides them.</i>"		
+	"DOTA_Tooltip_Talent_special_bonus_imba_mirana_8_title"                  	"Seed of the Moon"					
+	"DOTA_Tooltip_Talent_special_bonus_imba_mirana_8_Description"            	"Primary Starstorms that hit targets marks them with the Seed of the Moon for one second. If Mirana attacks a target that is marked, the debuff is consumed, and a secondary Starstorm procs on the target.<br>Secondary Starstorm do not mark the target, but the target can be marked multiple times from other primary Starstorms, including the Aghnaim's Scepter's wave.<br><br><i>Using lunar shards, Mirana signals her Goddess to drop her stars on her targets.</i>"
+
 	// Nyx
 	"DOTA_Tooltip_Talent_special_bonus_imba_nyx_assassin_1_title"             "Everlasting Vendetta"
 	"DOTA_Tooltip_Talent_special_bonus_imba_nyx_assassin_1_Description"       "If Vendetta kills an enemy unit, it doesn't consume the Eye for Eye stacks.<br><br><i>A successful hunt does not mean the end of Nyx's Vendetta.</i>"
@@ -568,7 +586,7 @@
 
 	// Sniper
 	"DOTA_Tooltip_Talent_special_bonus_imba_sniper_1_title"                   "Mortar Ammo"
-	"DOTA_Tooltip_Talent_special_bonus_imba_sniper_1_Description"             "Allows Sniper to cast Shrapnel globally. The bonus is reduced to double of the cast range if Sniper is within the Fountain's safe zone. <br><br><i>Firing a mortar shell is usually a lot more fun. And of course, it can reach almost anywhere!</i>"
+	"DOTA_Tooltip_Talent_special_bonus_imba_sniper_1_Description"             "Shrapnel's cast range is doubled. <br><br><i>Firing a mortar shell is usually a lot more fun. And of course, it can reach almost anywhere!</i>"
 	"DOTA_Tooltip_Talent_special_bonus_imba_sniper_2_title"                   "Jet Propelled Shell"
 	"DOTA_Tooltip_Talent_special_bonus_imba_sniper_2_Description"             "Assassinate knockbacks all enemy units hit by the projectile 500 units. <br><br><i>So powerful, even the mightiest enemies cannot resist the powerful jet propulsion of this shell.</i>"
 	"DOTA_Tooltip_Talent_special_bonus_imba_sniper_3_title"                   "Bulletstorm"

@@ -278,6 +278,13 @@ function modifier_imba_roshan_ai_diretide:StartPhase(phase)
 	-- Destroy candy eaten count
 	local candyMod = self.roshan:FindModifierByName("modifier_imba_roshan_eaten_candy")
 	if candyMod then candyMod:Destroy() end
+
+	-- Destroy all fury swipe modifiers
+	local units = FindUnitsInRadius(self.roshan:GetTeamNumber(), Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_CLOSEST, false)
+	for _, unit in ipairs(units) do
+		local swipesModifier = unit:FindModifierByName("modifier_imba_roshan_fury_swipes")
+		if swipesModifier then swipesModifier:Destroy() end
+	end
 	
 	-- Destroy acceleration modifier
 	local accelerationMod = self.roshan:FindModifierByName("modifier_imba_roshan_acceleration")
@@ -371,9 +378,18 @@ function modifier_imba_roshan_ai_diretide:Candy(roshan)
 			roshan:EmitSound("Diretide.RoshanRoar")
 		end)
 	end)
-	
+
 	local candyMod = roshan:FindModifierByName("modifier_imba_roshan_eaten_candy")
-	if not candyMod then candyMod = roshan:AddNewModifier(roshan, self:GetAbility(), "modifier_imba_roshan_eaten_candy", {}) end
+	if not candyMod then
+		candyMod = roshan:AddNewModifier(roshan, self:GetAbility(), "modifier_imba_roshan_eaten_candy", {})
+	else
+		if not GetMapName() == "imba_diretide" or DIRETIDE_COMMAND == false then
+			if candyMod:GetStackCount() == 14 then
+				DiretideChatCommand()
+				Diretide()
+			end
+		end
+	end
 	
 	candyMod:IncrementStackCount()
 end
@@ -385,6 +401,13 @@ function modifier_imba_roshan_ai_diretide:ChangeTagret(roshan)
 	
 	roshan:SetForceAttackTarget(nil)
 	roshan:Interrupt()
+
+	-- Destroy all fury swipe modifiers
+	local units = FindUnitsInRadius(roshan:GetTeamNumber(), Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_CLOSEST, false)
+	for _, unit in ipairs(units) do
+		local swipesModifier = unit:FindModifierByName("modifier_imba_roshan_fury_swipes")
+		if swipesModifier then swipesModifier:Destroy() end
+	end
 	
 	-- Destroy acceleration modifier
 	local accelerationMod = roshan:FindModifierByName("modifier_imba_roshan_acceleration")
@@ -638,6 +661,34 @@ function modifier_imba_roshan_ai_diretide:OnAttackLanded(keys)
 			target:EmitSound("Roshan.Attack")
 			target:EmitSound("Roshan.Attack.Post")
 
+			-- Deal fury swipes increased damage
+			local furySwipesModifier = target:FindModifierByName("modifier_imba_roshan_fury_swipes")
+			if furySwipesModifier then
+				local damageTable = { victim = target,attacker = roshan, damage_type = DAMAGE_TYPE_PURE, -- armor 2 stronk
+									  damage = furySwipesModifier:GetStackCount() * self.furyswipeDamage,	}
+				
+				-- Increase fury swipe damage based on times Roshan died
+				if self:GetStackCount() == 3 then
+					local deathMod = roshan:FindModifierByName("modifier_imba_roshan_death_buff")
+					if deathMod then
+						damageTable.damage = damageTable.damage + deathMod:GetStackCount() * self.furyswipeIncreasePerDeath
+					end
+				end
+				
+				ApplyDamage(damageTable)
+				furySwipesModifier:IncrementStackCount()
+			else
+				-- Does not wear off on phase 2
+				if self:GetStackCount() == 2 then
+					furySwipesModifier = target:AddNewModifier(roshan, self:GetAbility(), "modifier_imba_roshan_fury_swipes", {duration = math.huge})
+					if furySwipesModifier then furySwipesModifier:SetStackCount(1) end
+					
+				elseif self:GetStackCount() == 3 then
+					furySwipesModifier = target:AddNewModifier(roshan, self:GetAbility(), "modifier_imba_roshan_fury_swipes", {duration = self.furyswipeDuration})
+					if furySwipesModifier then furySwipesModifier:SetStackCount(1) end
+				end
+			end
+
 			-- Bash only in phase 3
 			if self:GetStackCount() == 3 then
 				-- check bash chance
@@ -667,6 +718,22 @@ function modifier_imba_roshan_ai_diretide:OnAttackStart(keys)
 		end
 	end
 end
+
+---------- Roshans Fury Swipes modifier
+if modifier_imba_roshan_fury_swipes == nil then modifier_imba_roshan_fury_swipes = class({}) end
+function modifier_imba_roshan_fury_swipes:IsPurgeException() return false end
+function modifier_imba_roshan_fury_swipes:IsPurgable() return false end
+function modifier_imba_roshan_fury_swipes:IsHidden() return false end
+function modifier_imba_roshan_fury_swipes:IsDebuff() return true end
+
+function modifier_imba_roshan_fury_swipes:GetEffectName()
+	return "particles/units/heroes/hero_ursa/ursa_fury_swipes_debuff.vpcf" end
+
+function modifier_imba_roshan_fury_swipes:GetTexture()
+	return "roshan_bash" end
+
+function modifier_imba_roshan_fury_swipes:GetEffectAttachType()
+	return PATTACH_OVERHEAD_FOLLOW end
 
 ---------- Roshans acceleration modifier
 if modifier_imba_roshan_acceleration == nil then modifier_imba_roshan_acceleration = class({}) end

@@ -226,8 +226,12 @@ function IllusionManager:ResetIllusion(tEntity,tIllusion)  -- Wipe AND re-add sk
 			if illusionAbility then 
 				illusionAbility:SetLevel(abilityLevel) 
 			else
-				local newability = tIllusion:AddAbility(abilityName)
-				newability:SetLevel(abilityLevel)
+				if not abilityName == "imba_sniper_headshot" then -- For reasons i could've find yet, this ability causes server to crash on an illusion
+					local newability = tIllusion:AddAbility(abilityName)
+					newability:SetLevel(abilityLevel)
+				else
+--					print("Found sniper's headshot! ignoring..")
+				end
 			end
 		end
 	end
@@ -249,7 +253,11 @@ function IllusionManager:ResetIllusion(tEntity,tIllusion)  -- Wipe AND re-add sk
 				illusion_individual_item:SetActiveState(individual_item.activestate)
 			end
 		end
-	end	
+	end
+--	print("Illusion bounty:", illusion_level*2)
+--	tIllusion:SetMinimumGoldBounty(illusion_level*2)
+--	tIllusion:SetMaximumGoldBounty(illusion_level*2)
+--	tIllusion:SetDeathXP(illusion_level*2)
 end
 
 function IllusionManager:WipeIllusion(tIllusion)  -- Wipe illusion of any notable characteristics (skills, items, etc)
