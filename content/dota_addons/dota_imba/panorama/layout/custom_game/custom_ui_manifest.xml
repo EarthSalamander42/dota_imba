@@ -132,16 +132,7 @@
 		}
 		else if (map_info.map_display_name == "imba_diretide")
 		{
-			//Chat
-			var Chat = hudElements.FindChildTraverse("HudChat");
-			Chat.style.marginBottom = "11%";
-//			Chat.style.width = "35%";
-//			Chat.FindChildTraverse("ChatControls").style.opacity = "1";
-			Chat.style.zIndex = "10";
-
-			//Channel Bar
-			var ChannelBar = Parent.FindChildTraverse("ChannelBar");
-			ChannelBar.style.zIndex = "10";
+			
 		}
 		else
 		{
