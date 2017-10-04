@@ -1346,3 +1346,18 @@ function OverrideHero(hero, hero_name)
 		hero:SetModelScale(1.1)
 	end
 end
+
+--[[
+function ThinkItemExpire()
+	for _,item in pairs(Entities:FindAllByName("item_diretide_candy")) do -- replace by a table of dropped items later if needed
+		print("Diretide candy found!")
+		if item and (GameRules:GetGameTime() - 60) > item:GetCreationTime() then
+			local nFXIndex = ParticleManager:CreateParticle("particles/items2_fx/veil_of_discord.vpcf", PATTACH_CUSTOMORIGIN, item)
+			ParticleManager:SetParticleControl(nFXIndex, 0, item:GetOrigin())
+			ParticleManager:SetParticleControl(nFXIndex, 1, Vector(35, 35, 25))
+			ParticleManager:ReleaseParticleIndex(nFXIndex)
+			UTIL_RemoveImmediate(item)
+		end
+	end
+end
+--]]

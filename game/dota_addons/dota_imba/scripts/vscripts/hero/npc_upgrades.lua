@@ -2,48 +2,11 @@
 		Updated by: Shush
 		Date: 04/08/2015	]]
 
-
-imba_creep_melee_bonuses = imba_creep_melee_bonuses or class({})
-
-function imba_creep_melee_bonuses:GetIntrinsicModifierName()
-	return "modifier_imba_creep_power"	
-end
-
-imba_creep_ranged_bonuses = imba_creep_ranged_bonuses or class({})
-
-function imba_creep_ranged_bonuses:GetIntrinsicModifierName()
-	return "modifier_imba_creep_power"	
-end
-
-imba_super_creep_melee_bonuses = imba_super_creep_melee_bonuses or class({})
-
-function imba_super_creep_melee_bonuses:GetIntrinsicModifierName()
-	return "modifier_imba_creep_power"	
-end
-
-imba_super_creep_ranged_bonuses = imba_super_creep_ranged_bonuses or class({})
-
-function imba_super_creep_ranged_bonuses:GetIntrinsicModifierName()
-	return "modifier_imba_creep_power"	
-end
-
-imba_mega_creep_melee_bonuses = imba_mega_creep_melee_bonuses or class({})
-
-function imba_mega_creep_melee_bonuses:GetIntrinsicModifierName()
-	return "modifier_imba_creep_power"	
-end
-
-imba_mega_creep_ranged_bonuses = imba_mega_creep_ranged_bonuses or class({})
-
-function imba_mega_creep_ranged_bonuses:GetIntrinsicModifierName()
-	return "modifier_imba_creep_power"	
-end
-
 LinkLuaModifier("modifier_imba_creep_power", "hero/npc_upgrades", LUA_MODIFIER_MOTION_NONE)
 
 modifier_imba_creep_power = modifier_imba_creep_power or class({})
 
-function modifier_imba_creep_power:IsHidden() return true end
+function modifier_imba_creep_power:IsHidden() return false end
 function modifier_imba_creep_power:IsPurgable() return false end
 function modifier_imba_creep_power:IsDebuff() return false end
 
@@ -53,8 +16,12 @@ function modifier_imba_creep_power:OnCreated()
 	self.ability = self:GetAbility()
 
 	-- Ability specials
-	self.bonus_damage_per_minute = self.ability:GetSpecialValueFor("bonus_damage_per_minute")
-	self.bonus_health_per_minute = self.ability:GetSpecialValueFor("bonus_health_per_minute")
+	self.bonus_damage_per_minute = 2
+	self.bonus_health_per_minute = 20
+	if self.parent:GetAttackCapability() == DOTA_UNIT_CAP_RANGED_ATTACK then
+		self.bonus_damage_per_minute = 4
+		self.bonus_health_per_minute = 12
+	end
 
 	if IsServer() then
 		Timers:CreateTimer(1, function()

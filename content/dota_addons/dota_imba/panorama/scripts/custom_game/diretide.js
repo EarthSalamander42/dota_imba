@@ -140,6 +140,7 @@ function HallOfFame()
 function OnPlayerReconnect( data ) {
 	$.Msg("DIRETIDE: Player has reconnected!")
 	var phase = data.Phase;
+	$.Msg("Phase: " + phase)
 }
 
 (function()
@@ -149,5 +150,5 @@ function OnPlayerReconnect( data ) {
 	GameEvents.Subscribe("diretide_phase", Phase);
 	GameEvents.Subscribe("roshan_target", RoshanTarget);
 	GameEvents.Subscribe("hall_of_fame", HallOfFame);
-	GameEvents.Subscribe( "player_reconnected", OnPlayerReconnect );
+	GameEvents.Subscribe("diretide_player_reconnected", OnPlayerReconnect);
 })();
