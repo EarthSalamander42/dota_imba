@@ -831,10 +831,10 @@ end
 
 function modifier_imba_necromastery_souls:OnIntervalThink()
     if IsServer() then
-        -- #6 Talent: Maximum Necromastery soul increase
+        --[[ Talent: Maximum Necromastery soul increase (REMOVED)
         if self.caster:HasTalent("special_bonus_imba_nevermore_6") and not self.talent6 then
             self.talent6 = true
-            self.max_souls = self.max_souls + self.caster:FindTalentValue("special_bonus_imba_nevermore_6")
+            self.max_souls = self.max_souls + self.caster:FindTalentValue("special_bonus_imba_nevermore_6")]]
 
             -- Recalculate temporary souls
             self.max_souls_inc_temp = self.max_souls * (1 + (self.max_temporary_souls_pct * 0.01))
@@ -870,8 +870,6 @@ function modifier_imba_necromastery_souls:OnIntervalThink()
 end
 
 function modifier_imba_necromastery_souls:OnRefresh()
-    -- Refresh the talent variable
-    self.talent6 = false
     self:OnCreated()
 end
 
@@ -920,10 +918,10 @@ end
 function modifier_imba_necromastery_souls:GetModifierPreAttack_BonusDamage()
     local stacks = self:GetStackCount()
 
-    -- #8 Talent: Necromastery soul grant additional damage
-    local damage_per_soul = self.damage_per_soul + self.caster:FindTalentValue("special_bonus_imba_nevermore_8")
+    -- Talent: Necromastery soul grant additional damage (REMOVED)
+   -- local damage_per_soul = self.damage_per_soul + self.caster:FindTalentValue("special_bonus_imba_nevermore_8")
 
-    return damage_per_soul * stacks
+    return self.damage_per_soul * stacks
 end
 
 function modifier_imba_necromastery_souls:OnAttackLanded(keys)
@@ -1361,11 +1359,11 @@ end
 function modifier_imba_dark_lord_debuff:GetModifierPhysicalArmorBonus()
     local stacks = self:GetStackCount()
 
-    -- #2 Talent: Presence of the Dark Lord Armor reduction increase
-    local armor_reduction = self.armor_reduction + self.caster:FindTalentValue("special_bonus_imba_nevermore_2", "armor_reduction")
-    local raze_armor_reduction = self.raze_armor_reduction + self.caster:FindTalentValue("special_bonus_imba_nevermore_2", "raze_armor_reduction")
+    --Talent: Presence of the Dark Lord Armor reduction increase (REMOVED)
+    --local armor_reduction = self.armor_reduction + self.caster:FindTalentValue("special_bonus_imba_nevermore_2", "armor_reduction")
+    --local raze_armor_reduction = self.raze_armor_reduction + self.caster:FindTalentValue("special_bonus_imba_nevermore_2", "raze_armor_reduction")
 
-    local total_armor_reduction = armor_reduction + stacks * raze_armor_reduction
+    local total_armor_reduction = self.armor_reduction + stacks * self.raze_armor_reduction
 
     return total_armor_reduction * (-1)
 end
@@ -1466,12 +1464,14 @@ function imba_nevermore_requiem:OnSpellStart(death_cast)
     local modifier_souls_handler
     local stacks
     local necro_ability
+    local max_souls
 
     if caster:HasModifier(modifier_souls) then
         modifier_souls_handler = caster:FindModifierByName(modifier_souls)
         if modifier_souls_handler then
             stacks = modifier_souls_handler:GetStackCount()
             necro_ability = modifier_souls_handler:GetAbility()
+	    max_souls = modifier_souls_handler.max_souls
         end
     end
 
@@ -1480,11 +1480,8 @@ function imba_nevermore_requiem:OnSpellStart(death_cast)
         return nil
     end
 
-    -- Necro ability specials
-    local max_souls = necro_ability:GetSpecialValueFor("max_souls")
-
-    -- #6 Talent: Maximum Necromastery soul increase
-    max_souls = max_souls + caster:FindTalentValue("special_bonus_imba_nevermore_6")
+    -- Talent: Maximum Necromastery soul increase (REMOVED)
+    -- max_souls = max_souls + caster:FindTalentValue("special_bonus_imba_nevermore_6")
 
     local line_count
     -- Determind if it was a death cast (clears and ignores temporary souls)
