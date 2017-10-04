@@ -11,8 +11,18 @@ function item_diretide_candy:OnSpellStart()
 		local modifier_candy = caster:FindModifierByName("modifier_diretide_candy_hp_loss")
 
 		if target:GetUnitName() == "npc_dota_good_candy_pumpkin" then
+			for _, hero in pairs(HeroList:GetAllHeroes()) do
+				hero:AddExperience(75, false, false)
+				hero:ModifyGold(50, true, 0)
+			end
+			StartAnimation(target, {duration=1.0, activity=ACT_DOTA_ATTACK, rate=1.0})
 			CustomNetTables:SetTableValue("game_options", "radiant", {score = CustomNetTables:GetTableValue("game_options", "radiant").score +1})
 		elseif target:GetUnitName() == "npc_dota_bad_candy_pumpkin" then
+			for _, hero in pairs(HeroList:GetAllHeroes()) do
+				hero:AddExperience(75, false, false)
+				hero:ModifyGold(50, true, 0)
+			end
+			StartAnimation(target, {duration=1.0, activity=ACT_DOTA_ATTACK, rate=1.0})
 			CustomNetTables:SetTableValue("game_options", "dire", {score = CustomNetTables:GetTableValue("game_options", "dire").score +1})
 		elseif target:GetUnitLabel() == "npc_diretide_roshan" then
 			local AImod = target:FindModifierByName("modifier_imba_roshan_ai_diretide")
@@ -25,12 +35,11 @@ function item_diretide_candy:OnSpellStart()
 			return
 		end
 
-		-- Create the projectile
 		local info = {
 			Target = target,
 			Source = caster,
 			Ability = self,
-			EffectName = "particles/hw_fx/hw_candy_drop.vpcf",
+			EffectName = "particles/hw_fx/hw_candy_drop.vpcf", -- particles/hw_fx/hw_candy_projectile.vpcf
 			bDodgeable = false,
 			bProvidesVision = true,
 			bVisibleToEnemies = true,
@@ -42,6 +51,8 @@ function item_diretide_candy:OnSpellStart()
 		}
 		ProjectileManager:CreateTrackingProjectile( info )
 
+		-- candy use sound
+--		EmitSoundOnLocationWithCaster(caster:GetAbsOrigin(), "", caster)
 		self:SetCurrentCharges(self:GetCurrentCharges()-1)
 		if self:GetCurrentCharges() <= 0 then self:RemoveSelf() end
 	end

@@ -391,24 +391,9 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 =========================================================================*/
 (function () {
 
-	// Banned Heroes
-	//STR
-	$("#npc_dota_hero_magnataur").AddClass( "taken" );
-	$("#npc_dota_hero_undying").AddClass( "taken" );
-	///AGI
-	$("#npc_dota_hero_phantom_lancer").AddClass( "taken" );
-//	$("#npc_dota_hero_spectre").AddClass( "taken" );
-	//INT
-	$("#npc_dota_hero_enigma").AddClass( "taken" );
-	$("#npc_dota_hero_furion").AddClass( "taken" );
-//	$("#npc_dota_hero_queenofpain").AddClass( "taken" );
-	$("#npc_dota_hero_techies").AddClass( "taken" );
-	$("#npc_dota_hero_tinker").AddClass( "taken" );
-	$("#npc_dota_hero_venomancer").AddClass( "taken" );
-	$("#npc_dota_hero_zuus").AddClass( "taken" );
 	//CUSTOM
 	$("#CustomPickList").style.visibility = "collapse";
-	$("#npc_dota_hero_storegga").AddClass( "taken" );
+//	$("#npc_dota_hero_storegga").AddClass( "taken" );
 
 	// If this player is a spectator, just kill the whole pick screen
 	var localTeam = Players.GetTeam(Players.GetLocalPlayer())
@@ -428,25 +413,37 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 		var parent_panel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
 		var map_info = Game.GetMapInfo();
 
-		if (map_info.map_display_name == "imba_arena") {
-			$('#GameModeSelectText').text = $.Localize( '#imba_gamemode_name_arena_mode' );
+		// Banned Heroes
+		if (map_info.map_display_name == "imba_standard" || map_info.map_display_name == "imba_custom") {
+			//STR
+			$("#npc_dota_hero_undying").AddClass( "taken" );
+			///AGI
+//			$("#npc_dota_hero_phantom_lancer").AddClass( "taken" );
+//			$("#npc_dota_hero_spectre").AddClass( "taken" );
+			//INT
+//			$("#npc_dota_hero_enigma").AddClass( "taken" );
+			$("#npc_dota_hero_furion").AddClass( "taken" );
+//			$("#npc_dota_hero_queenofpain").AddClass( "taken" );
+			$("#npc_dota_hero_techies").AddClass( "taken" );
+			$("#npc_dota_hero_tinker").AddClass( "taken" );
+			$("#npc_dota_hero_venomancer").AddClass( "taken" );
+//			$("#npc_dota_hero_zuus").AddClass( "taken" );
+		} else if (map_info.map_display_name == "imba_10v10" || map_info.map_display_name == "imba_custom_10v10") {
+			//STR
+			$("#npc_dota_hero_undying").AddClass( "taken" );
+			///AGI
+			$("#npc_dota_hero_phantom_lancer").AddClass( "taken" );
+			$("#npc_dota_hero_spectre").AddClass( "taken" );
+			//INT
+			$("#npc_dota_hero_enigma").AddClass( "taken" );
+			$("#npc_dota_hero_furion").AddClass( "taken" );
+//			$("#npc_dota_hero_queenofpain").AddClass( "taken" );
+			$("#npc_dota_hero_techies").AddClass( "taken" );
+			$("#npc_dota_hero_tinker").AddClass( "taken" );
+			$("#npc_dota_hero_venomancer").AddClass( "taken" );
+			$("#npc_dota_hero_zuus").AddClass( "taken" );
 		} else if (map_info.map_display_name == "imba_diretide") {
 			$('#GameModeSelectText').text = $.Localize( '#imba_gamemode_name_diretide' );
-			//STR
-			$("#npc_dota_hero_ursa").style.visibility = "collapse";
-			$("#npc_dota_hero_magnataur").style.visibility = "collapse";
-			$("#npc_dota_hero_undying").style.visibility = "collapse";
-			///AGI
-			$("#npc_dota_hero_juggernaut").style.visibility = "collapse";
-			$("#npc_dota_hero_phantom_lancer").style.visibility = "collapse";
-			$("#npc_dota_hero_troll_warlord").style.visibility = "collapse";
-			//INT
-			$("#npc_dota_hero_enigma").style.visibility = "collapse";
-			$("#npc_dota_hero_furion").style.visibility = "collapse";
-			$("#npc_dota_hero_techies").style.visibility = "collapse";
-			$("#npc_dota_hero_tinker").style.visibility = "collapse";
-			$("#npc_dota_hero_venomancer").style.visibility = "collapse";
-			$("#npc_dota_hero_zuus").style.visibility = "collapse";
 		}
 
 		// Hide the top scoreboard during the pick phase
