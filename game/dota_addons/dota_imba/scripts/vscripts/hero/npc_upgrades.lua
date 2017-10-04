@@ -6,7 +6,7 @@ LinkLuaModifier("modifier_imba_creep_power", "hero/npc_upgrades", LUA_MODIFIER_M
 
 modifier_imba_creep_power = modifier_imba_creep_power or class({})
 
-function modifier_imba_creep_power:IsHidden() return false end
+function modifier_imba_creep_power:IsHidden() return true end
 function modifier_imba_creep_power:IsPurgable() return false end
 function modifier_imba_creep_power:IsDebuff() return false end
 
@@ -16,11 +16,28 @@ function modifier_imba_creep_power:OnCreated()
 	self.ability = self:GetAbility()
 
 	-- Ability specials
-	self.bonus_damage_per_minute = 2
-	self.bonus_health_per_minute = 20
+	if string.find(self.parent:GetUnitName(), "mega") then
+		self.bonus_damage_per_minute = 12
+		self.bonus_health_per_minute = 180
+	elseif string.find(self.parent:GetUnitName(), "upgraded") then
+		self.bonus_damage_per_minute = 6
+		self.bonus_health_per_minute = 90
+	else
+		self.bonus_damage_per_minute = 2
+		self.bonus_health_per_minute = 20
+	end
+
 	if self.parent:GetAttackCapability() == DOTA_UNIT_CAP_RANGED_ATTACK then
-		self.bonus_damage_per_minute = 4
-		self.bonus_health_per_minute = 12
+		if string.find(self.parent:GetUnitName(), "mega") then
+			self.bonus_damage_per_minute = 20
+			self.bonus_health_per_minute = 152
+		elseif string.find(self.parent:GetUnitName(), "upgraded") then
+			self.bonus_damage_per_minute = 10
+			self.bonus_health_per_minute = 76
+		else
+			self.bonus_damage_per_minute = 4
+			self.bonus_health_per_minute = 12
+		end
 	end
 
 	if IsServer() then
