@@ -1863,9 +1863,9 @@
 		//"Ability15"					"special_bonus_imba_phoenix_6" //
 		//"Ability16"					"special_bonus_imba_phoenix_3" // 
 		//"Ability17"					"special_bonus_imba_phoenix_8" // 
-		"Ability15"						"special_bonus_unique_phoenix_3"
-		"Ability16"						"special_bonus_unique_phoenix_2"
-		"Ability17"						"special_bonus_unique_phoenix_1"
+		"Ability15"					"special_bonus_unique_phoenix_3"
+		"Ability16"					"special_bonus_unique_phoenix_2"
+		"Ability17"					"special_bonus_unique_phoenix_1"
 
 		"ProjectileModel"			"particles/units/heroes/hero_phoenix/phoenix_base_attack.vpcf"
 	}
@@ -2340,8 +2340,8 @@
 		//"Ability1"				"imba_spectre_spectral_dagger"
 		//"Ability2"				"imba_spectre_desolate"
 		//"Ability3"				"imba_spectre_dispersion"
-		"Ability4"				"imba_spectre_reality"
-		"Ability5"				"imba_spectre_haunt"
+		"Ability4"					"imba_spectre_reality"
+		"Ability5"					"imba_spectre_haunt"
 
 
 		"ProjectileSpeed"			"900"

@@ -22,8 +22,6 @@ self.ability = self:GetAbility()
 --		self:Destroy()
 --	end
 
-	self.modifier_self = "modifier_imba_assault_cuirass"
-
 	caster:AddNewModifier(self:GetCaster(), nil, "modifier_item_manta_passive", {})
 end
 
@@ -86,10 +84,6 @@ local incomingDamage = self:GetSpecialValueFor("images_take_damage_percent_range
 	end)
 end
 
------------------------------------------------------------------------------------------------------------
---	Reveal modifier
------------------------------------------------------------------------------------------------------------
-
 if modifier_item_manta_passive == nil then modifier_item_manta_passive = class({}) end
 function modifier_item_manta_passive:IsPassive() return true end
 function modifier_item_manta_passive:IsHidden() return true end
@@ -104,10 +98,6 @@ function modifier_item_manta_passive:DeclareFunctions()
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
 	}
 	return decFuncs	
-end
-
-function modifier_item_manta_passive:GetEffectAttachType()
-	return PATTACH_OVERHEAD_FOLLOW
 end
 
 function modifier_item_manta_passive:GetModifierMoveSpeedBonus_Percentage()

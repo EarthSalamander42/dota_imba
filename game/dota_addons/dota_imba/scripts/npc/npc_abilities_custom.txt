@@ -39547,17 +39547,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"beg_distance"			"300"
+				"beg_distance"			"350"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed_per_candy"		"20"
+				"speed_per_candy"		"25"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_candy"		"40"
+				"damage_per_candy"		"50"
 			}
 			"04"
 			{
@@ -39577,7 +39577,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bash_chance"			"14"
+				"bash_chance"			"17"
 			}
 			"08"
 			{
@@ -39587,7 +39587,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bash_distance"			"300"
+				"bash_distance"			"400"
 			}
 			"10"
 			{
@@ -39612,7 +39612,7 @@
 			"14"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"furyswipe_damage"		"20"
+				"furyswipe_damage"		"25"
 			}
 			"15"
 			{
@@ -39632,7 +39632,7 @@
 			"20"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_death"		"20"
+				"damage_per_death"		"50"
 			}
 			"21"
 			{
@@ -39657,7 +39657,7 @@
 			"25"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"fury_swipe_increase_per_death"		"20"
+				"fury_swipe_increase_per_death"		"25"
 			}
 			"26"	// Cooldown for attempting to spawn Roshlings when living ones were found 
 			{

@@ -194,8 +194,8 @@ function GameMode:OnFirstPlayerLoaded()
 	-- IMBA: Arena mode score initialization
 	-------------------------------------------------------------------------------------------------
 
-	CustomNetTables:SetTableValue("arena_capture", "radiant_score", {0})
-	CustomNetTables:SetTableValue("arena_capture", "dire_score", {0})
+	CustomNetTables:SetTableValue("game_options", "radiant", {score = 25})
+	CustomNetTables:SetTableValue("game_options", "dire", {score = 25})
 end
 
 -- Multiplies bounty rune experience and gold according to the gamemode multiplier
@@ -1147,7 +1147,6 @@ function GameMode:OnAllPlayersLoaded()
 	end	
 end
 
-random_time = 1.0
 function GameMode:OnHeroInGame(hero)	
 local time_elapsed = 0
 
@@ -1192,7 +1191,7 @@ local time_elapsed = 0
 		elseif not hero.is_real_wisp then
 			if hero:GetUnitName() == "npc_dota_hero_wisp" then
 				Timers:CreateTimer(function()
-					if not hero:HasModifier("modifier_imba_prevent_actions_game_start") then
+					if not hero:HasModifier("modifier_command_restricted") then
 						hero:AddNewModifier(hero, nil, "modifier_command_restricted", {})
 						hero:AddEffects(EF_NODRAW)
 						hero:SetDayTimeVisionRange(475)
