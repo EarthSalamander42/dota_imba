@@ -187,244 +187,6 @@ function GetRandomTowerAbility(tier, ability_table)
 	return ability
 end
 
--- Grants a given hero an appropriate amount of Random OMG abilities
-function ApplyAllRandomOmgAbilities( hero )
-
-	-- If there's no valid hero, do nothing
-	if not hero then
-		return nil
-	end
-
-	-- Check if the high level power-up ability is present
-	local ability_powerup = hero:FindAbilityByName("imba_unlimited_level_powerup")
-	local powerup_stacks
-	if ability_powerup then
-		powerup_stacks = hero:GetModifierStackCount("modifier_imba_unlimited_level_powerup", hero)
-		hero:RemoveModifierByName("modifier_imba_unlimited_level_powerup")
-		ability_powerup = true
-	end
-
-	-- Remove default abilities
-	for i = 0, 15 do
-		local old_ability = hero:GetAbilityByIndex(i)
-		if old_ability then
-			hero:RemoveAbility(old_ability:GetAbilityName())
-		end
-	end
-
-	-- Creates the table to store ability information for that hero
-	if not hero.random_omg_abilities then
-		hero.random_omg_abilities = {}
-	end
-
-	-- Initialize the precache list if necessary
-	if not PRECACHED_HERO_LIST then
-		PRECACHED_HERO_LIST = {}
-	end
-
-	-- Add new regular abilities
-	local i = 1
-	while i <= IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT do
-
-		-- Randoms an ability from the list of legal random omg abilities
-		local randomed_ability
-		local ability_owner
-		randomed_ability, ability_owner = GetRandomNormalAbility()
-
-		-- Checks for duplicate abilities
-		if not hero:FindAbilityByName(randomed_ability) then
-
-			-- Add the ability
-			hero:AddAbility(randomed_ability)
-
-			-- Check if this hero has been precached before
-			local is_precached = false
-			for j = 1, #PRECACHED_HERO_LIST do
-				if PRECACHED_HERO_LIST[j] == ability_owner then
-					is_precached = true
-				end
-			end
-
-			-- If not, do so and add it to the precached heroes list
-			if not is_precached then
-				PrecacheUnitWithQueue(ability_owner)
-				table.insert(PRECACHED_HERO_LIST, ability_owner)
-			end
-
-			-- Store it for later reference
-			hero.random_omg_abilities[i] = randomed_ability
-			i = i + 1
-		end
-	end
-
-	-- Add new ultimate abilities
-	while i <= ( IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT + IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT ) do
-
-		-- Randoms an ability from the list of legal random omg ultimates
-		local randomed_ultimate
-		local ultimate_owner
-		randomed_ultimate, ultimate_owner = GetRandomUltimateAbility()
-
-		-- Checks for duplicate abilities
-		if not hero:FindAbilityByName(randomed_ultimate) then
-
-			-- Add the ultimate
-			hero:AddAbility(randomed_ultimate)
-
-			-- Check if this hero has been precached before
-			local is_precached = false
-			for j = 1, #PRECACHED_HERO_LIST do
-				if PRECACHED_HERO_LIST[j] == ultimate_owner then
-					is_precached = true
-				end
-			end
-
-			-- If not, do so and add it to the precached heroes list
-			if not is_precached then
-				PrecacheUnitByNameAsync(ultimate_owner, function(...) end)
-				table.insert(PRECACHED_HERO_LIST, ultimate_owner)
-			end
-
-			-- Store it for later reference
-			hero.random_omg_abilities[i] = randomed_ultimate
-			i = i + 1
-		end
-	end
-
-	-- Apply high level powerup ability, if previously existing
-	if ability_powerup then
-		hero:AddAbility("imba_unlimited_level_powerup")
-		ability_powerup = hero:FindAbilityByName("imba_unlimited_level_powerup")
-		ability_powerup:SetLevel(1)
-		AddStacks(ability_powerup, hero, hero, "modifier_imba_unlimited_level_powerup", powerup_stacks, true)
-	end
-
-end
-
--- Randoms a hero not in the forbidden Random OMG hero pool
-function PickValidHeroRandomOMG()
-
-	local valid_heroes = {
-		"npc_dota_hero_abaddon",
-		"npc_dota_hero_alchemist",
-		"npc_dota_hero_ancient_apparition",
-		"npc_dota_hero_antimage",
-		"npc_dota_hero_axe",
-		"npc_dota_hero_bane",
-		"npc_dota_hero_bounty_hunter",
-		"npc_dota_hero_centaur",
-		"npc_dota_hero_chaos_knight",
-		"npc_dota_hero_crystal_maiden",
-		"npc_dota_hero_dazzle",
-		"npc_dota_hero_dragon_knight",
-		"npc_dota_hero_drow_ranger",
-		"npc_dota_hero_earthshaker",
-		"npc_dota_hero_jakiro",
-		"npc_dota_hero_juggernaut",
-		"npc_dota_hero_kunkka",
-		"npc_dota_hero_lich",
-		"npc_dota_hero_lina",
-		"npc_dota_hero_lion",
-		"npc_dota_hero_luna",
-		"npc_dota_hero_medusa",
-		"npc_dota_hero_mirana",
-		"npc_dota_hero_naga_siren",
-		"npc_dota_hero_furion",
-		"npc_dota_hero_necrolyte",
-		"npc_dota_hero_obsidian_destroyer",
-		"npc_dota_hero_omniknight",
-		"npc_dota_hero_phantom_assassin",
-		"npc_dota_hero_phantom_lancer",
-		"npc_dota_hero_phoenix",
-		"npc_dota_hero_puck",
-		"npc_dota_hero_queenofpain",
-		"npc_dota_hero_sand_king",
-		"npc_dota_hero_shadow_demon",
-		"npc_dota_hero_nevermore",
-		"npc_dota_hero_slark",
-		"npc_dota_hero_sniper",
-		"npc_dota_hero_storm_spirit",
-		"npc_dota_hero_sven",
-		"npc_dota_hero_templar_assassin",
-		"npc_dota_hero_terrorblade",
-		"npc_dota_hero_tinker",
-		"npc_dota_hero_ursa",
-		"npc_dota_hero_vengefulspirit",
-		"npc_dota_hero_venomancer",
-		"npc_dota_hero_wisp",
-		"npc_dota_hero_witch_doctor",
-		"npc_dota_hero_zuus"
-	}
-
-	return valid_heroes[RandomInt(1, #valid_heroes)]
-end
-
--- Checks if a hero is a valid pick in Random OMG
-function IsValidPickRandomOMG( hero )
-
-	local hero_name = hero:GetName()
-
-	local valid_heroes = {
-		"npc_dota_hero_abaddon",
-		"npc_dota_hero_alchemist",
-		"npc_dota_hero_ancient_apparition",
-		"npc_dota_hero_antimage",
-		"npc_dota_hero_axe",
-		"npc_dota_hero_bane",
-		"npc_dota_hero_bounty_hunter",
-		"npc_dota_hero_centaur",
-		"npc_dota_hero_chaos_knight",
-		"npc_dota_hero_crystal_maiden",
-		"npc_dota_hero_dazzle",
-		"npc_dota_hero_dragon_knight",
-		"npc_dota_hero_drow_ranger",
-		"npc_dota_hero_earthshaker",
-		"npc_dota_hero_jakiro",
-		"npc_dota_hero_juggernaut",
-		"npc_dota_hero_kunkka",
-		"npc_dota_hero_lich",
-		"npc_dota_hero_lina",
-		"npc_dota_hero_lion",
-		"npc_dota_hero_luna",
-		"npc_dota_hero_medusa",
-		"npc_dota_hero_mirana",
-		"npc_dota_hero_naga_siren",
-		"npc_dota_hero_furion",
-		"npc_dota_hero_necrolyte",
-		"npc_dota_hero_obsidian_destroyer",
-		"npc_dota_hero_omniknight",
-		"npc_dota_hero_phantom_assassin",
-		"npc_dota_hero_phantom_lancer",
-		"npc_dota_hero_phoenix",
-		"npc_dota_hero_puck",
-		"npc_dota_hero_queenofpain",
-		"npc_dota_hero_sand_king",
-		"npc_dota_hero_shadow_demon",
-		"npc_dota_hero_nevermore",
-		"npc_dota_hero_slark",
-		"npc_dota_hero_sniper",
-		"npc_dota_hero_storm_spirit",
-		"npc_dota_hero_sven",
-		"npc_dota_hero_templar_assassin",
-		"npc_dota_hero_terrorblade",
-		"npc_dota_hero_tinker",
-		"npc_dota_hero_ursa",
-		"npc_dota_hero_vengefulspirit",
-		"npc_dota_hero_venomancer",
-		"npc_dota_hero_wisp",
-		"npc_dota_hero_witch_doctor",
-		"npc_dota_hero_zuus"
-	}
-
-	for i = 1, #valid_heroes do
-		if valid_heroes[i] == hero_name then
-			return true
-		end
-	end
-
-	return false
-end
-
 -- Precaches an unit, or, if something else is being precached, enters it into the precache queue
 function PrecacheUnitWithQueue( unit_name )
 	
@@ -1347,17 +1109,57 @@ function OverrideHero(hero, hero_name)
 	end
 end
 
---[[
-function ThinkItemExpire()
-	for _,item in pairs(Entities:FindAllByName("item_diretide_candy")) do -- replace by a table of dropped items later if needed
-		print("Diretide candy found!")
-		if item and (GameRules:GetGameTime() - 60) > item:GetCreationTime() then
-			local nFXIndex = ParticleManager:CreateParticle("particles/items2_fx/veil_of_discord.vpcf", PATTACH_CUSTOMORIGIN, item)
-			ParticleManager:SetParticleControl(nFXIndex, 0, item:GetOrigin())
-			ParticleManager:SetParticleControl(nFXIndex, 1, Vector(35, 35, 25))
-			ParticleManager:ReleaseParticleIndex(nFXIndex)
-			UTIL_RemoveImmediate(item)
+function Announcer(announcer_type, event)
+	if announcer_type == "diretide" then
+		if event == "game_cancelled" then
+			EmitGlobalSound("Diretide.Announcer.GameCancelled")
+		end
+		if event == "pre_game" then
+			print("ANNOUNCER: PRE GAME")
+			EmitGlobalSound("Diretide.Announcer.PreGame")
+		end
+		if event == "game_in_progress" then
+			print("ANNOUNCER: GAME IN PROGRESS")
+			EmitGlobalSound("Diretide.Announcer.GameInProgress")
+			EmitGlobalSound("DireTideGameStart.DireSide")
+		end
+		if event == "phase_2" then
+			print("ANNOUNCER: PHASE 2")
+			EmitGlobalSound("Diretide.Announcer.TrickOrThreat")
+			Timers:CreateTimer(3.0, function()
+				local random_alt = RandomInt(1, 100)
+				if random_alt >= 90 then
+					EmitGlobalSound("Diretide.Announcer.RoshanTarget")
+				end
+			end)
+		end
+		if event == "roshan_target_good" then
+			print("ANNOUNCER: ROSHAN TARGET RADIANT")
+			EmitGlobalSound("Diretide.Announcer.RoshanTarget.Radiant")
+		end
+		if event == "roshan_target_bad" then
+			print("ANNOUNCER: ROSHAN TARGET DIRE")
+			EmitGlobalSound("Diretide.Announcer.RoshanTarget.Dire")
+		end
+		if event == "roshan_target_both" then
+			print("ANNOUNCER: ROSHAN TARGET A TEAM")
+			EmitGlobalSound("Diretide.Announcer.RoshanTarget.Both")
+		end
+		if event == "roshan_fed" then
+			print("ANNOUNCER: ROSHAN RECEIVED A CANDY")
+			EmitGlobalSound("announcer_diretide_rosh_")
+		end
+		if event == "winner_radiant" then
+			print("ANNOUNCER: RADIANT CANDY WIN")
+			EmitGlobalSound("Diretide.Announcer.MostCandy.Radiant")
+		end
+		if event == "winner_dire" then
+			print("ANNOUNCER: DIRE CANDY WIN")
+			EmitGlobalSound("Diretide.Announcer.MostCandy.Dire")
+		end
+		if event == "phase_3" then
+			print("ANNOUNCER: PHASE 3")
+			EmitGlobalSound("Diretide.Announcer.SugarRush")
 		end
 	end
 end
---]]
