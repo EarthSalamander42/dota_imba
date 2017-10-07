@@ -26452,7 +26452,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"11 11 11 11 10 9 8"
+		"AbilityCooldown"				"11"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -26482,6 +26482,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"area_of_effect"			"250 275 300 325 325 325 325"
+				"LinkedSpecialBonus"		"special_bonus_imba_riki_1"
 			}
 
 			"03"
@@ -26568,6 +26569,7 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"duration"				"2.5"
+				"LinkedSpecialBonus"	"special_bonus_imba_riki_4"
 			}
 			"03"
 			{
@@ -26583,6 +26585,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"max_jumps"				"1 2 3 4 4 4 4"
+				"LinkedSpecialBonus"	"special_bonus_imba_riki_3"
 			}
 			"06"
 			{
@@ -26607,7 +26610,7 @@
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"hero/hero_riki.lua"
 		"AbilityTextureName"			"riki_permanent_invisibility"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
@@ -26615,7 +26618,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"6 5 4 3 2.7 2.4 2.1"		
+		"AbilityCooldown"				"6 5 4 3 3 3 3"		
 
 
 		// Precache
@@ -26625,11 +26628,6 @@
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_riki.vsndevts"
 			"particle"					"particles/units/heroes/hero_riki/riki_backstab.vpcf"
 			"particle"					"particles/generic_hero_status/status_invisibility_start.vpcf"
-			"particle"					"particles/hero/riki/blink_trail.vpcf"
-			"particle"					"particles/hero/riki/riki_sucker_punch.vpcf"
-			"particle"					"particles/hero/riki/riki_peek_a_boo_active.vpcf"
-			"particle"					"particles/hero/riki/riki_peek_a_boo_stab.vpcf"
-			"particle"					"particles/hero/riki/riki_backbreaker_slash.vpcf"
 		}
 
 		// Special
@@ -26639,25 +26637,27 @@
 			"01"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"fade_time"							"6 5 4 3 2.7 2.4 2.1"
+				"fade_time"							"6 5 4 3 3 3 3"
+				"LinkedSpecialBonus"				"special_bonus_imba_riki_6"
 			}
 
 			"02"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"backstab_angle"					"120"
+				"backstab_angle"					"105"
 			}
 
 			"03"
 			{
 				"var_type"							"FIELD_FLOAT"
 				"agility_damage_multiplier"			"0.5 0.75 1 1.25 1.3 1.35 1.4"
+				"LinkedSpecialBonus"				"special_bonus_imba_riki_5"
 			}
 
 			"04"
 			{
 				"var_type"							"FIELD_FLOAT"
-				"agility_damage_multiplier_smoke"	"0.25 0.4 0.55 0.7 0.75 0.8 0.85"
+				"agility_damage_multiplier_smoke"	"0.25 0.4 0.65 0.8 0.85 0.9 0.95"
 			}
 
 			"05"
@@ -26665,13 +26665,6 @@
 				"var_type"							"FIELD_FLOAT"
 				"invis_break_agility_multiplier"	"2"
 			}
-
-			"06"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"agility_damage_multiplier_side"	"0.25 0.4 0.55 0.7 0.75 0.8 0.85"
-			}
-
 		}
 	}
 
@@ -26716,7 +26709,6 @@
 			"particle"					"particles/units/heroes/hero_riki/riki_tricks_cast.vpcf"
 			"particle"					"particles/units/heroes/hero_riki/riki_tricks_end.vpcf"
 			"particle"					"particles/units/heroes/hero_riki/riki_tricks.vpcf"
-			"particle"					"particles/hero/riki/riki_martyr_dagger_start_pos.vpcf"
 		}
 
 		// Special
@@ -26732,34 +26724,21 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"attack_interval"		"1 1 1 0.9 0.8 0.7"
+				"attack_interval"		"1 1 1 0.95 0.9 0.85"
 			}			
 
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"channel_duration"		"5"
-			}
-			
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
 				"scepter_cast_range"	"1000"
 			}
-			
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"scepter_duration"		"9"
-			}
-			
 		}
 	}
 
 	//=================================================================================================================
 	// Riki's Talents 
 	//=================================================================================================================
-	"special_bonus_imba_riki_1" // Each instance of Blink Strike leaves Smokescreen for 1 second
+	"special_bonus_imba_riki_1" // Smoke Screen radius increase
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -26770,7 +26749,56 @@
 		"LinkedAbility"
 		{
 			"01"        "imba_riki_smoke_screen"
-			"02"        "imba_riki_blink_strike"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"200"
+			}
+		}
+	}
+
+	"special_bonus_imba_riki_2" // Smoke Screen cooldown decrease
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"        "imba_riki_smoke_screen"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"4"
+			}
+		}
+	}
+
+	"special_bonus_imba_riki_3" // Blink Strike jumps increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"        "imba_riki_blink_strike"
 		}
 		
 		// Special
@@ -26785,7 +26813,7 @@
 		}
 	}
 
-	"special_bonus_imba_riki_2" // Tricks of the Trade applies Martys Mark on its targets
+	"special_bonus_imba_riki_4" // Blink Strike debuff (turn rate reduction) duration increase
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -26795,98 +26823,7 @@
 
 		"LinkedAbility"
 		{
-			"01"        "imba_riki_tricks_of_the_trade"
-		}
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"20"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"6"
-			}
-		}
-	}
-
-	"special_bonus_imba_riki_3" // Cloak and Dagger can be activated for Riki to gain bonus multiplier, but loses its invisibility over the duration
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"        "imba_riki_cloak_and_dagger"
-		}
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"value"						"2"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"6"
-			}
-		}
-	}
-
-	"special_bonus_imba_riki_4" // Cloak and Dagger now applies Sidestab for reduced multiplier
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"        "imba_riki_cloak_and_dagger"
-		}
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"1"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"sidestab_angle"			"285"
-			}
-		}
-	}
-
-	"special_bonus_imba_riki_5" // Smokescreen grants Riki a second form of Invisibility.
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"        "imba_riki_cloak_and_dagger"
-			"02"        "imba_riki_smoke_screen"
+			"01"        "imba_riki_blink_strike"
 		}
 		
 		// Special
@@ -26901,32 +26838,7 @@
 		}
 	}
 
-	"special_bonus_imba_riki_6" // Tricks of the Trade now refunds cooldown proportional to its cast duration. Has a minimum cooldown of 6 seconds.
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"        "imba_riki_tricks_of_the_trade"
-		}
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"6"
-			}
-		}
-	}
-
-	"special_bonus_imba_riki_7" // 4 successive Backstabs now breaks the target for 5 seconds. Resets when an attack isn't a Backstab.
+	"special_bonus_imba_riki_5" // Backstab agility multiplier increase
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -26945,18 +26857,58 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"4"
+				"var_type"					"FIELD_FLOAT"
+				"value"						"0.4"
 			}
-			"02"
+		}
+	}
+
+	"special_bonus_imba_riki_6" // Invisibility fade time reduction
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"        "imba_riki_cloak_and_dagger"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"5"
+				"var_type"					"FIELD_FLOAT"
+				"value"						"-2"
 			}
-			"03"
+		}
+	}
+
+	"special_bonus_imba_riki_7" // Tricks of the Trade attacks faster
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"        "imba_riki_tricks_of_the_trade"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"break_duration"			"5"
+				"var_type"					"FIELD_FLOAT"
+				"value"						"0.3"
 			}
 		}
 	}
@@ -26968,12 +26920,6 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"        
-
-		"LinkedAbility"
-		{
-			"01"        "imba_riki_blink_strike"
-			"02"        "imba_riki_cloak_and_dagger"
-		}
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -26983,11 +26929,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"value"						"20"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"distance"					"96"
 			}
 		}
 	}
