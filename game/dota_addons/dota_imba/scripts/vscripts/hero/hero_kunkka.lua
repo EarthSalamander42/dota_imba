@@ -650,8 +650,10 @@ function modifier_imba_kunkka_torrent_talent_thinker:OnCreated(keys)
         -- Ability properties
 		self.caster = self:GetCaster()
 		self.ability = self:GetAbility()
+		local min_interval = self.caster:FindTalentValue("special_bonus_imba_kunkka_4","min_interval") * 10
+		local max_interval = self.caster:FindTalentValue("special_bonus_imba_kunkka_4") * 10
 
-		self.tick = math.random() + math.random(0, self.caster:FindTalentValue("special_bonus_imba_kunkka_4"))
+		self.tick = (math.random() + math.random(min_interval, max_interval)) / 10
 		
 		-- Parameters
 		-- fuck you vectors
