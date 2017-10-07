@@ -15217,8 +15217,13 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"1"
+				"var_type"					"FIELD_FLOAT"
+				"value"						"1.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"min_interval"				"0.5"
 			}
 		}
 	}
