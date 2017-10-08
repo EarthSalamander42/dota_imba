@@ -253,10 +253,7 @@ function modifier_imba_juggernaut_blade_fury:OnAttackLanded(keys)
 			
 			-- Nullifies the attack, FrameTime() does not help.
 			self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_juggernaut_blade_fury_deflect_buff", {duration = 0.01})
-			
-			-- Nullifies Item Modifiers such as Deso if Juggernaut doesn't have it.
-			self.caster:Purge(false, true, true, false, false)
-			
+
 			-- Play hit sound
 			self.caster:EmitSound("Hero_Juggernaut.BladeFury.Impact")
 			
