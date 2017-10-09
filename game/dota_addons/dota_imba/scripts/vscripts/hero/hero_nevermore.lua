@@ -838,7 +838,7 @@ function modifier_imba_necromastery_souls:OnIntervalThink()
 
             -- Recalculate temporary souls
             self.max_souls_inc_temp = self.max_souls * (1 + (self.max_temporary_souls_pct * 0.01))
-        end
+        --end
 
         -- Check if we have less souls than how many are registered in the table.
         local stacks = self:GetStackCount()
