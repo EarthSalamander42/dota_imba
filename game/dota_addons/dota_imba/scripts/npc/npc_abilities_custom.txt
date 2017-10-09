@@ -20013,6 +20013,8 @@
 		"precache"
 		{
 			"particle"					"particles/hero/nevermore/nevermore_shadowraze.vpcf"
+			"particle"					"particles/hero/nevermore/nevermore_shadowraze_talent_pool.vpcf"
+			"particle"					"particles/hero/nevermore/nevermore_shadowraze_talent_pool_2.vpcf"
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
 			"soundfile"					"soundevents/voscripts/game_sounds_vo_nevermore.vsndevts"
 		}
@@ -20114,6 +20116,8 @@
 		"precache"
 		{
 			"particle"					"particles/hero/nevermore/nevermore_shadowraze.vpcf"
+			"particle"					"particles/hero/nevermore/nevermore_shadowraze_talent_pool.vpcf"
+			"particle"					"particles/hero/nevermore/nevermore_shadowraze_talent_pool_2.vpcf"
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
 			"soundfile"					"soundevents/voscripts/game_sounds_vo_nevermore.vsndevts"
 		}
@@ -20227,6 +20231,8 @@
 		"precache"
 		{
 			"particle"					"particles/hero/nevermore/nevermore_shadowraze.vpcf"
+			"particle"					"particles/hero/nevermore/nevermore_shadowraze_talent_pool.vpcf"
+			"particle"					"particles/hero/nevermore/nevermore_shadowraze_talent_pool_2.vpcf"
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
 			"soundfile"					"soundevents/voscripts/game_sounds_vo_nevermore.vsndevts"
 		}
@@ -20348,6 +20354,8 @@
 			"particle"				"particles/units/heroes/hero_nevermore/nevermore_necro_souls.vpcf"
 			"particle"				"particles/hero/nevermore/nevermore_soul_projectile.vpcf"
 			"particle"				"particles/units/heroes/hero_nevermore/nevermore_souls_hero_effect.vpcf"
+			"particle"				"particles/hero/nevermore/nevermore_necromastery_heal_1.vpcf"
+			"particle"				"particles/hero/nevermore/nevermore_necromastery_heal_2.vpcf"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
 			"soundfile"				"soundevents/voscripts/game_sounds_vo_nevermore.vsndevts"
 		}
@@ -20384,14 +20392,12 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"damage_per_soul"				"2"
-				"LinkedSpecialBonus"			"special_bonus_imba_nevermore_8"
 			}
 
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"max_souls"						"18 24 30 36 39 42 45"
-				"LinkedSpecialBonus"			"special_bonus_imba_nevermore_6"
 			}
 
 			"07"
@@ -20460,14 +20466,12 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"armor_reduction"			"3 4 5 6 6 6 6"
-				"LinkedSpecialBonus"		"special_bonus_imba_nevermore_2"
 			}
 
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"raze_armor_reduction"		"1 1 1 1 2 3 4"
-				"LinkedSpecialBonus"		"special_bonus_imba_nevermore_2"
 			}
 
 			"04"
@@ -20555,13 +20559,13 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"harvest_base_cd"			"1"
+				"harvest_base_cd"			"2"
 			}
 
 			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"harvest_line_duration_inc"	"0.2"
+				"harvest_line_duration_inc"	"0.3"
 			}
 
 			"07"
@@ -20601,11 +20605,11 @@
 			}
 		}
 	}
-
+	
 	//=================================================================================================================
 	// Shadow Fiend's Talents
 	//=================================================================================================================
-	"special_bonus_imba_nevermore_1" // Shadowraze mana cost reduction
+	"special_bonus_imba_nevermore_1" // Shadowrazes leave damaging pools
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -20627,12 +20631,28 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"value"	                    "20"
+				"duration"	                    "2"
+			}
+
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"dmg_per_sec"				"50"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"tick_interval"				"0.5"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"250"
 			}
 		}
 	}
 
-	"special_bonus_imba_nevermore_2" // Presence of the Dark Lord Armor reduction increase
+	"special_bonus_imba_nevermore_2" // Necromastery can be activated to heal by consuming souls
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -20642,7 +20662,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_nevermore_dark_lord"
+			"01" 	"imba_nevermore_necromastery"
 		}
 
 		// Special
@@ -20652,18 +20672,18 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"armor_reduction"           "2"
+				"heal_per_soul"             "80"
 			}
 
 			"02"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"raze_armor_reduction"      "1"
+				"cooldown"				    "12"
 			}
 		}
 	}
 
-	"special_bonus_imba_nevermore_3" // Shadowraze cooldown reduction
+	"special_bonus_imba_nevermore_3" // Permanent soul cap increase on hero kills
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -20673,9 +20693,7 @@
 
 		"LinkedAbility"
 		{
-			"01"	"imba_nevermore_shadowraze_close"
-			"02"	"imba_nevermore_shadowraze_medium"
-			"03"	"imba_nevermore_shadowraze_far"
+			"01"	"imba_nevermore_necromastery"
 		}
 
 		// Special
@@ -20685,7 +20703,7 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"value"	                    "3"
+				"value"	                    "1"
 			}
 		}
 	}
@@ -20740,7 +20758,7 @@
 		}
 	}
 
-	"special_bonus_imba_nevermore_6" // Maximum Necromastery soul increase
+	"special_bonus_imba_nevermore_6" // Shadowrazes refresh requiem debuff
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -20750,7 +20768,9 @@
 
 		"LinkedAbility"
 		{
-			"01"	"imba_nevermore_necromastery"
+			"01"	"imba_nevermore_shadowraze_far"
+			"02"	"imba_nevermore_shadowraze_medium"
+			"03"	"imba_nevermore_shadowraze_close"
 		}
 
 		// Special
@@ -20760,7 +20780,7 @@
 			"01"
 			{
 				"var_type"                  "FIELD_FLOAT"
-				"value"	                    "10"
+				"value"	                    "1"
 			}
 		}
 	}
@@ -20790,7 +20810,7 @@
 		}
 	}
 
-	"special_bonus_imba_nevermore_8" // Necromastery soul grant additional damage
+	"special_bonus_imba_nevermore_8" // Soulrazes cast point is halved during soul frenzy
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -20800,7 +20820,9 @@
 
 		"LinkedAbility"
 		{
-			"01"	"imba_nevermore_necromastery"
+			"01"	"imba_nevermore_shadowraze_far"
+			"02"	"imba_nevermore_shadowraze_medium"
+			"03"	"imba_nevermore_shadowraze_close"
 		}
 
 		// Special
@@ -20810,11 +20832,11 @@
 			"01"
 			{
 				"var_type"                  "FIELD_FLOAT"
-				"value"	                    "2"
+				"value"	                    "1"
 			}
 		}
 	}
-
+	
 	//=================================================================================================================
 	// Night Stalker's Stalker in the Night
 	//=================================================================================================================
