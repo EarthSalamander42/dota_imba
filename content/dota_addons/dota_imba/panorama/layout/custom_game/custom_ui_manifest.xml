@@ -89,6 +89,7 @@
 		var TalentGuide = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("center_with_stats")
 		TalentGuide.FindChildTraverse("RecommendedUpgradeOverlay").style.visibility = "collapse";
 
+		//Fix 4 digits levels
 		var LevelLabel = TalentGuide.FindChildTraverse("center_block").FindChildTraverse("xp").FindChildTraverse("LevelLabel")
 		LevelLabel.style.width = "50px";
 
@@ -113,6 +114,12 @@
 
 		var Stash = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("shop_launcher_block").FindChildTraverse("stash")
 		Stash.style.height = "150px";
+
+		//Tooltips Background change, need to be setup after pre-game state
+//		var Tooltips = Parent.FindChildTraverse("Tooltips");
+//		var TooltipsAB = Tooltips.FindChildTraverse("DOTAAbilityTooltip");
+//		var TooltipsBG = TooltipsAB.FindChildTraverse("Contents")
+//		TooltipsBG.style.backgroundColor = "#101010ga";
 
 		//TopBar
 		var map_info = Game.GetMapInfo();

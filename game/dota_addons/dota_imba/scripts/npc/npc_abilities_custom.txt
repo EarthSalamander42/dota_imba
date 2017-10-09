@@ -33168,6 +33168,11 @@
 				"switch_lose_pct"			"100 100 100 100 80 60 40"
 				"LinkedSpecialBonus"		"special_bonus_imba_troll_warlord_3"
 			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_stacks"				"14"
+			}
 		}
 	}
 
