@@ -740,11 +740,10 @@ LinkLuaModifier("modifier_imba_leap_aura", "hero/hero_mirana", LUA_MODIFIER_MOTI
 LinkLuaModifier("modifier_imba_leap_speed_boost", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_leap_talent_cast_angle_handler", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 
-
 function imba_mirana_leap:GetAbilityTextureName()
    return "mirana_leap"
 end
-
+--[[
 function imba_mirana_leap:GetCastRange(location, target)        
 local ability = self
 local leap_range = ability:GetSpecialValueFor("leap_range")
@@ -756,7 +755,7 @@ local night_leap_range_bonus = ability:GetSpecialValueFor("night_leap_range_bonu
 		return leap_range + night_leap_range_bonus        
 	end            
 end
-
+--]]
 function imba_mirana_leap:IsHiddenWhenStolen()
 	return false
 end

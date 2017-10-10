@@ -11,8 +11,8 @@
 	"addonContent_Campaign"			"0"
 	"addonDescription"				"A modified version of Dota, where everything is insanely powerful."
 
-//	"maps"							"imba_diretide"
-	"maps"							"imba_standard imba_10v10 imba_custom imba_custom_10v10"
+	"maps"							"imba_diretide imba_standard imba_10v10 imba_custom_10v10"
+//	"maps"							"imba_standard imba_10v10 imba_custom imba_custom_10v10"
 
 	"IsPlayable"					"1"
 
@@ -31,10 +31,10 @@
 		"MaxPlayers"				"20"
 	}
 
-	"imba_custom"
-	{
-		"MaxPlayers"				"10"
-	}
+//	"imba_custom"
+//	{
+//		"MaxPlayers"				"10"
+//	}
 
 	"imba_custom_10v10"
 	{

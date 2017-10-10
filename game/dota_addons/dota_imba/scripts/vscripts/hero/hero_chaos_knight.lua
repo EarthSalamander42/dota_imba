@@ -17,6 +17,12 @@ local caster = self:GetCaster()
 		else
 			return UF_FAIL_MAGIC_IMMUNE_ENEMY
 		end
+	elseif target:IsBuilding() then
+		return UF_FAIL_BUILDING
+	elseif target:GetTeamNumber() == caster:GetTeamNumber() then
+		return UF_FAIL_FRIENDLY
+	elseif target:IsAncient() then
+		return UF_FAIL_ANCIENT
 	end
 end
 
@@ -30,8 +36,8 @@ function imba_chaos_knight_reality_rift:OnAbilityPhaseStart()
 		local target_location = target:GetAbsOrigin()
 
 		-- Ability variables
-		local min_range = 0.2
-		local max_range = 0.8
+		local min_range = 0.25
+		local max_range = 0.75
 
 		-- Position calculation
 		local distance = (target_location - caster_location):Length2D()

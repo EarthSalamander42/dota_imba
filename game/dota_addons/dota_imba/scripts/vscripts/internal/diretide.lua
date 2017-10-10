@@ -206,28 +206,12 @@ end
 
 function SwapTeam(team)
 local duration = 15.0
-local i = 1
 
 	for _, hero in pairs(HeroList:GetAllHeroes()) do
 		local player_id = hero:GetPlayerOwnerID()
-		Timers:CreateTimer(function()
-			i = i + 1
-			if i < 10 then
-				if hero:GetTeamNumber() ~= team then
-					local Gold = hero:GetGold()
-					hero:SetTeam(team)
-					hero:GetPlayerOwner():SetTeam(team)
-					hero:SetGold(Gold, false)
-					PlayerResource:UpdateTeamSlot(player_id, team, 1)
-					PlayerResource:SetCustomTeamAssignment(player_id, team)
-				end
-				if not hero:HasModifier("modifier_command_restricted") then
-					hero:AddNewModifier(hero, nil, "modifier_command_restricted", {})
-				end
-				PlayerResource:SetCameraTarget(player_id, ROSHAN_ENT)
-				return 0.1
-			end
-		end)
+		hero:AddNewModifier(hero, nil, "modifier_command_restricted", {})
+		hero:AddNewModifier(hero, nil, "modifier_no_pvp", {})
+		PlayerResource:SetCameraTarget(player_id, ROSHAN_ENT)
 	end
 
 	for _, hero in pairs(HeroList:GetAllHeroes()) do
@@ -238,7 +222,7 @@ local i = 1
 		hero:SetHealth(hero:GetMaxHealth())
 		hero:SetMana(hero:GetMaxMana())
 		ROSHAN_ENT:SetTeam(team)
-		FindClearSpaceForUnit(hero, Entities:FindByName(nil, "courier_spawn_"..team):GetAbsOrigin(), true)
+		FindClearSpaceForUnit(hero, Entities:FindByName(nil, "courier_spawn_"..hero:GetTeamNumber()):GetAbsOrigin(), true)
 		hero:Stop()
 		hero:ModifyGold(DIRETIDE_BONUS_GOLD, true, 0)
 		hero:AddExperience(100000, false, false)

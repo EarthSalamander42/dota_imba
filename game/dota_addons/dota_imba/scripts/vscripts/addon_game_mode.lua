@@ -22,6 +22,7 @@ DebugPrint("[IMBA] Performing pre-load precache")
 	LinkLuaModifier("modifier_imba_range_indicator", "modifier/modifier_imba_range_indicator.lua", LUA_MODIFIER_MOTION_NONE )	
 	LinkLuaModifier("modifier_command_restricted", "modifier/modifier_command_restricted.lua", LUA_MODIFIER_MOTION_NONE )	
 	LinkLuaModifier("modifier_npc_dialog", "modifier/modifier_npc_dialog.lua", LUA_MODIFIER_MOTION_NONE )	
+	LinkLuaModifier("modifier_no_pvp", "modifier/modifier_no_pvp.lua", LUA_MODIFIER_MOTION_NONE )	
 
 	-- Runes modifiers
 	LinkLuaModifier("modifier_imba_double_damage_rune", "modifier/runes/modifier_imba_double_damage_rune.lua", LUA_MODIFIER_MOTION_NONE)
