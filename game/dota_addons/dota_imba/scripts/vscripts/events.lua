@@ -163,8 +163,12 @@ DebugPrintTable(keys)
 --			SendToServerConsole("dota_bot_populate")
 --		end
 
-		local roshan_easter_egg = Entities:FindByName(nil, "easter_egg_diretide"):GetAbsOrigin()
-		ROSHAN_ENT = CreateUnitByName("npc_diretide_roshan", roshan_easter_egg, true, nil, nil, DOTA_TEAM_NEUTRALS)
+		if GetMapName() == "imba_arena" then
+			print("NO ROSH!")
+		else
+			local roshan_easter_egg = Entities:FindByName(nil, "easter_egg_diretide"):GetAbsOrigin()
+			ROSHAN_ENT = CreateUnitByName("npc_diretide_roshan", roshan_easter_egg, true, nil, nil, DOTA_TEAM_NEUTRALS)
+		end
 
 		-- Shows various info to devs in pub-game to find lag issues
 		ImbaNetGraph(10.0)
@@ -748,18 +752,18 @@ function GameMode:OnTeamKillCredit(keys)
 	
 	if GetMapName() == "imba_arena" then
 		if killer_team == DOTA_TEAM_GOODGUYS then
-			local radiant_score = CustomNetTables:GetTableValue("arena_capture", "radiant_score")
+			local radiant = CustomNetTables:GetTableValue("arena_capture", "radiant_score")
 			CustomNetTables:SetTableValue("arena_capture", "radiant_score", {radiant_score["1"] + 1})
 			CustomGameEventManager:Send_ServerToAllClients("radiant_score_update", {})
-			if (radiant_score["1"] + 1) >= KILLS_TO_END_GAME_FOR_TEAM then
+			if (radiant.score + 1) >= KILLS_TO_END_GAME_FOR_TEAM then
 				GameRules:SetGameWinner(DOTA_TEAM_GOODGUYS)
 				GAME_WINNER_TEAM = "Radiant"
 			end
 		elseif killer_team == DOTA_TEAM_BADGUYS then
-			local dire_score = CustomNetTables:GetTableValue("arena_capture", "dire_score")
+			local dire = CustomNetTables:GetTableValue("arena_capture", "dire_score")
 			CustomNetTables:SetTableValue("arena_capture", "dire_score", {dire_score["1"] + 1})
 			CustomGameEventManager:Send_ServerToAllClients("dire_score_update", {})
-			if (dire_score["1"] + 1) >= KILLS_TO_END_GAME_FOR_TEAM then
+			if (dire.score + 1) >= KILLS_TO_END_GAME_FOR_TEAM then
 				GameRules:SetGameWinner(DOTA_TEAM_BADGUYS)
 				GAME_WINNER_TEAM = "Dire"
 			end
@@ -971,7 +975,7 @@ function GameMode:OnEntityKilled( keys )
 				buyback_cost = buyback_cost * (1 - (killed_unit:FindSpecificTalentValue("special_bonus_imba_vengefulspirit_7", "buyback_cost_pct") * 0.01))
 				buyback_cooldown = buyback_cooldown * (1 - (killed_unit:FindSpecificTalentValue("special_bonus_imba_vengefulspirit_7", "buyback_cooldown_pct") * 0.01))			
 			end
-			
+
 			-- Update buyback cost
 			PlayerResource:SetCustomBuybackCost(player_id, buyback_cost)
 			PlayerResource:SetCustomBuybackCooldown(player_id, buyback_cooldown)
@@ -981,7 +985,7 @@ function GameMode:OnEntityKilled( keys )
 			local item = CreateItem("item_diretide_candy", nil, nil)
 			local pos = killed_unit:GetAbsOrigin()
 			local drop = CreateItemOnPositionSync( pos, item )
-			item:LaunchLoot(false, 300, 0.5, pos)
+			item:LaunchLoot(false, 300, 0.5, pos + RandomVector(200))
 		elseif killed_unit:HasItemInInventory("item_diretide_candy") then
 			for i = 0, 8 do
 				if killed_unit:GetItemInSlot(i) and killed_unit:GetItemInSlot(i):GetName() == "item_diretide_candy" then
@@ -990,7 +994,7 @@ function GameMode:OnEntityKilled( keys )
 						local item = CreateItem("item_diretide_candy", nil, nil)
 						local pos = killed_unit:GetAbsOrigin()
 						local drop = CreateItemOnPositionSync( pos, item )
-						item:LaunchLoot(false, 300, 0.5, pos)
+						item:LaunchLoot(false, 300, 0.5, pos + RandomVector(200))
 						killed_unit:RemoveItem(killed_unit:GetItemInSlot(i))
 					end
 				end

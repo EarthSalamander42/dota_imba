@@ -653,7 +653,9 @@ function modifier_imba_fervor:OnAttackLanded(params)
 		local modifier = params.attacker:FindModifierByNameAndCaster("modifier_imba_fervor_stacks",parent)
 		if modifier then
 			if modifier.last_target == params.target then
-				modifier:IncrementStackCount()
+				if modifier:GetStackCount() < self:GetAbility():GetSpecialValueFor("max_stacks") then
+					modifier:IncrementStackCount()
+				end
 			else
 				local loss_pct = 1 - (self:GetAbility():GetTalentSpecialValueFor("switch_lose_pct") / 100)
 				modifier:SetStackCount(math.max(math.floor(modifier:GetStackCount() * loss_pct),1))
