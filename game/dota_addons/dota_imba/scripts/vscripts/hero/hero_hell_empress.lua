@@ -28,18 +28,17 @@ function imba_empress_eleven_curses:OnSpellStart(curse_target, curse_stacks)
 
 	-- If target has Linken's Sphere off cooldown, do nothing
 	if target:GetTeam() ~= caster:GetTeam() then
-		if target:TriggerSpellAbsorb(ability) then
+		if target:TriggerSpellAbsorb(self) then
 			return nil
 		end
 	end
 
 	-- Play hit sound
-	target:EmitSound("Hero_ShadowDemon.ShadowPoison.Release")
+	target:EmitSound("Imba.HellEmpressCurseHit")
 
 	-- Play target particle
-	local hit_pfx = ParticleManager:CreateParticle("particles/econ/items/shadow_demon/sd_ti7_shadow_poison/sd_ti7_shadow_poison_release.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, target)
-	ParticleManager:SetParticleControl(hit_pfx, 2, target:GetAbsOrigin())
-	ParticleManager:SetParticleControl(hit_pfx, 3, Vector(100, 1, 1))
+	local hit_pfx = ParticleManager:CreateParticle("particles/hero/hell_empress/empress_curse_hit.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, target)
+	ParticleManager:SetParticleControl(hit_pfx, 4, target:GetAbsOrigin() + Vector(0, 0, 100))
 	ParticleManager:ReleaseParticleIndex(hit_pfx)
 
 	-- Refresh the modifier's duration
@@ -122,7 +121,7 @@ function imba_empress_hellbolt:OnProjectileHit(target, target_loc)
 
 	-- If target has Linken's Sphere off cooldown, do nothing
 	if target:GetTeam() ~= caster:GetTeam() then
-		if target:TriggerSpellAbsorb(ability) then
+		if target:TriggerSpellAbsorb(self) then
 			return nil
 		end
 	end
@@ -189,9 +188,20 @@ function modifier_imba_royal_wrath:OnTakeDamage( keys )
 				
 				-- Trigger the curse ability
 				ability_curse:OnSpellStart(attacker)
-				local cooldown_reduction = parent:GetCooldownReduction() * 0.01
+
+				-- Reduce Hellbolt's cooldown, if appropriate
+				local ability_hellbolt = parent:FindAbilityByName("imba_empress_hellbolt")
+				if ability_hellbolt and ability_hellbolt:GetLevel() > 0 then
+					local hellbolt_cd_remaining = ability_hellbolt:GetCooldownTimeRemaining()
+					local hellbolt_cdr = ability:GetSpecialValueFor("hellbolt_cdr")
+					ability_hellbolt:EndCooldown()
+					if hellbolt_cd_remaining > hellbolt_cdr then
+						ability_hellbolt:StartCooldown( hellbolt_cd_remaining - hellbolt_cdr )
+					end
+				end
 				
 				-- Trigger the passive's cooldown
+				local cooldown_reduction = parent:GetCooldownReduction() * 0.01
 				ability:StartCooldown(ability:GetCooldown(ability:GetLevel()) * (1 - cooldown_reduction))
 			end
 		end
@@ -217,13 +227,13 @@ function imba_empress_hurl_through_hell:OnSpellStart()
 	local hurl_duration = self:GetSpecialValueFor("hurl_duration")
 
 	-- Play cast sound
-	caster:EmitSound("Hero_ObsidianDestroyer.SanityEclipse.Cast")
+	caster:EmitSound("Imba.HellEmpressHurlCast")
 
 	-- Play hit sound
-	EmitSoundOnLocationWithCaster(target_loc, "Hero_ObsidianDestroyer.SanityEclipse", caster)
+	EmitSoundOnLocationWithCaster(target_loc, "Imba.HellEmpressHurlHit", caster)
 
 	-- Play cast particle
-	local cast_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_area.vpcf", PATTACH_WORLDORIGIN, caster)
+	local cast_pfx = ParticleManager:CreateParticle("particles/hero/hell_empress/empress_hurl.vpcf", PATTACH_WORLDORIGIN, caster)
 	ParticleManager:SetParticleControl(cast_pfx, 0, target_loc)
 	ParticleManager:SetParticleControl(cast_pfx, 1, Vector(hurl_radius, 1, 1))
 	ParticleManager:SetParticleControl(cast_pfx, 2, Vector(hurl_radius, 1, 1))
@@ -245,7 +255,7 @@ end
 ------------------------------------
 modifier_imba_hurl_through_hell = class({})
 
-function modifier_imba_hurl_through_hell:IsHidden() return false end
+function modifier_imba_hurl_through_hell:IsHidden() return true end
 function modifier_imba_hurl_through_hell:IsPurgable() return false end
 function modifier_imba_hurl_through_hell:IsDebuff() return true end
 
@@ -273,13 +283,13 @@ function modifier_imba_hurl_through_hell:OnCreated()
 		end
 
 		-- Play astral prison loop sound
-		EmitSoundOn("Hero_ObsidianDestroyer.AstralImprisonment", parent)
+		EmitSoundOn("Imba.HellEmpressHurlLoop", parent)
 
 		-- Remove the model
 		parent:AddNoDraw()
 
 		-- Draw particle
-		self.hurl_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_prison.vpcf", PATTACH_WORLDORIGIN, parent)
+		self.hurl_pfx = ParticleManager:CreateParticle("particles/hero/hell_empress/empress_hurl_prison.vpcf", PATTACH_WORLDORIGIN, parent)
 		ParticleManager:SetParticleControl(self.hurl_pfx, 0, parent_loc)
 		ParticleManager:SetParticleControl(self.hurl_pfx, 2, parent_loc)
 		ParticleManager:SetParticleControl(self.hurl_pfx, 3, parent_loc)
@@ -295,8 +305,8 @@ function modifier_imba_hurl_through_hell:OnDestroy()
 		local ability = self:GetAbility()
 		
 		-- Stop sound loop and play end sound
-		parent:StopSound("Hero_ObsidianDestroyer.AstralImprisonment")
-		EmitSoundOn("Hero_ObsidianDestroyer.AstralImprisonment.End", parent)
+		parent:StopSound("Imba.HellEmpressHurlLoop")
+		EmitSoundOn("Imba.HellEmpressHurlEnd", parent)
 
 		-- Bring the model back
 		parent:RemoveNoDraw()

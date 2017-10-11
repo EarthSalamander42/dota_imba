@@ -110,7 +110,7 @@ DebugPrintTable(keys)
 	-------------------------------------------------------------------------------------------------
 
 	if new_state == DOTA_GAMERULES_STATE_HERO_SELECTION then
-		HeroSelection:Start()
+		HeroSelection:HeroListPreLoad()
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -148,7 +148,7 @@ DebugPrintTable(keys)
 		-- Eanble bots and fill empty slots
 --		if IsInToolsMode() and IsServer() and 10 - PlayerResource:GetPlayerCount() > 0 then
 --			local max_players = 10
---			if GetMapName() == "imba_10v10" or GetMapName() == "imba_custom_10v10" then
+--			if GetMapName() == "imba_10v10" or GetMapName() == "imba_12v12" or GetMapName() == "imba_custom_10v10" then
 --				max_players = 20
 --			end
 --			print("Adding bots in empty slots")
@@ -227,8 +227,8 @@ GameMode:_OnNPCSpawned(keys)
 local npc = EntIndexToHScript(keys.entindex)
 local normal_xp = npc:GetDeathXP()
 
-	if npc then
 		if GetMapName() == "imba_10v10" or GetMapName() == "imba_custom_10v10" then
+	if npc then
 			npc:SetDeathXP(normal_xp)
 		elseif GetMapName() == "imba_diretide" or DIRETIDE_COMMAND == true then
 			if npc:GetUnitName() == "npc_dota_creep_goodguys_melee" then
@@ -334,7 +334,6 @@ local normal_xp = npc:GetDeathXP()
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Arc Warden clone handling
 	-------------------------------------------------------------------------------------------------
-
 	if npc:FindAbilityByName("arc_warden_tempest_double") and not npc.first_tempest_double_cast and npc:IsRealHero() then
 		npc.first_tempest_double_cast = true
 		local tempest_double_ability = npc:FindAbilityByName("arc_warden_tempest_double")

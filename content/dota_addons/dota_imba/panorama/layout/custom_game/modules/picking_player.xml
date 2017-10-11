@@ -1,48 +1,39 @@
 <root>
 	<scripts>
-		<include src="file://{resources}/scripts/custom_game/Modular.js" />
+		<include src="s2r://panorama/scripts/custom_game/modular.vjs_c" />
 	</scripts>
 
 	<styles>
-		<include src="file://{resources}/styles/custom_game/modules/picking_player.css" />
+		<include src="s2r://panorama/styles/custom_game/modules/picking_player.vcss_c" />
 	</styles>
 
 	<script>
 		//Module definition
 		Modular.DefineThis({
-
-			//Set the player for this avatar
-			SetPlayer : function( playerID ) {
-				var pID = playerID;
-				var playerInfo = Game.GetPlayerInfo( playerID );
-				$('#PlayerAvatar').steamid = playerInfo.player_steamid;
-			},
-
-			//Sets if the panel is on the right or left side of the screen
-			SetIsRight : function( isRight ) {
-				var panel = $.GetContextPanel();
-				if (isRight) {
-					panel.AddClass( "right" );
-					//Swap the order of elements
-					panel.MoveChildBefore( $("#HeroPanel"), $("#PlayerAvatar") );
-				} else {
-					panel.RemoveClass( "right" );
-					//Swap the order of elements
-					panel.MoveChildBefore( $("#PlayerAvatar"), $("#HeroPanel") );
-				}
-			},
-
 			//Set the hero of the player, then set the transform to none,
 			//which animates the hero portrait panel
+			SetPlayerName : function( playerID ) {
+				var pID = playerID;
+				var playerInfo = Game.GetPlayerInfo( playerID );
+				$('#PlayerName').text = Players.GetPlayerName(playerID);
+			},
+
+			SetPreviewHero : function( heroName ) {
+				$('#HeroPanel').style.backgroundImage = 'url("s2r://panorama/images/heroes/'+ heroName +'_png.vtex")';
+				$('#HeroPanel').style.transform = 'none';
+				$('#HeroPanel').style.backgroundSize = "100% 100%";
+			},
+
 			SetHero : function( heroName ) {
 				$('#HeroPanel').style.backgroundImage = 'url("s2r://panorama/images/heroes/'+ heroName +'_png.vtex")';
 				$('#HeroPanel').style.transform = 'none';
+				$('#HeroPanel').style.backgroundSize = "100% 100%";
 			}
 		});
 	</script>
 
 	<Panel class="PickingPlayer">
-		<DOTAAvatarImage id="PlayerAvatar" class="AvatarImg" />
 		<Panel id="HeroPanel" />
+		<Label id="PlayerName" text="Player 1"/>
 	</Panel>
 </root>

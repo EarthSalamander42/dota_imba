@@ -22,7 +22,7 @@ require('libraries/notifications')
 -- This library can be used for starting customized animations on units from lua
 require('libraries/animations')
 -- This library can be used for creating frankenstein monsters
---	require('libraries/attachments')
+require('libraries/attachments')
 -- A*-Path-finding logic
 require('libraries/astar')
 -- Illusion manager, created by Seinken!
@@ -303,22 +303,20 @@ function GameMode:ModifierFilter( keys )
 			return true
 		end
 
-	-------------------------------------------------------------------------------------------------
-	-- Frantic mode duration adjustment
-	-------------------------------------------------------------------------------------------------
-
+		-------------------------------------------------------------------------------------------------
+		-- Frantic mode duration adjustment
+		-------------------------------------------------------------------------------------------------
 		if IMBA_FRANTIC_MODE_ON then
 			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
 				keys.duration = keys.duration * 0.3
 			end
 		end
 
-	-------------------------------------------------------------------------------------------------
-	-- Roshan special modifier rules
-	-------------------------------------------------------------------------------------------------
-
+		-------------------------------------------------------------------------------------------------
+		-- Roshan special modifier rules
+		-------------------------------------------------------------------------------------------------
 		if IsRoshan(modifier_owner) then
-			
+
 			-- Ignore stuns
 			if modifier_name == "modifier_stunned" then
 				return false
@@ -332,6 +330,20 @@ function GameMode:ModifierFilter( keys )
 			-- Fury swipes capping
 			if modifier_owner:GetModifierStackCount("modifier_ursa_fury_swipes_damage_increase", nil) > 5 then
 				modifier_owner:SetModifierStackCount("modifier_ursa_fury_swipes_damage_increase", nil, 5)
+			end
+		end
+
+		-- Diretide Roshan
+		if modifier_owner:GetUnitLabel() == "npc_diretide_roshan" then
+
+			-- Ignore stuns
+			if modifier_name == "modifier_stunned" then
+				return false
+			end
+
+			-- Halve the duration of everything else
+			if modifier_caster ~= modifier_owner and keys.duration > 0 then
+				keys.duration = keys.duration * 0.5
 			end
 		end
 
@@ -1798,44 +1810,4 @@ function GameMode:ProcessItemForLootExpire( item, flCutoffTime )
 	end
 	UTIL_RemoveImmediate( item )
 	return false
-end
-
-SPAWN_POINT = {} -- Spawn Point activé? 1 = oui
-SPAWN_POINT[1] = 1
-SPAWN_POINT[2] = 1
-SPAWN_POINT[3] = 1
-SPAWN_POINT[4] = 1
-
--- NPC / HEROES SPAWN
-function GameMode:OnNPCSpawned(keys)
-	local npc = EntIndexToHScript(keys.entindex)
-
-	if npc:IsRealHero() then -- Si héro
-		print("spawn")
-		print(self.NewState_spawn)
-		if self.NewState_spawn == 0 then -- Si 1er fois
-			print("1er fois")
-			-- Le code pour appliqué le modifier qui stun tout le monde
-		else
-			RespawnAtSpawnPoint(npc)
-		end
-	end
-end
-
-function RespawnAtSpawnPoint(hero)
-	local random = RandomInt(1, 4)
-	local point = Entities:FindByName(nil, "spawn_point_"..random)
-	if SPAWN_POINT[random] == 1 then
-		SPAWN_POINT[random] = 0 
-		FindClearSpaceForUnit(npc, point:GetAbsOrigin(), false)
-		PlayerResource:SetCameraTarget(npc:GetPlayerOwnerID(), npc)
-		Timers:CreateTimer(0.1, function()
-			PlayerResource:SetCameraTarget(npc:GetPlayerOwnerID(), nil)
-		end)
-		Timers:CreateTimer(5.0, function()
-			SPAWN_POINT[random] = 1
-		end)
-	else
-		RespawnAtSpawnPoint(hero)
-	end
 end

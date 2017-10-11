@@ -14,7 +14,7 @@ HIT_COUNT[2] = 0
 HIT_COUNT[3] = 0
 
 function Diretide()
-if GetMapName() == "imba_10v10" or GetMapName() == "imba_custom_10v10" then return end
+if GetMapName() == "imba_10v10" or GetMapName() == "imba_12v12" or GetMapName() == "imba_custom_10v10" then return end
 	Announcer("diretide", "game_in_progress")
 	nCOUNTDOWNTIMER = PHASE_TIME -- 481 / 8 Min
 	DIRETIDE_PHASE = DIRETIDE_PHASE + 1
@@ -256,8 +256,13 @@ function DiretideEnd()
 	ROSHAN_ENT:AddNewModifier(ROSHAN_ENT, nil, "modifier_invulnerable", {})
 	ROSHAN_ENT:AddNewModifier(ROSHAN_ENT, nil, "modifier_command_restricted", {})
 
-	Server_CalculateXPForWinnerAndAll(DIRETIDE_WINNER)
-	GameRules:SetGameWinner(DIRETIDE_WINNER)
+	if DIRETIDE_WINNER == 2 then
+		Entities:FindByName(nil, "dota_badguys_fort"):ForceKill(false)
+	else
+		Entities:FindByName(nil, "dota_goodguys_fort"):ForceKill(false)
+	end
+--	Server_CalculateXPForWinnerAndAll(DIRETIDE_WINNER)
+--	GameRules:SetGameWinner(DIRETIDE_WINNER)
 
 --	for _, hero in pairs(HeroList:GetAllHeroes()) do
 --		hero:AddNewModifier(hero, nil, "modifier_invulnerable", {})
@@ -267,18 +272,4 @@ function DiretideEnd()
 --	end
 
 --	CustomGameEventManager:Send_ServerToAllClients("hall_of_fame", {})
-end
-
-function DiretideChatCommand()
-	if GetMapName() == "imba_10v10" or GetMapName() == "imba_custom_10v10" then return end
-	DIRETIDE_COMMAND = true
-	Notifications:TopToAll({text="#diretide_advert", style={color="red"}, duration=20.0})
-	Entities:FindByName(nil, "good_healer_6"):RemoveSelf()
-	Entities:FindByName(nil, "bad_healer_6"):RemoveSelf()
-	good_pumpkin = CreateUnitByName("npc_dota_good_candy_pumpkin", Vector(-4224, 1279, 384), true, nil, nil, DOTA_TEAM_GOODGUYS) 
-	good_pumpkin:SetAbsOrigin(Vector(-4224, 1279, 384))
-	bad_pumpkin = CreateUnitByName("npc_dota_bad_candy_pumpkin", Vector(4191, -1599, 385), true, nil, nil, DOTA_TEAM_BADGUYS) 
-	bad_pumpkin:SetAbsOrigin(Vector(4191, -1599, 385))
-	good_pumpkin:RemoveModifierByName("modifier_invulnerable")
-	bad_pumpkin:RemoveModifierByName("modifier_invulnerable")
 end

@@ -2,7 +2,8 @@
 
 var JS_PHASE = 0
 var playerPanels = {};
-var hudElements = $.GetContextPanel().GetParent().GetParent().GetParent().FindChildTraverse("HUDElements");
+var Parent = $.GetContextPanel().GetParent().GetParent().GetParent()
+var hudElements = Parent.FindChildTraverse("HUDElements");
 
 function UpdateTimer( data )
 {

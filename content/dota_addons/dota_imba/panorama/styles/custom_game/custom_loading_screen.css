@@ -135,6 +135,8 @@
 
 .CommunityImg
 {
+	width: 240px;
+	height: 80px;
 	margin-top: 5px;
 	margin-bottom: 5px;
 	horizontal-align: center;
@@ -154,6 +156,10 @@
 {
 	transform: translate3d(1px, 1px, 0px);
 	sound: "ui_team_select_lock_and_start";
+}
+
+#community_reddit_header {
+	background-color: #909090aa;
 }
 
 .CommunityText

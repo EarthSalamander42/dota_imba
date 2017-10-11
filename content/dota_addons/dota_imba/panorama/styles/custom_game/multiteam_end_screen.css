@@ -457,7 +457,7 @@
 	font-size: 16px;
 	margin-top: 4px;
 	margin-right: 55%;
-	margin-left: 8%;
+	margin-left: 6%;
 	width: 100%;
 	color: white;
 	vertical-align: center;
@@ -486,10 +486,10 @@
 #ImbaXP18,
 #ImbaXP19
 {
-	margin-top: 4px;
-	margin-left: 36%;
+	margin-top: 3px;
+	margin-left: 34%;
 	width: 100%;
-	font-size: 16px;
+	font-size: 15px;
 	font-weight: bold;
 	color: white;
 	vertical-align: center;
@@ -673,10 +673,10 @@
 #ImbaXPEarned18,
 #ImbaXPEarned19
 {
-	margin-top: 4px;
-	margin-left: 77%;
+	margin-top: 3px;
+	margin-left: 76%;
 	width: 100%;
-	font-size: 16px;
+	font-size: 15px;
 	font-weight: bold;
 	color: white;
 	vertical-align: center;

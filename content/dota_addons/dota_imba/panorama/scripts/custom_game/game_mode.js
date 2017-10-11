@@ -44,7 +44,7 @@ function InitializeUI() {
 			$('#AllPickToggle').style.visibility = 'collapse';
 			$('#AllRandomToggle').style.visibility = 'collapse';
 			$('#AllRandomSameHeroToggle').style.visibility = 'collapse';
-		} else if (map_info.map_display_name == "imba_10v10") {
+		} else if (map_info.map_display_name == "imba_10v10" || map_info.map_display_name == "imba_12v12") {
 			$('#game_options_game_mode_title').text = $.Localize( "#imba_gamemode_name_10v10" );
 			$('#QuickOptionsPanel').style.visibility = 'collapse';
 			$('#HeroPowerOptionsPanel').style.visibility = 'collapse';
@@ -96,7 +96,7 @@ function SetQuickOptionsNormal() {
 
 	// Disables upgradable towers in standard and 10v10
 	var map_info = Game.GetMapInfo();
-	if (map_info.map_display_name == "imba_standard" || map_info.map_display_name == "imba_10v10") {
+	if (map_info.map_display_name == "imba_standard" || map_info.map_display_name == "imba_10v10" || map_info.map_display_name == "imba_12v12") {
 		$('#TowerUpgradesToggle').SetSelected(false);
 	} 
 
@@ -114,7 +114,7 @@ function SetQuickOptionsHigh() {
 
 	// Enables upgradable towers in standard and 10v10
 	var map_info = Game.GetMapInfo();
-	if (map_info.map_display_name == "imba_standard" || map_info.map_display_name == "imba_10v10") {
+	if (map_info.map_display_name == "imba_standard" || map_info.map_display_name == "imba_10v10" || map_info.map_display_name == "imba_12v12") {
 		$('#TowerUpgradesToggle').SetSelected(true);
 	} 
 
