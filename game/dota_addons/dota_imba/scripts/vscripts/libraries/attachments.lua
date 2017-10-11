@@ -1,15 +1,15 @@
-ATTACHMENTS_VERSION = "1.00"
+ATTACHMENTS_VERSION = "0.85"
 
 --[[
   Lua-controlled Frankenstein Attachments Library by BMD
+
   Installation
   -"require" this file inside your code in order to gain access to the Attachments global table.
   -Optionally require "libraries/notifications" before this file so that the Attachment Configuration GUI can display messages via the Notifications library.
-  -Ensure that this file is placed in the vscripts/libraries path
-  -Ensure that you have the barebones_attachments.xml, barebones_attachments.js, and barebones_attachments.css files in your panorama content folder to use the GUI.
-  -Ensure that barebones_attachments.xml is included in your custom_ui_manifest.xml with
-    <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_attachments.xml" />
+  -Additionally, ensure that this file is placed in the vscripts/libraries path
+  -Additionally, ensure that you have the barebones_attachments.xml, barebones_attachments.js, and barebones_attachments.css files in your panorama content folder to use the GUI.
   -Finally, include the "attachments.txt" in your scripts directory if you have a pre-build database of attachment settings.
+
   Library Usage
   -The library when required in loads in the "scripts/attachments.txt" file containing the attachment properties database for use during your game mode.
   -Attachment properties are specified as a 3-tuple of unit model name, attachment point string, and attachment prop model name.
@@ -35,6 +35,7 @@ ATTACHMENTS_VERSION = "1.00"
     -Ex: local prop = Attachments:AttachProp(unit, "attach_hitloc")
     -Calling prop:RemoveSelf() will automatically detach the prop from the unit
   -To access the loaded Attachment database directly (for reading properties directly), you can call Attachments:GetAttachmentDatabase()
+
   Attachment Configuration Usage
   -In tools-mode, execute "attachment_configure <ADDON_NAME>" to activate the attachment configuration GUI for setting up the attachment database.
   -See https://www.youtube.com/watch?v=PS1XmHGP3sw for an example of how to generally use the GUI
@@ -43,50 +44,24 @@ ATTACHMENTS_VERSION = "1.00"
   -The Save button will save the current properties as well as any other adjusted properties in the attachment database to disk.  
   -Databases will be saved to the scripts/attachments.txt file of the addon you set when calling the attachment_configure <ADDON_NAME> command.
   -More detail to come...
+
   Notes
   -"attach_origin" can be used as the attachment string for attaching a prop do the origin of the unit, even if that unit has no attachment point named "attach_origin"
   -Attached props will automatically scale when the parent unit/models are scaled, so rescaling individual props after attachment is not necessary.
   -This library requires that the "libraries/timers.lua" be present in your vscripts directory.
+
   Examples:
   --Attach an Axe axe model to the "attach_hitloc" to a given unit at a 1.0 Scale.
     Attachments:AttachProp(unit, "attach_hitloc", "models/items/axe/weapon_heavy_cutter.vmdl", 1.0)
+
   --For GUI use, see https://www.youtube.com/watch?v=PS1XmHGP3sw
+
 ]]
 
---LinkLuaModifier( "modifier_animation_freeze", "libraries/modifiers/modifier_animation_freeze.lua", LUA_MODIFIER_MOTION_NONE )
-
-LinkLuaModifier( "modifier_animation_freeze_stun", "libraries/attachments.lua", LUA_MODIFIER_MOTION_NONE )
-
-modifier_animation_freeze_stun = class({})
-
-function modifier_animation_freeze_stun:OnCreated(keys) 
-
-end
-
-function modifier_animation_freeze_stun:GetAttributes()
-  return MODIFIER_ATTRIBUTE_PERMANENT + MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE --+ MODIFIER_ATTRIBUTE_MULTIPLE
-end
-
-function modifier_animation_freeze_stun:IsHidden()
-  return true
-end
-
-function modifier_animation_freeze_stun:IsDebuff() 
-  return false
-end
-
-function modifier_animation_freeze_stun:IsPurgable() 
-  return false
-end
-
-function modifier_animation_freeze_stun:CheckState() 
-  local state = {
-    [MODIFIER_STATE_FROZEN] = true,
-    [MODIFIER_STATE_STUNNED] = true,
-  }
-
-  return state
-end
+LinkLuaModifier("modifier_animation_freeze_stun", "libraries/modifiers/modifier_animation_freeze_stun.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier("modifier_boss_stun", "libraries/modifiers/modifier_boss_stun.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_voodoo_lua", "libraries/modifiers/modifier_voodoo_lua.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_souls", "libraries/modifiers/modifier_souls.lua", LUA_MODIFIER_MOTION_NONE)
 
 -- Drop out of self-include to prevent execution of timers library and other code in modifier lua VM environment
 if not Entities or not Entities.CreateByClassname then
@@ -94,7 +69,6 @@ if not Entities or not Entities.CreateByClassname then
 end
 
 require('libraries/timers')
-
 
 local Notify = function(player, msg, duration)
   duration = duration or 2
@@ -133,60 +107,22 @@ if not Attachments then
 end
 
 function Attachments:start()
-
-  local src = debug.getinfo(1).source
-  --print(src)
-
-  self.gameDir = ""
-  self.addonName = ""
-
-  if IsInToolsMode() then
-
-    if src:sub(2):find("(.*dota 2 beta[\\/]game[\\/]dota_addons[\\/])([^\\/]+)[\\/]") then
-
-      self.gameDir, self.addonName = string.match(src:sub(2), "(.*dota 2 beta[\\/]game[\\/]dota_addons[\\/])([^\\/]+)[\\/]")
-      --print('[attachments] ', self.gameDir)
-      --print('[attachments] ', self.addonName)
-
-      self.initialized = true
-
-      self.activated = false
-      self.dbFilePath = nil
-      self.currentAttach = {}
-      self.hiddenCosmetics = {}
-      self.doAttach = true
-      self.doSphere = false
-      self.attachDB = LoadKeyValues("scripts/attachments.txt")
-
-
-      if IsInToolsMode() then
-        print('[attachments] Tools Mode')
-        SendToServerConsole("dota_combine_models 0")
-        Convars:RegisterCommand( "attachment_configure", Dynamic_Wrap(Attachments, 'ActivateAttachmentSetup'), "Activate Attachment Setup", FCVAR_CHEAT )
-      end
-    else
-      print("[attachments] RELOADING")
-      SendToServerConsole("script_reload_code " .. src:sub(2))
-    end
-  else
-    self.initialized = true
-
-    self.activated = false
-    self.dbFilePath = nil
-    self.currentAttach = {}
-    self.hiddenCosmetics = {}
-    self.doAttach = true
-    self.doSphere = false
-    self.attachDB = LoadKeyValues("scripts/attachments.txt")
-  end
+  Convars:RegisterCommand( "attachment_configure", Dynamic_Wrap(Attachments, 'ActivateAttachmentSetup'), "Attachment Setup: attachment_configure <ADDON_NAME>  (e.g. attachment_configure barebones)", FCVAR_CHEAT )
+  
+  self.activated = false
+  self.dbFilePath = nil
+  self.currentAttach = {}
+  self.hiddenCosmetics = {}
+  self.doAttach = true
+  self.doSphere = false
+  self.attachDB = LoadKeyValues("scripts/attachments.txt")
 end
 
-function Attachments:ActivateAttachmentSetup()
-  addon = Attachments.addonName
-  --[[if addon == nil or addon == "" then
+function Attachments:ActivateAttachmentSetup(addon)
+  if addon == nil or addon == "" then
     print("[Attachments.lua] Addon name must be specified.")
     return
-  end]]
+  end
 
   if not io then
     print("[Attachments.lua] Attachments Setup is only available in tools mode.")
@@ -208,6 +144,7 @@ function Attachments:ActivateAttachmentSetup()
       print("[Attachments.lua] Created file: 'dota_addons/" .. addon .. "/scripts/attachments.txt'.")
     end
     file:close()
+    
 
     CustomGameEventManager:RegisterListener("Attachment_DoSphere", Dynamic_Wrap(Attachments, "Attachment_DoSphere"))
     CustomGameEventManager:RegisterListener("Attachment_DoAttach", Dynamic_Wrap(Attachments, "Attachment_DoAttach"))
@@ -266,8 +203,8 @@ function Attachments:Attachment_Freeze(args)
 end
 
 function Attachments:Attachment_UpdateAttach(args)
-  DebugPrint('Attachment_UpdateAttach')
-  DebugPrintTable(args)
+  --DebugPrint('Attachment_UpdateAttach')
+  --DebugPrintTable(args)
 
   local unit = EntIndexToHScript(args.index)
   if not unit then
@@ -313,8 +250,7 @@ function Attachments:Attachment_UpdateAttach(args)
     prop:RemoveSelf()
   end
 
-  --Attachments.currentAttach[args.index][attach] = Attachments:AttachProp(unit, attach, model, properties.scale)
-  Attachments:AttachProp(unit, attach, model, properties.scale)
+  Attachments.currentAttach[args.index][attach] = Attachments:AttachProp(unit, attach, model, properties.scale)
 end
 
 function Attachments:Attachment_SaveAttach(args)
@@ -459,7 +395,6 @@ function Attachments:Attachment_HideCosmetic(args)
         child:RemoveEffects(EF_NODRAW)
         hiddenCosmetics[model] = nil
       else
-        --print("HIDING")
         child:AddEffects(EF_NODRAW)
         hiddenCosmetics[model] = true
       end
@@ -511,7 +446,7 @@ function Attachments:AttachProp(unit, attachPoint, model, scale, properties)
     if model.GetName and IsValidEntity(model) then
       prop = model
     else
-      prop = SpawnEntityFromTableSynchronous("prop_dynamic", {model = propModel, DefaultAnim=animation, targetname=DoUniqueString("prop_dynamic")})
+      prop = SpawnEntityFromTableSynchronous("prop_dynamic", {model = propModel, DefaultAnim=animation})
       prop:SetModelScale(scale * unit:GetModelScale())
     end
 
@@ -559,8 +494,13 @@ function Attachments:AttachProp(unit, attachPoint, model, scale, properties)
           ParticleManager:SetParticleControlEnt(prop.fx, tonumber(k), prop, PATTACH_POINT_FOLLOW, ent_point, prop:GetAbsOrigin(), true)
         end
       end    
+      -- Loop through the Control Point Entities
+      local control_points = particle_data['ControlPointEntities']
+      for k,ent_point in pairs(control_points) do
+        --print("Making Particle",particleName,prop.fx,k,prop,ent_point)
+        ParticleManager:SetParticleControlEnt(prop.fx, tonumber(k), prop, PATTACH_POINT_FOLLOW, ent_point, prop:GetAbsOrigin(), true)
+      end
     end
-
 
     if Attachments.timer then
       Timers:RemoveTimer(Attachments.timer)
@@ -577,11 +517,7 @@ function Attachments:AttachProp(unit, attachPoint, model, scale, properties)
       return .03
     end)
 
-
-    if not Attachments.currentAttach[unit:GetEntityIndex()] then Attachments.currentAttach[unit:GetEntityIndex()] = {} end
-    Attachments.currentAttach[unit:GetEntityIndex()][attachPoint] = prop
-
     return prop
 end
 
-if not Attachments.initialized then Attachments:start() end
+if not Attachments.attachDB then Attachments:start() end

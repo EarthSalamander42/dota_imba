@@ -243,7 +243,7 @@ function OnSetGameMode( eventSourceIndex, args )
 			CUSTOM_GOLD_BONUS = 75
 		elseif map_name == "imba_custom" or map_name == "imba_custom_10v10" then
 			CUSTOM_GOLD_BONUS = 300
-		elseif map_name == "imba_10v10" then
+		elseif map_name == "imba_10v10" or map_name == "imba_12v12" then
 			CUSTOM_GOLD_BONUS = 125
 		elseif map_name == "imba_arena" then
 			CUSTOM_GOLD_BONUS = 150
@@ -258,7 +258,7 @@ function OnSetGameMode( eventSourceIndex, args )
 			CUSTOM_XP_BONUS = 75
 		elseif map_name == "imba_custom" or map_name == "imba_custom_10v10" then
 			CUSTOM_XP_BONUS = 300
-		elseif map_name == "imba_10v10" then
+		elseif map_name == "imba_10v10" or map_name == "imba_12v12" then
 			CUSTOM_XP_BONUS = 125
 		elseif map_name == "imba_arena" then
 			CUSTOM_XP_BONUS = 150
@@ -273,7 +273,7 @@ function OnSetGameMode( eventSourceIndex, args )
 			CREEP_POWER_FACTOR = 2
 		elseif map_name == "imba_custom" or map_name == "imba_custom_10v10" then
 			CREEP_POWER_FACTOR = 3
-		elseif map_name == "imba_10v10" then
+		elseif map_name == "imba_10v10" or map_name == "imba_12v12" then
 			CREEP_POWER_FACTOR = 2
 		end
 		CustomNetTables:SetTableValue("game_options", "creep_power", {CREEP_POWER_FACTOR})
@@ -286,7 +286,7 @@ function OnSetGameMode( eventSourceIndex, args )
 			TOWER_POWER_FACTOR = 1
 		elseif map_name == "imba_custom" or map_name == "imba_custom_10v10" then
 			TOWER_POWER_FACTOR = 2
-		elseif map_name == "imba_10v10" then
+		elseif map_name == "imba_10v10" or map_name == "imba_12v12" then
 			TOWER_POWER_FACTOR = 2
 		end
 		CustomNetTables:SetTableValue("game_options", "tower_power", {TOWER_POWER_FACTOR})
@@ -299,7 +299,7 @@ function OnSetGameMode( eventSourceIndex, args )
 			HERO_RESPAWN_TIME_MULTIPLIER = 75
 		elseif map_name == "imba_custom" or map_name == "imba_custom_10v10" then
 			HERO_RESPAWN_TIME_MULTIPLIER = 50
-		elseif map_name == "imba_10v10" then
+		elseif map_name == "imba_10v10" or map_name == "imba_12v12" then
 			HERO_RESPAWN_TIME_MULTIPLIER = 50
 		end
 		CustomNetTables:SetTableValue("game_options", "respawn_multiplier", {100 - HERO_RESPAWN_TIME_MULTIPLIER})
@@ -322,7 +322,7 @@ function OnSetGameMode( eventSourceIndex, args )
 			HERO_RERANDOM_GOLD = 5500
 			HERO_STARTING_LEVEL = 12
 			MAX_LEVEL = 100
-		elseif map_name == "imba_10v10" then
+		elseif map_name == "imba_10v10" or map_name == "imba_12v12" then
 			HERO_INITIAL_GOLD = 2000
 			HERO_REPICK_GOLD = 1600
 			HERO_RANDOM_GOLD = 2400

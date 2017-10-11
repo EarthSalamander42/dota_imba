@@ -26,10 +26,10 @@ end
 function BuildGameArray()
 local game = {}
 
-	game.md = GetMode()
 	game.gl = GetGameLength()
-	game.tp = GetTowerUpgrades()
 	game.wt = GetWinningTeam()
+	game.md = GetMode()
+	game.tp = GetTowerUpgrades()
 --	game.wh = GetWinningHeroName(playerID)
 	game.wh = ""
 
@@ -53,9 +53,21 @@ local players = {}
 				table.insert(players, {
 					steamID32 = PlayerResource:GetSteamAccountID(playerID),
 
-					hn = GetHeroName(playerID), -- Hero name
+					ph = GetHeroName(playerID), -- Hero name
 					pt = player_team, -- Team this hero belongs to
 					pb = hero.buyback_count, -- Amount of buybacks performed during the game
+					pl = "", -- TODO: Remove this later once GDS is fixed.
+					pnw = "", -- TODO: Remove this later once GDS is fixed.
+					pbb = "", -- TODO: Remove this later once GDS is fixed.
+					pk = "", -- TODO: Remove this later once GDS is fixed.
+					pa = "", -- TODO: Remove this later once GDS is fixed.
+					pd = "", -- TODO: Remove this later once GDS is fixed.
+					i1 = "", -- TODO: Remove this later once GDS is fixed.
+					i2 = "", -- TODO: Remove this later once GDS is fixed.
+					i3 = "", -- TODO: Remove this later once GDS is fixed.
+					i4 = "", -- TODO: Remove this later once GDS is fixed.
+					i5 = "", -- TODO: Remove this later once GDS is fixed.
+					i6 = "", -- TODO: Remove this later once GDS is fixed.
 				})
 			end
 		end

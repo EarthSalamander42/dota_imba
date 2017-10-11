@@ -4,6 +4,10 @@
 -- Author:	zimberzimber
 -- Date:	30.8.2017
 
+-- Use these if roshan can't reach a target
+-- self.roshan:AddNewModifier(roshan, self:GetAbility(), "modifier_imba_skywrath_flying_movement", {})
+-- self.roshan:RemoveModifierByName("modifier_imba_skywrath_flying_movement")
+
 if imba_roshan_ai_diretide == nil then imba_roshan_ai_diretide = class({}) end
 LinkLuaModifier("modifier_imba_roshan_ai_diretide", "hero/neutral_roshan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_roshan_ai_beg", "hero/neutral_roshan", LUA_MODIFIER_MOTION_NONE)
@@ -58,9 +62,7 @@ function modifier_imba_roshan_ai_diretide:CheckState()
 	
 	if self:GetStackCount() == 1 then
 		state = {
-			[MODIFIER_STATE_ATTACK_IMMUNE]	= true,
 			[MODIFIER_STATE_INVULNERABLE]	= true,
-			[MODIFIER_STATE_MAGIC_IMMUNE]	= true,
 			[MODIFIER_STATE_CANNOT_MISS]	= true,
 			[MODIFIER_STATE_ROOTED]			= true,
 			[MODIFIER_STATE_DISARMED]		= true,
@@ -71,9 +73,7 @@ function modifier_imba_roshan_ai_diretide:CheckState()
 			[MODIFIER_STATE_INVISIBLE]		= false, }
 	elseif self:GetStackCount() == 2 then
 		state = {
-			[MODIFIER_STATE_ATTACK_IMMUNE]	= true,
 			[MODIFIER_STATE_INVULNERABLE]	= true,
-			[MODIFIER_STATE_MAGIC_IMMUNE]	= true,
 			[MODIFIER_STATE_CANNOT_MISS]	= true,
 			[MODIFIER_STATE_ROOTED]			= false,
 			[MODIFIER_STATE_DISARMED]		= false,
@@ -150,7 +150,7 @@ function modifier_imba_roshan_ai_diretide:OnCreated()
 		self.animDeath		= 10
 		
 		-- Ability handlers
-		self.forceWave	= self.roshan:FindAbilityByName("imba_roshan_diretide_force_wave")
+		self.forceWave	= self.roshan:FindAbilityByName("roshan_deafening_blast")
 		self.roshlings	= self.roshan:FindAbilityByName("imba_roshan_diretide_summon_roshlings")
 		self.breath		= self.roshan:FindAbilityByName("creature_fire_breath")
 		self.apocalypse	= self.roshan:FindAbilityByName("imba_roshan_diretide_apocalypse")
@@ -382,13 +382,6 @@ function modifier_imba_roshan_ai_diretide:Candy(roshan)
 	local candyMod = roshan:FindModifierByName("modifier_imba_roshan_eaten_candy")
 	if not candyMod then
 		candyMod = roshan:AddNewModifier(roshan, self:GetAbility(), "modifier_imba_roshan_eaten_candy", {})
-	else
-		if not GetMapName() == "imba_diretide" or DIRETIDE_COMMAND == false then
-			if candyMod:GetStackCount() == 14 then
-				DiretideChatCommand()
-				Diretide()
-			end
-		end
 	end
 	
 	candyMod:IncrementStackCount()
@@ -538,14 +531,19 @@ function modifier_imba_roshan_ai_diretide:ThinkPhase3(roshan)
 		-- Cast Force Wave if its available
 		if self.forceWave and self.forceWave:IsCooldownReady() then
 			print("Casting Wave of Force...")
-			local radius = self.forceWave:GetSpecialValueFor("radius")
+			local radius = 1000
 			local minTargets = self.forceWave:GetSpecialValueFor("min_targets")
-			
+
 			local nearbyHeroes = FindUnitsInRadius(roshan:GetTeamNumber(), roshan:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
-			if #nearbyHeroes >= minTargets then
-				roshan:CastAbilityNoTarget(self.apocalypse, 1)
+			for _, hero in ipairs(nearbyHeroes) do
+				roshan:CastAbilityOnPosition(hero:GetAbsOrigin(), self.forceWave, 1)
 				return
 			end
+--			local nearbyHeroes = FindUnitsInRadius(roshan:GetTeamNumber(), roshan:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+--			if #nearbyHeroes >= minTargets then
+--				roshan:CastAbilityNoTarget(self.apocalypse, 1)
+--				return
+--			end
 		end
 
 		-- Cast apocalypse if its available

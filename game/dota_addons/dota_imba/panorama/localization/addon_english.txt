@@ -29,6 +29,24 @@
 
 	"lag_issues"									"Experienced lag issues? Please click here."
 
+	//Picking Screen
+	"loading_pre_game"				"Loading heroes, please wait..."
+	"hero_list_title_strength"		"Strength Heroes"
+	"hero_list_title_agility"		"Agility Heroes"
+	"hero_list_title_intellect"		"Intelligence Heroes"
+	"hero_list_title_custom"		"Custom Heroes"
+	"hero_name_filler"				"Lock In"
+	"team_title_radiant"			"The Radiant"
+	"team_title_dire"				"The Dire"
+	"average_mmr"					"Average Imba Level: "
+	"swap_vanilla_to_custom"		"Swap to Vanilla Heroes"
+	"swap_custom_to_vanilla"		"Swap to Custom Heroes"
+	"confirm_pick_button"			"Select Hero"
+	"loading_heroes_button"			"Loading hero..."
+	"repick_button"					"Repick Hero"
+	"enter_game_button"				"Enter Game"
+	"welcome_label"					"Welcome to Dota IMBA!"
+
 	//=================================================================================================================
 	// Generic talent names
 	//=================================================================================================================
