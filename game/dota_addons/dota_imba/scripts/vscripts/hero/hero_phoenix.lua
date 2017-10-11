@@ -550,7 +550,7 @@ function imba_phoenix_fire_spirits:OnSpellStart()
 		iDuration = iDuration * self:GetCaster():FindTalentValue("special_bonus_imba_phoenix_7","duration_pct") / 100
 	end
 	caster:AddNewModifier(caster, self, "modifier_imba_phoenix_fire_spirits_count", { duration =  iDuration})
-	if not caster:HasTalent("special_bonus_imba_phoenix_7") == 0 then
+	if not caster:HasTalent("special_bonus_imba_phoenix_7") then
 		caster:SetModifierStackCount( "modifier_imba_phoenix_fire_spirits_count", caster, numSpirits )
 	end
 
