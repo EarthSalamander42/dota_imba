@@ -1656,8 +1656,8 @@ function imba_phoenix_supernova:OnSpellStart()
 	egg:AddNewModifier(caster, ability, "modifier_kill_no_timer", {duration = egg_duration })
 	egg:AddNewModifier(caster, ability, "modifier_imba_phoenix_supernova_egg_thinker", {duration = egg_duration + 0.3 })
 
-	egg:SetHealth( (4 * max_attack) )
-	egg:SetMaxHealth( (4 * max_attack) )
+	egg.max_attack = max_attack
+	egg.current_attack = 0
 
 	local egg_playback_rate = 6 / egg_duration
 	egg:StartGestureWithPlaybackRate(ACT_DOTA_IDLE , egg_playback_rate)
@@ -1687,10 +1687,13 @@ function imba_phoenix_supernova:OnSpellStart()
 			egg2:AddNewModifier(caster, ability, "modifier_imba_phoenix_supernova_egg_double", { } )
 			egg2:AddNewModifier(ally, ability, "modifier_imba_phoenix_supernova_egg_thinker", {duration = egg_duration + 0.3 })
 
-			egg2:SetHealth( ((4 * max_attack) * ( (100 - caster:FindTalentValue("special_bonus_imba_phoenix_6","attack_reduce_pct") ) / 100)) )
-			egg2:SetMaxHealth( ((4 * max_attack) * ( (100 - caster:FindTalentValue("special_bonus_imba_phoenix_6","attack_reduce_pct") ) / 100)) )
-			egg:SetHealth( ((4 * max_attack) * ( (100 - caster:FindTalentValue("special_bonus_imba_phoenix_6","attack_reduce_pct") ) / 100)) )
-			egg:SetMaxHealth( ((4 * max_attack) * ( (100 - caster:FindTalentValue("special_bonus_imba_phoenix_6","attack_reduce_pct") ) / 100)) )
+			max_attack = max_attack * ( (100 - caster:FindTalentValue("special_bonus_imba_phoenix_6","attack_reduce_pct") ) / 100)
+
+			egg.max_attack = max_attack
+			egg.current_attack = 0
+
+			egg2.max_attack = max_attack
+			egg2.current_attack = 0
 
 			local info = 
 			{
@@ -2029,27 +2032,9 @@ function modifier_imba_phoenix_supernova_egg_thinker:OnCreated()
 	ParticleManager:ReleaseParticleIndex( pfx )
 	StartSoundEvent( "Hero_Phoenix.SuperNova.Begin", egg)
 	StartSoundEvent( "Hero_Phoenix.SuperNova.Cast", egg)
-	self.bIsFirstAttacked = true
 
 	local ability = self:GetAbility()
 	GridNav:DestroyTreesAroundPoint(egg:GetAbsOrigin(), ability:GetSpecialValueFor("cast_range") * 1.5 , false)
-
-	local max_attack = ability:GetSpecialValueFor("max_hero_attacks")
-	if egg:HasModifier("modifier_imba_phoenix_supernova_egg_double") then
-		local novacaster = egg:FindModifierByName("modifier_imba_phoenix_supernova_egg_double"):GetCaster()
-		local hp = (ability:GetSpecialValueFor("max_hero_attacks") * 4 ) * ( (100 - novacaster:FindTalentValue("special_bonus_imba_phoenix_6","attack_reduce_pct") ) / 100)
-		egg:SetHealth( hp )
-		egg:SetMaxHealth( hp )
-	else
-		if caster:HasTalent("special_bonus_imba_phoenix_6") then
-			egg:SetHealth( ((4 * max_attack) * ( (100 - caster:FindTalentValue("special_bonus_imba_phoenix_6","attack_reduce_pct") ) / 100)) )
-			egg:SetMaxHealth( ((4 * max_attack) * ( (100 - caster:FindTalentValue("special_bonus_imba_phoenix_6","attack_reduce_pct") ) / 100)) )
-		else
-			egg:SetHealth( (max_attack * 4) )
-			egg:SetMaxHealth( (max_attack * 4) )
-		end
-	end
-	self:StartIntervalThink(1.0)
 end
 
 function modifier_imba_phoenix_supernova_egg_thinker:OnIntervalThink()
@@ -2208,27 +2193,18 @@ function modifier_imba_phoenix_supernova_egg_thinker:OnAttacked( keys )
 		return
 	end
 
-	local max_attack = ability:GetSpecialValueFor("max_hero_attacks")
-
-	--[[if self.bIsFirstAttacked then
-		if egg:HasModifier("modifier_imba_phoenix_supernova_egg_double") then
-			local novacaster = egg:FindModifierByName("modifier_imba_phoenix_supernova_egg_double"):GetCaster()
-			local hp = (ability:GetSpecialValueFor("max_hero_attacks") * 4 ) * ( (100 - novacaster:FindTalentValue("special_bonus_imba_phoenix_6","attack_reduce_pct") ) / 100)
-			egg:SetMaxHealth( hp )
-		else
-			if caster:HasTalent("special_bonus_imba_phoenix_6") then
-				egg:SetMaxHealth( ((4 * max_attack) * ( (100 - caster:FindTalentValue("special_bonus_imba_phoenix_6","attack_reduce_pct") ) / 100)) )
-			else
-				egg:SetMaxHealth( (max_attack * 4) )
-			end
-		end
-		self.bIsFirstAttacked = false
-	end]]
+	local max_attack = egg.max_attack
+	local current_attack = egg.current_attack
 
 	if attacker:IsRealHero() then
-		egg:SetHealth( (egg:GetHealth() - 4) )
+		egg.current_attack = egg.current_attack + 1
 	else
-		egg:SetHealth( (egg:GetHealth() - 1) )
+		egg.current_attack = egg.current_attack + 0.25
+	end
+	if egg.current_attack >= egg.max_attack then
+		egg:Kill(ability, attacker)
+	else
+		egg:SetHealth( (egg:GetMaxHealth() * ((egg.max_attack-egg.current_attack)/egg.max_attack)) )
 	end
 	local pfxName = "particles/units/heroes/hero_phoenix/phoenix_supernova_hit.vpcf"
 	local pfx = ParticleManager:CreateParticle( pfxName, PATTACH_POINT_FOLLOW, egg )
@@ -2277,7 +2253,7 @@ function modifier_imba_phoenix_supernova_dmg:GetModifierMiss_Percentage()
 	-- Get the miss pct
 	local egg = caster.egg
 	if egg then
-		local miss_pct = ability:GetSpecialValueFor("miss_pct_base") + ability:GetSpecialValueFor("miss_pct_perHit") * math.floor((egg:GetMaxHealth() - egg:GetHealth()) / 4 )
+		local miss_pct = ability:GetSpecialValueFor("miss_pct_base") + ability:GetSpecialValueFor("miss_pct_perHit") * egg.current_attack 
 		local miss_radius = self:GetAbility():GetSpecialValueFor("cast_range")
 		local miss_angle = self:GetAbility():GetSpecialValueFor("miss_angle")
 		local caster_location = caster:GetAbsOrigin()
