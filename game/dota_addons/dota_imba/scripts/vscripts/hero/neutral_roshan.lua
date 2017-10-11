@@ -36,11 +36,11 @@ function modifier_imba_roshan_ai_diretide:GetPriority()
     return MODIFIER_PRIORITY_SUPER_ULTRA end
 
 function modifier_imba_roshan_ai_diretide:GetModifierProvidesFOWVision()
-	if self:GetStackCount() == 3 then
-		return 0
-	else
+--	if self:GetStackCount() == 3 then
+--		return 0
+--	else
 		return 1
-	end
+--	end
 end
 	
 function modifier_imba_roshan_ai_diretide:GetActivityTranslationModifiers()
@@ -62,6 +62,7 @@ function modifier_imba_roshan_ai_diretide:CheckState()
 	
 	if self:GetStackCount() == 1 then
 		state = {
+			[MODIFIER_STATE_UNSELECTABLE]	= true,
 			[MODIFIER_STATE_INVULNERABLE]	= true,
 			[MODIFIER_STATE_CANNOT_MISS]	= true,
 			[MODIFIER_STATE_ROOTED]			= true,
@@ -811,7 +812,9 @@ function modifier_imba_roshan_death_buff:GetModifierMagicalResistanceBonus()
 	return self.bonusResist * self:GetStackCount() end
 
 function modifier_imba_roshan_death_buff:GetCustomTenacityUnique()
-	return self.bonusTenacity * self:GetStackCount() end
+--	return self.bonusTenacity * self:GetStackCount()
+	return 100
+end
 
 ---------- Modifier for handling begging
 if modifier_imba_roshan_ai_beg == nil then modifier_imba_roshan_ai_beg = class({}) end
