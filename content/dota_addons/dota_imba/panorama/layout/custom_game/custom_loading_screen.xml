@@ -115,6 +115,9 @@
 					<Label id="community_description" class="CommunityText" html="true" text="#imba_community_description" />
 					<Label id="community_post_description_01" class="CommunityText" html="true" text="#community_post_description_01"/>
 
+					<Button id="community_reddit_header" class="CommunityImg" onactivate="DOTADisplayURL('https://www.reddit.com/r/dotaimba/');" >
+						<Image src="file://{images}/custom_game/loading_screen/community_reddit_header.png" />
+					</Button>
 					<Button id="community_discord_header" class="CommunityImg" onactivate="DOTADisplayURL('http://tinyurl.com/imba-discord');" >
 						<Image src="file://{images}/custom_game/loading_screen/community_discord_header.png" />
 					</Button>

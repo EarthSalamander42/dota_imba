@@ -199,6 +199,11 @@ elseif GetMapName() == "imba_10v10" then
 	IMBA_PLAYERS_ON_GAME = 20
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 10
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 10
+elseif GetMapName() == "imba_12v12" then
+	IMBA_PICK_MODE_ALL_PICK = true
+	IMBA_PLAYERS_ON_GAME = 24
+	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 12
+	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 12
 elseif GetMapName() == "imba_arena" then
 	IMBA_PICK_MODE_ALL_PICK = true
 	IMBA_PLAYERS_ON_GAME = 12
@@ -317,7 +322,7 @@ elseif GetMapName() == "imba_custom" or GetMapName() == "imba_custom_10v10" then
 	HERO_RERANDOM_GOLD = 2200
 	HERO_STARTING_LEVEL = 5
 	MAX_LEVEL = 40
-elseif GetMapName() == "imba_10v10" then									-- 10v10 map defaults
+elseif GetMapName() == "imba_10v10" or GetMapName() == "imba_12v12" then									-- 10v10 map defaults
 	END_GAME_ON_KILLS = false
 	CUSTOM_GOLD_BONUS = 35
 	CUSTOM_XP_BONUS = 35

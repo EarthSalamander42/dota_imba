@@ -1,5 +1,3 @@
-@define ANIM_TIME: 0.75s;
-
 .CustomHudRoot
 {
 	width: 100%;
@@ -8,99 +6,229 @@
 
 #TopBarScoreboard
 {
-	horizontal-align: center;
-	vertical-align: top;
+    horizontal-align: center;
+    vertical-align: top;
+	width: 83%;
+}
+
+.AspectRatio4x3 #TopBarScoreboard,
+.AspectRatio5x4 #TopBarScoreboard
+{
+	margin-left: 200px;
+	width: 1070px;
+}
+
+.AspectRatio16x10 #TopBarScoreboard
+{
+	margin-left: 200px;
+	width: 1335px;
 }
 
 #ScoreboardContainer
 {
-	flow-children: right;
-	horizontal-align: center;
-	vertical-align: top;
+    horizontal-align: left;
+    vertical-align: top;
+	width: 100%;
 }
 
 #MultiteamScoreboard
 {
-	horizontal-align: center;
-	vertical-align: top;
-	height: 250px;
-
-	flow-children: right;
+    height: 80px;
+	width: 100%;
 }
 
 .ScoreboardTeamWrapper
 {
-	height: 100%;
-	border-left: 5px solid transparent;
-	border-right: 5px solid transparent;
-	transition-property: position;
-	transition-duration: ANIM_TIME;
-	margin-left: -50px;
-	margin-right: -50px;
+	width: 50%;
+    height: 100%;
 }
 
-#TeamLogo
+#ScoreboardCenter
 {
-	horizontal-align: left;
-	vertical-align: top;
-	width: 24px;
-	height: 24px;
+	horizontal-align: center;
+	flow-children: down;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-image: url("s2r://panorama/images/custom_game/scoreboard_center_wedge_psd.vtex");
+	horizontal-align: center;
+	width: 128px;
+	height: 62px;
+	margin-top: -2px;
 }
 
-.ScoreboardTeamWrapper.no_players
+#ScoreboardGoal
 {
-	visibility: collapse;
+	horizontal-align: center;
+	color: white;
+    font-size: 28px;
+    font-weight: bold;
+	margin-top: -2px;
+    text-shadow: 0px 4px 4px black;
+    text-overflow: clip;
+}
+
+#ScoreboardCurrentTime
+{
+	min-width: 46px;
+	padding-top: 2px;
+	padding-left: 2px;
+	padding-right: 2px;
+	color: #6f4d00;
+	margin-top: -8px;
+	horizontal-align: center;
+	text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    text-overflow: clip;
+
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #E9D048 ), color-stop( 0.5, #ffffff), color-stop( 0.5, #E3C948 ), to( #D7B129 ) );
+	box-shadow: #60000Caa -2px -2px 4px 4px;
+	border-radius: 4px;
 }
 
 #ScoreboardTeam
 {
-	margin-left: 100px;
-	margin-right: 100px;
-	padding-left: 2px;
-	padding-right: 2px;
+	padding-left: 5px;
+	padding-right: 5px;
+	flow-children: right;
 }
 
-.AspectRatio4x3 .ScoreboardTeamWrapper, .AspectRatio5x4 .ScoreboardTeamWrapper
+#_dynamic_team_2
 {
-	padding-left: -5px;
-	padding-right: -5px;
+	horizontal-align: left;
+}
+
+#_dynamic_team_3
+{
+	horizontal-align: right;
+}
+
+.AspectRatio4x3 .ScoreboardTeamWrapper,
+.AspectRatio5x4 .ScoreboardTeamWrapper
+{
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.ScoreboardTeamWrapper.local_player_team #ScoreboardTeam
+{
 }
 
 #LogoAndScore
 {
-	height: 100%;
-	width: 64px;
+    height: 100%;
+	width: 100px;
+	padding-right: 4px;
+	padding-left: 4px;
 }
 
-#TeamScore
+.ConquestScore
 {
-	vertical-align: bottom;
-	horizontal-align: left;
-	color: white;
-	font-size: 24px;
-	font-weight: bold;
-	text-shadow: 4px 4px 4px black;
+	vertical-align: top;
+	horizontal-align: center;
+	margin-top: 3px;
+    font-size: 28px;
+    font-weight: bold;
+    text-shadow: 4px 4px 4px black;
 	margin-bottom: -2px;
-	text-overflow: clip;
+    text-overflow: clip;
+	color: #ff5f42;
+ 	padding-right: 8px;
+ 	padding-left: 8px;
 }
 
-#TeamDarkenWash
+.local_player_team .ConquestScore
 {
-	width: 100%;
-	height: 42px;
-	background-color: gradient( linear, 25px 0%, 40px 0%, from( black ), to( transparent ) );
+    color: #46C42D;
+}
+
+.ColorBlindModeEnabled .local_player_team .ConquestScore
+{
+	color: #3b6cd0;
+}
+
+#ConquestScore_Radiant
+{
+	horizontal-align: left;
+}
+#ConquestScore_Dire
+{
+	horizontal-align: right;
+}
+
+.CustomHudRoot.radiant_earning_points #ConquestScore_Radiant,
+.CustomHudRoot.dire_earning_points #ConquestScore_Dire
+{
+	color: #FF5F42;
+	text-shadow: 0px 0px 6px 1.0 #ff0000aa;
+	animation-name: PulseScoreAnim;
+	animation-duration: 1.1s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+}
+
+.CustomHudRoot.radiant_earning_points .local_player_team #ConquestScore_Radiant,
+.CustomHudRoot.dire_earning_points .local_player_team #ConquestScore_Dire
+{
+	color: #9FFF8B;
+	text-shadow: 0px 0px 6px 1.0 #00ff00aa;
+}
+
+.ColorBlindModeEnabled .CustomHudRoot.radiant_earning_points .local_player_team #ConquestScore_Radiant,
+.ColorBlindModeEnabled .CustomHudRoot.dire_earning_points .local_player_team #ConquestScore_Dire
+{
+	color: #7bacff;
+	text-shadow: 0px 0px 6px 1.0 #208bff;
+}
+
+@keyframes 'x' {}
+@keyframes 'PulseScoreAnim'
+{
+	0%
+	{
+		brightness: 1;
+	}
+
+	50%
+	{
+		brightness: 2.5;
+	}
+
+	100%
+	{
+		brightness: 1;
+	}
+}
+
+#TeamPadding
+{
+	width: fill-parent-flow(1);
+}
+
+#_dynamic_team_2 #TeamScore
+{
+	horizontal-align: left;
+	margin-left: 5px;
+//	color: #70e770;
+}
+
+#_dynamic_team_3 #TeamScore
+{
+	horizontal-align: right;
+	margin-right: 5px;
+//	color: #d16a4f;
 }
 
 #TeamStatus
 {
-	width: 100%;
-	height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 #PlayersContainer
 {
-	padding-left: 24px;
-	flow-children: right;
+    flow-children: right;
 }
 
 #TeamColorBar
@@ -109,8 +237,8 @@
 
 #TeamOverlayBar
 {
-	width: 100%;
-	height: 48px;
+    width: 100%;
+    height: 48px;
 }
 
 .ScoreboardTeamWrapper.local_player_team #TeamOverlayBar
@@ -119,8 +247,8 @@
 
 #LocalTeamOverlay
 {
-	width: 100%;
-	height: 43px;
+    width: 100%;
+    height: 43px;
 }
 
 .ScoreboardTeamWrapper.local_player_team #LocalTeamOverlay
@@ -130,8 +258,15 @@
 
 .ScoreboardPlayer
 {
-	border-left: 1px solid black;
-	border-right: 1px solid black;
+}
+
+.AspectRatio4x3 .ScoreboardPlayer
+{
+    margin-top: 2px;
+}
+.AspectRatio16x10 .ScoreboardPlayer
+{
+   margin-top: 4px;
 }
 
 .ScoreboardPlayerWrapper
@@ -140,7 +275,7 @@
 
 .FlowDown
 {
-	flow-children: down;
+    flow-children: down;
 }
 
 .ScoreboardPlayerWrapper.is_local_player
@@ -149,35 +284,56 @@
 
 .PlayerPortraitWrapper
 {
-	flow-children: down;
+    flow-children: down;
 }
 
-#PlayerColorBar
+#ConquestPlayerColorBar
 {
-	height: 6px;
-	width: 100%;
-	border-bottom: 1px solid #000000;
+    height: 4px;
+    width: 100%;
+    border-bottom: 1px solid #000000;
+	background-color: #c42f00;
 }
+
+.local_player_team #ConquestPlayerColorBar
+{
+	background-color: #086108;
+}
+
+.ColorBlindModeEnabled .local_player_team #ConquestPlayerColorBar
+{
+	background-color: #3b6cd0;
+}
+
 
 #HeroIcon
 {
-	width: 64px;
-	height: 36px;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    width: 56px;
+    height: 32px;
+}
+
+.AspectRatio4x3 #HeroIcon,
+.AspectRatio5x4 #HeroIcon
+{
+    border-left: 0px solid black;
+    border-right: 0px solid black;
+    width: 44px;
+    height: 25px;
 }
 
 .AspectRatio16x10 #HeroIcon
 {
-	width: 58px;
-}
-
-.AspectRatio4x3 #HeroIcon
-{
-	width: 46px;
+    border-left: 0px solid black;
+    border-right: 0px solid black;
+    width: 55px;
+    height: 30px;
 }
 
 .player_dead #HeroIcon
 {
-	wash-color: #CCCCCC;
+	wash-color: #666666;
 	saturation: 0;
 }
 
@@ -205,18 +361,18 @@
 
 #ScoreRow
 {
-	width: 100%;
+    width: 100%;
 }
 
 #RespawnIndicator
 {
-	margin-top: 26px;
+	margin-top: 30px;
 	width: 42px;
-	height: 49px;
-	background-size: 100%;
-	background-repeat: no-repeat;
-	background-position: 50% 50%;
-	background-image: url("s2r://panorama/images/custom_game/deathtimer_background_psd.vtex");
+	height: 38px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-image: url("s2r://panorama/images/custom_game/deathtimer_background_psd.vtex");
 	horizontal-align: center;
 	transform: translateY(-30px);
 	opacity: 0;
@@ -225,30 +381,66 @@
 	transition-timing-function: ease-out;
 }
 
+#HealthIndicatorContainer
+{
+//	margin-top: 54px;
+	margin-top: 40px;
+	width: 100%;
+	background-color: black;
+	height: 13px;
+	horizontal-align: center;
+	border-radius: 2px;
+	box-shadow: -1px -1px 2px 2px black;
+	visibility: collapse;
+}
+
+.AspectRatio4x3 #HealthIndicatorContainer
+{
+    margin-top: 32px;
+}
+
+.local_player_is_spectator #HealthIndicatorContainer
+{
+	visibility: visible;
+}
+
+.ScoreboardPlayerWrapper.player_dead #HealthIndicatorContainer
+{
+	opacity: 0;
+}
+
+#HealthIndicatorHealth
+{
+	background-color: white;
+	height: 100%;
+	horizontal-align: left;
+}
+
+#_dynamic_team_2 #HealthIndicatorHealth
+{
+    background-color: gradient( linear, 0% 0%, 0% 100%, from( #529a52 ), color-stop( 0.5, #0d570d ), color-stop( 0.75, #186510 ), to( #084e08 ) );
+}
+
+#_dynamic_team_3 #HealthIndicatorHealth
+{
+    background-color: gradient( linear, 0% 0%, 0% 100%, from( #b06652 ), color-stop( 0.5, #88270d ), color-stop( 0.75, #852c1b ), to( #631609 ) );
+}
+
 #RespawnTimer
 {
-	color: #e5460e;
-	width: 100%;
+    color: #e5460e;
+    width: 100%;
 	text-align: center;
-	vertical-align: bottom;
-	margin-bottom: 4px;
-	font-size: 18px;
-	text-shadow: 2px 2px 2px black;
+    vertical-align: bottom;
+	margin-bottom: -1px;
+    font-size: 16px;
+    text-shadow: 2px 2px 2px black;
 }
 
 .ScoreboardPlayerWrapper.player_dead #RespawnIndicator
 {
 	opacity: 1;
 	transform: translateY(0px);
-}
-
-#LocalPlayerIndicator
-{
-	horizontal-align: center;
-	vertical-align: bottom;
-	visibility: collapse;
-	width: 40px;
-	height: 20px;
 }
 
 #UltimateIndicatorContainer
@@ -264,7 +456,7 @@
 	visibility: collapse;
 }
 
-.not_local_player_team #UltimateIndicatorContainer
+.not_local_player_teammate #UltimateIndicatorContainer
 {
 	visibility: collapse;
 }
@@ -273,12 +465,12 @@
 {
 	width: 100%;
 	height: 100%;
-	background-size: 100%;
-	background-repeat: no-repeat;
-	background-position: 50% 50%;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
 }
 
 .is_local_player #LocalPlayerIndicator
 {
-	visibility: visible;
+    visibility: visible;
 }
