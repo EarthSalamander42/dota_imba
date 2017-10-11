@@ -27,7 +27,25 @@
 	"scoreboard_tool_tip_disable_help"				"禁用帮助"
 	"scoreboard_tool_tip_active_disable_help"		"（已生效）"
 
-	"lag_issues"									"游戏卡顿？请点击这里"
+	"lag_issues"									"游戏卡顿？请点击这里（需要翻墙）"
+
+	//Picking Screen
+	"loading_pre_game"				"正在读取数据，请稍候..."
+	"hero_list_title_strength"		"力量"
+	"hero_list_title_agility"		"敏捷"
+	"hero_list_title_intellect"		"智力"
+	"hero_list_title_custom"		"原创英雄"
+	"hero_name_filler"				"选择"
+	"team_title_radiant"			"天辉"
+	"team_title_dire"				"夜魇"
+	"average_mmr"					"平均IMBA等级"
+	"swap_vanilla_to_custom"		"切换至DOTA英雄"
+	"swap_custom_to_vanilla"		"切换至原创英雄"
+	"confirm_pick_button"			"选择英雄"
+	"loading_heroes_button"			"载入英雄数据..."
+	"repick_button"					"重新选择（Repick）"
+	"enter_game_button"				"进入游戏！"
+	"welcome_label"					"欢迎来到 Dota IMBA!"
 
 	//=================================================================================================================
 	// Generic talent names
@@ -476,6 +494,24 @@
 	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_7_Description"			"被磁化的单位将被最近的盟友吸引"		
 	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_8_title"					"授予力量"
 	"DOTA_Tooltip_Talent_special_bonus_imba_magnataur_8_Description"			"对极度加强的单位施放授予力量将使其在接下来的8秒内的攻击发射小型震荡波，只能造成50%的伤害，没有其他效果，每秒只能触发一次"		
+
+	// Mirana
+	"DOTA_Tooltip_Talent_special_bonus_imba_mirana_1_title"						"月之暗面"			
+	"DOTA_Tooltip_Talent_special_bonus_imba_mirana_1_Description"				"月之暗面提供一次群星风暴"
+	"DOTA_Tooltip_Talent_special_bonus_imba_mirana_2_title"						"月神之箭"
+	"DOTA_Tooltip_Talent_special_bonus_imba_mirana_2_Description"				"月神之箭的暴击效果在眩晕剩余时间大于2秒时不再只生效一次，每次伤害都会触发"
+	"DOTA_Tooltip_Talent_special_bonus_imba_mirana_3_title"						"月之暗面"
+	"DOTA_Tooltip_Talent_special_bonus_imba_mirana_3_Description"				"月之暗面在隐形时提高20%移动速度"
+	"DOTA_Tooltip_Talent_special_bonus_imba_mirana_4_title"						"月神之箭"
+	"DOTA_Tooltip_Talent_special_bonus_imba_mirana_4_Description"				"+2 月神之箭数量"
+	"DOTA_Tooltip_Talent_special_bonus_imba_mirana_5_title"						"米拉娜"
+	"DOTA_Tooltip_Talent_special_bonus_imba_mirana_5_Description"				"站立不动3秒时进入隐形状态，只有移动和攻击会打破隐形"
+	"DOTA_Tooltip_Talent_special_bonus_imba_mirana_6_title"						"跳跃"	
+	"DOTA_Tooltip_Talent_special_bonus_imba_mirana_6_Description"				"跳跃发射一支月神之箭"
+	"DOTA_Tooltip_Talent_special_bonus_imba_mirana_7_title"						"跳跃"
+	"DOTA_Tooltip_Talent_special_bonus_imba_mirana_7_Description"				"跳跃不需要转身且会隐形，可以躲避弹道"		
+	"DOTA_Tooltip_Talent_special_bonus_imba_mirana_8_title"                  	"群星风暴"					
+	"DOTA_Tooltip_Talent_special_bonus_imba_mirana_8_Description"            	"主群星风暴在目标身上埋下群星风暴之种，米拉娜的攻击会引爆群星之种，触发一次次级群星风暴，多个群星之种可以叠加"
 
     // Nyx
     "DOTA_Tooltip_Talent_special_bonus_imba_nyx_assassin_1_title"             "复仇"
