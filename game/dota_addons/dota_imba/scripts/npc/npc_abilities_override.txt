@@ -787,7 +787,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"maximum_distance"		"575"
+				"maximum_distance"		"475"
 			}
 			"03"
 			{

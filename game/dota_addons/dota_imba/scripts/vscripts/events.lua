@@ -999,6 +999,25 @@ function GameMode:OnEntityKilled( keys )
 				end
 			end
 		end
+
+		if killed_unit:GetTeamNumber() == 4 then
+			if killed_unit:GetUnitLabel() == "npc_diretide_roshan" then return end
+			local chance = RandomInt(1, 100)
+			if chance > 50 then -- 49% chance
+				local item = CreateItem("item_diretide_candy", nil, nil)
+				local pos = killed_unit:GetAbsOrigin()
+				local drop = CreateItemOnPositionSync(pos, item)
+				item:LaunchLoot(false, 300, 0.5, pos + RandomVector(200))
+			end
+		elseif string.find(killed_unit:GetUnitName(), "dota_creep") then
+			local chance = RandomInt(1, 100)
+			if chance > 90 then -- 10% chance
+				local item = CreateItem("item_diretide_candy", nil, nil)
+				local pos = killed_unit:GetAbsOrigin()
+				local drop = CreateItemOnPositionSync(pos, item)
+				item:LaunchLoot(false, 300, 0.5, pos + RandomVector(200))
+			end
+		end
 	end
 end
 
