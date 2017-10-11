@@ -5,6 +5,11 @@
 	</scripts>
 
 	<script>
+		GameUI.CustomUIConfig().multiteam_top_scoreboard =
+		{
+			shouldSort: false
+		};
+
 		// Uncomment any of the following lines in order to disable that portion of the default UI
 		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_TIMEOFDAY, false );				//Time of day (clock).
 		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ACTION_PANEL, false );					//Hero actions UI.
@@ -65,6 +70,10 @@
 		GameUI.CustomUIConfig().player_colors[17] = "#800000;";
 		GameUI.CustomUIConfig().player_colors[18] = "#808080;";
 		GameUI.CustomUIConfig().player_colors[19] = "#FEFEFE;";
+		GameUI.CustomUIConfig().player_colors[20] = "#A6A6A6;";
+		GameUI.CustomUIConfig().player_colors[21] = "#FF59FF;";
+		GameUI.CustomUIConfig().player_colors[22] = "#CBFF59;";
+		GameUI.CustomUIConfig().player_colors[23] = "#6CA7FF;";
 
 		// HUD Hack, made by Cookies #42 [Earth Salamander]
 		// Hide normal picking screen
@@ -129,42 +138,39 @@
 		var topbarDire = topbar.FindChildTraverse("TopBarDireTeam");
 		var topbarDireContainer = topbarDire.FindChildTraverse("TopBarDirePlayersContainer");
 
-		if (map_info.map_display_name == "imba_standard")
-		{
-			
-		}
-		else if (map_info.map_display_name == "imba_custom")
-		{
-			
-		}
-		else if (map_info.map_display_name == "imba_diretide")
-		{
-			
-		}
-		else
-		{
-			topbar.style.width = "76%";
+//		if (map_info.map_display_name == "imba_standard" || map_info.map_display_name == "imba_custom" || map_info.map_display_name == "imba_diretide") {
+//		} else {
+//			topbar.style.width = "76%";
 
-			topbarRadiant.style.width = "50%";
-			topbarRadiant.style.marginLeft = "0px";
+//			topbarRadiant.style.width = "50%";
+//			topbarRadiant.style.marginLeft = "0px";
+			topbarRadiant.style.width = "5%";
+			topbarRadiant.style.horizontalAlign = "center";
+			topbarRadiant.style.marginRight = "10%";
 
-			topbarRadiantContainer.style.marginTop = "-1px";
-			topbarRadiantContainer.style.width = "630px";
-			topbarRadiantContainer.style.flowChildren = "left";
+//			topbarRadiantContainer.style.marginTop = "-1px";
+//			topbarRadiantContainer.style.width = "630px";
+//			topbarRadiantContainer.style.flowChildren = "left";
+			topbarRadiantContainer.style.visibility = "collapse";
 
-			topbarDire.style.width = "50%";
-			topbarDire.style.marginRight = "0px";
+//			topbarDire.style.width = "50%";
+//			topbarDire.style.marginRight = "0px";
+			topbarDire.style.width = "5%";
+			topbarDire.style.horizontalAlign = "center";
+			topbarDire.style.marginLeft = "10%";
 
-			topbarDireContainer.style.marginTop = "-1px";
-			topbarDireContainer.style.width = "630px";
-		}
+//			topbarDireContainer.style.marginTop = "-1px";
+//			topbarDireContainer.style.width = "630px";
+			topbarDireContainer.style.visibility = "collapse";
+//		}
 
 		for (var tbg of topbarRadiant.FindChildrenWithClassTraverse("TeamBackground")) {
 			for (var tbbg of tbg.FindChildrenWithClassTraverse("TopBarBackground")) {
 				tbbg.style.height = "44px"
 				tbbg.style.backgroundSize = '0%';
 //				tbbg.style.backgroundColor = '#000000da';
-				tbbg.style.backgroundColor = '#08640Eda';
+//				tbbg.style.backgroundColor = '#08640Eda';
+				tbbg.style.backgroundColor = 'none';
 			}
 		}
 
@@ -173,13 +179,15 @@
 				tbbg.style.height = "44px"
 				tbbg.style.backgroundSize = '0%';
 //				tbbg.style.backgroundColor = '#000000da';
-				tbbg.style.backgroundColor = '#640808da';
+//				tbbg.style.backgroundColor = '#640808da';
+				tbbg.style.backgroundColor = 'none';
 			}
 		}
 	</script>
 
 	<Panel>
 	<!-- CustomUIElements go here.  They are not provided currently as valve's parser reads commented lines and attempts to link them in.-->
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/precache.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/team_select.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/game_mode.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_attachments.xml" />
@@ -194,5 +202,6 @@
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/diretide_note.xml" />
 		<CustomUIElement type="EndScreen" layoutfile="file://{resources}/layout/custom_game/multiteam_end_screen.xml" />
 		<CustomUIElement type="FlyoutScoreboard" layoutfile="file://{resources}/layout/custom_game/multiteam_flyout_scoreboard.xml" />
+		<CustomUIElement type="HudTopBar" layoutfile="file://{resources}/layout/custom_game/multiteam_top_scoreboard.xml" />
 	</Panel>
 </root>

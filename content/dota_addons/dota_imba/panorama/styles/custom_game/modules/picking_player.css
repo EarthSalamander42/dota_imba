@@ -1,65 +1,31 @@
-.PickingPlayer
-{
-	height: 7.5%;
-	vertical-align: center;
-	flow-children: right;
-	margin-bottom: 1.5%;
+.PickingPlayer {
+	width: 18%;
+	height: 100%;
+	margin: 0% 2% 0% 0%;
+	flow-children: down;
 }
 
-.PickingPlayer.HoF
-{
-	height: 60px;
-}
-
-.PickingPlayer.right
-{
+.PickingPlayer.right {
 	horizontal-align: right;
 }
 
-#PlayerAvatar
-{
-	height: 72px;
-    width: 72px;
-	vertical-align: middle;
-	margin-left: 5px;
-	margin-right: 5px;
-	z-index: 5;
-    background-size: 100% 100%;
-}
-
-#HeroPanel
-{
-	width: 128px;
-	height: 64px;
-	vertical-align: center;
+#HeroPanel {
+	width: 100%;
+	height: 60%;
+	background-color: black;
 	background-size: 100% 100%;
-	background-position: 0px 0px;
-	transform: translateX( -200px );
-	transition: transform 400ms cubic-bezier(0.7, 1.6, 0.7, 0.7) 5ms;
+	border: 1px solid #656565;
 }
 
-.AspectRatio16x10 #HeroPanel
-{
-	width: 108px;
-	height: 58px;
-	vertical-align: center;
-	background-size: 100% 100%;
-	background-position: 0px 0px;
-	transform: translateX( -200px );
-	transition: transform 400ms cubic-bezier(0.7, 1.6, 0.7, 0.7) 5ms;
-}
-
-.AspectRatio4x3 #HeroPanel
-{
-	width: 78px;
-	height: 43px;
-	vertical-align: center;
-	background-size: 100% 100%;
-	background-position: 0px 0px;
-	transform: translateX( -200px );
-	transition: transform 400ms cubic-bezier(0.7, 1.6, 0.7, 0.7) 5ms;
-}
-
-.right #HeroPanel {
-	transform: translateX( 200px );
+#PlayerName {
+	width: 100%;
+	height: 35%;
+	margin-top: 5%;
+	font-size: 12px;
+	font-family: "Radiance";
+	horizontal-align: center;
+	text-align: center;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #fff;
 }

@@ -166,7 +166,7 @@
 
 		"IsImba"					"1"
 
-        "AbilityLayout"             "5"
+		"AbilityLayout"             "5"
 
 		"Ability1"					"imba_bane_enfeeble"
 		"Ability2"					"imba_bane_brain_sap"
@@ -271,7 +271,7 @@
 	//=================================================================================================================
 	// HERO: Bounty Hunter
 	//=================================================================================================================
-	"npc_imba_hero_bounty_hunter"
+	"npc_dota_hero_bounty_hunter"
 	{
 		"override_hero"				"npc_dota_hero_bounty_hunter"
 
@@ -572,7 +572,7 @@
 		"Ability2"					"imba_dazzle_shallow_grave"
 		"Ability3"					"imba_dazzle_shadow_wave"
 		"Ability4"                  "imba_dazzle_ressurection"
-        "Ability5"                  "imba_dazzle_weave"
+		"Ability5"                  "imba_dazzle_weave"
 
 		"Ability10"					"special_bonus_imba_dazzle_4" // Poison Touch slows the target after setting in appropriate to damage taken
 		"Ability11"					"special_bonus_imba_dazzle_5" // Enemies that interact with a poisoned touched teammate of their get poison touched as well
@@ -872,6 +872,7 @@
 		"AbilityLayout"				"4"
 
 		"IsImba"					"1"
+		"IsDisabled"				"1"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
 
 		"Ability1"					"imba_enigma_malefice"
 		"Ability2"					"imba_enigma_demonic_conversion"
@@ -1293,7 +1294,7 @@
 	{
 		"override_hero"				"npc_dota_hero_lone_druid"
 
-		"IsImba"					"1"
+		"IsImba"					"0"
 
 		//"Ability1"					"imba_lone_druid_spirit_bear"				
 		//"Ability2"					"imba_lone_druid_rabid"				
@@ -1449,7 +1450,7 @@
 	//=================================================================================================================
 	// HERO: Mirana
 	//=================================================================================================================
-    "npc_imba_hero_mirana"
+	"npc_imba_hero_mirana"
 	{
 		"override_hero"				"npc_dota_hero_mirana"		
 
@@ -1645,7 +1646,7 @@
 	//=================================================================================================================
 	// HERO: Nyx Assassin
 	//=================================================================================================================
-    "npc_imba_hero_nyx_assassin"
+	"npc_imba_hero_nyx_assassin"
 	{
 		"override_hero"				"npc_dota_hero_nyx_assassin"
 
@@ -1810,6 +1811,7 @@
 	"npc_imba_hero_phantom_lancer"
 	{
 		"override_hero"				"npc_dota_hero_phantom_lancer"
+		"IsDisabled"				"1"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
 
 		"IsDisabled"				"0"
 
@@ -2331,8 +2333,7 @@
 	"npc_imba_hero_spectre"
 	{
 		"override_hero"				"npc_dota_hero_spectre"
-
-		"IsDisabled"				"1"
+		"IsDisabled"				"1"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
 
 		//"Ability1"				"imba_spectre_spectral_dagger"
 		//"Ability2"				"imba_spectre_desolate"
@@ -2422,7 +2423,8 @@
 	//=================================================================================================================
 	"npc_imba_hero_techies"
 	{
-		"override_hero"				"npc_dota_hero_techies"		
+		"override_hero"				"npc_dota_hero_techies"
+		"IsDisabled"				"2"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.	
 
 		"IsImba"					"1"
 
@@ -2532,6 +2534,7 @@
 	"npc_imba_hero_tinker"
 	{
 		"override_hero"				"npc_dota_hero_tinker"
+		"IsDisabled"				"2"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
 
 		"IsImba"					"1"
 		
@@ -2733,6 +2736,7 @@
 	"npc_imba_hero_undying"
 	{
 		"override_hero"				"npc_dota_hero_undying"
+		"IsDisabled"				"2"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
 
 		"AttributeBaseAgility"		"20"
 
@@ -2851,7 +2855,7 @@
 	"npc_imba_hero_venomancer"
 	{
 		"override_hero"				"npc_dota_hero_venomancer"
-
+		"IsDisabled"				"2"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
 		"IsImba"					"1"
 
 		"AttackRange"				"500"
@@ -3071,6 +3075,8 @@
 
 		"AttackRange"				"500"
 
+		"IsDisabled"				"1"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
+
 		//"Ability1"					"imba_zuus_arc_lightning"
 		//"Ability2"					"imba_zuus_lightning_bolt"
 		//"Ability3"					"imba_zuus_static_field"
@@ -3086,5 +3092,205 @@
 		"Ability17"					"special_bonus_unique_zeus"
 
 		"ProjectileModel"			"particles/units/heroes/hero_zuus/zuus_base_attack.vpcf"
+	}
+
+	//=================================================================================================================
+	// HERO: Ghost Revenant // Need to be duplicated in npc_units_custom.txt
+	//=================================================================================================================
+	"npc_dota_hero_ghost_revenant"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"					"npc_dota_hero"
+		"HeroID"					"115"
+		"Model"						"models/heroes/razor/razor.vmdl"
+		"ModelScale"				"1.080000"
+		//"Portrait"				"vgui/hud/heroportraits/abyssal_underlord"
+		"SoundSet"					"Hero_Razor"
+		"HealthBarOffset"			"300"
+
+		// Abilities
+		//-------------------------------------------------------------------------------------------------------------
+		"Ability1"					"ghost_revenant_blackjack"		// Ability 1
+		"Ability2"					"ghost_revenant_wraith"				// Ability 2
+		"Ability3"					"ghost_revenant_miasma"		// Ability 3
+		"Ability4"					"ghost_revenant_ghost_immolation"		// Ability 4
+		"Ability5"					"ghost_revenant_exhaustion"
+
+		// Talents
+		//-------------------------------------------------------------------------------------------------------------
+//		"Ability10"					""		//10 Right
+//		"Ability11"					""		//10 Left
+//		"Ability12"					""		//15 Right
+//		"Ability13"					""		//15 Left
+//		"Ability14"					""		//20 Right    
+//		"Ability15"					""		//20 Left
+//		"Ability16"					""		//25 Right
+//		"Ability17"					""		//25 Left
+
+		// Armor
+		//-------------------------------------------------------------------------------------------------------------
+		"ArmorPhysical"				"-1"									// Physical protection.
+		"MagicalResistance"			"25"									// Magical protection (percentage).
+
+		// Attack
+		//-------------------------------------------------------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"30"										// Damage range min.
+		"AttackDamageMax"			"40"										// Damage range max.
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"				// Type of damage dealt. 
+		"AttackRate"				"1.900"									// Speed of attack.
+		"AttackAnimationPoint"		"0.300"									// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"600"									// Range within a target can be acquired.
+		"AttackRange"				"250"									// Range within a target can be attacked.
+		"ProjectileModel"			"particles/units/heroes/hero_venomancer/venomancer_base_attack.vpcf"							// Particle system model for projectile.
+		"ProjectileSpeed"			"800"									// Speed of projectile.
+
+		// Attributes
+		//-------------------------------------------------------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"	// Primary Attribute
+		"AttributeBaseStrength"		"23"						// Base strength
+		"AttributeStrengthGain"		"1.9"						// Strength bonus per level.
+		"AttributeBaseIntelligence"	"24"							// Base intelligence
+		"AttributeIntelligenceGain"	"3.3"						// Intelligence bonus per level.
+		"AttributeBaseAgility"		"13"						// Base agility
+		"AttributeAgilityGain"		"1.4"						// Agility bonus per level.
+
+		// Bounds
+		//-------------------------------------------------------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"70"
+
+		// Movement
+		//-------------------------------------------------------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"310"									// Speed.
+		"MovementTurnRate"			"0.4"									// Turning rate.
+
+		// Status
+		//-------------------------------------------------------------------------------------------------------------
+		"StatusHealth"				"200"									// Base health.
+		"StatusHealthRegen"			"0.25"									// Health regeneration rate.
+		"StatusMana"				"50"									// Base mana.
+		"StatusManaRegen"			"0.01"									// Mana regeneration rate.
+
+		// Team
+		//-------------------------------------------------------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_HERO"
+		
+		// Vision
+		//-------------------------------------------------------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"									// Range of vision during day light.
+		"VisionNighttimeRange"		"800"									// Range of vision at night time.
+
+		//"particle_folder"			"particles/units/heroes/hero_abaddon"
+		"GameSoundsFile"			"soundevents/game_sounds_heroes_custom/game_sounds_hell_empress.vsndevts"
+		//"VoiceFile"				"soundevents/voscripts/game_sounds_vo_abaddon.vsndevts"
+		"RenderablePortrait"
+		{
+		}
+	}
+
+	//=================================================================================================================
+	// HERO: Hell Empress // Need to be duplicated in npc_units_custom.txt
+	//=================================================================================================================
+	"npc_dota_hero_hell_empress"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"					"npc_dota_hero"
+		"HeroID"					"116"
+		"Model"						"models/heroes/abyssal_underlord/abyssal_underlord_v2.vmdl"
+		"ModelScale"				"1.080000"
+		//"Portrait"				"vgui/hud/heroportraits/abyssal_underlord"
+		"SoundSet"					"Hero_AbyssalUnderlord"
+
+		// Abilities
+        //-------------------------------------------------------------------------------------------------------------
+        "Ability1"					"viscous_ooze_slime_trail"      // Ability 1
+        "Ability2"					"viscous_ooze_split_oozelings"      // Ability 2
+        "Ability3"					"viscous_ooze_sticky_membrane"      // Ability 3
+        "Ability4"					"viscous_ooze_treasure_magic"       // Ability 4
+        "Ability5"					"viscous_ooze_size_mutator"     // Innate
+        "Ability6"					"viscous_ooze_consume_items"        // Ultimate
+
+        // Talents
+        //-------------------------------------------------------------------------------------------------------------
+        "Ability10"					"special_bonus_mp_regen_2"              //10 Right
+        "Ability11"					"special_bonus_armor_4"            //10 Left
+        "Ability12"					"special_bonus_movement_speed_25"          //15 Right
+        "Ability13"					"special_bonus_unique_viscous_ooze_1"   //15 Left
+        "Ability14"					"special_bonus_attack_speed_35"             //20 Right    
+        "Ability15"					"special_bonus_spell_amplify_10"       //20 Left
+        "Ability16"					"special_bonus_unique_viscous_ooze_2"       //25 Right
+        "Ability17"					"special_bonus_unique_viscous_ooze_3"       //25 Left
+
+		// Armor
+		//-------------------------------------------------------------------------------------------------------------
+		"ArmorPhysical"				"-1"									// Physical protection.
+		"MagicalResistance"			"25"									// Magical protection (percentage).
+
+		// Attack
+		//-------------------------------------------------------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"30"										// Damage range min.
+		"AttackDamageMax"			"40"										// Damage range max.
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"				// Type of damage dealt. 
+		"AttackRate"				"1.900"									// Speed of attack.
+		"AttackAnimationPoint"		"0.300"									// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"600"									// Range within a target can be acquired.
+		"AttackRange"				"250"									// Range within a target can be attacked.
+		"ProjectileModel"			"particles/units/heroes/hero_venomancer/venomancer_base_attack.vpcf"							// Particle system model for projectile.
+		"ProjectileSpeed"			"800"									// Speed of projectile.
+
+		// Attributes
+		//-------------------------------------------------------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"	// Primary Attribute
+		"AttributeBaseStrength"		"40"						// Base strength
+		"AttributeStrengthGain"		"2.5"						// Strength bonus per level.
+		"AttributeBaseIntelligence"	"8"							// Base intelligence
+		"AttributeIntelligenceGain"	"0.6"						// Intelligence bonus per level.
+		"AttributeBaseAgility"		"10"						// Base agility
+		"AttributeAgilityGain"		"0.75"						// Agility bonus per level.
+
+		// Bounds
+		//-------------------------------------------------------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"70"
+
+		// Movement
+		//-------------------------------------------------------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"240"									// Speed.
+		"MovementTurnRate"			"0.4"									// Turning rate.
+
+		// Status
+		//-------------------------------------------------------------------------------------------------------------
+		"StatusHealth"				"200"									// Base health.
+		"StatusHealthRegen"			"0.25"									// Health regeneration rate.
+		"StatusMana"				"50"										// Base mana.
+		"StatusManaRegen"			"0.01"									// Mana regeneration rate.
+
+		// Team
+		//-------------------------------------------------------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_HERO"
+		
+		// Vision
+		//-------------------------------------------------------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"									// Range of vision during day light.
+		"VisionNighttimeRange"		"800"									// Range of vision at night time.
+	
+		//"particle_folder"			"particles/units/heroes/hero_abaddon"
+		"GameSoundsFile"			"soundevents/game_sounds_heroes_custom/game_sounds_hell_empress.vsndevts"
+		//"VoiceFile"				"soundevents/voscripts/game_sounds_vo_abaddon.vsndevts"
+		"RenderablePortrait"
+		{
+		}
 	}
 }

@@ -87,6 +87,9 @@ DebugPrint("[IMBA] Performing pre-load precache")
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts", context)
 
+	-- Hell Empress
+	PrecacheResource("soundfile", "soundevents/game_sounds_heroes_custom/game_sounds_hell_empress.vsndevts", context)
+
 	-- Roshan
 	PrecacheResource("particle", "particles/neutral_fx/roshan_slam.vpcf", context)
 

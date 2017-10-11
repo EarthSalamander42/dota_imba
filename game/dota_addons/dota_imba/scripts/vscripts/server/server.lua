@@ -404,7 +404,7 @@ function Server_CalculateXPForWinnerAndAll(winning_team)
 	local multiplier = 1.0
 	if GetMapName() == "imba_standard" then
 		multiplier = 2.0
-	elseif GetMapName() == "imba_diretide" or DIRETIDE_COMMAND == true then
+	elseif GetMapName() == "imba_diretide" then
 		print("Diretide, bonus XP.")
 		multiplier = 4.0
 	end

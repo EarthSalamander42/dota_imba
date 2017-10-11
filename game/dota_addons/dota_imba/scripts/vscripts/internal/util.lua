@@ -1041,71 +1041,69 @@ function ImbaNetGraph(tick)
 	end)
 end
 
-function OverrideHero(hero, hero_name)
-	for abilitySlot = 0, 23 do
-		local ability = hero:GetAbilityByIndex(abilitySlot)
-		if ability then 
-			hero:RemoveAbility(ability:GetAbilityName())
-		end
-	end
-
-	local hero_abilities = {}
-	local index_count = 1
-	for index, ability in pairs(HERO_ABILITY_LIST[hero_name]) do
-		hero_abilities[index] = ability
-		if tonumber(index) == index_count then
-			index_count = index_count +1
-			hero:AddAbility(hero_abilities[index])
-		end
---		print(index.."/"..hero_abilities[index])
-	end
-	for index, ability in pairs(HERO_ABILITY_LIST[hero_name]) do
-		hero_abilities[index] = ability
-		if tonumber(index) == index_count then
-			index_count = index_count +1
-			hero:AddAbility(hero_abilities[index])
-		end
-	end
---	PrintTable(hero_abilities)
-
-	if hero_name == "npc_dota_hero_ghost_revenant" then
-		hero:SetAttackCapability(DOTA_UNIT_CAP_MELEE_ATTACK)
-		hero:SetRenderColor(128, 255, 0)
-
-		Timers:CreateTimer(1.0, function()
-			hero.hiddenWearables = {} -- Keep every wearable handle in a table to show them later
-			local model = hero:FirstMoveChild()
-			while model do
-				if model:GetClassname() == "dota_item_wearable" then
-					model:AddEffects(EF_NODRAW) -- Set model hidden. (EF_NODRAW, EF_ITEM_BLINK, EF_NOSHADOW, EF_BONEMERGE, EF_BONEMERGE_FASTCULL)
-					model:SetRenderColor(128, 255, 0)
---					print(model)
---					table.insert(hero.hiddenWearables, model)
-				end
-				model = model:NextMovePeer()
+function table.deepmerge(t1, t2)
+	for k,v in pairs(t2) do
+		if type(v) == "table" then
+			if type(t1[k] or false) == "table" then
+				tableMerge(t1[k] or {}, t2[k] or {})
+			else
+				t1[k] = v
 			end
-			PrintTable(hero.hiddenWearables)
-		end)
+		else
+			t1[k] = v
+		end
+	end
+	return t1
+end
 
-		Timers:CreateTimer(2.0, function()
---			Attachments:AttachProp(hero, "attach_hitloc", "models/items/centaur/chaos_champion_for_centaur_head/chaos_champion_for_centaur_head.vmdl", 1.0)
-			hero.head = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/razor/apostle_of_the_tempest_head/apostle_of_the_tempest_head.vmdl"})
-			hero.head:FollowEntity(hero, true)
-			hero.head:SetRenderColor(128, 255, 0)
-			hero.arms = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/razor/apostle_of_the_tempest_arms/apostle_of_the_tempest_arms.vmdl"})
-			hero.arms:FollowEntity(hero, true)
-			hero.arms:SetRenderColor(128, 255, 0)
-			hero.body = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/razor/apostle_of_the_tempest_armor/apostle_of_the_tempest_armor.vmdl"})
-			hero.body:FollowEntity(hero, true)
-			hero.body:SetRenderColor(128, 255, 0)
-			hero.belt = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/razor/empire_of_the_lightning_lord_belt/empire_of_the_lightning_lord_belt.vmdl"})
-			hero.belt:FollowEntity(hero, true)
-			hero.belt:SetRenderColor(128, 255, 0)
-		end)
-	elseif hero_name == "npc_dota_hero_storegga" then
-		hero:SetModel('models/creeps/ice_biome/storegga/storegga.vmdl')
-		hero:SetOriginalModel('models/creeps/ice_biome/storegga/storegga.vmdl')
-		hero:SetModelScale(1.1)
+function CustomHeroAttachments(hero, illusion)
+local hero_name = ""
+
+	if illusion == true then
+		hero_name = hero
+	else
+		hero_name = hero:GetUnitName()
+	
+		-- TODO: Add npc_heroes_custom abilities finding with KV.
+		local hero_abilities = {}
+		local index_count = 1
+		for index, ability in pairs(HERO_ABILITY_LIST[hero_name]) do
+			hero_abilities[index] = ability
+			if tonumber(index) == index_count then
+				index_count = index_count +1
+				hero:AddAbility(hero_abilities[index])
+			end
+	--		print(index.."/"..hero_abilities[index])
+		end
+		for index, ability in pairs(HERO_ABILITY_LIST[hero_name]) do
+			hero_abilities[index] = ability
+			if tonumber(index) == index_count then
+				index_count = index_count +1
+				hero:AddAbility(hero_abilities[index])
+			end
+		end
+	end
+
+	print("Attaching props on hero.")
+	if hero_name == "npc_dota_hero_ghost_revenant" then
+		hero:SetRenderColor(128, 255, 0)
+		hero.head = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/razor/apostle_of_the_tempest_head/apostle_of_the_tempest_head.vmdl"})
+		hero.head:FollowEntity(hero, true)
+		hero.head:SetRenderColor(128, 255, 0)
+		hero.arms = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/razor/apostle_of_the_tempest_arms/apostle_of_the_tempest_arms.vmdl"})
+		hero.arms:FollowEntity(hero, true)
+		hero.arms:SetRenderColor(128, 255, 0)
+		hero.body = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/razor/apostle_of_the_tempest_armor/apostle_of_the_tempest_armor.vmdl"})
+		hero.body:FollowEntity(hero, true)
+		hero.body:SetRenderColor(128, 255, 0)
+		hero.belt = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/razor/empire_of_the_lightning_lord_belt/empire_of_the_lightning_lord_belt.vmdl"})
+		hero.belt:FollowEntity(hero, true)
+		hero.belt:SetRenderColor(128, 255, 0)
+		hero.weapon = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/razor/severing_lash/mesh/severing_lash.vmdl"})
+		hero.weapon:FollowEntity(hero, true)
+		hero.weapon:SetRenderColor(128, 255, 0)
+	elseif hero_name == "npc_dota_hero_hell_empress" then
+		
 	end
 end
 
