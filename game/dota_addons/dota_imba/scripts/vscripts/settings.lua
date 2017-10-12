@@ -67,7 +67,7 @@ FOUNTAIN_PERCENTAGE_MANA_REGEN = 6			-- What should we use for the percentage fo
 FOUNTAIN_PERCENTAGE_HEALTH_REGEN = 6		-- What should we use for the percentage fountain health regen?  Use -1 to keep the default dota behavior.
 MAXIMUM_ATTACK_SPEED = 1600					-- What should we use for the maximum attack speed?
 MINIMUM_ATTACK_SPEED = 0					-- What should we use for the minimum attack speed?
-DOTA_MAX_PLAYERS = 20						-- Maximum amount of players allowed in a game
+DOTA_MAX_PLAYERS = 24						-- Maximum amount of players allowed in a game
 
 -------------------------------------------------------------------------------------------------
 -- IMBA: gameplay globals

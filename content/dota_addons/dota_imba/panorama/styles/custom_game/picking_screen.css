@@ -74,6 +74,26 @@
 	flow-children: down;
 }
 
+#LeftStatsPanel,
+#RightStatsPanel {
+	width: 40%;
+	visibility: collapse;
+}
+
+#LeftStatsSubPanel,
+#RightStatsSubPanel {
+	horizontal-align: center;
+	flow-children: right;
+}
+
+.StatsPanel {
+	width: fit-children;
+	height: 100%;
+	margin-top: 5%;
+	padding: 0% 0% 1% 0%;
+	flow-children: right;
+}
+
 #LabelsRadiant,
 #LabelsDire {
 	width: 100%;
@@ -143,8 +163,8 @@
 }
 
 #HeroPreview {
-	width: 800px;
-	height: 800px;
+	width: 600px;
+	height: 600px;
 	horizontal-align: center;
 }
 
@@ -197,6 +217,18 @@
 .PlayerOptionRow {
 	width: 100%;
 	height: 60%;
+	flow-children: right;
+}
+
+.AspectRatio16x10 .PlayerOptionRow {
+	width: 100%;
+	height: 55%;
+	flow-children: right;
+}
+
+.AspectRatio4x3 .PlayerOptionRow {
+	width: 100%;
+	height: 50%;
 	flow-children: right;
 }
 
@@ -296,7 +328,6 @@
 
 /* Text elements and timer
 =================================================================*/
-
 #PickInfoPanel {
 	width: 80%;
 	height: 20%;
@@ -345,10 +376,41 @@
 	font-weight: bold;
 }
 
+#ShowStatsPanel {
+	background-color: #000000aa;
+	align: center center;
+	flow-children: down;
+}
+
+#ShowStatsLabel {
+	width: 200px;
+	text-align: center;
+	font-size: 20px;
+	font-family: "Radiance";
+	color:#fff;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+#ShowStatsPanel:hover {
+	box-shadow: fill black -2px -2px 4px 4px;
+	color: white;
+	opacity: .5;
+	border: 1px solid #333333;
+	background-color: #111111;
+}
+
+#ShowStatsPanel:active {
+	box-shadow: fill grey -2px -2px 4px 4px;
+	color: white;
+	border: 1px solid #333333;
+	background-color: #111111;
+}
+
 #GameOptionsPanelContainer {
 	horizontal-align: center;
 	vertical-align: bottom;
-	flow-children: right;
+	flow-children: down;
 }
 
 .GameModeLabelPanel,

@@ -94,7 +94,25 @@ function PickingScreenSwap() {
 	}
 }
 
-/*  Create a hero panel based on the attribute
+var switched_alt = false
+function ShowStatsSwap() {
+	if (switched == false) {
+		switched = true
+		$("#TeamRadiant").style.visibility = 'collapse';
+		$("#TeamDire").style.visibility = 'collapse';
+		$("#LeftStatsPanel").style.visibility = 'visible';
+		$("#RightStatsPanel").style.visibility = 'visible';
+	}
+	else {
+		switched = false
+		$("#TeamRadiant").style.visibility = 'visible';
+		$("#TeamDire").style.visibility = 'visible';
+		$("#LeftStatsPanel").style.visibility = 'collapse';
+		$("#RightStatsPanel").style.visibility = 'collapse';
+	}
+}
+
+/*  Create a hero panel based on the attribute 
 	also handles 3 additional panels for custom heroes */
 function CreateHeroPanel(hero_table, attribute, custom) {
 	if (custom == true) {
@@ -209,6 +227,7 @@ var DireLevels = 0
 
 			var plyData = CustomNetTables.GetTableValue("player_table", player);
 			if (plyData != null) {
+				$.Msg(plyData.Lvl)
 				RadiantLevels = RadiantLevels + plyData.Lvl
 				$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + RadiantLevels;
 			}
@@ -244,7 +263,8 @@ var DireLevels = 0
 
 			var plyData = CustomNetTables.GetTableValue("player_table", player);
 			if (plyData != null) {
-				RadiantLevels = RadiantLevels + plyData.Lvl
+				$.Msg(plyData.Lvl)
+				DireLevels = DireLevels + plyData.Lvl
 				$("#AverageMMRTeamDire").text = $.Localize("average_mmr") + DireLevels;
 			}
 		});
@@ -310,7 +330,7 @@ var DireLevels = 0
  * swap to the hero preview screen. */
 function HeroPicked(player, hero, team, has_randomed) {
 	// Update the player panel and hero selection, if appropriate
-	if ( player != null ) {
+	if ( playerPanels[player] != null ) {
 		playerPanels[player].SetHero(hero);
 	}
 
@@ -358,7 +378,7 @@ function SwitchToHeroPreview( heroName ) {
 	// Hide/show relevant panels
 	$("#PickHeroBtn").style.visibility = 'collapse';
 	$('#PickList').style.visibility = 'collapse';
-	$('#PickInfoPanel').style.visibility = 'collapse';
+//	$('#PickInfoPanel').style.visibility = 'collapse';
 //	$('#CustomPickList').style.visibility = 'collapse';
 	$('#PostPickScreen').style.visibility = 'visible';
 	$('#WelcomePanel').style.visibility = 'collapse';	
@@ -492,7 +512,7 @@ function RepickHero() {
 		$('#HeroPreview').DeleteAsync( 0.0 );
 		$('#PickList').style.visibility = 'visible';
 		$("#PickHeroBtn").style.visibility = 'visible';
-		$('#PickInfoPanel').style.visibility = 'visible';
+//		$('#PickInfoPanel').style.visibility = 'visible';
 		$('#WelcomePanel').style.visibility = 'visible';	
 		$('#PostPickScreen').style.visibility = 'collapse';
 	}

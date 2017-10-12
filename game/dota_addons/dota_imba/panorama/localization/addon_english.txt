@@ -41,6 +41,7 @@
 	"average_mmr"					"Average Imba Level: "
 	"swap_vanilla_to_custom"		"Swap to Vanilla Heroes"
 	"swap_custom_to_vanilla"		"Swap to Custom Heroes"
+	"stats_swap"					"Toggle Stats Panel"
 	"confirm_pick_button"			"Select Hero"
 	"loading_heroes_button"			"Loading hero..."
 	"repick_button"					"Repick Hero"

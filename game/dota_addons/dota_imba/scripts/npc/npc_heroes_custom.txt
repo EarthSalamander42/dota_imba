@@ -1376,6 +1376,7 @@
 		"override_hero"				"npc_dota_hero_magnataur"
 
 		"IsImba"					"1"
+		"IsDisabled"				"1"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
 		
 		"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
 		"particle_folder"			"particles/units/heroes/hero_magnataur"
@@ -1560,6 +1561,7 @@
 	"npc_imba_hero_furion"
 	{
 		"override_hero"				"npc_dota_hero_furion"
+		"IsDisabled"				"1"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
 
 		"AttackDamageMin"			"34"
 		"AttackDamageMax"			"38"
@@ -1813,13 +1815,11 @@
 		"override_hero"				"npc_dota_hero_phantom_lancer"
 		"IsDisabled"				"1"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
 
-		"IsDisabled"				"0"
-
 		"AttributeAgilityGain"		"3.5"
 
 		"AttackRange"				"225"
 
-		"Ability1"					"imba_phantom_lancer_spirit_lance"
+		//"Ability1"					"imba_phantom_lancer_spirit_lance"
 		//"Ability2"					"imba_phantom_lancer_doppelwalk"
 		//"Ability3"					"imba_phantom_lancer_phantom_edge"
 		//"Ability4"					"imba_phantom_lancer_juxtapose"
@@ -2172,6 +2172,7 @@
 		"override_hero"				"npc_dota_hero_silencer"		
 
 		"IsImba"					"1"
+		"IsDisabled"				"1"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
 
 		"AbilityLayout"				"5"
 
