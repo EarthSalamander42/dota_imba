@@ -193,8 +193,8 @@ function HeroSelection:HeroList(delay)
 		table.deepmerge(HeroSelection.heroes_custom, HeroSelection.agility_heroes_custom)
 		table.deepmerge(HeroSelection.heroes_custom, HeroSelection.intellect_heroes_custom)
 
-		print("Custom Heroes:")
-		PrintTable(HeroSelection.heroes_custom)
+--		print("Custom Heroes:")
+--		PrintTable(HeroSelection.heroes_custom)
 	end)
 
 	HeroSelection:Start(0.1)
@@ -214,6 +214,7 @@ function HeroSelection:Start(delay)
 		HeroSelection.playerPicks = {}
 		HeroSelection.playerPickState = {}
 		HeroSelection.numPickers = 0
+--		print(DOTA_MAX_PLAYERS)
 		for pID = 0, DOTA_MAX_PLAYERS -1 do
 			if PlayerResource:IsValidPlayer( pID ) then
 				HeroSelection.numPickers = self.numPickers + 1
@@ -282,7 +283,13 @@ end
 
 function HeroSelection:RandomHero(event)
 local id = event.PlayerID
-if HeroSelection.playerPickState[id].pick_state ~= "selecting_hero" then return nil end
+if PlayerResource:GetConnectionState(id) == 1 then
+	print("Bot, ignoring..")
+else
+	if HeroSelection.playerPickState[id].pick_state ~= "selecting_hero" then
+		return nil
+	end
+end
 
 	-- Roll a random hero
 	local random_hero = normal_heroes[RandomInt(1, #normal_heroes)]
@@ -314,7 +321,6 @@ if HeroSelection.playerPickState[id].pick_state ~= "selecting_hero" then return 
 	HeroSelection.playerPickState[id].random_state = true
 
 	-- Send a Custom Message in PreGame Chat to tell other players this player has randomed
-	print("Hero Randomed", id)
 	Chat:PlayerRandomed(id, PlayerResource:GetPlayer(id), PlayerResource:GetTeam(id), random_hero)
 end
 
@@ -354,7 +360,7 @@ local id = event.PlayerID
 
 	-- Roll a random hero, and keep it stored
 	if not random_hero then random_hero = normal_heroes[RandomInt(1, #normal_heroes)] end
-	print(random_hero)
+--	print(random_hero)
 
 	PlayerResource:SetHasRandomed(id)
 	HeroSelection:HeroSelect({PlayerID = id, HeroName = random_hero, HasRandomed = true})
@@ -375,32 +381,38 @@ end
 function HeroSelection:HeroSelect(event)
 
 	-- If this player has not picked yet give him the hero
-	if not HeroSelection.playerPicks[ event.PlayerID ] then
-		HeroSelection.playersPicked = HeroSelection.playersPicked + 1
-		HeroSelection.playerPicks[ event.PlayerID ] = event.HeroName
+	if PlayerResource:GetConnectionState(event.PlayerID) == 1 then
+		HeroSelection:AssignHero( event.PlayerID, event.HeroName )
+	else
+		if not HeroSelection.playerPicks[ event.PlayerID ] then
+			HeroSelection.playersPicked = HeroSelection.playersPicked + 1
+			HeroSelection.playerPicks[ event.PlayerID ] = event.HeroName
 
-		-- Add the picked hero to the list of picks of the relevant team
-		if PlayerResource:GetTeam(event.PlayerID) == DOTA_TEAM_GOODGUYS then
-			HeroSelection.radiantPicks[#HeroSelection.radiantPicks + 1] = event.HeroName
-		else
-			HeroSelection.direPicks[#HeroSelection.direPicks + 1] = event.HeroName
+			-- Add the picked hero to the list of picks of the relevant team
+			if PlayerResource:GetTeam(event.PlayerID) == DOTA_TEAM_GOODGUYS then
+				HeroSelection.radiantPicks[#HeroSelection.radiantPicks + 1] = event.HeroName
+			else
+				HeroSelection.direPicks[#HeroSelection.direPicks + 1] = event.HeroName
+			end
+
+			-- Send a pick event to all clients
+			local has_randomed = false
+			if event.HasRandomed then has_randomed = true end
+			CustomGameEventManager:Send_ServerToAllClients("hero_picked", {PlayerID = event.PlayerID, HeroName = event.HeroName, Team = PlayerResource:GetTeam(event.PlayerID), HasRandomed = has_randomed})
+			if PlayerResource:GetConnectionState(event.PlayerID) ~= 1 then
+				HeroSelection.playerPickState[event.PlayerID].pick_state = "selected_hero"
+			end
+
+			-- Assign the hero if picking is over
+			if HeroSelection.TimeLeft <= 0 and HeroSelection.playerPickState[event.PlayerID].pick_state ~= "in_game" then
+				HeroSelection:AssignHero( event.PlayerID, event.HeroName )
+				HeroSelection.playerPickState[event.PlayerID].pick_state = "in_game"
+				CustomGameEventManager:Send_ServerToAllClients("hero_loading_done", {} )
+			end
+
+			-- Play pick sound to the player
+			EmitSoundOnClient("HeroPicker.Selected", PlayerResource:GetPlayer(event.PlayerID))
 		end
-
-		-- Send a pick event to all clients
-		local has_randomed = false
-		if event.HasRandomed then has_randomed = true end
-		CustomGameEventManager:Send_ServerToAllClients("hero_picked", {PlayerID = event.PlayerID, HeroName = event.HeroName, Team = PlayerResource:GetTeam(event.PlayerID), HasRandomed = has_randomed})
-		HeroSelection.playerPickState[event.PlayerID].pick_state = "selected_hero"
-
-		-- Assign the hero if picking is over
-		if HeroSelection.TimeLeft <= 0 and HeroSelection.playerPickState[event.PlayerID].pick_state ~= "in_game" then
-			HeroSelection:AssignHero( event.PlayerID, event.HeroName )
-			HeroSelection.playerPickState[event.PlayerID].pick_state = "in_game"
-			CustomGameEventManager:Send_ServerToAllClients("hero_loading_done", {} )
-		end
-
-		-- Play pick sound to the player
-		EmitSoundOnClient("HeroPicker.Selected", PlayerResource:GetPlayer(event.PlayerID))
 	end
 
 	-- If this is All Random and the player picked a hero manually, refuse it
@@ -534,6 +546,8 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		local wisp = PlayerResource:GetPlayer(player_id):GetAssignedHero()
 		local hero = PlayerResource:ReplaceHeroWith(player_id, hero_name, 0, 0 )
 		hero.pID = player_id
+--		print(hero.pID)
+--		print(hero_name)
 
 		-- If this is a "real" wisp, tag it
 		if hero:GetUnitName() == "npc_dota_hero_wisp" then

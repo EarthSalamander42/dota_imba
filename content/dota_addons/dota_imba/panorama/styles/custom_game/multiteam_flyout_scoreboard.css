@@ -265,7 +265,11 @@
 #ImbaXPRank16,
 #ImbaXPRank17,
 #ImbaXPRank18,
-#ImbaXPRank19
+#ImbaXPRank19,
+#ImbaXPRank20,
+#ImbaXPRank21,
+#ImbaXPRank22,
+#ImbaXPRank23
 {
 	width: 100%;
 	margin-right: 5%;
@@ -296,7 +300,11 @@
 #ImbaXP16,
 #ImbaXP17,
 #ImbaXP18,
-#ImbaXP19
+#ImbaXP19,
+#ImbaXP20,
+#ImbaXP21,
+#ImbaXP22,
+#ImbaXP23
 {
 	margin-top: 3px;
 	margin-left: 62%;
@@ -328,7 +336,11 @@
 #ImbaXPEarned16,
 #ImbaXPEarned17,
 #ImbaXPEarned18,
-#ImbaXPEarned19
+#ImbaXPEarned19,
+#ImbaXPEarned20,
+#ImbaXPEarned21,
+#ImbaXPEarned22,
+#ImbaXPEarned23
 {
 	visibility: collapse;
 }
@@ -352,7 +364,11 @@
 #ImbaLvl16,
 #ImbaLvl17,
 #ImbaLvl18,
-#ImbaLvl19
+#ImbaLvl19,
+#ImbaLvl20,
+#ImbaLvl21,
+#ImbaLvl22,
+#ImbaLvl23
 {
 	font-size: 17px;
 	font-weight: bold;
@@ -509,7 +525,11 @@
 #XPProgressBar16,
 #XPProgressBar17,
 #XPProgressBar18,
-#XPProgressBar19
+#XPProgressBar19,
+#XPProgressBar20,
+#XPProgressBar21,
+#XPProgressBar22,
+#XPProgressBar23
 {
 	width: 100%;
 	border-radius: 4px;
@@ -540,7 +560,11 @@
 #XPProgressBar16_Left,
 #XPProgressBar17_Left,
 #XPProgressBar18_Left,
-#XPProgressBar19_Left
+#XPProgressBar19_Left,
+#XPProgressBar20_Left,
+#XPProgressBar21_Left,
+#XPProgressBar22_Left,
+#XPProgressBar23_Left
 {
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #326114 ), color-stop( 0.3, #54BA07 ), color-stop( .5, #54BA07 ), to( #326114 ) );
 	box-shadow: inset #000 1px 1px 3px 3px;	
@@ -566,7 +590,11 @@
 #XPProgressBar16_Left,
 #XPProgressBar17_Left,
 #XPProgressBar18_Left,
-#XPProgressBar19_Left
+#XPProgressBar19_Left,
+#XPProgressBar20_Left,
+#XPProgressBar21_Left,
+#XPProgressBar22_Left,
+#XPProgressBar23_Left
 {
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #326114 ), color-stop( 0.3, #18BE23 ), color-stop( .5, #18BE23 ), to( #01410E ) );
 }
@@ -590,7 +618,11 @@
 #XPProgressBar16_Right,
 #XPProgressBar17_Right,
 #XPProgressBar18_Right,
-#XPProgressBar19_Right
+#XPProgressBar19_Right,
+#XPProgressBar20_Right,
+#XPProgressBar21_Right,
+#XPProgressBar22_Right,
+#XPProgressBar23_Right
 {
 	background-color: gradient( linear, 0% 0%, 100% 0%, from( #222222FF ), to( black ) );
 }
@@ -614,7 +646,11 @@
 #XPProgressBarContainer16,
 #XPProgressBarContainer17,
 #XPProgressBarContainer18,
-#XPProgressBarContainer19
+#XPProgressBarContainer19,
+#XPProgressBarContainer20,
+#XPProgressBarContainer21,
+#XPProgressBarContainer22,
+#XPProgressBarContainer23
 {
 	vertical-align: bottom;
 	height: 40px;

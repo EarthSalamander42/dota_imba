@@ -15010,7 +15010,7 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"ghostship_speed"				"750 950 1150 1350 1550 1750"
+				"ghostship_speed"				"650 700 750 800 850 900"
 			}
 			"04"
 			{

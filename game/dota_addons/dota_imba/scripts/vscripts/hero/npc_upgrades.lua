@@ -15,14 +15,14 @@ function modifier_imba_creep_power:OnCreated()
 	self.parent = self:GetParent()
 	self.ability = self:GetAbility()
 
-	if IsServer() then
+--	if IsServer() then
 		-- Ability specials
 		if string.find(self.parent:GetUnitName(), "mega") then
-			self.bonus_damage_per_minute = 12
-			self.bonus_health_per_minute = 180
+			self.bonus_damage_per_minute = 18
+			self.bonus_health_per_minute = 210
 		elseif string.find(self.parent:GetUnitName(), "upgraded") then
-			self.bonus_damage_per_minute = 6
-			self.bonus_health_per_minute = 90
+			self.bonus_damage_per_minute = 14
+			self.bonus_health_per_minute = 105
 		else
 			self.bonus_damage_per_minute = 2
 			self.bonus_health_per_minute = 20
@@ -30,10 +30,10 @@ function modifier_imba_creep_power:OnCreated()
 
 		if self.parent:GetAttackCapability() == DOTA_UNIT_CAP_RANGED_ATTACK then
 			if string.find(self.parent:GetUnitName(), "mega") then
-				self.bonus_damage_per_minute = 20
-				self.bonus_health_per_minute = 152
+				self.bonus_damage_per_minute = 28
+				self.bonus_health_per_minute = 165
 			elseif string.find(self.parent:GetUnitName(), "upgraded") then
-				self.bonus_damage_per_minute = 10
+				self.bonus_damage_per_minute = 14
 				self.bonus_health_per_minute = 76
 			else
 				self.bonus_damage_per_minute = 4
@@ -56,7 +56,7 @@ function modifier_imba_creep_power:OnCreated()
 				end
 			end
 		end)
-	end
+--	end
 end
 
 function modifier_imba_creep_power:DeclareFunctions()

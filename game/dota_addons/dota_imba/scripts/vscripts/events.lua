@@ -980,12 +980,7 @@ function GameMode:OnEntityKilled( keys )
 			PlayerResource:SetCustomBuybackCooldown(player_id, buyback_cooldown)
 		end
 
-		if killed_unit:GetUnitName() == "npc_dota_goodguys_siege" or killed_unit:GetUnitName() == "npc_dota_badguys_siege" then
-			local item = CreateItem("item_diretide_candy", nil, nil)
-			local pos = killed_unit:GetAbsOrigin()
-			local drop = CreateItemOnPositionSync( pos, item )
-			item:LaunchLoot(false, 300, 0.5, pos + RandomVector(200))
-		elseif killed_unit:HasItemInInventory("item_diretide_candy") then
+		if killed_unit:HasItemInInventory("item_diretide_candy") then
 			for i = 0, 8 do
 				if killed_unit:GetItemInSlot(i) and killed_unit:GetItemInSlot(i):GetName() == "item_diretide_candy" then
 					local stack_count = killed_unit:GetItemInSlot(i):GetCurrentCharges()
@@ -1000,21 +995,28 @@ function GameMode:OnEntityKilled( keys )
 			end
 		end
 
-		if killed_unit:GetTeamNumber() == 4 then
-			if killed_unit:GetUnitLabel() == "npc_diretide_roshan" then return end
-			local chance = RandomInt(1, 100)
-			if chance > 50 then -- 49% chance
+		if GetMapName() == "imba_diretide" then
+			if killed_unit:GetTeamNumber() == 4 then
+				if killed_unit:GetUnitLabel() == "npc_diretide_roshan" then return end
+				local chance = RandomInt(1, 100)
+				if chance > 50 then -- 49% chance
+					local item = CreateItem("item_diretide_candy", nil, nil)
+					local pos = killed_unit:GetAbsOrigin()
+					local drop = CreateItemOnPositionSync(pos, item)
+					item:LaunchLoot(false, 300, 0.5, pos + RandomVector(200))
+				end
+			elseif string.find(killed_unit:GetUnitName(), "dota_creep") then
+				local chance = RandomInt(1, 100)
+				if chance > 90 then -- 10% chance
+					local item = CreateItem("item_diretide_candy", nil, nil)
+					local pos = killed_unit:GetAbsOrigin()
+					local drop = CreateItemOnPositionSync(pos, item)
+					item:LaunchLoot(false, 300, 0.5, pos + RandomVector(200))
+				end
+			elseif killed_unit:GetUnitName() == "npc_dota_goodguys_siege" or killed_unit:GetUnitName() == "npc_dota_badguys_siege" then
 				local item = CreateItem("item_diretide_candy", nil, nil)
 				local pos = killed_unit:GetAbsOrigin()
-				local drop = CreateItemOnPositionSync(pos, item)
-				item:LaunchLoot(false, 300, 0.5, pos + RandomVector(200))
-			end
-		elseif string.find(killed_unit:GetUnitName(), "dota_creep") then
-			local chance = RandomInt(1, 100)
-			if chance > 90 then -- 10% chance
-				local item = CreateItem("item_diretide_candy", nil, nil)
-				local pos = killed_unit:GetAbsOrigin()
-				local drop = CreateItemOnPositionSync(pos, item)
+				local drop = CreateItemOnPositionSync( pos, item )
 				item:LaunchLoot(false, 300, 0.5, pos + RandomVector(200))
 			end
 		end

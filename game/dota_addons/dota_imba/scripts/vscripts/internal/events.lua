@@ -69,9 +69,8 @@ end
 
 -- This function is called once a player says something on any chat
 function GameMode:OnPlayerChat(keys)
-	local text = keys.text
+local text = keys.text
 
-	
 	-- This Handler is only for commands, ends the function if first character is not "-"
 	if not (string.byte(text) == 45) then
 		return nil
@@ -112,14 +111,18 @@ function GameMode:OnPlayerChat(keys)
 	-- 		return nil
 	-- 	end
 	-- end
-	
+
 	-- Check for Blink-Colorcode
 	local blink_command = false
 	for str in string.gmatch(text, "%S+") do
 		for i = 1, #IMBA_DEVS do
-			if PlayerResource:GetSteamAccountID(caster:GetPlayerID()) == IMBA_DEVS[i] then
-				if str == "-dev_remove_units" then
-					GameMode:RemoveUnits(true, true, true)
+			if PlayerResource:GetConnectionState(caster:GetPlayerID()) == 1 then
+				print("Bot, ignoring devcheck..")
+			else
+				if PlayerResource:GetSteamAccountID(caster:GetPlayerID()) == IMBA_DEVS[i] then
+					if str == "-dev_remove_units" then
+						GameMode:RemoveUnits(true, true, true)
+					end
 				end
 			end
 		end
