@@ -550,7 +550,7 @@ function imba_phoenix_fire_spirits:OnSpellStart()
 		iDuration = iDuration * self:GetCaster():FindTalentValue("special_bonus_imba_phoenix_7","duration_pct") / 100
 	end
 	caster:AddNewModifier(caster, self, "modifier_imba_phoenix_fire_spirits_count", { duration =  iDuration})
-	if not caster:HasTalent("special_bonus_imba_phoenix_7") == 0 then
+	if not caster:HasTalent("special_bonus_imba_phoenix_7") then
 		caster:SetModifierStackCount( "modifier_imba_phoenix_fire_spirits_count", caster, numSpirits )
 	end
 
@@ -1079,7 +1079,7 @@ function imba_phoenix_sun_ray:OnSpellStart()
 		local deltaYaw		= RotationDelta( lastAngles, currentAngles ).y
 		local deltaYawAbs	= math.abs( deltaYaw )
 
-		if deltaYawAbs > deltaYawMax and not caster:HasModifier( "modifier_imba_phoenix_icarus_dive_ignore_turn_ray" ) and not caster:HasTalent("special_bonus_imba_phoenix_8") == 0 then
+		if deltaYawAbs > deltaYawMax and not caster:HasModifier( "modifier_imba_phoenix_icarus_dive_ignore_turn_ray" ) and not caster:HasTalent("special_bonus_imba_phoenix_8")then
 			-- Clamp delta yaw
 			local yawSign = (deltaYaw < 0) and -1 or 1
 			local yaw = lastAngles.y + deltaYawMax * yawSign
@@ -2359,9 +2359,9 @@ function modifier_imba_phoenix_supernova_scepter_passive:OnTakeDamage( keys )
 		egg:AddNewModifier(caster, ability, "modifier_kill_no_timer", {duration = egg_duration + extend_duration })
 		egg:AddNewModifier(caster, ability, "modifier_imba_phoenix_supernova_egg_thinker", {duration = egg_duration + extend_duration })
 
-		egg:SetHealth( (4 * max_attack) )
-		egg:SetMaxHealth( (4 * max_attack) )
-
+		egg.max_attack = max_attack
+		egg.current_attack = 0
+		
 		local egg_playback_rate = 6 / (egg_duration + extend_duration)
 		egg:StartGestureWithPlaybackRate(ACT_DOTA_IDLE , egg_playback_rate)
 
