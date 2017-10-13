@@ -1199,7 +1199,7 @@ function modifier_imba_phoenix_sun_ray_caster_dummy:CheckState()
 end
 
 function modifier_imba_phoenix_sun_ray_caster_dummy:GetModifierMoveSpeed_Limit() 
-	if self:GetCaster():HasTalent("special_bonus_imba_phoenix_8") then
+	if not self:GetCaster():HasTalent("special_bonus_imba_phoenix_8") then
 		return 1
 	else
 		return nil
@@ -1207,7 +1207,7 @@ function modifier_imba_phoenix_sun_ray_caster_dummy:GetModifierMoveSpeed_Limit()
 end
 
 function modifier_imba_phoenix_sun_ray_caster_dummy:GetModifierMoveSpeed_Max() 
-	if self:GetCaster():HasTalent("special_bonus_imba_phoenix_8") then
+	if not self:GetCaster():HasTalent("special_bonus_imba_phoenix_8") then
 		return 1
 	else
 		return nil
@@ -1215,7 +1215,7 @@ function modifier_imba_phoenix_sun_ray_caster_dummy:GetModifierMoveSpeed_Max()
 end
 
 function modifier_imba_phoenix_sun_ray_caster_dummy:GetModifierIgnoreCastAngle() 
-	if self:GetCaster():HasTalent("special_bonus_imba_phoenix_8") then
+	if not self:GetCaster():HasTalent("special_bonus_imba_phoenix_8") then
 		return 360 
 	else
 		return nil
@@ -2361,7 +2361,7 @@ function modifier_imba_phoenix_supernova_scepter_passive:OnTakeDamage( keys )
 
 		egg.max_attack = max_attack
 		egg.current_attack = 0
-		
+
 		local egg_playback_rate = 6 / (egg_duration + extend_duration)
 		egg:StartGestureWithPlaybackRate(ACT_DOTA_IDLE , egg_playback_rate)
 
