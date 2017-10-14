@@ -23,7 +23,7 @@
 
 	"imba_10v10"
 	{
-		"MaxPlayers"				"24"
+		"MaxPlayers"				"20"
 	}
 
 //	"imba_custom"
