@@ -108,7 +108,6 @@ DebugPrintTable(keys)
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Pick screen stuff
 	-------------------------------------------------------------------------------------------------
-
 	if new_state == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		HeroSelection:HeroListPreLoad()
 	end
@@ -116,7 +115,6 @@ DebugPrintTable(keys)
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Start-of-pre-game stuff
 	-------------------------------------------------------------------------------------------------
-
 	if new_state == DOTA_GAMERULES_STATE_PRE_GAME then
 		-- Play Announcer sounds in Picking Screen until a hero is picked
 --		Timers:CreateTimer(function()
@@ -227,10 +225,10 @@ GameMode:_OnNPCSpawned(keys)
 local npc = EntIndexToHScript(keys.entindex)
 local normal_xp = npc:GetDeathXP()
 
-		if GetMapName() == "imba_10v10" or GetMapName() == "imba_custom_10v10" then
 	if npc then
+		if GetMapName() == "imba_10v10" or GetMapName() == "imba_custom_10v10" then
 			npc:SetDeathXP(normal_xp)
-		elseif GetMapName() == "imba_diretide" or DIRETIDE_COMMAND == true then
+		elseif GetMapName() == "imba_diretide" then
 			if npc:GetUnitName() == "npc_dota_creep_goodguys_melee" then
 				npc:SetModel("models/creeps/lane_creeps/creep_radiant_melee_diretide/creep_radiant_melee_diretide.vmdl")
 				npc:SetOriginalModel("models/creeps/lane_creeps/creep_radiant_melee_diretide/creep_radiant_melee_diretide.vmdl")
@@ -274,6 +272,7 @@ local normal_xp = npc:GetDeathXP()
 		else
 			npc:SetDeathXP(normal_xp*1.5)
 		end
+
 --		if npc:IsRealHero() and npc:GetUnitName() ~= "npc_dota_hero_wisp" or npc.is_real_wisp then
 --			if not npc.has_label then
 --				Timers:CreateTimer(5.0, function()
@@ -313,6 +312,24 @@ local normal_xp = npc:GetDeathXP()
 --						npc:SetCustomHealthLabel("THUNDER   LIZARD", 45, 45, 20)
 --					end
 					npc.is_dev = true
+				end
+			end
+		end
+
+		for i = 1, #banned_players do
+			if PlayerResource:GetSteamAccountID(npc:GetPlayerID()) == banned_players[i] then
+				if npc:GetUnitName() ~= "npc_dota_hero_wisp" or npc.is_real_wisp then
+					if not npc:HasModifier("modifier_command_restricted") then
+						npc:AddNewModifier(npc, nil, "modifier_command_restricted", {})
+						Timers:CreateTimer(0.1, function()
+							PlayerResource:SetCameraTarget(npc:GetPlayerOwnerID(), npc)
+						end)
+						Timers:CreateTimer(2.0, function()
+							StartAnimation(npc, {duration=2.0, activity=ACT_DOTA_DEFEAT, rate=1.0})
+							return 2.0
+						end)
+						Notifications:Bottom(npc:GetPlayerID(), {text="Hey what are you doing there, i thought this mod was shit?", duration=99999, style={color="red"}})
+					end
 				end
 			end
 		end
@@ -1027,7 +1044,6 @@ end
 function GameMode:PlayerConnect(keys)
 	DebugPrint('[BAREBONES] PlayerConnect')
 	DebugPrintTable(keys)
-
 end
 
 -- This function is called once when the player fully connects and becomes "Ready" during Loading

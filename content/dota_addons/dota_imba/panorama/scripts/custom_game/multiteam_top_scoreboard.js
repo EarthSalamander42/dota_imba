@@ -41,6 +41,6 @@ function UpdateScoreboard()
 	};
 	g_ScoreboardHandle = ScoreboardUpdater_InitializeScoreboard( scoreboardConfig, $( "#MultiteamScoreboard" ) );
 
-	UpdateScoreboard();
+	$.Schedule(1.0, UpdateScoreboard);
 })();
 

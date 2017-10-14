@@ -186,6 +186,8 @@
 										<DOTAAbilityImage id="PickedHeroAbility4" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
 										<DOTAAbilityImage id="PickedHeroAbility5" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
 										<DOTAAbilityImage id="PickedHeroAbility6" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
+										<DOTAAbilityImage id="PickedHeroAbility7" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
+										<DOTAAbilityImage id="PickedHeroAbility8" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
 									</Panel>
 								</Panel>
 
