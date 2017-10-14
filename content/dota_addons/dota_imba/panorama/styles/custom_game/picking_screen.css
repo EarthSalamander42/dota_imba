@@ -124,7 +124,7 @@
 
 #PickList {
 	width: 100%;
-	height: 47%;
+	height: 48%;
 	flow-children: right;
 	align: center center;
 	visibility: visible;
@@ -221,21 +221,21 @@
 }
 
 .AspectRatio16x10 .PlayerOptionRow {
-	width: 100%;
 	height: 55%;
-	flow-children: right;
 }
 
 .AspectRatio4x3 .PlayerOptionRow {
-	width: 100%;
 	height: 50%;
-	flow-children: right;
 }
 
 .PlayerOptionRowV10 {
 	width: 100%;
 	height: 50%;
 	flow-children: right;
+}
+
+.AspectRatio16x10 .PlayerOptionRowV10 {
+	height: 50%;
 }
 
 .ClassOptionRow {
@@ -251,9 +251,9 @@
 .ClassNormalOption,
 .ClassImbaOption,
 .ClassCustomOption {
-	width: 85px;
-	height: 50px;
-	margin: 3px 0px 3px 1px;
+	width: 80px;
+	height: 48px;
+	margin: 2px 0px 2px 1px;
 	horizontal-align: left;
 	wash-color: #7090B060;
 	background-size: 100% 100%;
@@ -264,12 +264,9 @@
 .AspectRatio16x10 .ClassNormalOption,
 .AspectRatio16x10 .ClassImbaOption,
 .AspectRatio16x10 .ClassCustomOption {
-	margin-left: 2.5px;
-	margin-right: 2.5px;
-	margin-top: 5px;
-	margin-bottom: 5px;
-	width: 67px;
-	height: 44px;
+	margin: 2px 0px 2px 1px;
+	width: 75px;
+	height: 46px;
 	horizontal-align: left;
 	background-position: center;
 	wash-color: #7090B060;
@@ -278,11 +275,8 @@
 .AspectRatio4x3 .ClassNormalOption,
 .AspectRatio4x3 .ClassImbaOption,
 .AspectRatio4x3 .ClassCustomOption {
-	margin-left: 2.5px;
-	margin-right: 2.5px;
-	margin-top: 5px;
-	margin-bottom: 5px;
-	width: 56px;
+	margin: 1px 0px 1px 1px;
+	width: 67px;
 	height: 48px;
 	horizontal-align: left;
 	background-position: center;
@@ -536,10 +530,7 @@
 .AspectRatio4x3 #PickListSeparator3,
 .AspectRatio4x3 #PickListSeparator4
 {
-	width: 300px;
-	height: 2px;
-	opacity: 0.2;
-	horizontal-align: middle;
+	width: 85%;
 }
 
 #PickListSeparator1 {
@@ -563,7 +554,7 @@
 =================================================================*/
 #CustomPickList
 {
-	width: 33%;
+	width: 25%;
 	height: 100%;
 	flow-children: right;
 	align: center center;
@@ -662,43 +653,55 @@
 
 /* 'Pick random hero' button
 =================================================================*/
+@keyframes 'increase_left'
+{
+	0%
+	{
+		saturation: 0.7;
+	}
+
+	100%
+	{
+		saturation: 1.0;
+	}
+}
+
 #RandomButtonContainer,
 #RandomImbaButtonContainer
 {
-	width: 50%;
+	width: 40%;
 	height: fit-children;
+	saturation: 0.7;
 	flow-children: down;
 	align: center center;
 }
 
-#RandomPickBtn
+#RandomButtonContainer:hover,
+#RandomImbaButtonContainer:hover {
+	saturation: 1.0;
+}
+
+#RandomPickBtn,
+#RandomImbaPickBtn
 {
-	width: 128px;
+	width: 100%;
 	height: 72px;
 	border-radius: 4px;
 	horizontal-align: center;
 	vertical-align: middle;
-	saturation: 0.7;
 	background-color: gradient(linear, 0% 0%, 0% 100%, from(grey), to (black));
 	background-image: url("s2r://panorama/images/custom_game/random_button_png.vtex");
 }
 
 #RandomImbaPickBtn
 {
-	width: 128px;
-	height: 72px;
-	border-radius: 4px;
-	horizontal-align: center;
-	vertical-align: middle;
-	saturation: 0.7;
-	background-color: gradient(linear, 0% 0%, 0% 100%, from(grey), to (black));
 	background-image: url("s2r://panorama/images/custom_game/random_button_imba_png.vtex");
 }
 
 #RandomPickBtn:hover,
 #RandomImbaPickBtn:hover
 {
-	box-shadow: fill #FF7800FF -2px -2px 4px 4px;
+	box-shadow: fill grey -2px -2px 4px 4px;
 	saturation: 1.0;
 }
 

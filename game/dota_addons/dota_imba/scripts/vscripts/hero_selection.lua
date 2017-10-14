@@ -12,7 +12,6 @@ end
 
 function HeroSelection:HeroListPreLoad()
 	-- Retrieve heroes info
-	NPC_HEROES_KV = LoadKeyValues("scripts/npc/kv/hero_list.kv")
 	NPC_HEROES_CUSTOM = LoadKeyValues("scripts/npc/npc_heroes_custom.txt")
 	HeroSelection.strength_heroes = {}
 	HeroSelection.agility_heroes = {}
@@ -22,55 +21,43 @@ function HeroSelection:HeroListPreLoad()
 	HeroSelection.agility_heroes_custom = {}
 	HeroSelection.intellect_heroes_custom = {}
 
+	HeroSelection.vanilla_heroes = {}
 	HeroSelection.imba_heroes = {}
+	HeroSelection.random_heroes = {}
 	HeroSelection.disabled_10v10_heroes = {}
 	HeroSelection.disabled_heroes = {}
 	HeroSelection.heroes_custom = {}
 
-	-- Old. Later remove this, and add all the KV infos in npc_heroes_custom.txt
-	for hero, attributes in pairs(NPC_HEROES_KV) do
-		for key, value in pairs(attributes) do
-			-- custom heroes
-			if key == "IsCustom" then
-				if value == 1 then
-					HeroSelection:AddCustomHeroToList(hero)
-				elseif value == 0 then -- if IsCustom is set to 0
-					HeroSelection:AddVanillaHeroToList(hero)
-				end
-			end
-		end
-	end
-
 	-- New function that retrieves kv infos
 	for hero, attributes in pairs(NPC_HEROES_CUSTOM) do
 		hero = string.gsub(hero, "imba", "dota")
-		for key, value in pairs(attributes) do
-			-- custom heroes
-		--	if key == "IsCustom" then
-		--		if value == 1 then
-		--			HeroSelection:AddCustomHeroToList(hero)
-		--		elseif value == 0 then -- if IsCustom is set to 0
-		--			HeroSelection:AddVanillaHeroToList(hero)
-		--		end
-		--	end
 
-			if key == "IsImba" then
-				if value == 1 then
---					print("IMBA hero:", hero)
-					table.insert(HeroSelection.imba_heroes, hero)
-					-- add imba list for imba random button + orange class in Pick Screen
-				elseif value == 0 then
-					-- add normal list for random button
-				end
+		if GetKeyValueByHeroName(hero, "IsImba") == 1 then
+			if GetKeyValueByHeroName(hero, "IsDisabled") == 1 then
+				table.insert(HeroSelection.disabled_10v10_heroes, hero)
+			elseif GetKeyValueByHeroName(hero, "IsDisabled") == 2 then
+				table.insert(HeroSelection.disabled_heroes, hero)
+			else
+				table.insert(HeroSelection.imba_heroes, hero)
 			end
+		else
+			if GetKeyValueByHeroName(hero, "IsDisabled") == 1 then
+				table.insert(HeroSelection.disabled_10v10_heroes, hero)
+			elseif GetKeyValueByHeroName(hero, "IsDisabled") == 2 then
+				table.insert(HeroSelection.disabled_heroes, hero)
+			else
+				table.insert(HeroSelection.vanilla_heroes, hero)
+			end
+		end
 
-			if key == "IsDisabled" then
-				if value == 1 then
-					table.insert(HeroSelection.disabled_10v10_heroes, hero)
-				elseif value == 2 then
-					table.insert(HeroSelection.disabled_heroes, hero)
-				end
-			end
+		if GetKeyValueByHeroName(hero, "IsCustom") == 1 then
+			HeroSelection:AddCustomHeroToList(hero)
+		elseif GetKeyValueByHeroName(hero, "IsCustom") == 0 then
+			HeroSelection:AddVanillaHeroToList(hero)
+		end
+
+		if GetKeyValueByHeroName(hero, "IsDisabled") == 1 then
+		elseif GetKeyValueByHeroName(hero, "IsDisabled") == 2 then
 		end
 	end
 
@@ -78,21 +65,12 @@ function HeroSelection:HeroListPreLoad()
 end
 
 function HeroSelection:AddCustomHeroToList(hero_name)
-	for hero, attributes in pairs(NPC_HEROES_KV) do
-		if hero == hero_name then
---			print(hero)
-			for key, value in pairs(attributes) do
-				if key == "AttributePrimary" then
-					if value == "DOTA_ATTRIBUTE_STRENGTH" then
-						table.insert(HeroSelection.strength_heroes_custom, hero)
-					elseif value == "DOTA_ATTRIBUTE_AGILITY" then
-						table.insert(HeroSelection.agility_heroes_custom, hero)
-					elseif value == "DOTA_ATTRIBUTE_INTELLECT" then
-						table.insert(HeroSelection.intellect_heroes_custom, hero)
-					end
-				end
-			end
-		end
+	if GetKeyValueByHeroName(hero_name, "AttributePrimary") == "DOTA_ATTRIBUTE_STRENGTH" then
+		table.insert(HeroSelection.strength_heroes_custom, hero_name)
+	elseif GetKeyValueByHeroName(hero_name, "AttributePrimary") == "DOTA_ATTRIBUTE_AGILITY" then
+		table.insert(HeroSelection.agility_heroes_custom, hero_name)
+	elseif GetKeyValueByHeroName(hero_name, "AttributePrimary") == "DOTA_ATTRIBUTE_INTELLECT" then
+		table.insert(HeroSelection.intellect_heroes_custom, hero_name)
 	end
 
 	a = {}
@@ -127,21 +105,12 @@ function HeroSelection:AddCustomHeroToList(hero_name)
 end
 
 function HeroSelection:AddVanillaHeroToList(hero_name)
-	for hero, attributes in pairs(NPC_HEROES_KV) do
-		if hero == hero_name then
---			print(hero)
-			for key, value in pairs(attributes) do
-				if key == "AttributePrimary" then
-					if value == "DOTA_ATTRIBUTE_STRENGTH" then
-						table.insert(HeroSelection.strength_heroes, hero)
-					elseif value == "DOTA_ATTRIBUTE_AGILITY" then
-						table.insert(HeroSelection.agility_heroes, hero)
-					elseif value == "DOTA_ATTRIBUTE_INTELLECT" then
-						table.insert(HeroSelection.intellect_heroes, hero)
-					end
-				end
-			end
-		end
+	if GetKeyValueByHeroName(hero_name, "AttributePrimary") == "DOTA_ATTRIBUTE_STRENGTH" then
+		table.insert(HeroSelection.strength_heroes, hero_name)
+	elseif GetKeyValueByHeroName(hero_name, "AttributePrimary") == "DOTA_ATTRIBUTE_AGILITY" then
+		table.insert(HeroSelection.agility_heroes, hero_name)
+	elseif GetKeyValueByHeroName(hero_name, "AttributePrimary") == "DOTA_ATTRIBUTE_INTELLECT" then
+		table.insert(HeroSelection.intellect_heroes, hero_name)
 	end
 
 	a = {}
@@ -189,9 +158,8 @@ function HeroSelection:HeroList(delay)
 			Disabled = HeroSelection.disabled_heroes
 		})
 
-		table.deepmerge(HeroSelection.heroes_custom, HeroSelection.strength_heroes_custom)
-		table.deepmerge(HeroSelection.heroes_custom, HeroSelection.agility_heroes_custom)
-		table.deepmerge(HeroSelection.heroes_custom, HeroSelection.intellect_heroes_custom)
+		table.deepmerge(HeroSelection.random_heroes, HeroSelection.vanilla_heroes)
+		table.deepmerge(HeroSelection.random_heroes, HeroSelection.imba_heroes)
 
 --		print("Custom Heroes:")
 --		PrintTable(HeroSelection.heroes_custom)
@@ -292,7 +260,7 @@ else
 end
 
 	-- Roll a random hero
-	local random_hero = normal_heroes[RandomInt(1, #normal_heroes)]
+	local random_hero = HeroSelection.random_heroes[RandomInt(1, #HeroSelection.random_heroes)]
 
 	-- Check if this random hero hasn't already been picked
 	if PlayerResource:GetTeam(id) == DOTA_TEAM_GOODGUYS then
@@ -329,7 +297,7 @@ local id = event.PlayerID
 
 	if HeroSelection.playerPickState[id].pick_state ~= "selecting_hero" then return nil end
 
-	local random_hero = imba_heroes[RandomInt(1, #imba_heroes)]
+	local random_hero = HeroSelection.imba_heroes[RandomInt(1, #HeroSelection.imba_heroes)]
 
 	if PlayerResource:GetTeam(id) == DOTA_TEAM_GOODGUYS then
 		for _, picked_hero in pairs(HeroSelection.radiantPicks) do
@@ -625,7 +593,9 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		PlayerResource:SetCustomPlayerColor(player_id, PLAYER_COLORS[player_id][1], PLAYER_COLORS[player_id][2], PLAYER_COLORS[player_id][3])
 
 		Timers:CreateTimer(3.0, function()
-			PlayerResource:SetCameraTarget(player_id, nil)
+			if not hero:HasModifier("modifier_command_restricted") then
+				PlayerResource:SetCameraTarget(player_id, nil)
+			end
 			UTIL_Remove(wisp)
 		end)
 
@@ -645,9 +615,12 @@ end
 
 -- Returns an array with the hero's non-hidden abilities
 function HeroSelection:GetPickScreenAbilities(hero_name)
-	local hero_abilities = {}
-	for index, ability in pairs(HERO_ABILITY_LIST[hero_name]) do
-		hero_abilities[index] = ability
+local hero_abilities = {}
+
+	for i = 1, 8 do
+		if GetKeyValueByHeroName(hero_name, "Ability"..i) ~= nil then
+			hero_abilities[i] = GetKeyValueByHeroName(hero_name, "Ability"..i)
+		end
 	end
 	return hero_abilities
 end

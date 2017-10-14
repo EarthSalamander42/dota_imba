@@ -77,6 +77,7 @@ function InitializeUI() {
 			$('#AllRandomSameHeroToggle').style.visibility = 'collapse';
 		} else if (map_info.map_display_name == "imba_diretide") {
 			$('#game_options_container').style.visibility = 'collapse';
+			$('#CustomBg').style.backgroundImage = 'url("file://{images}/custom_game/loading_screen/diretide.jpg")';
 		}
 	}
 }

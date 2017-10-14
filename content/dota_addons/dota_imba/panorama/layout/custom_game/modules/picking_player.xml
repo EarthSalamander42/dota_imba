@@ -12,19 +12,20 @@
 		Modular.DefineThis({
 			//Set the hero of the player, then set the transform to none,
 			//which animates the hero portrait panel
-			SetPlayerName : function( playerID ) {
+			SetPlayerName: function( playerID ) {
 				var pID = playerID;
 				var playerInfo = Game.GetPlayerInfo( playerID );
 				$('#PlayerName').text = Players.GetPlayerName(playerID);
 			},
 
-			SetPreviewHero : function( heroName ) {
+			SetPreviewHero: function( heroName ) {
 				$('#HeroPanel').style.backgroundImage = 'url("s2r://panorama/images/heroes/'+ heroName +'_png.vtex")';
 				$('#HeroPanel').style.transform = 'none';
 				$('#HeroPanel').style.backgroundSize = "100% 100%";
+				$('#HeroPanel').style.saturation = "0.5";
 			},
 
-			SetHero : function( heroName ) {
+			SetHero: function( heroName ) {
 				$('#HeroPanel').style.backgroundImage = 'url("s2r://panorama/images/heroes/'+ heroName +'_png.vtex")';
 				$('#HeroPanel').style.transform = 'none';
 				$('#HeroPanel').style.backgroundSize = "100% 100%";
@@ -34,6 +35,6 @@
 
 	<Panel class="PickingPlayer">
 		<Panel id="HeroPanel" />
-		<Label id="PlayerName" text="Player 1"/>
+		<Label id="PlayerName" text=""/>
 	</Panel>
 </root>

@@ -1063,25 +1063,25 @@ local hero_name = ""
 		hero_name = hero
 	else
 		hero_name = hero:GetUnitName()
-	
+
 		-- TODO: Add npc_heroes_custom abilities finding with KV.
-		local hero_abilities = {}
-		local index_count = 1
-		for index, ability in pairs(HERO_ABILITY_LIST[hero_name]) do
-			hero_abilities[index] = ability
-			if tonumber(index) == index_count then
-				index_count = index_count +1
-				hero:AddAbility(hero_abilities[index])
-			end
-	--		print(index.."/"..hero_abilities[index])
-		end
-		for index, ability in pairs(HERO_ABILITY_LIST[hero_name]) do
-			hero_abilities[index] = ability
-			if tonumber(index) == index_count then
-				index_count = index_count +1
-				hero:AddAbility(hero_abilities[index])
-			end
-		end
+--		local hero_abilities = {}
+--		local index_count = 1
+--		for index, ability in pairs(HERO_ABILITY_LIST[hero_name]) do
+--			hero_abilities[index] = ability
+--			if tonumber(index) == index_count then
+--				index_count = index_count +1
+--				hero:AddAbility(hero_abilities[index])
+--			end
+--	--		print(index.."/"..hero_abilities[index])
+--		end
+--		for index, ability in pairs(HERO_ABILITY_LIST[hero_name]) do
+--			hero_abilities[index] = ability
+--			if tonumber(index) == index_count then
+--				index_count = index_count +1
+--				hero:AddAbility(hero_abilities[index])
+--			end
+--		end
 	end
 
 	print("Attaching props on hero.")

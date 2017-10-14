@@ -10,24 +10,18 @@ if GameMode == nil then
 	_G.GameMode = class({})
 end
 
--- This library allow for easily delayed/timed actions
 require('libraries/timers')
--- This library can be used for advancted physics/motion/collision of units.  See PhysicsReadme.txt for more information.
 require('libraries/physics')
--- This library can be used for advanced 3D projectile systems.
 require('libraries/projectiles')
 require('libraries/projectiles_new')
--- This library can be used for sending panorama notifications to the UIs of players/teams/everyone
 require('libraries/notifications')
--- This library can be used for starting customized animations on units from lua
 require('libraries/animations')
--- This library can be used for creating frankenstein monsters
 require('libraries/attachments')
 -- A*-Path-finding logic
 require('libraries/astar')
 -- Illusion manager, created by Seinken!
 require('libraries/illusionmanager')
-
+require('libraries/keyvalues')
 -- These internal libraries set up barebones's events and processes.  Feel free to inspect them/change them if you need to.
 require('internal/gamemode')
 require('internal/events')
