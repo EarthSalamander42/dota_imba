@@ -150,6 +150,9 @@ function SetGameOptions()
 		}
 	});
 
+	$.Msg("Gold: " + $('#GoldOptionsDropdown').GetSelected().id)
+	$.Msg("XP: " + $('#ExpOptionsDropdown').GetSelected().id)
+
 	AnimatePanel($('#game_options_container'), { "transform": "translateX(-150px);", "opacity": "0;" }, 0.8);
 }
 

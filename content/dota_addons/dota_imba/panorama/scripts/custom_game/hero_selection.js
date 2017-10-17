@@ -219,12 +219,13 @@ var DireCount = 0
 		playerPanels[player] = playerPanel;
 		RadiantCount = RadiantCount +1
 
+
 		if (RadiantCount >= 5) {
 			class_option_count = class_option_count +1
 			var ClassOptionPanelRadiant_alt = $.CreatePanel("Panel", $("#LeftPlayers"), "PlayerRow" + class_option_count + "_good");
 			ClassOptionPanelRadiant.AddClass("PlayerOptionRowV10")
 			ClassOptionPanelRadiant_alt.AddClass("PlayerOptionRowV10")
-			RadiantCount = 1
+			RadiantCount = 0
 		} else {
 			ClassOptionPanelRadiant.AddClass("PlayerOptionRow")
 		}
@@ -250,7 +251,7 @@ var DireCount = 0
 			var ClassOptionPanelDire_alt = $.CreatePanel("Panel", $("#RightPlayers"), "PlayerRow" + class_option_count + "_bad");
 			ClassOptionPanelDire.AddClass("PlayerOptionRowV10")
 			ClassOptionPanelDire_alt.AddClass("PlayerOptionRowV10")
-			DireCount = 1
+			DireCount = 0
 		} else {
 			ClassOptionPanelDire.AddClass("PlayerOptionRow")
 		}
@@ -619,6 +620,73 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 			$('#GameModeSelectText').text = $.Localize( '#imba_gamemode_name_arena_mode' );
 		} else if (map_info.map_display_name == "imba_diretide") {
 			$('#GameModeSelectText').text = $.Localize( '#imba_gamemode_name_diretide' );
+		}
+
+		// If All Random is enabled, pick a random hero
+		var all_random_enabled = CustomNetTables.GetTableValue("game_options", "all_random" );
+		if (all_random_enabled != null && all_random_enabled[1] == 1) {
+			$("#PickHeroBtn").AddClass( "disabled" );
+			$("#RepickBtn").AddClass( "disabled" );
+			$('#GameModeSelectText').text = $.Localize( '#imba_gamemode_name_all_random' );
+			$.Schedule(5, SelectRandomHero);
+		}
+
+		// Update the game options display
+		var bounty_multiplier = CustomNetTables.GetTableValue("game_options", "bounty_multiplier");
+		var exp_multiplier = CustomNetTables.GetTableValue("game_options", "exp_multiplier");
+		var creep_power = CustomNetTables.GetTableValue("game_options", "creep_power");
+		var tower_power = CustomNetTables.GetTableValue("game_options", "tower_power");
+		var respawn_multiplier = CustomNetTables.GetTableValue("game_options", "respawn_multiplier");
+		var initial_gold = CustomNetTables.GetTableValue("game_options", "initial_gold");
+		var initial_level = CustomNetTables.GetTableValue("game_options", "initial_level");
+		var max_level = CustomNetTables.GetTableValue("game_options", "max_level");
+		var kills_to_end = CustomNetTables.GetTableValue("game_options", "kills_to_end");
+		var frantic_mode = CustomNetTables.GetTableValue("game_options", "frantic_mode");
+		var hero_pick_rule = CustomNetTables.GetTableValue("game_options", "hero_pick_rule");
+		$("#BountyMultiplierValue").text = bounty_multiplier[1] + "%";
+		$("#ExpMultiplierValue").text = exp_multiplier[1] + "%";
+		$("#RespawnTimerValue").text = respawn_multiplier[1] + "%";
+		$("#InitialGoldValue").text = initial_gold[1];
+		$("#InitialLevelValue").text = initial_level[1];
+		$("#MaxLevelValue").text = max_level[1];
+
+//		if (tower_power[1] == 0) {
+//			$("#TowerPowerValue").text = $.Localize( '#imba_gamemode_settings_power_1' );
+//		} else if (tower_power[1] == 1) {
+//			$("#TowerPowerValue").text = $.Localize( '#imba_gamemode_settings_power_2' );
+//		} else if (tower_power[1] == 2) {
+//			$("#TowerPowerValue").text = $.Localize( '#imba_gamemode_settings_power_3' );
+//		}
+
+		if (tower_power[1] == 1) {
+			$("#TowerPowerValue").text = $.Localize( '#imba_gamemode_settings_power_1' );
+		} else if (tower_power[1] == 2) {
+			$("#TowerPowerValue").text = $.Localize( '#imba_gamemode_settings_power_2' );
+		}
+
+		if (map_info.map_display_name == "imba_arena") {
+			$("#CreepPowerLabel").text = $.Localize( '#imba_gamemode_settings_kills_to_end' );
+			$("#CreepPowerValue").text = kills_to_end[1];
+		} else if (creep_power[1] == 1) {
+			$("#CreepPowerValue").text = $.Localize( '#imba_gamemode_settings_power_1' );
+		} else if (creep_power[1] == 2) {
+			$("#CreepPowerValue").text = $.Localize( '#imba_gamemode_settings_power_2' );
+		} else if (creep_power[1] == 3) {
+			$("#CreepPowerValue").text = $.Localize( '#imba_gamemode_settings_power_3' );
+		}
+
+		if (map_info.map_display_name == "imba_custom" || map_info.map_display_name == "imba_custom_10v10") {
+			if(frantic_mode) {
+				$("#FranticModeValue").text = $.Localize( '#imba_gamemode_game_options_frantic_enabled' );
+			}
+		}
+
+		if(hero_pick_rule[1] == 0){
+			$("#HeroPickRuleValue").text = $.Localize( '#imba_gamemode_settings_hero_pick_all_unique' );
+		} else if(hero_pick_rule[1] == 1){
+			$("#HeroPickRuleValue").text = $.Localize( '#imba_gamemode_settings_hero_pick_team_unique' );
+		} else if(hero_pick_rule[1] == 2){
+			$("#HeroPickRuleValue").text = $.Localize( '#imba_gamemode_settings_hero_pick_no_unique' );
 		}
 
 		// If All Random is enabled, pick a random hero
