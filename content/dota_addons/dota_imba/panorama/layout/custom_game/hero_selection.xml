@@ -26,6 +26,26 @@
 						</Panel>
 					</Panel>
 
+					<Panel id="LeftStatsPanel" class="StatsPanel">
+						<Panel id="LeftStatsSubPanel">
+							<Panel class="GameModeLabelPanel">
+								<Label id="BountyMultiplierLabel" class="GameModeLabel" text="#imba_gamemode_settings_gold_multiplier" />
+								<Label id="ExpMultiplierLabel" class="GameModeLabel" text="#imba_gamemode_settings_exp_multiplier" />
+								<Label id="CreepPowerLabel" class="GameModeLabel" text="#imba_gamemode_settings_creep_power_title" />
+								<Label id="TowerPowerLabel" class="GameModeLabel" text="#imba_gamemode_settings_tower_power_title" />
+								<Label id="RespawnTimerLabel" class="GameModeLabel" text="#imba_gamemode_settings_respawn_time" />
+							</Panel>
+
+							<Panel class="GameModeValuePanel">
+								<Label id="BountyMultiplierValue" class="GameModeValue" text="135%" />
+								<Label id="ExpMultiplierValue" class="GameModeValue" text="135%" />
+								<Label id="CreepPowerValue" class="GameModeValue" text="0" />
+								<Label id="TowerPowerValue" class="GameModeValue" text="0" />
+								<Label id="RespawnTimerValue" class="GameModeValue" text="0%" />
+							</Panel>
+					</Panel>
+				</Panel>
+
 					<Panel id="PickTextPanel">
 						<Panel id='GameOptionsPanelContainer'>
 							<Panel id='PickTimerPanel'>
@@ -34,6 +54,10 @@
 								</Panel>
 								<Label id="GameModeSelectText" class="GameModeSelectText" text="#addon_game_name" />
 							</Panel>
+
+							<Button id="ShowStatsPanel" onactivate="ShowStatsSwap()" >
+								<Label id="ShowStatsLabel" text="#stats_swap" />
+							</Button>
 						</Panel>
 					</Panel>
 
@@ -44,6 +68,26 @@
 						</Panel>
 						<Panel id="RightPlayers">
 							<!-- JS Inserts player elements here -->
+						</Panel>
+					</Panel>
+
+					<Panel id="RightStatsPanel" class="StatsPanel">
+						<Panel id="RightStatsSubPanel">
+							<Panel class="GameModeLabelPanel">
+								<Label id="HeroPickRuleLabel" class="GameModeLabel" text="#imba_gamemode_settings_hero_pick_rule" />
+								<Label id="FranticModeLabel" class="GameModeLabel" text="#imba_gamemode_game_options_frantic" />
+								<Label id="InitialGoldLabel" class="GameModeLabel" text="#imba_gamemode_settings_initial_gold" />
+								<Label id="InitialLevelLabel" class="GameModeLabel" text="#imba_gamemode_settings_initial_level" />
+								<Label id="MaxLevelLabel" class="GameModeLabel" text="#imba_gamemode_settings_max_level" />
+							</Panel>
+
+							<Panel class="GameModeValuePanel">
+								<Label id="HeroPickRuleValue" class="GameModeValue" text="" />
+								<Label id="FranticModeValue" class="GameModeValue" text="#imba_gamemode_game_options_frantic_disabled" />
+								<Label id="InitialGoldValue" class="GameModeValue" text="625" />
+								<Label id="InitialLevelValue" class="GameModeValue" text="1" />
+								<Label id="MaxLevelValue" class="GameModeValue" text="40" />
+							</Panel>
 						</Panel>
 					</Panel>
 				</Panel>
@@ -142,6 +186,8 @@
 										<DOTAAbilityImage id="PickedHeroAbility4" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
 										<DOTAAbilityImage id="PickedHeroAbility5" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
 										<DOTAAbilityImage id="PickedHeroAbility6" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
+										<DOTAAbilityImage id="PickedHeroAbility7" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
+										<DOTAAbilityImage id="PickedHeroAbility8" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
 									</Panel>
 								</Panel>
 

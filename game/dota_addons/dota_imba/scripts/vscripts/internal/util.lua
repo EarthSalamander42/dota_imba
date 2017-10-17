@@ -1063,7 +1063,7 @@ local hero_name = ""
 		hero_name = hero
 	else
 		hero_name = hero:GetUnitName()
-	
+
 		-- TODO: Add npc_heroes_custom abilities finding with KV.
 		local hero_abilities = {}
 		local index_count = 1

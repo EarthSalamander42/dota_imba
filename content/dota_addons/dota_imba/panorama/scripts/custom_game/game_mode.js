@@ -77,6 +77,7 @@ function InitializeUI() {
 			$('#AllRandomSameHeroToggle').style.visibility = 'collapse';
 		} else if (map_info.map_display_name == "imba_diretide") {
 			$('#game_options_container').style.visibility = 'collapse';
+			$('#CustomBg').style.backgroundImage = 'url("file://{images}/custom_game/loading_screen/diretide.jpg")';
 		}
 	}
 }
@@ -148,6 +149,9 @@ function SetGameOptions()
             "hero_pick_rule" : $('#HeroPickRuleDropdown').GetSelected().id,
 		}
 	});
+
+	$.Msg("Gold: " + $('#GoldOptionsDropdown').GetSelected().id)
+	$.Msg("XP: " + $('#ExpOptionsDropdown').GetSelected().id)
 
 	AnimatePanel($('#game_options_container'), { "transform": "translateX(-150px);", "opacity": "0;" }, 0.8);
 }

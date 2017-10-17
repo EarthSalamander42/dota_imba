@@ -17,7 +17,9 @@ end
 
 function modifier_no_pvp:OnTakeDamage( params )
 	if params.attacker == params.unit then return end
-	if params.attacker:IsRealHero() and params.unit:IsRealHero() then
-		params.unit:Heal(params.damage, params.unit)
+	if params.attacker:IsRealHero() or params.attacker:GetPlayerOwner() then
+		if params.unit:IsRealHero() then
+			params.unit:Heal(params.damage, params.unit)
+		end
 	end
 end

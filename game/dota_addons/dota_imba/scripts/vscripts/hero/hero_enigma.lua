@@ -526,8 +526,7 @@ function imba_enigma_black_hole:OnChannelFinish(interrupted)
 
 	if IsValidEntity(self:GetCaster().hBlackHoleDummyUnit) then
 		self:GetCaster().hBlackHoleDummyUnit:RemoveModifierByName("modifier_imba_enigma_black_hole_aura")
-	end  
-	
+	end
 end
 
 LinkLuaModifier("modifier_imba_singularity","hero/hero_enigma", LUA_MODIFIER_MOTION_NONE)
@@ -767,6 +766,7 @@ function modifier_imba_enigma_black_hole_force:GetMotionControllerPriority()  re
 
 function modifier_imba_enigma_black_hole_force:OnCreated()
 	if IsServer() then
+		if self:GetParent():GetUnitName() == "npc_dota_observer_wards" or self:GetParent():GetUnitName() == "npc_dota_sentry_wards" then print("Ward, ignoring.") return end
 		self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 		
 		self:StartIntervalThink(FrameTime())

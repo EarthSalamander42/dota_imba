@@ -108,7 +108,6 @@ DebugPrintTable(keys)
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Pick screen stuff
 	-------------------------------------------------------------------------------------------------
-
 	if new_state == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		HeroSelection:HeroListPreLoad()
 	end
@@ -116,7 +115,6 @@ DebugPrintTable(keys)
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Start-of-pre-game stuff
 	-------------------------------------------------------------------------------------------------
-
 	if new_state == DOTA_GAMERULES_STATE_PRE_GAME then
 		-- Play Announcer sounds in Picking Screen until a hero is picked
 --		Timers:CreateTimer(function()
@@ -227,10 +225,10 @@ GameMode:_OnNPCSpawned(keys)
 local npc = EntIndexToHScript(keys.entindex)
 local normal_xp = npc:GetDeathXP()
 
-		if GetMapName() == "imba_10v10" or GetMapName() == "imba_custom_10v10" then
 	if npc then
+		if GetMapName() == "imba_10v10" or GetMapName() == "imba_custom_10v10" then
 			npc:SetDeathXP(normal_xp)
-		elseif GetMapName() == "imba_diretide" or DIRETIDE_COMMAND == true then
+		elseif GetMapName() == "imba_diretide" then
 			if npc:GetUnitName() == "npc_dota_creep_goodguys_melee" then
 				npc:SetModel("models/creeps/lane_creeps/creep_radiant_melee_diretide/creep_radiant_melee_diretide.vmdl")
 				npc:SetOriginalModel("models/creeps/lane_creeps/creep_radiant_melee_diretide/creep_radiant_melee_diretide.vmdl")
@@ -274,6 +272,7 @@ local normal_xp = npc:GetDeathXP()
 		else
 			npc:SetDeathXP(normal_xp*1.5)
 		end
+
 --		if npc:IsRealHero() and npc:GetUnitName() ~= "npc_dota_hero_wisp" or npc.is_real_wisp then
 --			if not npc.has_label then
 --				Timers:CreateTimer(5.0, function()
@@ -313,6 +312,24 @@ local normal_xp = npc:GetDeathXP()
 --						npc:SetCustomHealthLabel("THUNDER   LIZARD", 45, 45, 20)
 --					end
 					npc.is_dev = true
+				end
+			end
+		end
+
+		for i = 1, #banned_players do
+			if PlayerResource:GetSteamAccountID(npc:GetPlayerID()) == banned_players[i] then
+				if npc:GetUnitName() ~= "npc_dota_hero_wisp" or npc.is_real_wisp then
+					if not npc:HasModifier("modifier_command_restricted") then
+						npc:AddNewModifier(npc, nil, "modifier_command_restricted", {})
+						Timers:CreateTimer(0.1, function()
+							PlayerResource:SetCameraTarget(npc:GetPlayerOwnerID(), npc)
+						end)
+						Timers:CreateTimer(2.0, function()
+							StartAnimation(npc, {duration=2.0, activity=ACT_DOTA_DEFEAT, rate=1.0})
+							return 2.0
+						end)
+						Notifications:Bottom(npc:GetPlayerID(), {text="Hey what are you doing there, i thought this mod was shit?", duration=99999, style={color="red"}})
+					end
 				end
 			end
 		end
@@ -655,6 +672,22 @@ function GameMode:OnPlayerLevelUp(keys)
 		end
 	end
 
+	local special_talent = 0
+	if hero_level == 34 then
+		for i = 1, 24 do
+			local ability_key = hero:GetKeyValue("Ability"..i)
+			if ability_key and string.find(ability_key, "special_bonus_unique_*") then
+				special_talent = special_talent +1
+				print(special_talent)
+			end
+		end
+
+		if special_talent < 2 then
+			print("Removing an ability point")
+			hero:SetAbilityPoints(hero:GetAbilityPoints() - 1)
+		end
+	end
+
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Hero experience bounty adjustment
 	-------------------------------------------------------------------------------------------------
@@ -980,12 +1013,7 @@ function GameMode:OnEntityKilled( keys )
 			PlayerResource:SetCustomBuybackCooldown(player_id, buyback_cooldown)
 		end
 
-		if killed_unit:GetUnitName() == "npc_dota_goodguys_siege" or killed_unit:GetUnitName() == "npc_dota_badguys_siege" then
-			local item = CreateItem("item_diretide_candy", nil, nil)
-			local pos = killed_unit:GetAbsOrigin()
-			local drop = CreateItemOnPositionSync( pos, item )
-			item:LaunchLoot(false, 300, 0.5, pos + RandomVector(200))
-		elseif killed_unit:HasItemInInventory("item_diretide_candy") then
+		if killed_unit:HasItemInInventory("item_diretide_candy") then
 			for i = 0, 8 do
 				if killed_unit:GetItemInSlot(i) and killed_unit:GetItemInSlot(i):GetName() == "item_diretide_candy" then
 					local stack_count = killed_unit:GetItemInSlot(i):GetCurrentCharges()
@@ -999,6 +1027,32 @@ function GameMode:OnEntityKilled( keys )
 				end
 			end
 		end
+
+		if GetMapName() == "imba_diretide" then
+			if killed_unit:GetTeamNumber() == 4 then
+				if killed_unit:GetUnitLabel() == "npc_diretide_roshan" then return end
+				local chance = RandomInt(1, 100)
+				if chance > 50 then -- 49% chance
+					local item = CreateItem("item_diretide_candy", nil, nil)
+					local pos = killed_unit:GetAbsOrigin()
+					local drop = CreateItemOnPositionSync(pos, item)
+					item:LaunchLoot(false, 300, 0.5, pos + RandomVector(200))
+				end
+			elseif string.find(killed_unit:GetUnitName(), "dota_creep") then
+				local chance = RandomInt(1, 100)
+				if chance > 90 then -- 10% chance
+					local item = CreateItem("item_diretide_candy", nil, nil)
+					local pos = killed_unit:GetAbsOrigin()
+					local drop = CreateItemOnPositionSync(pos, item)
+					item:LaunchLoot(false, 300, 0.5, pos + RandomVector(200))
+				end
+			elseif killed_unit:GetUnitName() == "npc_dota_goodguys_siege" or killed_unit:GetUnitName() == "npc_dota_badguys_siege" then
+				local item = CreateItem("item_diretide_candy", nil, nil)
+				local pos = killed_unit:GetAbsOrigin()
+				local drop = CreateItemOnPositionSync( pos, item )
+				item:LaunchLoot(false, 300, 0.5, pos + RandomVector(200))
+			end
+		end
 	end
 end
 
@@ -1006,7 +1060,6 @@ end
 function GameMode:PlayerConnect(keys)
 	DebugPrint('[BAREBONES] PlayerConnect')
 	DebugPrintTable(keys)
-
 end
 
 -- This function is called once when the player fully connects and becomes "Ready" during Loading

@@ -165,7 +165,7 @@ end
 
 -- This function captures the game mode options when they are set
 function OnSetGameMode( eventSourceIndex, args )
-	
+
 	local player_id = args.PlayerID
 	local player = PlayerResource:GetPlayer(player_id)
 	local is_host = GameRules:PlayerHasCustomGameHostPrivileges(player)
