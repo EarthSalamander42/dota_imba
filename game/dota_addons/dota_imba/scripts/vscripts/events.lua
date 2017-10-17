@@ -672,6 +672,22 @@ function GameMode:OnPlayerLevelUp(keys)
 		end
 	end
 
+	local special_talent = 0
+	if hero_level == 34 then
+		for i = 1, 24 do
+			local ability_key = hero:GetKeyValue("Ability"..i)
+			if ability_key and string.find(ability_key, "special_bonus_unique_*") then
+				special_talent = special_talent +1
+				print(special_talent)
+			end
+		end
+
+		if special_talent < 2 then
+			print("Removing an ability point")
+			hero:SetAbilityPoints(hero:GetAbilityPoints() - 1)
+		end
+	end
+
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Hero experience bounty adjustment
 	-------------------------------------------------------------------------------------------------

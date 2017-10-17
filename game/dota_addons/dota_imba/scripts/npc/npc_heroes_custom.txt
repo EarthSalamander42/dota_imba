@@ -340,7 +340,7 @@
 
 		//Picking Screen
 		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"		
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"		
 
 		"Ability1"					"brewmaster_thunder_clap"
 		"Ability2"			 		"brewmaster_drunken_haze"
@@ -856,7 +856,6 @@
 		"Ability2"					"earth_spirit_rolling_boulder"
 		"Ability3"					"earth_spirit_geomagnetic_grip"
 		"Ability4"					"earth_spirit_stone_caller"
-		"Ability5"					"earth_spirit_petrify"
 		"Ability6"					"earth_spirit_magnetize"
 
 		"Ability10"					"special_bonus_intelligence_10"
@@ -2257,15 +2256,16 @@
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
-		"Ability1"					"imba_rubick_telekinesis"
-		"Ability2"					"rubick_fade_bolt"
-		"Ability3"					"rubick_null_field"
-		"Ability4"					"rubick_empty1"
-		"Ability5"					"rubick_empty2"
-		"Ability6"					"rubick_spell_steal"
-		//"Ability7"					"rubick_hidden2"
-		//"Ability8"					"rubick_hidden3"
-		//"Ability9"					"rubick_hidden"
+		"Ability1"					"rubick_telekinesis"
+//		"Ability2"					"rubick_telekinesis_land"
+		"Ability3"					"rubick_fade_bolt"
+		"Ability4"					"rubick_null_field"
+		"Ability5"					"rubick_empty1"
+		"Ability6"					"rubick_empty2"
+		"Ability7"					"rubick_spell_steal"
+//		"Ability8"					"rubick_hidden1"
+//		"Ability9"					"rubick_hidden2"
+//		"Ability10"					"rubick_hidden3"
 
 		//"Ability1"					"imba_rubick_telekinesis"
 		//"Ability2"					"imba_rubick_spell_steal_controller"
@@ -2915,7 +2915,7 @@
 		"Ability1"					"treant_natures_guise"
 		"Ability2"					"treant_leech_seed"
 		"Ability3"					"treant_living_armor"
-		"Ability4"					"treant_eyes_in_the_forest"
+//		"Ability4"					"treant_eyes_in_the_forest"
 		"Ability5"					"treant_overgrowth"
 
 		"Ability10"					"special_bonus_attack_speed_15"
@@ -3333,14 +3333,12 @@
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
 		"Ability1"					"wisp_tether"
-		//"Ability2"					"wisp_tether_break"							
+//		"Ability2"					"wisp_tether_break"
 		"Ability3"					"wisp_spirits"
 		"Ability4"					"wisp_overcharge"
-		"Ability5"					"wisp_empty1"
-		"Ability6"					"wisp_empty2"
+		"Ability5"					"wisp_spirits_in"
+		"Ability6"					"wisp_spirits_out"
 		"Ability7"					"wisp_relocate"
-		"Ability9"					"wisp_spirits_in"
-		"Ability10"					"wisp_spirits_out"
 
 		"Ability11"					"special_bonus_magic_resistance_8"
 		"Ability12"					"special_bonus_armor_4"
