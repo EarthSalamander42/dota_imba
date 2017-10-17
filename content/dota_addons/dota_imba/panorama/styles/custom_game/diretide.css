@@ -268,8 +268,8 @@
 
 #Roshan
 {
-	width: 100px;
-	height: 70px;
+	width: 120px;
+	height: 80px;
 	align: center center;
 	background-image: url("file://{images}/custom_game/game_info/roshan.png");
 	background-repeat: no-repeat;
@@ -280,7 +280,8 @@
 #RoshanTarget
 {
 	width: 100%;
-	font-size: 17px;
+	margin-top: 4%;
+	font-size: 16px;
 	font-weight: bolder;
 	color: #ffffff;
 	text-shadow: 2px 2px 2px #7b612b;

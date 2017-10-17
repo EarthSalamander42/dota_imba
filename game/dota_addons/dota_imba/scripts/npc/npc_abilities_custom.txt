@@ -15010,7 +15010,7 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"ghostship_speed"				"750 950 1150 1350 1550 1750"
+				"ghostship_speed"				"650 700 750 800 850 900"
 			}
 			"04"
 			{
@@ -21864,7 +21864,7 @@
 			"01"
 			{
 				"var_type"                  "FIELD_FLOAT"
-				"duration"	                "0.5"
+				"duration"	                "0.4"
 			}
 			"02"
 			{
@@ -21889,12 +21889,12 @@
 			"06"
 			{
 				"var_type"                  "FIELD_FLOAT"
-				"spike_rate"	        	"0.15"
+				"spike_rate"	        	"0.8"
 			}
 			"07"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"spike_chance"	        	"65"
+				"spike_chance"	        	"50"
 			}
 			"08"
 			{

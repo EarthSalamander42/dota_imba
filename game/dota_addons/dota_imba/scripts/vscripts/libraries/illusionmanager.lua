@@ -230,11 +230,11 @@ function IllusionManager:ResetIllusion(tEntity,tIllusion)  -- Wipe AND re-add sk
 			if illusionAbility then 
 				illusionAbility:SetLevel(abilityLevel) 
 			else
-				if not abilityName == "imba_sniper_headshot" then -- For reasons i could've find yet, this ability causes server to crash on an illusion
+				if abilityName == "imba_sniper_headshot" then -- For reasons i could've find yet, this ability causes server to crash on an illusion
+					print("Found sniper's headshot! ignoring..")
+				else
 					local newability = tIllusion:AddAbility(abilityName)
 					newability:SetLevel(abilityLevel)
-				else
---					print("Found sniper's headshot! ignoring..")
 				end
 			end
 		end

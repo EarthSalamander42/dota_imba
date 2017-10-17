@@ -50,7 +50,7 @@ function AncientThink( keys )
 	local tier_3_ability = caster:GetAbilityByIndex(5 + behemoth_adjustment)
 
 	-- If health < 40%, refresh abilities once
-	if (( ancient_health < 0.40 and IMBA_PLAYERS_ON_GAME == 20 ) and not caster.abilities_refreshed ) then
+	if (( ancient_health < 0.40 and IMBA_PLAYERS_ON_GAME >= 20 ) and not caster.abilities_refreshed ) then
 		caster.tier_1_cast = false
 		caster.tier_3_cast = false
 		tier_1_ability:SetActivated(true)

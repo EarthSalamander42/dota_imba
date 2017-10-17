@@ -14,14 +14,12 @@
 .AspectRatio4x3 #TopBarScoreboard,
 .AspectRatio5x4 #TopBarScoreboard
 {
-	margin-left: 200px;
-	width: 1070px;
+	margin-top: -2px;
 }
 
 .AspectRatio16x10 #TopBarScoreboard
 {
-	margin-left: 200px;
-	width: 1335px;
+	margin-top: -4px;
 }
 
 #ScoreboardContainer
@@ -305,30 +303,29 @@
 	background-color: #3b6cd0;
 }
 
-
 #HeroIcon
 {
     border-left: 1px solid black;
     border-right: 1px solid black;
-    width: 56px;
-    height: 32px;
+    width: 66px;
+    height: 33px;
 }
 
 .AspectRatio4x3 #HeroIcon,
 .AspectRatio5x4 #HeroIcon
 {
-    border-left: 0px solid black;
-    border-right: 0px solid black;
-    width: 44px;
-    height: 25px;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    width: 47px;
+    height: 28px;
 }
 
 .AspectRatio16x10 #HeroIcon
 {
-    border-left: 0px solid black;
-    border-right: 0px solid black;
-    width: 55px;
-    height: 30px;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    width: 60px;
+    height: 33px;
 }
 
 .player_dead #HeroIcon

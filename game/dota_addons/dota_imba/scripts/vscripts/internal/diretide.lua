@@ -4,7 +4,7 @@ nCOUNTDOWNTIMER = 0
 DIRETIDE_PHASE = 0
 DIRETIDE_WINNER = 2
 COUNT_DOWN = 1
-PHASE_TIME = 481
+PHASE_TIME = 361
 if IsInToolsMode() then
 	PHASE_TIME = 31
 end
@@ -51,7 +51,15 @@ local units = FindUnitsInRadius(1, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DO
 			Announcer("diretide", "winner_radiant")
 		end
 		SwapTeam(DIRETIDE_WINNER)
-		AddFOWViewer(DIRETIDE_WINNER, Entities:FindByName(nil, "roshan_arena_"..DIRETIDE_WINNER):GetAbsOrigin(), 500, 99999, false)
+
+		local good_checkpoint = CreateUnitByName("npc_dota_good_candy_pumpkin", Vector(0, 0, 0), true, nil, nil, DOTA_TEAM_GOODGUYS)
+		local bad_checkpoint = CreateUnitByName("npc_dota_bad_candy_pumpkin", Vector(0, 0, 0), true, nil, nil, DOTA_TEAM_BADGUYS)
+		good_checkpoint:AddNewModifier(good_checkpoint, nil, "modifier_invulnerable", {})
+		good_checkpoint:SetAbsOrigin(Entities:FindByName(nil, "good_checkpoint_"..DIRETIDE_WINNER):GetAbsOrigin())
+		bad_checkpoint:AddNewModifier(bad_checkpoint, nil, "modifier_invulnerable", {})
+		bad_checkpoint:SetAbsOrigin(Entities:FindByName(nil, "bad_checkpoint_"..DIRETIDE_WINNER):GetAbsOrigin())
+		AddFOWViewer(2, Entities:FindByName(nil, "roshan_arena_"..DIRETIDE_WINNER):GetAbsOrigin(), 550, 99999, false)
+		AddFOWViewer(3, Entities:FindByName(nil, "roshan_arena_"..DIRETIDE_WINNER):GetAbsOrigin(), 550, 99999, false)
 		GameRules:SetUseUniversalShopMode(true)
 
 		local ents = Entities:FindAllByName("lane_*")
@@ -98,7 +106,7 @@ local ability = keys.ability
 		end
 	end
 
-	if HIT_COUNT[caster:GetTeamNumber()] >= 2 then
+	if HIT_COUNT[caster:GetTeamNumber()] >= 4 then
 		HIT_COUNT[caster:GetTeamNumber()] = 0
 		StartAnimation(caster, {duration=1.0, activity=ACT_DOTA_FLINCH, rate=1.0})
 		if caster:GetUnitName() == "npc_dota_good_candy_pumpkin" and CustomNetTables:GetTableValue("game_options", "radiant").score > 0 then
@@ -221,7 +229,7 @@ local duration = 15.0
 		end
 		hero:SetHealth(hero:GetMaxHealth())
 		hero:SetMana(hero:GetMaxMana())
-		ROSHAN_ENT:SetTeam(team)
+--		ROSHAN_ENT:SetTeam(team)
 		FindClearSpaceForUnit(hero, Entities:FindByName(nil, "courier_spawn_"..hero:GetTeamNumber()):GetAbsOrigin(), true)
 		hero:Stop()
 		hero:ModifyGold(DIRETIDE_BONUS_GOLD, true, 0)
@@ -232,7 +240,7 @@ end
 function EndRoshanCamera()
 local i = 1
 
-	ROSHAN_ENT:SetTeam(4)
+--	ROSHAN_ENT:SetTeam(4)
 
 	for _, hero in pairs(HeroList:GetAllHeroes()) do
 		PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), hero)
@@ -240,11 +248,11 @@ local i = 1
 		Timers:CreateTimer(0.1, function()
 			i = i + 1
 			if i < 10 then
-				print("Unlock camera!")
+--				print("Unlock camera!")
 				PlayerResource:SetCameraTarget(hero:GetPlayerOwnerID(), nil)
 				return 0.1
 			else
-				print("Camera unlocked.")
+--				print("Camera unlocked.")
 				return
 			end
 		end)
