@@ -2268,7 +2268,7 @@
 //		"Ability10"					"rubick_hidden3"
 
 		//"Ability1"					"imba_rubick_telekinesis"
-		//"Ability2"					"imba_rubick_spell_steal_controller"
+		"Ability2"					"imba_rubick_spell_steal_controller"
 		//"Ability3"					"imba_rubick_fade_bolt"
 		//"Ability4"					"imba_rubick_null_field"
 		//"Ability5"					"imba_rubick_empty1"
