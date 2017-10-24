@@ -27,6 +27,7 @@ var hiddenAbilities = [
 	"nyx_assassin_unburrow",
 	"imba_dazzle_ressurection",
 	"imba_jakiro_ice_breath",
+	"imba_empress_ambient_effects",
 	"" // Leave it alone, he's useful
 ]
 
@@ -233,7 +234,7 @@ var DireCount = 0
 		var plyData = CustomNetTables.GetTableValue("player_table", player);
 		if (plyData != null) {
 			RadiantLevels = RadiantLevels + plyData.Lvl / RadiantCount
-			$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + RadiantLevels;
+			$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + RadiantLevels.toFixed([1]);
 		}
 	});
 
@@ -259,7 +260,7 @@ var DireCount = 0
 		var plyData = CustomNetTables.GetTableValue("player_table", player);
 		if (plyData != null) {
 			DireLevels = DireLevels + plyData.Lvl / DireCount
-			$("#AverageMMRTeamDire").text = $.Localize("average_mmr") + DireLevels;
+			$("#AverageMMRTeamDire").text = $.Localize("average_mmr") + DireLevels.toFixed([1]);
 		}
 	});
 	$.Schedule(2.0, CreateHeroPick)
@@ -601,7 +602,9 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 /* Initialisation - runs when the element is created
 =========================================================================*/
 (function () {
-	$("#VanillaToCustom").style.visibility = "collapse"; /* Disabled custom heroes panel */
+
+//	$("#VanillaToCustom").style.visibility = "visible"; /* Disabled custom heroes panel */
+
 	// If this player is a spectator, just kill the whole pick screen
 	var localTeam = Players.GetTeam(Players.GetLocalPlayer())
 	if ( localTeam != 2 && localTeam != 3 ) {

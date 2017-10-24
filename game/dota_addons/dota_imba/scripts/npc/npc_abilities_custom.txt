@@ -14141,7 +14141,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"50"
+		"AbilityManaCost"				"75"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
@@ -40203,7 +40203,6 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityCastRange"			"1600"
 		"AbilityTextureName"    	"custom/ghost_revenant_blackjack"
-		"AOERadius"					"%radius%"
 		"MaxLevel"					"7"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -40327,7 +40326,7 @@
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"		"custom/ghost_revenant_miasma"
 		"MaxLevel"					"7"
-		"AOERadius"					"area_of_effect"
+		"AOERadius"					"%area_of_effect"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -40381,6 +40380,27 @@
 		"AbilityCastRange"			"900"
 		"AbilityTextureName"    	"custom/ghost_revenant_ghost_immolation"
 		"MaxLevel"					"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"900"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"tick_time"			"1"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"hp_loss_pct"		"1"
+			}
+		}
 	}
 
 	//=================================================================================================================
@@ -40388,7 +40408,7 @@
 	//=================================================================================================================
 	"ghost_revenant_exhaustion"
 	{
-		"BaseClass"					"ability_datadriven"
+		"BaseClass"					"ability_lua"
 		"ScriptFile"				"hero/hero_ghost_revenant.lua"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityTextureName"    	"custom/ghost_revenant_exhaustion"
@@ -40414,12 +40434,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"ms_reduction_pct"			"10 20 30 40 50 60"
+				"ms_reduction_pct"			"-25 -40 -55 -70 -85 -100"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"10.0"
+				"duration"					"7.0"
 			}
 		}
 	}
@@ -40587,6 +40607,19 @@
 				"cooldown"				"7 6 5 4 3 2 1"
 			}
 		}
+	}
+
+	//=================================================================================================================
+	// Hell Empress: Ambient Effects
+	//=================================================================================================================
+	"imba_empress_ambient_effects"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_hell_empress"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"MaxLevel"						"1"
 	}
 
 	//=================================================================================================================

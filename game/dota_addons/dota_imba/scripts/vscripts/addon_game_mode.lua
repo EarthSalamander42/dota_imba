@@ -2,9 +2,6 @@ require('statcollection/init')
 require('internal/util')
 require('internal/funcs')
 require('player_resource')
---	if GetMapName() == "imba_diretide" then
-require('internal/diretide')
---	end
 require('imba')
 require('hero_selection')
 
@@ -17,12 +14,9 @@ DebugPrint("[IMBA] Performing pre-load precache")
 	LinkLuaModifier("modifier_imba_haste_rune_speed_limit_break", "modifier/modifier_imba_haste_rune_speed_limit_break.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_haste_boots_speed_break", "modifier/modifier_imba_haste_boots_speed_break.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_chronosphere_ally_slow", "modifier/modifier_imba_chronosphere_ally_slow.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_imba_prevent_actions_game_start", "modifier/modifier_imba_prevent_actions_game_start.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_arena_passive_gold_thinker", "modifier/modifier_imba_arena_passive_gold_thinker.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_range_indicator", "modifier/modifier_imba_range_indicator.lua", LUA_MODIFIER_MOTION_NONE )	
 	LinkLuaModifier("modifier_command_restricted", "modifier/modifier_command_restricted.lua", LUA_MODIFIER_MOTION_NONE )	
-	LinkLuaModifier("modifier_npc_dialog", "modifier/modifier_npc_dialog.lua", LUA_MODIFIER_MOTION_NONE )	
-	LinkLuaModifier("modifier_no_pvp", "modifier/modifier_no_pvp.lua", LUA_MODIFIER_MOTION_NONE )	
 
 	-- Runes modifiers
 	LinkLuaModifier("modifier_imba_double_damage_rune", "modifier/runes/modifier_imba_double_damage_rune.lua", LUA_MODIFIER_MOTION_NONE)
@@ -67,16 +61,6 @@ DebugPrint("[IMBA] Performing pre-load precache")
 	LinkLuaModifier("modifier_imba_arcane_curse_debuff", "modifier/modifier_imba_arcane_curse_debuff.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_silencer_int_steal", "modifier/modifier_imba_silencer_int_steal.lua", LUA_MODIFIER_MOTION_NONE )
 
-	-- Items
---	if GetMapName() == "imba_diretide" then
---		print("Precaching Diretide particles...")
-		PrecacheResource("particle", "particles/hw_fx/hw_candy_drop.vpcf", context)
-		PrecacheResource("particle", "particles/hw_fx/candy_carrying_overhead.vpcf", context)
-		PrecacheResource("particle", "particles/units/heroes/hero_invoker/invoker_deafening_blast.vpcf", context) -- Apocalypse
-		PrecacheUnitByNameSync("npc_dota_hero_invoker", context) -- Apocalypse
-		PrecacheUnitByNameSync("npc_dota_hero_tiny", context) -- Toss
---	end
-
 	PrecacheResource("particle", "particles/econ/items/effigies/status_fx_effigies/gold_effigy_ambient_dire_lvl2.vpcf", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_ember_spirit.vsndevts", context)
@@ -84,10 +68,13 @@ DebugPrint("[IMBA] Performing pre-load precache")
 	PrecacheResource("soundfile", "soundevents/imba_item_soundevents.vsndevts", context)
 
 	-- Ghost Revenant
+	PrecacheResource("particle", "particles/econ/items/windrunner/windrunner_cape_cascade/windrunner_windrun_slow_cascade.vpcf", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts", context)
+	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_visage.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts", context)
 
 	-- Hell Empress
+	PrecacheResource("particle", "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_ambient.vpcf", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes_custom/game_sounds_hell_empress.vsndevts", context)
 
 	-- Roshan

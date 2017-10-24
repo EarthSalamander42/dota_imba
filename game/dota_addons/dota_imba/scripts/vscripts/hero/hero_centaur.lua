@@ -226,7 +226,7 @@ function imba_centaur_hoof_stomp:OnSpellStart()
 				local arena_center = caster:GetAbsOrigin()
 				for _,enemy in pairs(enemies) do					
 					modifier = enemy:FindModifierByName(modifier_arena_debuff)
-					if modifier and enemy:GetUnitName() ~= "npc_dota_diretide_easter_egg" then						
+					if modifier then						
 						modifier.arena_center = arena_center
 					end
 				end
