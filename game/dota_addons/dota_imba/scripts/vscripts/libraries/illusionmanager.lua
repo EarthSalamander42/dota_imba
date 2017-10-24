@@ -170,11 +170,12 @@ function IllusionManager:CreateIllusion(tEntity,tSkill,vSpawnLocation,tIllusionB
 		return tIllusion -- this will returns execution with a 'completed' unit, should be ready to receive commands now
 	end																																				 -- xxxxxxxxxxxxxxxxxxxxxxxxxx
 	local illusion = CreateUnitByNameAsync(illusion_name, vSpawnLocation, true, tEntity, nil, tEntity:GetTeamNumber(),illucallback) -- Use an async operation to allow the game to perform other ops while we're waiting for this
-	for int, unit in pairs(HeroSelection.heroes_custom) do
-		if unit == illusion_name then
-			CustomHeroAttachments(illusion_name, true)
-		end
-	end
+	-- TODO: Seems obvious, no?
+--	for int, unit in pairs(HeroSelection.heroes_custom) do
+--		if unit == illusion_name then
+--			CustomHeroAttachments(illusion_name)
+--		end
+--	end
 	-- We are still requesting illusions but no available ones exist! do the really shitty createbyname func to lag the fuck out of everyone for no reason!
 end	
 
