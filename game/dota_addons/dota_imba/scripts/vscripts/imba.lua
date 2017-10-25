@@ -327,20 +327,6 @@ function GameMode:ModifierFilter( keys )
 			end
 		end
 
-		-- Diretide Roshan
-		if modifier_owner:GetUnitLabel() == "npc_diretide_roshan" then
-
-			-- Ignore stuns
-			if modifier_name == "modifier_stunned" then
-				return false
-			end
-
-			-- Halve the duration of everything else
-			if modifier_caster ~= modifier_owner and keys.duration > 0 then
-				keys.duration = keys.duration * 0.5
-			end
-		end
-
 	-------------------------------------------------------------------------------------------------
 	-- Tenacity debuff duration reduction
 	-------------------------------------------------------------------------------------------------
@@ -1529,35 +1515,12 @@ function GameMode:InitGameMode()
 	Convars:RegisterCommand("imba_test", Dynamic_Wrap(GameMode, 'StartImbaTest'), "Spawns several units to help with testing", FCVAR_CHEAT)
 	Convars:RegisterCommand("particle_table_print", PrintParticleTable, "Prints a huge table of all used particles", FCVAR_CHEAT)	
 	Convars:RegisterCommand("test_picking_screen", InitPickScreen, "schnizzle", FCVAR_CHEAT)
-	Convars:RegisterCommand("hall_of_fame", HoF, "WOAW!", FCVAR_CHEAT)
 
 	CustomGameEventManager:RegisterListener("remove_units", Dynamic_Wrap(GameMode, "RemoveUnits"))
 
 	-- Panorama event stuff
 	initScoreBoardEvents()
 	InitPlayerHeroImbaTalents();
-end
-
-function HoF()
-local ents = Entities:FindAllByName("lane_*")
-local jungles = Entities:FindAllByName("jungle_*")
-local units = FindUnitsInRadius(1, Vector(0,0,0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
-
-	for _, ent in pairs(ents) do
-		ent:RemoveSelf()
-	end
-	for _, ent in pairs(jungles) do
-		ent:RemoveSelf()
-	end
-	for _, unit in pairs(units) do
-		if not unit:GetUnitLabel() == "npc_diretide_roshan" and unit:IsCreep() then
-			unit:RemoveSelf()						
-		end
-	end
-
---	PHASE = 4
-	COUNT_DOWN = 0
-	CustomGameEventManager:Send_ServerToAllClients("hall_of_fame", {})
 end
 
 function InitPickScreen()
@@ -1767,23 +1730,6 @@ local count = 0
 		end
 --	end
 	Notifications:TopToAll({text="Critical lags! All creeps have been removed: "..count, duration=10.0})
-end
-
-function GameMode:ThinkLootExpire()
-	if self.flItemExpireTime <= 0.0 then
-		return
-	end
-
-	local flCutoffTime = GameRules:GetGameTime() - self.flItemExpireTime
-
-	for _,item in pairs( Entities:FindAllByClassname( "dota_item_drop" ) ) do
-		if Entities:FindByName(nil, "item_diretide_candy") then
-			local containedItem = item:GetContainedItem()
-			if containedItem then
-				self:ProcessItemForLootExpire( item, flCutoffTime )
-			end
-		end
-	end
 end
 
 function GameMode:ProcessItemForLootExpire( item, flCutoffTime )

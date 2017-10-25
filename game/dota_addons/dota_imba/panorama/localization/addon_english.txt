@@ -585,6 +585,24 @@
 	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_8_title"				"Spread the Suffering"
 	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_8_Description"			"Allows your abilities to apply Shadow Strike to all enemies hit by them.<br><br><i>Many say the Queen of Pain's voice is 'like daggers'. Little do they know, at the peak of her power, it is literally as deadly as </i>poisoned<i> daggers.</i>"
 
+	// Riki
+	"DOTA_Tooltip_Talent_special_bonus_imba_riki_1_title"						"Smoke in your Eyes"
+	"DOTA_Tooltip_Talent_special_bonus_imba_riki_1_Description"					"Riki creates a Smokescreen for 1 second whenever he bounces onto a target with Blink Strike.<br><br><i>A stealthy art of assassination is to first blind everyone around, then aim for the target.</i>"
+	"DOTA_Tooltip_Talent_special_bonus_imba_riki_2_title"						"Martyr's Mark"
+	"DOTA_Tooltip_Talent_special_bonus_imba_riki_2_Description"					"Tricks of the Trade applies a stack of Martyr's Mark on its target hit by Martyr Strikes. Each stack of Martyr's Mark increases the probability of Martyr Strikes striking on the target by 20%. <br><br><i>Rikimaru never let go of his targets. He leaves them a mark and comes for them after. </i>"
+	"DOTA_Tooltip_Talent_special_bonus_imba_riki_3_title"						"Fangs Out!"
+	"DOTA_Tooltip_Talent_special_bonus_imba_riki_3_Description"					"Cloak and Dagger can be activated to double Backstab's Agility Multiplier, in trading his invisibility over the duration. The bonus does not apply to Tricks of the Trade. <br><br><i>In messy situations, Riki channels upon his daggers in risk of unsheathing himself, disposing his enemies at a much rapid pace.</i>"
+	"DOTA_Tooltip_Talent_special_bonus_imba_riki_4_title"						"Sidestab"
+	"DOTA_Tooltip_Talent_special_bonus_imba_riki_4_Description"					"Riki can trigger Sidestab, but with reduced agility multiplier bonuses from Backstab. <br><br><i>You'll need to know all your enemies' weak spots if you want to have an advantage over them.</i>"
+	"DOTA_Tooltip_Talent_special_bonus_imba_riki_5_title"						"Stealth Smoke"
+	"DOTA_Tooltip_Talent_special_bonus_imba_riki_5_Description"					"Smokescreen grants Riki another form of invisibility. This invisibility has a fade time of 1.5 seconds. <br><br><i>Even as a child, Riki's gift of arts in invisibility was an extraordinaire. He further levels his artistry and gain a much stealthier tactic. </i>"
+	"DOTA_Tooltip_Talent_special_bonus_imba_riki_6_title"						"Trading Tricks"
+	"DOTA_Tooltip_Talent_special_bonus_imba_riki_6_Description"					"Ending Tricks of the Trade before the channeling ends reduces its cooldown proportional to the channelling time remaining. The cooldown refunded at minimum is 6 seconds. <br><br><i>An assassin always have something up his sleeve. Riki gathers what is offered on his contracts. </i>"		
+	"DOTA_Tooltip_Talent_special_bonus_imba_riki_7_title"						"Backbreaker"
+	"DOTA_Tooltip_Talent_special_bonus_imba_riki_7_Description"					"4 consecutive Backstab attacks on the same target applies Break on the target for 5 seconds. Resets after 5 seconds or if an attack doesn't apply Backstab. <br><br><i>Consecutively striking the target on its weak spot causes it to become more and more fatigue, exhausting the energy of a strong foe.</i>"
+	"DOTA_Tooltip_Talent_special_bonus_imba_riki_8_title"						"Peek A Boo!"
+	"DOTA_Tooltip_Talent_special_bonus_imba_riki_8_Description"					"Riki's attacks have 20% chance to cast Blink Strike on the target, teleporting behind it and apply all the properties of Blink Strike on the target. <br><br><i>Nothing Personal, Kid.</i>"
+
 	// Silencer
 	"DOTA_Tooltip_Talent_special_bonus_imba_silencer_1_title"                   "Leeching Curse"
 	"DOTA_Tooltip_Talent_special_bonus_imba_silencer_1_Description"             "Arcane Curse now heals its caster for 25% of damage it deals every tick.<br><br><i>Why waste drained energies when you can consume them?</i>"

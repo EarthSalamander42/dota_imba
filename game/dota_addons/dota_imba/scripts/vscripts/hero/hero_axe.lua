@@ -719,7 +719,7 @@ function modifier_imba_counter_helix_passive:OnAttacked(keys)
 
     if keys.target == self:GetParent() then
 
-      if self.caster:PassivesDisabled() then
+      if self.caster:PassivesDisabled() or self.caster:IsHexed() then
         return nil
       end
 

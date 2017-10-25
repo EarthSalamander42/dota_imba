@@ -184,7 +184,7 @@ function imba_crystal_maiden_crystal_nova:OnSpellStart()
 	ParticleManager:SetParticleControl(nova_pfx, 0, target_point)
 	ParticleManager:SetParticleControl(nova_pfx, 1, Vector(nova_radius, nova_slow_duration, nova_radius))
 	ParticleManager:SetParticleControl(nova_pfx, 2, target_point)
-	ParticleManager:ReleaseParticleIndex(nova_pfx)	
+	ParticleManager:ReleaseParticleIndex(nova_pfx)
 	
 	-- Find all enemies that would be in the nova radius
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),

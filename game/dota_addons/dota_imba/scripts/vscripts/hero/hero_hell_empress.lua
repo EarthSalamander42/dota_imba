@@ -419,3 +419,40 @@ function modifier_imba_hurl_through_hell_silence:CheckState()
 
 	return state
 end
+
+-----------------------------------------------------------------------------------------------------------
+-- Ambient Effects
+-----------------------------------------------------------------------------------------------------------
+imba_empress_ambient_effects = imba_empress_ambient_effects or class({})
+
+function imba_empress_ambient_effects:GetIntrinsicModifierName()
+	return "modifier_hell_empress_ambient_effects"
+end
+
+function imba_empress_ambient_effects:IsInnateAbility() return true end
+
+LinkLuaModifier("modifier_hell_empress_ambient_effects", "hero/hero_hell_empress", LUA_MODIFIER_MOTION_NONE)
+
+modifier_hell_empress_ambient_effects = class({})
+
+function modifier_hell_empress_ambient_effects:GetEffectName()
+	return "particles/econ/items/shadow_fiend/sf_fire_arcana/sf_fire_arcana_ambient.vpcf"
+end
+
+function modifier_hell_empress_ambient_effects:OnCreated()
+	if IsServer() then
+		self:GetParent():SetRenderColor(200, 55, 55)
+	end
+end
+
+function modifier_hell_empress_ambient_effects:GetAttributes()
+	return MODIFIER_ATTRIBUTE_PERMANENT
+end
+
+function modifier_hell_empress_ambient_effects:IsHidden()
+	return true
+end
+
+function modifier_hell_empress_ambient_effects:GetEffectAttachType()
+	return PATTACH_POINT_FOLLOW
+end

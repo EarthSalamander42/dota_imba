@@ -37,17 +37,15 @@ function HeroSelection:HeroListPreLoad()
 				table.insert(HeroSelection.disabled_10v10_heroes, hero)
 			elseif GetKeyValueByHeroName(hero, "IsDisabled") == 2 then
 				table.insert(HeroSelection.disabled_heroes, hero)
-			else
-				table.insert(HeroSelection.imba_heroes, hero)
 			end
+			table.insert(HeroSelection.imba_heroes, hero)
 		else
 			if GetKeyValueByHeroName(hero, "IsDisabled") == 1 then
 				table.insert(HeroSelection.disabled_10v10_heroes, hero)
 			elseif GetKeyValueByHeroName(hero, "IsDisabled") == 2 then
 				table.insert(HeroSelection.disabled_heroes, hero)
-			else
-				table.insert(HeroSelection.vanilla_heroes, hero)
 			end
+			table.insert(HeroSelection.vanilla_heroes, hero)
 		end
 
 		if GetKeyValueByHeroName(hero, "IsCustom") == 1 then
@@ -72,6 +70,7 @@ function HeroSelection:AddCustomHeroToList(hero_name)
 	elseif GetKeyValueByHeroName(hero_name, "AttributePrimary") == "DOTA_ATTRIBUTE_INTELLECT" then
 		table.insert(HeroSelection.intellect_heroes_custom, hero_name)
 	end
+	table.insert(HeroSelection.heroes_custom, hero_name)
 
 	a = {}
 	for k, n in pairs(HeroSelection.strength_heroes_custom) do
@@ -585,7 +584,7 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		-- If a custom hero has been choosed
 		for int, unit in pairs(HeroSelection.heroes_custom) do
 			if unit == hero_name then
-				CustomHeroAttachments(hero, false)
+				CustomHeroAttachments(hero)
 			end
 		end
 

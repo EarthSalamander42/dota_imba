@@ -35,7 +35,7 @@ modifier_ghost_revenant_wraith = class({})
 function modifier_ghost_revenant_wraith:OnRefresh() 
 	if IsServer() then
 		self:OnDestroy()
-	end  
+	end
 end
 
 function modifier_ghost_revenant_wraith:IsHidden() return false end
@@ -216,12 +216,19 @@ local aoe = self:GetSpecialValueFor("area_of_effect")
 local duration = self:GetSpecialValueFor("duration")
 
 	caster:EmitSound("DOTA_Item.DustOfAppearance.Activate")
-	local particle = ParticleManager:CreateParticle("particles/hero/ghost_revenant/miasma.vpcf", PATTACH_ABSORIGIN_FOLLOW, nil)
-	ParticleManager:SetParticleControl(particle, 0, target)
---	ParticleManager:SetParticleControl(particle, 2, target)
---	ParticleManager:SetParticleControl(particle, 4, target)
 
-	local targets = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, aoe, DOTA_UNIT_TARGET_TEAM_ENEMY , DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO , DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER , false)
+	-- Creates flying vision area
+	self:CreateVisibilityNode(target, aoe, duration)
+
+	local miasma_pfx = ParticleManager:CreateParticle("particles/hero/ghost_revenant/miasma.vpcf", PATTACH_CUSTOMORIGIN, nil)	
+	ParticleManager:SetParticleControl(miasma_pfx, 0, target)
+	ParticleManager:SetParticleControl(miasma_pfx, 2, Vector(aoe, aoe, aoe))
+
+	Timers:CreateTimer(duration, function()
+		ParticleManager:ReleaseParticleIndex(miasma_pfx)
+	end)
+
+	local targets = FindUnitsInRadius(caster:GetTeamNumber(), target, nil, aoe, DOTA_UNIT_TARGET_TEAM_ENEMY , DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO , DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER , false)
 	for _,unit in pairs(targets) do
 		unit:AddNewModifier(caster, self, "modifier_ghost_revenant_miasma", {duration = duration})
 	end
@@ -337,57 +344,220 @@ end
 -- Ghost Immolation
 -----------------------------------------------------------------------------------------------------------
 ghost_revenant_ghost_immolation = ghost_revenant_ghost_immolation or class({})
-LinkLuaModifier("modifier_ghost_revenant_ambient", "hero/hero_ghost_revenant", LUA_MODIFIER_MOTION_NONE)
 
 function ghost_revenant_ghost_immolation:GetAbilityTextureName()
    return "custom/ghost_revenant_ghost_immolation"
 end
 
 function ghost_revenant_ghost_immolation:GetIntrinsicModifierName()
-	return "modifier_ghost_revenant_ambient"
+	return "modifier_ghost_revenant_ghost_immolation"
 end
 
 function ghost_revenant_ghost_immolation:IsInnateAbility() return true end
 
------------------------------------------------------------------------------------------------------------
--- Ghost Immolation modifier
------------------------------------------------------------------------------------------------------------
-modifier_ghost_revenant_ambient = modifier_ghost_revenant_ambient or class({})
+function ghost_revenant_ghost_immolation:GetCastRange( location , target)
+	return self:GetSpecialValueFor("radius")
+end
 
-function modifier_ghost_revenant_ambient:DeclareFunctions()	
+LinkLuaModifier("modifier_ghost_revenant_ghost_immolation", "hero/hero_ghost_revenant", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_ghost_revenant_ghost_immolation_debuff", "hero/hero_ghost_revenant", LUA_MODIFIER_MOTION_NONE)
+
+modifier_ghost_revenant_ghost_immolation = class({})
+
+function modifier_ghost_revenant_ghost_immolation:GetEffectName()
+	return "particles/hero/ghost_revenant/ambient_effects.vpcf"
+end
+
+function modifier_ghost_revenant_ghost_immolation:GetStatusEffectName()
+	return "particles/status_fx/status_effect_ghost_revenant.vpcf"
+end
+
+function modifier_ghost_revenant_ghost_immolation:StatusEffectPriority()
+	return 15
+end
+
+function modifier_ghost_revenant_ghost_immolation:OnCreated()
+	if IsServer() then
+		self:GetParent():SetRenderColor(128, 255, 0)
+	end
+end
+
+function modifier_ghost_revenant_ghost_immolation:OnRefresh()
+	if IsServer() then
+		self:OnCreated()
+	end
+end
+
+function modifier_ghost_revenant_ghost_immolation:GetAuraEntityReject(target)
+	return false
+end
+
+function modifier_ghost_revenant_ghost_immolation:GetAuraRadius()
+	return self:GetAbility():GetSpecialValueFor("radius")
+end
+
+function modifier_ghost_revenant_ghost_immolation:GetAuraSearchFlags()
+	return DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS
+end
+
+function modifier_ghost_revenant_ghost_immolation:GetAuraSearchTeam()
+	return DOTA_UNIT_TARGET_TEAM_ENEMY
+end
+
+function modifier_ghost_revenant_ghost_immolation:GetAuraSearchType()
+	return DOTA_UNIT_TARGET_HERO
+end
+
+function modifier_ghost_revenant_ghost_immolation:GetAuraDuration()
+	return -1
+end
+
+function modifier_ghost_revenant_ghost_immolation:IsAura()
+	if self:GetCaster():PassivesDisabled() then
+		return false
+	end
+	return true
+end
+
+function modifier_ghost_revenant_ghost_immolation:GetAttributes()
+	return MODIFIER_ATTRIBUTE_PERMANENT
+end
+
+function modifier_ghost_revenant_ghost_immolation:IsHidden()
+	return true
+end
+
+function modifier_ghost_revenant_ghost_immolation:GetEffectAttachType()
+	return PATTACH_POINT_FOLLOW
+end
+
+function modifier_ghost_revenant_ghost_immolation:GetModifierAura()
+	return "modifier_ghost_revenant_ghost_immolation_debuff"
+end
+
+modifier_ghost_revenant_ghost_immolation_debuff = modifier_ghost_revenant_ghost_immolation_debuff or class({})
+function modifier_ghost_revenant_ghost_immolation_debuff:IsHidden()
+	return false
+end
+
+function modifier_ghost_revenant_ghost_immolation_debuff:IsDebuff()
+	return true
+end
+
+function modifier_ghost_revenant_ghost_immolation_debuff:IsPurgable()
+	return false
+end
+
+function modifier_ghost_revenant_ghost_immolation_debuff:OnCreated()
+	if IsServer() then
+		self.interval_time = self:GetAbility():GetTalentSpecialValueFor("tick_time") -- must be int
+		self.hp_loss_pct = self:GetAbility():GetTalentSpecialValueFor("hp_loss_pct")
+		self:StartIntervalThink(self.interval_time)
+		self.lose_hp = false
+	end
+end
+
+function modifier_ghost_revenant_ghost_immolation_debuff:OnIntervalThink()
+	if IsServer() then
+		local ghost_revenant = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self:GetAbility():GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_FRIENDLY , DOTA_UNIT_TARGET_HERO , DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER , false)
+
+		self.lose_hp = false
+		for _, ghost in pairs(ghost_revenant) do
+			if ghost:GetUnitName() == self:GetCaster():GetUnitName() then
+				self.lose_hp = true
+			end
+		end
+
+		if self.lose_hp == true then
+			self:SetStackCount(self:GetStackCount() + self.interval_time)
+		else
+			self:SetStackCount(self:GetStackCount() - self.interval_time)
+		end
+
+		-- Re-calculate health stats
+		self:GetParent():CalculateStatBonus() -- spam a lot of errors, but works fine, lul?
+
+		if self:GetStackCount() <= 0 then
+			self:GetParent():RemoveModifierByName("modifier_ghost_revenant_ghost_immolation_debuff")
+		end
+	end
+end
+
+function modifier_ghost_revenant_ghost_immolation_debuff:DeclareFunctions()
+	local decFuncs = {MODIFIER_PROPERTY_EXTRA_HEALTH_PERCENTAGE}
+
+	return decFuncs
+end
+
+function modifier_ghost_revenant_ghost_immolation_debuff:GetModifierExtraHealthPercentage()
+	if IsServer() then
+		local hp_to_reduce = self.hp_loss_pct * 0.01 * self:GetStackCount() * (-1)
+		-- Make sure you don't go over 100%
+		if hp_to_reduce < -0.99 then
+			return -0.99
+		end
+
+		return hp_to_reduce
+	end
+end
+
+-----------------------------------------------------------------------------------------------------------
+--	Exhaustion
+-----------------------------------------------------------------------------------------------------------
+LinkLuaModifier( "modifier_ghost_revenant_exhaustion", "hero/hero_ghost_revenant.lua", LUA_MODIFIER_MOTION_NONE )
+if ghost_revenant_exhaustion == nil then ghost_revenant_exhaustion = class({}) end
+
+function ghost_revenant_exhaustion:GetAbilityTextureName()
+   return "custom/ghost_revenant_exhaustion"
+end
+
+function ghost_revenant_exhaustion:OnAbilityPhaseStart()
+	EmitSoundOn("Hero_Warlock.RainOfChaos_buildup", self:GetCaster())
+	return true
+end
+
+function ghost_revenant_exhaustion:OnSpellStart()
+local duration = self:GetSpecialValueFor("duration")
+
+	self:GetCaster():EmitSound("DOTA_Item.DustOfAppearance.Activate")
+
+	local targets = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), Vector(0, 0, 0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY , DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO , DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER , false)
+	for _,unit in pairs(targets) do
+		unit:AddNewModifier(self:GetCaster(), self, "modifier_ghost_revenant_exhaustion", {duration = duration})
+	end
+end
+
+if modifier_ghost_revenant_exhaustion == nil then modifier_ghost_revenant_exhaustion = class({}) end
+function modifier_ghost_revenant_exhaustion:IsDebuff() return true end
+function modifier_ghost_revenant_exhaustion:IsHidden() return false end
+function modifier_ghost_revenant_exhaustion:IsPurgable() return true end
+
+function modifier_ghost_revenant_exhaustion:DeclareFunctions()	
 	local decFuncs = {
-		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 	}
 	return decFuncs	
 end
 
-function modifier_ghost_revenant_ambient:OnCreated()
+function modifier_ghost_revenant_exhaustion:OnCreated()
 	if IsServer() then
-		self:GetParent():SetRenderColor(128, 255, 0)
-		self:StartIntervalThink(1.0)
+		self.ms_reduction_pct = self:GetAbility():GetSpecialValueFor("ms_reduction_pct")
+		EmitSoundOn("Hero_Visage.GraveChill.Target", self:GetCaster())
 	end
 end
 
-function modifier_ghost_revenant_ambient:OnIntervalThink()
-	if IsServer() then
-		if self:GetCaster():PassivesDisabled() then return nil end
-	end
+function modifier_ghost_revenant_exhaustion:GetEffectName()
+	return "particles/econ/items/windrunner/windrunner_cape_cascade/windrunner_windrun_slow_cascade.vpcf"
+end
+	
+function modifier_ghost_revenant_exhaustion:GetEffectAttachType()
+	return PATTACH_OVERHEAD_FOLLOW
 end
 
-function modifier_ghost_revenant_ambient:GetModifierAttackRangeBonus()
-	return -300
+function modifier_ghost_revenant_exhaustion:GetPriority()
+	return MODIFIER_PRIORITY_SUPER_ULTRA
 end
 
-function modifier_ghost_revenant_ambient:GetEffectName()
-	return "particles/hero/ghost_revenant/ambient_effects.vpcf"
+function modifier_ghost_revenant_exhaustion:GetModifierMoveSpeedBonus_Percentage()	
+	return self.ms_reduction_pct
 end
-
-function modifier_ghost_revenant_ambient:GetStatusEffectName()
-	return "particles/status_fx/status_effect_ghost_revenant.vpcf"
-end
-
-function modifier_ghost_revenant_ambient:StatusEffectPriority() return 15 end
-function modifier_ghost_revenant_ambient:IsDebuff() return false end
-function modifier_ghost_revenant_ambient:IsPurgable() return false end
-function modifier_ghost_revenant_ambient:IsHidden() return false end
-function modifier_ghost_revenant_ambient:RemoveOnDeath() return false end

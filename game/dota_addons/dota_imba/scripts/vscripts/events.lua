@@ -143,31 +143,6 @@ DebugPrintTable(keys)
 --			return 1.0
 --		end)
 
-		-- Eanble bots and fill empty slots
---		if IsInToolsMode() and IsServer() and 10 - PlayerResource:GetPlayerCount() > 0 then
---			local max_players = 10
---			if GetMapName() == "imba_10v10" or GetMapName() == "imba_12v12" or GetMapName() == "imba_custom_10v10" then
---				max_players = 20
---			end
---			print("Adding bots in empty slots")
---			for i = 1, 4 do
---				Tutorial:AddBot(normal_heroes[RandomInt(1, #normal_heroes)], "", "", true)
---			end
---			for i = 1, 5 do
---				Tutorial:AddBot(normal_heroes[RandomInt(1, #normal_heroes)], "", "", false)
---			end
---			GameRules:GetGameModeEntity():SetBotThinkingEnabled(true)
---			SendToServerConsole("dota_bot_set_difficulty 4")
---			SendToServerConsole("dota_bot_populate")
---		end
-
-		if GetMapName() == "imba_arena" then
-			print("NO ROSH!")
-		else
-			local roshan_easter_egg = Entities:FindByName(nil, "easter_egg_diretide"):GetAbsOrigin()
-			ROSHAN_ENT = CreateUnitByName("npc_diretide_roshan", roshan_easter_egg, true, nil, nil, DOTA_TEAM_NEUTRALS)
-		end
-
 		-- Shows various info to devs in pub-game to find lag issues
 		ImbaNetGraph(10.0)
 
@@ -180,8 +155,6 @@ DebugPrintTable(keys)
 					end
 				end
 			end
-
-			GameMode:ThinkLootExpire()
 			return 1.0
 		end)
 	end
@@ -198,10 +171,6 @@ DebugPrintTable(keys)
 				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph", {})
 --				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
 			end
-		end
-
-		if GetMapName() == "imba_diretide" or DIRETIDE_COMMAND == true then
-			Diretide()
 		end
 
 		Timers:CreateTimer(60, function()
@@ -228,47 +197,6 @@ local normal_xp = npc:GetDeathXP()
 	if npc then
 		if GetMapName() == "imba_10v10" or GetMapName() == "imba_custom_10v10" then
 			npc:SetDeathXP(normal_xp)
-		elseif GetMapName() == "imba_diretide" then
-			if npc:GetUnitName() == "npc_dota_creep_goodguys_melee" then
-				npc:SetModel("models/creeps/lane_creeps/creep_radiant_melee_diretide/creep_radiant_melee_diretide.vmdl")
-				npc:SetOriginalModel("models/creeps/lane_creeps/creep_radiant_melee_diretide/creep_radiant_melee_diretide.vmdl")
-			elseif npc:GetUnitName() == "npc_dota_creep_goodguys_ranged" then
-				npc:SetModel("models/creeps/lane_creeps/creep_radiant_ranged_diretide/creep_radiant_ranged_diretide.vmdl")
-				npc:SetOriginalModel("models/creeps/lane_creeps/creep_radiant_ranged_diretide/creep_radiant_ranged_diretide.vmdl")
-			elseif npc:GetUnitName() == "npc_dota_creep_badguys_melee" then
-				npc:SetModel("models/creeps/lane_creeps/creep_bad_melee_diretide/creep_bad_melee_diretide.vmdl")
-				npc:SetOriginalModel("models/creeps/lane_creeps/creep_bad_melee_diretide/creep_bad_melee_diretide.vmdl")
-			elseif npc:GetUnitName() == "npc_dota_creep_badguys_ranged" then
-				npc:SetModel("models/creeps/lane_creeps/creep_bad_ranged_diretide/creep_bad_ranged_diretide.vmdl")
-				npc:SetOriginalModel("models/creeps/lane_creeps/creep_bad_ranged_diretide/creep_bad_ranged_diretide.vmdl")
-			elseif npc:GetUnitName() == "npc_dota_goodguys_siege" then
-				npc:SetModel("models/creeps/baby_rosh_halloween/baby_rosh_radiant/baby_rosh_radiant.vmdl")
-				npc:SetOriginalModel("models/creeps/baby_rosh_halloween/baby_rosh_radiant/baby_rosh_radiant.vmdl")
-				npc:SetModelScale(1.5)
-				npc:SetBaseDamageMin(100)
-				npc:SetBaseDamageMax(125)
-				npc:SetPhysicalArmorBaseValue(5)
-				npc:SetBaseMagicalResistanceValue(33)
-				npc:SetAttackCapability(DOTA_UNIT_CAP_MELEE_ATTACK)
-				npc:SetBaseAttackTime(1.0)
-				npc:SetMaxHealth(3000)
-				npc:SetHealth(3000)
-				npc:SetMana(1000)
-			elseif npc:GetUnitName() == "npc_dota_badguys_siege" then
-				npc:SetModel("models/creeps/baby_rosh_halloween/baby_rosh_dire/baby_rosh_dire.vmdl")
-				npc:SetOriginalModel("models/creeps/baby_rosh_halloween/baby_rosh_dire/baby_rosh_dire.vmdl")
-				npc:SetModelScale(1.5)
-				npc:SetBaseDamageMin(100)
-				npc:SetBaseDamageMax(125)
-				npc:SetPhysicalArmorBaseValue(5)
-				npc:SetBaseMagicalResistanceValue(33)
-				npc:SetAttackCapability(DOTA_UNIT_CAP_MELEE_ATTACK)
-				npc:SetBaseAttackTime(1.0)
-				npc:SetMaxHealth(3000)
-				npc:SetHealth(3000)
-				npc:SetMana(1000)
-			end
-			npc:SetDeathXP(normal_xp*1.5)
 		else
 			npc:SetDeathXP(normal_xp*1.5)
 		end
@@ -334,8 +262,9 @@ local normal_xp = npc:GetDeathXP()
 			end
 		end
 
-		-- fix for killed with candies in inventory
-		if GetMapName() == "imba_diretide" or DIRETIDE_COMMAND == true then
+		-- fix for killed with Ghost Revenant immolation
+		if npc:HasModifier("modifier_ghost_revenant_ghost_immolation_debuff") then
+			npc:RemoveModifierByName("modifier_ghost_revenant_ghost_immolation_debuff")
 			Timers:CreateTimer(0.2, function()
 				npc:SetHealth(100000)
 			end)
@@ -672,21 +601,21 @@ function GameMode:OnPlayerLevelUp(keys)
 		end
 	end
 
-	local special_talent = 0
-	if hero_level == 34 then
-		for i = 1, 24 do
-			local ability_key = hero:GetKeyValue("Ability"..i)
-			if ability_key and string.find(ability_key, "special_bonus_unique_*") then
-				special_talent = special_talent +1
-				print(special_talent)
-			end
-		end
+--	local special_talent = 0
+--	if hero_level == 34 then
+--		for i = 1, 24 do
+--			local ability_key = hero:GetKeyValue("Ability"..i)
+--			if ability_key and string.find(ability_key, "special_bonus_unique_*") then
+--				special_talent = special_talent +1
+--				print(special_talent)
+--			end
+--		end
 
-		if special_talent < 2 then
-			print("Removing an ability point")
-			hero:SetAbilityPoints(hero:GetAbilityPoints() - 1)
-		end
-	end
+--		if special_talent < 2 then
+--			print("Removing an ability point")
+--			hero:SetAbilityPoints(hero:GetAbilityPoints() - 1)
+--		end
+--	end
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Hero experience bounty adjustment
@@ -776,7 +705,7 @@ function GameMode:OnTeamKillCredit(keys)
 	-- IMBA: Comeback gold logic
 	-------------------------------------------------------------------------------------------------
 
-	UpdateComebackBonus(1, killer_team)
+--	UpdateComebackBonus(1, killer_team)
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Arena mode scoreboard updater
@@ -972,6 +901,9 @@ function GameMode:OnEntityKilled( keys )
 			if killed_unit:GetUnitName() == "npc_dota_hero_meepo" then
 				KillMeepos()
 			else
+				if respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[25] then
+					respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[25]
+				end
 				killed_unit:SetTimeUntilRespawn(respawn_time)
 			end
 		end
@@ -1011,47 +943,6 @@ function GameMode:OnEntityKilled( keys )
 			-- Update buyback cost
 			PlayerResource:SetCustomBuybackCost(player_id, buyback_cost)
 			PlayerResource:SetCustomBuybackCooldown(player_id, buyback_cooldown)
-		end
-
-		if killed_unit:HasItemInInventory("item_diretide_candy") then
-			for i = 0, 8 do
-				if killed_unit:GetItemInSlot(i) and killed_unit:GetItemInSlot(i):GetName() == "item_diretide_candy" then
-					local stack_count = killed_unit:GetItemInSlot(i):GetCurrentCharges()
-					for v = 0, stack_count do
-						local item = CreateItem("item_diretide_candy", nil, nil)
-						local pos = killed_unit:GetAbsOrigin()
-						local drop = CreateItemOnPositionSync( pos, item )
-						item:LaunchLoot(false, 300, 0.5, pos + RandomVector(200))
-						killed_unit:RemoveItem(killed_unit:GetItemInSlot(i))
-					end
-				end
-			end
-		end
-
-		if GetMapName() == "imba_diretide" then
-			if killed_unit:GetTeamNumber() == 4 then
-				if killed_unit:GetUnitLabel() == "npc_diretide_roshan" then return end
-				local chance = RandomInt(1, 100)
-				if chance > 50 then -- 49% chance
-					local item = CreateItem("item_diretide_candy", nil, nil)
-					local pos = killed_unit:GetAbsOrigin()
-					local drop = CreateItemOnPositionSync(pos, item)
-					item:LaunchLoot(false, 300, 0.5, pos + RandomVector(200))
-				end
-			elseif string.find(killed_unit:GetUnitName(), "dota_creep") then
-				local chance = RandomInt(1, 100)
-				if chance > 90 then -- 10% chance
-					local item = CreateItem("item_diretide_candy", nil, nil)
-					local pos = killed_unit:GetAbsOrigin()
-					local drop = CreateItemOnPositionSync(pos, item)
-					item:LaunchLoot(false, 300, 0.5, pos + RandomVector(200))
-				end
-			elseif killed_unit:GetUnitName() == "npc_dota_goodguys_siege" or killed_unit:GetUnitName() == "npc_dota_badguys_siege" then
-				local item = CreateItem("item_diretide_candy", nil, nil)
-				local pos = killed_unit:GetAbsOrigin()
-				local drop = CreateItemOnPositionSync( pos, item )
-				item:LaunchLoot(false, 300, 0.5, pos + RandomVector(200))
-			end
 		end
 	end
 end
@@ -1131,15 +1022,6 @@ function GameMode:OnConnectFull(keys)
 				else
 					print("Running Dire picks...")
 					CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.direPicks, PlayerPicks = HeroSelection.playerPicks, pickState = pick_state, repickState = repick_state})
-				end
-
-				if GetMapName() == "imba_diretide" or DIRETIDE_COMMAND == true then
-					if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-						print("Diretde HUD show again")
-						CustomGameEventManager:Send_ServerToAllClients("diretide_player_reconnected", {PlayerID = player_id, Phase = DIRETIDE_PHASE, pickState = pick_state})
-					else
-						print("Game didn't started, no need to show the HUD yet.")
-					end
 				end
 			else
 				return 0.1
@@ -1230,8 +1112,8 @@ function GameMode:OnTowerKill(keys)
 	-- IMBA: Update comeback gold logic
 	-------------------------------------------------------------------------------------------------
 
-	local team = PlayerResource:GetTeam(keys.killer_userid)
-	UpdateComebackBonus(2, team)
+--	local team = PlayerResource:GetTeam(keys.killer_userid)
+--	UpdateComebackBonus(2, team)
 end
 
 -- This function is called whenever a player changes there custom team selection during Game Setup 
