@@ -1,0 +1,514 @@
+.MainPanel
+{
+    width: 100%;
+    height: 100%;
+}
+
+.UILabel
+{
+    font-family: Goudy Trajan Medium, FZKai-Z03, TH Sarabun New;
+    font-size: 19px;
+    text-shadow: -1px 1px 2px 2.0 #000000;
+    text-transform: uppercase;
+    color: #CCB966;
+}
+
+#HeroDetails
+{
+    flow-children: right;
+    vertical-align: bottom;
+    horizontal-align: left;
+    margin-bottom: 100px;
+    margin-left: 100px;
+    transition: transform 1.0s linear 0.0ms;
+}
+
+#HeroPortraitContainer
+{
+    opacity: 0.95;
+    width: 160px;
+    height: 160px;
+    overflow:clip;
+    opacity-mask: url('file://{images}/custom_game/portrait_mask.png');
+}
+
+#HeroPortrait
+{
+    margin-top: -20px;
+    width: 180px;
+    height: 240px;
+}
+
+#HeroNameContainer
+{
+    height: 100%;
+}
+
+#HeroNameLabel
+{
+    margin-left: 20px;
+    vertical-align: middle;
+}
+
+#HeroCosmeticAbilities
+{
+    vertical-align: bottom;
+    flow-children: right;
+}
+
+#HeroCosmeticAbilities .AbilityButton
+{
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+}
+
+#HeroCosmeticAbilities .AbilityButton .ShortcutText
+{
+    font-size: 20px;
+    width: 24px;
+    height: 24px;
+    align: center bottom;
+    margin: 4px;
+    background-color: none;
+    color: white;
+}
+
+#HeroCosmeticAbilities .AbilityButton .CooldownText
+{
+    visibility: collapse;
+}
+
+#HeroPanel
+{
+    flow-children: down;
+    horizontal-align: center;
+    vertical-align: bottom;
+    margin-bottom: 100px;
+    transition: transform 1.0s linear 0.0ms;
+}
+
+.BuffPanel
+{
+    flow-children: right;
+    horizontal-align: left;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.HealthPanel
+{
+    flow-children: right;
+    horizontal-align: center;
+    margin-bottom: 20px;
+    width: 600px;
+}
+
+.HealthBar
+{
+    width: fill-parent-flow(1.0);
+    height: 30px;
+    background-color: gradient(linear, 0% 0%, 0% 95%, from(#2eb31c), to(#1f721d));
+    margin: 3px;
+    /*box-shadow: inset #333333 2px 2px 4px 4px;*/
+    box-shadow: black 0px 0px 4px 0px;
+    border: 1px solid #404040;
+    border-radius: 2px;
+    transition-property: background-color, opacity;
+    transition-duration: 0.3s;
+}
+
+#KillLog
+{
+    flow-children: down;
+    vertical-align: bottom;
+    horizontal-align: right;
+    margin-bottom: 50px;
+    margin-right: 100px;
+    width: 200px;
+    height: 300px;
+    transition: transform 1.0s linear 0.0ms;
+    overflow: clip clip;
+}
+
+.KillLogTransform
+{
+    transform: scaleY(-1.0);
+}
+
+.KillLogEntry
+{
+    flow-children: right;
+    width: 100%;
+    height: 52px;
+    margin-bottom: 10px;
+    border-radius: 3px;
+    background-color: #33333366;
+    padding: 10px;
+    transition-property: transform, position;
+    transition-duration: 0.5s;
+    transform: translateX(-400px) scaleY(-1.0);
+}
+
+.KillLogEntryAppear
+{
+    transform: translateX(0px) scaleY(-1.0);
+    sound: "UI.Kill";
+}
+
+.KillLogEntry Image, .KillLogEntry DOTAHeroImage
+{
+    width: fill-parent-flow(1.0);
+}
+
+.AspectRatio5x4 .HealthPanel, .AspectRatio4x3 .HealthPanel
+{
+    width: 480px;
+}
+
+.HealthBarDead
+{
+    background-color: gray;
+    opacity: 0.4;
+}
+
+.AbilityEmote
+{
+    width: 100%;
+    height: 100%;
+    opacity-mask: url('file://{images}/custom_game/emote.png');
+    background-color: gradient(linear, 0% 0%, 0% 100%, from(#44E500), to(#007F0E));
+}
+
+.AbilityTaunt
+{
+    width: 100%;
+    height: 100%;
+    opacity-mask: url('file://{images}/custom_game/taunt.png');
+    background-color: gradient(linear, 0% 0%, 0% 100%, from(#FFD800), to(#DD4A29));
+}
+
+#DebugPanel
+{
+    flow-children: down;
+    horizontal-align: right;
+    vertical-align: top;
+    margin-right: 5px;
+    margin-top: 100px;
+}
+
+#DebugPanel TextEntry
+{
+    width: 160px;
+    height: 30px;
+    background-color: gray;
+    color: white;
+    border: 1px solid black;
+    border-radius: 2px;
+    padding: 4px;
+}
+
+#DebugPanel Button
+{
+    width: 160px;
+    height: 30px;
+    background-color: gray;
+    border: 1px solid black;
+    border-radius: 2px;
+}
+
+#DebugPanel Button Label
+{
+    horizontal-align: center;
+    vertical-align: middle;
+    color: white;
+    text-shadow: 0px 0px 8px 4.0 #333333b0;
+}
+
+#ResultMessage
+{
+    font-family: Goudy Trajan Medium, FZKai-Z03, TH Sarabun New;
+    font-size: 102;
+    horizontal-align: center;
+    vertical-align: middle;
+    text-shadow: -1px 1px 2px 2.0 #000000;
+    color: #CCB966;
+}
+
+#GameChat
+{
+    margin-top: 250px;
+    align: center center;
+    width: 25%;
+    height: 12%;
+    flow-children: down;
+}
+
+#GameChatContent
+{
+    width: 100%;
+    height: fill-parent-flow(1.0);
+    flow-children: down;
+    padding: 2px;
+    overflow: squish clip;
+    transform: scaleY(-1.0);
+}
+
+#GameChatEntry
+{
+    width: 100%;
+    height: 32px;
+    margin-top: 2px;
+    background-color: rgba(0, 0, 0, 0.94);
+    font-size: 16px;
+    padding: 6px 3px 5px 8px;
+    color: white;
+    font-weight: bold;
+    font-family: Radiance,FZLanTingHei-R-GBK,TH Sarabun New,YDYGO 540,Gulim,MingLiU;
+    text-overflow: clip;
+    border-radius: 3px;
+}
+
+#GameChatTarget
+{
+    horizontal-align: right;
+    margin-right: 8px;
+    color: #BBBBBB;
+}
+
+.GameChatLine
+{
+    font-family: Radiance,FZLanTingHei-R-GBK,TH Sarabun New,YDYGO 540,Gulim,MingLiU;
+    font-weight: bold;
+    color: white;
+    font-size: 16px;
+    flow-children: right;
+    transition-property: opacity, transform, position;
+    transition-duration: 0.2s;
+    transform: translateX(-100%) scaleY(-1.0);
+}
+
+.GameChatLineAppear
+{
+    transform: translateX(0px) scaleY(-1.0);
+}
+
+.GameChatLineHidden
+{
+    opacity: 0.0;
+}
+
+#GameChat.ChatVisible .GameChatLine
+{
+    opacity: 1.0;
+}
+
+#GameChat:not(:descendantfocus) #GameChatContent
+{
+    margin-bottom: 34px;
+}
+
+.GameChatLine Label
+{
+    vertical-align: center;
+    text-shadow: 0px 0px 4px 2.0 black;
+}
+
+.GameChatLine Label .InlineImage
+{
+    height: 24px;
+}
+
+.GameChatLine Label .InlineImage.ChatWheelIcon
+{
+    width: 20px;
+    height: 16px;
+    margin-top: 3px;
+    margin-bottom: -3px;
+    vertical-align: top;
+}
+
+.GameChatImage
+{
+    height: 24px;
+    width: 24px;
+    margin-right: 4px;
+    vertical-align: center;
+}
+
+#AttackTipContainer
+{
+    flow-children: right;
+    align: center bottom;
+    margin-bottom: 310px;
+}
+
+#AttackTipContainer > Panel
+{
+    width: 32px;
+    height: 32px;
+    margin: 0 8px 0 8px;
+    background-color: none;
+    background-image: url('file://{images}/custom_game/lmb.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    hue-rotation: 130deg;
+    contrast: 1.5;
+}
+
+#AttackTipContainer > Label
+{
+    color: white;
+    vertical-align: center;
+    font-family: Goudy Trajan Medium, FZKai-Z03, TH Sarabun New;
+    font-size: 28px;
+    text-shadow: -1px 1px 4px 2.0 #000000;
+}
+
+@keyframes 'roundTop'
+{
+    0% {
+        transform: translateX(0%) translateY(-100%);
+    }
+
+    30%  {
+        transform: translateX(0%);
+    }
+
+    85%  {
+        transform: translateX(0%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes 'roundBottom'
+{
+    0% {
+        transform: translateX(0%) translateY(100%);
+    }
+
+    30%  {
+        transform: translateX(0%);
+    }
+
+    85%  {
+        transform: translateX(0%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.RoundMessage
+{
+    font-family: Goudy Trajan Medium, FZKai-Z03, TH Sarabun New;
+    font-size: 80;
+    horizontal-align: center;
+    vertical-align: middle;
+    text-shadow: -1px 1px 2px 2.0 #000000;
+    color: white;
+    visibility: collapse;
+}
+
+#RoundMessageTop
+{
+    margin-bottom: 80px;
+}
+
+.RoundMessageTopAnimation
+{
+    visibility: visible;
+    animation-name: roundTop;
+    animation-duration: 3s;
+    animation-timing-function: ease-in;
+}
+
+#RoundMessageBottom
+{
+    margin-top: 80px;
+    color: #CCB966;
+}
+
+.RoundMessageBottomAnimation
+{
+    visibility: visible;
+    animation-name: roundBottom;
+    animation-duration: 3s;
+    animation-timing-function: ease-in;
+}
+
+.HeroMarkerTransition
+{
+    transition: position 0.3s linear 0.0ms;
+}
+
+.HeroMarkerJuggSwordContainer
+{
+    height: 32px;
+    width: 32px;
+}
+
+.HeroMarkerJuggSwordBG
+{
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+    background-color: #01090b;
+}
+
+.HeroMarkerJuggSword
+{
+    height: 32px;
+    width: 32px;
+    opacity-mask: url("file://{images}/custom_game/jugg_sword.png");
+}
+
+.HeroMarkerJuggSword.T1
+{
+    background-color: gradient(linear, 0% 0%, 0% 98%, from(rgb(255, 85, 0)), to(rgb(160, 55, 0)));
+}
+
+.HeroMarkerJuggSword.T2
+{
+    background-color: gradient(linear, 0% 0%, 0% 98%, from(rgb(170, 85, 255)), to(rgb(93, 67, 160)));
+}
+
+.HeroMarkerJuggSword.T3
+{
+    background-color: gradient(linear, 0% 0%, 0% 98%, from(rgb(0, 244, 255)), to(rgb(0, 149, 160)));
+}
+
+.HeroMarkerJuggSword.T4
+{
+    background-color: gradient(linear, 0% 0%, 0% 98%, from(rgb(170, 0, 0)), to(rgb(109, 0, 0)));
+}
+
+.AnimationHeroHudHidden
+{
+    transform: translateY(1000px);
+}
+
+.AnimationHeroDetailsHidden
+{
+    transform: translateX(-1000px);
+}
+
+.AnimationKillLogHidden
+{
+    transform: translateX(1000px);
+}
+
+.AnimationScoreboardHidden
+{
+    transform: translateY(-1000px);
+}
+
+.AnimationTimerHidden
+{
+    transform: translateX(1000px);
+}

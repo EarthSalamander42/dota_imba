@@ -14141,7 +14141,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"50"
+		"AbilityManaCost"				"75"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
@@ -15217,8 +15217,13 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"1"
+				"var_type"					"FIELD_FLOAT"
+				"value"						"1.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"min_interval"				"0.5"
 			}
 		}
 	}
@@ -20008,6 +20013,8 @@
 		"precache"
 		{
 			"particle"					"particles/hero/nevermore/nevermore_shadowraze.vpcf"
+			"particle"					"particles/hero/nevermore/nevermore_shadowraze_talent_pool.vpcf"
+			"particle"					"particles/hero/nevermore/nevermore_shadowraze_talent_pool_2.vpcf"
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
 			"soundfile"					"soundevents/voscripts/game_sounds_vo_nevermore.vsndevts"
 		}
@@ -20109,6 +20116,8 @@
 		"precache"
 		{
 			"particle"					"particles/hero/nevermore/nevermore_shadowraze.vpcf"
+			"particle"					"particles/hero/nevermore/nevermore_shadowraze_talent_pool.vpcf"
+			"particle"					"particles/hero/nevermore/nevermore_shadowraze_talent_pool_2.vpcf"
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
 			"soundfile"					"soundevents/voscripts/game_sounds_vo_nevermore.vsndevts"
 		}
@@ -20222,6 +20231,8 @@
 		"precache"
 		{
 			"particle"					"particles/hero/nevermore/nevermore_shadowraze.vpcf"
+			"particle"					"particles/hero/nevermore/nevermore_shadowraze_talent_pool.vpcf"
+			"particle"					"particles/hero/nevermore/nevermore_shadowraze_talent_pool_2.vpcf"
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
 			"soundfile"					"soundevents/voscripts/game_sounds_vo_nevermore.vsndevts"
 		}
@@ -20343,6 +20354,8 @@
 			"particle"				"particles/units/heroes/hero_nevermore/nevermore_necro_souls.vpcf"
 			"particle"				"particles/hero/nevermore/nevermore_soul_projectile.vpcf"
 			"particle"				"particles/units/heroes/hero_nevermore/nevermore_souls_hero_effect.vpcf"
+			"particle"				"particles/hero/nevermore/nevermore_necromastery_heal_1.vpcf"
+			"particle"				"particles/hero/nevermore/nevermore_necromastery_heal_2.vpcf"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
 			"soundfile"				"soundevents/voscripts/game_sounds_vo_nevermore.vsndevts"
 		}
@@ -20379,14 +20392,12 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"damage_per_soul"				"2"
-				"LinkedSpecialBonus"			"special_bonus_imba_nevermore_8"
 			}
 
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"max_souls"						"18 24 30 36 39 42 45"
-				"LinkedSpecialBonus"			"special_bonus_imba_nevermore_6"
 			}
 
 			"07"
@@ -20455,14 +20466,12 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"armor_reduction"			"3 4 5 6 6 6 6"
-				"LinkedSpecialBonus"		"special_bonus_imba_nevermore_2"
 			}
 
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"raze_armor_reduction"		"1 1 1 1 2 3 4"
-				"LinkedSpecialBonus"		"special_bonus_imba_nevermore_2"
 			}
 
 			"04"
@@ -20550,13 +20559,13 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"harvest_base_cd"			"1"
+				"harvest_base_cd"			"2"
 			}
 
 			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"harvest_line_duration_inc"	"0.2"
+				"harvest_line_duration_inc"	"0.3"
 			}
 
 			"07"
@@ -20596,11 +20605,11 @@
 			}
 		}
 	}
-
+	
 	//=================================================================================================================
 	// Shadow Fiend's Talents
 	//=================================================================================================================
-	"special_bonus_imba_nevermore_1" // Shadowraze mana cost reduction
+	"special_bonus_imba_nevermore_1" // Shadowrazes leave damaging pools
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -20622,12 +20631,28 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"value"	                    "20"
+				"duration"	                    "2"
+			}
+
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"dmg_per_sec"				"50"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"tick_interval"				"0.5"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"250"
 			}
 		}
 	}
 
-	"special_bonus_imba_nevermore_2" // Presence of the Dark Lord Armor reduction increase
+	"special_bonus_imba_nevermore_2" // Necromastery can be activated to heal by consuming souls
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -20637,7 +20662,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_nevermore_dark_lord"
+			"01" 	"imba_nevermore_necromastery"
 		}
 
 		// Special
@@ -20647,18 +20672,18 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"armor_reduction"           "2"
+				"heal_per_soul"             "80"
 			}
 
 			"02"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"raze_armor_reduction"      "1"
+				"cooldown"				    "12"
 			}
 		}
 	}
 
-	"special_bonus_imba_nevermore_3" // Shadowraze cooldown reduction
+	"special_bonus_imba_nevermore_3" // Permanent soul cap increase on hero kills
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -20668,9 +20693,7 @@
 
 		"LinkedAbility"
 		{
-			"01"	"imba_nevermore_shadowraze_close"
-			"02"	"imba_nevermore_shadowraze_medium"
-			"03"	"imba_nevermore_shadowraze_far"
+			"01"	"imba_nevermore_necromastery"
 		}
 
 		// Special
@@ -20680,7 +20703,7 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"value"	                    "3"
+				"value"	                    "1"
 			}
 		}
 	}
@@ -20735,7 +20758,7 @@
 		}
 	}
 
-	"special_bonus_imba_nevermore_6" // Maximum Necromastery soul increase
+	"special_bonus_imba_nevermore_6" // Shadowrazes refresh requiem debuff
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -20745,7 +20768,9 @@
 
 		"LinkedAbility"
 		{
-			"01"	"imba_nevermore_necromastery"
+			"01"	"imba_nevermore_shadowraze_far"
+			"02"	"imba_nevermore_shadowraze_medium"
+			"03"	"imba_nevermore_shadowraze_close"
 		}
 
 		// Special
@@ -20755,7 +20780,7 @@
 			"01"
 			{
 				"var_type"                  "FIELD_FLOAT"
-				"value"	                    "10"
+				"value"	                    "1"
 			}
 		}
 	}
@@ -20785,7 +20810,7 @@
 		}
 	}
 
-	"special_bonus_imba_nevermore_8" // Necromastery soul grant additional damage
+	"special_bonus_imba_nevermore_8" // Soulrazes cast point is halved during soul frenzy
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -20795,7 +20820,9 @@
 
 		"LinkedAbility"
 		{
-			"01"	"imba_nevermore_necromastery"
+			"01"	"imba_nevermore_shadowraze_far"
+			"02"	"imba_nevermore_shadowraze_medium"
+			"03"	"imba_nevermore_shadowraze_close"
 		}
 
 		// Special
@@ -20805,11 +20832,11 @@
 			"01"
 			{
 				"var_type"                  "FIELD_FLOAT"
-				"value"	                    "2"
+				"value"	                    "1"
 			}
 		}
 	}
-
+	
 	//=================================================================================================================
 	// Night Stalker's Stalker in the Night
 	//=================================================================================================================
@@ -26478,7 +26505,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"area_of_effect"			"250 275 300 325 325 325 325"
-				"LinkedSpecialBonus"		"special_bonus_imba_riki_1"
 			}
 
 			"03"
@@ -26565,7 +26591,6 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"duration"				"2.5"
-				"LinkedSpecialBonus"	"special_bonus_imba_riki_4"
 			}
 			"03"
 			{
@@ -26581,7 +26606,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"max_jumps"				"1 2 3 4 4 4 4"
-				"LinkedSpecialBonus"	"special_bonus_imba_riki_3"
 			}
 			"06"
 			{
@@ -26606,7 +26630,7 @@
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"hero/hero_riki.lua"
 		"AbilityTextureName"			"riki_permanent_invisibility"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
@@ -26624,6 +26648,11 @@
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_riki.vsndevts"
 			"particle"					"particles/units/heroes/hero_riki/riki_backstab.vpcf"
 			"particle"					"particles/generic_hero_status/status_invisibility_start.vpcf"
+			"particle"					"particles/hero/riki/blink_trail.vpcf"
+			"particle"					"particles/hero/riki/riki_sucker_punch.vpcf"
+			"particle"					"particles/hero/riki/riki_peek_a_boo_active.vpcf"
+			"particle"					"particles/hero/riki/riki_peek_a_boo_stab.vpcf"
+			"particle"					"particles/hero/riki/riki_backbreaker_slash.vpcf"
 		}
 
 		// Special
@@ -26634,26 +26663,24 @@
 			{
 				"var_type"							"FIELD_INTEGER"
 				"fade_time"							"6 5 4 3 3 3 3"
-				"LinkedSpecialBonus"				"special_bonus_imba_riki_6"
 			}
 
 			"02"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"backstab_angle"					"105"
+				"backstab_angle"					"120"
 			}
 
 			"03"
 			{
 				"var_type"							"FIELD_FLOAT"
 				"agility_damage_multiplier"			"0.5 0.75 1 1.25 1.3 1.35 1.4"
-				"LinkedSpecialBonus"				"special_bonus_imba_riki_5"
 			}
 
 			"04"
 			{
 				"var_type"							"FIELD_FLOAT"
-				"agility_damage_multiplier_smoke"	"0.25 0.4 0.65 0.8 0.85 0.9 0.95"
+				"agility_damage_multiplier_smoke"	"0.25 0.4 0.55 0.7 0.75 0.8 0.85"
 			}
 
 			"05"
@@ -26661,6 +26688,13 @@
 				"var_type"							"FIELD_FLOAT"
 				"invis_break_agility_multiplier"	"2"
 			}
+
+			"06"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"agility_damage_multiplier_side"	"0.25 0.4 0.55 0.7 0.75 0.8 0.85"
+			}
+
 		}
 	}
 
@@ -26705,6 +26739,7 @@
 			"particle"					"particles/units/heroes/hero_riki/riki_tricks_cast.vpcf"
 			"particle"					"particles/units/heroes/hero_riki/riki_tricks_end.vpcf"
 			"particle"					"particles/units/heroes/hero_riki/riki_tricks.vpcf"
+			"particle"					"particles/hero/riki/riki_martyr_dagger_start_pos.vpcf"
 		}
 
 		// Special
@@ -26726,15 +26761,28 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
+				"channel_duration"		"5"
+			}
+			
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
 				"scepter_cast_range"	"1000"
 			}
+			
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"scepter_duration"		"9"
+			}
+			
 		}
 	}
 
 	//=================================================================================================================
 	// Riki's Talents 
 	//=================================================================================================================
-	"special_bonus_imba_riki_1" // Smoke Screen radius increase
+	"special_bonus_imba_riki_1" // Each instance of Blink Strike leaves Smokescreen for 1 second
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -26745,56 +26793,7 @@
 		"LinkedAbility"
 		{
 			"01"        "imba_riki_smoke_screen"
-		}
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"200"
-			}
-		}
-	}
-
-	"special_bonus_imba_riki_2" // Smoke Screen cooldown decrease
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"        "imba_riki_smoke_screen"
-		}
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"value"						"4"
-			}
-		}
-	}
-
-	"special_bonus_imba_riki_3" // Blink Strike jumps increase
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"        "imba_riki_blink_strike"
+			"02"        "imba_riki_blink_strike"
 		}
 		
 		// Special
@@ -26809,82 +26808,7 @@
 		}
 	}
 
-	"special_bonus_imba_riki_4" // Blink Strike debuff (turn rate reduction) duration increase
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"        "imba_riki_blink_strike"
-		}
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"value"						"1.5"
-			}
-		}
-	}
-
-	"special_bonus_imba_riki_5" // Backstab agility multiplier increase
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"        "imba_riki_cloak_and_dagger"
-		}
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"value"						"0.4"
-			}
-		}
-	}
-
-	"special_bonus_imba_riki_6" // Invisibility fade time reduction
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"special_bonus_unique_centaur_2"														
-		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"        "imba_riki_cloak_and_dagger"
-		}
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"value"						"-2"
-			}
-		}
-	}
-
-	"special_bonus_imba_riki_7" // Tricks of the Trade attacks faster
+	"special_bonus_imba_riki_2" // Tricks of the Trade applies Martys Mark on its targets
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -26903,8 +26827,159 @@
 		{
 			"01"
 			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"20"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"duration"					"6"
+			}
+		}
+	}
+
+	"special_bonus_imba_riki_3" // Cloak and Dagger can be activated for Riki to gain bonus multiplier, but loses its invisibility over the duration
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"        "imba_riki_cloak_and_dagger"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
 				"var_type"					"FIELD_FLOAT"
-				"value"						"0.3"
+				"value"						"2"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"duration"					"6"
+			}
+		}
+	}
+
+	"special_bonus_imba_riki_4" // Cloak and Dagger now applies Sidestab for reduced multiplier
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"        "imba_riki_cloak_and_dagger"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"sidestab_angle"			"285"
+			}
+		}
+	}
+
+	"special_bonus_imba_riki_5" // Smokescreen grants Riki a second form of Invisibility.
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"        "imba_riki_cloak_and_dagger"
+			"02"        "imba_riki_smoke_screen"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"1.5"
+			}
+		}
+	}
+
+	"special_bonus_imba_riki_6" // Tricks of the Trade now refunds cooldown proportional to its cast duration. Has a minimum cooldown of 6 seconds.
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"        "imba_riki_tricks_of_the_trade"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"6"
+			}
+		}
+	}
+
+	"special_bonus_imba_riki_7" // 4 successive Backstabs now breaks the target for 5 seconds. Resets when an attack isn't a Backstab.
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"        "imba_riki_cloak_and_dagger"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"4"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"duration"					"5"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"break_duration"			"5"
 			}
 		}
 	}
@@ -26916,6 +26991,12 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"        
+
+		"LinkedAbility"
+		{
+			"01"        "imba_riki_blink_strike"
+			"02"        "imba_riki_cloak_and_dagger"
+		}
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -26925,6 +27006,11 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"value"						"20"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"distance"					"96"
 			}
 		}
 	}
@@ -40117,7 +40203,6 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityCastRange"			"1600"
 		"AbilityTextureName"    	"custom/ghost_revenant_blackjack"
-		"AOERadius"					"%radius%"
 		"MaxLevel"					"7"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -40241,7 +40326,7 @@
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"		"custom/ghost_revenant_miasma"
 		"MaxLevel"					"7"
-		"AOERadius"					"area_of_effect"
+		"AOERadius"					"%area_of_effect"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -40295,6 +40380,27 @@
 		"AbilityCastRange"			"900"
 		"AbilityTextureName"    	"custom/ghost_revenant_ghost_immolation"
 		"MaxLevel"					"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"900"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"tick_time"			"1"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"hp_loss_pct"		"1"
+			}
+		}
 	}
 
 	//=================================================================================================================
@@ -40302,7 +40408,7 @@
 	//=================================================================================================================
 	"ghost_revenant_exhaustion"
 	{
-		"BaseClass"					"ability_datadriven"
+		"BaseClass"					"ability_lua"
 		"ScriptFile"				"hero/hero_ghost_revenant.lua"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityTextureName"    	"custom/ghost_revenant_exhaustion"
@@ -40328,12 +40434,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"ms_reduction_pct"			"10 20 30 40 50 60"
+				"ms_reduction_pct"			"-25 -40 -55 -70 -85 -100"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"10.0"
+				"duration"					"7.0"
 			}
 		}
 	}
@@ -40501,6 +40607,19 @@
 				"cooldown"				"7 6 5 4 3 2 1"
 			}
 		}
+	}
+
+	//=================================================================================================================
+	// Hell Empress: Ambient Effects
+	//=================================================================================================================
+	"imba_empress_ambient_effects"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_hell_empress"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"MaxLevel"						"1"
 	}
 
 	//=================================================================================================================

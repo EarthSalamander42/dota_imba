@@ -253,19 +253,19 @@
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
 		"Ability1"					"beastmaster_wild_axes"
-		"Ability2"						"imba_beastmaster_summon_hawk"
-		"Ability3"						"imba_beastmaster_summon_boar"
+		"Ability2"					"imba_beastmaster_summon_hawk"
+		"Ability3"					"imba_beastmaster_summon_boar"
 		"Ability4"					"beastmaster_inner_beast"
 		"Ability5"					"beastmaster_primal_roar"
 
-		"Ability10"						"special_bonus_exp_boost_15"
-		"Ability11"						"special_bonus_movement_speed_25"
-		"Ability12"						"special_bonus_strength_8"
-		"Ability13"						"special_bonus_unique_beastmaster_2"
-		"Ability14"						"special_bonus_cooldown_reduction_15"
-		"Ability15"						"special_bonus_hp_250"
-		"Ability16"						"special_bonus_attack_damage_75"
-		"Ability17"						"special_bonus_unique_beastmaster"
+		"Ability10"					"special_bonus_exp_boost_15"
+		"Ability11"					"special_bonus_movement_speed_25"
+		"Ability12"					"special_bonus_strength_8"
+		"Ability13"					"special_bonus_unique_beastmaster_2"
+		"Ability14"					"special_bonus_cooldown_reduction_15"
+		"Ability15"					"special_bonus_hp_250"
+		"Ability16"					"special_bonus_attack_damage_75"
+		"Ability17"					"special_bonus_unique_beastmaster"
 
 		"ProjectileSpeed"			"900"
 	}
@@ -280,7 +280,7 @@
 		//Picking Screen
 		"IsCustom"					"0"
 		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"imba_bloodseeker_bloodrage"
 		"Ability2"					"imba_bloodseeker_blood_bath"
@@ -849,7 +849,6 @@
 
 		//Picking Screen
 		"IsCustom"					"0"
-		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
 		"Ability1"					"earth_spirit_boulder_smash"
@@ -1034,8 +1033,7 @@
 		"Ability1"					"gyrocopter_rocket_barrage"
 		"Ability2"					"gyrocopter_homing_missile"
 		"Ability3"					"gyrocopter_flak_cannon"
-		"Ability4"					"gyrocopter_call_down"
-		"Ability6"					""
+		"Ability6"					"gyrocopter_call_down"
 
 		"Ability10"					"special_bonus_spell_amplify_5"
 		"Ability11"					"special_bonus_hp_150"
@@ -1086,7 +1084,6 @@
 
 		//Picking Screen
 		"IsCustom"					"0"
-		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 		
 		"Ability1"					"invoker_quas"
@@ -1432,13 +1429,14 @@
 
 		//Picking Screen
 		"IsCustom"					"0"
-		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
-		"Ability1"					"lone_druid_spirit_bear"				
-		"Ability2"					"lone_druid_rabid"				
-		"Ability3"					"lone_druid_savage_roar"			
-		"Ability4"					"lone_druid_true_form"
+		"Ability1"					"lone_druid_spirit_bear"
+		"Ability2"					"lone_druid_rabid"
+		"Ability3"					"lone_druid_savage_roar"
+		"Ability4"					"lone_druid_true_form_battle_cry"
+		"Ability5"					"lone_druid_true_form"
+		"Ability6"					"lone_druid_true_form_druid"
 		
 		//"Ability10"					"special_bonus_unique_lone_druid_1"
 		//"Ability11"					"special_bonus_unique_lone_druid_2"
@@ -2074,14 +2072,13 @@
 
 		//Picking Screen
 		"IsCustom"					"0"
-		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
-		"Ability1"				"puck_illusory_orb"
-		"Ability2"				"puck_waning_rift"
-		"Ability3"				"puck_phase_shift"
+		"Ability1"					"puck_illusory_orb"
+		"Ability2"					"puck_waning_rift"
+		"Ability3"					"puck_phase_shift"
 		//"Ability4"				"puck_ethereal_jaunt"
-		"Ability5"				"puck_dream_coil"
+		"Ability5"					"puck_dream_coil"
 
 		"Ability10"					"special_bonus_intelligence_7"
 		"Ability11"					"special_bonus_hp_150"
@@ -2253,30 +2250,18 @@
 
 		//Picking Screen
 		"IsCustom"					"0"
-		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
 		"Ability1"					"rubick_telekinesis"
-//		"Ability2"					"rubick_telekinesis_land"
+		"Ability2"					"rubick_telekinesis_land"
 		"Ability3"					"rubick_fade_bolt"
 		"Ability4"					"rubick_null_field"
 		"Ability5"					"rubick_empty1"
 		"Ability6"					"rubick_empty2"
 		"Ability7"					"rubick_spell_steal"
-//		"Ability8"					"rubick_hidden1"
-//		"Ability9"					"rubick_hidden2"
-//		"Ability10"					"rubick_hidden3"
-
-		//"Ability1"					"imba_rubick_telekinesis"
-		"Ability2"					"imba_rubick_spell_steal_controller"
-		//"Ability3"					"imba_rubick_fade_bolt"
-		//"Ability4"					"imba_rubick_null_field"
-		//"Ability5"					"imba_rubick_empty1"
-		//"Ability6"					"imba_rubick_empty2"
-		//"Ability7"					"imba_rubick_spell_steal"
-		//"Ability8"					"imba_rubick_hidden2"
-		//"Ability9"					"imba_rubick_hidden3"
-		//"Ability10"					"imba_rubick_hidden"
+		"Ability8"					"rubick_hidden1"
+		"Ability9"					"rubick_hidden2"
+		"Ability10"					"rubick_hidden3"
 
 		"Ability11"					"special_bonus_gold_income_20"
 		"Ability12"					"special_bonus_attack_damage_35"
@@ -2286,6 +2271,8 @@
 		"Ability16"					"special_bonus_spell_amplify_8"
 		"Ability17"					"special_bonus_cooldown_reduction_20"
 		"Ability18"					"special_bonus_spell_lifesteal_20"
+
+		"Ability19"					"imba_rubick_spell_steal_controller"
 
 		"ProjectileModel"			"particles/units/heroes/hero_rubick/rubick_base_attack.vpcf"
 	}
@@ -2533,7 +2520,6 @@
 
 		//Picking Screen
 		"IsCustom"					"0"
-		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"slark_dark_pact"
@@ -3399,7 +3385,8 @@
 		"Ability1"					"zuus_arc_lightning"
 		"Ability2"					"zuus_lightning_bolt"
 		"Ability3"					"zuus_static_field"
-		"Ability4"					"zuus_thundergods_wrath"
+		"Ability4"					"zuus_cloud"
+		"Ability5"					"zuus_thundergods_wrath"
 
 		"Ability10"					"special_bonus_mp_regen_2"
 		"Ability11"					"special_bonus_hp_150"
@@ -3420,7 +3407,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"					"npc_dota_hero"
+		"BaseClass"					"npc_dota_hero_razor"
 		"HeroID"					"115"
 		"Model"						"models/heroes/razor/razor.vmdl"
 		"ModelScale"				"1.080000"
@@ -3452,7 +3439,7 @@
 		"AttackRate"				"1.900"									// Speed of attack.
 		"AttackAnimationPoint"		"0.300"									// Normalized time in animation cycle to attack.
 		"AttackAcquisitionRange"	"600"									// Range within a target can be acquired.
-		"AttackRange"				"250"									// Range within a target can be attacked.
+		"AttackRange"				"150"									// Range within a target can be attacked.
 		"ProjectileModel"			"particles/units/heroes/hero_venomancer/venomancer_base_attack.vpcf"							// Particle system model for projectile.
 		"ProjectileSpeed"			"800"									// Speed of projectile.
 
@@ -3470,7 +3457,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"RingRadius"				"70"
-		"HealthBarOffset"            "-1"
+		"HealthBarOffset"            "260"
 
 		// Movement
 		//-------------------------------------------------------------------------------------------------------------
@@ -3498,11 +3485,8 @@
 		"VisionNighttimeRange"		"800"									// Range of vision at night time.
 
 		//"particle_folder"			"particles/units/heroes/hero_abaddon"
-		"GameSoundsFile"			"soundevents/game_sounds_heroes_custom/game_sounds_hell_empress.vsndevts"
-		//"VoiceFile"				"soundevents/voscripts/game_sounds_vo_abaddon.vsndevts"
-		"RenderablePortrait"
-		{
-		}
+		"GameSoundsFile"			"soundevents/game_sounds_heroes_custom/game_sounds_razor.vsndevts"
+		//"VoiceFile"				"soundevents/voscripts/game_sounds_vo_razor.vsndevts"
 	}
 
 	//=================================================================================================================
@@ -3527,7 +3511,8 @@
 		"Ability1"					"imba_empress_eleven_curses"		// Ability 1
 		"Ability2"					"imba_empress_hellbolt"				// Ability 2
 		"Ability3"					"imba_empress_royal_wrath"			// Ability 3
-		"Ability4"					"imba_empress_hurl_through_hell"	// Ability 4
+		"Ability4"					"imba_empress_ambient_effects"		// Ability 4
+		"Ability5"					"imba_empress_hurl_through_hell"	// Ability 5
 
 		// Armor
 		//-------------------------------------------------------------------------------------------------------------
@@ -3551,22 +3536,22 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"	// Primary Attribute
 		"AttributeBaseStrength"		"40"						// Base strength
-		"AttributeStrengthGain"		"2.5"						// Strength bonus per level.
-		"AttributeBaseIntelligence"	"8"							// Base intelligence
-		"AttributeIntelligenceGain"	"0.6"						// Intelligence bonus per level.
+		"AttributeStrengthGain"		"2.1"						// Strength bonus per level.
+		"AttributeBaseIntelligence"	"13"							// Base intelligence
+		"AttributeIntelligenceGain"	"3.6"						// Intelligence bonus per level.
 		"AttributeBaseAgility"		"10"						// Base agility
-		"AttributeAgilityGain"		"0.75"						// Agility bonus per level.
+		"AttributeAgilityGain"		"1.75"						// Agility bonus per level.
 
 		// Bounds
 		//-------------------------------------------------------------------------------------------------------------
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"RingRadius"				"70"
-		"HealthBarOffset"            "-1"
+		"HealthBarOffset"            "240"
 
 		// Movement
 		//-------------------------------------------------------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"240"									// Speed.
+		"MovementSpeed"				"315"									// Speed.
 		"MovementTurnRate"			"0.4"									// Turning rate.
 
 		// Status
@@ -3591,8 +3576,5 @@
 		//"particle_folder"			"particles/units/heroes/hero_abaddon"
 		"GameSoundsFile"			"soundevents/game_sounds_heroes_custom/game_sounds_hell_empress.vsndevts"
 		//"VoiceFile"				"soundevents/voscripts/game_sounds_vo_abaddon.vsndevts"
-		"RenderablePortrait"
-		{
-		}
 	}
 }

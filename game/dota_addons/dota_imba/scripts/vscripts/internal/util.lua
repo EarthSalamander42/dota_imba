@@ -390,6 +390,8 @@ function ApplyAllTalentModifiers()
 		local current_hero_list = HeroList:GetAllHeroes()
 		for k,v in pairs(current_hero_list) do
 			local hero_name = string.match(v:GetName(),"npc_dota_hero_(.*)")
+			-- TODO: This is odd, please do something better bro
+			if hero_name == nil or hero_name == "npc_dota_hero_ghost_revenant" or hero_name == "npc_dota_hero_hell_empress" then print("Custom Hero, ignoring talents for now.") return end
 			for i = 1, 8 do
 				local talent_name = "special_bonus_imba_"..hero_name.."_"..i
 				local modifier_name = "modifier_special_bonus_imba_"..hero_name.."_"..i
@@ -1057,34 +1059,38 @@ function table.deepmerge(t1, t2)
 end
 
 function CustomHeroAttachments(hero, illusion)
-local hero_name = ""
 
-	if illusion == true then
-		hero_name = hero
-	else
-		hero_name = hero:GetUnitName()
+	hero_name = hero:GetUnitName()
 
-		-- TODO: Add npc_heroes_custom abilities finding with KV.
-		local hero_abilities = {}
-		local index_count = 1
-		for index, ability in pairs(HERO_ABILITY_LIST[hero_name]) do
-			hero_abilities[index] = ability
-			if tonumber(index) == index_count then
-				index_count = index_count +1
-				hero:AddAbility(hero_abilities[index])
-			end
-	--		print(index.."/"..hero_abilities[index])
-		end
-		for index, ability in pairs(HERO_ABILITY_LIST[hero_name]) do
-			hero_abilities[index] = ability
-			if tonumber(index) == index_count then
-				index_count = index_count +1
-				hero:AddAbility(hero_abilities[index])
+	for i = 1, 8 do
+		if GetKeyValueByHeroName(hero_name, "Ability"..i) ~= nil then
+			local ab = hero:AddAbility(GetKeyValueByHeroName(hero_name, "Ability"..i))
+			if GetKeyValueByHeroName(hero_name, "Ability"..i) == "ghost_revenant_ghost_immolation" or GetKeyValueByHeroName(hero_name, "Ability"..i) == "hell_empress_ambient_effects" then
+				ab:SetLevel(1)
 			end
 		end
 	end
 
-	print("Attaching props on hero.")
+--	-- TODO: Add npc_heroes_custom abilities finding with KV.
+--	local hero_abilities = {}
+--	local index_count = 1
+--	for index, ability in pairs(HERO_ABILITY_LIST[hero_name]) do
+--		hero_abilities[index] = ability
+--		if tonumber(index) == index_count then
+--			index_count = index_count +1
+--			hero:AddAbility(hero_abilities[index])
+--		end
+--	--	print(index.."/"..hero_abilities[index])
+--	end
+
+--	for index, ability in pairs(HERO_ABILITY_LIST[hero_name]) do
+--		hero_abilities[index] = ability
+--		if tonumber(index) == index_count then
+--			index_count = index_count +1
+--			hero:AddAbility(hero_abilities[index])
+--		end
+--	end
+
 	if hero_name == "npc_dota_hero_ghost_revenant" then
 		hero:SetRenderColor(128, 255, 0)
 		hero.head = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/razor/apostle_of_the_tempest_head/apostle_of_the_tempest_head.vmdl"})
@@ -1104,60 +1110,5 @@ local hero_name = ""
 		hero.weapon:SetRenderColor(128, 255, 0)
 	elseif hero_name == "npc_dota_hero_hell_empress" then
 		
-	end
-end
-
-function Announcer(announcer_type, event)
-	if announcer_type == "diretide" then
-		if event == "game_cancelled" then
-			EmitGlobalSound("Diretide.Announcer.GameCancelled")
-		end
-		if event == "pre_game" then
-			print("ANNOUNCER: PRE GAME")
-			EmitGlobalSound("Diretide.Announcer.PreGame")
-		end
-		if event == "game_in_progress" then
-			print("ANNOUNCER: GAME IN PROGRESS")
-			EmitGlobalSound("Diretide.Announcer.GameInProgress")
-			EmitGlobalSound("DireTideGameStart.DireSide")
-		end
-		if event == "phase_2" then
-			print("ANNOUNCER: PHASE 2")
-			EmitGlobalSound("Diretide.Announcer.TrickOrThreat")
-			Timers:CreateTimer(3.0, function()
-				local random_alt = RandomInt(1, 100)
-				if random_alt >= 90 then
-					EmitGlobalSound("Diretide.Announcer.RoshanTarget")
-				end
-			end)
-		end
-		if event == "roshan_target_good" then
-			print("ANNOUNCER: ROSHAN TARGET RADIANT")
-			EmitGlobalSound("Diretide.Announcer.RoshanTarget.Radiant")
-		end
-		if event == "roshan_target_bad" then
-			print("ANNOUNCER: ROSHAN TARGET DIRE")
-			EmitGlobalSound("Diretide.Announcer.RoshanTarget.Dire")
-		end
-		if event == "roshan_target_both" then
-			print("ANNOUNCER: ROSHAN TARGET A TEAM")
-			EmitGlobalSound("Diretide.Announcer.RoshanTarget.Both")
-		end
-		if event == "roshan_fed" then
-			print("ANNOUNCER: ROSHAN RECEIVED A CANDY")
-			EmitGlobalSound("announcer_diretide_rosh_")
-		end
-		if event == "winner_radiant" then
-			print("ANNOUNCER: RADIANT CANDY WIN")
-			EmitGlobalSound("Diretide.Announcer.MostCandy.Radiant")
-		end
-		if event == "winner_dire" then
-			print("ANNOUNCER: DIRE CANDY WIN")
-			EmitGlobalSound("Diretide.Announcer.MostCandy.Dire")
-		end
-		if event == "phase_3" then
-			print("ANNOUNCER: PHASE 3")
-			EmitGlobalSound("Diretide.Announcer.SugarRush")
-		end
 	end
 end
