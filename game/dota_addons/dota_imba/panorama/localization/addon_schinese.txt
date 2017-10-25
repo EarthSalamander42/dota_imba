@@ -587,6 +587,24 @@
 	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_8_title"				"暗影突袭"
 	"Dota_Tooltip_Talent_special_bonus_imba_queenofpain_8_Description"			"你的技能对目标施加暗影突袭"
 
+	// Riki
+	"DOTA_Tooltip_Talent_special_bonus_imba_riki_1_title"						"闪烁突袭"
+	"DOTA_Tooltip_Talent_special_bonus_imba_riki_1_Description"					"闪烁突袭时创造持续1秒的烟幕"
+	"DOTA_Tooltip_Talent_special_bonus_imba_riki_2_title"						"绝杀秘笈"
+	"DOTA_Tooltip_Talent_special_bonus_imba_riki_2_Description"					"绝杀秘笈标记被多重攻击伤害的敌人，使其受多重攻击伤害的几率提高20%，最多叠加5次"
+	"DOTA_Tooltip_Talent_special_bonus_imba_riki_3_title"						"刀光谍影"
+	"DOTA_Tooltip_Talent_special_bonus_imba_riki_3_Description"					"刀光谍影可主动使用，牺牲隐形能力，敏捷系数翻倍。这个效果在绝杀秘笈时无效"
+	"DOTA_Tooltip_Talent_special_bonus_imba_riki_4_title"						"刀光谍影"
+	"DOTA_Tooltip_Talent_special_bonus_imba_riki_4_Description"					"可以较低的系数在侧面触发刀光谍影"
+	"DOTA_Tooltip_Talent_special_bonus_imba_riki_5_title"						"烟幕"
+	"DOTA_Tooltip_Talent_special_bonus_imba_riki_5_Description"					"烟幕使力丸获得一个独立的1.5秒渐隐的隐身效果"
+	"DOTA_Tooltip_Talent_special_bonus_imba_riki_6_title"						"绝杀秘笈"
+	"DOTA_Tooltip_Talent_special_bonus_imba_riki_6_Description"					"根据绝杀秘笈的剩余持续时间百分比地降低其冷却，剩余时间越长，冷却降低越多，最多降低至6秒"		
+	"DOTA_Tooltip_Talent_special_bonus_imba_riki_7_title"						"刀光谍影"
+	"DOTA_Tooltip_Talent_special_bonus_imba_riki_7_Description"					"连续4次刀光谍影将破坏目标5秒"
+	"DOTA_Tooltip_Talent_special_bonus_imba_riki_8_title"						"力丸"
+	"DOTA_Tooltip_Talent_special_bonus_imba_riki_8_Description"					"攻击时有20%几率对目标施放无延迟的闪烁突袭"
+
     // Silencer
     "DOTA_Tooltip_Talent_special_bonus_imba_silencer_1_title"                   "静默诅咒"
     "DOTA_Tooltip_Talent_special_bonus_imba_silencer_1_Description"             "静默诅咒25%的伤害会治疗沉默术士"
