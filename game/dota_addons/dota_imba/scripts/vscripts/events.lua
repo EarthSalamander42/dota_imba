@@ -244,23 +244,23 @@ local normal_xp = npc:GetDeathXP()
 			end
 		end
 
-		for i = 1, #banned_players do
-			if PlayerResource:GetSteamAccountID(npc:GetPlayerID()) == banned_players[i] then
-				if npc:GetUnitName() ~= "npc_dota_hero_wisp" or npc.is_real_wisp then
-					if not npc:HasModifier("modifier_command_restricted") then
-						npc:AddNewModifier(npc, nil, "modifier_command_restricted", {})
-						Timers:CreateTimer(0.1, function()
-							PlayerResource:SetCameraTarget(npc:GetPlayerOwnerID(), npc)
-						end)
-						Timers:CreateTimer(2.0, function()
-							StartAnimation(npc, {duration=2.0, activity=ACT_DOTA_DEFEAT, rate=1.0})
-							return 2.0
-						end)
-						Notifications:Bottom(npc:GetPlayerID(), {text="Hey what are you doing there, i thought this mod was shit?", duration=99999, style={color="red"}})
-					end
-				end
-			end
-		end
+--		for i = 1, #banned_players do
+--			if PlayerResource:GetSteamAccountID(npc:GetPlayerID()) == banned_players[i] then
+--				if npc:GetUnitName() ~= "npc_dota_hero_wisp" or npc.is_real_wisp then
+--					if not npc:HasModifier("modifier_command_restricted") then
+--						npc:AddNewModifier(npc, nil, "modifier_command_restricted", {})
+--						Timers:CreateTimer(0.1, function()
+--							PlayerResource:SetCameraTarget(npc:GetPlayerOwnerID(), npc)
+--						end)
+--						Timers:CreateTimer(2.0, function()
+--							StartAnimation(npc, {duration=2.0, activity=ACT_DOTA_DEFEAT, rate=1.0})
+--							return 2.0
+--						end)
+--						Notifications:Bottom(npc:GetPlayerID(), {text="Hey what are you doing there, i thought this mod was shit?", duration=99999, style={color="red"}})
+--					end
+--				end
+--			end
+--		end
 
 		-- fix for killed with Ghost Revenant immolation
 		if npc:HasModifier("modifier_ghost_revenant_ghost_immolation_debuff") then

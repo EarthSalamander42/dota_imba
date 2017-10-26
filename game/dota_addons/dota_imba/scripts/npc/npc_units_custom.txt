@@ -12584,7 +12584,7 @@
 		"AttackDamageMin"			"30"										// Damage range min.
 		"AttackDamageMax"			"40"										// Damage range max.
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"				// Type of damage dealt. 
-		"AttackRate"				"1.900"									// Speed of attack.
+		"AttackRate"				"1.700"									// Speed of attack.
 		"AttackAnimationPoint"		"0.300"									// Normalized time in animation cycle to attack.
 		"AttackAcquisitionRange"	"600"									// Range within a target can be acquired.
 		"AttackRange"				"150"									// Range within a target can be attacked.
@@ -12595,11 +12595,11 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"	// Primary Attribute
 		"AttributeBaseStrength"		"23"						// Base strength
-		"AttributeStrengthGain"		"1.9"						// Strength bonus per level.
+		"AttributeStrengthGain"		"2.3"						// Strength bonus per level.
 		"AttributeBaseIntelligence"	"24"							// Base intelligence
 		"AttributeIntelligenceGain"	"3.3"						// Intelligence bonus per level.
-		"AttributeBaseAgility"		"13"						// Base agility
-		"AttributeAgilityGain"		"1.4"						// Agility bonus per level.
+		"AttributeBaseAgility"		"21"						// Base agility
+		"AttributeAgilityGain"		"2.4"						// Agility bonus per level.
 
 		// Bounds
 		//-------------------------------------------------------------------------------------------------------------
@@ -12688,7 +12688,7 @@
 		"AttackDamageMin"			"30"										// Damage range min.
 		"AttackDamageMax"			"40"										// Damage range max.
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"				// Type of damage dealt. 
-		"AttackRate"				"1.900"									// Speed of attack.
+		"AttackRate"				"1.700"									// Speed of attack.
 		"AttackAnimationPoint"		"0.300"									// Normalized time in animation cycle to attack.
 		"AttackAcquisitionRange"	"600"									// Range within a target can be acquired.
 		"AttackRange"				"250"									// Range within a target can be attacked.
@@ -12699,11 +12699,11 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"	// Primary Attribute
 		"AttributeBaseStrength"		"40"						// Base strength
-		"AttributeStrengthGain"		"2.5"						// Strength bonus per level.
-		"AttributeBaseIntelligence"	"8"							// Base intelligence
-		"AttributeIntelligenceGain"	"0.6"						// Intelligence bonus per level.
-		"AttributeBaseAgility"		"10"						// Base agility
-		"AttributeAgilityGain"		"0.75"						// Agility bonus per level.
+		"AttributeStrengthGain"		"2.1"						// Strength bonus per level.
+		"AttributeBaseIntelligence"	"19"							// Base intelligence
+		"AttributeIntelligenceGain"	"3.6"						// Intelligence bonus per level.
+		"AttributeBaseAgility"		"29"						// Base agility
+		"AttributeAgilityGain"		"2.6"						// Agility bonus per level.
 
 		// Bounds
 		//-------------------------------------------------------------------------------------------------------------
