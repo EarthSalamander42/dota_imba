@@ -255,7 +255,7 @@ end
 
 function modifier_ghost_revenant_miasma:OnCreated()
 	if IsServer() then
-		self.damage = self:GetAbility():GetSpecialValueFor("dmg_per_sec")
+		self.damage = self:GetAbility():GetSpecialValueFor("dmg_per_sec") * 0.01
 		self.tick = self:GetAbility():GetSpecialValueFor("tick")
 
 		self:StartIntervalThink(self.tick)
@@ -337,7 +337,7 @@ function modifier_ghost_revenant_miasma:GetModifierMoveSpeedBonus_Percentage()
 end
 
 function modifier_ghost_revenant_miasma:OnIntervalThink()
-	ApplyDamage({victim = self:GetParent(), attacker = self:GetCaster(), damage = self.damage, damage_type = DAMAGE_TYPE_MAGICAL})
+	ApplyDamage({victim = self:GetParent(), attacker = self:GetCaster(), damage = self:GetParent():GetMaxHealth() * self.damage, damage_type = DAMAGE_TYPE_MAGICAL})
 end
 
 -----------------------------------------------------------------------------------------------------------
@@ -469,9 +469,11 @@ function modifier_ghost_revenant_ghost_immolation_debuff:OnIntervalThink()
 		end
 
 		if self.lose_hp == true then
-			self:SetStackCount(self:GetStackCount() + self.interval_time)
+			if self:GetStackCount() < 99 then
+				self:SetStackCount(self:GetStackCount() + self.hp_loss_pct)
+			end
 		else
-			self:SetStackCount(self:GetStackCount() - self.interval_time)
+			self:SetStackCount(self:GetStackCount() - self.hp_loss_pct)
 		end
 
 		-- Re-calculate health stats
@@ -491,7 +493,7 @@ end
 
 function modifier_ghost_revenant_ghost_immolation_debuff:GetModifierExtraHealthPercentage()
 	if IsServer() then
-		local hp_to_reduce = self.hp_loss_pct * 0.01 * self:GetStackCount() * (-1)
+		local hp_to_reduce = 0.01 * self:GetStackCount() * (-1)
 		-- Make sure you don't go over 100%
 		if hp_to_reduce < -0.99 then
 			return -0.99
