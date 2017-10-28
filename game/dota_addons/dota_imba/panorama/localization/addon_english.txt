@@ -512,6 +512,24 @@
 	"DOTA_Tooltip_Talent_special_bonus_imba_mirana_8_title"                  	"Seed of the Moon"					
 	"DOTA_Tooltip_Talent_special_bonus_imba_mirana_8_Description"            	"Primary Starstorms that hit targets marks them with the Seed of the Moon for one second. If Mirana attacks a target that is marked, the debuff is consumed, and a secondary Starstorm procs on the target.<br>Secondary Starstorm do not mark the target, but the target can be marked multiple times from other primary Starstorms, including the Aghnaim's Scepter's wave.<br><br><i>Using lunar shards, Mirana signals her Goddess to drop her stars on her targets.</i>"
 
+	// Nevermore / Shadow Fiend
+	"DOTA_Tooltip_Talent_special_bonus_imba_nevermore_1_title"                  "Shadow Pool"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nevermore_1_Description"            "Each Shadowraze will leave behind a pool of desperate souls for 2 seconds. Any enemy standing in them will take 100 magic dmg per second. <br><br><i>The desperate cry of the souls taken away by Nevermore can be heard from these crimson pools...</i>"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nevermore_2_title"                  "Soul Eater"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nevermore_2_Description"            "Necromastery can be activated to heal in exchange of souls. Each consumed soul will heal 80 hp and Shadow Fiend will stop consuming when either there are no more souls or has healed completely. This can be done once every 12 seconds. <br><br><i>The Shadow Fiend shares a sadistic pleasure in consuming the souls he collected, so much that he feel invigorated from it.</i>"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nevermore_3_title"                  "Shadow harem"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nevermore_3_Description"            "Necromastery soul stacks cap permanently increases by 1 each time you kill an enemy hero. This has no limit. <br><br><i>Nevermore intellect strenghen whenever he siphons away the spirit of those too stupid to face, allowing him to enslave more souls.</i>"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nevermore_4_title"                  "Spirit siphon"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nevermore_4_Description"            "Each soul collected will increase the lifesteal by 0.4% <br><br><i> Even standing near Nevermore would be enough to drain vitality from the weak, let alone being engulfed in the grim embrace of his enslaved souls.</i>"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nevermore_5_title"                  "Demonlord Charm"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nevermore_5_Description"            "Presence of the Lord periodically steal souls from nearby enemy heroes. <br><br><i> Among Nevermore's most favourite ways to collect souls is letting his overwhelming presence twist the souls of those near him until they are begging him to rip them from their bodies.</i>"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nevermore_6_title"                  "Soul Rend"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nevermore_6_Description"            "Shadowraze can refresh the debuff from Requiem of Souls on enemies hit. This can be done infinitely. <br><br><i>What's the best way to rekindly the searing demonic energies? More demonic energy!</i>"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nevermore_7_title"                  "Nevermore's recall"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nevermore_7_Description"            "Shadow Fiend won't lose souls when dying. <br><br><i>Even thought the souls enslaved by Nevermore cry in desperation, their master recall is too strong to resist... and thus end up going straight back to him.</i>"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nevermore_8_title"                  "Shadow Frenzy"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nevermore_8_Description"            "Shadowraze cast point is halved during Soul Frenzy, allowing to quicker successive casts. <br><br><i>Watching the souls wrecking havoc during the requiem drives Nevermore into a state of pure ecstasy, where himself unleash hell on the living so that he can witness the Requiem once more soon enough."
+
 	// Nyx
 	"DOTA_Tooltip_Talent_special_bonus_imba_nyx_assassin_1_title"             "Everlasting Vendetta"
 	"DOTA_Tooltip_Talent_special_bonus_imba_nyx_assassin_1_Description"       "If Vendetta kills an enemy unit, it doesn't consume the Eye for Eye stacks.<br><br><i>A successful hunt does not mean the end of Nyx's Vendetta.</i>"
