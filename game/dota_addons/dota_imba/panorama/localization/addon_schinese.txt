@@ -514,6 +514,24 @@
 	"DOTA_Tooltip_Talent_special_bonus_imba_mirana_8_title"                  	"群星风暴"					
 	"DOTA_Tooltip_Talent_special_bonus_imba_mirana_8_Description"            	"主群星风暴在目标身上埋下群星风暴之种，米拉娜的攻击会引爆群星之种，触发一次次级群星风暴，多个群星之种可以叠加"
 
+	// Nevermore / Shadow Fiend
+	"DOTA_Tooltip_Talent_special_bonus_imba_nevermore_1_title"                  "毁灭阴影"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nevermore_1_Description"            "毁灭阴影会污染地面，每秒造成100魔法伤害，持续2秒"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nevermore_2_title"                  "支配死灵"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nevermore_2_Description"            "支配死灵可主动使用以回复生命值，每消耗1个灵魂回复80生命，只会消耗到回复满生命的灵魂，12秒冷却"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nevermore_3_title"                  "支配死灵"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nevermore_3_Description"            "每击杀一名英雄支配死灵灵魂的永久灵魂上限永久提高1"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nevermore_4_title"                  "支配死灵"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nevermore_4_Description"            "每个灵魂提供0.4%吸血"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nevermore_5_title"                  "魔王降临"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nevermore_5_Description"            "受魔王降临影响的英雄每秒为影魔提供一个灵魂"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nevermore_6_title"                  "毁灭阴影"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nevermore_6_Description"            "毁灭阴影增强魔王降临效果的效果将刷新持续时间，无限叠加"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nevermore_7_title"                  "支配死灵"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nevermore_7_Description"            "死亡时不丢失灵魂"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nevermore_8_title"                  "魂之挽歌"
+    "DOTA_Tooltip_Talent_special_bonus_imba_nevermore_8_Description"            "魂之挽歌灵魂狂暴使毁灭阴影的施法前摇减少一半"
+
     // Nyx
     "DOTA_Tooltip_Talent_special_bonus_imba_nyx_assassin_1_title"             "复仇"
     "DOTA_Tooltip_Talent_special_bonus_imba_nyx_assassin_1_Description"       "以复仇杀死敌人不会消耗以眼还眼"
