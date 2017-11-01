@@ -635,6 +635,7 @@
 
 		//Picking Screen
 		"IsCustom"					"0"
+		"IsNew"						"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
 		"Ability1"					"dark_willow_bramble_maze"
@@ -2009,6 +2010,7 @@
 
 		//Picking Screen
 		"IsCustom"					"0"
+		"IsNew"						"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"pangolier_swashbuckle"
@@ -3478,6 +3480,7 @@
 
 		//Picking Screen
 		"IsCustom"					"1"
+		"IsNew"						"1"
 
 		// Abilities
 		//-------------------------------------------------------------------------------------------------------------
@@ -3567,6 +3570,7 @@
 
 		//Picking Screen
 		"IsCustom"					"1"
+		"IsNew"						"1"
 
 		// Abilities
 		//-------------------------------------------------------------------------------------------------------------

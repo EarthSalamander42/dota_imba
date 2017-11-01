@@ -178,6 +178,16 @@ function MakeImbaHero(imba_heroes) {
 	}
 }
 
+function MakeNewHero(new_heroes) {
+	var h = 1;
+	for (h in imba_heroes) {
+		if (imba_heroes[h] != null) {
+			$("#PickList").FindChildTraverse(imba_heroes[h]).RemoveClass("ClassNormalOption")
+			$("#PickList").FindChildTraverse(imba_heroes[h]).AddClass("ClassCustomOption")
+		}
+	}
+}
+
 function MakeDisabledHeroes(disabled_10v10, disabled_all) {
 	var map_info = Game.GetMapInfo();
 	if (map_info.map_display_name == "imba_10v10" || map_info.map_display_name == "imba_custom_10v10" || map_info.map_display_name == "imba_12v12") {
@@ -277,6 +287,7 @@ function CreateHeroPick() {
 	var disabled_heroes_10v10 = hero_list.Disabled10v10;
 	var disabled_heroes = hero_list.Disabled
 	var imba_heroes = hero_list.Imba
+	var new_heroes = hero_list.New
 	var strength_heroes_custom = hero_list.StrengthCustom;
 	var agility_heroes_custom = hero_list.AgilityCustom;
 	var intellect_heroes_custom = hero_list.IntellectCustom;
@@ -293,6 +304,7 @@ function CreateHeroPick() {
 	CreateHeroPanel(intellect_heroes_custom, "INT", true)
 
 	MakeImbaHero(imba_heroes)
+	MakeNewHero(new_heroes)
 	MakeDisabledHeroes(disabled_heroes_10v10, disabled_heroes)
 
 	$.Msg("Add a caller here to call ReconnectPlayer(player_id) in lua!")
