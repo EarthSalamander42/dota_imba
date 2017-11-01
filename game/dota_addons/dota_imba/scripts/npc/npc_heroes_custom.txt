@@ -2017,7 +2017,7 @@
 		"Ability2"					"pangolier_shield_crash"
 		"Ability3"					"pangolier_heartpiercer"
 		"Ability4"					"pangolier_gyroshell"
-		"Ability5"					"pangolier_gyroshell_stop"
+//		"Ability5"					"pangolier_gyroshell_stop"
 
 //		"Ability10"					"special_bonus_mp_regen_2"
 //		"Ability11"					"special_bonus_movement_speed_25"

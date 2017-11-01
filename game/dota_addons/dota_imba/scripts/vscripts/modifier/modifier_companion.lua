@@ -54,7 +54,13 @@ function modifier_companion:OnIntervalThink()
 	if IsServer() then
 		local companion = self:GetParent()
 		local hero = self:GetParent():GetPlayerOwner():GetAssignedHero()
-		local distance = (hero:GetOrigin() - companion:GetOrigin()):Length()
+		local fountain = Entities:FindByName(nil, "ent_dota_fountain_good")
+		if hero:GetTeamNumber() == 3 then
+			fountain = Entities:FindByName(nil, "ent_dota_fountain_bad")
+		end
+
+		local hero_distance = (hero:GetAbsOrigin() - companion:GetAbsOrigin()):Length()
+		local fountain_distance = (fountain:GetAbsOrigin() - companion:GetAbsOrigin()):Length()
 		local min_distance = 250
 		local blink_distance = 800
 
@@ -72,7 +78,8 @@ function modifier_companion:OnIntervalThink()
 			"modifier_templar_assassin_meld",
 			"modifier_imba_skeleton_walk_dummy",
 			"modifier_invoker_ghost_walk_self",
-			"modifier_rune_invis"
+			"modifier_rune_invis",
+			"modifier_item_imba_silver_edge_invis"
 		}
 
 --		print("Companion MS:", companion:GetBaseMoveSpeed())
@@ -91,12 +98,20 @@ function modifier_companion:OnIntervalThink()
 			end
 		end
 
-		if distance > blink_distance then
+		if not hero:IsAlive() then
+			if fountain_distance > blink_distance then -- min_distance is too high with fountain bound radius
+				ParticleManager:CreateParticle("particles/items_fx/blink_dagger_start.vpcf", PATTACH_ABSORIGIN, companion)
+				companion:EmitSound("DOTA_Item.BlinkDagger.Activate")
+				FindClearSpaceForUnit(companion, fountain:GetAbsOrigin(), false)
+				ParticleManager:CreateParticle("particles/items_fx/blink_dagger_end.vpcf", PATTACH_ABSORIGIN, companion)
+				return
+			end
+		elseif hero_distance > blink_distance then
 			ParticleManager:CreateParticle("particles/items_fx/blink_dagger_start.vpcf", PATTACH_ABSORIGIN, companion)
 			companion:EmitSound("DOTA_Item.BlinkDagger.Activate")
-			FindClearSpaceForUnit(companion, hero:GetAbsOrigin(), false)
+			FindClearSpaceForUnit(companion, hero:GetAbsOrigin() + RandomVector(200), false)
 			ParticleManager:CreateParticle("particles/items_fx/blink_dagger_end.vpcf", PATTACH_ABSORIGIN, companion)
-		elseif distance > min_distance then
+		elseif hero_distance > min_distance then
 			local order = {
 				OrderType = DOTA_UNIT_ORDER_MOVE_TO_TARGET,
 				UnitIndex = companion:entindex(),

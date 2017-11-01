@@ -93,7 +93,8 @@ function modifier_imba_dust_of_appearance:GetModifierProvidesFOWVision()
 		"modifier_templar_assassin_meld",
 		"modifier_imba_skeleton_walk_dummy",
 		"modifier_invoker_ghost_walk_self",
-		"modifier_rune_invis"
+		"modifier_rune_invis",
+		"modifier_item_imba_silver_edge_invis"
 	}
 		
 	for _,v in ipairs(invisModifiers) do
@@ -121,7 +122,8 @@ function modifier_imba_dust_of_appearance:GetModifierMoveSpeedBonus_Percentage()
 		"modifier_templar_assassin_meld",
 		"modifier_imba_skeleton_walk_dummy",
 		"modifier_invoker_ghost_walk_self",
-		"modifier_rune_invis"
+		"modifier_rune_invis",
+		"modifier_item_imba_silver_edge_invis"
 	}
 		
 	for _,v in ipairs(invisModifiers) do
