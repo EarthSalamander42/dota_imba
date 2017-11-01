@@ -92,7 +92,8 @@ function modifier_imba_dust_of_appearance:GetModifierProvidesFOWVision()
 		"modifier_treant_natures_guise_invis",
 		"modifier_templar_assassin_meld",
 		"modifier_imba_skeleton_walk_dummy",
-		"modifier_invoker_ghost_walk_self"
+		"modifier_invoker_ghost_walk_self",
+		"modifier_rune_invis"
 	}
 		
 	for _,v in ipairs(invisModifiers) do
@@ -119,7 +120,8 @@ function modifier_imba_dust_of_appearance:GetModifierMoveSpeedBonus_Percentage()
 		"modifier_treant_natures_guise_invis",
 		"modifier_templar_assassin_meld",
 		"modifier_imba_skeleton_walk_dummy",
-		"modifier_invoker_ghost_walk_self"
+		"modifier_invoker_ghost_walk_self",
+		"modifier_rune_invis"
 	}
 		
 	for _,v in ipairs(invisModifiers) do

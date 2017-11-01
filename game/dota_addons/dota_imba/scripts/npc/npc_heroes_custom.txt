@@ -603,8 +603,11 @@
 	//=================================================================================================================
 	"npc_dota_hero_dark_seer"
 	{
-		"IsCustom"					"0"
 		"override_hero"				"npc_dota_hero_dark_seer"
+
+		//Picking Screen
+		"IsCustom"					"0"
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
 		"Ability1"					"dark_seer_vacuum"
 		"Ability2"					"dark_seer_ion_shell"
@@ -619,6 +622,35 @@
 		"Ability15"					"special_bonus_unique_dark_seer_2"
 		"Ability16"					"special_bonus_cooldown_reduction_12"
 		"Ability17"					"special_bonus_unique_dark_seer"
+
+		"ProjectileSpeed"			"900"
+	}
+
+	//=================================================================================================================
+	// HERO: Dark Willow
+	//=================================================================================================================
+	"npc_dota_hero_dark_willow"
+	{
+		"override_hero"				"npc_dota_hero_dark_willow"
+
+		//Picking Screen
+		"IsCustom"					"0"
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
+
+		"Ability1"					"dark_willow_bramble_maze"
+		"Ability2"					"dark_willow_shadow_realm"
+		"Ability3"					"dark_willow_cursed_crown"
+		"Ability4"					"dark_willow_bedlam"
+		"Ability5"					"dark_willow_terrorize"
+
+	//	"Ability10"					"special_bonus_attack_damage_20"
+	//	"Ability11"					"special_bonus_cast_range_125"
+	//	"Ability12"					"special_bonus_gold_income_15"
+	//	"Ability13"					"special_bonus_movement_speed_40"
+	//	"Ability14"					"special_bonus_spell_lifesteal_10"
+	//	"Ability15"					"special_bonus_unique_dark_willow_1"
+	//	"Ability16"					"special_bonus_attack_speed_200"
+	//	"Ability17"					"special_bonus_unique_dark_willow_2"
 
 		"ProjectileSpeed"			"900"
 	}
@@ -1963,6 +1995,36 @@
 		"Ability15"					"special_bonus_imba_omniknight_8"
 		"Ability16"					"special_bonus_imba_omniknight_7"
 		"Ability17"					"special_bonus_imba_omniknight_6"
+
+		"ProjectileSpeed"			"900"
+	}
+
+	//=================================================================================================================
+	// HERO: Pangolier
+	//=================================================================================================================
+	"npc_dota_hero_pangolier"
+	{
+		"override_hero"				"npc_dota_hero_pangolier"
+		"AttackRate"				"1.5"
+
+		//Picking Screen
+		"IsCustom"					"0"
+		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
+
+		"Ability1"					"pangolier_swashbuckle"
+		"Ability2"					"pangolier_shield_crash"
+		"Ability3"					"pangolier_heartpiercer"
+		"Ability4"					"pangolier_gyroshell"
+		"Ability5"					"pangolier_gyroshell_stop"
+
+//		"Ability10"					"special_bonus_mp_regen_2"
+//		"Ability11"					"special_bonus_movement_speed_25"
+//		"Ability12"					"special_bonus_unique_pangolier_2"
+//		"Ability13"					"special_bonus_attack_speed_30"
+//		"Ability14"					"special_bonus_unique_pangolier_3"
+//		"Ability15"					"special_bonus_strength_20"
+//		"Ability16"					"special_bonus_unique_pangolier_4"
+//		"Ability17"					"special_bonus_unique_pangolier_5"
 
 		"ProjectileSpeed"			"900"
 	}
