@@ -294,12 +294,12 @@ CHEAT_ENABLED = false
 -- Changes settings according to the current map
 if GetMapName() == "imba_standard" then										-- Standard map defaults
 	END_GAME_ON_KILLS = false
-	CUSTOM_GOLD_BONUS = 35
-	CUSTOM_XP_BONUS = 35
+	CUSTOM_GOLD_BONUS = 50
+	CUSTOM_XP_BONUS = 50
 	CREEP_POWER_FACTOR = 1
 	TOWER_UPGRADE_MODE = false
 	TOWER_POWER_FACTOR = 1
-	HERO_RESPAWN_TIME_MULTIPLIER = 100
+	HERO_RESPAWN_TIME_MULTIPLIER = 75
 	HERO_INITIAL_GOLD = 1200
 	HERO_REPICK_GOLD = 1100
 	HERO_RANDOM_GOLD = 1400
@@ -322,8 +322,8 @@ elseif GetMapName() == "imba_custom" or GetMapName() == "imba_custom_10v10" then
 	MAX_LEVEL = 40
 elseif GetMapName() == "imba_10v10" or GetMapName() == "imba_12v12" then									-- 10v10 map defaults
 	END_GAME_ON_KILLS = false
-	CUSTOM_GOLD_BONUS = 35
-	CUSTOM_XP_BONUS = 35
+	CUSTOM_GOLD_BONUS = 50
+	CUSTOM_XP_BONUS = 50
 	CREEP_POWER_FACTOR = 1
 	TOWER_UPGRADE_MODE = true
 	TOWER_POWER_FACTOR = 1
@@ -512,6 +512,10 @@ IMBA_DEVS = {
 	33828741	-- sercankd
 }
 
-_G.banned_players = {
-	38788222 -- customURL 420bongrip
-}
+IMBA_DONATORS = {}
+IMBA_DONATORS[1] = {163814800, "models/items/courier/livery_llama_courier/livery_llama_courier.vmdl"}	-- Hungrily_Hastur
+IMBA_DONATORS[2] = {54896080, "models/courier/doom_demihero_courier/doom_demihero_courier.vmdl"}	-- Cookies
+
+--	_G.banned_players = {
+--		38788222 -- customURL 420bongrip
+--	}

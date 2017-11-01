@@ -85,22 +85,19 @@ function GameMode:OnFirstPlayerLoaded()
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Roshan and Picking Screen camera initialization
 	-------------------------------------------------------------------------------------------------
-
 	if GetMapName() == "imba_arena" then
 		GoodCamera = Entities:FindByName(nil, "radiant_capture_point")
 		BadCamera = Entities:FindByName(nil, "dire_capture_point")
 	else
 		GoodCamera = Entities:FindByName(nil, "dota_goodguys_fort")
 		BadCamera = Entities:FindByName(nil, "dota_badguys_fort")
---		local roshan_spawn_loc = Entities:FindByName(nil, "roshan_spawn_point"):GetAbsOrigin()
---		local roshan = CreateUnitByName("npc_imba_roshan", roshan_spawn_loc, true, nil, nil, DOTA_TEAM_NEUTRALS)
---		roshan:FindAbilityByName("imba_roshan_rage"):SetLevel(1)
+--		TODO: Activate Roshan
+--		local roshan = CreateUnitByName("npc_dota_roshan", Vector(-2368, 1856, 168), true, nil, nil, DOTA_TEAM_NEUTRALS)
 	end
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Pre-pick forced hero selection
 	-------------------------------------------------------------------------------------------------
-
 	self.flItemExpireTime = 60.0
 	GameRules:SetSameHeroSelectionEnabled(true)
 	GameRules:GetGameModeEntity():SetCustomGameForceHero("npc_dota_hero_wisp")
@@ -126,17 +123,23 @@ function GameMode:OnFirstPlayerLoaded()
 	}
 
 	-- Add 4 random contributor statues
-	local current_location
+	local current_location = {}
+	current_location[1] = Vector(-6900, -5400, 384)
+	current_location[2] = Vector(-6900, -5100, 384)
+	current_location[3] = Vector(-6900, -4800, 384)
+	current_location[4] = Vector(6900, 5000, 384)
+	current_location[5] = Vector(6900, 4700, 384)
+	current_location[6] = Vector(6900, 4400, 384)
+
 	local current_statue
 	local statue_entity
 	for i = 1, 4 do
-		current_location = Entities:FindByName(nil, "contributor_location_0"..i):GetAbsOrigin()
 		current_statue = table.remove(contributor_statues, RandomInt(1, #contributor_statues))
 		if i <= 2 then
-			statue_entity = CreateUnitByName(current_statue, current_location, true, nil, nil, DOTA_TEAM_GOODGUYS)
+			statue_entity = CreateUnitByName(current_statue, current_location[i], true, nil, nil, DOTA_TEAM_GOODGUYS)
 			statue_entity:SetForwardVector(Vector(1, 1, 0):Normalized())
 		else
-			statue_entity = CreateUnitByName(current_statue, current_location, true, nil, nil, DOTA_TEAM_BADGUYS)
+			statue_entity = CreateUnitByName(current_statue, current_location[i], true, nil, nil, DOTA_TEAM_BADGUYS)
 			statue_entity:SetForwardVector(Vector(-1, -1, 0):Normalized())
 		end
 		statue_entity:AddNewModifier(statue_entity, nil, "modifier_imba_contributor_statue", {})
@@ -171,10 +174,10 @@ function GameMode:OnFirstPlayerLoaded()
 	local current_location
 	local current_statue
 	local statue_entity
-	for i = 1, 4 do
+	for i = 1, 6 do
 		current_location = Entities:FindByName(nil, "developer_location_0"..i):GetAbsOrigin()
 		current_statue = table.remove(developer_statues, RandomInt(1, #developer_statues))
-		if i <= 2 then
+		if i <= 3 then
 			statue_entity = CreateUnitByName(current_statue, current_location, true, nil, nil, DOTA_TEAM_GOODGUYS)
 			statue_entity:SetForwardVector(Vector(1, 1, 0):Normalized())
 		else

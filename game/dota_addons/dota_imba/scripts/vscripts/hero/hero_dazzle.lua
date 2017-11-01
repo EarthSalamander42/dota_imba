@@ -1675,7 +1675,7 @@ function imba_dazzle_ressurection:OnSpellStart()
 				self:RefundManaCost()
 			else
 				self:SetActivated(true)
-				target:RespawnHero(false, false, false)
+				target:RespawnHero(false, false)
 				FindClearSpaceForUnit(target, caster:GetAbsOrigin(), true)
 				
 				ParticleManager:DestroyParticle(screenParticle, true)

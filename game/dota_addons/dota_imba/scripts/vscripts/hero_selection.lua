@@ -35,17 +35,23 @@ function HeroSelection:HeroListPreLoad()
 		if GetKeyValueByHeroName(hero, "IsImba") == 1 then
 			if GetKeyValueByHeroName(hero, "IsDisabled") == 1 then
 				table.insert(HeroSelection.disabled_10v10_heroes, hero)
-			elseif GetKeyValueByHeroName(hero, "IsDisabled") == 2 then
-				table.insert(HeroSelection.disabled_heroes, hero)
 			end
-			table.insert(HeroSelection.imba_heroes, hero)
+
+			if GetKeyValueByHeroName(hero, "IsDisabled") == 2 then
+				table.insert(HeroSelection.disabled_heroes, hero)
+			else
+				table.insert(HeroSelection.imba_heroes, hero)
+			end
 		else
 			if GetKeyValueByHeroName(hero, "IsDisabled") == 1 then
 				table.insert(HeroSelection.disabled_10v10_heroes, hero)
-			elseif GetKeyValueByHeroName(hero, "IsDisabled") == 2 then
-				table.insert(HeroSelection.disabled_heroes, hero)
 			end
-			table.insert(HeroSelection.vanilla_heroes, hero)
+			
+			if GetKeyValueByHeroName(hero, "IsDisabled") == 2 then
+				table.insert(HeroSelection.disabled_heroes, hero)
+			else
+				table.insert(HeroSelection.vanilla_heroes, hero)
+			end
 		end
 
 		if GetKeyValueByHeroName(hero, "IsCustom") == 1 then
@@ -278,6 +284,16 @@ end
 		end
 	end
 
+	if GetMapName() == "imba_10v10" or GetMapName() == "imba_custom_10v10" then
+		for _, picked_hero in pairs(HeroSelection.disabled_10v10_heroes) do
+			if random_hero == picked_hero then
+				print("10v10 hero disabled")
+				HeroSelection:RandomHero({PlayerID = id})
+				break
+			end
+		end
+	end
+
 	-- Flag the player as having randomed
 	PlayerResource:SetHasRandomed(id)
 
@@ -301,14 +317,24 @@ local id = event.PlayerID
 	if PlayerResource:GetTeam(id) == DOTA_TEAM_GOODGUYS then
 		for _, picked_hero in pairs(HeroSelection.radiantPicks) do
 			if random_hero == picked_hero then
-				HeroSelection:RandomHero({PlayerID = id})
+				HeroSelection:RandomImbaHero({PlayerID = id})
 				break
 			end
 		end
 	else
 		for _, picked_hero in pairs(HeroSelection.direPicks) do
 			if random_hero == picked_hero then
-				HeroSelection:RandomHero({PlayerID = id})
+				HeroSelection:RandomImbaHero({PlayerID = id})
+				break
+			end
+		end
+	end
+
+	if GetMapName() == "imba_10v10" or GetMapName() == "imba_custom_10v10" then
+		for _, picked_hero in pairs(HeroSelection.disabled_10v10_heroes) do
+			if random_hero == picked_hero then
+				print("10v10 hero disabled")
+				HeroSelection:RandomImbaHero({PlayerID = id})
 				break
 			end
 		end
@@ -328,6 +354,16 @@ local id = event.PlayerID
 	-- Roll a random hero, and keep it stored
 	if not random_hero then random_hero = normal_heroes[RandomInt(1, #normal_heroes)] end
 --	print(random_hero)
+
+	if GetMapName() == "imba_10v10" or GetMapName() == "imba_custom_10v10" then
+		for _, picked_hero in pairs(HeroSelection.disabled_10v10_heroes) do
+			if random_hero == picked_hero then
+				print("10v10 hero disabled")
+				HeroSelection:RandomSameHero({PlayerID = id})
+				break
+			end
+		end
+	end
 
 	PlayerResource:SetHasRandomed(id)
 	HeroSelection:HeroSelect({PlayerID = id, HeroName = random_hero, HasRandomed = true})
@@ -525,7 +561,7 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		-- IMBA: First hero spawn initialization
 		-------------------------------------------------------------------------------------------------
 		
-		hero:RespawnHero(false, false, false)
+		hero:RespawnHero(false, false)
 		PlayerResource:SetCameraTarget(player_id, hero)
 		Timers:CreateTimer(FrameTime(), function()
 			PlayerResource:SetCameraTarget(player_id, nil)

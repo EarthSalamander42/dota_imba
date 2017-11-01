@@ -220,7 +220,6 @@ var DireCount = 0
 		playerPanels[player] = playerPanel;
 		RadiantCount = RadiantCount +1
 
-
 		if (RadiantCount >= 5) {
 			class_option_count = class_option_count +1
 			var ClassOptionPanelRadiant_alt = $.CreatePanel("Panel", $("#LeftPlayers"), "PlayerRow" + class_option_count + "_good");
@@ -234,7 +233,7 @@ var DireCount = 0
 		var plyData = CustomNetTables.GetTableValue("player_table", player);
 		if (plyData != null) {
 			RadiantLevels = RadiantLevels + plyData.Lvl / RadiantCount
-			$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + RadiantLevels.toFixed([1]);
+			$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + RadiantLevels.toFixed([0]);
 		}
 	});
 
@@ -260,7 +259,7 @@ var DireCount = 0
 		var plyData = CustomNetTables.GetTableValue("player_table", player);
 		if (plyData != null) {
 			DireLevels = DireLevels + plyData.Lvl / DireCount
-			$("#AverageMMRTeamDire").text = $.Localize("average_mmr") + DireLevels.toFixed([1]);
+			$("#AverageMMRTeamDire").text = $.Localize("average_mmr") + DireLevels.toFixed([0]);
 		}
 	});
 	$.Schedule(2.0, CreateHeroPick)
@@ -295,6 +294,8 @@ function CreateHeroPick() {
 
 	MakeImbaHero(imba_heroes)
 	MakeDisabledHeroes(disabled_heroes_10v10, disabled_heroes)
+
+	$.Msg("Add a caller here to call ReconnectPlayer(player_id) in lua!")
 }
 
 /* A player on the same team has picked a hero, tell the player's panel a hero was picked,
@@ -603,8 +604,6 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 =========================================================================*/
 (function () {
 
-//	$("#VanillaToCustom").style.visibility = "visible"; /* Disabled custom heroes panel */
-
 	// If this player is a spectator, just kill the whole pick screen
 	var localTeam = Players.GetTeam(Players.GetLocalPlayer())
 	if ( localTeam != 2 && localTeam != 3 ) {
@@ -613,7 +612,6 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 		///Load player elements
 		ShowHUD(false);
 		LoadPlayers()
-//		$.Schedule(2, LoadPlayers);
 
 		// Show only map-specific elements
 		var parent_panel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()

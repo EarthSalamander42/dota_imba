@@ -244,23 +244,16 @@ local normal_xp = npc:GetDeathXP()
 			end
 		end
 
---		for i = 1, #banned_players do
---			if PlayerResource:GetSteamAccountID(npc:GetPlayerID()) == banned_players[i] then
---				if npc:GetUnitName() ~= "npc_dota_hero_wisp" or npc.is_real_wisp then
---					if not npc:HasModifier("modifier_command_restricted") then
---						npc:AddNewModifier(npc, nil, "modifier_command_restricted", {})
---						Timers:CreateTimer(0.1, function()
---							PlayerResource:SetCameraTarget(npc:GetPlayerOwnerID(), npc)
---						end)
---						Timers:CreateTimer(2.0, function()
---							StartAnimation(npc, {duration=2.0, activity=ACT_DOTA_DEFEAT, rate=1.0})
---							return 2.0
---						end)
---						Notifications:Bottom(npc:GetPlayerID(), {text="Hey what are you doing there, i thought this mod was shit?", duration=99999, style={color="red"}})
---					end
---				end
---			end
---		end
+		for i = 1, #IMBA_DONATORS do
+			if PlayerResource:GetSteamAccountID(npc:GetPlayerID()) == IMBA_DONATORS[i][1] then
+				if npc:GetUnitName() ~= "npc_dota_hero_wisp" or npc.is_real_wisp then
+					if not npc.has_companion then
+						npc.has_companion = true
+						DonatorCompanion(npc, IMBA_DONATORS[i][2])
+					end
+				end
+			end
+		end
 
 		-- fix for killed with Ghost Revenant immolation
 		if npc:HasModifier("modifier_ghost_revenant_ghost_immolation_debuff") then
@@ -976,73 +969,7 @@ function GameMode:OnConnectFull(keys)
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Player reconnect logic
 	-------------------------------------------------------------------------------------------------
-	-- Reinitialize the player's pick screen panorama, if necessary
-	if HeroSelection.HorriblyImplementedReconnectDetection then
-		HeroSelection.HorriblyImplementedReconnectDetection[player_id] = false
-		Timers:CreateTimer(1.0, function()
-			if HeroSelection.HorriblyImplementedReconnectDetection[player_id] then
-				Server_EnableToGainXPForPlyaer(player_id)
-				print("updating player "..player_id.."'s pick screen state")
-				local pick_state = HeroSelection.playerPickState[player_id].pick_state
-				local repick_state = HeroSelection.playerPickState[player_id].repick_state
-
-				local data = {
-					PlayerID = player_id,
-					PlayerPicks = HeroSelection.playerPicks,
-					pickState = pick_state,
-					repickState = repick_state
-				}
-
-				if IMBA_HERO_PICK_RULE == 0 then
-					data.PickedHeroes = {}
-					-- Set as all of the heroes that were selected
-					for _,v in pairs(HeroSelection.radiantPicks) do
-						table.insert(data.PickedHeroes, v)
-					end
-					for _,v in pairs(HeroSelection.direPicks) do
-						table.insert(data.PickedHeroes, v)
-					end
-				elseif IMBA_HERO_PICK_RULE == 1 then
-					-- Set as the team's pick to prevent same hero on the same team
-					if PlayerResource:GetTeam(player_id) == DOTA_TEAM_GOODGUYS then
-						data.PickedHeroes = HeroSelection.radiantPicks
-					else
-						data.PickedHeroes = HeroSelection.direPicks
-					end
-				else
-					data.PickedHeroes = {} --Set as empty, to allow all heroes to be selected
-				end
-
-				print("HERO SELECTION ARGS:")
-				print(pick_state)
-
-				if PlayerResource:GetTeam(player_id) == DOTA_TEAM_GOODGUYS then
-					print("Running Radiant picks...")
-					CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.radiantPicks, PlayerPicks = HeroSelection.playerPicks, pickState = pick_state, repickState = repick_state})
-				else
-					print("Running Dire picks...")
-					CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.direPicks, PlayerPicks = HeroSelection.playerPicks, pickState = pick_state, repickState = repick_state})
-				end
-			else
-				return 0.1
-			end
-		end)
-
-		-- If this is a reconnect from abandonment due to a long disconnect, remove the abandon state
-		if PlayerResource:GetHasAbandonedDueToLongDisconnect(player_id) then
-			local player_name = keys.name
-			local hero = PlayerResource:GetPickedHero(player_id)
-			local hero_name = PlayerResource:GetPickedHeroName(player_id)
-			local line_duration = 7
-			Notifications:BottomToAll({hero = hero_name, duration = line_duration})
-			Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
-			Notifications:BottomToAll({text = "#imba_player_reconnect_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
-			PlayerResource:IncrementTeamPlayerCount(player_id)
-
-			-- Stop redistributing gold to allies, if applicable
-			PlayerResource:StopAbandonGoldRedistribution(player_id)
-		end
-	end
+	ReconnectPlayer(player_id)
 
 	PlayerResource:InitPlayerData(player_id)
 end
