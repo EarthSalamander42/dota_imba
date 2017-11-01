@@ -23,6 +23,7 @@ function HeroSelection:HeroListPreLoad()
 
 	HeroSelection.vanilla_heroes = {}
 	HeroSelection.imba_heroes = {}
+	HeroSelection.new_heroes = {}
 	HeroSelection.random_heroes = {}
 	HeroSelection.disabled_10v10_heroes = {}
 	HeroSelection.disabled_heroes = {}
@@ -60,8 +61,8 @@ function HeroSelection:HeroListPreLoad()
 			HeroSelection:AddVanillaHeroToList(hero)
 		end
 
-		if GetKeyValueByHeroName(hero, "IsDisabled") == 1 then
-		elseif GetKeyValueByHeroName(hero, "IsDisabled") == 2 then
+		if GetKeyValueByHeroName(hero, "IsNew") == 1 then
+			table.insert(HeroSelection.new_heroes, hero)
 		end
 	end
 
@@ -159,6 +160,7 @@ function HeroSelection:HeroList(delay)
 			AgilityCustom = HeroSelection.agility_heroes_custom,
 			IntellectCustom = HeroSelection.intellect_heroes_custom,
 			Imba = HeroSelection.imba_heroes,
+			New = HeroSelection.imba_heroes,
 			Disabled10v10 = HeroSelection.disabled_10v10_heroes,
 			Disabled = HeroSelection.disabled_heroes
 		})
