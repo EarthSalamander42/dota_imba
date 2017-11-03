@@ -93,7 +93,7 @@ function PickingScreenSwap() {
 		$("#HeroListSTR_Custom").style.visibility = 'visible';
 		$("#HeroListAGI_Custom").style.visibility = 'visible';
 		$("#HeroListINT_Custom").style.visibility = 'visible';
-		$("#PickingScreenSwapLabel").text = $.Localize("swap_vanilla_to_custom");
+		$("#PickingScreenSwapLabel").text = $.Localize("#swap_vanilla_to_custom");
 	}
 	else {
 		switched = false
@@ -103,7 +103,7 @@ function PickingScreenSwap() {
 		$("#HeroListSTR_Custom").style.visibility = 'collapse';
 		$("#HeroListAGI_Custom").style.visibility = 'collapse';
 		$("#HeroListINT_Custom").style.visibility = 'collapse';
-		$("#PickingScreenSwapLabel").text = $.Localize("swap_custom_to_vanilla");
+		$("#PickingScreenSwapLabel").text = $.Localize("#swap_custom_to_vanilla");
 	}
 }
 
@@ -180,10 +180,13 @@ function MakeImbaHero(imba_heroes) {
 
 function MakeNewHero(new_heroes) {
 	var h = 1;
-	for (h in imba_heroes) {
-		if (imba_heroes[h] != null) {
-			$("#PickList").FindChildTraverse(imba_heroes[h]).RemoveClass("ClassNormalOption")
-			$("#PickList").FindChildTraverse(imba_heroes[h]).AddClass("ClassCustomOption")
+	for (h in new_heroes) {
+		if (new_heroes[h] != null) {
+			$("#PickList").FindChildTraverse(new_heroes[h]).RemoveClass("ClassNormalOption")
+			$("#PickList").FindChildTraverse(new_heroes[h]).AddClass("ClassCustomOption")
+			var HeroLabel = $.CreatePanel("Label", $("#PickList").FindChildTraverse(new_heroes[h]), new_heroes[h] + "_label");
+			HeroLabel.AddClass("ClassCustomOptionLabelNew")
+			HeroLabel.text = $.Localize("new_hero");
 		}
 	}
 }
@@ -196,6 +199,9 @@ function MakeDisabledHeroes(disabled_10v10, disabled_all) {
 			if (disabled_10v10[g] != null) {
 				var hero_panel = $("#PickList").FindChildTraverse(disabled_10v10[g])
 				$("#PickList").FindChildTraverse(disabled_10v10[g]).AddClass("taken")
+				var HeroLabel = $.CreatePanel("Label", $("#PickList").FindChildTraverse(disabled_10v10[g]), disabled_10v10[g] + "_label");
+				HeroLabel.AddClass("ClassCustomOptionLabelDisabled")
+				HeroLabel.text = $.Localize("disabled_hero_10v10");
 			}
 		}
 	}
@@ -205,6 +211,9 @@ function MakeDisabledHeroes(disabled_10v10, disabled_all) {
 		if (disabled_all[h] != null) {
 			var hero_panel = $("#PickList").FindChildTraverse(disabled_all[h])
 			hero_panel.AddClass("taken")
+			var HeroLabel = $.CreatePanel("Label", $("#PickList").FindChildTraverse(disabled_all[h]), disabled_all[h] + "_label");
+			HeroLabel.AddClass("ClassCustomOptionLabelDisabled")
+			HeroLabel.text = $.Localize("disabled_hero");
 		}
 	}
 }
@@ -522,57 +531,61 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 			$.Msg("Pick State: In-Game")
 		// Else, repopulate player pick panels
 		} else {
-			ShowHUD(false)
-			ShowPickScreen(true)
-			$.Msg("Pick State: Picking..")
+			var localTeam = Players.GetTeam(Players.GetLocalPlayer())
+			if ( localTeam != 2 && localTeam != 3 ) {
+			} else {
+				ShowHUD(false)
+				ShowPickScreen(true)
+				$.Msg("Pick State: Picking..")
 
-			var i = 1;
-			for (i = 1; i <= player_picks.length; i++) {
-				if (player_picks[i] != null) {
-					$("#PickInfoPanel").style.visibility = "visible";
-//					$.Msg(playerPanels[0])
-//					playerPanels[i].SetHero(player_picks[i])
+				var i = 1;
+				for (i = 1; i <= player_picks.length; i++) {
+					if (player_picks[i] != null) {
+						$("#PickInfoPanel").style.visibility = "visible";
+//						$.Msg(playerPanels[0])
+//						playerPanels[i].SetHero(player_picks[i])
+					}
 				}
-			}
 
-			// If the player has already repicked, make the repick button unavailable
-			if (repick_state) {
-				$("#RepickBtn").AddClass("disabled");
-			}
+				// If the player has already repicked, make the repick button unavailable
+				if (repick_state) {
+					$("#RepickBtn").AddClass("disabled");
+				}
 
-			// If the player has already selected a hero, go to the hero preview screen
-			if (pick_state == "selected_hero" && player_picks[player_id] != null) {
-				SwitchToHeroPreview(player_picks[player_id])
-			}
+				// If the player has already selected a hero, go to the hero preview screen
+				if (pick_state == "selected_hero" && player_picks[player_id] != null) {
+					SwitchToHeroPreview(player_picks[player_id])
+				}
 
-			// Gray out heroes already selected by according to hero pick rule (handled by server)
-			var panel_table = $("#PickList").FindChildrenWithClassTraverse("ClassNormalOption");
-			var imba_panel_table = $("#PickList").FindChildrenWithClassTraverse("ClassImbaOption");
+				// Gray out heroes already selected by according to hero pick rule (handled by server)
+				var panel_table = $("#PickList").FindChildrenWithClassTraverse("ClassNormalOption");
+				var imba_panel_table = $("#PickList").FindChildrenWithClassTraverse("ClassImbaOption");
 
-			var picked_herolist = [ 
-			"npc_dota_hero_arc_warden",
-			"npc_dota_hero_alchemist",
-			"npc_dota_hero_beastmaster",
-			"npc_dota_hero_axe"
-		]
+				var picked_herolist = [ 
+					"npc_dota_hero_arc_warden",
+					"npc_dota_hero_alchemist",
+					"npc_dota_hero_beastmaster",
+					"npc_dota_hero_axe"
+				]
 
-			var j = 0;
-//			for (j in panel_table) {
-//				$.Msg(player_picks[i])
-//				if (panel_table[j] != null && panel_table[j].id == player_picks[i]) {
-//					$.Msg("Picked heroes: " + player_picks[i])
-//					panel_table[j].AddClass("taken");
+				var j = 0;
+//				for (j in panel_table) {
+//					$.Msg(player_picks[i])
+//					if (panel_table[j] != null && panel_table[j].id == player_picks[i]) {
+//						$.Msg("Picked heroes: " + player_picks[i])
+//						panel_table[j].AddClass("taken");
+//					}
 //				}
-//			}
 
-			// Gray out heroes already selected by according to hero pick rule (handled by server)
-			$.Msg(picked_herolist.length)
-			for (j = 0; j <= picked_herolist.length; j++) {
-				if (picked_herolist[i] != null) {
-					$.Msg("Picked heroes: " + picked_herolist[i])
-					$.Msg("-----")
-					$.Msg("Picked heroes: " + picked_herolist[j])
-					$('#'+picked_herolist[i]).AddClass("taken");
+				// Gray out heroes already selected by according to hero pick rule (handled by server)
+				$.Msg(picked_herolist.length)
+				for (j = 0; j <= picked_herolist.length; j++) {
+					if (picked_herolist[i] != null) {
+						$.Msg("Picked heroes: " + picked_herolist[i])
+						$.Msg("-----")
+						$.Msg("Picked heroes: " + picked_herolist[j])
+						$('#'+picked_herolist[i]).AddClass("taken");
+					}
 				}
 			}
 		}
@@ -655,7 +668,6 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 		var max_level = CustomNetTables.GetTableValue("game_options", "max_level");
 		var kills_to_end = CustomNetTables.GetTableValue("game_options", "kills_to_end");
 		var frantic_mode = CustomNetTables.GetTableValue("game_options", "frantic_mode");
-		var hero_pick_rule = CustomNetTables.GetTableValue("game_options", "hero_pick_rule");
 		$("#BountyMultiplierValue").text = bounty_multiplier[1] + "%";
 		$("#ExpMultiplierValue").text = exp_multiplier[1] + "%";
 		$("#RespawnTimerValue").text = respawn_multiplier[1] + "%";
@@ -692,14 +704,6 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 			if(frantic_mode) {
 				$("#FranticModeValue").text = $.Localize( '#imba_gamemode_game_options_frantic_enabled' );
 			}
-		}
-
-		if(hero_pick_rule[1] == 0){
-			$("#HeroPickRuleValue").text = $.Localize( '#imba_gamemode_settings_hero_pick_all_unique' );
-		} else if(hero_pick_rule[1] == 1){
-			$("#HeroPickRuleValue").text = $.Localize( '#imba_gamemode_settings_hero_pick_team_unique' );
-		} else if(hero_pick_rule[1] == 2){
-			$("#HeroPickRuleValue").text = $.Localize( '#imba_gamemode_settings_hero_pick_no_unique' );
 		}
 
 		// If All Random is enabled, pick a random hero

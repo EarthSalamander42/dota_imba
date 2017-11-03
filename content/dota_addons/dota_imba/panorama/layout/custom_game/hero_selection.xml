@@ -74,7 +74,6 @@
 					<Panel id="RightStatsPanel" class="StatsPanel">
 						<Panel id="RightStatsSubPanel">
 							<Panel class="GameModeLabelPanel">
-								<Label id="HeroPickRuleLabel" class="GameModeLabel" text="#imba_gamemode_settings_hero_pick_rule" />
 								<Label id="FranticModeLabel" class="GameModeLabel" text="#imba_gamemode_game_options_frantic" />
 								<Label id="InitialGoldLabel" class="GameModeLabel" text="#imba_gamemode_settings_initial_gold" />
 								<Label id="InitialLevelLabel" class="GameModeLabel" text="#imba_gamemode_settings_initial_level" />
@@ -82,7 +81,6 @@
 							</Panel>
 
 							<Panel class="GameModeValuePanel">
-								<Label id="HeroPickRuleValue" class="GameModeValue" text="" />
 								<Label id="FranticModeValue" class="GameModeValue" text="#imba_gamemode_game_options_frantic_disabled" />
 								<Label id="InitialGoldValue" class="GameModeValue" text="625" />
 								<Label id="InitialLevelValue" class="GameModeValue" text="1" />

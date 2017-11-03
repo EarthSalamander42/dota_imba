@@ -1114,6 +1114,7 @@ function CustomHeroAttachments(hero, illusion)
 end
 
 function ReconnectPlayer(player_id)
+	print("Player is reconnecting:", player_id)
 	-- Reinitialize the player's pick screen panorama, if necessary
 	if HeroSelection.HorriblyImplementedReconnectDetection then
 		HeroSelection.HorriblyImplementedReconnectDetection[player_id] = false
@@ -1131,24 +1132,14 @@ function ReconnectPlayer(player_id)
 					repickState = repick_state
 				}
 
-				if IMBA_HERO_PICK_RULE == 0 then
-					data.PickedHeroes = {}
-					-- Set as all of the heroes that were selected
-					for _,v in pairs(HeroSelection.radiantPicks) do
-						table.insert(data.PickedHeroes, v)
-					end
-					for _,v in pairs(HeroSelection.direPicks) do
-						table.insert(data.PickedHeroes, v)
-					end
-				elseif IMBA_HERO_PICK_RULE == 1 then
-					-- Set as the team's pick to prevent same hero on the same team
-					if PlayerResource:GetTeam(player_id) == DOTA_TEAM_GOODGUYS then
-						data.PickedHeroes = HeroSelection.radiantPicks
-					else
-						data.PickedHeroes = HeroSelection.direPicks
-					end
-				else
-					data.PickedHeroes = {} --Set as empty, to allow all heroes to be selected
+				data.PickedHeroes = {}
+				-- Set as all of the heroes that were selected
+				for _,v in pairs(HeroSelection.radiantPicks) do
+					table.insert(data.PickedHeroes, v)
+				end
+				
+				for _,v in pairs(HeroSelection.direPicks) do
+					table.insert(data.PickedHeroes, v)
 				end
 
 				print("HERO SELECTION ARGS:")
@@ -1197,4 +1188,96 @@ local summon_point = Entities:FindByName(nil, "ent_dota_fountain_good"):GetAbsOr
 	companion:AddNewModifier(companion, nil, "modifier_companion", {})
 	companion:AddNewModifier(companion, nil, "modifier_phased", {})
 	companion:SetRenderColor(200, 55, 55) -- add color in donator table?
+end
+
+function HeroVoiceLine(hero, event, ab)
+local hero_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")
+if not hero.voice_line_cd then hero.voice_line_cd = false end
+if not hero.voice_line_cd_alt then hero.voice_line_cd_alt = false end
+if hero:GetKeyValue("ShortName") == nil then return end
+local short_hero_name = hero:GetKeyValue("ShortName")
+local max_line = 2
+if event == "blink" or event == "firstblood" then
+else
+	max_line = hero:GetKeyValue(event)
+end
+local random_int = RandomInt(1, max_line)
+
+	-- NOT ADDED YET:
+	-- notyet
+	-- failure
+	-- anger
+	-- happy
+	-- rare
+	-- nomana
+	-- RIVAL MEETING SYSTEM
+	-- ITEM PURCHASED SYSTEM
+	-- FIRST BLOOD SYSTEM (always 2 voicelines)
+
+	-- Later on, finish this to play specific sounds from the ability
+--	if event == "cast" then
+--		if RandomInt(1, 100) >= 20 then
+--			event = hero:GetKeyValue("OnAbility"..ab.."Used")
+--			print("play specific ab sound")
+--		else
+--			print("play global ab sound")
+--		end
+--	end
+
+	-- prints
+--	if random_int >= 10 then
+--		print(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int)
+--	else
+--		print(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int)
+--	end
+
+	if event == "blink" or event == "purch" or event == "battlebegins" or event == "win" or event == "lose" or event == "kill" or event == "death" or event == "level_voiceline" or event == "laugh" or event == "thanks" then
+		if event == "level_voiceline" then event = string.gsub(event, "_voiceline", "") end
+		if random_int >= 10 then
+			EmitSoundOn(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int, hero)
+		else
+			EmitSoundOn(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int, hero)
+		end
+		return
+	end
+
+	if hero.voice_line_cd_alt == false then
+		if event == "lasthit" or event == "deny" then
+			if random_int >= 10 then
+				EmitSoundOn(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int, hero)
+			else
+				EmitSoundOn(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int, hero)
+			end
+
+			hero.voice_line_cd_alt = true
+			Timers:CreateTimer(6.0, function()
+				hero.voice_line_cd_alt = false
+			end)
+			return
+		end
+	end
+
+	-- move, cast, attack
+	if hero.voice_line_cd == false then
+		if random_int >= 10 then
+			EmitSoundOn(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int, hero)
+		else
+			EmitSoundOn(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int, hero)
+		end
+
+		hero.voice_line_cd = true
+		Timers:CreateTimer(6.0, function()
+			hero.voice_line_cd = false
+		end)
+	end
+end
+
+function UpdateRoshanBar(roshan)
+	CustomNetTables:SetTableValue("game_options", "roshan", {
+		level = roshan:GetLevel(),
+		HP = roshan:GetHealth(),
+		HP_alt = roshan:GetHealthPercent(),
+		maxHP = roshan:GetMaxHealth()
+	})
+	return time
 end

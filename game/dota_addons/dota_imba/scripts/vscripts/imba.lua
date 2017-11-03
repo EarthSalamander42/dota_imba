@@ -91,8 +91,10 @@ function GameMode:OnFirstPlayerLoaded()
 	else
 		GoodCamera = Entities:FindByName(nil, "dota_goodguys_fort")
 		BadCamera = Entities:FindByName(nil, "dota_badguys_fort")
---		TODO: Activate Roshan
---		local roshan = CreateUnitByName("npc_dota_roshan", Vector(-2368, 1856, 168), true, nil, nil, DOTA_TEAM_NEUTRALS)
+
+		ROSHAN_SPAWN_LOC = Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):GetAbsOrigin()
+		Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):RemoveSelf()
+		local roshan = CreateUnitByName("npc_imba_roshan", ROSHAN_SPAWN_LOC, true, nil, nil, DOTA_TEAM_NEUTRALS)
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -122,7 +124,7 @@ function GameMode:OnFirstPlayerLoaded()
 		"npc_imba_contributor_wally_chan"
 	}
 
-	-- Add 4 random contributor statues
+	-- Add 6 random contributor statues
 	local current_location = {}
 	current_location[1] = Vector(-6900, -5400, 384)
 	current_location[2] = Vector(-6900, -5100, 384)
@@ -170,18 +172,24 @@ function GameMode:OnFirstPlayerLoaded()
 		"npc_imba_developer_yahnich",
 	}
 
-	-- Add 4 random developer statues
-	local current_location
+	-- Add 6 random developer statues
+	local current_location = {}
+	current_location[1] = Vector(-5800, -6300, 384)
+	current_location[2] = Vector(-5500, -6300, 384)
+	current_location[3] = Vector(-5200, -6300, 384)
+	current_location[4] = Vector(5800, 6300, 384)
+	current_location[5] = Vector(5500, 6300, 384)
+	current_location[6] = Vector(5200, 6300, 384)
+
 	local current_statue
 	local statue_entity
 	for i = 1, 6 do
-		current_location = Entities:FindByName(nil, "developer_location_0"..i):GetAbsOrigin()
 		current_statue = table.remove(developer_statues, RandomInt(1, #developer_statues))
 		if i <= 3 then
-			statue_entity = CreateUnitByName(current_statue, current_location, true, nil, nil, DOTA_TEAM_GOODGUYS)
+			statue_entity = CreateUnitByName(current_statue, current_location[i], true, nil, nil, DOTA_TEAM_GOODGUYS)
 			statue_entity:SetForwardVector(Vector(1, 1, 0):Normalized())
 		else
-			statue_entity = CreateUnitByName(current_statue, current_location, true, nil, nil, DOTA_TEAM_BADGUYS)
+			statue_entity = CreateUnitByName(current_statue, current_location[i], true, nil, nil, DOTA_TEAM_BADGUYS)
 			statue_entity:SetForwardVector(Vector(-1, -1, 0):Normalized())
 		end
 		statue_entity:AddNewModifier(statue_entity, nil, "modifier_imba_contributor_statue", {})
@@ -583,13 +591,21 @@ function GameMode:OrderFilter( keys )
 		return nil
 	end
 
-	
 	-- Do special handlings if shift-casted only here! The event gets fired another time if the caster
 	-- is actually doing this order
 	if keys.queue == 1 then
 		return true
 	end
-	
+
+	-- Voice lines
+	if keys.order_type == DOTA_UNIT_ORDER_ATTACK_TARGET then
+		HeroVoiceLine(unit, "attack")
+	elseif keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION or keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_TARGET then
+		HeroVoiceLine(unit, "move")
+	elseif keys.order_type == DOTA_UNIT_ORDER_CAST_TARGET or keys.order_type == DOTA_UNIT_ORDER_CAST_POSITION or keys.order_type == DOTA_UNIT_ORDER_CAST_TARGET_TREE or keys.order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
+		HeroVoiceLine(unit, "cast")
+	end
+
 	------------------------------------------------------------------------------------
 	-- Prevent Buyback during reincarnation
 	------------------------------------------------------------------------------------

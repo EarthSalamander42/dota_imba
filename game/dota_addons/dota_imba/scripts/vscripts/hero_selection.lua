@@ -160,7 +160,7 @@ function HeroSelection:HeroList(delay)
 			AgilityCustom = HeroSelection.agility_heroes_custom,
 			IntellectCustom = HeroSelection.intellect_heroes_custom,
 			Imba = HeroSelection.imba_heroes,
-			New = HeroSelection.imba_heroes,
+			New = HeroSelection.new_heroes,
 			Disabled10v10 = HeroSelection.disabled_10v10_heroes,
 			Disabled = HeroSelection.disabled_heroes
 		})
@@ -425,33 +425,15 @@ function HeroSelection:HeroSelect(event)
 		return nil
 	end
 
-    if IMBA_HERO_PICK_RULE == 0 then
-        -- All Unique heroes
-        for _, picked_hero in pairs(HeroSelection.radiantPicks) do
-            if event.HeroName == picked_hero then
-                return nil
-            end
+    for _, picked_hero in pairs(HeroSelection.radiantPicks) do
+        if event.HeroName == picked_hero then
+            return nil
         end
-        for _, picked_hero in pairs(HeroSelection.direPicks) do
-            if event.HeroName == picked_hero then
-                return nil
-            end
-        end
-    elseif IMBA_HERO_PICK_RULE == 1 then
-        -- Allow Team pick same hero
-        -- Check if this hero hasn't already been picked
-        if PlayerResource:GetTeam(event.PlayerID) == DOTA_TEAM_GOODGUYS then
-            for _, picked_hero in pairs(HeroSelection.radiantPicks) do
-                if event.HeroName == picked_hero then
-                    return nil
-                end
-            end
-        else
-            for _, picked_hero in pairs(HeroSelection.direPicks) do
-                if event.HeroName == picked_hero then
-                    return nil
-                end
-            end
+    end
+        
+	for _, picked_hero in pairs(HeroSelection.direPicks) do
+        if event.HeroName == picked_hero then
+            return nil
         end
     end
 
@@ -598,11 +580,11 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		local has_repicked = PlayerResource:CustomGetHasRepicked(player_id)
 
 		if has_repicked and has_randomed then
-			PlayerResource:SetGold(player_id, HERO_RERANDOM_GOLD, false)
+			PlayerResource:SetGold(player_id, HERO_INITIAL_GOLD +100, false)
 		elseif has_repicked then
-			PlayerResource:SetGold(player_id, HERO_REPICK_GOLD, false)
+			PlayerResource:SetGold(player_id, HERO_INITIAL_GOLD -100, false)
 		elseif has_randomed or IMBA_PICK_MODE_ALL_RANDOM or IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
-			PlayerResource:SetGold(player_id, HERO_RANDOM_GOLD, false)
+			PlayerResource:SetGold(player_id, HERO_INITIAL_GOLD +200, false)
 		else
 			PlayerResource:SetGold(player_id, HERO_INITIAL_GOLD, false)
 		end

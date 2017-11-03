@@ -249,7 +249,17 @@
 }
 
 .ClassNormalOption,
-.ClassImbaOption,
+.ClassImbaOption {
+	width: 80px;
+	height: 48px;
+	margin: 2px 0px 2px 1px;
+	horizontal-align: left;
+	wash-color: #7090B060;
+	background-size: 100% 100%;
+	pre-transform-scale2d: 0.95;
+	border-radius: 25px;
+}
+
 .ClassCustomOption {
 	width: 80px;
 	height: 48px;
@@ -259,6 +269,26 @@
 	background-size: 100% 100%;
 	pre-transform-scale2d: 0.95;
 	border-radius: 25px;
+}
+
+.ClassCustomOptionLabelNew
+{
+	align: center center;
+	font-size: 12px;
+	font-family: "Radiance";
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #fff;
+}
+
+.ClassCustomOptionLabelDisabled
+{
+	align: center center;
+	font-size: 10px;
+	font-family: "Radiance";
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #fff;
 }
 
 .AspectRatio16x10 .ClassNormalOption,

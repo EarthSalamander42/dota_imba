@@ -121,4 +121,6 @@ function UpdateNetGraphHeroNames()
 	CustomNetTables.SubscribeNetTableListener("netgraph", UpdateNetGraph);
 	GameEvents.Subscribe("show_netgraph", ShowNetgraph);
 	GameEvents.Subscribe("show_netgraph_heronames", UpdateNetGraphHeroNames);
+
+//	$("#Buttons").style.visibility = "collapse";
 })();

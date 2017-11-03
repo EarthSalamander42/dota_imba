@@ -4276,88 +4276,6 @@
 		"VisionNighttimeRange"		"800"
 	}
 
-	"npc_dota_roshan"
-	{
-		// General
-		//
-		"BaseClass"					"npc_dota_roshan"	// Class of entity of link to.
-		"Model"						"models/creeps/roshan/roshan.vmdl"	// Model.
-		"SoundSet"					"Roshan"					// Name of sound set.
-		"ModelScale"				"1"
-		"Level"						"30"
-		"IsAncient"					"1"
-				
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"					"roshan_spell_block"	// Ability 1.
-		"Ability2"					"roshan_bash"			// Ability 2.
-		"Ability3"					"roshan_slam"			// Ability 3.
-		"Ability4"					"roshan_inherent_buffs"	// Ability 4.
-		"Ability5"					"roshan_devotion"		// Ability 5.
-		"Ability6"					""						// Ability 6 - Extra.
-		"Ability7"					""						// Ability 7 - Extra.
-		"Ability8"					""						// Ability 8 - Extra.
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"15.0"			// Physical protection.
-		"MagicalResistance"			"55"									// Magical protection (percentage).
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"65"		// Damage range min.
-		"AttackDamageMax"			"65"		// Damage range max.
-		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
-		"AttackRate"				"2.0"			// Speed of attack.
-		"AttackAnimationPoint"		"0.6"		// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"150"		// Range within a target can be acquired.
-		"AttackRange"				"150"		// Range within a target can be attacked.
-		"ProjectileModel"			"particles/base_attacks/ranged_goodguy.vpcf" // Particle system model for projectile.
-		"ProjectileSpeed"			"1000"		// Speed of projectile.
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"					"750"		// Experience earn.
-		"BountyGoldMin"				"150"		// Gold earned min.
-		"BountyGoldMax"				"400"		// Gold earned max.
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"			// Hull type used for navigation/locomotion.
-		"RingRadius"				"110"
-		"HealthBarOffset"			"400"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air
-		"MovementSpeed"				"270"		// Speed
-		"MovementTurnRate"			"1.0"		// Turning rate.
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"5500"		// Base health.
-		"StatusHealthRegen"			"20"		// Health regeneration rate.
-		"StatusMana"				"0"		// Base mana.
-		"StatusManaRegen"			"0"		// Mana regeneration rate.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_NEUTRALS"			// Team name.
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1400"		// Range of vision during day light.
-		"VisionNighttimeRange"		"1400"		// Range of vision at night time.
-
-		// Inventory
-		//----------------------------------------------------------------
-		"HasInventory"				"1"
-	}
-
 	//=================================================================================
 	// Necronomicon Warrior Level 1
 	//=================================================================================
@@ -12621,7 +12539,7 @@
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
 		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_HERO"
-		
+
 		// Vision
 		//-------------------------------------------------------------------------------------------------------------
 		"VisionDaytimeRange"		"1800"									// Range of vision during day light.
@@ -12635,5 +12553,190 @@
 		"RenderablePortrait"
 		{
 		}
+	}
+
+	//=================================================================================
+	// Diretide Roshan
+	//=================================================================================
+	"npc_imba_roshan"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_roshan"
+		"Model"						"models/rosh/roshan_halloween.vmdl"
+		"GameSoundsFile"			"soundevents/diretide_soundevents.vsndevts"
+		"SoundSet"					"Roshan"
+		"IdleSoundLoop"				"Roshan.Idle"
+		"ModelScale"				"1.0"
+		"Level"						"1"
+		"IsAncient"					"1"
+		"IsConsideredHero"			"1"
+		"UnitLabel"					"npc_imba_roshan"
+		"MinimapIcon"				"minimap_roshancamp"
+		"MinimapIconSize"			"400"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"imba_roshan_diretide_apocalypse" //Apocalypse
+		"Ability2"					"roshan_deafening_blast" //Wave of Force - imba_roshan_diretide_force_wave
+//		"Ability3"					"roshan_toss" //Toss
+		"Ability4"					"creature_fire_breath" //Fire Breath
+//		"Ability5"					"imba_roshan_diretide_summon_roshlings"
+		"Ability6"					"roshan_berserkers_blood"
+		"Ability7"					"roshan_spell_block"
+		"Ability8"					"roshan_true_sight"
+		"Ability9"					"imba_roshan_ai_diretide"
+		"Ability10"					"special_bonus_unique_invoker_2"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"30"
+		"MagicalResistance"			"75"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"250"
+		"AttackDamageMax"			"250"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"1.3"
+		"AttackAnimationPoint"		"0.4"
+		"AttackAcquisitionRange"	"600"
+		"AttackRange"				"200"
+		"ProjectileModel"			""
+		"ProjectileSpeed"			""
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"0"
+		"BountyGoldMin"				"0"
+		"BountyGoldMax"				"0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"150"
+		"HealthBarOffset"			"400"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"750"		// Experience earn.
+		"BountyGoldMin"				"150"		// Gold earned min.
+		"BountyGoldMax"				"400"		// Gold earned max.
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"350"
+		"MovementTurnRate"			"1.0"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"15000"
+		"StatusHealthRegen"			"50.0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0.0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"1400"
+
+		// Inventory
+		//----------------------------------------------------------------
+		"HasInventory"				"1"
+
+		"Creature"
+		{
+		   "AttachWearables"   
+			{
+//				"Wearable1" { "ItemDef" "10092" } // Roshan's Costume - Frankenstein
+//				"Wearable2" { "ItemDef" "10093" } // Roshan's Costume - Dracula
+//				"Wearable3" { "ItemDef" "10094" } // Roshan's Costume - Angel
+			} 
+		}
+	}
+
+	//=================================================================================
+	// Roshling
+	//=================================================================================
+	"npc_imba_roshling"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creep"
+		"Model"						"models/creeps/baby_rosh_halloween/baby_rosh_dire/baby_rosh_dire.vmdl"
+		"SoundSet"					"Undying_Zombie"
+		"MinimapIcon"				"minimap_siege"
+		"MinimapIconSize"			"250"
+		"ModelScale" 				"1.35"
+		"Level"						"20"
+		"IsAncient"					"1"
+		"UnitLabel"					"npc_imba_roshling"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"imba_roshling_bash"
+		"Ability2"					"imba_roshling_aura"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"10"
+		"MagicalResistance"			"50"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"50"
+		"AttackDamageMax"			"50"
+		"AttackRate"				"1.0"
+		"AttackAnimationPoint"		"0.26"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"150"
+		"ProjectileModel"			"ranged_goodguy"
+		"ProjectileSpeed"			"1000"   
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"0"
+		"BountyGoldMin"				"0"
+		"BountyGoldMax"				"0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"80"
+		"HealthBarOffset"			"160"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"490"
+		"MovementTurnRate"			"0.5"
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"2500"
+		"StatusHealthRegen"			"25.0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"1400"
 	}
 }
