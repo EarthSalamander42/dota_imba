@@ -238,6 +238,80 @@
 		"Ability17"					"special_bonus_unique_batrider_2"
 
 		"ProjectileModel"			"particles/units/heroes/hero_batrider/batrider_base_attack.vpcf"
+
+		//Voice Lines (number of voicelines per events)
+		"ShortName"					"bat"
+
+		//Abilities
+		"failure"					"4" // ability_failure -- OnAbilityFail
+		"notyet"					"9" // notyet -- OnAbilityNotReady, These voicelines should be called in the right order, as the unit gets anger and anger the more you spam
+		"cast"						"4" // cast -- OnAbilityUsed
+
+		//Make them later
+		"OnAbility1Used"			"ability_napalm"
+		"OnAbility1UsedCount"		"6"
+		"OnAbility2Used"			"ability_flame"
+		"OnAbility2UsedCount"		"6"
+		"OnAbility3Used"			"ability_firefly"
+		"OnAbility3UsedCount"		"9"
+		"OnAbility4Used"			"ability_lasso"
+		"OnAbility4UsedCount"		"11"
+
+		//Orders
+		"battlebegins"				"2" // battlebegins -- OnGameInProgress
+		"anger"						"5" // anger -- OnAngry
+		"attack"					"14" // attack -- OnAttack (When the unit attack another unit)
+		"pain"						"9" // pain -- OnAttacked, when the unit is attacked. Add underattack (1) here?
+		"death"						"15" // death -- OnDeath
+		"deny"						"18" // deny -- OnDeny
+		"happy"						"3" // happy -- OnHappy
+		"kill"						"20" // kill -- OnKill
+		"lasthit"					"15" // lasthit -- OnLastHit
+		"laugh"						"4" // laugh -- OnLaugh
+		"level_voiceline"			"14" // level -- OnLevelUp
+		"lose"						"3" // lose -- OnLose
+		"move"						"22" // move -- OnMove
+		"rare"						"4" // rare -- OnMoveRare
+		"nomana"					"9"	// nomana -- These voicelines should be called in the right order, as the unit gets anger and anger the more you spam
+		"purch"						"4" // purch -- OnPurchase
+		"respawn"					"20" // respawn -- OnRespawn
+		"spawn"						"5" // spawn -- OnSpawn, (loadout?)
+		"thanks"					"2" // thanks -- OnThanks
+		"win"						"4" // win -- OnWin
+
+		"Rivals" // 10, 25 ?? sound_name = batrider_bat_rival_ (rival)
+		{
+			"01"					"lina"
+			"02"					"queenofpain"
+			"03"					"drow_ranger"
+			"04"					"windrunner"
+			"05"					"vengefulspirit"
+			"06"					"enchantress"
+			"07"					"spectre"
+			"08"					"crystal_maiden"
+			"09"					"lina"
+			"11"					"templar_assassin"
+			"12"					"death_prophet"
+			"13"					"mirana"
+			"14"					"broodmother"
+			"15"					"phantom_assassin"
+			"16"					"night_stalker"
+			"17"					"storm_spirit"
+			"18"					"pudge"
+			"19"					"pudge"
+			"20"					"necrolyte"
+			"21"					"faceless_void"
+			"22"					"viper"
+			"23"					"dragon_knight"
+			"24"					"jakiro"
+		}
+
+		"ItemPurchased" // batrider_bat_item_
+		{
+			"01"					"force_staff"
+			"02"					"vanguard"
+			"03"					"arcane_boots"
+		}
 	}
 
 	//=================================================================================================================
@@ -1672,24 +1746,27 @@
 		//Picking Screen
 		"IsCustom"					"0"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
+		"IsDisabled"				"2" // 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
 
 		"Ability1"					"morphling_waveform"
-		"Ability2"					"morphling_adaptive_strike"
-		"Ability3"					"morphling_morph_agi"
-		"Ability4"					"morphling_morph_str"
-		//"Ability5"					"morphling_hybrid"
-		"Ability6"					"morphling_replicate"
-		//"Ability7"					"morphling_morph"
-		//"Ability8"					"morphling_morph_replicate"
+		"Ability2"					"morphling_adaptive_strike_agi"
+		"Ability3"					"morphling_adaptive_strike_str"
+		"Ability4"					"morphling_morph_agi"
+		"Ability5"					"morphling_morph_str"
+		"Ability6"					"morphling_morph"
+//		"Ability7"					"rubick_hidden1"
+//		"Ability8"					"rubick_hidden2"
+//		"Ability9"					"morphling_replicate"
+//		"Ability10"					"morphling_morph_replicate"
 
-		"Ability10"					"special_bonus_agility_13"
-		"Ability11"					"special_bonus_mp_150"
-		"Ability12"					"special_bonus_attack_speed_20"
-		"Ability13"					"special_bonus_cooldown_reduction_12"
-		"Ability14"					"special_bonus_movement_speed_25"
-		"Ability15"					"special_bonus_attack_damage_40"
-		"Ability16"					"special_bonus_unique_morphling_1"
-		"Ability17"					"special_bonus_unique_morphling_2"
+//		"Ability15"					"special_bonus_agility_10"
+//		"Ability16"					"special_bonus_movement_speed_20"
+//		"Ability17"					"special_bonus_unique_morphling_4"
+//		"Ability18"					"special_bonus_attack_speed_30"
+//		"Ability19"					"special_bonus_unique_morphling_5"
+//		"Ability20"					"special_bonus_unique_morphling_2"
+//		"Ability21"					"special_bonus_unique_morphling_1"
+//		"Ability22"					"special_bonus_unique_morphling_3"
 
 		"ProjectileModel"			"particles/units/heroes/hero_morphling/morphling_base_attack.vpcf"
 	}

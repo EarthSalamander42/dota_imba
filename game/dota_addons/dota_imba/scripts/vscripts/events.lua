@@ -171,6 +171,7 @@ DebugPrintTable(keys)
 				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph", {})
 --				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
 			end
+			HeroVoiceLine(hero, "battlebegins")
 		end
 
 		Timers:CreateTimer(60, function()
@@ -184,6 +185,20 @@ DebugPrintTable(keys)
 		CustomGameEventManager:Send_ServerToAllClients("end_game", {})
 		local winning_team = GAME_WINNER_TEAM
 		Server_CalculateXPForWinnerAndAll(winning_team)
+		local winning_team_number = 2
+		if winning_team == "Dire" then
+			winning_team_number = 3
+		end
+
+		for _, hero in pairs(HeroList:GetAllHeroes()) do
+			if hero:GetTeamNumber() == winning_team_number then
+				print("WINNING! YAY:", winning_team_number)
+				HeroVoiceLine(hero, "win")
+			else
+				print("LOSING! OH NOES:", winning_team_number)
+				HeroVoiceLine(hero, "lose")
+			end
+		end
 	end
 end
 
@@ -253,6 +268,14 @@ local normal_xp = npc:GetDeathXP()
 					end
 				end
 			end
+		end
+
+		if npc.first_spawn == nil then npc.first_spawn = true end
+		if npc.first_spawn == true then
+			npc.first_spawn = false
+			HeroVoiceLine(npc, "spawn")
+		else
+			HeroVoiceLine(npc, "respawn")
 		end
 
 		-- fix for killed with Ghost Revenant immolation
@@ -390,14 +413,17 @@ end
 -- An entity somewhere has been hurt.  This event fires very often with many units so don't do too many expensive
 -- operations here
 function GameMode:OnEntityHurt(keys)
-	--DebugPrint("[BAREBONES] Entity Hurt")
-	--DebugPrintTable(keys)
-
 	--local damagebits = keys.damagebits -- This might always be 0 and therefore useless
 	--if keys.entindex_attacker ~= nil and keys.entindex_killed ~= nil then
 	--local entCause = EntIndexToHScript(keys.entindex_attacker)
 	--local entVictim = EntIndexToHScript(keys.entindex_killed)
 	--end
+
+	if keys.entindex_killed ~= nil then
+		if EntIndexToHScript(keys.entindex_killed):IsRealHero() then
+			HeroVoiceLine(EntIndexToHScript(keys.entindex_killed), "pain")
+		end
+	end
 end
 
 -- An item was picked up off the ground
@@ -419,19 +445,19 @@ end
 
 -- An item was purchased by a player
 function GameMode:OnItemPurchased( keys )
-	DebugPrint( '[BAREBONES] OnItemPurchased' )
-	DebugPrintTable(keys)
+local plyID = keys.PlayerID
+if not plyID then return end
+local hero = PlayerResource:GetSelectedHeroEntity(plyID)
+local itemName = keys.itemname 
+local itemcost = keys.itemcost
 
-	-- The playerID of the hero who is buying something
-	local plyID = keys.PlayerID
-	if not plyID then return end
-
-	-- The name of the item purchased
-	local itemName = keys.itemname 
-	
-	-- The cost of the item purchased
-	local itemcost = keys.itemcost
-	
+	if itemName == "item_imba_blink" then
+		HeroVoiceLine(hero, "blink")
+	else
+		if RandomInt(1, 100) >= 50 then
+			HeroVoiceLine(hero, "purch")
+		end
+	end
 end
 
 -- An ability was used by a player
@@ -443,8 +469,10 @@ if not abilityname then return end
 local hero = PlayerResource:GetSelectedHeroEntity(player)
 if not hero then return end
 
---	local abilityUsed = hero:FindAbilityByName(abilityname)
---	if not abilityUsed then return end
+local abilityUsed = hero:FindAbilityByName(abilityname)
+if not abilityUsed then return end
+
+	HeroVoiceLine(hero, "cast")
 
 	if abilityname == "rubick_spell_steal" then
 		local target = abilityUsed:GetCursorTarget()
@@ -615,6 +643,7 @@ function GameMode:OnPlayerLevelUp(keys)
 	-------------------------------------------------------------------------------------------------
 
 	hero:SetCustomDeathXP(HERO_XP_BOUNTY_PER_LEVEL[hero_level])
+	HeroVoiceLine(hero, "level_voiceline")
 end
 
 -- A player last hit a creep, a tower, or a hero
@@ -627,6 +656,14 @@ function GameMode:OnLastHit(keys)
 	local isTowerKill = keys.TowerKill == 1
 	local player = PlayerResource:GetPlayer(keys.PlayerID)
 	local killedEnt = EntIndexToHScript(keys.EntKilled)
+
+	if isFirstBlood then
+		HeroVoiceLine(player:GetAssignedHero(), "firstblood")
+		return
+	elseif isHeroKill then
+		HeroVoiceLine(player:GetAssignedHero(), "kill")
+		return
+	end
 end
 
 -- A tree was cut down by tango, quelling blade, etc
@@ -728,10 +765,8 @@ function GameMode:OnTeamKillCredit(keys)
 	-- IMBA: Deathstreak logic
 	-------------------------------------------------------------------------------------------------		
 	if PlayerResource:IsValidPlayerID(killer_id) and PlayerResource:IsValidPlayerID(victim_id) then
-		-- Reset the killer's deathstreak
-		PlayerResource:ResetDeathstreak(killer_id)		
 
-		-- Increment the victim's deathstreak
+		PlayerResource:ResetDeathstreak(killer_id)		
 		PlayerResource:IncrementDeathstreak(victim_id)
 
 		-- Show Deathstreak message
@@ -741,7 +776,6 @@ function GameMode:OnTeamKillCredit(keys)
 		local line_duration = 7
 
 		if victim_death_streak then
-
 			if victim_death_streak >= 3 then
 				Notifications:BottomToAll({hero = victim_hero_name, duration = line_duration})
 				Notifications:BottomToAll({text = victim_player_name.." ", duration = line_duration, continue = true})
@@ -813,7 +847,6 @@ function GameMode:OnTeamKillCredit(keys)
 			victim_hero.vengeance_aura_target = killer_hero
 		end
 	end
-
 end
 
 -- An entity died
@@ -899,6 +932,7 @@ function GameMode:OnEntityKilled( keys )
 				end
 				killed_unit:SetTimeUntilRespawn(respawn_time)
 			end
+			HeroVoiceLine(killed_unit, "death")
 		end
 
 		-------------------------------------------------------------------------------------------------
@@ -936,6 +970,14 @@ function GameMode:OnEntityKilled( keys )
 			-- Update buyback cost
 			PlayerResource:SetCustomBuybackCost(player_id, buyback_cost)
 			PlayerResource:SetCustomBuybackCooldown(player_id, buyback_cooldown)
+		end
+
+		if string.find(killed_unit:GetUnitName(), "dota_creep") then
+			if killer:GetTeamNumber() == killed_unit:GetTeamNumber() then
+				HeroVoiceLine(killer, "deny")
+			else
+				HeroVoiceLine(killer, "lasthit")
+			end
 		end
 	end
 end

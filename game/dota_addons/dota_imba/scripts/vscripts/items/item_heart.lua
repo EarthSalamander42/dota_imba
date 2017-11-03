@@ -122,7 +122,7 @@ function modifier_item_imba_heart_unique:OnTakeDamage(keys)
 		if unit == self.caster then
 
 			-- If the attacker wasn't an enemy hero or Roshan, do nothing
-			if not attacker:IsHero() and not IsRoshan(attacker) then
+			if not attacker:IsHero() and not IsRoshan(attacker) and not attacker:GetUnitLabel("npc_imba_roshan") then
 				return nil
 			end
 

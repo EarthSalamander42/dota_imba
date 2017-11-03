@@ -238,7 +238,6 @@ KILLS_TO_END_GAME_FOR_TEAM = 70												-- How many kills for a team should s
 
 IMBA_HYPER_MODE_ON = false													-- Is Hyper mode activated?
 IMBA_FRANTIC_MODE_ON = false												-- Is Frantic mode activated?
-IMBA_HERO_PICK_RULE = 0                                                     -- 0 : All Unique Heroes, 1 : Allow teams to pick same hero, 2 : Allow all to pick same hero
 
 IMBA_PICK_MODE_ALL_PICK = false												-- Activates All Pick mode when true
 IMBA_PICK_MODE_ALL_RANDOM = false											-- Activates All Random mode when true
@@ -280,9 +279,6 @@ HERO_RESPAWN_TIME_MULTIPLIER = 100											-- User-defined respawn time multip
 
 MAP_INITIAL_GOLD = 0														-- Gold granted to players at the start of the game on a normal pick
 HERO_INITIAL_GOLD = 625														-- Gold to add to players as soon as they spawn into the game
-HERO_REPICK_GOLD = 525														-- Gold lost by players who repick their hero
-HERO_RANDOM_GOLD = 825														-- Gold granted to players who random their hero
-HERO_RERANDOM_GOLD = 725
 
 HERO_STARTING_LEVEL = 1														-- User-defined starting level
 
@@ -301,10 +297,6 @@ if GetMapName() == "imba_standard" then										-- Standard map defaults
 	TOWER_POWER_FACTOR = 1
 	HERO_RESPAWN_TIME_MULTIPLIER = 75
 	HERO_INITIAL_GOLD = 1200
-	HERO_REPICK_GOLD = 1100
-	HERO_RANDOM_GOLD = 1400
-	HERO_RERANDOM_GOLD = 1300
-	HERO_STARTING_LEVEL = 3
 	MAX_LEVEL = 40
 elseif GetMapName() == "imba_custom" or GetMapName() == "imba_custom_10v10" then									-- Custom map defaults
 	END_GAME_ON_KILLS = false
@@ -315,9 +307,6 @@ elseif GetMapName() == "imba_custom" or GetMapName() == "imba_custom_10v10" then
 	TOWER_POWER_FACTOR = 1
 	HERO_RESPAWN_TIME_MULTIPLIER = 75
 	HERO_INITIAL_GOLD = 2000
-	HERO_REPICK_GOLD = 1600
-	HERO_RANDOM_GOLD = 2400
-	HERO_RERANDOM_GOLD = 2200
 	HERO_STARTING_LEVEL = 5
 	MAX_LEVEL = 40
 elseif GetMapName() == "imba_10v10" or GetMapName() == "imba_12v12" then									-- 10v10 map defaults
@@ -329,34 +318,7 @@ elseif GetMapName() == "imba_10v10" or GetMapName() == "imba_12v12" then								
 	TOWER_POWER_FACTOR = 1
 	HERO_RESPAWN_TIME_MULTIPLIER = 75
 	HERO_INITIAL_GOLD = 2000
-	HERO_REPICK_GOLD = 1600
-	HERO_RANDOM_GOLD = 2400
-	HERO_RERANDOM_GOLD = 2200
-	HERO_STARTING_LEVEL = 5
 	MAX_LEVEL = 40
-elseif GetMapName() == "imba_arena" then									-- Arena map defaults
-	END_GAME_ON_KILLS = true
-	TOWER_ABILITY_MODE = false
-	TOWER_UPGRADE_MODE = false
-	SPAWN_ANCIENT_BEHEMOTHS = false
-	GOLD_PER_TICK = 0
-	UNIVERSAL_SHOP_MODE = true
-	USE_CUSTOM_TOP_BAR_VALUES = true
-	TREE_REGROW_TIME = 60.0
-	CUSTOM_GOLD_BONUS = 100
-	CUSTOM_XP_BONUS = 100
-	TOWER_POWER_FACTOR = 2
-	HERO_RESPAWN_TIME_MULTIPLIER = 40
-	HERO_INITIAL_GOLD = 1000
-	HERO_REPICK_GOLD = 750
-	HERO_RANDOM_GOLD = 1250
-	HERO_RERANDOM_GOLD = 1125
-	HERO_STARTING_LEVEL = 3
-	MAX_LEVEL = 40
-	RUNE_SPAWN_TIME = 15
-	FOUNTAIN_PERCENTAGE_MANA_REGEN = 15
-	FOUNTAIN_PERCENTAGE_HEALTH_REGEN = 15
-	PRE_GAME_TIME = 15.0 + HERO_SELECTION_TIME + 10.0
 end
 
 -- Update game mode net tables
@@ -373,7 +335,6 @@ CustomNetTables:SetTableValue("game_options", "respawn_multiplier", {100 - HERO_
 CustomNetTables:SetTableValue("game_options", "initial_gold", {HERO_INITIAL_GOLD})
 CustomNetTables:SetTableValue("game_options", "initial_level", {HERO_STARTING_LEVEL})
 CustomNetTables:SetTableValue("game_options", "max_level", {MAX_LEVEL})
-CustomNetTables:SetTableValue("game_options", "hero_pick_rule", {IMBA_HERO_PICK_RULE})
 
 -- XP per level table (only active if custom hero levels are enabled) 
 XP_PER_LEVEL_TABLE = {}
@@ -505,11 +466,11 @@ IMBA_DEVS = {
 	34067920,	-- Shush
 	95496383,	-- ZimberZimber
 	137997646,	-- Fudge
-	142818979,	-- Luxcerv
 	65988826,	-- Noobsauce
 	137344217,	-- Moujiaozi
 	65419767,	-- AtroCty
-	33828741	-- sercankd
+	33828741,	-- sercankd
+	61200060	-- suthernfriend
 }
 
 IMBA_DONATORS = {}

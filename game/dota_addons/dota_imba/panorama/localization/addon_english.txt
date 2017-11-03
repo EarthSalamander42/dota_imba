@@ -47,6 +47,9 @@
 	"repick_button"					"Repick Hero"
 	"enter_game_button"				"Enter Game"
 	"welcome_label"					"Welcome to Dota IMBA!"
+	"new_hero"						"New Hero!"
+	"disabled_hero"					"Disabled Hero!"
+	"disabled_hero_10v10"			"10v10 Disabled Hero!"
 
 	//=================================================================================================================
 	// Generic talent names

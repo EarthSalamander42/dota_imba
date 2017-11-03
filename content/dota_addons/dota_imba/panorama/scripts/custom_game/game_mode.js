@@ -40,7 +40,6 @@ function InitializeUI() {
 			$('#TowerPowerOptionsPanel').style.visibility = 'collapse';
 			$('#RespawnTimeOptionsPanel').style.visibility = 'collapse';
 			$('#TowerUpgradesToggle').style.visibility = 'collapse';
-			$('#HeroPickRulePanel').style.visibility = 'collapse';
 			$('#AllPickToggle').style.visibility = 'collapse';
 			$('#AllRandomToggle').style.visibility = 'collapse';
 			$('#AllRandomSameHeroToggle').style.visibility = 'collapse';
@@ -52,7 +51,6 @@ function InitializeUI() {
 			$('#TowerPowerOptionsPanel').style.visibility = 'collapse';
 			$('#RespawnTimeOptionsPanel').style.visibility = 'collapse';
 			$('#TowerUpgradesToggle').style.visibility = 'collapse';
-			$('#HeroPickRulePanel').style.visibility = 'collapse';
 			$('#AllPickToggle').style.visibility = 'collapse';
 			$('#AllRandomToggle').style.visibility = 'collapse';
 			$('#AllRandomSameHeroToggle').style.visibility = 'collapse';
@@ -71,7 +69,6 @@ function InitializeUI() {
 			$('#TowerPowerOptionsPanel').style.visibility = 'collapse';
 			$('#RespawnTimeOptionsPanel').style.visibility = 'collapse';
 			$('#TowerUpgradesToggle').style.visibility = 'collapse';
-			$('#HeroPickRulePanel').style.visibility = 'collapse';
 			$('#AllPickToggle').style.visibility = 'collapse';
 			$('#AllRandomToggle').style.visibility = 'collapse';
 			$('#AllRandomSameHeroToggle').style.visibility = 'collapse';
@@ -146,7 +143,6 @@ function SetGameOptions()
 			"respawn_reduction": $('#RespawnTimeOptionsDropdown').GetSelected().id,
 			"hero_power": $('#HeroPowerDropdown').GetSelected().id,
 			"kills_to_end": $('#KillsToEndOptionsDropdown').GetSelected().id,
-            "hero_pick_rule" : $('#HeroPickRuleDropdown').GetSelected().id,
 		}
 	});
 

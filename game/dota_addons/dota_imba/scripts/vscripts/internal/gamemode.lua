@@ -308,32 +308,12 @@ function OnSetGameMode( eventSourceIndex, args )
 
 	-- Hero power increase
 	if tostring(mode_info.hero_power) == "HeroPower2" then
-		if map_name == "imba_standard" or map_name == "imba_random_omg" then
-			HERO_INITIAL_GOLD = 1200
-			HERO_REPICK_GOLD = 1000
-			HERO_RANDOM_GOLD = 1500
-			HERO_RERANDOM_GOLD = 1350
-			HERO_STARTING_LEVEL = 1
-			MAX_LEVEL = 50
-		elseif map_name == "imba_custom" or map_name == "imba_custom_10v10" then
+		if map_name == "imba_custom" or map_name == "imba_custom_10v10" then
 			HERO_INITIAL_GOLD = 5000
-			HERO_REPICK_GOLD = 4000
-			HERO_RANDOM_GOLD = 6000
-			HERO_RERANDOM_GOLD = 5500
 			HERO_STARTING_LEVEL = 12
 			MAX_LEVEL = 100
 		elseif map_name == "imba_10v10" or map_name == "imba_12v12" then
 			HERO_INITIAL_GOLD = 2000
-			HERO_REPICK_GOLD = 1600
-			HERO_RANDOM_GOLD = 2400
-			HERO_RERANDOM_GOLD = 2200
-			HERO_STARTING_LEVEL = 5
-			MAX_LEVEL = 60
-		elseif map_name == "imba_arena" then
-			HERO_INITIAL_GOLD = 2000
-			HERO_REPICK_GOLD = 1600
-			HERO_RANDOM_GOLD = 2400
-			HERO_RERANDOM_GOLD = 2200
 			HERO_STARTING_LEVEL = 5
 			MAX_LEVEL = 60
 		end
@@ -342,16 +322,6 @@ function OnSetGameMode( eventSourceIndex, args )
 		CustomNetTables:SetTableValue("game_options", "max_level", {MAX_LEVEL})
 		print("Hero power set to high")
 	end	
-
-	-- Hero pick rule
-	-- Ignore HeroPickRuleOption1 because that is the default
-	if tostring(mode_info.hero_pick_rule) == "HeroPickRuleOption2" then
-		IMBA_HERO_PICK_RULE = 1
-	elseif tostring(mode_info.hero_pick_rule) == "HeroPickRuleOption3" then
-		IMBA_HERO_PICK_RULE = 2
-	end
-
-	CustomNetTables:SetTableValue("game_options", "hero_pick_rule", {IMBA_HERO_PICK_RULE})
 
 	-- Set the game options as being chosen
 	GAME_OPTIONS_SET = true
