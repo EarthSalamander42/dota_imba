@@ -1118,7 +1118,7 @@ function ReconnectPlayer(player_id)
 	-- Reinitialize the player's pick screen panorama, if necessary
 	if HeroSelection.HorriblyImplementedReconnectDetection then
 		HeroSelection.HorriblyImplementedReconnectDetection[player_id] = false
-		Timers:CreateTimer(1.0, function()
+		Timers:CreateTimer(2.0, function()
 			if HeroSelection.HorriblyImplementedReconnectDetection[player_id] then
 				Server_EnableToGainXPForPlyaer(player_id)
 				print("updating player "..player_id.."'s pick screen state")
@@ -1132,19 +1132,19 @@ function ReconnectPlayer(player_id)
 					repickState = repick_state
 				}
 
-				data.PickedHeroes = {}
 				-- Set as all of the heroes that were selected
 				for _,v in pairs(HeroSelection.radiantPicks) do
-					table.insert(data.PickedHeroes, v)
+					table.insert(HeroSelection.picked_heroes, v)
 				end
 				
 				for _,v in pairs(HeroSelection.direPicks) do
-					table.insert(data.PickedHeroes, v)
+					table.insert(HeroSelection.picked_heroes, v)
 				end
 
 				print("HERO SELECTION ARGS:")
 				print(pick_state)
 
+				-- obsolete?
 				if PlayerResource:GetTeam(player_id) == DOTA_TEAM_GOODGUYS then
 					print("Running Radiant picks...")
 					PrintTable(HeroSelection.radiantPicks)
@@ -1154,6 +1154,12 @@ function ReconnectPlayer(player_id)
 					PrintTable(HeroSelection.direPicks)
 					CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.direPicks, PlayerPicks = HeroSelection.playerPicks, pickState = pick_state, repickState = repick_state})
 				end
+
+				print("Sending picked heroes..")
+				PrintTable()
+				CustomNetTables:SetTableValue("game_options", "hero_list", {
+					Picked = HeroSelection.picked_heroes
+				})
 			else
 				print("Not fully reconnected yet:", player_id)
 				return 0.1
@@ -1174,6 +1180,8 @@ function ReconnectPlayer(player_id)
 			-- Stop redistributing gold to allies, if applicable
 			PlayerResource:StopAbandonGoldRedistribution(player_id)
 		end
+	else
+		print("Player "..player_id.." has not fully connected before this time")
 	end
 end
 

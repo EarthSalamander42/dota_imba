@@ -214,8 +214,8 @@ function GameMode:BountyRuneFilter( keys )
 	-- keys["gold_bounty"] = ( 1 + CUSTOM_GOLD_BONUS * 0.01 ) * (1 + game_time * BOUNTY_RAMP_PER_MINUTE * 0.01) * keys["gold_bounty"]
 	-- keys["xp_bounty"] = ( 1 + CUSTOM_XP_BONUS * 0.01 ) * (1 + game_time * BOUNTY_RAMP_PER_MINUTE * 0.01) * keys["xp_bounty"]
 
-	keys["gold_bounty"] = keys["gold_bounty"] * 2
-	keys["xp_bounty"] = keys["xp_bounty"] * 3
+	keys["gold_bounty"] = keys["gold_bounty"] * 6
+	keys["xp_bounty"] = keys["xp_bounty"] * 4
 
 	return true
 end
@@ -602,8 +602,6 @@ function GameMode:OrderFilter( keys )
 		HeroVoiceLine(unit, "attack")
 	elseif keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION or keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_TARGET then
 		HeroVoiceLine(unit, "move")
-	elseif keys.order_type == DOTA_UNIT_ORDER_CAST_TARGET or keys.order_type == DOTA_UNIT_ORDER_CAST_POSITION or keys.order_type == DOTA_UNIT_ORDER_CAST_TARGET_TREE or keys.order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
-		HeroVoiceLine(unit, "cast")
 	end
 
 	------------------------------------------------------------------------------------
@@ -1178,7 +1176,11 @@ local time_elapsed = 0
 		end)
 	elseif IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
 		Timers:CreateTimer(3.0, function()
-			HeroSelection:RandomSameHero({PlayerID = hero:GetPlayerID()})
+			if arsm == nil then
+				arsm = true
+				print("ARSM")
+				HeroSelection:RandomSameHero()
+			end
 		end)
 	end
 

@@ -122,17 +122,13 @@ function modifier_item_imba_heart_unique:OnTakeDamage(keys)
 		if unit == self.caster then
 
 			-- If the attacker wasn't an enemy hero or Roshan, do nothing
-			if not attacker:IsHero() and not IsRoshan(attacker) and not attacker:GetUnitLabel("npc_imba_roshan") then
-				return nil
+			if attacker:IsHero() or IsRoshan(attacker) then
+				if attacker == unit then
+					-- don't trigger cd with self damage
+					return
+				end
+				self:GetAbility():UseResources(false, false, true)
 			end
-
-			-- If the damage came from ourselves (e.g. Rot, Double Edge), do nothing
-			if attacker == unit then
-				return nil
-			end
-
-			-- Use cooldown!
-			self:GetAbility():UseResources(false, false, true)
 		end
 	end
 end

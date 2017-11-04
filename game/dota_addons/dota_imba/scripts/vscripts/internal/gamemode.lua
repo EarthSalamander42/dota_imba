@@ -293,19 +293,6 @@ function OnSetGameMode( eventSourceIndex, args )
 		print("Tower power set to high")
 	end
 
-	-- Respawn timer decrease
-	if tostring(mode_info.respawn_reduction) == "RespawnTimeOption2" then
-		if map_name == "imba_standard" or map_name == "imba_random_omg" then
-			HERO_RESPAWN_TIME_MULTIPLIER = 75
-		elseif map_name == "imba_custom" or map_name == "imba_custom_10v10" then
-			HERO_RESPAWN_TIME_MULTIPLIER = 50
-		elseif map_name == "imba_10v10" or map_name == "imba_12v12" then
-			HERO_RESPAWN_TIME_MULTIPLIER = 50
-		end
-		CustomNetTables:SetTableValue("game_options", "respawn_multiplier", {100 - HERO_RESPAWN_TIME_MULTIPLIER})
-		print("Respawn timer reduction set to high")
-	end
-
 	-- Hero power increase
 	if tostring(mode_info.hero_power) == "HeroPower2" then
 		if map_name == "imba_custom" or map_name == "imba_custom_10v10" then

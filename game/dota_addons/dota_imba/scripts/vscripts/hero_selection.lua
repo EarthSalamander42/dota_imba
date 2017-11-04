@@ -28,6 +28,7 @@ function HeroSelection:HeroListPreLoad()
 	HeroSelection.disabled_10v10_heroes = {}
 	HeroSelection.disabled_heroes = {}
 	HeroSelection.heroes_custom = {}
+	HeroSelection.picked_heroes = {}
 
 	-- New function that retrieves kv infos
 	for hero, attributes in pairs(NPC_HEROES_CUSTOM) do
@@ -150,7 +151,17 @@ function HeroSelection:AddVanillaHeroToList(hero_name)
 	end
 end
 
+local only_once = false
 function HeroSelection:HeroList(delay)
+	if only_once == false then
+		only_once = true
+		if IsInToolsMode() then
+			print("Adding fake picked heroes to check")
+			table.insert(HeroSelection.picked_heroes, "npc_dota_hero_arc_warden")
+			table.insert(HeroSelection.picked_heroes, "npc_dota_hero_pangolier")
+		end
+	end
+
 	Timers:CreateTimer(delay, function()
 		CustomNetTables:SetTableValue("game_options", "hero_list", {
 			Strength = HeroSelection.strength_heroes,
@@ -162,7 +173,8 @@ function HeroSelection:HeroList(delay)
 			Imba = HeroSelection.imba_heroes,
 			New = HeroSelection.new_heroes,
 			Disabled10v10 = HeroSelection.disabled_10v10_heroes,
-			Disabled = HeroSelection.disabled_heroes
+			Disabled = HeroSelection.disabled_heroes,
+			Picked = HeroSelection.picked_heroes
 		})
 
 		table.deepmerge(HeroSelection.random_heroes, HeroSelection.vanilla_heroes)
@@ -348,31 +360,28 @@ local id = event.PlayerID
 	Chat:PlayerRandomed(id, PlayerResource:GetPlayer(id), PlayerResource:GetTeam(id), random_hero)
 end
 
-global_chat_randomed = 0
-function HeroSelection:RandomSameHero(event)
-local id = event.PlayerID
+function HeroSelection:RandomSameHero()
 --	if id ~= -1 and HeroSelection.playerPickState[id].pick_state ~= "selecting_hero" then return end
 
 	-- Roll a random hero, and keep it stored
-	if not random_hero then random_hero = normal_heroes[RandomInt(1, #normal_heroes)] end
---	print(random_hero)
+	local random_hero = HeroSelection.random_heroes[RandomInt(1, #HeroSelection.random_heroes)]
 
 	if GetMapName() == "imba_10v10" or GetMapName() == "imba_custom_10v10" then
 		for _, picked_hero in pairs(HeroSelection.disabled_10v10_heroes) do
 			if random_hero == picked_hero then
 				print("10v10 hero disabled")
-				HeroSelection:RandomSameHero({PlayerID = id})
+				HeroSelection:RandomSameHero()
 				break
 			end
 		end
 	end
 
-	PlayerResource:SetHasRandomed(id)
-	HeroSelection:HeroSelect({PlayerID = id, HeroName = random_hero, HasRandomed = true})
-	HeroSelection.playerPickState[id].random_state = true
-	if global_chat_randomed == 0 then
-		global_chat_randomed = 1
-		Chat:PlayerRandomed(id, PlayerResource:GetPlayer(id), PlayerResource:GetTeam(id), random_hero)
+	Chat:PlayerRandomed(0, PlayerResource:GetPlayer(0), PlayerResource:GetTeam(0), random_hero)
+
+	for _, hero in pairs(HeroList:GetAllHeroes()) do
+		PlayerResource:SetHasRandomed(hero:GetPlayerOwnerID())
+		HeroSelection:HeroSelect({PlayerID = hero:GetPlayerOwnerID(), HeroName = random_hero, HasRandomed = true})
+		HeroSelection.playerPickState[hero:GetPlayerOwnerID()].random_state = true
 	end
 end
 
@@ -399,6 +408,9 @@ function HeroSelection:HeroSelect(event)
 			else
 				HeroSelection.direPicks[#HeroSelection.direPicks + 1] = event.HeroName
 			end
+
+			print("Added "..event.HeroName.." to the picked heroes list.")
+			table.insert(HeroSelection.picked_heroes, event.HeroName)
 
 			-- Send a pick event to all clients
 			local has_randomed = false
@@ -621,6 +633,9 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		-- Set initial spawn setup as having been done
 		PlayerResource:IncrementTeamPlayerCount(player_id)
 		CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(player_id), "picking_done", {})
+
+		-- TODO: in js, remove the function that gray out a hero when picked, since this function should do it in real time
+		HeroSelection:HeroList(0.1) -- send the picked hero list once a hero is picked
 
 		-- This is from imba_talent_events.lua
 		PopulateHeroImbaTalents(hero);

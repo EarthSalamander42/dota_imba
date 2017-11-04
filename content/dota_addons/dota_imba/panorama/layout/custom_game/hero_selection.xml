@@ -33,7 +33,6 @@
 								<Label id="ExpMultiplierLabel" class="GameModeLabel" text="#imba_gamemode_settings_exp_multiplier" />
 								<Label id="CreepPowerLabel" class="GameModeLabel" text="#imba_gamemode_settings_creep_power_title" />
 								<Label id="TowerPowerLabel" class="GameModeLabel" text="#imba_gamemode_settings_tower_power_title" />
-								<Label id="RespawnTimerLabel" class="GameModeLabel" text="#imba_gamemode_settings_respawn_time" />
 							</Panel>
 
 							<Panel class="GameModeValuePanel">
@@ -41,7 +40,6 @@
 								<Label id="ExpMultiplierValue" class="GameModeValue" text="135%" />
 								<Label id="CreepPowerValue" class="GameModeValue" text="0" />
 								<Label id="TowerPowerValue" class="GameModeValue" text="0" />
-								<Label id="RespawnTimerValue" class="GameModeValue" text="0%" />
 							</Panel>
 					</Panel>
 				</Panel>
