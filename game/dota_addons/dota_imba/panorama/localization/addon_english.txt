@@ -50,6 +50,7 @@
 	"new_hero"						"New Hero!"
 	"disabled_hero"					"Disabled Hero!"
 	"disabled_hero_10v10"			"10v10 Disabled Hero!"
+	"picked_hero"					"Picked hero!"
 
 	//=================================================================================================================
 	// Generic talent names

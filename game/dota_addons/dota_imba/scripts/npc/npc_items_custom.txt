@@ -4178,8 +4178,8 @@
 			}
 			"04"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"extra_damage"			"2.75"
+				"var_type"						"FIELD_FLOAT"
+				"extra_damage"					"2.0"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"05"

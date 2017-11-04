@@ -38,43 +38,20 @@ function InitializeUI() {
 			$('#HeroPowerOptionsPanel').style.visibility = 'collapse';
 			$('#CreepPowerOptionsPanel').style.visibility = 'collapse';
 			$('#TowerPowerOptionsPanel').style.visibility = 'collapse';
-			$('#RespawnTimeOptionsPanel').style.visibility = 'collapse';
 			$('#TowerUpgradesToggle').style.visibility = 'collapse';
-			$('#AllPickToggle').style.visibility = 'collapse';
-			$('#AllRandomToggle').style.visibility = 'collapse';
-			$('#AllRandomSameHeroToggle').style.visibility = 'collapse';
 		} else if (map_info.map_display_name == "imba_10v10" || map_info.map_display_name == "imba_12v12") {
 			$('#game_options_game_mode_title').text = $.Localize( "#imba_gamemode_name_10v10" );
 			$('#QuickOptionsPanel').style.visibility = 'collapse';
 			$('#HeroPowerOptionsPanel').style.visibility = 'collapse';
 			$('#CreepPowerOptionsPanel').style.visibility = 'collapse';
 			$('#TowerPowerOptionsPanel').style.visibility = 'collapse';
-			$('#RespawnTimeOptionsPanel').style.visibility = 'collapse';
 			$('#TowerUpgradesToggle').style.visibility = 'collapse';
-			$('#AllPickToggle').style.visibility = 'collapse';
-			$('#AllRandomToggle').style.visibility = 'collapse';
-			$('#AllRandomSameHeroToggle').style.visibility = 'collapse';
 		} else if (map_info.map_display_name == "imba_custom") {
 			$('#TowerUpgradesToggle').SetSelected(true);
 			$('#FranticToggle').style.visibility = 'visible';
 		} else if (map_info.map_display_name == "imba_custom_10v10") {
 			$('#TowerUpgradesToggle').SetSelected(true);
 			$('#FranticToggle').style.visibility = 'visible';
-		} else if (map_info.map_display_name == "imba_arena") {
-			$('#game_options_game_mode_title').text = $.Localize( "#imba_gamemode_name_arena_mode" );
-			$('#KillsToEndOptionsPanel').style.visibility = 'visible';
-			$('#QuickOptionsPanel').style.visibility = 'collapse';
-			$('#HeroPowerOptionsPanel').style.visibility = 'collapse';
-			$('#CreepPowerOptionsPanel').style.visibility = 'collapse';
-			$('#TowerPowerOptionsPanel').style.visibility = 'collapse';
-			$('#RespawnTimeOptionsPanel').style.visibility = 'collapse';
-			$('#TowerUpgradesToggle').style.visibility = 'collapse';
-			$('#AllPickToggle').style.visibility = 'collapse';
-			$('#AllRandomToggle').style.visibility = 'collapse';
-			$('#AllRandomSameHeroToggle').style.visibility = 'collapse';
-		} else if (map_info.map_display_name == "imba_diretide") {
-			$('#game_options_container').style.visibility = 'collapse';
-			$('#CustomBg').style.backgroundImage = 'url("file://{images}/custom_game/loading_screen/diretide.jpg")';
 		}
 	}
 }
@@ -103,7 +80,6 @@ function SetQuickOptionsNormal() {
 	$('#ExpOptionsDropdown').SetSelected('ExpOption1');
 	$('#CreepPowerOptionsDropdown').SetSelected('CreepPowerOption1');
 	$('#TowerPowerOptionsDropdown').SetSelected('TowerPowerOption1');
-	$('#RespawnTimeOptionsDropdown').SetSelected('RespawnTimeOption1');
 	$('#HeroPowerDropdown').SetSelected('HeroPower1');
 }
 
@@ -121,7 +97,6 @@ function SetQuickOptionsHigh() {
 	$('#ExpOptionsDropdown').SetSelected('ExpOption2');
 	$('#CreepPowerOptionsDropdown').SetSelected('CreepPowerOption2');
 	$('#TowerPowerOptionsDropdown').SetSelected('TowerPowerOption2');
-	$('#RespawnTimeOptionsDropdown').SetSelected('RespawnTimeOption2');
 	$('#HeroPowerDropdown').SetSelected('HeroPower2');
 }
 
@@ -140,7 +115,6 @@ function SetGameOptions()
 			"exp_multiplier": $('#ExpOptionsDropdown').GetSelected().id,
 			"creep_power": $('#CreepPowerOptionsDropdown').GetSelected().id,
 			"tower_power": $('#TowerPowerOptionsDropdown').GetSelected().id,
-			"respawn_reduction": $('#RespawnTimeOptionsDropdown').GetSelected().id,
 			"hero_power": $('#HeroPowerDropdown').GetSelected().id,
 			"kills_to_end": $('#KillsToEndOptionsDropdown').GetSelected().id,
 		}

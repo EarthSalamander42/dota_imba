@@ -66,14 +66,6 @@
 						</DropDown>
 					</Panel>
 
-					<Panel id="RespawnTimeOptionsPanel" class="GameOptionsSubPanel" onmouseover="UIShowTextTooltip( imba_gamemode_settings_respawn_time_tooltip )" onmouseout="UIHideTextTooltip()">
-						<Label id="RespawnTimeOptionsLabel" class="GameOptionsLabel" text="#imba_gamemode_settings_respawn_time" />
-						<DropDown id="RespawnTimeOptionsDropdown" class="GameOptionsDropdown">
-							<Label text="#imba_gamemode_settings_power_1" id="RespawnTimeOption1"/>
-							<Label text="#imba_gamemode_settings_power_2" id="RespawnTimeOption2"/>
-						</DropDown>
-					</Panel>
-
 					<Panel id="HeroPowerOptionsPanel" class="GameOptionsSubPanel" onmouseover="UIShowTextTooltip( imba_gamemode_settings_hero_power_title_tooltip )" onmouseout="UIHideTextTooltip()">
 						<Label id="HeroPowerLabel" class="GameOptionsLabel" text="#imba_gamemode_settings_hero_power_title" />
 						<DropDown id="HeroPowerDropdown" class="GameOptionsDropdown">

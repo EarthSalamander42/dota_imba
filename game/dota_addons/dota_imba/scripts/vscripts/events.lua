@@ -920,8 +920,6 @@ function GameMode:OnEntityKilled( keys )
 			if killed_unit.bloodstone_respawn_reduction and (respawn_time > 0) then
 				respawn_time = math.max( respawn_time - killed_unit.bloodstone_respawn_reduction, 0)
 			end
-			-- Multiply respawn timer by the lobby options
-			respawn_time = math.max( respawn_time * HERO_RESPAWN_TIME_MULTIPLIER * 0.01, 1)
 
 			-- Set up the respawn timer, include meepo fix
 			if killed_unit:GetUnitName() == "npc_dota_hero_meepo" then

@@ -39637,7 +39637,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_range"				"3000"
+				"max_range"				"1200"
 			}
 			"03"
 			{

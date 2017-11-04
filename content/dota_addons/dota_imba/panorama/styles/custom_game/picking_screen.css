@@ -271,20 +271,11 @@
 	border-radius: 25px;
 }
 
-.ClassCustomOptionLabelNew
+.ClassCustomOptionLabel
 {
 	align: center center;
+	text-align: center;
 	font-size: 12px;
-	font-family: "Radiance";
-	text-transform: uppercase;
-	font-weight: bold;
-	color: #fff;
-}
-
-.ClassCustomOptionLabelDisabled
-{
-	align: center center;
-	font-size: 10px;
 	font-family: "Radiance";
 	text-transform: uppercase;
 	font-weight: bold;
