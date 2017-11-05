@@ -127,7 +127,6 @@ function ShowStatsSwap() {
 
 /*  Create a hero panel based on the attribute 
 	also handles 3 additional panels for custom heroes */
-var single_msg = false
 function CreateHeroPanel(hero_table, attribute, custom) {
 	if (custom == true) {
 //		$.Msg(hero_table)
@@ -149,29 +148,6 @@ function CreateHeroPanel(hero_table, attribute, custom) {
 			Hero_Panel.AddClass("ClassNormalOption")
 			Hero_Panel.style.backgroundImage = 'url("file://{images}/heroes/'+ hero_table[i] +'.png")';
 			Hero_Panel.style.backgroundSize = "100% 100%";
-
-			// disable picked heroes
-			var hero_list = CustomNetTables.GetTableValue("game_options", "hero_list");
-			var picked_herolist = hero_list.Picked
-			var j = 0;
-
-			if (single_msg == false) {
-				single_msg = true
-				$.Msg("Hero tables:")
-				$.Msg(hero_table)
-				$.Msg(picked_herolist)
-			}
-
-			// Gray out heroes already selected by according to hero pick rule (handled by server)
-			for (j in picked_herolist) {
-				if (picked_herolist[j] == hero_table[i]) {
-					$.Msg("Picked heroes: " + picked_herolist[j])
-					$('#'+picked_herolist[j]).AddClass("taken");
-					var HeroLabel = $.CreatePanel("Label", $('#'+picked_herolist[j]), picked_herolist[j] + "_label");
-					HeroLabel.AddClass("ClassCustomOptionLabel")
-					HeroLabel.text = $.Localize("picked_hero");
-				}
-			}
 
 			i_count = i_count +1
 
@@ -307,7 +283,8 @@ var DireCount = 0
 		}
 	});
 
-	$.Schedule(1.0, CreateHeroPick)
+//	$.Schedule(1.0, CreateHeroPick)
+	CreateHeroPick()
 }
 
 function CreateHeroPick() {
@@ -354,7 +331,7 @@ function HeroPicked(player, hero, team, has_randomed) {
 
 	// Disable the hero button according to hero pick rule
 	var LocalPlayer = Players.GetLocalPlayer()
-	$('#'+hero).AddClass("taken");
+	$("#PickList").FindChildTraverse(hero).AddClass("taken");
 
 	// Check if the pick was by the local player
 	if ( player == LocalPlayer ) {
@@ -545,7 +522,7 @@ function EnterGame() {
 	}
 }
 
-function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, repick_state) {
+function PlayerReconnected(player_id, picked_heroes, pick_state, repick_state) {
 	// If this is not the local player, ignore everything
 	$.Msg("PlayerReconnected (JS)")
 	if ( player_id == Players.GetLocalPlayer() ) {
@@ -565,11 +542,23 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 				$.Msg("Pick State: Picking..")
 
 				var i = 1;
-				for (i = 1; i <= player_picks.length; i++) {
-					if (player_picks[i] != null) {
+				for (i = 1; i <= picked_heroes.length; i++) {
+					if (picked_heroes[i] != null) {
 						$("#PickInfoPanel").style.visibility = "visible";
-						$.Msg(playerPanels[i])
-						playerPanels[i].SetHero(player_picks[i])
+//						$.Msg(playerPanels[i]) // TODO: Fix this by adding player id replacing i
+//						playerPanels[i].SetHero(picked_heroes[i])
+					}
+				}
+
+				// Gray out heroes already selected by according to hero pick rule (handled by server)
+				var j = 0;
+				for (j in picked_heroes) {
+					if ($("#PickList").FindChildTraverse(picked_heroes[j])) {
+						$.Msg("Picked heroes: " + picked_heroes[j])
+						$("#PickList").FindChildTraverse(picked_heroes[j]).AddClass("taken");
+						var HeroLabel = $.CreatePanel("Label", $('#'+picked_heroes[j]), picked_heroes[j] + "_label");
+						HeroLabel.AddClass("ClassCustomOptionLabel")
+						HeroLabel.text = $.Localize("picked_hero");
 					}
 				}
 
@@ -579,8 +568,8 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 				}
 
 				// If the player has already selected a hero, go to the hero preview screen
-				if (pick_state == "selected_hero" && player_picks[player_id] != null) {
-					SwitchToHeroPreview(player_picks[player_id])
+				if (pick_state == "selected_hero" && picked_heroes[player_id] != null) {
+					SwitchToHeroPreview(picked_heroes[player_id])
 				}
 //			}
 		}
@@ -623,7 +612,6 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 /* Initialisation - runs when the element is created
 =========================================================================*/
 (function () {
-
 	// If this player is a spectator, just kill the whole pick screen
 	var localTeam = Players.GetTeam(Players.GetLocalPlayer())
 	if ( localTeam != 2 && localTeam != 3 ) {
@@ -668,10 +656,7 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 			$("#TowerPowerValue").text = $.Localize( '#imba_gamemode_settings_power_2' );
 		}
 
-		if (map_info.map_display_name == "imba_arena") {
-			$("#CreepPowerLabel").text = $.Localize( '#imba_gamemode_settings_kills_to_end' );
-			$("#CreepPowerValue").text = kills_to_end[1];
-		} else if (creep_power[1] == 1) {
+		if (creep_power[1] == 1) {
 			$("#CreepPowerValue").text = $.Localize( '#imba_gamemode_settings_power_1' );
 		} else if (creep_power[1] == 2) {
 			$("#CreepPowerValue").text = $.Localize( '#imba_gamemode_settings_power_2' );
@@ -693,6 +678,16 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 			$('#GameModeSelectText').text = $.Localize( '#imba_gamemode_name_all_random' );
 			$.Schedule(5, SelectRandomHero);
 		}
+
+		var picked_heroes = [ 
+			"npc_dota_hero_arc_warden",
+			"npc_dota_hero_alchemist",
+			"npc_dota_hero_beastmaster",
+			"npc_dota_hero_axe"
+		]
+
+		// DON'T FORGOT TO UNCOMMENT AFTER TEST DONE!!!!!
+//		PlayerReconnected(0, picked_heroes, "", "");
 
 		// Tell the server this player's UI was initialized
 		GameEvents.SendCustomGameEventToServer( "ui_initialized", {} );

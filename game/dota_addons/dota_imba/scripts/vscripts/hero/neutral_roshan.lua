@@ -173,7 +173,7 @@ local nearbyHeroes = FindUnitsInRadius(self.roshan:GetTeamNumber(), self.roshan:
 					local item = CreateItem("item_imba_aegis", nil, nil)
 					local pos = self.roshan:GetAbsOrigin()
 					local drop = CreateItemOnPositionSync(pos, item)
-					item:LaunchLoot(false, 300, 0.5, pos + RandomVector(200))
+					item:LaunchLoot(false, 300, 0.5, pos)
 
 					Timers:CreateTimer(ROSHAN_RESPAWN_TIME, function()
 						local roshan = CreateUnitByName("npc_imba_roshan", ROSHAN_SPAWN_LOC, true, nil, nil, DOTA_TEAM_NEUTRALS)
