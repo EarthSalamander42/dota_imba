@@ -1,6 +1,7 @@
 /* General layout
 =================================================================*/
-@define load_time: 5.0s;
+@define load_time: 4.0s;
+
 @keyframes 'fade'
 {
 	0%
@@ -39,7 +40,7 @@
 		opacity: 1.0;
 	}
 
-	70%
+	50%
 	{
 		opacity: 0.0;
 	}
