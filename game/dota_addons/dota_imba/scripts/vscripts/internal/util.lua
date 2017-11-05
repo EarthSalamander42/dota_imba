@@ -1112,3 +1112,180 @@ function CustomHeroAttachments(hero, illusion)
 		
 	end
 end
+
+function ReconnectPlayer(player_id)
+	print("Player is reconnecting:", player_id)
+	-- Reinitialize the player's pick screen panorama, if necessary
+	if HeroSelection.HorriblyImplementedReconnectDetection then
+		HeroSelection.HorriblyImplementedReconnectDetection[player_id] = false
+		Timers:CreateTimer(2.0, function()
+			if HeroSelection.HorriblyImplementedReconnectDetection[player_id] then
+				Server_EnableToGainXPForPlyaer(player_id)
+				print("updating player "..player_id.."'s pick screen state")
+				local pick_state = HeroSelection.playerPickState[player_id].pick_state
+				local repick_state = HeroSelection.playerPickState[player_id].repick_state
+
+				local data = {
+					PlayerID = player_id,
+					PlayerPicks = HeroSelection.playerPicks,
+					pickState = pick_state,
+					repickState = repick_state
+				}
+
+				-- Set as all of the heroes that were selected
+				for _,v in pairs(HeroSelection.radiantPicks) do
+					table.insert(HeroSelection.picked_heroes, v)
+				end
+				
+				for _,v in pairs(HeroSelection.direPicks) do
+					table.insert(HeroSelection.picked_heroes, v)
+				end
+
+				print("HERO SELECTION ARGS:")
+				print(pick_state)
+
+				-- obsolete?
+				if PlayerResource:GetTeam(player_id) == DOTA_TEAM_GOODGUYS then
+					print("Running Radiant picks...")
+					PrintTable(HeroSelection.radiantPicks)
+					CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.radiantPicks, PlayerPicks = HeroSelection.playerPicks, pickState = pick_state, repickState = repick_state})
+				else
+					print("Running Dire picks...")
+					PrintTable(HeroSelection.direPicks)
+					CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.direPicks, PlayerPicks = HeroSelection.playerPicks, pickState = pick_state, repickState = repick_state})
+				end
+
+				print("Sending picked heroes..")
+				PrintTable()
+				CustomNetTables:SetTableValue("game_options", "hero_list", {
+					Picked = HeroSelection.picked_heroes
+				})
+			else
+				print("Not fully reconnected yet:", player_id)
+				return 0.1
+			end
+		end)
+
+		-- If this is a reconnect from abandonment due to a long disconnect, remove the abandon state
+		if PlayerResource:GetHasAbandonedDueToLongDisconnect(player_id) then
+			local player_name = keys.name
+			local hero = PlayerResource:GetPickedHero(player_id)
+			local hero_name = PlayerResource:GetPickedHeroName(player_id)
+			local line_duration = 7
+			Notifications:BottomToAll({hero = hero_name, duration = line_duration})
+			Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
+			Notifications:BottomToAll({text = "#imba_player_reconnect_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
+			PlayerResource:IncrementTeamPlayerCount(player_id)
+
+			-- Stop redistributing gold to allies, if applicable
+			PlayerResource:StopAbandonGoldRedistribution(player_id)
+		end
+	else
+		print("Player "..player_id.." has not fully connected before this time")
+	end
+end
+
+function DonatorCompanion(hero, model)
+local summon_point = Entities:FindByName(nil, "ent_dota_fountain_good"):GetAbsOrigin()
+
+	local companion = CreateUnitByName("npc_imba_donator_companion", summon_point, true, hero, hero, hero:GetTeamNumber())
+	companion:SetOwner(hero)
+	companion:SetOriginalModel(model)
+	companion:SetModel(model)
+	companion:SetModelScale(1.0)
+	companion:AddNewModifier(companion, nil, "modifier_companion", {})
+	companion:AddNewModifier(companion, nil, "modifier_phased", {})
+	companion:SetRenderColor(200, 55, 55) -- add color in donator table?
+end
+
+function HeroVoiceLine(hero, event, ab)
+local hero_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")
+if not hero.voice_line_cd then hero.voice_line_cd = false end
+if not hero.voice_line_cd_alt then hero.voice_line_cd_alt = false end
+if hero:GetKeyValue("ShortName") == nil then return end
+local short_hero_name = hero:GetKeyValue("ShortName")
+local max_line = 2
+if event == "blink" or event == "firstblood" then
+else
+	max_line = hero:GetKeyValue(event)
+end
+local random_int = RandomInt(1, max_line)
+
+	-- NOT ADDED YET:
+	-- notyet
+	-- failure
+	-- anger
+	-- happy
+	-- rare
+	-- nomana
+	-- RIVAL MEETING SYSTEM
+	-- ITEM PURCHASED SYSTEM
+	-- FIRST BLOOD SYSTEM (always 2 voicelines)
+
+	-- Later on, finish this to play specific sounds from the ability
+--	if event == "cast" then
+--		if RandomInt(1, 100) >= 20 then
+--			event = hero:GetKeyValue("OnAbility"..ab.."Used")
+--			print("play specific ab sound")
+--		else
+--			print("play global ab sound")
+--		end
+--	end
+
+	-- prints
+--	if random_int >= 10 then
+--		print(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int)
+--	else
+--		print(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int)
+--	end
+
+	if event == "blink" or event == "purch" or event == "battlebegins" or event == "win" or event == "lose" or event == "kill" or event == "death" or event == "level_voiceline" or event == "laugh" or event == "thanks" then
+		if event == "level_voiceline" then event = string.gsub(event, "_voiceline", "") end
+		if random_int >= 10 then
+			EmitSoundOn(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int, hero)
+		else
+			EmitSoundOn(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int, hero)
+		end
+		return
+	end
+
+	if hero.voice_line_cd_alt == false then
+		if event == "lasthit" or event == "deny" then
+			if random_int >= 10 then
+				EmitSoundOn(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int, hero)
+			else
+				EmitSoundOn(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int, hero)
+			end
+
+			hero.voice_line_cd_alt = true
+			Timers:CreateTimer(6.0, function()
+				hero.voice_line_cd_alt = false
+			end)
+			return
+		end
+	end
+
+	-- move, cast, attack
+	if hero.voice_line_cd == false then
+		if random_int >= 10 then
+			EmitSoundOn(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int, hero)
+		else
+			EmitSoundOn(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int, hero)
+		end
+
+		hero.voice_line_cd = true
+		Timers:CreateTimer(6.0, function()
+			hero.voice_line_cd = false
+		end)
+	end
+end
+
+function UpdateRoshanBar(roshan)
+	CustomNetTables:SetTableValue("game_options", "roshan", {
+		level = roshan:GetLevel(),
+		HP = roshan:GetHealth(),
+		HP_alt = roshan:GetHealthPercent(),
+		maxHP = roshan:GetMaxHealth()
+	})
+	return time
+end

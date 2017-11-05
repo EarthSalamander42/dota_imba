@@ -17,6 +17,7 @@ DebugPrint("[IMBA] Performing pre-load precache")
 	LinkLuaModifier("modifier_imba_arena_passive_gold_thinker", "modifier/modifier_imba_arena_passive_gold_thinker.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_range_indicator", "modifier/modifier_imba_range_indicator.lua", LUA_MODIFIER_MOTION_NONE )	
 	LinkLuaModifier("modifier_command_restricted", "modifier/modifier_command_restricted.lua", LUA_MODIFIER_MOTION_NONE )	
+	LinkLuaModifier("modifier_companion", "modifier/modifier_companion.lua", LUA_MODIFIER_MOTION_NONE )	
 
 	-- Runes modifiers
 	LinkLuaModifier("modifier_imba_double_damage_rune", "modifier/runes/modifier_imba_double_damage_rune.lua", LUA_MODIFIER_MOTION_NONE)
@@ -66,6 +67,7 @@ DebugPrint("[IMBA] Performing pre-load precache")
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_ember_spirit.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/imba_soundevents.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/imba_item_soundevents.vsndevts", context)
+	PrecacheResource("soundfile", "soundevents/diretide_soundevents.vsndevts", context)
 
 	-- Ghost Revenant
 	PrecacheResource("particle", "particles/econ/items/windrunner/windrunner_cape_cascade/windrunner_windrun_slow_cascade.vpcf", context)
@@ -137,7 +139,14 @@ DebugPrint("[IMBA] Performing pre-load precache")
 	PrecacheResource("particle", "particles/creeps/lane_creeps/creep_dire_hulk_swipe.vpcf", context)
 	PrecacheResource("particle", "particles/creeps/lane_creeps/creep_dire_hulk_swipe_glow.vpcf", context)
 	PrecacheResource("particle", "particles/creeps/lane_creeps/creep_dire_hulk_swipe_left.vpcf", context)
-	PrecacheResource("particle", "particles/creeps/lane_creeps/creep_dire_hulk_swipe_right.vpcf", context)    
+	PrecacheResource("particle", "particles/creeps/lane_creeps/creep_dire_hulk_swipe_right.vpcf", context)
+
+	-- Roshan
+	PrecacheResource("particle_folder", "particles/econ/items/invoker/invoker_apex", context)
+	PrecacheResource("particle_folder", "particles/hw_fx", context)
+	PrecacheResource("particle", "particles/units/heroes/hero_invoker/invoker_deafening_blast.vpcf", context) -- Apocalypse
+	PrecacheUnitByNameSync("npc_dota_hero_invoker", context) -- Apocalypse
+	PrecacheUnitByNameSync("npc_dota_hero_tiny", context) -- Toss
 
 	-- Stuff
 	PrecacheResource("particle_folder", "particles/hero", context)

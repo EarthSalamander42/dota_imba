@@ -70,16 +70,22 @@ end
 -- This function is called once a player says something on any chat
 function GameMode:OnPlayerChat(keys)
 local text = keys.text
+local caster = PlayerResource:GetSelectedHeroEntity(keys.playerid)
+local caster_heroname = PlayerResource:GetSelectedHeroName(keys.playerid)
+local color = {}
+
+	for str in string.gmatch(text, "%S+") do
+		if str == "lol" or str == "lmao" or str == "rofl" or str == "lul" or str == "haha" or str == "kek" or str == "lel" or str == "kappa" or str == "topkek" or str == "toplel" or str == "lowkek" or str == "lowlel" or str == "hahaha" or str == "ahaha" then
+			HeroVoiceLine(caster, "laugh")
+		elseif str == "thank" or str == "thanks" or str == "ty" then
+			HeroVoiceLine(caster, "thanks")
+		end
+	end
 
 	-- This Handler is only for commands, ends the function if first character is not "-"
 	if not (string.byte(text) == 45) then
 		return nil
 	end
-	
-	-- If we are here, declare variables
-	local caster = PlayerResource:GetSelectedHeroEntity(keys.playerid)
-	local caster_heroname = PlayerResource:GetSelectedHeroName(keys.playerid)
-	local color = {}
 	
 	-- Check for Chakram-Colorcode
 	-- if caster_heroname == "npc_dota_hero_shredder" then

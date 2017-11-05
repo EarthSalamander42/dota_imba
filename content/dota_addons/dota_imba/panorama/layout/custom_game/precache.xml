@@ -1,7 +1,9 @@
 <root>
 	<Panel style="visibility:collapse;">
 		<Panel id="container" style="visibility:collapse;">
-			<Image src="file://panorama/images/custom_game/loading_screen/diretide.jpg" hittest="false" />
+			<Image src="file://panorama/images/heroes/icons/npc_dota_hero_ghost_revenant.png" hittest="false" />
+			<Image src="file://panorama/images/heroes/icons/npc_dota_hero_hell_empress.png" hittest="false" />
+			<Image src="file://panorama/images/heroes/icons/npc_dota_storegga.png" hittest="false" />
 		</Panel>
 	</Panel>
 </root>

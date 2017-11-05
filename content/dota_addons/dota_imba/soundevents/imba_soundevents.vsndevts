@@ -1570,34 +1570,34 @@
 
 "Imba.LionHexREEE"
 {
-    "operator_stacks"
-    {
-        "update_stack"
-        {
-            "reference_operator"
-            {
-                "operator"              "sos_reference_stack"
-                "reference_stack"       "dota_update_default"
-                "operator_variables"
-                {
-                    "vsnd_files"
-                    {
-                        "value"
-                        {
-                            "value0"    "sounds/hero/lion/LionHexREEEE.vsnd"
-                        }
-                    }
-                    "volume"            {   "value"     "3.000000"  }
-                    "pitch_rand_min"    {   "value"     "-0.03000"  }
-                    "pitch_rand_max"    {   "value"     "0.030000"  }
-                    "pitch"             {   "value"     "1.000000"  }
-                    "soundlevel"        {   "value"     "100.00000" }
-                    "distance_max"      {   "value"     "1200.000"  }
-                    "event_type"        {   "value"     "1.000000"  }
-                }
-            }
-        }
-    }
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"              "sos_reference_stack"
+				"reference_stack"       "dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"    "sounds/hero/lion/LionHexREEEE.vsnd"
+						}
+					}
+					"volume"            {   "value"     "3.000000"  }
+					"pitch_rand_min"    {   "value"     "-0.03000"  }
+					"pitch_rand_max"    {   "value"     "0.030000"  }
+					"pitch"             {   "value"     "1.000000"  }
+					"soundlevel"        {   "value"     "100.00000" }
+					"distance_max"      {   "value"     "1200.000"  }
+					"event_type"        {   "value"     "1.000000"  }
+				}
+			}
+		}
+	}
 }
 
 "Imba.CripplingFearKill"
@@ -2427,32 +2427,64 @@
 
 "Muradin.StormEarthFire"
 {
-    "operator_stacks"
-    {
-        "update_stack"
-        {
-            "reference_operator"
-            {
-                "operator"              "sos_reference_stack"
-                "reference_stack"       "dota_update_default"
-                "operator_variables"
-                {
-                    "vsnd_files"
-                    {
-                        "value"
-                        {
-                            "value0"        "sounds/storm_earth_fire.vsnd"
-                        }
-                    }
-                    "volume"            {   "value"     "1.00000"  }
-                    "pitch_rand_min"    {   "value"     "0.00000"  }
-                    "pitch_rand_max"    {   "value"     "0.000000"  }
-                    "pitch"             {   "value"     "1.000000"  }
-                    "soundlevel"        {   "value"     "100.00000" }
-                    "distance_max"      {   "value"     "5000.000"  }
-                    "event_type"        {   "value"     "1.000000"  }
-                }
-            }
-        }
-    }
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"		"sounds/storm_earth_fire.vsnd"
+						}
+					}
+					"volume"			{ "value"	"1.00000" }
+					"pitch_rand_min"	{ "value"	"0.00000" }
+					"pitch_rand_max"	{ "value"	"0.000000" }
+					"pitch"				{ "value"	"1.000000" }
+					"soundlevel"		{ "value"	"100.00000" }
+					"distance_max"		{ "value"	"5000.000" }
+					"event_type"		{ "value"	"1.000000" }
+				}
+			}
+		}
+	}
+}
+
+"Companion.Llama"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"		"sounds/companion_llama.vsnd"
+						}
+					}
+					"volume"			{ "value"	"1.00000" }
+					"pitch_rand_min"	{ "value"	"0.00000" }
+					"pitch_rand_max"	{ "value"	"0.000000" }
+					"pitch"				{ "value"	"1.000000" }
+					"soundlevel"		{ "value"	"100.00000" }
+					"distance_max"		{ "value"	"5000.000" }
+					"event_type"		{ "value"	"1.000000" }
+				}
+			}
+		}
+	}
 }
