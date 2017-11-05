@@ -33,7 +33,6 @@
 								<Label id="ExpMultiplierLabel" class="GameModeLabel" text="#imba_gamemode_settings_exp_multiplier" />
 								<Label id="CreepPowerLabel" class="GameModeLabel" text="#imba_gamemode_settings_creep_power_title" />
 								<Label id="TowerPowerLabel" class="GameModeLabel" text="#imba_gamemode_settings_tower_power_title" />
-								<Label id="RespawnTimerLabel" class="GameModeLabel" text="#imba_gamemode_settings_respawn_time" />
 							</Panel>
 
 							<Panel class="GameModeValuePanel">
@@ -41,7 +40,6 @@
 								<Label id="ExpMultiplierValue" class="GameModeValue" text="135%" />
 								<Label id="CreepPowerValue" class="GameModeValue" text="0" />
 								<Label id="TowerPowerValue" class="GameModeValue" text="0" />
-								<Label id="RespawnTimerValue" class="GameModeValue" text="0%" />
 							</Panel>
 					</Panel>
 				</Panel>
@@ -74,7 +72,6 @@
 					<Panel id="RightStatsPanel" class="StatsPanel">
 						<Panel id="RightStatsSubPanel">
 							<Panel class="GameModeLabelPanel">
-								<Label id="HeroPickRuleLabel" class="GameModeLabel" text="#imba_gamemode_settings_hero_pick_rule" />
 								<Label id="FranticModeLabel" class="GameModeLabel" text="#imba_gamemode_game_options_frantic" />
 								<Label id="InitialGoldLabel" class="GameModeLabel" text="#imba_gamemode_settings_initial_gold" />
 								<Label id="InitialLevelLabel" class="GameModeLabel" text="#imba_gamemode_settings_initial_level" />
@@ -82,7 +79,6 @@
 							</Panel>
 
 							<Panel class="GameModeValuePanel">
-								<Label id="HeroPickRuleValue" class="GameModeValue" text="" />
 								<Label id="FranticModeValue" class="GameModeValue" text="#imba_gamemode_game_options_frantic_disabled" />
 								<Label id="InitialGoldValue" class="GameModeValue" text="625" />
 								<Label id="InitialLevelValue" class="GameModeValue" text="1" />

@@ -171,6 +171,7 @@ DebugPrintTable(keys)
 				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph", {})
 --				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
 			end
+			HeroVoiceLine(hero, "battlebegins")
 		end
 
 		Timers:CreateTimer(60, function()
@@ -184,6 +185,20 @@ DebugPrintTable(keys)
 		CustomGameEventManager:Send_ServerToAllClients("end_game", {})
 		local winning_team = GAME_WINNER_TEAM
 		Server_CalculateXPForWinnerAndAll(winning_team)
+		local winning_team_number = 2
+		if winning_team == "Dire" then
+			winning_team_number = 3
+		end
+
+		for _, hero in pairs(HeroList:GetAllHeroes()) do
+			if hero:GetTeamNumber() == winning_team_number then
+				print("WINNING! YAY:", winning_team_number)
+				HeroVoiceLine(hero, "win")
+			else
+				print("LOSING! OH NOES:", winning_team_number)
+				HeroVoiceLine(hero, "lose")
+			end
+		end
 	end
 end
 
@@ -244,22 +259,23 @@ local normal_xp = npc:GetDeathXP()
 			end
 		end
 
-		for i = 1, #banned_players do
-			if PlayerResource:GetSteamAccountID(npc:GetPlayerID()) == banned_players[i] then
+		for i = 1, #IMBA_DONATORS do
+			if PlayerResource:GetSteamAccountID(npc:GetPlayerID()) == IMBA_DONATORS[i][1] then
 				if npc:GetUnitName() ~= "npc_dota_hero_wisp" or npc.is_real_wisp then
-					if not npc:HasModifier("modifier_command_restricted") then
-						npc:AddNewModifier(npc, nil, "modifier_command_restricted", {})
-						Timers:CreateTimer(0.1, function()
-							PlayerResource:SetCameraTarget(npc:GetPlayerOwnerID(), npc)
-						end)
-						Timers:CreateTimer(2.0, function()
-							StartAnimation(npc, {duration=2.0, activity=ACT_DOTA_DEFEAT, rate=1.0})
-							return 2.0
-						end)
-						Notifications:Bottom(npc:GetPlayerID(), {text="Hey what are you doing there, i thought this mod was shit?", duration=99999, style={color="red"}})
+					if not npc.has_companion then
+						npc.has_companion = true
+						DonatorCompanion(npc, IMBA_DONATORS[i][2])
 					end
 				end
 			end
+		end
+
+		if npc.first_spawn == nil then npc.first_spawn = true end
+		if npc.first_spawn == true then
+			npc.first_spawn = false
+			HeroVoiceLine(npc, "spawn")
+		else
+			HeroVoiceLine(npc, "respawn")
 		end
 
 		-- fix for killed with Ghost Revenant immolation
@@ -397,14 +413,17 @@ end
 -- An entity somewhere has been hurt.  This event fires very often with many units so don't do too many expensive
 -- operations here
 function GameMode:OnEntityHurt(keys)
-	--DebugPrint("[BAREBONES] Entity Hurt")
-	--DebugPrintTable(keys)
-
 	--local damagebits = keys.damagebits -- This might always be 0 and therefore useless
 	--if keys.entindex_attacker ~= nil and keys.entindex_killed ~= nil then
 	--local entCause = EntIndexToHScript(keys.entindex_attacker)
 	--local entVictim = EntIndexToHScript(keys.entindex_killed)
 	--end
+
+	if keys.entindex_killed ~= nil then
+		if EntIndexToHScript(keys.entindex_killed):IsRealHero() then
+			HeroVoiceLine(EntIndexToHScript(keys.entindex_killed), "pain")
+		end
+	end
 end
 
 -- An item was picked up off the ground
@@ -426,19 +445,19 @@ end
 
 -- An item was purchased by a player
 function GameMode:OnItemPurchased( keys )
-	DebugPrint( '[BAREBONES] OnItemPurchased' )
-	DebugPrintTable(keys)
+local plyID = keys.PlayerID
+if not plyID then return end
+local hero = PlayerResource:GetSelectedHeroEntity(plyID)
+local itemName = keys.itemname 
+local itemcost = keys.itemcost
 
-	-- The playerID of the hero who is buying something
-	local plyID = keys.PlayerID
-	if not plyID then return end
-
-	-- The name of the item purchased
-	local itemName = keys.itemname 
-	
-	-- The cost of the item purchased
-	local itemcost = keys.itemcost
-	
+	if itemName == "item_imba_blink" then
+		HeroVoiceLine(hero, "blink")
+	else
+		if RandomInt(1, 100) >= 50 then
+			HeroVoiceLine(hero, "purch")
+		end
+	end
 end
 
 -- An ability was used by a player
@@ -450,8 +469,10 @@ if not abilityname then return end
 local hero = PlayerResource:GetSelectedHeroEntity(player)
 if not hero then return end
 
---	local abilityUsed = hero:FindAbilityByName(abilityname)
---	if not abilityUsed then return end
+local abilityUsed = hero:FindAbilityByName(abilityname)
+if not abilityUsed then return end
+
+	HeroVoiceLine(hero, "cast")
 
 	if abilityname == "rubick_spell_steal" then
 		local target = abilityUsed:GetCursorTarget()
@@ -622,6 +643,7 @@ function GameMode:OnPlayerLevelUp(keys)
 	-------------------------------------------------------------------------------------------------
 
 	hero:SetCustomDeathXP(HERO_XP_BOUNTY_PER_LEVEL[hero_level])
+	HeroVoiceLine(hero, "level_voiceline")
 end
 
 -- A player last hit a creep, a tower, or a hero
@@ -634,6 +656,14 @@ function GameMode:OnLastHit(keys)
 	local isTowerKill = keys.TowerKill == 1
 	local player = PlayerResource:GetPlayer(keys.PlayerID)
 	local killedEnt = EntIndexToHScript(keys.EntKilled)
+
+	if isFirstBlood then
+		HeroVoiceLine(player:GetAssignedHero(), "firstblood")
+		return
+	elseif isHeroKill then
+		HeroVoiceLine(player:GetAssignedHero(), "kill")
+		return
+	end
 end
 
 -- A tree was cut down by tango, quelling blade, etc
@@ -735,10 +765,8 @@ function GameMode:OnTeamKillCredit(keys)
 	-- IMBA: Deathstreak logic
 	-------------------------------------------------------------------------------------------------		
 	if PlayerResource:IsValidPlayerID(killer_id) and PlayerResource:IsValidPlayerID(victim_id) then
-		-- Reset the killer's deathstreak
-		PlayerResource:ResetDeathstreak(killer_id)		
 
-		-- Increment the victim's deathstreak
+		PlayerResource:ResetDeathstreak(killer_id)		
 		PlayerResource:IncrementDeathstreak(victim_id)
 
 		-- Show Deathstreak message
@@ -748,7 +776,6 @@ function GameMode:OnTeamKillCredit(keys)
 		local line_duration = 7
 
 		if victim_death_streak then
-
 			if victim_death_streak >= 3 then
 				Notifications:BottomToAll({hero = victim_hero_name, duration = line_duration})
 				Notifications:BottomToAll({text = victim_player_name.." ", duration = line_duration, continue = true})
@@ -820,7 +847,6 @@ function GameMode:OnTeamKillCredit(keys)
 			victim_hero.vengeance_aura_target = killer_hero
 		end
 	end
-
 end
 
 -- An entity died
@@ -894,8 +920,6 @@ function GameMode:OnEntityKilled( keys )
 			if killed_unit.bloodstone_respawn_reduction and (respawn_time > 0) then
 				respawn_time = math.max( respawn_time - killed_unit.bloodstone_respawn_reduction, 0)
 			end
-			-- Multiply respawn timer by the lobby options
-			respawn_time = math.max( respawn_time * HERO_RESPAWN_TIME_MULTIPLIER * 0.01, 1)
 
 			-- Set up the respawn timer, include meepo fix
 			if killed_unit:GetUnitName() == "npc_dota_hero_meepo" then
@@ -906,6 +930,7 @@ function GameMode:OnEntityKilled( keys )
 				end
 				killed_unit:SetTimeUntilRespawn(respawn_time)
 			end
+			HeroVoiceLine(killed_unit, "death")
 		end
 
 		-------------------------------------------------------------------------------------------------
@@ -944,6 +969,14 @@ function GameMode:OnEntityKilled( keys )
 			PlayerResource:SetCustomBuybackCost(player_id, buyback_cost)
 			PlayerResource:SetCustomBuybackCooldown(player_id, buyback_cooldown)
 		end
+
+		if string.find(killed_unit:GetUnitName(), "dota_creep") then
+			if killer:GetTeamNumber() == killed_unit:GetTeamNumber() then
+				HeroVoiceLine(killer, "deny")
+			else
+				HeroVoiceLine(killer, "lasthit")
+			end
+		end
 	end
 end
 
@@ -976,73 +1009,7 @@ function GameMode:OnConnectFull(keys)
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Player reconnect logic
 	-------------------------------------------------------------------------------------------------
-	-- Reinitialize the player's pick screen panorama, if necessary
-	if HeroSelection.HorriblyImplementedReconnectDetection then
-		HeroSelection.HorriblyImplementedReconnectDetection[player_id] = false
-		Timers:CreateTimer(1.0, function()
-			if HeroSelection.HorriblyImplementedReconnectDetection[player_id] then
-				Server_EnableToGainXPForPlyaer(player_id)
-				print("updating player "..player_id.."'s pick screen state")
-				local pick_state = HeroSelection.playerPickState[player_id].pick_state
-				local repick_state = HeroSelection.playerPickState[player_id].repick_state
-
-				local data = {
-					PlayerID = player_id,
-					PlayerPicks = HeroSelection.playerPicks,
-					pickState = pick_state,
-					repickState = repick_state
-				}
-
-				if IMBA_HERO_PICK_RULE == 0 then
-					data.PickedHeroes = {}
-					-- Set as all of the heroes that were selected
-					for _,v in pairs(HeroSelection.radiantPicks) do
-						table.insert(data.PickedHeroes, v)
-					end
-					for _,v in pairs(HeroSelection.direPicks) do
-						table.insert(data.PickedHeroes, v)
-					end
-				elseif IMBA_HERO_PICK_RULE == 1 then
-					-- Set as the team's pick to prevent same hero on the same team
-					if PlayerResource:GetTeam(player_id) == DOTA_TEAM_GOODGUYS then
-						data.PickedHeroes = HeroSelection.radiantPicks
-					else
-						data.PickedHeroes = HeroSelection.direPicks
-					end
-				else
-					data.PickedHeroes = {} --Set as empty, to allow all heroes to be selected
-				end
-
-				print("HERO SELECTION ARGS:")
-				print(pick_state)
-
-				if PlayerResource:GetTeam(player_id) == DOTA_TEAM_GOODGUYS then
-					print("Running Radiant picks...")
-					CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.radiantPicks, PlayerPicks = HeroSelection.playerPicks, pickState = pick_state, repickState = repick_state})
-				else
-					print("Running Dire picks...")
-					CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.direPicks, PlayerPicks = HeroSelection.playerPicks, pickState = pick_state, repickState = repick_state})
-				end
-			else
-				return 0.1
-			end
-		end)
-
-		-- If this is a reconnect from abandonment due to a long disconnect, remove the abandon state
-		if PlayerResource:GetHasAbandonedDueToLongDisconnect(player_id) then
-			local player_name = keys.name
-			local hero = PlayerResource:GetPickedHero(player_id)
-			local hero_name = PlayerResource:GetPickedHeroName(player_id)
-			local line_duration = 7
-			Notifications:BottomToAll({hero = hero_name, duration = line_duration})
-			Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
-			Notifications:BottomToAll({text = "#imba_player_reconnect_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
-			PlayerResource:IncrementTeamPlayerCount(player_id)
-
-			-- Stop redistributing gold to allies, if applicable
-			PlayerResource:StopAbandonGoldRedistribution(player_id)
-		end
-	end
+	ReconnectPlayer(player_id)
 
 	PlayerResource:InitPlayerData(player_id)
 end

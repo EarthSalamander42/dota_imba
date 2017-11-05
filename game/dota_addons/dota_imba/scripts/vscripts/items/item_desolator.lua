@@ -192,6 +192,11 @@ function item_imba_desolator:OnProjectileThink(projectile_location)
 			ParticleManager:SetParticleControl(effect_pfx, 1, enemy:GetAbsOrigin() + Vector(0, 0, 100))
 			ParticleManager:ReleaseParticleIndex(effect_pfx)
 
+			-- Batrider insane damage fix
+			if enemy:HasModifier("modifier_batrider_sticky_napalm") then
+				enemy:RemoveModifierByName("modifier_batrider_sticky_napalm")
+			end
+
 			-- Deal minor physical damage on every think
 			ApplyDamage({attacker = self:GetCaster(), victim = enemy, ability = self, damage = active_damage * FrameTime() , damage_type = DAMAGE_TYPE_PHYSICAL})
 		end
