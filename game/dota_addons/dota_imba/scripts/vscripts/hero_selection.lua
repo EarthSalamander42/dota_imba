@@ -67,7 +67,7 @@ function HeroSelection:HeroListPreLoad()
 		end
 	end
 
-	HeroSelection:HeroList(0.1)
+	HeroSelection:HeroList()
 end
 
 function HeroSelection:AddCustomHeroToList(hero_name)
@@ -152,17 +152,18 @@ function HeroSelection:AddVanillaHeroToList(hero_name)
 end
 
 local only_once = false
-function HeroSelection:HeroList(delay)
+local only_once_alt = false
+function HeroSelection:HeroList()
 	if only_once == false then
 		only_once = true
 		if IsInToolsMode() then
 			print("Adding fake picked heroes to check")
 			table.insert(HeroSelection.picked_heroes, "npc_dota_hero_arc_warden")
-			table.insert(HeroSelection.picked_heroes, "npc_dota_hero_pangolier")
+			table.insert(HeroSelection.picked_heroes, "npc_dota_hero_chaos_knight")
 		end
 	end
 
-	Timers:CreateTimer(delay, function()
+--	Timers:CreateTimer(delay, function()
 		CustomNetTables:SetTableValue("game_options", "hero_list", {
 			Strength = HeroSelection.strength_heroes,
 			Agility = HeroSelection.agility_heroes,
@@ -182,9 +183,12 @@ function HeroSelection:HeroList(delay)
 
 --		print("Custom Heroes:")
 --		PrintTable(HeroSelection.heroes_custom)
-	end)
+--	end)
 
-	HeroSelection:Start(0.1)
+	if only_once_alt == false then
+		only_once_alt = true
+		HeroSelection:Start()
+	end
 end
 
 --[[
@@ -192,50 +196,53 @@ end
 	Call this function from your gamemode once the gamestate changes
 	to pre-game to start the hero selection.
 ]]
-function HeroSelection:Start(delay)
-	Timers:CreateTimer(delay, function()
-		-- Figure out which players have to pick
-		HeroSelection.HorriblyImplementedReconnectDetection = {}
-		HeroSelection.radiantPicks = {}
-		HeroSelection.direPicks = {}
-		HeroSelection.playerPicks = {}
-		HeroSelection.playerPickState = {}
-		HeroSelection.numPickers = 0
---		print(DOTA_MAX_PLAYERS)
-		for pID = 0, DOTA_MAX_PLAYERS -1 do
-			if PlayerResource:IsValidPlayer( pID ) then
-				HeroSelection.numPickers = self.numPickers + 1
-				HeroSelection.playerPickState[pID] = {}
-				HeroSelection.playerPickState[pID].pick_state = "selecting_hero"
-				HeroSelection.playerPickState[pID].repick_state = false
-				HeroSelection.HorriblyImplementedReconnectDetection[pID] = true			
-			end
+function HeroSelection:Start()
+	HeroSelection.HorriblyImplementedReconnectDetection = {}
+	HeroSelection.radiantPicks = {}
+	HeroSelection.direPicks = {}
+	HeroSelection.playerPicks = {}
+	HeroSelection.playerPickState = {}
+	HeroSelection.numPickers = 0
+
+	HeroSelection.pick_sound_dummy_good = CreateUnitByName("npc_dummy_unit", Entities:FindByName(nil, "dota_goodguys_fort"):GetAbsOrigin(), false, nil, nil, DOTA_TEAM_GOODGUYS)
+	HeroSelection.pick_sound_dummy_good:EmitSound("Imba.PickPhaseDrums")
+	HeroSelection.pick_sound_dummy_bad = CreateUnitByName("npc_dummy_unit", Entities:FindByName(nil, "dota_badguys_fort"):GetAbsOrigin(), false, nil, nil, DOTA_TEAM_GOODGUYS)
+	HeroSelection.pick_sound_dummy_bad:EmitSound("Imba.PickPhaseDrums")
+
+	-- Figure out which players have to pick
+	for pID = 0, DOTA_MAX_PLAYERS -1 do
+		if PlayerResource:IsValidPlayer( pID ) then
+			HeroSelection.numPickers = self.numPickers + 1
+			HeroSelection.playerPickState[pID] = {}
+			HeroSelection.playerPickState[pID].pick_state = "selecting_hero"
+			HeroSelection.playerPickState[pID].repick_state = false
+			HeroSelection.HorriblyImplementedReconnectDetection[pID] = true			
 		end
+	end
 
-		-- Start the pick timer
-		HeroSelection.TimeLeft = HERO_SELECTION_TIME
-		Timers:CreateTimer( 0.04, HeroSelection.Tick )
+	-- Start the pick timer
+	HeroSelection.TimeLeft = HERO_SELECTION_TIME
+	Timers:CreateTimer( 0.04, HeroSelection.Tick )
 
-		-- Keep track of the number of players that have picked
-		HeroSelection.playersPicked = 0
+	-- Keep track of the number of players that have picked
+	HeroSelection.playersPicked = 0
 
-		-- Listen for pick and repick events
-		HeroSelection.listener_select = CustomGameEventManager:RegisterListener("hero_selected", HeroSelection.HeroSelect )
-		HeroSelection.listener_random = CustomGameEventManager:RegisterListener("hero_randomed", HeroSelection.RandomHero )
-		HeroSelection.listener_imba_random = CustomGameEventManager:RegisterListener("hero_imba_randomed", HeroSelection.RandomImbaHero )
-		HeroSelection.listener_repick = CustomGameEventManager:RegisterListener("hero_repicked", HeroSelection.HeroRepicked )
-		HeroSelection.listener_ui_initialize = CustomGameEventManager:RegisterListener("ui_initialized", HeroSelection.UiInitialized )
-		HeroSelection.listener_abilities_requested = CustomGameEventManager:RegisterListener("pick_abilities_requested", HeroSelection.PickAbilitiesRequested )
+	-- Listen for pick and repick events
+	HeroSelection.listener_select = CustomGameEventManager:RegisterListener("hero_selected", HeroSelection.HeroSelect )
+	HeroSelection.listener_random = CustomGameEventManager:RegisterListener("hero_randomed", HeroSelection.RandomHero )
+	HeroSelection.listener_imba_random = CustomGameEventManager:RegisterListener("hero_imba_randomed", HeroSelection.RandomImbaHero )
+	HeroSelection.listener_repick = CustomGameEventManager:RegisterListener("hero_repicked", HeroSelection.HeroRepicked )
+	HeroSelection.listener_ui_initialize = CustomGameEventManager:RegisterListener("ui_initialized", HeroSelection.UiInitialized )
+	HeroSelection.listener_abilities_requested = CustomGameEventManager:RegisterListener("pick_abilities_requested", HeroSelection.PickAbilitiesRequested )
 
-		-- Play relevant pick lines
-		if IMBA_PICK_MODE_ALL_RANDOM or IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
-			EmitGlobalSound("announcer_announcer_type_all_random")	
-		elseif IMBA_PICK_MODE_ARENA_MODE then
-			EmitGlobalSound("announcer_announcer_type_death_match")
-		else
-			EmitGlobalSound("announcer_announcer_type_all_pick")
-		end
-	end)
+	-- Play relevant pick lines
+	if IMBA_PICK_MODE_ALL_RANDOM or IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
+		EmitGlobalSound("announcer_announcer_type_all_random")	
+	elseif IMBA_PICK_MODE_ARENA_MODE then
+		EmitGlobalSound("announcer_announcer_type_death_match")
+	else
+		EmitGlobalSound("announcer_announcer_type_all_pick")
+	end
 end
 
 -- Horribly implemented reconnection detection

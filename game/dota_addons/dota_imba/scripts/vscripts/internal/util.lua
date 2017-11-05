@@ -1121,45 +1121,24 @@ function ReconnectPlayer(player_id)
 		Timers:CreateTimer(2.0, function()
 			if HeroSelection.HorriblyImplementedReconnectDetection[player_id] then
 				Server_EnableToGainXPForPlyaer(player_id)
-				print("updating player "..player_id.."'s pick screen state")
 				local pick_state = HeroSelection.playerPickState[player_id].pick_state
 				local repick_state = HeroSelection.playerPickState[player_id].repick_state
 
 				local data = {
 					PlayerID = player_id,
-					PlayerPicks = HeroSelection.playerPicks,
+					PickedHeroes = HeroSelection.picked_heroes,
 					pickState = pick_state,
 					repickState = repick_state
 				}
 
-				-- Set as all of the heroes that were selected
-				for _,v in pairs(HeroSelection.radiantPicks) do
-					table.insert(HeroSelection.picked_heroes, v)
-				end
-				
-				for _,v in pairs(HeroSelection.direPicks) do
-					table.insert(HeroSelection.picked_heroes, v)
-				end
-
 				print("HERO SELECTION ARGS:")
-				print(pick_state)
+				print("Player ID:", player_id)
+				print("Pick State:", pick_state)
+				print("Re-Pick State:", repick_state)
 
-				-- obsolete?
-				if PlayerResource:GetTeam(player_id) == DOTA_TEAM_GOODGUYS then
-					print("Running Radiant picks...")
-					PrintTable(HeroSelection.radiantPicks)
-					CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.radiantPicks, PlayerPicks = HeroSelection.playerPicks, pickState = pick_state, repickState = repick_state})
-				else
-					print("Running Dire picks...")
-					PrintTable(HeroSelection.direPicks)
-					CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.direPicks, PlayerPicks = HeroSelection.playerPicks, pickState = pick_state, repickState = repick_state})
-				end
-
-				print("Sending picked heroes..")
-				PrintTable()
-				CustomNetTables:SetTableValue("game_options", "hero_list", {
-					Picked = HeroSelection.picked_heroes
-				})
+				print("Sending picked heroes...")
+				PrintTable(HeroSelection.picked_heroes)
+				CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.picked_heroes, pickState = pick_state, repickState = repick_state})
 			else
 				print("Not fully reconnected yet:", player_id)
 				return 0.1
@@ -1242,9 +1221,9 @@ local random_int = RandomInt(1, max_line)
 	if event == "blink" or event == "purch" or event == "battlebegins" or event == "win" or event == "lose" or event == "kill" or event == "death" or event == "level_voiceline" or event == "laugh" or event == "thanks" then
 		if event == "level_voiceline" then event = string.gsub(event, "_voiceline", "") end
 		if random_int >= 10 then
-			EmitSoundOn(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int, hero)
+			EmitSoundOnLocationForAllies(hero:GetAbsOrigin(), hero_name.."_"..short_hero_name.."_"..event.."_"..random_int, hero)
 		else
-			EmitSoundOn(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int, hero)
+			EmitSoundOnLocationForAllies(hero:GetAbsOrigin(), hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int, hero)
 		end
 		return
 	end
@@ -1252,9 +1231,9 @@ local random_int = RandomInt(1, max_line)
 	if hero.voice_line_cd_alt == false then
 		if event == "lasthit" or event == "deny" then
 			if random_int >= 10 then
-				EmitSoundOn(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int, hero)
+				EmitSoundOnLocationForAllies(hero:GetAbsOrigin(), hero_name.."_"..short_hero_name.."_"..event.."_"..random_int, hero)
 			else
-				EmitSoundOn(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int, hero)
+				EmitSoundOnLocationForAllies(hero:GetAbsOrigin(), hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int, hero)
 			end
 
 			hero.voice_line_cd_alt = true
@@ -1268,9 +1247,9 @@ local random_int = RandomInt(1, max_line)
 	-- move, cast, attack
 	if hero.voice_line_cd == false then
 		if random_int >= 10 then
-			EmitSoundOn(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int, hero)
+			EmitSoundOnLocationForAllies(hero:GetAbsOrigin(), hero_name.."_"..short_hero_name.."_"..event.."_"..random_int, hero)
 		else
-			EmitSoundOn(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int, hero)
+			EmitSoundOnLocationForAllies(hero:GetAbsOrigin(), hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int, hero)
 		end
 
 		hero.voice_line_cd = true

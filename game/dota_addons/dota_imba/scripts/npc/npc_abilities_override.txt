@@ -3067,7 +3067,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage"					"100 175 250 300 350 400 450"
-				"LinkedSpecialBonus"		"special_bonus_unique_brewmaster_2"
 			}
 			"03"
 			{
@@ -3150,11 +3149,13 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"dodge_chance"				"10 15 20 25 28 32 36"
+				"LinkedSpecialBonus"		"special_bonus_unique_brewmaster_4"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"crit_chance"				"10 15 20 25 28 32 36"
+				"LinkedSpecialBonus"		"special_bonus_unique_brewmaster_4"
 			}
 			"03"
 			{
@@ -3165,6 +3166,7 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"last_proc"					"13 12 11 10 9.5 9 8.5"
+				"LinkedSpecialBonus"		"special_bonus_unique_brewmaster_4"
 			}
 		}
 	}
@@ -3884,11 +3886,13 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"70 105 140 160 180 200"
+				"LinkedSpecialBonus"	"special_bonus_unique_broodmother_1"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"lifesteal_pct"			"70 105 140 160 180 200"
+				"LinkedSpecialBonus"	"special_bonus_unique_broodmother_1"
 			}
 			"03"
 			{
@@ -3909,11 +3913,6 @@
 
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"chaos_bolt_speed"		"1000"
-			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
@@ -3923,6 +3922,7 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"stun_max"				"2.0 3.0 4.0 4.0 4.25 4.5 4.75"
+				"LinkedSpecialBonus"	"special_bonus_unique_chaos_knight_3"
 			}
 			"04"
 			{
@@ -7692,6 +7692,7 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"stun_duration"			"1.5 2.0 2.5 3.0 3.25 3.5 3.75"
+				"LinkedSpecialBonus"	"special_bonus_unique_keeper_of_the_light_3"
 			}
 			"04"
 			{
@@ -10790,50 +10791,6 @@
 		"AbilityCastRange"					"600 600 600 600 700 800 900"
 
 		"AbilityCooldown"					"25 20 15 10 9 8 7"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"illusion_1_damage_out_pct"	"-100"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"illusion_1_damage_in_pct"	"0"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"illusion_2_damage_out_pct"	"-90 -70 -50 -30 -20 -10 0"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"illusion_2_damage_in_pct"	"500 500 500 500 300 100 0"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"target_aoe"				"325"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"search_radius"				"900"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"delay"						"1"
-			}			
-			"08"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"illusion_duration"			"8"
-			}
-		}
 	}
 
 	//=================================================================================================================
@@ -10847,15 +10804,10 @@
 		
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"min_distance"				"200"
-			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"max_distance"				"600 675 750 825 900 975 1050"
+				"max_distance"				"600 700 800 900 950 1000 1050"
 				"LinkedSpecialBonus"		"special_bonus_unique_phantom_lancer"
 			}
 			"03"
@@ -10903,47 +10855,13 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"max_illusions"				"2 2 3 3 4 4"
+				"max_illusions"				"6 8 10 11 12 13"
+				"LinkedSpecialBonus"		"special_bonus_unique_phantom_lancer_3"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"proc_chance_pct"			"30"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"illusion_proc_chance_pct"	"30"
-			}			
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"illusion_duration"			"8"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"illusion_damage_out_pct"	"-60 -40 -40 -20 -20 0"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"tooltip_illusion_damage"	"40 60 60 80 80 100"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"illusion_damage_in_pct"	"400"
-			}
-			"08"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"tooltip_total_illusion_damage_in_pct"	"500"
-			}
-			"09"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"illusion_from_illusion_duration"		"8"
+				"proc_chance_pct"			"40 45 50 50 50 50"
 			}
 		}
 	}
@@ -11448,44 +11366,39 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"coil_init_damage_tooltip"	"100 150 200 225 250 275"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
 				"coil_break_radius"			"600 600 600 570 540 510"
 			}
-			"04"
+			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"stun_duration"				"0.5 0.5 0.5 0.75 1.0 1.25"
 			}
-			"05"
+			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"coil_stun_duration"		"1.5 2.25 3.0 3.15 3.3 3.5"
 			}
-			"06"
+			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"coil_break_damage"			"150 200 250 300 350 400"
+				"coil_break_damage"			"300 400 500 550 600 650"
 			}
-			"07"
+			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"coil_radius"				"375 375 375 400 425 450"
 			}
-			"08"
+			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"coil_duration_scepter"		"8"
 			}
-			"09"
+			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"coil_break_damage_scepter"	"300 375 450 525 600 675"
+				"coil_break_damage_scepter"	"400 550 700 800 900 1000"
 			}
-			"10"
+			"09"
 			{
 				"var_type"						"FIELD_FLOAT"
 				"coil_stun_duration_scepter"	"1.5 3.0 4.5 4.65 4.8 5.0"
@@ -11651,7 +11564,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"value"					"125"
+				"value"					"0.1"
 			}
 		}
 	}
@@ -13261,6 +13174,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_reduction"		"18 30 42 54 60 66 72"
+				"LinkedSpecialBonus"	"special_bonus_unique_tidehunter_4"
 			}
 			"02"
 			{
@@ -13281,13 +13195,9 @@
 	"tidehunter_anchor_smash"
 	{
 		"MaxLevel"						"7"
-
 		"AbilityCastRange"				"375 375 375 375 410 445 480"
-
 		"AbilityCooldown"				"7 6 5 4 4 4 4"
-
 		"AbilityDamage"					"100 150 200 250 275 300 325"
-
 		"AbilityManaCost"				"30 40 50 60 63 66 70"
 
 		"AbilitySpecial"
@@ -13296,6 +13206,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_reduction"		"-45 -50 -55 -60 -65 -70 -75"
+				"LinkedSpecialBonus"	"special_bonus_unique_tidehunter_3"
 			}
 			"02"
 			{
@@ -14269,6 +14180,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"decay_duration"			"45"
+				"LinkedSpecialBonus"		"special_bonus_unique_undying_4"
 			}
 			"04"
 			{
@@ -15803,13 +15715,8 @@
 	"zuus_arc_lightning"
 	{
 		"MaxLevel"						"7"
-
 		"AbilityCastRange"				"850 850 850 850 900 950 1000"
-
 		"AbilityCastPoint"				"0.2 0.2 0.2 0.2 0.16 0.13 0.1"
-
-		"AbilityDamage"					"90 110 130 150 160 170 180"
-
 		"AbilityManaCost"				"65"
 
 		"AbilitySpecial"
@@ -15817,14 +15724,20 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"500 500 500 500 600 700 800"
+				"arc_damage"			"90 110 130 150 160 170 180"
+				"LinkedSpecialBonus"	"special_bonus_unique_zeus_2"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"jump_count"			"5 7 9 15 20 25 30"
+				"radius"				"500 500 500 500 600 700 800"
 			}
 			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"jump_count"			"5 7 9 15 20 25 30"
+			}
+			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"jump_delay"			"0.25 0.25 0.25 0.25 0.2 0.15 0.1"
