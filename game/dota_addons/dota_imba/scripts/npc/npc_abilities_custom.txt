@@ -19646,6 +19646,12 @@
 				"max_souls"						"18 24 30 36 39 42 45"
 			}
 
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"scepter_max_souls"				"20 28 36 44 49 54 59"
+			}
+
 
 			"07"
 			{

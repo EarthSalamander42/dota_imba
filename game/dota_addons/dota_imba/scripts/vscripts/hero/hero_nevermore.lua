@@ -329,7 +329,7 @@ function imba_nevermore_shadowraze_far:OnSpellStart()
 
     if level_of_ability == 7 then
 
-        -- Create the lats raze at the far end
+        -- Create the last raze at the far end
         local level_7_raze_point = caster:GetAbsOrigin() + caster:GetForwardVector() * level_7_raze_distance
         local lvl_7_raze_hit_hero = CastShadowRazeOnPoint(caster, ability, level_7_raze_point, level_7_raze_radius)
     end
@@ -341,6 +341,8 @@ function imba_nevermore_shadowraze_far:OnSpellStart()
 
 end
 
+--Return a boolean if the caster has the Soul Harvest modifier: True if the raze hit an enemy hero, false otherwise. 
+--Return nil if the caster doesn't have the modifier.
 function CastShadowRazeOnPoint(caster, ability, point, radius)
     -- Ability properties
     local particle_raze = "particles/hero/nevermore/nevermore_shadowraze.vpcf"
@@ -422,22 +424,14 @@ function CastShadowRazeOnPoint(caster, ability, point, radius)
     	CreateModifierThinker(caster, ability, pool_modifier, {duration = pool_duration, radius = pool_radius}, point, caster:GetTeamNumber(), false)
     end
 
-    -- If there are no enemy heroes in a raze and the caster is in a Soul Harvest, remove the modifier
+    -- Check if the raze has hit an enemy hero
     if caster:HasModifier(modifier_harvest) then
-        if #enemies > 0 then --if #enemies == 0 then
-           -- caster:RemoveModifierByName(modifier_harvest)
-        --else
-            -- Enemies found. If none of them are real heroes, remove the modifier
-           -- local enemy_hero = false
+        if #enemies > 0 then
             for _,enemy in pairs(enemies) do
                 if enemy:IsRealHero() then
-                	return true   --enemy_hero = true
+                	return true
                 end
             end
-
-           -- if not enemy_hero then
-           --     caster:RemoveModifierByName(modifier_harvest)
-           -- end
         end
         return false
     end
@@ -828,8 +822,10 @@ function modifier_imba_necromastery_souls:OnCreated()
     self.hero_attack_soul_count = self.ability:GetSpecialValueFor("hero_attack_soul_count")
     self.shadowraze_soul_count = self.ability:GetSpecialValueFor("shadowraze_soul_count")
     self.damage_per_soul = self.ability:GetSpecialValueFor("damage_per_soul")
-    self.max_souls = self.ability:GetSpecialValueFor("max_souls")
-   -- self.scepter_extra_souls = self.ability:GetSpecialValueFor("scepter_extra_souls")
+    self.base_max_souls = self.ability:GetSpecialValueFor("max_souls")
+    self.scepter_max_souls = self.ability:GetSpecialValueFor("scepter_max_souls")
+    self.max_souls = self.base_max_souls
+    self.total_max_souls = self.base_max_souls
     self.temporary_soul_duration = self.ability:GetSpecialValueFor("temporary_soul_duration")
     self.max_temporary_souls_pct = self.ability:GetSpecialValueFor("max_temporary_souls_pct")
     self.soul_projectile_speed = self.ability:GetSpecialValueFor("soul_projectile_speed")
@@ -867,14 +863,14 @@ function modifier_imba_necromastery_souls:OnCreated()
             return nil
         end
 
-        --create the talent extra cap modifier if it doesn't exist
+        --create the talent extra cap modifier if it doesn't exist (needed to fix a bug)
         if not self.caster:FindModifierByName(self.extra_cap_modifier) then
         	self.caster:AddNewModifier(self.caster, self.ability, self.extra_cap_modifier, {})
         end
 
 
         -- Decide how many temporary souls we can have at once
-        self.max_souls_inc_temp = self.max_souls * (1 + (self.max_temporary_souls_pct * 0.01))
+        self.max_souls_inc_temp = self.base_max_souls * (1 + (self.max_temporary_souls_pct * 0.01))
 
         -- If a table is not yet declared, assign it now
         if not self.soul_table then
@@ -895,30 +891,41 @@ function modifier_imba_necromastery_souls:OnIntervalThink()
 
     	local modifier_handler = self.caster:FindModifierByName(self.extra_cap_modifier)
 
-    	--[[Scepter: Maximum Necromastery soul increase
-        if self.caster:HasScepter() and not self.already_accounted then
-            self.already_accounted = true -- necessary or else there would be an infinite increase to the cap
-            self.max_souls = self.max_souls + self.scepter_extra_souls * self.levels_up_without_scepter
-            self.levels_up_without_scepter = 0
-            modifier_handler:SetStackCount(self.max_souls) --add the scepter bonus to the talent modifier
-        end]]
-        
-        -- Check if the souls cap has been reset (will fix the extra max souls cap from talent #3 resetting on death)
-        
-        if self.caster:HasTalent("special_bonus_imba_nevermore_3") and modifier_handler then
-            if self.max_souls < modifier_handler.bonus_cap then
-            	self.max_souls = modifier_handler.bonus_cap
-            end
+    	--Scepter: Maximum Necromastery soul increase
+        if self.caster:HasScepter() then
+            --self.already_accounted = true -- necessary or else there would be an infinite increase to the cap
+            self.max_souls = self.scepter_max_souls
+        else
+        	self.max_souls = self.base_max_souls
         end
 
+       -- print(self.max_souls)
+      --  print(self.total_max_souls)
+        
+        -- Check if the souls cap has been reset (will fix the extra max souls cap from talent #3 resetting on death) or if the new cap is higher than it should be
+        -- (happens when the player drop the Scepter, but who would do that? O.o)
+        
+        if self.caster:HasTalent("special_bonus_imba_nevermore_3") and modifier_handler then
+            if self.total_max_souls < self.max_souls + modifier_handler.bonus_cap then
+            	self.total_max_souls = self.max_souls + modifier_handler.bonus_cap
+            elseif self.total_max_souls > self.max_souls + modifier_handler.bonus_cap then
+            	self.total_max_souls = self.max_souls + modifier_handler.bonus_cap
+            end
+
+        elseif not self.caster:HasTalent("special_bonus_imba_nevermore_3") then --updates the cap if scepter is bought or discarded
+        	self.total_max_souls = self.max_souls
+        end
+
+        --print(self.total_max_souls)
+
         -- Recalculate temporary souls
-        self.max_souls_inc_temp = self.max_souls * (1 + (self.max_temporary_souls_pct * 0.01))
+        self.max_souls_inc_temp = self.total_max_souls * (1 + (self.max_temporary_souls_pct * 0.01))
 
         -- Check if we have less souls than how many are registered in the table.
         local stacks = self:GetStackCount()
 
         -- If the caster hasn't gone beyond the maximum souls, set the duration to infinity
-        if stacks <= self.max_souls then
+        if stacks <= self.total_max_souls then
             self:SetDuration(-1, true)
         end
 
@@ -930,10 +937,10 @@ function modifier_imba_necromastery_souls:OnIntervalThink()
         end
 
         -- Check if there are temporary souls
-        if #self.soul_table > self.max_souls then
+        if #self.soul_table > self.total_max_souls then
 
             -- Check each temporary soul's duration, to decide if he can go free
-            for i = #self.soul_table, (self.max_souls + 1), -1 do
+            for i = #self.soul_table, (self.total_max_souls + 1), -1 do
                 if self.soul_table[i] + self.temporary_soul_duration < GameRules:GetGameTime() then
                     table.remove(self.soul_table, i)
                     self:DecrementStackCount()
@@ -966,7 +973,7 @@ function modifier_imba_necromastery_souls:OnStackCountChanged(old_stack_count)
                 return nil
             end
 
-            if stacks > self.max_souls then
+            if stacks > self.total_max_souls then
                 -- Set the new temporary soul duration
                 self:SetDuration(self.temporary_soul_duration, true)
             end
@@ -1114,11 +1121,11 @@ function modifier_imba_necromastery_souls:OnDeath(keys)
             -- Decide how many souls should the caster get
             local soul_count = 0
             if target:IsRealHero() then
-            	--Talent #3: Increase souls cap permanently on hero kills
+            	--Talent #3: Increase souls cap permanently on hero kills. It is a retroactive talent, so when activated it will account all the hero kills
+            	local modifier_handler = self.caster:FindModifierByName(self.extra_cap_modifier)
+            	modifier_handler:SetStackCount(modifier_handler.bonus_cap + 1) -- will be also used to check if the cap was reset after a death to prevent a bug
             	if self.caster:HasTalent("special_bonus_imba_nevermore_3") then
-            		self.max_souls = self.max_souls + 1
-            		print(self.max_souls)
-            		self.caster:FindModifierByName(self.extra_cap_modifier):SetStackCount(self.max_souls) -- will be used to check if the cap was reset after a death to prevent a bug
+            		self.total_max_souls = self.total_max_souls + 1
             	end
                 soul_count = self.hero_kill_soul_count
             else
@@ -1242,9 +1249,9 @@ function modifier_imba_necromastery_talent_extra_cap:OnStackCountChanged()
 	self.bonus_cap = self.caster:GetModifierStackCount(self.modifier, self.caster)
 end
 
---change this to false for testing purposes
+
 function modifier_imba_necromastery_talent_extra_cap:IsHidden()
-	return true
+	return false
 end
 
 function modifier_imba_necromastery_talent_extra_cap:IsDebuff()
