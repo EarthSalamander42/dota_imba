@@ -19646,6 +19646,7 @@
 				"max_souls"						"18 24 30 36 39 42 45"
 			}
 
+
 			"07"
 			{
 				"var_type"						"FIELD_INTEGER"
@@ -19877,20 +19878,28 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"duration"	                    "2"
+				"duration"	                "2"
 			}
 
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"dmg_per_sec"				"50"
+				"pc_dmg_per_sec"			"5"
 			}
+
 			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"flat_dmg_per_sec"			"80"
+			}
+
+			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"tick_interval"				"0.5"
 			}
-			"04"
+
+			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"250"
@@ -23281,7 +23290,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"base_heal"					"7 10 13 16 19 22 25"
+				"base_heal"					"10 14 18 22 26 30 34"
 			}
 			"05"
 			{
@@ -23504,7 +23513,7 @@
 			"12"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"scepter_cooldown"				"60"
+				"scepter_cooldown"				"20"
 			}
 		}
 	}
