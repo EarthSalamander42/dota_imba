@@ -1242,9 +1242,9 @@ function modifier_imba_necromastery_talent_extra_cap:OnStackCountChanged()
 	self.bonus_cap = self.caster:GetModifierStackCount(self.modifier, self.caster)
 end
 
-
+--change this to false for testing purposes
 function modifier_imba_necromastery_talent_extra_cap:IsHidden()
-	return false
+	return true
 end
 
 function modifier_imba_necromastery_talent_extra_cap:IsDebuff()
