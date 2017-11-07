@@ -129,7 +129,6 @@ function ShowStatsSwap() {
 	also handles 3 additional panels for custom heroes */
 function CreateHeroPanel(hero_table, attribute, custom) {
 	if (custom == true) {
-//		$.Msg(hero_table)
 		attribute = attribute + "_Custom"
 	}
 	var i = 1;
@@ -227,7 +226,6 @@ var DireCount = 0
 	var radiantPlayers = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_GOODGUYS );
 	var direPlayers = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_BADGUYS );
 	var map_info = Game.GetMapInfo();
-	$.Msg(radiantPlayers.length)
 
 	var i = 1;
 	var class_option_count = 1;
@@ -252,7 +250,7 @@ var DireCount = 0
 
 		var plyData = CustomNetTables.GetTableValue("player_table", player);
 		if (plyData != null) {
-			RadiantLevels = RadiantLevels + plyData.Lvl / RadiantCount
+			RadiantLevels = RadiantLevels + plyData.Lvl / radiantPlayers.length
 			$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + RadiantLevels.toFixed([0]);
 		}
 	});
@@ -278,7 +276,7 @@ var DireCount = 0
 
 		var plyData = CustomNetTables.GetTableValue("player_table", player);
 		if (plyData != null) {
-			DireLevels = DireLevels + plyData.Lvl / DireCount
+			DireLevels = DireLevels + plyData.Lvl / direPlayers.length
 			$("#AverageMMRTeamDire").text = $.Localize("average_mmr") + DireLevels.toFixed([0]);
 		}
 	});
@@ -524,14 +522,11 @@ function EnterGame() {
 
 function PlayerReconnected(player_id, picked_heroes, pick_state, repick_state) {
 	// If this is not the local player, ignore everything
-	$.Msg("PlayerReconnected (JS)")
 	if ( player_id == Players.GetLocalPlayer() ) {
-		$.Msg("Act on local player only..")
 		// If the player is already in-game, destroy the pick interface and ignore the rest
 		if (pick_state == "in_game") {
 			ShowHUD(true)
 			ShowPickScreen(false)
-			$.Msg("Pick State: In-Game")
 		// Else, repopulate player pick panels
 		} else {
 //			var localTeam = Players.GetTeam(Players.GetLocalPlayer())
@@ -539,7 +534,6 @@ function PlayerReconnected(player_id, picked_heroes, pick_state, repick_state) {
 //			} else {
 				ShowHUD(false)
 				ShowPickScreen(true)
-				$.Msg("Pick State: Picking..")
 
 				var i = 1;
 				for (i = 1; i <= picked_heroes.length; i++) {
@@ -554,7 +548,6 @@ function PlayerReconnected(player_id, picked_heroes, pick_state, repick_state) {
 				var j = 0;
 				for (j in picked_heroes) {
 					if ($("#PickList").FindChildTraverse(picked_heroes[j])) {
-						$.Msg("Picked heroes: " + picked_heroes[j])
 						$("#PickList").FindChildTraverse(picked_heroes[j]).AddClass("taken");
 						var HeroLabel = $.CreatePanel("Label", $('#'+picked_heroes[j]), picked_heroes[j] + "_label");
 						HeroLabel.AddClass("ClassCustomOptionLabel")
@@ -618,6 +611,7 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 		$.Msg("VILKOMMEN BIENVENUE, SPECTATOR!")
 		// Else, do pick screen stuff
 	} else {
+		$.Msg("Hello Radiant/Dire Player")
 		///Load player elements
 		ShowHUD(false);
 		LoadPlayers()

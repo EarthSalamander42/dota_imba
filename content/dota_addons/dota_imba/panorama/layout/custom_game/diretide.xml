@@ -8,6 +8,7 @@
 		<include src="file://{resources}/scripts/custom_game/diretide.js" />
 		<include src="file://{resources}/scripts/custom_game/Modular.js" />
 	</scripts>
+	
 	<Panel class="Diretide" hittest="false">
 		<Panel id="DiretidePanel">
 			<Panel id="RoshanHP" hittest="false">
