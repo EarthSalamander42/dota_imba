@@ -147,7 +147,7 @@ function modifier_imba_item_elder_staff_passive:DeclareFunctions()
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
 		MODIFIER_PROPERTY_CAST_RANGE_BONUS_STACKING,
 		MODIFIER_PROPERTY_MANA_BONUS,
-		MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE
+		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT
     }
     return decFuns
 end
@@ -168,7 +168,7 @@ function modifier_imba_item_elder_staff_passive:GetModifierBonusStats_Intellect(
 	return self.bonus_intellect
 end
 
-function modifier_imba_item_elder_staff_passive:GetModifierPercentageManaRegen()
+function modifier_imba_item_elder_staff_passive:GetModifierConstantManaRegen()
 	return self.bonus_mana_regen
 end
 

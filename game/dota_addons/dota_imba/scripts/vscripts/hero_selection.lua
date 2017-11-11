@@ -12,7 +12,9 @@ end
 
 function HeroSelection:HeroListPreLoad()
 	-- Retrieve heroes info
+	NPC_HEROES = LoadKeyValues("scripts/npc/npc_heroes.txt")
 	NPC_HEROES_CUSTOM = LoadKeyValues("scripts/npc/npc_heroes_custom.txt")
+
 	HeroSelection.strength_heroes = {}
 	HeroSelection.agility_heroes = {}
 	HeroSelection.intellect_heroes = {}
@@ -30,40 +32,34 @@ function HeroSelection:HeroListPreLoad()
 	HeroSelection.heroes_custom = {}
 	HeroSelection.picked_heroes = {}
 
-	-- New function that retrieves kv infos
-	for hero, attributes in pairs(NPC_HEROES_CUSTOM) do
-		hero = string.gsub(hero, "imba", "dota")
-
-		if GetKeyValueByHeroName(hero, "IsImba") == 1 then
-			if GetKeyValueByHeroName(hero, "IsDisabled") == 1 then
-				table.insert(HeroSelection.disabled_10v10_heroes, hero)
-			end
-
-			if GetKeyValueByHeroName(hero, "IsDisabled") == 2 then
-				table.insert(HeroSelection.disabled_heroes, hero)
-			else
-				table.insert(HeroSelection.imba_heroes, hero)
-			end
+	for hero, attributes in pairs(NPC_HEROES) do
+		if hero == "Version" or hero == "npc_dota_hero_base" or hero == "npc_dota_hero_target_dummy" then
 		else
-			if GetKeyValueByHeroName(hero, "IsDisabled") == 1 then
-				table.insert(HeroSelection.disabled_10v10_heroes, hero)
-			end
-			
-			if GetKeyValueByHeroName(hero, "IsDisabled") == 2 then
-				table.insert(HeroSelection.disabled_heroes, hero)
-			else
-				table.insert(HeroSelection.vanilla_heroes, hero)
-			end
-		end
-
-		if GetKeyValueByHeroName(hero, "IsCustom") == 1 then
-			HeroSelection:AddCustomHeroToList(hero)
-		elseif GetKeyValueByHeroName(hero, "IsCustom") == 0 then
+			table.insert(HeroSelection.vanilla_heroes, hero)
 			HeroSelection:AddVanillaHeroToList(hero)
 		end
+	end
 
-		if GetKeyValueByHeroName(hero, "IsNew") == 1 then
-			table.insert(HeroSelection.new_heroes, hero)
+	for hero, attributes in pairs(NPC_HEROES_CUSTOM) do
+		hero = string.gsub(hero, "imba", "dota")
+		if string.find(hero, "npc_dota_hero_") then
+
+			if GetKeyValueByHeroName(hero, "IsDisabled") == 1 then
+				table.insert(HeroSelection.disabled_10v10_heroes, hero)
+			elseif GetKeyValueByHeroName(hero, "IsDisabled") == 2 then
+				table.insert(HeroSelection.disabled_heroes, hero)
+			end
+
+			if GetKeyValueByHeroName(hero, "IsImba") == 1 then
+				table.insert(HeroSelection.imba_heroes, hero)
+			elseif GetKeyValueByHeroName(hero, "IsCustom") == 1 then
+				HeroSelection:AddCustomHeroToList(hero)
+			end
+
+			-- Add a specific label
+			if GetKeyValueByHeroName(hero, "IsNew") == 1 then
+				table.insert(HeroSelection.new_heroes, hero)
+			end
 		end
 	end
 
@@ -154,36 +150,22 @@ end
 local only_once = false
 local only_once_alt = false
 function HeroSelection:HeroList()
-	if only_once == false then
-		only_once = true
-		if IsInToolsMode() then
-			print("Adding fake picked heroes to check")
-			table.insert(HeroSelection.picked_heroes, "npc_dota_hero_arc_warden")
-			table.insert(HeroSelection.picked_heroes, "npc_dota_hero_chaos_knight")
-		end
-	end
+	CustomNetTables:SetTableValue("game_options", "hero_list", {
+		Strength = HeroSelection.strength_heroes,
+		Agility = HeroSelection.agility_heroes,
+		Intellect = HeroSelection.intellect_heroes,
+		StrengthCustom = HeroSelection.strength_heroes_custom,
+		AgilityCustom = HeroSelection.agility_heroes_custom,
+		IntellectCustom = HeroSelection.intellect_heroes_custom,
+		Imba = HeroSelection.imba_heroes,
+		New = HeroSelection.new_heroes,
+		Disabled10v10 = HeroSelection.disabled_10v10_heroes,
+		Disabled = HeroSelection.disabled_heroes,
+		Picked = HeroSelection.picked_heroes
+	})
 
---	Timers:CreateTimer(delay, function()
-		CustomNetTables:SetTableValue("game_options", "hero_list", {
-			Strength = HeroSelection.strength_heroes,
-			Agility = HeroSelection.agility_heroes,
-			Intellect = HeroSelection.intellect_heroes,
-			StrengthCustom = HeroSelection.strength_heroes_custom,
-			AgilityCustom = HeroSelection.agility_heroes_custom,
-			IntellectCustom = HeroSelection.intellect_heroes_custom,
-			Imba = HeroSelection.imba_heroes,
-			New = HeroSelection.new_heroes,
-			Disabled10v10 = HeroSelection.disabled_10v10_heroes,
-			Disabled = HeroSelection.disabled_heroes,
-			Picked = HeroSelection.picked_heroes
-		})
-
-		table.deepmerge(HeroSelection.random_heroes, HeroSelection.vanilla_heroes)
-		table.deepmerge(HeroSelection.random_heroes, HeroSelection.imba_heroes)
-
---		print("Custom Heroes:")
---		PrintTable(HeroSelection.heroes_custom)
---	end)
+	table.deepmerge(HeroSelection.random_heroes, HeroSelection.vanilla_heroes)
+	table.deepmerge(HeroSelection.random_heroes, HeroSelection.imba_heroes)
 
 	if only_once_alt == false then
 		only_once_alt = true
@@ -215,6 +197,7 @@ function HeroSelection:Start()
 			HeroSelection.numPickers = self.numPickers + 1
 			HeroSelection.playerPickState[pID] = {}
 			HeroSelection.playerPickState[pID].pick_state = "selecting_hero"
+			print("Pick State:", pID, HeroSelection.playerPickState[pID].pick_state)
 			HeroSelection.playerPickState[pID].repick_state = false
 			HeroSelection.HorriblyImplementedReconnectDetection[pID] = true			
 		end
@@ -288,30 +271,29 @@ end
 	-- Roll a random hero
 	local random_hero = HeroSelection.random_heroes[RandomInt(1, #HeroSelection.random_heroes)]
 
-	-- Check if this random hero hasn't already been picked
-	if PlayerResource:GetTeam(id) == DOTA_TEAM_GOODGUYS then
-		for _, picked_hero in pairs(HeroSelection.radiantPicks) do
+	if GetMapName() == "imba_10v10" or GetMapName() == "imba_custom_10v10" then
+		for _, picked_hero in pairs(HeroSelection.disabled_10v10_heroes) do
 			if random_hero == picked_hero then
-				HeroSelection:RandomHero({PlayerID = id})
-				break
-			end
-		end
-	else
-		for _, picked_hero in pairs(HeroSelection.direPicks) do
-			if random_hero == picked_hero then
+				print("10v10 hero disabled, random again...")
 				HeroSelection:RandomHero({PlayerID = id})
 				break
 			end
 		end
 	end
 
-	if GetMapName() == "imba_10v10" or GetMapName() == "imba_custom_10v10" then
-		for _, picked_hero in pairs(HeroSelection.disabled_10v10_heroes) do
-			if random_hero == picked_hero then
-				print("10v10 hero disabled")
-				HeroSelection:RandomHero({PlayerID = id})
-				break
-			end
+	for _, picked_hero in pairs(HeroSelection.disabled_heroes) do
+		if random_hero == picked_hero then
+			print("Hero disabled, random again...")
+			HeroSelection:RandomHero({PlayerID = id})
+			break
+		end
+	end
+
+	for _, picked_hero in pairs(HeroSelection.picked_heroes) do
+		if random_hero == picked_hero then
+			print("Hero disabled, random again...")
+			HeroSelection:RandomHero({PlayerID = id})
+			break
 		end
 	end
 
@@ -335,29 +317,29 @@ local id = event.PlayerID
 
 	local random_hero = HeroSelection.imba_heroes[RandomInt(1, #HeroSelection.imba_heroes)]
 
-	if PlayerResource:GetTeam(id) == DOTA_TEAM_GOODGUYS then
-		for _, picked_hero in pairs(HeroSelection.radiantPicks) do
+	if GetMapName() == "imba_10v10" or GetMapName() == "imba_custom_10v10" then
+		for _, picked_hero in pairs(HeroSelection.disabled_10v10_heroes) do
 			if random_hero == picked_hero then
-				HeroSelection:RandomImbaHero({PlayerID = id})
-				break
-			end
-		end
-	else
-		for _, picked_hero in pairs(HeroSelection.direPicks) do
-			if random_hero == picked_hero then
-				HeroSelection:RandomImbaHero({PlayerID = id})
+				print("10v10 hero disabled, random again...")
+				HeroSelection:RandomHero({PlayerID = id})
 				break
 			end
 		end
 	end
 
-	if GetMapName() == "imba_10v10" or GetMapName() == "imba_custom_10v10" then
-		for _, picked_hero in pairs(HeroSelection.disabled_10v10_heroes) do
-			if random_hero == picked_hero then
-				print("10v10 hero disabled")
-				HeroSelection:RandomImbaHero({PlayerID = id})
-				break
-			end
+	for _, picked_hero in pairs(HeroSelection.disabled_heroes) do
+		if random_hero == picked_hero then
+			print("Hero disabled, random again...")
+			HeroSelection:RandomHero({PlayerID = id})
+			break
+		end
+	end
+
+	for _, picked_hero in pairs(HeroSelection.picked_heroes) do
+		if random_hero == picked_hero then
+			print("Hero disabled, random again...")
+			HeroSelection:RandomHero({PlayerID = id})
+			break
 		end
 	end
 
@@ -373,23 +355,13 @@ function HeroSelection:RandomSameHero()
 	-- Roll a random hero, and keep it stored
 	local random_hero = HeroSelection.random_heroes[RandomInt(1, #HeroSelection.random_heroes)]
 
-	if GetMapName() == "imba_10v10" or GetMapName() == "imba_custom_10v10" then
-		for _, picked_hero in pairs(HeroSelection.disabled_10v10_heroes) do
-			if random_hero == picked_hero then
-				print("10v10 hero disabled")
-				HeroSelection:RandomSameHero()
-				break
-			end
-		end
-	end
-
-	Chat:PlayerRandomed(0, PlayerResource:GetPlayer(0), PlayerResource:GetTeam(0), random_hero)
-
 	for _, hero in pairs(HeroList:GetAllHeroes()) do
 		PlayerResource:SetHasRandomed(hero:GetPlayerOwnerID())
 		HeroSelection:HeroSelect({PlayerID = hero:GetPlayerOwnerID(), HeroName = random_hero, HasRandomed = true})
 		HeroSelection.playerPickState[hero:GetPlayerOwnerID()].random_state = true
 	end
+
+	Chat:PlayerRandomed(0, PlayerResource:GetPlayer(0), PlayerResource:GetTeam(0), random_hero)
 end
 
 --[[
@@ -425,12 +397,14 @@ function HeroSelection:HeroSelect(event)
 			CustomGameEventManager:Send_ServerToAllClients("hero_picked", {PlayerID = event.PlayerID, HeroName = event.HeroName, Team = PlayerResource:GetTeam(event.PlayerID), HasRandomed = has_randomed})
 			if PlayerResource:GetConnectionState(event.PlayerID) ~= 1 then
 				HeroSelection.playerPickState[event.PlayerID].pick_state = "selected_hero"
+				print("Pick State:", event.PlayerID, HeroSelection.playerPickState[event.PlayerID].pick_state)
 			end
 
 			-- Assign the hero if picking is over
 			if HeroSelection.TimeLeft <= 0 and HeroSelection.playerPickState[event.PlayerID].pick_state ~= "in_game" then
 				HeroSelection:AssignHero( event.PlayerID, event.HeroName )
 				HeroSelection.playerPickState[event.PlayerID].pick_state = "in_game"
+				print("Pick State:", event.PlayerID, HeroSelection.playerPickState[event.PlayerID].pick_state)
 				CustomGameEventManager:Send_ServerToAllClients("hero_loading_done", {} )
 			end
 
@@ -496,6 +470,7 @@ function HeroSelection:HeroRepicked( event )
 	-- Flag the player as having repicked
 	PlayerResource:CustomSetHasRepicked(player_id, true)
 	HeroSelection.playerPickState[player_id].pick_state = "selecting_hero"
+	print("Pick State:", player_id, HeroSelection.playerPickState[player_id].pick_state)
 	HeroSelection.playerPickState[player_id].repick_state = true
 	HeroSelection.playerPickState[player_id].random_state = false
 
@@ -523,6 +498,7 @@ local time = 0.0
 		if HeroSelection.playerPicks[player_id] and HeroSelection.playerPickState[player_id].pick_state ~= "in_game" then
 			HeroSelection:AssignHero(player_id, HeroSelection.playerPicks[player_id])
 			HeroSelection.playerPickState[player_id].pick_state = "in_game"
+			print("Pick State:", player_id, HeroSelection.playerPickState[player_id].pick_state)
 		end
 	end
 
@@ -658,7 +634,7 @@ end
 function HeroSelection:GetPickScreenAbilities(hero_name)
 local hero_abilities = {}
 
-	for i = 1, 8 do
+	for i = 1, 9 do
 		if GetKeyValueByHeroName(hero_name, "Ability"..i) ~= nil then
 			hero_abilities[i] = GetKeyValueByHeroName(hero_name, "Ability"..i)
 		end

@@ -25,15 +25,6 @@
 						</Button>
 					</Panel>
 
-					<Panel id="KillsToEndOptionsPanel" class="GameOptionsSubPanel" onmouseover="UIShowTextTooltip( imba_gamemode_settings_kills_to_end_tooltip )" onmouseout="UIHideTextTooltip()">
-						<Label id="KillsToEndOptionsLabel" class="GameOptionsLabel" text="#imba_gamemode_settings_kills_to_end" />
-						<DropDown id="KillsToEndOptionsDropdown" class="GameOptionsDropdown">
-							<Label text="70" id="70"/>
-							<Label text="150" id="150"/>
-							<Label text="250" id="250"/>
-						</DropDown>
-					</Panel>
-
 					<Panel id="GoldOptionsPanel" class="GameOptionsSubPanel" onmouseover="UIShowTextTooltip( imba_gamemode_settings_gold_multiplier_tooltip )" onmouseout="UIHideTextTooltip()">
 						<Label id="GoldOptionsLabel" class="GameOptionsLabel" text="#imba_gamemode_settings_gold_multiplier" />
 						<DropDown id="GoldOptionsDropdown" class="GameOptionsDropdown">

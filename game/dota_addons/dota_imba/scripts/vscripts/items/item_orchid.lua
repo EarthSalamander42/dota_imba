@@ -79,7 +79,7 @@ function modifier_item_imba_orchid:DeclareFunctions()
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-		MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE,
+		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
 	}
 	return funcs
@@ -94,7 +94,7 @@ function modifier_item_imba_orchid:GetModifierAttackSpeedBonus_Constant()
 function modifier_item_imba_orchid:GetModifierPreAttack_BonusDamage()
 	return self.bonus_damage end
 
-function modifier_item_imba_orchid:GetModifierPercentageManaRegen()
+function modifier_item_imba_orchid:GetModifierConstantManaRegen()
 	return self.bonus_mana_regen end
 
 function modifier_item_imba_orchid:GetModifierSpellAmplify_Percentage()
@@ -280,7 +280,7 @@ function modifier_item_imba_bloodthorn:DeclareFunctions()
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-		MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE,
+		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
 	}
 	return funcs
@@ -295,7 +295,7 @@ function modifier_item_imba_bloodthorn:GetModifierAttackSpeedBonus_Constant()
 function modifier_item_imba_bloodthorn:GetModifierPreAttack_BonusDamage()
 	return self.bonus_damage end
 
-function modifier_item_imba_bloodthorn:GetModifierPercentageManaRegen()
+function modifier_item_imba_bloodthorn:GetModifierConstantManaRegen()
 	return self.bonus_mana_regen end
 
 function modifier_item_imba_bloodthorn:GetModifierSpellAmplify_Percentage()

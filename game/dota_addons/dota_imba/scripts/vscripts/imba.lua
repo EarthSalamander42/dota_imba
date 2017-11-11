@@ -135,9 +135,9 @@ function GameMode:OnFirstPlayerLoaded()
 
 	local current_statue
 	local statue_entity
-	for i = 1, 4 do
+	for i = 1, 6 do
 		current_statue = table.remove(contributor_statues, RandomInt(1, #contributor_statues))
-		if i <= 2 then
+		if i <= 3 then
 			statue_entity = CreateUnitByName(current_statue, current_location[i], true, nil, nil, DOTA_TEAM_GOODGUYS)
 			statue_entity:SetForwardVector(Vector(1, 1, 0):Normalized())
 		else
@@ -595,6 +595,13 @@ function GameMode:OrderFilter( keys )
 	-- is actually doing this order
 	if keys.queue == 1 then
 		return true
+	end
+
+	if unit:GetUnitName() == "npc_imba_donator_companion" then
+		if keys.order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET or keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_TARGET then
+		else
+			return false
+		end
 	end
 
 	-- Voice lines
@@ -1573,24 +1580,17 @@ function GameMode:StartImbaTest()
 		return nil
 	end
 
-	-- Define testbed zone reference point
-	local testbed_center = Vector(1500, -5000, 256)
-	if GetMapName() == "imba_arena" then
-		testbed_center = Vector(0, 0, 128)
-	end
+	local testbed_center = Vector(1360, -4920, 1365)
 
 	-- Move any existing heroes to the testbed area, and grant them useful testing items
 	local player_heroes = HeroList:GetAllHeroes()
 	for _, hero in pairs(player_heroes) do
 		hero:SetAbsOrigin(testbed_center + Vector(-250, 0, 0))
-		hero:AddItemByName("item_imba_diffusal_blade_3")
 		hero:AddItemByName("item_imba_manta")
 		hero:AddItemByName("item_imba_blink")
 		hero:AddItemByName("item_imba_silver_edge")
 		hero:AddItemByName("item_black_king_bar")
 		hero:AddItemByName("item_imba_heart")
-		hero:AddItemByName("item_imba_siege_cuirass")
-		hero:AddItemByName("item_imba_butterfly")
 		hero:AddItemByName("item_ultimate_scepter")
 		hero:AddExperience(100000, DOTA_ModifyXP_Unspecified, false, true)
 		PlayerResource:SetCameraTarget(0, hero)
@@ -1744,7 +1744,7 @@ local count = 0
 
 --	if neutral == true then
 		for _,v in pairs(units3) do
-			if v:HasMovementCapability() then
+			if v:HasMovementCapability() and not v:GetUnitName() == "npc_imba_roshan" then
 				count = count +1
 				v:RemoveSelf()
 			end
