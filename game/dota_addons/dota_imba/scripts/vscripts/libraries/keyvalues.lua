@@ -69,12 +69,14 @@ end
 -- Load all the necessary key value files
 function LoadGameKeyValues()
 	local scriptPath ="scripts/npc/"
-	local override = LoadKeyValues(scriptPath.."npc_abilities_override.txt")
-	local files = { AbilityKV = {base="npc_abilities",custom="npc_abilities_custom"},
-					ItemKV = {base="items",custom="npc_items_custom"},
-					UnitKV = {base="npc_units",custom="npc_units"}, -- npc_units_custom
-					HeroKV = {base="npc_heroes",custom="npc_heroes_custom"}
-				  }
+--	local override = LoadKeyValues(scriptPath.."npc_abilities_override.txt")
+	local files = {
+		AbilityKV = {base="npc_abilities",custom="npc_abilities_custom"},
+		ItemKV = {base="items",custom="npc_items_custom"},
+		UnitKV = {base="npc_units",custom="npc_units"}, -- npc_units_custom
+		HeroKV = {base="npc_heroes",custom="npc_heroes_custom"},
+		HeroKV2 = {base="",custom="npc_heroes"}
+	}
 
 	-- Load and validate the files
 	for k,v in pairs(files) do
@@ -84,11 +86,11 @@ function LoadGameKeyValues()
 		end
 
 		-- Replace main game keys by any match on the override file
-		for k,v in pairs(override) do
-			if file[k] then
-				file[k] = v
-			end
-		end
+--		for k,v in pairs(override) do
+--			if file[k] then
+--				file[k] = v
+--			end
+--		end
 
 		local custom_file = LoadKeyValues(scriptPath..v.custom..".txt")
 		if custom_file then
@@ -116,6 +118,16 @@ function LoadGameKeyValues()
 
 	-- Merge units and heroes (due to them sharing the same class CDOTA_BaseNPC)
 	for key,value in pairs(KeyValues.HeroKV) do
+		if not KeyValues.UnitKV[key] then
+			KeyValues.UnitKV[key] = value
+		else
+			if type(KeyValues.All[key]) == "table" then
+				print("[KeyValues] Warning: Duplicated unit/hero entry for "..key)
+			end
+		end
+	end
+
+	for key,value in pairs(KeyValues.HeroKV2) do
 		if not KeyValues.UnitKV[key] then
 			KeyValues.UnitKV[key] = value
 		else

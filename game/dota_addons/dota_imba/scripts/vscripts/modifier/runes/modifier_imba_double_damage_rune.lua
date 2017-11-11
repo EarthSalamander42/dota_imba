@@ -30,16 +30,13 @@ function modifier_imba_double_damage_rune:GetAuraEntityReject(entity)
 end
 
 function modifier_imba_double_damage_rune:OnCreated()
+	if not IsServer() then return end
 	self.parent = self:GetParent()
 	self.bonus_damage_pct_aura = 100
 	self.aura_radius = 900
 	self.bonus_main_attribute_multiplier = 1
 
 	if self.parent:IsRealHero() then
-		self.strength_bonus = 0
-		self.agility_bonus = 0
-		self.intellect_bonus = 0
-
 		local primary_attribute = self.parent:GetPrimaryAttribute()
 
 		-- Strength

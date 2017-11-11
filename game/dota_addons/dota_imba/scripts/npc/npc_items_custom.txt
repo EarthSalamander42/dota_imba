@@ -1070,8 +1070,8 @@
 			}
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_mana_regen"		"150"
+				"var_type"				"FIELD_FLOAT"
+				"bonus_mana_regen"		"2.5"
 			}
 			"05"
 			{
@@ -1179,8 +1179,8 @@
 			}
 			"04"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_mana_regen"			"150"
+				"var_type"					"FIELD_FLOAT"
+				"bonus_mana_regen"			"2.25"
 			}
 			"05"
 			{
@@ -1284,8 +1284,8 @@
 			}
 			"04"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_mana_regen"			"150"
+				"var_type"					"FIELD_FLOAT"
+				"bonus_mana_regen"			"2.25"
 			}
 			"05"
 			{
@@ -2867,8 +2867,8 @@
 
 			"06"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_mana_regen_pct"		"50"
+				"var_type"					"FIELD_FLOAT"
+				"bonus_mana_regen_pct"		"0.75"
 			}
 
 			"07"
@@ -3313,7 +3313,7 @@
 		"ItemResult"					"item_imba_bloodstone"
 		"ItemRequirements"
 		{
-			"01"						"item_soul_ring;item_soul_booster"
+			"01"						"item_pers;item_soul_booster"
 		}
 	}
 
@@ -3362,8 +3362,8 @@
 			}
 			"03"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_mana_regen"			"200"
+				"var_type"					"FIELD_FLOAT"
+				"bonus_mana_regen"			"3.0"
 			}
 			"04"
 			{
@@ -3443,7 +3443,7 @@
 				{
 					"MODIFIER_PROPERTY_HEALTH_BONUS" 					"%bonus_health"
 					"MODIFIER_PROPERTY_MANA_BONUS" 						"%bonus_mana"
-					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" 			"%bonus_mana_regen"
+					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT" 			"%bonus_mana_regen"
 				}
 			}
 
@@ -5706,8 +5706,8 @@
 			}
 			"11"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_mana_regen"		"75"
+				"var_type"				"FIELD_FLOAT"
+				"bonus_mana_regen"		"1.0"
 			}
 			"12"
 			{
@@ -6863,8 +6863,8 @@
 
 			"05"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_mana_regen"		"50"
+				"var_type"				"FIELD_FLOAT"
+				"bonus_mana_regen"		"0.75"
 			}
 
 			"06"
@@ -8673,8 +8673,8 @@
 			}
 			"05"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_mana_regen"		"75"
+				"var_type"				"FIELD_FLOAT"
+				"bonus_mana_regen"		"0.5"
 			}
 			"06"
 			{
@@ -8793,8 +8793,8 @@
 			}
 			"05"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_mana_regen"		"100"
+				"var_type"				"FIELD_FLOAT"
+				"bonus_mana_regen"		"0.75"
 			}
 			"06"
 			{
@@ -9174,8 +9174,8 @@
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_mana_regen"		"100"
+				"var_type"				"FIELD_FLOAT"
+				"bonus_mana_regen"		"1.5"
 			}
 			"03"
 			{
@@ -9354,7 +9354,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana_regen"		"100"
+				"bonus_mana_regen"		"2.0"
 			}
 			"06"
 			{

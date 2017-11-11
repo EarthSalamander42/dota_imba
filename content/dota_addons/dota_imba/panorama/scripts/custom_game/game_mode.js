@@ -39,6 +39,9 @@ function InitializeUI() {
 			$('#CreepPowerOptionsPanel').style.visibility = 'collapse';
 			$('#TowerPowerOptionsPanel').style.visibility = 'collapse';
 			$('#TowerUpgradesToggle').style.visibility = 'collapse';
+			$('#AllPickToggle').style.visibility = 'collapse';
+			$('#AllRandomToggle').style.visibility = 'collapse';
+			$('#AllRandomSameHeroToggle').style.visibility = 'collapse';
 		} else if (map_info.map_display_name == "imba_10v10" || map_info.map_display_name == "imba_12v12") {
 			$('#game_options_game_mode_title').text = $.Localize( "#imba_gamemode_name_10v10" );
 			$('#QuickOptionsPanel').style.visibility = 'collapse';
@@ -46,6 +49,9 @@ function InitializeUI() {
 			$('#CreepPowerOptionsPanel').style.visibility = 'collapse';
 			$('#TowerPowerOptionsPanel').style.visibility = 'collapse';
 			$('#TowerUpgradesToggle').style.visibility = 'collapse';
+			$('#AllPickToggle').style.visibility = 'collapse';
+			$('#AllRandomToggle').style.visibility = 'collapse';
+			$('#AllRandomSameHeroToggle').style.visibility = 'collapse';
 		} else if (map_info.map_display_name == "imba_custom") {
 			$('#TowerUpgradesToggle').SetSelected(true);
 			$('#FranticToggle').style.visibility = 'visible';
@@ -116,12 +122,8 @@ function SetGameOptions()
 			"creep_power": $('#CreepPowerOptionsDropdown').GetSelected().id,
 			"tower_power": $('#TowerPowerOptionsDropdown').GetSelected().id,
 			"hero_power": $('#HeroPowerDropdown').GetSelected().id,
-			"kills_to_end": $('#KillsToEndOptionsDropdown').GetSelected().id,
 		}
 	});
-
-	$.Msg("Gold: " + $('#GoldOptionsDropdown').GetSelected().id)
-	$.Msg("XP: " + $('#ExpOptionsDropdown').GetSelected().id)
 
 	AnimatePanel($('#game_options_container'), { "transform": "translateX(-150px);", "opacity": "0;" }, 0.8);
 }

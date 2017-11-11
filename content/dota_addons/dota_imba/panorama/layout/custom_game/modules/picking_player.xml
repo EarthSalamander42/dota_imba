@@ -18,17 +18,18 @@
 				$('#PlayerName').text = Players.GetPlayerName(playerID);
 			},
 
-			SetPreviewHero: function( heroName ) {
+			SetPreviewHero:function( heroName ) {
 				$('#HeroPanel').style.backgroundImage = 'url("s2r://panorama/images/heroes/'+ heroName +'_png.vtex")';
 				$('#HeroPanel').style.transform = 'none';
 				$('#HeroPanel').style.backgroundSize = "100% 100%";
-				$('#HeroPanel').style.saturation = "0.5";
+				$('#HeroPanel').style.saturation = "0.0";
 			},
 
-			SetHero: function( heroName ) {
+			SetHero:function( heroName ) {
 				$('#HeroPanel').style.backgroundImage = 'url("s2r://panorama/images/heroes/'+ heroName +'_png.vtex")';
 				$('#HeroPanel').style.transform = 'none';
 				$('#HeroPanel').style.backgroundSize = "100% 100%";
+				$('#HeroPanel').style.saturation = "1.0";
 			}
 		});
 	</script>

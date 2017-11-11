@@ -1,94 +1,96 @@
-.OverthrowGameInfo
+.ImbaGameInfoMain
 {
 	width: 100%;
-	margin-top: -50px;
+	height: 100%;
+	align: right bottom;
 	flow-children: down;
+	z-index: -1000;
 }
 
-Label
+.Separator {
+	width: 1%;
+	height: 100%;
+	background-color: grey;
+}
+
+#ImbaGameInfo
 {
-	font-size: 18px;
+	width: 25%;
+	height: 9%;
+	padding: 0% 1% 0% 1%;
+	align: center top;
+	flow-children: down;
+	background-image: url("s2r://panorama/images/hud/reborn/ability_bg_psd.vtex");
+	border-radius: 20px;
+	z-index: -1000;
+	visibility: collapse;
+}
+
+#ImbaGameInfoButton {
+	width: 120px;
+	height: 30px;
+	margin-top: 8%;
+	background-color: #000000aa;
+	align: center center;
+	border: 1px solid #333333;
+	border-radius: 5px;
+}
+
+#ImbaGameInfoButton:hover {
+	pre-transform-scale2d: 1.05;
+	wash-color: #00000000;
+	color: white;
+	box-shadow: fill grey -2px -2px 4px 4px;
+	color: white;
+}
+
+.ButtonLabel
+{
+	width: 100%;
+	height: 100%;
+	font-size: 14px;
+	margin-top: 5px;
+	color: #999999;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	text-align: center;
+	text-shadow: 0px 0px 4px 4 #000000;
+	color: #A3B5D0cc;
+}
+
+.ImbaGameInfoLabel
+{
+	margin-top: 3px;
+	horizontal-align: left;
+	font-size: 14px;
 	color: #999999;
 	vertical-align: top;
-	margin-top: 8px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	text-align: center;
+	text-shadow: 0px 0px 4px 4 #000000;
+	color: #A3B5D0cc;
 }
 
-#Intro01,
-#Intro02
+.GameModeValues
 {
-	width: 95%;
-	horizontal-align: left;
-}
-
-#ImbaTitle
-{
-	horizontal-align: center;
-}
-
-.HeaderSpecial
-{
-	font-size: 30px;
-	font-weight: bold;
-	margin-top: 24px;
-	horizontal-align: center;
-	color: #FF7800;
-}
-
-.Header
-{
-	font-size: 18px;
-	font-weight: bold;
-	margin-top: 24px;
-}
-
-.InfoBox
-{
-	flow-children: right;
-	width: 95%;
-	horizontal-align: left;
-}
-
-#HeroesTextBox
-{
-	flow-children: down;
-	horizontal-align: left;
-	width: 45%;
-}
-
-#HeroesImage
-{
-	margin-top: 2px;
-	horizontal-align: right;
-	vertical-align: center;
-}
-
-#AbilitiesImage
-{
-	margin-top: 24px;
-	width: 93%;
-	height: 52px;
-	horizontal-align: left;
-}
-
-#ItemsTextBox,
-#CreepsTextBox,
-#RoshanTextBox,
-#PowerBalanceTextBox,
-#ContributorsTextBox
-{
-	flow-children: down;
 	width: 100%;
+	margin-top: 5%;
+	flow-children: right;
 }
 
-#ItemsImage
+.GameModeLabelPanel
 {
-	margin-top: 24px;
-	width: 93%;
-	height: 48px;
-	horizontal-align: left;
+	width: 26%;
+	margin-left: 3%;
+	margin-right: 3%;
+	flow-children: down;
 }
 
-#End
+.GameModeValuePanel
 {
-	font-size: 24;
+	width: 15%;
+	margin-left: 2%;
+	flow-children: down;
+	font-size: 13px;
 }

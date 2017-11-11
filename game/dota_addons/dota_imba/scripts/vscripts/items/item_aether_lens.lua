@@ -51,7 +51,7 @@ function modifier_imba_aether_lens_passive:DeclareFunctions()
 		MODIFIER_PROPERTY_CAST_RANGE_BONUS_STACKING,
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
 		MODIFIER_PROPERTY_MANA_BONUS,
-		MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE
+		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT
     }
     return decFuns
 end
@@ -60,7 +60,7 @@ function modifier_imba_aether_lens_passive:GetModifierSpellAmplify_Percentage()
 	return self:CheckUniqueValue(self.spell_power,{"modifier_imba_elder_staff","modifier_imba_nether_wand"})
 end
 
-function modifier_imba_aether_lens_passive:GetModifierPercentageManaRegen()
+function modifier_imba_aether_lens_passive:GetModifierConstantManaRegen()
 	return self.bonus_mana_regen
 end
 
