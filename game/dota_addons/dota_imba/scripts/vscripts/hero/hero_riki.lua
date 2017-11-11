@@ -1421,7 +1421,7 @@ function modifier_imba_riki_tricks_of_the_trade_primary:CheckState()
 						[MODIFIER_STATE_NOT_ON_MINIMAP] = true,
 						[MODIFIER_STATE_NO_UNIT_COLLISION] = true,}
 		end
-			
+
 		return state
 	end
 end
@@ -1451,12 +1451,12 @@ function modifier_imba_riki_tricks_of_the_trade_primary:OnIntervalThink()
 		local backstab_ability = caster:FindAbilityByName("imba_riki_cloak_and_dagger")
 		local backstab_particle = "particles/units/heroes/hero_riki/riki_backstab.vpcf"
 		local backstab_sound = "Hero_Riki.Backstab"
-		
+
 		local targets = FindUnitsInRadius(caster:GetTeamNumber(), origin, nil, aoe, DOTA_UNIT_TARGET_TEAM_ENEMY , DOTA_UNIT_TARGET_HERO , DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER , false)
 		for _,unit in pairs(targets) do
 			if unit:IsAlive() and not unit:IsAttackImmune() then
 				caster:PerformAttack(target, true, true, true, false, false, false, false)
-						
+
 				if backstab_ability and backstab_ability:GetLevel() > 0 and not self:GetParent():PassivesDisabled() then
 					local agility_damage_multiplier = backstab_ability:GetSpecialValueFor("agility_damage_multiplier")
 										
@@ -1466,7 +1466,7 @@ function modifier_imba_riki_tricks_of_the_trade_primary:OnIntervalThink()
 										
 					EmitSoundOn(backstab_sound, unit)
 					ApplyDamage({victim = unit, attacker = caster, damage = caster:GetAgility() * agility_damage_multiplier, damage_type = backstab_ability:GetAbilityDamageType()})
-				
+
 					-- #7 Talent: 4 Consecutive Backstabs applies Break on the target for 5 seconds.
 					if caster:HasTalent("special_bonus_imba_riki_7") then
 						local backbreaker_mod = unit:FindModifierByName("modifier_imba_riki_backbreaker")

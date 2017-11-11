@@ -547,14 +547,13 @@ function imba_pudge_meat_hook:OnSpellStart()
 			local rotation = (i-self:GetCaster():FindTalentValue("special_bonus_imba_pudge_8"))	 * self:GetSpecialValueFor("multiple_hook_rotation")
 			self.hooks[i]["vDirection"] = RotatePosition(Vector(0,0,0), QAngle(0,rotation,0), self.hooks[i]["vDirection"])
 		end
+
 		self.hooks[i]["vDirection"].z = 0.0
 		self.hooks[i]["vTargetPosition"] = self.hooks[i]["vStartPosition"] + self.hooks[i]["vDirection"]
 		local vHookOffset = Vector( 0, 0, 96 )
 		self.hooks[i]["vHookTarget"] = self.hooks[i]["vTargetPosition"] + vHookOffset
 		local vKillswitch = Vector( ( ( self.hook_distance / self.hook_speed ) * 2 ), 0, 0 )
 
-		
-		
 		local info = {
 			Ability = self,
 			vSpawnOrigin = self:GetCaster():GetAbsOrigin(),
@@ -721,11 +720,11 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData( hTarget, vLocation,keys
 				self.bAllRetracting = true
 			end
 		end
-	
+
 		if self.bAllRetracting then
 			self:GetCaster():RemoveModifierByName("modifier_meat_hook_followthrough")
 		end
-	
+
 		local vHookPos = self.hooks[i]["vProjectileLocation"]
 		local flPad = self:GetCaster():GetPaddedCollisionRadius()
 		if hTarget ~= nil then

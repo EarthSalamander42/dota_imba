@@ -4,9 +4,11 @@
 		<include src="file://{resources}/styles/play.css" />
 		<include src="file://{resources}/styles/custom_game/team_select.css" />
 	</styles>
+
 	<scripts>
 		<include src="file://{resources}/scripts/custom_game/team_select.js" />
 	</scripts>
+
 	<Panel hittest="false" class="TeamSelect">
 		<Panel hittest="false" id="TeamSelectContainer" class="invisible" selectionpos="auto">`
 			<!--Empty space to let the loading screen and chat be visible-->

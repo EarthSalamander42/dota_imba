@@ -50,7 +50,7 @@ function modifier_imba_echo_sabre_passive:DeclareFunctions()
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-		MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE,
+		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
 		MODIFIER_EVENT_ON_ATTACK_START
 	}
     return decFuns
@@ -85,7 +85,7 @@ function modifier_imba_echo_sabre_passive:GetModifierPreAttack_BonusDamage()
 	return self.bonus_damage
 end
 
-function modifier_imba_echo_sabre_passive:GetModifierPercentageManaRegen()
+function modifier_imba_echo_sabre_passive:GetModifierConstantManaRegen()
 	return self.bonus_mana_regen
 end
 
@@ -147,7 +147,7 @@ function modifier_imba_reverb_rapier_passive:DeclareFunctions()
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-		MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE,
+		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
 		MODIFIER_EVENT_ON_ATTACK_START
 	}
     return decFuns
@@ -182,7 +182,7 @@ function modifier_imba_reverb_rapier_passive:GetModifierPreAttack_BonusDamage()
 	return self.bonus_damage
 end
 
-function modifier_imba_reverb_rapier_passive:GetModifierPercentageManaRegen()
+function modifier_imba_reverb_rapier_passive:GetModifierConstantManaRegen()
 	return self.bonus_mana_regen
 end
 

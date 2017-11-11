@@ -112,7 +112,7 @@ function modifier_item_imba_sheepstick:DeclareFunctions()
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-		MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE,
+		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
 	}
 	return funcs
 end
@@ -126,7 +126,7 @@ function modifier_item_imba_sheepstick:GetModifierBonusStats_Agility()
 function modifier_item_imba_sheepstick:GetModifierBonusStats_Intellect()
 	return self:GetAbility():GetSpecialValueFor("bonus_intellect") end
 
-function modifier_item_imba_sheepstick:GetModifierPercentageManaRegen()
+function modifier_item_imba_sheepstick:GetModifierConstantManaRegen()
 	return self:GetAbility():GetSpecialValueFor("bonus_mana_regen") end
 
 -----------------------------------------------------------------------------------------------------------

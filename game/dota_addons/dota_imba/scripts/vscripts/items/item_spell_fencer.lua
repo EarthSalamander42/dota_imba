@@ -79,7 +79,7 @@ function modifier_item_imba_spell_fencer:DeclareFunctions()
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-		MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE,
+		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
 	}
 	return funcs
 end
@@ -96,7 +96,7 @@ function modifier_item_imba_spell_fencer:GetModifierAttackSpeedBonus_Constant()
 function modifier_item_imba_spell_fencer:GetModifierBonusStats_Intellect()
 	return self:GetAbility():GetSpecialValueFor("bonus_int") end
 
-function modifier_item_imba_spell_fencer:GetModifierPercentageManaRegen()
+function modifier_item_imba_spell_fencer:GetModifierConstantManaRegen()
 	return self:GetAbility():GetSpecialValueFor("bonus_mana_regen") end
 
 -----------------------------------------------------------------------------------------------------------
