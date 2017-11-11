@@ -147,7 +147,7 @@ function modifier_imba_siege_cuirass:DeclareFunctions()
                       MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
                       MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
                       MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-                      MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE,
+                      MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
                       MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS}
     return decFuncs
 end
@@ -172,7 +172,7 @@ function modifier_imba_siege_cuirass:GetModifierAttackSpeedBonus_Constant()
     return self.bonus_as
 end
 
-function modifier_imba_siege_cuirass:GetModifierPercentageManaRegen()
+function modifier_imba_siege_cuirass:GetModifierConstantManaRegen()
     return self.bonus_mana_regen_pct
 end
 

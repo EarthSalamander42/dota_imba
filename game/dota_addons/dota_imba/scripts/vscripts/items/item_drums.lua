@@ -142,7 +142,7 @@ function modifier_imba_drums:DeclareFunctions()
 					  MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 					  MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 					  MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-					  MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE}
+					  MODIFIER_PROPERTY_MANA_REGEN_CONSTANT}
 
 	return decFuncs
 end
@@ -163,7 +163,7 @@ function modifier_imba_drums:GetModifierPreAttack_BonusDamage()
 	return self.bonus_damage
 end
 
-function modifier_imba_drums:GetModifierPercentageManaRegen()
+function modifier_imba_drums:GetModifierConstantManaRegen()
 	return self.bonus_mana_regen
 end
 

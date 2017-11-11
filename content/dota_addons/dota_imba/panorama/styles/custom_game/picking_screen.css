@@ -1,6 +1,7 @@
 /* General layout
 =================================================================*/
-@define load_time: 5.0s;
+@define load_time: 4.0s;
+
 @keyframes 'fade'
 {
 	0%
@@ -11,6 +12,19 @@
 	100%
 	{
 		opacity: 0.4;
+	}
+}
+
+@keyframes 'fade_full'
+{
+	0%
+	{
+		opacity: 0.0;
+	}
+
+	100%
+	{
+		opacity: 0.9;
 	}
 }
 
@@ -39,7 +53,7 @@
 		opacity: 1.0;
 	}
 
-	70%
+	50%
 	{
 		opacity: 0.0;
 	}
@@ -140,7 +154,7 @@
 
 #PostPickScreen {
 	width: 100%;
-	height: 100%;
+	height: 48%;
 	visibility: collapse;
 	flow-children: down;
 }
@@ -150,6 +164,7 @@
 	height: fit-children;
 	align: center center;
 	flow-children: right;
+	visibility: collapse;
 }
 
 .ClassContainer{
@@ -177,7 +192,8 @@
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #066319 ), to( #103F19 ) );
 	background-size: 320px 120px;
 	height: 55px;
-	width: 260px;
+	width: 220px;
+	saturation: 0.8;
 }
 
 #RepickBtn {
@@ -186,11 +202,12 @@
 
 #EnterGameBtn.disabled, #EnterGameBtn.disabled:Hover,
 #RepickBtn.disabled, #RepickBtn.disabled:Hover {
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #9C9C9C ), to( #D1D1D133 ) );
+	background-color: #595959;
 }
 
 #EnterGameBtn:Hover {
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #6FDE75 ), to( #87d69533 ) );
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( darkgreen ), to( black ) );
+	saturation: 1.0;
 }
 
 #RepickBtn:Hover {
@@ -251,14 +268,44 @@
 .ClassNormalOption,
 .ClassImbaOption,
 .ClassCustomOption {
-	width: 80px;
-	height: 48px;
-	margin: 2px 0px 2px 1px;
+	width: 84px;
+	height: 50px;
+	margin: 1px 0px 1px 0px;
 	horizontal-align: left;
 	wash-color: #7090B060;
 	background-size: 100% 100%;
 	pre-transform-scale2d: 0.95;
-	border-radius: 25px;
+	border-radius: 1px;
+}
+
+.ClassNormalOptionLabel,
+.ClassImbaOptionLabel,
+.ClassCustomOptionLabel
+{
+	width: 100%;
+	background-color: #1852D9;
+	align: center bottom;
+	text-align: center;
+	font-size: 12px;
+	font-family: "Bold";
+	text-transform: uppercase;
+	font-weight: bold;
+	color: white;
+	animation-name: fade_full;
+	animation-duration: load_time;
+	animation-timing-function: ease-in;
+	animation-direction: alternate;
+	animation-iteration-count: infinite;
+}
+
+.ClassNormalOptionLabel
+{
+	background-color: grey;
+}
+
+.ClassImbaOptionLabel
+{
+	background-color: darkorange;
 }
 
 .AspectRatio16x10 .ClassNormalOption,
@@ -291,14 +338,14 @@
 	border: 1px solid orange;
 }
 
-.selected {
-	border: 2px solid white;
-	box-shadow: fill white -1px -1px 2px 2px;
-	wash-color: #00000000;
-}
-
 .ClassCustomOption {
 	border: 2px solid #1852D9;
+}
+
+.selected {
+	border: 1px solid dodgerblue;
+	box-shadow: fill skyblue -1px -1px 2px 2px;
+	wash-color: #00000000;
 }
 
 .ClassNormalOption:hover,
@@ -314,10 +361,8 @@
 .ClassImbaOption.taken,
 .ClassCustomOption.taken
 {
-	saturation: 0.0;
-	transform: none;
-	opacity: 0.2;
-	wash-color: #00000000;
+	opacity: 0.5;
+	wash-color: #ff3333;
 }
 
 /* Text elements and timer
@@ -491,18 +536,30 @@
 }
 
 .PickListTitlePanel {
-	margin-left: 12%;
+	margin-left: 9%;
 	horizontal-align: left;
 	flow-children: right;
 }
 
 .PickListText {
 	horizontal-align: left;
-	font-size: 20px;
+	font-size: 18px;
 	font-family: "Radiance";
 	color: white;
 	text-transform: uppercase;
-	font-weight: bold;
+	letter-spacing: 4px;
+}
+
+#PickListTextSTR {
+	text-shadow: 0px 0px 6px red;
+}
+
+#PickListTextAGI {
+	text-shadow: 0px 0px 6px green;
+}
+
+#PickListTextINT {
+	text-shadow: 0px 0px 6px skyblue;
 }
 
 #PickListSeparator1,
@@ -511,9 +568,9 @@
 #PickListSeparator4
 {
 	margin: 0% 0% 1% 0%;
-	width: 78%;
-	height: 2px;
-	opacity: 0.3;
+	width: 82%;
+	height: 3px;
+	opacity: 0.2;
 	horizontal-align: middle;
 }
 
@@ -554,7 +611,7 @@
 =================================================================*/
 #CustomPickList
 {
-	width: 25%;
+	width: 20%;
 	height: 100%;
 	flow-children: right;
 	align: center center;
@@ -669,14 +726,20 @@
 #RandomButtonContainer,
 #RandomImbaButtonContainer
 {
-	width: 40%;
+	width: 50%;
 	height: fit-children;
-	saturation: 0.7;
 	flow-children: down;
 	align: center center;
+	border-left: 5px;
+	border-right: 5px;
+	border-right-color: white;
+	saturation: 0.8;
 }
 
-#RandomButtonContainer:hover,
+#RandomButtonContainer:hover {
+	saturation: 1.0;
+}
+
 #RandomImbaButtonContainer:hover {
 	saturation: 1.0;
 }
@@ -686,10 +749,8 @@
 {
 	width: 100%;
 	height: 72px;
-	border-radius: 4px;
 	horizontal-align: center;
 	vertical-align: middle;
-	background-color: gradient(linear, 0% 0%, 0% 100%, from(grey), to (black));
 	background-image: url("s2r://panorama/images/custom_game/random_button_png.vtex");
 }
 
@@ -701,7 +762,7 @@
 #RandomPickBtn:hover,
 #RandomImbaPickBtn:hover
 {
-	box-shadow: fill grey -2px -2px 4px 4px;
+	box-shadow: fill skyblue -2px -2px 4px 4px;
 	saturation: 1.0;
 }
 
