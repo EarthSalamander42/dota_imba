@@ -17,7 +17,8 @@ var abilityPanels = [
 	$('#PickedHeroAbility5'),
 	$('#PickedHeroAbility6'),
 	$('#PickedHeroAbility7'),
-	$('#PickedHeroAbility8')
+	$('#PickedHeroAbility8'),
+	$('#PickedHeroAbility9')
 ]
 
 var hiddenAbilities = [ 
@@ -28,6 +29,46 @@ var hiddenAbilities = [
 	"imba_dazzle_ressurection",
 	"imba_jakiro_ice_breath",
 	"imba_empress_ambient_effects",
+	"generic_hidden",
+	"imba_troll_warlord_whirling_axes_melee",
+	"abyssal_underlord_cancel_dark_rift",
+	"earth_spirit_petrify",
+	"elder_titan_return_spirit",
+	"life_stealer_assimilate",
+	"life_stealer_control",
+	"life_stealer_consume",
+	"life_stealer_assimilate_eject",
+	"imba_phoenix_sun_ray_toggle_move",
+	"imba_phoenix_launch_fire_spirit",
+	"imba_phoenix_sun_ray_stop",
+	"shredder_chakram_2",
+	"shredder_return_chakram",
+	"shredder_return_chakram_2",
+	"imba_slardar_rain_cloud",
+	"treant_eyes_in_the_forest",
+	"tusk_walrus_kick",
+	"tusk_launch_snowball",
+	"wisp_tether_break",
+	"lone_druid_true_form_battle_cry",
+	"lone_druid_true_form_druid",
+	"monkey_king_primal_spring_early",
+	"monkey_king_untransform",
+	"morphling_morph_replicate",
+	"morphling_morph",
+	"naga_siren_song_of_the_siren_cancel",
+	"pangolier_gyroshell_stop",
+	"ancient_apparition_ice_blast_release",
+	"invoker_cold_snap",
+	"invoker_tornado",
+	"invoker_ghost_walk",
+	"keeper_of_the_light_illuminate_end",
+	"keeper_of_the_light_spirit_form_illuminate",
+	"keeper_of_the_light_spirit_form_illuminate_end",
+	"ogre_magi_unrefined_fireblast",
+	"rubick_telekinesis_land",
+	"rubick_hidden1",
+	"rubick_hidden2",
+	"zuus_cloud",
 	"" // Leave it alone, he's useful
 ]
 
@@ -129,7 +170,6 @@ function ShowStatsSwap() {
 	also handles 3 additional panels for custom heroes */
 function CreateHeroPanel(hero_table, attribute, custom) {
 	if (custom == true) {
-//		$.Msg(hero_table)
 		attribute = attribute + "_Custom"
 	}
 	var i = 1;
@@ -148,6 +188,9 @@ function CreateHeroPanel(hero_table, attribute, custom) {
 			Hero_Panel.AddClass("ClassNormalOption")
 			Hero_Panel.style.backgroundImage = 'url("file://{images}/heroes/'+ hero_table[i] +'.png")';
 			Hero_Panel.style.backgroundSize = "100% 100%";
+			var HeroLabel = $.CreatePanel("Label", Hero_Panel, hero_table[i] + "_label");
+			HeroLabel.AddClass("ClassNormalOptionLabel")
+			HeroLabel.text = $.Localize("vanilla_hero");
 
 			i_count = i_count +1
 
@@ -172,8 +215,32 @@ function MakeImbaHero(imba_heroes) {
 	var h = 1;
 	for (h in imba_heroes) {
 		if (imba_heroes[h] != null) {
-			$("#PickList").FindChildTraverse(imba_heroes[h]).RemoveClass("ClassNormalOption")
-			$("#PickList").FindChildTraverse(imba_heroes[h]).AddClass("ClassImbaOption")
+			var hero = $("#PickList").FindChildTraverse(imba_heroes[h])
+			if (hero.BHasClass("ClassNormalOption")) {
+				hero.RemoveClass("ClassNormalOption")
+			}
+			hero.AddClass("ClassImbaOption")
+			var HeroLabel = $.CreatePanel("Label", hero, imba_heroes[h] + "_label");
+			HeroLabel.RemoveClass("ClassNormalOptionLabel")
+			HeroLabel.AddClass("ClassImbaOptionLabel")
+			HeroLabel.text = $.Localize("imba_hero");
+		}
+	}
+}
+
+function MakeNewHero(new_heroes) {
+	var h = 1;
+	for (h in new_heroes) {
+		if (new_heroes[h] != null) {
+			var hero = $("#PickList").FindChildTraverse(new_heroes[h])
+			if (hero.BHasClass("ClassNormalOption")) {
+				hero.RemoveClass("ClassNormalOption")
+			}
+			hero.RemoveClass("ClassNormalOption")
+			hero.AddClass("ClassCustomOption")
+			var HeroLabel = $.CreatePanel("Label", hero, new_heroes[h] + "_label");
+			HeroLabel.AddClass("ClassCustomOptionLabel")
+			HeroLabel.text = $.Localize("new_hero");
 		}
 	}
 }
@@ -186,6 +253,9 @@ function MakeDisabledHeroes(disabled_10v10, disabled_all) {
 			if (disabled_10v10[g] != null) {
 				var hero_panel = $("#PickList").FindChildTraverse(disabled_10v10[g])
 				$("#PickList").FindChildTraverse(disabled_10v10[g]).AddClass("taken")
+				var HeroLabel = $.CreatePanel("Label", $("#PickList").FindChildTraverse(disabled_10v10[g]), disabled_10v10[g] + "_label");
+				HeroLabel.AddClass("ClassCustomOptionLabel")
+				HeroLabel.text = $.Localize("disabled_hero_10v10");
 			}
 		}
 	}
@@ -195,6 +265,9 @@ function MakeDisabledHeroes(disabled_10v10, disabled_all) {
 		if (disabled_all[h] != null) {
 			var hero_panel = $("#PickList").FindChildTraverse(disabled_all[h])
 			hero_panel.AddClass("taken")
+			var HeroLabel = $.CreatePanel("Label", $("#PickList").FindChildTraverse(disabled_all[h]), disabled_all[h] + "_label");
+			HeroLabel.AddClass("ClassCustomOptionLabel")
+			HeroLabel.text = $.Localize("disabled_hero");
 		}
 	}
 }
@@ -220,7 +293,6 @@ var DireCount = 0
 		playerPanels[player] = playerPanel;
 		RadiantCount = RadiantCount +1
 
-
 		if (RadiantCount >= 5) {
 			class_option_count = class_option_count +1
 			var ClassOptionPanelRadiant_alt = $.CreatePanel("Panel", $("#LeftPlayers"), "PlayerRow" + class_option_count + "_good");
@@ -233,8 +305,8 @@ var DireCount = 0
 
 		var plyData = CustomNetTables.GetTableValue("player_table", player);
 		if (plyData != null) {
-			RadiantLevels = RadiantLevels + plyData.Lvl / RadiantCount
-			$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + RadiantLevels.toFixed([1]);
+			RadiantLevels = RadiantLevels + plyData.Lvl / radiantPlayers.length
+			$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + RadiantLevels.toFixed([0]);
 		}
 	});
 
@@ -259,11 +331,12 @@ var DireCount = 0
 
 		var plyData = CustomNetTables.GetTableValue("player_table", player);
 		if (plyData != null) {
-			DireLevels = DireLevels + plyData.Lvl / DireCount
-			$("#AverageMMRTeamDire").text = $.Localize("average_mmr") + DireLevels.toFixed([1]);
+			DireLevels = DireLevels + plyData.Lvl / direPlayers.length
+			$("#AverageMMRTeamDire").text = $.Localize("average_mmr") + DireLevels.toFixed([0]);
 		}
 	});
-	$.Schedule(2.0, CreateHeroPick)
+
+	CreateHeroPick()
 }
 
 function CreateHeroPick() {
@@ -278,6 +351,7 @@ function CreateHeroPick() {
 	var disabled_heroes_10v10 = hero_list.Disabled10v10;
 	var disabled_heroes = hero_list.Disabled
 	var imba_heroes = hero_list.Imba
+	var new_heroes = hero_list.New
 	var strength_heroes_custom = hero_list.StrengthCustom;
 	var agility_heroes_custom = hero_list.AgilityCustom;
 	var intellect_heroes_custom = hero_list.IntellectCustom;
@@ -294,6 +368,7 @@ function CreateHeroPick() {
 	CreateHeroPanel(intellect_heroes_custom, "INT", true)
 
 	MakeImbaHero(imba_heroes)
+	MakeNewHero(new_heroes)
 	MakeDisabledHeroes(disabled_heroes_10v10, disabled_heroes)
 }
 
@@ -308,7 +383,7 @@ function HeroPicked(player, hero, team, has_randomed) {
 
 	// Disable the hero button according to hero pick rule
 	var LocalPlayer = Players.GetLocalPlayer()
-	$('#'+hero).AddClass("taken");
+	$("#PickList").FindChildTraverse(hero).AddClass("taken");
 
 	// Check if the pick was by the local player
 	if ( player == LocalPlayer ) {
@@ -345,13 +420,15 @@ function SwitchToHeroPreview( heroName ) {
 	previewPanel.BLoadLayoutFromString('<root><Panel><DOTAScenePanel style="width:100%; height:100%;" particleonly="false" unit="'+heroName+'"/></Panel></root>', false, false );
 	previewPanel.style.opacityMask = 'url("s2r://panorama/images/masks/hero_model_opacity_mask_png.vtex");'
 
-	$('#PostPickScreen').MoveChildBefore( previewPanel, $("#PostPickScreenButtonContainer") );
-
 	// Hide/show relevant panels
+	$('#PostPickScreen').style.visibility = 'visible';
+	$('#PostPickScreenButtonContainer').style.visibility = 'visible';
+
+	$("#CustomPickList").style.visibility = 'collapse';
 	$("#PickHeroBtn").style.visibility = 'collapse';
 	$('#PickList').style.visibility = 'collapse';
-	$('#PostPickScreen').style.visibility = 'visible';
-	$('#WelcomePanel').style.visibility = 'collapse';	
+	$('#PickedHeroPanel').style.visibility = 'collapse';	
+	$('#WelcomePanel').style.visibility = 'collapse';
 }
 
 /* Select a hero, called when a player clicks a hero panel in the layout */
@@ -370,8 +447,18 @@ function SelectHero( heroName ) {
 		panel_table[i].RemoveClass("selected")
 	}
 
-	var LocalPlayer = Players.GetLocalPlayer()
-	playerPanels[LocalPlayer].SetPreviewHero(heroName)
+	var localTeam = Players.GetTeam(Players.GetLocalPlayer())
+	if (localTeam == 2) {
+		var radiantPlayers = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_GOODGUYS );
+		$.Each( radiantPlayers, function( player ) {
+			playerPanels[Players.GetLocalPlayer()].SetPreviewHero(heroName)
+		});
+	} else if (localTeam == 3) {
+		var direPlayers = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_BADGUYS );
+		$.Each( direPlayers, function( player ) {
+			playerPanels[Players.GetLocalPlayer()].SetPreviewHero(heroName)
+		});
+	}
 
 	selected_panel.AddClass("selected");
 	$("#PickHeroBtn").RemoveClass("Banned")
@@ -393,7 +480,7 @@ function SelectHero( heroName ) {
 
 /* Updates the selected hero abilities panel */
 function UpdateAbilities(abilityList) {
-	for( var i = 1; i <= 8; i++ ) {
+	for( var i = 1; i <= abilityPanels.length; i++ ) {
 		var abilityPanel = abilityPanels[i-1]
 		var ability = abilityList[i]
 		if ( ability != null ) {
@@ -453,9 +540,9 @@ function RepickHero() {
 
 	// If this player has already repicked, do nothing
 	if ($("#RepickBtn").BHasClass( "disabled" ) == false) {
-
+		$.Msg("REPICK HERO!")
 		// Send the repick event to the server
-		GameEvents.SendCustomGameEventToServer("hero_repicked", {} );
+		GameEvents.SendCustomGameEventToServer("hero_repicked", {} ); //TODO: Add the hero the player has in arg, to remove it from picked hero list
 
 		// Reset the hero selection image
 		$("#PickedHeroImage").heroname = null;
@@ -475,9 +562,11 @@ function RepickHero() {
 		$('#HeroPreview').DeleteAsync( 0.0 );
 		$('#PickList').style.visibility = 'visible';
 		$("#PickHeroBtn").style.visibility = 'visible';
-//		$('#PickInfoPanel').style.visibility = 'visible';
-		$('#WelcomePanel').style.visibility = 'visible';	
+		$('#WelcomePanel').style.visibility = 'visible';
+		$('#PickedHeroPanel').style.visibility = 'visible';
+
 		$('#PostPickScreen').style.visibility = 'collapse';
+		$('#PostPickScreenButtonContainer').style.visibility = 'collapse';
 	}
 }
 
@@ -499,67 +588,58 @@ function EnterGame() {
 	}
 }
 
-function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, repick_state) {
+// WARNING: pick_state and repick_state are inverted for test purposes!
+function PlayerReconnected(player_id, picked_heroes, repick_state, pick_state) {
+
+	$.Msg("ID: " + player_id)
+	$.Msg(picked_heroes)
+	$.Msg("Pick State: " + pick_state)
+	$.Msg("Repick State: " + repick_state)
+
 	// If this is not the local player, ignore everything
-	if ( player_id == Players.GetLocalPlayer() ) {		
+	if ( player_id == Players.GetLocalPlayer() ) {
 		// If the player is already in-game, destroy the pick interface and ignore the rest
 		if (pick_state == "in_game") {
+			$.Msg("Hide Picking Screen, Show HUD")
 			ShowHUD(true)
 			ShowPickScreen(false)
-			$.Msg("Pick State: In-Game")
 		// Else, repopulate player pick panels
 		} else {
-			ShowHUD(false)
-			ShowPickScreen(true)
-			$.Msg("Pick State: Picking..")
+			var localTeam = Players.GetTeam(Players.GetLocalPlayer())
+			if ( localTeam != 2 && localTeam != 3 ) {
+			} else {
+				$.Msg("Show Picking Screen, Hide HUD")
+				ShowHUD(false)
+				ShowPickScreen(true)
 
-			var i = 1;
-			for (i = 1; i <= player_picks.length; i++) {
-				if (player_picks[i] != null) {
-					$("#PickInfoPanel").style.visibility = "visible";
-//					$.Msg(playerPanels[0])
-//					playerPanels[i].SetHero(player_picks[i])
+				var i = 1;
+				for (i = 1; i <= picked_heroes.length; i++) {
+					if (picked_heroes[i] != null) {
+						$("#PickInfoPanel").style.visibility = "visible";
+//						$.Msg(playerPanels[i]) // TODO: Fix this by adding player id replacing i
+//						playerPanels[i].SetHero(picked_heroes[i])
+					}
 				}
-			}
 
-			// If the player has already repicked, make the repick button unavailable
-			if (repick_state) {
-				$("#RepickBtn").AddClass("disabled");
-			}
+				// Gray out heroes already selected by according to hero pick rule (handled by server)
+				var j = 0;
+				for (j in picked_heroes) {
+					if ($("#PickList").FindChildTraverse(picked_heroes[j])) {
+						$("#PickList").FindChildTraverse(picked_heroes[j]).AddClass("taken");
+						var HeroLabel = $.CreatePanel("Label", $('#'+picked_heroes[j]), picked_heroes[j] + "_label");
+						HeroLabel.AddClass("ClassCustomOptionLabel")
+						HeroLabel.text = $.Localize("picked_hero");
+					}
+				}
 
-			// If the player has already selected a hero, go to the hero preview screen
-			if (pick_state == "selected_hero" && player_picks[player_id] != null) {
-				SwitchToHeroPreview(player_picks[player_id])
-			}
+				// If the player has already repicked, make the repick button unavailable
+				if (repick_state) {
+					$("#RepickBtn").AddClass("disabled");
+				}
 
-			// Gray out heroes already selected by according to hero pick rule (handled by server)
-			var panel_table = $("#PickList").FindChildrenWithClassTraverse("ClassNormalOption");
-			var imba_panel_table = $("#PickList").FindChildrenWithClassTraverse("ClassImbaOption");
-
-			var picked_herolist = [ 
-			"npc_dota_hero_arc_warden",
-			"npc_dota_hero_alchemist",
-			"npc_dota_hero_beastmaster",
-			"npc_dota_hero_axe"
-		]
-
-			var j = 0;
-//			for (j in panel_table) {
-//				$.Msg(player_picks[i])
-//				if (panel_table[j] != null && panel_table[j].id == player_picks[i]) {
-//					$.Msg("Picked heroes: " + player_picks[i])
-//					panel_table[j].AddClass("taken");
-//				}
-//			}
-
-			// Gray out heroes already selected by according to hero pick rule (handled by server)
-			$.Msg(picked_herolist.length)
-			for (j = 0; j <= picked_herolist.length; j++) {
-				if (picked_herolist[i] != null) {
-					$.Msg("Picked heroes: " + picked_herolist[i])
-					$.Msg("-----")
-					$.Msg("Picked heroes: " + picked_herolist[j])
-					$('#'+picked_herolist[i]).AddClass("taken");
+				// If the player has already selected a hero, go to the hero preview screen
+				if (pick_state == "selected_hero" && picked_heroes[player_id] != null) {
+					SwitchToHeroPreview(picked_heroes[player_id])
 				}
 			}
 		}
@@ -602,37 +682,21 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 /* Initialisation - runs when the element is created
 =========================================================================*/
 (function () {
-
-//	$("#VanillaToCustom").style.visibility = "visible"; /* Disabled custom heroes panel */
-
 	// If this player is a spectator, just kill the whole pick screen
 	var localTeam = Players.GetTeam(Players.GetLocalPlayer())
 	if ( localTeam != 2 && localTeam != 3 ) {
-	// Else, do pick screen stuff
+		$.Msg("VILKOMMEN BIENVENUE, SPECTATOR!")
+		ShowHUD(true)
+		ShowPickScreen(false)
+		// Else, do pick screen stuff
 	} else {
+		$.Msg("Hello Radiant/Dire Player")
 		///Load player elements
 		ShowHUD(false);
 		LoadPlayers()
-//		$.Schedule(2, LoadPlayers);
 
 		// Show only map-specific elements
-		var parent_panel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
 		var map_info = Game.GetMapInfo();
-
-		if (map_info.map_display_name == "imba_arena") {
-			$('#GameModeSelectText').text = $.Localize( '#imba_gamemode_name_arena_mode' );
-		} else if (map_info.map_display_name == "imba_diretide") {
-			$('#GameModeSelectText').text = $.Localize( '#imba_gamemode_name_diretide' );
-		}
-
-		// If All Random is enabled, pick a random hero
-		var all_random_enabled = CustomNetTables.GetTableValue("game_options", "all_random" );
-		if (all_random_enabled != null && all_random_enabled[1] == 1) {
-			$("#PickHeroBtn").AddClass( "disabled" );
-			$("#RepickBtn").AddClass( "disabled" );
-			$('#GameModeSelectText').text = $.Localize( '#imba_gamemode_name_all_random' );
-			$.Schedule(5, SelectRandomHero);
-		}
 
 		// Update the game options display
 		var bounty_multiplier = CustomNetTables.GetTableValue("game_options", "bounty_multiplier");
@@ -645,10 +709,8 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 		var max_level = CustomNetTables.GetTableValue("game_options", "max_level");
 		var kills_to_end = CustomNetTables.GetTableValue("game_options", "kills_to_end");
 		var frantic_mode = CustomNetTables.GetTableValue("game_options", "frantic_mode");
-		var hero_pick_rule = CustomNetTables.GetTableValue("game_options", "hero_pick_rule");
 		$("#BountyMultiplierValue").text = bounty_multiplier[1] + "%";
 		$("#ExpMultiplierValue").text = exp_multiplier[1] + "%";
-		$("#RespawnTimerValue").text = respawn_multiplier[1] + "%";
 		$("#InitialGoldValue").text = initial_gold[1];
 		$("#InitialLevelValue").text = initial_level[1];
 		$("#MaxLevelValue").text = max_level[1];
@@ -667,10 +729,7 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 			$("#TowerPowerValue").text = $.Localize( '#imba_gamemode_settings_power_2' );
 		}
 
-		if (map_info.map_display_name == "imba_arena") {
-			$("#CreepPowerLabel").text = $.Localize( '#imba_gamemode_settings_kills_to_end' );
-			$("#CreepPowerValue").text = kills_to_end[1];
-		} else if (creep_power[1] == 1) {
+		if (creep_power[1] == 1) {
 			$("#CreepPowerValue").text = $.Localize( '#imba_gamemode_settings_power_1' );
 		} else if (creep_power[1] == 2) {
 			$("#CreepPowerValue").text = $.Localize( '#imba_gamemode_settings_power_2' );
@@ -684,14 +743,6 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 			}
 		}
 
-		if(hero_pick_rule[1] == 0){
-			$("#HeroPickRuleValue").text = $.Localize( '#imba_gamemode_settings_hero_pick_all_unique' );
-		} else if(hero_pick_rule[1] == 1){
-			$("#HeroPickRuleValue").text = $.Localize( '#imba_gamemode_settings_hero_pick_team_unique' );
-		} else if(hero_pick_rule[1] == 2){
-			$("#HeroPickRuleValue").text = $.Localize( '#imba_gamemode_settings_hero_pick_no_unique' );
-		}
-
 		// If All Random is enabled, pick a random hero
 		var all_random_enabled = CustomNetTables.GetTableValue("game_options", "all_random" );
 		if (all_random_enabled != null && all_random_enabled[1] == 1) {
@@ -703,16 +754,6 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 
 		// Tell the server this player's UI was initialized
 		GameEvents.SendCustomGameEventToServer( "ui_initialized", {} );
-
-//		var picked_herolist = [ 
-//			"npc_dota_hero_arc_warden",
-//			"npc_dota_hero_alchemist",
-//			"npc_dota_hero_beastmaster",
-//			"npc_dota_hero_axe"
-//		]
-
-		// DON'T FORGOT TO UNCOMMENT AFTER TEST DONE!!!!!
-//		PlayerReconnected(0, picked_herolist, picked_herolist, "", "");
 
 		//COOKIES: Custom Chat, created by Mahou Shoujo, approved to be used in IMBA
 		$("#HeroSelectionChat").BLoadLayout("file://{resources}/layout/custom_game/simple_chat.xml", false, false);

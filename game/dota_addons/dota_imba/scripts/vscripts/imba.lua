@@ -85,22 +85,21 @@ function GameMode:OnFirstPlayerLoaded()
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Roshan and Picking Screen camera initialization
 	-------------------------------------------------------------------------------------------------
-
 	if GetMapName() == "imba_arena" then
 		GoodCamera = Entities:FindByName(nil, "radiant_capture_point")
 		BadCamera = Entities:FindByName(nil, "dire_capture_point")
 	else
 		GoodCamera = Entities:FindByName(nil, "dota_goodguys_fort")
 		BadCamera = Entities:FindByName(nil, "dota_badguys_fort")
---		local roshan_spawn_loc = Entities:FindByName(nil, "roshan_spawn_point"):GetAbsOrigin()
---		local roshan = CreateUnitByName("npc_imba_roshan", roshan_spawn_loc, true, nil, nil, DOTA_TEAM_NEUTRALS)
---		roshan:FindAbilityByName("imba_roshan_rage"):SetLevel(1)
+
+		ROSHAN_SPAWN_LOC = Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):GetAbsOrigin()
+		Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):RemoveSelf()
+		local roshan = CreateUnitByName("npc_imba_roshan", ROSHAN_SPAWN_LOC, true, nil, nil, DOTA_TEAM_NEUTRALS)
 	end
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Pre-pick forced hero selection
 	-------------------------------------------------------------------------------------------------
-
 	self.flItemExpireTime = 60.0
 	GameRules:SetSameHeroSelectionEnabled(true)
 	GameRules:GetGameModeEntity():SetCustomGameForceHero("npc_dota_hero_wisp")
@@ -125,18 +124,24 @@ function GameMode:OnFirstPlayerLoaded()
 		"npc_imba_contributor_wally_chan"
 	}
 
-	-- Add 4 random contributor statues
-	local current_location
+	-- Add 6 random contributor statues
+	local current_location = {}
+	current_location[1] = Vector(-6900, -5400, 384)
+	current_location[2] = Vector(-6900, -5100, 384)
+	current_location[3] = Vector(-6900, -4800, 384)
+	current_location[4] = Vector(6900, 5000, 384)
+	current_location[5] = Vector(6900, 4700, 384)
+	current_location[6] = Vector(6900, 4400, 384)
+
 	local current_statue
 	local statue_entity
-	for i = 1, 4 do
-		current_location = Entities:FindByName(nil, "contributor_location_0"..i):GetAbsOrigin()
+	for i = 1, 6 do
 		current_statue = table.remove(contributor_statues, RandomInt(1, #contributor_statues))
-		if i <= 2 then
-			statue_entity = CreateUnitByName(current_statue, current_location, true, nil, nil, DOTA_TEAM_GOODGUYS)
+		if i <= 3 then
+			statue_entity = CreateUnitByName(current_statue, current_location[i], true, nil, nil, DOTA_TEAM_GOODGUYS)
 			statue_entity:SetForwardVector(Vector(1, 1, 0):Normalized())
 		else
-			statue_entity = CreateUnitByName(current_statue, current_location, true, nil, nil, DOTA_TEAM_BADGUYS)
+			statue_entity = CreateUnitByName(current_statue, current_location[i], true, nil, nil, DOTA_TEAM_BADGUYS)
 			statue_entity:SetForwardVector(Vector(-1, -1, 0):Normalized())
 		end
 		statue_entity:AddNewModifier(statue_entity, nil, "modifier_imba_contributor_statue", {})
@@ -167,18 +172,24 @@ function GameMode:OnFirstPlayerLoaded()
 		"npc_imba_developer_yahnich",
 	}
 
-	-- Add 4 random developer statues
-	local current_location
+	-- Add 6 random developer statues
+	local current_location = {}
+	current_location[1] = Vector(-5800, -6300, 384)
+	current_location[2] = Vector(-5500, -6300, 384)
+	current_location[3] = Vector(-5200, -6300, 384)
+	current_location[4] = Vector(5800, 6300, 384)
+	current_location[5] = Vector(5500, 6300, 384)
+	current_location[6] = Vector(5200, 6300, 384)
+
 	local current_statue
 	local statue_entity
-	for i = 1, 4 do
-		current_location = Entities:FindByName(nil, "developer_location_0"..i):GetAbsOrigin()
+	for i = 1, 6 do
 		current_statue = table.remove(developer_statues, RandomInt(1, #developer_statues))
-		if i <= 2 then
-			statue_entity = CreateUnitByName(current_statue, current_location, true, nil, nil, DOTA_TEAM_GOODGUYS)
+		if i <= 3 then
+			statue_entity = CreateUnitByName(current_statue, current_location[i], true, nil, nil, DOTA_TEAM_GOODGUYS)
 			statue_entity:SetForwardVector(Vector(1, 1, 0):Normalized())
 		else
-			statue_entity = CreateUnitByName(current_statue, current_location, true, nil, nil, DOTA_TEAM_BADGUYS)
+			statue_entity = CreateUnitByName(current_statue, current_location[i], true, nil, nil, DOTA_TEAM_BADGUYS)
 			statue_entity:SetForwardVector(Vector(-1, -1, 0):Normalized())
 		end
 		statue_entity:AddNewModifier(statue_entity, nil, "modifier_imba_contributor_statue", {})
@@ -203,8 +214,8 @@ function GameMode:BountyRuneFilter( keys )
 	-- keys["gold_bounty"] = ( 1 + CUSTOM_GOLD_BONUS * 0.01 ) * (1 + game_time * BOUNTY_RAMP_PER_MINUTE * 0.01) * keys["gold_bounty"]
 	-- keys["xp_bounty"] = ( 1 + CUSTOM_XP_BONUS * 0.01 ) * (1 + game_time * BOUNTY_RAMP_PER_MINUTE * 0.01) * keys["xp_bounty"]
 
-	keys["gold_bounty"] = keys["gold_bounty"] * 2
-	keys["xp_bounty"] = keys["xp_bounty"] * 3
+	keys["gold_bounty"] = keys["gold_bounty"] * 6
+	keys["xp_bounty"] = keys["xp_bounty"] * 4
 
 	return true
 end
@@ -580,13 +591,26 @@ function GameMode:OrderFilter( keys )
 		return nil
 	end
 
-	
 	-- Do special handlings if shift-casted only here! The event gets fired another time if the caster
 	-- is actually doing this order
 	if keys.queue == 1 then
 		return true
 	end
-	
+
+	if unit:GetUnitName() == "npc_imba_donator_companion" then
+		if keys.order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET or keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_TARGET then
+		else
+			return false
+		end
+	end
+
+	-- Voice lines
+	if keys.order_type == DOTA_UNIT_ORDER_ATTACK_TARGET then
+		HeroVoiceLine(unit, "attack")
+	elseif keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION or keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_TARGET then
+		HeroVoiceLine(unit, "move")
+	end
+
 	------------------------------------------------------------------------------------
 	-- Prevent Buyback during reincarnation
 	------------------------------------------------------------------------------------
@@ -1159,7 +1183,11 @@ local time_elapsed = 0
 		end)
 	elseif IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
 		Timers:CreateTimer(3.0, function()
-			HeroSelection:RandomSameHero({PlayerID = hero:GetPlayerID()})
+			if arsm == nil then
+				arsm = true
+				print("ARSM")
+				HeroSelection:RandomSameHero()
+			end
 		end)
 	end
 
@@ -1530,11 +1558,11 @@ picked_hero[1] = "npc_dota_hero_brewmaster"
 picked_hero[2] = "npc_dota_hero_troll_warlord"
 
 	print("Checking table...")
-	PrintTable(HeroSelection.radiantPicks)
-	PrintTable(HeroSelection.direPicks)
-	PrintTable(HeroSelection.playerPicks)
+	PrintTable(HeroSelection.picked_heroes)
 
-	CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = 0, PickedHeroes = HeroSelection.radiantPicks, PlayerPicks = picked_hero, pickState = "selecting_hero", repickState = "false"})
+	ReconnectPlayer(0)
+
+--	CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = 0, PickedHeroes = HeroSelection.radiantPicks, PlayerPicks = picked_hero, pickState = "selecting_hero", repickState = "false"})
 end
 
 -- Starts the testbed if in tools mode
@@ -1552,24 +1580,17 @@ function GameMode:StartImbaTest()
 		return nil
 	end
 
-	-- Define testbed zone reference point
-	local testbed_center = Vector(1500, -5000, 256)
-	if GetMapName() == "imba_arena" then
-		testbed_center = Vector(0, 0, 128)
-	end
+	local testbed_center = Vector(1360, -4920, 1365)
 
 	-- Move any existing heroes to the testbed area, and grant them useful testing items
 	local player_heroes = HeroList:GetAllHeroes()
 	for _, hero in pairs(player_heroes) do
 		hero:SetAbsOrigin(testbed_center + Vector(-250, 0, 0))
-		hero:AddItemByName("item_imba_diffusal_blade_3")
 		hero:AddItemByName("item_imba_manta")
 		hero:AddItemByName("item_imba_blink")
 		hero:AddItemByName("item_imba_silver_edge")
 		hero:AddItemByName("item_black_king_bar")
 		hero:AddItemByName("item_imba_heart")
-		hero:AddItemByName("item_imba_siege_cuirass")
-		hero:AddItemByName("item_imba_butterfly")
 		hero:AddItemByName("item_ultimate_scepter")
 		hero:AddExperience(100000, DOTA_ModifyXP_Unspecified, false, true)
 		PlayerResource:SetCameraTarget(0, hero)
@@ -1723,7 +1744,7 @@ local count = 0
 
 --	if neutral == true then
 		for _,v in pairs(units3) do
-			if v:HasMovementCapability() then
+			if v:HasMovementCapability() and not v:GetUnitName() == "npc_imba_roshan" then
 				count = count +1
 				v:RemoveSelf()
 			end

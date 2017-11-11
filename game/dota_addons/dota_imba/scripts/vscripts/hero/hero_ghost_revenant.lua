@@ -242,6 +242,9 @@ if modifier_ghost_revenant_miasma == nil then modifier_ghost_revenant_miasma = c
 function modifier_ghost_revenant_miasma:IsDebuff() return true end
 function modifier_ghost_revenant_miasma:IsHidden() return false end
 function modifier_ghost_revenant_miasma:IsPurgable() return true end
+function modifier_ghost_revenant_miasma:GetEffectName() return "particles/items2_fx/true_sight_debuff.vpcf" end
+function modifier_ghost_revenant_miasma:GetEffectAttachType() return PATTACH_OVERHEAD_FOLLOW end
+function modifier_ghost_revenant_miasma:GetPriority() return MODIFIER_PRIORITY_SUPER_ULTRA end
 
 function modifier_ghost_revenant_miasma:DeclareFunctions()	
 	local decFuncs = {
@@ -251,25 +254,14 @@ function modifier_ghost_revenant_miasma:DeclareFunctions()
 	return decFuncs	
 end
 
-
-
 function modifier_ghost_revenant_miasma:OnCreated()
 	if IsServer() then
-		self.damage = self:GetAbility():GetSpecialValueFor("dmg_per_sec") * 0.01
+		self.damage = self:GetAbility():GetSpecialValueFor("dmg_pct_per_sec") * 0.01
 		self.tick = self:GetAbility():GetSpecialValueFor("tick")
 
 		self:StartIntervalThink(self.tick)
 	end
 end
-
-function modifier_ghost_revenant_miasma:GetEffectName()
-	return "particles/items2_fx/true_sight_debuff.vpcf" end
-	
-function modifier_ghost_revenant_miasma:GetEffectAttachType()
-	return PATTACH_OVERHEAD_FOLLOW end
-
-function modifier_ghost_revenant_miasma:GetPriority()
-	return MODIFIER_PRIORITY_SUPER_ULTRA end
 
 function modifier_ghost_revenant_miasma:CheckState()
 	if self:GetParent():HasModifier("modifier_slark_shadow_dance") then
@@ -299,7 +291,9 @@ function modifier_ghost_revenant_miasma:GetModifierProvidesFOWVision()
 		"modifier_treant_natures_guise_invis",
 		"modifier_templar_assassin_meld",
 		"modifier_imba_skeleton_walk_dummy",
-		"modifier_invoker_ghost_walk_self"
+		"modifier_invoker_ghost_walk_self",
+		"modifier_rune_invis",
+		"modifier_item_imba_silver_edge_invis"
 	}
 		
 	for _,v in ipairs(invisModifiers) do
@@ -326,18 +320,20 @@ function modifier_ghost_revenant_miasma:GetModifierMoveSpeedBonus_Percentage()
 		"modifier_treant_natures_guise_invis",
 		"modifier_templar_assassin_meld",
 		"modifier_imba_skeleton_walk_dummy",
-		"modifier_invoker_ghost_walk_self"
+		"modifier_invoker_ghost_walk_self",
+		"modifier_rune_invis",
+		"modifier_item_imba_silver_edge_invis"
 	}
-		
+
 	for _,v in ipairs(invisModifiers) do
 		if parent:HasModifier(v) then slow = ability:GetSpecialValueFor("invisible_slow") end
 	end
-	
+
 	return slow
 end
 
 function modifier_ghost_revenant_miasma:OnIntervalThink()
-	ApplyDamage({victim = self:GetParent(), attacker = self:GetCaster(), damage = self:GetParent():GetMaxHealth() * self.damage, damage_type = DAMAGE_TYPE_MAGICAL})
+	ApplyDamage({victim = self:GetParent(), attacker = self:GetCaster(), damage = self:GetParent():GetMaxHealth() * self.damage + self:GetAbility():GetSpecialValueFor("dmg_per_sec"), damage_type = DAMAGE_TYPE_MAGICAL})
 end
 
 -----------------------------------------------------------------------------------------------------------
@@ -355,7 +351,7 @@ end
 
 function ghost_revenant_ghost_immolation:IsInnateAbility() return true end
 
-function ghost_revenant_ghost_immolation:GetCastRange( location , target)
+function ghost_revenant_ghost_immolation:GetCastRange(location, target)
 	return self:GetSpecialValueFor("radius")
 end
 

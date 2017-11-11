@@ -33,7 +33,6 @@
 								<Label id="ExpMultiplierLabel" class="GameModeLabel" text="#imba_gamemode_settings_exp_multiplier" />
 								<Label id="CreepPowerLabel" class="GameModeLabel" text="#imba_gamemode_settings_creep_power_title" />
 								<Label id="TowerPowerLabel" class="GameModeLabel" text="#imba_gamemode_settings_tower_power_title" />
-								<Label id="RespawnTimerLabel" class="GameModeLabel" text="#imba_gamemode_settings_respawn_time" />
 							</Panel>
 
 							<Panel class="GameModeValuePanel">
@@ -41,7 +40,6 @@
 								<Label id="ExpMultiplierValue" class="GameModeValue" text="135%" />
 								<Label id="CreepPowerValue" class="GameModeValue" text="0" />
 								<Label id="TowerPowerValue" class="GameModeValue" text="0" />
-								<Label id="RespawnTimerValue" class="GameModeValue" text="0%" />
 							</Panel>
 					</Panel>
 				</Panel>
@@ -74,7 +72,6 @@
 					<Panel id="RightStatsPanel" class="StatsPanel">
 						<Panel id="RightStatsSubPanel">
 							<Panel class="GameModeLabelPanel">
-								<Label id="HeroPickRuleLabel" class="GameModeLabel" text="#imba_gamemode_settings_hero_pick_rule" />
 								<Label id="FranticModeLabel" class="GameModeLabel" text="#imba_gamemode_game_options_frantic" />
 								<Label id="InitialGoldLabel" class="GameModeLabel" text="#imba_gamemode_settings_initial_gold" />
 								<Label id="InitialLevelLabel" class="GameModeLabel" text="#imba_gamemode_settings_initial_level" />
@@ -82,7 +79,6 @@
 							</Panel>
 
 							<Panel class="GameModeValuePanel">
-								<Label id="HeroPickRuleValue" class="GameModeValue" text="" />
 								<Label id="FranticModeValue" class="GameModeValue" text="#imba_gamemode_game_options_frantic_disabled" />
 								<Label id="InitialGoldValue" class="GameModeValue" text="625" />
 								<Label id="InitialLevelValue" class="GameModeValue" text="1" />
@@ -97,7 +93,7 @@
 					<Panel id="HeroListSTR" class="PickTypePanel">
 						<Panel class="PickListTitlePanel">
 <!--							<Image id="SeparatorImage" src="file://{images}/hud/pip_str.png"/> -->
-							<Label class="PickListText" text="#hero_list_title_strength" />
+							<Label id="PickListTextSTR" class="PickListText" text="#imba_generic_talent_strength" />
 						</Panel>
 
 						<Panel id="PickListSeparator1" class="PickListTitlePanel" />
@@ -107,7 +103,7 @@
 					<Panel id="HeroListAGI" class="PickTypePanel">
 						<Panel class="PickListTitlePanel">
 <!--							<Image id="SeparatorImage" src="file://{images}/hud/pip_agi.png"/> -->>
-							<Label class="PickListText" text="#hero_list_title_agility" />
+							<Label id="PickListTextAGI" class="PickListText" text="#imba_generic_talent_agility" />
 						</Panel>
 
 						<Panel id="PickListSeparator2" class="PickListTitlePanel" />
@@ -117,7 +113,7 @@
 					<Panel id="HeroListINT" class="PickTypePanel">
 						<Panel class="PickListTitlePanel">
 <!--							<Image id="SeparatorImage" src="file://{images}/hud/pip_int.png"/> -->
-							<Label class="PickListText" text="#hero_list_title_intellect" />
+							<Label id="PickListTextINT" class="PickListText" text="#imba_generic_talent_intelligence" />
 						</Panel>
 
 						<Panel id="PickListSeparator3" class="PickListTitlePanel" />
@@ -134,7 +130,7 @@
 					<Panel id="HeroListSTR_Custom" class="PickTypePanel">
 						<Panel class="PickListTitlePanel">
 <!--							<Image id="SeparatorImage" src="file://{images}/hud/pip_str.png"/> -->
-							<Label class="PickListText" text="#hero_list_title_strength" />
+							<Label id="PickListTextSTR" class="PickListText" text="#imba_generic_talent_strength" />
 						</Panel>
 
 						<Panel id="PickListSeparator1" class="PickListTitlePanel" />
@@ -144,7 +140,7 @@
 					<Panel id="HeroListAGI_Custom" class="PickTypePanel">
 						<Panel class="PickListTitlePanel">
 <!--							<Image id="SeparatorImage" src="file://{images}/hud/pip_agi.png"/> -->>
-							<Label class="PickListText" text="#hero_list_title_agility" />
+							<Label id="PickListTextAGI" class="PickListText" text="#imba_generic_talent_agility" />
 						</Panel>
 
 						<Panel id="PickListSeparator2" class="PickListTitlePanel" />
@@ -154,7 +150,7 @@
 					<Panel id="HeroListINT_Custom" class="PickTypePanel">
 						<Panel class="PickListTitlePanel">
 <!--							<Image id="SeparatorImage" src="file://{images}/hud/pip_int.png"/> -->
-							<Label class="PickListText" text="#hero_list_title_intellect" />
+							<Label id="PickListTextINT" class="PickListText" text="#imba_generic_talent_intelligence" />
 						</Panel>
 
 						<Panel id="PickListSeparator3" class="PickListTitlePanel" />
@@ -163,14 +159,7 @@
 
 				<!-- Post-pick screen (hero view) -->
 				<Panel id="PostPickScreen">
-					<Panel id="PostPickScreenButtonContainer">
-						<Button id="EnterGameBtn" class="disabled" onactivate="EnterGame()" >
-							<Label id="EnterGameBtnTxt" text="" />
-						</Button>
-						<Button id="RepickBtn" onactivate="RepickHero()" >
-							<Label id="RepickBtnTxt" text="#repick_button" />
-						</Button>
-					</Panel>
+					
 				</Panel>
 
 				<Panel id="BottomContainer">
@@ -188,6 +177,7 @@
 										<DOTAAbilityImage id="PickedHeroAbility6" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
 										<DOTAAbilityImage id="PickedHeroAbility7" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
 										<DOTAAbilityImage id="PickedHeroAbility8" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
+										<DOTAAbilityImage id="PickedHeroAbility9" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
 									</Panel>
 								</Panel>
 
@@ -196,6 +186,16 @@
 										<Label id="PickHeroBtnTxt" text="#imba_confirm_pick_button" />
 									</Button>
 									<DOTAHeroImage id="PickedHeroImage" heroname="" />
+								</Panel>
+
+								<Panel id="PostPickScreenButtonContainer">
+									<Button id="RepickBtn" onactivate="RepickHero()" >
+										<Label id="RepickBtnTxt" text="#repick_button" />
+									</Button>
+
+									<Button id="EnterGameBtn" class="disabled" onactivate="EnterGame()" >
+										<Label id="EnterGameBtnTxt" text="" />
+									</Button>
 								</Panel>
 							</Panel>
 						</Panel>

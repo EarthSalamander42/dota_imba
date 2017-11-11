@@ -533,132 +533,6 @@ function UpdateComebackBonus(points, team)
 	end
 end
 
--- Arena control point logic
-function ArenaControlPointThinkRadiant(control_point)
-
-	-- Create the control point particle, if this is the first iteration
-	if not control_point.particle then
-		control_point.particle = ParticleManager:CreateParticle("particles/customgames/capturepoints/cp_allied_wind.vpcf", PATTACH_CUSTOMORIGIN, nil)
-		ParticleManager:SetParticleControl(control_point.particle, 0, control_point:GetAbsOrigin())
-	end
-
-	-- Check how many heroes are near the control point
-	local allied_heroes = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, control_point:GetAbsOrigin(), nil, 600, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
-	local enemy_heroes = FindUnitsInRadius(DOTA_TEAM_BADGUYS, control_point:GetAbsOrigin(), nil, 600, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
-	local score_change = #allied_heroes - #enemy_heroes
-
-	-- Calculate the new score
-	local old_score = control_point.score
-	control_point.score = math.max(math.min(control_point.score + score_change, 20), -20)
-
-	-- If this control point changed disposition, update the UI and particle accordingly
-	if old_score >= 0 and control_point.score < 0 then
-		CustomGameEventManager:Send_ServerToAllClients("radiant_point_to_dire", {})
-		ParticleManager:DestroyParticle(control_point.particle, true)
-		control_point.particle = ParticleManager:CreateParticle("particles/customgames/capturepoints/cp_wind_captured.vpcf", PATTACH_CUSTOMORIGIN, nil)
-		ParticleManager:SetParticleControl(control_point.particle, 0, control_point:GetAbsOrigin())
-		control_point:EmitSound("Imba.ControlPointTaken")
-	elseif old_score < 0 and control_point.score >= 0 then
-		CustomGameEventManager:Send_ServerToAllClients("radiant_point_to_radiant", {})
-		ParticleManager:DestroyParticle(control_point.particle, true)
-		control_point.particle = ParticleManager:CreateParticle("particles/customgames/capturepoints/cp_allied_wind.vpcf", PATTACH_CUSTOMORIGIN, nil)
-		ParticleManager:SetParticleControl(control_point.particle, 0, control_point:GetAbsOrigin())
-		control_point:EmitSound("Imba.ControlPointTaken")
-	end
-
-	-- Update the progress bar
-	CustomNetTables:SetTableValue("arena_capture", "radiant_progress", {control_point.score})
-	CustomGameEventManager:Send_ServerToAllClients("radiant_progress_update", {})
-
-	-- Run this function again after a second
-	Timers:CreateTimer(1, function()
-		ArenaControlPointThinkRadiant(control_point)
-	end)
-end
-
-function ArenaControlPointThinkDire(control_point)
-
-	-- Create the control point particle, if this is the first iteration
-	if not control_point.particle then
-		control_point.particle = ParticleManager:CreateParticle("particles/customgames/capturepoints/cp_metal_captured.vpcf", PATTACH_CUSTOMORIGIN, nil)
-		ParticleManager:SetParticleControl(control_point.particle, 0, control_point:GetAbsOrigin())
-	end
-
-	-- Check how many heroes are near the control point
-	local allied_heroes = FindUnitsInRadius(DOTA_TEAM_BADGUYS, control_point:GetAbsOrigin(), nil, 600, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
-	local enemy_heroes = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, control_point:GetAbsOrigin(), nil, 600, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
-	local score_change = #allied_heroes - #enemy_heroes
-
-	-- Calculate the new score
-	local old_score = control_point.score
-	control_point.score = math.max(math.min(control_point.score + score_change, 20), -20)
-
-	-- If this control point changed disposition, update the UI and particle accordingly
-	if old_score >= 0 and control_point.score < 0 then
-		CustomGameEventManager:Send_ServerToAllClients("dire_point_to_radiant", {})
-		ParticleManager:DestroyParticle(control_point.particle, true)
-		control_point.particle = ParticleManager:CreateParticle("particles/customgames/capturepoints/cp_allied_metal.vpcf", PATTACH_CUSTOMORIGIN, nil)
-		ParticleManager:SetParticleControl(control_point.particle, 0, control_point:GetAbsOrigin())
-		control_point:EmitSound("Imba.ControlPointTaken")
-	elseif old_score < 0 and control_point.score >= 0 then
-		CustomGameEventManager:Send_ServerToAllClients("dire_point_to_dire", {})
-		ParticleManager:DestroyParticle(control_point.particle, true)
-		control_point.particle = ParticleManager:CreateParticle("particles/customgames/capturepoints/cp_metal_captured.vpcf", PATTACH_CUSTOMORIGIN, nil)
-		ParticleManager:SetParticleControl(control_point.particle, 0, control_point:GetAbsOrigin())
-		control_point:EmitSound("Imba.ControlPointTaken")
-	end
-
-	-- Update the progress bar
-	CustomNetTables:SetTableValue("arena_capture", "dire_progress", {control_point.score})
-	CustomGameEventManager:Send_ServerToAllClients("dire_progress_update", {})
-
-	-- Run this function again after a second
-	Timers:CreateTimer(1, function()
-		ArenaControlPointThinkDire(control_point)
-	end)
-end
-
-function ArenaControlPointScoreThink(radiant_cp, dire_cp)
-
-	-- Fetch current scores
-	local radiant = CustomNetTables:GetTableValue("game_options", "radiant")
-	local dire = CustomNetTables:GetTableValue("game_options", "dire")
-
-	-- Update scores
-	if radiant_cp.score >= 0 then
-		radiant.score = radiant.score + 1
-	else
-		dire.score = dire.score + 1
-	end
-	if dire_cp.score >= 0 then
-		dire.score = dire.score + 1
-	else
-		radiant.score = radiant.score + 1
-	end
-
-	-- Set new values
-	CustomNetTables:SetTableValue("arena_capture", "radiant_score", {radiant.score})
-	CustomNetTables:SetTableValue("arena_capture", "dire_score", {dire.score})
-
-	-- Update scoreboard
-	CustomGameEventManager:Send_ServerToAllClients("radiant_score_update", {})
-	CustomGameEventManager:Send_ServerToAllClients("dire_score_update", {})
-
-	-- Check if one of the teams won the game
-	if radiant.score >= KILLS_TO_END_GAME_FOR_TEAM then
-		GameRules:SetGameWinner(DOTA_TEAM_GOODGUYS)
-		GAME_WINNER_TEAM = "Radiant"
-	elseif dire.score >= KILLS_TO_END_GAME_FOR_TEAM then
-		GameRules:SetGameWinner(DOTA_TEAM_BADGUYS)
-		GAME_WINNER_TEAM = "Dire"
-	end
-
-	-- Call this function again after 10 seconds
-	Timers:CreateTimer(10, function()
-		ArenaControlPointScoreThink(radiant_cp, dire_cp)
-	end)
-end
-
 -------------------------------------------------------------------------------------------------------
 -- Client side daytime tracking system
 -------------------------------------------------------------------------------------------------------
@@ -693,6 +567,15 @@ function IsDaytime()
 	return true   
 end
 
+function IsDev(hero)
+	for i = 1, #IMBA_DEVS do
+		if PlayerResource:GetSteamAccountID(hero:GetPlayerID()) == IMBA_DEVS[i] then
+			return true
+		end
+	end
+
+	return false
+end
 
 -- COOKIES: PreGame Chat System, created by Mahou Shoujo
 Chat = Chat or class({})
@@ -710,6 +593,7 @@ function Chat:OnSay(args)
 	local id = args.PlayerID
 	local message = args.message
 	local player = PlayerResource:GetPlayer(id)
+	local hero = player:GetAssignedHero()
 
 	message = message:gsub("^%s*(.-)%s*$", "%1") -- Whitespace trim
 	message = message:gsub("^(.{0,256})", "%1") -- Limit string length
@@ -720,15 +604,19 @@ function Chat:OnSay(args)
 
 	local arguments = {
 		hero = player,
-		color = TEAM_COLORS[player:GetPlayerID()],
+		color = PLAYER_COLORS[id],
 		player = id,
 		message = args.message,
 		team = args.team,
---		IsFiretoad = player:IsFireToad() -- COOKIES: Define this function later, can also be used for all devs
+		IsDev = IsDev(hero) -- COOKIES: Define this function later, can also be used for all devs
 	}
 
 	if args.team then
 		CustomGameEventManager:Send_ServerToTeam(player:GetTeamNumber(), "custom_chat_say", arguments)
+
+		print(hero, args.message, PLAYER_COLORS[id])
+--		Say(hero, args.message, true)
+
 --	else -- i leave this here if someday we want to create a whole new chat, and not only a pregame chat
 --		CustomGameEventManager:Send_ServerToAllClients("custom_chat_say", arguments)
 	end
@@ -737,9 +625,9 @@ end
 function Chat:PlayerRandomed(id, hero, teamLocal, name)
 	local hero = PlayerResource:GetPlayer(id)
 	local shared = {
-		color = TEAM_COLORS[hero:GetPlayerID()],
+		color = PLAYER_COLORS[id],
 		player = id,
---		IsFiretoad = player:IsFireToad()
+		IsDev = IsDev(hero:GetAssignedHero())
 	}
 
 	local localArgs = vlua.clone(shared)
@@ -1111,4 +999,167 @@ function CustomHeroAttachments(hero, illusion)
 	elseif hero_name == "npc_dota_hero_hell_empress" then
 		
 	end
+end
+
+function ReconnectPlayer(player_id)
+	print("Player is reconnecting:", player_id)
+	-- Reinitialize the player's pick screen panorama, if necessary
+	if HeroSelection.HorriblyImplementedReconnectDetection then
+		HeroSelection.HorriblyImplementedReconnectDetection[player_id] = false
+		Timers:CreateTimer(1.0, function()
+			if HeroSelection.HorriblyImplementedReconnectDetection[player_id] then
+				Server_EnableToGainXPForPlyaer(player_id)
+				local pick_state = HeroSelection.playerPickState[player_id].pick_state
+				local repick_state = HeroSelection.playerPickState[player_id].repick_state
+				print("Pick State (util.lua):", pick_state)
+				print("Repick State (util.lua):", repick_state)
+
+				local data = {
+					PlayerID = player_id,
+					PickedHeroes = HeroSelection.picked_heroes,
+					pickState = pick_state,
+					repickState = repick_state
+				}
+
+				print("HERO SELECTION ARGS:")
+				print("Player ID:", player_id)
+				print("Pick State:", pick_state)
+				print("Re-Pick State:", repick_state)
+
+				print("Sending picked heroes...")
+				PrintTable(HeroSelection.picked_heroes)
+				CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.picked_heroes, pickState = pick_state, repickState = repick_state})
+			else
+				print("Not fully reconnected yet:", player_id)
+				return 0.1
+			end
+		end)
+
+		-- If this is a reconnect from abandonment due to a long disconnect, remove the abandon state
+		if PlayerResource:GetHasAbandonedDueToLongDisconnect(player_id) then
+			local player_name = keys.name
+			local hero = PlayerResource:GetPickedHero(player_id)
+			local hero_name = PlayerResource:GetPickedHeroName(player_id)
+			local line_duration = 7
+			Notifications:BottomToAll({hero = hero_name, duration = line_duration})
+			Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
+			Notifications:BottomToAll({text = "#imba_player_reconnect_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
+			PlayerResource:IncrementTeamPlayerCount(player_id)
+
+			-- Stop redistributing gold to allies, if applicable
+			PlayerResource:StopAbandonGoldRedistribution(player_id)
+		end
+	else
+		print("Player "..player_id.." has not fully connected before this time")
+	end
+end
+
+function DonatorCompanion(hero, model, super_donator)
+local summon_point = Entities:FindByName(nil, "ent_dota_fountain_good"):GetAbsOrigin()
+local color = hero:GetFittingColor()
+
+	local companion = CreateUnitByName("npc_imba_donator_companion", summon_point, true, hero, hero, hero:GetTeamNumber())
+	companion:SetOwner(hero)
+	companion:SetControllableByPlayer(hero:GetPlayerID(), true)
+	companion:SetOriginalModel(model)
+	companion:SetModel(model)
+	companion:SetModelScale(1.0)
+	companion:AddNewModifier(companion, nil, "modifier_companion", {})
+	companion:SetRenderColor(color[1], color[2], color[3]) -- add color in donator table?
+
+	if super_donator then
+		companion:FindAbilityByName("companion_morph"):SetLevel(1)
+	end
+end
+
+function HeroVoiceLine(hero, event, ab)
+local hero_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")
+if not hero.voice_line_cd then hero.voice_line_cd = false end
+if not hero.voice_line_cd_alt then hero.voice_line_cd_alt = false end
+if hero:GetKeyValue("ShortName") == nil then return end
+local short_hero_name = hero:GetKeyValue("ShortName")
+local max_line = 2
+if event == "blink" or event == "firstblood" then
+else
+	max_line = hero:GetKeyValue(event)
+end
+local random_int = RandomInt(1, max_line)
+
+	-- NOT ADDED YET:
+	-- notyet
+	-- failure
+	-- anger
+	-- happy
+	-- rare
+	-- nomana
+	-- RIVAL MEETING SYSTEM
+	-- ITEM PURCHASED SYSTEM
+	-- FIRST BLOOD SYSTEM (always 2 voicelines)
+
+	-- Later on, finish this to play specific sounds from the ability
+--	if event == "cast" then
+--		if RandomInt(1, 100) >= 20 then
+--			event = hero:GetKeyValue("OnAbility"..ab.."Used")
+--			print("play specific ab sound")
+--		else
+--			print("play global ab sound")
+--		end
+--	end
+
+	-- prints
+--	if random_int >= 10 then
+--		print(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int)
+--	else
+--		print(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int)
+--	end
+
+	if event == "blink" or event == "purch" or event == "battlebegins" or event == "win" or event == "lose" or event == "kill" or event == "death" or event == "level_voiceline" or event == "laugh" or event == "thanks" then
+		if event == "level_voiceline" then event = string.gsub(event, "_voiceline", "") end
+		if random_int >= 10 then
+			EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int, hero:GetPlayerOwnerID())
+		else
+			EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int, hero:GetPlayerOwnerID())
+		end
+		return
+	end
+
+	if hero.voice_line_cd_alt == false then
+		if event == "lasthit" or event == "deny" then
+			if random_int >= 10 then
+				EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int, hero:GetPlayerOwnerID())
+			else
+				EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int, hero:GetPlayerOwnerID())
+			end
+
+			hero.voice_line_cd_alt = true
+			Timers:CreateTimer(6.0, function()
+				hero.voice_line_cd_alt = false
+			end)
+			return
+		end
+	end
+
+	-- move, cast, attack
+	if hero.voice_line_cd == false then
+		if random_int >= 10 then
+			EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int, hero:GetPlayerOwnerID())
+		else
+			EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int, hero:GetPlayerOwnerID())
+		end
+
+		hero.voice_line_cd = true
+		Timers:CreateTimer(6.0, function()
+			hero.voice_line_cd = false
+		end)
+	end
+end
+
+function UpdateRoshanBar(roshan)
+	CustomNetTables:SetTableValue("game_options", "roshan", {
+		level = roshan:GetLevel(),
+		HP = roshan:GetHealth(),
+		HP_alt = roshan:GetHealthPercent(),
+		maxHP = roshan:GetMaxHealth()
+	})
+	return time
 end

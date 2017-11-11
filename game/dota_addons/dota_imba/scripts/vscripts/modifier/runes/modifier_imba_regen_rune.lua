@@ -39,7 +39,7 @@ function modifier_imba_regen_rune:OnCreated()
 
 	-- Set the amount of damage instances we can take as stacks
 	self:SetStackCount(25)
-	
+
 	self.aura_radius = 900
 	self.hp_regen_base_owner = 50
 	self.hp_regen_perc_owner = 5

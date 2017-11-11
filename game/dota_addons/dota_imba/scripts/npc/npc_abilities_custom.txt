@@ -60,46 +60,19 @@
 		}
 	}
 
-	//-------------------
-	// Diretide stuff
-	//-------------------
-
-	//=====================================================================================================
-	// Candy Box: Immune
-	//=====================================================================================================
-	"diretide_pumpkin_immune"
+	//=================================================================================================================
+	// Companion: Model Swap
+	//=================================================================================================================
+	"companion_morph"
 	{
 		// General
-		//-------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityTextureName"			"roshan_bash"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"courier_burst"
+		"ScriptFile"					"hero/companion.lua"
+		"AbilityCooldown"				"10.0"
 		"MaxLevel"						"1"
-
-		"Modifiers"
-		{
-			"modifier_pumpkin_immune"
-			{
-				"Passive"	"1"
-				"IsHidden"	"1"
-
-				"OnAttacked"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"internal/diretide.lua"
-						"Function"		"Pumpkin"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"		"1"
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL"		"1"
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"			"1"
-				}
-			}
-		}
 	}
 
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -651,718 +624,6 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"aura_reject_time"				"10"
-			}
-		}
-	}
-	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	//	[ROSH]		ROSHAN STUFF
-	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-	//=================================================================================================================
-	// Roshan: Slam
-	//=================================================================================================================
-	"imba_roshan_slam"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_datadriven"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"						"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		"AbilityUnitDamageType"							"DAMAGE_TYPE_PHYSICAL"
-		"AbilityTextureName"							"roshan_slam"
-		"MaxLevel"										"1"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"								"0"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"								"9.0"
-		"AbilityCastPoint"								"0.3"
-		"AbilityCastAnimation"							"ACT_DOTA_CAST_ABILITY_3"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"slam_radius"							"500"
-			}
-			"02"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"base_damage"							"100"
-			}
-			"03"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"stacking_damage"						"50"
-			}
-			"04"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"base_armor"							"4"
-			}
-			"05"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"stacking_armor"						"2"
-			}
-			"06"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"slow"									"-70"
-			}
-			"07"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"debuff_duration"						"5.0"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"							"hero/neutral_roshan.lua"
-				"Function"								"RoshanSlam"
-
-				"modifier_slow"							"modifier_imba_roshan_slam"
-				"modifier_armor"						"modifier_imba_roshan_slam_armor"
-				"sound_cast"							"Roshan.Slam"
-				"particle_slam"							"particles/neutral_fx/roshan_slam.vpcf"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_roshan_slam"
-			{
-				"Passive"								"0"
-				"IsHidden"								"0"
-				"IsDebuff"								"1"
-				"IsPurgable"							"1"
-
-				"Duration"								"%debuff_duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%slow"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%slow"
-				}
-			}
-
-			"modifier_imba_roshan_slam_armor"
-			{
-				"Passive"								"0"
-				"IsHidden"								"1"
-				"IsDebuff"								"1"
-				"IsPurgable"							"1"
-
-				"Duration"								"%debuff_duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"-1"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Roshan: Summon Roshlings
-	//=================================================================================================================
-	"imba_roshan_summon"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityTextureName"					"roshan_spell_block"
-		"MaxLevel"								"1"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"						"0"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"						"90.0"
-		"AbilityCastPoint"						"0.0"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"summon_duration"				"60"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_damage"					"10"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"					"hero/neutral_roshan.lua"
-				"Function"						"RoshanSummon"
-
-				"sound_summon"					"DOTA_Item.Necronomicon.Activate"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_roshan_summon_passive"
-			{
-				"Passive"						"0"
-				"IsHidden"						"1"
-				"IsBuff"						"1"
-				"IsPurgable"					"0"
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/neutral_roshan.lua"
-						"Function"				"RoshanSummonAttack"
-
-						"modifier_bonus"		"modifier_imba_roshling_bash_debuff"
-					}
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Roshan: Roshling bash
-	//=================================================================================================================
-	"imba_roshling_bash"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_datadriven"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitTargetFlags"						"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		"AbilityUnitDamageType"							"DAMAGE_TYPE_PHYSICAL"
-		"AbilityTextureName"							"roshan_bash"
-		"MaxLevel"										"1"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"debuff_duration"						"4"
-			}
-			"02"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"damage_bonus"							"10"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_roshling_bash"
-			{
-				"Passive"								"1"
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-
-				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/neutral_roshan.lua"
-						"Function"						"RoshlingBash"
-
-						"modifier_debuff"				"modifier_imba_roshling_bash_debuff"
-					}
-				}
-			}
-
-			"modifier_imba_roshling_bash_debuff"
-			{
-				"Passive"								"0"
-				"IsHidden"								"0"
-				"IsDebuff"								"1"
-				"IsPurgable"							"0"
-
-				"Duration"								"%debuff_duration"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Roshan: Roshling aura
-	//=================================================================================================================
-	"imba_roshling_aura"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_datadriven"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
-		"AbilityTextureName"							"roshan_spell_block"
-		"MaxLevel"										"1"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"dmg_bonus"								"20"
-			}
-			"02"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"armor_bonus"							"5"
-			}
-			"03"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"regen_bonus"							"25"
-			}
-			"04"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"radius"								"500"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_roshling_aura"
-			{
-				"Passive"								"1"
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-
-				"Aura"									"modifier_imba_roshling_aura_effect"
-				"Aura_Radius"							"%radius"
-				"Aura_Teams"							"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types"							"DOTA_UNIT_TARGET_BASIC"
-				"Aura_ApplyToCaster"					"0"
-			}
-
-			"modifier_imba_roshling_aura_effect"
-			{
-				"Passive"								"0"
-				"IsHidden"								"0"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-
-				"Attributes"							"MODIFIER_ATTRIBUTE_MULTIPLE"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"		"%dmg_bonus"
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%armor_bonus"
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%regen_bonus"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Roshan: Rage of the Immortal
-	//=================================================================================================================
-	"imba_roshan_rage"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_datadriven"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"							"custom/imba_roshan_rage"
-		"MaxLevel"										"1"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"base_hp_threshold"						"1000"
-			}
-			"02"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"stacking_hp_threshold_perc"			"0.9"
-			}
-			"03"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"as_bonus"								"10"
-			}
-			"04"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"armor_bonus"							"1"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_roshan_rage"
-			{
-				"Passive"								"1"
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-
-				"ThinkInterval"							"0.1"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/neutral_roshan.lua"
-						"Function"						"RoshanRage"
-
-						"modifier_stack"				"modifier_imba_roshan_rage_stack"
-					}
-				}
-			}
-
-			"modifier_imba_roshan_rage_stack"
-			{
-				"Passive"								"0"
-				"IsHidden"								"0"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%as_bonus"
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%armor_bonus"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Roshan: Fury of the Immortal
-	//=================================================================================================================
-	"imba_roshan_fury"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_datadriven"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"						"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		"AbilityUnitDamageType"							"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"							"custom/imba_roshan_fury"
-		"MaxLevel"										"1"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"								"0"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"								"600"
-		"AbilityCastRangeBuffer"						"3000"
-		"AbilityCooldown"								"30.0"
-		"AbilityCastPoint"								"1.2"
-		"AbilityCastAnimation"							"ACT_DOTA_CAST_ABILITY_1"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"width"									"375"
-			}
-			"02"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"length"								"1600"
-			}
-			"03"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"speed"									"2000"
-			}
-			"04"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"base_damage"							"500"
-			}
-			"05"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"stacking_damage"						"250"
-			}
-			"06"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"debuff_duration"						"2.5"
-			}
-		}
-
-		"OnAbilityPhaseStart"
-		{
-			"FireSound"
-			{
-				"EffectName"							"RoshanDT.Scream"
-				"Target"								"CASTER"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"							"hero/neutral_roshan.lua"
-				"Function"								"RoshanFury"
-
-				"sound_cast"							"Hero_Invoker.DeafeningBlast"
-				"particle_fury"							"particles/units/heroes/hero_invoker/invoker_deafening_blast.vpcf"
-			}
-		}
-
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"								"0"
-
-			"RunScript"
-			{
-				"ScriptFile"							"hero/neutral_roshan.lua"
-				"Function"								"RoshanFuryHit"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Roshan: Strength of the Immortal (passive buffs)
-	//=================================================================================================================
-	"imba_roshan_immortal_strength"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_datadriven"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"AbilityTextureName"							"rubick_empty1"
-		"MaxLevel"										"1"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"bonus_damage"							"50"
-			}
-			"02"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"bonus_armor"							"5"
-			}
-			"03"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"bonus_as"								"40"
-			}
-			"04"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"bonus_health"							"1000"
-			}
-			"05"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"bonus_ms"								"10"
-			}
-			"06"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"base_as"								"100"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_roshan_immortal_strength"
-			{
-				"Passive"								"1"
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/neutral_roshan.lua"
-						"Function"						"RoshanUpgrade"
-
-						"modifier_stack"				"modifier_imba_roshan_immortal_strength_stack"
-					}
-				}
-
-				"OnDeath"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/neutral_roshan.lua"
-						"Function"						"RoshanDeath"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%base_as"
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_CANNOT_MISS"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_imba_roshan_immortal_strength_stack"
-			{
-				"Passive"								"0"
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"			"%bonus_damage"
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%bonus_armor"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%bonus_as"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%bonus_ms"
-				}
-			}
-
-			"modifier_imba_roshan_immortal_strength_purge"
-			{
-				"Passive"								"1"
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-
-				"OnAttacked"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/neutral_roshan.lua"
-						"Function"						"RoshanIllusionPurge"
-					}
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Roshan: AI controller
-	//=================================================================================================================
-	"imba_roshan_ai"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_datadriven"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"AbilityTextureName"							"rubick_empty1"
-		"MaxLevel"										"1"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"slam_radius"							"500"
-			}
-			"02"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"roshling_pct"							"0.7"
-			}
-			"03"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"fury_pct"								"0.35"
-			}
-			"04"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"leash_radius"							"500"
-			}
-			"05"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"leash_time"							"3"
-			}
-			"06"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"super_leash_time"						"6"
-			}
-			"07"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"leash_margin"							"50"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_roshan_ai"
-			{
-				"Passive"								"1"
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-
-				"ThinkInterval"							"0.1"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/neutral_roshan.lua"
-						"Function"						"RoshanAIthink"
-					}
-				}
-
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/neutral_roshan.lua"
-						"Function"						"RoshanAIstart"
-
-						"damage_taken"					"%attack_damage"
-					}
-				}
 			}
 		}
 	}
@@ -11897,6 +11158,268 @@
 	}
 
 	//=================================================================================================================
+	// Elder Titan's Echo Stomp
+	//=================================================================================================================
+	"imba_elder_titan_echo_stomp"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES_STRONG"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"custom/imba_elder_titan_echo_stomp"
+		"ScriptFile"					"hero/hero_elder_titan.lua"
+		"MaxLevel"						"7"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"1.2"
+		"AbilityCastRange"				"500"
+		"AbilityCooldown"				"14.0 13.0 12.0 11.0 11.0 11.0 11.0"
+		"AbilityManaCost"				"125"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_elder_titan.vsndevts"
+			"particle"					"particles/econ/items/elder_titan/elder_titan_ti7/elder_titan_echo_stomp_ti7_physical.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"cast_time"					"1.2"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"500"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"sleep_duration"			"2.0 2.5 3.0 3.5 4.0 4.5 5.0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"stomp_damage"				"100 140 180 220 260 300 340"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"wake_damage_limit"			"50 100 150 200 250 300 350"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Elder Titan: Ancestral Spirit
+	//=================================================================================================================
+	"imba_elder_titan_ancestral_spirit"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_elder_titan.lua"
+		"AbilityTextureName"			"elder_titan_ancestral_spirit"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"AbilitySound"					"Hero_ElderTitan.AncestralSpirit.Cast"
+		"MaxLevel"						"7"
+
+		"AbilityCastRange"				"1200"
+		"AbilityCastPoint"				"0.4"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"16.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"80 90 100 110 120 130 140"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"radius"						"275"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"pass_damage"					"60 90 120 150 180 210 240"
+			}		
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"spirit_duration"				"8.0"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"buff_duration"					"9.0"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"speed"							"600"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"move_pct_creeps"				"1"
+			}
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"move_pct_heroes"				"5"
+			}
+			"08"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_creeps"					"6 9 12 15 18 21 24"
+				"CalculateSpellDamageTooltip"	"0"
+			}
+			"09"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_heroes"					"15 30 45 60 75 90 105"
+				"LinkedSpecialBonus"			"special_bonus_unique_elder_titan"
+				"CalculateSpellDamageTooltip"	"0"
+			}	
+			"10"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"move_pct_cap"					"30"
+			}		
+		}
+	}
+
+	//=================================================================================================================
+	// Elder Titan: Natural Order
+	//=================================================================================================================
+	"imba_elder_titan_natural_order"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_elder_titan.lua"
+		"AbilityTextureName"			"elder_titan_natural_order"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+ 		"AbilityCastAnimation"			"ACT_INVALID"
+ 		"MaxLevel"						"7"
+
+		"AbilityCastRange"				"350"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"350"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"armor_reduction_pct"	    "-40 -60 -80 -100 -120 -140 -160"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"magic_resistance_pct"		"-40 -60 -80 -100 -120 -140 -160"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Elder Titan's Echo Stomp
+	//=================================================================================================================
+	"imba_elder_titan_echo_stomp_spirit"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES_STRONG"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"custom/imba_elder_titan_echo_stomp"
+		"ScriptFile"					"hero/hero_elder_titan.lua"
+		"MaxLevel"						"7"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"1.2"
+		"AbilityCastRange"				"500"
+		"AbilityCooldown"				"14.0 13.0 12.0 11.0 11.0 11.0 11.0"
+		"AbilityManaCost"				"0"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_elder_titan.vsndevts"
+			"particle"					"particles/econ/items/elder_titan/elder_titan_ti7/elder_titan_echo_stomp_ti7.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"cast_time"					"1.2"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"500"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"sleep_duration"			"2.0 2.5 3.0 3.5 4.0 4.5 5.0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"stomp_damage"				"100 140 180 220 260 300 340"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"wake_damage_limit"			"50 100 150 200 250 300 350"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Enigma's Malefice
 	//=================================================================================================================
 	"imba_enigma_malefice"
@@ -12546,6 +12069,19 @@
 		"AbilityTextureName"			"faceless_void_time_walk"
 		"ScriptFile"					"hero/hero_faceless_void.lua"
 
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"24 18 12 6 6 6 6"
+		"AbilityManaCost"				"40"
+		"MaxLevel"						"7"
+
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
@@ -12557,19 +12093,6 @@
 			"particle"					"particles/units/heroes/hero_faceless_void/faceless_void_chrono_speed.vpcf"
 			"particle"					"particles/units/heroes/hero_faceless_void/faceless_void_backtrack02.vpcf"
 		}
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"0"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"24 18 12 6 6 6 6"
-		"AbilityManaCost"				"40"
-		"MaxLevel"						"7"
-
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
-		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -19060,7 +18583,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityTextureName"			"mirana_leap"
@@ -24035,7 +23558,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"base_heal"					"10 14 18 22 26 30 34"
+				"base_heal"					"7 10 13 16 19 22 25"
 			}
 			"05"
 			{
@@ -24258,7 +23781,7 @@
 			"12"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"scepter_cooldown"				"20"
+				"scepter_cooldown"				"60"
 			}
 		}
 	}
@@ -28602,7 +28125,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3 0.3 0.3"
+		"AbilityCastPoint"				"0.3"
 
 		"precache"
 		{
@@ -28633,7 +28156,7 @@
 			"04"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"travel_mana_cost_pct"					"0.4"		
+				"travel_mana_cost_pct"					"0.7"		
 			}
 			"05"
 			{
@@ -31345,25 +30868,21 @@
 				"seal_duration"			"3 4 5 6 6 6 6"
 				"LinkedSpecialBonus"	"special_bonus_imba_skywrath_mage_2"
 			}
-
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"mr_reduction_pct"	"30 35 40 45 46 47 48"
 			}
-
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"sigil_radius"		"180 180 180 180 270 360 450"
 			}
-
 			"04"
 			{
 				"var_type"			"FIELD_FLOAT"
 				"aura_linger"		"0.1"
 			}
-
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -39457,6 +38976,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"armor_reduction"			"-1 -3 -5 -7 -8 -9 -10"
+				"LinkedSpecialBonus"		"special_bonus_unique_chaos_knight_2"
 			}		
 			"03"
 			{
@@ -39553,534 +39073,6 @@
 	}
 
 	//=================================================================================================================
-	// Roshan: Diretide AI controller
-	//=================================================================================================================
-	"imba_roshan_ai_diretide"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"rubick_empty1"
-		"ScriptFile"					"hero/neutral_roshan.lua"
-		"MaxLevel"						"1"
-		
-		
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"					"soundevents/diretide_soundevents.vsndevts"
-		}
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"beg_distance"			"350"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed_per_candy"		"25"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_per_candy"		"50"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"leash_distance"		"1200"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"leash_heal_pcnt"		"10"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"acquisition_range"		"800"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bash_chance"			"17"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bash_damage"			"200"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bash_distance"			"400"
-			}
-			"10"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"bash_duration"			"0.75"
-			}
-			"11"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"speedup_increase"		"2.5"
-			}
-			"12"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"speedup_as_increase"	"2.5"
-			}
-			"13"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"speedup_interval"		"1.5"
-			}
-			"14"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"furyswipe_damage"		"25"
-			}
-			"15"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"furyswipe_duration"	"20"
-			}
-			"17"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"health_per_death"		"15000"
-			}
-			"19"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"spellamp_per_death"	"5"
-			}
-			"20"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_per_death"		"50"
-			}
-			"21"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"attackspeed_per_death"	"20"
-			}
-			"22"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"armor_per_death"		"20"
-			}
-			"23"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"resist_per_death"		"5.0"
-			}
-			"24"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"tenacity_per_death"	"5.0"
-			}
-			"25"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"fury_swipe_increase_per_death"		"25"
-			}
-			"26"	// Cooldown for attempting to spawn Roshlings when living ones were found 
-			{
-				"var_type"					"FIELD_INTEGER"
-				"spawn_think_cooldown"		"3"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Creature: Fire Breath     (The generic one, just copy pasted from holdout_example)
-	//=================================================================================================================
-	"creature_fire_breath"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityName"					"creature_fire_breath"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"custom/skeleton_king_hellfire_aura"
-		"MaxLevel"						"1"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"30.0"
-		"AbilityChannelTime"			"2.5"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"800"
-		"AbilityCastPoint"				"1.5"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"radius"				"200.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed"					"1000"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage"				"300"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"rotation_angle"		"90"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"projectile_count"		"20"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"search_range"			"350"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Diretide Roshan: Apocalypse
-	//=================================================================================================================
-	"imba_roshan_diretide_apocalypse"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
-		"AbilityTextureName"			"custom/imba_roshan_megaton_punch"
-		"AbilityCooldown"				"20.0"
-		"AbilityCastRange"				"0"
-		"AbilityCastPoint"				"1.0"
-		"AbilityManaCost"				"0"
-		"MaxLevel"						"1"
-		"ScriptFile"					"hero/neutral_roshan.lua"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"min_range"				"0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_range"				"3000"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"min_targets"			"3"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"delay"					"2.0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage"				"3000.0"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"200"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Diretide Roshan: Summon Roshlings
-	//=================================================================================================================
-	"imba_roshan_diretide_summon_roshlings"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_UNRESTRICTED | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_DONT_CANCEL_MOVEMENT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_DONT_CANCEL_CHANNEL"
-		"AbilityTextureName"			"roshan_spell_block"
-		"AbilityCooldown"				"30"
-		"AbilityCastRange"				"0"
-		"AbilityCastPoint"				"0"
-		"AbilityManaCost"				"0"
-		"MaxLevel"						"1"
-		"ScriptFile"					"hero/neutral_roshan.lua"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"summon_count"			"3"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"extra_per_death"		"1"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Roshan Halloween: Toss (overriding vanilla Tiny toss)
-	//=================================================================================================================
-	"tiny_toss"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"5107"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_CUSTOM"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CUSTOM"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"MaxLevel"						"1"
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1300"
-		"AbilityCastPoint"				"0.0"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"5.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
-
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityModifierSupportValue"	"0.25"	// generally used for damage only
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"1.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"grab_radius"			"300"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"275"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage_pct"		"20"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"grow_bonus_damage_pct"		"35"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"tooltip_range"				"1300"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"toss_damage"				"500"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Roshan: Spell Block
-	//=================================================================================================================
-	"roshan_spell_block"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"5213"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"10.0"
-	}
-
-	//=================================================================================================================
-	// Roshan Halloween: Wave of Force
-	//=================================================================================================================
-	"imba_roshan_diretide_force_wave"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"hero/neutral_roshan.lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-		"MaxLevel"						"1"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"0"
-		"AbilityCastPoint"				"3.0"
-		
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"12.0"
-
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"600"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"radius"			"800"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"speed"				"775"
-			}
-			"03"
-			{	
-				"var_type"			"FIELD_FLOAT"
-				"duration"			"2.0"
-			}
-			"04"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"mana_burn"			"50"
-			}
-			"05"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"game_end_radius"	"3000"
-			}
-			"06"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"game_end_damage"	"100000"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Roshan: Deafening Blast
-	//=================================================================================================================
-	"roshan_deafening_blast"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"invoker_deafening_blast"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
-		"MaxLevel"						"1"
-		"HotKeyOverride"				"B"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"FightRecapLevel"				"1"
-		"AbilitySound"					"Hero_Invoker.DeafeningBlast"
-
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"0"
-		"AbilityCastPoint"				"3.0"
-		"AbilityCooldown"				"12.0"
-		"AbilityManaCost"				"0"
-		"AbilityModifierSupportValue"	"0.5"	// Applies 2 modifiers
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"travel_distance"		"800"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"travel_speed"			"775"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius_start"			"175"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius_end"			"225"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"end_vision_duration"	"1.75"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"5000"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"knockback_duration"	"2.0"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"disarm_duration"		"2.0"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Doom Bringer: Doom
 	//=================================================================================================================
 	"imba_doom_bringer_doom"
@@ -40154,41 +39146,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"armor_bonus"			"666"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Journal Note Ability
-	//=================================================================================================================
-	"ability_journal_note"
-	{
-		"BaseClass"                         "ability_datadriven"
-		"AbilityName"                       "ability_journal_note"
-		"AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"IsOnCastBar"                   "0"
-
-		"Modifiers"
-		{
-			"modifier_ability_journal_note"
-			{
-				"IsHidden"              "1"
-				"Passive"               "1"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"		"1"
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL"		"1"
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"			"1"
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_BLIND"					"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NOT_ON_MINIMAP"			"MODIFIER_STATE_VALUE_ENABLED"
-				}
 			}
 		}
 	}
@@ -40338,7 +39295,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"90 95 100 105 110 115 120"
+		"AbilityManaCost"				"130"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -40357,12 +39314,17 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"dmg_per_sec"				"7 7 7 7 8 9 10"
+				"dmg_per_sec"				"20 30 40 50 60 70 80"
 			}
-			"04"
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"dmg_pct_per_sec"			"3"
+			}
+			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"10.0 11.0 12.0 13.0 13.0 13.0 13.0"
+				"duration"					"10.0"
 			}
 		}
 	}
@@ -40704,6 +39666,492 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"debuff_duration_scepter"	"2.5 2.75 3.0 3.25 3.5 3.75"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Roshan: Diretide AI controller
+	//=================================================================================================================
+	"imba_roshan_ai_diretide"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"rubick_empty1"
+		"ScriptFile"					"hero/neutral_roshan.lua"
+		"MaxLevel"						"1"
+		
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/diretide_soundevents.vsndevts"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"leash_distance"		"1000"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"leash_heal_pcnt"		"10"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"acquisition_range"		"800"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bash_chance"			"17"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bash_damage"			"500"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bash_distance"			"500"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bash_duration"			"1.0"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"speedup_increase"		"2.5"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"speedup_as_increase"	"2.5"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"speedup_interval"		"1.5"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health_per_death"		"15000"
+			}
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spellamp_per_death"	"5"
+			}
+			"16"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_per_death"		"100"
+			}
+			"17"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"attackspeed_per_death"	"20"
+			}
+			"18"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"armor_per_death"		"5"
+			}
+			"19"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"resist_per_death"		"7.5"
+			}
+			"20"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tenacity_per_death"	"7.5"
+			}
+			"21"	// Cooldown for attempting to spawn Roshlings when living ones were found 
+			{
+				"var_type"					"FIELD_INTEGER"
+				"spawn_think_cooldown"		"3"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Creature: Fire Breath
+	//=================================================================================================================
+	"creature_fire_breath"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityName"					"creature_fire_breath"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"custom/roshan_fire_breath"
+		"MaxLevel"						"1"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"25.0"
+		"AbilityChannelTime"			"2.5"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"800"
+		"AbilityCastPoint"				"1.5"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"radius"				"200.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"1000"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage"				"300"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"rotation_angle"		"90"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"projectile_count"		"20"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"search_range"			"350"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Roshan: Berserker's Blood
+	//=================================================================================================================
+	"roshan_berserkers_blood"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"			"huskar_berserkers_blood"
+		"MaxLevel"			"1"
+				
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"maximum_attack_speed"			"140"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"maximum_resistance"			"25"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"hp_threshold_max"				"10"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Diretide Roshan: Apocalypse
+	//=================================================================================================================
+	"imba_roshan_diretide_apocalypse"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+		"AbilityTextureName"			"custom/roshan_apocalypse"
+		"AbilityCooldown"				"45.0"
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"1.0"
+		"AbilityManaCost"				"0"
+		"MaxLevel"						"1"
+		"ScriptFile"					"hero/neutral_roshan.lua"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"min_range"				"0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_range"				"1200"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"min_targets"			"3"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"delay"					"2.0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage"				"3000.0"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"200"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Diretide Roshan: Summon Roshlings
+	//=================================================================================================================
+	"imba_roshan_diretide_summon_roshlings"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_UNRESTRICTED | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_DONT_CANCEL_MOVEMENT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_DONT_CANCEL_CHANNEL"
+		"AbilityTextureName"			"roshan_spell_block"
+		"AbilityCooldown"				"30"
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0"
+		"AbilityManaCost"				"0"
+		"MaxLevel"						"1"
+		"ScriptFile"					"hero/neutral_roshan.lua"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"summon_count"			"3"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"extra_per_death"		"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Roshan Halloween: Toss (overriding vanilla Tiny toss)
+	//=================================================================================================================
+	"roshan_toss"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"tiny_toss"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_CUSTOM"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CUSTOM"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"MaxLevel"						"1"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1300"
+		"AbilityCastPoint"				"0.0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"5.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.25"	// generally used for damage only
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"1.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"grab_radius"			"300"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"275"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage_pct"		"20"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"grow_bonus_damage_pct"		"35"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"tooltip_range"				"1300"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"toss_damage"				"500"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Roshan: Spell Block
+	//=================================================================================================================
+	"roshan_spell_block"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"5213"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"10.0"
+	}
+
+	//=================================================================================================================
+	// Roshan: Deafening Blast
+	//=================================================================================================================
+	"roshan_deafening_blast"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"invoker_deafening_blast"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"MaxLevel"						"1"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"custom/roshan_wave_of_force"
+		"AbilitySound"					"Hero_Invoker.DeafeningBlast"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"3.0"
+		"AbilityCooldown"				"30.0"
+		"AbilityManaCost"				"0"
+		"AbilityModifierSupportValue"	"0.5"	// Applies 2 modifiers
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"travel_distance"		"800"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"travel_speed"			"775"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius_start"			"175"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius_end"			"225"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"end_vision_duration"	"1.75"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"3000"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"knockback_duration"	"2.0"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"disarm_duration"		"2.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Roshan's True Sight
+	//=================================================================================================================
+	"roshan_true_sight"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"necronomicon_warrior_sight"
+		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"100000"
 			}
 		}
 	}

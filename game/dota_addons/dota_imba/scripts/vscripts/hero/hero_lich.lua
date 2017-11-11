@@ -1370,9 +1370,9 @@ function imba_lich_chain_frost:OnProjectileHit_ExtraData(target, location, extra
 	local cold_front_stacks = ability:GetSpecialValueFor("cold_front_stacks")    
 
 	-- Make sure there is a target
-	if not target then
-		return nil
-	end
+	if not target then return nil end
+
+	EmitSoundOn("Hero_Lich.ChainFrostImpact.Hero", target)
 
 	-- #1 Talent: Chain Frost bounces almost instantly after hitting a target
 	if caster:HasTalent("special_bonus_imba_lich_1") then

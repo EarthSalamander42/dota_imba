@@ -13,10 +13,10 @@ START_GAME_AUTOMATICALLY = true				-- Should the game start automatically
 ENABLE_HERO_RESPAWN = true					-- Should the heroes automatically respawn on a timer or stay dead until manually respawned
 UNIVERSAL_SHOP_MODE = false					-- Should the main shop contain Secret Shop items as well as regular items
 
-HERO_SELECTION_TIME = 45.0 + 10.0		-- How long should we let people select their hero?
-if IsInToolsMode() then HERO_SELECTION_TIME = 5.0 end
+HERO_SELECTION_TIME = 30.0 + 5.0		-- How long should we let people select their hero?
+if IsInToolsMode() then HERO_SELECTION_TIME = 10.0 end
 
-PRE_GAME_TIME = 90.0 + HERO_SELECTION_TIME + 10.0	-- How long after people select their heroes should the horn blow and the game start?
+PRE_GAME_TIME = 90.0 + HERO_SELECTION_TIME	-- How long after people select their heroes should the horn blow and the game start?
 POST_GAME_TIME = 60.0						-- How long should we let people look at the scoreboard before closing the server automatically?
 AUTO_LAUNCH_DELAY = 15.0					-- How long should we wait for the host to setup the game, after all players have loaded in?
 TREE_REGROW_TIME = 180.0					-- How long should it take individual trees to respawn after being cut down/destroyed?
@@ -87,6 +87,7 @@ BUYBACK_COOLDOWN_MAXIMUM = 360												-- Maximum buyback cooldown
 ABANDON_TIME = 180															-- Time for a player to be considered as having abandoned the game (in seconds)
 FULL_ABANDON_TIME = 15														-- Time for a team to be considered as having abandoned the game (in seconds)
 
+GAME_ROSHAN_KILLS = 0														-- Tracks amount of Roshan kills
 ROSHAN_RESPAWN_TIME = RandomInt(2, 4) * 60									-- Roshan respawn timer (in seconds)
 AEGIS_DURATION = 300														-- Aegis expiration timer (in seconds)
 
@@ -102,31 +103,31 @@ COMEBACK_BOUNTY_BONUS[DOTA_TEAM_BADGUYS] = 0
 COMEBACK_EXP_BONUS = 100
 
 HERO_RESPAWN_TIME_PER_LEVEL = {}											-- Hero respawn time per level
-HERO_RESPAWN_TIME_PER_LEVEL[1] = 6
-HERO_RESPAWN_TIME_PER_LEVEL[2] = 8
-HERO_RESPAWN_TIME_PER_LEVEL[3] = 10
-HERO_RESPAWN_TIME_PER_LEVEL[4] = 12
-HERO_RESPAWN_TIME_PER_LEVEL[5] = 14
-HERO_RESPAWN_TIME_PER_LEVEL[6] = 18
-HERO_RESPAWN_TIME_PER_LEVEL[7] = 20
-HERO_RESPAWN_TIME_PER_LEVEL[8] = 22
-HERO_RESPAWN_TIME_PER_LEVEL[9] = 24
-HERO_RESPAWN_TIME_PER_LEVEL[10] = 26
-HERO_RESPAWN_TIME_PER_LEVEL[11] = 28
-HERO_RESPAWN_TIME_PER_LEVEL[12] = 32
-HERO_RESPAWN_TIME_PER_LEVEL[13] = 34
-HERO_RESPAWN_TIME_PER_LEVEL[14] = 36
-HERO_RESPAWN_TIME_PER_LEVEL[15] = 38
-HERO_RESPAWN_TIME_PER_LEVEL[16] = 40
-HERO_RESPAWN_TIME_PER_LEVEL[17] = 42
-HERO_RESPAWN_TIME_PER_LEVEL[18] = 46
-HERO_RESPAWN_TIME_PER_LEVEL[19] = 48
-HERO_RESPAWN_TIME_PER_LEVEL[20] = 50
-HERO_RESPAWN_TIME_PER_LEVEL[21] = 52
-HERO_RESPAWN_TIME_PER_LEVEL[22] = 54
-HERO_RESPAWN_TIME_PER_LEVEL[23] = 56
-HERO_RESPAWN_TIME_PER_LEVEL[24] = 58
-HERO_RESPAWN_TIME_PER_LEVEL[25] = 60
+HERO_RESPAWN_TIME_PER_LEVEL[1] = 3
+HERO_RESPAWN_TIME_PER_LEVEL[2] = 4
+HERO_RESPAWN_TIME_PER_LEVEL[3] = 5
+HERO_RESPAWN_TIME_PER_LEVEL[4] = 6
+HERO_RESPAWN_TIME_PER_LEVEL[5] = 7
+HERO_RESPAWN_TIME_PER_LEVEL[6] = 8
+HERO_RESPAWN_TIME_PER_LEVEL[7] = 9
+HERO_RESPAWN_TIME_PER_LEVEL[8] = 10
+HERO_RESPAWN_TIME_PER_LEVEL[9] = 11
+HERO_RESPAWN_TIME_PER_LEVEL[10] = 13
+HERO_RESPAWN_TIME_PER_LEVEL[11] = 15
+HERO_RESPAWN_TIME_PER_LEVEL[12] = 17
+HERO_RESPAWN_TIME_PER_LEVEL[13] = 19
+HERO_RESPAWN_TIME_PER_LEVEL[14] = 21
+HERO_RESPAWN_TIME_PER_LEVEL[15] = 23
+HERO_RESPAWN_TIME_PER_LEVEL[16] = 25
+HERO_RESPAWN_TIME_PER_LEVEL[17] = 27
+HERO_RESPAWN_TIME_PER_LEVEL[18] = 29
+HERO_RESPAWN_TIME_PER_LEVEL[19] = 31
+HERO_RESPAWN_TIME_PER_LEVEL[20] = 33
+HERO_RESPAWN_TIME_PER_LEVEL[21] = 36
+HERO_RESPAWN_TIME_PER_LEVEL[22] = 39
+HERO_RESPAWN_TIME_PER_LEVEL[23] = 42
+HERO_RESPAWN_TIME_PER_LEVEL[24] = 45
+HERO_RESPAWN_TIME_PER_LEVEL[25] = 48
 
 -------------------------------------------------------------------------------------------------
 -- IMBA: map-based settings
@@ -231,14 +232,12 @@ ENABLED_RUNES[DOTA_RUNE_ARCANE] = true
 -------------------------------------------------------------------------------------------------
 
 GAME_WINNER_TEAM = "none"													-- Tracks game winner
-GAME_ROSHAN_KILLS = 0														-- Tracks amount of Roshan kills
 
 END_GAME_ON_KILLS = false													-- Should the game end after a certain number of kills?
 KILLS_TO_END_GAME_FOR_TEAM = 70												-- How many kills for a team should signify the end of the game?
 
 IMBA_HYPER_MODE_ON = false													-- Is Hyper mode activated?
 IMBA_FRANTIC_MODE_ON = false												-- Is Frantic mode activated?
-IMBA_HERO_PICK_RULE = 0                                                     -- 0 : All Unique Heroes, 1 : Allow teams to pick same hero, 2 : Allow all to pick same hero
 
 IMBA_PICK_MODE_ALL_PICK = false												-- Activates All Pick mode when true
 IMBA_PICK_MODE_ALL_RANDOM = false											-- Activates All Random mode when true
@@ -276,13 +275,8 @@ TOWER_UPGRADE_TREE["hardlane"]["tier_1"] = {}
 TOWER_UPGRADE_TREE["hardlane"]["tier_2"] = {}
 TOWER_UPGRADE_TREE["hardlane"]["tier_3"] = {}																		
 
-HERO_RESPAWN_TIME_MULTIPLIER = 100											-- User-defined respawn time multiplier
-
 MAP_INITIAL_GOLD = 0														-- Gold granted to players at the start of the game on a normal pick
 HERO_INITIAL_GOLD = 625														-- Gold to add to players as soon as they spawn into the game
-HERO_REPICK_GOLD = 525														-- Gold lost by players who repick their hero
-HERO_RANDOM_GOLD = 825														-- Gold granted to players who random their hero
-HERO_RERANDOM_GOLD = 725
 
 HERO_STARTING_LEVEL = 1														-- User-defined starting level
 
@@ -294,17 +288,12 @@ CHEAT_ENABLED = false
 -- Changes settings according to the current map
 if GetMapName() == "imba_standard" then										-- Standard map defaults
 	END_GAME_ON_KILLS = false
-	CUSTOM_GOLD_BONUS = 35
-	CUSTOM_XP_BONUS = 35
+	CUSTOM_GOLD_BONUS = 70
+	CUSTOM_XP_BONUS = 40
 	CREEP_POWER_FACTOR = 1
 	TOWER_UPGRADE_MODE = false
 	TOWER_POWER_FACTOR = 1
-	HERO_RESPAWN_TIME_MULTIPLIER = 100
 	HERO_INITIAL_GOLD = 1200
-	HERO_REPICK_GOLD = 1100
-	HERO_RANDOM_GOLD = 1400
-	HERO_RERANDOM_GOLD = 1300
-	HERO_STARTING_LEVEL = 3
 	MAX_LEVEL = 40
 elseif GetMapName() == "imba_custom" or GetMapName() == "imba_custom_10v10" then									-- Custom map defaults
 	END_GAME_ON_KILLS = false
@@ -313,50 +302,18 @@ elseif GetMapName() == "imba_custom" or GetMapName() == "imba_custom_10v10" then
 	CREEP_POWER_FACTOR = 2
 	TOWER_UPGRADE_MODE = true
 	TOWER_POWER_FACTOR = 1
-	HERO_RESPAWN_TIME_MULTIPLIER = 75
 	HERO_INITIAL_GOLD = 2000
-	HERO_REPICK_GOLD = 1600
-	HERO_RANDOM_GOLD = 2400
-	HERO_RERANDOM_GOLD = 2200
 	HERO_STARTING_LEVEL = 5
 	MAX_LEVEL = 40
 elseif GetMapName() == "imba_10v10" or GetMapName() == "imba_12v12" then									-- 10v10 map defaults
 	END_GAME_ON_KILLS = false
-	CUSTOM_GOLD_BONUS = 35
-	CUSTOM_XP_BONUS = 35
+	CUSTOM_GOLD_BONUS = 70
+	CUSTOM_XP_BONUS = 40
 	CREEP_POWER_FACTOR = 1
 	TOWER_UPGRADE_MODE = true
 	TOWER_POWER_FACTOR = 1
-	HERO_RESPAWN_TIME_MULTIPLIER = 75
 	HERO_INITIAL_GOLD = 2000
-	HERO_REPICK_GOLD = 1600
-	HERO_RANDOM_GOLD = 2400
-	HERO_RERANDOM_GOLD = 2200
-	HERO_STARTING_LEVEL = 5
 	MAX_LEVEL = 40
-elseif GetMapName() == "imba_arena" then									-- Arena map defaults
-	END_GAME_ON_KILLS = true
-	TOWER_ABILITY_MODE = false
-	TOWER_UPGRADE_MODE = false
-	SPAWN_ANCIENT_BEHEMOTHS = false
-	GOLD_PER_TICK = 0
-	UNIVERSAL_SHOP_MODE = true
-	USE_CUSTOM_TOP_BAR_VALUES = true
-	TREE_REGROW_TIME = 60.0
-	CUSTOM_GOLD_BONUS = 100
-	CUSTOM_XP_BONUS = 100
-	TOWER_POWER_FACTOR = 2
-	HERO_RESPAWN_TIME_MULTIPLIER = 40
-	HERO_INITIAL_GOLD = 1000
-	HERO_REPICK_GOLD = 750
-	HERO_RANDOM_GOLD = 1250
-	HERO_RERANDOM_GOLD = 1125
-	HERO_STARTING_LEVEL = 3
-	MAX_LEVEL = 40
-	RUNE_SPAWN_TIME = 15
-	FOUNTAIN_PERCENTAGE_MANA_REGEN = 15
-	FOUNTAIN_PERCENTAGE_HEALTH_REGEN = 15
-	PRE_GAME_TIME = 15.0 + HERO_SELECTION_TIME + 10.0
 end
 
 -- Update game mode net tables
@@ -369,29 +326,28 @@ CustomNetTables:SetTableValue("game_options", "bounty_multiplier", {100 + CUSTOM
 CustomNetTables:SetTableValue("game_options", "exp_multiplier", {100 + CUSTOM_XP_BONUS})
 CustomNetTables:SetTableValue("game_options", "creep_power", {CREEP_POWER_FACTOR})
 CustomNetTables:SetTableValue("game_options", "tower_power", {TOWER_POWER_FACTOR})
-CustomNetTables:SetTableValue("game_options", "respawn_multiplier", {100 - HERO_RESPAWN_TIME_MULTIPLIER})
 CustomNetTables:SetTableValue("game_options", "initial_gold", {HERO_INITIAL_GOLD})
 CustomNetTables:SetTableValue("game_options", "initial_level", {HERO_STARTING_LEVEL})
 CustomNetTables:SetTableValue("game_options", "max_level", {MAX_LEVEL})
-CustomNetTables:SetTableValue("game_options", "hero_pick_rule", {IMBA_HERO_PICK_RULE})
+CustomNetTables:SetTableValue("game_options", "frantic_mode", {IMBA_FRANTIC_MODE_ON})
 
 -- XP per level table (only active if custom hero levels are enabled) 
 XP_PER_LEVEL_TABLE = {}
 
 -- Vanilla
 XP_PER_LEVEL_TABLE[1] = 0			-- +0
-XP_PER_LEVEL_TABLE[2] = 240			-- +240
-XP_PER_LEVEL_TABLE[3] = 600			-- +360
-XP_PER_LEVEL_TABLE[4] = 1080		-- +480
-XP_PER_LEVEL_TABLE[5] = 1680		-- +600
-XP_PER_LEVEL_TABLE[6] = 2300		-- +620
-XP_PER_LEVEL_TABLE[7] = 2940		-- +640
-XP_PER_LEVEL_TABLE[8] = 3600		-- +660
-XP_PER_LEVEL_TABLE[9] = 4280		-- +680
-XP_PER_LEVEL_TABLE[10] = 5080		-- +800
-XP_PER_LEVEL_TABLE[11] = 5900		-- +820
-XP_PER_LEVEL_TABLE[12] = 6740		-- +840
-XP_PER_LEVEL_TABLE[13] = 7640		-- +900
+XP_PER_LEVEL_TABLE[2] = 80			-- +80
+XP_PER_LEVEL_TABLE[3] = 240			-- +160
+XP_PER_LEVEL_TABLE[4] = 520			-- +280
+XP_PER_LEVEL_TABLE[5] = 1120		-- +600
+XP_PER_LEVEL_TABLE[6] = 1770		-- +650
+XP_PER_LEVEL_TABLE[7] = 2470		-- +700
+XP_PER_LEVEL_TABLE[8] = 3220		-- +750
+XP_PER_LEVEL_TABLE[9] = 4020		-- +800
+XP_PER_LEVEL_TABLE[10] = 4870		-- +850
+XP_PER_LEVEL_TABLE[11] = 5770		-- +900
+XP_PER_LEVEL_TABLE[12] = 6740		-- +970
+XP_PER_LEVEL_TABLE[13] = 7640		-- +1000
 XP_PER_LEVEL_TABLE[14] = 8865		-- +1225
 XP_PER_LEVEL_TABLE[15] = 10115		-- +1250
 XP_PER_LEVEL_TABLE[16] = 11390		-- +1275
@@ -419,49 +375,6 @@ XP_PER_LEVEL_TABLE[37] = 61405		-- +3500
 XP_PER_LEVEL_TABLE[38] = 64905		-- +3500
 XP_PER_LEVEL_TABLE[39] = 68405		-- +3500
 XP_PER_LEVEL_TABLE[40] = 71905		-- +3500
-
---[[
-XP_PER_LEVEL_TABLE[1] = 0			-- +0
-XP_PER_LEVEL_TABLE[2] = 120			-- +120
-XP_PER_LEVEL_TABLE[3] = 270			-- +150
-XP_PER_LEVEL_TABLE[4] = 450			-- +180
-XP_PER_LEVEL_TABLE[5] = 690			-- +240
-XP_PER_LEVEL_TABLE[6] = 990			-- +300
-XP_PER_LEVEL_TABLE[7] = 1350		-- +360
-XP_PER_LEVEL_TABLE[8] = 1790		-- +440
-XP_PER_LEVEL_TABLE[9] = 2310		-- +520
-XP_PER_LEVEL_TABLE[10] = 2910		-- +600
-XP_PER_LEVEL_TABLE[11] = 3590		-- +680
-XP_PER_LEVEL_TABLE[12] = 4350		-- +760
-XP_PER_LEVEL_TABLE[13] = 5190		-- +840
-XP_PER_LEVEL_TABLE[14] = 6110		-- +920
-XP_PER_LEVEL_TABLE[15] = 7110		-- +1000
-XP_PER_LEVEL_TABLE[16] = 8190		-- +1080
-XP_PER_LEVEL_TABLE[17] = 9350		-- +1160
-XP_PER_LEVEL_TABLE[18] = 10590		-- +1240
-XP_PER_LEVEL_TABLE[19] = 11910		-- +1320
-XP_PER_LEVEL_TABLE[20] = 13310		-- +1420
-XP_PER_LEVEL_TABLE[21] = 14810		-- +1500
-XP_PER_LEVEL_TABLE[22] = 16410		-- +1600
-XP_PER_LEVEL_TABLE[23] = 18110		-- +1700
-XP_PER_LEVEL_TABLE[24] = 19910		-- +1800
-XP_PER_LEVEL_TABLE[25] = 21810		-- +1900
-XP_PER_LEVEL_TABLE[26] = 23810		-- +2000
-XP_PER_LEVEL_TABLE[27] = 25910		-- +2100
-XP_PER_LEVEL_TABLE[28] = 28110		-- +2200
-XP_PER_LEVEL_TABLE[29] = 30410		-- +2300
-XP_PER_LEVEL_TABLE[30] = 32810		-- +2400
-XP_PER_LEVEL_TABLE[31] = 35310		-- +2500
-XP_PER_LEVEL_TABLE[32] = 38010		-- +2700
-XP_PER_LEVEL_TABLE[33] = 40910		-- +2900
-XP_PER_LEVEL_TABLE[34] = 44010		-- +3100
-XP_PER_LEVEL_TABLE[35] = 47310		-- +3300
-XP_PER_LEVEL_TABLE[36] = 50810		-- +3500
-XP_PER_LEVEL_TABLE[37] = 54610		-- +3800
-XP_PER_LEVEL_TABLE[38] = 58710		-- +4100
-XP_PER_LEVEL_TABLE[39] = 63110		-- +4400
-XP_PER_LEVEL_TABLE[40] = 67810		-- +4700
-]]
 
 -- XP AWARDED per level table (how much bounty heroes are worth beyond level 25)
 HERO_XP_BOUNTY_PER_LEVEL = {}
@@ -505,13 +418,20 @@ IMBA_DEVS = {
 	34067920,	-- Shush
 	95496383,	-- ZimberZimber
 	137997646,	-- Fudge
-	142818979,	-- Luxcerv
 	65988826,	-- Noobsauce
 	137344217,	-- Moujiaozi
 	65419767,	-- AtroCty
-	33828741	-- sercankd
+	33828741,	-- sercankd
+	61200060	-- suthernfriend
 }
 
-_G.banned_players = {
-	38788222 -- customURL 420bongrip
-}
+IMBA_DONATORS = {}
+IMBA_DONATORS[1] = {163814800, "models/items/courier/livery_llama_courier/livery_llama_courier.vmdl", false}	-- Hungrily_Hastur
+IMBA_DONATORS[2] = {54896080, "models/items/courier/carty/carty.vmdl", true}	-- Cookies
+
+
+-- IMBA_DONATORS[3] = {steam_id, "models/courier/doom_demihero_courier/doom_demihero_courier.vmdl"}	-- Cookies
+
+--	_G.banned_players = {
+--		38788222 -- customURL 420bongrip
+--	}
