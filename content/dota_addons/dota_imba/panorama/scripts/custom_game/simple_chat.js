@@ -307,6 +307,5 @@ function SubmitGameChat() {
 	else
 	{
 		GameEvents.SendCustomGameEventToServer("custom_chat_say", { message: entry.text, team: !$("#GameChat").shiftHeld });
-//		$.Msg("CHAT: SubmitGameChat check.")
 	}
 }

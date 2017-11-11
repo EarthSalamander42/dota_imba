@@ -187,18 +187,16 @@
 
 	<Panel>
 	<!-- CustomUIElements go here.  They are not provided currently as valve's parser reads commented lines and attempts to link them in.-->
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/hero_selection.xml" />
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/talent_window.xml" />
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/simple_chat.xml" />
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/netgraph.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/diretide.xml" />
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/health_bar.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/precache.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/team_select.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/game_mode.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_attachments.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_notifications.xml" />
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/hero_selection.xml" />
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/arena_topbar.xml" />
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/talent_window.xml" />
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/simple_chat.xml" />
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/netgraph.xml" />
 		<CustomUIElement type="EndScreen" layoutfile="file://{resources}/layout/custom_game/multiteam_end_screen.xml" />
 		<CustomUIElement type="FlyoutScoreboard" layoutfile="file://{resources}/layout/custom_game/multiteam_flyout_scoreboard.xml" />
 		<CustomUIElement type="HudTopBar" layoutfile="file://{resources}/layout/custom_game/multiteam_top_scoreboard.xml" />

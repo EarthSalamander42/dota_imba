@@ -166,6 +166,11 @@ DebugPrint("[IMBA] Performing pre-load precache")
 	PrecacheResource("model_folder", "models/creeps", context)
 	PrecacheResource("model_folder", "models/props_gameplay", context)
 
+	-- Companions
+	PrecacheResource("model_folder", "models/courier/doom_demihero_courier", context)
+	PrecacheResource("model_folder", "models/items/courier/livery_llama_courier", context)
+	PrecacheResource("model_folder", "models/items/courier/carty/carty.vmdl", context)
+
 	-- Sounds can precached here like anything else
 	PrecacheResource("soundfile", "sounds/weapons/creep/roshan/slam.vsnd", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_items.vsndevts", context)

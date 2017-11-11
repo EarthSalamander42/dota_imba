@@ -13,10 +13,10 @@ START_GAME_AUTOMATICALLY = true				-- Should the game start automatically
 ENABLE_HERO_RESPAWN = true					-- Should the heroes automatically respawn on a timer or stay dead until manually respawned
 UNIVERSAL_SHOP_MODE = false					-- Should the main shop contain Secret Shop items as well as regular items
 
-HERO_SELECTION_TIME = 45.0 + 10.0		-- How long should we let people select their hero?
-if IsInToolsMode() then HERO_SELECTION_TIME = 5.0 end
+HERO_SELECTION_TIME = 30.0 + 5.0		-- How long should we let people select their hero?
+if IsInToolsMode() then HERO_SELECTION_TIME = 10.0 end
 
-PRE_GAME_TIME = 90.0 + HERO_SELECTION_TIME + 10.0	-- How long after people select their heroes should the horn blow and the game start?
+PRE_GAME_TIME = 90.0 + HERO_SELECTION_TIME	-- How long after people select their heroes should the horn blow and the game start?
 POST_GAME_TIME = 60.0						-- How long should we let people look at the scoreboard before closing the server automatically?
 AUTO_LAUNCH_DELAY = 15.0					-- How long should we wait for the host to setup the game, after all players have loaded in?
 TREE_REGROW_TIME = 180.0					-- How long should it take individual trees to respawn after being cut down/destroyed?
@@ -87,6 +87,7 @@ BUYBACK_COOLDOWN_MAXIMUM = 360												-- Maximum buyback cooldown
 ABANDON_TIME = 180															-- Time for a player to be considered as having abandoned the game (in seconds)
 FULL_ABANDON_TIME = 15														-- Time for a team to be considered as having abandoned the game (in seconds)
 
+GAME_ROSHAN_KILLS = 0														-- Tracks amount of Roshan kills
 ROSHAN_RESPAWN_TIME = RandomInt(2, 4) * 60									-- Roshan respawn timer (in seconds)
 AEGIS_DURATION = 300														-- Aegis expiration timer (in seconds)
 
@@ -231,7 +232,6 @@ ENABLED_RUNES[DOTA_RUNE_ARCANE] = true
 -------------------------------------------------------------------------------------------------
 
 GAME_WINNER_TEAM = "none"													-- Tracks game winner
-GAME_ROSHAN_KILLS = 0														-- Tracks amount of Roshan kills
 
 END_GAME_ON_KILLS = false													-- Should the game end after a certain number of kills?
 KILLS_TO_END_GAME_FOR_TEAM = 70												-- How many kills for a team should signify the end of the game?
@@ -329,6 +329,7 @@ CustomNetTables:SetTableValue("game_options", "tower_power", {TOWER_POWER_FACTOR
 CustomNetTables:SetTableValue("game_options", "initial_gold", {HERO_INITIAL_GOLD})
 CustomNetTables:SetTableValue("game_options", "initial_level", {HERO_STARTING_LEVEL})
 CustomNetTables:SetTableValue("game_options", "max_level", {MAX_LEVEL})
+CustomNetTables:SetTableValue("game_options", "frantic_mode", {IMBA_FRANTIC_MODE_ON})
 
 -- XP per level table (only active if custom hero levels are enabled) 
 XP_PER_LEVEL_TABLE = {}
@@ -425,8 +426,11 @@ IMBA_DEVS = {
 }
 
 IMBA_DONATORS = {}
-IMBA_DONATORS[1] = {163814800, "models/items/courier/livery_llama_courier/livery_llama_courier.vmdl"}	-- Hungrily_Hastur
-IMBA_DONATORS[2] = {54896080, "models/courier/doom_demihero_courier/doom_demihero_courier.vmdl"}	-- Cookies
+IMBA_DONATORS[1] = {163814800, "models/items/courier/livery_llama_courier/livery_llama_courier.vmdl", false}	-- Hungrily_Hastur
+IMBA_DONATORS[2] = {54896080, "models/items/courier/carty/carty.vmdl", true}	-- Cookies
+
+
+-- IMBA_DONATORS[3] = {steam_id, "models/courier/doom_demihero_courier/doom_demihero_courier.vmdl"}	-- Cookies
 
 --	_G.banned_players = {
 --		38788222 -- customURL 420bongrip

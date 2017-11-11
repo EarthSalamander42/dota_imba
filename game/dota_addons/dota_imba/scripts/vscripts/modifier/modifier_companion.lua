@@ -10,6 +10,7 @@ function modifier_companion:CheckState()
 	{
 		[MODIFIER_STATE_NO_HEALTH_BAR] = true,
 		[MODIFIER_STATE_NOT_ON_MINIMAP] = true,
+		[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
 	}
 
 	return state
@@ -29,6 +30,12 @@ end
 function modifier_companion:OnCreated()
 	if IsServer() then
 		self:StartIntervalThink(0.1)
+
+		local companion = self:GetParent()
+		if not companion.base_model then
+			print("Store base model")
+			companion.base_model = companion:GetModelName()
+		end
 	end
 end
 
@@ -61,7 +68,7 @@ function modifier_companion:OnIntervalThink()
 
 		local hero_distance = (hero:GetAbsOrigin() - companion:GetAbsOrigin()):Length()
 		local fountain_distance = (fountain:GetAbsOrigin() - companion:GetAbsOrigin()):Length()
-		local min_distance = 250
+		local min_distance = 200
 		local blink_distance = 800
 
 		local invisModifiers = {
@@ -79,7 +86,9 @@ function modifier_companion:OnIntervalThink()
 			"modifier_imba_skeleton_walk_dummy",
 			"modifier_invoker_ghost_walk_self",
 			"modifier_rune_invis",
-			"modifier_item_imba_silver_edge_invis"
+			"modifier_item_imba_silver_edge_invis",
+			"modifier_imba_skeleton_walk_invis",
+			"modifier_imba_riki_invisibility"
 		}
 
 --		print("Companion MS:", companion:GetBaseMoveSpeed())
@@ -111,13 +120,15 @@ function modifier_companion:OnIntervalThink()
 			companion:EmitSound("DOTA_Item.BlinkDagger.Activate")
 			FindClearSpaceForUnit(companion, hero:GetAbsOrigin() + RandomVector(200), false)
 			ParticleManager:CreateParticle("particles/items_fx/blink_dagger_end.vpcf", PATTACH_ABSORIGIN, companion)
-		elseif hero_distance > min_distance then
+		elseif hero_distance > min_distance + 200 then
 			local order = {
 				OrderType = DOTA_UNIT_ORDER_MOVE_TO_TARGET,
 				UnitIndex = companion:entindex(),
 				TargetIndex = hero:entindex()
 			}
 			ExecuteOrderFromTable(order)
+		elseif hero_distance < min_distance then
+			companion:Stop()
 		end
 	end
 end

@@ -7675,7 +7675,7 @@
 	// Beastmaster: Call of the Wild Hawk
 	//=================================================================================	
 	
-	"npc_imba_dota_beastmaster_hawk_1"
+	"npc_dota_beastmaster_hawk_1"
 	{                                       
 		// General
 		//----------------------------------------------------------------
@@ -7735,7 +7735,7 @@
 		"WakesNeutrals"             "0"
 	}   
 
-	"npc_imba_dota_beastmaster_hawk_2"
+	"npc_dota_beastmaster_hawk_2"
 	{                                       
 		// General
 		//----------------------------------------------------------------
@@ -7795,7 +7795,7 @@
 		"WakesNeutrals"             "0"
 	} 
 		
-	"npc_imba_dota_beastmaster_hawk_3"
+	"npc_dota_beastmaster_hawk_3"
 	{                                       
 		// General
 		//----------------------------------------------------------------
@@ -7855,7 +7855,7 @@
 		"WakesNeutrals"             "0"
 	} 
 		
-	"npc_imba_dota_beastmaster_hawk_4"
+	"npc_dota_beastmaster_hawk_4"
 	{                                       
 		// General
 		//----------------------------------------------------------------
@@ -7915,7 +7915,7 @@
 		"WakesNeutrals"             "0"
 	} 
 		
-	"npc_imba_dota_beastmaster_hawk_5"
+	"npc_dota_beastmaster_hawk_5"
 	{                                       
 		// General
 		//----------------------------------------------------------------
@@ -7975,7 +7975,7 @@
 		"WakesNeutrals"             "0"
 	} 
 		
-	"npc_imba_dota_beastmaster_hawk_6"
+	"npc_dota_beastmaster_hawk_6"
 	{                                       
 		// General
 		//----------------------------------------------------------------
@@ -8035,7 +8035,7 @@
 		"WakesNeutrals"             "0"
 	} 
 		
-	"npc_imba_dota_beastmaster_hawk_7"
+	"npc_dota_beastmaster_hawk_7"
 	{                                       
 		// General
 		//----------------------------------------------------------------
@@ -8098,7 +8098,7 @@
 	//=================================================================================
 	// Beastmaster: Call of the Wild Boar
 	//=================================================================================
-	"npc_imba_dota_beastmaster_boar_1"
+	"npc_dota_beastmaster_boar_1"
 	{                                       
 		// General
 		//----------------------------------------------------------------
@@ -8164,7 +8164,7 @@
 		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 	}   
 
-	"npc_imba_dota_beastmaster_boar_2"
+	"npc_dota_beastmaster_boar_2"
 	{                                       
 		// General
 		//----------------------------------------------------------------
@@ -8230,7 +8230,7 @@
 		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 	}   
 
-	"npc_imba_dota_beastmaster_boar_3"
+	"npc_dota_beastmaster_boar_3"
 	{                                       
 		// General
 		//----------------------------------------------------------------
@@ -8296,7 +8296,7 @@
 		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 	}   
 
-	"npc_imba_dota_beastmaster_boar_4"
+	"npc_dota_beastmaster_boar_4"
 	{                                       
 		// General
 		//----------------------------------------------------------------
@@ -8362,13 +8362,13 @@
 		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 	}   
 
-	"npc_imba_dota_beastmaster_boar_5"
+	"npc_dota_beastmaster_boar_5"
 	{                                       
 		// General
 		//----------------------------------------------------------------
 		"Model"                     "models/heroes/beastmaster/beastmaster_beast.vmdl"  // Model.
 		"BaseClass"                 "npc_dota_beastmaster_boar"
-		"SoundSet"                  "Hero_Beastmaster.Call.Boar"          // Name of sound set.
+		"SoundSet"                  "Beastmaster_Boar"          // Name of sound set.
 		"Level"                     "1"
 		"ModelScale"                "1.25"
 		"IsSummoned"                "1"
@@ -8428,7 +8428,7 @@
 		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 	} 
 	
-	"npc_imba_dota_beastmaster_boar_6"
+	"npc_dota_beastmaster_boar_6"
 	{                                       
 		// General
 		//----------------------------------------------------------------
@@ -8495,7 +8495,7 @@
 	}
 	
 	
-	"npc_imba_dota_beastmaster_boar_7"
+	"npc_dota_beastmaster_boar_7"
 	{                                       
 		// General
 		//----------------------------------------------------------------
@@ -12284,15 +12284,16 @@
 	{
 		// General
 		//----------------------------------------------------------------
-		"BaseClass"					"npc_dota_creature"
+		"BaseClass"					"npc_dota_base_additive"
 		"Model"						"models/creeps/neutral_creeps/n_creep_ghost_b/n_creep_ghost_frost.vmdl"        
 		"Level"						"1"
 		"ModelScale"				"1"
 		"UnitLabel"					"donator_companion"        
-		
+
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"neutral_spell_immunity"
+		"Ability1"					"companion_morph"
+		"Ability2"					"neutral_spell_immunity"
 
 		// Armor
 		//----------------------------------------------------------------
@@ -12304,10 +12305,8 @@
 		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
 		"AttackDamageMin"           "0"
 		"AttackDamageMax"           "0"
-		"AttackRate"                "1.5"
-		"AttackAnimationPoint"      "0.26"
-		"AttackAcquisitionRange"    "500"
-		"AttackRange"               "100"
+		"AttackRate"                "0.0"
+		"AttackRange"               "0"
 
 		// Bounds
 		//----------------------------------------------------------------
@@ -12323,7 +12322,7 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"             "550"
+		"MovementSpeed"             "480"
 		"MovementTurnRate"          "0.5"
 
 		// Status
@@ -12424,9 +12423,9 @@
 		// Status
 		//-------------------------------------------------------------------------------------------------------------
 		"StatusHealth"				"200"									// Base health.
-		"StatusHealthRegen"			"0.25"									// Health regeneration rate.
-		"StatusMana"				"50"										// Base mana.
-		"StatusManaRegen"			"0.01"									// Mana regeneration rate.
+		"StatusHealthRegen"			"3.0"									// Health regeneration rate.
+		"StatusMana"				"50"									// Base mana.
+		"StatusManaRegen"			"1.0"									// Mana regeneration rate.
 
 		// Team
 		//-------------------------------------------------------------------------------------------------------------
@@ -12529,9 +12528,9 @@
 		// Status
 		//-------------------------------------------------------------------------------------------------------------
 		"StatusHealth"				"200"									// Base health.
-		"StatusHealthRegen"			"0.25"									// Health regeneration rate.
-		"StatusMana"				"50"										// Base mana.
-		"StatusManaRegen"			"0.01"									// Mana regeneration rate.
+		"StatusHealthRegen"			"3.0"									// Health regeneration rate.
+		"StatusMana"				"50"									// Base mana.
+		"StatusManaRegen"			"1.0"									// Mana regeneration rate.
 
 		// Team
 		//-------------------------------------------------------------------------------------------------------------
@@ -12738,5 +12737,144 @@
 		//----------------------------------------------------------------
 		"VisionDaytimeRange"		"1400"
 		"VisionNighttimeRange"		"1400"
+	}
+
+	"npc_dota_courier"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_courier"	// Class of entity of link to.
+		"Model"						"models/props_gameplay/donkey.vmdl"	// Model.
+		"SoundSet"					""					// Name of sound set.
+		"Level"						"0"
+		"IsAncient"					"1"
+		"ModelScale"				"1"
+		"UnitLabel"					"courier"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"courier_return_to_base"
+		"Ability2"					"courier_go_to_secretshop"		
+		"Ability3"					"courier_return_stash_items"
+		"Ability4"					"courier_take_stash_items"
+		"Ability5"					"courier_transfer_items"	
+		"Ability6"					"courier_burst"		
+		"Ability7"					"courier_morph"
+		"Ability8"					"courier_take_stash_and_transfer_items"
+		"Ability9"					"courier_transfer_items_to_other_player"
+		"Ability10"					"courier_go_to_enemy_secretshop"
+		"Ability11"					"courier_go_to_sideshop"
+		"Ability12"					"courier_go_to_sideshop2"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"			// Hull type used for navigation/locomotion.
+		"HealthBarOffset"			"120"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air
+		"MovementSpeed"				"380"		// Speed
+		"MovementTurnRate"			"0.5"		// Turning rate.
+	
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"175"		// Gold earned min.
+		"BountyGoldMax"				"175"		// Gold earned max.
+
+			// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"75"		// Base health.
+		"StatusHealthRegen"			"0.5"			// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_COURIER"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"350"		// Range of vision during day light.
+		"VisionNighttimeRange"		"350"		// Range of vision at night time.
+
+		// Bots
+		//----------------------------------------------------------------
+		"AttackDesire"				"1.5"		// How much bots want to attack them vs other non-hero things
+
+		//Inventory
+		"HasInventory"				"1"
+		
+		"IdleExpression"			"scenes/default_idle.vcd"
+		
+		"WakesNeutrals"				"0"
+	}
+
+	"npc_dota_elder_titan_ancestral_spirit"
+	{										
+		// General
+		//----------------------------------------------------------------
+		"Model"						"models/heroes/elder_titan/ancestral_spirit.vmdl"	// Model.
+		"BaseClass"					"npc_dota_elder_titan_ancestral_spirit"
+		"SoundSet"					"0"			// Name of sound set.
+		"Level"						"1"
+		"ModelScale"				"1.0"
+		"ConsideredHero"			"1"
+		"IsAncient"					"1"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"imba_elder_titan_echo_stomp_spirit"	// Ability 1
+		"Ability2"					"generic_hidden"						// Ability 2
+		"Ability3"					"imba_elder_titan_natural_order"		// Ability 3
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"			// Physical protection.
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageMin"			"0"			// Damage range min.
+		"AttackDamageMax"			"0"			// Damage range max.	
+		"AttackRate"				"1.0"		// Speed of attack.
+		"AttackAnimationPoint"		"0.0"		// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"0"			// Range within a target can be acquired.
+		"AttackRange"				"0"			// Range within a target can be attacked.
+		"ProjectileModel"			""			// Particle system model for projectile.
+		"ProjectileSpeed"			"0"			// Speed of projectile.		   
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"			// Hull type used for navigation/locomotion.
+
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air
+		"MovementSpeed"				"315"			// Speed
+		"MovementTurnRate"			"0.5"		// Turning rate.
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"100"		// Base health.
+		"StatusHealthRegen"			"0.0"		// Health regeneration rate.	
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"0"		// Range of vision during day light.
+		"VisionNighttimeRange"		"0"		// Range of vision at night time.
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"							// Team name.
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+
+		"ImmuneToOmnislash"			"1"
 	}
 }

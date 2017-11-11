@@ -166,7 +166,7 @@ DebugPrintTable(keys)
 		Server_WaitToEnableXpGain()
 
 		for _, hero in pairs(HeroList:GetAllHeroes()) do
-			if hero.is_dev and not hero.has_graph then
+			if IsDev(hero) then
 				hero.has_graph = true
 				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph", {})
 --				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
@@ -240,39 +240,19 @@ local normal_xp = npc:GetDeathXP()
 	end
 
 	if npc:IsRealHero() then
-		for i = 1, #IMBA_DEVS do
-			-- Granting access to admin stuff for Imba Devs
-			if PlayerResource:GetSteamAccountID(npc:GetPlayerID()) == IMBA_DEVS[i] then
-				if not npc.is_dev then
---					if PlayerResource:GetSteamAccountID(npc:GetPlayerID()) == 54896080 then
---						npc:EmitSound("Muradin.StormEarthFire")
---						npc:SetCustomHealthLabel("EARTH   SALAMANDER", 45, 200, 45)
---					elseif PlayerResource:GetSteamAccountID(npc:GetPlayerID()) == 46875732 then
---						npc:EmitSound("Muradin.StormEarthFire")
---						npc:SetCustomHealthLabel("FIRETOAD", 200, 45, 45)
---					elseif PlayerResource:GetSteamAccountID(npc:GetPlayerID()) == 34067920 then
---						npc:EmitSound("Muradin.StormEarthFire")
---						npc:SetCustomHealthLabel("THUNDER   LIZARD", 45, 45, 20)
---					end
-					npc.is_dev = true
-				end
-			end
-		end
-
 		for i = 1, #IMBA_DONATORS do
 			if PlayerResource:GetSteamAccountID(npc:GetPlayerID()) == IMBA_DONATORS[i][1] then
 				if npc:GetUnitName() ~= "npc_dota_hero_wisp" or npc.is_real_wisp then
 					if not npc.has_companion then
 						npc.has_companion = true
-						DonatorCompanion(npc, IMBA_DONATORS[i][2])
+						DonatorCompanion(npc, IMBA_DONATORS[i][2], IMBA_DONATORS[i][3])
 					end
 				end
 			end
 		end
 
-		if npc.first_spawn == nil then npc.first_spawn = true end
-		if npc.first_spawn == true then
-			npc.first_spawn = false
+		if not npc.first_spawn then
+			npc.first_spawn = true
 			HeroVoiceLine(npc, "spawn")
 		else
 			HeroVoiceLine(npc, "respawn")
@@ -925,7 +905,12 @@ function GameMode:OnEntityKilled( keys )
 			if killed_unit:GetUnitName() == "npc_dota_hero_meepo" then
 				KillMeepos()
 			else
-				if respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[25] then
+				if killed_unit:HasModifier("modifier_imba_reapers_scythe_respawn") then
+					local reaper_scythe = killer:FindAbilityByName("imba_necrolyte_reapers_scythe"):GetSpecialValueFor("respawn_increase")
+					print("ignore respawn time limit")
+					print(reaper_scythe)
+					respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[hero_level] + reaper_scythe
+				elseif respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[25] then
 					respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[25]
 				end
 				killed_unit:SetTimeUntilRespawn(respawn_time)

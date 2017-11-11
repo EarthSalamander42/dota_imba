@@ -8,7 +8,6 @@
 		"override_hero"				"npc_dota_hero_abaddon"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
@@ -16,7 +15,8 @@
 		"Ability2"					"imba_abaddon_aphotic_shield"
 		"Ability3"					"imba_abaddon_curse_of_avernus"
 		"Ability4"					"imba_abaddon_over_channel"
-		"Ability5"					"imba_abaddon_borrowed_time"		
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_abaddon_borrowed_time"
 		
 		"Ability10"					"special_bonus_imba_abaddon_8" //Heals that heal above maximum health threshold during Borrowed Time grants a mist shield (25% ratio) that is released after Borrowed Time expires for 5 seconds, healing Abaddon.
 		"Ability11"					"special_bonus_imba_abaddon_6" //+50% Overchannel power
@@ -36,7 +36,6 @@
 		"override_hero"				"npc_dota_hero_alchemist"	
 		
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
@@ -44,7 +43,8 @@
 		"Ability2"					"imba_alchemist_unstable_concoction"
 		"Ability3"					"imba_alchemist_goblins_greed"		
 		"Ability4"					"imba_alchemist_mammonite"	
-		"Ability5"					"imba_alchemist_chemical_rage"			
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_alchemist_chemical_rage"
 
 		"Ability10"					"special_bonus_imba_alchemist_7" // Alchemist now gains 4x gold from bounty runes
 		"Ability11"					"special_bonus_imba_alchemist_1" // Sticky Acid slows by 15%
@@ -59,26 +59,6 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Ancient Apparition
-	//=================================================================================================================
-	"npc_dota_hero_ancient_apparition"
-	{
-		"override_hero"				"npc_dota_hero_ancient_apparition"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-
-		"Ability1"					"ancient_apparition_cold_feet"		
-		"Ability2"					"ancient_apparition_ice_vortex"		
-		"Ability3"					"ancient_apparition_chilling_touch"	
-		"Ability4"					"ancient_apparition_ice_blast"		
-		//"Ability5"					"ancient_apparition_ice_blast_release"
-
-		"ProjectileModel"			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_base_attack.vpcf"
-	}
-
-	//=================================================================================================================
 	// HERO: Antimage
 	//=================================================================================================================
 	"npc_dota_hero_antimage"
@@ -86,14 +66,14 @@
 		"override_hero"				"npc_dota_hero_antimage"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"imba_antimage_mana_break"
 		"Ability2"					"imba_antimage_blink"
 		"Ability3"					"imba_antimage_spell_shield"
-		"Ability4"					"imba_antimage_mana_void"		
+		"Ability4"					"generic_hidden"
+		"Ability6"					"imba_antimage_mana_void"
 
 		"Ability10"					"special_bonus_imba_antimage_3" //Blink cast point decrease
 		"Ability11"					"special_bonus_imba_antimage_7" //Mana Break attacks burn mana of nearby enemies in AoE, equal to a portion of the mana burned.
@@ -108,25 +88,6 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Arc Warden
-	//=================================================================================================================
-	"npc_dota_hero_arc_warden"
-	{
-		"override_hero"				"npc_dota_hero_arc_warden"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-
-		"Ability1"					"arc_warden_flux"
-		"Ability2"					"arc_warden_magnetic_field"
-		"Ability3"					"arc_warden_spark_wraith"
-		"Ability4"					"arc_warden_tempest_double"
-
-		"ProjectileModel"			"particles/units/heroes/hero_arc_warden/arc_warden_base_attack.vpcf"
-	}
-
-	//=================================================================================================================
 	// HERO: Axe
 	//=================================================================================================================
 	"npc_dota_hero_axe"
@@ -134,7 +95,6 @@
 		"override_hero"				"npc_dota_hero_axe"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
@@ -143,7 +103,8 @@
 		"Ability1"					"imba_axe_berserkers_call"
 		"Ability2"					"imba_axe_battle_hunger"
 		"Ability3"					"imba_axe_counter_helix"
-		"Ability4"					"imba_axe_culling_blade"		
+		"Ability4"					"generic_hidden"
+		"Ability6"					"imba_axe_culling_blade"
 
 		"Ability10"					"special_bonus_imba_axe_2" // +1 armor with every hit taken during Berserker's Call, lasts for 3 seconds after it ends.
 		"Ability11"					"special_bonus_imba_axe_7" // Counter Helix's damage is increased by 1 for each point of Armor Axe has.
@@ -165,7 +126,6 @@
 		"override_hero"				"npc_dota_hero_bane"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
@@ -175,7 +135,8 @@
 		"Ability2"					"imba_bane_brain_sap"
 		"Ability3"					"imba_bane_nightmare"
 		"Ability4"					"imba_bane_nightmare_end"
-		"Ability5"					"imba_bane_fiends_grip"		
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_bane_fiends_grip"
 
 		"Ability10"					"special_bonus_imba_bane_1" //Grants Enfeeble stacks when Nightmaring a target.
 		"Ability11"					"special_bonus_imba_bane_4" //Enfeeble causes the target to lose his stats. This effect increases for each Enfeeble stack it has.
@@ -197,7 +158,6 @@
 		"override_hero"				"npc_dota_hero_batrider"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
 		"AttackDamageMin"			"24"
@@ -208,7 +168,9 @@
 		"Ability1"					"batrider_sticky_napalm"
 		"Ability2"					"batrider_flamebreak"
 		"Ability3"					"batrider_firefly"
-		"Ability4"					"batrider_flaming_lasso"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"batrider_flaming_lasso"
 
 		"ProjectileModel"			"particles/units/heroes/hero_batrider/batrider_base_attack.vpcf"
 
@@ -288,22 +250,22 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Bestmaster
+	// HERO: Beastmaster
 	//=================================================================================================================
 	"npc_dota_hero_beastmaster"
 	{
 		"override_hero"				"npc_dota_hero_beastmaster"
-		"AttackRate"				"1.55"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		"IsDisabled"				"2"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
 
 		"Ability1"					"beastmaster_wild_axes"
-		"Ability2"					"imba_beastmaster_summon_hawk"
-		"Ability3"					"imba_beastmaster_summon_boar"
-		"Ability4"					"beastmaster_inner_beast"
-		"Ability5"					"beastmaster_primal_roar"
+		"Ability2"					"beastmaster_call_of_the_wild"
+		"Ability3"					"beastmaster_inner_beast"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"beastmaster_primal_roar"
 
 		"ProjectileSpeed"			"900"
 	}
@@ -316,14 +278,14 @@
 		"override_hero"				"npc_dota_hero_bloodseeker"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"imba_bloodseeker_bloodrage"
 		"Ability2"					"imba_bloodseeker_blood_bath"
 		"Ability3"					"imba_bloodseeker_thirst"
-		"Ability4"					"imba_bloodseeker_rupture"			
+		"Ability4"					"generic_hidden"
+		"Ability6"					"imba_bloodseeker_rupture"
 
 		"Ability10"					"special_bonus_imba_bloodseeker_1" //Blood Amp shift
 		"Ability11"					"special_bonus_imba_bloodseeker_6" //Rupture's distance cap increase
@@ -345,7 +307,6 @@
 		"override_hero"				"npc_dota_hero_bounty_hunter"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
@@ -355,7 +316,8 @@
 		"Ability2"			 		"imba_bounty_hunter_jinada"
 		"Ability3"					"imba_bounty_hunter_shadow_walk"
 		"Ability4"					"imba_bounty_hunter_headhunter"
-		"Ability5"					"imba_bounty_hunter_track"		
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_bounty_hunter_track"
 
 		"Ability10"					"special_bonus_imba_bounty_hunter_6" //While in Shadow Walk, as long as Bounty Hunter is moving, he gains bonus move speed
 		"Ability11"					"special_bonus_imba_bounty_hunter_3" //Jinada can now be cast on allies, granting them the ensured Jinada buff.
@@ -370,62 +332,22 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Brewmaster
+	// HERO: Beastmaster
 	//=================================================================================================================
 	"npc_dota_hero_brewmaster"
 	{
-		"override_hero"				"npc_dota_hero_brewmaster"	
+		"override_hero"				"npc_dota_hero_brewmaster"
 
 		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"		
-
-		"Ability1"					"brewmaster_thunder_clap"
-		"Ability2"			 		"brewmaster_drunken_haze"
-		"Ability3"					"brewmaster_drunken_brawler"
-		"Ability4"					"brewmaster_primal_split"		
-
-		"ProjectileSpeed"			"900"
-	}
-
-	//=================================================================================================================
-	// HERO: Bristleback
-	//=================================================================================================================
-	"npc_dota_hero_bristleback"
-	{
-		"override_hero"				"npc_dota_hero_bristleback"
-
-		//Picking Screen
-		"IsCustom"					"0"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
-		"ModelScale"				"0.84"
-
-		"Ability1"					"bristleback_viscous_nasal_goo"
-		"Ability2"					"bristleback_quill_spray"
-		"Ability3"					"bristleback_bristleback"
-		"Ability4"					"bristleback_warpath"
-
-		"ProjectileSpeed"			"900"
-	}
-
-	//=================================================================================================================
-	// HERO: Broodmother
-	//=================================================================================================================
-	"npc_dota_hero_broodmother"
-	{
-		"override_hero"				"npc_dota_hero_broodmother"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-
-		"ModelScale"				"1.0"
-
-		"Ability1"					"broodmother_spawn_spiderlings"
-		"Ability2"					"broodmother_spin_web"
-		"Ability3"					"broodmother_incapacitating_bite"
-		"Ability4"					"broodmother_insatiable_hunger"
+		"Ability1"					"brewmaster_thunder_clap"
+		"Ability2"					"brewmaster_drunken_haze"
+		"Ability3"					"brewmaster_drunken_brawler"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"brewmaster_primal_split"
+		"Ability16"					"generic_hidden" // Disable ult cdr
 
 		"ProjectileSpeed"			"900"
 	}
@@ -438,17 +360,15 @@
 		"override_hero"				"npc_dota_hero_centaur"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
  
-		"AbilityLayout"				"5"
-
 		"Ability1"					"imba_centaur_hoof_stomp"
 		"Ability2"					"imba_centaur_double_edge"
 		"Ability3"					"imba_centaur_return"
 		"Ability4"					"imba_centaur_thick_hide"
-		"Ability5"					"imba_centaur_stampede"		
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_centaur_stampede"
 
 		"Ability10"					"special_bonus_imba_centaur_1" //Double Edge self-damage reduction
 		"Ability11"					"special_bonus_imba_centaur_4" //Double edge damage in increased by x * strength
@@ -473,35 +393,16 @@
 		"AttackRange"				"200"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
 		"Ability1"					"chaos_knight_chaos_bolt"
 		"Ability2"					"imba_chaos_knight_reality_rift"
 		"Ability3"					"chaos_knight_chaos_strike"
-		"Ability4"					"imba_chaos_knight_phantasm"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_chaos_knight_phantasm"
 
 		"ProjectileSpeed"			"900"
-	}
-
-	//=================================================================================================================
-	//	HERO: Chen
-	//=================================================================================================================
-	"npc_dota_hero_chen"
-	{
-		"override_hero"				"npc_dota_hero_chen"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-
-		"Ability1"					"chen_penitence"
-		"Ability2"					"chen_test_of_faith"
-		"Ability3"					"chen_test_of_faith_teleport"
-		"Ability4"					"chen_holy_persuasion"
-		"Ability5"					"chen_hand_of_god"
-
-		"ProjectileModel"			"particles/units/heroes/hero_chen/chen_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -512,14 +413,15 @@
 		"override_hero"				"npc_dota_hero_clinkz"		
 		
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"imba_clinkz_strafe"
 		"Ability2"					"imba_clinkz_searing_arrows"
 		"Ability3"					"imba_clinkz_skeleton_walk"
-		"Ability4"					"imba_clinkz_death_pact"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_clinkz_death_pact"
 
 		"Ability10"					"special_bonus_imba_clinkz_6" //Skeleton Walk move speed persists for a small period
 		"Ability11"					"special_bonus_imba_clinkz_2" //Clinkz gains extra move speed when Skeleton Walking close to enemies
@@ -534,25 +436,6 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Clockwerk
-	//=================================================================================================================
-	"npc_dota_hero_rattletrap"
-	{
-		"override_hero"				"npc_dota_hero_rattletrap"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-
-		"Ability1"					"rattletrap_battery_assault"
-		"Ability2"					"rattletrap_power_cogs"
-		"Ability3"					"rattletrap_rocket_flare"
-		"Ability4"					"rattletrap_hookshot"
-
-		"ProjectileSpeed"			"900"
-	}
-
-	//=================================================================================================================
 	// HERO: Crystal Maiden
 	//=================================================================================================================
 	"npc_dota_hero_crystal_maiden"
@@ -560,7 +443,6 @@
 		"override_hero"				"npc_dota_hero_crystal_maiden"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 		
@@ -568,7 +450,8 @@
 		"Ability2"					"imba_crystal_maiden_frostbite"
 		"Ability3"					"imba_crystal_maiden_brilliance_aura"
 		"Ability4"					"imba_crystal_maiden_arcane_dynamo"
-		"Ability5"					"imba_crystal_maiden_freezing_field"		
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_crystal_maiden_freezing_field"
 
 		"Ability10"					"special_bonus_imba_crystal_maiden_2" //Frostbite can be cast on allies to regen health and mana and reduce damage taken
 		"Ability11"					"special_bonus_imba_crystal_maiden_5" //Enemies hit by Crystal Maiden's abilities gain a debuff that slows them by 15%/15 move/attack speed for 3 seconds
@@ -583,46 +466,6 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Dark Seer
-	//=================================================================================================================
-	"npc_dota_hero_dark_seer"
-	{
-		"override_hero"				"npc_dota_hero_dark_seer"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-
-		"Ability1"					"dark_seer_vacuum"
-		"Ability2"					"dark_seer_ion_shell"
-		"Ability3"					"dark_seer_surge"
-		"Ability4"					"dark_seer_wall_of_replica"
-
-		"ProjectileSpeed"			"900"
-	}
-
-	//=================================================================================================================
-	// HERO: Dark Willow
-	//=================================================================================================================
-	"npc_dota_hero_dark_willow"
-	{
-		"override_hero"				"npc_dota_hero_dark_willow"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"IsNew"						"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-
-		"Ability1"					"dark_willow_bramble_maze"
-		"Ability2"					"dark_willow_shadow_realm"
-		"Ability3"					"dark_willow_cursed_crown"
-		"Ability4"					"dark_willow_bedlam"
-		"Ability5"					"dark_willow_terrorize"
-
-		"ProjectileSpeed"			"900"
-	}
-
-	//=================================================================================================================
 	// HERO: Dazzle
 	//=================================================================================================================
 	"npc_dota_hero_dazzle"
@@ -630,7 +473,6 @@
 		"override_hero"				"npc_dota_hero_dazzle"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
@@ -638,7 +480,8 @@
 		"Ability2"					"imba_dazzle_shallow_grave"
 		"Ability3"					"imba_dazzle_shadow_wave"
 		"Ability4"                  "imba_dazzle_ressurection"
-		"Ability5"                  "imba_dazzle_weave"
+		"Ability5"                  "generic_hidden"
+		"Ability6"					"imba_dazzle_weave"
 
 		"Ability10"					"special_bonus_imba_dazzle_4" // Poison Touch slows the target after setting in appropriate to damage taken
 		"Ability11"					"special_bonus_imba_dazzle_5" // Enemies that interact with a poisoned touched teammate of their get poison touched as well
@@ -653,26 +496,6 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Death Prophet
-	//=================================================================================================================
-	"npc_dota_hero_death_prophet"
-	{
-		"override_hero"				"npc_dota_hero_death_prophet"
-		"ArmorPhysical"				"2"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-		
-		"Ability1"					"death_prophet_carrion_swarm"
-		"Ability2"					"death_prophet_silence"
-		"Ability3"					"death_prophet_spirit_siphon"
-		"Ability4"					"death_prophet_exorcism"
-
-		"ProjectileModel"			"particles/units/heroes/hero_death_prophet/death_prophet_base_attack.vpcf"
-	}
-
-	//=================================================================================================================
 	// HERO: Disruptor
 	//=================================================================================================================
 	"npc_dota_hero_disruptor"
@@ -680,7 +503,6 @@
 		"override_hero"				"npc_dota_hero_disruptor"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
@@ -690,7 +512,8 @@
 		"Ability2"					"imba_disruptor_glimpse"
 		"Ability3"					"imba_disruptor_kinetic_field"
 		"Ability4"					"imba_disruptor_stormbearer"
-		"Ability5"					"imba_disruptor_static_storm"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_disruptor_static_storm"
 
 		"Ability10"					"special_bonus_imba_disruptor_1"
 		"Ability11"					"special_bonus_imba_disruptor_2"
@@ -712,7 +535,6 @@
 		"override_hero"				"npc_dota_hero_doom_bringer"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
 		"ModelScale" 				"1.05"
@@ -730,25 +552,6 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Dragon Knight
-	//=================================================================================================================
-	"npc_dota_hero_dragon_knight"
-	{
-		"override_hero"				"npc_dota_hero_dragon_knight"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-
-		"Ability1"					"dragon_knight_breathe_fire"
-		"Ability2"					"dragon_knight_dragon_tail"
-		"Ability3"					"dragon_knight_dragon_blood"
-		"Ability4"					"dragon_knight_elder_dragon_form"
-
-		"ProjectileSpeed"			"900"
-	}
-
-	//=================================================================================================================
 	// HERO: Drow Ranger
 	//=================================================================================================================
 	"npc_dota_hero_drow_ranger"
@@ -756,7 +559,6 @@
 		"override_hero"				"npc_dota_hero_drow_ranger"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
@@ -768,7 +570,8 @@
 		"Ability2"					"imba_drow_ranger_gust"
 		"Ability3"					"imba_drow_ranger_trueshot"
 		"Ability4"					"imba_drow_ranger_deadeye"
-		"Ability5"					"imba_drow_ranger_marksmanship"		
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_drow_ranger_marksmanship"
 
 		"Ability10"					"special_bonus_imba_drow_ranger_7" //Deadeye becomes an aura
 		"Ability11"					"special_bonus_imba_drow_ranger_2" //Chance to kill creeps instantly
@@ -782,67 +585,52 @@
 		"ProjectileModel"			"particles/units/heroes/hero_drow/drow_base_attack.vpcf"
 	}
 
-	//=================================================================================================================
-	// HERO: Earthshaker
-	//=================================================================================================================
-	"npc_dota_hero_earthshaker"
-	{
-		"override_hero"				"npc_dota_hero_earthshaker"
-		"ModelScale"				".87"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-
-		"Ability1"					"earthshaker_fissure"
-		"Ability2"					"earthshaker_enchant_totem"
-		"Ability3"					"earthshaker_aftershock"
-		"Ability4"					"earthshaker_echo_slam"
-
-		"ProjectileSpeed"			"900"
-	}
-
-	//=================================================================================================================
-	// HERO: Earth Spirit
-	//=================================================================================================================
-	"npc_dota_hero_earth_spirit"
-	{
-		"override_hero"				"npc_dota_hero_earth_spirit"
-		"AttackRange"				"225"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-
-		"Ability1"					"earth_spirit_boulder_smash"
-		"Ability2"					"earth_spirit_rolling_boulder"
-		"Ability3"					"earth_spirit_geomagnetic_grip"
-		"Ability4"					"earth_spirit_stone_caller"
-		"Ability6"					"earth_spirit_magnetize"
-
-		"ProjectileSpeed"			"900"
-	}
-
-	//=================================================================================================================
-	// HERO: Elder Titan
-	//=================================================================================================================
-	"npc_dota_hero_elder_titan"
-	{
-		"override_hero"				"npc_dota_hero_elder_titan"
-		"AttackRange"				"200"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-
-		"Ability1"					"elder_titan_echo_stomp"
-		"Ability2"					"elder_titan_ancestral_spirit"
-		"Ability3"					"elder_titan_natural_order"
-		"Ability4"					"elder_titan_return_spirit"
-		"Ability5"					"elder_titan_earth_splitter"
-
-		"ProjectileSpeed"			"900"
-	}
+//		//=================================================================================================================
+//		// HERO: Elder Titan
+//		//=================================================================================================================
+//		"npc_dota_hero_elder_titan"
+//		{
+//			"override_hero"				"npc_dota_hero_elder_titan"
+//	
+//			//Picking Screen
+//			"IsImba"					"1"
+//			"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+//	
+//			"Ability1"					"imba_elder_titan_echo_stomp"
+//			"Ability2"					"imba_elder_titan_ancestral_spirit"
+//			"Ability3"					"imba_elder_titan_natural_order"
+//			"Ability4"					"generic_hidden"
+//			"Ability5"					"generic_hidden"
+//			"Ability6"					"generic_hidden"
+//			"Ability7"					"generic_hidden"
+//	
+//	//		"Ability2"					"elder_titan_ancestral_spirit"
+//	//		"Ability3"					"elder_titan_natural_order"
+//	//		"Ability4"					"generic_hidden"
+//	//		"Ability5"					"generic_hidden"
+//	//		"Ability6"					"elder_titan_earth_splitter"
+//	//		"Ability7"					"elder_titan_return_spirit"
+//	
+//			"Ability10"					"generic_hidden" // 
+//			"Ability11"					"generic_hidden" // 
+//			"Ability12"					"generic_hidden" // 
+//			"Ability13"					"generic_hidden" // 
+//			"Ability14"					"generic_hidden" // 
+//			"Ability15"					"generic_hidden" // 
+//			"Ability16"					"generic_hidden" // 
+//			"Ability17"					"generic_hidden" // 
+//	
+//	//		"Ability10"					"special_bonus_imba_elder_titan_1" // reduce echo stomp cast time
+//	//		"Ability11"					"special_bonus_imba_elder_titan_2" // reduce bonus armor (in addition to base armor)
+//	//		"Ability12"					"special_bonus_imba_elder_titan_3" // increase ancestral spirit movespeed
+//	//		"Ability13"					"special_bonus_imba_elder_titan_4" // natural order reduce both armor and magic resist on elder titan
+//	//		"Ability14"					"special_bonus_imba_elder_titan_7" // natural order reduce both armor and magic resist on the spirit
+//	//		"Ability15"					"special_bonus_imba_elder_titan_5" // astral spirit roots target hit
+//	//		"Ability16"					"special_bonus_imba_elder_titan_6" // 
+//	//		"Ability17"					"special_bonus_imba_elder_titan_8" // 
+//	
+//			"ProjectileSpeed"			"900"
+//		}
 
 	//=================================================================================================================
 	// HERO: Ember Spirit
@@ -850,40 +638,27 @@
 	"npc_dota_hero_ember_spirit"
 	{
 		"override_hero"				"npc_dota_hero_ember_spirit"
-		"AttackRate"				"1.6"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"ember_spirit_searing_chains"
 		"Ability2"					"ember_spirit_sleight_of_fist"
 		"Ability3"					"ember_spirit_flame_guard"
 		"Ability4"					"ember_spirit_activate_fire_remnant"
-		"Ability5"					"ember_spirit_fire_remnant"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"ember_spirit_fire_remnant"
+		"Ability10"					"special_bonus_attack_damage_20"
+		"Ability11"					"special_bonus_unique_ember_spirit_1"
+		"Ability12"					"special_bonus_unique_ember_spirit_3"
+		"Ability13"					"special_bonus_unique_ember_spirit_2"
+		"Ability14"					"special_bonus_spell_amplify_10"
+		"Ability15"					"special_bonus_truestrike"
+		"Ability16"					"special_bonus_unique_ember_spirit_4"
+		"Ability17"					"generic_hidden"
+//		"Ability17"					"special_bonus_unique_ember_spirit_5"
 
 		"ProjectileSpeed"			"900"
-	}
-
-	//=================================================================================================================
-	//	HERO: Enchantress
-	//=================================================================================================================
-	"npc_dota_hero_enchantress"
-	{
-		"override_hero"				"npc_dota_hero_enchantress"
-		"AttackRange"				"600"
-		"MovementSpeed"				"335"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-
-		"Ability1"					"enchantress_untouchable"
-		"Ability2"					"enchantress_enchant"
-		"Ability3"					"enchantress_natures_attendants"
-		"Ability4"					"enchantress_impetus"
-
-		"ProjectileModel"			"particles/units/heroes/hero_enchantress/enchantress_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -894,7 +669,6 @@
 		"override_hero"				"npc_dota_hero_enigma"		
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 		"IsDisabled"				"1"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
@@ -902,7 +676,9 @@
 		"Ability1"					"imba_enigma_malefice"
 		"Ability2"					"imba_enigma_demonic_conversion"
 		"Ability3"					"imba_enigma_midnight_pulse"
-		"Ability4"					"imba_enigma_black_hole"		
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_enigma_black_hole"
 
 		"Ability10"					"special_bonus_imba_enigma_1" // Each Singularity stack consumed now decreases Black Hole's cooldown by 2 seconds.
 		"Ability11"					"special_bonus_imba_enigma_2" // Malefice has an AoE Radius
@@ -924,7 +700,6 @@
 		"override_hero"				"npc_dota_hero_faceless_void"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
@@ -932,7 +707,8 @@
 		"Ability2"					"imba_faceless_void_time_dilation"
 		"Ability3"					"imba_faceless_void_time_lock"
 		"Ability4"					"imba_faceless_void_timelord"
-		"Ability5"					"imba_faceless_void_chronosphere"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_faceless_void_chronosphere"
 
 		"Ability10"					"special_bonus_imba_faceless_void_7" // Time Dilation no longer spends chronocharges to affect allies
 		"Ability11"					"special_bonus_imba_faceless_void_2" // Time Dilation grants bonus health and mana per charge spent on them
@@ -954,65 +730,15 @@
 		"override_hero"				"npc_dota_hero_gyrocopter"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"gyrocopter_rocket_barrage"
 		"Ability2"					"gyrocopter_homing_missile"
 		"Ability3"					"gyrocopter_flak_cannon"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
 		"Ability6"					"gyrocopter_call_down"
-
-		"ProjectileModel"			"particles/units/heroes/hero_gyrocopter/gyro_base_attack.vpcf"
-	}
-
-	//=================================================================================================================
-	// HERO: Huskar
-	//=================================================================================================================
-	"npc_dota_hero_huskar"
-	{
-		"override_hero"				"npc_dota_hero_huskar"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-
-		"Ability1"					"huskar_inner_vitality"
-		"Ability2"					"huskar_burning_spear"
-		"Ability3"					"huskar_berserkers_blood"
-		"Ability4"					"huskar_life_break"
-
-		"ProjectileModel"			"particles/units/heroes/hero_huskar/huskar_base_attack.vpcf"					
-	}
-
-	//=================================================================================================================
-	// HERO: Invoker
-	//=================================================================================================================
-	"npc_dota_hero_invoker"
-	{
-		"override_hero"				"npc_dota_hero_invoker"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-		
-		"Ability1"					"invoker_quas"
-		"Ability2"					"invoker_wex"
-		"Ability3"					"invoker_exort"
-		"Ability4"					"invoker_empty1"
-		"Ability5"					"invoker_empty2"
-		"Ability6"					"invoker_invoke"
-		//"Ability7"				"imba_invoker_cold_snap"
-		//"Ability8"				"imba_invoker_ghost_walk"
-		//"Ability9"				"imba_invoker_tornado"
-		//"Ability10"				"imba_invoker_emp"
-		//"Ability11"				"imba_invoker_alacrity"
-		//"Ability12"				"imba_invoker_chaos_meteor"
-		//"Ability13"				"imba_invoker_sun_strike"
-		//"Ability14"				"imba_invoker_forge_spirit"
-		//"Ability15"				"imba_invoker_ice_wall"
-		//"Ability16"				"imba_invoker_deafening_blast"
-
-		"ProjectileModel"			"particles/units/heroes/hero_invoker/invoker_base_attack.vpcf"
+		"Ability16"					"generic_hidden" // Disable ult cdr
 	}
 
 	//=================================================================================================================
@@ -1024,7 +750,6 @@
 		"AttackRange"				"500"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
@@ -1032,7 +757,8 @@
 		"Ability2"					"imba_jakiro_ice_breath"
 		"Ability3"					"imba_jakiro_ice_path"
 		"Ability4"					"imba_jakiro_liquid_fire"
-		"Ability5"					"imba_jakiro_macropyre"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_jakiro_macropyre"
 
 		"Ability10"					"special_bonus_imba_jakiro_1"
 		"Ability11"					"special_bonus_imba_jakiro_2"
@@ -1054,14 +780,15 @@
 		"override_hero"				"npc_dota_hero_juggernaut"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"imba_juggernaut_blade_fury"
 		"Ability2"					"imba_juggernaut_healing_ward"
 		"Ability3"					"imba_juggernaut_blade_dance"
-		"Ability4"					"imba_juggernaut_omni_slash"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_juggernaut_omni_slash"
 
 		"Ability10"					"special_bonus_imba_juggernaut_2" // Blade Fury slowly increases in size
 		"Ability11"					"special_bonus_imba_juggernaut_4" // Secret Blade strikes 3 times, once forward, twice from the sides
@@ -1076,32 +803,6 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Keeper of the Light
-	//=================================================================================================================
-	"npc_dota_hero_keeper_of_the_light"
-	{
-		"override_hero"				"npc_dota_hero_keeper_of_the_light"
-		"MovementSpeed"				"370"
-		"AttackDamageMin"			"28"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-
-		"Ability1"					"keeper_of_the_light_illuminate"
-		"Ability2"					"keeper_of_the_light_mana_leak"
-		"Ability3"					"keeper_of_the_light_chakra_magic"
-		"Ability4"					"keeper_of_the_light_recall"
-		"Ability5"					"keeper_of_the_light_blinding_light"
-		"Ability6"					"keeper_of_the_light_spirit_form"
-		//"Ability7"					"imba_keeper_of_the_light_illuminate_end"
-		//"Ability8"					"imba_keeper_of_the_light_spirit_form_illuminate"
-		//"Ability9"					"imba_keeper_of_the_light_spirit_form_illuminate_end"
-
-		"ProjectileModel"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_base_attack.vpcf"
-	}
-
-	//=================================================================================================================
 	// HERO: Kunkka
 	//=================================================================================================================
 	"npc_dota_hero_kunkka"
@@ -1110,7 +811,6 @@
 		"MovementTurnRate"			"5.0"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 		
@@ -1134,47 +834,6 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Legion Commander
-	//=================================================================================================================
-	"npc_dota_hero_legion_commander"
-	{
-		"override_hero"				"npc_dota_hero_legion_commander"
-		"AttackRange"				"225"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-		
-		"Ability1"				"legion_commander_overwhelming_odds"
-		"Ability2"				"legion_commander_press_the_attack"
-		"Ability3"				"legion_commander_moment_of_courage"
-		"Ability4"				"legion_commander_duel"
-
-		"ProjectileSpeed"			"900"
-	}
-
-	//=================================================================================================================
-	// HERO: Leshrac
-	//=================================================================================================================
-	"npc_dota_hero_leshrac"
-	{
-		"override_hero"				"npc_dota_hero_leshrac"
-		"AttackDamageMin"			"21"
-		"AttackDamageMax"			"25"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-
-		"Ability1"					"leshrac_split_earth"
-		"Ability2"					"leshrac_diabolic_edict"
-		"Ability3"					"leshrac_lightning_storm"
-		"Ability4"					"leshrac_pulse_nova"
-
-		"ProjectileModel"			"particles/units/heroes/hero_leshrac/leshrac_base_attack.vpcf"
-	}
-
-	//=================================================================================================================
 	// HERO: Lich
 	//=================================================================================================================
 	"npc_dota_hero_lich"
@@ -1182,7 +841,6 @@
 		"override_hero"				"npc_dota_hero_lich"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 		
@@ -1190,7 +848,8 @@
 		"Ability2"					"imba_lich_frost_armor"
 		"Ability3"					"imba_lich_dark_ritual"
 		"Ability4"					"imba_lich_cold_front"
-		"Ability5"					"imba_lich_chain_frost"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_lich_chain_frost"
 		
 		"Ability10"					"special_bonus_imba_lich_1" // Chain Frost bounces instantly after hitting a target
 		"Ability11"					"special_bonus_imba_lich_2" // Sacrifice can now be used on self, granting you and nearby allies the damage reduction buff.
@@ -1205,30 +864,6 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Lifestealer
-	//=================================================================================================================
-	"npc_dota_hero_life_stealer"
-	{
-		"override_hero"				"npc_dota_hero_life_stealer"
-		"AttributeAgilityGain"		"3.0"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-
-		"Ability1"				"life_stealer_rage"
-		"Ability2"				"life_stealer_feast"
-		"Ability3"				"life_stealer_open_wounds"
-		//"Ability4"				"life_stealer_assimilate"
-		//"Ability5"				"life_stealer_assimilate_eject"
-		"Ability6"				"life_stealer_infest"
-		//"Ability7"				"life_stealer_control"
-		//"Ability8"				"life_stealer_consume"
-
-		"ProjectileSpeed"			"900"
-	}
-
-	//=================================================================================================================
 	// HERO: Lina
 	//=================================================================================================================
 	"npc_dota_hero_lina"
@@ -1236,14 +871,15 @@
 		"override_hero"				"npc_dota_hero_lina"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 		
 		"Ability1"					"imba_lina_dragon_slave"
 		"Ability2"					"imba_lina_light_strike_array"
 		"Ability3"					"imba_lina_fiery_soul"
-		"Ability4"					"imba_lina_laguna_blade"		
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_lina_laguna_blade"
 
 		"Ability10"					"special_bonus_imba_lina_1" // Additional Dragon Slaves
 		"Ability11"					"special_bonus_imba_lina_3" // Reaching 3 Fiery Soul stacks allows Lina to unleash a blast of hot shockwave
@@ -1265,14 +901,15 @@
 		"override_hero"				"npc_dota_hero_lion"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
-		"Ability1"					"imba_lion_earth_spike"				
-		"Ability2"					"imba_lion_hex"				
-		"Ability3"					"imba_lion_mana_drain"			
-		"Ability4"					"imba_lion_finger_of_death"
+		"Ability1"					"imba_lion_earth_spike"
+		"Ability2"					"imba_lion_hex"
+		"Ability3"					"imba_lion_mana_drain"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_lion_finger_of_death"
 		
 		"Ability10"					"special_bonus_imba_lion_1"
 		"Ability11"					"special_bonus_imba_lion_2"
@@ -1287,47 +924,6 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Lone Druid
-	//=================================================================================================================
-	"npc_dota_hero_lone_druid"
-	{
-		"override_hero"				"npc_dota_hero_lone_druid"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-
-		"Ability1"					"lone_druid_spirit_bear"
-		"Ability2"					"lone_druid_rabid"
-		"Ability3"					"lone_druid_savage_roar"
-		"Ability4"					"lone_druid_true_form_battle_cry"
-		"Ability5"					"lone_druid_true_form"
-		"Ability6"					"lone_druid_true_form_druid"
-		
-		"ProjectileModel"			"particles/units/heroes/hero_lion/lion_base_attack.vpcf"
-	}
-
-	//=================================================================================================================
-	// HERO: Luna
-	//=================================================================================================================
-	"npc_dota_hero_luna"
-	{
-		"override_hero"				"npc_dota_hero_luna"
-		"AttributeAgilityGain"		"3.5"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-
-		"Ability1"					"luna_lucent_beam"
-		"Ability2"					"luna_moon_glaive"
-		"Ability3"					"luna_lunar_blessing"
-		"Ability4"					"luna_eclipse"
-
-		"ProjectileModel"			"particles/units/heroes/hero_luna/luna_base_attack.vpcf"
-	}
-
-	//=================================================================================================================
 	// HERO: Lycan
 	//=================================================================================================================
 	"npc_dota_hero_lycan"
@@ -1335,15 +931,15 @@
 		"override_hero"				"npc_dota_hero_lycan"	
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
 		"Ability1"					"imba_lycan_summon_wolves"
 		"Ability2"					"imba_lycan_howl"
 		"Ability3"					"imba_lycan_feral_impulse"
-		"Ability5"					"imba_lycan_shapeshift"
 		"Ability4"					"imba_lycan_wolfsbane"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_lycan_shapeshift"
 
 		"Ability10"					"special_bonus_imba_lycan_1"
 		"Ability11"					"special_bonus_imba_lycan_2"
@@ -1365,7 +961,6 @@
 		"override_hero"				"npc_dota_hero_magnataur"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 		"IsDisabled"				"1"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
@@ -1378,7 +973,9 @@
 		"Ability1"					"imba_magnataur_shockwave"
 		"Ability2"					"imba_magnataur_empower"
 		"Ability3"					"imba_magnataur_skewer"
-		"Ability4"					"imba_magnataur_reverse_polarity"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_magnataur_reverse_polarity"
 
 		"Ability10"					"special_bonus_imba_magnataur_1"
 		"Ability11"					"special_bonus_imba_magnataur_2"
@@ -1393,44 +990,6 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Medusa
-	//=================================================================================================================
-	"npc_dota_hero_medusa"
-	{
-		"override_hero"				"npc_dota_hero_medusa"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-
-		"Ability1"					"medusa_split_shot"	
-		"Ability2"					"medusa_mystic_snake"		
-		"Ability3"					"medusa_mana_shield"
-		"Ability4"					"medusa_stone_gaze"
-
-		"ProjectileModel"			"particles/units/heroes/hero_medusa/medusa_base_attack.vpcf"
-	}
-
-	//=================================================================================================================
-	// HERO: Meepo
-	//=================================================================================================================
-	"npc_dota_hero_meepo"
-	{
-		"override_hero"				"npc_dota_hero_meepo"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-
-		"Ability1"					"meepo_earthbind"
-		"Ability2"					"meepo_poof"
-		"Ability3"					"meepo_geostrike"
-		"Ability4"					"meepo_divided_we_stand"
-
-		"ProjectileSpeed"			"900"
-	}
-
-	//=================================================================================================================
 	// HERO: Mirana
 	//=================================================================================================================
 	"npc_dota_hero_mirana"
@@ -1438,14 +997,15 @@
 		"override_hero"				"npc_dota_hero_mirana"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"imba_mirana_starfall"
 		"Ability2"					"imba_mirana_arrow"
 		"Ability3"					"imba_mirana_leap"		
-		"Ability4"					"imba_mirana_moonlight_shadow"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_mirana_moonlight_shadow"
 
 		"Ability10"					"special_bonus_imba_mirana_3" // Moonlight Shadow grants bonus move speed to invisible allies.
 		"Ability11"					"special_bonus_imba_mirana_7" // Leap can now be cast without needing to turn. Makes Mirana invisible for the duration of the jump, causing her to dodge projectiles. 
@@ -1460,75 +1020,6 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Morphling
-	//=================================================================================================================
-	"npc_dota_hero_morphling"
-	{
-		"override_hero"				"npc_dota_hero_morphling"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-		"IsDisabled"				"2" // 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
-
-		"Ability1"					"morphling_waveform"
-		"Ability2"					"morphling_adaptive_strike_agi"
-		"Ability3"					"morphling_adaptive_strike_str"
-		"Ability4"					"morphling_morph_agi"
-		"Ability5"					"morphling_morph_str"
-		"Ability6"					"morphling_morph"
-//		"Ability7"					"rubick_hidden1"
-//		"Ability8"					"rubick_hidden2"
-//		"Ability9"					"morphling_replicate"
-//		"Ability10"					"morphling_morph_replicate"
-
-		"ProjectileModel"			"particles/units/heroes/hero_morphling/morphling_base_attack.vpcf"
-	}
-
-	//=================================================================================================================
-	// HERO: Monkey King
-	//=================================================================================================================
-	"npc_dota_hero_monkey_king"
-	{
-		"override_hero"				"npc_dota_hero_monkey_king"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-
-		"Ability1"					"monkey_king_boundless_strike"
-		"Ability2"					"monkey_king_tree_dance"
-		"Ability3"					"monkey_king_primal_spring"
-		//"Ability4"					"monkey_king_primal_spring_early"
-		"Ability5"					"monkey_king_jingu_mastery"
-		"Ability6"					"monkey_king_mischief"
-		//"Ability7"					"monkey_king_untransform"
-		"Ability8"					"monkey_king_wukongs_command"
-
-		"ProjectileSpeed"			"900"
-	}
-
-	//=================================================================================================================
-	// HERO: Naga Siren
-	//=================================================================================================================
-	"npc_dota_hero_naga_siren"
-	{
-		"override_hero"				"npc_dota_hero_naga_siren"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-
-		"Ability1"					"naga_siren_mirror_image"
-		"Ability2"					"naga_siren_ensnare"
-		"Ability3"					"naga_siren_rip_tide"
-		"Ability4"					"naga_siren_song_of_the_siren"
-		//"Ability5"				"naga_siren_song_of_the_siren_cancel"
-
-		"ProjectileSpeed"			"900"
-	}
-
-	//=================================================================================================================
 	// HERO: Nature's Prophet
 	//=================================================================================================================
 	"npc_dota_hero_furion"
@@ -1536,7 +1027,6 @@
 		"override_hero"				"npc_dota_hero_furion"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 		"IsDisabled"				"1"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
 
@@ -1547,7 +1037,9 @@
 		"Ability1"					"furion_sprout"
 		"Ability2"					"furion_teleportation"
 		"Ability3"					"furion_force_of_nature"
-		"Ability4"					"furion_wrath_of_nature"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"furion_wrath_of_nature"
 
 		"ProjectileModel"			"particles/units/heroes/hero_furion/furion_base_attack.vpcf"
 	}
@@ -1560,7 +1052,6 @@
 		"override_hero"				"npc_dota_hero_necrolyte"		
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
@@ -1568,7 +1059,8 @@
 		"Ability2"					"imba_necrolyte_ghost_shroud"
 		"Ability3"					"imba_necrolyte_heartstopper_aura"
 		"Ability4"					"imba_necrolyte_sadist"
-		"Ability5"					"imba_necrolyte_reapers_scythe"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_necrolyte_reapers_scythe"
 
 		"Ability10"					"special_bonus_imba_necrolyte_1"
 		"Ability11"					"special_bonus_imba_necrolyte_5"
@@ -1593,7 +1085,6 @@
 		"VisionNighttimeRange"      "800"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
@@ -1601,7 +1092,8 @@
 		"Ability2"					"imba_night_stalker_crippling_fear"
 		"Ability3"					"imba_night_stalker_hunter_in_the_night"
 		"Ability4"					"imba_night_stalker_stalker_in_the_night"		
-		"Ability5"					"imba_night_stalker_darkness"		
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_night_stalker_darkness"
 
 		"Ability10"					"special_bonus_imba_night_stalker_1"
 		"Ability11"					"special_bonus_imba_night_stalker_2"
@@ -1620,11 +1112,9 @@
 	//=================================================================================================================
 	"npc_dota_hero_nyx_assassin"
 	{
-		"IsCustom"					"0"
 		"override_hero"				"npc_dota_hero_nyx_assassin"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
@@ -1648,47 +1138,6 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Ogre McGee
-	//=================================================================================================================
-	"npc_dota_hero_ogre_magi"
-	{
-		"override_hero"				"npc_dota_hero_ogre_magi"
-		"ArmorPhysical"				"9.0"
-		"AttributeBaseIntelligence"	"22"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-
-		"Ability1"					"ogre_magi_fireblast"
-		"Ability2"					"ogre_magi_ignite"
-		"Ability3"					"ogre_magi_bloodlust"
-		//"Ability4"					"ogre_magi_unrefined_fireblast"
-		"Ability5"					"ogre_magi_multicast"
-
-		"ProjectileSpeed"			"900"
-	}
-
-	//=================================================================================================================
-	// HERO: Oracle
-	//=================================================================================================================
-	"npc_dota_hero_oracle"
-	{
-		"override_hero"				"npc_dota_hero_oracle"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-
-		"Ability1"					"oracle_fortunes_end"
-		"Ability2"					"oracle_fates_edict"
-		"Ability3"					"oracle_purifying_flames"
-		"Ability4"					"oracle_false_promise"
-
-		"ProjectileModel"			"particles/units/heroes/hero_oracle/oracle_base_attack.vpcf"
-	}
-
-	//=================================================================================================================
 	// HERO: Outworld Devourer
 	//=================================================================================================================
 	"npc_dota_hero_obsidian_destroyer"
@@ -1696,14 +1145,15 @@
 		"override_hero"				"npc_dota_hero_obsidian_destroyer"		
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
 		"Ability1"					"imba_obsidian_destroyer_arcane_orb"
 		"Ability2"					"imba_obsidian_destroyer_astral_imprisonment"
 		"Ability3"					"imba_obsidian_destroyer_essence_aura"
-		"Ability4"					"imba_obsidian_destroyer_sanity_eclipse"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_obsidian_destroyer_sanity_eclipse"
 
 		"Ability10"					"special_bonus_imba_obsidian_destroyer_1"
 		"Ability11"					"special_bonus_imba_obsidian_destroyer_2"
@@ -1725,7 +1175,6 @@
 		"override_hero"				"npc_dota_hero_omniknight"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
@@ -1733,6 +1182,7 @@
 		"Ability2"					"imba_omniknight_repel"
 		"Ability3"					"imba_omniknight_hammer_of_virtue"
 		"Ability4"					"imba_omniknight_guardian_angel"
+		"Ability6"					"generic_hidden"
 
 		"Ability10"					"special_bonus_imba_omniknight_1"
 		"Ability11"					"special_bonus_imba_omniknight_2"
@@ -1747,29 +1197,6 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Pangolier
-	//=================================================================================================================
-	"npc_dota_hero_pangolier"
-	{
-		"override_hero"				"npc_dota_hero_pangolier"
-		"AttackRate"				"1.5"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"IsNew"						"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-
-		"Ability1"					"pangolier_swashbuckle"
-		"Ability2"					"pangolier_shield_crash"
-		"Ability3"					"pangolier_heartpiercer"
-		"Ability4"					"pangolier_gyroshell"
-//		"Ability5"					"pangolier_gyroshell_stop"
-
-		"ProjectileSpeed"			"900"
-	}
-
-
-	//=================================================================================================================
 	// HERO: Phantom Assassin
 	//=================================================================================================================
 	"npc_dota_hero_phantom_assassin"
@@ -1778,14 +1205,15 @@
 		"AttackRate"				"1.5"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"imba_phantom_assassin_stifling_dagger"
 		"Ability2"					"imba_phantom_assassin_phantom_strike"
 		"Ability3"					"imba_phantom_assassin_blur"
-		"Ability4"					"imba_phantom_assassin_coup_de_grace"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_phantom_assassin_coup_de_grace"
 
 		"Ability10"					"special_bonus_imba_phantom_assassin_1"
 		"Ability11"					"special_bonus_imba_phantom_assassin_2"
@@ -1805,20 +1233,17 @@
 	"npc_dota_hero_phantom_lancer"
 	{
 		"override_hero"				"npc_dota_hero_phantom_lancer"
-		"IsDisabled"				"1"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
-		"AttributeAgilityGain"		"3.5"
-		"AttackRange"				"225"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
+		"IsDisabled"				"1"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
 
 		"Ability1"					"phantom_lancer_spirit_lance"
 		"Ability2"					"phantom_lancer_doppelwalk"
 		"Ability3"					"phantom_lancer_phantom_edge"
-		"Ability4"					"phantom_lancer_juxtapose"
-
-		"ProjectileSpeed"			"900"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"phantom_lancer_juxtapose"
 	}
 
 	//=================================================================================================================
@@ -1829,7 +1254,6 @@
 		"override_hero"				"npc_dota_hero_phoenix"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
@@ -1856,26 +1280,6 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Puck
-	//=================================================================================================================
-	"npc_dota_hero_puck"
-	{
-		"override_hero"				"npc_dota_hero_puck"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-
-		"Ability1"					"puck_illusory_orb"
-		"Ability2"					"puck_waning_rift"
-		"Ability3"					"puck_phase_shift"
-		//"Ability4"				"puck_ethereal_jaunt"
-		"Ability5"					"puck_dream_coil"
-
-		"ProjectileModel"			"particles/units/heroes/hero_puck/puck_base_attack.vpcf"
-	}
-
-	//=================================================================================================================
 	// HERO: Pudge
 	//=================================================================================================================
 	"npc_dota_hero_pudge"
@@ -1884,7 +1288,6 @@
 		"AttackRange"				"200"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
@@ -1892,8 +1295,8 @@
 		"Ability2"					"imba_pudge_rot"
 		"Ability3"					"imba_pudge_butchers_cleaver"
 		"Ability4"					"imba_pudge_flesh_heap"
-		"Ability5"					"imba_pudge_dismember"
-		"Ability6"					""		
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_pudge_dismember"		
 
 		"Ability10"					"special_bonus_imba_pudge_2" // Meat Shield: Consume X stacks of charges to block Y damage, restores after Z seconds, Ignore on A damage?
 		"Ability11"					"special_bonus_imba_pudge_6" // Hook now deals damage for each tree the unit passes through
@@ -1915,7 +1318,6 @@
 		"override_hero"				"npc_dota_hero_pugna"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
@@ -1923,7 +1325,8 @@
 		"Ability2"					"imba_pugna_decrepify"
 		"Ability3"					"imba_pugna_nether_ward"
 		"Ability4"					"imba_pugna_life_drain_end"
-		"Ability5"					"imba_pugna_life_drain"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_pugna_life_drain"
 		
 		"Ability10"					"special_bonus_imba_pugna_1"		//Life Drain cannot be broken by distance for the first 4 seconds of Life Drain.			
 		"Ability11"					"special_bonus_imba_pugna_2"		//Whenever Nether Ward zaps a target, it becomes briefly decrepified for 1 second. This occurs before zap damage is applied.	
@@ -1945,7 +1348,6 @@
 		"override_hero"				"npc_dota_hero_queenofpain"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
@@ -1953,7 +1355,8 @@
 		"Ability2"					"imba_queenofpain_blink"
 		"Ability3"					"imba_queenofpain_scream_of_pain"
 		"Ability4"					"imba_queenofpain_delightful_torment"
-		"Ability5"					"imba_queenofpain_sonic_wave"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_queenofpain_sonic_wave"
 
 		"Ability10"					"special_bonus_imba_queenofpain_1"
 		"Ability11"					"special_bonus_imba_queenofpain_2"
@@ -1968,25 +1371,6 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Razor
-	//=================================================================================================================
-	"npc_dota_hero_razor"
-	{
-		"override_hero"				"npc_dota_hero_razor"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-
-		"Ability1"					"razor_plasma_field"
-		"Ability2"					"razor_static_link"
-		"Ability3"					"razor_unstable_current"
-		"Ability4"					"razor_eye_of_the_storm"
-
-		"ProjectileModel"			"particles/units/heroes/hero_razor/razor_base_attack.vpcf"
-	}
-
-	//=================================================================================================================
 	// HERO: Riki
 	//=================================================================================================================
 	"npc_dota_hero_riki"
@@ -1994,14 +1378,15 @@
 		"override_hero"				"npc_dota_hero_riki"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"imba_riki_smoke_screen"
 		"Ability2"					"imba_riki_blink_strike"
 		"Ability3"					"imba_riki_cloak_and_dagger"
-		"Ability4"					"imba_riki_tricks_of_the_trade"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_riki_tricks_of_the_trade"
 
 		"Ability10"					"special_bonus_imba_riki_1"
 		"Ability11"					"special_bonus_imba_riki_4"
@@ -2023,16 +1408,15 @@
 		"override_hero"				"npc_dota_hero_rubick"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
 		"Ability1"					"rubick_telekinesis"
-		"Ability2"					"rubick_telekinesis_land"
-		"Ability3"					"rubick_fade_bolt"
-		"Ability4"					"rubick_null_field"
-		"Ability5"					"rubick_empty1"
-		"Ability6"					"rubick_empty2"
-		"Ability7"					"rubick_spell_steal"
+		"Ability2"					"rubick_fade_bolt"
+		"Ability3"					"rubick_null_field"
+		"Ability4"					"rubick_empty1"
+		"Ability5"					"rubick_empty2"
+		"Ability6"					"rubick_spell_steal"
+		"Ability7"					"rubick_telekinesis_land"
 		"Ability8"					"rubick_hidden1"
 		"Ability9"					"rubick_hidden2"
 		"Ability10"					"rubick_hidden3"
@@ -2050,14 +1434,15 @@
 		"override_hero"				"npc_dota_hero_sand_king"	
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
 		"Ability1"					"imba_sandking_burrowstrike"
 		"Ability2"					"imba_sandking_sand_storm"
 		"Ability3"					"imba_sandking_caustic_finale"		
-		"Ability4"					"imba_sandking_epicenter"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_sandking_epicenter"
 
 		"Ability10"					"special_bonus_imba_sand_king_1"
 		"Ability11"					"special_bonus_imba_sand_king_2"
@@ -2072,26 +1457,6 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Shadow Demon
-	//=================================================================================================================
-	"npc_dota_hero_shadow_demon"
-	{
-		"override_hero"				"npc_dota_hero_shadow_demon"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-
-		"Ability1"					"shadow_demon_disruption"
-		"Ability2"					"shadow_demon_soul_catcher"
-		"Ability3"					"shadow_demon_shadow_poison"
-		"Ability4"					"shadow_demon_shadow_poison_release"
-		"Ability5"					"shadow_demon_demonic_purge"
-
-		"ProjectileModel"			"particles/units/heroes/hero_shadow_demon/shadow_demon_base_attack.vpcf"
-	}
-
-	//=================================================================================================================
 	// HERO: Shadow Fiend
 	//=================================================================================================================
 	"npc_dota_hero_nevermore"
@@ -2099,7 +1464,6 @@
 		"override_hero"				"npc_dota_hero_nevermore"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 	
@@ -2130,13 +1494,14 @@
 		"override_hero"				"npc_dota_hero_shadow_shaman"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
 		"Ability1"					"shadow_shaman_ether_shock"
 		"Ability2"					"shadow_shaman_voodoo"
 		"Ability3"					"shadow_shaman_shackles"
-		"Ability4"					"imba_shadow_shaman_mass_serpent_ward"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_shadow_shaman_mass_serpent_ward"
 
 		"ProjectileModel"			"particles/units/heroes/hero_shadowshaman/shadowshaman_base_attack.vpcf"
 	}
@@ -2149,7 +1514,6 @@
 		"override_hero"				"npc_dota_hero_silencer"		
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 		"IsDisabled"				"1"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
@@ -2158,7 +1522,8 @@
 		"Ability2"					"imba_silencer_glaives_of_wisdom"
 		"Ability3"					"imba_silencer_last_word"
 		"Ability4"					"imba_silencer_arcane_supremacy"
-		"Ability5"					"imba_silencer_global_silence"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_silencer_global_silence"
 		
 		"Ability10"					"special_bonus_imba_silencer_1"
 		"Ability11"					"special_bonus_imba_silencer_2"
@@ -2180,7 +1545,6 @@
 		"override_hero"				"npc_dota_hero_skeleton_king"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
@@ -2188,7 +1552,8 @@
 		"Ability2"					"imba_wraith_king_vampiric_aura"
 		"Ability3"					"imba_wraith_king_mortal_strike"
 		"Ability4"					"imba_wraith_king_kingdom_come"
-		"Ability5"					"imba_wraith_king_reincarnation"		
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_wraith_king_reincarnation"
 
 		"Ability10"					"special_bonus_imba_skeleton_king_1"
 		"Ability11"					"special_bonus_imba_skeleton_king_2"
@@ -2210,14 +1575,15 @@
 		"override_hero"				"npc_dota_hero_skywrath_mage"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
 		"Ability1"					"imba_skywrath_mage_arcane_bolt"
 		"Ability2"					"imba_skywrath_mage_concussive_shot"
 		"Ability3"					"imba_skywrath_mage_ancient_seal"
-		"Ability4"					"imba_skywrath_mage_mystic_flare"		
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_skywrath_mage_mystic_flare"
 
 		"Ability10"					"special_bonus_imba_skywrath_mage_1"
 		"Ability11"					"special_bonus_imba_skywrath_mage_2"
@@ -2239,7 +1605,6 @@
 		"override_hero"				"npc_dota_hero_slardar"		
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
@@ -2247,7 +1612,8 @@
 		"Ability2"					"imba_slardar_slithereen_crush"
 		"Ability3"					"imba_slardar_bash_of_the_deep"
 		"Ability4"					"imba_slardar_rain_cloud"
-		"Ability5"					"imba_slardar_corrosive_haze"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_slardar_corrosive_haze"
 		
 		"Ability10"					"special_bonus_imba_slardar_1"
 		"Ability11"					"special_bonus_imba_slardar_2"
@@ -2262,26 +1628,6 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Slark
-	//=================================================================================================================
-	"npc_dota_hero_slark"
-	{
-		"override_hero"				"npc_dota_hero_slark"
-		"AttackRate"				"1.6"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-
-		"Ability1"					"slark_dark_pact"
-		"Ability2"					"slark_pounce"
-		"Ability3"					"slark_essence_shift"
-		"Ability4"					"slark_shadow_dance"
-
-		"ProjectileSpeed"			"900"
-	}
-
-	//=================================================================================================================
 	// HERO: Sniper
 	//=================================================================================================================
 	"npc_dota_hero_sniper"
@@ -2289,14 +1635,15 @@
 		"override_hero"				"npc_dota_hero_sniper"		
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"imba_sniper_shrapnel"
 		"Ability2"					"imba_sniper_headshot"
 		"Ability3"					"imba_sniper_take_aim"		
-		"Ability4"					"imba_sniper_assassinate"		
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_sniper_assassinate"
 
 		"Ability10"					"special_bonus_imba_sniper_1"
 		"Ability11"					"special_bonus_imba_sniper_2"
@@ -2318,7 +1665,6 @@
 		"override_hero"				"npc_dota_hero_spectre"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 		"IsDisabled"				"1"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
 
@@ -2326,27 +1672,8 @@
 		"Ability2"					"spectre_desolate"
 		"Ability3"					"spectre_dispersion"
 		"Ability4"					"imba_spectre_reality"
-		"Ability5"					"imba_spectre_haunt"
-
-		"ProjectileSpeed"			"900"
-	}
-
-	//=================================================================================================================
-	// HERO: Spirit Breaker
-	//=================================================================================================================
-	"npc_dota_hero_spirit_breaker"
-	{
-		"override_hero"				"npc_dota_hero_spirit_breaker"
-		"ModelScale"				"0.89"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-
-		"Ability1"					"spirit_breaker_charge_of_darkness"
-		"Ability2"					"spirit_breaker_empowering_haste"
-		"Ability3"					"spirit_breaker_greater_bash"
-		"Ability4"					"spirit_breaker_nether_strike"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_spectre_haunt"
 
 		"ProjectileSpeed"			"900"
 	}
@@ -2359,14 +1686,15 @@
 		"override_hero"				"npc_dota_hero_storm_spirit"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
 		"Ability1"					"imba_storm_spirit_static_remnant"
 		"Ability2"					"imba_storm_spirit_electric_vortex"
 		"Ability3"					"imba_storm_spirit_overload"
-		"Ability4"					"imba_storm_spirit_ball_lightning"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_storm_spirit_ball_lightning"
 
 		"ProjectileModel"			"particles/units/heroes/hero_stormspirit/stormspirit_base_attack.vpcf"
 	}
@@ -2379,7 +1707,6 @@
 		"override_hero"				"npc_dota_hero_sven"		
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
@@ -2387,7 +1714,8 @@
 		"Ability2"					"imba_sven_great_cleave"
 		"Ability3"					"imba_sven_warcry"
 		"Ability4"					"imba_sven_colossal_slash"
-		"Ability5"					"imba_sven_gods_strength"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_sven_gods_strength"
 
 		"Ability10"					"special_bonus_imba_sven_1"
 		"Ability11"					"special_bonus_imba_sven_2"
@@ -2409,10 +1737,9 @@
 		"override_hero"				"npc_dota_hero_techies"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-		"IsDisabled"				"2"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.	
+		"IsDisabled"				"2"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
 
 		"Ability1"					"imba_techies_proximity_mine"
 		"Ability2"					"imba_techies_stasis_trap"
@@ -2434,45 +1761,6 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Templar Assassin
-	//=================================================================================================================
-	"npc_dota_hero_templar_assassin"
-	{
-		"override_hero"				"npc_dota_hero_templar_assassin"
-		"AttackRange"				"200"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-
-		"Ability1"					"templar_assassin_refraction"
-		"Ability2"					"templar_assassin_meld"
-		"Ability3"					"templar_assassin_psi_blades"
-		"Ability4"					"templar_assassin_trap"
-		"Ability5"					"templar_assassin_psionic_trap"
-
-		"ProjectileModel"			"particles/units/heroes/hero_templar_assassin/templar_assassin_base_attack.vpcf"
-	}
-
-	//=================================================================================================================
-	// HERO: Terrorblade
-	//=================================================================================================================
-	"npc_dota_hero_terrorblade"
-	{
-		"override_hero"				"npc_dota_hero_terrorblade"
-		"ArmorPhysical"				"9"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-
-		"Ability1"					"terrorblade_reflection"
-		"Ability2"					"terrorblade_conjure_image"
-		"Ability3"					"terrorblade_metamorphosis"
-		"Ability4"					"terrorblade_sunder"
-	}
-
-	//=================================================================================================================
 	// HERO: Tidehunter
 	//=================================================================================================================
 	"npc_dota_hero_tidehunter"
@@ -2483,13 +1771,14 @@
 		"AttackRange"				"200"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
 		"Ability1"					"tidehunter_gush"
 		"Ability2"					"tidehunter_kraken_shell"
 		"Ability3"					"tidehunter_anchor_smash"
-		"Ability4"					"imba_tidehunter_ravage"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_tidehunter_ravage"
 
 		"ProjectileSpeed"			"900"
 	}
@@ -2502,7 +1791,6 @@
 		"override_hero"				"npc_dota_hero_tinker"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 		"IsDisabled"				"2"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
@@ -2511,7 +1799,8 @@
 		"Ability2"					"imba_tinker_heat_seeking_missile"
 		"Ability3"					"imba_tinker_march_of_the_machines"
 		"Ability4"					"imba_tinker_technomancy"
-		"Ability5"					"imba_tinker_rearm"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_tinker_rearm"
 
 		"Ability10"					"special_bonus_imba_tinker_1"
 		"Ability11"					"special_bonus_imba_tinker_2"
@@ -2526,28 +1815,6 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Timbersaw
-	//=================================================================================================================
-	"npc_dota_hero_shredder"
-	{
-		"override_hero"				"npc_dota_hero_shredder"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-
-		"Ability1"					"shredder_whirling_death"
-		"Ability2"					"shredder_timber_chain"
-		"Ability3"					"shredder_reactive_armor"
-		//"Ability4"					"shredder_chakram_2"
-		//"Ability5"					"shredder_return_chakram_2"
-		"Ability6"					"shredder_chakram"
-		//"Ability7"					"shredder_return_chakram"
-
-		"ProjectileSpeed"			"900"
-	}
-
-	//=================================================================================================================
 	// HERO: Tiny
 	//=================================================================================================================
 	"npc_dota_hero_tiny"
@@ -2555,48 +1822,24 @@
 		"override_hero"				"npc_dota_hero_tiny"		
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
-		"Ability1"			"imba_tiny_avalanche"
-		"Ability2"			"imba_tiny_toss"
-		"Ability3"			"imba_tiny_craggy_exterior"
-		"Ability4"			"imba_tiny_rolling_stone"
-		"Ability5"			"imba_tiny_grow"
+		"Ability1"					"imba_tiny_avalanche"
+		"Ability2"					"imba_tiny_toss"
+		"Ability3"					"imba_tiny_craggy_exterior"
+		"Ability4"					"imba_tiny_rolling_stone"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_tiny_grow"
 
-		"Ability10"			"special_bonus_imba_tiny_1"
-		"Ability11"			"special_bonus_imba_tiny_2"
-		"Ability12"			"special_bonus_imba_tiny_3"
-		"Ability13"			"special_bonus_imba_tiny_4"
-		"Ability14"			"special_bonus_imba_tiny_5"
-		"Ability15"			"special_bonus_imba_tiny_6"
-		"Ability16"			"special_bonus_imba_tiny_7"
-		"Ability17"			"special_bonus_imba_tiny_8"
-
-		"ProjectileSpeed"			"900"
-	}
-
-	//=================================================================================================================
-	// HERO: Treant
-	//=================================================================================================================
-	"npc_dota_hero_treant"
-	{
-		"override_hero"				"npc_dota_hero_treant"
-		"ModelScale"				"0.92"
-		"AttackDamageMin"			"92"
-		"AttackDamageMax"			"100"
-		"AttackRange"				"200"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-
-		"Ability1"					"treant_natures_guise"
-		"Ability2"					"treant_leech_seed"
-		"Ability3"					"treant_living_armor"
-//		"Ability4"					"treant_eyes_in_the_forest"
-		"Ability5"					"treant_overgrowth"
+		"Ability10"					"special_bonus_imba_tiny_1"
+		"Ability11"					"special_bonus_imba_tiny_2"
+		"Ability12"					"special_bonus_imba_tiny_3"
+		"Ability13"					"special_bonus_imba_tiny_4"
+		"Ability14"					"special_bonus_imba_tiny_5"
+		"Ability15"					"special_bonus_imba_tiny_6"
+		"Ability16"					"special_bonus_imba_tiny_7"
+		"Ability17"					"special_bonus_imba_tiny_8"
 
 		"ProjectileSpeed"			"900"
 	}
@@ -2609,15 +1852,15 @@
 		"override_hero"				"npc_dota_hero_troll_warlord"		
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"imba_troll_warlord_berserkers_rage"
-		"Ability2"					"imba_troll_warlord_whirling_axes_melee"
-		"Ability3"					"imba_troll_warlord_whirling_axes_ranged"
-		"Ability4"					"imba_troll_warlord_fervor"
-		"Ability5"					"imba_troll_warlord_battle_trance"
+		"Ability2"					"imba_troll_warlord_whirling_axes_ranged"
+		"Ability3"					"imba_troll_warlord_fervor"
+		"Ability4"					"imba_troll_warlord_whirling_axes_melee"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_troll_warlord_battle_trance"
 
 		"Ability10"					"special_bonus_imba_troll_warlord_1"
 		"Ability11"					"special_bonus_imba_troll_warlord_2"
@@ -2632,49 +1875,6 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Tusk
-	//=================================================================================================================
-	"npc_dota_hero_tusk"
-	{
-		"override_hero"				"npc_dota_hero_tusk"
-		"ModelScale"				"0.96"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-
-		"Ability1"					"tusk_ice_shards"
-		"Ability2"					"tusk_snowball"
-		"Ability3"					"tusk_frozen_sigil"
-		//"Ability4"					"tusk_launch_snowball"
-		//"Ability5"					"tusk_walrus_kick"
-		"Ability6"					"tusk_walrus_punch"
-
-		"ProjectileSpeed"			"900"
-	}
-
-	//=================================================================================================================
-	// HERO: Underlord
-	//=================================================================================================================
-	"npc_dota_hero_abyssal_underlord"
-	{
-		"override_hero"				"npc_dota_hero_abyssal_underlord"
-		"AttributeIntelligenceGain"	"3.0"
-		"AttackRange"				"225"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-
-		"Ability1"					"abyssal_underlord_firestorm"
-		"Ability2"					"abyssal_underlord_pit_of_malice"
-		"Ability3"					"abyssal_underlord_atrophy_aura"
-		"Ability4"					"abyssal_underlord_dark_rift"
-
-		"ProjectileSpeed"			"900"
-	}
-
-	//=================================================================================================================
 	// HERO: Undying
 	//=================================================================================================================
 	"npc_dota_hero_undying"
@@ -2684,14 +1884,15 @@
 		"AttributeAgilityGain"		"2.0"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 		"IsDisabled"				"1"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
 
 		"Ability1"					"undying_decay"
 		"Ability2"					"undying_soul_rip"
 		"Ability3"					"undying_tombstone"
-		"Ability4"					"undying_flesh_golem"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"undying_flesh_golem"
 
 		"ProjectileSpeed"			"900"
 	}
@@ -2704,7 +1905,6 @@
 		"override_hero"				"npc_dota_hero_ursa"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
@@ -2712,8 +1912,8 @@
 		"Ability2"					"imba_ursa_overpower"
 		"Ability3"					"imba_ursa_fury_swipes"
 		"Ability4"					"imba_ursa_territorial_hunter"
-		"Ability5"					"imba_ursa_enrage"
-		"Ability6"					""
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_ursa_enrage"
 
 		"Ability10"					"special_bonus_imba_ursa_1" // Enrage is activated automatically after taking enough damage. Resets after a few seconds
 		"Ability11"					"special_bonus_imba_ursa_2" // Every x points in Strength improves the cooldown of Earthshock's Trembling Steps cooldown.
@@ -2728,25 +1928,6 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Viper
-	//=================================================================================================================
-	"npc_dota_hero_viper"
-	{
-		"override_hero"				"npc_dota_hero_viper"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-
-		"Ability1"					"viper_poison_attack"
-		"Ability2"					"viper_nethertoxin"
-		"Ability3"					"viper_corrosive_skin"
-		"Ability4"					"viper_viper_strike"
-
-		"ProjectileModel"			"particles/units/heroes/hero_viper/viper_base_attack.vpcf"
-	}
-
-	//=================================================================================================================
 	// HERO: Vengeful Spirit
 	//=================================================================================================================
 	"npc_dota_hero_vengefulspirit"
@@ -2757,7 +1938,6 @@
 		"AttackRange"				"425"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
@@ -2790,16 +1970,16 @@
 		"AttackRange"				"500"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-		"IsDisabled"				"2"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
+		"IsDisabled"				"1"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
 
 		"Ability1"					"imba_venomancer_venomous_gale"
 		"Ability2"					"imba_venomancer_poison_sting"
 		"Ability3"					"imba_venomancer_plague_ward"
 		"Ability4"					"imba_venomancer_toxicity"
-		"Ability5"					"imba_venomancer_poison_nova"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_venomancer_poison_nova"
 
 		"Ability10"					"special_bonus_imba_venomancer_1"
 		"Ability11"					"special_bonus_imba_venomancer_2"
@@ -2814,25 +1994,6 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Visage
-	//=================================================================================================================
-	"npc_dota_hero_visage"
-	{
-		"override_hero"				"npc_dota_hero_visage"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-
-		"Ability1"					"visage_grave_chill"
-		"Ability2"					"visage_soul_assumption"
-		"Ability3"					"visage_gravekeepers_cloak"
-		"Ability4"					"visage_summon_familiars"
-
-		"ProjectileModel"			"particles/units/heroes/hero_visage/visage_base_attack.vpcf"
-	}
-
-	//=================================================================================================================
 	// HERO: Warlock
 	//=================================================================================================================
 	"npc_dota_hero_warlock"
@@ -2840,14 +2001,15 @@
 		"override_hero"				"npc_dota_hero_warlock"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
 		"Ability1"					"imba_warlock_fatal_bonds"
 		"Ability2"					"imba_warlock_shadow_word"
 		"Ability3"					"imba_warlock_upheaval"
-		"Ability4"					"imba_warlock_rain_of_chaos"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_warlock_rain_of_chaos"
 
 		"Ability10"					"special_bonus_imba_warlock_1"
 		"Ability11"					"special_bonus_imba_warlock_2"
@@ -2862,87 +2024,6 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Weaver
-	//=================================================================================================================
-	"npc_dota_hero_weaver"
-	{
-		"override_hero"				"npc_dota_hero_weaver"
-		"ProjectileSpeed"			"1500"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-
-		"Ability1"					"weaver_the_swarm"
-		"Ability2"					"weaver_shukuchi"
-		"Ability3"					"weaver_geminate_attack"
-		"Ability4"					"weaver_time_lapse"
-
-		"ProjectileModel"			"particles/units/heroes/hero_weaver/weaver_base_attack.vpcf"
-	}
-
-	//=================================================================================================================
-	// HERO: Windrunner
-	//=================================================================================================================
-	"npc_dota_hero_windrunner"
-	{
-		"override_hero"				"npc_dota_hero_windrunner"
-		"AttackAnimationPoint"		"0.0"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-
-		"Ability1"					"windrunner_shackleshot"
-		"Ability2"					"windrunner_powershot"
-		"Ability3"					"windrunner_windrun"
-		"Ability4"					"windrunner_focusfire"
-
-		"ProjectileModel"			"particles/units/heroes/hero_windrunner/windrunner_base_attack.vpcf"
-	}
-
-	//=================================================================================================================
-	// HERO: Winter Wyvern
-	//=================================================================================================================
-	"npc_dota_hero_winter_wyvern"
-	{
-		"override_hero"				"npc_dota_hero_winter_wyvern"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-
-		"Ability1"					"winter_wyvern_arctic_burn"
-		"Ability2"					"winter_wyvern_splinter_blast"
-		"Ability3"					"winter_wyvern_cold_embrace"
-		"Ability4"					"winter_wyvern_winters_curse"
-
-		"ProjectileModel"			"particles/units/heroes/hero_winter_wyvern/winter_wyvern_base_attack.vpcf"
-	}
-
-	//=================================================================================================================
-	// HERO: Wisp
-	//=================================================================================================================
-	"npc_dota_hero_wisp"
-	{
-		"override_hero"				"npc_dota_hero_wisp"
-
-		//Picking Screen
-		"IsCustom"					"0"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-
-		"Ability1"					"wisp_tether"
-//		"Ability2"					"wisp_tether_break"
-		"Ability3"					"wisp_spirits"
-		"Ability4"					"wisp_overcharge"
-		"Ability5"					"wisp_spirits_in"
-		"Ability6"					"wisp_spirits_out"
-		"Ability7"					"wisp_relocate"
-
-		"ProjectileModel"			"particles/units/heroes/hero_wisp/wisp_base_attack.vpcf"
-	}
-
-	//=================================================================================================================
 	// HERO: Witch Doctor
 	//=================================================================================================================
 	"npc_dota_hero_witch_doctor"
@@ -2950,14 +2031,15 @@
 		"override_hero"				"npc_dota_hero_witch_doctor"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
 		"Ability1"					"imba_witch_doctor_paralyzing_cask"
 		"Ability2"					"imba_witch_doctor_voodoo_restoration"
 		"Ability3"					"imba_witch_doctor_maledict"
-		"Ability4"					"imba_witch_doctor_death_ward"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_witch_doctor_death_ward"
 
 		"Ability10"					"special_bonus_imba_witch_doctor_5" //Enemies dying from a death ward will spawn a mini death ward that deal part of the damage
 		"Ability11"					"special_bonus_imba_witch_doctor_7" //When Maledict's curse bursts, health regen is completely disabled for a period.
@@ -2982,7 +2064,6 @@
 		"AttackRange"				"500"
 
 		//Picking Screen
-		"IsCustom"					"0"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 		"IsDisabled"				"1"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
 
@@ -2990,7 +2071,8 @@
 		"Ability2"					"zuus_lightning_bolt"
 		"Ability3"					"zuus_static_field"
 		"Ability4"					"zuus_cloud"
-		"Ability5"					"zuus_thundergods_wrath"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"zuus_thundergods_wrath"
 
 		"ProjectileModel"			"particles/units/heroes/hero_zuus/zuus_base_attack.vpcf"
 	}
@@ -3064,9 +2146,9 @@
 		// Status
 		//-------------------------------------------------------------------------------------------------------------
 		"StatusHealth"				"200"									// Base health.
-		"StatusHealthRegen"			"0.25"									// Health regeneration rate.
+		"StatusHealthRegen"			"3.0"									// Health regeneration rate.
 		"StatusMana"				"50"									// Base mana.
-		"StatusManaRegen"			"0.01"									// Mana regeneration rate.
+		"StatusManaRegen"			"1.0"									// Mana regeneration rate.
 
 		// Team
 		//-------------------------------------------------------------------------------------------------------------
@@ -3154,9 +2236,9 @@
 		// Status
 		//-------------------------------------------------------------------------------------------------------------
 		"StatusHealth"				"200"									// Base health.
-		"StatusHealthRegen"			"0.25"									// Health regeneration rate.
-		"StatusMana"				"50"										// Base mana.
-		"StatusManaRegen"			"0.01"									// Mana regeneration rate.
+		"StatusHealthRegen"			"3.0"									// Health regeneration rate.
+		"StatusMana"				"50"									// Base mana.
+		"StatusManaRegen"			"1.0"									// Mana regeneration rate.
 
 		// Team
 		//-------------------------------------------------------------------------------------------------------------

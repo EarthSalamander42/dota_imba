@@ -1,4 +1,4 @@
-"imba_custom_shops"
+"imba_custom_10v10_shops"
 {
 	"consumables"
 	{
@@ -108,7 +108,7 @@
 		"item"		"item_helm_of_the_dominator"
 		"item"		"item_imba_mekansm"
 		"item"		"item_imba_vladmir"
-		"item"		"item_imba_pipe"		
+		"item"		"item_imba_pipe"
 	}
 				
 	"magics"			
@@ -149,7 +149,7 @@
 		"item"		"item_imba_greatwyrm_plate"
 		"item"		"item_imba_guardian_greaves"
 	}
-			
+	
 	"weapons"
 	{
 		"item"		"item_dragon_lance"
@@ -167,7 +167,7 @@
 		"item"		"item_imba_rapier"
 		"item"		"item_imba_starfury"
 	}
-		
+
 	// Level 4 - Orange / Orb / Artifacts				
 	"artifacts"
 	{
@@ -184,7 +184,7 @@
 		"item"		"item_imba_triumvirate"
 		"item"		"item_imba_mjollnir"
 		"item"		"item_imba_satanic"
-		"item"		"item_imba_skadi"		
+		"item"		"item_imba_skadi"
 		"item"		"item_lotus_orb"
 	}
 
@@ -192,12 +192,12 @@
 	{
 		"item"		"item_imba_magic_stick"
 		"item"		"item_imba_stout_shield"
-		"item"		"item_sobi_mask"
-		"item"		"item_ring_of_regen"
-		"item"		"item_orb_of_venom"
+//		"item"		"item_sobi_mask"
+//		"item"		"item_ring_of_regen"
+//		"item"		"item_orb_of_venom"
 		"item"		"item_boots"
 		"item"		"item_cloak"
-		"item"		"item_ring_of_health"
+//		"item"		"item_ring_of_health"
 		"item"		"item_void_stone"
 		"item"		"item_imba_morbid_mask"
 		"item"		"item_helm_of_iron_will"
@@ -207,16 +207,16 @@
 
 	"sideshop2"
 	{
-		"item"		"item_slippers"
+//		"item"		"item_slippers"
 		"item"		"item_quelling_blade"
 		"item"		"item_belt_of_strength"
 		"item"		"item_boots_of_elves"
 		"item"		"item_robe"
-		"item"		"item_blades_of_attack"
+//		"item"		"item_blades_of_attack"
 		"item"		"item_gloves"
 		"item"		"item_chainmail"
-		"item"		"item_bottle"
-		"item"		"item_quarterstaff"
+//		"item"		"item_bottle"
+//		"item"		"item_quarterstaff"
 		"item"		"item_vitality_booster"		
 		"item"		"item_broadsword"		
 	}

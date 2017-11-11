@@ -177,34 +177,9 @@ function item_imba_desolator:OnSpellStart()
 	end
 end
 
-function item_imba_desolator:OnProjectileThink(projectile_location)
-	if IsServer() then
-		local active_damage = self:GetSpecialValueFor("active_damage")
-
-		-- Iterate through nearby enemies
-		local projectile_radius = self:GetSpecialValueFor("projectile_radius")
-		local nearby_enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), projectile_location, nil, projectile_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
-		for _, enemy in pairs(nearby_enemies) do
-			
-			-- Fire the effect particle
-			local effect_pfx = ParticleManager:CreateParticle("particles/item/desolator/desolator_active_damage.vpcf", PATTACH_CUSTOMORIGIN, enemy)
-			ParticleManager:SetParticleControl(effect_pfx, 0, projectile_location)
-			ParticleManager:SetParticleControl(effect_pfx, 1, enemy:GetAbsOrigin() + Vector(0, 0, 100))
-			ParticleManager:ReleaseParticleIndex(effect_pfx)
-
-			-- Batrider insane damage fix
-			if enemy:HasModifier("modifier_batrider_sticky_napalm") then
-				enemy:RemoveModifierByName("modifier_batrider_sticky_napalm")
-			end
-
-			-- Deal minor physical damage on every think
-			ApplyDamage({attacker = self:GetCaster(), victim = enemy, ability = self, damage = active_damage * FrameTime() , damage_type = DAMAGE_TYPE_PHYSICAL})
-		end
-	end
-end
-
 function item_imba_desolator:OnProjectileHit(target, target_loc)
 	if IsServer() and target then
+		local active_damage = self:GetSpecialValueFor("active_damage")
 
 		-- Play hit sound
 		target:EmitSound("Item_Desolator.Target")
@@ -215,7 +190,16 @@ function item_imba_desolator:OnProjectileHit(target, target_loc)
 		-- Apply the armor debuff, if applicable
 		if not target:HasModifier("modifier_item_imba_desolator_2_debuff") then
 			target:AddNewModifier(self:GetCaster(), self, "modifier_item_imba_desolator_debuff", {duration = self:GetSpecialValueFor("duration")})
-		end		
+		end
+
+		-- Fire the effect particle
+		local effect_pfx = ParticleManager:CreateParticle("particles/item/desolator/desolator_active_damage.vpcf", PATTACH_CUSTOMORIGIN, enemy)
+		ParticleManager:SetParticleControl(effect_pfx, 0, target_loc)
+		ParticleManager:SetParticleControl(effect_pfx, 1, target_loc + Vector(0, 0, 100))
+		ParticleManager:ReleaseParticleIndex(effect_pfx)
+
+		-- Deal minor physical damage on every think
+		ApplyDamage({attacker = self:GetCaster(), victim = target, ability = self, damage = active_damage , damage_type = DAMAGE_TYPE_PHYSICAL})
 	end
 end
 

@@ -69,25 +69,16 @@ function modifier_imba_roshan_ai_diretide:OnCreated()
 		self.leashDistance		= ability:GetSpecialValueFor("leash_distance")		-- How far is Roshan allowed to walk away from the starting point
 		self.leashHealPcnt		= ability:GetSpecialValueFor("leash_heal_pcnt")		-- Percent of max health Roshan will heal should he get leashed
 		self.isDead				= false												-- Is Roshan 'dead'?
-		self.deathPoint			= Vector(0,0,0)										-- Roshans last death point to which he will return upon respawn
-		self.deathCounter		= 0													-- Times Roshan died
-		self.refreshed_heroes	= false
 		self.last_movement		= 0.0
 
 		-- Sound delays to sync with animation
-		self.candyBeg		= 0.5
 		self.candyEat		= 0.15
 		self.candySniff		= 3.33
 		self.candyRoar		= 5.9
-		self.pumpkinDrop	= 0.3
-		self.candyGobble	= 0.5
-		self.gobbleRoar		= 4.7
 		self.deathRoar		= 1.9
 
-		-- Aimation durations
-		self.animBeg		= 5
-		self.animGobble		= 6
-		self.animDeath		= 10
+		-- Animation durations
+		self.animDeath		= 11
 		
 		-- Ability handlers
 		self.forceWave	= self.roshan:FindAbilityByName("roshan_deafening_blast")
@@ -110,6 +101,10 @@ function modifier_imba_roshan_ai_diretide:OnCreated()
 		-- weird bug where roshan would swap team..
 		if self.roshan:GetTeamNumber() ~= 4 then
 			self.roshan:SetTeam(4)
+		end
+
+		if not self.roshan:HasModifier("modifier_command_restricted") then
+			self.roshan:AddNewModifier(self.roshan, nil, "modifier_command_restricted", {})
 		end
 
 		-- Turn on brain
@@ -150,10 +145,8 @@ local nearbyHeroes = FindUnitsInRadius(self.roshan:GetTeamNumber(), self.roshan:
 	else
 		-- Spawn death particle, start the respawn timer, index death point
 		if not self.isDead then
-			self.deathPoint = self.roshan:GetAbsOrigin()
 			self.isDead = true
-			self.deathCounter = self.deathCounter + 1
-			self.refreshed_heroes = false
+			GAME_ROSHAN_KILLS = GAME_ROSHAN_KILLS + 1
 
 			-- Play sounds
 			self.roshan:EmitSound("Diretide.RoshanDeathLava")
@@ -175,6 +168,25 @@ local nearbyHeroes = FindUnitsInRadius(self.roshan:GetTeamNumber(), self.roshan:
 					local drop = CreateItemOnPositionSync(pos, item)
 					item:LaunchLoot(false, 300, 0.5, pos)
 
+					if GAME_ROSHAN_KILLS >= 2 then
+						print("Create Cheese!")
+						for i = 1, GAME_ROSHAN_KILLS -1 do
+							local item = CreateItem("item_imba_cheese", nil, nil)
+							local pos = self.roshan:GetAbsOrigin()
+							local drop = CreateItemOnPositionSync(pos, item)
+							item:LaunchLoot(false, 300, 0.5, pos + RandomVector(RandomInt(100, 150)))
+						end
+					end
+					if GAME_ROSHAN_KILLS >= 3 then
+						print("Create Shard!")
+						for i = 1, GAME_ROSHAN_KILLS -2 do
+							local item = CreateItem("item_refresher_shard", nil, nil)
+							local pos = self.roshan:GetAbsOrigin()
+							local drop = CreateItemOnPositionSync(pos, item)
+							item:LaunchLoot(false, 300, 0.5, pos + RandomVector(RandomInt(100, 150)))
+						end
+					end
+
 					Timers:CreateTimer(ROSHAN_RESPAWN_TIME, function()
 						local roshan = CreateUnitByName("npc_imba_roshan", ROSHAN_SPAWN_LOC, true, nil, nil, DOTA_TEAM_NEUTRALS)
 					end)
@@ -189,8 +201,6 @@ function modifier_imba_roshan_ai_diretide:StartPhase(phase)
 	self.AItarget = nil
 	self.atStartPoint = false
 	self.leashPoint = nil
-	self.deathPoint = self.roshan:GetAbsOrigin()
-	self.deathCounter = 0
 
 	if self.isDead then
 		self.isDead = false
@@ -249,7 +259,7 @@ end
 function modifier_imba_roshan_ai_diretide:ThinkPhase3(roshan)
 if roshan:IsStunned() or roshan:IsSilenced() or roshan:IsHexed() or roshan:IsChanneling() then return end
 if not self.leashPoint then self.leashPoint = ROSHAN_SPAWN_LOC end
-	
+
 	local distanceFromLeash = (roshan:GetAbsOrigin() - self.leashPoint):Length2D()
 	if not self.returningToLeash and distanceFromLeash >= self.leashDistance then
 		self.returningToLeash = true
@@ -257,6 +267,9 @@ if not self.leashPoint then self.leashPoint = ROSHAN_SPAWN_LOC end
 	elseif self.returningToLeash and distanceFromLeash < 100 then
 		roshan:Interrupt()
 		self.returningToLeash = false
+		if not roshan:HasModifier("modifier_command_restricted") then
+			roshan:AddNewModifier(roshan, nil, "modifier_command_restricted", {})
+		end
 	end
 	
 	-- Return to the leashing point if he should
@@ -265,32 +278,6 @@ if not self.leashPoint then self.leashPoint = ROSHAN_SPAWN_LOC end
 		roshan:MoveToPosition(self.leashPoint)
 		return
 	end
-
---	if self.refreshed_heroes == false then
---		if roshan:GetHealthPercent() <= 50 then
---			self.refreshed_heroes = true
---			for _, hero in pairs(HeroList:GetAllHeroes()) do
---				for i=0, 23, 1 do  --The maximum number of abilities a unit can have is currently 16.
---					local current_ability = hero:GetAbilityByIndex(i)
---					if current_ability ~= nil then
---						current_ability:EndCooldown()
---					end
---				end
---
---				for i=0, 8, 1 do
---					local current_item = hero:GetItemInSlot(i)
---					if current_item ~= nil then
---						if current_item:GetName() ~= "item_refresher_datadriven" then  --Refresher Orb does not refresh itself.
---							current_item:EndCooldown()
---						end
---					end
---				end
---
---				ParticleManager:SetParticleControlEnt(ParticleManager:CreateParticle("particles/items2_fx/refresher.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero), 0, hero, PATTACH_POINT_FOLLOW, "attach_hitloc", hero:GetAbsOrigin(), true)
---			end
---			roshan:EmitSound("DOTA_Item.Refresher.Activate")
---		end
---	end
 
 	local ability_count = roshan:GetAbilityCount()
 	for ability_index = 0, ability_count - 1 do
@@ -428,6 +415,7 @@ function modifier_imba_roshan_ai_diretide:OnTakeDamage(keys)
 			if attacker == unit then return nil end
 			self.last_movement = GameRules:GetGameTime()
 
+			self.roshan:RemoveModifierByName("modifier_command_restricted")
 			attacker.roshan_attacked_time = GameRules:GetGameTime()
 			CustomGameEventManager:Send_ServerToPlayer(attacker:GetPlayerOwner(), "show_roshan_hp", {})
 

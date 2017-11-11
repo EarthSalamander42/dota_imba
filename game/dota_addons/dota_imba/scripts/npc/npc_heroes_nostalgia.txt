@@ -1,0 +1,37 @@
+"DOTAHeroes"
+{
+	//=================================================================================================================
+	// HERO: Pudge
+	//=================================================================================================================
+	"npc_imba_hero_pudge"
+	{
+		"override_hero"				"npc_dota_hero_pudge"
+
+		"ModelScale"				"1.0"
+
+		"MovementTurnRate"			"1.0"
+
+		"AbilityLayout"				"6"
+
+		"AttackRange"				"200"
+
+		"Ability1"					"imba_pudge_meat_hook"
+		"Ability2"					"imba_pudge_rot"
+		"Ability3"					"imba_pudge_flesh_heap"
+		"Ability4"					"imba_pudge_sharp_hook"
+		"Ability5"					"imba_pudge_light_hook"
+		"Ability6"					"imba_pudge_dismember"
+
+		"Ability9"					"imba_unlimited_level_powerup"
+		"Ability10"					"special_bonus_strength_6"
+		"Ability11"					"special_bonus_mp_regen_2"
+		"Ability12"					"special_bonus_gold_income_25"
+		"Ability13"					"special_bonus_movement_speed_20"
+		"Ability14"					"special_bonus_armor_6"
+		"Ability15"					"special_bonus_respawn_reduction_35"
+		"Ability16"					"special_bonus_attack_speed_35"
+		"Ability17"					"special_bonus_strength_12"
+
+		"ProjectileSpeed"			"900"
+	}
+}
