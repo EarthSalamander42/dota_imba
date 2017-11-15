@@ -254,6 +254,11 @@ local normal_xp = npc:GetDeathXP()
 		if not npc.first_spawn then
 			npc.first_spawn = true
 			HeroVoiceLine(npc, "spawn")
+			if npc:GetUnitName() == "npc_dota_hero_troll_warlord" then
+				npc:SwapAbilities("imba_troll_warlord_whirling_axes_ranged", "imba_troll_warlord_whirling_axes_melee", true, false)
+				npc:SwapAbilities("imba_troll_warlord_whirling_axes_ranged", "imba_troll_warlord_whirling_axes_melee", false, true)
+				npc:SwapAbilities("imba_troll_warlord_whirling_axes_ranged", "imba_troll_warlord_whirling_axes_melee", true, false)
+			end
 		else
 			HeroVoiceLine(npc, "respawn")
 		end
