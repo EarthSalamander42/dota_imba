@@ -65,13 +65,19 @@ function imba_troll_warlord_berserkers_rage:OnToggle()
 		if caster:HasModifier("modifier_imba_berserkers_rage_ranged") and self:GetToggleState() then
 			caster:RemoveModifierByName("modifier_imba_berserkers_rage_ranged")
 			caster:AddNewModifier(caster, self, "modifier_imba_berserkers_rage_melee", {})
+			caster:SwapAbilities("imba_troll_warlord_whirling_axes_ranged", "imba_troll_warlord_whirling_axes_melee", false, true)
+			caster:SetAttackCapability(DOTA_UNIT_CAP_MELEE_ATTACK)
+			self.mode = 2
 		else
 			caster:RemoveModifierByName("modifier_imba_berserkers_rage_melee")
 			caster:AddNewModifier(caster, self, "modifier_imba_berserkers_rage_ranged", {})
+			caster:SwapAbilities("imba_troll_warlord_whirling_axes_ranged", "imba_troll_warlord_whirling_axes_melee", true, false)
+			caster:SetAttackCapability(DOTA_UNIT_CAP_RANGED_ATTACK)
+			self.mode = 1
 		end
 	end
 end
-	
+
 function imba_troll_warlord_berserkers_rage:GetAbilityTextureName()
 	if self.mode == 1 then
 		return "troll_warlord_berserkers_rage_active"
@@ -147,18 +153,6 @@ function modifier_imba_berserkers_rage_melee:GetActivityTranslationModifiers()
 	return 0
 end
 
-function modifier_imba_berserkers_rage_melee:OnCreated()
-	if IsServer() then
-		local parent = self:GetParent()
-		if parent:HasAbility("imba_troll_warlord_whirling_axes_melee") then
-			parent:FindAbilityByName("imba_troll_warlord_whirling_axes_melee"):SetHidden(false)
-			parent:FindAbilityByName("imba_troll_warlord_whirling_axes_ranged"):SetHidden(true)
-		end
-		parent:SetAttackCapability(DOTA_UNIT_CAP_MELEE_ATTACK)
-	end
-	self:GetAbility().mode = 1
-end
-
 -- Note: This is for BAT-modifying, since only troll modify BAT of others and himself
 function modifier_imba_berserkers_rage_melee:GetPriority()
 	return 1
@@ -185,18 +179,6 @@ function modifier_imba_berserkers_rage_ranged:IsPurgeException() return false en
 function modifier_imba_berserkers_rage_ranged:IsStunDebuff() return false end
 function modifier_imba_berserkers_rage_ranged:RemoveOnDeath() return false end
 -------------------------------------------
-
-function modifier_imba_berserkers_rage_ranged:OnCreated()
-	if IsServer() then
-		local parent = self:GetParent()
-		if parent:HasAbility("imba_troll_warlord_whirling_axes_ranged") then
-			parent:FindAbilityByName("imba_troll_warlord_whirling_axes_ranged"):SetHidden(false)
-			parent:FindAbilityByName("imba_troll_warlord_whirling_axes_melee"):SetHidden(true)
-		end
-		parent:SetAttackCapability(DOTA_UNIT_CAP_RANGED_ATTACK)
-	end
-	self:GetAbility().mode = 2
-end
 
 function modifier_imba_berserkers_rage_ranged:DeclareFunctions()
     local decFuns =
