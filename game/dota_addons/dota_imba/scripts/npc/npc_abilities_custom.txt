@@ -1,4 +1,4 @@
-﻿// Dota Abilities Override File
+// Dota Abilities Override File
 // DataDriven Ability Guide: https://moddota.com/forums/discussion/14/datadriven-ability-breakdown-documentation
 
 "DOTAAbilities"
@@ -58,21 +58,6 @@
 				}
 			}
 		}
-	}
-
-	//=================================================================================================================
-	// Companion: Model Swap
-	//=================================================================================================================
-	"companion_morph"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityTextureName"			"courier_burst"
-		"ScriptFile"					"hero/companion.lua"
-		"AbilityCooldown"				"10.0"
-		"MaxLevel"						"1"
 	}
 
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -11158,268 +11143,6 @@
 	}
 
 	//=================================================================================================================
-	// Elder Titan's Echo Stomp
-	//=================================================================================================================
-	"imba_elder_titan_echo_stomp"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_YES_STRONG"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"custom/imba_elder_titan_echo_stomp"
-		"ScriptFile"					"hero/hero_elder_titan.lua"
-		"MaxLevel"						"7"
-
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"1.2"
-		"AbilityCastRange"				"500"
-		"AbilityCooldown"				"14.0 13.0 12.0 11.0 11.0 11.0 11.0"
-		"AbilityManaCost"				"125"
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_elder_titan.vsndevts"
-			"particle"					"particles/econ/items/elder_titan/elder_titan_ti7/elder_titan_echo_stomp_ti7_physical.vpcf"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"cast_time"					"1.2"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"500"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"sleep_duration"			"2.0 2.5 3.0 3.5 4.0 4.5 5.0"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"stomp_damage"				"100 140 180 220 260 300 340"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"wake_damage_limit"			"50 100 150 200 250 300 350"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Elder Titan: Ancestral Spirit
-	//=================================================================================================================
-	"imba_elder_titan_ancestral_spirit"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"hero/hero_elder_titan.lua"
-		"AbilityTextureName"			"elder_titan_ancestral_spirit"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
-		"AbilitySound"					"Hero_ElderTitan.AncestralSpirit.Cast"
-		"MaxLevel"						"7"
-
-		"AbilityCastRange"				"1200"
-		"AbilityCastPoint"				"0.4"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
-		
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"16.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"80 90 100 110 120 130 140"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"radius"						"275"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"pass_damage"					"60 90 120 150 180 210 240"
-			}		
-			"03"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"spirit_duration"				"8.0"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"buff_duration"					"9.0"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"speed"							"600"
-			}
-			"06"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"move_pct_creeps"				"1"
-			}
-			"07"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"move_pct_heroes"				"5"
-			}
-			"08"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"damage_creeps"					"6 9 12 15 18 21 24"
-				"CalculateSpellDamageTooltip"	"0"
-			}
-			"09"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"damage_heroes"					"15 30 45 60 75 90 105"
-				"LinkedSpecialBonus"			"special_bonus_unique_elder_titan"
-				"CalculateSpellDamageTooltip"	"0"
-			}	
-			"10"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"move_pct_cap"					"30"
-			}		
-		}
-	}
-
-	//=================================================================================================================
-	// Elder Titan: Natural Order
-	//=================================================================================================================
-	"imba_elder_titan_natural_order"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"hero/hero_elder_titan.lua"
-		"AbilityTextureName"			"elder_titan_natural_order"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
- 		"AbilityCastAnimation"			"ACT_INVALID"
- 		"MaxLevel"						"7"
-
-		"AbilityCastRange"				"350"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"350"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"armor_reduction_pct"	    "-40 -60 -80 -100 -120 -140 -160"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"magic_resistance_pct"		"-40 -60 -80 -100 -120 -140 -160"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Elder Titan's Echo Stomp
-	//=================================================================================================================
-	"imba_elder_titan_echo_stomp_spirit"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_YES_STRONG"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"custom/imba_elder_titan_echo_stomp"
-		"ScriptFile"					"hero/hero_elder_titan.lua"
-		"MaxLevel"						"7"
-
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"1.2"
-		"AbilityCastRange"				"500"
-		"AbilityCooldown"				"14.0 13.0 12.0 11.0 11.0 11.0 11.0"
-		"AbilityManaCost"				"0"
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_elder_titan.vsndevts"
-			"particle"					"particles/econ/items/elder_titan/elder_titan_ti7/elder_titan_echo_stomp_ti7.vpcf"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"cast_time"					"1.2"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"500"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"sleep_duration"			"2.0 2.5 3.0 3.5 4.0 4.5 5.0"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"stomp_damage"				"100 140 180 220 260 300 340"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"wake_damage_limit"			"50 100 150 200 250 300 350"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Enigma's Malefice
 	//=================================================================================================================
 	"imba_enigma_malefice"
@@ -12069,19 +11792,6 @@
 		"AbilityTextureName"			"faceless_void_time_walk"
 		"ScriptFile"					"hero/hero_faceless_void.lua"
 
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"0"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"24 18 12 6 6 6 6"
-		"AbilityManaCost"				"40"
-		"MaxLevel"						"7"
-
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
@@ -12093,6 +11803,19 @@
 			"particle"					"particles/units/heroes/hero_faceless_void/faceless_void_chrono_speed.vpcf"
 			"particle"					"particles/units/heroes/hero_faceless_void/faceless_void_backtrack02.vpcf"
 		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"24 18 12 6 6 6 6"
+		"AbilityManaCost"				"40"
+		"MaxLevel"						"7"
+
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -18583,7 +18306,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityTextureName"			"mirana_leap"
@@ -22588,6 +22311,582 @@
 			}
 		}
 	}
+
+	//=================================================================================================================
+	// Pangolier's Swashbuckle
+	//=================================================================================================================
+	"imba_pangolier_swashbuckle"
+
+{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_pangolier"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"			"pangolier_swashbuckle"
+		"MaxLevel"						"7"
+		"HasScepterUpgrade"				"0"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_pangolier.vsndevts"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCastRange"				"1000"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"20 16 12 8 7.5 7.0 6.5"
+		"AbilityDuration"				"4.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"70 80 90 100 105 110 115"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"dash_range"			"1000"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"range"					"900"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"dash_speed"			"2000"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"attack_interval"		"0.1 0.1 0.1 0.1 0.1 0.1 0.1"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"24 42 60 78 87 96 105"
+				"LinkedSpecialBonus"	"special_bonus_imba_pangolier_5"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"start_radius"			"125"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"end_radius"			"125"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"strikes"				"4"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
+	}
+
+	//=================================================================================================================
+	// Pangolier's Shield Crash
+	//=================================================================================================================
+	"imba_pangolier_shield_crash"
+
+{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_pangolier"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"pangolier_shield_crash"
+		"MaxLevel"						"7"
+		"HasScepterUpgrade"				"0"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_pangolier.vsndevts"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------		
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"13"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"90 100 110 120"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"75 150 225 300 333 366 400"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hero_stacks"			"9 12 15 18 20 22 24"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"10.0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"500"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"jump_duration"			"0.4"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"jump_duration_gyroshell"	"0.75"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"jump_height"			"250"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"jump_height_gyroshell"	"350"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"jump_horizontal_distance"	"225"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	}
+
+	//=================================================================================================================
+	// Pangolier's Heartpiercer
+	//=================================================================================================================
+	"imba_pangolier_heartpiercer"
+
+{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_pangolier"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"AbilityTextureName"			"pangolier_heartpiercer"
+		"MaxLevel"						"7"
+		"HasScepterUpgrade"				"0"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_pangolier.vsndevts"
+		}
+
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"chance_pct"				"15"
+				"LinkedSpecialBonus"	"special_bonus_imba_pangolier_2"
+			}
+
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"2 3 4 5 5.5 6 6.5"
+			}
+
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow_pct"				"-35 -40 -45 -50 -52 -54 -56"
+			}
+
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"debuff_delay"			"2.0"
+				
+			}
+
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
+	}
+
+
+	//=================================================================================================================
+	// Pangolier's Rolling Thunder
+	//=================================================================================================================
+	"imba_pangolier_gyroshell"
+
+{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_pangolier"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"AbilityTextureName"			"pangolier_gyroshell"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"FightRecapLevel"				"1"
+		"MaxLevel"						"6"
+		"HasScepterUpgrade"				"0"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_pangolier.vsndevts"
+			"model" "models/heroes/pangolier/pangolier_gyroshell.vmdl"
+			"model" "models/heroes/pangolier/pangolier_gyroshell2.vmdl"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"1.2"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"50 45 40 38 36 34"
+		"AbilityDuration"				"9.5"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100"
+
+		// Damage
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"200 275 350 425 500 575"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"cast_time_tooltip"		"1.2"
+			}			
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tick_interval"			"0.05"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"forward_move_speed"	"600 600 600 625 650 675"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT" // used after any break in the roll (start/jump/bounce)
+				"turn_rate_boosted"		"165"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"turn_rate"				"120 120 120 125 130 135"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"400"
+			}			
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hit_radius"			"150"
+			}			
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bounce_duration"		"0.4"
+			}			
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"			"1.0 1.25 1.5 1.65 1.8 1.95"
+			}			
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"knockback_radius"		"150"
+			}			
+			"11"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"6.0 7.0 8.0 8.5 9.0 9.5"
+				"LinkedSpecialBonus"	"special_bonus_imba_pangolier_4"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"jump_recover_time"		"0.25"
+			}			
+
+		}
+	}
+
+	//=================================================================================================================
+	// Pangolier's Talents
+	//=================================================================================================================
+
+	"special_bonus_imba_pangolier_1" // Heartpiercer can proc again while the debuff is in place to remove any extra armor
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_pangolier_heartpiercer"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"value"						"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_pangolier_2" // Extra proc chance on Heartpiercer
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_pangolier_heartpiercer"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"10"
+			}
+		}
+	}
+
+	"special_bonus_imba_pangolier_3" // 2 seconds cooldown on Shield Crash while rolling
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_pangolier_shield_crash"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"value"						"2.0"
+			}
+		}
+	}
+
+	"special_bonus_imba_pangolier_4" // Rolling Thunder lasts longer
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_pangolier_gyroshell"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"value"						"3.5"
+			}
+		}
+	}
+
+	"special_bonus_imba_pangolier_5" // extra damage on each Swashbuckle slash
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_pangolier_swashbuckle"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"30"
+			}
+		}
+	}
+
+	"special_bonus_imba_pangolier_6" // Extra damage on shield crash based on enemy heroes hit
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_pangolier_shield_crash"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"20"
+			}
+		}
+	}
+
+	"special_bonus_imba_pangolier_7" // Reduced cooldown on Swashbuckle
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_pangolier_swashbuckle"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"value"						"3.0"
+			}
+		}
+	}
+
+	"special_bonus_imba_pangolier_8" // Reduced cooldown on Rolling Thunder
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_pangolier_gyroshell"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"value"						"14.0"
+			}
+		}
+	}
+
+
+
+
+
 
 	//=================================================================================================================
 	// Phantom Assassin's Stifling Dagger
@@ -28140,7 +28439,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3"
+		"AbilityCastPoint"				"0.3 0.3 0.3"
 
 		"precache"
 		{
@@ -28171,7 +28470,7 @@
 			"04"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"travel_mana_cost_pct"					"0.7"		
+				"travel_mana_cost_pct"					"0.4"		
 			}
 			"05"
 			{
