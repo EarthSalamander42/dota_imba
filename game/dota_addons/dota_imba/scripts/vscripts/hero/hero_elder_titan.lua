@@ -178,10 +178,10 @@ function modifier_imba_elder_titan_ancestral_spirit_self:CheckState()
 	if IsServer() then
 		local state = {}
 
-		if self:GetStackCount() == 1 then
-			print("Stack Count = 1")
-			state[MODIFIER_STATE_UNSELECTABLE]	= true,
-		end
+--		if self:GetStackCount() == 1 then
+--			print("Stack Count = 1")
+--			state[MODIFIER_STATE_UNSELECTABLE]	= true,
+--		end
 
 		state[MODIFIER_STATE_NO_HEALTH_BAR] = true
 		state[MODIFIER_STATE_FLYING] = true

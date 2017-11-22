@@ -1686,7 +1686,6 @@
 		"override_hero"				"npc_dota_hero_storm_spirit"
 
 		//Picking Screen
-		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
 		"Ability1"					"imba_storm_spirit_static_remnant"
@@ -1856,9 +1855,9 @@
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"imba_troll_warlord_berserkers_rage"
-		"Ability2"					"imba_troll_warlord_whirling_axes_ranged"
+		"Ability2"					"imba_troll_warlord_whirling_axes_melee"
 		"Ability3"					"imba_troll_warlord_fervor"
-		"Ability4"					"imba_troll_warlord_whirling_axes_melee"
+		"Ability4"					"imba_troll_warlord_whirling_axes_ranged"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_troll_warlord_battle_trance"
 
