@@ -106,7 +106,7 @@ function modifier_imba_generic_talents_handler:OnTakeDamage( keys )
 
 			-- Also do nothing if the inflictor is forbidden
 			local forbidden_inflictors = {
-				"item_blade_mail",
+				"item_imba_blade_mail",
 				"luna_moon_glaive"
 			}
 			for _, forbidden_inflictor in pairs(forbidden_inflictors) do
