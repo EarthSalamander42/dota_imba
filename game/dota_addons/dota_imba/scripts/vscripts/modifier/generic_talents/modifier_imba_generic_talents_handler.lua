@@ -93,6 +93,7 @@ function modifier_imba_generic_talents_handler:OnTakeDamage( keys )
 		local caster = keys.attacker
 		local target = keys.unit
 		local damage = keys.damage
+		local damage_flags = keys.damage_flags
 		local inflictor = keys.inflictor
 		
 		if caster == parent and inflictor then
@@ -101,7 +102,7 @@ function modifier_imba_generic_talents_handler:OnTakeDamage( keys )
 			local lifesteal_amount = parent:GetSpellLifesteal()
 
 			-- Do nothing if the victim is not a valid target, or if the lifesteal amount is nonpositive
-			if target:IsBuilding() or target:IsIllusion() or (target:GetTeam() == caster:GetTeam()) or (lifesteal_amount <= 0) then
+			if target:IsBuilding() or target:IsIllusion() or (target:GetTeam() == caster:GetTeam()) or (lifesteal_amount <= 0) or bit.band(damage_flags, DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL) == DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL then
 				return end
 
 			-- Also do nothing if the inflictor is forbidden
