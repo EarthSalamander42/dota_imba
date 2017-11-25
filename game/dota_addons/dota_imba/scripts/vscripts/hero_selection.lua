@@ -247,6 +247,12 @@ function HeroSelection:Tick()
 		CustomGameEventManager:Send_ServerToAllClients( "picking_time_update", {time = HeroSelection.TimeLeft} )
 	end
 
+	--Check if all heroes have been picked
+	if HeroSelection.playersPicked >= HeroSelection.numPickers then
+		--End picking
+		HeroSelection.TimeLeft = 0
+	end
+
 	-- Tick away a second of time
 	HeroSelection.TimeLeft = HeroSelection.TimeLeft - 1
 	if HeroSelection.TimeLeft < 0 then
@@ -291,7 +297,7 @@ end
 
 	for _, picked_hero in pairs(HeroSelection.picked_heroes) do
 		if random_hero == picked_hero then
-			print("Hero disabled, random again...")
+			print("Hero picked, random again...")
 			HeroSelection:RandomHero({PlayerID = id})
 			break
 		end
@@ -337,7 +343,7 @@ local id = event.PlayerID
 
 	for _, picked_hero in pairs(HeroSelection.picked_heroes) do
 		if random_hero == picked_hero then
-			print("Hero disabled, random again...")
+			print("Hero picked, random again...")
 			HeroSelection:RandomHero({PlayerID = id})
 			break
 		end
@@ -418,24 +424,17 @@ function HeroSelection:HeroSelect(event)
 		return nil
 	end
 
-    for _, picked_hero in pairs(HeroSelection.radiantPicks) do
-        if event.HeroName == picked_hero then
-            return nil
-        end
-    end
-        
+	for _, picked_hero in pairs(HeroSelection.radiantPicks) do
+		if event.HeroName == picked_hero then
+			return nil
+		end
+	end
+		
 	for _, picked_hero in pairs(HeroSelection.direPicks) do
-        if event.HeroName == picked_hero then
-            return nil
-        end
-    end
-
-	--Check if all heroes have been picked
---	if HeroSelection.playersPicked >= HeroSelection.numPickers then
-
-		--End picking
---		HeroSelection.TimeLeft = 0
---	end
+		if event.HeroName == picked_hero then
+			return nil
+		end
+	end
 end
 
 -- Handles player repick

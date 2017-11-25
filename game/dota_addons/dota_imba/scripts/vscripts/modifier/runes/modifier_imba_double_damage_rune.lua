@@ -9,8 +9,8 @@ function modifier_imba_double_damage_rune:GetAuraSearchType() return DOTA_UNIT_T
 function modifier_imba_double_damage_rune:GetAuraSearchFlags() return DOTA_UNIT_TARGET_FLAG_NONE end
 function modifier_imba_double_damage_rune:GetModifierAura() return "modifier_imba_rune_double_damage_aura" end
 
-function modifier_imba_double_damage_rune:GetTextureName()
-	return "rune_doubledamage"
+function modifier_imba_double_damage_rune:GetTexture()
+	return "custom/imba_rune_double_damage"
 end
 
 function modifier_imba_double_damage_rune:GetEffectName()

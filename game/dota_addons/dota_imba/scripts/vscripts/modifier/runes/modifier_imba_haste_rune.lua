@@ -12,8 +12,8 @@ function modifier_imba_haste_rune:IsHidden() 	return false end
 function modifier_imba_haste_rune:IsPurgable()	return true end
 function modifier_imba_haste_rune:IsDebuff() 	return false end
 
-function modifier_imba_haste_rune:GetTextureName()
-	return "rune_haste"
+function modifier_imba_haste_rune:GetTexture()
+	return "rune_haste"	-- "custom/imba_rune_haste"
 end
 
 function modifier_imba_haste_rune:OnCreated()
