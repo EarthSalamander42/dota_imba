@@ -72,6 +72,8 @@
 		</Panel>
 		<Panel id="imba-news">
 			<Label id="imba-news-title" text="DOTA IMBA v7.02 - Elder Titan Update" />
+			<Label id="imba-news-article-title" />
+			<Label id="imba-news-article-text" />
 		</Panel>
 <!--		<Panel id="imba-logo"/> -->
 		<Panel id="imba-social">

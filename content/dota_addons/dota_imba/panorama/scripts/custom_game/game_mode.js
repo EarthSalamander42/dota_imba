@@ -5,6 +5,8 @@
 (function () {
 	InitializeUI()
 
+	GameEvents.Subscribe("loading_screen_news", InitializeNews);
+
 	// Hides battlecuck crap
 	var hit_test_blocker = $.GetContextPanel().GetParent().FindChild("SidebarAndBattleCupLayoutContainer");
 
@@ -63,6 +65,16 @@ function InitializeUI() {
 			$('#AllPickToggle').checked = true;
 		}
 	}
+
+	InitializeNews();
+}
+
+function InitializeNews(data) {
+
+	$("#imba-news-article-title").text = data.title;
+	$("#imba-news-article-text").text = data.article;
+
+	$.Msg("InitializeNews ", data.title);
 }
 
 // Checks if the local player has local privileges
