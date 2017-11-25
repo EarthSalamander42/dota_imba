@@ -31,8 +31,8 @@ CustomNetTables:SetTableValue("game_options", "game_count", {value = 0})
 
 local bonus = 0
 for i = 21 +1, 200 do
-	bonus = bonus +10
-	table_rankXP[i] = table_rankXP[i-1] +500 + bonus
+	bonus = bonus +510
+	table_rankXP[i] = table_rankXP[i-1] + bonus
 end
 
 local XP_level_title= {}

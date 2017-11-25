@@ -338,10 +338,9 @@ function GameMode:ModifierFilter( keys )
 			end
 		end
 
-	-------------------------------------------------------------------------------------------------
-	-- Tenacity debuff duration reduction
-	-------------------------------------------------------------------------------------------------
-
+		-------------------------------------------------------------------------------------------------
+		-- Tenacity debuff duration reduction
+		-------------------------------------------------------------------------------------------------
 		if modifier_owner.GetTenacity then						
 			local original_duration = keys.duration
 
@@ -365,10 +364,9 @@ function GameMode:ModifierFilter( keys )
 			end)
 		end
 
-	-------------------------------------------------------------------------------------------------
-	-- Silencer Arcane Supremacy silence duration reduction
-	-------------------------------------------------------------------------------------------------		
-
+		-------------------------------------------------------------------------------------------------
+		-- Silencer Arcane Supremacy silence duration reduction
+		-------------------------------------------------------------------------------------------------
 		if modifier_owner:HasModifier("modifier_imba_silencer_arcane_supremacy") then
 			if not modifier_owner:PassivesDisabled() then
 
@@ -394,9 +392,9 @@ function GameMode:ModifierFilter( keys )
 			end
 		end
 
-	-------------------------------------------------------------------------------------------------
-	-- Silencer Arcane Supremacy silence duration increase for Silencer's applied silences
-	-------------------------------------------------------------------------------------------------	
+		-------------------------------------------------------------------------------------------------
+		-- Silencer Arcane Supremacy silence duration increase for Silencer's applied silences
+		-------------------------------------------------------------------------------------------------	
 		if modifier_caster:HasModifier("modifier_imba_silencer_arcane_supremacy") and not modifier_owner:PassivesDisabled() then
 			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
 
@@ -414,7 +412,6 @@ function GameMode:ModifierFilter( keys )
 		-------------------------------------------------------------------------------------------------
 		-- Rune pickup logic
 		-------------------------------------------------------------------------------------------------	
-
 		if modifier_caster == modifier_owner then
 			if modifier_caster:HasModifier("modifier_rune_doubledamage") then
 				local duration = modifier_caster:FindModifierByName("modifier_rune_doubledamage"):GetDuration()
@@ -432,6 +429,11 @@ function GameMode:ModifierFilter( keys )
 				modifier_caster:RemoveModifierByName("modifier_rune_regen")
 				modifier_caster:AddNewModifier(modifier_caster, nil, "modifier_imba_regen_rune", {duration = duration})
 			end
+		end
+
+		if modifier_name == "modifier_courier_shield" then
+			modifier_caster:RemoveModifierByName(modifier_name)
+			modifier_caster:FindAbilityByName("courier_burst"):CastAbility()
 		end
 
 		return true
