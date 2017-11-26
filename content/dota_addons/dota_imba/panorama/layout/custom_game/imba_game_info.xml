@@ -13,7 +13,7 @@
 			<Label class="ButtonLabel" text="Game Options:" />
 		</Button>
 
-		<Panel id="ImbaGameInfo">
+		<Panel id="ImbaGameInfo" hittest="false">
 			<Panel class="GameModeValues">
 				<Panel class="GameModeLabelPanel">
 					<Label class="ImbaGameInfoLabel" text="#imba_gamemode_settings_gold_multiplier" />

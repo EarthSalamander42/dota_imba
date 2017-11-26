@@ -62,6 +62,10 @@ DebugPrint("[IMBA] Performing pre-load precache")
 	LinkLuaModifier("modifier_imba_arcane_curse_debuff", "modifier/modifier_imba_arcane_curse_debuff.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_silencer_int_steal", "modifier/modifier_imba_silencer_int_steal.lua", LUA_MODIFIER_MOTION_NONE )
 
+	-- Companion using mirana modifiers
+	LinkLuaModifier("modifier_imba_mirana_silence_stance", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+	LinkLuaModifier("modifier_imba_mirana_silence_stance_visible", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+
 	PrecacheResource("particle", "particles/econ/items/effigies/status_fx_effigies/gold_effigy_ambient_dire_lvl2.vpcf", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_ember_spirit.vsndevts", context)

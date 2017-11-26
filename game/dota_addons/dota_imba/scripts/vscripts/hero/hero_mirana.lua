@@ -3,8 +3,6 @@
 
 
 CreateEmptyTalents("mirana")
-LinkLuaModifier("modifier_imba_mirana_silence_stance", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_mirana_silence_stance_visible", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 
 -------------------------------
 --        STARSTORM          --

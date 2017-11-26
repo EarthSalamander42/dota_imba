@@ -155,6 +155,23 @@ DebugPrintTable(keys)
 					end
 				end
 			end
+
+			-- fix for super high respawn time
+			for _, hero in pairs(HeroList:GetAllHeroes()) do
+				if hero:IsAlive() then return end
+				local respawn_time = hero:GetTimeUntilRespawn()
+				local reaper_scythe = 36 -- max necro timer addition
+				if respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[25] + reaper_scythe and hero:HasModifier("modifier_imba_reapers_scythe_respawn") then
+					print("NECROPHOS BUG:", hero:GetUnitName(), "respawn time too high:", respawn_time..". setting to", HERO_RESPAWN_TIME_PER_LEVEL[25])
+					respawn_time = respawn_time + reaper_scythe
+				else
+					if respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[25] then
+						print(hero:GetUnitName(), "respawn time too high:", respawn_time..". setting to", HERO_RESPAWN_TIME_PER_LEVEL[25])
+						respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[25]
+					end
+				end
+				hero:SetTimeUntilRespawn(respawn_time)
+			end
 			return 1.0
 		end)
 	end
@@ -214,6 +231,21 @@ local normal_xp = npc:GetDeathXP()
 			npc:SetDeathXP(normal_xp)
 		else
 			npc:SetDeathXP(normal_xp*1.5)
+		end
+
+		-- monkey king fix, do not spawn the 14 monkeys
+		if npc:GetUnitName() == "npc_dota_hero_monkey_king" then
+			if TRUE_MK_HAS_SPAWNED then
+				return nil
+			else
+				TRUE_MK_HAS_SPAWNED = true
+			end
+		end
+
+		if npc:GetUnitName() == "npc_dota_courier" then
+			if npc:FindAbilityByName("courier_burst"):GetLevel() ~= 1 then
+				npc:FindAbilityByName("courier_burst"):SetLevel(1)
+			end
 		end
 
 --		if npc:IsRealHero() and npc:GetUnitName() ~= "npc_dota_hero_wisp" or npc.is_real_wisp then
