@@ -305,6 +305,7 @@ elseif GetMapName() == "imba_custom" or GetMapName() == "imba_custom_10v10" then
 	HERO_INITIAL_GOLD = 2000
 	HERO_STARTING_LEVEL = 5
 	MAX_LEVEL = 40
+	IMBA_FRANTIC_MODE_ON = true
 elseif GetMapName() == "imba_10v10" or GetMapName() == "imba_12v12" then									-- 10v10 map defaults
 	END_GAME_ON_KILLS = false
 	CUSTOM_GOLD_BONUS = 70

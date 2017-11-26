@@ -12753,18 +12753,7 @@
 
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"courier_return_to_base"
-		"Ability2"					"courier_go_to_secretshop"		
-		"Ability3"					"courier_return_stash_items"
-		"Ability4"					"courier_take_stash_items"
-		"Ability5"					"courier_transfer_items"	
-		"Ability6"					"courier_burst"		
-		"Ability7"					"courier_morph"
-		"Ability8"					"courier_take_stash_and_transfer_items"
-		"Ability9"					"courier_transfer_items_to_other_player"
-		"Ability10"					"courier_go_to_enemy_secretshop"
-		"Ability11"					"courier_go_to_sideshop"
-		"Ability12"					"courier_go_to_sideshop2"
+		"Ability13"					"courier_burst"
 
 		// Bounds
 		//----------------------------------------------------------------

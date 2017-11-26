@@ -220,6 +220,7 @@ function MakeImbaHero(imba_heroes) {
 				hero.RemoveClass("ClassNormalOption")
 			}
 			hero.AddClass("ClassImbaOption")
+			$("#" + imba_heroes[h] + "_label").DeleteAsync(0);
 			var HeroLabel = $.CreatePanel("Label", hero, imba_heroes[h] + "_label");
 			HeroLabel.RemoveClass("ClassNormalOptionLabel")
 			HeroLabel.AddClass("ClassImbaOptionLabel")
@@ -238,6 +239,7 @@ function MakeNewHero(new_heroes) {
 			}
 			hero.RemoveClass("ClassNormalOption")
 			hero.AddClass("ClassCustomOption")
+			$("#" + new_heroes[h] + "_label").DeleteAsync(0);
 			var HeroLabel = $.CreatePanel("Label", hero, new_heroes[h] + "_label");
 			HeroLabel.AddClass("ClassCustomOptionLabel")
 			HeroLabel.text = $.Localize("new_hero");
@@ -253,6 +255,7 @@ function MakeDisabledHeroes(disabled_10v10, disabled_all) {
 			if (disabled_10v10[g] != null) {
 				var hero_panel = $("#PickList").FindChildTraverse(disabled_10v10[g])
 				$("#PickList").FindChildTraverse(disabled_10v10[g]).AddClass("taken")
+				$("#" + disabled_10v10[g] + "_label").DeleteAsync(0);
 				var HeroLabel = $.CreatePanel("Label", $("#PickList").FindChildTraverse(disabled_10v10[g]), disabled_10v10[g] + "_label");
 				HeroLabel.AddClass("ClassCustomOptionLabel")
 				HeroLabel.text = $.Localize("disabled_hero_10v10");
@@ -265,6 +268,7 @@ function MakeDisabledHeroes(disabled_10v10, disabled_all) {
 		if (disabled_all[h] != null) {
 			var hero_panel = $("#PickList").FindChildTraverse(disabled_all[h])
 			hero_panel.AddClass("taken")
+			$("#" + disabled_all[h] + "_label").DeleteAsync(0);
 			var HeroLabel = $.CreatePanel("Label", $("#PickList").FindChildTraverse(disabled_all[h]), disabled_all[h] + "_label");
 			HeroLabel.AddClass("ClassCustomOptionLabel")
 			HeroLabel.text = $.Localize("disabled_hero");
