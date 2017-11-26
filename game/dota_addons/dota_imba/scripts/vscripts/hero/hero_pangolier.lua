@@ -58,10 +58,8 @@ function imba_pangolier_swashbuckle:OnSpellStart()
     local sound_cast = "Hero_Pangolier.Swashbuckle.Cast"
     local modifier_movement = "modifier_imba_swashbuckle_dash"
     local attack_modifier = "modifier_imba_swashbuckle_slashes"
-    print(caster:HasTalent("special_bonus_imba_pangolier_1"))
-    print(caster:HasTalent("special_bonus_imba_pangolier_2"))
-    print(caster:HasTalent("special_bonus_imba_pangolier_3"))
-    print(caster:HasTalent("special_bonus_imba_pangolier_4"))
+    local cast_response = {"pangolin_pangolin_ability1_01", "pangolin_pangolin_ability1_02", "pangolin_pangolin_ability1_03", "pangolin_pangolin_ability1_04", "pangolin_pangolin_ability1_05", "pangolin_pangolin_ability1_06",
+						"pangolin_pangolin_ability1_07", "pangolin_pangolin_ability1_08", "pangolin_pangolin_ability1_09", "pangolin_pangolin_ability1_10", "pangolin_pangolin_ability1_11", "pangolin_pangolin_ability1_12", "pangolin_pangolin_ability1_13"}
 
     -- Ability specials
 	local dash_range = ability:GetSpecialValueFor("dash_range")
@@ -70,15 +68,19 @@ function imba_pangolier_swashbuckle:OnSpellStart()
 
 	
 	--Cancel Rolling Thunder if he was rolling
-	local rolling_thunder = "DOTA_Tooltip_modifier_pangolier_gyroshell"
+	local rolling_thunder = "modifier_pangolier_gyroshell" --Vanilla
+	--local rolling_thunder = "modifier_imba_pangolier_gyroshell_roll" --Imba
 	if caster:HasModifier(rolling_thunder) then
 		caster:RemoveModifierByName(rolling_thunder)
 	end
 
-	-- Turn Pangolier toward the point he will dash (fix targeting for when cast in ranger AND there are no nearby enemies after dash)
+	-- Turn Pangolier toward the point he will dash (fix targeting for when cast in range AND there are no nearby enemies after dash)
 	local direction = (point - caster:GetAbsOrigin()):Normalized()
 
 	caster:SetForwardVector(direction)
+
+	-- Play cast response
+    EmitSoundOn(cast_response[math.random(1, #cast_response)], caster)
 
     --play animation
     caster:StartGesture(ACT_DOTA_CAST_ABILITY_1)
@@ -325,20 +327,23 @@ function modifier_imba_swashbuckle_slashes:OnIntervalThink()
 			--Play damage sound effect
 			EmitSoundOn(self.hit_sound, enemy)
 
-			--Apply the damage from the slash
-			local damageTable = {victim = enemy,
-                        damage = self.damage,
-                        damage_type = DAMAGE_TYPE_PHYSICAL,
-                        damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
-                        attacker = self.caster,
-                        ability = nil
+			--can't hit Ethereal enemies
+			if not enemy:IsAttackImmune() then
+				--Apply the damage from the slash
+				local damageTable = {victim = enemy,
+               	    	    damage = self.damage,
+                	        damage_type = DAMAGE_TYPE_PHYSICAL,
+                      	    damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
+                       	 	attacker = self.caster,
+                       	    ability = nil
                         }
 
 
 
-            ApplyDamage(damageTable)
-            --Apply on-hit effects
-			self.caster:PerformAttack(enemy, true, true, true, true, false, true, true) --slashes are disguised normal attacks that never misses
+            	ApplyDamage(damageTable)
+           	    --Apply on-hit effects
+				self.caster:PerformAttack(enemy, true, true, true, true, false, true, true) --slashes are disguised normal attacks that never misses
+			end
 			
 		end
 
@@ -350,7 +355,8 @@ function modifier_imba_swashbuckle_slashes:OnIntervalThink()
 end
 
 function modifier_imba_swashbuckle_slashes:CheckState()
-	state = {[MODIFIER_STATE_STUNNED] = true}
+	state = {[MODIFIER_STATE_STUNNED] = true,
+			[MODIFIER_STATE_CANNOT_MISS] = true}
 
 	return state
 end
@@ -395,9 +401,6 @@ function imba_pangolier_shield_crash:GetCooldown(level)
 end
 
 
-function imba_pangolier_shield_crash:OnUpgrade()
-end
-
 function imba_pangolier_shield_crash:GetCastPoint()
 	local cast_point = self.BaseClass.GetCastPoint(self)
 
@@ -413,6 +416,8 @@ function imba_pangolier_shield_crash:OnSpellStart()
     local gyroshell_ability = caster:FindAbilityByName("imba_pangolier_gyroshell")
     local modifier_movement = "modifier_imba_shield_crash_jump"
     local dust_particle = "particles/units/heroes/hero_pangolier/pangolier_tailthump_cast.vpcf"
+    local cast_response = {"pangolin_pangolin_ability2_01", "pangolin_pangolin_ability2_02", "pangolin_pangolin_ability2_03", "pangolin_pangolin_ability2_04", "pangolin_pangolin_ability2_05", "pangolin_pangolin_ability2_06", "pangolin_pangolin_ability2_07",
+							"pangolin_pangolin_ability2_08", "pangolin_pangolin_ability2_09", "pangolin_pangolin_ability2_10", "pangolin_pangolin_ability2_11"}
 
 
     -- Ability specials
@@ -430,7 +435,8 @@ function imba_pangolier_shield_crash:OnSpellStart()
 	ParticleManager:SetParticleControl(dust, 0, caster:GetAbsOrigin())
     
 
-
+	-- Play cast response
+    EmitSoundOn(cast_response[math.random(1, #cast_response)], caster)
 
 	-- Play cast sound
 	EmitSoundOn(sound_cast, caster)
@@ -469,6 +475,7 @@ function modifier_imba_shield_crash_buff:OnCreated(kv)
     self.ability = self:GetAbility()
     self.stacks = kv.stacks
     self.particle = "particles/units/heroes/hero_pangolier/pangolier_tailthump_buff.vpcf"
+    self.sound = "Hero_Pangolier.TailThump.Shield"
 
     -- Ability specials
     self.damage_reduction_pct = self.ability:GetSpecialValueFor("hero_stacks")
@@ -478,8 +485,14 @@ function modifier_imba_shield_crash_buff:OnCreated(kv)
     	--set the stacks to the total % of mitigation for readability
     	self.caster:SetModifierStackCount("modifier_imba_shield_crash_buff", self.caster, self.damage_reduction_pct * self.stacks)
 
+    	--Play buff sound effect
+    	EmitSoundOn(self.sound, self.caster)
+
     	--Add buff particle
     	self.buff_particle = ParticleManager:CreateParticle(self.particle, PATTACH_WORLDORIGIN, self.caster)
+
+    	--ADD HERE PARTICLE EFFECTS CONTROL POINTS CONDITIONS (1-2 enemies: floating shields, 3: bigger shields with slight swirl effect, 4+: big shields and strong swirl effect)
+
 		ParticleManager:SetParticleControl(self.buff_particle, 1, self.caster:GetAbsOrigin()) --origin
 
    		self:AddParticle(self.buff_particle, false, false, -1, true, false)
@@ -519,7 +532,7 @@ end
 
 function modifier_imba_shield_crash_buff:IsPermanent() return false end
 function modifier_imba_shield_crash_buff:IsHidden() return false end
-function modifier_imba_shield_crash_buff:IsPurgable() return false end
+function modifier_imba_shield_crash_buff:IsPurgable() return true end
 function modifier_imba_shield_crash_buff:IsDebuff() return false end
 function modifier_imba_shield_crash_buff:AllowIllusionDuplicate() return true end
 function modifier_imba_shield_crash_buff:IsStealable() return true end
@@ -536,6 +549,8 @@ function modifier_imba_shield_crash_jump:OnCreated()
 	self.buff_modifier = "modifier_imba_shield_crash_buff"
 	self.smash_particle = "particles/units/heroes/hero_pangolier/pangolier_tailthump.vpcf"
 	self.smash_sound = "Hero_Pangolier.TailThump"
+	self.gyroshell = "modifier_pangolier_gyroshell" --Vanilla
+	--self.gyroshell = "modifier_imba_gyroshell_roll" --Imba
 
 	-- Ability specials
 	-- self.jump_height passed by the ability
@@ -549,6 +564,7 @@ function modifier_imba_shield_crash_jump:OnCreated()
 		-- Variables
 		self.time_elapsed = 0
 		self.jump_z = 0
+		self.no_horizontal = false
 
 		-- Wait one frame to get the target point from the ability's OnSpellStart, then calculate distance
 		Timers:CreateTimer(FrameTime(), function()
@@ -565,7 +581,17 @@ function modifier_imba_shield_crash_jump:OnCreated()
 end
 
 function modifier_imba_shield_crash_jump:CheckState()
-	state = {[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true}
+	--becomes fully disabled if jumping while not rolling
+	if self.caster:HasModifier(self.gyroshell) then
+		state = {[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true,
+				[MODIFIER_STATE_NO_UNIT_COLLISION] = true}
+	else
+		state = {[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true,
+				[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
+				[MODIFIER_STATE_STUNNED] = true,
+				[MODIFIER_STATE_SILENCED] = true,
+				[MODIFIER_STATE_MUTED] = true}
+	end
 
 	return state
 end
@@ -580,8 +606,13 @@ function modifier_imba_shield_crash_jump:OnIntervalThink()
 	-- Vertical Motion
 	self:VerticalMotion(self.caster, self.frametime)
 
-	-- Horizontal Motion
-	self:HorizontalMotion(self.caster, self.frametime)
+	-- Horizontal Motion only needed when Pangolier isn't rolling, won't gain horizontal movement
+	-- if Rolling Thunder end mid-jump
+	if not self.no_horizontal and not self.caster:HasModifier("modifier_pangolier_gyroshell") then
+		self:HorizontalMotion(self.caster, self.frametime)
+	else
+		self.no_horizontal = true
+	end
 end
 
 function modifier_imba_shield_crash_jump:IsHidden() return true end
@@ -595,6 +626,7 @@ function modifier_imba_shield_crash_jump:VerticalMotion(me, dt)
 	if IsServer() then
 
 		-- Check if we're still jumping
+		self.time_elapsed = self.time_elapsed + dt
 		if self.time_elapsed < self.jump_time then
 
 			-- Check if we should be going up or down
@@ -611,7 +643,9 @@ function modifier_imba_shield_crash_jump:VerticalMotion(me, dt)
 					self.caster:SetAbsOrigin(GetGroundPosition(self.caster:GetAbsOrigin(), self.caster) + Vector(0,0,self.jump_z))
 				end
 				
-			end 
+			end
+		else            
+			self:Destroy() 
 		end
 	end
 end
@@ -619,14 +653,11 @@ end
 function modifier_imba_shield_crash_jump:HorizontalMotion(me, dt)
 	if IsServer() then
 		-- Check if we're still jumping
-		self.time_elapsed = self.time_elapsed + dt
 		if self.time_elapsed < self.jump_time then
 
 			-- Go forward
 			local new_location = self.caster:GetAbsOrigin() + self.direction * self.jump_speed * dt
 			self.caster:SetAbsOrigin(new_location)            
-		else            
-			self:Destroy()
 		end
 	end 
 end
@@ -694,12 +725,21 @@ function modifier_imba_shield_crash_jump:OnRemoved()
 		end
 
 
-		--Create (replace if it exists already) the damage reduction modifier
+		--Create the damage reduction modifier. If it already exist,
+		--upgrade its stacks if the new count is higher and refresh
 		if damaged_heroes > 0 then
 			if self.caster:HasModifier(self.buff_modifier) then
-				self.caster:RemoveModifierByName(self.buff_modifier)
+				local old_stacks = self.caster:GetModifierStackCount(self.buff_modifier)
+
+				if damaged_heroes > old_stacks / self.hero_stacks then
+					self.caster:AddNewModifier(self.caster, self.ability, self.buff_modifier, {duration = self.duration, stacks = damaged_heroes})
+				else
+					self.caster:AddNewModifier(self.caster, self.ability, self.buff_modifier, {duration = self.duration, stacks = old_stacks / self.hero_stacks})
+				end
+
+			else
+				self.caster:AddNewModifier(self.caster, self.ability, self.buff_modifier, {duration = self.duration, stacks = damaged_heroes}) 
 			end
-			self.caster:AddNewModifier(self.caster, self.ability, self.buff_modifier, {duration = self.duration, stacks = damaged_heroes}) 
 		end
 
 		--destroy and release particle indexes
@@ -709,6 +749,23 @@ function modifier_imba_shield_crash_jump:OnRemoved()
 
 	end
 end
+
+--Needed for imba modifier, not vanilla
+--[[function modifier_imba_shield_crash_jump:OnDestroy()
+
+	if IsServer() then
+		--boost rolling thunder turn rate
+		local gyroshell_handler = self.caster:FindModifierByName(self.gyroshell)
+		if gyroshell_handler then
+			--plays bounce animation if rolling
+			self.caster:StartGesture()
+			gyroshell_handler.boosted_turn = true
+			gyroshell_handler.boosted_turn_time = 0
+			gyroshell_handler:GetModifierTurnRate_Percentage()
+		end
+	end
+
+end]]
 
 
 
@@ -752,9 +809,11 @@ function modifier_imba_heartpiercer_passive:OnCreated()
 	self.proc_sound_creep = "Hero_Pangolier.HeartPiercer.Proc.Creep"
 	self.delayed_debuff = "modifier_imba_heartpiercer_delay"
 	self.procced_debuff = "modifier_imba_heartpiercer_debuff"
+	self.cast_response = {"pangolin_pangolin_ability3_01", "pangolin_pangolin_ability3_02", "pangolin_pangolin_ability3_03", "pangolin_pangolin_ability3_04", "pangolin_pangolin_ability3_05", "pangolin_pangolin_ability3_06"}
 
 	--Ability specials
 	self.chance_pct = self.ability:GetSpecialValueFor("chance_pct") + self.caster:FindTalentValue("special_bonus_imba_pangolier_2") --Talent: extra proc chance
+	self.duration = self.ability:GetSpecialValueFor("duration")
 	self.debuff_delay = self.ability:GetSpecialValueFor("debuff_delay")
 
 	if IsServer() then
@@ -786,20 +845,24 @@ function modifier_imba_heartpiercer_passive:OnAttackLanded(kv)
                 return nil
             end
 
-            --Roll for the pierce chance
-            if RollPercentage(self.chance_pct) then
+            --Won't work on Roshan
+            if target:IsRoshan() then
+            	return nil
+            end
+
+            --Roll for the pierce chance, won't work on magic immune enemies
+            if not target:IsMagicImmune() and RollPercentage(self.chance_pct) then
             	--heartpiercer procced
 
-            	--Talent: check if heartpiercer is already in effect on the target. If it is, reapply the modifier 
-            	--with the remaining duration (will take care of any change to bonus armor gained while debuffed)
+            	--Talent: check if heartpiercer is already in effect on the target. If it is, refresh the modifier 
+            	-- (will also take care of any change to bonus armor gained while debuffed)
 
             	if target:HasModifier(self.procced_debuff) then
             		if self.caster:HasTalent("special_bonus_imba_pangolier_1") then
             	
             			local modifier_handler = target:FindModifierByName(self.procced_debuff)
-            			local remaining_duration = modifier_handler:GetDuration() - modifier_handler:GetElapsedTime()
             			target:RemoveModifierByName(self.procced_debuff)
-            			target:AddNewModifier(self.caster, self.ability, self.procced_debuff, {duration = remaining_duration})
+            			target:AddNewModifier(self.caster, self.ability, self.procced_debuff, {duration = self.duration})
             		end
             		return
             	else
@@ -811,6 +874,8 @@ function modifier_imba_heartpiercer_passive:OnAttackLanded(kv)
 						if target:IsCreep() then
 							EmitSoundOn(self.proc_sound_creep, target)
 						else
+							--also plays cast response on heroes
+    						EmitSoundOn(self.cast_response[math.random(1, #self.cast_response)], self.caster)
 							EmitSoundOn(self.proc_sound_hero, target)
 						end
 
@@ -881,7 +946,7 @@ function modifier_imba_heartpiercer_delay:OnRemoved()
 end
 
 function modifier_imba_heartpiercer_delay:IsHidden() return false end
-function modifier_imba_heartpiercer_delay:IsPurgable() return false end
+function modifier_imba_heartpiercer_delay:IsPurgable() return true end
 function modifier_imba_heartpiercer_delay:IsStealable() return false end
 function modifier_imba_heartpiercer_delay:IsPermanent() return false end
 function modifier_imba_heartpiercer_delay:IsDebuff() return true end
@@ -952,7 +1017,7 @@ function modifier_imba_heartpiercer_debuff:GetModifierPhysicalArmorBonus()
 end
 
 function modifier_imba_heartpiercer_debuff:IsHidden() return false end
-function modifier_imba_heartpiercer_debuff:IsPurgable() return false end
+function modifier_imba_heartpiercer_debuff:IsPurgable() return true end
 function modifier_imba_heartpiercer_debuff:IsStealable() return false end
 function modifier_imba_heartpiercer_debuff:IsPermanent() return false end
 function modifier_imba_heartpiercer_debuff:IsDebuff() return true end
@@ -963,7 +1028,10 @@ function modifier_imba_heartpiercer_debuff:IsDebuff() return true end
 -----    ROLLING THUNDER       -----
 ------------------------------------
 imba_pangolier_gyroshell = imba_pangolier_gyroshell or class({})
---LinkLuaModifier("modifier_imba_gyroshell_roll", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_gyroshell_roll", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_gyroshell_ricochet", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_gyroshell_stun", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_pangolier_gyroshell_bounce", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_pangolier_gyroshell:GetAbilityTextureName()
    return "pangolier_gyroshell"
@@ -1017,8 +1085,10 @@ function imba_pangolier_gyroshell:OnSpellStart()
     local caster = self:GetCaster()
     local ability = self
     local loop_sound = "Hero_Pangolier.Gyroshell.Loop"
-    local vanilla_modifier = "modifier_pangolier_gyroshell"
-    --local stun_modifier = "modifier_imba_gyroshell_stun" (not needed since we are using vanilla modifier for now)
+    local roll_modifier = "modifier_pangolier_gyroshell" --Vanilla
+    --local roll_modifier = "modifier_imba_gyroshell_roll" --Imba
+    local cast_response = {"pangolin_pangolin_ability4_01", "pangolin_pangolin_ability4_02", "pangolin_pangolin_ability4_03", "pangolin_pangolin_ability4_04", "pangolin_pangolin_ability4_05", "pangolin_pangolin_ability4_06",
+							"pangolin_pangolin_ability4_07", "pangolin_pangolin_ability4_08", "pangolin_pangolin_ability4_09", "pangolin_pangolin_ability4_10", "pangolin_pangolin_ability4_11", "pangolin_pangolin_ability4_12"}
 
     -- Ability specials
 	local tick_interval = ability:GetSpecialValueFor("tick_interval")
@@ -1043,13 +1113,46 @@ function imba_pangolier_gyroshell:OnSpellStart()
 	ParticleManager:DestroyParticle(self.cast_effect, false)
 	ParticleManager:ReleaseParticleIndex(self.cast_effect)
 
+	--Apply a basic purge
+	caster:Purge(false, true, false, false, false)
+
 	--Starts rolling (Vanilla modifier for now)
-	caster:AddNewModifier(caster, ability, vanilla_modifier, {duration = ability_duration})
+	caster:AddNewModifier(caster, ability, roll_modifier, {duration = ability_duration})
+
+	-- Play cast response
+    EmitSoundOn(cast_response[math.random(1, #cast_response)], caster)
 
 	--Play Loop sound
 	EmitSoundOn(loop_sound, caster)
 
+	--start interval thiking to play the ending voice lines (needed while we use vanilla modifier)
+
+	self.end_sound_played = false
+
+	--self:StartIntervalThink(0.5)
+
 end
+
+
+--[[function imba_pangolier_gyroshell:OnIntervalThink()
+
+	if IsServer() then
+
+		local caster = self:GetCaster()
+		local stop_response = {"pangolin_pangolin_ability_stop_01", "pangolin_pangolin_ability_stop_02", "pangolin_pangolin_ability_stop_03", 
+								"pangolin_pangolin_ability_stop_04", "pangolin_pangolin_ability_stop_05", "pangolin_pangolin_ability_stop_06"}
+
+		--check if pangolier stopped rolling, to play the voice lines
+		if not caster:HasModifier("modifier_pangolier_gyroshell") then
+			EmitSoundOn(stop_response[math.random(1, #stop_response)], caster)
+			self:StartIntervalThink(-1) --stop thinking
+		end
+
+	end
+
+
+end]]
+
 
 
 
@@ -1066,23 +1169,45 @@ modifier_imba_gyroshell_roll = modifier_imba_gyroshell_roll or class({})
 function modifier_imba_gyroshell_roll:OnCreated()
 	-- Ability properties
     self.caster = self:GetCaster()
-    self.ability = self
+    self.ability = self:GetAbility()
     self.stun_modifier = "modifier_imba_gyroshell_stun"
+    self.collision_modifier = "modifier_imba_gyroshell_ricochet"
+    self.shield_crash = "modifier_imba_shield_crash_jump"
+    self.end_sound = "Hero_Pangolier.Gyroshell.Stop"
+    self.sprinting_effect = "particles/units/heroes/hero_pangolier/pangolier_gyroshell.vpcf"
 
     -- Ability specials
-	self.tick_interval = ability:GetSpecialValueFor("tick_interval")
-	self.forward_move_speed = ability:GetSpecialValueFor("forward_move_speed")
-	self.turn_rate_boosted = ability:GetSpecialValueFor("turn_rate_boosted")
-	self.turn_rate = ability:GetSpecialValueFor("turn_rate")
-	self.radius = ability:GetSpecialValueFor("radius")
-	self.hit_radius = ability:GetSpecialValueFor("hit_radius")
-	self.bounce_duration = ability:GetSpecialValueFor("bounce_duration")
-	self.stun_duration = ability:GetSpecialValueFor("stun_duration")
-	self.knockback_radius = ability:GetSpecialValueFor("knockback_radius")
-	self.jump_recover_time = ability:GetSpecialValueFor("jump_recover_time")
+	self.tick_interval = self.ability:GetSpecialValueFor("tick_interval")
+	self.forward_move_speed = self.ability:GetSpecialValueFor("forward_move_speed")
+	self.turn_rate_boosted = self.ability:GetSpecialValueFor("turn_rate_boosted")
+	self.boost_duration = self.ability:GetSpecialValueFor("turn_rate_boost_duration")
+	self.turn_rate = self.ability:GetSpecialValueFor("turn_rate")
+	self.radius = self.ability:GetSpecialValueFor("radius")
+	self.hit_radius = self.ability:GetSpecialValueFor("hit_radius")
+	self.bounce_duration = self.ability:GetSpecialValueFor("bounce_duration")
+	self.stun_duration = self.ability:GetSpecialValueFor("stun_duration")
+	self.knockback_radius = self.ability:GetSpecialValueFor("knockback_radius")
+	self.jump_recover_time = self.ability:GetSpecialValueFor("jump_recover_time")
+	self.pause_duration = self.ability:GetSpecialValueFor("pause_duration")
 
 	if IsServer() then
 
+		--play initial roll gesture
+		self.caster:StartGesture(ACT_DOTA_CAST_ABILITY_4)
+
+		--Add particles
+		self.sprint = ParticleManager:CreateParticle(self.sprinting_effect, PATTACH_WORLDORIGIN, self.caster)
+		ParticleManager:SetParticleControl(self.sprint, 0, self.caster:GetAbsOrigin()) --origin
+
+   		self:AddParticle(self.sprint, false, false, -1, true, false)
+
+
+		--declaring variables
+		self.initial_direction = self.caster:GetForwardVector() --will be needed to stop turning after pangolier turn 180°
+		self.issued_order = false --is pangolier turning?
+		self.boosted_turn = true --is pangolier turning faster? (on start, collision, jump)
+		self.boosted_turn_time = 0 --will count how many ticks have been passed with boosted turn rate
+		self:GetModifierTurnRate_Percentage() --start with boosted turn rate
 
 
 		--start modifier interval thinking
@@ -1097,47 +1222,201 @@ function modifier_imba_gyroshell_roll:IgnoreTenacity() return true end
 function modifier_imba_gyroshell_roll:IsMotionController() return true end
 function modifier_imba_gyroshell_roll:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
+
 function modifier_imba_gyroshell_roll:OnIntervalThink()
 
-	--check the direction we are rolling to and the target point to determine if Pangolier is turning
-	local direction = self.caster:GetForwardVector():Normalized()
-	local target_direction = self.point - self.caster:GetAbsOrigin():Normalized()
+	--Interrupt if Pangolier has been stunned, rooted or taunted
+	if self.caster:IsStunned() or self.caster:IsRooted() or self.caster:GetForceAttackTarget() then
 
-	if direction ~= target_direction
+		 return self:Destroy()
+		
+	end
+
+	--center particles on Pangolier
+	ParticleManager:SetParticleControl(self.sprint, 0, self.caster:GetAbsOrigin())
+
+	--check what the turn rate should be
+	if self.boosted_turn then
+		--return to normal turn rate if boost duration expired
+		if self.boosted_turn_time == self.boost_duration then
+			self.boosted_turn = false
+			self:GetModifierTurnRate_Percentage()
+		end
+		self.boosted_turn_time = self.boosted_turn_time + self.tick_interval
+	end
+
+	--check if we have to stop turning: stop the order once pangolier has turned 180° from the order launch
+	if (self.caster:GetForwardVector() + self.initial_direction) == Vector(0,0,0) then
+		self.caster:Interrupt() --stop turning
+		self.issued_order = false
+
+	end
+
+	--if no orders are issued, Pangolier will move in a straight line
+	if not self.issued_order then
+		self.caster:MoveToPosition(self.caster:GetAbsOrigin() + self.caster:GetForwardVector() * 100)
+	end
+
+	--destroys nearby trees
+	GridNav:DestroyTreesAroundPoint(self.caster:GetAbsOrigin(), self.radius, false)
+	
+
+	-- Check Motion controllers
+	if not self:CheckMotionControllers() then
+		self:Destroy()
+		return nil
+	end
+
+
+	-- Horizontal motion, don't move if Pangolier has just bounced
+	if not self.caster:HasModifier(self.collision_modifier) then
+		self:HorizontalMotion(self:GetParent(), self.tick_interval)
+	end
+
+
 end
 
+function modifier_imba_gyroshell_roll:HorizontalMotion(me, dt)
+	if IsServer() then
+
+			-- Go forward, check if Pangolier is going to collide with impassable terrain
+			local expected_location = self.caster:GetAbsOrigin() + self.caster:GetForwardVector() * self.forward_move_speed * dt
+			local isTraversable = GridNav:IsTraversable(expected_location)
+			
+
+			if self.caster:HasModifier("modifier_imba_shield_crash_jump") or isTraversable then --can Pangolier proceed?
+				
+				self.caster:SetAbsOrigin(expected_location)
+			else --Pangolier collide, reverse his direction and pause him slitghly
+				
+				self.caster:SetForwardVector(self.caster:GetForwardVector() * (-1))
+				self.caster:AddNewModifier(self.caster, self.ability, self.collision_modifier, {duration = self.pause_duration})
+			end
+
+	end 
+end
+
+
+function modifier_imba_gyroshell_roll:OnRemoved()    
+	if IsServer() then
+		self.caster:SetUnitOnClearGround()
+		self.caster:StopSound(self.loop_sound)
+		EmitSoundOn(self.end_sound, self.caster)
+	end
+
+end
+
+function modifier_imba_gyroshell_roll:OnDestroy()
+
+	if IsServer() then
+		--release particle index
+		ParticleManager:DestroyParticle(self.sprint, false)
+		ParticleManager:ReleaseParticleIndex(self.sprint)
+	end
 
 end
 
 function modifier_imba_gyroshell_roll:DeclareFunctions()
 	local declfuncs = {MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE,
 						MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE,
-						MODIFIER_PROPERTY_OVERRIDE_ANIMATION
+						MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
+						MODIFIER_PROPERTY_MODEL_CHANGE,
 						MODIFIER_EVENT_ON_ORDER}
 
 	return declfuncs
 end 
 
---if issuing an movement order, update the position Pangolier will try to roll to
-function modifier_imba_gyroshell_roll:OnOrder(kv)
-	local order_type = kv.order_type
-	if order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION or order_type == DOTA_UNIT_ORDER_MOVE_TO_TARGET or order_type == DOTA_UNIT_ORDER_HOLD_POSITION then
-		self.point = self.caster:GetCursorPosition()
+function modifier_imba_gyroshell_roll:OnOrder(keys)
+
+	if IsServer() then
+
+		--filter orders
+		if keys.unit == self.caster then
+		local order_type = keys.order_type	
+
+		-- On any movement order, track the initial direction of Pangolier
+		if order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION or order_type == DOTA_UNIT_ORDER_MOVE_TO_TARGET 
+		or order_type == DOTA_UNIT_ORDER_ATTACK_MOVE or order_type == DOTA_UNIT_ORDER_ATTACK_TARGET then
+			self.initial_direction = self.caster:GetForwardVector()
+			self.issued_order = true
+		end
+	end
+
 	end
 end
 
-
+--Fixed movement speed. Motion controller will handle the movement
 function modifier_imba_gyroshell_roll:GetModifierMoveSpeed_Absolute()
-	return self.forward_move_speed
+	return 1 
 end
 
 function modifier_imba_gyroshell_roll:GetModifierTurnRate_Percentage()
 
+	if IsServer() then
+
+		local base_tr = 1.0 --HARDCODED because fucking volvo can't provide a simple function -.-
+
+		--calculating turn rates
+		--converting from degrees/second to radians/second
+		local tr_per_sec_in_radians = (self.turn_rate * math.pi) / 180
+		local boosted_tr_per_sec_in_radians = (self.turn_rate_boosted * math.pi) / 180 
+
+		--converting from radians/second to radians/0.03s (actual turn rate)
+		local tr_in_radians = tr_per_sec_in_radians * 0.03
+		local boosted_tr_in_radians = boosted_tr_per_sec_in_radians * 0.03
+
+		--calculating percentage needed to achieve the desired turn rates
+		local tr_percentage = 100 - ((100 * tr_in_radians) / base_tr )
+		local boosted_tr_percentage = 100 - ((100 * (tr_in_radians + boosted_tr_in_radians)) / base_tr)
 
 
-	return self.forward_move_speed
+		if self.boosted_turn then
+			return boosted_tr_percentage * (-1)
+		end
+		return tr_percentage * (-1)
+	end
+end
+
+function modifier_imba_gyroshell_roll:GetModifierModelChange()
+	return "models/heroes/pangolier/pangolier_gyroshell.vmdl"
 end
 
 function modifier_imba_gyroshell_roll:GetOverrideAnimation()
 	return ACT_DOTA_OVERRIDE_ABILITY_4
-end]]
+end
+
+--Collision modifier: will disable Rolling Thunder motion controllers while it's active
+modifier_imba_gyroshell_ricochet = modifier_imba_gyroshell_ricochet or class({})
+
+function modifier_imba_gyroshell_ricochet:OnCreated()
+
+	--Ability properties
+	self.caster = self:GetCaster()
+	self.ability = self:GetAbility()
+	self.gyroshell = "modifier_imba_gyroshell_roll"
+	self.bounce_sound = "Hero_Pangolier.Gyroshell.Carom"
+
+
+
+	--play the bounce sound
+    EmitSoundOn(self.bounce_sound, self.caster)
+    --play the bounce animation
+    self.caster:StartGesture(ACT_DOTA_FLAIL)
+end
+
+function modifier_imba_gyroshell_ricochet:OnDestroy()
+
+	--boost rolling thunder turn rate
+	local gyroshell_handler = self.caster:FindModifierByName(self.gyroshell)
+	if gyroshell_handler then
+		gyroshell_handler.boosted_turn = true
+		gyroshell_handler.boosted_turn_time = 0
+		gyroshell_handler:GetModifierTurnRate_Percentage()
+	end
+end
+
+
+function modifier_imba_gyroshell_ricochet:IsHidden() return true end
+function modifier_imba_gyroshell_ricochet:IsPurgable() return true end
+function modifier_imba_gyroshell_ricochet:IsDebuff() return false end
+]]
