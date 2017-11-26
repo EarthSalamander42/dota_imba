@@ -70,6 +70,7 @@ function imba_nevermore_shadowraze_close:OnSpellStart()
     local ability = self
     local cast_response = {"nevermore_nev_ability_shadow_07", "nevermore_nev_ability_shadow_18", "nevermore_nev_ability_shadow_21"}
     local sound_raze = "Hero_Nevermore.Shadowraze"
+    local modifier_harvest = "modifier_imba_reqiuem_harvest"
 
     -- Ability specials
     local raze_radius = ability:GetSpecialValueFor("raze_radius")
@@ -84,7 +85,12 @@ function imba_nevermore_shadowraze_close:OnSpellStart()
     -- Calculate the center point of the raze
     local raze_point = caster:GetAbsOrigin() + caster:GetForwardVector() * raze_distance
 
-    CastShadowRazeOnPoint(caster, ability, raze_point, raze_radius)
+    local raze_hit_hero = CastShadowRazeOnPoint(caster, ability, raze_point, raze_radius)
+
+    --if caster is in Soul Harvest and the raze didn't hit any hero, remove the modifier
+    if caster:HasModifier(modifier_harvest) and not raze_hit_hero then
+    	caster:RemoveModifierByName(modifier_harvest)
+    end
 
 end
 
@@ -152,6 +158,7 @@ function imba_nevermore_shadowraze_medium:OnSpellStart()
     local cast_response = {"nevermore_nev_ability_shadow_08", "nevermore_nev_ability_shadow_20", "nevermore_nev_ability_shadow_22"}
     local sound_raze = "Hero_Nevermore.Shadowraze"
     local modifier_combo = "modifier_shadow_raze_combo"
+    local modifier_harvest = "modifier_imba_reqiuem_harvest"
 
     -- Ability specials
     local raze_radius = ability:GetSpecialValueFor("raze_radius")
@@ -171,10 +178,12 @@ function imba_nevermore_shadowraze_medium:OnSpellStart()
     -- Calculate the center point of the primary raze
     local main_raze_point = caster:GetAbsOrigin() + caster:GetForwardVector() * raze_distance
 
-    CastShadowRazeOnPoint(caster, ability, main_raze_point, raze_radius)
+    local raze_hit_hero = CastShadowRazeOnPoint(caster, ability, main_raze_point, raze_radius)
 
 
     -- Additional razes, if feasible
+    local extra_razes_did_hit = false -- check if at least one extra raze hit an enemy hero
+
     if additional_raze_count > 0 then
         local last_left_raze_point = main_raze_point
         local last_right_raze_point = main_raze_point
@@ -186,9 +195,17 @@ function imba_nevermore_shadowraze_medium:OnSpellStart()
             last_left_raze_point = RotatePosition(caster:GetAbsOrigin(), left_qangle, last_left_raze_point)
             last_right_raze_point = RotatePosition(caster:GetAbsOrigin(), right_qangle, last_right_raze_point)
 
-            CastShadowRazeOnPoint(caster, ability, last_left_raze_point, raze_radius)
-            CastShadowRazeOnPoint(caster, ability, last_right_raze_point, raze_radius)
+            local extra_hit_1 = CastShadowRazeOnPoint(caster, ability, last_left_raze_point, raze_radius)
+            local extra_hit_2 = CastShadowRazeOnPoint(caster, ability, last_right_raze_point, raze_radius)
+            if extra_hit_1 or extra_hit_2 then --did any of these pair of razes hit an enemy hero?
+            	extra_razes_did_hit = true
+            end
         end
+    end
+
+    --if caster is in Soul Harvest and no razes hit an hero, remove the modifier
+    if caster:HasModifier(modifier_harvest) and not raze_hit_hero and not extra_razes_did_hit then
+    	caster:RemoveModifierByName(modifier_harvest)
     end
 end
 
@@ -255,6 +272,7 @@ function imba_nevermore_shadowraze_far:OnSpellStart()
     local cast_response = {"nevermore_nev_ability_shadow_11", "nevermore_nev_ability_shadow_19", "nevermore_nev_ability_shadow_23"}
     local sound_raze = "Hero_Nevermore.Shadowraze"
     local modifier_combo = "modifier_shadow_raze_combo"
+    local modifier_harvest = "modifier_imba_reqiuem_harvest"
 
     -- Ability specials
     local main_raze_radius = ability:GetSpecialValueFor("main_raze_radius")
@@ -280,34 +298,51 @@ function imba_nevermore_shadowraze_far:OnSpellStart()
 
     -- Calculate the center point of the primary raze
     local main_raze_point = caster:GetAbsOrigin() + caster:GetForwardVector() * main_raze_distance
-    CastShadowRazeOnPoint(caster, ability, main_raze_point, main_raze_radius)
+    local raze_hit_hero = CastShadowRazeOnPoint(caster, ability, main_raze_point, main_raze_radius)
 
     -- Check if ability is level 5 or above
+
+    local lvl_5_raze_hit_hero = false --check wether this raze hit an enemy hero
+
     if level_of_ability >= 5 then
 
         -- Create a second raze with its values
         local level_5_raze_point = caster:GetAbsOrigin() + caster:GetForwardVector() * level_5_raze_distance
-        CastShadowRazeOnPoint(caster, ability, level_5_raze_point, level_5_raze_radius)
+        lvl_5_raze_hit_hero = CastShadowRazeOnPoint(caster, ability, level_5_raze_point, level_5_raze_radius)
     end
 
     -- Check if ability is level 6 or above
+
+	local lvl_6_raze_hit_hero = false --check wether this raze hit an enemy hero
+
     if level_of_ability >= 6 then
 
         -- Create a third raze with its values, behind the caster
         local back_direction = (main_raze_point - caster:GetAbsOrigin()):Normalized()
         local level_6_raze_point = caster:GetAbsOrigin() + back_direction * level_6_raze_distance
-        CastShadowRazeOnPoint(caster, ability, level_6_raze_point, level_6_raze_radius)
+        lvl_6_raze_hit_hero = CastShadowRazeOnPoint(caster, ability, level_6_raze_point, level_6_raze_radius)
     end
 
     -- Check if abiility is level 7
+
+	local lvl_7_raze_hit_hero = false --check wether this raze hit an enemy hero
+
     if level_of_ability == 7 then
 
-        -- Create the lats raze at the far end
+        -- Create the last raze at the far end
         local level_7_raze_point = caster:GetAbsOrigin() + caster:GetForwardVector() * level_7_raze_distance
-        CastShadowRazeOnPoint(caster, ability, level_7_raze_point, level_7_raze_radius)
+        local lvl_7_raze_hit_hero = CastShadowRazeOnPoint(caster, ability, level_7_raze_point, level_7_raze_radius)
     end
+
+    --if caster is in Soul Harvest and no razes hit an hero, remove the modifier
+    if caster:HasModifier(modifier_harvest) and not raze_hit_hero and not lvl_5_raze_hit_hero and not lvl_6_raze_hit_hero and not lvl_7_raze_hit_hero then
+    	caster:RemoveModifierByName(modifier_harvest)
+    end
+
 end
 
+--Return a boolean if the caster has the Soul Harvest modifier: True if the raze hit an enemy hero, false otherwise. 
+--Return nil if the caster doesn't have the modifier.
 function CastShadowRazeOnPoint(caster, ability, point, radius)
     -- Ability properties
     local particle_raze = "particles/hero/nevermore/nevermore_shadowraze.vpcf"
@@ -371,6 +406,15 @@ function CastShadowRazeOnPoint(caster, ability, point, radius)
 
             else --If there was no table, just damage enemy
                 ApplyShadowRazeDamage(caster, ability, enemy)
+                --#6 Talent: Shadowraze refresh Requiem of Souls' debuff
+                    if caster:HasTalent("special_bonus_imba_nevermore_6") and enemy:HasModifier("modifier_imba_reqiuem_debuff") then
+                    	local modifier_handler = enemy:FindModifierByName(requiem_debuff)
+                    	if modifier_handler then
+                    	 	local new_duration = modifier_handler.duration
+                    	 	enemy:RemoveModifierByName(requiem_debuff)
+                    	 	enemy:AddNewModifier(caster, modifier_handler.ability, requiem_debuff, {duration = new_duration})
+                    	end
+                    end
             end
         end
     end
@@ -380,23 +424,16 @@ function CastShadowRazeOnPoint(caster, ability, point, radius)
     	CreateModifierThinker(caster, ability, pool_modifier, {duration = pool_duration, radius = pool_radius}, point, caster:GetTeamNumber(), false)
     end
 
-    -- If there are no enemy heroes in a raze and the caster is in a Soul Harvest, remove the modifier
+    -- Check if the raze has hit an enemy hero
     if caster:HasModifier(modifier_harvest) then
-        if #enemies == 0 then
-            caster:RemoveModifierByName(modifier_harvest)
-        else
-            -- Enemies found. If none of them are real heroes, remove the modifier
-            local enemy_hero = false
+        if #enemies > 0 then
             for _,enemy in pairs(enemies) do
                 if enemy:IsRealHero() then
-                    enemy_hero = true
+                	return true
                 end
             end
-
-            if not enemy_hero then
-                caster:RemoveModifierByName(modifier_harvest)
-            end
         end
+        return false
     end
 end
 
@@ -419,7 +456,7 @@ function ApplyShadowRazeDamage(caster, ability, enemy)
         local stacks = caster:GetModifierStackCount(modifier_souls, caster)
 
 
-        -- #8 Talent: Necromastery soul grant additional damage (REMOVED)
+        -- Talent: Necromastery soul grant additional damage (REMOVED)
        -- damage_per_soul = damage_per_soul + caster:FindTalentValue("special_bonus_imba_nevermore_8")
 
         -- Adjust damage
@@ -597,8 +634,8 @@ function modifier_imba_shadow_raze_pool:OnCreated(kv)
 
 		-- Talent specials
 		self.radius = kv.radius
-		print(self.radius)
-		self.damage = self.caster:FindTalentValue("special_bonus_imba_nevermore_1", "dmg_per_sec")
+		self.flat_damage = self.caster:FindTalentValue("special_bonus_imba_nevermore_1", "flat_dmg_per_sec")
+		self.percent_damage = self.caster:FindTalentValue("special_bonus_imba_nevermore_1", "pc_dmg_per_sec")
 		self.tick_interval = self.caster:FindTalentValue("special_bonus_imba_nevermore_1", "tick_interval")
 
 		-- Play shadow pool particle effect, assign to modifier
@@ -608,7 +645,8 @@ function modifier_imba_shadow_raze_pool:OnCreated(kv)
 		self:AddParticle(particle_pool, false, false, -1, false, false)
 
 		-- Calculate damage per tick
-		self.damage_per_tick = self.damage * self.tick_interval
+		self.percent_damage_per_tick = self.percent_damage * self.tick_interval
+		self.flat_damage_per_tick = self.flat_damage * self.tick_interval
 
 		-- Start thinking
 		self:StartIntervalThink(self.tick_interval)
@@ -633,7 +671,7 @@ function modifier_imba_shadow_raze_pool:OnIntervalThink()
 			damage_table = ({victim = enemy,
 						 attacker = self.caster,
 						 ability = self.ability,
-						 damage = self.damage_per_tick,
+						 damage = ((enemy:GetMaxHealth() / 100) * self.percent_damage_per_tick) + self.flat_damage_per_tick,
 						 damage_type = DAMAGE_TYPE_MAGICAL})
 
 			ApplyDamage(damage_table)
@@ -646,6 +684,7 @@ end
 ------------------------------------
 imba_nevermore_necromastery = imba_nevermore_necromastery or class({})
 LinkLuaModifier("modifier_imba_necromastery_souls", "hero/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_necromastery_talent_extra_cap", "hero/hero_nevermore.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_nevermore_necromastery:GetAbilityTextureName()
    return "nevermore_necromastery"
@@ -758,6 +797,8 @@ function imba_nevermore_necromastery:OnSpellStart()
 
 end
 
+
+
 -- Necromastery souls modifier
 modifier_imba_necromastery_souls = modifier_imba_necromastery_souls or class({})
 
@@ -768,6 +809,7 @@ function modifier_imba_necromastery_souls:OnCreated()
     self.particle_soul_creep = "particles/units/heroes/hero_nevermore/nevermore_necro_souls.vpcf"
     self.particle_soul_hero = "particles/hero/nevermore/nevermore_soul_projectile.vpcf"
     self.requiem_ability = "imba_nevermore_requiem"
+    self.extra_cap_modifier = "modifier_imba_necromastery_talent_extra_cap"
 
     -- Ability specials
     self.creep_kill_soul_count = self.ability:GetSpecialValueFor("creep_kill_soul_count")
@@ -775,7 +817,10 @@ function modifier_imba_necromastery_souls:OnCreated()
     self.hero_attack_soul_count = self.ability:GetSpecialValueFor("hero_attack_soul_count")
     self.shadowraze_soul_count = self.ability:GetSpecialValueFor("shadowraze_soul_count")
     self.damage_per_soul = self.ability:GetSpecialValueFor("damage_per_soul")
-    self.max_souls = self.ability:GetSpecialValueFor("max_souls")
+    self.base_max_souls = self.ability:GetSpecialValueFor("max_souls")
+    self.scepter_max_souls = self.ability:GetSpecialValueFor("scepter_max_souls")
+    self.max_souls = self.base_max_souls
+    self.total_max_souls = self.base_max_souls
     self.temporary_soul_duration = self.ability:GetSpecialValueFor("temporary_soul_duration")
     self.max_temporary_souls_pct = self.ability:GetSpecialValueFor("max_temporary_souls_pct")
     self.soul_projectile_speed = self.ability:GetSpecialValueFor("soul_projectile_speed")
@@ -812,8 +857,10 @@ function modifier_imba_necromastery_souls:OnCreated()
             return nil
         end
 
+
+
         -- Decide how many temporary souls we can have at once
-        self.max_souls_inc_temp = self.max_souls * (1 + (self.max_temporary_souls_pct * 0.01))
+        self.max_souls_inc_temp = self.base_max_souls * (1 + (self.max_temporary_souls_pct * 0.01))
 
         -- If a table is not yet declared, assign it now
         if not self.soul_table then
@@ -831,20 +878,39 @@ end
 
 function modifier_imba_necromastery_souls:OnIntervalThink()
     if IsServer() then
-        --[[ Talent: Maximum Necromastery soul increase (REMOVED)
-        if self.caster:HasTalent("special_bonus_imba_nevermore_6") and not self.talent6 then
-            self.talent6 = true
-            self.max_souls = self.max_souls + self.caster:FindTalentValue("special_bonus_imba_nevermore_6")]]
 
-            -- Recalculate temporary souls
-            self.max_souls_inc_temp = self.max_souls * (1 + (self.max_temporary_souls_pct * 0.01))
-        --end
+    	--Scepter: Maximum Necromastery soul increase
+        if self.caster:HasScepter() then
+            --self.already_accounted = true -- necessary or else there would be an infinite increase to the cap
+            self.max_souls = self.scepter_max_souls
+        else
+        	self.max_souls = self.base_max_souls
+        end
+
+       -- print(self.max_souls)
+      --  print(self.total_max_souls)
+        
+        -- Check if the souls cap is correct and reset it in case it's wrong 
+        --(happens with a bug that reset the extra max souls cap from talent #3 on death and when dropping/selling aghanim scepter)
+        
+        if self.caster:HasTalent("special_bonus_imba_nevermore_3") then
+            if self.total_max_souls ~= self.max_souls + self.ability.hero_killed then
+            	self.total_max_souls = self.max_souls + self.ability.hero_killed
+            end
+        else --updates the cap if scepter is bought or discarded when you don't have the talent
+        	self.total_max_souls = self.max_souls
+        end
+
+        --print(self.total_max_souls)
+
+        -- Recalculate temporary souls
+        self.max_souls_inc_temp = self.total_max_souls * (1 + (self.max_temporary_souls_pct * 0.01))
 
         -- Check if we have less souls than how many are registered in the table.
         local stacks = self:GetStackCount()
 
         -- If the caster hasn't gone beyond the maximum souls, set the duration to infinity
-        if stacks <= self.max_souls then
+        if stacks <= self.total_max_souls then
             self:SetDuration(-1, true)
         end
 
@@ -856,10 +922,10 @@ function modifier_imba_necromastery_souls:OnIntervalThink()
         end
 
         -- Check if there are temporary souls
-        if #self.soul_table > self.max_souls then
+        if #self.soul_table > self.total_max_souls then
 
             -- Check each temporary soul's duration, to decide if he can go free
-            for i = #self.soul_table, (self.max_souls + 1), -1 do
+            for i = #self.soul_table, (self.total_max_souls + 1), -1 do
                 if self.soul_table[i] + self.temporary_soul_duration < GameRules:GetGameTime() then
                     table.remove(self.soul_table, i)
                     self:DecrementStackCount()
@@ -892,7 +958,7 @@ function modifier_imba_necromastery_souls:OnStackCountChanged(old_stack_count)
                 return nil
             end
 
-            if stacks > self.max_souls then
+            if stacks > self.total_max_souls then
                 -- Set the new temporary soul duration
                 self:SetDuration(self.temporary_soul_duration, true)
             end
@@ -1040,10 +1106,10 @@ function modifier_imba_necromastery_souls:OnDeath(keys)
             -- Decide how many souls should the caster get
             local soul_count = 0
             if target:IsRealHero() then
-            	--Talent #3: Increase souls cap permanently on hero kills
-            	if self.caster:HasTalent("special_bonus_imba_nevermore_3") then
-            		self.max_souls = self.max_souls + 1
-            	end
+            	--Talent #3: Increase souls cap permanently on hero kills. It is a retroactive talent, so when activated it will account all the hero kills
+            	self.ability.hero_killed = (self.ability.hero_killed or (self.caster:GetKills() - 1)) + 1
+                --print(self.ability.hero_killed)
+                --print(self.total_max_souls)
                 soul_count = self.hero_kill_soul_count
             else
                 soul_count = self.creep_kill_soul_count
