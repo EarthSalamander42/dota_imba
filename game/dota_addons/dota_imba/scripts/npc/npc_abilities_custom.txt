@@ -22337,6 +22337,7 @@
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_pangolier.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_pangolin.vsndevts"
 		}
 
 		// Casting
@@ -22365,7 +22366,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range"					"900"
+				"range"					"1025"
 			}
 			"03"
 			{
@@ -22428,6 +22429,7 @@
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_pangolier.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_pangolin.vsndevts"
 		}
 
 		// Casting
@@ -22509,8 +22511,8 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 		"AbilityTextureName"			"pangolier_heartpiercer"
 		"MaxLevel"						"7"
 		"HasScepterUpgrade"				"0"
@@ -22520,6 +22522,7 @@
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_pangolier.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_pangolin.vsndevts"
 		}
 
 		
@@ -22585,6 +22588,7 @@
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_pangolier.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_pangolin.vsndevts"
 			"model" "models/heroes/pangolier/pangolier_gyroshell.vmdl"
 			"model" "models/heroes/pangolier/pangolier_gyroshell2.vmdl"
 		}
@@ -22637,43 +22641,53 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"turn_rate"				"120 120 120 125 130 135"
+				"turn_rate_boost_duration" "0.25"
 			}
 			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"turn_rate"				"120 120 120 125 130 135"
+			}
+			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"radius"				"400"
 			}			
-			"07"
+			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"hit_radius"			"150"
 			}			
-			"08"
+			"09"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"bounce_duration"		"0.4"
 			}			
-			"09"
+			"10"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"stun_duration"			"1.0 1.25 1.5 1.65 1.8 1.95"
 			}			
-			"10"
+			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"knockback_radius"		"150"
 			}			
-			"11"
+			"12"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"duration"				"6.0 7.0 8.0 8.5 9.0 9.5"
 				"LinkedSpecialBonus"	"special_bonus_imba_pangolier_4"
 			}
-			"12"
+			"13"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"jump_recover_time"		"0.25"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"pause_duration"		"0.2"
 			}			
 
 		}
