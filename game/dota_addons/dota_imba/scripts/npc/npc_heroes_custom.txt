@@ -585,52 +585,52 @@
 		"ProjectileModel"			"particles/units/heroes/hero_drow/drow_base_attack.vpcf"
 	}
 
-//		//=================================================================================================================
-//		// HERO: Elder Titan
-//		//=================================================================================================================
-//		"npc_dota_hero_elder_titan"
-//		{
-//			"override_hero"				"npc_dota_hero_elder_titan"
-//	
-//			//Picking Screen
-//			"IsImba"					"1"
-//			"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-//	
-//			"Ability1"					"imba_elder_titan_echo_stomp"
-//			"Ability2"					"imba_elder_titan_ancestral_spirit"
-//			"Ability3"					"imba_elder_titan_natural_order"
-//			"Ability4"					"generic_hidden"
-//			"Ability5"					"generic_hidden"
-//			"Ability6"					"generic_hidden"
-//			"Ability7"					"generic_hidden"
-//	
-//	//		"Ability2"					"elder_titan_ancestral_spirit"
-//	//		"Ability3"					"elder_titan_natural_order"
-//	//		"Ability4"					"generic_hidden"
-//	//		"Ability5"					"generic_hidden"
-//	//		"Ability6"					"elder_titan_earth_splitter"
-//	//		"Ability7"					"elder_titan_return_spirit"
-//	
-//			"Ability10"					"generic_hidden" // 
-//			"Ability11"					"generic_hidden" // 
-//			"Ability12"					"generic_hidden" // 
-//			"Ability13"					"generic_hidden" // 
-//			"Ability14"					"generic_hidden" // 
-//			"Ability15"					"generic_hidden" // 
-//			"Ability16"					"generic_hidden" // 
-//			"Ability17"					"generic_hidden" // 
-//	
-//	//		"Ability10"					"special_bonus_imba_elder_titan_1" // reduce echo stomp cast time
-//	//		"Ability11"					"special_bonus_imba_elder_titan_2" // reduce bonus armor (in addition to base armor)
-//	//		"Ability12"					"special_bonus_imba_elder_titan_3" // increase ancestral spirit movespeed
-//	//		"Ability13"					"special_bonus_imba_elder_titan_4" // natural order reduce both armor and magic resist on elder titan
-//	//		"Ability14"					"special_bonus_imba_elder_titan_7" // natural order reduce both armor and magic resist on the spirit
-//	//		"Ability15"					"special_bonus_imba_elder_titan_5" // astral spirit roots target hit
-//	//		"Ability16"					"special_bonus_imba_elder_titan_6" // 
-//	//		"Ability17"					"special_bonus_imba_elder_titan_8" // 
-//	
-//			"ProjectileSpeed"			"900"
-//		}
+	//=================================================================================================================
+	// HERO: Elder Titan
+	//=================================================================================================================
+	"npc_dota_hero_elder_titan"
+	{
+		"override_hero"				"npc_dota_hero_elder_titan"
+
+		//Picking Screen
+		"IsImba"					"1"
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+
+		"Ability1"					"imba_elder_titan_echo_stomp"
+		"Ability2"					"imba_elder_titan_ancestral_spirit"
+		"Ability3"					"imba_elder_titan_natural_order"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"generic_hidden"
+		"Ability7"					"generic_hidden"
+
+//		"Ability2"					"elder_titan_ancestral_spirit"
+//		"Ability3"					"elder_titan_natural_order"
+//		"Ability4"					"generic_hidden"
+//		"Ability5"					"generic_hidden"
+//		"Ability6"					"elder_titan_earth_splitter"
+//		"Ability7"					"elder_titan_return_spirit"
+
+		"Ability10"					"generic_hidden" // 
+		"Ability11"					"generic_hidden" // 
+		"Ability12"					"generic_hidden" // 
+		"Ability13"					"generic_hidden" // 
+		"Ability14"					"generic_hidden" // 
+		"Ability15"					"generic_hidden" // 
+		"Ability16"					"generic_hidden" // 
+		"Ability17"					"generic_hidden" // 
+
+//		"Ability10"					"special_bonus_imba_elder_titan_1" // reduce echo stomp cast time
+//		"Ability11"					"special_bonus_imba_elder_titan_2" // reduce bonus armor (in addition to base armor)
+//		"Ability12"					"special_bonus_imba_elder_titan_3" // increase ancestral spirit movespeed
+//		"Ability13"					"special_bonus_imba_elder_titan_4" // natural order reduce both armor and magic resist on elder titan
+//		"Ability14"					"special_bonus_imba_elder_titan_7" // natural order reduce both armor and magic resist on the spirit
+//		"Ability15"					"special_bonus_imba_elder_titan_5" // astral spirit roots target hit
+//		"Ability16"					"special_bonus_imba_elder_titan_6" // 
+//		"Ability17"					"special_bonus_imba_elder_titan_8" // 
+
+		"ProjectileSpeed"			"900"
+	}
 
 	//=================================================================================================================
 	// HERO: Ember Spirit
