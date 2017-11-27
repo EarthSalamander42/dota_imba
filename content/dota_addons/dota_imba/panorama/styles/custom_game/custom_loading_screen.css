@@ -45,6 +45,15 @@
 	color: #122;
 }
 
+#imba-news-link {
+	color: #255;
+	font-size: 20px;
+}
+
+#imba-news-link:hover {
+	text-decoration: underline;
+}
+
 #imba-logo {
 	margin-bottom: 80px;
 	margin-left: 40px;
@@ -66,11 +75,11 @@
 }
 
 #imba-social-buttons Button {
-	width: 220px;
+	width: 240px;
 	height: 77px;
 	box-shadow: #000 0 0 10px 0; 
-	background-size: 100% 100%;
-	background-position: center;
+	background-size: contain;
+	background-position: center center;
 }  
 
 #imba-social-buttons Button:hover {
@@ -79,7 +88,7 @@
 
 #imba-social-buttons Button:active {
 	box-shadow: #333 0 0 15px 0;
-	width: 218px;
+	width: 238px;
 }
 
 #imba-social-button-discord-en {
@@ -89,23 +98,23 @@
 #imba-social-button-discord-en:active { margin-left: 1px; }
 
 #imba-social-button-discord-ru { 
-	margin-left: 250px;
+	margin-left: 260px;
 	background-image: url("file://{images}/custom_game/loading_screen/community_discord_header_ru.png"); 
 }
-#imba-social-button-discord-ru:active { margin-left: 251px; }
+#imba-social-button-discord-ru:active { margin-left: 261px; }
 
 #imba-social-button-tencent { 
-	margin-left: 500px;
+	margin-left: 520px;
 	background-image: url("file://{images}/custom_game/loading_screen/community_chinese_blog.png"); 
 }
-#imba-social-button-tencent:active { margin-left: 501px; }
+#imba-social-button-tencent:active { margin-left: 521px; }
 
 #imba-social-button-reddit {
-	margin-left: 750px;
+	margin-left: 780px;
 	background-color: grey;
 	background-image: url("file://{images}/custom_game/loading_screen/community_reddit_header.png");
 }
-#imba-social-button-reddit:active { margin-left: 751px; }
+#imba-social-button-reddit:active { margin-left: 781px; }
 
 #GameOptionsPanel
 {
