@@ -69,12 +69,18 @@ function InitializeUI() {
 	InitializeNews();
 }
 
-function InitializeNews(data) {
+function InitializeNews() {
 
-	$("#imba-news-article-title").text = data.title;
-	$("#imba-news-article-text").text = data.article;
-
-	$.Msg("InitializeNews ", data.title);
+    $.AsyncWebRequest('http://api.dota2imba.org/meta/news',
+	{
+		type: 'GET',
+		success: function (data) {
+			$.Msg("Request: Data: " + data.data.title)
+			$("#imba-news-article-title").text = data.data.title;
+			$("#imba-news-article-text").text = data.data.article;
+		} 
+	});
+	
 }
 
 // Checks if the local player has local privileges

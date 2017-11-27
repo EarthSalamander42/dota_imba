@@ -74,14 +74,15 @@
 			<Label id="imba-news-title" text="DOTA IMBA v7.02 - Elder Titan Update" />
 			<Label id="imba-news-article-title" />
 			<Label id="imba-news-article-text" />
+			<Label id="imba-news-link" text="Read more news on our Official Website" onactivate="DOTADisplayURL('http://www.dota2imba.org/');" />
 		</Panel>
 <!--		<Panel id="imba-logo"/> -->
 		<Panel id="imba-social">
 			<Panel id="imba-social-buttons">
-				<Button id="imba-social-button-discord-en" />
-				<Button id="imba-social-button-discord-ru" />
-				<Button id="imba-social-button-tencent"/>
-				<Button id="imba-social-button-reddit" />
+				<Button id="imba-social-button-discord-en" onactivate="DOTADisplayURL('http://tinyurl.com/imba-discord');" />
+				<Button id="imba-social-button-discord-ru" onactivate="DOTADisplayURL('https://discord.gg/HcybJKt');" />
+				<Button id="imba-social-button-tencent" onactivate="DOTADisplayURL('https://www.bilibiliduang.cn/imbagroup');" />
+				<Button id="imba-social-button-reddit" onactivate="DOTADisplayURL('https://www.reddit.com/r/dotaimba/');" />
 			</Panel>
 		</Panel>
 	</Panel>

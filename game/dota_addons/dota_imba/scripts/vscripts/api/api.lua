@@ -7,7 +7,7 @@ require("api/json")
 -- Constants
 IMBA_API_CONFIG = {
     key = "3utx8DehTd42Wxqh65ldAErJjoCdi6XB",
-    endpoint = "https://api.dota2imba.org",
+    endpoint = "http://api.dota2imba.org",
     agent = "dota_imba-lua-1.x",
     timeout = 1000
 }
@@ -38,7 +38,7 @@ function ImbaApi:perform(robj, endpoint, callback)
     local method = "GET"
 
     -- build base request
-    if robj == nil then
+    if robj ~= nil then
         local base_request = {
             agent = self.config.agent,
             version = 1,

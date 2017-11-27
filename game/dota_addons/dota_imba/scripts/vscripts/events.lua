@@ -111,21 +111,6 @@ DebugPrintTable(keys)
 	if new_state == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 		-- run api function
 
-		print("[API] Accessing News via API")
-		imba_api():meta_news(function (data)
-			print("[API] OK")
-			DebugPrintTable(data)
-			CustomGameEventManager:Send_ServerToAllClients("loading_screen_news", data)
-		end, function (error) 
-			print("[API] NOT OK")
-			DebugPrintTable(error)
-			CustomGameEventManager:Send_ServerToAllClients("loading_screen_news", {
-				title = "News not available",
-				article = "",
-				user = "none",
-				created = 0
-			})
-		end)
 	end
 	
 	-------------------------------------------------------------------------------------------------
