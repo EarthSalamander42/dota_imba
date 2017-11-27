@@ -787,7 +787,7 @@
 	"item_courier"
 	{
 		"ItemCost"						"5"
-		"ItemStockTime"					"5.0"
+		"ItemStockTime"					"60.0"
 	}
 
 	//=================================================================================================================
@@ -796,15 +796,10 @@
 	"item_ward_observer"
 	{
 		"AbilityCastRange"				"800"
-		
 		"ItemCost"						"40"
-
 		"ItemInitialCharges"			"1"
-
 		"ItemStockMax"					"6"
-
 		"ItemStockInitial"				"2"
-
 		"ItemStockTime"					"45.0"
 
 		"AbilitySpecial"
@@ -1853,6 +1848,7 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"hero_stun_duration"	"3.0"
+				"LinkedSpecialBonus"	"special_bonus_unique_magnus_5"
 			}
 			"04"
 			{
@@ -5935,11 +5931,8 @@
 	"ember_spirit_searing_chains"
 	{
 		"MaxLevel"								"7"
-
 		"AbilityCastRange"						"400 400 400 400 450 500 550"
-		
 		"AbilityCooldown"						"14 12 10 8 8 8 8"
-
 		"AbilityManaCost"						"110"
 
 		"AbilitySpecial"
@@ -6109,7 +6102,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"charge_restore_time"	"30 30 30 30 28 26 24"
+				"charge_restore_time"	"30 30 30 29 28 27"
 			}
 			"04"
 			{
@@ -9276,9 +9269,7 @@
 	"monkey_king_tree_dance"
 	{
 		"MaxLevel"								"7"
-
 		"AbilityCastRange"						"1000 1000 1000 1000 1100 1200 1300"
-
 		"AbilityCooldown"						"1.2"
 
 		"AbilitySpecial"
@@ -9302,11 +9293,13 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"ground_jump_distance"			"1000 1000 1000 1000 1100 1200 1300"
+				"LinkedSpecialBonus"			"special_bonus_unique_monkey_king_7"
 			}
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"perched_jump_distance"			"1000 1000 1000 1000 1100 1200 1300"
+				"LinkedSpecialBonus"			"special_bonus_unique_monkey_king_7"
 			}
 			"06"
 			{
@@ -9358,7 +9351,6 @@
 	"monkey_king_primal_spring"
 	{
 		"MaxLevel"						"7"
-
 		"AbilityCooldown"				"19 17 15 13 12 11 10"
 
 		"AbilitySpecial"
@@ -9737,6 +9729,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"duration"				"30 30 30 35 40 45"
+				"LinkedSpecialBonus"	"special_bonus_unique_morphling_8"
 			}
 		}
 	}
@@ -9761,11 +9754,13 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"outgoing_damage"						"-60 -60 -50 -50 -40 -35 -30"
+				"LinkedSpecialBonus"					"special_bonus_unique_naga_siren_4"
 			}
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"outgoing_damage_tooltip"				"40 40 50 50 60 65 70"
+				"LinkedSpecialBonus"					"special_bonus_unique_naga_siren_4"
 			}
 			"04"
 			{
@@ -11726,7 +11721,6 @@
 	"slark_shadow_dance"
 	{
 		"MaxLevel"							"6"
-
 		"AbilityCooldown"					"60 50 40 40 40 40"
 
 		"AbilitySpecial"
@@ -11735,6 +11729,7 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"duration"					"4.0 4.0 4.0 4.5 5.0 5.5"
+				"LinkedSpecialBonus"		"special_bonus_unique_slark_3"
 			}
 			"02"
 			{
@@ -11841,19 +11836,24 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_movespeed_pct"		"9 12 15 18 20 22 24"
+				"bonus_movespeed_pct_self"	"12 16 20 24 28 32 36"
 			}
 			"02"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"aura_radius"				"900"
+				"var_type"						"FIELD_INTEGER"
+				"bonus_movespeed_pct_allies"	"9 12 15 18 20 22 24"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_movespeed_pct_extra"	"9 9 9 9 12 15 18"
+				"aura_radius"				"900"
 			}
 			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_movespeed_pct_extra"	"9 9 9 9 12 15 18"
+			}
+			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"duration"					"8"
@@ -12142,7 +12142,6 @@
 	"templar_assassin_psionic_trap"
 	{
 		"MaxLevel"							"6"
-
 		"AbilityCooldown"					"11 8 5 4 3 2"
 
 		"AbilitySpecial"
@@ -12150,7 +12149,8 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"max_traps"						"5 8 11 14 17 20"
+				"max_traps"						"5 8 11 17 23 29"
+				"LinkedSpecialBonus"			"special_bonus_unique_templar_assassin_6"
 			}
 			"02"
 			{
@@ -12160,17 +12160,27 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"movement_speed_min_tooltip"	"30"
+				"movement_speed_min"			"50 60 70 80 90 100"
 			}
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"movement_speed_max_tooltip"	"90"
+				"movement_speed_max"			"100"
 			}
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"trap_duration_tooltip"			"5"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"trap_bonus_damage"				"250 350 450 550 650 750"
+			}
+			"07"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"trap_max_charge_duration"		"4"
 			}
 		}
 	}
@@ -12180,28 +12190,40 @@
 	//=================================================================================================================
 	"templar_assassin_trap"
 	{
+		"MaxLevel"							"6"
+
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"movement_speed_bonus"		"-30"
+				"var_type"						"FIELD_INTEGER"
+				"trap_radius"					"400 400 400 450 500 550"
 			}
 			"02"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"trap_radius"				"400"
+				"var_type"						"FIELD_FLOAT"
+				"trap_duration"					"5.0"
 			}
 			"03"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"trap_duration"				"5.0"
+				"var_type"						"FIELD_INTEGER"
+				"trap_bonus_damage"				"250 350 450 550 650 750"
 			}
 			"04"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"movement_speed_bonus_stage"		"-10"
-			}	
+				"var_type"						"FIELD_INTEGER"
+				"movement_speed_min"			"30"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"movement_speed_max"			"60"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"trap_max_charge_duration"		"4"
+			}
 		}
 	}
 
@@ -12214,23 +12236,33 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"movement_speed_bonus"		"-30"
+				"var_type"						"FIELD_INTEGER"
+				"trap_radius"					"400 400 400 450 500 550"
 			}
 			"02"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"trap_radius"				"400"
+				"var_type"						"FIELD_FLOAT"
+				"trap_duration"					"5.0"
 			}
 			"03"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"trap_duration"				"5.0"
+				"var_type"						"FIELD_INTEGER"
+				"trap_bonus_damage"				"250 350 450 550 650 750"
 			}
 			"04"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"movement_speed_bonus_stage"		"-10"
+				"var_type"						"FIELD_INTEGER"
+				"movement_speed_min"			"30"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"movement_speed_max"			"60"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"trap_max_charge_duration"		"4"
 			}
 		}
 	}
@@ -15486,28 +15518,6 @@
 	}
 
 	//=================================================================================================================
-	// Courier Burst
-	//=================================================================================================================
-	"courier_burst"
-	{
-		"AbilityCooldown"			"30.0"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"duration"			"3.5"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"movement_speed"	"2000"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Kobold Taskmaster: Speed Aura
 	//=================================================================================================================
 	"kobold_taskmaster_speed_aura"
@@ -16919,5 +16929,42 @@
 		{
 			"01"						"item_imba_urn_of_shadows;item_vitality_booster;item_wind_lace"
 		}
+	}
+
+	//=================================================================================================================
+	// Ability: Courier Burst
+	//=================================================================================================================
+	"courier_burst"
+	{
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_CANCEL_MOVEMENT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityCooldown"			"30.0"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"3.5"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"movement_speed"	"2000"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"damage_absorb"		"250"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Courier Shield
+	//=================================================================================================================
+	"courier_shield"
+	{
+		"AbilityTextureName"		"courier_burst"
+		"AbilityCooldown"			"30.0"
 	}
 }

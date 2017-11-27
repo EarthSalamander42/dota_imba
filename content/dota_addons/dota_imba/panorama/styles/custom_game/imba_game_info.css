@@ -2,9 +2,7 @@
 {
 	width: 100%;
 	height: 100%;
-	align: right bottom;
 	flow-children: down;
-	z-index: -1000;
 }
 
 .Separator {
@@ -22,7 +20,6 @@
 	flow-children: down;
 	background-image: url("s2r://panorama/images/hud/reborn/ability_bg_psd.vtex");
 	border-radius: 20px;
-	z-index: -1000;
 	visibility: collapse;
 }
 

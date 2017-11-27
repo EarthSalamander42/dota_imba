@@ -1,7 +1,7 @@
 <root>
 	<styles>
 		<include src="file://{resources}/styles/custom_game/custom_loading_screen.css" />
-		<include src="file://{resources}/styles/dotastyles.css" />
+		<include src="file://{resources}/styles/dotastyles.vcss_c" />
 	</styles>
 
 	<scripts>
@@ -9,10 +9,9 @@
 		<include src="file://{resources}/scripts/custom_game/game_mode.js" />
 	</scripts>
 
-	<Panel class="AddonLoadingRoot">
-		<Panel id="CustomBg">
-			<Panel id="game_options_container" >
-				<Panel id="GameOptionsPanel">
+	<Panel class="addon-root">
+		<Panel id="imba-admin">
+			<Panel id="GameOptionsPanel">
 					<Label id="game_options_game_mode_title" text="#imba_gamemode_name_all_pick" />
 
 					<Panel id="QuickOptionsPanel" class="GameOptionsSubPanel" >
@@ -27,90 +26,63 @@
 
 					<Panel id="GoldOptionsPanel" class="GameOptionsSubPanel" onmouseover="UIShowTextTooltip( imba_gamemode_settings_gold_multiplier_tooltip )" onmouseout="UIHideTextTooltip()">
 						<Label id="GoldOptionsLabel" class="GameOptionsLabel" text="#imba_gamemode_settings_gold_multiplier" />
-						<DropDown id="GoldOptionsDropdown" class="GameOptionsDropdown">
-							<Label text="#imba_gamemode_settings_power_1" id="GoldOption1"/>
-							<Label text="#imba_gamemode_settings_power_2" id="GoldOption2"/>
-						</DropDown>
+						<RadioButton id="GoldOption1" class="GameOptionsToggle" group="GoldOption" text="#imba_gamemode_settings_power_1" />
+						<RadioButton id="GoldOption2" class="GameOptionsToggle" group="GoldOption" text="#imba_gamemode_settings_power_2" />
 					</Panel>
 
 					<Panel id="ExpOptionsPanel" class="GameOptionsSubPanel" onmouseover="UIShowTextTooltip( imba_gamemode_settings_exp_multiplier_tooltip )" onmouseout="UIHideTextTooltip()">
 						<Label id="ExpLabel" class="GameOptionsLabel" text="#imba_gamemode_settings_exp_multiplier" />
-						<DropDown id="ExpOptionsDropdown" class="GameOptionsDropdown">
-							<Label text="#imba_gamemode_settings_power_1" id="ExpOption1"/>
-							<Label text="#imba_gamemode_settings_power_2" id="ExpOption2"/>
-						</DropDown>
+						<RadioButton id="ExpOption1" class="GameOptionsToggle" group="ExpOption" text="#imba_gamemode_settings_power_1" />
+						<RadioButton id="ExpOption2" class="GameOptionsToggle" group="ExpOption" text="#imba_gamemode_settings_power_2" />
 					</Panel>
 
 					<Panel id="CreepPowerOptionsPanel" class="GameOptionsSubPanel" onmouseover="UIShowTextTooltip( imba_gamemode_settings_creep_power_title_tooltip )" onmouseout="UIHideTextTooltip()">
 						<Label id="CreepPowerOptionsLabel" class="GameOptionsLabel" text="#imba_gamemode_settings_creep_power_title" />
-						<DropDown id="CreepPowerOptionsDropdown" class="GameOptionsDropdown">
-							<Label text="#imba_gamemode_settings_power_1" id="CreepPowerOption1"/>
-							<Label text="#imba_gamemode_settings_power_2" id="CreepPowerOption2"/>
-						</DropDown>
+						<RadioButton id="CreepPowerOption1" class="GameOptionsToggle" group="CreepPowerOption" text="#imba_gamemode_settings_power_1" />
+						<RadioButton id="CreepPowerOption2" class="GameOptionsToggle" group="CreepPowerOption" text="#imba_gamemode_settings_power_2" />
 					</Panel>
 
 					<Panel id="TowerPowerOptionsPanel" class="GameOptionsSubPanel" onmouseover="UIShowTextTooltip( imba_gamemode_settings_tower_power_title_tooltip )" onmouseout="UIHideTextTooltip()">
 						<Label id="TowerPowerOptionsLabel" class="GameOptionsLabel" text="#imba_gamemode_settings_tower_power_title" />
-						<DropDown id="TowerPowerOptionsDropdown" class="GameOptionsDropdown">
-							<Label text="#imba_gamemode_settings_power_1" id="TowerPowerOption1"/>
-							<Label text="#imba_gamemode_settings_power_2" id="TowerPowerOption2"/>
-						</DropDown>
+						<RadioButton id="TowerPowerOption1" class="GameOptionsToggle" group="TowerPowerOption" text="#imba_gamemode_settings_power_1" />
+						<RadioButton id="TowerPowerOption2" class="GameOptionsToggle" group="TowerPowerOption" text="#imba_gamemode_settings_power_2" />
 					</Panel>
 
 					<Panel id="HeroPowerOptionsPanel" class="GameOptionsSubPanel" onmouseover="UIShowTextTooltip( imba_gamemode_settings_hero_power_title_tooltip )" onmouseout="UIHideTextTooltip()">
 						<Label id="HeroPowerLabel" class="GameOptionsLabel" text="#imba_gamemode_settings_hero_power_title" />
-						<DropDown id="HeroPowerDropdown" class="GameOptionsDropdown">
-							<Label text="#imba_gamemode_settings_power_1" id="HeroPower1"/>
-							<Label text="#imba_gamemode_settings_power_2" id="HeroPower2"/>
-						</DropDown>
+						<RadioButton id="HeroPower1" class="GameOptionsToggle" group="HeroPower" text="#imba_gamemode_settings_power_1" />
+						<RadioButton id="HeroPower2" class="GameOptionsToggle" group="HeroPower" text="#imba_gamemode_settings_power_2" />
 					</Panel>
 
-					<Panel id="TowerUpgradeOptionsPanel">
-						<RadioButton id="AllPickToggle" group="GameLength" text="#imba_gamemode_name_all_pick" onmouseover="UIShowTextTooltip( imba_gamemode_name_all_pick_tooltip )" onmouseout="UIHideTextTooltip()" />
+					<Panel class="GameOptionsSubPanel_alt">
+						<RadioButton id="AllPickToggle" class="GameOptionsToggle" group="GameLength" text="#imba_gamemode_name_all_pick" onmouseover="UIShowTextTooltip( imba_gamemode_name_all_pick_tooltip )" onmouseout="UIHideTextTooltip()" />
 						<RadioButton id="AllRandomToggle" class="GameOptionsToggle" group="GameLength" text="#imba_gamemode_name_all_random" onmouseover="UIShowTextTooltip( imba_gamemode_name_all_random_tooltip )" onmouseout="UIHideTextTooltip()" />
 						<RadioButton id="AllRandomSameHeroToggle" class="GameOptionsToggle" group="GameLength" text="#imba_gamemode_name_all_random_same_hero" onmouseover="UIShowTextTooltip( imba_gamemode_name_all_random_same_hero_tooltip )" onmouseout="UIHideTextTooltip()" />
-						<ToggleButton id="FranticToggle" text="#imba_gamemode_game_options_frantic" class="GameOptionsToggle" onmouseover="UIShowTextTooltip( imba_gamemode_game_options_frantic_tooltip )" onmouseout="UIHideTextTooltip()"/>
+					</Panel>
+
+					<Panel class="GameOptionsSubPanel_alt">
 						<ToggleButton id="TowerUpgradesToggle" text="#imba_gamemode_settings_tower_upgrades" class="GameOptionsToggle" onmouseover="UIShowTextTooltip( imba_gamemode_settings_tower_upgrades_tooltip )" onmouseout="UIHideTextTooltip()"/>
+						<ToggleButton id="FranticToggle" text="#imba_gamemode_game_options_frantic" class="GameOptionsToggle" onmouseover="UIShowTextTooltip( imba_gamemode_game_options_frantic_tooltip )" onmouseout="UIHideTextTooltip()"/>
 					</Panel>
 
 					<Button id="ConfirmOptionsBtn" onactivate="SetGameOptions();" onmouseover="UIShowTextTooltip( imba_gamemode_settings_lock_options_tooltip )" onmouseout="UIHideTextTooltip()">
 						<Label id="ConfirmOptionsBtnLabel" text="#imba_gamemode_settings_lock_options" />
 					</Button>
 				</Panel>
-			</Panel>
-
-			<Panel id="community_stuff_container" >
-				<Button id="show_community_panel_button" onactivate="ShowCommunityButton();" >
-					<Label id="show_community_panel_button_label" html="true" text="#imba_community_header" />
-				</Button>
-
-				<Panel id="CommunityPanel">
-				
-					<Label id="community_description" class="CommunityText" html="true" text="#imba_community_description" />
-					<Label id="community_post_description_01" class="CommunityText" html="true" text="#community_post_description_01"/>
-
-					<Button id="community_reddit_header" class="CommunityImg" onactivate="DOTADisplayURL('https://www.reddit.com/r/dotaimba/');" >
-						<Image src="file://{images}/custom_game/loading_screen/community_reddit_header.png" />
-					</Button>
-					<Button id="community_discord_header" class="CommunityImg" onactivate="DOTADisplayURL('http://tinyurl.com/imba-discord');" >
-						<Image src="file://{images}/custom_game/loading_screen/community_discord_header.png" />
-					</Button>
-					<Label id="community_discord_description" class="CommunityText" html="true" text="#community_discord_description"/>
-
-					<Button id="community_discord_header_ru" class="CommunityImg" onactivate="DOTADisplayURL('https://discord.gg/HcybJKt');" >
-						<Image src="file://{images}/custom_game/loading_screen/community_discord_header_ru.png" />
-					</Button>
-					<Label id="community_discord_description_ru" class="CommunityText" html="true" text="#community_discord_description_ru"/>
-
-					<Button id="community_chinese_blog_header" class="CommunityImg" onactivate="DOTADisplayURL('https://www.bilibiliduang.cn/imbagroup');" >
-						<Image src="file://{images}/custom_game/loading_screen/community_chinese_blog.png" />
-					</Button>
-					<Label id="community_chinese_blog_description_02" class="CommunityText" html="true" text="欢迎加入IMBA中文QQ群，讨论、开黑、找队友，没有早退，NO LEAVERS！"/>
-				</Panel>
-
-				<Panel id="TitlePanel">
-					<Image id="loading_screen_title" class="SeqImg" src="file://{images}/custom_game/loading_screen/loading_screen_title.png" />
-				</Panel>
+		</Panel>
+		<Panel id="imba-news">
+			<Label id="imba-news-title" text="DOTA IMBA v7.02 - Elder Titan Update" />
+			<Label id="imba-news-article-title" />
+			<Label id="imba-news-article-text" />
+			<Label id="imba-news-link" text="Read more news on our Official Website" onactivate="DOTADisplayURL('http://www.dota2imba.org/');" />
+		</Panel>
+<!--		<Panel id="imba-logo"/> -->
+		<Panel id="imba-social">
+			<Panel id="imba-social-buttons">
+				<Button id="imba-social-button-discord-en" onactivate="DOTADisplayURL('http://tinyurl.com/imba-discord');" />
+				<Button id="imba-social-button-discord-ru" onactivate="DOTADisplayURL('https://discord.gg/HcybJKt');" />
+				<Button id="imba-social-button-tencent" onactivate="DOTADisplayURL('https://www.bilibiliduang.cn/imbagroup');" />
+				<Button id="imba-social-button-reddit" onactivate="DOTADisplayURL('https://www.reddit.com/r/dotaimba/');" />
 			</Panel>
 		</Panel>
 	</Panel>

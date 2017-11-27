@@ -6,12 +6,26 @@ function modifier_companion:GetAbsoluteNoDamageMagical() return 1 end
 function modifier_companion:GetAbsoluteNoDamagePure() return 1 end
 
 function modifier_companion:CheckState()
-	local state = 
-	{
+	local state
+
+	if self:GetStackCount() == 0 then
+		state = {
 		[MODIFIER_STATE_NO_HEALTH_BAR] = true,
 		[MODIFIER_STATE_NOT_ON_MINIMAP] = true,
 		[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
+		[MODIFIER_STATE_UNSELECTABLE] = true,
+		[MODIFIER_STATE_INVULNERABLE] = true,
 	}
+	elseif self:GetStackCount() == 1 then
+		state = {
+		[MODIFIER_STATE_NO_HEALTH_BAR] = true,
+		[MODIFIER_STATE_NOT_ON_MINIMAP] = true,
+		[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
+		[MODIFIER_STATE_UNSELECTABLE] = true,
+		[MODIFIER_STATE_INVULNERABLE] = true,
+		[MODIFIER_STATE_INVISIBLE] = true,
+	}
+	end
 
 	return state
 end
@@ -19,28 +33,42 @@ end
 function modifier_companion:DeclareFunctions()
 	local funcs = 
 	{
-		MODIFIER_EVENT_ON_ATTACKED,
-		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
-		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL,
-		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE,
+--		MODIFIER_EVENT_ON_ATTACKED,
+--		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
+--		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL,
+--		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE,
+		MODIFIER_PROPERTY_INVISIBILITY_LEVEL,
 	}
 	return funcs
 end
 
 function modifier_companion:OnCreated()
+	-- Stacks determine invisibility state:
+	-- 0: not invisible
+	-- 1: invisible
+
 	if IsServer() then
 		self:StartIntervalThink(0.1)
 
 		local companion = self:GetParent()
 		if not companion.base_model then
-			print("Store base model")
 			companion.base_model = companion:GetModelName()
 		end
+
+		-- Talent specials
+		self.stand_time = self:GetParent():FindTalentValue("special_bonus_imba_mirana_5")
+
+		-- Set the current stand position and timer
+		self.last_position = self:GetParent():GetAbsOrigin()
+		self.last_time_tick = GameRules:GetGameTime()
+
+		-- Set invisibility state
+		self:SetStackCount(0)
 	end
 end
 
+--[[
 local anti_spam = false
-
 function modifier_companion:OnAttacked(keys)
 local target = keys.target
 
@@ -56,6 +84,13 @@ local target = keys.target
 		end
 	end
 end
+--]]
+
+function modifier_companion:GetModifierInvisibilityLevel()        
+	if self:GetStackCount() == 1 then
+		return 1
+	end
+end
 
 function modifier_companion:OnIntervalThink()
 	if IsServer() then
@@ -68,7 +103,7 @@ function modifier_companion:OnIntervalThink()
 
 		local hero_distance = (hero:GetAbsOrigin() - companion:GetAbsOrigin()):Length()
 		local fountain_distance = (fountain:GetAbsOrigin() - companion:GetAbsOrigin()):Length()
-		local min_distance = 200
+		local min_distance = 160
 		local blink_distance = 800
 
 		local invisModifiers = {
@@ -88,14 +123,12 @@ function modifier_companion:OnIntervalThink()
 			"modifier_rune_invis",
 			"modifier_item_imba_silver_edge_invis",
 			"modifier_imba_skeleton_walk_invis",
-			"modifier_imba_riki_invisibility"
+			"modifier_imba_riki_invisibility",
 		}
 
---		print("Companion MS:", companion:GetBaseMoveSpeed())
---		print("Hero MS:", hero:GetBaseMoveSpeed() - 10)
---		if companion:GetBaseMoveSpeed() ~= hero:GetBaseMoveSpeed() - 10 then
---			companion:SetBaseMoveSpeed(hero:GetBaseMoveSpeed() - 10)
---		end
+		if companion:GetIdealSpeed() ~= hero:GetIdealSpeed() - 5 then
+			companion:SetBaseMoveSpeed(hero:GetIdealSpeed() - 5)
+		end
 
 		for _,v in ipairs(invisModifiers) do
 			if not hero:HasModifier(v) then
@@ -129,6 +162,24 @@ function modifier_companion:OnIntervalThink()
 			ExecuteOrderFromTable(order)
 		elseif hero_distance < min_distance then
 			companion:Stop()
+		end
+
+		-- Check Companion's current position. If it changed, remove possible invisibility and reset the last tick time
+		if self.last_position ~= self:GetParent():GetAbsOrigin() then
+			self:SetStackCount(0)
+			self.last_position = self:GetParent():GetAbsOrigin()
+			self.last_time_tick = GameRules:GetGameTime()
+		else            
+			-- Otherwise, check if Companion is not invisible yet. 
+			if self:GetStackCount() == 0 then
+
+				-- Check last tick and see if she should be awarded invisibility
+				if (GameRules:GetGameTime() - self.last_time_tick) >= self.stand_time then
+
+					-- Grant invisibility
+					self:SetStackCount(1)
+				end
+			end
 		end
 	end
 end
