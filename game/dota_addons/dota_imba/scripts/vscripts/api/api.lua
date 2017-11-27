@@ -5,14 +5,14 @@
 require("api/json")
 
 -- Constants
-IMBA_API_CONFIG = {
+local IMBA_API_CONFIG = {
     key = "3utx8DehTd42Wxqh65ldAErJjoCdi6XB",
     endpoint = "http://api.dota2imba.org",
     agent = "dota_imba-lua-1.x",
     timeout = 1000
 }
 
-IMBA_API_ENDPOINTS = {
+local IMBA_API_ENDPOINTS = {
     meta_news = "/meta/news",
     meta_donators = "/meta/donators",
     meta_developers = "/meta/developers"
@@ -123,7 +123,7 @@ function imba_api_test()
 end
 
 -- Internal Vars
-_api_instance = nil
+local _api_instance = nil
 
 -- functions
 function imba_api()
