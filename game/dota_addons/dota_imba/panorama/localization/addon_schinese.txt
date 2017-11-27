@@ -47,6 +47,12 @@
 	"repick_button"					"重新选择（Repick）"
 	"enter_game_button"				"进入游戏！"
 	"welcome_label"					"欢迎来到 Dota IMBA!"
+	"new_hero"						"新英雄"
+	"disabled_hero"					"禁用"
+	"disabled_hero_10v10"			"10v10下禁用"
+	"picked_hero"					"已选择"
+	"imba_hero"						"IMBA英雄"
+	"vanilla_hero"					"原版英雄"
 
 	//=================================================================================================================
 	// Generic talent names

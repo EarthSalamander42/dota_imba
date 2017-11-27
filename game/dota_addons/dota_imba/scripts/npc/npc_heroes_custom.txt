@@ -1410,13 +1410,13 @@
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
-		"Ability1"					"rubick_telekinesis"
+		"Ability1"					"imba_rubick_telekinesis"
 		"Ability2"					"rubick_fade_bolt"
 		"Ability3"					"rubick_null_field"
 		"Ability4"					"rubick_empty1"
 		"Ability5"					"rubick_empty2"
 		"Ability6"					"rubick_spell_steal"
-		"Ability7"					"rubick_telekinesis_land"
+		"Ability7"					"imba_rubick_spell_steal_controller"
 		"Ability8"					"rubick_hidden1"
 		"Ability9"					"rubick_hidden2"
 		"Ability10"					"rubick_hidden3"
