@@ -2062,6 +2062,7 @@ function modifier_imba_phoenix_supernova_egg_thinker:OnIntervalThink()
         attacker = caster,
         damage = ability:GetSpecialValueFor("damage_per_sec"),
         damage_type = DAMAGE_TYPE_MAGICAL,
+        ability = ability,
     	}
     	ApplyDamage(damageTable)
     end
