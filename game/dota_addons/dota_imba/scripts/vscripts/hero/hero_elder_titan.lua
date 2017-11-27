@@ -19,7 +19,7 @@ function imba_elder_titan_echo_stomp:GetCastRange(location, target)
 end
 
 function imba_elder_titan_echo_stomp:OnAbilityPhaseStart()
-	if astral_spirit and astral_spirit:FindAbilityByName("imba_elder_titan_echo_stomp_spirit") then
+	if astral_spirit and astral_spirit:FindAbilityByName("imba_elder_titan_echo_stomp_spirit") and astral_spirit:FindModifierByName("modifier_imba_elder_titan_ancestral_spirit_self"):GetStackCount() ~= 1 then
 		astral_spirit:CastAbilityNoTarget(astral_spirit:FindAbilityByName("imba_elder_titan_echo_stomp_spirit"), astral_spirit:GetPlayerOwnerID())
 	end
 
@@ -94,6 +94,7 @@ function imba_elder_titan_ancestral_spirit:OnSpellStart()
 	local target_point = self:GetCursorPosition()
 	local radius = self:GetSpecialValueFor("radius")
 	local duration = self:GetSpecialValueFor("spirit_duration")
+	local spirit_returning = false
 
 	EmitSoundOn("Hero_ElderTitan.AncestralSpirit.Cast", caster)
 
@@ -104,15 +105,29 @@ function imba_elder_titan_ancestral_spirit:OnSpellStart()
 	astral_spirit = CreateUnitByName("npc_dota_elder_titan_ancestral_spirit", target_point, true, caster, caster, caster:GetTeamNumber())
 	astral_spirit:SetControllableByPlayer(caster:GetPlayerID(), true)
 	astral_spirit:AddNewModifier(astral_spirit, nil, "modifier_imba_elder_titan_ancestral_spirit_self", {})
-	astral_spirit:SetBaseMoveSpeed(self:GetSpecialValueFor("speed")) -- TODO: doesn't show on hud the right move speed
+	astral_spirit:SetBaseMoveSpeed(self:GetSpecialValueFor("speed"))
 
 	astral_spirit:FindAbilityByName("imba_elder_titan_echo_stomp_spirit"):SetLevel(caster:FindAbilityByName("imba_elder_titan_echo_stomp"):GetLevel())
 	astral_spirit:FindAbilityByName("imba_elder_titan_natural_order"):SetLevel(caster:FindAbilityByName("imba_elder_titan_natural_order"):GetLevel())
 
+	Timers:CreateTimer(function()
+		local hero_distance = (caster:GetAbsOrigin() - astral_spirit:GetAbsOrigin()):Length()
+		if spirit_returning == true then
+			if hero_distance < 140 then
+				astral_spirit:RemoveSelf()
+				astral_spirit = nil
+				return nil
+			end
+		end
+		return 0.1
+	end)
+
 	Timers:CreateTimer(duration, function()
-		print("Return spirit.")
-		astral_spirit:RemoveSelf()
-		astral_spirit = nil
+		astral_spirit:MoveToNPC(caster)
+		spirit_returning = true
+		astral_spirit:FindModifierByName("modifier_imba_elder_titan_ancestral_spirit_self"):SetStackCount(1)
+		astral_spirit:SetBaseMoveSpeed(self:GetSpecialValueFor("speed"))		
+		StartAnimation(astral_spirit, {duration=30.0, activity=ACT_DOTA_FLAIL, rate=0.1})
 	end)
 end
 
@@ -158,7 +173,6 @@ function modifier_imba_elder_titan_ancestral_spirit:IsHidden() return false end
 function modifier_imba_elder_titan_ancestral_spirit:IsPurgable() return false end
 
 function modifier_imba_elder_titan_ancestral_spirit:OnCreated()
-	print(self:GetAbility():GetSpecialValueFor("pass_damage"))
 	local damageTable = {victim = self:GetParent(), attacker = self:GetCaster(), damage = self:GetAbility():GetSpecialValueFor("pass_damage"), damage_type = self:GetAbility():GetAbilityDamageType(), ability = self:GetAbility()}
 										
 	ApplyDamage(damageTable)	
@@ -178,29 +192,23 @@ function modifier_imba_elder_titan_ancestral_spirit_self:CheckState()
 	if IsServer() then
 		local state = {}
 
---		if self:GetStackCount() == 1 then
---			print("Stack Count = 1")
---			state[MODIFIER_STATE_UNSELECTABLE]	= true,
---		end
+		state = {
+			[MODIFIER_STATE_NO_HEALTH_BAR] = true,
+			[MODIFIER_STATE_FLYING] = true,
+			[MODIFIER_STATE_INVULNERABLE] = true,
+		}
 
-		state[MODIFIER_STATE_NO_HEALTH_BAR] = true
-		state[MODIFIER_STATE_FLYING] = true
-		state[MODIFIER_STATE_INVULNERABLE] = true
+		if self:GetStackCount() == 1 then
+			state = {
+				[MODIFIER_STATE_UNSELECTABLE] = true,
+				[MODIFIER_STATE_NO_HEALTH_BAR] = true,
+				[MODIFIER_STATE_FLYING] = true,
+				[MODIFIER_STATE_INVULNERABLE] = true,
+			}
+		end
 		return state
 	end
 end
-
---	function modifier_imba_elder_titan_ancestral_spirit_self:DeclareFunctions()
---		local funcs ={
---			MODIFIER_PROPERTY_MOVESPEED_BASE_OVERRIDE,
---		}
---		return funcs 
---	end
-
---	function modifier_imba_elder_titan_ancestral_spirit_self:GetModifierMoveSpeedOverride()
---		print(self:GetAbility())
---		return self:GetAbility():GetSpecialValueFor("speed")
---	end
 
 modifier_imba_elder_titan_natural_order = modifier_imba_elder_titan_natural_order or class({})
 
@@ -289,17 +297,14 @@ end
 
 function modifier_imba_elder_titan_natural_order:GetModifierPhysicalArmorBonus()
 	if self:GetCaster() and self:GetCaster():GetUnitName() == "npc_dota_elder_titan_ancestral_spirit" then
-		print("Spirit don't reduce armor")
 		return 0
 	else
-		print("Elder Titan reducing armor!")
 		return self.base_armor_reduction * 0.01 * self:GetParent():GetPhysicalArmorBaseValue()
 	end
 end
 
 function modifier_imba_elder_titan_natural_order:GetModifierMagicalResistanceBonus()
 	if self:GetCaster() and self:GetCaster():GetUnitName() == "npc_dota_hero_elder_titan" then
-		print("Hero don't reduce magic resist")
 		return 0
 	else
 		return self.magic_resist_reduction
@@ -384,21 +389,3 @@ function imba_elder_titan_echo_stomp_spirit:OnSpellStart()
 		end
 	end
 end
-
-	-- TODO: Make elder titan cast too if order came from astral spirit
---	function imba_elder_titan_echo_stomp_spirit:OnAbilityPhaseStart()
---		if astral_spirit:GetOwnerEntity():FindAbilityByName("imba_elder_titan_echo_stomp") then
---			astral_spirit:GetOwnerEntity():CastAbilityNoTarget(astral_spirit:GetOwnerEntity():FindAbilityByName("imba_elder_titan_echo_stomp"), astral_spirit:GetOwnerEntity():GetPlayerID())
---		end
-
---		EmitSoundOn("Hero_ElderTitan.EchoStomp.Channel.ti7_layer", self:GetCaster())
---		return true
---	end
-
---	function imba_elder_titan_echo_stomp_spirit:OnAbilityPhaseInterrupted()
---		if astral_spirit:GetOwnerEntity() then
---			astral_spirit:GetOwnerEntity():Interrupt()
---		end
-
---		StopSoundOn("Hero_ElderTitan.EchoStomp.Channel.ti7_layer", self:GetCaster())
---	end

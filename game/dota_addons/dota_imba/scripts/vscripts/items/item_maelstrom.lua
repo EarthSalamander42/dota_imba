@@ -285,6 +285,7 @@ function modifier_item_imba_mjollnir_slow:GetModifierAttackSpeedBonus_Constant()
 
 -- Initial launch + main loop
 function LaunchLightning(caster, target, ability, damage, bounce_radius, deflector)
+	if deflector == nil then return end
 
 	-- Parameters
 	local targets_hit = { target }
@@ -313,9 +314,9 @@ function LaunchLightning(caster, target, ability, damage, bounce_radius, deflect
 			local nearby_enemies
 			-- If the target is the same team, get the targets from same team.
 			if target:GetTeamNumber() == caster:GetTeamNumber() then
-			nearby_enemies = FindUnitsInRadius(deflector:GetTeamNumber(), potential_source:GetAbsOrigin(), nil, bounce_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
+				nearby_enemies = FindUnitsInRadius(deflector:GetTeamNumber(), potential_source:GetAbsOrigin(), nil, bounce_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
 			else
-			nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), potential_source:GetAbsOrigin(), nil, bounce_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
+				nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), potential_source:GetAbsOrigin(), nil, bounce_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
 			end
 			
 			for _, potential_target in pairs(nearby_enemies) do

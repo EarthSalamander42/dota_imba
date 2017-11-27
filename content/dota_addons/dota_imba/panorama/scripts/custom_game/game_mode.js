@@ -5,6 +5,8 @@
 (function () {
 	InitializeUI()
 
+	GameEvents.Subscribe("loading_screen_news", InitializeNews);
+
 	// Hides battlecuck crap
 	var hit_test_blocker = $.GetContextPanel().GetParent().FindChild("SidebarAndBattleCupLayoutContainer");
 
@@ -23,12 +25,8 @@ function InitializeUI() {
 	} else if (is_host) {
 
 		// Make the game options panel visible
-		var game_options_panel = $('#game_options_container')
+		var game_options_panel = $('#imba-admin')
 		game_options_panel.style.visibility = 'visible';
-
-		// Animate it
-		game_options_panel.style.opacity = 0.0;
-		AnimatePanel(game_options_panel, { "transform": "translateX(250px);", "opacity": "1;" }, 1.0, "ease-out"); 
 
 		// Update other elements according to the current map
 		var map_info = Game.GetMapInfo();
@@ -42,6 +40,8 @@ function InitializeUI() {
 			$('#AllPickToggle').style.visibility = 'collapse';
 			$('#AllRandomToggle').style.visibility = 'collapse';
 			$('#AllRandomSameHeroToggle').style.visibility = 'collapse';
+			$('#GoldOption1').checked = true;
+			$('#ExpOption1').checked = true;
 		} else if (map_info.map_display_name == "imba_10v10" || map_info.map_display_name == "imba_12v12") {
 			$('#game_options_game_mode_title').text = $.Localize( "#imba_gamemode_name_10v10" );
 			$('#QuickOptionsPanel').style.visibility = 'collapse';
@@ -52,14 +52,35 @@ function InitializeUI() {
 			$('#AllPickToggle').style.visibility = 'collapse';
 			$('#AllRandomToggle').style.visibility = 'collapse';
 			$('#AllRandomSameHeroToggle').style.visibility = 'collapse';
-		} else if (map_info.map_display_name == "imba_custom") {
+			$('#GoldOption1').checked = true;
+			$('#ExpOption1').checked = true;
+		} else if (map_info.map_display_name == "imba_custom" || map_info.map_display_name == "imba_custom_10v10") {
 			$('#TowerUpgradesToggle').SetSelected(true);
-			$('#FranticToggle').style.visibility = 'visible';
-		} else if (map_info.map_display_name == "imba_custom_10v10") {
-			$('#TowerUpgradesToggle').SetSelected(true);
-			$('#FranticToggle').style.visibility = 'visible';
+//			$('#FranticToggle').style.visibility = 'visible';
+			$('#GoldOption1').checked = true;
+			$('#ExpOption1').checked = true;
+			$('#CreepPowerOption1').checked = true;
+			$('#TowerPowerOption1').checked = true;
+			$('#HeroPower1').checked = true;
+			$('#AllPickToggle').checked = true;
 		}
 	}
+
+	InitializeNews();
+}
+
+function InitializeNews() {
+
+    $.AsyncWebRequest('http://api.dota2imba.org/meta/news',
+	{
+		type: 'GET',
+		success: function (data) {
+			$.Msg("Request: Data: " + data.data.title)
+			$("#imba-news-article-title").text = data.data.title;
+			$("#imba-news-article-text").text = data.data.article;
+		} 
+	});
+	
 }
 
 // Checks if the local player has local privileges
@@ -74,36 +95,34 @@ function CheckForHostPrivileges() {
 
 // Sets all options to Normal mode
 function SetQuickOptionsNormal() {
-
-	// Disables upgradable towers in standard and 10v10
 	var map_info = Game.GetMapInfo();
-	if (map_info.map_display_name == "imba_standard" || map_info.map_display_name == "imba_10v10" || map_info.map_display_name == "imba_12v12") {
+	if (map_info.map_display_name != "imba_standard" || map_info.map_display_name != "imba_10v10" || map_info.map_display_name != "imba_12v12") {
 		$('#TowerUpgradesToggle').SetSelected(false);
 	} 
 
 	// Sets everything else to normal options
-	$('#GoldOptionsDropdown').SetSelected('GoldOption1');
-	$('#ExpOptionsDropdown').SetSelected('ExpOption1');
-	$('#CreepPowerOptionsDropdown').SetSelected('CreepPowerOption1');
-	$('#TowerPowerOptionsDropdown').SetSelected('TowerPowerOption1');
-	$('#HeroPowerDropdown').SetSelected('HeroPower1');
+	$('#GoldOption1').checked = true;
+	$('#ExpOption1').checked = true;
+	$('#CreepPowerOption1').checked = true;
+	$('#TowerPowerOption1').checked = true;
+	$('#HeroPower1').checked = true;
+//	$('#FranticToggle').SetSelected(false);
 }
 
 // Sets all options to Hyper mode
 function SetQuickOptionsHigh() {
-
-	// Enables upgradable towers in standard and 10v10
 	var map_info = Game.GetMapInfo();
-	if (map_info.map_display_name == "imba_standard" || map_info.map_display_name == "imba_10v10" || map_info.map_display_name == "imba_12v12") {
+	if (map_info.map_display_name != "imba_standard" || map_info.map_display_name != "imba_10v10" || map_info.map_display_name != "imba_12v12") {
 		$('#TowerUpgradesToggle').SetSelected(true);
 	} 
 
 	// Sets everything else to high options
-	$('#GoldOptionsDropdown').SetSelected('GoldOption2');
-	$('#ExpOptionsDropdown').SetSelected('ExpOption2');
-	$('#CreepPowerOptionsDropdown').SetSelected('CreepPowerOption2');
-	$('#TowerPowerOptionsDropdown').SetSelected('TowerPowerOption2');
-	$('#HeroPowerDropdown').SetSelected('HeroPower2');
+	$('#GoldOption2').checked = true;
+	$('#ExpOption2').checked = true;
+	$('#CreepPowerOption2').checked = true;
+	$('#TowerPowerOption2').checked = true;
+	$('#HeroPower2').checked = true;
+//	$('#FranticToggle').SetSelected(true);
 }
 
 // Locks the game mode
@@ -115,7 +134,7 @@ function SetGameOptions()
 			"all_pick": $('#AllPickToggle').checked,
 			"all_random": $('#AllRandomToggle').checked,
 			"all_random_same_hero": $('#AllRandomSameHeroToggle').checked,
-			"frantic_mode": $('#FranticToggle').checked,
+//			"frantic_mode": $('#FranticToggle').checked,
 			"tower_upgrades": $('#TowerUpgradesToggle').checked,
 			"bounty_multiplier": $('#GoldOptionsDropdown').GetSelected().id,
 			"exp_multiplier": $('#ExpOptionsDropdown').GetSelected().id,
@@ -124,13 +143,4 @@ function SetGameOptions()
 			"hero_power": $('#HeroPowerDropdown').GetSelected().id,
 		}
 	});
-
-	AnimatePanel($('#game_options_container'), { "transform": "translateX(-150px);", "opacity": "0;" }, 0.8);
-}
-
-// Shows/hides the community panel
-function ShowCommunityButton() {
-	var community_panel = $.GetContextPanel().FindChildTraverse("CommunityPanel");
-	
-	community_panel.ToggleClass('invisible')
 }

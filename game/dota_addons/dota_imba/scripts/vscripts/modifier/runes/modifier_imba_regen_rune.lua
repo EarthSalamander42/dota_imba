@@ -14,8 +14,8 @@ function modifier_imba_regen_rune:GetAuraSearchType() return DOTA_UNIT_TARGET_HE
 function modifier_imba_regen_rune:GetAuraSearchFlags() return DOTA_UNIT_TARGET_FLAG_NONE end
 function modifier_imba_regen_rune:GetModifierAura() return "modifier_imba_regen_rune_aura" end
 
-function modifier_imba_regen_rune:GetTextureName()
-	return "rune_regen"
+function modifier_imba_regen_rune:GetTexture()
+	return "rune_regen"	-- "custom/imba_rune_regen"
 end
 
 function modifier_imba_regen_rune:GetEffectName()
