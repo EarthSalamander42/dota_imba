@@ -106,6 +106,14 @@ DebugPrintTable(keys)
 	CustomNetTables:SetTableValue("game_options", "game_state", {state = new_state})
 
 	-------------------------------------------------------------------------------------------------
+	-- IMBA: Game Setup / API Calls
+	-------------------------------------------------------------------------------------------------
+	if new_state == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
+		-- run api function
+
+	end
+	
+	-------------------------------------------------------------------------------------------------
 	-- IMBA: Pick screen stuff
 	-------------------------------------------------------------------------------------------------
 	if new_state == DOTA_GAMERULES_STATE_HERO_SELECTION then
