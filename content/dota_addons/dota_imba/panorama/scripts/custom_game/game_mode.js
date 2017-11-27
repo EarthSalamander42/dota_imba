@@ -5,6 +5,8 @@
 (function () {
 	InitializeUI()
 
+	GameEvents.Subscribe("loading_screen_news", InitializeNews);
+
 	// Hides battlecuck crap
 	var hit_test_blocker = $.GetContextPanel().GetParent().FindChild("SidebarAndBattleCupLayoutContainer");
 
@@ -63,6 +65,22 @@ function InitializeUI() {
 			$('#AllPickToggle').checked = true;
 		}
 	}
+
+	InitializeNews();
+}
+
+function InitializeNews() {
+
+    $.AsyncWebRequest('http://api.dota2imba.org/meta/news',
+	{
+		type: 'GET',
+		success: function (data) {
+			$.Msg("Request: Data: " + data.data.title)
+			$("#imba-news-article-title").text = data.data.title;
+			$("#imba-news-article-text").text = data.data.article;
+		} 
+	});
+	
 }
 
 // Checks if the local player has local privileges

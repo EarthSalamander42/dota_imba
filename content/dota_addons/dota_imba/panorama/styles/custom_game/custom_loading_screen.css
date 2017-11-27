@@ -26,11 +26,32 @@
 	width: 50%;
 	background-color: rgba(255, 255, 255, 0.2);
 	padding: 20px 40px;
+	height: fit-children;
+	flow-children: down;
 }  
 
 #imba-news-title {
 	font-size: 32px;
 	color: #144;
+}
+
+#imba-news-article-title {
+	font-size: 24px;
+	color: #255;
+}
+
+#imba-news-article-text {
+	font-size: 18px;
+	color: #122;
+}
+
+#imba-news-link {
+	color: #255;
+	font-size: 20px;
+}
+
+#imba-news-link:hover {
+	text-decoration: underline;
 }
 
 #imba-logo {
@@ -54,11 +75,11 @@
 }
 
 #imba-social-buttons Button {
-	width: 220px;
+	width: 240px;
 	height: 77px;
 	box-shadow: #000 0 0 10px 0; 
-	background-size: 100% 100%;
-	background-position: center;
+	background-size: contain;
+	background-position: center center;
 }  
 
 #imba-social-buttons Button:hover {
@@ -72,41 +93,42 @@
 
 #imba-social-button-discord-en {
 	margin-left: 0px;
-	background-image: url("file://{images}/custom_game/loading_screen/discord-en.png"); 
+	background-image: url("file://{images}/custom_game/loading_screen/community_discord_header.png"); 
 }
 #imba-social-button-discord-en:active { margin-left: 1px; }
 
 #imba-social-button-discord-ru { 
-	margin-left: 250px;
-	background-image: url("file://{images}/custom_game/loading_screen/discord-ru.png"); 
+	margin-left: 260px;
+	background-image: url("file://{images}/custom_game/loading_screen/community_discord_header_ru.png"); 
 }
-#imba-social-button-discord-ru:active { margin-left: 251px; }
+#imba-social-button-discord-ru:active { margin-left: 261px; }
 
 #imba-social-button-tencent { 
-	margin-left: 500px;
-	background-image: url("file://{images}/custom_game/loading_screen/tencent.png"); 
+	margin-left: 520px;
+	background-image: url("file://{images}/custom_game/loading_screen/community_chinese_blog.png"); 
 }
-#imba-social-button-tencent:active { margin-left: 501px; }
+#imba-social-button-tencent:active { margin-left: 521px; }
 
 #imba-social-button-reddit {
-	margin-left: 750px;
+	margin-left: 780px;
 	background-color: grey;
-	background-image: url("file://{images}/custom_game/loading_screen/reddit.png");
+	background-image: url("file://{images}/custom_game/loading_screen/community_reddit_header.png");
 }
-#imba-social-button-reddit:active { margin-left: 751px; }
+#imba-social-button-reddit:active { margin-left: 781px; }
 
 #GameOptionsPanel
 {
 	width: 100%;
 	height: fit-children;
 	flow-children: down;
-	padding: 1% 1% 1% 1%;
+	padding: 10px;
 }
 
 #game_options_game_mode_title
 {
 	font-size: 32px;
-	color: #FF7800;
+	color: #FFF;
+	margin-top: 5px;
 	text-align: center;
 	font-weight: bold;
 	horizontal-align: center;
@@ -239,7 +261,7 @@
 
 #ConfirmOptionsBtn
 {
-	margin-top: 30px;
+	margin: 20px 40px;
 	width: 400px;
 	height: 40px;
 	background-size: 100% 100%;
