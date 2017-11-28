@@ -184,7 +184,11 @@ function IllusionManager:MoveExistingIllusion(tEntity,tIllusionBase,tSkill,vSpaw
 	local tEntityAngles = tEntity:GetAngles()
 	tFoundIllusion:SetAbsOrigin(vSpawnLocation)
 	tFoundIllusion:Stop()
-	tFoundIllusion:SetHealth(tEntity:GetHealth())
+	local tIllusionHealth = tEntity:GetHealth()
+	if tIllusionHealth <= 1 then
+		tIllusionHealth = 1
+	end
+	tFoundIllusion:SetHealth(tIllusionHealth)
 	tFoundIllusion:SetAngles(tEntityAngles.x, tEntityAngles.y, tEntityAngles.z)
 	tFoundIllusion:RemoveModifierByName('modifier_illusion_manager_out_of_world')
 	IllusionManager:ResetIllusion(tIllusionBase,tFoundIllusion)
