@@ -7243,32 +7243,7 @@
 		}
 	}
 
-	//=================================================================================================================
-	// Recipe: Moon Shard
-	//=================================================================================================================
-	"item_recipe_imba_moon_shard"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2112"
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
 
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"0"
-		"ItemShopTags"					""
-
-		// Recipe
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemRecipe"					"1"
-		"ItemResult"					"item_imba_moon_shard"
-		"ItemRequirements"
-		{
-			"01"						"item_hyperstone;item_hyperstone"
-		}
-	}
 
 	//=================================================================================================================
 	// Moon Shard
@@ -7278,12 +7253,13 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2113"
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_moon_shard"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"BaseClass"						"item_lua"
+		"AbilityTextureName" 			"item_moon_shard"
+		"ScriptFile"					"items/item_moon_shard.lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"AbilityCastRange"				"600"
+		"AbilityCastRange"				"999999"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -7292,8 +7268,12 @@
 		"ItemQuality"					"common"
 		"ItemAliases"					"moon shard"
 		"SideShop"						"0"
+		"SecretShop"					"1"
+		"ItemStackable"					"1"
+		"ItemInitialCharges"			"1"
+		"IsTempestDoubleClonable"		"1"
 
-		// Special
+		// Special  Warning:If you want to change te consume values, you have to change the lua file's "CDOTAIMBA_ITEM_MOON_SHARD_abc" too
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
@@ -7331,95 +7311,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"consume_as_3"			"30"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"items/item_moon_shard.lua"
-				"Function"				"MoonShardActive"
-
-				"sound_consume"			"Item.MoonShard.Consume"
-				"modifier_consume_1"	"modifier_imba_moon_shard_consume_1"
-				"modifier_consume_2"	"modifier_imba_moon_shard_consume_2"
-				"modifier_consume_3"	"modifier_imba_moon_shard_consume_3"
-				"modifier_stacks"		"modifier_imba_moon_shard_stacks_dummy"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_moon_shard"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 	"%bonus_attack_speed"
-					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"			"%bonus_night_vision"
-				}
-			}
-
-			"modifier_imba_moon_shard_stacks_dummy"
-			{
-				"Passive"			"0"
-				"IsHidden"			"0"
-
-				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"TextureName"		"custom/imba_moon_shard"
-			}
-
-			"modifier_imba_moon_shard_consume_1"
-			{
-				"Passive"			"0"
-				"IsHidden"			"1"
-				"IsBuff"			"1"
-				"IsPurgable"		"0"
-
-				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 	"%consume_as_1"
-					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"			"%consume_vision_1"
-				}
-			}
-
-			"modifier_imba_moon_shard_consume_2"
-			{
-				"Passive"			"0"
-				"IsHidden"			"1"
-				"IsBuff"			"1"
-				"IsPurgable"		"0"
-
-				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 	"%consume_as_2"
-					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"			"%consume_vision_2"
-				}
-			}
-
-			"modifier_imba_moon_shard_consume_3"
-			{
-				"Passive"			"0"
-				"IsHidden"			"1"
-				"IsBuff"			"1"
-				"IsPurgable"		"0"
-
-				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_MULTIPLE"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 	"%consume_as_3"
-				}
 			}
 		}
 	}
