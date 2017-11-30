@@ -44,6 +44,7 @@ require('settings')
 require('events')
 
 require('api/api')
+require('api/frontend')
 
 -- clientside KV loading
 require('addon_init')
@@ -83,6 +84,11 @@ end
 	It can be used to initialize state that isn't initializeable in InitGameMode() but needs to be done before everyone loads in.
 ]]
 function GameMode:OnFirstPlayerLoaded()
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: API. Preload
+	-------------------------------------------------------------------------------------------------
+	imba_api_init()
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Roshan and Picking Screen camera initialization

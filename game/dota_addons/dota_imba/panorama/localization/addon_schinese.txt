@@ -1,5 +1,6 @@
 "addon"
 {
+	"lang"											"cn"
 	"Unassigned"      								"未知队伍"
 	"Spectator"       								"观察者"
 	"Neutrals"        								"中立"
