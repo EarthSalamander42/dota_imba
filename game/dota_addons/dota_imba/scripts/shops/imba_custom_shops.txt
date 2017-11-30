@@ -1,4 +1,4 @@
-"imba_custom_shops"
+"imba_10v10_shops"
 {
 	"consumables"
 	{
@@ -87,7 +87,6 @@
 		"item"		"item_imba_hand_of_midas"
 		"item"		"item_travel_boots"
 		"item"		"item_imba_nether_wand"
-		"item"		"item_imba_moon_shard"
 		"item"		"item_ultimate_scepter"
 		"item"		"item_imba_blink_boots"
 	}
@@ -109,6 +108,8 @@
 		"item"		"item_imba_mekansm"
 		"item"		"item_imba_vladmir"
 		"item"		"item_imba_pipe"
+		"item"		"item_imba_occult_mask"
+		"item"		"item_meteor_hammer"
 	}
 				
 	"magics"			
@@ -128,6 +129,7 @@
 		"item"		"item_refresher"
 		"item"		"item_imba_sheepstick"
 		"item"		"item_imba_octarine_core"
+		"item"		"item_nullifier"
 	}
 		
 	// Level 3 - Purple Recipes	
@@ -166,6 +168,7 @@
 		"item"		"item_imba_abyssal_blade"
 		"item"		"item_imba_rapier"
 		"item"		"item_imba_starfury"
+		"item"		"item_combo_breaker"
 	}
 
 	// Level 4 - Orange / Orb / Artifacts				
@@ -235,7 +238,7 @@
 		"item"		"item_reaver"
 		"item"		"item_eagle"
 		"item"		"item_relic"
-		"item"		"item_imba_occult_mask"
+		"item"		"item_imba_moon_shard"
 	}
 
 	"pregame"
