@@ -272,7 +272,7 @@ function GetAncientAbility( tier )
 	if tier == 1 then
 		local ability_list = {
 			"venomancer_poison_nova",
-			"juggernaut_blade_fury"			
+			"juggernaut_blade_fury_ancient"			
 		}
 
 		return ability_list[RandomInt(1, #ability_list)]

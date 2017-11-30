@@ -452,6 +452,7 @@ function GameMode:ItemAddedFilter( keys )
 	-- suggested_slot: -1
 	local unit = EntIndexToHScript(keys.inventory_parent_entindex_const)
 	local item = EntIndexToHScript(keys.item_entindex_const)
+	if item:GetAbilityName() == "item_tpscroll" and item:GetPurchaser() == nil then return false end
 	local item_name = 0
 	if item:GetName() then
 		item_name = item:GetName()
