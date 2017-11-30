@@ -9,13 +9,16 @@ local IMBA_API_CONFIG = {
     key = "3utx8DehTd42Wxqh65ldAErJjoCdi6XB",
     endpoint = "http://api.dota2imba.org",
     agent = "dota_imba-lua-1.x",
-    timeout = 1000
+    timeout = 3000
 }
 
 local IMBA_API_ENDPOINTS = {
     meta_news = "/meta/news",
     meta_donators = "/meta/donators",
-    meta_developers = "/meta/developers"
+    meta_developers = "/meta/developers",
+    game_register = "/game/register",
+    game_complete = "/game/complete",
+    game_event = "/game/event"
 }
 
 ImbaApi = {}
@@ -29,7 +32,7 @@ function ImbaApi:new(cpo, config)
 end
 
 function ImbaApi:print(t)
-    print("[API] " .. t)
+    print("[api] " .. t)
 end
 
 function ImbaApi:perform(robj, endpoint, callback)
@@ -51,6 +54,11 @@ function ImbaApi:perform(robj, endpoint, callback)
         payload = json.encode(base_request)
     end 
 
+    self:print("Performing " .. method .. " @ " .. endpoint)
+    if (method == "POST") then
+        self:print("Payload " .. payload)
+    end
+    
     -- create request
     rqH = CreateHTTPRequestScriptVM(method, self.config.endpoint .. endpoint)
     rqH:SetHTTPRequestAbsoluteTimeoutMS(self.config.timeout)
@@ -84,42 +92,34 @@ function ImbaApi:perform(robj, endpoint, callback)
             end
         end
     end)
+end
 
+function ImbaApi:simple_perform(data, endpoint, success_cb, error_cb)
+    self:perform(data, endpoint, function (err, rs)
+        if (err) then
+            if (error_cb) then error_cb() end
+        else success_cb(rs.data) end
+    end)
 end
 
 function ImbaApi:meta_news(success_cb, error_cb)
-    self:perform(nil, IMBA_API_ENDPOINTS.meta_news, function (err, rs)
-        if err then 
-            if error_cb then error_cb() end
-        else success_cb(rs.data) end
-    end)
+    self:simple_perform(nil, IMBA_API_ENDPOINTS.meta_news, success_cb, error_cb)
 end
 
 function ImbaApi:meta_donators(success_cb, error_cb)
-    self:perform(nil, IMBA_API_ENDPOINTS.meta_donators, function (err, rs)
-        if err then
-            if error_cb then error_cb() end
-        else success_cb(rs.data) end
-    end)
+    self:simple_perform(nil, IMBA_API_ENDPOINTS.meta_donators, success_cb, error_cb)
 end
 
 function ImbaApi:meta_developers(success_cb, error_cb)
-    self:perform(nil, IMBA_API_ENDPOINTS.meta_developers, function (err, rs)
-        if err then 
-            if error_cb then error_cb() end
-        else success_cb(rs.data) end
-    end)
+    self:simple_perform(nil, IMBA_API_ENDPOINTS.meta_developers, success_cb, error_cb)
 end
 
-function imba_api_test()
-    print("[API-TEST] IMBA API Test")
+function ImbaApi:game_event(data, success_cb, error_cb)
+    self:simple_perform(data, IMBA_API_ENDPOINTS.game_event, success_cb, error_cb)
+end
 
-    local api = imba_api()
-
-    api:meta_news(function (data)
-        print("[API-TEST] " .. data.title)
-        print("[API-TEST] " .. data.article)
-    end)
+function ImbaApi:game_register(data, success_cb, error_cb)
+    self:simple_perform(data, IMBA_API_ENDPOINTS.game_register, success_cb, error_cb)
 end
 
 -- Internal Vars
