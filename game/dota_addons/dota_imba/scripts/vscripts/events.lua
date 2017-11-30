@@ -676,6 +676,7 @@ function GameMode:OnLastHit(keys)
 	DebugPrint('[BAREBONES] OnLastHit')
 	DebugPrintTable(keys)
 
+	if keys.PlayerID == -1 then return end
 	local isFirstBlood = keys.FirstBlood == 1
 	local isHeroKill = keys.HeroKill == 1
 	local isTowerKill = keys.TowerKill == 1
@@ -958,7 +959,13 @@ function GameMode:OnEntityKilled( keys )
 				elseif respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[25] then
 					respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[25]
 				end
-				killed_unit:SetTimeUntilRespawn(respawn_time)
+
+				-- divide the respawn time by 2 for frantic mode
+				if IMBA_FRANTIC_MODE_ON == true then
+					killed_unit:SetTimeUntilRespawn(respawn_time / 2)
+				else
+					killed_unit:SetTimeUntilRespawn(respawn_time)
+				end
 			end
 			HeroVoiceLine(killed_unit, "death")
 		end
