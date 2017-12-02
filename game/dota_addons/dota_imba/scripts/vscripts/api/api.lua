@@ -55,6 +55,7 @@ function ImbaApi:perform(robj, endpoint, callback)
     end 
 
     self:print("Performing " .. method .. " @ " .. endpoint)
+
     if (method == "POST") then
         self:print("Payload " .. payload)
     end
@@ -120,6 +121,10 @@ end
 
 function ImbaApi:game_register(data, success_cb, error_cb)
     self:simple_perform(data, IMBA_API_ENDPOINTS.game_register, success_cb, error_cb)
+end
+
+function ImbaApi:game_complete(data, success_cb, error_cb)
+    self:simple_perform(data, IMBA_API_ENDPOINTS.game_complete, success_cb, error_cb)
 end
 
 -- Internal Vars
