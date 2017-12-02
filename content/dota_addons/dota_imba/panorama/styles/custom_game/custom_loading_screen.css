@@ -21,14 +21,19 @@
 
 #imba-news {
 	vertical-align: bottom;
-	margin-bottom: 300px;
+	margin-bottom: 250px;
 	margin-left: 2%;
 	width: 50%;
 	background-color: rgba(255, 255, 255, 0.2);
 	padding: 20px 40px;
 	height: fit-children;
 	flow-children: down;
-}  
+}
+
+.AspectRatio4x3 #imba-news {
+	width: 40%;
+	margin-bottom: 220px;
+}
 
 #imba-news-title {
 	font-size: 32px;
@@ -162,6 +167,10 @@
 	flow-children: right;
 }
 
+#QuickOptionsPanel {
+	margin-top: 30px;
+}
+
 #QuickOptionsNormalBtn
 {
 	width: 45%;
@@ -293,4 +302,13 @@
 
 #AllPickToggle {
 	margin-left: 5%;
+}
+
+#FranticInfo
+{
+	width: 100%;
+	margin-left: 5%;
+	text-align: left;
+	horizontal-align: left;
+	vertical-align: center;
 }

@@ -601,33 +601,17 @@
 		"Ability3"					"imba_elder_titan_natural_order"
 		"Ability4"					"generic_hidden"
 		"Ability5"					"generic_hidden"
-		"Ability6"					"generic_hidden"
-		"Ability7"					"generic_hidden"
+		"Ability6"					"imba_elder_titan_earth_splitter"
+		"Ability7"					"imba_elder_titan_return_spirit"
 
-//		"Ability2"					"elder_titan_ancestral_spirit"
-//		"Ability3"					"elder_titan_natural_order"
-//		"Ability4"					"generic_hidden"
-//		"Ability5"					"generic_hidden"
-//		"Ability6"					"elder_titan_earth_splitter"
-//		"Ability7"					"elder_titan_return_spirit"
-
-		"Ability10"					"generic_hidden" // 
-		"Ability11"					"generic_hidden" // 
-		"Ability12"					"generic_hidden" // 
+		"Ability10"					"special_bonus_imba_elder_titan_1" // 2400 cast range ancestral spirit
+		"Ability11"					"special_bonus_imba_elder_titan_2" // +600 Ancestral Spirit movespeed
+		"Ability12"					"generic_hidden" // Ancestral Spirit roots target hit
 		"Ability13"					"generic_hidden" // 
 		"Ability14"					"generic_hidden" // 
 		"Ability15"					"generic_hidden" // 
-		"Ability16"					"generic_hidden" // 
-		"Ability17"					"generic_hidden" // 
-
-//		"Ability10"					"special_bonus_imba_elder_titan_1" // reduce echo stomp cast time
-//		"Ability11"					"special_bonus_imba_elder_titan_2" // reduce bonus armor (in addition to base armor)
-//		"Ability12"					"special_bonus_imba_elder_titan_3" // increase ancestral spirit movespeed
-//		"Ability13"					"special_bonus_imba_elder_titan_4" // natural order reduce both armor and magic resist on elder titan
-//		"Ability14"					"special_bonus_imba_elder_titan_7" // natural order reduce both armor and magic resist on the spirit
-//		"Ability15"					"special_bonus_imba_elder_titan_5" // astral spirit roots target hit
-//		"Ability16"					"special_bonus_imba_elder_titan_6" // 
-//		"Ability17"					"special_bonus_imba_elder_titan_8" // 
+		"Ability16"					"generic_hidden" // Echo Stomp no longer require channeling
+		"Ability17"					"generic_hidden" // Natural Order reduces physical and magical resistance
 
 		"ProjectileSpeed"			"900"
 	}
@@ -753,8 +737,8 @@
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
 		"Ability1"					"imba_jakiro_fire_breath"
-		"Ability2"					"imba_jakiro_ice_breath"
-		"Ability3"					"imba_jakiro_ice_path"
+		"Ability2"					"imba_jakiro_ice_path"
+		"Ability3"					"imba_jakiro_ice_breath"
 		"Ability4"					"imba_jakiro_liquid_fire"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_jakiro_macropyre"

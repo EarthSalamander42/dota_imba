@@ -55,7 +55,7 @@ function ShivaBlast( keys )
 
 			-- If not, blast it
 			if not enemy_has_been_hit then
-				
+
 				-- Play hit particle
 				local hit_pfx = ParticleManager:CreateParticle(particle_hit, PATTACH_ABSORIGIN_FOLLOW, enemy)
 				ParticleManager:SetParticleControl(hit_pfx, 0, enemy:GetAbsOrigin())
