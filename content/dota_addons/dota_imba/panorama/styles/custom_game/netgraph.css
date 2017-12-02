@@ -1,6 +1,6 @@
 .ScoreboardLeft
 {
-	margin-bottom: 23%;
+	margin-bottom: 26%;
 	background-color: gradient(linear, 0% 0%, 100% 0%, from(#425663cc), color-stop(.5, #42566355), to(#0000));
 	width: fit-children;
 	height: fit-children;

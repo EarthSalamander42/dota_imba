@@ -14,7 +14,7 @@
 	border: 1px solid #333;
 	border-top-right-radius: 5px;
 	border-bottom-right-radius: 5px;
-	background-color: #444A5Dee;
+	background-color: #000000ba;
 }
 
 .ScoreCol_DisplayPic DOTAAvatarImage
@@ -156,7 +156,7 @@
 {
 	flow-children: down;
 	padding-bottom: 30px;
-	background-color: #262c36bb;
+//	background-color: #262c36bb;
 }
 
 #TeamScore,

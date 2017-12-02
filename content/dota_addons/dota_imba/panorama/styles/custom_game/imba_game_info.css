@@ -1,7 +1,7 @@
 .ImbaGameInfoMain
 {
-	width: 100%;
-	height: 100%;
+	margin-top: 35px;
+	align: center top;
 	flow-children: down;
 }
 
@@ -13,8 +13,8 @@
 
 #ImbaGameInfo
 {
-	width: 25%;
-	height: 9%;
+	width: 480px;
+	height: 100px;
 	padding: 0% 1% 0% 1%;
 	align: center top;
 	flow-children: down;
@@ -31,10 +31,11 @@
 	align: center center;
 	border: 1px solid #333333;
 	border-radius: 5px;
+	pre-transform-scale2d: 0.95;
 }
 
 #ImbaGameInfoButton:hover {
-	pre-transform-scale2d: 1.05;
+	pre-transform-scale2d: 0.9;
 	wash-color: #00000000;
 	color: white;
 	box-shadow: fill grey -2px -2px 4px 4px;

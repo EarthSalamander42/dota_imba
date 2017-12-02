@@ -321,6 +321,24 @@
 	"DOTA_Tooltip_Talent_special_bonus_imba_drow_ranger_8_title"                "Perfect Marksmanship"
 	"DOTA_Tooltip_Talent_special_bonus_imba_drow_ranger_8_Description"          "Marksmanship is no longer disabled by nearby enemies. Marksmanship still stops when Drow Ranger is broken. <br><br><i>With deadly aim and unparalleled swiftness, no one can stop the Drow Ranger.</i>"
 
+	// Elder Titan
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_1_title"				"Cast Range"
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_1_Description"			"2400 Cast Range."
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_2_title"				"Astral Speed"
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_2_Description"			"+600 Ancestral Spirit movespeed."
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_3_title"				"Astral Root"
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_3_Description"			"Ancestral Spirit roots targets."
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_4_title"				""
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_4_Description"			""
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_5_title"				""
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_5_Description"			""
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_6_title"				""
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_6_Description"			""
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_7_title"				""
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_7_Description"			""
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_8_title"				""
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_8_Description"			""
+
 	// Enigma
 	"DOTA_Tooltip_Talent_special_bonus_imba_enigma_1_title"                     "Closer to Singularity"
 	"DOTA_Tooltip_Talent_special_bonus_imba_enigma_1_Description"               "Each Singularity stack consumed now decreases Black Hole's cooldown by 2 seconds. <br><br><i> Enigma fetches the dark energy scattered by his Singularity essences, allowing him to recharge his ultimate power.</i>"

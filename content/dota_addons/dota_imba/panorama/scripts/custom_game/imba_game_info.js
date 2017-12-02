@@ -27,7 +27,7 @@ function ToggleGameOptions() {
 	var frantic_mode = CustomNetTables.GetTableValue("game_options", "frantic_mode");
 	var frantic = "Disabled";
 
-	if (frantic_mode == true) {
+	if (frantic_mode[1] == 1) {
 		frantic = "Enabled"
 	}
 
@@ -38,17 +38,6 @@ function ToggleGameOptions() {
 	$("#MaxLevelValue").text = max_level[1];
 	$("#FranticModeValue").text = frantic;
 
-	if (tower_power[1] == 1) {
-		$("#TowerPowerValue").text = $.Localize( '#imba_gamemode_settings_power_1' );
-	} else if (tower_power[1] == 2) {
-		$("#TowerPowerValue").text = $.Localize( '#imba_gamemode_settings_power_2' );
-	}
-
-	if (creep_power[1] == 1) {
-		$("#CreepPowerValue").text = $.Localize( '#imba_gamemode_settings_power_1' );
-	} else if (creep_power[1] == 2) {
-		$("#CreepPowerValue").text = $.Localize( '#imba_gamemode_settings_power_2' );
-	} else if (creep_power[1] == 3) {
-		$("#CreepPowerValue").text = $.Localize( '#imba_gamemode_settings_power_3' );
-	}
+	$("#TowerPowerValue").text = $.Localize( '#imba_gamemode_settings_power_' + tower_power[1] );
+	$("#CreepPowerValue").text = $.Localize( '#imba_gamemode_settings_power_' + creep_power[1] );
 })();

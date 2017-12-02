@@ -1092,7 +1092,8 @@ function GameMode:OnTowerKill(keys)
 	-- IMBA: Attack of the Ancients tower upgrade logic
 	-------------------------------------------------------------------------------------------------
 	
-	if TOWER_UPGRADE_MODE then		
+	-- Always enabled!
+--	if TOWER_UPGRADE_MODE then		
 		
 		-- Find all friendly towers on the map
 		local towers = FindUnitsInRadius(tower_team, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
@@ -1110,7 +1111,7 @@ function GameMode:OnTowerKill(keys)
 			Notifications:BottomToAll({text = "#tower_abilities_dire_upgrade", duration = 7, style = {color = "DodgerBlue"}})
 			EmitGlobalSound("powerup_02")			
 		end
-	end
+--	end
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Update comeback gold logic
