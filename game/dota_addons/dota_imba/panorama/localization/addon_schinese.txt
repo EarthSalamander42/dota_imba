@@ -321,6 +321,24 @@
 	"DOTA_Tooltip_Talent_special_bonus_imba_drow_ranger_8_title"        		"射手天赋"
 	"DOTA_Tooltip_Talent_special_bonus_imba_drow_ranger_8_Description" 			"射手天赋不会失效"
 
+	// Elder Titan
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_1_title"				"Cast Range"
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_1_Description"			"2400 Cast Range."
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_2_title"				"Astral Speed"
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_2_Description"			"+600 Ancestral Spirit movespeed."
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_3_title"				"Astral Root"
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_3_Description"			"Ancestral Spirit roots targets."
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_4_title"				""
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_4_Description"			""
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_5_title"				""
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_5_Description"			""
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_6_title"				""
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_6_Description"			""
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_7_title"				""
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_7_Description"			""
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_8_title"				""
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_8_Description"			""
+
     // Enigma
     "DOTA_Tooltip_Talent_special_bonus_imba_enigma_1_title"                     "黑洞"
     "DOTA_Tooltip_Talent_special_bonus_imba_enigma_1_Description"               "每层奇点还将降低2秒黑洞冷却时间"
