@@ -13,9 +13,9 @@
 			//Set the hero of the player, then set the transform to none,
 			//which animates the hero portrait panel
 			SetPlayerName: function( playerID ) {
-				var pID = playerID;
 				var playerInfo = Game.GetPlayerInfo( playerID );
 				$('#PlayerName').text = Players.GetPlayerName(playerID);
+				$('#PlayerColor').style.backgroundColor = GameUI.CustomUIConfig().player_colors[playerID];
 			},
 
 			SetPreviewHero:function( heroName ) {
@@ -30,12 +30,24 @@
 				$('#HeroPanel').style.transform = 'none';
 				$('#HeroPanel').style.backgroundSize = "100% 100%";
 				$('#HeroPanel').style.saturation = "1.0";
-			}
+			},
+
+			SetPlayerMMR: function( MMR ) {
+				$('#PlayerMMR').style.visibility = "visible";
+				$('#PlayerMMRLabel').text = MMR;
+			},
 		});
 	</script>
 
 	<Panel class="PickingPlayer">
-		<Panel id="HeroPanel" />
-		<Label id="PlayerName" text=""/>
+		<Panel class="Player">
+			<Panel id="HeroPanel" />
+			<Label id="PlayerColor" text=""/>
+			<Label id="PlayerName" text=""/>
+		</Panel>
+
+		<Panel id="PlayerMMR">
+			<Label id="PlayerMMRLabel" />
+		</Panel>
 	</Panel>
 </root>

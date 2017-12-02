@@ -160,7 +160,7 @@ PLAYER_COLORS[5] = { 190, 255, 0 }
 PLAYER_COLORS[6] = { 255, 0, 0 }
 PLAYER_COLORS[7] = { 0, 128, 128 }
 PLAYER_COLORS[8] = { 255, 250, 200 }
-PLAYER_COLORS[9] = { 1, 1, 1 }
+PLAYER_COLORS[9] = { 49, 49, 49 }
 PLAYER_COLORS[10] = { 255, 0, 255 }
 PLAYER_COLORS[11]  = { 128, 128, 0 }
 PLAYER_COLORS[12] = { 100, 255, 255 }
@@ -169,8 +169,12 @@ PLAYER_COLORS[14] = { 170, 110, 40 }
 PLAYER_COLORS[15] = { 0, 0, 128 }
 PLAYER_COLORS[16] = { 230, 190, 255 }
 PLAYER_COLORS[17] = { 128, 0, 0 }
-PLAYER_COLORS[18] = { 128, 128, 128 }
+PLAYER_COLORS[18] = { 144, 144, 144 }
 PLAYER_COLORS[19] = { 254, 254, 254 }
+PLAYER_COLORS[20] = { 166, 166, 166 }
+PLAYER_COLORS[21] = { 255, 89, 255 }
+PLAYER_COLORS[22] = { 203, 255, 89 }
+PLAYER_COLORS[23] = { 108, 167, 255 }
 
 USE_AUTOMATIC_PLAYERS_PER_TEAM = false										-- Should we set the number of players to 10 / MAX_NUMBER_OF_TEAMS?
 
@@ -301,7 +305,7 @@ elseif GetMapName() == "imba_custom" or GetMapName() == "imba_custom_10v10" then
 	CUSTOM_XP_BONUS = 200
 	CREEP_POWER_FACTOR = 2
 	TOWER_UPGRADE_MODE = true
-	TOWER_POWER_FACTOR = 1
+	TOWER_POWER_FACTOR = 2
 	HERO_INITIAL_GOLD = 2000
 	HERO_STARTING_LEVEL = 5
 	MAX_LEVEL = 40
@@ -331,6 +335,7 @@ CustomNetTables:SetTableValue("game_options", "initial_gold", {HERO_INITIAL_GOLD
 CustomNetTables:SetTableValue("game_options", "initial_level", {HERO_STARTING_LEVEL})
 CustomNetTables:SetTableValue("game_options", "max_level", {MAX_LEVEL})
 CustomNetTables:SetTableValue("game_options", "frantic_mode", {IMBA_FRANTIC_MODE_ON})
+print("Frantic:", IMBA_FRANTIC_MODE_ON)
 
 -- XP per level table (only active if custom hero levels are enabled) 
 XP_PER_LEVEL_TABLE = {}

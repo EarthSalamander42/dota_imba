@@ -216,19 +216,20 @@ function OnSetGameMode( eventSourceIndex, args )
 	end
 
 	-- Tower upgrade setup
-	if tonumber(mode_info.tower_upgrades) == 1 then
-		TOWER_UPGRADE_MODE = true
-		CustomNetTables:SetTableValue("game_options", "tower_upgrades", {true})
-		print("Tower upgrades activated!")
-	end
+--	if tonumber(mode_info.tower_upgrades) == 1 then
+--		TOWER_UPGRADE_MODE = true
+--		CustomNetTables:SetTableValue("game_options", "tower_upgrades", {true})
+--		print("Tower upgrades activated!")
+--	end
 
 	-- Frantic mode setup
-	if tonumber(mode_info.frantic_mode) == 1 then
-		IMBA_FRANTIC_MODE_ON = true
-		CustomNetTables:SetTableValue("game_options", "frantic_mode", {true})
-		print("Frantic mode activated!")
-	end
-
+--	print("Frantic setup:", tonumber(mode_info.frantic_mode), mode_info.frantic_mode)
+--	if tonumber(mode_info.frantic_mode) == 1 then
+--		IMBA_FRANTIC_MODE_ON = true
+--		CustomNetTables:SetTableValue("game_options", "frantic_mode", {true})
+--		print("Frantic mode activated!")
+--	end
+--[[
 	-- Arena mode setup
 	if mode_info.kills_to_end and tonumber(mode_info.kills_to_end) > 0 and map_name == "imba_arena" then
 		END_GAME_ON_KILLS = true
@@ -236,9 +237,11 @@ function OnSetGameMode( eventSourceIndex, args )
 		CustomNetTables:SetTableValue("game_options", "kills_to_end", {mode_info.kills_to_end})
 		print("Game will end on "..KILLS_TO_END_GAME_FOR_TEAM.." kills!")
 	end
+--]]
 
 	-- Bounty multiplier increase
-	if tostring(mode_info.bounty_multiplier) == "GoldOption2" then
+	print("Gold Mult:", tostring(mode_info.bounty_multiplier))
+	if tostring(mode_info.bounty_multiplier) == 2 then
 		if map_name == "imba_standard" or map_name == "imba_random_omg" then
 			CUSTOM_GOLD_BONUS = 75
 		elseif map_name == "imba_custom" or map_name == "imba_custom_10v10" then
@@ -253,7 +256,8 @@ function OnSetGameMode( eventSourceIndex, args )
 	end
 
 	-- Bounty multiplier increase
-	if tostring(mode_info.exp_multiplier) == "ExpOption2" then
+	print("Exp Mult:", tostring(mode_info.exp_multiplier))
+	if tostring(mode_info.exp_multiplier) == 2 then
 		if map_name == "imba_standard" or map_name == "imba_random_omg" then
 			CUSTOM_XP_BONUS = 75
 		elseif map_name == "imba_custom" or map_name == "imba_custom_10v10" then
@@ -268,7 +272,8 @@ function OnSetGameMode( eventSourceIndex, args )
 	end
 
 	-- Creep power increase
-	if tostring(mode_info.creep_power) == "CreepPowerOption2" then
+	print("Creep Power:", tostring(mode_info.creep_power))
+	if tostring(mode_info.creep_power) == 2 then
 		if map_name == "imba_standard" or map_name == "imba_random_omg" then
 			CREEP_POWER_FACTOR = 2
 		elseif map_name == "imba_custom" or map_name == "imba_custom_10v10" then
@@ -281,7 +286,8 @@ function OnSetGameMode( eventSourceIndex, args )
 	end
 
 	-- Tower power increase
-	if tostring(mode_info.tower_power) == "TowerPowerOption2" then
+	print("Tower Power:", tostring(mode_info.tower_power))
+	if tostring(mode_info.tower_power) == 2 then
 		if map_name == "imba_standard" or map_name == "imba_random_omg" then
 			TOWER_POWER_FACTOR = 1
 		elseif map_name == "imba_custom" or map_name == "imba_custom_10v10" then
@@ -294,7 +300,8 @@ function OnSetGameMode( eventSourceIndex, args )
 	end
 
 	-- Hero power increase
-	if tostring(mode_info.hero_power) == "HeroPower2" then
+	print("Hero Power:", tostring(mode_info.hero_power))
+	if tostring(mode_info.hero_power) == 2 then
 		if map_name == "imba_custom" or map_name == "imba_custom_10v10" then
 			HERO_INITIAL_GOLD = 5000
 			HERO_STARTING_LEVEL = 12
@@ -311,7 +318,7 @@ function OnSetGameMode( eventSourceIndex, args )
 	end	
 
 	-- Set the game options as being chosen
-	GAME_OPTIONS_SET = true
+--	GAME_OPTIONS_SET = true
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Stat tracking stuff
