@@ -33,7 +33,7 @@ var hiddenAbilities = [
 	"imba_troll_warlord_whirling_axes_melee",
 	"abyssal_underlord_cancel_dark_rift",
 	"earth_spirit_petrify",
-	"elder_titan_return_spirit",
+	"imba_elder_titan_return_spirit",
 	"life_stealer_assimilate",
 	"life_stealer_control",
 	"life_stealer_consume",
@@ -221,10 +221,14 @@ function MakeImbaHero(imba_heroes) {
 			}
 			hero.AddClass("ClassImbaOption")
 			$("#" + imba_heroes[h] + "_label").DeleteAsync(0);
-			var HeroLabel = $.CreatePanel("Label", hero, imba_heroes[h] + "_label");
-			HeroLabel.RemoveClass("ClassNormalOptionLabel")
-			HeroLabel.AddClass("ClassImbaOptionLabel")
-			HeroLabel.text = $.Localize("imba_hero");
+			
+			if (hero.BHasClass("taken")) {
+			} else {
+				var HeroLabel = $.CreatePanel("Label", hero, imba_heroes[h] + "_label");
+				HeroLabel.RemoveClass("ClassNormalOptionLabel")
+				HeroLabel.AddClass("ClassImbaOptionLabel")
+				HeroLabel.text = $.Localize("imba_hero");
+			}
 		}
 	}
 }
@@ -282,6 +286,10 @@ var DireLevels = 0
 var RadiantCount = 0
 var DireCount = 0
 
+	var str = "Visit W3Schools!";
+	var n = str.search("W3Schools");
+	$.Msg(n)
+
 	var radiantPlayers = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_GOODGUYS );
 	var direPlayers = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_BADGUYS );
 	var map_info = Game.GetMapInfo();
@@ -311,6 +319,8 @@ var DireCount = 0
 		if (plyData != null) {
 			RadiantLevels = RadiantLevels + plyData.Lvl / radiantPlayers.length
 			$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + RadiantLevels.toFixed([0]);
+			playerPanel.SetPlayerMMR( plyData.Lvl );
+//			$.Msg(plyData.Lvl)
 		}
 	});
 
@@ -371,9 +381,9 @@ function CreateHeroPick() {
 	CreateHeroPanel(agility_heroes_custom, "AGI", true)
 	CreateHeroPanel(intellect_heroes_custom, "INT", true)
 
+	MakeDisabledHeroes(disabled_heroes_10v10, disabled_heroes)
 	MakeImbaHero(imba_heroes)
 	MakeNewHero(new_heroes)
-	MakeDisabledHeroes(disabled_heroes_10v10, disabled_heroes)
 }
 
 /* A player on the same team has picked a hero, tell the player's panel a hero was picked,

@@ -17,7 +17,7 @@
 		"Ability4"					"imba_abaddon_over_channel"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_abaddon_borrowed_time"
-		
+
 		"Ability10"					"special_bonus_imba_abaddon_8" //Heals that heal above maximum health threshold during Borrowed Time grants a mist shield (25% ratio) that is released after Borrowed Time expires for 5 seconds, healing Abaddon.
 		"Ability11"					"special_bonus_imba_abaddon_6" //+50% Overchannel power
 		"Ability12"					"special_bonus_imba_abaddon_5" //Curse of Avernus Abbadon buff now apply as an aura around him in 900 AoE, affecting all allies in range.
@@ -26,7 +26,7 @@
 		"Ability15"					"special_bonus_imba_abaddon_3" //During the first second of Aphotic Shield, it absorbs all damage done to it and adds it to it's health/damage.
 		"Ability16"					"special_bonus_imba_abaddon_1" //When the shield breaks, applies Mist Coil to all allies and enemies within 350 radius
 		"Ability17"					"special_bonus_imba_abaddon_7" //Borrowed Time Strong Purges all allies in 900 AoE on cast.
-	}	
+	}
 
 	//=================================================================================================================
 	// HERO: Alchemist
@@ -34,7 +34,7 @@
 	"npc_dota_hero_alchemist"
 	{
 		"override_hero"				"npc_dota_hero_alchemist"	
-		
+
 		//Picking Screen
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
@@ -601,33 +601,17 @@
 		"Ability3"					"imba_elder_titan_natural_order"
 		"Ability4"					"generic_hidden"
 		"Ability5"					"generic_hidden"
-		"Ability6"					"generic_hidden"
-		"Ability7"					"generic_hidden"
+		"Ability6"					"imba_elder_titan_earth_splitter"
+		"Ability7"					"imba_elder_titan_return_spirit"
 
-//		"Ability2"					"elder_titan_ancestral_spirit"
-//		"Ability3"					"elder_titan_natural_order"
-//		"Ability4"					"generic_hidden"
-//		"Ability5"					"generic_hidden"
-//		"Ability6"					"elder_titan_earth_splitter"
-//		"Ability7"					"elder_titan_return_spirit"
-
-		"Ability10"					"generic_hidden" // 
-		"Ability11"					"generic_hidden" // 
-		"Ability12"					"generic_hidden" // 
+		"Ability10"					"special_bonus_imba_elder_titan_1" // 2400 cast range ancestral spirit
+		"Ability11"					"special_bonus_imba_elder_titan_2" // +600 Ancestral Spirit movespeed
+		"Ability12"					"generic_hidden" // Ancestral Spirit roots target hit
 		"Ability13"					"generic_hidden" // 
 		"Ability14"					"generic_hidden" // 
 		"Ability15"					"generic_hidden" // 
-		"Ability16"					"generic_hidden" // 
-		"Ability17"					"generic_hidden" // 
-
-//		"Ability10"					"special_bonus_imba_elder_titan_1" // reduce echo stomp cast time
-//		"Ability11"					"special_bonus_imba_elder_titan_2" // reduce bonus armor (in addition to base armor)
-//		"Ability12"					"special_bonus_imba_elder_titan_3" // increase ancestral spirit movespeed
-//		"Ability13"					"special_bonus_imba_elder_titan_4" // natural order reduce both armor and magic resist on elder titan
-//		"Ability14"					"special_bonus_imba_elder_titan_7" // natural order reduce both armor and magic resist on the spirit
-//		"Ability15"					"special_bonus_imba_elder_titan_5" // astral spirit roots target hit
-//		"Ability16"					"special_bonus_imba_elder_titan_6" // 
-//		"Ability17"					"special_bonus_imba_elder_titan_8" // 
+		"Ability16"					"generic_hidden" // Echo Stomp no longer require channeling
+		"Ability17"					"generic_hidden" // Natural Order reduces physical and magical resistance
 
 		"ProjectileSpeed"			"900"
 	}
@@ -753,8 +737,8 @@
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
 		"Ability1"					"imba_jakiro_fire_breath"
-		"Ability2"					"imba_jakiro_ice_breath"
-		"Ability3"					"imba_jakiro_ice_path"
+		"Ability2"					"imba_jakiro_ice_path"
+		"Ability3"					"imba_jakiro_ice_breath"
 		"Ability4"					"imba_jakiro_liquid_fire"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_jakiro_macropyre"
@@ -769,6 +753,36 @@
 		"Ability17"					"special_bonus_imba_jakiro_8"
 
 		"ProjectileModel"			"particles/units/heroes/hero_jakiro/jakiro_base_attack.vpcf"
+	}
+
+	//=================================================================================================================
+	// HERO: Juggernaut
+	//=================================================================================================================
+	"npc_dota_hero_juggernaut"
+	{
+		"override_hero"				"npc_dota_hero_juggernaut"
+
+//		//Picking Screen
+//		"IsImba"					"1"
+		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
+
+		"Ability1"					"juggernaut_blade_fury"
+		"Ability2"					"juggernaut_healing_ward"
+		"Ability3"					"juggernaut_blade_dance"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"juggernaut_omni_slash"
+
+//		"Ability10"					"special_bonus_imba_juggernaut_2" // Blade Fury slowly increases in size
+//		"Ability11"					"special_bonus_imba_juggernaut_4" // Secret Blade strikes 3 times, once forward, twice from the sides
+//		"Ability12"					"special_bonus_imba_juggernaut_3" // Healing Ward aura also gives attack speed
+//		"Ability13"					"special_bonus_imba_juggernaut_8" // Landing a Blade Dance Crit grants a Jade Blossom stack
+//		"Ability14"					"special_bonus_imba_juggernaut_7" // Omnislash sends a doppelganger to commit the slashes
+//		"Ability15"					"special_bonus_imba_juggernaut_6" // Blade Fury receives benefits from Blade Dance
+//		"Ability16"					"special_bonus_imba_juggernaut_1" // Blade Fury acts as a vacuum, SUCCing nearby enemies
+//		"Ability17"					"special_bonus_imba_juggernaut_5" // Wind Dance stacks are consumed to increase Secret Blade max hit count
+
+		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -1738,7 +1752,7 @@
 		//Picking Screen
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-		"IsDisabled"				"2"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
+		"IsDisabled"				"1"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
 
 		"Ability1"					"imba_techies_proximity_mine"
 		"Ability2"					"imba_techies_stasis_trap"

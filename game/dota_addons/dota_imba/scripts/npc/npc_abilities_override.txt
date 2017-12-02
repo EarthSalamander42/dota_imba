@@ -787,7 +787,9 @@
 	"item_courier"
 	{
 		"ItemCost"						"5"
-		"ItemStockTime"					"60.0"
+		"ItemStockTime"					"180.0"
+		"ItemStockInitial"				"3"
+		"ItemStockMax"					"3"
 	}
 
 	//=================================================================================================================
@@ -1790,15 +1792,10 @@
 	"tidehunter_ravage"
 	{
 		"MaxLevel"					"1"
-
 		"AbilityCastRange"			"3000"
-
 		"AbilityCastPoint"			"0.0"
-		
 		"AbilityCooldown"			"10"
-
-		"AbilityDamage"				"500"
-
+		"AbilityDamage"				"2000"
 		"AbilityManaCost"			"0"
 
 		"AbilitySpecial"
@@ -1993,12 +1990,9 @@
 	//=================================================================================================================
 	"juggernaut_blade_fury"
 	{
-		"MaxLevel"						"1"
-		"AbilityCastRange"				"0"
-		"AbilityCastPoint"				"0"
-		"AbilityCooldown"				"10"
-		"AbilityDuration"				"10.0"
-		"AbilityManaCost"				"0"		
+		"MaxLevel"						"7"
+		"AbilityCooldown"				"42 34 26 18"
+		"AbilityManaCost"				"90 80 70 60 40 20 0"		
 
 		"AbilitySpecial"
 		{
@@ -2010,12 +2004,12 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"blade_fury_radius"			"1500"
+				"blade_fury_radius"			"250 250 250 250 300 350 400"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"blade_fury_damage"			"200"
+				"blade_fury_damage"			"80 105 130 155 160 165 170"
 				"LinkedSpecialBonus"		"special_bonus_unique_juggernaut_3"
 			}
 			"04"
@@ -2023,6 +2017,111 @@
 				"var_type"					"FIELD_FLOAT"
 				"duration"					"5.0"
 				"LinkedSpecialBonus"		"special_bonus_unique_juggernaut"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Juggernaut Healing Ward
+	//=================================================================================================================
+	"juggernaut_healing_ward"
+	{
+		"AbilityCooldown"				"60.0"
+		"AbilityDuration"				"25.0"
+		"AbilityManaCost"				"140"
+		"MaxLevel"						"7"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"healing_ward_heal_amount"	"2 3 4 5 5.5 6 6.5"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"healing_ward_aura_radius"	"500 525 550 575 600 625 650"
+			}
+			"03"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"healing_ward_movespeed_tooltip"	"420"
+			}
+			"04"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"healing_ward_duration_tooltip"		"25"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Juggernaut Blade Dance
+	//=================================================================================================================
+	"juggernaut_blade_dance"
+	{
+		"MaxLevel"							"7"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"blade_dance_crit_mult"		"200 200 200 200 225 250 275"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"blade_dance_crit_chance"	"20 25 30 35 35 35 35"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
+	}
+
+	//=================================================================================================================
+	// Ability: Juggernaut Omni Slash
+	//=================================================================================================================
+	"juggernaut_omni_slash"
+	{
+		"AbilityCastRange"				"350"
+		"AbilityCooldown"				"130.0 120.0 110.0 100.0"
+		"AbilityManaCost"				"200 275 350 425"
+		"MaxLevel"						"4"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"omni_slash_damage"			"200 225 250 275"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"omni_slash_jumps"			"3 6 9 12"
+				"LinkedSpecialBonus"		"special_bonus_unique_juggernaut_2"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"omni_slash_radius"			"425"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"omni_slash_bounce_tick"	"0.4"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"omni_slash_jumps_scepter"		"6 9 12 15"
+				"LinkedSpecialBonus"		"special_bonus_unique_juggernaut_2"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"omni_slash_cooldown_scepter"	"70"
 			}
 		}
 	}
@@ -2059,7 +2158,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"125"
+				"damage"					"300"
 			}
 			"05"
 			{

@@ -59,7 +59,7 @@
 		GameUI.CustomUIConfig().player_colors[6] = "#FF0000;";
 		GameUI.CustomUIConfig().player_colors[7] = "#008080;";
 		GameUI.CustomUIConfig().player_colors[8] = "#FFFAC8;";
-		GameUI.CustomUIConfig().player_colors[9] = "#010101;";
+		GameUI.CustomUIConfig().player_colors[9] = "#313131;";
 		GameUI.CustomUIConfig().player_colors[10] = "#FF00FF;";
 		GameUI.CustomUIConfig().player_colors[11] = "#808000;";
 		GameUI.CustomUIConfig().player_colors[12] = "#64FFFF;";
@@ -68,7 +68,7 @@
 		GameUI.CustomUIConfig().player_colors[15] = "#000080;";
 		GameUI.CustomUIConfig().player_colors[16] = "#E6BEFF;";
 		GameUI.CustomUIConfig().player_colors[17] = "#800000;";
-		GameUI.CustomUIConfig().player_colors[18] = "#808080;";
+		GameUI.CustomUIConfig().player_colors[18] = "#909090;";
 		GameUI.CustomUIConfig().player_colors[19] = "#FEFEFE;";
 		GameUI.CustomUIConfig().player_colors[20] = "#A6A6A6;";
 		GameUI.CustomUIConfig().player_colors[21] = "#FF59FF;";
@@ -200,5 +200,6 @@
 		<CustomUIElement type="EndScreen" layoutfile="file://{resources}/layout/custom_game/multiteam_end_screen.xml" />
 		<CustomUIElement type="FlyoutScoreboard" layoutfile="file://{resources}/layout/custom_game/multiteam_flyout_scoreboard.xml" />
 		<CustomUIElement type="HudTopBar" layoutfile="file://{resources}/layout/custom_game/multiteam_top_scoreboard.xml" />
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/imba_game_info.xml" />
 	</Panel>
 </root>

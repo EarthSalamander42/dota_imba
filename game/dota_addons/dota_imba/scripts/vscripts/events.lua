@@ -676,6 +676,7 @@ function GameMode:OnLastHit(keys)
 	DebugPrint('[BAREBONES] OnLastHit')
 	DebugPrintTable(keys)
 
+	if keys.PlayerID == -1 then return end
 	local isFirstBlood = keys.FirstBlood == 1
 	local isHeroKill = keys.HeroKill == 1
 	local isTowerKill = keys.TowerKill == 1
@@ -958,7 +959,13 @@ function GameMode:OnEntityKilled( keys )
 				elseif respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[25] then
 					respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[25]
 				end
-				killed_unit:SetTimeUntilRespawn(respawn_time)
+
+				-- divide the respawn time by 2 for frantic mode
+				if IMBA_FRANTIC_MODE_ON == true then
+					killed_unit:SetTimeUntilRespawn(respawn_time / 2)
+				else
+					killed_unit:SetTimeUntilRespawn(respawn_time)
+				end
 			end
 			HeroVoiceLine(killed_unit, "death")
 		end
@@ -1085,7 +1092,8 @@ function GameMode:OnTowerKill(keys)
 	-- IMBA: Attack of the Ancients tower upgrade logic
 	-------------------------------------------------------------------------------------------------
 	
-	if TOWER_UPGRADE_MODE then		
+	-- Always enabled!
+--	if TOWER_UPGRADE_MODE then		
 		
 		-- Find all friendly towers on the map
 		local towers = FindUnitsInRadius(tower_team, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
@@ -1103,7 +1111,7 @@ function GameMode:OnTowerKill(keys)
 			Notifications:BottomToAll({text = "#tower_abilities_dire_upgrade", duration = 7, style = {color = "DodgerBlue"}})
 			EmitGlobalSound("powerup_02")			
 		end
-	end
+--	end
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Update comeback gold logic

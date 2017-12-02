@@ -2,6 +2,29 @@
 	width: 18%;
 	height: 100%;
 	margin: 0% 2% 0% 0%;
+}
+
+#PlayerMMR {
+	width: 35%;
+	height: 18%;
+	background-color: #b30000ba;
+	align: center top;
+	visibility: collapse;
+}
+
+#PlayerMMRLabel {
+	font-size: 13px;
+	font-family: "Radiance";
+	horizontal-align: center;
+	text-align: center;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #fff;
+}
+
+.Player {
+	width: 100%;
+	height: 90%;
 	flow-children: down;
 }
 
@@ -12,16 +35,20 @@
 #HeroPanel {
 	width: 100%;
 	height: 60%;
-	background-color: black;
 	background-size: 100% 100%;
 	border: 1px solid #656565;
 }
 
+#PlayerColor {
+	width: 100%;
+	height: 5%;
+}
+
 #PlayerName {
 	width: 100%;
-	height: 35%;
+	height: 30%;
 	margin-top: 5%;
-	font-size: 12px;
+	font-size: 11px;
 	font-family: "Radiance";
 	horizontal-align: center;
 	text-align: center;
