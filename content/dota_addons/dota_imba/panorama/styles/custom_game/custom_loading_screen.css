@@ -73,19 +73,29 @@
 } 
 
 #imba-social {
-	margin-left: 60px;
+	margin-left: 2%;
 	vertical-align: bottom;
 	margin-bottom: 120px;
 	padding: 10px;
 }
 
+#imba-social-buttons {
+	flow-children: right;
+}
+
 #imba-social-buttons Button {
-	width: 240px;
-	height: 77px;
+	width: 200px;
+	height: 65px;
 	box-shadow: #000 0 0 10px 0; 
-	background-size: contain;
 	background-position: center center;
-}  
+}
+
+.AspectRatio4x3 #imba-social-buttons Button {
+	width: 180px;
+	height: 59px;
+	box-shadow: #000 0 0 10px 0; 
+	background-position: center center;
+}
 
 #imba-social-buttons Button:hover {
 	box-shadow: #111 0 0 15px 0;
@@ -93,33 +103,41 @@
 
 #imba-social-buttons Button:active {
 	box-shadow: #333 0 0 15px 0;
-	width: 238px;
 }
 
 #imba-social-button-discord-en {
-	margin-left: 0px;
+	background-size: contain;
 	background-image: url("file://{images}/custom_game/loading_screen/community_discord_header.png"); 
 }
-#imba-social-button-discord-en:active { margin-left: 1px; }
+#imba-social-button-discord-en:active { margin-left: 21px; }
 
-#imba-social-button-discord-ru { 
-	margin-left: 260px;
+#imba-social-button-discord-ru {
+	margin-left: 20px;
+	background-size: contain;
 	background-image: url("file://{images}/custom_game/loading_screen/community_discord_header_ru.png"); 
 }
-#imba-social-button-discord-ru:active { margin-left: 261px; }
+#imba-social-button-discord-ru:active { margin-left: 21px; }
 
-#imba-social-button-tencent { 
-	margin-left: 520px;
+#imba-social-button-tencent {
+	margin-left: 20px;
+	background-size: contain;
 	background-image: url("file://{images}/custom_game/loading_screen/community_chinese_blog.png"); 
 }
-#imba-social-button-tencent:active { margin-left: 521px; }
+#imba-social-button-tencent:active { margin-left: 21px; }
 
 #imba-social-button-reddit {
-	margin-left: 780px;
-	background-color: grey;
+	margin-left: 20px;
+	background-size: contain;
 	background-image: url("file://{images}/custom_game/loading_screen/community_reddit_header.png");
 }
-#imba-social-button-reddit:active { margin-left: 781px; }
+#imba-social-button-reddit:active { margin-left: 21px; }
+
+#imba-social-button-patreon {
+	margin-left: 20px;
+	background-image: url("file://{images}/custom_game/loading_screen/patreon.png");
+	background-size: 200px 65px;
+}
+#imba-social-button-patreon:active { margin-left: 21px; }
 
 #GameOptionsPanel
 {
