@@ -322,7 +322,7 @@
 	"DOTA_Tooltip_Talent_special_bonus_imba_drow_ranger_8_Description"          "Marksmanship is no longer disabled by nearby enemies. Marksmanship still stops when Drow Ranger is broken. <br><br><i>With deadly aim and unparalleled swiftness, no one can stop the Drow Ranger.</i>"
 
 	// Elder Titan
-	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_1_title"				"Cast Range"
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_1_title"				"Astral World"
 	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_1_Description"			"Increase Cast Range (2400)."
 	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_2_title"				"Astral Speed"
 	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_2_Description"			"Increase Ancestral Spirit movespeed by 600."
