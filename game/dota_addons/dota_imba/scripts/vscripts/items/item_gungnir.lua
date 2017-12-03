@@ -16,10 +16,6 @@ function item_imba_gungnir:GetIntrinsicModifierName()
 	return "modifier_item_imba_gungnir"
 end
 
-function item_imba_gungnir:GetAbilityTextureName()
-	return "custom/imba_gungnir"
-end
-
 function item_imba_gungnir:OnSpellStart()
 	if not IsServer() then return end
 	local ability = self
@@ -42,6 +38,8 @@ function item_imba_gungnir:OnSpellStart()
 		EmitSoundOn("DOTA_Item.ForceStaff.Activate", target)
 		EmitSoundOn("DOTA_Item.ForceStaff.Activate", caster)
 	end
+
+
 end
 
 -------------------------------------
@@ -418,7 +416,6 @@ function modifier_item_imba_gungnir_attack_speed:OnCreated()
 	if not IsServer() then return end
 	self.as = 0
 	self.ar = 0
---	self:GetParent():SetForceAttackTarget(self.target)
 	self:StartIntervalThink(FrameTime())
 end
 
@@ -426,18 +423,18 @@ function modifier_item_imba_gungnir_attack_speed:OnIntervalThink()
 	if not IsServer() then return end
 	if self:GetParent():GetAttackTarget() == self.target then
 		self.as = self:GetAbility():GetSpecialValueFor("bounce_attack_speed")
+		self.ar = 999999
 	else
 		self.as = 0
+		self.ar = 0
 	end
 end
 
 function modifier_item_imba_gungnir_attack_speed:DeclareFunctions()
-	local decFuncs =   {
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		MODIFIER_EVENT_ON_ATTACK,
-		MODIFIER_EVENT_ON_ORDER,
-		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
-	}
+	local decFuncs =   {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+						MODIFIER_EVENT_ON_ATTACK,
+						MODIFIER_EVENT_ON_ORDER,
+						MODIFIER_PROPERTY_ATTACK_RANGE_BONUS}
 	return decFuncs
 end
 
