@@ -210,3 +210,9 @@ function imba_api_game_complete()
 
     print("[api-frontend] Saving game to server")
 end
+
+-- Saves a print message to server
+function ApiPrint(str)
+    imba_api_game_event("debug", str);
+end
+
