@@ -1,6 +1,5 @@
 LinkLuaModifier( "modifier_item_manta_passive", "items/item_manta.lua", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_item_imba_manta_stacks", "items/item_manta.lua", LUA_MODIFIER_MOTION_NONE )		-- Stacking attack speed
-LinkLuaModifier( "modifier_item_imba_manta_proc", "items/item_manta.lua", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_manta_invulnerable", "items/item_manta.lua", LUA_MODIFIER_MOTION_NONE )
 
 if item_imba_manta == nil then item_imba_manta = class({}) end
@@ -150,7 +149,7 @@ function modifier_item_manta_passive:OnAttackLanded( keys )
 		end
 
 		-- All conditions met, perform a manta attack
-		MantaAttack(owner, self:GetAbility(), "modifier_item_imba_manta_stacks", "modifier_item_imba_manta_proc")
+		MantaAttack(owner, self:GetAbility(), "modifier_item_imba_manta_stacks")
 	end
 end
 
@@ -227,60 +226,11 @@ function modifier_item_imba_manta_stacks:DeclareFunctions()
 end
 
 function modifier_item_imba_manta_stacks:GetModifierAttackSpeedBonus_Constant()
-	return self.as_stack * self:GetStackCount() end
-
------------------------------------------------------------------------------------------------------------
---	manta move speed proc
------------------------------------------------------------------------------------------------------------
-
-if modifier_item_imba_manta_proc == nil then modifier_item_imba_manta_proc = class({}) end
-function modifier_item_imba_manta_proc:IsHidden() return true end
-function modifier_item_imba_manta_proc:IsDebuff() return false end
-function modifier_item_imba_manta_proc:IsPurgable() return true end
-
--- Modifier particle
-function modifier_item_imba_manta_proc:GetEffectName()
-	return "particles/item/swords/yasha_proc.vpcf"
+	return self.as_stack * self:GetStackCount()
 end
 
-function modifier_item_imba_manta_proc:GetEffectAttachType()
-	return PATTACH_ABSORIGIN_FOLLOW
-end
 
--- Modifier property storage
-function modifier_item_imba_manta_proc:OnCreated()
-	self.proc_ms = self:GetAbility():GetSpecialValueFor("proc_ms")
-
-	-- Remove this if higher tier modifiers are present
-	if IsServer() then
-		local owner = self:GetParent()
-		local higher_tier_modifiers = {
-			"modifier_item_imba_sange_yasha_proc",
-			"modifier_item_imba_azura_yasha_proc",
-			"modifier_item_imba_triumvirate_proc_buff"
-		}
-		for _, modifier in pairs(higher_tier_modifiers) do
-			if owner:FindModifierByName(modifier) then
-				self:Destroy()
-			end
-		end
-	end
-end
-
--- Declare modifier events/properties
-function modifier_item_imba_manta_proc:DeclareFunctions()
-	local funcs = {
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
-	}
-	return funcs
-end
-
-function modifier_item_imba_manta_proc:GetModifierMoveSpeedBonus_Percentage()
-	return self.proc_ms end
-
-function MantaAttack(attacker, ability, modifier_stacks, modifier_proc)
+function MantaAttack(attacker, ability, modifier_stacks)
 	-- Stack the attack speed buff up
 	local modifier_as = attacker:AddNewModifier(attacker, ability, modifier_stacks, {duration = ability:GetSpecialValueFor("stack_duration")})
 	if modifier_as and modifier_as:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
@@ -290,14 +240,6 @@ function MantaAttack(attacker, ability, modifier_stacks, modifier_proc)
 
 	-- If this is an illusion, do nothing else
 	if attacker:IsIllusion() then
-		return end
-	
-	-- If the ability is not on cooldown, roll for a proc
-	if ability:IsCooldownReady() and RollPercentage(ability:GetSpecialValueFor("proc_chance")) then
-
-		-- Proc! Apply the move speed modifier and put the ability on cooldown
-		attacker:AddNewModifier(attacker, ability, modifier_proc, {duration = ability:GetSpecialValueFor("proc_duration_self")})
-		attacker:EmitSound("Imba.YashaProc")
-		ability:UseResources(false, false, true)
+		return
 	end
 end
