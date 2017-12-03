@@ -209,7 +209,8 @@ DebugPrintTable(keys)
 
 	if new_state == DOTA_GAMERULES_STATE_POST_GAME then
 
-		-- call imba api
+        -- call imba api
+        imba_api_game_event("post_game", "Entering post game")
 		imba_api_game_complete()
 
 		CustomGameEventManager:Send_ServerToAllClients("end_game", {})
