@@ -763,9 +763,9 @@ function imba_obsidian_destroyer_astral_imprisonment:GetBehavior()
 	local modifier_self = "modifier_imba_astral_imprisonment_buff"
 
 	-- If a prison is ongoing, change the spell to a point target
-	if caster:HasModifier(modifier_self) then
-		return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK        
-	end
+--	if caster:HasModifier(modifier_self) then
+--		return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK        
+--	end
 
 	return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET + DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK
 end
@@ -790,9 +790,9 @@ function imba_obsidian_destroyer_astral_imprisonment:GetCastPoint()
 	local modifier_self = "modifier_imba_astral_imprisonment_buff"
 
 	-- If a prison is ongoing, remove the cast point
-	if caster:HasModifier(modifier_self) then
-		return 0
-	end
+--	if caster:HasModifier(modifier_self) then
+--		return 0
+--	end
 
 	return self.BaseClass.GetCastPoint(self)
 end
@@ -802,9 +802,9 @@ function imba_obsidian_destroyer_astral_imprisonment:GetCastRange(location, targ
 	local modifier_self = "modifier_imba_astral_imprisonment_buff"
 
 	-- If a prison is ongoing, allow it to be cast globally
-	if caster:HasModifier(modifier_self) then
-		return 25000
-	end   
+--	if caster:HasModifier(modifier_self) then
+--		return 25000
+--	end   
 
 	-- Otherwise, normal cast range
 	local cast_range = self:GetSpecialValueFor("cast_range")
@@ -817,9 +817,9 @@ function imba_obsidian_destroyer_astral_imprisonment:GetManaCost(level)
 	local modifier_self = "modifier_imba_astral_imprisonment_buff"
 
 	-- If a prison is ongoing, remove the mana cost
-	if caster:HasModifier(modifier_self) then
-		return 0
-	end
+--	if caster:HasModifier(modifier_self) then
+--		return 0
+--	end
 
 	return self.BaseClass.GetManaCost(self, level)
 end
@@ -831,9 +831,9 @@ function imba_obsidian_destroyer_astral_imprisonment:GetCooldown(level)
 	local prison_duration = ability:GetSpecialValueFor("prison_duration")
 
 	-- If a prison is ongoing, remove the cooldown
-	if caster:HasModifier(modifier_self) then
-		return 0
-	end
+--	if caster:HasModifier(modifier_self) then
+--		return 0
+--	end
 
 	if IsServer() then
 		return self.BaseClass.GetCooldown(self, level) - prison_duration
@@ -859,7 +859,7 @@ function imba_obsidian_destroyer_astral_imprisonment:OnSpellStart()
 	local modifier_self = "modifier_imba_astral_imprisonment_buff"
 
 	-- ASTRAL PRISON
-	if not caster:HasModifier(modifier_self) then
+--	if not caster:HasModifier(modifier_self) then
 		-- Ability properties
 		local target = self:GetCursorTarget()    
 		local sound_cast = "Hero_ObsidianDestroyer.AstralImprisonment.Cast"     
@@ -905,17 +905,18 @@ function imba_obsidian_destroyer_astral_imprisonment:OnSpellStart()
 			end
 		end
 
-	else
+		self:UseResources(false, false, true)
+--	else
 	-- MOVE ACTIVE PRISON
 		-- Ability properties
-		local target_point = self:GetCursorPosition()    
+--		local target_point = self:GetCursorPosition()    
 
-		-- Find the self buff, and assign a new target point
-		local modifier_self_handler = caster:FindModifierByName(modifier_self)
-		if modifier_self_handler then
-			modifier_self_handler.target_point = target_point
-		end
-	end
+--		-- Find the self buff, and assign a new target point
+--		local modifier_self_handler = caster:FindModifierByName(modifier_self)
+--		if modifier_self_handler then
+--			modifier_self_handler.target_point = target_point
+--		end
+--	end
 end
 
 -- Prison modifier 
@@ -1164,12 +1165,12 @@ function modifier_imba_astral_imprisonment_buff:OnIntervalThink()
 	
 end
 
-function modifier_imba_astral_imprisonment_buff:OnDestroy()
-	if IsServer() then
-		-- Spend the cooldown of the ability
-		self.ability:UseResources(false, false, true)
-	end
-end
+--	function modifier_imba_astral_imprisonment_buff:OnDestroy()
+--		if IsServer() then
+--			-- Spend the cooldown of the ability
+--			self.ability:UseResources(false, false, true)
+--		end
+--	end
 
 function modifier_imba_astral_imprisonment_buff:IsHidden() return true end
 function modifier_imba_astral_imprisonment_buff:IsPurgable() return false end

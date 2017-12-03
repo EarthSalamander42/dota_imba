@@ -521,7 +521,7 @@ function imba_enigma_black_hole:OnChannelFinish(interrupted)
 
 	-- If Enigma was interrupted, remove Singularity stacks accumulated so far  
 	if interrupted then
-			self:GetCaster():FindModifierByName("modifier_imba_singularity"):SetStackCount(0)
+		self:GetCaster():FindModifierByName("modifier_imba_singularity"):SetStackCount(0)
 	end
 
 	if IsValidEntity(self:GetCaster().hBlackHoleDummyUnit) then

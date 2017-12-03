@@ -12854,8 +12854,8 @@
 		
 		// Vision
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"0"		// Range of vision during day light.
-		"VisionNighttimeRange"		"0"		// Range of vision at night time.
+		"VisionDaytimeRange"		"400"		// Range of vision during day light.
+		"VisionNighttimeRange"		"400"		// Range of vision at night time.
 
 		// Team
 		//----------------------------------------------------------------

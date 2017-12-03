@@ -1,5 +1,5 @@
--- Author: Shush
--- Date: 05.03.2017
+-- Author: Cookies
+-- Date: 03.12.2017
 
 CreateEmptyTalents("elder_titan")
 
@@ -18,8 +18,83 @@ function imba_elder_titan_echo_stomp:GetCastRange(location, target)
 	return self.BaseClass.GetCastRange(self, location, target)
 end
 
-function imba_elder_titan_echo_stomp:OnAbilityPhaseStart()
-	if astral_spirit and astral_spirit:FindAbilityByName("imba_elder_titan_echo_stomp_spirit") and astral_spirit:FindModifierByName("modifier_imba_elder_titan_ancestral_spirit_self"):GetStackCount() ~= 1 then
+function imba_elder_titan_echo_stomp:GetBehavior()
+
+	if self:GetCaster():HasTalent("special_bonus_imba_elder_titan_7") then
+		return DOTA_ABILITY_BEHAVIOR_NO_TARGET
+	else
+		return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_CHANNELLED
+	end
+end
+
+function imba_elder_titan_echo_stomp:GetCastPoint()
+	if self:GetCaster():HasTalent("special_bonus_imba_elder_titan_7") then
+		return self:GetSpecialValueFor("cast_time")
+	else
+		return self.BaseClass.GetCastPoint(self)
+	end
+end
+
+function imba_elder_titan_echo_stomp:GetChannelTime()
+	if self:GetCaster():HasTalent("special_bonus_imba_elder_titan_7") then
+		return false
+	else
+		return self:GetSpecialValueFor("cast_time")
+	end
+end
+
+function imba_elder_titan_echo_stomp:OnChannelFinish(interrupted) 
+
+	if IsServer() then
+		if interrupted then
+			if astral_spirit then
+				astral_spirit:Interrupt()
+			end
+			StopSoundOn("Hero_ElderTitan.EchoStomp.Channel.ti7_layer", self:GetCaster())
+		else
+
+			-- Ability properties
+			local caster = self:GetCaster()
+			local ability = self
+
+			-- Ability specials
+			local radius = ability:GetSpecialValueFor("radius")
+			local stun_duration = ability:GetSpecialValueFor("sleep_duration")
+			local stomp_damage = ability:GetSpecialValueFor("stomp_damage")
+
+			-- Play cast sound
+			EmitSoundOn("Hero_ElderTitan.EchoStomp.ti7", caster)
+			EmitSoundOn("Hero_ElderTitan.EchoStomp.ti7_layer", caster)
+
+			-- Add stomp particle
+			local particle_stomp_fx = ParticleManager:CreateParticle("particles/econ/items/elder_titan/elder_titan_ti7/elder_titan_echo_stomp_ti7_physical.vpcf", PATTACH_ABSORIGIN, caster)
+			ParticleManager:SetParticleControl(particle_stomp_fx, 0, caster:GetAbsOrigin())
+			ParticleManager:SetParticleControl(particle_stomp_fx, 1, Vector(radius, 1, 1))
+			ParticleManager:SetParticleControl(particle_stomp_fx, 2, caster:GetAbsOrigin())
+			ParticleManager:ReleaseParticleIndex(particle_stomp_fx)
+
+			-- Find all nearby enemies
+			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+
+			for _, enemy in pairs(enemies) do
+				-- Deal damage to nearby non-magic immune enemies
+				if not enemy:IsMagicImmune() then			
+					local damageTable = {victim = enemy, attacker = caster, damage = stomp_damage, damage_type = ability:GetAbilityDamageType(), ability = ability}
+											
+					ApplyDamage(damageTable)	
+
+					-- Stun them
+					enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})
+				end
+			end
+		end
+	end
+end
+
+function imba_elder_titan_echo_stomp:OnAbilityPhaseStart()	
+	if astral_spirit == nil then
+	else
+		if astral_spirit.is_returning == true then return true end
 		astral_spirit:CastAbilityNoTarget(astral_spirit:FindAbilityByName("imba_elder_titan_echo_stomp_spirit"), astral_spirit:GetPlayerOwnerID())
 	end
 
@@ -35,6 +110,7 @@ function imba_elder_titan_echo_stomp:OnAbilityPhaseInterrupted()
 end
 
 function imba_elder_titan_echo_stomp:OnSpellStart()
+	if not self:GetCaster():HasTalent("special_bonus_imba_elder_titan_7") then return end
 	if IsServer() then
 		-- Ability properties
 		local caster = self:GetCaster()
@@ -67,7 +143,7 @@ function imba_elder_titan_echo_stomp:OnSpellStart()
 				ApplyDamage(damageTable)	
 
 				-- Stun them
-				enemy:AddNewModifier(caster, ability, "modifier_elder_titan_echo_stomp", {duration = stun_duration})
+				enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})
 			end
 		end
 	end
@@ -102,8 +178,6 @@ function imba_elder_titan_ancestral_spirit:OnSpellStart()
 	if caster:HasTalent("special_bonus_imba_elder_titan_2") then
 		spirit_movespeed = self:GetSpecialValueFor("speed") + self:GetCaster():FindTalentValue("special_bonus_imba_elder_titan_2")
 	end
-
-	print(self:GetCaster():FindTalentValue("special_bonus_imba_elder_titan_2"))
 
 	EmitSoundOn("Hero_ElderTitan.AncestralSpirit.Cast", caster)
 	caster:SwapAbilities("imba_elder_titan_ancestral_spirit", "imba_elder_titan_return_spirit", false, true)
@@ -140,6 +214,7 @@ function imba_elder_titan_return_spirit:OnSpellStart()
 		astral_spirit.is_returning = true
 		astral_spirit:FindModifierByName("modifier_imba_elder_titan_ancestral_spirit_self"):SetStackCount(1)
 		StartAnimation(astral_spirit, {duration=30.0, activity=ACT_DOTA_FLAIL, rate=0.1})
+		EmitSoundOn("Hero_ElderTitan.AncestralSpirit.Return", astral_spirit)
 	end
 end
 
@@ -210,6 +285,7 @@ function modifier_imba_elder_titan_ancestral_spirit_self:OnCreated()
 	self.targets_hit = {}
 
 	if IsServer() then
+		EmitSoundOn("Hero_ElderTitan.AncestralSpirit.Spawn", self:GetParent())
 		self:StartIntervalThink(0.1)
 	end
 end
@@ -217,7 +293,9 @@ end
 function modifier_imba_elder_titan_ancestral_spirit_self:OnIntervalThink()
 --	print(self:GetAbility():GetSpecialValueFor("radius"))
 
+	local duration = self:GetAbility():GetCaster():FindTalentValue("special_bonus_imba_elder_titan_3")
 	local nearby_enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+
 	for _, enemy in pairs(nearby_enemies) do
 		-- Check if this enemy was already hit
 		local enemy_has_been_hit = false
@@ -235,8 +313,20 @@ function modifier_imba_elder_titan_ancestral_spirit_self:OnIntervalThink()
 			ParticleManager:SetParticleControlEnt(hit_pfx, 1, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
 			ParticleManager:ReleaseParticleIndex(hit_pfx)
 
-			-- Deal damage
+			EmitSoundOn("Hero_ElderTitan.AncestralSpirit.Buff", enemy)
 			ApplyDamage({attacker = self:GetParent(), victim = enemy, ability = self:GetAbility(), damage = self.pass_damage, damage_type = DAMAGE_TYPE_MAGICAL})
+
+			if self:GetParent():GetOwner():HasTalent("special_bonus_imba_elder_titan_3") then
+				enemy:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_rooted", {duration = duration})
+				
+				local root_fx = ParticleManager:CreateParticle("particles/units/heroes/heroes_underlord/abyssal_underlord_pitofmalice_stun.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy)
+				ParticleManager:SetParticleControl(root_fx, 0, enemy:GetAbsOrigin())
+
+				Timers:CreateTimer(duration ,function()
+					ParticleManager:DestroyParticle(root_fx, true)
+					ParticleManager:ReleaseParticleIndex(root_fx)
+				end)
+			end
 
 			-- Apply slow modifier
 --			self:GetAbility():ApplyDataDrivenModifier(self:GetCaster(), enemy, modifier_slow, {})
@@ -261,28 +351,30 @@ function modifier_imba_elder_titan_ancestral_spirit_self:OnIntervalThink()
 			self:GetParent().is_returning = true
 			self:GetParent():FindModifierByName("modifier_imba_elder_titan_ancestral_spirit_self"):SetStackCount(1)
 			StartAnimation(self:GetParent(), {duration=30.0, activity=ACT_DOTA_FLAIL, rate=0.1})
-		end
-
-		local hero_distance = (self:GetParent():GetOwner():GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length()
-		if self:GetParent().is_returning == true then
-			if hero_distance < 150 then
-				self:GetParent():GetOwner():SwapAbilities("imba_elder_titan_ancestral_spirit", "imba_elder_titan_return_spirit", true, false)
-				if self.bonus_damage > 0 then
-					local damage_mod = self:GetParent():GetOwner():AddNewModifier(self:GetParent():GetOwner(), self:GetAbility(), "modifier_imba_elder_titan_ancestral_spirit_damage", {duration = self.buff_duration})
-					damage_mod:SetStackCount(self.bonus_damage)
-				end
-
-				if self.bonus_ms > 0 then
-					local speed_mod = self:GetParent():GetOwner():AddNewModifier(self:GetParent():GetOwner(), self:GetAbility(), "modifier_imba_elder_titan_ancestral_spirit_ms", {duration = self.buff_duration})
-					speed_mod:SetStackCount(self.bonus_ms)
-				end
-
-				self:GetParent():RemoveSelf()
-				return nil
-			end
+			EmitSoundOn("Hero_ElderTitan.AncestralSpirit.Return", self:GetParent())
 		end
 	else
 		self.return_timer = self.return_timer + 0.1
+	end
+
+	local hero_distance = (self:GetParent():GetOwner():GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length()
+	if self:GetParent().is_returning == true then
+		if hero_distance < 150 then
+			self:GetParent():GetOwner():SwapAbilities("imba_elder_titan_ancestral_spirit", "imba_elder_titan_return_spirit", true, false)
+			if self.bonus_damage > 0 then
+				local damage_mod = self:GetParent():GetOwner():AddNewModifier(self:GetParent():GetOwner(), self:GetAbility(), "modifier_imba_elder_titan_ancestral_spirit_damage", {duration = self.buff_duration})
+				damage_mod:SetStackCount(self.bonus_damage)
+			end
+
+			if self.bonus_ms > 0 then
+				local speed_mod = self:GetParent():GetOwner():AddNewModifier(self:GetParent():GetOwner(), self:GetAbility(), "modifier_imba_elder_titan_ancestral_spirit_ms", {duration = self.buff_duration})
+				speed_mod:SetStackCount(self.bonus_ms)
+			end
+
+			self:GetParent():RemoveSelf()
+			astral_spirit = nil
+			return nil
+		end
 	end
 end
 
@@ -294,6 +386,7 @@ function modifier_imba_elder_titan_ancestral_spirit_self:CheckState()
 			[MODIFIER_STATE_NO_HEALTH_BAR] = true,
 			[MODIFIER_STATE_FLYING] = true,
 			[MODIFIER_STATE_INVULNERABLE] = true,
+			[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
 		}
 
 		if self:GetStackCount() == 1 then
@@ -302,6 +395,7 @@ function modifier_imba_elder_titan_ancestral_spirit_self:CheckState()
 				[MODIFIER_STATE_NO_HEALTH_BAR] = true,
 				[MODIFIER_STATE_FLYING] = true,
 				[MODIFIER_STATE_INVULNERABLE] = true,
+				[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
 			}
 		end
 		return state
@@ -328,6 +422,10 @@ LinkLuaModifier("modifier_imba_elder_titan_natural_order_aura", "hero/hero_elder
 LinkLuaModifier("modifier_imba_elder_titan_natural_order", "hero/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
 
 function imba_elder_titan_natural_order:GetAbilityTextureName()
+	if self:GetCaster():GetUnitName() == "npc_dota_elder_titan_ancestral_spirit" then
+		return "elder_titan_natural_order_spirit"
+	end
+
 	return "elder_titan_natural_order"
 end
 
@@ -345,13 +443,14 @@ function modifier_imba_elder_titan_natural_order_aura:IsHidden() return true end
 function modifier_imba_elder_titan_natural_order_aura:IsPermanent() return true end
 function modifier_imba_elder_titan_natural_order_aura:IsPurgable() return false end
 
+local natural_order_radius = 0
 function modifier_imba_elder_titan_natural_order_aura:OnCreated()
-	self.radius = self:GetAbility():GetSpecialValueFor("radius")
+	natural_order_radius = self:GetAbility():GetSpecialValueFor("radius")
 end
 
 -- Aura properties
 function modifier_imba_elder_titan_natural_order_aura:GetAuraRadius()
-	return self.radius 
+	return natural_order_radius 
 end
 
 function modifier_imba_elder_titan_natural_order_aura:GetAuraSearchFlags()
@@ -384,48 +483,61 @@ function modifier_imba_elder_titan_natural_order:OnCreated()
 end
 
 function modifier_imba_elder_titan_natural_order:DeclareFunctions()
-	local funcs ={
+	local funcs = {
 		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
 		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
---		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
---		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
+		MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE,
 	}
 	return funcs 
 end
 
 function modifier_imba_elder_titan_natural_order:GetModifierPhysicalArmorBonus()
-	if self:GetCaster() and self:GetCaster():GetUnitName() == "npc_dota_elder_titan_ancestral_spirit" then
-		return 0
-	else
+	if self:GetCaster() and self:GetCaster():GetUnitName() == "npc_dota_hero_elder_titan" then
 		return self.base_armor_reduction * 0.01 * self:GetParent():GetPhysicalArmorBaseValue()
+	else
+		if self:GetCaster():GetOwner():HasTalent("special_bonus_imba_elder_titan_8") then
+			return self.base_armor_reduction * 0.01 * self:GetParent():GetPhysicalArmorBaseValue()
+		else
+			return 0
+		end
 	end
 end
 
 function modifier_imba_elder_titan_natural_order:GetModifierMagicalResistanceBonus()
-	if self:GetCaster() and self:GetCaster():GetUnitName() == "npc_dota_hero_elder_titan" then
-		return 0
+	if self:GetCaster():GetUnitName() == "npc_dota_hero_elder_titan" then
+		if self:GetCaster():HasTalent("special_bonus_imba_elder_titan_8") then
+			return self.magic_resist_reduction
+		else
+			return 0
+		end
 	else
 		return self.magic_resist_reduction
 	end
 end
 
---[[
-function modifier_imba_elder_titan_natural_order:GetModifierIncomingDamage_Percentage()
-	return self.bonusSpellAmp * self:GetStackCount()
+function modifier_imba_elder_titan_natural_order:GetModifierBaseAttack_BonusDamage()
+	if self:GetCaster():HasTalent("special_bonus_imba_elder_titan_4") then
+		if self:GetCaster():GetUnitName() == "npc_dota_elder_titan_ancestral_spirit" then
+			return self:GetCaster():GetOwner():FindTalentValue("special_bonus_imba_elder_titan_4") * (-1)
+		else
+			return self:GetCaster():FindTalentValue("special_bonus_imba_elder_titan_4") * (-1)
+		end
+	else
+		return 0
+	end
 end
 
-function modifier_imba_elder_titan_natural_order:GetModifierSpellAmplify_Percentage()
-	return self.bonusSpellAmp * self:GetStackCount()
-end
---]]
-
--- talent
---[[
 function modifier_imba_elder_titan_natural_order:GetCustomTenacityUnique()
-	return self.bonusTenacity * self:GetStackCount()
+	if self:GetCaster():HasTalent("special_bonus_imba_elder_titan_5") then
+		if self:GetCaster():GetUnitName() == "npc_dota_elder_titan_ancestral_spirit" then
+			return self:GetCaster():GetOwner():FindTalentValue("special_bonus_imba_elder_titan_5") * (-1)
+		else
+			return self:GetCaster():FindTalentValue("special_bonus_imba_elder_titan_5") * (-1)
+		end
+	else
+		return 0
+	end
 end
---]]
-
 
 ---------------
 --	SPIRIT	--
@@ -452,6 +564,7 @@ function imba_elder_titan_echo_stomp_spirit:OnSpellStart()
 	if IsServer() then
 		-- Ability properties
 		local caster = self:GetCaster()
+		if caster.is_returning == true then return end
 		local ability = self
 
 		-- Ability specials
@@ -481,7 +594,7 @@ function imba_elder_titan_echo_stomp_spirit:OnSpellStart()
 				ApplyDamage(damageTable)	
 
 				-- Stun them
-				enemy:AddNewModifier(caster, ability, "modifier_elder_titan_echo_stomp", {duration = stun_duration})
+				enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})
 			end
 		end
 	end
@@ -509,6 +622,14 @@ function imba_elder_titan_earth_splitter:IsNetherWardStealable()
 	return false
 end
 
+function imba_elder_titan_earth_splitter:GetCastRange(location, target)
+	if self:GetCaster():HasTalent("special_bonus_imba_elder_titan_6") then
+		return self.BaseClass.GetCastRange(self, location, target) + self:GetCaster():FindTalentValue("special_bonus_imba_elder_titan_6")
+	else
+		return self.BaseClass.GetCastRange(self, location, target)
+	end
+end
+
 function imba_elder_titan_earth_splitter:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()
@@ -521,15 +642,19 @@ function imba_elder_titan_earth_splitter:OnSpellStart()
 	local radius = self:GetSpecialValueFor("radius")
 	local duration = self:GetSpecialValueFor("duration")
 	local slow_duration = self:GetSpecialValueFor("slow_duration")
-	if scepter then
-		slow_duration = self:GetSpecialValueFor("slow_duration_scepter")
-	end
+--	if scepter then
+--		slow_duration = self:GetSpecialValueFor("slow_duration_scepter")
+--	end
 	local bonus_hp_per_str = self:GetSpecialValueFor("bonus_hp_per_str")
 	local effect_delay = self:GetSpecialValueFor("crack_time")
 	local crack_width = self:GetSpecialValueFor("crack_width")
 	local crack_distance = self:GetSpecialValueFor("crack_distance")
+	if caster:HasTalent("special_bonus_imba_elder_titan_6") then
+		crack_distance = self:GetSpecialValueFor("crack_distance") + caster:FindTalentValue("special_bonus_imba_elder_titan_6")
+	end
 	local crack_damage = self:GetSpecialValueFor("damage_pct") / 2
-	local crack_ending = caster_position + caster:GetForwardVector() * crack_distance
+	local caster_fw = caster:GetForwardVector()
+	local crack_ending = caster_position + caster_fw * crack_distance
 
 	-- Play cast sound
 	EmitSoundOn("Hero_ElderTitan.EarthSplitter.Cast", caster)
@@ -552,6 +677,8 @@ function imba_elder_titan_earth_splitter:OnSpellStart()
 			enemy:AddNewModifier(caster, self, "modifier_imba_earth_splitter", {duration = slow_duration})
 			ApplyDamage({victim = enemy, attacker = caster, damage = enemy:GetMaxHealth() * crack_damage * 0.01, damage_type = DAMAGE_TYPE_PHYSICAL, ability = self})
 			ApplyDamage({victim = enemy, attacker = caster, damage = enemy:GetMaxHealth() * crack_damage * 0.01, damage_type = DAMAGE_TYPE_MAGICAL, ability = self})
+			local closest_point = FindNearestPointFromLine(caster_position, caster_fw, enemy:GetAbsOrigin())
+			FindClearSpaceForUnit(enemy, closest_point, false)
 		end
 
 		ParticleManager:ReleaseParticleIndex(particle_start_fx)
@@ -565,17 +692,19 @@ function modifier_imba_earth_splitter:IsHidden() return false end
 function modifier_imba_earth_splitter:IsPurgeException() return true end
 function modifier_imba_earth_splitter:IsStunDebuff() return true end
 
---	function modifier_imba_earth_splitter:CheckState()
---		local state = {[MODIFIER_STATE_STUNNED] = true}
---		return state
---	end
-
 function modifier_imba_earth_splitter:DeclareFunctions()
 	local decFuncs = {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 	}
 
 	return decFuncs
+end
+
+function modifier_imba_earth_splitter:CheckState()
+	local state = {
+		[MODIFIER_STATE_PASSIVES_DISABLED] = true
+	}
+	return state
 end
 
 function modifier_imba_earth_splitter:GetModifierMoveSpeedBonus_Percentage()
