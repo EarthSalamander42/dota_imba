@@ -9,7 +9,7 @@ local IMBA_API_CONFIG = {
     key = "3utx8DehTd42Wxqh65ldAErJjoCdi6XB",
     endpoint = "http://api.dota2imba.org",
     agent = "dota_imba-lua-1.x",
-    timeout = 3000
+    timeout = 10000
 }
 
 local IMBA_API_ENDPOINTS = {
