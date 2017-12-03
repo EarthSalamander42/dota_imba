@@ -95,9 +95,9 @@ end
 
 -- The overall game state has changed
 function GameMode:OnGameRulesStateChange(keys)
-DebugPrint("[BAREBONES] GameRules State Changed")
-DebugPrintTable(keys)
---	local i = 10
+    DebugPrint("[BAREBONES] GameRules State Changed")
+    DebugPrintTable(keys)
+    --	local i = 10
 
 	-- This internal handling is used to set up main barebones functions
 	GameMode:_OnGameRulesStateChange(keys)
@@ -117,7 +117,7 @@ DebugPrintTable(keys)
 	-- IMBA: Pick screen stuff
 	-------------------------------------------------------------------------------------------------
 	if new_state == DOTA_GAMERULES_STATE_HERO_SELECTION then
-		imba_api_game_event("hero_selection", "entered hero selection")
+		ApiPrint("entered hero selection")
 		HeroSelection:HeroListPreLoad()
 	end
 
@@ -188,7 +188,10 @@ DebugPrintTable(keys)
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Game started (horn sounded)
 	-------------------------------------------------------------------------------------------------
-	if new_state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+    if new_state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+        
+        ApiPrint("Entering Game in progress / horn")
+
 		Server_WaitToEnableXpGain()
 
 		for _, hero in pairs(HeroList:GetAllHeroes()) do
@@ -210,7 +213,7 @@ DebugPrintTable(keys)
 	if new_state == DOTA_GAMERULES_STATE_POST_GAME then
 
         -- call imba api
-        imba_api_game_event("post_game", "Entering post game")
+        ApiPrint("Entering post game")
 		imba_api_game_complete()
 
 		CustomGameEventManager:Send_ServerToAllClients("end_game", {})
