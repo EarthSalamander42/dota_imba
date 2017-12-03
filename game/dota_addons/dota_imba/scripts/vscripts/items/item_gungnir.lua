@@ -32,7 +32,7 @@ function item_imba_gungnir:OnSpellStart()
 			target:AddNewModifier(caster, ability, "modifier_item_imba_gungnir_force_enemy_melee", {duration = ability:GetSpecialValueFor("duration")/2})
 			caster:AddNewModifier(target, ability, "modifier_item_imba_gungnir_force_self_melee", {duration = ability:GetSpecialValueFor("duration")/2})
 		end
-		local buff = caster:AddNewModifier(caster, ability, "modifier_item_imba_gungnir_attack_speed", {})
+		local buff = caster:AddNewModifier(caster, ability, "modifier_item_imba_gungnir_attack_speed", {duration = ability:GetSpecialValueFor("range_duration")})
 		buff.target = target
 		buff:SetStackCount(ability:GetSpecialValueFor("max_attacks"))
 		EmitSoundOn("DOTA_Item.ForceStaff.Activate", target)
