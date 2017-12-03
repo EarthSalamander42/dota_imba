@@ -89,6 +89,7 @@
 		"item"		"item_imba_nether_wand"
 		"item"		"item_ultimate_scepter"
 		"item"		"item_imba_blink_boots"
+		"item"		"item_imba_gungnir"
 	}
 
 	// Level 2 - Blue Recipes
