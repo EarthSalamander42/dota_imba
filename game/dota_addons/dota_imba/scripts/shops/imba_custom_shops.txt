@@ -111,6 +111,7 @@
 		"item"		"item_imba_pipe"
 		"item"		"item_imba_occult_mask"
 		"item"		"item_meteor_hammer"
+		"item"		"item_imba_jarnbjorn"
 	}
 				
 	"magics"			
