@@ -136,13 +136,25 @@ function imba_api_game_complete()
         results = {}
     }
 
+    imba_api_game_event("debug", "game_complete Before player info collection")
+
+    local player_count = 0
+
+    for playerID = 0, DOTA_MAX_TEAM_PLAYERS do
+        if PlayerResource:IsValidPlayerID(playerID) then
+            player_count = player_count + 1
+        end
+    end
+
+    imba_api_game_event("debug", "game_complete player count in game_complete: " .. player_count)
+
     -- for each player
     for playerID = 0, DOTA_MAX_TEAM_PLAYERS do
         if PlayerResource:IsValidPlayerID(playerID) then
             local player = PlayerResource:GetPlayer(playerID)
             local id = tostring(PlayerResource:GetSteamID(playerID))
 
-            local hero = player:GetAssignedHero()
+            local hero = PlayerResource:GetPickedHero(playerID)
             local items = {}
 
             -- get all items
@@ -178,14 +190,20 @@ function imba_api_game_complete()
                 xp = PlayerResource:GetTotalEarnedXP(playerID),
                 gold = PlayerResource:GetGold(playerID)
             };
-            
         end
     end
+
+    imba_api_game_event("debug", "game_complete after player info collection")
     
     -- perform request
     imba_api():game_complete(args, function (data)
+        imba_api_game_event("debug", "Request good")
         print("[api-frontend] Request good (Game save)")
-    end, function () 
+    end, function (err)
+        if (err == nil)
+            imba_api_game_event("debug", "request failed with nil")
+        elseif (err.message ~= nil)
+            imba_api_game_event("debug", "request failed :" .. err.message)
         print("[api-frontend] Request failed!")
     end)
 
