@@ -606,12 +606,12 @@
 
 		"Ability10"					"special_bonus_imba_elder_titan_1" // 2400 cast range ancestral spirit
 		"Ability11"					"special_bonus_imba_elder_titan_2" // +600 Ancestral Spirit movespeed
-		"Ability12"					"generic_hidden" // Ancestral Spirit roots target hit
-		"Ability13"					"generic_hidden" // 
-		"Ability14"					"generic_hidden" // 
-		"Ability15"					"generic_hidden" // 
-		"Ability16"					"generic_hidden" // Echo Stomp no longer require channeling
-		"Ability17"					"generic_hidden" // Natural Order reduces physical and magical resistance
+		"Ability12"					"special_bonus_imba_elder_titan_4" // Natural Order reduces base damage
+		"Ability13"					"special_bonus_imba_elder_titan_5" // Natural Order reduces tenacity
+		"Ability14"					"special_bonus_imba_elder_titan_3" // Ancestral Spirit roots target hit (1 sec)
+		"Ability15"					"special_bonus_imba_elder_titan_6" // +3000 Earth Splitter crack distance
+		"Ability16"					"special_bonus_imba_elder_titan_7" // Echo Stomp no longer require channeling
+		"Ability17"					"special_bonus_imba_elder_titan_8" // Natural Order reduces physical and magical resistance
 
 		"ProjectileSpeed"			"900"
 	}
@@ -654,7 +654,7 @@
 		//Picking Screen
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-		"IsDisabled"				"1"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
+		"IsDisabled"				"0"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
 
 		"Ability1"					"imba_enigma_malefice"
 		"Ability2"					"imba_enigma_demonic_conversion"
