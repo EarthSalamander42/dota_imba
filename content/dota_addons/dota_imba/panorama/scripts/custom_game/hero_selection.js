@@ -251,7 +251,7 @@ function MakeNewHero(new_heroes) {
 	}
 }
 
-function MakeDisabledHeroes(disabled_10v10, disabled_all) {
+function MakeDisabledHeroes(disabled_10v10, disabled_frantic, disabled_all) {
 	var map_info = Game.GetMapInfo();
 	if (map_info.map_display_name == "imba_10v10" || map_info.map_display_name == "imba_custom_10v10" || map_info.map_display_name == "imba_12v12") {
 		var g = 1;
@@ -263,6 +263,20 @@ function MakeDisabledHeroes(disabled_10v10, disabled_all) {
 				var HeroLabel = $.CreatePanel("Label", $("#PickList").FindChildTraverse(disabled_10v10[g]), disabled_10v10[g] + "_label");
 				HeroLabel.AddClass("ClassCustomOptionLabel")
 				HeroLabel.text = $.Localize("disabled_hero_10v10");
+			}
+		}
+	}
+
+	if (map_info.map_display_name == "imba_custom_10v10") {
+		var i = 1;
+		for (i in disabled_frantic) {
+			if (disabled_frantic[i] != null) {
+				var hero_panel = $("#PickList").FindChildTraverse(disabled_frantic[i])
+				$("#PickList").FindChildTraverse(disabled_frantic[i]).AddClass("taken")
+				$("#" + disabled_frantic[i] + "_label").DeleteAsync(0);
+				var HeroLabel = $.CreatePanel("Label", $("#PickList").FindChildTraverse(disabled_frantic[i]), disabled_frantic[i] + "_label");
+				HeroLabel.AddClass("ClassCustomOptionLabel")
+				HeroLabel.text = $.Localize("disabled_hero_frantic");
 			}
 		}
 	}
@@ -320,7 +334,6 @@ var DireCount = 0
 			RadiantLevels = RadiantLevels + plyData.Lvl / radiantPlayers.length
 			$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + RadiantLevels.toFixed([0]);
 			playerPanel.SetPlayerMMR( plyData.Lvl );
-//			$.Msg(plyData.Lvl)
 		}
 	});
 
@@ -347,6 +360,7 @@ var DireCount = 0
 		if (plyData != null) {
 			DireLevels = DireLevels + plyData.Lvl / direPlayers.length
 			$("#AverageMMRTeamDire").text = $.Localize("average_mmr") + DireLevels.toFixed([0]);
+			playerPanel.SetPlayerMMR( plyData.Lvl );
 		}
 	});
 
@@ -362,6 +376,7 @@ function CreateHeroPick() {
 //		return;
 //	}
 
+	var disabled_heroes_frantic = hero_list.DisabledFrantic;
 	var disabled_heroes_10v10 = hero_list.Disabled10v10;
 	var disabled_heroes = hero_list.Disabled
 	var imba_heroes = hero_list.Imba
@@ -381,7 +396,7 @@ function CreateHeroPick() {
 	CreateHeroPanel(agility_heroes_custom, "AGI", true)
 	CreateHeroPanel(intellect_heroes_custom, "INT", true)
 
-	MakeDisabledHeroes(disabled_heroes_10v10, disabled_heroes)
+	MakeDisabledHeroes(disabled_heroes_10v10, disabled_heroes_frantic, disabled_heroes)
 	MakeImbaHero(imba_heroes)
 	MakeNewHero(new_heroes)
 }

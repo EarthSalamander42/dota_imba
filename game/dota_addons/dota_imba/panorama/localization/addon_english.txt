@@ -51,6 +51,7 @@
 	"new_hero"						"New!"
 	"disabled_hero"					"Disabled"
 	"disabled_hero_10v10"			"10v10 Disabled"
+	"disabled_hero_frantic"			"Frantic Disabled"
 	"picked_hero"					"Picked"
 	"imba_hero"						"Imba"
 	"vanilla_hero"					"Lazy"

@@ -28,6 +28,7 @@ function HeroSelection:HeroListPreLoad()
 	HeroSelection.new_heroes = {}
 	HeroSelection.random_heroes = {}
 	HeroSelection.disabled_10v10_heroes = {}
+	HeroSelection.disabled_frantic_heroes = {}
 	HeroSelection.disabled_heroes = {}
 	HeroSelection.heroes_custom = {}
 	HeroSelection.picked_heroes = {}
@@ -47,6 +48,8 @@ function HeroSelection:HeroListPreLoad()
 			if GetKeyValueByHeroName(hero, "IsDisabled") == 1 then
 				table.insert(HeroSelection.disabled_10v10_heroes, hero)
 			elseif GetKeyValueByHeroName(hero, "IsDisabled") == 2 then
+				table.insert(HeroSelection.disabled_frantic_heroes, hero)
+			elseif GetKeyValueByHeroName(hero, "IsDisabled") == 3 then
 				table.insert(HeroSelection.disabled_heroes, hero)
 			end
 
@@ -160,6 +163,7 @@ function HeroSelection:HeroList()
 		Imba = HeroSelection.imba_heroes,
 		New = HeroSelection.new_heroes,
 		Disabled10v10 = HeroSelection.disabled_10v10_heroes,
+		DisabledFrantic = HeroSelection.disabled_frantic_heroes,
 		Disabled = HeroSelection.disabled_heroes,
 		Picked = HeroSelection.picked_heroes
 	})
@@ -285,6 +289,15 @@ end
 				break
 			end
 		end
+		if GetMapName() == "imba_custom_10v10" then
+			for _, picked_hero in pairs(HeroSelection.disabled_frantic_heroes) do
+				if random_hero == picked_hero then
+					print("10v10 hero disabled, random again...")
+					HeroSelection:RandomHero({PlayerID = id})
+					break
+				end
+			end
+		end
 	end
 
 	for _, picked_hero in pairs(HeroSelection.disabled_heroes) do
@@ -329,6 +342,15 @@ local id = event.PlayerID
 				print("10v10 hero disabled, random again...")
 				HeroSelection:RandomHero({PlayerID = id})
 				break
+			end
+		end
+		if GetMapName() == "imba_custom_10v10" then
+			for _, picked_hero in pairs(HeroSelection.disabled_frantic_heroes) do
+				if random_hero == picked_hero then
+					print("10v10 hero disabled, random again...")
+					HeroSelection:RandomHero({PlayerID = id})
+					break
+				end
 			end
 		end
 	end
