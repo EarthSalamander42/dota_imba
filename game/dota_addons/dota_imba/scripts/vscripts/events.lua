@@ -117,6 +117,7 @@ DebugPrintTable(keys)
 	-- IMBA: Pick screen stuff
 	-------------------------------------------------------------------------------------------------
 	if new_state == DOTA_GAMERULES_STATE_HERO_SELECTION then
+		imba_api_game_event("hero_selection", "entered hero selection")
 		HeroSelection:HeroListPreLoad()
 	end
 
@@ -207,6 +208,10 @@ DebugPrintTable(keys)
 	end
 
 	if new_state == DOTA_GAMERULES_STATE_POST_GAME then
+
+		-- call imba api
+		imba_api_game_complete()
+
 		CustomGameEventManager:Send_ServerToAllClients("end_game", {})
 		local winning_team = GAME_WINNER_TEAM
 		Server_CalculateXPForWinnerAndAll(winning_team)
