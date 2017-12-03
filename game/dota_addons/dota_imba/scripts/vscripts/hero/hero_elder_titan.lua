@@ -344,6 +344,13 @@ function modifier_imba_elder_titan_ancestral_spirit_self:OnIntervalThink()
 		end
 	end
 
+	if not self:GetParent():GetOwner():IsAlive() then
+		self:GetParent():GetOwner():SwapAbilities("imba_elder_titan_ancestral_spirit", "imba_elder_titan_return_spirit", true, false)
+		self:GetParent():RemoveSelf()
+		astral_spirit = nil
+		return nil
+	end
+
 	local et_ab = self:GetParent():FindAbilityByName("imba_elder_titan_echo_stomp_spirit")
 	if self.return_timer > self.duration and not et_ab:IsInAbilityPhase() then
 		if not self:GetParent().is_returning then
