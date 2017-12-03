@@ -11528,6 +11528,7 @@
 		"ID"							"2255"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.vmdl"
+		"AbilityTextureName" 			"custom/imba_recipe"
 		"FightRecapLevel"				"1"
 
 		// Item Info
@@ -11817,7 +11818,7 @@
 		"ID"							"2260"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"items/item_gungnir.lua"
-		"AbilityTextureName" 			"item_lesser_crit"
+		"AbilityTextureName" 			"custom/imba_gungnir"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
@@ -11828,7 +11829,7 @@
 		"ItemShopTags"					"damage;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"gungnir"
-		
+
 		"AbilitySharedCooldown"			"force"
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"15.0"
@@ -11914,7 +11915,144 @@
 				"var_type"				"FIELD_INTEGER"
 				"ranged_bounce_ar"		"150"
 			}
+			"16"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"range_duration"		"5"
+			}
 		}
 	}
-	//next free ID: 2261
+
+	//=================================================================================================================
+	// Recipe: Jarnbjorn
+	//=================================================================================================================
+	"item_recipe_imba_jarnbjorn"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2261"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+		"Model"							"models/props_gameplay/recipe.mdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1250"
+		"ItemShopTags"					""
+
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_jarnbjorn"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_mjollnir;item_bfury"
+		}
+	}
+
+	//=================================================================================================================
+	// Jarnbjorn
+	//=================================================================================================================
+	"item_imba_jarnbjorn"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2262"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"items/item_maelstrom.lua"
+		"AbilityTextureName"			"custom/imba_jarnbjorn"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"800"
+		"AbilityCooldown"				"35.0"
+		"AbilityManaCost"				"125"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"10900"
+		"ItemShopTags"					"damage;attack_speed;unique"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"jarnbjorn"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"24"
+				"CalculateSpellDamageTooltip"	"0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_as"				"80"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"proc_chance"			"25"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bounce_damage"			"200"
+				"CalculateSpellDamageTooltip"	"1"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bounce_radius"			"900"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"static_duration"		"15"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"static_proc_chance"	"20"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"static_damage"			"200"
+				"CalculateSpellDamageTooltip"	"1"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"static_radius"			"900"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"static_slow"			"-100"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"static_slow_duration"	"1.25"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"splash_damage_pct"		"40"
+			}
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"splash_range"			"625"
+			}
+		}
+	}
+	//next free ID: 2263
 }

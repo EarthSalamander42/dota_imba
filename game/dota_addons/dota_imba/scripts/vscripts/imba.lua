@@ -444,6 +444,14 @@ function GameMode:ModifierFilter( keys )
 			modifier_caster:FindAbilityByName("courier_burst"):CastAbility()
 		end
 
+		-- add particle or sound playing to notify
+		if modifier_owner:HasModifier("modifier_item_imba_jarnbjorn_static") then
+			if modifier_name == "modifier_item_imba_triumvirate_proc_debuff" or modifier_name == "modifier_item_imba_sange_azura_proc" or modifier_name == "modifier_item_imba_sange_yasha_disarm" or modifier_name == "modifier_item_imba_heavens_halberd_active_disarm" or modifier_name == "modifier_item_imba_sange_disarm" or modifier_name == "modifier_imba_angelic_alliance_debuff" or modifier_name == "modifier_imba_overpower_disarm" or modifier_name == "modifier_imba_silencer_last_word_debuff" or modifier_name == "modifier_imba_hurl_through_hell_disarm" or modifier_name == "modifier_imba_frost_armor_freeze" or modifier_name == "modifier_dismember_disarm" or modifier_name == "modifier_imba_decrepify" then
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_EVADE, modifier_owner, 0, nil)
+				return false
+			end
+		end
+
 		return true
 	end
 end
