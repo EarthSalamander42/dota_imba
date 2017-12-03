@@ -166,7 +166,7 @@ function imba_api_game_complete()
                 end
             end
 
-            local teamid = PlayerResource:GetTeam(playerID)
+            local teamid = tonumber(PlayerResource:GetTeam(playerID))
 
             -- winner team conversation
             local team = "Invalid"
@@ -200,10 +200,11 @@ function imba_api_game_complete()
         imba_api_game_event("debug", "Request good")
         print("[api-frontend] Request good (Game save)")
     end, function (err)
-        if (err == nil)
+        if (err == nil) then
             imba_api_game_event("debug", "request failed with nil")
-        elseif (err.message ~= nil)
+        elseif (err.message ~= nil) then
             imba_api_game_event("debug", "request failed :" .. err.message)
+        end
         print("[api-frontend] Request failed!")
     end)
 
