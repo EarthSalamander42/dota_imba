@@ -423,10 +423,14 @@ function modifier_item_imba_gungnir_attack_speed:OnIntervalThink()
 	if not IsServer() then return end
 	if self:GetParent():GetAttackTarget() == self.target then
 		self.as = self:GetAbility():GetSpecialValueFor("bounce_attack_speed")
-		self.ar = 999999
+		if self:GetParent():IsRangedAttacker() then
+			self.ar = 999999
+		end
 	else
 		self.as = 0
-		self.ar = 0
+		if self:GetParent():IsRangedAttacker() then
+			self.ar = 0
+		end
 	end
 end
 
@@ -456,14 +460,5 @@ function modifier_item_imba_gungnir_attack_speed:OnAttack( keys )
 		else
 			self:Destroy()
 		end
-	end
-end
-
-function modifier_item_imba_gungnir_attack_speed:OnOrder( keys )
-	if not IsServer() then return end
-	if keys.target == self.target and keys.unit == self:GetParent() and self:GetParent():IsRangedAttacker() then
-		self.ar = 9999999
-	else
-		self.ar = 0
 	end
 end
