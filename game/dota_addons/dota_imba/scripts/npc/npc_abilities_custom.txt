@@ -11157,7 +11157,8 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES_STRONG"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -11170,7 +11171,7 @@
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"1.2"
+		"AbilityCastPoint"				"0.0"
 		"AbilityCastRange"				"500"
 		"AbilityCooldown"				"14.0 13.0 12.0 11.0 11.0 11.0 11.0"
 		"AbilityManaCost"				"125"
@@ -11359,7 +11360,6 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"damage_heroes"					"15 30 45 60 75 90 105"
-				"LinkedSpecialBonus"			"special_bonus_unique_elder_titan"
 				"CalculateSpellDamageTooltip"	"0"
 			}	
 		}
@@ -11499,14 +11499,15 @@
 			}
 			"07"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_pct"				"35 40 45 50 55 60"
+				"var_type"						"FIELD_INTEGER"
+				"damage_pct"					"35 40 45 50 55 60"
+				"CalculateSpellDamageTooltip"	"0"
 			}
-			"08"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"slow_duration_scepter"		"4.0 5.0 6.0 7.0 8.0 9.0"
-			}
+//			"08"
+//			{
+//				"var_type"					"FIELD_FLOAT"
+//				"slow_duration_scepter"		"4.0 5.0 6.0 7.0 8.0 9.0"
+//			}
 		}
 	}
 
@@ -11538,9 +11539,6 @@
 		}
 	}
 
-	//=================================================================================================================
-	// Elder Titan Talents
-	//=================================================================================================================
 	"special_bonus_imba_elder_titan_2"	// Ancestral Spirit movespeed increased.
 	{
 		// General
@@ -11562,6 +11560,156 @@
 			{
 				"var_type"		"FIELD_FLOAT"
 				"value"			"600"
+			}
+		}
+	}
+
+	"special_bonus_imba_elder_titan_3"	// Ancestral Spirit roots targets.
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_elder_titan_ancestral_spirit"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_elder_titan_4"	// Natural Order reduce base damage (25%)
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_elder_titan_natural_order"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"25"
+			}
+		}
+	}
+
+	"special_bonus_imba_elder_titan_5"	// Natural Order reduce tenacity (25%)
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_elder_titan_natural_order"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"25"
+			}
+		}
+	}
+
+	"special_bonus_imba_elder_titan_6"	// Earth Splitter crack distance bonus (+3000)
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_elder_titan_earth_splitter"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"3000"
+			}
+		}
+	}
+
+	"special_bonus_imba_elder_titan_7"	// Echo Stomp no longer channeling.
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_elder_titan_echo_stomp"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_elder_titan_8"	// Natural Order reduce both physical and magical
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_elder_titan_natural_order"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"1"
 			}
 		}
 	}
