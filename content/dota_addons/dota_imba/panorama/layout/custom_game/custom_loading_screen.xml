@@ -86,6 +86,7 @@
 				<Button id="imba-social-button-discord-ru" onactivate="DOTADisplayURL('https://discord.gg/HcybJKt');" />
 				<Button id="imba-social-button-tencent" onactivate="DOTADisplayURL('https://www.bilibiliduang.cn/imbagroup');" />
 				<Button id="imba-social-button-reddit" onactivate="DOTADisplayURL('https://www.reddit.com/r/dotaimba/');" />
+				<Button id="imba-social-button-patreon" onactivate="DOTADisplayURL('https://www.patreon.com/dotaimba');" />
 			</Panel>
 		</Panel>
 	</Panel>
