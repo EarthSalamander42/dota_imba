@@ -2068,12 +2068,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"blade_dance_crit_mult"		"200 200 200 200 225 250 275"
+				"blade_dance_crit_chance"	"20 25 30 35 35 35 35"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"blade_dance_crit_chance"	"20 25 30 35 35 35 35"
+				"blade_dance_crit_mult"		"200 200 200 200 225 250 275"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
@@ -2087,19 +2087,19 @@
 		"AbilityCastRange"				"350"
 		"AbilityCooldown"				"130.0 120.0 110.0 100.0"
 		"AbilityManaCost"				"200 275 350 425"
-		"MaxLevel"						"4"
+		"MaxLevel"						"6"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"omni_slash_damage"			"200 225 250 275"
+				"omni_slash_damage"			"200 225 250 275 300 325"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"omni_slash_jumps"			"3 6 9 12"
+				"omni_slash_jumps"			"3 5 7 9 11 13"
 				"LinkedSpecialBonus"		"special_bonus_unique_juggernaut_2"
 			}
 			"03"
@@ -2115,8 +2115,8 @@
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"omni_slash_jumps_scepter"		"6 9 12 15"
-				"LinkedSpecialBonus"		"special_bonus_unique_juggernaut_2"
+				"omni_slash_jumps_scepter"		"6 8 10 12 14 16"
+				"LinkedSpecialBonus"			"special_bonus_unique_juggernaut_2"
 			}
 			"06"
 			{
@@ -2898,6 +2898,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"boar_damage_tooltip"		"20 40 60 80 90 100 110"
+				"LinkedSpecialBonus"		"special_bonus_unique_beastmaster_2"
 			}
 			"04"
 			{
@@ -8452,6 +8453,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bear_armor"				"3 4 5 6 7 8 9"
+				"LinkedSpecialBonus"		"special_bonus_unique_lone_druid_2"
 			}
 			"05"
 			{

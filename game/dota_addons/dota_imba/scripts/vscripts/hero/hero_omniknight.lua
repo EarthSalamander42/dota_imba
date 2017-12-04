@@ -813,11 +813,11 @@ function imba_omniknight_guardian_angel:IsHiddenWhenStolen()
 end
 
 function imba_omniknight_guardian_angel:GetCooldown(level)
-    local caster = self:GetCaster()
-    local cooldown = self.BaseClass.GetCooldown(self, level)
+local caster = self:GetCaster()
+local cooldown = self.BaseClass.GetCooldown(self, level)
 
-    -- #7 Talent: Guardian Angel cooldown decrease
-    cooldown = cooldown - caster:FindTalentValue("special_bonus_imba_omniknight_7")
+	-- #7 Talent: Guardian Angel cooldown decrease
+--	cooldown = cooldown - caster:FindTalentValue("special_bonus_imba_omniknight_7")
 
     return cooldown    
 end
