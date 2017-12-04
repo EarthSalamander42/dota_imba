@@ -29,7 +29,7 @@
 		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_FLYOUT_SCOREBOARD, false );				//Lefthand flyout scoreboard.
 		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_TEAMS, false );			//Hero selection Radiant and Dire player lists.
 		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_GAME_NAME, false );		//Hero selection game mode name display.
-		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_CLOCK, false );			//Hero selection clock.
+		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_CLOCK, false );
 		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ENDGAME, false );						//Endgame scoreboard.
 
 		GameEvents.Subscribe("CreateIngameErrorMessage", function(data) 
@@ -82,17 +82,33 @@
 		var CustomUIRoot = Parent.FindChildTraverse("CustomUIRoot");
 		Parent.FindChildTraverse("PreGame").style.visibility = "collapse";
 
-		//Buff Bar
-		var BuffBar = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("buffs")
-		BuffBar.style.width = "30%";
-		BuffBar.style.marginLeft = "40%";
+		var CUSTOM_HUD = false
+		if (CUSTOM_HUD == true) {
+			//Buff Bar
+			var BuffBar = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("buffs")
+			BuffBar.style.width = "30%";
+			BuffBar.style.marginLeft = "40%";
 
-		//DeBuff Bar
-		var DeBuffBar = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("debuffs")
-		DeBuffBar.style.width = "30%";
-		DeBuffBar.style.marginBottom = "40.5%";
-		DeBuffBar.style.marginRight = "30%";
-		DeBuffBar.style.flowChildren = "right";
+			//DeBuff Bar
+			var DeBuffBar = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("debuffs")
+			DeBuffBar.style.width = "30%";
+			DeBuffBar.style.marginBottom = "40.5%";
+			DeBuffBar.style.marginRight = "30%";
+			DeBuffBar.style.flowChildren = "right";
+		} else {
+			//Buff Bar
+			var BuffBar = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("buffs")
+			BuffBar.style.width = "30%";
+			BuffBar.style.marginLeft = "35%";
+			BuffBar.style.marginBottom = "42%";
+
+			//DeBuff Bar
+			var DeBuffBar = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("debuffs")
+			DeBuffBar.style.width = "30%";
+			DeBuffBar.style.marginBottom = "33%";
+			DeBuffBar.style.marginRight = "35%";
+			DeBuffBar.style.flowChildren = "right";
+		}
 
 		//Recommended Talent
 		var TalentGuide = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("center_with_stats")
@@ -129,6 +145,50 @@
 //		var TooltipsAB = Tooltips.FindChildTraverse("DOTAAbilityTooltip");
 //		var TooltipsBG = TooltipsAB.FindChildTraverse("Contents")
 //		TooltipsBG.style.backgroundColor = "#101010ga";
+
+
+		if (CUSTOM_HUD == true) {
+			//Chat
+			var Chat = hudElements.FindChildTraverse("HudChat");
+			Chat.style.marginBottom = "5%";
+//			Chat.style.width = "35%";
+//			Chat.FindChildTraverse("ChatControls").style.opacity = "1";
+			Chat.style.zIndex = "10";
+
+			//Minimap
+			var minimap_block = hudElements.FindChildTraverse("minimap_block");
+			minimap_block.style.backgroundImage = "none";
+			minimap_block.style.borderRadius = "40px";
+//			minimap_block.style.opacityMask = 'url("s2r://panorama/images/masks/softedge_vertical_vscroll_psd.vtex");'
+
+			// Hide vanilla UI
+			hudElements.FindChildTraverse("left_flare").style.visibility = "collapse";
+			hudElements.FindChildTraverse("center_bg").style.visibility = "collapse";
+			hudElements.FindChildTraverse("PortraitBacker").style.visibility = "collapse";
+			hudElements.FindChildTraverse("PortraitBackerColor").style.visibility = "collapse";
+			hudElements.FindChildTraverse("PortraitContainer").style.visibility = "collapse";
+			hudElements.FindChildTraverse("xp").style.visibility = "collapse";
+			hudElements.FindChildTraverse("stats_container").style.visibility = "collapse";
+			hudElements.FindChildTraverse("unitname").style.visibility = "collapse";
+			hudElements.FindChildTraverse("health_mana").style.visibility = "collapse";
+			hudElements.FindChildTraverse("AbilitiesAndStatBranch").style.visibility = "collapse";
+			hudElements.FindChildTraverse("right_flare").style.visibility = "collapse";
+
+			var shadow_left = hudElements.FindChildrenWithClassTraverse("AbilityInsetShadowLeft")
+			shadow_left[0].style.visibility = "collapse";
+			var shadow_right = hudElements.FindChildrenWithClassTraverse("AbilityInsetShadowRight")
+			shadow_right[0].style.visibility = "collapse";
+
+			var inventory = hudElements.FindChildTraverse("inventory")
+			inventory.style.marginLeft = "420px";
+			inventory.FindChildTraverse("inventory_items").style.backgroundImage = "none";
+			inventory.FindChildTraverse("inventory_items").style.backgroundColor = "none";
+			inventory.FindChildTraverse("InventoryBG").style.backgroundImage = "none";
+
+			//Glyph Container
+			var glyph_container = hudElements.FindChildTraverse("GlyphScanContainer");
+			glyph_container.style.marginLeft = "1500px";
+		}
 
 		//TopBar
 		var map_info = Game.GetMapInfo();
@@ -187,6 +247,8 @@
 
 	<Panel>
 	<!-- CustomUIElements go here.  They are not provided currently as valve's parser reads commented lines and attempts to link them in.-->
+<!--		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/hud_main.xml" /> -->
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/imba_imr.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/hero_selection.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/talent_window.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/simple_chat.xml" />

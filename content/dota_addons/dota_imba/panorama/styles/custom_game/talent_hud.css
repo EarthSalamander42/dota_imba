@@ -11,6 +11,17 @@
 	margin-top: 95px;
 }
 
+/* CUSTOM_HUD = true */ /*
+.IMBA_Talent_HUD_Panel
+{
+	width : 64px;
+	height : 64px;
+	padding: 0px;
+//	margin-top: 95px;
+	margin-top: 107px;
+}
+*/
+
 #IMBA_Talent_HUD_Button,
 #IMBA_Talent_HUD_Button_Overlay
 {
