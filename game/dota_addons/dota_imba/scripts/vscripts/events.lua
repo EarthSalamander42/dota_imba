@@ -109,16 +109,23 @@ function GameMode:OnGameRulesStateChange(keys)
 	-- IMBA: Game Setup / API Calls
 	-------------------------------------------------------------------------------------------------
 	if new_state == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
-		-- run api function
-
+		-- get top 10 xp
+		for i = 1, 10 do
+			Server_GetTopPlayer(i)
+		end
 	end
-	
+
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Pick screen stuff
 	-------------------------------------------------------------------------------------------------
 	if new_state == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		ApiPrint("entered hero selection")
 		HeroSelection:HeroListPreLoad()
+--		if IsInToolsMode() then
+--			for i = 0, PlayerResource:GetPlayerCount() -1 do
+--				HoF_Test(i)
+--			end
+--		end
 	end
 
 	-------------------------------------------------------------------------------------------------

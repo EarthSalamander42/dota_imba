@@ -1,4 +1,3 @@
-require('statcollection/init')
 require('internal/util')
 require('internal/funcs')
 require('player_resource')
