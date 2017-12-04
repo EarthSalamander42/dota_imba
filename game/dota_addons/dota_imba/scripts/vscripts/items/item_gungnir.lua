@@ -37,6 +37,11 @@ function item_imba_gungnir:OnSpellStart()
 		buff:SetStackCount(ability:GetSpecialValueFor("max_attacks"))
 		EmitSoundOn("DOTA_Item.ForceStaff.Activate", target)
 		EmitSoundOn("DOTA_Item.ForceStaff.Activate", caster)
+		local startAttack = {
+							UnitIndex = caster:entindex(),
+							OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET,
+							TargetIndex = target:entindex(),}
+		ExecuteOrderFromTable(startAttack)
 	end
 
 
