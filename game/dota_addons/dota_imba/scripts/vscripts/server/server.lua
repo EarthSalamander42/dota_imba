@@ -185,7 +185,7 @@ end
 --		end
 --	end
 
-function Server_DecodeForPlayer ( t, nPlayerID )   --To deep-decode the Json code...
+function Server_DecodeForPlayer( t, nPlayerID )   --To deep-decode the Json code...
 	local print_r_cache={}
 	local function sub_print_r(t,indent)
 		if (print_r_cache[tostring(t)]) then
@@ -468,14 +468,14 @@ end
 
 function Server_SendEndGameInfo(json)
 	local request = CreateHTTPRequestScriptVM( "GET", "http://www.dota2imba.cn/XP_game_end_tmp_to_perm.php" )
-			request:SetHTTPRequestGetOrPostParameter("data_json",JSON:encode(json))
-			request:SetHTTPRequestGetOrPostParameter("auth",_AuthCode);
-			request:Send(function(result)
-				if result.StatusCode ~= 200 then
-					Server_SendEndGameInfo(json)
-					return
-				end
-			end)
+	request:SetHTTPRequestGetOrPostParameter("data_json",JSON:encode(json))
+	request:SetHTTPRequestGetOrPostParameter("auth",_AuthCode);
+	request:Send(function(result)
+		if result.StatusCode ~= 200 then
+			Server_SendEndGameInfo(json)
+			return
+		end
+	end)
 end
 
 local table_AFK_check_allHeroes = {}
@@ -640,7 +640,7 @@ function Server_RankDecode( t )
 							print("Steam ID:", val)
 							table.insert(leaderboard_SteamID, val)
 						end
-						if pos == "XP_has" then
+						if pos == "XP" then
 							print("Imba Experience:", val)
 							table.insert(leaderboard_XP, val)
 						end
@@ -654,43 +654,64 @@ function Server_RankDecode( t )
 		end
 	end
 
---	for key, value in pairs(t) do
+	local xp = 100000 -- total xp (pos == "XP")
+	local level = 0 -- imba level
+	local level_title = "" -- imba title
+	local XP_in_this_level = 0 --xp in level
+	local XP_needed_to_levelup = 0 -- xp required to level up
+	local XP_needed_to_levelup_global = 0 -- toal xp required to level up
 
---	end
+	for i = #table_rankXP, 1, -1 do
+		if xp and table_rankXP and table_rankXP[i] then
+			if tonumber(xp) >= table_rankXP[i] then
+				print(xp, table_rankXP[i])
+				level = i-1
+				XP_level_title_player[nPlayerID] = Server_GetTitle(level)
+				XP_needed_to_levelup_global = table_rankXP[i]
+				XP_needed_to_levelup = table_rankXP[i+1] - tonumber(xp)
+				XP_in_this_level = tonumber(xp) - table_rankXP[i]
+			end
+		end
+	end
+
+	print("DECODE level:", level)
+	print("DECODE xp progress in this level:", XP_in_this_level)
+	print("DECODE xp needed to level up:", XP_needed_to_levelup)
+	print("DECODE total xp needed to level up:", XP_needed_to_levelup_global)
 
 	if (type(t)=="table") then
 		sub_print_r(t,"  ")
 	end
 
-	a = {}
-	for k, n in pairs(leaderboard_SteamID) do
-		table.insert(a, n)
-		leaderboard_SteamID = {}
-	end
-	table.sort(a)
-	for i,n in ipairs(a) do
-		table.insert(leaderboard_SteamID, n)
-	end
-
-	a = {}
-	for k, n in pairs(leaderboard_XP) do
-		table.insert(a, n)
-		leaderboard_XP = {}
-	end
-	table.sort(a)
-	for i,n in ipairs(a) do
-		table.insert(leaderboard_XP, n)
-	end
-
-	a = {}
-	for k, n in pairs(leaderboard_IMR) do
-		table.insert(a, n)
-		leaderboard_IMR = {}
-	end
-	table.sort(a)
-	for i,n in ipairs(a) do
-		table.insert(leaderboard_IMR, n)
-	end
+--	a = {}
+--	for k, n in pairs(leaderboard_SteamID) do
+--		table.insert(a, n)
+--		leaderboard_SteamID = {}
+--	end
+--	table.sort(a)
+--	for i,n in ipairs(a) do
+--		table.insert(leaderboard_SteamID, n)
+--	end
+--
+--	a = {}
+--	for k, n in pairs(leaderboard_XP) do
+--		table.insert(a, n)
+--		leaderboard_XP = {}
+--	end
+--	table.sort(a)
+--	for i,n in ipairs(a) do
+--		table.insert(leaderboard_XP, n)
+--	end
+--
+--	a = {}
+--	for k, n in pairs(leaderboard_IMR) do
+--		table.insert(a, n)
+--		leaderboard_IMR = {}
+--	end
+--	table.sort(a)
+--	for i,n in ipairs(a) do
+--		table.insert(leaderboard_IMR, n)
+--	end
 
 	CustomNetTables:SetTableValue("game_options", "leaderboard", {
 		SteamID64 = leaderboard_SteamID,
@@ -698,6 +719,8 @@ function Server_RankDecode( t )
 		IMR = leaderboard_IMR,
 	})
 end
+
+-- xp_need_to_next_level, xp_level, level, rank
 
 function HoF_Test(id)
 	table.insert(leaderboard_SteamID, PlayerResource:GetSteamID(id))
