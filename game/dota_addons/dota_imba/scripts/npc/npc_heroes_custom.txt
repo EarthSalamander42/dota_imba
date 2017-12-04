@@ -1,5 +1,8 @@
 "DOTAHeroes"
 {
+	//LEGEND
+	// "IsDisabled": 0 = Enabled, 1 = 10v10 disabled, 2 = frantic disabled 3 = fully disabled.
+
 	//=================================================================================================================
 	// HERO: Abaddon
 	//=================================================================================================================
@@ -258,7 +261,7 @@
 
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-		"IsDisabled"				"2"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
+		"IsDisabled"				"3"
 
 		"Ability1"					"beastmaster_wild_axes"
 		"Ability2"					"beastmaster_call_of_the_wild"
@@ -654,7 +657,6 @@
 		//Picking Screen
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-		"IsDisabled"				"0"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
 
 		"Ability1"					"imba_enigma_malefice"
 		"Ability2"					"imba_enigma_demonic_conversion"
@@ -1190,6 +1192,7 @@
 		//Picking Screen
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		"IsDisabled"				"2"
 
 		"Ability1"					"imba_omniknight_purification"
 		"Ability2"					"imba_omniknight_repel"
@@ -1806,7 +1809,7 @@
 		//Picking Screen
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-		"IsDisabled"				"2"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
+		"IsDisabled"				"3"
 
 		"Ability1"					"imba_tinker_laser"
 		"Ability2"					"imba_tinker_heat_seeking_missile"

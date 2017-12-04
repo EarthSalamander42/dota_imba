@@ -1,0 +1,104 @@
+<root>
+	<styles>
+		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
+		<include src="s2r://panorama/styles/hud.vcss_c"/>
+		<include src="s2r://panorama/styles/hudstyles.vcss_c"/>
+		<include src="s2r://panorama/styles/hud/hud_reborn.vcss_c" />	
+
+		<include src="s2r://panorama/styles/custom_game/hud_main.vcss_c" />
+	</styles>
+<!--  
+	<scripts>
+		<include src="s2r://panorama/scripts/custom_game/hud_main.vjs_c" />
+		<include src="s2r://panorama/scripts/custom_game/quests.vjs_c" />
+		<include src="s2r://panorama/scripts/custom_game/party_health_bars.vjs_c" />
+		<include src="s2r://panorama/scripts/custom_game/party_arrows.vjs_c" />
+		<include src="s2r://panorama/scripts/custom_game/relic_courier.vjs_c" />
+	</scripts>
+-->
+	<script>
+		Game.SetDotaRefractHeroes( true );
+	</script>
+
+	<Panel hittest="false" class="CustomHudRoot">		
+		<Panel id="DungeonHUDContents" hittest="false" class="CustomHudContents">
+
+			
+
+			<Panel id="DungeonHUD" hittest="false">
+				<Panel id="lower_hud" hittest="false" disallowedstyleflags="hover,descendantfocus">
+					<Panel id="StatBranchDrawer" hittest="false">
+						<DOTAStatBranch id="statbranchdialog" hittest="false" />
+					</Panel>
+
+					<Panel id="PortraitContainerDungeon" hittest="false">
+						<Panel id="PortraitBacker" hittest="flase"/>
+						<Panel id="PortraitBackerColor" hittest="false"/>
+						<Panel id="PortraitContainer" hittest="false">
+							<DOTAPortrait id="portraitHUD" class="PortraitLocation" />
+							<DOTAPortrait id="portraitHUDOverlay" class="PortraitLocation"/>
+							<Panel id="SilenceIcon" hittest="false" always-cache-composition-layer="true" />
+							<Panel id="DeathGradient"/>
+						</Panel>
+
+						<DOTAXP id="xp" hittest="false" always-cache-composition-layer="true" require-composition-layer="true" />
+
+						<Panel id="stats_container" hittest="false" >
+							<DOTAHUDStrAgiInt id="stragiint" always-cache-composition-layer="true" require-composition-layer="true" hittest="false" />
+							<DOTAPortraitStatsClickRegion id="stats_tooltip_region" acceptsinput="true" onmouseover="DOTAHUDShowDamageArmorTooltip();" onmouseout="DOTAHUDHideDamageArmorTooltip();" />
+						</Panel>
+
+						<Panel id="stats_container_2" hittest="false" >
+							<DOTAStatsRegion id="stats" class="ShowSplitLabels" hittest="false" />	
+						</Panel>
+
+						<Panel hittest="false" id="RecommendedUpgradeOverlay" >
+							<Panel hittest="false" class="BorderEdge BorderTop" />
+							<Panel hittest="false" class="BorderEdge BorderRight" />
+							<Panel hittest="false" class="BorderEdge BorderBottom" />
+							<Panel hittest="false" class="BorderEdge BorderLeft" />
+						</Panel> 
+						<DOTAUnitName id="unitname" hittest="false" />				
+					</Panel>
+					
+					<Panel id="BuffsLine" class="LeftRightFlow" hittest="false">
+						<DOTABuffList id="buffs" showdebuffs="false" />
+						<DOTABuffList id="debuffs" showbuffs="false" />
+					</Panel>
+					
+					<DOTASpellCard id="InvokerSpellCard" hittest="false"/>
+
+					<Panel id="center_with_stats" hittest="false" disallowedstyleflags="hover, descendantfocus" >
+						<Panel id="center_block" hittest="false" disallowedstyleflags="hover, descendantfocus">
+							<Panel id="center_bg" />
+					
+							<DOTALevelUpButton id="levelup" hittest="false" />
+							<Panel id="HUDSkinAbilityContainerBG" hittest="false" />
+							<Panel class="AbilityInsetShadowLeft"/>
+
+							<DOTAHealthMana id="health_mana" />
+
+							<Panel id="AbilitiesAndStatBranch" hittest="false">
+								<DOTATalentDisplay id="StatBranch"/>
+								<DOTAAbilityList id="abilities" hittest="false"/>
+							</Panel>
+							<DOTAHUDDeathPanel id="death_panel_buyback" class="">
+								<DOTAHeroImage id="BuybackLifeCost" hittest="false" heroimagestyle="icon" heroid="1" class="LifeLeftIcon" scaling="stretch-to-cover-preserve-aspect" />							
+								<Panel id="ResLabelContainer">
+									<Label id="ResMain" class="ResLabel" text="#DOTA_Siltbreaker_Resurrect"/>
+									<Label id="NoResLeftDesc" class="ResLabel RezLabelDesc" text="#DOTA_Siltbreaker_RespawnNearest"/>
+								</Panel>
+							</DOTAHUDDeathPanel>
+							<Panel class="AbilityInsetShadowRight" require-composition-layer="true" always-cache-composition-layer="true"/>
+							<ProgressBar id="MorphProgress" min="0" max="1" value="0.5" />
+							<DOTAUnitEconItem id="econ_item"/>
+
+<!--							<DOTAInventory id="inventory" slotsDraggable="true" /> -->
+							<Panel id="right_flare" />
+						</Panel>
+					</Panel>
+				</Panel>
+		  </Panel>	
+		</Panel>
+	</Panel>
+</root>

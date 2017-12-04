@@ -56,3 +56,71 @@
 	font-weight: bold;
 	color: #fff;
 }
+
+/* Hall of Fame */
+.PickingPlayer.HoF {
+	width: 100%;
+	height: 72px;
+	margin: 0% 2% 1% 2%;
+	flow-children: right;
+}
+
+#PickingPlayerDT {
+	width: 100%;
+	height: 60px;
+	margin: 0% 2% 1% 2%;
+	flow-children: right;
+}
+
+#PlayerAvatarDT {
+	width: 60px;
+	height: 100%;
+	vertical-align: middle;
+	margin-left: 5px;
+	margin-right: 5px;
+	z-index: 5;
+	background-size: 100% 100%;
+}
+
+.PickingPlayerDetailsDT,
+.PickingPlayerDT {
+	width: 40%;
+	height: 100%;
+	flow-children: down;
+	border: 1px solid white;
+}
+
+#HeroPanelDT {
+	width: 50%;
+	height: 60%;
+	background-color: black;
+	background-size: 100% 100%;
+	border: 1px solid #656565;
+}
+
+#PlayerNameDT {
+	width: fit-children;
+	height: 40%;
+	margin-top: 5%;
+	font-size: 12px;
+	font-family: "Radiance";
+	horizontal-align: left;
+	text-align: center;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #fff;
+}
+
+#PlayerDT_Lvl,
+#PlayerDT_HP {
+	width: 100%;
+	height: 40%;
+	margin-top: 5%;
+	font-size: 12px;
+	font-family: "Radiance";
+	horizontal-align: left;
+	text-align: center;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #fff;
+}

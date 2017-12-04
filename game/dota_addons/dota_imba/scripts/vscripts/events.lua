@@ -95,9 +95,9 @@ end
 
 -- The overall game state has changed
 function GameMode:OnGameRulesStateChange(keys)
-DebugPrint("[BAREBONES] GameRules State Changed")
-DebugPrintTable(keys)
---	local i = 10
+    DebugPrint("[BAREBONES] GameRules State Changed")
+    DebugPrintTable(keys)
+    --	local i = 10
 
 	-- This internal handling is used to set up main barebones functions
 	GameMode:_OnGameRulesStateChange(keys)
@@ -109,16 +109,23 @@ DebugPrintTable(keys)
 	-- IMBA: Game Setup / API Calls
 	-------------------------------------------------------------------------------------------------
 	if new_state == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
-		-- run api function
-
+		-- get top 10 xp
+		for i = 1, 10 do
+			Server_GetTopPlayer(i)
+		end
 	end
-	
+
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Pick screen stuff
 	-------------------------------------------------------------------------------------------------
 	if new_state == DOTA_GAMERULES_STATE_HERO_SELECTION then
-		imba_api_game_event("hero_selection", "entered hero selection")
+		ApiPrint("entered hero selection")
 		HeroSelection:HeroListPreLoad()
+--		if IsInToolsMode() then
+--			for i = 0, PlayerResource:GetPlayerCount() -1 do
+--				HoF_Test(i)
+--			end
+--		end
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -188,7 +195,10 @@ DebugPrintTable(keys)
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Game started (horn sounded)
 	-------------------------------------------------------------------------------------------------
-	if new_state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+    if new_state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+        
+        ApiPrint("Entering Game in progress / horn")
+
 		Server_WaitToEnableXpGain()
 
 		for _, hero in pairs(HeroList:GetAllHeroes()) do
@@ -209,7 +219,8 @@ DebugPrintTable(keys)
 
 	if new_state == DOTA_GAMERULES_STATE_POST_GAME then
 
-		-- call imba api
+        -- call imba api
+        ApiPrint("Entering post game")
 		imba_api_game_complete()
 
 		CustomGameEventManager:Send_ServerToAllClients("end_game", {})

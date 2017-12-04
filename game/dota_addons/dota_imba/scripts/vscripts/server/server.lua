@@ -185,7 +185,7 @@ end
 --		end
 --	end
 
-function Server_DecodeForPlayer ( t, nPlayerID )   --To deep-decode the Json code...
+function Server_DecodeForPlayer( t, nPlayerID )   --To deep-decode the Json code...
 	local print_r_cache={}
 	local function sub_print_r(t,indent)
 		if (print_r_cache[tostring(t)]) then
@@ -209,10 +209,10 @@ function Server_DecodeForPlayer ( t, nPlayerID )   --To deep-decode the Json cod
 						if pos == "XP_has" then
 							XP_has = val
 							if tonumber(XP_has) < 0 then
-                                table_XP_has[nPlayerID] = 0
-                            else
-                                table_XP_has[nPlayerID] = tostring(XP_has)
-                            end
+								table_XP_has[nPlayerID] = 0
+							else
+								table_XP_has[nPlayerID] = tostring(XP_has)
+							end
 							table_XP_has[nPlayerID] = tostring(XP_has)
 							--print("XP_has="..table_XP_has[nPlayerID])
 						end
@@ -468,14 +468,14 @@ end
 
 function Server_SendEndGameInfo(json)
 	local request = CreateHTTPRequestScriptVM( "GET", "http://www.dota2imba.cn/XP_game_end_tmp_to_perm.php" )
-			request:SetHTTPRequestGetOrPostParameter("data_json",JSON:encode(json))
-			request:SetHTTPRequestGetOrPostParameter("auth",_AuthCode);
-			request:Send(function(result)
-				if result.StatusCode ~= 200 then
-					Server_SendEndGameInfo(json)
-					return
-				end
-			end)
+	request:SetHTTPRequestGetOrPostParameter("data_json",JSON:encode(json))
+	request:SetHTTPRequestGetOrPostParameter("auth",_AuthCode);
+	request:Send(function(result)
+		if result.StatusCode ~= 200 then
+			Server_SendEndGameInfo(json)
+			return
+		end
+	end)
 end
 
 local table_AFK_check_allHeroes = {}
@@ -557,7 +557,6 @@ function Server_GetPlayerTitle(playerID)
 	end
 end
 
-
 function print_r ( t )  
 	local print_r_cache={}
 	local function sub_print_r(t,indent)
@@ -592,6 +591,149 @@ function print_r ( t )
 	print()
 end
 
+function Server_GetTopPlayer(ranking)  -- If you want to get the 2nd-top player, then use Server_GetTopPlayer(2)
+	local jsondata = {}
+	local jsontable = {}
+	jsontable.Ranking = ranking
+	table.insert(jsondata,jsontable)
+
+	local request = CreateHTTPRequestScriptVM( "GET", "http://www.dota2imba.cn/XP_top.php" )
+
+	request:SetHTTPRequestGetOrPostParameter("data_json",JSON:encode(jsondata))
+	request:SetHTTPRequestGetOrPostParameter("auth",_AuthCode);
+	request:Send(function(result)
+		if result.StatusCode ~= 200 then
+			Server_GetTopPlayer(ranking)
+			return
+		else
+			local Adecode=JSON:decode(result.Body)
+--			print("Result:", result.Body)
+			Server_RankDecode(Adecode)
+		end
+	end)
+end
+
+leaderboard_SteamID = {}
+leaderboard_XP = {}
+leaderboard_IMR = {}
+
+function Server_RankDecode( t )
+	local print_r_cache={}
+	local function sub_print_r(t,indent)
+		if (print_r_cache[tostring(t)]) then
+			--print(indent.."*"..tostring(t))
+		else
+			print_r_cache[tostring(t)]=true
+			if (type(t)=="table") then
+				for pos,val in pairs(t) do
+					print(pos)
+					print(val)
+					if (type(val)=="table") then
+						sub_print_r(val,indent..string.rep(" ",string.len(pos)+8))
+--						for k, v in pairs(val) do
+--							print(k)
+--							print(v)
+--						end
+					elseif (type(val)=="string") then
+						print(val)
+						if pos == "SteamID64" then
+							print("Steam ID:", val)
+							table.insert(leaderboard_SteamID, val)
+						end
+						if pos == "XP" then
+							print("Imba Experience:", val)
+							table.insert(leaderboard_XP, val)
+						end
+						if pos == "IMR_has" then
+							print("Imba Matchmaking Rank:", val)
+							table.insert(leaderboard_IMR, val)
+						end
+					end
+				end
+			end
+		end
+	end
+
+	local xp = 100000 -- total xp (pos == "XP")
+	local level = 0 -- imba level
+	local level_title = "" -- imba title
+	local XP_in_this_level = 0 --xp in level
+	local XP_needed_to_levelup = 0 -- xp required to level up
+	local XP_needed_to_levelup_global = 0 -- toal xp required to level up
+
+	for i = #table_rankXP, 1, -1 do
+		if xp and table_rankXP and table_rankXP[i] then
+			if tonumber(xp) >= table_rankXP[i] then
+				print(xp, table_rankXP[i])
+				level = i-1
+				XP_level_title_player[nPlayerID] = Server_GetTitle(level)
+				XP_needed_to_levelup_global = table_rankXP[i]
+				XP_needed_to_levelup = table_rankXP[i+1] - tonumber(xp)
+				XP_in_this_level = tonumber(xp) - table_rankXP[i]
+			end
+		end
+	end
+
+	print("DECODE level:", level)
+	print("DECODE xp progress in this level:", XP_in_this_level)
+	print("DECODE xp needed to level up:", XP_needed_to_levelup)
+	print("DECODE total xp needed to level up:", XP_needed_to_levelup_global)
+
+	if (type(t)=="table") then
+		sub_print_r(t,"  ")
+	end
+
+--	a = {}
+--	for k, n in pairs(leaderboard_SteamID) do
+--		table.insert(a, n)
+--		leaderboard_SteamID = {}
+--	end
+--	table.sort(a)
+--	for i,n in ipairs(a) do
+--		table.insert(leaderboard_SteamID, n)
+--	end
+--
+--	a = {}
+--	for k, n in pairs(leaderboard_XP) do
+--		table.insert(a, n)
+--		leaderboard_XP = {}
+--	end
+--	table.sort(a)
+--	for i,n in ipairs(a) do
+--		table.insert(leaderboard_XP, n)
+--	end
+--
+--	a = {}
+--	for k, n in pairs(leaderboard_IMR) do
+--		table.insert(a, n)
+--		leaderboard_IMR = {}
+--	end
+--	table.sort(a)
+--	for i,n in ipairs(a) do
+--		table.insert(leaderboard_IMR, n)
+--	end
+
+	CustomNetTables:SetTableValue("game_options", "leaderboard", {
+		SteamID64 = leaderboard_SteamID,
+		XP = leaderboard_XP,
+		IMR = leaderboard_IMR,
+	})
+end
+
+-- xp_need_to_next_level, xp_level, level, rank
+
+function HoF_Test(id)
+	table.insert(leaderboard_SteamID, PlayerResource:GetSteamID(id))
+	table.insert(leaderboard_IMR, 5691)
+	table.insert(leaderboard_SteamID, PlayerResource:GetSteamID(id))
+	table.insert(leaderboard_IMR, 1)
+
+	CustomNetTables:SetTableValue("game_options", "leaderboard", {
+		SteamID64 = leaderboard_SteamID,
+		XP = leaderboard_XP,
+		IMR = leaderboard_IMR,
+	})
+end
 
 ----------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------

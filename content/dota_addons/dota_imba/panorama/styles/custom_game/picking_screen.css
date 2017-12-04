@@ -281,8 +281,7 @@
 }
 
 .ClassNormalOptionLabel,
-.ClassImbaOptionLabel,
-.ClassCustomOptionLabel
+.ClassImbaOptionLabel
 {
 	width: 100%;
 	background-color: #1852D9;
@@ -298,6 +297,19 @@
 	animation-timing-function: ease-in;
 	animation-direction: alternate;
 	animation-iteration-count: infinite;
+}
+
+.ClassCustomOptionLabel
+{
+	width: 100%;
+	background-color: #1852D9;
+	align: center bottom;
+	text-align: center;
+	font-size: 12px;
+	font-family: "Bold";
+	text-transform: uppercase;
+	font-weight: bold;
+	background-color: #000000da;
 }
 
 .ClassNormalOptionLabel
@@ -368,8 +380,8 @@
 .ClassImbaOption.taken,
 .ClassCustomOption.taken
 {
-	opacity: 0.5;
-	wash-color: #ff3333;
+	saturation: 0.0;
+	wash-color: grey;
 }
 
 /* Text elements and timer

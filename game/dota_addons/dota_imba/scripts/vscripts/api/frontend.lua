@@ -136,25 +136,41 @@ function imba_api_game_complete()
         results = {}
     }
 
+    ApiPrint("game_complete Before player info collection")
+
+    local player_count = 0
+
+    for playerID = 0, DOTA_MAX_TEAM_PLAYERS do
+        if PlayerResource:IsValidPlayerID(playerID) then
+            player_count = player_count + 1
+        end
+    end
+
+    ApiPrint("game_complete player count in game_complete: " .. tostring(player_count))
+
     -- for each player
     for playerID = 0, DOTA_MAX_TEAM_PLAYERS do
         if PlayerResource:IsValidPlayerID(playerID) then
             local player = PlayerResource:GetPlayer(playerID)
             local id = tostring(PlayerResource:GetSteamID(playerID))
 
-            local hero = player:GetAssignedHero()
+            local hero = PlayerResource:GetPickedHero(playerID)
             local items = {}
 
-            -- get all items
-            -- inventory + backpack
-            for slot = 0, MAX_ITEM_SLOT do
-                local item = hero:GetItemInSlot(slot)
-                if item ~= nil then
-                    table.insert(items, tostring(item:GetAbilityName()))
-                end
+            if hero == nil then
+                ApiPrint("Hero for player " .. id .. " is nil")
+            else
+                -- get all items
+                -- inventory + backpack
+                for slot = 0, MAX_ITEM_SLOT do
+                    local item = hero:GetItemInSlot(slot)
+                    if item ~= nil then
+                        table.insert(items, tostring(item:GetAbilityName()))
+                    end
+                end    
             end
-
-            local teamid = PlayerResource:GetTeam(playerID)
+            
+            local teamid = tonumber(PlayerResource:GetTeam(playerID))
 
             -- winner team conversation
             local team = "Invalid"
@@ -164,10 +180,15 @@ function imba_api_game_complete()
                 tean = "Dire"
             end
 
+            local rhero = json.null
+            if hero ~= nil then
+                rhero = tostring(hero:GetUnitName())
+            end
+
             -- final object for user
             args.results[id] = {
                 team = team,
-                hero = hero:GetUnitName(),
+                hero = rhero,
                 items = items,
                 kills = PlayerResource:GetKills(playerID),
                 deaths = PlayerResource:GetDeaths(playerID),
@@ -178,16 +199,31 @@ function imba_api_game_complete()
                 xp = PlayerResource:GetTotalEarnedXP(playerID),
                 gold = PlayerResource:GetGold(playerID)
             };
-            
         end
     end
+
+    ApiPrint(json.encode(args))
+    ApiPrint("game_complete after player info collection");
     
     -- perform request
     imba_api():game_complete(args, function (data)
+        ApiPrint("Request good")
         print("[api-frontend] Request good (Game save)")
-    end, function () 
+    end, function (err)
+        if (err == nil) then
+            ApiPrint("request failed with nil")
+        elseif (err.message ~= nil) then
+            ApiPrint("request failed :" .. err.message)
+        end
         print("[api-frontend] Request failed!")
     end)
 
+    ApiPrint("Serialization successful")
     print("[api-frontend] Saving game to server")
 end
+
+-- Saves a print message to server
+function ApiPrint(str)
+    imba_api_game_event("debug", str);
+end
+

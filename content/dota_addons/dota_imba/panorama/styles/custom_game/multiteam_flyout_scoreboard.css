@@ -102,7 +102,7 @@
 
 .ScoreCol_ImbaXP
 {
-	width: 220px;
+	width: 230px;
 }
 
 .ScoreCol_Gold
@@ -318,13 +318,12 @@
 #ImbaXP23
 {
 	margin-top: 3px;
-	margin-left: 62%;
 	width: 100%;
 	font-size: 17px;
 	font-weight: bold;
 	color: white;
 	vertical-align: center;
-	horizontal-align: center;
+	horizontal-align: right;
 	opacity: 0.75;
 }
 
