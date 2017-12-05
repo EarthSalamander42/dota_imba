@@ -24,7 +24,7 @@
 
 	100%
 	{
-		opacity: 0.9;
+		opacity: 1.0;
 	}
 }
 
@@ -246,8 +246,10 @@
 }
 
 .PlayerOptionRowV10 {
-	width: 100%;
+	width: 94%;
 	height: 50%;
+	margin-left: 3%;
+	margin-right: 3%;
 	flow-children: right;
 }
 
@@ -268,8 +270,8 @@
 .ClassNormalOption,
 .ClassImbaOption,
 .ClassCustomOption {
-	width: 84px;
-	height: 50px;
+	width: 85px;
+	height: 48px;
 	margin: 1px 0px 1px 0px;
 	horizontal-align: left;
 	wash-color: #7090B060;
@@ -279,7 +281,24 @@
 }
 
 .ClassNormalOptionLabel,
-.ClassImbaOptionLabel,
+.ClassImbaOptionLabel
+{
+	width: 100%;
+	background-color: #1852D9;
+	align: center bottom;
+	text-align: center;
+	font-size: 12px;
+	font-family: "Bold";
+	text-transform: uppercase;
+	font-weight: bold;
+	background-color: #000000da;
+	animation-name: fade_full;
+	animation-duration: load_time;
+	animation-timing-function: ease-in;
+	animation-direction: alternate;
+	animation-iteration-count: infinite;
+}
+
 .ClassCustomOptionLabel
 {
 	width: 100%;
@@ -290,22 +309,22 @@
 	font-family: "Bold";
 	text-transform: uppercase;
 	font-weight: bold;
-	color: white;
-	animation-name: fade_full;
-	animation-duration: load_time;
-	animation-timing-function: ease-in;
-	animation-direction: alternate;
-	animation-iteration-count: infinite;
+	background-color: #000000da;
 }
 
 .ClassNormalOptionLabel
 {
-	background-color: grey;
+	color: grey;
 }
 
 .ClassImbaOptionLabel
 {
-	background-color: darkorange;
+	color: darkorange;
+}
+
+.ClassCustomOptionLabel
+{
+	color: dodgerblue;
 }
 
 .AspectRatio16x10 .ClassNormalOption,
@@ -361,8 +380,8 @@
 .ClassImbaOption.taken,
 .ClassCustomOption.taken
 {
-	opacity: 0.5;
-	wash-color: #ff3333;
+	saturation: 0.0;
+	wash-color: grey;
 }
 
 /* Text elements and timer
@@ -373,7 +392,7 @@
 	horizontal-align: center;
 	vertical-align: middle;
 	flow-children: right;
-	margin-top: 5%;
+	margin-top: 3%;
 	padding: 0% 0% 1% 0%;
 }
 
@@ -388,7 +407,7 @@
 
 #PickTextPanel {
 	width: 20%;
-	align: center center;
+	align: center top;
 	flow-children: down;
 }
 
@@ -494,16 +513,34 @@
 	color:#FF7800;
 }
 
-#PickScreenTeamTitleRadiant,
-#PickScreenTeamTitleDire {
+#PickScreenTeamTitleRadiant {
+	margin-left: 3%;
 	width: 50%;
 	height: 100%;
 	margin-bottom: 15%;
 	
-//	text-align: left;
-	font-size: 26px;
+	text-align: left;
+	font-size: 20px;
 	font-family: "Bold";
+	text-transform: uppercase;
 	color: green;
+}
+
+#PickScreenTeamTitleDire {
+	margin-right: 3%;
+	width: 50%;
+	height: 100%;
+	margin-bottom: 15%;
+	
+	font-size: 20px;
+	font-family: "Bold";
+	text-transform: uppercase;
+	color: green;
+
+	horizontal-align: right;
+	text-align: right;
+	padding-right: 3%;
+	color: darkred;
 }
 
 #AverageMMRTeamRadiant,
@@ -520,14 +557,6 @@
 
 #AverageMMRTeamRadiant {
 	text-align: right;
-}
-
-
-#PickScreenTeamTitleDire {
-	horizontal-align: right;
-	text-align: right;
-	padding-right: 3%;
-	color: darkred;
 }
 
 #SeparatorImage {

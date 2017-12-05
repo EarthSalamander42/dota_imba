@@ -147,6 +147,13 @@ function TableToStringCommaEnt(table)
 	return string
 end
 
+function FindNearestPointFromLine(caster, dir, affected)
+	local castertoaffected = affected - caster
+	local len = castertoaffected:Dot(dir)    
+	local ntgt = Vector(dir.x * len, dir.y * len, caster.z)
+	return caster + ntgt
+end
+
 -------------------------------------------------------------------------------------------------
 -- IMBA: custom utility functions
 -------------------------------------------------------------------------------------------------
@@ -272,7 +279,7 @@ function GetAncientAbility( tier )
 	if tier == 1 then
 		local ability_list = {
 			"venomancer_poison_nova",
-			"juggernaut_blade_fury"			
+			"juggernaut_blade_fury_ancient"			
 		}
 
 		return ability_list[RandomInt(1, #ability_list)]

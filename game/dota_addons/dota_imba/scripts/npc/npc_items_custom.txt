@@ -3304,7 +3304,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"900"
+		"ItemCost"						"0"
 		"ItemShopTags"					""
 
 		// Recipe
@@ -3338,11 +3338,11 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"4850"
+		"ItemCost"						"4900"
 		"ItemShopTags"					"regen_health;regen_mana;mana_pool;health_pool"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"bs;bloodstone"
-		"ItemInitialCharges"			"12"
+		"ItemInitialCharges"			"14"
 		"ItemDisplayCharges"			"1"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 
@@ -7243,32 +7243,7 @@
 		}
 	}
 
-	//=================================================================================================================
-	// Recipe: Moon Shard
-	//=================================================================================================================
-	"item_recipe_imba_moon_shard"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2112"
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
 
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"0"
-		"ItemShopTags"					""
-
-		// Recipe
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemRecipe"					"1"
-		"ItemResult"					"item_imba_moon_shard"
-		"ItemRequirements"
-		{
-			"01"						"item_hyperstone;item_hyperstone"
-		}
-	}
 
 	//=================================================================================================================
 	// Moon Shard
@@ -7278,12 +7253,13 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2113"
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_moon_shard"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"BaseClass"						"item_lua"
+		"AbilityTextureName" 			"item_moon_shard"
+		"ScriptFile"					"items/item_moon_shard.lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"AbilityCastRange"				"600"
+		"AbilityCastRange"				"999999"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -7292,8 +7268,12 @@
 		"ItemQuality"					"common"
 		"ItemAliases"					"moon shard"
 		"SideShop"						"0"
+		"SecretShop"					"1"
+		"ItemStackable"					"1"
+		"ItemInitialCharges"			"1"
+		"IsTempestDoubleClonable"		"1"
 
-		// Special
+		// Special  Warning:If you want to change te consume values, you have to change the lua file's "CDOTAIMBA_ITEM_MOON_SHARD_abc" too
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
@@ -7331,95 +7311,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"consume_as_3"			"30"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"items/item_moon_shard.lua"
-				"Function"				"MoonShardActive"
-
-				"sound_consume"			"Item.MoonShard.Consume"
-				"modifier_consume_1"	"modifier_imba_moon_shard_consume_1"
-				"modifier_consume_2"	"modifier_imba_moon_shard_consume_2"
-				"modifier_consume_3"	"modifier_imba_moon_shard_consume_3"
-				"modifier_stacks"		"modifier_imba_moon_shard_stacks_dummy"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_moon_shard"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 	"%bonus_attack_speed"
-					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"			"%bonus_night_vision"
-				}
-			}
-
-			"modifier_imba_moon_shard_stacks_dummy"
-			{
-				"Passive"			"0"
-				"IsHidden"			"0"
-
-				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"TextureName"		"custom/imba_moon_shard"
-			}
-
-			"modifier_imba_moon_shard_consume_1"
-			{
-				"Passive"			"0"
-				"IsHidden"			"1"
-				"IsBuff"			"1"
-				"IsPurgable"		"0"
-
-				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 	"%consume_as_1"
-					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"			"%consume_vision_1"
-				}
-			}
-
-			"modifier_imba_moon_shard_consume_2"
-			{
-				"Passive"			"0"
-				"IsHidden"			"1"
-				"IsBuff"			"1"
-				"IsPurgable"		"0"
-
-				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 	"%consume_as_2"
-					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"			"%consume_vision_2"
-				}
-			}
-
-			"modifier_imba_moon_shard_consume_3"
-			{
-				"Passive"			"0"
-				"IsHidden"			"1"
-				"IsBuff"			"1"
-				"IsPurgable"		"0"
-
-				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_MULTIPLE"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 	"%consume_as_3"
-				}
 			}
 		}
 	}
@@ -11637,6 +11528,7 @@
 		"ID"							"2255"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.vmdl"
+		"AbilityTextureName" 			"custom/imba_recipe"
 		"FightRecapLevel"				"1"
 
 		// Item Info
@@ -11786,6 +11678,36 @@
 				"var_type"							"FIELD_FLOAT"
 				"tooltip_ranged_cooldown_increase"	"15"
 			}
+			"21"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"proc_chance"				"30"
+			}
+			"22"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"proc_duration_self"		"3"
+			}
+			"23"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"proc_ms"					"15"
+			}
+			"24"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"as_stack"					"5"
+			}
+			"25"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_stacks"				"3"
+			}
+			"26"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"stack_duration"			"5"
+			}
 		}
 	}
 	
@@ -11858,5 +11780,279 @@
 			}
 		}
 	}
-	//next free ID: 2259
+	
+	//=================================================================================================================
+	// Recipe: Gungnir
+	//=================================================================================================================
+	"item_recipe_imba_gungnir"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2259"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+		"Model"							"models/props_gameplay/recipe.mdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1250"
+		"ItemShopTags"					""
+
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_gungnir"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_monkey_king_bar;item_hurricane_pike"
+		}
+	}
+
+	//=================================================================================================================
+	// Gungnir
+	//=================================================================================================================
+	"item_imba_gungnir"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2260"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"items/item_gungnir.lua"
+		"AbilityTextureName" 			"custom/imba_gungnir"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"10900"
+		"ItemShopTags"					"damage;hard_to_tag"
+		"ItemQuality"					"rare"
+		"ItemAliases"					"gungnir"
+
+		"AbilitySharedCooldown"			"force"
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"15.0"
+		"AbilityManaCost"				"75"
+		"AbilityCastRange"				"850"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"77"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intellect"		"13"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_health_regen"	"7"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_agility"			"20"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_strength"		"15"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bash_chance"			"35"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bash_damage"			"100"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ally_distance"			"750"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"enemy_distance_ranged"	"450"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"enemy_distance_melee"	"400"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"0.4"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bounce_attack_speed"	"400"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_attacks"			"4"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"melee_bounce_ar"		"100"
+			}
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ranged_bounce_ar"		"150"
+			}
+			"16"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"range_duration"		"5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Recipe: Jarnbjorn
+	//=================================================================================================================
+	"item_recipe_imba_jarnbjorn"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2261"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+		"Model"							"models/props_gameplay/recipe.mdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1250"
+		"ItemShopTags"					""
+
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_jarnbjorn"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_mjollnir;item_bfury"
+		}
+	}
+
+	//=================================================================================================================
+	// Jarnbjorn
+	//=================================================================================================================
+	"item_imba_jarnbjorn"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2262"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"items/item_maelstrom.lua"
+		"AbilityTextureName"			"custom/imba_jarnbjorn"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"800"
+		"AbilityCooldown"				"35.0"
+		"AbilityManaCost"				"125"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"10900"
+		"ItemShopTags"					"damage;attack_speed;unique"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"jarnbjorn"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"24"
+				"CalculateSpellDamageTooltip"	"0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_as"				"80"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"proc_chance"			"25"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bounce_damage"			"200"
+				"CalculateSpellDamageTooltip"	"1"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bounce_radius"			"900"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"static_duration"		"15"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"static_proc_chance"	"20"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"static_damage"			"200"
+				"CalculateSpellDamageTooltip"	"1"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"static_radius"			"900"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"static_slow"			"-100"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"static_slow_duration"	"1.25"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"splash_damage_pct"		"40"
+			}
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"splash_range"			"625"
+			}
+		}
+	}
+	//next free ID: 2263
 }

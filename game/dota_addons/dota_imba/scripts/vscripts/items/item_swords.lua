@@ -55,7 +55,8 @@ function modifier_item_imba_sange:OnAttackLanded( keys )
 
 		-- If this attack was not performed by the modifier's owner, do nothing
 		if owner ~= keys.attacker then
-			return end
+			return
+		end
 
 		-- If a higher-priority sword is present, do nothing either
 		local priority_sword_modifiers = {

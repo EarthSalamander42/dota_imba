@@ -8,6 +8,7 @@ var _current_show_all_text_timer = null;
 var _current_hover_preview_timer = null;
 //Integer to remove "selectable" class from talent choice panel
 var _current_ability_points = 0;
+var CUSTOM_HUD = false
 
 var ATTRIBUTE_UNIT_ID = "open_unit_id";
 var TALENT_TABLE_NAME = "imba_talent_manager";
@@ -22,7 +23,11 @@ function GetHUDRootUI(){
 	while(rootUI.id != "Hud" && rootUI.GetParent() != null){
 		rootUI = rootUI.GetParent();
 	}
-	return rootUI;
+	if (CUSTOM_HUD == true) {
+		return rootUI.FindChildTraverse("DungeonHUDContents");;
+	} else {
+		return rootUI;
+	}
 }
 
 function GetDefaultTalentWindowPanel(){

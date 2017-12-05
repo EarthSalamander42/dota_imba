@@ -1,0 +1,391 @@
+.Diretide
+{
+	width: 100%;
+	height: 100%;
+	z-index: -10;
+}
+
+//XHS BOSS BARS
+.HoldoutLabelSmall
+{
+	color: white;
+	font-weight: bold;
+	text-align: center;
+	text-shadow: 1px 1px 2px 2.0 #00000011;
+
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-size: 14px;
+	letter-spacing: 2px;
+	text-overflow: clip;
+
+	horizontal-align: center;
+	text-align: center;	
+	margin-top: 12px;
+	text-shadow: 1px 1px 2px 3.0 #000000;
+	font-size: 16px;
+}
+
+.HoldoutLabelSmall_alt
+{
+	color: white;
+	font-weight: bold;
+	text-align: center;
+	text-shadow: 1px 1px 2px 2.0 #00000011;
+
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-size: 14px;
+	letter-spacing: 2px;
+	text-overflow: clip;
+
+	horizontal-align: center;
+	text-align: center;	
+	margin-bottom: 12px;
+	text-shadow: 1px 1px 2px 3.0 #000000;
+	font-size: 16px;
+}
+
+.HoldoutLabelSmall.Header
+{
+	width: 95px;
+}
+
+#RoshanLevel_alt
+{
+	margin-top: 5%;
+	margin-left: 2%;
+	horizontal-align: left;
+	color: white;
+	font-weight: bold;
+	text-align: center;
+	text-shadow: 1px 1px 2px 2.0 #00000011;
+
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-size: 14px;
+	letter-spacing: 2px;
+	text-overflow: clip;
+
+	text-align: center;
+	text-shadow: 1px 1px 2px 3.0 #000000;
+	font-size: 18px;
+}
+
+#HallOfFame
+{
+	width: 800px;
+	height: fit-children;
+	border-radius: 25px;
+	background-color: #000000da;
+	align: center center;
+	flow-children: down;
+	visibility: collapse;
+}
+
+#InfoContent
+{
+	width: 100%;
+	height: fit-children;
+}
+
+#InfoContainer {
+	width: 100%;
+	height: fit-children;
+	flow-children: down;
+	padding: 1% 1% 1% 1%;
+}
+
+#InfoHeader {
+	width: 100%;
+	height: 60px;
+}
+
+.LeaderboardRank,
+.LeaderboardXP,
+.LeaderboardIMR,
+.LeaderboardAvatar,
+.LeaderboardAvatar_alt
+{
+	text-align: center;
+	font-size: 18px;
+	font-weight: bolder;
+	color:#fff;
+}
+
+.LeaderboardXP, {
+	padding: 3px 10px 3px 10px;
+}
+
+/* Leaderboard Legend */
+.LeaderboardLegend {
+	width: 100%;
+	height: 30px;
+	flow-children: right-wrap;
+	border-bottom: 1px solid white;
+}
+
+/* Leaderboard */
+.LeaderboardGames {
+	width: 100%;
+	height: 35px;
+	flow-children: right-wrap;
+}
+
+.LeaderboardRank {
+	width: 10%;
+	height: 100%;
+	border-left: 1px solid white;
+	border-top: 1px solid white;
+	border-right: 1px solid white;
+}
+
+.LeaderboardAvatar {
+	width: 15%;
+	height: 100%;
+	border-left: 1px solid white;
+	border-top: 1px solid white;
+	border-right: 1px solid white;
+}
+
+.LeaderboardXP {
+	width: 50%;
+	height: 100%;
+	border-left: 1px solid white;
+	border-top: 1px solid white;
+	border-right: 1px solid white;
+}
+
+.LeaderboardIMR {
+	width: 30%;
+	height: 100%;
+	border-left: 1px solid white;
+	border-top: 1px solid white;
+	border-right: 1px solid white;
+}
+
+#PlayerContent
+{
+	width: 100%;
+	height: fit-children;
+	flow-children: right;
+}
+
+#RadiantPlayers
+{
+	width: 50%;
+	height: fit-children;
+	background-color: #005000da;
+	flow-children: down;
+}
+
+#DirePlayers
+{
+	width: 50%;
+	height: fit-children;
+	background-color: #500000da;
+	flow-children: down;
+}
+
+.TeamTitle {
+	width: 100%;
+	height: 40px;
+	text-align: center;
+	font-size: 24px;
+	font-weight: bolder;
+	color:#fff;
+}
+
+#ButtonContent
+{
+	flow-children: right;
+	width: 100%;
+	height: 90px;
+	horizontal-align: center;
+	background-color: darkred;
+	saturation: 0.8;
+}
+
+#ButtonContent:hover
+{
+	border: 2px solid white;
+	saturation: 1.0;
+}
+
+#ButtonContent:active
+{
+	saturation: 0.6;
+}
+
+#ButtonContent Label
+{
+	align: center center;
+	color: white;
+	text-transform: uppercase;
+	text-align: center center;
+	font-size: 18px;
+}
+
+#ButtonContent:hover Label
+{
+	color: white;
+}
+
+#FeedButton,
+#CloseButton
+{
+	width: 40%;
+	margin-top: 60%;
+	margin-left: 5%;
+	margin-right: 5%;
+	background-color: #000000da;
+	border: 2px solid #4d5051;
+	border-radius: 5px;
+}
+
+#FeedButton:hover
+{
+	border: 2px solid orange;
+}
+
+#CloseButton:hover
+{
+	border: 2px solid white;
+}
+
+#FeedButton Label,
+#CloseButton Label
+{
+	align: center center;
+	color: #6f6f6f;
+	text-transform: uppercase;
+	text-align: center center;
+	font-size: 16px;
+}
+
+#FeedButton:hover Label,
+#CloseButton:hover Label
+{
+	color: white;
+}
+
+#FrostivusAltarRespawn
+{
+	margin-top: 4%;
+	align: center top;
+	flow-children: up;
+}
+
+#FrostivusAltarButton
+{
+	width: 150px;
+	height: 35px;
+	margin-top: 4%;
+	padding: 4px 4px 4px 4px;
+	border-radius: 4px;
+	background-color: darkred;
+	saturation: 0.8;
+}
+
+#FrostivusAltarButton:hover
+{
+	border: 2px solid white;
+	saturation: 1.0;
+}
+
+#FrostivusAltarButton:active
+{
+	saturation: 0.6;
+}
+
+#FrostivusAltarButton Label
+{
+	align: center center;
+	color: white;
+	text-transform: uppercase;
+	text-align: center center;
+	font-size: 18px;
+}
+
+#FrostivusAltarButton:hover Label
+{
+	color: white;
+}
+
+.ButtonClass:hover {
+	saturation: 1.0;
+}
+
+.ButtonClass:active {
+	saturation: 0.6;
+}
+
+#Tops {
+	width: 100%;
+	height: fit-children;
+	flow-children: down;
+}
+
+.imbar-progress-bar
+{
+	width: 100%;
+	border-radius: 4px;
+	border: 3px solid #444;
+	background-color: black;
+	height: 24px;
+	vertical-align: center;
+	box-shadow: fill #000 -3px -3px 6px 6px;
+}
+
+.ProgressBarLeft
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #326114 ), color-stop( 0.3, #18BE23 ), color-stop( .5, #18BE23 ), to( #01410E ) )
+	box-shadow: inset #000 1px 1px 3px 3px;	
+	border-radius: 2px;
+}
+
+#ProgressBar_Right
+{
+	background-color: gradient( linear, 0% 0%, 100% 0%, from( #222222FF ), to( black ) );
+}
+
+.imbar-lvl
+{
+	width: 30%;
+	height: 100%;
+	font-size: 17px;
+	font-weight: bold;
+	margin-top: 4px;
+	margin-left: 10px;
+	color: white;
+	vertical-align: center;
+	horizontal-align: left;
+	text-align: left;
+	opacity: 0.75;
+}
+
+.imbar-rank
+{
+	width: 30%;
+	height: 100%;
+	margin-top: 4px;
+	font-size: 16px;
+	font-weight: bold;
+	color: white;
+	vertical-align: center;
+	horizontal-align: center;
+	text-align: center;
+	opacity: 0.75;
+}
+
+.imbar-xp
+{
+	width: 40%;
+	height: 100%;
+	margin-top: 4px;
+	margin-right: 8px;
+	font-size: 17px;
+	font-weight: bold;
+	color: white;
+	vertical-align: center;
+	horizontal-align: right;
+	text-align: right;
+	opacity: 0.75;
+}

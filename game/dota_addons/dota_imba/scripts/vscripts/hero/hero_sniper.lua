@@ -30,7 +30,6 @@ function imba_sniper_shrapnel:GetAOERadius()
 	return radius
 end
 
-
 function imba_sniper_shrapnel:GetCastRange(location, target)
 	local caster = self:GetCaster()
 	local base_range = self.BaseClass.GetCastRange(self, location, target)
