@@ -9,7 +9,6 @@ function FrostivusAltar() {
 		$("#HallOfFame").style.visibility = "visible";
 		toggle = true
 		if (first_time == false) {
-			$.Msg("First time!")
 			first_time = true
 			DiretidePlayersXP()
 			HallOfFame()
@@ -65,68 +64,84 @@ function DiretidePlayersXP()
 	});
 }
 
+var dot = "."
 function HallOfFame()
 {
 	var LeaderboardTable = CustomNetTables.GetTableValue("game_options", "leaderboard");
+	$("#LoadingWarning").text = $.Localize("#leaderboard_loading") + dot;
+	if (dot == ".") {
+		dot = ".."
+	} else if (dot == "..") {
+		dot = "..."
+	} else if (dot == "...") {
+		dot = "."
+	}
 
-	if (LeaderboardTable == undefined) {
-		$.Msg("Couldn't find any leaderboard values, trying again in 5 seconds...")
-		$.Schedule(5, HallOfFame)
+	if (LeaderboardTable === undefined) {
+		$.Schedule(1, HallOfFame)
+		return;
+	} else if (LeaderboardTable.SteamID64[10] === undefined) {
+		$.Schedule(1, HallOfFame)
 		return;
 	} else {
 		var SteamID64 = LeaderboardTable.SteamID64;
 		var Experience = LeaderboardTable.XP;
+		var MaxExperience = LeaderboardTable.MaxXP;
+		var Level = LeaderboardTable.Lvl;
+		var Title = LeaderboardTable.Title;
+		var Title_Color = LeaderboardTable.TitleColor;
 		var ImbaMatchmakingRank = LeaderboardTable.IMR;
+		$("#LoadingWarning").style.visibility = "collapse";
+
+		if (ImbaMatchmakingRank == undefined) {
+			ImbaMatchmakingRank = []
+			for (var i = 1; i <= 10; i++) {
+				ImbaMatchmakingRank[i] = 3000;
+			}
+		}
 
 		for (var i = 1; i <= 10; i++) {
-//			$("#Rank"+i).text = i; // bug, table inverted now i'm re-ordering it in lua..
-
 			var player = $.CreatePanel("Panel", $('#Tops'), "player_" + i);
 			player.AddClass("LeaderboardGames")
 			var rank = $.CreatePanel("Label", player, "rank_" + i);
 			rank.AddClass("LeaderboardRank")
 			rank.text = i
 
-			var steam_id = $.CreatePanel("Label", player, "player_steamid_" + i);
-			steam_id.AddClass("LeaderboardAvatar_alt")
-			steam_id.text = SteamID64[i]
-
-//			var steam_id = $.CreatePanel("DOTAAvatarImage", player, "player_steamid_" + i);
+//			var steam_id = $.CreatePanel("Label", player, "player_steamid_" + i);
 //			steam_id.AddClass("LeaderboardAvatar_alt")
-//			steam_id.steamid = SteamID64[i]
-//			$.Msg(steam_id)
+//			steam_id.text = SteamID64[i]
 
-			var ply_name = $.CreatePanel("Label", player, "player_steamid_" + i);
-			ply_name.AddClass("LeaderboardAvatar_alt")
+			var steam_id = $.CreatePanel("DOTAAvatarImage", player, "player_steamid_" + i);
+			steam_id.AddClass("LeaderboardAvatar")
+			steam_id.steamid = SteamID64[i]
+			steam_id.style.width = "15%";
+			steam_id.style.height = "100%";
+			steam_id.style.borderLeft = "1px solid white";
+			steam_id.style.borderTop = "1px solid white";
+			steam_id.style.borderRight = "1px solid white";
+
+//			var ply_name = $.CreatePanel("Label", player, "player_steamid_" + i);
+//			ply_name.AddClass("LeaderboardAvatar_alt")
 
 			var imbar_container = $.CreatePanel("Panel", player, "imbar_container_" + i);
 			imbar_container.AddClass("LeaderboardXP")
 			var imbar = $.CreatePanel("ProgressBar", imbar_container, "imbar_" + i);
 			imbar.AddClass("imbar-progress-bar")
+			imbar.value = Experience[i] / MaxExperience[i]
 
-			$.Msg(Experience[i])
+			var imbar_lvl = $.CreatePanel("Label", imbar_container, "imbar_lvl" + i);
+			imbar_lvl.AddClass("imbar-lvl")
+			imbar_lvl.text = "Level: " + Level[i]
 
-			var plyData = CustomNetTables.GetTableValue("player_table", i - 1);
-			if (plyData != undefined) {
-				imbar.value = plyData.XP / plyData.MaxXP
-				var imbar_lvl = $.CreatePanel("Label", imbar_container, "imbar_lvl" + i);
-				imbar_lvl.AddClass("imbar-lvl")
-				imbar_lvl.text = "Level: " + plyData.Lvl
-				var imbar_rank = $.CreatePanel("Label", imbar_container, "imbar_rank" + i);
-				imbar_rank.AddClass("imbar-rank")
-				imbar_rank.text = plyData.title
-				imbar_rank.style.color = plyData.title_color;
-				var imbar_xp = $.CreatePanel("Label", imbar_container, "imbar_xp" + i);
-				imbar_xp.AddClass("imbar-xp")
-				imbar_xp.text = plyData.XP + "/" + plyData.MaxXP
-			}
+			var imbar_rank = $.CreatePanel("Label", imbar_container, "imbar_rank" + i);
+			imbar_rank.AddClass("imbar-rank")
+			imbar_rank.text = Title[i]
+			imbar_rank.style.color = Title_Color[i]
 
-			/*
-			_ScoreboardUpdater_SetValueSafe( playerPanel, "XPProgressBar"+playerId, plyData.XP / plyData.MaxXP );
-			_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaLvl"+playerId, "Lvl: " + plyData.Lvl );
-			_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaXPRank"+playerId, plyData.title );
-			_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaXP"+playerId, plyData.XP + "/" + plyData.MaxXP );
-			*/
+			var imbar_xp = $.CreatePanel("Label", imbar_container, "imbar_xp" + i);
+			imbar_xp.AddClass("imbar-xp")
+			imbar_xp.text = Experience[i] + "/" + MaxExperience[i]
+
 			var imr = $.CreatePanel("Label", player, "rank_" + i);
 			imr.AddClass("LeaderboardIMR")
 			imr.text = ImbaMatchmakingRank[i]

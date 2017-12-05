@@ -102,7 +102,7 @@
 
 .ScoreCol_ImbaXP
 {
-	width: 230px;
+	width: 250px;
 }
 
 .ScoreCol_Gold
@@ -318,7 +318,7 @@
 #ImbaXP23
 {
 	margin-top: 3px;
-	width: 100%;
+	margin-right: 5px;
 	font-size: 17px;
 	font-weight: bold;
 	color: white;
@@ -548,6 +548,7 @@
 	vertical-align: middle;
 	horizontal-align: right;
 	box-shadow: fill #000 -3px -3px 6px 6px;
+	flow-children: right;
 }
 
 #XPProgressBar0_Left,
