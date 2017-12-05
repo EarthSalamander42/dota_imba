@@ -184,7 +184,11 @@ function IllusionManager:MoveExistingIllusion(tEntity,tIllusionBase,tSkill,vSpaw
 	local tEntityAngles = tEntity:GetAngles()
 	tFoundIllusion:SetAbsOrigin(vSpawnLocation)
 	tFoundIllusion:Stop()
-	tFoundIllusion:SetHealth(tEntity:GetHealth())
+	local tIllusionHealth = tEntity:GetHealth()
+	if tIllusionHealth <= 1 then
+		tIllusionHealth = 1
+	end
+	tFoundIllusion:SetHealth(tIllusionHealth)
 	tFoundIllusion:SetAngles(tEntityAngles.x, tEntityAngles.y, tEntityAngles.z)
 	tFoundIllusion:RemoveModifierByName('modifier_illusion_manager_out_of_world')
 	IllusionManager:ResetIllusion(tIllusionBase,tFoundIllusion)
@@ -249,7 +253,7 @@ function IllusionManager:ResetIllusion(tEntity,tIllusion)  -- Wipe AND re-add sk
 	end	
 	tIllusion:SetAbilityPoints(0)
 	--Recreate the caster's items for the illusion.
-	for item_slot = 0, 5 do
+	for item_slot = 0, 8 do
 		local individual_item = tEntity:GetItemInSlot(item_slot)
 		if individual_item then
 			local illusion_duplicate_item = CreateItem(individual_item:GetName(), tIllusion, tIllusion)
@@ -275,9 +279,10 @@ function IllusionManager:WipeIllusion(tIllusion)  -- Wipe illusion of any notabl
 		end
 	end
 	if tIllusion:IsCreep() then return end	
-	for item_slot = 0, 5 do	
+	for item_slot = 0, 8 do	
 		local wipe_item_index = tIllusion:GetItemInSlot(item_slot)
 		if wipe_item_index then
+--			UTIL_Remove(wipe_item_index)
 			tIllusion:RemoveItem(wipe_item_index)
 		end		
 	end

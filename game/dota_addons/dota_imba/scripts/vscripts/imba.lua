@@ -43,6 +43,9 @@ require('settings')
 -- events.lua is where you can specify the actions to be taken when any event occurs and is one of the core barebones files.
 require('events')
 
+require('api/api')
+require('api/frontend')
+
 -- clientside KV loading
 require('addon_init')
 
@@ -81,6 +84,11 @@ end
 	It can be used to initialize state that isn't initializeable in InitGameMode() but needs to be done before everyone loads in.
 ]]
 function GameMode:OnFirstPlayerLoaded()
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: API. Preload
+	-------------------------------------------------------------------------------------------------
+	imba_api_init()
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Roshan and Picking Screen camera initialization
@@ -436,6 +444,14 @@ function GameMode:ModifierFilter( keys )
 			modifier_caster:FindAbilityByName("courier_burst"):CastAbility()
 		end
 
+		-- add particle or sound playing to notify
+		if modifier_owner:HasModifier("modifier_item_imba_jarnbjorn_static") then
+			if modifier_name == "modifier_item_imba_triumvirate_proc_debuff" or modifier_name == "modifier_item_imba_sange_azura_proc" or modifier_name == "modifier_item_imba_sange_yasha_disarm" or modifier_name == "modifier_item_imba_heavens_halberd_active_disarm" or modifier_name == "modifier_item_imba_sange_disarm" or modifier_name == "modifier_imba_angelic_alliance_debuff" or modifier_name == "modifier_imba_overpower_disarm" or modifier_name == "modifier_imba_silencer_last_word_debuff" or modifier_name == "modifier_imba_hurl_through_hell_disarm" or modifier_name == "modifier_imba_frost_armor_freeze" or modifier_name == "modifier_dismember_disarm" or modifier_name == "modifier_imba_decrepify" then
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_EVADE, modifier_owner, 0, nil)
+				return false
+			end
+		end
+
 		return true
 	end
 end
@@ -450,6 +466,7 @@ function GameMode:ItemAddedFilter( keys )
 	-- suggested_slot: -1
 	local unit = EntIndexToHScript(keys.inventory_parent_entindex_const)
 	local item = EntIndexToHScript(keys.item_entindex_const)
+	if item:GetAbilityName() == "item_tpscroll" and item:GetPurchaser() == nil then return false end
 	local item_name = 0
 	if item:GetName() then
 		item_name = item:GetName()

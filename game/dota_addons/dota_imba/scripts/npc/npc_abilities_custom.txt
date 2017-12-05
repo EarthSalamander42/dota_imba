@@ -1,4 +1,4 @@
-// Dota Abilities Override File
+﻿// Dota Abilities Override File
 // DataDriven Ability Guide: https://moddota.com/forums/discussion/14/datadriven-ability-breakdown-documentation
 
 "DOTAAbilities"
@@ -58,6 +58,21 @@
 				}
 			}
 		}
+	}
+
+	//=================================================================================================================
+	// Companion: Model Swap
+	//=================================================================================================================
+	"companion_morph"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"courier_burst"
+		"ScriptFile"					"hero/companion.lua"
+		"AbilityCooldown"				"10.0"
+		"MaxLevel"						"1"
 	}
 
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1090,7 +1105,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"hp_regen"						"6"
+				"hp_regen"						"10"
 			}
 			"03"
 			{
@@ -1622,7 +1637,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"base_tenacity_pct"				"15 20 25"
+				"base_tenacity_pct"				"20 35 50"
 			}			
 
 			"03"
@@ -1668,13 +1683,13 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"cast_range_bonus"				"100 125 150"
+				"cast_range_bonus"				"100 200 300"
 			}
 
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"spellamp_bonus"				"6 9 12"
+				"spellamp_bonus"				"10 20 30"
 			}
 
 			"03"
@@ -1719,20 +1734,18 @@
 			"01"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"hp_regen"						"0.5 0.75 1.0"
+				"hp_regen"						"1.0 1.75 2.5"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"aura_radius"					"900"
 			}
-
 			"03"
 			{
 				"var_type"						"FIELD_FLOAT"
 				"aura_stickyness"				"0.5"
 			}
-
 			"04"
 			{
 				"var_type"						"FIELD_FLOAT"
@@ -1771,19 +1784,16 @@
 				"var_type"						"FIELD_INTEGER"
 				"crit_damage"					"140"
 			}
-
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"aura_radius"					"900"
 			}
-
 			"04"
 			{
 				"var_type"						"FIELD_FLOAT"
 				"aura_stickyness"				"0.5"
 			}
-
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
@@ -1816,13 +1826,11 @@
 				"var_type"						"FIELD_INTEGER"
 				"damage_reduction"				"25 30 35"
 			}
-
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"aura_radius"					"900"
 			}
-
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
@@ -2015,7 +2023,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_increase"				"6 8 10"
+				"damage_increase"				"10 20 30"
 			}
 
 			"02"
@@ -2408,7 +2416,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"soul_leech_pct"				"12 16 20"
+				"soul_leech_pct"				"20 30 40"
 			}
 
 			"02"
@@ -2436,7 +2444,6 @@
 			}
 		}
 	}
-
 
 	//=================================================================================================================
 	// Tower ability: Frost Shroud Aura (Tier 3)
@@ -11143,6 +11150,571 @@
 	}
 
 	//=================================================================================================================
+	// Elder Titan's Echo Stomp
+	//=================================================================================================================
+	"imba_elder_titan_echo_stomp"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES_STRONG"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"custom/imba_elder_titan_echo_stomp"
+		"ScriptFile"					"hero/hero_elder_titan.lua"
+		"MaxLevel"						"7"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0"
+		"AbilityCastRange"				"500"
+		"AbilityCooldown"				"14.0 13.0 12.0 11.0 11.0 11.0 11.0"
+		"AbilityManaCost"				"125"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_elder_titan.vsndevts"
+			"particle"					"particles/econ/items/elder_titan/elder_titan_ti7/elder_titan_echo_stomp_ti7_physical.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"cast_time"					"1.2"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"500"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"sleep_duration"			"2.0 2.5 3.0 3.5 4.0 4.5 5.0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"stomp_damage"				"100 140 180 220 260 300 340"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"wake_damage_limit"			"50 100 150 200 250 300 350"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Elder Titan's Echo Stomp
+	//=================================================================================================================
+	"imba_elder_titan_echo_stomp_spirit"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES_STRONG"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"custom/imba_elder_titan_echo_stomp"
+		"ScriptFile"					"hero/hero_elder_titan.lua"
+		"MaxLevel"						"7"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"1.2"
+		"AbilityCastRange"				"500"
+		"AbilityCooldown"				"14.0 13.0 12.0 11.0 11.0 11.0 11.0"
+		"AbilityManaCost"				"0"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_elder_titan.vsndevts"
+			"particle"					"particles/econ/items/elder_titan/elder_titan_ti7/elder_titan_echo_stomp_ti7.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"cast_time"					"1.2"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"500"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"sleep_duration"			"2.0 2.5 3.0 3.5 4.0 4.5 5.0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"stomp_damage"				"100 140 180 220 260 300 340"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"wake_damage_limit"			"50 100 150 200 250 300 350"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Elder Titan: Ancestral Spirit
+	//=================================================================================================================
+	"imba_elder_titan_ancestral_spirit"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_elder_titan.lua"
+		"AbilityTextureName"			"elder_titan_ancestral_spirit"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"AbilitySound"					"Hero_ElderTitan.AncestralSpirit.Cast"
+		"MaxLevel"						"7"
+
+		"AbilityCastRange"				"1200"
+		"AbilityCastPoint"				"0.4"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"16.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"80 90 100 110 120 130 140"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"radius"						"275"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"pass_damage"					"60 90 120 150 180 210 240"
+			}		
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"spirit_duration"				"8.0"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"buff_duration"					"9.0"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"speed"							"750"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"move_pct_creeps"				"1"
+			}
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"move_pct_heroes"				"5"
+			}
+			"08"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_creeps"					"6 9 12 15 18 21 24"
+				"CalculateSpellDamageTooltip"	"0"
+			}
+			"09"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_heroes"					"15 30 45 60 75 90 105"
+				"CalculateSpellDamageTooltip"	"0"
+			}	
+		}
+	}
+
+	//=================================================================================================================
+	// Elder Titan: Return Spirit
+	//=================================================================================================================
+	"imba_elder_titan_return_spirit"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_elder_titan.lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"elder_titan_return_spirit"
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+ 		"AbilityCastAnimation"			"ACT_INVALID"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.0 0.0 0.0"
+	}
+
+	//=================================================================================================================
+	// Elder Titan: Natural Order
+	//=================================================================================================================
+	"imba_elder_titan_natural_order"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_elder_titan.lua"
+		"AbilityTextureName"			"elder_titan_natural_order"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+ 		"AbilityCastAnimation"			"ACT_INVALID"
+ 		"MaxLevel"						"7"
+
+		"AbilityCastRange"				"350"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"350"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"armor_reduction_pct"	    "-40 -60 -80 -100 -120 -140 -160"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"magic_resistance_pct"		"-40 -60 -80 -100 -120 -140 -160"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Elder Titan: Earth Splitter
+	//=================================================================================================================
+	"imba_elder_titan_earth_splitter"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_elder_titan.lua"
+		"AbilityTextureName"			"elder_titan_earth_splitter"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"HasScepterUpgrade"				"1"
+		"MaxLevel"						"6"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"2400"
+		"AbilityCastPoint"				"0.4"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_5"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"100.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"125 150 175 200 225 250 275"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"crack_time"				"3.14"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"crack_width"				"315"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"crack_distance"			"2400"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow_pct"					"-35 -40 -45 -50 -55 -60"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"slow_duration"				"3.0 4.0 5.0 6.0 7.0 8.0"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"speed"						"910"
+			}
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_pct"					"35 40 45 50 55 60"
+				"CalculateSpellDamageTooltip"	"0"
+			}
+//			"08"
+//			{
+//				"var_type"					"FIELD_FLOAT"
+//				"slow_duration_scepter"		"4.0 5.0 6.0 7.0 8.0 9.0"
+//			}
+		}
+	}
+
+	//=================================================================================================================
+	// Elder Titan Talents
+	//=================================================================================================================
+	"special_bonus_imba_elder_titan_1"	// Ancestral Spirit increased cast range.
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_elder_titan_ancestral_spirit"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"2400"
+			}
+		}
+	}
+
+	"special_bonus_imba_elder_titan_2"	// Ancestral Spirit movespeed increased.
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_elder_titan_ancestral_spirit"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"600"
+			}
+		}
+	}
+
+	"special_bonus_imba_elder_titan_3"	// Ancestral Spirit roots targets.
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_elder_titan_ancestral_spirit"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_elder_titan_4"	// Natural Order reduce base damage (25%)
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_elder_titan_natural_order"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"25"
+			}
+		}
+	}
+
+	"special_bonus_imba_elder_titan_5"	// Natural Order reduce tenacity (25%)
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_elder_titan_natural_order"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"25"
+			}
+		}
+	}
+
+	"special_bonus_imba_elder_titan_6"	// Earth Splitter crack distance bonus (+3000)
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_elder_titan_earth_splitter"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"3000"
+			}
+		}
+	}
+
+	"special_bonus_imba_elder_titan_7"	// Echo Stomp no longer channeling.
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_elder_titan_echo_stomp"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_elder_titan_8"	// Natural Order reduce both physical and magical
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_elder_titan_natural_order"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Enigma's Malefice
 	//=================================================================================================================
 	"imba_enigma_malefice"
@@ -11792,6 +12364,19 @@
 		"AbilityTextureName"			"faceless_void_time_walk"
 		"ScriptFile"					"hero/hero_faceless_void.lua"
 
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"24 18 12 6 6 6 6"
+		"AbilityManaCost"				"40"
+		"MaxLevel"						"7"
+
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
@@ -11803,19 +12388,6 @@
 			"particle"					"particles/units/heroes/hero_faceless_void/faceless_void_chrono_speed.vpcf"
 			"particle"					"particles/units/heroes/hero_faceless_void/faceless_void_backtrack02.vpcf"
 		}
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"0"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"24 18 12 6 6 6 6"
-		"AbilityManaCost"				"40"
-		"MaxLevel"						"7"
-
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
-		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -13155,6 +13727,45 @@
 		}
 	}
 
+	//=================================================================================================================
+	// Ability: Blade Fury
+	//=================================================================================================================
+	"juggernaut_blade_fury_ancient"
+	{
+		"BaseClass"						"juggernaut_blade_fury"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"MaxLevel"						"1"
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0"
+		"AbilityCooldown"				"10"
+		"AbilityManaCost"				"0"		
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"blade_fury_damage_tick"	"0.2"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"blade_fury_radius"			"1500"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"blade_fury_damage"			"1000"
+				"LinkedSpecialBonus"		"special_bonus_unique_juggernaut_3"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"10.0"
+				"LinkedSpecialBonus"		"special_bonus_unique_juggernaut"
+			}
+		}
+	}
 
 	//=================================================================================================================
 	// Juggernaut's Blade Fury
@@ -18306,7 +18917,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityTextureName"			"mirana_leap"
@@ -19649,13 +20260,6 @@
 			"07"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"scepter_max_souls"				"20 28 36 44 49 54 59"
-			}
-
-
-			"07"
-			{
-				"var_type"						"FIELD_INTEGER"
 				"temporary_soul_duration"		"18 18 18 18 22 26 30"
 			}
 
@@ -19884,28 +20488,20 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"duration"	                "2"
+				"duration"	                    "2"
 			}
 
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"pc_dmg_per_sec"			"5"
+				"dmg_per_sec"				"50"
 			}
-
 			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"flat_dmg_per_sec"			"80"
-			}
-
-			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"tick_interval"				"0.5"
 			}
-
-			"05"
+			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"250"
@@ -22897,11 +23493,6 @@
 		}
 	}
 
-
-
-
-
-
 	//=================================================================================================================
 	// Phantom Assassin's Stifling Dagger
 	//=================================================================================================================
@@ -23886,7 +24477,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"base_heal"					"10 14 18 22 26 30 34"
+				"base_heal"					"7 10 13 16 19 22 25"
 			}
 			"05"
 			{
@@ -24109,7 +24700,7 @@
 			"12"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"scepter_cooldown"				"20"
+				"scepter_cooldown"				"60"
 			}
 		}
 	}
@@ -25301,7 +25892,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"mana_regen_reduction"	"0.25 0.5 0.75 1 1.5 2.0 2.5"
+				"mana_regen_reduction"	"0.3 0.5 0.7 0.9 1.1 1.3 1.5"
 			}
 
 			"04"
@@ -25371,7 +25962,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"mana_regen_reduction"	"0.25 0.5 0.75 1 1.5 2.0 2.5"
+				"mana_regen_reduction"	"0.3 0.5 0.7 0.9 1.1 1.3 1.5"
 			}
 
 			"04"
@@ -28453,7 +29044,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3 0.3 0.3"
+		"AbilityCastPoint"				"0.3"
 
 		"precache"
 		{
@@ -28484,7 +29075,7 @@
 			"04"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"travel_mana_cost_pct"					"0.4"		
+				"travel_mana_cost_pct"					"0.7"		
 			}
 			"05"
 			{
@@ -35773,8 +36364,8 @@
 
 			"04"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"stack_duration"			"1"
+				"var_type"					"FIELD_FLOAT"
+				"stack_duration"			"0.5"
 			}
 
 			"05"

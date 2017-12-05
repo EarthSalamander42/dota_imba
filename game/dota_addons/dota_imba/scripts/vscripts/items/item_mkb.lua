@@ -268,8 +268,7 @@ function modifier_item_imba_monkey_king_bar_unique:OnAttackLanded(keys)
 				target:AddNewModifier(owner, self:GetAbility(), "modifier_stunned", {duration = self.pulverize_stun})
 
 				-- Deal damage
-				ApplyDamage({attacker = owner, victim = target, ability = self:GetAbility(), damage = self.pulverize_damage, damage_type = DAMAGE_TYPE_MAGICAL})			
-				
+				ApplyDamage({attacker = owner, victim = target, ability = self:GetAbility(), damage = self.pulverize_damage, damage_type = DAMAGE_TYPE_MAGICAL})
 			end
 		end
 	end

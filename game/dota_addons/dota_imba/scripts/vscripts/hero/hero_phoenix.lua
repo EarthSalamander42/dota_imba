@@ -1361,7 +1361,7 @@ end
 
 modifier_imba_phoenix_sun_ray_debuff = modifier_imba_phoenix_sun_ray_debuff or class({})
 
-function modifier_imba_phoenix_sun_ray_debuff:IsDebuff()				return true end
+function modifier_imba_phoenix_sun_ray_debuff:IsDebuff()				return false end
 function modifier_imba_phoenix_sun_ray_debuff:IsHidden() 				return true end
 function modifier_imba_phoenix_sun_ray_debuff:IsPurgable() 				return false end
 function modifier_imba_phoenix_sun_ray_debuff:IsPurgeException() 		return false end
@@ -2062,6 +2062,7 @@ function modifier_imba_phoenix_supernova_egg_thinker:OnIntervalThink()
         attacker = caster,
         damage = ability:GetSpecialValueFor("damage_per_sec"),
         damage_type = DAMAGE_TYPE_MAGICAL,
+        ability = ability,
     	}
     	ApplyDamage(damageTable)
     end

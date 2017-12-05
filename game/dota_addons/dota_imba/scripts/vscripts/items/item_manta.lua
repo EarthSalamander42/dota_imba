@@ -1,4 +1,5 @@
 LinkLuaModifier( "modifier_item_manta_passive", "items/item_manta.lua", LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_item_imba_manta_stacks", "items/item_manta.lua", LUA_MODIFIER_MOTION_NONE )		-- Stacking attack speed
 LinkLuaModifier( "modifier_manta_invulnerable", "items/item_manta.lua", LUA_MODIFIER_MOTION_NONE )
 
 if item_imba_manta == nil then item_imba_manta = class({}) end
@@ -11,9 +12,9 @@ function item_imba_manta:GetAbilityTextureName()
    return "item_manta"
 end
 
---	function item_imba_assault:GetIntrinsicModifierName()
---		return "modifier_item_manta_passive"
---	end
+function item_imba_manta:GetIntrinsicModifierName()
+	return "modifier_item_manta_passive"
+end
 
 function item_imba_manta:OnCreated()
 self.ability = self:GetAbility()
@@ -22,7 +23,7 @@ self.ability = self:GetAbility()
 --		self:Destroy()
 --	end
 
-	caster:AddNewModifier(self:GetCaster(), nil, "modifier_item_manta_passive", {})
+	caster:AddNewModifier(self:GetCaster(), self, "modifier_item_manta_passive", {})
 end
 
 function item_imba_manta:OnSpellStart()
@@ -95,7 +96,8 @@ function modifier_item_manta_passive:DeclareFunctions()
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
 	}
 	return decFuncs	
 end
@@ -118,6 +120,37 @@ end
 
 function modifier_item_manta_passive:GetModifierAttackSpeedBonus_Constant()
 	return self:GetAbility():GetSpecialValueFor("bonus_attack_speed")
+end
+
+-- On attack landed, roll for proc and apply stacks
+function modifier_item_manta_passive:OnAttackLanded( keys )
+	if IsServer() then
+		local owner = self:GetParent()
+		local target = keys.target
+		
+		-- If this attack was not performed by the modifier's owner, do nothing
+		if owner ~= keys.attacker then
+			return end
+		
+		-- If the target is a deflector, do nothing either
+		if target:HasModifier("modifier_imba_juggernaut_blade_fury") and owner:IsRangedAttacker() then
+			return end
+		
+		-- If a higher-priority sword is present, do nothing either
+		local priority_sword_modifiers = {
+			"modifier_item_imba_sange_yasha",
+			"modifier_item_imba_azura_yasha",
+			"modifier_item_imba_triumvirate"
+		}
+		for _, sword_modifier in pairs(priority_sword_modifiers) do
+			if owner:HasModifier(sword_modifier) then
+				return nil
+			end
+		end
+
+		-- All conditions met, perform a manta attack
+		MantaAttack(owner, self:GetAbility(), "modifier_item_imba_manta_stacks")
+	end
 end
 
 function modifier_item_manta_passive:OnDestroy()
@@ -144,4 +177,69 @@ function modifier_manta_invulnerable:CheckState()
 	}
 	
 	return state
+end
+
+-----------------------------------------------------------------------------------------------------------
+--	manta attack speed buff (stackable)
+-----------------------------------------------------------------------------------------------------------
+
+if modifier_item_imba_manta_stacks == nil then modifier_item_imba_manta_stacks = class({}) end
+function modifier_item_imba_manta_stacks:IsHidden() return false end
+function modifier_item_imba_manta_stacks:IsDebuff() return false end
+function modifier_item_imba_manta_stacks:IsPurgable() return true end
+
+-- Modifier particle
+function modifier_item_imba_manta_stacks:GetEffectName()
+	return "particles/item/swords/yasha_buff.vpcf"
+end
+
+function modifier_item_imba_manta_stacks:GetEffectAttachType()
+	return PATTACH_ABSORIGIN_FOLLOW
+end
+
+-- Modifier property storage
+function modifier_item_imba_manta_stacks:OnCreated()
+	self.as_stack = self:GetAbility():GetSpecialValueFor("as_stack")
+
+	-- Remove this if higher tier modifiers are present
+	if IsServer() then
+		local owner = self:GetParent()
+		local higher_tier_modifiers = {
+			"modifier_item_imba_sange_yasha_stacks",
+			"modifier_item_imba_azura_yasha_stacks",
+			"modifier_item_imba_triumvirate_stacks_buff"
+		}
+		for _, modifier in pairs(higher_tier_modifiers) do
+			if owner:FindModifierByName(modifier) then
+				self:Destroy()
+			end
+		end
+	end
+end
+
+-- Declare modifier events/properties
+function modifier_item_imba_manta_stacks:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+	}
+	return funcs
+end
+
+function modifier_item_imba_manta_stacks:GetModifierAttackSpeedBonus_Constant()
+	return self.as_stack * self:GetStackCount()
+end
+
+
+function MantaAttack(attacker, ability, modifier_stacks)
+	-- Stack the attack speed buff up
+	local modifier_as = attacker:AddNewModifier(attacker, ability, modifier_stacks, {duration = ability:GetSpecialValueFor("stack_duration")})
+	if modifier_as and modifier_as:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
+		modifier_as:SetStackCount(modifier_as:GetStackCount() + 1)
+		attacker:EmitSound("Imba.YashaStack")
+	end
+
+	-- If this is an illusion, do nothing else
+	if attacker:IsIllusion() then
+		return
+	end
 end

@@ -1,5 +1,6 @@
 "addon"
 {
+	"lang"											"en"
 	"Unassigned"      								"Unassigned Team"
 	"Spectator"       								"Spectators"
 	"Neutrals"        								"Neutrals"
@@ -50,9 +51,13 @@
 	"new_hero"						"New!"
 	"disabled_hero"					"Disabled"
 	"disabled_hero_10v10"			"10v10 Disabled"
+	"disabled_hero_frantic"			"Frantic Disabled"
 	"picked_hero"					"Picked"
 	"imba_hero"						"Imba"
 	"vanilla_hero"					"Lazy"
+
+	//Leaderboard
+	"leaderboard_loading"			"Loading leaderboard, please wait"
 
 	//=================================================================================================================
 	// Generic talent names
@@ -319,6 +324,24 @@
 	"DOTA_Tooltip_Talent_special_bonus_imba_drow_ranger_7_Description"          "Applies Deadeye's vision bonuses to all allied heroes. This effect stops if Drow Ranger is either broken or dead. <br><br><i>Everyone's vision, shared with each other, reveals much more than one can see by himself.</i>"
 	"DOTA_Tooltip_Talent_special_bonus_imba_drow_ranger_8_title"                "Perfect Marksmanship"
 	"DOTA_Tooltip_Talent_special_bonus_imba_drow_ranger_8_Description"          "Marksmanship is no longer disabled by nearby enemies. Marksmanship still stops when Drow Ranger is broken. <br><br><i>With deadly aim and unparalleled swiftness, no one can stop the Drow Ranger.</i>"
+
+	// Elder Titan
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_1_title"				"Astral World"
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_1_Description"			"Increase Cast Range (2400)."
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_2_title"				"Astral Speed"
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_2_Description"			"Increase Ancestral Spirit movespeed by 600."
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_3_title"				"Astral Touch"
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_3_Description"			"Ancestral Spirit roots target hit."
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_4_title"				"Natural Selection"
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_4_Description"			"Natural Order reduce base damage by 25%"
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_5_title"				"Natural Vigor"
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_5_Description"			"Natural Order reduce tenacity by 25%"
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_6_title"				"Fundamental Split"
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_6_Description"			"Elder Titan smash the ground harder than ever, increasing the crack distance of Earth Splitter. (+3000)"
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_7_title"				"Safe Stomp"
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_7_Description"			"Echo Stomp no longer requires channeling."
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_8_title"				"Absolute Order"
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_8_Description"			"Both Elder Titan and his Ancestral Spirit reduces physical and magical resistance."
 
 	// Enigma
 	"DOTA_Tooltip_Talent_special_bonus_imba_enigma_1_title"                     "Closer to Singularity"

@@ -95,9 +95,9 @@ end
 
 -- The overall game state has changed
 function GameMode:OnGameRulesStateChange(keys)
-DebugPrint("[BAREBONES] GameRules State Changed")
-DebugPrintTable(keys)
---	local i = 10
+    DebugPrint("[BAREBONES] GameRules State Changed")
+    DebugPrintTable(keys)
+    --	local i = 10
 
 	-- This internal handling is used to set up main barebones functions
 	GameMode:_OnGameRulesStateChange(keys)
@@ -106,10 +106,26 @@ DebugPrintTable(keys)
 	CustomNetTables:SetTableValue("game_options", "game_state", {state = new_state})
 
 	-------------------------------------------------------------------------------------------------
+	-- IMBA: Game Setup / API Calls
+	-------------------------------------------------------------------------------------------------
+	if new_state == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
+		-- get top 10 xp
+		for i = 1, 10 +1 do
+			Server_GetTopPlayer(i)
+		end
+	end
+
+	-------------------------------------------------------------------------------------------------
 	-- IMBA: Pick screen stuff
 	-------------------------------------------------------------------------------------------------
 	if new_state == DOTA_GAMERULES_STATE_HERO_SELECTION then
+		ApiPrint("entered hero selection")
 		HeroSelection:HeroListPreLoad()
+--		if IsInToolsMode() then
+--			for i = 0, PlayerResource:GetPlayerCount() -1 do
+--				HoF_Test(i)
+--			end
+--		end
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -148,11 +164,11 @@ DebugPrintTable(keys)
 
 		Timers:CreateTimer(function() -- OnThink
 			if CHEAT_ENABLED == false then
-				if Convars:GetBool("sv_cheats") == true or GameRules:IsCheatMode() then
-					if not IsInToolsMode() then
+				if Convars:GetBool("developer") == true or Convars:GetBool("sv_cheats") == true or GameRules:IsCheatMode() then
+--					if not IsInToolsMode() then
 						print("Cheats have been enabled, game don't count.")
 						CHEAT_ENABLED = true
-					end
+--					end
 				end
 			end
 
@@ -179,7 +195,10 @@ DebugPrintTable(keys)
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Game started (horn sounded)
 	-------------------------------------------------------------------------------------------------
-	if new_state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+    if new_state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+        
+        ApiPrint("Entering Game in progress / horn")
+
 		Server_WaitToEnableXpGain()
 
 		for _, hero in pairs(HeroList:GetAllHeroes()) do
@@ -199,6 +218,11 @@ DebugPrintTable(keys)
 	end
 
 	if new_state == DOTA_GAMERULES_STATE_POST_GAME then
+
+        -- call imba api
+        ApiPrint("Entering post game")
+		imba_api_game_complete()
+
 		CustomGameEventManager:Send_ServerToAllClients("end_game", {})
 		local winning_team = GAME_WINNER_TEAM
 		Server_CalculateXPForWinnerAndAll(winning_team)
@@ -668,6 +692,7 @@ function GameMode:OnLastHit(keys)
 	DebugPrint('[BAREBONES] OnLastHit')
 	DebugPrintTable(keys)
 
+	if keys.PlayerID == -1 then return end
 	local isFirstBlood = keys.FirstBlood == 1
 	local isHeroKill = keys.HeroKill == 1
 	local isTowerKill = keys.TowerKill == 1
@@ -950,7 +975,13 @@ function GameMode:OnEntityKilled( keys )
 				elseif respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[25] then
 					respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[25]
 				end
-				killed_unit:SetTimeUntilRespawn(respawn_time)
+
+				-- divide the respawn time by 2 for frantic mode
+				if IMBA_FRANTIC_MODE_ON == true then
+					killed_unit:SetTimeUntilRespawn(respawn_time / 2)
+				else
+					killed_unit:SetTimeUntilRespawn(respawn_time)
+				end
 			end
 			HeroVoiceLine(killed_unit, "death")
 		end
@@ -1077,7 +1108,8 @@ function GameMode:OnTowerKill(keys)
 	-- IMBA: Attack of the Ancients tower upgrade logic
 	-------------------------------------------------------------------------------------------------
 	
-	if TOWER_UPGRADE_MODE then		
+	-- Always enabled!
+--	if TOWER_UPGRADE_MODE then		
 		
 		-- Find all friendly towers on the map
 		local towers = FindUnitsInRadius(tower_team, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
@@ -1095,7 +1127,7 @@ function GameMode:OnTowerKill(keys)
 			Notifications:BottomToAll({text = "#tower_abilities_dire_upgrade", duration = 7, style = {color = "DodgerBlue"}})
 			EmitGlobalSound("powerup_02")			
 		end
-	end
+--	end
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Update comeback gold logic
