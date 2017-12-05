@@ -25,6 +25,9 @@
 			</Panel>
 
 			<Panel id="InfoContainer" hittest="false">
+
+				<Label id="LoadingWarning" class="HoldoutLabelSmall" hittest="false" text="#leaderboard_loading"/>
+
 				<Panel id="Legend" class="LeaderboardLegend" hittest="false">
 					<Label id="Rank" class="LeaderboardRank" text="Rank"/>
 					<Label id="SteamAvatar" class="LeaderboardAvatar" text="Steam Profile"/>
@@ -49,15 +52,9 @@
 				</Panel>
 			</Panel>
 
-			<Panel id="ButtonContent">
-				<Button id="FeedButton" onactivate="DOTADisplayURL('https://goo.gl/forms/nIqedrEqoacqT00F2');">
-					<Label text="#lag_issues" />
-				</Button>
-			
-				<Button id="CloseButton" onactivate="DOTADisconnectClicked();">
-					<Label text="#CustomEndScreenClose" />
-				</Button>
-			</Panel>
+			<Button id="ButtonContent" onactivate="FrostivusAltar();">
+					<Label text="Close" />
+			</Button>
 		</Panel>
 	</Panel>
 </root>

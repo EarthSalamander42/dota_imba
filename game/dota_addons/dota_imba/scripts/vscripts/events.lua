@@ -110,7 +110,7 @@ function GameMode:OnGameRulesStateChange(keys)
 	-------------------------------------------------------------------------------------------------
 	if new_state == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 		-- get top 10 xp
-		for i = 1, 10 do
+		for i = 1, 10 +1 do
 			Server_GetTopPlayer(i)
 		end
 	end
@@ -164,11 +164,11 @@ function GameMode:OnGameRulesStateChange(keys)
 
 		Timers:CreateTimer(function() -- OnThink
 			if CHEAT_ENABLED == false then
-				if Convars:GetBool("sv_cheats") == true or GameRules:IsCheatMode() then
-					if not IsInToolsMode() then
+				if Convars:GetBool("developer") == true or Convars:GetBool("sv_cheats") == true or GameRules:IsCheatMode() then
+--					if not IsInToolsMode() then
 						print("Cheats have been enabled, game don't count.")
 						CHEAT_ENABLED = true
-					end
+--					end
 				end
 			end
 
