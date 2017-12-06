@@ -65,7 +65,8 @@ modifier_illusion_manager_out_of_world	= class({
 	IsHidden						 = function(self) return true																 					end,				
 	},
 	{
-	funcs = {},
+	funcs = {MODIFIER_PROPERTY_BONUS_DAY_VISION,
+			MODIFIER_PROPERTY_BONUS_NIGHT_VISION},
 	states = {[MODIFIER_STATE_OUT_OF_GAME]=true,
 		[MODIFIER_STATE_INVULNERABLE]=true,
 		[MODIFIER_STATE_NO_HEALTH_BAR]=true,
@@ -107,6 +108,9 @@ function modifier_illusion_manager:OnDestroy()
 	end
 	illusiontimer:SetDuration(1,true) 																															 -- prevent modifier_illusion from running out 
 end
+
+function modifier_illusion_manager_out_of_world:GetBonusDayVision() return -10000 end
+function modifier_illusion_manager_out_of_world:GetBonusNightVision() return -10000 end
 
 function modifier_illusion_manager_out_of_world:OnCreated(params)
 	if not IsServer() then return end	

@@ -28,6 +28,7 @@ end
 
 function item_imba_manta:OnSpellStart()
 local caster = self:GetCaster()
+local caster_entid = caster:entindex()
 local duration = self:GetSpecialValueFor("tooltip_illusion_duration")
 local invulnerability_duration = self:GetSpecialValueFor("invuln_duration")
 local images_count = self:GetSpecialValueFor("images_count")
@@ -76,7 +77,7 @@ local incomingDamage = self:GetSpecialValueFor("images_take_damage_percent_range
 
 		for i=1, images_count do
 			local origin = caster:GetAbsOrigin() + table.remove( vRandomSpawnPos, 1 )
-			local illusion = IllusionManager:CreateIllusion(caster, self, origin, caster, {damagein=incomingDamage, damageout=outcomingDamage, unique="manta_"..i, duration=duration})
+			local illusion = IllusionManager:CreateIllusion(caster, self, origin, caster, {damagein=incomingDamage, damageout=outcomingDamage, unique=caster_entid.."_manta_"..i, duration=duration})
 			table.insert(caster.manta, illusion)
 		end
 
