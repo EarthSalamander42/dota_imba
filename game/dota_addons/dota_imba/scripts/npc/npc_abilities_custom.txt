@@ -19254,6 +19254,112 @@
 	}
 
 	//=================================================================================================================
+	// Naga Siren: Mirror Image
+	//=================================================================================================================
+	"imba_naga_siren_mirror_image"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_naga_siren"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilitySound"					"Hero_NagaSiren.MirrorImage"
+		"AbilityTextureName"			"naga_siren_mirror_image"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.65"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
+
+		"MaxLevel"						"7"
+		"AbilityCooldown"				"40"
+		"AbilityManaCost"				"70 80 90 100 105 110 115"
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"illusion_duration"						"30 32 34 36 38 40 42"
+			}
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"outgoing_damage"						"-60 -60 -50 -50 -40 -35 -30"
+				"LinkedSpecialBonus"					"special_bonus_unique_naga_siren_4"
+			}
+			"03"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"outgoing_damage_tooltip"				"40 40 50 50 60 65 70"
+				"LinkedSpecialBonus"					"special_bonus_unique_naga_siren_4"
+			}
+			"04"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"incoming_damage"						"225 175 175 175 125 125 125"
+			}
+			"05"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"tooltip_incoming_damage_total_pct"		"325 275 275 275 225 225 225"
+			}
+			"06"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"images_count"							"2 2 2 3 3 3 4"
+				"LinkedSpecialBonus"					"special_bonus_unique_naga_siren"
+			}
+			"07"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"invuln_duration"						"0.3"
+			}		
+		}
+	}
+
+	//=================================================================================================================
+	// Naga Siren: Rip Tide
+	//=================================================================================================================
+	"imba_naga_siren_rip_tide"
+	{
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_naga_siren"
+		"AbilityTextureName"			"naga_siren_rip_tide"
+		"AbilitySound"					"Hero_NagaSiren.Riptide.Cast"
+
+		"MaxLevel"						"7"
+		"AbilityCooldown"				"10 10 10 10 9 8 7"
+		"AbilityManaCost"				"80 90 100 110 115 120 125"
+		"AbilityDamage"					"120 160 200 240 260 280 300"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"armor_reduction"			"-2 -3 -4 -5 -6 -7 -8"
+				"LinkedSpecialBonus"		"special_bonus_unique_naga_siren_3"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"320 320 320 320 350 380 410"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"duration"					"8"
+			}
+		}
+	}	
+
+	//=================================================================================================================
 	// Necrolyte's Sadist
 	//=================================================================================================================
 	"imba_necrolyte_sadist"

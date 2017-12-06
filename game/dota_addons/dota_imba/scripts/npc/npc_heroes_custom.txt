@@ -1153,6 +1153,36 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Naga Siren
+	//=================================================================================================================
+	"npc_dota_hero_naga_siren"
+	{
+		"override_hero"				"npc_dota_hero_naga_siren"
+
+		//Picking Screen
+		"IsImba"					"0"
+		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
+
+		"Ability1"					"imba_naga_siren_mirror_image"
+		"Ability2"					"naga_siren_ensnare"
+		"Ability3"					"imba_naga_siren_rip_tide"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"naga_siren_song_of_the_siren"
+		"Ability7"					"naga_siren_song_of_the_siren_cancel"
+		"Ability10"					"special_bonus_movement_speed_25"
+		"Ability11"					"special_bonus_unique_naga_siren_4"
+		"Ability12"					"special_bonus_agility_15"
+		"Ability13"					"special_bonus_strength_14"
+		"Ability14"					"special_bonus_unique_naga_siren_2"
+		"Ability15"					"special_bonus_unique_naga_siren"
+		"Ability16"					"special_bonus_evasion_30"
+		"Ability17"					"special_bonus_unique_naga_siren_3"
+		
+		"ProjectileSpeed"			"900"
+	}
+
+	//=================================================================================================================
 	// HERO: Outworld Devourer
 	//=================================================================================================================
 	"npc_dota_hero_obsidian_destroyer"
