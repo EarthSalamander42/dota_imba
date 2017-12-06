@@ -495,7 +495,7 @@ function ApplyIntelligenceSteal(caster, ability, target, stack_count, duration)
 			modifier_buff_handler:ForceRefresh()
 		end
 	end
-	
+
 	-- #2 Talent: Sanity Eclipse's cooldown is reduced by 1 second for each instance of INT steal Obsidian Destroyer applies
 	if caster:HasTalent("special_bonus_imba_obsidian_destroyer_2") then
 		local modifier_stack = "modifier_imba_arcane_orb_instance"
@@ -1874,9 +1874,17 @@ function imba_obsidian_destroyer_sanity_eclipse:OnSpellStart()
 	if caster:HasTalent("special_bonus_imba_obsidian_destroyer_2") then
 		local talent_modifier = caster:FindModifierByName("modifier_imba_arcane_orb_instance")
 		if talent_modifier then
-			local new_cooldown = ability:GetCooldownTimeRemaining() - talent_modifier:GetStackCount()
-			ability:EndCooldown()
-			ability:StartCooldown(new_cooldown)
+			local cooldown_remaining = ability:GetCooldownTimeRemaining()
+			local new_cooldown = cooldown_remaining - talent_modifier:GetStackCount()
+
+			-- if cdr is very high cap to 50%
+			if talent_modifier:GetStackCount() > cooldown_remaining / 2 then
+				ability:EndCooldown()
+				ability:StartCooldown(cooldown_remaining / 2)
+			else
+				ability:EndCooldown()
+				ability:StartCooldown(new_cooldown)
+			end
 		end
 	end
 end

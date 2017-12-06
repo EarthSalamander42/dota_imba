@@ -817,7 +817,7 @@ local caster = self:GetCaster()
 local cooldown = self.BaseClass.GetCooldown(self, level)
 
 	-- #7 Talent: Guardian Angel cooldown decrease
---	cooldown = cooldown - caster:FindTalentValue("special_bonus_imba_omniknight_7")
+	cooldown = cooldown - caster:FindTalentValue("special_bonus_imba_omniknight_7")
 
     return cooldown    
 end

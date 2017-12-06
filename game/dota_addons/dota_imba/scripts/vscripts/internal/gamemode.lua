@@ -240,82 +240,31 @@ function OnSetGameMode( eventSourceIndex, args )
 --]]
 
 	-- Bounty multiplier increase
-	print("Gold Mult:", tostring(mode_info.bounty_multiplier))
-	if tostring(mode_info.bounty_multiplier) == 2 then
-		if map_name == "imba_standard" or map_name == "imba_random_omg" then
-			CUSTOM_GOLD_BONUS = 75
-		elseif map_name == "imba_custom" or map_name == "imba_custom_10v10" then
-			CUSTOM_GOLD_BONUS = 300
-		elseif map_name == "imba_10v10" or map_name == "imba_12v12" then
-			CUSTOM_GOLD_BONUS = 125
-		elseif map_name == "imba_arena" then
-			CUSTOM_GOLD_BONUS = 150
-		end
-		CustomNetTables:SetTableValue("game_options", "bounty_multiplier", {100 + CUSTOM_GOLD_BONUS})
-		print("Bounty multiplier set to high")
-	end
+	print("Gold Mult:", tostring(mode_info.bounty_multiplier), CUSTOM_XP_BONUS[map_name][mode_info.exp_multiplier])
+	CustomNetTables:SetTableValue("game_options", "bounty_multiplier", {100 + CUSTOM_GOLD_BONUS[map_name][mode_info.bounty_multiplier]})
 
-	-- Bounty multiplier increase
-	print("Exp Mult:", tostring(mode_info.exp_multiplier))
-	if tostring(mode_info.exp_multiplier) == 2 then
-		if map_name == "imba_standard" or map_name == "imba_random_omg" then
-			CUSTOM_XP_BONUS = 75
-		elseif map_name == "imba_custom" or map_name == "imba_custom_10v10" then
-			CUSTOM_XP_BONUS = 300
-		elseif map_name == "imba_10v10" or map_name == "imba_12v12" then
-			CUSTOM_XP_BONUS = 125
-		elseif map_name == "imba_arena" then
-			CUSTOM_XP_BONUS = 150
-		end
-		CustomNetTables:SetTableValue("game_options", "exp_multiplier", {100 + CUSTOM_XP_BONUS})
-		print("Exp multiplier set to high")
-	end
-
-	-- Creep power increase
-	print("Creep Power:", tostring(mode_info.creep_power))
-	if tostring(mode_info.creep_power) == 2 then
-		if map_name == "imba_standard" or map_name == "imba_random_omg" then
-			CREEP_POWER_FACTOR = 2
-		elseif map_name == "imba_custom" or map_name == "imba_custom_10v10" then
-			CREEP_POWER_FACTOR = 3
-		elseif map_name == "imba_10v10" or map_name == "imba_12v12" then
-			CREEP_POWER_FACTOR = 2
-		end
-		CustomNetTables:SetTableValue("game_options", "creep_power", {CREEP_POWER_FACTOR})
-		print("Creep power set to high")
-	end
+	-- XP multiplier increase
+	print("XP Mult:", mode_info.exp_multiplier, CUSTOM_XP_BONUS[map_name][mode_info.exp_multiplier])
+	CustomNetTables:SetTableValue("game_options", "exp_multiplier", {100 + CUSTOM_XP_BONUS[map_name][mode_info.exp_multiplier]})
 
 	-- Tower power increase
-	print("Tower Power:", tostring(mode_info.tower_power))
-	if tostring(mode_info.tower_power) == 2 then
-		if map_name == "imba_standard" or map_name == "imba_random_omg" then
-			TOWER_POWER_FACTOR = 1
-		elseif map_name == "imba_custom" or map_name == "imba_custom_10v10" then
+	if mode_info.exp_multiplier == 1 then
+		TOWER_POWER_FACTOR = 1
+	elseif mode_info.tower_power == 2 then
+		if map_name ~= "imba_custom_10v10" then
 			TOWER_POWER_FACTOR = 2
-		elseif map_name == "imba_10v10" or map_name == "imba_12v12" then
-			TOWER_POWER_FACTOR = 2
+		else
+			TOWER_POWER_FACTOR = 3
 		end
-		CustomNetTables:SetTableValue("game_options", "tower_power", {TOWER_POWER_FACTOR})
-		print("Tower power set to high")
 	end
+	print("Tower Power:", TOWER_POWER_FACTOR)
+	CustomNetTables:SetTableValue("game_options", "tower_power", {TOWER_POWER_FACTOR})
 
 	-- Hero power increase
-	print("Hero Power:", tostring(mode_info.hero_power))
-	if tostring(mode_info.hero_power) == 2 then
-		if map_name == "imba_custom" or map_name == "imba_custom_10v10" then
-			HERO_INITIAL_GOLD = 5000
-			HERO_STARTING_LEVEL = 12
-			MAX_LEVEL = 100
-		elseif map_name == "imba_10v10" or map_name == "imba_12v12" then
-			HERO_INITIAL_GOLD = 2000
-			HERO_STARTING_LEVEL = 5
-			MAX_LEVEL = 60
-		end
-		CustomNetTables:SetTableValue("game_options", "initial_gold", {HERO_INITIAL_GOLD})
-		CustomNetTables:SetTableValue("game_options", "initial_level", {HERO_STARTING_LEVEL})
-		CustomNetTables:SetTableValue("game_options", "max_level", {MAX_LEVEL})
-		print("Hero power set to high")
-	end	
+	print("Hero Power:", mode_info.hero_power)
+	CustomNetTables:SetTableValue("game_options", "initial_gold", {HERO_INITIAL_GOLD[map_name][mode_info.hero_power]})
+	CustomNetTables:SetTableValue("game_options", "initial_level", {HERO_STARTING_LEVEL[map_name][mode_info.hero_power]})
+	CustomNetTables:SetTableValue("game_options", "max_level", {MAX_LEVEL[map_name][mode_info.hero_power]})
 
 	-- Set the game options as being chosen
 --	GAME_OPTIONS_SET = true
@@ -364,7 +313,6 @@ function OnSetGameMode( eventSourceIndex, args )
 	-- statCollection:setFlags({starting_exp = HERO_STARTING_LEVEL})
 
 	-- -- Tracks creep and tower power settings
-	-- statCollection:setFlags({creep_power = CREEP_POWER_FACTOR})
 	-- statCollection:setFlags({tower_power = TOWER_POWER_FACTOR})
 
 	-- -- Tracks structure abilities and upgrades

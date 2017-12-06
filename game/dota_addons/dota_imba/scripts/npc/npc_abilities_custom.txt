@@ -1824,7 +1824,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_reduction"				"25 30 35"
+				"damage_reduction"				"-25 -30 -35"
 			}
 			"02"
 			{
@@ -21926,7 +21926,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"int_steal_count"			"1 2 3 4 4 5 5"
+				"int_steal_count"			"1 1 2 2 3 3 4"
 			}
 
 			"04"

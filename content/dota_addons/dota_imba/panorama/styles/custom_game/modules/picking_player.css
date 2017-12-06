@@ -5,10 +5,11 @@
 }
 
 #PlayerMMR {
-	width: 35%;
+	width: 100%;
 	height: 18%;
-	background-color: #b30000ba;
-	align: center top;
+	margin-bottom: 10%;
+	background-color: gradient( linear, 0% 0%, 100% 0%, from( #00000000 ), color-stop( .25, #800000), color-stop( .75, #800000 ), to( #00000000 ) );
+	align: center center;
 	visibility: collapse;
 }
 
@@ -22,7 +23,7 @@
 	color: #fff;
 }
 
-.Player {
+#Player {
 	width: 100%;
 	height: 90%;
 	flow-children: down;
@@ -59,7 +60,7 @@
 
 /* Hall of Fame */
 .PickingPlayer.HoF {
-	width: 100%;
+	width: 45%;
 	height: 72px;
 	margin: 0% 2% 1% 2%;
 	flow-children: right;
@@ -70,6 +71,7 @@
 	height: 60px;
 	margin: 0% 2% 1% 2%;
 	flow-children: right;
+	visibility: collapse;
 }
 
 #PlayerAvatarDT {
@@ -91,7 +93,7 @@
 }
 
 #HeroPanelDT {
-	width: 50%;
+	width: 100%;
 	height: 60%;
 	background-color: black;
 	background-size: 100% 100%;

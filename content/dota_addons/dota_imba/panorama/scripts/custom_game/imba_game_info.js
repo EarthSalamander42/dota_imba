@@ -17,13 +17,10 @@ function ToggleGameOptions() {
 	// Update the game options display
 	var bounty_multiplier = CustomNetTables.GetTableValue("game_options", "bounty_multiplier");
 	var exp_multiplier = CustomNetTables.GetTableValue("game_options", "exp_multiplier");
-	var creep_power = CustomNetTables.GetTableValue("game_options", "creep_power");
 	var tower_power = CustomNetTables.GetTableValue("game_options", "tower_power");
-	var respawn_multiplier = CustomNetTables.GetTableValue("game_options", "respawn_multiplier");
 	var initial_gold = CustomNetTables.GetTableValue("game_options", "initial_gold");
 	var initial_level = CustomNetTables.GetTableValue("game_options", "initial_level");
 	var max_level = CustomNetTables.GetTableValue("game_options", "max_level");
-	var kills_to_end = CustomNetTables.GetTableValue("game_options", "kills_to_end");
 	var frantic_mode = CustomNetTables.GetTableValue("game_options", "frantic_mode");
 	var frantic = "Disabled";
 
@@ -39,5 +36,4 @@ function ToggleGameOptions() {
 	$("#FranticModeValue").text = frantic;
 
 	$("#TowerPowerValue").text = $.Localize( '#imba_gamemode_settings_power_' + tower_power[1] );
-	$("#CreepPowerValue").text = $.Localize( '#imba_gamemode_settings_power_' + creep_power[1] );
 })();

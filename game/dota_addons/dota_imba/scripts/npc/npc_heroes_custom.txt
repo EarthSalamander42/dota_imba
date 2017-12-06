@@ -740,8 +740,8 @@
 
 		"Ability1"					"imba_jakiro_fire_breath"
 		"Ability2"					"imba_jakiro_ice_path"
-		"Ability3"					"imba_jakiro_ice_breath"
-		"Ability4"					"imba_jakiro_liquid_fire"
+		"Ability3"					"imba_jakiro_liquid_fire"
+		"Ability4"					"imba_jakiro_ice_breath"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_jakiro_macropyre"
 

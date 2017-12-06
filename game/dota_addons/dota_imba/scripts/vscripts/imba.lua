@@ -250,7 +250,8 @@ function GameMode:GoldFilter( keys )
 	-- Lobby options adjustment
 	if keys.gold > 0 then
 		local game_time = math.max(GameRules:GetDOTATime(false, false), 0)
-		keys.gold = keys.gold * (1 + CUSTOM_GOLD_BONUS * 0.01) * (1 + game_time * BOUNTY_RAMP_PER_SECOND * 0.01)
+		local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
+		keys.gold = keys.gold * (1 + custom_gold_bonus * 0.01) * (1 + game_time * BOUNTY_RAMP_PER_SECOND * 0.01)
 	end
 
 	-- Comeback gold gain
@@ -282,7 +283,8 @@ function GameMode:ExperienceFilter( keys )
 
 	-- Lobby options adjustment
 	local game_time = math.max(GameRules:GetDOTATime(false, false), 0)
-	keys.experience = keys.experience * (1 + CUSTOM_XP_BONUS * 0.01) * (1 + game_time * BOUNTY_RAMP_PER_SECOND * 0.01)
+	local custom_xp_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "exp_multiplier")["1"])
+	keys.experience = keys.experience * (1 + custom_xp_bonus * 0.01) * (1 + game_time * BOUNTY_RAMP_PER_SECOND * 0.01)
 
 	-- Losing team gets huge EXP bonus.
 	if hero and CustomNetTables:GetTableValue("gamerules", "losing_team") then
@@ -321,7 +323,7 @@ function GameMode:ModifierFilter( keys )
 		-------------------------------------------------------------------------------------------------
 		if IMBA_FRANTIC_MODE_ON then
 			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
-				keys.duration = keys.duration * 0.3
+				keys.duration = keys.duration * IMBA_FRANTIC_VALUE
 			end
 		end
 
@@ -616,10 +618,37 @@ function GameMode:OrderFilter( keys )
 		return true
 	end
 
-	if unit:GetUnitName() == "npc_imba_donator_companion" then
-		if keys.order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET or keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_TARGET then
-		else
-			return false
+	if keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION then
+		local target_loc = Vector(keys.position_x, keys.position_y, keys.position_z)
+		if unit:IsRealHero() then
+			local companions = FindUnitsInRadius(unit:GetTeamNumber(), Vector(0, 0, 0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+			for _, companion in pairs(companions) do
+				if companion:GetUnitName() == "npc_imba_donator_companion" and companion:GetOwner() == unit then
+					Timers:CreateTimer(0.2, function()
+						companion:MoveToPosition(target_loc + RandomVector(RandomFloat(250, 400)))
+					end)
+				end
+			end
+		end
+	end
+
+	if keys.order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
+		local ability = EntIndexToHScript(keys["entindex_ability"])
+		if unit:IsRealHero() then
+			local companions = FindUnitsInRadius(unit:GetTeamNumber(), Vector(0, 0, 0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+			for _, companion in pairs(companions) do
+				if companion:GetUnitName() == "npc_imba_donator_companion" and companion:GetOwner() == unit then
+--					if ability:GetAbilityName() == "slark_pounce" then
+--						local ab = companion:AddAbility(ability:GetAbilityName())
+--						ab:SetLevel(1)
+--						ab:EndCooldown()
+--						companion:CastAbilityNoTarget(ab, -1)
+--						Timers:CreateTimer(ab:GetCastPoint() + 0.1, function()
+--							companion:RemoveAbility(ab:GetAbilityName())
+--						end)
+--					end
+				end
+			end
 		end
 	end
 
@@ -675,7 +704,6 @@ function GameMode:OrderFilter( keys )
 	------------------------------------------------------------------------------------
 
 	if unit:HasModifier("modifier_imba_sonic_wave_daze") then
-
 		-- Determine order type
 		local modifier = unit:FindModifierByName("modifier_imba_sonic_wave_daze")
 		local rand = math.random
@@ -740,7 +768,6 @@ function GameMode:OrderFilter( keys )
 
 		-- Spin positional orders a random angle
 		if keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION or keys.order_type == DOTA_UNIT_ORDER_ATTACK_MOVE or keys.order_type == DOTA_UNIT_ORDER_CAST_POSITION then
-			
 			-- Calculate new order position
 			local target_loc = Vector(keys.position_x, keys.position_y, keys.position_z)
 			local origin_loc = unit:GetAbsOrigin()
@@ -1265,7 +1292,8 @@ function GameMode:OnGameInProgress()
 	-- IMBA: Passive gold adjustment
 	-------------------------------------------------------------------------------------------------
 	
-	local adjusted_gold_tick_time = GOLD_TICK_TIME / ( 1 + CUSTOM_GOLD_BONUS * 0.01 )
+	local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
+	local adjusted_gold_tick_time = GOLD_TICK_TIME / ( 1 + custom_gold_bonus * 0.01 )
 	GameRules:SetGoldTickTime( adjusted_gold_tick_time )
 
 	-------------------------------------------------------------------------------------------------
@@ -1340,8 +1368,9 @@ function GameMode:OnGameInProgress()
 	-- IMBA: Custom maximum level EXP tables adjustment
 	-------------------------------------------------------------------------------------------------
 	
-	if MAX_LEVEL > 35 then
-		for i = 36, MAX_LEVEL do
+	local max_level = tonumber(CustomNetTables:GetTableValue("game_options", "max_level")["1"])
+	if max_level > 35 then
+		for i = 36, max_level do
 			XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + 5000
 			GameRules:GetGameModeEntity():SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
 		end

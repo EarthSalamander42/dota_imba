@@ -192,7 +192,7 @@ function SpawnRadiantBehemoth( keys )
 			local base_health = ability:GetLevelSpecialValueFor("base_health", ability:GetLevel() - 1)
 			local health_per_minute = ability:GetLevelSpecialValueFor("health_per_minute", ability:GetLevel() - 1)
 			local health_per_hero = ability:GetLevelSpecialValueFor("health_per_hero", ability:GetLevel() - 1)
-			local game_time = GameRules:GetDOTATime(false, false) * CREEP_POWER_FACTOR / 60
+			local game_time = GameRules:GetDOTATime(false, false) * 3 / 60
 			
 			-- Spawn the Behemoth
 			local spawn_loc = Entities:FindByName(nil, "radiant_reinforcement_spawn_mid"):GetAbsOrigin()
@@ -264,7 +264,7 @@ function SpawnDireBehemoth( keys )
 			local base_health = ability:GetLevelSpecialValueFor("base_health", ability:GetLevel() - 1)
 			local health_per_minute = ability:GetLevelSpecialValueFor("health_per_minute", ability:GetLevel() - 1)
 			local health_per_hero = ability:GetLevelSpecialValueFor("health_per_hero", ability:GetLevel() - 1)
-			local game_time = GameRules:GetDOTATime(false, false) * CREEP_POWER_FACTOR / 60
+			local game_time = GameRules:GetDOTATime(false, false) * 3 / 60
 			
 			-- Spawn the Behemoth
 			local spawn_loc = Entities:FindByName(nil, "dire_reinforcement_spawn_mid"):GetAbsOrigin()
