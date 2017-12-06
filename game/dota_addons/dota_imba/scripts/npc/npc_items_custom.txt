@@ -6463,9 +6463,6 @@
 		"ItemQuality"					"artifact"
 		"ItemAliases"					"diffusal blade"
 		"ItemPermanent"					"1"
-		"ItemInitialCharges"			"8"
-		"ItemRequiresCharges"			"1"
-		"ItemDisplayCharges"			"1"
 		"MaxUpgradeLevel"				"3"
 		"ItemBaseLevel"					"1"
 
@@ -6481,56 +6478,42 @@
 				"var_type"					"FIELD_INTEGER"
 				"bonus_agi"					"20"
 			}
-
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_int"					"10"
 			}
-
 			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"initial_charges"			"8"
-			}
-
-			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"mana_burn"					"50"
 			}
-
-			"05"
+			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"slow_degrade_pct"			"20"
-			}	
-
-			"06"
+			}
+			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"starting_slow_pct"			"100"
-			}			
-
-			"07"
+			}
+			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"stack_loss_time"			"0.8"
 			}
-
-			"08"
+			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"total_slow_duration"		"4"
 			}
-
-			"09"
+			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"illusion_mana_burn"		"16"
 			}
-
-			"10"
+			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"root_duration"				"3"
@@ -6572,9 +6555,6 @@
 		"ItemAliases"					"diffusal blade 2;purgeblade"
 
 		"ItemPermanent"					"1"
-		"ItemInitialCharges"			"16"
-		"ItemRequiresCharges"			"1"
-		"ItemDisplayCharges"			"1"
 		"MaxUpgradeLevel"				"3"
 		"ItemBaseLevel"					"2"
 
@@ -6590,73 +6570,57 @@
 				"var_type"					"FIELD_INTEGER"
 				"bonus_agi"					"40"
 			}
-
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_int"					"18"
 			}
-
 			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"initial_charges"			"16"
-			}
-
-			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"mana_burn"					"75"
 			}
-
-			"05"
+			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"slow_degrade_pct"			"20"
 			}	
-
-			"06"
+			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"starting_slow_pct"			"100"
 			}			
-
-			"07"
+			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"stack_loss_time"			"0.8"
 			}
-
-			"08"
+			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"total_slow_duration"		"4"
 			}
-
-			"09"
+			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"illusion_mana_burn"		"25"
 			}
-
-			"10"
+			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"root_duration"				"3"
 			}
-
-			"11"
+			"10"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"dispel_chance_pct"			"20"
 			}
-
-			"12"
+			"11"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"dispel_burn"				"100"
 			}
-		}		
+		}
 	}
 
 	//=================================================================================================================
@@ -6693,11 +6657,7 @@
 		"ItemAliases"					"diffusal blade 3;witchblade"
 		"MaxUpgradeLevel"				"3"
 		"ItemBaseLevel"					"3"
-
 		"ItemPermanent"					"1"
-		"ItemInitialCharges"			"24"
-		"ItemRequiresCharges"			"1"
-		"ItemDisplayCharges"			"1"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -6708,68 +6668,52 @@
 				"var_type"					"FIELD_INTEGER"
 				"bonus_agi"					"60"
 			}
-
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_int"					"25"
 			}
-
 			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"initial_charges"			"24"
-			}
-
-			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"mana_burn"					"100"
 			}
-
-			"05"
+			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"slow_degrade_pct"			"20"
-			}	
-
-			"06"
+			}
+			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"starting_slow_pct"			"100"
-			}			
-
-			"07"
+			}
+			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"stack_loss_time"			"0.8"
 			}
-
-			"08"
+			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"total_slow_duration"		"4"
 			}
-
-			"09"
+			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"illusion_mana_burn"		"32"
 			}
-
-			"10"
+			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"root_duration"				"3"
 			}
-
-			"11"
+			"10"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"steal_chance_pct"			"25"
 			}
-
-			"12"
+			"11"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"steal_burn"				"130"

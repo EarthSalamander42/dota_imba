@@ -363,10 +363,10 @@ end
 function Server_WaitToEnableXpGain()
 	Serer_CheckForAFKPlayer()
 	Timers:CreateTimer({
-	endTime = 300, -- Plyaer can gain XP from this game after 5 mins later the creep spwans
+	endTime = 600, -- Plyaer can gain XP from this game after 10 mins later the creep spwans
 	callback = function()
 		EnnDisEnabled = 1
-		if CHEAT_ENABLED == true then
+		if CHEAT_ENABLED == true or PlayerResource:GetPlayerCount() < 10 then
 			print("Game don't count.")
 			return
 		else
@@ -394,6 +394,7 @@ end
 -- Radiant=2 or Dire=3
 
 function Server_CalculateXPForWinnerAndAll(winning_team)
+	if CHEAT_ENABLED == true then return end
 	local Winner
 	local dis_player = 0
 	for nPlayerID=0, DOTA_MAX_TEAM_PLAYERS-1 do
@@ -401,10 +402,12 @@ function Server_CalculateXPForWinnerAndAll(winning_team)
 			dis_player = dis_player + 1
 		end
 	end
+
 	local multiplier = 1.0
 	if GetMapName() == "imba_standard" then
 		multiplier = 2.0
 	end
+
 	local abandon_xp = 0 - (ABANDON_CHARGE / dis_player / multiplier)
 	for nPlayerID=0, DOTA_MAX_TEAM_PLAYERS-1 do
 		if  PlayerResource:IsValidPlayer(nPlayerID) and not PlayerResource:IsFakeClient(nPlayerID) then
@@ -422,7 +425,6 @@ function Server_CalculateXPForWinnerAndAll(winning_team)
 			jsontable.SteamID64 = table_SteamID64[nPlayerID]
 			jsontable.XP = table_XP[nPlayerID]
 
-			print("SERVER XP: Testing XP earned...")
 			if PlayerResource:GetTeam(nPlayerID) == Winner and PlayerResource:GetConnectionState(nPlayerID) == 2 then
 				jsontable.XP = tostring(math.ceil(table_XP[nPlayerID] * multiplier)) -- WIN
 				CustomNetTables:SetTableValue("player_table", tostring(nPlayerID), {
@@ -591,13 +593,12 @@ function print_r ( t )
 	print()
 end
 
-function Server_GetTopPlayer(ranking)  -- If you want to get the 2nd-top player, then use Server_GetTopPlayer(2)
-	local jsondata = {}
-	local jsontable = {}
-	jsontable.Ranking = ranking
-	table.insert(jsondata,jsontable)
-
-	local request = CreateHTTPRequestScriptVM( "GET", "http://www.dota2imba.cn/XP_top.php" )
+function Server_GetTopPlayer(ranking)
+local jsondata = {}
+local jsontable = {}
+jsontable.Ranking = ranking
+table.insert(jsondata,jsontable)
+local request = CreateHTTPRequestScriptVM( "GET", "http://www.dota2imba.cn/XP_top.php" )
 
 	request:SetHTTPRequestGetOrPostParameter("data_json",JSON:encode(jsondata))
 	request:SetHTTPRequestGetOrPostParameter("auth",_AuthCode);
@@ -626,16 +627,9 @@ function Server_RankDecode( t )
 			print_r_cache[tostring(t)]=true
 			if (type(t)=="table") then
 				for pos,val in pairs(t) do
-					print(pos)
-					print(val)
 					if (type(val)=="table") then
 						sub_print_r(val,indent..string.rep(" ",string.len(pos)+8))
---						for k, v in pairs(val) do
---							print(k)
---							print(v)
---						end
 					elseif (type(val)=="string") then
-						print(val)
 						if pos == "SteamID64" then
 							table.insert(leaderboard_SteamID, val)
 						end
@@ -654,45 +648,15 @@ function Server_RankDecode( t )
 
 	-- turn pure xp into level xp
 	for k, v in pairs(leaderboard_XP) do
-		print("XP Table:", k, v)
 		Server_DecodeLeaderboard(leaderboard_SteamID[k], tonumber(v))
 	end
 
 	if (type(t)=="table") then
 		sub_print_r(t,"  ")
 	end
-
---	a = {}
---	for k, n in pairs(leaderboard_SteamID) do
---		table.insert(a, n)
---		leaderboard_SteamID = {}
---	end
---	table.sort(a)
---	for i,n in ipairs(a) do
---		table.insert(leaderboard_SteamID, n)
---	end
-
---	a = {}
---	for k, n in pairs(leaderboard_XP) do
---		table.insert(a, n)
---		leaderboard_XP = {}
---	end
---	table.sort(a)
---	for i,n in ipairs(a) do
---		table.insert(leaderboard_XP, n)
---	end
-
---	a = {}
---	for k, n in pairs(leaderboard_IMR) do
---		table.insert(a, n)
---		leaderboard_IMR = {}
---	end
---	table.sort(a)
---	for i,n in ipairs(a) do
---		table.insert(leaderboard_IMR, n)
---	end
 end
 
+local rank = 0
 local steamid_table = {}
 local xp_table = {}
 local level_table = {}
@@ -701,6 +665,8 @@ local title_color_table = {}
 local XP_max_in_level_table = {}
 local leaderboard_table = {}
 local steamid_duplicate = {}
+table.insert(steamid_duplicate, "76561198021465788")
+table.insert(steamid_duplicate, "76561198015161808")
 
 function Server_DecodeLeaderboard(steamid64, xp)
 local level = 0 -- imba level
@@ -709,12 +675,11 @@ local XP_in_this_level = 0 --xp in level
 local XP_needed_to_levelup = 0 -- xp required to level up
 local XP_max_in_level = 0
 local title_color
-local rank = 0
 local send_info = true
 
 	for k, v in pairs(steamid_duplicate) do
 		if v == steamid64 then
-			print("Found Steam ID duplicated, ignoring...")
+--			print("Found Steam ID duplicated, ignoring...")
 			send_info = false
 		end
 	end
@@ -725,17 +690,11 @@ local send_info = true
 			if xp >= table_rankXP[i] then
 				if level < i then
 					rank = rank +1
-					print(rank, xp)
 					level = i-1
-					print("DECODE level:", level)
 					level_title = Server_GetTitle(level)
-					print("DECODE rank:", level_title)
 					XP_needed_to_levelup = table_rankXP[i+1] - xp
-					print("DECODE xp needed to level up:", XP_needed_to_levelup)
 					XP_in_this_level = xp - table_rankXP[i]
-					print("DECODE xp progress in this level:", XP_in_this_level)
 					title_color = Server_GetTitleColor(level_title, true)
-					print("DECODE Title Color:", title_color)
 
 					table.insert(steamid_table, steamid64)
 					table.insert(xp_table, XP_in_this_level)
@@ -748,7 +707,9 @@ local send_info = true
 		end
 	end
 
+	print(rank, steamid64, level, level_title)
 	CustomNetTables:SetTableValue("game_options", "leaderboard", {
+		Rank = rank,
 		SteamID64 = steamid_table,
 		XP = xp_table,
 		MaxXP = XP_max_in_level_table,

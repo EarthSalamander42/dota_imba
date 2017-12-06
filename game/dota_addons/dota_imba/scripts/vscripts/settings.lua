@@ -237,22 +237,50 @@ ENABLED_RUNES[DOTA_RUNE_ARCANE] = true
 
 GAME_WINNER_TEAM = "none"													-- Tracks game winner
 
-END_GAME_ON_KILLS = false													-- Should the game end after a certain number of kills?
-KILLS_TO_END_GAME_FOR_TEAM = 70												-- How many kills for a team should signify the end of the game?
-
 IMBA_HYPER_MODE_ON = false													-- Is Hyper mode activated?
-IMBA_FRANTIC_MODE_ON = false												-- Is Frantic mode activated?
+if GetMapName() ~= "imba_custom_10v10" then
+	IMBA_FRANTIC_MODE_ON = false
+else
+	IMBA_FRANTIC_MODE_ON = true
+end
+IMBA_FRANTIC_VALUE = 0.4													-- 60% CDR
 
 IMBA_PICK_MODE_ALL_PICK = false												-- Activates All Pick mode when true
 IMBA_PICK_MODE_ALL_RANDOM = false											-- Activates All Random mode when true
 IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO = false									-- Activates All Random Same Hero mode when true
 IMBA_ALL_RANDOM_HERO_SELECTION_TIME = 5.0									-- Time we need to wait before the game starts when all heroes are randomed
 
-CUSTOM_GOLD_BONUS = 0														-- Amount of bonus gold gained (in %)
-CUSTOM_XP_BONUS = 0														-- Amount of bonus XP gained (in %)
+-- Global Gold earning, values are doubled with Hyper for non-custom maps
+CUSTOM_GOLD_BONUS = {} -- 1 = Normal, 2 = Hyper
+CUSTOM_GOLD_BONUS["imba_standard"] = {75, 150}
+CUSTOM_GOLD_BONUS["imba_10v10"] = {75, 150}
+CUSTOM_GOLD_BONUS["imba_custom_10v10"] = {200, 200}
+
+-- Global XP earning, values are doubled with Hyper for non-custom maps
+CUSTOM_XP_BONUS = {} -- 1 = standard, 2 = 10v10, 3 = custom
+CUSTOM_XP_BONUS["imba_standard"] = {40, 80}
+CUSTOM_XP_BONUS["imba_10v10"] = {40, 80}
+CUSTOM_XP_BONUS["imba_custom_10v10"] = {200, 200}
+
+-- Hero base level, values are doubled with Hyper for non-custom maps
+HERO_STARTING_LEVEL = {} -- 1 = standard, 2 = 10v10, 3 = custom
+HERO_STARTING_LEVEL["imba_standard"] = {1, 1}
+HERO_STARTING_LEVEL["imba_10v10"] = {1, 1}
+HERO_STARTING_LEVEL["imba_custom_10v10"] = {5, 12}
+
+MAX_LEVEL = {}
+MAX_LEVEL["imba_standard"] = {40, 40}
+MAX_LEVEL["imba_10v10"] = {40, 40}
+MAX_LEVEL["imba_custom_10v10"] = {100, 200}
+
+HERO_INITIAL_GOLD = {}
+HERO_INITIAL_GOLD["imba_standard"] = {1200, 2000}
+HERO_INITIAL_GOLD["imba_10v10"] = {2000, 3000}
+HERO_INITIAL_GOLD["imba_custom_10v10"] = {2000, 5000}
+
+IMBA_COURIERS = {}
 
 BOUNTY_RAMP_PER_SECOND = 0.04												-- Bounty increase (in %) based on game time
-CREEP_POWER_FACTOR = 1														-- Creep power increase multiplier factor
 CREEP_POWER_MAX_UPGRADES = 30												-- Maximum amount of creep/structure upgrades
 
 REMAINING_GOODGUYS = 0														-- Remaining players on Radiant
@@ -261,8 +289,8 @@ REMAINING_BADGUYS = 0														-- Remaining players on Dire
 ANCIENT_ABILITIES_LIST = {}													-- Initializes the ancients' abilities list
 SPAWN_ANCIENT_BEHEMOTHS = true												-- Should the ancients spawn behemoths?
 TOWER_ABILITY_MODE = true													-- Should towers gain random unique abilities?
-TOWER_UPGRADE_MODE = false													-- Should tower abilities be upgradeable?
-TOWER_POWER_FACTOR = 0														-- Tower durability/damage increase factor (0 = default)
+TOWER_UPGRADE_MODE = true													-- Should tower abilities be upgradeable?
+TOWER_POWER_FACTOR = 1														-- Tower durability/damage increase factor (0 = default)
 TOWER_UPGRADE_TREE = {}														-- Stores the tower upgrades for this game if necessary
 TOWER_UPGRADE_TREE["safelane"] = {}
 TOWER_UPGRADE_TREE["midlane"] = {}
@@ -280,62 +308,16 @@ TOWER_UPGRADE_TREE["hardlane"]["tier_2"] = {}
 TOWER_UPGRADE_TREE["hardlane"]["tier_3"] = {}																		
 
 MAP_INITIAL_GOLD = 0														-- Gold granted to players at the start of the game on a normal pick
-HERO_INITIAL_GOLD = 625														-- Gold to add to players as soon as they spawn into the game
-
-HERO_STARTING_LEVEL = 1														-- User-defined starting level
 
 USE_CUSTOM_HERO_LEVELS = true												-- Should we allow heroes to have custom levels?
-MAX_LEVEL = 40																-- What level should we let heroes get to?
 
 CHEAT_ENABLED = false
-
--- Changes settings according to the current map
-if GetMapName() == "imba_standard" then										-- Standard map defaults
-	END_GAME_ON_KILLS = false
-	CUSTOM_GOLD_BONUS = 70
-	CUSTOM_XP_BONUS = 40
-	CREEP_POWER_FACTOR = 1
-	TOWER_UPGRADE_MODE = false
-	TOWER_POWER_FACTOR = 1
-	HERO_INITIAL_GOLD = 1200
-	MAX_LEVEL = 40
-elseif GetMapName() == "imba_custom" or GetMapName() == "imba_custom_10v10" then									-- Custom map defaults
-	END_GAME_ON_KILLS = false
-	CUSTOM_GOLD_BONUS = 200
-	CUSTOM_XP_BONUS = 200
-	CREEP_POWER_FACTOR = 2
-	TOWER_UPGRADE_MODE = true
-	TOWER_POWER_FACTOR = 2
-	HERO_INITIAL_GOLD = 2000
-	HERO_STARTING_LEVEL = 5
-	MAX_LEVEL = 40
-	IMBA_FRANTIC_MODE_ON = true
-elseif GetMapName() == "imba_10v10" or GetMapName() == "imba_12v12" then									-- 10v10 map defaults
-	END_GAME_ON_KILLS = false
-	CUSTOM_GOLD_BONUS = 70
-	CUSTOM_XP_BONUS = 40
-	CREEP_POWER_FACTOR = 1
-	TOWER_UPGRADE_MODE = true
-	TOWER_POWER_FACTOR = 1
-	HERO_INITIAL_GOLD = 2000
-	MAX_LEVEL = 40
-end
 
 -- Update game mode net tables
 CustomNetTables:SetTableValue("game_options", "all_pick", {IMBA_PICK_MODE_ALL_PICK})
 CustomNetTables:SetTableValue("game_options", "all_random", {IMBA_PICK_MODE_ALL_RANDOM})
 CustomNetTables:SetTableValue("game_options", "all_random_same_hero", {IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO})
-CustomNetTables:SetTableValue("game_options", "tower_upgrades", {TOWER_UPGRADE_MODE})
-CustomNetTables:SetTableValue("game_options", "kills_to_end", {KILLS_TO_END_GAME_FOR_TEAM})
-CustomNetTables:SetTableValue("game_options", "bounty_multiplier", {100 + CUSTOM_GOLD_BONUS})
-CustomNetTables:SetTableValue("game_options", "exp_multiplier", {100 + CUSTOM_XP_BONUS})
-CustomNetTables:SetTableValue("game_options", "creep_power", {CREEP_POWER_FACTOR})
-CustomNetTables:SetTableValue("game_options", "tower_power", {TOWER_POWER_FACTOR})
-CustomNetTables:SetTableValue("game_options", "initial_gold", {HERO_INITIAL_GOLD})
-CustomNetTables:SetTableValue("game_options", "initial_level", {HERO_STARTING_LEVEL})
-CustomNetTables:SetTableValue("game_options", "max_level", {MAX_LEVEL})
 CustomNetTables:SetTableValue("game_options", "frantic_mode", {IMBA_FRANTIC_MODE_ON})
-print("Frantic:", IMBA_FRANTIC_MODE_ON)
 
 -- XP per level table (only active if custom hero levels are enabled) 
 XP_PER_LEVEL_TABLE = {}

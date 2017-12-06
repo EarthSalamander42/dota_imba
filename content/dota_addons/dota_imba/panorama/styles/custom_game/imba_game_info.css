@@ -1,6 +1,6 @@
 .ImbaGameInfoMain
 {
-	margin-top: 35px;
+	margin-top: 5%;
 	align: center top;
 	flow-children: down;
 }
@@ -24,36 +24,32 @@
 }
 
 #ImbaGameInfoButton {
-	width: 120px;
-	height: 30px;
-	margin-top: 8%;
-	background-color: #000000aa;
+	width: 150px;
+	height: 35px;
+	margin-left: 150px;
+	padding: 4px 4px 4px 4px;
+	border-radius: 4px;
+	background-color: darkred;
+	saturation: 0.8;
 	align: center center;
-	border: 1px solid #333333;
-	border-radius: 5px;
-	pre-transform-scale2d: 0.95;
 }
 
 #ImbaGameInfoButton:hover {
-	pre-transform-scale2d: 0.9;
-	wash-color: #00000000;
-	color: white;
-	box-shadow: fill grey -2px -2px 4px 4px;
-	color: white;
+	border: 1px solid white;
+	saturation: 1.0;
+}
+
+#ImbaGameInfoButton:active {
+	saturation: 0.6;
 }
 
 .ButtonLabel
 {
-	width: 100%;
-	height: 100%;
-	font-size: 14px;
-	margin-top: 5px;
-	color: #999999;
-	letter-spacing: 1px;
+	align: center center;
+	color: white;
 	text-transform: uppercase;
-	text-align: center;
-	text-shadow: 0px 0px 4px 4 #000000;
-	color: #A3B5D0cc;
+	text-align: center center;
+	font-size: 18px;
 }
 
 .ImbaGameInfoLabel
