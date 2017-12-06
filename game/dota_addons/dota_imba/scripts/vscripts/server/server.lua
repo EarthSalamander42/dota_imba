@@ -30,7 +30,7 @@ local table_rankXP = {0,100,200,300,400,500,700,900,1100,1300,1500,1800,2100,240
 CustomNetTables:SetTableValue("game_options", "game_count", {value = 0})
 
 local bonus = 0
-for i = 21 +1, 200 do
+for i = 21 +1, 1000 do
 	bonus = bonus +10
 	table_rankXP[i] = table_rankXP[i-1] + 500 + bonus
 end
@@ -637,47 +637,26 @@ function Server_RankDecode( t )
 					elseif (type(val)=="string") then
 						print(val)
 						if pos == "SteamID64" then
-							print("Steam ID:", val)
 							table.insert(leaderboard_SteamID, val)
 						end
 						if pos == "XP" then
-							print("Imba Experience:", val)
 							table.insert(leaderboard_XP, val)
 						end
-						if pos == "IMR_has" then
-							print("Imba Matchmaking Rank:", val)
-							table.insert(leaderboard_IMR, val)
-						end
+--						if pos == "IMR_has" then
+--							print("Imba Matchmaking Rank:", val)
+--							table.insert(leaderboard_IMR, val)
+--						end
 					end
 				end
 			end
 		end
 	end
 
-	local xp = 100000 -- total xp (pos == "XP")
-	local level = 0 -- imba level
-	local level_title = "" -- imba title
-	local XP_in_this_level = 0 --xp in level
-	local XP_needed_to_levelup = 0 -- xp required to level up
-	local XP_needed_to_levelup_global = 0 -- toal xp required to level up
-
-	for i = #table_rankXP, 1, -1 do
-		if xp and table_rankXP and table_rankXP[i] then
-			if tonumber(xp) >= table_rankXP[i] then
-				print(xp, table_rankXP[i])
-				level = i-1
-				XP_level_title_player[nPlayerID] = Server_GetTitle(level)
-				XP_needed_to_levelup_global = table_rankXP[i]
-				XP_needed_to_levelup = table_rankXP[i+1] - tonumber(xp)
-				XP_in_this_level = tonumber(xp) - table_rankXP[i]
-			end
-		end
+	-- turn pure xp into level xp
+	for k, v in pairs(leaderboard_XP) do
+		print("XP Table:", k, v)
+		Server_DecodeLeaderboard(leaderboard_SteamID[k], tonumber(v))
 	end
-
-	print("DECODE level:", level)
-	print("DECODE xp progress in this level:", XP_in_this_level)
-	print("DECODE xp needed to level up:", XP_needed_to_levelup)
-	print("DECODE total xp needed to level up:", XP_needed_to_levelup_global)
 
 	if (type(t)=="table") then
 		sub_print_r(t,"  ")
@@ -692,7 +671,7 @@ function Server_RankDecode( t )
 --	for i,n in ipairs(a) do
 --		table.insert(leaderboard_SteamID, n)
 --	end
---
+
 --	a = {}
 --	for k, n in pairs(leaderboard_XP) do
 --		table.insert(a, n)
@@ -702,7 +681,7 @@ function Server_RankDecode( t )
 --	for i,n in ipairs(a) do
 --		table.insert(leaderboard_XP, n)
 --	end
---
+
 --	a = {}
 --	for k, n in pairs(leaderboard_IMR) do
 --		table.insert(a, n)
@@ -712,29 +691,75 @@ function Server_RankDecode( t )
 --	for i,n in ipairs(a) do
 --		table.insert(leaderboard_IMR, n)
 --	end
-
-	CustomNetTables:SetTableValue("game_options", "leaderboard", {
-		SteamID64 = leaderboard_SteamID,
-		XP = leaderboard_XP,
-		IMR = leaderboard_IMR,
-	})
 end
 
--- xp_need_to_next_level, xp_level, level, rank
+local steamid_table = {}
+local xp_table = {}
+local level_table = {}
+local level_title_table = {}
+local title_color_table = {}
+local XP_max_in_level_table = {}
+local leaderboard_table = {}
+local steamid_duplicate = {}
 
-function HoF_Test(id)
-	table.insert(leaderboard_SteamID, PlayerResource:GetSteamID(id))
-	table.insert(leaderboard_IMR, 5691)
-	table.insert(leaderboard_SteamID, PlayerResource:GetSteamID(id))
-	table.insert(leaderboard_IMR, 1)
+function Server_DecodeLeaderboard(steamid64, xp)
+local level = 0 -- imba level
+local level_title = "" -- imba title
+local XP_in_this_level = 0 --xp in level
+local XP_needed_to_levelup = 0 -- xp required to level up
+local XP_max_in_level = 0
+local title_color
+local rank = 0
+local send_info = true
+
+	for k, v in pairs(steamid_duplicate) do
+		if v == steamid64 then
+			print("Found Steam ID duplicated, ignoring...")
+			send_info = false
+		end
+	end
+	if send_info == false then return end
+
+	for i = #table_rankXP, 1, -1 do
+		if xp and table_rankXP and table_rankXP[i] then
+			if xp >= table_rankXP[i] then
+				if level < i then
+					rank = rank +1
+					print(rank, xp)
+					level = i-1
+					print("DECODE level:", level)
+					level_title = Server_GetTitle(level)
+					print("DECODE rank:", level_title)
+					XP_needed_to_levelup = table_rankXP[i+1] - xp
+					print("DECODE xp needed to level up:", XP_needed_to_levelup)
+					XP_in_this_level = xp - table_rankXP[i]
+					print("DECODE xp progress in this level:", XP_in_this_level)
+					title_color = Server_GetTitleColor(level_title, true)
+					print("DECODE Title Color:", title_color)
+
+					table.insert(steamid_table, steamid64)
+					table.insert(xp_table, XP_in_this_level)
+					table.insert(level_table, level)
+					table.insert(level_title_table, level_title)
+					table.insert(title_color_table, title_color)
+					table.insert(XP_max_in_level_table, XP_needed_to_levelup + XP_in_this_level)
+				end
+			end
+		end
+	end
 
 	CustomNetTables:SetTableValue("game_options", "leaderboard", {
-		SteamID64 = leaderboard_SteamID,
-		XP = leaderboard_XP,
-		IMR = leaderboard_IMR,
+		SteamID64 = steamid_table,
+		XP = xp_table,
+		MaxXP = XP_max_in_level_table,
+		Lvl = level_table,
+		Title = level_title_table,
+		TitleColor = title_color_table,
+--		IMR = leaderboard_IMR,
 	})
-end
 
+	table.insert(steamid_duplicate, steamid64)
+end
 ----------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------
 ----------------------------------------------HERO Particle-----------------------------------------------------
@@ -745,7 +770,6 @@ function Server_findHeroByPlayerID(nPlayerID)
 	local _Hero = PlayerResource:GetSelectedHeroEntity(nPlayerID)
 	return _Hero
 end
-
 
 local Table_Hero_Particle = {}
 
