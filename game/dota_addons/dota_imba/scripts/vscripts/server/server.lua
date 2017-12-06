@@ -609,7 +609,7 @@ local request = CreateHTTPRequestScriptVM( "GET", "http://www.dota2imba.cn/XP_to
 		else
 			local Adecode=JSON:decode(result.Body)
 --			print("Result:", result.Body)
-			Server_RankDecode(Adecode)
+			Server_RankDecode(Adecode, ranking)
 		end
 	end)
 end
@@ -618,7 +618,7 @@ leaderboard_SteamID = {}
 leaderboard_XP = {}
 leaderboard_IMR = {}
 
-function Server_RankDecode( t )
+function Server_RankDecode( t, ranking )
 	local print_r_cache={}
 	local function sub_print_r(t,indent)
 		if (print_r_cache[tostring(t)]) then
@@ -631,10 +631,10 @@ function Server_RankDecode( t )
 						sub_print_r(val,indent..string.rep(" ",string.len(pos)+8))
 					elseif (type(val)=="string") then
 						if pos == "SteamID64" then
-							table.insert(leaderboard_SteamID, val)
+							leaderboard_SteamID[ranking] = val
 						end
 						if pos == "XP" then
-							table.insert(leaderboard_XP, val)
+							leaderboard_XP[ranking] = val
 						end
 --						if pos == "IMR_has" then
 --							print("Imba Matchmaking Rank:", val)
