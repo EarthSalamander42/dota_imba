@@ -129,10 +129,16 @@ local MAX_ITEM_SLOT = 14
 -- Collects stats infos and saves them to the server
 -- Will later be used for IMR and XP changes
 function imba_api_game_complete()
-
+    
+    local winning_team = GAME_WINNER_TEAM
+    local winning_team_number = 2
+    if winning_team == "Dire" then
+        winning_team_number = 3
+    end
+    
     local args = {
         id = api_preloaded.id,
-        winner = GAME_WINNER_TEAM,
+        winner = winning_team_number,
         results = {}
     }
 
@@ -149,12 +155,12 @@ function imba_api_game_complete()
     ApiPrint("game_complete player count in game_complete: " .. tostring(player_count))
 
     -- for each player
-    for playerID = 0, DOTA_MAX_TEAM_PLAYERS do
-        if PlayerResource:IsValidPlayerID(playerID) then
-            local player = PlayerResource:GetPlayer(playerID)
-            local id = tostring(PlayerResource:GetSteamID(playerID))
+    for pid = 0, DOTA_MAX_TEAM_PLAYERS do
+        if PlayerResource:IsValidPlayerID(pid) then
+            local player = PlayerResource:GetPlayer(pid)
+            local id = tostring(PlayerResource:GetSteamID(pid))
 
-            local hero = PlayerResource:GetPickedHero(playerID)
+            local hero = PlayerResource:GetPickedHero(pid)
             local items = {}
 
             if hero == nil then
@@ -169,16 +175,6 @@ function imba_api_game_complete()
                     end
                 end    
             end
-            
-            local teamid = tonumber(PlayerResource:GetTeam(playerID))
-
-            -- winner team conversation
-            local team = "Invalid"
-            if (teamid == 2) then 
-                team = "Radiant"
-            elseif (teamid == 3) then
-                tean = "Dire"
-            end
 
             local rhero = json.null
             if hero ~= nil then
@@ -187,17 +183,52 @@ function imba_api_game_complete()
 
             -- final object for user
             args.results[id] = {
-                team = team,
+                team = tonumber(PlayerResource:getTeam()),
                 hero = rhero,
                 items = items,
-                kills = PlayerResource:GetKills(playerID),
-                deaths = PlayerResource:GetDeaths(playerID),
-                assists = PlayerResource:GetAssists(playerID),
-                xpm = PlayerResource:GetXPPerMin(playerID),
-                gpm = PlayerResource:GetGoldPerMin(playerID),
-                level = PlayerResource:GetLevel(playerID),
-                xp = PlayerResource:GetTotalEarnedXP(playerID),
-                gold = PlayerResource:GetGold(playerID)
+                aegis_pickups = tonumber(PlayerResource:GetAegisPickups(pid)),
+                assists = tonumber(PlayerResource:GetAssists(pid)),
+                claimed_denies = tonumber(PlayerResource:GetClaimedDenies(pid)),
+                claimed_farm = tonumber(PlayerResource:GetClaimedFarm(pid)),
+                claimed_misses = tonumber(PlayerResource:GetClaimedMisses(pid)),
+                connection_state = tonumber(PlayerResource:GetConnectionState(pid)),
+                creep_damage_taken = tonumber(PlayerResource:GetCreepDamageTaken(pid)),
+                deaths = tonumber(PlayerResource:GetDeaths(pid)),
+                denies = tonumber(PlayerResource:GetDenies(pid)),
+                gold = tonumber(PlayerResource:GetGold(pid)),
+                gold_lost_to_death = tonumber(PlayerResource:GetGoldLostToDeath(pid)),
+                gold_per_minute = tonumber(PlayerResource:GetGoldPerMinute(pid)),
+                gold_spent_on_buybacks = tonumber(PlayerResource:GetGoldSpentOnBuybacks(pid)),
+                gold_spent_on_consumables = tonumber(PlayerResource:GetGoldSpentOnConsumables(pid)),
+                gold_spent_on_items = tonumber(PlayerResource:GetGoldSpentOnItems(pid)),
+                gold_spent_on_support = tonumber(PlayerResource:GetGoldSpentOnSupport(pid)),
+                healing = tonumber(PlayerResource:GetHealing(pid)),
+                hero_damage_taken = tonumber(PlayerResource:GetHeroDamageTaken(pid)),
+                kills = tonumber(PlayerResource:GetKills(pid)),
+                last_hit_multikill = tonumber(PlayerResource:GetLastHitMultikill(pid)),
+                last_hits = tonumber(PlayerResource:GetLastHits(pid)),
+                last_hit_streak = tonumber(PlayerResource:GetLastHitStreak(pid)),
+                level = tonumber(PlayerResource:GetLevel(pid)),
+                misses = tonumber(PlayerResource:GetMisses(pid)),
+                nearby_creep_deaths = tonumber(PlayerResource:GetNearbyCreepDeaths(pid)),
+                consumables_purchased = tonumber(PlayerResource:GetConsumablesPurchased(pid)),
+                items_purchased = tonumber(PlayerResource:GetItemsPurchased(pid)),
+                player_name = tostring(PlayerResource:GetPlayerName(pid)),
+                raw_player_damage = tonumber(PlayerResource:GetRawPlayerDamage(pid)),
+                reliable_gold = tonumber(PlayerResource:GetReliableGold(pid)),
+                roshan_kills = tonumber(PlayerResource:GetRoshanKills(pid)),
+                rune_pickups = tonumber(PlayerResource:GetRunePickups(pid)),
+                streak = tonumber(PlayerResource:GetStreak(pid)),
+                stuns = tonumber(PlayerResource:GetStuns(pid)),
+                total_earned_gold = tonumber(PlayerResource:GetTotalEarnedGold(pid)),
+                total_earned_xp = tonumber(PlayerResource:GetTotalEarnedXp(pid)),
+                total_gold_spent = tonumber(PlayerResource:GetTotalGoldSpent(pid)),
+                tower_damage_taken = tonumber(PlayerResource:GetTowerDamageTaken(pid)),
+                tower_kills = tonumber(PlayerResource:GetTowerKills(pid)),
+                unreliable_gold = tonumber(PlayerResource:GetUnreliableGold(pid)),
+                xp_per_minute = tonumber(PlayerResource:GetXpPerMinute(pid)),
+                team = tonumber(PlayerResource:GetTeam(pid)),
+                valid_player = true
             };
         end
     end
