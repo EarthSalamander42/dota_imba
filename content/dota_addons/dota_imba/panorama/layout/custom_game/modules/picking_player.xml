@@ -41,33 +41,40 @@
 				var pID = playerID;
 				var playerInfo = Game.GetPlayerInfo( playerID );
 				$('#PlayerNameDT').text = Players.GetPlayerName(playerID);
+				$('#PickingPlayerDT').style.visibility = "visible";
+				$('#Player').style.visibility = "collapse";
 				$('#HeroPanel').style.visibility = "collapse";
 				$('#PlayerName').style.visibility = "collapse";
+				$.Msg(Players.GetPlayerName(playerID));
 			},
 
 			SetHeroDT: function( heroName ) {
 				$('#HeroPanelDT').style.backgroundImage = 'url("s2r://panorama/images/heroes/'+ heroName +'_png.vtex")';
 				$('#HeroPanelDT').style.transform = 'none';
 				$('#HeroPanelDT').style.backgroundSize = "100% 100%";
+				$('#Player').style.visibility = "collapse";
+				$('#PickingPlayerDT').style.visibility = "visible";
 				$('#HeroPanel').style.visibility = "collapse";
 				$('#PlayerName').style.visibility = "collapse";
+				$.Msg($('#HeroPanelDT').style.backgroundImage);
 			},
 
 			SetPlayerDTInfo: function( playerID, level, hp ) {
-				$("#PlayerDT_Lvl").text = "Roshan Level: " + level;
-				$("#PlayerDT_HP").text = "Roshan HP: " + hp;
+				$("#PlayerDT_Lvl").text = "Level: " + level;
+				$("#PlayerDT_HP").text = "IMR: " + hp;
 			},
 
 			SetPlayerAvatarDT: function( playerID ) {
 				var pID = playerID;
 				var playerInfo = Game.GetPlayerInfo( playerID );
 				$('#PlayerAvatarDT').steamid = playerInfo.player_steamid;
+				$.Msg(playerInfo.player_steamid);
 			},
 		});
 	</script>
 
 	<Panel class="PickingPlayer">
-		<Panel class="Player">
+		<Panel id="Player">
 			<Panel id="HeroPanel" />
 			<Label id="PlayerColor" text=""/>
 			<Label id="PlayerName" text=""/>

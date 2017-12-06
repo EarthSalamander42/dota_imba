@@ -102,8 +102,10 @@ function item_imba_hand_of_midas:OnSpellStart()
 	local bonus_xp = target:GetDeathXP()	
 
 	-- Adjust for the lobby settings and for midas' own bonuses
-	bonus_xp = bonus_xp * xp_multiplier * (1 + CUSTOM_XP_BONUS * 0.01)
-	bonus_gold = bonus_gold * (1 + CUSTOM_GOLD_BONUS * 0.01)
+	local custom_xp_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "exp_multiplier")["1"])
+	bonus_xp = bonus_xp * xp_multiplier * (1 + custom_xp_bonus * 0.01)
+	local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
+	bonus_gold = bonus_gold * (1 + custom_gold_bonus * 0.01)
 
 	-- Play sound and show gold gain message to the owner
 	target:EmitSound(sound_cast)

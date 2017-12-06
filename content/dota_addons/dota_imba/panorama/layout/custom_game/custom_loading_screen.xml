@@ -26,12 +26,6 @@
 						<RadioButton id="ExpOption2" class="GameOptionsToggle" group="ExpOption" text="#imba_gamemode_settings_power_2" onactivate="SetGameParameters('exp', 2);" />
 					</Panel>
 
-					<Panel id="CreepPowerOptionsPanel" class="GameOptionsSubPanel" onmouseover="UIShowTextTooltip( imba_gamemode_settings_creep_power_title_tooltip )" onmouseout="UIHideTextTooltip()">
-						<Label id="CreepPowerOptionsLabel" class="GameOptionsLabel" text="#imba_gamemode_settings_creep_power_title" />
-						<RadioButton id="CreepPowerOption1" class="GameOptionsToggle" group="CreepPowerOption" text="#imba_gamemode_settings_power_1" onactivate="SetGameParameters('creep', 1);" />
-						<RadioButton id="CreepPowerOption2" class="GameOptionsToggle" group="CreepPowerOption" text="#imba_gamemode_settings_power_2" onactivate="SetGameParameters('creep', 2);" />
-					</Panel>
-
 					<Panel id="TowerPowerOptionsPanel" class="GameOptionsSubPanel" onmouseover="UIShowTextTooltip( imba_gamemode_settings_tower_power_title_tooltip )" onmouseout="UIHideTextTooltip()">
 						<Label id="TowerPowerOptionsLabel" class="GameOptionsLabel" text="#imba_gamemode_settings_tower_power_title" />
 						<RadioButton id="TowerPowerOption1" class="GameOptionsToggle" group="TowerPowerOption" text="#imba_gamemode_settings_power_1" onactivate="SetGameParameters('tower', 1);" />

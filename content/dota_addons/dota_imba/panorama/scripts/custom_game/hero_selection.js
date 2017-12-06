@@ -743,28 +743,7 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 		$("#InitialGoldValue").text = initial_gold[1];
 		$("#InitialLevelValue").text = initial_level[1];
 		$("#MaxLevelValue").text = max_level[1];
-
-//		if (tower_power[1] == 0) {
-//			$("#TowerPowerValue").text = $.Localize( '#imba_gamemode_settings_power_1' );
-//		} else if (tower_power[1] == 1) {
-//			$("#TowerPowerValue").text = $.Localize( '#imba_gamemode_settings_power_2' );
-//		} else if (tower_power[1] == 2) {
-//			$("#TowerPowerValue").text = $.Localize( '#imba_gamemode_settings_power_3' );
-//		}
-
-		if (tower_power[1] == 1) {
-			$("#TowerPowerValue").text = $.Localize( '#imba_gamemode_settings_power_1' );
-		} else if (tower_power[1] == 2) {
-			$("#TowerPowerValue").text = $.Localize( '#imba_gamemode_settings_power_2' );
-		}
-
-		if (creep_power[1] == 1) {
-			$("#CreepPowerValue").text = $.Localize( '#imba_gamemode_settings_power_1' );
-		} else if (creep_power[1] == 2) {
-			$("#CreepPowerValue").text = $.Localize( '#imba_gamemode_settings_power_2' );
-		} else if (creep_power[1] == 3) {
-			$("#CreepPowerValue").text = $.Localize( '#imba_gamemode_settings_power_3' );
-		}
+		$("#TowerPowerValue").text = $.Localize( '#imba_gamemode_settings_power_' + tower_power[1] );
 
 		if (map_info.map_display_name == "imba_custom" || map_info.map_display_name == "imba_custom_10v10") {
 			if(frantic_mode) {

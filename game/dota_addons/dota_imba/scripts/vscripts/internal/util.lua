@@ -334,7 +334,8 @@ function PickupBountyRune(unit)
 	end
 
 	-- Adjust value for lobby options
-	current_bounty = current_bounty * (1 + CUSTOM_GOLD_BONUS * 0.01)
+	local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
+	current_bounty = current_bounty * (1 + custom_gold_bonus * 0.01)
 
 	-- Grant the unit experience
 	unit:AddExperience(current_bounty, DOTA_ModifyXP_CreepKill, false, true)
@@ -696,7 +697,7 @@ function StartGarbageCollector()
 --		print("Removed "..particle_removed.." particle.")			
 --	end
 end
-
+--[[
 -- This function is responsible for deciding which team is behind, if any, and store it at a nettable.
 function DefineLosingTeam()
 -- Losing team is defined as a team that is both behind in both the sums of networth and levels.
@@ -756,7 +757,7 @@ local dire_levels = 0
 		CustomNetTables:SetTableValue("gamerules", "losing_team", {losing_team = 0})		
 	end
 end
-
+--]]
 hero_particles = {}
 hero_particles[0] = 0
 hero_particles[1] = 0

@@ -585,8 +585,9 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		hero:SetCustomDeathXP(HERO_XP_BOUNTY_PER_LEVEL[1])
 
 		-- Set up initial level
-		if HERO_STARTING_LEVEL > 1 then
-			hero:AddExperience(XP_PER_LEVEL_TABLE[HERO_STARTING_LEVEL], DOTA_ModifyXP_CreepKill, false, true)
+		local starting_level = tonumber(CustomNetTables:GetTableValue("game_options", "initial_level")["1"])
+		if starting_level > 1 then
+			hero:AddExperience(XP_PER_LEVEL_TABLE[starting_level], DOTA_ModifyXP_CreepKill, false, true)
 		end
 
 		-- Set up initial gold
@@ -595,14 +596,15 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		local has_randomed = HeroSelection.playerPickState[player_id].random_state
 		local has_repicked = PlayerResource:CustomGetHasRepicked(player_id)
 
+		local initial_gold = tonumber(CustomNetTables:GetTableValue("game_options", "initial_gold")["1"])
 		if has_repicked and has_randomed then
-			PlayerResource:SetGold(player_id, HERO_INITIAL_GOLD +100, false)
+			PlayerResource:SetGold(player_id, initial_gold +100, false)
 		elseif has_repicked then
-			PlayerResource:SetGold(player_id, HERO_INITIAL_GOLD -100, false)
+			PlayerResource:SetGold(player_id, initial_gold -100, false)
 		elseif has_randomed or IMBA_PICK_MODE_ALL_RANDOM or IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO then
-			PlayerResource:SetGold(player_id, HERO_INITIAL_GOLD +200, false)
+			PlayerResource:SetGold(player_id, initial_gold +200, false)
 		else
-			PlayerResource:SetGold(player_id, HERO_INITIAL_GOLD, false)
+			PlayerResource:SetGold(player_id, initial_gold, false)
 		end
 
 		-- Apply generic talents handler

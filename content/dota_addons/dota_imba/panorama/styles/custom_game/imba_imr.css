@@ -14,7 +14,6 @@
 	text-shadow: 1px 1px 2px 2.0 #00000011;
 
 	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
-	font-size: 14px;
 	letter-spacing: 2px;
 	text-overflow: clip;
 
@@ -22,7 +21,7 @@
 	text-align: center;	
 	margin-top: 12px;
 	text-shadow: 1px 1px 2px 3.0 #000000;
-	font-size: 16px;
+	font-size: 22px;
 }
 
 .HoldoutLabelSmall_alt
@@ -41,7 +40,6 @@
 	text-align: center;	
 	margin-bottom: 12px;
 	text-shadow: 1px 1px 2px 3.0 #000000;
-	font-size: 16px;
 }
 
 .HoldoutLabelSmall.Header
@@ -60,20 +58,18 @@
 	text-shadow: 1px 1px 2px 2.0 #00000011;
 
 	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
-	font-size: 14px;
 	letter-spacing: 2px;
 	text-overflow: clip;
 
 	text-align: center;
 	text-shadow: 1px 1px 2px 3.0 #000000;
-	font-size: 18px;
+	font-size: 16px;
 }
 
 #HallOfFame
 {
-	width: 800px;
+	width: 600px;
 	height: fit-children;
-	border-radius: 25px;
 	background-color: #000000da;
 	align: center center;
 	flow-children: down;
@@ -104,8 +100,9 @@
 .LeaderboardAvatar,
 .LeaderboardAvatar_alt
 {
+	margin-top: 0px;
 	text-align: center;
-	font-size: 18px;
+	font-size: 19px;
 	font-weight: bolder;
 	color:#fff;
 }
@@ -197,7 +194,7 @@
 {
 	flow-children: right;
 	width: 100%;
-	height: 90px;
+	height: 40px;
 	horizontal-align: center;
 	background-color: darkred;
 	saturation: 0.8;
@@ -205,7 +202,7 @@
 
 #ButtonContent:hover
 {
-	border: 2px solid white;
+	border: 1px solid white;
 	saturation: 1.0;
 }
 
@@ -268,7 +265,8 @@
 
 #FrostivusAltarRespawn
 {
-	margin-top: 4%;
+	margin-top: 5%;
+	margin-right: 150px;
 	align: center top;
 	flow-children: up;
 }
@@ -277,7 +275,7 @@
 {
 	width: 150px;
 	height: 35px;
-	margin-top: 4%;
+	margin-top: 0%;
 	padding: 4px 4px 4px 4px;
 	border-radius: 4px;
 	background-color: darkred;
@@ -286,7 +284,7 @@
 
 #FrostivusAltarButton:hover
 {
-	border: 2px solid white;
+	border: 1px solid white;
 	saturation: 1.0;
 }
 
@@ -388,4 +386,9 @@
 	horizontal-align: right;
 	text-align: right;
 	opacity: 0.75;
+}
+
+.LeaderboardInGamePlayers {
+	width: 100%;
+	flow-children: right;
 }

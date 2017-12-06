@@ -19,8 +19,7 @@
 		<Panel id="HallOfFame" hittest="false">
 			<Panel id="InfoContent" hittest="false">
 				<Panel id="InfoHeader" hittest="false">
-					<Label id="HoFTitle" class="HoldoutLabelSmall" hittest="false" text="Hall Of Fame"/>
-					<Label id="RoshanLevel_alt" class="HoldoutLabelSmall_alt" text="Top 10 Imba Level:"/>
+					<Label id="HoFTitle" class="HoldoutLabelSmall" hittest="false" text="Top 10 Imba Level"/>
 				</Panel>
 			</Panel>
 
@@ -30,7 +29,7 @@
 
 				<Panel id="Legend" class="LeaderboardLegend" hittest="false">
 					<Label id="Rank" class="LeaderboardRank" text="Rank"/>
-					<Label id="SteamAvatar" class="LeaderboardAvatar" text="Steam Profile"/>
+					<Label id="SteamAvatar" class="LeaderboardAvatar" text="Steam"/>
 					<Label id="XP" class="LeaderboardXP" text="Experience"/>
 					<Label id="IMR" class="LeaderboardIMR" text="Imba Match Rank"/>
 				</Panel>
@@ -39,19 +38,17 @@
 					<!-- JS Inserts records here -->
 				</Panel>
 			</Panel>
-
+<!--
 			<Panel id="PlayerContent" hittest="false">
 				<Panel id="RadiantPlayers">
 					<Label class="TeamTitle" text="#imba_radiant_team_title" />
-					<!-- JS Inserts player elements here -->
 				</Panel>
 
 				<Panel id="DirePlayers">
 					<Label class="TeamTitle" text="#imba_dire_team_title" />
-					<!-- JS Inserts player elements here -->
 				</Panel>
 			</Panel>
-
+-->
 			<Button id="ButtonContent" onactivate="FrostivusAltar();">
 					<Label text="Close" />
 			</Button>
