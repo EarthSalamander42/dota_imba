@@ -10,9 +10,8 @@ function FrostivusAltar() {
 		toggle = true
 		if (first_time == false) {
 			first_time = true
-			DiretidePlayersXP()
+//			DiretidePlayersXP()
 			HallOfFame()
-			$("#ButtonContent").style.visibility = "collapse";
 		}
 	}
 	else {
@@ -33,8 +32,19 @@ function DiretidePlayersXP()
 //		return;
 //	}
 
+	var i = 1;
+	var i_count = 1;
+	var class_option_count = 1;
+	var i_single = false
+
 	$.Each( radiantPlayers, function( player ) {
-		var playerPanel = Modular.Spawn( "picking_player", $("#RadiantPlayers"), "HoF" );
+		if (i_single == false) {
+			i_single = true
+			var ClassOptionPanel = $.CreatePanel("Panel", $('#RadiantPlayers'), "RadiantPlayers" + "_" + class_option_count);
+			ClassOptionPanel.AddClass("LeaderboardInGamePlayers");
+		}
+
+		var playerPanel = Modular.Spawn( "picking_player", $("#RadiantPlayers" + "_" + class_option_count), "HoF" );
 		var playerInfo = Game.GetPlayerInfo( player )
 
 		playerPanels[player] = playerPanel;
@@ -43,25 +53,30 @@ function DiretidePlayersXP()
 		playerPanel.SetPlayerAvatarDT( player );
 		playerPanel.SetPlayerNameDT( player );
 
+		i_count = i_count +1;
+
+		if (i_count > 2) {
+			class_option_count = class_option_count +1
+			var ClassOptionPanel_alt = $.CreatePanel("Panel", $("#RadiantPlayers"), "RadiantPlayers" + "_" + class_option_count);
+			ClassOptionPanel_alt.AddClass("LeaderboardInGamePlayers");
+			i_count = 1;
+		}
+	});
+
+//	$.Each( direPlayers, function( player ) {
+//		var playerPanel = Modular.Spawn( "picking_player", $("#DirePlayers"), "HoF" );
+//		var playerInfo = Game.GetPlayerInfo( player )
+
+//		playerPanels[player] = playerPanel;
+
+//		playerPanels[player].SetHeroDT(playerInfo.player_selected_hero);
+//		playerPanel.SetPlayerAvatarDT( player );
+//		playerPanel.SetPlayerNameDT( player );
+
 //		var DT_Lvl = CustomNetTables.GetTableValue("player_table", player).DT_Lvl;
 //		var DT_HP = CustomNetTables.GetTableValue("player_table", player).DT_HP;
 //		playerPanel.SetPlayerDTInfo( player, DT_Lvl, DT_HP );
-	});
-
-	$.Each( direPlayers, function( player ) {
-		var playerPanel = Modular.Spawn( "picking_player", $("#DirePlayers"), "HoF" );
-		var playerInfo = Game.GetPlayerInfo( player )
-
-		playerPanels[player] = playerPanel;
-
-		playerPanels[player].SetHeroDT(playerInfo.player_selected_hero);
-		playerPanel.SetPlayerAvatarDT( player );
-		playerPanel.SetPlayerNameDT( player );
-
-//		var DT_Lvl = CustomNetTables.GetTableValue("player_table", player).DT_Lvl;
-//		var DT_HP = CustomNetTables.GetTableValue("player_table", player).DT_HP;
-//		playerPanel.SetPlayerDTInfo( player, DT_Lvl, DT_HP );
-	});
+//	});
 }
 
 var dot = "."
@@ -107,10 +122,6 @@ function HallOfFame()
 			rank.AddClass("LeaderboardRank")
 			rank.text = i
 
-//			var steam_id = $.CreatePanel("Label", player, "player_steamid_" + i);
-//			steam_id.AddClass("LeaderboardAvatar_alt")
-//			steam_id.text = SteamID64[i]
-
 			var steam_id = $.CreatePanel("DOTAAvatarImage", player, "player_steamid_" + i);
 			steam_id.AddClass("LeaderboardAvatar")
 			steam_id.steamid = SteamID64[i]
@@ -119,9 +130,6 @@ function HallOfFame()
 			steam_id.style.borderLeft = "1px solid white";
 			steam_id.style.borderTop = "1px solid white";
 			steam_id.style.borderRight = "1px solid white";
-
-//			var ply_name = $.CreatePanel("Label", player, "player_steamid_" + i);
-//			ply_name.AddClass("LeaderboardAvatar_alt")
 
 			var imbar_container = $.CreatePanel("Panel", player, "imbar_container_" + i);
 			imbar_container.AddClass("LeaderboardXP")
@@ -153,4 +161,3 @@ function HallOfFame()
 {
 	GameEvents.Subscribe("hall_of_fame", HallOfFame);
 })();
-

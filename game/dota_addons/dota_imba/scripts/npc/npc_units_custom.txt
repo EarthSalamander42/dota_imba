@@ -12327,8 +12327,10 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"              "100"
-		"StatusHealthRegen"         "0"        
+		"StatusHealth"				"7777"
+		"StatusHealthRegen"			"7777"
+		"StatusMana"				"10000"
+		"StatusManaRegen"			"10000.0"
 
 		// Team
 		//----------------------------------------------------------------
@@ -12763,7 +12765,7 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air
-		"MovementSpeed"				"380"		// Speed
+		"MovementSpeed"				"500"		// Speed
 		"MovementTurnRate"			"0.5"		// Turning rate.
 	
 		// Bounty

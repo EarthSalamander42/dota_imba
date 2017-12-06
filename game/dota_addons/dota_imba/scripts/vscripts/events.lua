@@ -110,7 +110,7 @@ function GameMode:OnGameRulesStateChange(keys)
 	-------------------------------------------------------------------------------------------------
 	if new_state == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 		-- get top 10 xp
-		for i = 1, 10 +1 do
+		for i = 1, 13 do -- +2 for the 2 unallowed xp (cookies and suthernfriend) and +1 because universe big bang 42
 			Server_GetTopPlayer(i)
 		end
 	end
@@ -165,28 +165,40 @@ function GameMode:OnGameRulesStateChange(keys)
 		Timers:CreateTimer(function() -- OnThink
 			if CHEAT_ENABLED == false then
 				if Convars:GetBool("developer") == true or Convars:GetBool("sv_cheats") == true or GameRules:IsCheatMode() then
---					if not IsInToolsMode() then
+					if not IsInToolsMode() then
 						print("Cheats have been enabled, game don't count.")
 						CHEAT_ENABLED = true
---					end
+					end
 				end
+			end
+
+			-- fix to setup flying courier speed, volvo black magic reset it to 450
+			if GameRules:GetDOTATime(false, false) > 180 then
+				for _, courier in pairs(IMBA_COURIERS) do
+		 			if not courier:HasModifier("modifier_courier_hack") then
+		 				courier:AddNewModifier(courier, nil, "modifier_courier_hack", {})
+		 			end
+		 		end
 			end
 
 			-- fix for super high respawn time
 			for _, hero in pairs(HeroList:GetAllHeroes()) do
-				if hero:IsAlive() then return end
-				local respawn_time = hero:GetTimeUntilRespawn()
-				local reaper_scythe = 36 -- max necro timer addition
-				if respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[25] + reaper_scythe and hero:HasModifier("modifier_imba_reapers_scythe_respawn") then
-					print("NECROPHOS BUG:", hero:GetUnitName(), "respawn time too high:", respawn_time..". setting to", HERO_RESPAWN_TIME_PER_LEVEL[25])
-					respawn_time = respawn_time + reaper_scythe
-				else
-					if respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[25] then
-						print(hero:GetUnitName(), "respawn time too high:", respawn_time..". setting to", HERO_RESPAWN_TIME_PER_LEVEL[25])
-						respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[25]
+				if not hero:IsAlive() then
+					local respawn_time = hero:GetTimeUntilRespawn()
+					local reaper_scythe = 36 -- max necro timer addition
+					if hero:HasModifier("modifier_imba_reapers_scythe_respawn") then
+						if respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[25] + reaper_scythe then
+							print("NECROPHOS BUG:", hero:GetUnitName(), "respawn time too high:", respawn_time..". setting to", HERO_RESPAWN_TIME_PER_LEVEL[25])
+							respawn_time = respawn_time + reaper_scythe
+						end
+					else
+						if respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[25] then
+							print(hero:GetUnitName(), "respawn time too high:", respawn_time..". setting to", HERO_RESPAWN_TIME_PER_LEVEL[25])
+							respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[25]
+						end
 					end
+					hero:SetTimeUntilRespawn(respawn_time)
 				end
-				hero:SetTimeUntilRespawn(respawn_time)
 			end
 			return 1.0
 		end)
@@ -212,7 +224,7 @@ function GameMode:OnGameRulesStateChange(keys)
 
 		Timers:CreateTimer(60, function()
 			StartGarbageCollector()
-			DefineLosingTeam()
+--			DefineLosingTeam()
 			return 60
 		end)
 	end
@@ -256,6 +268,7 @@ local normal_xp = npc:GetDeathXP()
 		else
 			npc:SetDeathXP(normal_xp*1.5)
 		end
+		npc:AddNewModifier(npc, nil, "modifier_river", {})
 
 		-- monkey king fix, do not spawn the 14 monkeys
 		if npc:GetUnitName() == "npc_dota_hero_monkey_king" then
@@ -267,9 +280,14 @@ local normal_xp = npc:GetDeathXP()
 		end
 
 		if npc:GetUnitName() == "npc_dota_courier" then
-			if npc:FindAbilityByName("courier_burst"):GetLevel() ~= 1 then
-				npc:FindAbilityByName("courier_burst"):SetLevel(1)
+			if not npc.first_spawn then
+				npc.first_spawn = true
+				table.insert(IMBA_COURIERS, npc)
+				if npc:FindAbilityByName("courier_burst"):GetLevel() ~= 1 then
+					npc:FindAbilityByName("courier_burst"):SetLevel(1)
+				end
 			end
+			npc:AddNewModifier(npc, nil, "modifier_imba_speed_limit_break", {})
 		end
 
 --		if npc:IsRealHero() and npc:GetUnitName() ~= "npc_dota_hero_wisp" or npc.is_real_wisp then
@@ -978,7 +996,7 @@ function GameMode:OnEntityKilled( keys )
 
 				-- divide the respawn time by 2 for frantic mode
 				if IMBA_FRANTIC_MODE_ON == true then
-					killed_unit:SetTimeUntilRespawn(respawn_time / 2)
+					killed_unit:SetTimeUntilRespawn(respawn_time * IMBA_FRANTIC_VALUE)
 				else
 					killed_unit:SetTimeUntilRespawn(respawn_time)
 				end
@@ -995,7 +1013,7 @@ function GameMode:OnEntityKilled( keys )
 			-- Buyback parameters
 			local player_id = killed_unit:GetPlayerID()
 			local hero_level = killed_unit:GetLevel()
-			local game_time = GameRules:GetDOTATime(false, false)
+			local game_time = GameRules:GetDOTATime(false, true)
 
 			-- Calculate buyback cost
 			local level_based_cost = math.min(hero_level * hero_level, 625) * BUYBACK_COST_PER_LEVEL
@@ -1003,7 +1021,8 @@ function GameMode:OnEntityKilled( keys )
 				level_based_cost = level_based_cost + BUYBACK_COST_PER_LEVEL_AFTER_25 * (hero_level - 25)
 			end
 			local buyback_cost = BUYBACK_BASE_COST + level_based_cost + game_time * BUYBACK_COST_PER_SECOND		
-			buyback_cost = buyback_cost * (1 + CUSTOM_GOLD_BONUS * 0.01)
+			local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
+			buyback_cost = buyback_cost * (1 + custom_gold_bonus * 0.01)
 
 			-- Setup buyback cooldown
 			local buyback_cooldown = 0

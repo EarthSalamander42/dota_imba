@@ -18,31 +18,29 @@
 				<Panel class="GameModeLabelPanel">
 					<Label class="ImbaGameInfoLabel" text="#imba_gamemode_settings_gold_multiplier" />
 					<Label class="ImbaGameInfoLabel" text="#imba_gamemode_settings_exp_multiplier" />
-					<Label class="ImbaGameInfoLabel" text="#imba_gamemode_settings_creep_power_title" />
 					<Label class="ImbaGameInfoLabel" text="#imba_gamemode_settings_tower_power_title" />
+					<Label class="ImbaGameInfoLabel" text="#imba_gamemode_settings_max_level" />
 				</Panel>
 
 				<Panel class="GameModeValuePanel">
 					<Label id="BountyMultiplierValue" class="ImbaGameInfoLabel" text="0%" />
 					<Label id="ExpMultiplierValue" class="ImbaGameInfoLabel" text="0%" />
-					<Label id="CreepPowerValue" class="ImbaGameInfoLabel" text="0" />
 					<Label id="TowerPowerValue" class="ImbaGameInfoLabel" text="0" />
+					<Label id="MaxLevelValue" class="ImbaGameInfoLabel" text="0" />
 				</Panel>
 
 				<Panel class="Separator"/>
 
 				<Panel class="GameModeLabelPanel">
-					<Label class="ImbaGameInfoLabel" text="#imba_gamemode_game_options_frantic" />
 					<Label class="ImbaGameInfoLabel" text="#imba_gamemode_settings_initial_gold" />
 					<Label class="ImbaGameInfoLabel" text="#imba_gamemode_settings_initial_level" />
-					<Label class="ImbaGameInfoLabel" text="#imba_gamemode_settings_max_level" />
+					<Label class="ImbaGameInfoLabel" text="#imba_gamemode_game_options_frantic" />
 				</Panel>
 
 				<Panel class="GameModeValuePanel">
-					<Label id="FranticModeValue" class="ImbaGameInfoLabel" text="0" />
 					<Label id="InitialGoldValue" class="ImbaGameInfoLabel" text="0" />
 					<Label id="InitialLevelValue" class="ImbaGameInfoLabel" text="0" />
-					<Label id="MaxLevelValue" class="ImbaGameInfoLabel" text="0" />
+					<Label id="FranticModeValue" class="ImbaGameInfoLabel" text="0" />
 				</Panel>
 			</Panel>
 		</Panel>

@@ -167,6 +167,16 @@ function imba_elder_titan_ancestral_spirit:GetCastRange(location, target)
 	end
 end
 
+function imba_elder_titan_ancestral_spirit:OnAbilityPhaseStart()
+	StartAnimation(self:GetCaster(), {duration=self.BaseClass.GetCastPoint(self), activity=ACT_DOTA_ANCESTRAL_SPIRIT, rate=1.0})
+	return true
+end
+
+function imba_elder_titan_ancestral_spirit:OnAbilityPhaseInterrupted()
+	EndAnimation(self:GetCaster())
+	return true
+end
+
 function imba_elder_titan_ancestral_spirit:IsNetherWardStealable() return false end
 
 function imba_elder_titan_ancestral_spirit:OnSpellStart()

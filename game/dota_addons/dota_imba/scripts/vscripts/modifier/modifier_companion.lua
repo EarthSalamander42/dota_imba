@@ -6,26 +6,13 @@ function modifier_companion:GetAbsoluteNoDamageMagical() return 1 end
 function modifier_companion:GetAbsoluteNoDamagePure() return 1 end
 
 function modifier_companion:CheckState()
-	local state
-
-	if self:GetStackCount() == 0 then
-		state = {
+	local state = {
 		[MODIFIER_STATE_NO_HEALTH_BAR] = true,
 		[MODIFIER_STATE_NOT_ON_MINIMAP] = true,
 		[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
 		[MODIFIER_STATE_UNSELECTABLE] = true,
 		[MODIFIER_STATE_INVULNERABLE] = true,
 	}
-	elseif self:GetStackCount() == 1 then
-		state = {
-		[MODIFIER_STATE_NO_HEALTH_BAR] = true,
-		[MODIFIER_STATE_NOT_ON_MINIMAP] = true,
-		[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
-		[MODIFIER_STATE_UNSELECTABLE] = true,
-		[MODIFIER_STATE_INVULNERABLE] = true,
-		[MODIFIER_STATE_INVISIBLE] = true,
-	}
-	end
 
 	return state
 end
@@ -37,7 +24,6 @@ function modifier_companion:DeclareFunctions()
 --		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
 --		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL,
 --		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE,
-		MODIFIER_PROPERTY_INVISIBILITY_LEVEL,
 	}
 	return funcs
 end
@@ -48,7 +34,7 @@ function modifier_companion:OnCreated()
 	-- 1: invisible
 
 	if IsServer() then
-		self:StartIntervalThink(0.1)
+		self:StartIntervalThink(0.2)
 
 		local companion = self:GetParent()
 		if not companion.base_model then
@@ -86,12 +72,6 @@ local target = keys.target
 end
 --]]
 
-function modifier_companion:GetModifierInvisibilityLevel()        
-	if self:GetStackCount() == 1 then
-		return 1
-	end
-end
-
 function modifier_companion:OnIntervalThink()
 	if IsServer() then
 		local companion = self:GetParent()
@@ -126,60 +106,49 @@ function modifier_companion:OnIntervalThink()
 			"modifier_imba_riki_invisibility",
 		}
 
-		if companion:GetIdealSpeed() ~= hero:GetIdealSpeed() - 5 then
-			companion:SetBaseMoveSpeed(hero:GetIdealSpeed() - 5)
+		if companion:GetIdealSpeed() ~= hero:GetIdealSpeed() + 10 then
+			companion:SetBaseMoveSpeed(hero:GetIdealSpeed() + 10)
 		end
 
-		for _,v in ipairs(invisModifiers) do
-			if not hero:HasModifier(v) then
-				if companion:HasModifier(v) then
-					companion:RemoveModifierByName(v)
+		if self.last_position ~= self:GetParent():GetAbsOrigin() then
+			companion:RemoveModifierByName("modifier_invisible")
+			self.last_position = self:GetParent():GetAbsOrigin()
+			self.last_time_tick = GameRules:GetGameTime()
+		else            
+			for _,v in ipairs(invisModifiers) do
+				if not hero:HasModifier(v) then
+					if companion:HasModifier(v) then
+						companion:RemoveModifierByName(v)
+					end
+				else
+					companion:AddNewModifier(companion, nil, v, {})				
 				end
-			else
-				companion:AddNewModifier(companion, nil, v, {})				
 			end
 		end
 
 		if not hero:IsAlive() then
 			if fountain_distance > blink_distance then -- min_distance is too high with fountain bound radius
 				ParticleManager:CreateParticle("particles/items_fx/blink_dagger_start.vpcf", PATTACH_ABSORIGIN, companion)
-				companion:EmitSound("DOTA_Item.BlinkDagger.Activate")
+--				companion:EmitSound("DOTA_Item.BlinkDagger.Activate")
 				FindClearSpaceForUnit(companion, fountain:GetAbsOrigin(), false)
 				ParticleManager:CreateParticle("particles/items_fx/blink_dagger_end.vpcf", PATTACH_ABSORIGIN, companion)
+				companion:Stop()
 				return
 			end
 		elseif hero_distance > blink_distance then
-			ParticleManager:CreateParticle("particles/items_fx/blink_dagger_start.vpcf", PATTACH_ABSORIGIN, companion)
-			companion:EmitSound("DOTA_Item.BlinkDagger.Activate")
-			FindClearSpaceForUnit(companion, hero:GetAbsOrigin() + RandomVector(200), false)
-			ParticleManager:CreateParticle("particles/items_fx/blink_dagger_end.vpcf", PATTACH_ABSORIGIN, companion)
+			if companion:HasModifier("modifier_river") and companion:GetAbsOrigin().z < 160 then
+			else
+				ParticleManager:CreateParticle("particles/items_fx/blink_dagger_start.vpcf", PATTACH_ABSORIGIN, companion)
+--				companion:EmitSound("DOTA_Item.BlinkDagger.Activate")
+				FindClearSpaceForUnit(companion, hero:GetAbsOrigin() + RandomVector(200), false)
+				ParticleManager:CreateParticle("particles/items_fx/blink_dagger_end.vpcf", PATTACH_ABSORIGIN, companion)
+			end
 		elseif hero_distance > min_distance + 200 then
-			local order = {
-				OrderType = DOTA_UNIT_ORDER_MOVE_TO_TARGET,
-				UnitIndex = companion:entindex(),
-				TargetIndex = hero:entindex()
-			}
-			ExecuteOrderFromTable(order)
+--			Timers:CreateTimer(0.2, function()
+--				companion:MoveToTargetToAttack(hero)
+--			end)
 		elseif hero_distance < min_distance then
 			companion:Stop()
-		end
-
-		-- Check Companion's current position. If it changed, remove possible invisibility and reset the last tick time
-		if self.last_position ~= self:GetParent():GetAbsOrigin() then
-			self:SetStackCount(0)
-			self.last_position = self:GetParent():GetAbsOrigin()
-			self.last_time_tick = GameRules:GetGameTime()
-		else            
-			-- Otherwise, check if Companion is not invisible yet. 
-			if self:GetStackCount() == 0 then
-
-				-- Check last tick and see if she should be awarded invisibility
-				if (GameRules:GetGameTime() - self.last_time_tick) >= self.stand_time then
-
-					-- Grant invisibility
-					self:SetStackCount(1)
-				end
-			end
 		end
 	end
 end

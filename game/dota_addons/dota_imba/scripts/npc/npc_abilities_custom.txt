@@ -1824,7 +1824,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_reduction"				"25 30 35"
+				"damage_reduction"				"-25 -30 -35"
 			}
 			"02"
 			{
@@ -21926,7 +21926,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"int_steal_count"			"1 2 3 4 4 5 5"
+				"int_steal_count"			"1 1 2 2 3 3 4"
 			}
 
 			"04"
@@ -22904,6 +22904,591 @@
 			{
 				"var_type"                  "FIELD_INTEGER"
 				"value"						"230"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Pangolier's Swashbuckle
+	//=================================================================================================================
+	"imba_pangolier_swashbuckle"
+
+{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_pangolier"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"			"pangolier_swashbuckle"
+		"MaxLevel"						"7"
+		"HasScepterUpgrade"				"0"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_pangolier.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_pangolin.vsndevts"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCastRange"				"1000"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"20 16 12 8 7.5 7.0 6.5"
+		"AbilityDuration"				"4.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"70 80 90 100 105 110 115"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"dash_range"			"1000"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"range"					"1025"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"dash_speed"			"2000"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"attack_interval"		"0.1 0.1 0.1 0.1 0.1 0.1 0.1"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"24 42 60 78 87 96 105"
+				"LinkedSpecialBonus"	"special_bonus_imba_pangolier_5"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"start_radius"			"125"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"end_radius"			"125"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"strikes"				"4"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
+	}
+
+	//=================================================================================================================
+	// Pangolier's Shield Crash
+	//=================================================================================================================
+	"imba_pangolier_shield_crash"
+
+{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_pangolier"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"pangolier_shield_crash"
+		"MaxLevel"						"7"
+		"HasScepterUpgrade"				"0"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_pangolier.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_pangolin.vsndevts"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------		
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"13"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"90 100 110 120"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"75 150 225 300 333 366 400"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hero_stacks"			"9 12 15 18 20 22 24"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"10.0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"500"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"jump_duration"			"0.4"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"jump_duration_gyroshell"	"0.75"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"jump_height"			"250"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"jump_height_gyroshell"	"350"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"jump_horizontal_distance"	"225"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+	}
+
+	//=================================================================================================================
+	// Pangolier's Heartpiercer
+	//=================================================================================================================
+	"imba_pangolier_heartpiercer"
+
+{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_pangolier"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"AbilityTextureName"			"pangolier_heartpiercer"
+		"MaxLevel"						"7"
+		"HasScepterUpgrade"				"0"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_pangolier.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_pangolin.vsndevts"
+		}
+
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"chance_pct"				"15"
+				"LinkedSpecialBonus"	"special_bonus_imba_pangolier_2"
+			}
+
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"2 3 4 5 5.5 6 6.5"
+			}
+
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow_pct"				"-35 -40 -45 -50 -52 -54 -56"
+			}
+
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"debuff_delay"			"2.0"
+				
+			}
+
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
+	}
+
+
+	//=================================================================================================================
+	// Pangolier's Rolling Thunder
+	//=================================================================================================================
+	"imba_pangolier_gyroshell"
+
+{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_pangolier"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"AbilityTextureName"			"pangolier_gyroshell"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"FightRecapLevel"				"1"
+		"MaxLevel"						"6"
+		"HasScepterUpgrade"				"0"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_pangolier.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_pangolin.vsndevts"
+			"model" "models/heroes/pangolier/pangolier_gyroshell.vmdl"
+			"model" "models/heroes/pangolier/pangolier_gyroshell2.vmdl"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"1.2"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"50 45 40 38 36 34"
+		"AbilityDuration"				"9.5"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100"
+
+		// Damage
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"200 275 350 425 500 575"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"cast_time_tooltip"		"1.2"
+			}			
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tick_interval"			"0.05"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"forward_move_speed"	"600 600 600 625 650 675"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT" // used after any break in the roll (start/jump/bounce)
+				"turn_rate_boosted"		"165"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"turn_rate_boost_duration" "0.25"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"turn_rate"				"120 120 120 125 130 135"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"400"
+			}			
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hit_radius"			"150"
+			}			
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bounce_duration"		"0.4"
+			}			
+			"10"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"			"1.0 1.25 1.5 1.65 1.8 1.95"
+			}			
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"knockback_radius"		"150"
+			}			
+			"12"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"6.0 7.0 8.0 8.5 9.0 9.5"
+				"LinkedSpecialBonus"	"special_bonus_imba_pangolier_4"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"jump_recover_time"		"0.25"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"pause_duration"		"0.2"
+			}			
+
+		}
+	}
+
+	//=================================================================================================================
+	// Pangolier's Talents
+	//=================================================================================================================
+
+	"special_bonus_imba_pangolier_1" // Heartpiercer can proc again while the debuff is in place to remove any extra armor
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_pangolier_heartpiercer"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"value"						"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_pangolier_2" // Extra proc chance on Heartpiercer
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_pangolier_heartpiercer"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"10"
+			}
+		}
+	}
+
+	"special_bonus_imba_pangolier_3" // 2 seconds cooldown on Shield Crash while rolling
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_pangolier_shield_crash"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"value"						"2.0"
+			}
+		}
+	}
+
+	"special_bonus_imba_pangolier_4" // Rolling Thunder lasts longer
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_pangolier_gyroshell"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"value"						"3.5"
+			}
+		}
+	}
+
+	"special_bonus_imba_pangolier_5" // extra damage on each Swashbuckle slash
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_pangolier_swashbuckle"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"30"
+			}
+		}
+	}
+
+	"special_bonus_imba_pangolier_6" // Extra damage on shield crash based on enemy heroes hit
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_pangolier_shield_crash"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"20"
+			}
+		}
+	}
+
+	"special_bonus_imba_pangolier_7" // Reduced cooldown on Swashbuckle
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_pangolier_swashbuckle"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"value"						"3.0"
+			}
+		}
+	}
+
+	"special_bonus_imba_pangolier_8" // Reduced cooldown on Rolling Thunder
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_pangolier_gyroshell"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"value"						"14.0"
 			}
 		}
 	}

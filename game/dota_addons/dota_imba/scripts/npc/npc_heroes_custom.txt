@@ -740,8 +740,8 @@
 
 		"Ability1"					"imba_jakiro_fire_breath"
 		"Ability2"					"imba_jakiro_ice_path"
-		"Ability3"					"imba_jakiro_ice_breath"
-		"Ability4"					"imba_jakiro_liquid_fire"
+		"Ability3"					"imba_jakiro_liquid_fire"
+		"Ability4"					"imba_jakiro_ice_breath"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_jakiro_macropyre"
 
@@ -1211,6 +1211,39 @@
 		"Ability17"					"special_bonus_imba_omniknight_6"
 
 		"ProjectileSpeed"			"900"
+	}
+
+	//=================================================================================================================
+	// HERO: Pangolier
+	//=================================================================================================================
+	"npc_dota_hero_pangolier"
+	{
+		"override_hero"				"npc_dota_hero_pangolier"
+		"AttackRate"				"1.5"
+
+		//Picking Screen
+		"IsCustom"					"0"
+		"IsNew"						"1"
+		"IsImba"					"1"
+		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
+
+		"Ability1"					"imba_pangolier_swashbuckle"
+		"Ability2"					"imba_pangolier_shield_crash"
+		"Ability3"					"imba_pangolier_heartpiercer"
+		"Ability6"					"imba_pangolier_gyroshell"
+
+		"Ability10"					"special_bonus_imba_pangolier_1"
+		"Ability11"					"special_bonus_imba_pangolier_2"
+		"Ability12"					"special_bonus_imba_pangolier_3"
+		"Ability13"					"special_bonus_imba_pangolier_4"
+		"Ability14"					"special_bonus_imba_pangolier_5"
+		"Ability15"					"special_bonus_imba_pangolier_6"
+		"Ability16"					"special_bonus_imba_pangolier_7"
+		"Ability17"					"special_bonus_imba_pangolier_8"
+
+		"ProjectileSpeed"			"900"
+
+
 	}
 
 	//=================================================================================================================

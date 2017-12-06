@@ -339,7 +339,7 @@
 	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_6_title"				"Fundamental Split"
 	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_6_Description"			"Elder Titan smash the ground harder than ever, increasing the crack distance of Earth Splitter. (+3000)"
 	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_7_title"				"Safe Stomp"
-	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_7_Description"			"Echo Stomp no longer requires channeling."
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_7_Description"			"Echo Stomp can no longer be interrupted."
 	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_8_title"				"Absolute Order"
 	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_8_Description"			"Both Elder Titan and his Ancestral Spirit reduces physical and magical resistance."
 
@@ -581,7 +581,7 @@
 	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_1_title"         "Orb Of Destruction"
 	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_1_Description"   "When attacking with Arcane Orb, if Outworld Devourer has more intelligence than its target, the difference in stats explodes in a 300 radius with pure damage.<br><br><i>Balance is a field between antrophy and entrophy. Harnessing excessive energy into the Orb will cause disastrous results.</i>"
 	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_2_title"         "Imminent Eclipse"
-	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_2_Description"   "Sanity's Eclipse cooldown is reduced by 1 second for every active instance of stolen Intelligence applied by Outworld Devourer while it is off-cooldown.<br><br><i>People's perception are always limited what they see. The Outworld Devourer will show them visions of nigh and terror, opening them towards the conjuction of doom.</i>"
+	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_2_Description"   "Sanity's Eclipse cooldown is reduced by 1 second for every active instance of stolen Intelligence applied by Outworld Devourer while it is off-cooldown, capped at 50% of the ultimate cooldown.<br><br><i>People's perception are always limited what they see. The Outworld Devourer will show them visions of nigh and terror, opening them towards the conjuction of doom.</i>"
 	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_3_title"         "Dissociative Synergy"
 	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_3_Description"   "Essence Aura's Essence Synergy can be triggered from enemies as well.<br><br><i>Just like happiness and joy, everybody has negative emotions flowing within them, waiting to be expressed. Outworld Devourer channels this source of energy, bringing ill omens.</i>"
 	"DOTA_Tooltip_Talent_special_bonus_imba_obsidian_destroyer_4_title"         "Conjuring Prison"

@@ -132,7 +132,7 @@ function LoadGameKeyValues()
 			KeyValues.UnitKV[key] = value
 		else
 			if type(KeyValues.All[key]) == "table" then
-				print("[KeyValues] Warning: Duplicated unit/hero entry for "..key)
+--				print("[KeyValues] Warning: Duplicated unit/hero entry for "..key)
 			end
 		end
 	end
