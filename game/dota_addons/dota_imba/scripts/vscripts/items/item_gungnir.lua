@@ -137,7 +137,7 @@ function modifier_item_imba_gungnir_unique:GetModifierAttackRangeBonus()
 end
 
 function modifier_item_imba_gungnir_unique:OnAttackLanded( keys )
-	if keys.attacker == self:GetParent() then
+	if keys.attacker == self:GetParent() and keys.attacker:IsRealHero() and not keys.target:IsBuilding() then 
 		if RollPseudoRandom(self:GetAbility():GetSpecialValueFor("bash_chance"), self) then
 			local target = keys.target
 			target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_stunned", {duration = 0.1})
