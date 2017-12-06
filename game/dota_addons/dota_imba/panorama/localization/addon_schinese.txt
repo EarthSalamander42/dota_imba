@@ -51,9 +51,13 @@
 	"new_hero"						"新英雄"
 	"disabled_hero"					"禁用"
 	"disabled_hero_10v10"			"10v10下禁用"
+	"disabled_hero_frantic"			"WTF下禁用"
 	"picked_hero"					"已选择"
 	"imba_hero"						"IMBA英雄"
 	"vanilla_hero"					"原版英雄"
+
+	//Leaderboard
+	"leaderboard_loading"			"正在读取数据，请稍候"
 
 	//=================================================================================================================
 	// Generic talent names
