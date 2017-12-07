@@ -270,6 +270,15 @@ local normal_xp = npc:GetDeathXP()
 		end
 		npc:AddNewModifier(npc, nil, "modifier_river", {})
 
+		-- Valve Illusion bug to prevent respawning
+		if npc:IsIllusion() or npc:IsTempestDouble() then
+			if npc.illusion == true then
+				UTIL_Remove(npc)
+			end
+			npc.illusion = true
+			return
+		end
+
 		-- monkey king fix, do not spawn the 14 monkeys
 		if npc:GetUnitName() == "npc_dota_hero_monkey_king" then
 			if TRUE_MK_HAS_SPAWNED then
@@ -314,25 +323,21 @@ local normal_xp = npc:GetDeathXP()
 	end
 
 	if npc:IsRealHero() then
-		for i = 1, #IMBA_DONATORS do
-			if PlayerResource:GetSteamAccountID(npc:GetPlayerID()) == IMBA_DONATORS[i][1] then
-				if npc:GetUnitName() ~= "npc_dota_hero_wisp" or npc.is_real_wisp then
-					if not npc.has_companion then
-						npc.has_companion = true
-						DonatorCompanion(npc, IMBA_DONATORS[i][2], IMBA_DONATORS[i][3])
-					end
-				end
-			end
-		end
-
 		if not npc.first_spawn then
-			npc.first_spawn = true
-			HeroVoiceLine(npc, "spawn")
 			if npc:GetUnitName() == "npc_dota_hero_troll_warlord" then
 				npc:SwapAbilities("imba_troll_warlord_whirling_axes_ranged", "imba_troll_warlord_whirling_axes_melee", true, false)
 				npc:SwapAbilities("imba_troll_warlord_whirling_axes_ranged", "imba_troll_warlord_whirling_axes_melee", false, true)
 				npc:SwapAbilities("imba_troll_warlord_whirling_axes_ranged", "imba_troll_warlord_whirling_axes_melee", true, false)
 			end
+
+			if IsDonator(npc) ~= false then
+				if npc:GetUnitName() ~= "npc_dota_hero_wisp" or npc.is_real_wisp then
+					DonatorCompanion(npc, IsDonator(npc))
+				end
+			end
+
+			npc.first_spawn = true
+			HeroVoiceLine(npc, "spawn")
 		else
 			HeroVoiceLine(npc, "respawn")
 		end
