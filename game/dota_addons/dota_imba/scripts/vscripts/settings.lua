@@ -24,7 +24,6 @@ SHOWCASE_TIME = 0.0							-- How long should showcase time last?
 STRATEGY_TIME = 0.0							-- How long should strategy time last?
 
 GOLD_PER_TICK = 1							-- How much gold should players get per tick?
-GOLD_TICK_TIME = 0.6						-- How long should we wait in seconds between gold ticks?
 
 RECOMMENDED_BUILDS_DISABLED = true			-- Should we disable the recommened builds for heroes
 CAMERA_DISTANCE_OVERRIDE = -1				-- How far out should we allow the camera to go?  1134 is the default in Dota
@@ -278,6 +277,11 @@ HERO_INITIAL_GOLD["imba_standard"] = {1200, 2000}
 HERO_INITIAL_GOLD["imba_10v10"] = {2000, 3000}
 HERO_INITIAL_GOLD["imba_custom_10v10"] = {2000, 5000}
 
+GOLD_TICK_TIME = {}
+GOLD_TICK_TIME["imba_standard"] = 0.6
+GOLD_TICK_TIME["imba_10v10"] = 0.6
+GOLD_TICK_TIME["imba_custom_10v10"] = 0.4
+
 IMBA_COURIERS = {}
 
 BOUNTY_RAMP_PER_SECOND = 0.04												-- Bounty increase (in %) based on game time
@@ -402,24 +406,6 @@ DISPELLABLE_DEBUFF_LIST = LoadKeyValues("scripts/npc/KV/dispellable_debuffs_list
 
 IMBA_DEVS = {
 	54896080,	-- Cookies
-	46875732,	-- Firetoad
-	34067920,	-- Shush
-	95496383,	-- ZimberZimber
-	137997646,	-- Fudge
-	65988826,	-- Noobsauce
 	137344217,	-- Moujiaozi
-	65419767,	-- AtroCty
-	33828741,	-- sercankd
 	61200060	-- suthernfriend
 }
-
-IMBA_DONATORS = {}
-IMBA_DONATORS[1] = {163814800, "models/items/courier/livery_llama_courier/livery_llama_courier.vmdl", false}	-- Hungrily_Hastur
-IMBA_DONATORS[2] = {54896080, "models/items/courier/carty/carty.vmdl", true}	-- Cookies
-
-
--- IMBA_DONATORS[3] = {steam_id, "models/courier/doom_demihero_courier/doom_demihero_courier.vmdl"}	-- Cookies
-
---	_G.banned_players = {
---		38788222 -- customURL 420bongrip
---	}

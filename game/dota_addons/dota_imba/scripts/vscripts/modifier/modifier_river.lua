@@ -28,7 +28,7 @@ function modifier_river:IsInRiver()
 	local parent = self:GetParent()
 	local origin = parent:GetAbsOrigin()
 
-	if origin.z < 160 then
+	if origin.z < 160 and parent:HasGroundMovementCapability() then
 		return true
 	else
 		return false
