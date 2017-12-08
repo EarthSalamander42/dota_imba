@@ -226,12 +226,12 @@ function imba_api_game_complete()
 				streak = tonumber(PlayerResource:GetStreak(pid)),
 				stuns = tonumber(PlayerResource:GetStuns(pid)),
 				total_earned_gold = tonumber(PlayerResource:GetTotalEarnedGold(pid)),
---				total_earned_xp = tonumber(PlayerResource:GetTotalEarnedXp(pid)), -- in the API but returns nil
+				total_earned_xp = tonumber(PlayerResource:GetTotalEarnedXP(pid)), -- in the API but returns nil
 				total_gold_spent = tonumber(PlayerResource:GetTotalGoldSpent(pid)),
 				tower_damage_taken = tonumber(PlayerResource:GetTowerDamageTaken(pid)),
 				tower_kills = tonumber(PlayerResource:GetTowerKills(pid)),
 				unreliable_gold = tonumber(PlayerResource:GetUnreliableGold(pid)),
---				xp_per_minute = tonumber(PlayerResource:GetXpPerMinute(pid)), -- in the API but returns nil
+				xp_per_minute = tonumber(PlayerResource:GetXPPerMin(pid)), -- in the API but returns nil
 				team = tonumber(PlayerResource:GetTeam(pid)),
 				valid_player = true
 			};

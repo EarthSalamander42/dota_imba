@@ -366,7 +366,7 @@ function Server_WaitToEnableXpGain()
 	endTime = 600, -- Plyaer can gain XP from this game after 10 mins later the creep spwans
 	callback = function()
 		EnnDisEnabled = 1
-		if CHEAT_ENABLED == true or PlayerResource:GetPlayerCount() < 10 then
+		if CHEAT_ENABLED == true then
 			print("Game don't count.")
 			return
 		else
