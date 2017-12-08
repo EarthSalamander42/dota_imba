@@ -57,7 +57,8 @@ function modifier_item_imba_javelin:DeclareFunctions()
 end
 
 function modifier_item_imba_javelin:GetModifierPreAttack_BonusDamage()
-	return self:GetAbility():GetSpecialValueFor("bonus_damage") end
+	return self:GetAbility():GetSpecialValueFor("bonus_damage")
+end
 
 -----------------------------------------------------------------------------------------------------------
 --	Javelin unique passive (Pierce + melee range increase)

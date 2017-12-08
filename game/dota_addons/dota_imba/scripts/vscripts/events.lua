@@ -113,6 +113,10 @@ function GameMode:OnGameRulesStateChange(keys)
 		for i = 1, 13 do -- +2 for the 2 unallowed xp (cookies and suthernfriend) and +1 because universe big bang 42
 			Server_GetTopPlayer(i)
 		end
+
+		if PlayerResource:GetPlayerCount() < 10 then
+			CHEAT_ENABLED = true
+		end
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -161,6 +165,15 @@ function GameMode:OnGameRulesStateChange(keys)
 
 		-- Shows various info to devs in pub-game to find lag issues
 		ImbaNetGraph(10.0)
+
+		local pos = {}
+		pos[1] = Vector(6446, -6979, 1496)
+		pos[2] = Vector(-5217, 5912, 1423)
+		pos[3] = Vector(-587, 6240, 1440)
+		pos[4] = Vector(7041, -6263, 1461)
+
+		local item = CreateItem("item_the_caustic_finale", nil, nil)
+		local drop = CreateItemOnPositionSync(pos[RandomInt(1, #pos)] + RandomVector(RandomInt(75, 300)), item)
 
 		Timers:CreateTimer(function() -- OnThink
 			if CHEAT_ENABLED == false then

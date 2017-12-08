@@ -51,11 +51,13 @@ function modifier_item_imba_maelstrom:OnAttackLanded( keys )
 		
 		-- If this attack is irrelevant, do nothing
 		if attacker ~= keys.attacker then
-			return end
+			return
+		end
 
 		-- If this is an illusion, do nothing either
 		if attacker:IsIllusion() then
-			return end
+			return
+		end
 
 		-- If the target is invalid, still do nothing
 		local target = keys.target
@@ -144,16 +146,19 @@ function modifier_item_imba_mjollnir:OnAttackLanded( keys )
 
 		-- If this attack is irrelevant, do nothing
 		if attacker ~= keys.attacker then
-			return end
+			return
+		end
 
 		-- If this is an illusion, do nothing either
 		if attacker:IsIllusion() then
-			return end
+			return
+		end
 
 		-- If the target is invalid, still do nothing
 		local target = keys.target
 		if (not IsHeroOrCreep(target)) then -- or attacker:GetTeam() == target:GetTeam() then
-			return end
+			return
+		end
 		
 		-- If the target is a deflector, set to do nothing
 		if target:HasModifier("modifier_imba_juggernaut_blade_fury") and attacker:IsRangedAttacker() then
@@ -332,15 +337,27 @@ function modifier_item_imba_jarnbjorn:DeclareFunctions()
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
+		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
 	}
 	return funcs
 end
 
 function modifier_item_imba_jarnbjorn:GetModifierPreAttack_BonusDamage()
-	return self:GetAbility():GetSpecialValueFor("bonus_damage") end
+	return self:GetAbility():GetSpecialValueFor("bonus_damage")
+end
 
 function modifier_item_imba_jarnbjorn:GetModifierAttackSpeedBonus_Constant()
-	return self:GetAbility():GetSpecialValueFor("bonus_as") end
+	return self:GetAbility():GetSpecialValueFor("bonus_as")
+end
+
+function modifier_item_imba_jarnbjorn:GetModifierConstantHealthRegen()
+	return self:GetAbility():GetSpecialValueFor("bonus_hp_regen")
+end
+
+function modifier_item_imba_jarnbjorn:GetModifierConstantManaRegen()
+	return self:GetAbility():GetSpecialValueFor("bonus_mana_regen")
+end
 
 -- On attack landed, roll for proc and apply stacks
 function modifier_item_imba_jarnbjorn:OnAttackLanded( keys )
@@ -350,16 +367,24 @@ function modifier_item_imba_jarnbjorn:OnAttackLanded( keys )
 
 		-- If this attack is irrelevant, do nothing
 		if attacker ~= keys.attacker then
-			return end
+			return
+		end
 
 		-- If this is an illusion, do nothing either
 		if attacker:IsIllusion() then
-			return end
+			return
+		end
+
+		-- If this a ranged hero, do nothing either
+		if attacker:IsRangedAttacker() then
+			return
+		end
 
 		-- If the target is invalid, still do nothing
 		local target = keys.target
 		if (not IsHeroOrCreep(target)) then -- or attacker:GetTeam() == target:GetTeam() then
-			return end
+			return
+		end
 		
 		-- If the target is a deflector, set to do nothing
 		if target:HasModifier("modifier_imba_juggernaut_blade_fury") and attacker:IsRangedAttacker() then

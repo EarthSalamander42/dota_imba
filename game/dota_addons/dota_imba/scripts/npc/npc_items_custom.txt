@@ -11931,7 +11931,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"24"
+				"bonus_damage"			"79"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"02"
@@ -11996,7 +11996,89 @@
 				"var_type"				"FIELD_INTEGER"
 				"splash_range"			"625"
 			}
+			"16"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_hp_regen"		"7"
+			}
+			"17"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_mana_regen"		"2.25"
+			}
 		}
 	}
-	//next free ID: 2263
+
+	//=================================================================================================================
+	// The Caustic Finale
+	//=================================================================================================================
+	"item_the_caustic_finale"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2263"
+		"BaseClass"						"item_lua"
+		"AbilityTextureName"			"custom/the_caustic_finale"
+		"ScriptFile"					"items/item_the_caustic_finale"
+		"Model"							"models/props_gameplay/treasure_chest001.vmdl"
+		"Effect"						"particles/generic_gameplay/dropped_aegis.vpcf"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"
+		"ItemPurchasable"				"0"
+		"ItemQuality"					"epic"
+		"ItemStackable"					"0"
+		"ItemSellable"					"0"
+		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+		"ItemPermanent"					"0"
+		"ItemKillable"					"0"
+//		"ItemDisplayOwnership"			"1"
+		"AllowedInBackpack"				"0"
+		"IsTempestDoubleClonable"		"0"
+		"ItemDroppable" 				"0"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"666"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"35"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"caustic_armor_reduction_pct"	"5"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"caustic_duration"			"3.0"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"caustic_radius"			"300"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"caustic_damage"			"2000"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_stack_count"			"10"
+			}
+		}
+	}
+	//next free ID: 2264
 }
