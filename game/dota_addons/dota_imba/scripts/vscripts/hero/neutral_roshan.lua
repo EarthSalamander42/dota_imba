@@ -13,7 +13,8 @@ LinkLuaModifier("modifier_imba_roshan_ai_diretide", "hero/neutral_roshan", LUA_M
 LinkLuaModifier("modifier_imba_roshan_death_buff", "hero/neutral_roshan", LUA_MODIFIER_MOTION_NONE)
 
 function imba_roshan_ai_diretide:GetIntrinsicModifierName()
-	return "modifier_imba_roshan_ai_diretide" end
+	return "modifier_imba_roshan_ai_diretide"
+end
 
 ------------------------------------------
 --				Modifiers				--
@@ -160,6 +161,17 @@ local nearbyHeroes = FindUnitsInRadius(self.roshan:GetTeamNumber(), self.roshan:
 			local deathParticle = ParticleManager:CreateParticle("particles/hw_fx/hw_roshan_death.vpcf", PATTACH_CUSTOMORIGIN, nil)
 			ParticleManager:SetParticleControl(deathParticle, 0, self.roshan:GetAbsOrigin())
 			ParticleManager:ReleaseParticleIndex(deathParticle)
+
+			local deathMod = self.roshan:FindModifierByName("modifier_imba_roshan_death_buff")
+			if not deathMod then
+				deathMod = self.roshan:AddNewModifier(self.roshan, nil, "modifier_imba_roshan_death_buff", {})
+			end
+			
+			if deathMod then
+				deathMod:SetStackCount(GAME_ROSHAN_KILLS +1)
+			else
+				print("ERROR - DEATH COUNTING MODIFIER MISSING AND FAILED TO APPLY TO ROSHAN")
+			end
 
 			Timers:CreateTimer(self.animDeath, function()
 				if self.isDead then
@@ -501,22 +513,22 @@ function modifier_imba_roshan_death_buff:DeclareFunctions()
 end
 
 function modifier_imba_roshan_death_buff:GetModifierExtraHealthBonus()
-	return self.bonusHealth * self:GetStackCount() end
+	return self.bonusHealth * GAME_ROSHAN_KILLS end
 
 function modifier_imba_roshan_death_buff:GetModifierSpellAmplify_Percentage()
-	return self.bonusSpellAmp * self:GetStackCount() end
+	return self.bonusSpellAmp * GAME_ROSHAN_KILLS end
 	
 function modifier_imba_roshan_death_buff:GetModifierPreAttack_BonusDamage()
-	return self.bonusDamage * self:GetStackCount() end
+	return self.bonusDamage * GAME_ROSHAN_KILLS end
 	
 function modifier_imba_roshan_death_buff:GetModifierAttackSpeedBonus_Constant()
-	return self.bonusAttackSpeed * self:GetStackCount() end
+	return self.bonusAttackSpeed * GAME_ROSHAN_KILLS end
 	
 function modifier_imba_roshan_death_buff:GetModifierPhysicalArmorBonus()
-	return self.bonusArmor * self:GetStackCount() end
+	return self.bonusArmor * GAME_ROSHAN_KILLS end
 
 --	function modifier_imba_roshan_death_buff:GetCustomTenacityUnique()
---		return self.bonusTenacity * self:GetStackCount()
+--		return self.bonusTenacity * GAME_ROSHAN_KILLS
 --	end
 
 ------------------------------------------

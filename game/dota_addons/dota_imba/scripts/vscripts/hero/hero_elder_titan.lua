@@ -199,6 +199,7 @@ function imba_elder_titan_ancestral_spirit:OnSpellStart()
 	astral_spirit = CreateUnitByName("npc_dota_elder_titan_ancestral_spirit", target_point, true, caster, caster, caster:GetTeamNumber())
 	astral_spirit:SetControllableByPlayer(caster:GetPlayerID(), true)
 	astral_spirit:AddNewModifier(astral_spirit, self, "modifier_imba_elder_titan_ancestral_spirit_self", {})
+	astral_spirit:AddNewModifier(astral_spirit, nil, "modifier_imba_haste_rune_speed_limit_break", {})
 	astral_spirit:SetBaseMoveSpeed(spirit_movespeed)
 
 	astral_spirit:FindAbilityByName("imba_elder_titan_echo_stomp_spirit"):SetLevel(caster:FindAbilityByName("imba_elder_titan_echo_stomp"):GetLevel())
@@ -376,7 +377,7 @@ function modifier_imba_elder_titan_ancestral_spirit_self:OnIntervalThink()
 
 	local hero_distance = (self:GetParent():GetOwner():GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length()
 	if self:GetParent().is_returning == true then
-		if hero_distance < 150 then
+		if hero_distance < 180 then
 			self:GetParent():GetOwner():SwapAbilities("imba_elder_titan_ancestral_spirit", "imba_elder_titan_return_spirit", true, false)
 			if self.bonus_damage > 0 then
 				local damage_mod = self:GetParent():GetOwner():AddNewModifier(self:GetParent():GetOwner(), self:GetAbility(), "modifier_imba_elder_titan_ancestral_spirit_damage", {duration = self.buff_duration})

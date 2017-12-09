@@ -618,20 +618,6 @@ function GameMode:OrderFilter( keys )
 		return true
 	end
 
-	if keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION then
-		local target_loc = Vector(keys.position_x, keys.position_y, keys.position_z)
-		if unit:IsRealHero() then
-			local companions = FindUnitsInRadius(unit:GetTeamNumber(), Vector(0, 0, 0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
-			for _, companion in pairs(companions) do
-				if companion:GetUnitName() == "npc_imba_donator_companion" and companion:GetOwner() == unit then
-					Timers:CreateTimer(0.2, function()
-						companion:MoveToPosition(target_loc + RandomVector(RandomFloat(250, 400)))
-					end)
-				end
-			end
-		end
-	end
-
 	if keys.order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
 		local ability = EntIndexToHScript(keys["entindex_ability"])
 		if unit:IsRealHero() then
@@ -1292,9 +1278,7 @@ function GameMode:OnGameInProgress()
 	-- IMBA: Passive gold adjustment
 	-------------------------------------------------------------------------------------------------
 	
-	local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
-	local adjusted_gold_tick_time = GOLD_TICK_TIME / ( 1 + custom_gold_bonus * 0.01 )
-	GameRules:SetGoldTickTime( adjusted_gold_tick_time )
+	GameRules:SetGoldTickTime( GOLD_TICK_TIME[GetMapName()] )
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Arena mode initialization
@@ -1767,32 +1751,33 @@ end
 
 --	function GameMode:RemoveUnits(good, bad, neutral)
 function GameMode:RemoveUnits()
-local units = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0, 0, 0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_INVULNERABLE , FIND_ANY_ORDER, false )
-local units2 = FindUnitsInRadius(DOTA_TEAM_BADGUYS, Vector(0, 0, 0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_INVULNERABLE , FIND_ANY_ORDER, false )
-local units3 = FindUnitsInRadius(DOTA_TEAM_NEUTRALS, Vector(0, 0, 0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_INVULNERABLE , FIND_ANY_ORDER, false )
+-- local units = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0, 0, 0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_INVULNERABLE , FIND_ANY_ORDER, false )
+-- local units2 = FindUnitsInRadius(DOTA_TEAM_BADGUYS, Vector(0, 0, 0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_INVULNERABLE , FIND_ANY_ORDER, false )
+local units3 = FindUnitsInRadius(DOTA_TEAM_NEUTRALS, Vector(0, 0, 0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_NONE , FIND_ANY_ORDER, false )
 local count = 0
 
 --	if good == true then
-		for _,v in pairs(units) do
-			if v:HasMovementCapability() and not v:GetUnitName() == "npc_dota_creep_goodguys_melee" then
-				count = count +1
-				v:RemoveSelf()
-			end
-		end
+--		for _,v in pairs(units) do
+--			if v:HasMovementCapability() and not v:GetUnitName() == "npc_dota_creep_goodguys_melee" then
+--				count = count +1
+--				v:RemoveSelf()
+--			end
+--		end
 --	end
 
 --	if bad == true then
-		for _,v in pairs(units2) do
-			if v:HasMovementCapability() and not v:GetUnitName() == "npc_dota_creep_badguys_melee" then
-				count = count +1
-				v:RemoveSelf()
-			end
-		end
+--		for _,v in pairs(units2) do
+--			if v:HasMovementCapability() and not v:GetUnitName() == "npc_dota_creep_badguys_melee" then
+--				count = count +1
+--				v:RemoveSelf()
+--			end
+--		end
 --	end
 
 --	if neutral == true then
 		for _,v in pairs(units3) do
-			if v:HasMovementCapability() and not v:GetUnitName() == "npc_imba_roshan" then
+			if v:GetUnitName() == "npc_imba_roshan" then
+			else
 				count = count +1
 				v:RemoveSelf()
 			end
