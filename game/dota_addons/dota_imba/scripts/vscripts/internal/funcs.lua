@@ -337,14 +337,6 @@ function ShowWearables( event )
   end
 end
 
--- Get the base projectile of a unit
-function GetBaseRangedProjectileName( unit )
-	local unit_name = unit:GetUnitName()
-	unit_name = string.gsub(unit_name, "dota", "imba")
-	local unit_table = unit:IsHero() and GameRules.HeroKV[unit_name] or GameRules.UnitKV[unit_name]
-	return unit_table and unit_table["ProjectileModel"] or ""
-end
-
 function ChangeAttackProjectileImba(unit)
 
 	local particle_deso = "particles/items_fx/desolator_projectile.vpcf"
@@ -389,7 +381,9 @@ function ChangeAttackProjectileImba(unit)
 
 	-- Else, default to the base ranged projectile
 	else
-		unit:SetRangedProjectileName(GetBaseRangedProjectileName(unit))
+		print(unit:GetKeyValue("ProjectileModel"))
+		unit:SetRangedProjectileName(unit:GetKeyValue("ProjectileModel"))
+		
 	end
 end
 

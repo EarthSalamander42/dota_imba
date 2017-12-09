@@ -476,10 +476,14 @@ function SelectHero( heroName ) {
 		panel_table[i].RemoveClass("selected")
 	}
 
+//	$.Msg(playerPanels[1])
+//	playerPanels[1].SetPreviewHero(heroName)
+
 	var localTeam = Players.GetTeam(Players.GetLocalPlayer())
 	if (localTeam == 2) {
 		var radiantPlayers = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_GOODGUYS );
 		$.Each( radiantPlayers, function( player ) {
+			$.Msg(heroName)
 			playerPanels[Players.GetLocalPlayer()].SetPreviewHero(heroName)
 		});
 	} else if (localTeam == 3) {

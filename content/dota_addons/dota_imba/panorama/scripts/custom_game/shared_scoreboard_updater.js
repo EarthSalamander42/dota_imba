@@ -496,7 +496,7 @@ function ScoreboardUpdater_GetTeamPanel( scoreboardHandle, teamId )
 	{
 		return;
 	}
-	
+
 	var teamPanelName = "_dynamic_team_" + teamId;
 	return scoreboardHandle.scoreboardPanel.FindChild( teamPanelName );
 }

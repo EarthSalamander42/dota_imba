@@ -12338,11 +12338,43 @@
 		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
 		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
 		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
-		
+
 		// Vision
 		//----------------------------------------------------------------
 		"VisionDaytimeRange"        "0"
 		"VisionNighttimeRange"      "0"
+	}
+
+	"npc_imba_dummy_companion"
+	{										
+		// General
+		//----------------------------------------------------------------
+		"Model"						"models/items/courier/livery_llama_courier/livery_llama_courier.vmdl"	// Model.
+		"BaseClass"					"npc_dota_creature"
+		"ModelScale" 				"1.0"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackRange"				"0"		// Range within a target can be attacked.
+		"ProjectileModel"			""			// Particle system model for projectile.
+		"ProjectileSpeed"			"0"			// Speed of projectile.		   
+
+		// Bounds
+		//----------------------------------------------------------------
+		"RingRadius"				"70"
+		"HealthBarOffset"			"215"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"350"		// Speed.
+		"MovementTurnRate"			"0.6"		// Turning rate.
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"100"		// Base health.
+		"StatusHealthRegen"			"0"			// Health regeneration rate.
 	}
 
 	//=================================================================================================================

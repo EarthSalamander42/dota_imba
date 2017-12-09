@@ -1062,7 +1062,7 @@ function ReconnectPlayer(player_id)
 	end
 end
 
-function DonatorCompanion(hero, model, super_donator)
+function DonatorCompanion(hero, model)
 local summon_point = Entities:FindByName(nil, "ent_dota_fountain_good"):GetAbsOrigin()
 local color = hero:GetFittingColor()
 
@@ -1073,11 +1073,16 @@ local color = hero:GetFittingColor()
 	companion:SetModel(model)
 	companion:SetModelScale(1.0)
 	companion:AddNewModifier(companion, nil, "modifier_companion", {})
-	companion:SetRenderColor(color[1], color[2], color[3]) -- add color in donator table?
-
-	if super_donator then
-		companion:FindAbilityByName("companion_morph"):SetLevel(1)
+	companion:SetRenderColor(color[1], color[2], color[3])
+	if string.find(model, "flying") then
+		companion:SetMoveCapability(DOTA_UNIT_CAP_MOVE_FLY)
 	end
+
+--	if super_donator then
+--		local ab = companion:FindAbilityByName("companion_morph")
+--		ab:SetLevel(1)
+--		ab:CastAbility()		
+--	end
 end
 
 function HeroVoiceLine(hero, event, ab)
