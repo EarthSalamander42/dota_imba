@@ -26,7 +26,7 @@ require('libraries/keyvalues')
 require('internal/gamemode')
 require('internal/events')
 -- These are the XP system
-require('server/server')
+-- require('server/server')
 require('libraries/json')
 -- All custom constants
 require('internal/constants')
@@ -88,7 +88,9 @@ function GameMode:OnFirstPlayerLoaded()
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: API. Preload
 	-------------------------------------------------------------------------------------------------
-	imba_api_init()
+	imba_api_init(function ()
+        print("API: Init data...")
+    end)
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Roshan and Picking Screen camera initialization
