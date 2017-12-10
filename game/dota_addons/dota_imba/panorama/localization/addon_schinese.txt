@@ -339,7 +339,7 @@
 	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_6_title"				"裂地沟壑"
 	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_6_Description"			"+3000 裂地沟壑长度"
 	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_7_title"				"回音重踏"
-	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_7_Description"			"回音重踏不需要吟唱"
+	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_7_Description"			"回音重踏不会被打断"
 	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_8_title"				"自然秩序"
 	"DOTA_Tooltip_Talent_special_bonus_imba_elder_titan_8_Description"			"自然秩序的效果不再分离"
 

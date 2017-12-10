@@ -1074,7 +1074,7 @@ local color = hero:GetFittingColor()
 		model = "models/courier/baby_rosh/babyroshan.vmdl"
 		companion:SetOriginalModel(model)
 		companion:SetModel(model)
-		companion:SetMaterialGroup("2")
+		companion:SetMaterialGroup(tostring(RandomInt(1, 4)))
 	else
 		companion:SetOriginalModel(model)
 		companion:SetModel(model)
