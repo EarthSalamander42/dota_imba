@@ -9,8 +9,9 @@ function imba_xp_get_level(xp_value)
     if (xp_value < xp_value - xp_value % 100) then
         return rlevel = should - 1
     end
-    if (rlevel < 0)
+    if (rlevel < 0) then
         rlevel = 0
+    end
     return rlevel
 end
 
