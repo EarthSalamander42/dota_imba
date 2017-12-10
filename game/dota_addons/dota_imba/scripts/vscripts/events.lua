@@ -29,15 +29,12 @@ function GameMode:OnDisconnect(keys)
 
 	-- Else, start tracking player's reconnect/abandon state
 	else
-
 		-- Fetch player's player and hero information
 		local player_id = keys.PlayerID
 		local player_name = keys.name
 		local hero = PlayerResource:GetPickedHero(player_id)
 		local hero_name = PlayerResource:GetPickedHeroName(player_id)
 		local line_duration = 7
-
-		Server_DisableToGainXpForPlayer(player_id)
 
 		-- Start tracking
 		print("started keeping track of player "..player_id.."'s connection state")
@@ -49,7 +46,6 @@ function GameMode:OnDisconnect(keys)
 
 			-- If the player has abandoned the game, set his gold to zero and distribute passive gold towards its allies
 			if hero:HasOwnerAbandoned() or disconnect_time >= ABANDON_TIME then
-
 				-- Abandon message
 				Notifications:BottomToAll({hero = hero_name, duration = line_duration})
 				Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
@@ -69,7 +65,7 @@ function GameMode:OnDisconnect(keys)
 					Timers:CreateTimer(FULL_ABANDON_TIME, function()
 						if REMAINING_GOODGUYS <= 0 then
 							GameRules:SetGameWinner(DOTA_TEAM_BADGUYS)
-							GAME_WINNER_TEAM = "Dire"
+							GAME_WINNER_TEAM = 3
 						end
 					end)
 				elseif REMAINING_BADGUYS <= 0 then
@@ -77,7 +73,7 @@ function GameMode:OnDisconnect(keys)
 					Timers:CreateTimer(FULL_ABANDON_TIME, function()
 						if REMAINING_BADGUYS <= 0 then
 							GameRules:SetGameWinner(DOTA_TEAM_GOODGUYS)
-							GAME_WINNER_TEAM = "Radiant"
+							GAME_WINNER_TEAM = 2
 						end
 					end)
 				end
@@ -110,9 +106,9 @@ function GameMode:OnGameRulesStateChange(keys)
 	-------------------------------------------------------------------------------------------------
 	if new_state == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 		-- get top 10 xp
-		for i = 1, 13 do -- +2 for the 2 unallowed xp (cookies and suthernfriend) and +1 because universe big bang 42
-			Server_GetTopPlayer(i)
-		end
+--		for i = 1, 13 do -- +2 for the 2 unallowed xp (cookies and suthernfriend) and +1 because universe big bang 42
+--			Server_GetTopPlayer(i)
+--		end
 
 		if PlayerResource:GetPlayerCount() < 10 then
 			CHEAT_ENABLED = true
@@ -125,11 +121,9 @@ function GameMode:OnGameRulesStateChange(keys)
 	if new_state == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		ApiPrint("entered hero selection")
 		HeroSelection:HeroListPreLoad()
---		if IsInToolsMode() then
---			for i = 0, PlayerResource:GetPlayerCount() -1 do
---				HoF_Test(i)
---			end
---		end
+
+		-- get the IXP of everyone (ignore bot)
+		GetPlayerInfoIXP()
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -215,7 +209,7 @@ function GameMode:OnGameRulesStateChange(keys)
         
         ApiPrint("Entering Game in progress / horn")
 
-		Server_WaitToEnableXpGain()
+		CountGameIXP()
 
 		for _, hero in pairs(HeroList:GetAllHeroes()) do
 			if IsDev(hero) then
@@ -260,19 +254,14 @@ function GameMode:OnGameRulesStateChange(keys)
         end)
 
 		CustomGameEventManager:Send_ServerToAllClients("end_game", {})
-		local winning_team = GAME_WINNER_TEAM
-		Server_CalculateXPForWinnerAndAll(winning_team)
-		local winning_team_number = 2
-		if winning_team == "Dire" then
-			winning_team_number = 3
-		end
+		SetPlayerInfoXP()
 
 		for _, hero in pairs(HeroList:GetAllHeroes()) do
-			if hero:GetTeamNumber() == winning_team_number then
-				print("WINNING! YAY:", winning_team_number)
+			if hero:GetTeamNumber() == GAME_WINNER_TEAM then
+				print("WINNING! YAY:", GAME_WINNER_TEAM)
 				HeroVoiceLine(hero, "win")
 			else
-				print("LOSING! OH NOES:", winning_team_number)
+				print("LOSING! OH NOES:", GAME_WINNER_TEAM)
 				HeroVoiceLine(hero, "lose")
 			end
 		end
@@ -324,23 +313,23 @@ local normal_xp = npc:GetDeathXP()
 			npc:AddNewModifier(npc, nil, "modifier_imba_speed_limit_break", {})
 		end
 
---		if npc:IsRealHero() and npc:GetUnitName() ~= "npc_dota_hero_wisp" or npc.is_real_wisp then
---			if not npc.has_label then
---				Timers:CreateTimer(5.0, function()
---					local title = Server_GetPlayerTitle(npc:GetPlayerID())
---					local rgb = Server_GetTitleColor(title)
---					npc:SetCustomHealthLabel(title, rgb[1], rgb[2], rgb[3])
---				end)
---				npc.has_label = true
---			end
---		elseif npc:IsIllusion() then
---			if not npc.has_label then
---				local title = Server_GetPlayerTitle(npc:GetPlayerID())
---				local rgb = Server_GetTitleColor(title)
---				npc:SetCustomHealthLabel(title, rgb[1], rgb[2], rgb[3])
---				npc.has_label = true
---			end
---		end
+		if npc:IsRealHero() and npc:GetUnitName() ~= "npc_dota_hero_wisp" or npc.is_real_wisp then
+			if not npc.has_label then
+				Timers:CreateTimer(5.0, function()
+					local title = GetTitleIXP(npc:GetPlayerID())
+					local rgb = GetTitleColorIXP(title)
+					npc:SetCustomHealthLabel(title, rgb[1], rgb[2], rgb[3])
+				end)
+				npc.has_label = true
+			end
+		elseif npc:IsIllusion() then
+			if not npc.has_label then
+				local title = GetTitleIXP(npc:GetPlayerID())
+				local rgb = GetTitleColorIXP(title)
+				npc:SetCustomHealthLabel(title, rgb[1], rgb[2], rgb[3])
+				npc.has_label = true
+			end
+		end
 	end
 
 	if npc:GetUnitName() == "npc_dummy_unit" or npc:GetUnitName() == "npc_dummy_unit_perma" then
@@ -828,32 +817,7 @@ function GameMode:OnTeamKillCredit(keys)
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Comeback gold logic
 	-------------------------------------------------------------------------------------------------
-
 --	UpdateComebackBonus(1, killer_team)
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Arena mode scoreboard updater
-	-------------------------------------------------------------------------------------------------
-	
-	if GetMapName() == "imba_arena" then
-		if killer_team == DOTA_TEAM_GOODGUYS then
-			local radiant = CustomNetTables:GetTableValue("arena_capture", "radiant_score")
-			CustomNetTables:SetTableValue("arena_capture", "radiant_score", {radiant_score["1"] + 1})
-			CustomGameEventManager:Send_ServerToAllClients("radiant_score_update", {})
-			if (radiant.score + 1) >= KILLS_TO_END_GAME_FOR_TEAM then
-				GameRules:SetGameWinner(DOTA_TEAM_GOODGUYS)
-				GAME_WINNER_TEAM = "Radiant"
-			end
-		elseif killer_team == DOTA_TEAM_BADGUYS then
-			local dire = CustomNetTables:GetTableValue("arena_capture", "dire_score")
-			CustomNetTables:SetTableValue("arena_capture", "dire_score", {dire_score["1"] + 1})
-			CustomGameEventManager:Send_ServerToAllClients("dire_score_update", {})
-			if (dire.score + 1) >= KILLS_TO_END_GAME_FOR_TEAM then
-				GameRules:SetGameWinner(DOTA_TEAM_BADGUYS)
-				GAME_WINNER_TEAM = "Dire"
-			end
-		end
-	end
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Deathstreak logic
@@ -965,9 +929,9 @@ function GameMode:OnEntityKilled( keys )
 		-- IMBA: Ancient destruction detection
 		-------------------------------------------------------------------------------------------------
 		if killed_unit:GetUnitName() == "npc_dota_badguys_fort" then
-			GAME_WINNER_TEAM = "Radiant"
+			GAME_WINNER_TEAM = 2
 		elseif killed_unit:GetUnitName() == "npc_dota_goodguys_fort" then
-			GAME_WINNER_TEAM = "Dire"
+			GAME_WINNER_TEAM = 3
 		end
 
 		-------------------------------------------------------------------------------------------------
@@ -1096,7 +1060,6 @@ end
 function GameMode:OnConnectFull(keys)
 	DebugPrint('[BAREBONES] OnConnectFull')
 	DebugPrintTable(keys)
-	Server_SendAndGetInfoForAll()
 
 	GameMode:_OnConnectFull(keys)
 	

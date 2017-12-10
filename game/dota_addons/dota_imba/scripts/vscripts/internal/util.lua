@@ -1019,8 +1019,6 @@ function ReconnectPlayer(player_id)
 				Server_EnableToGainXPForPlyaer(player_id)
 				local pick_state = HeroSelection.playerPickState[player_id].pick_state
 				local repick_state = HeroSelection.playerPickState[player_id].repick_state
-				print("Pick State (util.lua):", pick_state)
-				print("Repick State (util.lua):", repick_state)
 
 				local data = {
 					PlayerID = player_id,
@@ -1029,12 +1027,6 @@ function ReconnectPlayer(player_id)
 					repickState = repick_state
 				}
 
-				print("HERO SELECTION ARGS:")
-				print("Player ID:", player_id)
-				print("Pick State:", pick_state)
-				print("Re-Pick State:", repick_state)
-
-				print("Sending picked heroes...")
 				PrintTable(HeroSelection.picked_heroes)
 				CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.picked_heroes, pickState = pick_state, repickState = repick_state})
 			else
