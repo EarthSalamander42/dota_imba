@@ -4,7 +4,7 @@
 
 function imba_xp_get_level(xp_value) 
     -- function for xp level: 0.075 * x^0.66667
-    return 0.075 * math.pow(xp_value, 0.6666667)
+    return math.floor(0.075 * math.pow(xp_value, 0.6666667))
 end
 
 function imba_xp_get_title_by_level(level)
