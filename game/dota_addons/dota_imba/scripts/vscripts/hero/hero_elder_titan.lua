@@ -371,8 +371,23 @@ function modifier_imba_elder_titan_ancestral_spirit_self:OnIntervalThink()
 			StartAnimation(self:GetParent(), {duration=30.0, activity=ACT_DOTA_FLAIL, rate=0.1})
 			EmitSoundOn("Hero_ElderTitan.AncestralSpirit.Return", self:GetParent())
 		end
-	else
-		self.return_timer = self.return_timer + 0.1
+	end
+
+	if self.return_timer - 10.0 > self.duration then
+		self:GetParent():GetOwner():SwapAbilities("imba_elder_titan_ancestral_spirit", "imba_elder_titan_return_spirit", true, false)
+		if self.bonus_damage > 0 then
+			local damage_mod = self:GetParent():GetOwner():AddNewModifier(self:GetParent():GetOwner(), self:GetAbility(), "modifier_imba_elder_titan_ancestral_spirit_damage", {duration = self.buff_duration})
+			damage_mod:SetStackCount(self.bonus_damage)
+		end
+
+		if self.bonus_ms > 0 then
+			local speed_mod = self:GetParent():GetOwner():AddNewModifier(self:GetParent():GetOwner(), self:GetAbility(), "modifier_imba_elder_titan_ancestral_spirit_ms", {duration = self.buff_duration})
+			speed_mod:SetStackCount(self.bonus_ms)
+		end
+
+		self:GetParent():RemoveSelf()
+		astral_spirit = nil
+		return nil
 	end
 
 	local hero_distance = (self:GetParent():GetOwner():GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Length()
@@ -394,6 +409,8 @@ function modifier_imba_elder_titan_ancestral_spirit_self:OnIntervalThink()
 			return nil
 		end
 	end
+
+	self.return_timer = self.return_timer + 0.1
 end
 
 function modifier_imba_elder_titan_ancestral_spirit_self:CheckState()

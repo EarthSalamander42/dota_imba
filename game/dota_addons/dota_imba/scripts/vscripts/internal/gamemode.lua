@@ -240,11 +240,9 @@ function OnSetGameMode( eventSourceIndex, args )
 --]]
 
 	-- Bounty multiplier increase
-	print("Gold Mult:", tostring(mode_info.bounty_multiplier), CUSTOM_XP_BONUS[map_name][mode_info.exp_multiplier])
 	CustomNetTables:SetTableValue("game_options", "bounty_multiplier", {100 + CUSTOM_GOLD_BONUS[map_name][mode_info.bounty_multiplier]})
 
 	-- XP multiplier increase
-	print("XP Mult:", mode_info.exp_multiplier, CUSTOM_XP_BONUS[map_name][mode_info.exp_multiplier])
 	CustomNetTables:SetTableValue("game_options", "exp_multiplier", {100 + CUSTOM_XP_BONUS[map_name][mode_info.exp_multiplier]})
 
 	-- Tower power increase
@@ -257,11 +255,9 @@ function OnSetGameMode( eventSourceIndex, args )
 			TOWER_POWER_FACTOR = 3
 		end
 	end
-	print("Tower Power:", TOWER_POWER_FACTOR)
 	CustomNetTables:SetTableValue("game_options", "tower_power", {TOWER_POWER_FACTOR})
 
 	-- Hero power increase
-	print("Hero Power:", mode_info.hero_power)
 	CustomNetTables:SetTableValue("game_options", "initial_gold", {HERO_INITIAL_GOLD[map_name][mode_info.hero_power]})
 	CustomNetTables:SetTableValue("game_options", "initial_level", {HERO_STARTING_LEVEL[map_name][mode_info.hero_power]})
 	CustomNetTables:SetTableValue("game_options", "max_level", {MAX_LEVEL[map_name][mode_info.hero_power]})
