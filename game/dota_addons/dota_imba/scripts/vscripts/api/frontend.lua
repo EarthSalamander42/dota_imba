@@ -51,6 +51,22 @@ function get_developers()
 	return api_preloaded.developers
 end
 
+-- Returns the preloaded xp for player / if available
+-- {
+--    xp: number
+--    imr_5v5: number
+--    imr_10v10: number
+--    imr_5v5_calibrating: boolean
+--    imr_10v10_calibrating: boolean
+-- }
+function get_stats_for_player(steamid)
+    if api_preloaded.player ~= nil and api_preloaded.players[steamid] ~= nil then
+        return api_preloaded.players[steamid];
+    else
+        return nil
+    end
+end
+
 -- Will write a custom game event to the server
 -- event and content mandatory, tag optional 
 function imba_api_game_event(event, content, tag)
@@ -133,7 +149,10 @@ local MAX_ITEM_SLOT = 14
 -- Has to be called in DOTA_GAMERULES_STATE_POST_GAME
 -- Collects stats infos and saves them to the server
 -- Will later be used for IMR and XP changes
-function imba_api_game_complete()
+-- 
+-- complete_fun will get a table as argument: https://hastebin.com/ubopezureh.json        
+-- 
+function imba_api_game_complete(complete_fun)
 	
 	local winning_team = GAME_WINNER_TEAM
 	local winning_team_number = 2
@@ -244,7 +263,12 @@ function imba_api_game_complete()
 	-- perform request
 	imba_api():game_complete(args, function (data)
 		ApiPrint("Request good")
-		print("[api-frontend] Request good (Game save)")
+        print("[api-frontend] Request good (Game save)")
+        
+        -- data contains info about changed xp and changed imr:
+        if complete_fun ~= nil then
+            complete_fun(data.players)
+        end
 	end, function (err)
 		if (err == nil) then
 			ApiPrint("request failed with nil")

@@ -253,7 +253,11 @@ function GameMode:OnGameRulesStateChange(keys)
 	if new_state == DOTA_GAMERULES_STATE_POST_GAME then
         -- call imba api
         ApiPrint("Entering post game")
-		imba_api_game_complete()
+        imba_api_game_complete(function (players) 
+            -- do sth with the players new xp + imr
+            -- accessing xp would be
+            local playersXp = players[steamIdOfPlayer].xp 
+        end)
 
 		CustomGameEventManager:Send_ServerToAllClients("end_game", {})
 		local winning_team = GAME_WINNER_TEAM
