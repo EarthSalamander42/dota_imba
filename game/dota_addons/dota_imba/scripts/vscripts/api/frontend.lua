@@ -34,7 +34,7 @@ function imba_api_preload()
 end
 
 -- Syncronous
--- returns array of donators or nil
+-- returns a string with the model used for the companion or false
 function IsDonator(hero)
 	for i = 1, #api_preloaded.donators do
 		if tostring(PlayerResource:GetSteamID(hero:GetPlayerID())) == api_preloaded.donators[i].steamId64 then
