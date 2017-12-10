@@ -57,8 +57,6 @@
 		"Ability15"					"special_bonus_imba_alchemist_2" // Unstable Concoction can grant allies Chemical Rage
 		"Ability16"					"special_bonus_imba_alchemist_5" // Greed stacks increase Acid Spray damage
 		"Ability17"					"special_bonus_imba_alchemist_8" // Chemical Rage grants a damage aura
-
-		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -86,8 +84,6 @@
 		"Ability15"					"special_bonus_imba_antimage_5" //Blinking grants a 1 second magic immunity shield.
 		"Ability16"					"special_bonus_imba_antimage_8" //Mana Void counts missing mana from all targets in the AOE
 		"Ability17"					"special_bonus_imba_antimage_4" //% of target's missing mana added to Mana Break damage
-
-		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -117,8 +113,6 @@
 		"Ability15"					"special_bonus_imba_axe_4" // +30% of your strength added to Counter Helix damage.
 		"Ability16"					"special_bonus_imba_axe_6" // When Counter Helix procs, it has 25% chance to immediately proc again. Psuedo Random chance. The extra proc cannot trigger this again.
 		"Ability17"					"special_bonus_imba_axe_8" // +650 Culling Blade cast range (leaps into the target to execute it).
-
-		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -149,8 +143,6 @@
 		"Ability15"					"special_bonus_imba_bane_3" //Fiend's Grip is no longer channeled
 		"Ability16"					"special_bonus_imba_bane_8" //Fiend's Grip spread during channeling
 		"Ability17"					"special_bonus_imba_bane_5" //Brain Sap casts summons a Baby Bane which applies a Baby Fiend's Grip on the target.
-
-		"ProjectileModel"			"particles/units/heroes/hero_bane/bane_projectile.vpcf"
 	}
 
 	//=================================================================================================================
@@ -174,8 +166,6 @@
 		"Ability4"					"generic_hidden"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"batrider_flaming_lasso"
-
-		"ProjectileModel"			"particles/units/heroes/hero_batrider/batrider_base_attack.vpcf"
 
 		//Voice Lines (number of voicelines per events)
 		"ShortName"					"bat"
@@ -269,8 +259,6 @@
 		"Ability4"					"generic_hidden"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"beastmaster_primal_roar"
-
-		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -298,8 +286,6 @@
 		"Ability15"					"special_bonus_imba_bloodseeker_3" //Rupture Damage Heals Bloodseeker
 		"Ability16"					"special_bonus_imba_bloodseeker_5" //Blood Rite is cast in three overlapping circles
 		"Ability17"					"special_bonus_imba_bloodseeker_8" //Bloodrage's damage amplification increases the less health the target has
-
-		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -330,8 +316,6 @@
 		"Ability15"					"special_bonus_imba_bounty_hunter_5" //Global Shuriken bounce range on all Tracked targets
 		"Ability16"					"special_bonus_imba_bounty_hunter_1" //Tracked enemies take increased damage from any source
 		"Ability17"					"special_bonus_imba_bounty_hunter_8" //Track becomes hidden and unpurgable
-
-		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -351,8 +335,6 @@
 		"Ability5"					"generic_hidden"
 		"Ability6"					"brewmaster_primal_split"
 		"Ability16"					"generic_hidden" // Disable ult cdr
-
-		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -381,8 +363,6 @@
 		"Ability15"					"special_bonus_imba_centaur_6" //Return becomes an aura 
 		"Ability16"					"special_bonus_imba_centaur_7" //Return's Bulging Hide gains stacks from all auto attacks, or any kind of damage above 100.
 		"Ability17"					"special_bonus_imba_centaur_5" //Heroes with Stampede haste get 75% tenacity. 
-
-		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -404,8 +384,6 @@
 		"Ability4"					"generic_hidden"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_chaos_knight_phantasm"
-
-		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -434,8 +412,6 @@
 		"Ability15"					"special_bonus_imba_clinkz_1" //Death Pact Spirits can now attack with spirit strikes
 		"Ability16"					"special_bonus_imba_clinkz_7" //Searing Arrows has a chance to attack the same target again
 		"Ability17"					"special_bonus_imba_clinkz_8" //Death Pact bonuses stay permanently if target dies quickly
-
-		"ProjectileModel"			"particles/units/heroes/hero_clinkz/clinkz_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -464,8 +440,6 @@
 		"Ability15"					"special_bonus_imba_crystal_maiden_8" //+50% Freezing Field explosion rate
 		"Ability16"					"special_bonus_imba_crystal_maiden_6" //Freezing Field constantly Frostbites enemies in it during the duration of the spell
 		"Ability17"					"special_bonus_imba_crystal_maiden_3" //Crystal Nova's Snowfield grants damage reduction and increases health regeneration. 
-
-		"ProjectileModel"			"particles/units/heroes/hero_crystalmaiden/maiden_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -494,8 +468,6 @@
 		"Ability15"					"special_bonus_imba_dazzle_1" // Shadow Wave now bounces after a small delay
 		"Ability16"					"special_bonus_imba_dazzle_6" // Nothl Protection is now an aura around Dazzle
 		"Ability17"					"special_bonus_imba_dazzle_3" // Shallow Grave releases a shadow wave to heal allies when it ends
-
-		"ProjectileModel"			"particles/units/heroes/hero_dazzle/dazzle_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -526,8 +498,6 @@
 		"Ability15"					"special_bonus_imba_disruptor_6"
 		"Ability16"					"special_bonus_imba_disruptor_7"
 		"Ability17"					"special_bonus_imba_disruptor_8"
-
-		"ProjectileModel"			"particles/units/heroes/hero_disruptor/disruptor_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -550,8 +520,6 @@
 		"Ability4"					"doom_bringer_empty1"
 		"Ability5"					"doom_bringer_empty2"
 		"Ability6"					"imba_doom_bringer_doom"
-
-		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -584,8 +552,6 @@
 		"Ability15"					"special_bonus_imba_drow_ranger_3" //After casting Gust, all auto attacks hitting a target casts a small Gust for 5 seconds. This small gust wave pushes the main target back 50 units, deals no damage, and does not silence.
 		"Ability16"					"special_bonus_imba_drow_ranger_8" //Marksmanship no longer disables itself
 		"Ability17"					"special_bonus_imba_drow_ranger_6" //While Trueshot Aura is active, Drow gains agility equal to 5% of every allied hero's agility.
-
-		"ProjectileModel"			"particles/units/heroes/hero_drow/drow_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -615,8 +581,6 @@
 		"Ability15"					"special_bonus_imba_elder_titan_6" // +3000 Earth Splitter crack distance
 		"Ability16"					"special_bonus_imba_elder_titan_7" // Echo Stomp no longer require channeling
 		"Ability17"					"special_bonus_imba_elder_titan_8" // Natural Order reduces physical and magical resistance
-
-		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -643,8 +607,6 @@
 		"Ability15"					"special_bonus_truestrike"
 		"Ability16"					"generic_hidden"
 		"Ability17"					"special_bonus_unique_ember_spirit_5"
-
-		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -673,8 +635,6 @@
 		"Ability15"					"special_bonus_imba_enigma_5" // True malefice, instead of stuns little black holes are created
 		"Ability16"					"special_bonus_imba_enigma_6" // Enigma has a constant AoE Midnight pulse around him. Stacks with regular pulse.
 		"Ability17"					"special_bonus_imba_enigma_8" // Cast Eidolons on heroes
-
-		"ProjectileModel"			"particles/units/heroes/hero_enigma/enigma_base_attack.vpcf"					
 	}
 
 	//=================================================================================================================
@@ -703,8 +663,6 @@
 		"Ability15"					"special_bonus_imba_faceless_void_4" // Bashing enemies with the Time Dilation debuff increases their active spells' CD while decreasing all of Voids cooldowns
 		"Ability16"					"special_bonus_imba_faceless_void_5" // Time Lock now spawns mini chronospheres
 		"Ability17"					"special_bonus_imba_faceless_void_1" // Time Dilation grants Faceless Void a chance to backtrack damage instances that increases per ability affected by Time Dilation
-
-		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -753,8 +711,6 @@
 		"Ability15"					"special_bonus_imba_jakiro_6"
 		"Ability16"					"special_bonus_imba_jakiro_7"
 		"Ability17"					"special_bonus_imba_jakiro_8"
-
-		"ProjectileModel"			"particles/units/heroes/hero_jakiro/jakiro_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -783,8 +739,6 @@
 //		"Ability15"					"special_bonus_imba_juggernaut_6" // Blade Fury receives benefits from Blade Dance
 //		"Ability16"					"special_bonus_imba_juggernaut_1" // Blade Fury acts as a vacuum, SUCCing nearby enemies
 //		"Ability17"					"special_bonus_imba_juggernaut_5" // Wind Dance stacks are consumed to increase Secret Blade max hit count
-
-		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -814,7 +768,7 @@
 //		"Ability16"					"special_bonus_imba_juggernaut_1" // Blade Fury acts as a vacuum, SUCCing nearby enemies
 //		"Ability17"					"special_bonus_imba_juggernaut_5" // Wind Dance stacks are consumed to increase Secret Blade max hit count
 
-//		"ProjectileSpeed"			"900"
+
 //	}
 
 	//=================================================================================================================
@@ -844,8 +798,6 @@
 		"Ability15"					"special_bonus_imba_kunkka_6"
 		"Ability16"					"special_bonus_imba_kunkka_7"
 		"Ability17"					"special_bonus_imba_kunkka_8"
-
-		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -874,8 +826,6 @@
 		"Ability15"					"special_bonus_imba_lich_6" // Chain Frost can be cast on allies to give them a orb that spins around them. Taking damage from an enemy hero causes the Chain Frost to bounce to the attacker.
 		"Ability16"					"special_bonus_imba_lich_7" // Chain Frost bounces now procs two little Mini Frosts when bouncing
 		"Ability17"					"special_bonus_imba_lich_8" // Frost Armor is now an aura that slows nearby enemies in a small range around the target. The slow gets stronger each time the target is attacked.
-	
-		"ProjectileModel"			"particles/units/heroes/hero_lich/lich_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -904,8 +854,6 @@
 		"Ability15"					"special_bonus_imba_lina_7" // Main Light Strike Array's explosion is repeated 3 times
 		"Ability16"					"special_bonus_imba_lina_4" // After a Light Strike Array hits the ground, magma erupts and damages nearby enemy units
 		"Ability17"					"special_bonus_imba_lina_8" // Blazing Fire
-
-		"ProjectileModel"			"particles/units/heroes/hero_lina/lina_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -934,8 +882,6 @@
 		"Ability15"					"special_bonus_imba_lion_6"
 		"Ability16"					"special_bonus_imba_lion_7"
 		"Ability17"					"special_bonus_imba_lion_8"
-
-		"ProjectileModel"			"particles/units/heroes/hero_lion/lion_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -964,8 +910,6 @@
 		"Ability15"					"special_bonus_imba_lycan_6"
 		"Ability16"					"special_bonus_imba_lycan_7"
 		"Ability17"					"special_bonus_imba_lycan_8"
-
-		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -1000,8 +944,6 @@
 		"Ability15"					"special_bonus_imba_magnataur_6"
 		"Ability16"					"special_bonus_imba_magnataur_7"
 		"Ability17"					"special_bonus_imba_magnataur_8"
-
-		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -1030,8 +972,6 @@
 		"Ability15"					"special_bonus_imba_mirana_6" // Free Sacred Arrow after Leap ends
 		"Ability16"					"special_bonus_imba_mirana_1" // Upon using Moonlight Shadow, allies are given a stack of Starstorm which will proc when they go out of invisibility near an enemy unit.
 		"Ability17"					"special_bonus_imba_mirana_8" // Each Starstorm wave marks the target. If Mirana lands an attack on the target, she drops an additional secondary star on it.
-
-		"ProjectileModel"			"particles/units/heroes/hero_mirana/mirana_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -1055,8 +995,6 @@
 		"Ability4"					"generic_hidden"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"furion_wrath_of_nature"
-
-		"ProjectileModel"			"particles/units/heroes/hero_furion/furion_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -1085,8 +1023,6 @@
 		"Ability15"					"special_bonus_imba_necrolyte_6"
 		"Ability16"					"special_bonus_imba_necrolyte_7"
 		"Ability17"					"special_bonus_imba_necrolyte_8"
-
-		"ProjectileModel"			"particles/units/heroes/hero_necrolyte/necrolyte_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -1118,8 +1054,6 @@
 		"Ability15"					"special_bonus_imba_night_stalker_6"
 		"Ability16"					"special_bonus_imba_night_stalker_7"
 		"Ability17"					"special_bonus_imba_night_stalker_8"
-
-		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -1148,8 +1082,6 @@
 		"Ability15"					"special_bonus_imba_nyx_assassin_1" //Vendetta kill doesn't use Eye for Eye stacks
 		"Ability16"					"special_bonus_imba_nyx_assassin_6" //Impale causes random spikes to appear around targets hit
 		"Ability17"					"special_bonus_imba_nyx_assassin_2" //Vendetta hits apply Mana Burn
-
-		"ProjectileSpeed"			"900"
 	}
 
 //	//=================================================================================================================
@@ -1179,7 +1111,7 @@
 //		"Ability16"					"special_bonus_evasion_30"
 //		"Ability17"					"special_bonus_unique_naga_siren_3"
 
-//		"ProjectileSpeed"			"900"
+
 //	}
 
 	//=================================================================================================================
@@ -1208,8 +1140,6 @@
 		"Ability15"					"special_bonus_imba_obsidian_destroyer_6"
 		"Ability16"					"special_bonus_imba_obsidian_destroyer_7"
 		"Ability17"					"special_bonus_imba_obsidian_destroyer_8"
-
-		"ProjectileModel"			"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -1239,8 +1169,6 @@
 		"Ability15"					"special_bonus_imba_omniknight_8"
 		"Ability16"					"special_bonus_imba_omniknight_7"
 		"Ability17"					"special_bonus_imba_omniknight_6"
-
-		"ProjectileSpeed"			"900"
 	}
 
 //	//=================================================================================================================
@@ -1270,7 +1198,7 @@
 //		"Ability16"					"special_bonus_imba_pangolier_7"
 //		"Ability17"					"special_bonus_imba_pangolier_8"
 
-//		"ProjectileSpeed"			"900"
+
 //	}
 
 	//=================================================================================================================
@@ -1300,8 +1228,6 @@
 		"Ability15"					"special_bonus_imba_phantom_assassin_6"
 		"Ability16"					"special_bonus_imba_phantom_assassin_7"
 		"Ability17"					"special_bonus_imba_phantom_assassin_8"
-
-		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -1352,8 +1278,6 @@
 		"Ability15"					"special_bonus_imba_phoenix_6" // Creates another egg with allies, egg health decreased by 25%
 		"Ability16"					"special_bonus_imba_phoenix_3" // Fire spirits can stack up to 3
 		"Ability17"					"special_bonus_imba_phoenix_8" // Can move freely when casting Sun Ray
-
-		"ProjectileModel"			"particles/units/heroes/hero_phoenix/phoenix_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -1383,8 +1307,6 @@
 		"Ability15"					"special_bonus_imba_pudge_1" // Rot deals x more damage for every y% health he misses
 		"Ability16"					"special_bonus_imba_pudge_8" // Triple Meat Hooks
 		"Ability17"					"special_bonus_imba_pudge_7" // Dismember now disarms the target after the duration for the channeled duration
-
-		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -1413,8 +1335,6 @@
 		"Ability15"					"special_bonus_imba_pugna_6"		//Nether Ward doesn't take damage from casting spells, but has a 2 seconds cooldown between cast.
 		"Ability16"					"special_bonus_imba_pugna_7"		//Decrepify decreases the target's Tenacity by 15%.
 		"Ability17"					"special_bonus_imba_pugna_8"		//Nether Blasts' Nether Weakness is not reset when a new blast affects an already affected target. Instead, it refreshes the duration and stacks upon it.
-
-		"ProjectileModel"			"particles/units/heroes/hero_pugna/pugna_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -1443,8 +1363,6 @@
 		"Ability15"					"special_bonus_imba_queenofpain_6"
 		"Ability16"					"special_bonus_imba_queenofpain_7"
 		"Ability17"					"special_bonus_imba_queenofpain_8"
-
-		"ProjectileModel"			"particles/units/heroes/hero_queenofpain/queen_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -1473,8 +1391,6 @@
 		"Ability15"					"special_bonus_imba_riki_6"
 		"Ability16"					"special_bonus_imba_riki_7"
 		"Ability17"					"special_bonus_imba_riki_8"
-
-		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -1499,8 +1415,6 @@
 		"Ability10"					"rubick_hidden3"
 
 		"Ability19"					"imba_rubick_spell_steal_controller"
-
-		"ProjectileModel"			"particles/units/heroes/hero_rubick/rubick_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -1529,8 +1443,6 @@
 		"Ability15"					"special_bonus_imba_sand_king_6"
 		"Ability16"					"special_bonus_imba_sand_king_7"
 		"Ability17"					"special_bonus_imba_sand_king_8"
-
-		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -1559,9 +1471,7 @@
 		"Ability15"					"special_bonus_imba_nevermore_6"
 		"Ability16"					"special_bonus_imba_nevermore_7"
 		"Ability17"					"special_bonus_imba_nevermore_8"
-	
-		"ProjectileModel"			"particles/units/heroes/hero_nevermore/nevermore_base_attack.vpcf"
-	}
+		}
 
 	//=================================================================================================================
 	// HERO: Shadow Shaman
@@ -1579,8 +1489,6 @@
 		"Ability4"					"generic_hidden"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_shadow_shaman_mass_serpent_ward"
-
-		"ProjectileModel"			"particles/units/heroes/hero_shadowshaman/shadowshaman_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -1610,8 +1518,6 @@
 		"Ability15"					"special_bonus_imba_silencer_4"
 		"Ability16"					"special_bonus_imba_silencer_7"
 		"Ability17"					"special_bonus_imba_silencer_8"
-
-		"ProjectileModel"			"particles/units/heroes/hero_silencer/silencer_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -1640,8 +1546,7 @@
 		"Ability15"					"special_bonus_imba_skeleton_king_6"
 		"Ability16"					"special_bonus_imba_skeleton_king_7"
 		"Ability17"					"special_bonus_imba_skeleton_king_8"
-		
-		"ProjectileSpeed"			"900"
+	
 	}
 
 	//=================================================================================================================
@@ -1670,8 +1575,6 @@
 		"Ability15"					"special_bonus_imba_skywrath_mage_6"
 		"Ability16"					"special_bonus_imba_skywrath_mage_7"
 		"Ability17"					"special_bonus_imba_skywrath_mage_8"
-
-		"ProjectileModel"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -1700,8 +1603,6 @@
 		"Ability15"					"special_bonus_imba_slardar_6"
 		"Ability16"					"special_bonus_imba_slardar_7"
 		"Ability17"					"special_bonus_imba_slardar_8"
-
-		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -1730,8 +1631,6 @@
 		"Ability15"					"special_bonus_imba_sniper_6" // Assassination's cast point increases. When executed, it launches three projectiles towards the target. 
 		"Ability16"					"special_bonus_imba_sniper_7" // Take Aim's Aimed Assaults cause the target to bleed and lose vision
 		"Ability17"					"special_bonus_imba_sniper_8" // Shrapnel attacks increase the damage done to the target instead of lowering it
-
-		"ProjectileModel"			"particles/units/heroes/hero_sniper/sniper_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -1751,8 +1650,6 @@
 		"Ability4"					"imba_spectre_reality"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_spectre_haunt"
-
-		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -1771,8 +1668,6 @@
 		"Ability4"					"generic_hidden"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_storm_spirit_ball_lightning"
-
-		"ProjectileModel"			"particles/units/heroes/hero_stormspirit/stormspirit_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -1801,8 +1696,6 @@
 		"Ability15"					"special_bonus_imba_sven_6"
 		"Ability16"					"special_bonus_imba_sven_7"
 		"Ability17"					"special_bonus_imba_sven_8"
-
-		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -1832,8 +1725,6 @@
 		"Ability15"					"special_bonus_imba_techies_6"
 		"Ability16"					"special_bonus_imba_techies_7"
 		"Ability17"					"special_bonus_imba_techies_8"
-
-		"ProjectileModel"			"particles/units/heroes/hero_techies/techies_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -1855,8 +1746,6 @@
 		"Ability4"					"generic_hidden"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_tidehunter_ravage"
-
-		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -1886,8 +1775,6 @@
 		"Ability15"					"special_bonus_imba_tinker_6"
 		"Ability16"					"special_bonus_imba_tinker_7"
 		"Ability17"					"special_bonus_imba_tinker_8"
-
-		"ProjectileModel"			"particles/units/heroes/hero_tinker/tinker_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -1916,8 +1803,6 @@
 		"Ability15"					"special_bonus_imba_tiny_6"
 		"Ability16"					"special_bonus_imba_tiny_7"
 		"Ability17"					"special_bonus_imba_tiny_8"
-
-		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -1946,8 +1831,6 @@
 		"Ability15"					"special_bonus_imba_troll_warlord_6"
 		"Ability16"					"special_bonus_imba_troll_warlord_7"
 		"Ability17"					"special_bonus_imba_troll_warlord_8"
-
-		"ProjectileModel"			"particles/units/heroes/hero_troll_warlord/troll_warlord_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -1969,8 +1852,6 @@
 		"Ability4"					"generic_hidden"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"undying_flesh_golem"
-
-		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -1999,8 +1880,6 @@
 		"Ability15"					"special_bonus_imba_ursa_6" // Overpower also roots targets in addition to disarming them.
 		"Ability16"					"special_bonus_imba_ursa_7" // Enrage adds a portion of your current health as damage.
 		"Ability17"					"special_bonus_imba_ursa_8" // Overpower becomes a passive, granting Ursa free attacks for 4 seconds whenever he starts an attack and Overpower is off cooldown.
-
-		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -2023,7 +1902,6 @@
 		"Ability4"					"imba_vengefulspirit_rancor"
 		"Ability5"					"imba_vengefulspirit_swap_back"
 		"Ability6"					"imba_vengefulspirit_nether_swap"
-		//"Ability7"					"vengefulspirit_nether_swap"
 
 		"Ability10"					"special_bonus_imba_vengefulspirit_1"
 		"Ability11"					"special_bonus_imba_vengefulspirit_2"
@@ -2033,8 +1911,6 @@
 		"Ability15"					"special_bonus_imba_vengefulspirit_6"
 		"Ability16"					"special_bonus_imba_vengefulspirit_7"
 		"Ability17"					"special_bonus_imba_vengefulspirit_8"
-
-		"ProjectileModel"			"particles/units/heroes/hero_vengeful/vengeful_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -2065,8 +1941,6 @@
 		"Ability15"					"special_bonus_imba_venomancer_6"
 		"Ability16"					"special_bonus_imba_venomancer_7"
 		"Ability17"					"special_bonus_imba_venomancer_8"
-
-		"ProjectileModel"			"particles/units/heroes/hero_venomancer/venomancer_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -2095,8 +1969,6 @@
 		"Ability15"					"special_bonus_imba_warlock_6"
 		"Ability16"					"special_bonus_imba_warlock_7"
 		"Ability17"					"special_bonus_imba_warlock_8"
-
-		"ProjectileModel"			"particles/units/heroes/hero_warlock/warlock_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -2125,8 +1997,6 @@
 		"Ability15"					"special_bonus_imba_witch_doctor_1" //Every Maledict burst deals it's damage around the target (spreads between enemies)
 		"Ability16"					"special_bonus_imba_witch_doctor_3" //Voodoo Restoration's purge is now a strong purge.
 		"Ability17"					"special_bonus_imba_witch_doctor_8" //Now spawns two Death Wards; if channeling is broken, only one of them disappears.
-
-		"ProjectileModel"			"particles/units/heroes/hero_witchdoctor/witchdoctor_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -2149,8 +2019,6 @@
 		"Ability4"					"zuus_cloud"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"zuus_thundergods_wrath"
-
-		"ProjectileModel"			"particles/units/heroes/hero_zuus/zuus_base_attack.vpcf"
 	}
 
 	//=================================================================================================================

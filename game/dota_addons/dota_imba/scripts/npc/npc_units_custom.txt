@@ -10805,7 +10805,7 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"                 "npc_dota_ward_base"
-		"Model"                     "models/courier/doom_demihero_courier/doom_demihero_courier.vmdl"
+		"Model"                     "models/creeps/roshan/babyroshan_statue.vmdl"
 		"Level"                     "1"
 		"ModelScale"                "1.3"
 

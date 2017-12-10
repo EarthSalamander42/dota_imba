@@ -166,15 +166,6 @@ function GameMode:OnGameRulesStateChange(keys)
 		-- Shows various info to devs in pub-game to find lag issues
 		ImbaNetGraph(10.0)
 
-		local pos = {}
-		pos[1] = Vector(6446, -6979, 1496)
-		pos[2] = Vector(-5217, 5912, 1423)
-		pos[3] = Vector(-587, 6240, 1440)
-		pos[4] = Vector(7041, -6263, 1461)
-
-		local item = CreateItem("item_the_caustic_finale", nil, nil)
-		local drop = CreateItemOnPositionSync(pos[RandomInt(1, #pos)] + RandomVector(RandomInt(75, 300)), item)
-
 		Timers:CreateTimer(function() -- OnThink
 			if CHEAT_ENABLED == false then
 				if Convars:GetBool("developer") == true or Convars:GetBool("sv_cheats") == true or GameRules:IsCheatMode() then
@@ -240,10 +231,26 @@ function GameMode:OnGameRulesStateChange(keys)
 --			DefineLosingTeam()
 			return 60
 		end)
+
+		if RandomInt(1, 100) > 25 then
+			Timers:CreateTimer(RandomInt(5, 10) * 60, function()
+				if CHEAT_ENABLED == false then
+					local pos = {}
+					pos[1] = Vector(6446, -6979, 1496)
+					pos[2] = Vector(RandomInt(-6000, 0), RandomInt(7150, 7300), 1423)
+					pos[3] = Vector(RandomInt(-1000, 2000), RandomInt(6900, 7200), 1440)
+					pos[4] = Vector(7041, -6263, 1461)
+					local pos = pos[4]
+
+					GridNav:DestroyTreesAroundPoint(pos, 80, false)
+					local item = CreateItem("item_the_caustic_finale", nil, nil)
+					local drop = CreateItemOnPositionSync(pos, item)
+				end
+			end)
+		end
 	end
 
 	if new_state == DOTA_GAMERULES_STATE_POST_GAME then
-
         -- call imba api
         ApiPrint("Entering post game")
 		imba_api_game_complete()
@@ -281,7 +288,8 @@ local normal_xp = npc:GetDeathXP()
 		else
 			npc:SetDeathXP(normal_xp*1.5)
 		end
-		npc:AddNewModifier(npc, nil, "modifier_river", {})
+
+--		npc:AddNewModifier(npc, nil, "modifier_river", {})
 
 		-- Valve Illusion bug to prevent respawning
 		if npc:IsIllusion() or npc:IsTempestDouble() then
@@ -345,7 +353,11 @@ local normal_xp = npc:GetDeathXP()
 
 			if IsDonator(npc) ~= false then
 				if npc:GetUnitName() ~= "npc_dota_hero_wisp" or npc.is_real_wisp then
-					DonatorCompanion(npc, IsDonator(npc))
+					if tostring(PlayerResource:GetSteamID(npc:GetPlayerID())) == "76561198015161808" then
+						DonatorCompanion(npc, "cookies")
+					else
+						DonatorCompanion(npc, IsDonator(npc))
+					end
 				end
 			end
 
@@ -479,7 +491,7 @@ local normal_xp = npc:GetDeathXP()
 	-- IMBA: Creep stats adjustment
 	-------------------------------------------------------------------------------------------------
 
-	if not npc:IsHero() and not npc:IsOwnedByAnyPlayer() then
+	if not npc:IsHero() and not npc:IsOwnedByAnyPlayer() and not npc:IsBuilding() then
 		-- Add passive buff to lane creeps
 		if string.find(npc:GetUnitName(), "dota_creep") then
 			npc:AddNewModifier(npc, nil, "modifier_imba_creep_power", {})

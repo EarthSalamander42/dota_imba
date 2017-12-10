@@ -55,9 +55,10 @@ end
 
 function modifier_item_the_caustic_finale:OnAttackLanded( params )
 	if IsServer() then
+		if self:GetParent():IsIllusion() then return end
 		if self:GetParent() == params.attacker then
 			local Target = params.target
-			if Target ~= nil then
+			if Target ~= nil and Target:GetTeamNumber() ~= self:GetParent():GetTeamNumber() then
 				local hCausticBuff = Target:FindModifierByName( "modifier_sand_king_boss_caustic_finale" )
 				if hCausticBuff == nil then
 					hCausticBuff = Target:AddNewModifier( self:GetParent(), self:GetAbility(), "modifier_sand_king_boss_caustic_finale", { duration = self.caustic_duration } )

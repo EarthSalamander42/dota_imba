@@ -1069,11 +1069,20 @@ local color = hero:GetFittingColor()
 	local companion = CreateUnitByName("npc_imba_donator_companion", summon_point, true, hero, hero, hero:GetTeamNumber())
 	companion:SetOwner(hero)
 	companion:SetControllableByPlayer(hero:GetPlayerID(), true)
-	companion:SetOriginalModel(model)
-	companion:SetModel(model)
+
+	if model == "cookies" then
+		model = "models/courier/baby_rosh/babyroshan.vmdl"
+		companion:SetOriginalModel(model)
+		companion:SetModel(model)
+		companion:SetMaterialGroup("2")
+	else
+		companion:SetOriginalModel(model)
+		companion:SetModel(model)
+		companion:SetRenderColor(color[1], color[2], color[3])
+	end
+
 	companion:SetModelScale(1.0)
 	companion:AddNewModifier(companion, nil, "modifier_companion", {})
-	companion:SetRenderColor(color[1], color[2], color[3])
 	if string.find(model, "flying") then
 		companion:SetMoveCapability(DOTA_UNIT_CAP_MOVE_FLY)
 	end

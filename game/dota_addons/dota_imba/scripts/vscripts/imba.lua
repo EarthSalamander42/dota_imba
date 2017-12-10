@@ -1158,7 +1158,6 @@ function GameMode:OnAllPlayersLoaded()
 	-- CHAT
 	self.chat = Chat(self.Players, self.Users, TEAM_COLORS)
 	--	Chat:constructor(players, users, teamColors)
-	print("Constructing Chat!")
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Fountain abilities setup
@@ -1201,9 +1200,9 @@ local time_elapsed = 0
 	Timers:CreateTimer(function()
 		if not hero:IsNull() then
 			if hero:GetUnitName() == "npc_dota_hero_meepo" then
-			if not hero:IsClone() then
-				TrackMeepos()
-			end
+				if not hero:IsClone() then
+					TrackMeepos()
+				end
 			end
 		end
 		return 0.5
