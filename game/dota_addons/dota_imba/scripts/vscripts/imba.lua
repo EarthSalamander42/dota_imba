@@ -26,7 +26,7 @@ require('libraries/keyvalues')
 require('internal/gamemode')
 require('internal/events')
 -- These are the XP system
-require('server/server')
+-- require('server/server')
 require('libraries/json')
 -- All custom constants
 require('internal/constants')
@@ -88,7 +88,9 @@ function GameMode:OnFirstPlayerLoaded()
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: API. Preload
 	-------------------------------------------------------------------------------------------------
-	imba_api_init()
+	imba_api_init(function ()
+        print("API: Init data...")
+    end)
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Roshan and Picking Screen camera initialization
@@ -1158,7 +1160,6 @@ function GameMode:OnAllPlayersLoaded()
 	-- CHAT
 	self.chat = Chat(self.Players, self.Users, TEAM_COLORS)
 	--	Chat:constructor(players, users, teamColors)
-	print("Constructing Chat!")
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Fountain abilities setup
@@ -1201,9 +1202,9 @@ local time_elapsed = 0
 	Timers:CreateTimer(function()
 		if not hero:IsNull() then
 			if hero:GetUnitName() == "npc_dota_hero_meepo" then
-			if not hero:IsClone() then
-				TrackMeepos()
-			end
+				if not hero:IsClone() then
+					TrackMeepos()
+				end
 			end
 		end
 		return 0.5

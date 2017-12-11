@@ -47,7 +47,7 @@
 			<Panel id="TeamsContainer" />
 
 			<Panel id="ButtonsContainer">
-				<Button id="FeedButton" onactivate="DOTADisplayURL('https://goo.gl/forms/nIqedrEqoacqT00F2');">
+				<Button id="FeedButton" onactivate="DOTADisplayURL('https://www.dota2imba.org');">
 					<Label text="#lag_issues" />
 				</Button>
 			

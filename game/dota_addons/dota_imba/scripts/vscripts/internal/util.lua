@@ -1019,8 +1019,6 @@ function ReconnectPlayer(player_id)
 				Server_EnableToGainXPForPlyaer(player_id)
 				local pick_state = HeroSelection.playerPickState[player_id].pick_state
 				local repick_state = HeroSelection.playerPickState[player_id].repick_state
-				print("Pick State (util.lua):", pick_state)
-				print("Repick State (util.lua):", repick_state)
 
 				local data = {
 					PlayerID = player_id,
@@ -1029,12 +1027,6 @@ function ReconnectPlayer(player_id)
 					repickState = repick_state
 				}
 
-				print("HERO SELECTION ARGS:")
-				print("Player ID:", player_id)
-				print("Pick State:", pick_state)
-				print("Re-Pick State:", repick_state)
-
-				print("Sending picked heroes...")
 				PrintTable(HeroSelection.picked_heroes)
 				CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.picked_heroes, pickState = pick_state, repickState = repick_state})
 			else
@@ -1069,11 +1061,20 @@ local color = hero:GetFittingColor()
 	local companion = CreateUnitByName("npc_imba_donator_companion", summon_point, true, hero, hero, hero:GetTeamNumber())
 	companion:SetOwner(hero)
 	companion:SetControllableByPlayer(hero:GetPlayerID(), true)
-	companion:SetOriginalModel(model)
-	companion:SetModel(model)
+
+	if model == "cookies" then
+		model = "models/courier/baby_rosh/babyroshan.vmdl"
+		companion:SetOriginalModel(model)
+		companion:SetModel(model)
+		companion:SetMaterialGroup(tostring(RandomInt(1, 4)))
+	else
+		companion:SetOriginalModel(model)
+		companion:SetModel(model)
+		companion:SetRenderColor(color[1], color[2], color[3])
+	end
+
 	companion:SetModelScale(1.0)
 	companion:AddNewModifier(companion, nil, "modifier_companion", {})
-	companion:SetRenderColor(color[1], color[2], color[3])
 	if string.find(model, "flying") then
 		companion:SetMoveCapability(DOTA_UNIT_CAP_MOVE_FLY)
 	end

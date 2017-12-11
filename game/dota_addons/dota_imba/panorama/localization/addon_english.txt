@@ -28,7 +28,7 @@
 	"scoreboard_tool_tip_disable_help"				"Disable Help"
 	"scoreboard_tool_tip_active_disable_help"		"(DISABLED)"
 
-	"lag_issues"									"Experienced lag issues? Please click here."
+	"lag_issues"									"Dota 2 IMBA website"
 
 	//Picking Screen
 	"loading_pre_game"				"Loading heroes, please wait..."
