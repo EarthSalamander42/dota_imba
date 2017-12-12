@@ -20,6 +20,11 @@ function ShivaBlast( keys )
 	-- Play cast sound
 	caster:EmitSound(sound_cast)
 
+	if Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 100) == true then
+		particle_blast = "particles/econ/events/ti7/shivas_guard_active_ti7.vpcf"
+		particle_hit = "particles/econ/events/ti7/shivas_guard_impact_ti7.vpcf"
+	end
+
 	-- Play particle
 	local blast_pfx = ParticleManager:CreateParticle(particle_blast, PATTACH_ABSORIGIN_FOLLOW, caster)
 	ParticleManager:SetParticleControl(blast_pfx, 0, caster:GetAbsOrigin())

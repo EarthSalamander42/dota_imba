@@ -25,7 +25,7 @@ STRATEGY_TIME = 0.0							-- How long should strategy time last?
 
 GOLD_PER_TICK = 1							-- How much gold should players get per tick?
 
-RECOMMENDED_BUILDS_DISABLED = true			-- Should we disable the recommened builds for heroes
+RECOMMENDED_BUILDS_DISABLED = false			-- Should we disable the recommened builds for heroes
 CAMERA_DISTANCE_OVERRIDE = -1				-- How far out should we allow the camera to go?  1134 is the default in Dota
 
 MINIMAP_ICON_SIZE = 1						-- What icon size should we use for our heroes?
@@ -89,6 +89,7 @@ FULL_ABANDON_TIME = 15														-- Time for a team to be considered as havin
 GAME_ROSHAN_KILLS = 0														-- Tracks amount of Roshan kills
 ROSHAN_RESPAWN_TIME = RandomInt(2, 4) * 60									-- Roshan respawn timer (in seconds)
 AEGIS_DURATION = 300														-- Aegis expiration timer (in seconds)
+GAME_COUNT_DELAY = 600 -- wait 10 min before being able to earn xp
 
 IMBA_DAMAGE_EFFECTS_DISTANCE_CUTOFF = 2500									-- Range at which most on-damage effects no longer trigger
 
@@ -140,14 +141,6 @@ USE_CUSTOM_TEAM_COLORS_FOR_PLAYERS = false									-- Should we use custom team 
 TEAM_COLORS = {}															-- If USE_CUSTOM_TEAM_COLORS is set, use these colors.
 TEAM_COLORS[DOTA_TEAM_GOODGUYS] = { 61, 210, 150 }							-- Teal
 TEAM_COLORS[DOTA_TEAM_BADGUYS]  = { 243, 201, 9 }							-- Yellow
-TEAM_COLORS[DOTA_TEAM_CUSTOM_1] = { 197, 77, 168 }							-- Pink
-TEAM_COLORS[DOTA_TEAM_CUSTOM_2] = { 255, 108, 0 }							-- Orange
-TEAM_COLORS[DOTA_TEAM_CUSTOM_3] = { 52, 85, 255 }							-- Blue
-TEAM_COLORS[DOTA_TEAM_CUSTOM_4] = { 101, 212, 19 }							-- Green
-TEAM_COLORS[DOTA_TEAM_CUSTOM_5] = { 129, 83, 54 }							-- Brown
-TEAM_COLORS[DOTA_TEAM_CUSTOM_6] = { 27, 192, 216 }							-- Cyan
-TEAM_COLORS[DOTA_TEAM_CUSTOM_7] = { 199, 228, 13 }							-- Olive
-TEAM_COLORS[DOTA_TEAM_CUSTOM_8] = { 140, 42, 244 }							-- Purple
 
 PLAYER_COLORS = {}															-- Stores individual player colors
 PLAYER_COLORS[0] = { 67, 133, 255 }
@@ -180,14 +173,6 @@ USE_AUTOMATIC_PLAYERS_PER_TEAM = false										-- Should we set the number of p
 CUSTOM_TEAM_PLAYER_COUNT = {}
 CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 5
 CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 5
-CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_1] = 0
-CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_2] = 0
-CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_3] = 0
-CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_4] = 0
-CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_5] = 0
-CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_6] = 0
-CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_7] = 0
-CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_8] = 0
 
 if GetMapName() == "imba_standard" then
 	IMBA_PICK_MODE_ALL_PICK = true
@@ -270,7 +255,7 @@ HERO_STARTING_LEVEL["imba_custom_10v10"] = {5, 12}
 MAX_LEVEL = {}
 MAX_LEVEL["imba_standard"] = {40, 40}
 MAX_LEVEL["imba_10v10"] = {40, 40}
-MAX_LEVEL["imba_custom_10v10"] = {100, 200}
+MAX_LEVEL["imba_custom_10v10"] = {40, 100}
 
 HERO_INITIAL_GOLD = {}
 HERO_INITIAL_GOLD["imba_standard"] = {1200, 2000}

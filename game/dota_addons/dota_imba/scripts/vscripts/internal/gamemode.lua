@@ -15,7 +15,6 @@ function GameMode:_InitGameMode()
 	GameRules:SetTreeRegrowTime( TREE_REGROW_TIME )
 	GameRules:SetUseCustomHeroXPValues ( USE_NONSTANDARD_HERO_XP_BOUNTY )
 	GameRules:SetGoldPerTick( GOLD_PER_TICK )
---	GameRules:SetGoldTickTime( GOLD_TICK_TIME )
 	GameRules:SetRuneSpawnTime( RUNE_SPAWN_TIME )
 	GameRules:SetUseBaseGoldBountyOnHeroes( USE_NONSTANDARD_HERO_GOLD_BOUNTY )
 	GameRules:SetHeroMinimapIconScale( MINIMAP_ICON_SIZE )
@@ -83,17 +82,6 @@ function GameMode:_InitGameMode()
 	ListenToGameEvent("dota_tower_kill", Dynamic_Wrap(GameMode, 'OnTowerKill'), self)
 	ListenToGameEvent("dota_player_selected_custom_team", Dynamic_Wrap(GameMode, 'OnPlayerSelectedCustomTeam'), self)
 	ListenToGameEvent("dota_npc_goal_reached", Dynamic_Wrap(GameMode, 'OnNPCGoalReached'), self)
-	
-	--ListenToGameEvent("dota_tutorial_shop_toggled", Dynamic_Wrap(GameMode, 'OnShopToggled'), self)
-
-	--ListenToGameEvent('player_spawn', Dynamic_Wrap(GameMode, 'OnPlayerSpawn'), self)
-	--ListenToGameEvent('dota_unit_event', Dynamic_Wrap(GameMode, 'OnDotaUnitEvent'), self)
-	--ListenToGameEvent('nommed_tree', Dynamic_Wrap(GameMode, 'OnPlayerAteTree'), self)
-	--ListenToGameEvent('player_completed_game', Dynamic_Wrap(GameMode, 'OnPlayerCompletedGame'), self)
-	--ListenToGameEvent('dota_match_done', Dynamic_Wrap(GameMode, 'OnDotaMatchDone'), self)
-	--ListenToGameEvent('dota_combatlog', Dynamic_Wrap(GameMode, 'OnCombatLogEvent'), self)
-	--ListenToGameEvent('dota_player_killed', Dynamic_Wrap(GameMode, 'OnPlayerKilled'), self)
-	--ListenToGameEvent('player_team', Dynamic_Wrap(GameMode, 'OnPlayerTeam'), self)
 
 	--[[This block is only used for testing events handling in the event that Valve adds more in the future
 	Convars:RegisterCommand('events_test', function()
@@ -229,15 +217,6 @@ function OnSetGameMode( eventSourceIndex, args )
 --		CustomNetTables:SetTableValue("game_options", "frantic_mode", {true})
 --		print("Frantic mode activated!")
 --	end
---[[
-	-- Arena mode setup
-	if mode_info.kills_to_end and tonumber(mode_info.kills_to_end) > 0 and map_name == "imba_arena" then
-		END_GAME_ON_KILLS = true
-		KILLS_TO_END_GAME_FOR_TEAM = math.min(tonumber(mode_info.kills_to_end), 250)
-		CustomNetTables:SetTableValue("game_options", "kills_to_end", {mode_info.kills_to_end})
-		print("Game will end on "..KILLS_TO_END_GAME_FOR_TEAM.." kills!")
-	end
---]]
 
 	-- Bounty multiplier increase
 	CustomNetTables:SetTableValue("game_options", "bounty_multiplier", {100 + CUSTOM_GOLD_BONUS[map_name][mode_info.bounty_multiplier]})
@@ -261,57 +240,4 @@ function OnSetGameMode( eventSourceIndex, args )
 	CustomNetTables:SetTableValue("game_options", "initial_gold", {HERO_INITIAL_GOLD[map_name][mode_info.hero_power]})
 	CustomNetTables:SetTableValue("game_options", "initial_level", {HERO_STARTING_LEVEL[map_name][mode_info.hero_power]})
 	CustomNetTables:SetTableValue("game_options", "max_level", {MAX_LEVEL[map_name][mode_info.hero_power]})
-
-	-- Set the game options as being chosen
---	GAME_OPTIONS_SET = true
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Stat tracking stuff
-	-------------------------------------------------------------------------------------------------
-
-	-- Tracks if game options were customized or just left as default
-	-- statCollection:setFlags({game_options_set = GAME_OPTIONS_SET and 1 or 0})
-
-	-- -- Tracks the game mode
-	-- if IMBA_ABILITY_MODE_RANDOM_OMG then
-	-- 	statCollection:setFlags({game_mode = "Random_OMG"})
-	-- 	if IMBA_RANDOM_OMG_RANDOMIZE_SKILLS_ON_DEATH then
-	-- 		statCollection:setFlags({romg_mode = "ROMG_random_skills"})
-	-- 	else
-	-- 		statCollection:setFlags({romg_mode = "ROMG_fixed_skills"})
-	-- 	end
-	-- elseif IMBA_PICK_MODE_ALL_RANDOM then
-	-- 	statCollection:setFlags({game_mode = "All_Random"})
-	-- else
-	-- 	statCollection:setFlags({game_mode = "All_Pick"})
-	-- end
-
-	-- -- Tracks same-hero selection
-	-- statCollection:setFlags({same_hero = ALLOW_SAME_HERO_SELECTION and 1 or 0})
-
-	-- -- Tracks game objective
-	-- if END_GAME_ON_KILLS then
-	-- 	statCollection:setFlags({kills_to_end = KILLS_TO_END_GAME_FOR_TEAM})
-	-- else
-	-- 	statCollection:setFlags({kills_to_end = 0})
-	-- end
-
-	-- -- Tracks gold/experience options
-	-- statCollection:setFlags({gold_bonus = CUSTOM_GOLD_BONUS})
-	-- statCollection:setFlags({exp_bonus = CUSTOM_XP_BONUS})
-
-	-- -- Tracks respawn and buyback
-	-- statCollection:setFlags({respawn_mult = HERO_RESPAWN_TIME_MULTIPLIER})
-	-- statCollection:setFlags({buyback_mult = 100})
-
-	-- -- Track starting gold and levels
-	-- statCollection:setFlags({starting_gold = HERO_INITIAL_GOLD})
-	-- statCollection:setFlags({starting_exp = HERO_STARTING_LEVEL})
-
-	-- -- Tracks creep and tower power settings
-	-- statCollection:setFlags({tower_power = TOWER_POWER_FACTOR})
-
-	-- -- Tracks structure abilities and upgrades
-	-- statCollection:setFlags({tower_abilities = TOWER_ABILITY_MODE and 1 or 0})
-	-- statCollection:setFlags({tower_upgrades = TOWER_UPGRADE_MODE and 1 or 0})
 end

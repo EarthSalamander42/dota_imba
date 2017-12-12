@@ -10264,7 +10264,7 @@
 	{
 		"ID"							"2230"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName"			"item_lifesteal"
+		"AbilityTextureName"			"custom/imba_lifesteal"
 		"ScriptFile"					"items/item_lifesteal.lua"
 
 		// Item Info
@@ -10337,7 +10337,7 @@
 	{
 		"ID"							"2232"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName"			"item_mask_of_madness"
+		"AbilityTextureName"			"custom/imba_mask_of_madness"
 		"ScriptFile"					"items/item_mask_of_madness.lua"
 
 		// Item Info
@@ -10462,7 +10462,7 @@
 	{
 		"ID"							"2234"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName"			"item_satanic"
+		"AbilityTextureName"			"custom/imba_satanic"
 		"ScriptFile"					"items/item_satanic.lua"
 
 		// Item Info
@@ -10580,7 +10580,7 @@
 	{
 		"ID"							"2240"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName"			"item_urn_of_shadows"
+		"AbilityTextureName"			"custom/imba_urn_of_shadows"
 		"ScriptFile"					"items/item_urn_of_shadows.lua"
 
 		// Item Info
@@ -10828,7 +10828,7 @@
 	{
 		"ID"							"2244"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName"			"item_hood_of_defiance"
+		"AbilityTextureName"			"custom/imba_hood_of_defiance"
 		"ScriptFile"					"items/item_hood_of_defiance.lua"
 
 		// Item Info
@@ -11044,7 +11044,7 @@
 	{
 		"ID"							"2248"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName"			"item_blade_mail"
+		"AbilityTextureName"			"custom/imba_blade_mail"
 		"ScriptFile"					"items/item_blademail.lua"
 
 		// Item Info
@@ -11234,7 +11234,7 @@
 	{
 		"ID"							"2252"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName"			"item_basher"
+		"AbilityTextureName"			"custom/imba_basher"
 		"ScriptFile"					"items/item_skull_basher.lua"		
 
 		// Item Info
@@ -11344,7 +11344,7 @@
 	{
 		"ID"							"2254"
 		"BaseClass"						"item_lua"
-		"AbilityTextureName"			"item_abyssal_blade"
+		"AbilityTextureName"			"custom/imba_abyssal_blade"
 		"ScriptFile"					"items/item_abyssal_blade.lua"		
 
 		// Item Info
@@ -11503,9 +11503,9 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"Model"							"models/props_gameplay/red_box.vmdl" 
 		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
-		"AbilityTextureName"			"item_manta"
+		"AbilityTextureName"			"custom/imba_manta"
 
-		// Stats		
+		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"45.0"
 		"AbilityCastPoint"				"0.0"
@@ -11693,7 +11693,7 @@
 		"ID"							"2258"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"items/item_crit.lua"
-		"AbilityTextureName" 			"item_lesser_crit"
+		"AbilityTextureName" 			"custom/imba_lesser_crit"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 		// Item Info

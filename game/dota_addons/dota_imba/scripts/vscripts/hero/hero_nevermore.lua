@@ -1537,7 +1537,7 @@ function imba_nevermore_requiem:OnSpellStart(death_cast)
         if modifier_souls_handler then
             stacks = modifier_souls_handler:GetStackCount()
             necro_ability = modifier_souls_handler:GetAbility()
-	    max_souls = modifier_souls_handler.max_souls
+	    max_souls = modifier_souls_handler.total_max_souls
         end
     end
 

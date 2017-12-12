@@ -39,11 +39,6 @@ function imba_api_preload(complete_fun)
 		api_preloaded.developers = devs
 		complete_fun()
 	end)
-
-	imba_api():meta_topxpplayers(function (devs)
-		api_preloaded.topxpplayers = devs
-		complete_fun()
-	end)
 end
 
 -- Syncronous
@@ -64,10 +59,6 @@ function get_developers()
 	return api_preloaded.developers
 end
 
-function get_topxpplayers()
-    return api_preloaded.topxpplayers
-end
-
 -- Returns the preloaded xp for player / if available
 -- {
 --    xp: number
@@ -78,9 +69,6 @@ end
 -- }
 function get_stats_for_player(ID)
 	local steamid = tostring(PlayerResource:GetSteamID(ID))
-	print(steamid)
-	print(api_preloaded.players)
-	print(api_preloaded.players[steamid])
 	if api_preloaded.players ~= nil and api_preloaded.players[steamid] ~= nil then
 		return api_preloaded.players[steamid];
 	else
@@ -296,11 +284,11 @@ end
 
 -- Experience System
 CustomNetTables:SetTableValue("game_options", "game_count", {value = 0})
-local XP_level_table = {0,100,200,300,400,500,700,900,1100,1300,1500,1800,2100,2400,2700,3000,3400,3800,4200,4600,5000}
---------------------    0  1   2   3   4   5   6   7    8    9   10   11   12   13   14   15   16   17   18   19   20
+XP_level_table = {0,100,200,300,400,500,700,900,1100,1300,1500,1800,2100,2400,2700,3000,3400,3800,4200,4600,5000}
+--------------    0  1   2   3   4   5   6   7    8    9   10   11   12   13   14   15   16   17   18   19   20
 
 local bonus = 0
-for i = 21 +1, 400 do
+for i = 21 +1, 500 do
 	bonus = bonus +10
 	XP_level_table[i] = XP_level_table[i-1] + 500 + bonus
 end
@@ -388,13 +376,11 @@ function GetTitleColorIXP(title, js)
 end
 
 function CountGameIXP()
-local delay = 600 -- wait 10 min before being able to earn xp
-
 	if CHEAT_ENABLED == true then
 		print("CHEATS: Game will not record xp.")
 		return
 	else
-		Timers:CreateTimer(delay, function()
+		Timers:CreateTimer(GAME_COUNT_DELAY, function()
 			CustomNetTables:SetTableValue("game_options", "game_count", {value = 1})
 		end)
 	end
@@ -437,7 +423,6 @@ local level = 0
 			XP = current_xp,
 			MaxXP = xp_required_levelup + current_xp_in_level,
 			Lvl = level +1, -- add +1 only on the HUD else you are level 0 at the first level
-			ID = ID,
 			title = GetTitleIXP(level),
 			title_color = GetTitleColorIXP(GetTitleIXP(level), true)
 		})

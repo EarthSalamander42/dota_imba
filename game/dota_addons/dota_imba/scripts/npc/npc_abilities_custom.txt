@@ -15279,7 +15279,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"              "800"
+		"AbilityCastRange"              "600"
 		"AbilityCastPoint"              "0.4"
 
 		// Time
@@ -15585,7 +15585,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"               "100 90 80 70 60 50"
+		"AbilityCooldown"               "100 80 60 60 60 60"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -15644,7 +15644,7 @@
 			"07"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"projectile_base_speed"     "1200"
+				"projectile_base_speed"     "850"
 			}
 
 			"08"
@@ -20366,6 +20366,13 @@
 			"07"
 			{
 				"var_type"						"FIELD_INTEGER"
+				"scepter_max_souls"				"20 28 36 44 49 54 59"
+			}
+
+
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
 				"temporary_soul_duration"		"18 18 18 18 22 26 30"
 			}
 
@@ -20594,20 +20601,28 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"duration"	                    "2"
+				"duration"	                "2"
 			}
 
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"dmg_per_sec"				"50"
+				"pc_dmg_per_sec"			"5"
 			}
+
 			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"flat_dmg_per_sec"			"80"
+			}
+
+			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"tick_interval"				"0.5"
 			}
-			"04"
+
+			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"250"
@@ -25668,7 +25683,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_pudge_meat_hook"
+			"01" 	"imba_pudge_dismember"
 			
 		}
 

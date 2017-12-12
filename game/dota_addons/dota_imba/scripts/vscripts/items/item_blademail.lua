@@ -26,6 +26,23 @@ function item_imba_blade_mail:OnSpellStart()
 	caster:AddNewModifier(caster, ability, modifier_active, {duration = return_duration})
 end
 
+function item_imba_blade_mail:GetAbilityTextureName()
+	if IsClient() then
+		local caster = self:GetCaster()
+		if not caster:IsHero() then return "custom/imba_blade_mail" end
+		
+		local carrier_name = caster:GetName()
+		local uniqueBlink = {
+			npc_dota_hero_axe = "axe",
+		}
+		
+		if uniqueBlink[carrier_name] then
+			return "custom/imba_blade_mail_"..uniqueBlink[carrier_name]
+		end
+		
+		return "custom/imba_blink"
+	end
+end
 
 ---------------------------------------
 --     STATS MODIFIER (STACKABLE)    --

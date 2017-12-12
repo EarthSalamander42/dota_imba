@@ -97,7 +97,14 @@ function modifier_imba_radiance_aura:GetAuraRadius()
 function modifier_imba_radiance_aura:OnCreated()
 	if IsServer() then
 		local parent = self:GetParent()
-		self.particle = ParticleManager:CreateParticle("particles/item/radiance/radiance_owner.vpcf", PATTACH_ABSORIGIN_FOLLOW, parent)
+		local particle = "particles/item/radiance/radiance_owner.vpcf"
+		if Imbattlepass:GetRewardUnlocked(parent:GetPlayerID(), 44) == true then
+			particle = "particles/econ/events/ti7/radiance_owner_ti7.vpcf"
+		elseif Imbattlepass:GetRewardUnlocked(parent:GetPlayerID(), 88) == true then
+			particle = "particles/econ/events/ti6/radiance_owner_ti6.vpcf"
+		end
+
+		self.particle = ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN_FOLLOW, parent)
 		ParticleManager:SetParticleControl(self.particle, 2, parent:GetFittingColor())
 		self:StartIntervalThink(0.5)
 	end
