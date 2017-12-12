@@ -13,6 +13,7 @@ function item_tpscroll:GetAOERadius() return self:GetSpecialValueFor("maximum_di
 
 function item_tpscroll:OnSpellStart()
 	local caster = self:GetCaster()
+	local target = self:GetCursorTarget()
 	local ability = self
 	local max_distance = ability:GetSpecialValueFor("maximum_distance")
 	local start_pfx_name = "particles/items2_fx/teleport_start.vpcf"
@@ -22,10 +23,21 @@ function item_tpscroll:OnSpellStart()
 	if #building >= 1 then
 		self.location = ability:GetCursorPosition()
 	else
-		local building = FindUnitsInRadius(caster:GetTeamNumber(), ability:GetCursorPosition(), nil, 9999999, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
-		local building_pos = building[1]:GetAbsOrigin()
-		self.location = ((caster:GetAbsOrigin() - building_pos) * max_distance) + building_pos
+		local buildings = FindUnitsInRadius(caster:GetTeamNumber(), ability:GetCursorPosition(), nil, 9999999, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+		local building_pos = buildings[1]:GetAbsOrigin()
+		self.location = GetGroundPosition((((ability:GetCursorPosition() - building_pos):Normalized() * max_distance) + building_pos), nil)
 	end
+	if target and caster == target then -- self cast: teleport to base
+		local buildings = FindUnitsInRadius(caster:GetTeamNumber(), ability:GetCursorPosition(), nil, 9999999, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_FARTHEST, false)
+		for _, i in pairs(buildings) do
+			if IsFountain(i) then
+				local building_pos = i:GetAbsOrigin()
+				self.location = GetGroundPosition((((ability:GetCursorPosition() - building_pos):Normalized() * max_distance) + building_pos), nil)
+				break
+			end
+		end
+	end
+	MinimapEvent(caster:GetTeamNumber(), caster, self.location.x, self.location.y, DOTA_MINIMAP_EVENT_TEAMMATE_TELEPORTING, ability:GetChannelTime())
 	self.buff = caster:AddNewModifier(caster, ability, "modifier_item_imba_tpscroll_active", {duration = ability:GetSpecialValueFor("tooltip_channel_time")})
 	self.start_pfx = ParticleManager:CreateParticle(start_pfx_name, PATTACH_WORLDORIGIN, caster)
 	ParticleManager:SetParticleControl(self.start_pfx, 0, caster:GetAbsOrigin())
@@ -48,11 +60,11 @@ function item_tpscroll:OnChannelFinish( bInterrupted )
 	local ability = self
 	if bInterrupted then -- unsuccessful
 		self.buff:Destroy()
-
 	else -- successful
-
-
+		FindClearSpaceForUnit(caster, self.location, true)
+		
 	end
+	MinimapEvent(caster:GetTeamNumber(), caster, self.location.x, self.location.y, DOTA_MINIMAP_EVENT_TEAMMATE_TELEPORTING, -1)
 	ParticleManager:DestroyParticle(self.start_pfx, false)
 	ParticleManager:DestroyParticle(self.end_pfx, false)
 	ParticleManager:ReleaseParticleIndex(self.start_pfx)
