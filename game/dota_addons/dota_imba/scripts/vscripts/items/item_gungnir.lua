@@ -1,5 +1,22 @@
 -- Author: MouJiaoZi
--- Dtae: 2017/12/02  YYYY/MM/DD
+-- Date: 2017/12/02  YYYY/MM/DD
+
+-- For battle pass
+function GetForceStaffEffect(npc)
+	local effect = "particles/items_fx/force_staff.vpcf"
+
+	if Imbattlepass:GetRewardUnlocked(npc:GetPlayerID(), 18) == true then
+		effect = "particles/econ/events/fall_major_2016/force_staff_fm06.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(npc:GetPlayerID(), 27) == true then
+		effect = "particles/econ/events/ti7/force_staff_ti7.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(npc:GetPlayerID(), 45) == true then
+		effect = "particles/econ/events/winter_major_2017/force_staff_wm07.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(npc:GetPlayerID(), 54) == true then
+		effect = "particles/econ/events/ti6/force_staff_ti6.vpcf"
+	end
+
+	return effect
+end
 
 item_imba_gungnir = item_imba_gungnir or class({})
 
@@ -43,8 +60,6 @@ function item_imba_gungnir:OnSpellStart()
 							TargetIndex = target:entindex(),}
 		ExecuteOrderFromTable(startAttack)
 	end
-
-
 end
 
 -------------------------------------
@@ -467,3 +482,116 @@ function modifier_item_imba_gungnir_attack_speed:OnAttack( keys )
 		end
 	end
 end
+
+
+---------------------------------------------
+--		item_imba_force_staff
+---------------------------------------------
+item_imba_force_staff = item_imba_force_staff or class({})
+LinkLuaModifier("modifier_item_imba_force_staff", "items/item_gungnir", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_item_imba_force_staff_active", "items/item_gungnir", LUA_MODIFIER_MOTION_NONE)
+
+function item_imba_force_staff:GetIntrinsicModifierName()
+	return "modifier_item_imba_force_staff"
+end
+
+function item_imba_force_staff:CastFilterResultTarget(target)
+	if IsServer() then
+		local caster = self:GetCaster()
+		if caster:GetTeam() == target:GetTeam() and caster ~= target and target:IsMagicImmune() then
+			return UF_FAIL_MAGIC_IMMUNE_ALLY
+		elseif caster:GetTeam() ~= target:GetTeam() and target:IsMagicImmune() then
+			return UF_FAIL_MAGIC_IMMUNE_ENEMY
+		end
+		return UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+	end
+end
+
+function item_imba_force_staff:OnSpellStart()
+	if not IsServer() then return end
+	local ability = self
+	local caster = self:GetCaster()
+	local target = self:GetCursorTarget()
+	EmitSoundOn("DOTA_Item.ForceStaff.Activate", target)
+	target:AddNewModifier(caster, ability, "modifier_item_imba_force_staff_active", {duration = ability:GetSpecialValueFor("duration")})
+end
+
+-------------------------------------
+-----  STATE MODIFIER ---------------
+-------------------------------------
+
+modifier_item_imba_force_staff = modifier_item_imba_force_staff or class({})
+
+function modifier_item_imba_force_staff:IsHidden() return true end
+function modifier_item_imba_force_staff:IsPurgable() return false end
+function modifier_item_imba_force_staff:IsDebuff() return false end
+function modifier_item_imba_force_staff:RemoveOnDeath() return false end
+function modifier_item_imba_force_staff:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_force_staff:DeclareFunctions()
+	local decFuncs = {MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
+					 MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+					 }
+	return decFuncs
+end
+
+function modifier_item_imba_force_staff:GetModifierConstantHealthRegen()
+	return self:GetAbility():GetSpecialValueFor("bonus_health_regen")
+end
+
+function modifier_item_imba_force_staff:GetModifierBonusStats_Intellect()
+	return self:GetAbility():GetSpecialValueFor("bonus_intellect")
+end
+
+---------------------------------------
+--------  ACTIVE BUFF -----------------
+---------------------------------------
+
+modifier_item_imba_force_staff_active = modifier_item_imba_force_staff_active or class({})
+
+function modifier_item_imba_force_staff_active:IsDebuff() return false end
+function modifier_item_imba_force_staff_active:IsHidden() return true end
+function modifier_item_imba_force_staff_active:IsPurgable() return false end
+function modifier_item_imba_force_staff_active:IsStunDebuff() return false end
+function modifier_item_imba_force_staff_active:IsMotionController()  return true end
+function modifier_item_imba_force_staff_active:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
+
+function modifier_item_imba_force_staff_active:OnCreated()
+	if not IsServer() then return end
+	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
+	self:StartIntervalThink(FrameTime())
+	self.angle = self:GetParent():GetForwardVector():Normalized()
+	self.distance = self:GetAbility():GetSpecialValueFor("push_length") / ( self:GetDuration() / FrameTime())
+end
+
+function modifier_item_imba_force_staff_active:GetEffectName() return "particles/items_fx/force_staff.vpcf" end
+
+function modifier_item_imba_force_staff_active:OnDestroy()
+	if not IsServer() then return end
+	self:GetParent():FadeGesture(ACT_DOTA_FLAIL)
+	ResolveNPCPositions(self:GetParent():GetAbsOrigin(), 128)
+end
+
+function modifier_item_imba_force_staff_active:OnIntervalThink()
+	-- Remove force if conflicting
+	if not self:CheckMotionControllers() then
+		self:Destroy()
+		return
+	end
+	self:HorizontalMotion(self:GetParent(), FrameTime())
+end
+
+function modifier_item_imba_force_staff_active:HorizontalMotion(unit, time)
+	if not IsServer() then return end
+	local pos = unit:GetAbsOrigin()
+	GridNav:DestroyTreesAroundPoint(pos, 80, false)
+	local pos_p = self.angle * self.distance
+	local next_pos = GetGroundPosition(pos + pos_p,unit)
+	unit:SetAbsOrigin(next_pos)
+end
+
+
+---------------------------------------------
+--		item_imba_hurricane_pike
+---------------------------------------------
+item_imba_hurricane_pike = item_imba_hurricane_pike or class({})
