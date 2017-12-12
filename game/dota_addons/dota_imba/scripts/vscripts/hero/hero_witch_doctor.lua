@@ -212,19 +212,12 @@ function imba_witch_doctor_voodoo_restoration:GetAbilityTextureName()
    return "witch_doctor_voodoo_restoration"
 end
 
--- #6 TALENT : Voodo restoration turns into a passive.
-function modifier_special_bonus_imba_witch_doctor_6:OnCreated()
-	if IsServer() then
-		local ability = self:GetParent():FindAbilityByName("imba_witch_doctor_voodoo_restoration")
-		local caster = self:GetParent()
-		if not ability then return end
-		caster:SetContextThink( DoUniqueString("checkforvoodoo"), function ( )
-			if ability:GetLevel() > 0 then			
-				self:GetParent():AddNewModifier(self:GetParent(), ability, "modifier_imba_voodoo_restoration", {})
-				return nil
-			end
-			return 1.0
-		end, 0 )
+function imba_witch_doctor_voodoo_restoration:GetIntrinsicModifierName()
+    -- #6 TALENT : Voodo restoration turns into a passive.
+	if self:GetCaster():HasTalent("special_bonus_imba_witch_doctor_6") then
+		return "modifier_imba_voodoo_restoration"
+	else
+		return nil
 	end
 end
 

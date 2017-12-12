@@ -73,8 +73,16 @@ function item_imba_sheepstick:OnSpellStart()
 		-- Play the cast sound
 		target:EmitSound("DOTA_Item.Sheepstick.Activate")
 
+		local particle = "particles/items_fx/item_sheepstick.vpcf"
+
+		if Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 60) == true then
+			particle = "particles/econ/events/winter_major_2017/item_sheepstick_wm07.vpcf"
+		elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 120) == true then
+			particle = "particles/econ/items/shadow_shaman/shadow_shaman_sheepstick/shadowshaman_voodoo_sheepstick.vpcf"
+		end
+
 		-- Play the target particle
-		local sheep_pfx = ParticleManager:CreateParticle("particles/items_fx/item_sheepstick.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+		local sheep_pfx = ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN_FOLLOW, target)
 		ParticleManager:SetParticleControl(sheep_pfx, 0, target:GetAbsOrigin())
 		ParticleManager:ReleaseParticleIndex(sheep_pfx)
 
@@ -151,7 +159,14 @@ function modifier_item_imba_sheepstick_debuff:GetModifierMoveSpeedOverride()
 	return self:GetAbility():GetSpecialValueFor("enemy_move_speed") end
 
 function modifier_item_imba_sheepstick_debuff:GetModifierModelChange()
-	return "models/props_gameplay/pig.vmdl" end
+	local model = "models/props_gameplay/pig.vmdl"
+	if Imbattlepass:GetRewardUnlocked(self:GetCaster():GetPlayerID(), 60) == true then
+		model = "models/props_gameplay/pig_blue.vmdl"
+	elseif Imbattlepass:GetRewardUnlocked(self:GetCaster():GetPlayerID(), 120) == true then
+		model = "models/props_gameplay/roquelaire/roquelaire.vmdl"
+	end
+	return model
+end
 
 -- Hexed state
 function modifier_item_imba_sheepstick_debuff:CheckState()

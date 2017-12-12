@@ -91,9 +91,9 @@ end
 
 -- The overall game state has changed
 function GameMode:OnGameRulesStateChange(keys)
-    DebugPrint("[BAREBONES] GameRules State Changed")
-    DebugPrintTable(keys)
-    --	local i = 10
+	DebugPrint("[BAREBONES] GameRules State Changed")
+	DebugPrintTable(keys)
+	--	local i = 10
 
 	-- This internal handling is used to set up main barebones functions
 	GameMode:_OnGameRulesStateChange(keys)
@@ -111,7 +111,9 @@ function GameMode:OnGameRulesStateChange(keys)
 --		end
 
 		if PlayerResource:GetPlayerCount() < 10 then
-			CHEAT_ENABLED = true
+			if not IsInToolsMode() then
+				CHEAT_ENABLED = true
+			end
 		end
 	end
 
@@ -157,6 +159,9 @@ function GameMode:OnGameRulesStateChange(keys)
 --			return 1.0
 --		end)
 
+		-- Initialize Battle Pass
+		Imbattlepass:Init()
+
 		-- Shows various info to devs in pub-game to find lag issues
 		ImbaNetGraph(10.0)
 
@@ -173,10 +178,10 @@ function GameMode:OnGameRulesStateChange(keys)
 			-- fix to setup flying courier speed, volvo black magic reset it to 450
 			if GameRules:GetDOTATime(false, false) > 180 then
 				for _, courier in pairs(IMBA_COURIERS) do
-		 			if not courier:HasModifier("modifier_courier_hack") then
-		 				courier:AddNewModifier(courier, nil, "modifier_courier_hack", {})
-		 			end
-		 		end
+					if not courier:HasModifier("modifier_courier_hack") then
+						courier:AddNewModifier(courier, nil, "modifier_courier_hack", {})
+					end
+				end
 			end
 
 			-- fix for super high respawn time
@@ -205,9 +210,9 @@ function GameMode:OnGameRulesStateChange(keys)
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Game started (horn sounded)
 	-------------------------------------------------------------------------------------------------
-    if new_state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-        
-        ApiPrint("Entering Game in progress / horn")
+	if new_state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+		
+		ApiPrint("Entering Game in progress / horn")
 
 		CountGameIXP()
 
@@ -245,16 +250,26 @@ function GameMode:OnGameRulesStateChange(keys)
 	end
 
 	if new_state == DOTA_GAMERULES_STATE_POST_GAME then
-        -- call imba api
-        ApiPrint("Entering post game")
-        imba_api_game_complete(function (players) 
-            -- do sth with the players new xp + imr
-            -- accessing xp would be
-            local playersXp = players[steamIdOfPlayer].xp 
-        end)
+		-- call imba api
+		ApiPrint("Entering post game")
+
+		imba_api_game_complete(function (players)
+			print("Sending new XP / IMR values to clients")
+			for ID = 0, PlayerResource:GetPlayerCount() -1 do
+				print("XP DIFF:", players[tostring(PlayerResource:GetSteamID(ID))].xp_diff)
+				CustomNetTables:SetTableValue("player_table", tostring(ID), {
+					XP = CustomNetTables:GetTableValue("player_table", tostring(ID)).XP,
+					MaxXP = CustomNetTables:GetTableValue("player_table", tostring(ID)).MaxXP,
+					Lvl = CustomNetTables:GetTableValue("player_table", tostring(ID)).Lvl,
+					title = CustomNetTables:GetTableValue("player_table", tostring(ID)).title,
+					title_color = CustomNetTables:GetTableValue("player_table", tostring(ID)).title_color,
+					XP_change = players[tostring(PlayerResource:GetSteamID(ID))].xp_diff
+				})
+			end
+--			CustomGameEventManager:Send_ServerToAllClients("end_game", players)
+		end)
 
 		CustomGameEventManager:Send_ServerToAllClients("end_game", {})
-		SetPlayerInfoXP()
 
 		for _, hero in pairs(HeroList:GetAllHeroes()) do
 			if hero:GetTeamNumber() == GAME_WINNER_TEAM then
@@ -313,23 +328,23 @@ local normal_xp = npc:GetDeathXP()
 			npc:AddNewModifier(npc, nil, "modifier_imba_speed_limit_break", {})
 		end
 
-		if npc:IsRealHero() and npc:GetUnitName() ~= "npc_dota_hero_wisp" or npc.is_real_wisp then
-			if not npc.has_label then
-				Timers:CreateTimer(5.0, function()
-					local title = GetTitleIXP(npc:GetPlayerID())
-					local rgb = GetTitleColorIXP(title)
-					npc:SetCustomHealthLabel(title, rgb[1], rgb[2], rgb[3])
-				end)
-				npc.has_label = true
-			end
-		elseif npc:IsIllusion() then
-			if not npc.has_label then
-				local title = GetTitleIXP(npc:GetPlayerID())
-				local rgb = GetTitleColorIXP(title)
-				npc:SetCustomHealthLabel(title, rgb[1], rgb[2], rgb[3])
-				npc.has_label = true
-			end
-		end
+--		if npc:IsRealHero() and npc:GetUnitName() ~= "npc_dota_hero_wisp" or npc.is_real_wisp then
+--			if not npc.has_label then
+--				Timers:CreateTimer(5.0, function()
+--					local title = GetTitleIXP(npc:GetPlayerID())
+--					local rgb = GetTitleColorIXP(title)
+--					npc:SetCustomHealthLabel(title, rgb[1], rgb[2], rgb[3])
+--				end)
+--				npc.has_label = true
+--			end
+--		elseif npc:IsIllusion() then
+--			if not npc.has_label then
+--				local title = GetTitleIXP(npc:GetPlayerID())
+--				local rgb = GetTitleColorIXP(title)
+--				npc:SetCustomHealthLabel(title, rgb[1], rgb[2], rgb[3])
+--				npc.has_label = true
+--			end
+--		end
 	end
 
 	if npc:GetUnitName() == "npc_dummy_unit" or npc:GetUnitName() == "npc_dummy_unit_perma" then

@@ -10,14 +10,16 @@ if item_imba_blink == nil then item_imba_blink = class({}) end
 LinkLuaModifier( "modifier_imba_blink_dagger_handler", "items/item_blink.lua", LUA_MODIFIER_MOTION_NONE ) -- Check if the target was damaged and set cooldown
 
 function item_imba_blink:GetBehavior()
-	return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES end
+	return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES
+end
 
 function item_imba_blink:GetAbilityTextureName()
    return "custom/imba_blink"
 end
 
 function item_imba_blink:GetIntrinsicModifierName()
-	return "modifier_imba_blink_dagger_handler" end
+	return "modifier_imba_blink_dagger_handler"
+end
 
 function item_imba_blink:OnSpellStart()
 	local caster = self:GetCaster()
@@ -27,12 +29,44 @@ function item_imba_blink:OnSpellStart()
 	local distance = (target_point - origin_point):Length2D()
 	local max_blink_range = self:GetSpecialValueFor("max_blink_range")
 	
-	local blink_effect = "particles/item/blink/blink_dagger_start_imba.vpcf"
-	local blink_effect_end = "particles/item/blink/blink_dagger_imbaend.vpcf"
-	
+	local blink_effect = "particles/items_fx/blink_dagger_start.vpcf"
+	local blink_effect_end = "particles/items_fx/blink_dagger_end.vpcf"
+
+	if Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 9) == true then
+		blink_effect = "particles/econ/events/nexon_hero_compendium_2014/blink_dagger_start_nexon_hero_cp_2014.vpcf"
+		blink_effect_end = "particles/econ/events/nexon_hero_compendium_2014/blink_dagger_end_nexon_hero_cp_2014.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 18) == true then
+		blink_effect = "particles/econ/events/fall_major_2016/blink_dagger_start_fm06.vpcf"
+		blink_effect_end = "particles/econ/events/fall_major_2016/blink_dagger_end_fm06.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 27) == true then
+		blink_effect = "particles/econ/events/ti7/blink_dagger_start_ti7.vpcf"
+		blink_effect_end = "particles/econ/events/ti7/blink_dagger_end_ti7.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 36) == true then
+		blink_effect = "particles/econ/events/ti7/blink_dagger_start_ti7_lvl2.vpcf"
+		blink_effect_end = "particles/econ/events/ti7/blink_dagger_end_ti7_lvl2.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 45) == true then
+		blink_effect = "particles/econ/events/winter_major_2017/blink_dagger_start_wm07.vpcf"
+		blink_effect_end = "particles/econ/events/winter_major_2017/blink_dagger_end_wm07.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 54) == true then
+		blink_effect = "particles/econ/events/ti6/blink_dagger_start_ti6.vpcf"
+		blink_effect_end = "particles/econ/events/ti6/blink_dagger_end_ti6.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 63) == true then
+		blink_effect = "particles/econ/events/ti6/blink_dagger_start_ti6_lvl2.vpcf"
+		blink_effect_end = "particles/econ/events/ti6/blink_dagger_end_ti6_lvl2.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 72) == true then
+		blink_effect = "particles/econ/events/ti5/blink_dagger_start_ti5.vpcf"
+		blink_effect_end = "particles/econ/events/ti5/blink_dagger_end_ti5.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 81) == true then
+		blink_effect = "particles/econ/events/ti5/blink_dagger_start_lvl2_ti5.vpcf"
+		blink_effect_end = "particles/econ/events/ti5/blink_dagger_end_lvl2_ti5.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 90) == true then
+		blink_effect = "particles/econ/events/ti4/blink_dagger_start_ti4.vpcf"
+		blink_effect_end = "particles/econ/events/ti4/blink_dagger_end_ti4.vpcf"
+	end
+
 	-- Disjointing everything
 	ProjectileManager:ProjectileDodge(caster)
-	
+
 	-- Defining the color, either default or by command
 	local color
 	if caster.blinkcolor then
@@ -204,6 +238,38 @@ function item_imba_blink_boots:OnSpellStart()
 
 	local blink_effect = "particles/item/blink/blink_dagger_start_imba.vpcf"
 	local blink_effect_end = "particles/item/blink/blink_dagger_imbaend.vpcf"
+
+	if Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 9) == true then
+		blink_effect = "particles/econ/events/nexon_hero_compendium_2014/blink_dagger_start_nexon_hero_cp_2014.vpcf"
+		blink_effect_end = "particles/econ/events/nexon_hero_compendium_2014/blink_dagger_end_nexon_hero_cp_2014.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 18) == true then
+		blink_effect = "particles/econ/events/fall_major_2016/blink_dagger_start_fm06.vpcf"
+		blink_effect_end = "particles/econ/events/fall_major_2016/blink_dagger_end_fm06.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 27) == true then
+		blink_effect = "particles/econ/events/ti7/blink_dagger_start_ti7.vpcf"
+		blink_effect_end = "particles/econ/events/ti7/blink_dagger_end_ti7.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 36) == true then
+		blink_effect = "particles/econ/events/ti7/blink_dagger_start_ti7_lvl2.vpcf"
+		blink_effect_end = "particles/econ/events/ti7/blink_dagger_end_ti7_lvl2.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 45) == true then
+		blink_effect = "particles/econ/events/winter_major_2017/blink_dagger_start_wm07.vpcf"
+		blink_effect_end = "particles/econ/events/winter_major_2017/blink_dagger_end_wm07.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 54) == true then
+		blink_effect = "particles/econ/events/ti6/blink_dagger_start_ti6.vpcf"
+		blink_effect_end = "particles/econ/events/ti6/blink_dagger_end_ti6.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 63) == true then
+		blink_effect = "particles/econ/events/ti6/blink_dagger_start_ti6_lvl2.vpcf"
+		blink_effect_end = "particles/econ/events/ti6/blink_dagger_end_ti6_lvl2.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 72) == true then
+		blink_effect = "particles/econ/events/ti5/blink_dagger_start_ti5.vpcf"
+		blink_effect_end = "particles/econ/events/ti5/blink_dagger_end_ti5.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 81) == true then
+		blink_effect = "particles/econ/events/ti5/blink_dagger_start_lvl2_ti5.vpcf"
+		blink_effect_end = "particles/econ/events/ti5/blink_dagger_end_lvl2_ti5.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 90) == true then
+		blink_effect = "particles/econ/events/ti4/blink_dagger_start_ti4.vpcf"
+		blink_effect_end = "particles/econ/events/ti4/blink_dagger_end_ti4.vpcf"
+	end
 
 	-- Disjointing everything
 	ProjectileManager:ProjectileDodge(caster)

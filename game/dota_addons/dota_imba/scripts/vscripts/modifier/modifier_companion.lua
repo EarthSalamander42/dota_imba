@@ -98,6 +98,7 @@ function modifier_companion:OnIntervalThink()
 			"modifier_item_imba_silver_edge_invis",
 			"modifier_imba_skeleton_walk_invis",
 			"modifier_imba_riki_invisibility",
+			"modifier_imba_shadow_walk_buff_invis",
 		}
 
 		if companion:GetIdealSpeed() ~= hero:GetIdealSpeed() - 60 then

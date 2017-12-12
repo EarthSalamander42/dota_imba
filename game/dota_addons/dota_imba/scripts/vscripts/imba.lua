@@ -25,9 +25,6 @@ require('libraries/keyvalues')
 -- These internal libraries set up barebones's events and processes.  Feel free to inspect them/change them if you need to.
 require('internal/gamemode')
 require('internal/events')
--- These are the XP system
--- require('server/server')
-require('libraries/json')
 -- All custom constants
 require('internal/constants')
 -- This library used to handle scoreboard events
@@ -46,6 +43,8 @@ require('events')
 require('api/api')
 require('api/frontend')
 
+require('battlepass/imbattlepass')
+
 -- clientside KV loading
 require('addon_init')
 
@@ -56,12 +55,6 @@ StoreCurrentDayCycle()
 --		OverrideCreateParticle()
 --		OverrideReleaseIndex()
 --	end
-
--- storage API
---require('libraries/json')
---require('libraries/storage')
-
---Storage:SetApiKey("35c56d290cbd168b6a58aabc43c87aff8d6b39cb")
 
 function GameMode:OnItemPickedUp(event) 
 	-- If this is a hero
