@@ -8,7 +8,7 @@ function Imbattlepass:Init()
 			ImbattlepassReward[ID][i] = false
 			if get_stats_for_player(ID).xp > XP_level_table[i] then
 				ImbattlepassReward[ID][i] = true
-				print("Reward Enabled:", i)
+--				print("Reward Enabled:", i)
 			end
 		end
 	end

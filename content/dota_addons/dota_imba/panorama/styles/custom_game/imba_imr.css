@@ -1,75 +1,58 @@
-.Diretide
+.Battlepass
 {
 	width: 100%;
 	height: 100%;
 	z-index: -10;
 }
 
-//XHS BOSS BARS
-.HoldoutLabelSmall
-{
-	color: white;
-	font-weight: bold;
-	text-align: center;
-	text-shadow: 1px 1px 2px 2.0 #00000011;
-
-	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
-	letter-spacing: 2px;
-	text-overflow: clip;
-
-	horizontal-align: center;
-	text-align: center;	
-	margin-top: 12px;
-	text-shadow: 1px 1px 2px 3.0 #000000;
-	font-size: 22px;
-}
-
-.HoldoutLabelSmall_alt
-{
-	color: white;
-	font-weight: bold;
-	text-align: center;
-	text-shadow: 1px 1px 2px 2.0 #00000011;
-
-	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
-	font-size: 14px;
-	letter-spacing: 2px;
-	text-overflow: clip;
-
-	horizontal-align: center;
-	text-align: center;	
-	margin-bottom: 12px;
-	text-shadow: 1px 1px 2px 3.0 #000000;
-}
-
-.HoldoutLabelSmall.Header
-{
-	width: 95px;
-}
-
-#RoshanLevel_alt
+#BattlepassButtonContainer
 {
 	margin-top: 5%;
-	margin-left: 2%;
-	horizontal-align: left;
-	color: white;
-	font-weight: bold;
-	text-align: center;
-	text-shadow: 1px 1px 2px 2.0 #00000011;
-
-	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
-	letter-spacing: 2px;
-	text-overflow: clip;
-
-	text-align: center;
-	text-shadow: 1px 1px 2px 3.0 #000000;
-	font-size: 16px;
+	margin-right: 150px;
+	align: center top;
+	flow-children: up;
 }
 
-#HallOfFame
+#BattlepassButton
 {
-	width: 600px;
-	height: fit-children;
+	width: 150px;
+	height: 35px;
+	margin-top: 0%;
+	padding: 4px 4px 4px 4px;
+	border-radius: 4px;
+	background-color: blue;
+	saturation: 0.7;
+}
+
+#BattlepassButton:hover
+{
+	border: 1px solid white;
+	saturation: 0.8;
+}
+
+#BattlepassButton:active
+{
+	saturation: 1.0;
+}
+
+#BattlepassButton Label
+{
+	align: center center;
+	color: white;
+	text-transform: uppercase;
+	text-align: center center;
+	font-size: 18px;
+}
+
+#BattlepassButton:hover Label
+{
+	color: white;
+}
+
+#BattlepassWindow
+{
+	width: 800px;
+	height: 600px;
 	background-color: #000000da;
 	align: center center;
 	flow-children: down;
@@ -80,13 +63,22 @@
 {
 	width: 100%;
 	height: fit-children;
+	flow-children: down;
 }
 
-#InfoContainer {
+#BattlepassInfoContainer {
 	width: 100%;
 	height: fit-children;
 	flow-children: down;
 	padding: 1% 1% 1% 1%;
+}
+
+#LeaderboardInfoContainer {
+	width: 100%;
+	height: fit-children;
+	flow-children: down;
+	padding: 1% 1% 1% 1%;
+	visibility: collapse;
 }
 
 #InfoHeader {
@@ -190,119 +182,57 @@
 	color:#fff;
 }
 
-#ButtonContent
-{
-	flow-children: right;
+#TabButtonContainer {
 	width: 100%;
-	height: 40px;
-	horizontal-align: center;
-	background-color: darkred;
-	saturation: 0.8;
+	flow-children: right;
 }
 
-#ButtonContent:hover
+#BattlepassTabButton,
+#LeaderboardTabButton,
+#CloseButton
+{
+	width: 100%;
+	height: 40px;
+	align: center bottom;
+	background-color: darkred;
+	saturation: 0.9;
+}
+
+#BattlepassTabButton,
+#LeaderboardButton {
+	width: 50%;
+	background-color: blue;
+}
+
+#BattlepassTabButton:hover,
+#LeaderboardButton:hover,
+#CloseButton:hover
 {
 	border: 1px solid white;
+	saturation: 0.9;
+}
+
+#BattlepassTabButton:active,
+#LeaderboardButton:active,
+#CloseButton:active
+{
 	saturation: 1.0;
 }
 
-#ButtonContent:active
-{
-	saturation: 0.6;
-}
-
-#ButtonContent Label
-{
-	align: center center;
-	color: white;
-	text-transform: uppercase;
-	text-align: center center;
-	font-size: 18px;
-}
-
-#ButtonContent:hover Label
-{
-	color: white;
-}
-
-#FeedButton,
-#CloseButton
-{
-	width: 40%;
-	margin-top: 60%;
-	margin-left: 5%;
-	margin-right: 5%;
-	background-color: #000000da;
-	border: 2px solid #4d5051;
-	border-radius: 5px;
-}
-
-#FeedButton:hover
-{
-	border: 2px solid orange;
-}
-
-#CloseButton:hover
-{
-	border: 2px solid white;
-}
-
-#FeedButton Label,
+#BattlepassTabButton Label,
+#LeaderboardButton Label,
 #CloseButton Label
 {
 	align: center center;
-	color: #6f6f6f;
-	text-transform: uppercase;
-	text-align: center center;
-	font-size: 16px;
-}
-
-#FeedButton:hover Label,
-#CloseButton:hover Label
-{
-	color: white;
-}
-
-#FrostivusAltarRespawn
-{
-	margin-top: 5%;
-	margin-right: 150px;
-	align: center top;
-	flow-children: up;
-}
-
-#FrostivusAltarButton
-{
-	width: 150px;
-	height: 35px;
-	margin-top: 0%;
-	padding: 4px 4px 4px 4px;
-	border-radius: 4px;
-	background-color: darkred;
-	saturation: 0.8;
-}
-
-#FrostivusAltarButton:hover
-{
-	border: 1px solid white;
-	saturation: 1.0;
-}
-
-#FrostivusAltarButton:active
-{
-	saturation: 0.6;
-}
-
-#FrostivusAltarButton Label
-{
-	align: center center;
 	color: white;
 	text-transform: uppercase;
 	text-align: center center;
 	font-size: 18px;
 }
 
-#FrostivusAltarButton:hover Label
+#BattlepassTabButton:hover Label,
+#LeaderboardButton:hover Label,
+#CloseButton:hover Label
 {
 	color: white;
 }
@@ -391,4 +321,65 @@
 .LeaderboardInGamePlayers {
 	width: 100%;
 	flow-children: right;
+}
+
+/* Labels */
+.HoldoutLabelSmall
+{
+	color: white;
+	font-weight: bold;
+	text-align: center;
+	text-shadow: 1px 1px 2px 2.0 #00000011;
+
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	letter-spacing: 2px;
+	text-overflow: clip;
+
+	horizontal-align: center;
+	text-align: center;	
+	margin-top: 12px;
+	text-shadow: 1px 1px 2px 3.0 #000000;
+	font-size: 22px;
+}
+
+.HoldoutLabelSmall_alt
+{
+	color: white;
+	font-weight: bold;
+	text-align: center;
+	text-shadow: 1px 1px 2px 2.0 #00000011;
+
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	font-size: 14px;
+	letter-spacing: 2px;
+	text-overflow: clip;
+
+	horizontal-align: center;
+	text-align: center;	
+	margin-bottom: 12px;
+	text-shadow: 1px 1px 2px 3.0 #000000;
+}
+
+.HoldoutLabelSmall.Header
+{
+	width: 95px;
+}
+
+#RoshanLevel_alt
+{
+	margin-top: 5%;
+	margin-left: 2%;
+	horizontal-align: left;
+	color: white;
+	font-weight: bold;
+	text-align: center;
+	text-shadow: 1px 1px 2px 2.0 #00000011;
+
+	font-family: Radiance,FZKai-Z03,TH Sarabun New,YDYGO 540;
+	letter-spacing: 2px;
+	text-overflow: clip;
+
+	text-align: center;
+	text-shadow: 1px 1px 2px 3.0 #000000;
+	font-size: 16px;
 }
