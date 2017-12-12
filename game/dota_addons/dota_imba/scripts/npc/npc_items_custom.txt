@@ -11842,7 +11842,7 @@
 			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_attack_speed"	"400"
+				"bonus_attack_speed"	"400"
 			}
 			"13"
 			{
@@ -11852,12 +11852,12 @@
 			"14"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"melee_bounce_ar"		"100"
+				"melee_bonus_ar"		"100"
 			}
 			"15"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"ranged_bounce_ar"		"150"
+				"ranged_bonus_ar"		"150"
 			}
 			"16"
 			{
