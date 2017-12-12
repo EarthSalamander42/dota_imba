@@ -98,8 +98,6 @@ function modifier_item_imba_gungnir:DeclareFunctions()
 					 MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
 					 MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 					 MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
-					 MODIFIER_EVENT_ON_ATTACK_LANDED,
-					 MODIFIER_PROPERTY_ATTACK_RANGE_BONUS
 					 }
 	return decFuncs
 end
@@ -110,6 +108,10 @@ function modifier_item_imba_gungnir:CheckState()
 		[MODIFIER_STATE_CANNOT_MISS] = true,
 	}
 	return state
+end
+
+function modifier_item_imba_gungnir:GetModifierConstantHealthRegen()
+	return self:GetAbility():GetSpecialValueFor("bonus_health_regen")
 end
 
 function modifier_item_imba_gungnir:GetModifierPreAttack_BonusDamage()
@@ -145,9 +147,9 @@ end
 
 function modifier_item_imba_gungnir_unique:GetModifierAttackRangeBonus()
 	if self:GetParent():IsRangedAttacker() then
-		return self:GetAbility():GetSpecialValueFor("ranged_bounce_ar")
+		return self:GetAbility():GetSpecialValueFor("ranged_bonus_ar")
 	else
-		return self:GetAbility():GetSpecialValueFor("melee_bounce_ar")
+		return self:GetAbility():GetSpecialValueFor("melee_bonus_ar")
 	end
 end
 
@@ -183,6 +185,7 @@ function modifier_item_imba_gungnir_force_ally:IsMotionController()  return true
 function modifier_item_imba_gungnir_force_ally:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_item_imba_gungnir_force_ally:OnCreated()
+	self.effect = GetForceStaffEffect(self:GetCaster())
 	if not IsServer() then return end
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
@@ -191,7 +194,7 @@ function modifier_item_imba_gungnir_force_ally:OnCreated()
 	self.attacked_target = {}
 end
 
-function modifier_item_imba_gungnir_force_ally:GetEffectName() return "particles/items_fx/force_staff.vpcf" end
+function modifier_item_imba_gungnir_force_ally:GetEffectName() return self.effect end
 
 function modifier_item_imba_gungnir_force_ally:OnDestroy()
 	if not IsServer() then return end
@@ -253,9 +256,8 @@ function modifier_item_imba_gungnir_force_enemy_ranged:IsStunDebuff() return fal
 function modifier_item_imba_gungnir_force_enemy_ranged:IsMotionController()  return true end
 function modifier_item_imba_gungnir_force_enemy_ranged:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
-function modifier_item_imba_gungnir_force_enemy_ranged:GetEffectName() return "particles/items_fx/force_staff.vpcf" end
-
 function modifier_item_imba_gungnir_force_enemy_ranged:OnCreated()
+	self.effect = GetForceStaffEffect(self:GetCaster())
 	if not IsServer() then return end
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
@@ -263,7 +265,7 @@ function modifier_item_imba_gungnir_force_enemy_ranged:OnCreated()
 	self.distance = self:GetAbility():GetSpecialValueFor("enemy_distance_ranged") / ( self:GetDuration() / FrameTime())
 end
 
-function modifier_item_imba_gungnir_force_enemy_ranged:GetEffectName() return "particles/items_fx/force_staff.vpcf" end
+function modifier_item_imba_gungnir_force_enemy_ranged:GetEffectName() return self.effect end
 
 function modifier_item_imba_gungnir_force_enemy_ranged:OnDestroy()
 	if not IsServer() then return end
@@ -297,9 +299,8 @@ function modifier_item_imba_gungnir_force_self_ranged:IgnoreTenacity() return tr
 function modifier_item_imba_gungnir_force_self_ranged:IsMotionController()  return true end
 function modifier_item_imba_gungnir_force_self_ranged:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
-function modifier_item_imba_gungnir_force_self_ranged:GetEffectName() return "particles/items_fx/force_staff.vpcf" end
-
 function modifier_item_imba_gungnir_force_self_ranged:OnCreated()
+	self.effect = GetForceStaffEffect(self:GetParent())
 	if not IsServer() then return end
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
@@ -307,7 +308,7 @@ function modifier_item_imba_gungnir_force_self_ranged:OnCreated()
 	self.distance = self:GetAbility():GetSpecialValueFor("enemy_distance_ranged") / ( self:GetDuration() / FrameTime())
 end
 
-function modifier_item_imba_gungnir_force_self_ranged:GetEffectName() return "particles/items_fx/force_staff.vpcf" end
+function modifier_item_imba_gungnir_force_self_ranged:GetEffectName() return self.effect end
 
 function modifier_item_imba_gungnir_force_self_ranged:OnDestroy()
 	if not IsServer() then return end
@@ -343,9 +344,8 @@ function modifier_item_imba_gungnir_force_enemy_melee:IsStunDebuff() return fals
 function modifier_item_imba_gungnir_force_enemy_melee:IsMotionController()  return true end
 function modifier_item_imba_gungnir_force_enemy_melee:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
-function modifier_item_imba_gungnir_force_enemy_melee:GetEffectName() return "particles/items_fx/force_staff.vpcf" end
-
 function modifier_item_imba_gungnir_force_enemy_melee:OnCreated()
+	self.effect = GetForceStaffEffect(self:GetCaster())
 	if not IsServer() then return end
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
@@ -353,7 +353,7 @@ function modifier_item_imba_gungnir_force_enemy_melee:OnCreated()
 	self.distance = self:GetAbility():GetSpecialValueFor("enemy_distance_melee") / ( self:GetDuration() / FrameTime())
 end
 
-function modifier_item_imba_gungnir_force_enemy_melee:GetEffectName() return "particles/items_fx/force_staff.vpcf" end
+function modifier_item_imba_gungnir_force_enemy_melee:GetEffectName() return self.effect end
 
 function modifier_item_imba_gungnir_force_enemy_melee:OnDestroy()
 	if not IsServer() then return end
@@ -387,9 +387,8 @@ function modifier_item_imba_gungnir_force_self_melee:IgnoreTenacity() return tru
 function modifier_item_imba_gungnir_force_self_melee:IsMotionController()  return true end
 function modifier_item_imba_gungnir_force_self_melee:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
-function modifier_item_imba_gungnir_force_self_melee:GetEffectName() return "particles/items_fx/force_staff.vpcf" end
-
 function modifier_item_imba_gungnir_force_self_melee:OnCreated()
+	self.effect = GetForceStaffEffect(self:GetParent())
 	if not IsServer() then return end
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
@@ -397,7 +396,7 @@ function modifier_item_imba_gungnir_force_self_melee:OnCreated()
 	self.distance = self:GetAbility():GetSpecialValueFor("enemy_distance_melee") / ( self:GetDuration() / FrameTime())
 end
 
-function modifier_item_imba_gungnir_force_self_melee:GetEffectName() return "particles/items_fx/force_staff.vpcf" end
+function modifier_item_imba_gungnir_force_self_melee:GetEffectName() return self.effect end
 
 function modifier_item_imba_gungnir_force_self_melee:OnDestroy()
 	if not IsServer() then return end
@@ -427,10 +426,9 @@ modifier_item_imba_gungnir_attack_speed = modifier_item_imba_gungnir_attack_spee
 
 function modifier_item_imba_gungnir_attack_speed:IsDebuff() return false end
 function modifier_item_imba_gungnir_attack_speed:IsHidden() return false end
-function modifier_item_imba_gungnir_attack_speed:IsPurgable() return false end
+function modifier_item_imba_gungnir_attack_speed:IsPurgable() return true end
 function modifier_item_imba_gungnir_attack_speed:IsStunDebuff() return false end
 function modifier_item_imba_gungnir_attack_speed:IgnoreTenacity() return true end
---function modifier_item_imba_gungnir_attack_speed:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_gungnir_attack_speed:OnCreated()
 	if not IsServer() then return end
@@ -442,7 +440,7 @@ end
 function modifier_item_imba_gungnir_attack_speed:OnIntervalThink()
 	if not IsServer() then return end
 	if self:GetParent():GetAttackTarget() == self.target then
-		self.as = self:GetAbility():GetSpecialValueFor("bounce_attack_speed")
+		self.as = self:GetAbility():GetSpecialValueFor("bonus_attack_speed")
 		if self:GetParent():IsRangedAttacker() then
 			self.ar = 999999
 		end
@@ -557,6 +555,7 @@ function modifier_item_imba_force_staff_active:IsMotionController()  return true
 function modifier_item_imba_force_staff_active:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_item_imba_force_staff_active:OnCreated()
+	self.effect = GetForceStaffEffect(self:GetCaster())
 	if not IsServer() then return end
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
@@ -564,7 +563,7 @@ function modifier_item_imba_force_staff_active:OnCreated()
 	self.distance = self:GetAbility():GetSpecialValueFor("push_length") / ( self:GetDuration() / FrameTime())
 end
 
-function modifier_item_imba_force_staff_active:GetEffectName() return "particles/items_fx/force_staff.vpcf" end
+function modifier_item_imba_force_staff_active:GetEffectName() return self.effect end
 
 function modifier_item_imba_force_staff_active:OnDestroy()
 	if not IsServer() then return end
@@ -595,3 +594,304 @@ end
 --		item_imba_hurricane_pike
 ---------------------------------------------
 item_imba_hurricane_pike = item_imba_hurricane_pike or class({})
+
+LinkLuaModifier("modifier_item_imba_hurricane_pike", "items/item_gungnir", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_item_imba_hurricane_pike_unique", "items/item_gungnir", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_item_imba_hurricane_pike_force_ally", "items/item_gungnir", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_item_imba_hurricane_pike_force_enemy", "items/item_gungnir", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_item_imba_hurricane_pike_force_self", "items/item_gungnir", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_item_imba_hurricane_pike_attack_speed", "items/item_gungnir", LUA_MODIFIER_MOTION_NONE)
+
+
+function item_imba_hurricane_pike:GetIntrinsicModifierName()
+	return "modifier_item_imba_hurricane_pike"
+end
+
+function item_imba_hurricane_pike:OnSpellStart()
+	if not IsServer() then return end
+	local ability = self
+	local caster = self:GetCaster()
+	local target = self:GetCursorTarget()
+	local duration = 0.4
+	if caster:GetTeamNumber() == target:GetTeamNumber() then
+		EmitSoundOn("DOTA_Item.ForceStaff.Activate", target)
+		target:AddNewModifier(caster, ability, "modifier_item_imba_hurricane_pike_force_ally", {duration = duration })
+	else
+		target:AddNewModifier(caster, ability, "modifier_item_imba_hurricane_pike_force_enemy", {duration = duration})
+		caster:AddNewModifier(target, ability, "modifier_item_imba_hurricane_pike_force_self", {duration = duration})
+		local buff = caster:AddNewModifier(caster, ability, "modifier_item_imba_hurricane_pike_attack_speed", {duration = ability:GetSpecialValueFor("range_duration")})
+		buff.target = target
+		buff:SetStackCount(ability:GetSpecialValueFor("max_attacks"))
+		EmitSoundOn("DOTA_Item.ForceStaff.Activate", target)
+		EmitSoundOn("DOTA_Item.ForceStaff.Activate", caster)
+		local startAttack = {
+							UnitIndex = caster:entindex(),
+							OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET,
+							TargetIndex = target:entindex(),}
+		ExecuteOrderFromTable(startAttack)
+	end
+end
+
+
+modifier_item_imba_hurricane_pike = modifier_item_imba_hurricane_pike or class({})
+
+function modifier_item_imba_hurricane_pike:IsHidden() return true end
+function modifier_item_imba_hurricane_pike:IsPurgable() return false end
+function modifier_item_imba_hurricane_pike:IsDebuff() return false end
+function modifier_item_imba_hurricane_pike:RemoveOnDeath() return false end
+function modifier_item_imba_hurricane_pike:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_hurricane_pike:OnCreated()
+	if IsServer() then
+		local parent = self:GetParent()
+		if not parent:HasModifier("modifier_item_imba_hurricane_pike_unique") then
+			parent:AddNewModifier(parent, self:GetAbility(), "modifier_item_imba_hurricane_pike_unique", {})
+		end
+	end
+end
+
+function modifier_item_imba_hurricane_pike:OnDestroy()
+	if IsServer() then
+		local parent = self:GetParent()
+		if not parent:HasModifier("modifier_item_imba_hurricane_pike") then
+			parent:RemoveModifierByName("modifier_item_imba_hurricane_pike_unique")
+		end
+	end
+end
+
+function modifier_item_imba_hurricane_pike:DeclareFunctions()
+	local decFuncs = {MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+					 MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+					 MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+					 MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
+					 }
+	return decFuncs
+end
+
+function modifier_item_imba_hurricane_pike:GetModifierConstantHealthRegen()
+	return self:GetAbility():GetSpecialValueFor("bonus_health_regen")
+end
+
+function modifier_item_imba_hurricane_pike:GetModifierBonusStats_Strength()
+	return self:GetAbility():GetSpecialValueFor("bonus_strength")
+end
+
+function modifier_item_imba_hurricane_pike:GetModifierBonusStats_Agility()
+	return self:GetAbility():GetSpecialValueFor("bonus_agility")
+end
+
+function modifier_item_imba_hurricane_pike:GetModifierBonusStats_Intellect()
+	return self:GetAbility():GetSpecialValueFor("bonus_intellect")
+end
+
+modifier_item_imba_hurricane_pike_unique = modifier_item_imba_hurricane_pike_unique or class({})
+
+function modifier_item_imba_hurricane_pike_unique:IsHidden() return true end
+function modifier_item_imba_hurricane_pike_unique:IsPurgable() return false end
+function modifier_item_imba_hurricane_pike_unique:IsDebuff() return false end
+function modifier_item_imba_hurricane_pike_unique:RemoveOnDeath() return false end
+
+function modifier_item_imba_hurricane_pike_unique:DeclareFunctions()
+	local decFuncs = {
+					 MODIFIER_PROPERTY_ATTACK_RANGE_BONUS
+					 }
+	return decFuncs
+end
+
+function modifier_item_imba_hurricane_pike_unique:GetModifierAttackRangeBonus()
+	if self:GetParent():IsRangedAttacker() then
+		return self:GetAbility():GetSpecialValueFor("base_attack_range")
+	end
+end
+
+
+modifier_item_imba_hurricane_pike_force_ally = modifier_item_imba_hurricane_pike_force_ally or class({})
+
+function modifier_item_imba_hurricane_pike_force_ally:IsDebuff() return false end
+function modifier_item_imba_hurricane_pike_force_ally:IsHidden() return true end
+function modifier_item_imba_hurricane_pike_force_ally:IsPurgable() return false end
+function modifier_item_imba_hurricane_pike_force_ally:IsStunDebuff() return false end
+function modifier_item_imba_hurricane_pike_force_ally:IsMotionController()  return true end
+function modifier_item_imba_hurricane_pike_force_ally:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
+
+function modifier_item_imba_hurricane_pike_force_ally:OnCreated()
+	self.effect = GetForceStaffEffect(self:GetCaster())
+	if not IsServer() then return end
+	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
+	self:StartIntervalThink(FrameTime())
+	self.angle = self:GetParent():GetForwardVector():Normalized()
+	self.distance = self:GetAbility():GetSpecialValueFor("push_length") / ( self:GetDuration() / FrameTime())
+end
+
+function modifier_item_imba_hurricane_pike_force_ally:GetEffectName() return self.effect end
+
+function modifier_item_imba_hurricane_pike_force_ally:OnDestroy()
+	if not IsServer() then return end
+	self:GetParent():FadeGesture(ACT_DOTA_FLAIL)
+	ResolveNPCPositions(self:GetParent():GetAbsOrigin(), 128)
+end
+
+function modifier_item_imba_hurricane_pike_force_ally:OnIntervalThink()
+	-- Remove force if conflicting
+	if not self:CheckMotionControllers() then
+		self:Destroy()
+		return
+	end
+	self:HorizontalMotion(self:GetParent(), FrameTime())
+end
+
+function modifier_item_imba_hurricane_pike_force_ally:HorizontalMotion(unit, time)
+	if not IsServer() then return end
+	local pos = unit:GetAbsOrigin()
+	GridNav:DestroyTreesAroundPoint(pos, 80, false)
+	local pos_p = self.angle * self.distance
+	local next_pos = GetGroundPosition(pos + pos_p,unit)
+	unit:SetAbsOrigin(next_pos)
+end
+
+modifier_item_imba_hurricane_pike_force_enemy = modifier_item_imba_hurricane_pike_force_enemy or class({})
+modifier_item_imba_hurricane_pike_force_self = modifier_item_imba_hurricane_pike_force_self or class({})
+
+function modifier_item_imba_hurricane_pike_force_enemy:IsDebuff() return true end
+function modifier_item_imba_hurricane_pike_force_enemy:IsHidden() return true end
+function modifier_item_imba_hurricane_pike_force_enemy:IsPurgable() return false end
+function modifier_item_imba_hurricane_pike_force_enemy:IsStunDebuff() return false end
+function modifier_item_imba_hurricane_pike_force_enemy:IsMotionController()  return true end
+function modifier_item_imba_hurricane_pike_force_enemy:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
+
+function modifier_item_imba_hurricane_pike_force_enemy:OnCreated()
+	self.effect = GetForceStaffEffect(self:GetCaster())
+	if not IsServer() then return end
+	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
+	self:StartIntervalThink(FrameTime())
+	self.angle = (self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized()
+	self.distance = self:GetAbility():GetSpecialValueFor("enemy_length") / ( self:GetDuration() / FrameTime())
+end
+
+function modifier_item_imba_hurricane_pike_force_enemy:GetEffectName() return self.effect end
+
+function modifier_item_imba_hurricane_pike_force_enemy:OnDestroy()
+	if not IsServer() then return end
+	self:GetParent():FadeGesture(ACT_DOTA_FLAIL)
+	ResolveNPCPositions(self:GetParent():GetAbsOrigin(), 128)
+end
+
+function modifier_item_imba_hurricane_pike_force_enemy:OnIntervalThink()
+	-- Remove force if conflicting
+	if not self:CheckMotionControllers() then
+		self:Destroy()
+		return
+	end
+	self:HorizontalMotion(self:GetParent(), FrameTime())
+end
+
+function modifier_item_imba_hurricane_pike_force_enemy:HorizontalMotion(unit, time)
+	if not IsServer() then return end
+	local pos = unit:GetAbsOrigin()
+	GridNav:DestroyTreesAroundPoint(pos, 80, false)
+	local pos_p = self.angle * self.distance
+	local next_pos = GetGroundPosition(pos + pos_p,unit)
+	unit:SetAbsOrigin(next_pos)
+end
+
+function modifier_item_imba_hurricane_pike_force_self:IsDebuff() return false end
+function modifier_item_imba_hurricane_pike_force_self:IsHidden() return true end
+function modifier_item_imba_hurricane_pike_force_self:IsPurgable() return false end
+function modifier_item_imba_hurricane_pike_force_self:IsStunDebuff() return false end
+function modifier_item_imba_hurricane_pike_force_self:IgnoreTenacity() return true end
+function modifier_item_imba_hurricane_pike_force_self:IsMotionController()  return true end
+function modifier_item_imba_hurricane_pike_force_self:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
+
+function modifier_item_imba_hurricane_pike_force_self:OnCreated()
+	self.effect = GetForceStaffEffect(self:GetParent())
+	if not IsServer() then return end
+	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
+	self:StartIntervalThink(FrameTime())
+	self.angle = (self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized()
+	self.distance = self:GetAbility():GetSpecialValueFor("enemy_length") / ( self:GetDuration() / FrameTime())
+end
+
+function modifier_item_imba_hurricane_pike_force_self:GetEffectName() return self.effect end
+
+function modifier_item_imba_hurricane_pike_force_self:OnDestroy()
+	if not IsServer() then return end
+	self:GetParent():FadeGesture(ACT_DOTA_FLAIL)
+	ResolveNPCPositions(self:GetParent():GetAbsOrigin(), 128)
+end
+
+function modifier_item_imba_hurricane_pike_force_self:OnIntervalThink()
+	-- Remove force if conflicting
+	if not self:CheckMotionControllers() then
+		self:Destroy()
+		return
+	end
+	self:HorizontalMotion(self:GetParent(), FrameTime())
+end
+
+function modifier_item_imba_hurricane_pike_force_self:HorizontalMotion(unit, time)
+	if not IsServer() then return end
+	local pos = unit:GetAbsOrigin()
+	GridNav:DestroyTreesAroundPoint(pos, 80, false)
+	local pos_p = self.angle * self.distance
+	local next_pos = GetGroundPosition(pos + pos_p,unit)
+	unit:SetAbsOrigin(next_pos)
+end
+
+modifier_item_imba_hurricane_pike_attack_speed = modifier_item_imba_hurricane_pike_attack_speed or class({})
+
+function modifier_item_imba_hurricane_pike_attack_speed:IsDebuff() return false end
+function modifier_item_imba_hurricane_pike_attack_speed:IsHidden() return false end
+function modifier_item_imba_hurricane_pike_attack_speed:IsPurgable() return true end
+function modifier_item_imba_hurricane_pike_attack_speed:IsStunDebuff() return false end
+function modifier_item_imba_hurricane_pike_attack_speed:IgnoreTenacity() return true end
+
+function modifier_item_imba_hurricane_pike_attack_speed:OnCreated()
+	if not IsServer() then return end
+	self.as = 0
+	self.ar = 0
+	self:StartIntervalThink(FrameTime())
+end
+
+function modifier_item_imba_hurricane_pike_attack_speed:OnIntervalThink()
+	if not IsServer() then return end
+	if self:GetParent():GetAttackTarget() == self.target then
+		self.as = self:GetAbility():GetSpecialValueFor("bonus_attack_speed")
+		if self:GetParent():IsRangedAttacker() then
+			self.ar = 999999
+		end
+	else
+		self.as = 0
+		if self:GetParent():IsRangedAttacker() then
+			self.ar = 0
+		end
+	end
+end
+
+function modifier_item_imba_hurricane_pike_attack_speed:DeclareFunctions()
+	local decFuncs =   {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+						MODIFIER_EVENT_ON_ATTACK,
+						MODIFIER_EVENT_ON_ORDER,
+						MODIFIER_PROPERTY_ATTACK_RANGE_BONUS}
+	return decFuncs
+end
+
+function modifier_item_imba_hurricane_pike_attack_speed:GetModifierAttackSpeedBonus_Constant()
+	if not IsServer() then return end
+	return self.as
+end
+
+function modifier_item_imba_hurricane_pike_attack_speed:GetModifierAttackRangeBonus()
+	if not IsServer() then return end
+	return self.ar
+end
+
+function modifier_item_imba_hurricane_pike_attack_speed:OnAttack( keys )
+	if not IsServer() then return end
+	if keys.target == self.target and keys.attacker == self:GetParent() then
+		if self:GetStackCount() > 1 then
+			self:DecrementStackCount()
+		else
+			self:Destroy()
+		end
+	end
+end
