@@ -39,6 +39,11 @@ function imba_api_preload(complete_fun)
 		api_preloaded.developers = devs
 		complete_fun()
 	end)
+
+	imba_api():meta_topxpplayers(function (devs)
+		api_preloaded.topxpplayers = devs
+		complete_fun()
+	end)
 end
 
 -- Syncronous
@@ -57,6 +62,10 @@ end
 -- returns array of developers or nil
 function get_developers()
 	return api_preloaded.developers
+end
+
+function get_topxpplayers()
+    return api_preloaded.topxpplayers
 end
 
 -- Returns the preloaded xp for player / if available
