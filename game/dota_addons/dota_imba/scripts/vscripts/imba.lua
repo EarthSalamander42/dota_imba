@@ -43,6 +43,7 @@ require('events')
 require('api/api')
 require('api/frontend')
 
+require('battlepass/experience')
 require('battlepass/imbattlepass')
 
 -- clientside KV loading
