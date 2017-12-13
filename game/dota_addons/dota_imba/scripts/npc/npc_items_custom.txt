@@ -12302,7 +12302,7 @@
 	{
 		"BaseClass"						"item_lua"
 		"ScriptFile"						"items/item_tp"
-		"AbilityTextureName"				"custom/imba_tpscroll"
+		"AbilityTextureName"				"item_tpscroll"
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2268"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
