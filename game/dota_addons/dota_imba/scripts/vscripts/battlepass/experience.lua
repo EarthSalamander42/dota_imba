@@ -111,26 +111,17 @@ local current_xp_in_level = {}
 		level[ID] = 0
 
 		for i = 1, #XP_level_table do
-			-- setup the xp into the level
 			if global_xp > XP_level_table[i] then
-				-- setup the level
 				level[ID] = i
-
 				current_xp_in_level[ID] = 0
 				current_xp_in_level[ID] = global_xp - XP_level_table[i]
 			end
 		end
 
---		print("XP:", current_xp_in_level[ID])
---		print("Max XP:", XP_level_table[level[ID]+1])
---		print("Level:", level[ID])
---		print("Title:", GetTitleIXP(level[ID]))
---		print("Title Color:", GetTitleColorIXP(GetTitleIXP(level[ID]), true))
-
 		CustomNetTables:SetTableValue("player_table", tostring(ID),
 		{
 			XP = current_xp_in_level[ID],
-			MaxXP = XP_level_table[level[ID]+1],
+			MaxXP = XP_level_table[level[ID]+1] - XP_level_table[level[ID]],
 			Lvl = level[ID], -- add +1 only on the HUD else you are level 0 at the first level
 			title = GetTitleIXP(level[ID]),
 			title_color = GetTitleColorIXP(GetTitleIXP(level[ID]), true)

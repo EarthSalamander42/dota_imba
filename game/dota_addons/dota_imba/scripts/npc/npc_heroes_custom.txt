@@ -3,6 +3,22 @@
 	//LEGEND
 	// "IsDisabled": 0 = Enabled, 1 = 10v10 disabled, 2 = frantic disabled 3 = fully disabled.
 
+	"npc_dota_hero_arc_warden"
+	{
+		"override_hero"				"npc_dota_hero_arc_warden"
+
+		//Picking Screen
+		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
+		"IsDisabled"				"3"
+
+		"Ability1"					"arc_warden_flux"
+		"Ability2"					"arc_warden_magnetic_field"
+		"Ability3"					"arc_warden_spark_wraith"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"arc_warden_tempest_double"
+	}
+
 	//=================================================================================================================
 	// HERO: Abaddon
 	//=================================================================================================================
