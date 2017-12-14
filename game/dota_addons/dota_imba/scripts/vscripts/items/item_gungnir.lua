@@ -168,8 +168,12 @@ function modifier_item_imba_gungnir_force_ally:IsMotionController()  return true
 function modifier_item_imba_gungnir_force_ally:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_item_imba_gungnir_force_ally:OnCreated()
-	self.effect = self:GetCaster().force_staff_effect
 	if not IsServer() then return end
+	if self:GetParent():HasModifier("modifier_legion_commander_duel") or self:GetParent():HasModifier("modifier_imba_enigma_black_hole_aura_modifier") or self:GetParent():HasModifier("modifier_imba_faceless_void_chronosphere_handler") then
+		self:Destroy()
+	end
+	self.effect = self:GetCaster().force_staff_effect
+	self.pfx = ParticleManager:CreateParticle(self.effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
 	self.angle = self:GetParent():GetForwardVector():Normalized()
@@ -177,10 +181,10 @@ function modifier_item_imba_gungnir_force_ally:OnCreated()
 	self.attacked_target = {}
 end
 
-function modifier_item_imba_gungnir_force_ally:GetEffectName() return self.effect end
-
 function modifier_item_imba_gungnir_force_ally:OnDestroy()
 	if not IsServer() then return end
+	ParticleManager:DestroyParticle(self.pfx, false)
+	ParticleManager:ReleaseParticleIndex(self.pfx)
 	self:GetParent():FadeGesture(ACT_DOTA_FLAIL)
 	ResolveNPCPositions(self:GetParent():GetAbsOrigin(), 128)
 end
@@ -240,18 +244,19 @@ function modifier_item_imba_gungnir_force_enemy_ranged:IsMotionController()  ret
 function modifier_item_imba_gungnir_force_enemy_ranged:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_item_imba_gungnir_force_enemy_ranged:OnCreated()
-	self.effect = self:GetCaster().force_staff_effect
 	if not IsServer() then return end
+	self.effect = self:GetCaster().force_staff_effect
+	self.pfx = ParticleManager:CreateParticle(self.effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
 	self.angle = (self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized()
 	self.distance = self:GetAbility():GetSpecialValueFor("enemy_distance_ranged") / ( self:GetDuration() / FrameTime())
 end
 
-function modifier_item_imba_gungnir_force_enemy_ranged:GetEffectName() return self.effect end
-
 function modifier_item_imba_gungnir_force_enemy_ranged:OnDestroy()
 	if not IsServer() then return end
+	ParticleManager:DestroyParticle(self.pfx, false)
+	ParticleManager:ReleaseParticleIndex(self.pfx)
 	self:GetParent():FadeGesture(ACT_DOTA_FLAIL)
 	ResolveNPCPositions(self:GetParent():GetAbsOrigin(), 128)
 end
@@ -283,18 +288,19 @@ function modifier_item_imba_gungnir_force_self_ranged:IsMotionController()  retu
 function modifier_item_imba_gungnir_force_self_ranged:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_item_imba_gungnir_force_self_ranged:OnCreated()
-	self.effect = self:GetCaster().force_staff_effect
 	if not IsServer() then return end
+	self.effect = self:GetCaster().force_staff_effect
+	self.pfx = ParticleManager:CreateParticle(self.effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
 	self.angle = (self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized()
 	self.distance = self:GetAbility():GetSpecialValueFor("enemy_distance_ranged") / ( self:GetDuration() / FrameTime())
 end
 
-function modifier_item_imba_gungnir_force_self_ranged:GetEffectName() return self.effect end
-
 function modifier_item_imba_gungnir_force_self_ranged:OnDestroy()
 	if not IsServer() then return end
+	ParticleManager:DestroyParticle(self.pfx, false)
+	ParticleManager:ReleaseParticleIndex(self.pfx)
 	self:GetParent():FadeGesture(ACT_DOTA_FLAIL)
 	ResolveNPCPositions(self:GetParent():GetAbsOrigin(), 128)
 end
@@ -328,18 +334,19 @@ function modifier_item_imba_gungnir_force_enemy_melee:IsMotionController()  retu
 function modifier_item_imba_gungnir_force_enemy_melee:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_item_imba_gungnir_force_enemy_melee:OnCreated()
-	self.effect = self:GetCaster().force_staff_effect
 	if not IsServer() then return end
+	self.effect = self:GetCaster().force_staff_effect
+	self.pfx = ParticleManager:CreateParticle(self.effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
 	self.angle = (self:GetCaster():GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Normalized()
 	self.distance = self:GetAbility():GetSpecialValueFor("enemy_distance_melee") / ( self:GetDuration() / FrameTime())
 end
 
-function modifier_item_imba_gungnir_force_enemy_melee:GetEffectName() return self.effect end
-
 function modifier_item_imba_gungnir_force_enemy_melee:OnDestroy()
 	if not IsServer() then return end
+	ParticleManager:DestroyParticle(self.pfx, false)
+	ParticleManager:ReleaseParticleIndex(self.pfx)
 	self:GetParent():FadeGesture(ACT_DOTA_FLAIL)
 	ResolveNPCPositions(self:GetParent():GetAbsOrigin(), 128)
 end
@@ -371,18 +378,19 @@ function modifier_item_imba_gungnir_force_self_melee:IsMotionController()  retur
 function modifier_item_imba_gungnir_force_self_melee:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_item_imba_gungnir_force_self_melee:OnCreated()
-	self.effect = self:GetCaster().force_staff_effect
 	if not IsServer() then return end
+	self.effect = self:GetCaster().force_staff_effect
+	self.pfx = ParticleManager:CreateParticle(self.effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
 	self.angle = (self:GetCaster():GetAbsOrigin() - self:GetParent():GetAbsOrigin()):Normalized()
 	self.distance = self:GetAbility():GetSpecialValueFor("enemy_distance_melee") / ( self:GetDuration() / FrameTime())
 end
 
-function modifier_item_imba_gungnir_force_self_melee:GetEffectName() return self.effect end
-
 function modifier_item_imba_gungnir_force_self_melee:OnDestroy()
 	if not IsServer() then return end
+	ParticleManager:DestroyParticle(self.pfx, false)
+	ParticleManager:ReleaseParticleIndex(self.pfx)
 	self:GetParent():FadeGesture(ACT_DOTA_FLAIL)
 	ResolveNPCPositions(self:GetParent():GetAbsOrigin(), 128)
 end
@@ -464,6 +472,13 @@ function modifier_item_imba_gungnir_attack_speed:OnAttack( keys )
 	end
 end
 
+function modifier_item_imba_gungnir_attack_speed:OnOrder( keys )
+	if not IsServer() then return end
+	if keys.target == self.target and keys.unit == self:GetParent() and keys.ordertype == 4 then
+		self.ar = 999999
+		self.as = self:GetAbility():GetSpecialValueFor("bonus_attack_speed")
+	end
+end
 
 ---------------------------------------------
 --		item_imba_force_staff
@@ -538,18 +553,22 @@ function modifier_item_imba_force_staff_active:IsMotionController()  return true
 function modifier_item_imba_force_staff_active:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_item_imba_force_staff_active:OnCreated()
-	self.effect = self:GetCaster().force_staff_effect
 	if not IsServer() then return end
+	self.effect = self:GetCaster().force_staff_effect
+	if self:GetParent():HasModifier("modifier_legion_commander_duel") or self:GetParent():HasModifier("modifier_imba_enigma_black_hole_aura_modifier") or self:GetParent():HasModifier("modifier_imba_faceless_void_chronosphere_handler") then
+		self:Destroy()
+	end
+	self.pfx = ParticleManager:CreateParticle(self.effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
 	self.angle = self:GetParent():GetForwardVector():Normalized()
 	self.distance = self:GetAbility():GetSpecialValueFor("push_length") / ( self:GetDuration() / FrameTime())
 end
 
-function modifier_item_imba_force_staff_active:GetEffectName() return self.effect end
-
 function modifier_item_imba_force_staff_active:OnDestroy()
 	if not IsServer() then return end
+	ParticleManager:DestroyParticle(self.pfx, false)
+	ParticleManager:ReleaseParticleIndex(self.pfx)
 	self:GetParent():FadeGesture(ACT_DOTA_FLAIL)
 	ResolveNPCPositions(self:GetParent():GetAbsOrigin(), 128)
 end
@@ -571,7 +590,6 @@ function modifier_item_imba_force_staff_active:HorizontalMotion(unit, time)
 	local next_pos = GetGroundPosition(pos + pos_p,unit)
 	unit:SetAbsOrigin(next_pos)
 end
-
 
 ---------------------------------------------
 --		item_imba_hurricane_pike
@@ -698,18 +716,22 @@ function modifier_item_imba_hurricane_pike_force_ally:IsMotionController()  retu
 function modifier_item_imba_hurricane_pike_force_ally:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_item_imba_hurricane_pike_force_ally:OnCreated()
-	self.effect = self:GetCaster().force_staff_effect
 	if not IsServer() then return end
+	if self:GetParent():HasModifier("modifier_legion_commander_duel") or self:GetParent():HasModifier("modifier_imba_enigma_black_hole_aura_modifier") or self:GetParent():HasModifier("modifier_imba_faceless_void_chronosphere_handler") then
+		self:Destroy()
+	end
+	self.effect = self:GetCaster().force_staff_effect
+	self.pfx = ParticleManager:CreateParticle(self.effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
 	self.angle = self:GetParent():GetForwardVector():Normalized()
 	self.distance = self:GetAbility():GetSpecialValueFor("push_length") / ( self:GetDuration() / FrameTime())
 end
 
-function modifier_item_imba_hurricane_pike_force_ally:GetEffectName() return self.effect end
-
 function modifier_item_imba_hurricane_pike_force_ally:OnDestroy()
 	if not IsServer() then return end
+	ParticleManager:DestroyParticle(self.pfx, false)
+	ParticleManager:ReleaseParticleIndex(self.pfx)
 	self:GetParent():FadeGesture(ACT_DOTA_FLAIL)
 	ResolveNPCPositions(self:GetParent():GetAbsOrigin(), 128)
 end
@@ -743,18 +765,19 @@ function modifier_item_imba_hurricane_pike_force_enemy:IsMotionController()  ret
 function modifier_item_imba_hurricane_pike_force_enemy:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_item_imba_hurricane_pike_force_enemy:OnCreated()
-	self.effect = self:GetCaster().force_staff_effect
 	if not IsServer() then return end
+	self.effect = self:GetCaster().force_staff_effect
+	self.pfx = ParticleManager:CreateParticle(self.effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
 	self.angle = (self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized()
 	self.distance = self:GetAbility():GetSpecialValueFor("enemy_length") / ( self:GetDuration() / FrameTime())
 end
 
-function modifier_item_imba_hurricane_pike_force_enemy:GetEffectName() return self.effect end
-
 function modifier_item_imba_hurricane_pike_force_enemy:OnDestroy()
 	if not IsServer() then return end
+	ParticleManager:DestroyParticle(self.pfx, false)
+	ParticleManager:ReleaseParticleIndex(self.pfx)
 	self:GetParent():FadeGesture(ACT_DOTA_FLAIL)
 	ResolveNPCPositions(self:GetParent():GetAbsOrigin(), 128)
 end
@@ -786,18 +809,19 @@ function modifier_item_imba_hurricane_pike_force_self:IsMotionController()  retu
 function modifier_item_imba_hurricane_pike_force_self:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_item_imba_hurricane_pike_force_self:OnCreated()
-	self.effect = self:GetCaster().force_staff_effect
 	if not IsServer() then return end
+	self.effect = self:GetCaster().force_staff_effect
+	self.pfx = ParticleManager:CreateParticle(self.effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
 	self.angle = (self:GetParent():GetAbsOrigin() - self:GetCaster():GetAbsOrigin()):Normalized()
 	self.distance = self:GetAbility():GetSpecialValueFor("enemy_length") / ( self:GetDuration() / FrameTime())
 end
 
-function modifier_item_imba_hurricane_pike_force_self:GetEffectName() return self.effect end
-
 function modifier_item_imba_hurricane_pike_force_self:OnDestroy()
 	if not IsServer() then return end
+	ParticleManager:DestroyParticle(self.pfx, false)
+	ParticleManager:ReleaseParticleIndex(self.pfx)
 	self:GetParent():FadeGesture(ACT_DOTA_FLAIL)
 	ResolveNPCPositions(self:GetParent():GetAbsOrigin(), 128)
 end
@@ -876,5 +900,12 @@ function modifier_item_imba_hurricane_pike_attack_speed:OnAttack( keys )
 		else
 			self:Destroy()
 		end
+	end
+end
+
+function modifier_item_imba_hurricane_pike_attack_speed:OnOrder( keys )
+	if not IsServer() then return end
+	if keys.target == self.target and keys.unit == self:GetParent() and keys.ordertype == 4 then
+		self.ar = 999999
 	end
 end

@@ -1780,7 +1780,7 @@ local count = 0
 --	end
 	Notifications:TopToAll({text="Critical lags! All creeps have been removed: "..count, duration=10.0})
 end
-
+--[[
 function GameMode:ProcessItemForLootExpire( item, flCutoffTime )
 	if item:IsNull() then
 		return false
@@ -1800,3 +1800,4 @@ function GameMode:ProcessItemForLootExpire( item, flCutoffTime )
 	UTIL_RemoveImmediate( item )
 	return false
 end
+--]]

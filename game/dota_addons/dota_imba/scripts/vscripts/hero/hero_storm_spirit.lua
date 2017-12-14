@@ -466,6 +466,11 @@ function modifier_imba_overload_buff:OnAttackLanded( keys )
 				local damage		=	ability:GetSpecialValueFor("damage")
 				local slow_duration	=	ability:GetSpecialValueFor("slow_duration")
 
+				local target_flag = ability:GetAbilityTargetFlags()
+				if self:GetParent():HasTalent("special_bonus_unique_storm_spirit_3") then
+					target_flag = target_flag + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES
+				end
+
 				-- Find enemies around the target
 				local enemies	=	FindUnitsInRadius(	parent:GetTeamNumber(),
 				keys.target:GetAbsOrigin(),
@@ -473,7 +478,7 @@ function modifier_imba_overload_buff:OnAttackLanded( keys )
 				radius,
 				DOTA_UNIT_TARGET_TEAM_ENEMY,
 				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP,
-				ability:GetAbilityTargetFlags(),
+				target_flag,
 				FIND_ANY_ORDER,
 				false)
 
@@ -572,6 +577,11 @@ function imba_storm_spirit_ball_lightning:OnSpellStart()
 			return
 		end
 
+		if self:GetCaster():HasTalent("special_bonus_unique_storm_spirit_4") then
+			self.remnant = self:GetCaster():FindAbilityByName("imba_storm_spirit_static_remnant")
+			self.traveled_remnant = 0
+		end
+
 		-- Ability properties
 		local caster = self:GetCaster()
 		local target_loc = self:GetCursorPosition()
@@ -652,6 +662,20 @@ function imba_storm_spirit_ball_lightning:OnProjectileThink_ExtraData(location, 
 		-- Use up mana for traveling
 		caster:ReduceMana(( (ExtraData.pct_mana_cost * 0.01) + ExtraData.base_mana_cost ) * self.units_traveled_in_last_tick * 0.01)
 		-- Note: the last *0.01 in the calculation is because the manacost is calculated for every 100 units.
+
+		if self.traveled_remnant ~= nil and self.remnant then
+			self.traveled_remnant = self.traveled_remnant + ExtraData.speed
+			local remant_interval = caster:FindTalentValue("special_bonus_unique_storm_spirit_4")
+			if self.traveled_remnant - remant_interval >= 0 then
+				self.traveled_remnant = self.traveled_remnant - remant_interval
+				local cast_sound			=	"Hero_StormSpirit.StaticRemnantPlant"
+				EmitSoundOn(cast_sound,caster)
+				--Create remnant
+				local dummy = CreateUnitByName( "npc_imba_dota_stormspirit_remnant", caster:GetAbsOrigin(), false, caster, nil, caster:GetTeamNumber() )
+				-- Give it the necessary modifier
+				dummy:AddNewModifier(caster, self.remnant, "modifier_imba_static_remnant", {duration = self.remnant:GetSpecialValueFor("big_remnant_duration")})
+			end
+		end
 
 		-- Once the caster can no longer travel, remove this projectile
 	else
