@@ -3170,8 +3170,6 @@
 				"Function"				"ShivaBlast"
 
 				"sound_cast"			"DOTA_Item.ShivasGuard.Activate"
-				"particle_blast"		"particles/items2_fx/shivas_guard_active.vpcf"
-				"particle_hit"			"particles/items2_fx/shivas_guard_impact.vpcf"
 				"modifier_slow"			"modifier_item_imba_shivas_blast_slow"
 			}
 		}
@@ -5143,20 +5141,15 @@
 		"ID"							"2108"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"items/item_swords.lua"
-		"AbilityTextureName"			"custom/imba_azura"
+		"AbilityTextureName"			"item_kaya"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"5"
-		"AbilitySharedCooldown"			"sword"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"1750"
 		"ItemShopTags"					"int;unique"
 		"ItemQuality"					"artifact"
-		"ItemAliases"					"azura"
+		"ItemAliases"					"kaya"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -5165,34 +5158,14 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"proc_chance"			"30"
+				"spell_amp"				"10"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"proc_duration_enemy"	"1"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"amp_stack"				"-3"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_stacks"			"7"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"stack_duration"		"5"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
+				"var_type"				"FIELD_INTEGER" // also mana cost reduction
 				"bonus_cdr"				"10"
 			}
-			"07"
+			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_int"				"16"
@@ -5714,6 +5687,11 @@
 				"var_type"				"FIELD_INTEGER"
 				"proc_cooldown"			"5"
 			}
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spell_amp"				"10"
+			}
 		}
 	}
 
@@ -5994,6 +5972,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+		"AbilitySharedCooldown"			"some_viking_shit"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -11908,6 +11887,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+		"AbilitySharedCooldown"			"some_viking_shit"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -12114,8 +12094,8 @@
 	"item_imba_force_staff"
 	{
 		"BaseClass"						"item_lua"
-		"ScriptFile"						"items/item_gungnir"
-		"AbilityTextureName"				"item_force_staff"
+		"ScriptFile"					"items/item_gungnir"
+		"AbilityTextureName"			"custom/imba_force_staff"
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2265"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.

@@ -51,7 +51,6 @@ function modifier_item_imba_spell_fencer:IsHidden() return true end
 function modifier_item_imba_spell_fencer:IsDebuff() return false end
 function modifier_item_imba_spell_fencer:IsPurgable() return false end
 function modifier_item_imba_spell_fencer:IsPermanent() return true end
-function modifier_item_imba_spell_fencer:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Adds the unique modifier to the bearer when created
 function modifier_item_imba_spell_fencer:OnCreated(keys)
@@ -79,13 +78,25 @@ function modifier_item_imba_spell_fencer:DeclareFunctions()
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
+		MODIFIER_PROPERTY_MANACOST_PERCENTAGE,
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
 		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
 	}
 	return funcs
 end
 
-function modifier_item_imba_spell_fencer:GetCustomCooldownReduction()
-	return self:GetAbility():GetSpecialValueFor("bonus_cdr") end
+function modifier_item_imba_spell_fencer:GetModifierPercentageCooldown()
+	return self:GetAbility():GetSpecialValueFor("bonus_cdr")
+end
+
+function modifier_item_imba_spell_fencer:GetModifierSpellAmplify_Percentage()
+	return self:GetAbility():GetSpecialValueFor("spell_amp")
+end
+
+function modifier_item_imba_spell_fencer:GetModifierPercentageManacost()
+	return self:GetAbility():GetSpecialValueFor("bonus_cdr")
+end
 
 function modifier_item_imba_spell_fencer:GetModifierPreAttack_BonusDamage()
 	return self:GetAbility():GetSpecialValueFor("bonus_damage") end

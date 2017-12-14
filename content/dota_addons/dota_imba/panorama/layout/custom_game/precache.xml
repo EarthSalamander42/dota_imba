@@ -1,7 +1,7 @@
 <root>
 	<Panel style="visibility:collapse;">
 		<Panel id="container" style="visibility:collapse;">
-			<Image src="file://panorama/images/custom_game/loading_screen/loading-elder.jpg" hittest="false" />
+			<Image src="file://panorama/images/heroes/npc_dota_hero_sly_king.png" hittest="false" />
 		</Panel>
 	</Panel>
 </root>

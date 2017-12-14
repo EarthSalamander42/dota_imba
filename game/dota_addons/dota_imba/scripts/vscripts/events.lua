@@ -26,7 +26,6 @@ function GameMode:OnDisconnect(keys)
 	-- If the game hasn't started, or has already ended, do nothing
 	if (GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME) or (GameRules:State_Get() < DOTA_GAMERULES_STATE_PRE_GAME) then
 		return nil
-
 	-- Else, start tracking player's reconnect/abandon state
 	else
 		-- Fetch player's player and hero information
@@ -162,6 +161,8 @@ function GameMode:OnGameRulesStateChange(keys)
 		-- Initialize Battle Pass
 		Imbattlepass:Init()
 
+--		PrintTable(get_topxpplayers())
+
 		-- Shows various info to devs in pub-game to find lag issues
 		ImbaNetGraph(10.0)
 
@@ -291,7 +292,7 @@ local npc = EntIndexToHScript(keys.entindex)
 local normal_xp = npc:GetDeathXP()
 
 	if npc then
-		if GetMapName() == "imba_10v10" or GetMapName() == "imba_custom_10v10" then
+		if GetMapName() == "imba_10v10" or GetMapName() == "imba_frantic_10v10" then
 			npc:SetDeathXP(normal_xp)
 		else
 			npc:SetDeathXP(normal_xp*1.5)
@@ -1042,7 +1043,7 @@ function GameMode:OnEntityKilled( keys )
 			-- if BUYBACK_COOLDOWN_ENABLED and game_time > BUYBACK_COOLDOWN_START_POINT then
 			-- 	buyback_cooldown = math.min(BUYBACK_COOLDOWN_GROW_FACTOR * (game_time - BUYBACK_COOLDOWN_START_POINT), BUYBACK_COOLDOWN_MAXIMUM)
 			-- end
-			buyback_cooldown = 60
+			buyback_cooldown = 90
 
 			-- #7 Talent Vengeful Spirit - Decreased respawn time & cost
 			if killed_unit:HasTalent("special_bonus_imba_vengefulspirit_7") then

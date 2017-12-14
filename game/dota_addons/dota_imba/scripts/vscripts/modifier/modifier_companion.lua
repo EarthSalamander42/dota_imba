@@ -80,7 +80,7 @@ function modifier_companion:OnIntervalThink()
 		local min_distance = 200
 		local blink_distance = 800
 
-		local invisModifiers = {
+		local shared_modifiers = {
 			"modifier_invisible",
 			"modifier_mirana_moonlight_shadow",
 			"modifier_item_imba_shadow_blade_invis",
@@ -99,13 +99,14 @@ function modifier_companion:OnIntervalThink()
 			"modifier_imba_skeleton_walk_invis",
 			"modifier_imba_riki_invisibility",
 			"modifier_imba_shadow_walk_buff_invis",
+			"modifier_smoke_of_deceit",
 		}
 
 		if companion:GetIdealSpeed() ~= hero:GetIdealSpeed() - 60 then
 			companion:SetBaseMoveSpeed(hero:GetIdealSpeed() - 60)
 		end
          
-		for _,v in ipairs(invisModifiers) do
+		for _,v in ipairs(shared_modifiers) do
 			if not hero:HasModifier(v) then
 				if companion:HasModifier(v) then
 					companion:RemoveModifierByName(v)

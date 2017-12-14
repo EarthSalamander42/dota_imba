@@ -1,10 +1,4 @@
 -------------------------------------------------------------------------------------------------
--- IMBA: Game settings
--------------------------------------------------------------------------------------------------
-
-IMBA_VERSION = "7.01"						-- Tracks game version
-
--------------------------------------------------------------------------------------------------
 -- Barebones basics
 -------------------------------------------------------------------------------------------------
 
@@ -178,7 +172,7 @@ if GetMapName() == "imba_standard" then
 	IMBA_PICK_MODE_ALL_PICK = true
 elseif GetMapName() == "imba_custom" then
 	IMBA_PICK_MODE_ALL_PICK = true
-elseif GetMapName() == "imba_custom_10v10" then
+elseif GetMapName() == "imba_frantic_10v10" then
 	IMBA_PICK_MODE_ALL_PICK = true
 	IMBA_PLAYERS_ON_GAME = 20
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 10
@@ -222,7 +216,7 @@ ENABLED_RUNES[DOTA_RUNE_ARCANE] = true
 GAME_WINNER_TEAM = "none"													-- Tracks game winner
 
 IMBA_HYPER_MODE_ON = false													-- Is Hyper mode activated?
-if GetMapName() ~= "imba_custom_10v10" then
+if GetMapName() ~= "imba_frantic_10v10" then
 	IMBA_FRANTIC_MODE_ON = false
 else
 	IMBA_FRANTIC_MODE_ON = true
@@ -236,36 +230,36 @@ IMBA_ALL_RANDOM_HERO_SELECTION_TIME = 5.0									-- Time we need to wait before
 
 -- Global Gold earning, values are doubled with Hyper for non-custom maps
 CUSTOM_GOLD_BONUS = {} -- 1 = Normal, 2 = Hyper
-CUSTOM_GOLD_BONUS["imba_standard"] = {75, 150}
-CUSTOM_GOLD_BONUS["imba_10v10"] = {75, 150}
-CUSTOM_GOLD_BONUS["imba_custom_10v10"] = {200, 200}
+CUSTOM_GOLD_BONUS["imba_standard"] = {40, 40}
+CUSTOM_GOLD_BONUS["imba_10v10"] = {40, 40}
+CUSTOM_GOLD_BONUS["imba_frantic_10v10"] = {200, 200}
 
--- Global XP earning, values are doubled with Hyper for non-custom maps
+-- Global XP earning, values are doubled with Hyper for non-custom maps (right now this is not used anymore, but i'll keep it there just in case)
 CUSTOM_XP_BONUS = {} -- 1 = standard, 2 = 10v10, 3 = custom
-CUSTOM_XP_BONUS["imba_standard"] = {40, 80}
-CUSTOM_XP_BONUS["imba_10v10"] = {40, 80}
-CUSTOM_XP_BONUS["imba_custom_10v10"] = {200, 200}
+CUSTOM_XP_BONUS["imba_standard"] = {0, 0}
+CUSTOM_XP_BONUS["imba_10v10"] = {0, 0}
+CUSTOM_XP_BONUS["imba_frantic_10v10"] = {200, 200}
 
 -- Hero base level, values are doubled with Hyper for non-custom maps
 HERO_STARTING_LEVEL = {} -- 1 = standard, 2 = 10v10, 3 = custom
 HERO_STARTING_LEVEL["imba_standard"] = {1, 1}
 HERO_STARTING_LEVEL["imba_10v10"] = {1, 1}
-HERO_STARTING_LEVEL["imba_custom_10v10"] = {5, 12}
+HERO_STARTING_LEVEL["imba_frantic_10v10"] = {5, 12}
 
 MAX_LEVEL = {}
 MAX_LEVEL["imba_standard"] = {40, 40}
 MAX_LEVEL["imba_10v10"] = {40, 40}
-MAX_LEVEL["imba_custom_10v10"] = {40, 100}
+MAX_LEVEL["imba_frantic_10v10"] = {40, 100}
 
 HERO_INITIAL_GOLD = {}
-HERO_INITIAL_GOLD["imba_standard"] = {1200, 2000}
-HERO_INITIAL_GOLD["imba_10v10"] = {2000, 3000}
-HERO_INITIAL_GOLD["imba_custom_10v10"] = {2000, 5000}
+HERO_INITIAL_GOLD["imba_standard"] = {1200, 1200}
+HERO_INITIAL_GOLD["imba_10v10"] = {1200, 1200}
+HERO_INITIAL_GOLD["imba_frantic_10v10"] = {2000, 5000}
 
 GOLD_TICK_TIME = {}
 GOLD_TICK_TIME["imba_standard"] = 0.6
 GOLD_TICK_TIME["imba_10v10"] = 0.6
-GOLD_TICK_TIME["imba_custom_10v10"] = 0.4
+GOLD_TICK_TIME["imba_frantic_10v10"] = 0.4
 
 IMBA_COURIERS = {}
 
@@ -297,9 +291,7 @@ TOWER_UPGRADE_TREE["hardlane"]["tier_2"] = {}
 TOWER_UPGRADE_TREE["hardlane"]["tier_3"] = {}																		
 
 MAP_INITIAL_GOLD = 0														-- Gold granted to players at the start of the game on a normal pick
-
 USE_CUSTOM_HERO_LEVELS = true												-- Should we allow heroes to have custom levels?
-
 CHEAT_ENABLED = false
 
 -- Update game mode net tables

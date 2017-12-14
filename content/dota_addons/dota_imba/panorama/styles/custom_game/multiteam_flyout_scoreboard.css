@@ -282,13 +282,12 @@
 #ImbaXPRank22,
 #ImbaXPRank23
 {
-	width: 100%;
+	margin-top: 3px;
 	margin-right: 5%;
 	font-size: 16px;
 	font-weight: bold;
 	color: white;
-	vertical-align: center;
-	horizontal-align: center;
+	align: center center;
 	opacity: 0.75;
 }
 
@@ -319,11 +318,10 @@
 {
 	margin-top: 3px;
 	margin-right: 5px;
-	font-size: 17px;
+	font-size: 16px;
 	font-weight: bold;
 	color: white;
-	vertical-align: center;
-	horizontal-align: right;
+	align: right center;
 	opacity: 0.75;
 }
 
@@ -380,14 +378,12 @@
 #ImbaLvl22,
 #ImbaLvl23
 {
-	font-size: 17px;
+	font-size: 16px;
 	font-weight: bold;
 	margin-top: 3px;
-	margin-right: 70%;
-	width: 100%;
+	margin-left: 3%;
 	color: white;
-	vertical-align: center;
-	horizontal-align: center;
+	align: left center;
 	opacity: 0.75;
 }
 

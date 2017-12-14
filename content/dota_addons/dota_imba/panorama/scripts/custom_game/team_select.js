@@ -281,7 +281,7 @@ function UpdateTimer()
 	{
 		$( "#MapInfo" ).SetDialogVariable( "map_name", "imba custom" );
 	}
-	else if (mapInfo.map_display_name == "imba_custom_10v10")
+	else if (mapInfo.map_display_name == "imba_frantic_10v10")
 	{
 		$( "#MapInfo" ).SetDialogVariable( "map_name", "imba 10v10 custom" );
 	}

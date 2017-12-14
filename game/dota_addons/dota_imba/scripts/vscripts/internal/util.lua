@@ -1063,17 +1063,18 @@ local color = hero:GetFittingColor()
 	companion:SetControllableByPlayer(hero:GetPlayerID(), true)
 
 	if model == "cookies" then
-		model = "models/courier/baby_rosh/babyroshan.vmdl"
+--		model = "models/courier/baby_rosh/babyroshan.vmdl"
+		model = "models/heroes/pikachu/pikachu_3.vmdl"
 		companion:SetOriginalModel(model)
 		companion:SetModel(model)
-		companion:SetMaterialGroup(tostring(RandomInt(1, 4)))
+--		companion:SetMaterialGroup(tostring(RandomInt(1, 4)))
 	else
 		companion:SetOriginalModel(model)
 		companion:SetModel(model)
 		companion:SetRenderColor(color[1], color[2], color[3])
 	end
 
-	companion:SetModelScale(1.0)
+	companion:SetModelScale(0.9)
 	companion:AddNewModifier(companion, nil, "modifier_companion", {})
 	if string.find(model, "flying") then
 		companion:SetMoveCapability(DOTA_UNIT_CAP_MOVE_FLY)
@@ -1176,4 +1177,15 @@ function UpdateRoshanBar(roshan)
 		maxHP = roshan:GetMaxHealth()
 	})
 	return time
+end
+
+-- Checks if this ability is casted by someone with Spell Steal (i.e. Rubick)
+function IsStolenSpell(caster)
+
+	-- If the caster has the Spell Steal ability, return true
+	if caster:FindAbilityByName("rubick_spell_steal") then
+		return true
+	end
+
+	return false
 end

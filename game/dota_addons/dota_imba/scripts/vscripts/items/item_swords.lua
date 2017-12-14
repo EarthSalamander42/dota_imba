@@ -496,15 +496,14 @@ function modifier_item_imba_yasha_proc:GetModifierMoveSpeedBonus_Percentage()
 
 if item_imba_azura == nil then item_imba_azura = class({}) end
 LinkLuaModifier( "modifier_item_imba_azura", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )			-- Owner's bonus attributes, stackable
-LinkLuaModifier( "modifier_item_imba_azura_amp", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )		-- Magic amp debuff
-LinkLuaModifier( "modifier_item_imba_azura_silence", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )	-- Silence debuff
 
 function item_imba_azura:GetAbilityTextureName()
-   return "custom/imba_azura"
+	return "item_kaya"
 end
 
 function item_imba_azura:GetIntrinsicModifierName()
-	return "modifier_item_imba_azura" end
+	return "modifier_item_imba_azura"
+end
 
 -----------------------------------------------------------------------------------------------------------
 --	Azura passive modifier (stackable)
@@ -515,130 +514,36 @@ function modifier_item_imba_azura:IsHidden() return true end
 function modifier_item_imba_azura:IsDebuff() return false end
 function modifier_item_imba_azura:IsPurgable() return false end
 function modifier_item_imba_azura:IsPermanent() return true end
-function modifier_item_imba_azura:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Declare modifier events/properties
 function modifier_item_imba_azura:DeclareFunctions()
 	local funcs = {
+		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
+		MODIFIER_PROPERTY_MANACOST_PERCENTAGE,
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-		MODIFIER_EVENT_ON_ATTACK_LANDED,
 	}
 	return funcs
 end
-
-function modifier_item_imba_azura:GetCustomCooldownReduction()
-	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_cdr") end
 
 function modifier_item_imba_azura:GetModifierBonusStats_Intellect()
 	if not self:GetAbility() then return end
-	return self:GetAbility():GetSpecialValueFor("bonus_int") end
-
--- On attack landed, roll for proc and apply stacks
-function modifier_item_imba_azura:OnAttackLanded( keys )
-	if IsServer() then
-		local owner = self:GetParent()
-		local target = keys.target
-		
-		-- If this attack was not performed by the modifier's owner, do nothing
-		if owner ~= keys.attacker then
-			return end
-		
-		-- If the target is a deflector, do nothing either
-		if target:HasModifier("modifier_imba_juggernaut_blade_fury") and owner:IsRangedAttacker() then
-			return end
-		
-		-- If a higher-priority sword is present, do nothing either
-		local priority_sword_modifiers = {
-			"modifier_item_imba_sange_azura",
-			"modifier_item_imba_azura_yasha",
-			"modifier_item_imba_triumvirate"
-		}
-		for _, sword_modifier in pairs(priority_sword_modifiers) do
-			if owner:HasModifier(sword_modifier) then
-				return nil
-			end
-		end
-
-		-- All conditions met, perform an Azura attack
-		AzuraAttack(owner, keys.target, self:GetAbility(), "modifier_item_imba_azura_amp", "modifier_item_imba_azura_silence")
-	end
+	return self:GetAbility():GetSpecialValueFor("bonus_int")
 end
 
------------------------------------------------------------------------------------------------------------
---	Azura amp debuff (stackable)
------------------------------------------------------------------------------------------------------------
-
-if modifier_item_imba_azura_amp == nil then modifier_item_imba_azura_amp = class({}) end
-function modifier_item_imba_azura_amp:IsHidden() return false end
-function modifier_item_imba_azura_amp:IsDebuff() return true end
-function modifier_item_imba_azura_amp:IsPurgable() return true end
-
--- Modifier particle
-function modifier_item_imba_azura_amp:GetEffectName()
-	return "particles/item/swords/azura_debuff.vpcf"
-end
-
-function modifier_item_imba_azura_amp:GetEffectAttachType()
-	return PATTACH_ABSORIGIN_FOLLOW
-end
-
--- Modifier property storage
-function modifier_item_imba_azura_amp:OnCreated()
-	self.amp_stack = self:GetAbility():GetSpecialValueFor("amp_stack")
-
-	-- Remove this if higher tier modifiers are present
-	if IsServer() then
-		local owner = self:GetParent()
-		local higher_tier_modifiers = {
-			"modifier_item_imba_sange_azura_stacks",
-			"modifier_item_imba_azura_yasha_amp",
-			"modifier_item_imba_triumvirate_stacks_debuff"
-		}
-		for _, modifier in pairs(higher_tier_modifiers) do
-			if owner:FindModifierByName(modifier) then
-				self:Destroy()
-			end
-		end
-	end
-end
-
--- Declare modifier events/properties
-function modifier_item_imba_azura_amp:DeclareFunctions()
-	local funcs = {
-		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
-	}
-	return funcs
-end
-
-function modifier_item_imba_azura_amp:GetModifierMagicalResistanceBonus()
+function modifier_item_imba_azura:GetModifierPercentageCooldown()
 	if not self:GetAbility() then return end
-	return self.amp_stack * self:GetStackCount() end
-
------------------------------------------------------------------------------------------------------------
---	Azura silence debuff
------------------------------------------------------------------------------------------------------------
-
-if modifier_item_imba_azura_silence == nil then modifier_item_imba_azura_silence = class({}) end
-function modifier_item_imba_azura_silence:IsHidden() return true end
-function modifier_item_imba_azura_silence:IsDebuff() return true end
-function modifier_item_imba_azura_silence:IsPurgable() return true end
-
--- Modifier particle
-function modifier_item_imba_azura_silence:GetEffectName()
-	return "particles/item/swords/azura_proc.vpcf"
+	return self:GetAbility():GetSpecialValueFor("bonus_cdr")
 end
 
-function modifier_item_imba_azura_silence:GetEffectAttachType()
-	return PATTACH_OVERHEAD_FOLLOW
+function modifier_item_imba_azura:GetModifierSpellAmplify_Percentage()
+	if not self:GetAbility() then return end
+	return self:GetAbility():GetSpecialValueFor("spell_amp")
 end
 
--- Declare modifier states
-function modifier_item_imba_azura_silence:CheckState()
-	local states = {
-		[MODIFIER_STATE_SILENCED] = true,
-	}
-	return states
+function modifier_item_imba_azura:GetModifierPercentageManacost()
+if not self:GetAbility() then return end
+	return self:GetAbility():GetSpecialValueFor("bonus_cdr")
 end
 
 -----------------------------------------------------------------------------------------------------------
@@ -1067,7 +972,6 @@ function modifier_item_imba_sange_azura_stacks:OnCreated()
 		-- Inherit stacks from lower-tier modifiers
 		local lower_tier_modifiers = {
 			"modifier_item_imba_sange_maim",
-			"modifier_item_imba_azura_amp",
 			"modifier_item_imba_sange_yasha_maim",
 			"modifier_item_imba_azura_yasha_amp"
 		}
@@ -1259,18 +1163,6 @@ function modifier_item_imba_azura_yasha_amp:OnCreated()
 			end
 		end
 
-		-- Inherit stacks from lower-tier modifiers
-		local lower_tier_modifiers = {
-			"modifier_item_imba_azura_amp",
-		}
-		local stack_count = self:GetStackCount()
-		for _, modifier in pairs(lower_tier_modifiers) do
-			local modifier_to_remove = owner:FindModifierByName(modifier)
-			if modifier_to_remove then
-				stack_count = math.max(stack_count, modifier_to_remove:GetStackCount())
-				modifier_to_remove:Destroy()
-			end
-		end
 		self:SetStackCount(stack_count)
 	end
 end
@@ -1558,7 +1450,6 @@ function modifier_item_imba_triumvirate_stacks_debuff:OnCreated()
 		local owner = self:GetParent()
 		local lower_tier_modifiers = {
 			"modifier_item_imba_sange_maim",
-			"modifier_item_imba_azura_amp",
 			"modifier_item_imba_sange_yasha_maim",
 			"modifier_item_imba_azura_yasha_amp",
 			"modifier_item_imba_sange_azura_stacks"
