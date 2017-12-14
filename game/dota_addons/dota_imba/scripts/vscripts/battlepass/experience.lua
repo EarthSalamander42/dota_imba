@@ -31,9 +31,9 @@ function GetTitleIXP(level)
 	elseif level <= 199 then
 		return "Ancient"
 	elseif level <= 299 then
-		return "Amphibian"..level-200
+		return "Amphibian "..level-200
 	elseif level <= 399 then
-		return "Icefrog"..level-300
+		return "Icefrog "..level-300
 	else 
 		return "Firetoad "..level-400
 	end
@@ -59,6 +59,10 @@ function GetTitleColorIXP(title, js)
 			return "#8E0C0C"
 		elseif title == "Legendary" then
 			return "#EFBC14"
+		elseif title == "Ancient" then
+			return "#BF950D"
+		elseif title == "Amphibian" then
+			return "#000066"
 		elseif title == "Icefrog" then
 			return "#1456EF"
 		else -- it's Firetoaaaaaaaaaaad! 
@@ -83,6 +87,10 @@ function GetTitleColorIXP(title, js)
 			return {142, 12, 12}
 		elseif title == "Legendary" then
 			return {239, 188, 20}
+		elseif title == "Ancient" then
+			return {191, 149, 13}
+		elseif title == "Amphibian" then
+			return {0, 0, 102}
 		elseif title == "Icefrog" then
 			return {20, 86, 239}
 		else -- it's Firetoaaaaaaaaaaad! 
@@ -102,9 +110,11 @@ function CountGameIXP()
 	end
 end
 
-function GetPlayerInfoIXP()
+function GetPlayerInfoIXP() -- yet it has too much useless loops, format later
+if api_preloaded.players == nil then return end
 local level = {}
 local current_xp_in_level = {}
+local max_xp = {}
 
 	for ID = 0, PlayerResource:GetPlayerCount() -1 do
 		local global_xp = get_stats_for_player(ID).xp
@@ -112,16 +122,23 @@ local current_xp_in_level = {}
 
 		for i = 1, #XP_level_table do
 			if global_xp > XP_level_table[i] then
-				level[ID] = i
-				current_xp_in_level[ID] = 0
-				current_xp_in_level[ID] = global_xp - XP_level_table[i]
+				if global_xp > XP_level_table[#XP_level_table] then -- if max level
+					level[ID] = #XP_level_table
+					current_xp_in_level[ID] = XP_level_table[level[ID]] - XP_level_table[level[ID]-1]
+					max_xp[ID] = XP_level_table[level[ID]] - XP_level_table[level[ID]-1]
+				else
+					level[ID] = i
+					current_xp_in_level[ID] = 0
+					current_xp_in_level[ID] = global_xp - XP_level_table[i]
+					max_xp[ID] = XP_level_table[level[ID]+1] - XP_level_table[level[ID]]
+				end
 			end
 		end
 
 		CustomNetTables:SetTableValue("player_table", tostring(ID),
 		{
 			XP = current_xp_in_level[ID],
-			MaxXP = XP_level_table[level[ID]+1] - XP_level_table[level[ID]],
+			MaxXP = max_xp[ID],
 			Lvl = level[ID], -- add +1 only on the HUD else you are level 0 at the first level
 			title = GetTitleIXP(level[ID]),
 			title_color = GetTitleColorIXP(GetTitleIXP(level[ID]), true)

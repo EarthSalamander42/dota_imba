@@ -5,8 +5,6 @@ function ShivaBlast( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local sound_cast = keys.sound_cast
-	local particle_blast = keys.particle_blast
-	local particle_hit = keys.particle_hit
 	local modifier_slow = keys.modifier_slow
 
 	-- Parameters
@@ -20,17 +18,11 @@ function ShivaBlast( keys )
 	-- Play cast sound
 	caster:EmitSound(sound_cast)
 
-	if Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 100) == true then
-		particle_blast = "particles/econ/events/ti7/shivas_guard_active_ti7.vpcf"
-		particle_hit = "particles/econ/events/ti7/shivas_guard_impact_ti7.vpcf"
-	end
-
 	-- Play particle
-	local blast_pfx = ParticleManager:CreateParticle(particle_blast, PATTACH_ABSORIGIN_FOLLOW, caster)
+	local blast_pfx = ParticleManager:CreateParticle(caster.shiva_blast_effect, PATTACH_ABSORIGIN_FOLLOW, caster)
 	ParticleManager:SetParticleControl(blast_pfx, 0, caster:GetAbsOrigin())
 	ParticleManager:SetParticleControl(blast_pfx, 1, Vector(blast_radius, blast_duration * 1.33, blast_speed))
 	ParticleManager:ReleaseParticleIndex(blast_pfx)
-
 
 	-- Initialize targets hit table
 	local targets_hit = {}
@@ -39,7 +31,6 @@ function ShivaBlast( keys )
 	local current_radius = 0
 	local tick_interval = 0.1
 	Timers:CreateTimer(tick_interval, function()
-
 		-- Give vision
 		AddFOWViewer(caster:GetTeamNumber(), current_loc, current_radius, 0.1, false)
 
@@ -51,7 +42,6 @@ function ShivaBlast( keys )
 		-- Iterate through enemies in the radius
 		local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), current_loc, nil, current_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 		for _,enemy in pairs(nearby_enemies) do
-			
 			-- Check if this enemy was already hit
 			local enemy_has_been_hit = false
 			for _,enemy_hit in pairs(targets_hit) do
@@ -60,9 +50,8 @@ function ShivaBlast( keys )
 
 			-- If not, blast it
 			if not enemy_has_been_hit then
-
 				-- Play hit particle
-				local hit_pfx = ParticleManager:CreateParticle(particle_hit, PATTACH_ABSORIGIN_FOLLOW, enemy)
+				local hit_pfx = ParticleManager:CreateParticle(caster.shiva_hit_effect, PATTACH_ABSORIGIN_FOLLOW, enemy)
 				ParticleManager:SetParticleControl(hit_pfx, 0, enemy:GetAbsOrigin())
 				ParticleManager:SetParticleControl(hit_pfx, 1, enemy:GetAbsOrigin())
 				ParticleManager:ReleaseParticleIndex(hit_pfx)

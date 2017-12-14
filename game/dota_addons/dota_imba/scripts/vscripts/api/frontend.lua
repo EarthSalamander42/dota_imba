@@ -5,7 +5,7 @@
 require("api/api")
 require("api/json")
 
-local api_preloaded = {}
+api_preloaded = {}
 
 -- has to be called in GameMode:OnFirstPlayerLoaded
 -- loads donators / developers and registers the game
@@ -14,7 +14,12 @@ function imba_api_init(complete_fun)
 	print("[api-frontend] init")
 
 	local proxy_fun = function () 
-		if api_preloaded.donators ~= nil and api_preloaded.developers ~= nil and api_preloaded.players ~= nil then
+		if api_preloaded.donators ~= nil 
+			and api_preloaded.developers ~= nil 
+			and api_preloaded.players ~= nil
+--			and api_preloaded.topxpplayers ~= nil 
+--			and api_preloaded.topimrplayers ~= nil
+		then
 			complete_fun()
 		end
 	end
@@ -27,7 +32,7 @@ end
 -- will be called by imba_api_init()
 -- loads donators and developers
 function imba_api_preload(complete_fun)
-	
+
 	print("[api-frontend] preloading")
 
 	imba_api():meta_donators(function (donors)
@@ -39,6 +44,16 @@ function imba_api_preload(complete_fun)
 		api_preloaded.developers = devs
 		complete_fun()
 	end)
+
+--	imba_api():meta_topxpplayers(function (devs)
+--		api_preloaded.topxpplayers = devs
+--		complete_fun()
+--	end)
+
+--	imba_api():meta_topimrplayers(function (devs)
+--		api_preloaded.topimrplayers = devs
+--		complete_fun()
+--	end)
 end
 
 -- Syncronous
@@ -58,6 +73,14 @@ end
 function get_developers()
 	return api_preloaded.developers
 end
+
+--	function get_topxpplayers()
+--		return api_preloaded.topxpplayers
+--	end
+--	
+--	function get_topimrplayers()
+--		return api_preloaded.topimrplayers
+--	end
 
 -- Returns the preloaded xp for player / if available
 -- {

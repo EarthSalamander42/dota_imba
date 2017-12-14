@@ -28,56 +28,12 @@ function item_imba_blink:OnSpellStart()
 	
 	local distance = (target_point - origin_point):Length2D()
 	local max_blink_range = self:GetSpecialValueFor("max_blink_range")
-	
-	local blink_effect = "particles/items_fx/blink_dagger_start.vpcf"
-	local blink_effect_end = "particles/items_fx/blink_dagger_end.vpcf"
-
-	if Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 9) == true then
-		blink_effect = "particles/econ/events/nexon_hero_compendium_2014/blink_dagger_start_nexon_hero_cp_2014.vpcf"
-		blink_effect_end = "particles/econ/events/nexon_hero_compendium_2014/blink_dagger_end_nexon_hero_cp_2014.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 18) == true then
-		blink_effect = "particles/econ/events/fall_major_2016/blink_dagger_start_fm06.vpcf"
-		blink_effect_end = "particles/econ/events/fall_major_2016/blink_dagger_end_fm06.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 27) == true then
-		blink_effect = "particles/econ/events/ti7/blink_dagger_start_ti7.vpcf"
-		blink_effect_end = "particles/econ/events/ti7/blink_dagger_end_ti7.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 36) == true then
-		blink_effect = "particles/econ/events/ti7/blink_dagger_start_ti7_lvl2.vpcf"
-		blink_effect_end = "particles/econ/events/ti7/blink_dagger_end_ti7_lvl2.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 45) == true then
-		blink_effect = "particles/econ/events/winter_major_2017/blink_dagger_start_wm07.vpcf"
-		blink_effect_end = "particles/econ/events/winter_major_2017/blink_dagger_end_wm07.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 54) == true then
-		blink_effect = "particles/econ/events/ti6/blink_dagger_start_ti6.vpcf"
-		blink_effect_end = "particles/econ/events/ti6/blink_dagger_end_ti6.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 63) == true then
-		blink_effect = "particles/econ/events/ti6/blink_dagger_start_ti6_lvl2.vpcf"
-		blink_effect_end = "particles/econ/events/ti6/blink_dagger_end_ti6_lvl2.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 72) == true then
-		blink_effect = "particles/econ/events/ti5/blink_dagger_start_ti5.vpcf"
-		blink_effect_end = "particles/econ/events/ti5/blink_dagger_end_ti5.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 81) == true then
-		blink_effect = "particles/econ/events/ti5/blink_dagger_start_lvl2_ti5.vpcf"
-		blink_effect_end = "particles/econ/events/ti5/blink_dagger_end_lvl2_ti5.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 90) == true then
-		blink_effect = "particles/econ/events/ti4/blink_dagger_start_ti4.vpcf"
-		blink_effect_end = "particles/econ/events/ti4/blink_dagger_end_ti4.vpcf"
-	end
 
 	-- Disjointing everything
 	ProjectileManager:ProjectileDodge(caster)
-
-	-- Defining the color, either default or by command
-	local color
-	if caster.blinkcolor then
-		color = caster.blinkcolor
-	else
-		color = Vector(0, 20, 255) -- Blueish, just a little brighter
-	end
 	
 	-- Creating the particle & sound at the start-location
-	local blink_pfx = ParticleManager:CreateParticle(blink_effect, PATTACH_ABSORIGIN, caster)
-	ParticleManager:SetParticleControl(blink_pfx, 15, color)
+	local blink_pfx = ParticleManager:CreateParticle(caster.blink_effect, PATTACH_ABSORIGIN, caster)
 	ParticleManager:ReleaseParticleIndex(blink_pfx)
 	caster:EmitSound("DOTA_Item.BlinkDagger.Activate")
 	
@@ -110,8 +66,7 @@ function item_imba_blink:OnSpellStart()
 		FindClearSpaceForUnit(caster, target_point, true)
 		
 		-- Create Particle on end-point
-		local blink_end_pfx = ParticleManager:CreateParticle(blink_effect_end, PATTACH_ABSORIGIN, caster)
-		ParticleManager:SetParticleControl(blink_end_pfx, 15, color )
+		local blink_end_pfx = ParticleManager:CreateParticle(caster.blink_effect_end, PATTACH_ABSORIGIN, caster)
 		ParticleManager:ReleaseParticleIndex(blink_end_pfx)
 	end)
 end
@@ -236,41 +191,6 @@ function item_imba_blink_boots:OnSpellStart()
 	local distance = (target_point - origin_point):Length2D()
 	local max_blink_range = self:GetSpecialValueFor("max_blink_range")
 
-	local blink_effect = "particles/item/blink/blink_dagger_start_imba.vpcf"
-	local blink_effect_end = "particles/item/blink/blink_dagger_imbaend.vpcf"
-
-	if Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 9) == true then
-		blink_effect = "particles/econ/events/nexon_hero_compendium_2014/blink_dagger_start_nexon_hero_cp_2014.vpcf"
-		blink_effect_end = "particles/econ/events/nexon_hero_compendium_2014/blink_dagger_end_nexon_hero_cp_2014.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 18) == true then
-		blink_effect = "particles/econ/events/fall_major_2016/blink_dagger_start_fm06.vpcf"
-		blink_effect_end = "particles/econ/events/fall_major_2016/blink_dagger_end_fm06.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 27) == true then
-		blink_effect = "particles/econ/events/ti7/blink_dagger_start_ti7.vpcf"
-		blink_effect_end = "particles/econ/events/ti7/blink_dagger_end_ti7.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 36) == true then
-		blink_effect = "particles/econ/events/ti7/blink_dagger_start_ti7_lvl2.vpcf"
-		blink_effect_end = "particles/econ/events/ti7/blink_dagger_end_ti7_lvl2.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 45) == true then
-		blink_effect = "particles/econ/events/winter_major_2017/blink_dagger_start_wm07.vpcf"
-		blink_effect_end = "particles/econ/events/winter_major_2017/blink_dagger_end_wm07.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 54) == true then
-		blink_effect = "particles/econ/events/ti6/blink_dagger_start_ti6.vpcf"
-		blink_effect_end = "particles/econ/events/ti6/blink_dagger_end_ti6.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 63) == true then
-		blink_effect = "particles/econ/events/ti6/blink_dagger_start_ti6_lvl2.vpcf"
-		blink_effect_end = "particles/econ/events/ti6/blink_dagger_end_ti6_lvl2.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 72) == true then
-		blink_effect = "particles/econ/events/ti5/blink_dagger_start_ti5.vpcf"
-		blink_effect_end = "particles/econ/events/ti5/blink_dagger_end_ti5.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 81) == true then
-		blink_effect = "particles/econ/events/ti5/blink_dagger_start_lvl2_ti5.vpcf"
-		blink_effect_end = "particles/econ/events/ti5/blink_dagger_end_lvl2_ti5.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(caster:GetPlayerID(), 90) == true then
-		blink_effect = "particles/econ/events/ti4/blink_dagger_start_ti4.vpcf"
-		blink_effect_end = "particles/econ/events/ti4/blink_dagger_end_ti4.vpcf"
-	end
-
 	-- Disjointing everything
 	ProjectileManager:ProjectileDodge(caster)
 
@@ -283,14 +203,13 @@ function item_imba_blink_boots:OnSpellStart()
 	end
 
 	-- Creating the particle & sound at the start-location
-	local blink_pfx = ParticleManager:CreateParticle(blink_effect, PATTACH_ABSORIGIN, caster)
+	local blink_pfx = ParticleManager:CreateParticle(caster.blink_effect, PATTACH_ABSORIGIN, caster)
 	ParticleManager:SetParticleControl(blink_pfx, 15, color)
 	ParticleManager:ReleaseParticleIndex(blink_pfx)
 	caster:EmitSound("DOTA_Item.BlinkDagger.Activate")
 
 	-- Set distance if targeted destiny is beyond range
 	if distance > max_blink_range then
-
 		-- Extra parameters
 		local max_extra_distance = self:GetSpecialValueFor("max_extra_distance")
 		local max_extra_cooldown = self:GetSpecialValueFor("max_extra_cooldown")
@@ -317,7 +236,7 @@ function item_imba_blink_boots:OnSpellStart()
 		FindClearSpaceForUnit(caster, target_point, true)
 
 		-- Create Particle on end-point
-		local blink_end_pfx = ParticleManager:CreateParticle(blink_effect_end, PATTACH_ABSORIGIN, caster)
+		local blink_end_pfx = ParticleManager:CreateParticle(caster.blink_effect_end, PATTACH_ABSORIGIN, caster)
 		ParticleManager:SetParticleControl(blink_end_pfx, 15, color )
 		ParticleManager:ReleaseParticleIndex(blink_end_pfx)
 	end)

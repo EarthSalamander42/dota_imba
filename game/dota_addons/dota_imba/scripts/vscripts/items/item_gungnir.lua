@@ -1,23 +1,6 @@
 -- Author: MouJiaoZi
 -- Date: 2017/12/02  YYYY/MM/DD
 
--- For battle pass
-function GetForceStaffEffect(npc)
-	local effect = "particles/items_fx/force_staff.vpcf"
-
-	if Imbattlepass:GetRewardUnlocked(npc:GetPlayerID(), 18) == true then
-		effect = "particles/econ/events/fall_major_2016/force_staff_fm06.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(npc:GetPlayerID(), 27) == true then
-		effect = "particles/econ/events/ti7/force_staff_ti7.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(npc:GetPlayerID(), 45) == true then
-		effect = "particles/econ/events/winter_major_2017/force_staff_wm07.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(npc:GetPlayerID(), 54) == true then
-		effect = "particles/econ/events/ti6/force_staff_ti6.vpcf"
-	end
-
-	return effect
-end
-
 item_imba_gungnir = item_imba_gungnir or class({})
 
 LinkLuaModifier("modifier_item_imba_gungnir", "items/item_gungnir", LUA_MODIFIER_MOTION_NONE)
@@ -185,7 +168,7 @@ function modifier_item_imba_gungnir_force_ally:IsMotionController()  return true
 function modifier_item_imba_gungnir_force_ally:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_item_imba_gungnir_force_ally:OnCreated()
-	self.effect = GetForceStaffEffect(self:GetCaster())
+	self.effect = self:GetCaster().force_staff_effect
 	if not IsServer() then return end
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
@@ -257,7 +240,7 @@ function modifier_item_imba_gungnir_force_enemy_ranged:IsMotionController()  ret
 function modifier_item_imba_gungnir_force_enemy_ranged:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_item_imba_gungnir_force_enemy_ranged:OnCreated()
-	self.effect = GetForceStaffEffect(self:GetCaster())
+	self.effect = self:GetCaster().force_staff_effect
 	if not IsServer() then return end
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
@@ -300,7 +283,7 @@ function modifier_item_imba_gungnir_force_self_ranged:IsMotionController()  retu
 function modifier_item_imba_gungnir_force_self_ranged:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_item_imba_gungnir_force_self_ranged:OnCreated()
-	self.effect = GetForceStaffEffect(self:GetParent())
+	self.effect = self:GetCaster().force_staff_effect
 	if not IsServer() then return end
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
@@ -345,7 +328,7 @@ function modifier_item_imba_gungnir_force_enemy_melee:IsMotionController()  retu
 function modifier_item_imba_gungnir_force_enemy_melee:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_item_imba_gungnir_force_enemy_melee:OnCreated()
-	self.effect = GetForceStaffEffect(self:GetCaster())
+	self.effect = self:GetCaster().force_staff_effect
 	if not IsServer() then return end
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
@@ -388,7 +371,7 @@ function modifier_item_imba_gungnir_force_self_melee:IsMotionController()  retur
 function modifier_item_imba_gungnir_force_self_melee:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_item_imba_gungnir_force_self_melee:OnCreated()
-	self.effect = GetForceStaffEffect(self:GetParent())
+	self.effect = self:GetCaster().force_staff_effect
 	if not IsServer() then return end
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
@@ -555,7 +538,7 @@ function modifier_item_imba_force_staff_active:IsMotionController()  return true
 function modifier_item_imba_force_staff_active:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_item_imba_force_staff_active:OnCreated()
-	self.effect = GetForceStaffEffect(self:GetCaster())
+	self.effect = self:GetCaster().force_staff_effect
 	if not IsServer() then return end
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
@@ -715,7 +698,7 @@ function modifier_item_imba_hurricane_pike_force_ally:IsMotionController()  retu
 function modifier_item_imba_hurricane_pike_force_ally:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_item_imba_hurricane_pike_force_ally:OnCreated()
-	self.effect = GetForceStaffEffect(self:GetCaster())
+	self.effect = self:GetCaster().force_staff_effect
 	if not IsServer() then return end
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
@@ -760,7 +743,7 @@ function modifier_item_imba_hurricane_pike_force_enemy:IsMotionController()  ret
 function modifier_item_imba_hurricane_pike_force_enemy:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_item_imba_hurricane_pike_force_enemy:OnCreated()
-	self.effect = GetForceStaffEffect(self:GetCaster())
+	self.effect = self:GetCaster().force_staff_effect
 	if not IsServer() then return end
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())
@@ -803,7 +786,7 @@ function modifier_item_imba_hurricane_pike_force_self:IsMotionController()  retu
 function modifier_item_imba_hurricane_pike_force_self:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
 
 function modifier_item_imba_hurricane_pike_force_self:OnCreated()
-	self.effect = GetForceStaffEffect(self:GetParent())
+	self.effect = self:GetCaster().force_staff_effect
 	if not IsServer() then return end
 	self:GetParent():StartGesture(ACT_DOTA_FLAIL)
 	self:StartIntervalThink(FrameTime())

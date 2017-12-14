@@ -253,7 +253,7 @@ function MakeNewHero(new_heroes) {
 
 function MakeDisabledHeroes(disabled_10v10, disabled_frantic, disabled_all) {
 	var map_info = Game.GetMapInfo();
-	if (map_info.map_display_name == "imba_10v10" || map_info.map_display_name == "imba_custom_10v10" || map_info.map_display_name == "imba_12v12") {
+	if (map_info.map_display_name == "imba_10v10" || map_info.map_display_name == "imba_frantic_10v10" || map_info.map_display_name == "imba_12v12") {
 		var g = 1;
 		for (g in disabled_10v10) {
 			if (disabled_10v10[g] != null) {
@@ -267,7 +267,7 @@ function MakeDisabledHeroes(disabled_10v10, disabled_frantic, disabled_all) {
 		}
 	}
 
-	if (map_info.map_display_name == "imba_custom_10v10") {
+	if (map_info.map_display_name == "imba_frantic_10v10") {
 		var i = 1;
 		for (i in disabled_frantic) {
 			if (disabled_frantic[i] != null) {
@@ -749,7 +749,7 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 		$("#MaxLevelValue").text = max_level[1];
 		$("#TowerPowerValue").text = $.Localize( '#imba_gamemode_settings_power_' + tower_power[1] );
 
-		if (map_info.map_display_name == "imba_custom" || map_info.map_display_name == "imba_custom_10v10") {
+		if (map_info.map_display_name == "imba_custom" || map_info.map_display_name == "imba_frantic_10v10") {
 			if(frantic_mode) {
 				$("#FranticModeValue").text = $.Localize( '#imba_gamemode_game_options_frantic_enabled' );
 			}

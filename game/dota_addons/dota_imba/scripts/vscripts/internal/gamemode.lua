@@ -228,7 +228,7 @@ function OnSetGameMode( eventSourceIndex, args )
 	if mode_info.exp_multiplier == 1 then
 		TOWER_POWER_FACTOR = 1
 	elseif mode_info.tower_power == 2 then
-		if map_name ~= "imba_custom_10v10" then
+		if map_name ~= "imba_frantic_10v10" then
 			TOWER_POWER_FACTOR = 2
 		else
 			TOWER_POWER_FACTOR = 3

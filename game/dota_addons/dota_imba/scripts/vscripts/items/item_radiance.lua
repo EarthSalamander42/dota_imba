@@ -85,26 +85,23 @@ function modifier_imba_radiance_aura:GetAuraSearchTeam()
 	return DOTA_UNIT_TARGET_TEAM_ENEMY end
 	
 function modifier_imba_radiance_aura:GetAuraSearchType()
-	return DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO end
+	return DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO
+end
 	
 function modifier_imba_radiance_aura:GetModifierAura()
-	return "modifier_imba_radiance_burn" end
+	return "modifier_imba_radiance_burn"
+end
 	
 function modifier_imba_radiance_aura:GetAuraRadius()
-	return self:GetAbility():GetSpecialValueFor("aura_radius") end
+	return self:GetAbility():GetSpecialValueFor("aura_radius")
+end
 
 -- Create the glow particle and start thinking
 function modifier_imba_radiance_aura:OnCreated()
 	if IsServer() then
 		local parent = self:GetParent()
-		local particle = "particles/item/radiance/radiance_owner.vpcf"
-		if Imbattlepass:GetRewardUnlocked(parent:GetPlayerID(), 44) == true then
-			particle = "particles/econ/events/ti7/radiance_owner_ti7.vpcf"
-		elseif Imbattlepass:GetRewardUnlocked(parent:GetPlayerID(), 88) == true then
-			particle = "particles/econ/events/ti6/radiance_owner_ti6.vpcf"
-		end
 
-		self.particle = ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN_FOLLOW, parent)
+		self.particle = ParticleManager:CreateParticle(parent.radiance_effect, PATTACH_ABSORIGIN_FOLLOW, parent)
 		ParticleManager:SetParticleControl(self.particle, 2, parent:GetFittingColor())
 		self:StartIntervalThink(0.5)
 	end

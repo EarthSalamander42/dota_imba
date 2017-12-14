@@ -1,0 +1,1173 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+	m_meshList = 
+	{
+		m_meshList = 
+		[
+			{
+				m_meshName = "model_kirby"
+				m_meshFile = "models/heroes/kirby/model_kirby.fbx"
+				m_materialSearchPath = ""
+				m_bSkinParentedObjects = true
+				m_bLegacySkinParentedTransforms = false
+				m_bExpensiveTangents = false
+				m_bHighPrecisionTexCoords = false
+				m_bPerVertexCurvature = false
+				m_bBentNormals = false
+				m_bIgnoreCloth = false
+				m_bGetSkinningFromLod0 = false
+				m_pMorphInfo = null
+			},
+		]
+	}
+	m_clothProxyMeshList = 
+	{
+		_class = "CVClothProxyMeshList"
+		m_flClothEnableThreshold = 0.05
+		m_bCreateStaticBone = false
+		m_nMaxBonesPerVertex = 4
+		m_bRemoveUnusedBonesEnabled = false
+		m_bDriveMeshesWithBacksolvedJointsOnly = true
+		m_flMatchProxiesToMeshes = 1.0
+		m_flFallbackEnvelope = 1.0
+		m_nReservedInt = 0
+		m_bSoftSkinAnimation = false
+		m_bReservedBool2 = false
+		m_bReservedBool3 = false
+		m_bReservedBool4 = false
+		m_clothProxyMeshList = [  ]
+	}
+	m_physicsMeshList = 
+	{
+		m_meshList = [  ]
+	}
+	m_pModelInfo = null
+	m_pBoneFlagList = 
+	{
+		m_pObject = null
+	}
+	m_pHitBoxSetLists = 
+	[
+		{
+			m_pObject = 
+			{
+				m_HitBoxSets = 
+				[
+					{
+						m_name = "default"
+						m_HitBoxes = 
+						[
+							{
+								m_name = "BodyBN"
+								m_sSurfaceProperty = ""
+								m_nGroupId = 0
+								m_sBoneName = "BodyBN"
+								m_vMinBounds = [ -40.746948, -41.673203, -41.668919 ]
+								m_vMaxBounds = [ 42.624191, 42.910934, 41.668919 ]
+								m_bTranslationOnly = false
+								m_cRenderColor = [ 0, 0, 0, 0 ]
+							},
+							{
+								m_name = "LFootJ"
+								m_sSurfaceProperty = ""
+								m_nGroupId = 0
+								m_sBoneName = "LFootJ"
+								m_vMinBounds = [ -7.393126, -39.754593, -17.850241 ]
+								m_vMaxBounds = [ 16.402475, 13.074906, 19.010862 ]
+								m_bTranslationOnly = false
+								m_cRenderColor = [ 0, 0, 0, 0 ]
+							},
+							{
+								m_name = "RFootJ"
+								m_sSurfaceProperty = ""
+								m_nGroupId = 0
+								m_sBoneName = "RFootJ"
+								m_vMinBounds = [ -7.296345, -39.662834, -18.959843 ]
+								m_vMaxBounds = [ 16.421753, 13.099616, 17.963177 ]
+								m_bTranslationOnly = false
+								m_cRenderColor = [ 0, 0, 0, 0 ]
+							},
+							{
+								m_name = "LShoulderJ"
+								m_sSurfaceProperty = ""
+								m_nGroupId = 0
+								m_sBoneName = "LShoulderJ"
+								m_vMinBounds = [ -11.796289, -11.142208, -12.091915 ]
+								m_vMaxBounds = [ 17.684437, 11.127037, 13.014984 ]
+								m_bTranslationOnly = false
+								m_cRenderColor = [ 0, 0, 0, 0 ]
+							},
+							{
+								m_name = "RShoulderJ"
+								m_sSurfaceProperty = ""
+								m_nGroupId = 0
+								m_sBoneName = "RShoulderJ"
+								m_vMinBounds = [ -11.79874, -11.088955, -13.067013 ]
+								m_vMaxBounds = [ 17.716507, 11.18256, 12.039883 ]
+								m_bTranslationOnly = false
+								m_cRenderColor = [ 0, 0, 0, 0 ]
+							},
+							{
+								m_name = "MouthShitaN"
+								m_sSurfaceProperty = ""
+								m_nGroupId = 0
+								m_sBoneName = "MouthShitaN"
+								m_vMinBounds = [ -33.782883, 7.668152, -21.045126 ]
+								m_vMaxBounds = [ 11.144047, 42.868359, 21.045099 ]
+								m_bTranslationOnly = false
+								m_cRenderColor = [ 0, 0, 0, 0 ]
+							},
+							{
+								m_name = "LToeN"
+								m_sSurfaceProperty = ""
+								m_nGroupId = 0
+								m_sBoneName = "LToeN"
+								m_vMinBounds = [ -18.510612, -11.380004, -18.916582 ]
+								m_vMaxBounds = [ 28.3703, 12.376363, 17.944536 ]
+								m_bTranslationOnly = false
+								m_cRenderColor = [ 0, 0, 0, 0 ]
+							},
+							{
+								m_name = "RToeN"
+								m_sSurfaceProperty = ""
+								m_nGroupId = 0
+								m_sBoneName = "RToeN"
+								m_vMinBounds = [ -18.808567, -11.192939, -20.249538 ]
+								m_vMaxBounds = [ 28.080578, 12.521661, 16.673527 ]
+								m_bTranslationOnly = false
+								m_cRenderColor = [ 0, 0, 0, 0 ]
+							},
+							{
+								m_name = "LArmJ"
+								m_sSurfaceProperty = ""
+								m_nGroupId = 0
+								m_sBoneName = "LArmJ"
+								m_vMinBounds = [ -13.258629, -11.094742, -12.091759 ]
+								m_vMaxBounds = [ 15.247486, 11.17865, 13.015137 ]
+								m_bTranslationOnly = false
+								m_cRenderColor = [ 0, 0, 0, 0 ]
+							},
+							{
+								m_name = "RArmJ"
+								m_sSurfaceProperty = ""
+								m_nGroupId = 0
+								m_sBoneName = "RArmJ"
+								m_vMinBounds = [ -13.194933, -11.040323, -13.067146 ]
+								m_vMaxBounds = [ 15.250782, 11.232904, 12.039745 ]
+								m_bTranslationOnly = false
+								m_cRenderColor = [ 0, 0, 0, 0 ]
+							},
+							{
+								m_name = "HeadN"
+								m_sSurfaceProperty = ""
+								m_nGroupId = 0
+								m_sBoneName = "HeadN"
+								m_vMinBounds = [ -2.0, -2.0, -2.0 ]
+								m_vMaxBounds = [ 2.0, 2.0, 2.0 ]
+								m_bTranslationOnly = false
+								m_cRenderColor = [ 0, 0, 0, 0 ]
+							},
+							{
+								m_name = "MouthL1stN"
+								m_sSurfaceProperty = ""
+								m_nGroupId = 0
+								m_sBoneName = "MouthL1stN"
+								m_vMinBounds = [ 10.273014, 41.651512, -5.304368 ]
+								m_vMaxBounds = [ 11.694721, 42.910927, 7.848587 ]
+								m_bTranslationOnly = false
+								m_cRenderColor = [ 0, 0, 0, 0 ]
+							},
+							{
+								m_name = "MouthR1stN"
+								m_sSurfaceProperty = ""
+								m_nGroupId = 0
+								m_sBoneName = "MouthR1stN"
+								m_vMinBounds = [ 10.273224, 41.651466, -7.848623 ]
+								m_vMaxBounds = [ 11.694721, 42.910927, 5.30433 ]
+								m_bTranslationOnly = false
+								m_cRenderColor = [ 0, 0, 0, 0 ]
+							},
+							{
+								m_name = "MouthL2ndN"
+								m_sSurfaceProperty = ""
+								m_nGroupId = 0
+								m_sBoneName = "MouthL2ndN"
+								m_vMinBounds = [ 7.049335, 25.021454, 4.887969 ]
+								m_vMaxBounds = [ 20.679596, 42.295364, 31.852394 ]
+								m_bTranslationOnly = false
+								m_cRenderColor = [ 0, 0, 0, 0 ]
+							},
+							{
+								m_name = "MouthR2ndN"
+								m_sSurfaceProperty = ""
+								m_nGroupId = 0
+								m_sBoneName = "MouthR2ndN"
+								m_vMinBounds = [ 7.049335, 25.021442, -31.852413 ]
+								m_vMaxBounds = [ 20.679596, 42.2953, -4.887996 ]
+								m_bTranslationOnly = false
+								m_cRenderColor = [ 0, 0, 0, 0 ]
+							},
+							{
+								m_name = "MouthL3rdN"
+								m_sSurfaceProperty = ""
+								m_nGroupId = 0
+								m_sBoneName = "MouthL3rdN"
+								m_vMinBounds = [ -12.181286, 7.668156, 2.894177 ]
+								m_vMaxBounds = [ 14.173744, 42.75584, 33.042084 ]
+								m_bTranslationOnly = false
+								m_cRenderColor = [ 0, 0, 0, 0 ]
+							},
+							{
+								m_name = "MouthR3rdN"
+								m_sSurfaceProperty = ""
+								m_nGroupId = 0
+								m_sBoneName = "MouthR3rdN"
+								m_vMinBounds = [ -12.181417, 7.668594, -33.042103 ]
+								m_vMaxBounds = [ 14.173744, 42.755844, -2.894217 ]
+								m_bTranslationOnly = false
+								m_cRenderColor = [ 0, 0, 0, 0 ]
+							},
+							{
+								m_name = "MouthL4thN"
+								m_sSurfaceProperty = ""
+								m_nGroupId = 0
+								m_sBoneName = "MouthL4thN"
+								m_vMinBounds = [ -29.544415, 13.227715, 1.450069 ]
+								m_vMaxBounds = [ 9.131199, 42.832455, 32.449425 ]
+								m_bTranslationOnly = false
+								m_cRenderColor = [ 0, 0, 0, 0 ]
+							},
+							{
+								m_name = "MouthR4thN"
+								m_sSurfaceProperty = ""
+								m_nGroupId = 0
+								m_sBoneName = "MouthR4thN"
+								m_vMinBounds = [ -29.544422, 12.263962, -32.449448 ]
+								m_vMaxBounds = [ 9.131187, 42.832458, -1.450108 ]
+								m_bTranslationOnly = false
+								m_cRenderColor = [ 0, 0, 0, 0 ]
+							},
+							{
+								m_name = "MouthShitaNb"
+								m_sSurfaceProperty = ""
+								m_nGroupId = 0
+								m_sBoneName = "MouthShitaNb"
+								m_vMinBounds = [ -38.850182, 7.668217, -15.857194 ]
+								m_vMaxBounds = [ -2.852566, 42.091324, 15.857169 ]
+								m_bTranslationOnly = false
+								m_cRenderColor = [ 0, 0, 0, 0 ]
+							},
+							{
+								m_name = "CheekN"
+								m_sSurfaceProperty = ""
+								m_nGroupId = 0
+								m_sBoneName = "CheekN"
+								m_vMinBounds = [ -33.590473, 3.922572, -40.826241 ]
+								m_vMaxBounds = [ 24.154552, 32.169476, 40.826225 ]
+								m_bTranslationOnly = false
+								m_cRenderColor = [ 0, 0, 0, 0 ]
+							},
+							{
+								m_name = "HukumiN"
+								m_sSurfaceProperty = ""
+								m_nGroupId = 0
+								m_sBoneName = "HukumiN"
+								m_vMinBounds = [ -35.679649, -0.000015, -41.455063 ]
+								m_vMaxBounds = [ 32.656075, 42.091263, 41.455048 ]
+								m_bTranslationOnly = false
+								m_cRenderColor = [ 0, 0, 0, 0 ]
+							},
+						]
+					},
+				]
+				m_AutoCreateSetName = ""
+			}
+		},
+	]
+	m_pAttachmentLists = 
+	[
+		{
+			m_pObject = 
+			{
+				m_name = ""
+				m_attachments = 
+				[
+					{
+						m_name = "attach_hat"
+						m_influences = 
+						[
+							{
+								m_influenceName = "HeadN"
+								m_vTranslationOffset = [ -11.593933, -0.000004, -0.000001 ]
+								m_vRotationOffset = [ 90.0, 0.000003, -179.18364 ]
+								m_flWeight = 1.0
+								m_bRoot = false
+							},
+						]
+					},
+					{
+						m_name = "attach_eyes"
+						m_influences = 
+						[
+							{
+								m_influenceName = "NeckN"
+								m_vTranslationOffset = [ -7.0, 5.0, -1.0 ]
+								m_vRotationOffset = [ 90.0, 0.0, -179.184006 ]
+								m_flWeight = 1.0
+								m_bRoot = false
+							},
+						]
+					},
+					{
+						m_name = "attach_hitloc"
+						m_influences = 
+						[
+							{
+								m_influenceName = "HeadN"
+								m_vTranslationOffset = [ 0.0, 0.0, 0.0 ]
+								m_vRotationOffset = [ 0.0, 0.0, 0.0 ]
+								m_flWeight = 1.0
+								m_bRoot = false
+							},
+						]
+					},
+				]
+			}
+		},
+	]
+	m_pAnimGroup = 
+	{
+		m_pObject = 
+		{
+			m_Name = ""
+			m_pReferenceSkeleton = 
+			{
+				m_pObject = null
+			}
+			m_pBoneFlagList = 
+			{
+				m_pObject = null
+			}
+			m_pSeqGroup = 
+			{
+				m_pObject = null
+			}
+			m_pAnimGroups = [  ]
+			m_Vanim = 
+			[
+				{
+					m_Animationname = "kirby_idle"
+					m_Filepath = "models/heroes/kirby/kirby_idle.fbx"
+					m_nStartframe = 0
+					m_nEndframe = 100
+					m_flFps = 30.0
+					m_Loop = 
+					{
+						m_bLoop = true
+						m_bSmoothLoop = false
+						m_nSmoothLoopStart = 0
+						m_nSmoothLoopEnd = 0
+						m_StartLoop = 
+						{
+							_class = "CVAnimCmdStartLoop"
+							m_bEnabled = false
+							m_nLoopRestart = 0
+						}
+					}
+					m_bHidden = false
+					m_bDisable = false
+					m_Activities = 
+					[
+						{
+							m_Name = "ACT_DOTA_IDLE"
+							m_nWeight = 1
+						},
+					]
+					m_AnimationEvents = [  ]
+					m_MotionFrames = [  ]
+					m_pIkRules = [  ]
+					m_pAlignAnimation = null
+					m_adjustAnimation = 
+					{
+						m_translation = [ 0.0, 0.0, 0.0 ]
+						m_rotation = [ 0.0, 0.0, 0.0 ]
+					}
+					m_Keywords = [  ]
+					m_sequenceParams = 
+					{
+						m_flFadeInTime = 0.2
+						m_flFadeOutTime = 0.2
+					}
+					m_folderName = ""
+					m_MotionFramesRootBone = ""
+				},
+				{
+					m_Animationname = "kirby_taunt"
+					m_Filepath = "models/heroes/kirby/kirby_taunt.fbx"
+					m_nStartframe = 0
+					m_nEndframe = 140
+					m_flFps = 33.0
+					m_Loop = 
+					{
+						m_bLoop = false
+						m_bSmoothLoop = false
+						m_nSmoothLoopStart = 0
+						m_nSmoothLoopEnd = 0
+						m_StartLoop = 
+						{
+							_class = "CVAnimCmdStartLoop"
+							m_bEnabled = false
+							m_nLoopRestart = 0
+						}
+					}
+					m_bHidden = false
+					m_bDisable = false
+					m_Activities = 
+					[
+						{
+							m_Name = "ACT_DOTA_TAUNT"
+							m_nWeight = 1
+						},
+					]
+					m_AnimationEvents = 
+					[
+						{
+							m_Event = "AE_CL_PLAYSOUND"
+							m_nFrame = 3
+							m_DataString = "kirby.jump"
+						},
+						{
+							m_Event = "AE_CL_PLAYSOUND"
+							m_nFrame = 38
+							m_DataString = "kirby.jump"
+						},
+						{
+							m_Event = "AE_CL_PLAYSOUND"
+							m_nFrame = 68
+							m_DataString = "kirby.jump"
+						},
+						{
+							m_Event = "AE_CL_PLAYSOUND"
+							m_nFrame = 96
+							m_DataString = "kirby.jump"
+						},
+					]
+					m_MotionFrames = [  ]
+					m_pIkRules = [  ]
+					m_pAlignAnimation = null
+					m_adjustAnimation = 
+					{
+						m_translation = [ 0.0, 0.0, 0.0 ]
+						m_rotation = [ 0.0, 0.0, 0.0 ]
+					}
+					m_Keywords = [  ]
+					m_sequenceParams = 
+					{
+						m_flFadeInTime = 0.2
+						m_flFadeOutTime = 0.2
+					}
+					m_folderName = ""
+					m_MotionFramesRootBone = ""
+				},
+				{
+					m_Animationname = "kirby_run"
+					m_Filepath = "models/heroes/kirby/kirby_run.fbx"
+					m_nStartframe = 0
+					m_nEndframe = 78
+					m_flFps = 110.0
+					m_Loop = 
+					{
+						m_bLoop = true
+						m_bSmoothLoop = false
+						m_nSmoothLoopStart = 0
+						m_nSmoothLoopEnd = 0
+						m_StartLoop = 
+						{
+							_class = "CVAnimCmdStartLoop"
+							m_bEnabled = false
+							m_nLoopRestart = 0
+						}
+					}
+					m_bHidden = false
+					m_bDisable = false
+					m_Activities = 
+					[
+						{
+							m_Name = "ACT_DOTA_RUN"
+							m_nWeight = 1
+						},
+					]
+					m_AnimationEvents = [  ]
+					m_MotionFrames = 
+					[
+						{
+							m_nFrame = 0
+							m_bExtractTX = true
+							m_bExtractTY = true
+							m_bExtractTZ = false
+							m_bExtractRX = false
+							m_bExtractRY = false
+							m_bExtractRZ = false
+							m_bDiscardTX = false
+							m_bDiscardTY = false
+							m_bDiscardTZ = false
+							m_bDiscardRX = false
+							m_bDiscardRY = false
+							m_bDiscardRZ = false
+						},
+					]
+					m_pIkRules = [  ]
+					m_pAlignAnimation = null
+					m_adjustAnimation = 
+					{
+						m_translation = [ 0.0, 0.0, 0.0 ]
+						m_rotation = [ 0.0, 0.0, 0.0 ]
+					}
+					m_Keywords = [  ]
+					m_sequenceParams = 
+					{
+						m_flFadeInTime = 0.2
+						m_flFadeOutTime = 0.2
+					}
+					m_folderName = ""
+					m_MotionFramesRootBone = ""
+				},
+				{
+					m_Animationname = "kirby_runhaste"
+					m_Filepath = "models/heroes/kirby/kirby_run.fbx"
+					m_nStartframe = 0
+					m_nEndframe = 78
+					m_flFps = 160.0
+					m_Loop = 
+					{
+						m_bLoop = true
+						m_bSmoothLoop = false
+						m_nSmoothLoopStart = 0
+						m_nSmoothLoopEnd = 0
+						m_StartLoop = 
+						{
+							_class = "CVAnimCmdStartLoop"
+							m_bEnabled = false
+							m_nLoopRestart = 0
+						}
+					}
+					m_bHidden = false
+					m_bDisable = false
+					m_Activities = 
+					[
+						{
+							m_Name = "ACT_DOTA_RUN+haste"
+							m_nWeight = 1
+						},
+					]
+					m_AnimationEvents = [  ]
+					m_MotionFrames = 
+					[
+						{
+							m_nFrame = 0
+							m_bExtractTX = true
+							m_bExtractTY = true
+							m_bExtractTZ = false
+							m_bExtractRX = false
+							m_bExtractRY = false
+							m_bExtractRZ = false
+							m_bDiscardTX = false
+							m_bDiscardTY = false
+							m_bDiscardTZ = false
+							m_bDiscardRX = false
+							m_bDiscardRY = false
+							m_bDiscardRZ = false
+						},
+					]
+					m_pIkRules = [  ]
+					m_pAlignAnimation = null
+					m_adjustAnimation = 
+					{
+						m_translation = [ 0.0, 0.0, 0.0 ]
+						m_rotation = [ 0.0, 0.0, 0.0 ]
+					}
+					m_Keywords = [  ]
+					m_sequenceParams = 
+					{
+						m_flFadeInTime = 0.2
+						m_flFadeOutTime = 0.2
+					}
+					m_folderName = ""
+					m_MotionFramesRootBone = ""
+				},
+				{
+					m_Animationname = "kirby_attack"
+					m_Filepath = "models/heroes/kirby/kirby_attack.fbx"
+					m_nStartframe = 0
+					m_nEndframe = 20
+					m_flFps = 20.0
+					m_Loop = 
+					{
+						m_bLoop = false
+						m_bSmoothLoop = false
+						m_nSmoothLoopStart = 0
+						m_nSmoothLoopEnd = 0
+						m_StartLoop = 
+						{
+							_class = "CVAnimCmdStartLoop"
+							m_bEnabled = false
+							m_nLoopRestart = 0
+						}
+					}
+					m_bHidden = false
+					m_bDisable = false
+					m_Activities = 
+					[
+						{
+							m_Name = "ACT_DOTA_ATTACK"
+							m_nWeight = 1
+						},
+					]
+					m_AnimationEvents = [  ]
+					m_MotionFrames = 
+					[
+						{
+							m_nFrame = 0
+							m_bExtractTX = true
+							m_bExtractTY = true
+							m_bExtractTZ = false
+							m_bExtractRX = false
+							m_bExtractRY = false
+							m_bExtractRZ = false
+							m_bDiscardTX = false
+							m_bDiscardTY = false
+							m_bDiscardTZ = false
+							m_bDiscardRX = false
+							m_bDiscardRY = false
+							m_bDiscardRZ = false
+						},
+					]
+					m_pIkRules = [  ]
+					m_pAlignAnimation = null
+					m_adjustAnimation = 
+					{
+						m_translation = [ 0.0, 0.0, 0.0 ]
+						m_rotation = [ 0.0, 0.0, 0.0 ]
+					}
+					m_Keywords = [  ]
+					m_sequenceParams = 
+					{
+						m_flFadeInTime = 0.2
+						m_flFadeOutTime = 0.2
+					}
+					m_folderName = ""
+					m_MotionFramesRootBone = ""
+				},
+				{
+					m_Animationname = "kirby_cast3"
+					m_Filepath = "models/heroes/kirby/kirby_cast3.fbx"
+					m_nStartframe = 0
+					m_nEndframe = 38
+					m_flFps = 30.0
+					m_Loop = 
+					{
+						m_bLoop = false
+						m_bSmoothLoop = false
+						m_nSmoothLoopStart = 0
+						m_nSmoothLoopEnd = 0
+						m_StartLoop = 
+						{
+							_class = "CVAnimCmdStartLoop"
+							m_bEnabled = false
+							m_nLoopRestart = 0
+						}
+					}
+					m_bHidden = false
+					m_bDisable = false
+					m_Activities = 
+					[
+						{
+							m_Name = "ACT_DOTA_CAST_ABILITY_4"
+							m_nWeight = 1
+						},
+					]
+					m_AnimationEvents = [  ]
+					m_MotionFrames = [  ]
+					m_pIkRules = [  ]
+					m_pAlignAnimation = null
+					m_adjustAnimation = 
+					{
+						m_translation = [ 0.0, 0.0, 0.0 ]
+						m_rotation = [ 0.0, 0.0, 0.0 ]
+					}
+					m_Keywords = [  ]
+					m_sequenceParams = 
+					{
+						m_flFadeInTime = 0.2
+						m_flFadeOutTime = 0.2
+					}
+					m_folderName = ""
+					m_MotionFramesRootBone = ""
+				},
+				{
+					m_Animationname = "kirby_stun"
+					m_Filepath = "models/heroes/kirby/kirby_stun.fbx"
+					m_nStartframe = 0
+					m_nEndframe = 40
+					m_flFps = 40.0
+					m_Loop = 
+					{
+						m_bLoop = true
+						m_bSmoothLoop = false
+						m_nSmoothLoopStart = 0
+						m_nSmoothLoopEnd = 0
+						m_StartLoop = 
+						{
+							_class = "CVAnimCmdStartLoop"
+							m_bEnabled = false
+							m_nLoopRestart = 0
+						}
+					}
+					m_bHidden = false
+					m_bDisable = false
+					m_Activities = 
+					[
+						{
+							m_Name = "ACT_DOTA_FLAIL"
+							m_nWeight = 1
+						},
+					]
+					m_AnimationEvents = [  ]
+					m_MotionFrames = [  ]
+					m_pIkRules = [  ]
+					m_pAlignAnimation = null
+					m_adjustAnimation = 
+					{
+						m_translation = [ 0.0, 0.0, 0.0 ]
+						m_rotation = [ 0.0, 0.0, 0.0 ]
+					}
+					m_Keywords = [  ]
+					m_sequenceParams = 
+					{
+						m_flFadeInTime = 0.2
+						m_flFadeOutTime = 0.2
+					}
+					m_folderName = ""
+					m_MotionFramesRootBone = ""
+				},
+				{
+					m_Animationname = "kirby_fall"
+					m_Filepath = "models/heroes/kirby/kirby_stun.fbx"
+					m_nStartframe = 0
+					m_nEndframe = 40
+					m_flFps = 20.0
+					m_Loop = 
+					{
+						m_bLoop = false
+						m_bSmoothLoop = false
+						m_nSmoothLoopStart = 0
+						m_nSmoothLoopEnd = 0
+						m_StartLoop = 
+						{
+							_class = "CVAnimCmdStartLoop"
+							m_bEnabled = false
+							m_nLoopRestart = 0
+						}
+					}
+					m_bHidden = false
+					m_bDisable = false
+					m_Activities = 
+					[
+						{
+							m_Name = "ACT_DOTA_DISABLED"
+							m_nWeight = 1
+						},
+					]
+					m_AnimationEvents = [  ]
+					m_MotionFrames = [  ]
+					m_pIkRules = [  ]
+					m_pAlignAnimation = null
+					m_adjustAnimation = 
+					{
+						m_translation = [ 0.0, 0.0, 0.0 ]
+						m_rotation = [ 0.0, 0.0, 0.0 ]
+					}
+					m_Keywords = [  ]
+					m_sequenceParams = 
+					{
+						m_flFadeInTime = 0.2
+						m_flFadeOutTime = 0.2
+					}
+					m_folderName = ""
+					m_MotionFramesRootBone = ""
+				},
+				{
+					m_Animationname = "kirby_die"
+					m_Filepath = "models/heroes/kirby/kirby_die.fbx"
+					m_nStartframe = 0
+					m_nEndframe = 40
+					m_flFps = 30.0
+					m_Loop = 
+					{
+						m_bLoop = false
+						m_bSmoothLoop = false
+						m_nSmoothLoopStart = 0
+						m_nSmoothLoopEnd = 0
+						m_StartLoop = 
+						{
+							_class = "CVAnimCmdStartLoop"
+							m_bEnabled = false
+							m_nLoopRestart = 0
+						}
+					}
+					m_bHidden = false
+					m_bDisable = false
+					m_Activities = 
+					[
+						{
+							m_Name = "ACT_DOTA_DIE"
+							m_nWeight = 1
+						},
+					]
+					m_AnimationEvents = [  ]
+					m_MotionFrames = 
+					[
+						{
+							m_nFrame = 0
+							m_bExtractTX = true
+							m_bExtractTY = true
+							m_bExtractTZ = false
+							m_bExtractRX = false
+							m_bExtractRY = false
+							m_bExtractRZ = false
+							m_bDiscardTX = false
+							m_bDiscardTY = false
+							m_bDiscardTZ = false
+							m_bDiscardRX = false
+							m_bDiscardRY = false
+							m_bDiscardRZ = false
+						},
+					]
+					m_pIkRules = [  ]
+					m_pAlignAnimation = null
+					m_adjustAnimation = 
+					{
+						m_translation = [ 0.0, 0.0, 0.0 ]
+						m_rotation = [ 0.0, 0.0, 0.0 ]
+					}
+					m_Keywords = [  ]
+					m_sequenceParams = 
+					{
+						m_flFadeInTime = 0.2
+						m_flFadeOutTime = 0.2
+					}
+					m_folderName = ""
+					m_MotionFramesRootBone = ""
+				},
+				{
+					m_Animationname = "kirby_versus"
+					m_Filepath = "models/heroes/kirby/kirby_run.fbx"
+					m_nStartframe = 0
+					m_nEndframe = 78
+					m_flFps = 160.0
+					m_Loop = 
+					{
+						m_bLoop = true
+						m_bSmoothLoop = false
+						m_nSmoothLoopStart = 0
+						m_nSmoothLoopEnd = 0
+						m_StartLoop = 
+						{
+							_class = "CVAnimCmdStartLoop"
+							m_bEnabled = false
+							m_nLoopRestart = 0
+						}
+					}
+					m_bHidden = true
+					m_bDisable = true
+					m_Activities = 
+					[
+						{
+							m_Name = "ACT_DOTA_VERSUS"
+							m_nWeight = 1
+						},
+					]
+					m_AnimationEvents = [  ]
+					m_MotionFrames = 
+					[
+						{
+							m_nFrame = 0
+							m_bExtractTX = true
+							m_bExtractTY = true
+							m_bExtractTZ = false
+							m_bExtractRX = false
+							m_bExtractRY = false
+							m_bExtractRZ = false
+							m_bDiscardTX = false
+							m_bDiscardTY = false
+							m_bDiscardTZ = false
+							m_bDiscardRX = false
+							m_bDiscardRY = false
+							m_bDiscardRZ = false
+						},
+					]
+					m_pIkRules = [  ]
+					m_pAlignAnimation = null
+					m_adjustAnimation = 
+					{
+						m_translation = [ 0.0, 0.0, 400.0 ]
+						m_rotation = [ 0.0, 0.0, 0.0 ]
+					}
+					m_Keywords = [  ]
+					m_sequenceParams = 
+					{
+						m_flFadeInTime = 0.2
+						m_flFadeOutTime = 0.2
+					}
+					m_folderName = ""
+					m_MotionFramesRootBone = ""
+				},
+				{
+					m_Animationname = "kirby_load"
+					m_Filepath = "models/heroes/kirby/kirby_idle.fbx"
+					m_nStartframe = 0
+					m_nEndframe = 100
+					m_flFps = 30.0
+					m_Loop = 
+					{
+						m_bLoop = true
+						m_bSmoothLoop = false
+						m_nSmoothLoopStart = 0
+						m_nSmoothLoopEnd = 0
+						m_StartLoop = 
+						{
+							_class = "CVAnimCmdStartLoop"
+							m_bEnabled = false
+							m_nLoopRestart = 0
+						}
+					}
+					m_bHidden = true
+					m_bDisable = true
+					m_Activities = 
+					[
+						{
+							m_Name = "ACT_DOTA_LOADOUT"
+							m_nWeight = 1
+						},
+					]
+					m_AnimationEvents = [  ]
+					m_MotionFrames = [  ]
+					m_pIkRules = [  ]
+					m_pAlignAnimation = null
+					m_adjustAnimation = 
+					{
+						m_translation = [ 0.0, 0.0, 400.0 ]
+						m_rotation = [ 0.0, 0.0, 0.0 ]
+					}
+					m_Keywords = [  ]
+					m_sequenceParams = 
+					{
+						m_flFadeInTime = 0.2
+						m_flFadeOutTime = 0.2
+					}
+					m_folderName = ""
+					m_MotionFramesRootBone = ""
+				},
+				{
+					m_Animationname = "kirby_load_rare"
+					m_Filepath = "models/heroes/kirby/kirby_taunt.fbx"
+					m_nStartframe = 0
+					m_nEndframe = 140
+					m_flFps = 33.0
+					m_Loop = 
+					{
+						m_bLoop = false
+						m_bSmoothLoop = false
+						m_nSmoothLoopStart = 0
+						m_nSmoothLoopEnd = 0
+						m_StartLoop = 
+						{
+							_class = "CVAnimCmdStartLoop"
+							m_bEnabled = false
+							m_nLoopRestart = 0
+						}
+					}
+					m_bHidden = true
+					m_bDisable = true
+					m_Activities = 
+					[
+						{
+							m_Name = "ACT_DOTA_LOADOUT_RARE"
+							m_nWeight = 1
+						},
+					]
+					m_AnimationEvents = 
+					[
+						{
+							m_Event = "AE_CL_PLAYSOUND"
+							m_nFrame = 3
+							m_DataString = "kirby.jump"
+						},
+						{
+							m_Event = "AE_CL_PLAYSOUND"
+							m_nFrame = 38
+							m_DataString = "kirby.jump"
+						},
+						{
+							m_Event = "AE_CL_PLAYSOUND"
+							m_nFrame = 68
+							m_DataString = "kirby.jump"
+						},
+						{
+							m_Event = "AE_CL_PLAYSOUND"
+							m_nFrame = 96
+							m_DataString = "kirby.jump"
+						},
+					]
+					m_MotionFrames = [  ]
+					m_pIkRules = [  ]
+					m_pAlignAnimation = null
+					m_adjustAnimation = 
+					{
+						m_translation = [ 0.0, 0.0, 400.0 ]
+						m_rotation = [ 0.0, 0.0, 0.0 ]
+					}
+					m_Keywords = [  ]
+					m_sequenceParams = 
+					{
+						m_flFadeInTime = 0.2
+						m_flFadeOutTime = 0.2
+					}
+					m_folderName = ""
+					m_MotionFramesRootBone = ""
+				},
+			]
+			m_sScripts = [  ]
+			m_folderNames = [  ]
+			m_sCompileScripts = [  ]
+		}
+	}
+	m_pMaterialGroupList = 
+	{
+		m_pObject = 
+		{
+			m_materialGroups = 
+			[
+				{
+					m_name = "0"
+					m_materialList = 
+					[
+						"materials/models/heroes/kirby/kirby_02.vmat",
+						"materials/models/heroes/kirby/kirby_01.vmat",
+						"materials/models/heroes/kirby/kirby_03.vmat",
+					]
+				},
+				{
+					m_name = "1"
+					m_materialList = 
+					[
+						"materials/models/heroes/kirby/kirby_02_color.vmat",
+						"materials/models/heroes/kirby/kirby_01_color.vmat",
+						"materials/models/heroes/kirby/kirby_03.vmat",
+					]
+				},
+				{
+					m_name = "2"
+					m_materialList = 
+					[
+						"materials/models/heroes/kirby/kirby_02_color01.vmat",
+						"materials/models/heroes/kirby/kirby_01_color01.vmat",
+						"materials/models/heroes/kirby/kirby_03.vmat",
+					]
+				},
+				{
+					m_name = "3"
+					m_materialList = 
+					[
+						"materials/models/heroes/kirby/kirby_02_color02.vmat",
+						"materials/models/heroes/kirby/kirby_01_color02.vmat",
+						"materials/models/heroes/kirby/kirby_03.vmat",
+					]
+				},
+				{
+					m_name = "4"
+					m_materialList = 
+					[
+						"materials/models/heroes/kirby/kirby_02_color03.vmat",
+						"materials/models/heroes/kirby/kirby_01_color03.vmat",
+						"materials/models/heroes/kirby/kirby_03.vmat",
+					]
+				},
+				{
+					m_name = "5"
+					m_materialList = 
+					[
+						"materials/models/heroes/kirby/kirby_02_color04.vmat",
+						"materials/models/heroes/kirby/kirby_01_color04.vmat",
+						"materials/models/heroes/kirby/kirby_03.vmat",
+					]
+				},
+			]
+		}
+	}
+	m_pMeshGroupList = 
+	{
+		m_pObject = null
+	}
+	m_pLodGroupList = 
+	{
+		m_pObject = null
+	}
+	m_pPropBreakableList = 
+	{
+		m_pObject = null
+	}
+	m_pPropDataList = 
+	{
+		m_pObject = null
+	}
+	m_pConstraintLists = [  ]
+	m_collision = ""
+	m_softbody = ""
+	m_sMDLFilename = ""
+	m_sOffsetHitboxSets = [  ]
+	m_vHitboxSetOffset = [ 0.0, 0.0, 0.0 ]
+	m_scriptFiles = [  ]
+	m_pMaterialRemapList = 
+	{
+		m_vMaterialRemapList = 
+		[
+			{
+				m_sSearchMaterial = "(0)_14.vmat"
+				m_sReplaceMaterial = "materials/models/heroes/kirby/kirby_02.vmat"
+			},
+			{
+				m_sSearchMaterial = "(0)_2.vmat"
+				m_sReplaceMaterial = "materials/models/heroes/kirby/kirby_01.vmat"
+			},
+			{
+				m_sSearchMaterial = "(0)_2_(1).vmat"
+				m_sReplaceMaterial = "materials/models/heroes/kirby/kirby_01.vmat"
+			},
+			{
+				m_sSearchMaterial = "(0)_2_(3).vmat"
+				m_sReplaceMaterial = "materials/models/heroes/kirby/kirby_03.vmat"
+			},
+			{
+				m_sSearchMaterial = "(0)_14_(1).vmat"
+				m_sReplaceMaterial = "materials/models/heroes/kirby/kirby_01.vmat"
+			},
+		]
+	}
+	m_flFbxScale = 1.0
+	m_flQCScale = 1.0
+	m_vOrigin = [ 0.0, 0.0, 0.0 ]
+	m_pPsfList = null
+	m_keyValueText = ""
+	m_bStaticProp = false
+	m_bEnableClothProcessing = true
+	m_flClothEnableThreshold = 0.05
+	m_nMaxClothVertsPerMesh = 2048
+	m_bBuildClothBoneHierarchy = false
+	m_nNavType = "AUTH_NAV_MESH"
+	m_bMakeUniqueVMeshes = false
+	m_bMakeImplicitBindPoseSequence = false
+	m_bAdjustSkeletonFromBoneFlags = false
+	m_bHiddenAssetFlag = false
+	m_pAnimGroups = [  ]
+}

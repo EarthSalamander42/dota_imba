@@ -15,7 +15,7 @@ function modifier_imba_creep_power:OnCreated()
 	self.parent = self:GetParent()
 	self.ability = self:GetAbility()
 
---	if IsServer() then
+	if IsServer() then
 		-- Ability specials
 		if string.find(self.parent:GetUnitName(), "mega") then
 			self.bonus_damage_per_minute = 18
@@ -56,7 +56,7 @@ function modifier_imba_creep_power:OnCreated()
 				end
 			end
 		end)
---	end
+	end
 end
 
 function modifier_imba_creep_power:DeclareFunctions()

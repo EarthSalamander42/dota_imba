@@ -12588,6 +12588,96 @@
 		}
 	}
 
+	//=================================================================================================================
+	// HERO: Sly King // Need to be duplicated in npc_units_custom.txt
+	//=================================================================================================================
+	"npc_dota_hero_sly_king"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"					"npc_dota_hero"
+		"HeroID"					"117"
+		"Model"						"models/heroes/slyli/model_weaver.vmdl"
+		"ModelScale"				"0.980000"
+		//"Portrait"				"vgui/hud/heroportraits/abyssal_underlord"
+		"SoundSet"					"Hero_Weaver"
+
+		//Picking Screen
+		"IsCustom"					"1"
+		"IsNew"						"1"
+
+		// Abilities
+		//-------------------------------------------------------------------------------------------------------------
+		"Ability1"					"imba_sly_king_frost_gale"			// Ability 1
+		"Ability2"					"imba_sly_king_burrow_blast"		// Ability 2
+		"Ability3"					"generic_hidden"					// Ability 3
+		"Ability4"					"imba_sly_king_frozen_skin"			// Ability 4
+		"Ability5"					"generic_hidden"					// Ability 5
+
+		// Armor
+		//-------------------------------------------------------------------------------------------------------------
+		"ArmorPhysical"				"3"									// Physical protection.
+		"MagicalResistance"			"25"								// Magical protection (percentage).
+
+		// Attack
+		//-------------------------------------------------------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"30"							// Damage range min.
+		"AttackDamageMax"			"40"							// Damage range max.
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"		// Type of damage dealt. 
+		"AttackRate"				"1.700"							// Speed of attack.
+		"AttackAnimationPoint"		"0.300"							// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"600"							// Range within a target can be acquired.
+		"AttackRange"				"150"							// Range within a target can be attacked.
+		"ProjectileModel"			""								// Particle system model for projectile.
+		"ProjectileSpeed"			"900"							// Speed of projectile.
+
+		// Attributes
+		//-------------------------------------------------------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"	// Primary Attribute
+		"AttributeBaseStrength"		"40"						// Base strength
+		"AttributeStrengthGain"		"2.4"						// Strength bonus per level.
+		"AttributeBaseIntelligence"	"24"							// Base intelligence
+		"AttributeIntelligenceGain"	"4.1"						// Intelligence bonus per level.
+		"AttributeBaseAgility"		"26"						// Base agility
+		"AttributeAgilityGain"		"2.3"						// Agility bonus per level.
+
+		// Bounds
+		//-------------------------------------------------------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"70"
+		"HealthBarOffset"			"240"
+
+		// Movement
+		//-------------------------------------------------------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"325"									// Speed.
+		"MovementTurnRate"			"0.4"									// Turning rate.
+
+		// Status
+		//-------------------------------------------------------------------------------------------------------------
+		"StatusHealth"				"200"									// Base health.
+		"StatusHealthRegen"			"3.0"									// Health regeneration rate.
+		"StatusMana"				"50"									// Base mana.
+		"StatusManaRegen"			"1.0"									// Mana regeneration rate.
+
+		// Team
+		//-------------------------------------------------------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_HERO"
+
+		// Vision
+		//-------------------------------------------------------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"									// Range of vision during day light.
+		"VisionNighttimeRange"		"800"									// Range of vision at night time.
+
+		//"particle_folder"			"particles/units/heroes/hero_abaddon"
+		"GameSoundsFile"			"soundevents/game_sounds_heroes_custom/game_sounds_weaver.vsndevts"
+		//"VoiceFile"				"soundevents/voscripts/game_sounds_vo_abaddon.vsndevts"
+	}
+
 	//=================================================================================
 	// Diretide Roshan
 	//=================================================================================
@@ -13002,10 +13092,9 @@
 		"Model"						"models/props_structures/dire_statue002.vmdl"	// Model.
 		"SoundSet"					"Creep_Good_Melee"					// Name of sound set.
 		"MinimapIcon"				"minimap_miscbuilding"
-		
+
 		// Abilities
 		//----------------------------------------------------------------
-		
 		"Ability1"					"backdoor_protection_in_base"			// Ability 1.
 		"Ability2"					"filler_ability"			// Ability 2.
 		"Ability3"					""			// Ability 3.

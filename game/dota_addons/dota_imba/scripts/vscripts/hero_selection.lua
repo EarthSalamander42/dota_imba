@@ -281,7 +281,7 @@ end
 	-- Roll a random hero
 	local random_hero = HeroSelection.random_heroes[RandomInt(1, #HeroSelection.random_heroes)]
 
-	if GetMapName() == "imba_10v10" or GetMapName() == "imba_custom_10v10" then
+	if GetMapName() == "imba_10v10" or GetMapName() == "imba_frantic_10v10" then
 		for _, picked_hero in pairs(HeroSelection.disabled_10v10_heroes) do
 			if random_hero == picked_hero then
 				print("10v10 hero disabled, random again...")
@@ -289,7 +289,7 @@ end
 				break
 			end
 		end
-		if GetMapName() == "imba_custom_10v10" then
+		if GetMapName() == "imba_frantic_10v10" then
 			for _, picked_hero in pairs(HeroSelection.disabled_frantic_heroes) do
 				if random_hero == picked_hero then
 					print("10v10 hero disabled, random again...")
@@ -336,7 +336,7 @@ local id = event.PlayerID
 
 	local random_hero = HeroSelection.imba_heroes[RandomInt(1, #HeroSelection.imba_heroes)]
 
-	if GetMapName() == "imba_10v10" or GetMapName() == "imba_custom_10v10" then
+	if GetMapName() == "imba_10v10" or GetMapName() == "imba_frantic_10v10" then
 		for _, picked_hero in pairs(HeroSelection.disabled_10v10_heroes) do
 			if random_hero == picked_hero then
 				print("10v10 hero disabled, random again...")
@@ -344,7 +344,7 @@ local id = event.PlayerID
 				break
 			end
 		end
-		if GetMapName() == "imba_custom_10v10" then
+		if GetMapName() == "imba_frantic_10v10" then
 			for _, picked_hero in pairs(HeroSelection.disabled_frantic_heroes) do
 				if random_hero == picked_hero then
 					print("10v10 hero disabled, random again...")
@@ -643,8 +643,8 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		-- TODO: in js, remove the function that gray out a hero when picked, since this function should do it in real time
 		HeroSelection:HeroList(0.1) -- send the picked hero list once a hero is picked
 
-		-- This is from imba_talent_events.lua
 		PopulateHeroImbaTalents(hero);
+		Imbattlepass:AddItemEffects(hero)
 	end, player_id)
 end
 
