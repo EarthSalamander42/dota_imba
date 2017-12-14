@@ -1,15 +1,7 @@
 --[[
 		Author: MouJiaoZi
 		Date: 2017/12/13
-
 ]]
-
-function GetFountainBattlePassEffect(npc)
-	local effect = "particles/econ/events/winter_major_2016/radiant_fountain_regen_wm_lvl3.vpcf"
-
-
-	return effect
-end
 
 LinkLuaModifier("modifier_imba_fountain_particle_control", "modifier/modifier_fountain_particle", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_fountain_particle_effect", "modifier/modifier_fountain_particle", LUA_MODIFIER_MOTION_NONE)
@@ -24,29 +16,23 @@ function modifier_imba_fountain_particle_control:RemoveOnDeath() return false en
 
 function modifier_imba_fountain_particle_control:OnCreated()
 	if not IsServer() then return end
-	self.unit = self:GetParent()
+	self.effect = self:GetParent().fountain_effect
+	print(self.effect)
+	self.pfx = ParticleManager:CreateParticle(effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 	self.tick = 0.2
 	self:StartIntervalThink(self.tick)
 end
 
-function modifier_imba_fountain_particle_control:OnIntervalThink()
-	if self.unit:HasModifier("modifier_fountain_aura_buff") then
-		self.unit:AddNewModifier(self.unit, nil, "modifier_imba_fountain_particle_effect", {duration = (self.tick * 2)})
+function modifier_imba_fountain_particle_control:OnIntervalThink() -- doesn't print anything
+	if not self:GetParent():HasModifier("modifier_fountain_aura_buff") then
+		print("Remove modifier")
+		self:GetParent():RemoveModifierByName("modifier_imba_fountain_particle_control"))
+	else
+		print("keep modifier")
 	end
 end
 
-function modifier_imba_fountain_particle_effect:IsHidden() return true end
-function modifier_imba_fountain_particle_effect:IsPurgable() return false end
-function modifier_imba_fountain_particle_effect:IsDebuff() return false end
-function modifier_imba_fountain_particle_effect:RemoveOnDeath() return false end
-
-function modifier_imba_fountain_particle_effect:OnCreated()
-	if not IsServer() then return end
-	local effect = GetFountainBattlePassEffect(self:GetParent())
-	self.pfx = ParticleManager:CreateParticle(effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
-end
-
-function modifier_imba_fountain_particle_effect:OnDestroy()
+function modifier_imba_fountain_particle_control:OnDestroy()
 	if not IsServer() then return end
 	ParticleManager:DestroyParticle(self.pfx, true)
 	ParticleManager:ReleaseParticleIndex(self.pfx)

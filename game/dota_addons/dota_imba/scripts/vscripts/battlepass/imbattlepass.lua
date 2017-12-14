@@ -4,25 +4,40 @@
 if Imbattlepass == nil then Imbattlepass = class({}) end
 
 IMBATTLEPASS_LEVEL_REWARD = {}
+IMBATTLEPASS_LEVEL_REWARD["fountain"]		= 4
 IMBATTLEPASS_LEVEL_REWARD["blink"]			= 9
+IMBATTLEPASS_LEVEL_REWARD["fountain2"]		= 13
 IMBATTLEPASS_LEVEL_REWARD["force_staff"]	= 16
 IMBATTLEPASS_LEVEL_REWARD["blink2"]			= 18
+IMBATTLEPASS_LEVEL_REWARD["fountain3"]		= 22
 IMBATTLEPASS_LEVEL_REWARD["blink3"]			= 27
 IMBATTLEPASS_LEVEL_REWARD["force_staff2"]	= 32
+IMBATTLEPASS_LEVEL_REWARD["fountain4"]		= 31
 IMBATTLEPASS_LEVEL_REWARD["blink4"]			= 36
+IMBATTLEPASS_LEVEL_REWARD["fountain5"]		= 40
 IMBATTLEPASS_LEVEL_REWARD["radiance"]		= 44
 IMBATTLEPASS_LEVEL_REWARD["blink5"]			= 45
 IMBATTLEPASS_LEVEL_REWARD["force_staff3"]	= 48
+IMBATTLEPASS_LEVEL_REWARD["fountain6"]		= 49
 IMBATTLEPASS_LEVEL_REWARD["blink6"]			= 54
+IMBATTLEPASS_LEVEL_REWARD["fountain7"]		= 58
 IMBATTLEPASS_LEVEL_REWARD["sheepstick"]		= 60
 IMBATTLEPASS_LEVEL_REWARD["blink7"]			= 63
 IMBATTLEPASS_LEVEL_REWARD["force_staff4"]	= 64
+IMBATTLEPASS_LEVEL_REWARD["fountain8"]		= 67
 IMBATTLEPASS_LEVEL_REWARD["blink8"]			= 72
+IMBATTLEPASS_LEVEL_REWARD["fountain9"]		= 76
 IMBATTLEPASS_LEVEL_REWARD["blink9"]			= 81
+IMBATTLEPASS_LEVEL_REWARD["fountain10"]		= 85
 IMBATTLEPASS_LEVEL_REWARD["radiance2"]		= 88
 IMBATTLEPASS_LEVEL_REWARD["blink10"]		= 90
+IMBATTLEPASS_LEVEL_REWARD["fountain11"]		= 94
 IMBATTLEPASS_LEVEL_REWARD["shiva"]			= 100
+IMBATTLEPASS_LEVEL_REWARD["fountain12"]		= 103
+IMBATTLEPASS_LEVEL_REWARD["fountain13"]		= 112
 IMBATTLEPASS_LEVEL_REWARD["sheepstick2"]	= 120
+IMBATTLEPASS_LEVEL_REWARD["fountain14"]		= 121
+IMBATTLEPASS_LEVEL_REWARD["fountain15"]		= 130
 IMBATTLEPASS_LEVEL_REWARD["shiva2"]			= 200
 
 --[[ Not Added yet: 
@@ -31,7 +46,6 @@ IMBATTLEPASS_LEVEL_REWARD["shiva2"]			= 200
 	XP Boosters,
 	TP Scroll effect + pro team effect,
 	golden roshan contributor statue(level 500?),
-	Fountain effect,
 	Mekansm/Guardian Greaves effect,
 	Mjollnir/Jarnbjorn effect,
 	Companion unlocking (need to create the companion choice in-game and remove the one in website),
@@ -46,25 +60,6 @@ IMBATTLEPASS_LEVEL_REWARD["shiva2"]			= 200
 	Deny creep effect with ? instead of !,
 	Tiny unique set,
 --]]
-
---[[ Actual Rewards
-	Level 9: Blink Effect (Blue/Green)
-	Level 18: Blink Effect (Green)
-	Level 27: Blink Effect (Water/Blue)
-	Level 36: Blink Effect (Water/Blue 2)
-	Level 44: Radiance Effect (Water)
-	Level 45: Blink Effect (Snow)
-	Level 54: Blink Effect (Red)
-	Level 60: Sheepstick Effect (Blue Pig + Winter)
-	Level 63: Blink Effect (Red 2)
-	Level 72: Blink Effect (Gold)
-	Level 81: Blink Effect (Gold 2)
-	Level 88: Radiance Effect (Red)
-	Level 90: Blink Effect (Purple)
-	Level 100: Shiva Effect (Water)
-	Level 120: Sheepstick Effect (Bird + Red)
---]]
-
 
 function Imbattlepass:Init()
 if api_preloaded.players == nil then return end
@@ -85,8 +80,8 @@ if api_preloaded.players == nil then return end
 	GetRadianceEffect(hero)
 	GetSheepstickEffect(hero)
 	GetSheepstickModel(hero)
-	GetShivaBlastEffect(hero)
-	GetShivaHitEffect(hero)
+	GetShivaEffect(hero)
+	GetFountainEffect(hero)
 end
 
 function Imbattlepass:GetRewardUnlocked(ID)
@@ -185,26 +180,55 @@ local effect = "models/props_gameplay/pig.vmdl"
 	hero.sheepstick_model = effect
 end
 
-function GetShivaBlastEffect(hero)
+function GetShivaEffect(hero)
 local effect = "particles/items2_fx/shivas_guard_active.vpcf"
 
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["shiva2"] then
 		effect = "particles/econ/events/newbloom_2015/shivas_guard_active_nian2015.vpcf"
+		effect2 = "particles/econ/events/newbloom_2015/shivas_guard_impact_nian2015.vpcf"
 	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["shiva"] then
 		effect = "particles/econ/events/ti7/shivas_guard_active_ti7.vpcf"
+		effect2 = "particles/econ/events/ti7/shivas_guard_impact_ti7.vpcf"
 	end
 
 	hero.shiva_blast_effect = effect
+	hero.shiva_hit_effect = effect2
 end
 
-function GetShivaHitEffect(hero) -- string.gsub impact and active later to format into 1 function
-local effect = "particles/items2_fx/shivas_guard_impact.vpcf"
+function GetFountainEffect(hero)
+local effect = ""
 
-	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["shiva2"] then
-		effect = "particles/econ/events/newbloom_2015/shivas_guard_impact_nian2015.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["shiva"] then
-		effect = "particles/econ/events/ti7/shivas_guard_impact_ti7.vpcf"
+	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain15"] then
+		effect = "particles/econ/events/winter_major_2017/radiant_fountain_regen_wm07_lvl3.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain14"] then
+		effect = "particles/econ/events/winter_major_2017/radiant_fountain_regen_wm07_lvl2.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain13"] then
+		effect = "particles/econ/events/winter_major_2017/radiant_fountain_regen_wm07_lvl1.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain12"] then
+		effect = "particles/econ/events/ti6/radiant_fountain_regen_ti6_lvl3.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain11"] then
+		effect = "particles/econ/events/ti6/radiant_fountain_regen_ti6_lvl2.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain10"] then
+		effect = "particles/econ/events/ti6/radiant_fountain_regen_ti6.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain9"] then
+		effect = "particles/econ/events/ti5/radiant_fountain_regen_lvl2_ti5.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain8"] then
+		effect = "particles/econ/events/ti5/radiant_fountain_regen_ti5.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain7"] then
+		effect = "particles/econ/events/ti4/radiant_fountain_regen_ti4.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain6"] then
+		effect = "particles/econ/events/ti7/fountain_regen_ti7_lvl3.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain5"] then
+		effect = "particles/econ/events/ti7/fountain_regen_ti7_lvl2.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain4"] then
+		effect = "particles/econ/events/ti7/fountain_regen_ti7.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain3"] then
+		effect = "particles/econ/events/fall_major_2016/radiant_fountain_regen_fm06_lvl3.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain2"] then
+		effect = "particles/econ/events/fall_major_2016/radiant_fountain_regen_fm06_lvl2.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain"] then
+		effect = "particles/econ/events/fall_major_2016/radiant_fountain_regen_fm06_lvl1.vpcf"
 	end
 
-	hero.shiva_hit_effect = effect
+	hero.fountain_effect = effect
 end

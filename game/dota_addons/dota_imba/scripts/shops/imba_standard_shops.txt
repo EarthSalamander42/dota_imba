@@ -90,6 +90,7 @@
 		"item"		"item_ultimate_scepter"
 		"item"		"item_imba_blink_boots"
 		"item"		"item_imba_gungnir"
+		"item"		"item_imba_jarnbjorn"
 	}
 
 	// Level 2 - Blue Recipes
@@ -111,7 +112,6 @@
 		"item"		"item_imba_pipe"
 		"item"		"item_imba_occult_mask"
 		"item"		"item_meteor_hammer"
-		"item"		"item_imba_jarnbjorn"
 	}
 				
 	"magics"			
@@ -119,7 +119,7 @@
 		"item"		"item_imba_initiate_robe"
 		"item"		"item_glimmer_cape"
 		"item"		"item_cyclone"
-		"item"		"item_force_staff"
+		"item"		"item_imba_force_staff"
 		"item"		"item_imba_aether_lens"
 		"item"		"item_dagon"
 		"item"		"item_imba_veil_of_discord"
@@ -143,7 +143,7 @@
 		"item"		"item_black_king_bar"
 		"item"		"item_imba_black_queen_cape"
 		"item"		"item_imba_assault"
-		"item"		"item_hurricane_pike"
+		"item"		"item_imba_hurricane_pike"
 		"item"		"item_imba_shivas_guard"
 		"item"		"item_imba_manta"
 		"item"		"item_sphere"

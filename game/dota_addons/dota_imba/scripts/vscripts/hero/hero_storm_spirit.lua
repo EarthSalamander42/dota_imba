@@ -676,7 +676,6 @@ function imba_storm_spirit_ball_lightning:OnProjectileThink_ExtraData(location, 
 				dummy:AddNewModifier(caster, self.remnant, "modifier_imba_static_remnant", {duration = self.remnant:GetSpecialValueFor("big_remnant_duration")})
 			end
 		end
-
 		-- Once the caster can no longer travel, remove this projectile
 	else
 		-- Emit end response

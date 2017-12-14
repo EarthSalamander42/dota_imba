@@ -327,7 +327,6 @@ function GameMode:ModifierFilter( keys )
 		-- Roshan special modifier rules
 		-------------------------------------------------------------------------------------------------
 		if IsRoshan(modifier_owner) then
-
 			-- Ignore stuns
 			if modifier_name == "modifier_stunned" then
 				return false
@@ -448,6 +447,10 @@ function GameMode:ModifierFilter( keys )
 				SendOverheadEventMessage(nil, OVERHEAD_ALERT_EVADE, modifier_owner, 0, nil)
 				return false
 			end
+		end
+
+		if modifier_name == "modifier_fountain_aura_buff" then
+			modifier_owner:AddNewModifier(modifier_owner, nil, "modifier_imba_fountain_particle_control", {})
 		end
 
 		return true
