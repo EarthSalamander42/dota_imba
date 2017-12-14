@@ -447,7 +447,7 @@ function ApplyShadowRazeDamage(caster, ability, enemy)
     -- Ability specials
     local damage = ability:GetSpecialValueFor("damage")
     local shadow_combo_duration = ability:GetSpecialValueFor("shadow_combo_duration")
-   -- local damage_per_soul = ability:GetSpecialValueFor("damage_per_soul")
+    local damage_per_soul = ability:GetSpecialValueFor("damage_per_soul")
     local souls_per_raze = ability:GetSpecialValueFor("souls_per_raze")
     local soul_projectile_speed = ability:GetSpecialValueFor("soul_projectile_speed")
 
@@ -460,7 +460,7 @@ function ApplyShadowRazeDamage(caster, ability, enemy)
        -- damage_per_soul = damage_per_soul + caster:FindTalentValue("special_bonus_imba_nevermore_8")
 
         -- Adjust damage
-       -- damage = damage + stacks * damage_per_soul
+        damage = damage + stacks * damage_per_soul
 
         -- Add a Necromastery stack if it was a hero
         if enemy:IsRealHero() then
