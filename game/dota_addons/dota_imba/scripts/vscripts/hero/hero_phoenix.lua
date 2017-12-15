@@ -992,6 +992,13 @@ function imba_phoenix_sun_ray:OnSpellStart()
 	local caster	= self:GetCaster()
 	local ability	= self
 
+	local ray_stop = caster:FindAbilityByName("imba_phoenix_sun_ray_stop")
+	local toggle_move = caster:FindAbilityByName("imba_phoenix_sun_ray_toggle_move")
+	if not ray_stop or not toggle_move then
+		caster:RemoveAbility("imba_phoenix_sun_ray")
+		return
+	end
+
 	local pathLength					= self:GetSpecialValueFor("beam_range")
 	local max_duration 					= self:GetSpecialValueFor("duration")
 	local forwardMoveSpeed				= self:GetSpecialValueFor("move_speed")
