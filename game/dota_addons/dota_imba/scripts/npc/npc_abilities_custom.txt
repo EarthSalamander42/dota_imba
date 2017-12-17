@@ -11864,7 +11864,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"child_duration"			"3 3 3 3 6 9 12"
+				"child_duration"			"8"
 			}
 
 			"05"
@@ -11889,7 +11889,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"base_ms"					"260 280 300 320 320 320 320"
-			}			
+			}
 
 			"09"
 			{
@@ -11906,7 +11906,7 @@
 			"11"
 			{
 				"var_type"     				"FIELD_INTEGER"
-				"additional_attacks_split"	"3"
+				"additional_attacks_split"	"6"
 			}
 		}
 	}
@@ -12032,6 +12032,9 @@
 		//-------------------------------------------------------------------------------------------------------------		
 		"AbilityChannelTime"				"4.0"
 		"AbilityCastAnimation"				"ACT_DOTA_CAST_ABILITY_4"
+		"AOERadius"							"420"
+		"AbilityCastRange"					"275"
+		"AbilityCastPoint"					"0.3"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -12061,7 +12064,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"stack_pull_distance"		"30"
-			}									
+			}
 
 			"04"
 			{
@@ -12083,8 +12086,8 @@
 
 			"07"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"	 				"4"			
+				"var_type"					"FIELD_FLOAT"
+				"duration"	 				"4.0"			
 			}
 			"08"
 			{
@@ -12095,16 +12098,6 @@
 			{
 				"var_type" 										"FIELD_INTEGER"
 				"singularity_stun_radius_increment_per_stack" 	"25"
-			}
-			"10"
-			{
-				"var_type" 		"FIELD_INTEGER"
-				"cast_range" 	"275"
-			}
-			"11"
-			{
-				"var_type" 		"FIELD_INTEGER"
-				"cast_point" 	"0.3"
 			}
 		}
 	}
@@ -12132,7 +12125,7 @@
 			"01"
 			{
 				"var_type"		"FIELD_FLOAT"
-				"value"			"2"
+				"value"			"10"
 			}
 		}
 	}
