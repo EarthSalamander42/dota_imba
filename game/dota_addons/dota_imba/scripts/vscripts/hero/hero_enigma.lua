@@ -677,16 +677,25 @@ function modifier_imba_enigma_black_hole_thinker:OnCreated(keys)
 	if not IsServer() then return end
 	local pfx_name = "particles/units/heroes/hero_enigma/enigma_blackhole.vpcf"
 	self.sound = "Hero_Enigma.Black_Hole"
+	local total = FindUnitsInRadius(self:GetCaster():GetTeamNumber(),
+									self:GetParent():GetAbsOrigin(),
+									nil,
+									999999,
+									DOTA_UNIT_TARGET_TEAM_ENEMY,
+									DOTA_UNIT_TARGET_HERO,
+									DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_DEAD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD,
+									FIND_ANY_ORDER,
+									false)
 	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(),
 									self:GetParent():GetAbsOrigin(),
 									nil,
 									self.radius,
 									DOTA_UNIT_TARGET_TEAM_ENEMY,
 									DOTA_UNIT_TARGET_HERO,
-									DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
+									DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS,
 									FIND_ANY_ORDER,
 									false)
-	if #enemies > 0 then
+	if #enemies >= #total/2 then
 		pfx_name = "particles/econ/items/enigma/enigma_world_chasm/enigma_blackhole_ti5.vpcf"
 		self.sound = "Imba.EnigmaBlackHoleTi5"
 		EmitSoundOn("Imba.EnigmaBlackHoleTobi0"..math.random(1,5), self:GetParent())
