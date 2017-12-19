@@ -214,6 +214,7 @@ function modifier_imba_arcane_orb_thinker:ApplyArcaneOrbAttack(target)
 		local damageTable = {victim = target,
 							damage = damage,
 							damage_type = DAMAGE_TYPE_PURE,
+							damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
 							attacker = self.caster,
 							ability = self.ability
 							}
@@ -259,6 +260,7 @@ function modifier_imba_arcane_orb_thinker:ApplyArcaneOrbAttack(target)
 						local damageTable = {victim = enemy,
 											damage = (damage - self.illusion_bonus_dmg),
 											damage_type = DAMAGE_TYPE_PURE,
+											damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
 											attacker = self.caster,
 											ability = self.ability
 											}
@@ -312,6 +314,7 @@ function modifier_imba_arcane_orb_thinker:ApplyArcaneOrbAttack(target)
 				damage = damage,
 				damage_type = DAMAGE_TYPE_PURE,
 				attacker = self.caster,
+				damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
 				ability = self.ability
 				}
 														

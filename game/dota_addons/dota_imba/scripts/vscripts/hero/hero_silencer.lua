@@ -393,6 +393,7 @@ function modifier_imba_silencer_glaives_of_wisdom:OnAttackLanded(keys)
 					attacker = attacker,
 					damage = glaive_pure_damage,
 					damage_type = self.ability:GetAbilityDamageType(),
+					damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
 					ability = self.ability
 				}
 
