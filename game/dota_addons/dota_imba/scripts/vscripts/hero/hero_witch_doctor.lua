@@ -340,6 +340,7 @@ end
 function modifier_imba_voodoo_restoration:OnIntervalThink()
 	local hCaster = self:GetCaster()
 	local hAbility = self:GetAbility()
+	if not hCaster:IsAlive() then return end
 	-- Counter for purge effect
 	self.cleanse_counter = self.cleanse_counter or 0
 

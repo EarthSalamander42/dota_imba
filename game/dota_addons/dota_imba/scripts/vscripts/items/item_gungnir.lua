@@ -175,7 +175,7 @@ function modifier_item_imba_gungnir_force_ally:GetMotionControllerPriority()  re
 
 function modifier_item_imba_gungnir_force_ally:OnCreated()
 	if not IsServer() then return end
-	if self:GetParent():HasModifier("modifier_legion_commander_duel") or self:GetParent():HasModifier("modifier_imba_enigma_black_hole_aura_modifier") or self:GetParent():HasModifier("modifier_imba_faceless_void_chronosphere_handler") then
+	if self:GetParent():HasModifier("modifier_legion_commander_duel") or self:GetParent():HasModifier("modifier_imba_enigma_black_hole") or self:GetParent():HasModifier("modifier_imba_faceless_void_chronosphere_handler") then
 		self:Destroy()
 	end
 	self.effect = self:GetCaster().force_staff_effect
@@ -561,7 +561,7 @@ function modifier_item_imba_force_staff_active:GetMotionControllerPriority()  re
 function modifier_item_imba_force_staff_active:OnCreated()
 	if not IsServer() then return end
 	self.effect = self:GetCaster().force_staff_effect
-	if self:GetParent():HasModifier("modifier_legion_commander_duel") or self:GetParent():HasModifier("modifier_imba_enigma_black_hole_aura_modifier") or self:GetParent():HasModifier("modifier_imba_faceless_void_chronosphere_handler") then
+	if self:GetParent():HasModifier("modifier_legion_commander_duel") or self:GetParent():HasModifier("modifier_imba_enigma_black_hole") or self:GetParent():HasModifier("modifier_imba_faceless_void_chronosphere_handler") then
 		self:Destroy()
 	end
 	self.pfx = ParticleManager:CreateParticle(self.effect, PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
@@ -723,7 +723,7 @@ function modifier_item_imba_hurricane_pike_force_ally:GetMotionControllerPriorit
 
 function modifier_item_imba_hurricane_pike_force_ally:OnCreated()
 	if not IsServer() then return end
-	if self:GetParent():HasModifier("modifier_legion_commander_duel") or self:GetParent():HasModifier("modifier_imba_enigma_black_hole_aura_modifier") or self:GetParent():HasModifier("modifier_imba_faceless_void_chronosphere_handler") then
+	if self:GetParent():HasModifier("modifier_legion_commander_duel") or self:GetParent():HasModifier("modifier_imba_enigma_black_hole") or self:GetParent():HasModifier("modifier_imba_faceless_void_chronosphere_handler") then
 		self:Destroy()
 	end
 	self.effect = self:GetCaster().force_staff_effect

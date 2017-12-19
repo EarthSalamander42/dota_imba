@@ -345,21 +345,21 @@
 
     // Enigma
     "DOTA_Tooltip_Talent_special_bonus_imba_enigma_1_title"                     "黑洞"
-    "DOTA_Tooltip_Talent_special_bonus_imba_enigma_1_Description"               "每层奇点还将降低2秒黑洞冷却时间"
+    "DOTA_Tooltip_Talent_special_bonus_imba_enigma_1_Description"               "每层奇点还将降低10秒黑洞冷却时间"
     "DOTA_Tooltip_Talent_special_bonus_imba_enigma_2_title"                     "憎恶"
-    "DOTA_Tooltip_Talent_special_bonus_imba_enigma_2_Description"               "憎恶施加于目标400范围内所有目标"
+    "DOTA_Tooltip_Talent_special_bonus_imba_enigma_2_Description"               "憎恶施加于目标225范围内所有目标"
     "DOTA_Tooltip_Talent_special_bonus_imba_enigma_3_title"                     "午夜凋零"
     "DOTA_Tooltip_Talent_special_bonus_imba_enigma_3_Description"               "午夜凋零的范围随时间提高翻倍"
     "DOTA_Tooltip_Talent_special_bonus_imba_enigma_4_title"                     "黑洞"
     "DOTA_Tooltip_Talent_special_bonus_imba_enigma_4_Description"               "死亡时施放黑洞"
     "DOTA_Tooltip_Talent_special_bonus_imba_enigma_5_title"                     "憎恶"
-    "DOTA_Tooltip_Talent_special_bonus_imba_enigma_5_Description"               "憎恶在眩晕时将创造黑洞"
+    "DOTA_Tooltip_Talent_special_bonus_imba_enigma_5_Description"               "改变憎恶的重力井顺序：最强黑洞，午夜凋零次之，其次为受憎恶影响的最近的英雄，最后才是谜团"
     "DOTA_Tooltip_Talent_special_bonus_imba_enigma_6_title"                     "午夜凋零"
     "DOTA_Tooltip_Talent_special_bonus_imba_enigma_6_Description"               "被动午夜凋零光环"
     "DOTA_Tooltip_Talent_special_bonus_imba_enigma_7_title"                     "谜团"
     "DOTA_Tooltip_Talent_special_bonus_imba_enigma_7_Description"               "谜团在施法时获得1秒的技能免疫，该效果可以顺延持续时间"
     "DOTA_Tooltip_Talent_special_bonus_imba_enigma_8_title"                     "恶魔转化"
-    "DOTA_Tooltip_Talent_special_bonus_imba_enigma_8_Description"               "虚灵体可从英雄身上出现"
+    "DOTA_Tooltip_Talent_special_bonus_imba_enigma_8_Description"               "虚灵体可从英雄身上出现，此时虚灵体的原初碎片计算将以目标英雄为准"
 
     // Faceless Void
     "DOTA_Tooltip_Talent_special_bonus_imba_faceless_void_1_title"              "时间膨胀"        
