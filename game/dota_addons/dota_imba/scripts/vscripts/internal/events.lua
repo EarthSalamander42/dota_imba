@@ -141,8 +141,8 @@ local color = {}
 			caster.norange = nil
 		end
 
-		if str == "-printxpinfo" then
-			Server_PrintInfo() --print the XP system info
+		if str == "-spawnimbarune" and CHEAT_ENABLED == true then
+			SpawnImbaRunes()
 		end
 
 		if str == "-blink" then
