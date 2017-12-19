@@ -26593,7 +26593,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_pudge_rot"
+			"01" 	"imba_pudge_flesh_heap"
 		}
 
 		// Special
@@ -26608,7 +26608,7 @@
 		}
 	}
 
-	"special_bonus_imba_pudge_5" // Cleaver can now pierce through enemies, damaging and affecting all enemies in a straight line.
+	"special_bonus_imba_pudge_5" // nothing yet
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -26618,7 +26618,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_pudge_butchers_cleaver"
+			"01" 	""
 			
 		}
 
@@ -26629,12 +26629,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"value"						"1"
+				"value"					""
 			}
 		}
 	}
 
-	"special_bonus_imba_pudge_6" // Hook now deals damage for each tree the unit passes through
+	"special_bonus_imba_pudge_6" // +120 Rot damage
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -26644,7 +26644,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_pudge_dismember"
+			"01" 	"imba_pudge_rot"
 			
 		}
 
@@ -26655,12 +26655,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"120"
+				"rot_damage"				"120"
 			}
 		}
 	}
 
-	"special_bonus_imba_pudge_7" // Dismember now disarms the target after the duration for the channeled duration
+	"special_bonus_imba_pudge_7" // Nothing yet
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -26670,7 +26670,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_pudge_dismember"
+			"01" 	""
 			
 		}
 
@@ -26681,12 +26681,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"1"
+				"value"						""
 			}
 		}
 	}
 
-	"special_bonus_imba_pudge_8" // Triple Meat Hooks
+	"special_bonus_imba_pudge_8" // Nothing yet
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -26696,7 +26696,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_pudge_meat_hook"
+			"01" 	""
 		}
 
 		// Special
@@ -26706,7 +26706,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"						"2"
+				"value"						""
 			}
 		}
 	}

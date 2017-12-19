@@ -12,7 +12,7 @@
 	"addonDescription"				"A modified version of Dota, where everything is insanely powerful."
 	"HeroGuidesSupported"			"1"
 
-	"maps"							"imba_standard imba_10v10 imba_custom_10v10"
+	"maps"							"imba_standard imba_10v10 imba_frantic_10v10"
 	"IsPlayable"					"1"
 
 	"imba_standard"

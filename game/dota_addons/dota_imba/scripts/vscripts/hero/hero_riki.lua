@@ -1302,7 +1302,7 @@ function imba_riki_tricks_of_the_trade:OnSpellStart()
 		local continuos_sound = "Hero_Riki.TricksOfTheTrade"
 		local buttsecks_sound = "Imba.RikiSurpriseButtsex"
 		
-		local heroes = FindUnitsInRadius(caster:GetTeamNumber(), origin, nil, aoe, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false)
+		local heroes = FindUnitsInRadius(caster:GetTeamNumber(), origin, nil, aoe, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false)
 		if #heroes >= IMBA_PLAYERS_ON_GAME * 0.35 then
 			-- caster:EmitSound(buttsecks_sound)
 			EmitSoundOn(buttsecks_sound, caster)

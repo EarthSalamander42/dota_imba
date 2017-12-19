@@ -274,10 +274,8 @@ function GameMode:OnGameRulesStateChange(keys)
 
 		for _, hero in pairs(HeroList:GetAllHeroes()) do
 			if hero:GetTeamNumber() == GAME_WINNER_TEAM then
-				print("WINNING! YAY:", GAME_WINNER_TEAM)
 				HeroVoiceLine(hero, "win")
 			else
-				print("LOSING! OH NOES:", GAME_WINNER_TEAM)
 				HeroVoiceLine(hero, "lose")
 			end
 		end

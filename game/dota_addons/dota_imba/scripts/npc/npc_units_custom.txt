@@ -16,10 +16,9 @@
 		"SoundSet"					"Creep_Good_Range"					// Name of sound set.
 		"Level"						"0"
 		"UnitLabel"					"healing_ward"
-		
+
 		// Abilities
 		//----------------------------------------------------------------
-		
 		"Ability1"					"dummy_unit_state"			// Ability 1.
 		"Ability2"					""			// Ability 2.
 		"Ability3"					""			// Ability 3.

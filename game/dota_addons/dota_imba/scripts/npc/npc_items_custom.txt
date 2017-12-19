@@ -12278,129 +12278,129 @@
 	//=================================================================================================================
 	// Teleport Scroll
 	//=================================================================================================================
-	"item_tpscroll"
-	{
-		"BaseClass"						"item_lua"
-		"ScriptFile"						"items/item_tp"
-		"AbilityTextureName"				"item_tpscroll"
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2268"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_NOASSIST | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_DONT_CANCEL_CHANNEL | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
-		"Model"							"models/props_gameplay/tpscroll01.vmdl"
+//	"item_tpscroll"
+//	{
+//		"BaseClass"						"item_lua"
+//		"ScriptFile"					"items/item_tp"
+//		"AbilityTextureName"			"item_tpscroll"
+//		// General
+//		//-------------------------------------------------------------------------------------------------------------
+//		"ID"							"2268"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+//		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_NOASSIST | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_DONT_CANCEL_CHANNEL | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+//		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+//		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BUILDING | DOTA_UNIT_TARGET_HERO"
+//		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+//		"Model"							"models/props_gameplay/tpscroll01.vmdl"
 
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"0"
-		"AbilityCooldown"				"45.0"
-		"AbilitySharedCooldown"			"teleport"
-		"AbilityChannelTime"			"3.0"
-		"AbilityCastPoint"				"0.0"
-		
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"75"
-		"ItemCost"						"50"
-		"ItemShopTags"					"consumable;tutorial"
-		"ItemQuality"					"consumable"
-		"ItemAliases"					"tp;town portal scroll;teleport"
-		"ItemStackable"					"1"
-		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
-		"ItemPermanent"					"0"
-		"ItemInitialCharges"			"1"
-		"SideShop"						"1"
-		
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"particle"						"particles/items2_fx/teleport_start.vpcf"
-			"particle"						"particles/items2_fx/teleport_end.vpcf"
-		}
-		
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"minimun_distance"		"70"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"maximum_distance"		"575"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"vision_radius"			"200"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"tooltip_channel_time"			"3.0"
-			}
-		}
-	}
+//		// Stats
+//		//-------------------------------------------------------------------------------------------------------------
+//		"AbilityCastRange"				"0"
+//		"AbilityCooldown"				"45.0"
+//		"AbilitySharedCooldown"			"teleport"
+//		"AbilityChannelTime"			"3.0"
+//		"AbilityCastPoint"				"0.0"
+//		
+//		// Item Info
+//		//-------------------------------------------------------------------------------------------------------------
+//		"AbilityManaCost"				"75"
+//		"ItemCost"						"50"
+//		"ItemShopTags"					"consumable;tutorial"
+//		"ItemQuality"					"consumable"
+//		"ItemAliases"					"tp;town portal scroll;teleport"
+//		"ItemStackable"					"1"
+//		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+//		"ItemPermanent"					"0"
+//		"ItemInitialCharges"			"1"
+//		"SideShop"						"1"
+//		
+//		// Precache
+//		//-------------------------------------------------------------------------------------------------------------
+//		"precache"
+//		{
+//			"particle"						"particles/items2_fx/teleport_start.vpcf"
+//			"particle"						"particles/items2_fx/teleport_end.vpcf"
+//		}
+//		
+//		// Special	
+//		//-------------------------------------------------------------------------------------------------------------
+//		"AbilitySpecial"
+//		{
+//			"01"
+//			{
+//				"var_type"				"FIELD_INTEGER"
+//				"minimun_distance"		"70"
+//			}
+//			"02"
+//			{
+//				"var_type"				"FIELD_INTEGER"
+//				"maximum_distance"		"575"
+//			}
+//			"03"
+//			{
+//				"var_type"				"FIELD_INTEGER"
+//				"vision_radius"			"200"
+//			}
+//			"04"
+//			{
+//				"var_type"				"FIELD_FLOAT"
+//				"tooltip_channel_time"			"3.0"
+//			}
+//		}
+//	}
 	
 	//=================================================================================================================
 	// Recipe: Travel Boots
 	//=================================================================================================================
-	"item_recipe_imba_travel_boots"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2269"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"Model"							"models/props_gameplay/recipe.vmdl"
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 				"custom/imba_recipe"
-		
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"2000"	
-		"ItemShopTags"					""
-		
-		// Recipe
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemRecipe"					"1"
-		"ItemResult"					"item_imba_travel_boots"
-		"ItemRequirements"
-		{
-			"01"						"item_boots;item_tpscroll"
-		}
-	}
+//	"item_recipe_imba_travel_boots"
+//	{
+//		// General
+//		//-------------------------------------------------------------------------------------------------------------
+//		"ID"							"2269"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+//		"Model"							"models/props_gameplay/recipe.vmdl"
+//		"BaseClass"						"item_datadriven"
+//		"AbilityTextureName" 			"custom/imba_recipe"
+//		
+//		// Item Info
+//		//-------------------------------------------------------------------------------------------------------------
+//		"ItemCost"						"2000"	
+//		"ItemShopTags"					""
+//		
+//		// Recipe
+//		//-------------------------------------------------------------------------------------------------------------
+//		"ItemRecipe"					"1"
+//		"ItemResult"					"item_imba_travel_boots"
+//		"ItemRequirements"
+//		{
+//			"01"						"item_boots;item_tpscroll"
+//		}
+//	}
 	
-	//=================================================================================================================
-	// Recipe: Travel Boots2
-	//=================================================================================================================
-	"item_recipe_travel_boots_2"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2270"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"Model"							"models/props_gameplay/recipe.vmdl"
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 				"custom/imba_recipe"
-		
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"0"	
-		"ItemShopTags"					""
-		
-		// Recipe
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemRecipe"					"1"
-		"ItemResult"					"item_imba_travel_boots_2"
-		"ItemRequirements"
-		{
-			"01"						"item_imba_travel_boots;item_recipe_imba_travel_boots"
-		}
-	}
+//	//=================================================================================================================
+//	// Recipe: Travel Boots2
+//	//=================================================================================================================
+//	"item_recipe_travel_boots_2"
+//	{
+//		// General
+//		//-------------------------------------------------------------------------------------------------------------
+//		"ID"							"2270"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+//		"Model"							"models/props_gameplay/recipe.vmdl"
+//		"BaseClass"						"item_datadriven"
+//		"AbilityTextureName" 			"custom/imba_recipe"
+//		
+//		// Item Info
+//		//-------------------------------------------------------------------------------------------------------------
+//		"ItemCost"						"0"	
+//		"ItemShopTags"					""
+//		
+//		// Recipe
+//		//-------------------------------------------------------------------------------------------------------------
+//		"ItemRecipe"					"1"
+//		"ItemResult"					"item_imba_travel_boots_2"
+//		"ItemRequirements"
+//		{
+//			"01"						"item_imba_travel_boots;item_recipe_imba_travel_boots"
+//		}
+//	}
 	
 	//=================================================================================================================
 	// Travel Boots
@@ -12408,8 +12408,8 @@
 	"item_imba_travel_boots"
 	{
 		"BaseClass"						"item_lua"
-		"ScriptFile"						"items/item_tp"
-		"AbilityTextureName"				"item_travel_boots"
+		"ScriptFile"					"items/item_tp"
+		"AbilityTextureName"			"item_travel_boots"
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2271"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
@@ -12462,7 +12462,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"tooltip_channel_time"		"2.0"
+				"tooltip_channel_time"	"2.0"
 			}
 		}
 	}
@@ -12473,8 +12473,8 @@
 	"item_imba_travel_boots_2"
 	{
 		"BaseClass"						"item_lua"
-		"ScriptFile"						"items/item_tp"
-		"AbilityTextureName"				"item_travel_boots_2"
+		"ScriptFile"					"items/item_tp"
+		"AbilityTextureName"			"item_travel_boots_2"
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2272"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
@@ -12523,10 +12523,248 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"tooltip_channel_time"		"2.0"
+				"tooltip_channel_time"	"2.0"
 			}
 		}
 	}
-	
-	//next free ID: 2273
+
+	//=================================================================================================================
+	// Bounty Rune
+	//=================================================================================================================
+	"item_imba_rune_bounty"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"									"2273"
+		"BaseClass"								"item_datadriven"
+		"Model"									"models/props_gameplay/rune_goldxp.vmdl"
+		"Effect"								"particles/generic_gameplay/rune_bounty.vpcf"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"								"0"
+		"ItemQuality"							"artifact"
+		"ItemPurchasable"						"0"
+		"ItemSellable"							"0"
+		"ItemKillable"							"1"
+		"ItemCastOnPickup"						"1"
+	}
+
+	//=================================================================================================================
+	// Nightmare Shadow (haste rune)
+	//=================================================================================================================
+	"item_imba_rune_haste"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"									"2274"
+		"BaseClass"								"item_datadriven"
+		"Model"									"models/props_gameplay/rune_haste01.vmdl"
+		"Effect"								"particles/generic_gameplay/rune_haste.vpcf"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"								"0"
+		"ItemQuality"							"artifact"
+		"ItemPurchasable"						"0"
+		"ItemSellable"							"0"
+		"ItemKillable"							"1"
+		"ItemCastOnPickup"						"1"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"duration"						"22"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Power Surge (double damage rune)
+	//=================================================================================================================
+	"item_imba_rune_double_damage"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"									"2275"
+		"BaseClass"								"item_datadriven"
+		"Model"									"models/props_gameplay/rune_doubledamage01.vmdl"
+		"Effect"								"particles/generic_gameplay/rune_doubledamage.vpcf"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"								"0"
+		"ItemQuality"							"artifact"
+		"ItemPurchasable"						"0"
+		"ItemSellable"							"0"
+		"ItemKillable"							"1"
+		"ItemCastOnPickup"						"1"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"duration"						"45"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Boundless Energy (regeneration rune)
+	//=================================================================================================================
+	"item_imba_rune_regeneration"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"									"2276"
+		"BaseClass"								"item_datadriven"
+		"Model"									"models/props_gameplay/rune_regeneration01.vmdl"
+		"Effect"								"particles/generic_gameplay/rune_regeneration.vpcf"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"								"0"
+		"ItemQuality"							"artifact"
+		"ItemPurchasable"						"0"
+		"ItemSellable"							"0"
+		"ItemKillable"							"1"
+		"ItemCastOnPickup"						"1"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"duration"						"30"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Archmage Soul (arcane rune)
+	//=================================================================================================================
+	"item_imba_rune_arcane"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"									"2277"
+		"BaseClass"								"item_datadriven"
+		"Model"									"models/props_gameplay/rune_arcane.vmdl"
+		"Effect"								"particles/generic_gameplay/rune_arcane.vpcf"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"								"0"
+		"ItemQuality"							"artifact"
+		"ItemPurchasable"						"0"
+		"ItemSellable"							"0"
+		"ItemKillable"							"1"
+		"ItemCastOnPickup"						"1"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"duration"						"50"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Invisibility Rune (invis rune)
+	//=================================================================================================================
+	"item_imba_rune_invisibility"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"									"2278"
+		"BaseClass"								"item_datadriven"
+		"Model"									"models/props_gameplay/rune_invisibility01.vmdl"
+		"Effect"								"particles/generic_gameplay/rune_invisibility.vpcf"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"								"0"
+		"ItemQuality"							"artifact"
+		"ItemPurchasable"						"0"
+		"ItemSellable"							"0"
+		"ItemKillable"							"1"
+		"ItemCastOnPickup"						"1"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"duration"						"45"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Illusion Rune (illusion rune)
+	//=================================================================================================================
+	"item_imba_rune_illusion"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"									"2279"
+		"BaseClass"								"item_datadriven"
+		"Model"									"models/props_gameplay/rune_illusion01.vmdl"
+		"Effect"								"particles/generic_gameplay/rune_illusion.vpcf"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"								"0"
+		"ItemQuality"							"artifact"
+		"ItemPurchasable"						"0"
+		"ItemSellable"							"0"
+		"ItemKillable"							"1"
+		"ItemCastOnPickup"						"1"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"duration"						"45"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Frost Rune (frost rune)
+	//=================================================================================================================
+	"item_imba_rune_frost"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"									"2280"
+		"BaseClass"								"item_datadriven"
+		"Model"									"models/props_gameplay/rune_frost.vmdl"
+		"Effect"								"particles/econ/items/puck/puck_snowflake/puck_snowflake_ambient.vpcf"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"								"0"
+		"ItemQuality"							"artifact"
+		"ItemPurchasable"						"0"
+		"ItemSellable"							"0"
+		"ItemKillable"							"1"
+		"ItemCastOnPickup"						"1"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"duration"						"45"
+			}
+		}
+	}
+	//next free ID: 2281
 }

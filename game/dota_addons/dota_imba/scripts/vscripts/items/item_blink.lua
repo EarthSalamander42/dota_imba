@@ -39,7 +39,6 @@ function item_imba_blink:OnSpellStart()
 	
 	-- Set distance if targeted destiny is beyond range
 	if distance > max_blink_range then
-
 		-- Extra parameters
 		local max_extra_distance = self:GetSpecialValueFor("max_extra_distance")
 		local max_extra_cooldown = self:GetSpecialValueFor("max_extra_cooldown")

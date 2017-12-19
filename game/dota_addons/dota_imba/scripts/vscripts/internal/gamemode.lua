@@ -25,6 +25,7 @@ function GameMode:_InitGameMode()
 	GameRules:SetHideKillMessageHeaders( HIDE_KILL_BANNERS )
 	GameRules:SetCustomGameSetupAutoLaunchDelay( AUTO_LAUNCH_DELAY )
 	GameRules:SetStartingGold( MAP_INITIAL_GOLD )
+	GameRules:LockCustomGameSetupTeamAssignment(true)
 
 	-- Register a listener for the game mode configuration
 	CustomGameEventManager:RegisterListener("set_game_mode", OnSetGameMode)

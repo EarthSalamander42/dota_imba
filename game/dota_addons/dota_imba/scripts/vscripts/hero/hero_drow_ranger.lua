@@ -977,7 +977,6 @@ function modifier_imba_gust_buff:OnAttackLanded(kv)
 	end
 end
 
-
 ----------------------------
 --	   PRECISION AURA     --
 ----------------------------

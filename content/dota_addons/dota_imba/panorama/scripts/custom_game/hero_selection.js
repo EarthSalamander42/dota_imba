@@ -479,17 +479,21 @@ function SelectHero( heroName ) {
 //	$.Msg(playerPanels[1])
 //	playerPanels[1].SetPreviewHero(heroName)
 
-	var localTeam = Players.GetTeam(Players.GetLocalPlayer())
+	var local_player = Players.GetLocalPlayer()
+	var localTeam = Players.GetTeam(local_player)
 	if (localTeam == 2) {
 		var radiantPlayers = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_GOODGUYS );
 		$.Each( radiantPlayers, function( player ) {
-			$.Msg(heroName)
-			playerPanels[Players.GetLocalPlayer()].SetPreviewHero(heroName)
+			if (player == local_player) {
+				playerPanels[local_player].SetPreviewHero(heroName)
+			}
 		});
 	} else if (localTeam == 3) {
 		var direPlayers = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_BADGUYS );
 		$.Each( direPlayers, function( player ) {
-			playerPanels[Players.GetLocalPlayer()].SetPreviewHero(heroName)
+			if (player == local_player) {
+				playerPanels[local_player].SetPreviewHero(heroName)
+			}
 		});
 	}
 

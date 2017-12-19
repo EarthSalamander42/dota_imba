@@ -91,7 +91,7 @@ end
 
 -- Haste particle
 function modifier_imba_haste_rune:GetEffectName()
-	return "particles/generic_gameplay/rune_haste.vpcf"
+	return "particles/generic_gameplay/rune_haste_owner.vpcf"
 end
 
 function modifier_imba_haste_rune:GetEffectAttachType()
@@ -138,7 +138,7 @@ end
 
 -- Haste particle
 function modifier_imba_haste_rune_aura:GetEffectName()
-	return "particles/generic_gameplay/rune_haste.vpcf"
+	return "particles/generic_gameplay/rune_haste_owner.vpcf"
 end
 
 function modifier_imba_haste_rune_aura:GetEffectAttachType()

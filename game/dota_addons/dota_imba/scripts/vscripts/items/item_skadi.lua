@@ -228,7 +228,6 @@ function modifier_item_imba_skadi_unique:OnTakeDamage( keys )
 		-- If there's no valid target, do nothing
 		if (not IsHeroOrCreep(target)) or attacker:GetTeam() == target:GetTeam() then
 			return end
-			
 
 		-- Calculate actual slow duration
 		local target_distance = (target:GetAbsOrigin() - attacker:GetAbsOrigin()):Length2D()

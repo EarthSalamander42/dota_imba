@@ -93,7 +93,6 @@ end
 
 function item_imba_mekansm:OnSpellStart()
 	if IsServer() then
-
 		-- Parameters
 		local caster = self:GetCaster()
 		local heal_amount = self:GetSpecialValueFor("heal_amount") * (1 + caster:GetSpellPower() * 0.01)
@@ -102,7 +101,7 @@ function item_imba_mekansm:OnSpellStart()
 
 		-- Play activation sound and particle
 		caster:EmitSound("DOTA_Item.Mekansm.Activate")
-		local mekansm_pfx = ParticleManager:CreateParticle("particles/items2_fx/mekanism.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+		local mekansm_pfx = ParticleManager:CreateParticle(caster.mekansm_effect, PATTACH_ABSORIGIN_FOLLOW, caster)
 		ParticleManager:ReleaseParticleIndex(mekansm_pfx)
 
 		-- Iterate through nearby allies
@@ -116,7 +115,7 @@ function item_imba_mekansm:OnSpellStart()
 
 			-- Play healing sound & particle
 			ally:EmitSound("DOTA_Item.Mekansm.Target")
-			local mekansm_target_pfx = ParticleManager:CreateParticle("particles/items2_fx/mekanism_recipient.vpcf", PATTACH_ABSORIGIN_FOLLOW, ally)
+			local mekansm_target_pfx = ParticleManager:CreateParticle(caster.mekansm_hit_effect, PATTACH_ABSORIGIN_FOLLOW, ally)
 			ParticleManager:SetParticleControl(mekansm_target_pfx, 0, caster_loc)
 			ParticleManager:SetParticleControl(mekansm_target_pfx, 1, ally:GetAbsOrigin())
 			ParticleManager:ReleaseParticleIndex(mekansm_target_pfx)
@@ -499,7 +498,8 @@ function modifier_item_imba_guardian_greaves_heal:IsPurgable() return true end
 
 -- Modifier texture
 function modifier_item_imba_guardian_greaves_heal:GetTexture()
-	return "custom/imba_guardian_greaves" end
+	return "custom/imba_guardian_greaves"
+end
 
 -- Stores the ability's parameters to prevent errors if the item is destroyed
 function modifier_item_imba_guardian_greaves_heal:OnCreated(keys)
@@ -515,14 +515,14 @@ function modifier_item_imba_guardian_greaves_heal:DeclareFunctions()
 end
 
 function modifier_item_imba_guardian_greaves_heal:GetModifierHealthRegenPercentage()
-	return self.mend_regen end
+	return self.mend_regen
+end
 
 -----------------------------------------------------------------------------------------------------------
 --	Guardian Greaves active
 -----------------------------------------------------------------------------------------------------------
 
 function GreavesActivate(caster, ability, heal_amount, mana_amount, heal_radius, heal_duration)
-
 	-- Purge debuffs from the caster
 	caster:Purge(false, true, false, true, false)
 

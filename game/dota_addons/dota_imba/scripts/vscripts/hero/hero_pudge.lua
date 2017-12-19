@@ -1345,7 +1345,6 @@ function HookCast( keys )
 
 	-- Check if the target point is inside range, if not, stop casting and move closer
 	if cast_distance > hook_range then
-
 		-- Start moving
 		caster:MoveToPosition(target)
 		Timers:CreateTimer(0.1, function()
@@ -1398,6 +1397,7 @@ function MeatHook( keys )
 		"item_travel_boots",
 		"item_travel_boots_2"
 	}
+
 	for i = 0, 5 do
 		local current_item = caster:GetItemInSlot(i)
 		local should_mute = false
@@ -1466,7 +1466,10 @@ function MeatHook( keys )
 		hook_damage = hook_damage + light_stacks * damage_scepter
 		local hook_cooldown = math.max(ability:GetCooldown(ability_level) - cooldown_scepter * sharp_stacks, cooldown_cap_scepter)
 		ability:EndCooldown()
-		ability:StartCooldown(hook_cooldown * GetCooldownReduction(caster))
+		if caster:GetCooldownReduction() ~= 0 then
+			cdr = hook_cooldown * (caster:GetCooldownReduction() / 100)
+		end
+		ability:StartCooldown(hook_cooldown - cdr)
 	end
 
 	-- Stun the caster for the hook duration
@@ -1506,8 +1509,7 @@ function MeatHook( keys )
 
 	-- Initialize Hook variables
 	local hook_loc = start_loc
-	local tick_rate = 0.03
-	hook_speed = hook_speed * tick_rate
+	hook_speed = hook_speed * FrameTime()
 
 	local travel_distance = (hook_loc - caster_loc):Length2D()
 	local hook_step = (keys.target_points[1] - caster_loc):Normalized() * hook_speed
@@ -1516,8 +1518,7 @@ function MeatHook( keys )
 	local target
 
 	-- Main Hook loop
-	Timers:CreateTimer(tick_rate, function()
-
+	Timers:CreateTimer(FrameTime(), function()
 		-- Check for valid units in the area
 		local units = FindUnitsInRadius(caster:GetTeamNumber(), hook_loc, nil, hook_width, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
 		for _,unit in pairs(units) do
@@ -1547,7 +1548,7 @@ function MeatHook( keys )
 			ability:CreateVisibilityNode(hook_loc, vision_radius, vision_duration)
 
 			-- Increase hook return speed
---			hook_speed = math.max(hook_speed, 3000 * tick_rate)
+--			hook_speed = math.max(hook_speed, 3000 * FrameTime())
 		end
 
 		-- If no target was hit and the maximum range is not reached, move the hook and keep going
@@ -1559,7 +1560,7 @@ function MeatHook( keys )
 			-- Recalculate position and distance
 			hook_loc = hook_dummy:GetAbsOrigin()
 			travel_distance = (hook_loc - caster_loc):Length2D()
-			return tick_rate
+			return FrameTime()
 		end
 
 		-- If we are here, this means the hook has to start reeling back; prepare return variables
@@ -1585,8 +1586,7 @@ function MeatHook( keys )
 		end
 
 		-- Hook reeling loop
-		Timers:CreateTimer(tick_rate, function()
-
+		Timers:CreateTimer(FrameTime(), function()
 			-- Recalculate position variables
 			caster_loc = caster:GetAbsOrigin()
 			hook_loc = hook_dummy:GetAbsOrigin()
@@ -1649,7 +1649,7 @@ function MeatHook( keys )
 					ability:CreateVisibilityNode(hook_loc, vision_radius, 0.5)
 				end
 				
-				return tick_rate
+				return FrameTime()
 			end
 		end)
 	end)
@@ -1799,6 +1799,10 @@ function Rot( keys )
 	local damage = (base_damage + caster:GetMaxHealth() * bonus_damage) * rot_tick
 	local radius = base_radius + stack_radius * heap_stacks
 
+	if caster:HasTalent("special_bonus_imba_pudge_6") then
+		damage = damage + caster:FindTalentValue("special_bonus_imba_pudge_6", "rot_damage")
+	end
+
 	-- Damage the caster
 	ApplyDamage({attacker = caster, victim = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 
@@ -1873,8 +1877,6 @@ function FleshHeapUpgrade( keys )
 	if caster:HasTalent("special_bonus_imba_pudge_4") then
 		max_stacks = max_stacks + caster:FindTalentValue("special_bonus_imba_pudge_4", "max_stacks")
 	end
-
-	print(max_stacks)
 
 	-- If Heap is already learned, fetch the current amount of stacks
 	if caster.heap_stacks then

@@ -11,8 +11,9 @@ IMBATTLEPASS_LEVEL_REWARD["force_staff"]	= 16
 IMBATTLEPASS_LEVEL_REWARD["blink2"]			= 18
 IMBATTLEPASS_LEVEL_REWARD["fountain3"]		= 22
 IMBATTLEPASS_LEVEL_REWARD["blink3"]			= 27
-IMBATTLEPASS_LEVEL_REWARD["force_staff2"]	= 32
 IMBATTLEPASS_LEVEL_REWARD["fountain4"]		= 31
+IMBATTLEPASS_LEVEL_REWARD["force_staff2"]	= 32
+IMBATTLEPASS_LEVEL_REWARD["mekansm"]		= 35
 IMBATTLEPASS_LEVEL_REWARD["blink4"]			= 36
 IMBATTLEPASS_LEVEL_REWARD["fountain5"]		= 40
 IMBATTLEPASS_LEVEL_REWARD["radiance"]		= 44
@@ -25,6 +26,7 @@ IMBATTLEPASS_LEVEL_REWARD["sheepstick"]		= 60
 IMBATTLEPASS_LEVEL_REWARD["blink7"]			= 63
 IMBATTLEPASS_LEVEL_REWARD["force_staff4"]	= 64
 IMBATTLEPASS_LEVEL_REWARD["fountain8"]		= 67
+IMBATTLEPASS_LEVEL_REWARD["mekansm2"]		= 70
 IMBATTLEPASS_LEVEL_REWARD["blink8"]			= 72
 IMBATTLEPASS_LEVEL_REWARD["fountain9"]		= 76
 IMBATTLEPASS_LEVEL_REWARD["blink9"]			= 81
@@ -44,21 +46,21 @@ IMBATTLEPASS_LEVEL_REWARD["shiva2"]			= 200
 	Custom Icons if has special item effects
 	Rank Double Down,
 	XP Boosters,
-	TP Scroll effect + pro team effect,
-	golden roshan contributor statue(level 500?),
+	TP Scroll effect + pro team effect (7.04),
+	golden roshan contributor statue(level 500?) (7.04),
 	Mekansm/Guardian Greaves effect,
 	Mjollnir/Jarnbjorn effect,
 	Companion unlocking (need to create the companion choice in-game and remove the one in website),
 	Dagon effect,
 	Eul Scepter effect,
-	Level Up effect (not sure it's possible),
-	Bottle effect,
+	Level Up effect (not sure it's possible) (7.04),
+	Bottle effect (7.04),
 	Aegis effect,
-	Hermes companion with all cosmetics,
-	Axolotl companion with all cosmetics,
-	River painting (if possible),
+	Hermes companion with all cosmetics (7.04),
+	Axolotl companion with all cosmetics (7.04),
+	River painting (if possible) (7.04),
 	Deny creep effect with ? instead of !,
-	Tiny unique set,
+	Tiny unique set (7.04),
 --]]
 
 function Imbattlepass:Init()
@@ -81,6 +83,7 @@ if api_preloaded.players == nil then return end
 	GetSheepstickEffect(hero)
 	GetSheepstickModel(hero)
 	GetShivaEffect(hero)
+	GetMekansmEffect(hero)
 	GetFountainEffect(hero)
 end
 
@@ -182,6 +185,7 @@ end
 
 function GetShivaEffect(hero)
 local effect = "particles/items2_fx/shivas_guard_active.vpcf"
+local effect2 = "particles/items2_fx/shivas_guard_impact.vpcf"
 
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["shiva2"] then
 		effect = "particles/econ/events/newbloom_2015/shivas_guard_active_nian2015.vpcf"
@@ -193,6 +197,22 @@ local effect = "particles/items2_fx/shivas_guard_active.vpcf"
 
 	hero.shiva_blast_effect = effect
 	hero.shiva_hit_effect = effect2
+end
+
+function GetMekansmEffect(hero)
+local effect = "particles/items2_fx/mekanism.vpcf"
+local effect2 = "particles/items2_fx/mekanism_recipient.vpcf"
+
+	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["mekansm2"] then
+		effect = "particles/econ/events/ti6/mekanism_ti6.vpcf"
+		effect2 = "particles/econ/events/ti6/mekanism_recipient_ti6.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["mekansm"] then
+		effect = "particles/econ/events/ti7/mekanism_ti7.vpcf"
+		effect2 = "particles/econ/events/ti7/mekanism_recipient_ti7.vpcf"
+	end
+
+	hero.mekansm_effect = effect
+	hero.mekansm_hit_effect = effect2
 end
 
 function GetFountainEffect(hero)

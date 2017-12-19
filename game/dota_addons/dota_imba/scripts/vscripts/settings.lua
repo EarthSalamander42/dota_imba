@@ -12,7 +12,10 @@ if IsInToolsMode() then HERO_SELECTION_TIME = 10.0 end
 
 PRE_GAME_TIME = 90.0 + HERO_SELECTION_TIME	-- How long after people select their heroes should the horn blow and the game start?
 POST_GAME_TIME = 60.0						-- How long should we let people look at the scoreboard before closing the server automatically?
-AUTO_LAUNCH_DELAY = 15.0					-- How long should we wait for the host to setup the game, after all players have loaded in?
+AUTO_LAUNCH_DELAY = 3.0					-- How long should we wait for the host to setup the game, after all players have loaded in?
+if GetMapName() == "imba_frantic_10v10" then
+	AUTO_LAUNCH_DELAY = 10.0
+end
 TREE_REGROW_TIME = 180.0					-- How long should it take individual trees to respawn after being cut down/destroyed?
 SHOWCASE_TIME = 0.0							-- How long should showcase time last?
 STRATEGY_TIME = 0.0							-- How long should strategy time last?
@@ -232,13 +235,13 @@ IMBA_ALL_RANDOM_HERO_SELECTION_TIME = 5.0									-- Time we need to wait before
 CUSTOM_GOLD_BONUS = {} -- 1 = Normal, 2 = Hyper
 CUSTOM_GOLD_BONUS["imba_standard"] = {40, 40}
 CUSTOM_GOLD_BONUS["imba_10v10"] = {40, 40}
-CUSTOM_GOLD_BONUS["imba_frantic_10v10"] = {200, 200}
+CUSTOM_GOLD_BONUS["imba_frantic_10v10"] = {150, 150}
 
 -- Global XP earning, values are doubled with Hyper for non-custom maps (right now this is not used anymore, but i'll keep it there just in case)
 CUSTOM_XP_BONUS = {} -- 1 = standard, 2 = 10v10, 3 = custom
 CUSTOM_XP_BONUS["imba_standard"] = {0, 0}
 CUSTOM_XP_BONUS["imba_10v10"] = {0, 0}
-CUSTOM_XP_BONUS["imba_frantic_10v10"] = {200, 200}
+CUSTOM_XP_BONUS["imba_frantic_10v10"] = {150, 150}
 
 -- Hero base level, values are doubled with Hyper for non-custom maps
 HERO_STARTING_LEVEL = {} -- 1 = standard, 2 = 10v10, 3 = custom

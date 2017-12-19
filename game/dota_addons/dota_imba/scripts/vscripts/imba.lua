@@ -89,17 +89,12 @@ function GameMode:OnFirstPlayerLoaded()
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Roshan and Picking Screen camera initialization
 	-------------------------------------------------------------------------------------------------
-	if GetMapName() == "imba_arena" then
-		GoodCamera = Entities:FindByName(nil, "radiant_capture_point")
-		BadCamera = Entities:FindByName(nil, "dire_capture_point")
-	else
-		GoodCamera = Entities:FindByName(nil, "dota_goodguys_fort")
-		BadCamera = Entities:FindByName(nil, "dota_badguys_fort")
+	GoodCamera = Entities:FindByName(nil, "dota_goodguys_fort")
+	BadCamera = Entities:FindByName(nil, "dota_badguys_fort")
 
-		ROSHAN_SPAWN_LOC = Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):GetAbsOrigin()
-		Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):RemoveSelf()
-		local roshan = CreateUnitByName("npc_imba_roshan", ROSHAN_SPAWN_LOC, true, nil, nil, DOTA_TEAM_NEUTRALS)
-	end
+	ROSHAN_SPAWN_LOC = Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):GetAbsOrigin()
+	Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):RemoveSelf()
+	local roshan = CreateUnitByName("npc_imba_roshan", ROSHAN_SPAWN_LOC, true, nil, nil, DOTA_TEAM_NEUTRALS)
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Pre-pick forced hero selection
@@ -441,11 +436,32 @@ function GameMode:ModifierFilter( keys )
 			modifier_caster:FindAbilityByName("courier_burst"):CastAbility()
 		end
 
+		-- disarm immune
+		local jarnbjorn_immunity = {
+			"modifier_item_imba_triumvirate_proc_debuff",
+			"modifier_item_imba_sange_azura_proc",
+			"modifier_item_imba_sange_yasha_disarm",
+			"modifier_item_imba_heavens_halberd_active_disarm",
+			"modifier_item_imba_sange_disarm",
+			"modifier_imba_angelic_alliance_debuff",
+			"modifier_imba_overpower_disarm",
+			"modifier_imba_silencer_last_word_debuff",
+			"modifier_imba_hurl_through_hell_disarm",
+			"modifier_imba_frost_armor_freeze",
+			"modifier_dismember_disarm",
+			"modifier_imba_decrepify",
+
+--			"modifier_imba_faceless_void_time_lock_stun",
+--			"modifier_bashed",
+		}
+
 		-- add particle or sound playing to notify
 		if modifier_owner:HasModifier("modifier_item_imba_jarnbjorn_static") then
-			if modifier_name == "modifier_item_imba_triumvirate_proc_debuff" or modifier_name == "modifier_item_imba_sange_azura_proc" or modifier_name == "modifier_item_imba_sange_yasha_disarm" or modifier_name == "modifier_item_imba_heavens_halberd_active_disarm" or modifier_name == "modifier_item_imba_sange_disarm" or modifier_name == "modifier_imba_angelic_alliance_debuff" or modifier_name == "modifier_imba_overpower_disarm" or modifier_name == "modifier_imba_silencer_last_word_debuff" or modifier_name == "modifier_imba_hurl_through_hell_disarm" or modifier_name == "modifier_imba_frost_armor_freeze" or modifier_name == "modifier_dismember_disarm" or modifier_name == "modifier_imba_decrepify" then
-				SendOverheadEventMessage(nil, OVERHEAD_ALERT_EVADE, modifier_owner, 0, nil)
-				return false
+			for _, modifier in pairs(jarnbjorn_immunity) do
+				if modifier_name == modifier then
+					SendOverheadEventMessage(nil, OVERHEAD_ALERT_EVADE, modifier_owner, 0, nil)
+					return false
+				end
 			end
 		end
 
@@ -473,10 +489,16 @@ function GameMode:ItemAddedFilter( keys )
 		item_name = item:GetName()
 	end
 
+	if string.find(item_name, "item_imba_rune_") then
+		local duration = item:GetSpecialValueFor("duration")
+		print(item_name, duration)
+		PickupRune(item, unit, duration)
+		return false
+	end
+
 	-------------------------------------------------------------------------------------------------
 	-- Aegis of the Immortal pickup logic
 	-------------------------------------------------------------------------------------------------
-
 	if item_name == "item_imba_aegis" then
 		-- If this is a player, do Aegis stuff
 		if unit:IsRealHero() and not unit:HasModifier("modifier_item_imba_aegis") then
@@ -1272,16 +1294,19 @@ end
 	is useful for starting any game logic timers/thinkers, beginning the first round, etc.									]]
 function GameMode:OnGameInProgress()
 
+	Timers:CreateTimer(0, function()
+		SpawnImbaRunes()
+		return RUNE_SPAWN_TIME
+	end)
+
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Passive gold adjustment
 	-------------------------------------------------------------------------------------------------
-	
 	GameRules:SetGoldTickTime( GOLD_TICK_TIME[GetMapName()] )
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Arena mode initialization
 	-------------------------------------------------------------------------------------------------
-
 	if GetMapName() == "imba_arena" then
 
 		-- Define the bonus gold positions

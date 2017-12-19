@@ -1189,3 +1189,202 @@ function IsStolenSpell(caster)
 
 	return false
 end
+
+-- Spawns runes on the map
+function SpawnImbaRunes()
+
+	-- Remove any existing runes, if any
+	RemoveRunes()
+
+	-- Locate the rune spots on the map
+	local bounty_rune_spawner_a = Entities:FindAllByName("bounty_rune_location_dire_bot")
+	local bounty_rune_spawner_b = Entities:FindAllByName("bounty_rune_location_dire_top")
+	local bounty_rune_spawner_c = Entities:FindAllByName("bounty_rune_location_radiant_bot")
+	local bounty_rune_spawner_d = Entities:FindAllByName("bounty_rune_location_radiant_top")
+	local powerup_rune_spawner_a = Entities:FindAllByName("powerup_rune_location_bot")
+	local powerup_rune_spawner_b = Entities:FindAllByName("powerup_rune_location_top")
+	local bounty_rune_locations = {
+		bounty_rune_spawner_a[1]:GetAbsOrigin(),
+		bounty_rune_spawner_b[1]:GetAbsOrigin(),
+		bounty_rune_spawner_c[1]:GetAbsOrigin(),
+		bounty_rune_spawner_d[1]:GetAbsOrigin()
+	}
+
+	local powerup_rune_locations = {
+		powerup_rune_spawner_a[1]:GetAbsOrigin(),
+		powerup_rune_spawner_b[1]:GetAbsOrigin()
+	}
+
+	local rune
+
+	-- Spawn bounty runes
+	local game_time = GameRules:GetDOTATime(false, false)
+	for _, bounty_loc in pairs(bounty_rune_locations) do
+		local bounty_rune = CreateItem("item_imba_rune_bounty", nil, nil)
+		rune = CreateItemOnPositionForLaunch(bounty_loc, bounty_rune)		
+		RegisterRune(rune)
+
+		-- If these are the 00:00 runes, double their worth
+		if game_time < 1 then
+			bounty_rune.is_initial_bounty_rune = true
+		end
+	end
+
+	-- List of powerup rune types
+	local powerup_rune_types = {
+		"item_imba_rune_arcane",
+		"item_imba_rune_double_damage",
+		"item_imba_rune_haste",
+		"item_imba_rune_regeneration",
+		"item_imba_rune_illusion",
+		"item_imba_rune_invisibility",
+		"item_imba_rune_frost"
+	}
+
+	-- Spawn a random powerup rune in a random powerup location
+	if game_time > 1 and game_time < 40 then		
+		rune = CreateItemOnPositionForLaunch(powerup_rune_locations[RandomInt(1, #powerup_rune_locations)], CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))		
+		RegisterRune(rune)
+
+	-- After 40 minutes, spawn powerup runes on both locations
+	elseif game_time >= 40 then
+		rune = CreateItemOnPositionForLaunch(powerup_rune_locations[1], CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))
+		RegisterRune(rune)
+		rune = CreateItemOnPositionForLaunch(powerup_rune_locations[2], CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))
+		RegisterRune(rune)
+	end
+end
+
+function RegisterRune(rune)
+
+	-- Initialize table
+	if not rune_spawn_table then
+		rune_spawn_table = {}
+	end
+
+	-- Register rune into table
+	table.insert(rune_spawn_table, rune)
+end
+
+function RemoveRunes()
+	if rune_spawn_table then
+
+		-- Remove existing runes
+		for _,rune in pairs(rune_spawn_table) do
+			if not rune:IsNull() then								
+				local item = rune:GetContainedItem()
+				UTIL_Remove(item)
+				UTIL_Remove(rune)
+			end
+		end
+
+		-- Clear the table
+		rune_spawn_table = {}
+	end
+end
+
+function PickupRune(item, unit, duration)
+local item_name = item:GetName()
+item_name = string.gsub(item_name, "item_imba_rune_", "")
+
+	if item_name == "bounty" then
+		-- Bounty rune parameters
+		local base_bounty = 150
+		local bounty_per_minute = 10
+		local game_time = GameRules:GetDOTATime(false, false)
+		local current_bounty = base_bounty + bounty_per_minute * game_time / 60
+
+		-- If this is the first bounty rune spawn, double the base bounty
+		if item.is_initial_bounty_rune then
+			current_bounty = current_bounty  * 2
+		end
+
+		-- Adjust value for lobby options
+		local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
+		current_bounty = current_bounty * (1 + custom_gold_bonus * 0.01)
+
+		-- Grant the unit experience
+		unit:AddExperience(current_bounty, DOTA_ModifyXP_CreepKill, false, true)
+
+		-- If this is alchemist, increase the gold amount
+		if unit:FindAbilityByName("imba_alchemist_goblins_greed") and unit:FindAbilityByName("imba_alchemist_goblins_greed"):GetLevel() > 0 then
+			current_bounty = current_bounty * unit:FindAbilityByName("imba_alchemist_goblins_greed"):GetSpecialValueFor("bounty_multiplier")
+
+			-- #7 Talent: Doubles gold from bounty runes
+			if unit:HasTalent("special_bonus_imba_alchemist_7") then
+				current_bounty = current_bounty * unit:FindTalentValue("special_bonus_imba_alchemist_7")
+			end		
+		end
+
+		-- #3 Talent: Bounty runes give gold bags
+		if unit:HasTalent("special_bonus_imba_alchemist_3") then
+			local stacks_to_gold =( unit:FindTalentValue("special_bonus_imba_alchemist_3") / 100 )  / 5
+			local gold_per_bag = unit:FindModifierByName("modifier_imba_goblins_greed_passive"):GetStackCount() * stacks_to_gold
+			for i=1, 5 do
+				-- Drop gold bags
+				local newItem = CreateItem( "item_bag_of_gold", nil, nil )
+				newItem:SetPurchaseTime( 0 )
+				newItem:SetCurrentCharges( gold_per_bag )
+				
+				local drop = CreateItemOnPositionSync( unit:GetAbsOrigin(), newItem )
+				local dropTarget = unit:GetAbsOrigin() + RandomVector( RandomFloat( 300, 450 ) )
+				newItem:LaunchLoot( true, 300, 0.75, dropTarget )
+				EmitSoundOn( "Dungeon.TreasureItemDrop", unit )
+			end
+		end
+
+--		"particles/generic_gameplay/rune_bounty_owner.vpcf"
+
+		unit:ModifyGold(current_bounty, false, DOTA_ModifyGold_Unspecified)
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_GOLD, unit, current_bounty, nil)
+		EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "General.Coins", unit)
+		EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Bounty", unit)
+	elseif item_name == "arcane" then
+		unit:AddNewModifier(unit, item, "modifier_imba_arcane_rune", {duration=duration})
+		EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Arcane", unit)
+	elseif item_name == "double_damage" then
+		unit:AddNewModifier(unit, item, "modifier_imba_double_damage_rune", {duration=duration})
+		EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.DD", unit)
+	elseif item_name == "haste" then
+		unit:AddNewModifier(unit, item, "modifier_imba_haste_rune", {duration=duration})
+		EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Haste", unit)
+	elseif item_name == "illusion" then
+		local images_count = 3
+		local vRandomSpawnPos = {
+			Vector( 72, 0, 0 ),		-- North
+			Vector( 0, 72, 0 ),		-- East
+			Vector( -72, 0, 0 ),	-- South
+			Vector( 0, -72, 0 ),	-- West
+		}
+
+		for i = #vRandomSpawnPos, 2, -1 do	-- Simply shuffle them
+			local j = RandomInt( 1, i )
+			vRandomSpawnPos[i], vRandomSpawnPos[j] = vRandomSpawnPos[j], vRandomSpawnPos[i]
+		end
+
+		table.insert( vRandomSpawnPos, RandomInt( 1, images_count+1 ), Vector( 0, 0, 0 ) )
+		FindClearSpaceForUnit(unit, unit:GetAbsOrigin() + table.remove( vRandomSpawnPos, 1 ), true)
+
+		for i = 1, images_count do
+			local origin = unit:GetAbsOrigin() + table.remove( vRandomSpawnPos, 1 )
+			local illusion = IllusionManager:CreateIllusion(unit, self, origin, unit, {damagein=incomingDamage, damageout=outcomingDamage, unique=unit:entindex().."_rune_illusion_"..i, duration=duration})
+		end
+		EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Illusion", unit)
+	elseif item_name == "invisibility" then
+		unit:AddNewModifier(unit, item, "modifier_rune_invis", {duration=duration})
+		EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Invis", unit)
+	elseif item_name == "regeneration" then
+		unit:AddNewModifier(unit, item, "modifier_imba_regen_rune", {duration=duration})
+		EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Regen", unit)
+	elseif item_name == "frost" then
+		unit:AddNewModifier(unit, item, "modifier_imba_frost_rune", {duration=duration})
+		EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.DD", unit)
+	end
+
+	local gameEvent = {}
+	gameEvent["player_id"] = unit:GetPlayerID()
+	gameEvent["team_number"] = unit:GetTeamNumber()
+	gameEvent["locstring_value"] = "#DOTA_Tooltip_Ability_" .. item:GetName()
+	gameEvent["message"] = "#IMBA_custom_rune_"..item_name
+	FireGameEvent("dota_combat_event_message", gameEvent)
+end

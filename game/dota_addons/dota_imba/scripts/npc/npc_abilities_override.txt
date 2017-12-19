@@ -145,8 +145,8 @@
 	"item_kaya"								"REMOVE"
 	"item_force_staff"						"REMOVE"
 	"item_hurricane_pike"					"REMOVE"
-	"item_travel_boots"						"REMOVE"
-	"item_travel_boots_2"					"REMOVE"
+//	"item_travel_boots"						"REMOVE"
+//	"item_travel_boots_2"					"REMOVE"
 
 	//Banned items
 	"item_imba_ironleaf_boots"				"REMOVE"
@@ -157,6 +157,8 @@
 	"item_imba_azura_yasha"					"REMOVE"
 	"item_imba_nether_wand"					"REMOVE"
 	"item_imba_elder_staff"					"REMOVE"
+	"item_imba_travel_boots"				"REMOVE"
+	"item_imba_travel_boots_2"				"REMOVE"
 
 	//=================================================================================================================
 	//-----------------------------------------------------------------------------------------------------------------
@@ -204,6 +206,40 @@
 	"item_ultimate_orb"			{ "AbilityTextureName" "custom/imba_ultimate_orb" }
 	"item_void_stone"			{ "AbilityTextureName" "custom/imba_void_stone" }
 
+	//=================================================================================================================
+	// Recipe: Travel Boots
+	//=================================================================================================================
+	"item_recipe_travel_boots"
+	{
+		"ItemCost"						"1950"	
+		"ItemShopTags"					""
+		
+		"ItemRequirements"
+		{
+			"01"						"item_boots;item_tpscroll"
+		}
+	}
+
+	//=================================================================================================================
+	// Travel Boots
+	//=================================================================================================================
+	"item_travel_boots"
+	{
+		"AbilityCooldown"				"40.0"
+		"AbilityChannelTime"			"3.0"
+		"AbilityManaCost"				"25"
+	}
+
+	//=================================================================================================================
+	// Travel Boots II
+	//=================================================================================================================
+	"item_travel_boots_2"
+	{
+		"AbilityCooldown"				"40.0"
+		"AbilityChannelTime"			"3.0"
+		"AbilityManaCost"				"25"
+		"ItemCost"						"4350"
+	}
 
 	//=================================================================================================================
 	// Tango
@@ -646,7 +682,7 @@
 	"item_tpscroll"
 	{
 		"AbilityTextureName"			"custom/imba_tpscroll"
-		"AbilityCooldown"				"45"
+		"AbilityCooldown"				"45.0"
 		"AbilityChannelTime"			"3.0"
 		"AbilityManaCost"				"50"
 
@@ -2063,13 +2099,9 @@
 	"ancient_apparition_ice_vortex"
 	{
 		"AbilityCastRange"				"3000"
-	
 		"AbilityCooldown"				"4.0"
-
 		"AbilityDuration"				"16 16 16 16 20 24 28"
-
 		"AbilityManaCost"				"80 75 70 65 60 55 50"
-
 		"MaxLevel"						"7"
 
 		"AbilitySpecial"
@@ -15337,7 +15369,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"1200"
+				"radius"				"900"
 			}
 		}
 	}

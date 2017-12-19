@@ -3,6 +3,8 @@
 		Date: 2017/12/12
 
 ]]
+
+--[[
 LinkLuaModifier("modifier_imba_teleporting", "items/item_tp", LUA_MODIFIER_MOTION_NONE)
 
 modifier_imba_teleporting = modifier_imba_teleporting or class({})
@@ -279,3 +281,4 @@ function item_imba_travel_boots_2:OnChannelFinish( bInterrupted )
 	UTIL_Remove(self.unit)
 	MinimapEvent(caster:GetTeamNumber(), caster, self.location.x, self.location.y, DOTA_MINIMAP_EVENT_TEAMMATE_TELEPORTING, -1)
 end
+--]]
