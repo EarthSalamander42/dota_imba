@@ -25,6 +25,12 @@ function item_imba_gungnir:OnSpellStart()
 		EmitSoundOn("DOTA_Item.ForceStaff.Activate", target)
 		target:AddNewModifier(caster, ability, "modifier_item_imba_gungnir_force_ally", {duration = ability:GetSpecialValueFor("duration")})
 	else
+
+		-- If the target possesses a ready Linken's Sphere, do nothing
+		if target:TriggerSpellAbsorb(ability) then
+			return nil
+		end
+
 		if caster:IsRangedAttacker() then
 			target:AddNewModifier(caster, ability, "modifier_item_imba_gungnir_force_enemy_ranged", {duration = ability:GetSpecialValueFor("duration")/2})
 			caster:AddNewModifier(target, ability, "modifier_item_imba_gungnir_force_self_ranged", {duration = ability:GetSpecialValueFor("duration")/2})
