@@ -45,6 +45,7 @@ game/dota_addons/dota_imba/server_log\.txt
 
 #Server Auth Key
 game/dota_addons/dota_imba/scripts/vscripts/server/auth.kv
+game/dota_addons/dota_imba/scripts/vscripts/battlepass*
 
 #Stat-Collection Shema Key
 game/dota_addons/dota_imba/scripts/vscripts/statcollection/settings.kv
