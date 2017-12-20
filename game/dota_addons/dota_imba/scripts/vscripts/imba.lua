@@ -489,7 +489,7 @@ function GameMode:ItemAddedFilter( keys )
 		item_name = item:GetName()
 	end
 
-	if string.find(item_name, "item_imba_rune_") then
+	if string.find(item_name, "item_imba_rune_") and unit:IsRealHero() then
 		PickupRune(item_name, unit)
 		return false
 	end
