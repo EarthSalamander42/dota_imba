@@ -58,22 +58,12 @@
 						m_HitBoxes = 
 						[
 							{
-								m_name = "Skeleton_Skeleton_model"
-								m_sSurfaceProperty = ""
-								m_nGroupId = 0
-								m_sBoneName = "Skeleton_Skeleton_model"
-								m_vMinBounds = [ 4915944075924916477483115433951232.0, 0.0, -0.0 ]
-								m_vMaxBounds = [ 4915944075924916477483115433951232.0, 0.0, -0.0 ]
-								m_bTranslationOnly = false
-								m_cRenderColor = [ 0, 0, 0, 0 ]
-							},
-							{
 								m_name = "Skeleton_Skeleton_model (2)"
-								m_sSurfaceProperty = ""
+								m_sSurfaceProperty = "ice"
 								m_nGroupId = 0
 								m_sBoneName = "Skeleton_Skeleton_model (2)"
-								m_vMinBounds = [ -23.284775, -24.018986, -30.409653 ]
-								m_vMaxBounds = [ 17.165443, 14.972325, 34.46199 ]
+								m_vMinBounds = [ -29.80451, -30.744301, -52.296993 ]
+								m_vMaxBounds = [ 26.909624, 27.87002, 51.313202 ]
 								m_bTranslationOnly = false
 								m_cRenderColor = [ 0, 0, 0, 0 ]
 							},
@@ -150,7 +140,13 @@
 					}
 					m_bHidden = false
 					m_bDisable = false
-					m_Activities = [  ]
+					m_Activities = 
+					[
+						{
+							m_Name = "ACT_DOTA_IDLE"
+							m_nWeight = 1
+						},
+					]
 					m_AnimationEvents = [  ]
 					m_MotionFrames = 
 					[

@@ -490,9 +490,7 @@ function GameMode:ItemAddedFilter( keys )
 	end
 
 	if string.find(item_name, "item_imba_rune_") then
-		local duration = item:GetSpecialValueFor("duration")
-		print(item_name, duration)
-		PickupRune(item, unit, duration)
+		PickupRune(item_name, unit)
 		return false
 	end
 
@@ -530,7 +528,6 @@ function GameMode:ItemAddedFilter( keys )
 	-------------------------------------------------------------------------------------------------
 	-- Rapier pickup logic
 	-------------------------------------------------------------------------------------------------
-
 	if item.IsRapier then
 		if item.rapier_pfx then
 			ParticleManager:DestroyParticle(item.rapier_pfx, false)

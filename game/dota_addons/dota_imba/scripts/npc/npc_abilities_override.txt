@@ -145,6 +145,7 @@
 	"item_kaya"								"REMOVE"
 	"item_force_staff"						"REMOVE"
 	"item_hurricane_pike"					"REMOVE"
+	"item_bottle"							"REMOVE"
 //	"item_travel_boots"						"REMOVE"
 //	"item_travel_boots_2"					"REMOVE"
 

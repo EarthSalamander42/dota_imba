@@ -290,12 +290,6 @@ local npc = EntIndexToHScript(keys.entindex)
 local normal_xp = npc:GetDeathXP()
 
 	if npc then
-		if GetMapName() == "imba_10v10" or GetMapName() == "imba_frantic_10v10" then
-			npc:SetDeathXP(normal_xp)
-		else
-			npc:SetDeathXP(normal_xp*1.5)
-		end
-
 --		npc:AddNewModifier(npc, nil, "modifier_river", {})
 
 		-- Valve Illusion bug to prevent respawning

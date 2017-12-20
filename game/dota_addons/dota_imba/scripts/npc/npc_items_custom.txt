@@ -12561,6 +12561,7 @@
 		"BaseClass"								"item_datadriven"
 		"Model"									"models/props_gameplay/rune_haste01.vmdl"
 		"Effect"								"particles/generic_gameplay/rune_haste.vpcf"
+		"RuneDuration"							"22"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -12570,15 +12571,6 @@
 		"ItemSellable"							"0"
 		"ItemKillable"							"1"
 		"ItemCastOnPickup"						"1"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"duration"						"22"
-			}
-		}
 	}
 
 	//=================================================================================================================
@@ -12592,6 +12584,7 @@
 		"BaseClass"								"item_datadriven"
 		"Model"									"models/props_gameplay/rune_doubledamage01.vmdl"
 		"Effect"								"particles/generic_gameplay/rune_doubledamage.vpcf"
+		"RuneDuration"							"45"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -12601,15 +12594,6 @@
 		"ItemSellable"							"0"
 		"ItemKillable"							"1"
 		"ItemCastOnPickup"						"1"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"duration"						"45"
-			}
-		}
 	}
 
 	//=================================================================================================================
@@ -12623,6 +12607,7 @@
 		"BaseClass"								"item_datadriven"
 		"Model"									"models/props_gameplay/rune_regeneration01.vmdl"
 		"Effect"								"particles/generic_gameplay/rune_regeneration.vpcf"
+		"RuneDuration"							"30"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -12632,15 +12617,6 @@
 		"ItemSellable"							"0"
 		"ItemKillable"							"1"
 		"ItemCastOnPickup"						"1"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"duration"						"30"
-			}
-		}
 	}
 
 	//=================================================================================================================
@@ -12654,6 +12630,7 @@
 		"BaseClass"								"item_datadriven"
 		"Model"									"models/props_gameplay/rune_arcane.vmdl"
 		"Effect"								"particles/generic_gameplay/rune_arcane.vpcf"
+		"RuneDuration"							"50"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -12663,15 +12640,6 @@
 		"ItemSellable"							"0"
 		"ItemKillable"							"1"
 		"ItemCastOnPickup"						"1"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"duration"						"50"
-			}
-		}
 	}
 
 	//=================================================================================================================
@@ -12685,6 +12653,7 @@
 		"BaseClass"								"item_datadriven"
 		"Model"									"models/props_gameplay/rune_invisibility01.vmdl"
 		"Effect"								"particles/generic_gameplay/rune_invisibility.vpcf"
+		"RuneDuration"							"45"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -12694,15 +12663,6 @@
 		"ItemSellable"							"0"
 		"ItemKillable"							"1"
 		"ItemCastOnPickup"						"1"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"duration"						"45"
-			}
-		}
 	}
 
 	//=================================================================================================================
@@ -12716,6 +12676,7 @@
 		"BaseClass"								"item_datadriven"
 		"Model"									"models/props_gameplay/rune_illusion01.vmdl"
 		"Effect"								"particles/generic_gameplay/rune_illusion.vpcf"
+		"RuneDuration"							"45"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -12725,15 +12686,6 @@
 		"ItemSellable"							"0"
 		"ItemKillable"							"1"
 		"ItemCastOnPickup"						"1"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"duration"						"45"
-			}
-		}
 	}
 
 	//=================================================================================================================
@@ -12747,6 +12699,7 @@
 		"BaseClass"								"item_datadriven"
 		"Model"									"models/props_gameplay/rune_frost.vmdl"
 		"Effect"								"particles/econ/items/puck/puck_snowflake/puck_snowflake_ambient.vpcf"
+		"RuneDuration"							"45"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -12756,15 +12709,56 @@
 		"ItemSellable"							"0"
 		"ItemKillable"							"1"
 		"ItemCastOnPickup"						"1"
+	}
+
+	//=================================================================================================================
+	// Bottle
+	//=================================================================================================================
+	"item_imba_bottle"
+	{
+		"BaseClass"						"item_lua"
+		"ID"							"2281"
+		"ScriptFile"					"items/item_bottle.lua"
+		"AbilityTextureName"			"custom/bottle_3"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"Model"							"models/props_gameplay/bottle_blue.vmdl"
+
+		"AbilityCooldown"				"0.5"
+		"AbilityCastRange"				"350"
+		"AbilityCastPoint"				"0.0"
+		"ItemCost"						"650"
+
+		"ItemQuality"					"consumable"
+		"ItemAliases"					"bottle"
+		"ItemStackable"					"0"
+		"ItemShareability"				"ITEM_PARTIALLY_SHAREABLE"
+		"ItemInitialCharges"			"3"
+		"ItemDisplayCharges"			"1"
+		"IsTempestDoubleClonable"		"0"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"duration"						"45"
+				"var_type"				"FIELD_INTEGER"
+				"health_restore"		"100"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_restore"			"60"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"restore_time"			"2.5"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_range"			"350"
 			}
 		}
 	}
-	//next free ID: 2281
+	//next free ID: 2282
 }

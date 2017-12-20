@@ -59,6 +59,7 @@ end
 -- Syncronous
 -- returns array of donators or nil
 function IsDonator(hero)
+	if hero:GetPlayerID() == -1 then return end
 	for i = 1, #api_preloaded.donators do
 		if tostring(PlayerResource:GetSteamID(hero:GetPlayerID())) == api_preloaded.donators[i].steamId64 then
 			return api_preloaded.donators[i].model

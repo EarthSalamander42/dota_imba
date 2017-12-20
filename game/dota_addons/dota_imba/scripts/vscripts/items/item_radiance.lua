@@ -30,7 +30,8 @@ end
 
 function item_imba_radiance:GetAbilityTextureName()
 	if self:GetCaster():HasModifier("modifier_imba_radiance_aura") then
-		return "custom/imba_radiance" end
+		return "custom/imba_radiance"
+	end
 	
 	return "custom/imba_radiance_inactive"
 end
