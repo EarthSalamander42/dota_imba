@@ -9,6 +9,7 @@ item_imba_bottle = class({})
 
 function item_imba_bottle:OnCreated()
 	self:SetCurrentCharges(3)
+	self.RuneStorage = nil
 end
 
 function item_imba_bottle:GetIntrinsicModifierName() return "modifier_item_imba_bottle_texture_controller" end
@@ -19,8 +20,8 @@ end
 
 function item_imba_bottle:OnSpellStart()
 	if self.RuneStorage then
-		PickupRune(self.RuneStorage, self:GetCaster(), nil, true)
-		if self.RuneStorage == "bounty" then
+		PickupRune(self.RuneStorage, self:GetCaster(), true)
+		if self.RuneStorage == "bounty" and self:GetCurrentCharges() < 2 then
 			self:SetCurrentCharges(2)
 		else
 			self:SetCurrentCharges(3)
@@ -37,7 +38,7 @@ function item_imba_bottle:OnSpellStart()
 end
 
 function item_imba_bottle:SetStorageRune(type)
-	if self.RuneStorage then return end
+	--if self.RuneStorage then return end
 	if self:GetCaster().GetPlayerID then
 		local gameEvent = {}
 		gameEvent["player_id"] = self:GetCaster():GetPlayerID()
@@ -50,9 +51,6 @@ function item_imba_bottle:SetStorageRune(type)
 	if self.RuneStorage == "bounty" then
 		if self:GetCurrentCharges() < 3 then
 			self:SetCurrentCharges(2)
-		else
-			PickupRune(self.RuneStorage, self:GetCaster())
-			return
 		end
 	else
 		self:SetCurrentCharges(3)
