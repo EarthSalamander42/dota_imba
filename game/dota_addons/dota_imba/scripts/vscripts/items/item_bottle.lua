@@ -69,6 +69,12 @@ end
 
 modifier_item_imba_bottle_texture_controller = modifier_item_imba_bottle_texture_controller or class({})
 
+function modifier_item_imba_bottle_texture_controller:IsHidden() return true end
+function modifier_item_imba_bottle_texture_controller:IsPurgable() return false end
+function modifier_item_imba_bottle_texture_controller:IsDebuff() return false end
+function modifier_item_imba_bottle_texture_controller:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+
 function modifier_item_imba_bottle_texture_controller:OnCreated()
 	self:OnIntervalThink()
 	self:StartIntervalThink(FrameTime())

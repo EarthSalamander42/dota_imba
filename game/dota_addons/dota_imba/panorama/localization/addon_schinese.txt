@@ -28,7 +28,7 @@
 	"scoreboard_tool_tip_disable_help"				"禁用帮助"
 	"scoreboard_tool_tip_active_disable_help"		"（已生效）"
 
-	"lag_issues"									"游戏卡顿？请点击这里（需要翻墙）"
+	"lag_issues"									"访问IMBA官网"
 
 	//Picking Screen
 	"loading_pre_game"				"正在读取数据，请稍候..."
