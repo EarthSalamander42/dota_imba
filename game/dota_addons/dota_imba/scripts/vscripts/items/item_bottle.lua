@@ -19,7 +19,7 @@ end
 
 function item_imba_bottle:OnSpellStart()
 	if self.RuneStorage then
-		PickupRune(self.RuneStorage, self:GetCaster())
+		PickupRune(self.RuneStorage, self:GetCaster(), nil, true)
 		if self.RuneStorage == "bounty" then
 			self:SetCurrentCharges(2)
 		else

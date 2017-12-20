@@ -1224,19 +1224,21 @@ function RemoveRunes()
 	end
 end
 
-function PickupRune(rune_name, unit, duration)
+function PickupRune(rune_name, unit, duration, bActiveByBottle)
 	if string.find(rune_name, "item_imba_rune_") then
 		rune_name = string.gsub(rune_name, "item_imba_rune_", "")
 	end
 
+	local bottle = bActiveByBottle or false
 	local duration = GetItemKV("item_imba_rune_"..rune_name, "RuneDuration")
 	print("Rune duration:", duration)
 
 	for i = 0, 5 do
 		local item = unit:GetItemInSlot(i)
-		if item then
+		if item and not bottle then
 			if item:GetAbilityName() == "item_imba_bottle" and not item.RuneStorage then
 				item:SetStorageRune(rune_name)
+				break
 				return
 			end
 		end
