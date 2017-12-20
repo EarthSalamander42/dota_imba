@@ -107,7 +107,12 @@
 
 .ScoreCol_Gold
 {
-	width: 90px;
+	width: 70px;
+}
+
+.ScoreCol_IMR
+{
+	width: 70px;
 }
 
 .ScoreCol_Kills,
@@ -416,6 +421,16 @@
 	font-weight: bold;
 	color: #ffcc33;
 	visibility: collapse;
+}
+
+#TeammateIMRAmount
+{
+	margin-bottom: -2px;
+	vertical-align: middle;
+	horizontal-align: center;
+	font-size: 18px;
+	font-weight: bold;
+	color: green;
 }
 
 .is_local_player .ScoreCol_Buttons Button

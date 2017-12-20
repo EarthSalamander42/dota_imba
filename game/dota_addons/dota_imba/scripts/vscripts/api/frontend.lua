@@ -39,7 +39,7 @@ function imba_api_preload(complete_fun)
 	   api_preloaded.donators = donors
 	   complete_fun()
 	end)
-	
+
 	imba_api():meta_developers(function (devs)
 		api_preloaded.developers = devs
 		complete_fun()
@@ -78,7 +78,7 @@ end
 --	function get_topxpplayers()
 --		return api_preloaded.topxpplayers
 --	end
---	
+
 --	function get_topimrplayers()
 --		return api_preloaded.topimrplayers
 --	end

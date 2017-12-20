@@ -28,6 +28,9 @@
 			</Panel>
 			<Panel id="PanelImbaXP" class="ScoreCol_ImbaXP ScoreboardPanel">
 			</Panel>
+			<Panel class="ScoreCol_IMR ScoreboardPanel">
+				<Label id="TeammateIMRAmount" text="999" />
+			</Panel>
 			<Panel class="ScoreCol_Gold ScoreboardPanel">
 				<Label id="TeammateGoldAmount" text="999" />
 			</Panel>

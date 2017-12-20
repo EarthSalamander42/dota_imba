@@ -141,7 +141,9 @@ local max_xp = {}
 			MaxXP = max_xp[ID],
 			Lvl = level[ID], -- add +1 only on the HUD else you are level 0 at the first level
 			title = GetTitleIXP(level[ID]),
-			title_color = GetTitleColorIXP(GetTitleIXP(level[ID]), true)
+			title_color = GetTitleColorIXP(GetTitleIXP(level[ID]), true),
+			IMR_5v5 = get_stats_for_player(ID).imr_5v5,
+			IMR_10v10 = get_stats_for_player(ID).imr_10v10,
 		})
 	end
 end

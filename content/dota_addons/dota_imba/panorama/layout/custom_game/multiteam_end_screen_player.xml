@@ -25,6 +25,9 @@
 				<Label id="Assists" text="999" />
 			</Panel>
 			<Panel id="PanelImbaXP" class="ScoreCol_ImbaXP ScoreboardPanel" />
+			<Panel id="IMRContainer" class="ScoreCol_IMR ScoreboardPanel">
+				<Label id="PlayerIMRAmount" text="999" />
+			</Panel>
 			<Panel id="PlayerItemsContainer" class="ScoreCol_Items ScoreboardPanel" />
 			<Panel id="GoldContainer" class="ScoreCol_Gold ScoreboardPanel">
 				<Label id="PlayerGoldAmount" text="999" />

@@ -41120,7 +41120,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage"				"30 50 70 90 110 130"
-				"LinkedSpecialBonus"	"special_bonus_unique_doom_5"				
+				"LinkedSpecialBonus"	"special_bonus_unique_doom_5"
 			}
 //			"03"
 //			{
@@ -41140,12 +41140,12 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"550"
+				"aura_radius"			"450"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"armor_bonus"			"666"
+				"armor_bonus"			"100"
 			}
 		}
 	}

@@ -2257,7 +2257,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"					"npc_dota_hero"
+		"BaseClass"					"npc_dota_hero_weaver"
 		"HeroID"					"117"
 		"Model"						"models/heroes/slyli/model_weaver.vmdl"
 		"ModelScale"				"0.980000"

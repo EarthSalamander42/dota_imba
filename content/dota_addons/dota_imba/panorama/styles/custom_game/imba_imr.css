@@ -458,19 +458,19 @@
 }
 
 .BattlepassRewardIcon {
-	width: 75px;
-	height: 55px;
-	margin-right: 3px;
+	width: 74px;
+	height: 60px;
+	margin-left: 2px;
+	margin-right: 2px;
 	vertical-align: center;
 	background-position: 0px 0px;
-	background-size: cover;
 	wash-color: darkgrey;
-	saturation: 0.75;
+	saturation: 0.8;
 }
 
 .BattlepassRewardLabel {
 	horizontal-align: left;
-	font-size: 12px;
+	font-size: 11px;
 	color: #999999;
 	vertical-align: top;
 	letter-spacing: 1px;

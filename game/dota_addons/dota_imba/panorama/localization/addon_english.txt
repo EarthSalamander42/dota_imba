@@ -27,6 +27,7 @@
 	"scoreboard_tool_tip_active_share_unit_hero"	"(SHARED)"
 	"scoreboard_tool_tip_disable_help"				"Disable Help"
 	"scoreboard_tool_tip_active_disable_help"		"(DISABLED)"
+	"custom_end_screen_legend_imr"					"IMR"
 
 	"lag_issues"									"Dota 2 IMBA website"
 
@@ -39,7 +40,7 @@
 	"hero_name_filler"				"Lock In"
 	"team_title_radiant"			"The Radiant"
 	"team_title_dire"				"The Dire"
-	"average_mmr"					"Average Imba Level: "
+	"average_mmr"					"Average IMR: "
 	"swap_vanilla_to_custom"		"Swap to Vanilla Heroes"
 	"swap_custom_to_vanilla"		"Swap to Custom Heroes"
 	"stats_swap"					"Toggle Stats Panel"
@@ -55,6 +56,7 @@
 	"picked_hero"					"Picked"
 	"imba_hero"						"Imba"
 	"vanilla_hero"					"Lazy"
+
 
 	//Leaderboard
 	"leaderboard"					"Leaderboard"
