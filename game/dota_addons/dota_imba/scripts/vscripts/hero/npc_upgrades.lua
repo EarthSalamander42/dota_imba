@@ -15,48 +15,46 @@ function modifier_imba_creep_power:OnCreated()
 	self.parent = self:GetParent()
 	self.ability = self:GetAbility()
 
-	if IsServer() then
-		-- Ability specials
+	-- Ability specials
+	if string.find(self.parent:GetUnitName(), "mega") then
+		self.bonus_damage_per_minute = 18
+		self.bonus_health_per_minute = 210
+	elseif string.find(self.parent:GetUnitName(), "upgraded") then
+		self.bonus_damage_per_minute = 14
+		self.bonus_health_per_minute = 105
+	else
+		self.bonus_damage_per_minute = 2
+		self.bonus_health_per_minute = 20
+	end
+
+	if self.parent:GetAttackCapability() == DOTA_UNIT_CAP_RANGED_ATTACK then
 		if string.find(self.parent:GetUnitName(), "mega") then
-			self.bonus_damage_per_minute = 18
-			self.bonus_health_per_minute = 210
+			self.bonus_damage_per_minute = 28
+			self.bonus_health_per_minute = 165
 		elseif string.find(self.parent:GetUnitName(), "upgraded") then
 			self.bonus_damage_per_minute = 14
-			self.bonus_health_per_minute = 105
+			self.bonus_health_per_minute = 76
 		else
-			self.bonus_damage_per_minute = 2
-			self.bonus_health_per_minute = 20
+			self.bonus_damage_per_minute = 4
+			self.bonus_health_per_minute = 12
 		end
-
-		if self.parent:GetAttackCapability() == DOTA_UNIT_CAP_RANGED_ATTACK then
-			if string.find(self.parent:GetUnitName(), "mega") then
-				self.bonus_damage_per_minute = 28
-				self.bonus_health_per_minute = 165
-			elseif string.find(self.parent:GetUnitName(), "upgraded") then
-				self.bonus_damage_per_minute = 14
-				self.bonus_health_per_minute = 76
-			else
-				self.bonus_damage_per_minute = 4
-				self.bonus_health_per_minute = 12
-			end
-		end
-	
-		Timers:CreateTimer(1, function()
-			local gametime = GameRules:GetGameTime()
-			if gametime > 0 then
-				local stacks = math.floor(gametime / 60)
-				if stacks then
-					-- Set stacks
-					self:SetStackCount(stacks)
-
-					-- Set health of the creep according to stacks
-					local bonus_health = self.bonus_health_per_minute * stacks
-					local adjusted_hp = self.parent:GetMaxHealth() + bonus_health
-					SetCreatureHealth(self.parent, adjusted_hp, true)            
-				end
-			end
-		end)
 	end
+	
+	Timers:CreateTimer(1, function()
+		local gametime = GameRules:GetGameTime()
+		if gametime > 0 then
+			local stacks = math.floor(gametime / 60)
+			if stacks then
+				-- Set stacks
+				self:SetStackCount(stacks)
+
+				-- Set health of the creep according to stacks
+				local bonus_health = self.bonus_health_per_minute * stacks
+				local adjusted_hp = self.parent:GetMaxHealth() + bonus_health
+				SetCreatureHealth(self.parent, adjusted_hp, true)            
+			end
+		end
+	end)
 end
 
 function modifier_imba_creep_power:DeclareFunctions()

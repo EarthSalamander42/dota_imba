@@ -100,7 +100,7 @@ function modifier_item_imba_bottle_texture_controller:OnIntervalThink()
 		end
 		local stack = bottle:GetCurrentCharges() + 1
 		for i=5,12 do
-			if bottle.RuneStorage ==  rune_table[i] then
+			if bottle.RuneStorage == rune_table[i] then
 				stack = i
 				break
 			end

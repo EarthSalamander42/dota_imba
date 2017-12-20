@@ -11,12 +11,26 @@ function ToggleBattlepass() {
 		if (first_time == false) {
 			first_time = true
 //			DiretidePlayersXP()
+			Battlepass()
 			HallOfFame()
 		}
 	}
 	else {
 		$("#BattlepassWindow").style.visibility = "collapse";
 		toggle = false
+	}
+}
+
+var toggle = false
+function ToggleGameOptions() {
+	var bool = ""
+
+	if (toggle == false) {
+		toggle = true
+		$("#ImbaGameInfo").style.visibility = "visible"
+	} else {
+		toggle = false
+		$("#ImbaGameInfo").style.visibility = "collapse"
 	}
 }
 
@@ -27,15 +41,60 @@ function SwitchTab(tab) {
 	$("#"+tab).style.visibility = "visible";
 }
 
+function Battlepass()
+{
+	var BattlepassRewards = CustomNetTables.GetTableValue("game_options", "battlepass").battlepass;
+	if (BattlepassRewards === undefined) {
+		$.Msg("Battlepass undefined..")
+		$.Schedule(1, Battlepass)
+		return;
+	} else {
+		var i = 0;
+		var i_count = 1;
+		var class_option_count = 1;
+		var i_single = false
+
+		for (i in BattlepassRewards) {
+			if (i_single == false) {
+				i_single = true
+				var reward_row = $.CreatePanel("Panel", $('#BattlepassInfoContainer'), "BattlepassRow" + class_option_count);
+				reward_row.AddClass("BattlepassRow")
+			}
+
+			// Battlepass reward level
+//			$.Msg(BattlepassRewards[i])
+
+			var reward = $.CreatePanel("Panel", $("#BattlepassRow" + class_option_count), i);
+			reward.AddClass("BattlepassRewardIcon")
+			reward.style.backgroundImage = 'url("file://{images}/custom_game/battlepass/'+ i +'.png")';
+			var reward_label = $.CreatePanel("Label", reward, i + "_label");
+			reward_label.AddClass("BattlepassRewardLabel")
+			$.Msg("#battlepass_"+i)
+			reward_label.text = $.Localize("battlepass_" + i) + " \n" + $.Localize("battlepass_reward_locked");
+
+			i_count = i_count +1
+
+			if (i_count > 10) {
+				class_option_count = class_option_count +1
+				var reward_row = $.CreatePanel("Panel", $('#BattlepassInfoContainer'), "BattlepassRow" + class_option_count);
+				reward_row.AddClass("BattlepassRow")
+				i_count = 1
+			}
+		}
+	}
+}
+
 var dot = "."
 function HallOfFame()
 {
 	var LeaderboardTable = CustomNetTables.GetTableValue("game_options", "leaderboard");
 
 	if (LeaderboardTable === undefined) {
+		$.Msg("Leaderbord undefined..")
 		$.Schedule(1, HallOfFame)
 		return;
 	} else if (LeaderboardTable.SteamID64[10] === undefined) {
+		$.Msg("Leaderboard not fully loaded yet...")
 		$.Schedule(1, HallOfFame)
 		return;
 	} else {
@@ -158,5 +217,27 @@ function DiretidePlayersXP()
 
 (function()
 {
+	// Update the game options display
+	var bounty_multiplier = CustomNetTables.GetTableValue("game_options", "bounty_multiplier");
+	var exp_multiplier = CustomNetTables.GetTableValue("game_options", "exp_multiplier");
+	var tower_power = CustomNetTables.GetTableValue("game_options", "tower_power");
+	var initial_gold = CustomNetTables.GetTableValue("game_options", "initial_gold");
+	var initial_level = CustomNetTables.GetTableValue("game_options", "initial_level");
+	var max_level = CustomNetTables.GetTableValue("game_options", "max_level");
+	var frantic_mode = CustomNetTables.GetTableValue("game_options", "frantic_mode");
+	var frantic = "Disabled";
+
+	if (frantic_mode[1] == 1) {
+		frantic = "Enabled"
+	}
+
+	$("#BountyMultiplierValue").text = bounty_multiplier[1] + "%";
+	$("#ExpMultiplierValue").text = exp_multiplier[1] + "%";
+	$("#InitialGoldValue").text = initial_gold[1];
+	$("#InitialLevelValue").text = initial_level[1];
+	$("#MaxLevelValue").text = max_level[1];
+	$("#FranticModeValue").text = frantic;
+
+	$("#TowerPowerValue").text = $.Localize( '#imba_gamemode_settings_power_' + tower_power[1] );
 	GameEvents.Subscribe("hall_of_fame", HallOfFame);
 })();

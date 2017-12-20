@@ -156,8 +156,6 @@
 	"item_imba_triumvirate"					"REMOVE"
 	"item_imba_sange_azura"					"REMOVE"
 	"item_imba_azura_yasha"					"REMOVE"
-	"item_imba_nether_wand"					"REMOVE"
-	"item_imba_elder_staff"					"REMOVE"
 	"item_imba_travel_boots"				"REMOVE"
 	"item_imba_travel_boots_2"				"REMOVE"
 

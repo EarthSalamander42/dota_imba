@@ -7,8 +7,7 @@
 
 #BattlepassButtonContainer
 {
-	margin-top: 5%;
-	margin-right: 150px;
+	margin-top: 4%;
 	align: center top;
 	flow-children: up;
 }
@@ -20,7 +19,7 @@
 	margin-top: 0%;
 	padding: 4px 4px 4px 4px;
 	border-radius: 4px;
-	background-color: blue;
+	background-color: #000090ba;
 	saturation: 0.7;
 }
 
@@ -52,7 +51,7 @@
 #BattlepassWindow
 {
 	width: 800px;
-	height: 600px;
+	height: 625px;
 	background-color: #000000da;
 	align: center center;
 	flow-children: down;
@@ -68,7 +67,7 @@
 
 #BattlepassInfoContainer {
 	width: 100%;
-	height: fit-children;
+	height: 58%;
 	flow-children: down;
 	padding: 1% 1% 1% 1%;
 }
@@ -194,18 +193,25 @@
 	width: 100%;
 	height: 40px;
 	align: center bottom;
-	background-color: darkred;
+	background-color: #500000ba;
 	saturation: 0.9;
 }
 
-#BattlepassTabButton,
-#LeaderboardButton {
+#CloseButton {
+	background-color: #000090ba;
+}
+
+#BattlepassTabButton {
 	width: 50%;
-	background-color: blue;
+	background-color: #000090ba;
+}
+
+#LeaderboardTabButton {
+	width: 50%;
 }
 
 #BattlepassTabButton:hover,
-#LeaderboardButton:hover,
+#LeaderboardTabButton:hover,
 #CloseButton:hover
 {
 	border: 1px solid white;
@@ -213,14 +219,15 @@
 }
 
 #BattlepassTabButton:active,
-#LeaderboardButton:active,
+#LeaderboardTabButton:active,
 #CloseButton:active
 {
 	saturation: 1.0;
 }
 
+#LeaderboardTabButton Label,
 #BattlepassTabButton Label,
-#LeaderboardButton Label,
+#LeaderboardTabButton Label,
 #CloseButton Label
 {
 	align: center center;
@@ -231,7 +238,7 @@
 }
 
 #BattlepassTabButton:hover Label,
-#LeaderboardButton:hover Label,
+#LeaderboardTabButton:hover Label,
 #CloseButton:hover Label
 {
 	color: white;
@@ -382,4 +389,94 @@
 	text-align: center;
 	text-shadow: 1px 1px 2px 3.0 #000000;
 	font-size: 16px;
+}
+
+/* Game Info */
+.GameModeValues
+{
+	width: 100%;
+	margin-bottom: 5%;
+	flow-children: right;
+}
+
+.GameModeLabelPanel
+{
+	width: 26%;
+	margin-left: 3%;
+	margin-right: 3%;
+	flow-children: down;
+}
+
+.GameModeValuePanel
+{
+	width: 15%;
+	margin-left: 2%;
+	flow-children: down;
+	font-size: 13px;
+}
+
+.Separator {
+	width: 1%;
+	height: 100%;
+	background-color: grey;
+}
+
+.ImbaGameInfoLabel
+{
+	margin-top: 3px;
+	horizontal-align: left;
+	font-size: 14px;
+	color: #999999;
+	vertical-align: top;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	text-align: center center;
+	text-shadow: 0px 0px 4px 4 #000000;
+	color: #A3B5D0cc;
+}
+
+#ComingSoon {
+	width: 100%;
+	height: 20px;
+	background-color: #505050ba;
+
+	align: center center;
+	color: white;
+	text-transform: uppercase;
+	text-align: center center;
+	font-size: 18px;
+}
+
+.BattlepassRow {
+	width: 100%;
+	height: 70px;
+	margin-top: 10px;
+	background-color: #000000ba;
+	horizontal-align: left;
+	flow-children: right;
+/*	overflow: noclip scroll; */
+}
+
+.BattlepassRewardIcon {
+	width: 75px;
+	height: 55px;
+	margin-right: 3px;
+	vertical-align: center;
+	background-position: 0px 0px;
+	background-size: cover;
+	wash-color: darkgrey;
+	saturation: 0.75;
+}
+
+.BattlepassRewardLabel {
+	horizontal-align: left;
+	font-size: 12px;
+	color: #999999;
+	vertical-align: top;
+	letter-spacing: 1px;
+	align: center center;
+	text-transform: uppercase;
+	text-align: center center;
+	text-shadow: 0px 0px 4px 4 #000000;
+	color: #A3B5D0cc;
 }

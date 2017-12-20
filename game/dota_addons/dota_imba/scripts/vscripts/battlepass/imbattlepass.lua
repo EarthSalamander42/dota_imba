@@ -42,6 +42,8 @@ IMBATTLEPASS_LEVEL_REWARD["fountain14"]		= 121
 IMBATTLEPASS_LEVEL_REWARD["fountain15"]		= 130
 IMBATTLEPASS_LEVEL_REWARD["shiva2"]			= 200
 
+CustomNetTables:SetTableValue("game_options", "battlepass", {battlepass = IMBATTLEPASS_LEVEL_REWARD})
+
 --[[ Not Added yet: 
 	Custom Icons if has special item effects
 	Rank Double Down,
@@ -135,13 +137,14 @@ function GetForceStaffEffect(hero) -- still not working yet
 	local effect = "particles/items_fx/force_staff.vpcf"
 
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["force_staff4"] then
-		effect = "particles/econ/events/fall_major_2016/force_staff_fm06.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["force_staff3"] then
-		effect = "particles/econ/events/ti7/force_staff_ti7.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["force_staff2"] then
-		effect = "particles/econ/events/winter_major_2017/force_staff_wm07.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["force_staff"] then
+		
 		effect = "particles/econ/events/ti6/force_staff_ti6.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["force_staff3"] then
+		effect = "particles/econ/events/winter_major_2017/force_staff_wm07.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["force_staff2"] then
+		effect = "particles/econ/events/ti7/force_staff_ti7.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["force_staff"] then
+		effect = "particles/econ/events/fall_major_2016/force_staff_fm06.vpcf"
 	end
 
 	hero.force_staff_effect = effect
@@ -219,23 +222,23 @@ function GetFountainEffect(hero)
 local effect = ""
 
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain15"] then
-		effect = "particles/econ/events/winter_major_2017/radiant_fountain_regen_wm07_lvl3.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain14"] then
-		effect = "particles/econ/events/winter_major_2017/radiant_fountain_regen_wm07_lvl2.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain13"] then
-		effect = "particles/econ/events/winter_major_2017/radiant_fountain_regen_wm07_lvl1.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain12"] then
-		effect = "particles/econ/events/ti6/radiant_fountain_regen_ti6_lvl3.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain11"] then
-		effect = "particles/econ/events/ti6/radiant_fountain_regen_ti6_lvl2.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain10"] then
-		effect = "particles/econ/events/ti6/radiant_fountain_regen_ti6.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain9"] then
-		effect = "particles/econ/events/ti5/radiant_fountain_regen_lvl2_ti5.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain8"] then
-		effect = "particles/econ/events/ti5/radiant_fountain_regen_ti5.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain7"] then
 		effect = "particles/econ/events/ti4/radiant_fountain_regen_ti4.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain14"] then
+		effect = "particles/econ/events/winter_major_2017/radiant_fountain_regen_wm07_lvl3.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain13"] then
+		effect = "particles/econ/events/winter_major_2017/radiant_fountain_regen_wm07_lvl2.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain12"] then
+		effect = "particles/econ/events/winter_major_2017/radiant_fountain_regen_wm07_lvl1.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain11"] then
+		effect = "particles/econ/events/ti5/radiant_fountain_regen_lvl2_ti5.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain10"] then
+		effect = "particles/econ/events/ti5/radiant_fountain_regen_ti5.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain9"] then
+		effect = "particles/econ/events/ti6/radiant_fountain_regen_ti6_lvl3.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain8"] then
+		effect = "particles/econ/events/ti6/radiant_fountain_regen_ti6_lvl2.vpcf"
+	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain7"] then
+		effect = "particles/econ/events/ti6/radiant_fountain_regen_ti6.vpcf"
 	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain6"] then
 		effect = "particles/econ/events/ti7/fountain_regen_ti7_lvl3.vpcf"
 	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain5"] then

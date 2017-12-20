@@ -102,28 +102,6 @@
 		var LevelLabel = TalentGuide.FindChildTraverse("center_block").FindChildTraverse("xp").FindChildTraverse("LevelLabel")
 		LevelLabel.style.width = "50px";
 
-		//Shop (Fixing last item in advanced tab not being fully visible)
-//		var Shop = hudElements.FindChildTraverse("shop")
-//		Shop.style.width = "320px";
-//		Shop.style.height = "100%";
-//		Shop.style.marginBottom = "18%";
-//		Shop.style.marginTop = "4%";
-
-//		var MainShop = hudElements.FindChildTraverse("shop").FindChildTraverse("Main")
-//		MainShop.style.height = "100%";
-
-//		var HeightLimiter = MainShop.FindChildTraverse("HeightLimiter")
-//		HeightLimiter.style.height = "100%";
-
-//		var GridMainShop = MainShop.FindChildTraverse("GridMainShop")
-//		GridMainShop.style.marginTop = "52px";
-
-//		var GridMainShopContents = MainShop.FindChildTraverse("GridMainShopContents")
-//		GridMainShopContents.style.marginTop = "30px";
-
-//		var Stash = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("shop_launcher_block").FindChildTraverse("stash")
-//		Stash.style.height = "150px";
-
 		//Tooltips Background change, need to be setup after pre-game state
 //		var Tooltips = Parent.FindChildTraverse("Tooltips");
 //		var TooltipsAB = Tooltips.FindChildTraverse("DOTAAbilityTooltip");
@@ -137,6 +115,9 @@
 		var topbarRadiantContainer = topbarRadiant.FindChildTraverse("TopBarRadiantPlayersContainer");
 		var topbarDire = topbar.FindChildTraverse("TopBarDireTeam");
 		var topbarDireContainer = topbarDire.FindChildTraverse("TopBarDirePlayersContainer");
+		var TimeUntil = hudElements.FindChildTraverse("topbar").FindChildTraverse("TimeUntil");
+
+		TimeUntil.style.marginBottom = "0px";
 
 //		if (map_info.map_display_name == "imba_standard" || map_info.map_display_name == "imba_custom" || map_info.map_display_name == "imba_diretide") {
 //		} else {
@@ -201,6 +182,5 @@
 		<CustomUIElement type="EndScreen" layoutfile="file://{resources}/layout/custom_game/multiteam_end_screen.xml" />
 		<CustomUIElement type="FlyoutScoreboard" layoutfile="file://{resources}/layout/custom_game/multiteam_flyout_scoreboard.xml" />
 		<CustomUIElement type="HudTopBar" layoutfile="file://{resources}/layout/custom_game/multiteam_top_scoreboard.xml" />
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/imba_game_info.xml" />
 	</Panel>
 </root>

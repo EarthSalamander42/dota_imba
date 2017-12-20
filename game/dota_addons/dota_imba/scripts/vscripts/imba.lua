@@ -377,12 +377,16 @@ function GameMode:ModifierFilter( keys )
 				end
 
 				if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
-					
 					if IsVanillaSilence(modifier_name) or IsImbaSilence(modifier_name) then						
-					
 						-- if reduction is 1 (or more), the modifier is completely ignored
 						if silence_reduction_pct >= 1 then
 							SendOverheadEventMessage(nil, OVERHEAD_ALERT_LAST_HIT_MISS, modifier_owner, 0, nil)
+							return false
+						else
+							keys.duration = keys.duration * (1 - silence_reduction_pct)
+						end
+					elseif IsSilentSilence(modifier_name) then
+						if silence_reduction_pct >= 1 then
 							return false
 						else
 							keys.duration = keys.duration * (1 - silence_reduction_pct)

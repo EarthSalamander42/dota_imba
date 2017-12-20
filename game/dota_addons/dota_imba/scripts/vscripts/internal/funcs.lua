@@ -1614,6 +1614,19 @@ function IsImbaSilence(modifier_name)
 		 ["modifier_item_imba_azura_yasha_silence"] = true,
 		 ["modifier_item_imba_triumvirate_proc_debuff"] = true}
 
+
+	if silence_modifiers[modifier_name] then
+		return true
+	end
+
+	return false
+end
+
+function IsSilentSilence(modifier_name)
+	local silence_modifiers = 		
+		{["modifier_imba_ancient_seal_secondary"] = true}
+
+
 	if silence_modifiers[modifier_name] then
 		return true
 	end

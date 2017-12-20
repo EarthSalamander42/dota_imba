@@ -1004,7 +1004,7 @@ local color = hero:GetFittingColor()
 
 	if model == "cookies" then
 --		model = "models/courier/baby_rosh/babyroshan.vmdl"
-		model = "models/heroes/pikachu/pikachu_3.vmdl"
+		model = "models/heroes/mario/mario_model.vmdl"
 		companion:SetOriginalModel(model)
 		companion:SetModel(model)
 --		companion:SetMaterialGroup(tostring(RandomInt(1, 4)))
@@ -1232,7 +1232,6 @@ function PickupRune(rune_name, unit, bActiveByBottle)
 	local bottle = bActiveByBottle or false
 	local store_in_bottle = false
 	local duration = GetItemKV("item_imba_rune_"..rune_name, "RuneDuration")
-	print("Rune duration:", duration)
 
 	for i = 0, 5 do
 		local item = unit:GetItemInSlot(i)
