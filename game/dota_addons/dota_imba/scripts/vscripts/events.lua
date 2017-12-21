@@ -212,9 +212,7 @@ function GameMode:OnGameRulesStateChange(keys)
 	-- IMBA: Game started (horn sounded)
 	-------------------------------------------------------------------------------------------------
 	if new_state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-		
 		ApiPrint("Entering Game in progress / horn")
-
 		CountGameIXP()
 
 		for _, hero in pairs(HeroList:GetAllHeroes()) do
@@ -232,21 +230,23 @@ function GameMode:OnGameRulesStateChange(keys)
 			return 60
 		end)
 
-		if RandomInt(1, 100) > 25 then
-			Timers:CreateTimer(RandomInt(5, 10) * 60, function()
-				if CHEAT_ENABLED == false then
-					local pos = {}
-					pos[1] = Vector(6446, -6979, 1496)
-					pos[2] = Vector(RandomInt(-6000, 0), RandomInt(7150, 7300), 1423)
-					pos[3] = Vector(RandomInt(-1000, 2000), RandomInt(6900, 7200), 1440)
-					pos[4] = Vector(7041, -6263, 1461)
-					local pos = pos[4]
+		if GetMapName() ~= "imba_standard" then
+			if RandomInt(1, 100) > 25 then
+				Timers:CreateTimer(RandomInt(5, 10) * 60, function()
+					if CHEAT_ENABLED == false then
+						local pos = {}
+						pos[1] = Vector(6446, -6979, 1496)
+						pos[2] = Vector(RandomInt(-6000, 0), RandomInt(7150, 7300), 1423)
+						pos[3] = Vector(RandomInt(-1000, 2000), RandomInt(6900, 7200), 1440)
+						pos[4] = Vector(7041, -6263, 1461)
+						local pos = pos[4]
 
-					GridNav:DestroyTreesAroundPoint(pos, 80, false)
-					local item = CreateItem("item_the_caustic_finale", nil, nil)
-					local drop = CreateItemOnPositionSync(pos, item)
-				end
-			end)
+						GridNav:DestroyTreesAroundPoint(pos, 80, false)
+						local item = CreateItem("item_the_caustic_finale", nil, nil)
+						local drop = CreateItemOnPositionSync(pos, item)
+					end
+				end)
+			end
 		end
 	end
 
@@ -292,50 +292,52 @@ local normal_xp = npc:GetDeathXP()
 	if npc then
 --		npc:AddNewModifier(npc, nil, "modifier_river", {})
 
-		if string.find(npc:GetUnitName(), "dota_creep") then
-			local material_group = tostring(RandomInt(0, 8))
-			npc.is_greevil = true
-			if string.find(npc:GetUnitName(), "ranged") then
-				npc:SetModel("models/courier/greevil/greevil_flying.vmdl")
-				npc:SetOriginalModel("models/courier/greevil/greevil_flying.vmdl")
-			else
-				npc:SetModel("models/courier/greevil/greevil.vmdl")
-				npc:SetOriginalModel("models/courier/greevil/greevil.vmdl")
-			end
-			npc:SetMaterialGroup(material_group)
-			npc.eyes = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_eyes.vmdl"})
-			npc.ears = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_ears"..RandomInt(1, 2)..".vmdl"})
-			if RandomInt(1, 100) > 75 then
-				npc.feathers = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_feathers.vmdl"})
-				npc.feathers:FollowEntity(npc, true)
-			end
-			npc.hair = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_hair"..RandomInt(1, 2)..".vmdl"})
-			npc.horns = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_horns"..RandomInt(1, 4)..".vmdl"})
-			npc.nose = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_nose"..RandomInt(1, 3)..".vmdl"})
-			npc.tail = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_tail"..RandomInt(1, 4)..".vmdl"})
-			npc.teeth = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_teeth"..RandomInt(1, 4)..".vmdl"})
-			npc.wings = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_wings"..RandomInt(1, 4)..".vmdl"})
+		if RandomInt(1, 100) > 85 then
+			if string.find(npc:GetUnitName(), "dota_creep") then
+				local material_group = tostring(RandomInt(0, 8))
+				npc.is_greevil = true
+				if string.find(npc:GetUnitName(), "ranged") then
+					npc:SetModel("models/courier/greevil/greevil_flying.vmdl")
+					npc:SetOriginalModel("models/courier/greevil/greevil_flying.vmdl")
+				else
+					npc:SetModel("models/courier/greevil/greevil.vmdl")
+					npc:SetOriginalModel("models/courier/greevil/greevil.vmdl")
+				end
+				npc:SetMaterialGroup(material_group)
+				npc.eyes = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_eyes.vmdl"})
+				npc.ears = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_ears"..RandomInt(1, 2)..".vmdl"})
+				if RandomInt(1, 100) > 80 then
+					npc.feathers = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_feathers.vmdl"})
+					npc.feathers:FollowEntity(npc, true)
+				end
+				npc.hair = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_hair"..RandomInt(1, 2)..".vmdl"})
+				npc.horns = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_horns"..RandomInt(1, 4)..".vmdl"})
+				npc.nose = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_nose"..RandomInt(1, 3)..".vmdl"})
+				npc.tail = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_tail"..RandomInt(1, 4)..".vmdl"})
+				npc.teeth = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_teeth"..RandomInt(1, 4)..".vmdl"})
+				npc.wings = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_wings"..RandomInt(1, 4)..".vmdl"})
 
-			-- lock to bone
-			npc.eyes:SetMaterialGroup(material_group)
-			npc.eyes:FollowEntity(npc, true)
-			npc.ears:SetMaterialGroup(material_group)
-			npc.ears:FollowEntity(npc, true)
-			npc.hair:FollowEntity(npc, true)
-			npc.horns:SetMaterialGroup(material_group)
-			npc.horns:FollowEntity(npc, true)
-			npc.nose:SetMaterialGroup(material_group)
-			npc.nose:FollowEntity(npc, true)
-			npc.tail:SetMaterialGroup(material_group)
-			npc.tail:FollowEntity(npc, true)
-			npc.teeth:SetMaterialGroup(material_group)
-			npc.teeth:FollowEntity(npc, true)
-			npc.wings:SetMaterialGroup(material_group)
-			npc.wings:FollowEntity(npc, true)
-		elseif string.find(npc:GetUnitName(), "_siege") then
-			npc:SetModel("models/creeps/mega_greevil/mega_greevil.vmdl")
-			npc:SetOriginalModel("models/creeps/mega_greevil/mega_greevil.vmdl")
-			npc:SetModelScale(3.0)
+				-- lock to bone
+				npc.eyes:SetMaterialGroup(material_group)
+				npc.eyes:FollowEntity(npc, true)
+				npc.ears:SetMaterialGroup(material_group)
+				npc.ears:FollowEntity(npc, true)
+				npc.hair:FollowEntity(npc, true)
+				npc.horns:SetMaterialGroup(material_group)
+				npc.horns:FollowEntity(npc, true)
+				npc.nose:SetMaterialGroup(material_group)
+				npc.nose:FollowEntity(npc, true)
+				npc.tail:SetMaterialGroup(material_group)
+				npc.tail:FollowEntity(npc, true)
+				npc.teeth:SetMaterialGroup(material_group)
+				npc.teeth:FollowEntity(npc, true)
+				npc.wings:SetMaterialGroup(material_group)
+				npc.wings:FollowEntity(npc, true)
+			elseif string.find(npc:GetUnitName(), "_siege") then
+				npc:SetModel("models/creeps/mega_greevil/mega_greevil.vmdl")
+				npc:SetOriginalModel("models/creeps/mega_greevil/mega_greevil.vmdl")
+				npc:SetModelScale(2.75)
+			end
 		end
 
 		-- Valve Illusion bug to prevent respawning
@@ -363,9 +365,9 @@ local normal_xp = npc:GetDeathXP()
 			if not npc.first_spawn then
 				npc.first_spawn = true
 				table.insert(IMBA_COURIERS, npc)
-				if npc:FindAbilityByName("courier_burst"):GetLevel() ~= 1 then
-					npc:FindAbilityByName("courier_burst"):SetLevel(1)
-				end
+--				if npc:FindAbilityByName("courier_burst"):GetLevel() ~= 1 then
+--					npc:FindAbilityByName("courier_burst"):SetLevel(1)
+--				end
 			end
 			npc:AddNewModifier(npc, nil, "modifier_imba_speed_limit_break", {})
 		end

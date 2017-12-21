@@ -1078,7 +1078,7 @@ end
 function modifier_butchers_cleaver:GetEffectAttachType()
 	return PATTACH_OVERHEAD_FOLLOW
 end
-
+--]]
 imba_pudge_dismember = imba_pudge_dismember or class({})
 
 LinkLuaModifier( "modifier_dismember", "hero/hero_pudge" ,LUA_MODIFIER_MOTION_NONE )
@@ -1115,6 +1115,10 @@ function imba_pudge_dismember:GetChannelTime()
 	if self:GetCaster():GetModifierStackCount("modifier_dismember_dummy",self:GetCaster()) == 1 then
 		time = self.creep_duration
 	end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_pudge_8") then
+		time = time + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_8", "dismember_duration")
+	end
 	return time
 end
 
@@ -1123,7 +1127,6 @@ end
 function imba_pudge_dismember:OnAbilityPhaseStart()
 	if IsServer() then
 		self.hVictim = self:GetCursorTarget()
-	
 	end
 	return true
 end
@@ -1144,7 +1147,6 @@ function imba_pudge_dismember:OnSpellStart()
 		self.hVictim:Interrupt()
 	end
 end
-
 
 --------------------------------------------------------------------------------
 
@@ -1339,6 +1341,10 @@ function HookCast( keys )
 	local cast_distance = ( target - caster:GetAbsOrigin() ):Length2D()
 	caster.stop_hook_cast = nil
 
+	if caster:HasTalent("special_bonus_imba_pudge_5") then
+		base_range = base_range + caster:FindTalentValue("special_bonus_imba_pudge_5", "hook_range")
+	end
+
 	-- Calculate actual cast range
 	local light_stacks = caster:GetModifierStackCount(modifier_light, caster)
 	local hook_range = base_range + stack_range * light_stacks + GetCastRangeIncrease(caster)
@@ -1453,6 +1459,10 @@ function MeatHook( keys )
 	local hook_range = base_range + stack_range * light_stacks + GetCastRangeIncrease(caster)
 	local hook_damage = base_damage + stack_damage * sharp_stacks
 
+	if caster:HasTalent("special_bonus_imba_pudge_5") then
+		hook_range = hook_range + caster:FindTalentValue("special_bonus_imba_pudge_5", "hook_range")
+	end
+
 	if caster:HasTalent("special_bonus_imba_pudge_2") then
 		hook_speed = hook_speed + caster:FindTalentValue("special_bonus_imba_pudge_2", "hook_speed")
 	end
@@ -1515,6 +1525,7 @@ function MeatHook( keys )
 	local hook_step = (keys.target_points[1] - caster_loc):Normalized() * hook_speed
 
 	local target_hit = false
+	local target_special = false
 	local target
 
 	-- Main Hook loop
@@ -1529,15 +1540,46 @@ function MeatHook( keys )
 			end
 		end
 
+		local runes = {
+			"models/props_gameplay/rune_goldxp.vmdl",
+			"models/props_gameplay/rune_haste01.vmdl",
+			"models/props_gameplay/rune_doubledamage01.vmdl",
+			"models/props_gameplay/rune_regeneration01.vmdl",
+			"models/props_gameplay/rune_arcane.vmdl",
+			"models/props_gameplay/rune_invisibility01.vmdl",
+			"models/props_gameplay/rune_illusion01.vmdl",
+			"models/props_gameplay/rune_frost.vmdl",
+		}
+
+		for _, ent in pairs(Entities:FindAllInSphere(hook_loc, hook_width)) do
+			for _, model in pairs(runes) do
+				for _, rune in pairs(Entities:FindAllByModel(model)) do
+					if (hook_loc - rune:GetAbsOrigin()):Length2D() < hook_width then
+						target_hit = true
+						target_special = true
+						target = rune
+					end
+				end
+			end
+		end
+
+		for _, rune in pairs(runes) do
+--			print(Entities:FindByNameWithin(nil, rune, hook_loc, hook_width))
+		end
+
 		-- If a valid target was hit, start dragging them
 		if target_hit then
-			-- Apply stun/root modifier, and damage if the target is an enemy
-			if caster:GetTeam() == target:GetTeam() then
-				ability:ApplyDataDrivenModifier(caster, target, modifier_target_ally, {})
+			if target_special == false then
+				-- Apply stun/root modifier, and damage if the target is an enemy
+				if caster:GetTeam() == target:GetTeam() then
+					ability:ApplyDataDrivenModifier(caster, target, modifier_target_ally, {})
+				else
+					ability:ApplyDataDrivenModifier(caster, target, modifier_target_enemy, {})
+					ApplyDamage({attacker = caster, victim = target, ability = ability, damage = hook_damage, damage_type = DAMAGE_TYPE_PURE})
+					SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, target, hook_damage, nil)
+				end
 			else
-				ability:ApplyDataDrivenModifier(caster, target, modifier_target_enemy, {})
-				ApplyDamage({attacker = caster, victim = target, ability = ability, damage = hook_damage, damage_type = DAMAGE_TYPE_PURE})
-				SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, target, hook_damage, nil)
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_GOLD, target, 0, nil)
 			end
 
 			-- Play the hit sound and particle
@@ -1575,14 +1617,28 @@ function MeatHook( keys )
 		caster:RemoveModifierByName(modifier_caster)
 
 		-- Play sound reaction according to which target was hit
-		if target_hit and target:IsRealHero() and target:GetTeam() ~= caster:GetTeam() then
-			caster:EmitSound("pudge_pud_ability_hook_0"..RandomInt(1,9))
-		elseif target_hit and target:IsRealHero() and target:GetTeam() == caster:GetTeam() then
-			caster:EmitSound("pudge_pud_ability_hook_miss_01")
-		elseif target_hit then
-			caster:EmitSound("pudge_pud_ability_hook_miss_0"..RandomInt(2,6))
+		if target_special == false then
+			if target_hit and target:IsRealHero() and target:GetTeam() ~= caster:GetTeam() then
+				caster:EmitSound("pudge_pud_ability_hook_0"..RandomInt(1,9))
+			elseif target_hit and target:IsRealHero() and target:GetTeam() == caster:GetTeam() then
+				caster:EmitSound("pudge_pud_ability_hook_miss_01")
+			elseif target_hit then
+				caster:EmitSound("pudge_pud_ability_hook_miss_0"..RandomInt(2,6))
+			else
+				caster:EmitSound("pudge_pud_ability_hook_miss_0"..RandomInt(8,9))
+			end
 		else
-			caster:EmitSound("pudge_pud_ability_hook_miss_0"..RandomInt(8,9))
+			if target_hit then
+				caster:EmitSound("pudge_pud_ability_hook_miss_0"..RandomInt(2,6))
+			else
+				caster:EmitSound("pudge_pud_ability_hook_miss_0"..RandomInt(8,9))
+			end
+		end
+
+		local damage_cap = 2500
+		local target_previous_position
+		if target then
+			target_previous_position = target:GetAbsOrigin()
 		end
 
 		-- Hook reeling loop
@@ -1593,7 +1649,7 @@ function MeatHook( keys )
 			direction = ( caster_loc - hook_loc )
 			hook_step = direction:Normalized() * hook_speed
 			current_tick = current_tick + 1
-			
+
 			-- If the target is close enough, or the hook has been out too long, finalize the hook return
 			if direction:Length2D() < hook_speed or current_tick > 300 then
 
@@ -1603,12 +1659,14 @@ function MeatHook( keys )
 					FindClearSpaceForUnit(target, final_loc, false)
 
 					-- Remove the target's modifiers
-					target:RemoveModifierByName(modifier_target_ally)
+					if target_special == false then
+						target:RemoveModifierByName(modifier_target_ally)
 
-					-- Enemies have a small extra duration on their stun
-					Timers:CreateTimer(enemy_disable_linger, function()
-						target:RemoveModifierByName(modifier_target_enemy)
-					end)
+						-- Enemies have a small extra duration on their stun
+						Timers:CreateTimer(enemy_disable_linger, function()
+							target:RemoveModifierByName(modifier_target_enemy)
+						end)
+					end
 				end
 
 				-- Destroy the hook dummy and particles
@@ -1635,10 +1693,8 @@ function MeatHook( keys )
 						current_item:SetActivated(true)
 					end
 				end
-
 			-- If this is not the final step, keep reeling the hook in
 			else
-
 				-- Move the hook and an eventual target
 				hook_dummy:SetAbsOrigin(hook_loc + hook_step)
 				ParticleManager:SetParticleControl(hook_pfx, 6, hook_loc + hook_step + Vector(0, 0, 90))
@@ -1647,9 +1703,30 @@ function MeatHook( keys )
 					target:SetAbsOrigin(hook_loc + hook_step)
 					target:SetForwardVector(direction:Normalized())
 					ability:CreateVisibilityNode(hook_loc, vision_radius, 0.5)
+
+					if caster:GetTeamNumber() ~= target:GetTeamNumber() and target_special == false and caster:HasTalent("special_bonus_imba_pudge_7") then
+						local rupture_damage = caster:FindTalentValue("special_bonus_imba_pudge_7", "movement_damage_pct") / 20
+
+						if CalculateDistance(target_previous_position, target) < damage_cap then
+							local move_damage = CalculateDistance(target_previous_position, target) * rupture_damage
+							if move_damage > 0 then
+								if not target.is_ruptured then
+									target.is_ruptured = true
+									ability.RuptureFX = ParticleManager:CreateParticle("particles/units/heroes/hero_bloodseeker/bloodseeker_rupture.vpcf", PATTACH_POINT_FOLLOW, target)
+									EmitSoundOn("hero_bloodseeker.rupture.cast", target)
+									EmitSoundOn("hero_bloodseeker.rupture", target)
+								end
+								ApplyDamage({victim = target, attacker = caster, damage = move_damage, damage_type = DAMAGE_TYPE_MAGICAL, ability = ability})
+							end
+						end
+						target_previous_position = target:GetAbsOrigin()
+					end
 				end
-				
 				return FrameTime()
+			end
+			if ability.RuptureFX then
+				ParticleManager:DestroyParticle(ability.RuptureFX, true)
+				ParticleManager:ReleaseParticleIndex(ability.RuptureFX)
 			end
 		end)
 	end)
@@ -1882,7 +1959,6 @@ function FleshHeapUpgrade( keys )
 	if caster.heap_stacks then
 		stack_amount = caster.heap_stacks
 		resist_amount = caster.heap_resist_stacks
-
 	-- Else, fetch kills/assists up to this point of the game (lazy way to make Heap retroactive)
 	else
 		local assists = caster:GetAssists()
@@ -1894,7 +1970,7 @@ function FleshHeapUpgrade( keys )
 		caster.heap_stacks = stack_amount
 		caster.heap_resist_stacks = resist_amount
 	end
-	
+
 	-- Remove both modifiers in order to update their bonuses
 	caster:RemoveModifierByName(modifier_stacks)
 	while caster:HasModifier(modifier_resist) do
@@ -1983,7 +2059,7 @@ function HeapUpdater( keys )
 		end
 	end
 end
-
+--[[
 function Dismember( keys )
 	local caster = keys.caster
 	local target = keys.target
@@ -1991,7 +2067,7 @@ function Dismember( keys )
 	local ability_level = ability:GetLevel() - 1
 	local particle_target = keys.particle_target
 	local modifier_debuff = keys.modifier_debuff
-	
+
 	-- Parameters
 	local dismember_damage = ability:GetLevelSpecialValueFor("dismember_damage", ability_level)
 	local strength_damage = ability:GetLevelSpecialValueFor("strength_damage", ability_level)
@@ -2010,7 +2086,7 @@ function Dismember( keys )
 			return nil
 		end
 	end
-	
+
 	-- Flag the target as such
 	if not caster.dismember_target then
 		caster.dismember_target = target
@@ -2021,7 +2097,7 @@ function Dismember( keys )
 
 	-- Apply Dismember debuff
 	ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
-	
+
 	-- Apply damage/heal
 	caster:Heal(damage, caster)
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, damage, nil)
@@ -2044,3 +2120,4 @@ function DismemberEnd( keys )
 		caster.dismember_target = nil
 	end
 end
+--]]

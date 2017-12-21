@@ -167,7 +167,7 @@ end
 
 function modifier_imba_bloodrage_blood_frenzy:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-				      MODIFIER_PROPERTY_MOVESPEED_MAX}
+					  MODIFIER_PROPERTY_MOVESPEED_MAX}
 
 	return decFuncs
 end
@@ -234,9 +234,9 @@ function imba_bloodseeker_blood_bath:OnSpellStart()
 			-- Rotate the direction clockwise or counter-clockwise
 			local vector_direction
 			if i%2 == 0 then
-			  	vector_direction = Orthogonal(direction, false)
+				vector_direction = Orthogonal(direction, false)
 			else
-			  	vector_direction = Orthogonal(direction, true)
+				vector_direction = Orthogonal(direction, true)
 			end
 
 			-- Claim position in the distance of the main target point
@@ -613,11 +613,11 @@ end
 
 function imba_bloodseeker_rupture:GetCooldown( nLevel )
 	-- Scepter grants charges, no cooldown needed
-  	if self:GetCaster():HasScepter() then
-      	return 0
-  	end
+	if self:GetCaster():HasScepter() then
+		return 0
+	end
 
-  	return self.BaseClass.GetCooldown( self, nLevel )
+	return self.BaseClass.GetCooldown( self, nLevel )
 end
 
 function imba_bloodseeker_rupture:GetIntrinsicModifierName()
@@ -664,20 +664,19 @@ function imba_bloodseeker_rupture:OnSpellStart(target)
 	end
 
 	-- Scepter effect: Rupture has charges
-    if caster:HasScepter() and not self.from_blood_rite then
-        local modifier_rupture_charges_handler = caster:FindModifierByName(modifier_rupture_charges)
-        if modifier_rupture_charges_handler then
-            modifier_rupture_charges_handler:DecrementStackCount()
-        end
-    end
+	if caster:HasScepter() and not self.from_blood_rite then
+		local modifier_rupture_charges_handler = caster:FindModifierByName(modifier_rupture_charges)
+		if modifier_rupture_charges_handler then
+			modifier_rupture_charges_handler:DecrementStackCount()
+		end
+	end
 	self.from_blood_rite = false
-	
 end
 
 modifier_imba_rupture_debuff_dot = modifier_imba_rupture_debuff_dot or class({})
 -- Rupture is undispellable.
 function modifier_imba_rupture_debuff_dot:IsPurgable()
-    return false
+	return false
 end
 if IsServer() then
 	function modifier_imba_rupture_debuff_dot:OnCreated()
@@ -713,16 +712,16 @@ if IsServer() then
 	end
 	
 	function modifier_imba_rupture_debuff_dot:DeclareFunctions()
-        local funcs = {
-            MODIFIER_EVENT_ON_ABILITY_START,
+		local funcs = {
+			MODIFIER_EVENT_ON_ABILITY_START,
 			MODIFIER_EVENT_ON_ATTACK_START,
-        }
+		}
 
-        return funcs
-    end
+		return funcs
+	end
 	
 	function modifier_imba_rupture_debuff_dot:OnAbilityStart(params)
-        if params.unit == self.parent then
+		if params.unit == self.parent then
 			ApplyDamage({victim = self.parent, attacker = self.caster, damage = self.castdamage, damage_type = self.ability:GetAbilityDamageType(), ability = self.ability})
 			if self.caster:HasTalent("special_bonus_imba_bloodseeker_3") then 
 				self.caster:Heal(self.castdamage, self.caster) 
@@ -730,10 +729,10 @@ if IsServer() then
 				ParticleManager:ReleaseParticleIndex(healFX)
 			end
 		end
-    end
+	end
 	
 	function modifier_imba_rupture_debuff_dot:OnAttackStart(params)
-        if params.attacker == self.parent then
+		if params.attacker == self.parent then
 			ApplyDamage({victim = self.parent, attacker = self.caster, damage = self.castdamage, damage_type = self.ability:GetAbilityDamageType(), ability = self.ability})
 			if self.caster:HasTalent("special_bonus_imba_bloodseeker_3") then 
 				self.caster:Heal(self.castdamage, self.caster) 
@@ -741,7 +740,7 @@ if IsServer() then
 				ParticleManager:ReleaseParticleIndex(healFX)
 			end
 		end
-    end
+	end
 	
 	function modifier_imba_rupture_debuff_dot:OnDestroy()
 		--Stop Meme Sounds
@@ -761,11 +760,11 @@ end
 modifier_imba_rupture_charges = modifier_imba_rupture_charges or class({})
 
 function modifier_imba_rupture_charges:IsHidden() 
-    if self:GetCaster():HasScepter() then
-        return false
-    end
+	if self:GetCaster():HasScepter() then
+		return false
+	end
 
-    return true
+	return true
 end
 
 function modifier_imba_rupture_charges:IsDebuff() return false end
@@ -773,140 +772,140 @@ function modifier_imba_rupture_charges:IsPurgable() return false end
 function modifier_imba_rupture_charges:RemoveOnDeath() return false end
 
 function modifier_imba_rupture_charges:OnCreated()    
-    if IsServer() then
-        -- Ability properties
-        self.caster = self:GetCaster()
-        self.ability = self:GetAbility()
-        self.parent = self:GetParent()
-        self.modifier_charge = "modifier_imba_rupture_charges"
+	if IsServer() then
+		-- Ability properties
+		self.caster = self:GetCaster()
+		self.ability = self:GetAbility()
+		self.parent = self:GetParent()
+		self.modifier_charge = "modifier_imba_rupture_charges"
 
-        -- Ability specials
-        self.max_charge_count = self.ability:GetSpecialValueFor("rupture_charges")
-        self.charge_replenish_rate = self.ability:GetSpecialValueFor("scepter_charge_replenish_rate")
+		-- Ability specials
+		self.max_charge_count = self.ability:GetSpecialValueFor("rupture_charges")
+		self.charge_replenish_rate = self.ability:GetSpecialValueFor("scepter_charge_replenish_rate")
 
-        -- If it the real one, set max charges
-        if self.caster:IsRealHero() then
-            self:SetStackCount(self.max_charge_count)            
-        else
-            -- Illusions find their owner and its charges
-            local playerid = self.caster:GetPlayerID()
-            local real_hero = playerid:GetAssignedHero()
+		-- If it the real one, set max charges
+		if self.caster:IsRealHero() then
+			self:SetStackCount(self.max_charge_count)            
+		else
+			-- Illusions find their owner and its charges
+			local playerid = self.caster:GetPlayerID()
+			local real_hero = playerid:GetAssignedHero()
 
-            if hero:HasModifier(self.modifier_charge) then
-                self.modifier_charge_handler = hero:FindModifierByName(self.modifier_charge)
-                if self.modifier_charge_handler then
-                    self:SetStackCount(self.modifier_charge_handler:GetStackCount())
-                    self:SetDuration(self.modifier_charge_handler:GetRemainingTime(), true)                            
-                end
-            end
-        end
+			if hero:HasModifier(self.modifier_charge) then
+				self.modifier_charge_handler = hero:FindModifierByName(self.modifier_charge)
+				if self.modifier_charge_handler then
+					self:SetStackCount(self.modifier_charge_handler:GetStackCount())
+					self:SetDuration(self.modifier_charge_handler:GetRemainingTime(), true)                            
+				end
+			end
+		end
 
-        -- Start thinking
-        self:StartIntervalThink(0.1)
-    end
+		-- Start thinking
+		self:StartIntervalThink(0.1)
+	end
 end
 
 function modifier_imba_rupture_charges:OnIntervalThink()
-    if IsServer() then
-        -- If the caster doesn't have scepter, do nothing, and turn off if he dropped it.
-        if not self.caster:HasScepter() then
-            self.turned_on = false
-            return nil            
-        end
+	if IsServer() then
+		-- If the caster doesn't have scepter, do nothing, and turn off if he dropped it.
+		if not self.caster:HasScepter() then
+			self.turned_on = false
+			return nil            
+		end
 
-        -- If this is the first time the charges are "turned on", set the stack count.
-        if not self.turned_on then
-            self.turned_on = true            
-            self:OnCreated()     
-        end        
+		-- If this is the first time the charges are "turned on", set the stack count.
+		if not self.turned_on then
+			self.turned_on = true            
+			self:OnCreated()     
+		end        
 
-        local stacks = self:GetStackCount()
+		local stacks = self:GetStackCount()
 
-        -- If we have at least one stack, set ability to active, otherwise disable it
-        if stacks > 0 then
-            self.ability:SetActivated(true)
-        else
-            self.ability:SetActivated(false)
-        end        
+		-- If we have at least one stack, set ability to active, otherwise disable it
+		if stacks > 0 then
+			self.ability:SetActivated(true)
+		else
+			self.ability:SetActivated(false)
+		end        
 
-        -- If we're at max charges, do nothing else
-        if stacks == self.max_charge_count then            
-            return nil
-        end        
+		-- If we're at max charges, do nothing else
+		if stacks == self.max_charge_count then            
+			return nil
+		end        
 
-        -- If a charge has finished charging, give a stack
-        if self:GetRemainingTime() < 0 then                        
-            self:IncrementStackCount()
-        end        
-    end
+		-- If a charge has finished charging, give a stack
+		if self:GetRemainingTime() < 0 then                        
+			self:IncrementStackCount()
+		end        
+	end
 end
 
 function modifier_imba_rupture_charges:OnStackCountChanged(old_stack_count)
-    if IsServer() then
-        -- If the caster doesn't have a scepter yet, do nothing
-        if not self.turned_on then
-            return nil
-        end
+	if IsServer() then
+		-- If the caster doesn't have a scepter yet, do nothing
+		if not self.turned_on then
+			return nil
+		end
 
-        -- Current stacks
-        local stacks = self:GetStackCount() 
-        local true_replenish_cooldown = self.charge_replenish_rate * (1 - self.caster:GetCooldownReduction() * 0.01)
+		-- Current stacks
+		local stacks = self:GetStackCount() 
+		local true_replenish_cooldown = self.charge_replenish_rate * (1 - self.caster:GetCooldownReduction() * 0.01)
 
-        -- If the stacks are now 0, start the ability's cooldown
-        if stacks == 0 then
-            self.ability:EndCooldown()
-            self.ability:StartCooldown(self:GetRemainingTime())
-        end
+		-- If the stacks are now 0, start the ability's cooldown
+		if stacks == 0 then
+			self.ability:EndCooldown()
+			self.ability:StartCooldown(self:GetRemainingTime())
+		end
 
-        -- If the stack count is now 1, and the skill is still in cooldown because of some cd manipulation, refresh it
-        if stacks == 1 and not self.ability:IsCooldownReady() then            
-            self.ability:EndCooldown()
-        end
+		-- If the stack count is now 1, and the skill is still in cooldown because of some cd manipulation, refresh it
+		if stacks == 1 and not self.ability:IsCooldownReady() then            
+			self.ability:EndCooldown()
+		end
 
-        local lost_stack
-        if old_stack_count > stacks then
-            lost_stack = true
-        else
-            lost_stack = false
-        end
+		local lost_stack
+		if old_stack_count > stacks then
+			lost_stack = true
+		else
+			lost_stack = false
+		end
 
-        if not lost_stack then
+		if not lost_stack then
 
-            -- If we're not at the max stacks yet, reset the timer   
-            if stacks < self.max_charge_count then
-                self:SetDuration(true_replenish_cooldown, true)
-            else
-                -- Otherwise, stop the timer
-                self:SetDuration(-1, true)
-            end
-        else
-            if old_stack_count == self.max_charge_count then
-                self:SetDuration(true_replenish_cooldown, true)            
-            end
-        end
-    end
+			-- If we're not at the max stacks yet, reset the timer   
+			if stacks < self.max_charge_count then
+				self:SetDuration(true_replenish_cooldown, true)
+			else
+				-- Otherwise, stop the timer
+				self:SetDuration(-1, true)
+			end
+		else
+			if old_stack_count == self.max_charge_count then
+				self:SetDuration(true_replenish_cooldown, true)            
+			end
+		end
+	end
 end
 
 function modifier_imba_rupture_charges:DeclareFunctions()
-    local decFuncs = {MODIFIER_EVENT_ON_ABILITY_FULLY_CAST}
+	local decFuncs = {MODIFIER_EVENT_ON_ABILITY_FULLY_CAST}
 
-    return decFuncs
+	return decFuncs
 end
 
 function modifier_imba_rupture_charges:OnAbilityFullyCast(keys)
-    if IsServer() then
-        local ability = keys.ability
-        local unit = keys.unit
+	if IsServer() then
+		local ability = keys.ability
+		local unit = keys.unit
 
-        -- If this was the caster casting Refresher, refresh charges
-        if unit == self.caster and ability:GetName() == "item_refresher" then
-            self:SetStackCount(self.max_charge_count)            
-        end
-    end
+		-- If this was the caster casting Refresher, refresh charges
+		if unit == self.caster and ability:GetName() == "item_refresher" then
+			self:SetStackCount(self.max_charge_count)            
+		end
+	end
 end
 
 function modifier_imba_rupture_charges:DestroyOnExpire()
-    return false
+	return false
 end
 
 --------------------------------------------------------------------------------

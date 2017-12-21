@@ -1349,10 +1349,10 @@
 		"Ability11"					"special_bonus_imba_pudge_4" // +10 Flesh Heap magic resist stack
 		"Ability12"					"special_bonus_imba_pudge_2" // +300 Hook Speed
 		"Ability13"					"special_bonus_imba_pudge_3" // +100 Hook Width
-		"Ability14"					"special_bonus_imba_pudge_5"
-		"Ability15"					"special_bonus_imba_pudge_6"
-		"Ability16"					"special_bonus_imba_pudge_7"
-		"Ability17"					"special_bonus_imba_pudge_8"
+		"Ability14"					"special_bonus_imba_pudge_8" // Dismember last 2 more seconds
+		"Ability15"					"special_bonus_imba_pudge_6" // Increase Rot Damage
+		"Ability16"					"special_bonus_imba_pudge_7" // Meat Hook applies Rupture
+		"Ability17"					"special_bonus_imba_pudge_5" // nothing yet
 
 		"ProjectileSpeed"			"900"
 	}

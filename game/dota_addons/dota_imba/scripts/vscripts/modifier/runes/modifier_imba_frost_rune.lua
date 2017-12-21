@@ -22,7 +22,8 @@ end
 -- Function declarations
 function modifier_imba_frost_rune:DeclareFunctions()
 	local funcs	=	{
-		MODIFIER_EVENT_ON_ATTACK_LANDED
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_EVENT_ON_TAKEDAMAGE,
 	}
 	return funcs
 end
@@ -30,6 +31,25 @@ end
 function modifier_imba_frost_rune:OnAttackLanded(kv)
 	if (kv.attacker == self:GetParent()) and (kv.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber()) then
 		kv.target:AddNewModifier(kv.attacker, nil, "modifier_imba_frost_rune_slow", {duration = self.slow_duration})
+	end
+end
+
+function modifier_imba_frost_rune:OnTakeDamage(keys)
+	if IsServer() then
+		if self:GetParent() ~= keys.attacker then
+			return
+		end
+		
+		local target = keys.unit
+		print(self:GetParent():GetUnitName())
+		print(target)
+		if self:GetParent():GetTeam() == target:GetTeam() then
+			return
+		end
+
+		if self:GetParent() == target then
+			target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_frost_rune_slow", {duration = self.slow_duration})
+		end
 	end
 end
 
@@ -76,32 +96,38 @@ function modifier_imba_frost_rune_aura:OnCreated()
 end
 
 -- Function declarations
-function modifier_imba_frost_rune_aura:DeclareFunctions()
-	local funcs	= {
-		MODIFIER_EVENT_ON_TAKEDAMAGE
+function modifier_imba_frost_rune:DeclareFunctions()
+	local funcs	=	{
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_EVENT_ON_TAKEDAMAGE,
 	}
 	return funcs
 end
---[[
+
+function modifier_imba_frost_rune:OnAttackLanded(kv)
+	if (kv.attacker == self:GetParent()) and (kv.target:GetTeamNumber() ~= self:GetParent():GetTeamNumber()) then
+		kv.target:AddNewModifier(kv.attacker, nil, "modifier_imba_frost_rune_slow", {duration = self.slow_duration})
+	end
+end
+
 function modifier_imba_frost_rune_aura:OnTakeDamage(keys)
 	if IsServer() then
-		if attacker ~= keys.attacker then
+		if self:GetParent() ~= keys.attacker then
 			return
 		end
 		
 		local target = keys.unit
-		print(attacker:GetUnitName())
+		print(self:GetParent():GetUnitName())
 		print(target)
-		if attacker:GetTeam() == target:GetTeam() then
+		if self:GetParent():GetTeam() == target:GetTeam() then
 			return
 		end
 
-		if attacker == target then
+		if self:GetParent() == target then
 			target:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_frost_rune_slow", {duration = self.slow_duration})
 		end
 	end
 end
---]]
 
 function modifier_imba_frost_rune_aura:GetEffectName()
 	return "particles/econ/courier/courier_greevil_blue/courier_greevil_blue_ambient_3.vpcf"

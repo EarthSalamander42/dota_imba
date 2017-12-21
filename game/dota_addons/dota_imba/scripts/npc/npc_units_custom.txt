@@ -12666,6 +12666,7 @@
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
 		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_HERO"
+		"HasInventory"				"1"
 
 		// Vision
 		//-------------------------------------------------------------------------------------------------------------
@@ -12876,7 +12877,7 @@
 
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability13"					"courier_burst"
+		"Ability13"					"courier_shield"
 
 		// Bounds
 		//----------------------------------------------------------------

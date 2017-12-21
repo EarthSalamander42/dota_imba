@@ -655,14 +655,14 @@
 	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_3_Description"                "Increase Pudge Meat Hook's width by 100 (200 width)."
 	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_4_title"                      "Fat Boy"
 	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_4_Description"                "Increase He's a big guy (not you) max stacks by 10."
-	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_5_title"                      ""
-	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_5_Description"                ""
+	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_5_title"                      "Rage Quit"
+	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_5_Description"                "Increase Meat Hook's range by +2500."
 	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_6_title"                      "Rot"
-	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_6_Description"                "Increase Rot damage by 120."
-	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_7_title"                      ""
-	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_7_Description"                ""
-	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_8_title"                      ""
-	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_8_Description"                ""
+	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_6_Description"                "Increase Rot damage by 90."
+	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_7_title"                      "Bloody Period"
+	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_7_Description"                "Meat Hook applies Rupture while the hook is returning, dealing 10% of the distance travelled as damage."
+	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_8_title"                      "Fresh Meal"
+	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_8_Description"                "Increase Dismember duration by +2 seconds."
 
 	//QoP
 	// Queen of Pain

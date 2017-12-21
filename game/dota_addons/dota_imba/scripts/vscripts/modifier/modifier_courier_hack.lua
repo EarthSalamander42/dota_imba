@@ -23,9 +23,9 @@ function modifier_courier_hack:DeclareFunctions()
 end
 
 function modifier_courier_hack:GetModifierMoveSpeed_Absolute()
-    return 1000
+    return 2500
 end
 
 function modifier_courier_hack:GetModifierMoveSpeed_Max()
-	return 1000
+	return 2500
 end

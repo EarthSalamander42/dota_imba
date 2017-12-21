@@ -435,10 +435,10 @@ function GameMode:ModifierFilter( keys )
 			end
 		end
 
-		if modifier_name == "modifier_courier_shield" then
-			modifier_caster:RemoveModifierByName(modifier_name)
-			modifier_caster:FindAbilityByName("courier_burst"):CastAbility()
-		end
+--		if modifier_name == "modifier_courier_shield" then
+--			modifier_caster:RemoveModifierByName(modifier_name)
+--			modifier_caster:FindAbilityByName("courier_burst"):CastAbility()
+--		end
 
 		-- disarm immune
 		local jarnbjorn_immunity = {
