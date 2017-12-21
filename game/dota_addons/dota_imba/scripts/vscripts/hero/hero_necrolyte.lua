@@ -558,7 +558,11 @@ function modifier_imba_ghost_shroud_buff:GetHealthRegenAmp()
 end
 
 function modifier_imba_ghost_shroud_buff:GetAbsoluteNoDamagePhysical()
-	return 1
+	if self:GetCaster() == self:GetParent() then
+		return 1
+	else
+		return nil
+	end
 end
 
 function modifier_imba_ghost_shroud_buff:IsDebuff()
@@ -725,23 +729,15 @@ function modifier_imba_heartstopper_aura_damage:IsPurgable()
 	return false
 end
 
-function modifier_imba_heartstopper_aura_damage:OnIntervalThink()
-	return false
-end
-
 function modifier_imba_heartstopper_aura_damage:DeclareFunctions()
 	local decFuncs =
 	{
-		MODIFIER_PROPERTY_HEAL_AMPLIFY_PERCENTAGE,
+		MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE,
 	}
 	return decFuncs
 end
 
-function modifier_imba_heartstopper_aura_damage:GetModifierHealAmplify_Percentage()
-	return ( self:GetAbility():GetTalentSpecialValueFor("heal_reduce_pct") * (-1) )
-end
-
-function modifier_imba_heartstopper_aura_damage:GetHealthRegenAmp()
+function modifier_imba_heartstopper_aura_damage:GetModifierHPRegenAmplify_Percentage()
 	return ( self:GetAbility():GetTalentSpecialValueFor("heal_reduce_pct") * (-1) )
 end
 
