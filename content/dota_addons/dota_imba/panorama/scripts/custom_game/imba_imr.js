@@ -69,7 +69,6 @@ function Battlepass()
 			reward.style.backgroundImage = 'url("file://{images}/custom_game/battlepass/'+ i +'.png")';
 			var reward_label = $.CreatePanel("Label", reward, i + "_label");
 			reward_label.AddClass("BattlepassRewardLabel")
-			$.Msg("#battlepass_"+i)
 			reward_label.text = $.Localize("battlepass_" + i) + " \n" + $.Localize("battlepass_reward_locked");
 
 			i_count = i_count +1

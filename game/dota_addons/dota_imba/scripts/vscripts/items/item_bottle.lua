@@ -115,21 +115,17 @@ function modifier_item_imba_bottle_texture_controller:OnIntervalThink()
 	end
 end
 
-
 modifier_item_imba_bottle_heal = class({
-	IsPurgable =          function() return false end,
-	GetEffectName =       function() return "particles/items_fx/bottle.vpcf" end,
-	GetEffectAttachType = function() return PATTACH_ABSORIGIN_FOLLOW end,
+	GetTexture =			function() return "custom/bottle_3" end,
+	IsPurgable =			function() return false end,
+	GetEffectName =			function() return "particles/items_fx/bottle.vpcf" end,
+	GetEffectAttachType =	function() return PATTACH_ABSORIGIN_FOLLOW end,
 })
-
-function modifier_item_imba_bottle_heal:GetTexture()
-	return "custom/bottle_3"
-end
 
 function modifier_item_imba_bottle_heal:DeclareFunctions()
 	return {
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
-		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT
+		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
 	}
 end
 
