@@ -1247,7 +1247,7 @@ function PickupRune(rune_name, unit, bActiveByBottle)
 	if not store_in_bottle then
 		if rune_name == "bounty" then
 			-- Bounty rune parameters
-			local base_bounty = 200
+			local base_bounty = 100
 			local bounty_per_minute = 4
 			local xp_per_minute = 10
 			local game_time = GameRules:GetDOTATime(false, false)
@@ -1338,7 +1338,7 @@ function PickupRune(rune_name, unit, bActiveByBottle)
 			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Regen", unit)
 		elseif rune_name == "frost" then
 			unit:AddNewModifier(unit, nil, "modifier_imba_frost_rune", {duration=duration})
-			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.DD", unit)
+			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Frost", unit)
 		end
 
 		local gameEvent = {}
