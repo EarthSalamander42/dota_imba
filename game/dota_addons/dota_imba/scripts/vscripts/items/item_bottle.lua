@@ -130,9 +130,9 @@ function modifier_item_imba_bottle_heal:DeclareFunctions()
 end
 
 function modifier_item_imba_bottle_heal:GetModifierConstantHealthRegen()
-	return self:GetAbility():GetSpecialValueFor("health_restore") / self:GetDuration()
+	return self:GetAbility():GetSpecialValueFor("health_restore") / self:GetAbility():GetSpecialValueFor("restore_time")
 end
 
 function modifier_item_imba_bottle_heal:GetModifierConstantManaRegen()
-	return self:GetAbility():GetSpecialValueFor("mana_restore") / self:GetDuration()
+	return self:GetAbility():GetSpecialValueFor("mana_restore") / self:GetAbility():GetSpecialValueFor("restore_time")
 end
