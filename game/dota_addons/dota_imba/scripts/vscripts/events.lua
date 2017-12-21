@@ -37,6 +37,7 @@ function GameMode:OnDisconnect(keys)
 
 		-- Start tracking
 		print("started keeping track of player "..player_id.."'s connection state")
+		ApiPrint("Player " .. tostring(PlayerResource:GetSteamID(player_id)) .. " disconnected.");
 		local disconnect_time = 0
 		Timers:CreateTimer(1, function()
 			
@@ -51,6 +52,7 @@ function GameMode:OnDisconnect(keys)
 				Notifications:BottomToAll({text = "#imba_player_abandon_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
 				PlayerResource:SetHasAbandonedDueToLongDisconnect(player_id, true)
 				print("player "..player_id.." has abandoned the game.")
+				ApiPrint("Player " .. tostring(PlayerResource:GetSteamID(player_id)) .. " has abandoned the game.");
 
 				-- Decrease the player's team's player count
 				PlayerResource:DecrementTeamPlayerCount(player_id)

@@ -88,6 +88,20 @@ function GetDevelopers()
 end
 
 -- Syncronous
+-- Returns true if the player with the given id is a developer, false otherwise
+function IsDeveloper(playerid)
+	local devs = GetDevelopers()
+	for i = 1, #devs do
+		local id = tostring(PlayerResource:GetSteamID(pid))
+		if id == devs[i] then
+			return true
+		end
+	end
+
+	return false
+end
+
+-- Syncronous
 -- Returns array of the top users by xp
 -- [ {
 --    xp: number
