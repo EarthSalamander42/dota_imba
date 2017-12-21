@@ -117,7 +117,7 @@ local current_xp_in_level = {}
 local max_xp = {}
 
 	for ID = 0, PlayerResource:GetPlayerCount() -1 do
-		local global_xp = get_stats_for_player(ID).xp
+		local global_xp = GetStatsForPlayer(ID).xp
 		level[ID] = 0
 
 		for i = 1, #XP_level_table do
@@ -142,8 +142,8 @@ local max_xp = {}
 			Lvl = level[ID], -- add +1 only on the HUD else you are level 0 at the first level
 			title = GetTitleIXP(level[ID]),
 			title_color = GetTitleColorIXP(GetTitleIXP(level[ID]), true),
-			IMR_5v5 = get_stats_for_player(ID).imr_5v5,
-			IMR_10v10 = get_stats_for_player(ID).imr_10v10,
+			IMR_5v5 = GetStatsForPlayer(ID).imr_5v5,
+			IMR_10v10 = GetStatsForPlayer(ID).imr_10v10,
 		})
 	end
 end

@@ -83,7 +83,10 @@ function GameMode:OnFirstPlayerLoaded()
 	-- IMBA: API. Preload
 	-------------------------------------------------------------------------------------------------
 	imba_api_init(function ()
-        print("API: Init data...")
+		--
+		-- Here API Data is guaranteed to be available !!!
+		--
+		PrintTable(GetTopImrUsers())
     end)
 
 	-------------------------------------------------------------------------------------------------

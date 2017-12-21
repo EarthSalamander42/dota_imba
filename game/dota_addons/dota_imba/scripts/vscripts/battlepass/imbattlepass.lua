@@ -70,7 +70,7 @@ if api_preloaded.players == nil then return end
 	ImbattlepassReward = {}
 	for ID = 0, PlayerResource:GetPlayerCount() -1 do
 		for i = 1, #XP_level_table do
-			if get_stats_for_player(ID).xp > XP_level_table[i] then
+			if GetStatsForPlayer(ID).xp > XP_level_table[i] then
 				ImbattlepassReward[ID] = i
 			end
 		end
