@@ -7,8 +7,10 @@ require("api/json")
 
 api_preloaded = {}
 
+-- Asyncronous
 -- has to be called in GameMode:OnFirstPlayerLoaded
 -- loads donators / developers and registers the game
+-- complete_fun is called once all preload requests are finished 
 function imba_api_init(complete_fun)
 
 	print("[api-frontend] init")
@@ -17,9 +19,10 @@ function imba_api_init(complete_fun)
 		if api_preloaded.donators ~= nil 
 			and api_preloaded.developers ~= nil 
 			and api_preloaded.players ~= nil
---			and api_preloaded.topxpplayers ~= nil 
---			and api_preloaded.topimrplayers ~= nil
+			and api_preloaded.topxpusers ~= nil 
+			and api_preloaded.topimrusers ~= nil
 		then
+			print("[api-frontend] preloading completed")
 			complete_fun()
 		end
 	end
@@ -28,9 +31,13 @@ function imba_api_init(complete_fun)
 	imba_api_game_register(proxy_fun)
 end
 
+--
+-- Asyncronous
 -- has to be called in GameMode:OnFirstPlayerLoaded
 -- will be called by imba_api_init()
--- loads donators and developers
+-- loads donators, developers and top lists
+-- complete_fun is called each time one api request is finished
+--
 function imba_api_preload(complete_fun)
 
 	print("[api-frontend] preloading")
@@ -45,19 +52,23 @@ function imba_api_preload(complete_fun)
 		complete_fun()
 	end)
 
---	imba_api():meta_topxpplayers(function (devs)
---		api_preloaded.topxpplayers = devs
---		complete_fun()
---	end)
+	imba_api():meta_topxpusers(function (users)
+		api_preloaded.topxpusers = users
+		complete_fun()
+	end)
 
---	imba_api():meta_topimrplayers(function (devs)
---		api_preloaded.topimrplayers = devs
---		complete_fun()
---	end)
+	imba_api():meta_topimrusers(function (users)
+		api_preloaded.topimrusers = users
+		complete_fun()
+	end)
 end
 
 -- Syncronous
--- returns array of donators or nil
+-- returns 
+--   a string with the path to the companion model 	 if the player owning the hero is a donator
+-- 	 nil											 if the hero doesnt have a player or is an illusion
+--   false											 if the player is not a donator
+-- WTF: COOKIES: DOCUMENTATION
 function IsDonator(hero)
 	if hero:GetPlayerID() == -1 or hero:IsIllusion() then return end
 	for i = 1, #api_preloaded.donators do
@@ -71,17 +82,56 @@ end
 
 -- Syncronous
 -- returns array of developers or nil
-function get_developers()
+-- [ 7666611212312, 78877721371727, 7887272727711, ... ]
+function GetDevelopers()
 	return api_preloaded.developers
 end
 
---	function get_topxpplayers()
---		return api_preloaded.topxpplayers
---	end
+-- Syncronous
+-- Returns true if the player with the given id is a developer, false otherwise
+function IsDeveloper(playerid)
+	local devs = GetDevelopers()
+	for i = 1, #devs do
+		local id = tostring(PlayerResource:GetSteamID(pid))
+		if id == devs[i] then
+			return true
+		end
+	end
 
---	function get_topimrplayers()
---		return api_preloaded.topimrplayers
---	end
+	return false
+end
+
+-- Syncronous
+-- Returns array of the top users by xp
+-- [ {
+--    xp: number
+--    imr_5v5: number
+--    imr_10v10: number
+--    imr_5v5_calibrating: boolean
+--    imr_10v10_calibrating: boolean
+--    steamName: string
+--    steamid: string
+--    rank: number
+-- }, ... ]
+function GetTopXpUsers()
+	return api_preloaded.topxpusers
+end
+
+-- Syncronous
+-- Returns array of the top users by imr
+-- [ {
+--    xp: number
+--    imr_5v5: number
+--    imr_10v10: number
+--    imr_5v5_calibrating: boolean
+--    imr_10v10_calibrating: boolean
+--    steamName: string
+--    steamid: string
+--    rank: number
+-- }, ... ]
+function GetTopImrUsers()
+	return api_preloaded.topimrusers
+end
 
 -- Returns the preloaded xp for player / if available
 -- {
@@ -91,13 +141,18 @@ end
 --    imr_5v5_calibrating: boolean
 --    imr_10v10_calibrating: boolean
 -- }
-function get_stats_for_player(ID)
+function GetStatsForPlayer(ID)
 	local steamid = tostring(PlayerResource:GetSteamID(ID))
 	if api_preloaded.players ~= nil and api_preloaded.players[steamid] ~= nil then
 		return api_preloaded.players[steamid];
 	else
 		return nil
 	end
+end
+
+-- Saves a print message to server
+function ApiPrint(str)
+	imba_api_game_event("debug", str);
 end
 
 -- Will write a custom game event to the server
@@ -299,9 +354,4 @@ function imba_api_game_complete(complete_fun)
 
 	ApiPrint("Serialization successful")
 	print("[api-frontend] Saving game to server")
-end
-
--- Saves a print message to server
-function ApiPrint(str)
-	imba_api_game_event("debug", str);
 end

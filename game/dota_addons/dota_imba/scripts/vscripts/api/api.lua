@@ -19,8 +19,8 @@ local IMBA_API_ENDPOINTS = {
 	game_register = "/game/register",
 	game_complete = "/game/complete",
 	game_event = "/game/event",
---	meta_topxpusers = "/meta/top-xp-users",
---	meta_topimrusers = "/meta/top-imr-users",
+	meta_topxpusers = "/meta/top-xp-users",
+	meta_topimrusers = "/meta/top-imr-users",
 }
 
 ImbaApi = {}
@@ -128,15 +128,15 @@ end
 function ImbaApi:game_complete(data, success_cb, error_cb)
 	self:simple_perform(data, IMBA_API_ENDPOINTS.game_complete, success_cb, error_cb)
 end
---[[
-function ImbaApi:meta_topxpusers(data, success_cb, error_cb)
-	self:simple_perform(data, IMBA_API_ENDPOINTS.meta_topxpusers, success_cb, error_cb)
+
+function ImbaApi:meta_topxpusers(success_cb, error_cb)
+	self:simple_perform(nil, IMBA_API_ENDPOINTS.meta_topxpusers, success_cb, error_cb)
 end
 
-function ImbaApi:meta_topimrusers(data, success_cb, error_cb)
-	self:simple_perform(data, IMBA_API_ENDPOINTS.meta_topimrusers, success_cb, error_cb)
+function ImbaApi:meta_topimrusers(success_cb, error_cb)
+	self:simple_perform(nil, IMBA_API_ENDPOINTS.meta_topimrusers, success_cb, error_cb)
 end
---]]
+
 -- Internal Vars
 local _api_instance = nil
 

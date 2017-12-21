@@ -24,15 +24,16 @@
 #TeamsList
 {
 	width: 400px;
+	margin-right: 10px;
 	height: fit-children;
 	flow-children: down;    
 	padding-left: 16px;
 	padding-right: 16px;
 	margin-left: 16px;
-	background-color: #000000da;
-	border-radius: 45px;
+	background-color: rgba(64, 64, 64, 0.95);
+	border-radius: 3px;
 	box-shadow: black -4px -4px 8px 8px;
-   
+	padding: 10px 10px;
 	animation-name: TeamsListAppear;
 	animation-duration: 0.75s;
 	align: center top;
@@ -465,23 +466,11 @@
 	width: 100%;
 	margin: 6px;
 	background-color: gradient( linear, 100% 0%, 100% 100%, from( #272b30 ), color-stop( 0.6, #181a1e ), to( #181a1e ) );
-	
-	//box-shadow: fill #44444430 -5px -5px 9px 9px;
-	//border-top: 1px solid #ffffff10;
-	//border-right: 1px solid #000000ff;
-	//border-left: 1px solid #ffffff10;
-	//border-bottom: 1px solid #000000ff;
 }
 
 .TeamSelectTeam.local_player_on_this_team
 {
-	box-shadow: fill #ffffff40 -3px -3px 3px 6px;
-	//box-shadow: -3px -3px 12px 6px #FFFFFF88;
-}
-
-.TeamSelectTeam:hover
-{    
-	//background-color: #272b30dd;
+	box-shadow: fill #ffffff40 0px 0px 5px;
 }
 
 #TeamBackgroundGradient

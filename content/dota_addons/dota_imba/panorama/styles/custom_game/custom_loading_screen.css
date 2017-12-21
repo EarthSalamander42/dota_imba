@@ -2,7 +2,7 @@
 	width: 100%;
 	height: 100%;
 	background-color: black;
-	background-image: url("file://{images}/custom_game/loading_screen/loading-elder.jpg");
+	background-image: url("file://{images}/custom_game/loading_screen/slyking_loading.png");
 	background-position: 65% 0%;
 	background-size: cover;
 	overflow: clip;
@@ -24,7 +24,7 @@
 	margin-bottom: 250px;
 	margin-left: 2%;
 	width: 50%;
-	background-color: rgba(255, 255, 255, 0.2);
+	background-color: rgba(255, 255, 255, 0.5);
 	padding: 20px 40px;
 	height: fit-children;
 	flow-children: down;
@@ -37,7 +37,7 @@
 
 #imba-news-title {
 	font-size: 32px;
-	color: #144;
+	color: #071010;
 }
 
 #imba-news-article-title {
@@ -103,13 +103,18 @@
 
 #imba-social-buttons Button:active {
 	box-shadow: #333 0 0 15px 0;
+	width: 198px; 
+}
+
+.AspectRatio4x3 #imba-social-buttons Button:active {
+	width: 178px; 
 }
 
 #imba-social-button-discord-en {
 	background-size: contain;
 	background-image: url("file://{images}/custom_game/loading_screen/community_discord_header.png"); 
 }
-#imba-social-button-discord-en:active { margin-left: 21px; }
+#imba-social-button-discord-en:active { margin-left: 1px; }
 
 #imba-social-button-discord-ru {
 	margin-left: 20px;

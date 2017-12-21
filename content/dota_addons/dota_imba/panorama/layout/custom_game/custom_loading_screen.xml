@@ -68,7 +68,7 @@
 				</Panel>
 		</Panel>
 		<Panel id="imba-news">
-			<Label id="imba-news-title" text="DOTA IMBA v7.02 - Elder Titan Update" />
+			<Label id="imba-news-title" text="DOTA IMBA v7.03 - The Real Frostivus has arrived" />
 			<Label id="imba-news-article-title" />
 			<Label id="imba-news-article-text" />
 			<Label id="imba-news-link" text="Read more news on our Official Website" onactivate="DOTADisplayURL('http://www.dota2imba.org/');" />
