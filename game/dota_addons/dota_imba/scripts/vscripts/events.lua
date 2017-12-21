@@ -292,12 +292,61 @@ local normal_xp = npc:GetDeathXP()
 	if npc then
 --		npc:AddNewModifier(npc, nil, "modifier_river", {})
 
+		if string.find(npc:GetUnitName(), "dota_creep") then
+			local material_group = tostring(RandomInt(0, 8))
+			npc.is_greevil = true
+			if string.find(npc:GetUnitName(), "ranged") then
+				npc:SetModel("models/courier/greevil/greevil_flying.vmdl")
+				npc:SetOriginalModel("models/courier/greevil/greevil_flying.vmdl")
+			else
+				npc:SetModel("models/courier/greevil/greevil.vmdl")
+				npc:SetOriginalModel("models/courier/greevil/greevil.vmdl")
+			end
+			npc:SetMaterialGroup(material_group)
+			npc.eyes = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_eyes.vmdl"})
+			npc.ears = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_ears"..RandomInt(1, 2)..".vmdl"})
+			if RandomInt(1, 100) > 75 then
+				npc.feathers = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_feathers.vmdl"})
+				npc.feathers:FollowEntity(npc, true)
+			end
+			npc.hair = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_hair"..RandomInt(1, 2)..".vmdl"})
+			npc.horns = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_horns"..RandomInt(1, 4)..".vmdl"})
+			npc.nose = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_nose"..RandomInt(1, 3)..".vmdl"})
+			npc.tail = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_tail"..RandomInt(1, 4)..".vmdl"})
+			npc.teeth = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_teeth"..RandomInt(1, 4)..".vmdl"})
+			npc.wings = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/courier/greevil/greevil_wings"..RandomInt(1, 4)..".vmdl"})
+
+			-- lock to bone
+			npc.eyes:SetMaterialGroup(material_group)
+			npc.eyes:FollowEntity(npc, true)
+			npc.ears:SetMaterialGroup(material_group)
+			npc.ears:FollowEntity(npc, true)
+			npc.hair:FollowEntity(npc, true)
+			npc.horns:SetMaterialGroup(material_group)
+			npc.horns:FollowEntity(npc, true)
+			npc.nose:SetMaterialGroup(material_group)
+			npc.nose:FollowEntity(npc, true)
+			npc.tail:SetMaterialGroup(material_group)
+			npc.tail:FollowEntity(npc, true)
+			npc.teeth:SetMaterialGroup(material_group)
+			npc.teeth:FollowEntity(npc, true)
+			npc.wings:SetMaterialGroup(material_group)
+			npc.wings:FollowEntity(npc, true)
+		elseif string.find(npc:GetUnitName(), "_siege") then
+			npc:SetModel("models/creeps/mega_greevil/mega_greevil.vmdl")
+			npc:SetOriginalModel("models/creeps/mega_greevil/mega_greevil.vmdl")
+			npc:SetModelScale(3.0)
+		end
+
 		-- Valve Illusion bug to prevent respawning
-		if npc:IsIllusion() or npc:IsTempestDouble() then
+		if npc:IsIllusion() and not npc:HasModifier("modifier_illusion_manager_out_of_world") then
 			if npc.illusion == true then
 				UTIL_Remove(npc)
 			end
 			npc.illusion = true
+			return
+		elseif npc:IsTempestDouble() then
+			UTIL_Remove(npc)
 			return
 		end
 

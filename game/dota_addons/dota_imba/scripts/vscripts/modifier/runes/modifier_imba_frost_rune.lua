@@ -52,7 +52,7 @@ function modifier_imba_frost_rune:GetAuraEntityReject(target)
 end
 
 function modifier_imba_frost_rune:GetEffectName()
-	return "particles/econ/courier/courier_baekho/courier_baekho_ambient_snow.vpcf"
+	return "particles/econ/courier/courier_greevil_blue/courier_greevil_blue_ambient_3.vpcf"
 end
 
 function modifier_imba_frost_rune:GetEffectAttachType()
@@ -104,7 +104,7 @@ end
 --]]
 
 function modifier_imba_frost_rune_aura:GetEffectName()
-	return "particles/econ/courier/courier_baekho/courier_baekho_ambient_snow.vpcf"
+	return "particles/econ/courier/courier_greevil_blue/courier_greevil_blue_ambient_3.vpcf"
 end
 
 function modifier_imba_frost_rune_aura:GetEffectAttachType()

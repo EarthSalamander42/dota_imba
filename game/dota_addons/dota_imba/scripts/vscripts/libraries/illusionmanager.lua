@@ -106,7 +106,7 @@ function modifier_illusion_manager:OnDestroy()
 	if self.special_modifier then
 		illusiontimer = self:GetParent():FindModifierByName(self.special_modifier)
 	end
-	illusiontimer:SetDuration(1,true) 																															 -- prevent modifier_illusion from running out 
+	illusiontimer:SetDuration(1, true) 																															 -- prevent modifier_illusion from running out 
 end
 
 function modifier_illusion_manager_out_of_world:GetBonusDayVision() return -10000 end
@@ -131,7 +131,12 @@ end
 function modifier_illusion_manager_out_of_world:OnIntervalThink()
 	if not IsServer() then return end	
 	self:GetParent():SetAbsOrigin(self:GetParent():GetOwner():GetAbsOrigin())  	 -- this prevents the weird 'teleport' effect from doing setabsorigin.  I could also add a frame delay to the absorigin set but i'm lazy
-	self.illusiontimer:SetDuration(1,true)	 -- constantly watch modifier_illusion and just keep the duration running
+	if self.illusiontimer then
+		if not self:GetParent():HasModifier("modifier_illusion_manager_out_of_world") then
+			self:GetParent():AddNewModifier(tEntity, nil, "modifier_illusion_manager_out_of_world",{})
+		end
+		self.illusiontimer:SetDuration(1, true)	 -- constantly watch modifier_illusion and just keep the duration running
+	end
 end
 
 function modifier_illusion_manager_out_of_world:OnDestroy()

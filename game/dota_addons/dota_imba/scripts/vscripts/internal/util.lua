@@ -994,7 +994,7 @@ function ReconnectPlayer(player_id)
 end
 
 function DonatorCompanion(hero, model)
-if hero:GetPlayerID() == -1 then return end
+if hero:GetPlayerID() == -1 or hero:IsIllusion() then return end
 local summon_point = Entities:FindByName(nil, "ent_dota_fountain_good"):GetAbsOrigin()
 local color = hero:GetFittingColor()
 
@@ -1249,9 +1249,10 @@ function PickupRune(rune_name, unit, bActiveByBottle)
 			-- Bounty rune parameters
 			local base_bounty = 200
 			local bounty_per_minute = 4
+			local xp_per_minute = 10
 			local game_time = GameRules:GetDOTATime(false, false)
 			local current_bounty = base_bounty + bounty_per_minute * game_time / 60
-			local current_xp = bounty_per_minute * game_time / 60
+			local current_xp = xp_per_minute * game_time / 60
 
 			-- If this is the first bounty rune spawn, double the base bounty
 			if bounty_rune_is_initial_bounty_rune then

@@ -14,7 +14,7 @@
 		"item"		"item_ward_observer"
 		"item"		"item_ward_sentry"
 		"item"		"item_tome_of_knowledge"
-		"item"		"item_bottle"
+		"item"		"item_imba_bottle"
 	}
 
 	"attributes"
@@ -220,7 +220,7 @@
 //		"item"		"item_blades_of_attack"
 		"item"		"item_gloves"
 		"item"		"item_chainmail"
-//		"item"		"item_bottle"
+//		"item"		"item_imba_bottle"
 //		"item"		"item_quarterstaff"
 		"item"		"item_vitality_booster"		
 		"item"		"item_broadsword"		
@@ -256,7 +256,7 @@
 		"item"		"item_courier"
 		"item"		"item_ward_observer"
 		"item"		"item_ward_sentry"
-		"item"		"item_bottle"
+		"item"		"item_imba_bottle"
 		"item"		"item_branches"
 		"item"		"item_gauntlets"
 		"item"		"item_slippers"

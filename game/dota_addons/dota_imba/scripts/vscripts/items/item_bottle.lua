@@ -30,7 +30,7 @@ function item_imba_bottle:OnSpellStart()
 	else
 		local charges = self:GetCurrentCharges()
 		if charges > 0 then
-			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_item_imba_bottle_heal", {duration = self:GetSpecialValueFor("restore_time")})
+			self:GetCaster():AddNewModifier(self:GetCaster(), nil, "modifier_item_imba_bottle_heal", {duration = self:GetSpecialValueFor("restore_time")})
 			self:SetCurrentCharges(charges - 1)
 			self:GetCaster():EmitSound("Bottle.Drink")
 		end
@@ -117,11 +117,14 @@ end
 
 
 modifier_item_imba_bottle_heal = class({
-	GetTexture =          function() return "custom/bottle_3" end,
 	IsPurgable =          function() return false end,
 	GetEffectName =       function() return "particles/items_fx/bottle.vpcf" end,
 	GetEffectAttachType = function() return PATTACH_ABSORIGIN_FOLLOW end,
 })
+
+function modifier_item_imba_bottle_heal:GetTexture()
+	return "custom/bottle_3"
+end
 
 function modifier_item_imba_bottle_heal:DeclareFunctions()
 	return {

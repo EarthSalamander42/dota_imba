@@ -9,7 +9,6 @@
 
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-		"IsDisabled"				"3"
 
 		"Ability1"					"arc_warden_flux"
 		"Ability2"					"arc_warden_magnetic_field"
