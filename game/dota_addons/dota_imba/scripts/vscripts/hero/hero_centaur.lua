@@ -785,6 +785,7 @@ function modifier_imba_return_passive:OnTakeDamage(keys)
 				attacker = parent,
 				damage = final_damage,
 				damage_type = DAMAGE_TYPE_PHYSICAL,
+				damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
 				ability = ability}
 
 			ApplyDamage(damageTable)
