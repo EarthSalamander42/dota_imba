@@ -535,21 +535,13 @@ modifier_imba_ghost_shroud_buff = modifier_imba_ghost_shroud_buff or class({})
 function modifier_imba_ghost_shroud_buff:DeclareFunctions()
 	local decFuncs =
 	{
-		MODIFIER_PROPERTY_HEAL_AMPLIFY_PERCENTAGE,
+		MODIFIER_PROPERTY_HP_REGEN_AMPLIFY_PERCENTAGE,
 		MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL,
 	}
 	return decFuncs
 end
 
-function modifier_imba_ghost_shroud_buff:GetModifierHealAmplify_Percentage()
-	local healing_amp_pct = self:GetAbility():GetSpecialValueFor("healing_amp_pct")
-	if self:GetCaster() ~= self:GetParent() then 
-		healing_amp_pct = healing_amp_pct / 2
-	end
-	return healing_amp_pct
-end
-
-function modifier_imba_ghost_shroud_buff:GetHealthRegenAmp()
+function modifier_imba_heartstopper_aura_damage:GetModifierHPRegenAmplify_Percentage()
 	local healing_amp_pct = self:GetAbility():GetSpecialValueFor("healing_amp_pct")
 	if self:GetCaster() ~= self:GetParent() then 
 		healing_amp_pct = healing_amp_pct / 2
