@@ -5288,7 +5288,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed"					"900 900 900 900 1100 1300 1500"
+				"speed"					"1200 1200 1200 1200 1400 1600 1800"
 			}
 			"06"
 			{
@@ -5298,7 +5298,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"rock_distance"			"2000"
+				"rock_distance"			"2000 2000 2000 2000 2100 2200 2300"
 			}
 			"08"
 			{
@@ -5363,7 +5363,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"slow_duration"			"1.4 1.6 1.8 2.0 2.25 2.5 2.75"
+				"slow_duration"			"2.25 2.5 2.75 3.0 3.25 3.5 3.75"
 			}
 		}
 	}
@@ -5407,12 +5407,12 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"miss_duration"			"2.5 3.0 3.5 4.0"
+				"miss_duration"			"2.5 3.0 3.5 4.0 4.5 5.0 5.5"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pull_units_per_second_heroes"		"600 600 600 600 700 800 900"
+				"pull_units_per_second_heroes"		"1200"
 			}				
 			"05"
 			{
@@ -5494,12 +5494,12 @@
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"300"
+				"damage"			"600"
 			}
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"aoe"				"300"
+				"aoe"				"600"
 			}
 		}
 	}
@@ -5509,7 +5509,7 @@
 	//=================================================================================================================
 	"earth_spirit_magnetize"
 	{
-		"AbilityCastRange"				"300"
+		"AbilityCastRange"				"500"
 
 		"AbilityCooldown"				"100 90 80 75 70 65"
 
@@ -5520,7 +5520,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cast_radius"			"300"
+				"cast_radius"			"500"
 			}
 			"02"
 			{

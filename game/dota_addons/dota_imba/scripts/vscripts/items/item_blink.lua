@@ -13,10 +13,6 @@ function item_imba_blink:GetBehavior()
 	return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES
 end
 
-function item_imba_blink:GetAbilityTextureName()
-   return "custom/imba_blink"
-end
-
 function item_imba_blink:GetIntrinsicModifierName()
 	return "modifier_imba_blink_dagger_handler"
 end
@@ -71,10 +67,10 @@ function item_imba_blink:OnSpellStart()
 end
 
 function item_imba_blink:GetAbilityTextureName()
+	if not IsClient() then return end
 	local caster = self:GetCaster()
-	if not caster:IsHero() then return "custom/imba_blink" end
-
-	return "custom/imba_blink_"..caster.blink_icon
+	if not caster.blink_icon_client then return "custom/imba_blink" end
+	return "custom/imba_blink"..caster.blink_icon_client
 end
 
 -----------------------------------------------------------------------------------------------------------
@@ -84,6 +80,7 @@ if modifier_imba_blink_dagger_handler == nil then modifier_imba_blink_dagger_han
 function modifier_imba_blink_dagger_handler:IsHidden() return true end
 function modifier_imba_blink_dagger_handler:IsDebuff() return false end
 function modifier_imba_blink_dagger_handler:IsPurgable() return false end
+function modifier_imba_blink_dagger_handler:RemoveOnDeath() return false end
 function modifier_imba_blink_dagger_handler:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_blink_dagger_handler:OnCreated()
@@ -116,6 +113,23 @@ function modifier_imba_blink_dagger_handler:OnCreated()
 					EmitAnnouncerSoundForPlayer(blinkResponse[carrier_name], caster:GetPlayerID())
 				end)
 			end
+		end
+	end
+	self:OnIntervalThink()
+	self:StartIntervalThink(1.0)
+end
+
+function modifier_imba_blink_dagger_handler:OnIntervalThink()
+	local caster = self:GetCaster()
+	if IsServer() then
+		self:SetStackCount(caster.blink_icon)
+	end
+	if IsClient() then
+		local icon = self:GetStackCount()
+		if icon == 0 then
+			caster.blink_icon_client = nil
+		else
+			caster.blink_icon_client = icon
 		end
 	end
 end

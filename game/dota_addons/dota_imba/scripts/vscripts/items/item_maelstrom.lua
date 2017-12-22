@@ -417,7 +417,7 @@ function modifier_item_imba_jarnbjorn:OnAttackLanded( keys )
 
 			for _,enemy in pairs(enemy_units) do
 				if enemy ~= target then
-					local damageTable = {victim = enemy, attacker = self:GetParent(), damage = splash_damage, damage_type = DAMAGE_TYPE_PHYSICAL, ability = self.ability}
+					local damageTable = {victim = enemy, attacker = self:GetParent(), damage = splash_damage, damage_type = DAMAGE_TYPE_PHYSICAL, damage_flags = DOTA_DAMAGE_FLAG_BYPASSES_BLOCK + DOTA_DAMAGE_FLAG_IGNORES_PHYSICAL_ARMOR + DOTA_DAMAGE_FLAG_NO_DAMAGE_MULTIPLIERS, ability = self.ability}
 
 					ApplyDamage(damageTable)
 				end

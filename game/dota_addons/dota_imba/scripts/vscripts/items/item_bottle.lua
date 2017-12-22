@@ -30,7 +30,7 @@ function item_imba_bottle:OnSpellStart()
 	else
 		local charges = self:GetCurrentCharges()
 		if charges > 0 then
-			self:GetCaster():AddNewModifier(self:GetCaster(), nil, "modifier_item_imba_bottle_heal", {duration = self:GetSpecialValueFor("restore_time")})
+			self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_item_imba_bottle_heal", {duration = self:GetSpecialValueFor("restore_time")})
 			self:SetCurrentCharges(charges - 1)
 			self:GetCaster():EmitSound("Bottle.Drink")
 		end
@@ -130,9 +130,9 @@ function modifier_item_imba_bottle_heal:DeclareFunctions()
 end
 
 function modifier_item_imba_bottle_heal:GetModifierConstantHealthRegen()
-	return self:GetAbility():GetSpecialValueFor("health_restore") / self:GetAbility():GetSpecialValueFor("restore_time")
+	return (self:GetAbility():GetSpecialValueFor("health_restore") / self:GetAbility():GetSpecialValueFor("restore_time"))
 end
 
 function modifier_item_imba_bottle_heal:GetModifierConstantManaRegen()
-	return self:GetAbility():GetSpecialValueFor("mana_restore") / self:GetAbility():GetSpecialValueFor("restore_time")
+	return (self:GetAbility():GetSpecialValueFor("mana_restore") / self:GetAbility():GetSpecialValueFor("restore_time"))
 end
