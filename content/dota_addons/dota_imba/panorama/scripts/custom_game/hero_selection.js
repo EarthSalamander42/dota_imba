@@ -320,11 +320,13 @@ var DireCount = 0
 		RadiantCount = RadiantCount +1
 
 		if (RadiantCount >= 5) {
-			class_option_count = class_option_count +1
-			var ClassOptionPanelRadiant_alt = $.CreatePanel("Panel", $("#LeftPlayers"), "PlayerRow" + class_option_count + "_good");
-			ClassOptionPanelRadiant.AddClass("PlayerOptionRowV10")
-			ClassOptionPanelRadiant_alt.AddClass("PlayerOptionRowV10")
 			RadiantCount = 0
+			if (map_info.map_display_name != "imba_standard") {
+				class_option_count = class_option_count +1
+				var ClassOptionPanelRadiant_alt = $.CreatePanel("Panel", $("#LeftPlayers"), "PlayerRow" + class_option_count + "_good");
+				ClassOptionPanelRadiant.AddClass("PlayerOptionRowV10")
+				ClassOptionPanelRadiant_alt.AddClass("PlayerOptionRowV10")
+			}
 		} else {
 			ClassOptionPanelRadiant.AddClass("PlayerOptionRow")
 		}
@@ -360,11 +362,13 @@ var DireCount = 0
 		DireCount = DireCount +1
 
 		if (DireCount >= 5) {
-			class_option_count = class_option_count +1
-			var ClassOptionPanelDire_alt = $.CreatePanel("Panel", $("#RightPlayers"), "PlayerRow" + class_option_count + "_bad");
-			ClassOptionPanelDire.AddClass("PlayerOptionRowV10")
-			ClassOptionPanelDire_alt.AddClass("PlayerOptionRowV10")
 			DireCount = 0
+			if (map_info.map_display_name != "imba_standard") {
+				class_option_count = class_option_count +1
+				var ClassOptionPanelDire_alt = $.CreatePanel("Panel", $("#RightPlayers"), "PlayerRow" + class_option_count + "_bad");
+				ClassOptionPanelDire.AddClass("PlayerOptionRowV10")
+				ClassOptionPanelDire_alt.AddClass("PlayerOptionRowV10")
+			}
 		} else {
 			ClassOptionPanelDire.AddClass("PlayerOptionRow")
 		}
