@@ -9,6 +9,8 @@
 		"gamerules",
 		"shared_unit_control",
 		"imba_talent_manager",
-		"netgraph"
+		"netgraph",
+		"top_xp",
+		"top_imr_5v5",
 	]
 }

@@ -5,7 +5,7 @@ XP_level_table = {0,100,200,300,400,500,700,900,1100,1300,1500,1800,2100,2400,27
 
 local bonus = 0
 for i = 21 +1, 500 do
-	bonus = bonus +10
+	bonus = bonus +25
 	XP_level_table[i] = XP_level_table[i-1] + 500 + bonus
 end
 
@@ -144,6 +144,84 @@ local max_xp = {}
 			title_color = GetTitleColorIXP(GetTitleIXP(level[ID]), true),
 			IMR_5v5 = GetStatsForPlayer(ID).imr_5v5,
 			IMR_10v10 = GetStatsForPlayer(ID).imr_10v10,
+		})
+	end
+	GetTopPlayersIXP()
+	GetTopPlayersIMR()
+end
+
+function GetTopPlayersIXP()
+if api_preloaded.topxpusers == nil then return end
+local level = {}
+local current_xp_in_level = {}
+local max_xp = {}
+
+	for _, top_user in pairs(api_preloaded.topxpusers) do
+		local global_xp = top_user.xp
+		level[top_user.rank] = 0
+
+		for i = 1, #XP_level_table do
+			if global_xp > XP_level_table[i] then
+				if global_xp > XP_level_table[#XP_level_table] then -- if max level
+					level[top_user.rank] = #XP_level_table
+					current_xp_in_level[top_user.rank] = XP_level_table[level[top_user.rank]] - XP_level_table[level[top_user.rank]]
+					max_xp[top_user.rank] = XP_level_table[level[top_user.rank]] - XP_level_table[level[top_user.rank]]
+				else
+					level[top_user.rank] = i
+					current_xp_in_level[top_user.rank] = 0
+					current_xp_in_level[top_user.rank] = global_xp - XP_level_table[i]
+					max_xp[top_user.rank] = XP_level_table[level[top_user.rank]+1] - XP_level_table[level[top_user.rank]]
+				end
+			end
+		end
+
+		CustomNetTables:SetTableValue("top_xp", tostring(top_user.rank),
+		{
+			SteamID64 = top_user.steamid,
+			XP = current_xp_in_level[top_user.rank],
+			MaxXP = max_xp[top_user.rank],
+			Lvl = level[top_user.rank],
+			title = GetTitleIXP(level[top_user.rank]),
+			title_color = GetTitleColorIXP(GetTitleIXP(level[top_user.rank]), true),
+			IMR_5v5 = top_user.imr_5v5,
+		})
+	end
+end
+
+function GetTopPlayersIMR()
+if api_preloaded.topimrusers == nil then return end
+local level = {}
+local current_xp_in_level = {}
+local max_xp = {}
+
+	for _, top_user in pairs(api_preloaded.topimrusers) do
+		local global_xp = top_user.xp
+		level[top_user.rank] = 0
+
+		for i = 1, #XP_level_table do
+			if global_xp > XP_level_table[i] then
+				if global_xp > XP_level_table[#XP_level_table] then -- if max level
+					level[top_user.rank] = #XP_level_table
+					current_xp_in_level[top_user.rank] = XP_level_table[level[top_user.rank]] - XP_level_table[level[top_user.rank]]
+					max_xp[top_user.rank] = XP_level_table[level[top_user.rank]] - XP_level_table[level[top_user.rank]]
+				else
+					level[top_user.rank] = i +1 -- transform level 0 into level 1
+					current_xp_in_level[top_user.rank] = 0
+					current_xp_in_level[top_user.rank] = global_xp - XP_level_table[i]
+					max_xp[top_user.rank] = XP_level_table[level[top_user.rank]+1] - XP_level_table[level[top_user.rank]]
+				end
+			end
+		end
+
+		CustomNetTables:SetTableValue("top_imr_5v5", tostring(top_user.rank),
+		{
+			SteamID64 = top_user.steamid,
+			XP = current_xp_in_level[top_user.rank],
+			MaxXP = max_xp[top_user.rank],
+			Lvl = level[top_user.rank],
+			title = GetTitleIXP(level[top_user.rank]),
+			title_color = GetTitleColorIXP(GetTitleIXP(level[top_user.rank]), true),
+			IMR_5v5 = top_user.imr_5v5,
 		})
 	end
 end

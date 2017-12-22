@@ -266,7 +266,6 @@
 
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-		"IsDisabled"				"3"
 
 		"Ability1"					"beastmaster_wild_axes"
 		"Ability2"					"beastmaster_call_of_the_wild"
@@ -2242,9 +2241,8 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"Ability1"					"imba_sly_king_frost_gale"			// Ability 1
 		"Ability2"					"imba_sly_king_burrow_blast"		// Ability 2
-		"Ability3"					"generic_hidden"					// Ability 3
-		"Ability4"					"imba_sly_king_frozen_skin"			// Ability 4
-		"Ability5"					"generic_hidden"					// Ability 5
+		"Ability3"					"imba_sly_king_frozen_skin"					// Ability 3
+		"Ability4"					"generic_hidden"			// Ability 4
 
 		// Armor
 		//-------------------------------------------------------------------------------------------------------------

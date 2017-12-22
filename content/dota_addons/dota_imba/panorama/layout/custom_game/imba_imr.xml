@@ -76,8 +76,12 @@
 				<Panel id="Legend" class="LeaderboardLegend" hittest="false">
 					<Label id="Rank" class="LeaderboardRank" text="#leaderboard_rank"/>
 					<Label id="SteamAvatar" class="LeaderboardAvatar" text="#leaderboard_steam_avatar"/>
-					<Label id="XP" class="LeaderboardXP" text="#leaderboard_xp"/>
-					<Label id="IMR" class="LeaderboardIMR" text="#leaderboard_imr"/>
+					<Button id="XP" class="LeaderboardXP" onactivate="ClassBy('XP');">
+						<Label class="LeaderboardButtonLabel" text="#leaderboard_xp" />
+					</Button>
+					<Button id="IMR" class="LeaderboardIMR" onactivate="ClassBy('IMR');">
+						<Label class="LeaderboardButtonLabel" text="#leaderboard_imr" />
+					</Button>
 				</Panel>
 
 				<Panel id="Tops" hittest="false">

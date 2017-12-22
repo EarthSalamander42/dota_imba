@@ -9,6 +9,7 @@ DebugPrint("[IMBA] Performing pre-load precache")
 
 	-- Lua modifiers activation
 	LinkLuaModifier("modifier_imba_speed_limit_break", "modifier/modifier_imba_speed_limit_break.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_imba_amphibian", "modifier/modifier_imba_amphibian.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_contributor_statue", "modifier/modifier_imba_contributor_statue.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_haste_rune_speed_limit_break", "modifier/modifier_imba_haste_rune_speed_limit_break.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_haste_boots_speed_break", "modifier/modifier_imba_haste_boots_speed_break.lua", LUA_MODIFIER_MOTION_NONE )

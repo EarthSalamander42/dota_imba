@@ -577,10 +577,6 @@ function imba_mirana_arrow:OnProjectileHit_ExtraData(target, location, extra_dat
 	return true
 end
 
-
-
-
-
 -- Arrow stun modifier
 modifier_imba_sacred_arrow_stun = class({})
 
@@ -748,7 +744,7 @@ local ability = self
 local leap_range = ability:GetSpecialValueFor("leap_range")
 local night_leap_range_bonus = ability:GetSpecialValueFor("night_leap_range_bonus")
 	
-	if IsDaytime() then                    
+	if IsDaytime() then
 		return leap_range        
 	else            
 		return leap_range + night_leap_range_bonus        
@@ -826,7 +822,6 @@ function imba_mirana_leap:OnSpellStart()
 		end)
 	end
 end
-
 
 -- Leap movement modifier
 modifier_imba_leap_movement = class({})

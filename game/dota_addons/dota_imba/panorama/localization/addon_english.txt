@@ -63,7 +63,7 @@
 	"leaderboard_loading"			"Loading leaderboard, please wait"
 	"leaderboard_rank"				"Rank"
 	"leaderboard_steam_avatar"		"Steam"
-	"leaderboard_xp"				"Experience"
+	"leaderboard_xp"				"Experience (click to sort)"
 	"leaderboard_imr"				"Imba Match Rank"
 
 	//Battlepass

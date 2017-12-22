@@ -51,7 +51,7 @@
 #BattlepassWindow
 {
 	width: 800px;
-	height: 625px;
+	height: 650px;
 	background-color: #000000da;
 	align: center center;
 	flow-children: down;
@@ -83,6 +83,38 @@
 #InfoHeader {
 	width: 100%;
 	height: 60px;
+}
+
+.LeaderboardButtonLabel {
+	width: 100%;
+	text-align: center;
+	font-size: 19px;
+	font-weight: bolder;
+	color:#fff;
+}
+
+#XP {
+	background-color: #505050ba;
+}
+
+#XP:hover {
+	background-color: #303030ba;
+}
+
+#XP:active {
+	background-color: #505050ba;
+}
+
+#IMR {
+	background-color: #005000ba;
+}
+
+#IMR:hover {
+	background-color: #003000ba;
+}
+
+#IMR:active {
+	background-color: #005000ba;
 }
 
 .LeaderboardRank,
@@ -211,18 +243,22 @@
 }
 
 #BattlepassTabButton:hover,
-#LeaderboardTabButton:hover,
 #CloseButton:hover
 {
-	border: 1px solid white;
-	saturation: 0.9;
+	background-color: #000060ba;
 }
+
+#LeaderboardTabButton:hover {
+	background-color: #400000ba;
+}
+
 
 #BattlepassTabButton:active,
 #LeaderboardTabButton:active,
 #CloseButton:active
 {
 	saturation: 1.0;
+	background-color: #300000ba;
 }
 
 #LeaderboardTabButton Label,

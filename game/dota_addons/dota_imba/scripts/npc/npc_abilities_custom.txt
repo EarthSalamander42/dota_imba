@@ -42152,4 +42152,76 @@
 			}
 		}
 	}
+
+	//=================================================================================================================
+	// Sly King : Ice Route
+	//=================================================================================================================
+	"imba_sly_king_burrow_blast"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile" 					"hero/hero_sly_king.lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitDamageType"  		"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"winter_wyvern_winters_curse"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.8 0.8 0.8"
+		"AbilityCastRange" 				"0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"150 130 110"
+		"AbilityDamage"					"30 55 80"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"150 200 250"
+		"AbilityCastAnimation"  		"ACT_DOTA_CAST_ABILITY_4"
+		"AnimationPlaybackRate" 		"1"
+		"AnimationIgnoresModelScale" 	"1"
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/heroes/game_sounds_pikachu.vsndevts"
+			"particle"					"particles/pikachu/pikachu_newulti_new.vpcf"
+			"particle"					"particles/pikachu/pikachu_newulti_new2.vpcf"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"speed"						"550 575 600"		// Level Imba = 550 625 700 800 900 1050 1200
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"12.0 14.0 16.0" 	// Level Imba = 12 13 14 15 16 18 20
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"400 450 500"		// Level Imba = 550 625 700 800 900 1050 1200
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"200 300 400" 		// Level Imba = 200 310 420 530 640 750 900
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"stun_duration"				"2.2 2.7 3.2" 		// Level Imba = 2.0 2.5 3.0 3.5 4.0 4.5 5.0
+			}
+		}
+	}
 }

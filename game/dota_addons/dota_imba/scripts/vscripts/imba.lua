@@ -110,6 +110,17 @@ function GameMode:OnFirstPlayerLoaded()
 	-- IMBA: Contributor models
 	-------------------------------------------------------------------------------------------------
 
+	for _, amphibian in pairs(Entities:FindAllByName("imbamphibian2")) do
+		local imbamphibian = CreateUnitByName("npc_imba_amphibian", amphibian:GetAbsOrigin(), true, nil, nil, 2)
+		imbamphibian:SetForwardVector(Vector(1, 1, 0):Normalized())
+		imbamphibian:AddNewModifier(imbamphibian, nil, "modifier_imba_amphibian", {})
+	end
+	for _, amphibian in pairs(Entities:FindAllByName("imbamphibian3")) do
+		local imbamphibian = CreateUnitByName("npc_imba_amphibian", amphibian:GetAbsOrigin(), true, nil, nil, 3)
+		imbamphibian:SetForwardVector(Vector(1, 1, 0):Normalized())
+		imbamphibian:AddNewModifier(imbamphibian, nil, "modifier_imba_amphibian", {})
+	end
+
 	-- Contributor statue list
 	local contributor_statues = {
 		"npc_imba_contributor_hjort",
