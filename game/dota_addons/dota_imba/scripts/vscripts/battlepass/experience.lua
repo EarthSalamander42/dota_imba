@@ -167,7 +167,7 @@ local max_xp = {}
 					current_xp_in_level[top_user.rank] = XP_level_table[level[top_user.rank]] - XP_level_table[level[top_user.rank]]
 					max_xp[top_user.rank] = XP_level_table[level[top_user.rank]] - XP_level_table[level[top_user.rank]]
 				else
-					level[top_user.rank] = i
+					level[top_user.rank] = i +1
 					current_xp_in_level[top_user.rank] = 0
 					current_xp_in_level[top_user.rank] = global_xp - XP_level_table[i]
 					max_xp[top_user.rank] = XP_level_table[level[top_user.rank]+1] - XP_level_table[level[top_user.rank]]

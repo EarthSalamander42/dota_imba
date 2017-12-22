@@ -71,34 +71,10 @@ function item_imba_blink:OnSpellStart()
 end
 
 function item_imba_blink:GetAbilityTextureName()
-	if IsClient() then
-		local caster = self:GetCaster()
-		if not caster:IsHero() then return "custom/imba_blink" end
-		
-		local carrier_name = caster:GetName()
-		local uniqueBlink = {
-			npc_dota_hero_antimage		= "antimage",
-			npc_dota_hero_bristleback	= "bristleback",
-			npc_dota_hero_brewmaster	= "brewmaster",
-			npc_dota_hero_chen			= "chen",
-			npc_dota_hero_clinkz		= "clinkz",
-			npc_dota_hero_doom_bringer	= "doom",
-			npc_dota_hero_invoker		= "invoker",
-			npc_dota_hero_jakiro		= "jakiro",
-			npc_dota_hero_leshrac		= "leshrac",
-			npc_dota_hero_lycan			= "lycan",
-			npc_dota_hero_meepo			= "meepo",
-			npc_dota_hero_naga_siren	= "naga",
-			npc_dota_hero_nyx_assassin	= "nyx",
-			npc_dota_hero_silencer		= "silencer"
-		}
-		
-		if uniqueBlink[carrier_name] then
-			return "custom/imba_blink_"..uniqueBlink[carrier_name]
-		end
-		
-		return "custom/imba_blink"
-	end
+	local caster = self:GetCaster()
+	if not caster:IsHero() then return "custom/imba_blink" end
+
+	return "custom/imba_blink_"..caster.blink_icon
 end
 
 -----------------------------------------------------------------------------------------------------------
@@ -193,17 +169,8 @@ function item_imba_blink_boots:OnSpellStart()
 	-- Disjointing everything
 	ProjectileManager:ProjectileDodge(caster)
 
-	-- Defining the color, either default or by command
-	local color
-	if caster.blinkcolor then
-		color = caster.blinkcolor
-	else
-		color = Vector(0, 20, 255) -- Blueish, just a little brighter
-	end
-
 	-- Creating the particle & sound at the start-location
 	local blink_pfx = ParticleManager:CreateParticle(caster.blink_effect, PATTACH_ABSORIGIN, caster)
-	ParticleManager:SetParticleControl(blink_pfx, 15, color)
 	ParticleManager:ReleaseParticleIndex(blink_pfx)
 	caster:EmitSound("DOTA_Item.BlinkDagger.Activate")
 
@@ -236,7 +203,6 @@ function item_imba_blink_boots:OnSpellStart()
 
 		-- Create Particle on end-point
 		local blink_end_pfx = ParticleManager:CreateParticle(caster.blink_effect_end, PATTACH_ABSORIGIN, caster)
-		ParticleManager:SetParticleControl(blink_end_pfx, 15, color )
 		ParticleManager:ReleaseParticleIndex(blink_end_pfx)
 	end)
 end

@@ -218,9 +218,7 @@
 	flow-children: right;
 }
 
-#BattlepassTabButton,
-#LeaderboardTabButton,
-#CloseButton
+#LeaderboardTabButton
 {
 	width: 100%;
 	height: 40px;
@@ -229,7 +227,12 @@
 	saturation: 0.9;
 }
 
+#BattlepassTabButton,
 #CloseButton {
+	width: 100%;
+	height: 40px;
+	align: center bottom;
+	saturation: 0.9;
 	background-color: #000090ba;
 }
 
@@ -252,13 +255,17 @@
 	background-color: #400000ba;
 }
 
-
-#BattlepassTabButton:active,
-#LeaderboardTabButton:active,
-#CloseButton:active
+#LeaderboardTabButton:active
 {
 	saturation: 1.0;
 	background-color: #300000ba;
+}
+
+#BattlepassTabButton:active,
+#CloseButton:active
+{
+	saturation: 1.0;
+	background-color: #000030ba;
 }
 
 #LeaderboardTabButton Label,
@@ -485,29 +492,37 @@
 
 .BattlepassRow {
 	width: 100%;
-	height: 70px;
-	margin-top: 10px;
+	height: 85px;
+	margin-top: 5px;
 	background-color: #000000ba;
 	horizontal-align: left;
 	flow-children: right;
 /*	overflow: noclip scroll; */
 }
 
+.BattlepassReward {
+	width: 74px;
+	height: 75px;
+	margin-left: 2px;
+	margin-right: 2px;
+	flow-children: down;
+}
+
 .BattlepassRewardIcon {
 	width: 74px;
 	height: 60px;
-	margin-left: 2px;
-	margin-right: 2px;
-	vertical-align: center;
+	vertical-align: top;
 	background-position: 0px 0px;
+}
+
+.BattlepassRewardIcon_locked {
 	wash-color: darkgrey;
 	saturation: 0.8;
 }
 
 .BattlepassRewardLabel {
 	horizontal-align: left;
-	font-size: 11px;
-	color: #999999;
+	font-size: 13px;
 	vertical-align: top;
 	letter-spacing: 1px;
 	align: center center;
@@ -515,4 +530,16 @@
 	text-align: center center;
 	text-shadow: 0px 0px 4px 4 #000000;
 	color: #A3B5D0cc;
+}
+
+.BattlepassRewardLabelLocked {
+	horizontal-align: left;
+	font-size: 15px;
+	vertical-align: top;
+	letter-spacing: 1px;
+	align: center center;
+	text-transform: uppercase;
+	text-align: center center;
+	text-shadow: 0px 0px 4px 4 #000000;
+	color: red;
 }

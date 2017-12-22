@@ -336,8 +336,11 @@ var DireCount = 0
 				RadiantLevels = RadiantLevels + plyData.IMR_5v5 / radiantPlayers.length
 				$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + RadiantLevels.toFixed([0]);
 			} else if (map_info.map_display_name == "imba_10v10") {
-				playerPanel.SetPlayerMMR( plyData.IMR_10v10.toFixed([0]) );
-				RadiantLevels = RadiantLevels + plyData.IMR_10v10 / radiantPlayers.length
+//				playerPanel.SetPlayerMMR( plyData.IMR_10v10.toFixed([0]) );
+//				RadiantLevels = RadiantLevels + plyData.IMR_10v10 / radiantPlayers.length
+//				$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + RadiantLevels.toFixed([0]);
+				playerPanel.SetPlayerMMR( plyData.Lvl.toFixed([0]) );
+				RadiantLevels = RadiantLevels + plyData.Lvl / radiantPlayers.length
 				$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + RadiantLevels.toFixed([0]);
 			} else if (map_info.map_display_name == "imba_frantic_10v10") {
 				playerPanel.SetPlayerMMR( plyData.Lvl.toFixed([0]) );
@@ -370,15 +373,18 @@ var DireCount = 0
 		if (plyData != null) {
 			if (map_info.map_display_name == "imba_standard") {
 				playerPanel.SetPlayerMMR( plyData.IMR_5v5.toFixed([0]) );
-				DireLevels = DireLevels + plyData.IMR_5v5 / radiantPlayers.length
+				DireLevels = DireLevels + plyData.IMR_5v5 / direPlayers.length
 				$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + DireLevels.toFixed([0]);
 			} else if (map_info.map_display_name == "imba_10v10") {
-				playerPanel.SetPlayerMMR( plyData.IMR_10v10.toFixed([0]) );
-				DireLevels = DireLevels + plyData.IMR_10v10 / radiantPlayers.length
+//				playerPanel.SetPlayerMMR( plyData.IMR_10v10.toFixed([0]) );
+//				DireLevels = DireLevels + plyData.IMR_10v10 / radiantPlayers.length
+//				$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + DireLevels.toFixed([0]);
+				playerPanel.SetPlayerMMR( plyData.Lvl.toFixed([0]) );
+				DireLevels = DireLevels + plyData.Lvl / direPlayers.length
 				$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + DireLevels.toFixed([0]);
 			} else if (map_info.map_display_name == "imba_frantic_10v10") {
 				playerPanel.SetPlayerMMR( plyData.Lvl.toFixed([0]) );
-				DireLevels = DireLevels + plyData.Lvl / radiantPlayers.length
+				DireLevels = DireLevels + plyData.Lvl / direPlayers.length
 				$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + DireLevels.toFixed([0]);
 			}
 		}

@@ -44,6 +44,7 @@ function SwitchTab(tab) {
 function Battlepass()
 {
 	var BattlepassRewards = CustomNetTables.GetTableValue("game_options", "battlepass").battlepass;
+//	BattlepassRewards.sort();
 	if (BattlepassRewards === undefined) {
 		$.Msg("Battlepass undefined..")
 		$.Schedule(1, Battlepass)
@@ -54,31 +55,75 @@ function Battlepass()
 		var class_option_count = 1;
 		var i_single = false
 
-		for (i in BattlepassRewards) {
-			if (i_single == false) {
-				i_single = true
-				var reward_row = $.CreatePanel("Panel", $('#BattlepassInfoContainer'), "BattlepassRow" + class_option_count);
-				reward_row.AddClass("BattlepassRow")
-			}
+		for (var i = 1; i <= 200; i++) {
+			if (BattlepassRewards[i] != undefined) {
+				if (i_single == false) {
+					i_single = true
+					var reward_row = $.CreatePanel("Panel", $('#BattlepassInfoContainer'), "BattlepassRow" + class_option_count);
+					reward_row.AddClass("BattlepassRow")
+				}
 
-			// Battlepass reward level
-//			$.Msg(BattlepassRewards[i])
+				// Battlepass reward level
+//				$.Msg(BattlepassRewards.level)
 
-			var reward = $.CreatePanel("Panel", $("#BattlepassRow" + class_option_count), i);
-			reward.AddClass("BattlepassRewardIcon")
-			reward.style.backgroundImage = 'url("file://{images}/custom_game/battlepass/'+ i +'.png")';
-			var reward_label = $.CreatePanel("Label", reward, i + "_label");
-			reward_label.AddClass("BattlepassRewardLabel")
-			reward_label.text = $.Localize("battlepass_" + i) + " \n" + $.Localize("battlepass_reward_locked");
+				var reward = $.CreatePanel("Panel", $("#BattlepassRow" + class_option_count), BattlepassRewards[i]);
+				reward.AddClass("BattlepassReward")
+	
+				var reward_icon = $.CreatePanel("Panel", reward, BattlepassRewards[i] + "_icon");
+				reward_icon.AddClass("BattlepassRewardIcon")
+				reward_icon.style.backgroundImage = 'url("file://{images}/custom_game/battlepass/'+ BattlepassRewards[i] +'.png")';
 
-			i_count = i_count +1
+				// all tooltips only show the last created window...
+//				(function () {
+//					reward_icon.SetPanelEvent("onmouseover", function() {
+//						$.DispatchEvent("DOTAShowTextTooltip", reward_icon, $.Localize("battlepass_" + BattlepassRewards[i]));
+//					})
+//					reward_icon.SetPanelEvent("onmouseout", function() {
+//						$.DispatchEvent( "DOTAHideTextTooltip", reward_icon);
+//					})
+//				})(reward_icon);
 
-			if (i_count > 10) {
-				class_option_count = class_option_count +1
-				var reward_row = $.CreatePanel("Panel", $('#BattlepassInfoContainer'), "BattlepassRow" + class_option_count);
-				reward_row.AddClass("BattlepassRow")
-				i_count = 1
-			}
+				var reward_label = $.CreatePanel("Label", reward, BattlepassRewards[i] + "_label");
+				reward_label.AddClass("BattlepassRewardLabel")
+				reward_label.text = $.Localize("battlepass_level") + i;
+
+				var radiantPlayers = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_GOODGUYS );
+				$.Each( radiantPlayers, function( player ) {
+					var plyData = CustomNetTables.GetTableValue("player_table", player);
+					if (plyData != null) {
+						if (i >= plyData.Lvl) {
+							reward_icon.AddClass("BattlepassRewardIcon_locked")
+							var reward_label_locked = $.CreatePanel("Label", reward_icon, BattlepassRewards[i] + "_label");
+							reward_label_locked.AddClass("BattlepassRewardLabelLocked")
+							reward_label_locked.text = $.Localize("battlepass_reward_locked");
+						}
+					}
+				});
+				// onmouseover="UIShowTextTooltip( imba_gamemode_settings_tower_power_title_tooltip )"
+				// onmouseout="UIHideTextTooltip()">
+
+				var direPlayers = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_BADGUYS );
+				$.Each( direPlayers, function( player ) {
+					var plyData = CustomNetTables.GetTableValue("player_table", player);
+					if (plyData != null) {
+						if (i >= plyData.Lvl) {
+							reward_icon.AddClass("BattlepassRewardIcon_locked")
+							var reward_label_locked = $.CreatePanel("Label", reward_icon, BattlepassRewards[i] + "_label");
+							reward_label_locked.AddClass("BattlepassRewardLabelLocked")
+							reward_label_locked.text = $.Localize("battlepass_reward_locked");
+						}
+					}
+				});				
+
+				i_count = i_count +1
+
+				if (i_count > 10) {
+					class_option_count = class_option_count +1
+					var reward_row = $.CreatePanel("Panel", $('#BattlepassInfoContainer'), "BattlepassRow" + class_option_count);
+					reward_row.AddClass("BattlepassRow")
+					i_count = 1
+				}
+			}	
 		}
 	}
 }

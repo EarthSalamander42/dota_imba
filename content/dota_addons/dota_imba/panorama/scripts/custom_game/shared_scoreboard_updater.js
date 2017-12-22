@@ -81,8 +81,10 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 					_ScoreboardUpdater_SetTextSafe( playerPanel, "TeammateIMRAmount", plyData.IMR_5v5.toFixed([0]) );
 					_ScoreboardUpdater_SetTextSafe( playerPanel, "PlayerIMRAmount", plyData.IMR_5v5.toFixed([0]) );
 				} else if (map_info.map_display_name == "imba_10v10") {
-					_ScoreboardUpdater_SetTextSafe( playerPanel, "TeammateIMRAmount", plyData.IMR_10v10.toFixed([0]) );
-					_ScoreboardUpdater_SetTextSafe( playerPanel, "PlayerIMRAmount", plyData.IMR_10v10.toFixed([0]) );
+//					_ScoreboardUpdater_SetTextSafe( playerPanel, "TeammateIMRAmount", plyData.IMR_10v10.toFixed([0]) );
+//					_ScoreboardUpdater_SetTextSafe( playerPanel, "PlayerIMRAmount", plyData.IMR_10v10.toFixed([0]) );
+					_ScoreboardUpdater_SetTextSafe( playerPanel, "TeammateIMRAmount", "n/a" );
+					_ScoreboardUpdater_SetTextSafe( playerPanel, "PlayerIMRAmount", "n/a" );
 				} else if (map_info.map_display_name == "imba_frantic_10v10") {
 					_ScoreboardUpdater_SetTextSafe( playerPanel, "TeammateIMRAmount", "n/a" );
 					_ScoreboardUpdater_SetTextSafe( playerPanel, "PlayerIMRAmount", "n/a" );
