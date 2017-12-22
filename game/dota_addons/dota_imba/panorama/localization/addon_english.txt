@@ -66,6 +66,14 @@
 	"leaderboard_xp"				"Experience (click to sort)"
 	"leaderboard_imr"				"Imba Match Rank"
 
+	//blue
+	//nature
+	//water
+	//snow
+	//gold
+	//red/Fire
+	//purple
+
 	//Battlepass
 	"imba_game_info"				"Imba Game Info"
 	"imba_game_info_close"			"Close"
@@ -101,15 +109,19 @@
 	"battlepass_fountain4"			"Water Fountain"
 	"battlepass_fountain5"			"Water Fountain 2"
 	"battlepass_fountain6"			"Water Fountain 3"
-	"battlepass_fountain7"			"Gold Fountain"
-	"battlepass_fountain8"			"Gold Fountain 2"
-	"battlepass_fountain9"			"Gold Fountain 3"
-	"battlepass_fountain10"			"Red Fountain"
-	"battlepass_fountain11"			"Red Fountain 2"
-	"battlepass_fountain12"			"Snow Fountain"
-	"battlepass_fountain13"			"Snow Fountain 2"
-	"battlepass_fountain14"			"Snow Fountain 3"
+	"battlepass_fountain7"			"Snow Fountain"
+	"battlepass_fountain8"			"Snow Fountain 2"
+	"battlepass_fountain9"			"Snow Fountain 3"
+	"battlepass_fountain10"			"Gold Fountain"
+	"battlepass_fountain11"			"Gold Fountain 2"
+	"battlepass_fountain12"			"Red Fountain"
+	"battlepass_fountain13"			"Red Fountain 2"
+	"battlepass_fountain14"			"Red Fountain 3"
 	"battlepass_fountain15"			"Purple Fountain"
+	"battlepass_bottle"				"Water Bottle"
+	"battlepass_bottle2"			"Gold Bottle"
+	"battlepass_bottle3"			"Red Bottle"
+	"battlepass_bottle4"			"Purple Bottle"
 
 	//=================================================================================================================
 	// Generic talent names

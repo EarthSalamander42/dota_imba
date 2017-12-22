@@ -118,7 +118,7 @@ end
 modifier_item_imba_bottle_heal = class({
 	GetTexture =			function() return "custom/bottle_3" end,
 	IsPurgable =			function() return false end,
-	GetEffectName =			function() return "particles/items_fx/bottle.vpcf" end,
+	GetEffectName =			function() return self:GetCaster().bottle_effect end,
 	GetEffectAttachType =	function() return PATTACH_ABSORIGIN_FOLLOW end,
 })
 

@@ -39,6 +39,10 @@
 			<Image src="file://panorama/images/custom_game/battlepass/mekansm2.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/sheepstick.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/sheepstick2.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/bottle.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/bottle2.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/bottle3.png" hittest="false" />
+			<Image src="file://panorama/images/custom_game/battlepass/bottle4.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_storegga.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/icons/npc_dota_hero_storegga.png" hittest="false" />
 		</Panel>

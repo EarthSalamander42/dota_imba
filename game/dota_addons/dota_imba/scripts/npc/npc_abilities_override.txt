@@ -17005,7 +17005,7 @@
 	//=================================================================================================================
 	"courier_shield"
 	{
-		"AbilityTextureName"		"courier_burst"
+//		"AbilityTextureName"		"courier_burst"
 		"AbilityCooldown"			"30.0"
 	}
 

@@ -121,6 +121,7 @@ end
 
 function modifier_imba_blink_dagger_handler:OnIntervalThink()
 	local caster = self:GetCaster()
+	if caster:IsIllusion() then return end
 	if IsServer() then
 		self:SetStackCount(caster.blink_icon)
 	end
