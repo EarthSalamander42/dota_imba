@@ -42,7 +42,14 @@ IMBATTLEPASS_LEVEL_REWARD["fountain14"]		= 121
 IMBATTLEPASS_LEVEL_REWARD["fountain15"]		= 130
 IMBATTLEPASS_LEVEL_REWARD["shiva2"]			= 200
 
-CustomNetTables:SetTableValue("game_options", "battlepass", {battlepass = IMBATTLEPASS_LEVEL_REWARD})
+a = {}
+for k, v in pairs(IMBATTLEPASS_LEVEL_REWARD) do
+	table.insert(a, v, k)
+end
+-- PrintTable(a)
+-- table.sort(a)
+
+CustomNetTables:SetTableValue("game_options", "battlepass", {battlepass = a})
 
 --[[ Not Added yet: 
 	Custom Icons if has special item effects
@@ -96,41 +103,53 @@ end
 function GetBlinkEffect(hero)
 	local effect = "particles/items_fx/blink_dagger_start.vpcf"
 	local effect2 = "particles/items_fx/blink_dagger_end.vpcf"
+	local icon = "imba_blink"
 
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["blink10"] then
 		effect = "particles/econ/events/ti4/blink_dagger_start_ti4.vpcf"
 		effect = "particles/econ/events/ti4/blink_dagger_end_ti4.vpcf"
+		icon = "imba_blink10"
 	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["blink9"] then
-		effect = "particles/econ/events/ti5/blink_dagger_start_lvl2_ti5.vpcf"
-		effect = "particles/econ/events/ti5/blink_dagger_end_lvl2_ti5.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["blink8"] then
-		effect = "particles/econ/events/ti5/blink_dagger_start_ti5.vpcf"
-		effect2 = "particles/econ/events/ti5/blink_dagger_end_ti5.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["blink7"] then
 		effect = "particles/econ/events/ti6/blink_dagger_start_ti6_lvl2.vpcf"
 		effect2 = "particles/econ/events/ti6/blink_dagger_end_ti6_lvl2.vpcf"
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["blink6"] then
+		icon = "imba_blink9"
+	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["blink8"] then
 		effect = "particles/econ/events/ti6/blink_dagger_start_ti6.vpcf"
 		effect2 = "particles/econ/events/ti6/blink_dagger_end_ti6.vpcf"
+		icon = "imba_blink8"
+	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["blink7"] then
+		effect = "particles/econ/events/ti5/blink_dagger_start_lvl2_ti5.vpcf"
+		effect = "particles/econ/events/ti5/blink_dagger_end_lvl2_ti5.vpcf"
+		icon = "imba_blink7"
+	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["blink6"] then
+		effect = "particles/econ/events/ti5/blink_dagger_start_ti5.vpcf"
+		effect2 = "particles/econ/events/ti5/blink_dagger_end_ti5.vpcf"
+		icon = "imba_blink6"
 	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["blink5"] then
 		effect = "particles/econ/events/winter_major_2017/blink_dagger_start_wm07.vpcf"
 		effect2 = "particles/econ/events/winter_major_2017/blink_dagger_end_wm07.vpcf"
+		icon = "imba_blink5"
 	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["blink4"] then
 		effect = "particles/econ/events/ti7/blink_dagger_start_ti7_lvl2.vpcf"
 		effect2 = "particles/econ/events/ti7/blink_dagger_end_ti7_lvl2.vpcf"
+		icon = "imba_blink4"
 	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["blink3"] then
 		effect = "particles/econ/events/ti7/blink_dagger_start_ti7.vpcf"
 		effect2 = "particles/econ/events/ti7/blink_dagger_end_ti7.vpcf"
+		icon = "imba_blink3"
 	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["blink2"] then
 		effect = "particles/econ/events/fall_major_2016/blink_dagger_start_fm06.vpcf"
 		effect2 = "particles/econ/events/fall_major_2016/blink_dagger_end_fm06.vpcf"
+		icon = "imba_blink2"
 	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["blink"] then
 		effect = "particles/econ/events/nexon_hero_compendium_2014/blink_dagger_start_nexon_hero_cp_2014.vpcf"
 		effect2 = "particles/econ/events/nexon_hero_compendium_2014/blink_dagger_end_nexon_hero_cp_2014.vpcf"
+		icon = "imba_blink"
 	end
 
 	hero.blink_effect = effect
 	hero.blink_effect_end = effect2
+	hero.blink_icon = icon
 end
 
 function GetForceStaffEffect(hero) -- still not working yet

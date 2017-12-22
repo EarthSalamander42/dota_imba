@@ -22,9 +22,6 @@
 
 	<Panel hittest="false" class="CustomHudRoot">		
 		<Panel id="DungeonHUDContents" hittest="false" class="CustomHudContents">
-
-			
-
 			<Panel id="DungeonHUD" hittest="false">
 				<Panel id="lower_hud" hittest="false" disallowedstyleflags="hover,descendantfocus">
 					<Panel id="StatBranchDrawer" hittest="false">

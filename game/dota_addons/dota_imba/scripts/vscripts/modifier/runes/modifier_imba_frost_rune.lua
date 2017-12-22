@@ -88,7 +88,7 @@ function modifier_imba_frost_rune_aura:IsPurgable()	return false end
 function modifier_imba_frost_rune_aura:IsDebuff() 	return false end
 
 function modifier_imba_frost_rune_aura:GetTextureName()
-	return "vustom/imba_rune_frost"
+	return "custom/imba_rune_frost"
 end
 
 function modifier_imba_frost_rune_aura:OnCreated()
