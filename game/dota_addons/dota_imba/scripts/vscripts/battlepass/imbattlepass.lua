@@ -53,24 +53,6 @@ end
 
 CustomNetTables:SetTableValue("game_options", "battlepass", {battlepass = a})
 
---[[ Not Added yet: 
-	Rank Double Down,
-	XP Boosters,
-	TP Scroll effect + pro team effect (7.04),
-	golden roshan contributor statue(level 500?) (7.04),
-	Mjollnir/Jarnbjorn effect,
-	Companion unlocking (need to create the companion choice in-game and remove the one in website),
-	Dagon effect,
-	Eul Scepter effect,
-	Level Up effect (not sure it's possible) (7.04),
-	Aegis effect,
-	Hermes companion with all cosmetics (7.04),
-	Axolotl companion with all cosmetics (7.04),
-	River painting (if possible) (7.04),
-	Deny creep effect with ? instead of !,
-	Tiny unique set (7.04),
---]]
-
 function Imbattlepass:Init()
 if api_preloaded.players == nil then return end
 	ImbattlepassReward = {}
@@ -264,9 +246,8 @@ local effect = ""
 	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain11"] then
 		effect = "particles/econ/events/ti5/radiant_fountain_regen_lvl2_ti5.vpcf"
 	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain10"] then
-		effect = "particles/econ/events/ti6/radiant_fountain_regen_ti5.vpcf"
+		effect = "particles/econ/events/ti5/radiant_fountain_regen_ti5.vpcf"
 	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain9"] then
-		effect = "particles/econ/events/ti6/radiant_fountain_regen_ti6_lvl3.vpcf"
 		effect = "particles/econ/events/winter_major_2017/radiant_fountain_regen_wm07_lvl3.vpcf"
 	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["fountain8"] then
 		effect = "particles/econ/events/winter_major_2017/radiant_fountain_regen_wm07_lvl2.vpcf"

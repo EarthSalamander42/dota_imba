@@ -78,6 +78,8 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 				}
 				var map_info = Game.GetMapInfo();
 				if (map_info.map_display_name == "imba_standard") {
+					$.Msg(plyData.IMR_5v5)
+					$.Msg(plyData.IMR_5v5_change)
 					_ScoreboardUpdater_SetTextSafe( playerPanel, "TeammateIMRAmount", plyData.IMR_5v5.toFixed([0]) );
 					_ScoreboardUpdater_SetTextSafe( playerPanel, "PlayerIMRAmount", plyData.IMR_5v5.toFixed([0]) + " +0" );
 					if (plyData.IMR_5v5_change != undefined) {

@@ -1699,7 +1699,7 @@ function MeatHook( keys )
 				hook_dummy:SetAbsOrigin(hook_loc + hook_step)
 				ParticleManager:SetParticleControl(hook_pfx, 6, hook_loc + hook_step + Vector(0, 0, 90))
 
-				if target_hit then
+				if target and target_hit then
 					target:SetAbsOrigin(hook_loc + hook_step)
 					target:SetForwardVector(direction:Normalized())
 					ability:CreateVisibilityNode(hook_loc, vision_radius, 0.5)

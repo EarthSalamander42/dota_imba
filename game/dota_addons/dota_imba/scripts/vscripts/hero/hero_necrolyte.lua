@@ -541,7 +541,7 @@ function modifier_imba_ghost_shroud_buff:DeclareFunctions()
 	return decFuncs
 end
 
-function modifier_imba_heartstopper_aura_damage:GetModifierHPRegenAmplify_Percentage()
+function modifier_imba_ghost_shroud_buff:GetModifierHPRegenAmplify_Percentage()
 	local healing_amp_pct = self:GetAbility():GetSpecialValueFor("healing_amp_pct")
 	if self:GetCaster() ~= self:GetParent() then 
 		healing_amp_pct = healing_amp_pct / 2

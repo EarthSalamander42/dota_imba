@@ -50,12 +50,11 @@ function Battlepass()
 		$.Schedule(1, Battlepass)
 		return;
 	} else {
-		var i = 0;
 		var i_count = 1;
 		var class_option_count = 1;
 		var i_single = false
 
-		for (var i = 1; i <= 200; i++) {
+		for (var i = 0; i <= 500 -1; i++) {
 			if (BattlepassRewards[i] != undefined) {
 				if (i_single == false) {
 					i_single = true
@@ -68,7 +67,7 @@ function Battlepass()
 
 				var reward = $.CreatePanel("Panel", $("#BattlepassRow" + class_option_count), BattlepassRewards[i]);
 				reward.AddClass("BattlepassReward")
-	
+
 				$.Msg(i + " " + BattlepassRewards[i])
 
 				var reward_icon = $.CreatePanel("Panel", reward, BattlepassRewards[i] + "_icon");

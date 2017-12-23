@@ -144,6 +144,8 @@ local max_xp = {}
 			title_color = GetTitleColorIXP(GetTitleIXP(level[ID]), true),
 			IMR_5v5 = GetStatsForPlayer(ID).imr_5v5,
 			IMR_10v10 = GetStatsForPlayer(ID).imr_10v10,
+			XP_change = 0,
+			IMR_5v5_change = 0,
 		})
 	end
 	GetTopPlayersIXP()

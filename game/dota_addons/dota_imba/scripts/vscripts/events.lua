@@ -265,6 +265,7 @@ function GameMode:OnGameRulesStateChange(keys)
 					Lvl = CustomNetTables:GetTableValue("player_table", tostring(ID)).Lvl,
 					title = CustomNetTables:GetTableValue("player_table", tostring(ID)).title,
 					title_color = CustomNetTables:GetTableValue("player_table", tostring(ID)).title_color,
+					IMR_5v5 = CustomNetTables:GetTableValue("player_table", tostring(ID)).IMR_5v5,
 					XP_change = players[tostring(PlayerResource:GetSteamID(ID))].xp_diff,
 					IMR_5v5_change = players[tostring(PlayerResource:GetSteamID(ID))].imr_5v5_diff,
 				})

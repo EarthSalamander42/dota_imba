@@ -65,9 +65,6 @@
 			</Panel>
 
 			<Panel id="BattlepassInfoContainer" hittest="false">
-				<Panel id="BattlepassXP" hittest="false">
-					
-				</Panel>
 				<Label id="ComingSoon" text="#coming_soon"/>
 				<!-- JS Inserts records here -->
 			</Panel>
