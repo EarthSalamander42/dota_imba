@@ -914,6 +914,14 @@ function imba_ursa_enrage:GetAbilityTextureName()
    return "ursa_enrage"
 end
 
+--[[function imba_ursa_enrage:GetIntrinsicModifierName()
+	if self:GetCaster():HasTalent("special_bonus_imba_ursa_1") then
+		return "modifier_imba_talent_enrage_damage"
+	else
+		return nil
+	end
+end]]
+
 function imba_ursa_enrage:GetCooldown(level)
 	local caster = self:GetCaster()
 	local ability = self	
@@ -1111,9 +1119,9 @@ end
 -- #1 Talent: When taking the talent, get the modifier
 function modifier_special_bonus_imba_ursa_1:OnCreated()
 	if IsServer() then
-		local ability = self:GetCaster():FindAbilityByName("imba_ursa_enrage")
+		local ability = self:GetParent():FindAbilityByName("imba_ursa_enrage")
 		if ability then			
-			self:GetCaster():AddNewModifier(self:GetCaster(), ability, "modifier_imba_talent_enrage_damage", {})
+			self:GetParent():AddNewModifier(self:GetParent(), ability, "modifier_imba_talent_enrage_damage", {})
 		end
 	end
 end
