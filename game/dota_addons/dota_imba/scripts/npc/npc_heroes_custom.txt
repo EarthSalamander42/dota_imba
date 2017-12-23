@@ -2239,8 +2239,8 @@
 
 		// Abilities
 		//-------------------------------------------------------------------------------------------------------------
-		"Ability1"					"imba_sly_king_frost_gale"
-		"Ability2"					"imba_sly_king_burrow_blast"
+		"Ability1"					"imba_sly_king_burrow_blast"
+		"Ability2"					"imba_sly_king_frost_gale"
 		"Ability3"					"imba_sly_king_frozen_skin"
 		"Ability4"					"generic_hidden"
 		"Ability5"					"generic_hidden"

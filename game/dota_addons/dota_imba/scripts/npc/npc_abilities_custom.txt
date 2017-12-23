@@ -42166,18 +42166,18 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"  		"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"crystal_maiden_frostbite"
+		"AbilityTextureName"			"venomancer_venomous_gale"
 		"MaxLevel"						"7"
 		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3"
+		"AbilityCastPoint"				"0.15"
 		"AbilityCastRange" 				"500"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"20 17 14 11 9.5 8 6.5"
+		"AbilityCooldown"				"11"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -42185,16 +42185,17 @@
 		"AbilityCastAnimation"  		"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"1"
 		"AnimationIgnoresModelScale" 	"1"
-		
+
 		// Data driven
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"soundfile"					"soundevents/heroes/game_sounds_pikachu.vsndevts"
+			"particle"					"particles/econ/courier/courier_greevil_blue/courier_greevil_blue_ambient_3.vpcf"
+			"particle"					"particles/heroes/hero_slyli/frost_gale.vpcf"
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_venomancer.vsndevts"
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_ancient_apparition.vsndevts"
 		}
-		
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -42263,35 +42264,33 @@
 		"ScriptFile" 					"hero/hero_sly_king.lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitDamageType"  		"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"winter_wyvern_winters_curse"
+		"AbilityTextureName"			"sand_king_burrowstrike"
 		"MaxLevel"						"7"
-		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.8 0.8 0.8"
-		"AbilityCastRange" 				"900 1000 1100 1200 1250 1300 1350"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCastRange" 				"700 800 900 1000 1050 1100 1150"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"20 15 10"
+		"AbilityCooldown"				"20 18 16 14 12 10 8"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100 150 200"
+		"AbilityManaCost"				"150"
 		"AbilityCastAnimation"  		"ACT_DOTA_CAST_ABILITY_2"
 		"AnimationPlaybackRate" 		"1"
 		"AnimationIgnoresModelScale" 	"1"
-		
+
 		// Data driven
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"soundfile"					"soundevents/heroes/game_sounds_pikachu.vsndevts"
-			"particle"					"particles/pikachu/pikachu_newulti_new.vpcf"
-			"particle"					"particles/pikachu/pikachu_newulti_new2.vpcf"
+			"soundfile"					"soundevents/heroes/game_sounds_sandking.vsndevts"
+//			"particle"					""
 		}
-		
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -42299,32 +42298,32 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"speed"						"550 625 700 800 900 1050 1200"		
+				"speed"						"3000"		
 			}
 			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"12" 	
-			}
-			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"300"		
 			}
-			"04"
+			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"200 310 420 530 640 750 900" 	
+				"damage"					"125 175 225 275 325 375 425" 	
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"stun_duration"				"1.0 1.25 1.5 1.75 2.0 2.25 2.5" 	
 			}
 			"05"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"2.0 2.5 3.0 3.5 4.0 4.5 5.0" 	
+				"var_type"					"FIELD_INTEGER"
+				"travel_distance"			"700 800 900 1000 1050 1100 1150"
 			}
 			"06"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"travel_distance"			"900 1000 1100 1200 1250 1300 1350"
+				"var_type"					"FIELD_FLOAT"
+				"delay_burrow"				"0.35"
 			}
 		}
 	}
@@ -42340,9 +42339,8 @@
 		"ScriptFile" 					"hero/hero_sly_king.lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"  		"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"tiny_craggy_exterior"
+		"AbilityTextureName"			"crystal_maiden_frostbite"
 		"MaxLevel"						"7"
-		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -42364,11 +42362,9 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"soundfile"					"soundevents/heroes/game_sounds_pikachu.vsndevts"
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_crystalmaiden.vsndevts"
 			"particle"					"particles/units/heroes/hero_crystalmaiden/maiden_frostbite.vpcf"
 			"particle"  				"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
-			
 		}
 		
 		// Special
@@ -42400,7 +42396,6 @@
 				"var_type"					"FIELD_FLOAT"
 				"damage_interval"			"0.5"
 			}
-			
 		}
 	}
 
@@ -42415,7 +42410,7 @@
 		"ScriptFile" 					"hero/hero_sly_king.lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 		"AbilityUnitDamageType"  		"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"sandking_epicenter"
+		"AbilityTextureName"			"winter_wyvern_winters_curse"
 		"MaxLevel"						"6"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 

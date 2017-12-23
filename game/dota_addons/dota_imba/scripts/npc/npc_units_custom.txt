@@ -12669,19 +12669,6 @@
 		//"Portrait"				"vgui/hud/heroportraits/abyssal_underlord"
 		"SoundSet"					"Hero_Weaver"
 
-		//Picking Screen
-		"IsCustom"					"1"
-		"IsNew"						"1"
-
-		// Abilities
-		//-------------------------------------------------------------------------------------------------------------
-		"Ability1"					"imba_sly_king_frost_gale"
-		"Ability2"					"imba_sly_king_burrow_blast"
-		"Ability3"					"imba_sly_king_frozen_skin"
-		"Ability4"					"generic_hidden"
-		"Ability5"					"generic_hidden"
-		"Ability6"					"imba_sly_king_winterbringer"
-
 		// Armor
 		//-------------------------------------------------------------------------------------------------------------
 		"ArmorPhysical"				"3"									// Physical protection.

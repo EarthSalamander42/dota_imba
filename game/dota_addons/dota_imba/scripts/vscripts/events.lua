@@ -258,13 +258,15 @@ function GameMode:OnGameRulesStateChange(keys)
 			print("Sending new XP / IMR values to clients")
 			for ID = 0, PlayerResource:GetPlayerCount() -1 do
 				print("XP DIFF:", players[tostring(PlayerResource:GetSteamID(ID))].xp_diff)
+				print("IMR DIFF:", players[tostring(PlayerResource:GetSteamID(ID))].imr_5v5_diff)
 				CustomNetTables:SetTableValue("player_table", tostring(ID), {
 					XP = CustomNetTables:GetTableValue("player_table", tostring(ID)).XP,
 					MaxXP = CustomNetTables:GetTableValue("player_table", tostring(ID)).MaxXP,
 					Lvl = CustomNetTables:GetTableValue("player_table", tostring(ID)).Lvl,
 					title = CustomNetTables:GetTableValue("player_table", tostring(ID)).title,
 					title_color = CustomNetTables:GetTableValue("player_table", tostring(ID)).title_color,
-					XP_change = players[tostring(PlayerResource:GetSteamID(ID))].xp_diff
+					XP_change = players[tostring(PlayerResource:GetSteamID(ID))].xp_diff,
+					IMR_5v5_change = players[tostring(PlayerResource:GetSteamID(ID))].imr_5v5_diff,
 				})
 			end
 --			CustomGameEventManager:Send_ServerToAllClients("end_game", players)

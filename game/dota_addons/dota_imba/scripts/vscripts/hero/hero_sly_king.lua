@@ -14,10 +14,6 @@ imba_sly_king_frost_gale = imba_sly_king_frost_gale or class({})
 LinkLuaModifier( "modifier_imba_frost_gale_setin", "hero/hero_sly_king.lua", LUA_MODIFIER_MOTION_NONE )		-- Set in modifier (slow)
 LinkLuaModifier( "modifier_imba_frost_gale_debuff", "hero/hero_sly_king.lua", LUA_MODIFIER_MOTION_NONE )		-- Root
 
-function imba_sly_king_frost_gale:GetAbilityTextureName()
-   return "sly_king_frost_gale"
-end
-
 function imba_sly_king_frost_gale:GetCastRange()
 	return self:GetSpecialValueFor("cast_range")
 end
@@ -246,10 +242,6 @@ imba_sly_king_burrow_blast = class({})
 LinkLuaModifier("modifier_imba_burrowblast_stun", "hero/hero_sly_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_burrowblast_burrow", "hero/hero_sly_king.lua", LUA_MODIFIER_MOTION_NONE)
 
-function imba_sly_king_burrow_blast:GetAbilityTextureName()
-	return "custom/imba_sly_king_burrowblast"
-end
-
 function imba_sly_king_burrow_blast:IsHiddenWhenStolen()
 	return false
 end
@@ -257,7 +249,7 @@ end
 function imba_sly_king_burrow_blast:IsNetherWardStealable()
 	return false
 end
-
+--[[
 function imba_sly_king_burrow_blast:GetCastRange(location, target)
 	local caster = self:GetCaster()
 	local cast_range = self:GetSpecialValueFor("cast_range")
@@ -266,7 +258,7 @@ function imba_sly_king_burrow_blast:GetCastRange(location, target)
 	cast_range = cast_range + caster:FindTalentValue("special_bonus_imba_sand_king_3")
 	return cast_range
 end
-
+--]]
 function imba_sly_king_burrow_blast:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()    
@@ -304,7 +296,7 @@ function imba_sly_king_burrow_blast:OnSpellStart()
 	local particle_burrow_fx = ParticleManager:CreateParticle(particle_burrow, PATTACH_WORLDORIGIN, caster)
 	ParticleManager:SetParticleControl(particle_burrow_fx, 0, caster:GetAbsOrigin())
 	ParticleManager:SetParticleControl(particle_burrow_fx, 1, target_point)    
- 
+
 	-- Projectile information
 	local burrow_projectile = {Ability = ability,                               
 							   vSpawnOrigin = caster:GetAbsOrigin(),
@@ -336,7 +328,7 @@ function imba_sly_king_burrow_blast:OnSpellStart()
 	end)
 
 	-- Add burrowed status modifier
---	caster:AddNewModifier(caster, ability, modifier_burrow, {duration = burrowblast_time})    
+	caster:AddNewModifier(caster, ability, modifier_burrow, {duration = self:GetSpecialValueFor("delay_burrow")})    
 end
 
 function imba_sly_king_burrow_blast:OnProjectileHit(target, location)
@@ -502,11 +494,6 @@ function imba_sly_king_frozen_skin:GetIntrinsicModifierName()
 	return "modifier_imba_frozen_skin_passive"
 end
 
-function imba_sly_king_frozen_skin:GetAbilityTextureName()
-   return "tiny_craggy_exterior"
-end
-
-
 --------------------------------------------------------------
 ----------Frozen skin intrinsic modifier ------------------
 --------------------------------------------------------------
@@ -618,10 +605,6 @@ function modifier_imba_frozen_skin_debuff:GetEffectAttachType() return PATTACH_A
 imba_sly_king_winterbringer = imba_sly_king_winterbringer or class({})
 LinkLuaModifier("modifier_imba_winterbringer_pulse", "hero/hero_sly_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_winterbringer_slow", "hero/hero_sly_king.lua", LUA_MODIFIER_MOTION_NONE)
-
-function imba_sly_king_winterbringer:GetAbilityTextureName()
-	return "sly_king_epicenter"
-end
 
 function imba_sly_king_winterbringer:IsHiddenWhenStolen()
 	return false

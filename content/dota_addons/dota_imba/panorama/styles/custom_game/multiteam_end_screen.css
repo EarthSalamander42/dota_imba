@@ -433,7 +433,12 @@
 	background-position: 50% 50%;
 }
 
-.ScoreCol_IMR,
+.ScoreCol_IMR
+{
+	width: 100px;
+	text-align: center;
+}
+
 .ScoreCol_Gold
 {
 	width: 70px;
