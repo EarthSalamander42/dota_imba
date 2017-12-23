@@ -11,9 +11,11 @@ LinkLuaModifier( "modifier_item_imba_sheepstick", "items/item_sheepstick.lua", L
 LinkLuaModifier( "modifier_item_imba_sheepstick_debuff", "items/item_sheepstick.lua", LUA_MODIFIER_MOTION_NONE )	-- Enemy debuff
 LinkLuaModifier( "modifier_item_imba_sheepstick_buff", "items/item_sheepstick.lua", LUA_MODIFIER_MOTION_NONE )		-- Self-use buff
 
-
 function item_imba_sheepstick:GetAbilityTextureName()
-   return "custom/imba_sheepstick"
+	if not IsClient() then return end
+	local caster = self:GetCaster()
+	if not caster.sheepstick_icon_client then return "custom/imba_sheepstick" end
+	return "custom/imba_sheepstick"..caster.sheepstick_icon_client
 end
 
 function item_imba_sheepstick:GetIntrinsicModifierName()
@@ -115,6 +117,27 @@ function modifier_item_imba_sheepstick:DeclareFunctions()
 		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
 	}
 	return funcs
+end
+
+function modifier_item_imba_sheepstick:OnCreated()
+	self:OnIntervalThink()
+	self:StartIntervalThink(1.0)
+end
+
+function modifier_item_imba_sheepstick:OnIntervalThink()
+	local caster = self:GetCaster()
+	if caster:IsIllusion() then return end
+	if IsServer() then
+		self:SetStackCount(caster.sheepstick_icon)
+	end
+	if IsClient() then
+		local icon = self:GetStackCount()
+		if icon == 0 then
+			caster.sheepstick_icon_client = nil
+		else
+			caster.sheepstick_icon_client = icon
+		end
+	end
 end
 
 function modifier_item_imba_sheepstick:GetModifierBonusStats_Strength()

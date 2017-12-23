@@ -30,7 +30,10 @@ end
 
 function item_imba_radiance:GetAbilityTextureName()
 	if self:GetCaster():HasModifier("modifier_imba_radiance_aura") then
-		return "custom/imba_radiance"
+		if not IsClient() then return end
+		local caster = self:GetCaster()
+		if not caster.radiance_icon_client then return "custom/imba_radiance" end
+		return "custom/imba_radiance"..caster.radiance_icon_client
 	end
 	
 	return "custom/imba_radiance_inactive"
@@ -54,7 +57,26 @@ function modifier_imba_radiance_basic:OnCreated(keys)
 			parent:AddNewModifier(parent, self:GetAbility(), "modifier_imba_radiance_aura", {})
 		end
 	end
+	self:OnIntervalThink()
+	self:StartIntervalThink(1.0)
 end
+
+function modifier_imba_radiance_basic:OnIntervalThink()
+	local caster = self:GetCaster()
+	if caster:IsIllusion() then return end
+	if IsServer() then
+		self:SetStackCount(caster.radiance_icon)
+	end
+	if IsClient() then
+		local icon = self:GetStackCount()
+		if icon == 0 then
+			caster.radiance_icon_client = nil
+		else
+			caster.radiance_icon_client = icon
+		end
+	end
+end
+
 
 -- Removes the unique modifier from the owner if this is the last Radiance in its inventory
 function modifier_imba_radiance_basic:OnDestroy(keys)

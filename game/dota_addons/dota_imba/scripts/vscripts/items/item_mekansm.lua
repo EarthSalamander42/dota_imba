@@ -67,12 +67,12 @@ function modifier_item_imba_arcane_boots:DeclareFunctions()
 end
 
 function modifier_item_imba_arcane_boots:GetModifierMoveSpeedBonus_Special_Boots()
-	return self:GetAbility():GetSpecialValueFor("bonus_ms") end
+	return self:GetAbility():GetSpecialValueFor("bonus_ms")
+end
 
 function modifier_item_imba_arcane_boots:GetModifierManaBonus()
-	return self:GetAbility():GetSpecialValueFor("bonus_mana") end
-
-
+	return self:GetAbility():GetSpecialValueFor("bonus_mana")
+end
 
 -----------------------------------------------------------------------------------------------------------
 --	Mekansm definition
@@ -88,7 +88,10 @@ function item_imba_mekansm:GetIntrinsicModifierName()
 	return "modifier_item_imba_mekansm" end
 
 function item_imba_mekansm:GetAbilityTextureName()
-   return "custom/imba_mekansm"
+	if not IsClient() then return end
+	local caster = self:GetCaster()
+	if not caster.mekansm_icon_client then return "custom/imba_mekansm" end
+	return "custom/imba_mekansm"..caster.mekansm_icon_client
 end
 
 function item_imba_mekansm:OnSpellStart()
@@ -143,6 +146,24 @@ function modifier_item_imba_mekansm:OnCreated(keys)
 		local parent = self:GetParent()
 		if not parent:HasModifier("modifier_item_imba_mekansm_aura_emitter") then
 			parent:AddNewModifier(parent, self:GetAbility(), "modifier_item_imba_mekansm_aura_emitter", {})
+		end
+	end
+	self:OnIntervalThink()
+	self:StartIntervalThink(1.0)
+end
+
+function modifier_item_imba_mekansm:OnIntervalThink()
+	local caster = self:GetCaster()
+	if caster:IsIllusion() then return end
+	if IsServer() then
+		self:SetStackCount(caster.mekansm_icon)
+	end
+	if IsClient() then
+		local icon = self:GetStackCount()
+		if icon == 0 then
+			caster.mekansm_icon_client = nil
+		else
+			caster.mekansm_icon_client = icon
 		end
 	end
 end

@@ -50,24 +50,19 @@ a = {}
 for k, v in pairs(IMBATTLEPASS_LEVEL_REWARD) do
 	table.insert(a, v, k)
 end
--- PrintTable(a)
--- table.sort(a)
 
 CustomNetTables:SetTableValue("game_options", "battlepass", {battlepass = a})
 
 --[[ Not Added yet: 
-	Custom Icons if has special item effects
 	Rank Double Down,
 	XP Boosters,
 	TP Scroll effect + pro team effect (7.04),
 	golden roshan contributor statue(level 500?) (7.04),
-	Mekansm/Guardian Greaves effect,
 	Mjollnir/Jarnbjorn effect,
 	Companion unlocking (need to create the companion choice in-game and remove the one in website),
 	Dagon effect,
 	Eul Scepter effect,
 	Level Up effect (not sure it's possible) (7.04),
-	Bottle effect (7.04),
 	Aegis effect,
 	Hermes companion with all cosmetics (7.04),
 	Axolotl companion with all cosmetics (7.04),
@@ -94,10 +89,10 @@ if api_preloaded.players == nil then return end
 	GetForceStaffEffect(hero)
 	GetRadianceEffect(hero)
 	GetSheepstickEffect(hero)
-	GetSheepstickModel(hero)
 	GetShivaEffect(hero)
 	GetMekansmEffect(hero)
 	GetFountainEffect(hero)
+	GetBottleEffect(hero)
 end
 
 function Imbattlepass:GetRewardUnlocked(ID)
@@ -105,9 +100,9 @@ function Imbattlepass:GetRewardUnlocked(ID)
 end
 
 function GetBlinkEffect(hero)
-	local effect = "particles/items_fx/blink_dagger_start.vpcf"
-	local effect2 = "particles/items_fx/blink_dagger_end.vpcf"
-	local icon = 0
+local effect = "particles/items_fx/blink_dagger_start.vpcf"
+local effect2 = "particles/items_fx/blink_dagger_end.vpcf"
+local icon = 0
 
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["blink10"] then
 		effect = "particles/econ/events/ti4/blink_dagger_start_ti4.vpcf"
@@ -157,88 +152,102 @@ function GetBlinkEffect(hero)
 end
 
 function GetForceStaffEffect(hero) -- still not working yet
-	local effect = "particles/items_fx/force_staff.vpcf"
+local effect = "particles/items_fx/force_staff.vpcf"
+local icon = 0
 
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["force_staff4"] then
 		
 		effect = "particles/econ/events/ti6/force_staff_ti6.vpcf"
+		icon = 4
 	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["force_staff3"] then
 		effect = "particles/econ/events/winter_major_2017/force_staff_wm07.vpcf"
+		icon = 3
 	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["force_staff2"] then
 		effect = "particles/econ/events/ti7/force_staff_ti7.vpcf"
+		icon = 2
 	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["force_staff"] then
 		effect = "particles/econ/events/fall_major_2016/force_staff_fm06.vpcf"
+		icon = 1
 	end
 
 	hero.force_staff_effect = effect
+	hero.force_staff_icon = icon
 end
 
 function GetRadianceEffect(hero)
 local effect = "particles/item/radiance/radiance_owner.vpcf"
+local icon = 0
 
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["radiance2"] then
 		effect = "particles/econ/events/ti6/radiance_owner_ti6.vpcf"
+		icon = 2
 	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["radiance"] then
 		effect = "particles/econ/events/ti7/radiance_owner_ti7.vpcf"
+		icon = 1
 	end
 
 	hero.radiance_effect = effect
+	hero.radiance_icon = icon
 end
 
 function GetSheepstickEffect(hero)
 local effect = "particles/items_fx/item_sheepstick.vpcf"
+local model = "models/props_gameplay/pig.vmdl"
+local icon = 0
 
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["sheepstick2"] then
 		effect = "particles/econ/items/shadow_shaman/shadow_shaman_sheepstick/shadowshaman_voodoo_sheepstick.vpcf"
+		model = "models/props_gameplay/roquelaire/roquelaire.vmdl"
+		icon = 2
 	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["sheepstick"] then
 		effect = "particles/econ/events/winter_major_2017/item_sheepstick_wm07.vpcf"
+		model = "models/props_gameplay/pig_blue.vmdl"
+		icon = 1
 	end
 
 	hero.sheepstick_effect = effect
-end
-
-function GetSheepstickModel(hero)
-local effect = "models/props_gameplay/pig.vmdl"
-
-	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["sheepstick2"] then
-		effect = "models/props_gameplay/roquelaire/roquelaire.vmdl"
-	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["sheepstick"] then
-		effect = "models/props_gameplay/pig_blue.vmdl"
-	end
-
-	hero.sheepstick_model = effect
+	hero.sheepstick_model = model
+	hero.sheepstick_icon = icon
 end
 
 function GetShivaEffect(hero)
 local effect = "particles/items2_fx/shivas_guard_active.vpcf"
 local effect2 = "particles/items2_fx/shivas_guard_impact.vpcf"
+local icon = 0
 
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["shiva2"] then
 		effect = "particles/econ/events/newbloom_2015/shivas_guard_active_nian2015.vpcf"
 		effect2 = "particles/econ/events/newbloom_2015/shivas_guard_impact_nian2015.vpcf"
+		icon = 2
 	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["shiva"] then
 		effect = "particles/econ/events/ti7/shivas_guard_active_ti7.vpcf"
 		effect2 = "particles/econ/events/ti7/shivas_guard_impact_ti7.vpcf"
+		icon = 1
 	end
 
 	hero.shiva_blast_effect = effect
 	hero.shiva_hit_effect = effect2
+	hero.shiva_icon = icon
 end
 
 function GetMekansmEffect(hero)
 local effect = "particles/items2_fx/mekanism.vpcf"
 local effect2 = "particles/items2_fx/mekanism_recipient.vpcf"
+local icon = 0
 
 	if Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["mekansm2"] then
 		effect = "particles/econ/events/ti6/mekanism_ti6.vpcf"
 		effect2 = "particles/econ/events/ti6/mekanism_recipient_ti6.vpcf"
+		icon = 2
 	elseif Imbattlepass:GetRewardUnlocked(hero:GetPlayerID()) >= IMBATTLEPASS_LEVEL_REWARD["mekansm"] then
 		effect = "particles/econ/events/ti7/mekanism_ti7.vpcf"
 		effect2 = "particles/econ/events/ti7/mekanism_recipient_ti7.vpcf"
+		icon = 1
 	end
 
 	hero.mekansm_effect = effect
 	hero.mekansm_hit_effect = effect2
+	hero.mekansm_icon = icon
 end
 
 function GetFountainEffect(hero)

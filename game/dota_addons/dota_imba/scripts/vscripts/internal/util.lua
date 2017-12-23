@@ -1008,13 +1008,14 @@ local color = hero:GetFittingColor()
 		companion:SetOriginalModel(model)
 		companion:SetModel(model)
 --		companion:SetMaterialGroup(tostring(RandomInt(1, 4)))
+		companion:SetModelScale(0.5)
 	else
 		companion:SetOriginalModel(model)
 		companion:SetModel(model)
 		companion:SetRenderColor(color[1], color[2], color[3])
+		companion:SetModelScale(0.9)
 	end
 
-	companion:SetModelScale(0.9)
 	companion:AddNewModifier(companion, nil, "modifier_companion", {})
 	if string.find(model, "flying") then
 		companion:SetMoveCapability(DOTA_UNIT_CAP_MOVE_FLY)

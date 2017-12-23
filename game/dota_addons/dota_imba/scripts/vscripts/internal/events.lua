@@ -118,18 +118,22 @@ local color = {}
 	-- 	end
 	-- end
 
-	-- Check for Blink-Colorcode
-	local blink_command = false
 	for str in string.gmatch(text, "%S+") do
-		for i = 1, #IMBA_DEVS do
-			if PlayerResource:GetConnectionState(caster:GetPlayerID()) == 1 then
-				print("Bot, ignoring devcheck..")
-			else
-				if PlayerResource:GetSteamAccountID(caster:GetPlayerID()) == IMBA_DEVS[i] then
-					if str == "-dev_remove_units" then
-						GameMode:RemoveUnits(true, true, true)
+		if IsInToolsMode() then
+			for i = 1, #IMBA_DEVS do
+				if PlayerResource:GetConnectionState(caster:GetPlayerID()) == 1 then
+					print("Bot, ignoring devcheck..")
+				else
+					if PlayerResource:GetSteamAccountID(caster:GetPlayerID()) == IMBA_DEVS[i] then
+						if str == "-dev_remove_units" then
+							GameMode:RemoveUnits(true, true, true)
+						end
 					end
 				end
+			end
+
+			if str == "-spawnimbarune" then
+				SpawnImbaRunes()
 			end
 		end
 
@@ -140,35 +144,5 @@ local color = {}
 		if str == "-rangeon" then
 			caster.norange = nil
 		end
-
-		if str == "-spawnimbarune" and CHEAT_ENABLED == true then
-			SpawnImbaRunes()
-		end
-
-		if str == "-blink" then
-			blink_command = true
-		elseif blink_command == false then
-			break
-		end
-		
-		if tonumber(str) then
-			if blink_command and tonumber(str) >= 0 and tonumber(str) <=255 then
-				table.insert(color,str)
-				if #color >= 3 then
-					break
-				end
-			else
-				blink_command = false
-			end
-		end
-		
-		if blink_command == false then
-			break
-		end
-	end
-	
-	if blink_command == true then
-		caster.blinkcolor = Vector(color[1], color[2], color[3])
-		return nil
 	end
 end

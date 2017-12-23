@@ -185,7 +185,6 @@ function OnSetGameMode( eventSourceIndex, args )
 	if tonumber(mode_info.all_pick) == 1 then
 		IMBA_PICK_MODE_ALL_PICK = true
 		CustomNetTables:SetTableValue("game_options", "all_pick", {true})
-		print("All Pick mode activated!")
 	end
 
 	-- All random setup
@@ -193,7 +192,6 @@ function OnSetGameMode( eventSourceIndex, args )
 		IMBA_PICK_MODE_ALL_RANDOM = true
 		HERO_SELECTION_TIME = IMBA_ALL_RANDOM_HERO_SELECTION_TIME
 		CustomNetTables:SetTableValue("game_options", "all_random", {true})
-		print("All Random mode activated!")
 	end
 
 	-- All random setup
@@ -201,22 +199,18 @@ function OnSetGameMode( eventSourceIndex, args )
 		IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO = true
 		HERO_SELECTION_TIME = IMBA_ALL_RANDOM_HERO_SELECTION_TIME
 		CustomNetTables:SetTableValue("game_options", "all_random_same_hero", {true})
-		print("All Random Same Hero mode activated!")
 	end
 
 	-- Tower upgrade setup
 --	if tonumber(mode_info.tower_upgrades) == 1 then
 --		TOWER_UPGRADE_MODE = true
 --		CustomNetTables:SetTableValue("game_options", "tower_upgrades", {true})
---		print("Tower upgrades activated!")
 --	end
 
 	-- Frantic mode setup
---	print("Frantic setup:", tonumber(mode_info.frantic_mode), mode_info.frantic_mode)
 --	if tonumber(mode_info.frantic_mode) == 1 then
 --		IMBA_FRANTIC_MODE_ON = true
 --		CustomNetTables:SetTableValue("game_options", "frantic_mode", {true})
---		print("Frantic mode activated!")
 --	end
 
 	-- Bounty multiplier increase

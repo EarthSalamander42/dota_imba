@@ -27,7 +27,7 @@ function item_imba_blink:OnSpellStart()
 
 	-- Disjointing everything
 	ProjectileManager:ProjectileDodge(caster)
-	
+
 	-- Creating the particle & sound at the start-location
 	local blink_pfx = ParticleManager:CreateParticle(caster.blink_effect, PATTACH_ABSORIGIN, caster)
 	ParticleManager:ReleaseParticleIndex(blink_pfx)

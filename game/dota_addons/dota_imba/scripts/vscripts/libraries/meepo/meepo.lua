@@ -9,8 +9,6 @@ local meepo_extra_boots = {
 	"item_branches"
 }
 
-print("Tracking Meepos...")
-
 	for m = 1, #meepo_table do
 		if meepo_table[m] == PlayerResource:GetSelectedHeroEntity(meepo_table[m]:GetPlayerID()) then -- Real Meepo
 			caster = meepo_table[m]

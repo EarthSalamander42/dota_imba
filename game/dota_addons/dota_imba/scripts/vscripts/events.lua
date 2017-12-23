@@ -163,8 +163,6 @@ function GameMode:OnGameRulesStateChange(keys)
 		-- Initialize Battle Pass
 		Imbattlepass:Init()
 
---		PrintTable(get_topxpplayers())
-
 		-- Shows various info to devs in pub-game to find lag issues
 		ImbaNetGraph(10.0)
 

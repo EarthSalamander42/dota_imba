@@ -69,6 +69,8 @@ function Battlepass()
 				var reward = $.CreatePanel("Panel", $("#BattlepassRow" + class_option_count), BattlepassRewards[i]);
 				reward.AddClass("BattlepassReward")
 	
+				$.Msg(i + " " + BattlepassRewards[i])
+
 				var reward_icon = $.CreatePanel("Panel", reward, BattlepassRewards[i] + "_icon");
 				reward_icon.AddClass("BattlepassRewardIcon")
 				reward_icon.style.backgroundImage = 'url("file://{images}/custom_game/battlepass/'+ BattlepassRewards[i] +'.png")';

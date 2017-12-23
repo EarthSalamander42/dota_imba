@@ -518,8 +518,15 @@ function item_imba_force_staff:OnSpellStart()
 	target:AddNewModifier(caster, ability, "modifier_item_imba_force_staff_active", {duration = ability:GetSpecialValueFor("duration")})
 end
 
+function item_imba_force_staff:GetAbilityTextureName()
+	if not IsClient() then return end
+	local caster = self:GetCaster()
+	if not caster.force_staff_icon_client then return "custom/imba_blink" end
+	return "custom/imba_force_staff"..caster.force_staff_icon_client
+end
+
 -------------------------------------
------  STATE MODIFIER ---------------
+--------- STATE MODIFIER ------------
 -------------------------------------
 
 modifier_item_imba_force_staff = modifier_item_imba_force_staff or class({})
@@ -529,6 +536,27 @@ function modifier_item_imba_force_staff:IsPurgable() return false end
 function modifier_item_imba_force_staff:IsDebuff() return false end
 function modifier_item_imba_force_staff:RemoveOnDeath() return false end
 function modifier_item_imba_force_staff:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+function modifier_item_imba_force_staff:OnCreated()
+	self:OnIntervalThink()
+	self:StartIntervalThink(1.0)
+end
+
+function modifier_item_imba_force_staff:OnIntervalThink()
+	local caster = self:GetCaster()
+	if caster:IsIllusion() then return end
+	if IsServer() then
+		self:SetStackCount(caster.force_staff_icon)
+	end
+	if IsClient() then
+		local icon = self:GetStackCount()
+		if icon == 0 then
+			caster.force_staff_icon_client = nil
+		else
+			caster.force_staff_icon_client = icon
+		end
+	end
+end
 
 function modifier_item_imba_force_staff:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,

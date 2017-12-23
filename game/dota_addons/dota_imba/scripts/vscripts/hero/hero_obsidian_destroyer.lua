@@ -91,7 +91,6 @@ function modifier_imba_arcane_orb_thinker:OnAttackStart(keys)
 		local attacker = keys.attacker
 		local target = keys.target      
 
-		print(attacker:GetTeamNumber(), target:GetTeamNumber())
 		-- Do absolutely nothing if the attacker is an illusion
 		if attacker:IsIllusion() then
 			return nil
