@@ -12675,11 +12675,12 @@
 
 		// Abilities
 		//-------------------------------------------------------------------------------------------------------------
-		"Ability1"					"imba_sly_king_frost_gale"			// Ability 1
-		"Ability2"					"imba_sly_king_burrow_blast"		// Ability 2
-		"Ability3"					"generic_hidden"					// Ability 3
-		"Ability4"					"imba_sly_king_frozen_skin"			// Ability 4
-		"Ability5"					"generic_hidden"					// Ability 5
+		"Ability1"					"imba_sly_king_frost_gale"
+		"Ability2"					"imba_sly_king_burrow_blast"
+		"Ability3"					"imba_sly_king_frozen_skin"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_sly_king_winterbringer"
 
 		// Armor
 		//-------------------------------------------------------------------------------------------------------------

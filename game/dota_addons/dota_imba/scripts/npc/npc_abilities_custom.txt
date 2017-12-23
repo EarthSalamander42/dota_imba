@@ -42153,7 +42153,6 @@
 		}
 	}
 
-
 	//=================================================================================================================
 	// Sly King : Frost Gale
 	//=================================================================================================================
@@ -42173,7 +42172,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.8"
+		"AbilityCastPoint"				"0.3"
 		"AbilityCastRange" 				"500"
 
 		// Time		
@@ -42200,67 +42199,58 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			
-
 			"01"
 			{
-				"var_type"								"FIELD_INTEGER"
-				"set_in_time"							"3"
+				"var_type"				"FIELD_INTEGER"
+				"set_in_time"			"3"
 			}
-
 			"02"
 			{
-				"var_type"								"FIELD_INTEGER"
-				"minimum_slow"							"33"
+				"var_type"				"FIELD_INTEGER"
+				"minimum_slow"			"33"
 			}
-
 			"03"
 			{
-				"var_type"								"FIELD_INTEGER"
-				"maximum_slow"							"66"
+				"var_type"				"FIELD_INTEGER"
+				"maximum_slow"			"66"
 			}
-
 			"04"
 			{
-				"var_type"								"FIELD_FLOAT"
-				"chill_duration"						"1 1.5 2 2.5 3 3.25 3.5"
+				"var_type"				"FIELD_FLOAT"
+				"chill_duration"		"1 1.5 2 2.5 3 3.5 4.0"
 			}
-
 			"05"
 			{
-				"var_type"								"FIELD_INTEGER"
-				"chill_damage"						"14 20 26 36 40 44 48"
+				"var_type"				"FIELD_INTEGER"
+				"chill_damage"			"90"
 			}
-
-
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"		"1300"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_range"			"600 650 700 750 775 800 825"
+			}
 			"08"
 			{
-				"var_type"								"FIELD_INTEGER"
-				"projectile_speed"						"1300"
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"125"
 			}
-
 			"09"
 			{
-				"var_type"								"FIELD_INTEGER"
-				"cast_range"							"600 650 700 750 775 800 825"
+				"var_type"				"FIELD_FLOAT"
+				"tick_interval"			"0.5"
 			}
-
 			"10"
 			{
-				"var_type"								"FIELD_INTEGER"
-				"radius"								"125"
+				"var_type"				"FIELD_INTEGER"
+				"projectile_count"		"2 3 4 5 6 7 8"
 			}
-
-			"11"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"tick_interval"							"0.5"
-			}
-
-			
 		}
 	}
-
 
 	//=================================================================================================================
 	// Sly King : Burrow Blast
@@ -42319,7 +42309,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"550 625 700 800 900 1050 1200"		
+				"radius"					"300"		
 			}
 			"04"
 			{
@@ -42338,8 +42328,6 @@
 			}
 		}
 	}
-
-
 
 	//=================================================================================================================
 	// Sly King : Frozen Skin
@@ -42390,7 +42378,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"chance"						"15"		
+				"chance"					"15"		
 			}
 			"02"
 			{
@@ -42446,18 +42434,16 @@
 		"AbilityCastAnimation"  		"ACT_DOTA_CAST_ABILITY_4"
 		"AnimationPlaybackRate" 		"1"
 		"AnimationIgnoresModelScale" 	"1"
-		
+
 		// Data driven
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"soundfile"					"soundevents/heroes/game_sounds_pikachu.vsndevts"
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_crystalmaiden.vsndevts"
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
 			"particle"					"particles/units/heroes/hero_sandking/sandking_epicenter.vpcf"
-			
 		}
-		
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -42470,7 +42456,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"damage"					"200 300 400 425 450 500" 
+				"damage"					"75 100 125 150 175 200" 
 			}
 			"03"
 			{
@@ -42480,7 +42466,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"pull_speed"				"100"
+				"pull_speed"				"50"
 			}
 			"05"
 			{
@@ -42502,7 +42488,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"slow_duration"				"3"
 			}
-			
 		}
 	}
 }
