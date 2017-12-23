@@ -42153,8 +42153,117 @@
 		}
 	}
 
+
 	//=================================================================================================================
-	// Sly King : Ice Route
+	// Sly King : Frost Gale
+	//=================================================================================================================
+	"imba_sly_king_frost_gale"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile" 					"hero/hero_sly_king.lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"  		"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"crystal_maiden_frostbite"
+		"MaxLevel"						"7"
+		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.8"
+		"AbilityCastRange" 				"500"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"20 17 14 11 9.5 8 6.5"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"80 100 120 140 150 160 170"
+		"AbilityCastAnimation"  		"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"1"
+		"AnimationIgnoresModelScale" 	"1"
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/heroes/game_sounds_pikachu.vsndevts"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_venomancer.vsndevts"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_ancient_apparition.vsndevts"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			
+
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"set_in_time"							"3"
+			}
+
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"minimum_slow"							"33"
+			}
+
+			"03"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"maximum_slow"							"66"
+			}
+
+			"04"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"chill_duration"						"1 1.5 2 2.5 3 3.25 3.5"
+			}
+
+			"05"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"chill_damage"						"14 20 26 36 40 44 48"
+			}
+
+
+			"08"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"projectile_speed"						"1300"
+			}
+
+			"09"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"cast_range"							"600 650 700 750 775 800 825"
+			}
+
+			"10"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"radius"								"125"
+			}
+
+			"11"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"tick_interval"							"0.5"
+			}
+
+			
+		}
+	}
+
+
+	//=================================================================================================================
+	// Sly King : Burrow Blast
 	//=================================================================================================================
 	"imba_sly_king_burrow_blast"
 	{
@@ -42162,25 +42271,25 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"ScriptFile" 					"hero/hero_sly_king.lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitDamageType"  		"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"winter_wyvern_winters_curse"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"MaxLevel"						"7"
+		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.8 0.8 0.8"
-		"AbilityCastRange" 				"0"
+		"AbilityCastRange" 				"900 1000 1100 1200 1250 1300 1350"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"150 130 110"
-		"AbilityDamage"					"30 55 80"
+		"AbilityCooldown"				"20 15 10"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"150 200 250"
-		"AbilityCastAnimation"  		"ACT_DOTA_CAST_ABILITY_4"
+		"AbilityManaCost"				"100 150 200"
+		"AbilityCastAnimation"  		"ACT_DOTA_CAST_ABILITY_2"
 		"AnimationPlaybackRate" 		"1"
 		"AnimationIgnoresModelScale" 	"1"
 		
@@ -42200,28 +42309,200 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"speed"						"550 575 600"		// Level Imba = 550 625 700 800 900 1050 1200
+				"speed"						"550 625 700 800 900 1050 1200"		
 			}
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"12.0 14.0 16.0" 	// Level Imba = 12 13 14 15 16 18 20
+				"duration"					"12" 	
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"400 450 500"		// Level Imba = 550 625 700 800 900 1050 1200
+				"radius"					"550 625 700 800 900 1050 1200"		
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"200 300 400" 		// Level Imba = 200 310 420 530 640 750 900
+				"damage"					"200 310 420 530 640 750 900" 	
 			}
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"2.2 2.7 3.2" 		// Level Imba = 2.0 2.5 3.0 3.5 4.0 4.5 5.0
+				"stun_duration"				"2.0 2.5 3.0 3.5 4.0 4.5 5.0" 	
 			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"travel_distance"			"900 1000 1100 1200 1250 1300 1350"
+			}
+		}
+	}
+
+
+
+	//=================================================================================================================
+	// Sly King : Frozen Skin
+	//=================================================================================================================
+	"imba_sly_king_frozen_skin"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile" 					"hero/hero_sly_king.lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitDamageType"  		"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"tiny_craggy_exterior"
+		"MaxLevel"						"7"
+		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0"
+		"AbilityCastRange" 				"0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"4 3.5 3 2.5 2 1.5 1"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		"AbilityCastAnimation"  		"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"1"
+		"AnimationIgnoresModelScale" 	"1"
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/heroes/game_sounds_pikachu.vsndevts"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_crystalmaiden.vsndevts"
+			"particle"					"particles/units/heroes/hero_crystalmaiden/maiden_frostbite.vpcf"
+			"particle"  				"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
+			
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"chance"						"15"		
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"1.5 2 2.5 3 3.25 3.5 3.75" 
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_per_second"			"50"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"stun_duration"				"0.1"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"damage_interval"			"0.5"
+			}
+			
+		}
+	}
+
+	//=================================================================================================================
+	// Sly King : Winterbringer
+	//=================================================================================================================
+	"imba_sly_king_winterbringer"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile" 					"hero/hero_sly_king.lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityUnitDamageType"  		"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"sandking_epicenter"
+		"MaxLevel"						"6"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.8"
+		"AbilityCastRange" 				"500"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"120 100 80 70 60 50"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100 140 180 200 220 240"
+		"AbilityCastAnimation"  		"ACT_DOTA_CAST_ABILITY_4"
+		"AnimationPlaybackRate" 		"1"
+		"AnimationIgnoresModelScale" 	"1"
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/heroes/game_sounds_pikachu.vsndevts"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_crystalmaiden.vsndevts"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
+			"particle"					"particles/units/heroes/hero_sandking/sandking_epicenter.vpcf"
+			
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"channel_time"				"10"		
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"damage"					"200 300 400 425 450 500" 
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"500"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"pull_speed"				"100"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"pulse_interval"			"0.5"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"ms_slow_pct"				"50"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"as_slow"					"200"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow_duration"				"3"
+			}
+			
 		}
 	}
 }
