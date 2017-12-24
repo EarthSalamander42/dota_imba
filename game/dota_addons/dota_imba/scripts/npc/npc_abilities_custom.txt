@@ -40440,27 +40440,28 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"hero/hero_hell_empress"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 		"AbilityTextureName"			"custom/empress_eleven_curses"
 		"MaxLevel"						"7"
+		"AOERadius"						"%effect_area"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1200"
-		"AbilityCastPoint"				"0.1"
+		"AbilityCastRange"				"1100"
+		"AbilityCastPoint"				"0.2"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"1.0"
+		"AbilityCooldown"				"3.5"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"10"
+		"AbilityManaCost"				"20"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -40468,6 +40469,7 @@
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_shadow_demon.vsndevts"
 			"particle"					"particles/econ/items/shadow_demon/sd_ti7_shadow_poison/sd_ti7_shadow_poison_release.vpcf"
+			"particle"					"particles/hero/hell_empress/hellion_curse_area.vpcf"
 		}
 
 		// Special
@@ -40476,18 +40478,28 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_amp"			"3.0 3.5 4.0 4.5 5.0 5.5 6.0"
+				"var_type"				"FIELD_INTEGER"
+				"damage_amp"			"6"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"stack_duration"		"6.6"
+				"var_type"				"FIELD_INTEGER"
+				"stack_duration"		"9"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
+				"curse_stacks"			"1 2 3 4 4 4 4"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
 				"max_stacks"			"11"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"effect_radius"			"325 325 325 325 375 425 475"
 			}
 		}
 	}
@@ -40518,7 +40530,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"12"
+		"AbilityCooldown"				"11"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -40554,7 +40566,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bolt_speed"			"700"
+				"bolt_speed"			"900"
 			}
 		}
 	}
@@ -40578,7 +40590,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"7 6 5 4 3 2 1"
+		"AbilityCooldown"				"5.0 3.0 2.0 1.5 1.0 0.6 0.2"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -40590,8 +40602,13 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"cooldown"				"7 6 5 4 3 2 1"
+				"var_type"				"FIELD_FLOAT"
+				"cooldown"				"5.0 3.0 2.0 1.5 1.0 0.6 0.2"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"hellbolt_cdr"			"1.0"
 			}
 		}
 	}
@@ -40627,17 +40644,18 @@
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"custom/empress_hurl_through_hell"
 		"MaxLevel"						"6"
-		"AOERadius"						"%hurl_radius%"
+		"HasScepterUpgrade"				"1"
+		"AOERadius"						"%hurl_radius"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"400"
+		"AbilityCastRange"				"400 500 600 700 800 900"
 		"AbilityCastPoint"				"0.4"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"100 95 90 85 80 75"
+		"AbilityCooldown"				"75"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -40660,37 +40678,42 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hurl_radius"			"425"
+				"hurl_radius"			"450"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"hurl_duration"			"4.0"
+				"hurl_duration"			"3.0"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hurl_damage"			"175 200 225 250 275 300"
+				"hurl_damage"			"150 200 250 300 350 400"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"curse_stacks"			"1 2 3 4 5 6"
+				"cast_range"			"400 500 600 700 800 900"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"debuff_duration"		"1.5 1.75 2.0 2.25 2.5 2.75"
+				"debuff_duration"		"2.0 2.4 2.8 3.2 3.6 4.0"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"slow_pct"				"-60"
+				"slow_pct"				"-70"
 			}
 			"07"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"debuff_duration_scepter"	"2.5 2.75 3.0 3.25 3.5 3.75"
+				"var_type"				"FIELD_INTEGER"
+				"debuff_amount"			"2"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"debuff_amount_scepter"	"4"
 			}
 		}
 	}
