@@ -118,7 +118,6 @@ end
 modifier_item_imba_bottle_heal = class({
 	GetTexture =			function() return "custom/bottle_3" end,
 	IsPurgable =			function() return false end,
-	GetEffectName =			function() return self:GetCaster().bottle_effect end,
 	GetEffectAttachType =	function() return PATTACH_ABSORIGIN_FOLLOW end,
 })
 
@@ -135,4 +134,15 @@ end
 
 function modifier_item_imba_bottle_heal:GetModifierConstantManaRegen()
 	return (self:GetAbility():GetSpecialValueFor("mana_restore") / self:GetAbility():GetSpecialValueFor("restore_time"))
+end
+
+function modifier_item_imba_bottle_heal:OnCreated()
+	if not IsServer() then return end
+	self.pfx = ParticleManager:CreateParticle(self:GetCaster().bottle_effect, PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+end
+
+function modifier_item_imba_bottle_heal:OnDestroy()
+	if not IsServer() then return end
+	ParticleManager:DestroyParticle(self.pfx, false)
+	ParticleManager:ReleaseParticleIndex(self.pfx)
 end
