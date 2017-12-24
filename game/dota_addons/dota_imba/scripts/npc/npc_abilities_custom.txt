@@ -42166,7 +42166,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"  		"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"venomancer_venomous_gale"
+		"AbilityTextureName"			"custom/sly_king_frost_gale"
 		"MaxLevel"						"7"
 		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
 
@@ -42223,7 +42223,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"chill_damage"			"90"
+				"chill_damage"			"90" // 180 dmg/sec
 			}
 			"06"
 			{
@@ -42238,7 +42238,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"125"
+				"radius"				"140"
 			}
 			"09"
 			{
@@ -42264,7 +42264,7 @@
 		"ScriptFile" 					"hero/hero_sly_king.lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitDamageType"  		"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"sand_king_burrowstrike"
+		"AbilityTextureName"			"custom/sly_king_burrowblast"
 		"MaxLevel"						"7"
 
 		// Casting
@@ -42303,7 +42303,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"300"		
+				"radius"					"250"		
 			}
 			"03"
 			{
@@ -42339,7 +42339,7 @@
 		"ScriptFile" 					"hero/hero_sly_king.lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"  		"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"crystal_maiden_frostbite"
+		"AbilityTextureName"			"custom/sly_king_frozen_skin"
 		"MaxLevel"						"7"
 
 		// Casting
@@ -42379,12 +42379,12 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"1.5 2 2.5 3 3.25 3.5 3.75" 
+				"duration"					"1.2 1.6 2.0 2.4 2.6 2.8 3.0" 
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_per_second"			"50"
+				"damage_per_second"			"75"
 			}
 			"04"
 			{
@@ -42410,7 +42410,7 @@
 		"ScriptFile" 					"hero/hero_sly_king.lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 		"AbilityUnitDamageType"  		"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"winter_wyvern_winters_curse"
+		"AbilityTextureName"			"custom/sly_king_winterbringer"
 		"MaxLevel"						"6"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 

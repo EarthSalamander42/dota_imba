@@ -12665,14 +12665,21 @@
 		"BaseClass"					"npc_dota_hero_weaver"
 		"HeroID"					"117"
 		"Model"						"models/heroes/slyli/model_weaver.vmdl"
-		"ModelScale"				"0.980000"
+		"ModelScale"				"0.940000"
 		//"Portrait"				"vgui/hud/heroportraits/abyssal_underlord"
 		"SoundSet"					"Hero_Weaver"
 
 		// Armor
 		//-------------------------------------------------------------------------------------------------------------
-		"ArmorPhysical"				"3"									// Physical protection.
+		"ArmorPhysical"				"4"									// Physical protection.
 		"MagicalResistance"			"25"								// Magical protection (percentage).
+
+		// Abilities
+		//-------------------------------------------------------------------------------------------------------------
+		"Ability1"					"imba_sly_king_burrow_blast"
+		"Ability2"					"imba_sly_king_frost_gale"
+		"Ability3"					"imba_sly_king_frozen_skin"
+		"Ability4"					"imba_sly_king_winterbringer"
 
 		// Attack
 		//-------------------------------------------------------------------------------------------------------------

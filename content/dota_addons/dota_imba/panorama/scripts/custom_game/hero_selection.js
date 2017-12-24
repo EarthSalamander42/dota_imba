@@ -783,10 +783,15 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 		$("#MaxLevelValue").text = max_level[1];
 		$("#TowerPowerValue").text = $.Localize( '#imba_gamemode_settings_power_' + tower_power[1] );
 
+		$('#GameModeSelectText').text = $.Localize( '#imba_gamemode_name_ranked_5v5' );
+
 		if (map_info.map_display_name == "imba_custom" || map_info.map_display_name == "imba_frantic_10v10") {
 			if(frantic_mode) {
 				$("#FranticModeValue").text = $.Localize( '#imba_gamemode_game_options_frantic_enabled' );
+				$('#GameModeSelectText').text = $.Localize( '#imba_gamemode_name_frantic' );
 			}
+		} else if (map_info.map_display_name == "imba_10v10") {
+			$('#GameModeSelectText').text = $.Localize( '#imba_gamemode_name_10v10' );
 		}
 
 		// If All Random is enabled, pick a random hero
@@ -795,7 +800,7 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 			$("#PickHeroBtn").AddClass( "disabled" );
 			$("#RepickBtn").AddClass( "disabled" );
 			$('#GameModeSelectText').text = $.Localize( '#imba_gamemode_name_all_random' );
-			$.Schedule(5, SelectRandomHero);
+			$.Schedule(3, SelectRandomHero);
 		}
 
 		// Tell the server this player's UI was initialized

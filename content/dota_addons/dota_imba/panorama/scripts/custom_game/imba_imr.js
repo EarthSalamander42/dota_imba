@@ -97,9 +97,14 @@ function Battlepass()
 							var reward_label_locked = $.CreatePanel("Label", reward_icon, BattlepassRewards[i] + "_label");
 							reward_label_locked.AddClass("BattlepassRewardLabelLocked")
 							reward_label_locked.text = $.Localize("battlepass_reward_locked");
+						} else {
+							var reward_label_unlocked = $.CreatePanel("Label", reward_icon, BattlepassRewards[i] + "_label");
+							reward_label_unlocked.AddClass("BattlepassRewardLabelUnlocked")
+							reward_label_unlocked.text = $.Localize("#battlepass_" + BattlepassRewards[i]);
 						}
 					}
 				});
+
 				// onmouseover="UIShowTextTooltip( imba_gamemode_settings_tower_power_title_tooltip )"
 				// onmouseout="UIHideTextTooltip()">
 

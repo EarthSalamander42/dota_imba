@@ -29,6 +29,6 @@ end
 
 function modifier_imba_fountain_particle_control:OnDestroy()
 	if not IsServer() then return end
-	ParticleManager:DestroyParticle(self.pfx, true)
+	ParticleManager:DestroyParticle(self.pfx, false)
 	ParticleManager:ReleaseParticleIndex(self.pfx)
 end

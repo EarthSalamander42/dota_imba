@@ -17118,4 +17118,179 @@
 			}
 		}
 	}
+
+	//=================================================================================================================
+	// Techies: Land Mines
+	//=================================================================================================================
+	"techies_land_mines"
+	{
+		"AbilityManaCost"				"110 130 150 170 175 180 185"
+		"MaxLevel"						"7"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"				"400"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"proximity_threshold"		"1.6"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"200 400 600 800 900 1000 1100"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"burn_duration"				"5"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"activation_delay"			"1.5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Techies: Stasis Trap
+	//=================================================================================================================
+	"techies_stasis_trap"
+	{
+		"AbilityCooldown"				"20.0 16.0 13.0 10.0"
+		"AbilityManaCost"				"80 110 140 170 180 190 200"
+		"MaxLevel"						"7"
+
+		"AbilitySpecial"
+		{		
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"activation_radius"			"500"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"stun_radius"				"800"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"stun_duration"				"2 3 4 5 5.5 6.0 6.5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Techies: Suicide Squad, Attack!
+	//=================================================================================================================
+	"techies_suicide"
+	{
+		"AbilityManaCost"				"100 125 150 175 190 205 220"
+		"MaxLevel"						"7"
+
+		"AbilitySpecial"
+		{
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"300 400 500 600 700 800 900"
+				"LinkedSpecialBonus"		"special_bonus_unique_techies"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"silence_duration"			"4 5 6 7 7.5 8 8.5"
+			} 
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hp_cost"					"50 50 50 50 45 40 35"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Techies: Remote Mines
+	//=================================================================================================================
+	"techies_remote_mines"
+	{
+		"AbilityCooldown"				"10.0"
+		"AbilityManaCost"				"200 240 280 320 360 400"
+		"MaxLevel"						"6"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_mines"					"42"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"300 450 600 650 700 750"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"450"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_scepter"			"450 600 750 800 850 900"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius_scepter"			"500"
+			}
+			"12"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"model_scale"				"0 10 20 30 40 50"     // Percentage over model scale
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Remote Mine Self Detonate
+	//=================================================================================================================
+	"techies_remote_mines_self_detonate"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"450"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Minefield Sign
+	//=================================================================================================================
+	"techies_minefield_sign"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"aura_radius"				"200"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"lifetime"					"360"
+			}
+		}
+	}
 }

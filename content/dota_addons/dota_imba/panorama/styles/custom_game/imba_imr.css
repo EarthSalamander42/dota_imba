@@ -1,3 +1,21 @@
+@keyframes 'fade_full'
+{
+	0%
+	{
+		opacity: 0.0;
+	}
+
+	50%
+	{
+		opacity: 0.9;
+	}
+
+	100%
+	{
+		opacity: 1.0;
+	}
+}
+
 .Battlepass
 {
 	width: 100%;
@@ -543,4 +561,24 @@
 	text-align: center center;
 	text-shadow: 0px 0px 4px 4 #000000;
 	color: red;
+}
+
+.BattlepassRewardLabelUnlocked {
+	horizontal-align: left;
+	font-size: 12px;
+	vertical-align: top;
+	letter-spacing: 1px;
+	align: center center;
+	text-transform: uppercase;
+	text-align: center center;
+	text-shadow: 0px 0px 4px 4 #000000;
+	color: #A3B5D0cc;
+	font-family: "Bold";
+	font-weight: bold;
+	background-color: #000000da;
+	animation-name: fade_full;
+	animation-duration: 4.0s;
+	animation-timing-function: ease-in;
+	animation-direction: alternate;
+	animation-iteration-count: infinite;
 }

@@ -68,7 +68,7 @@
 		"item"		"item_imba_morbid_mask"
 		"item"		"item_shadow_amulet"
 		"item"		"item_ghost"
-		"item"		"item_imba_blink"				
+		"item"		"item_imba_blink"
 		"item"		"item_imba_shotgun"
 	}
 	
@@ -90,7 +90,6 @@
 		"item"		"item_ultimate_scepter"
 		"item"		"item_imba_blink_boots"
 		"item"		"item_imba_gungnir"
-		"item"		"item_imba_jarnbjorn"
 	}
 
 	// Level 2 - Blue Recipes
@@ -170,10 +169,10 @@
 		"item"		"item_imba_abyssal_blade"
 		"item"		"item_imba_rapier"
 		"item"		"item_imba_starfury"
-		"item"		"item_combo_breaker"
+		"item"		"item_imba_jarnbjorn"
 	}
 
-	// Level 4 - Orange / Orb / Artifacts				
+	// Level 4 - Orange / Orb / Artifacts
 	"artifacts"
 	{
 		"item"		"item_imba_mask_of_madness"
@@ -191,6 +190,7 @@
 		"item"		"item_imba_satanic"
 		"item"		"item_imba_skadi"
 		"item"		"item_lotus_orb"
+		"item"		"item_imba_arcane_nexus"
 	}
 
 	"sideshop1"
@@ -222,8 +222,8 @@
 		"item"		"item_chainmail"
 //		"item"		"item_imba_bottle"
 //		"item"		"item_quarterstaff"
-		"item"		"item_vitality_booster"		
-		"item"		"item_broadsword"		
+		"item"		"item_vitality_booster"
+		"item"		"item_broadsword"
 	}
 	
 	"secretshop"

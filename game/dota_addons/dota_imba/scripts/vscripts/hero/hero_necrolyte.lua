@@ -134,7 +134,7 @@ function modifier_imba_sadist_stack:OnCreated()
         -- Ability properties
         self.caster = self:GetCaster()
         self.ability = self:GetAbility()
-        self.parent = self:GetParent()        
+        self.parent = self:GetParent()
 
         -- Ability specials
         self.regen_duration = self.ability:GetSpecialValueFor("regen_duration")        

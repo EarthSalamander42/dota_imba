@@ -48,10 +48,9 @@ function imba_sly_king_frost_gale:OnSpellStart()
 		for i = 1, projectile_count, 1 do
 			local angle = 360 - (360 / projectile_count)*i
 			local velocity = RotateVector2D(direction,angle,true)
-			local projectile
 
 			travel_distance = self:GetSpecialValueFor("cast_range") + GetCastRangeIncrease(caster)
-			projectile = 
+			local projectile = 
 			{
 				Ability				= self,
 				EffectName			= "particles/heroes/hero_slyli/frost_gale.vpcf",
@@ -264,9 +263,8 @@ function imba_sly_king_burrow_blast:OnSpellStart()
 	local caster = self:GetCaster()    
 	local ability = self
 	local target_point = self:GetCursorPosition()
-	local cast_responses = "sly_king_skg_ability_burrowblast_0"..math.random(1, 9)
-	local sound_cast = "Ability.SandKing_BurrowStrike"
-	local particle_burrow = "particles/econ/items/sand_king/sandking_barren_crown/sandking_rubyspire_burrowstrike.vpcf"        
+	local sound_cast = "Hero_NyxAssassin.Impale"
+	local particle_burrow = "particles/heroes/hero_slyli/sly_king_burrowblast.vpcf"        
 	local modifier_burrow = "modifier_imba_burrowblast_burrow"    
 
 	-- Ability specials
@@ -276,9 +274,6 @@ function imba_sly_king_burrow_blast:OnSpellStart()
 
 	-- #1 Talent: burrowblast path radius increase
 	burrow_radius = burrow_radius + caster:FindTalentValue("special_bonus_imba_sand_king_1")
-
-	-- Play cast response
-	EmitSoundOn(cast_responses, caster)
 
 	-- Play cast sound
 	EmitSoundOn(sound_cast, caster)
@@ -341,8 +336,6 @@ function imba_sly_king_burrow_blast:OnProjectileHit(target, location)
 	if target:IsMagicImmune() then
 		return nil
 	end
-
-	print("Target hit!")
 
 	-- Ability properties
 	local caster = self:GetCaster()
@@ -611,11 +604,9 @@ function imba_sly_king_winterbringer:IsHiddenWhenStolen()
 end
 
 function imba_sly_king_winterbringer:GetChannelTime()
-
 	local ability = self
-
 	local channel_time = ability:GetSpecialValueFor("channel_time")
-	
+
 	return channel_time
 end
 
@@ -623,12 +614,12 @@ function imba_sly_king_winterbringer:OnSpellStart()
 	-- Ability properties
 	local caster = self:GetCaster()
 	local ability = self
-	--local sound_cast = "Hero_KeeperOfTheLight.Illuminate.Charge"
+	local sound_cast = "Hero_KeeperOfTheLight.Illuminate.Charge"
 	local modifier_pulse = "modifier_imba_winterbringer_pulse"
 	local radius = ability:GetSpecialValueFor("radius")
 
 	-- Play cast sound
-   -- EmitSoundOnLocationWithCaster(caster:GetAbsOrigin(), sound_cast, caster)
+   EmitSoundOnLocationWithCaster(caster:GetAbsOrigin(), sound_cast, caster)
 
 	--Add the pulse modifier to the caster
 	caster:AddNewModifier(caster, ability, modifier_pulse, {})
@@ -648,8 +639,6 @@ function imba_sly_king_winterbringer:OnSpellStart()
 	if string.find(caster:GetUnitName(), "npc_imba_pugna_nether_ward") then
 		-- Wait two seconds, then apply it like it had succeeded
 		Timers:CreateTimer(2, function()
-
-
 			-- Start pulsing
 			caster:AddNewModifier(caster, ability, modifier_pulse, {})
 		end)

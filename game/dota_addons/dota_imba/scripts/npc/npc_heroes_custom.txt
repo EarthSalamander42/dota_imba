@@ -1194,7 +1194,6 @@
 //		"AttackRate"				"1.5"
 
 //		//Picking Screen
-//		"IsNew"						"1"
 //		"IsImba"					"1"
 //		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
@@ -1746,35 +1745,6 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Techies
-	//=================================================================================================================
-	"npc_dota_hero_techies"
-	{
-		"override_hero"				"npc_dota_hero_techies"
-
-		//Picking Screen
-		"IsImba"					"1"
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-		"IsDisabled"				"1"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
-
-		"Ability1"					"imba_techies_proximity_mine"
-		"Ability2"					"imba_techies_stasis_trap"
-		"Ability3"					"imba_techies_blast_off"
-		"Ability4"					"imba_techies_focused_detonate"
-		"Ability5"					"imba_techies_minefield_sign"
-		"Ability6"					"imba_techies_remote_mine"
-
-		"Ability10"					"special_bonus_imba_techies_1"
-		"Ability11"					"special_bonus_imba_techies_2"
-		"Ability12"					"special_bonus_imba_techies_3"
-		"Ability13"					"special_bonus_imba_techies_4"
-		"Ability14"					"special_bonus_imba_techies_5"
-		"Ability15"					"special_bonus_imba_techies_6"
-		"Ability16"					"special_bonus_imba_techies_7"
-		"Ability17"					"special_bonus_imba_techies_8"
-	}
-
-	//=================================================================================================================
 	// HERO: Tidehunter
 	//=================================================================================================================
 	"npc_dota_hero_tidehunter"
@@ -2055,7 +2025,6 @@
 
 		//Picking Screen
 		"IsCustom"					"1"
-		"IsNew"						"1"
 
 		// Abilities
 		//-------------------------------------------------------------------------------------------------------------
@@ -2145,7 +2114,6 @@
 
 		//Picking Screen
 		"IsCustom"					"1"
-		"IsNew"						"1"
 
 		// Abilities
 		//-------------------------------------------------------------------------------------------------------------
@@ -2229,7 +2197,7 @@
 		"BaseClass"					"npc_dota_hero_weaver"
 		"HeroID"					"117"
 		"Model"						"models/heroes/slyli/model_weaver.vmdl"
-		"ModelScale"				"0.980000"
+		"ModelScale"				"0.940000"
 		//"Portrait"				"vgui/hud/heroportraits/abyssal_underlord"
 		"SoundSet"					"Hero_Weaver"
 

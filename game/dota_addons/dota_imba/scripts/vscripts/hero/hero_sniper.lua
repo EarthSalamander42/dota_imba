@@ -440,9 +440,6 @@ function modifier_special_bonus_imba_sniper_4:OnCreated()
 	end
 end
 
-
-
-
 -- Shrapnel slow aura modifier
 modifier_imba_shrapnel_aura = class({})
 
@@ -455,7 +452,10 @@ function modifier_imba_shrapnel_aura:OnCreated()
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
 	self.parent = self:GetParent()    
-	self.particle_shrapnel = "particles/units/heroes/hero_sniper/sniper_shrapnel.vpcf"        
+	self.particle_shrapnel = "particles/units/heroes/hero_sniper/sniper_shrapnel.vpcf"
+	if self.caster:HasTalent("special_bonus_imba_sniper_3") then
+		self.particle_shrapnel = "particles/econ/items/sniper/sniper_charlie/sniper_shrapnel_charlie.vpcf"
+	end
 
 	-- Ability specials
 	self.radius = self.ability:GetSpecialValueFor("radius")    

@@ -37,7 +37,7 @@ end
 function modifier_imba_frost_rune:OnTakeDamage(keys)
 	if IsServer() then
 		local target = keys.unit
-		if keys.attacker == target:GetTeam() then
+		if keys.attacker == target:GetTeam() or keys.attacker:IsBuilding() then
 			return
 		end
 
@@ -107,7 +107,7 @@ end
 function modifier_imba_frost_rune_aura:OnTakeDamage(keys)
 	if IsServer() then
 		local target = keys.unit
-		if keys.attacker == target:GetTeam() then
+		if keys.attacker == target:GetTeam() or keys.attacker:IsBuilding() then
 			return
 		end
 
