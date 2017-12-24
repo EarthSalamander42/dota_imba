@@ -238,7 +238,6 @@ end
 --       burrowblast        --
 -------------------------------
 imba_sly_king_burrow_blast = class({})
-LinkLuaModifier("modifier_imba_burrowblast_stun", "hero/hero_sly_king.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_burrowblast_burrow", "hero/hero_sly_king.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_sly_king_burrow_blast:IsHiddenWhenStolen()
@@ -341,7 +340,7 @@ function imba_sly_king_burrow_blast:OnProjectileHit(target, location)
 	local caster = self:GetCaster()
 	local ability = self
 	local target_point = self.target_point    
-	local modifier_stun = "modifier_imba_burrowblast_stun"    
+	local modifier_stun = "modifier_stunned"    
 --	local modifier_poison = "modifier_imba_caustic_finale_poison"
 
 	-- Ability specials
@@ -419,28 +418,6 @@ function imba_sly_king_burrow_blast:OnProjectileHit(target, location)
 		ResolveNPCPositions(target_point, 128)
 	end)    
 end
-
-
-
--- burrowblast stun modifier
-modifier_imba_burrowblast_stun = class({})
-
-function modifier_imba_burrowblast_stun:CheckState()
-	local state = {[MODIFIER_STATE_STUNNED] = true}
-	return state
-end
-
-function modifier_imba_burrowblast_stun:GetEffectName()
-	return "particles/generic_gameplay/generic_stunned.vpcf"
-end
-
-function modifier_imba_burrowblast_stun:GetEffectAttachType()
-	return PATTACH_OVERHEAD_FOLLOW
-end
-
-function modifier_imba_burrowblast_stun:IsHidden() return false end
-function modifier_imba_burrowblast_stun:IsPurgeException() return true end
-function modifier_imba_burrowblast_stun:IsStunDebuff() return true end
 
 
 -- burrowblast burrow modifier
