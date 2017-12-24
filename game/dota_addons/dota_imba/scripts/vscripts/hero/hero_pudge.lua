@@ -1473,11 +1473,13 @@ function MeatHook( keys )
 
 	-- If the caster has a scepter, improve stack-based damage and cooldown
 	if caster:HasScepter() then
+		local cdr = 0
+		local caster_cdr = caster:GetCooldownReduction()
 		hook_damage = hook_damage + light_stacks * damage_scepter
 		local hook_cooldown = math.max(ability:GetCooldown(ability_level) - cooldown_scepter * sharp_stacks, cooldown_cap_scepter)
 		ability:EndCooldown()
-		if caster:GetCooldownReduction() ~= 0 then
-			cdr = hook_cooldown * (caster:GetCooldownReduction() / 100)
+		if caster_cdr and caster_cdr ~= 0 then
+			cdr = hook_cooldown * caster_cdr / 100
 		end
 		ability:StartCooldown(hook_cooldown - cdr)
 	end
@@ -1882,6 +1884,7 @@ function Rot( keys )
 
 	-- Damage the caster
 	ApplyDamage({attacker = caster, victim = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+
 
 	-- Deal damage and apply slow
 	local units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
