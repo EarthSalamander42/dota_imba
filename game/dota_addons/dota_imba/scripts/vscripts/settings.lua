@@ -216,7 +216,7 @@ ENABLED_RUNES[DOTA_RUNE_ARCANE] = true
 -- IMBA: game mode globals
 -------------------------------------------------------------------------------------------------
 
-GAME_WINNER_TEAM = "none"													-- Tracks game winner
+GAME_WINNER_TEAM = 0														-- Tracks game winner
 
 IMBA_HYPER_MODE_ON = false													-- Is Hyper mode activated?
 if GetMapName() ~= "imba_frantic_10v10" then
