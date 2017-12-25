@@ -44,8 +44,7 @@ end
 
 
 function modifier_item_imba_lesser_crit:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-					  MODIFIER_EVENT_ON_ATTACK_START}
+	local decFuncs = {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,}
 
 	return decFuncs
 end
@@ -84,7 +83,6 @@ end
 function modifier_item_imba_lesser_crit_buff:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE,
-		MODIFIER_EVENT_ON_ATTACK_LANDED
 	}
 	return funcs
 end
@@ -92,34 +90,11 @@ end
 -- Grant the crit damage multiplier
 function modifier_item_imba_lesser_crit_buff:GetModifierPreAttack_CriticalStrike(params)
 	if IsServer() then
-	
-	-- If the target is a deflector, do nothing
-		if params.target:HasModifier("modifier_imba_juggernaut_blade_fury") and params.attacker:IsRangedAttacker() then
-			return nil
-		end
-		
 		if RollPercentage(self.crit_chance) then
-		return self.base_crit
+			return self.base_crit
 		else
-		return nil
-		end
-	end
-end
-
--- Remove the crit modifier when the attack is concluded
-function modifier_item_imba_lesser_crit_buff:OnAttackLanded(keys)
-	if IsServer() then
-	
-		--If the target is a deflector, do nothing
-		if keys.target:HasModifier("modifier_imba_juggernaut_blade_fury") and keys.attacker:IsRangedAttacker() then
 			return nil
 		end
-		
-		-- If this unit is the attacker, remove its crit modifier
-		-- Removed so Juggernaut's crit can proc
-		--if self:GetParent() == keys.attacker then
-		--	self:GetParent():RemoveModifierByName("modifier_item_imba_bloodthorn_crit")
-		--end
 	end
 end
 
@@ -229,14 +204,8 @@ function modifier_item_imba_greater_crit_buff:GetModifierPreAttack_CriticalStrik
 		local multiplicative_chance = (1 - (1 - self.crit_chance * 0.01) ^ #crit_modifiers) * 100
 
 		if RollPercentage(multiplicative_chance) then
-		
-		-- If the target is a deflector, do nothing
-			if params.target:HasModifier("modifier_imba_juggernaut_blade_fury") and params.attacker:IsRangedAttacker() then
-				self.crit_succeeded = false
-			else
-				self:SetStackCount(0)			
-				self.crit_succeeded = true
-			end
+			self:SetStackCount(0)			
+			self.crit_succeeded = true
 		end		
 
 		if self.crit_succeeded then
@@ -255,12 +224,7 @@ function modifier_item_imba_greater_crit_buff:OnAttackLanded( params )
 			if params.target:IsBuilding() then
 				return nil
 			end
-			
-			-- If the target is a deflector, do nothing either
-			if params.target:HasModifier("modifier_imba_juggernaut_blade_fury") and params.attacker:IsRangedAttacker() then
-				return nil
-			end
-			
+
 			if not self.crit_succeeded then
 				local stacks = self:GetStackCount()
 				local crit_modifiers = self.caster:FindAllModifiersByName("modifier_item_imba_greater_crit")

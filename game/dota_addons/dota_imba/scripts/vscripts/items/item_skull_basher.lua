@@ -129,16 +129,9 @@ function modifier_imba_skull_basher_unique:OnAttack(keys)
                 return nil                
             end
 
-			-- If the target is a deflector, do nothing either
-			if target:HasModifier("modifier_imba_juggernaut_blade_fury") and attacker:IsRangedAttacker() then
-				return nil
-			end
-		
-            -- If the target is on the same team as the attacker, do nothing (WW R for instace)
-			-- On behalf of Jugg's deflecting function, disabling this. ~IamInnocentX3
-            -- if attacker:GetTeamNumber() == target:GetTeamNumber() then
-            --    return nil
-            -- end
+            if attacker:GetTeamNumber() == target:GetTeamNumber() then
+                return nil
+            end
 
             -- If the Skull Basher is on cooldown, do nothing
             if not self.ability:IsCooldownReady() then

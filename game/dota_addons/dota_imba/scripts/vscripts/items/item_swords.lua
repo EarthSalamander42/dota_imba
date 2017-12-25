@@ -371,10 +371,6 @@ function modifier_item_imba_yasha:OnAttackLanded( keys )
 		if owner ~= keys.attacker then
 			return end
 		
-		-- If the target is a deflector, do nothing either
-		if target:HasModifier("modifier_imba_juggernaut_blade_fury") and owner:IsRangedAttacker() then
-			return end
-		
 		-- If a higher-priority sword is present, do nothing either
 		local priority_sword_modifiers = {
 			"modifier_item_imba_sange_yasha",
@@ -618,10 +614,6 @@ function modifier_item_imba_sange_yasha:OnAttackLanded( keys )
 		if owner ~= keys.attacker then
 			return end
 
-		-- If the target is a deflector, do nothing either
-		if target:HasModifier("modifier_imba_juggernaut_blade_fury") and owner:IsRangedAttacker() then
-			return end
-		
 		-- If a higher-priority sword is present, do nothing either
 		local priority_sword_modifiers = {
 			"modifier_item_imba_sange_azura",
@@ -915,10 +907,6 @@ function modifier_item_imba_sange_azura:OnAttackLanded( keys )
 		if owner ~= keys.attacker then
 			return end
 
-		-- If the target is a deflector, do nothing either
-		if target:HasModifier("modifier_imba_juggernaut_blade_fury") and owner:IsRangedAttacker() then
-			return end
-		
 		-- If a higher-priority sword is present, do nothing either
 		local priority_sword_modifiers = {
 			"modifier_item_imba_triumvirate"
@@ -1107,10 +1095,6 @@ function modifier_item_imba_azura_yasha:OnAttackLanded( keys )
 		if owner ~= keys.attacker then
 			return end
 
-		-- If the target is a deflector, do nothing either
-		if target:HasModifier("modifier_imba_juggernaut_blade_fury") and owner:IsRangedAttacker() then
-			return end
-		
 		-- If a higher-priority sword is present, do nothing either
 		local priority_sword_modifiers = {
 			"modifier_item_imba_sange_yasha",
@@ -1406,10 +1390,6 @@ function modifier_item_imba_triumvirate:OnAttackLanded( keys )
 		if owner ~= keys.attacker then
 			return end
 
-		-- If the target is a deflector, do nothing either
-		if target:HasModifier("modifier_imba_juggernaut_blade_fury") and owner:IsRangedAttacker() then
-			return end
-		
 		-- All conditions met, perform a Triumvirate attack
 		TriumAttack(owner, keys.target, self:GetAbility(), "modifier_item_imba_triumvirate_stacks_debuff", "modifier_item_imba_triumvirate_stacks_buff", "modifier_item_imba_triumvirate_proc_debuff", "modifier_item_imba_triumvirate_proc_buff")
 	end

@@ -214,20 +214,19 @@ function modifier_item_imba_skadi_unique:OnTakeDamage( keys )
 
 		-- If this damage event is irrelevant, do nothing
 		if attacker ~= keys.attacker then
-			return end
+			return
+		end
 
 		-- If the attacker is an illusion, do nothing either
 		if attacker:IsIllusion() then
-			return end
-		
-		-- If the target is a deflector, do nothing either
+			return
+		end
 		local target = keys.unit
-		if target:HasModifier("modifier_imba_juggernaut_blade_fury") and attacker:IsRangedAttacker() then
-			return end
-		
+
 		-- If there's no valid target, do nothing
 		if (not IsHeroOrCreep(target)) or attacker:GetTeam() == target:GetTeam() then
-			return end
+			return
+		end
 
 		-- Calculate actual slow duration
 		local target_distance = (target:GetAbsOrigin() - attacker:GetAbsOrigin()):Length2D()

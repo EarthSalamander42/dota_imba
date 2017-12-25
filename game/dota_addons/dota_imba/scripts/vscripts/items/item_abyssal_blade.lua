@@ -192,16 +192,9 @@ function modifier_imba_abyssal_blade_unique:OnAttack(keys)
                 return nil                
             end
 
-			-- If the target is a deflector, do nothing either
-			if target:HasModifier("modifier_imba_juggernaut_blade_fury") and attacker:IsRangedAttacker() then
-				return nil
-			end
-		
-            -- If the target is on the same team as the attacker, do nothing (WW R for instace)
-			-- On behalf of Jugg's deflecting function, disabling this. ~IamInnocentX3
-            -- if attacker:GetTeamNumber() == target:GetTeamNumber() then
-            --    return nil
-            -- end
+            if attacker:GetTeamNumber() == target:GetTeamNumber() then
+                return nil
+            end
 
             -- If the Abyssal Blade is on cooldown (internal), do nothing
             if self.caster:HasModifier(self.modifier_internal_cd) then                

@@ -234,11 +234,7 @@ end
 function modifier_imba_echo_rapier_haste:OnAttack(keys)
 	if self.parent == keys.attacker then
 		
-		-- If the target is a deflector, do nothing
-		if keys.target:HasModifier("modifier_imba_juggernaut_blade_fury") and self.parent:IsRangedAttacker() then
-		else
 		keys.target:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_echo_rapier_debuff_slow", {duration = self.slow_duration})
-		end
 		
 		if self:GetStackCount() == 1 then
 			self:Destroy()

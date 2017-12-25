@@ -108,12 +108,7 @@ function modifier_item_imba_javelin_unique:OnAttackLanded(keys)
 
 		-- Else, keep going
 		local target = keys.target
-		
-		-- If the target is a deflector, do nothing either
-		if target:HasModifier("modifier_imba_juggernaut_blade_fury") and owner:IsRangedAttacker() then
-			return nil
-		end
-		
+
 		-- If the target is a hero or creep, increase this modifier's stack count
 		if IsHeroOrCreep(target) then -- and owner:GetTeam() ~= target:GetTeam() then
 			self:SetStackCount(self:GetStackCount() + 1)
@@ -241,12 +236,7 @@ function modifier_item_imba_monkey_king_bar_unique:OnAttackLanded(keys)
 			return end
 
 		-- Else, keep going
-		
-		-- If the target is a deflector, do nothing
-		if target:HasModifier("modifier_imba_juggernaut_blade_fury") and owner:IsRangedAttacker() then
-			return nil
-		end
-		
+
 		-- If the target is a hero or creep, increase this modifier's stack count
 		if IsHeroOrCreep(target) then -- and owner:GetTeam() ~= target:GetTeam() then
 			self:SetStackCount(self:GetStackCount() + 1)

@@ -132,11 +132,7 @@ function modifier_item_manta_passive:OnAttackLanded( keys )
 		-- If this attack was not performed by the modifier's owner, do nothing
 		if owner ~= keys.attacker then
 			return end
-		
-		-- If the target is a deflector, do nothing either
-		if target:HasModifier("modifier_imba_juggernaut_blade_fury") and owner:IsRangedAttacker() then
-			return end
-		
+
 		-- If a higher-priority sword is present, do nothing either
 		local priority_sword_modifiers = {
 			"modifier_item_imba_sange_yasha",

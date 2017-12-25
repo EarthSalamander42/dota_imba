@@ -1122,39 +1122,7 @@ function GameMode:DamageFilter( keys )
 				end
 			end
 		end
-		
-		-- Juggernaut Deflect kill credit
-		if victim:HasModifier("modifier_imba_juggernaut_blade_fury_deflect_on_kill_credit") then
-			-- Check if this is the killing blow
-			local victim_health = victim:GetHealth()
-			local blade_fury_modifier = victim:FindModifierByName("modifier_imba_juggernaut_blade_fury_deflect_on_kill_credit")
-			if keys.damage >= victim_health then
-				-- Prevent death and trigger Reaper's Scythe's on-kill effects
-				local blade_fury_caster = false
-				local blade_fury_ability = false
-				if blade_fury_modifier then
-					blade_fury_caster = blade_fury_modifier:GetCaster()
-					blade_fury_ability = blade_fury_modifier:GetAbility()
-				end
-				if blade_fury_caster then
-					keys.damage = 0
 
-					-- Find the Reaper's Scythe ability
-					local scythe_ability = blade_fury_caster:FindModifierByName("modifier_imba_reapers_scythe")
-					if scythe_ability then return nil end
-			
-					-- Prevent denying when other sources of damage occurs
-					local blade_fury_damager = blade_fury_caster:FindAbilityByName("imba_juggernaut_blade_fury")
-					if not blade_fury_damager then return nil end
-			
-					-- if not attacker then return nil end
-					blade_fury_modifier:Destroy()
-					-- Attempt to kill the target, crediting it to the caster of Reaper's Scythe
-					ApplyDamage({attacker = blade_fury_caster, victim = victim, ability = blade_fury_ability, damage = victim:GetHealth() + 10, damage_type = DAMAGE_TYPE_PURE, damage_flag = DOTA_DAMAGE_FLAG_NO_DAMAGE_MULTIPLIERS + DOTA_DAMAGE_FLAG_BYPASSES_BLOCK})
-				end
-			end
-		end
-	
 		-- Kunkka Oceanids Blessing talent damage negation, applying true PURE damage towards the target
 		if victim:HasModifier("modifier_imba_tidebringer_cleave_hit_target") then
 			local tidebringer_ability = attacker:FindAbilityByName("imba_kunkka_tidebringer")
