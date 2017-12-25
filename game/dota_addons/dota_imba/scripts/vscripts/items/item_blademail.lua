@@ -31,13 +31,12 @@ function item_imba_blade_mail:GetAbilityTextureName()
 		local caster = self:GetCaster()
 		if not caster:IsHero() then return "custom/imba_blade_mail" end
 		
-		local carrier_name = caster:GetName()
-		local uniqueBlink = {
+		local uniqueBM = {
 			npc_dota_hero_axe = "axe",
 		}
-		
-		if uniqueBlink[carrier_name] then
-			return "custom/imba_blade_mail_"..uniqueBlink[carrier_name]
+
+		if uniqueBM[caster:GetName()] then
+			return "custom/imba_blade_mail_"..uniqueBM[caster:GetName()]
 		end
 		
 		return "custom/imba_blade_mail"

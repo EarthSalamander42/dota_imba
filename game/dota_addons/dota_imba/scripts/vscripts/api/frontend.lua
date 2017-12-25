@@ -70,7 +70,7 @@ end
 --   false											 if the player is not a donator
 -- WTF: COOKIES: DOCUMENTATION
 function IsDonator(hero)
-	if hero:GetPlayerID() == -1 or hero:IsIllusion() then return end
+	if hero:GetPlayerID() == -1 or hero:IsIllusion() or api_preloaded.donators == nil then return end
 	for i = 1, #api_preloaded.donators do
 		if tostring(PlayerResource:GetSteamID(hero:GetPlayerID())) == api_preloaded.donators[i].steamId64 then
 			return api_preloaded.donators[i].model

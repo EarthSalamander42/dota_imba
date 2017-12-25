@@ -300,8 +300,8 @@ var DireLevels = 0
 var RadiantCount = 0
 var DireCount = 0
 
-	var str = "Visit W3Schools!";
-	var n = str.search("W3Schools");
+	var str = "Cuckies";
+	var n = str.search("Cuckies");
 	$.Msg(n)
 
 	var radiantPlayers = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_GOODGUYS );
@@ -378,18 +378,18 @@ var DireCount = 0
 			if (map_info.map_display_name == "imba_standard") {
 				playerPanel.SetPlayerMMR( plyData.IMR_5v5.toFixed([0]) );
 				DireLevels = DireLevels + plyData.IMR_5v5 / direPlayers.length
-				$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + DireLevels.toFixed([0]);
+				$("#AverageMMRTeamDire").text = $.Localize("average_mmr") + DireLevels.toFixed([0]);
 			} else if (map_info.map_display_name == "imba_10v10") {
 //				playerPanel.SetPlayerMMR( plyData.IMR_10v10.toFixed([0]) );
 //				DireLevels = DireLevels + plyData.IMR_10v10 / radiantPlayers.length
-//				$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + DireLevels.toFixed([0]);
+//				$("#AverageMMRTeamDire").text = $.Localize("average_mmr") + DireLevels.toFixed([0]);
 				playerPanel.SetPlayerMMR( plyData.Lvl.toFixed([0]) );
 				DireLevels = DireLevels + plyData.Lvl / direPlayers.length
-				$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + DireLevels.toFixed([0]);
+				$("#AverageMMRTeamDire").text = $.Localize("average_mmr") + DireLevels.toFixed([0]);
 			} else if (map_info.map_display_name == "imba_frantic_10v10") {
 				playerPanel.SetPlayerMMR( plyData.Lvl.toFixed([0]) );
 				DireLevels = DireLevels + plyData.Lvl / direPlayers.length
-				$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + DireLevels.toFixed([0]);
+				$("#AverageMMRTeamDire").text = $.Localize("average_mmr") + DireLevels.toFixed([0]);
 			}
 		}
 	});
@@ -735,6 +735,24 @@ if (hide == false) {
 	$('#BackgroundPanel').style.visibility = show;
 	$('#PickingScreen').style.visibility = show;
 	$('#LoadingPanel').style.visibility = show;
+}
+
+function ClosePickScreen(hide) {
+	if (Game.GetPlayerInfo(Players.GetLocalPlayer()).player_selected_hero == "npc_dota_hero_wisp") {
+		$.Msg("don't close pick screen")
+		return;
+	}
+	var MainPanel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
+	MainPanel.FindChildTraverse("topbar").style.visibility = "visible";
+	MainPanel.FindChildTraverse("minimap_container").style.visibility = "visible";
+	MainPanel.FindChildTraverse("lower_hud").style.visibility = "visible";
+	MainPanel.FindChildTraverse("HudChat").style.visibility = "visible";
+	MainPanel.FindChildTraverse("NetGraph").style.visibility = "visible";
+	MainPanel.FindChildTraverse("quickstats").style.visibility = "visible";
+
+	$('#BackgroundPanel').style.visibility = "collapse";
+	$('#PickingScreen').style.visibility = "collapse";
+	$('#LoadingPanel').style.visibility = "collapse";
 }
 
 //Subscribe to events

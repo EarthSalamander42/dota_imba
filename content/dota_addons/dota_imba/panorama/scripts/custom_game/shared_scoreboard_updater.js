@@ -1,6 +1,5 @@
 "use strict";
 
-
 //=============================================================================
 //=============================================================================
 function _ScoreboardUpdater_SetTextSafe( panel, childName, textValue )
@@ -76,12 +75,14 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 					_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaXPEarned"+playerId, plyData.XP_change );
 					ImbaXP_Panel.FindChildTraverse("ImbaXPEarned"+playerId).style.color = 'red';
 				}
+
 				var map_info = Game.GetMapInfo();
 				if (map_info.map_display_name == "imba_standard") {
-					$.Msg(plyData.IMR_5v5)
-					$.Msg(plyData.IMR_5v5_change)
-					_ScoreboardUpdater_SetTextSafe( playerPanel, "TeammateIMRAmount", plyData.IMR_5v5.toFixed([0]) );
-					_ScoreboardUpdater_SetTextSafe( playerPanel, "PlayerIMRAmount", plyData.IMR_5v5.toFixed([0]) + " +0" );
+					if (plyData.IMR_5v5 != undefined) {
+						$.Msg(plyData.IMR_5v5)
+						_ScoreboardUpdater_SetTextSafe( playerPanel, "TeammateIMRAmount", plyData.IMR_5v5.toFixed([0]) );
+						_ScoreboardUpdater_SetTextSafe( playerPanel, "PlayerIMRAmount", plyData.IMR_5v5.toFixed([0]) + " +0" );
+					}
 					if (plyData.IMR_5v5_change != undefined) {
 						$.Msg(plyData.IMR_5v5_change)
 						_ScoreboardUpdater_SetTextSafe( playerPanel, "PlayerIMRAmount", plyData.IMR_5v5.toFixed([0]) + " + " + plyData.IMR_5v5_change.toFixed([0]) );
@@ -255,7 +256,6 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 	playerPanel.SetHasClass( "player_ultimate_cooldown", ( ultStateOrTime > 0 ) );
 	_ScoreboardUpdater_SetTextSafe( playerPanel, "PlayerUltimateCooldown", ultStateOrTime );
 }
-
 
 //=============================================================================
 //=============================================================================

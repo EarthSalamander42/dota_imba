@@ -56,6 +56,7 @@
 	"picked_hero"					"Picked"
 	"imba_hero"						"Imba"
 	"vanilla_hero"					"Lazy"
+	"close_picking_screen"			"Force-close Picking Screen"
 
 
 	//Leaderboard
@@ -78,7 +79,7 @@
 	"imba_game_info"				"Imba Game Info"
 	"imba_game_info_close"			"Close"
 	"battlepass"					"Battlepass"
-	"coming_soon"					"Coming Soon: (being able to choose reward)"
+	"coming_soon"					"Upcoming feature: being able to choose reward"
 	"battlepass_reward_locked"		"Locked!"
 	"battlepass_level"				"Level: "
 	"battlepass_blink"				"Light Blue Blink"

@@ -521,7 +521,7 @@ end
 function item_imba_force_staff:GetAbilityTextureName()
 	if not IsClient() then return end
 	local caster = self:GetCaster()
-	if not caster.force_staff_icon_client then return "custom/imba_blink" end
+	if not caster.force_staff_icon_client then return "custom/imba_force_staff" end
 	return "custom/imba_force_staff"..caster.force_staff_icon_client
 end
 
