@@ -11518,7 +11518,7 @@
 		"ItemResult"					"item_imba_gungnir"
 		"ItemRequirements"
 		{
-			"01"						"item_imba_monkey_king_bar;item_hurricane_pike"
+			"01"						"item_imba_monkey_king_bar;item_imba_hurricane_pike"
 		}
 	}
 

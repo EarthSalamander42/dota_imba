@@ -40,7 +40,7 @@ function item_imba_blade_mail:GetAbilityTextureName()
 			return "custom/imba_blade_mail_"..uniqueBlink[carrier_name]
 		end
 		
-		return "custom/imba_blink"
+		return "custom/imba_blade_mail"
 	end
 end
 

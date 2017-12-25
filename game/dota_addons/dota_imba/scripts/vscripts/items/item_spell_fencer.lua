@@ -229,13 +229,10 @@ function modifier_item_imba_spell_fencer_passive_silence:OnAttackLanded( keys )
 		end
 
 		-- If the target is not valid, do nothing either
-		if target:IsMagicImmune() then -- or owner:GetTeam() == target:GetTeam() then
-			return end
+		if target:IsMagicImmune() then or owner:GetTeam() == target:GetTeam() then
+			return
+		end
 
-		-- If the target is a deflector, do nothing either
-		if target:HasModifier("modifier_imba_juggernaut_blade_fury") and owner:IsRangedAttacker() then
-			return end
-		
 		-- Stack the magic amp up
 		local modifier_amp = target:AddNewModifier(owner, ability, "modifier_item_imba_azura_amp", {duration = ability:GetSpecialValueFor("stack_duration")})
 		if modifier_amp and modifier_amp:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then

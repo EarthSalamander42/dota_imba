@@ -55,7 +55,6 @@ function modifier_item_imba_silver_edge_invis:IsPurgable() return false end
 function modifier_item_imba_silver_edge_invis:OnCreated()
 	self.parent     =   self:GetParent()
 	local ability   =   self:GetAbility()
-	self.deflector  =   self.parent
 
 	self.bonus_movespeed        =   ability:GetSpecialValueFor("invis_ms_pct")
 	self.bonus_attack_damage    =   ability:GetSpecialValueFor("invis_damage")
@@ -107,13 +106,7 @@ end
 
 function modifier_item_imba_silver_edge_invis:OnAttackLanded(params)
 	if IsServer() then
-		
-		-- Set the deflector.
-		if params.target:HasModifier("modifier_imba_juggernaut_blade_fury") and self.parent:IsRangedAttacker() then
-			self.deflector = params.target
-			return self.deflector
-		end
-		
+
 		if params.attacker == self.parent then
 
 			local ability 			=	self:GetAbility()
@@ -129,12 +122,7 @@ function modifier_item_imba_silver_edge_invis:OnAttackLanded(params)
 
 			-- Teleport ranged attackers to make the affect go from the target's vector
 			if self.parent:IsRangedAttacker() then
-				
-				-- If the target is a deflector, do nothing
-				--if params.target:HasModifier("modifier_imba_juggernaut_blade_fury") then
-				-- Doing nothing
-				--else
-				
+
 				initial_pos 	= self.parent:GetAbsOrigin()
 				local target_pos 	= params.target:GetAbsOrigin()
 
@@ -170,52 +158,24 @@ function modifier_item_imba_silver_edge_invis:OnAttackLanded(params)
 			
 			-- Find units hit by the cleave (amazing custom function from funcs.lua)
 			
-			-- If the target is a deflector, do nothing
-			--if params.target:HasModifier("modifier_imba_juggernaut_blade_fury") and self.parent:IsRangedAttacker() then
-			-- Doing nothing
-			--else
 			
-			local enemies
-			
-			-- If it is a deflected projectile, accounts allies to damage.
-			if params.target:GetTeamNumber() == self.parent:GetTeamNumber() then
-			enemies = FindUnitsInCone(self.parent:GetTeamNumber(),
-			CalculateDirection(params.target, self.parent),
-			self.parent:GetAbsOrigin(),
-			cleave_radius_start,
-			cleave_radius_end,
-			cleave_distance,
-			nil,
-			DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP,
-			0,
-			FIND_ANY_ORDER,
-			false)
-			
-			else
-			enemies = FindUnitsInCone(self.parent:GetTeamNumber(),
-			CalculateDirection(params.target, self.parent),
-			self.parent:GetAbsOrigin(),
-			cleave_radius_start,
-			cleave_radius_end,
-			cleave_distance,
-			nil,
-			DOTA_UNIT_TARGET_TEAM_ENEMY,
-			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP,
-			0,
-			FIND_ANY_ORDER,
-			false)
-			end
+			local enemies = FindUnitsInCone(self.parent:GetTeamNumber(),
+											CalculateDirection(params.target, self.parent),
+											self.parent:GetAbsOrigin(),
+											cleave_radius_start,
+											cleave_radius_end,
+											cleave_distance,
+											nil,
+											DOTA_UNIT_TARGET_TEAM_ENEMY,
+											DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP,
+											0,
+											FIND_ANY_ORDER,
+											false)
 			
 			-- Damage each unit hit by the cleave and give them the panic modifier
 			for _,enemy in pairs(enemies) do
 				local damager = self.parent
-				
-				-- Set the attacker as the deflector. Default deflector is the default attacker. (See line 58 on Notepad++)
-				if enemy:GetTeamNumber() == self.parent:GetTeamNumber() then
-				damager = self.deflector
-				end
-				
+	
 				local damageTable =({victim = enemy,
 					attacker = damager,
 					ability = ability,

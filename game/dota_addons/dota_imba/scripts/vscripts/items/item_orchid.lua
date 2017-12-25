@@ -192,7 +192,6 @@ end
 item_imba_bloodthorn = item_imba_bloodthorn or class({})
 LinkLuaModifier( "modifier_item_imba_bloodthorn", "items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE )			-- Owner's bonus attributes, stackable
 LinkLuaModifier( "modifier_item_imba_bloodthorn_unique", "items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE )	-- Crit chance, unstackable
-LinkLuaModifier( "modifier_item_imba_bloodthorn_crit", "items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE )		-- Passive crit buff
 LinkLuaModifier( "modifier_item_imba_bloodthorn_attacker_crit", "items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE )		-- Active attackers' crit buff
 LinkLuaModifier( "modifier_item_imba_bloodthorn_debuff", "items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE )	-- Active debuff
 
@@ -314,75 +313,22 @@ function modifier_item_imba_bloodthorn_unique:IsPermanent() return true end
 -- Declare modifier events/properties
 function modifier_item_imba_bloodthorn_unique:DeclareFunctions()
 	local funcs = {
-		MODIFIER_EVENT_ON_ATTACK_START,
+		MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE,
 	}
 	return funcs
 end
 
 -- Roll for the crit chance
-function modifier_item_imba_bloodthorn_unique:OnAttackStart(keys)
+function modifier_item_imba_bloodthorn_unique:GetModifierPreAttack_CriticalStrike(keys)
 	if IsServer() then
 		local owner = self:GetParent()
 
 		-- If this unit is the attacker, roll for a crit
 		if owner == keys.attacker then
 			if RollPercentage(self:GetAbility():GetSpecialValueFor("crit_chance")) then
-				owner:AddNewModifier(owner, self:GetAbility(), "modifier_item_imba_bloodthorn_crit", {duration = 1.0})
+				return self:GetAbility():GetSpecialValueFor("crit_damage")
 			end
 		end
-	end
-end
-
------------------------------------------------------------------------------------------------------------
---	Bloodthorn crit buff
------------------------------------------------------------------------------------------------------------
-modifier_item_imba_bloodthorn_crit = modifier_item_imba_bloodthorn_crit or class({})
-function modifier_item_imba_bloodthorn_crit:IsHidden() return true end
-function modifier_item_imba_bloodthorn_crit:IsDebuff() return false end
-function modifier_item_imba_bloodthorn_crit:IsPurgable() return false end
-
--- Track parameters to prevent errors if the item is unequipped
-function modifier_item_imba_bloodthorn_crit:OnCreated()
-	if IsServer() then
-		self.crit_damage = self:GetAbility():GetSpecialValueFor("crit_damage")
-	end
-end
-
--- Declare modifier events/properties
-function modifier_item_imba_bloodthorn_crit:DeclareFunctions()
-	local funcs = {
-		MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE,
-		MODIFIER_EVENT_ON_ATTACK_LANDED,
-	}
-	return funcs
-end
-
--- Grant the crit damage multiplier
-function modifier_item_imba_bloodthorn_crit:GetModifierPreAttack_CriticalStrike(params)
-	if IsServer() then
-	
-		-- If the target is a deflector, do nothing
-		if params.target:HasModifier("modifier_imba_juggernaut_blade_fury") and params.attacker:IsRangedAttacker() then
-			return nil
-		end
-		
-		return self.crit_damage
-	end
-end
-
--- Remove the crit modifier when the attack is concluded
-function modifier_item_imba_bloodthorn_crit:OnAttackLanded(keys)
-	if IsServer() then
-	
-		-- If the target is a deflector, do nothing
-		if keys.target:HasModifier("modifier_imba_juggernaut_blade_fury") and keys.attacker:IsRangedAttacker() then
-			return nil
-		end
-		-- If this unit is the attacker, remove its crit modifier
-		-- Removed so that Juggernaut's deflect procs crit to its attacker
-		--if self:GetParent() == keys.attacker then
-		--	self:GetParent():RemoveModifierByName("modifier_item_imba_bloodthorn_crit")
-		--end
 	end
 end
 

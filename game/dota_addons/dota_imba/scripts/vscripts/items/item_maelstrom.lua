@@ -64,18 +64,13 @@ function modifier_item_imba_maelstrom:OnAttackLanded( keys )
 		if (not IsHeroOrCreep(target)) then -- or attacker:GetTeam() == target:GetTeam() then
 			return end
 
-		-- If the target is a deflector, set to do nothing
-		if target:HasModifier("modifier_imba_juggernaut_blade_fury") and attacker:IsRangedAttacker() then
-			self.deflector = target
-			return end
-		
 		-- All conditions met, stack the proc counter up
 		local ability = self:GetAbility()
 		
 		-- zap the target's ass
 		local proc_chance = ability:GetSpecialValueFor("proc_chance")		
 		if RollPseudoRandom(proc_chance, ability) then
-			LaunchLightning(attacker, target, ability, ability:GetSpecialValueFor("bounce_damage"), ability:GetSpecialValueFor("bounce_radius"), self.deflector)
+			LaunchLightning(attacker, target, ability, ability:GetSpecialValueFor("bounce_damage"), ability:GetSpecialValueFor("bounce_radius"))
 		end
 	end
 end
@@ -159,19 +154,14 @@ function modifier_item_imba_mjollnir:OnAttackLanded( keys )
 		if (not IsHeroOrCreep(target)) then -- or attacker:GetTeam() == target:GetTeam() then
 			return
 		end
-		
-		-- If the target is a deflector, set to do nothing
-		if target:HasModifier("modifier_imba_juggernaut_blade_fury") and attacker:IsRangedAttacker() then
-			self.deflector = target
-			return end
-		
+
 		-- All conditions met, stack the proc counter up
 		local ability = self:GetAbility()
 		
 		-- zap the target's ass
 		local proc_chance = ability:GetSpecialValueFor("proc_chance")		
 		if RollPseudoRandom(proc_chance, ability) then
-			LaunchLightning(attacker, target, ability, ability:GetSpecialValueFor("bounce_damage"), ability:GetSpecialValueFor("bounce_radius"), self.deflector)
+			LaunchLightning(attacker, target, ability, ability:GetSpecialValueFor("bounce_damage"), ability:GetSpecialValueFor("bounce_radius"))
 		end
 	end
 end
@@ -386,11 +376,6 @@ function modifier_item_imba_jarnbjorn:OnAttackLanded( keys )
 			return
 		end
 		
-		-- If the target is a deflector, set to do nothing
-		if target:HasModifier("modifier_imba_juggernaut_blade_fury") and attacker:IsRangedAttacker() then
-			self.deflector = target
-			return
-		end
 		
 		-- All conditions met, stack the proc counter up
 		local ability = self:GetAbility()
@@ -398,7 +383,7 @@ function modifier_item_imba_jarnbjorn:OnAttackLanded( keys )
 		-- zap the target's ass
 		local proc_chance = ability:GetSpecialValueFor("proc_chance")
 		if RollPseudoRandom(proc_chance, ability) then
-			LaunchLightning(attacker, target, ability, ability:GetSpecialValueFor("bounce_damage"), ability:GetSpecialValueFor("bounce_radius"), self.deflector)
+			LaunchLightning(attacker, target, ability, ability:GetSpecialValueFor("bounce_damage"), ability:GetSpecialValueFor("bounce_radius"))
 		end
 
 		-- Only apply if the attacker is the parent of the buff, and the victim is on the opposing team.
@@ -544,8 +529,7 @@ end
 -----------------------------------------------------------------------------------------------------------
 
 -- Initial launch + main loop
-function LaunchLightning(caster, target, ability, damage, bounce_radius, deflector)
-	if deflector ~= nil then return end
+function LaunchLightning(caster, target, ability, damage, bounce_radius)
 
 	-- Parameters
 	local targets_hit = { target }
@@ -557,12 +541,7 @@ function LaunchLightning(caster, target, ability, damage, bounce_radius, deflect
 	-- Play first bounce sound
 	target:EmitSound("Item.Maelstrom.Chain_Lightning.Jump")
 
-	-- Zap initial target
-	if target:GetTeamNumber() == caster:GetTeamNumber() or target == attacker then
-	ZapThem(deflector, ability, caster, target, damage)
-	else
 	ZapThem(caster, ability, caster, target, damage)
-	end
 
 	-- While there are potential sources, keep looping
 	while #search_sources > 0 do
@@ -570,14 +549,7 @@ function LaunchLightning(caster, target, ability, damage, bounce_radius, deflect
 		-- Loop through every potential source this iteration
 		for potential_source_index, potential_source in pairs(search_sources) do
 
-			-- Iterate through potential targets near this source
-			local nearby_enemies
-			-- If the target is the same team, get the targets from same team.
-			if target:GetTeamNumber() == caster:GetTeamNumber() then
-				nearby_enemies = FindUnitsInRadius(deflector:GetTeamNumber(), potential_source:GetAbsOrigin(), nil, bounce_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
-			else
-				nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), potential_source:GetAbsOrigin(), nil, bounce_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
-			end
+			local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), potential_source:GetAbsOrigin(), nil, bounce_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
 			
 			for _, potential_target in pairs(nearby_enemies) do
 				
@@ -592,11 +564,7 @@ function LaunchLightning(caster, target, ability, damage, bounce_radius, deflect
 				
 				-- If not, zap it from this source, and mark it as a hit target and potential future source
 				if not already_hit then
-					if potential_target:GetTeamNumber() == caster:GetTeamNumber() then
-					ZapThem(deflector, ability, potential_source, potential_target, damage)
-					else
 					ZapThem(caster, ability, potential_source, potential_target, damage)
-					end
 					targets_hit[#targets_hit+1] = potential_target
 					search_sources[#search_sources+1] = potential_target
 				end
