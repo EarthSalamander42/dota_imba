@@ -56,6 +56,10 @@
 							<Button id="ShowStatsPanel" onactivate="ShowStatsSwap()" >
 								<Label id="ShowStatsLabel" text="#stats_swap" />
 							</Button>
+
+							<Button id="ClosePickScreen_Force" onactivate="ClosePickScreen()" >
+								<Label id="ClosePickScreen_Force_Label" text="#close_picking_screen" />
+							</Button>
 						</Panel>
 					</Panel>
 

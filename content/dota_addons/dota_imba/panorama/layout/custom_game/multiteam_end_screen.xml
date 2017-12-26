@@ -5,7 +5,7 @@
     </styles>
 
     <scripts>
-         <include src="s2r://panorama/scripts/custom_game/shared_scoreboard_updater.vjs_c" />
+        <include src="s2r://panorama/scripts/custom_game/shared_scoreboard_updater.vjs_c" />
        <include src="s2r://panorama/scripts/custom_game/multiteam_end_screen.vjs_c" />
     </scripts>
 

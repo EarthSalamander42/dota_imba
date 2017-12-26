@@ -440,16 +440,6 @@
 	flow-children: down;
 }
 
-#ShowStatsLabel {
-	width: 200px;
-	text-align: center;
-	font-size: 20px;
-	font-family: "Radiance";
-	color:#fff;
-	text-transform: uppercase;
-	font-weight: bold;
-}
-
 #ShowStatsPanel:hover {
 	box-shadow: fill black -2px -2px 4px 4px;
 	color: white;
@@ -463,6 +453,45 @@
 	color: white;
 	border: 1px solid #333333;
 	background-color: #111111;
+}
+
+#ShowStatsLabel {
+	width: 200px;
+	text-align: center;
+	font-size: 20px;
+	font-family: "Radiance";
+	color:#fff;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+#ClosePickScreen_Force {
+	margin-top: 10px;
+	background-color: #500000ba;
+	align: center center;
+	flow-children: down;
+}
+
+#ClosePickScreen_Force:hover {
+	box-shadow: fill black -2px -2px 4px 4px;
+	color: white;
+	opacity: .5;
+	border: 1px solid #333333;
+	background-color: #900000ba;
+}
+
+#ClosePickScreen_Force:active {
+	box-shadow: fill red -2px -2px 4px 4px;
+}
+
+#ClosePickScreen_Force_Label {
+	width: 200px;
+	text-align: center;
+	font-size: 18px;
+	font-family: "Radiance";
+	color:#fff;
+	text-transform: uppercase;
+	font-weight: bold;
 }
 
 #GameOptionsPanelContainer {
