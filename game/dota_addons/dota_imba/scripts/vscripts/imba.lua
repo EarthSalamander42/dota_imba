@@ -21,6 +21,8 @@ require('libraries/attachments')
 require('libraries/astar')
 -- Illusion manager, created by Seinken!
 require('libraries/illusionmanager')
+-- Ability Charge Contolller
+require('libraries/abilitychargecontroller')
 require('libraries/keyvalues')
 -- These internal libraries set up barebones's events and processes.  Feel free to inspect them/change them if you need to.
 require('internal/gamemode')
