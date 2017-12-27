@@ -914,6 +914,8 @@ function imba_ursa_enrage:GetAbilityTextureName()
    return "ursa_enrage"
 end
 
+function imba_ursa_enrage:GetIntrinsicModifierName() return "modifier_imba_talent_enrage_damage" end
+
 function imba_ursa_enrage:GetCooldown(level)
 	local caster = self:GetCaster()
 	local ability = self	
@@ -1127,14 +1129,6 @@ function modifier_imba_talent_enrage_damage:OnCreated()
 		self.caster = self:GetCaster()
 		self.ability = self:GetAbility()
 		self.prevent_modifier = "modifier_imba_talent_enrage_prevent"	
-
-		-- Talent specials
-		self.damage_threshold = self.caster:FindTalentValue("special_bonus_imba_ursa_1", "damage_threshold")
-		self.damage_reset = self.caster:FindTalentValue("special_bonus_imba_ursa_1", "damage_reset")
-		self.enrage_cooldown = self.caster:FindTalentValue("special_bonus_imba_ursa_1", "enrage_cooldown")	
-
-		-- Set stack count to maximum
-		self:SetStackCount(self.damage_threshold)
 	end
 end
 
@@ -1160,7 +1154,7 @@ end
 
 function modifier_imba_talent_enrage_damage:IsHidden()		
 	-- If Ursa didn't learn Enrage yet, hide it
-	if self:GetAbility():GetLevel() <= 0 then
+	if not self:GetCaster():HasTalent("special_bonus_imba_ursa_1") then
 		return true
 	end
 
@@ -1191,6 +1185,16 @@ function modifier_imba_talent_enrage_damage:OnTakeDamage( keys )
 
 		-- Only apply if the target taking damage is the caster
 		if target == self.caster then
+			if not self.caster:HasTalent("special_bonus_imba_ursa_1") then
+				return nil
+			end
+
+			-- Talent specials
+			if not self.damage_threshold or not self.damage_reset or not self.enrage_cooldown then
+				self.damage_threshold = self.caster:FindTalentValue("special_bonus_imba_ursa_1", "damage_threshold")
+				self.damage_reset = self.caster:FindTalentValue("special_bonus_imba_ursa_1", "damage_reset")
+				self.enrage_cooldown = self.caster:FindTalentValue("special_bonus_imba_ursa_1", "enrage_cooldown")
+			end
 
 		    -- If Ursa is broken, do nothing: don't count damage, don't trigger, etc)
 		    if self.caster:PassivesDisabled() then		    	

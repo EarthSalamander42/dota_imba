@@ -12843,8 +12843,12 @@
 	//=================================================================================================================
 	"tinker_rearm"
 	{
-		"AbilityChannelTime"			"3.0 1.5 0.75 0.70 0.65 0.60"
+		"AbilityChannelTime"			"3.0 1.5 0.75 0.70 0.37 0.15"
 		"MaxLevel"						"6"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_tinker_temp"
+		"AbilityTextureName"			"tinker_rearm"
+		"AbilityCastPoint"				"0.53"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -12855,7 +12859,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"channel_tooltip"		"3.0 1.5 0.75 0.70 0.65 0.60"
+				"channel_tooltip"		"3.0 1.5 0.75 0.70 0.37 0.15"
 			}
 		}
 	}
