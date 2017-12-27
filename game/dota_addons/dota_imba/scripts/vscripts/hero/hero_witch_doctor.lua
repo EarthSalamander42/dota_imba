@@ -228,6 +228,29 @@ function modifier_special_bonus_imba_witch_doctor_6:OnCreated()
 	end
 end
 
+
+--Attempt at updating the heal from the aura if the passive aura talent is taken and ability is leveled up
+--[[function imba_witch_doctor_voodoo_restoration:OnUpgrade()
+
+	--if #6 Talent is equipped, reapply the modifier to increase the heal (without this, the heal would update after respawning)
+	local caster = self:GetCaster()
+	local talent_modifier = "modifier_special_bonus_imba_witch_doctor_6"
+	local aura_modifier = "modifier_imba_voodoo_restoration"
+	local ability = caster:FindAbilityByName("imba_witch_doctor_voodoo_restoration")
+
+	if not ability then return end --Useless but better be safe than sorry!
+
+	if caster:HasTalent(special_bonus_imba_witch_doctor_6) then
+		local modifier_handler = caster:FindModifierByName(aura_modifier)
+		modifier_handler:ForceRefresh()
+		--talent_handler:OnCreated() 
+		--caster:RemoveModifierByName(aura_modifier)
+		--caster:AddNewModifier(caster, self, aura_modifier, {})
+		
+	end
+
+end]]
+
 function imba_witch_doctor_voodoo_restoration:GetCastRange()
 	return self:GetSpecialValueFor("radius")
 end
