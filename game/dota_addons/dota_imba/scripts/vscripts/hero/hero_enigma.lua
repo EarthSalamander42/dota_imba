@@ -658,6 +658,8 @@ function imba_enigma_black_hole:OnChannelFinish( bInterrupted )
 		local buff = caster:FindModifierByName("modifier_imba_singularity")
 		buff:SetStackCount(0)
 	end
+	StopSoundOn("Hero_Enigma.Black_Hole", self.thinker)
+	StopSoundOn("Imba.EnigmaBlackHoleTi5", self.thinker)
 end
 
 modifier_imba_enigma_black_hole_thinker = modifier_imba_enigma_black_hole_thinker or class({})
@@ -699,6 +701,11 @@ function modifier_imba_enigma_black_hole_thinker:OnCreated(keys)
 		pfx_name = "particles/econ/items/enigma/enigma_world_chasm/enigma_blackhole_ti5.vpcf"
 		self.sound = "Imba.EnigmaBlackHoleTi5"
 		EmitSoundOn("Imba.EnigmaBlackHoleTobi0"..math.random(1,5), self:GetParent())
+
+		self.pfx_ulti = ParticleManager:CreateParticle("particles/econ/items/slark/slark_ti6_blade/slark_ti6_pounce_leash_gold_body_energy_pull.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetCaster())
+		ParticleManager:SetParticleControlEnt(self.pfx_ulti, 0, self:GetCaster(), PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), false)
+		ParticleManager:SetParticleControlEnt(self.pfx_ulti, 1, self:GetCaster(), PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), false)
+		ParticleManager:SetParticleControl(self.pfx_ulti, 3, self:GetParent():GetAbsOrigin())
 	end
 	local buff = self:GetCaster():FindModifierByName("modifier_imba_singularity")
 	buff:SetStackCount(buff:GetStackCount() + #enemies)
@@ -768,6 +775,10 @@ function modifier_imba_enigma_black_hole_thinker:OnDestroy()
 	EmitSoundOn("Hero_Enigma.Black_Hole.Stop", self:GetParent())
 	ParticleManager:DestroyParticle(self.particle, false)
 	ParticleManager:ReleaseParticleIndex(self.particle)
+	if self.pfx_ulti then
+		ParticleManager:DestroyParticle(self.pfx_ulti, false)
+		ParticleManager:ReleaseParticleIndex(self.pfx_ulti)
+	end
 	self:GetParent():ForceKill(false)
 end
 
