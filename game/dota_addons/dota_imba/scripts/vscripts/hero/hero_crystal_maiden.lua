@@ -936,7 +936,7 @@ function imba_crystal_maiden_freezing_field:OnChannelFinish(bInterrupted)
 		EndAnimation(self.caster)
 
 		--Kill Particles
-		ParticleManager:DestroyParticle(self.freezing_field_particle, true)
+		ParticleManager:DestroyParticle(self.freezing_field_particle, false)
 		ParticleManager:ReleaseParticleIndex(self.freezing_field_particle)
 
 		if self.are_we_nuclear then

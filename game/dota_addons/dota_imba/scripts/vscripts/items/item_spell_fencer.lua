@@ -229,7 +229,7 @@ function modifier_item_imba_spell_fencer_passive_silence:OnAttackLanded( keys )
 		end
 
 		-- If the target is not valid, do nothing either
-		if target:IsMagicImmune() then or owner:GetTeam() == target:GetTeam() then
+		if target:IsMagicImmune() or owner:GetTeam() == target:GetTeam() then
 			return
 		end
 

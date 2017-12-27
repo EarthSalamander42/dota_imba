@@ -300,9 +300,9 @@ var DireLevels = 0
 var RadiantCount = 0
 var DireCount = 0
 
-	var str = "Cuckies";
-	var n = str.search("Cuckies");
-	$.Msg(n)
+//	var str = "Cuckies";
+//	var n = str.search("Cuckies");
+//	$.Msg(n)
 
 	var radiantPlayers = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_GOODGUYS );
 	var direPlayers = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_BADGUYS );
@@ -739,20 +739,10 @@ if (hide == false) {
 
 function ClosePickScreen(hide) {
 	if (Game.GetPlayerInfo(Players.GetLocalPlayer()).player_selected_hero == "npc_dota_hero_wisp") {
-		$.Msg("don't close pick screen")
 		return;
 	}
-	var MainPanel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
-	MainPanel.FindChildTraverse("topbar").style.visibility = "visible";
-	MainPanel.FindChildTraverse("minimap_container").style.visibility = "visible";
-	MainPanel.FindChildTraverse("lower_hud").style.visibility = "visible";
-	MainPanel.FindChildTraverse("HudChat").style.visibility = "visible";
-	MainPanel.FindChildTraverse("NetGraph").style.visibility = "visible";
-	MainPanel.FindChildTraverse("quickstats").style.visibility = "visible";
-
-	$('#BackgroundPanel').style.visibility = "collapse";
-	$('#PickingScreen').style.visibility = "collapse";
-	$('#LoadingPanel').style.visibility = "collapse";
+	ShowHUD(true)
+	ShowPickScreen(false)
 }
 
 //Subscribe to events
@@ -775,7 +765,7 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 		ShowPickScreen(false)
 		// Else, do pick screen stuff
 	} else {
-		$.Msg("Hello Radiant/Dire Player")
+		$.Msg("Radiant/Dire Player")
 		///Load player elements
 		ShowHUD(false);
 		LoadPlayers()

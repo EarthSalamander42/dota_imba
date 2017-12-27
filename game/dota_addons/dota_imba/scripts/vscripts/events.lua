@@ -256,24 +256,22 @@ function GameMode:OnGameRulesStateChange(keys)
 
 		imba_api_game_complete(function (players)
 			print("Sending new XP / IMR values to clients")
-			Timers:CreateTimer(function()
-				for ID = 0, PlayerResource:GetPlayerCount() -1 do
-					print("XP DIFF:", players[tostring(PlayerResource:GetSteamID(ID))].xp_diff)
-					print("IMR DIFF:", players[tostring(PlayerResource:GetSteamID(ID))].imr_5v5_diff)
-					CustomNetTables:SetTableValue("player_table", tostring(ID), {
-						XP = CustomNetTables:GetTableValue("player_table", tostring(ID)).XP,
-						MaxXP = CustomNetTables:GetTableValue("player_table", tostring(ID)).MaxXP,
-						Lvl = CustomNetTables:GetTableValue("player_table", tostring(ID)).Lvl,
-						title = CustomNetTables:GetTableValue("player_table", tostring(ID)).title,
-						title_color = CustomNetTables:GetTableValue("player_table", tostring(ID)).title_color,
-						XP_change = players[tostring(PlayerResource:GetSteamID(ID))].xp_diff,
-						IMR_5v5 = CustomNetTables:GetTableValue("player_table", tostring(ID)).IMR_5v5,
-						IMR_5v5_change = players[tostring(PlayerResource:GetSteamID(ID))].imr_5v5_diff,
-					})
-					return 1.0 -- we can keep it endless since it's end-game
-				end
-				CustomGameEventManager:Send_ServerToAllClients("end_game", {})
-			end)
+			for ID = 0, PlayerResource:GetPlayerCount() -1 do
+				print("XP DIFF:", players[tostring(PlayerResource:GetSteamID(ID))].xp_diff)
+				print("IMR DIFF:", players[tostring(PlayerResource:GetSteamID(ID))].imr_5v5_diff)
+				CustomNetTables:SetTableValue("player_table", tostring(ID), {
+					XP = CustomNetTables:GetTableValue("player_table", tostring(ID)).XP,
+					MaxXP = CustomNetTables:GetTableValue("player_table", tostring(ID)).MaxXP,
+					Lvl = CustomNetTables:GetTableValue("player_table", tostring(ID)).Lvl,
+					title = CustomNetTables:GetTableValue("player_table", tostring(ID)).title,
+					title_color = CustomNetTables:GetTableValue("player_table", tostring(ID)).title_color,
+					XP_change = players[tostring(PlayerResource:GetSteamID(ID))].xp_diff,
+					IMR_5v5 = CustomNetTables:GetTableValue("player_table", tostring(ID)).IMR_5v5,
+					IMR_5v5_change = players[tostring(PlayerResource:GetSteamID(ID))].imr_5v5_diff,
+				})
+				return 1.0 -- we can keep it endless since it's end-game
+			end
+			CustomGameEventManager:Send_ServerToAllClients("end_game", {})
 --			CustomGameEventManager:Send_ServerToAllClients("end_game", players)
 		end)
 

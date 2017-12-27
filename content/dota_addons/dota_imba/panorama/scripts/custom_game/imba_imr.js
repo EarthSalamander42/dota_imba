@@ -50,36 +50,43 @@ function Battlepass()
 		$.Schedule(1, Battlepass)
 		return;
 	} else {
-		var i_count = 1;
-		var class_option_count = 1;
-		var i_single = false
+		var radiantPlayers = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_GOODGUYS );
+		$.Each( radiantPlayers, function( player ) {
+			if (player != Players.GetLocalPlayer()) {return}
+			var i_count = 0;
+			var class_option_count = 1;
+			var i_single = false
 
-		for (var i = 0; i <= 500 -1; i++) {
-			if (BattlepassRewards[i] != undefined) {
-				if (i_single == false) {
-					i_single = true
-					var reward_row = $.CreatePanel("Panel", $('#BattlepassInfoContainer'), "BattlepassRow" + class_option_count);
-					reward_row.AddClass("BattlepassRow")
-				}
+			for (var i = 0; i <= 500; i++) {
+				if (BattlepassRewards[i] != undefined) {
+					if (i_single == false) {
+						i_single = true
+						var reward_row = $.CreatePanel("Panel", $('#BattlepassInfoContainer'), "BattlepassRow" + class_option_count + "_" + player);
+						reward_row.AddClass("BattlepassRow")
+					}
 
-				// Battlepass reward level
-//				$.Msg(BattlepassRewards.level)
+					i_count = i_count +1
 
-				var reward = $.CreatePanel("Panel", $("#BattlepassRow" + class_option_count), BattlepassRewards[i]);
-				reward.AddClass("BattlepassReward")
+					if (i_count > 10) {
+						class_option_count = class_option_count +1
+						var reward_row = $.CreatePanel("Panel", $('#BattlepassInfoContainer'), "BattlepassRow" + class_option_count + "_" + player);
+						reward_row.AddClass("BattlepassRow")
+						i_count = 1
+					}
 
-//				$.Msg(i + " " + BattlepassRewards[i])
+					var reward = $.CreatePanel("Panel", $("#BattlepassRow" + class_option_count + "_" + player), BattlepassRewards[i]);
+					reward.AddClass("BattlepassReward")
 
-				var reward_icon = $.CreatePanel("Panel", reward, BattlepassRewards[i] + "_icon");
-				reward_icon.AddClass("BattlepassRewardIcon")
-				reward_icon.style.backgroundImage = 'url("file://{images}/custom_game/battlepass/'+ BattlepassRewards[i] +'.png")';
+//					$.Msg(i + " " + BattlepassRewards[i])
 
-				var reward_label = $.CreatePanel("Label", reward, BattlepassRewards[i] + "_label");
-				reward_label.AddClass("BattlepassRewardLabel")
-				reward_label.text = $.Localize("battlepass_level") + i;
+					var reward_icon = $.CreatePanel("Panel", reward, BattlepassRewards[i] + "_icon");
+					reward_icon.AddClass("BattlepassRewardIcon")
+					reward_icon.style.backgroundImage = 'url("file://{images}/custom_game/battlepass/'+ BattlepassRewards[i] +'.png")';
 
-				var radiantPlayers = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_GOODGUYS );
-				$.Each( radiantPlayers, function( player ) {
+					var reward_label = $.CreatePanel("Label", reward, BattlepassRewards[i] + "_label");
+					reward_label.AddClass("BattlepassRewardLabel")
+					reward_label.text = $.Localize("battlepass_level") + i;
+
 					var plyData = CustomNetTables.GetTableValue("player_table", player);
 					if (plyData != null) {
 						if (i <= plyData.Lvl) {
@@ -108,13 +115,51 @@ function Battlepass()
 						reward_label_locked.AddClass("BattlepassRewardLabelLocked")
 						reward_label_locked.text = $.Localize("battlepass_reward_locked");
 					}
-				});
+					
+					// onmouseover="UIShowTextTooltip( imba_gamemode_settings_tower_power_title_tooltip )"
+					// onmouseout="UIHideTextTooltip()">
+				}	
+			}
+		});
 
-				// onmouseover="UIShowTextTooltip( imba_gamemode_settings_tower_power_title_tooltip )"
-				// onmouseout="UIHideTextTooltip()">
+		var direPlayers = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_BADGUYS );
+		$.Each( direPlayers, function( player ) {
+			if (player != Players.GetLocalPlayer()) {return}
+			var i_count = 0;
+			var class_option_count = 1;
+			var i_single = false
 
-				var direPlayers = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_BADGUYS );
-				$.Each( direPlayers, function( player ) {
+			for (var i = 0; i <= 500; i++) {
+				if (BattlepassRewards[i] != undefined) {
+					if (i_single == false) {
+						i_single = true
+						var reward_row = $.CreatePanel("Panel", $('#BattlepassInfoContainer'), "BattlepassRow" + class_option_count + "_" + player);
+						reward_row.AddClass("BattlepassRow")
+					}
+
+					i_count = i_count +1
+
+					if (i_count > 10) {
+						$.Msg("Create second panel...")
+						class_option_count = class_option_count +1
+						var reward_row = $.CreatePanel("Panel", $('#BattlepassInfoContainer'), "BattlepassRow" + class_option_count + "_" + player);
+						reward_row.AddClass("BattlepassRow")
+						i_count = 1
+					}
+
+					var reward = $.CreatePanel("Panel", $("#BattlepassRow" + class_option_count + "_" + player), BattlepassRewards[i]);
+					reward.AddClass("BattlepassReward")
+
+//					$.Msg(i + " " + BattlepassRewards[i])
+
+					var reward_icon = $.CreatePanel("Panel", reward, BattlepassRewards[i] + "_icon");
+					reward_icon.AddClass("BattlepassRewardIcon")
+					reward_icon.style.backgroundImage = 'url("file://{images}/custom_game/battlepass/'+ BattlepassRewards[i] +'.png")';
+
+					var reward_label = $.CreatePanel("Label", reward, BattlepassRewards[i] + "_label");
+					reward_label.AddClass("BattlepassRewardLabel")
+					reward_label.text = $.Localize("battlepass_level") + i;
+
 					var plyData = CustomNetTables.GetTableValue("player_table", player);
 					if (plyData != null) {
 						if (i <= plyData.Lvl) {
@@ -143,18 +188,12 @@ function Battlepass()
 						reward_label_locked.AddClass("BattlepassRewardLabelLocked")
 						reward_label_locked.text = $.Localize("battlepass_reward_locked");
 					}
-				});				
-
-				i_count = i_count +1
-
-				if (i_count > 10) {
-					class_option_count = class_option_count +1
-					var reward_row = $.CreatePanel("Panel", $('#BattlepassInfoContainer'), "BattlepassRow" + class_option_count);
-					reward_row.AddClass("BattlepassRow")
-					i_count = 1
-				}
-			}	
-		}
+					
+					// onmouseover="UIShowTextTooltip( imba_gamemode_settings_tower_power_title_tooltip )"
+					// onmouseout="UIHideTextTooltip()">
+				}	
+			}
+		});
 	}
 }
 

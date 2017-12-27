@@ -1244,7 +1244,7 @@ function PickupRune(rune_name, unit, bActiveByBottle)
 			end
 		end
 	end
-	
+
 	if not store_in_bottle then
 		if rune_name == "bounty" then
 			-- Bounty rune parameters
