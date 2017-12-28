@@ -437,20 +437,6 @@ function modifier_imba_elder_titan_ancestral_spirit_self:CheckState()
 	end
 end
 
-modifier_imba_elder_titan_natural_order = modifier_imba_elder_titan_natural_order or class({})
-
--- Modifier properties
-function modifier_imba_elder_titan_natural_order:IsDebuff() return true end
-function modifier_imba_elder_titan_natural_order:IsHidden() return false end
-function modifier_imba_elder_titan_natural_order:IsPurgable() return false end
-function modifier_imba_elder_titan_natural_order:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
-
-function modifier_imba_elder_titan_natural_order:OnCreated() 
-	local ability = self:GetAbility()
-	self.base_armor_reduction = ability:GetSpecialValueFor("armor_reduction_pct")
-	self.magic_resist_reduction = ability:GetSpecialValueFor("magic_resistance_pct")
-end
-
 -- Natural Order
 imba_elder_titan_natural_order = imba_elder_titan_natural_order or class({})
 LinkLuaModifier("modifier_imba_elder_titan_natural_order_aura", "hero/hero_elder_titan", LUA_MODIFIER_MOTION_NONE)
@@ -510,6 +496,7 @@ modifier_imba_elder_titan_natural_order = modifier_imba_elder_titan_natural_orde
 function modifier_imba_elder_titan_natural_order:IsDebuff() return true end
 function modifier_imba_elder_titan_natural_order:IsHidden() return false end
 function modifier_imba_elder_titan_natural_order:IsPurgable() return false end
+function modifier_imba_elder_titan_natural_order:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_elder_titan_natural_order:OnCreated() 
 	local ability = self:GetAbility()
