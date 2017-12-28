@@ -228,7 +228,7 @@ function AbilityChargeController:CostCharge(hAbility, iCost, bIncreaseType)  --b
 		local cd_buff = {}
 		local buffs = caster:FindAllModifiersByName("modifier_imba_ability_charge_cd_dummy")
 		for _, buff in pairs(buffs) do
-			if buff.GetAbility() == control_buff.ability then
+			if buff:GetAbility() == control_buff.ability then
 				table.insert(cd_buff, buff)
 			end
 		end
