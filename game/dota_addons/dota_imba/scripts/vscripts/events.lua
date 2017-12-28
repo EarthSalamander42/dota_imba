@@ -437,6 +437,14 @@ local normal_xp = npc:GetDeathXP()
 		end)
 	end
 
+	if npc:GetUnitName() == "npc_dota_hero_witch_doctor" then
+		if npc:IsAlive() and npc:HasTalent("special_bonus_imba_witch_doctor_6") then
+			if not npc:HasModifier("modifier_imba_voodoo_restoration") then
+				npc:AddNewModifier(npc, npc:GetAbilityByIndex(1), "modifier_imba_voodoo_restoration", {})
+			end
+		end
+	end
+
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Arc Warden clone handling
 	-------------------------------------------------------------------------------------------------

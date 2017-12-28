@@ -29,6 +29,16 @@
 	"scoreboard_tool_tip_active_disable_help"		"(DISABLED)"
 	"custom_end_screen_legend_imr"					"IMR"
 
+	"custom_toast_ActivatedRune"							"{player_name} has activated {rune_name}"
+	"DOTA_Tooltip_ability_item_imba_rune_arcane"			"Archmage Soul"
+	"DOTA_Tooltip_ability_item_imba_rune_bounty"			"Bounty Rune"
+	"DOTA_Tooltip_ability_item_imba_rune_double_damage"		"Power Surge"
+	"DOTA_Tooltip_ability_item_imba_rune_haste"				"Nightmare Shadow"
+	"DOTA_Tooltip_ability_item_imba_rune_illusion"			"Illusion Rune"
+	"DOTA_Tooltip_ability_item_imba_rune_invisibility"		"Invisibility Rune"
+	"DOTA_Tooltip_ability_item_imba_rune_regeneration"		"Boundless Energy"
+	"DOTA_Tooltip_ability_item_imba_rune_frost"				"Greevil Soul"
+
 	"lag_issues"									"Dota 2 IMBA website"
 
 	//Picking Screen

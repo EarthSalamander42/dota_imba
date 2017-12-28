@@ -12,7 +12,7 @@ if IsInToolsMode() then HERO_SELECTION_TIME = 10.0 end
 
 PRE_GAME_TIME = 90.0 + HERO_SELECTION_TIME	-- How long after people select their heroes should the horn blow and the game start?
 POST_GAME_TIME = 60.0						-- How long should we let people look at the scoreboard before closing the server automatically?
-AUTO_LAUNCH_DELAY = 3.0					-- How long should we wait for the host to setup the game, after all players have loaded in?
+AUTO_LAUNCH_DELAY = 5.0					-- How long should we wait for the host to setup the game, after all players have loaded in?
 if GetMapName() == "imba_frantic_10v10" then
 	AUTO_LAUNCH_DELAY = 10.0
 end
