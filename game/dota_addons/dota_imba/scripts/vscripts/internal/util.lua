@@ -1342,11 +1342,18 @@ function PickupRune(rune_name, unit, bActiveByBottle)
 			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Frost", unit)
 		end
 
-		local gameEvent = {}
-		gameEvent["player_id"] = unit:GetPlayerID()
-		gameEvent["team_number"] = unit:GetTeamNumber()
-		gameEvent["locstring_value"] = "#DOTA_Tooltip_Ability_item_imba_rune_"..rune_name
-		gameEvent["message"] = "#IMBA_custom_rune_"..rune_name
-		FireGameEvent("dota_combat_event_message", gameEvent)
+		CustomGameEventManager:Send_ServerToTeam(unit:GetTeam(), "create_custom_toast", {
+			type = "generic",
+			text = "#custom_toast_ActivatedRune",
+			player = unit:GetPlayerID(),
+			runeType = rune_name
+		})
+
+--		local gameEvent = {}
+--		gameEvent["player_id"] = unit:GetPlayerID()
+--		gameEvent["team_number"] = unit:GetTeam()
+--		gameEvent["locstring_value"] = "#DOTA_Tooltip_Ability_item_imba_rune_"..rune_name
+--		gameEvent["message"] = "#IMBA_custom_rune_"..rune_name
+--		FireGameEvent("dota_combat_event_message", gameEvent)
 	end
 end

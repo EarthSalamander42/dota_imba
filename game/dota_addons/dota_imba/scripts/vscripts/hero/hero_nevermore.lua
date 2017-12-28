@@ -58,7 +58,7 @@ function imba_nevermore_shadowraze_close:GetCastPoint()
 	local cast_point = self.BaseClass.GetCastPoint(self)
 	local caster = self:GetCaster()
 	--Talent #8: Cast point is halved when in soul frenzy
-	if caster:HasTalent("special_bonus_imba_nevermore_8") and caster:HasModifier("modifier_imba_reqiuem_harvest") then
+	if caster:HasTalent("special_bonus_imba_nevermore_8") and caster:HasModifier("modifier_imba_reqiuem_harvest") and caster:IsAlive() then
 		cast_point = cast_point / 2
 	end
 	return cast_point
