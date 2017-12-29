@@ -186,6 +186,11 @@
 		$("#es-team-score-radiant").text = new String(scores.radiant);
 		$("#es-team-score-dire").text = new String(scores.dire);
 
+		// Configure Stats Button
+		$("#es-buttons-stats").SetPanelEvent("onactivate", function () {
+			$.DispatchEvent("DOTADisplayURL", "http://www.dota2imba.org/game/" + serverInfo.gameid);
+		});
+
 		// Hide all other UI
 		var MainPanel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
 		
