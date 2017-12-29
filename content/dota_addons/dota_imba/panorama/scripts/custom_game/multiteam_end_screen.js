@@ -238,7 +238,7 @@
 
 		// Configure Stats Button
 		$("#es-buttons-stats").SetPanelEvent("onactivate", function () {
-			$.DispatchEvent("DOTADisplayURL", "http://www.dota2imba.org/game/" + serverInfo.gameid);
+			$.DispatchEvent("DOTADisplayURL", "http://www.dota2imba.org/stats/game/" + serverInfo.gameid);
 		});
 
 		// Hide all other UI
