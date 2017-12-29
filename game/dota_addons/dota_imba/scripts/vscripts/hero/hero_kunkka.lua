@@ -19,7 +19,7 @@ CreateEmptyTalents("kunkka")
 --function modifier_special_bonus_imba_kunkka_1:OnDeath( params )
 --	if (params.attacker:GetTeam() == self:GetCaster():GetTeam()) and (params.attacker == self:GetParent()) and (params.attacker ~= params.unit) and (params.attacker:HasTalent("special_bonus_imba_kunkka_1")) then
 --		local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
---		local gold = params.attacker:FindTalentValue("special_bonus_imba_kunkka_1") * (1 + custom_gold_bonus * 0.01)
+--		local gold = params.attacker:FindTalentValue("special_bonus_imba_kunkka_1") * (custom_gold_bonus / 100)
 --		SendOverheadEventMessage( self:GetCaster():GetOwner(),  OVERHEAD_ALERT_GOLD , self:GetParent(), gold, self:GetCaster() )
 --		params.attacker:ModifyGold(gold, false, 0)
 --	end

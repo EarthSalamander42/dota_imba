@@ -989,6 +989,28 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Morphling
+	//=================================================================================================================
+	"npc_dota_hero_morphling"
+	{
+		"override_hero"				"npc_dota_hero_morphling"
+
+		//Picking Screen
+		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
+
+		"Ability1"					"morphling_waveform"
+		"Ability2"					"morphling_adaptive_strike_agi"
+		"Ability3"					"morphling_adaptive_strike_str"
+		"Ability4"					"morphling_morph_agi"
+		"Ability5"					"morphling_morph_str"
+		"Ability6"					"morphling_replicate"
+		"Ability7"					"morphling_morph_replicate"
+		"Ability8"					"morphling_morph"
+
+		"Ability21"					"generic_hidden"
+	}
+
+	//=================================================================================================================
 	// HERO: Nature's Prophet
 	//=================================================================================================================
 	"npc_dota_hero_furion"

@@ -45,6 +45,7 @@
 			<Image src="file://panorama/images/custom_game/battlepass/bottle4.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/npc_dota_hero_storegga.png" hittest="false" />
 			<Image src="file://panorama/images/heroes/icons/npc_dota_hero_storegga.png" hittest="false" />
+			<Image src="file://panorama/images/hud/icon_kill_enemy_fb.png" hittest="false" />
 		</Panel>
 	</Panel>
 </root>

@@ -9,6 +9,29 @@ for i = 21 +1, 500 do
 	XP_level_table[i] = XP_level_table[i-1] + 500 + bonus
 end
 
+function GetXPLevelByXp(xp)
+	if xp <= 0 then return 0 end
+
+	for k, v in pairs(XP_level_table) do
+		if v > xp then
+			return k - 1
+		end
+	end
+	return 500
+end
+
+function GetXpProgressToNextLevel(xp)
+	local level = GetXPLevelByXp(xp)
+	local next = level + 1
+	local thisXp = XP_level_table[level]
+	local nextXp = XP_level_table[next]
+
+	local xpRequiredForThisLevel = nextXp - thisXp
+	local xpProgressInThisLevel = xp - thisXp
+
+	return xpProgressInThisLevel / xpRequiredForThisLevel
+end
+
 function GetTitleIXP(level)
 	if level <= 19 then
 		return "Rookie"

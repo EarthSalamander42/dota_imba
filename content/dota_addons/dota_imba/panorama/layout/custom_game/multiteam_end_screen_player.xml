@@ -1,38 +1,27 @@
 <root>
-    <styles>
- 		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
-        <include src="s2r://panorama/styles/custom_game/multiteam_end_screen.vcss_c" />
-    </styles>
-	<Panel class="PlayerRow">
-		<Panel id="PlayerRowContainer">
-			<Panel id="Hero" class="ScoreCol_Hero ScoreboardPanel">
-				<Image id="HeroIcon" heroimagestyle="landscape" scaling="stretch-to-fit-preserve-aspect" />
-			</Panel>
-			<Panel id="PlayerDetailsContainer" class="ScoreCol_PlayerDetails ScoreboardPanel">
-				<Panel id="PlayerAndHeroName">
-					<Label id="PlayerName" text="AAAAA" />
-					<Label id="HeroNameAndDescription" text="#custom_scoreboard_hero_name_and_desc" />
-				</Panel>
-			</Panel>
-			<Panel id="TeamScoreSpace" class="ScoreCol_TeamScore" />
-			<Panel id="KillsContainer" class="ScoreCol_Kills ScoreboardPanel">
-				<Label id="Kills" text="999" />
-			</Panel>
-			<Panel id="DeathsContainer" class="ScoreCol_Deaths ScoreboardPanel">
-				<Label id="Deaths" text="999" />
-			</Panel>
-			<Panel id="AssistsContainer" class="ScoreCol_Assists ScoreboardPanel">
-				<Label id="Assists" text="999" />
-			</Panel>
-			<Panel id="PanelImbaXP" class="ScoreCol_ImbaXP ScoreboardPanel" />
-			<Panel id="IMRContainer" class="ScoreCol_IMR ScoreboardPanel">
-				<Label id="PlayerIMRAmount" text="999" />
-			</Panel>
-			<Panel id="PlayerItemsContainer" class="ScoreCol_Items ScoreboardPanel" />
-			<Panel id="GoldContainer" class="ScoreCol_Gold ScoreboardPanel">
-				<Label id="PlayerGoldAmount" text="999" />
-			</Panel>
+	<styles>
+		<include src="file://{resources}/styles/custom_game/multiteam_end_screen.css" />
+	</styles>
+
+	<Panel class="es-player-root">
+		<DOTAHeroImage id="es-player-hero" heroname="npc_dota_hero_pudge" heroimagestyle="landscape" />
+		<DOTAAvatarImage id="es-player-avatar" steamid="" />
+		<Panel class="es-player-name-and-desc">
+			<Label id="es-player-name" text="N/A" />
+			<Label id="es-player-desc" text="N/A" />
 		</Panel>
+		<Label id="es-player-level" class="es-player-kdalevel" />
+		<Label id="es-player-k" class="es-player-kdalevel" />
+		<Label id="es-player-d" class="es-player-kdalevel" />
+		<Label id="es-player-a" class="es-player-kdalevel" />
+		<Label id="es-player-gold" />
+		<Label id="es-player-imr" />
+		<Panel class="es-player-xp">
+			<Panel id="es-player-xp-progress" />
+			<Label id="es-player-xp-level" text="N/A" />
+			<Label id="es-player-xp-rank" text="N/A" />
+		</Panel>
+		<Label id="es-player-xp-earned" text="N/A" /> 
 	</Panel>
 </root>
-
+  

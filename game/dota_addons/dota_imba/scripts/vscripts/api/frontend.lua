@@ -150,6 +150,11 @@ function GetStatsForPlayer(ID)
 	end
 end
 
+-- Returns the gameid
+function GetApiGameId()
+	return api_preloaded.id
+end
+
 -- Saves a print message to server
 function ApiPrint(str)
 	imba_api_game_event("debug", str);
