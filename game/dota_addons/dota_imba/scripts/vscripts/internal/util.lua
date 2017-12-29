@@ -994,7 +994,7 @@ function ReconnectPlayer(player_id)
 end
 
 function DonatorCompanion(hero, model)
-if hero:GetPlayerID() == -1 or hero:IsIllusion() then return end
+if hero:GetPlayerID() == -1 or hero:IsIllusion() or model == nil then return end
 local summon_point = Entities:FindByName(nil, "ent_dota_fountain_good"):GetAbsOrigin()
 local color = hero:GetFittingColor()
 
@@ -1262,7 +1262,7 @@ function PickupRune(rune_name, unit, bActiveByBottle)
 
 			-- Adjust value for lobby options
 			local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
-			current_bounty = current_bounty * (1 + custom_gold_bonus * 0.01)
+			current_bounty = current_bounty * (custom_gold_bonus * 0.01)
 
 			-- Grant the unit experience
 			unit:AddExperience(current_xp, DOTA_ModifyXP_CreepKill, false, true)

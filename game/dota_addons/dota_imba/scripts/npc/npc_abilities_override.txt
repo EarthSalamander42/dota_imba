@@ -176,14 +176,14 @@
 	"item_claymore"				{ "AbilityTextureName" "custom/imba_claymore" }
 	"item_cloak"				{ "AbilityTextureName" "custom/imba_cloak" }
 	"item_demon_edge"			{ "AbilityTextureName" "custom/imba_demon_edge" }
-	"item_eaglesong"			{ "AbilityTextureName" "custom/imba_eaglesong" }
+	"item_eagle"				{ "AbilityTextureName" "custom/imba_eaglesong" }
 	"item_ethereal_blade"		{ "AbilityTextureName" "custom/imba_ethereal_blade" }
 	"item_gauntlets"			{ "AbilityTextureName" "custom/imba_gauntlets" }
 	"item_gloves"				{ "AbilityTextureName" "custom/imba_gloves" }
 	"item_hyperstone"			{ "AbilityTextureName" "custom/imba_hyperstone" }
 	"item_lotus_orb"			{ "AbilityTextureName" "custom/imba_lotus_orb" }
 	"item_mantle"				{ "AbilityTextureName" "custom/imba_mantle" }
-	"item_medaillon_of_courage"	{ "AbilityTextureName" "custom/imba_medaillon_of_courage" }
+	"item_medallion_of_courage"	{ "AbilityTextureName" "custom/imba_medaillon_of_courage" }
 	"item_mithril_hammer"		{ "AbilityTextureName" "custom/imba_mithril_hammer" }
 	"item_mystic_staff"			{ "AbilityTextureName" "custom/imba_mystic_staff" }
 	"item_oblivion_staff"		{ "AbilityTextureName" "custom/imba_oblivion_staff" }

@@ -29,6 +29,13 @@
 	"scoreboard_tool_tip_active_disable_help"		"(DISABLED)"
 	"custom_end_screen_legend_imr"					"IMR"
 
+	"custom_toast_CourierKilled"							"{courier_icon} {team_name} courier is dead"
+	"custom_toast_CourierRespawned"							"{courier_icon} {team_name} courier has respawned"
+	"custom_toast_GlyphUsed"								"{glyph_icon} {team_name} structures fortified"
+	"custom_toast_TeamKilled"								"{team_name} {killed_icon} {victim_name}"
+	"custom_toast_KillStreak"								"{player_name} is {kill_streak}"
+	"custom_toast_KillStreak_Ended"							"{victim_name} {kill_streak}x Kill Streak ended"
+	"custom_toast_BottledRune"								"{player_name} bottled {rune_name}"
 	"custom_toast_ActivatedRune"							"{player_name} has activated {rune_name}"
 	"DOTA_Tooltip_ability_item_imba_rune_arcane"			"Archmage Soul"
 	"DOTA_Tooltip_ability_item_imba_rune_bounty"			"Bounty Rune"

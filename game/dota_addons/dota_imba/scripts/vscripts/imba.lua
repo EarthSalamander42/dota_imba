@@ -216,23 +216,6 @@ function GameMode:OnFirstPlayerLoaded()
 	CustomNetTables:SetTableValue("game_options", "dire", {score = 25})
 end
 
--- Multiplies bounty rune experience and gold according to the gamemode multiplier
-function GameMode:BountyRuneFilter( keys )
-
-	--player_id_const	 ==> 	0
-	--xp_bounty	 ==> 	136.5
-	--gold_bounty	 ==> 	132.6
-
-	-- local game_time = math.max(GameRules:GetDOTATime(false, false) / 60, 0)
-	-- keys["gold_bounty"] = ( 1 + CUSTOM_GOLD_BONUS * 0.01 ) * (1 + game_time * BOUNTY_RAMP_PER_MINUTE * 0.01) * keys["gold_bounty"]
-	-- keys["xp_bounty"] = ( 1 + CUSTOM_XP_BONUS * 0.01 ) * (1 + game_time * BOUNTY_RAMP_PER_MINUTE * 0.01) * keys["xp_bounty"]
-
-	keys["gold_bounty"] = keys["gold_bounty"] * 6
-	keys["xp_bounty"] = keys["xp_bounty"] * 4
-
-	return true
-end
-
 -- Gold gain filter function
 function GameMode:GoldFilter( keys )
 	-- reason_const		12
@@ -256,7 +239,7 @@ function GameMode:GoldFilter( keys )
 	if keys.gold > 0 then
 		local game_time = math.max(GameRules:GetDOTATime(false, false), 0)
 		local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
-		keys.gold = keys.gold * (1 + custom_gold_bonus * 0.01) * (1 + game_time * BOUNTY_RAMP_PER_SECOND * 0.01)
+		keys.gold = keys.gold * (custom_gold_bonus * 0.01) * (1 + game_time * 0.01)
 	end
 
 	-- Comeback gold gain
@@ -289,19 +272,19 @@ function GameMode:ExperienceFilter( keys )
 	-- Lobby options adjustment
 	local game_time = math.max(GameRules:GetDOTATime(false, false), 0)
 	local custom_xp_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "exp_multiplier")["1"])
-	keys.experience = keys.experience * (1 + custom_xp_bonus * 0.01) * (1 + game_time * BOUNTY_RAMP_PER_SECOND * 0.01)
+	keys.experience = keys.experience * (custom_xp_bonus * 0.01) * (1 + game_time * 0.01)
 
 	-- Losing team gets huge EXP bonus.
-	if hero and CustomNetTables:GetTableValue("gamerules", "losing_team") then
-		if CustomNetTables:GetTableValue("gamerules", "losing_team").losing_team then
-			local losing_team = CustomNetTables:GetTableValue("gamerules", "losing_team").losing_team
+--	if hero and CustomNetTables:GetTableValue("gamerules", "losing_team") then
+--		if CustomNetTables:GetTableValue("gamerules", "losing_team").losing_team then
+--			local losing_team = CustomNetTables:GetTableValue("gamerules", "losing_team").losing_team
 			
-			if hero:GetTeamNumber() == losing_team then
-				keys.experience = keys.experience * (1 + COMEBACK_EXP_BONUS * 0.01)
-			end
-		end
-	end
-			
+--			if hero:GetTeamNumber() == losing_team then
+--				keys.experience = keys.experience * (1 + COMEBACK_EXP_BONUS * 0.01)
+--			end
+--		end
+--	end
+
 	return true
 end
 
@@ -673,6 +656,16 @@ function GameMode:OrderFilter( keys )
 --			end
 --		end
 --	end
+
+	if keys.order_type == DOTA_UNIT_ORDER_GLYPH then
+		CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
+			type = "generic",
+			text = "#custom_toast_GlyphUsed",
+			teamColor = unit:GetTeam(),
+			team = unit:GetTeam(),
+			glyph = true,
+		})
+	end
 
 	-- Voice lines
 	if keys.order_type == DOTA_UNIT_ORDER_ATTACK_TARGET then
@@ -1288,76 +1281,8 @@ function GameMode:OnGameInProgress()
 	GameRules:SetGoldTickTime( GOLD_TICK_TIME[GetMapName()] )
 
 	-------------------------------------------------------------------------------------------------
-	-- IMBA: Arena mode initialization
-	-------------------------------------------------------------------------------------------------
-	if GetMapName() == "imba_arena" then
-
-		-- Define the bonus gold positions
-		local bonus_gold_positions = {}
-		bonus_gold_positions.fountain_radiant = {
-			stacks = 20,
-			center = Vector(-3776, -3776, 384),
-			radius = 1300
-		}
-		bonus_gold_positions.fountain_dire = {
-			stacks = 20,
-			center = Vector(3712, 3712, 384),
-			radius = 1300
-		}
-		bonus_gold_positions.center_arena = {
-			stacks = 40,
-			center = Vector(0, 0, 256),
-			radius = 900
-		}
-
-		-- Continuously update the amount of gold/exp to gain
-		Timers:CreateTimer(0, function()
-
-			-- Apply the modifier
-			local nearby_heroes = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0, 0, 0), nil, 6000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
-			for _, hero in pairs(nearby_heroes) do
-				if not hero:HasModifier("modifier_imba_arena_passive_gold_thinker") then
-					hero:AddNewModifier(hero, nil, "modifier_imba_arena_passive_gold_thinker", {})
-				end
-				hero:FindModifierByName("modifier_imba_arena_passive_gold_thinker"):SetStackCount(12)
-			end
-
-			-- Update stack amount, when relevant
-			for _, position in pairs(bonus_gold_positions) do
-				nearby_heroes = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, position.center, nil, position.radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
-				for _, hero in pairs(nearby_heroes) do
-					hero:FindModifierByName("modifier_imba_arena_passive_gold_thinker"):SetStackCount(position.stacks)
-				end
-			end
-
-			-- Adjust ward vision
-			local nearby_wards = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0, 0, 0), nil, 6000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_OTHER, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
-			for v, ward in pairs(nearby_wards) do
-				ward:SetDayTimeVisionRange(1000)
-				ward:SetNightTimeVisionRange(1000)
-			end
-			return 0.1
-		end)
-
-		-- Set up control points
-		local radiant_control_point_loc = Entities:FindByName(nil, "radiant_capture_point"):GetAbsOrigin()
-		local dire_control_point_loc = Entities:FindByName(nil, "dire_capture_point"):GetAbsOrigin()
-		RADIANT_CONTROL_POINT_DUMMY = CreateUnitByName("npc_dummy_unit_perma", radiant_control_point_loc, false, nil, nil, DOTA_TEAM_NOTEAM)
-		DIRE_CONTROL_POINT_DUMMY = CreateUnitByName("npc_dummy_unit_perma", dire_control_point_loc, false, nil, nil, DOTA_TEAM_NOTEAM)
-		RADIANT_CONTROL_POINT_DUMMY.score = 20
-		DIRE_CONTROL_POINT_DUMMY.score = 20
-		ArenaControlPointThinkRadiant(RADIANT_CONTROL_POINT_DUMMY)
-		ArenaControlPointThinkDire(DIRE_CONTROL_POINT_DUMMY)
-		Timers:CreateTimer(10, function()
-			ArenaControlPointScoreThink(RADIANT_CONTROL_POINT_DUMMY, DIRE_CONTROL_POINT_DUMMY)
-		end)
-		CustomGameEventManager:Send_ServerToAllClients("contest_started", {})
-	end
-
-	-------------------------------------------------------------------------------------------------
 	-- IMBA: Custom maximum level EXP tables adjustment
 	-------------------------------------------------------------------------------------------------
-	
 	local max_level = tonumber(CustomNetTables:GetTableValue("game_options", "max_level")["1"])
 	if max_level > 35 then
 		for i = 36, max_level do
@@ -1369,7 +1294,6 @@ function GameMode:OnGameInProgress()
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Structure stats setup
 	-------------------------------------------------------------------------------------------------
-
 	-- Roll the random ancient abilities for this game
 	local ancient_ability_2 = "imba_ancient_stalwart_defense"
 	local ancient_ability_3 = GetAncientAbility(1)

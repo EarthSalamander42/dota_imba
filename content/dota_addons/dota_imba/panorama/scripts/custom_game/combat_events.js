@@ -1,4 +1,8 @@
 // Toasts (Ported from AABS, credits to the owner)
+
+// url("s2r://panorama/images/hud/icon_kill_ally_psd.vtex")
+// url("s2r://panorama/images/hud/icon_kill_enemy_psd.vtex")
+
 function CreateCustomToast(data) {
 	var row = $.CreatePanel('Panel', $('#CustomToastManager'), '');
 	row.BLoadLayoutSnippet('ToastPanel');
@@ -7,10 +11,11 @@ function CreateCustomToast(data) {
 
 	if (data.type === 'kill') {
 		var byNeutrals = data.killerPlayer == null;
-		var isSelfKill = data.victimPlayer === data.killerPlayer;
-		var isAllyKill = !byNeutrals && data.victimPlayer != null && Players.GetTeam(data.victimPlayer) === Players.GetTeam(data.killerPlayer);
+		var isSelfKill = data.victimPlayer === data.killerPlayer & data.roshan == undefined;
+		var isAllyKill = !byNeutrals && data.victimPlayer != null && Players.GetTeam(data.victimPlayer) === Players.GetTeam(data.killerPlayer) && data.roshan == undefined;
 		var isVictim = data.victimPlayer === Game.GetLocalPlayerID();
 		var isKiller = data.killerPlayer === Game.GetLocalPlayerID();
+		var isRoshanKill = data.roshan != null
 		var teamVictim = byNeutrals || Players.GetTeam(data.victimPlayer) === Players.GetTeam(Game.GetLocalPlayerID());
 		var teamKiller = !byNeutrals && Players.GetTeam(data.killerPlayer) === Players.GetTeam(Game.GetLocalPlayerID());
 		row.SetHasClass('AllyEvent', teamKiller);
@@ -18,6 +23,7 @@ function CreateCustomToast(data) {
 		row.SetHasClass('LocalPlayerInvolved', isVictim || isKiller);
 		row.SetHasClass('LocalPlayerKiller', isKiller);
 		row.SetHasClass('LocalPlayerVictim', isVictim);
+
 		if (isKiller)
 			Game.EmitSound('notification.self.kill');
 		else if (isVictim)
@@ -31,13 +37,18 @@ function CreateCustomToast(data) {
 			rowText = $.Localize('custom_toast_PlayerDeniedSelf');
 		} else if (isAllyKill) {
 			rowText = $.Localize('#custom_toast_PlayerDenied');
+		} else if (isRoshanKill) {
+			rowText = '{team_name} {killed_icon} {roshan_icon} Roshan {gold}';
 		} else {
 			if (byNeutrals) {
 				rowText = $.Localize('#npc_dota_neutral_creep');
 			} else {
 				rowText = '{killer_name}';
 			}
-			rowText = rowText + ' {killed_icon} {victim_name} {gold}';
+
+			if (roshan.data == undefined) {
+				rowText = rowText + ' {killed_icon} {victim_name} {gold}';
+			}
 		}
 	} else if (data.type === 'generic') {
 		if (data.teamPlayer != null || data.teamColor != null) {
@@ -52,7 +63,13 @@ function CreateCustomToast(data) {
 		rowText = $.Localize(data.text);
 	}
 
-	rowText = rowText.replace('{denied_icon}', "<img class='DeniedIcon'/>").replace('{killed_icon}', "<img class='CombatEventKillIcon'/>").replace('{time_dota}', "<font color='lime'>" + secondsToMS(Game.GetDOTATime(false, false), true) + '</font>');
+	// yet nothing different
+	if (data.firstblood != null) {
+		rowText = rowText.replace('{denied_icon}', "<img class='DeniedIcon'/>").replace('{killed_icon}', "<img class='CombatEventKillIcon'/>").replace('{time_dota}', "<font color='lime'>" + secondsToMS(Game.GetDOTATime(false, false), true) + '</font>');
+	} else {
+		rowText = rowText.replace('{denied_icon}', "<img class='DeniedIcon'/>").replace('{killed_icon}', "<img class='CombatEventKillIcon'/>").replace('{time_dota}', "<font color='lime'>" + secondsToMS(Game.GetDOTATime(false, false), true) + '</font>');
+	}
+
 	if (data.player != null)
 		rowText = rowText.replace('{player_name}', CreateHeroElements(data.player));
 	if (data.victimPlayer != null)
@@ -60,12 +77,20 @@ function CreateCustomToast(data) {
 	if (data.killerPlayer != null) {
 		rowText = rowText.replace('{killer_name}', CreateHeroElements(data.killerPlayer));
 	}
+		
 	if (data.victimUnitName)
 		rowText = rowText.replace('{victim_name}', "<font color='red'>" + $.Localize(data.victimUnitName) + '</font>');
 	if (data.team != null)
+		$.Msg("Team: " + data.team)
 		rowText = rowText.replace('{team_name}', "<font color='" + GameUI.CustomUIConfig().team_colors[data.team] + "'>" + GameUI.CustomUIConfig().team_names[data.team] + '</font>');
 	if (data.gold != null)
 		rowText = rowText.replace('{gold}', "<font color='gold'>" + FormatGold(data.gold) + "</font> <img class='CombatEventGoldIcon' />");
+	if (data.glyph != null)
+		rowText = rowText.replace('{glyph_icon}', "<img class='CombatEventGlyphIcon' />");
+	if (data.courier != null)
+		rowText = rowText.replace('{courier_icon}', "<img class='CombatEventCourierIcon' />");
+	if (data.roshan)
+		rowText = rowText.replace('{roshan_icon}', "<img class='CombatEventRoshanIcon' />");
 	if (data.runeType != null)
 		rowText = rowText.replace('{rune_name}', "<font color='#" + RUNES_COLOR_MAP[data.runeType] + "'>" + $.Localize('DOTA_Tooltip_ability_item_imba_rune_' + data.runeType) + '</font>');
 	if (data.variables)
@@ -93,8 +118,6 @@ var RUNES_COLOR_MAP = {
 };
 
 function CreateHeroElements(id) {
-	$.Msg(Players.GetPlayerName(id))
-	$.Msg(Players.GetPlayerName(id).encodeHTML())
 	var playerColor = GetHEXPlayerColor(id);
 	return "<img src='" + TransformTextureToPath(GetPlayerHeroName(id), 'icon') + "' class='CombatEventHeroIcon'/> <font color='" + playerColor + "'>" + Players.GetPlayerName(id).encodeHTML() + '</font>';
 }
@@ -142,10 +165,15 @@ function TransformTextureToPath(texture, optPanelImageStyle) {
 
 function GetPlayerHeroName(playerId) {
 	if (Players.IsValidPlayerID(playerId)) {
-		$.Msg(Game.GetPlayerInfo(playerId).player_selected_hero)
 		return Game.GetPlayerInfo(playerId).player_selected_hero
 	}
 	return '';
+}
+
+function FormatGold(value) {
+	return (GameUI.IsAltDown() ? value : value > 9999999 ? (value/1000000).toFixed(2) + 'M' : value > 99999 ? (value/1000).toFixed(1) + 'k' : value)
+		.toString()
+		.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 }
 
 (function() {

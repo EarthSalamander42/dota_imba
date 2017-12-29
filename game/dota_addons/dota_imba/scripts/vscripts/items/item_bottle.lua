@@ -21,7 +21,7 @@ end
 function item_imba_bottle:OnSpellStart()
 	if self.RuneStorage then
 		PickupRune(self.RuneStorage, self:GetCaster(), true)
-		if self.RuneStorage == "bounty" and self:GetCurrentCharges() < 2 then
+		if self.RuneStorage == "bounty" and self:GetCurrentCharges() < 3 then
 			self:SetCurrentCharges(2)
 		else
 			self:SetCurrentCharges(3)
@@ -40,17 +40,21 @@ end
 function item_imba_bottle:SetStorageRune(type)
 	--if self.RuneStorage then return end
 	if self:GetCaster().GetPlayerID then
-		local gameEvent = {}
-		gameEvent["player_id"] = self:GetCaster():GetPlayerID()
-		gameEvent["team_number"] = self:GetCaster():GetTeamNumber()
-		gameEvent["locstring_value"] = "#DOTA_Tooltip_Ability_item_imba_rune_"..type
-		gameEvent["message"] = "#IMBA_custom_rune_bottled_"..type
-		FireGameEvent("dota_combat_event_message", gameEvent)
+		CustomGameEventManager:Send_ServerToTeam(self:GetCaster():GetTeam(), "create_custom_toast", {
+			type = "generic",
+			text = "#custom_toast_BottledRune",
+			player = self:GetCaster():GetPlayerID(),
+			runeType = type
+		})
 	end
 	self.RuneStorage = type
 	if self.RuneStorage == "bounty" then
 		if self:GetCurrentCharges() < 3 then
 			self:SetCurrentCharges(2)
+		else
+			PickupRune(self.RuneStorage, self:GetCaster(), true)
+			self.RuneStorage = nil
+			return
 		end
 	else
 		self:SetCurrentCharges(3)

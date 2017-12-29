@@ -178,7 +178,11 @@ function GameMode:OnGameRulesStateChange(keys)
 
 			-- fix to setup flying courier speed, volvo black magic reset it to 450
 			if GameRules:GetDOTATime(false, false) > 180 then
+				local IMBA_COURIERS = FindUnitsInRadius(2, Vector(0, 0, 0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 				for _, courier in pairs(IMBA_COURIERS) do
+					if not courier:HasModifier("modifier_imba_speed_limit_break") then
+						courier:AddNewModifier(courier, nil, "modifier_imba_speed_limit_break", {})
+					end
 					if not courier:HasModifier("modifier_courier_hack") then
 						courier:AddNewModifier(courier, nil, "modifier_courier_hack", {})
 					end
@@ -204,7 +208,7 @@ function GameMode:OnGameRulesStateChange(keys)
 					hero:SetTimeUntilRespawn(respawn_time)
 				end
 			end
-			return 1.0
+			return 10.0 -- avoid lag
 		end)
 	end
 
@@ -364,13 +368,20 @@ local normal_xp = npc:GetDeathXP()
 			end
 		end
 
-		if npc:GetUnitName() == "npc_dota_courier" then
+		if npc:IsCourier() then
 			if not npc.first_spawn then
 				npc.first_spawn = true
-				table.insert(IMBA_COURIERS, npc)
 --				if npc:FindAbilityByName("courier_burst"):GetLevel() ~= 1 then
 --					npc:FindAbilityByName("courier_burst"):SetLevel(1)
 --				end
+			else
+				CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
+					type = "generic",
+					text = "#custom_toast_CourierRespawned",
+					teamColor = npc:GetTeam(),
+					team = npc:GetTeam(),
+					courier = true,
+				})
 			end
 			npc:AddNewModifier(npc, nil, "modifier_imba_speed_limit_break", {})
 		end
@@ -810,12 +821,61 @@ function GameMode:OnLastHit(keys)
 	local player = PlayerResource:GetPlayer(keys.PlayerID)
 	local killedEnt = EntIndexToHScript(keys.EntKilled)
 
+	local streak = {}
+	streak[3] = "Killing spree"
+	streak[4] = "Dominating"
+	streak[5] = "Mega kill"
+	streak[6] = "Unstoppable"
+	streak[7] = "Wicked sick"
+	streak[8] = "Monster kill"
+	streak[9] = "Godlike"
+	streak[10] = "Beyond Godlike"
+
 	if isFirstBlood then
 		HeroVoiceLine(player:GetAssignedHero(), "firstblood")
+		CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
+			type = "kill",
+			killerPlayer = keys.PlayerID,
+			victimPlayer = killedEnt:GetPlayerID(),
+			firstblood = true,
+			gold = 0,
+		})
 		return
 	elseif isHeroKill then
 		HeroVoiceLine(player:GetAssignedHero(), "kill")
-		return
+		if not player:GetAssignedHero().killstreak then player:GetAssignedHero().killstreak = 0 end
+		player:GetAssignedHero().killstreak = player:GetAssignedHero().killstreak +1
+
+		if player:GetAssignedHero().killstreak >= 3 and player:GetAssignedHero().killstreak <= 9 then
+			CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
+				type = "generic",
+				text = "#custom_toast_KillStreak",
+				victimPlayer = killedEnt:GetPlayerID(),
+				player = keys.PlayerID,
+				teamInverted = true,
+				variables = {
+					["{kill_streak}"] = streak[player:GetAssignedHero().killstreak]
+				}
+			})
+		elseif player:GetAssignedHero().killstreak >= 10 then
+			CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
+				type = "generic",
+				text = "#custom_toast_KillStreak",
+				victimPlayer = killedEnt:GetPlayerID(),
+				player = keys.PlayerID,
+				teamInverted = true,
+				variables = {
+					["{kill_streak}"] = streak[10]
+				}
+			})
+		end
+
+		CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
+			type = "kill",
+			killerPlayer = keys.PlayerID,
+			victimPlayer = killedEnt:GetPlayerID(),
+--			gold = 0,
+		})
 	end
 end
 
@@ -925,7 +985,7 @@ function GameMode:OnTeamKillCredit(keys)
 				Notifications:BottomToAll({text = "#imba_deathstreak_9", duration = line_duration, continue = true})
 			elseif victim_death_streak >= 10 then
 				Notifications:BottomToAll({text = "#imba_deathstreak_10", duration = line_duration, continue = true})
-			end	
+			end
 		end
 	end
 
@@ -1090,7 +1150,7 @@ function GameMode:OnEntityKilled( keys )
 			end
 			local buyback_cost = BUYBACK_BASE_COST + level_based_cost + game_time * BUYBACK_COST_PER_SECOND		
 			local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
-			buyback_cost = buyback_cost * (1 + custom_gold_bonus * 0.01)
+			buyback_cost = buyback_cost * (custom_gold_bonus * 0.01)
 
 			-- Setup buyback cooldown
 			local buyback_cooldown = 0
@@ -1116,6 +1176,54 @@ function GameMode:OnEntityKilled( keys )
 			else
 				HeroVoiceLine(killer, "lasthit")
 			end
+		end
+
+		if killed_unit.killstreak then
+			killed_unit.killstreak = 0
+		end
+
+		local gold_bounty = 200
+		if killed_unit:GetUnitName() == "npc_dota_badguys_healers" then
+			gold_bounty = 125
+		end
+
+		-- ready to use
+		if killed_unit:IsBuilding() then
+			print(killed_unit:GetUnitName())
+			if killer:IsRealHero() then
+				CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
+					type = "kill",
+					killerPlayer = killer:GetPlayerID(),
+					victimUnitName = killed_unit:GetUnitName(),
+					gold = gold_bounty,
+				})
+			else
+				CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
+					type = "generic",
+					text = "#custom_toast_TeamKilled",
+					victimUnitName = killed_unit:GetUnitName(),
+					teamColor = killer:GetTeam(),
+					team = killer:GetTeam(),
+					gold = gold_bounty,
+				})
+			end
+		elseif killed_unit:IsCourier() then
+			CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
+				type = "generic",
+				text = "#custom_toast_CourierKilled",
+				teamColor = killed_unit:GetTeam(),
+				team = killed_unit:GetTeam(),
+				courier = true,
+			})
+		elseif killed_unit:GetUnitName() == "npc_imba_roshan" then
+			CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
+				type = "kill",
+				teamColor = killer:GetTeam(),
+				team = killer:GetTeam(),
+				victimUnitName = killed_unit:GetUnitName(),
+				roshan = true,
+				gold = 150,
+			})
 		end
 	end
 end

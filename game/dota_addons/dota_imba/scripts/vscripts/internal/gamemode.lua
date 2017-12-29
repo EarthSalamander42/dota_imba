@@ -142,10 +142,6 @@ function GameMode:_CaptureGameMode()
 		mode:SetMinimumAttackSpeed( MINIMUM_ATTACK_SPEED )
 		mode:SetStashPurchasingDisabled ( DISABLE_STASH_PURCHASING )
 
-		for rune, spawn in pairs(ENABLED_RUNES) do
-			mode:SetRuneEnabled(rune, spawn)
-		end
-
 		mode:SetUnseenFogOfWarEnabled(USE_UNSEEN_FOG_OF_WAR)
 
 		self:OnFirstPlayerLoaded()
@@ -214,10 +210,10 @@ function OnSetGameMode( eventSourceIndex, args )
 --	end
 
 	-- Bounty multiplier increase
-	CustomNetTables:SetTableValue("game_options", "bounty_multiplier", {100 + CUSTOM_GOLD_BONUS[map_name][mode_info.bounty_multiplier]})
+	CustomNetTables:SetTableValue("game_options", "bounty_multiplier", {CUSTOM_GOLD_BONUS[map_name][mode_info.bounty_multiplier]})
 
 	-- XP multiplier increase
-	CustomNetTables:SetTableValue("game_options", "exp_multiplier", {100 + CUSTOM_XP_BONUS[map_name][mode_info.exp_multiplier]})
+	CustomNetTables:SetTableValue("game_options", "exp_multiplier", {CUSTOM_XP_BONUS[map_name][mode_info.exp_multiplier]})
 
 	-- Tower power increase
 	if mode_info.exp_multiplier == 1 then

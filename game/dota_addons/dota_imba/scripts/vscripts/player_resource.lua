@@ -146,7 +146,7 @@ function PlayerResource:StartAbandonGoldRedistribution(player_id)
 	local current_allies = {}
 	local ally_amount = 0
 	local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
-	local gold_per_interval = 3 * ( 1 + custom_gold_bonus * 0.01 ) / GOLD_TICK_TIME
+	local gold_per_interval = 3 * (custom_gold_bonus * 0.01 ) / GOLD_TICK_TIME
 
 	-- Distribute initial gold
 	for id = 0, 19 do

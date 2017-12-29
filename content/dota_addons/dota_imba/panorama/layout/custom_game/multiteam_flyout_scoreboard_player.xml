@@ -24,24 +24,24 @@
 				</Panel>
 			</Panel>
 			<Panel class="ScoreCol_HeroLevel ScoreboardPanel">
-				<Label id="Level" text="999" />
+				<Label id="Level" text="N/A" />
 			</Panel>
 			<Panel id="PanelImbaXP" class="ScoreCol_ImbaXP ScoreboardPanel">
 			</Panel>
 			<Panel class="ScoreCol_IMR ScoreboardPanel">
-				<Label id="TeammateIMRAmount" text="999" />
+				<Label id="TeammateIMRAmount" text="N/A" />
 			</Panel>
 			<Panel class="ScoreCol_Gold ScoreboardPanel">
-				<Label id="TeammateGoldAmount" text="999" />
+				<Label id="TeammateGoldAmount" text="N/A" />
 			</Panel>
 			<Panel id="KillsContainer" class="ScoreCol_Kills ScoreboardPanel">
-				<Label id="Kills" text="999" />
+				<Label id="Kills" text="N/A" />
 			</Panel>
 			<Panel id="DeathsContainer" class="ScoreCol_Deaths ScoreboardPanel">
-				<Label id="Deaths" text="999" />
+				<Label id="Deaths" text="N/A" />
 			</Panel>
 			<Panel id="AssistsContainer" class="ScoreCol_Assists ScoreboardPanel">
-				<Label id="Assists" text="999" />
+				<Label id="Assists" text="N/A" />
 			</Panel>
 			<Panel id="UltimateIndicator" class="ScoreCol_Ultimate UltimateIndicatorShared" />
 			<Panel class="ScoreCol_Buttons ScoreboardPanel">

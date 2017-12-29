@@ -172,76 +172,50 @@ CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 5
 CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 5
 
 if GetMapName() == "imba_standard" then
-	IMBA_PICK_MODE_ALL_PICK = true
-elseif GetMapName() == "imba_custom" then
-	IMBA_PICK_MODE_ALL_PICK = true
+
 elseif GetMapName() == "imba_frantic_10v10" then
-	IMBA_PICK_MODE_ALL_PICK = true
 	IMBA_PLAYERS_ON_GAME = 20
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 10
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 10
 elseif GetMapName() == "imba_10v10" then
-	IMBA_PICK_MODE_ALL_PICK = true
 	IMBA_PLAYERS_ON_GAME = 20
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 10
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 10
 elseif GetMapName() == "imba_12v12" then
-	IMBA_PICK_MODE_ALL_PICK = true
 	IMBA_PLAYERS_ON_GAME = 24
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 12
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 12
-elseif GetMapName() == "imba_arena" then
-	IMBA_PICK_MODE_ALL_PICK = true
-	IMBA_PLAYERS_ON_GAME = 12
-	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 6
-	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 6
 end
-
--- NOTE: You always need at least 2 non-bounty type runes to be able to spawn or your game will crash!
-ENABLED_RUNES = {}                      -- Which runes should be enabled to spawn in our game mode?
-ENABLED_RUNES[DOTA_RUNE_DOUBLEDAMAGE] = true
-ENABLED_RUNES[DOTA_RUNE_HASTE] = true
-ENABLED_RUNES[DOTA_RUNE_ILLUSION] = true
-ENABLED_RUNES[DOTA_RUNE_INVISIBILITY] = true
-ENABLED_RUNES[DOTA_RUNE_REGENERATION] = true
-ENABLED_RUNES[DOTA_RUNE_BOUNTY] = true
-ENABLED_RUNES[DOTA_RUNE_ARCANE] = true
---	ENABLED_RUNES[DOTA_RUNE_HAUNTED] = true
---	ENABLED_RUNES[DOTA_RUNE_MYSTERY] = true
---	ENABLED_RUNES[DOTA_RUNE_RAPIER] = true
---	ENABLED_RUNES[DOTA_RUNE_SPOOKY] = true
---	ENABLED_RUNES[DOTA_RUNE_TURBO] = true
 
 -------------------------------------------------------------------------------------------------
 -- IMBA: game mode globals
 -------------------------------------------------------------------------------------------------
-
 GAME_WINNER_TEAM = 0														-- Tracks game winner
 
-IMBA_HYPER_MODE_ON = false													-- Is Hyper mode activated?
 if GetMapName() ~= "imba_frantic_10v10" then
 	IMBA_FRANTIC_MODE_ON = false
 else
 	IMBA_FRANTIC_MODE_ON = true
 end
+
 IMBA_FRANTIC_VALUE = 0.4													-- 60% CDR
 
-IMBA_PICK_MODE_ALL_PICK = false												-- Activates All Pick mode when true
+IMBA_PICK_MODE_ALL_PICK = true												-- Activates All Pick mode when true
 IMBA_PICK_MODE_ALL_RANDOM = false											-- Activates All Random mode when true
 IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO = false									-- Activates All Random Same Hero mode when true
 IMBA_ALL_RANDOM_HERO_SELECTION_TIME = 5.0									-- Time we need to wait before the game starts when all heroes are randomed
 
 -- Global Gold earning, values are doubled with Hyper for non-custom maps
 CUSTOM_GOLD_BONUS = {} -- 1 = Normal, 2 = Hyper
-CUSTOM_GOLD_BONUS["imba_standard"] = {40, 40}
-CUSTOM_GOLD_BONUS["imba_10v10"] = {40, 40}
-CUSTOM_GOLD_BONUS["imba_frantic_10v10"] = {150, 150}
+CUSTOM_GOLD_BONUS["imba_standard"] = {140, 140}
+CUSTOM_GOLD_BONUS["imba_10v10"] = {140, 140}
+CUSTOM_GOLD_BONUS["imba_frantic_10v10"] = {250, 250}
 
 -- Global XP earning, values are doubled with Hyper for non-custom maps (right now this is not used anymore, but i'll keep it there just in case)
 CUSTOM_XP_BONUS = {} -- 1 = standard, 2 = 10v10, 3 = custom
-CUSTOM_XP_BONUS["imba_standard"] = {0, 0}
-CUSTOM_XP_BONUS["imba_10v10"] = {0, 0}
-CUSTOM_XP_BONUS["imba_frantic_10v10"] = {150, 150}
+CUSTOM_XP_BONUS["imba_standard"] = {100, 100}
+CUSTOM_XP_BONUS["imba_10v10"] = {100, 100}
+CUSTOM_XP_BONUS["imba_frantic_10v10"] = {250, 250}
 
 -- Hero base level, values are doubled with Hyper for non-custom maps
 HERO_STARTING_LEVEL = {} -- 1 = standard, 2 = 10v10, 3 = custom
@@ -263,11 +237,6 @@ GOLD_TICK_TIME = {}
 GOLD_TICK_TIME["imba_standard"] = 0.6
 GOLD_TICK_TIME["imba_10v10"] = 0.6
 GOLD_TICK_TIME["imba_frantic_10v10"] = 0.4
-
-IMBA_COURIERS = {}
-
-BOUNTY_RAMP_PER_SECOND = 0.04												-- Bounty increase (in %) based on game time
-CREEP_POWER_MAX_UPGRADES = 30												-- Maximum amount of creep/structure upgrades
 
 REMAINING_GOODGUYS = 0														-- Remaining players on Radiant
 REMAINING_BADGUYS = 0														-- Remaining players on Dire

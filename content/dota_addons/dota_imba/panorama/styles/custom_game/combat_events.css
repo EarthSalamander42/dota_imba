@@ -147,6 +147,37 @@ background-image: url("s2r://panorama/images/hud/icon_gold_psd.vtex");
 background-size: 100%;
 transform: translateY(10px); }
 
+.CombatEventGlyphIcon {
+width: 30px;
+height: 30px;
+margin-right: 2px;
+margin-left: 2px;
+vertical-align: center;
+background-size: 100%;
+transform: translateY(10px);
+background-image: url("s2r://panorama/images/hud/icon_glyph_small_psd.vtex"); }
+
+.CombatEventCourierIcon {
+width: 24px;
+height: 24px;
+margin-bottom: 4px;
+margin-right: 2px;
+margin-left: 2px;
+vertical-align: center;
+background-size: 100%;
+transform: translateY(10px);
+background-image: url("s2r://panorama/images/hud/icon_courier_event_psd.vtex"); }
+
+.CombatEventRoshanIcon {
+width: 24px;
+height: 24px;
+margin-bottom: 2px;
+vertical-align: center;
+background-size: 100%;
+wash-color: #ff0000;
+transform: translateY(12px);
+background-image: url("s2r://panorama/images/hud/icon_roshan_psd.vtex"); }
+
 .CombatEventKillIcon {
 width: 48px;
 height: 30px;
@@ -239,12 +270,12 @@ transform: rotateZ(25deg); }
 height: 30px;
 padding-top: -9px;
 padding-right: 0;
-padding-left: 18px;
+padding-left: 10px;
 margin-left: 5px;
-font-size: 18px;
+font-size: 17px;
 font-weight: bold;
 color: white;
-text-shadow: 2px 1px 5px 2 #000;
+text-shadow: 2px 1px 0px 2 black;
 vertical-align: center; }
 .SimpleText #ToastLabel {
 padding-top: 0; }

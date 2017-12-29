@@ -46,7 +46,11 @@
 		GameUI.CustomUIConfig().team_colors = {}
 		GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_GOODGUYS] = "#08640E;";
 		GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_BADGUYS ] = "#640808;";
-		GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_NEUTRALS ] = "#640808;";
+
+		GameUI.CustomUIConfig().team_names = {}
+		GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_GOODGUYS] = "Radiant";
+		GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_BADGUYS] = "Dire";
+
 
 		// These lines set up the panorama colors used by each player on the top scoreboard
 		GameUI.CustomUIConfig().player_colors = {}
@@ -81,6 +85,7 @@
 		var hudElements = Parent.FindChildTraverse("HUDElements");
 		var CustomUIRoot = Parent.FindChildTraverse("CustomUIRoot");
 		Parent.FindChildTraverse("PreGame").style.visibility = "collapse";
+		hudElements.FindChildTraverse("combat_events").style.visibility = "collapse";
 
 		//Buff Bar
 		var BuffBar = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("buffs")
