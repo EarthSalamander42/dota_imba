@@ -156,8 +156,12 @@ function GetApiGameId()
 end
 
 -- Saves a print message to server
-function ApiPrint(str)
-	imba_api_game_event("debug", str);
+function ApiPrint(str, tag)
+	if tag == nil then
+		tag = "debug"
+	end
+
+	imba_api_game_event(tag, str);
 end
 
 -- Will write a custom game event to the server

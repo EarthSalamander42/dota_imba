@@ -46,9 +46,9 @@
 			</Panel> 
 		</Panel>
 		<Panel id="es-buttons">
-			<!--<Button id="es-buttons-stats">
+			<Button id="es-buttons-stats">
 				<Label text="See Detailed statistics about this Game" />
-			</Button>-->
+			</Button>
 			<Button id="es-buttons-website" onactivate="DOTADisplayURL('http://www.dota2imba.org/');">
 				<Label text="Go to our Official Website" />
 			</Button>
