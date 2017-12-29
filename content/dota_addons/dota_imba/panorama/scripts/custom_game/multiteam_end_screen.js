@@ -1,77 +1,201 @@
 "use strict";
 
-(function()
-{
-	if ( ScoreboardUpdater_InitializeScoreboard === null ) { $.Msg( "WARNING: This file requires shared_scoreboard_updater.js to be included." ); }
+(function() {	
 
-	var scoreboardConfig =
-	{
-		"teamXmlName" : "file://{resources}/layout/custom_game/multiteam_end_screen_team.xml",
-		"playerXmlName" : "file://{resources}/layout/custom_game/multiteam_end_screen_player.xml",
-	};
+	GameEvents.Subscribe("end_game", function (args) {
 
-	var endScoreboardHandle = ScoreboardUpdater_InitializeScoreboard( scoreboardConfig, $( "#TeamsContainer" ) );
-	$.GetContextPanel().SetHasClass( "endgame", 1 );
-	
-	var teamInfoList = ScoreboardUpdater_GetSortedTeamInfoList( endScoreboardHandle );
-	var delay = 0.2;
-	var delay_per_panel = 1 / teamInfoList.length;
-	for ( var teamInfo of teamInfoList )
-	{
-		var teamPanel = ScoreboardUpdater_GetTeamPanel( endScoreboardHandle, teamInfo.team_id );
-		teamPanel.SetHasClass( "team_endgame", false );
-		var callback = function( panel )
-		{
-			return function(){ panel.SetHasClass( "team_endgame", 1 ); }
-		}( teamPanel );
-		$.Schedule( delay, callback )
-		delay += delay_per_panel;
-	}
+		// Gather info 
+		var playerResults = args.players;
+		var serverInfo = args.info;
+		var xpInfo = args.xp_info;
+		var mapInfo = Game.GetMapInfo();
+		var radiantPlayerIds = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_GOODGUYS );
+		var direPlayerIds = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_BADGUYS );
 
-	var winningTeamId = Game.GetGameWinner();
-	var winningTeamDetails = Game.GetTeamDetails( winningTeamId );
-	var endScreenVictory = $( "#EndScreenVictory" );
-	if ( endScreenVictory )
-	{
-		endScreenVictory.SetDialogVariable( "winning_team_name", $.Localize( winningTeamDetails.team_name ) );
+		// Victory Info text
+		var victoryMessage = "winning_team_name Victory!";
+		var vicrotyMessageLabel = $("#es-victory-info-text");
 
-		if ( GameUI.CustomUIConfig().team_colors )
-		{
-			var teamColor = GameUI.CustomUIConfig().team_colors[ winningTeamId ];
-			teamColor = teamColor.replace( ";", "" );
-			endScreenVictory.style.color = teamColor + ";";
-		}
-
-		var ImbaXPLabel = $( "#ImbaXPCount" ).FindChildTraverse("ImbaXPAdvertize");
-		var GameCount = CustomNetTables.GetTableValue("game_options", "game_count").value;
-//		$.Msg(GameCount)
-		if ( GameCount == 1 )
-		{
-			ImbaXPLabel.text = "Imba XP: This game was recorded."
-			ImbaXPLabel.style.color = "green"
-		}
+		if (serverInfo.winner == 2)
+			victoryMessage = victoryMessage.replace("winning_team_name", "Radiant");
 		else
-		{
-			ImbaXPLabel.text = "Imba XP: This game was not recorded."
-			ImbaXPLabel.style.color = "red"
-		}
-	}
+			victoryMessage = victoryMessage.replace("winning_team_name", "Dire");
 
-//	var winningTeamLogo = $( "#WinningTeamLogo" );
-//	if ( winningTeamLogo )
-//	{
-//		var logo_xml = GameUI.CustomUIConfig().team_logo_large_xml;
-//		if ( logo_xml )
-//		{
-//			winningTeamLogo.SetAttributeInt( "team_id", winningTeamId );
-//			winningTeamLogo.BLoadLayout( logo_xml, false, false );
-//		}
-//	}
+		vicrotyMessageLabel.text = victoryMessage;
 
-	//COOKIES: Disable HUD
-	var parent_panel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
-	parent_panel.FindChildTraverse("topbar").style.visibility = "collapse";
-	parent_panel.FindChildTraverse("lower_hud").style.visibility = "collapse";
-	parent_panel.FindChildTraverse("topbar").style.visibility = "collapse";
-	parent_panel.FindChildTraverse("minimap_container").style.visibility = "collapse";
+		// Load frequently used panels
+		var teamsContainer = $("#es-teams");
+
+		var panels = {
+			radiant: $("#es-radiant"),
+			dire: $("#es-dire"),
+			radiantPlayers: $("#es-radiant-players"),
+			direPlayers: $("#es-dire-players"),
+		};
+		
+		// the panorama xml file used for the player lines
+		var playerXmlFile = "file://{resources}/layout/custom_game/multiteam_end_screen_player.xml";
+
+		// sort a player by merging results from server and using getplayerinfo  
+		var loadPlayer = function (id) {
+			
+			var playerInfo = Game.GetPlayerInfo(id);
+			var resultInfo = null;
+			var xp = null;
+
+			for (var steamid in playerResults) {
+				if (playerInfo.player_steamid == steamid)
+					resultInfo = playerResults[steamid];
+			}
+
+			for (var steamid in xpInfo) {
+				if (playerInfo.player_steamid == steamid)
+					xp = xpInfo[steamid];
+			}
+
+			return {
+				id: id,
+				info: playerInfo,
+				result: resultInfo,
+				xp: xp
+			};
+		};
+		
+		// Load players = sort our data we got from above
+		var radiantPlayers = [];
+		var direPlayers = [];
+
+		$.Each(radiantPlayerIds, function (id) { radiantPlayers.push(loadPlayer(id)); });
+		$.Each(direPlayerIds, function (id) { direPlayers.push(loadPlayer(id)); });
+
+		var createPanelForPlayer = function (player, parent) {
+
+			// Create a new Panel for this player
+			var pp = $.CreatePanel("Panel", parent, "es-player-" + player.id);
+			pp.AddClass("es-player");
+			pp.BLoadLayout(playerXmlFile, false, false);
+
+			var values = {
+				name: pp.FindChildInLayoutFile("es-player-name"),
+				avatar: pp.FindChildInLayoutFile("es-player-avatar"),
+				hero: pp.FindChildInLayoutFile("es-player-hero"),
+				desc: pp.FindChildInLayoutFile("es-player-desc"),
+				kills: pp.FindChildInLayoutFile("es-player-k"),
+				deaths: pp.FindChildInLayoutFile("es-player-d"),
+				assists: pp.FindChildInLayoutFile("es-player-a"),
+				imr: pp.FindChildInLayoutFile("es-player-imr"),
+				gold: pp.FindChildInLayoutFile("es-player-gold"),
+				level: pp.FindChildInLayoutFile("es-player-level"),
+				xp: {
+					progress: pp.FindChildInLayoutFile("es-player-xp-progress"),
+					level: pp.FindChildInLayoutFile("es-player-xp-level"),
+					rank: pp.FindChildInLayoutFile("es-player-xp-rank"),
+					earned: pp.FindChildInLayoutFile("es-player-xp-earned")
+				}
+			};
+
+
+			// Avatar + Hero Image
+			values.avatar.steamid = player.info.player_steamid;
+			values.hero.heroname = player.info.player_selected_hero;
+			
+			// Steam Name + Hero name
+			values.name.text = player.info.player_name;
+			values.desc.text = $.Localize(player.info.player_selected_hero);
+			
+			// Stats
+			values.kills.text = player.info.player_kills;
+			values.deaths.text = player.info.player_deaths;
+			values.assists.text = player.info.player_assists;
+			values.gold.text = player.info.player_gold;
+			values.level.text = player.info.player_level;
+
+			// IMR
+			if (player.result != null) {
+				if (player.result.imr_5v5_calibrating)
+					values.imr.text = "TBD";
+				else {
+					var imr = Math.floor(player.result.imr_5v5);
+					var diff = Math.floor(player.result.imr_5v5_diff)
+					if (diff == 0) {
+						values.imr.text = imr;
+						values.imr.AddClass("es-text-white");
+					} else if (diff > 0) {
+						values.imr.text = imr + " (+" + diff + ")";
+						values.imr.AddClass("es-text-green");
+					} else {
+						values.imr.text = imr + " (" + diff + ")";
+						values.imr.AddClass("es-text-red");
+					}
+				}
+			} else {
+				values.imr.text = "N/A";
+			}
+
+			// XP
+			if (player.result != null) {
+				var xp = Math.floor(player.result.xp);
+				var xpDiff = Math.floor(player.result.xp_diff);
+				var oldXp = xp - xpDiff;
+
+				if (xpDiff > 0) {
+					values.xp.earned.text = "+" + xpDiff;
+					values.xp.earned.AddClass("es-text-green");
+				} else if (xpDiff == 0) {
+					values.xp.earned.text = "0";
+					values.xp.earned.AddClass("es-text-white");
+				} else {
+					values.xp.earned.text = new String(xpDiff);
+					values.xp.earned.AddClass("es-text-red");
+				}
+
+				values.xp.level.text = player.xp.level;
+				values.xp.rank.text = player.xp.title;
+				values.xp.rank.style.color = player.xp.color;
+	
+				var convertToPercentString = function (f) {
+					var x = Math.floor(Math.abs(f) * 100);
+					return x + "%";
+				};
+	
+				values.xp.progress.style.width = convertToPercentString(player.xp.progress);
+	
+			} else {
+				values.xp.earned.text = "N/A";
+			}
+
+		};
+
+		var scores = {
+			radiant: 0,
+			dire: 0
+		};
+
+		// Create the panels for the players
+		$.Each(radiantPlayers, function (player) {
+			scores.dire += player.info.player_deaths;
+			createPanelForPlayer(player, panels.radiantPlayers);
+		});
+		
+		$.Each(direPlayers, function (player) {
+			scores.radiant += player.info.player_deaths;
+			createPanelForPlayer(player, panels.direPlayers);
+		});
+
+		// Set Team Score
+		$("#es-team-score-radiant").text = new String(scores.radiant);
+		$("#es-team-score-dire").text = new String(scores.dire);
+
+		// Hide all other UI
+		var MainPanel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
+		
+		MainPanel.FindChildTraverse("topbar").style.visibility = "collapse";
+	    MainPanel.FindChildTraverse("minimap_container").style.visibility = "collapse";
+	    MainPanel.FindChildTraverse("lower_hud").style.visibility = "collapse";
+	    MainPanel.FindChildTraverse("HudChat").style.visibility = "collapse";
+	    MainPanel.FindChildTraverse("NetGraph").style.visibility = "collapse";
+	    MainPanel.FindChildTraverse("quickstats").style.visibility = "collapse";
+
+	});
+
 })();

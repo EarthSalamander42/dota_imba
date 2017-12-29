@@ -91,6 +91,7 @@ function ImbaApi:perform(robj, endpoint, callback)
 				callback(true, rp)
 			else
 				self:print("Request succesful")
+				self:print("Payload: " .. result.Body)
 				callback(false, rp)
 			end
 		end
