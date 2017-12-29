@@ -383,7 +383,7 @@ local normal_xp = npc:GetDeathXP()
 		end
 
 		-- Valve Illusion bug to prevent respawning
-		if npc:IsIllusion() and not npc:HasModifier("modifier_illusion_manager_out_of_world") then
+		if npc:IsIllusion() and not npc:HasModifier("modifier_illusion_manager_out_of_world") and not npc:HasModifier("modifier_illusion_manager") then
 			if npc.illusion == true then
 				UTIL_Remove(npc)
 			end
