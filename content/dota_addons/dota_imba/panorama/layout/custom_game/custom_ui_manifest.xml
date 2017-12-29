@@ -168,6 +168,7 @@
 
 	<Panel>
 	<!-- CustomUIElements go here.  They are not provided currently as valve's parser reads commented lines and attempts to link them in.-->
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/combat_events.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/imba_imr.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/hero_selection.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/talent_window.xml" />
