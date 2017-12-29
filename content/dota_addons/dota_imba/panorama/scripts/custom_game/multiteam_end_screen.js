@@ -1,8 +1,36 @@
 "use strict";
 
 (function() {	
+	/*
+	var ApiDebug = function(obj) {
+		$.AsyncWebRequest("http://api.dota2imba.org/game/event", {
+			type: "POST",
+			dataType: "json",
+			data: {
+				agent: "panorama",
+				version: 1,
+				data: {
+					id: null, 
+					event: "panorama",
+					content: JSON.stringify(obj),
+					tag: null
+				}
+			},
+			complete: function (data) {
+				$.Msg("Request Complete");
+				$.Msg(data);
+			},
+			error: function (err) {
+				$.Msg("Request failed");
+				$.Msg(err);
+			}
+		});
+	};
+	*/
 
 	GameEvents.Subscribe("end_game", function (args) {
+
+		$.Msg("End game received");
 
 		// Gather info 
 		var playerResults = args.players;
@@ -12,16 +40,25 @@
 		var radiantPlayerIds = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_GOODGUYS );
 		var direPlayerIds = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_BADGUYS );
 
+		$.Msg({
+			args: args,
+			info: {
+				map: mapInfo,
+				ids1: radiantPlayerIds,
+				ids2: direPlayerIds
+			}
+		});
+
 		// Victory Info text
 		var victoryMessage = "winning_team_name Victory!";
-		var vicrotyMessageLabel = $("#es-victory-info-text");
+		var victoryMessageLabel = $("#es-victory-info-text");
 
 		if (serverInfo.winner == 2)
 			victoryMessage = victoryMessage.replace("winning_team_name", "Radiant");
 		else
 			victoryMessage = victoryMessage.replace("winning_team_name", "Dire");
 
-		vicrotyMessageLabel.text = victoryMessage;
+		victoryMessageLabel.text = victoryMessage;
 
 		// Load frequently used panels
 		var teamsContainer = $("#es-teams");
@@ -39,6 +76,8 @@
 		// sort a player by merging results from server and using getplayerinfo  
 		var loadPlayer = function (id) {
 			
+			$.Msg("Loading player " + id);
+
 			var playerInfo = Game.GetPlayerInfo(id);
 			var resultInfo = null;
 			var xp = null;
@@ -70,6 +109,8 @@
 
 		var createPanelForPlayer = function (player, parent) {
 
+			$.Msg("Creating Panel for player " + player.info.player_steamid);
+
 			// Create a new Panel for this player
 			var pp = $.CreatePanel("Panel", parent, "es-player-" + player.id);
 			pp.AddClass("es-player");
@@ -94,6 +135,8 @@
 				}
 			};
 
+			$.Msg("Ok we loaded the layout file");
+
 
 			// Avatar + Hero Image
 			values.avatar.steamid = player.info.player_steamid;
@@ -116,7 +159,8 @@
 					values.imr.text = "TBD";
 				else {
 					var imr = Math.floor(player.result.imr_5v5);
-					var diff = Math.floor(player.result.imr_5v5_diff)
+					var diff = Math.floor(player.result.imr_5v5_diff);
+
 					if (diff == 0) {
 						values.imr.text = imr;
 						values.imr.AddClass("es-text-white");
@@ -164,12 +208,16 @@
 				values.xp.earned.text = "N/A";
 			}
 
+			$.Msg("Player panel complete");
+
 		};
 
 		var scores = {
 			radiant: 0,
 			dire: 0
 		};
+
+		$.Msg("Creating the panels");
 
 		// Create the panels for the players
 		$.Each(radiantPlayers, function (player) {
@@ -186,6 +234,8 @@
 		$("#es-team-score-radiant").text = new String(scores.radiant);
 		$("#es-team-score-dire").text = new String(scores.dire);
 
+		$.Msg("Setting the gmaeid button panel event");
+
 		// Configure Stats Button
 		$("#es-buttons-stats").SetPanelEvent("onactivate", function () {
 			$.DispatchEvent("DOTADisplayURL", "http://www.dota2imba.org/game/" + serverInfo.gameid);
@@ -201,6 +251,7 @@
 	    MainPanel.FindChildTraverse("NetGraph").style.visibility = "collapse";
 	    MainPanel.FindChildTraverse("quickstats").style.visibility = "collapse";
 
+		$.Msg("Scoreboard was created successfully? Or not?");
 	});
 
 })();
