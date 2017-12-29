@@ -46,13 +46,16 @@ modifier_illusion_manager = class({
 	IsDebuff                         				= function(self) return false                  				 	 end,    
 	IsPurgable                       				= function(self) return false                 					 end,  
 	IsHidden										= function(self) return true														 end,
+	IsPermanent 									= function(self) return true 									end,
 	GetModifierDamageOutgoing_Percentage 			= function(self) return self.damageout 									 end,
 	GetModifierIncomingDamage_Percentage			= function(self) return self.damagein										 end,
+	GetMinHealth									= function(self) return 1 end,	
 },
 {
 	funcs = {MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE,
 		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
-		MODIFIER_EVENT_ON_TAKEDAMAGE
+		MODIFIER_EVENT_ON_TAKEDAMAGE,
+		MODIFIER_PROPERTY_MIN_HEALTH
 	},
 	states = {}
 })		
@@ -62,11 +65,16 @@ modifier_illusion_manager_out_of_world	= class({
 	CheckState						 = function(self) return self.states   											 					end,
 	IsDebuff                         = function(self) return false                               					end,    
 	IsPurgable                       = function(self) return false                               					end,    
-	IsHidden						 = function(self) return true																 					end,				
+	IsHidden						 = function(self) return true																 					end,
+	IsPermanent 					= function(self) return true 									end,	
+	GetBonusDayVision 				= function(self) return -10000 end,
+	GetBonusNightVision				= function(self) return -10000 end,
+	GetMinHealth					= function(self) return 1 end,			
 	},
 	{
 	funcs = {MODIFIER_PROPERTY_BONUS_DAY_VISION,
-			MODIFIER_PROPERTY_BONUS_NIGHT_VISION},
+			MODIFIER_PROPERTY_BONUS_NIGHT_VISION,
+			MODIFIER_PROPERTY_MIN_HEALTH},
 	states = {[MODIFIER_STATE_OUT_OF_GAME]=true,
 		[MODIFIER_STATE_INVULNERABLE]=true,
 		[MODIFIER_STATE_NO_HEALTH_BAR]=true,
@@ -88,10 +96,11 @@ function modifier_illusion_manager:OnTakeDamage(params)
 	if not IsServer() then return end	
 	if params.unit == self:GetParent() then
 		if params.damage > self:GetParent():GetHealth() then
-			params.damage = 0 																																					 -- prevent death and make it look like we really died
+			--params.damage = 0 																																					 -- prevent death and make it look like we really died
 			self:GetParent():SetHealth(1)
 			self:GetParent().active = 0
 			self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_illusion_manager_out_of_world", {})
+			ProjectileManager:ProjectileDodge(self:GetParent())
 		end
 	end
 end
@@ -108,9 +117,6 @@ function modifier_illusion_manager:OnDestroy()
 	end
 	illusiontimer:SetDuration(1, true) 																															 -- prevent modifier_illusion from running out 
 end
-
-function modifier_illusion_manager_out_of_world:GetBonusDayVision() return -10000 end
-function modifier_illusion_manager_out_of_world:GetBonusNightVision() return -10000 end
 
 function modifier_illusion_manager_out_of_world:OnCreated(params)
 	if not IsServer() then return end	
@@ -130,11 +136,12 @@ end
 
 function modifier_illusion_manager_out_of_world:OnIntervalThink()
 	if not IsServer() then return end	
-	self:GetParent():SetAbsOrigin(self:GetParent():GetOwner():GetAbsOrigin())  	 -- this prevents the weird 'teleport' effect from doing setabsorigin.  I could also add a frame delay to the absorigin set but i'm lazy
+	self:GetParent():SetAbsOrigin(Vector(-93000,-93000,-99999))  	 -- this prevents the weird 'teleport' effect from doing setabsorigin.  I could also add a frame delay to the absorigin set but i'm lazy
 	if self.illusiontimer then
 		if not self:GetParent():HasModifier("modifier_illusion_manager_out_of_world") then
-			self:GetParent():AddNewModifier(tEntity, nil, "modifier_illusion_manager_out_of_world",{})
+			self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_illusion_manager_out_of_world",{})
 		end
+		self:GetParent():AddNoDraw()	
 		self.illusiontimer:SetDuration(1, true)	 -- constantly watch modifier_illusion and just keep the duration running
 	end
 end
