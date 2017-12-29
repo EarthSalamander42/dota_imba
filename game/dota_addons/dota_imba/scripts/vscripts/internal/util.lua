@@ -1262,7 +1262,7 @@ function PickupRune(rune_name, unit, bActiveByBottle)
 
 			-- Adjust value for lobby options
 			local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
-			current_bounty = current_bounty * (custom_gold_bonus * 0.01)
+			current_bounty = current_bounty * (custom_gold_bonus / 100)
 
 			-- Grant the unit experience
 			unit:AddExperience(current_xp, DOTA_ModifyXP_CreepKill, false, true)

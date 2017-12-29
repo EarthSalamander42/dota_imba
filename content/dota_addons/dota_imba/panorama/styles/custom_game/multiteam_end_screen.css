@@ -89,10 +89,11 @@
 .es-legend Label {
 	color: #ddd;
 	text-align: center;
-	vertical-align: center;	
+	vertical-align: center;
+	font-size: 17px;
 }
 
-.es-legend-kdalevel { width: 50px; }
+.es-legend-kdalevel { width: 40px; }
 .es-legend-gold { width: 70px; }
 .es-legend-imr { width: 100px; }
 .es-legend-xp { width: 190px; }
@@ -137,7 +138,7 @@
 }
 
 .es-player-kdalevel {
-	width: 50px;
+	width: 40px;
 	font-size: 22px;
 	vertical-align: center;
 	text-align: center;

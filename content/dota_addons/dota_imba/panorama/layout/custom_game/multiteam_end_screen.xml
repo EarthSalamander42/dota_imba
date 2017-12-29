@@ -24,7 +24,7 @@
 					<Label class="es-legend-kdalevel" text="A" />
 					<Label class="es-legend-gold" text="Gold" />
 					<Label class="es-legend-imr" text="IMR" />
-					<Label class="es-legend-xp" text="XP" />
+					<Label class="es-legend-xp" text="Imba XP" />
 				</Panel>
 				<Panel id="es-radiant-players" class="es-players" />
 			</Panel>

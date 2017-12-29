@@ -16,7 +16,7 @@ function CreateCustomToast(data) {
 		var isVictim = data.victimPlayer === Game.GetLocalPlayerID();
 		var isKiller = data.killerPlayer === Game.GetLocalPlayerID();
 		var isRoshanKill = data.roshan != null
-		var teamVictim = byNeutrals || Players.GetTeam(data.victimPlayer) === Players.GetTeam(Game.GetLocalPlayerID());
+//		var teamVictim = byNeutrals || Players.GetTeam(data.victimPlayer) === Players.GetTeam(Game.GetLocalPlayerID());
 		var teamKiller = !byNeutrals && Players.GetTeam(data.killerPlayer) === Players.GetTeam(Game.GetLocalPlayerID());
 		row.SetHasClass('AllyEvent', teamKiller);
 		row.SetHasClass('EnemyEvent', byNeutrals || !teamKiller);
@@ -24,14 +24,16 @@ function CreateCustomToast(data) {
 		row.SetHasClass('LocalPlayerKiller', isKiller);
 		row.SetHasClass('LocalPlayerVictim', isVictim);
 
+//		$.Msg(Players.GetTeam(data.victimPlayer))
+
 		if (isKiller)
 			Game.EmitSound('notification.self.kill');
 		else if (isVictim)
 			Game.EmitSound('notification.self.death');
 		else if (teamKiller)
 			Game.EmitSound('notification.teammate.kill');
-		else if (teamVictim)
-			Game.EmitSound('notification.teammate.death');
+//		else if (teamVictim)
+//			Game.EmitSound('notification.teammate.death');
 		if (isSelfKill) {
 			Game.EmitSound('notification.self.kill');
 			rowText = $.Localize('custom_toast_PlayerDeniedSelf');
@@ -46,7 +48,7 @@ function CreateCustomToast(data) {
 				rowText = '{killer_name}';
 			}
 
-			if (roshan.data == undefined) {
+			if (data.roshan == undefined) {
 				rowText = rowText + ' {killed_icon} {victim_name} {gold}';
 			}
 		}

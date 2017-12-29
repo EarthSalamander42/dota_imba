@@ -1118,8 +1118,8 @@ function modifier_imba_track_debuff_mark:OnCreated()
 	if IsServer() then
 		-- Adjust custom lobby gold settings to the gold
 		local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
-		self.bonus_gold_self = self.bonus_gold_self * (custom_gold_bonus * 0.01)
-		self.bonus_gold_allies = self.bonus_gold_allies * (custom_gold_bonus * 0.01)
+		self.bonus_gold_self = self.bonus_gold_self * (custom_gold_bonus / 100)
+		self.bonus_gold_allies = self.bonus_gold_allies * (custom_gold_bonus / 100)
 
 		-- Add overhead particle only for the caster's team
 		self.particle_shield_fx = ParticleManager:CreateParticleForTeam(self.particle_shield, PATTACH_OVERHEAD_FOLLOW, self.parent, self.caster:GetTeamNumber())

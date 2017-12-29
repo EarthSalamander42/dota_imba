@@ -176,15 +176,17 @@ function GameMode:OnGameRulesStateChange(keys)
 				end
 			end
 
-			-- fix to setup flying courier speed, volvo black magic reset it to 450
+			-- fix to setup flying courier speed, volvo black magic reset it to 450 (bug if courier is dead, flying respawn with 450 ms)
 			if GameRules:GetDOTATime(false, false) > 180 then
 				local IMBA_COURIERS = FindUnitsInRadius(2, Vector(0, 0, 0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 				for _, courier in pairs(IMBA_COURIERS) do
-					if not courier:HasModifier("modifier_imba_speed_limit_break") then
-						courier:AddNewModifier(courier, nil, "modifier_imba_speed_limit_break", {})
-					end
-					if not courier:HasModifier("modifier_courier_hack") then
-						courier:AddNewModifier(courier, nil, "modifier_courier_hack", {})
+					if courier:GetUnitName() == "npc_dota_courier" then
+						if not courier:HasModifier("modifier_imba_speed_limit_break") then
+							courier:AddNewModifier(courier, nil, "modifier_imba_speed_limit_break", {})
+						end
+						if not courier:HasModifier("modifier_courier_hack") then
+							courier:AddNewModifier(courier, nil, "modifier_courier_hack", {})
+						end
 					end
 				end
 			end
@@ -907,7 +909,7 @@ function GameMode:OnLastHit(keys)
 			type = "kill",
 			killerPlayer = keys.PlayerID,
 			victimPlayer = killedEnt:GetPlayerID(),
---			gold = 0,
+			gold = 0,
 		})
 	end
 end
@@ -1183,7 +1185,7 @@ function GameMode:OnEntityKilled( keys )
 			end
 			local buyback_cost = BUYBACK_BASE_COST + level_based_cost + game_time * BUYBACK_COST_PER_SECOND		
 			local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
-			buyback_cost = buyback_cost * (custom_gold_bonus * 0.01)
+			buyback_cost = buyback_cost * (custom_gold_bonus / 100)
 
 			-- Setup buyback cooldown
 			local buyback_cooldown = 0

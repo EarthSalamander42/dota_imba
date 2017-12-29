@@ -237,9 +237,8 @@ function GameMode:GoldFilter( keys )
 
 	-- Lobby options adjustment
 	if keys.gold > 0 then
-		local game_time = math.max(GameRules:GetDOTATime(false, false), 0)
 		local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
-		keys.gold = keys.gold * (custom_gold_bonus * 0.01) * (1 + game_time * 0.01)
+		keys.gold = keys.gold * (custom_gold_bonus / 100)
 	end
 
 	-- Comeback gold gain
