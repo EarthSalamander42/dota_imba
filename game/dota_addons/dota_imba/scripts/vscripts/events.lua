@@ -176,21 +176,6 @@ function GameMode:OnGameRulesStateChange(keys)
 				end
 			end
 
-			-- fix to setup flying courier speed, volvo black magic reset it to 450 (bug if courier is dead, flying respawn with 450 ms)
-			if GameRules:GetDOTATime(false, false) > 180 then
-				local IMBA_COURIERS = FindUnitsInRadius(2, Vector(0, 0, 0), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-				for _, courier in pairs(IMBA_COURIERS) do
-					if courier:GetUnitName() == "npc_dota_courier" then
-						if not courier:HasModifier("modifier_imba_speed_limit_break") then
-							courier:AddNewModifier(courier, nil, "modifier_imba_speed_limit_break", {})
-						end
-						if not courier:HasModifier("modifier_courier_hack") then
-							courier:AddNewModifier(courier, nil, "modifier_courier_hack", {})
-						end
-					end
-				end
-			end
-
 			-- fix for super high respawn time
 			for _, hero in pairs(HeroList:GetAllHeroes()) do
 				if not hero:IsAlive() then
@@ -210,7 +195,7 @@ function GameMode:OnGameRulesStateChange(keys)
 					hero:SetTimeUntilRespawn(respawn_time)
 				end
 			end
-			return 10.0 -- avoid lag
+			return 1.0
 		end)
 	end
 
@@ -404,21 +389,18 @@ local normal_xp = npc:GetDeathXP()
 		end
 
 		if npc:IsCourier() then
-			if not npc.first_spawn then
-				npc.first_spawn = true
---				if npc:FindAbilityByName("courier_burst"):GetLevel() ~= 1 then
---					npc:FindAbilityByName("courier_burst"):SetLevel(1)
---				end
-			else
-				CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
-					type = "generic",
-					text = "#custom_toast_CourierRespawned",
-					teamColor = npc:GetTeam(),
-					team = npc:GetTeam(),
-					courier = true,
-				})
+			if not npc:HasModifier("modifier_courier_hack") then
+				print("Apply courier modifier hack!")
+				npc:AddNewModifier(courier, nil, "modifier_courier_hack", {})
 			end
-			npc:AddNewModifier(npc, nil, "modifier_imba_speed_limit_break", {})
+
+			CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
+				type = "generic",
+				text = "#custom_toast_CourierRespawned",
+				teamColor = npc:GetTeam(),
+				team = npc:GetTeam(),
+				courier = true,
+			})
 		end
 
 --		if npc:IsRealHero() and npc:GetUnitName() ~= "npc_dota_hero_wisp" or npc.is_real_wisp then

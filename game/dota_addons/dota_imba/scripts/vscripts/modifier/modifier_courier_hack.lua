@@ -7,9 +7,16 @@ end
 
 function modifier_courier_hack:IsPurgable() return true end
 function modifier_courier_hack:IsHidden() return true end
+function modifier_courier_hack:RemoveOnDeath() return false end
 
 function modifier_courier_hack:OnCreated( kv )	
 	if IsServer() then
+		self.ms = 1000
+
+		-- fail-safe, not needed since modifier is not removed on death
+		if string.find(self:GetParent():GetModelName(), "flying") then
+			self.ms = 2500
+		end
 	end
 end
 
@@ -17,15 +24,20 @@ function modifier_courier_hack:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE,
 		MODIFIER_PROPERTY_MOVESPEED_MAX,
+		MODIFIER_EVENT_ON_MODEL_CHANGED,
 	}
 
 	return funcs
 end
 
 function modifier_courier_hack:GetModifierMoveSpeed_Absolute()
-    return 2500
+    return self.ms
 end
 
 function modifier_courier_hack:GetModifierMoveSpeed_Max()
-	return 2500
+	return self.ms
+end
+
+function modifier_courier_hack:OnModelChanged(keys)
+	self.ms = 2500
 end

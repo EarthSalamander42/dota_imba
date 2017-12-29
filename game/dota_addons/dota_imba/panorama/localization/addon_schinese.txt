@@ -18,7 +18,24 @@
 	"DOTA_Custom8"    								"粉色"
 	
 	"addonname"										"Dota IMBA"
-	
+
+	"imba_confirm_pick_button"															"选择此英雄"
+	"imba_hero_name_filler"																"选择  "
+	"imba_strength_hero_pick_list_title"												"力量英雄"
+	"imba_agility_hero_pick_list_title"													"敏捷英雄"
+	"imba_intelligence_hero_pick_list_title"											"智力英雄"
+	"imba_custom_hero_pick_list_title"													"原创英雄"
+
+	"imba_waiting_for_other_players_button"												"请等待其他玩家"
+	"imba_loading_heroes_button"														"正在加载游戏"
+	"imba_enter_game_button"															"开始游戏！"
+
+	"ChatTeam"																			"[队友]"
+	"ChatPlaceholder"																	"在此处输入聊天内容。"
+	"ChatLine" 																			"<b><font color='{s:color}'>{s:name}</font></b>: {s:message}"
+	"ChatLinePass" 																		"<b><font color='{s:color}'>{s:name}</font></b>: <font color='gold'>{s:message}</font>"
+	"ChatRandomed" 																		"<b><font color='{s:color}'>{s:name}</font></b> 随机选择了 <font color='gold'>{s:hero}</font>"	
+
 	"custom_scoreboard_hero_name_and_desc"			"{s:hero_name}"
 	"scoreboard_tool_tip_mute_player"				"屏蔽聊天和语音"
 	"scoreboard_tool_tip_active_mute_player"		"（已生效）"

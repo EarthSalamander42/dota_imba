@@ -19,6 +19,27 @@
 	
 	"addonname"										"Dota IMBA"
 
+	"ChatTeam"										"[Team]"
+	"ChatPlaceholder"								"Type here to chat.."
+	"ChatLine"										"<b><font color='{s:color}'>{s:name}</font></b>: {s:message}"
+	"ChatLinePass"									"<b><font color='{s:color}'>{s:name}</font></b>: <font color='gold'>{s:message}</font>"
+	"ChatRandomed"									"<b><font color='{s:color}'>{s:name}</font></b> has randomed <font color='gold'>{s:hero}</font>"
+
+	"imba_confirm_pick_button"                                                          "Select this hero"
+	"imba_hero_name_filler"                                                             "Lock in "
+	"imba_strength_hero_pick_list_title"                                                "Strength Heroes"
+	"imba_agility_hero_pick_list_title"                                                 "Agility Heroes"
+	"imba_intelligence_hero_pick_list_title"                                            "Intelligence Heroes"
+	"imba_custom_hero_pick_list_title"													"Custom Heroes"
+
+	"imba_waiting_for_other_players_button"                                             "Waiting for other players..."
+	"imba_loading_heroes_button"                                                        "Loading game..."
+	"imba_enter_game_button"                                                            "Enter game!"
+
+	"imba_radiant_team_title"                                                           "The Radiant"
+	"imba_dire_team_title"                                                              "The Dire"
+	"average_mmr"																		"Average MMR: "
+
 	"custom_scoreboard_hero_name_and_desc"			"{s:hero_name}"
 	"scoreboard_tool_tip_mute_player"				"Mute Player"
 	"scoreboard_tool_tip_active_mute_player"		"(MUTED)"
