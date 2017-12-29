@@ -260,6 +260,8 @@ function GameMode:OnGameRulesStateChange(keys)
 
 		imba_api_game_complete(function (players)
 			print("Sending new XP / IMR values to clients")
+
+			--[[
 			for ID = 0, PlayerResource:GetPlayerCount() -1 do
 				print("XP DIFF:", players[tostring(PlayerResource:GetSteamID(ID))].xp_diff)
 				print("IMR DIFF:", players[tostring(PlayerResource:GetSteamID(ID))].imr_5v5_diff)
@@ -273,10 +275,41 @@ function GameMode:OnGameRulesStateChange(keys)
 					IMR_5v5 = CustomNetTables:GetTableValue("player_table", tostring(ID)).IMR_5v5,
 					IMR_5v5_change = players[tostring(PlayerResource:GetSteamID(ID))].imr_5v5_diff,
 				})
-				return 1.0 -- we can keep it endless since it's end-game
+--				return 1.0 -- we can keep it endless since it's end-game
 			end
 			CustomGameEventManager:Send_ServerToAllClients("end_game", {})
 --			CustomGameEventManager:Send_ServerToAllClients("end_game", players)
+			]]
+
+			-- calculate levels
+			local xpInfo = {}
+
+			PrintTable(players)
+
+			for k, v in pairs(players) do
+
+				local level = GetXPLevelByXp(v.xp)
+				local title = GetTitleIXP(level)
+				local color = GetTitleColorIXP(title, true)
+				local progress = GetXpProgressToNextLevel(v.xp)
+
+				xpInfo[k] = {
+					level = level,
+					title = title,
+					color = color,
+					progress = progress
+				}
+			end
+
+			CustomGameEventManager:Send_ServerToAllClients("end_game", {
+				players = players,
+				xp_info = xpInfo,
+				info = {
+					winner = GAME_WINNER_TEAM,
+					gameid = GetApiGameId()
+				}
+			})
+
 		end)
 
 		for _, hero in pairs(HeroList:GetAllHeroes()) do

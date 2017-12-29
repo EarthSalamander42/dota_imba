@@ -1,745 +1,227 @@
-@define BACKGROUND_COLOR: #000000;
-
-.EndScreenRoot
-{
+.es-root {
 	width: 100%;
 	height: 100%;
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #000000FF ), color-stop( 0.12, #000000ff ), color-stop( 0.5, #00000022 ), to( #00000000 ) );
-}
-
-#VictoryRow
-{
-	flow-children: right;
-	horizontal-align: center;
-
-	transition-property: opacity, transform;
-	transition-duration: 1s;
-	opacity: 0;
-	transform: scaleX(0) scaleY(0) translatey(-50px);
-}
-
-.endgame #VictoryRow
-{
-	opacity: 1;
-	transform: scaleX(1) scaleY(1);
-}
-
-#EndScreenVictory
-{
-	font-size: 64px;
-	color: #cccccc;
-	vertical-align: center;
-
-	text-transform: uppercase;
-}
-
-.EndScreenWindow
-{
-	horizontal-align: center;
-	vertical-align: center;
-	margin-bottom: 10%;
 	flow-children: down;
 }
 
-.AspectRatio4x3 .EndScreenWindow, .AspectRatio5x4 .EndScreenWindow
-{
-	margin-right: 50px;
+.es-text-red { color: #f03333; }
+.es-text-green { color: #72a144; }
+.es-text-white { color: #ffffff; }
+
+#es-victory-info { 
+	margin-top: 14%;
+	margin-bottom: 20px;
+	flow-children: down;
+	horizontal-align: center;
+	text-align: center;
+} 
+
+#es-victory-info-text {
+	font-size: 40px;
+	color: #fff;
+	horizontal-align: center;
+	text-transform: uppercase;
+	text-shadow: 0 0 4px 2.0 #777;
 }
 
-.EndScreenVictoryRow
-{
+#es-teams {
+	flow-children: right;
+	horizontal-align: center;
+	width: 100%;
+	padding: 10px;
+}
+
+.es-team {
+	flow-children: down;
+	horizontal-align: center;
+	width: 50%;
+	border: 2px solid #44444499;
+	background-color: #222222cc;
+	padding: 20px 0px;
+	box-shadow: #111 0 0 4px 0;
+}
+
+#es-radiant {
+	margin-right: 10px;
+	background-color: #042204bb;
+}
+
+#es-dire {
+	background-color: #220404bb;
+}
+
+#es-radiant .es-team-name {
+	color: #326114;
+	text-shadow: 0 0 5px 2.0 #111;
+}
+
+#es-dire .es-team-name {
+	color: #f03333;
+	text-shadow: 0 0 5px 2.0 #111;
+}
+
+.es-team-title {
 	width: 100%;
 }
 
-#ButtonsContainer
-{
-	flow-children: right;
-	width: 800px;
-	height: 90px;
-	horizontal-align: center;
-}
-
-#FeedButton,
-#CloseButton
-{
-	width: 45%;
-	margin-top: 60%;
-	margin-left: 5%;
-	background-color: #000000da;
-	border: 3px solid #4d5051;
-	border-radius: 5px;
-	horizontal-align: center;
-	vertical-align: top;
-}
-
-#FeedButton:hover
-{
-	border: 3px solid orange;
-}
-
-#CloseButton:hover
-{
-	border: 3px solid white;
-}
-
-#FeedButton Label,
-#CloseButton Label
-{
-	horizontal-align: center;
-	vertical-align: center;
-	color: #6f6f6f;
-	text-transform: uppercase;
-	text-align: center center;
-}
-
-#FeedButton:hover Label,
-#CloseButton:hover Label
-{
-	color: white;
-}
-
-.FlyoutScoreboardRoot.flyout_scoreboard_visible
-{
-	transform: translatey( 0px );
-}
-
-#TeamsContainer
-{
-	horizontal-align: right;
-	flow-children: right;
-}
-
-.AspectRatio16x10 #TeamsContainer,
-.AspectRatio4x3 #TeamsContainer
-{
-	horizontal-align: center;
-	flow-children: down;
-}
-
-.FlyoutTeam
-{
-	margin-top: 3px;
-	margin-bottom: 3px;
-
-	transition-property: opacity, transform;
-	transition-duration: 0.5s;
-	opacity: 0;
-	transform: translatey(-50px);
-	
-	margin-right: 8px;
-}
-
-.FlyoutTeam.local_player_team
-{
-}
-
-.FlyoutTeam.team_endgame
-{
-	opacity: 1;
-	transform: translatey(0px);
-}
-
-.FlyoutTeam.no_players
-{
-	visibility: collapse;
-}
-
-.FlyoutTeamData
-{
-	flow-children: right;
-}
-
-.TeamInfo
-{
-	margin-top: 1px;
-	height: 100%;
-}
-
-#TeamColor_GradentFromTransparentLeft
-{
-	width: 100%;
-	height: 100%;
-}
-
-.FlyoutPlayer
-{ 
-	flow-children: right;
-}
-
-.TeamCloseSpacer
-{
-}
-
-#PlayersContainer
-{
-	flow-children: down;
-}
-
-.local_player_team #PlayersContainer
-{
-	box-shadow: fill #ffffff40 -3px -3px 3px 6px;
-}
-
-.TeamId
-{
-	flow-children: right;
-}
-
-#TeamScorePanel
-{
-	margin-top: 1px;
-	margin-left: 217px;
-	width: 69px;
-	height: 100%;
-	background-color: BACKGROUND_COLOR;
-}
-
-.AspectRatio4x3 #TeamScorePanel
-{
-	margin-left: 216px;
-}
-
-.AspectRatio16x9 #TeamScorePanel
-{
-	margin-left: 216px;
-}
-
-#TeamScore
-{
-	vertical-align: center;
-	horizontal-align: center;
-	color: #cccccc;
-	font-size: 42px;
-	text-shadow: 2px 2px 2px black;
-	font-weight: bold;
-	margin-top: -2px;
-}
-
-.one_player #TeamScore
-{
+.es-team-name {
 	font-size: 30px;
-}
-
-.local_player_team #TeamScore
-{
-	color: white;
-}
-
-.Legends
-{
-	width: 100%;
+	color: #fff;
+	text-transform: uppercase; 
 	horizontal-align: center;
-	flow-children: right;
 }
 
-#Legend1
-{
-	flow-children: right;
+.es-team-score {
+	font-size: 30px;
+	margin-right: 20px;
+	color: #fff;
+	text-transform: uppercase;
 	horizontal-align: right;
 }
 
-#Legend2
-{
-	flow-children: right;
-	horizontal-align: left;
-}
-
-.AspectRatio4x3 #Legend1
-{
-	visibility: collapse;
-}
-
-#Legend1 Label,
-#Legend2 Label
-{
-	text-transform: uppercase;
-	font-size: 12px;
-	color: #90999b;
-}
-
-.PlayerRow
-{
-	height: 32px;
-}
-
-#PlayerRowContainer
-{
-	flow-children: right;
-	height: 32px;
-}
-
-#HeroIcon
-{
-	vertical-align: middle;
-	border: 1px solid black;
-}
-
-#LevelContainer,
-#KillsContainer,
-#DeathsContainer,
-#AssistsContainer
-{
-	height: 100%;
-}
-
-.ScoreboardPanel
-{
-	background-color: BACKGROUND_COLOR;
-	margin-top: 1px;
-	margin-left: 1px;
-	height: 100%;
-}
-
-.LegendPanel
-{
-	margin-top: 1px;
-	margin-left: 1px;
-}
-
-.ScoreboardPanel Label
-{
-	font-size: 30px;
-	text-shadow: 2px 2px 2px black;
-	margin-top: -2px;
-}
-
-.UltimateIndicatorShared
-{
-	margin-left: 44px;
-	margin-top: 2px;
-	vertical-align: center;
-	width: 20px;
-	height: 20px;
-	background-size: 20px;
-	background-repeat: no-repeat;
-	background-position: 50% 50%;
-}
-
-#Level
-{
-	vertical-align: middle;
-	horizontal-align: center;
-	color: #898b8c;
-}
-
-#Kills,
-#Deaths,
-#Assists,
-#PlayerIMRAmount,
-#PlayerGoldAmount
-{
-	horizontal-align: center;
-	vertical-align: center;
-	text-align: center;
-	font-size: 20px;
-	margin-top: 3px;
-}
-
-#PlayerIMRAmount {
-	color: green;
-}
-
-#PlayerName
-{
-	font-size: 13px;
-	font-weight: bold;
-	margin-bottom: -4px;
-	margin-top: 0px;
-	padding-left: 4px;
-	color: #cccccc;
-	white-space: nowrap;
-}
-
-#HeroNameAndDescription
-{
-	padding-left: 4px;
-	font-size: 12px;
-	text-shadow: 2px 2px 2px black;
-	margin-bottom: 1px;
-	color: #999999;
-	vertical-align: bottom;
-}
-
-#PlayerDetailsContainer
-{
-	height: 100%;
-}
-
-#PlayerAndHeroName
-{
-	height: 100%;
-}
-
-.is_local_player Label
-{
-	color: white;
-}
-
-.ScoreCol_PlayerDetails
-{
-	width: 160px;
-}
-
-.ScoreCol_TeamScore
-{
-	width: 70px;
-	text-align: center;
-}
-
-.ScoreCol_Hero
-{
-	width: 53px;
-}
-
-.ScoreCol_Level
-{
-	width: 50px;
-	text-align: center;
-}
-
-.ScoreCol_Kills,
-.ScoreCol_Deaths,
-.ScoreCol_Assists
-{
-	width: 30px;
-	text-align: center;
-}
-
-.ScoreCol_ImbaXP
-{
-	width: 160px;
-	text-align: center;
-}
-
-.ScoreCol_Items
-{
-	width: 238px;
-	text-align: center;
-}
-
-#PlayerItemsContainer
-{
-	flow-children: right;
-}
-
-#PlayerItemsContainer Image,
-#PlayerItemsContainer DOTAItemImage
-{
-	margin: 1px;
-	width: 37.5px;
-	height: 29px;
-	background-color: BACKGROUND_COLOR;
-	background-size: 100% 100%;
-	background-position: 50% 50%;
-}
-
-.ScoreCol_IMR
-{
-	width: 100px;
-	text-align: center;
-}
-
-.ScoreCol_Gold
-{
-	width: 70px;
-	text-align: center;
-}
-
-#ImbaLvl0,
-#ImbaLvl1,
-#ImbaLvl2,
-#ImbaLvl3,
-#ImbaLvl4,
-#ImbaLvl5,
-#ImbaLvl6,
-#ImbaLvl7,
-#ImbaLvl8,
-#ImbaLvl9,
-#ImbaLvl10,
-#ImbaLvl11,
-#ImbaLvl12,
-#ImbaLvl13,
-#ImbaLvl14,
-#ImbaLvl15,
-#ImbaLvl16,
-#ImbaLvl17,
-#ImbaLvl18,
-#ImbaLvl19,
-#ImbaLvl20,
-#ImbaLvl21,
-#ImbaLvl22,
-#ImbaLvl23
-{
-	font-size: 16px;
-	margin-top: 4px;
-	margin-right: 55%;
-	margin-left: 6%;
-	width: 100%;
-	color: white;
-	vertical-align: center;
-	horizontal-align: center;
-	opacity: 1.0;
-}
-
-#ImbaXP0,
-#ImbaXP1,
-#ImbaXP2,
-#ImbaXP3,
-#ImbaXP4,
-#ImbaXP5,
-#ImbaXP6,
-#ImbaXP7,
-#ImbaXP8,
-#ImbaXP9,
-#ImbaXP10,
-#ImbaXP11,
-#ImbaXP12,
-#ImbaXP13,
-#ImbaXP14,
-#ImbaXP15,
-#ImbaXP16,
-#ImbaXP17,
-#ImbaXP18,
-#ImbaXP19,
-#ImbaXP20,
-#ImbaXP21,
-#ImbaXP22,
-#ImbaXP23
-{
-	margin-top: 3px;
-	margin-left: 10%;
-	font-size: 15px;
-	font-weight: bold;
-	color: white;
-	vertical-align: center;
-	horizontal-align: center;
-	opacity: 0.75;
-}
-
-#ImbaXPRank0,
-#ImbaXPRank1,
-#ImbaXPRank2,
-#ImbaXPRank3,
-#ImbaXPRank4,
-#ImbaXPRank5,
-#ImbaXPRank6,
-#ImbaXPRank7,
-#ImbaXPRank8,
-#ImbaXPRank9,
-#ImbaXPRank10,
-#ImbaXPRank11,
-#ImbaXPRank12,
-#ImbaXPRank13,
-#ImbaXPRank14,
-#ImbaXPRank15,
-#ImbaXPRank16,
-#ImbaXPRank17,
-#ImbaXPRank18,
-#ImbaXPRank19,
-#ImbaXPRank20,
-#ImbaXPRank21,
-#ImbaXPRank22,
-#ImbaXPRank23
-{
-	visibility: collapse;
-}
-
-#XPProgressBar0,
-#XPProgressBar1,
-#XPProgressBar2,
-#XPProgressBar3,
-#XPProgressBar4,
-#XPProgressBar5,
-#XPProgressBar6,
-#XPProgressBar7,
-#XPProgressBar8,
-#XPProgressBar9,
-#XPProgressBar10,
-#XPProgressBar11,
-#XPProgressBar12,
-#XPProgressBar13,
-#XPProgressBar14,
-#XPProgressBar15,
-#XPProgressBar16,
-#XPProgressBar17,
-#XPProgressBar18,
-#XPProgressBar19,
-#XPProgressBar20,
-#XPProgressBar21,
-#XPProgressBar22,
-#XPProgressBar23
-{
-	width: 95%;
-	border-radius: 4px;
-	border: 3px solid #444;
-	background-color: black;
-	height: 24px;
-	vertical-align: center;
-	horizontal-align: center;
-	box-shadow: fill #000 -3px -3px 6px 6px;
-}
-
-#XPProgressBar0_Left,
-#XPProgressBar1_Left,
-#XPProgressBar2_Left,
-#XPProgressBar3_Left,
-#XPProgressBar4_Left,
-#XPProgressBar5_Left,
-#XPProgressBar6_Left,
-#XPProgressBar7_Left,
-#XPProgressBar8_Left,
-#XPProgressBar9_Left,
-#XPProgressBar10_Left,
-#XPProgressBar11_Left,
-#XPProgressBar12_Left,
-#XPProgressBar13_Left,
-#XPProgressBar14_Left,
-#XPProgressBar15_Left,
-#XPProgressBar16_Left,
-#XPProgressBar17_Left,
-#XPProgressBar18_Left,
-#XPProgressBar19_Left,
-#XPProgressBar20_Left,
-#XPProgressBar21_Left,
-#XPProgressBar22_Left,
-#XPProgressBar23_Left
-{
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #326114 ), color-stop( 0.3, #54BA07 ), color-stop( .5, #54BA07 ), to( #326114 ) );
-	box-shadow: inset #000 1px 1px 3px 3px;	
-	border-radius: 2px;
-}
-
-#XPProgressBar0_Left,
-#XPProgressBar1_Left,
-#XPProgressBar2_Left,
-#XPProgressBar3_Left,
-#XPProgressBar4_Left,
-#XPProgressBar5_Left,
-#XPProgressBar6_Left,
-#XPProgressBar7_Left,
-#XPProgressBar8_Left,
-#XPProgressBar9_Left,
-#XPProgressBar10_Left,
-#XPProgressBar11_Left,
-#XPProgressBar12_Left,
-#XPProgressBar13_Left,
-#XPProgressBar14_Left,
-#XPProgressBar15_Left,
-#XPProgressBar16_Left,
-#XPProgressBar17_Left,
-#XPProgressBar18_Left,
-#XPProgressBar19_Left,
-#XPProgressBar20_Left,
-#XPProgressBar21_Left,
-#XPProgressBar22_Left,
-#XPProgressBar23_Left
-{
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #326114 ), color-stop( 0.3, #18BE23 ), color-stop( .5, #18BE23 ), to( #01410E ) );
-}
-
-#XPProgressBar0_Right,
-#XPProgressBar1_Right,
-#XPProgressBar2_Right,
-#XPProgressBar3_Right,
-#XPProgressBar4_Right,
-#XPProgressBar5_Right,
-#XPProgressBar6_Right,
-#XPProgressBar7_Right,
-#XPProgressBar8_Right,
-#XPProgressBar9_Right,
-#XPProgressBar10_Right,
-#XPProgressBar11_Right,
-#XPProgressBar12_Right,
-#XPProgressBar13_Right,
-#XPProgressBar14_Right,
-#XPProgressBar15_Right,
-#XPProgressBar16_Right,
-#XPProgressBar17_Right,
-#XPProgressBar18_Right,
-#XPProgressBar19_Right,
-#XPProgressBar20_Right,
-#XPProgressBar21_Right,
-#XPProgressBar22_Right,
-#XPProgressBar23_Right
-{
-	background-color: gradient( linear, 0% 0%, 100% 0%, from( #222222FF ), to( black ) );
-}
-
-#XPProgressBarContainer0,
-#XPProgressBarContainer1,
-#XPProgressBarContainer2,
-#XPProgressBarContainer3,
-#XPProgressBarContainer4,
-#XPProgressBarContainer5,
-#XPProgressBarContainer6,
-#XPProgressBarContainer7,
-#XPProgressBarContainer8,
-#XPProgressBarContainer9,
-#XPProgressBarContainer10,
-#XPProgressBarContainer11,
-#XPProgressBarContainer12,
-#XPProgressBarContainer13,
-#XPProgressBarContainer14,
-#XPProgressBarContainer15,
-#XPProgressBarContainer16,
-#XPProgressBarContainer17,
-#XPProgressBarContainer18,
-#XPProgressBarContainer19,
-#XPProgressBarContainer20,
-#XPProgressBarContainer21,
-#XPProgressBarContainer22,
-#XPProgressBarContainer23
-{
-	vertical-align: bottom;
+.es-legend {
 	height: 40px;
-	width: 100%;
+	flow-children: right;
+	padding-left: 310px;
 }
 
-#ImbaXPEarned0,
-#ImbaXPEarned1,
-#ImbaXPEarned2,
-#ImbaXPEarned3,
-#ImbaXPEarned4,
-#ImbaXPEarned5,
-#ImbaXPEarned6,
-#ImbaXPEarned7,
-#ImbaXPEarned8,
-#ImbaXPEarned9,
-#ImbaXPEarned10,
-#ImbaXPEarned11,
-#ImbaXPEarned12,
-#ImbaXPEarned13,
-#ImbaXPEarned14,
-#ImbaXPEarned15,
-#ImbaXPEarned16,
-#ImbaXPEarned17,
-#ImbaXPEarned18,
-#ImbaXPEarned19,
-#ImbaXPEarned20,
-#ImbaXPEarned21,
-#ImbaXPEarned22,
-#ImbaXPEarned23
-{
-	margin-top: 3px;
-	margin-left: 76%;
-	width: 100%;
-	font-size: 15px;
-	font-weight: bold;
-	color: white;
-	vertical-align: center;
-	horizontal-align: center;
-	opacity: 0.75;
-//	visibility: collapse;
+.es-legend Label {
+	color: #ddd;
+	text-align: center;
+	vertical-align: center;	
 }
 
-#ImbaXPCount
-{
-	align: center center;
+.es-legend-kdalevel { width: 50px; }
+.es-legend-gold { width: 70px; }
+.es-legend-imr { width: 100px; }
+.es-legend-xp { width: 190px; }
+
+.es-player-root {
+	flow-children: right;
+	border-top: 2px solid #333;
+	padding: 3px 10px;
 }
 
-#ImbaXPAdvertize
-{
+.es-players {
+	flow-children: down;
+}
+
+.es-player-name-and-desc {
+	flow-children: down;
+	width: 170px;
+}
+
+#es-player-name {
 	font-size: 20px;
-	font-weight: bold;
-	color: white;
+	color: #fff;
+}
+
+#es-player-desc {
+	font-size: 16px;
+	color: #ccc;
+}
+
+#es-player-avatar {
+	border: 1px solid #666;
+	height: 40px;
+	width: 40px;
+	margin-right: 10px;
+} 
+
+#es-player-hero {
+	border: 1px solid #999;
+	height: 40px;
+	width: 71px;
+	margin-right: 10px;
+}
+
+.es-player-kdalevel {
+	width: 50px;
+	font-size: 22px;
+	vertical-align: center;
+	text-align: center;
+	color: #eee;
+}
+
+#es-player-gold {
+	width: 70px;
+	font-size: 22px;
+	vertical-align: center;
+	text-align: center;
+	color: #ee7;
+}
+
+#es-player-imr {
+	width: 100px;
+	font-size: 22px;
+	vertical-align: center;
+	text-align: center;
+	margin-right: 10px;
+}
+
+.es-player-xp {
+	flow-children: none;
+	width: 180px;
+	vertical-align: center;
+	border: 3px solid #444;
+	border-radius: 4px;
+	box-shadow: #000000 0px 0px 10px 0px;
+	margin-right: 10px;
+}
+
+#es-player-xp-progress { 
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #326114 ), color-stop( 0.3, #54BA07 ), color-stop( .5, #54BA07 ), to( #326114 ) );
+	width: 0%;
+	height: 25px;
+}
+
+.es-player-xp Label {
+	color: #fff;
+	width: 100%;
+	font-size: 18px;
+	vertical-align: center;
+	padding: 0px 10px;
+}
+
+#es-player-xp-rank { text-align: right; }
+#es-player-xp-level { text-align: left; }
+#es-player-xp-xp { text-align: right; }
+
+#es-player-xp-earned {
+	width: 54px;
+	font-size: 20px;
+	vertical-align: center;
+	text-align: center;
+}
+
+#es-buttons {
+	flow-children: right;
+	horizontal-align: center;
+}
+
+#es-buttons Button {
+	padding: 7px 25px;
+	border: 1px solid #333;
+	background-color: #222222ee;
+	box-shadow: #111 0 0 4px 0;
+}
+
+#es-buttons-stats, #es-buttons-website {
+	margin-right: 20px;
+}
+
+#es-buttons Label {
+	font-size: 20px;
+	color: #fff;
+}
+
+#es-buttons Button:hover {
+	background-color: #333333ee;
+}
+
+#es-buttons Button:active {
+	background-color: #222222ff;
+	border: 1px transparent;
+	box-shadow: none;
 }

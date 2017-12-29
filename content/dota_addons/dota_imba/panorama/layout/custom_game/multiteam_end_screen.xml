@@ -1,62 +1,60 @@
 <root>
-    <styles>
- 		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
-        <include src="s2r://panorama/styles/custom_game/multiteam_end_screen.vcss_c" />
-    </styles>
+	<styles>
+		<include src="file://{resources}/styles/custom_game/multiteam_end_screen.css" />
+	</styles>
 
-    <scripts>
-        <include src="s2r://panorama/scripts/custom_game/shared_scoreboard_updater.vjs_c" />
-       <include src="s2r://panorama/scripts/custom_game/multiteam_end_screen.vjs_c" />
-    </scripts>
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/multiteam_end_screen.js" />
+	</scripts>
 
-	<Panel hittest="false" class="EndScreenRoot">
-		<Panel hittest="false" class="EndScreenWindow">
-			<Panel id="VictoryRow">
-				<Label id="EndScreenVictory" text="#custom_end_screen_victory_message" />
-			</Panel>
-			<Panel id="ImbaXPCount">
-				<Label id="ImbaXPAdvertize" text="" />
-			</Panel>
-			<Panel class="Legends">
-				<Panel id="Legend1">
-					<Panel class="LegendPanel ScoreCol_TeamInfo" />
-					<Panel class="LegendPanel ScoreCol_Hero" />
-					<Panel class="LegendPanel ScoreCol_PlayerDetails" />
-					<Label class="LegendPanel ScoreCol_TeamScore" text="#custom_end_screen_legend_team_score" />
-					<Label class="LegendPanel ScoreCol_Kills" text="#custom_end_screen_legend_kills" />
-					<Label class="LegendPanel ScoreCol_Deaths" text="#custom_end_screen_legend_deaths" />
-					<Label class="LegendPanel ScoreCol_Assists" text="#custom_end_screen_legend_assists" />
-					<Label class="LegendPanel ScoreCol_ImbaXP" text="Imba XP" />
-					<Label class="LegendPanel ScoreCol_IMR" text="#custom_end_screen_legend_imr" />
-					<Label class="LegendPanel ScoreCol_Items" text="#custom_end_screen_legend_items" />
-					<Label class="LegendPanel ScoreCol_Gold" text="#custom_end_screen_legend_gold" />
+	<Panel class="es-root">
+		<Panel id="es-victory-info">
+			<Label id="es-victory-info-text" text="" />
+		</Panel>
+		<Panel id="es-teams">
+			<Panel class="es-team" id="es-radiant">
+				<Panel class="es-team-title">
+					<Label class="es-team-name" text="Radiant" />
+					<Label id="es-team-score-radiant" class="es-team-score" text="N/A" />
 				</Panel>
-				<Panel id="Legend2">
-					<Panel class="LegendPanel ScoreCol_TeamInfo" />
-					<Panel class="LegendPanel ScoreCol_Hero" />
-					<Panel class="LegendPanel ScoreCol_PlayerDetails" />
-					<Label class="LegendPanel ScoreCol_TeamScore" text="#custom_end_screen_legend_team_score" />
-					<Label class="LegendPanel ScoreCol_Kills" text="#custom_end_screen_legend_kills" />
-					<Label class="LegendPanel ScoreCol_Deaths" text="#custom_end_screen_legend_deaths" />
-					<Label class="LegendPanel ScoreCol_Assists" text="#custom_end_screen_legend_assists" />
-					<Label class="LegendPanel ScoreCol_ImbaXP" text="Imba XP" />
-					<Label class="LegendPanel ScoreCol_IMR" text="#custom_end_screen_legend_imr" />
-					<Label class="LegendPanel ScoreCol_Items" text="#custom_end_screen_legend_items" />
-					<Label class="LegendPanel ScoreCol_Gold" text="#custom_end_screen_legend_gold" />
+				<Panel class="es-legend">
+					<Label class="es-legend-kdalevel" text="LVL" />
+					<Label class="es-legend-kdalevel" text="K" />
+					<Label class="es-legend-kdalevel" text="D" />
+					<Label class="es-legend-kdalevel" text="A" />
+					<Label class="es-legend-gold" text="Gold" />
+					<Label class="es-legend-imr" text="IMR" />
+					<Label class="es-legend-xp" text="XP" />
 				</Panel>
+				<Panel id="es-radiant-players" class="es-players" />
 			</Panel>
-
-			<Panel id="TeamsContainer" />
-
-			<Panel id="ButtonsContainer">
-				<Button id="FeedButton" onactivate="DOTADisplayURL('https://www.dota2imba.org');">
-					<Label text="#lag_issues" />
-				</Button>
-			
-				<Button id="CloseButton" onactivate="Game.FinishGame();">
-					<Label text="#CustomEndScreenClose" />
-				</Button>
-			</Panel>
+			<Panel class="es-team" id="es-dire">
+				<Panel class="es-team-title">
+					<Label class="es-team-name" text="Dire" />
+					<Label id="es-team-score-dire" class="es-team-score" text="N/A" />
+				</Panel>
+				<Panel class="es-legend">
+					<Label class="es-legend-kdalevel" text="LVL" />
+					<Label class="es-legend-kdalevel" text="K" />
+					<Label class="es-legend-kdalevel" text="D" />
+					<Label class="es-legend-kdalevel" text="A" />
+					<Label class="es-legend-gold" text="Gold" />
+					<Label class="es-legend-imr" text="IMR" />
+					<Label class="es-legend-xp" text="XP" />
+				</Panel>
+				<Panel id="es-dire-players" class="es-players" />
+			</Panel> 
+		</Panel>
+		<Panel id="es-buttons">
+			<!--<Button id="es-buttons-stats">
+				<Label text="See Detailed statistics about this Game" />
+			</Button>-->
+			<Button id="es-buttons-website" onactivate="DOTADisplayURL('http://www.dota2imba.org/');">
+				<Label text="Go to our Official Website" />
+			</Button>
+			<Button id="es-buttons-close"  onactivate="Game.FinishGame();">
+				<Label text="#CustomEndScreenClose" />
+			</Button>
 		</Panel>
 	</Panel>
 </root>
