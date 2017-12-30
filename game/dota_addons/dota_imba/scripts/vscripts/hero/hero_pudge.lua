@@ -1,5 +1,18 @@
 
 CreateEmptyTalents("pudge")
+
+
+
+function modifier_special_bonus_imba_pudge_1:OnCreated()
+	if IsServer() then
+		--Updates the stacks without waiting for a level up
+		local meat_hook = self:GetParent():FindAbilityByName("imba_pudge_meat_hook")
+
+		meat_hook:OnHeroLevelUp()
+	end
+end
+
+
 --[[
 -------------------------------------------
 --                Flesh Heap
@@ -463,871 +476,9 @@ function modifier_cleaver_rot:OnDestroy()
 end
 -------------------------------------------
 
---                Meat Hook
+--                Meat Hook (DATADRIVEN)
 -------------------------------------------
-LinkLuaModifier("modifier_meat_hook", "hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier( "modifier_meat_hook_followthrough", "hero/hero_pudge" ,LUA_MODIFIER_MOTION_NONE )
-imba_pudge_meat_hook = class({})
-function imba_pudge_meat_hook:IsHiddenWhenStolen() return false end
-function imba_pudge_meat_hook:IsRefreshable() return true end
-function imba_pudge_meat_hook:IsStealable() return true end
-function imba_pudge_meat_hook:IsNetherWardStealable() return true end
-function imba_pudge_meat_hook:IsInnateAbility() return false end
-
-function imba_pudge_meat_hook:GetAbilityTextureName()
-   return "pudge_meat_hook"
-end
--------------------------------------------
-function imba_pudge_meat_hook:GetCastRange()
-	return self:GetSpecialValueFor("hook_distance") + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_2")
-end
-
-function imba_pudge_meat_hook:GetCooldown()
-	if self:GetCaster():HasScepter() then
-		return self:GetSpecialValueFor("scepter_cooldown")
-	else
-		return self:GetSpecialValueFor("cooldown")
-	end
-end
---------------------------------------------------------------------------------
-
-function imba_pudge_meat_hook:OnAbilityPhaseStart()
-	self:GetCaster():StartGesture( ACT_DOTA_OVERRIDE_ABILITY_1 )
-	return true
-end
-
---------------------------------------------------------------------------------
-
-function imba_pudge_meat_hook:OnAbilityPhaseInterrupted()
-	self:GetCaster():RemoveGesture( ACT_DOTA_OVERRIDE_ABILITY_1 )
-end
-
---------------------------------------------------------------------------------
-
-function imba_pudge_meat_hook:OnSpellStart()
-	self.bChainAttached = false	
-	self.hooks = self.hooks or {}
-	self.targets = {}
-	self.treeTargets = {}
-	self.max_targets = self:GetSpecialValueFor( "max_targets" )  
-	self.hook_damage = self:GetSpecialValueFor( "hook_damage" )
-	self.hook_stackdamage = math.min(self:GetCaster():GetModifierStackCount("modifier_flesh_heap",self:GetCaster()) * self:GetSpecialValueFor("stack_bonus_damage"),self:GetSpecialValueFor("stack_max_bonus_damage"))  
-	self.hook_damage = self.hook_damage + self.hook_stackdamage
-	self.hook_speed = self:GetSpecialValueFor( "hook_speed" )
-	self.hook_width = self:GetSpecialValueFor( "hook_width" )
-	self.hook_distance = self:GetSpecialValueFor( "hook_distance" ) + GetCastRangeIncrease(self:GetCaster())
-	self.hook_distance = self.hook_distance + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_2")
-	self.vision_radius = self:GetSpecialValueFor( "vision_radius" )  
-	self.vision_duration = self:GetSpecialValueFor( "vision_duration" )
-	self.nAmountOfHooks = self:GetSpecialValueFor( "number_of_hooks" ) + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_8")  
-
-	-- Visually remove the hook from pudge
-	if self:GetCaster() and self:GetCaster():IsHero() then
-		local hHook = self:GetCaster():GetTogglableWearable( DOTA_LOADOUT_TYPE_WEAPON )
-		if hHook ~= nil then
-			hHook:AddEffects( EF_NODRAW )
-		end
-	end
-
-	self.vStartPosition = self:GetCaster():GetAbsOrigin()
-
-	-- Root the caster
-	self:GetCaster():AddNewModifier( self:GetCaster(), self, "modifier_meat_hook_followthrough", {} )
-
-	EmitSoundOn( "Hero_Pudge.AttackHookExtend", self:GetCaster())
-
-	for i=1,self.nAmountOfHooks do
-		self.hooks[i] = {}
-		self.treeTargets[i] = 0
-		self.hooks[i]["vStartPosition"] = self:GetCaster():GetAbsOrigin()
-		self.hooks[i]["vProjectileLocation"] = self.hooks[i]["vStartPosition"]
-		self.hooks[i]["vDirection"] = (self:GetCursorPosition() - self.hooks[i]["vStartPosition"]):Normalized() * self.hook_distance
-		
-		if self.nAmountOfHooks > 1 then
-			local rotation = (i-self:GetCaster():FindTalentValue("special_bonus_imba_pudge_8"))	 * self:GetSpecialValueFor("multiple_hook_rotation")
-			self.hooks[i]["vDirection"] = RotatePosition(Vector(0,0,0), QAngle(0,rotation,0), self.hooks[i]["vDirection"])
-		end
-
-		self.hooks[i]["vDirection"].z = 0.0
-		self.hooks[i]["vTargetPosition"] = self.hooks[i]["vStartPosition"] + self.hooks[i]["vDirection"]
-		local vHookOffset = Vector( 0, 0, 96 )
-		self.hooks[i]["vHookTarget"] = self.hooks[i]["vTargetPosition"] + vHookOffset
-		local vKillswitch = Vector( ( ( self.hook_distance / self.hook_speed ) * 2 ), 0, 0 )
-
-		local info = {
-			Ability = self,
-			vSpawnOrigin = self:GetCaster():GetAbsOrigin(),
-			vVelocity = self.hooks[i]["vDirection"] /self.hook_distance * self.hook_speed,
-			fDistance = self.hook_distance,
-			fStartRadius = self.hook_width ,
-			fEndRadius = self.hook_width ,
-			Source = self:GetCaster(),
-			iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_BOTH,
-			iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_TREE,
-			iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,
-			EffectName = "particles/units/heroes/hero_pudge/pudge_meathook.vpcf",
-			ExtraData = 
-			{
-				nProjectileNumber = i
-			}
-		}
-
-		self.hooks[i]["hProjectile"] = ProjectileManager:CreateLinearProjectile( info )
-
-		self.hooks[i]["nChainParticleFXIndex"] = ParticleManager:CreateParticle( "particles/units/heroes/hero_pudge/pudge_meathook.vpcf", PATTACH_CUSTOMORIGIN, nil)
-		ParticleManager:SetParticleAlwaysSimulate( self.hooks[i]["nChainParticleFXIndex"])
-		ParticleManager:SetParticleControlEnt( self.hooks[i]["nChainParticleFXIndex"], 0, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_weapon_chain_rt", self:GetCaster():GetAbsOrigin() + vHookOffset, true )
-		ParticleManager:SetParticleControl( self.hooks[i]["nChainParticleFXIndex"], 1, self.hooks[i]["vHookTarget"] )
-		ParticleManager:SetParticleControl( self.hooks[i]["nChainParticleFXIndex"], 2, Vector( self.hook_speed, self.hook_distance, self.hook_width ) )
-		ParticleManager:SetParticleControl( self.hooks[i]["nChainParticleFXIndex"], 3, vKillswitch )
-		ParticleManager:SetParticleControl( self.hooks[i]["nChainParticleFXIndex"], 4, Vector( 1, 0, 0 ) )
-		ParticleManager:SetParticleControl( self.hooks[i]["nChainParticleFXIndex"], 5, Vector( 0, 0, 0 ) )
-		ParticleManager:SetParticleControlEnt( self.hooks[i]["nChainParticleFXIndex"], 7, self:GetCaster(), PATTACH_CUSTOMORIGIN, nil, self:GetCaster():GetAbsOrigin(), true )
-
-		self.hooks[i]["bRetracting"] = false
-		self.hooks[i]["hVictim"] = nil
-		self.hooks[i]["bDiedInHook"] = false
-		self.hooks[i]["unitsHit"] = {}
-	end
-end
-
---------------------------------------------------------------------------------
-
-function imba_pudge_meat_hook:OnProjectileHit_ExtraData( hTarget, vLocation,keys )
-	
-	local i = keys.nProjectileNumber
-	if not self.hooks[i] then return end	
-	
-	-- RETRACTING
-	if self.hooks[i]["bRetracting"] then		
-		-- Hitting someone on the way back is ignored
-	 	if hTarget then
-			return 
-		end
-		-- The endpoint has been reached. Clean up
-		if self:GetCaster() and self:GetCaster():IsHero() then
-			local hHook = self:GetCaster():GetTogglableWearable( DOTA_LOADOUT_TYPE_WEAPON )
-			if hHook ~= nil then
-				hHook:RemoveEffects( EF_NODRAW )								
-			end			
-			StopSoundOn( "Hero_Pudge.AttackHookRetract", self:GetCaster())
-			StopSoundOn( "Hero_Pudge.AttackHookExtend", self:GetCaster())
-			StopSoundOn( "Hero_Pudge.AttackHookRetractStop", self:GetCaster() )			
-		end
-
-		if self.hooks[i]["unitsHit"] and #self.hooks[i]["unitsHit"] > 0 then
-			for k,v in pairs(self.hooks[i]["unitsHit"]) do
-				if IsValidEntity(v) then
-					v:RemoveModifierByName( "modifier_meat_hook" )
-					v:SetUnitOnClearGround()
-				end
-			end
-		end
-		--self.hooks[i]["unitsHit"] = nil
-		ParticleManager:DestroyParticle( self.hooks[i]["nChainParticleFXIndex"], true )
-		ParticleManager:ReleaseParticleIndex( self.hooks[i]["nChainParticleFXIndex"] )
-		EmitSoundOn( "Hero_Pudge.AttackHookRetractStop", self:GetCaster() )
-
-		self.hooks[i] = nil
-		return
-	end
-
-	-- Here the hook always moves forward and has a target. The impact is handled here.
-	if hTarget then
-		-- You can't pull yourself or Juggernaut ward.
-		if hTarget == self:GetCaster() or hTarget:GetUnitName() == "npc_imba_juggernaut_healing_ward" then
-			return
-		end
-
-		if not self.targets[hTarget] then -- Storing the targets so it won't get handled again
-			if hTarget.IsStanding then -- It is a tree	or Jugg's healing ward		
-			else
-				EmitSoundOn( "Hero_Pudge.AttackHookImpact", hTarget )
-				hTarget:AddNewModifier( self:GetCaster(), self, "modifier_meat_hook", {duration = 1.5} )
-				self.targets[hTarget] = i
-				if hTarget:GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then
-					local bonusTreeDamage = self.treeTargets[i] * self:GetCaster():FindTalentValue("special_bonus_imba_pudge_6")
-					local damage = 
-					{
-						victim = hTarget,
-						attacker = self:GetCaster(),
-						damage = bonusTreeDamage,
-						damage_type = DAMAGE_TYPE_PHYSICAL,		
-						ability = self
-					}
-					ApplyDamage( damage )
-					local damage = 
-					{
-						victim = hTarget,
-						attacker = self:GetCaster(),
-						damage = self.hook_damage,
-						damage_type = DAMAGE_TYPE_PURE,		
-						ability = self
-					}
-					ApplyDamage( damage )
-
-					if not hTarget:IsAlive() then
-						self.hooks[i]["bDiedInHook"] = true
-					end
-
-					if not hTarget:IsMagicImmune() then
-						hTarget:Interrupt()
-					end
-
-					local nFXIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_pudge/pudge_meathook_impact.vpcf", PATTACH_CUSTOMORIGIN, hTarget )
-					ParticleManager:SetParticleControlEnt( nFXIndex, 0, hTarget, PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true )
-					ParticleManager:ReleaseParticleIndex( nFXIndex )
-				end
-			end
-
-			AddFOWViewer( self:GetCaster():GetTeamNumber(), hTarget:GetOrigin(), self.vision_radius, self.vision_duration, false )
-
-			table.insert(self.hooks[i]["unitsHit"], hTarget)
-		end
-	end
-	-- Check if the hook should retract
-	
-	if not hTarget or #self.hooks[i]["unitsHit"] >= self.max_targets or (self.targets[hTarget] == i and hTarget:GetTeamNumber() == self:GetCaster():GetTeamNumber()) then
-		
-		if self.hooks[i]["hProjectile"] then
-			ProjectileManager:DestroyLinearProjectile(self.hooks[i]["hProjectile"])
-		end
-		local vHookOffset = Vector( 0, 0, 96 )
-		if not self.hooks[i]["unitsHit"] or #self.hooks[i]["unitsHit"] == 0  then 
-	
-			ParticleManager:SetParticleControlEnt( self.hooks[i]["nChainParticleFXIndex"], 1, self:GetCaster(), PATTACH_POINT_FOLLOW, "attach_weapon_chain_rt", self:GetCaster():GetAbsOrigin() + vHookOffset, true);
-			ParticleManager:SetParticleControl( self.hooks[i]["nChainParticleFXIndex"], 4, Vector( 0, 0, 0 ) )
-			ParticleManager:SetParticleControl( self.hooks[i]["nChainParticleFXIndex"], 5, Vector( 1, 0, 0 ) )
-		else
-	
-			for k,v in pairs(self.hooks[i]["unitsHit"]) do
-	
-				if v ~= nil and ( not v:IsInvisible() ) then
-					ParticleManager:SetParticleControlEnt( self.hooks[i]["nChainParticleFXIndex"], 1, v, PATTACH_POINT_FOLLOW, "attach_hitloc", v:GetAbsOrigin() + vHookOffset, true )
-					ParticleManager:SetParticleControl( self.hooks[i]["nChainParticleFXIndex"], 4, Vector( 0, 0, 0 ) )
-					ParticleManager:SetParticleControl( self.hooks[i]["nChainParticleFXIndex"], 5, Vector( 1, 0, 0 ) )
-				end			
-			end
-		end
-		self.hooks[i]["bRetracting"] = true		
-		
-		for j = 1,self.nAmountOfHooks do
-			self.bAllRetracting = false
-			if self.hooks[i]["bRetracting"] == false then
-				self.bAllRetracting = false
-				break
-			else
-				self.bAllRetracting = true
-			end
-		end
-
-		if self.bAllRetracting then
-			self:GetCaster():RemoveModifierByName("modifier_meat_hook_followthrough")
-		end
-
-		local vHookPos = self.hooks[i]["vProjectileLocation"]
-		local flPad = self:GetCaster():GetPaddedCollisionRadius()
-		if hTarget ~= nil then
-			vHookPos = hTarget:GetAbsOrigin()
-			flPad = flPad + hTarget:GetPaddedCollisionRadius()
-		end
-		--Missing: Setting target facing angle
-		local vVelocity = self.hooks[i]["vStartPosition"] - vHookPos
-		vVelocity.z = 0.0
-	
-		local flDistance = vVelocity:Length2D()-- - flPad
-		vVelocity = vVelocity:Normalized() * self.hook_speed
-	
-		self.hooks[i]["vDirection"] = self.hooks[i]["vDirection"] * -1
-		local info = 
-		{
-			Ability = self,
-			vSpawnOrigin = vHookPos,
-			vVelocity = self.hooks[i]["vDirection"] ,
-			fDistance = flDistance-100,
-			Source = self:GetCaster(),
-			EffectName =  "particles/units/heroes/hero_pudge/pudge_meathook.vpcf",
-			--iUnitTargetType = DOTA_UNIT_TARGET_TREE,
-			ExtraData = 
-			{
-				nProjectileNumber = i
-			}
-		}
-		
-		self.hooks[i]["hProjectile"] = ProjectileManager:CreateLinearProjectile( info )
-	end
-
-	if self:GetCaster():IsAlive() then
-		self:GetCaster():RemoveGesture( ACT_DOTA_OVERRIDE_ABILITY_1 );
-		self:GetCaster():StartGesture( ACT_DOTA_CHANNEL_ABILITY_1 );
-	end
-end
-
-
---------------------------------------------------------------------------------
-
-function imba_pudge_meat_hook:OnProjectileThink_ExtraData(vLocation,keys)
-
-	local i = keys.nProjectileNumber
-	if not self.hooks[i] then return end
-	if self:GetCaster():FindTalentValue("special_bonus_imba_pudge_6") ~= 0 then
-		local trees = GridNav:GetAllTreesAroundPoint(vLocation,self.hook_width,false)
-		for _,tree in pairs(trees) do
-			if tree:IsStanding() then
-				tree:CutDown(self:GetCaster():GetTeamNumber())
-				self.treeTargets[i] = self.treeTargets[i] + 1
-			else
-				table.remove(trees, tree)
-			end
-		end
-	end
-	
-
-	self.hooks[i]["vProjectileLocation"] = vLocation
-	if self.hooks[i]["unitsHit"] then
-		for k,v in pairs(self.hooks[i]["unitsHit"]) do
-			if IsValidEntity(v) then
-				v:SetAbsOrigin(GetGroundPosition(vLocation,self:GetCaster()))
-			end
-		end
-	end
-end
-
---------------------------------------------------------------------------------
-
-function imba_pudge_meat_hook:OnOwnerDied()
-	self:GetCaster():RemoveGesture( ACT_DOTA_OVERRIDE_ABILITY_1 );
-	self:GetCaster():RemoveGesture( ACT_DOTA_CHANNEL_ABILITY_1 );
-end	
-
-
---------------------------------------------------------------------------------
-
-modifier_meat_hook = class({})
---------------------------------------------------------------------------------
-
-function modifier_meat_hook:IsDebuff()
-	return true
-end
-
---------------------------------------------------------------------------------
-
-function modifier_meat_hook:IsStunDebuff()
-	return true
-end
-
---------------------------------------------------------------------------------
-
-function modifier_meat_hook:RemoveOnDeath()
-	return false
-end
---------------------------------------------------------------------------------
-
-function modifier_meat_hook:DeclareFunctions()
-	local funcs = {
-		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
-	}
-
-	return funcs
-end
-
---------------------------------------------------------------------------------
-
-function modifier_meat_hook:GetOverrideAnimation( params )
-	return ACT_DOTA_FLAIL
-end
-
---------------------------------------------------------------------------------
-
-function modifier_meat_hook:CheckState()
-	if IsServer() then
-		if self:GetCaster() ~= nil and self:GetParent() ~= nil then
-			if self:GetCaster():GetTeamNumber() ~= self:GetParent():GetTeamNumber() and ( not self:GetParent():IsMagicImmune() ) then
-				local state = 
-				{
-					[MODIFIER_STATE_STUNNED] = true,
-				}
-
-				return state
-			end
-		end
-	end
-
-	local state = 
-	{
-		[MODIFIER_STATE_ROOTED] = true,
-	}
-
-	return state
-end
-
-modifier_meat_hook_followthrough = class({})
-
---------------------------------------------------------------------------------
-
-function modifier_meat_hook_followthrough:IsHidden()
-	return true
-end
-
---------------------------------------------------------------------------------
-
-function modifier_meat_hook_followthrough:CheckState()
-	local state = 
-	{
-		[MODIFIER_STATE_STUNNED] = true,
-	}
-	return state
-end
-
---------------------------------------------------------------------------------
-
-LinkLuaModifier("modifier_butchers_cleaver", "hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_butchers_cleaver_dummy", "hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
-
-imba_pudge_butchers_cleaver = class({})
-function imba_pudge_butchers_cleaver:IsHiddenWhenStolen() return false end
-function imba_pudge_butchers_cleaver:IsRefreshable() return true end
-function imba_pudge_butchers_cleaver:IsStealable() return true end
-function imba_pudge_butchers_cleaver:IsNetherWardStealable() return true end
-function imba_pudge_butchers_cleaver:IsInnateAbility() return false end
-
-function imba_pudge_butchers_cleaver:GetAbilityTextureName()
-   return "custom/imba_pudge_cleaver"
-end
--------------------------------------------
-
-function imba_pudge_butchers_cleaver:OnSpellStart()
-	local vTargetPosition = self:GetCursorPosition()
-	local caster = self:GetCaster()
-
-	-- I want to remove the thing but I can't find it.
-	if self:GetCaster() and self:GetCaster():IsHero() then
-		local cleaver = self:GetCaster():GetTogglableWearable( DOTA_LOADOUT_TYPE_OFFHAND_WEAPON )
-		if cleaver ~= nil then
-			cleaver:AddEffects( EF_NODRAW )
-		end
-	end
-	local velocity = (self:GetCursorPosition() - caster:GetAbsOrigin()):Normalized() * self:GetSpecialValueFor("projectile_speed")
-	local info = {
-		bDeleteOnHit = self:GetCaster():FindTalentValue("special_bonus_imba_pudge_5") == 0,
-		Ability = self,
-		vSpawnOrigin = self:GetCaster():GetAbsOrigin(),
-		vVelocity = Vector(velocity.x,velocity.y,0),
-		fDistance = self:GetSpecialValueFor("range"),
-		fStartRadius = self:GetSpecialValueFor("projectile_radius"),
-		fEndRadius = self:GetSpecialValueFor("projectile_radius"),
-		Source = self:GetCaster(),
-		iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
-		iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-		iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
-		EffectName = "particles/hero/pudge/butchers_cleave_projectile.vpcf",
-
-		iVisionRadius = self:GetSpecialValueFor("projectile_radius"),
-		bProvidesVision = true,
-		iVisionTeamNumber = caster:GetTeamNumber(),		
-		
-	}
-	
-	self.projectile = ProjectileManager:CreateLinearProjectile(info)
-
-end
-
-function imba_pudge_butchers_cleaver:OnProjectileHit(hTarget,vLocation)
-	if not hTarget then 
-		for i =0,30 do
-			local cleaver = self:GetCaster():GetTogglableWearable( i )
-			if cleaver ~= nil then
-				cleaver:RemoveEffects(EF_NODRAW)		
-			end
-		end
-		return 
-	end
-	
-	local nFXIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_pudge/pudge_meathook_impact.vpcf", PATTACH_CUSTOMORIGIN, hTarget )
-	ParticleManager:SetParticleControlEnt( nFXIndex, 0, hTarget, PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true )
-	ParticleManager:ReleaseParticleIndex( nFXIndex )
-
-	hTarget:AddNewModifier(self:GetCaster(),self,"modifier_butchers_cleaver",{duration = self:GetSpecialValueFor("root_duration")})
-
-	local damage = 
-	{
-		victim = hTarget,
-		attacker = self:GetCaster(),
-		damage = self:GetSpecialValueFor("damage"),
-		damage_type = DAMAGE_TYPE_MAGICAL,		
-		ability = self,
-	}
-	ApplyDamage( damage )
-	if self:GetCaster():FindTalentValue("special_bonus_imba_pudge_5") == 0 then
-		return true
-	end
-end
-
-
--------------------------------------------
-modifier_butchers_cleaver_dummy = class({})
-
-function modifier_butchers_cleaver_dummy:IsDebuff() return false end
-function modifier_butchers_cleaver_dummy:IsHidden() return true end
-function modifier_butchers_cleaver_dummy:IsPurgable() return false end
-function modifier_butchers_cleaver_dummy:IsPurgeException() return false end
-function modifier_butchers_cleaver_dummy:IsStunDebuff() return false end
-function modifier_butchers_cleaver_dummy:RemoveOnDeath() return true end
-function modifier_butchers_cleaver_dummy:AllowIllusionDuplicate() return false end
-
-
-function modifier_butchers_cleaver_dummy:CheckState()
-	local state = 
-	{
-		[MODIFIER_STATE_NO_HEALTH_BAR] = true,
-		[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
-		[MODIFIER_STATE_INVULNERABLE] = true,
-		[MODIFIER_STATE_COMMAND_RESTRICTED] = true,
-		[MODIFIER_STATE_OUT_OF_GAME] = true,
-	}
-	return state
-end
-
-function modifier_butchers_cleaver_dummy:OnCreated()
-	if IsServer() then
-		self:StartIntervalThink(FrameTime())
-	end
-end
-
-function modifier_butchers_cleaver_dummy:OnDestroy()
-	if IsServer() then
-		UTIL_Remove(self:GetParent())
-
-		if self:GetCaster() and self:GetCaster():IsHero() then
-			local cleaver = self:GetCaster():GetTogglableWearable( DOTA_LOADOUT_TYPE_OFFHAND_WEAPON )
-			if cleaver ~= nil then
-				cleaver:RemoveEffects(EF_NODRAW)
-			end
-		end
-	end
-end
-
-function modifier_butchers_cleaver_dummy:OnIntervalThink()
-	if not self:GetParent().parentUnit or not IsValidEntity(self:GetParent().parentUnit) then
-		UTIL_Remove(self:GetParent())
-		return 
-	end	
-end
-
-modifier_butchers_cleaver = class({})
-function modifier_butchers_cleaver:IsDebuff() return true end
-function modifier_butchers_cleaver:IsHidden() return false end
-function modifier_butchers_cleaver:IsPurgable() return true end
-
-function modifier_butchers_cleaver:OnCreated()
-	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()
-	self.parent = self:GetParent()
-	self.modifier_rot = "modifier_cleaver_rot"	
-
-	if IsServer() then
-	self.ability_rot = self.caster:FindAbilityByName("imba_pudge_rot")
-	
-		if self.ability_rot and self.ability_rot:GetLevel() > 0 then
-			self.parent.butcher_cleaver_target = true			
-			self.parent:AddNewModifier(self.caster, self.ability_rot, self.modifier_rot, {})
-		end
-	end
-end
-
-function modifier_butchers_cleaver:OnDestroy()
-	if IsServer() then
-		if self.parent.butcher_cleaver_target then
-			self.parent:RemoveModifierByNameAndCaster(self.modifier_rot, self.caster)
-		end
-	end
-end
--------------------------------------------
-
-function modifier_butchers_cleaver:DeclareFunctions()
-	local decFuns =
-	{
-		MODIFIER_EVENT_ON_TAKEDAMAGE,
-	}
-	return decFuns
-end
-
---------------------------------------------------------------------------------
-
-function modifier_butchers_cleaver:CheckState()
-	local state = 
-	{
-		[MODIFIER_STATE_ROOTED] = true,
-	}
-	return state
-end
-
-function modifier_butchers_cleaver:OnTakeDamage(keys)
-	if IsServer() then
-		if keys.attacker == self:GetCaster() and keys.unit == self:GetParent() then
-			local factor = 0 + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_4")
-			self:GetCaster():Heal(keys.damage*factor ,self:GetCaster())
-		end
-	end
-end
-
-function modifier_butchers_cleaver:GetEffectName()
-	return "particles/hero/pudge/pudge_cleaver_overhead.vpcf"
-end
-
-function modifier_butchers_cleaver:GetEffectAttachType()
-	return PATTACH_OVERHEAD_FOLLOW
-end
---]]
-imba_pudge_dismember = imba_pudge_dismember or class({})
-
-LinkLuaModifier( "modifier_dismember", "hero/hero_pudge" ,LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier( "modifier_dismember_lifesteal", "hero/hero_pudge" ,LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier( "modifier_dismember_dummy", "hero/hero_pudge" ,LUA_MODIFIER_MOTION_NONE )
-LinkLuaModifier( "modifier_dismember_disarm", "hero/hero_pudge" ,LUA_MODIFIER_MOTION_NONE )
-
-function imba_pudge_dismember:GetAbilityTextureName()
-   return "pudge_dismember"
-end
-
-function imba_pudge_dismember:IsHiddenWhenStolen() return false end
-function imba_pudge_dismember:GetConceptRecipientType()
-	return DOTA_SPEECH_USER_ALL
-end
-
-function imba_pudge_dismember:GetIntrinsicModifierName()
-	return "modifier_dismember_dummy"
-end
-
---------------------------------------------------------------------------------
-
-function imba_pudge_dismember:SpeakTrigger()
-	return DOTA_ABILITY_SPEAK_CAST
-end
-
---------------------------------------------------------------------------------
-
-function imba_pudge_dismember:GetChannelTime()
-	self.creep_duration = self:GetSpecialValueFor( "creep_duration" ) + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_7")
-	self.hero_duration = self:GetSpecialValueFor( "hero_duration" ) + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_7")
-
-	local time = self.hero_duration
-	if self:GetCaster():GetModifierStackCount("modifier_dismember_dummy",self:GetCaster()) == 1 then
-		time = self.creep_duration
-	end
-
-	if self:GetCaster():HasTalent("special_bonus_imba_pudge_8") then
-		time = time + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_8", "dismember_duration")
-	end
-	return time
-end
-
---------------------------------------------------------------------------------
-
-function imba_pudge_dismember:OnAbilityPhaseStart()
-	if IsServer() then
-		self.hVictim = self:GetCursorTarget()
-	end
-	return true
-end
-
---------------------------------------------------------------------------------
-
-function imba_pudge_dismember:OnSpellStart()
-	if self.hVictim == nil then
-		return
-	end
-	if self.hVictim:TriggerSpellAbsorb( self ) then
-		self.hVictim = nil
-		self:GetCaster():Interrupt()
-	else
-		self.startTime = GameRules:GetGameTime()
-		self.hVictim:AddNewModifier( self:GetCaster(), self, "modifier_dismember", { duration = self:GetChannelTime() } )
-		self:GetCaster():AddNewModifier( self:GetCaster(), self, "modifier_dismember_lifesteal", { duration = self:GetChannelTime() } )
-		self.hVictim:Interrupt()
-	end
-end
-
---------------------------------------------------------------------------------
-
-function imba_pudge_dismember:OnChannelFinish( bInterrupted )
-	if self.hVictim ~= nil then
-		self.hVictim:RemoveModifierByName( "modifier_dismember" )
-		self:GetCaster():RemoveModifierByName( "modifier_dismember_lifesteal")
-		if self:GetCaster():FindTalentValue("special_bonus_imba_pudge_7") ~= 0 then
-			self.hVictim:AddNewModifier(self:GetCaster(),self,"modifier_dismember_disarm",{duration = GameRules:GetGameTime() - self.startTime})
-		end
-	end
-end
-
---------------------------------------------------------------------------------
-modifier_dismember_disarm = class({})	
-function modifier_dismember_disarm:IsHidden() return false end
-function modifier_dismember_disarm:IsDebuff() return true end
-function modifier_dismember_disarm:IsPurgable() return false end
-function modifier_dismember_disarm:IsPurgeException() return false end
-
-
--- Modifier particle
-function modifier_dismember_disarm:GetEffectName()
-	return "particles/items2_fx/heavens_halberd.vpcf"
-end
-
-function modifier_dismember_disarm:GetEffectAttachType()
-	return PATTACH_ABSORIGIN_FOLLOW
-end
-
--- Declare modifier states
-function modifier_dismember_disarm:CheckState()
-	local states = {
-		[MODIFIER_STATE_DISARMED] = true,
-	}
-	return states
-end
-
-modifier_dismember_dummy = class({})
-function modifier_dismember_dummy:IsDebuff() return false end
-function modifier_dismember_dummy:IsHidden() return true end
-function modifier_dismember_dummy:IsPurgable() return false end
-function modifier_dismember_dummy:IsPurgeException() return false end
-function modifier_dismember_dummy:IsStunDebuff() return false end
-function modifier_dismember_dummy:RemoveOnDeath() return false end
-
-function modifier_dismember_dummy:DeclareFunctions()
-	local decFuns =
-	{
-		MODIFIER_EVENT_ON_ABILITY_START,		
-	}
-	return decFuns
-end
-
-function modifier_dismember_dummy:OnAbilityStart(keys)
-	if IsServer() then
-		if keys.unit == self:GetCaster() and keys.ability == self:GetAbility() then
-			if keys.target:IsConsideredHero() then
-				self:SetStackCount(0)
-			else
-				self:SetStackCount(1)
-			end
-		end
-	end
-end
-
-modifier_dismember = class({})
-
---------------------------------------------------------------------------------
-
-function modifier_dismember:IsDebuff()
-	return true
-end
-
---------------------------------------------------------------------------------
-
-function modifier_dismember:IsStunDebuff()
-	return true
-end
-
---------------------------------------------------------------------------------
-
-function modifier_dismember:OnCreated( kv )
-	self.dismember_damage = self:GetAbility():GetSpecialValueFor( "dismember_damage" )
-	self.tick_rate = self:GetAbility():GetSpecialValueFor( "tick_rate" )
-	self.strength_damage = self:GetAbility():GetSpecialValueFor( "strength_damage" )/100
-
-	if IsServer() then
-		self:GetParent():InterruptChannel()
-		self:OnIntervalThink()
-		local cast_responses = {"Imba.PudgeDismember1", "Imba.PudgeDismember2", "Imba.PudgeDismember3", "Imba.PudgeNom"}
-		self.castResponse = cast_responses[math.random(1, #cast_responses)]
-		EmitSoundOn(self.castResponse, self:GetCaster())
-		self:StartIntervalThink( self.tick_rate )
-	end
-end
-
---------------------------------------------------------------------------------
-
-function modifier_dismember:OnDestroy()
-	if IsServer() then
-		self:GetCaster():InterruptChannel()
-		if self.castResponse then
-			StopSoundEvent(self.castResponse, self:GetCaster())
-		end
-	end
-end
-
---------------------------------------------------------------------------------
-
-function modifier_dismember:OnIntervalThink()
-	if IsServer() then
-		local flDamage = self.dismember_damage
-		flDamage = flDamage + ( self:GetCaster():GetStrength() * self.strength_damage )
-		--flDamage = self:GetParent():GetMagicalResistance() * flDamage
-		local damage = {
-			victim = self:GetParent(),
-			attacker = self:GetCaster(),
-			damage = flDamage,
-			damage_type = DAMAGE_TYPE_MAGICAL,
-			ability = self:GetAbility(),
-			--damage_flags  = DOTA_DAMAGE_FLAG_IGNORES_MAGIC_ARMOR,
-		}
-		ApplyDamage( damage )
-		
-		EmitSoundOn( "Hero_Pudge.Dismember", self:GetParent() )		
-	end
-end
-
---------------------------------------------------------------------------------
-
-function modifier_dismember:CheckState()
-	if self:GetParent():HasModifier("modifier_slark_shadow_dance") then
-		local state = {[MODIFIER_STATE_STUNNED] = true}
-		return state
-	end
-
-	local state = {
-		[MODIFIER_STATE_STUNNED] = true,
-		[MODIFIER_STATE_INVISIBLE] = false,
-	}
-
-	return state
-end
-
---------------------------------------------------------------------------------
-
-function modifier_dismember:DeclareFunctions()
-	local funcs = {
-		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
-	}
-
-	return funcs
-end
-
---------------------------------------------------------------------------------
-
-function modifier_dismember:GetOverrideAnimation( params )
-	return ACT_DOTA_DISABLED
-end
-
---------------------------------------------------------------------------------
-
-modifier_dismember_lifesteal = class({})
-function modifier_dismember_lifesteal:IsDebuff() return false end
-function modifier_dismember_lifesteal:IsHidden() return true end
-function modifier_dismember_lifesteal:IsPurgable() return false end
-function modifier_dismember_lifesteal:IsPurgeException() return false end
-function modifier_dismember_lifesteal:IsStunDebuff() return true end
-function modifier_dismember_lifesteal:RemoveOnDeath() return true end
-function modifier_dismember_lifesteal:AllowIllusionDuplicate() return false end
-	
-function modifier_dismember_lifesteal:GetModifierSpellLifesteal()
-	return self:GetAbility():GetSpecialValueFor("spell_lifesteal")
-end
---]]
-
---[[ 	Authors: Pizzalol and D2imba
-		Date: 10.07.2015				]]
-
-function HookCast( keys )
+--[[function HookCast( keys )
 	local caster = keys.caster
 	local target = keys.target_points[1]
 	local ability = keys.ability
@@ -1475,10 +626,13 @@ function MeatHook( keys )
 	if caster:HasScepter() then
 		local cdr = 0
 		local caster_cdr = caster:GetCooldownReduction()
+		print(caster_cdr)
 		hook_damage = hook_damage + light_stacks * damage_scepter
 		local hook_cooldown = math.max(ability:GetCooldown(ability_level) - cooldown_scepter * sharp_stacks, cooldown_cap_scepter)
+		print(hook_cooldown)
 		ability:EndCooldown()
 		if caster_cdr and caster_cdr ~= 0 then
+			print(caster:GetCooldownReduction())
 			cdr = hook_cooldown * caster_cdr / 100
 		end
 		ability:StartCooldown(hook_cooldown - cdr)
@@ -1852,6 +1006,1369 @@ function LightHook( keys )
 	-- Add a stack of Light Hook
 	AddStacks(ability_hook, caster, caster, modifier_light, 1, true)
 end
+-------------------------------------------------------------
+------------------BUTCHER CLEAVER----------------------------
+-------------------------------------------------------------
+
+LinkLuaModifier("modifier_butchers_cleaver", "hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_butchers_cleaver_dummy", "hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+
+imba_pudge_butchers_cleaver = class({})
+function imba_pudge_butchers_cleaver:IsHiddenWhenStolen() return false end
+function imba_pudge_butchers_cleaver:IsRefreshable() return true end
+function imba_pudge_butchers_cleaver:IsStealable() return true end
+function imba_pudge_butchers_cleaver:IsNetherWardStealable() return true end
+function imba_pudge_butchers_cleaver:IsInnateAbility() return false end
+
+function imba_pudge_butchers_cleaver:GetAbilityTextureName()
+   return "custom/imba_pudge_cleaver"
+end
+-------------------------------------------
+
+function imba_pudge_butchers_cleaver:OnSpellStart()
+	local vTargetPosition = self:GetCursorPosition()
+	local caster = self:GetCaster()
+
+	-- I want to remove the thing but I can't find it.
+	if self:GetCaster() and self:GetCaster():IsHero() then
+		local cleaver = self:GetCaster():GetTogglableWearable( DOTA_LOADOUT_TYPE_OFFHAND_WEAPON )
+		if cleaver ~= nil then
+			cleaver:AddEffects( EF_NODRAW )
+		end
+	end
+	local velocity = (self:GetCursorPosition() - caster:GetAbsOrigin()):Normalized() * self:GetSpecialValueFor("projectile_speed")
+	local info = {
+		bDeleteOnHit = self:GetCaster():FindTalentValue("special_bonus_imba_pudge_5") == 0,
+		Ability = self,
+		vSpawnOrigin = self:GetCaster():GetAbsOrigin(),
+		vVelocity = Vector(velocity.x,velocity.y,0),
+		fDistance = self:GetSpecialValueFor("range"),
+		fStartRadius = self:GetSpecialValueFor("projectile_radius"),
+		fEndRadius = self:GetSpecialValueFor("projectile_radius"),
+		Source = self:GetCaster(),
+		iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
+		iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
+		EffectName = "particles/hero/pudge/butchers_cleave_projectile.vpcf",
+
+		iVisionRadius = self:GetSpecialValueFor("projectile_radius"),
+		bProvidesVision = true,
+		iVisionTeamNumber = caster:GetTeamNumber(),		
+		
+	}
+	
+	self.projectile = ProjectileManager:CreateLinearProjectile(info)
+
+end
+
+function imba_pudge_butchers_cleaver:OnProjectileHit(hTarget,vLocation)
+	if not hTarget then 
+		for i =0,30 do
+			local cleaver = self:GetCaster():GetTogglableWearable( i )
+			if cleaver ~= nil then
+				cleaver:RemoveEffects(EF_NODRAW)		
+			end
+		end
+		return 
+	end
+	
+	local nFXIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_pudge/pudge_meathook_impact.vpcf", PATTACH_CUSTOMORIGIN, hTarget )
+	ParticleManager:SetParticleControlEnt( nFXIndex, 0, hTarget, PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetCaster():GetAbsOrigin(), true )
+	ParticleManager:ReleaseParticleIndex( nFXIndex )
+
+	hTarget:AddNewModifier(self:GetCaster(),self,"modifier_butchers_cleaver",{duration = self:GetSpecialValueFor("root_duration")})
+
+	local damage = 
+	{
+		victim = hTarget,
+		attacker = self:GetCaster(),
+		damage = self:GetSpecialValueFor("damage"),
+		damage_type = DAMAGE_TYPE_MAGICAL,		
+		ability = self,
+	}
+	ApplyDamage( damage )
+	if self:GetCaster():FindTalentValue("special_bonus_imba_pudge_5") == 0 then
+		return true
+	end
+end
+
+
+-------------------------------------------
+modifier_butchers_cleaver_dummy = class({})
+
+function modifier_butchers_cleaver_dummy:IsDebuff() return false end
+function modifier_butchers_cleaver_dummy:IsHidden() return true end
+function modifier_butchers_cleaver_dummy:IsPurgable() return false end
+function modifier_butchers_cleaver_dummy:IsPurgeException() return false end
+function modifier_butchers_cleaver_dummy:IsStunDebuff() return false end
+function modifier_butchers_cleaver_dummy:RemoveOnDeath() return true end
+function modifier_butchers_cleaver_dummy:AllowIllusionDuplicate() return false end
+
+
+function modifier_butchers_cleaver_dummy:CheckState()
+	local state = 
+	{
+		[MODIFIER_STATE_NO_HEALTH_BAR] = true,
+		[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
+		[MODIFIER_STATE_INVULNERABLE] = true,
+		[MODIFIER_STATE_COMMAND_RESTRICTED] = true,
+		[MODIFIER_STATE_OUT_OF_GAME] = true,
+	}
+	return state
+end
+
+function modifier_butchers_cleaver_dummy:OnCreated()
+	if IsServer() then
+		self:StartIntervalThink(FrameTime())
+	end
+end
+
+function modifier_butchers_cleaver_dummy:OnDestroy()
+	if IsServer() then
+		UTIL_Remove(self:GetParent())
+
+		if self:GetCaster() and self:GetCaster():IsHero() then
+			local cleaver = self:GetCaster():GetTogglableWearable( DOTA_LOADOUT_TYPE_OFFHAND_WEAPON )
+			if cleaver ~= nil then
+				cleaver:RemoveEffects(EF_NODRAW)
+			end
+		end
+	end
+end
+
+function modifier_butchers_cleaver_dummy:OnIntervalThink()
+	if not self:GetParent().parentUnit or not IsValidEntity(self:GetParent().parentUnit) then
+		UTIL_Remove(self:GetParent())
+		return 
+	end	
+end
+
+modifier_butchers_cleaver = class({})
+function modifier_butchers_cleaver:IsDebuff() return true end
+function modifier_butchers_cleaver:IsHidden() return false end
+function modifier_butchers_cleaver:IsPurgable() return true end
+
+function modifier_butchers_cleaver:OnCreated()
+	self.caster = self:GetCaster()
+	self.ability = self:GetAbility()
+	self.parent = self:GetParent()
+	self.modifier_rot = "modifier_cleaver_rot"	
+
+	if IsServer() then
+	self.ability_rot = self.caster:FindAbilityByName("imba_pudge_rot")
+	
+		if self.ability_rot and self.ability_rot:GetLevel() > 0 then
+			self.parent.butcher_cleaver_target = true			
+			self.parent:AddNewModifier(self.caster, self.ability_rot, self.modifier_rot, {})
+		end
+	end
+end
+
+function modifier_butchers_cleaver:OnDestroy()
+	if IsServer() then
+		if self.parent.butcher_cleaver_target then
+			self.parent:RemoveModifierByNameAndCaster(self.modifier_rot, self.caster)
+		end
+	end
+end
+-------------------------------------------
+
+function modifier_butchers_cleaver:DeclareFunctions()
+	local decFuns =
+	{
+		MODIFIER_EVENT_ON_TAKEDAMAGE,
+	}
+	return decFuns
+end
+
+--------------------------------------------------------------------------------
+
+function modifier_butchers_cleaver:CheckState()
+	local state = 
+	{
+		[MODIFIER_STATE_ROOTED] = true,
+	}
+	return state
+end
+
+function modifier_butchers_cleaver:OnTakeDamage(keys)
+	if IsServer() then
+		if keys.attacker == self:GetCaster() and keys.unit == self:GetParent() then
+			local factor = 0 + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_4")
+			self:GetCaster():Heal(keys.damage*factor ,self:GetCaster())
+		end
+	end
+end
+
+function modifier_butchers_cleaver:GetEffectName()
+	return "particles/hero/pudge/pudge_cleaver_overhead.vpcf"
+end
+
+function modifier_butchers_cleaver:GetEffectAttachType()
+	return PATTACH_OVERHEAD_FOLLOW
+end
+--]]
+
+---------------------------------------------------
+------------------ MEAT HOOK ----------------------
+---------------------------------------------------
+LinkLuaModifier("modifier_imba_meat_hook", "hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_meat_hook_followthrough", "hero/hero_pudge" ,LUA_MODIFIER_MOTION_NONE )
+--LinkLuaModifier("modifier_imba_hook_sharp_stack", "hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+--LinkLuaModifier("modifier_imba_hook_light_stack", "hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+imba_pudge_meat_hook = class({})
+
+function imba_pudge_meat_hook:IsHiddenWhenStolen() return false end
+function imba_pudge_meat_hook:IsRefreshable() return true end
+function imba_pudge_meat_hook:IsStealable() return true end
+function imba_pudge_meat_hook:IsNetherWardStealable() return true end
+function imba_pudge_meat_hook:IsInnateAbility() return false end
+
+function imba_pudge_meat_hook:GetAbilityTextureName()
+   return "pudge_meat_hook"
+end
+-------------------------------------------
+function imba_pudge_meat_hook:GetCastRange()
+
+	--Check the extra range from the swift stacks
+	local caster = self:GetCaster()
+	local swift_modifier = "modifier_imba_hook_light_stack"
+
+	--Talent #5: extra range on meat hook
+	return self:GetSpecialValueFor("base_range") + caster:FindTalentValue("special_bonus_imba_pudge_5") + self:GetSpecialValueFor("stack_range") * caster:GetModifierStackCount(swift_modifier, caster)
+end
+
+function imba_pudge_meat_hook:GetCooldown(level)
+	return self.BaseClass.GetCooldown(self, level)
+end
+--------------------------------------------------------------------------------
+
+function imba_pudge_meat_hook:OnUpgrade()
+	local caster = self:GetCaster()
+	local ability_level = self:GetLevel()
+	local light_hook = caster:FindAbilityByName("imba_pudge_light_hook")
+	local sharp_hook = caster:FindAbilityByName("imba_pudge_sharp_hook")
+
+	-- Level up sharp and light hook abilities
+	if sharp_hook and light_hook then
+		sharp_hook:SetLevel(ability_level)
+		light_hook:SetLevel(ability_level)
+	end
+
+
+end
+
+--------------------------------------------------------------------------------
+
+function imba_pudge_meat_hook:OnAbilityPhaseStart()
+	self:GetCaster():StartGesture( ACT_DOTA_OVERRIDE_ABILITY_1 )
+	return true
+end
+
+--------------------------------------------------------------------------------
+
+function imba_pudge_meat_hook:OnAbilityPhaseInterrupted()
+	self:GetCaster():RemoveGesture( ACT_DOTA_OVERRIDE_ABILITY_1 )
+end
+
+--------------------------------------------------------------------------------
+
+function imba_pudge_meat_hook:OnSpellStart()
+
+	--Ability properties
+	local caster = self:GetCaster()
+	local light_hook = "modifier_imba_hook_light_stack"
+	local sharp_hook = "modifier_imba_hook_sharp_stack"
+	self.bChainAttached = false	
+	self.hooks = self.hooks or {}
+	self.targets = {}
+	self.treeTargets = {}
+
+	--Ability Specials
+	local base_speed = self:GetSpecialValueFor("base_speed")
+	local stack_speed = self:GetSpecialValueFor("stack_speed")
+	local base_range = self:GetSpecialValueFor("base_range")
+	local stack_range = self:GetSpecialValueFor("stack_range")
+	local base_damage = self:GetSpecialValueFor("base_damage")
+	local stack_damage = self:GetSpecialValueFor("stack_damage")
+	local hook_width = self:GetSpecialValueFor("hook_width")
+	local vision_radius = self:GetSpecialValueFor("vision_radius")
+	local vision_duration = self:GetSpecialValueFor("vision_duration")
+	local damage_scepter = self:GetSpecialValueFor("damage_scepter")
+	local cooldown_scepter = self:GetSpecialValueFor("cooldown_scepter")
+	local cooldown_cap_scepter = self:GetSpecialValueFor("cooldown_cap_scepter")
+	local enemy_disable_linger = self:GetSpecialValueFor("enemy_disable_linger")
+	local nAmountOfHooks = self:GetSpecialValueFor("number_of_hooks")
+	local max_targets = self:GetSpecialValueFor("max_targets")
+
+	--post 7.00 pudge KV
+	--[[self.max_targets = self:GetSpecialValueFor( "max_targets" )  
+	self.hook_damage = self:GetSpecialValueFor( "hook_damage" )
+	self.hook_stackdamage = math.min(self:GetCaster():GetModifierStackCount("modifier_flesh_heap",self:GetCaster()) * self:GetSpecialValueFor("stack_bonus_damage"),self:GetSpecialValueFor("stack_max_bonus_damage"))  
+	self.hook_damage = self.hook_damage + self.hook_stackdamage
+	self.hook_speed = self:GetSpecialValueFor( "hook_speed" )
+	self.hook_width = self:GetSpecialValueFor( "hook_width" )
+	self.hook_distance = self:GetSpecialValueFor( "hook_distance" ) + GetCastRangeIncrease(self:GetCaster())
+	self.hook_distance = self.hook_distance + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_2")
+	self.vision_radius = self:GetSpecialValueFor( "vision_radius" )  
+	self.vision_duration = self:GetSpecialValueFor( "vision_duration" )
+	self.nAmountOfHooks = self:GetSpecialValueFor( "number_of_hooks" ) + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_8")]]
+
+	--compute skill parameters
+	local light_hook_stacks = caster:GetModifierStackCount(light_hook, caster)
+	local sharp_hook_stacks = caster:GetModifierStackCount(sharp_hook, caster)
+
+	local hook_damage = base_damage
+
+	-- If the caster has a scepter, improve stack-based damage and cooldown
+	if caster:HasScepter() then
+		local cdr = 0
+		local caster_cdr = caster:GetCooldownReduction()
+		hook_damage = hook_damage + light_hook_stacks * damage_scepter
+		local hook_cooldown = math.max(self:GetCooldown(self:GetLevel()) - cooldown_scepter * sharp_hook_stacks, cooldown_cap_scepter)
+		self:EndCooldown()
+		if caster_cdr and caster_cdr ~= 0 then
+			cdr = hook_cooldown * caster_cdr / 100
+		end
+		self:StartCooldown(hook_cooldown - cdr)
+	end
+
+	self.nAmountOfHooks = nAmountOfHooks
+	self.hook_damage = hook_damage + sharp_hook_stacks * stack_damage
+	self.max_targets = max_targets
+	--Talent #3: Increase Meat Hook width
+	self.hook_width = hook_width + caster:FindTalentValue("special_bonus_imba_pudge_3", "hook_width")
+	--Talent #5: Increase Meat Hook range
+	self.hook_distance = base_range + light_hook_stacks * stack_range + caster:FindTalentValue("special_bonus_imba_pudge_5", "hook_range") + GetCastRangeIncrease(caster)
+	--Talent #2: Increase Meat Hook speed
+	self.hook_speed = base_speed + light_hook_stacks * stack_speed + caster:FindTalentValue("special_bonus_imba_pudge_2", "hook_speed")
+
+	self.vision_radius = vision_radius
+	self.vision_duration = vision_duration
+
+	-- If another hook is already out, refund mana cost and do nothing
+	if caster.hook_launched then
+		caster:GiveMana(self:GetManaCost(self:GetLevel()))
+		self:EndCooldown()
+		return nil
+	end
+
+	-- Set the hook_launched variable on the caster
+	caster.hook_launched = true
+
+	-- Prevent Pudge from using tps while the hook is out
+	local forbidden_items = {
+		"item_tpscroll",
+		"item_travel_boots",
+		"item_travel_boots_2"
+	}
+
+	for i = 0, 5 do
+		local current_item = caster:GetItemInSlot(i)
+		local should_mute = false
+
+		-- If this item is forbidden, do not refresh it
+		for _,forbidden_item in pairs(forbidden_items) do
+			if current_item and current_item:GetName() == forbidden_item then
+				should_mute = true
+			end
+		end
+
+		-- Make item inactive
+		if current_item and should_mute then
+			current_item:SetActivated(false)
+		end
+	end
+
+	-- Visually remove the hook from pudge
+	if caster and caster:IsHero() then
+		local hHook = caster:GetTogglableWearable( DOTA_LOADOUT_TYPE_WEAPON )
+		if hHook ~= nil then
+			hHook:AddEffects( EF_NODRAW )
+		end
+	end
+
+	self.vStartPosition = caster:GetAbsOrigin()
+
+	-- Root the caster
+	caster:AddNewModifier( caster, self, "modifier_imba_meat_hook_followthrough", {} )
+
+	EmitSoundOn( "Hero_Pudge.AttackHookExtend", caster)
+
+	--Multiple hooks has been removed, however i'm keeping the code and commenting out what isn't needed anymore (Lindbrum)
+	for i=1,nAmountOfHooks do
+		self.hooks[i] = {}
+		--self.treeTargets[i] = 0
+		self.hooks[i]["vStartPosition"] = caster:GetAbsOrigin()
+		self.hooks[i]["vProjectileLocation"] = self.hooks[i]["vStartPosition"]
+		self.hooks[i]["vDirection"] = (self:GetCursorPosition() - self.hooks[i]["vStartPosition"]):Normalized() * self.hook_distance
+		
+		if self.nAmountOfHooks > 1 then
+			local rotation = 0 --(i - caster:FindTalentValue("special_bonus_imba_pudge_8"))	 * self:GetSpecialValueFor("multiple_hook_rotation")
+			self.hooks[i]["vDirection"] = RotatePosition(Vector(0,0,0), QAngle(0,rotation,0), self.hooks[i]["vDirection"])
+		end
+
+		self.hooks[i]["vDirection"].z = 0.0
+		self.hooks[i]["vTargetPosition"] = self.hooks[i]["vStartPosition"] + self.hooks[i]["vDirection"]
+		local vHookOffset = Vector( 0, 0, 96 )
+		self.hooks[i]["vHookTarget"] = self.hooks[i]["vTargetPosition"] + vHookOffset
+		local vKillswitch = Vector( ( ( self.hook_distance / self.hook_speed ) * 2 ), 0, 0 )
+
+		local info = {
+			Ability = self,
+			vSpawnOrigin = caster:GetAbsOrigin(),
+			vVelocity = self.hooks[i]["vDirection"] /self.hook_distance * self.hook_speed,
+			fDistance = self.hook_distance,
+			fStartRadius = self.hook_width ,
+			fEndRadius = self.hook_width ,
+			Source = caster,
+			iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_BOTH,
+			iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, --DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_TREE,
+			iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,
+			EffectName = "particles/units/heroes/hero_pudge/pudge_meathook.vpcf",
+			ExtraData = 
+			{
+				nProjectileNumber = i,
+				--special_target = 0 --false
+
+			}
+		}
+
+		self.hooks[i]["hProjectile"] = ProjectileManager:CreateLinearProjectile( info )
+
+		self.hooks[i]["nChainParticleFXIndex"] = ParticleManager:CreateParticle( "particles/units/heroes/hero_pudge/pudge_meathook.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleAlwaysSimulate( self.hooks[i]["nChainParticleFXIndex"])
+		ParticleManager:SetParticleControlEnt( self.hooks[i]["nChainParticleFXIndex"], 0, caster, PATTACH_POINT_FOLLOW, "attach_weapon_chain_rt", caster:GetAbsOrigin() + vHookOffset, true )
+		ParticleManager:SetParticleControl( self.hooks[i]["nChainParticleFXIndex"], 1, self.hooks[i]["vHookTarget"] )
+		ParticleManager:SetParticleControl( self.hooks[i]["nChainParticleFXIndex"], 2, Vector( self.hook_speed, self.hook_distance, self.hook_width ) )
+		ParticleManager:SetParticleControl( self.hooks[i]["nChainParticleFXIndex"], 3, vKillswitch )
+		ParticleManager:SetParticleControl( self.hooks[i]["nChainParticleFXIndex"], 4, Vector( 1, 0, 0 ) )
+		ParticleManager:SetParticleControl( self.hooks[i]["nChainParticleFXIndex"], 5, Vector( 0, 0, 0 ) )
+		ParticleManager:SetParticleControlEnt( self.hooks[i]["nChainParticleFXIndex"], 7, caster, PATTACH_CUSTOMORIGIN, nil, caster:GetAbsOrigin(), true )
+
+		self.hooks[i]["bRetracting"] = false
+		self.hooks[i]["hVictim"] = nil
+		self.hooks[i]["bDiedInHook"] = false
+		self.hooks[i]["unitsHit"] = {}
+	end
+end
+	
+
+--------------------------------------------------------------------------------
+function imba_pudge_meat_hook:OnProjectileHit_ExtraData( hTarget, vLocation,keys )
+	
+	local caster = self:GetCaster()
+	local i = keys.nProjectileNumber
+	--local special_target = keys.special_target
+
+	if not self.hooks[i] then return end	
+	
+	-- RETRACTING
+	if self.hooks[i]["bRetracting"] then		
+		-- Hitting someone on the way back is ignored
+	 	if hTarget then
+			return 
+		end
+		-- The endpoint has been reached. Clean up
+		if caster and caster:IsHero() then
+			local hHook = caster:GetTogglableWearable( DOTA_LOADOUT_TYPE_WEAPON )
+			if hHook ~= nil then
+				hHook:RemoveEffects( EF_NODRAW )								
+			end			
+			StopSoundOn( "Hero_Pudge.AttackHookRetract", caster)
+			StopSoundOn( "Hero_Pudge.AttackHookExtend", caster)
+			StopSoundOn( "Hero_Pudge.AttackHookRetractStop", caster)			
+		end
+
+		if self.hooks[i]["unitsHit"] and #self.hooks[i]["unitsHit"] > 0 then
+			for k,v in pairs(self.hooks[i]["unitsHit"]) do
+				if IsValidEntity(v) and not v:IsRune() then --would return errors on runes
+					v:RemoveModifierByName( "modifier_imba_meat_hook" )
+					--Remove the Rupture effect from Talent #7
+					if caster:HasTalent("special_bonus_imba_pudge_7") then
+						ParticleManager:DestroyParticle(v.RuptureFX, true)
+						ParticleManager:ReleaseParticleIndex(v.RuptureFX)
+					end
+
+					v:SetUnitOnClearGround()
+				end
+			end
+		end
+		--self.hooks[i]["unitsHit"] = nil
+		ParticleManager:DestroyParticle( self.hooks[i]["nChainParticleFXIndex"], true )
+		ParticleManager:ReleaseParticleIndex( self.hooks[i]["nChainParticleFXIndex"] )
+		EmitSoundOn( "Hero_Pudge.AttackHookRetractStop", caster )
+
+		self.hooks[i] = nil
+
+		-- Allow Meat Hook to be launched again
+		caster.hook_launched = false
+		return
+	end
+
+	-- Here the hook always moves forward and has a target. The impact is handled here.
+	if hTarget then
+		-- You can't pull yourself or Juggernaut ward.
+		if hTarget == caster or (not hTarget:IsRune() and hTarget:GetUnitName() == "npc_imba_juggernaut_healing_ward") then
+			return
+		end
+
+		if not self.targets[hTarget] then -- Storing the targets so it won't get handled again
+			-- If it is a tree or Jugg's healing ward or is near the fountain, do nothing	
+			if hTarget.IsStanding or IsNearEnemyFountain(hTarget:GetAbsOrigin(), caster:GetTeamNumber(), 1200) then 
+			else
+				if not hTarget:IsRune() then --it's NOT a rune
+					EmitSoundOn( "Hero_Pudge.AttackHookImpact", hTarget )
+					hTarget:AddNewModifier( caster, self, "modifier_imba_meat_hook", {duration = 1.5} )
+					self.targets[hTarget] = i
+					--If it's an enemy
+					if hTarget:GetTeamNumber() ~= caster:GetTeamNumber() then
+						--local bonusTreeDamage = self.treeTargets[i] * self:GetCaster():FindTalentValue("special_bonus_imba_pudge_6")
+						--[[local damage = 
+						{
+							victim = hTarget,
+							attacker = self:GetCaster(),
+							damage = bonusTreeDamage,
+							damage_type = DAMAGE_TYPE_PHYSICAL,		
+							ability = self
+						}
+						ApplyDamage( damage )]]
+						local damage = 
+						{
+							victim = hTarget,
+							attacker = caster,
+							damage = self.hook_damage,
+							damage_type = DAMAGE_TYPE_PURE,		
+							ability = self
+						}
+						ApplyDamage( damage )
+
+						if not hTarget:IsAlive() then
+							self.hooks[i]["bDiedInHook"] = true
+						end
+
+						if not hTarget:IsMagicImmune() then
+							hTarget:Interrupt()
+						end
+
+						local nFXIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_pudge/pudge_meathook_impact.vpcf", PATTACH_CUSTOMORIGIN, hTarget )
+						ParticleManager:SetParticleControlEnt( nFXIndex, 0, hTarget, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true )
+						ParticleManager:ReleaseParticleIndex( nFXIndex )
+
+					end
+				else --it's a rune
+					SendOverheadEventMessage(nil, OVERHEAD_ALERT_GOLD, hTarget, 0, nil)
+
+				end
+
+				
+			end
+
+			AddFOWViewer( caster:GetTeamNumber(), hTarget:GetOrigin(), self.vision_radius, self.vision_duration, false )
+
+			table.insert(self.hooks[i]["unitsHit"], hTarget)
+		end
+	end
+	-- Check if the hook should retract
+	
+	if not hTarget or #self.hooks[i]["unitsHit"] >= self.max_targets or (self.targets[hTarget] == i and hTarget:GetTeamNumber() == caster:GetTeamNumber()) then
+		
+		if self.hooks[i]["hProjectile"] then
+			ProjectileManager:DestroyLinearProjectile(self.hooks[i]["hProjectile"])
+		end
+		local vHookOffset = Vector( 0, 0, 96 )
+		if not self.hooks[i]["unitsHit"] or #self.hooks[i]["unitsHit"] == 0  then 
+	
+			ParticleManager:SetParticleControlEnt( self.hooks[i]["nChainParticleFXIndex"], 1, caster, PATTACH_POINT_FOLLOW, "attach_weapon_chain_rt", caster:GetAbsOrigin() + vHookOffset, true);
+			ParticleManager:SetParticleControl( self.hooks[i]["nChainParticleFXIndex"], 4, Vector( 0, 0, 0 ) )
+			ParticleManager:SetParticleControl( self.hooks[i]["nChainParticleFXIndex"], 5, Vector( 1, 0, 0 ) )
+		else
+	
+			for k,v in pairs(self.hooks[i]["unitsHit"]) do
+	
+				if v ~= nil and (v:IsRune() or not v:IsInvisible() ) then
+					ParticleManager:SetParticleControlEnt( self.hooks[i]["nChainParticleFXIndex"], 1, v, PATTACH_POINT_FOLLOW, "attach_hitloc", v:GetAbsOrigin() + vHookOffset, true )
+					ParticleManager:SetParticleControl( self.hooks[i]["nChainParticleFXIndex"], 4, Vector( 0, 0, 0 ) )
+					ParticleManager:SetParticleControl( self.hooks[i]["nChainParticleFXIndex"], 5, Vector( 1, 0, 0 ) )
+				end			
+			end
+		end
+		self.hooks[i]["bRetracting"] = true		
+		
+		for j = 1,self.nAmountOfHooks do
+			self.bAllRetracting = false
+			if self.hooks[i]["bRetracting"] == false then
+				self.bAllRetracting = false
+				break
+			else
+				self.bAllRetracting = true
+			end
+		end
+
+		if self.bAllRetracting then
+			caster:RemoveModifierByName("modifier_imba_meat_hook_followthrough") --remove root on pudge
+		end
+
+		local vHookPos = self.hooks[i]["vProjectileLocation"]
+		local flPad = caster:GetPaddedCollisionRadius()
+		if hTarget ~= nil then
+			vHookPos = hTarget:GetAbsOrigin()
+			if not hTarget:IsRune() then
+				flPad = flPad + hTarget:GetPaddedCollisionRadius()
+			end
+		end
+		--Missing: Setting target facing angle
+		local vVelocity = self.hooks[i]["vStartPosition"] - vHookPos
+		vVelocity.z = 0.0
+	
+		local flDistance = vVelocity:Length2D()-- - flPad
+		vVelocity = vVelocity:Normalized() * self.hook_speed
+	
+		self.hooks[i]["vDirection"] = self.hooks[i]["vDirection"] * -1
+		local info = 
+		{
+			Ability = self,
+			vSpawnOrigin = vHookPos,
+			vVelocity = self.hooks[i]["vDirection"] ,
+			fDistance = flDistance-100,
+			Source = caster,
+			EffectName =  "particles/units/heroes/hero_pudge/pudge_meathook.vpcf",
+			--iUnitTargetType = DOTA_UNIT_TARGET_TREE,
+			ExtraData = 
+			{
+				nProjectileNumber = i,
+				--special_target = special_target
+			}
+		}
+		
+		self.hooks[i]["hProjectile"] = ProjectileManager:CreateLinearProjectile( info )
+	end
+
+	if caster:IsAlive() then
+		caster:RemoveGesture( ACT_DOTA_OVERRIDE_ABILITY_1 );
+		caster:StartGesture( ACT_DOTA_CHANNEL_ABILITY_1 );
+	end
+end
+
+
+--------------------------------------------------------------------------------
+
+function imba_pudge_meat_hook:OnProjectileThink_ExtraData(vLocation,keys)
+
+	local caster = self:GetCaster()
+	local i = keys.nProjectileNumber
+	if not self.hooks[i] then return end
+
+	--Tree will damage grabbed units (OLD TALENT)
+
+	--[[if caster:FindTalentValue("special_bonus_imba_pudge_6") ~= 0 then
+		local trees = GridNav:GetAllTreesAroundPoint(vLocation,self.hook_width,false)
+		for _,tree in pairs(trees) do
+			if tree:IsStanding() then
+				tree:CutDown(self:GetCaster():GetTeamNumber())
+				self.treeTargets[i] = self.treeTargets[i] + 1
+			else
+				table.remove(trees, tree)
+			end
+		end
+	end]]
+
+	--When going forward
+	if not self.hooks[i]["bRetracting"] then
+		local location = vLocation
+		local radius = self.hook_width
+		local runes = {
+				"models/props_gameplay/rune_goldxp.vmdl",
+				"models/props_gameplay/rune_haste01.vmdl",
+				"models/props_gameplay/rune_doubledamage01.vmdl",
+				"models/props_gameplay/rune_regeneration01.vmdl",
+				"models/props_gameplay/rune_arcane.vmdl",
+				"models/props_gameplay/rune_invisibility01.vmdl",
+				"models/props_gameplay/rune_illusion01.vmdl",
+				"models/props_gameplay/rune_frost.vmdl",
+			}
+
+			--check if there are runes to grab
+			for _, ent in pairs(Entities:FindAllInSphere(location, radius)) do
+				for _, model in pairs(runes) do
+					for _, rune in pairs(Entities:FindAllByModel(model)) do
+						if (location - rune:GetAbsOrigin()):Length2D() < radius then
+							--keys.special_target = 1 --true
+							self:OnProjectileHit_ExtraData(rune,location,keys) --grab the rune
+						end
+					end
+				end
+			end
+	end
+	
+	--Drag the targets
+	self.hooks[i]["vProjectileLocation"] = vLocation
+	if self.hooks[i]["unitsHit"] then
+		for k,v in pairs(self.hooks[i]["unitsHit"]) do
+			AddFOWViewer( caster:GetTeamNumber(), v:GetOrigin(), self.vision_radius, 1, false ) --Give vision on the victims
+			local oldPos = v:GetAbsOrigin() --Needed for rupture damage
+			if IsValidEntity(v) or (v == rune) then
+				v:SetAbsOrigin(GetGroundPosition(vLocation,caster))
+			end
+
+			--Talent #7: Grabbed units are ruptured
+			if caster:GetTeamNumber() ~= v:GetTeamNumber() and not v:IsRune() and caster:HasTalent("special_bonus_imba_pudge_7") then
+				local damage_cap = caster:FindTalentValue("special_bonus_imba_pudge_7", "damage_cap")
+				local rupture_damage = caster:FindTalentValue("special_bonus_imba_pudge_7", "movement_damage_pct") / 20
+				local distance_diff = CalculateDistance(oldPos, v)
+
+				if distance_diff < damage_cap then
+					local move_damage = distance_diff * rupture_damage
+					if move_damage > 0 then
+						if not v.is_ruptured then
+							v.is_ruptured = true
+							v.RuptureFX = ParticleManager:CreateParticle("particles/units/heroes/hero_bloodseeker/bloodseeker_rupture.vpcf", PATTACH_POINT_FOLLOW, v)
+							EmitSoundOn("hero_bloodseeker.rupture.cast", v)
+							EmitSoundOn("hero_bloodseeker.rupture", v)
+						end
+						ApplyDamage({victim = v, attacker = caster, damage = move_damage, damage_type = DAMAGE_TYPE_MAGICAL, ability = caster:FindAbilityByName("imba_pudge_meat_hook")})
+					end
+				end
+			end
+
+			if v.RuptureFX then
+				ParticleManager:DestroyParticle(v.RuptureFX, true)
+				ParticleManager:ReleaseParticleIndex(v.RuptureFX)
+			end
+		end
+	end
+end
+
+--------------------------------------------------------------------------------
+
+function imba_pudge_meat_hook:OnOwnerDied()
+	local caster = self:GetCaster()
+	caster:RemoveGesture( ACT_DOTA_OVERRIDE_ABILITY_1 );
+	caster:RemoveGesture( ACT_DOTA_CHANNEL_ABILITY_1 );
+
+	-- Allow again to launch meat hook
+	caster.hook_launched = false
+end	
+
+--------------------------------------------------------------------------------
+
+function imba_pudge_meat_hook:OnHeroLevelUp()
+	local caster = self:GetCaster()
+	local ability = self
+	local sharp_stacks = caster:GetModifierStackCount("modifier_imba_hook_sharp_stack", caster)
+	local light_stacks = caster:GetModifierStackCount("modifier_imba_hook_light_stack", caster)
+	local level = caster:GetLevel()
+	
+	--Talent #1: Increase the total stack count between Swift and Sharp Hook
+	if caster:HasTalent("special_bonus_imba_pudge_1") then
+		level = level + caster:FindTalentValue("special_bonus_imba_pudge_1", "bonus_stacks")
+	end
+
+	-- Check if caster level is greater than twice the amount of stacks and increase the stacks accordingly
+	while level > sharp_stacks + light_stacks do
+		caster:SetModifierStackCount("modifier_imba_hook_sharp_stack", caster, sharp_stacks + 1)
+		caster:SetModifierStackCount("modifier_imba_hook_light_stack", caster, light_stacks + 1)
+		sharp_stacks = sharp_stacks + 1
+		light_stacks = light_stacks + 1
+	end 
+end
+
+--------------------------------------------------------------------------------
+
+function imba_pudge_meat_hook:OnUnStolen()
+	local caster = self:GetCaster()
+--remove swift and sharp hook modifiers
+	if not caster:FindAbilityByName("imba_pudge_meat_hook") then
+			caster:RemoveModifierByName("modifier_imba_hook_sharp_stack")
+			caster:RemoveModifierByName("modifier_imba_hook_light_stack")
+			return nil
+	end
+-- Allow the stealer to launch again the hook later
+	caster.hook_launched = false
+end
+
+--------------------------------------------------------------------------------
+--Meat hook grab debuff
+
+modifier_imba_meat_hook = class({})
+--------------------------------------------------------------------------------
+
+function modifier_imba_meat_hook:IsDebuff()
+	return true
+end
+
+--------------------------------------------------------------------------------
+
+function modifier_imba_meat_hook:IsStunDebuff()
+	return true
+end
+
+--------------------------------------------------------------------------------
+
+function modifier_imba_meat_hook:RemoveOnDeath()
+	return false
+end
+--------------------------------------------------------------------------------
+
+function modifier_imba_meat_hook:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
+	}
+
+	return funcs
+end
+
+--------------------------------------------------------------------------------
+
+function modifier_imba_meat_hook:GetOverrideAnimation( params )
+	return ACT_DOTA_FLAIL
+end
+
+--------------------------------------------------------------------------------
+
+function modifier_imba_meat_hook:CheckState()
+	--Stun if it's an enemy and isn't magic immune
+	if IsServer() then
+		if self:GetCaster() ~= nil and self:GetParent() ~= nil then
+			if self:GetCaster():GetTeamNumber() ~= self:GetParent():GetTeamNumber() and ( not self:GetParent():IsMagicImmune() ) then
+				local state = 
+				{
+					[MODIFIER_STATE_STUNNED] = true,
+				}
+
+				return state
+			end
+		end
+	end
+
+	--Root if it's an ally
+	local state = 
+	{
+		[MODIFIER_STATE_ROOTED] = true,
+	}
+
+	return state
+end
+
+modifier_imba_meat_hook_followthrough = class({})
+
+--------------------------------------------------------------------------------
+
+function modifier_imba_meat_hook_followthrough:IsHidden()
+	return true
+end
+
+--------------------------------------------------------------------------------
+
+function modifier_imba_meat_hook_followthrough:CheckState()
+	local state = 
+	{
+		[MODIFIER_STATE_STUNNED] = true,
+	}
+	return state
+end
+
+--------------------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------
+----------------------SHARP HOOK-------------------------
+---------------------------------------------------------
+LinkLuaModifier("modifier_imba_sharp_hook", "hero/hero_pudge.lua",LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_hook_sharp_stack", "hero/hero_pudge.lua",LUA_MODIFIER_MOTION_NONE)
+imba_pudge_sharp_hook = imba_pudge_sharp_hook or class({})
+
+function imba_pudge_sharp_hook:GetAbilityTextureName()
+	return "custom/pudge_sharp_hook"
+end
+
+function imba_pudge_sharp_hook:GetIntrinsicModifierName()
+	return "modifier_imba_hook_sharp_stack"
+end
+
+function imba_pudge_sharp_hook:ResetToggleOnRespawn() return true end
+
+function imba_pudge_sharp_hook:OnToggle()
+
+	local caster = self:GetCaster()
+	local ability = self
+	local ability_hook = caster:FindAbilityByName("imba_pudge_meat_hook")
+	local ability_swift = caster:FindAbilityByName("imba_pudge_light_hook")
+	local modifier_sharp = caster:FindModifierByName("modifier_imba_hook_sharp_stack")
+	local sharp_hook_stacks = caster:GetModifierStackCount("modifier_imba_hook_sharp_stack", caster)
+	local modifier_light = caster:FindModifierByName("modifier_imba_hook_light_stack")
+	local light_hook_stacks = caster:GetModifierStackCount("modifier_imba_hook_light_stack", caster)
+
+	local toggle_state = ability_swift:GetToggleState()
+
+	--if Toggling on
+	if ability:GetToggleState() then
+
+		--Toggle off Swift Hook
+		if toggle_state then
+			ability_swift:ToggleAbility()
+		end
+
+
+		-- If there are no stacks of Light Hook, do nothing and toggle the skill off
+		if not light_hook_stacks or light_hook_stacks == 0 then
+			ability:ToggleAbility()
+			return nil
+		end
+
+		-- If not, start transferring stacks
+		caster:AddNewModifier(caster, ability, "modifier_imba_sharp_hook", {})
+
+	else --if toggling off
+		caster:RemoveModifierByName("modifier_imba_sharp_hook") --Stop transferring
+	end
+
+	
+
+end
+
+--Stack transfer modifier (Swift -> Sharp)
+modifier_imba_sharp_hook = modifier_imba_sharp_hook or class({})
+
+function modifier_imba_sharp_hook:IsDebuff() return false end
+function modifier_imba_sharp_hook:IsHidden() return true end
+function modifier_imba_sharp_hook:IsPurgable() return false end
+
+function modifier_imba_sharp_hook:OnCreated()
+	if IsServer() then
+		--Ability properties
+		self.ability = self:GetAbility()
+		self.parent = self:GetParent()
+		self.ability_hook = self.parent:FindAbilityByName("imba_pudge_meat_hook")
+		self.ability_swift = self.parent:FindAbilityByName("imba_pudge_light_hook")
+		self.modifier_sharp = self.parent:FindModifierByName("modifier_imba_hook_sharp_stack")
+		self.sharp_hook_stacks = self.parent:GetModifierStackCount("modifier_imba_hook_sharp_stack", self.parent)
+		self.modifier_light = self.parent:FindModifierByName("modifier_imba_hook_light_stack")
+		self.light_hook_stacks = self.parent:GetModifierStackCount("modifier_imba_hook_light_stack", self.parent)
+
+		--Ability Specials
+		self.interval_time = self.ability:GetSpecialValueFor("think_interval")
+
+
+		--start thinking
+		self:StartIntervalThink(self.interval_time)
+	end
+end
+
+function modifier_imba_sharp_hook:OnIntervalThink()
+	if IsServer() then
+		--Do nothing if there are no more stacks to transfer
+		if self.light_hook_stacks > 0 then
+			--Remove a stack of Swift Hook
+			self.parent:SetModifierStackCount("modifier_imba_hook_light_stack",self.parent,self.light_hook_stacks - 1)
+			self.light_hook_stacks = self.light_hook_stacks - 1
+
+			-- Add a stack of Sharp Hook
+			self.parent:SetModifierStackCount("modifier_imba_hook_sharp_stack",self.parent,self.sharp_hook_stacks + 1)
+			self.sharp_hook_stacks = self.sharp_hook_stacks + 1
+		end
+
+	end
+end
+
+
+--Sharp hook stacks modifier
+modifier_imba_hook_sharp_stack = modifier_imba_hook_sharp_stack or class({})
+
+function modifier_imba_hook_sharp_stack:IsDebuff() return false end
+function modifier_imba_hook_sharp_stack:IsHidden() return false end
+function modifier_imba_hook_sharp_stack:IsPermanent() return true end
+function modifier_imba_hook_sharp_stack:IsPurgable() return false end
+
+function modifier_imba_hook_sharp_stack:OnCreated()
+	if IsServer() then
+		self.caster = self:GetCaster()
+		self.ability = self:GetAbility()
+		self.parent = self:GetParent()
+
+		local initial_stacks = math.floor(self.parent:GetLevel() / 2) + 1
+
+		--initialize the Sharp Hook stacks count to half the hero level
+		self.parent:SetModifierStackCount("modifier_imba_hook_sharp_stack", self.parent, initial_stacks)
+	end
+end
+
+
+---------------------------------------------------------
+----------------------SWIFT HOOK-------------------------
+---------------------------------------------------------
+LinkLuaModifier("modifier_imba_light_hook", "hero/hero_pudge.lua",LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_hook_light_stack", "hero/hero_pudge.lua",LUA_MODIFIER_MOTION_NONE)
+imba_pudge_light_hook = imba_pudge_light_hook or class({})
+
+function imba_pudge_light_hook:GetAbilityTextureName()
+	return "custom/pudge_light_hook"
+end
+
+function imba_pudge_light_hook:GetIntrinsicModifierName()
+	return "modifier_imba_hook_light_stack"
+end
+
+function imba_pudge_light_hook:ResetToggleOnRespawn() return true end
+
+function imba_pudge_light_hook:OnToggle()
+
+	local caster = self:GetCaster()
+	local ability = self
+	local ability_hook = caster:FindAbilityByName("imba_pudge_meat_hook")
+	local ability_sharp = caster:FindAbilityByName("imba_pudge_sharp_hook")
+	local modifier_sharp = caster:FindModifierByName("modifier_imba_hook_sharp_stack")
+	local sharp_hook_stacks = caster:GetModifierStackCount("modifier_imba_hook_sharp_stack", caster)
+	local modifier_light = caster:FindModifierByName("modifier_imba_hook_light_stack")
+	local light_hook_stacks = caster:GetModifierStackCount("modifier_imba_hook_light_stack", caster)
+
+	local toggle_state = ability_sharp:GetToggleState()
+
+	--if Toggling on
+	if ability:GetToggleState() then
+
+		--Toggle off Sharp Hook
+		if toggle_state then
+			ability_sharp:ToggleAbility()
+		end
+
+
+		-- If there are no stacks of Sharp Hook, do nothing and toggle the skill off
+		if not sharp_hook_stacks or sharp_hook_stacks == 0 then
+			ability:ToggleAbility()
+			return nil
+		end
+
+		-- If not, start transferring stacks
+		caster:AddNewModifier(caster, ability, "modifier_imba_light_hook", {})
+
+	else --if toggling off
+		caster:RemoveModifierByName("modifier_imba_light_hook") --Stop transferring
+	end
+
+end
+
+--Stack transfer modifier (Sharp -> Swift)
+modifier_imba_light_hook = modifier_imba_light_hook or class({})
+
+function modifier_imba_light_hook:IsDebuff() return false end
+function modifier_imba_light_hook:IsHidden() return true end
+function modifier_imba_light_hook:IsPurgable() return false end
+
+function modifier_imba_light_hook:OnCreated()
+	if IsServer() then
+		--Ability properties
+		self.ability = self:GetAbility()
+		self.caster = self:GetCaster()
+		self.ability_hook = self.caster:FindAbilityByName("imba_pudge_meat_hook")
+		self.ability_swift = self.caster:FindAbilityByName("imba_pudge_light_hook")
+		self.modifier_sharp = self.caster:FindModifierByName("modifier_imba_hook_sharp_stack")
+		self.sharp_hook_stacks = self.caster:GetModifierStackCount("modifier_imba_hook_sharp_stack", self.parent)
+		self.modifier_light = self.caster:FindModifierByName("modifier_imba_hook_light_stack")
+		self.light_hook_stacks = self.caster:GetModifierStackCount("modifier_imba_hook_light_stack", self.parent)
+
+		--Ability Specials
+		self.interval_time = self.ability:GetSpecialValueFor("think_interval")
+
+
+		--start thinking
+		self:StartIntervalThink(self.interval_time)
+	end
+
+end
+
+function modifier_imba_light_hook:OnIntervalThink()
+	if IsServer() then
+		--Do nothing if there are no more stacks to transfer
+		if self.sharp_hook_stacks > 0 then
+			--Remove a stack of Sharp Hook
+			self.caster:SetModifierStackCount("modifier_imba_hook_sharp_stack",self.caster,self.sharp_hook_stacks - 1)
+			self.sharp_hook_stacks = self.sharp_hook_stacks - 1
+
+			-- Add a stack of Swift Hook
+			self.caster:SetModifierStackCount("modifier_imba_hook_light_stack",self.caster,self.light_hook_stacks + 1)
+			self.light_hook_stacks = self.light_hook_stacks + 1	
+		end
+
+	end
+end
+
+
+--Swift hook stacks modifier
+modifier_imba_hook_light_stack = modifier_imba_hook_light_stack or class({})
+
+function modifier_imba_hook_light_stack:IsDebuff() return false end
+function modifier_imba_hook_light_stack:IsHidden() return false end
+function modifier_imba_hook_light_stack:IsPermanent() return true end
+function modifier_imba_hook_light_stack:IsPurgable() return false end
+
+function modifier_imba_hook_light_stack:OnCreated()
+	if IsServer() then
+		self.caster = self:GetCaster()
+		self.ability = self:GetAbility()
+		self.parent = self:GetParent()
+
+		local initial_stacks = math.floor(self.parent:GetLevel() / 2) + 1
+
+		--initialize the Swift Hook stacks count to half the hero level
+		self.parent:SetModifierStackCount("modifier_imba_hook_light_stack", self.parent, initial_stacks)
+	end
+end
+
+---------------------------------------------------------
+------------------- DISMEMBER ---------------------------
+---------------------------------------------------------
+imba_pudge_dismember = imba_pudge_dismember or class({})
+
+LinkLuaModifier( "modifier_dismember", "hero/hero_pudge" ,LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_dismember_lifesteal", "hero/hero_pudge" ,LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_dismember_dummy", "hero/hero_pudge" ,LUA_MODIFIER_MOTION_NONE )
+LinkLuaModifier( "modifier_dismember_disarm", "hero/hero_pudge" ,LUA_MODIFIER_MOTION_NONE )
+
+function imba_pudge_dismember:GetAbilityTextureName()
+   return "pudge_dismember"
+end
+
+function imba_pudge_dismember:IsHiddenWhenStolen() return false end
+function imba_pudge_dismember:GetConceptRecipientType()
+	return DOTA_SPEECH_USER_ALL
+end
+
+function imba_pudge_dismember:GetIntrinsicModifierName()
+	return "modifier_dismember_dummy"
+end
+
+--------------------------------------------------------------------------------
+
+function imba_pudge_dismember:SpeakTrigger()
+	return DOTA_ABILITY_SPEAK_CAST
+end
+
+--------------------------------------------------------------------------------
+
+function imba_pudge_dismember:GetChannelTime()
+	self.creep_duration = self:GetSpecialValueFor( "creep_duration" ) + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_7")
+	self.hero_duration = self:GetSpecialValueFor( "hero_duration" ) + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_7")
+
+	local time = self.hero_duration
+	if self:GetCaster():GetModifierStackCount("modifier_dismember_dummy",self:GetCaster()) == 1 then
+		time = self.creep_duration
+	end
+
+	if self:GetCaster():HasTalent("special_bonus_imba_pudge_8") then
+		time = time + self:GetCaster():FindTalentValue("special_bonus_imba_pudge_8", "dismember_duration")
+	end
+	return time
+end
+
+--------------------------------------------------------------------------------
+
+function imba_pudge_dismember:OnAbilityPhaseStart()
+	if IsServer() then
+		self.hVictim = self:GetCursorTarget()
+	end
+	return true
+end
+
+--------------------------------------------------------------------------------
+
+function imba_pudge_dismember:OnSpellStart()
+	if self.hVictim == nil then
+		return
+	end
+	if self.hVictim:TriggerSpellAbsorb( self ) then
+		self.hVictim = nil
+		self:GetCaster():Interrupt()
+	else
+		self.startTime = GameRules:GetGameTime()
+		self.hVictim:AddNewModifier( self:GetCaster(), self, "modifier_dismember", { duration = self:GetChannelTime() } )
+		self:GetCaster():AddNewModifier( self:GetCaster(), self, "modifier_dismember_lifesteal", { duration = self:GetChannelTime() } )
+		self.hVictim:Interrupt()
+	end
+end
+
+--------------------------------------------------------------------------------
+
+function imba_pudge_dismember:OnChannelFinish( bInterrupted )
+	if self.hVictim ~= nil then
+		self.hVictim:RemoveModifierByName( "modifier_dismember" )
+		self:GetCaster():RemoveModifierByName( "modifier_dismember_lifesteal")
+		if self:GetCaster():FindTalentValue("special_bonus_imba_pudge_7") ~= 0 then
+			self.hVictim:AddNewModifier(self:GetCaster(),self,"modifier_dismember_disarm",{duration = GameRules:GetGameTime() - self.startTime})
+		end
+	end
+end
+
+--------------------------------------------------------------------------------
+modifier_dismember_disarm = class({})	
+function modifier_dismember_disarm:IsHidden() return false end
+function modifier_dismember_disarm:IsDebuff() return true end
+function modifier_dismember_disarm:IsPurgable() return false end
+function modifier_dismember_disarm:IsPurgeException() return false end
+
+
+-- Modifier particle
+function modifier_dismember_disarm:GetEffectName()
+	return "particles/items2_fx/heavens_halberd.vpcf"
+end
+
+function modifier_dismember_disarm:GetEffectAttachType()
+	return PATTACH_ABSORIGIN_FOLLOW
+end
+
+-- Declare modifier states
+function modifier_dismember_disarm:CheckState()
+	local states = {
+		[MODIFIER_STATE_DISARMED] = true,
+	}
+	return states
+end
+
+modifier_dismember_dummy = class({})
+function modifier_dismember_dummy:IsDebuff() return false end
+function modifier_dismember_dummy:IsHidden() return true end
+function modifier_dismember_dummy:IsPurgable() return false end
+function modifier_dismember_dummy:IsPurgeException() return false end
+function modifier_dismember_dummy:IsStunDebuff() return false end
+function modifier_dismember_dummy:RemoveOnDeath() return false end
+
+function modifier_dismember_dummy:DeclareFunctions()
+	local decFuns =
+	{
+		MODIFIER_EVENT_ON_ABILITY_START,		
+	}
+	return decFuns
+end
+
+function modifier_dismember_dummy:OnAbilityStart(keys)
+	if IsServer() then
+		if keys.unit == self:GetCaster() and keys.ability == self:GetAbility() then
+			if keys.target:IsConsideredHero() then
+				self:SetStackCount(0)
+			else
+				self:SetStackCount(1)
+			end
+		end
+	end
+end
+
+modifier_dismember = class({})
+
+--------------------------------------------------------------------------------
+
+function modifier_dismember:IsDebuff()
+	return true
+end
+
+--------------------------------------------------------------------------------
+
+function modifier_dismember:IsStunDebuff()
+	return true
+end
+
+--------------------------------------------------------------------------------
+
+function modifier_dismember:OnCreated( kv )
+	self.dismember_damage = self:GetAbility():GetSpecialValueFor( "dismember_damage" )
+	self.tick_rate = self:GetAbility():GetSpecialValueFor( "tick_rate" )
+	self.strength_damage = self:GetAbility():GetSpecialValueFor( "strength_damage" )/100
+
+	if IsServer() then
+		self:GetParent():InterruptChannel()
+		self:OnIntervalThink()
+		local cast_responses = {"Imba.PudgeDismember1", "Imba.PudgeDismember2", "Imba.PudgeDismember3", "Imba.PudgeNom"}
+		self.castResponse = cast_responses[math.random(1, #cast_responses)]
+		EmitSoundOn(self.castResponse, self:GetCaster())
+		self:StartIntervalThink( self.tick_rate )
+	end
+end
+
+--------------------------------------------------------------------------------
+
+function modifier_dismember:OnDestroy()
+	if IsServer() then
+		self:GetCaster():InterruptChannel()
+		if self.castResponse then
+			StopSoundEvent(self.castResponse, self:GetCaster())
+		end
+	end
+end
+
+--------------------------------------------------------------------------------
+
+function modifier_dismember:OnIntervalThink()
+	if IsServer() then
+		local flDamage = self.dismember_damage
+		flDamage = flDamage + ( self:GetCaster():GetStrength() * self.strength_damage )
+		--flDamage = self:GetParent():GetMagicalResistance() * flDamage
+		local damage = {
+			victim = self:GetParent(),
+			attacker = self:GetCaster(),
+			damage = flDamage,
+			damage_type = DAMAGE_TYPE_MAGICAL,
+			ability = self:GetAbility(),
+			--damage_flags  = DOTA_DAMAGE_FLAG_IGNORES_MAGIC_ARMOR,
+		}
+		ApplyDamage( damage )
+		
+		EmitSoundOn( "Hero_Pudge.Dismember", self:GetParent() )		
+	end
+end
+
+--------------------------------------------------------------------------------
+
+function modifier_dismember:CheckState()
+	if self:GetParent():HasModifier("modifier_slark_shadow_dance") then
+		local state = {[MODIFIER_STATE_STUNNED] = true}
+		return state
+	end
+
+	local state = {
+		[MODIFIER_STATE_STUNNED] = true,
+		[MODIFIER_STATE_INVISIBLE] = false,
+	}
+
+	return state
+end
+
+--------------------------------------------------------------------------------
+
+function modifier_dismember:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
+	}
+
+	return funcs
+end
+
+--------------------------------------------------------------------------------
+
+function modifier_dismember:GetOverrideAnimation( params )
+	return ACT_DOTA_DISABLED
+end
+
+--------------------------------------------------------------------------------
+
+modifier_dismember_lifesteal = class({})
+function modifier_dismember_lifesteal:IsDebuff() return false end
+function modifier_dismember_lifesteal:IsHidden() return true end
+function modifier_dismember_lifesteal:IsPurgable() return false end
+function modifier_dismember_lifesteal:IsPurgeException() return false end
+function modifier_dismember_lifesteal:IsStunDebuff() return true end
+function modifier_dismember_lifesteal:RemoveOnDeath() return true end
+function modifier_dismember_lifesteal:AllowIllusionDuplicate() return false end
+	
+function modifier_dismember_lifesteal:GetModifierSpellLifesteal()
+	return self:GetAbility():GetSpecialValueFor("spell_lifesteal")
+end
+--]]
+
+--[[ 	Authors: Pizzalol and D2imba
+		Date: 10.07.2015				]]
+
+
 
 function Rot( keys )
 	local caster = keys.caster
@@ -1884,7 +2401,6 @@ function Rot( keys )
 
 	-- Damage the caster
 	ApplyDamage({attacker = caster, victim = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
-
 
 	-- Deal damage and apply slow
 	local units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
@@ -2124,3 +2640,22 @@ function DismemberEnd( keys )
 	end
 end
 --]]
+
+--[[function IsRune(entity)
+    local runes = {
+                "models/props_gameplay/rune_goldxp.vmdl",
+                "models/props_gameplay/rune_haste01.vmdl",
+                "models/props_gameplay/rune_doubledamage01.vmdl",
+                "models/props_gameplay/rune_regeneration01.vmdl",
+                "models/props_gameplay/rune_arcane.vmdl",
+                "models/props_gameplay/rune_invisibility01.vmdl",
+                "models/props_gameplay/rune_illusion01.vmdl",
+                "models/props_gameplay/rune_frost.vmdl",
+            }
+    for _, model in pairs(runes) do
+        if entity:GetModelName() == model then
+            return true
+        end
+    end
+    return false
+end]]
