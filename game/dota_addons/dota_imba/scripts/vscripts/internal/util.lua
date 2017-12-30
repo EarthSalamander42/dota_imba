@@ -994,7 +994,7 @@ function ReconnectPlayer(player_id)
 end
 
 function DonatorCompanion(hero, model)
-if hero:GetPlayerID() == -1 or hero:IsIllusion() or model == nil then return end
+if hero:GetPlayerID() == -1 or hero:IsIllusion() then return end
 local summon_point = Entities:FindByName(nil, "ent_dota_fountain_good"):GetAbsOrigin()
 local color = hero:GetFittingColor()
 
@@ -1244,7 +1244,7 @@ function PickupRune(rune_name, unit, bActiveByBottle)
 			end
 		end
 	end
-
+	
 	if not store_in_bottle then
 		if rune_name == "bounty" then
 			-- Bounty rune parameters
@@ -1262,7 +1262,7 @@ function PickupRune(rune_name, unit, bActiveByBottle)
 
 			-- Adjust value for lobby options
 			local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
-			current_bounty = current_bounty * (custom_gold_bonus / 100)
+			current_bounty = current_bounty * (1 + custom_gold_bonus * 0.01)
 
 			-- Grant the unit experience
 			unit:AddExperience(current_xp, DOTA_ModifyXP_CreepKill, false, true)
@@ -1342,18 +1342,31 @@ function PickupRune(rune_name, unit, bActiveByBottle)
 			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Frost", unit)
 		end
 
-		CustomGameEventManager:Send_ServerToTeam(unit:GetTeam(), "create_custom_toast", {
-			type = "generic",
-			text = "#custom_toast_ActivatedRune",
-			player = unit:GetPlayerID(),
-			runeType = rune_name
-		})
-
---		local gameEvent = {}
---		gameEvent["player_id"] = unit:GetPlayerID()
---		gameEvent["team_number"] = unit:GetTeam()
---		gameEvent["locstring_value"] = "#DOTA_Tooltip_Ability_item_imba_rune_"..rune_name
---		gameEvent["message"] = "#IMBA_custom_rune_"..rune_name
---		FireGameEvent("dota_combat_event_message", gameEvent)
+		local gameEvent = {}
+		gameEvent["player_id"] = unit:GetPlayerID()
+		gameEvent["team_number"] = unit:GetTeamNumber()
+		gameEvent["locstring_value"] = "#DOTA_Tooltip_Ability_item_imba_rune_"..rune_name
+		gameEvent["message"] = "#IMBA_custom_rune_"..rune_name
+		FireGameEvent("dota_combat_event_message", gameEvent)
 	end
+end
+
+
+function CBaseEntity:IsRune()
+	local runes = {
+                "models/props_gameplay/rune_goldxp.vmdl",
+                "models/props_gameplay/rune_haste01.vmdl",
+                "models/props_gameplay/rune_doubledamage01.vmdl",
+                "models/props_gameplay/rune_regeneration01.vmdl",
+                "models/props_gameplay/rune_arcane.vmdl",
+                "models/props_gameplay/rune_invisibility01.vmdl",
+                "models/props_gameplay/rune_illusion01.vmdl",
+                "models/props_gameplay/rune_frost.vmdl",
+            }
+    for _, model in pairs(runes) do
+        if self:GetModelName() == model then
+            return true
+        end
+    end
+    return false
 end
