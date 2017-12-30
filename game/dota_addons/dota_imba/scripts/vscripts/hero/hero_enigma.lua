@@ -708,7 +708,7 @@ function modifier_imba_enigma_black_hole_thinker:OnCreated(keys)
 		ParticleManager:SetParticleControl(self.pfx_ulti, 3, self:GetParent():GetAbsOrigin())
 	end
 	local buff = self:GetCaster():FindModifierByName("modifier_imba_singularity")
-	buff:SetStackCount(buff:GetStackCount() + #enemies)
+	if not keys.talent then buff:SetStackCount(buff:GetStackCount() + #enemies) end
 	EmitSoundOn(self.sound, self:GetParent())
 	self.particle = ParticleManager:CreateParticle(pfx_name, PATTACH_WORLDORIGIN, nil)
 	ParticleManager:SetParticleControl(self.particle, 0, Vector(self:GetParent():GetAbsOrigin().x,self:GetParent():GetAbsOrigin().y,self:GetParent():GetAbsOrigin().z+64))
