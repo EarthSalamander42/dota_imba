@@ -18,24 +18,28 @@
 	"DOTA_Custom8"    								"粉色"
 	
 	"addonname"										"Dota IMBA"
-
-	"imba_confirm_pick_button"															"选择此英雄"
-	"imba_hero_name_filler"																"选择  "
-	"imba_strength_hero_pick_list_title"												"力量英雄"
-	"imba_agility_hero_pick_list_title"													"敏捷英雄"
-	"imba_intelligence_hero_pick_list_title"											"智力英雄"
-	"imba_custom_hero_pick_list_title"													"原创英雄"
-
-	"imba_waiting_for_other_players_button"												"请等待其他玩家"
-	"imba_loading_heroes_button"														"正在加载游戏"
-	"imba_enter_game_button"															"开始游戏！"
-
+	
 	"ChatTeam"																			"[队友]"
 	"ChatPlaceholder"																	"在此处输入聊天内容。"
 	"ChatLine" 																			"<b><font color='{s:color}'>{s:name}</font></b>: {s:message}"
 	"ChatLinePass" 																		"<b><font color='{s:color}'>{s:name}</font></b>: <font color='gold'>{s:message}</font>"
-	"ChatRandomed" 																		"<b><font color='{s:color}'>{s:name}</font></b> 随机选择了 <font color='gold'>{s:hero}</font>"	
+	"ChatRandomed" 																		"<b><font color='{s:color}'>{s:name}</font></b> 随机选择了 <font color='gold'>{s:hero}</font>"
 
+	"imba_confirm_pick_button"													"选择此英雄"
+	"imba_hero_name_filler"														"选择  "
+	"imba_strength_hero_pick_list_title"											"力量英雄"
+	"imba_agility_hero_pick_list_title"												"敏捷英雄"
+	"imba_intelligence_hero_pick_list_title"											"智力英雄"
+	"imba_custom_hero_pick_list_title"											"原创英雄"
+
+	"imba_waiting_for_other_players_button"										"请等待其他玩家"
+	"imba_loading_heroes_button"												"正在加载游戏"
+	"imba_enter_game_button"													"开始游戏！"
+
+	"imba_radiant_team_title"													"天辉"
+	"imba_dire_team_title"														"夜魇"
+	"average_mmr"															"平均IMBA天梯分："
+	
 	"custom_scoreboard_hero_name_and_desc"			"{s:hero_name}"
 	"scoreboard_tool_tip_mute_player"				"屏蔽聊天和语音"
 	"scoreboard_tool_tip_active_mute_player"		"（已生效）"
@@ -45,6 +49,23 @@
 	"scoreboard_tool_tip_disable_help"				"禁用帮助"
 	"scoreboard_tool_tip_active_disable_help"		"（已生效）"
 	"custom_end_screen_legend_imr"					"IMBA天梯分"
+
+	"custom_toast_CourierKilled"							"{courier_icon} {team_name}信使已被击杀"
+	"custom_toast_CourierRespawned"							"{courier_icon} {team_name}信使已经重生"
+	"custom_toast_GlyphUsed"								"{glyph_icon} {team_name}建筑全面加固"
+	"custom_toast_TeamKilled"								"{team_name} {killed_icon} {victim_name}"
+	"custom_toast_KillStreak"								"{player_name} 正在 {kill_streak}"
+	"custom_toast_KillStreak_Ended"							"{victim_name} 的 {kill_streak} 已被终结"
+	"custom_toast_BottledRune"								"{player_name} 装载了 {rune_name}"
+	"custom_toast_ActivatedRune"							"{player_name} 激活了 {rune_name}"
+	"DOTA_Tooltip_ability_item_imba_rune_arcane"			"超级奥术神符"
+	"DOTA_Tooltip_ability_item_imba_rune_bounty"			"超级赏金神符"
+	"DOTA_Tooltip_ability_item_imba_rune_double_damage"		"超级双倍神符"
+	"DOTA_Tooltip_ability_item_imba_rune_haste"				"超级加速神符"
+	"DOTA_Tooltip_ability_item_imba_rune_illusion"			"超级幻象神符"
+	"DOTA_Tooltip_ability_item_imba_rune_invisibility"		"超级隐形神符"
+	"DOTA_Tooltip_ability_item_imba_rune_regeneration"		"超级恢复神符"
+	"DOTA_Tooltip_ability_item_imba_rune_frost"				"贪婪之魂神符"
 
 	"lag_issues"									"访问IMBA官网"
 
