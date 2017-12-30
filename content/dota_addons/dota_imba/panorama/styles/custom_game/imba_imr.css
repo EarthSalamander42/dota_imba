@@ -541,7 +541,7 @@
 
 .BattlepassRewardLabel {
 	horizontal-align: left;
-	font-size: 13px;
+	font-size: 12px;
 	vertical-align: top;
 	letter-spacing: 1px;
 	align: center center;
@@ -553,7 +553,7 @@
 
 .BattlepassRewardLabelLocked {
 	horizontal-align: left;
-	font-size: 15px;
+	font-size: 12px;
 	vertical-align: top;
 	letter-spacing: 1px;
 	align: center center;
