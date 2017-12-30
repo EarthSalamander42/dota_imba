@@ -10,8 +10,8 @@ function CreateCustomToast(data) {
 	var rowText = '';
 
 	if (data.type === 'kill') {
-		var byNeutrals = data.killerPlayer == null;
-		var isSelfKill = data.victimPlayer === data.killerPlayer & data.roshan == undefined;
+		var byNeutrals = data.killerPlayer == null && data.neutral != null;
+		var isSelfKill = data.victimPlayer === data.killerPlayer & data.roshan == undefined & data.neutral == undefined;
 		var isAllyKill = !byNeutrals && data.victimPlayer != null && Players.GetTeam(data.victimPlayer) === Players.GetTeam(data.killerPlayer) && data.roshan == undefined;
 		var isVictim = data.victimPlayer === Game.GetLocalPlayerID();
 		var isKiller = data.killerPlayer === Game.GetLocalPlayerID();
@@ -65,6 +65,8 @@ function CreateCustomToast(data) {
 		rowText = $.Localize(data.text);
 	}
 
+	$.Msg(data.variables)
+
 	// yet nothing different
 	if (data.firstblood != null) {
 		rowText = rowText.replace('{denied_icon}', "<img class='DeniedIcon'/>").replace('{killed_icon}', "<img class='CombatEventKillIcon'/>").replace('{time_dota}', "<font color='lime'>" + secondsToMS(Game.GetDOTATime(false, false), true) + '</font>');
@@ -79,14 +81,16 @@ function CreateCustomToast(data) {
 	if (data.killerPlayer != null) {
 		rowText = rowText.replace('{killer_name}', CreateHeroElements(data.killerPlayer));
 	}
-		
+
+	if (byNeutrals) {
+		rowText = rowText.replace('{gold}', "");
+	}		
+
 	if (data.victimUnitName)
 		rowText = rowText.replace('{victim_name}', "<font color='red'>" + $.Localize(data.victimUnitName) + '</font>');
 	if (data.team != null)
 		$.Msg("Team: " + data.team)
 		rowText = rowText.replace('{team_name}', "<font color='" + GameUI.CustomUIConfig().team_colors[data.team] + "'>" + GameUI.CustomUIConfig().team_names[data.team] + '</font>');
-	if (data.gold != null)
-		rowText = rowText.replace('{gold}', "<font color='gold'>" + FormatGold(data.gold) + "</font> <img class='CombatEventGoldIcon' />");
 	if (data.glyph != null)
 		rowText = rowText.replace('{glyph_icon}', "<img class='CombatEventGlyphIcon' />");
 	if (data.courier != null)
@@ -95,9 +99,15 @@ function CreateCustomToast(data) {
 		rowText = rowText.replace('{roshan_icon}', "<img class='CombatEventRoshanIcon' />");
 	if (data.runeType != null)
 		rowText = rowText.replace('{rune_name}', "<font color='#" + RUNES_COLOR_MAP[data.runeType] + "'>" + $.Localize('DOTA_Tooltip_ability_item_imba_rune_' + data.runeType) + '</font>');
+	if (data.gold != null && data.gold > 0) {
+		rowText = rowText.replace('{gold}', "<font color='gold'>" + FormatGold(data.gold) + "</font> <img class='CombatEventGoldIcon' />");
+	} else {
+		rowText = rowText.replace('{gold}', "");
+	}
 	if (data.variables)
 		for (var k in data.variables) {
-			rowText = rowText.replace(k, $.Localize(data.variables[k]));
+//			rowText = rowText.replace(k, $.Localize(data.variables[k]));
+			rowText = rowText + ' (' + $.Localize(data.variables[k]) + ")";
 		}
 	if (rowText.indexOf('<img') === -1)
 		row.AddClass('SimpleText');

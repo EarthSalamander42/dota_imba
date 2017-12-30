@@ -84,6 +84,7 @@ DebugPrint("[IMBA] Performing pre-load precache")
 
 	-- Ghost Revenant
 	PrecacheResource("particle", "particles/econ/items/windrunner/windrunner_cape_cascade/windrunner_windrun_slow_cascade.vpcf", context)
+	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_bloodseeker.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_juggernaut.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_pugna.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_visage.vsndevts", context)
@@ -179,6 +180,7 @@ DebugPrint("[IMBA] Performing pre-load precache")
 	PrecacheResource("model_folder", "models/development", context)
 	PrecacheResource("model_folder", "models/creeps", context)
 	PrecacheResource("model_folder", "models/props_gameplay", context)
+	PrecacheResource("model_folder", "models/heroes", context)
 
 	-- Companions
 	PrecacheResource("model_folder", "models/courier/doom_demihero_courier", context)

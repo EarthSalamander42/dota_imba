@@ -230,16 +230,20 @@ function GameMode:GoldFilter( keys )
 
 	local hero = PlayerResource:GetPickedHero(keys.player_id_const)
 
+	-- Ignore negative experience values
+	if keys.gold < 0 then
+		return false
+	end
+
 	-- Hand of Midas gold bonus
 	if hero and hero:HasModifier("modifier_item_imba_hand_of_midas") and keys.gold > 0 then
 		keys.gold = keys.gold * 1.1
 	end
 
 	-- Lobby options adjustment
-	if keys.gold > 0 then
-		local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
-		keys.gold = keys.gold * (custom_gold_bonus / 100)
-	end
+	local game_time = math.max(GameRules:GetDOTATime(false, false), 0)
+	local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
+	keys.gold = keys.gold * (custom_gold_bonus / 100) * (game_time / 100)
 
 	-- Comeback gold gain
 	local team = PlayerResource:GetTeam(keys.player_id_const)
@@ -248,16 +252,16 @@ function GameMode:GoldFilter( keys )
 	end
 
 	-- Show gold earned message??
-	--if hero then
-	--	SendOverheadEventMessage(nil, OVERHEAD_ALERT_GOLD, hero, keys.gold, nil)
-	--end
+--	if hero then
+--		SendOverheadEventMessage(nil, OVERHEAD_ALERT_GOLD, hero, keys.gold, nil)
+--	end
 
 	return true
 end
 
 -- Experience gain filter function
 function GameMode:ExperienceFilter( keys )
-	-- reason_const		1
+	-- reason_const		1 (DOTA_ModifyXP_CreepKill)
 	-- experience		130
 	-- player_id_const	0
 
@@ -268,10 +272,14 @@ function GameMode:ExperienceFilter( keys )
 		return false
 	end
 
-	-- Lobby options adjustment
 	local game_time = math.max(GameRules:GetDOTATime(false, false), 0)
 	local custom_xp_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "exp_multiplier")["1"])
-	keys.experience = keys.experience * (custom_xp_bonus * 0.01) * (1 + game_time * 0.01)
+
+	if keys.reason_const == DOTA_ModifyXP_HeroKill then
+		keys.experience = keys.experience * (custom_xp_bonus / 100)
+	else
+		keys.experience = keys.experience * (custom_xp_bonus / 100) * (1 + game_time / 200)
+	end
 
 	-- Losing team gets huge EXP bonus.
 --	if hero and CustomNetTables:GetTableValue("gamerules", "losing_team") then
@@ -1143,7 +1151,6 @@ function GameMode:OnAllPlayersLoaded()
 	-- IMBA: Game filters setup
 	-------------------------------------------------------------------------------------------------
 
-	GameRules:GetGameModeEntity():SetBountyRunePickupFilter( Dynamic_Wrap(GameMode, "BountyRuneFilter"), self )
 	GameRules:GetGameModeEntity():SetExecuteOrderFilter( Dynamic_Wrap(GameMode, "OrderFilter"), self )
 	GameRules:GetGameModeEntity():SetDamageFilter( Dynamic_Wrap(GameMode, "DamageFilter"), self )
 	GameRules:GetGameModeEntity():SetModifyGoldFilter( Dynamic_Wrap(GameMode, "GoldFilter"), self )

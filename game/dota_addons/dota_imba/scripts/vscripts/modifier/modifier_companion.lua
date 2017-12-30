@@ -26,10 +26,6 @@ function modifier_companion:DeclareFunctions()
 end
 
 function modifier_companion:OnCreated()
-	-- Stacks determine invisibility state:
-	-- 0: not invisible
-	-- 1: invisible
-
 	if IsServer() then
 		self:StartIntervalThink(0.5)
 

@@ -271,7 +271,7 @@ function GameMode:OnGameRulesStateChange(keys)
 			-- calculate levels
 			local xpInfo = {}
 
-			PrintTable(players)
+--			PrintTable(players)
 
 			for k, v in pairs(players) do
 
@@ -394,30 +394,41 @@ local normal_xp = npc:GetDeathXP()
 				npc:AddNewModifier(courier, nil, "modifier_courier_hack", {})
 			end
 
-			CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
-				type = "generic",
-				text = "#custom_toast_CourierRespawned",
-				teamColor = npc:GetTeam(),
-				team = npc:GetTeam(),
-				courier = true,
-			})
+			if npc.first_spawn == true then
+				CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
+					type = "generic",
+					text = "#custom_toast_CourierRespawned",
+					teamColor = npc:GetTeam(),
+					team = npc:GetTeam(),
+					courier = true,
+				})
+			end
+			npc.first_spawn = true
 		end
 
+		-- working, but overlapping on overhead particles..
 --		if npc:IsRealHero() and npc:GetUnitName() ~= "npc_dota_hero_wisp" or npc.is_real_wisp then
---			if not npc.has_label then
---				Timers:CreateTimer(5.0, function()
---					local title = GetTitleIXP(npc:GetPlayerID())
---					local rgb = GetTitleColorIXP(title)
---					npc:SetCustomHealthLabel(title, rgb[1], rgb[2], rgb[3])
---				end)
---				npc.has_label = true
---			end
---		elseif npc:IsIllusion() then
---			if not npc.has_label then
---				local title = GetTitleIXP(npc:GetPlayerID())
---				local rgb = GetTitleColorIXP(title)
---				npc:SetCustomHealthLabel(title, rgb[1], rgb[2], rgb[3])
---				npc.has_label = true
+--			local title
+--			local rgb = GetTitleColorIXP(title, false)
+--			if npc:GetPlayerOwner() then
+--				if not npc.first_spawn then
+--					npc.first_spawn = true
+--					title = CustomNetTables:GetTableValue("player_table", tostring(npc:GetPlayerID())).title
+--					if title and rgb then
+--						npc:SetCustomHealthLabel(title, rgb[1], rgb[2], rgb[3])
+--					end
+--				end
+--			else
+--				if not npc.first_spawn then
+--					npc.first_spawn = true
+--					Timers:CreateTimer(FrameTime(), function()
+--						title = CustomNetTables:GetTableValue("player_table", tostring(npc:GetPlayerOwnerID())).title
+--						print(title, rgb)
+--						if title and rgb then
+--							npc:SetCustomHealthLabel(title, rgb[1], rgb[2], rgb[3])
+--						end
+--					end)
+--				end
 --			end
 --		end
 	end
@@ -863,35 +874,38 @@ function GameMode:OnLastHit(keys)
 		if not player:GetAssignedHero().killstreak then player:GetAssignedHero().killstreak = 0 end
 		player:GetAssignedHero().killstreak = player:GetAssignedHero().killstreak +1
 
-		if player:GetAssignedHero().killstreak >= 3 and player:GetAssignedHero().killstreak <= 9 then
-			CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
-				type = "generic",
-				text = "#custom_toast_KillStreak",
-				victimPlayer = killedEnt:GetPlayerID(),
-				player = keys.PlayerID,
-				teamInverted = true,
-				variables = {
-					["{kill_streak}"] = streak[player:GetAssignedHero().killstreak]
-				}
-			})
-		elseif player:GetAssignedHero().killstreak >= 10 then
-			CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
-				type = "generic",
-				text = "#custom_toast_KillStreak",
-				victimPlayer = killedEnt:GetPlayerID(),
-				player = keys.PlayerID,
-				teamInverted = true,
-				variables = {
-					["{kill_streak}"] = streak[10]
-				}
-			})
-		end
+--		if player:GetAssignedHero().killstreak >= 3 and player:GetAssignedHero().killstreak <= 9 then
+--			CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
+--				type = "generic",
+--				text = "#custom_toast_KillStreak",
+--				victimPlayer = killedEnt:GetPlayerID(),
+--				player = keys.PlayerID,
+--				teamInverted = true,
+--				variables = {
+--					["{kill_streak}"] = streak[player:GetAssignedHero().killstreak]
+--				}
+--			})
+--		elseif player:GetAssignedHero().killstreak >= 10 then
+--			CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
+--				type = "generic",
+--				text = "#custom_toast_KillStreak",
+--				victimPlayer = killedEnt:GetPlayerID(),
+--				player = keys.PlayerID,
+--				teamInverted = true,
+--				variables = {
+--					["{kill_streak}"] = streak[10]
+--				}
+--			})
+--		end
 
 		CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
 			type = "kill",
 			killerPlayer = keys.PlayerID,
 			victimPlayer = killedEnt:GetPlayerID(),
 			gold = 0,
+			variables = {
+				["{kill_streak}"] = streak[math.min(player:GetAssignedHero().killstreak, 10)]
+			}
 		})
 	end
 end
@@ -1195,10 +1209,6 @@ function GameMode:OnEntityKilled( keys )
 			end
 		end
 
-		if killed_unit.killstreak then
-			killed_unit.killstreak = 0
-		end
-
 		local gold_bounty = 200
 		if killed_unit:GetUnitName() == "npc_dota_badguys_healers" then
 			gold_bounty = 125
@@ -1206,7 +1216,6 @@ function GameMode:OnEntityKilled( keys )
 
 		-- ready to use
 		if killed_unit:IsBuilding() then
-			print(killed_unit:GetUnitName())
 			if killer:IsRealHero() then
 				CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
 					type = "kill",
@@ -1241,6 +1250,29 @@ function GameMode:OnEntityKilled( keys )
 				roshan = true,
 				gold = 150,
 			})
+		end
+
+		if killer:IsRealHero() then
+			if killer == killed_unit then
+				CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
+					type = "kill",
+					victimUnitName = killed_unit:GetUnitName(),
+				})
+				print("Suicide Comitted!")
+				return
+			end
+		end
+
+		if killed_unit:IsRealHero() then
+			if killer:IsNeutralUnitType() then
+				CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
+					type = "kill",
+					victimUnitName = killed_unit:GetUnitName(),
+					neutral = true,
+				})
+			end
+			-- reset killstreak if not comitted suicide
+			killed_unit.killstreak = 0
 		end
 	end
 end

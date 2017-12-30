@@ -584,6 +584,9 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		-- Set up initial level 1 experience bounty
 		hero:SetCustomDeathXP(HERO_XP_BOUNTY_PER_LEVEL[1])
 
+		-- Set killstreak hero value
+		hero.killstreak = 0
+
 		-- Set up initial level
 		local starting_level = tonumber(CustomNetTables:GetTableValue("game_options", "initial_level")["1"])
 		if starting_level > 1 then
