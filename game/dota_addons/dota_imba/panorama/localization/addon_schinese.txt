@@ -49,7 +49,8 @@
 	"scoreboard_tool_tip_disable_help"				"禁用帮助"
 	"scoreboard_tool_tip_active_disable_help"		"（已生效）"
 	"custom_end_screen_legend_imr"					"IMBA天梯分"
-
+	
+    "custom_toast_PlayerDeniedSelf"                            "{victim_name} {denied_icon}自杀了"
 	"custom_toast_CourierKilled"							"{courier_icon} {team_name}信使已被击杀"
 	"custom_toast_CourierRespawned"							"{courier_icon} {team_name}信使已经重生"
 	"custom_toast_GlyphUsed"								"{glyph_icon} {team_name}建筑全面加固"
