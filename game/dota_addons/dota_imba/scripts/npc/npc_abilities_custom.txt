@@ -8321,7 +8321,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -8347,7 +8348,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -8372,7 +8374,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -8397,7 +8400,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -8422,7 +8426,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -8447,7 +8452,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -8472,7 +8478,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -8497,7 +8504,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -11816,6 +11824,8 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"15"
+		"AbilityCastRange"				"600"
+		"AbilityCastPoint"				"0.3"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -11845,48 +11855,27 @@
 
 			"04"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"tick_amount"				"4"
-			}
-
-			"05"
-			{
 				"var_type"					"FIELD_FLOAT"
 				"total_duration"			"4"
 			}			
 
-			"06"
+			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"pull_delay"				"0.4"
 			}
 
-			"07"
+			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"pull_strength" 		"100 120 140 160 200 240 280"
 			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cast_point" 		"0.3"
-			}
-			"09"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cast_range" 		"600"
-			}		
-			"10"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"eidolon_bonus_duration_percent"				"0.07"
-			}
-			"11"
+			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"health_bonus_duration_percent" 		"25"
 			}		
-			"12"
+			"08"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"health_bonus_duration"				"2"
@@ -11927,6 +11916,8 @@
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"170"
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -11953,7 +11944,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"child_duration"			"3 3 3 3 6 9 12"
+				"child_duration"			"8"
 			}
 
 			"05"
@@ -11963,22 +11954,22 @@
 			}			
 
 			"06"
-		  {
+		  	{
 			"var_type"      			"FIELD_INTEGER"
 			"shard_percentage" 			"5 5 5 5 10 15 20"
-		  }
+		  	}
 
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"base_damage"				"20 28 36 44"
+				"base_damage"				"20 28 36 44 44 44 44"
 			}			
 
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"base_ms"					"260 280 300 320 340 370"
-			}			
+				"base_ms"					"260 280 300 320 320 320 320"
+			}
 
 			"09"
 			{
@@ -11995,19 +11986,8 @@
 			"11"
 			{
 				"var_type"     				"FIELD_INTEGER"
-				"additional_attacks_split"	"3"
+				"additional_attacks_split"	"6"
 			}
-			"12"
-			{
-				"var_type"     				"FIELD_INTEGER"
-				"cast_range" 	"700"
-			}		
-
-			"13"
-			{
-				"var_type"     				"FIELD_FLOAT"
-				"cast_point"	"0.3"
-			}																					
 		}
 	}
 
@@ -12040,10 +12020,13 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------		
 		"AbilityCastAnimation"			"ACT_DOTA_MIDNIGHT_PULSE"
+		"AOERadius"						"550"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"35"
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -12063,6 +12046,7 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"damage_per_tick"			"3.0 3.75 4.5 5.25 5.5 5.75 6"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 
 			"03"
@@ -12079,26 +12063,9 @@
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"eidolon_heal_duration"		"3.0"
-			}			
-			"06"
-			{
-				"var_type"					"FIELD_FLOAT"
 				"pull_duration"				"1"
 			}
-			"07"
-			{
-				"var_type"     				"FIELD_INTEGER"
-				"cast_range" 				"700"
-			}
-
-			"08"
-			{
-				"var_type"     				"FIELD_FLOAT"
-				"cast_point"				"0.1"
-			}									
-
-			"09"
+			"06"
 			{
 				"var_type"     				"FIELD_INTEGER"
 				"eidolon_hp_regen"			"20 20 20 20 30 40 50"
@@ -12145,6 +12112,9 @@
 		//-------------------------------------------------------------------------------------------------------------		
 		"AbilityChannelTime"				"4.0"
 		"AbilityCastAnimation"				"ACT_DOTA_CAST_ABILITY_4"
+		"AOERadius"							"420"
+		"AbilityCastRange"					"275"
+		"AbilityCastPoint"					"0.3"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -12174,7 +12144,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"stack_pull_distance"		"30"
-			}									
+			}
 
 			"04"
 			{
@@ -12196,8 +12166,8 @@
 
 			"07"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"	 				"4"			
+				"var_type"					"FIELD_FLOAT"
+				"duration"	 				"4.0"			
 			}
 			"08"
 			{
@@ -12208,16 +12178,6 @@
 			{
 				"var_type" 										"FIELD_INTEGER"
 				"singularity_stun_radius_increment_per_stack" 	"25"
-			}
-			"10"
-			{
-				"var_type" 		"FIELD_INTEGER"
-				"cast_range" 	"275"
-			}
-			"11"
-			{
-				"var_type" 		"FIELD_INTEGER"
-				"cast_point" 	"0.3"
 			}
 		}
 	}
@@ -12245,7 +12205,7 @@
 			"01"
 			{
 				"var_type"		"FIELD_FLOAT"
-				"value"			"2"
+				"value"			"10"
 			}
 		}
 	}
@@ -12270,7 +12230,7 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"value"			"400"
+				"value"			"225"
 			}
 		}
 	}
@@ -15784,7 +15744,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -15809,7 +15770,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -15834,7 +15796,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -15859,7 +15822,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -15915,7 +15879,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -15940,7 +15905,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -15971,7 +15937,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -16002,7 +15969,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -17083,7 +17051,8 @@
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -17108,7 +17077,8 @@
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -17133,7 +17103,8 @@
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -17163,7 +17134,8 @@
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -17188,7 +17160,8 @@
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -17213,7 +17186,8 @@
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -17238,7 +17212,8 @@
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -17278,7 +17253,8 @@
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"
+        "BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -19189,7 +19165,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -19215,7 +19192,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -19240,7 +19218,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -19265,7 +19244,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -19290,7 +19270,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"		
 
@@ -19310,7 +19291,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -19335,7 +19317,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -19360,7 +19343,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -20719,7 +20703,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -20770,7 +20755,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -20801,7 +20787,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -20826,7 +20813,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -20851,7 +20839,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -20876,7 +20865,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -20903,7 +20893,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -20928,7 +20919,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -21295,7 +21287,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -21320,7 +21313,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -21345,7 +21339,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -21376,7 +21371,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -21401,7 +21397,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -21426,7 +21423,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -21451,7 +21449,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -21476,7 +21475,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -21864,7 +21864,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -21889,7 +21890,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -21914,7 +21916,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -21939,7 +21942,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -21964,7 +21968,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -21989,7 +21994,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -22059,7 +22065,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -22094,7 +22101,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -22446,7 +22454,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -22471,7 +22480,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -22496,7 +22506,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -22521,7 +22532,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -22546,7 +22558,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -22571,7 +22584,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -22606,7 +22620,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -22631,7 +22646,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -22955,7 +22971,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -22980,7 +22997,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -23013,7 +23031,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -23038,7 +23057,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -23063,7 +23083,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -23088,7 +23109,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -23119,7 +23141,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -23144,7 +23167,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -23554,7 +23578,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -23579,7 +23604,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -23604,7 +23630,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -23629,7 +23656,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -23654,7 +23682,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -23679,7 +23708,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -23704,7 +23734,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -23729,7 +23760,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -27254,7 +27286,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -27279,7 +27312,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -27304,7 +27338,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -27334,7 +27369,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -27359,7 +27395,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -27384,7 +27421,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -27409,7 +27447,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -27434,7 +27473,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -29101,7 +29141,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -29126,7 +29167,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -29151,7 +29193,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -29176,7 +29219,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -29201,7 +29245,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -29234,7 +29279,8 @@
 
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -29264,7 +29310,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -29289,7 +29336,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -29629,7 +29677,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -29654,7 +29703,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -29679,7 +29729,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -29710,7 +29761,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -29741,7 +29793,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -29766,7 +29819,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -29803,7 +29857,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -29846,7 +29901,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -31761,7 +31817,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"                                                        
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -31786,7 +31843,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"                                                        
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -31811,7 +31869,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"                                                        
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -31836,7 +31895,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"                                                        
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -31861,7 +31921,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"                                                        
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -31887,7 +31948,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"                                                        
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -31912,7 +31974,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"                                                        
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -31937,7 +32000,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"                                                        
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -32338,7 +32402,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -32363,7 +32428,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -32388,7 +32454,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -32413,7 +32480,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -32438,7 +32506,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -32463,7 +32532,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -32488,7 +32558,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -32513,7 +32584,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -33092,7 +33164,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -33117,7 +33190,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -33142,7 +33216,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -33167,7 +33242,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -33192,7 +33268,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -33217,7 +33294,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -33242,7 +33320,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"        
 
@@ -33262,7 +33341,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -39133,7 +39213,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -39158,7 +39239,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -39183,7 +39265,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -39208,7 +39291,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -39233,7 +39317,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -39258,7 +39343,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -39283,7 +39369,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -39308,7 +39395,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -40346,7 +40434,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"                                                        
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -40376,7 +40465,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"                                                        
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -40406,7 +40496,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"                                                        
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -40451,7 +40542,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"                                                        
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -40482,7 +40574,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"                                                        
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -40512,7 +40605,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"                                                        
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -40537,7 +40631,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"                                                        
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -40562,7 +40657,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"internal/funcs.lua"                                                        
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
