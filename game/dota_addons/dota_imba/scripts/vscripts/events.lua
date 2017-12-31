@@ -246,32 +246,12 @@ function GameMode:OnGameRulesStateChange(keys)
 		ApiPrint("Entering post game")
 
 		imba_api_game_complete(function (players)
-			print("Sending new XP / IMR values to clients")
-
-			--[[
-			for ID = 0, PlayerResource:GetPlayerCount() -1 do
-				print("XP DIFF:", players[tostring(PlayerResource:GetSteamID(ID))].xp_diff)
-				print("IMR DIFF:", players[tostring(PlayerResource:GetSteamID(ID))].imr_5v5_diff)
-				CustomNetTables:SetTableValue("player_table", tostring(ID), {
-					XP = CustomNetTables:GetTableValue("player_table", tostring(ID)).XP,
-					MaxXP = CustomNetTables:GetTableValue("player_table", tostring(ID)).MaxXP,
-					Lvl = CustomNetTables:GetTableValue("player_table", tostring(ID)).Lvl,
-					title = CustomNetTables:GetTableValue("player_table", tostring(ID)).title,
-					title_color = CustomNetTables:GetTableValue("player_table", tostring(ID)).title_color,
-					XP_change = players[tostring(PlayerResource:GetSteamID(ID))].xp_diff,
-					IMR_5v5 = CustomNetTables:GetTableValue("player_table", tostring(ID)).IMR_5v5,
-					IMR_5v5_change = players[tostring(PlayerResource:GetSteamID(ID))].imr_5v5_diff,
-				})
---				return 1.0 -- we can keep it endless since it's end-game
-			end
-			CustomGameEventManager:Send_ServerToAllClients("end_game", {})
---			CustomGameEventManager:Send_ServerToAllClients("end_game", players)
-			]]
+			ApiPrint("Game complete request successful!")
 
 			-- calculate levels
 			local xpInfo = {}
 
---			PrintTable(players)
+			ApiPrint("Calculating XP Levels")
 
 			for k, v in pairs(players) do
 
@@ -280,6 +260,8 @@ function GameMode:OnGameRulesStateChange(keys)
 				local color = GetTitleColorIXP(title, true)
 				local progress = GetXpProgressToNextLevel(v.xp)
 
+				ApiPrint(k .. " " .. level .. " " .. title .. " " .. color .. " " .. progress)
+
 				xpInfo[k] = {
 					level = level,
 					title = title,
@@ -287,6 +269,8 @@ function GameMode:OnGameRulesStateChange(keys)
 					progress = progress
 				}
 			end
+
+			ApiPrint("Sending Event")
 
 			CustomGameEventManager:Send_ServerToAllClients("end_game", {
 				players = players,
@@ -297,6 +281,7 @@ function GameMode:OnGameRulesStateChange(keys)
 				}
 			})
 
+			ApiPrint("Done sending Event")
 		end)
 
 		for _, hero in pairs(HeroList:GetAllHeroes()) do

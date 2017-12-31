@@ -5,13 +5,10 @@ CreateEmptyTalents("pudge")
 
 function modifier_special_bonus_imba_pudge_1:OnCreated()
 	if IsServer() then
-		--Updates the stacks without waiting for a level up
-		local meat_hook = self:GetParent():FindAbilityByName("imba_pudge_meat_hook")
-
-		meat_hook:OnHeroLevelUp()
+		self:GetParent():SetModifierStackCount("modifier_imba_hook_sharp_stack", self:GetParent(), self:GetParent():GetModifierStackCount("modifier_imba_hook_sharp_stack", self:GetParent()) + 5)
+		self:GetParent():SetModifierStackCount("modifier_imba_hook_light_stack", self:GetParent(), self:GetParent():GetModifierStackCount("modifier_imba_hook_light_stack", self:GetParent()) + 5)
 	end
 end
-
 
 --[[
 -------------------------------------------
@@ -1228,6 +1225,7 @@ function imba_pudge_meat_hook:GetAbilityTextureName()
    return "pudge_meat_hook"
 end
 -------------------------------------------
+--[[ Do not show range, as it is harder to hook then
 function imba_pudge_meat_hook:GetCastRange()
 
 	--Check the extra range from the swift stacks
@@ -1241,6 +1239,7 @@ end
 function imba_pudge_meat_hook:GetCooldown(level)
 	return self.BaseClass.GetCooldown(self, level)
 end
+--]]
 --------------------------------------------------------------------------------
 
 function imba_pudge_meat_hook:OnUpgrade()
@@ -1430,7 +1429,6 @@ function imba_pudge_meat_hook:OnSpellStart()
 			{
 				nProjectileNumber = i,
 				--special_target = 0 --false
-
 			}
 		}
 
@@ -1461,14 +1459,23 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData( hTarget, vLocation,keys
 	local i = keys.nProjectileNumber
 	--local special_target = keys.special_target
 
-	if not self.hooks[i] then return end	
+	if not self.hooks[i] then return end
 	
 	-- RETRACTING
-	if self.hooks[i]["bRetracting"] then		
+	if self.hooks[i]["bRetracting"] then
 		-- Hitting someone on the way back is ignored
 	 	if hTarget then
 			return 
 		end
+
+		-- Reactivate tp scrolls/boots
+		for i = 0, 5 do
+			local current_item = caster:GetItemInSlot(i)
+			if current_item then
+				current_item:SetActivated(true)
+			end
+		end
+
 		-- The endpoint has been reached. Clean up
 		if caster and caster:IsHero() then
 			local hHook = caster:GetTogglableWearable( DOTA_LOADOUT_TYPE_WEAPON )
@@ -1905,17 +1912,15 @@ function imba_pudge_sharp_hook:OnToggle()
 
 	--if Toggling on
 	if ability:GetToggleState() then
-
 		--Toggle off Swift Hook
 		if toggle_state then
 			ability_swift:ToggleAbility()
 		end
 
-
 		-- If there are no stacks of Light Hook, do nothing and toggle the skill off
 		if not light_hook_stacks or light_hook_stacks == 0 then
 			ability:ToggleAbility()
-			return nil
+			return
 		end
 
 		-- If not, start transferring stacks

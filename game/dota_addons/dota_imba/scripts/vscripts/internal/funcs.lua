@@ -254,12 +254,12 @@ function IsFountain( unit )
 	return false
 end
 
-function CDOTABaseAbility:GetTrueCooldown()
-	local cooldown = self:GetCooldown(-1)
-	local cdr = self:GetCaster():GetCooldownReduction()
-	cooldown = cooldown * cdr
-	return cooldown
-end
+--	function CDOTABaseAbility:GetTrueCooldown()
+--		local cooldown = self:GetCooldown(-1)
+--		local cdr = self:GetCaster():GetCooldownReduction()
+--		cooldown = cooldown * cdr
+--		return cooldown
+--	end
 
 -- Check if an unit is near the enemy fountain
 function IsNearEnemyFountain(location, team, distance)
@@ -426,9 +426,9 @@ function IsUninterruptableForcedMovement( unit )
 	return false
 end
 
-function CDOTA_BaseNPC:GetBonusDamage(tEntity)
-  return tEntity:GetAverageTrueAttackDamage(tEntity) - ( tEntity:GetBaseDamageMin()  + tEntity:GetBaseDamageMax() ) / 2 
-end
+--	function CDOTA_BaseNPC:GetBonusDamage(tEntity)
+--		return tEntity:GetAverageTrueAttackDamage(tEntity) - ( tEntity:GetBaseDamageMin()  + tEntity:GetBaseDamageMax() ) / 2 
+--	end
 
 -- Detect hero-creeps with an inventory, like warlock golems or lone druid's bear
 function IsHeroCreep( unit )

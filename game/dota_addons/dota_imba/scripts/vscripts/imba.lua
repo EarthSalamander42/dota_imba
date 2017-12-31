@@ -86,7 +86,7 @@ function GameMode:OnFirstPlayerLoaded()
 		--
 		-- Here API Data is guaranteed to be available !!!
 		--
-		PrintTable(GetTopImrUsers())
+--		PrintTable(GetTopImrUsers())
     end)
 
 	-------------------------------------------------------------------------------------------------
@@ -224,7 +224,7 @@ function GameMode:GoldFilter( keys )
 	-- gold				141
 
 	-- Gold from abandoning players does not get multiplied
-	if keys.reason_const == DOTA_ModifyGold_AbandonedRedistribute then
+	if keys.reason_const == DOTA_ModifyGold_AbandonedRedistribute or keys.reason_const == DOTA_ModifyGold_GameTick then
 		return true
 	end
 
@@ -241,15 +241,20 @@ function GameMode:GoldFilter( keys )
 	end
 
 	-- Lobby options adjustment
-	local game_time = math.max(GameRules:GetDOTATime(false, false), 0)
+	local game_time = math.min(GameRules:GetGameTime() / 60, 30) -- minutes
 	local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
-	keys.gold = keys.gold * (custom_gold_bonus / 100) * (game_time / 100)
+
+	if keys.reason_const == DOTA_ModifyGold_HeroKill then
+		keys.gold = keys.gold * (custom_gold_bonus / 100)
+	else
+		keys.gold = keys.gold * (custom_gold_bonus / 100) * (1 + game_time / 10)
+	end
 
 	-- Comeback gold gain
-	local team = PlayerResource:GetTeam(keys.player_id_const)
-	if COMEBACK_BOUNTY_BONUS[team] > 0 then
-		keys.gold = keys.gold * (1 + COMEBACK_BOUNTY_BONUS[team])
-	end
+--	local team = PlayerResource:GetTeam(keys.player_id_const)
+--	if COMEBACK_BOUNTY_BONUS[team] > 0 then
+--		keys.gold = keys.gold * (1 + COMEBACK_BOUNTY_BONUS[team])
+--	end
 
 	-- Show gold earned message??
 --	if hero then
