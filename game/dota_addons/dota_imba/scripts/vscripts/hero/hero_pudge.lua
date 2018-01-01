@@ -1522,9 +1522,7 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData( hTarget, vLocation,keys
 		end
 
 		if not self.targets[hTarget] then -- Storing the targets so it won't get handled again
-			-- If it is a tree or Jugg's healing ward or is near the fountain, do nothing
-			print(hTarget.IsStanding)
-			print(IsNearEnemyFountain(hTarget:GetAbsOrigin(), caster:GetTeamNumber(), 1200))	
+			-- If it is a tree or Jugg's healing ward or is near the fountain, do nothing	
 			if not hTarget.IsStanding and not IsNearEnemyFountain(hTarget:GetAbsOrigin(), caster:GetTeamNumber(), 1200) then 
 				if not hTarget:IsRune() then --it's NOT a rune
 					EmitSoundOn( "Hero_Pudge.AttackHookImpact", hTarget )
