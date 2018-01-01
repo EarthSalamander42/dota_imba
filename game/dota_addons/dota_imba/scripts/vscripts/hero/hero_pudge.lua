@@ -1491,10 +1491,11 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData( hTarget, vLocation,keys
 			for k,v in pairs(self.hooks[i]["unitsHit"]) do
 				if IsValidEntity(v) and not v:IsRune() then --would return errors on runes
 					v:RemoveModifierByName( "modifier_imba_meat_hook" )
-					--Remove the Rupture effect from Talent #7
+					--Remove the Rupture effect from Talent #7 and set back to false the check
 					if caster:HasTalent("special_bonus_imba_pudge_7") then
 						ParticleManager:DestroyParticle(v.RuptureFX, true)
 						ParticleManager:ReleaseParticleIndex(v.RuptureFX)
+						v.is_ruptured = false
 					end
 
 					v:SetUnitOnClearGround()
@@ -1522,8 +1523,7 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData( hTarget, vLocation,keys
 
 		if not self.targets[hTarget] then -- Storing the targets so it won't get handled again
 			-- If it is a tree or Jugg's healing ward or is near the fountain, do nothing	
-			if hTarget.IsStanding or IsNearEnemyFountain(hTarget:GetAbsOrigin(), caster:GetTeamNumber(), 1200) then 
-			else
+			if not hTarget.IsStanding and not IsNearEnemyFountain(hTarget:GetAbsOrigin(), caster:GetTeamNumber(), 1200) then 
 				if not hTarget:IsRune() then --it's NOT a rune
 					EmitSoundOn( "Hero_Pudge.AttackHookImpact", hTarget )
 					hTarget:AddNewModifier( caster, self, "modifier_imba_meat_hook", {duration = 1.5} )
@@ -1568,12 +1568,11 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData( hTarget, vLocation,keys
 
 				end
 
-				
+				AddFOWViewer( caster:GetTeamNumber(), hTarget:GetOrigin(), self.vision_radius, self.vision_duration, false )
+
+				table.insert(self.hooks[i]["unitsHit"], hTarget) --Grab the target
 			end
 
-			AddFOWViewer( caster:GetTeamNumber(), hTarget:GetOrigin(), self.vision_radius, self.vision_duration, false )
-
-			table.insert(self.hooks[i]["unitsHit"], hTarget)
 		end
 	end
 	-- Check if the hook should retract
@@ -1712,28 +1711,30 @@ function imba_pudge_meat_hook:OnProjectileThink_ExtraData(vLocation,keys)
 	self.hooks[i]["vProjectileLocation"] = vLocation
 	if self.hooks[i]["unitsHit"] then
 		for k,v in pairs(self.hooks[i]["unitsHit"]) do
-			AddFOWViewer( caster:GetTeamNumber(), v:GetOrigin(), self.vision_radius, 1, false ) --Give vision on the victims
-			local oldPos = v:GetAbsOrigin() --Needed for rupture damage
-			if IsValidEntity(v) or (v == rune) then
-				v:SetAbsOrigin(GetGroundPosition(vLocation,caster))
-			end
+			if not v:IsNull() then --Avoid bugs with runes being picked up while grabbed
+				AddFOWViewer( caster:GetTeamNumber(), v:GetOrigin(), self.vision_radius, 1, false ) --Give vision on the victims
+				local oldPos = v:GetAbsOrigin() --Needed for rupture damage
+				if IsValidEntity(v) or (v == rune) then
+					v:SetAbsOrigin(GetGroundPosition(vLocation,caster))
+				end
 
-			--Talent #7: Grabbed units are ruptured
-			if caster:GetTeamNumber() ~= v:GetTeamNumber() and not v:IsRune() and caster:HasTalent("special_bonus_imba_pudge_7") then
-				local damage_cap = caster:FindTalentValue("special_bonus_imba_pudge_7", "damage_cap")
-				local rupture_damage = caster:FindTalentValue("special_bonus_imba_pudge_7", "movement_damage_pct") / 20
-				local distance_diff = CalculateDistance(oldPos, v)
+				--Talent #7: Grabbed units are ruptured
+				if caster:GetTeamNumber() ~= v:GetTeamNumber() and not v:IsRune() and caster:HasTalent("special_bonus_imba_pudge_7") then
+					local damage_cap = caster:FindTalentValue("special_bonus_imba_pudge_7", "damage_cap")
+					local rupture_damage = caster:FindTalentValue("special_bonus_imba_pudge_7", "movement_damage_pct") / 20
+					local distance_diff = CalculateDistance(oldPos, v)
 
-				if distance_diff < damage_cap then
-					local move_damage = distance_diff * rupture_damage
-					if move_damage > 0 then
-						if not v.is_ruptured then
-							v.is_ruptured = true
-							v.RuptureFX = ParticleManager:CreateParticle("particles/units/heroes/hero_bloodseeker/bloodseeker_rupture.vpcf", PATTACH_POINT_FOLLOW, v)
-							EmitSoundOn("hero_bloodseeker.rupture.cast", v)
-							EmitSoundOn("hero_bloodseeker.rupture", v)
+					if distance_diff < damage_cap then
+						local move_damage = distance_diff * rupture_damage
+						if move_damage > 0 then
+							if not v.is_ruptured then
+								v.is_ruptured = true
+								v.RuptureFX = ParticleManager:CreateParticle("particles/units/heroes/hero_bloodseeker/bloodseeker_rupture.vpcf", PATTACH_POINT_FOLLOW, v)
+								EmitSoundOn("hero_bloodseeker.rupture.cast", v)
+								EmitSoundOn("hero_bloodseeker.rupture", v)
+							end
+							ApplyDamage({victim = v, attacker = caster, damage = move_damage, damage_type = DAMAGE_TYPE_PURE, ability = caster:FindAbilityByName("imba_pudge_meat_hook")})
 						end
-						ApplyDamage({victim = v, attacker = caster, damage = move_damage, damage_type = DAMAGE_TYPE_MAGICAL, ability = caster:FindAbilityByName("imba_pudge_meat_hook")})
 					end
 				end
 			end
