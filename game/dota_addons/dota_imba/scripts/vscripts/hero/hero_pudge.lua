@@ -1267,7 +1267,10 @@ end
 --------------------------------------------------------------------------------
 
 function imba_pudge_meat_hook:OnAbilityPhaseInterrupted()
-	self:GetCaster():RemoveGesture( ACT_DOTA_OVERRIDE_ABILITY_1 )
+	local caster = self:GetCaster()
+	caster:RemoveGesture( ACT_DOTA_OVERRIDE_ABILITY_1 )
+	--Should fix meat hook breaking sometimes
+	caster.hook_launched = false
 end
 
 --------------------------------------------------------------------------------
