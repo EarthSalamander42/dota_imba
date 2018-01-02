@@ -65,8 +65,6 @@ function CreateCustomToast(data) {
 		rowText = $.Localize(data.text);
 	}
 
-	$.Msg(data.variables)
-
 	// yet nothing different
 	if (data.firstblood != null) {
 		rowText = rowText.replace('{denied_icon}', "<img class='DeniedIcon'/>").replace('{killed_icon}', "<img class='CombatEventKillIcon'/>").replace('{time_dota}', "<font color='lime'>" + secondsToMS(Game.GetDOTATime(false, false), true) + '</font>');
@@ -89,7 +87,6 @@ function CreateCustomToast(data) {
 	if (data.victimUnitName)
 		rowText = rowText.replace('{victim_name}', "<font color='red'>" + $.Localize(data.victimUnitName) + '</font>');
 	if (data.team != null)
-		$.Msg("Team: " + data.team)
 		rowText = rowText.replace('{team_name}', "<font color='" + GameUI.CustomUIConfig().team_colors[data.team] + "'>" + GameUI.CustomUIConfig().team_names[data.team] + '</font>');
 	if (data.glyph != null)
 		rowText = rowText.replace('{glyph_icon}', "<img class='CombatEventGlyphIcon' />");

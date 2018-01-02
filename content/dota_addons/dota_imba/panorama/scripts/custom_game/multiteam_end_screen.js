@@ -28,6 +28,10 @@
 	};
 	*/
 
+	$.Schedule(1.0, EndScoreboard)
+})();
+
+function EndScoreboard() {
 	GameEvents.Subscribe("end_game", function (args) {
 
 		$.Msg("End game received");
@@ -245,13 +249,12 @@
 		var MainPanel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
 		
 		MainPanel.FindChildTraverse("topbar").style.visibility = "collapse";
-	    MainPanel.FindChildTraverse("minimap_container").style.visibility = "collapse";
-	    MainPanel.FindChildTraverse("lower_hud").style.visibility = "collapse";
-	    MainPanel.FindChildTraverse("HudChat").style.visibility = "collapse";
-	    MainPanel.FindChildTraverse("NetGraph").style.visibility = "collapse";
-	    MainPanel.FindChildTraverse("quickstats").style.visibility = "collapse";
+		MainPanel.FindChildTraverse("minimap_container").style.visibility = "collapse";
+		MainPanel.FindChildTraverse("lower_hud").style.visibility = "collapse";
+		MainPanel.FindChildTraverse("HudChat").style.visibility = "collapse";
+		MainPanel.FindChildTraverse("NetGraph").style.visibility = "collapse";
+		MainPanel.FindChildTraverse("quickstats").style.visibility = "collapse";
 
 		$.Msg("Scoreboard was created successfully? Or not?");
 	});
-
-})();
+}

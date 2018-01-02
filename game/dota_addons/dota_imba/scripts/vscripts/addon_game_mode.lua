@@ -194,7 +194,6 @@ DebugPrint("[IMBA] Performing pre-load precache")
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_phantom_lancer.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_spirit_breaker.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts", context)
-	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_abyssal_underlord.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_razor.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_weaver.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_roshan_halloween.vsndevts", context)
@@ -207,7 +206,10 @@ DebugPrint("[IMBA] Performing pre-load precache")
 	--PrecacheResource("sound", "sounds/physics/items/weapon_drop_common_02.vsnd", context)
 	--PrecacheResource("sound", "sounds/ui/inventory/metalblade_equip_01.vsnd", context)
 
-	PrecacheUnitByNameAsync("npc_dota_hero_wisp", context) --Precaching dummy wisp
+	PrecacheUnitByNameAsync("npc_dota_hero_abyssal_underlord", context) -- Hellion (attack sound)
+	PrecacheUnitByNameAsync("npc_dota_hero_invoker", context) -- Roshan
+	PrecacheUnitByNameAsync("npc_dota_hero_weaver", context) -- Sly King (attack sound)
+	PrecacheUnitByNameAsync("npc_dota_hero_wisp", context) -- Dummy Wisp
 end
 
 function Activate()

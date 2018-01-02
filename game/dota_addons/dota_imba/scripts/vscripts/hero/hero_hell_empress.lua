@@ -7,15 +7,18 @@
 imba_empress_eleven_curses = class({})
 LinkLuaModifier("modifier_imba_eleven_curses", "hero/hero_hell_empress.lua", LUA_MODIFIER_MOTION_NONE)
 
+function imba_empress_eleven_curses:GetAOERadius() 
+	return self:GetSpecialValueFor("effect_radius")
+end
+
 function imba_empress_eleven_curses:OnSpellStart(curse_target, curse_stacks)
 	local caster = self:GetCaster()
-	local target = self:GetCursorTarget()
-	local stacks_to_add = 1
-	local modifier_curse = "modifier_imba_eleven_curses"
+	local target_point = self:GetCursorPosition()
+	local stacks_to_add = self:GetSpecialValueFor("curse_stacks")
 
 	-- Override curse parameters if they're passed in
 	if curse_target then
-		target = curse_target
+		target_point = curse_target
 	end
 
 	if curse_stacks then
@@ -25,29 +28,33 @@ function imba_empress_eleven_curses:OnSpellStart(curse_target, curse_stacks)
 	-- Ability parameters
 	local stack_duration = self:GetSpecialValueFor("stack_duration")
 	local max_stacks = self:GetSpecialValueFor("max_stacks")
-
-	-- If target has Linken's Sphere off cooldown, do nothing
-	if target:GetTeam() ~= caster:GetTeam() then
-		if target:TriggerSpellAbsorb(self) then
-			return nil
-		end
-	end
+	local effect_radius = self:GetSpecialValueFor("effect_radius")
 
 	-- Play hit sound
-	target:EmitSound("Imba.HellEmpressCurseHit")
+	EmitSoundOnLocationWithCaster(target_point, "Imba.HellEmpressCurseHit", caster )
 
-	-- Play target particle
-	local hit_pfx = ParticleManager:CreateParticle("particles/hero/hell_empress/empress_curse_hit.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, target)
-	ParticleManager:SetParticleControl(hit_pfx, 4, target:GetAbsOrigin() + Vector(0, 0, 100))
-	ParticleManager:ReleaseParticleIndex(hit_pfx)
+	-- Play ground particle
+	local ground_pfx = ParticleManager:CreateParticle("particles/hero/hell_empress/hellion_curse_area.vpcf", PATTACH_CUSTOMORIGIN, nil)
+	ParticleManager:SetParticleControl(ground_pfx, 0, target_point + Vector(0, 0, 50))
+	ParticleManager:SetParticleControl(ground_pfx, 1, Vector(effect_radius, 0, 0))
+	ParticleManager:ReleaseParticleIndex(ground_pfx)
 
-	-- Refresh the modifier's duration
-	target:AddNewModifier(caster, self, modifier_curse, {duration = stack_duration})
+	-- Find enemies in the target area
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target_point, nil, effect_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+	for _, enemy in pairs(enemies) do
 
-	-- Increase the modifier's stack count
-	local modifier_curse_instance = target:FindModifierByName(modifier_curse)
-	modifier_curse_instance:SetStackCount(math.min(max_stacks, modifier_curse_instance:GetStackCount() + stacks_to_add))
+		-- Play target particle
+		local hit_pfx = ParticleManager:CreateParticle("particles/hero/hell_empress/empress_curse_hit.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, enemy)
+		ParticleManager:SetParticleControl(hit_pfx, 4, enemy:GetAbsOrigin() + Vector(0, 0, 100))
+		ParticleManager:ReleaseParticleIndex(hit_pfx)
 
+		-- Refresh the modifier's duration
+		enemy:AddNewModifier(caster, self, "modifier_imba_eleven_curses", {duration = stack_duration})
+
+		-- Increase the modifier's stack count
+		local modifier_curse_instance = enemy:FindModifierByName("modifier_imba_eleven_curses")
+		modifier_curse_instance:SetStackCount(math.min(max_stacks, modifier_curse_instance:GetStackCount() + stacks_to_add))
+	end
 end
 
 
@@ -83,7 +90,6 @@ imba_empress_hellbolt = class({})
 
 function imba_empress_hellbolt:OnSpellStart()
 	local caster = self:GetCaster()
-	local modifier_curse = "modifier_imba_eleven_curses"    
 
 	-- Ability parameters
 	local target_radius = self:GetSpecialValueFor("target_radius") + GetCastRangeIncrease(caster)
@@ -95,19 +101,17 @@ function imba_empress_hellbolt:OnSpellStart()
 	-- Iterate through nearby targets
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, target_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false)
 	for _, enemy in pairs(enemies) do
-		if enemy:HasModifier(modifier_curse) then
-			local projectile = {
-				Target = enemy,
-				Source = caster,
-				Ability = self,
-				EffectName = "particles/hero/hell_empress/empress_hellbolt.vpcf",
-				bDodgable = true,
-				bProvidesVision = false,
-				iMoveSpeed = bolt_speed,
-				iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION,
-			}
-			ProjectileManager:CreateTrackingProjectile(projectile)
-		end
+		local projectile = {
+			Target = enemy,
+			Source = caster,
+			Ability = self,
+			EffectName = "particles/hero/hell_empress/empress_hellbolt.vpcf",
+			bDodgable = true,
+			bProvidesVision = false,
+			iMoveSpeed = bolt_speed,
+			iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION,
+		}
+		ProjectileManager:CreateTrackingProjectile(projectile)
 	end
 end
 
@@ -139,8 +143,8 @@ function imba_empress_hellbolt:OnProjectileHit(target, target_loc)
 			bonus_damage = 0
 		end
 		local damage = base_damage + bonus_damage
-		ApplyDamage({victim = target, attacker = caster, ability = self, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
-		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, damage, nil)
+		local actual_damage = ApplyDamage({victim = target, attacker = caster, ability = self, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, actual_damage, nil)
 		target:RemoveModifierByName(modifier_curse)
 	end
 end
@@ -184,10 +188,10 @@ function modifier_imba_royal_wrath:OnTakeDamage( keys )
 			local attacker = keys.attacker
 			local ability = self:GetAbility()
 			local ability_curse = parent:FindAbilityByName("imba_empress_eleven_curses")
-			if attacker:IsRealHero() and ability:IsCooldownReady() and ability_curse and ability_curse:GetLevel() > 0 and not parent:PassivesDisabled() and not attacker:IsMagicImmune() then
+			if attacker:IsRealHero() and attacker:IsAlive() and ability:IsCooldownReady() and ability_curse and ability_curse:GetLevel() > 0 and not parent:PassivesDisabled() and not attacker:IsMagicImmune() then
 				
 				-- Trigger the curse ability
-				ability_curse:OnSpellStart(attacker)
+				ability_curse:OnSpellStart(attacker:GetAbsOrigin(), 1)
 
 				-- Reduce Hellbolt's cooldown, if appropriate
 				local ability_hellbolt = parent:FindAbilityByName("imba_empress_hellbolt")
@@ -217,6 +221,12 @@ LinkLuaModifier("modifier_imba_hurl_through_hell_slow", "hero/hero_hell_empress.
 LinkLuaModifier("modifier_imba_hurl_through_hell_root", "hero/hero_hell_empress.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_hurl_through_hell_disarm", "hero/hero_hell_empress.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_hurl_through_hell_silence", "hero/hero_hell_empress.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_hurl_through_hell_mute", "hero/hero_hell_empress.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_hurl_through_hell_break", "hero/hero_hell_empress.lua", LUA_MODIFIER_MOTION_NONE)
+
+function imba_empress_hurl_through_hell:GetAOERadius() 
+	return self:GetSpecialValueFor("hurl_radius")
+end
 
 function imba_empress_hurl_through_hell:OnSpellStart()
 	local caster = self:GetCaster()
@@ -276,10 +286,10 @@ function modifier_imba_hurl_through_hell:OnCreated()
 		local parent_loc = parent:GetAbsOrigin()
 		local ability = self:GetAbility()
 		self.hurl_damage = ability:GetSpecialValueFor("hurl_damage")
-		self.curse_stacks = ability:GetSpecialValueFor("curse_stacks")
+		self.debuff_amount = ability:GetSpecialValueFor("debuff_amount")
 		self.debuff_duration = ability:GetSpecialValueFor("debuff_duration")
 		if self:GetCaster():HasScepter() then
-			self.debuff_duration = ability:GetSpecialValueFor("debuff_duration_scepter")
+			self.debuff_amount = ability:GetSpecialValueFor("debuff_amount_scepter")
 		end
 
 		-- Play astral prison loop sound
@@ -318,24 +328,24 @@ function modifier_imba_hurl_through_hell:OnDestroy()
 		-- Apply curse to the target
 		local ability_curse = caster:FindAbilityByName("imba_empress_eleven_curses")
 		if ability_curse and ability_curse:GetLevel() > 0 then
-			ability_curse:OnSpellStart(parent, self.curse_stacks)
+			ability_curse:OnSpellStart(parent:GetAbsOrigin())
 		end
 
 		-- Deal damage
 		ApplyDamage({victim = parent, attacker = caster, ability = ability, damage = self.hurl_damage, damage_type = DAMAGE_TYPE_MAGICAL})
 
-		-- Pick a random debuff to apply
+		-- Pick the appropriate number of random debuffs to apply
 		local debuff_table = {
 			"modifier_imba_hurl_through_hell_slow",
 			"modifier_imba_hurl_through_hell_root",
 			"modifier_imba_hurl_through_hell_disarm",
-			"modifier_imba_hurl_through_hell_silence"
+			"modifier_imba_hurl_through_hell_silence",
+			"modifier_imba_hurl_through_hell_mute",
+			"modifier_imba_hurl_through_hell_break"
 		}
-		parent:AddNewModifier(caster, ability, table.remove(debuff_table, RandomInt(1, #debuff_table)), {duration = self.debuff_duration})
 
-		-- If the caster has a scepter, apply another debuff
-		if caster:HasScepter() then
-			parent:AddNewModifier(caster, ability, debuff_table[RandomInt(1, #debuff_table)], {duration = self.debuff_duration})
+		for i = 1, self.debuff_amount do
+			parent:AddNewModifier(caster, ability, table.remove(debuff_table, RandomInt(1, #debuff_table)), {duration = self.debuff_duration})
 		end
 
 		-- Resolve position to prevent being stuck
@@ -415,6 +425,40 @@ function modifier_imba_hurl_through_hell_silence:IsDebuff() return true end
 function modifier_imba_hurl_through_hell_silence:CheckState()
 	local state = {
 		[MODIFIER_STATE_SILENCED] = true
+	}
+
+	return state
+end
+
+------------------------------------
+--	Hurl through hell's mute modifier
+------------------------------------
+modifier_imba_hurl_through_hell_mute = class({})
+
+function modifier_imba_hurl_through_hell_mute:IsHidden() return false end
+function modifier_imba_hurl_through_hell_mute:IsPurgable() return false end
+function modifier_imba_hurl_through_hell_mute:IsDebuff() return true end
+
+function modifier_imba_hurl_through_hell_mute:CheckState()
+	local state = {
+		[MODIFIER_STATE_MUTED] = true
+	}
+
+	return state
+end
+
+------------------------------------
+--	Hurl through hell's break modifier
+------------------------------------
+modifier_imba_hurl_through_hell_break = class({})
+
+function modifier_imba_hurl_through_hell_break:IsHidden() return false end
+function modifier_imba_hurl_through_hell_break:IsPurgable() return false end
+function modifier_imba_hurl_through_hell_break:IsDebuff() return true end
+
+function modifier_imba_hurl_through_hell_break:CheckState()
+	local state = {
+		[MODIFIER_STATE_PASSIVES_DISABLED] = true
 	}
 
 	return state

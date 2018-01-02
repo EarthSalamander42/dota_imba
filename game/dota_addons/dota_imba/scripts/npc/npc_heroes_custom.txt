@@ -2014,7 +2014,6 @@
 		"HeroID"					"115"
 		"Model"						"models/heroes/razor/razor.vmdl"
 		"ModelScale"				"1.080000"
-		//"Portrait"				"vgui/hud/heroportraits/abyssal_underlord"
 		"SoundSet"					"Hero_Razor"
 
 		//Picking Screen
@@ -2087,9 +2086,7 @@
 		"VisionDaytimeRange"		"1800"									// Range of vision during day light.
 		"VisionNighttimeRange"		"800"									// Range of vision at night time.
 
-		//"particle_folder"			"particles/units/heroes/hero_abaddon"
 		"GameSoundsFile"			"soundevents/game_sounds_heroes_custom/game_sounds_razor.vsndevts"
-		//"VoiceFile"				"soundevents/voscripts/game_sounds_vo_razor.vsndevts"
 	}
 
 	//=================================================================================================================
@@ -2103,7 +2100,6 @@
 		"HeroID"					"116"
 		"Model"						"models/heroes/abyssal_underlord/abyssal_underlord_v2.vmdl"
 		"ModelScale"				"1.080000"
-		//"Portrait"				"vgui/hud/heroportraits/abyssal_underlord"
 		"SoundSet"					"Hero_AbyssalUnderlord"
 
 		//Picking Screen
@@ -2176,9 +2172,7 @@
 		"VisionDaytimeRange"		"1800"									// Range of vision during day light.
 		"VisionNighttimeRange"		"800"									// Range of vision at night time.
 	
-		//"particle_folder"			"particles/units/heroes/hero_abaddon"
 		"GameSoundsFile"			"soundevents/game_sounds_heroes_custom/game_sounds_hell_empress.vsndevts"
-		//"VoiceFile"				"soundevents/voscripts/game_sounds_vo_abaddon.vsndevts"
 	}
 
 	//=================================================================================================================
@@ -2192,7 +2186,6 @@
 		"HeroID"					"117"
 		"Model"						"models/heroes/slyli/model_weaver.vmdl"
 		"ModelScale"				"0.940000"
-		//"Portrait"				"vgui/hud/heroportraits/abyssal_underlord"
 		"SoundSet"					"Hero_Weaver"
 
 		//Picking Screen
@@ -2270,5 +2263,97 @@
 		//"particle_folder"			"particles/units/heroes/hero_abaddon"
 		"GameSoundsFile"			"soundevents/game_sounds_heroes_custom/game_sounds_weaver.vsndevts"
 		//"VoiceFile"				"soundevents/voscripts/game_sounds_vo_abaddon.vsndevts"
+	}
+
+	//=================================================================================================================
+	// HERO: Scaldris // Need to be duplicated in npc_units_custom.txt
+	//=================================================================================================================
+	"npc_dota_hero_scaldris"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"					"npc_dota_hero_invoker"
+		"HeroID"					"118"
+		"Model"						"models/heroes/invoker/invoker.vmdl"
+		"ModelScale"				"0.810000" //0.74
+		"SoundSet"					"Hero_Invoker"
+
+		//Picking Screen
+		"IsCustom"					"1"
+		"IsNew"						"1"
+
+		// Abilities
+		//-------------------------------------------------------------------------------------------------------------
+		"Ability1"			"imba_scaldris_heatwave"
+		"Ability2"			"imba_scaldris_scorch"
+		"Ability3"			"imba_scaldris_jet_blaze"
+		"Ability4"			"generic_hidden"
+		"Ability5"			"imba_scaldris_antipode"
+		"Ability6"			"imba_scaldris_living_flame"
+		"Ability7"			"imba_scaldris_cold_front"
+		"Ability8"			"imba_scaldris_freeze"
+		"Ability9"			"imba_scaldris_ice_floes"
+		"Ability10"			"imba_scaldris_absolute_zero"
+
+		// Armor
+		//-------------------------------------------------------------------------------------------------------------
+		"ArmorPhysical"				"3"									// Physical protection.
+		"MagicalResistance"			"25"								// Magical protection (percentage).
+
+		// Attack
+		//-------------------------------------------------------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"19"							// Damage range min.
+		"AttackDamageMax"			"25"							// Damage range max.
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"		// Type of damage dealt. 
+		"AttackRate"				"1.700"							// Speed of attack.
+		"AttackAnimationPoint"		"0.400"							// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"800"							// Range within a target can be acquired.
+		"AttackRange"				"600"							// Range within a target can be attacked.
+		"ProjectileModel"			"particles/units/heroes/hero_invoker/invoker_base_attack.vpcf"								// Particle system model for projectile.
+		"ProjectileSpeed"			"900"							// Speed of projectile.
+
+		// Attributes
+		//-------------------------------------------------------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"	// Primary Attribute
+		"AttributeBaseStrength"		"16"
+		"AttributeStrengthGain"		"2.200000"
+		"AttributeBaseAgility"		"14"
+		"AttributeAgilityGain"		"1.900000"
+		"AttributeBaseIntelligence"	"16"
+		"AttributeIntelligenceGain"	"4.000000"
+
+		// Bounds
+		//-------------------------------------------------------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"70"
+		"HealthBarOffset"			"240"
+
+		// Movement
+		//-------------------------------------------------------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"305"									// Speed.
+		"MovementTurnRate"			"0.5"									// Turning rate.
+
+		// Status
+		//-------------------------------------------------------------------------------------------------------------
+		"StatusHealth"				"200"									// Base health.
+		"StatusHealthRegen"			"3.0"									// Health regeneration rate.
+		"StatusMana"				"50"									// Base mana.
+		"StatusManaRegen"			"1.0"									// Mana regeneration rate.
+
+		// Team
+		//-------------------------------------------------------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_HERO"
+
+		// Vision
+		//-------------------------------------------------------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"									// Range of vision during day light.
+		"VisionNighttimeRange"		"800"									// Range of vision at night time.
+
+		"GameSoundsFile"			"soundevents/game_sounds_heroes_custom/game_sounds_weaver.vsndevts"
 	}
 }

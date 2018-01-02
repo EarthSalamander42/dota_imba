@@ -183,7 +183,7 @@
 	"item_hyperstone"			{ "AbilityTextureName" "custom/imba_hyperstone" }
 	"item_lotus_orb"			{ "AbilityTextureName" "custom/imba_lotus_orb" }
 	"item_mantle"				{ "AbilityTextureName" "custom/imba_mantle" }
-	"item_medallion_of_courage"	{ "AbilityTextureName" "custom/imba_medaillon_of_courage" }
+	"item_medallion_of_courage"	{ "AbilityTextureName" "custom/imba_medallion_of_courage" }
 	"item_mithril_hammer"		{ "AbilityTextureName" "custom/imba_mithril_hammer" }
 	"item_mystic_staff"			{ "AbilityTextureName" "custom/imba_mystic_staff" }
 	"item_oblivion_staff"		{ "AbilityTextureName" "custom/imba_oblivion_staff" }
@@ -15407,7 +15407,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"regen_rate"			"500"
+				"regen_rate"			"750"
 			}
 		}
 	}
@@ -15638,9 +15638,7 @@
 	"spawnlord_master_stomp"
 	{
 		"AbilityCastPoint"				"0.4"
-
 		"AbilityCooldown"				"10.0"
-
 		"AbilityManaCost"				"50"
 
 		"AbilitySpecial"
