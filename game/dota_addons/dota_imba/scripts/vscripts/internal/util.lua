@@ -1298,7 +1298,7 @@ function PickupRune(rune_name, unit, bActiveByBottle)
 
 			unit:ModifyGold(current_bounty, false, DOTA_ModifyGold_Unspecified)
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_GOLD, unit, current_bounty, nil)
-			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "General.Coins", unit)
+--			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "General.Coins", unit)
 			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Bounty", unit)
 		elseif rune_name == "arcane" then
 			unit:AddNewModifier(unit, item, "modifier_imba_arcane_rune", {duration=duration})

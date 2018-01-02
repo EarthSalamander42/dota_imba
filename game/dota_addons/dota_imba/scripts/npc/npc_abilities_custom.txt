@@ -300,22 +300,22 @@
 			"01"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"base_damage_per_tier"					"15"
+				"base_damage_per_tier"					"50"
 			}
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"base_armor_per_tier"					"4"
+				"base_armor_per_tier"					"7"
 			}
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"base_as_per_tier"						"25"
+				"base_as_per_tier"						"30"
 			}
 			"04"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"base_health_per_tier"					"400"
+				"base_health_per_tier"					"500"
 			}
 		}
 
@@ -451,14 +451,12 @@
 
 				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 
-				"ThinkInterval"							"0.9"
-
-				"OnIntervalThink"
+				"OnCreated"
 				{
 					"RunScript"
 					{
 						"ScriptFile"					"hero/npc_upgrades.lua"
-						"Function"						"FountainThink"
+						"Function"						"FountainMarker"
 
 						"particle_danger"				"particles/ambient/fountain_danger_circle.vpcf"
 					}
@@ -26735,7 +26733,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"rot_damage"				"90"
+				"rot_damage"				"75"
 			}
 		}
 	}
@@ -41657,27 +41655,28 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"hero/hero_hell_empress"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 		"AbilityTextureName"			"custom/empress_eleven_curses"
 		"MaxLevel"						"7"
+		"AOERadius"						"%effect_area"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1200"
-		"AbilityCastPoint"				"0.1"
+		"AbilityCastRange"				"1100"
+		"AbilityCastPoint"				"0.2"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"1.0"
+		"AbilityCooldown"				"3.5"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"10"
+		"AbilityManaCost"				"20"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -41685,6 +41684,7 @@
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_shadow_demon.vsndevts"
 			"particle"					"particles/econ/items/shadow_demon/sd_ti7_shadow_poison/sd_ti7_shadow_poison_release.vpcf"
+			"particle"					"particles/hero/hell_empress/hellion_curse_area.vpcf"
 		}
 
 		// Special
@@ -41693,18 +41693,28 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_amp"			"3.0 3.5 4.0 4.5 5.0 5.5 6.0"
+				"var_type"				"FIELD_INTEGER"
+				"damage_amp"			"6"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"stack_duration"		"6.6"
+				"var_type"				"FIELD_INTEGER"
+				"stack_duration"		"9"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
+				"curse_stacks"			"1 2 3 4 4 4 4"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
 				"max_stacks"			"11"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"effect_radius"			"325 325 325 325 375 425 475"
 			}
 		}
 	}
@@ -41735,7 +41745,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"12"
+		"AbilityCooldown"				"11"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -41771,7 +41781,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bolt_speed"			"700"
+				"bolt_speed"			"900"
 			}
 		}
 	}
@@ -41795,11 +41805,7 @@
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"7 6 5 4 3 2 1"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
+		"AbilityCooldown"				"5.0 3.0 2.0 1.5 1.0 0.6 0.2"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -41808,8 +41814,13 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cooldown"				"7 6 5 4 3 2 1"
+				"cooldown"				"5.0 3.0 2.0 1.5 1.0 0.6 0.2"
 			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"hellbolt_cdr"			"1.0"
+  			}
 		}
 	}
 
@@ -41844,17 +41855,18 @@
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"custom/empress_hurl_through_hell"
 		"MaxLevel"						"6"
-		"AOERadius"						"%hurl_radius%"
+		"HasScepterUpgrade"				"1"
+		"AOERadius"						"%hurl_radius"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"400"
+		"AbilityCastRange"				"400 500 600 700 800 900"
 		"AbilityCastPoint"				"0.4"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"100 95 90 85 80 75"
+		"AbilityCooldown"				"75"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -41877,37 +41889,42 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hurl_radius"			"425"
+				"hurl_radius"			"450"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"hurl_duration"			"4.0"
+				"hurl_duration"			"3.0"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hurl_damage"			"175 200 225 250 275 300"
+				"hurl_damage"			"150 200 250 300 350 400"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"curse_stacks"			"1 2 3 4 5 6"
+				"cast_range"			"400 500 600 700 800 900"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"debuff_duration"		"1.5 1.75 2.0 2.25 2.5 2.75"
+				"debuff_duration"		"2.0 2.4 2.8 3.2 3.6 4.0"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"slow_pct"				"-60"
+				"slow_pct"				"-70"
 			}
 			"07"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"debuff_duration_scepter"	"2.5 2.75 3.0 3.25 3.5 3.75"
+				"var_type"				"FIELD_INTEGER"
+				"debuff_amount"			"2"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"debuff_amount_scepter"	"4"
 			}
 		}
 	}
@@ -42532,7 +42549,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"soundfile"					"soundevents/heroes/game_sounds_sandking.vsndevts"
+			"soundfile"					"soundevents/heroes/game_sounds_nyx_assassin.vsndevts"
 //			"particle"					""
 		}
 
@@ -42727,6 +42744,626 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"slow_duration"				"3"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Scaldris: Antipode
+	//=================================================================================================================
+	"imba_scaldris_antipode"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"custom/scaldris_antipode"
+		"ScriptFile"					"hero/hero_scaldris.lua"
+		"MaxLevel"						"1"
+	}
+
+	//=================================================================================================================
+	// Scaldris: Heatwave
+	//=================================================================================================================
+	"imba_scaldris_heatwave"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"MaxLevel"						"7"
+		"AbilityTextureName"			"custom/scaldris_heatwave"
+		"ScriptFile"					"hero/hero_scaldris.lua"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.05"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ALACRITY"
+		"AbilityCastRange"				"1200"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"12"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"70 85 100 115 130 145 160"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"					"particles/hero/scaldris/heatwave.vpcf"
+			"particle"					"particles/units/heroes/hero_jakiro/jakiro_liquid_fire_debuff.vpcf"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"wave_radius"				"300"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"wave_speed"				"2000"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"wave_distance"				"1200"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"8.0"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"dps"						"9 17 25 33 37 41 45"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Scaldris: Cold Front
+	//=================================================================================================================
+	"imba_scaldris_cold_front"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"MaxLevel"						"7"
+		"AbilityTextureName"			"custom/scaldris_cold_front"
+		"ScriptFile"					"hero/hero_scaldris.lua"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ALACRITY"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"12"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"70"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/imba_soundevents.vsndevts"
+			"particle"					"particles/hero/scaldris/ice_spell_projectile.vpcf"
+			"particle"					"particles/hero/scaldris/cold_front_blast.vpcf"
+			"particle"					"particles/hero/lich/cold_front_freeze.vpcf"
+			"particle"					"particles/status_fx/status_effect_frost_lich.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"		"450"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"blast_radius"			"325"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"root_duration"			"1.5 2.0 2.5 3.0 3.0 3.0 3.0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_duration"		"8.0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"dps"					"8 8 8 8 12 16 20"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Scaldris: Scorch
+	//=================================================================================================================
+	"imba_scaldris_scorch"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"MaxLevel"						"7"
+		"AbilityTextureName"			"custom/scaldris_scorch"
+		"ScriptFile"					"hero/hero_scaldris.lua"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.05"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_GHOST_WALK"
+		"AbilityCastRange"				"600 700 700 800 800 900 900"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"15 14 13 12 11 10 9"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"70 80 90 100 110 120 130"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"					"particles/hero/scaldris/scorch.vpcf"
+			"particle"					"particles/hero/scaldris/scorch_blind.vpcf"
+			"particle"					"particles/units/heroes/hero_jakiro/jakiro_liquid_fire_debuff.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"effect_radius"				"600 700 700 800 800 900 900"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"blind_amount"				"40 50 60 70 80 90 100"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"blind_duration"			"3.0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"8.0"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"dps"						"9 13 17 21 24 27 30"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Scaldris: Freeze
+	//=================================================================================================================
+	"imba_scaldris_freeze"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"MaxLevel"						"7"
+		"AbilityTextureName"			"custom/scaldris_freeze"
+		"ScriptFile"					"hero/hero_scaldris.lua"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.05"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ALACRITY"
+		"AbilityCastRange"				"1000"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"15 14 13 12 11 10 9"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50 55 60 65 70 75 80"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"					"particles/hero/scaldris/freeze.vpcf"
+			"particle"					"particles/status_fx/status_effect_frost_lich.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"initial_radius"			"200"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"final_radius"				"400"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"wave_speed"				"450"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"wave_distance"				"1000"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"slow_duration"				"2.25 2.75 3.25 3.75 4.0 4.25 4.5"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow_amount"				"-40"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"damage_duration"			"8.0"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"dps"						"8 8 8 8 12 16 20"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Scaldris: Jet Blaze
+	//=================================================================================================================
+	"imba_scaldris_jet_blaze"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"MaxLevel"						"7"
+		"AbilityTextureName"			"custom/scaldris_jet_blaze"
+		"ScriptFile"					"hero/hero_scaldris.lua"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.05"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_GHOST_WALK"
+		"AbilityCastRange"				"400 450 500 550 600 650 700"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"22 20 18 16 14 12 10"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"90"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"					"particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf"
+			"particle"					"particles/hero/scaldris/jet_blaze.vpcf"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_dragon_knight.vsndevts"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"rush_distance"				"400 450 500 550 600 650 700"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"initial_radius"			"175"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"final_radius"				"375"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cone_length"				"800"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"fire_speed"				"1500"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"rush_duration"				"0.5"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"damage_duration"			"8.0"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"dps"						"9 13 17 21 24 27 30"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Scaldris: Ice Floes
+	//=================================================================================================================
+	"imba_scaldris_ice_floes"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"MaxLevel"						"7"
+		"AbilityTextureName"			"custom/scaldris_ice_floes"
+		"ScriptFile"					"hero/hero_scaldris.lua"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"600 675 750 825 900 975 1050"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ALACRITY"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"22 20 18 16 14 12 10"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"70"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"					"particles/hero/scaldris/ice_spell_projectile.vpcf"
+			"particle"					"particles/econ/items/wisp/wisp_relocate_marker_ti7_endpoint.vpcf"
+			"particle"					"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
+			"particle"					"particles/status_fx/status_effect_frost_lich.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"		"450"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"effect_radius"			"200"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"			"0.9 1.2 1.5 1.8 2.0 2.2 2.4"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_duration"		"8.0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"dps"					"8 8 8 8 12 16 20"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Scaldris: Living Flame
+	//=================================================================================================================
+	"imba_scaldris_living_flame"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"MaxLevel"						"6"
+		"AbilityTextureName"			"custom/scaldris_living_flame"
+		"ScriptFile"					"hero/hero_scaldris.lua"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.05"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ALACRITY"
+		"AbilityCastRange"				"800"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"85 80 75 70 65 60"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"200 250 300 350 400 450"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"					"particles/hero/scaldris/living_flame.vpcf"
+			"particle"					"particles/hero/scaldris/living_flame_debuff.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"jump_radius"				"575 600 625 650 675 700"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"8.0"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"dps"						"30 40 50 60 70 80"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Scaldris: Absolute Zero
+	//=================================================================================================================
+	"imba_scaldris_absolute_zero"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"FightRecapLevel"				"1"
+		"MaxLevel"						"6"
+		"AbilityTextureName"			"custom/scaldris_absolute_zero"
+		"ScriptFile"					"hero/hero_scaldris.lua"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.05"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ALACRITY"
+		"AbilityCastRange"				"800"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"85 80 75 70 65 60"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"175 200 225 250 275 300 325"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"					"particles/hero/scaldris/ice_spell_projectile_tracking.vpcf"
+			"particle"					"particles/units/heroes/hero_winter_wyvern/wyvern_winters_curse.vpcf"
+			"particle"					"particles/status_fx/status_effect_frost_lich.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"projectile_speed"			"450"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"stun_duration"				"3.0"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"initial_slow"				"-30 -40 -50 -60 -70 -80"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"damage_duration"			"8.0"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"dps"						"10 15 20 25 30 35"
 			}
 		}
 	}

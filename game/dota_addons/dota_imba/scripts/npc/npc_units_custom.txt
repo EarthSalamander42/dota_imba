@@ -11301,8 +11301,8 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"             "25"        // Physical protection.
-		"MagicalResistance"             "0"         // Magical protection.
+		"ArmorPhysical"             "40"        // Physical protection.
+		"MagicalResistance"         "0"         // Magical protection.
 
 		// Attack
 		//----------------------------------------------------------------
@@ -11390,8 +11390,8 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"             "25"        // Physical protection.
-		"MagicalResistance"             "0"         // Magical protection.
+		"ArmorPhysical"             "40"        // Physical protection.
+		"MagicalResistance"         "0"         // Magical protection.
 
 		// Attack
 		//----------------------------------------------------------------
@@ -11479,8 +11479,8 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"             "25"        // Physical protection.
-		"MagicalResistance"             "0"         // Magical protection.
+		"ArmorPhysical"             "40"        // Physical protection.
+		"MagicalResistance"         "0"         // Magical protection.
 
 		// Attack
 		//----------------------------------------------------------------
@@ -11568,8 +11568,8 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"             "20"            // Physical protection.
-		"MagicalResistance"             "0"         // Magical protection.
+		"ArmorPhysical"             "30"            // Physical protection.
+		"MagicalResistance"         "0"         // Magical protection.
 
 		// Attack
 		//----------------------------------------------------------------
@@ -11658,8 +11658,8 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"             "20"            // Physical protection.
-		"MagicalResistance"             "0"         // Magical protection.
+		"ArmorPhysical"             "30"            // Physical protection.
+		"MagicalResistance"         "0"         // Magical protection.
 
 		// Attack
 		//----------------------------------------------------------------
@@ -11747,8 +11747,8 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"             "20"            // Physical protection.
-		"MagicalResistance"             "0"         // Magical protection.
+		"ArmorPhysical"             "30"            // Physical protection.
+		"MagicalResistance"         "0"         // Magical protection.
 
 		// Attack
 		//----------------------------------------------------------------
@@ -11836,8 +11836,8 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"             "25"        // Physical protection.
-		"MagicalResistance"             "0"         // Magical protection.
+		"ArmorPhysical"             "40"        // Physical protection.
+		"MagicalResistance"         "0"         // Magical protection.
 
 		// Attack
 		//----------------------------------------------------------------
@@ -11926,8 +11926,8 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"             "25"        // Physical protection.
-		"MagicalResistance"             "0"         // Magical protection.
+		"ArmorPhysical"             "40"        // Physical protection.
+		"MagicalResistance"         "0"         // Magical protection.
 
 		// Attack
 		//----------------------------------------------------------------
@@ -12014,8 +12014,8 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"             "25"        // Physical protection.
-		"MagicalResistance"             "0"         // Magical protection.
+		"ArmorPhysical"             "40"        // Physical protection.
+		"MagicalResistance"         "0"         // Magical protection.
 
 		// Attack
 		//----------------------------------------------------------------
@@ -12103,8 +12103,8 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"             "20"            // Physical protection.
-		"MagicalResistance"             "0"         // Magical protection.
+		"ArmorPhysical"             "30"            // Physical protection.
+		"MagicalResistance"         "0"         // Magical protection.
 
 		// Attack
 		//----------------------------------------------------------------
@@ -12192,8 +12192,8 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"             "20"            // Physical protection.
-		"MagicalResistance"             "0"         // Magical protection.
+		"ArmorPhysical"             "30"            // Physical protection.
+		"MagicalResistance"         "0"         // Magical protection.
 
 		// Attack
 		//----------------------------------------------------------------
@@ -13067,7 +13067,6 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		
 		"Ability1"					"backdoor_protection_in_base"			// Ability 1.
 		"Ability2"					"filler_ability"			// Ability 2.
 		"Ability3"					""			// Ability 3.
@@ -13080,7 +13079,7 @@
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"24"			// Physical protection.
-		"MagicalResistance"				"0"			// Magical protection.
+		"MagicalResistance"			"0"			// Magical protection.
 
 		// Attack
 		//----------------------------------------------------------------
@@ -13230,5 +13229,85 @@
 		//----------------------------------------------------------------
 		"VisionDaytimeRange"		"1900"		// Range of vision during day light.
 		"VisionNighttimeRange"		"800"		// Range of vision at night time.
+	}
+
+	//=================================================================================================================
+	// HERO: Scaldris // Need to be duplicated in npc_units_custom.txt
+	//=================================================================================================================
+	"npc_dota_hero_scaldris"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"					"npc_dota_hero_invoker"
+		"HeroID"					"118"
+		"Model"						"models/heroes/invoker/invoker.vmdl"
+		"ModelScale"				"0.810000" //0.74
+		"SoundSet"					"Hero_Invoker"
+
+		//Picking Screen
+		"IsCustom"					"1"
+		"IsNew"						"1"
+
+		// Armor
+		//-------------------------------------------------------------------------------------------------------------
+		"ArmorPhysical"				"3"									// Physical protection.
+		"MagicalResistance"			"25"								// Magical protection (percentage).
+
+		// Attack
+		//-------------------------------------------------------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"19"							// Damage range min.
+		"AttackDamageMax"			"25"							// Damage range max.
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"		// Type of damage dealt. 
+		"AttackRate"				"1.700"							// Speed of attack.
+		"AttackAnimationPoint"		"0.400"							// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"800"							// Range within a target can be acquired.
+		"AttackRange"				"600"							// Range within a target can be attacked.
+		"ProjectileModel"			"particles/units/heroes/hero_invoker/invoker_base_attack.vpcf"								// Particle system model for projectile.
+		"ProjectileSpeed"			"900"							// Speed of projectile.
+		"HasInventory"				"1"
+
+		// Attributes
+		//-------------------------------------------------------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"	// Primary Attribute
+		"AttributeBaseStrength"		"16"
+		"AttributeStrengthGain"		"2.200000"
+		"AttributeBaseAgility"		"14"
+		"AttributeAgilityGain"		"1.900000"
+		"AttributeBaseIntelligence"	"16"
+		"AttributeIntelligenceGain"	"4.000000"
+
+		// Bounds
+		//-------------------------------------------------------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"70"
+		"HealthBarOffset"			"240"
+
+		// Movement
+		//-------------------------------------------------------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"305"									// Speed.
+		"MovementTurnRate"			"0.5"									// Turning rate.
+
+		// Status
+		//-------------------------------------------------------------------------------------------------------------
+		"StatusHealth"				"200"									// Base health.
+		"StatusHealthRegen"			"3.0"									// Health regeneration rate.
+		"StatusMana"				"50"									// Base mana.
+		"StatusManaRegen"			"1.0"									// Mana regeneration rate.
+
+		// Team
+		//-------------------------------------------------------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_HERO"
+
+		// Vision
+		//-------------------------------------------------------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"									// Range of vision during day light.
+		"VisionNighttimeRange"		"800"									// Range of vision at night time.
+
+		"GameSoundsFile"			"soundevents/game_sounds_heroes_custom/game_sounds_invoker.vsndevts"
 	}
 }

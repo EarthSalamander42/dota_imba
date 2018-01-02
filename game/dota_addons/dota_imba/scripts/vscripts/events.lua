@@ -262,12 +262,14 @@ function GameMode:OnGameRulesStateChange(keys)
 
 				ApiPrint(k .. " " .. level .. " " .. title .. " " .. color .. " " .. progress)
 
-				xpInfo[k] = {
-					level = level,
-					title = title,
-					color = color,
-					progress = progress
-				}
+				if level and title and color and progress then
+					xpInfo[k] = {
+						level = level,
+						title = title,
+						color = color,
+						progress = progress
+					}
+				end
 			end
 
 			ApiPrint("Sending Event")
