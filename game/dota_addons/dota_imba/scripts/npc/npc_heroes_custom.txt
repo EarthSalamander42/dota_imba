@@ -8,6 +8,7 @@
 		"override_hero"				"npc_dota_hero_arc_warden"
 
 		//Picking Screen
+		"IsDisabled"				"3"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"Ability1"					"arc_warden_flux"
@@ -1314,35 +1315,6 @@
 		"Ability16"					"special_bonus_imba_phoenix_3" // Fire spirits can stack up to 3
 		"Ability17"					"special_bonus_imba_phoenix_8" // Can move freely when casting Sun Ray
 	}
-
-	//=================================================================================================================
-	// HERO: Pudge
-	//=================================================================================================================
-//	"npc_dota_hero_pudge"
-//	{
-//		"override_hero"				"npc_dota_hero_pudge"
-//		"AttackRange"				"200"
-
-//		//Picking Screen
-//		"IsImba"					"1"
-//		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-
-//		"Ability1"					"imba_pudge_meat_hook"
-//		"Ability2"					"imba_pudge_rot"
-//		"Ability3"					"imba_pudge_butchers_cleaver"
-//		"Ability4"					"imba_pudge_flesh_heap"
-//		"Ability5"					"generic_hidden"
-//		"Ability6"					"imba_pudge_dismember"		
-
-//		"Ability10"					"special_bonus_imba_pudge_2" // Meat Shield: Consume X stacks of charges to block Y damage, restores after Z seconds, Ignore on A damage?
-//		"Ability11"					"special_bonus_imba_pudge_6" // Hook now deals damage for each tree the unit passes through
-//		"Ability12"					"special_bonus_imba_pudge_3" // Bonus Spellsteal per Flesh Heap stack
-//		"Ability13"					"special_bonus_imba_pudge_4" // Pudge lifesteals from all sources of damage on units rooted by Cleaver 
-//		"Ability14"					"special_bonus_imba_pudge_5" // Cleaver can now pierce through enemies, damaging and affecting all enemies in a straight line.
-//		"Ability15"					"special_bonus_imba_pudge_1" // Rot deals x more damage for every y% health he misses
-//		"Ability16"					"special_bonus_imba_pudge_8" // Triple Meat Hooks
-//		"Ability17"					"special_bonus_imba_pudge_7" // Dismember now disarms the target after the duration for the channeled duration
-//	}
 
 	//========================================================================================================
 	// HERO: Pudge

@@ -5,13 +5,10 @@ CreateEmptyTalents("pudge")
 
 function modifier_special_bonus_imba_pudge_1:OnCreated()
 	if IsServer() then
-		--Updates the stacks without waiting for a level up
-		local meat_hook = self:GetParent():FindAbilityByName("imba_pudge_meat_hook")
-
-		meat_hook:OnHeroLevelUp()
+		self:GetParent():SetModifierStackCount("modifier_imba_hook_sharp_stack", self:GetParent(), self:GetParent():GetModifierStackCount("modifier_imba_hook_sharp_stack", self:GetParent()) + 5)
+		self:GetParent():SetModifierStackCount("modifier_imba_hook_light_stack", self:GetParent(), self:GetParent():GetModifierStackCount("modifier_imba_hook_light_stack", self:GetParent()) + 5)
 	end
 end
-
 
 --[[
 -------------------------------------------
@@ -1228,6 +1225,7 @@ function imba_pudge_meat_hook:GetAbilityTextureName()
    return "pudge_meat_hook"
 end
 -------------------------------------------
+--[[ Do not show range, as it is harder to hook then
 function imba_pudge_meat_hook:GetCastRange()
 
 	--Check the extra range from the swift stacks
@@ -1241,6 +1239,7 @@ end
 function imba_pudge_meat_hook:GetCooldown(level)
 	return self.BaseClass.GetCooldown(self, level)
 end
+--]]
 --------------------------------------------------------------------------------
 
 function imba_pudge_meat_hook:OnUpgrade()
@@ -1268,7 +1267,10 @@ end
 --------------------------------------------------------------------------------
 
 function imba_pudge_meat_hook:OnAbilityPhaseInterrupted()
-	self:GetCaster():RemoveGesture( ACT_DOTA_OVERRIDE_ABILITY_1 )
+	local caster = self:GetCaster()
+	caster:RemoveGesture( ACT_DOTA_OVERRIDE_ABILITY_1 )
+	--Should fix meat hook breaking sometimes
+	caster.hook_launched = false
 end
 
 --------------------------------------------------------------------------------
@@ -1430,7 +1432,6 @@ function imba_pudge_meat_hook:OnSpellStart()
 			{
 				nProjectileNumber = i,
 				--special_target = 0 --false
-
 			}
 		}
 
@@ -1461,14 +1462,23 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData( hTarget, vLocation,keys
 	local i = keys.nProjectileNumber
 	--local special_target = keys.special_target
 
-	if not self.hooks[i] then return end	
+	if not self.hooks[i] then return end
 	
 	-- RETRACTING
-	if self.hooks[i]["bRetracting"] then		
+	if self.hooks[i]["bRetracting"] then
 		-- Hitting someone on the way back is ignored
 	 	if hTarget then
 			return 
 		end
+
+		-- Reactivate tp scrolls/boots
+		for i = 0, 5 do
+			local current_item = caster:GetItemInSlot(i)
+			if current_item then
+				current_item:SetActivated(true)
+			end
+		end
+
 		-- The endpoint has been reached. Clean up
 		if caster and caster:IsHero() then
 			local hHook = caster:GetTogglableWearable( DOTA_LOADOUT_TYPE_WEAPON )
@@ -1484,10 +1494,11 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData( hTarget, vLocation,keys
 			for k,v in pairs(self.hooks[i]["unitsHit"]) do
 				if IsValidEntity(v) and not v:IsRune() then --would return errors on runes
 					v:RemoveModifierByName( "modifier_imba_meat_hook" )
-					--Remove the Rupture effect from Talent #7
+					--Remove the Rupture effect from Talent #7 and set back to false the check
 					if caster:HasTalent("special_bonus_imba_pudge_7") then
 						ParticleManager:DestroyParticle(v.RuptureFX, true)
 						ParticleManager:ReleaseParticleIndex(v.RuptureFX)
+						v.is_ruptured = false
 					end
 
 					v:SetUnitOnClearGround()
@@ -1515,8 +1526,7 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData( hTarget, vLocation,keys
 
 		if not self.targets[hTarget] then -- Storing the targets so it won't get handled again
 			-- If it is a tree or Jugg's healing ward or is near the fountain, do nothing	
-			if hTarget.IsStanding or IsNearEnemyFountain(hTarget:GetAbsOrigin(), caster:GetTeamNumber(), 1200) then 
-			else
+			if not hTarget.IsStanding and not IsNearEnemyFountain(hTarget:GetAbsOrigin(), caster:GetTeamNumber(), 1200) then 
 				if not hTarget:IsRune() then --it's NOT a rune
 					EmitSoundOn( "Hero_Pudge.AttackHookImpact", hTarget )
 					hTarget:AddNewModifier( caster, self, "modifier_imba_meat_hook", {duration = 1.5} )
@@ -1561,12 +1571,11 @@ function imba_pudge_meat_hook:OnProjectileHit_ExtraData( hTarget, vLocation,keys
 
 				end
 
-				
+				AddFOWViewer( caster:GetTeamNumber(), hTarget:GetOrigin(), self.vision_radius, self.vision_duration, false )
+
+				table.insert(self.hooks[i]["unitsHit"], hTarget) --Grab the target
 			end
 
-			AddFOWViewer( caster:GetTeamNumber(), hTarget:GetOrigin(), self.vision_radius, self.vision_duration, false )
-
-			table.insert(self.hooks[i]["unitsHit"], hTarget)
 		end
 	end
 	-- Check if the hook should retract
@@ -1705,28 +1714,30 @@ function imba_pudge_meat_hook:OnProjectileThink_ExtraData(vLocation,keys)
 	self.hooks[i]["vProjectileLocation"] = vLocation
 	if self.hooks[i]["unitsHit"] then
 		for k,v in pairs(self.hooks[i]["unitsHit"]) do
-			AddFOWViewer( caster:GetTeamNumber(), v:GetOrigin(), self.vision_radius, 1, false ) --Give vision on the victims
-			local oldPos = v:GetAbsOrigin() --Needed for rupture damage
-			if IsValidEntity(v) or (v == rune) then
-				v:SetAbsOrigin(GetGroundPosition(vLocation,caster))
-			end
+			if not v:IsNull() then --Avoid bugs with runes being picked up while grabbed
+				AddFOWViewer( caster:GetTeamNumber(), v:GetOrigin(), self.vision_radius, 1, false ) --Give vision on the victims
+				local oldPos = v:GetAbsOrigin() --Needed for rupture damage
+				if IsValidEntity(v) or (v == rune) then
+					v:SetAbsOrigin(GetGroundPosition(vLocation,caster))
+				end
 
-			--Talent #7: Grabbed units are ruptured
-			if caster:GetTeamNumber() ~= v:GetTeamNumber() and not v:IsRune() and caster:HasTalent("special_bonus_imba_pudge_7") then
-				local damage_cap = caster:FindTalentValue("special_bonus_imba_pudge_7", "damage_cap")
-				local rupture_damage = caster:FindTalentValue("special_bonus_imba_pudge_7", "movement_damage_pct") / 20
-				local distance_diff = CalculateDistance(oldPos, v)
+				--Talent #7: Grabbed units are ruptured
+				if caster:GetTeamNumber() ~= v:GetTeamNumber() and not v:IsRune() and caster:HasTalent("special_bonus_imba_pudge_7") then
+					local damage_cap = caster:FindTalentValue("special_bonus_imba_pudge_7", "damage_cap")
+					local rupture_damage = caster:FindTalentValue("special_bonus_imba_pudge_7", "movement_damage_pct") / 20
+					local distance_diff = CalculateDistance(oldPos, v)
 
-				if distance_diff < damage_cap then
-					local move_damage = distance_diff * rupture_damage
-					if move_damage > 0 then
-						if not v.is_ruptured then
-							v.is_ruptured = true
-							v.RuptureFX = ParticleManager:CreateParticle("particles/units/heroes/hero_bloodseeker/bloodseeker_rupture.vpcf", PATTACH_POINT_FOLLOW, v)
-							EmitSoundOn("hero_bloodseeker.rupture.cast", v)
-							EmitSoundOn("hero_bloodseeker.rupture", v)
+					if distance_diff < damage_cap then
+						local move_damage = distance_diff * rupture_damage
+						if move_damage > 0 then
+							if not v.is_ruptured then
+								v.is_ruptured = true
+								v.RuptureFX = ParticleManager:CreateParticle("particles/units/heroes/hero_bloodseeker/bloodseeker_rupture.vpcf", PATTACH_POINT_FOLLOW, v)
+								EmitSoundOn("hero_bloodseeker.rupture.cast", v)
+								EmitSoundOn("hero_bloodseeker.rupture", v)
+							end
+							ApplyDamage({victim = v, attacker = caster, damage = move_damage, damage_type = DAMAGE_TYPE_PURE, ability = caster:FindAbilityByName("imba_pudge_meat_hook")})
 						end
-						ApplyDamage({victim = v, attacker = caster, damage = move_damage, damage_type = DAMAGE_TYPE_MAGICAL, ability = caster:FindAbilityByName("imba_pudge_meat_hook")})
 					end
 				end
 			end
@@ -1905,17 +1916,15 @@ function imba_pudge_sharp_hook:OnToggle()
 
 	--if Toggling on
 	if ability:GetToggleState() then
-
 		--Toggle off Swift Hook
 		if toggle_state then
 			ability_swift:ToggleAbility()
 		end
 
-
 		-- If there are no stacks of Light Hook, do nothing and toggle the skill off
 		if not light_hook_stacks or light_hook_stacks == 0 then
 			ability:ToggleAbility()
-			return nil
+			return
 		end
 
 		-- If not, start transferring stacks

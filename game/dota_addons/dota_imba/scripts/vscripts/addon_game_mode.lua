@@ -74,7 +74,7 @@ DebugPrint("[IMBA] Performing pre-load precache")
 	-- Companion using mirana modifiers
 	LinkLuaModifier("modifier_imba_mirana_silence_stance", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 	LinkLuaModifier("modifier_imba_mirana_silence_stance_visible", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
-
+--[[
 	PrecacheResource("particle", "particles/econ/items/effigies/status_fx_effigies/gold_effigy_ambient_dire_lvl2.vpcf", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_ember_spirit.vsndevts", context)
@@ -198,7 +198,7 @@ DebugPrint("[IMBA] Performing pre-load precache")
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_razor.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_weaver.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_roshan_halloween.vsndevts", context)
-
+--]]
 	-- Rapier sounds
 	--PrecacheResource("sound", "sounds/vo/announcer_dlc_bastion/announcer_event_store_rapier.vsnd", context)
 	--PrecacheResource("sound", "sounds/vo/announcer_dlc_pflax/announcer_divine_rapier_one.vsnd", context)
@@ -207,7 +207,7 @@ DebugPrint("[IMBA] Performing pre-load precache")
 	--PrecacheResource("sound", "sounds/physics/items/weapon_drop_common_02.vsnd", context)
 	--PrecacheResource("sound", "sounds/ui/inventory/metalblade_equip_01.vsnd", context)
 
-	PrecacheUnitByNameSync("npc_dota_hero_wisp", context) --Precaching dummy wisp
+	PrecacheUnitByNameAsync("npc_dota_hero_wisp", context) --Precaching dummy wisp
 end
 
 function Activate()

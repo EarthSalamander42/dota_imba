@@ -907,7 +907,6 @@
 				"Aura_Radius"					"%aura_radius"
 				"Aura_Teams"					"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 				"Aura_Types"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_Flags"					"DOTA_UNIT_TARGET_FLAG_NONE"
 				"Aura_ApplyToCaster"			"0"
 			}
 
@@ -1000,7 +999,6 @@
 				"Aura_Radius"					"%aura_radius"
 				"Aura_Teams"					"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 				"Aura_Types"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_Flags"					"DOTA_UNIT_TARGET_FLAG_NONE"
 				"Aura_ApplyToCaster"			"0"
 			}
 
@@ -3430,8 +3428,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -3459,8 +3457,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -3489,8 +3487,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -3518,8 +3516,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -3557,8 +3555,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -3586,8 +3584,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -3615,8 +3613,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -3644,8 +3642,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -4601,8 +4599,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -4630,8 +4628,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -4659,8 +4657,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -4688,8 +4686,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -4717,8 +4715,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -4746,8 +4744,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -4781,8 +4779,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -4816,8 +4814,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -6567,8 +6565,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -6593,8 +6591,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -6620,8 +6618,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -6646,8 +6644,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -6672,8 +6670,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -6704,8 +6702,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -6730,8 +6728,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -6762,8 +6760,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -7234,8 +7232,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -7260,8 +7258,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -7286,8 +7284,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -7312,8 +7310,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -7338,8 +7336,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -7364,8 +7362,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -7396,8 +7394,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -7423,8 +7421,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -7759,8 +7757,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -7788,8 +7786,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -7817,8 +7815,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -7846,8 +7844,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -7876,8 +7874,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -7905,8 +7903,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -7934,8 +7932,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -7963,8 +7961,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -8321,8 +8319,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -8348,8 +8346,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -8374,8 +8372,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -8400,8 +8398,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -8426,8 +8424,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -8452,8 +8450,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -8478,8 +8476,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -8504,8 +8502,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -8978,8 +8976,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -9019,8 +9017,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -9048,8 +9046,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
 
@@ -9083,8 +9081,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -9112,8 +9110,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -9148,8 +9146,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -9189,8 +9187,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -9230,8 +9228,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -9679,8 +9677,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -9717,8 +9715,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -9743,8 +9741,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -9775,8 +9773,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -9813,8 +9811,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -9839,8 +9837,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -9872,8 +9870,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -9898,8 +9896,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -10396,8 +10394,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -10422,8 +10420,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -10448,8 +10446,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -10484,8 +10482,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -10510,8 +10508,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -10536,8 +10534,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -10572,8 +10570,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -10598,8 +10596,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -10957,8 +10955,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -10996,8 +10994,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
 
@@ -11017,8 +11015,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -11073,8 +11071,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -11105,8 +11103,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -11150,8 +11148,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -11181,8 +11179,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -11207,8 +11205,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -12779,8 +12777,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -12818,8 +12816,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -12853,8 +12851,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -12882,8 +12880,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -12917,8 +12915,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -12952,8 +12950,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -12982,8 +12980,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -13011,8 +13009,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -13537,8 +13535,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -13567,8 +13565,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -13602,8 +13600,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -13631,8 +13629,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -13660,8 +13658,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -13689,8 +13687,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -13719,8 +13717,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -13748,8 +13746,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -14226,8 +14224,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -14265,8 +14263,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -14294,8 +14292,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -14328,8 +14326,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -14357,8 +14355,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -14386,8 +14384,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -14420,8 +14418,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -14454,8 +14452,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -15031,8 +15029,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -15060,8 +15058,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -15089,8 +15087,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -15118,8 +15116,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -15152,8 +15150,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -15181,8 +15179,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -15210,8 +15208,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -15240,8 +15238,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -15744,8 +15742,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -15770,8 +15768,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -15796,8 +15794,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -15822,8 +15820,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -15879,8 +15877,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -15905,8 +15903,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -15937,8 +15935,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -15969,8 +15967,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -16382,8 +16380,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -16411,8 +16409,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -16440,8 +16438,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -16489,8 +16487,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -16524,8 +16522,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -16563,8 +16561,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -16592,8 +16590,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -16631,8 +16629,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -17051,8 +17049,8 @@
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+        "BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -17077,8 +17075,8 @@
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+        "BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -17103,8 +17101,8 @@
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+        "BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -17134,8 +17132,8 @@
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+        "BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -17160,8 +17158,8 @@
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+        "BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -17186,8 +17184,8 @@
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+        "BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -17212,8 +17210,8 @@
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+        "BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -17253,8 +17251,8 @@
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+        "BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -17797,8 +17795,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -17826,8 +17824,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -17855,8 +17853,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -17916,8 +17914,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -17945,8 +17943,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -17974,8 +17972,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -18003,8 +18001,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -18037,8 +18035,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -18549,8 +18547,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -18578,8 +18576,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -18612,8 +18610,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -18641,8 +18639,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -18670,8 +18668,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -18704,8 +18702,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -18733,8 +18731,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -18762,8 +18760,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -19165,8 +19163,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -19192,8 +19190,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -19218,8 +19216,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -19244,8 +19242,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -19270,8 +19268,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"		
 
@@ -19291,8 +19289,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -19317,8 +19315,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -19343,8 +19341,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -19834,8 +19832,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -19863,8 +19861,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -19892,8 +19890,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -19921,8 +19919,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -19950,8 +19948,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -19979,8 +19977,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -20008,8 +20006,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -20037,8 +20035,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -20703,8 +20701,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -20755,8 +20753,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -20787,8 +20785,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -20813,8 +20811,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -20839,8 +20837,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -20865,8 +20863,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -20893,8 +20891,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -20919,8 +20917,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -21287,8 +21285,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -21313,8 +21311,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -21339,8 +21337,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -21371,8 +21369,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -21397,8 +21395,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -21423,8 +21421,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -21449,8 +21447,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -21475,8 +21473,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -21864,8 +21862,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -21890,8 +21888,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -21916,8 +21914,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -21942,8 +21940,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -21968,8 +21966,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -21994,8 +21992,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -22065,8 +22063,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -22101,8 +22099,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -22454,8 +22452,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -22480,8 +22478,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -22506,8 +22504,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -22532,8 +22530,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -22558,8 +22556,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -22584,8 +22582,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -22620,8 +22618,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -22646,8 +22644,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -22971,8 +22969,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -22997,8 +22995,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -23031,8 +23029,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -23057,8 +23055,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -23083,8 +23081,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -23109,8 +23107,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -23141,8 +23139,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -23167,8 +23165,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -23578,8 +23576,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -23604,8 +23602,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -23630,8 +23628,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -23656,8 +23654,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -23682,8 +23680,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -23708,8 +23706,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -23734,8 +23732,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -23760,8 +23758,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -25058,8 +25056,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -25084,8 +25082,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -25115,8 +25113,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -25146,8 +25144,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -25172,8 +25170,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -25204,8 +25202,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -25236,8 +25234,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -25273,8 +25271,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -26589,8 +26587,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -26616,8 +26614,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -26642,8 +26640,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -26668,8 +26666,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -26694,8 +26692,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -26720,8 +26718,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -26746,8 +26744,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -26778,8 +26776,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -27286,8 +27284,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -27312,8 +27310,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -27338,8 +27336,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -27369,8 +27367,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -27395,8 +27393,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -27421,8 +27419,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -27447,8 +27445,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -27473,8 +27471,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -27849,8 +27847,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -27878,8 +27876,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -27907,8 +27905,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -27936,8 +27934,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -27970,8 +27968,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -27999,8 +27997,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -28029,8 +28027,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -28058,8 +28056,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -28414,8 +28412,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -28441,8 +28439,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -28472,8 +28470,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -28503,8 +28501,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -28534,8 +28532,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -28561,8 +28559,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -28587,8 +28585,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -28623,8 +28621,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"        
 
@@ -29141,8 +29139,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -29167,8 +29165,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -29193,8 +29191,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -29219,8 +29217,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -29245,8 +29243,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -29279,8 +29277,8 @@
 
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -29310,8 +29308,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -29336,8 +29334,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -29677,8 +29675,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -29703,8 +29701,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -29729,8 +29727,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -29761,8 +29759,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -29793,8 +29791,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -29819,8 +29817,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -29857,8 +29855,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -29901,8 +29899,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -30244,7 +30242,6 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NONE"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
@@ -30328,8 +30325,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -30357,8 +30354,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -30780,8 +30777,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -30809,8 +30806,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -30838,8 +30835,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -30867,8 +30864,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -30896,8 +30893,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -30925,8 +30922,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -30954,8 +30951,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -30983,8 +30980,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -31817,8 +31814,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"                                                        
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"                                                        
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -31843,8 +31840,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"                                                        
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"                                                        
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -31869,8 +31866,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"                                                        
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"                                                        
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -31895,8 +31892,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"                                                        
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"                                                        
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -31921,8 +31918,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"                                                        
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"                                                        
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -31948,8 +31945,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"                                                        
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"                                                        
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -31974,8 +31971,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"                                                        
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"                                                        
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -32000,8 +31997,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"                                                        
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"                                                        
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -32402,8 +32399,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -32428,8 +32425,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -32454,8 +32451,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -32480,8 +32477,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -32506,8 +32503,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -32532,8 +32529,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -32558,8 +32555,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -32584,8 +32581,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -32699,8 +32696,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -32728,8 +32725,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -33164,8 +33161,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -33190,8 +33187,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -33216,8 +33213,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -33242,8 +33239,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -33268,8 +33265,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -33294,8 +33291,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -33320,8 +33317,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"        
 
@@ -33341,8 +33338,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -33825,8 +33822,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -33857,8 +33854,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -33883,8 +33880,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -33909,8 +33906,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -33935,8 +33932,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -33961,8 +33958,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -33987,8 +33984,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -34019,8 +34016,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -34464,8 +34461,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -34488,8 +34485,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -34512,8 +34509,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -34536,8 +34533,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -34560,8 +34557,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -34584,8 +34581,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -34608,8 +34605,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -34632,8 +34629,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -35038,8 +35035,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		
@@ -35077,8 +35074,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		
@@ -35106,8 +35103,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		
@@ -35135,8 +35132,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		
@@ -35164,8 +35161,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		
@@ -35194,8 +35191,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		
@@ -35223,8 +35220,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		
@@ -35258,8 +35255,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		
@@ -35683,8 +35680,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -36487,8 +36484,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -36517,8 +36514,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -36546,8 +36543,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -36575,8 +36572,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -36604,8 +36601,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -36633,8 +36630,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -36662,8 +36659,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -36691,8 +36688,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -36727,7 +36724,6 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NONE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES_STRONG"
 		"AbilityTextureName"			"tidehunter_ravage"
@@ -37168,8 +37164,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -37196,8 +37192,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -37224,8 +37220,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -37252,8 +37248,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -37280,8 +37276,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -37309,8 +37305,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -37339,8 +37335,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -37368,8 +37364,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -37794,8 +37790,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -37823,8 +37819,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -37852,8 +37848,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -37886,8 +37882,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -37920,8 +37916,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -37949,8 +37945,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -37989,8 +37985,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -38018,8 +38014,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -38448,8 +38444,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -38477,8 +38473,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -38506,8 +38502,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -38535,8 +38531,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -38564,8 +38560,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -38593,8 +38589,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -38622,8 +38618,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -38651,8 +38647,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -39213,8 +39209,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -39239,8 +39235,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -39265,8 +39261,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -39291,8 +39287,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -39317,8 +39313,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -39343,8 +39339,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -39369,8 +39365,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -39395,8 +39391,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -39762,8 +39758,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -39791,8 +39787,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -39820,8 +39816,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -39849,8 +39845,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -39879,8 +39875,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -39908,8 +39904,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -39937,8 +39933,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -39966,8 +39962,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -40434,8 +40430,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"                                                        
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"                                                        
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -40465,8 +40461,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"                                                        
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"                                                        
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -40496,8 +40492,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"                                                        
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"                                                        
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -40542,8 +40538,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"                                                        
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"                                                        
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -40574,8 +40570,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"                                                        
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"                                                        
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -40605,8 +40601,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"                                                        
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"                                                        
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -40631,8 +40627,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"                                                        
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"                                                        
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -40657,8 +40653,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"internal/funcs.lua"                                                        
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"                                                        
 		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 

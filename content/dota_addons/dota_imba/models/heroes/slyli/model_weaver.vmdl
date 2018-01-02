@@ -1128,39 +1128,6 @@
 						"materials/models/heroes/slyli/slyli02.vmat",
 					]
 				},
-				{
-					m_name = "1"
-					m_materialList = 
-					[
-						"materials/models/heroes/slyli/slyli03a.vmat",
-						"materials/models/heroes/slyli/slyli05a.vmat",
-						"materials/models/heroes/slyli/slyli04a.vmat",
-						"materials/models/heroes/slyli/slyli01a.vmat",
-						"materials/models/heroes/slyli/slyli02a.vmat",
-					]
-				},
-				{
-					m_name = "2"
-					m_materialList = 
-					[
-						"materials/models/heroes/slyli/slyli03b.vmat",
-						"materials/models/heroes/slyli/slyli05b.vmat",
-						"materials/models/heroes/slyli/slyli04b.vmat",
-						"materials/models/heroes/slyli/slyli01b.vmat",
-						"materials/models/heroes/slyli/slyli02b.vmat",
-					]
-				},
-				{
-					m_name = "3"
-					m_materialList = 
-					[
-						"materials/models/heroes/slyli/slyli03c.vmat",
-						"materials/models/heroes/slyli/slyli05c.vmat",
-						"materials/models/heroes/slyli/slyli04c.vmat",
-						"materials/models/heroes/slyli/slyli01c.vmat",
-						"materials/models/heroes/slyli/slyli02c.vmat",
-					]
-				},
 			]
 		}
 	}
