@@ -12,6 +12,7 @@ function UpdateScoreboard()
 (function()
 {
 	var shouldSort = true;
+//	$("#MultiteamScoreboard").style.visibility = "collapse";
 
 	if ( GameUI.CustomUIConfig().multiteam_top_scoreboard )
 	{
@@ -43,4 +44,3 @@ function UpdateScoreboard()
 
 	$.Schedule(1.0, UpdateScoreboard);
 })();
-

@@ -253,7 +253,6 @@ function CheckForHostPrivileges()
 	$.GetContextPanel().SetHasClass( "player_has_host_privileges", playerInfo.player_has_host_privileges );
 }
 
-
 //--------------------------------------------------------------------------------------------------
 // Update the state for the transition timer periodically
 //--------------------------------------------------------------------------------------------------
@@ -261,38 +260,12 @@ function UpdateTimer()
 {
 	var gameTime = Game.GetGameTime();
 	var transitionTime = Game.GetStateTransitionTime();
+	var mapInfo = Game.GetMapInfo();
+	var map_name = mapInfo.map_display_name.replace('_', " ")
 
 	CheckForHostPrivileges();
 
-	var mapInfo = Game.GetMapInfo();
-	if (mapInfo.map_display_name == "imba_standard")
-	{
-		$( "#MapInfo" ).SetDialogVariable( "map_name", "imba standard" );
-	}
-	else if (mapInfo.map_display_name == "imba_10v10")
-	{
-		$( "#MapInfo" ).SetDialogVariable( "map_name", "imba 10v10" );
-	}
-	else if (mapInfo.map_display_name == "imba_12v12")
-	{
-		$( "#MapInfo" ).SetDialogVariable( "map_name", "imba 12v12" );
-	}
-	else if (mapInfo.map_display_name == "imba_custom")
-	{
-		$( "#MapInfo" ).SetDialogVariable( "map_name", "imba custom" );
-	}
-	else if (mapInfo.map_display_name == "imba_frantic_10v10")
-	{
-		$( "#MapInfo" ).SetDialogVariable( "map_name", "imba 10v10 custom" );
-	}
-	else if (mapInfo.map_display_name == "imba_arena")
-	{
-		$( "#MapInfo" ).SetDialogVariable( "map_name", "imba arena" );
-	}
-	else if (mapInfo.map_display_name == "imba_diretide")
-	{
-		$( "#MapInfo" ).SetDialogVariable( "map_name", "diretide" );
-	}
+	$( "#MapInfo" ).SetDialogVariable( "map_name", map_name );
 
 	if ( transitionTime >= 0 )
 	{

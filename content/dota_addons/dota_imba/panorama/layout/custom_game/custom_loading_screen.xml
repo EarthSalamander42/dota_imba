@@ -20,8 +20,23 @@
 				<Image id="seq_coins" class="SeqImg" src="file://{images}/custom_game/loading_screen/loading_seq_coins.psd" />
 			</Panel>
 
-			<Panel id="TitlePanel">
-				<Label id="OverthrowTitle" text="#addon_game_name" style="" />
+			<Panel id="imba-news">
+				<Label id="imba-news-title" text="DOTA IMBA v7.03 - The Real Frostivus has arrived" />
+				<Label id="imba-news-article-title" />
+				<Label id="imba-news-article-text" />
+				<Label id="imba-news-link" text="Read more news on our Official Website" onactivate="DOTADisplayURL('http://www.dota2imba.org/');" />
+			</Panel>
+
+<!--			<Panel id="imba-logo"/> -->
+
+			<Panel id="imba-social">
+				<Panel id="imba-social-buttons">
+					<Button id="imba-social-button-discord-en" onactivate="DOTADisplayURL('http://tinyurl.com/imba-discord');" />
+					<Button id="imba-social-button-discord-ru" onactivate="DOTADisplayURL('https://discord.gg/HcybJKt');" />
+					<Button id="imba-social-button-tencent" onactivate="DOTADisplayURL('https://www.bilibiliduang.cn/imbagroup');" />
+					<Button id="imba-social-button-reddit" onactivate="DOTADisplayURL('https://www.reddit.com/r/dotaimba/');" />
+					<Button id="imba-social-button-patreon" onactivate="DOTADisplayURL('https://www.patreon.com/dotaimba');" />
+				</Panel>
 			</Panel>
 		</Panel>
 
@@ -61,10 +76,6 @@
 						</Panel>
 						<Panel class="GameOptionsSubPanel_alt">
 							<Label id="FranticInfo" text="#imba_gamemode_game_options_frantic_tooltip" />
-<!--
-							<ToggleButton id="TowerUpgradesToggle" text="#imba_gamemode_settings_tower_upgrades" class="GameOptionsToggle" onmouseover="UIShowTextTooltip( imba_gamemode_settings_tower_upgrades_tooltip )" onmouseout="UIHideTextTooltip()"/>
-							<ToggleButton id="FranticToggle" text="#imba_gamemode_game_options_frantic" class="GameOptionsToggle" onmouseover="UIShowTextTooltip( imba_gamemode_game_options_frantic_tooltip )" onmouseout="UIHideTextTooltip()"/>
--->
 						</Panel>
 
 						<Panel id="QuickOptionsPanel" class="GameOptionsSubPanel" >
@@ -76,11 +87,6 @@
 								<Label id="QuickOptionsHighBtnLabel" class="QuickOptionsBtnLabel" text="#imba_gamemode_settings_high" />
 							</Button>
 						</Panel>
-<!--
-						<Button id="ConfirmOptionsBtn" onactivate="SetGameOptions();" onmouseover="UIShowTextTooltip( imba_gamemode_settings_lock_options_tooltip )" onmouseout="UIHideTextTooltip()">
-							<Label id="ConfirmOptionsBtnLabel" text="#imba_gamemode_settings_lock_options" />
-						</Button>
-						 -->
 					</Panel>
 			</Panel>
 

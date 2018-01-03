@@ -770,13 +770,13 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 (function () {
 	// If this player is a spectator, just kill the whole pick screen
 	var localTeam = Players.GetTeam(Players.GetLocalPlayer())
-	if ( localTeam != 2 && localTeam != 3 ) {
+	if ( localTeam != 2 && localTeam != 3 && localTeam != 6 && localTeam != 7 && localTeam != 8 ) {
 		$.Msg("VILKOMMEN BIENVENUE, SPECTATOR!")
 		ShowHUD(true)
 		ShowPickScreen(false)
 		// Else, do pick screen stuff
 	} else {
-		$.Msg("Radiant/Dire Player")
+		$.Msg("Valid Player")
 		///Load player elements
 		ShowHUD(false);
 		LoadPlayers()
