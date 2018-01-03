@@ -28,7 +28,7 @@
 	};
 	*/
 
-	$.Schedule(1.0, EndScoreboard)
+	EndScoreboard()
 })();
 
 function EndScoreboard() {

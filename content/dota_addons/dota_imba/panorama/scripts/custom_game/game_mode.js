@@ -73,8 +73,10 @@ function InitializeUI() {
 	SetGameOptions(); // Setup game options by default in case the host don't change them (initialize)
 }
 
-function InitializeNews() { 
-	var lang = $.Localize("lang"); 
+function InitializeNews() {
+	$.Msg("Init News...")
+	var lang = $.Localize("lang");
+	$.Msg("Language: " + lang)
 
     $.AsyncWebRequest('http://api.dota2imba.org/meta/news',
 	{
@@ -82,15 +84,14 @@ function InitializeNews() {
 		success: function (data) {
 			var news = data.data;
 
+			$("#imba-news-article-title").text = news["en"].title;
+			$("#imba-news-article-text").text = news["en"].text;
+
 			if (news[lang] !== undefined) {
-				$.Msg("News received: " + news[lang].title)
 				$("#imba-news-article-title").text = news[lang].title;
 				$("#imba-news-article-text").text = news[lang].text;
-			} else {
-				$("#imba-news-article-title").text = "";
-				$("#imba-news-article-text").text = "";
 			}
-		} 
+		}
 	});
 }
 

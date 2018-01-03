@@ -1,0 +1,20 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_Children =
+	[
+		{
+			m_ChildRef = resource:"particles/treasure_courier_death_wing_01.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/treasure_courier_death_wing_02.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/treasure_courier_death_coins.vpcf"
+			m_flDelay = 0.150000
+		},
+		{
+			m_ChildRef = resource:"particles/treasure_courier_death_glow.vpcf"
+		},
+	]
+}

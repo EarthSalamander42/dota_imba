@@ -906,26 +906,6 @@ function CustomHeroAttachments(hero, illusion)
 		end
 	end
 
---	-- TODO: Add npc_heroes_custom abilities finding with KV.
---	local hero_abilities = {}
---	local index_count = 1
---	for index, ability in pairs(HERO_ABILITY_LIST[hero_name]) do
---		hero_abilities[index] = ability
---		if tonumber(index) == index_count then
---			index_count = index_count +1
---			hero:AddAbility(hero_abilities[index])
---		end
---	--	print(index.."/"..hero_abilities[index])
---	end
-
---	for index, ability in pairs(HERO_ABILITY_LIST[hero_name]) do
---		hero_abilities[index] = ability
---		if tonumber(index) == index_count then
---			index_count = index_count +1
---			hero:AddAbility(hero_abilities[index])
---		end
---	end
-
 	if hero_name == "npc_dota_hero_ghost_revenant" then
 		hero:SetRenderColor(128, 255, 0)
 		hero.head = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/razor/apostle_of_the_tempest_head/apostle_of_the_tempest_head.vmdl"})
@@ -945,6 +925,37 @@ function CustomHeroAttachments(hero, illusion)
 		hero.weapon:SetRenderColor(128, 255, 0)
 	elseif hero_name == "npc_dota_hero_hell_empress" then
 		
+	elseif hero_name == "npc_dota_hero_scaldris" then
+		for i = 0, 24 do
+			if hero:GetAbilityByIndex(i) then
+				hero:RemoveAbility(hero:GetAbilityByIndex(i):GetAbilityName())
+			end
+		end
+		hero:AddAbility("imba_scaldris_heatwave")
+		hero:AddAbility("imba_scaldris_scorch")
+		hero:AddAbility("imba_scaldris_jet_blaze")
+		hero:AddAbility("generic_hidden")
+		local ab = hero:AddAbility("imba_scaldris_antipode")
+		ab:SetLevel(1)
+		hero:AddAbility("imba_scaldris_living_flame")
+		hero:AddAbility("imba_scaldris_cold_front")
+		hero:AddAbility("imba_scaldris_freeze")
+		hero:AddAbility("imba_scaldris_ice_floes")
+		hero:AddAbility("imba_scaldris_absolute_zero")
+		hero:AddAbility("generic_hidden")
+		hero:AddAbility("generic_hidden")
+		hero:AddAbility("generic_hidden")
+		hero:AddAbility("generic_hidden")
+		hero:AddAbility("generic_hidden")
+		hero:AddAbility("generic_hidden")
+		hero:AddAbility("generic_hidden")
+		hero:AddAbility("generic_hidden")
+		hero:AddAbility("generic_hidden")
+		hero:AddAbility("generic_hidden")
+		hero:AddAbility("generic_hidden")
+		hero:AddAbility("generic_hidden")
+		hero:AddAbility("generic_hidden")
+		hero:AddAbility("generic_hidden")
 	end
 end
 
@@ -994,11 +1005,10 @@ function ReconnectPlayer(player_id)
 end
 
 function DonatorCompanion(hero, model)
-if hero:GetPlayerID() == -1 or hero:IsIllusion() then return end
-local summon_point = Entities:FindByName(nil, "ent_dota_fountain_good"):GetAbsOrigin()
+if model == nil then return end
 local color = hero:GetFittingColor()
 
-	local companion = CreateUnitByName("npc_imba_donator_companion", summon_point, true, hero, hero, hero:GetTeamNumber())
+	local companion = CreateUnitByName("npc_imba_donator_companion", hero:GetAbsOrigin(), true, hero, hero, hero:GetTeamNumber())
 	companion:SetOwner(hero)
 	companion:SetControllableByPlayer(hero:GetPlayerID(), true)
 
@@ -1139,38 +1149,8 @@ bounty_rune_is_initial_bounty_rune = false
 	RemoveRunes()
 
 	-- Locate the rune spots on the map
-	local bounty_rune_spawner_a = Entities:FindAllByName("bounty_rune_location_dire_bot")
-	local bounty_rune_spawner_b = Entities:FindAllByName("bounty_rune_location_dire_top")
-	local bounty_rune_spawner_c = Entities:FindAllByName("bounty_rune_location_radiant_bot")
-	local bounty_rune_spawner_d = Entities:FindAllByName("bounty_rune_location_radiant_top")
-	local powerup_rune_spawner_a = Entities:FindAllByName("powerup_rune_location_bot")
-	local powerup_rune_spawner_b = Entities:FindAllByName("powerup_rune_location_top")
-	local bounty_rune_locations = {
-		bounty_rune_spawner_a[1]:GetAbsOrigin(),
-		bounty_rune_spawner_b[1]:GetAbsOrigin(),
-		bounty_rune_spawner_c[1]:GetAbsOrigin(),
-		bounty_rune_spawner_d[1]:GetAbsOrigin()
-	}
-
-	local powerup_rune_locations = {
-		powerup_rune_spawner_a[1]:GetAbsOrigin(),
-		powerup_rune_spawner_b[1]:GetAbsOrigin()
-	}
-
-	local rune
-
-	-- Spawn bounty runes
-	local game_time = GameRules:GetDOTATime(false, false)
-	for _, bounty_loc in pairs(bounty_rune_locations) do
-		local bounty_rune = CreateItem("item_imba_rune_bounty", nil, nil)
-		rune = CreateItemOnPositionForLaunch(bounty_loc, bounty_rune)		
-		RegisterRune(rune)
-
-		-- If these are the 00:00 runes, double their worth
-		if game_time < 1 then
-			bounty_rune_is_initial_bounty_rune = true
-		end
-	end
+	local bounty_rune_spawners = Entities:FindAllByName("bounty_rune_location")
+	local powerup_rune_spawners = Entities:FindAllByName("powerup_rune_location")
 
 	-- List of powerup rune types
 	local powerup_rune_types = {
@@ -1183,17 +1163,22 @@ bounty_rune_is_initial_bounty_rune = false
 		"item_imba_rune_frost",
 	}
 
-	-- Spawn a random powerup rune in a random powerup location
-	if game_time > 1 and game_time < 40 then		
-		rune = CreateItemOnPositionForLaunch(powerup_rune_locations[RandomInt(1, #powerup_rune_locations)], CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))		
+	local rune
+	for k, v in pairs(powerup_rune_spawners) do
+		rune = CreateItemOnPositionForLaunch(powerup_rune_spawners[k]:GetAbsOrigin(), CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))
+		RegisterRune(rune)
+	end
+
+	for k, v in pairs(bounty_rune_spawners) do
+		local bounty_rune = CreateItem("item_imba_rune_bounty", nil, nil)
+		rune = CreateItemOnPositionForLaunch(bounty_rune_spawners[k]:GetAbsOrigin(), bounty_rune)		
 		RegisterRune(rune)
 
-	-- After 40 minutes, spawn powerup runes on both locations
-	elseif game_time >= 40 then
-		rune = CreateItemOnPositionForLaunch(powerup_rune_locations[1], CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))
-		RegisterRune(rune)
-		rune = CreateItemOnPositionForLaunch(powerup_rune_locations[2], CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))
-		RegisterRune(rune)
+		-- If these are the 00:00 runes, double their worth
+		local game_time = GameRules:GetDOTATime(false, false)
+		if game_time < 1 then
+			bounty_rune_is_initial_bounty_rune = true
+		end
 	end
 end
 
@@ -1297,7 +1282,7 @@ function PickupRune(rune_name, unit, bActiveByBottle)
 	--		"particles/generic_gameplay/rune_bounty_owner.vpcf"
 
 			unit:ModifyGold(current_bounty, false, DOTA_ModifyGold_Unspecified)
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_GOLD, unit, current_bounty, nil)
+			SendOverheadEventMessage(PlayerResource:GetPlayer(unit:GetPlayerOwnerID()), OVERHEAD_ALERT_GOLD, unit, current_bounty, nil)
 --			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "General.Coins", unit)
 			EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Bounty", unit)
 		elseif rune_name == "arcane" then

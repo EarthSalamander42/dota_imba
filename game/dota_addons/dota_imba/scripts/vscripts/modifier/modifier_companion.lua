@@ -65,9 +65,9 @@ function modifier_companion:OnIntervalThink()
 	if IsServer() then
 		local companion = self:GetParent()
 		local hero = self:GetParent():GetPlayerOwner():GetAssignedHero()
-		local fountain = Entities:FindByName(nil, "ent_dota_fountain_good")
+		local fountain = GoodCamera
 		if hero:GetTeamNumber() == 3 then
-			fountain = Entities:FindByName(nil, "ent_dota_fountain_bad")
+			fountain = BadCamera
 		end
 
 		local hero_origin = hero:GetAbsOrigin()

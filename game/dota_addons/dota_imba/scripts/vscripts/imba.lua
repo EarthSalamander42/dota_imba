@@ -92,12 +92,28 @@ function GameMode:OnFirstPlayerLoaded()
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Roshan and Picking Screen camera initialization
 	-------------------------------------------------------------------------------------------------
-	GoodCamera = Entities:FindByName(nil, "dota_goodguys_fort")
-	BadCamera = Entities:FindByName(nil, "dota_badguys_fort")
+	if GetMapName() == "desert_duo" then
+		GoodCamera = Entities:FindByName(nil, "@overboss")
+		BadCamera = Entities:FindByName(nil, "@overboss")
 
-	ROSHAN_SPAWN_LOC = Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):GetAbsOrigin()
-	Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):RemoveSelf()
-	local roshan = CreateUnitByName("npc_imba_roshan", ROSHAN_SPAWN_LOC, true, nil, nil, DOTA_TEAM_NEUTRALS)
+		-- Spawning monsters
+		spawncamps = {}
+		for i = 1, OVERTHROW_CAMP_NUMBER do
+			local campname = "camp"..i.."_path_customspawn"
+			spawncamps[campname] =
+			{
+				NumberToSpawn = RandomInt(3,5),
+				WaypointName = "camp"..i.."_path_wp1"
+			}
+		end
+		GameMode:CustomSpawnCamps()
+	else
+		GoodCamera = Entities:FindByName(nil, "dota_goodguys_fort")
+		BadCamera = Entities:FindByName(nil, "dota_badguys_fort")
+		ROSHAN_SPAWN_LOC = Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):GetAbsOrigin()
+		Entities:FindByClassname(nil, "npc_dota_roshan_spawner"):RemoveSelf()
+		local roshan = CreateUnitByName("npc_imba_roshan", ROSHAN_SPAWN_LOC, true, nil, nil, DOTA_TEAM_NEUTRALS)
+	end
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Pre-pick forced hero selection
@@ -228,7 +244,7 @@ function GameMode:GoldFilter( keys )
 		return true
 	end
 
-	local hero = PlayerResource:GetPickedHero(keys.player_id_const)
+	local hero = PlayerResource:GetPlayer(keys.player_id_const):GetAssignedHero()
 
 	-- Ignore negative experience values
 	if keys.gold < 0 then
@@ -246,6 +262,11 @@ function GameMode:GoldFilter( keys )
 
 	if keys.reason_const == DOTA_ModifyGold_HeroKill then
 		keys.gold = keys.gold * (custom_gold_bonus / 100)
+		if not hero.kill_hero_bounty then hero.kill_hero_bounty = 0 end
+		if hero.kill_hero_bounty == 0 then hero.kill_hero_bounty = keys.gold end
+		if hero.kill_hero_bounty ~= 0 and hero.kill_hero_bounty ~= keys.gold then
+			CustomNetTables:SetTableValue("player_table", tostring(keys.player_id_const), {hero_kill_bounty = keys.gold + hero.kill_hero_bounty})
+		end
 	else
 		keys.gold = keys.gold * (custom_gold_bonus / 100) * (1 + game_time / 10)
 	end
@@ -256,12 +277,19 @@ function GameMode:GoldFilter( keys )
 --		keys.gold = keys.gold * (1 + COMEBACK_BOUNTY_BONUS[team])
 --	end
 
-	-- Show gold earned message??
---	if hero then
---		SendOverheadEventMessage(nil, OVERHEAD_ALERT_GOLD, hero, keys.gold, nil)
---	end
+	local reliable = false
+	if keys.reason_const == DOTA_ModifyGold_HeroKill or keys.reason_const == DOTA_ModifyGold_RoshanKill or keys.reason_const == DOTA_ModifyGold_CourierKill or keys.reason_const == DOTA_ModifyGold_Building then
+		reliable = true
+	end
 
-	return true
+	-- Show gold earned message??
+	if hero then
+		hero:ModifyGold(keys.gold, reliable, keys.reason_const)
+		if keys.reason_const == DOTA_ModifyGold_Unspecified then return false end
+		SendOverheadEventMessage(PlayerResource:GetPlayer(keys.player_id_const), OVERHEAD_ALERT_GOLD, hero, keys.gold, nil)
+	end
+
+	return false
 end
 
 -- Experience gain filter function
@@ -1302,6 +1330,8 @@ function GameMode:OnGameInProgress()
 		end
 	end
 
+	if GetMapName() == "desert_duo" then return end
+
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Structure stats setup
 	-------------------------------------------------------------------------------------------------
@@ -1747,3 +1777,38 @@ function GameMode:ProcessItemForLootExpire( item, flCutoffTime )
 	return false
 end
 --]]
+
+-- Overthrow
+function GameMode:CustomSpawnCamps()
+	for name,_ in pairs(spawncamps) do
+		spawnunits(name)
+	end
+end
+
+function GameMode:spawncamp(campname)
+	spawnunits(campname)
+end
+
+-- Simple Custom Spawn
+function spawnunits(campname)
+	local spawndata = spawncamps[campname]
+	local NumberToSpawn = spawndata.NumberToSpawn --How many to spawn
+	local SpawnLocation = Entities:FindByName( nil, campname )
+	local waypointlocation = Entities:FindByName ( nil, spawndata.WaypointName )
+	if SpawnLocation == nil then
+		return
+	end
+
+	local randomCreature = 
+		{
+			"basic_zombie",
+			"berserk_zombie"
+		}
+	local r = randomCreature[RandomInt(1,#randomCreature)]
+	--print(r)
+	for i = 1, NumberToSpawn do
+		local creature = CreateUnitByName( "npc_dota_creature_" ..r , SpawnLocation:GetAbsOrigin() + RandomVector( RandomFloat( 0, 200 ) ), true, nil, nil, DOTA_TEAM_NEUTRALS )
+		--print ("Spawning Camps")
+		creature:SetInitialGoalEntity( waypointlocation )
+	end
+end

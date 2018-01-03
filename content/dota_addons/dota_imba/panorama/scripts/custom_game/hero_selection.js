@@ -251,7 +251,7 @@ function MakeNewHero(new_heroes) {
 	}
 }
 
-function MakeDisabledHeroes(disabled_10v10, disabled_frantic, disabled_all) {
+function MakeDisabledHeroes(disabled_10v10, disabled_frantic, disabled_all, disabled_silent) {
 	var map_info = Game.GetMapInfo();
 	if (map_info.map_display_name == "imba_10v10" || map_info.map_display_name == "imba_frantic_10v10" || map_info.map_display_name == "imba_12v12") {
 		var g = 1;
@@ -290,6 +290,16 @@ function MakeDisabledHeroes(disabled_10v10, disabled_frantic, disabled_all) {
 			var HeroLabel = $.CreatePanel("Label", $("#PickList").FindChildTraverse(disabled_all[h]), disabled_all[h] + "_label");
 			HeroLabel.AddClass("ClassCustomOptionLabel")
 			HeroLabel.text = $.Localize("disabled_hero");
+		}
+	}
+
+	$.Msg(disabled_silent)
+
+	var j = 1;
+	for (j in disabled_silent) {
+		if (disabled_silent[j] != null) {
+			var hero_panel = $("#PickList").FindChildTraverse(disabled_silent[j])
+			hero_panel.DeleteAsync(0);
 		}
 	}
 }
@@ -409,6 +419,7 @@ function CreateHeroPick() {
 	var disabled_heroes_frantic = hero_list.DisabledFrantic;
 	var disabled_heroes_10v10 = hero_list.Disabled10v10;
 	var disabled_heroes = hero_list.Disabled
+	var disabled_silent_heroes = hero_list.DisabledSilent
 	var imba_heroes = hero_list.Imba
 	var new_heroes = hero_list.New
 	var strength_heroes_custom = hero_list.StrengthCustom;
@@ -426,7 +437,7 @@ function CreateHeroPick() {
 	CreateHeroPanel(agility_heroes_custom, "AGI", true)
 	CreateHeroPanel(intellect_heroes_custom, "INT", true)
 
-	MakeDisabledHeroes(disabled_heroes_10v10, disabled_heroes_frantic, disabled_heroes)
+	MakeDisabledHeroes(disabled_heroes_10v10, disabled_heroes_frantic, disabled_heroes, disabled_silent_heroes)
 	MakeImbaHero(imba_heroes)
 	MakeNewHero(new_heroes)
 }
@@ -782,13 +793,14 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 		var initial_gold = CustomNetTables.GetTableValue("game_options", "initial_gold");
 		var initial_level = CustomNetTables.GetTableValue("game_options", "initial_level");
 		var max_level = CustomNetTables.GetTableValue("game_options", "max_level");
-		var kills_to_end = CustomNetTables.GetTableValue("game_options", "kills_to_end");
 		var frantic_mode = CustomNetTables.GetTableValue("game_options", "frantic_mode");
+		var gold_tick = CustomNetTables.GetTableValue("game_options", "gold_tick");
 		$("#BountyMultiplierValue").text = bounty_multiplier[1] + "%";
 		$("#ExpMultiplierValue").text = exp_multiplier[1] + "%";
 		$("#InitialGoldValue").text = initial_gold[1];
 		$("#InitialLevelValue").text = initial_level[1];
 		$("#MaxLevelValue").text = max_level[1];
+		$("#GoldTickValue").text = gold_tick[1].toFixed(1);
 		$("#TowerPowerValue").text = $.Localize( '#imba_gamemode_settings_power_' + tower_power[1] );
 
 		$('#GameModeSelectText').text = $.Localize( '#imba_gamemode_name_ranked_5v5' );

@@ -30,6 +30,7 @@ function HeroSelection:HeroListPreLoad()
 	HeroSelection.disabled_10v10_heroes = {}
 	HeroSelection.disabled_frantic_heroes = {}
 	HeroSelection.disabled_heroes = {}
+	HeroSelection.disabled_silent_heroes = {}
 	HeroSelection.heroes_custom = {}
 	HeroSelection.picked_heroes = {}
 
@@ -51,6 +52,8 @@ function HeroSelection:HeroListPreLoad()
 				table.insert(HeroSelection.disabled_frantic_heroes, hero)
 			elseif GetKeyValueByHeroName(hero, "IsDisabled") == 3 then
 				table.insert(HeroSelection.disabled_heroes, hero)
+			elseif GetKeyValueByHeroName(hero, "IsDisabled") == 4 then
+				table.insert(HeroSelection.disabled_silent_heroes, hero)
 			end
 
 			if GetKeyValueByHeroName(hero, "IsImba") == 1 then
@@ -165,6 +168,7 @@ function HeroSelection:HeroList()
 		Disabled10v10 = HeroSelection.disabled_10v10_heroes,
 		DisabledFrantic = HeroSelection.disabled_frantic_heroes,
 		Disabled = HeroSelection.disabled_heroes,
+		DisabledSilent = HeroSelection.disabled_silent_heroes,
 		Picked = HeroSelection.picked_heroes
 	})
 
@@ -190,9 +194,9 @@ function HeroSelection:Start()
 	HeroSelection.playerPickState = {}
 	HeroSelection.numPickers = 0
 
-	HeroSelection.pick_sound_dummy_good = CreateUnitByName("npc_dummy_unit", Entities:FindByName(nil, "dota_goodguys_fort"):GetAbsOrigin(), false, nil, nil, DOTA_TEAM_GOODGUYS)
+	HeroSelection.pick_sound_dummy_good = CreateUnitByName("npc_dummy_unit", GoodCamera:GetAbsOrigin(), false, nil, nil, DOTA_TEAM_GOODGUYS)
 	HeroSelection.pick_sound_dummy_good:EmitSound("Imba.PickPhaseDrums")
-	HeroSelection.pick_sound_dummy_bad = CreateUnitByName("npc_dummy_unit", Entities:FindByName(nil, "dota_badguys_fort"):GetAbsOrigin(), false, nil, nil, DOTA_TEAM_GOODGUYS)
+	HeroSelection.pick_sound_dummy_bad = CreateUnitByName("npc_dummy_unit", BadCamera:GetAbsOrigin(), false, nil, nil, DOTA_TEAM_GOODGUYS)
 	HeroSelection.pick_sound_dummy_bad:EmitSound("Imba.PickPhaseDrums")
 
 	-- Figure out which players have to pick
@@ -308,6 +312,14 @@ end
 		end
 	end
 
+	for _, picked_hero in pairs(HeroSelection.disabled_silent_heroes) do
+		if random_hero == picked_hero then
+			print("Hero disabled silently, random again...")
+			HeroSelection:RandomHero({PlayerID = id})
+			break
+		end
+	end
+
 	for _, picked_hero in pairs(HeroSelection.picked_heroes) do
 		if random_hero == picked_hero then
 			print("Hero picked, random again...")
@@ -358,6 +370,14 @@ local id = event.PlayerID
 	for _, picked_hero in pairs(HeroSelection.disabled_heroes) do
 		if random_hero == picked_hero then
 			print("Hero disabled, random again...")
+			HeroSelection:RandomHero({PlayerID = id})
+			break
+		end
+	end
+
+	for _, picked_hero in pairs(HeroSelection.disabled_silent_heroes) do
+		if random_hero == picked_hero then
+			print("Hero disabled silently, random again...")
 			HeroSelection:RandomHero({PlayerID = id})
 			break
 		end
@@ -549,8 +569,6 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		local wisp = PlayerResource:GetPlayer(player_id):GetAssignedHero()
 		local hero = PlayerResource:ReplaceHeroWith(player_id, hero_name, 0, 0 )
 		hero.pID = player_id
---		print(hero.pID)
---		print(hero_name)
 
 		-- If this is a "real" wisp, tag it
 		if hero:GetUnitName() == "npc_dota_hero_wisp" then

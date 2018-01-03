@@ -78,9 +78,6 @@ DebugPrint("[IMBA] Performing pre-load precache")
 	PrecacheResource("particle", "particles/econ/items/effigies/status_fx_effigies/gold_effigy_ambient_dire_lvl2.vpcf", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_ember_spirit.vsndevts", context)
-	PrecacheResource("soundfile", "soundevents/imba_soundevents.vsndevts", context)
-	PrecacheResource("soundfile", "soundevents/imba_item_soundevents.vsndevts", context)
-	PrecacheResource("soundfile", "soundevents/diretide_soundevents.vsndevts", context)
 
 	-- Ghost Revenant
 	PrecacheResource("particle", "particles/econ/items/windrunner/windrunner_cape_cascade/windrunner_windrun_slow_cascade.vpcf", context)
@@ -205,6 +202,11 @@ DebugPrint("[IMBA] Performing pre-load precache")
 	--PrecacheResource("sound", "sounds/vo/announcer_dlc_pflax/announcer_divine_rapier_two.vsnd", context)
 	--PrecacheResource("sound", "sounds/physics/items/weapon_drop_common_02.vsnd", context)
 	--PrecacheResource("sound", "sounds/ui/inventory/metalblade_equip_01.vsnd", context)
+
+	PrecacheResource("particle_folder", "particles/hero/scaldris", context) -- Scaldris Hero
+	PrecacheResource("soundfile", "soundevents/imba_soundevents.vsndevts", context) -- Various sounds
+	PrecacheResource("soundfile", "soundevents/imba_item_soundevents.vsndevts", context) -- Various Item sounds
+	PrecacheResource("soundfile", "soundevents/diretide_soundevents.vsndevts", context) -- Roshan sounds
 
 	PrecacheUnitByNameAsync("npc_dota_hero_abyssal_underlord", context) -- Hellion (attack sound)
 	PrecacheUnitByNameAsync("npc_dota_hero_invoker", context) -- Roshan

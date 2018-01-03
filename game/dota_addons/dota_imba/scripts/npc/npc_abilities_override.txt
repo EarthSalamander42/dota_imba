@@ -16863,7 +16863,7 @@
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage"						"24 42 60 78 87 96 105"
+				"damage"						"30 50 70 90 110 130 150"
 				"LinkedSpecialBonus"			"special_bonus_unique_pangolier_3"
 				"CalculateSpellDamageTooltip"	"0"
 			}
@@ -16883,7 +16883,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"75 150 225 300 333 366 400"
+				"damage"				"80 160 240 320 380 440 500"
 			}
 			"02"
 			{
@@ -16921,7 +16921,7 @@
 	"pangolier_gyroshell"
 	{
 		"AbilityCooldown"				"50 45 40 38 36 34"
-		"AbilityDamage"					"200 250 300 333 366 400"
+		"AbilityDamage"					"200 275 350 400 450 500"
 		"MaxLevel"						"6"
 
 		"AbilitySpecial"

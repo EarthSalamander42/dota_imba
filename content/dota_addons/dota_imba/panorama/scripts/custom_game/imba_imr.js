@@ -270,6 +270,7 @@ function ClassBy(type) {
 	var initial_level = CustomNetTables.GetTableValue("game_options", "initial_level");
 	var max_level = CustomNetTables.GetTableValue("game_options", "max_level");
 	var frantic_mode = CustomNetTables.GetTableValue("game_options", "frantic_mode");
+	var gold_tick = CustomNetTables.GetTableValue("game_options", "gold_tick");
 	var frantic = "Disabled";
 
 	if (frantic_mode[1] == 1) {
@@ -282,6 +283,7 @@ function ClassBy(type) {
 	$("#InitialLevelValue").text = initial_level[1];
 	$("#MaxLevelValue").text = max_level[1];
 	$("#FranticModeValue").text = frantic;
+	$("#GoldTickValue").text = gold_tick[1].toFixed(1);
 
 	$("#TowerPowerValue").text = $.Localize( '#imba_gamemode_settings_power_' + tower_power[1] );
 	GameEvents.Subscribe("hall_of_fame", HallOfFame);

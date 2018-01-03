@@ -44,12 +44,14 @@
 						<Label class="ImbaGameInfoLabel" text="#imba_gamemode_settings_initial_gold" />
 						<Label class="ImbaGameInfoLabel" text="#imba_gamemode_settings_initial_level" />
 						<Label class="ImbaGameInfoLabel" text="#imba_gamemode_game_options_frantic" />
+						<Label class="ImbaGameInfoLabel" text="#imba_gamemode_settings_gold_tick" />
 					</Panel>
 
 					<Panel class="GameModeValuePanel">
 						<Label id="InitialGoldValue" class="ImbaGameInfoLabel" text="0" />
 						<Label id="InitialLevelValue" class="ImbaGameInfoLabel" text="0" />
 						<Label id="FranticModeValue" class="ImbaGameInfoLabel" text="0" />
+						<Label id="GoldTickValue" class="ImbaGameInfoLabel" text="0" />
 					</Panel>
 				</Panel>
 

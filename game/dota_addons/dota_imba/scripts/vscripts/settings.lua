@@ -185,6 +185,13 @@ elseif GetMapName() == "imba_12v12" then
 	IMBA_PLAYERS_ON_GAME = 24
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 12
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 12
+elseif GetMapName() == "desert_duo" then
+	IMBA_PLAYERS_ON_GAME = 10
+	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 2
+	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 2
+	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_1]  = 2
+	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_2]  = 2
+	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_3]  = 2
 end
 
 -------------------------------------------------------------------------------------------------
@@ -207,36 +214,42 @@ IMBA_ALL_RANDOM_HERO_SELECTION_TIME = 5.0									-- Time we need to wait before
 
 -- Global Gold earning, values are doubled with Hyper for non-custom maps
 CUSTOM_GOLD_BONUS = {} -- 1 = Normal, 2 = Hyper
-CUSTOM_GOLD_BONUS["imba_standard"] = {140, 140}
-CUSTOM_GOLD_BONUS["imba_10v10"] = {140, 140}
+CUSTOM_GOLD_BONUS["imba_standard"] = {150, 150}
+CUSTOM_GOLD_BONUS["imba_10v10"] = {150, 150}
 CUSTOM_GOLD_BONUS["imba_frantic_10v10"] = {250, 250}
+CUSTOM_GOLD_BONUS["desert_duo"] = {150, 150}
 
 -- Global XP earning, values are doubled with Hyper for non-custom maps (right now this is not used anymore, but i'll keep it there just in case)
 CUSTOM_XP_BONUS = {} -- 1 = standard, 2 = 10v10, 3 = custom
 CUSTOM_XP_BONUS["imba_standard"] = {100, 100}
 CUSTOM_XP_BONUS["imba_10v10"] = {100, 100}
-CUSTOM_XP_BONUS["imba_frantic_10v10"] = {250, 250}
+CUSTOM_XP_BONUS["imba_frantic_10v10"] = {200, 200}
+CUSTOM_XP_BONUS["desert_duo"] = {100, 100}
 
 -- Hero base level, values are doubled with Hyper for non-custom maps
 HERO_STARTING_LEVEL = {} -- 1 = standard, 2 = 10v10, 3 = custom
 HERO_STARTING_LEVEL["imba_standard"] = {1, 1}
 HERO_STARTING_LEVEL["imba_10v10"] = {1, 1}
 HERO_STARTING_LEVEL["imba_frantic_10v10"] = {5, 12}
+HERO_STARTING_LEVEL["desert_duo"] = {1, 1}
 
 MAX_LEVEL = {}
 MAX_LEVEL["imba_standard"] = {40, 40}
 MAX_LEVEL["imba_10v10"] = {40, 40}
 MAX_LEVEL["imba_frantic_10v10"] = {40, 100}
+MAX_LEVEL["desert_duo"] = {40, 40}
 
 HERO_INITIAL_GOLD = {}
 HERO_INITIAL_GOLD["imba_standard"] = {1200, 1200}
 HERO_INITIAL_GOLD["imba_10v10"] = {1200, 1200}
 HERO_INITIAL_GOLD["imba_frantic_10v10"] = {2000, 5000}
+HERO_INITIAL_GOLD["desert_duo"] = {1200, 1200}
 
 GOLD_TICK_TIME = {}
 GOLD_TICK_TIME["imba_standard"] = 0.6
-GOLD_TICK_TIME["imba_10v10"] = 0.6
+GOLD_TICK_TIME["imba_10v10"] = 0.4
 GOLD_TICK_TIME["imba_frantic_10v10"] = 0.4
+GOLD_TICK_TIME["desert_duo"] = 9999
 
 REMAINING_GOODGUYS = 0														-- Remaining players on Radiant
 REMAINING_BADGUYS = 0														-- Remaining players on Dire
@@ -271,6 +284,7 @@ CustomNetTables:SetTableValue("game_options", "all_pick", {IMBA_PICK_MODE_ALL_PI
 CustomNetTables:SetTableValue("game_options", "all_random", {IMBA_PICK_MODE_ALL_RANDOM})
 CustomNetTables:SetTableValue("game_options", "all_random_same_hero", {IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO})
 CustomNetTables:SetTableValue("game_options", "frantic_mode", {IMBA_FRANTIC_MODE_ON})
+CustomNetTables:SetTableValue("game_options", "gold_tick", {GOLD_TICK_TIME[GetMapName()]})
 
 -- XP per level table (only active if custom hero levels are enabled) 
 XP_PER_LEVEL_TABLE = {}
@@ -352,6 +366,8 @@ PURGE_BUFF_LIST = LoadKeyValues("scripts/npc/KV/purge_buffs_list.kv")
 IMBA_GENERIC_TALENT_LIST = LoadKeyValues("scripts/npc/KV/imba_generic_talent_list.kv")
 IMBA_HERO_TALENTS_LIST = LoadKeyValues("scripts/npc/KV/imba_hero_talents_list.kv")
 DISPELLABLE_DEBUFF_LIST = LoadKeyValues("scripts/npc/KV/dispellable_debuffs_list.kv")
+
+OVERTHROW_CAMP_NUMBER = 5
 
 IMBA_DEVS = {
 	54896080,	-- Cookies

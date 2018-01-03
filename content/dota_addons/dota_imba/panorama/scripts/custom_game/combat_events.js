@@ -8,6 +8,7 @@ function CreateCustomToast(data) {
 	row.BLoadLayoutSnippet('ToastPanel');
 	row.AddClass('ToastPanel');
 	var rowText = '';
+	var gold = data.gold
 
 	if (data.type === 'kill') {
 		var byNeutrals = data.killerPlayer == null && data.neutral != null;
@@ -96,8 +97,8 @@ function CreateCustomToast(data) {
 		rowText = rowText.replace('{roshan_icon}', "<img class='CombatEventRoshanIcon' />");
 	if (data.runeType != null)
 		rowText = rowText.replace('{rune_name}', "<font color='#" + RUNES_COLOR_MAP[data.runeType] + "'>" + $.Localize('DOTA_Tooltip_ability_item_imba_rune_' + data.runeType) + '</font>');
-	if (data.gold != null && data.gold > 0) {
-		rowText = rowText.replace('{gold}', "<font color='gold'>" + FormatGold(data.gold) + "</font> <img class='CombatEventGoldIcon' />");
+	if (gold != null && gold > 0) {
+		rowText = rowText.replace('{gold}', "<font color='gold'>" + FormatGold(gold.toFixed(0)) + "</font> <img class='CombatEventGoldIcon' />");
 	} else {
 		rowText = rowText.replace('{gold}', "");
 	}

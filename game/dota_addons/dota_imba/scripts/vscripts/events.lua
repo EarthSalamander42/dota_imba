@@ -255,12 +255,17 @@ function GameMode:OnGameRulesStateChange(keys)
 
 			for k, v in pairs(players) do
 
-				local level = GetXPLevelByXp(v.xp)
+				ApiPrint(k)
+ 				local level = GetXPLevelByXp(v.xp)
+				ApiPrint(k .. " -> Level: " .. level)
 				local title = GetTitleIXP(level)
+				ApiPrint(k .. " -> Title: " .. title)
 				local color = GetTitleColorIXP(title, true)
+				ApiPrint(k .. " -> Color: " .. color)
 				local progress = GetXpProgressToNextLevel(v.xp)
+				ApiPrint(k .. " -> Progress: " .. progress)
 
-				ApiPrint(k .. " " .. level .. " " .. title .. " " .. color .. " " .. progress)
+				ApiPrint(k .. " L: " .. level .. " T: " .. title .. " C: " .. color .. " P: " .. progress)
 
 				if level and title and color and progress then
 					xpInfo[k] = {
@@ -560,7 +565,6 @@ local normal_xp = npc:GetDeathXP()
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Buyback penalty removal
 	-------------------------------------------------------------------------------------------------
-
 	Timers:CreateTimer(0.1, function()
 		if (not npc:IsNull()) and npc:HasModifier("modifier_buyback_gold_penalty") then
 			npc:RemoveModifierByName("modifier_buyback_gold_penalty")
@@ -570,7 +574,6 @@ local normal_xp = npc:GetDeathXP()
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Negative Vengeance Aura removal
 	-------------------------------------------------------------------------------------------------
-
 	if npc.vengeance_aura_target then
 		npc.vengeance_aura_target:RemoveModifierByName("modifier_imba_command_aura_negative_aura")
 		npc.vengeance_aura_target = nil
@@ -579,8 +582,7 @@ local normal_xp = npc:GetDeathXP()
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Creep stats adjustment
 	-------------------------------------------------------------------------------------------------
-
-	if not npc:IsHero() and not npc:IsOwnedByAnyPlayer() and not npc:IsBuilding() then
+	if not npc:IsHero() and not npc:IsOwnedByAnyPlayer() and not npc:IsBuilding() and not npc:IsNeutralUnitType() then
 		-- Add passive buff to lane creeps
 		if string.find(npc:GetUnitName(), "dota_creep") then
 			npc:AddNewModifier(npc, nil, "modifier_imba_creep_power", {})
@@ -848,52 +850,36 @@ function GameMode:OnLastHit(keys)
 
 	if isFirstBlood then
 		HeroVoiceLine(player:GetAssignedHero(), "firstblood")
-		CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
-			type = "kill",
-			killerPlayer = keys.PlayerID,
-			victimPlayer = killedEnt:GetPlayerID(),
-			firstblood = true,
-			gold = 0,
-		})
+
+		player:GetAssignedHero().kill_hero_bounty = 0
+		Timers:CreateTimer(FrameTime() * 2, function()
+			CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
+				type = "kill",
+				killerPlayer = keys.PlayerID,
+				victimPlayer = killedEnt:GetPlayerID(),
+				firstblood = true,
+				gold = CustomNetTables:GetTableValue("player_table", tostring(keys.PlayerID)).hero_kill_bounty,
+			})
+		end)
 		return
 	elseif isHeroKill then
 		HeroVoiceLine(player:GetAssignedHero(), "kill")
+
 		if not player:GetAssignedHero().killstreak then player:GetAssignedHero().killstreak = 0 end
 		player:GetAssignedHero().killstreak = player:GetAssignedHero().killstreak +1
 
---		if player:GetAssignedHero().killstreak >= 3 and player:GetAssignedHero().killstreak <= 9 then
---			CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
---				type = "generic",
---				text = "#custom_toast_KillStreak",
---				victimPlayer = killedEnt:GetPlayerID(),
---				player = keys.PlayerID,
---				teamInverted = true,
---				variables = {
---					["{kill_streak}"] = streak[player:GetAssignedHero().killstreak]
---				}
---			})
---		elseif player:GetAssignedHero().killstreak >= 10 then
---			CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
---				type = "generic",
---				text = "#custom_toast_KillStreak",
---				victimPlayer = killedEnt:GetPlayerID(),
---				player = keys.PlayerID,
---				teamInverted = true,
---				variables = {
---					["{kill_streak}"] = streak[10]
---				}
---			})
---		end
-
-		CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
-			type = "kill",
-			killerPlayer = keys.PlayerID,
-			victimPlayer = killedEnt:GetPlayerID(),
-			gold = 0,
-			variables = {
-				["{kill_streak}"] = streak[math.min(player:GetAssignedHero().killstreak, 10)]
-			}
-		})
+		player:GetAssignedHero().kill_hero_bounty = 0
+		Timers:CreateTimer(FrameTime() * 2, function()
+			CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
+				type = "kill",
+				killerPlayer = keys.PlayerID,
+				victimPlayer = killedEnt:GetPlayerID(),
+				gold = CustomNetTables:GetTableValue("player_table", tostring(keys.PlayerID)).hero_kill_bounty,
+				variables = {
+					["{kill_streak}"] = streak[math.min(player:GetAssignedHero().killstreak, 10)]
+				}
+			})
+		end)
 	end
 end
 

@@ -1,0 +1,61 @@
+// THIS FILE IS AUTO-GENERATED
+
+Layer0
+{
+	shader "global_lit_simple.vfx"
+
+	//---- Normal Maps ----
+	F_NORMAL_MAP 1
+
+	//---- Overlay ----
+	F_OVERLAY 1
+
+	//---- Specular ----
+	F_SPECULAR 1
+
+	//---- Tint Mask ----
+	F_TINT_MASK 1
+
+	//---- Translucent ----
+	F_TRANSLUCENT 1
+
+	//---- Color ----
+	g_vColorTint "[1.000000 1.000000 1.000000 0.000000]"
+	g_vColorTint2 "[1.000000 1.000000 1.000000 1.000000]"
+	g_vTexCoordOffset "[0.000 0.000]"
+	g_vTexCoordScale "[1.000 1.000]"
+	TextureColor "materials/stone/stone_path002_color.psd"
+	TextureTintMask "materials/stone/stone_path002b_tint.psd"
+
+	//---- Normal Map ----
+	g_flBumpStrength "1.000"
+	TextureNormal "materials/stone/stone_path002_normal.psd"
+	TextureNormalAlpha "materials/stone/stone_path002b_blend.psd"
+
+	//---- Self Illum ----
+	TextureSelfIllumMask "materials/default/default_selfillum.tga"
+
+	//---- Specular ----
+	g_flSpecularBloom "0.000"
+	g_flSpecularIntensity "1.000"
+	TextureBloom "materials/default/default_bloom.tga"
+	TextureReflectance "materials/stone/stone_path002_desert_refl.psd"
+
+	//---- Translucent ----
+	g_flOpacityScale "1.000"
+	TextureTranslucency "materials/stone/stone_path002b_blend.psd"
+
+	Attributes
+	{
+		dota.nav.walkable "1"
+		dota.tile_path.falloff "1.000000"
+		dota.tile_path.opacity "0.500000"
+		dota.tile_path.width "150"
+		dota.tile_path.layer1_opacity "1.000000"
+		dota.tile_path.layer1_sharpness "0.500000"
+		dota.tile_path.layer2_opacity "1.050000"
+		dota.tile_path.layer2_sharpness "0.950000"
+		dota.tile_path.layer3_opacity "1.000000"
+		dota.tile_path.layer3_sharpness "0.700000"
+	}
+}

@@ -1,0 +1,2101 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<!-- 
+    Animation Picker XML (.apml) data file
+
+    filename: D:\dev\source2\main\content\dota\models\props_structures\midas_throne\maya\picker\kobold_overboss.apml
+    creator : jameso
+    date    : 21 May 2015, 02:48PM
+-->
+
+<AnimationPicker>
+    <background>
+        <imgFile>kobold_overboss.png</imgFile>
+    </background>
+
+    <item>
+        <type>square</type>
+        <name>BellyHelperAFk0_CTRL</name>
+        <translation>188.215350742 -300.984203818</translation>
+        <rotation>45.0</rotation>
+        <scale>0.4 0.4</scale>
+        <fillColor>255 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>BellyHelperAFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>BellyHelperBFk0_CTRL</name>
+        <translation>187.189275868 -398.352016766</translation>
+        <rotation>45.0</rotation>
+        <scale>0.4 0.4</scale>
+        <fillColor>255 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>BellyHelperBFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>ChaliceFk0_CTRL</name>
+        <translation>519.179318947 -547.003218577</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>255 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>ChaliceFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>CrownFk0_CTRL</name>
+        <translation>528.094193742 -10.7680040141</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>255 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>CrownFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>text</type>
+        <text> KOBOLD  </text>
+        <fontSize>25</fontSize>
+        <strong>True</strong>
+        <italic>False</italic>
+        <centered>True</centered>
+        <drawBox>True</drawBox>
+        <underline>False</underline>
+        <name>Everything</name>
+        <translation>39.6275592072 369.869023233</translation>
+        <rotation>0.0</rotation>
+        <scale>1.5 1.5</scale>
+        <fillColor>170 255 255</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>BellyHelperAFk0_CTRL</node>
+            <node>BellyHelperAglobalScale_CTRL</node>
+            <node>BellyHelperBFk0_CTRL</node>
+            <node>BellyHelperBglobalScale_CTRL</node>
+            <node>ChaliceFk0_CTRL</node>
+            <node>ChaliceglobalScale_CTRL</node>
+            <node>FootRtLegBox_CTRL</node>
+            <node>ToeRtLegBox_CTRL</node>
+            <node>EndRtLegBox_CTRL</node>
+            <node>FootLfLegBox_CTRL</node>
+            <node>ToeLfLegBox_CTRL</node>
+            <node>EndLfLegBox_CTRL</node>
+            <node>CrownFk0_CTRL</node>
+            <node>CrownglobalScale_CTRL</node>
+            <node>FkFoot0_CTRL</node>
+            <node>FkFoot_CTRL</node>
+            <node>FkLfLeg0_CTRL</node>
+            <node>FkLfLeg1_CTRL</node>
+            <node>FkRtLeg0_CTRL</node>
+            <node>FkRtLeg1_CTRL</node>
+            <node>FkToe0_CTRL</node>
+            <node>FkToe_CTRL</node>
+            <node>LfArmFk0CTRL</node>
+            <node>LfArmFk1CTRL</node>
+            <node>LfArmFk2CTRL</node>
+            <node>LfArmIkCTRL</node>
+            <node>LfArmpoleVector_CTRL</node>
+            <node>LfArmtransCTRL</node>
+            <node>LfBangleFk0_CTRL</node>
+            <node>LfBangleglobalScale_CTRL</node>
+            <node>LfBeardFk0_CTRL</node>
+            <node>LfBeardFk1_CTRL</node>
+            <node>LfBeardFk2_CTRL</node>
+            <node>LfBeardglobalScale_CTRL</node>
+            <node>LfBreastFk0_CTRL</node>
+            <node>LfBreastglobalScale_CTRL</node>
+            <node>LfDigitAFk0_CTRL</node>
+            <node>LfDigitAFk1_CTRL</node>
+            <node>LfDigitAFk2_CTRL</node>
+            <node>LfDigitARevIk_CTRL</node>
+            <node>LfDigitAglobalScale_CTRL</node>
+            <node>LfDigitBFk0_CTRL</node>
+            <node>LfDigitBFk1_CTRL</node>
+            <node>LfDigitBRevIk_CTRL</node>
+            <node>LfDigitBglobalScale_CTRL</node>
+            <node>LfDigitCFk0_CTRL</node>
+            <node>LfDigitCFk1_CTRL</node>
+            <node>LfDigitCRevIk_CTRL</node>
+            <node>LfDigitCglobalScale_CTRL</node>
+            <node>LfEarFk0_CTRL</node>
+            <node>LfEarFk1_CTRL</node>
+            <node>LfEarglobalScale_CTRL</node>
+            <node>LfLegPV_CTRL</node>
+            <node>LfLegTrans_CTRL</node>
+            <node>LfLeg_CTRL</node>
+            <node>LfLwrEyelidFk0_CTRL</node>
+            <node>LfLwrEyelidglobalScale_CTRL</node>
+            <node>LfNostrilFk0_CTRL</node>
+            <node>LfNostrilglobalScale_CTRL</node>
+            <node>LfShoulderBase_CTRL</node>
+            <node>LfShoulderCompressLimit_CTRL</node>
+            <node>LfShoulderStretchLimit_CTRL</node>
+            <node>LfShoulderTop_CTRL</node>
+            <node>LfShoulderUp_CTRL</node>
+            <node>LfToeAFk0_CTRL</node>
+            <node>LfToeAglobalScale_CTRL</node>
+            <node>LfToeBFk0_CTRL</node>
+            <node>LfToeBglobalScale_CTRL</node>
+            <node>LfUprEyelidFk0_CTRL</node>
+            <node>LfUprEyelidglobalScale_CTRL</node>
+            <node>LoinclothFk0_CTRL</node>
+            <node>LoinclothFk1_CTRL</node>
+            <node>LoinclothglobalScale_CTRL</node>
+            <node>MedallionFk0_CTRL</node>
+            <node>MedallionglobalScale_CTRL</node>
+            <node>MouthFk0_CTRL</node>
+            <node>MouthglobalScale_CTRL</node>
+            <node>NeckHeadFk0CTRL</node>
+            <node>NeckHead_HeadA_CTRL</node>
+            <node>NeckHead_HeadFK_CTRL</node>
+            <node>NeckHead_NeckIkBaseA_CTRL</node>
+            <node>NeckHead_NeckTwistBaseA_CTRL</node>
+            <node>NeckHead_NeckTwistEndA_CTRL</node>
+            <node>NeckHelperFk0_CTRL</node>
+            <node>NeckHelperglobalScale_CTRL</node>
+            <node>NecklaceInnerAFk0_CTRL</node>
+            <node>NecklaceInnerAglobalScale_CTRL</node>
+            <node>NecklaceInnerBFk0_CTRL</node>
+            <node>NecklaceInnerBglobalScale_CTRL</node>
+            <node>NecklaceMainFk0_CTRL</node>
+            <node>NecklaceMainFk1_CTRL</node>
+            <node>NecklaceMainFk2_CTRL</node>
+            <node>NecklaceMainFk3_CTRL</node>
+            <node>NecklaceMainFk4_CTRL</node>
+            <node>NecklaceMainFk5_CTRL</node>
+            <node>NecklaceMainFk6_CTRL</node>
+            <node>NecklaceMainglobalScale_CTRL</node>
+            <node>RtArmFk0CTRL</node>
+            <node>RtArmFk1CTRL</node>
+            <node>RtArmFk2CTRL</node>
+            <node>RtArmIkCTRL</node>
+            <node>RtArmpoleVector_CTRL</node>
+            <node>RtArmtransCTRL</node>
+            <node>RtBangleFk0_CTRL</node>
+            <node>RtBangleglobalScale_CTRL</node>
+            <node>RtBeardFk0_CTRL</node>
+            <node>RtBeardFk1_CTRL</node>
+            <node>RtBeardFk2_CTRL</node>
+            <node>RtBeardglobalScale_CTRL</node>
+            <node>RtBreastFk0_CTRL</node>
+            <node>RtBreastglobalScale_CTRL</node>
+            <node>RtDigitAFk0_CTRL</node>
+            <node>RtDigitAFk1_CTRL</node>
+            <node>RtDigitAFk2_CTRL</node>
+            <node>RtDigitARevIk_CTRL</node>
+            <node>RtDigitAglobalScale_CTRL</node>
+            <node>RtDigitBFk0_CTRL</node>
+            <node>RtDigitBFk1_CTRL</node>
+            <node>RtDigitBRevIk_CTRL</node>
+            <node>RtDigitBglobalScale_CTRL</node>
+            <node>RtDigitCFk0_CTRL</node>
+            <node>RtDigitCFk1_CTRL</node>
+            <node>RtDigitCRevIk_CTRL</node>
+            <node>RtDigitCglobalScale_CTRL</node>
+            <node>RtEarFk0_CTRL</node>
+            <node>RtEarFk1_CTRL</node>
+            <node>RtEarglobalScale_CTRL</node>
+            <node>RtLegPV_CTRL</node>
+            <node>RtLegTrans_CTRL</node>
+            <node>RtLeg_CTRL</node>
+            <node>RtLwrEyelidFk0_CTRL</node>
+            <node>RtLwrEyelidglobalScale_CTRL</node>
+            <node>RtNostrilFk0_CTRL</node>
+            <node>RtNostrilglobalScale_CTRL</node>
+            <node>RtShoulderBase_CTRL</node>
+            <node>RtShoulderCompressLimit_CTRL</node>
+            <node>RtShoulderStretchLimit_CTRL</node>
+            <node>RtShoulderTop_CTRL</node>
+            <node>RtShoulderUp_CTRL</node>
+            <node>RtToeAFk0_CTRL</node>
+            <node>RtToeAglobalScale_CTRL</node>
+            <node>RtToeBFk0_CTRL</node>
+            <node>RtToeBglobalScale_CTRL</node>
+            <node>RtUprEyelidFk0_CTRL</node>
+            <node>RtUprEyelidglobalScale_CTRL</node>
+            <node>Spine_Body_CTRL</node>
+            <node>Spine_CLS1_CTRL</node>
+            <node>Spine_CLS2_CTRL</node>
+            <node>Spine_CLS3_CTRL</node>
+            <node>Spine_Chest_CTRL</node>
+            <node>Spine_InnerChest_CTRL</node>
+            <node>Spine_Pelvis_CTRL</node>
+            <node>Spine_brokenDownFk0_CTRL</node>
+            <node>Spine_brokenDownFk1_CTRL</node>
+            <node>Spine_brokenUpFk0_CTRL</node>
+            <node>Spine_brokenUpFk1_CTRL</node>
+            <node>Spine_chestTwist_CTRL</node>
+            <node>Spine_fwdFk0_CTRL</node>
+            <node>Spine_fwdFk1_CTRL</node>
+            <node>Spine_fwdFk2_CTRL</node>
+            <node>Spine_fwdFk3_CTRL</node>
+            <node>Spine_pelvisTwist_CTRL</node>
+            <node>Spine_revFk0_CTRL</node>
+            <node>Spine_revFk1_CTRL</node>
+            <node>Spine_revFk2_CTRL</node>
+            <node>Spine_revFk3_CTRL</node>
+            <node>TailFk0_CTRL</node>
+            <node>TailFk1_CTRL</node>
+            <node>TailFk2_CTRL</node>
+            <node>TailFk3_CTRL</node>
+            <node>TailFk4_CTRL</node>
+            <node>TailFk5_CTRL</node>
+            <node>TailglobalScale_CTRL</node>
+            <node>exportRelative_CTRL</node>
+            <node>fly_CTRL</node>
+            <node>root_CTRL</node>
+            <node>scale_CTRL</node>
+            <node>world_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>FkFoot0_CTRL</name>
+        <translation>-46.44255709 136.077589389</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>89 178 178</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>FkFoot0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>FkFoot_CTRL</name>
+        <translation>-508.106392725 124.551292971</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>204 102 204</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>FkFoot_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>FkLfLeg0_CTRL</name>
+        <translation>-46.44255709 -13.7857816327</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>0 178 178</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>FkLfLeg0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>FkLfLeg1_CTRL</name>
+        <translation>-46.44255709 61.1459038782</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>44 178 178</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>FkLfLeg1_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>FkRtLeg0_CTRL</name>
+        <translation>-508.106392725 -12.1266878196</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>204 0 204</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>FkRtLeg0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>FkRtLeg1_CTRL</name>
+        <translation>-508.106392725 56.2123025755</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>204 51 204</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>FkRtLeg1_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>FkToe0_CTRL</name>
+        <translation>-46.44255709 211.0092749</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>133 178 178</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>FkToe0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>FkToe_CTRL</name>
+        <translation>-508.106392725 192.890283366</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>204 153 204</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>FkToe_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>LfArmFk0CTRL</name>
+        <translation>-56.4801961802 -418.626568567</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>0 0 255</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>LfArmFk0CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>LfArmFk1CTRL</name>
+        <translation>23.1228576646 -347.468689746</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>0 0 255</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>LfArmFk1CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>LfArmFk2CTRL</name>
+        <translation>82.6026720678 -265.22766134</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>0 0 255</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>LfArmFk2CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>LfArmIkCTRL</name>
+        <translation>74.6545240113 -177.665080817</translation>
+        <rotation>0.0</rotation>
+        <scale>1.0 1.0</scale>
+        <fillColor>0 0 255</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>LfArmIkCTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>ellipse</type>
+        <name>LfArmpoleVector_CTRL</name>
+        <translation>-27.1261379015 -288.185868797</translation>
+        <rotation>45.0</rotation>
+        <scale>1.0 1.0</scale>
+        <fillColor>0 178 178</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>LfArmpoleVector_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>LfArmtransCTRL</name>
+        <translation>-96.0446628585 -376.595009564</translation>
+        <rotation>0.0</rotation>
+        <scale>1.0 1.0</scale>
+        <fillColor>0 178 178</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>LfArmtransCTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>LfBangleFk0_CTRL</name>
+        <translation>593.756358869 -398.582120715</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>0 0 255</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>LfBangleFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>LfBeardFk0_CTRL</name>
+        <translation>326.768958857 45.1162755063</translation>
+        <rotation>45.0</rotation>
+        <scale>0.3 0.3</scale>
+        <fillColor>0 0 255</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>LfBeardFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>LfBeardFk1_CTRL</name>
+        <translation>349.088576793 83.4984310413</translation>
+        <rotation>45.0</rotation>
+        <scale>0.3 0.3</scale>
+        <fillColor>95 95 255</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>LfBeardFk1_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>LfBeardFk2_CTRL</name>
+        <translation>355.982240884 124.631079896</translation>
+        <rotation>45.0</rotation>
+        <scale>0.3 0.3</scale>
+        <fillColor>191 191 255</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>LfBeardFk2_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>LfBreastFk0_CTRL</name>
+        <translation>-148.614648246 -311.075277184</translation>
+        <rotation>45.0</rotation>
+        <scale>0.3 0.3</scale>
+        <fillColor>0 0 255</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>LfBreastFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>LfDigitAFk0_CTRL</name>
+        <translation>31.7801986427 -79.0917328594</translation>
+        <rotation>45.0</rotation>
+        <scale>0.3 0.3</scale>
+        <fillColor>0 0 255</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>LfDigitAFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>LfDigitAFk1_CTRL</name>
+        <translation>30.8264286042 -51.7940550884</translation>
+        <rotation>45.0</rotation>
+        <scale>0.3 0.3</scale>
+        <fillColor>95 95 255</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>LfDigitAFk1_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>LfDigitAFk2_CTRL</name>
+        <translation>31.0169678446 -25.385593534</translation>
+        <rotation>45.0</rotation>
+        <scale>0.3 0.3</scale>
+        <fillColor>191 191 255</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>LfDigitAFk2_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>LfDigitBFk0_CTRL</name>
+        <translation>58.6363703922 -78.3283552741</translation>
+        <rotation>45.0</rotation>
+        <scale>0.3 0.3</scale>
+        <fillColor>0 0 255</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>LfDigitBFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>LfDigitBFk1_CTRL</name>
+        <translation>58.4321024833 -50.7941727066</translation>
+        <rotation>45.0</rotation>
+        <scale>0.3 0.3</scale>
+        <fillColor>191 191 255</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>LfDigitBFk1_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>LfDigitCFk0_CTRL</name>
+        <translation>83.2137932463 -78.3969452336</translation>
+        <rotation>45.0</rotation>
+        <scale>0.3 0.3</scale>
+        <fillColor>0 0 255</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>LfDigitCFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>LfDigitCFk1_CTRL</name>
+        <translation>82.6013914183 -48.5405667829</translation>
+        <rotation>45.0</rotation>
+        <scale>0.3 0.3</scale>
+        <fillColor>191 191 255</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>LfDigitCFk1_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>LfEarFk0_CTRL</name>
+        <translation>409.130117015 -108.440393633</translation>
+        <rotation>45.0</rotation>
+        <scale>0.4 0.4</scale>
+        <fillColor>0 0 255</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>LfEarFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>LfEarFk1_CTRL</name>
+        <translation>444.89175111 -120.254644333</translation>
+        <rotation>45.0</rotation>
+        <scale>0.4 0.4</scale>
+        <fillColor>191 191 255</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>LfEarFk1_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>ellipse</type>
+        <name>LfLegPV_CTRL</name>
+        <translation>-147.908381659 76.2218900224</translation>
+        <rotation>45.0</rotation>
+        <scale>1.0 1.0</scale>
+        <fillColor>0 178 178</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>LfLegPV_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>LfLegTrans_CTRL</name>
+        <translation>-116.888084964 -8.45864304458</translation>
+        <rotation>0.0</rotation>
+        <scale>1.0 1.0</scale>
+        <fillColor>0 178 178</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>LfLegTrans_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>LfLeg_CTRL</name>
+        <translation>-157.069853287 153.978497423</translation>
+        <rotation>0.0</rotation>
+        <scale>1.0 1.0</scale>
+        <fillColor>0 0 255</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>LfLeg_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>LfLwrEyelidFk0_CTRL</name>
+        <translation>349.337243542 -68.4288754937</translation>
+        <rotation>45.0</rotation>
+        <scale>0.25 0.25</scale>
+        <fillColor>0 0 255</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>LfLwrEyelidFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>LfNostrilFk0_CTRL</name>
+        <translation>333.113676853 -49.8564039488</translation>
+        <rotation>45.0</rotation>
+        <scale>0.3 0.3</scale>
+        <fillColor>0 0 255</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>LfNostrilFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>LfShoulderBase_CTRL</name>
+        <translation>-157.136082618 -383.898826402</translation>
+        <rotation>0.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>0 0 255</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>LfShoulderBase_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>LfShoulderTop_CTRL</name>
+        <translation>-133.621005123 -431.421834033</translation>
+        <rotation>0.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>0 0 255</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>LfShoulderTop_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>LfToeAFk0_CTRL</name>
+        <translation>-191.725208967 215.213039946</translation>
+        <rotation>45.0</rotation>
+        <scale>0.3 0.3</scale>
+        <fillColor>0 0 255</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>LfToeAFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>LfToeBFk0_CTRL</name>
+        <translation>-148.482136093 216.537239346</translation>
+        <rotation>45.0</rotation>
+        <scale>0.3 0.3</scale>
+        <fillColor>0 0 255</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>LfToeBFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>LfUprEyelidFk0_CTRL</name>
+        <translation>349.774610577 -91.6093283601</translation>
+        <rotation>45.0</rotation>
+        <scale>0.25 0.25</scale>
+        <fillColor>0 0 255</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>LfUprEyelidFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>LoinclothFk0_CTRL</name>
+        <translation>248.0730524 -242.79699307</translation>
+        <rotation>45.0</rotation>
+        <scale>0.4 0.4</scale>
+        <fillColor>255 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>LoinclothFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>LoinclothFk1_CTRL</name>
+        <translation>250.265179432 -201.098879362</translation>
+        <rotation>45.0</rotation>
+        <scale>0.4 0.4</scale>
+        <fillColor>255 255 191</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>LoinclothFk1_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>MedallionFk0_CTRL</name>
+        <translation>307.924359352 509.066091329</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>255 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>MedallionFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>MouthFk0_CTRL</name>
+        <translation>242.724494023 -560.365657463</translation>
+        <rotation>45.0</rotation>
+        <scale>0.4 0.4</scale>
+        <fillColor>255 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>MouthFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>NeckHeadFk0CTRL</name>
+        <translation>-277.0 -336.196604303</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>255 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>NeckHeadFk0CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>NeckHead_HeadA_CTRL</name>
+        <translation>-277.0 -399.495016708</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>255 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>NeckHead_HeadA_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>NeckHead_HeadFK_CTRL</name>
+        <translation>-277.0 -533.797297126</translation>
+        <rotation>45.0</rotation>
+        <scale>1.25 1.25</scale>
+        <fillColor>255 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>NeckHead_HeadFK_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>NeckHelperFk0_CTRL</name>
+        <translation>231.517962725 -508.035573133</translation>
+        <rotation>45.0</rotation>
+        <scale>0.4 0.4</scale>
+        <fillColor>255 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>NeckHelperFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>NecklaceInnerAFk0_CTRL</name>
+        <translation>317.136123372 323.631196779</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>255 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>NecklaceInnerAFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>NecklaceInnerBFk0_CTRL</name>
+        <translation>336.777393491 353.270691832</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>255 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>NecklaceInnerBFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>NecklaceMainFk0_CTRL</name>
+        <translation>295.688463916 231.309863292</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>255 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>NecklaceMainFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>NecklaceMainFk1_CTRL</name>
+        <translation>231.982763872 256.086043464</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>255 255 31</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>NecklaceMainFk1_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>NecklaceMainFk2_CTRL</name>
+        <translation>242.500786691 303.560202448</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>255 255 63</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>NecklaceMainFk2_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>NecklaceMainFk3_CTRL</name>
+        <translation>268.138251921 361.753724788</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>255 255 95</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>NecklaceMainFk3_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>NecklaceMainFk4_CTRL</name>
+        <translation>314.901111755 419.602138034</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>255 255 127</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>NecklaceMainFk4_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>NecklaceMainFk5_CTRL</name>
+        <translation>379.961609931 361.030210395</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>255 255 159</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>NecklaceMainFk5_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>NecklaceMainFk6_CTRL</name>
+        <translation>370.368174202 271.285391454</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>255 255 191</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>NecklaceMainFk6_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>RtArmFk0CTRL</name>
+        <translation>-490.897368443 -428.411052527</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>0 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>RtArmFk0CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>RtArmFk1CTRL</name>
+        <translation>-571.991816547 -345.633647284</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>0 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>RtArmFk1CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>RtArmFk2CTRL</name>
+        <translation>-652.616727969 -248.302234166</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>0 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>RtArmFk2CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>RtArmIkCTRL</name>
+        <translation>-624.470716286 -176.632206675</translation>
+        <rotation>0.0</rotation>
+        <scale>1.0 1.0</scale>
+        <fillColor>0 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>RtArmIkCTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>ellipse</type>
+        <name>RtArmpoleVector_CTRL</name>
+        <translation>-509.578908137 -298.946023957</translation>
+        <rotation>45.0</rotation>
+        <scale>1.0 1.0</scale>
+        <fillColor>204 0 204</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>RtArmpoleVector_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>RtArmtransCTRL</name>
+        <translation>-444.962853911 -389.506112714</translation>
+        <rotation>0.0</rotation>
+        <scale>1.0 1.0</scale>
+        <fillColor>204 0 204</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>RtArmtransCTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>RtBangleFk0_CTRL</name>
+        <translation>455.559897849 -398.21434257</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>0 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>RtBangleFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>RtBeardFk0_CTRL</name>
+        <translation>287.575815373 45.5888878057</translation>
+        <rotation>45.0</rotation>
+        <scale>0.3 0.3</scale>
+        <fillColor>0 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>RtBeardFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>RtBeardFk1_CTRL</name>
+        <translation>265.563392849 82.4363413618</translation>
+        <rotation>45.0</rotation>
+        <scale>0.3 0.3</scale>
+        <fillColor>95 255 95</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>RtBeardFk1_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>RtBeardFk2_CTRL</name>
+        <translation>258.976910474 126.026945729</translation>
+        <rotation>45.0</rotation>
+        <scale>0.3 0.3</scale>
+        <fillColor>191 255 191</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>RtBeardFk2_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>RtBreastFk0_CTRL</name>
+        <translation>-415.090969638 -314.203146996</translation>
+        <rotation>45.0</rotation>
+        <scale>0.3 0.3</scale>
+        <fillColor>0 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>RtBreastFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>RtDigitAFk0_CTRL</name>
+        <translation>-594.244734885 -81.4860722983</translation>
+        <rotation>45.0</rotation>
+        <scale>0.3 0.3</scale>
+        <fillColor>0 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>RtDigitAFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>RtDigitAFk1_CTRL</name>
+        <translation>-594.677870864 -56.3525480423</translation>
+        <rotation>45.0</rotation>
+        <scale>0.3 0.3</scale>
+        <fillColor>95 255 95</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>RtDigitAFk1_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>RtDigitAFk2_CTRL</name>
+        <translation>-593.598611693 -32.5350969474</translation>
+        <rotation>45.0</rotation>
+        <scale>0.3 0.3</scale>
+        <fillColor>191 255 191</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>RtDigitAFk2_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>RtDigitBFk0_CTRL</name>
+        <translation>-619.507350102 -81.9899606997</translation>
+        <rotation>45.0</rotation>
+        <scale>0.3 0.3</scale>
+        <fillColor>0 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>RtDigitBFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>RtDigitBFk1_CTRL</name>
+        <translation>-619.541773434 -58.5638959812</translation>
+        <rotation>45.0</rotation>
+        <scale>0.3 0.3</scale>
+        <fillColor>191 255 191</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>RtDigitBFk1_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>RtDigitCFk0_CTRL</name>
+        <translation>-643.047050477 -81.6863500009</translation>
+        <rotation>45.0</rotation>
+        <scale>0.3 0.3</scale>
+        <fillColor>0 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>RtDigitCFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>RtDigitCFk1_CTRL</name>
+        <translation>-644.38675363 -57.8668555947</translation>
+        <rotation>45.0</rotation>
+        <scale>0.3 0.3</scale>
+        <fillColor>191 255 191</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>RtDigitCFk1_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>RtEarFk0_CTRL</name>
+        <translation>203.329544656 -103.240188244</translation>
+        <rotation>45.0</rotation>
+        <scale>0.4 0.4</scale>
+        <fillColor>0 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>RtEarFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>RtEarFk1_CTRL</name>
+        <translation>167.567739123 -115.053210204</translation>
+        <rotation>45.0</rotation>
+        <scale>0.4 0.4</scale>
+        <fillColor>191 255 191</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>RtEarFk1_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>ellipse</type>
+        <name>RtLegPV_CTRL</name>
+        <translation>-407.934507051 81.1029019931</translation>
+        <rotation>45.0</rotation>
+        <scale>1.0 1.0</scale>
+        <fillColor>204 0 204</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>RtLegPV_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>RtLegTrans_CTRL</name>
+        <translation>-442.802801289 -12.0456220416</translation>
+        <rotation>0.0</rotation>
+        <scale>1.0 1.0</scale>
+        <fillColor>204 0 204</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>RtLegTrans_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>RtLeg_CTRL</name>
+        <translation>-397.232511459 159.629354616</translation>
+        <rotation>0.0</rotation>
+        <scale>1.0 1.0</scale>
+        <fillColor>0 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>RtLeg_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>RtLwrEyelidFk0_CTRL</name>
+        <translation>263.290035993 -71.4893628422</translation>
+        <rotation>45.0</rotation>
+        <scale>0.25 0.25</scale>
+        <fillColor>0 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>RtLwrEyelidFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>RtNostrilFk0_CTRL</name>
+        <translation>283.500498264 -48.9039002441</translation>
+        <rotation>45.0</rotation>
+        <scale>0.3 0.3</scale>
+        <fillColor>0 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>RtNostrilFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>RtShoulderBase_CTRL</name>
+        <translation>-384.829085174 -396.065855183</translation>
+        <rotation>0.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>0 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>RtShoulderBase_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>RtShoulderTop_CTRL</name>
+        <translation>-408.92800479 -449.352358349</translation>
+        <rotation>0.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>0 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>RtShoulderTop_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>RtToeAFk0_CTRL</name>
+        <translation>-364.110349527 214.31938127</translation>
+        <rotation>45.0</rotation>
+        <scale>0.3 0.3</scale>
+        <fillColor>0 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>RtToeAFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>RtToeBFk0_CTRL</name>
+        <translation>-406.62426658 215.107522239</translation>
+        <rotation>45.0</rotation>
+        <scale>0.3 0.3</scale>
+        <fillColor>0 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>RtToeBFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>RtUprEyelidFk0_CTRL</name>
+        <translation>262.415301923 -95.9819168143</translation>
+        <rotation>45.0</rotation>
+        <scale>0.25 0.25</scale>
+        <fillColor>0 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>RtUprEyelidFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>Spine_Body_CTRL</name>
+        <translation>-277.0 -31.3736859773</translation>
+        <rotation>0.0</rotation>
+        <scale>2.0 2.0</scale>
+        <fillColor>255 255 255</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>Spine_Body_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>Spine_CLS1_CTRL</name>
+        <translation>-523.851964316 473.233946459</translation>
+        <rotation>0.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>255 102 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>Spine_CLS1_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>Spine_CLS2_CTRL</name>
+        <translation>-523.851964316 426.982725047</translation>
+        <rotation>0.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>255 159 95</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>Spine_CLS2_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>Spine_CLS3_CTRL</name>
+        <translation>-523.851964316 367.613314895</translation>
+        <rotation>0.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>255 216 191</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>Spine_CLS3_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>polygon</type>
+        <name>Spine_Chest_CTRL</name>
+        <translation>-563.881587149 442.378211658</translation>
+        <rotation>0.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>255 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>Spine_Chest_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>polygon</type>
+        <name>Spine_InnerChest_CTRL</name>
+        <translation>-563.881587149 328.135362926</translation>
+        <rotation>0.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>255 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>Spine_InnerChest_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>polygon</type>
+        <name>Spine_Pelvis_CTRL</name>
+        <translation>-563.881587149 531.029793644</translation>
+        <rotation>0.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>255 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>Spine_Pelvis_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>Spine_brokenDownFk0_CTRL</name>
+        <translation>-162.045757943 395.279116778</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>255 255 191</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>Spine_brokenDownFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>Spine_brokenDownFk1_CTRL</name>
+        <translation>-162.045757943 468.259425101</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>255 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>Spine_brokenDownFk1_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>Spine_brokenUpFk0_CTRL</name>
+        <translation>-162.045757943 431.769270939</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>255 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>Spine_brokenUpFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>Spine_brokenUpFk1_CTRL</name>
+        <translation>-162.045757943 358.788962617</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>255 255 191</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>Spine_brokenUpFk1_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>Spine_fwdFk0_CTRL</name>
+        <translation>-407.612098013 496.388773884</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>255 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>Spine_fwdFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>Spine_fwdFk1_CTRL</name>
+        <translation>-405.302696696 450.778770274</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>255 255 63</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>Spine_fwdFk1_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>Spine_fwdFk2_CTRL</name>
+        <translation>-405.302696696 405.168766665</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>255 255 127</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>Spine_fwdFk2_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>Spine_fwdFk3_CTRL</name>
+        <translation>-405.302696696 359.558763056</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>255 255 191</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>Spine_fwdFk3_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>Spine_revFk0_CTRL</name>
+        <translation>-285.213828198 335.063566877</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>255 255 191</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>Spine_revFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>Spine_revFk1_CTRL</name>
+        <translation>-285.213828198 393.575194335</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>255 255 127</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>Spine_revFk1_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>Spine_revFk2_CTRL</name>
+        <translation>-285.213828198 452.086821793</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>255 255 63</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>Spine_revFk2_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>Spine_revFk3_CTRL</name>
+        <translation>-285.213828198 510.598449251</translation>
+        <rotation>45.0</rotation>
+        <scale>0.6 0.6</scale>
+        <fillColor>255 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>Spine_revFk3_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>TailFk0_CTRL</name>
+        <translation>360.165466766 -334.391932642</translation>
+        <rotation>45.0</rotation>
+        <scale>0.3 0.3</scale>
+        <fillColor>255 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>TailFk0_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>TailFk1_CTRL</name>
+        <translation>385.076735358 -303.160507445</translation>
+        <rotation>45.0</rotation>
+        <scale>0.3 0.3</scale>
+        <fillColor>255 255 38</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>TailFk1_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>TailFk2_CTRL</name>
+        <translation>418.998296117 -291.507093085</translation>
+        <rotation>45.0</rotation>
+        <scale>0.3 0.3</scale>
+        <fillColor>255 255 76</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>TailFk2_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>TailFk3_CTRL</name>
+        <translation>454.273815324 -295.342959998</translation>
+        <rotation>45.0</rotation>
+        <scale>0.3 0.3</scale>
+        <fillColor>255 255 114</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>TailFk3_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>TailFk4_CTRL</name>
+        <translation>490.645398046 -289.523361195</translation>
+        <rotation>45.0</rotation>
+        <scale>0.3 0.3</scale>
+        <fillColor>255 255 153</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>TailFk4_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>TailFk5_CTRL</name>
+        <translation>522.294237094 -263.390875693</translation>
+        <rotation>45.0</rotation>
+        <scale>0.3 0.3</scale>
+        <fillColor>255 255 191</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>TailFk5_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>text</type>
+        <text> Fly  </text>
+        <fontSize>25</fontSize>
+        <strong>False</strong>
+        <italic>False</italic>
+        <centered>True</centered>
+        <drawBox>True</drawBox>
+        <underline>False</underline>
+        <name>fly_CTRL</name>
+        <translation>39.6275592072 506.738870722</translation>
+        <rotation>0.0</rotation>
+        <scale>1.0 1.0</scale>
+        <fillColor>255 102 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>fly_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>square</type>
+        <name>root_CTRL</name>
+        <translation>-277.0 -150.492665903</translation>
+        <rotation>45.0</rotation>
+        <scale>1.5 1.5</scale>
+        <fillColor>255 178 102</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>root_CTRL</node>
+        </trigger>
+    </item>
+
+    <item>
+        <type>text</type>
+        <text> World  </text>
+        <fontSize>25</fontSize>
+        <strong>False</strong>
+        <italic>False</italic>
+        <centered>True</centered>
+        <drawBox>True</drawBox>
+        <underline>False</underline>
+        <name>world_CTRL</name>
+        <translation>39.6275592072 443.573704496</translation>
+        <rotation>0.0</rotation>
+        <scale>1.0 1.0</scale>
+        <fillColor>255 255 0</fillColor>
+        <outlineColor>0 0 0</outlineColor>
+        <zValue>0</zValue>
+        <trigger>
+            <type>selection</type>
+            <supportsNamespace>True</supportsNamespace>
+            <node>world_CTRL</node>
+        </trigger>
+    </item>
+
+</AnimationPicker>
