@@ -21,6 +21,9 @@ function GetXPLevelByXp(xp)
 end
 
 function GetXpProgressToNextLevel(xp)
+	
+	if xp == 0 then return 0 end
+
 	local level = GetXPLevelByXp(xp)
 	local next = level + 1
 	local thisXp = XP_level_table[level]
