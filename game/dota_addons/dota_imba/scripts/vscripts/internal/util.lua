@@ -966,7 +966,6 @@ function ReconnectPlayer(player_id)
 		HeroSelection.HorriblyImplementedReconnectDetection[player_id] = false
 		Timers:CreateTimer(1.0, function()
 			if HeroSelection.HorriblyImplementedReconnectDetection[player_id] then
-				Server_EnableToGainXPForPlyaer(player_id)
 				local pick_state = HeroSelection.playerPickState[player_id].pick_state
 				local repick_state = HeroSelection.playerPickState[player_id].repick_state
 

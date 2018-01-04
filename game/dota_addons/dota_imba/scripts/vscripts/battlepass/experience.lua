@@ -28,6 +28,9 @@ function GetXpProgressToNextLevel(xp)
 	local next = level + 1
 	local thisXp = XP_level_table[level]
 	local nextXp = XP_level_table[next]
+	if nextXp == nil then
+		nextXp = 0
+	end
 
 	local xpRequiredForThisLevel = nextXp - thisXp
 	local xpProgressInThisLevel = xp - thisXp

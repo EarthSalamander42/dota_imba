@@ -31,6 +31,9 @@
 
 			$( "#ConquestScore_Radiant" ).style.visibility = "visible";
 			$( "#ConquestScore_Dire" ).style.visibility = "visible";
+			$( "#ConquestScore_Custom1" ).style.visibility = "visible";
+			$( "#ConquestScore_Custom2" ).style.visibility = "visible";
+			$( "#ConquestScore_Custom3" ).style.visibility = "visible";
 		}
 		$( "#_dynamic_team_2" ).SetAttributeInt( "team_id", 2 );
 		$( "#_dynamic_team_3" ).SetAttributeInt( "team_id", 3 );

@@ -106,11 +106,6 @@ function GameMode:OnGameRulesStateChange(keys)
 	-- IMBA: Game Setup / API Calls
 	-------------------------------------------------------------------------------------------------
 	if new_state == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
-		-- get top 10 xp
---		for i = 1, 13 do -- +2 for the 2 unallowed xp (cookies and suthernfriend) and +1 because universe big bang 42
---			Server_GetTopPlayer(i)
---		end
-
 		if PlayerResource:GetPlayerCount() < 10 then
 			if not IsInToolsMode() then
 				CHEAT_ENABLED = true
@@ -263,36 +258,36 @@ function GameMode:OnGameRulesStateChange(keys)
 					end
 				end)
 			end
-		end
-
-		countdownEnabled = true
-		CustomGameEventManager:Send_ServerToAllClients( "show_timer", {} )
-		DoEntFire( "center_experience_ring_particles", "Start", "0", 0, self, self  )
-		Timers:CreateTimer(function()
-			CountdownTimer()
-			self:ThinkGoldDrop() -- TODO: Enable this
-			self:ThinkSpecialItemDrop()
-			if nCOUNTDOWNTIMER == 30 then
-				CustomGameEventManager:Send_ServerToAllClients( "timer_alert", {} )
-			end
-			if nCOUNTDOWNTIMER <= 0 then
-				--Check to see if there's a tie
-				if isGameTied == false then
-					GameRules:SetCustomVictoryMessage( m_VictoryMessages[leadingTeam] )
-					GameMode:EndGame( leadingTeam )
-					countdownEnabled = false
-					return nil
-				else
-					TEAM_KILLS_TO_WIN = leadingTeamScore + 1
-					local broadcast_killcount = 
-					{
-						killcount = TEAM_KILLS_TO_WIN
-					}
-					CustomGameEventManager:Send_ServerToAllClients( "overtime_alert", broadcast_killcount )
+		elseif GetMapName() == "imba_overthrow" then
+			countdownEnabled = true
+			CustomGameEventManager:Send_ServerToAllClients( "show_timer", {} )
+			DoEntFire( "center_experience_ring_particles", "Start", "0", 0, self, self  )
+			Timers:CreateTimer(function()
+				CountdownTimer()
+				self:ThinkGoldDrop() -- TODO: Enable this
+				self:ThinkSpecialItemDrop()
+				if nCOUNTDOWNTIMER == 30 then
+					CustomGameEventManager:Send_ServerToAllClients( "timer_alert", {} )
 				end
-			end
-			return 1.0
-		end)
+				if nCOUNTDOWNTIMER <= 0 then
+					--Check to see if there's a tie
+					if isGameTied == false then
+						GameRules:SetCustomVictoryMessage( m_VictoryMessages[leadingTeam] )
+						GameMode:EndGame( leadingTeam )
+						countdownEnabled = false
+						return nil
+					else
+						TEAM_KILLS_TO_WIN = leadingTeamScore + 1
+						local broadcast_killcount = 
+						{
+							killcount = TEAM_KILLS_TO_WIN
+						}
+						CustomGameEventManager:Send_ServerToAllClients( "overtime_alert", broadcast_killcount )
+					end
+				end
+				return 1.0
+			end)
+		end
 	end
 
 	if new_state == DOTA_GAMERULES_STATE_POST_GAME then
@@ -1302,10 +1297,10 @@ function GameMode:OnEntityKilled( keys )
 						--print("Set time for Wraith King respawn disabled")
 						return nil
 					else
-						GameMode:SetRespawnTime( killedTeam, killed_unit, 10 )
+						GameMode:SetRespawnTime( killedTeam, killed_unit, 0 )
 					end
 				else
-					GameMode:SetRespawnTime( killedTeam, killed_unit, 10 )
+					GameMode:SetRespawnTime( killedTeam, killed_unit, 0 )
 				end
 			end
 				
