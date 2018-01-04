@@ -220,12 +220,13 @@ function imba_nyx_assassin_impale:OnProjectileHit_ExtraData(target, location, Ex
 		EmitSoundOn(sound_land, target)
 
 		-- Get the target's Suffering modifier
+		local total_dmg = 0
 		local modifier_suffering_handler = target:FindAllModifiersByName("modifier_imba_impale_suffering_damage_counter")
-		
+		local suffering_damage = 0
+
 		if main_spike == 1 and modifier_suffering_handler then
 
 			-- Calculate Suffering damage
-			local suffering_damage = 0
 			for _,damage in pairs(modifier_suffering_handler) do
 				suffering_damage = suffering_damage + damage:GetStackCount()
 			end
@@ -241,10 +242,8 @@ function imba_nyx_assassin_impale:OnProjectileHit_ExtraData(target, location, Ex
 								 ability = ability,
 								}
 		
-			ApplyDamage(damageTable)  
-
-			-- Create alert
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, target, suffering_damage, nil)
+			local dmg1 = ApplyDamage(damageTable)
+			total_dmg = total_dmg + dmg1
 		end
 
 		-- Deal base damage        
@@ -255,7 +254,10 @@ function imba_nyx_assassin_impale:OnProjectileHit_ExtraData(target, location, Ex
 					  ability = ability
 					  }
 	
-		ApplyDamage(damageTable) 
+		local dmg2 = ApplyDamage(damageTable) 
+		total_dmg = total_dmg + dmg2
+		-- Create alert
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, target, total_dmg, nil)
 	end)
 end
 

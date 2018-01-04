@@ -383,19 +383,15 @@ function GameMode:ModifierFilter( keys )
 				end
 			end
 
-			Timers:CreateTimer(FrameTime(), function()
-				if modifier_owner:IsNull() then
-					return false
-				end
-				local modifier_handler = modifier_owner:FindModifierByName(modifier_name)
-				if modifier_handler then
-					if modifier_handler.IgnoreTenacity then
-						if modifier_handler:IgnoreTenacity() then
-							modifier_handler:SetDuration(original_duration, true)
-						end
+			local modifier_handler = modifier_owner:FindModifierByName(modifier_name)
+			if modifier_handler then
+				if modifier_handler.IgnoreTenacity then
+					if modifier_handler:IgnoreTenacity() then
+						keys.duration = original_duration
 					end
 				end
-			end)
+			end
+
 		end
 
 		-------------------------------------------------------------------------------------------------
