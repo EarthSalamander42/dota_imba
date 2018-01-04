@@ -369,17 +369,17 @@ function GameMode:ModifierFilter( keys )
 		-------------------------------------------------------------------------------------------------
 		-- Tenacity debuff duration reduction
 		-------------------------------------------------------------------------------------------------
-		if modifier_owner.GetTenacity then						
+		if modifier_owner.GetTenacity and keys.duration > 0 then						
 			local original_duration = keys.duration
-
+			local actually_duration = original_duration
 			local tenacity = modifier_owner:GetTenacity()
 			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 and tenacity ~= 0 then				
-				keys.duration = keys.duration * (100 - tenacity) * 0.01
+				actually_duration = actually_duration * (100 - tenacity) * 0.01
 				-------------------------------------------------------------------------------------------------
 				-- Frantic mode duration adjustment
 				-------------------------------------------------------------------------------------------------
 				if IMBA_FRANTIC_MODE_ON then
-					keys.duration = keys.duration * IMBA_FRANTIC_VALUE
+					actually_duration = actually_duration * IMBA_FRANTIC_VALUE
 				end
 			end
 
@@ -387,10 +387,12 @@ function GameMode:ModifierFilter( keys )
 			if modifier_handler then
 				if modifier_handler.IgnoreTenacity then
 					if modifier_handler:IgnoreTenacity() then
-						keys.duration = original_duration
+						actually_duration = original_duration
 					end
 				end
 			end
+
+			keys.duration = actually_duration
 
 		end
 
