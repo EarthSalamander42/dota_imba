@@ -123,6 +123,8 @@
 
 .ConquestScore
 {
+	width: 40%;
+	height: 100%;
 	vertical-align: top;
 	horizontal-align: center;
 	margin-top: 3px;
@@ -149,10 +151,16 @@
 #ConquestScore_Radiant
 {
 	horizontal-align: left;
+	visibility: collapse;
 }
-#ConquestScore_Dire
+
+#ConquestScore_Dire,
+#ConquestScore_Custom1,
+#ConquestScore_Custom2,
+#ConquestScore_Custom3
 {
 	horizontal-align: right;
+	visibility: collapse;
 }
 
 .CustomHudRoot.radiant_earning_points #ConquestScore_Radiant,
@@ -470,4 +478,9 @@
 .is_local_player #LocalPlayerIndicator
 {
     visibility: visible;
+}
+
+.overthrow {
+	width: 20%;
+	height: 100%;
 }

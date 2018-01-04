@@ -92,7 +92,7 @@ function GameMode:OnFirstPlayerLoaded()
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Roshan and Picking Screen camera initialization
 	-------------------------------------------------------------------------------------------------
-	if GetMapName() == "desert_duo" then
+	if GetMapName() == "imba_overthrow" then
 		GoodCamera = Entities:FindByName(nil, "@overboss")
 		BadCamera = Entities:FindByName(nil, "@overboss")
 
@@ -118,7 +118,7 @@ function GameMode:OnFirstPlayerLoaded()
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Pre-pick forced hero selection
 	-------------------------------------------------------------------------------------------------
-	self.flItemExpireTime = 60.0
+	flItemExpireTime = 60.0
 	GameRules:SetSameHeroSelectionEnabled(true)
 	GameRules:GetGameModeEntity():SetCustomGameForceHero("npc_dota_hero_wisp")
 
@@ -1192,7 +1192,7 @@ function GameMode:OnAllPlayersLoaded()
 	GameRules:GetGameModeEntity():SetItemAddedToInventoryFilter( Dynamic_Wrap(GameMode, "ItemAddedFilter"), self )
 
 	-- CHAT
-	self.chat = Chat(self.Players, self.Users, TEAM_COLORS)
+	chat = Chat(Players, Users, TEAM_COLORS)
 	--	Chat:constructor(players, users, teamColors)
 
 	-------------------------------------------------------------------------------------------------
@@ -1330,7 +1330,7 @@ function GameMode:OnGameInProgress()
 		end
 	end
 
-	if GetMapName() == "desert_duo" then return end
+	if GetMapName() == "imba_overthrow" then return end
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Structure stats setup
@@ -1537,35 +1537,33 @@ function GameMode:InitGameMode()
 	-- Call the internal function to set up the rules/behaviors specified in constants.lua
 	-- This also sets up event hooks for all event handlers in events.lua
 	-- Check out internals/gamemode to see/modify the exact code
-	GameMode:_InitGameMode()
+	self:_InitGameMode()
 
 	GameRules.HeroKV = LoadKeyValues("scripts/npc/npc_heroes_custom.txt")
 	GameRules.UnitKV = LoadKeyValues("scripts/npc/npc_units_custom.txt")
 
 	-- IMBA testbed command
-	Convars:RegisterCommand("imba_test", Dynamic_Wrap(GameMode, 'StartImbaTest'), "Spawns several units to help with testing", FCVAR_CHEAT)
+	Convars:RegisterCommand("imba_test", Dynamic_Wrap(self, 'StartImbaTest'), "Spawns several units to help with testing", FCVAR_CHEAT)
 	Convars:RegisterCommand("particle_table_print", PrintParticleTable, "Prints a huge table of all used particles", FCVAR_CHEAT)	
-	Convars:RegisterCommand("test_picking_screen", InitPickScreen, "schnizzle", FCVAR_CHEAT)
 
-	CustomGameEventManager:RegisterListener("remove_units", Dynamic_Wrap(GameMode, "RemoveUnits"))
+	CustomGameEventManager:RegisterListener("remove_units", Dynamic_Wrap(self, "RemoveUnits"))
 
 	-- Panorama event stuff
 	initScoreBoardEvents()
 	InitPlayerHeroImbaTalents();
-end
 
-function InitPickScreen()
-local picked_hero = {}
-picked_hero[0] = "npc_dota_hero_axe"
-picked_hero[1] = "npc_dota_hero_brewmaster"
-picked_hero[2] = "npc_dota_hero_troll_warlord"
+	if GetMapName() == "imba_overthrow" then
+		GameRules:GetGameModeEntity():SetLoseGoldOnDeath( false )
+		GameRules:GetGameModeEntity():SetFountainPercentageHealthRegen( 0 )
+		GameRules:GetGameModeEntity():SetFountainPercentageManaRegen( 0 )
+		GameRules:GetGameModeEntity():SetFountainConstantManaRegen( 0 )
+		GameRules:SetHideKillMessageHeaders( true )
+		GameRules:GetGameModeEntity():SetTopBarTeamValuesOverride( true )
+		GameRules:GetGameModeEntity():SetTopBarTeamValuesVisible( false )
 
-	print("Checking table...")
-	PrintTable(HeroSelection.picked_heroes)
-
-	ReconnectPlayer(0)
-
---	CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = 0, PickedHeroes = HeroSelection.radiantPicks, PlayerPicks = picked_hero, pickState = "selecting_hero", repickState = "false"})
+		self:SetUpFountains()
+		self:GatherAndRegisterValidTeams()
+	end
 end
 
 -- Starts the testbed if in tools mode
@@ -1779,12 +1777,175 @@ end
 --]]
 
 -- Overthrow
-function GameMode:CustomSpawnCamps()
-	for name,_ in pairs(spawncamps) do
-		spawnunits(name)
+---------------------------------------------------------------------------
+-- Set up fountain regen
+---------------------------------------------------------------------------
+function GameMode:SetUpFountains()
+
+	LinkLuaModifier( "modifier/modifier_fountain_aura_lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier( "modifier/modifier_fountain_aura_effect_lua", LUA_MODIFIER_MOTION_NONE )
+
+	local fountainEntities = Entities:FindAllByClassname( "ent_dota_fountain")
+	for _,fountainEnt in pairs( fountainEntities ) do
+		--print("fountain unit " .. tostring( fountainEnt ) )
+		fountainEnt:AddNewModifier( fountainEnt, fountainEnt, "modifier_fountain_aura_lua", {} )
 	end
 end
 
+---------------------------------------------------------------------------
+-- Get the color associated with a given teamID
+---------------------------------------------------------------------------
+function GameMode:ColorForTeam( teamID )
+	local color = TEAM_COLORS[ teamID ]
+	if color == nil then
+		color = { 255, 255, 255 } -- default to white
+	end
+	return color
+end
+
+---------------------------------------------------------------------------
+function GameMode:EndGame( victoryTeam )
+	local overBoss = Entities:FindByName( nil, "@overboss" )
+	if overBoss then
+		local celebrate = overBoss:FindAbilityByName( 'dota_ability_celebrate' )
+		if celebrate then
+			overBoss:CastAbilityNoTarget( celebrate, -1 )
+		end
+	end
+
+	GameRules:SetGameWinner( victoryTeam )
+end
+
+---------------------------------------------------------------------------
+-- Put a label over a player's hero so people know who is on what team
+---------------------------------------------------------------------------
+function GameMode:UpdatePlayerColor( nPlayerID )
+	if not PlayerResource:HasSelectedHero( nPlayerID ) then
+		return
+	end
+
+	local hero = PlayerResource:GetSelectedHeroEntity( nPlayerID )
+	if hero == nil then
+		return
+	end
+
+	local teamID = PlayerResource:GetTeam( nPlayerID )
+	local color = self:ColorForTeam( teamID )
+	PlayerResource:SetCustomPlayerColor( nPlayerID, color[1], color[2], color[3] )
+end
+
+---------------------------------------------------------------------------
+-- Simple scoreboard using debug text
+---------------------------------------------------------------------------
+function GameMode:UpdateScoreboard()
+	local sortedTeams = {}
+	for _, team in pairs( m_GatheredShuffledTeams ) do
+		table.insert( sortedTeams, { teamID = team, teamScore = GetTeamHeroKills( team ) } )
+	end
+
+	-- reverse-sort by score
+	table.sort( sortedTeams, function(a,b) return ( a.teamScore > b.teamScore ) end )
+
+	for _, t in pairs( sortedTeams ) do
+		local clr = self:ColorForTeam( t.teamID )
+
+		-- Scaleform UI Scoreboard
+		local score = 
+		{
+			team_id = t.teamID,
+			team_score = t.teamScore
+		}
+		FireGameEvent( "score_board", score )
+	end
+	-- Leader effects (moved from OnTeamKillCredit)
+	local leader = sortedTeams[1].teamID
+	--print("Leader = " .. leader)
+	leadingTeam = leader
+	runnerupTeam = sortedTeams[2].teamID
+	leadingTeamScore = sortedTeams[1].teamScore
+	runnerupTeamScore = sortedTeams[2].teamScore
+	if sortedTeams[1].teamScore == sortedTeams[2].teamScore then
+		isGameTied = true
+	else
+		isGameTied = false
+	end
+	local allHeroes = HeroList:GetAllHeroes()
+	for _,entity in pairs( allHeroes) do
+		if entity:GetTeamNumber() == leader and sortedTeams[1].teamScore ~= sortedTeams[2].teamScore then
+			if entity:IsAlive() == true then
+				-- Attaching a particle to the leading team heroes
+				local existingParticle = entity:Attribute_GetIntValue( "particleID", -1 )
+       			if existingParticle == -1 then
+       				local particleLeader = ParticleManager:CreateParticle( "particles/leader/leader_overhead.vpcf", PATTACH_OVERHEAD_FOLLOW, entity )
+					ParticleManager:SetParticleControlEnt( particleLeader, PATTACH_OVERHEAD_FOLLOW, entity, PATTACH_OVERHEAD_FOLLOW, "follow_overhead", entity:GetAbsOrigin(), true )
+					entity:Attribute_SetIntValue( "particleID", particleLeader )
+				end
+			else
+				local particleLeader = entity:Attribute_GetIntValue( "particleID", -1 )
+				if particleLeader ~= -1 then
+					ParticleManager:DestroyParticle( particleLeader, true )
+					entity:DeleteAttribute( "particleID" )
+				end
+			end
+		else
+			local particleLeader = entity:Attribute_GetIntValue( "particleID", -1 )
+			if particleLeader ~= -1 then
+				ParticleManager:DestroyParticle( particleLeader, true )
+				entity:DeleteAttribute( "particleID" )
+			end
+		end
+	end
+end
+
+---------------------------------------------------------------------------
+-- Scan the map to see which teams have spawn points
+---------------------------------------------------------------------------
+function GameMode:GatherAndRegisterValidTeams()
+--	print( "GatherValidTeams:" )
+
+	local foundTeams = {}
+	for _, playerStart in pairs( Entities:FindAllByClassname( "info_player_start_dota" ) ) do
+		foundTeams[  playerStart:GetTeam() ] = true
+	end
+
+	local numTeams = TableCount(foundTeams)
+	print( "GatherValidTeams - Found spawns for a total of " .. numTeams .. " teams" )
+	
+	local foundTeamsList = {}
+	for t, _ in pairs( foundTeams ) do
+		table.insert( foundTeamsList, t )
+		print("Team:", t)
+		AddFOWViewer(t, Entities:FindByName(nil, "throne_vision"):GetAbsOrigin(), 900, 99999, false)
+	end
+
+	if numTeams == 0 then
+		print( "GatherValidTeams - NO team spawns detected, defaulting to GOOD/BAD" )
+		table.insert( foundTeamsList, DOTA_TEAM_GOODGUYS )
+		table.insert( foundTeamsList, DOTA_TEAM_BADGUYS )
+		numTeams = 2
+	end
+
+	local maxPlayersPerValidTeam = math.floor( 10 / numTeams )
+
+	m_GatheredShuffledTeams = ShuffledList( foundTeamsList )
+
+	print( "Final shuffled team list:" )
+	for _, team in pairs( m_GatheredShuffledTeams ) do
+		print( " - " .. team .. " ( " .. GetTeamName( team ) .. " )" )
+	end
+
+	print( "Setting up teams:" )
+	for team = 0, (DOTA_TEAM_COUNT-1) do
+		local maxPlayers = 0
+		if ( nil ~= TableFindKey( foundTeamsList, team ) ) then
+			maxPlayers = maxPlayersPerValidTeam
+		end
+		print( " - " .. team .. " ( " .. GetTeamName( team ) .. " ) -> max players = " .. tostring(maxPlayers) )
+		GameRules:SetCustomGameTeamMaxPlayers( team, maxPlayers )
+	end
+end
+
+-- Spawning individual camps
 function GameMode:spawncamp(campname)
 	spawnunits(campname)
 end
@@ -1793,22 +1954,96 @@ end
 function spawnunits(campname)
 	local spawndata = spawncamps[campname]
 	local NumberToSpawn = spawndata.NumberToSpawn --How many to spawn
-	local SpawnLocation = Entities:FindByName( nil, campname )
-	local waypointlocation = Entities:FindByName ( nil, spawndata.WaypointName )
+    local SpawnLocation = Entities:FindByName( nil, campname )
+    local waypointlocation = Entities:FindByName ( nil, spawndata.WaypointName )
 	if SpawnLocation == nil then
 		return
 	end
 
-	local randomCreature = 
-		{
+    local randomCreature = 
+    	{
 			"basic_zombie",
 			"berserk_zombie"
-		}
+	    }
 	local r = randomCreature[RandomInt(1,#randomCreature)]
 	--print(r)
-	for i = 1, NumberToSpawn do
-		local creature = CreateUnitByName( "npc_dota_creature_" ..r , SpawnLocation:GetAbsOrigin() + RandomVector( RandomFloat( 0, 200 ) ), true, nil, nil, DOTA_TEAM_NEUTRALS )
-		--print ("Spawning Camps")
-		creature:SetInitialGoalEntity( waypointlocation )
+    for i = 1, NumberToSpawn do
+        local creature = CreateUnitByName( "npc_dota_creature_" ..r , SpawnLocation:GetAbsOrigin() + RandomVector( RandomFloat( 0, 200 ) ), true, nil, nil, DOTA_TEAM_NEUTRALS )
+        --print ("Spawning Camps")
+        creature:SetInitialGoalEntity( waypointlocation )
+    end
+end
+
+--------------------------------------------------------------------------------
+-- Event: Filter for inventory full
+--------------------------------------------------------------------------------
+function GameMode:ExecuteOrderFilter( filterTable )
+	--[[
+	for k, v in pairs( filterTable ) do
+		print("EO: " .. k .. " " .. tostring(v) )
+	end
+	]]
+
+	local orderType = filterTable["order_type"]
+	if ( orderType ~= DOTA_UNIT_ORDER_PICKUP_ITEM or filterTable["issuer_player_id_const"] == -1 ) then
+		return true
+	else
+		local item = EntIndexToHScript( filterTable["entindex_target"] )
+		if item == nil then
+			return true
+		end
+		local pickedItem = item:GetContainedItem()
+		--print(pickedItem:GetAbilityName())
+		if pickedItem == nil then
+			return true
+		end
+		if pickedItem:GetAbilityName() == "item_treasure_chest" then
+			local player = PlayerResource:GetPlayer(filterTable["issuer_player_id_const"])
+			local hero = player:GetAssignedHero()
+			if hero:GetNumItemsInInventory() < 6 then
+				--print("inventory has space")
+				return true
+			else
+				--print("Moving to target instead")
+				local position = item:GetAbsOrigin()
+				filterTable["position_x"] = position.x
+				filterTable["position_y"] = position.y
+				filterTable["position_z"] = position.z
+				filterTable["order_type"] = DOTA_UNIT_ORDER_MOVE_TO_POSITION
+				return true
+			end
+		end
+	end
+	return true
+end
+
+function GameMode:CustomSpawnCamps()
+	for name,_ in pairs(spawncamps) do
+	spawnunits(name)
+	end
+end
+
+function GameMode:OnItemPickUp( event )
+	local item = EntIndexToHScript( event.ItemEntityIndex )
+	local owner = EntIndexToHScript( event.HeroEntityIndex )
+	r = 300
+	--r = RandomInt(200, 400)
+	if event.itemname == "item_bag_of_gold" then
+		--print("Bag of gold picked up")
+		PlayerResource:ModifyGold( owner:GetPlayerID(), r, true, 0 )
+		SendOverheadEventMessage( owner, OVERHEAD_ALERT_GOLD, owner, r, nil )
+		UTIL_Remove( item ) -- otherwise it pollutes the player inventory
+	elseif event.itemname == "item_treasure_chest" then
+		--print("Special Item Picked Up")
+		DoEntFire( "item_spawn_particle_" .. itemSpawnIndex, "Stop", "0", 0, self, self )
+		GameMode:SpecialItemAdd( event )
+		UTIL_Remove( item ) -- otherwise it pollutes the player inventory
+	end
+end
+
+function GameMode:OnNpcGoalReached( event )
+	local npc = EntIndexToHScript( event.npc_entindex )
+	if npc:GetUnitName() == "npc_dota_treasure_courier" then
+		GameMode:TreasureDrop( npc )
 	end
 end

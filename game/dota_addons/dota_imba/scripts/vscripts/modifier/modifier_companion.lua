@@ -65,9 +65,14 @@ function modifier_companion:OnIntervalThink()
 	if IsServer() then
 		local companion = self:GetParent()
 		local hero = self:GetParent():GetPlayerOwner():GetAssignedHero()
-		local fountain = GoodCamera
-		if hero:GetTeamNumber() == 3 then
+		local fountain
+		if hero:GetTeamNumber() == 2 then
+			fountain = GoodCamera
+		elseif hero:GetTeamNumber() == 3 then
 			fountain = BadCamera
+		end
+		if GetMapName() == "imba_overthrow" then
+			fountain = Entities:FindByName(nil, "xp_granter")
 		end
 
 		local hero_origin = hero:GetAbsOrigin()

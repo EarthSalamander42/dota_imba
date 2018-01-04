@@ -196,8 +196,10 @@ function HeroSelection:Start()
 
 	HeroSelection.pick_sound_dummy_good = CreateUnitByName("npc_dummy_unit", GoodCamera:GetAbsOrigin(), false, nil, nil, DOTA_TEAM_GOODGUYS)
 	HeroSelection.pick_sound_dummy_good:EmitSound("Imba.PickPhaseDrums")
-	HeroSelection.pick_sound_dummy_bad = CreateUnitByName("npc_dummy_unit", BadCamera:GetAbsOrigin(), false, nil, nil, DOTA_TEAM_GOODGUYS)
-	HeroSelection.pick_sound_dummy_bad:EmitSound("Imba.PickPhaseDrums")
+	if GetMapName() ~= "imba_overthrow" then
+		HeroSelection.pick_sound_dummy_bad = CreateUnitByName("npc_dummy_unit", BadCamera:GetAbsOrigin(), false, nil, nil, DOTA_TEAM_GOODGUYS)
+		HeroSelection.pick_sound_dummy_bad:EmitSound("Imba.PickPhaseDrums")
+	end
 
 	-- Figure out which players have to pick
 	for pID = 0, DOTA_MAX_PLAYERS -1 do
