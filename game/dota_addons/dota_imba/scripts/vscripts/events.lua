@@ -195,7 +195,32 @@ function GameMode:OnGameRulesStateChange(keys)
 					hero:SetTimeUntilRespawn(respawn_time)
 				end
 			end
+
+			if GetMapName() == "imba_overthrow" then
+				self:UpdateScoreboard()
+			end
 			return 1.0
+		end)
+
+		-- custom gold and xp earning
+		Timers:CreateTimer(function()
+			-- global
+			for _, hero in pairs(HeroList:GetAllHeroes()) do
+				if not hero:HasModifier("modifier_fountain_aura_buff") then
+					hero:ModifyGold(2, true, 0)
+					hero:AddExperience(4, 0, false, false)
+				end
+			end
+
+			-- center
+			local heroes = FindUnitsInRadius(2, Entities:FindByName(nil, "xp_granter"):GetAbsOrigin(), nil, 900, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+			for _, hero in pairs(heroes) do
+				if not hero:HasModifier("modifier_fountain_aura_buff") then
+					hero:ModifyGold(4, true, 0)
+					hero:AddExperience(10, 0, false, false)
+				end
+			end
+			return 0.5
 		end)
 	end
 
@@ -239,6 +264,35 @@ function GameMode:OnGameRulesStateChange(keys)
 				end)
 			end
 		end
+
+		countdownEnabled = true
+		CustomGameEventManager:Send_ServerToAllClients( "show_timer", {} )
+		DoEntFire( "center_experience_ring_particles", "Start", "0", 0, self, self  )
+		Timers:CreateTimer(function()
+			CountdownTimer()
+			self:ThinkGoldDrop() -- TODO: Enable this
+			self:ThinkSpecialItemDrop()
+			if nCOUNTDOWNTIMER == 30 then
+				CustomGameEventManager:Send_ServerToAllClients( "timer_alert", {} )
+			end
+			if nCOUNTDOWNTIMER <= 0 then
+				--Check to see if there's a tie
+				if isGameTied == false then
+					GameRules:SetCustomVictoryMessage( m_VictoryMessages[leadingTeam] )
+					GameMode:EndGame( leadingTeam )
+					countdownEnabled = false
+					return nil
+				else
+					TEAM_KILLS_TO_WIN = leadingTeamScore + 1
+					local broadcast_killcount = 
+					{
+						killcount = TEAM_KILLS_TO_WIN
+					}
+					CustomGameEventManager:Send_ServerToAllClients( "overtime_alert", broadcast_killcount )
+				end
+			end
+			return 1.0
+		end)
 	end
 
 	if new_state == DOTA_GAMERULES_STATE_POST_GAME then
@@ -445,6 +499,12 @@ local normal_xp = npc:GetDeathXP()
 						DonatorCompanion(npc, IsDonator(npc))
 					end
 				end
+			end
+
+			local deathEffects = npc:Attribute_GetIntValue( "effectsID", -1 )
+			if deathEffects ~= -1 then
+				ParticleManager:DestroyParticle( deathEffects, true )
+				npc:DeleteAttribute( "effectsID" )
 			end
 
 			npc.first_spawn = true
@@ -947,6 +1007,36 @@ function GameMode:OnTeamKillCredit(keys)
 	local killer_id = keys.killer_userid
 	local victim_id = keys.victim_userid
 	local killer_team = keys.teamnumber
+	local nTeamKills = keys.herokills
+
+	-- Overthrow
+	if GetMapName() == "imba_overthrow" then
+		local nKillsRemaining = TEAM_KILLS_TO_WIN - nTeamKills
+		local broadcast_kill_event =
+		{
+			killer_id = keys.killer_userid,
+			team_id = keys.teamnumber,
+			team_kills = nTeamKills,
+			kills_remaining = nKillsRemaining,
+			victory = 0,
+			close_to_victory = 0,
+			very_close_to_victory = 0,
+		}
+
+		if nKillsRemaining <= 0 then
+			print(m_VictoryMessages[killer_team])
+			GameRules:SetCustomVictoryMessage( m_VictoryMessages[killer_team] )
+			GameRules:SetGameWinner( killer_team )
+			broadcast_kill_event.victory = 1
+		elseif nKillsRemaining == 1 then
+			EmitGlobalSound( "ui.npe_objective_complete" )
+			broadcast_kill_event.very_close_to_victory = 1
+		elseif nKillsRemaining <= CLOSE_TO_VICTORY_THRESHOLD then
+			EmitGlobalSound( "ui.npe_objective_given" )
+			broadcast_kill_event.close_to_victory = 1
+		end
+		CustomGameEventManager:Send_ServerToAllClients( "kill_event", broadcast_kill_event )
+	end
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Comeback gold logic
@@ -957,7 +1047,6 @@ function GameMode:OnTeamKillCredit(keys)
 	-- IMBA: Deathstreak logic
 	-------------------------------------------------------------------------------------------------		
 	if PlayerResource:IsValidPlayerID(killer_id) and PlayerResource:IsValidPlayerID(victim_id) then
-
 		PlayerResource:ResetDeathstreak(killer_id)		
 		PlayerResource:IncrementDeathstreak(victim_id)
 
@@ -1041,6 +1130,15 @@ function GameMode:OnTeamKillCredit(keys)
 	end
 end
 
+function GameMode:SetRespawnTime( killedTeam, killed_unit, extraTime )
+	--print("Setting time for respawn")
+	if killedTeam == leadingTeam and isGameTied == false then
+		killed_unit:SetTimeUntilRespawn( 20 + extraTime )
+	else
+		killed_unit:SetTimeUntilRespawn( 10 + extraTime )
+	end
+end
+
 -- An entity died
 function GameMode:OnEntityKilled( keys )
 	DebugPrint( '[BAREBONES] OnEntityKilled Called' )
@@ -1102,46 +1200,115 @@ function GameMode:OnEntityKilled( keys )
 		elseif killed_unit:HasModifier("modifier_item_imba_aegis") then
 			killed_unit:SetTimeUntilRespawn(killed_unit:FindModifierByName("modifier_item_imba_aegis").reincarnate_time)
 		elseif killed_unit:IsRealHero() and killed_unit:GetPlayerID() and (PlayerResource:IsImbaPlayer(killed_unit:GetPlayerID()) or (GameRules:IsCheatMode() == true) ) then
-			-- Calculate base respawn timer, capped at 60 seconds
-			local hero_level = math.min(killed_unit:GetLevel(), 25)
-			local respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[hero_level]
-			-- Calculate respawn timer reduction due to talents and modifiers
-			respawn_time = respawn_time * killed_unit:GetRespawnTimeModifier_Pct() * 0.01
-			respawn_time = math.max(respawn_time + killed_unit:GetRespawnTimeModifier(),0)
-			-- Fetch decreased respawn timer due to Bloodstone charges
-			if killed_unit.bloodstone_respawn_reduction and (respawn_time > 0) then
-				respawn_time = math.max( respawn_time - killed_unit.bloodstone_respawn_reduction, 0)
-			end
-
-			-- Set up the respawn timer, include meepo fix
-			if killed_unit:GetUnitName() == "npc_dota_hero_meepo" then
-				KillMeepos()
-			else
-				if killed_unit:HasModifier("modifier_imba_reapers_scythe_respawn") then
-					local reaper_scythe = killer:FindAbilityByName("imba_necrolyte_reapers_scythe"):GetSpecialValueFor("respawn_increase")
-					print("ignore respawn time limit")
-					print(reaper_scythe)
-					respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[hero_level] + reaper_scythe
-				elseif respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[25] then
-					respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[25]
-				end
-
-				-- divide the respawn time by 2 for frantic mode
-				if IMBA_FRANTIC_MODE_ON == true then
-					killed_unit:SetTimeUntilRespawn(respawn_time * IMBA_FRANTIC_VALUE)
-				else
-					killed_unit:SetTimeUntilRespawn(respawn_time)
-				end
-			end
 			HeroVoiceLine(killed_unit, "death")
+			if GetMapName() ~= "imba_overthrow" then
+				-- Calculate base respawn timer, capped at 60 seconds
+				local hero_level = math.min(killed_unit:GetLevel(), 25)
+				local respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[hero_level]
+				-- Calculate respawn timer reduction due to talents and modifiers
+				respawn_time = respawn_time * killed_unit:GetRespawnTimeModifier_Pct() * 0.01
+				respawn_time = math.max(respawn_time + killed_unit:GetRespawnTimeModifier(),0)
+				-- Fetch decreased respawn timer due to Bloodstone charges
+				if killed_unit.bloodstone_respawn_reduction and (respawn_time > 0) then
+					respawn_time = math.max( respawn_time - killed_unit.bloodstone_respawn_reduction, 0)
+				end
+
+				-- Set up the respawn timer, include meepo fix
+				if killed_unit:GetUnitName() == "npc_dota_hero_meepo" then
+					KillMeepos()
+				else
+					if killed_unit:HasModifier("modifier_imba_reapers_scythe_respawn") then
+						local reaper_scythe = killer:FindAbilityByName("imba_necrolyte_reapers_scythe"):GetSpecialValueFor("respawn_increase")
+						print("ignore respawn time limit")
+						print(reaper_scythe)
+						respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[hero_level] + reaper_scythe
+					elseif respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[25] then
+						respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[25]
+					end
+
+					-- divide the respawn time by 2 for frantic mode
+					if IMBA_FRANTIC_MODE_ON == true then
+						killed_unit:SetTimeUntilRespawn(respawn_time * IMBA_FRANTIC_VALUE)
+					else
+						killed_unit:SetTimeUntilRespawn(respawn_time)
+					end
+				end
+			end
 		end
 
-		-------------------------------------------------------------------------------------------------
-		-- IMBA: Buyback setup
-		-------------------------------------------------------------------------------------------------
-
 		-- Check if the dying unit was a player-controlled hero
-		if killed_unit:IsRealHero() and killed_unit:GetPlayerID() and PlayerResource:IsImbaPlayer(killed_unit:GetPlayerID()) then
+		if killed_unit:IsRealHero() and killed_unit:GetPlayerID() then
+			-- Overthrow
+			if GetMapName() == "imba_overthrow" then
+				allSpawned = true
+				--print("Hero has been killed")
+				--Add extra time if killed by Necro Ult
+				if keys.entindex_inflictor ~= nil then
+					local inflictor_index = keys.entindex_inflictor
+					if inflictor_index ~= nil then
+						local ability = EntIndexToHScript( keys.entindex_inflictor )
+						if ability ~= nil then
+							if ability:GetAbilityName() ~= nil then
+								if ability:GetAbilityName() == "necrolyte_reapers_scythe" then
+									print("Killed by Necro Ult")
+									extraTime = 20
+								end
+							end
+						end
+					end
+				end
+
+				if killer:GetTeam() ~= killed_unit:GetTeam() then
+					--print("Granting killer xp")
+					if killed_unit:GetTeam() == leadingTeam and isGameTied == false then
+						local memberID = killed_unit:GetPlayerID()
+						PlayerResource:ModifyGold( memberID, 500, true, 0 )
+						killed_unit:AddExperience( 100, 0, false, false )
+						local name = killed_unit:GetClassname()
+						local victim = killed_unit:GetClassname()
+						local kill_alert =
+							{
+								hero_id = killed_unit:GetClassname()
+							}
+						CustomGameEventManager:Send_ServerToAllClients( "kill_alert", kill_alert )
+					else
+						killed_unit:AddExperience( 50, 0, false, false )
+					end
+
+					local broadcast_team_points = 
+					{
+						radiant = GetTeamHeroKills(2),
+						dire = GetTeamHeroKills(3),
+						custom_1 = GetTeamHeroKills(6),
+						custom_2 = GetTeamHeroKills(7),
+						custom_3 = GetTeamHeroKills(8),
+					}
+					CustomGameEventManager:Send_ServerToAllClients( "team_points", broadcast_team_points )
+				end
+				--Granting XP to all heroes who assisted
+				local allHeroes = HeroList:GetAllHeroes()
+				for _,attacker in pairs( allHeroes ) do
+					--print(killed_unit:GetNumAttackers())
+					for i = 0, killed_unit:GetNumAttackers() - 1 do
+						if attacker == killed_unit:GetAttacker( i ) then
+							--print("Granting assist xp")
+							attacker:AddExperience( 25, 0, false, false )
+						end
+					end
+				end
+				if killed_unit:GetRespawnTime() > 10 then
+					--print("Hero has long respawn time")
+					if killed_unit:IsReincarnating() == true then
+						--print("Set time for Wraith King respawn disabled")
+						return nil
+					else
+						GameMode:SetRespawnTime( killedTeam, killed_unit, 10 )
+					end
+				else
+					GameMode:SetRespawnTime( killedTeam, killed_unit, 10 )
+				end
+			end
+				
 			-- Buyback parameters
 			local player_id = killed_unit:GetPlayerID()
 			local hero_level = killed_unit:GetLevel()
@@ -1155,7 +1322,6 @@ function GameMode:OnEntityKilled( keys )
 			local buyback_cost = BUYBACK_BASE_COST + level_based_cost + game_time * BUYBACK_COST_PER_SECOND		
 			local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
 			buyback_cost = buyback_cost * (custom_gold_bonus / 100)
-
 			-- Setup buyback cooldown
 			local buyback_cooldown = 0
 			-- if BUYBACK_COOLDOWN_ENABLED and game_time > BUYBACK_COOLDOWN_START_POINT then

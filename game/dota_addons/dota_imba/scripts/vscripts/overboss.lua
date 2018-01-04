@@ -6,5 +6,5 @@ function ThrowCoin( args )
 		coinSpawn = args.caster:GetAttachmentOrigin( coinAttach )
 	end
 --	print( coinSpawn )
-	GameRules:GetGameModeEntity().GameMode:SpawnGoldEntity( coinSpawn )
+	SpawnGoldEntity( coinSpawn )
 end

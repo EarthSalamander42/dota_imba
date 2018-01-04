@@ -46,7 +46,7 @@
 		GameUI.CustomUIConfig().team_colors = {}
 		GameUI.CustomUIConfig().team_names = {}
 		var map_info = Game.GetMapInfo();
-		if (map_info.map_display_name == "desert_duo") {
+		if (map_info.map_display_name == "imba_overthrow") {
 			GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_GOODGUYS] = "Teal Tiger";
 			GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_BADGUYS] = "Dire";
 			GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_CUSTOM_1] = "Pink Dragon";
@@ -186,14 +186,12 @@
 				tbbg.style.backgroundColor = 'none';
 			}
 		}
-
-		if (map_info.map_display_name == "desert_duo") {
-			topbar.style.visibility = "collapse";
-		}
 	</script>
 
 	<Panel>
 	<!-- CustomUIElements go here.  They are not provided currently as valve's parser reads commented lines and attempts to link them in.-->
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/overthrow_item_notification.xml" />
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/overthrow_scoreboard_left.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/combat_events.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/imba_imr.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/hero_selection.xml" />

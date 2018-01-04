@@ -135,10 +135,6 @@ IMBA_PLAYERS_ON_GAME = 10													-- Number of players in the game
 USE_CUSTOM_TEAM_COLORS = false												-- Should we use custom team colors?
 USE_CUSTOM_TEAM_COLORS_FOR_PLAYERS = false									-- Should we use custom team colors to color the players/minimap?
 
-TEAM_COLORS = {}															-- If USE_CUSTOM_TEAM_COLORS is set, use these colors.
-TEAM_COLORS[DOTA_TEAM_GOODGUYS] = { 61, 210, 150 }							-- Teal
-TEAM_COLORS[DOTA_TEAM_BADGUYS]  = { 243, 201, 9 }							-- Yellow
-
 PLAYER_COLORS = {}															-- Stores individual player colors
 PLAYER_COLORS[0] = { 67, 133, 255 }
 PLAYER_COLORS[1]  = { 170, 255, 195 }
@@ -171,6 +167,10 @@ CUSTOM_TEAM_PLAYER_COUNT = {}
 CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 5
 CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 5
 
+TEAM_COLORS = {}															-- If USE_CUSTOM_TEAM_COLORS is set, use these colors.
+TEAM_COLORS[DOTA_TEAM_GOODGUYS] = { 61, 210, 150 }							-- Teal
+TEAM_COLORS[DOTA_TEAM_BADGUYS]  = { 243, 201, 9 }							-- Yellow
+
 if GetMapName() == "imba_standard" then
 
 elseif GetMapName() == "imba_frantic_10v10" then
@@ -185,13 +185,74 @@ elseif GetMapName() == "imba_12v12" then
 	IMBA_PLAYERS_ON_GAME = 24
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 12
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 12
-elseif GetMapName() == "desert_duo" then
+elseif GetMapName() == "imba_overthrow" then
+	require("libraries/overthrow/items")
+	PRE_GAME_TIME = 20.0 + HERO_SELECTION_TIME
+	UNIVERSAL_SHOP_MODE = true
+	FIXED_RESPAWN_TIME = 10
+	MAX_NUMBER_OF_TEAMS = 5
 	IMBA_PLAYERS_ON_GAME = 10
+	USE_CUSTOM_TEAM_COLORS = true						-- Should we use custom team colors?
+	USE_CUSTOM_TEAM_COLORS_FOR_PLAYERS = true			-- Should we use custom team colors to color the players/minimap?
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 2
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 2
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_1]  = 2
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_2]  = 2
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_3]  = 2
+	TEAM_COLORS[DOTA_TEAM_GOODGUYS] = { 61, 210, 150 }	-- Teal
+	TEAM_COLORS[DOTA_TEAM_BADGUYS]  = { 243, 201, 9 }	-- Yellow
+	TEAM_COLORS[DOTA_TEAM_CUSTOM_1]  = { 197, 77, 168 }	-- Pink
+	TEAM_COLORS[DOTA_TEAM_CUSTOM_2]  = { 255, 108, 0 }	-- Orange
+	TEAM_COLORS[DOTA_TEAM_CUSTOM_3]  = { 52, 85, 255 }	-- Blue
+
+	m_GoldRadiusMin = 250
+	m_GoldRadiusMax = 550
+	m_GoldDropPercent = 4
+	nNextSpawnItemNumber = 1
+	spawnTime = 120
+	leadingTeam = -1
+	runnerupTeam = -1
+	leadingTeamScore = 0
+	OVERTHROW_CAMP_NUMBER = 5
+	CLOSE_TO_VICTORY_THRESHOLD = 5
+
+	hasWarnedSpawn = false
+	allSpawned = false
+	countdownEnabled = false
+	isGameTied = false
+
+	itemSpawnIndex = 1
+	itemSpawnLocation = Entities:FindByName( nil, "greevil" )
+	tier1ItemBucket = {}
+	tier2ItemBucket = {}
+	tier3ItemBucket = {}
+	tier4ItemBucket = {}
+
+	m_VictoryMessages = {}
+	m_VictoryMessages[DOTA_TEAM_GOODGUYS] = "#VictoryMessage_GoodGuys"
+	m_VictoryMessages[DOTA_TEAM_BADGUYS]  = "#VictoryMessage_BadGuys"
+	m_VictoryMessages[DOTA_TEAM_CUSTOM_1] = "#VictoryMessage_Custom1"
+	m_VictoryMessages[DOTA_TEAM_CUSTOM_2] = "#VictoryMessage_Custom2"
+	m_VictoryMessages[DOTA_TEAM_CUSTOM_3] = "#VictoryMessage_Custom3"
+	m_VictoryMessages[DOTA_TEAM_CUSTOM_4] = "#VictoryMessage_Custom4"
+	m_VictoryMessages[DOTA_TEAM_CUSTOM_5] = "#VictoryMessage_Custom5"
+	m_VictoryMessages[DOTA_TEAM_CUSTOM_6] = "#VictoryMessage_Custom6"
+	m_VictoryMessages[DOTA_TEAM_CUSTOM_7] = "#VictoryMessage_Custom7"
+	m_VictoryMessages[DOTA_TEAM_CUSTOM_8] = "#VictoryMessage_Custom8"
+
+	m_GatheredShuffledTeams = {}
+
+--	if PlayerResource:GetPlayerCount() > 7 then
+		TEAM_KILLS_TO_WIN = 25
+		nCOUNTDOWNTIMER = 901
+--	elseif PlayerResource:GetPlayerCount() > 4 and PlayerResource:GetPlayerCount() <= 7 then
+--		TEAM_KILLS_TO_WIN = 20
+--		nCOUNTDOWNTIMER = 721
+--	else
+--		TEAM_KILLS_TO_WIN = 15
+--		nCOUNTDOWNTIMER = 601
+--	end
+	CustomNetTables:SetTableValue( "game_state", "victory_condition", { kills_to_win = TEAM_KILLS_TO_WIN } );
 end
 
 -------------------------------------------------------------------------------------------------
@@ -217,39 +278,39 @@ CUSTOM_GOLD_BONUS = {} -- 1 = Normal, 2 = Hyper
 CUSTOM_GOLD_BONUS["imba_standard"] = {150, 150}
 CUSTOM_GOLD_BONUS["imba_10v10"] = {150, 150}
 CUSTOM_GOLD_BONUS["imba_frantic_10v10"] = {250, 250}
-CUSTOM_GOLD_BONUS["desert_duo"] = {150, 150}
+CUSTOM_GOLD_BONUS["imba_overthrow"] = {125, 125}
 
 -- Global XP earning, values are doubled with Hyper for non-custom maps (right now this is not used anymore, but i'll keep it there just in case)
 CUSTOM_XP_BONUS = {} -- 1 = standard, 2 = 10v10, 3 = custom
 CUSTOM_XP_BONUS["imba_standard"] = {100, 100}
 CUSTOM_XP_BONUS["imba_10v10"] = {100, 100}
 CUSTOM_XP_BONUS["imba_frantic_10v10"] = {200, 200}
-CUSTOM_XP_BONUS["desert_duo"] = {100, 100}
+CUSTOM_XP_BONUS["imba_overthrow"] = {125, 125}
 
 -- Hero base level, values are doubled with Hyper for non-custom maps
 HERO_STARTING_LEVEL = {} -- 1 = standard, 2 = 10v10, 3 = custom
 HERO_STARTING_LEVEL["imba_standard"] = {1, 1}
 HERO_STARTING_LEVEL["imba_10v10"] = {1, 1}
 HERO_STARTING_LEVEL["imba_frantic_10v10"] = {5, 12}
-HERO_STARTING_LEVEL["desert_duo"] = {1, 1}
+HERO_STARTING_LEVEL["imba_overthrow"] = {1, 1}
 
 MAX_LEVEL = {}
 MAX_LEVEL["imba_standard"] = {40, 40}
 MAX_LEVEL["imba_10v10"] = {40, 40}
 MAX_LEVEL["imba_frantic_10v10"] = {40, 100}
-MAX_LEVEL["desert_duo"] = {40, 40}
+MAX_LEVEL["imba_overthrow"] = {40, 40}
 
 HERO_INITIAL_GOLD = {}
 HERO_INITIAL_GOLD["imba_standard"] = {1200, 1200}
 HERO_INITIAL_GOLD["imba_10v10"] = {1200, 1200}
 HERO_INITIAL_GOLD["imba_frantic_10v10"] = {2000, 5000}
-HERO_INITIAL_GOLD["desert_duo"] = {1200, 1200}
+HERO_INITIAL_GOLD["imba_overthrow"] = {1200, 1200}
 
 GOLD_TICK_TIME = {}
 GOLD_TICK_TIME["imba_standard"] = 0.6
 GOLD_TICK_TIME["imba_10v10"] = 0.4
 GOLD_TICK_TIME["imba_frantic_10v10"] = 0.4
-GOLD_TICK_TIME["desert_duo"] = 9999
+GOLD_TICK_TIME["imba_overthrow"] = 9999
 
 REMAINING_GOODGUYS = 0														-- Remaining players on Radiant
 REMAINING_BADGUYS = 0														-- Remaining players on Dire
@@ -367,7 +428,6 @@ IMBA_GENERIC_TALENT_LIST = LoadKeyValues("scripts/npc/KV/imba_generic_talent_lis
 IMBA_HERO_TALENTS_LIST = LoadKeyValues("scripts/npc/KV/imba_hero_talents_list.kv")
 DISPELLABLE_DEBUFF_LIST = LoadKeyValues("scripts/npc/KV/dispellable_debuffs_list.kv")
 
-OVERTHROW_CAMP_NUMBER = 5
 
 IMBA_DEVS = {
 	54896080,	-- Cookies

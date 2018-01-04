@@ -66,7 +66,7 @@ function InitializeUI() {
 			$('#AllPickToggle').checked = true;
 			gold = 2
 			exp = 2
-		} else if (map_info.map_display_name == "desert_duo") {
+		} else if (map_info.map_display_name == "imba_overthrow") {
 			$('#GameOptionsPanel').style.visibility = 'collapse';
 			$('#imba-loading').style.visibility = 'collapse';
 			$('#overthrow-loading').style.visibility = 'visible';
