@@ -346,6 +346,10 @@ function GameMode:ModifierFilter( keys )
 			return true
 		end
 
+		if modifier_name == "modifier_datadriven" then
+			return false
+		end
+
 		-------------------------------------------------------------------------------------------------
 		-- Roshan special modifier rules
 		-------------------------------------------------------------------------------------------------
