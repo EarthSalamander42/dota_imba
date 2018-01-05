@@ -29,7 +29,11 @@ end
 
 function imba_pangolier_swashbuckle:IsHiddenWhenStolen() return false end
 function imba_pangolier_swashbuckle:IsStealable() return true end
-function imba_pangolier_swashbuckle:IsNetherWardStealable() return true end 
+function imba_pangolier_swashbuckle:IsNetherWardStealable() return true end
+
+function imba_pangolier_swashbuckle:GetAssociatedSecondaryAbilities()
+	return "imba_pangolier_heartpiercer"
+end 
 
 function imba_pangolier_swashbuckle:GetManaCost(level)
     local manacost = self.BaseClass.GetManaCost(self, level)
@@ -82,14 +86,15 @@ function imba_pangolier_swashbuckle:OnSpellStart()
 
 	caster:SetForwardVector(direction)
 
-	-- Play cast response
-    EmitSoundOn(cast_response[math.random(1, #cast_response)], caster)
-
+	if not self:IsStolen() then
+		-- Play cast response
+    	EmitSoundOnLocationWithCaster(caster:GetAbsOrigin(), cast_response[math.random(1, #cast_response)], caster)
+    end
     --play animation
     caster:StartGesture(ACT_DOTA_CAST_ABILITY_1)
 	
     -- Play cast sound
-    EmitSoundOn(sound_cast, caster)
+    EmitSoundOnLocationWithCaster(caster:GetAbsOrigin(), sound_cast, caster)
 	
    
 
@@ -376,7 +381,7 @@ function modifier_imba_swashbuckle_slashes:OnIntervalThink()
 		end
 
 		--plays the attack sound
-  		EmitSoundOn(self.slashing_sound, self.caster)
+  		EmitSoundOnLocationWithCaster(self.caster:GetAbsOrigin(), self.slashing_sound, self.caster)
 
 
 
@@ -584,12 +589,13 @@ function imba_pangolier_shield_crash:OnSpellStart()
 	local dust = ParticleManager:CreateParticle(dust_particle, PATTACH_WORLDORIGIN, nil)
 	ParticleManager:SetParticleControl(dust, 0, caster:GetAbsOrigin())
     
-
-	-- Play cast response
-    EmitSoundOn(cast_response[math.random(1, #cast_response)], caster)
+	if not self:IsStolen() then
+		-- Play cast response
+    	EmitSoundOnLocationWithCaster(caster:GetAbsOrigin(), cast_response[math.random(1, #cast_response)], caster)
+    end
 
 	-- Play cast sound
-	EmitSoundOn(sound_cast, caster)
+	EmitSoundOnLocationWithCaster(caster:GetAbsOrigin(), sound_cast, caster)
 
 
    --jump in the faced direction
@@ -597,21 +603,31 @@ function imba_pangolier_shield_crash:OnSpellStart()
 
 	-- Assign the landing point, jump height and duration in the modifier
 	if modifier_movement_handler then
-		local gyroshell_horizontal_distance = jump_duration_gyroshell * gyroshell_ability:GetSpecialValueFor("forward_move_speed")
 		modifier_movement_handler.dust_particle = dust
-		--if Pangolier is rolling, the jump will be longer
-		if caster:HasModifier("modifier_pangolier_gyroshell") then
-			modifier_movement_handler.target_point = caster:GetAbsOrigin() + caster:GetForwardVector():Normalized() * gyroshell_horizontal_distance
-			modifier_movement_handler.jump_height = jump_height_gyroshell
-			modifier_movement_handler.jump_duration = jump_duration_gyroshell
-		else --shorter jump
+
+		if self:IsStolen() then --Avoid errors because gyroshell isn't associated to Shield Crash when stolen
+		
 			modifier_movement_handler.target_point = caster:GetAbsOrigin() + caster:GetForwardVector():Normalized() * jump_horizontal_distance
 			modifier_movement_handler.jump_height = jump_height
 			modifier_movement_handler.jump_duration = jump_duration
+
+		else
+
+			local gyroshell_horizontal_distance = jump_duration_gyroshell * gyroshell_ability:GetSpecialValueFor("forward_move_speed")
+		
+		
+			--if Pangolier is rolling, the jump will be longer
+			if caster:HasModifier("modifier_pangolier_gyroshell") then
+				modifier_movement_handler.target_point = caster:GetAbsOrigin() + caster:GetForwardVector():Normalized() * gyroshell_horizontal_distance
+				modifier_movement_handler.jump_height = jump_height_gyroshell
+				modifier_movement_handler.jump_duration = jump_duration_gyroshell
+			else --shorter jump
+				modifier_movement_handler.target_point = caster:GetAbsOrigin() + caster:GetForwardVector():Normalized() * jump_horizontal_distance
+				modifier_movement_handler.jump_height = jump_height
+				modifier_movement_handler.jump_duration = jump_duration
+			end
 		end
 	end
-
-	
 
 end
 
@@ -636,7 +652,7 @@ function modifier_imba_shield_crash_buff:OnCreated(kv)
     	self.caster:SetModifierStackCount("modifier_imba_shield_crash_buff", self.caster, self.damage_reduction_pct * self.stacks)
 
     	--Play buff sound effect
-    	EmitSoundOn(self.sound, self.caster)
+    	EmitSoundOnLocationWithCaster(self.caster:GetAbsOrigin(), self.sound, self.caster)
 
     	--Add buff particle
     	self.buff_particle = ParticleManager:CreateParticle(self.particle, PATTACH_WORLDORIGIN, self.caster)
@@ -825,7 +841,7 @@ function modifier_imba_shield_crash_jump:OnRemoved()
 
 
 		-- Play smash sound
-		EmitSoundOn(self.smash_sound, self.caster)
+		EmitSoundOnLocationWithCaster(self.caster:GetAbsOrigin(), self.smash_sound, self.caster)
 
 		
 
@@ -937,6 +953,8 @@ function modifier_imba_shield_crash_block:IsDebuff() return false end
 
 function modifier_imba_shield_crash_block:OnCreated()
 	if IsServer() then
+		
+
 		--Ability Properties
 		self.caster = self:GetCaster()
 		self.ability = self:GetAbility()
@@ -954,6 +972,11 @@ function modifier_imba_shield_crash_block:OnCreated()
 		self.start_radius = self.swashbuckle:GetSpecialValueFor("start_radius")
 		self.end_radius = self.swashbuckle:GetSpecialValueFor("end_radius")
 
+		--SORRY RUBICK!
+		if self.ability:IsStolen() then
+			self:Destroy()
+		end
+
 		--initialize stack count
 		self.caster:SetModifierStackCount("modifier_imba_shield_crash_block", self.caster, 0)
 	end
@@ -962,13 +985,13 @@ end
 function modifier_imba_shield_crash_block:DeclareFunctions()
 	funcs = {MODIFIER_EVENT_ON_ATTACK_START,
 			MODIFIER_EVENT_ON_ATTACK,
+			MODIFIER_EVENT_ON_ATTACK_FINISHED,
 			MODIFIER_PROPERTY_EVASION_CONSTANT}
 
 	return funcs
 end
 
 function modifier_imba_shield_crash_block:GetModifierEvasion_Constant(params)
-	
 	--If the attack is to be parried, maximize evasion
 	local parried = false
 	for k,v in pairs(self.attackers) do
@@ -978,8 +1001,10 @@ function modifier_imba_shield_crash_block:GetModifierEvasion_Constant(params)
 		end
 	end
 	if parried then
+		
 		return 100
 	else
+		
 		return 0
 	end
 end
@@ -1029,21 +1054,12 @@ function modifier_imba_shield_crash_block:OnAttack(keys)
 
 			if self.hero_attacks > 0 then
 				--Signal that the attack was parried
-				SendOverheadEventMessage(nil, OVERHEAD_ALERT_EVADE, self.caster, 0, nil)
 				SendOverheadEventMessage(nil, OVERHEAD_ALERT_MISS, attacker, 0, nil)
 				self.hero_attacks = self.hero_attacks - 1
 				
 			end
 
-			--Remove debuff on attacker and remove him from table
-			if attacker:HasModifier("modifier_imba_shield_crash_block_miss") then
-				attacker:RemoveModifierByName("modifier_imba_shield_crash_block_miss")
-				for k,v in pairs(self.attackers) do
-					if v == attacker then
-						table.remove(self.attackers, k)
-					end
-				end
-			end
+			
 
 			--If all incoming attacks have been parried, remove the evasion on pangolier
 			--if self.hero_attacks == 0 and self.caster:HasModifier("modifier_imba_shield_crash_block_parry") then
@@ -1071,7 +1087,7 @@ function modifier_imba_shield_crash_block:OnAttack(keys)
 				self.caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_1)
 
 				--plays the attack sound
-  				EmitSoundOn(self.slashing_sound, self.caster)
+  				EmitSoundOnLocationWithCaster(self.caster:GetAbsOrigin(), self.slashing_sound, self.caster)
 
   				--play slashing particle
 				local slash_particle = ParticleManager:CreateParticle(self.particle, PATTACH_WORLDORIGIN, nil)
@@ -1157,6 +1173,27 @@ function modifier_imba_shield_crash_block:OnAttack(keys)
 	end
 end
 
+function modifier_imba_shield_crash_block:OnAttackFinished(keys)
+	if IsServer() then
+		local attacker = keys.attacker
+		local target = keys.target
+
+		--Proceed only if the target is Pangolier and the attacker is an hero
+		if target == self.caster and attacker:IsHero() then
+
+			--Remove debuff on attacker and remove him from table
+			if attacker:HasModifier("modifier_imba_shield_crash_block_miss") then
+				attacker:RemoveModifierByName("modifier_imba_shield_crash_block_miss")
+				for k,v in pairs(self.attackers) do
+					if v == attacker then
+						table.remove(self.attackers, k)
+					end
+				end
+			end
+		end
+	end
+end
+
 --[[Parry modifier: Evade the next hero attack
 modifier_imba_shield_crash_block_parry = modifier_imba_shield_crash_block_parry or class({})
 
@@ -1232,6 +1269,17 @@ end
 
 function imba_pangolier_heartpiercer:GetIntrinsicModifierName()
 	return "modifier_imba_heartpiercer_passive"
+end
+
+function imba_pangolier_heartpiercer:OnUnStolen()
+	if IsServer() then	
+		local caster = self:GetCaster()
+
+		--Remove the modifier from Rubick
+		if caster:HasModifier("modifier_imba_heartpiercer_passive") then
+			caster:RemoveModifierByName("modifier_imba_heartpiercer_passive")
+		end
+	end
 end
 
 
@@ -1315,8 +1363,11 @@ function modifier_imba_heartpiercer_passive:OnAttackLanded(kv)
 						if target:IsCreep() then
 							EmitSoundOn(self.proc_sound_creep, target)
 						else
-							--also plays cast response on heroes
-    						EmitSoundOn(self.cast_response[math.random(1, #self.cast_response)], self.caster)
+							if not self.ability:IsStolen() then
+								--also plays cast response on heroes
+    							EmitSoundOnLocationWithCaster(self.caster:GetAbsOrigin(), self.cast_response[math.random(1, #self.cast_response)], self.caster)
+    						end
+
 							EmitSoundOn(self.proc_sound_hero, target)
 						end
 
@@ -1375,9 +1426,9 @@ function modifier_imba_heartpiercer_delay:OnRemoved()
 
 		--play debuff sound
 		if self.parent:IsCreep() then
-			EmitSoundOn(self.debuff_sound_creep, self.parent)
+			EmitSoundOnLocationWithCaster(self.parent:GetAbsOrigin(), self.debuff_sound_creep, self.parent)
 		else
-			EmitSoundOn(self.debuff_sound_hero, self.parent)
+			EmitSoundOnLocationWithCaster(self.parent:GetAbsOrigin(), self.debuff_sound_hero, self.parent)
 		end
 
 		--apply the debuff
@@ -1595,7 +1646,7 @@ function imba_pangolier_gyroshell:OnAbilityPhaseStart()
 	local caster = self:GetCaster() 
 
 	--Play ability cast sound
-	EmitSoundOn(sound_cast, caster)
+	EmitSoundOnLocationWithCaster(caster:GetAbsOrigin(), sound_cast, caster)
 
 	--Play the effect and animation
 	self.cast_effect = ParticleManager:CreateParticle(cast_particle, PATTACH_WORLDORIGIN, nil)
@@ -1648,8 +1699,10 @@ function imba_pangolier_gyroshell:OnSpellStart()
 	--starts checking for hero impacts
 	caster:AddNewModifier(caster, ability, "modifier_imba_gyroshell_impact_check", {duration = ability_duration})
 
-	-- Play cast response
-    EmitSoundOn(cast_response[math.random(1, #cast_response)], caster)
+	if not self:IsStolen() then
+		-- Play cast response
+    	EmitSoundOnLocationWithCaster(caster:GetAbsOrigin(), cast_response[math.random(1, #cast_response)], caster)
+    end
 
 	--Play Loop sound
 	EmitSoundOn(loop_sound, caster)
@@ -1780,8 +1833,9 @@ function modifier_imba_gyroshell_impact_check:OnRemoved()
 	if IsServer() then
 
 		--Play Rolling Thunder end voice lines
-		
-		EmitSoundOn(self.stop_response[math.random(1, #self.stop_response)], self.caster)
+		if not self.ability:IsStolen() then
+			EmitSoundOnLocationWithCaster(self.caster:GetAbsOrigin(), self.stop_response[math.random(1, #self.stop_response)], self.caster)
+		end
 		--Talent #4: Extra duration on spell immunity after Rolling Thunder end
 		if self.caster:HasTalent("special_bonus_imba_pangolier_4") then
 			self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_gyroshell_linger", {duration = self.talent_duration})
