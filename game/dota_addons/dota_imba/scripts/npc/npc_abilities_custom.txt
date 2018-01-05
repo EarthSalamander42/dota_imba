@@ -21567,16 +21567,18 @@
 				"air_time"				"0.5"
 			}
 
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"air_height"			"350"
-			}
-
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_repeat_pct"		"20"
+				"CalculateSpellDamageTooltip"	"0"
+			}
+
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_duration"		"2"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 
 			"08"

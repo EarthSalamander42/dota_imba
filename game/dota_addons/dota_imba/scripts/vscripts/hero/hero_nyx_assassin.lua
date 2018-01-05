@@ -10,6 +10,7 @@ CreateEmptyTalents("nyx_assassin")
 imba_nyx_assassin_impale = class({})
 LinkLuaModifier("modifier_imba_impale_suffering_aura", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_impale_suffering", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_impale_suffering_damage_counter", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_impale_stun", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_impale_talent_slow", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_impale_talent_thinker", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
@@ -219,32 +220,30 @@ function imba_nyx_assassin_impale:OnProjectileHit_ExtraData(target, location, Ex
 		EmitSoundOn(sound_land, target)
 
 		-- Get the target's Suffering modifier
-		local modifier_suffering_handler = target:FindModifierByName(modifier_suffering)
-		
+		local total_dmg = 0
+		local modifier_suffering_handler = target:FindAllModifiersByName("modifier_imba_impale_suffering_damage_counter")
+		local suffering_damage = 0
+
 		if main_spike == 1 and modifier_suffering_handler then
-			-- Get the damage table
-			local damage_table = modifier_suffering_handler.damage_table
 
 			-- Calculate Suffering damage
-			local suffering_damage = 0
-			if damage_table then
-				for _,damage in pairs(damage_table) do
-					suffering_damage = suffering_damage + damage
-				end
+			for _,damage in pairs(modifier_suffering_handler) do
+				suffering_damage = suffering_damage + damage:GetStackCount()
 			end
+
+			suffering_damage = suffering_damage * damage_repeat_pct * 0.01
 
 			-- Deal Suffering damage
 			local damageTable = {victim = target,
 								 attacker = caster, 
 								 damage = suffering_damage,
 								 damage_type = DAMAGE_TYPE_MAGICAL,
-								 ability = ability
+								 damgae_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
+								 ability = ability,
 								}
 		
-			ApplyDamage(damageTable)  
-
-			-- Create alert
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, target, suffering_damage, nil)
+			local dmg1 = ApplyDamage(damageTable)
+			total_dmg = total_dmg + dmg1
 		end
 
 		-- Deal base damage        
@@ -255,7 +254,10 @@ function imba_nyx_assassin_impale:OnProjectileHit_ExtraData(target, location, Ex
 					  ability = ability
 					  }
 	
-		ApplyDamage(damageTable) 
+		local dmg2 = ApplyDamage(damageTable) 
+		total_dmg = total_dmg + dmg2
+		-- Create alert
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, target, total_dmg, nil)
 	end)
 end
 
@@ -293,7 +295,7 @@ end
 
 function modifier_imba_impale_suffering_aura:IsDebuff() return true end
 function modifier_imba_impale_suffering_aura:IsHidden() return true end
-function modifier_imba_impale_suffering_aura:IsPermanent() return true end
+function modifier_imba_impale_suffering_aura:RemoveOnDeath() return false end
 function modifier_imba_impale_suffering_aura:IsPurgable() return false end
 
 
@@ -309,40 +311,6 @@ function modifier_imba_impale_suffering:OnCreated()
 
 		-- Ability specials
 		self.damage_duration = self.ability:GetSpecialValueFor("damage_duration")
-
-		-- Tables
-		self.damage_table = {}
-		self.time_table = {}
-
-		-- Start interval think
-		self:StartIntervalThink(0.2)
-	end
-end
-
-function modifier_imba_impale_suffering:OnIntervalThink()
-	if IsServer() then
-		-- Index to remove from the table
-		local relevant_index = 0
-
-		-- If there are records that are too old, remove them
-		if self.damage_table and self.time_table then
-			local current_time = GameRules:GetDOTATime(true, true)
-			
-
-			for _,instance in pairs(self.time_table) do
-
-				-- Check its time in comparison to the current game time
-				if (instance + self.damage_duration) < current_time then
-					relevant_index = relevant_index + 1
-				end
-			end
-		end
-
-		-- Remove the firstmost damage and time instance from the table
-		for i = 1, relevant_index do            
-			table.remove(self.damage_table, 1)
-			table.remove(self.time_table, 1)
-		end        
 	end
 end
 
@@ -359,10 +327,10 @@ function modifier_imba_impale_suffering:OnTakeDamage(keys)
 
 		-- Only apply if the unit taking damage is the parent of the modifier
 		if self.parent == unit then
-
-			-- Record the attack damage in the damage table            
-			table.insert(self.damage_table, damage)         
-			table.insert(self.time_table, GameRules:GetDOTATime(true, true))
+			if damage > 0 then
+				local buff = self.parent:AddNewModifier(self.parent, self.ability, "modifier_imba_impale_suffering_damage_counter", {duration = self.damage_duration})
+				buff:SetStackCount(math.floor(damage+0.5))
+			end
 		end
 	end
 end
@@ -370,7 +338,16 @@ end
 function modifier_imba_impale_suffering:IsHidden() return true end
 function modifier_imba_impale_suffering:IsPurgable() return false end
 function modifier_imba_impale_suffering:IsDebuff() return true end
-function modifier_imba_impale_suffering:IsPermanent() return true end
+function modifier_imba_impale_suffering:RemoveOnDeath() return true end
+
+modifier_imba_impale_suffering_damage_counter = modifier_imba_impale_suffering_damage_counter or class({})
+
+function modifier_imba_impale_suffering_damage_counter:IsHidden() return true end
+function modifier_imba_impale_suffering_damage_counter:IsPurgable() return false end
+function modifier_imba_impale_suffering_damage_counter:IsDebuff() return true end
+function modifier_imba_impale_suffering_damage_counter:RemoveOnDeath() return true end
+function modifier_imba_impale_suffering_damage_counter:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
 
 
 -- Impale stun modifier
