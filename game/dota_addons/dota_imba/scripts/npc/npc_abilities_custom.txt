@@ -23190,7 +23190,7 @@
 	//=================================================================================================================
 	"imba_pangolier_swashbuckle"
 
-{
+	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
@@ -23271,6 +23271,21 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"strikes"				"4"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attackspeed"		"490"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_attacks"			"4"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"buff_duration"			"4"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
@@ -23366,6 +23381,11 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"jump_horizontal_distance"	"225"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"roll_cooldown"			"2.0"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
@@ -23561,6 +23581,16 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"pause_duration"		"0.2"
+			}
+			"15"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration_extend"		"1.0"
+			}
+			"16"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"200 275 350 425 500 575"
 			}			
 
 		}
@@ -23570,7 +23600,7 @@
 	// Pangolier's Talents
 	//=================================================================================================================
 
-	"special_bonus_imba_pangolier_1" // Heartpiercer can proc again while the debuff is in place to remove any extra armor
+	"special_bonus_imba_pangolier_1" // Pangolier strikes any enemy in his dash path during Swashbuckle
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -23581,7 +23611,65 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_pangolier_heartpiercer"
+			"01" 	"imba_pangolier_swashbuckle"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"value"						"1"
+			}
+
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"125"
+			}
+		}
+	}
+
+	"special_bonus_imba_pangolier_2" // Swashbuckle makes Pandolier invulnerable while dashing and disjoint projectiles while slashing
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_pangolier_swashbuckle"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_pangolier_3" // Hitting an hero with Shield Crash generate 1 stack of attack block. Blocking an attack execute a Swashbuckle slash towards the attacker.
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_pangolier_shield_crash"
 		}
 
 		// Special
@@ -23596,7 +23684,33 @@
 		}
 	}
 
-	"special_bonus_imba_pangolier_2" // Extra proc chance on Heartpiercer
+	"special_bonus_imba_pangolier_4" // Spell immunity linger 4 seconds after Rolling Thunder end
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		//"ScriptFile"					"internal/funcs.lua"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_pangolier_gyroshell"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"value"						"4.0"
+			}
+		}
+	}
+
+	"special_bonus_imba_pangolier_5" // Heartpiercer deals damage over time and applies on-hit effects from Pangolier at each tick
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -23617,12 +23731,22 @@
 			"01"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"value"						"10"
+				"value"						"1"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_per_second"			"40"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"tick_interval"				"0.5"
 			}
 		}
 	}
 
-	"special_bonus_imba_pangolier_3" // 2 seconds cooldown on Shield Crash while rolling
+	"special_bonus_imba_pangolier_6" // Decrease tenacity on enemies affected by Heartpiercer
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -23633,7 +23757,7 @@
 
 		"LinkedAbility"
 		{
-			"01" 	"imba_pangolier_shield_crash"
+			"01" 	"imba_pangolier_heartpiercer"
 		}
 
 		// Special
@@ -23642,13 +23766,13 @@
 		{
 			"01"
 			{
-				"var_type"                  "FIELD_FLOAT"
-				"value"						"2.0"
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"25"
 			}
 		}
 	}
 
-	"special_bonus_imba_pangolier_4" // Rolling Thunder lasts longer
+	"special_bonus_imba_pangolier_7" // Rolling Thunder damage on a given target is doubled for subsequent impacts
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -23669,64 +23793,12 @@
 			"01"
 			{
 				"var_type"                  "FIELD_FLOAT"
-				"value"						"3.5"
+				"value"						"1"
 			}
 		}
 	}
 
-	"special_bonus_imba_pangolier_5" // extra damage on each Swashbuckle slash
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		//"ScriptFile"					"internal/funcs.lua"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_pangolier_swashbuckle"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"value"						"30"
-			}
-		}
-	}
-
-	"special_bonus_imba_pangolier_6" // Extra damage on shield crash based on enemy heroes hit
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		//"ScriptFile"					"internal/funcs.lua"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_pangolier_shield_crash"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"value"						"20"
-			}
-		}
-	}
-
-	"special_bonus_imba_pangolier_7" // Reduced cooldown on Swashbuckle
+	"special_bonus_imba_pangolier_8" // Swashbuckle uses Pangolier attack damage
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -23747,33 +23819,7 @@
 			"01"
 			{
 				"var_type"                  "FIELD_FLOAT"
-				"value"						"3.0"
-			}
-		}
-	}
-
-	"special_bonus_imba_pangolier_8" // Reduced cooldown on Rolling Thunder
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		//"ScriptFile"					"internal/funcs.lua"
-		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01" 	"imba_pangolier_gyroshell"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"                  "FIELD_FLOAT"
-				"value"						"14.0"
+				"value"						"1"
 			}
 		}
 	}
