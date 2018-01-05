@@ -628,7 +628,11 @@ function imba_enigma_black_hole:IsNetherWardStealable() 	return true end
 
 function imba_enigma_black_hole:GetCooldown(nLevel)  
 	local charges = self:GetCaster():GetModifierStackCount("modifier_imba_singularity", self:GetCaster())
-	return self.BaseClass.GetCooldown( self, nLevel ) - charges * self:GetCaster():FindTalentValue("special_bonus_imba_enigma_1")    
+	local cd = self.BaseClass.GetCooldown( self, nLevel ) - charges * self:GetCaster():FindTalentValue("special_bonus_imba_enigma_1")
+	if cd < 30 then
+		cd = 30
+	end
+	return cd
 end
 
 function imba_enigma_black_hole:GetIntrinsicModifierName()
@@ -710,8 +714,10 @@ function modifier_imba_enigma_black_hole_thinker:OnCreated(keys)
 	local buff = self:GetCaster():FindModifierByName("modifier_imba_singularity")
 	if not keys.talent then buff:SetStackCount(buff:GetStackCount() + #enemies) end
 	EmitSoundOn(self.sound, self:GetParent())
+	local dummy = self:GetParent()
 	self:GetParent():SetContextThink("StopBHsound", function()
-														StopSoundOn(self.sound, self:GetParent())
+														StopSoundOn("Hero_Enigma.Black_Hole", dummy)
+														StopSoundOn("Imba.EnigmaBlackHoleTi5", dummy)
 														return nil
 													end, self:GetDuration())
 	self.particle = ParticleManager:CreateParticle(pfx_name, PATTACH_WORLDORIGIN, nil)
