@@ -14,26 +14,22 @@
 		if (map_info.map_display_name == "imba_overthrow") {
 			$( "#MultiteamScoreboard" ).style.width = "85%";
 			$( "#MultiteamScoreboard" ).style.horizontalAlign = "right";
-			$( "#_dynamic_team_2" ).style.width = "19%";
-			$( "#_dynamic_team_3" ).style.width = "19%";
+			$( "#_dynamic_team_2" ).style.width = "25%";
+			$( "#_dynamic_team_3" ).style.width = "25%";
 			$( "#_dynamic_team_3" ).style.horizontalAlign = "left";
 			$( "#_dynamic_team_3" ).style.marginLeft = "19%";
 
 			$( "#_dynamic_team_6" ).SetAttributeInt( "team_id", 6 );
-			$( "#_dynamic_team_6" ).style.width = "19%";
+			$( "#_dynamic_team_6" ).style.width = "25%";
 			$( "#_dynamic_team_6" ).style.marginLeft = "38%";
 			$( "#_dynamic_team_7" ).SetAttributeInt( "team_id", 7 );
-			$( "#_dynamic_team_7" ).style.width = "19%";
+			$( "#_dynamic_team_7" ).style.width = "25%";
 			$( "#_dynamic_team_7" ).style.marginLeft = "57%";
-			$( "#_dynamic_team_8" ).SetAttributeInt( "team_id", 8 );
-			$( "#_dynamic_team_8" ).style.width = "19%";
-			$( "#_dynamic_team_8" ).style.marginLeft = "76%";
 
 			$( "#ConquestScore_Radiant" ).style.visibility = "visible";
 			$( "#ConquestScore_Dire" ).style.visibility = "visible";
 			$( "#ConquestScore_Custom1" ).style.visibility = "visible";
 			$( "#ConquestScore_Custom2" ).style.visibility = "visible";
-			$( "#ConquestScore_Custom3" ).style.visibility = "visible";
 		}
 		$( "#_dynamic_team_2" ).SetAttributeInt( "team_id", 2 );
 		$( "#_dynamic_team_3" ).SetAttributeInt( "team_id", 3 );
@@ -81,17 +77,6 @@
 							<Panel hittest="false" id="LogoAndScore">
 								<Panel hittest="false" id="TeamLogo" />
 								<Label hittest="false" class="ConquestScore MonoNumbersFont" id="ConquestScore_Custom2" text="0"/>
-							</Panel>
-							<Panel hittest="false" id="PlayersContainer"/>
-							<Panel hittest="false" id="TeamPadding"/>
-						</Panel>
-					</Panel>
-
-					<Panel hittest="false" class="ScoreboardTeamWrapper" id="_dynamic_team_8">
-						<Panel hittest="false" id="ScoreboardTeam">
-							<Panel hittest="false" id="LogoAndScore">
-								<Panel hittest="false" id="TeamLogo" />
-								<Label hittest="false" class="ConquestScore MonoNumbersFont" id="ConquestScore_Custom3" text="0"/>
 							</Panel>
 							<Panel hittest="false" id="PlayersContainer"/>
 							<Panel hittest="false" id="TeamPadding"/>
