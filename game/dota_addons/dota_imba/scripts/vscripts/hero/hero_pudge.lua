@@ -861,6 +861,7 @@ function imba_pudge_dismember:OnSpellStart()
 	local target = self:GetCursorTarget()
 	target:AddNewModifier(caster, self, "modifier_dismember", {})
 	caster:AddNewModifier(caster, self, "modifier_imba_pudge_dismember_buff", {duration = self.channelTime})
+	self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_dismember.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 end
 
 function imba_pudge_dismember:OnChannelFinish()
@@ -870,6 +871,8 @@ function imba_pudge_dismember:OnChannelFinish()
 	local caster_buff = caster:FindModifierByNameAndCaster("modifier_imba_pudge_dismember_buff", caster)
 	if target_buff then target_buff:Destroy() end
 	if caster_buff then caster_buff:Destroy() end
+	ParticleManager:DestroyParticle(self.pfx, true)
+	ParticleManager:ReleaseParticleIndex(self.pfx)
 end
 
 modifier_dismember = class({})
@@ -920,7 +923,7 @@ function modifier_imba_pudge_dismember_buff:IsDebuff() return false end
 function modifier_imba_pudge_dismember_buff:IsHidden() return true end
 function modifier_imba_pudge_dismember_buff:IsPurgable() return false end
 function modifier_imba_pudge_dismember_buff:IsStunDebuff() return false end
-	
+
 function modifier_imba_pudge_dismember_buff:GetModifierSpellLifesteal()
 	return self:GetAbility():GetSpecialValueFor("spell_lifesteal")
 end
