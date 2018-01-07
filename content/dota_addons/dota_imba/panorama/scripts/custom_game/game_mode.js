@@ -80,22 +80,31 @@ function InitializeUI() {
 function InitializeNews() {
 	$.Msg("Init News...")
 	var lang = $.Localize("lang");
-	$.Msg("Language: " + lang)
-
-    $.AsyncWebRequest('http://api.dota2imba.org/meta/news',
+    $.Msg("Language: " + lang)
+    
+    $.AsyncWebRequest('https://api.dota2imba.org/meta/news', 
 	{
-		type: 'GET',
-		success: function (data) {
-			var news = data.data;
+        type: 'GET',
+        dataType: 'json',
+		success: function (d) {
+            $.Msg("News received"); 
+            $.Msg(JSON.stringify(d)); 
 
+            var news = d.data;
+             
 			$("#imba-news-article-title").text = news["en"].title;
 			$("#imba-news-article-text").text = news["en"].text;
 
 			if (news[lang] !== undefined) {
 				$("#imba-news-article-title").text = news[lang].title;
 				$("#imba-news-article-text").text = news[lang].text;
-			}
-		}
+            }
+
+        },
+        timeout: 5000,
+        error: function (err) {
+            $.Msg("Api Error" + JSON.stringify(err));
+        }
 	});
 }
 
