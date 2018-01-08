@@ -49,10 +49,24 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 				ImbaXP_Panel.BCreateChildren("<Label id='ImbaXPRank" +playerId+ "' text='999'/>");
 				ImbaXP_Panel.BCreateChildren("<Label id='ImbaXP" +playerId+ "' text='999'/>");
 				ImbaXP_Panel.BCreateChildren("<Label id='ImbaXPEarned" +playerId+ "' text='+0'/>");
-				_ScoreboardUpdater_SetValueSafe( playerPanel, "XPProgressBar"+playerId, plyData.XP / plyData.MaxXP );
-				_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaLvl"+playerId, "Lvl: " + plyData.Lvl );
-				_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaXPRank"+playerId, plyData.title );
-				_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaXP"+playerId, plyData.XP + "/" + plyData.MaxXP );
+				
+                if (plyData.XP == undefined || plyData.MaxXP == undefined)
+                    _ScoreboardUpdater_SetValueSafe( playerPanel, "XPProgressBar"+playerId, 0 );
+                else
+                    _ScoreboardUpdater_SetValueSafe( playerPanel, "XPProgressBar"+playerId, plyData.XP / plyData.MaxXP );
+                
+                if (plyData.Lvl == undefined)
+                    _ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaLvl"+playerId, "Lvl: 0" );
+                else
+    				_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaLvl"+playerId, "Lvl: " + plyData.Lvl );
+
+                _ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaXPRank"+playerId, plyData.title );
+
+                if (plyData.XP == undefined || plyData.MaxXP == undefined) // prevent stupid undefined/undefined
+                    _ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaXP"+playerId, "0/100");
+                else
+                    _ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaXP"+playerId, plyData.XP + "/" + plyData.MaxXP );
+                				
 				if (plyData.title_color != null)
 				{
 					playerPanel.FindChildTraverse("ImbaXPRank" +playerId).style.color = plyData.title_color;
