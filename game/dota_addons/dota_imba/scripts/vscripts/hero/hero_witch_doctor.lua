@@ -58,7 +58,8 @@ function imba_witch_doctor_paralyzing_cask:OnSpellStart()
 				bounces = self:GetSpecialValueFor("bounces"),
 				speed = speed,
 				bounce_delay = self:GetSpecialValueFor("bounce_delay"),
-				index = index
+				index = index,
+				bFirstCast = 1
 			}
 		}
 		EmitSoundOn("Hero_WitchDoctor.Paralyzing_Cask_Cast", self:GetCaster())
@@ -75,7 +76,7 @@ function imba_witch_doctor_paralyzing_cask:OnProjectileHit_ExtraData(hTarget, vL
 				if not hTarget:IsMagicImmune() and not hTarget:TriggerSpellAbsorb(self) then
 
 					-- #4 TALENT: Casket applies maledict if previous target was maledicted
-					if IsServer() then
+					if IsServer() and self:GetCaster():HasTalent("special_bonus_imba_witch_doctor_4") then
 						local maledict_ability	=	hCaster:FindAbilityByName("imba_witch_doctor_maledict")
 						if hTarget:FindModifierByName("modifier_imba_maledict") then
 							self.cursed_casket = true 
@@ -180,6 +181,7 @@ function imba_witch_doctor_paralyzing_cask:OnProjectileHit_ExtraData(hTarget, vL
 						bounce_delay 		= ExtraData.bounce_delay,
 						index 				= ExtraData.index,
 						cursed_casket 		= self.cursed_casket,
+						bFirstCast			= 0
 					}
 				}
 				ProjectileManager:CreateTrackingProjectile(projectile)

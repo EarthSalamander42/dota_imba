@@ -1336,6 +1336,7 @@
 		"Ability4"					"imba_pudge_sharp_hook"
 		"Ability5"					"imba_pudge_light_hook"
 		"Ability6"					"imba_pudge_dismember"
+		"Ability7"					"imba_pudge_flesh_heap_handle"
 
 		"Ability10"					"special_bonus_imba_pudge_1" // +10 Power and Swift stacks
 		"Ability11"					"special_bonus_imba_pudge_4" // +10 Flesh Heap magic resist stack
