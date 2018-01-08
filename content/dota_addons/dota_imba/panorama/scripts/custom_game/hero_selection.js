@@ -360,7 +360,13 @@ var Custom2Count = 0
 		var plyData = CustomNetTables.GetTableValue("player_table", player);
 		if (plyData != null) {
 			if (map_info.map_display_name == "imba_standard") {
-				playerPanel.SetPlayerMMR( plyData.IMR_5v5.toFixed([0]) );
+			
+				// Dont display IMR if player havent calibrated yet
+				if (plyData.IMR_5v5_calibrating)
+					playerPanel.setPlayerMMR("TBD");
+				else
+					playerPanel.SetPlayerMMR( plyData.IMR_5v5.toFixed([0]) );
+					
 				RadiantLevels = RadiantLevels + plyData.IMR_5v5 / radiantPlayers.length
 				$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + RadiantLevels.toFixed([0]);
 			} else if (map_info.map_display_name == "imba_10v10") {
