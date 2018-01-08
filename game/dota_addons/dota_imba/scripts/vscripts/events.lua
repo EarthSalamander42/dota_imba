@@ -208,7 +208,7 @@ function GameMode:OnGameRulesStateChange(keys)
 			end
 
 			-- center
-			local heroes = FindUnitsInRadius(2, Entities:FindByName(nil, "xp_granter"):GetAbsOrigin(), nil, 900, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+			local heroes = FindUnitsInRadius(2, Entities:FindByName(nil, "@overboss"):GetAbsOrigin(), nil, 900, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 			for _, hero in pairs(heroes) do
 				if not hero:HasModifier("modifier_fountain_aura_buff") then
 					hero:ModifyGold(4, true, 0)
@@ -258,7 +258,9 @@ function GameMode:OnGameRulesStateChange(keys)
 					end
 				end)
 			end
-		elseif GetMapName() == "imba_overthrow" then
+		end
+
+		if GetMapName() == "imba_overthrow" then
 			countdownEnabled = true
 			CustomGameEventManager:Send_ServerToAllClients( "show_timer", {} )
 			DoEntFire( "center_experience_ring_particles", "Start", "0", 0, self, self  )

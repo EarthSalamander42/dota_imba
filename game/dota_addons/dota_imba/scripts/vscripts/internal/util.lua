@@ -149,7 +149,7 @@ end
 
 function FindNearestPointFromLine(caster, dir, affected)
 	local castertoaffected = affected - caster
-	local len = castertoaffected:Dot(dir)    
+	local len = castertoaffected:Dot(dir)
 	local ntgt = Vector(dir.x * len, dir.y * len, caster.z)
 	return caster + ntgt
 end
@@ -1425,7 +1425,7 @@ end
 function CountdownTimer()
     nCOUNTDOWNTIMER = nCOUNTDOWNTIMER - 1
     local t = nCOUNTDOWNTIMER
-    --print( t )
+	-- print( t )
     local minutes = math.floor(t / 60)
     local seconds = t - (minutes * 60)
     local m10 = math.floor(minutes / 10)

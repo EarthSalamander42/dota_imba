@@ -24,6 +24,9 @@
 						<Panel id="LeftPlayers">
 							<!-- JS Inserts player elements here -->
 						</Panel>
+						<Panel id="LeftPlayers_alt">
+							<!-- JS Inserts player elements here -->
+						</Panel>
 					</Panel>
 
 					<Panel id="LeftStatsPanel" class="StatsPanel">
@@ -69,6 +72,9 @@
 							<Label id="PickScreenTeamTitleDire" text="#team_title_dire" />
 						</Panel>
 						<Panel id="RightPlayers">
+							<!-- JS Inserts player elements here -->
+						</Panel>
+						<Panel id="RightPlayers_alt">
 							<!-- JS Inserts player elements here -->
 						</Panel>
 					</Panel>

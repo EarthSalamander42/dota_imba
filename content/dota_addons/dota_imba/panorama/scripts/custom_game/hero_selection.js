@@ -321,6 +321,8 @@ var RadiantLevels = 0
 var DireLevels = 0
 var RadiantCount = 0
 var DireCount = 0
+var Custom1Count = 0
+var Custom2Count = 0
 
 //	var str = "Cuckies";
 //	var n = str.search("Cuckies");
@@ -328,6 +330,8 @@ var DireCount = 0
 
 	var radiantPlayers = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_GOODGUYS );
 	var direPlayers = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_BADGUYS );
+	var custom1Players = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_CUSTOM_1 );
+	var custom2Players = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_CUSTOM_2 );
 	var map_info = Game.GetMapInfo();
 
 	var i = 1;
@@ -341,7 +345,7 @@ var DireCount = 0
 		playerPanels[player] = playerPanel;
 		RadiantCount = RadiantCount +1
 
-		if (RadiantCount >= 5) {
+		if (RadiantCount >= 5 || map_info.map_display_name == "imba_overthrow") {
 			RadiantCount = 0
 			if (map_info.map_display_name != "imba_standard") {
 				class_option_count = class_option_count +1
@@ -413,6 +417,48 @@ var DireCount = 0
 				DireLevels = DireLevels + plyData.Lvl / direPlayers.length
 				$("#AverageMMRTeamDire").text = $.Localize("average_mmr") + DireLevels.toFixed([0]);
 			}
+		}
+	});
+
+	$.Each( custom1Players, function( player ) {
+		var playerPanel = Modular.Spawn( "picking_player", $("#PlayerRow" + class_option_count + "_good") );
+		playerPanel.SetPlayerName( player );
+
+		//Save the panel for later
+		playerPanels[player] = playerPanel;
+		Custom1Count = Custom1Count +1
+
+		if (Custom1Count >= 5 || map_info.map_display_name == "imba_overthrow") {
+			Custom1Count = 0
+			if (map_info.map_display_name != "imba_standard") {
+				class_option_count = class_option_count +1
+				var ClassOptionPanelRadiant_alt = $.CreatePanel("Panel", $("#LeftPlayers_alt"), "PlayerRow" + class_option_count + "_good");
+				ClassOptionPanelRadiant.AddClass("PlayerOptionRowV10")
+				ClassOptionPanelRadiant_alt.AddClass("PlayerOptionRowV10")
+			}
+		} else {
+			ClassOptionPanelRadiant.AddClass("PlayerOptionRow")
+		}
+	});
+
+	$.Each( custom2Players, function( player ) {
+		var playerPanel = Modular.Spawn( "picking_player", $("#PlayerRow" + class_option_count + "_good") );
+		playerPanel.SetPlayerName( player );
+
+		//Save the panel for later
+		playerPanels[player] = playerPanel;
+		Custom2Count = Custom2Count +1
+
+		if (Custom2Count >= 5 || map_info.map_display_name == "imba_overthrow") {
+			Custom2Count = 0
+			if (map_info.map_display_name != "imba_standard") {
+				class_option_count = class_option_count +1
+				var ClassOptionPanelRadiant_alt = $.CreatePanel("Panel", $("#RightPlayers_alt"), "PlayerRow" + class_option_count + "_good");
+				ClassOptionPanelRadiant.AddClass("PlayerOptionRowV10")
+				ClassOptionPanelRadiant_alt.AddClass("PlayerOptionRowV10")
+			}
+		} else {
+			ClassOptionPanelRadiant.AddClass("PlayerOptionRow")
 		}
 	});
 
