@@ -719,7 +719,7 @@ function modifier_imba_enigma_black_hole_thinker:OnCreated(keys)
 														StopSoundOn("Hero_Enigma.Black_Hole", dummy)
 														StopSoundOn("Imba.EnigmaBlackHoleTi5", dummy)
 														return nil
-													end, self:GetDuration())
+													end, 4.0)
 	self.particle = ParticleManager:CreateParticle(pfx_name, PATTACH_WORLDORIGIN, nil)
 	ParticleManager:SetParticleControl(self.particle, 0, Vector(self:GetParent():GetAbsOrigin().x,self:GetParent():GetAbsOrigin().y,self:GetParent():GetAbsOrigin().z+64))
 	ParticleManager:SetParticleControl(self.particle, 6, Vector(self.radius, self.radius ,self.radius))
