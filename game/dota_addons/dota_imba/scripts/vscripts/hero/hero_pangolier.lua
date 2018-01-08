@@ -1,7 +1,17 @@
--- Author: Lindbrum
+	-- Author: Lindbrum
 -- Date: 11/11/2017
 
 CreateEmptyTalents("pangolier")
+
+
+--Talent #3: Grants Pangolier a parry modifier that will gain stacks through Shield Crash
+function modifier_special_bonus_imba_pangolier_3:OnCreated()
+	if IsServer() then
+		local caster = self:GetCaster()
+		local shield_crash = caster:FindAbilityByName("imba_pangolier_shield_crash")
+		caster:AddNewModifier(caster, shield_crash, "modifier_imba_shield_crash_block", {})
+	end
+end
 
 
 -------------------------------------
@@ -10,6 +20,7 @@ CreateEmptyTalents("pangolier")
 imba_pangolier_swashbuckle = imba_pangolier_swashbuckle or class({})
 LinkLuaModifier("modifier_imba_swashbuckle_dash", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_swashbuckle_slashes", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_swashbuckle_buff", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
 
 function imba_pangolier_swashbuckle:GetAbilityTextureName()
    return "pangolier_swashbuckle"
@@ -18,7 +29,11 @@ end
 
 function imba_pangolier_swashbuckle:IsHiddenWhenStolen() return false end
 function imba_pangolier_swashbuckle:IsStealable() return true end
-function imba_pangolier_swashbuckle:IsNetherWardStealable() return true end 
+function imba_pangolier_swashbuckle:IsNetherWardStealable() return true end
+
+function imba_pangolier_swashbuckle:GetAssociatedSecondaryAbilities()
+	return "imba_pangolier_heartpiercer"
+end 
 
 function imba_pangolier_swashbuckle:GetManaCost(level)
     local manacost = self.BaseClass.GetManaCost(self, level)
@@ -26,14 +41,6 @@ function imba_pangolier_swashbuckle:GetManaCost(level)
     return manacost
 end
 
-function imba_pangolier_swashbuckle:GetCooldown(level)
-    
-    local cooldown = self.BaseClass.GetCooldown(self, level)
-    local caster = self:GetCaster()
-
-    --Talent: Reduced cooldown on swashbuckle
-   	return cooldown - caster:FindTalentValue("special_bonus_imba_pangolier_7")
-end
 
 function imba_pangolier_swashbuckle:GetCastRange()
 	return self:GetSpecialValueFor("dash_range")
@@ -44,6 +51,21 @@ function imba_pangolier_swashbuckle:GetCastPoint()
 	local cast_point = self.BaseClass.GetCastPoint(self)
 
 	return cast_point
+end
+
+function imba_pangolier_swashbuckle:OnUpgrade()
+	if IsServer() then
+		--reapply En Guarde talent modifier to update the counter attack damage KV
+		local caster = self:GetCaster()
+		local en_guarde = "modifier_imba_shield_crash_block"
+
+		if caster:HasTalent("special_bonus_imba_pangolier_3") then
+			local stacks = caster:GetModifierStackCount(en_guarde, caster)
+			caster:RemoveModifierByName(en_guarde)
+			caster:AddNewModifier(caster, caster:FindAbilityByName("imba_pangolier_shield_crash"), en_guarde, {})
+			caster:SetModifierStackCount(en_guarde, caster, stacks)
+		end
+	end
 end
 
 
@@ -79,14 +101,15 @@ function imba_pangolier_swashbuckle:OnSpellStart()
 
 	caster:SetForwardVector(direction)
 
-	-- Play cast response
-    EmitSoundOn(cast_response[math.random(1, #cast_response)], caster)
-
+	if not self:IsStolen() then
+		-- Play cast response
+    	EmitSoundOnLocationWithCaster(caster:GetAbsOrigin(), cast_response[math.random(1, #cast_response)], caster)
+    end
     --play animation
     caster:StartGesture(ACT_DOTA_CAST_ABILITY_1)
 	
     -- Play cast sound
-    EmitSoundOn(sound_cast, caster)
+    EmitSoundOnLocationWithCaster(caster:GetAbsOrigin(), sound_cast, caster)
 	
    
 
@@ -112,10 +135,12 @@ function modifier_imba_swashbuckle_dash:OnCreated()
 	self.ability = self:GetAbility()
 	self.attack_modifier = "modifier_imba_swashbuckle_slashes"
 	self.dash_particle = "particles/units/heroes/hero_pangolier/pangolier_swashbuckler_dash.vpcf"
+	self.hit_sound= "Hero_Pangolier.Swashbuckle.Damage"
 
 	--Ability specials
 	self.dash_speed = self.ability:GetSpecialValueFor("dash_speed")
 	self.range = self.ability:GetSpecialValueFor("range")
+	self.talent_radius = self.caster:FindTalentValue("special_bonus_imba_pangolier_1", "radius")
 
 	if IsServer() then
 
@@ -141,7 +166,19 @@ end
 
 --pangolier is stunned during the dash
 function modifier_imba_swashbuckle_dash:CheckState()
-	state = {[MODIFIER_STATE_STUNNED] = true}
+
+	--Talent #2: Pangolier is invulnerable while dashing
+	if self.caster:HasTalent("special_bonus_imba_pangolier_2") then
+		state = {[MODIFIER_STATE_STUNNED] = true,
+				[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
+				[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true,
+				[MODIFIER_STATE_INVULNERABLE] = true}
+	else
+
+		state = {[MODIFIER_STATE_STUNNED] = true,
+				[MODIFIER_STATE_NO_UNIT_COLLISION] = true,
+				[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true}
+	end
 
 	return state
 end
@@ -159,6 +196,51 @@ function modifier_imba_swashbuckle_dash:OnIntervalThink()
 	if not self:CheckMotionControllers() then
 		self:Destroy()
 		return nil
+	end
+
+	--Talent #1: Enemies in the dash path are applied a basic attack
+	if self.caster:HasTalent("special_bonus_imba_pangolier_1") then
+		self.enemies_hit = self.enemies_hit or {}
+		local direction = self.caster:GetForwardVector()
+		local caster_loc = self.caster:GetAbsOrigin()
+		local target_loc = caster_loc + direction * self.talent_radius
+
+		--Check for enemies in front of pangolier
+		local enemies = FindUnitsInLine(self.caster:GetTeamNumber(),
+										 caster_loc,
+										 target_loc,
+										 nil,
+										 self.talent_radius,
+										 DOTA_UNIT_TARGET_TEAM_ENEMY,
+										 DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO,
+										 DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES)
+
+		
+		for _,enemy in pairs(enemies) do
+			--Do nothing if the target was hit already
+			local already_hit = false
+			for k,v in pairs(self.enemies_hit) do
+
+				if v == enemy then
+					already_hit = true
+					break
+				end
+			end 
+
+			if not already_hit then
+				--Play damage sound effect
+				EmitSoundOn(self.hit_sound, enemy)
+
+				--can't hit Ethereal enemies
+				if not enemy:IsAttackImmune() then
+					--Apply the basic attack
+					self.caster:PerformAttack(enemy, true, true, true, true, false, false, true) 
+
+					table.insert(self.enemies_hit, enemy) --Mark the target as hit
+				end
+			end
+			
+		end
 	end
 
 
@@ -241,17 +323,19 @@ function modifier_imba_swashbuckle_slashes:OnCreated()
 	--Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
+	self.buff = "modifier_imba_swashbuckle_buff"
 	self.particle = "particles/units/heroes/hero_pangolier/pangolier_swashbuckler.vpcf"
 	self.slashing_sound = "Hero_Pangolier.Swashbuckle"
 	self.hit_sound= "Hero_Pangolier.Swashbuckle.Damage"
-	
+	self.slash_particle = {}
 	--Ability specials
 	self.range = self.ability:GetSpecialValueFor("range")
-	self.damage = self.ability:GetSpecialValueFor("damage") + self.caster:FindTalentValue("special_bonus_imba_pangolier_5")
+	self.damage = self.ability:GetSpecialValueFor("damage")
 	self.start_radius = self.ability:GetSpecialValueFor("start_radius")
 	self.end_radius = self.ability:GetSpecialValueFor("end_radius")
-	self.strikes = self.ability:GetSpecialValueFor("strikes")
+	self.strikes = self.ability:GetSpecialValueFor("strikes") 
 	self.attack_interval = self.ability:GetSpecialValueFor("attack_interval")
+	self.buff_duration = self.ability:GetSpecialValueFor("buff_duration")
 
 	if IsServer() then
 
@@ -261,20 +345,15 @@ function modifier_imba_swashbuckle_slashes:OnCreated()
 		--wait one frame to acquire the target from the ability
 		Timers:CreateTimer(FrameTime(), function()
 			--Set the point to use for the direction. If no units were found from the ability, use Pangolier current forward vector
-			local direction = nil -- needed for the particle
+			self.direction = nil -- needed for the particle
 			if self.target then
-				direction = (self.target:GetAbsOrigin() - self.caster:GetAbsOrigin()):Normalized()
-				self.fixed_target = self.caster:GetAbsOrigin() + direction * self.range -- will lock the targeting on the direction of the target on-cast
+				self.direction = (self.target:GetAbsOrigin() - self.caster:GetAbsOrigin()):Normalized()
+				self.fixed_target = self.caster:GetAbsOrigin() + self.direction * self.range -- will lock the targeting on the direction of the target on-cast
 			else --no units found
-				direction = self.caster:GetForwardVector():Normalized()
-				self.fixed_target = self.caster:GetAbsOrigin() + direction * self.range
+				self.direction = self.caster:GetForwardVector():Normalized()
+				self.fixed_target = self.caster:GetAbsOrigin() + self.direction * self.range
 			end
 
-			--play slashing particle
-			local slash_particle = ParticleManager:CreateParticle(self.particle, PATTACH_WORLDORIGIN, nil)
-			ParticleManager:SetParticleControl(slash_particle, 0, self.caster:GetAbsOrigin()) --origin of particle
-			ParticleManager:SetParticleControl(slash_particle, 1, direction * self.range) --direction and range of the subparticles
-            self:AddParticle(slash_particle, false, false, -1, true, false)
 
 
 			--start interval thinker
@@ -306,8 +385,19 @@ function modifier_imba_swashbuckle_slashes:OnIntervalThink()
 			return nil
 		end
 
+		--Talent #2: Pangolier disjoint projectiles while slashing
+		if self.caster:HasTalent("special_bonus_imba_pangolier_2") then
+			ProjectileManager:ProjectileDodge(self.caster)
+		end
+
+		--play slashing particle
+		self.slash_particle[self.executed_strikes] = ParticleManager:CreateParticle(self.particle, PATTACH_WORLDORIGIN, nil)
+		ParticleManager:SetParticleControl(self.slash_particle[self.executed_strikes], 0, self.caster:GetAbsOrigin()) --origin of particle
+		ParticleManager:SetParticleControl(self.slash_particle[self.executed_strikes], 1, self.direction * self.range) --direction and range of the subparticles
+        
+
 		--plays the attack sound
-  		EmitSoundOn(self.slashing_sound, self.caster)
+  		EmitSoundOnLocationWithCaster(self.caster:GetAbsOrigin(), self.slashing_sound, self.caster)
 
 
 
@@ -329,8 +419,11 @@ function modifier_imba_swashbuckle_slashes:OnIntervalThink()
 
 			--can't hit Ethereal enemies
 			if not enemy:IsAttackImmune() then
-				--Apply the damage from the slash
-				local damageTable = {victim = enemy,
+				--Talent #8: Swashbuckle also uses Pangolier attack damage
+				if self.caster:HasTalent("special_bonus_imba_pangolier_8") then
+
+					--Apply the damage from the slash
+					local damageTable = {victim = enemy,
                	    	    damage = self.damage,
                 	        damage_type = DAMAGE_TYPE_PHYSICAL,
                       	    damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
@@ -340,17 +433,50 @@ function modifier_imba_swashbuckle_slashes:OnIntervalThink()
 
 
 
-            	ApplyDamage(damageTable)
-           	    --Apply on-hit effects
-				self.caster:PerformAttack(enemy, true, true, true, true, false, true, true) --slashes are disguised normal attacks that never misses
+            		ApplyDamage(damageTable)
+
+					--and also perform a basic attack
+					self.caster:PerformAttack(enemy, true, true, true, true, false, false, true)
+
+				else --No talent: only perform a fake basic attack for the on-hit effects
+					--Apply the damage from the slash
+					local damageTable = {victim = enemy,
+               	    	    damage = self.damage,
+                	        damage_type = DAMAGE_TYPE_PHYSICAL,
+                      	    damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
+                       	 	attacker = self.caster,
+                       	    ability = nil
+                        }
+
+
+
+            		ApplyDamage(damageTable)
+           	    	--Apply on-hit effects
+					self.caster:PerformAttack(enemy, true, true, true, true, false, true, true)
+				end
 			end
 			
 		end
 
 
+
+		
+
 		--increment the slash counter
 		self.executed_strikes = self.executed_strikes + 1
+	end
+end
 
+function modifier_imba_swashbuckle_slashes:OnRemoved()
+	if IsServer() then
+		--remove slash particle instances
+		for k,v in pairs(self.slash_particle) do
+			ParticleManager:DestroyParticle(v, false)
+			ParticleManager:ReleaseParticleIndex(v)
+		end
+
+		--Apply the attack speed buff
+		self.caster:AddNewModifier(self.caster, self.ability, self.buff, {duration = self.buff_duration}) 
 	end
 end
 
@@ -361,15 +487,68 @@ function modifier_imba_swashbuckle_slashes:CheckState()
 	return state
 end
 
+--Swashbuckle attack speed buff
+modifier_imba_swashbuckle_buff = modifier_imba_swashbuckle_buff or class({})
 
+function modifier_imba_swashbuckle_buff:IsHidden() return false end
+function modifier_imba_swashbuckle_buff:IsPurgable() return false end
+function modifier_imba_swashbuckle_buff:IsDebuff() return false end
+
+function modifier_imba_swashbuckle_buff:OnCreated()
+	if IsServer() then
+		--Ability properties
+		self.caster = self:GetCaster()
+		self.ability = self:GetAbility()
+	
+		--Ability specials
+		self.bonus_as = self.ability:GetSpecialValueFor("bonus_attackspeed")
+		self.max_attacks = self.ability:GetSpecialValueFor("max_attacks")
+
+		--Set stacks to the max attacks
+		self.caster:SetModifierStackCount("modifier_imba_swashbuckle_buff", self.caster, self.max_attacks)
+
+		self.attacks = 0
+	end
+end
+
+function modifier_imba_swashbuckle_buff:DeclareFunctions()
+	local funcs = {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+					MODIFIER_EVENT_ON_ATTACK}
+
+	return funcs
+end
+
+function modifier_imba_swashbuckle_buff:GetModifierAttackSpeedBonus_Constant()
+	return self.bonus_as
+end
+
+function modifier_imba_swashbuckle_buff:OnAttack(keys)
+	if IsServer() then
+		--Proceed only if the attacker is the caster
+		if keys.attacker == self.caster then
+			--increase the attack count
+			self.attacks = self.attacks + 1
+			--decrease stacks on modifier
+			self.caster:SetModifierStackCount("modifier_imba_swashbuckle_buff", self.caster, self.caster:GetModifierStackCount("modifier_imba_swashbuckle_buff", self.caster) -1)
+
+			--Remove the buff after the max attacks have been performed
+			if self.attacks >= self.max_attacks then
+				self:Destroy()
+			end
+		end
+	end
+end
 
 
 -------------------------------------
 -----      SHIELD CRUSH         -----
 -------------------------------------
 imba_pangolier_shield_crash = imba_pangolier_shield_crash or class({})
-LinkLuaModifier("modifier_imba_shield_crash_buff", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_shield_crash_jump", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_shield_crash_buff", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) -- Damage reduction
+LinkLuaModifier("modifier_imba_shield_crash_jump", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) -- movement
+LinkLuaModifier("modifier_imba_shield_crash_block", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) -- Talent #3: parry stacks
+LinkLuaModifier("modifier_imba_shield_crash_block_parry", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) --Talent #3: Pangolier parry (100% evasion)
+LinkLuaModifier("modifier_imba_shield_crash_block_miss", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) --Talent #3: Parried attack debuff (remove true strike during the attack)
 
 function imba_pangolier_shield_crash:GetAbilityTextureName()
    return "pangolier_shield_crash"
@@ -389,12 +568,12 @@ function imba_pangolier_shield_crash:GetCooldown(level)
     
     local cooldown = self.BaseClass.GetCooldown(self, level)
     local caster = self:GetCaster()
-    local talent_cooldown = caster:FindTalentValue("special_bonus_imba_pangolier_3")
+    local roll_cooldown = self:GetSpecialValueFor("roll_cooldown")
 
-    -- Talent: Shield Crash cooldown is set to 2 seconds during Rolling Thunder
-    if caster:HasModifier("modifier_pangolier_gyroshell") and talent_cooldown > 0 then
+    -- Shield Crash cooldown is set to 2 seconds during Rolling Thunder
+    if caster:HasModifier("modifier_pangolier_gyroshell") then
     	
-    	return talent_cooldown
+    	return roll_cooldown
 
     end
     return cooldown
@@ -434,12 +613,13 @@ function imba_pangolier_shield_crash:OnSpellStart()
 	local dust = ParticleManager:CreateParticle(dust_particle, PATTACH_WORLDORIGIN, nil)
 	ParticleManager:SetParticleControl(dust, 0, caster:GetAbsOrigin())
     
-
-	-- Play cast response
-    EmitSoundOn(cast_response[math.random(1, #cast_response)], caster)
+	if not self:IsStolen() then
+		-- Play cast response
+    	EmitSoundOnLocationWithCaster(caster:GetAbsOrigin(), cast_response[math.random(1, #cast_response)], caster)
+    end
 
 	-- Play cast sound
-	EmitSoundOn(sound_cast, caster)
+	EmitSoundOnLocationWithCaster(caster:GetAbsOrigin(), sound_cast, caster)
 
 
    --jump in the faced direction
@@ -447,21 +627,31 @@ function imba_pangolier_shield_crash:OnSpellStart()
 
 	-- Assign the landing point, jump height and duration in the modifier
 	if modifier_movement_handler then
-		local gyroshell_horizontal_distance = jump_duration_gyroshell * gyroshell_ability:GetSpecialValueFor("forward_move_speed")
 		modifier_movement_handler.dust_particle = dust
-		--if Pangolier is rolling, the jump will be longer
-		if caster:HasModifier("modifier_pangolier_gyroshell") then
-			modifier_movement_handler.target_point = caster:GetAbsOrigin() + caster:GetForwardVector():Normalized() * gyroshell_horizontal_distance
-			modifier_movement_handler.jump_height = jump_height_gyroshell
-			modifier_movement_handler.jump_duration = jump_duration_gyroshell
-		else --shorter jump
+
+		if self:IsStolen() then --Avoid errors because gyroshell isn't associated to Shield Crash when stolen
+		
 			modifier_movement_handler.target_point = caster:GetAbsOrigin() + caster:GetForwardVector():Normalized() * jump_horizontal_distance
 			modifier_movement_handler.jump_height = jump_height
 			modifier_movement_handler.jump_duration = jump_duration
+
+		else
+
+			local gyroshell_horizontal_distance = jump_duration_gyroshell * gyroshell_ability:GetSpecialValueFor("forward_move_speed")
+		
+		
+			--if Pangolier is rolling, the jump will be longer
+			if caster:HasModifier("modifier_pangolier_gyroshell") then
+				modifier_movement_handler.target_point = caster:GetAbsOrigin() + caster:GetForwardVector():Normalized() * gyroshell_horizontal_distance
+				modifier_movement_handler.jump_height = jump_height_gyroshell
+				modifier_movement_handler.jump_duration = jump_duration_gyroshell
+			else --shorter jump
+				modifier_movement_handler.target_point = caster:GetAbsOrigin() + caster:GetForwardVector():Normalized() * jump_horizontal_distance
+				modifier_movement_handler.jump_height = jump_height
+				modifier_movement_handler.jump_duration = jump_duration
+			end
 		end
 	end
-
-	
 
 end
 
@@ -474,8 +664,12 @@ function modifier_imba_shield_crash_buff:OnCreated(kv)
     self.caster = self:GetCaster()
     self.ability = self:GetAbility()
     self.stacks = kv.stacks
-    self.particle = "particles/units/heroes/hero_pangolier/pangolier_tailthump_buff.vpcf"
+    self.particle_1 = "particles/units/heroes/hero_pangolier/pangolier_tailthump_buff.vpcf"
+    self.particle_2 = "particles/units/heroes/hero_pangolier/pangolier_tailthump_buff_egg.vpcf"
+    self.particle_3 = "particles/units/heroes/hero_pangolier/pangolier_tailthump_buff_streaks.vpcf"
     self.sound = "Hero_Pangolier.TailThump.Shield"
+    self.buff_particles = {}
+
 
     -- Ability specials
     self.damage_reduction_pct = self.ability:GetSpecialValueFor("hero_stacks")
@@ -486,30 +680,27 @@ function modifier_imba_shield_crash_buff:OnCreated(kv)
     	self.caster:SetModifierStackCount("modifier_imba_shield_crash_buff", self.caster, self.damage_reduction_pct * self.stacks)
 
     	--Play buff sound effect
-    	EmitSoundOn(self.sound, self.caster)
+    	EmitSoundOnLocationWithCaster(self.caster:GetAbsOrigin(), self.sound, self.caster)
 
-    	--Add buff particle
-    	self.buff_particle = ParticleManager:CreateParticle(self.particle, PATTACH_WORLDORIGIN, self.caster)
+    	--Add buff particles depending on the stack amount:
+    	if self.stacks > 0 then --Tier 1: up to 2 enemy heroes hit. Pangolier will gain a swirling effect on him with floating shields.
+    		self.buff_particles[1] = ParticleManager:CreateParticle(self.particle_1, PATTACH_ABSORIGIN_FOLLOW, self.caster)
+			ParticleManager:SetParticleControlEnt(self.buff_particles[1], 1, self.caster, PATTACH_ABSORIGIN_FOLLOW, nil, Vector(0,0,0), false) --origin
+			self:AddParticle(self.buff_particles[1], false, false, -1, true, false)
 
-    	--ADD HERE PARTICLE EFFECTS CONTROL POINTS CONDITIONS (1-2 enemies: floating shields, 3: bigger shields with slight swirl effect, 4+: big shields and strong swirl effect)
+			if self.stacks >= 3 then --Tier 2: 3 enemy heroes hit. Pangolier will also have a light aura under his feet
+				self.buff_particles[2] = ParticleManager:CreateParticle(self.particle_2, PATTACH_ABSORIGIN_FOLLOW, self.caster)
+				ParticleManager:SetParticleControlEnt(self.buff_particles[2], 1, self.caster, PATTACH_ABSORIGIN_FOLLOW, nil, Vector(0,0,0), false) --origin
+				self:AddParticle(self.buff_particles[2], false, false, -1, true, false)
 
-		ParticleManager:SetParticleControl(self.buff_particle, 1, self.caster:GetAbsOrigin()) --origin
-
-   		self:AddParticle(self.buff_particle, false, false, -1, true, false)
-
-   		--start thinking
-   		self:StartIntervalThink(FrameTime())
+				if self.stacks >= 4 then --Tier 3: 4+ enemy heroes hit. Pangolier will gain an ascending light effect
+					self.buff_particles[3] = ParticleManager:CreateParticle(self.particle_3, PATTACH_ABSORIGIN_FOLLOW, self.caster)
+					ParticleManager:SetParticleControlEnt(self.buff_particles[3], 1, self.caster, PATTACH_ABSORIGIN_FOLLOW, nil, Vector(0,0,0), false) --origin
+					self:AddParticle(self.buff_particles[3], false, false, -1, true, false)
+				end
+			end
+		end
     end
-end
-
-function modifier_imba_shield_crash_buff:OnIntervalThink()
-	if IsServer() then
-
-		--set particle to new position
-		ParticleManager:SetParticleControl(self.buff_particle, 1, self.caster:GetAbsOrigin())
-	end
-
-
 end
 
 
@@ -555,9 +746,9 @@ function modifier_imba_shield_crash_jump:OnCreated()
 	-- Ability specials
 	-- self.jump_height passed by the ability
 	self.damage = self.ability:GetSpecialValueFor("damage")
-	self.talent_damage = self.caster:FindTalentValue("special_bonus_imba_pangolier_6")
     self.duration = self.ability:GetSpecialValueFor("duration")
     self.radius = self.ability:GetSpecialValueFor("radius")
+    self.hero_stacks = self.ability:GetSpecialValueFor("hero_stacks")
 
 	if IsServer() then
 
@@ -675,8 +866,9 @@ function modifier_imba_shield_crash_jump:OnRemoved()
 
 
 		-- Play smash sound
-		EmitSoundOn(self.smash_sound, self.caster)
+		EmitSoundOnLocationWithCaster(self.caster:GetAbsOrigin(), self.smash_sound, self.caster)
 
+		
 
 		-- Find heroes in AoE and track how many will be damaged
 		local enemy_heroes = FindUnitsInRadius(self.caster:GetTeamNumber(),
@@ -692,9 +884,10 @@ function modifier_imba_shield_crash_jump:OnRemoved()
 
 		local damaged_heroes = #enemy_heroes
 
-		--Talent: extra damage for each enemy hero damaged
+		
+		--Talent: extra damage for each enemy hero damaged (REMOVED)
 
-		local total_damage = self.damage + (damaged_heroes * self.talent_damage)
+		--local total_damage = self.damage + (damaged_heroes * self.talent_damage)
 
 		-- Find all enemies in AoE
 		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
@@ -715,7 +908,7 @@ function modifier_imba_shield_crash_jump:OnRemoved()
 				damage_table = ({victim = enemy,
 							 attacker = self.caster,
 							 ability = self.ability,
-							 damage = total_damage,
+							 damage = self.damage,
 							 damage_type = DAMAGE_TYPE_MAGICAL})
 
 				ApplyDamage(damage_table)
@@ -728,8 +921,27 @@ function modifier_imba_shield_crash_jump:OnRemoved()
 		--Create the damage reduction modifier. If it already exist,
 		--upgrade its stacks if the new count is higher and refresh
 		if damaged_heroes > 0 then
+
+			--Talent #3: Earn stacks of parry based on the heroes hit with Shield Crash
+			if self.caster:HasTalent("special_bonus_imba_pangolier_3") then
+				local block_modifier_stacks = self.caster:GetModifierStackCount("modifier_imba_shield_crash_block", self.caster)
+				self.caster:SetModifierStackCount("modifier_imba_shield_crash_block", self.caster, block_modifier_stacks + damaged_heroes)
+			end
+
 			if self.caster:HasModifier(self.buff_modifier) then
-				local old_stacks = self.caster:GetModifierStackCount(self.buff_modifier)
+				local old_stacks = self.caster:GetModifierStackCount(self.buff_modifier, self.caster)
+
+				--Remove previous buff particles
+				local buff = self.caster:FindModifierByName("modifier_imba_shield_crash_buff")
+
+				for k,v in pairs(buff.buff_particles) do
+					ParticleManager:DestroyParticle(v, false)
+					ParticleManager:ReleaseParticleIndex(v)
+					table.remove(buff.buff_particles, k)
+				end
+
+				--remove modifier then reapply it to play update the particles
+				self.caster:RemoveModifierByName(self.buff_modifier)
 
 				if damaged_heroes > old_stacks / self.hero_stacks then
 					self.caster:AddNewModifier(self.caster, self.ability, self.buff_modifier, {duration = self.duration, stacks = damaged_heroes})
@@ -750,7 +962,7 @@ function modifier_imba_shield_crash_jump:OnRemoved()
 	end
 end
 
---Needed for imba modifier, not vanilla
+--Needed for imba Rolling Thunder modifier
 --[[function modifier_imba_shield_crash_jump:OnDestroy()
 
 	if IsServer() then
@@ -767,13 +979,284 @@ end
 
 end]]
 
+--Talent #3 modifier: each stack will block an attack directed to Pangolier from an enemy hero and start a counterattack (1 Swashbuckle slash)
+modifier_imba_shield_crash_block = modifier_imba_shield_crash_block or class({})
+
+function modifier_imba_shield_crash_block:IsHidden() return false end
+function modifier_imba_shield_crash_block:IsPurgable() return false end
+function modifier_imba_shield_crash_block:IsPermanent() return true end
+function modifier_imba_shield_crash_block:RemoveOnDeath() return false end
+function modifier_imba_shield_crash_block:IsDebuff() return false end
+
+
+function modifier_imba_shield_crash_block:OnCreated()
+	if IsServer() then
+		
+
+		--Ability Properties
+		self.caster = self:GetCaster()
+		self.ability = self:GetAbility()
+		self.swashbuckle = self.caster:FindAbilityByName("imba_pangolier_swashbuckle")
+		self.particle = "particles/units/heroes/hero_pangolier/pangolier_swashbuckler.vpcf"
+		self.slashing_sound = "Hero_Pangolier.Swashbuckle"
+		self.hit_sound= "Hero_Pangolier.Swashbuckle.Damage"
+		self.hero_attacks = 0
+		self.attackers = self.attackers or {}
+
+
+		--Ability Specials
+		self.counter_range = self.swashbuckle:GetSpecialValueFor("range")
+		self.counter_damage = self.swashbuckle:GetSpecialValueFor("damage")
+		self.start_radius = self.swashbuckle:GetSpecialValueFor("start_radius")
+		self.end_radius = self.swashbuckle:GetSpecialValueFor("end_radius")
+
+		--SORRY RUBICK!
+		if self.ability:IsStolen() then
+			self:Destroy()
+		end
+
+		--initialize stack count
+		self.caster:SetModifierStackCount("modifier_imba_shield_crash_block", self.caster, 0)
+	end
+end
+
+function modifier_imba_shield_crash_block:DeclareFunctions()
+	funcs = {MODIFIER_EVENT_ON_ATTACK_START,
+			MODIFIER_EVENT_ON_ATTACK,
+			MODIFIER_EVENT_ON_ATTACK_FINISHED,
+			MODIFIER_PROPERTY_EVASION_CONSTANT}
+
+	return funcs
+end
+
+function modifier_imba_shield_crash_block:GetModifierEvasion_Constant(params)
+	--If the attack is to be parried, maximize evasion
+	local parried = false
+	for k,v in pairs(self.attackers) do
+		if v == params.attacker then --has the attacker launched an attack to parry?
+			parried = true
+			break
+		end
+	end
+	if parried then
+		
+		return 100
+	else
+		
+		return 0
+	end
+end
+
+function modifier_imba_shield_crash_block:OnAttackStart(keys)
+
+	if IsServer() then
+		local attacker = keys.attacker
+		local target = keys.target
+		--proceed only if the target is Pangolier and the attacker is an hero
+		if target == self.caster and attacker:IsHero() then
+
+			--if pangolier is rolling, do nothing
+			if self.caster:HasModifier("modifier_pangolier_gyroshell") then
+				return nil
+			end
+
+			--if no parry stacks remains, do nothing
+			local stacks = self.caster:GetModifierStackCount("modifier_imba_shield_crash_block", self.caster)
+
+			if stacks == 0 then
+				--clears the attackers table to avoid inconsistencies
+				self.attackers = {}
+				return nil
+			end
+
+			--Makes Pangolier dodge the next hero attack
+			--self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_shield_crash_block_parry", {})
+
+			--Makes the attacking hero ignore true strike
+			attacker:AddNewModifier(self.caster, self.ability, "modifier_imba_shield_crash_block_miss", {})
+
+
+			--Register the attacker
+			table.insert(self.attackers, attacker)
+
+			--account the attack to parry
+			self.hero_attacks = self.hero_attacks + 1
+
+		end
+	end
+end
+
+function modifier_imba_shield_crash_block:OnAttack(keys)
+	if IsServer() then
+		local attacker = keys.attacker
+		local target = keys.target 
+		--proceed only if the target is Pangolier and the attacker is an hero
+		if target == self.caster and attacker:IsHero() then
+
+			--if Pangolier is rolling, do nothing
+			if self.caster:HasModifier("modifier_pangolier_gyroshell") then
+				return nil
+			end
+
+			--check if the attack is going to be parried, remove true strike prevention
+
+			if self.hero_attacks > 0 then
+				--Signal that the attack was parried
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_MISS, attacker, 0, nil)
+				self.hero_attacks = self.hero_attacks - 1
+				
+			end
+
+			
+
+			--If all incoming attacks have been parried, remove the evasion on pangolier
+			--if self.hero_attacks == 0 and self.caster:HasModifier("modifier_imba_shield_crash_block_parry") then
+			--	self.caster:RemoveModifierByName("modifier_imba_shield_crash_block_parry")
+			--end
+
+	
+			local stacks = self.caster:GetModifierStackCount("modifier_imba_shield_crash_block", self.caster)
+			
+
+			local caster_loc = self.caster:GetAbsOrigin()
+			local attacker_loc = attacker:GetAbsOrigin()
+			local distance = (attacker_loc - caster_loc):Length2D()
+
+			--counter if Pangolier has stacks, the attacker is an enemy and is in range
+			if stacks > 0 and attacker:GetTeamNumber() ~= self.caster:GetTeamNumber() and distance < self.counter_range then
+				local old_direction = self.caster:GetForwardVector()
+				local direction = (attacker_loc - caster_loc):Normalized() 
+				local target_point = caster_loc + direction * self.counter_range
+
+				--Make Pangolier turn to the target
+				self.caster:SetForwardVector(direction)
+
+				--plays slash animation
+				self.caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_1)
+
+				--plays the attack sound
+  				EmitSoundOnLocationWithCaster(self.caster:GetAbsOrigin(), self.slashing_sound, self.caster)
+
+  				--play slashing particle
+				local slash_particle = ParticleManager:CreateParticle(self.particle, PATTACH_WORLDORIGIN, nil)
+				ParticleManager:SetParticleControl(slash_particle, 0, self.caster:GetAbsOrigin()) --origin of particle
+				ParticleManager:SetParticleControl(slash_particle, 1, direction * self.counter_range) --direction and range of the subparticles
 
 
 
+				--Check for enemies in the direction set on cast
+				local enemies = FindUnitsInLine(self.caster:GetTeamNumber(),
+										 caster_loc,
+										 target_point,
+										 nil,
+										 self.start_radius,
+										 DOTA_UNIT_TARGET_TEAM_ENEMY,
+										 DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO,
+										 DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES)
+
+		
+				for _,enemy in pairs(enemies) do
+
+					--Play damage sound effect
+					EmitSoundOn(self.hit_sound, enemy)
+
+					--can't hit Ethereal enemies
+					if not enemy:IsAttackImmune() then
+						--Talent #8: Swashbuckle also uses Pangolier attack damage
+						if self.caster:HasTalent("special_bonus_imba_pangolier_8") then
+
+							--Apply the damage from the slash
+							local damageTable = {victim = enemy,
+               	    			    damage = self.counter_damage,
+                	  		      damage_type = DAMAGE_TYPE_PHYSICAL,
+                    		  	    damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
+                     		  	 	attacker = self.caster,
+                       			    ability = nil
+                     		   }
 
 
 
+            				ApplyDamage(damageTable)
 
+							--and also perform a basic attack
+							self.caster:PerformAttack(enemy, true, true, true, true, false, false, true)
+
+						else --No talent: only perform a fake basic attack for the on-hit effects
+							--Apply the damage from the slash
+							local damageTable = {victim = enemy,
+               	   			 	    damage = self.counter_damage,
+                			        damage_type = DAMAGE_TYPE_PHYSICAL,
+                    		  	    damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
+                   		    	 	attacker = self.caster,
+                    		   	    ability = nil
+                    		    }
+
+
+
+            				ApplyDamage(damageTable)
+           	    			--Apply on-hit effects
+							self.caster:PerformAttack(enemy, true, true, true, true, false, true, true)
+						end
+					end 
+				end
+				--Decrease parry stacks
+				self.caster:SetModifierStackCount("modifier_imba_shield_crash_block", self.caster, stacks - 1)
+				
+				Timers:CreateTimer(0.5, function ()
+					--Remove particles
+					ParticleManager:DestroyParticle(slash_particle, false)
+					ParticleManager:ReleaseParticleIndex(slash_particle)
+
+					--end slash animation
+					self.caster:RemoveGesture(ACT_DOTA_OVERRIDE_ABILITY_1)
+
+					--Turn pangolier back to his previous direction
+					self.caster:SetForwardVector(old_direction)
+
+				end)
+
+			end
+			
+		end
+	end
+end
+
+function modifier_imba_shield_crash_block:OnAttackFinished(keys)
+	if IsServer() then
+		local attacker = keys.attacker
+		local target = keys.target
+
+		--Proceed only if the target is Pangolier and the attacker is an hero
+		if target == self.caster and attacker:IsHero() then
+
+			--Remove debuff on attacker and remove him from table
+			if attacker:HasModifier("modifier_imba_shield_crash_block_miss") then
+				attacker:RemoveModifierByName("modifier_imba_shield_crash_block_miss")
+				for k,v in pairs(self.attackers) do
+					if v == attacker then
+						table.remove(self.attackers, k)
+					end
+				end
+			end
+		end
+	end
+end
+
+
+--Attackers debuff: deny their true strike effect while Pangolier is parrying their attack
+modifier_imba_shield_crash_block_miss = modifier_imba_shield_crash_block_miss or class({})
+
+function modifier_imba_shield_crash_block_miss:IsHidden() return true end
+function modifier_imba_shield_crash_block_miss:IsDebuff() return true end
+function modifier_imba_shield_crash_block_miss:IsPurgable() return false end
+function modifier_imba_shield_crash_block_miss:RemoveOnDeath() return true end
+function modifier_imba_shield_crash_block_miss:StatusEffectPriority() return MODIFIER_PRIORITY_SUPER_ULTRA end
+
+function modifier_imba_shield_crash_block_miss:CheckState()
+	state = {[MODIFIER_STATE_CANNOT_MISS] = false}
+
+	return state
+end
 
 ------------------------------------
 -----      HEARTPIERCER        -----
@@ -782,6 +1265,8 @@ imba_pangolier_heartpiercer = imba_pangolier_heartpiercer or class({})
 LinkLuaModifier("modifier_imba_heartpiercer_passive", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_heartpiercer_delay", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_heartpiercer_debuff", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_heartpiercer_talent_debuff", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) --visual 
+LinkLuaModifier("modifier_imba_heartpiercer_talent_debuff_2", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) --visual
 
 
 function imba_pangolier_heartpiercer:GetAbilityTextureName()
@@ -790,6 +1275,26 @@ end
 
 function imba_pangolier_heartpiercer:GetIntrinsicModifierName()
 	return "modifier_imba_heartpiercer_passive"
+end
+
+function imba_pangolier_heartpiercer:OnUnStolen()
+	if IsServer() then	
+		local caster = self:GetCaster()
+
+		--Remove the modifier from Rubick
+		if caster:HasModifier("modifier_imba_heartpiercer_passive") then
+			caster:RemoveModifierByName("modifier_imba_heartpiercer_passive")
+		end
+	end
+end
+
+function imba_pangolier_heartpiercer:OnUpgrade()
+	--refresh intrinsic modifier to update KVs
+	local caster = self:GetCaster()
+
+	caster:RemoveModifierByName("modifier_imba_heartpiercer_passive")
+	caster:AddNewModifier(caster, self, "modifier_imba_heartpiercer_passive", {})
+
 end
 
 
@@ -810,9 +1315,10 @@ function modifier_imba_heartpiercer_passive:OnCreated()
 	self.delayed_debuff = "modifier_imba_heartpiercer_delay"
 	self.procced_debuff = "modifier_imba_heartpiercer_debuff"
 	self.cast_response = {"pangolin_pangolin_ability3_01", "pangolin_pangolin_ability3_02", "pangolin_pangolin_ability3_03", "pangolin_pangolin_ability3_04", "pangolin_pangolin_ability3_05", "pangolin_pangolin_ability3_06"}
+	self.caster.allow_heartpiercer = true --Used for Talent #5 heartpiercer reproc loop prevention
 
 	--Ability specials
-	self.chance_pct = self.ability:GetSpecialValueFor("chance_pct") + self.caster:FindTalentValue("special_bonus_imba_pangolier_2") --Talent: extra proc chance
+	self.chance_pct = self.ability:GetSpecialValueFor("chance_pct")
 	self.duration = self.ability:GetSpecialValueFor("duration")
 	self.debuff_delay = self.ability:GetSpecialValueFor("debuff_delay")
 
@@ -846,24 +1352,22 @@ function modifier_imba_heartpiercer_passive:OnAttackLanded(kv)
             end
 
             --Won't work on Roshan
-            if target:IsRoshan() then
-            	return nil
-            end
+            --if IsRoshan(target) then
+            --	return nil
+          --  end
 
-            --Roll for the pierce chance, won't work on magic immune enemies
-            if not target:IsMagicImmune() and RollPercentage(self.chance_pct) then
+            --Roll for the pierce chance, won't work on magic immune enemies or if it would proc from Talent #5 attacks
+            if self.caster.allow_heartpiercer and not target:IsMagicImmune() and RollPercentage(self.chance_pct) then
             	--heartpiercer procced
 
-            	--Talent: check if heartpiercer is already in effect on the target. If it is, refresh the modifier 
+            	--check if heartpiercer is already in effect on the target. If it is, refresh the modifier 
             	-- (will also take care of any change to bonus armor gained while debuffed)
 
             	if target:HasModifier(self.procced_debuff) then
-            		if self.caster:HasTalent("special_bonus_imba_pangolier_1") then
-            	
-            			local modifier_handler = target:FindModifierByName(self.procced_debuff)
-            			target:RemoveModifierByName(self.procced_debuff)
-            			target:AddNewModifier(self.caster, self.ability, self.procced_debuff, {duration = self.duration})
-            		end
+           
+            		target:RemoveModifierByName(self.procced_debuff)
+            		target:AddNewModifier(self.caster, self.ability, self.procced_debuff, {duration = self.duration})
+            		
             		return
             	else
 
@@ -874,8 +1378,11 @@ function modifier_imba_heartpiercer_passive:OnAttackLanded(kv)
 						if target:IsCreep() then
 							EmitSoundOn(self.proc_sound_creep, target)
 						else
-							--also plays cast response on heroes
-    						EmitSoundOn(self.cast_response[math.random(1, #self.cast_response)], self.caster)
+							if not self.ability:IsStolen() then
+								--also plays cast response on heroes
+    							EmitSoundOnLocationWithCaster(self.caster:GetAbsOrigin(), self.cast_response[math.random(1, #self.cast_response)], self.caster)
+    						end
+
 							EmitSoundOn(self.proc_sound_hero, target)
 						end
 
@@ -909,8 +1416,6 @@ function modifier_imba_heartpiercer_delay:OnCreated()
 	self.parent = self:GetParent()
 	self.debuff = "modifier_imba_heartpiercer_debuff"
 	self.icon = "particles/units/heroes/hero_pangolier/pangolier_heartpiercer_delay.vpcf"
-	self.debuff_sound_creep = "Hero_Pangolier.HeartPiercer.Creep"
-	self.debuff_sound_hero = "Hero_Pangolier.HeartPiercer"
 
 	--Ability specials
 	self.duration = self.ability:GetSpecialValueFor("duration")
@@ -931,13 +1436,6 @@ end
 
 function modifier_imba_heartpiercer_delay:OnRemoved()
 	if IsServer() then
-
-		--play debuff sound
-		if self.parent:IsCreep() then
-			EmitSoundOn(self.debuff_sound_creep, self.parent)
-		else
-			EmitSoundOn(self.debuff_sound_hero, self.parent)
-		end
 
 		--apply the debuff
 		local modifier_handler = self.parent:AddNewModifier(self.caster, self.ability, self.debuff, {duration = self.duration})
@@ -962,18 +1460,47 @@ function modifier_imba_heartpiercer_debuff:OnCreated()
 	self.parent = self:GetParent()
 	self.icon = "particles/units/heroes/hero_pangolier/pangolier_heartpiercer_debuff.vpcf"
 	self.parent_armor = self.parent:GetPhysicalArmorValue()
+	self.debuff_sound_creep = "Hero_Pangolier.HeartPiercer.Creep"
+	self.debuff_sound_hero = "Hero_Pangolier.HeartPiercer"
 
 	--Ability specials
 	self.slow_pct = self.ability:GetSpecialValueFor("slow_pct")
+	self.talent_interval = self.caster:FindTalentValue("special_bonus_imba_pangolier_5", "tick_interval")
+	self.damage_per_second = self.caster:FindTalentValue("special_bonus_imba_pangolier_5", "damage_per_second")
+	self.talent_tenacity_pct = self.caster:FindTalentValue("special_bonus_imba_pangolier_6")
 
+	if IsServer() then
 
+		--play debuff sound
+		if self.parent:IsCreep() then
+			EmitSoundOnLocationWithCaster(self.parent:GetAbsOrigin(), self.debuff_sound_creep, self.parent)
+		else
+			EmitSoundOnLocationWithCaster(self.parent:GetAbsOrigin(), self.debuff_sound_hero, self.parent)
+		end
 
 		--create overhead particle
 		local icon_particle = ParticleManager:CreateParticle(self.icon, PATTACH_OVERHEAD_FOLLOW, self.parent)
-        self:AddParticle(icon_particle, false, false, -1, true, true)
+    	self:AddParticle(icon_particle, false, false, -1, true, true)
 
-        --start thinking
-        self:StartIntervalThink(0.1)
+   		--Talent #5: Victim will take damage over time and proc on-hit effects for Pangolier at each tick.
+   		-- The effect itself is coded internally to Heartpiercer base debuff, however we add a fake debuff to inform the target.
+    	if self.caster:HasTalent("special_bonus_imba_pangolier_5") then
+    		self.parent:AddNewModifier(self.caster, self.ability, "modifier_imba_heartpiercer_talent_debuff", {})
+    	end
+
+    	--Talent #6: Victim will have decreased tenacity during Heartpiercer.
+    	-- The effect itself is coded internally to Heartpiercer base debuff, however we add a fake debuff to inform the target.
+    	if self.caster:HasTalent("special_bonus_imba_pangolier_6") then
+    		self.parent:AddNewModifier(self.caster, self.ability, "modifier_imba_heartpiercer_talent_debuff_2", {})
+    	end
+    end
+
+    	--start thinking
+   	if self.talent_interval > 0 then
+    	self:StartIntervalThink(self.talent_interval)
+    else
+    	self:StartIntervalThink(0.1)
+    end
 
 
 end
@@ -985,11 +1512,55 @@ function modifier_imba_heartpiercer_debuff:OnIntervalThink()
 	if IsClient() then
 
 		self.parent_armor = self.parent:GetModifierStackCount("modifier_imba_heartpiercer_debuff", self.caster)
-
 	end
 
+	if IsServer() then
+		--Talent #5: Heartpiercer deals damage over time and applies on-hit effects at each tick (except Heartpiercer)
+		if self.caster:HasTalent("special_bonus_imba_pangolier_5") then
+			local damage_per_tick = self.damage_per_second * self.talent_interval
+
+			local damageTable = {victim = self.parent,
+               		 		    damage = damage_per_tick,
+              			        damage_type = DAMAGE_TYPE_PHYSICAL,
+              			  	    damage_flags = DOTA_DAMAGE_FLAG_NONE,
+              		   		 	attacker = self.caster,
+    	           		   	    ability = self.ability
+        	          	  }
 
 
+
+        	ApplyDamage(damageTable)
+
+        	--Disallow Heartpiercer from proccing
+        	self.caster.allow_heartpiercer = false
+
+        	--Apply on-hit effects
+			self.caster:PerformAttack(self.parent, true, true, true, true, false, true, true)
+
+			--Allow Heartpiercer again
+			self.caster.allow_heartpiercer = true
+		end 
+	end
+end
+
+function modifier_imba_heartpiercer_debuff:OnRemoved()
+	if IsServer() then
+		--Remove Talent #5 modifier
+		if self.caster:HasTalent("special_bonus_imba_pangolier_5") then
+			self.parent:RemoveModifierByName("modifier_imba_heartpiercer_talent_debuff")
+		end
+
+		--Remove Talent #6 modifier
+    	if self.caster:HasTalent("special_bonus_imba_pangolier_6") then
+    		self.parent:RemoveModifierByName("modifier_imba_heartpiercer_talent_debuff_2")
+   		end
+	end
+end
+
+function modifier_imba_heartpiercer_debuff:CheckState()
+	local state = {[MODIFIER_STATE_PASSIVES_DISABLED] = true} --break
+
+	return state
 end
 
 function modifier_imba_heartpiercer_debuff:DeclareFunctions()
@@ -997,6 +1568,15 @@ function modifier_imba_heartpiercer_debuff:DeclareFunctions()
 						MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS}
 
 	return declfuncs
+end
+
+function modifier_imba_heartpiercer_debuff:GetCustomTenacity()
+	--Talent #6: Heartpiercer decrease the parent tenacity
+	if self.caster:HasTalent("special_bonus_imba_pangolier_6") then
+		return self.caster:FindTalentValue("special_bonus_imba_pangolier_6") * (-1)
+	end
+
+	return 0
 end
 
 
@@ -1023,15 +1603,37 @@ function modifier_imba_heartpiercer_debuff:IsPermanent() return false end
 function modifier_imba_heartpiercer_debuff:IsDebuff() return true end
 
 
+--Talent #5 fake modifier: It's just visual for the victim
+modifier_imba_heartpiercer_talent_debuff = modifier_imba_heartpiercer_talent_debuff or class({})
+
+function modifier_imba_heartpiercer_talent_debuff:IsHidden() return false end
+function modifier_imba_heartpiercer_talent_debuff:IsPurgable() return true end
+function modifier_imba_heartpiercer_talent_debuff:IsStealable() return false end
+function modifier_imba_heartpiercer_talent_debuff:IsPermanent() return false end
+function modifier_imba_heartpiercer_talent_debuff:IsDebuff() return true end
+
+--Talent #6 fake modifier: It's just visual for the victim
+modifier_imba_heartpiercer_talent_debuff_2 = modifier_imba_heartpiercer_talent_debuff_2 or class({})
+
+function modifier_imba_heartpiercer_talent_debuff_2:IsHidden() return false end
+function modifier_imba_heartpiercer_talent_debuff_2:IsPurgable() return true end
+function modifier_imba_heartpiercer_talent_debuff_2:IsStealable() return false end
+function modifier_imba_heartpiercer_talent_debuff_2:IsPermanent() return false end
+function modifier_imba_heartpiercer_talent_debuff_2:IsDebuff() return true end
+
+
+
 
 ------------------------------------
 -----    ROLLING THUNDER       -----
 ------------------------------------
 imba_pangolier_gyroshell = imba_pangolier_gyroshell or class({})
-LinkLuaModifier("modifier_imba_gyroshell_roll", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_gyroshell_ricochet", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_gyroshell_stun", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_pangolier_gyroshell_bounce", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)
+--LinkLuaModifier("modifier_imba_gyroshell_roll", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) 				------|
+--LinkLuaModifier("modifier_imba_gyroshell_ricochet", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)			------|  IMBA MODIFIERS (not used atm)
+--LinkLuaModifier("modifier_imba_gyroshell_stun", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)				------|
+--LinkLuaModifier("modifier_imba_pangolier_gyroshell_bounce", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE)	------| 
+LinkLuaModifier("modifier_imba_gyroshell_impact_check", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) -- extend Rolling Thunder on each impact and implement #7 Talent
+LinkLuaModifier("modifier_imba_gyroshell_linger", "hero/hero_pangolier.lua", LUA_MODIFIER_MOTION_NONE) --Talent #4: Extra spell immunity
 
 function imba_pangolier_gyroshell:GetAbilityTextureName()
    return "pangolier_gyroshell"
@@ -1047,16 +1649,6 @@ function imba_pangolier_gyroshell:GetManaCost(level)
     return manacost
 end
 
-function imba_pangolier_gyroshell:GetCooldown(level)
-    
-    local cooldown = self.BaseClass.GetCooldown(self, level)
-    local caster = self:GetCaster()
-
-    --Talent: Reduced cooldown on Rolling Thunder
-    return cooldown - caster:FindTalentValue("special_bonus_imba_pangolier_8")
-end
-
-
 function imba_pangolier_gyroshell:GetCastPoint()
 	local cast_point = self.BaseClass.GetCastPoint(self)
 
@@ -1069,7 +1661,7 @@ function imba_pangolier_gyroshell:OnAbilityPhaseStart()
 	local caster = self:GetCaster() 
 
 	--Play ability cast sound
-	EmitSoundOn(sound_cast, caster)
+	EmitSoundOnLocationWithCaster(caster:GetAbsOrigin(), sound_cast, caster)
 
 	--Play the effect and animation
 	self.cast_effect = ParticleManager:CreateParticle(cast_particle, PATTACH_WORLDORIGIN, nil)
@@ -1100,7 +1692,7 @@ function imba_pangolier_gyroshell:OnSpellStart()
 	local bounce_duration = ability:GetSpecialValueFor("bounce_duration")
 	local stun_duration = ability:GetSpecialValueFor("stun_duration")
 	local knockback_radius = ability:GetSpecialValueFor("knockback_radius")
-	local ability_duration = ability:GetSpecialValueFor("duration") + caster:FindTalentValue("special_bonus_imba_pangolier_4")
+	local ability_duration = ability:GetSpecialValueFor("duration")
 	local jump_recover_time = ability:GetSpecialValueFor("jump_recover_time")
 
 
@@ -1119,43 +1711,170 @@ function imba_pangolier_gyroshell:OnSpellStart()
 	--Starts rolling (Vanilla modifier for now)
 	caster:AddNewModifier(caster, ability, roll_modifier, {duration = ability_duration})
 
-	-- Play cast response
-    EmitSoundOn(cast_response[math.random(1, #cast_response)], caster)
+	--starts checking for hero impacts
+	caster:AddNewModifier(caster, ability, "modifier_imba_gyroshell_impact_check", {duration = ability_duration})
+
+	if not self:IsStolen() then
+		-- Play cast response
+    	EmitSoundOnLocationWithCaster(caster:GetAbsOrigin(), cast_response[math.random(1, #cast_response)], caster)
+    end
 
 	--Play Loop sound
 	EmitSoundOn(loop_sound, caster)
 
-	--start interval thiking to play the ending voice lines (needed while we use vanilla modifier)
-
-	self.end_sound_played = false
-
-	--self:StartIntervalThink(0.5)
-
+											
 end
 
 
---[[function imba_pangolier_gyroshell:OnIntervalThink()
+-- Impact checker, will extend Rolling Thunder duration on each hero hit will also hadle the targets and damage for Talent #7
+modifier_imba_gyroshell_impact_check = modifier_imba_gyroshell_impact_check or class({})
 
+function modifier_imba_gyroshell_impact_check:IsHidden() return true end
+function modifier_imba_gyroshell_impact_check:IsPurgable() return false end
+function modifier_imba_gyroshell_impact_check:IsStealable() return false end
+function modifier_imba_gyroshell_impact_check:IsPermanent() return false end
+function modifier_imba_gyroshell_impact_check:IsDebuff() return false end
+
+function modifier_imba_gyroshell_impact_check:OnCreated()
+	if IsServer() then
+		--Ability Properties
+		self.caster = self:GetCaster()
+		self.ability = self:GetAbility()
+		self.stop_response = {"pangolin_pangolin_ability_stop_01", "pangolin_pangolin_ability_stop_02", "pangolin_pangolin_ability_stop_03", 
+								"pangolin_pangolin_ability_stop_04", "pangolin_pangolin_ability_stop_05", "pangolin_pangolin_ability_stop_06"}
+		self.gyroshell = self.caster:FindModifierByName("modifier_pangolier_gyroshell")
+		self.targets = self.targets or {}
+
+
+		--Ability Specials
+		self.duration_extend = self.ability:GetSpecialValueFor("duration_extend")
+		self.hit_radius = self.ability:GetSpecialValueFor("hit_radius")
+		self.talent_duration = self.caster:FindTalentValue("special_bonus_imba_pangolier_4")
+
+		self:StartIntervalThink(FrameTime())
+	end
+end
+
+function modifier_imba_gyroshell_impact_check:OnIntervalThink()
 	if IsServer() then
 
-		local caster = self:GetCaster()
-		local stop_response = {"pangolin_pangolin_ability_stop_01", "pangolin_pangolin_ability_stop_02", "pangolin_pangolin_ability_stop_03", 
-								"pangolin_pangolin_ability_stop_04", "pangolin_pangolin_ability_stop_05", "pangolin_pangolin_ability_stop_06"}
+		local enemies_hit = 0
 
-		--check if pangolier stopped rolling, to play the voice lines
-		if not caster:HasModifier("modifier_pangolier_gyroshell") then
-			EmitSoundOn(stop_response[math.random(1, #stop_response)], caster)
-			self:StartIntervalThink(-1) --stop thinking
+		-- Find all enemies in AoE
+		local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
+										  self.caster:GetAbsOrigin(),
+										  nil,
+										  self.hit_radius,
+										  DOTA_UNIT_TARGET_TEAM_ENEMY,
+										  DOTA_UNIT_TARGET_HERO,
+										  DOTA_UNIT_TARGET_FLAG_NONE,
+										  FIND_ANY_ORDER,
+										  false)
+
+		
+
+		-- Check how many targets are valid (not impacted recently)
+		for _,enemy in pairs(enemies) do
+			if enemy:IsRealHero() and not enemy:IsMagicImmune() then
+				
+				--Is he affected by a previous impact? if so, ignore it
+				if not enemy:HasModifier("modifier_pangolier_gyroshell_timeout") then
+					enemies_hit = enemies_hit + 1
+					--Talent #7: Double damage taken by single targets on subsequent impacts
+					if self.caster:HasTalent("special_bonus_imba_pangolier_7") then
+
+						local found = false
+
+						for k,v in pairs(self.targets) do
+							if v == enemy then
+								found = true
+							end
+						end
+
+						if found then --was this target hit already?
+							--Check how many times this target was damaged already
+							local times_hit = enemy.hit_times
+							--print(times_hit)
+							local extra_damage = self.ability:GetSpecialValueFor("damage")
+
+							--Multiplies the damage by 2 for each previous impact
+							if times_hit > 1 then
+								times_hit = times_hit - 1
+								for i=1,times_hit do
+									extra_damage = extra_damage * 2
+								end
+							end
+
+							--print(extra_damage)
+
+							local damageTable = {victim = enemy,
+               		 		    damage = extra_damage,
+              			        damage_type = DAMAGE_TYPE_MAGICAL,
+              			  	    damage_flags = DOTA_DAMAGE_FLAG_NONE,
+              		   		 	attacker = self.caster,
+    	           		   	    ability = self.ability
+        	          	 		 }
+
+
+
+        					ApplyDamage(damageTable)
+
+        					enemy.hit_times = enemy.hit_times + 1 --increase hit count
+
+						else --New target, add him to the table and set hit_time to 1
+							--print("new target")
+							enemy.hit_times = 1
+							table.insert(self.targets, enemy)
+
+						end
+					end
+				end
+
+			end
 		end
 
+		--Extend Rolling Thunder if a valid hero was hit
+		if enemies_hit > 0 then
+			local time_remaining = self.gyroshell:GetRemainingTime()
+			local new_duration = time_remaining + enemies_hit * self.duration_extend
+
+			self.caster:AddNewModifier(self.caster, self.ability, "modifier_pangolier_gyroshell", {duration = new_duration})
+			self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_gyroshell_impact_check", {duration = new_duration})
+		end
 	end
+end
+
+function modifier_imba_gyroshell_impact_check:OnRemoved()
+	if IsServer() then
+
+		--Play Rolling Thunder end voice lines
+		if not self.ability:IsStolen() then
+			EmitSoundOnLocationWithCaster(self.caster:GetAbsOrigin(), self.stop_response[math.random(1, #self.stop_response)], self.caster)
+		end
+		--Talent #4: Extra duration on spell immunity after Rolling Thunder end
+		if self.caster:HasTalent("special_bonus_imba_pangolier_4") then
+			self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_gyroshell_linger", {duration = self.talent_duration})
+		end
+	end
+end
 
 
-end]]
+--Talent #4 modifier: spell immunity from Rolling Thunder linger after ending the skill
+modifier_imba_gyroshell_linger = modifier_imba_gyroshell_linger or class({})
 
+function modifier_imba_gyroshell_linger:IsHidden() return false end
+function modifier_imba_gyroshell_linger:IsDebuff() return false end
+function modifier_imba_gyroshell_linger:IsPurgable() return false end
 
+function modifier_imba_gyroshell_linger:GetEffectName() 
+	return "particles/items_fx/black_king_bar_avatar.vpcf"
+end
 
+function modifier_imba_gyroshell_linger:CheckState()
+	local state = {[MODIFIER_STATE_MAGIC_IMMUNE] = true}
 
+	return state
+end
 
 
 

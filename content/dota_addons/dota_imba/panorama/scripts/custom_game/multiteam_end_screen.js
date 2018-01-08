@@ -36,6 +36,16 @@ function EndScoreboard() {
 
 		$.Msg("End game received");
 
+		// Hide all other UI
+		var MainPanel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
+
+		MainPanel.FindChildTraverse("topbar").style.visibility = "collapse";
+		MainPanel.FindChildTraverse("minimap_container").style.visibility = "collapse";
+		MainPanel.FindChildTraverse("lower_hud").style.visibility = "collapse";
+		MainPanel.FindChildTraverse("HudChat").style.visibility = "collapse";
+		MainPanel.FindChildTraverse("NetGraph").style.visibility = "collapse";
+		MainPanel.FindChildTraverse("quickstats").style.visibility = "collapse";
+
 		// Gather info 
 		var playerResults = args.players;
 		var serverInfo = args.info;
@@ -43,13 +53,17 @@ function EndScoreboard() {
 		var mapInfo = Game.GetMapInfo();
 		var radiantPlayerIds = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_GOODGUYS );
 		var direPlayerIds = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_BADGUYS );
+		var custom1PlayerIds = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_CUSTOM_1 );
+		var custom2PlayerIds = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_CUSTOM_2 );
 
 		$.Msg({
 			args: args,
 			info: {
 				map: mapInfo,
 				ids1: radiantPlayerIds,
-				ids2: direPlayerIds
+				ids2: direPlayerIds,
+				ids3: custom1PlayerIds,
+				ids4: custom2PlayerIds,
 			}
 		});
 
@@ -58,9 +72,13 @@ function EndScoreboard() {
 		var victoryMessageLabel = $("#es-victory-info-text");
 
 		if (serverInfo.winner == 2)
-			victoryMessage = victoryMessage.replace("winning_team_name", "Radiant");
-		else
-			victoryMessage = victoryMessage.replace("winning_team_name", "Dire");
+			victoryMessage = victoryMessage.replace("winning_team_name", "#DOTA_GoodGuys");
+		else if (serverInfo.winner == 3)
+			victoryMessage = victoryMessage.replace("winning_team_name", "#DOTA_BadGuys");
+		else if (serverInfo.winner == 6)
+			victoryMessage = victoryMessage.replace("winning_team_name", "#DOTA_Custom1");
+		else if (serverInfo.winner == 7)
+			victoryMessage = victoryMessage.replace("winning_team_name", "#DOTA_Custom2");
 
 		victoryMessageLabel.text = victoryMessage;
 
@@ -70,8 +88,12 @@ function EndScoreboard() {
 		var panels = {
 			radiant: $("#es-radiant"),
 			dire: $("#es-dire"),
+			custom1: $("#es-custom1"),
+			custom2: $("#es-custom2"),
 			radiantPlayers: $("#es-radiant-players"),
 			direPlayers: $("#es-dire-players"),
+			custom1Players: $("#es-custom1-players"),
+			custom2Players: $("#es-custom2-players"),
 		};
 		
 		// the panorama xml file used for the player lines
@@ -107,9 +129,13 @@ function EndScoreboard() {
 		// Load players = sort our data we got from above
 		var radiantPlayers = [];
 		var direPlayers = [];
+		var custom1Players = [];
+		var custom2Players = [];
 
 		$.Each(radiantPlayerIds, function (id) { radiantPlayers.push(loadPlayer(id)); });
 		$.Each(direPlayerIds, function (id) { direPlayers.push(loadPlayer(id)); });
+		$.Each(custom1PlayerIds, function (id) { custom1Players.push(loadPlayer(id)); });
+		$.Each(custom2PlayerIds, function (id) { custom2Players.push(loadPlayer(id)); });
 
 		var createPanelForPlayer = function (player, parent) {
 
@@ -218,7 +244,9 @@ function EndScoreboard() {
 
 		var scores = {
 			radiant: 0,
-			dire: 0
+			dire: 0,
+			custom1: 0,
+			custom2: 0,
 		};
 
 		$.Msg("Creating the panels");
@@ -234,26 +262,28 @@ function EndScoreboard() {
 			createPanelForPlayer(player, panels.direPlayers);
 		});
 
+		$.Each(custom1Players, function (player) {
+			scores.radiant += player.info.player_deaths;
+			createPanelForPlayer(player, panels.direPlayers);
+		});
+
+		$.Each(custom2Players, function (player) {
+			scores.radiant += player.info.player_deaths;
+			createPanelForPlayer(player, panels.direPlayers);
+		});
+
 		// Set Team Score
 		$("#es-team-score-radiant").text = new String(scores.radiant);
 		$("#es-team-score-dire").text = new String(scores.dire);
+		$("#es-team-score-custom1").text = new String(scores.custom1);
+		$("#es-team-score-custom2").text = new String(scores.custom2);
 
-		$.Msg("Setting the gmaeid button panel event");
+		$.Msg("Setting the game id button panel event");
 
 		// Configure Stats Button
 		$("#es-buttons-stats").SetPanelEvent("onactivate", function () {
 			$.DispatchEvent("DOTADisplayURL", "http://www.dota2imba.org/stats/game/" + serverInfo.gameid);
 		});
-
-		// Hide all other UI
-		var MainPanel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
-		
-		MainPanel.FindChildTraverse("topbar").style.visibility = "collapse";
-		MainPanel.FindChildTraverse("minimap_container").style.visibility = "collapse";
-		MainPanel.FindChildTraverse("lower_hud").style.visibility = "collapse";
-		MainPanel.FindChildTraverse("HudChat").style.visibility = "collapse";
-		MainPanel.FindChildTraverse("NetGraph").style.visibility = "collapse";
-		MainPanel.FindChildTraverse("quickstats").style.visibility = "collapse";
 
 		$.Msg("Scoreboard was created successfully? Or not?");
 	});
