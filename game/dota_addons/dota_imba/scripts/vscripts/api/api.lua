@@ -20,7 +20,8 @@ local IMBA_API_ENDPOINTS = {
 	game_complete = "/game/complete",
 	game_event = "/game/event",
 	meta_topxpusers = "/meta/top-xp-users",
-	meta_topimrusers = "/meta/top-imr-users",
+    meta_topimrusers = "/meta/top-imr-users",
+    meta_hotdisabledheroes = "/meta/hot-disabled-heroes"
 }
 
 ImbaApi = {}
@@ -136,6 +137,10 @@ end
 
 function ImbaApi:meta_topimrusers(success_cb, error_cb)
 	self:simple_perform(nil, IMBA_API_ENDPOINTS.meta_topimrusers, success_cb, error_cb)
+end
+
+function ImbaApi:meta_hotdisabledheroes(success_cb, error_cb)
+	self:simple_perform(nil, IMBA_API_ENDPOINTS.meta_hotdisabledheroes, success_cb, error_cb)
 end
 
 -- Internal Vars

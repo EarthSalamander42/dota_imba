@@ -11,6 +11,9 @@ if HeroSelection == nil then
 end
 
 function HeroSelection:HeroListPreLoad()
+
+    print("[hero-selection] preloading hero selection")
+
 	-- Retrieve heroes info
 	NPC_HEROES = LoadKeyValues("scripts/npc/npc_heroes.txt")
 	NPC_HEROES_CUSTOM = LoadKeyValues("scripts/npc/npc_heroes_custom.txt")
@@ -53,7 +56,10 @@ function HeroSelection:HeroListPreLoad()
 			elseif GetKeyValueByHeroName(hero, "IsDisabled") == 3 then
 				table.insert(HeroSelection.disabled_heroes, hero)
 			elseif GetKeyValueByHeroName(hero, "IsDisabled") == 4 then
-				table.insert(HeroSelection.disabled_silent_heroes, hero)
+                table.insert(HeroSelection.disabled_silent_heroes, hero)
+            elseif HeroIsHotDisabled(hero) then
+                print("[hero-selection] Hero " .. hero .. " is hot disabled")
+                table.insert(HeroSelection.disabled_heroes, hero)
 			end
 
 			if GetKeyValueByHeroName(hero, "IsImba") == 1 then
@@ -608,8 +614,9 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		hero.killstreak = 0
 
 		-- Set up initial level
-		local starting_level = tonumber(CustomNetTables:GetTableValue("game_options", "initial_level")["1"])
-		if starting_level > 1 then
+        local starting_level = tonumber(CustomNetTables:GetTableValue("game_options", "initial_level")["1"])
+        -- TODO: starting level sometimes nil - check this! 
+        if starting_level ~= nil and starting_level > 1 then
 			hero:AddExperience(XP_PER_LEVEL_TABLE[starting_level], DOTA_ModifyXP_CreepKill, false, true)
 		end
 

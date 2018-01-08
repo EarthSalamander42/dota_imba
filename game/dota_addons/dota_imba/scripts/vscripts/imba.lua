@@ -1328,8 +1328,9 @@ function GameMode:OnGameInProgress()
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Custom maximum level EXP tables adjustment
 	-------------------------------------------------------------------------------------------------
-	local max_level = tonumber(CustomNetTables:GetTableValue("game_options", "max_level")["1"])
-	if max_level > 35 then
+    local max_level = tonumber(CustomNetTables:GetTableValue("game_options", "max_level")["1"])
+    -- TODO: max_level sometimes nil - WHY?
+	if max_level ~= nil and max_level > 35 then
 		for i = 36, max_level do
 			XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + 5000
 			GameRules:GetGameModeEntity():SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
