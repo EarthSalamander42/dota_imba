@@ -765,7 +765,7 @@ function imba_necrolyte_reapers_scythe:OnSpellStart()
 		local damage = self:GetSpecialValueFor("damage")
 		local stun_duration = self:GetSpecialValueFor("stun_duration")
 		
-		target:AddNewModifier(caster, self, "modifier_imba_reapers_scythe", {duration = stun_duration+FrameTime(), damage = damage})
+		target:AddNewModifier(caster, self, "modifier_imba_reapers_scythe", {duration = stun_duration+FrameTime()})
 	end
 end
 
@@ -780,22 +780,14 @@ end
 
 modifier_imba_reapers_scythe = modifier_imba_reapers_scythe or class({})
 function modifier_imba_reapers_scythe:IgnoreTenacity() return true end
+function modifier_imba_reapers_scythe:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 function modifier_imba_reapers_scythe:OnCreated( params )
 	if IsServer() then
 		local caster = self:GetCaster()
 		local target = self:GetParent()
 		self.ability = self:GetAbility()
-		self.damage = params.damage
-		Timers:CreateTimer(self:GetRemainingTime()-FrameTime(), function()
-			-- Calculates damage
-			if target:IsAlive() and self.ability then
-				self.damage = self.damage * (target:GetMaxHealth() - target:GetHealth())
-				-- Deals damage				
-				ApplyDamage({attacker = caster, victim = target, ability = self.ability, damage = self.damage, damage_type = DAMAGE_TYPE_MAGICAL})
-				SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, target, self.damage, nil)
-				self:Destroy()
-			end
-		end)
+		self.damage = self.ability:GetSpecialValueFor("damage")
+
 		local stun_fx = ParticleManager:CreateParticle("particles/generic_gameplay/generic_stunned.vpcf", PATTACH_OVERHEAD_FOLLOW, target)
 		self:AddParticle(stun_fx,false,false,-1,false,false)
 		local orig_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_necrolyte/necrolyte_scythe_orig.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
@@ -805,6 +797,19 @@ function modifier_imba_reapers_scythe:OnCreated( params )
 		ParticleManager:SetParticleControlEnt(scythe_fx, 0, caster, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
 		ParticleManager:SetParticleControlEnt(scythe_fx, 1, target, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
 		ParticleManager:ReleaseParticleIndex(scythe_fx)
+	end
+end
+
+function modifier_imba_reapers_scythe:OnDestroy()
+	if IsServer() then
+		local caster = self:GetCaster()
+		local target = self:GetParent()
+		if target:IsAlive() and self.ability then
+			self.damage = self.damage * (target:GetMaxHealth() - target:GetHealth())
+			-- Deals damage
+			local actually_dmg = ApplyDamage({attacker = caster, victim = target, ability = self.ability, damage = self.damage, damage_type = DAMAGE_TYPE_MAGICAL})
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, target, actually_dmg, nil)
+		end
 	end
 end
 
