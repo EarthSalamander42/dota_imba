@@ -348,6 +348,12 @@ function GameMode:ModifierFilter( keys )
 			return true
 		end
 
+		if GetMapName() == "imba_overthrow" then
+			if modifier_name == "modifier_fountain_aura_buff" then
+				return false
+			end
+		end
+
 		-------------------------------------------------------------------------------------------------
 		-- Frantic mode duration adjustment
 		-------------------------------------------------------------------------------------------------
@@ -1784,12 +1790,11 @@ end
 ---------------------------------------------------------------------------
 function GameMode:SetUpFountains()
 
-	LinkLuaModifier( "modifier/modifier_fountain_aura_lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier( "modifier/modifier_fountain_aura_effect_lua", LUA_MODIFIER_MOTION_NONE )
-
+	print("Setup Fountains...")
 	local fountainEntities = Entities:FindAllByClassname( "ent_dota_fountain")
+	PrintTable(fountainEntities)
 	for _,fountainEnt in pairs( fountainEntities ) do
-		--print("fountain unit " .. tostring( fountainEnt ) )
+		print("fountain unit " .. tostring( fountainEnt ) )
 		fountainEnt:AddNewModifier( fountainEnt, fountainEnt, "modifier_fountain_aura_lua", {} )
 	end
 end

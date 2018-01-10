@@ -36,9 +36,13 @@ function EndScoreboard() {
 
 		$.Msg("End game received");
 
+		var map_info = Game.GetMapInfo();
+		if (map_info.map_display_name == "imba_overthrow") {
+			$("#es-custom1").style.visibility = "visible";
+		}
+
 		// Hide all other UI
 		var MainPanel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
-
 		MainPanel.FindChildTraverse("topbar").style.visibility = "collapse";
 		MainPanel.FindChildTraverse("minimap_container").style.visibility = "collapse";
 		MainPanel.FindChildTraverse("lower_hud").style.visibility = "collapse";

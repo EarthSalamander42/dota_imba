@@ -36,6 +36,10 @@ DebugPrint("[IMBA] Performing pre-load precache")
 	-- Fountain Particle
 	LinkLuaModifier("modifier_imba_fountain_particle_control", "modifier/modifier_fountain_particle", LUA_MODIFIER_MOTION_NONE)
 
+	-- Overthrow Fountain Lua
+	LinkLuaModifier( "modifier_fountain_aura_lua", "modifier/modifier_fountain_aura_lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier( "modifier_fountain_aura_effect_lua", "modifier/modifier_fountain_aura_effect_lua", LUA_MODIFIER_MOTION_NONE )
+
 	-- Aegis
 	LinkLuaModifier("modifier_item_imba_aegis", "items/item_aegis.lua", LUA_MODIFIER_MOTION_NONE)
 

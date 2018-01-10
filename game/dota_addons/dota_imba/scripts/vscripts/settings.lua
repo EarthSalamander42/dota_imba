@@ -308,7 +308,7 @@ GOLD_TICK_TIME = {}
 GOLD_TICK_TIME["imba_standard"] = 0.6
 GOLD_TICK_TIME["imba_10v10"] = 0.4
 GOLD_TICK_TIME["imba_frantic_10v10"] = 0.4
-GOLD_TICK_TIME["imba_overthrow"] = 9999
+GOLD_TICK_TIME["imba_overthrow"] = 0.6
 
 REMAINING_GOODGUYS = 0														-- Remaining players on Radiant
 REMAINING_BADGUYS = 0														-- Remaining players on Dire

@@ -11457,7 +11457,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
- 		"AbilityCastAnimation"			"ACT_INVALID"
+		"AbilityCastAnimation"			"ACT_INVALID"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -11478,8 +11478,8 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
- 		"AbilityCastAnimation"			"ACT_INVALID"
- 		"MaxLevel"						"7"
+		"AbilityCastAnimation"			"ACT_INVALID"
+		"MaxLevel"						"7"
 
 		"AbilityCastRange"				"350"
 
@@ -11950,10 +11950,10 @@
 			}			
 
 			"06"
-		  	{
+			{
 			"var_type"      			"FIELD_INTEGER"
 			"shard_percentage" 			"5 5 5 5 10 15 20"
-		  	}
+			}
 
 			"07"
 			{
@@ -17041,235 +17041,235 @@
 	}
 
 	//=================================================================================================================
-    // Lion's Talents
-    //=================================================================================================================
-    "special_bonus_imba_lion_1" // Earth Spike now branches from creeps as well
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"						"ability_datadriven"
+	// Lion's Talents
+	//=================================================================================================================
+	"special_bonus_imba_lion_1" // Earth Spike now branches from creeps as well
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
 		//"ScriptFile"					"internal/funcs.lua"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-        "LinkedAbility"
-        {
-        	"01" 	"imba_lion_earth_spike"
-        }
+		"LinkedAbility"
+		{
+			"01" 	"imba_lion_earth_spike"
+		}
 
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "value"	                    "1"
-            }
-        }
-    }
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"	                    "1"
+			}
+		}
+	}
 
-    "special_bonus_imba_lion_2" // Hexed targets have Break applied to them.
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"						"ability_datadriven"
+	"special_bonus_imba_lion_2" // Hexed targets have Break applied to them.
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
 		//"ScriptFile"					"internal/funcs.lua"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-        "LinkedAbility"
-        {
-        	"01" 	"imba_lion_hex"
-        }
+		"LinkedAbility"
+		{
+			"01" 	"imba_lion_hex"
+		}
 
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "value"	                    "1"
-            }
-        }
-    }
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"	                    "1"
+			}
+		}
+	}
 
-    "special_bonus_imba_lion_3" // Draining Mana while mana pool is full grants Mana Overcharge
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"						"ability_datadriven"
+	"special_bonus_imba_lion_3" // Draining Mana while mana pool is full grants Mana Overcharge
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
 		//"ScriptFile"					"internal/funcs.lua"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-        "LinkedAbility"
-        {
-        	"01" 	"imba_lion_mana_drain"
-        }
+		"LinkedAbility"
+		{
+			"01" 	"imba_lion_mana_drain"
+		}
 
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "value"	                    "0"
-            }
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"	                    "0"
+			}
 			"02"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "duration"	                "8"
-            }
-        }
-    }
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"duration"	                "8"
+			}
+		}
+	}
 
-    "special_bonus_imba_lion_4" // Mana drain slows the target according to missing mana
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"						"ability_datadriven"
+	"special_bonus_imba_lion_4" // Mana drain slows the target according to missing mana
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
 		//"ScriptFile"					"internal/funcs.lua"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-        "LinkedAbility"
-        {
-        	"01" 	"imba_lion_mana_drain"
-        }
+		"LinkedAbility"
+		{
+			"01" 	"imba_lion_mana_drain"
+		}
 
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "value"	                    "1"
-            }
-        }
-    }
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"	                    "1"
+			}
+		}
+	}
 
-    "special_bonus_imba_lion_5" // Trigger Finger always triggers
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"						"ability_datadriven"
+	"special_bonus_imba_lion_5" // Trigger Finger always triggers
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
 		//"ScriptFile"					"internal/funcs.lua"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-        "LinkedAbility"
-        {
-        	"01" 	"imba_lion_finger_of_death"
-        }
+		"LinkedAbility"
+		{
+			"01" 	"imba_lion_finger_of_death"
+		}
 
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "value"	                    "15"
-            }
-        }
-    }
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"value"	                    "15"
+			}
+		}
+	}
 
-    "special_bonus_imba_lion_6" // Hex bounces to a second enemy
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"						"ability_datadriven"
+	"special_bonus_imba_lion_6" // Hex bounces to a second enemy
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
 		//"ScriptFile"					"internal/funcs.lua"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-        "LinkedAbility"
-        {
-        	"01" 	"imba_lion_hex"
-        }
+		"LinkedAbility"
+		{
+			"01" 	"imba_lion_hex"
+		}
 
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "value"	                    "1"
-            }
-        }
-    }
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"value"	                    "1"
+			}
+		}
+	}
 
-    "special_bonus_imba_lion_7" // Earth Spike slows and target receives damage addition to Finger of Death
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"						"ability_datadriven"
+	"special_bonus_imba_lion_7" // Earth Spike slows and target receives damage addition to Finger of Death
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
 		//"ScriptFile"					"internal/funcs.lua"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-        "LinkedAbility"
-        {
-        	"01"	"imba_lion_earth_spike"
-        }
+		"LinkedAbility"
+		{
+			"01"	"imba_lion_earth_spike"
+		}
 
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "value"	                    "0"
-            }
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"value"	                    "0"
+			}
 			"02"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "slow"	                    "25"
-            }
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"slow"	                    "25"
+			}
 			"03"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "bonus_damage"	            "30"
-            }
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"bonus_damage"	            "30"
+			}
 			"04"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "duration"	                "3"
-            }
-        }
-    }
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"duration"	                "3"
+			}
+		}
+	}
 
-    "special_bonus_imba_lion_8" // Mana Drain now targets all units in aura radius
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"						"ability_datadriven"
+	"special_bonus_imba_lion_8" // Mana Drain now targets all units in aura radius
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
 		//"ScriptFile"					"internal/funcs.lua"
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-        "LinkedAbility"
-        {
-        	"01" 	"imba_lion_mana_drain"
-        }
+		"LinkedAbility"
+		{
+			"01" 	"imba_lion_mana_drain"
+		}
 
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "value"	                    "1"
-            }
-        }
-    }
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"value"	                    "1"
+			}
+		}
+	}
 
 	//=================================================================================================================
 	// Lycan's Summon Wolves
@@ -19169,7 +19169,7 @@
 		"LinkedAbility"
 		{
 			"01" 	"imba_mirana_starfall"
-            "02"    "imba_mirana_moonlight_shadow"
+			"02"    "imba_mirana_moonlight_shadow"
 		}
 
 		// Special
@@ -29705,9 +29705,9 @@
 			}
 			
 			"09"
- 			{
- 				"var_type"					"FIELD_INTEGER"
- 				"projectiles"				"1"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"projectiles"				"1"
 			}
 		}
 	}
@@ -29792,10 +29792,10 @@
 			}
 			
 			"02"
- 			{
- 				"var_type"                  "FIELD_INTEGER"
- 				"miss_chance_pct"           "30"
-  			}
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"miss_chance_pct"           "30"
+			}
 		}
 	}
 
@@ -29824,10 +29824,10 @@
 			}
 			
 			"02"
- 			{
- 				"var_type"                  "FIELD_FLOAT"
- 				"charges_per_recharge"      "2"
-  			}
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"charges_per_recharge"      "2"
+			}
 		}
 	}
 
@@ -29882,16 +29882,16 @@
 			}
 			
 			"02"
- 			{
- 				"var_type"                  "FIELD_FLOAT"
- 				"total_projectiles"	        "3"
- 			}
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"total_projectiles"	        "3"
+			}
  
- 			"03"
- 			{
- 				"var_type"                  "FIELD_FLOAT"
- 				"refire_delay"		        "0.2"
-  			}
+			"03"
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"refire_delay"		        "0.2"
+			}
 		}
 	}
 
@@ -29914,26 +29914,26 @@
 		"AbilitySpecial"
 		{
 			"01"
-  			{
- 				"var_type"                  "FIELD_INTEGER"
- 				"damage_per_second"         "80"
- 			}
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"damage_per_second"         "80"
+			}
  
- 			"02"
- 			{
- 				"var_type"                  "FIELD_INTEGER"
- 				"vision_loss"	         	"500"
- 			}
+			"02"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"vision_loss"	         	"500"
+			}
  
- 			"03"
- 			{
- 				"var_type"                  "FIELD_INTEGER"
- 				"duration"			        "5"
- 			}
+			"03"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"duration"			        "5"
+			}
  
- 			"04"
- 			{
-  				"var_type"                  "FIELD_FLOAT"
+			"04"
+			{
+				"var_type"                  "FIELD_FLOAT"
 				"damage_interval"	        "0.5"
 			}
 		}
@@ -35427,13 +35427,13 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"trembling_steps_damage"	"30 60 90 120 140 160 180"
-  			}
+			}
 
 			"11"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"trembling_steps_cooldown"	"0.4"
-  			}
+			}
 
 			"12"
 			{
@@ -35445,7 +35445,7 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"bonus_damage_pct"			"50"				
-  			}
+			}
 
 			"14"
 			{
@@ -35512,7 +35512,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"attacks_num"			"3 4 5 6 7 8 9"				
-  			}
+			}
 
 			"03"
 			{
@@ -35530,7 +35530,7 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"disarm_duration"		"2.0 2.5 3 3.5 3.75 4.0 4.25"				
-  			}
+			}
 		}
 	}
 
@@ -35588,7 +35588,7 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"deep_stack_multiplier"	"150"				
-  			}
+			}
 
 			"05"
 			{
@@ -35657,7 +35657,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_radius_skills"	"100 120 140 160 180 200"				
-  			}
+			}
 
 			"07"
 			{
@@ -35744,21 +35744,21 @@
 				"value"					"50"
 			}
 			"02"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "damage_threshold"  "750"
-            }
-            "03"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "damage_reset"      "3"
-            }
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"damage_threshold"  "750"
+			}
+			"03"
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"damage_reset"      "3"
+			}
 
-            "04"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "enrage_cooldown"   "20"
-            }
+			"04"
+			{
+				"var_type"                  "FIELD_FLOAT"
+				"enrage_cooldown"   "20"
+			}
 		}
 	}
 
@@ -35845,10 +35845,10 @@
 				"armor_reduction"		"2"
 			}
 			"02"
- 			{
- 				"var_type"				"FIELD_INTEGER"
- 				"duration"				"3"
-  			}
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"3"
+			}
 		}
 	}
 
@@ -35870,13 +35870,13 @@
 		"AbilitySpecial"
 		{
 			"01"
-  			{
- 				"var_type"				"FIELD_FLOAT"
- 				"maximum_health_dmg"	"3.5"
- 			}
+			{
+				"var_type"				"FIELD_FLOAT"
+				"maximum_health_dmg"	"3.5"
+			}
  
- 			"02"
- 			{
+			"02"
+			{
 				"var_type"				"FIELD_INTEGER"
 				"health_threshold_pct"	"50"
 			}
@@ -39484,7 +39484,7 @@
 		{
 			"particle"					"particles/units/heroes/hero_witchdoctor/witchdoctor_cask.vpcf"
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_witch_doctor.vsndevts"
-			"soundfile"					"soundevents/voscripts/game_sounds_vo_witch_doctor.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_witchdoctor.vsndevts"
 		}
 
 		// Casting
@@ -39578,7 +39578,7 @@
 			"particle"					"particles/units/heroes/hero_witchdoctor/witchdoctor_voodoo_restoration_flame.vpcf"
 			"particle"					"particles/hero/witch_doctor/voodoo_cleanse.vpcf"
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_witch_doctor.vsndevts"
-			"soundfile"					"soundevents/voscripts/game_sounds_vo_witch_doctor.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_witchdoctor.vsndevts"
 		}
 
 		// Cost
@@ -39650,7 +39650,7 @@
 			"particle"					"particles/units/heroes/hero_witchdoctor/witchdoctor_maledict.vpcf"
 			"particle"					"particles/units/heroes/hero_witchdoctor/witchdoctor_maledict_aoe.vpcf"
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_witch_doctor.vsndevts"
-			"soundfile"					"soundevents/voscripts/game_sounds_vo_witch_doctor.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_witchdoctor.vsndevts"
 		}
 
 		// Casting
@@ -41866,7 +41866,7 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"hellbolt_cdr"			"1.0"
-  			}
+			}
 		}
 	}
 
@@ -43587,7 +43587,7 @@
 			{
 				"Passive"       "1"
 				"EffectName"	""
-				"TextureName"	"custom_games_xp_coin"
+				"TextureName"	"custom/custom_games_xp_coin"
 			}
 		}
 	}
@@ -43629,7 +43629,7 @@
 						"Target"
 						{
 							"Center"		"CASTER"
-							"radius"		"1400"
+							"radius"		"2000"
 							"Types"			"DOTA_UNIT_TARGET_HERO"
 							"Flags"			"DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS"
 						}
@@ -43645,7 +43645,7 @@
 			{
 				"Passive"       "1"
 				"EffectName"	""
-				"TextureName"	"custom_games_xp_coin"
+				"TextureName"	"custom/custom_games_xp_coin"
 			}
 		}
 	}
@@ -43701,7 +43701,7 @@
 
 			"modifier_get_xp_global"
 			{
-				"Passive"       "1"
+				"Passive"		"1"
 				"EffectName"	"particles/econ/courier/courier_greevil_yellow/courier_greevil_yellow_ambient_3_b.vpcf"
 				"TextureName"	"alchemist_goblins_greed"
 			}
@@ -43709,45 +43709,45 @@
 	}
 
 	"dota_ability_reveal_invis"
-    {
-           "BaseClass"							"ability_datadriven"
-           "AbilityName"						"dota_ability_reveal_invis"
-           "AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	{
+			"BaseClass"							"ability_datadriven"
+			"AbilityName"						"dota_ability_reveal_invis"
+			"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-           "Modifiers"
-           {
-                "modifier_dota_ability_reveal_invis"
-                {
-                     "IsHidden"					"1"
-                     "Passive"					"1"
-                     
-                     "Aura"						"modifier_invis_revealed"
-                     "Aura_Radius"				"350"
-                     "Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_BOTH"
-                     "Aura_Types"				"DOTA_UNIT_TARGET_ALL"
-                     "Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+			"Modifiers"
+			{
+				"modifier_dota_ability_reveal_invis"
+				{
+					"IsHidden"					"1"
+					"Passive"					"1"
+					
+					"Aura"						"modifier_invis_revealed"
+					"Aura_Radius"				"350"
+					"Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_BOTH"
+					"Aura_Types"				"DOTA_UNIT_TARGET_ALL"
+					"Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 
-                     "States"
-                     {
-                           "MODIFIER_STATE_UNSELECTABLE"		"MODIFIER_STATE_VALUE_ENABLED"
-                           "MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
-                           "MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
-                           "MODIFIER_STATE_OUT_OF_GAME"	"MODIFIER_STATE_VALUE_ENABLED"
-                     }
-                }
+					"States"
+					{
+						"MODIFIER_STATE_UNSELECTABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+						"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+						"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+						"MODIFIER_STATE_OUT_OF_GAME"		"MODIFIER_STATE_VALUE_ENABLED"
+					}
+				}
 
-                "modifier_invis_revealed"
-                {
-                     "Passive"					"1"
-                     "TextureName"				"item_gem"
-                     "Priority"					"MODIFIER_PRIORITY_HIGH"
-                     "States"
-                     {
-                           "MODIFIER_STATE_INVISIBLE"			"MODIFIER_STATE_VALUE_DISABLED"
-                     }
-                }
-           }
-    }
+				"modifier_invis_revealed"
+				{
+					"Passive"					"1"
+					"TextureName"				"item_gem"
+					"Priority"					"MODIFIER_PRIORITY_HIGH"
+					"States"
+					{
+						"MODIFIER_STATE_INVISIBLE"			"MODIFIER_STATE_VALUE_DISABLED"
+					}
+				}
+			}
+	}
 
 	//=================================================================================================================
 	// Ability: Treasure Courier
@@ -43818,13 +43818,13 @@
 	// Ability: Traps
 	//=================================================================================================================
 	"trap_unselectable"
-  	{
-	    "AbilityBehavior"        "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-	    
-	    "BaseClass"             "ability_datadriven"
-	    
-	    "Modifiers"
-	    {
+	{
+		"AbilityBehavior"        "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		
+		"BaseClass"             "ability_datadriven"
+		
+		"Modifiers"
+		{
 			"modifier_unselectable"
 			{
 				"Passive" "1"
@@ -43843,9 +43843,9 @@
 					"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_OUT_OF_GAME"			"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_BLIND"					"MODIFIER_STATE_VALUE_ENABLED"
-		        }
-	      	}
-	    }
+				}
+			}
+		}
 	}
 	"breathe_fire"
 	{

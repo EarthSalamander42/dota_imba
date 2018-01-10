@@ -142,8 +142,6 @@
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
-		"AbilityLayout"             "5"
-
 		"Ability1"					"imba_bane_enfeeble"
 		"Ability2"					"imba_bane_brain_sap"
 		"Ability3"					"imba_bane_nightmare"
@@ -313,8 +311,6 @@
 		//Picking Screen
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-
-		"AbilityLayout"				"5"
 
 		"Ability1"					"imba_bounty_hunter_shuriken_toss"
 		"Ability2"			 		"imba_bounty_hunter_jinada"
@@ -496,8 +492,6 @@
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
 
-		"AbilityLayout"				"5"
-
 		"Ability1"					"imba_disruptor_thunder_strike"
 		"Ability2"					"imba_disruptor_glimpse"
 		"Ability3"					"imba_disruptor_kinetic_field"
@@ -549,8 +543,6 @@
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
 		"AttackAcquisitionRange"	"900"
-
-		"AbilityLayout"				"5"
 		
 		"Ability1"					"imba_drow_ranger_frost_arrows"
 		"Ability2"					"imba_drow_ranger_gust"
@@ -1944,7 +1936,7 @@
 		//Picking Screen
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-		"IsDisabled"				"1"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
+		"IsDisabled"				"3"
 
 		"Ability1"					"imba_venomancer_venomous_gale"
 		"Ability2"					"imba_venomancer_poison_sting"
@@ -2031,7 +2023,7 @@
 
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-		"IsDisabled"				"1"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
+//		"IsDisabled"				"1"	// 0 = Enabled, 1 = 10v10 disabled, 2 = fully disabled.
 
 		"Ability1"					"zuus_arc_lightning"
 		"Ability2"					"zuus_lightning_bolt"
