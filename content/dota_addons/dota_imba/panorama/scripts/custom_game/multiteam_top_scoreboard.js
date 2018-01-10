@@ -42,12 +42,6 @@ function OnScoreChanged( data )
 	{
 		custom2Score.text = data.custom_2;
 	}
-
-	var custom3Score = $( "#ConquestScore_Custom3" );
-	if ( custom3Score )
-	{
-		custom3Score.text = data.custom_3;
-	}
 }
 
 (function()

@@ -25,8 +25,6 @@ function CreateCustomToast(data) {
 		row.SetHasClass('LocalPlayerKiller', isKiller);
 		row.SetHasClass('LocalPlayerVictim', isVictim);
 
-//		$.Msg(Players.GetTeam(data.victimPlayer))
-
 		if (isKiller)
 			Game.EmitSound('notification.self.kill');
 		else if (isVictim)

@@ -321,8 +321,6 @@ var RadiantLevels = 0
 var DireLevels = 0
 var RadiantCount = 0
 var DireCount = 0
-var Custom1Count = 0
-var Custom2Count = 0
 
 //	var str = "Cuckies";
 //	var n = str.search("Cuckies");
@@ -330,8 +328,6 @@ var Custom2Count = 0
 
 	var radiantPlayers = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_GOODGUYS );
 	var direPlayers = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_BADGUYS );
-	var custom1Players = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_CUSTOM_1 );
-	var custom2Players = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_CUSTOM_2 );
 	var map_info = Game.GetMapInfo();
 
 	var i = 1;
@@ -345,7 +341,7 @@ var Custom2Count = 0
 		playerPanels[player] = playerPanel;
 		RadiantCount = RadiantCount +1
 
-		if (RadiantCount >= 5 || map_info.map_display_name == "imba_overthrow") {
+		if (RadiantCount >= 5) {
 			RadiantCount = 0
 			if (map_info.map_display_name != "imba_standard") {
 				class_option_count = class_option_count +1
@@ -360,7 +356,6 @@ var Custom2Count = 0
 		var plyData = CustomNetTables.GetTableValue("player_table", player);
 		if (plyData != null) {
 			if (map_info.map_display_name == "imba_standard") {
-			
 				// Dont display IMR if player havent calibrated yet
 				if (plyData.IMR_5v5_calibrating)
 					playerPanel.setPlayerMMR("TBD");
@@ -426,47 +421,94 @@ var Custom2Count = 0
 		}
 	});
 
+	CreateHeroPick()
+}
+
+function LoadOverthrowPlayers() {
+	var RadiantLevels = 0
+	var DireLevels = 0
+	var RadiantCount = 0
+	var DireCount = 0
+	var Custom1Count = 0
+	var Custom2Count = 0
+
+//	var str = "Cuckies";
+//	var n = str.search("Cuckies");
+//	$.Msg(n)
+
+	var radiantPlayers = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_GOODGUYS );
+	var direPlayers = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_BADGUYS );
+	var custom1Players = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_CUSTOM_1 );
+	var custom2Players = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_CUSTOM_2 );
+	var map_info = Game.GetMapInfo();
+
+	$("#AverageMMRTeamRadiant").style.visibility = "collapse";
+	$("#AverageMMRTeamDire").style.visibility = "collapse";
+	$("#PickScreenTeamTitleRadiant").style.visibility = "collapse";
+	$("#PickScreenTeamTitleDire").style.visibility = "collapse";
+
+	var ClassOptionPanelRadiant = $.CreatePanel("Panel", $("#LeftPlayers"), "PlayerRow1" + "_good");
+	ClassOptionPanelRadiant.AddClass("PlayerOptionRowV10")
+
+	$.Each( radiantPlayers, function( player ) {
+		var playerPanel = Modular.Spawn( "picking_player", $("#PlayerRow1" + "_good") );
+		playerPanel.SetPlayerName( player );
+
+		//Save the panel for later
+		playerPanels[player] = playerPanel;
+	});
+
+	var TeamLabel = $.CreatePanel("Label", ClassOptionPanelRadiant, "goodguys_label");
+	TeamLabel.AddClass("TeamLabelText")
+	TeamLabel.text = $.Localize("DOTA_GoodGuys");
+	TeamLabel.style.color = "#326114";
+
+	var ClassOptionPanelDire = $.CreatePanel("Panel", $("#RightPlayers"), "PlayerRow1" + "_bad");
+	ClassOptionPanelDire.AddClass("PlayerOptionRowV10")
+
+	var TeamLabel = $.CreatePanel("Label", ClassOptionPanelDire, "badguys_label");
+	TeamLabel.AddClass("TeamLabelText")
+	TeamLabel.text = $.Localize("DOTA_BadGuys");
+	TeamLabel.style.color = "#f03333";
+
+	$.Each( direPlayers, function( player ) {
+		var playerPanel = Modular.Spawn( "picking_player", $("#PlayerRow1" + "_bad") );
+		playerPanel.SetPlayerName( player );
+
+		//Save the panel for later
+		playerPanels[player] = playerPanel;
+	});
+
+	var ClassOptionPanelRadiant_alt = $.CreatePanel("Panel", $("#LeftPlayers"), "PlayerRow2" + "_good");
+	ClassOptionPanelRadiant_alt.AddClass("PlayerOptionRowV10")
+
+	var TeamLabel = $.CreatePanel("Label", ClassOptionPanelRadiant_alt, "custom1_label");
+	TeamLabel.AddClass("TeamLabelText")
+	TeamLabel.text = $.Localize("DOTA_Custom1");
+	TeamLabel.style.color = "#cc00cc";
+
 	$.Each( custom1Players, function( player ) {
-		var playerPanel = Modular.Spawn( "picking_player", $("#PlayerRow" + class_option_count + "_good") );
+		var playerPanel = Modular.Spawn( "picking_player", $("#PlayerRow2" + "_good") );
 		playerPanel.SetPlayerName( player );
 
 		//Save the panel for later
 		playerPanels[player] = playerPanel;
-		Custom1Count = Custom1Count +1
-
-		if (Custom1Count >= 5 || map_info.map_display_name == "imba_overthrow") {
-			Custom1Count = 0
-			if (map_info.map_display_name != "imba_standard") {
-				class_option_count = class_option_count +1
-				var ClassOptionPanelRadiant_alt = $.CreatePanel("Panel", $("#LeftPlayers_alt"), "PlayerRow" + class_option_count + "_good");
-				ClassOptionPanelRadiant.AddClass("PlayerOptionRowV10")
-				ClassOptionPanelRadiant_alt.AddClass("PlayerOptionRowV10")
-			}
-		} else {
-			ClassOptionPanelRadiant.AddClass("PlayerOptionRow")
-		}
 	});
 
+	var ClassOptionPanelDire_alt = $.CreatePanel("Panel", $("#RightPlayers"), "PlayerRow2" + "_bad");
+	ClassOptionPanelDire_alt.AddClass("PlayerOptionRowV10")
 	$.Each( custom2Players, function( player ) {
-		var playerPanel = Modular.Spawn( "picking_player", $("#PlayerRow" + class_option_count + "_good") );
+		var playerPanel = Modular.Spawn( "picking_player", $("#PlayerRow2" + "_bad") );
 		playerPanel.SetPlayerName( player );
 
 		//Save the panel for later
 		playerPanels[player] = playerPanel;
-		Custom2Count = Custom2Count +1
-
-		if (Custom2Count >= 5 || map_info.map_display_name == "imba_overthrow") {
-			Custom2Count = 0
-			if (map_info.map_display_name != "imba_standard") {
-				class_option_count = class_option_count +1
-				var ClassOptionPanelRadiant_alt = $.CreatePanel("Panel", $("#RightPlayers_alt"), "PlayerRow" + class_option_count + "_good");
-				ClassOptionPanelRadiant.AddClass("PlayerOptionRowV10")
-				ClassOptionPanelRadiant_alt.AddClass("PlayerOptionRowV10")
-			}
-		} else {
-			ClassOptionPanelRadiant.AddClass("PlayerOptionRow")
-		}
 	});
+
+	var TeamLabel = $.CreatePanel("Label", ClassOptionPanelDire_alt, "custom2_label");
+	TeamLabel.AddClass("TeamLabelText")
+	TeamLabel.text = $.Localize("DOTA_Custom2");
+	TeamLabel.style.color = "#ff4000";
 
 	CreateHeroPick()
 }
@@ -841,13 +883,17 @@ GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 		ShowPickScreen(false)
 		// Else, do pick screen stuff
 	} else {
+		var map_info = Game.GetMapInfo();
 		$.Msg("Valid Player")
 		///Load player elements
 		ShowHUD(false);
-		LoadPlayers()
+		if (map_info.map_display_name != "imba_overthrow") {
+			LoadPlayers()
+		} else {
+			LoadOverthrowPlayers()
+		}
 
 		// Show only map-specific elements
-		var map_info = Game.GetMapInfo();
 
 		// Update the game options display
 		var bounty_multiplier = CustomNetTables.GetTableValue("game_options", "bounty_multiplier");

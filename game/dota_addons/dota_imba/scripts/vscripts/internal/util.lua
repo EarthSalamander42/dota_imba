@@ -1140,16 +1140,37 @@ function IsStolenSpell(caster)
 	return false
 end
 
+function InitRunes()
+	bounty_rune_spawners = {}
+	bounty_rune_locations = {}
+	powerup_rune_spawners = {}
+	powerup_rune_locations = {}
+
+	bounty_rune_spawners = Entities:FindAllByName("bounty_rune_location")
+
+	if GetMapName() == "imba_overthrow" then
+		powerup_rune_spawners = Entities:FindAllByName("dota_item_rune_spawner")
+	else
+		powerup_rune_spawners = Entities:FindAllByName("powerup_rune_location")
+	end
+
+	for i = 1, #powerup_rune_spawners do
+		powerup_rune_locations[i] = powerup_rune_spawners[i]:GetAbsOrigin()
+		powerup_rune_spawners[i]:RemoveSelf()
+	end
+
+	for i = 1, #bounty_rune_spawners do
+		bounty_rune_locations[i] = bounty_rune_spawners[i]:GetAbsOrigin()
+		bounty_rune_spawners[i]:RemoveSelf()
+	end
+end
+
 -- Spawns runes on the map
 function SpawnImbaRunes()
 bounty_rune_is_initial_bounty_rune = false
 
 	-- Remove any existing runes, if any
 	RemoveRunes()
-
-	-- Locate the rune spots on the map
-	local bounty_rune_spawners = Entities:FindAllByName("bounty_rune_location")
-	local powerup_rune_spawners = Entities:FindAllByName("powerup_rune_location")
 
 	-- List of powerup rune types
 	local powerup_rune_types = {
@@ -1163,14 +1184,14 @@ bounty_rune_is_initial_bounty_rune = false
 	}
 
 	local rune
-	for k, v in pairs(powerup_rune_spawners) do
-		rune = CreateItemOnPositionForLaunch(powerup_rune_spawners[k]:GetAbsOrigin(), CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))
+	for k, v in pairs(powerup_rune_locations) do
+		rune = CreateItemOnPositionForLaunch(powerup_rune_locations[k], CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))
 		RegisterRune(rune)
 	end
 
-	for k, v in pairs(bounty_rune_spawners) do
+	for k, v in pairs(bounty_rune_locations) do
 		local bounty_rune = CreateItem("item_imba_rune_bounty", nil, nil)
-		rune = CreateItemOnPositionForLaunch(bounty_rune_spawners[k]:GetAbsOrigin(), bounty_rune)		
+		rune = CreateItemOnPositionForLaunch(bounty_rune_locations[k], bounty_rune)		
 		RegisterRune(rune)
 
 		-- If these are the 00:00 runes, double their worth

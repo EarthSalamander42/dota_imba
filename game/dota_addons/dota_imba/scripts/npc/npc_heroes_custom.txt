@@ -962,6 +962,25 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Meepo
+	//=================================================================================================================
+	"npc_dota_hero_meepo"
+	{
+		"override_hero"				"npc_dota_hero_meepo"
+
+		//Picking Screen
+		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
+		"IsDisabled"				"5"
+
+		"Ability1"					"meepo_earthbind"
+		"Ability2"					"meepo_poof"
+		"Ability3"					"meepo_geostrike"
+		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"meepo_divided_we_stand"
+	}
+
+	//=================================================================================================================
 	// HERO: Mirana
 	//=================================================================================================================
 	"npc_dota_hero_mirana"
@@ -987,6 +1006,27 @@
 		"Ability15"					"special_bonus_imba_mirana_6" // Free Sacred Arrow after Leap ends
 		"Ability16"					"special_bonus_imba_mirana_1" // Upon using Moonlight Shadow, allies are given a stack of Starstorm which will proc when they go out of invisibility near an enemy unit.
 		"Ability17"					"special_bonus_imba_mirana_8" // Each Starstorm wave marks the target. If Mirana lands an attack on the target, she drops an additional secondary star on it.
+	}
+
+	//=================================================================================================================
+	// HERO: Monkey King
+	//=================================================================================================================
+	"npc_dota_hero_monkey_king"
+	{
+		"override_hero"				"npc_dota_hero_monkey_king"
+
+		//Picking Screen
+		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
+		"IsDisabled"				"5"
+
+		"Ability1"					"monkey_king_boundless_strike"
+		"Ability2"					"monkey_king_tree_dance"
+		"Ability3"					"monkey_king_primal_spring"
+		"Ability4"					"monkey_king_jingu_mastery"
+		"Ability5"					"monkey_king_mischief"
+		"Ability6"					"monkey_king_wukongs_command"
+		"Ability7"					"monkey_king_primal_spring_early"
+		"Ability8"					"monkey_king_untransform"
 	}
 
 	//=================================================================================================================
@@ -1208,34 +1248,32 @@
 		"Ability17"					"special_bonus_imba_omniknight_6"
 	}
 
-//	//=================================================================================================================
-//	// HERO: Pangolier
-//	//=================================================================================================================
-//	"npc_dota_hero_pangolier"
-//	{
-//		"override_hero"				"npc_dota_hero_pangolier"
-//		"AttackRate"				"1.5"
+	//=================================================================================================================
+	// HERO: Pangolier
+	//=================================================================================================================
+	"npc_dota_hero_pangolier"
+	{
+		"override_hero"				"npc_dota_hero_pangolier"
+		"AttackRate"				"1.5"
 
-//		//Picking Screen
-//		"IsImba"					"1"
-//		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
+		//Picking Screen
+		"IsImba"					"1"
+		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
 
-//		"Ability1"					"imba_pangolier_swashbuckle"
-//		"Ability2"					"imba_pangolier_shield_crash"
-//		"Ability3"					"imba_pangolier_heartpiercer"
-//		"Ability6"					"imba_pangolier_gyroshell"
+		"Ability1"					"imba_pangolier_swashbuckle"
+		"Ability2"					"imba_pangolier_shield_crash"
+		"Ability3"					"imba_pangolier_heartpiercer"
+		"Ability6"					"imba_pangolier_gyroshell"
 
-//		"Ability10"					"special_bonus_imba_pangolier_1"
-//		"Ability11"					"special_bonus_imba_pangolier_2"
-//		"Ability12"					"special_bonus_imba_pangolier_3"
-//		"Ability13"					"special_bonus_imba_pangolier_4"
-//		"Ability14"					"special_bonus_imba_pangolier_5"
-//		"Ability15"					"special_bonus_imba_pangolier_6"
-//		"Ability16"					"special_bonus_imba_pangolier_7"
-//		"Ability17"					"special_bonus_imba_pangolier_8"
-
-
-//	}
+		"Ability10"					"special_bonus_imba_pangolier_1"
+		"Ability11"					"special_bonus_imba_pangolier_2"
+		"Ability12"					"special_bonus_imba_pangolier_3"
+		"Ability13"					"special_bonus_imba_pangolier_4"
+		"Ability14"					"special_bonus_imba_pangolier_5"
+		"Ability15"					"special_bonus_imba_pangolier_6"
+		"Ability16"					"special_bonus_imba_pangolier_7"
+		"Ability17"					"special_bonus_imba_pangolier_8"
+	}
 
 	//=================================================================================================================
 	// HERO: Phantom Assassin
@@ -1336,7 +1374,6 @@
 		"Ability4"					"imba_pudge_sharp_hook"
 		"Ability5"					"imba_pudge_light_hook"
 		"Ability6"					"imba_pudge_dismember"
-		"Ability7"					"imba_pudge_flesh_heap_handle"
 
 		"Ability10"					"special_bonus_imba_pudge_1" // +10 Power and Swift stacks
 		"Ability11"					"special_bonus_imba_pudge_4" // +10 Flesh Heap magic resist stack

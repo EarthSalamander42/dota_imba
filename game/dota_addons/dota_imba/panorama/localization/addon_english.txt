@@ -31,6 +31,7 @@
 	"custom_end_screen_legend_imr"					"IMR"
 
 	//Combat Events
+	"custom_toast_PlayerDenied"								"{killer_name} {denied_icon} Denied {victim_name}"
 	"custom_toast_CourierKilled"							"{courier_icon} {team_name} courier is dead"
 	"custom_toast_CourierRespawned"							"{courier_icon} {team_name} courier has respawned"
 	"custom_toast_GlyphUsed"								"{glyph_icon} {team_name} structures fortified"
@@ -136,6 +137,7 @@
 	"disabled_hero"					"Disabled"
 	"disabled_hero_10v10"			"10v10 Disabled"
 	"disabled_hero_frantic"			"Frantic Disabled"
+	"disabled_hero_overthrow"		"Overthrow Disabled"
 	"picked_hero"					"Picked"
 	"imba_hero"						"Imba"
 	"vanilla_hero"					"Lazy"
