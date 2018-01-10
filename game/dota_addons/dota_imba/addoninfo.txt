@@ -17,7 +17,7 @@
 
 	"imba_overthrow"
 	{
-		"MaxPlayers"				"16"
+		"MaxPlayers"				"15"
 	}
 
 	"imba_standard"

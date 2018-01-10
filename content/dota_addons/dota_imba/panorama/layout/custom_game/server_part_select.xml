@@ -1,0 +1,20 @@
+<root>
+
+	<styles>
+		<include src="file://{resources}/styles/custom_game/server_part_select.css" />
+		<include src="s2r://panorama/styles/hud/dota_hud_menu_buttons.vcss_c" />
+    </styles>
+	
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/server_part_select.js" />
+	</scripts>
+
+
+	<Panel require-composition-layer="true">
+
+        <Button id="select_button" onactivate="Server_Show_Select_Page()" onmouseover="Server_Part_Select_Show_Tooltip()" onmouseout="Server_Part_Select_Hide_Tooltip()"  />
+
+    </Panel>
+	
+	
+</root>

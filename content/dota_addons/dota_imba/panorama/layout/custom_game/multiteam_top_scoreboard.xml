@@ -12,29 +12,29 @@
 	<script>
 		var map_info = Game.GetMapInfo();
 		if (map_info.map_display_name == "imba_overthrow") {
-			$( "#MultiteamScoreboard" ).style.width = "85%";
+			$( "#MultiteamScoreboard" ).style.width = "86%";
 			$( "#MultiteamScoreboard" ).style.horizontalAlign = "right";
-			$( "#_dynamic_team_2" ).style.width = "25%";
-			$( "#_dynamic_team_3" ).style.width = "25%";
+			$( "#_dynamic_team_2" ).style.width = "33%";
+			$( "#_dynamic_team_3" ).style.width = "33%";
 			$( "#_dynamic_team_3" ).style.horizontalAlign = "left";
-			$( "#_dynamic_team_3" ).style.marginLeft = "25%";
+			$( "#_dynamic_team_3" ).style.marginLeft = "33%";
 
 			$( "#_dynamic_team_6" ).SetAttributeInt( "team_id", 6 );
-			$( "#_dynamic_team_6" ).style.width = "25%";
-			$( "#_dynamic_team_6" ).style.marginLeft = "50%";
-			$( "#_dynamic_team_7" ).SetAttributeInt( "team_id", 7 );
-			$( "#_dynamic_team_7" ).style.width = "25%";
-			$( "#_dynamic_team_7" ).style.marginLeft = "75%";
+			$( "#_dynamic_team_6" ).style.width = "33%";
+			$( "#_dynamic_team_6" ).style.marginLeft = "66%";
+//			$( "#_dynamic_team_7" ).SetAttributeInt( "team_id", 7 );
+//			$( "#_dynamic_team_7" ).style.width = "30%";
+//			$( "#_dynamic_team_7" ).style.marginLeft = "90%";
 
 			$( "#ConquestScore_Radiant" ).style.visibility = "visible";
 			$( "#ConquestScore_Dire" ).style.visibility = "visible";
 			$( "#ConquestScore_Custom1" ).style.visibility = "visible";
-			$( "#ConquestScore_Custom2" ).style.visibility = "visible";
+//			$( "#ConquestScore_Custom2" ).style.visibility = "visible";
 
 			$( "#LogoAndScore2" ).AddClass("OverthrowScore")
 			$( "#LogoAndScore3" ).AddClass("OverthrowScore")
 			$( "#LogoAndScore6" ).AddClass("OverthrowScore")
-			$( "#LogoAndScore7" ).AddClass("OverthrowScore")
+//			$( "#LogoAndScore7" ).AddClass("OverthrowScore")
 		}
 
 		$( "#_dynamic_team_2" ).SetAttributeInt( "team_id", 2 );
@@ -74,7 +74,7 @@
 							<Panel hittest="false" id="TeamPadding"/>
 						</Panel>
 					</Panel>
-
+<!--
 					<Panel hittest="false" class="ScoreboardTeamWrapper" id="_dynamic_team_7">
 						<Panel hittest="false" id="ScoreboardTeam">
 							<Panel hittest="false" id="LogoAndScore7" class="ImbaScore">
@@ -83,7 +83,7 @@
 							<Panel hittest="false" id="PlayersContainer"/>
 							<Panel hittest="false" id="TeamPadding"/>
 						</Panel>
-					</Panel>
+					</Panel> -->
 				</Panel>
 			</Panel>
 		</Panel>
