@@ -154,6 +154,64 @@
 	"battlepass_bottle3"			"赤红魔瓶特效"
 	"battlepass_bottle4"			"紫色魔瓶特效"
 
+	// Overthrow
+	"PointsToWin"									"+{d:points_to_win} more"
+	"PointsToWin_CloseToVictory"					"+{d:points_to_win} more"
+	"PointsToWin_VeryCloseToVictory"				"+{d:points_to_win} more!"
+	"PointsToWin_Victory"							"胜利！"
+
+	"InstructionsTitle"								"IMBA先锋"
+	"InstructionsObjective"							"目标："
+	"InstructionsObjectiveText"						"消灭你的敌人来获得制胜点数！"
+	"InstructionsHowToPlay"							"游戏方法"
+	"InstructionsLines"								"-尽可能地呆在中央场地获取资源<br>
+													-拾取炼金术士的零花钱<br>
+													-争夺被运送到地图周围的装备宝箱<br>
+													-队伍的制胜点数越低，获得的装备越好<br>
+													-消灭所有的敌人！"
+
+	"Chest"											"装备"
+	"ItemWillSpawn"									"即将送达！"
+	"ItemHasSpawned"								"开始运送！"
+
+	"RecentScore"									"+{d:score}"
+
+	"DOTA_GoodGuys"   								"Teal Tiger"
+	"DOTA_BadGuys"    								"Yellow Monkey"
+	"DOTA_Custom1"    								"Pink Dragon"
+	"DOTA_Custom2"    								"Orange Dog"
+	"DOTA_Custom3"    								"Blue Rooster"
+	"DOTA_Custom4"    								"Green Ram"
+	"DOTA_Custom5"    								"Brown Rat"
+	"DOTA_Custom6"    								"Cyan Boar"
+	"DOTA_Custom7"    								"Olive Snake"
+	"DOTA_Custom8"    								"Purple Horse"
+	
+	"OverthrowHeroPickup"							"{s:hero_id}"
+	"OverthrowTextPickup"							"获得了"
+	"OverthrowItemPickup"							"{s:item_id}!"
+
+	"Remaining"										"剩余"
+
+	"Overtime"										"加时赛"
+	"OvertimeInstructions"							"目标点数："
+
+	"KillMessageHero"								"{s:hero_id}"
+	"KillMessageText"								"击杀了第一，"
+	"KillMessageBounty"								"获得额外500金币的奖励！"
+
+	"overthrow_game_info_header_objective"			"目标："
+	"overthrow_brief_description"					"消灭你的敌人来获得制胜点数！"
+	"overthrow_game_info_header_how_to_play"		"游戏方法："
+	"overthrow_game_info_throne"					"-尽可能地呆在中央场地获取资源"
+	"overthrow_game_info_coins"						"-拾取炼金术士的零花钱"
+	"overthrow_game_info_items"						"-争夺被运送到地图周围的装备宝箱"
+	"overthrow_game_info_tips_header"				"提示："
+	"overthrow_game_info_tip01"						"第一名的队伍英雄头上有王冠标志，击杀他们会获得额外的金币"
+	"overthrow_game_info_tip02"						"物品可以被共享"
+	"overthrow_game_info_tip03"						"利用其他队伍消灭敌人"
+	"overthrow_game_info_tip04"						"队伍的制胜点数越低，从装备宝箱中获得的装备越好"
+
 	//=================================================================================================================
 	// Generic talent names
 	//=================================================================================================================
