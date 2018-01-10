@@ -24,6 +24,7 @@
 						<Panel id="LeftPlayers">
 							<!-- JS Inserts player elements here -->
 						</Panel>
+						
 					</Panel>
 
 					<Panel id="LeftStatsPanel" class="StatsPanel">

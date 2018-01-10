@@ -1366,6 +1366,7 @@ function CBaseEntity:IsRune()
                 "models/props_gameplay/rune_invisibility01.vmdl",
                 "models/props_gameplay/rune_illusion01.vmdl",
                 "models/props_gameplay/rune_frost.vmdl",
+                "models/props_gameplay/gold_coin001.vmdl",	-- Overthrow coin
             }
     for _, model in pairs(runes) do
         if self:GetModelName() == model then

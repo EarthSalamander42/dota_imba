@@ -254,22 +254,22 @@ function EndScoreboard() {
 
 		// Create the panels for the players
 		$.Each(radiantPlayers, function (player) {
-			scores.dire += player.info.player_deaths;
+			scores.radiant = scores.radiant + player.info.player_kills;
 			createPanelForPlayer(player, panels.radiantPlayers);
 		});
 		
 		$.Each(direPlayers, function (player) {
-			scores.radiant += player.info.player_deaths;
+			scores.dire = scores.dire + player.info.player_kills;
 			createPanelForPlayer(player, panels.direPlayers);
 		});
 
 		$.Each(custom1Players, function (player) {
-			scores.radiant += player.info.player_deaths;
+			scores.custom1 = scores.custom1 + player.info.player_kills;
 			createPanelForPlayer(player, panels.custom1Players);
 		});
 
 //		$.Each(custom2Players, function (player) {
-//			scores.radiant += player.info.player_deaths;
+//			scores.radiant = player.info.player_kills;
 //			createPanelForPlayer(player, panels.custom2Players);
 //		});
 

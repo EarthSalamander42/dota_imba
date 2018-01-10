@@ -70,7 +70,7 @@ function modifier_imba_hook_sharp_stack:OnCreated()
 	self.caster_level = 1
 	self:SetStackCount(1)
 	if self.caster:HasTalent("special_bonus_imba_pudge_1") then
-		self:SetStackCount(1 + self.caster:FindTalentValue("special_bonus_imba_pudge_1", "bonus_stacks"))
+		self:SetStackCount(1 + self.caster:FindTalentValue("special_bonus_imba_pudge_1"))
 	end
 end
 
@@ -100,7 +100,7 @@ function modifier_imba_hook_light_stack:OnCreated()
 	self.caster_level = 1
 	self:SetStackCount(1)
 	if self.caster:HasTalent("special_bonus_imba_pudge_1") then
-		self:SetStackCount(1 + self.caster:FindTalentValue("special_bonus_imba_pudge_1", "bonus_stacks"))
+		self:SetStackCount(1 + self.caster:FindTalentValue("special_bonus_imba_pudge_1"))
 	end
 end
 
@@ -121,7 +121,7 @@ function modifier_special_bonus_imba_pudge_1:OnCreated()
 	if not IsServer() then return end
 	local dmg_hook_buff = self:GetParent():FindModifierByName("modifier_imba_hook_sharp_stack")
 	local spd_hook_buff = self:GetParent():FindModifierByName("modifier_imba_hook_light_stack")
-	local stack = self:GetParent():FindTalentValue("special_bonus_imba_pudge_1", "bonus_stacks")
+	local stack = self:GetParent():FindTalentValue("special_bonus_imba_pudge_1")
 	if dmg_hook_buff and spd_hook_buff then
 		dmg_hook_buff:SetStackCount(dmg_hook_buff:GetStackCount() + stack)
 		spd_hook_buff:SetStackCount(spd_hook_buff:GetStackCount() + stack)
@@ -338,6 +338,7 @@ function imba_pudge_meat_hook:OnProjectileThink_ExtraData(vLocation, ExtraData)
 						"models/props_gameplay/rune_invisibility01.vmdl",
 						"models/props_gameplay/rune_illusion01.vmdl",
 						"models/props_gameplay/rune_frost.vmdl",
+						"models/props_gameplay/gold_coin001.vmdl",	-- Overthrow coin
 						}
 
 		--check if there are runes to grab
@@ -677,13 +678,13 @@ function imba_pudge_rot_active:OnIntervalThink()
 	if not IsServer() then return end
 	local caster = self:GetCaster()
 	local ability = self:GetAbility()
-	local dmg = ability:GetSpecialValueFor("base_damage") + caster:GetMaxHealth() * ability:GetSpecialValueFor("bonus_damage") * 0.01 + caster:FindTalentValue("special_bonus_imba_pudge_6")
+	local dmg = ability:GetSpecialValueFor("rot_damage") + caster:GetMaxHealth() * ability:GetSpecialValueFor("bonus_damage") * 0.01 + caster:FindTalentValue("special_bonus_imba_pudge_6")
 	local selfDamageTable = {
 						victim = caster,
 						attacker = caster,
 						damage = dmg,
 						damage_type = DAMAGE_TYPE_MAGICAL,
-						damage_flags = DOTA_DAMAGE_FLAG_HPLOSS,
+						damage_flags = DOTA_DAMAGE_FLAG_NONE,
 						ability = ability,
 						}
 	ApplyDamage(selfDamageTable)

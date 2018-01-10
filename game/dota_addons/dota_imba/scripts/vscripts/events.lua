@@ -1133,6 +1133,7 @@ end
 
 function GameMode:SetRespawnTime( killedTeam, killed_unit, extraTime )
 	--print("Setting time for respawn")
+	print(killedTeam, leadingTeam, isGameTied)
 	if killedTeam == leadingTeam and isGameTied == false then
 		killed_unit:SetTimeUntilRespawn( 20 + extraTime )
 	else
@@ -1303,10 +1304,10 @@ function GameMode:OnEntityKilled( keys )
 						--print("Set time for Wraith King respawn disabled")
 						return nil
 					else
-						GameMode:SetRespawnTime( killedTeam, killed_unit, 0 )
+						GameMode:SetRespawnTime( killed_unit:GetTeamNumber(), killed_unit, 0 )
 					end
 				else
-					GameMode:SetRespawnTime( killedTeam, killed_unit, 0 )
+					GameMode:SetRespawnTime( killed_unit:GetTeamNumber(), killed_unit, 0 )
 				end
 			end
 				

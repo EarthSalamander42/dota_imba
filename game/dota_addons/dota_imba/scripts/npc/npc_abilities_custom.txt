@@ -23185,11 +23185,10 @@
 		}
 	}
 
-		//=================================================================================================================
+	//=================================================================================================================
 	// Pangolier's Swashbuckle
 	//=================================================================================================================
 	"imba_pangolier_swashbuckle"
-
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -23211,6 +23210,7 @@
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_pangolier.vsndevts"
 			"soundfile"					"soundevents/voscripts/game_sounds_vo_pangolin.vsndevts"
+			"particle"					"particles/generic_gameplay/generic_hit_blood.vpcf"
 		}
 
 		// Casting
@@ -23295,8 +23295,7 @@
 	// Pangolier's Shield Crash
 	//=================================================================================================================
 	"imba_pangolier_shield_crash"
-
-{
+	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
@@ -23395,8 +23394,7 @@
 	// Pangolier's Heartpiercer
 	//=================================================================================================================
 	"imba_pangolier_heartpiercer"
-
-{
+	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
@@ -23458,8 +23456,7 @@
 	// Pangolier's Rolling Thunder
 	//=================================================================================================================
 	"imba_pangolier_gyroshell"
-
-{
+	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
@@ -23599,7 +23596,6 @@
 	//=================================================================================================================
 	// Pangolier's Talents
 	//=================================================================================================================
-
 	"special_bonus_imba_pangolier_1" // Pangolier strikes any enemy in his dash path during Swashbuckle
 	{
 		// General
@@ -25538,77 +25534,76 @@
 //	}
 //		
 
-//	//=================================================================================================================
-//	// Pudge's Rot
-//	//=================================================================================================================
-//	"imba_pudge_rot"
-//	{
-//		// General
-//		//-------------------------------------------------------------------------------------------------------------
-//		"BaseClass"						"ability_lua"
-//		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-//		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-//		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-//		"FightRecapLevel"				"1"
-//		"AbilityTextureName"			"pudge_rot"
-//		"MaxLevel"						"7"
-//		"ScriptFile"					"hero/hero_pudge.lua"
+	//=================================================================================================================
+	// Pudge's Rot
+	//=================================================================================================================
+	"imba_pudge_rot"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"pudge_rot"
+		"MaxLevel"						"7"
+		"ScriptFile"					"hero/hero_pudge.lua"
 
-//		// Precache
-//		//-------------------------------------------------------------------------------------------------------------
-//		"precache"
-//		{
-//			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
-//			"particle"					"particles/units/heroes/hero_pudge/pudge_rot.vpcf"
-//		}
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
+			"particle"					"particles/units/heroes/hero_pudge/pudge_rot.vpcf"
+		}
 
-//		// Casting
-//		//-------------------------------------------------------------------------------------------------------------		
-//		"AbilityCastAnimation"			"ACT_DOTA_CHANNEL_ABILITY_2"
-//		"AbilityCastPoint"				"250"
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------		
+		"AbilityCastAnimation"			"ACT_DOTA_CHANNEL_ABILITY_2"
+		"AbilityCastPoint"				"250"
 
-//		// Special
-//		//-------------------------------------------------------------------------------------------------------------
-//		"AbilitySpecial"
-//		{
-//			"01"
-//			{
-//				"var_type"				"FIELD_INTEGER"
-//				"base_radius"			"250"
-//			}
-//			"02"
-//			{
-//				"var_type"				"FIELD_FLOAT"
-//				"rot_tick"				"0.2"
-//			}
-//			"03"
-//			{
-//				"var_type"				"FIELD_INTEGER"
-//				"rot_slow"				"-30 -30 -30 -30 -33 -36 -40"
-//			}
-//			"04"
-//			{
-//				"var_type"				"FIELD_INTEGER"
-//				"rot_damage"			"30 60 90 120 130 140 150"
-//			}
-//			"05"
-//			{
-//				"var_type"				"FIELD_INTEGER"
-//				"stack_radius"			"5"
-//			}
-//			"06"
-//			{
-//				"var_type"				"FIELD_INTEGER"
-//				"max_stacks"			"30"
-//			}
-//			"07"
-//			{
-//				"var_type"				"FIELD_INTEGER"
-//				"max_radius_tooltip"	"500"
-//			}
-//		}
-
-//	}	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"base_radius"			"250"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"rot_tick"				"0.2"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"rot_slow"				"-30 -30 -30 -30 -33 -36 -40"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"rot_damage"			"30 60 90 120 130 140 150"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stack_radius"			"5"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_stacks"			"30"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_radius_tooltip"	"500"
+			}
+		}
+	}
 
 //	//=================================================================================================================
 //	// Pudge's Flesh Heap
@@ -26047,180 +26042,6 @@
 //	}
 
 	//=================================================================================================================
-	// Pudge's Rot (DATADRIVEN)
-	//=================================================================================================================
-	"imba_pudge_rot"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"pudge_rot"
-		"MaxLevel"						"7"
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
-			"particle"					"particles/units/heroes/hero_pudge/pudge_rot.vpcf"
-		}
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0"
-		"AbilityCastAnimation"			"ACT_DOTA_CHANNEL_ABILITY_2"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"base_radius"			"250"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"rot_tick"				"0.2"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"rot_slow"				"-30"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"base_damage"			"30 45 60 75 90 105 120"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"3"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"stack_radius"			"10"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"rot_stickyness"		"0.5"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_stacks"			"25"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_radius_tooltip"	"500"
-			}
-		}
-
-		"OnToggleOn"
-		{
-			"ApplyModifier"
-			{
-				"ModifierName"			"modifier_imba_rot"
-				"Target"				"CASTER"
-			}
-
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_pudge.lua"
-				"Function"				"RotResponse"
-			}
-
-			"FireSound"
-			{
-				"EffectName"			"Hero_Pudge.Rot"
-				"Target"				"CASTER"
-			}
-		}
-
-		"OnToggleOff"
-		{
-			"RemoveModifier"
-			{
-				"ModifierName"			"modifier_imba_rot"
-				"Target"
-				{
-					"Center"			"CASTER"
-					"Flags" 			"DOTA_UNIT_TARGET_FLAG_DEAD"
-				}
-			}
-
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_pudge.lua"
-				"Function"				"RotEnd"
-
-				"rot_sound"				"Hero_Pudge.Rot"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_rot"
-			{
-				"IsBuff"				"1"
-				"Passive"				"0"
-				"IsPurgable"			"0"
-				"IsHidden"				"1"
-
-				"ThinkInterval"			"%rot_tick"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_pudge.lua"
-						"Function"		"Rot"
-
-						"modifier_slow"	"modifier_imba_rot_slow"
-						"modifier_heap"	"modifier_imba_flesh_heap_stacks"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_pudge.lua"
-						"Function"		"RotParticle"
-
-						"rot_particle"	"particles/units/heroes/hero_pudge/pudge_rot.vpcf"
-						"modifier_heap"	"modifier_imba_flesh_heap_stacks"
-					}
-				}
-			}
-
-			"modifier_imba_rot_slow"
-			{
-				"IsDebuff"				"1"
-				"Passive"				"0"
-				"IsPurgable"			"0"
-				"IsHidden"				"0"
-
-				"Duration"				"%rot_stickyness"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%rot_slow"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Pudge's Flesh Heap (DATADRIVEN)
 	//=================================================================================================================
 	"imba_pudge_flesh_heap"
@@ -26649,7 +26470,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_stacks"				"10"
+				"value"						"10"
 			}
 		}
 	}
@@ -26675,7 +26496,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"hook_speed"				"300"
+				"value"						"300"
 			}
 		}
 	}
@@ -26701,7 +26522,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"hook_width"				"100"
+				"value"						"100"
 			}
 		}
 	}
@@ -26727,7 +26548,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"max_stacks"				"10"
+				"value"						"10"
 			}
 		}
 	}
@@ -26753,7 +26574,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"hook_range"				"2500"
+				"value"				"2500"
 			}
 		}
 	}
@@ -26779,7 +26600,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"rot_damage"				"75"
+				"value"						"75"
 			}
 		}
 	}
@@ -26836,8 +26657,8 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"dismember_duration"		"2"
+				"var_type"				"FIELD_INTEGER"
+				"value"					"2"
 			}
 		}
 	}
@@ -43633,9 +43454,9 @@
 							"Types"			"DOTA_UNIT_TARGET_HERO"
 							"Flags"			"DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS"
 						}
-						"XPAmount"		"10"
+						"XPAmount"		"8"
 						"SplitEvenly"	"0"
-						"GoldAmount"	"8"
+						"GoldAmount"	"6"
 						"ReliableGold"	"0"
 					}
 				}
@@ -43691,9 +43512,9 @@
 							"Types"			"DOTA_UNIT_TARGET_HERO"
 							"Flags"			"DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS"
 						}
-						"XPAmount"		"6"
+						"XPAmount"		"4"
 						"SplitEvenly"	"0"
-						"GoldAmount"	"4"
+						"GoldAmount"	"3"
 						"ReliableGold"	"0"
 					}
 				}
