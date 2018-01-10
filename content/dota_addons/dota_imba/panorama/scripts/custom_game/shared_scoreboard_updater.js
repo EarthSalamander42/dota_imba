@@ -49,10 +49,24 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 				ImbaXP_Panel.BCreateChildren("<Label id='ImbaXPRank" +playerId+ "' text='999'/>");
 				ImbaXP_Panel.BCreateChildren("<Label id='ImbaXP" +playerId+ "' text='999'/>");
 				ImbaXP_Panel.BCreateChildren("<Label id='ImbaXPEarned" +playerId+ "' text='+0'/>");
-				_ScoreboardUpdater_SetValueSafe( playerPanel, "XPProgressBar"+playerId, plyData.XP / plyData.MaxXP );
-				_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaLvl"+playerId, "Lvl: " + plyData.Lvl );
-				_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaXPRank"+playerId, plyData.title );
-				_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaXP"+playerId, plyData.XP + "/" + plyData.MaxXP );
+				
+                if (plyData.XP == undefined || plyData.MaxXP == undefined)
+                    _ScoreboardUpdater_SetValueSafe( playerPanel, "XPProgressBar"+playerId, 0 );
+                else
+                    _ScoreboardUpdater_SetValueSafe( playerPanel, "XPProgressBar"+playerId, plyData.XP / plyData.MaxXP );
+                
+                if (plyData.Lvl == undefined)
+                    _ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaLvl"+playerId, "Lvl: 0" );
+                else
+    				_ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaLvl"+playerId, "Lvl: " + plyData.Lvl );
+
+                _ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaXPRank"+playerId, plyData.title );
+
+                if (plyData.XP == undefined || plyData.MaxXP == undefined) // prevent stupid undefined/undefined
+                    _ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaXP"+playerId, "0/100");
+                else
+                    _ScoreboardUpdater_SetTextSafe( playerPanel, "ImbaXP"+playerId, plyData.XP + "/" + plyData.MaxXP );
+                				
 				if (plyData.title_color != null)
 				{
 					playerPanel.FindChildTraverse("ImbaXPRank" +playerId).style.color = plyData.title_color;
@@ -79,22 +93,30 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 				var map_info = Game.GetMapInfo();
 				if (map_info.map_display_name == "imba_standard") {
 					if (plyData.IMR_5v5 != undefined) {
-						$.Msg(plyData.IMR_5v5)
-						_ScoreboardUpdater_SetTextSafe( playerPanel, "TeammateIMRAmount", plyData.IMR_5v5.toFixed([0]) );
-						_ScoreboardUpdater_SetTextSafe( playerPanel, "PlayerIMRAmount", plyData.IMR_5v5.toFixed([0]) + " +0" );
+                        if (plyData.IMR_5v5_calibrating) {
+                            _ScoreboardUpdater_SetTextSafe( playerPanel, "TeammateIMRAmount", "TBD" );
+                            _ScoreboardUpdater_SetTextSafe( playerPanel, "PlayerIMRAmount", "TBD +0" );
+                        } else {
+                            _ScoreboardUpdater_SetTextSafe( playerPanel, "TeammateIMRAmount", plyData.IMR_5v5.toFixed([0]) );
+                            _ScoreboardUpdater_SetTextSafe( playerPanel, "PlayerIMRAmount", plyData.IMR_5v5.toFixed([0]) + " +0" )
+                        }
 					}
 					if (plyData.IMR_5v5_change != undefined) {
 						$.Msg(plyData.IMR_5v5_change)
 						_ScoreboardUpdater_SetTextSafe( playerPanel, "PlayerIMRAmount", plyData.IMR_5v5.toFixed([0]) + " + " + plyData.IMR_5v5_change.toFixed([0]) );
 					}
 				} else if (map_info.map_display_name == "imba_10v10") {
-//					_ScoreboardUpdater_SetTextSafe( playerPanel, "TeammateIMRAmount", plyData.IMR_10v10.toFixed([0]) );
-//					_ScoreboardUpdater_SetTextSafe( playerPanel, "PlayerIMRAmount", plyData.IMR_10v10.toFixed([0]) );
-					_ScoreboardUpdater_SetTextSafe( playerPanel, "TeammateIMRAmount", "n/a" );
-					_ScoreboardUpdater_SetTextSafe( playerPanel, "PlayerIMRAmount", "n/a" );
+                    if (plyData.IMR_5v5_calibrating)
+                        _ScoreboardUpdater_SetTextSafe( playerPanel, "TeammateIMRAmount", "TBD" );
+                    else
+                        _ScoreboardUpdater_SetTextSafe( playerPanel, "TeammateIMRAmount", plyData.IMR_5v5.toFixed([0]) );
+                _ScoreboardUpdater_SetTextSafe( playerPanel, "PlayerIMRAmount", "N/A" );
 				} else if (map_info.map_display_name == "imba_frantic_10v10") {
-					_ScoreboardUpdater_SetTextSafe( playerPanel, "TeammateIMRAmount", "n/a" );
-					_ScoreboardUpdater_SetTextSafe( playerPanel, "PlayerIMRAmount", "n/a" );
+                    if (plyData.IMR_5v5_calibrating)
+                        _ScoreboardUpdater_SetTextSafe( playerPanel, "TeammateIMRAmount", "TBD" );
+                    else
+                        _ScoreboardUpdater_SetTextSafe( playerPanel, "TeammateIMRAmount", plyData.IMR_5v5.toFixed([0]) );
+                _ScoreboardUpdater_SetTextSafe( playerPanel, "PlayerIMRAmount", "N/A" );
 				}
 			}
 		}

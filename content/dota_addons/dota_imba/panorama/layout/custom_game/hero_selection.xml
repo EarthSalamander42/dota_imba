@@ -24,6 +24,9 @@
 						<Panel id="LeftPlayers">
 							<!-- JS Inserts player elements here -->
 						</Panel>
+						<Panel id="LeftPlayers_alt">
+							<!-- JS Inserts player elements here -->
+						</Panel>
 					</Panel>
 
 					<Panel id="LeftStatsPanel" class="StatsPanel">
@@ -39,7 +42,7 @@
 								<Label id="BountyMultiplierValue" class="GameModeValue" text="135%" />
 								<Label id="ExpMultiplierValue" class="GameModeValue" text="135%" />
 								<Label id="TowerPowerValue" class="GameModeValue" text="0" />
-								<Label id="MaxLevelValue" class="GameModeValue" text="40" />
+								<Label id="InitialLevelValue" class="GameModeValue" text="40" />
 							</Panel>
 					</Panel>
 				</Panel>
@@ -71,6 +74,9 @@
 						<Panel id="RightPlayers">
 							<!-- JS Inserts player elements here -->
 						</Panel>
+						<Panel id="RightPlayers_alt">
+							<!-- JS Inserts player elements here -->
+						</Panel>
 					</Panel>
 
 					<Panel id="RightStatsPanel" class="StatsPanel">
@@ -85,7 +91,7 @@
 							<Panel class="GameModeValuePanel">
 								<Label id="FranticModeValue" class="GameModeValue" text="#imba_gamemode_game_options_frantic_disabled" />
 								<Label id="InitialGoldValue" class="GameModeValue" text="625" />
-								<Label id="InitialLevelValue" class="GameModeValue" text="1" />
+								<Label id="MaxLevelValue" class="GameModeValue" text="1" />
 								<Label id="GoldTickValue" class="GameModeValue" text="40" />
 							</Panel>
 						</Panel>

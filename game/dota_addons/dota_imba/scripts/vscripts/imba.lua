@@ -257,7 +257,7 @@ function GameMode:GoldFilter( keys )
 	end
 
 	-- Lobby options adjustment
-	local game_time = math.min(GameRules:GetGameTime() / 60, 30) -- minutes
+	local game_time = math.min(GameRules:GetDOTATime(false, false) / 60, 30) -- minutes
 	local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
 
 	if keys.reason_const == DOTA_ModifyGold_HeroKill then
@@ -268,7 +268,9 @@ function GameMode:GoldFilter( keys )
 			CustomNetTables:SetTableValue("player_table", tostring(keys.player_id_const), {hero_kill_bounty = keys.gold + hero.kill_hero_bounty})
 		end
 	else
-		keys.gold = keys.gold * (custom_gold_bonus / 100) * (1 + game_time / 10)
+		print(keys.gold, custom_gold_bonus / 100, 1 + game_time / 25)
+		keys.gold = (custom_gold_bonus / 100) + (1 + game_time / 25) * keys.gold
+		print(keys.gold)
 	end
 
 	-- Comeback gold gain
@@ -346,6 +348,15 @@ function GameMode:ModifierFilter( keys )
 			return true
 		end
 
+		-------------------------------------------------------------------------------------------------
+		-- Frantic mode duration adjustment
+		-------------------------------------------------------------------------------------------------
+		if IMBA_FRANTIC_MODE_ON then
+			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
+				keys.duration = keys.duration * IMBA_FRANTIC_VALUE
+			end
+		end
+
 		if modifier_name == "modifier_datadriven" then
 			return false
 		end
@@ -373,31 +384,27 @@ function GameMode:ModifierFilter( keys )
 		-------------------------------------------------------------------------------------------------
 		-- Tenacity debuff duration reduction
 		-------------------------------------------------------------------------------------------------
-		if modifier_owner.GetTenacity and keys.duration > 0 then						
+		if modifier_owner.GetTenacity then						
 			local original_duration = keys.duration
-			local actually_duration = original_duration
+
 			local tenacity = modifier_owner:GetTenacity()
 			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 and tenacity ~= 0 then				
-				actually_duration = actually_duration * (100 - tenacity) * 0.01
-				-------------------------------------------------------------------------------------------------
-				-- Frantic mode duration adjustment
-				-------------------------------------------------------------------------------------------------
-				if IMBA_FRANTIC_MODE_ON then
-					actually_duration = actually_duration * IMBA_FRANTIC_VALUE
-				end
+				keys.duration = keys.duration * (100 - tenacity) * 0.01
 			end
 
-			local modifier_handler = modifier_owner:FindModifierByName(modifier_name)
-			if modifier_handler then
-				if modifier_handler.IgnoreTenacity then
-					if modifier_handler:IgnoreTenacity() then
-						actually_duration = original_duration
+			Timers:CreateTimer(FrameTime(), function()
+				if modifier_owner:IsNull() then
+					return false
+				end
+				local modifier_handler = modifier_owner:FindModifierByName(modifier_name)
+				if modifier_handler then
+					if modifier_handler.IgnoreTenacity then
+						if modifier_handler:IgnoreTenacity() then
+							modifier_handler:SetDuration(original_duration, true)
+						end
 					end
 				end
-			end
-
-			keys.duration = actually_duration
-
+			end)
 		end
 
 		-------------------------------------------------------------------------------------------------
@@ -1321,8 +1328,9 @@ function GameMode:OnGameInProgress()
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Custom maximum level EXP tables adjustment
 	-------------------------------------------------------------------------------------------------
-	local max_level = tonumber(CustomNetTables:GetTableValue("game_options", "max_level")["1"])
-	if max_level > 35 then
+    local max_level = tonumber(CustomNetTables:GetTableValue("game_options", "max_level")["1"])
+    -- TODO: max_level sometimes nil - WHY?
+	if max_level ~= nil and max_level > 35 then
 		for i = 36, max_level do
 			XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + 5000
 			GameRules:GetGameModeEntity():SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
@@ -1914,7 +1922,7 @@ function GameMode:GatherAndRegisterValidTeams()
 	for t, _ in pairs( foundTeams ) do
 		table.insert( foundTeamsList, t )
 		print("Team:", t)
-		AddFOWViewer(t, Entities:FindByName(nil, "throne_vision"):GetAbsOrigin(), 900, 99999, false)
+--		AddFOWViewer(t, Entities:FindByName(nil, "@overboss"):GetAbsOrigin(), 900, 99999, false)
 	end
 
 	if numTeams == 0 then
@@ -1924,7 +1932,7 @@ function GameMode:GatherAndRegisterValidTeams()
 		numTeams = 2
 	end
 
-	local maxPlayersPerValidTeam = math.floor( 10 / numTeams )
+	local maxPlayersPerValidTeam = math.floor( IMBA_PLAYERS_ON_GAME / numTeams )
 
 	m_GatheredShuffledTeams = ShuffledList( foundTeamsList )
 

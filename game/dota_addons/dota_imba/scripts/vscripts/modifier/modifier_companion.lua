@@ -72,7 +72,7 @@ function modifier_companion:OnIntervalThink()
 			fountain = BadCamera
 		end
 		if GetMapName() == "imba_overthrow" then
-			fountain = Entities:FindByName(nil, "xp_granter")
+			fountain = Entities:FindByName(nil, "@overboss")
 		end
 
 		local hero_origin = hero:GetAbsOrigin()

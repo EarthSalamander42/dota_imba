@@ -12,38 +12,77 @@
 			<Label id="es-victory-info-text" text="" />
 		</Panel>
 		<Panel id="es-teams">
-			<Panel class="es-team" id="es-radiant">
-				<Panel class="es-team-title">
-					<Label class="es-team-name" text="Radiant" />
-					<Label id="es-team-score-radiant" class="es-team-score" text="N/A" />
+			<Panel class="es-teams-columns">
+				<Panel class="es-team" id="es-radiant">
+					<Panel class="es-team-title">
+						<Label class="es-team-name" text="Radiant" />
+						<Label id="es-team-score-radiant" class="es-team-score" text="N/A" />
+					</Panel>
+					<Panel class="es-legend">
+						<Label class="es-legend-kdalevel" text="LVL" />
+						<Label class="es-legend-kdalevel" text="K" />
+						<Label class="es-legend-kdalevel" text="D" />
+						<Label class="es-legend-kdalevel" text="A" />
+						<Label class="es-legend-gold" text="Gold" />
+						<Label class="es-legend-imr" text="IMR" />
+						<Label class="es-legend-xp" text="Imba XP" />
+					</Panel>
+					<Panel id="es-radiant-players" class="es-players" />
 				</Panel>
-				<Panel class="es-legend">
-					<Label class="es-legend-kdalevel" text="LVL" />
-					<Label class="es-legend-kdalevel" text="K" />
-					<Label class="es-legend-kdalevel" text="D" />
-					<Label class="es-legend-kdalevel" text="A" />
-					<Label class="es-legend-gold" text="Gold" />
-					<Label class="es-legend-imr" text="IMR" />
-					<Label class="es-legend-xp" text="Imba XP" />
+
+				<Panel class="es-team" id="es-dire">
+					<Panel class="es-team-title">
+						<Label class="es-team-name" text="Dire" />
+						<Label id="es-team-score-dire" class="es-team-score" text="N/A" />
+					</Panel>
+					<Panel class="es-legend">
+						<Label class="es-legend-kdalevel" text="LVL" />
+						<Label class="es-legend-kdalevel" text="K" />
+						<Label class="es-legend-kdalevel" text="D" />
+						<Label class="es-legend-kdalevel" text="A" />
+						<Label class="es-legend-gold" text="Gold" />
+						<Label class="es-legend-imr" text="IMR" />
+						<Label class="es-legend-xp" text="Imba XP" />
+					</Panel>
+					<Panel id="es-dire-players" class="es-players" />
 				</Panel>
-				<Panel id="es-radiant-players" class="es-players" />
 			</Panel>
-			<Panel class="es-team" id="es-dire">
-				<Panel class="es-team-title">
-					<Label class="es-team-name" text="Dire" />
-					<Label id="es-team-score-dire" class="es-team-score" text="N/A" />
+
+			<Panel class="es-teams-columns">
+				<Panel class="es-team" id="es-custom1">
+					<Panel class="es-team-title">
+						<Label class="es-team-name" text="#DOTA_Custom1" />
+						<Label id="es-team-score-custom1" class="es-team-score" text="N/A" />
+					</Panel>
+					<Panel class="es-legend">
+						<Label class="es-legend-kdalevel" text="LVL" />
+						<Label class="es-legend-kdalevel" text="K" />
+						<Label class="es-legend-kdalevel" text="D" />
+						<Label class="es-legend-kdalevel" text="A" />
+						<Label class="es-legend-gold" text="Gold" />
+						<Label class="es-legend-imr" text="IMR" />
+						<Label class="es-legend-xp" text="Imba XP" />
+					</Panel>
+					<Panel id="es-custom1-players" class="es-players" />
 				</Panel>
-				<Panel class="es-legend">
-					<Label class="es-legend-kdalevel" text="LVL" />
-					<Label class="es-legend-kdalevel" text="K" />
-					<Label class="es-legend-kdalevel" text="D" />
-					<Label class="es-legend-kdalevel" text="A" />
-					<Label class="es-legend-gold" text="Gold" />
-					<Label class="es-legend-imr" text="IMR" />
-					<Label class="es-legend-xp" text="XP" />
-				</Panel>
-				<Panel id="es-dire-players" class="es-players" />
-			</Panel> 
+
+				<Panel class="es-team" id="es-custom2">
+					<Panel class="es-team-title">
+						<Label class="es-team-name" text="#DOTA_Custom2" />
+						<Label id="es-team-score-custom2" class="es-team-score" text="N/A" />
+					</Panel>
+					<Panel class="es-legend">
+						<Label class="es-legend-kdalevel" text="LVL" />
+						<Label class="es-legend-kdalevel" text="K" />
+						<Label class="es-legend-kdalevel" text="D" />
+						<Label class="es-legend-kdalevel" text="A" />
+						<Label class="es-legend-gold" text="Gold" />
+						<Label class="es-legend-imr" text="IMR" />
+						<Label class="es-legend-xp" text="Imba XP" />
+					</Panel>
+					<Panel id="es-custom2-players" class="es-players" />
+				</Panel> 
+			</Panel>
 		</Panel>
 		<Panel id="es-buttons">
 			<Button id="es-buttons-stats">

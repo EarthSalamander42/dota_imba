@@ -18,28 +18,8 @@
 	"DOTA_Custom8"    								"粉色"
 	
 	"addonname"										"Dota IMBA"
-	
-	"ChatTeam"																			"[队友]"
-	"ChatPlaceholder"																	"在此处输入聊天内容。"
-	"ChatLine" 																			"<b><font color='{s:color}'>{s:name}</font></b>: {s:message}"
-	"ChatLinePass" 																		"<b><font color='{s:color}'>{s:name}</font></b>: <font color='gold'>{s:message}</font>"
-	"ChatRandomed" 																		"<b><font color='{s:color}'>{s:name}</font></b> 随机选择了 <font color='gold'>{s:hero}</font>"
 
-	"imba_confirm_pick_button"													"选择此英雄"
-	"imba_hero_name_filler"														"选择  "
-	"imba_strength_hero_pick_list_title"											"力量英雄"
-	"imba_agility_hero_pick_list_title"												"敏捷英雄"
-	"imba_intelligence_hero_pick_list_title"											"智力英雄"
-	"imba_custom_hero_pick_list_title"											"原创英雄"
-
-	"imba_waiting_for_other_players_button"										"请等待其他玩家"
-	"imba_loading_heroes_button"												"正在加载游戏"
-	"imba_enter_game_button"													"开始游戏！"
-
-	"imba_radiant_team_title"													"天辉"
-	"imba_dire_team_title"														"夜魇"
-	"average_mmr"															"平均IMBA天梯分："
-	
+	//Flyout Scoreboard
 	"custom_scoreboard_hero_name_and_desc"			"{s:hero_name}"
 	"scoreboard_tool_tip_mute_player"				"屏蔽聊天和语音"
 	"scoreboard_tool_tip_active_mute_player"		"（已生效）"
@@ -50,6 +30,7 @@
 	"scoreboard_tool_tip_active_disable_help"		"（已生效）"
 	"custom_end_screen_legend_imr"					"IMBA天梯分"
 	
+	//Combat Events
     "custom_toast_PlayerDeniedSelf"                            "{victim_name} {denied_icon}自杀了"
 	"custom_toast_CourierKilled"							"{courier_icon} {team_name}信使已被击杀"
 	"custom_toast_CourierRespawned"							"{courier_icon} {team_name}信使已经重生"
@@ -69,6 +50,70 @@
 	"DOTA_Tooltip_ability_item_imba_rune_frost"				"贪婪之魂神符"
 
 	"lag_issues"									"访问IMBA官网"
+
+	"imba_gamemode_name_all_pick"                                                       "全英雄选择"
+	"imba_gamemode_name_all_pick_tooltip"												"玩家可以任意选择英雄"
+	"imba_gamemode_name_all_random"                                                     "全英雄随机"
+	"imba_gamemode_name_all_random_tooltip"                                             "所有玩家将强制随机英雄"
+	"imba_gamemode_name_all_random_same_hero"											"单一英雄随机"
+	"imba_gamemode_name_all_random_same_hero_tooltip"									"所有玩家将会强制使用一个由系统随机挑选的英雄"
+	"imba_gamemode_name_10v10"                                                          "全英雄选择（10v10）"        
+	"imba_gamemode_name_arena_mode"                                                     "竞技场模式"
+	"imba_gamemode_name_frantic"														"WTF模式（10v10）"
+	"imba_gamemode_name_ranked_5v5"                                                     "天梯比赛（5v5）"
+
+	"imba_random_pick_button"                                                           "随机全部英雄"
+	"imba_random_imba_pick_button"                                                      "随机IMBA英雄"
+	"imba_repick_button"                                                                "重新选择（Repick）"
+
+	"imba_gamemode_settings_title"                                                      "投票选择游戏模式"
+	"imba_gamemode_settings_regular"                                                    "标准"
+	"imba_gamemode_settings_regular_tooltip"                                            "适合快速游戏"
+	"imba_gamemode_settings_high"                                                       "狂暴"
+	"imba_gamemode_settings_high_tooltip"                                               "憋说了，就是干！"
+	"imba_gamemode_settings_extreme"                                                    "比狂暴还狂暴"
+
+	"imba_gamemode_settings_lock_options"                                               "使游戏设置生效"
+	"imba_gamemode_settings_lock_options_tooltip"                                       "令游戏设置生效，必须按下此按钮你的设置才会生效"
+	"imba_gamemode_settings_kills_to_end"                                               "胜利点数："
+	"imba_gamemode_settings_kills_to_end_tooltip"                                       "率先达到此比分的队伍将会获胜"
+	"imba_gamemode_settings_gold_multiplier"                                            "金钱倍率："
+	"imba_gamemode_settings_gold_multiplier_tooltip"                                    "玩家获得金钱的速度"
+	"imba_gamemode_settings_exp_multiplier"                                             "经验倍率："
+	"imba_gamemode_settings_exp_multiplier_tooltip"                                     "玩家获得经验的速度"
+	"imba_gamemode_settings_respawn_time"                                               "复活时间降低："
+	"imba_gamemode_settings_respawn_time_tooltip"                                       "降低玩家的复活时间"
+	"imba_gamemode_settings_tower_upgrades"                                             "防御塔升级"
+	"imba_gamemode_settings_tower_upgrades_tooltip"                                     "每一座被摧毁的防御塔都会使剩余的防御塔更加强大"
+	"imba_gamemode_settings_creep_power_title"                                          "小兵强度："
+	"imba_gamemode_settings_creep_power_title_tooltip"                                  "小兵的成长速度"
+	"imba_gamemode_settings_tower_power_title"                                          "防御塔强度："
+	"imba_gamemode_settings_tower_power_title_tooltip"                                  "防御塔的血量、护甲、攻击力、攻击速度"
+	"imba_gamemode_settings_hero_power_title"                                           "英雄强度："
+	"imba_gamemode_settings_hero_power_title_tooltip"                                   "英雄的初始/最大等级和出门金钱"
+	"imba_gamemode_settings_initial_gold"                                               "出门金钱："
+	"imba_gamemode_settings_initial_gold_tooltip"                                       "玩家的起始金钱"
+	"imba_gamemode_settings_initial_level"                                              "出门等级："
+	"imba_gamemode_settings_initial_level_tooltip"                                      "英雄的初始等级"
+	"imba_gamemode_settings_max_level"                                                  "最大等级："
+	"imba_gamemode_settings_max_level_tooltip"                                          "英雄的最大等级"
+	"imba_gamemode_settings_gold_tick"                                                  "工资频率："
+
+	"imba_gamemode_settings_power_1"                                                    "普通"
+	"imba_gamemode_settings_power_2"                                                    "高"
+	"imba_gamemode_settings_power_3"                                                    "极高"
+
+	"imba_gamemode_settings_hero_pick_rule"                                             "选人规则："
+	"imba_gamemode_settings_hero_pick_rule_tooltip"                                     "是否允许玩家选择相同的英雄"
+
+	"imba_gamemode_settings_hero_pick_all_unique"                                       "标准"
+	"imba_gamemode_settings_hero_pick_team_unique"                                      "分队复选"
+	"imba_gamemode_settings_hero_pick_no_unique"                                        "无限复选"
+
+	"imba_gamemode_game_options_frantic"                                                "WTF模式"
+	"imba_gamemode_game_options_frantic_enabled"                                        "开"
+	"imba_gamemode_game_options_frantic_disabled"                                       "关"
+	"imba_gamemode_game_options_frantic_tooltip"                                        "复活时间、技能冷却速度和负面状态持续时间降低60%"
 
 	//Picking Screen
 	"loading_pre_game"				"正在读取数据，请稍候..."
@@ -96,6 +141,27 @@
 	"imba_hero"						"IMBA英雄"
 	"vanilla_hero"					"原版英雄"
 	"close_picking_screen"			"强制关闭选人界面（卡界面时使用）"
+
+	"ChatTeam"										"[队友]"
+	"ChatPlaceholder"								"在此输入内容以聊天..."
+	"ChatLine"										"<b><font color='{s:color}'>{s:name}</font></b>: {s:message}"
+	"ChatLinePass"									"<b><font color='{s:color}'>{s:name}</font></b>: <font color='gold'>{s:message}</font>"
+	"ChatRandomed"									"<b><font color='{s:color}'>{s:name}</font></b> 随机选择了 <font color='gold'>{s:hero}</font>"
+
+	"imba_confirm_pick_button"                      "选择此英雄"
+	"imba_hero_name_filler"                         "选中此英雄"
+	"imba_strength_hero_pick_list_title"            "力量"
+	"imba_agility_hero_pick_list_title"             "敏捷"
+	"imba_intelligence_hero_pick_list_title"        "智力"
+	"imba_custom_hero_pick_list_title"				"原创"
+
+	"imba_waiting_for_other_players_button"         "等待其他玩家..."
+	"imba_loading_heroes_button"                    "游戏数据载入中..."
+	"imba_enter_game_button"                        "开始游戏！"
+
+	"imba_radiant_team_title"                       "天辉"
+	"imba_dire_team_title"                          "夜魇"
+	"average_mmr"									"平均IMBA天梯分："
 
 	//Leaderboard
 	"leaderboard"					"排行榜"

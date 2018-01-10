@@ -26,10 +26,16 @@
 }
 
 #es-teams {
-	flow-children: right;
+	flow-children: down;
 	horizontal-align: center;
 	width: 100%;
 	padding: 10px;
+}
+
+.es-teams-columns {
+	flow-children: right;
+	horizontal-align: center;
+	width: 100%;
 }
 
 .es-team {
@@ -43,12 +49,19 @@
 }
 
 #es-radiant {
-	margin-right: 10px;
 	background-color: #042204bb;
 }
 
 #es-dire {
 	background-color: #220404bb;
+}
+
+#es-custom1 {
+	background-color: #660066aa;
+}
+
+#es-custom2 {
+	background-color: #802000aa;
 }
 
 #es-radiant .es-team-name {
@@ -58,6 +71,16 @@
 
 #es-dire .es-team-name {
 	color: #f03333;
+	text-shadow: 0 0 5px 2.0 #111;
+}
+
+#es-custom1 .es-team-name {
+	color: #cc00cc;
+	text-shadow: 0 0 5px 2.0 #111;
+}
+
+#es-custom2 .es-team-name {
+	color: #ff4000;
 	text-shadow: 0 0 5px 2.0 #111;
 }
 
