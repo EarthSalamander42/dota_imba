@@ -5178,11 +5178,8 @@
 	"earthshaker_aftershock"
 	{
 		"AbilityCastRange"				"300 300 300 300 350 400 450"
-
 		"AbilityDuration"				"0.6 0.9 1.2 1.5 1.6 1.7 1.8"
-
 		"AbilityDamage"					"75 100 125 150 170 190 210"
-
 		"MaxLevel"						"7"
 
 		"AbilitySpecial"

@@ -216,10 +216,8 @@ function GameMode:PlanNextSpawn()
 
 	local r = RandomInt( 1, 8 )
 	if GetMapName() == "desert_quintet" then
-		print("map is desert_quintet")
 		r = RandomInt( 1, 6 )
-	elseif GetMapName() == "temple_quartet" then
-		print("map is temple_quartet")
+	elseif GetMapName() == "imba_overthrow" then
 		r = RandomInt( 1, 4 )
 	end
 	local path_track = "item_spawn_" .. r

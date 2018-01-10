@@ -149,7 +149,7 @@ function PlayerResource:StartAbandonGoldRedistribution(player_id)
 	local gold_per_interval = 3 * (custom_gold_bonus / 100 ) / GOLD_TICK_TIME
 
 	-- Distribute initial gold
-	for id = 0, 19 do
+	for id = 0, PlayerResource:GetPlayerCount() -1 do
 		if self:IsImbaPlayer(id) and (not self.PlayerData[id]["distribute_gold_to_allies"]) and self:GetTeam(id) == player_team then
 			current_allies[#current_allies + 1] = id
 		end
@@ -178,7 +178,7 @@ function PlayerResource:StartAbandonGoldRedistribution(player_id)
 		current_gold = current_gold + gold_per_interval
 
 		-- Update active ally amount
-		for id = 0, 19 do
+		for id = 0, PlayerResource:GetPlayerCount() -1 do
 			if self:IsImbaPlayer(id) and (not self.PlayerData[id]["distribute_gold_to_allies"]) and self:GetTeam(id) == player_team then
 				current_allies[#current_allies + 1] = id
 			end

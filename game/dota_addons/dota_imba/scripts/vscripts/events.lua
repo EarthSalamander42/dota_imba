@@ -45,7 +45,7 @@ function GameMode:OnDisconnect(keys)
 			disconnect_time = disconnect_time + 1
 
 			-- If the player has abandoned the game, set his gold to zero and distribute passive gold towards its allies
-			if hero:HasOwnerAbandoned() or disconnect_time >= ABANDON_TIME then
+			if disconnect_time >= ABANDON_TIME then
 				-- Abandon message
 				Notifications:BottomToAll({hero = hero_name, duration = line_duration})
 				Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
@@ -56,6 +56,7 @@ function GameMode:OnDisconnect(keys)
 
 				-- Decrease the player's team's player count
 				PlayerResource:DecrementTeamPlayerCount(player_id)
+				print(REMAINING_GOODGUYS, REMAINING_BADGUYS)
 
 				-- Start redistributing this player's gold to its allies
 				PlayerResource:StartAbandonGoldRedistribution(player_id)
@@ -161,6 +162,9 @@ function GameMode:OnGameRulesStateChange(keys)
 		-- Shows various info to devs in pub-game to find lag issues
 		ImbaNetGraph(10.0)
 
+		-- Initialize rune spawners
+		InitRunes()
+
 		Timers:CreateTimer(function() -- OnThink
 			if CHEAT_ENABLED == false then
 				if Convars:GetBool("developer") == true or Convars:GetBool("sv_cheats") == true or GameRules:IsCheatMode() then
@@ -197,26 +201,26 @@ function GameMode:OnGameRulesStateChange(keys)
 			return 1.0
 		end)
 
-		-- custom gold and xp earning
-		Timers:CreateTimer(function()
-			-- global
-			for _, hero in pairs(HeroList:GetAllHeroes()) do
-				if not hero:HasModifier("modifier_fountain_aura_buff") then
-					hero:ModifyGold(2, true, 0)
-					hero:AddExperience(4, 0, false, false)
-				end
-			end
-
-			-- center
-			local heroes = FindUnitsInRadius(2, Entities:FindByName(nil, "@overboss"):GetAbsOrigin(), nil, 900, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-			for _, hero in pairs(heroes) do
-				if not hero:HasModifier("modifier_fountain_aura_buff") then
-					hero:ModifyGold(4, true, 0)
-					hero:AddExperience(10, 0, false, false)
-				end
-			end
-			return 0.5
-		end)
+		-- OVERTHROW: custom gold and xp earning
+--		Timers:CreateTimer(function()
+--			-- global
+--			for _, hero in pairs(HeroList:GetAllHeroes()) do
+--				if not hero:HasModifier("modifier_fountain_aura_buff") then
+--					hero:ModifyGold(2, true, 0)
+--					hero:AddExperience(4, 0, false, false)
+--				end
+--			end
+--
+--			-- center
+--			local heroes = FindUnitsInRadius(2, Entities:FindByName(nil, "@overboss"):GetAbsOrigin(), nil, 900, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+--			for _, hero in pairs(heroes) do
+--				if not hero:HasModifier("modifier_fountain_aura_buff") then
+--					hero:ModifyGold(4, true, 0)
+--					hero:AddExperience(10, 0, false, false)
+--				end
+--			end
+--			return 0.5
+--		end)
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -721,9 +725,9 @@ if not abilityUsed then return end
 		for m = 1, #meepo_table do
 			if meepo_table[m]:IsClone() then
 				if abilityname == "item_sphere" then
-					print("Linken!")
+--					print("Linken!")
 					local duration = abilityname:GetSpecialValueFor("block_cooldown")					
-					print("Duration", duration)
+--					print("Duration", duration)
 					meepo_table[m]:AddNewModifier(meepo_table[m], ability, "modifier_item_sphere_target", {duration = duration})
 				end
 			end
@@ -1394,13 +1398,19 @@ function GameMode:OnEntityKilled( keys )
 					type = "kill",
 					victimUnitName = killed_unit:GetUnitName(),
 				})
-				print("Suicide Comitted!")
 				return
+			elseif killed_unit:IsRealHero() and killer:GetTeamNumber() == killed_unit:GetTeamNumber() then
+				CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
+					type = "kill",
+					killerPlayer = killer:GetPlayerID(),
+					victimPlayer = killed_unit:GetPlayerID(),
+					victimUnitName = killed_unit:GetUnitName(),
+				})
 			end
 		end
 
 		if killed_unit:IsRealHero() then
-			if killer:IsNeutralUnitType() then
+			if killer:GetTeamNumber() == 4 then
 				CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
 					type = "kill",
 					victimUnitName = killed_unit:GetUnitName(),
