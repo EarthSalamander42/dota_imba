@@ -1346,6 +1346,11 @@ function modifier_imba_heartpiercer_passive:OnAttackLanded(kv)
         -- Only apply if the attacker is the parent
         if self.parent == attacker then
 
+        	--If the target is a building, do nothing
+        	if target:IsBuilding() then
+        		return nil
+        	end
+
             -- If the parent is broken, do nothing
             if self.parent:PassivesDisabled() then
                 return nil
