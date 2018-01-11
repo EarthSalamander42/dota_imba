@@ -21,6 +21,8 @@ LinkLuaModifier("modifier_imba_hook_light_stack","hero/hero_pudge", LUA_MODIFIER
 
 function imba_pudge_sharp_hook:GetIntrinsicModifierName() return "modifier_imba_hook_sharp_stack" end
 function imba_pudge_light_hook:GetIntrinsicModifierName() return "modifier_imba_hook_light_stack" end
+function imba_pudge_sharp_hook:IsStealable()	return false end
+function imba_pudge_sharp_hook:IsNetherWardStealable() 	return false end
 
 function imba_pudge_sharp_hook:OnToggle()
 	local toggle = self:GetToggleState()  --true为打开 false为关闭
@@ -38,6 +40,8 @@ function imba_pudge_sharp_hook:OnToggle()
 	end
 end
 
+function imba_pudge_light_hook:IsStealable()	return false end
+function imba_pudge_light_hook:IsNetherWardStealable() 	return false end
 function imba_pudge_light_hook:OnToggle()
 	local toggle = self:GetToggleState()  --true为打开 false为关闭
 	local buff = self:GetCaster():FindModifierByName("modifier_imba_hook_light_stack")
