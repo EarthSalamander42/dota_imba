@@ -1,7 +1,6 @@
 "use strict";
 
-function UpdateTimer( data )
-{
+function UpdateTimer(data) {
 	//$.Msg( "UpdateTimer: ", data );
 	//var timerValue = Game.GetDOTATime( false, false );
 
@@ -25,43 +24,36 @@ function UpdateTimer( data )
 	timerText += data.timer_second_10;
 	timerText += data.timer_second_01;
 
-	$( "#Timer" ).text = timerText;
+	$("#Timer").text = timerText;
 
 	//$.Schedule( 0.1, UpdateTimer );
 }
 
-function ShowTimer( data )
-{
-	$( "#Timer" ).AddClass( "timer_visible" );
+function ShowTimer(data) {
+	$("#Timer").AddClass("timer_visible");
 }
 
-function AlertTimer( data )
-{
-	$( "#Timer" ).AddClass( "timer_alert" );
+function AlertTimer(data) {
+	$("#Timer").AddClass("timer_alert");
 }
 
-function HideTimer( data )
-{
-	$( "#Timer" ).AddClass( "timer_hidden" );
+function HideTimer(data) {
+	$("#Timer").AddClass("timer_hidden");
 }
 
-function UpdateKillsToWin()
-{
-	var victory_condition = CustomNetTables.GetTableValue( "game_state", "victory_condition" );
-	if ( victory_condition )
-	{
+function UpdateKillsToWin() {
+	var victory_condition = CustomNetTables.GetTableValue("game_state", "victory_condition");
+	if (victory_condition) {
 		$("#VictoryPoints").text = victory_condition.kills_to_win;
 	}
 }
 
-function OnGameStateChanged( table, key, data )
-{
-	$.Msg( "Table '", table, "' changed: '", key, "' = ", data );
+function OnGameStateChanged(table, key, data) {
+	$.Msg("Table '", table, "' changed: '", key, "' = ", data);
 	UpdateKillsToWin();
 }
 
-(function()
-{
+(function () {
 	var map_info = Game.GetMapInfo();
 	if (map_info.map_display_name != "imba_overthrow") {
 		$("#OverthrowScoreboard").style.visibility = "collapse";
@@ -69,12 +61,11 @@ function OnGameStateChanged( table, key, data )
 
 	// We use a nettable to communicate victory conditions to make sure we get the value regardless of timing.
 	UpdateKillsToWin();
-	CustomNetTables.SubscribeNetTableListener( "game_state", OnGameStateChanged );
+	CustomNetTables.SubscribeNetTableListener("game_state", OnGameStateChanged);
 
-    GameEvents.Subscribe( "countdown", UpdateTimer );
-    GameEvents.Subscribe( "show_timer", ShowTimer );
-    GameEvents.Subscribe( "timer_alert", AlertTimer );
-    GameEvents.Subscribe( "overtime_alert", HideTimer );
+	GameEvents.Subscribe("countdown", UpdateTimer);
+	GameEvents.Subscribe("show_timer", ShowTimer);
+	GameEvents.Subscribe("timer_alert", AlertTimer);
+	GameEvents.Subscribe("overtime_alert", HideTimer);
 	//UpdateTimer();
 })();
-

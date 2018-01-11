@@ -4,20 +4,19 @@ var progress = 0;
 
 /* Initialisation - runs when the element is created
 =========================================================================*/
-(function () {
-})();
+(function () {})();
 
 /* Subscribe to events
 =========================================================================*/
-GameEvents.Subscribe( "contest_started", ShowContestUI );
-GameEvents.Subscribe( "radiant_point_to_radiant", RadiantPointToRadiant );
-GameEvents.Subscribe( "radiant_point_to_dire", RadiantPointToDire );
-GameEvents.Subscribe( "dire_point_to_radiant", DirePointToRadiant );
-GameEvents.Subscribe( "dire_point_to_dire", DirePointToDire );
-GameEvents.Subscribe( "radiant_progress_update", RadiantProgressUpdate );
-GameEvents.Subscribe( "dire_progress_update", DireProgressUpdate );
-GameEvents.Subscribe( "radiant_score_update", RadiantScoreUpdate );
-GameEvents.Subscribe( "dire_score_update", DireScoreUpdate );
+GameEvents.Subscribe("contest_started", ShowContestUI);
+GameEvents.Subscribe("radiant_point_to_radiant", RadiantPointToRadiant);
+GameEvents.Subscribe("radiant_point_to_dire", RadiantPointToDire);
+GameEvents.Subscribe("dire_point_to_radiant", DirePointToRadiant);
+GameEvents.Subscribe("dire_point_to_dire", DirePointToDire);
+GameEvents.Subscribe("radiant_progress_update", RadiantProgressUpdate);
+GameEvents.Subscribe("dire_progress_update", DireProgressUpdate);
+GameEvents.Subscribe("radiant_score_update", RadiantScoreUpdate);
+GameEvents.Subscribe("dire_score_update", DireScoreUpdate);
 
 // Makes the arena contest UI visible
 function ShowContestUI() {
@@ -53,7 +52,7 @@ function DirePointToDire() {
 // Updates the Radiant contest point's progress bar
 function RadiantProgressUpdate() {
 	var progress = CustomNetTables.GetTableValue("arena_capture", "radiant_progress");
-	if (progress[1] >= 0 ) {
+	if (progress[1] >= 0) {
 		$('#RadiantProgressBar').value = progress[1];
 		$('#RadiantTakenProgressBar').value = progress[1];
 	} else {
@@ -65,7 +64,7 @@ function RadiantProgressUpdate() {
 // Updates the Dire contest point's progress bar
 function DireProgressUpdate() {
 	var progress = CustomNetTables.GetTableValue("arena_capture", "dire_progress");
-	if (progress[1] >= 0 ) {
+	if (progress[1] >= 0) {
 		$('#DireProgressBar').value = progress[1];
 		$('#DireTakenProgressBar').value = progress[1];
 	} else {

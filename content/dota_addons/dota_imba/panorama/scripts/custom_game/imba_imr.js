@@ -4,24 +4,25 @@ var playerPanels = {};
 
 var toggle = false
 var first_time = false
+
 function ToggleBattlepass() {
 	if (toggle == false) {
 		$("#BattlepassWindow").style.visibility = "visible";
 		toggle = true
 		if (first_time == false) {
 			first_time = true
-//			DiretidePlayersXP()
+			//			DiretidePlayersXP()
 			Battlepass()
 			HallOfFame("XP")
 		}
-	}
-	else {
+	} else {
 		$("#BattlepassWindow").style.visibility = "collapse";
 		toggle = false
 	}
 }
 
 var toggle = false
+
 function ToggleGameOptions() {
 	var bool = ""
 
@@ -38,21 +39,22 @@ function SwitchTab(tab) {
 	$("#BattlepassInfoContainer").style.visibility = "collapse";
 	$("#LeaderboardInfoContainer").style.visibility = "collapse";
 
-	$("#"+tab).style.visibility = "visible";
+	$("#" + tab).style.visibility = "visible";
 }
 
-function Battlepass()
-{
+function Battlepass() {
 	var BattlepassRewards = CustomNetTables.GetTableValue("game_options", "battlepass").battlepass;
-//	BattlepassRewards.sort();
+	//	BattlepassRewards.sort();
 	if (BattlepassRewards === undefined) {
 		$.Msg("Battlepass undefined..")
 		$.Schedule(1, Battlepass)
 		return;
 	} else {
-		var radiantPlayers = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_GOODGUYS );
-		$.Each( radiantPlayers, function( player ) {
-			if (player != Players.GetLocalPlayer()) {return}
+		var radiantPlayers = Game.GetPlayerIDsOnTeam(DOTATeam_t.DOTA_TEAM_GOODGUYS);
+		$.Each(radiantPlayers, function (player) {
+			if (player != Players.GetLocalPlayer()) {
+				return
+			}
 			var i_count = 0;
 			var class_option_count = 1;
 			var i_single = false
@@ -65,10 +67,10 @@ function Battlepass()
 						reward_row.AddClass("BattlepassRow")
 					}
 
-					i_count = i_count +1
+					i_count = i_count + 1
 
 					if (i_count > 10) {
-						class_option_count = class_option_count +1
+						class_option_count = class_option_count + 1
 						var reward_row = $.CreatePanel("Panel", $('#BattlepassInfoContainer'), "BattlepassRow" + class_option_count + "_" + player);
 						reward_row.AddClass("BattlepassRow")
 						i_count = 1
@@ -77,11 +79,11 @@ function Battlepass()
 					var reward = $.CreatePanel("Panel", $("#BattlepassRow" + class_option_count + "_" + player), BattlepassRewards[i]);
 					reward.AddClass("BattlepassReward")
 
-//					$.Msg(i + " " + BattlepassRewards[i])
+					//					$.Msg(i + " " + BattlepassRewards[i])
 
 					var reward_icon = $.CreatePanel("Panel", reward, BattlepassRewards[i] + "_icon");
 					reward_icon.AddClass("BattlepassRewardIcon")
-					reward_icon.style.backgroundImage = 'url("file://{images}/custom_game/battlepass/'+ BattlepassRewards[i] +'.png")';
+					reward_icon.style.backgroundImage = 'url("file://{images}/custom_game/battlepass/' + BattlepassRewards[i] + '.png")';
 
 					var reward_label = $.CreatePanel("Label", reward, BattlepassRewards[i] + "_label");
 					reward_label.AddClass("BattlepassRewardLabel")
@@ -101,30 +103,32 @@ function Battlepass()
 						}
 
 						// all tooltips only show the last created window...
-//						(function () {
-//							reward_icon.SetPanelEvent("onmouseover", function() {
-//								$.DispatchEvent("DOTAShowTextTooltip", reward_icon, $.Localize("battlepass_" + BattlepassRewards[i]));
-//							})
-//							reward_icon.SetPanelEvent("onmouseout", function() {
-//								$.DispatchEvent( "DOTAHideTextTooltip", reward_icon);
-//							})
-//						})(reward_icon);
+						//						(function () {
+						//							reward_icon.SetPanelEvent("onmouseover", function() {
+						//								$.DispatchEvent("DOTAShowTextTooltip", reward_icon, $.Localize("battlepass_" + BattlepassRewards[i]));
+						//							})
+						//							reward_icon.SetPanelEvent("onmouseout", function() {
+						//								$.DispatchEvent( "DOTAHideTextTooltip", reward_icon);
+						//							})
+						//						})(reward_icon);
 					} else {
 						reward_icon.AddClass("BattlepassRewardIcon_locked")
 						var reward_label_locked = $.CreatePanel("Label", reward_icon, BattlepassRewards[i] + "_label");
 						reward_label_locked.AddClass("BattlepassRewardLabelLocked")
 						reward_label_locked.text = $.Localize("battlepass_reward_locked");
 					}
-					
+
 					// onmouseover="UIShowTextTooltip( imba_gamemode_settings_tower_power_title_tooltip )"
 					// onmouseout="UIHideTextTooltip()">
-				}	
+				}
 			}
 		});
 
-		var direPlayers = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_BADGUYS );
-		$.Each( direPlayers, function( player ) {
-			if (player != Players.GetLocalPlayer()) {return}
+		var direPlayers = Game.GetPlayerIDsOnTeam(DOTATeam_t.DOTA_TEAM_BADGUYS);
+		$.Each(direPlayers, function (player) {
+			if (player != Players.GetLocalPlayer()) {
+				return
+			}
 			var i_count = 0;
 			var class_option_count = 1;
 			var i_single = false
@@ -137,11 +141,11 @@ function Battlepass()
 						reward_row.AddClass("BattlepassRow")
 					}
 
-					i_count = i_count +1
+					i_count = i_count + 1
 
 					if (i_count > 10) {
 						$.Msg("Create second panel...")
-						class_option_count = class_option_count +1
+						class_option_count = class_option_count + 1
 						var reward_row = $.CreatePanel("Panel", $('#BattlepassInfoContainer'), "BattlepassRow" + class_option_count + "_" + player);
 						reward_row.AddClass("BattlepassRow")
 						i_count = 1
@@ -150,11 +154,11 @@ function Battlepass()
 					var reward = $.CreatePanel("Panel", $("#BattlepassRow" + class_option_count + "_" + player), BattlepassRewards[i]);
 					reward.AddClass("BattlepassReward")
 
-//					$.Msg(i + " " + BattlepassRewards[i])
+					//					$.Msg(i + " " + BattlepassRewards[i])
 
 					var reward_icon = $.CreatePanel("Panel", reward, BattlepassRewards[i] + "_icon");
 					reward_icon.AddClass("BattlepassRewardIcon")
-					reward_icon.style.backgroundImage = 'url("file://{images}/custom_game/battlepass/'+ BattlepassRewards[i] +'.png")';
+					reward_icon.style.backgroundImage = 'url("file://{images}/custom_game/battlepass/' + BattlepassRewards[i] + '.png")';
 
 					var reward_label = $.CreatePanel("Label", reward, BattlepassRewards[i] + "_label");
 					reward_label.AddClass("BattlepassRewardLabel")
@@ -174,32 +178,32 @@ function Battlepass()
 						}
 
 						// all tooltips only show the last created window...
-//						(function () {
-//							reward_icon.SetPanelEvent("onmouseover", function() {
-//								$.DispatchEvent("DOTAShowTextTooltip", reward_icon, $.Localize("battlepass_" + BattlepassRewards[i]));
-//							})
-//							reward_icon.SetPanelEvent("onmouseout", function() {
-//								$.DispatchEvent( "DOTAHideTextTooltip", reward_icon);
-//							})
-//						})(reward_icon);
+						//						(function () {
+						//							reward_icon.SetPanelEvent("onmouseover", function() {
+						//								$.DispatchEvent("DOTAShowTextTooltip", reward_icon, $.Localize("battlepass_" + BattlepassRewards[i]));
+						//							})
+						//							reward_icon.SetPanelEvent("onmouseout", function() {
+						//								$.DispatchEvent( "DOTAHideTextTooltip", reward_icon);
+						//							})
+						//						})(reward_icon);
 					} else {
 						reward_icon.AddClass("BattlepassRewardIcon_locked")
 						var reward_label_locked = $.CreatePanel("Label", reward_icon, BattlepassRewards[i] + "_label");
 						reward_label_locked.AddClass("BattlepassRewardLabelLocked")
 						reward_label_locked.text = $.Localize("battlepass_reward_locked");
 					}
-					
+
 					// onmouseover="UIShowTextTooltip( imba_gamemode_settings_tower_power_title_tooltip )"
 					// onmouseout="UIHideTextTooltip()">
-				}	
+				}
 			}
 		});
 	}
 }
 
 var current_type = ""
-function HallOfFame(type)
-{
+
+function HallOfFame(type) {
 	if (current_type == type) {
 		$.Msg("Bro don't reload you're fine!")
 		return;
@@ -212,8 +216,8 @@ function HallOfFame(type)
 			var top_users = CustomNetTables.GetTableValue("top_imr_5v5", i.toString());
 		}
 
-		if ($("#player_"+i)) {
-			$("#player_"+i).DeleteAsync(0);
+		if ($("#player_" + i)) {
+			$("#player_" + i).DeleteAsync(0);
 		}
 
 		var player = $.CreatePanel("Panel", $('#Tops'), "player_" + i);
@@ -260,8 +264,7 @@ function ClassBy(type) {
 	HallOfFame(type)
 }
 
-(function()
-{
+(function () {
 	// Update the game options display
 	var bounty_multiplier = CustomNetTables.GetTableValue("game_options", "bounty_multiplier");
 	var exp_multiplier = CustomNetTables.GetTableValue("game_options", "exp_multiplier");
@@ -285,6 +288,6 @@ function ClassBy(type) {
 	$("#FranticModeValue").text = frantic;
 	$("#GoldTickValue").text = gold_tick[1].toFixed(1);
 
-	$("#TowerPowerValue").text = $.Localize( '#imba_gamemode_settings_power_' + tower_power[1] );
+	$("#TowerPowerValue").text = $.Localize('#imba_gamemode_settings_power_' + tower_power[1]);
 	GameEvents.Subscribe("hall_of_fame", HallOfFame);
 })();
