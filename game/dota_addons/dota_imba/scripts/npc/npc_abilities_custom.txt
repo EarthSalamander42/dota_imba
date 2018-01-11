@@ -21577,6 +21577,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_repeat_pct"		"20"
+				"CalculateSpellDamageTooltip" 	"0"
 			}
 
 			"08"
