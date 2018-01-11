@@ -36,9 +36,13 @@ function EndScoreboard() {
 
 		$.Msg("End game received");
 
+		var map_info = Game.GetMapInfo();
+		if (map_info.map_display_name == "imba_overthrow") {
+			$("#es-custom1").style.visibility = "visible";
+		}
+
 		// Hide all other UI
 		var MainPanel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
-
 		MainPanel.FindChildTraverse("topbar").style.visibility = "collapse";
 		MainPanel.FindChildTraverse("minimap_container").style.visibility = "collapse";
 		MainPanel.FindChildTraverse("lower_hud").style.visibility = "collapse";
@@ -54,7 +58,7 @@ function EndScoreboard() {
 		var radiantPlayerIds = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_GOODGUYS );
 		var direPlayerIds = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_BADGUYS );
 		var custom1PlayerIds = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_CUSTOM_1 );
-		var custom2PlayerIds = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_CUSTOM_2 );
+//		var custom2PlayerIds = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_CUSTOM_2 );
 
 		$.Msg({
 			args: args,
@@ -63,7 +67,7 @@ function EndScoreboard() {
 				ids1: radiantPlayerIds,
 				ids2: direPlayerIds,
 				ids3: custom1PlayerIds,
-				ids4: custom2PlayerIds,
+//				ids4: custom2PlayerIds,
 			}
 		});
 
@@ -72,13 +76,13 @@ function EndScoreboard() {
 		var victoryMessageLabel = $("#es-victory-info-text");
 
 		if (serverInfo.winner == 2)
-			victoryMessage = victoryMessage.replace("winning_team_name", "#DOTA_GoodGuys");
+			victoryMessage = victoryMessage.replace("winning_team_name", $.Localize("#DOTA_GoodGuys"));
 		else if (serverInfo.winner == 3)
-			victoryMessage = victoryMessage.replace("winning_team_name", "#DOTA_BadGuys");
+			victoryMessage = victoryMessage.replace("winning_team_name", $.Localize("#DOTA_BadGuys"));
 		else if (serverInfo.winner == 6)
-			victoryMessage = victoryMessage.replace("winning_team_name", "#DOTA_Custom1");
+			victoryMessage = victoryMessage.replace("winning_team_name", $.Localize("#DOTA_Custom1"));
 		else if (serverInfo.winner == 7)
-			victoryMessage = victoryMessage.replace("winning_team_name", "#DOTA_Custom2");
+			victoryMessage = victoryMessage.replace("winning_team_name", $.Localize("#DOTA_Custom2"));
 
 		victoryMessageLabel.text = victoryMessage;
 
@@ -89,11 +93,11 @@ function EndScoreboard() {
 			radiant: $("#es-radiant"),
 			dire: $("#es-dire"),
 			custom1: $("#es-custom1"),
-			custom2: $("#es-custom2"),
+//			custom2: $("#es-custom2"),
 			radiantPlayers: $("#es-radiant-players"),
 			direPlayers: $("#es-dire-players"),
 			custom1Players: $("#es-custom1-players"),
-			custom2Players: $("#es-custom2-players"),
+//			custom2Players: $("#es-custom2-players"),
 		};
 		
 		// the panorama xml file used for the player lines
@@ -135,10 +139,9 @@ function EndScoreboard() {
 		$.Each(radiantPlayerIds, function (id) { radiantPlayers.push(loadPlayer(id)); });
 		$.Each(direPlayerIds, function (id) { direPlayers.push(loadPlayer(id)); });
 		$.Each(custom1PlayerIds, function (id) { custom1Players.push(loadPlayer(id)); });
-		$.Each(custom2PlayerIds, function (id) { custom2Players.push(loadPlayer(id)); });
+//		$.Each(custom2PlayerIds, function (id) { custom2Players.push(loadPlayer(id)); });
 
 		var createPanelForPlayer = function (player, parent) {
-
 			$.Msg("Creating Panel for player " + player.info.player_steamid);
 
 			// Create a new Panel for this player
@@ -233,50 +236,48 @@ function EndScoreboard() {
 				};
 	
 				values.xp.progress.style.width = convertToPercentString(player.xp.progress);
-	
 			} else {
 				values.xp.earned.text = "N/A";
 			}
 
 			$.Msg("Player panel complete");
-
 		};
 
 		var scores = {
 			radiant: 0,
 			dire: 0,
 			custom1: 0,
-			custom2: 0,
+//			custom2: 0,
 		};
 
 		$.Msg("Creating the panels");
 
 		// Create the panels for the players
 		$.Each(radiantPlayers, function (player) {
-			scores.dire += player.info.player_deaths;
+			scores.radiant = scores.radiant + player.info.player_kills;
 			createPanelForPlayer(player, panels.radiantPlayers);
 		});
 		
 		$.Each(direPlayers, function (player) {
-			scores.radiant += player.info.player_deaths;
+			scores.dire = scores.dire + player.info.player_kills;
 			createPanelForPlayer(player, panels.direPlayers);
 		});
 
 		$.Each(custom1Players, function (player) {
-			scores.radiant += player.info.player_deaths;
-			createPanelForPlayer(player, panels.direPlayers);
+			scores.custom1 = scores.custom1 + player.info.player_kills;
+			createPanelForPlayer(player, panels.custom1Players);
 		});
 
-		$.Each(custom2Players, function (player) {
-			scores.radiant += player.info.player_deaths;
-			createPanelForPlayer(player, panels.direPlayers);
-		});
+//		$.Each(custom2Players, function (player) {
+//			scores.radiant = player.info.player_kills;
+//			createPanelForPlayer(player, panels.custom2Players);
+//		});
 
 		// Set Team Score
 		$("#es-team-score-radiant").text = new String(scores.radiant);
 		$("#es-team-score-dire").text = new String(scores.dire);
 		$("#es-team-score-custom1").text = new String(scores.custom1);
-		$("#es-team-score-custom2").text = new String(scores.custom2);
+//		$("#es-team-score-custom2").text = new String(scores.custom2);
 
 		$.Msg("Setting the game id button panel event");
 

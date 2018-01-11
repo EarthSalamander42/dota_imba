@@ -325,6 +325,7 @@ function modifier_imba_swashbuckle_slashes:OnCreated()
 	self.ability = self:GetAbility()
 	self.buff = "modifier_imba_swashbuckle_buff"
 	self.particle = "particles/units/heroes/hero_pangolier/pangolier_swashbuckler.vpcf"
+	self.hit_particle = "particles/generic_gameplay/generic_hit_blood.vpcf"
 	self.slashing_sound = "Hero_Pangolier.Swashbuckle"
 	self.hit_sound= "Hero_Pangolier.Swashbuckle.Damage"
 	self.slash_particle = {}
@@ -419,6 +420,12 @@ function modifier_imba_swashbuckle_slashes:OnIntervalThink()
 
 			--can't hit Ethereal enemies
 			if not enemy:IsAttackImmune() then
+
+				--Play blood particle on targets
+				local blood_particle = ParticleManager:CreateParticle(self.hit_particle, PATTACH_WORLDORIGIN, nil)
+				ParticleManager:SetParticleControl(blood_particle, 0, enemy:GetAbsOrigin()) --origin of particle
+				ParticleManager:SetParticleControl(blood_particle, 2, self.direction * 500) --direction and speed of the blood spills
+
 				--Talent #8: Swashbuckle also uses Pangolier attack damage
 				if self.caster:HasTalent("special_bonus_imba_pangolier_8") then
 
@@ -1346,6 +1353,11 @@ function modifier_imba_heartpiercer_passive:OnAttackLanded(kv)
         -- Only apply if the attacker is the parent
         if self.parent == attacker then
 
+        	--If the target is a building, do nothing
+        	if target:IsBuilding() then
+        		return nil
+        	end
+
             -- If the parent is broken, do nothing
             if self.parent:PassivesDisabled() then
                 return nil
@@ -1672,6 +1684,14 @@ function imba_pangolier_gyroshell:OnAbilityPhaseStart()
 	return true
 end
 
+function imba_pangolier_gyroshell:OnAbilityPhaseInterrupted()
+
+	--Destroy cast particle
+	ParticleManager:DestroyParticle(self.cast_effect, true)
+	ParticleManager:ReleaseParticleIndex(self.cast_effect)
+
+end
+
 function imba_pangolier_gyroshell:OnSpellStart()
     -- Ability properties
     local caster = self:GetCaster()
@@ -1721,6 +1741,19 @@ function imba_pangolier_gyroshell:OnSpellStart()
 
 	--Play Loop sound
 	EmitSoundOn(loop_sound, caster)
+
+	--Replay loop sound if pango didn't finish rolling
+	caster:SetContextThink("Loop_sound_replay", function ()
+
+		if caster:HasModifier("modifier_pangolier_gyroshell") then
+			StopSoundOn(loop_sound, caster)
+			EmitSoundOn(loop_sound, caster)
+
+			return 8.6
+		else
+			return nil
+		end
+	end, 8.6)
 
 											
 end

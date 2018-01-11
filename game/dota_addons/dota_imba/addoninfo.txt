@@ -3,7 +3,7 @@
 	"addonSteamAppID"				"816"
 	"addontitle"					"Dota IMBA"
 	"addon_game_name"				"Dota IMBA"
-	"addonversion"					"7.02a"
+	"addonversion"					"7.03b"
 	"addontagline"					"IMBA"
 	"addonauthor"					"Firetoad and Hewdraw"
 	"addonSteamGroupName"			""
@@ -12,8 +12,13 @@
 	"addonDescription"				"A modified version of Dota, where everything is insanely powerful."
 	"HeroGuidesSupported"			"1"
 
-	"maps"							"imba_standard imba_10v10 imba_frantic_10v10"
+	"maps"							"imba_overthrow imba_standard imba_10v10 imba_frantic_10v10"
 	"IsPlayable"					"1"
+
+	"imba_overthrow"
+	{
+		"MaxPlayers"				"15"
+	}
 
 	"imba_standard"
 	{
@@ -25,20 +30,10 @@
 		"MaxPlayers"				"20"
 	}
 
-//	"imba_custom"
-//	{
-//		"MaxPlayers"				"10"
-//	}
-
 	"imba_frantic_10v10"
 	{
 		"MaxPlayers"				"20"
 	}
-
-//	"imba_diretide"
-//	{
-//		"MaxPlayers"				"10"
-//	}
 
 //	"imba_12v12"
 //	{

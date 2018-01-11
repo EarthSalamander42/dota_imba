@@ -65,7 +65,7 @@
 					</Panel>
 					<Panel id="es-custom1-players" class="es-players" />
 				</Panel>
-
+<!--
 				<Panel class="es-team" id="es-custom2">
 					<Panel class="es-team-title">
 						<Label class="es-team-name" text="#DOTA_Custom2" />
@@ -81,7 +81,7 @@
 						<Label class="es-legend-xp" text="Imba XP" />
 					</Panel>
 					<Panel id="es-custom2-players" class="es-players" />
-				</Panel> 
+				</Panel> -->
 			</Panel>
 		</Panel>
 		<Panel id="es-buttons">

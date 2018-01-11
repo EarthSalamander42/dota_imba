@@ -37,17 +37,11 @@ function OnScoreChanged( data )
 		custom1Score.text = data.custom_1;
 	}
 
-	var custom2Score = $( "#ConquestScore_Custom2" );
-	if ( custom2Score )
-	{
-		custom2Score.text = data.custom_2;
-	}
-
-	var custom3Score = $( "#ConquestScore_Custom3" );
-	if ( custom3Score )
-	{
-		custom3Score.text = data.custom_3;
-	}
+//	var custom2Score = $( "#ConquestScore_Custom2" );
+//	if ( custom2Score )
+//	{
+//		custom2Score.text = data.custom_2;
+//	}
 }
 
 (function()

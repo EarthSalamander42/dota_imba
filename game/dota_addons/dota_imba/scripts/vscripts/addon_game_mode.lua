@@ -36,6 +36,10 @@ DebugPrint("[IMBA] Performing pre-load precache")
 	-- Fountain Particle
 	LinkLuaModifier("modifier_imba_fountain_particle_control", "modifier/modifier_fountain_particle", LUA_MODIFIER_MOTION_NONE)
 
+	-- Overthrow Fountain Lua
+	LinkLuaModifier( "modifier_fountain_aura_lua", "modifier/modifier_fountain_aura_lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier( "modifier_fountain_aura_effect_lua", "modifier/modifier_fountain_aura_effect_lua", LUA_MODIFIER_MOTION_NONE )
+
 	-- Aegis
 	LinkLuaModifier("modifier_item_imba_aegis", "items/item_aegis.lua", LUA_MODIFIER_MOTION_NONE)
 
@@ -74,6 +78,49 @@ DebugPrint("[IMBA] Performing pre-load precache")
 	-- Companion using mirana modifiers
 	LinkLuaModifier("modifier_imba_mirana_silence_stance", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
 	LinkLuaModifier("modifier_imba_mirana_silence_stance_visible", "hero/hero_mirana", LUA_MODIFIER_MOTION_NONE)
+
+	if GetMapName() == "imba_overthrow" then
+		PrecacheItemByNameSync( "item_bag_of_gold", context )
+		PrecacheResource( "particle", "particles/items2_fx/veil_of_discord.vpcf", context )	
+
+		PrecacheItemByNameSync( "item_treasure_chest", context )
+		PrecacheModel( "item_treasure_chest", context )
+
+		--Cache the creature models
+		PrecacheUnitByNameSync( "npc_dota_creature_basic_zombie", context )
+		PrecacheModel( "npc_dota_creature_basic_zombie", context )
+
+		PrecacheUnitByNameSync( "npc_dota_creature_berserk_zombie", context )
+		PrecacheModel( "npc_dota_creature_berserk_zombie", context )
+
+		PrecacheUnitByNameSync( "npc_dota_treasure_courier", context )
+		PrecacheModel( "npc_dota_treasure_courier", context )
+
+		PrecacheUnitByNameSync( "npc_dota_kobold_overboss", context )
+		PrecacheModel( "npc_dota_kobold_overboss", context )
+
+		--Cache new particles
+		PrecacheResource( "particle", "particles/econ/events/nexon_hero_compendium_2014/teleport_end_nexon_hero_cp_2014.vpcf", context )
+		PrecacheResource( "particle", "particles/leader/leader_overhead.vpcf", context )
+		PrecacheResource( "particle", "particles/last_hit/last_hit.vpcf", context )
+		PrecacheResource( "particle", "particles/units/heroes/hero_zuus/zeus_taunt_coin.vpcf", context )
+		PrecacheResource( "particle", "particles/addons_gameplay/player_deferred_light.vpcf", context )
+		PrecacheResource( "particle", "particles/items_fx/black_king_bar_avatar.vpcf", context )
+		PrecacheResource( "particle", "particles/treasure_courier_death.vpcf", context )
+		PrecacheResource( "particle", "particles/econ/wards/f2p/f2p_ward/f2p_ward_true_sight_ambient.vpcf", context )
+		PrecacheResource( "particle", "particles/econ/items/lone_druid/lone_druid_cauldron/lone_druid_bear_entangle_dust_cauldron.vpcf", context )
+		PrecacheResource( "particle", "particles/newplayer_fx/npx_landslide_debris.vpcf", context )
+		
+		--Cache particles for traps
+		PrecacheResource( "particle_folder", "particles/units/heroes/hero_dragon_knight", context )
+		PrecacheResource( "particle_folder", "particles/units/heroes/hero_venomancer", context )
+		PrecacheResource( "particle_folder", "particles/units/heroes/hero_axe", context )
+		PrecacheResource( "particle_folder", "particles/units/heroes/hero_life_stealer", context )
+
+		--Cache sounds for traps
+		PrecacheResource( "soundfile", "soundevents/game_sounds_heroes/game_sounds_dragon_knight.vsndevts", context )
+		PrecacheResource( "soundfile", "soundevents/soundevents_conquest.vsndevts", context )
+	end
 --[[
 	PrecacheResource("particle", "particles/econ/items/effigies/status_fx_effigies/gold_effigy_ambient_dire_lvl2.vpcf", context)
 	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts", context)

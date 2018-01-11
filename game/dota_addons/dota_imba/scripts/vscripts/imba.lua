@@ -268,9 +268,9 @@ function GameMode:GoldFilter( keys )
 			CustomNetTables:SetTableValue("player_table", tostring(keys.player_id_const), {hero_kill_bounty = keys.gold + hero.kill_hero_bounty})
 		end
 	else
-		print(keys.gold, custom_gold_bonus / 100, 1 + game_time / 25)
+--		print(keys.gold, custom_gold_bonus / 100, 1 + game_time / 25)
 		keys.gold = (custom_gold_bonus / 100) + (1 + game_time / 25) * keys.gold
-		print(keys.gold)
+--		print(keys.gold)
 	end
 
 	-- Comeback gold gain
@@ -346,6 +346,12 @@ function GameMode:ModifierFilter( keys )
 			modifier_caster = EntIndexToHScript(keys.entindex_caster_const)
 		else
 			return true
+		end
+
+		if GetMapName() == "imba_overthrow" then
+			if modifier_name == "modifier_fountain_aura_buff" then
+				return false
+			end
 		end
 
 		if modifier_name == "modifier_datadriven" then
@@ -1261,23 +1267,17 @@ local time_elapsed = 0
 
 	-- Disabling announcer for the player who picked a hero
 	Timers:CreateTimer(0.1, function()
-		if hero:GetUnitName() ~= "npc_dota_hero_wisp" then
-			hero.picked = true
-		elseif hero.is_real_wisp then
-			print("REAL WISP")
+		if hero:GetUnitName() ~= "npc_dota_hero_wisp" or hero.is_real_wisp then
 			hero.picked = true
 		end
 	end)
 
 	Timers:CreateTimer(0.1, function()
-		if hero.is_real_wisp then
-			hero.picked = true
-			return
-		elseif hero:GetUnitName() ~= "npc_dota_hero_wisp" then
+		if hero.is_real_wisp or hero:GetUnitName() ~= "npc_dota_hero_wisp" and not hero:IsIllusion() then
 			hero.picked = true
 			return
 		elseif not hero.is_real_wisp then
-			if hero:GetUnitName() == "npc_dota_hero_wisp" then
+			if hero:GetUnitName() == "npc_dota_hero_wisp" and not hero:IsIllusion() then
 				Timers:CreateTimer(function()
 					if not hero:HasModifier("modifier_command_restricted") then
 						hero:AddNewModifier(hero, nil, "modifier_command_restricted", {})
@@ -1323,9 +1323,8 @@ function GameMode:OnGameInProgress()
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Custom maximum level EXP tables adjustment
 	-------------------------------------------------------------------------------------------------
-    local max_level = tonumber(CustomNetTables:GetTableValue("game_options", "max_level")["1"])
-    -- TODO: max_level sometimes nil - WHY?
-	if max_level ~= nil and max_level > 35 then
+	local max_level = tonumber(CustomNetTables:GetTableValue("game_options", "max_level")["1"])
+	if max_level > 35 then
 		for i = 36, max_level do
 			XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + 5000
 			GameRules:GetGameModeEntity():SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
@@ -1784,12 +1783,11 @@ end
 ---------------------------------------------------------------------------
 function GameMode:SetUpFountains()
 
-	LinkLuaModifier( "modifier/modifier_fountain_aura_lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier( "modifier/modifier_fountain_aura_effect_lua", LUA_MODIFIER_MOTION_NONE )
-
+	print("Setup Fountains...")
 	local fountainEntities = Entities:FindAllByClassname( "ent_dota_fountain")
+	PrintTable(fountainEntities)
 	for _,fountainEnt in pairs( fountainEntities ) do
-		--print("fountain unit " .. tostring( fountainEnt ) )
+		print("fountain unit " .. tostring( fountainEnt ) )
 		fountainEnt:AddNewModifier( fountainEnt, fountainEnt, "modifier_fountain_aura_lua", {} )
 	end
 end
@@ -1931,18 +1929,18 @@ function GameMode:GatherAndRegisterValidTeams()
 
 	m_GatheredShuffledTeams = ShuffledList( foundTeamsList )
 
-	print( "Final shuffled team list:" )
-	for _, team in pairs( m_GatheredShuffledTeams ) do
-		print( " - " .. team .. " ( " .. GetTeamName( team ) .. " )" )
-	end
+--	print( "Final shuffled team list:" )
+--	for _, team in pairs( m_GatheredShuffledTeams ) do
+--		print( " - " .. team .. " ( " .. GetTeamName( team ) .. " )" )
+--	end
 
-	print( "Setting up teams:" )
+--	print( "Setting up teams:" )
 	for team = 0, (DOTA_TEAM_COUNT-1) do
 		local maxPlayers = 0
 		if ( nil ~= TableFindKey( foundTeamsList, team ) ) then
 			maxPlayers = maxPlayersPerValidTeam
 		end
-		print( " - " .. team .. " ( " .. GetTeamName( team ) .. " ) -> max players = " .. tostring(maxPlayers) )
+--		print( " - " .. team .. " ( " .. GetTeamName( team ) .. " ) -> max players = " .. tostring(maxPlayers) )
 		GameRules:SetCustomGameTeamMaxPlayers( team, maxPlayers )
 	end
 end

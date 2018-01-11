@@ -113,12 +113,17 @@
 {
 }
 
-#LogoAndScore
+.ImbaScore
 {
-    height: 100%;
-	width: 100px;
+	height: 100%;
+	width: 95px;
 	padding-right: 4px;
 	padding-left: 4px;
+}
+
+.OverthrowScore
+{
+	width: 110px;
 }
 
 .ConquestScore

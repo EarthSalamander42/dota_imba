@@ -61,9 +61,9 @@ function imba_api_preload(complete_fun)
 	imba_api():meta_topimrusers(function (users)
 		api_preloaded.topimrusers = users
 		complete_fun()
-    end)
-    
-	imba_api():meta_hotdisabledheroes(function (heroes)
+	end)
+
+		imba_api():meta_hotdisabledheroes(function (heroes)
 		api_preloaded.hot_disabled_heroes = heroes
 		complete_fun()
 	end)
@@ -156,11 +156,6 @@ function GetStatsForPlayer(ID)
 	end
 end
 
--- Returns the gameid
-function GetApiGameId()
-	return api_preloaded.id
-end
-
 function HeroIsHotDisabled(hero)
     for i = 1, #api_preloaded.hot_disabled_heroes do
         if api_preloaded.hot_disabled_heroes[i] == hero then
@@ -168,6 +163,11 @@ function HeroIsHotDisabled(hero)
         end
     end
     return false
+end
+
+-- Returns the gameid
+function GetApiGameId()
+	return api_preloaded.id
 end
 
 -- Saves a print message to server

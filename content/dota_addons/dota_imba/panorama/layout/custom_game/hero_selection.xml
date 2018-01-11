@@ -17,16 +17,14 @@
 			<Panel id="ClassContain" class="ClassContainer" >
 				<Panel id="PickInfoPanel">
 					<Panel id="TeamRadiant">
-						<Panel id="LabelsRadiant">
+						<Panel class="TeamLabel">
 							<Label id="PickScreenTeamTitleRadiant" text="#team_title_radiant" />
 							<Label id="AverageMMRTeamRadiant" text="#average_mmr" />
 						</Panel>
 						<Panel id="LeftPlayers">
 							<!-- JS Inserts player elements here -->
 						</Panel>
-						<Panel id="LeftPlayers_alt">
-							<!-- JS Inserts player elements here -->
-						</Panel>
+						
 					</Panel>
 
 					<Panel id="LeftStatsPanel" class="StatsPanel">
@@ -67,14 +65,11 @@
 					</Panel>
 
 					<Panel id="TeamDire">
-						<Panel id="LabelsDire">
+						<Panel class="TeamLabel">
 							<Label id="AverageMMRTeamDire" text="#average_mmr" />
 							<Label id="PickScreenTeamTitleDire" text="#team_title_dire" />
 						</Panel>
 						<Panel id="RightPlayers">
-							<!-- JS Inserts player elements here -->
-						</Panel>
-						<Panel id="RightPlayers_alt">
 							<!-- JS Inserts player elements here -->
 						</Panel>
 					</Panel>
