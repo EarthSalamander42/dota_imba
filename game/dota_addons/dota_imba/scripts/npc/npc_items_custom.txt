@@ -10535,6 +10535,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityCastRange"				"950"
 		"AbilityCooldown"				"22"
+		"AbilitySharedCooldown"			"bkb"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
