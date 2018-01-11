@@ -403,9 +403,7 @@ function GameMode:ModifierFilter( keys )
 					end
 				end
 			end
-
 			keys.duration = actually_duration
-
 		end
 
 		-------------------------------------------------------------------------------------------------
@@ -1861,6 +1859,7 @@ function GameMode:UpdateScoreboard()
 	local leader = sortedTeams[1].teamID
 	--print("Leader = " .. leader)
 	leadingTeam = leader
+	GAME_WINNER_TEAM = leadingTeam
 	runnerupTeam = sortedTeams[2].teamID
 	leadingTeamScore = sortedTeams[1].teamScore
 	runnerupTeamScore = sortedTeams[2].teamScore

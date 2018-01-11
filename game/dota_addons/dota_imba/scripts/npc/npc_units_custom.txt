@@ -13500,7 +13500,7 @@
 	"npc_dota_kobold_overboss"
 	{
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/props_structures/midas_throne/kobold_overboss.vmdl"
+		"Model"						"models/props_structures/midas_throne/kobold_underboss.vmdl"
 		"Ability1"					"dota_ability_throw_coin"
 		"Ability2"					"dota_ability_throw_coin_long"
 		"Ability3"					"dota_ability_celebrate"
