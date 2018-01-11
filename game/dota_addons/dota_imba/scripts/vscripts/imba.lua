@@ -354,15 +354,6 @@ function GameMode:ModifierFilter( keys )
 			end
 		end
 
-		-------------------------------------------------------------------------------------------------
-		-- Frantic mode duration adjustment
-		-------------------------------------------------------------------------------------------------
-		if IMBA_FRANTIC_MODE_ON then
-			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
-				keys.duration = keys.duration * IMBA_FRANTIC_VALUE
-			end
-		end
-
 		if modifier_name == "modifier_datadriven" then
 			return false
 		end
@@ -412,7 +403,9 @@ function GameMode:ModifierFilter( keys )
 					end
 				end
 			end
+
 			keys.duration = actually_duration
+
 		end
 
 		-------------------------------------------------------------------------------------------------
