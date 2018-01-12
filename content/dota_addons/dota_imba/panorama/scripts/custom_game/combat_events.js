@@ -17,7 +17,7 @@ function CreateCustomToast(data) {
 		var isVictim = data.victimPlayer === Game.GetLocalPlayerID();
 		var isKiller = data.killerPlayer === Game.GetLocalPlayerID();
 		var isRoshanKill = data.roshan != null
-//		var teamVictim = byNeutrals || Players.GetTeam(data.victimPlayer) === Players.GetTeam(Game.GetLocalPlayerID());
+		//		var teamVictim = byNeutrals || Players.GetTeam(data.victimPlayer) === Players.GetTeam(Game.GetLocalPlayerID());
 		var teamKiller = !byNeutrals && Players.GetTeam(data.killerPlayer) === Players.GetTeam(Game.GetLocalPlayerID());
 		row.SetHasClass('AllyEvent', teamKiller);
 		row.SetHasClass('EnemyEvent', byNeutrals || !teamKiller);
@@ -31,8 +31,8 @@ function CreateCustomToast(data) {
 			Game.EmitSound('notification.self.death');
 		else if (teamKiller)
 			Game.EmitSound('notification.teammate.kill');
-//		else if (teamVictim)
-//			Game.EmitSound('notification.teammate.death');
+		//		else if (teamVictim)
+		//			Game.EmitSound('notification.teammate.death');
 		if (isSelfKill) {
 			Game.EmitSound('notification.self.kill');
 			rowText = $.Localize('custom_toast_PlayerDeniedSelf');
@@ -81,7 +81,7 @@ function CreateCustomToast(data) {
 
 	if (byNeutrals) {
 		rowText = rowText.replace('{gold}', "");
-	}		
+	}
 
 	if (data.victimUnitName)
 		rowText = rowText.replace('{victim_name}', "<font color='red'>" + $.Localize(data.victimUnitName) + '</font>');
@@ -102,27 +102,27 @@ function CreateCustomToast(data) {
 	}
 	if (data.variables)
 		for (var k in data.variables) {
-//			rowText = rowText.replace(k, $.Localize(data.variables[k]));
+			//			rowText = rowText.replace(k, $.Localize(data.variables[k]));
 			rowText = rowText + ' (' + $.Localize(data.variables[k]) + ")";
 		}
 	if (rowText.indexOf('<img') === -1)
 		row.AddClass('SimpleText');
 	row.FindChildTraverse('ToastLabel').text = rowText;
-	$.Schedule(10, function() {
+	$.Schedule(10, function () {
 		row.AddClass('Collapsed');
 	});
 	row.DeleteAsync(10.3);
 };
 
 var RUNES_COLOR_MAP = {
-	"bounty":			'FF7800',
-	"haste":			'F62817',
-	"arcane":			'FD3AFB',
-	"frost":			'0099FF',
-	"invisibility":		'8B008B',
-	"regeneration":		'7FFF00',
-	"double_damage":	'80CCFF',
-	"illusion":			'FFEC5E',
+	"bounty": 'FF7800',
+	"haste": 'F62817',
+	"arcane": 'FD3AFB',
+	"frost": '0099FF',
+	"invisibility": '8B008B',
+	"regeneration": '7FFF00',
+	"double_damage": '80CCFF',
+	"illusion": 'FFEC5E',
 };
 
 function CreateHeroElements(id) {
@@ -147,28 +147,28 @@ function secondsToMS(seconds, bTwoChars) {
 	return minutes + ':' + seconds;
 }
 
-String.prototype.encodeHTML = function() {
+String.prototype.encodeHTML = function () {
 	return this.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
 };
 
 function TransformTextureToPath(texture, optPanelImageStyle) {
-//	if (IsHeroName(texture)) {
-		return optPanelImageStyle === 'portrait' ?
-			'file://{images}/heroes/selection/' + texture + '.png' :
-			optPanelImageStyle === 'icon' ?
-				'file://{images}/heroes/icons/' + texture + '.png' :
-				'file://{images}/heroes/' + texture + '.png';
-//	} else if (IsBossName(texture)) {
-//		return bossesMap[texture] || 'file://{images}/custom_game/units/' + texture + '.png';
-//	} else if (texture.lastIndexOf('npc_') === 0) {
-//		return optPanelImageStyle === 'portrait' ?
-//			'file://{images}/custom_game/units/portraits/' + texture + '.png' :
-//			'file://{images}/custom_game/units/' + texture + '.png';
-//	} else {
-//		return optPanelImageStyle === 'item' ?
-//			'raw://resource/flash3/images/items/' + texture + '.png' :
-//			'raw://resource/flash3/images/spellicons/' + texture + '.png';
-//	}
+	//	if (IsHeroName(texture)) {
+	return optPanelImageStyle === 'portrait' ?
+		'file://{images}/heroes/selection/' + texture + '.png' :
+		optPanelImageStyle === 'icon' ?
+		'file://{images}/heroes/icons/' + texture + '.png' :
+		'file://{images}/heroes/' + texture + '.png';
+	//	} else if (IsBossName(texture)) {
+	//		return bossesMap[texture] || 'file://{images}/custom_game/units/' + texture + '.png';
+	//	} else if (texture.lastIndexOf('npc_') === 0) {
+	//		return optPanelImageStyle === 'portrait' ?
+	//			'file://{images}/custom_game/units/portraits/' + texture + '.png' :
+	//			'file://{images}/custom_game/units/' + texture + '.png';
+	//	} else {
+	//		return optPanelImageStyle === 'item' ?
+	//			'raw://resource/flash3/images/items/' + texture + '.png' :
+	//			'raw://resource/flash3/images/spellicons/' + texture + '.png';
+	//	}
 }
 
 function GetPlayerHeroName(playerId) {
@@ -179,11 +179,11 @@ function GetPlayerHeroName(playerId) {
 }
 
 function FormatGold(value) {
-	return (GameUI.IsAltDown() ? value : value > 9999999 ? (value/1000000).toFixed(2) + 'M' : value > 99999 ? (value/1000).toFixed(1) + 'k' : value)
+	return (GameUI.IsAltDown() ? value : value > 9999999 ? (value / 1000000).toFixed(2) + 'M' : value > 99999 ? (value / 1000).toFixed(1) + 'k' : value)
 		.toString()
 		.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 }
 
-(function() {
+(function () {
 	GameEvents.Subscribe('create_custom_toast', CreateCustomToast);
 })();

@@ -57,6 +57,8 @@ function HeroSelection:HeroListPreLoad()
 				table.insert(HeroSelection.disabled_silent_heroes, hero)
 			elseif GetKeyValueByHeroName(hero, "IsDisabled") == 5 then
 				table.insert(HeroSelection.disabled_overthrow_heroes, hero)
+			elseif HeroIsHotDisabled(hero) then -- hero hot disable
+				table.insert(HeroSelection.disabled_heroes, hero)
 			end
 
 			if GetKeyValueByHeroName(hero, "IsImba") == 1 then

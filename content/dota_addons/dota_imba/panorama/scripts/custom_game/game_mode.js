@@ -4,8 +4,7 @@
 =========================================================================*/
 (function () {
 	InitializeUI()
-
-	GameEvents.Subscribe("loading_screen_news", InitializeNews);
+	$.Schedule(4, InitializeNews);
 
 	// Hides battlecuck crap
 	var hit_test_blocker = $.GetContextPanel().GetParent().FindChild("SidebarAndBattleCupLayoutContainer");
@@ -24,6 +23,7 @@ var hero = 1
 
 // Initializes the UI for the player with host privileges
 function InitializeUI() {
+
 	var is_host = CheckForHostPrivileges();
 	if (is_host === undefined) {
 		$.Schedule(1, InitializeUI);
@@ -39,25 +39,25 @@ function InitializeUI() {
 
 		if (map_info.map_display_name == "imba_standard") {
 			$('#GameOptionsPanel').style.visibility = 'collapse';
-//			$('#HeroPowerOptionsPanel').style.visibility = 'collapse';
-//			$('#TowerPowerOptionsPanel').style.visibility = 'collapse';
-//			$('#AllPickToggle').style.visibility = 'collapse';
-//			$('#AllRandomToggle').style.visibility = 'collapse';
-//			$('#AllRandomSameHeroToggle').style.visibility = 'collapse';
-//			$('#FranticInfo').style.visibility = 'collapse';
-//			$('#GoldOption1').checked = true;
-//			$('#ExpOption1').checked = true;
+			//			$('#HeroPowerOptionsPanel').style.visibility = 'collapse';
+			//			$('#TowerPowerOptionsPanel').style.visibility = 'collapse';
+			//			$('#AllPickToggle').style.visibility = 'collapse';
+			//			$('#AllRandomToggle').style.visibility = 'collapse';
+			//			$('#AllRandomSameHeroToggle').style.visibility = 'collapse';
+			//			$('#FranticInfo').style.visibility = 'collapse';
+			//			$('#GoldOption1').checked = true;
+			//			$('#ExpOption1').checked = true;
 		} else if (map_info.map_display_name == "imba_10v10" || map_info.map_display_name == "imba_12v12") {
 			$('#GameOptionsPanel').style.visibility = 'collapse';
-//			$('#game_options_game_mode_title').text = $.Localize( "#imba_gamemode_name_10v10" );
-//			$('#HeroPowerOptionsPanel').style.visibility = 'collapse';
-//			$('#TowerPowerOptionsPanel').style.visibility = 'collapse';
-//			$('#AllPickToggle').style.visibility = 'collapse';
-//			$('#AllRandomToggle').style.visibility = 'collapse';
-//			$('#AllRandomSameHeroToggle').style.visibility = 'collapse';
-//			$('#FranticInfo').style.visibility = 'collapse';
-//			$('#GoldOption1').checked = true;
-//			$('#ExpOption1').checked = true;
+			//			$('#game_options_game_mode_title').text = $.Localize( "#imba_gamemode_name_10v10" );
+			//			$('#HeroPowerOptionsPanel').style.visibility = 'collapse';
+			//			$('#TowerPowerOptionsPanel').style.visibility = 'collapse';
+			//			$('#AllPickToggle').style.visibility = 'collapse';
+			//			$('#AllRandomToggle').style.visibility = 'collapse';
+			//			$('#AllRandomSameHeroToggle').style.visibility = 'collapse';
+			//			$('#FranticInfo').style.visibility = 'collapse';
+			//			$('#GoldOption1').checked = true;
+			//			$('#ExpOption1').checked = true;
 		} else if (map_info.map_display_name == "imba_custom" || map_info.map_display_name == "imba_frantic_10v10") {
 			$('#GoldOptionsPanel').style.visibility = 'collapse';
 			$('#ExpOptionsPanel').style.visibility = 'collapse';
@@ -73,45 +73,52 @@ function InitializeUI() {
 		}
 	}
 
-	InitializeNews();
 	SetGameOptions(); // Setup game options by default in case the host don't change them (initialize)
 }
 
-function InitializeNews() {
-	$.Msg("Init News...")
+var news = null;
+
+function setNews() {
+	if (news == null) return;
+
 	var lang = $.Localize("lang");
-    $.Msg("Language: " + lang)
-    
-    $.AsyncWebRequest('https://api.dota2imba.org/meta/news', 
-	{
-        type: 'GET',
-        dataType: 'json',
+	var fallbackLanguage = "en";
+
+	var title = news[fallbackLanguage].title;
+	var text = news[fallbackLanguage].text;
+
+	if (news[lang] !== undefined) {
+		title = news[lang].title;
+		text = news[lang].text;
+	}
+
+	$("#imba-news-article-title").text = title;
+	$("#imba-news-article-text").text = text;
+}
+
+function InitializeNews() {
+	$.Msg("Init News...");
+	$.AsyncWebRequest('https://api.dota2imba.org/meta/news', {
+		type: 'GET',
+		dataType: 'json',
 		success: function (d) {
-            $.Msg("News received"); 
-            $.Msg(JSON.stringify(d)); 
+			$.Msg("News received");
+			news = d.data;
+		},
 
-            var news = d.data;
-             
-			$("#imba-news-article-title").text = news["en"].title;
-			$("#imba-news-article-text").text = news["en"].text;
-
-			if (news[lang] !== undefined) {
-				$("#imba-news-article-title").text = news[lang].title;
-				$("#imba-news-article-text").text = news[lang].text;
-            }
-
-        },
-        timeout: 5000,
-        error: function (err) {
-            $.Msg("Api Error" + JSON.stringify(err));
-        }
+		timeout: 5000,
+		error: function (err) {
+			$.Msg("Api Error" + JSON.stringify(err));
+		}
 	});
+
+	$.Schedule(0.33, setNews);
 }
 
 // Checks if the local player has local privileges
 function CheckForHostPrivileges() {
 	var player_info = Game.GetLocalPlayerInfo();
-	if ( !player_info ) {
+	if (!player_info) {
 		return undefined;
 	} else {
 		return player_info.player_has_host_privileges;
@@ -119,8 +126,7 @@ function CheckForHostPrivileges() {
 }
 
 // Locks the game mode
-function SetGameParameters(parameter, value)
-{
+function SetGameParameters(parameter, value) {
 	if (parameter == "gold") {
 		gold = value
 	} else if (parameter == "exp") {
@@ -170,8 +176,7 @@ function SetQuickOptionsHigh() {
 	SetGameOptions();
 }
 
-function SetGameOptions()
-{
+function SetGameOptions() {
 	GameEvents.SendCustomGameEventToServer("set_game_mode", {
 		"is_host": CheckForHostPrivileges(),
 		"modes": {

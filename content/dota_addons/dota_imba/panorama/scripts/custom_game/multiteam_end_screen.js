@@ -1,6 +1,6 @@
 "use strict";
 
-(function() {	
+(function () {
 	/*
 	var ApiDebug = function(obj) {
 		$.AsyncWebRequest("http://api.dota2imba.org/game/event", {
@@ -55,10 +55,10 @@ function EndScoreboard() {
 		var serverInfo = args.info;
 		var xpInfo = args.xp_info;
 		var mapInfo = Game.GetMapInfo();
-		var radiantPlayerIds = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_GOODGUYS );
-		var direPlayerIds = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_BADGUYS );
-		var custom1PlayerIds = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_CUSTOM_1 );
-//		var custom2PlayerIds = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_CUSTOM_2 );
+		var radiantPlayerIds = Game.GetPlayerIDsOnTeam(DOTATeam_t.DOTA_TEAM_GOODGUYS);
+		var direPlayerIds = Game.GetPlayerIDsOnTeam(DOTATeam_t.DOTA_TEAM_BADGUYS);
+		var custom1PlayerIds = Game.GetPlayerIDsOnTeam(DOTATeam_t.DOTA_TEAM_CUSTOM_1);
+		//		var custom2PlayerIds = Game.GetPlayerIDsOnTeam( DOTATeam_t.DOTA_TEAM_CUSTOM_2 );
 
 		$.Msg({
 			args: args,
@@ -67,7 +67,7 @@ function EndScoreboard() {
 				ids1: radiantPlayerIds,
 				ids2: direPlayerIds,
 				ids3: custom1PlayerIds,
-//				ids4: custom2PlayerIds,
+				//				ids4: custom2PlayerIds,
 			}
 		});
 
@@ -93,19 +93,19 @@ function EndScoreboard() {
 			radiant: $("#es-radiant"),
 			dire: $("#es-dire"),
 			custom1: $("#es-custom1"),
-//			custom2: $("#es-custom2"),
+			//			custom2: $("#es-custom2"),
 			radiantPlayers: $("#es-radiant-players"),
 			direPlayers: $("#es-dire-players"),
 			custom1Players: $("#es-custom1-players"),
-//			custom2Players: $("#es-custom2-players"),
+			//			custom2Players: $("#es-custom2-players"),
 		};
-		
+
 		// the panorama xml file used for the player lines
 		var playerXmlFile = "file://{resources}/layout/custom_game/multiteam_end_screen_player.xml";
 
 		// sort a player by merging results from server and using getplayerinfo  
 		var loadPlayer = function (id) {
-			
+
 			$.Msg("Loading player " + id);
 
 			var playerInfo = Game.GetPlayerInfo(id);
@@ -129,17 +129,23 @@ function EndScoreboard() {
 				xp: xp
 			};
 		};
-		
+
 		// Load players = sort our data we got from above
 		var radiantPlayers = [];
 		var direPlayers = [];
 		var custom1Players = [];
 		var custom2Players = [];
 
-		$.Each(radiantPlayerIds, function (id) { radiantPlayers.push(loadPlayer(id)); });
-		$.Each(direPlayerIds, function (id) { direPlayers.push(loadPlayer(id)); });
-		$.Each(custom1PlayerIds, function (id) { custom1Players.push(loadPlayer(id)); });
-//		$.Each(custom2PlayerIds, function (id) { custom2Players.push(loadPlayer(id)); });
+		$.Each(radiantPlayerIds, function (id) {
+			radiantPlayers.push(loadPlayer(id));
+		});
+		$.Each(direPlayerIds, function (id) {
+			direPlayers.push(loadPlayer(id));
+		});
+		$.Each(custom1PlayerIds, function (id) {
+			custom1Players.push(loadPlayer(id));
+		});
+		//		$.Each(custom2PlayerIds, function (id) { custom2Players.push(loadPlayer(id)); });
 
 		var createPanelForPlayer = function (player, parent) {
 			$.Msg("Creating Panel for player " + player.info.player_steamid);
@@ -174,11 +180,11 @@ function EndScoreboard() {
 			// Avatar + Hero Image
 			values.avatar.steamid = player.info.player_steamid;
 			values.hero.heroname = player.info.player_selected_hero;
-			
+
 			// Steam Name + Hero name
 			values.name.text = player.info.player_name;
 			values.desc.text = $.Localize(player.info.player_selected_hero);
-			
+
 			// Stats
 			values.kills.text = player.info.player_kills;
 			values.deaths.text = player.info.player_deaths;
@@ -229,12 +235,12 @@ function EndScoreboard() {
 				values.xp.level.text = player.xp.level;
 				values.xp.rank.text = player.xp.title;
 				values.xp.rank.style.color = player.xp.color;
-	
+
 				var convertToPercentString = function (f) {
 					var x = Math.floor(Math.abs(f) * 100);
 					return x + "%";
 				};
-	
+
 				values.xp.progress.style.width = convertToPercentString(player.xp.progress);
 			} else {
 				values.xp.earned.text = "N/A";
@@ -247,7 +253,7 @@ function EndScoreboard() {
 			radiant: 0,
 			dire: 0,
 			custom1: 0,
-//			custom2: 0,
+			//			custom2: 0,
 		};
 
 		$.Msg("Creating the panels");
@@ -257,7 +263,7 @@ function EndScoreboard() {
 			scores.radiant = scores.radiant + player.info.player_kills;
 			createPanelForPlayer(player, panels.radiantPlayers);
 		});
-		
+
 		$.Each(direPlayers, function (player) {
 			scores.dire = scores.dire + player.info.player_kills;
 			createPanelForPlayer(player, panels.direPlayers);
@@ -268,16 +274,16 @@ function EndScoreboard() {
 			createPanelForPlayer(player, panels.custom1Players);
 		});
 
-//		$.Each(custom2Players, function (player) {
-//			scores.radiant = player.info.player_kills;
-//			createPanelForPlayer(player, panels.custom2Players);
-//		});
+		//		$.Each(custom2Players, function (player) {
+		//			scores.radiant = player.info.player_kills;
+		//			createPanelForPlayer(player, panels.custom2Players);
+		//		});
 
 		// Set Team Score
 		$("#es-team-score-radiant").text = new String(scores.radiant);
 		$("#es-team-score-dire").text = new String(scores.dire);
 		$("#es-team-score-custom1").text = new String(scores.custom1);
-//		$("#es-team-score-custom2").text = new String(scores.custom2);
+		//		$("#es-team-score-custom2").text = new String(scores.custom2);
 
 		$.Msg("Setting the game id button panel event");
 

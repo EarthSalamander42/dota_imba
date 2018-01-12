@@ -257,7 +257,7 @@ function EscapeHtml(unsafe) {
 		.replace(/>/g, "&gt;")
 		.replace(/"/g, "&quot;")
 		.replace(/'/g, "&#039;");
- }
+}
 
 function ProcessEmote(input, template, emote, id) {
 	var url = template.replace("{image_id}", id);
@@ -286,7 +286,7 @@ if (!Game.enterListeners) {
 	Game.enterListeners = {};
 }
 
-function LuaColor(color){
+function LuaColor(color) {
 	color = color || [0, 128, 128, 128];
 
 	return "rgb(" + [color[1], color[2], color[3]].join(",") + ")";
@@ -297,15 +297,16 @@ function SubmitGameChat() {
 	var entry = $("#GameChatEntry");
 
 	if (entry.text.length == 0 && entry.BCanSeeInParentScroll() && Game.Time() - (lastShowTime || time) > 0.1) {
-//		HideGameChat();
+		//		HideGameChat();
 		return;
 	}
 
 	if (entry.text === "-ping") {
 		Game.ServerCmd("dota_ping");
-	}
-	else
-	{
-		GameEvents.SendCustomGameEventToServer("custom_chat_say", { message: entry.text, team: !$("#GameChat").shiftHeld });
+	} else {
+		GameEvents.SendCustomGameEventToServer("custom_chat_say", {
+			message: entry.text,
+			team: !$("#GameChat").shiftHeld
+		});
 	}
 }

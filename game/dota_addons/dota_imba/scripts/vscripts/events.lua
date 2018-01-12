@@ -177,21 +177,12 @@ function GameMode:OnGameRulesStateChange(keys)
 			-- calculate levels
 			local xpInfo = {}
 
-			ApiPrint("Calculating XP Levels")
-
 			for k, v in pairs(players) do
 
-				ApiPrint(k)
  				local level = GetXPLevelByXp(v.xp)
-				ApiPrint(k .. " -> Level: " .. level)
 				local title = GetTitleIXP(level)
-				ApiPrint(k .. " -> Title: " .. title)
 				local color = GetTitleColorIXP(title, true)
-				ApiPrint(k .. " -> Color: " .. color)
 				local progress = GetXpProgressToNextLevel(v.xp)
-				ApiPrint(k .. " -> Progress: " .. progress)
-
-				ApiPrint(k .. " L: " .. level .. " T: " .. title .. " C: " .. color .. " P: " .. progress)
 
 				if level and title and color and progress then
 					xpInfo[k] = {
@@ -202,8 +193,6 @@ function GameMode:OnGameRulesStateChange(keys)
 					}
 				end
 			end
-
-			ApiPrint("Sending Event")
 
 			CustomGameEventManager:Send_ServerToAllClients("end_game", {
 				players = players,
@@ -898,6 +887,7 @@ function GameMode:OnTeamKillCredit(keys)
 		if nKillsRemaining <= 0 then
 			print(m_VictoryMessages[killer_team])
 			GameRules:SetCustomVictoryMessage( m_VictoryMessages[killer_team] )
+			GAME_WINNER_TEAM = killer_team
 			GameRules:SetGameWinner( killer_team )
 			broadcast_kill_event.victory = 1
 		elseif nKillsRemaining == 1 then
