@@ -684,7 +684,6 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		end)
 
 		-- Set initial spawn setup as having been done
-		PlayerResource:IncrementTeamPlayerCount(player_id)
 		CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(player_id), "picking_done", {})
 
 		-- TODO: in js, remove the function that gray out a hero when picked, since this function should do it in real time

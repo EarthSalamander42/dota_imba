@@ -8,7 +8,7 @@ ENABLE_HERO_RESPAWN = true					-- Should the heroes automatically respawn on a t
 UNIVERSAL_SHOP_MODE = false					-- Should the main shop contain Secret Shop items as well as regular items
 
 HERO_SELECTION_TIME = 30.0 + 5.0		-- How long should we let people select their hero?
-if IsInToolsMode() then HERO_SELECTION_TIME = 10.0 end
+if IsInToolsMode() then HERO_SELECTION_TIME = 15.0 end
 
 PRE_GAME_TIME = 90.0 + HERO_SELECTION_TIME	-- How long after people select their heroes should the horn blow and the game start?
 POST_GAME_TIME = 60.0						-- How long should we let people look at the scoreboard before closing the server automatically?
@@ -336,7 +336,6 @@ TOWER_UPGRADE_TREE["hardlane"]["tier_3"] = {}
 
 MAP_INITIAL_GOLD = 0														-- Gold granted to players at the start of the game on a normal pick
 USE_CUSTOM_HERO_LEVELS = true												-- Should we allow heroes to have custom levels?
-CHEAT_ENABLED = false
 
 -- Update game mode net tables
 CustomNetTables:SetTableValue("game_options", "all_pick", {IMBA_PICK_MODE_ALL_PICK})

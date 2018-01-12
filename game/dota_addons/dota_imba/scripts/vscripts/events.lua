@@ -1,9 +1,4 @@
--- This file contains all barebones-registered events and has already set up the passed-in parameters for your use.
--- Do not remove the GameMode:_Function calls in these events as it will mess with the internal barebones systems.
-
--- Cleanup a player when they leave
 function GameMode:OnDisconnect(keys)
-
 	-- GetConnectionState values:
 	-- 0 - no connection
 	-- 1 - bot connected
@@ -40,7 +35,6 @@ function GameMode:OnDisconnect(keys)
 		ApiPrint("Player " .. tostring(PlayerResource:GetSteamID(player_id)) .. " disconnected.");
 		local disconnect_time = 0
 		Timers:CreateTimer(1, function()
-			
 			-- Keep track of time disconnected
 			disconnect_time = disconnect_time + 1
 
@@ -54,31 +48,8 @@ function GameMode:OnDisconnect(keys)
 				print("player "..player_id.." has abandoned the game.")
 				ApiPrint("Player " .. tostring(PlayerResource:GetSteamID(player_id)) .. " has abandoned the game.");
 
-				-- Decrease the player's team's player count
-				PlayerResource:DecrementTeamPlayerCount(player_id)
-				print(REMAINING_GOODGUYS, REMAINING_BADGUYS)
-
 				-- Start redistributing this player's gold to its allies
 				PlayerResource:StartAbandonGoldRedistribution(player_id)
-
-				-- If this was the last player to abandon on his team, wait 15 seconds and end the game if no one came back.
-				if REMAINING_GOODGUYS <= 0 then
-					Notifications:BottomToAll({text = "#imba_team_good_abandon_message", duration = line_duration, style = {color = "DodgerBlue"} })
-					Timers:CreateTimer(FULL_ABANDON_TIME, function()
-						if REMAINING_GOODGUYS <= 0 then
-							GameRules:SetGameWinner(DOTA_TEAM_BADGUYS)
-							GAME_WINNER_TEAM = 3
-						end
-					end)
-				elseif REMAINING_BADGUYS <= 0 then
-					Notifications:BottomToAll({text = "#imba_team_bad_abandon_message", duration = line_duration, style = {color = "DodgerBlue"} })
-					Timers:CreateTimer(FULL_ABANDON_TIME, function()
-						if REMAINING_BADGUYS <= 0 then
-							GameRules:SetGameWinner(DOTA_TEAM_GOODGUYS)
-							GAME_WINNER_TEAM = 2
-						end
-					end)
-				end
 			-- If the player has reconnected, stop tracking connection state every second
 			elseif PlayerResource:GetConnectionState(player_id) == 2 then
 
@@ -91,28 +62,15 @@ function GameMode:OnDisconnect(keys)
 	end
 end
 
--- The overall game state has changed
 function GameMode:OnGameRulesStateChange(keys)
 	DebugPrint("[BAREBONES] GameRules State Changed")
 	DebugPrintTable(keys)
-	--	local i = 10
 
 	-- This internal handling is used to set up main barebones functions
 	GameMode:_OnGameRulesStateChange(keys)
 
 	local new_state = GameRules:State_Get()
 	CustomNetTables:SetTableValue("game_options", "game_state", {state = new_state})
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Game Setup / API Calls
-	-------------------------------------------------------------------------------------------------
-	if new_state == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
-		if PlayerResource:GetPlayerCount() < 10 then
-			if not IsInToolsMode() then
-				CHEAT_ENABLED = true
-			end
-		end
-	end
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Pick screen stuff
@@ -129,33 +87,6 @@ function GameMode:OnGameRulesStateChange(keys)
 	-- IMBA: Start-of-pre-game stuff
 	-------------------------------------------------------------------------------------------------
 	if new_state == DOTA_GAMERULES_STATE_PRE_GAME then
-		-- Play Announcer sounds in Picking Screen until a hero is picked
---		Timers:CreateTimer(function()
---			local i2 = false
---			for _, hero in pairs(HeroList:GetAllHeroes()) do
---				if hero.picked == true then print("Hero Picked! Aborting Announcer...") return nil end
---				if GameRules:GetDOTATime(false, true) >= -PRE_GAME_TIME + HERO_SELECTION_TIME -30 and GameRules:GetDOTATime(false, true) <= -PRE_GAME_TIME + HERO_SELECTION_TIME -29 then
---					EmitAnnouncerSoundForPlayer("announcer_announcer_count_battle_30", hero:GetPlayerID())
---				elseif GameRules:GetDOTATime(false, true) >= -PRE_GAME_TIME + HERO_SELECTION_TIME -10 and GameRules:GetDOTATime(false, true) <= -PRE_GAME_TIME + HERO_SELECTION_TIME then
---					if i2 == false then
---						if i == 10 then
---							EmitAnnouncerSoundForPlayer("announcer_ann_custom_countdown_"..i, hero:GetPlayerID())
---							i = i -1
---							i2 = true
---						elseif i <= 10 then
---							EmitAnnouncerSoundForPlayer("announcer_ann_custom_countdown_0"..i, hero:GetPlayerID())
---							i = i -1
---							i2 = true
---						elseif i == 1 then
---							print("NIL")
---							return nil
---						end
---					end
---				end
---			end
---			return 1.0
---		end)
-
 		-- Initialize Battle Pass
 		Imbattlepass:Init()
 
@@ -164,63 +95,6 @@ function GameMode:OnGameRulesStateChange(keys)
 
 		-- Initialize rune spawners
 		InitRunes()
-
-		Timers:CreateTimer(function() -- OnThink
-			if CHEAT_ENABLED == false then
-				if Convars:GetBool("developer") == true or Convars:GetBool("sv_cheats") == true or GameRules:IsCheatMode() then
-					if not IsInToolsMode() then
-						print("Cheats have been enabled, game don't count.")
-						CHEAT_ENABLED = true
-					end
-				end
-			end
-
-			-- fix for super high respawn time
-			for _, hero in pairs(HeroList:GetAllHeroes()) do
-				if not hero:IsAlive() then
-					local respawn_time = hero:GetTimeUntilRespawn()
-					local reaper_scythe = 36 -- max necro timer addition
-					if hero:HasModifier("modifier_imba_reapers_scythe_respawn") then
-						if respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[25] + reaper_scythe then
-							print("NECROPHOS BUG:", hero:GetUnitName(), "respawn time too high:", respawn_time..". setting to", HERO_RESPAWN_TIME_PER_LEVEL[25])
-							respawn_time = respawn_time + reaper_scythe
-						end
-					else
-						if respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[25] then
-							print(hero:GetUnitName(), "respawn time too high:", respawn_time..". setting to", HERO_RESPAWN_TIME_PER_LEVEL[25])
-							respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[25]
-						end
-					end
-					hero:SetTimeUntilRespawn(respawn_time)
-				end
-			end
-
-			if GetMapName() == "imba_overthrow" then
-				self:UpdateScoreboard()
-			end
-			return 1.0
-		end)
-
-		-- OVERTHROW: custom gold and xp earning
---		Timers:CreateTimer(function()
---			-- global
---			for _, hero in pairs(HeroList:GetAllHeroes()) do
---				if not hero:HasModifier("modifier_fountain_aura_buff") then
---					hero:ModifyGold(2, true, 0)
---					hero:AddExperience(4, 0, false, false)
---				end
---			end
---
---			-- center
---			local heroes = FindUnitsInRadius(2, Entities:FindByName(nil, "@overboss"):GetAbsOrigin(), nil, 900, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
---			for _, hero in pairs(heroes) do
---				if not hero:HasModifier("modifier_fountain_aura_buff") then
---					hero:ModifyGold(4, true, 0)
---					hero:AddExperience(10, 0, false, false)
---				end
---			end
---			return 0.5
---		end)
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -228,7 +102,6 @@ function GameMode:OnGameRulesStateChange(keys)
 	-------------------------------------------------------------------------------------------------
 	if new_state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		ApiPrint("Entering Game in progress / horn")
-		CountGameIXP()
 
 		for _, hero in pairs(HeroList:GetAllHeroes()) do
 			if IsDev(hero) then
@@ -248,18 +121,16 @@ function GameMode:OnGameRulesStateChange(keys)
 		if GetMapName() ~= "imba_standard" then
 			if RandomInt(1, 100) > 25 then
 				Timers:CreateTimer(RandomInt(5, 10) * 60, function()
-					if CHEAT_ENABLED == false then
-						local pos = {}
-						pos[1] = Vector(6446, -6979, 1496)
-						pos[2] = Vector(RandomInt(-6000, 0), RandomInt(7150, 7300), 1423)
-						pos[3] = Vector(RandomInt(-1000, 2000), RandomInt(6900, 7200), 1440)
-						pos[4] = Vector(7041, -6263, 1461)
-						local pos = pos[4]
+					local pos = {}
+					pos[1] = Vector(6446, -6979, 1496)
+					pos[2] = Vector(RandomInt(-6000, 0), RandomInt(7150, 7300), 1423)
+					pos[3] = Vector(RandomInt(-1000, 2000), RandomInt(6900, 7200), 1440)
+					pos[4] = Vector(7041, -6263, 1461)
+					local pos = pos[4]
 
-						GridNav:DestroyTreesAroundPoint(pos, 80, false)
-						local item = CreateItem("item_the_caustic_finale", nil, nil)
-						local drop = CreateItemOnPositionSync(pos, item)
-					end
+					GridNav:DestroyTreesAroundPoint(pos, 80, false)
+					local item = CreateItem("item_the_caustic_finale", nil, nil)
+					local drop = CreateItemOnPositionSync(pos, item)
 				end)
 			end
 		end

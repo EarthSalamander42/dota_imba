@@ -128,17 +128,6 @@ function GetTitleColorIXP(title, js)
 	end
 end
 
-function CountGameIXP()
-	if CHEAT_ENABLED == true then
-		print("CHEATS: Game will not record xp.")
-		return
-	else
-		Timers:CreateTimer(GAME_COUNT_DELAY, function()
-			CustomNetTables:SetTableValue("game_options", "game_count", {value = 1})
-		end)
-	end
-end
-
 function GetPlayerInfoIXP() -- yet it has too much useless loops, format later
 if api_preloaded.players == nil then return end
 local level = {}

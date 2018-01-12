@@ -83,32 +83,6 @@ function PlayerResource:GetHasAbandonedDueToLongDisconnect(player_id)
 	end
 end
 
--- Increase a player's team's player count
-function PlayerResource:IncrementTeamPlayerCount(player_id)
-	if self:IsImbaPlayer(player_id) then
-		if self:GetTeam(player_id) == DOTA_TEAM_GOODGUYS then
-			REMAINING_GOODGUYS = REMAINING_GOODGUYS + 1
-			print("Radiant now has "..REMAINING_GOODGUYS.." players remaining")
-		else
-			REMAINING_BADGUYS = REMAINING_BADGUYS + 1
-			print("Dire now has "..REMAINING_BADGUYS.." players remaining")
-		end
-	end
-end
-
--- Decrease a player's team's player count
-function PlayerResource:DecrementTeamPlayerCount(player_id)
-	if self:IsImbaPlayer(player_id) then
-		if self:GetTeam(player_id) == DOTA_TEAM_GOODGUYS then
-			REMAINING_GOODGUYS = REMAINING_GOODGUYS - 1
-			print("Radiant now has "..REMAINING_GOODGUYS.." players remaining")
-		else
-			REMAINING_BADGUYS = REMAINING_BADGUYS - 1
-			print("Dire now has "..REMAINING_BADGUYS.." players remaining")
-		end
-	end
-end
-
 -- Increase a player's current deathstreak count
 function PlayerResource:IncrementDeathstreak(player_id)
 	if self:IsImbaPlayer(player_id) then

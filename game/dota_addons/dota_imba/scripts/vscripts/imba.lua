@@ -1195,6 +1195,7 @@ function GameMode:OnAllPlayersLoaded()
 	GameRules:GetGameModeEntity():SetModifyExperienceFilter( Dynamic_Wrap(GameMode, "ExperienceFilter"), self )
 	GameRules:GetGameModeEntity():SetModifierGainedFilter( Dynamic_Wrap(GameMode, "ModifierFilter"), self )
 	GameRules:GetGameModeEntity():SetItemAddedToInventoryFilter( Dynamic_Wrap(GameMode, "ItemAddedFilter"), self )
+	GameRules:GetGameModeEntity():SetThink( "OnThink", self, 1 )
 
 	-- CHAT
 	chat = Chat(Players, Users, TEAM_COLORS)
@@ -2045,4 +2046,78 @@ function GameMode:OnNpcGoalReached( event )
 	if npc:GetUnitName() == "npc_dota_treasure_courier" then
 		GameMode:TreasureDrop( npc )
 	end
+end
+
+function GameMode:OnThink()
+local newState = GameRules:State_Get()
+if newState == DOTA_GAMERULES_STATE_POST_GAME then return nil end
+if GameRules:IsGamePaused() == true then return 1 end
+local team_abandoned = 0
+
+	if newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+		
+	end
+
+	if GetMapName() == "imba_overthrow" then
+		self:UpdateScoreboard()
+	else
+		-- fix for super high respawn time
+		for _, hero in pairs(HeroList:GetAllHeroes()) do
+			if not hero:IsAlive() then
+				local respawn_time = hero:GetTimeUntilRespawn()
+				local reaper_scythe = 36 -- max necro timer addition
+				if hero:HasModifier("modifier_imba_reapers_scythe_respawn") then
+					if respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[math.min(hero:GetLevel(), 25)] + reaper_scythe then
+						print("NECROPHOS BUG:", hero:GetUnitName(), "respawn time too high:", respawn_time..". setting to", HERO_RESPAWN_TIME_PER_LEVEL[25])
+						respawn_time = respawn_time + reaper_scythe
+					end
+				else
+					if respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[math.min(hero:GetLevel(), 25)] then
+						print(hero:GetUnitName(), "respawn time too high:", respawn_time..". setting to", HERO_RESPAWN_TIME_PER_LEVEL[25])
+						respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[math.min(hero:GetLevel(), 25)]
+					end
+				end
+				hero:SetTimeUntilRespawn(respawn_time)
+			end
+		end
+
+		-- End the game if one team completely abandoned
+		for ID = 0, PlayerResource:GetPlayerCount() - 1 do
+			for team = 2, 3 do
+				if PlayerResource:GetTeamNumber() == team then
+					local Hero = PlayerResource:GetSelectedHeroEntity(ID)
+					if #Hero then
+						print("Team "..team.." Heroes:", #Hero)
+						Notifications:BottomToAll({text = "#imba_team_bad_abandon_message", duration = line_duration, style = {color = "DodgerBlue"} })
+						Timers:CreateTimer(FULL_ABANDON_TIME, function()
+							GameRules:SetGameWinner(team)
+							GAME_WINNER_TEAM = team
+						end)
+					end
+				end
+			end
+		end
+	end
+
+	-- Picking Screen voice alert
+	if i == nil then i = HERO_SELECTION_TIME -1
+	elseif i == false then
+	else
+		i = i -1
+		for _, hero in pairs(HeroList:GetAllHeroes()) do
+			if not hero.picked then
+				if i == 30 then
+					EmitAnnouncerSoundForPlayer("announcer_ann_custom_countdown_"..i, hero:GetPlayerID())
+				elseif i == 10 then
+					EmitAnnouncerSoundForPlayer("announcer_ann_custom_countdown_"..i, hero:GetPlayerID())
+				elseif i <= 10 and i > 0 then
+					EmitAnnouncerSoundForPlayer("announcer_ann_custom_countdown_0"..i, hero:GetPlayerID())
+				elseif i <= 0 then
+					i = false
+				end
+			end
+		end
+	end
+
+	return 1
 end

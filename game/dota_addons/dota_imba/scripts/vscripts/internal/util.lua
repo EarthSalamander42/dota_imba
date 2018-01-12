@@ -993,7 +993,6 @@ function ReconnectPlayer(player_id)
 			Notifications:BottomToAll({hero = hero_name, duration = line_duration})
 			Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
 			Notifications:BottomToAll({text = "#imba_player_reconnect_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
-			PlayerResource:IncrementTeamPlayerCount(player_id)
 
 			-- Stop redistributing gold to allies, if applicable
 			PlayerResource:StopAbandonGoldRedistribution(player_id)
@@ -1358,56 +1357,56 @@ end
 
 function CBaseEntity:IsRune()
 	local runes = {
-                "models/props_gameplay/rune_goldxp.vmdl",
-                "models/props_gameplay/rune_haste01.vmdl",
-                "models/props_gameplay/rune_doubledamage01.vmdl",
-                "models/props_gameplay/rune_regeneration01.vmdl",
-                "models/props_gameplay/rune_arcane.vmdl",
-                "models/props_gameplay/rune_invisibility01.vmdl",
-                "models/props_gameplay/rune_illusion01.vmdl",
-                "models/props_gameplay/rune_frost.vmdl",
-                "models/props_gameplay/gold_coin001.vmdl",	-- Overthrow coin
-            }
-    for _, model in pairs(runes) do
-        if self:GetModelName() == model then
-            return true
-        end
-    end
-    return false
+				"models/props_gameplay/rune_goldxp.vmdl",
+				"models/props_gameplay/rune_haste01.vmdl",
+				"models/props_gameplay/rune_doubledamage01.vmdl",
+				"models/props_gameplay/rune_regeneration01.vmdl",
+				"models/props_gameplay/rune_arcane.vmdl",
+				"models/props_gameplay/rune_invisibility01.vmdl",
+				"models/props_gameplay/rune_illusion01.vmdl",
+				"models/props_gameplay/rune_frost.vmdl",
+				"models/props_gameplay/gold_coin001.vmdl",	-- Overthrow coin
+			}
+	for _, model in pairs(runes) do
+		if self:GetModelName() == model then
+			return true
+		end
+	end
+	return false
 end
 
 -- Overthrow
 function PickRandomShuffle( reference_list, bucket )
-    if ( #reference_list == 0 ) then
-        return nil
-    end
-    
-    if ( #bucket == 0 ) then
-        -- ran out of options, refill the bucket from the reference
-        for k, v in pairs(reference_list) do
-            bucket[k] = v
-        end
-    end
+	if ( #reference_list == 0 ) then
+		return nil
+	end
+	
+	if ( #bucket == 0 ) then
+		-- ran out of options, refill the bucket from the reference
+		for k, v in pairs(reference_list) do
+			bucket[k] = v
+		end
+	end
 
-    -- pick a value from the bucket and remove it
-    local pick_index = RandomInt( 1, #bucket )
-    local result = bucket[ pick_index ]
-    table.remove( bucket, pick_index )
-    return result
+	-- pick a value from the bucket and remove it
+	local pick_index = RandomInt( 1, #bucket )
+	local result = bucket[ pick_index ]
+	table.remove( bucket, pick_index )
+	return result
 end
 
 function shallowcopy(orig)
-    local orig_type = type(orig)
-    local copy
-    if orig_type == 'table' then
-        copy = {}
-        for orig_key, orig_value in pairs(orig) do
-            copy[orig_key] = orig_value
-        end
-    else -- number, string, boolean, etc
-        copy = orig
-    end
-    return copy
+	local orig_type = type(orig)
+	local copy
+	if orig_type == 'table' then
+		copy = {}
+		for orig_key, orig_value in pairs(orig) do
+			copy[orig_key] = orig_value
+		end
+	else -- number, string, boolean, etc
+		copy = orig
+	end
+	return copy
 end
 
 function ShuffledList( orig_list )
@@ -1445,24 +1444,24 @@ function TableFindKey( table, val )
 end
 
 function CountdownTimer()
-    nCOUNTDOWNTIMER = nCOUNTDOWNTIMER - 1
-    local t = nCOUNTDOWNTIMER
+	nCOUNTDOWNTIMER = nCOUNTDOWNTIMER - 1
+	local t = nCOUNTDOWNTIMER
 	-- print( t )
-    local minutes = math.floor(t / 60)
-    local seconds = t - (minutes * 60)
-    local m10 = math.floor(minutes / 10)
-    local m01 = minutes - (m10 * 10)
-    local s10 = math.floor(seconds / 10)
-    local s01 = seconds - (s10 * 10)
-    local broadcast_gametimer = 
-        {
-            timer_minute_10 = m10,
-            timer_minute_01 = m01,
-            timer_second_10 = s10,
-            timer_second_01 = s01,
-        }
-    CustomGameEventManager:Send_ServerToAllClients( "countdown", broadcast_gametimer )
-    if t <= 120 then
-        CustomGameEventManager:Send_ServerToAllClients( "time_remaining", broadcast_gametimer )
-    end
+	local minutes = math.floor(t / 60)
+	local seconds = t - (minutes * 60)
+	local m10 = math.floor(minutes / 10)
+	local m01 = minutes - (m10 * 10)
+	local s10 = math.floor(seconds / 10)
+	local s01 = seconds - (s10 * 10)
+	local broadcast_gametimer = 
+		{
+			timer_minute_10 = m10,
+			timer_minute_01 = m01,
+			timer_second_10 = s10,
+			timer_second_01 = s01,
+		}
+	CustomGameEventManager:Send_ServerToAllClients( "countdown", broadcast_gametimer )
+	if t <= 120 then
+		CustomGameEventManager:Send_ServerToAllClients( "time_remaining", broadcast_gametimer )
+	end
 end

@@ -21,8 +21,6 @@ LinkLuaModifier("modifier_imba_hook_light_stack","hero/hero_pudge", LUA_MODIFIER
 
 function imba_pudge_sharp_hook:GetIntrinsicModifierName() return "modifier_imba_hook_sharp_stack" end
 function imba_pudge_light_hook:GetIntrinsicModifierName() return "modifier_imba_hook_light_stack" end
-function imba_pudge_sharp_hook:IsStealable()	return false end
-function imba_pudge_sharp_hook:IsNetherWardStealable() 	return false end
 
 function imba_pudge_sharp_hook:OnToggle()
 	local toggle = self:GetToggleState()  --true为打开 false为关闭
@@ -40,8 +38,6 @@ function imba_pudge_sharp_hook:OnToggle()
 	end
 end
 
-function imba_pudge_light_hook:IsStealable()	return false end
-function imba_pudge_light_hook:IsNetherWardStealable() 	return false end
 function imba_pudge_light_hook:OnToggle()
 	local toggle = self:GetToggleState()  --true为打开 false为关闭
 	local buff = self:GetCaster():FindModifierByName("modifier_imba_hook_light_stack")
@@ -74,7 +70,7 @@ function modifier_imba_hook_sharp_stack:OnCreated()
 	self.caster_level = 1
 	self:SetStackCount(1)
 	if self.caster:HasTalent("special_bonus_imba_pudge_1") then
-		self:SetStackCount(1 + self.caster:FindTalentValue("special_bonus_imba_pudge_1"))
+		self:SetStackCount(1 + self.caster:FindTalentValue("special_bonus_imba_pudge_1") / 2)
 	end
 end
 
@@ -104,7 +100,7 @@ function modifier_imba_hook_light_stack:OnCreated()
 	self.caster_level = 1
 	self:SetStackCount(1)
 	if self.caster:HasTalent("special_bonus_imba_pudge_1") then
-		self:SetStackCount(1 + self.caster:FindTalentValue("special_bonus_imba_pudge_1"))
+		self:SetStackCount(1 + self.caster:FindTalentValue("special_bonus_imba_pudge_1") / 2)
 	end
 end
 
@@ -127,8 +123,8 @@ function modifier_special_bonus_imba_pudge_1:OnCreated()
 	local spd_hook_buff = self:GetParent():FindModifierByName("modifier_imba_hook_light_stack")
 	local stack = self:GetParent():FindTalentValue("special_bonus_imba_pudge_1")
 	if dmg_hook_buff and spd_hook_buff then
-		dmg_hook_buff:SetStackCount(dmg_hook_buff:GetStackCount() + stack)
-		spd_hook_buff:SetStackCount(spd_hook_buff:GetStackCount() + stack)
+		dmg_hook_buff:SetStackCount(dmg_hook_buff:GetStackCount() + (stack / 2))
+		spd_hook_buff:SetStackCount(spd_hook_buff:GetStackCount() + (stack / 2))
 	end
 end
 
@@ -671,7 +667,7 @@ function imba_pudge_rot_active:OnCreated()
 		self:OnIntervalThink()
 		self:StartIntervalThink(ability:GetSpecialValueFor("rot_tick"))
 		EmitSoundOn("Hero_Pudge.Rot", caster)
-		
+
 		local pfx_name = "particles/units/heroes/hero_pudge/pudge_rot.vpcf"
 		self.pfx = ParticleManager:CreateParticle(pfx_name, PATTACH_ABSORIGIN_FOLLOW, caster)
 		ParticleManager:SetParticleControl(self.pfx, 1, Vector(self.radius, 0, 0))
@@ -682,7 +678,8 @@ function imba_pudge_rot_active:OnIntervalThink()
 	if not IsServer() then return end
 	local caster = self:GetCaster()
 	local ability = self:GetAbility()
-	local dmg = ability:GetSpecialValueFor("rot_damage") + caster:GetMaxHealth() * ability:GetSpecialValueFor("bonus_damage") * 0.01 + caster:FindTalentValue("special_bonus_imba_pudge_6")
+	local dmg = ability:GetSpecialValueFor("rot_damage") + caster:GetMaxHealth() * ability:GetSpecialValueFor("bonus_damage") / 100 + caster:FindTalentValue("special_bonus_imba_pudge_6")
+	print(dmg, ability:GetSpecialValueFor("rot_damage"), caster:GetMaxHealth() * ability:GetSpecialValueFor("bonus_damage") / 100, caster:FindTalentValue("special_bonus_imba_pudge_6"))
 	local selfDamageTable = {
 						victim = caster,
 						attacker = caster,
@@ -784,6 +781,7 @@ function modifier_imba_pudge_flesh_heap_handle:OnDeath(keys)
 	end
 end
 
+--[[
 imba_pudge_flesh_heap = imba_pudge_flesh_heap or class({})
 
 LinkLuaModifier("modifier_imba_flesh_heap_stacks","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
@@ -841,7 +839,7 @@ function modifier_imba_flesh_heap_stacks:GetModifierModelScale()
 	if stacks > max_stack then stacks = max_stack end
 	return stacks * 3
 end
-
+--]]
 --=================================================================================================================
 -- Pudge's Dismember
 --=================================================================================================================
@@ -934,4 +932,127 @@ function modifier_imba_pudge_dismember_buff:IsStunDebuff() return false end
 
 function modifier_imba_pudge_dismember_buff:GetModifierSpellLifesteal()
 	return self:GetAbility():GetSpecialValueFor("spell_lifesteal")
+end
+
+function FleshHeapUpgrade( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local modifier_resist = keys.modifier_resist
+	local modifier_stacks = keys.modifier_stacks
+
+	-- Parameters
+	local stack_scale_up = ability:GetLevelSpecialValueFor("stack_scale_up", ability_level)
+	local max_stacks = ability:GetLevelSpecialValueFor("max_stacks", ability_level)
+	local stack_amount
+	local resist_amount
+
+	if caster:HasTalent("special_bonus_imba_pudge_4") then
+		max_stacks = max_stacks + caster:FindTalentValue("special_bonus_imba_pudge_4", "max_stacks")
+	end
+
+	-- If Heap is already learned, fetch the current amount of stacks
+	if caster.heap_stacks then
+		stack_amount = caster.heap_stacks
+		resist_amount = caster.heap_resist_stacks
+	-- Else, fetch kills/assists up to this point of the game (lazy way to make Heap retroactive)
+	else
+		local assists = caster:GetAssists()
+		local kills = caster:GetKills()	
+		stack_amount = kills + assists
+		resist_amount = math.min(stack_amount, max_stacks)
+
+		-- Define the global variables which keep track of heap stacks
+		caster.heap_stacks = stack_amount
+		caster.heap_resist_stacks = resist_amount
+	end
+
+	-- Remove both modifiers in order to update their bonuses
+	caster:RemoveModifierByName(modifier_stacks)
+	while caster:HasModifier(modifier_resist) do
+		caster:RemoveModifierByName(modifier_resist)
+	end
+
+	-- Add stacks of the capped (magic resist) modifier
+	for i = 1, resist_amount do
+		ability:ApplyDataDrivenModifier(caster, caster, modifier_resist, {})
+	end
+
+	-- Add stacks of the uncapped modifier
+	AddStacks(ability, caster, caster, modifier_stacks, stack_amount, true)
+
+	-- Update stats
+	caster:CalculateStatBonus()
+
+	-- Make pudge GROW
+	caster:SetModelScale( math.min( 1 + stack_scale_up * stack_amount / 100, 2.0) )
+end
+
+function FleshHeap( keys )
+	local caster = keys.caster
+	local target = keys.unit
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+
+	-- If this isnt a real hero, do nothing.
+	if ( not target:IsRealHero() ) or target:HasModifier("modifier_arc_warden_tempest_double") then
+		return nil
+	end
+
+	-- Parameters
+	local max_stacks = ability:GetLevelSpecialValueFor("max_stacks", ability_level)
+
+	if caster:HasTalent("special_bonus_imba_pudge_4") then
+		max_stacks = max_stacks + caster:FindTalentValue("special_bonus_imba_pudge_4", "max_stacks")
+	end
+
+	-- Prevent resist stacks from resetting if the skill is unlearned
+	if ability_level == 0 then
+		max_stacks = caster.heap_resist_stacks + 1
+	end
+
+	-- Update the global heap stacks variable
+	caster.heap_stacks = caster.heap_stacks + 1
+	caster.heap_resist_stacks = math.min(caster.heap_resist_stacks + 1, max_stacks)
+
+	-- Play pudge's voice reaction
+	caster:EmitSound("pudge_pud_ability_heap_0"..RandomInt(1,2))
+end
+
+function HeapUpdater( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local modifier_resist = keys.modifier_resist
+	local modifier_stacks = keys.modifier_stacks
+
+	-- Parameters
+	local stack_scale_up = ability:GetLevelSpecialValueFor("stack_scale_up", ability_level)
+	local stack_amount = caster:GetModifierStackCount(modifier_stacks, caster)
+	local resist_amount = caster:FindAllModifiersByName(modifier_resist)
+	print(modifier_stacks, stack_amount, caster.heap_stacks)
+
+	-- If the amount of strength stacks has increased, update it
+--	if caster.heap_stacks > stack_amount and caster:IsAlive() then
+		local stacks_missing = caster.heap_stacks - stack_amount
+
+		-- Add the appropriate amount of strength stacks
+		caster:SetModifierStackCount(modifier_stacks, ability, caster.heap_stacks)
+
+		-- Update stats
+		caster:CalculateStatBonus()
+
+		-- Make pudge GROW
+		caster:SetModelScale( math.min( 1 + stack_scale_up * stack_amount / 100, 2.0) )
+--	end
+
+	-- If the amount of resist stacks has increased, update it
+	if caster.heap_resist_stacks > #resist_amount and caster:IsAlive() then
+		local stacks_missing = caster.heap_resist_stacks - #resist_amount
+
+		-- Add the appropriate amount of resist stacks
+		for i = 1, stacks_missing do
+			ability:ApplyDataDrivenModifier(caster, caster, modifier_resist, {})
+		end
+	end
 end
