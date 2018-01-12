@@ -47,7 +47,9 @@ function HeroSelection:HeroListPreLoad()
 		hero = string.gsub(hero, "imba", "dota")
 		if string.find(hero, "npc_dota_hero_") then
 
-			if GetKeyValueByHeroName(hero, "IsDisabled") == 1 then
+			if HeroIsHotDisabled(hero) then -- hero hot disable
+				table.insert(HeroSelection.disabled_heroes, hero)
+			elseif GetKeyValueByHeroName(hero, "IsDisabled") == 1 then
 				table.insert(HeroSelection.disabled_10v10_heroes, hero)
 			elseif GetKeyValueByHeroName(hero, "IsDisabled") == 2 then
 				table.insert(HeroSelection.disabled_frantic_heroes, hero)
@@ -57,8 +59,6 @@ function HeroSelection:HeroListPreLoad()
 				table.insert(HeroSelection.disabled_silent_heroes, hero)
 			elseif GetKeyValueByHeroName(hero, "IsDisabled") == 5 then
 				table.insert(HeroSelection.disabled_overthrow_heroes, hero)
-			elseif HeroIsHotDisabled(hero) then -- hero hot disable
-				table.insert(HeroSelection.disabled_heroes, hero)
 			end
 
 			if GetKeyValueByHeroName(hero, "IsImba") == 1 then
