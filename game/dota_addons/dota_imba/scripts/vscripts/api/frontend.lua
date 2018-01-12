@@ -157,6 +157,10 @@ function GetStatsForPlayer(ID)
 end
 
 function HeroIsHotDisabled(hero)
+	if api_preloaded.hot_disabled_heroes == nil then
+		return false
+	end
+
     for i = 1, #api_preloaded.hot_disabled_heroes do
         if api_preloaded.hot_disabled_heroes[i] == hero then
             return true
