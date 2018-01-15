@@ -7,12 +7,32 @@ CreateEmptyTalents("pangolier")
 --Talent #3: Grants Pangolier a parry modifier that will gain stacks through Shield Crash
 function modifier_special_bonus_imba_pangolier_3:OnCreated()
 	if IsServer() then
-		local caster = self:GetCaster()
-		local shield_crash = caster:FindAbilityByName("imba_pangolier_shield_crash")
-		caster:AddNewModifier(caster, shield_crash, "modifier_imba_shield_crash_block", {})
+		self.caster = self:GetCaster()
+		self.shield_crash = self.caster:FindAbilityByName("imba_pangolier_shield_crash")
+		self.en_guarde = "modifier_imba_shield_crash_block"
+
+
+		self.caster:AddNewModifier(self.caster, self.shield_crash, self.en_guarde, {})
 	end
 end
 
+function modifier_special_bonus_imba_pangolier_3:DeclareFunctions()
+	local funcs = {MODIFIER_EVENT_ON_RESPAWN}
+
+	return funcs
+end
+
+function modifier_special_bonus_imba_pangolier_3:OnRespawn(kv)
+	if IsServer() then
+		--Add again the modifier if somehow it was lost (stupid bugs)
+		if not self.caster:HasModifier(self.en_guarde) then
+			self.caster:AddNewModifier(self.caster, self.shield_crash, self.en_guarde, {})
+
+			--reset to last amount of stacks recorded
+			self.caster:SetModifierStackCount(self.en_guarde, self.caster, self.caster:GetModifierStackCount("modifier_special_bonus_imba_pangolier_3", self.caster))
+		end
+	end
+end
 
 -------------------------------------
 -----        SWASHBUCKLE       ------
@@ -498,7 +518,7 @@ end
 modifier_imba_swashbuckle_buff = modifier_imba_swashbuckle_buff or class({})
 
 function modifier_imba_swashbuckle_buff:IsHidden() return false end
-function modifier_imba_swashbuckle_buff:IsPurgable() return false end
+function modifier_imba_swashbuckle_buff:IsPurgable() return true end
 function modifier_imba_swashbuckle_buff:IsDebuff() return false end
 
 function modifier_imba_swashbuckle_buff:OnCreated()
@@ -933,6 +953,7 @@ function modifier_imba_shield_crash_jump:OnRemoved()
 			if self.caster:HasTalent("special_bonus_imba_pangolier_3") then
 				local block_modifier_stacks = self.caster:GetModifierStackCount("modifier_imba_shield_crash_block", self.caster)
 				self.caster:SetModifierStackCount("modifier_imba_shield_crash_block", self.caster, block_modifier_stacks + damaged_heroes)
+				self.caster:SetModifierStackCount("modifier_special_bonus_imba_pangolier_3", self.caster, block_modifier_stacks + damaged_heroes)
 			end
 
 			if self.caster:HasModifier(self.buff_modifier) then
@@ -990,7 +1011,7 @@ end]]
 modifier_imba_shield_crash_block = modifier_imba_shield_crash_block or class({})
 
 function modifier_imba_shield_crash_block:IsHidden() return false end
-function modifier_imba_shield_crash_block:IsPurgable() return false end
+function modifier_imba_shield_crash_block:IsPurgable() return false end --WHY THE FUCK IS THIS FAILING SOMETIMES?!
 function modifier_imba_shield_crash_block:IsPermanent() return true end
 function modifier_imba_shield_crash_block:RemoveOnDeath() return false end
 function modifier_imba_shield_crash_block:IsDebuff() return false end
@@ -1208,6 +1229,7 @@ function modifier_imba_shield_crash_block:OnAttack(keys)
 				end
 				--Decrease parry stacks
 				self.caster:SetModifierStackCount("modifier_imba_shield_crash_block", self.caster, stacks - 1)
+				self.caster:SetModifierStackCount("modifier_special_bonus_imba_pangolier_3", self.caster, stacks - 1)
 				
 				Timers:CreateTimer(0.5, function ()
 					--Remove particles
@@ -1457,7 +1479,6 @@ end
 
 function modifier_imba_heartpiercer_delay:IsHidden() return false end
 function modifier_imba_heartpiercer_delay:IsPurgable() return true end
-function modifier_imba_heartpiercer_delay:IsStealable() return false end
 function modifier_imba_heartpiercer_delay:IsPermanent() return false end
 function modifier_imba_heartpiercer_delay:IsDebuff() return true end
 
@@ -1610,7 +1631,6 @@ end
 
 function modifier_imba_heartpiercer_debuff:IsHidden() return false end
 function modifier_imba_heartpiercer_debuff:IsPurgable() return true end
-function modifier_imba_heartpiercer_debuff:IsStealable() return false end
 function modifier_imba_heartpiercer_debuff:IsPermanent() return false end
 function modifier_imba_heartpiercer_debuff:IsDebuff() return true end
 
@@ -1620,7 +1640,6 @@ modifier_imba_heartpiercer_talent_debuff = modifier_imba_heartpiercer_talent_deb
 
 function modifier_imba_heartpiercer_talent_debuff:IsHidden() return false end
 function modifier_imba_heartpiercer_talent_debuff:IsPurgable() return true end
-function modifier_imba_heartpiercer_talent_debuff:IsStealable() return false end
 function modifier_imba_heartpiercer_talent_debuff:IsPermanent() return false end
 function modifier_imba_heartpiercer_talent_debuff:IsDebuff() return true end
 
@@ -1629,7 +1648,6 @@ modifier_imba_heartpiercer_talent_debuff_2 = modifier_imba_heartpiercer_talent_d
 
 function modifier_imba_heartpiercer_talent_debuff_2:IsHidden() return false end
 function modifier_imba_heartpiercer_talent_debuff_2:IsPurgable() return true end
-function modifier_imba_heartpiercer_talent_debuff_2:IsStealable() return false end
 function modifier_imba_heartpiercer_talent_debuff_2:IsPermanent() return false end
 function modifier_imba_heartpiercer_talent_debuff_2:IsDebuff() return true end
 
@@ -1764,7 +1782,6 @@ modifier_imba_gyroshell_impact_check = modifier_imba_gyroshell_impact_check or c
 
 function modifier_imba_gyroshell_impact_check:IsHidden() return true end
 function modifier_imba_gyroshell_impact_check:IsPurgable() return false end
-function modifier_imba_gyroshell_impact_check:IsStealable() return false end
 function modifier_imba_gyroshell_impact_check:IsPermanent() return false end
 function modifier_imba_gyroshell_impact_check:IsDebuff() return false end
 
