@@ -1660,7 +1660,7 @@ function imba_phoenix_supernova:OnSpellStart()
 	caster:AddNoDraw()
 
 	local egg = CreateUnitByName("npc_dota_phoenix_sun",location,false,caster,caster:GetOwner(),caster:GetTeamNumber())
-	egg:AddNewModifier(caster, ability, "modifier_kill_no_timer", {duration = egg_duration })
+	egg:AddNewModifier(caster, ability, "modifier_kill", {duration = egg_duration })
 	egg:AddNewModifier(caster, ability, "modifier_imba_phoenix_supernova_egg_thinker", {duration = egg_duration + 0.3 })
 
 	egg.max_attack = max_attack
@@ -1690,7 +1690,7 @@ function imba_phoenix_supernova:OnSpellStart()
 			local loaction = caster:GetForwardVector() * 192 + caster:GetAbsOrigin()
 			local egg2 = CreateUnitByName("npc_dota_phoenix_sun", loaction, false, ally, ally:GetOwner(), ally:GetTeamNumber())
 			
-			egg2:AddNewModifier(ally, ability, "modifier_kill_no_timer", {duration = egg_duration })
+			egg2:AddNewModifier(ally, ability, "modifier_kill", {duration = egg_duration })
 			egg2:AddNewModifier(caster, ability, "modifier_imba_phoenix_supernova_egg_double", { } )
 			egg2:AddNewModifier(ally, ability, "modifier_imba_phoenix_supernova_egg_thinker", {duration = egg_duration + 0.3 })
 
@@ -2042,6 +2042,7 @@ function modifier_imba_phoenix_supernova_egg_thinker:OnCreated()
 
 	local ability = self:GetAbility()
 	GridNav:DestroyTreesAroundPoint(egg:GetAbsOrigin(), ability:GetSpecialValueFor("cast_range") * 1.5 , false)
+	self:StartIntervalThink(1.0)
 end
 
 function modifier_imba_phoenix_supernova_egg_thinker:OnIntervalThink()
@@ -2092,6 +2093,7 @@ function modifier_imba_phoenix_supernova_egg_thinker:OnDeath( keys )
 	if egg.NovaCaster then
 		egg.NovaCaster = nil
 	end
+	print(killer:GetUnitName())
 
 	caster:RemoveNoDraw()
 	if caster.ally and not caster.HasDoubleEgg then
@@ -2364,8 +2366,8 @@ function modifier_imba_phoenix_supernova_scepter_passive:OnTakeDamage( keys )
 		caster:AddNoDraw()
 
 		local egg = CreateUnitByName("npc_dota_phoenix_sun",location,false,caster,caster:GetOwner(),caster:GetTeamNumber())
-		egg:AddNewModifier(caster, ability, "modifier_kill_no_timer", {duration = egg_duration + extend_duration })
-		egg:AddNewModifier(caster, ability, "modifier_imba_phoenix_supernova_egg_thinker", {duration = egg_duration + extend_duration })
+		egg:AddNewModifier(caster, ability, "modifier_kill", {duration = egg_duration + extend_duration })
+		egg:AddNewModifier(caster, ability, "modifier_imba_phoenix_supernova_egg_thinker", {duration = egg_duration + extend_duration + 0.3})
 
 		egg.max_attack = max_attack
 		egg.current_attack = 0

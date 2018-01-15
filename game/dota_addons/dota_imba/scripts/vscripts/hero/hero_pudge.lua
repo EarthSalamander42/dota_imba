@@ -865,14 +865,15 @@ end
 function imba_pudge_dismember:OnSpellStart()
 	local caster = self:GetCaster()
 	local target = self:GetCursorTarget()
+	self.target = target
 	target:AddNewModifier(caster, self, "modifier_dismember", {})
-	caster:AddNewModifier(caster, self, "modifier_imba_pudge_dismember_buff", {duration = self.channelTime})
+	caster:AddNewModifier(caster, self, "modifier_imba_pudge_dismember_buff", {})
 	self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_dismember.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 end
 
 function imba_pudge_dismember:OnChannelFinish()
 	local caster = self:GetCaster()
-	local target = self:GetCursorTarget()
+	local target = self.target
 	local target_buff = target:FindModifierByNameAndCaster("modifier_dismember", caster)
 	local caster_buff = caster:FindModifierByNameAndCaster("modifier_imba_pudge_dismember_buff", caster)
 	if target_buff then target_buff:Destroy() end
@@ -888,6 +889,7 @@ function modifier_dismember:IsHidden() return false end
 function modifier_dismember:IsPurgable() return false end
 function modifier_dismember:IsStunDebuff() return false end
 function modifier_dismember:RemoveOnDeath() return true end
+function modifier_dismember:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_dismember:OnCreated()
 	self:StartIntervalThink(1.0)
