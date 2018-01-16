@@ -9144,9 +9144,7 @@
 	"monkey_king_boundless_strike"
 	{
 		"MaxLevel"							"7"
-
 		"AbilityCastRange"					"1200 1200 1200 1200 1400 1600 1800"
-
 		"AbilityCooldown"					"25 25 25 25 22 19 16"
 
 		"AbilitySpecial"
@@ -9159,7 +9157,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"strike_crit_mult"			"150 170 190 210 215 220 225"
+				"strike_crit_mult"			"150 177 200 225 250 275 300"
 				"LinkedSpecialBonus"		"special_bonus_unique_monkey_king"
 			}
 			"03"
@@ -9431,7 +9429,7 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"bonus_armor"					"8 14 20 26 32 38"
-				"LinkedSpecialBonus"		"special_bonus_unique_monkey_king_4"
+				"LinkedSpecialBonus"			"special_bonus_unique_monkey_king_4"
 			}
 			"07"
 			{

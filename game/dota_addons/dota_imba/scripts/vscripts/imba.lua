@@ -1323,8 +1323,8 @@ function GameMode:OnGameInProgress()
 	-- IMBA: Custom maximum level EXP tables adjustment
 	-------------------------------------------------------------------------------------------------
 	local max_level = tonumber(CustomNetTables:GetTableValue("game_options", "max_level")["1"])
-	if max_level > 35 then
-		for i = 36, max_level do
+	if max_level > 40 then
+		for i = 41, max_level do
 			XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + 5000
 			GameRules:GetGameModeEntity():SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
 		end
@@ -1782,11 +1782,8 @@ end
 ---------------------------------------------------------------------------
 function GameMode:SetUpFountains()
 
-	print("Setup Fountains...")
 	local fountainEntities = Entities:FindAllByClassname( "ent_dota_fountain")
-	PrintTable(fountainEntities)
 	for _,fountainEnt in pairs( fountainEntities ) do
-		print("fountain unit " .. tostring( fountainEnt ) )
 		fountainEnt:AddNewModifier( fountainEnt, fountainEnt, "modifier_fountain_aura_lua", {} )
 	end
 end
@@ -1909,12 +1906,12 @@ function GameMode:GatherAndRegisterValidTeams()
 	end
 
 	local numTeams = TableCount(foundTeams)
-	print( "GatherValidTeams - Found spawns for a total of " .. numTeams .. " teams" )
+--	print( "GatherValidTeams - Found spawns for a total of " .. numTeams .. " teams" )
 	
 	local foundTeamsList = {}
 	for t, _ in pairs( foundTeams ) do
 		table.insert( foundTeamsList, t )
-		print("Team:", t)
+--		print("Team:", t)
 --		AddFOWViewer(t, Entities:FindByName(nil, "@overboss"):GetAbsOrigin(), 900, 99999, false)
 	end
 

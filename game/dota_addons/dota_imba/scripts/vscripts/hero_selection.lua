@@ -591,12 +591,11 @@ end
 		- player_id {integer} - The playerID of the player to assign to.
 		- hero_name {string} - The unit name of the hero to assign (e.g. 'npc_dota_hero_rubick')
 ]]
-function HeroSelection:AssignHero(player_id, hero_name)
+function HeroSelection:AssignHero(player_id, hero_name, dev_command)
 	PrecacheUnitByNameAsync(hero_name, function()
 		-- Dummy invisible wisp
 		local wisp = PlayerResource:GetPlayer(player_id):GetAssignedHero()
 		local hero = PlayerResource:ReplaceHeroWith(player_id, hero_name, 0, 0 )
-		hero.pID = player_id
 
 		-- If this is a "real" wisp, tag it
 		if hero:GetUnitName() == "npc_dota_hero_wisp" then
@@ -606,7 +605,7 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		-------------------------------------------------------------------------------------------------
 		-- IMBA: First hero spawn initialization
 		-------------------------------------------------------------------------------------------------
-		
+
 		hero:RespawnHero(false, false)
 		PlayerResource:SetCameraTarget(player_id, hero)
 		Timers:CreateTimer(FrameTime(), function()

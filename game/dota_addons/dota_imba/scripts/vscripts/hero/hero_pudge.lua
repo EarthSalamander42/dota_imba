@@ -679,7 +679,6 @@ function imba_pudge_rot_active:OnIntervalThink()
 	local caster = self:GetCaster()
 	local ability = self:GetAbility()
 	local dmg = ability:GetSpecialValueFor("rot_damage") + caster:GetMaxHealth() * ability:GetSpecialValueFor("bonus_damage") / 100 + caster:FindTalentValue("special_bonus_imba_pudge_6")
-	print(dmg, ability:GetSpecialValueFor("rot_damage"), caster:GetMaxHealth() * ability:GetSpecialValueFor("bonus_damage") / 100, caster:FindTalentValue("special_bonus_imba_pudge_6"))
 	local selfDamageTable = {
 						victim = caster,
 						attacker = caster,
@@ -1032,7 +1031,6 @@ function HeapUpdater( keys )
 	local stack_scale_up = ability:GetLevelSpecialValueFor("stack_scale_up", ability_level)
 	local stack_amount = caster:GetModifierStackCount(modifier_stacks, caster)
 	local resist_amount = caster:FindAllModifiersByName(modifier_resist)
-	print(modifier_stacks, stack_amount, caster.heap_stacks)
 
 	-- If the amount of strength stacks has increased, update it
 --	if caster.heap_stacks > stack_amount and caster:IsAlive() then

@@ -353,12 +353,10 @@ function ChangeAttackProjectileImba(unit)
 	if unit:HasModifier("modifier_item_imba_desolator") or unit:HasModifier("modifier_item_imba_desolator_2") then
 		if unit:HasModifier("modifier_item_imba_skadi") then
 			unit:SetRangedProjectileName(particle_deso_skadi)
-
 		-- If only a Desolator, use its attack projectile instead
 		else
 			unit:SetRangedProjectileName(particle_deso)
 		end
-
 	-- If only a Skadi, use its attack projectile instead
 	elseif unit:HasModifier("modifier_item_imba_skadi") then
 		unit:SetRangedProjectileName(particle_skadi)
@@ -383,7 +381,6 @@ function ChangeAttackProjectileImba(unit)
 	else
 		print(unit:GetKeyValue("ProjectileModel"))
 		unit:SetRangedProjectileName(unit:GetKeyValue("ProjectileModel"))
-		
 	end
 end
 

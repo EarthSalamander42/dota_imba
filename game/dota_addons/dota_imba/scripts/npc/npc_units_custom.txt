@@ -12494,8 +12494,6 @@
 		"AttackAnimationPoint"		"0.300"									// Normalized time in animation cycle to attack.
 		"AttackAcquisitionRange"	"600"									// Range within a target can be acquired.
 		"AttackRange"				"150"									// Range within a target can be attacked.
-		"ProjectileModel"			"particles/units/heroes/hero_venomancer/venomancer_base_attack.vpcf"							// Particle system model for projectile.
-		"ProjectileSpeed"			"800"									// Speed of projectile.
 
 		// Attributes
 		//-------------------------------------------------------------------------------------------------------------
@@ -12599,8 +12597,6 @@
 		"AttackAnimationPoint"		"0.300"									// Normalized time in animation cycle to attack.
 		"AttackAcquisitionRange"	"600"									// Range within a target can be acquired.
 		"AttackRange"				"250"									// Range within a target can be attacked.
-		"ProjectileModel"			"particles/units/heroes/hero_venomancer/venomancer_base_attack.vpcf"							// Particle system model for projectile.
-		"ProjectileSpeed"			"800"									// Speed of projectile.
 
 		// Attributes
 		//-------------------------------------------------------------------------------------------------------------
@@ -12689,8 +12685,6 @@
 		"AttackAnimationPoint"		"0.300"							// Normalized time in animation cycle to attack.
 		"AttackAcquisitionRange"	"600"							// Range within a target can be acquired.
 		"AttackRange"				"150"							// Range within a target can be attacked.
-		"ProjectileModel"			""								// Particle system model for projectile.
-		"ProjectileSpeed"			"900"							// Speed of projectile.
 
 		// Attributes
 		//-------------------------------------------------------------------------------------------------------------
@@ -12787,8 +12781,6 @@
 		"AttackAnimationPoint"		"0.4"
 		"AttackAcquisitionRange"	"600"
 		"AttackRange"				"200"
-		"ProjectileModel"			""
-		"ProjectileSpeed"			""
 
 		// Bounty
 		//----------------------------------------------------------------

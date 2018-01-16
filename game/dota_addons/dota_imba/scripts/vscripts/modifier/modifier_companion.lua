@@ -85,7 +85,6 @@ function modifier_companion:OnIntervalThink()
 			"modifier_invisible",
 			"modifier_mirana_moonlight_shadow",
 			"modifier_item_imba_shadow_blade_invis",
-			"modifier_item_shadow_amulet_fade",
 			"modifier_imba_vendetta",
 			"modifier_nyx_assassin_burrow",
 			"modifier_item_imba_silver_edge_invis",
@@ -103,17 +102,37 @@ function modifier_companion:OnIntervalThink()
 			"modifier_smoke_of_deceit",
 		}
 
+		local shared_nodraw_modifiers = {
+			"modifier_item_shadow_amulet_fade",
+		}
+
 		if companion:GetIdealSpeed() ~= hero:GetIdealSpeed() - 60 then
 			companion:SetBaseMoveSpeed(hero:GetIdealSpeed() - 60)
 		end
-         
+
+		for _, v in ipairs(shared_nodraw_modifiers) do
+			if hero:HasModifier(v) and not companion.has_nodraw == true then
+				companion.has_nodraw = true
+				companion:AddEffects(EF_NODRAW)
+				print("Add No Draw")
+			elseif not hero:HasModifier(v) and companion.has_nodraw ~= false then
+				print("Remove No Draw")
+				companion.has_nodraw = false
+				companion:RemoveEffects(EF_NODRAW)
+			end
+		end
+
 		for _,v in ipairs(shared_modifiers) do
 			if not hero:HasModifier(v) then
 				if companion:HasModifier(v) then
+					print("Remove Modifier")
 					companion:RemoveModifierByName(v)
 				end
 			else
-				companion:AddNewModifier(companion, nil, v, {})				
+				if not companion:HasModifier(v) then
+					companion:AddNewModifier(companion, nil, v, {})
+					print("Add Modifier")
+				end
 			end
 		end
 

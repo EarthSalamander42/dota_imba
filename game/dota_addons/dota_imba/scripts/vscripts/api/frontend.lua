@@ -98,8 +98,8 @@ end
 function IsDeveloper(playerid)
 	local devs = GetDevelopers()
 	for i = 1, #devs do
-		local id = tostring(PlayerResource:GetSteamID(pid))
-		if id == devs[i] then
+		local id = tostring(PlayerResource:GetSteamID(playerid))
+		if id == devs[i].steamId64 then
 			return true
 		end
 	end

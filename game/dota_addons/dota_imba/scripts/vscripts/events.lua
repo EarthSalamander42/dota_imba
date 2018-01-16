@@ -104,7 +104,7 @@ function GameMode:OnGameRulesStateChange(keys)
 		ApiPrint("Entering Game in progress / horn")
 
 		for _, hero in pairs(HeroList:GetAllHeroes()) do
-			if IsDev(hero) then
+			if IsDeveloper(hero:GetPlayerID()) then
 				hero.has_graph = true
 				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph", {})
 --				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
@@ -1097,12 +1097,9 @@ function GameMode:OnEntityKilled( keys )
 					end
 				end
 			end
-		end
 
-		-- Check if the dying unit was a player-controlled hero
-		if killed_unit:IsRealHero() and killed_unit:GetPlayerID() then
-			-- Overthrow
 			if GetMapName() == "imba_overthrow" then
+				print("Imbathrow map")
 				allSpawned = true
 				--print("Hero has been killed")
 				--Add extra time if killed by Necro Ult
@@ -1143,8 +1140,6 @@ function GameMode:OnEntityKilled( keys )
 						radiant = GetTeamHeroKills(2),
 						dire = GetTeamHeroKills(3),
 						custom_1 = GetTeamHeroKills(6),
-						custom_2 = GetTeamHeroKills(7),
-						custom_3 = GetTeamHeroKills(8),
 					}
 					CustomGameEventManager:Send_ServerToAllClients( "team_points", broadcast_team_points )
 				end
@@ -1163,7 +1158,6 @@ function GameMode:OnEntityKilled( keys )
 					--print("Hero has long respawn time")
 					if killed_unit:IsReincarnating() == true then
 						--print("Set time for Wraith King respawn disabled")
-						return nil
 					else
 						GameMode:SetRespawnTime( killed_unit:GetTeamNumber(), killed_unit, 0 )
 					end
@@ -1171,7 +1165,10 @@ function GameMode:OnEntityKilled( keys )
 					GameMode:SetRespawnTime( killed_unit:GetTeamNumber(), killed_unit, 0 )
 				end
 			end
-				
+		end
+
+		-- Check if the dying unit was a player-controlled hero
+		if killed_unit:IsRealHero() and killed_unit:GetPlayerID() then				
 			-- Buyback parameters
 			local player_id = killed_unit:GetPlayerID()
 			local hero_level = killed_unit:GetLevel()
