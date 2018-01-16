@@ -1746,6 +1746,29 @@ function imba_pangolier_gyroshell:OnSpellStart()
 	--Apply a basic purge
 	caster:Purge(false, true, false, false, false)
 
+	-- Prevent Pangolier from blinking while rolling
+	local forbidden_items = {
+		"item_imba_blink",
+		"item_imba_blink_boots"
+	}
+
+	for i = 0, 5 do
+		local current_item = caster:GetItemInSlot(i)
+		local should_mute = false
+
+		-- If this item is forbidden, do not refresh it
+		for _,forbidden_item in pairs(forbidden_items) do
+			if current_item and current_item:GetName() == forbidden_item then
+				should_mute = true
+			end
+		end
+
+		-- Make item inactive
+		if current_item and should_mute then
+			current_item:SetActivated(false)
+		end
+	end
+
 	--Starts rolling (Vanilla modifier for now)
 	caster:AddNewModifier(caster, ability, roll_modifier, {duration = ability_duration})
 
@@ -1807,6 +1830,11 @@ end
 
 function modifier_imba_gyroshell_impact_check:OnIntervalThink()
 	if IsServer() then
+
+		--If pangolier stopped rolling, remove this modifier
+		if not self.caster:HasModifier("modifier_pangolier_gyroshell") then
+			self:Destroy()
+		end
 
 		local enemies_hit = 0
 
@@ -1896,6 +1924,15 @@ end
 
 function modifier_imba_gyroshell_impact_check:OnRemoved()
 	if IsServer() then
+
+		--renable blink on Pangolier
+		for i = 0, 5 do
+			local current_item = self.caster:GetItemInSlot(i)
+		
+			if current_item then
+				current_item:SetActivated(true)
+			end
+		end
 
 		--Play Rolling Thunder end voice lines
 		if not self.ability:IsStolen() then
