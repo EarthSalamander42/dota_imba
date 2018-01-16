@@ -678,7 +678,7 @@ function imba_pudge_rot_active:OnIntervalThink()
 	if not IsServer() then return end
 	local caster = self:GetCaster()
 	local ability = self:GetAbility()
-	local dmg = ability:GetSpecialValueFor("rot_damage") + caster:GetMaxHealth() * ability:GetSpecialValueFor("bonus_damage") / 100 + caster:FindTalentValue("special_bonus_imba_pudge_6")
+	local dmg = (ability:GetSpecialValueFor("rot_damage") + caster:GetMaxHealth() * ability:GetSpecialValueFor("bonus_damage") / 100 + caster:FindTalentValue("special_bonus_imba_pudge_6")) / (1 / ability:GetSpecialValueFor("rot_tick"))
 	local selfDamageTable = {
 						victim = caster,
 						attacker = caster,
