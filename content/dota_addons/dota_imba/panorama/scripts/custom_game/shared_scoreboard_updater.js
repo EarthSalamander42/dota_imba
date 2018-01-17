@@ -100,11 +100,16 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 					map_info.map_display_name == "imba_frantic_10v10" ||
 					map_info.map_display_name == "imba_overthrow"
 				) {
-					if (plyData.IMR_5v5_calibrating)
+					$.Msg(plyData.IMR_5v5)
+					if (plyData.IMR_5v5_calibrating && plyData.IMR_5v5) {
 						_ScoreboardUpdater_SetTextSafe(playerPanel, "TeammateIMRAmount", "TBD");
-					else
+					} else if (plyData.IMR_5v5 == undefined) {
+						_ScoreboardUpdater_SetTextSafe(playerPanel, "TeammateIMRAmount", "N/A");
+						_ScoreboardUpdater_SetTextSafe(playerPanel, "PlayerIMRAmount", "N/A");
+					} else {
 						_ScoreboardUpdater_SetTextSafe(playerPanel, "TeammateIMRAmount", plyData.IMR_5v5.toFixed([0]));
-					_ScoreboardUpdater_SetTextSafe(playerPanel, "PlayerIMRAmount", "N/A");
+						_ScoreboardUpdater_SetTextSafe(playerPanel, "PlayerIMRAmount", "N/A");
+					}
 				}
 			}
 		}

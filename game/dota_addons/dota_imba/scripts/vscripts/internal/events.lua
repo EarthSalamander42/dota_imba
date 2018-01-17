@@ -86,54 +86,23 @@ local color = {}
 	if not (string.byte(text) == 45) then
 		return nil
 	end
-	
-	-- Check for Chakram-Colorcode
-	-- if caster_heroname == "npc_dota_hero_shredder" then
-	-- 	local chakram_command = false
-	-- 	for str in string.gmatch(text, "%S+") do
-	-- 		if str == "-chakram" then
-	-- 			chakram_command = true
-	-- 		elseif chakram_command == false then
-	-- 			break
-	-- 		end
-			
-	-- 		if tonumber(str) then
-	-- 			if correct_command and tonumber(str) >= 0 and tonumber(str) <=255 then
-	-- 				table.insert(color,str)
-	-- 				if #color >= 3 then
-	-- 					break
-	-- 				end
-	-- 			else
-	-- 				chakram_command = false
-	-- 			end
-	-- 		end
-			
-	-- 		if chakram_command == false then
-	-- 			break
-	-- 		end
-	-- 	end
-	-- 	if chakram_command == true then
-	-- 		caster.color = Vector ( color[1], color[2], color[3])
-	-- 		return nil
-	-- 	end
-	-- end
 
 	for str in string.gmatch(text, "%S+") do
-		if IsInToolsMode() then
-			for i = 1, #IMBA_DEVS do
-				if PlayerResource:GetConnectionState(caster:GetPlayerID()) == 1 then
-					print("Bot, ignoring devcheck..")
-				else
-					if PlayerResource:GetSteamAccountID(caster:GetPlayerID()) == IMBA_DEVS[i] then
-						if str == "-dev_remove_units" then
-							GameMode:RemoveUnits(true, true, true)
-						end
-					end
-				end
+		if IsInToolsMode() or IsDeveloper(caster:GetPlayerID()) then
+			if str == "-dev_remove_units" then
+				GameMode:RemoveUnits(true, true, true)
 			end
 
 			if str == "-spawnimbarune" then
 				SpawnImbaRunes()
+			end
+
+			if str == "-replaceherowith" then
+				text = string.gsub(text, str, "")
+				text = string.gsub(text, " ", "")
+				if PlayerResource:GetSelectedHeroName(caster:GetPlayerID()) ~= "npc_dota_hero_"..text then
+					HeroSelection:AssignHero(caster:GetPlayerID(), "npc_dota_hero_"..text)
+				end
 			end
 		end
 

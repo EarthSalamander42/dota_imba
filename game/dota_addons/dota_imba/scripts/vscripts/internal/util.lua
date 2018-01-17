@@ -514,16 +514,6 @@ function IsDaytime()
 	return true   
 end
 
-function IsDev(hero)
-	for i = 1, #IMBA_DEVS do
-		if PlayerResource:GetSteamAccountID(hero:GetPlayerID()) == IMBA_DEVS[i] then
-			return true
-		end
-	end
-
-	return false
-end
-
 -- COOKIES: PreGame Chat System, created by Mahou Shoujo
 Chat = Chat or class({})
 
@@ -555,7 +545,7 @@ function Chat:OnSay(args)
 		player = id,
 		message = args.message,
 		team = args.team,
-		IsDev = IsDev(hero) -- COOKIES: Define this function later, can also be used for all devs
+		IsDev = IsDeveloper(id)
 	}
 
 	if args.team then
@@ -574,7 +564,7 @@ function Chat:PlayerRandomed(id, hero, teamLocal, name)
 	local shared = {
 		color = PLAYER_COLORS[id],
 		player = id,
-		IsDev = IsDev(hero:GetAssignedHero())
+		IsDev = IsDeveloper(id)
 	}
 
 	local localArgs = vlua.clone(shared)
@@ -1012,7 +1002,7 @@ local color = hero:GetFittingColor()
 
 	if model == "cookies" then
 --		model = "models/courier/baby_rosh/babyroshan.vmdl"
-		model = "models/heroes/mario/mario_model.vmdl"
+		model = "models/heroes/samus/samus_ball_model.vmdl"
 		companion:SetOriginalModel(model)
 		companion:SetModel(model)
 --		companion:SetMaterialGroup(tostring(RandomInt(1, 4)))
@@ -1357,16 +1347,17 @@ end
 
 function CBaseEntity:IsRune()
 	local runes = {
-				"models/props_gameplay/rune_goldxp.vmdl",
-				"models/props_gameplay/rune_haste01.vmdl",
-				"models/props_gameplay/rune_doubledamage01.vmdl",
-				"models/props_gameplay/rune_regeneration01.vmdl",
-				"models/props_gameplay/rune_arcane.vmdl",
-				"models/props_gameplay/rune_invisibility01.vmdl",
-				"models/props_gameplay/rune_illusion01.vmdl",
-				"models/props_gameplay/rune_frost.vmdl",
-				"models/props_gameplay/gold_coin001.vmdl",	-- Overthrow coin
-			}
+		"models/props_gameplay/rune_goldxp.vmdl",
+		"models/props_gameplay/rune_haste01.vmdl",
+		"models/props_gameplay/rune_doubledamage01.vmdl",
+		"models/props_gameplay/rune_regeneration01.vmdl",
+		"models/props_gameplay/rune_arcane.vmdl",
+		"models/props_gameplay/rune_invisibility01.vmdl",
+		"models/props_gameplay/rune_illusion01.vmdl",
+		"models/props_gameplay/rune_frost.vmdl",
+		"models/props_gameplay/gold_coin001.vmdl",	-- Overthrow coin
+	}
+
 	for _, model in pairs(runes) do
 		if self:GetModelName() == model then
 			return true
