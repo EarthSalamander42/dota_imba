@@ -385,7 +385,7 @@ function GameMode:ModifierFilter( keys )
 			local original_duration = keys.duration
 			local actually_duration = original_duration
 			local tenacity = modifier_owner:GetTenacity()
-			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 and tenacity ~= 0 then				
+			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then --and tenacity ~= 0 then				
 				actually_duration = actually_duration * (100 - tenacity) * 0.01
 				-------------------------------------------------------------------------------------------------
 				-- Frantic mode duration adjustment
