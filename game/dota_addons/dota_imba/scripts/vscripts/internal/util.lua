@@ -1006,7 +1006,12 @@ local color = hero:GetFittingColor()
 		companion:SetOriginalModel(model)
 		companion:SetModel(model)
 --		companion:SetMaterialGroup(tostring(RandomInt(1, 4)))
-		companion:SetModelScale(0.5)
+		companion:SetModelScale(1.0)
+	elseif model == "baumi" then
+		model = "models/heroes/mario/mario_model.vmdl"
+		companion:SetOriginalModel(model)
+		companion:SetModel(model)
+		companion:SetModelScale(0.55)
 	else
 		companion:SetOriginalModel(model)
 		companion:SetModel(model)
