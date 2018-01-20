@@ -31,6 +31,7 @@
 	"custom_end_screen_legend_imr"					"IMBA天梯分"
 	
 	//Combat Events
+	"custom_toast_PlayerDenied"								"{killer_name} {denied_icon} 反补了 {victim_name}"
     "custom_toast_PlayerDeniedSelf"                            "{victim_name} {denied_icon}自杀了"
 	"custom_toast_CourierKilled"							"{courier_icon} {team_name}信使已被击杀"
 	"custom_toast_CourierRespawned"							"{courier_icon} {team_name}信使已经重生"
@@ -137,6 +138,7 @@
 	"disabled_hero"					"禁用"
 	"disabled_hero_10v10"			"10v10下禁用"
 	"disabled_hero_frantic"			"WTF下禁用"
+	"disabled_hero_overthrow"		"乱战先锋禁用"
 	"picked_hero"					"已选择"
 	"imba_hero"						"IMBA英雄"
 	"vanilla_hero"					"原版英雄"
@@ -826,11 +828,11 @@
 	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_4_title"                      "腐肉堆积"
 	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_4_Description"                "+10 腐肉堆积大肉块最大层数"
 	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_5_title"                      "肉钩"
-	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_5_Description"                "+2500 肉钩距离"
+	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_5_Description"                "+2000 肉钩距离"
 	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_6_title"                      "腐烂"
 	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_6_Description"                "+75 腐烂伤害"
 	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_7_title"                      "肉钩"
-	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_7_Description"                "肉钩施加割裂，造成10%路程的伤害"
+	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_7_Description"                "肉钩施加割裂，造成50%路程的伤害"
 	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_8_title"                      "肢解"
 	"DOTA_Tooltip_Talent_special_bonus_imba_pudge_8_Description"                "+2秒 肢解持续时间"
 
