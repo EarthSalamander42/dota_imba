@@ -16,7 +16,7 @@
 	"DOTA_Custom6"    								"Cyan Boar"
 	"DOTA_Custom7"    								"Olive Snake"
 	"DOTA_Custom8"    								"Purple Horse"
-	
+
 	"addonname"										"Dota IMBA"
 
 	//Flyout Scoreboard
@@ -50,6 +50,7 @@
 	"DOTA_Tooltip_ability_item_imba_rune_frost"				"Greevil Soul"
 
 	"lag_issues"									"Dota 2 IMBA website"
+	"oaa_news_text"									"On the 3rd of March, the Open Angel Arena team will host their second tournament with a cash price pool of X€. Click the link below to check out the game and find additional information about the tournament!"
 
 	"imba_gamemode_name_all_pick"                                                       "All Pick"
 	"imba_gamemode_name_all_pick_tooltip"												"Players are free to choose any hero."

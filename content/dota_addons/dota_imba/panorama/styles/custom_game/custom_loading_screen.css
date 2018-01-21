@@ -244,7 +244,7 @@
 
 #imba-news {
 	vertical-align: bottom;
-	margin-bottom: 250px;
+	margin-bottom: 160px;
 	margin-left: 2%;
 	width: 50%;
 	background-color: rgba(255, 255, 255, 0.5);
@@ -256,6 +256,45 @@
 .AspectRatio4x3 #imba-news {
 	width: 40%;
 	margin-bottom: 220px;
+}
+
+#oaa-news-panel {
+	width: 100%;
+	height: 140px;
+	margin-bottom: 10px;
+	background-color: rgba(200, 100, 100, 0.6);
+	flow-children: right;
+}
+
+#oaa-news-text {
+	width: 600px;
+	flow-children: down;
+}
+
+#oaa-news-article-text {
+	font-size: 18px;
+	color: #122;
+}
+
+#oaa-news-title {
+	font-size: 32px;
+	color: #071010;
+}
+
+#oaa-news-link {
+	color: #255;
+	font-size: 20px;
+}
+
+#oaa-news-link:hover {
+	text-decoration: underline;
+}
+
+#oaa-news-image {
+	width: 290px;
+	height: 140px;
+	background-size: cover;
+	overflow: clip;
 }
 
 #imba-news-title {
@@ -298,7 +337,7 @@
 #imba-social {
 	margin-left: 2%;
 	vertical-align: bottom;
-	margin-bottom: 120px;
+	margin-bottom: 80px;
 	padding: 10px;
 }
 
