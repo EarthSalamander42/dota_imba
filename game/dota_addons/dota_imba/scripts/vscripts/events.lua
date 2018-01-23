@@ -355,11 +355,13 @@ local normal_xp = npc:GetDeathXP()
 			if IsDonator(npc) ~= false then
 				if npc:GetUnitName() ~= "npc_dota_hero_wisp" or npc.is_real_wisp then
 					if tostring(PlayerResource:GetSteamID(npc:GetPlayerID())) == "76561198015161808" then
-						DonatorCompanion(npc, "cookies")
+						DonatorCompanion(npc, "npc_imba_donator_companion_cookies")
 					elseif tostring(PlayerResource:GetSteamID(npc:GetPlayerID())) == "76561198003571172" then
-						DonatorCompanion(npc, "baumi")
+						DonatorCompanion(npc, "npc_imba_donator_companion_baumi")
 					elseif tostring(PlayerResource:GetSteamID(npc:GetPlayerID())) == "76561198014254115" then
-						DonatorCompanion(npc, "icefrog")
+						DonatorCompanion(npc, "npc_imba_donator_companion_icefrog")
+					elseif tostring(PlayerResource:GetSteamID(npc:GetPlayerID())) == "76561198014254115" then
+						DonatorCompanion(npc, "npc_imba_donator_companion_admiral_bulldog")
 					else
 						DonatorCompanion(npc, IsDonator(npc))
 					end

@@ -165,6 +165,10 @@
 	"imba_dire_team_title"                          "The Dire"
 	"average_mmr"									"Average MMR: "
 
+	//Donator Tab
+	"donator_companion"		"Selected Companion"
+	"donator_info"			"Select a Companion"
+
 	//Leaderboard
 	"leaderboard"					"Leaderboard"
 	"leaderboard_loading"			"Loading leaderboard, please wait"

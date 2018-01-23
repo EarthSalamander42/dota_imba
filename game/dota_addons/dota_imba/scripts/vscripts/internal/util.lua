@@ -996,33 +996,15 @@ function DonatorCompanion(hero, model)
 if model == nil then return end
 local color = hero:GetFittingColor()
 
-	local companion = CreateUnitByName("npc_imba_donator_companion", hero:GetAbsOrigin(), true, hero, hero, hero:GetTeamNumber())
+	local companion = CreateUnitByName(model, hero:GetAbsOrigin(), true, hero, hero, hero:GetTeamNumber())
 	companion:SetOwner(hero)
 	companion:SetControllableByPlayer(hero:GetPlayerID(), true)
 
-	if model == "cookies" then
---		model = "models/courier/baby_rosh/babyroshan.vmdl"
-		model = "models/heroes/samus/samus_ball_model.vmdl"
-		companion:SetOriginalModel(model)
-		companion:SetModel(model)
---		companion:SetMaterialGroup(tostring(RandomInt(1, 4)))
-		companion:SetModelScale(1.0)
-	elseif model == "baumi" then
-		model = "models/heroes/mario/mario_model.vmdl"
-		companion:SetOriginalModel(model)
-		companion:SetModel(model)
-		companion:SetModelScale(0.55)
-	else
-		companion:SetOriginalModel(model)
-		companion:SetModel(model)
-		companion:SetRenderColor(color[1], color[2], color[3])
-		companion:SetModelScale(0.9)
-	end
-
 	companion:AddNewModifier(companion, nil, "modifier_companion", {})
-	if string.find(model, "flying") then
-		companion:SetMoveCapability(DOTA_UNIT_CAP_MOVE_FLY)
-	end
+
+--	if string.find(model, "flying") then
+--		companion:SetMoveCapability(DOTA_UNIT_CAP_MOVE_FLY)
+--	end
 
 --	if super_donator then
 --		local ab = companion:FindAbilityByName("companion_morph")
