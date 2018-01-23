@@ -117,10 +117,12 @@ function modifier_imba_octarine_core_unique:DeclareFunctions()
 end
 
 function modifier_imba_octarine_core_unique:GetModifierSpellLifesteal()
-	return self:GetAbility():GetSpecialValueFor("spell_lifesteal") end
+	return self:GetAbility():GetSpecialValueFor("spell_lifesteal")
+end
 
 function modifier_imba_octarine_core_unique:GetCustomCooldownReductionStacking()
-	return self:GetAbility():GetSpecialValueFor("bonus_cooldown") end
+	return self:GetAbility():GetSpecialValueFor("bonus_cooldown")
+end
 
 function modifier_imba_octarine_core_unique:OnSpentMana( keys )
 	if IsServer() then

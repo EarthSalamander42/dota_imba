@@ -514,7 +514,6 @@ function modifier_item_imba_azura:IsPermanent() return true end
 -- Declare modifier events/properties
 function modifier_item_imba_azura:DeclareFunctions()
 	local funcs = {
-		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
 		MODIFIER_PROPERTY_MANACOST_PERCENTAGE,
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
@@ -527,8 +526,7 @@ function modifier_item_imba_azura:GetModifierBonusStats_Intellect()
 	return self:GetAbility():GetSpecialValueFor("bonus_int")
 end
 
-function modifier_item_imba_azura:GetModifierPercentageCooldown()
-	if not self:GetAbility() then return end
+function modifier_item_imba_azura:GetCustomCooldownReductionStacking()
 	return self:GetAbility():GetSpecialValueFor("bonus_cdr")
 end
 

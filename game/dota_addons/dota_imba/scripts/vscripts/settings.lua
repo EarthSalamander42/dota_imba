@@ -241,7 +241,7 @@ elseif GetMapName() == "imba_overthrow" then
 	m_GatheredShuffledTeams = {}
 
 --	if PlayerResource:GetPlayerCount() > 7 then
-		TEAM_KILLS_TO_WIN = 75
+		TEAM_KILLS_TO_WIN = 90
 		nCOUNTDOWNTIMER = 961
 --	elseif PlayerResource:GetPlayerCount() > 4 and PlayerResource:GetPlayerCount() <= 7 then
 --		TEAM_KILLS_TO_WIN = 20

@@ -39,13 +39,7 @@ function modifier_imba_item_nether_wand_passive:OnCreated()
 	self.item = self:GetAbility()
 	self.parent = self:GetParent()
 	if self.parent:IsHero() and self.item then
-		self.bonus_damage = self.item:GetSpecialValueFor("bonus_damage")
-		self.bonus_as = self.item:GetSpecialValueFor("bonus_as")
-		self.bonus_intellect = self.item:GetSpecialValueFor("bonus_intellect")
-		self.burn_duration = self.item:GetSpecialValueFor("burn_duration")
-		self.burn_amount = self.item:GetSpecialValueFor("burn_amount")
-		self.spell_power = self.item:GetSpecialValueFor("spell_power")
-		self.burn_tick = self.item:GetSpecialValueFor("burn_tick")
+		self.spell_amp = self.item:GetSpecialValueFor("spell_amp")
 		self:CheckUnique(true)
 	end
 end
@@ -54,27 +48,12 @@ function modifier_imba_item_nether_wand_passive:DeclareFunctions()
     local decFuns =
     {
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
-		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
     }
     return decFuns
 end
 
 function modifier_imba_item_nether_wand_passive:GetModifierSpellAmplify_Percentage()
-	return self:CheckUniqueValue(self.spell_power,{"modifier_imba_item_elder_staff_passive"})
-end
-
-function modifier_imba_item_nether_wand_passive:GetModifierPreAttack_BonusDamage()
-	return self.bonus_damage
-end
-
-function modifier_imba_item_nether_wand_passive:GetModifierAttackSpeedBonus_Constant()
-	return self.bonus_as
-end
-
-function modifier_imba_item_nether_wand_passive:GetModifierBonusStats_Intellect()
-	return self.bonus_intellect
+	return self:CheckUniqueValue(self.spell_amp,{"modifier_imba_item_elder_staff_passive"})
 end
 
 -------------------------------------------
