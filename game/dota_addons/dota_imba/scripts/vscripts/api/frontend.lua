@@ -22,6 +22,7 @@ function imba_api_init(complete_fun)
 			and api_preloaded.topxpusers ~= nil 
             and api_preloaded.topimrusers ~= nil
             and api_preloaded.hot_disabled_heroes ~= nil
+            and api_preloaded.companions ~nil
 		then
 			print("[api-frontend] preloading completed")
 			complete_fun()
@@ -63,8 +64,13 @@ function imba_api_preload(complete_fun)
 		complete_fun()
 	end)
 
-		imba_api():meta_hotdisabledheroes(function (heroes)
+	imba_api():meta_hotdisabledheroes(function (heroes)
 		api_preloaded.hot_disabled_heroes = heroes
+		complete_fun()
+	end)
+	
+	imba_api():meta_companions(function (heroes)
+		api_preloaded.companions = heroes
 		complete_fun()
 	end)
 end
@@ -106,6 +112,28 @@ function IsDeveloper(playerid)
 
 	return false
 end
+
+-- Syncronous
+-- Returns a list with all companions
+function GetAllCompanions()
+	return api_preloaded.companions
+end
+
+-- Asyncronous
+-- Changes the companion model for a user
+-- playerid = ingame id of player p.e. '1'
+-- newcompanion: the file name of the companion p.e. 'npc_imba_donator_companion_demi_doom'
+-- callback: the function that is executed when the request is completed 
+function ChangeCompanion(playerid, newcompanion, callback)
+	local id = tostring(PlayerResource:GetSteamID(playerid))
+	
+	api_preloaded.meta_companion_change({
+		steamid = id,
+		model = newcompanion,
+	}, callback, callback)
+	
+end
+
 
 -- Syncronous
 -- Returns array of the top users by xp

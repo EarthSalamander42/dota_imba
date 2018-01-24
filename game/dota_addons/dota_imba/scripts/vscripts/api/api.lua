@@ -22,6 +22,8 @@ local IMBA_API_ENDPOINTS = {
 	meta_topxpusers = "/meta/top-xp-users",
 	meta_topimrusers = "/meta/top-imr-users",
     meta_hotdisabledheroes = "/meta/hot-disabled-heroes"
+    meta_companions = "/meta/companions"
+    meta_companion_change = "/meta/companion-change"
 }
 
 ImbaApi = {}
@@ -141,6 +143,14 @@ end
 
 function ImbaApi:meta_hotdisabledheroes(success_cb, error_cb)
     self:simple_perform(nil, IMBA_API_ENDPOINTS.meta_hotdisabledheroes, success_cb, error_cb)
+end
+
+function ImbaApi:meta_companions(success_cb, error_cb)
+    self:simple_perform(nil, IMBA_API_ENDPOINTS.meta_companions, success_cb, error_cb)
+end
+
+function ImbaApi:meta_companion_change(data, success_cb, error_cb)
+	self:simple_perform(data, IMBA_API_ENDPOINTS.meta_companion_change, success_cb, error_cb)
 end
 
 -- Internal Vars
