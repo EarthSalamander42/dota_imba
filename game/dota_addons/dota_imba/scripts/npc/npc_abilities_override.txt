@@ -2713,7 +2713,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"boar_moveslow_tooltip"		"15 35 50 60"
+				"boar_moveslow_tooltip"		"25 30 35 40"
 			}
 			"05"
 			{
@@ -9571,7 +9571,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cast_range_tooltip"	"625 775 925 1075"
+				"cast_range_tooltip"	"625 775 1000 1300"
 			}
 		}
 	}
