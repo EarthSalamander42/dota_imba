@@ -183,6 +183,29 @@ function ApiPrint(str, tag)
 	imba_api_game_event(tag, str);
 end
 
+ApiEventCodes = {
+	PlayerConnected = 2,
+	PlayerAbandoned = 3,
+	HeroKilled = 4,
+	HeroRespawned = 5,
+	EnteredHeroSelection = 6,
+	StartedGame = 7,
+	EnteredPreGame = 8,
+	EnteredPostGame = 9,
+	PlayerDisconnected = 10,
+	TowerKilled = 11
+}
+
+function ApiEvent(event, content) {
+	
+	rcontent = ""
+	if content ~= nil then
+		rcontent = content
+	end
+
+	imba_api_game_event(event, rcontent)
+}
+
 -- Will write a custom game event to the server
 -- event and content mandatory, tag optional 
 function imba_api_game_event(event, content, tag)
@@ -198,7 +221,7 @@ function imba_api_game_event(event, content, tag)
 	imba_api():game_event({ 
 		id = api_preloaded.id,
 		event = tostring(event),
-		content = tostring(content),
+		content = content,
 		tag = rtag
 	}, function (response) end, 
 		function () print("[api-frontend] Error writing game event") end)
@@ -245,7 +268,11 @@ function imba_api_game_register(complete_fun)
 		map = tostring(GetMapName()),
 		leader = leader,
 		dedicated = true,
-		players = players
+		players = players,
+		frames = tonumber(GetFrameCount()),
+		system_date = tostring(GetSystemDate()),
+		system_time = tostring(GetSystemTime()),
+		server_time = tonumber(Time()) 
 	}
 
 	-- perform request
@@ -274,7 +301,11 @@ function imba_api_game_complete(complete_fun)
 	local args = {
 		id = api_preloaded.id,
 		winner = GAME_WINNER_TEAM,
-		results = {}
+		results = {},
+		frames = tonumber(GetFrameCount()),
+		system_date = tostring(GetSystemDate()),
+		system_time = tostring(GetSystemTime()),
+		server_time = tonumber(Time()) 
 	}
 
 	ApiPrint("game_complete Before player info collection")
