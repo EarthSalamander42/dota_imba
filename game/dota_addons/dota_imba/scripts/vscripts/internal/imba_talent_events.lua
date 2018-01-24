@@ -178,7 +178,7 @@ function PopulateHeroImbaTalents(hero)
         PopulateHeroTalentChoice(hero)
         PopulateHeroTalentList(hero)
         PopulateHeroTalentLinkedAbilities(hero)
-        RemoveTalents(hero)
+--		RemoveTalents(hero)
     end
 end
 

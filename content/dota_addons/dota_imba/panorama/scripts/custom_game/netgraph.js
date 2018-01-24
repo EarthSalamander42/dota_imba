@@ -12,9 +12,11 @@ function ToggleNetGraph() {
 	if (toggle_graph == false) {
 		toggle_graph = true
 		$("#GlobalStats").style.visibility = "visible";
+		$("#Items").style.visibility = "visible";
 	} else {
 		toggle_graph = false
 		$("#GlobalStats").style.visibility = "collapse";
+		$("#Items").style.visibility = "collapse";
 	}
 }
 
@@ -33,6 +35,11 @@ function ToggleUniqueStats() {
 function RemoveUnits() {
 	$.Msg("Removing units...")
 	GameEvents.SendCustomGameEventToServer("remove_units", {});
+}
+
+function GiveItem(item) {
+	$.Msg("Give item: " + item)
+	GameEvents.SendCustomGameEventToServer("give_item", {item: item});
 }
 
 //	function RemoveParticles()
@@ -105,4 +112,16 @@ function UpdateNetGraphHeroNames() {
 	CustomNetTables.SubscribeNetTableListener("netgraph", UpdateNetGraph);
 	GameEvents.Subscribe("show_netgraph", ShowNetgraph);
 	GameEvents.Subscribe("show_netgraph_heronames", UpdateNetGraphHeroNames);
+
+	var items = [
+		"heart",
+		"butterfly",
+	]
+
+	var i = 0
+	for (i in items) {
+		var item_button = $.CreatePanel("Button", $("#Items"), items[i]);
+		item_button.AddClass("item-button")
+		item_button.style.backgroundImage = 'url("s2r://panorama/images/items/' + items[i] + '_png.vtex")';
+	}
 })();

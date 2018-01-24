@@ -23,6 +23,12 @@
 	visibility: collapse;
 }
 
+#Items
+{
+	flow-children: right;
+	visibility: collapse;
+}
+
 .EntryPanel
 {
 	width: 90%;
@@ -51,24 +57,47 @@
 	background-repeat: no-repeat;
 }
 
-#RemoveUnits,
-#RemoveParticles,
-#ToggleNetGraph,
-#ToggleUniqueStats
+.Button
 {
 	width: fit-children;
 	padding: 4px 4px 4px 4px;
 	height: 35px;
 	margin-top: 1%;
 	border-radius: 4px;
-	background-color: black;
+	background-color: #007000;
+}
+
+.Button:hover {
+	background-color: #009000;
+}
+
+.Button:active {
+	background-color: #003000;
+}
+
+.item-button
+{
+	width: 48px;
+	padding: 4px 4px 4px 4px;
+	height: 35px;
+	margin-top: 1%;
+	border-radius: 4px;
+	background-size: 48px 35px;
+	wash-color: white;
+}
+
+.item-button:hover {
+	wash-color: #909090aa;
+}
+
+.item-button:active {
+	wash-color: lightgreen;
 }
 
 #ToggleUniqueStats
 {
 	margin-left: 4%;
 }
-
 
 #UniqueStatsButtonText
 {
@@ -78,6 +107,7 @@
 	align: center center;
 }
 
+.HeroParticlesPanel
 #Hero0ParticlesPanel,
 #Hero1ParticlesPanel,
 #Hero2ParticlesPanel,

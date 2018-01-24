@@ -109,7 +109,6 @@ function GameMode:OnGameRulesStateChange(keys)
 				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph", {})
 --				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
 			end
-			HeroVoiceLine(hero, "battlebegins")
 		end
 
 		Timers:CreateTimer(60, function()
@@ -205,14 +204,6 @@ function GameMode:OnGameRulesStateChange(keys)
 
 			ApiPrint("Done sending Event")
 		end)
-
-		for _, hero in pairs(HeroList:GetAllHeroes()) do
-			if hero:GetTeamNumber() == GAME_WINNER_TEAM then
-				HeroVoiceLine(hero, "win")
-			else
-				HeroVoiceLine(hero, "lose")
-			end
-		end
 	end
 end
 
@@ -375,9 +366,6 @@ local normal_xp = npc:GetDeathXP()
 			end
 
 			npc.first_spawn = true
-			HeroVoiceLine(npc, "spawn")
-		else
-			HeroVoiceLine(npc, "respawn")
 		end
 
 		-- fix for killed with Ghost Revenant immolation
@@ -525,12 +513,6 @@ function GameMode:OnEntityHurt(keys)
 	--local entCause = EntIndexToHScript(keys.entindex_attacker)
 	--local entVictim = EntIndexToHScript(keys.entindex_killed)
 	--end
-
-	if keys.entindex_killed ~= nil then
-		if EntIndexToHScript(keys.entindex_killed):IsRealHero() then
-			HeroVoiceLine(EntIndexToHScript(keys.entindex_killed), "pain")
-		end
-	end
 end
 
 -- An item was picked up off the ground
@@ -557,14 +539,6 @@ if not plyID then return end
 local hero = PlayerResource:GetSelectedHeroEntity(plyID)
 local itemName = keys.itemname 
 local itemcost = keys.itemcost
-
-	if itemName == "item_imba_blink" then
-		HeroVoiceLine(hero, "blink")
-	else
-		if RandomInt(1, 100) >= 50 then
-			HeroVoiceLine(hero, "purch")
-		end
-	end
 end
 
 -- An ability was used by a player
@@ -578,8 +552,6 @@ if not hero then return end
 
 local abilityUsed = hero:FindAbilityByName(abilityname)
 if not abilityUsed then return end
-
-	HeroVoiceLine(hero, "cast")
 
 	if abilityname == "rubick_spell_steal" then
 		local target = abilityUsed:GetCursorTarget()
@@ -790,8 +762,6 @@ function GameMode:OnLastHit(keys)
 		end)
 		return
 	elseif isHeroKill then
-		HeroVoiceLine(player:GetAssignedHero(), "kill")
-
 		if not player:GetAssignedHero().killstreak then player:GetAssignedHero().killstreak = 0 end
 		player:GetAssignedHero().killstreak = player:GetAssignedHero().killstreak +1
 
@@ -1069,7 +1039,6 @@ function GameMode:OnEntityKilled( keys )
 		elseif killed_unit:HasModifier("modifier_item_imba_aegis") then
 			killed_unit:SetTimeUntilRespawn(killed_unit:FindModifierByName("modifier_item_imba_aegis").reincarnate_time)
 		elseif killed_unit:IsRealHero() and killed_unit:GetPlayerID() and (PlayerResource:IsImbaPlayer(killed_unit:GetPlayerID()) or (GameRules:IsCheatMode() == true) ) then
-			HeroVoiceLine(killed_unit, "death")
 			if GetMapName() ~= "imba_overthrow" then
 				-- Calculate base respawn timer, capped at 60 seconds
 				local hero_level = math.min(killed_unit:GetLevel(), 25)
@@ -1204,6 +1173,7 @@ function GameMode:OnEntityKilled( keys )
 			-- Update buyback cost
 			PlayerResource:SetCustomBuybackCost(player_id, buyback_cost)
 			PlayerResource:SetCustomBuybackCooldown(player_id, buyback_cooldown)
+			HeroVoiceLine(killer, "kill", killed_unit)
 		end
 
 		if string.find(killed_unit:GetUnitName(), "dota_creep") then

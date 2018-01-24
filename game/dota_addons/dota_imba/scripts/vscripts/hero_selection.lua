@@ -634,7 +634,7 @@ function HeroSelection:AssignHero(player_id, hero_name, dev_command)
 
 		-- Set up initial level
 		local starting_level = tonumber(CustomNetTables:GetTableValue("game_options", "initial_level")["1"])
-		if starting_level > 1 then
+		if starting_level and starting_level > 1 then
 			hero:AddExperience(XP_PER_LEVEL_TABLE[starting_level], DOTA_ModifyXP_CreepKill, false, true)
 		end
 
@@ -672,6 +672,11 @@ function HeroSelection:AssignHero(player_id, hero_name, dev_command)
 			if unit == hero_name then
 				CustomHeroAttachments(hero)
 			end
+		end
+
+		-- if getkeyvalue voiceline then add "modifier_hero_voiceline"
+		if hero:GetKeyValue("ShortName") then
+			hero:AddNewModifier(hero, nil, "modifier_hero_voiceline", {})
 		end
 
 		-- Set up player color

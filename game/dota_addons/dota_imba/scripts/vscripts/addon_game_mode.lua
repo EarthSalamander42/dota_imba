@@ -19,6 +19,7 @@ DebugPrint("[IMBA] Performing pre-load precache")
 	LinkLuaModifier("modifier_companion", "modifier/modifier_companion.lua", LUA_MODIFIER_MOTION_NONE )	
 	LinkLuaModifier("modifier_river", "modifier/modifier_river.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_courier_hack", "modifier/modifier_courier_hack.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_hero_voiceline", "modifier/modifier_hero_voiceline.lua", LUA_MODIFIER_MOTION_NONE )	
 
 	-- Runes modifiers
 	LinkLuaModifier("modifier_imba_arcane_rune", "modifier/runes/modifier_imba_arcane_rune.lua", LUA_MODIFIER_MOTION_NONE)

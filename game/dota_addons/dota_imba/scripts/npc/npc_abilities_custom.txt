@@ -42170,9 +42170,9 @@
 							"Types"			"DOTA_UNIT_TARGET_HERO"
 							"Flags"			"DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS"
 						}
-						"XPAmount"		"4"
+						"XPAmount"		"8"
 						"SplitEvenly"	"0"
-						"GoldAmount"	"2"
+						"GoldAmount"	"4"
 						"ReliableGold"	"0"
 					}
 				}
@@ -42228,9 +42228,9 @@
 							"Types"			"DOTA_UNIT_TARGET_HERO"
 							"Flags"			"DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS"
 						}
-						"XPAmount"		"8"
+						"XPAmount"		"4"
 						"SplitEvenly"	"0"
-						"GoldAmount"	"6"
+						"GoldAmount"	"2"
 						"ReliableGold"	"0"
 					}
 				}

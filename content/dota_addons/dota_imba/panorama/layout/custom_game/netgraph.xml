@@ -15,43 +15,48 @@
 				<Label class="OnValue" text="Good Buildings/Units:" />
 				<Label class="Value" id="GoodUnits" text="0" />
 			</Panel>
+
 			<Panel id="BadUnitPanel" class="EntryPanel">
 				<Label class="OnValue" text="Bad Buildings/Units:" />
 				<Label class="Value" id="BadUnits" text="0" />
 			</Panel>
+
 			<Panel id="TotalUnitPanel" class="EntryPanel">
 				<Label class="OnValue" text="Total Units:" />
 				<Label class="Value" id="TotalUnits" text="0" />
 			</Panel>
+
 			<Panel id="TotalDummyPanel" class="EntryPanel">
 				<Label class="OnValue" text="Total Dummies:" />
 				<Label class="Value" id="TotalDummies" text="0" />	
 			</Panel>
+
 			<Panel id="TotalDummyCreatedPanel" class="EntryPanel">
 				<Label class="OnValue" text="Dummies Created:" />
 				<Label class="Value" id="TotalDummiesCreated" text="0" />	
 			</Panel>
+
 			<Panel id="TotalParticlesPanel" class="EntryPanel">
 				<Label class="OnValue" text="Particles Alive:" />
 				<Label class="Value" id="TotalParticles" text="0" />	
 			</Panel>
+
 			<Panel id="TotalParticlesCreatedPanel" class="EntryPanel">
 				<Label class="OnValue" text="Particles Created:" />
 				<Label class="Value" id="TotalParticlesCreated" text="0" />	
 			</Panel>
+
+			<Panel id="Items" />
 		</Panel>
 
 		<Panel id="Buttons">
-			<Button id="ToggleNetGraph" onmouseactivate="ToggleNetGraph();" >
+			<Button id="ToggleNetGraph" class="Button" onmouseactivate="ToggleNetGraph();" >
 				<Label id="UniqueStatsButtonText" class="Event1_Title" text="Toggle Stats"/>
-			</Button> -->
-<!--			<Button id="ToggleNetGraph" onmouseactivate="ToggleNetGraph();" >
-				<Label id="UniqueStatsButtonText" class="Event1_Title" text="Toggle Stats"/>
-			</Button> -->
-			<Button id="RemoveUnits" onmouseactivate="RemoveUnits();" >
+			</Button>
+			<Button id="RemoveUnits" class="Button" onmouseactivate="RemoveUnits();" >
 				<Label id="UniqueStatsButtonText" class="Event1_Title" text="Remove Units"/>
 			</Button>
-<!--			<Button id="RemoveParticles" onmouseactivate="RemoveParticles();" >
+<!--			<Button id="RemoveParticles" class="Button" onmouseactivate="RemoveParticles();" >
 				<Label id="UniqueStatsButtonText" class="Event1_Title" text="Remove Particles"/>
 			</Button> -->
 		</Panel>
