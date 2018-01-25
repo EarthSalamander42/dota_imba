@@ -21,9 +21,9 @@ local IMBA_API_ENDPOINTS = {
 	game_event = "/game/event",
 	meta_topxpusers = "/meta/top-xp-users",
 	meta_topimrusers = "/meta/top-imr-users",
-    meta_hotdisabledheroes = "/meta/hot-disabled-heroes"
-    meta_companions = "/meta/companions"
-    meta_companion_change = "/meta/companion-change"
+    meta_hotdisabledheroes = "/meta/hot-disabled-heroes",
+    meta_companions = "/meta/companions",
+    meta_companion_change = "/meta/companion-change",
 }
 
 ImbaApi = {}

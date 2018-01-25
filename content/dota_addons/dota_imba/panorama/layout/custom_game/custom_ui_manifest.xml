@@ -119,7 +119,7 @@
 
 		//Recommended Talent
 		var TalentGuide = hudElements.FindChildTraverse("lower_hud").FindChildTraverse("center_with_stats")
-		TalentGuide.FindChildTraverse("RecommendedUpgradeOverlay").style.visibility = "collapse";
+//		TalentGuide.FindChildTraverse("RecommendedUpgradeOverlay").style.visibility = "collapse";
 
 		//Fix 4 digits levels
 		var LevelLabel = TalentGuide.FindChildTraverse("center_block").FindChildTraverse("xp").FindChildTraverse("LevelLabel")

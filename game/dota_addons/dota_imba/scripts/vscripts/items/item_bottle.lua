@@ -99,7 +99,7 @@ function modifier_item_imba_bottle_texture_controller:OnIntervalThink()
 						"bounty", --12
 						}
 	if IsServer() then
-		if bottle:IsCooldownReady() and self:GetParent():HasModifier("modifier_fountain_aura_buff") then
+		if bottle:IsCooldownReady() and self:GetParent():HasModifier("modifier_fountain_aura_buff") or self:GetParent():HasModifier("modifier_fountain_aura_effect_lua") then
 			bottle:SetCurrentCharges(3)
 		end
 		local stack = bottle:GetCurrentCharges() + 1
@@ -125,6 +125,11 @@ modifier_item_imba_bottle_heal = class({
 	GetEffectAttachType =	function() return PATTACH_ABSORIGIN_FOLLOW end,
 })
 
+function modifier_item_imba_bottle_heal:OnCreated()
+	self.health_restore = self:GetAbility():GetSpecialValueFor("health_restore") / self:GetAbility():GetSpecialValueFor("restore_time")
+	self.mana_restore = self:GetAbility():GetSpecialValueFor("mana_restore") / self:GetAbility():GetSpecialValueFor("restore_time")
+end
+
 function modifier_item_imba_bottle_heal:DeclareFunctions()
 	return {
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
@@ -133,11 +138,11 @@ function modifier_item_imba_bottle_heal:DeclareFunctions()
 end
 
 function modifier_item_imba_bottle_heal:GetModifierConstantHealthRegen()
-	return (self:GetAbility():GetSpecialValueFor("health_restore") / self:GetAbility():GetSpecialValueFor("restore_time"))
+	return self.health_restore
 end
 
 function modifier_item_imba_bottle_heal:GetModifierConstantManaRegen()
-	return (self:GetAbility():GetSpecialValueFor("mana_restore") / self:GetAbility():GetSpecialValueFor("restore_time"))
+	return self.mana_restore
 end
 
 function modifier_item_imba_bottle_heal:OnCreated()

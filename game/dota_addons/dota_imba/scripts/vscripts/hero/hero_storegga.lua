@@ -292,7 +292,7 @@ function storegga_grab_throw:OnProjectileHit( hTarget, vLocation )
 		--ParticleManager:DestroyParticle( self.nTargetFX, false )
 
 		EmitSoundOnLocationWithCaster( vLocation, "Ability.TossImpact", self:GetCaster() )
-		EmitSoundOnLocationWithCaster( vLocation, "OgreTank.GroundSmash", self:GetCaster() )
+--		EmitSoundOnLocationWithCaster( vLocation, "OgreTank.GroundSmash", self:GetCaster() )
 		
 		if self.hThrowTarget ~= nil then
 			self.hThrowBuff:Destroy()
@@ -315,7 +315,7 @@ function storegga_grab_throw:OnProjectileHit( hTarget, vLocation )
 					ParticleManager:SetParticleControlEnt( nFXIndex, 10, self.hThrowTarget, PATTACH_ABSORIGIN_FOLLOW, nil, self.hThrowTarget:GetOrigin(), true )
 					ParticleManager:ReleaseParticleIndex( nFXIndex )
 
-					EmitSoundOn( "Dungeon.BloodSplatterImpact", self.hThrowTarget )
+					EmitSoundOn( "Hero_PhantomAssassin.Spatter", self.hThrowTarget )
 				else
 					self.hThrowTarget:AddNewModifier( self:GetCaster(), self, "modifier_stunned", { duration = self.stun_duration } )
 				end
@@ -347,7 +347,7 @@ function storegga_grab_throw:OnProjectileHit( hTarget, vLocation )
 						ParticleManager:SetParticleControlEnt( nFXIndex, 10, enemy, PATTACH_ABSORIGIN_FOLLOW, nil, enemy:GetOrigin(), true )
 						ParticleManager:ReleaseParticleIndex( nFXIndex )
 
-						EmitSoundOn( "Dungeon.BloodSplatterImpact", enemy )
+						EmitSoundOn( "Hero_PhantomAssassin.Spatter", enemy )
 					else
 						local kv =
 						{

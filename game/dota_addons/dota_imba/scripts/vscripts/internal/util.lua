@@ -1014,14 +1014,19 @@ local color = hero:GetFittingColor()
 end
 
 function HeroVoiceLine(hero, event, extra) -- extra can be victim for kill event, or item purchased for purch event
+if not hero:GetKeyValue("ShortName") then return end
 local ID = hero:GetPlayerID()
 local hero_name = string.gsub(hero:GetUnitName(), "npc_dota_hero_", "")
 local short_hero_name = hero:GetKeyValue("ShortName")
 local max_line = 2
 if event == "blink" or event == "firstblood" then
+	max_line = 1
 else
+	print(event)
+	print(max_line)
 	max_line = hero:GetKeyValue(event)
 end
+
 local random_int = RandomInt(1, max_line)
 
 if not VOICELINE_IN_CD then
@@ -1062,9 +1067,9 @@ end
 		if event == "level_voiceline" then event = string.gsub(event, "_voiceline", "") end
 		if event == "purch" and RandomInt(1, 100) <= 50 then return end -- 50% chance to play purchase voice line
 		if random_int >= 10 then
-			EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int, hero:GetPlayerOwnerID())
+			EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int, ID)
 		else
-			EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int, hero:GetPlayerOwnerID())
+			EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int, ID)
 		end
 	return
 	elseif event == "move" or event == "cast" or event == "attack" then
@@ -1072,9 +1077,9 @@ end
 --		print("Move/Attack/Cast cd:", VOICELINE_IN_CD[ID][1])
 		if VOICELINE_IN_CD[ID][1] == false then
 			if random_int >= 10 then
-				EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int, hero:GetPlayerOwnerID())
+				EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int, ID)
 			else
-				EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int, hero:GetPlayerOwnerID())
+				EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int, ID)
 			end
 
 			VOICELINE_IN_CD[ID][1] = true
@@ -1092,9 +1097,9 @@ end
 			end
 
 			if random_int >= 10 then
-				EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int, hero:GetPlayerOwnerID())
+				EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int, ID)
 			else
-				EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int, hero:GetPlayerOwnerID())
+				EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int, ID)
 			end
 
 			VOICELINE_IN_CD[ID][2] = true
@@ -1106,9 +1111,9 @@ end
 	elseif event == "pain" then
 		if VOICELINE_IN_CD[ID][3] == false then
 			if random_int >= 10 then
-				EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int, hero:GetPlayerOwnerID())
+				EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int, ID)
 			else
-				EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int, hero:GetPlayerOwnerID())
+				EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int, ID)
 			end
 
 			VOICELINE_IN_CD[ID][3] = true
@@ -1120,9 +1125,9 @@ end
 --	elseif event == "notyet" or event == "nomana" then
 --		if VOICELINE_IN_CD[ID][4] == false then
 --			if random_int >= 10 then
---				EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int, hero:GetPlayerOwnerID())
+--				EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_"..random_int, ID)
 --			else
---				EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int, hero:GetPlayerOwnerID())
+--				EmitAnnouncerSoundForPlayer(hero_name.."_"..short_hero_name.."_"..event.."_0"..random_int, ID)
 --			end
 
 			-- make hero play anger voice lines if he click within 10 seconds

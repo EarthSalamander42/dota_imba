@@ -281,6 +281,48 @@
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
 
+		//Voice Lines (number of voicelines per events)
+		"ShortName"					"beas"
+
+		//Abilities
+		"failure"					"3"		// ability_failure -- OnAbilityFail
+		"notyet"					"9"		// notyet -- OnAbilityNotReady, These voicelines should be called in the right order, as the unit gets anger and anger the more you spam
+		"cast"						"7"		// cast -- OnAbilityUsed
+	
+		"OnAbility1Used"			"ability_axes"
+		"OnAbility1UsedCount"		"6"
+		"OnAbility2Used"			"ability_callwild"
+		"OnAbility2UsedCount"		"5"
+
+		//Orders
+		"battlebegins"				"2"		// battlebegins -- OnGameInProgress
+		"anger"						"6"		// anger -- OnAngry
+		"attack"					"15"	// attack -- OnAttack (When the unit attack another unit)
+		"pain"						"1"		// pain -- OnAttacked, when the unit is attacked. Add underattack (1) here?
+		"death"						"14"	// death -- OnDeath
+		"deny"						"9"		// deny -- OnDeny
+		"happy"						"5"		// happy -- OnHappy
+		"kill"						"14"	// kill -- OnKill
+		"deny"						"8"		// lasthit -- OnLastHit
+		"laugh"						"9"		// laugh -- OnLaugh
+		"level"						"8"		// level -- OnLevelUp
+		"lose"						"3"		// lose -- OnLose
+		"move"						"16"	// move -- OnMove
+		"rare"						"5"		// rare -- OnMoveRare
+		"nomana"					"9"		// nomana -- These voicelines should be called in the right order, as the unit gets anger and anger the more you spam
+		"purch"						"4"		// purch -- OnPurchase
+		"respawn"					"12"	// respawn -- OnRespawn
+		"spawn"						"6"		// spawn -- OnSpawn, (loadout?)
+		"thanks"					"2"		// thanks -- OnThanks
+		"win"						"3"		// win -- OnWin
+	
+		//Shop
+//		"OnAegisPickup"				"2"
+//		"OnAghanimPurchased"		"2"
+//		"OnBlinkPurchased"			"2"
+//		"OnBottlePurchased"			"4"
+//		"OnNecronomiconPurchased"	"7"
+
 		"Ability1"					"beastmaster_wild_axes"
 		"Ability2"					"beastmaster_call_of_the_wild"
 		"Ability3"					"beastmaster_inner_beast"
@@ -2413,6 +2455,94 @@
 		"VisionDaytimeRange"		"1800"									// Range of vision during day light.
 		"VisionNighttimeRange"		"800"									// Range of vision at night time.
 
-		"GameSoundsFile"			"soundevents/game_sounds_heroes_custom/game_sounds_weaver.vsndevts"
+		"GameSoundsFile"			"soundevents/game_sounds_heroes_custom/game_sounds_invoker.vsndevts"
+	}
+
+	//=================================================================================================================
+	// HERO: Storegga // Need to be duplicated in npc_units_custom.txt
+	//=================================================================================================================
+	"npc_dota_hero_storegga"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"					"npc_dota_hero_tiny"
+		"HeroID"					"121"
+		"Model"						"models/heroes/tiny_01/tiny_01.vmdl"
+		"ModelScale"				"1.10000"
+		"SoundSet"					"Hero_Tiny"
+
+		//Picking Screen
+		"IsCustom"					"1"
+		"IsNew"						"1"
+
+		// Abilities
+		//-------------------------------------------------------------------------------------------------------------
+		"Ability1"			"storegga_arm_slam"
+		"Ability2"			"storegga_grab"
+		"Ability3"			"storegga_grab_throw"
+		"Ability4"			"storegga_passive"
+		"Ability5"			"generic_hidden"
+		"Ability6"			"storegga_avalanche"
+
+		// Armor
+		//-------------------------------------------------------------------------------------------------------------
+		"ArmorPhysical"				"8"									// Physical protection.
+		"MagicalResistance"			"25"								// Magical protection (percentage).
+
+		// Attack
+		//-------------------------------------------------------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"59"							// Damage range min.
+		"AttackDamageMax"			"75"							// Damage range max.
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"		// Type of damage dealt. 
+		"AttackRate"				"1.700"							// Speed of attack.
+		"AttackAnimationPoint"		"1.000"							// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"800"							// Range within a target can be acquired.
+		"AttackRange"				"150"							// Range within a target can be attacked.
+		"ProjectileModel"			""								// Particle system model for projectile.
+		"ProjectileSpeed"			"0"							// Speed of projectile.
+
+		// Attributes
+		//-------------------------------------------------------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"	// Primary Attribute
+		"AttributeBaseStrength"		"26"
+		"AttributeStrengthGain"		"4.400000"
+		"AttributeBaseAgility"		"19"
+		"AttributeAgilityGain"		"2.900000"
+		"AttributeBaseIntelligence"	"16"
+		"AttributeIntelligenceGain"	"2.600000"
+
+		// Bounds
+		//-------------------------------------------------------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"70"
+		"HealthBarOffset"			"240"
+
+		// Movement
+		//-------------------------------------------------------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"285"									// Speed.
+		"MovementTurnRate"			"0.5"									// Turning rate.
+
+		// Status
+		//-------------------------------------------------------------------------------------------------------------
+		"StatusHealth"				"200"									// Base health.
+		"StatusHealthRegen"			"3.0"									// Health regeneration rate.
+		"StatusMana"				"50"									// Base mana.
+		"StatusManaRegen"			"1.0"									// Mana regeneration rate.
+
+		// Team
+		//-------------------------------------------------------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_HERO"
+
+		// Vision
+		//-------------------------------------------------------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"									// Range of vision during day light.
+		"VisionNighttimeRange"		"800"									// Range of vision at night time.
+
+		"GameSoundsFile"			"soundevents/game_sounds_heroes_custom/game_sounds_tiny.vsndevts"
 	}
 }

@@ -33,7 +33,7 @@ function GameMode:OnDisconnect(keys)
 		-- Start tracking
 		print("started keeping track of player "..player_id.."'s connection state")
 		ApiEvent(ApiEventCodes.PlayerDisconnected, tostring(PlayerResource:GetSteamID(player_id)))
-		
+
 		local disconnect_time = 0
 		Timers:CreateTimer(1, function()
 			-- Keep track of time disconnected
@@ -369,6 +369,11 @@ local normal_xp = npc:GetDeathXP()
 			if deathEffects ~= -1 then
 				ParticleManager:DestroyParticle( deathEffects, true )
 				npc:DeleteAttribute( "effectsID" )
+			end
+
+			if npc:GetUnitName() == "npc_dota_hero_storegga" then
+				npc:SetModel("models/creeps/ice_biome/storegga/storegga.vmdl")
+				npc:SetOriginalModel("models/creeps/ice_biome/storegga/storegga.vmdl")
 			end
 
 			npc.first_spawn = true
@@ -1300,6 +1305,9 @@ function GameMode:OnConnectFull(keys)
 --	if player.is_dev then
 --		CustomGameEventManager:Send_ServerToPlayer(player:GetPlayerOwner(), "show_netgraph", {})
 --	end
+
+	CustomGameEventManager:Send_ServerToAllClients("send_news", {})
+
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Player reconnect logic
 	-------------------------------------------------------------------------------------------------
@@ -1349,7 +1357,7 @@ function GameMode:OnTowerKill(keys)
 	-- IMBA: Attack of the Ancients tower upgrade logic
 	-------------------------------------------------------------------------------------------------
 
-	ApiEvent(ApiEventCodes.TowerKilled, tower_team))
+	ApiEvent(ApiEventCodes.TowerKilled, tower_team)
 
 	-- Always enabled!
 --	if TOWER_UPGRADE_MODE then		

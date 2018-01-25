@@ -14,6 +14,7 @@ api_preloaded = {}
 function imba_api_init(complete_fun)
 
 	print("[api-frontend] init")
+	print(api_preloaded.donators, api_preloaded.developers, api_preloaded.players, api_preloaded.topxpusers, api_preloaded.topimrusers, api_preloaded.hot_disabled_heroes, api_preloaded.companions)
 
 	local proxy_fun = function () 
 		if api_preloaded.donators ~= nil 
@@ -22,7 +23,7 @@ function imba_api_init(complete_fun)
 			and api_preloaded.topxpusers ~= nil 
             and api_preloaded.topimrusers ~= nil
             and api_preloaded.hot_disabled_heroes ~= nil
-            and api_preloaded.companions ~nil
+            and api_preloaded.companions ~= nil
 		then
 			print("[api-frontend] preloading completed")
 			complete_fun()
@@ -102,7 +103,9 @@ end
 -- Syncronous
 -- Returns true if the player with the given id is a developer, false otherwise
 function IsDeveloper(playerid)
-	local devs = GetDevelopers()
+if GetDevelopers() == nil then return end
+local devs = GetDevelopers()
+
 	for i = 1, #devs do
 		local id = tostring(PlayerResource:GetSteamID(playerid))
 		if id == devs[i].steamId64 then
@@ -221,10 +224,10 @@ ApiEventCodes = {
 	EnteredPreGame = 8,
 	EnteredPostGame = 9,
 	PlayerDisconnected = 10,
-	TowerKilled = 11
+	TowerKilled = 11,
 }
 
-function ApiEvent(event, content) {
+function ApiEvent(event, content)
 	
 	rcontent = ""
 	if content ~= nil then
@@ -232,7 +235,7 @@ function ApiEvent(event, content) {
 	end
 
 	imba_api_game_event(event, rcontent)
-}
+end
 
 -- Will write a custom game event to the server
 -- event and content mandatory, tag optional 

@@ -4,7 +4,7 @@
 =========================================================================*/
 (function () {
 	InitializeUI()
-	$.Schedule(4, InitializeNews);
+	InitializeNews()
 
 	// Hides battlecuck crap
 	var hit_test_blocker = $.GetContextPanel().GetParent().FindChild("SidebarAndBattleCupLayoutContainer");
@@ -29,7 +29,6 @@ function InitializeUI() {
 		$.Schedule(1, InitializeUI);
 		return;
 	} else if (is_host) {
-
 		// Make the game options panel visible
 		var game_options_panel = $('#imba-admin')
 		game_options_panel.style.visibility = 'visible';
@@ -62,21 +61,26 @@ function InitializeUI() {
 var news = null;
 
 function setNews() {
-	if (news == null) return;
+	GameEvents.Subscribe("send_news", function (args) {
+		$.Msg("Receiving News...")
+		if (news == null) return;
 
-	var lang = $.Localize("lang");
-	var fallbackLanguage = "en";
+		var lang = $.Localize("lang");
+		var fallbackLanguage = "en";
 
-	var title = news[fallbackLanguage].title;
-	var text = news[fallbackLanguage].text;
+		var title = news[fallbackLanguage].title;
+		var text = news[fallbackLanguage].text;
 
-	if (news[lang] !== undefined) {
-		title = news[lang].title;
-		text = news[lang].text;
-	}
+		if (news[lang] !== undefined) {
+			title = news[lang].title;
+			text = news[lang].text;
+		}
 
-	$("#imba-news-article-title").text = title;
-	$("#imba-news-article-text").text = text;
+		$("#imba-news-article-title").text = title;
+		$("#imba-news-article-text").text = text;
+
+		$.Msg($("#imba-news-article-title").text)
+	})
 }
 
 function InitializeNews() {
@@ -95,7 +99,7 @@ function InitializeNews() {
 		}
 	});
 
-	$.Schedule(0.33, setNews);
+	setNews()
 }
 
 // Checks if the local player has local privileges
