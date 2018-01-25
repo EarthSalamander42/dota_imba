@@ -3,8 +3,7 @@
 /* Initialisation - runs when the element is created
 =========================================================================*/
 (function () {
-	InitializeUI()
-	InitializeNews()
+	InitializeUI();
 
 	// Hides battlecuck crap
 	var hit_test_blocker = $.GetContextPanel().GetParent().FindChild("SidebarAndBattleCupLayoutContainer");
@@ -56,50 +55,6 @@ function InitializeUI() {
 	}
 
 	SetGameOptions(); // Setup game options by default in case the host don't change them (initialize)
-}
-
-var news = null;
-
-function setNews() {
-	GameEvents.Subscribe("send_news", function (args) {
-		$.Msg("Receiving News...")
-		if (news == null) return;
-
-		var lang = $.Localize("lang");
-		var fallbackLanguage = "en";
-
-		var title = news[fallbackLanguage].title;
-		var text = news[fallbackLanguage].text;
-
-		if (news[lang] !== undefined) {
-			title = news[lang].title;
-			text = news[lang].text;
-		}
-
-		$("#imba-news-article-title").text = title;
-		$("#imba-news-article-text").text = text;
-
-		$.Msg($("#imba-news-article-title").text)
-	})
-}
-
-function InitializeNews() {
-	$.Msg("Init News...");
-	$.AsyncWebRequest('https://api.dota2imba.org/meta/news', {
-		type: 'GET',
-		dataType: 'json',
-		success: function (d) {
-			$.Msg("News received");
-			news = d.data;
-		},
-
-		timeout: 5000,
-		error: function (err) {
-			$.Msg("Api Error" + JSON.stringify(err));
-		}
-	});
-
-	setNews()
 }
 
 // Checks if the local player has local privileges
