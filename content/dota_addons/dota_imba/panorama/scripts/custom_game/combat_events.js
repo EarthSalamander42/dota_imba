@@ -3,6 +3,9 @@
 // url("s2r://panorama/images/hud/icon_kill_ally_psd.vtex")
 // url("s2r://panorama/images/hud/icon_kill_enemy_psd.vtex")
 
+// <DOTAEmoticon src="file://{images}/emoticons/bountyrune.png" defaultsrc="" scaling="stretch"
+// width and height = 24px, transform = translateY( 10px )
+
 function CreateCustomToast(data) {
 	var row = $.CreatePanel('Panel', $('#CustomToastManager'), '');
 	row.BLoadLayoutSnippet('ToastPanel');

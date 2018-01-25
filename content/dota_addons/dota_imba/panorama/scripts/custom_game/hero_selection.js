@@ -368,13 +368,17 @@ function LoadPlayers() {
 				//				playerPanel.SetPlayerMMR( plyData.IMR_10v10.toFixed([0]) );
 				//				RadiantLevels = RadiantLevels + plyData.IMR_10v10 / radiantPlayers.length
 				//				$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + RadiantLevels.toFixed([0]);
-				playerPanel.SetPlayerMMR(plyData.Lvl.toFixed([0]));
-				RadiantLevels = RadiantLevels + plyData.Lvl / radiantPlayers.length
-				$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + RadiantLevels.toFixed([0]);
+				if (plyData.lvl != undefined) {
+					playerPanel.SetPlayerMMR(plyData.Lvl.toFixed([0]));
+					RadiantLevels = RadiantLevels + plyData.Lvl / radiantPlayers.length
+					$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + RadiantLevels.toFixed([0]);
+				}
 			} else if (map_info.map_display_name == "imba_frantic_10v10") {
-				playerPanel.SetPlayerMMR(plyData.Lvl.toFixed([0]));
-				RadiantLevels = RadiantLevels + plyData.Lvl / radiantPlayers.length
-				$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + RadiantLevels.toFixed([0]);
+				if (plyData.lvl != undefined) {
+					playerPanel.SetPlayerMMR(plyData.Lvl.toFixed([0]));
+					RadiantLevels = RadiantLevels + plyData.Lvl / radiantPlayers.length
+					$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + RadiantLevels.toFixed([0]);
+				}
 			}
 		}
 	});

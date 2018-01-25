@@ -109,7 +109,7 @@ function GameMode:SpecialItemAdd( event )
 		"item_sphere",
 		"item_imba_diffusal_blade",
 		"item_imba_maelstrom",
-		"item_basher",
+		"item_imba_basher",
 		"item_imba_invis_sword",
 		"item_imba_desolator",
 		"item_ultimate_scepter",

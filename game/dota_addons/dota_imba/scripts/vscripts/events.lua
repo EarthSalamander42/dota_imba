@@ -32,7 +32,8 @@ function GameMode:OnDisconnect(keys)
 
 		-- Start tracking
 		print("started keeping track of player "..player_id.."'s connection state")
-		ApiPrint("Player " .. tostring(PlayerResource:GetSteamID(player_id)) .. " disconnected.");
+		ApiEvent(ApiEventCodes.PlayerDisconnected, tostring(PlayerResource:GetSteamID(player_id)))
+		
 		local disconnect_time = 0
 		Timers:CreateTimer(1, function()
 			-- Keep track of time disconnected
@@ -46,7 +47,7 @@ function GameMode:OnDisconnect(keys)
 				Notifications:BottomToAll({text = "#imba_player_abandon_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
 				PlayerResource:SetHasAbandonedDueToLongDisconnect(player_id, true)
 				print("player "..player_id.." has abandoned the game.")
-				ApiPrint("Player " .. tostring(PlayerResource:GetSteamID(player_id)) .. " has abandoned the game.");
+				ApiEvent(ApiEventCodes.PlayerAbandoned, tostring(PlayerResource:GetSteamID(player_id)))
 
 				-- Start redistributing this player's gold to its allies
 				PlayerResource:StartAbandonGoldRedistribution(player_id)
@@ -76,7 +77,7 @@ function GameMode:OnGameRulesStateChange(keys)
 	-- IMBA: Pick screen stuff
 	-------------------------------------------------------------------------------------------------
 	if new_state == DOTA_GAMERULES_STATE_HERO_SELECTION then
-		ApiPrint("entered hero selection")
+		ApiEvent(ApiEventCodes.EnteredHeroSelection, nil)
 		HeroSelection:HeroListPreLoad()
 
 		-- get the IXP of everyone (ignore bot)
@@ -87,6 +88,7 @@ function GameMode:OnGameRulesStateChange(keys)
 	-- IMBA: Start-of-pre-game stuff
 	-------------------------------------------------------------------------------------------------
 	if new_state == DOTA_GAMERULES_STATE_PRE_GAME then
+		ApiEvent(ApiEventCodes.EnteredPreGame, nil)
 		-- Initialize Battle Pass
 		Imbattlepass:Init()
 
@@ -101,7 +103,7 @@ function GameMode:OnGameRulesStateChange(keys)
 	-- IMBA: Game started (horn sounded)
 	-------------------------------------------------------------------------------------------------
 	if new_state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-		ApiPrint("Entering Game in progress / horn")
+		ApiEvent(ApiEventCodes.EnteredHeroSelection, nil)
 
 		for _, hero in pairs(HeroList:GetAllHeroes()) do
 			if IsDeveloper(hero:GetPlayerID()) then
@@ -109,7 +111,6 @@ function GameMode:OnGameRulesStateChange(keys)
 				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph", {})
 --				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
 			end
-			HeroVoiceLine(hero, "battlebegins")
 		end
 
 		Timers:CreateTimer(60, function()
@@ -169,7 +170,7 @@ function GameMode:OnGameRulesStateChange(keys)
 
 	if new_state == DOTA_GAMERULES_STATE_POST_GAME then
 		-- call imba api
-		ApiPrint("Entering post game")
+		ApiEvent(ApiEventCodes.EnteredPostGame, nil)
 
 		imba_api_game_complete(function (players)
 			ApiPrint("Game complete request successful!")
@@ -205,14 +206,6 @@ function GameMode:OnGameRulesStateChange(keys)
 
 			ApiPrint("Done sending Event")
 		end)
-
-		for _, hero in pairs(HeroList:GetAllHeroes()) do
-			if hero:GetTeamNumber() == GAME_WINNER_TEAM then
-				HeroVoiceLine(hero, "win")
-			else
-				HeroVoiceLine(hero, "lose")
-			end
-		end
 	end
 end
 
@@ -345,6 +338,10 @@ local normal_xp = npc:GetDeathXP()
 	end
 
 	if npc:IsRealHero() then
+	
+		ApiEvent(ApiEventCodes.HeroRespawned, { player = tostring(PlayerResource:GetSteamID(npc:GetPlayerID())), hero = npc:GetUnitName() })
+		
+	
 		if not npc.first_spawn then
 			if npc:GetUnitName() == "npc_dota_hero_troll_warlord" then
 				npc:SwapAbilities("imba_troll_warlord_whirling_axes_ranged", "imba_troll_warlord_whirling_axes_melee", true, false)
@@ -355,11 +352,13 @@ local normal_xp = npc:GetDeathXP()
 			if IsDonator(npc) ~= false then
 				if npc:GetUnitName() ~= "npc_dota_hero_wisp" or npc.is_real_wisp then
 					if tostring(PlayerResource:GetSteamID(npc:GetPlayerID())) == "76561198015161808" then
-						DonatorCompanion(npc, "cookies")
+						DonatorCompanion(npc, "npc_imba_donator_companion_cookies")
 					elseif tostring(PlayerResource:GetSteamID(npc:GetPlayerID())) == "76561198003571172" then
-						DonatorCompanion(npc, "baumi")
+						DonatorCompanion(npc, "npc_imba_donator_companion_baumi")
 					elseif tostring(PlayerResource:GetSteamID(npc:GetPlayerID())) == "76561198014254115" then
-						DonatorCompanion(npc, "icefrog")
+						DonatorCompanion(npc, "npc_imba_donator_companion_icefrog")
+					elseif tostring(PlayerResource:GetSteamID(npc:GetPlayerID())) == "76561198014254115" then
+						DonatorCompanion(npc, "npc_imba_donator_companion_admiral_bulldog")
 					else
 						DonatorCompanion(npc, IsDonator(npc))
 					end
@@ -373,9 +372,6 @@ local normal_xp = npc:GetDeathXP()
 			end
 
 			npc.first_spawn = true
-			HeroVoiceLine(npc, "spawn")
-		else
-			HeroVoiceLine(npc, "respawn")
 		end
 
 		-- fix for killed with Ghost Revenant immolation
@@ -523,12 +519,6 @@ function GameMode:OnEntityHurt(keys)
 	--local entCause = EntIndexToHScript(keys.entindex_attacker)
 	--local entVictim = EntIndexToHScript(keys.entindex_killed)
 	--end
-
-	if keys.entindex_killed ~= nil then
-		if EntIndexToHScript(keys.entindex_killed):IsRealHero() then
-			HeroVoiceLine(EntIndexToHScript(keys.entindex_killed), "pain")
-		end
-	end
 end
 
 -- An item was picked up off the ground
@@ -555,14 +545,6 @@ if not plyID then return end
 local hero = PlayerResource:GetSelectedHeroEntity(plyID)
 local itemName = keys.itemname 
 local itemcost = keys.itemcost
-
-	if itemName == "item_imba_blink" then
-		HeroVoiceLine(hero, "blink")
-	else
-		if RandomInt(1, 100) >= 50 then
-			HeroVoiceLine(hero, "purch")
-		end
-	end
 end
 
 -- An ability was used by a player
@@ -576,8 +558,6 @@ if not hero then return end
 
 local abilityUsed = hero:FindAbilityByName(abilityname)
 if not abilityUsed then return end
-
-	HeroVoiceLine(hero, "cast")
 
 	if abilityname == "rubick_spell_steal" then
 		local target = abilityUsed:GetCursorTarget()
@@ -788,8 +768,6 @@ function GameMode:OnLastHit(keys)
 		end)
 		return
 	elseif isHeroKill then
-		HeroVoiceLine(player:GetAssignedHero(), "kill")
-
 		if not player:GetAssignedHero().killstreak then player:GetAssignedHero().killstreak = 0 end
 		player:GetAssignedHero().killstreak = player:GetAssignedHero().killstreak +1
 
@@ -1067,7 +1045,6 @@ function GameMode:OnEntityKilled( keys )
 		elseif killed_unit:HasModifier("modifier_item_imba_aegis") then
 			killed_unit:SetTimeUntilRespawn(killed_unit:FindModifierByName("modifier_item_imba_aegis").reincarnate_time)
 		elseif killed_unit:IsRealHero() and killed_unit:GetPlayerID() and (PlayerResource:IsImbaPlayer(killed_unit:GetPlayerID()) or (GameRules:IsCheatMode() == true) ) then
-			HeroVoiceLine(killed_unit, "death")
 			if GetMapName() ~= "imba_overthrow" then
 				-- Calculate base respawn timer, capped at 60 seconds
 				local hero_level = math.min(killed_unit:GetLevel(), 25)
@@ -1172,7 +1149,16 @@ function GameMode:OnEntityKilled( keys )
 		end
 
 		-- Check if the dying unit was a player-controlled hero
-		if killed_unit:IsRealHero() and killed_unit:GetPlayerID() then				
+		if killed_unit:IsRealHero() and killed_unit:GetPlayerID() then
+		
+			if killer ~= nil then		
+				ApiEvent(ApiEventCodes.HeroKilled, { 
+					player = tostring(PlayerResource:GetSteamID(killed_unit:GetPlayerID())), 
+					killed = killed_unit:GetUnitName(),
+					killer = killer:GetUnitName()
+				})
+			end
+			
 			-- Buyback parameters
 			local player_id = killed_unit:GetPlayerID()
 			local hero_level = killed_unit:GetLevel()
@@ -1202,6 +1188,7 @@ function GameMode:OnEntityKilled( keys )
 			-- Update buyback cost
 			PlayerResource:SetCustomBuybackCost(player_id, buyback_cost)
 			PlayerResource:SetCustomBuybackCooldown(player_id, buyback_cooldown)
+			HeroVoiceLine(killer, "kill", killed_unit)
 		end
 
 		if string.find(killed_unit:GetUnitName(), "dota_creep") then
@@ -1296,6 +1283,7 @@ end
 function GameMode:OnConnectFull(keys)
 	DebugPrint('[BAREBONES] OnConnectFull')
 	DebugPrintTable(keys)
+	
 
 	GameMode:_OnConnectFull(keys)
 	
@@ -1303,6 +1291,7 @@ function GameMode:OnConnectFull(keys)
 	local ply = EntIndexToHScript(entIndex)
 	local player_id = ply:GetPlayerID()
 
+	ApiEvent(ApiEventCodes.PlayerConnectedFull, tostring(PlayerResource:GetSteamID(player_id)))
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Player data initialization
 	-------------------------------------------------------------------------------------------------
@@ -1359,7 +1348,9 @@ function GameMode:OnTowerKill(keys)
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Attack of the Ancients tower upgrade logic
 	-------------------------------------------------------------------------------------------------
-	
+
+	ApiEvent(ApiEventCodes.TowerKilled, tower_team))
+
 	-- Always enabled!
 --	if TOWER_UPGRADE_MODE then		
 		

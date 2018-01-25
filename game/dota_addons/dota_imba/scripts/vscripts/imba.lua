@@ -712,13 +712,6 @@ function GameMode:OrderFilter( keys )
 		})
 	end
 
-	-- Voice lines
-	if keys.order_type == DOTA_UNIT_ORDER_ATTACK_TARGET then
-		HeroVoiceLine(unit, "attack")
-	elseif keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION or keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_TARGET then
-		HeroVoiceLine(unit, "move")
-	end
-
 	------------------------------------------------------------------------------------
 	-- Prevent Buyback during reincarnation
 	------------------------------------------------------------------------------------
@@ -727,7 +720,7 @@ function GameMode:OrderFilter( keys )
 			return false
 		end
 	end
-	
+
 	------------------------------------------------------------------------------------
 	-- Witch Doctor Death Ward handler
 	------------------------------------------------------------------------------------
@@ -740,7 +733,7 @@ function GameMode:OrderFilter( keys )
 			return nil
 		end
 	end
-	
+
 	if unit:HasModifier("modifier_imba_death_ward_caster") then
 		if keys.order_type ==  DOTA_UNIT_ORDER_ATTACK_TARGET then
 			local modifier = unit:FindModifierByName("modifier_imba_death_ward_caster")
@@ -748,7 +741,7 @@ function GameMode:OrderFilter( keys )
 			return nil
 		end
 	end
-	
+
 	------------------------------------------------------------------------------------
 	-- Riki Blink-Strike handler
 	------------------------------------------------------------------------------------
@@ -758,7 +751,7 @@ function GameMode:OrderFilter( keys )
 			ability.thinker = unit:AddNewModifier(unit, ability, "modifier_imba_blink_strike_thinker", {target = keys.entindex_target})
 		end
 	end
-	
+
 	------------------------------------------------------------------------------------
 	-- Queen of Pain's Sonic Wave confusion
 	------------------------------------------------------------------------------------
@@ -767,7 +760,7 @@ function GameMode:OrderFilter( keys )
 		-- Determine order type
 		local modifier = unit:FindModifierByName("modifier_imba_sonic_wave_daze")
 		local rand = math.random
-		
+
 		-- Change "move to target" to "move to position"
 		if keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_TARGET then
 			local target = EntIndexToHScript(keys["entindex_target"])
@@ -1323,9 +1316,9 @@ function GameMode:OnGameInProgress()
 	-- IMBA: Custom maximum level EXP tables adjustment
 	-------------------------------------------------------------------------------------------------
 	local max_level = tonumber(CustomNetTables:GetTableValue("game_options", "max_level")["1"])
-	if max_level > 40 then
-		for i = 41, max_level do
-			XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + 5000
+	if max_level and max_level > 40 then
+		for i = 26, max_level do
+			XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + 2500
 			GameRules:GetGameModeEntity():SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
 		end
 	end
@@ -1934,6 +1927,7 @@ function GameMode:GatherAndRegisterValidTeams()
 --	print( "Setting up teams:" )
 	for team = 0, (DOTA_TEAM_COUNT-1) do
 		local maxPlayers = 0
+
 		if ( nil ~= TableFindKey( foundTeamsList, team ) ) then
 			maxPlayers = maxPlayersPerValidTeam
 		end
@@ -1953,6 +1947,7 @@ function spawnunits(campname)
 	local NumberToSpawn = spawndata.NumberToSpawn --How many to spawn
     local SpawnLocation = Entities:FindByName( nil, campname )
     local waypointlocation = Entities:FindByName ( nil, spawndata.WaypointName )
+
 	if SpawnLocation == nil then
 		return
 	end
@@ -1963,6 +1958,7 @@ function spawnunits(campname)
 			"berserk_zombie"
 	    }
 	local r = randomCreature[RandomInt(1,#randomCreature)]
+
 	--print(r)
     for i = 1, NumberToSpawn do
         local creature = CreateUnitByName( "npc_dota_creature_" ..r , SpawnLocation:GetAbsOrigin() + RandomVector( RandomFloat( 0, 200 ) ), true, nil, nil, DOTA_TEAM_NEUTRALS )
@@ -1982,18 +1978,23 @@ function GameMode:ExecuteOrderFilter( filterTable )
 	]]
 
 	local orderType = filterTable["order_type"]
+
 	if ( orderType ~= DOTA_UNIT_ORDER_PICKUP_ITEM or filterTable["issuer_player_id_const"] == -1 ) then
 		return true
 	else
 		local item = EntIndexToHScript( filterTable["entindex_target"] )
+
 		if item == nil then
 			return true
 		end
+
 		local pickedItem = item:GetContainedItem()
+
 		--print(pickedItem:GetAbilityName())
 		if pickedItem == nil then
 			return true
 		end
+
 		if pickedItem:GetAbilityName() == "item_treasure_chest" then
 			local player = PlayerResource:GetPlayer(filterTable["issuer_player_id_const"])
 			local hero = player:GetAssignedHero()
@@ -2011,20 +2012,22 @@ function GameMode:ExecuteOrderFilter( filterTable )
 			end
 		end
 	end
+
 	return true
 end
 
 function GameMode:CustomSpawnCamps()
 	for name,_ in pairs(spawncamps) do
-	spawnunits(name)
+		spawnunits(name)
 	end
 end
 
 function GameMode:OnItemPickUp( event )
 	local item = EntIndexToHScript( event.ItemEntityIndex )
 	local owner = EntIndexToHScript( event.HeroEntityIndex )
-	r = 300
-	--r = RandomInt(200, 400)
+
+	r = RandomInt(300, 450)
+
 	if event.itemname == "item_bag_of_gold" then
 		--print("Bag of gold picked up")
 		PlayerResource:ModifyGold( owner:GetPlayerID(), r, true, 0 )
@@ -2040,6 +2043,7 @@ end
 
 function GameMode:OnNpcGoalReached( event )
 	local npc = EntIndexToHScript( event.npc_entindex )
+
 	if npc:GetUnitName() == "npc_dota_treasure_courier" then
 		GameMode:TreasureDrop( npc )
 	end
@@ -2047,12 +2051,13 @@ end
 
 function GameMode:OnThink()
 local newState = GameRules:State_Get()
-if newState == DOTA_GAMERULES_STATE_POST_GAME then return nil end
-if GameRules:IsGamePaused() == true then return 1 end
-local team_abandoned = 0
 
-	if newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-		
+	if newState == DOTA_GAMERULES_STATE_POST_GAME then
+		return nil
+	end
+
+	if GameRules:IsGamePaused() == true then
+		return 1
 	end
 
 	if GetMapName() == "imba_overthrow" then
@@ -2063,6 +2068,7 @@ local team_abandoned = 0
 			if not hero:IsAlive() then
 				local respawn_time = hero:GetTimeUntilRespawn()
 				local reaper_scythe = 36 -- max necro timer addition
+
 				if hero:HasModifier("modifier_imba_reapers_scythe_respawn") then
 					if respawn_time > HERO_RESPAWN_TIME_PER_LEVEL[math.min(hero:GetLevel(), 25)] + reaper_scythe then
 						print("NECROPHOS BUG:", hero:GetUnitName(), "respawn time too high:", respawn_time..". setting to", HERO_RESPAWN_TIME_PER_LEVEL[25])
@@ -2078,18 +2084,45 @@ local team_abandoned = 0
 			end
 		end
 
-		-- End the game if one team completely abandoned
-		for ID = 0, PlayerResource:GetPlayerCount() - 1 do
-			for team = 2, 3 do
-				if PlayerResource:GetTeamNumber() == team then
-					local Hero = PlayerResource:GetSelectedHeroEntity(ID)
-					if #Hero then
-						print("Team "..team.." Heroes:", #Hero)
-						Notifications:BottomToAll({text = "#imba_team_bad_abandon_message", duration = line_duration, style = {color = "DodgerBlue"} })
-						Timers:CreateTimer(FULL_ABANDON_TIME, function()
-							GameRules:SetGameWinner(team)
-							GAME_WINNER_TEAM = team
-						end)
+		if newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+			-- End the game if one team completely abandoned
+			if not IsInToolsMode() then
+				if not TEAM_ABANDON then
+					TEAM_ABANDON = {} -- 15 second to abandon, is_abandoning?, player_count
+					TEAM_ABANDON[2] = {FULL_ABANDON_TIME, false, IMBA_PLAYERS_ON_GAME / 2, 0}
+					TEAM_ABANDON[3] = {FULL_ABANDON_TIME, false, IMBA_PLAYERS_ON_GAME / 2, 0}
+				end
+
+				TEAM_ABANDON[2][4] = 0
+				TEAM_ABANDON[3][4] = 0
+
+				for ID = 0, PlayerResource:GetPlayerCount() -1 do
+					local team = PlayerResource:GetTeam(ID)
+					local player_count = PlayerResource:GetPlayerCountForTeam(team)
+
+					if PlayerResource:GetConnectionState(ID) == 3 then -- if disconnected then
+						TEAM_ABANDON[team][4] = TEAM_ABANDON[team][4] +1
+					end
+
+					TEAM_ABANDON[team][3] = player_count - TEAM_ABANDON[team][4]
+
+					if TEAM_ABANDON[team][3] > 0 then
+						TEAM_ABANDON[team][2] = false
+					else
+						if TEAM_ABANDON[team][2] == false then
+							Notifications:BottomToAll({text = "#imba_team_bad_abandon_message", duration = 15.0, style = {color = "DodgerBlue"} })
+						end
+
+						TEAM_ABANDON[team][2] = true
+						TEAM_ABANDON[team][1] = TEAM_ABANDON[team][1] -1
+
+						if TEAM_ABANDON[2][1] <= 0 then
+							GameRules:SetGameWinner(3)
+							GAME_WINNER_TEAM = 3
+						elseif TEAM_ABANDON[3][1] <= 0 then
+							GameRules:SetGameWinner(2)
+							GAME_WINNER_TEAM = 2
+						end
 					end
 				end
 			end

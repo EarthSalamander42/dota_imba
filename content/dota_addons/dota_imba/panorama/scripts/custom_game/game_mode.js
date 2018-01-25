@@ -39,25 +39,8 @@ function InitializeUI() {
 
 		if (map_info.map_display_name == "imba_standard") {
 			$('#GameOptionsPanel').style.visibility = 'collapse';
-			//			$('#HeroPowerOptionsPanel').style.visibility = 'collapse';
-			//			$('#TowerPowerOptionsPanel').style.visibility = 'collapse';
-			//			$('#AllPickToggle').style.visibility = 'collapse';
-			//			$('#AllRandomToggle').style.visibility = 'collapse';
-			//			$('#AllRandomSameHeroToggle').style.visibility = 'collapse';
-			//			$('#FranticInfo').style.visibility = 'collapse';
-			//			$('#GoldOption1').checked = true;
-			//			$('#ExpOption1').checked = true;
 		} else if (map_info.map_display_name == "imba_10v10" || map_info.map_display_name == "imba_12v12") {
 			$('#GameOptionsPanel').style.visibility = 'collapse';
-			//			$('#game_options_game_mode_title').text = $.Localize( "#imba_gamemode_name_10v10" );
-			//			$('#HeroPowerOptionsPanel').style.visibility = 'collapse';
-			//			$('#TowerPowerOptionsPanel').style.visibility = 'collapse';
-			//			$('#AllPickToggle').style.visibility = 'collapse';
-			//			$('#AllRandomToggle').style.visibility = 'collapse';
-			//			$('#AllRandomSameHeroToggle').style.visibility = 'collapse';
-			//			$('#FranticInfo').style.visibility = 'collapse';
-			//			$('#GoldOption1').checked = true;
-			//			$('#ExpOption1').checked = true;
 		} else if (map_info.map_display_name == "imba_custom" || map_info.map_display_name == "imba_frantic_10v10") {
 			$('#GoldOptionsPanel').style.visibility = 'collapse';
 			$('#ExpOptionsPanel').style.visibility = 'collapse';

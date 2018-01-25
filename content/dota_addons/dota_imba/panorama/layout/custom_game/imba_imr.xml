@@ -60,6 +60,10 @@
 						<Label text="#battlepass" />
 					</Button>
 
+					<Button id="DonatorTabButton" onactivate="SwitchTab('DonatorInfoContainer');">
+						<Label text="#donator" />
+					</Button>
+
 					<Button id="LeaderboardTabButton" onactivate="SwitchTab('LeaderboardInfoContainer');">
 						<Label id="LoadingWarning" text="#leaderboard" />
 					</Button>
@@ -68,6 +72,12 @@
 
 			<Panel id="BattlepassInfoContainer" hittest="false">
 				<Label id="ComingSoon" text="#coming_soon"/>
+				<!-- JS Inserts records here -->
+			</Panel>
+
+			<Panel id="DonatorInfoContainer" hittest="false">
+				<Label class="DonatorTabLabel" text="#donator_companion"/>
+				<Label class="DonatorTabLabel" text="#donator_info"/>
 				<!-- JS Inserts records here -->
 			</Panel>
 

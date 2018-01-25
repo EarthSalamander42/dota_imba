@@ -22,6 +22,7 @@ function imba_api_init(complete_fun)
 			and api_preloaded.topxpusers ~= nil 
             and api_preloaded.topimrusers ~= nil
             and api_preloaded.hot_disabled_heroes ~= nil
+            and api_preloaded.companions ~nil
 		then
 			print("[api-frontend] preloading completed")
 			complete_fun()
@@ -63,8 +64,13 @@ function imba_api_preload(complete_fun)
 		complete_fun()
 	end)
 
-		imba_api():meta_hotdisabledheroes(function (heroes)
+	imba_api():meta_hotdisabledheroes(function (heroes)
 		api_preloaded.hot_disabled_heroes = heroes
+		complete_fun()
+	end)
+	
+	imba_api():meta_companions(function (heroes)
+		api_preloaded.companions = heroes
 		complete_fun()
 	end)
 end
@@ -106,6 +112,28 @@ function IsDeveloper(playerid)
 
 	return false
 end
+
+-- Syncronous
+-- Returns a list with all companions
+function GetAllCompanions()
+	return api_preloaded.companions
+end
+
+-- Asyncronous
+-- Changes the companion model for a user
+-- playerid = ingame id of player p.e. '1'
+-- newcompanion: the file name of the companion p.e. 'npc_imba_donator_companion_demi_doom'
+-- callback: the function that is executed when the request is completed 
+function ChangeCompanion(playerid, newcompanion, callback)
+	local id = tostring(PlayerResource:GetSteamID(playerid))
+	
+	api_preloaded.meta_companion_change({
+		steamid = id,
+		model = newcompanion,
+	}, callback, callback)
+	
+end
+
 
 -- Syncronous
 -- Returns array of the top users by xp
@@ -183,6 +211,29 @@ function ApiPrint(str, tag)
 	imba_api_game_event(tag, str);
 end
 
+ApiEventCodes = {
+	PlayerConnected = 2,
+	PlayerAbandoned = 3,
+	HeroKilled = 4,
+	HeroRespawned = 5,
+	EnteredHeroSelection = 6,
+	StartedGame = 7,
+	EnteredPreGame = 8,
+	EnteredPostGame = 9,
+	PlayerDisconnected = 10,
+	TowerKilled = 11
+}
+
+function ApiEvent(event, content) {
+	
+	rcontent = ""
+	if content ~= nil then
+		rcontent = content
+	end
+
+	imba_api_game_event(event, rcontent)
+}
+
 -- Will write a custom game event to the server
 -- event and content mandatory, tag optional 
 function imba_api_game_event(event, content, tag)
@@ -198,7 +249,7 @@ function imba_api_game_event(event, content, tag)
 	imba_api():game_event({ 
 		id = api_preloaded.id,
 		event = tostring(event),
-		content = tostring(content),
+		content = content,
 		tag = rtag
 	}, function (response) end, 
 		function () print("[api-frontend] Error writing game event") end)
@@ -245,7 +296,11 @@ function imba_api_game_register(complete_fun)
 		map = tostring(GetMapName()),
 		leader = leader,
 		dedicated = true,
-		players = players
+		players = players,
+		frames = tonumber(GetFrameCount()),
+		system_date = tostring(GetSystemDate()),
+		system_time = tostring(GetSystemTime()),
+		server_time = tonumber(Time()) 
 	}
 
 	-- perform request
@@ -274,7 +329,11 @@ function imba_api_game_complete(complete_fun)
 	local args = {
 		id = api_preloaded.id,
 		winner = GAME_WINNER_TEAM,
-		results = {}
+		results = {},
+		frames = tonumber(GetFrameCount()),
+		system_date = tostring(GetSystemDate()),
+		system_time = tostring(GetSystemTime()),
+		server_time = tonumber(Time()) 
 	}
 
 	ApiPrint("game_complete Before player info collection")

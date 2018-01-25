@@ -64,7 +64,8 @@ end
 function modifier_companion:OnIntervalThink()
 	if IsServer() then
 		local companion = self:GetParent()
-		local hero = self:GetParent():GetPlayerOwner():GetAssignedHero()
+		local hero = companion:GetPlayerOwner():GetAssignedHero()
+		hero.companion = companion
 		local fountain
 		if hero:GetTeamNumber() == 2 then
 			fountain = GoodCamera
@@ -114,9 +115,7 @@ function modifier_companion:OnIntervalThink()
 			if hero:HasModifier(v) and not companion.has_nodraw == true then
 				companion.has_nodraw = true
 				companion:AddEffects(EF_NODRAW)
-				print("Add No Draw")
 			elseif not hero:HasModifier(v) and companion.has_nodraw ~= false then
-				print("Remove No Draw")
 				companion.has_nodraw = false
 				companion:RemoveEffects(EF_NODRAW)
 			end
@@ -125,13 +124,11 @@ function modifier_companion:OnIntervalThink()
 		for _,v in ipairs(shared_modifiers) do
 			if not hero:HasModifier(v) then
 				if companion:HasModifier(v) then
-					print("Remove Modifier")
 					companion:RemoveModifierByName(v)
 				end
 			else
 				if not companion:HasModifier(v) then
 					companion:AddNewModifier(companion, nil, v, {})
-					print("Add Modifier")
 				end
 			end
 		end

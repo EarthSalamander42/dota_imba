@@ -1289,8 +1289,6 @@ function CDOTA_BaseNPC:GetFittingColor()
 		return Vector(1,1,1)
 	elseif self:FindModifierByName("modifier_item_imba_skadi") then
 		return Vector(50,255,255)
-	elseif self:FindModifierByName("modifier_item_imba_nether_wand") or self:FindModifierByName("modifier_item_imba_elder_staff") then
-		return Vector(0,255,0)
 	-- Heroes' color is based on attributes
 	elseif self:IsHero() then
 		

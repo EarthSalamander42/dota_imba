@@ -101,6 +101,7 @@ local color = {}
 				text = string.gsub(text, str, "")
 				text = string.gsub(text, " ", "")
 				if PlayerResource:GetSelectedHeroName(caster:GetPlayerID()) ~= "npc_dota_hero_"..text then
+					caster.companion:ForceKill(false)
 					HeroSelection:AssignHero(caster:GetPlayerID(), "npc_dota_hero_"..text)
 				end
 			end

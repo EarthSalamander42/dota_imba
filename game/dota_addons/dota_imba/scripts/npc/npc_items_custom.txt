@@ -9047,32 +9047,6 @@
 	}
 
 	//=================================================================================================================
-	// Recipe: Nether Wand
-	//=================================================================================================================
-	"item_recipe_imba_nether_wand"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2164"
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"300"
-		"ItemShopTags"					""
-
-		// Recipe
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemRecipe"					"1"
-		"ItemResult"					"item_imba_nether_wand"
-		"ItemRequirements"
-		{
-			"01"						"item_quarterstaff;item_staff_of_wizardry;item_staff_of_wizardry"
-		}
-	}
-
-	//=================================================================================================================
 	// Nether Wand
 	//=================================================================================================================
 	"item_imba_nether_wand"
@@ -9087,7 +9061,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"3175"
+		"ItemCost"						"2500"
 		"ItemShopTags"					"int;damage;attack_speed;attack_damage;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"wand;nether wand"
@@ -9099,23 +9073,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"15"
-				"CalculateSpellDamageTooltip"	"0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_as"				"15"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"24"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"spell_power"			"15"
+				"spell_amp"			"16"
 			}
 		}
 	}
@@ -9161,7 +9119,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"4925"
+		"ItemCost"						"4250"
 		"ItemShopTags"					"int;damage;attack_speed;attack_damage;mana;hard_to_tag"
 		"ItemQuality"					"artifact"
 		"ItemAliases"					"arcane nexus"
@@ -9173,29 +9131,18 @@
 		{
 			"01"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_damage"					"15"
-				"CalculateSpellDamageTooltip"	"0"
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intellect"		"26"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_as"				"15"
+				"spell_amp"				"26"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"40"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"spell_power"			"26"
-			}
-			"05"
-			{
 				"var_type"				"FIELD_INTEGER" // also mana cost reduction
-				"bonus_cdr"				"10"
+				"bonus_cdr"				"16"
 			}
 		}
 	}

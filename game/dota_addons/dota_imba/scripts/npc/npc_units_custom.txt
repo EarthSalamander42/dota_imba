@@ -2430,81 +2430,6 @@
 		"BaseClass"					"npc_dota_lone_druid_bear"
 		"SoundSet"					"LoneDruid_SpiritBear"
 		"Level"						"7"
-		"ModelScale" 				".72"
-		"ConsideredHero"			"1"
-		"UnitLabel"			"spirit_bear"
-
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"					"lone_druid_spirit_bear_return"			// Ability 1
-		"Ability2"					"bear_empty"			// Ability 2
-		"Ability3"					"lone_druid_savage_roar_bear"			// Ability 3
-		"Ability4"					""			// Ability 4
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"4"			// Physical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"45"		// Damage range min.
-		"AttackDamageMax"			"45"		// Damage range max.	
-		"AttackRate"				"1.55"		// Speed of attack.
-		"AttackAnimationPoint"		"0.43"		// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"500"		// Range within a target can be acquired.
-		"AttackRange"				"128"		// Range within a target can be attacked.
-		"ProjectileModel"			""			// Particle system model for projectile.
-		"ProjectileSpeed"			"0"			// Speed of projectile.		   
-
-		// Bounds
-		//----------------------------------------------------------------
-		"RingRadius"				"70"
-		"HealthBarOffset"			"215"
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"					"300"		// Experience earn.
-		"BountyGoldMin"				"300"		// Gold earned min.
-		"BountyGoldMax"				"300"		// Gold earned max.
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"330"		// Speed.
-		"MovementTurnRate"			"0.6"		// Turning rate.
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"1800"		// Base health.
-		"StatusHealthRegen"			"3"			// Health regeneration rate.
-		"StatusMana"				"300"		// Base mana.
-		"StatusManaRegen"			"0.5"		// Mana regeneration rate.		 
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1400"		// Range of vision during day light.
-		"VisionNighttimeRange"		"800"		// Range of vision at night time.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_NEUTRALS"							// Team name.
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-
-		//Inventory
-		"HasInventory"				"1"
-	}
-
-	"npc_dota_lone_druid_bear3"
-	{										
-		// General
-		//----------------------------------------------------------------
-		"Model"						"models/heroes/lone_druid/spirit_bear.vmdl"	// Model.
-		"BaseClass"					"npc_dota_lone_druid_bear"
-		"SoundSet"					"LoneDruid_SpiritBear"
-		"Level"						"7"
 		"ModelScale" 				".78"
 		"ConsideredHero"			"1"
 		"UnitLabel"			"spirit_bear"
@@ -2572,82 +2497,7 @@
 		"HasInventory"				"1"
 	}
 
-	"npc_dota_lone_druid_bear4"
-	{										
-		// General
-		//----------------------------------------------------------------
-		"Model"						"models/heroes/lone_druid/spirit_bear.vmdl"	// Model.
-		"BaseClass"					"npc_dota_lone_druid_bear"
-		"SoundSet"					"LoneDruid_SpiritBear"
-		"Level"						"7"
-		"ModelScale" 				".85"
-		"ConsideredHero"			"1"
-		"UnitLabel"					"spirit_bear"
-
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"					"lone_druid_spirit_bear_return"			// Ability 1
-		"Ability2"					"lone_druid_spirit_bear_entangle"			// Ability 2
-		"Ability3"					"lone_druid_savage_roar_bear"			// Ability 3
-		"Ability4"					"lone_druid_spirit_bear_demolish"			// Ability 4
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"6"			// Physical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"65"		// Damage range min.
-		"AttackDamageMax"			"65"		// Damage range max.	
-		"AttackRate"				"1.35"		// Speed of attack.
-		"AttackAnimationPoint"		"0.43"		// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"500"		// Range within a target can be acquired.
-		"AttackRange"				"128"		// Range within a target can be attacked.
-		"ProjectileModel"			""			// Particle system model for projectile.
-		"ProjectileSpeed"			"0"			// Speed of projectile.		   
-
-		// Bounds
-		//----------------------------------------------------------------
-		"RingRadius"				"70"
-		"HealthBarOffset"			"215"
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"					"300"		// Experience earn.
-		"BountyGoldMin"				"300"		// Gold earned min.
-		"BountyGoldMax"				"300"		// Gold earned max.
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"350"		// Speed.
-		"MovementTurnRate"			"0.6"		// Turning rate.
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"2700"		// Base health.
-		"StatusHealthRegen"			"5"			// Health regeneration rate.
-		"StatusMana"				"300"		// Base mana.
-		"StatusManaRegen"			"0.5"		// Mana regeneration rate.		 
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1400"		// Range of vision during day light.
-		"VisionNighttimeRange"		"800"		// Range of vision at night time.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_NEUTRALS"
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-
-		//Inventory
-		"HasInventory"				"1"
-	}
-
-	"npc_dota_lone_druid_bear5"
+	"npc_dota_lone_druid_bear3"
 	{										
 		// General
 		//----------------------------------------------------------------
@@ -2722,82 +2572,7 @@
 		"HasInventory"				"1"
 	}
 
-	"npc_dota_lone_druid_bear6"
-	{										
-		// General
-		//----------------------------------------------------------------
-		"Model"						"models/heroes/lone_druid/spirit_bear.vmdl"	// Model.
-		"BaseClass"					"npc_dota_lone_druid_bear"
-		"SoundSet"					"LoneDruid_SpiritBear"
-		"Level"						"7"
-		"ModelScale" 				".99"
-		"ConsideredHero"			"1"
-		"UnitLabel"					"spirit_bear"
-
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"					"lone_druid_spirit_bear_return"			// Ability 1
-		"Ability2"					"lone_druid_spirit_bear_entangle"			// Ability 2
-		"Ability3"					"lone_druid_savage_roar_bear"			// Ability 3
-		"Ability4"					"lone_druid_spirit_bear_demolish"			// Ability 4
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"8"			// Physical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"85"		// Damage range min.
-		"AttackDamageMax"			"85"		// Damage range max.	
-		"AttackRate"				"1.15"		// Speed of attack.
-		"AttackAnimationPoint"		"0.43"		// Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"	"500"		// Range within a target can be acquired.
-		"AttackRange"				"128"		// Range within a target can be attacked.
-		"ProjectileModel"			""			// Particle system model for projectile.
-		"ProjectileSpeed"			"0"			// Speed of projectile.		   
-
-		// Bounds
-		//----------------------------------------------------------------
-		"RingRadius"				"70"
-		"HealthBarOffset"			"215"
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"					"300"		// Experience earn.
-		"BountyGoldMin"				"300"		// Gold earned min.
-		"BountyGoldMax"				"300"		// Gold earned max.
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"370"		// Speed.
-		"MovementTurnRate"			"0.6"		// Turning rate.
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"3700"		// Base health.
-		"StatusHealthRegen"			"7"			// Health regeneration rate.
-		"StatusMana"				"300"		// Base mana.
-		"StatusManaRegen"			"0.5"		// Mana regeneration rate.		 
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1400"		// Range of vision during day light.
-		"VisionNighttimeRange"		"800"		// Range of vision at night time.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_NEUTRALS"
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-
-		//Inventory
-		"HasInventory"				"1"
-	}
-
-	"npc_dota_lone_druid_bear7"
+	"npc_dota_lone_druid_bear4"
 	{										
 		// General
 		//----------------------------------------------------------------
@@ -2873,8 +2648,8 @@
 	}
 
 	//=================================================================================
-// Frozen Sigil 
-//=================================================================================
+	// Frozen Sigil 
+	//=================================================================================
 	"npc_dota_tusk_frozen_sigil1"
 	{
 		// General
@@ -8169,72 +7944,6 @@
 		"BaseClass"                 "npc_dota_beastmaster_boar"
 		"SoundSet"                  "Hero_Beastmaster.Call.Boar"          // Name of sound set.
 		"Level"                     "1"
-		"ModelScale"                "0.8"
-		"IsSummoned"                "1"
-		"UnitLabel"                 "boar"
-
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"                  "imba_beastmaster_boar_poison"           // Ability 1
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"             "1"         // Physical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"        "DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"           "40"        // Damage range min.
-		"AttackDamageMax"           "40"        // Damage range max.    
-		"AttackRate"                "1.25"      // Speed of attack.
-		"AttackAnimationPoint"      "0.5"       // Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"    "600"       // Range within a target can be acquired.
-		"AttackRange"               "550"       // Range within a target can be attacked.
-		"ProjectileModel"           "particles/units/heroes/hero_beastmaster/beastmaster_boar_attack.vpcf"  // Particle system model for projectile.
-		"ProjectileSpeed"           "1500"      // Speed of projectile.        
-
-		// Bounds
-		//----------------------------------------------------------------
-		"HealthBarOffset"           "125"
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"                  "70"        // Experience earn.
-		"BountyGoldMin"             "26"        // Gold earned min.
-		"BountyGoldMax"             "38"        // Gold earned max.
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"             "350"       // Speed.
-		"MovementTurnRate"          "0.6"       // Turning rate.
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"              "400"       // Base health.
-		"StatusHealthRegen"         "1.5"       // Health regeneration rate.
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"        "1400"      // Range of vision during day light.
-		"VisionNighttimeRange"      "800"       // Range of vision at night time.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"                  "DOTA_TEAM_NEUTRALS"                            // Team name.
-		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_PIERCE"
-		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
-		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-	}   
-
-	"npc_dota_beastmaster_boar_3"
-	{                                       
-		// General
-		//----------------------------------------------------------------
-		"Model"                     "models/heroes/beastmaster/beastmaster_beast.vmdl"  // Model.
-		"BaseClass"                 "npc_dota_beastmaster_boar"
-		"SoundSet"                  "Hero_Beastmaster.Call.Boar"          // Name of sound set.
-		"Level"                     "1"
 		"ModelScale"                "0.95"
 		"IsSummoned"                "1"
 		"UnitLabel"                 "boar"
@@ -8293,73 +8002,7 @@
 		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 	}   
 
-	"npc_dota_beastmaster_boar_4"
-	{                                       
-		// General
-		//----------------------------------------------------------------
-		"Model"                     "models/heroes/beastmaster/beastmaster_beast.vmdl"  // Model.
-		"BaseClass"                 "npc_dota_beastmaster_boar"
-		"SoundSet"                  "Hero_Beastmaster.Call.Boar"          // Name of sound set.
-		"Level"                     "1"
-		"ModelScale"                "1.1"
-		"IsSummoned"                "1"
-		"UnitLabel"                 "boar"
-
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"                  "imba_beastmaster_boar_poison"           // Ability 1
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"             "3"         // Physical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"        "DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"           "80"        // Damage range min.
-		"AttackDamageMax"           "80"        // Damage range max.    
-		"AttackRate"                "1.25"      // Speed of attack.
-		"AttackAnimationPoint"      "0.5"       // Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"    "600"       // Range within a target can be acquired.
-		"AttackRange"               "550"       // Range within a target can be attacked.
-		"ProjectileModel"           "particles/units/heroes/hero_beastmaster/beastmaster_boar_attack.vpcf"  // Particle system model for projectile.
-		"ProjectileSpeed"           "1500"      // Speed of projectile.        
-
-		// Bounds
-		//----------------------------------------------------------------
-		"HealthBarOffset"           "125"
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"                  "90"        // Experience earn.
-		"BountyGoldMin"             "26"        // Gold earned min.
-		"BountyGoldMax"             "38"        // Gold earned max.
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"             "350"       // Speed.
-		"MovementTurnRate"          "0.6"       // Turning rate.
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"              "700"       // Base health.
-		"StatusHealthRegen"         "1.5"       // Health regeneration rate.
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"        "1400"      // Range of vision during day light.
-		"VisionNighttimeRange"      "800"       // Range of vision at night time.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"                  "DOTA_TEAM_NEUTRALS"                            // Team name.
-		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_PIERCE"
-		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
-		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-	}   
-
-	"npc_dota_beastmaster_boar_5"
+	"npc_dota_beastmaster_boar_3"
 	{                                       
 		// General
 		//----------------------------------------------------------------
@@ -8425,74 +8068,7 @@
 		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 	} 
 	
-	"npc_dota_beastmaster_boar_6"
-	{                                       
-		// General
-		//----------------------------------------------------------------
-		"Model"                     "models/heroes/beastmaster/beastmaster_beast.vmdl"  // Model.
-		"BaseClass"                 "npc_dota_beastmaster_boar"
-		"SoundSet"                  "Hero_Beastmaster.Call.Boar"          // Name of sound set.
-		"Level"                     "1"
-		"ModelScale"                "1.4"
-		"IsSummoned"                "1"
-		"UnitLabel"                 "boar"
-
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"                  "imba_beastmaster_boar_poison"           // Ability 1
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"             "5"         // Physical protection.
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"        "DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"           "100"        // Damage range min.
-		"AttackDamageMax"           "100"        // Damage range max.    
-		"AttackRate"                "1.25"      // Speed of attack.
-		"AttackAnimationPoint"      "0.5"       // Normalized time in animation cycle to attack.
-		"AttackAcquisitionRange"    "600"       // Range within a target can be acquired.
-		"AttackRange"               "550"       // Range within a target can be attacked.
-		"ProjectileModel"           "particles/units/heroes/hero_beastmaster/beastmaster_boar_attack.vpcf"  // Particle system model for projectile.
-		"ProjectileSpeed"           "1500"      // Speed of projectile.        
-
-		// Bounds
-		//----------------------------------------------------------------
-		"HealthBarOffset"           "125"
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"                  "90"        // Experience earn.
-		"BountyGoldMin"             "26"        // Gold earned min.
-		"BountyGoldMax"             "38"        // Gold earned max.
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"             "400"       // Speed.
-		"MovementTurnRate"          "0.6"       // Turning rate.
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"              "1000"       // Base health.
-		"StatusHealthRegen"         "1.5"       // Health regeneration rate.
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"        "1400"      // Range of vision during day light.
-		"VisionNighttimeRange"      "800"       // Range of vision at night time.
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"                  "DOTA_TEAM_NEUTRALS"                            // Team name.
-		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_PIERCE"
-		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
-		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-	}
-	
-	
-	"npc_dota_beastmaster_boar_7"
+	"npc_dota_beastmaster_boar_4"
 	{                                       
 		// General
 		//----------------------------------------------------------------
@@ -12345,14 +11921,14 @@
 	//=================================================================================
 	// Donator Companion follwing hero
 	//=================================================================================
-	"npc_imba_donator_companion"
+	"npc_imba_donator_companion_demi_doom"
 	{
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_base_additive"
-		"Model"						"models/creeps/neutral_creeps/n_creep_ghost_b/n_creep_ghost_frost.vmdl"        
+		"Model"						"models/courier/doom_demihero_courier/doom_demihero_courier.vmdl"        
 		"Level"						"1"
-		"ModelScale"				"1"
+		"ModelScale"				"1.0"
 		"UnitLabel"					"donator_companion"        
 
 		// Abilities
@@ -12380,7 +11956,7 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"                  "10"
+		"BountyXP"                  "0"
 		"BountyGoldMin"             "0"
 		"BountyGoldMax"             "0"
 
@@ -12392,10 +11968,10 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"7777"
-		"StatusHealthRegen"			"7777"
-		"StatusMana"				"10000"
-		"StatusManaRegen"			"10000.0"
+		"StatusHealth"				"1"
+		"StatusHealthRegen"			"0.0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0.0"
 
 		// Team
 		//----------------------------------------------------------------
@@ -12410,36 +11986,590 @@
 		"VisionNighttimeRange"      "0"
 	}
 
-	"npc_imba_dummy_companion"
-	{										
+	"npc_imba_donator_companion_carty"
+	{
 		// General
 		//----------------------------------------------------------------
-		"Model"						"models/items/courier/livery_llama_courier/livery_llama_courier.vmdl"	// Model.
-		"BaseClass"					"npc_dota_creature"
-		"ModelScale" 				"1.0"
+		"BaseClass"					"npc_dota_base_additive"
+		"Model"						"models/items/courier/carty/carty.vmdl"        
+		"Level"						"1"
+		"ModelScale"				"1.0"
+		"UnitLabel"					"donator_companion"        
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"companion_morph"
+		"Ability2"					"neutral_spell_immunity"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"             "0"
+		"MagicalResistance"         "0"
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackRange"				"0"		// Range within a target can be attacked.
-		"ProjectileModel"			""			// Particle system model for projectile.
-		"ProjectileSpeed"			"0"			// Speed of projectile.		   
+		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageMin"           "0"
+		"AttackDamageMax"           "0"
+		"AttackRate"                "0.0"
+		"AttackRange"               "0"
 
 		// Bounds
 		//----------------------------------------------------------------
-		"RingRadius"				"70"
-		"HealthBarOffset"			"215"
+		"HealthBarOffset"           "240"
+		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"                  "0"
+		"BountyGoldMin"             "0"
+		"BountyGoldMax"             "0"
 
 		// Movement
 		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"350"		// Speed.
-		"MovementTurnRate"			"0.6"		// Turning rate.
+		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"             "480"
+		"MovementTurnRate"          "0.5"
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"100"		// Base health.
-		"StatusHealthRegen"			"0"			// Health regeneration rate.
+		"StatusHealth"				"1"
+		"StatusHealthRegen"			"0.0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0.0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"                  "DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"        "0"
+		"VisionNighttimeRange"      "0"
+	}
+
+	"npc_imba_donator_companion_carty_dire"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_base_additive"
+		"Model"						"models/items/courier/carty_dire/carty_dire_flying.vmdl"        
+		"Level"						"1"
+		"ModelScale"				"1.0"
+		"UnitLabel"					"donator_companion"        
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"companion_morph"
+		"Ability2"					"neutral_spell_immunity"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"             "0"
+		"MagicalResistance"         "0"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageMin"           "0"
+		"AttackDamageMax"           "0"
+		"AttackRate"                "0.0"
+		"AttackRange"               "0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"HealthBarOffset"           "240"
+		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"                  "0"
+		"BountyGoldMin"             "0"
+		"BountyGoldMax"             "0"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"             "480"
+		"MovementTurnRate"          "0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1"
+		"StatusHealthRegen"			"0.0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0.0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"                  "DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"        "0"
+		"VisionNighttimeRange"      "0"
+	}
+
+	"npc_imba_donator_companion_llama"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_base_additive"
+		"Model"						"models/items/courier/livery_llama_courier/livery_llama_courier.vmdl"        
+		"Level"						"1"
+		"ModelScale"				"1.0"
+		"UnitLabel"					"donator_companion"        
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"companion_morph"
+		"Ability2"					"neutral_spell_immunity"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"             "0"
+		"MagicalResistance"         "0"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageMin"           "0"
+		"AttackDamageMax"           "0"
+		"AttackRate"                "0.0"
+		"AttackRange"               "0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"HealthBarOffset"           "240"
+		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"                  "0"
+		"BountyGoldMin"             "0"
+		"BountyGoldMax"             "0"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"             "480"
+		"MovementTurnRate"          "0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1"
+		"StatusHealthRegen"			"0.0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0.0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"                  "DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"        "0"
+		"VisionNighttimeRange"      "0"
+	}
+
+	"npc_imba_donator_companion_jumo"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_base_additive"
+		"Model"						"models/items/courier/jumo/jumo.vmdl"        
+		"Level"						"1"
+		"ModelScale"				"1.0"
+		"UnitLabel"					"donator_companion"        
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"companion_morph"
+		"Ability2"					"neutral_spell_immunity"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"             "0"
+		"MagicalResistance"         "0"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageMin"           "0"
+		"AttackDamageMax"           "0"
+		"AttackRate"                "0.0"
+		"AttackRange"               "0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"HealthBarOffset"           "240"
+		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"                  "0"
+		"BountyGoldMin"             "0"
+		"BountyGoldMax"             "0"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"             "480"
+		"MovementTurnRate"          "0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1"
+		"StatusHealthRegen"			"0.0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0.0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"                  "DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"        "0"
+		"VisionNighttimeRange"      "0"
+	}
+
+	"npc_imba_donator_companion_jin"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_base_additive"
+		"Model"						"models/items/courier/jin_yin_white_fox/jin_yin_white_fox.vmdl"        
+		"Level"						"1"
+		"ModelScale"				"1.0"
+		"UnitLabel"					"donator_companion"        
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"companion_morph"
+		"Ability2"					"neutral_spell_immunity"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"             "0"
+		"MagicalResistance"         "0"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageMin"           "0"
+		"AttackDamageMax"           "0"
+		"AttackRate"                "0.0"
+		"AttackRange"               "0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"HealthBarOffset"           "240"
+		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"                  "0"
+		"BountyGoldMin"             "0"
+		"BountyGoldMax"             "0"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"             "480"
+		"MovementTurnRate"          "0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1"
+		"StatusHealthRegen"			"0.0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0.0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"                  "DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"        "0"
+		"VisionNighttimeRange"      "0"
+	}
+
+	"npc_imba_donator_companion_cookies"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_base_additive"
+//		"Model"						"models/heroes/samus/samus_ball_model.vmdl"        
+		"Model"						"models/items/lone_druid/true_form/elemental_curse_set_elemental_curse_true_form/elemental_curse_set_elemental_curse_true_form.vmdl"
+		"Level"						"1"
+		"ModelScale"				"0.3"
+		"UnitLabel"					"donator_companion"        
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"companion_morph"
+		"Ability2"					"neutral_spell_immunity"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"             "0"
+		"MagicalResistance"         "0"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageMin"           "0"
+		"AttackDamageMax"           "0"
+		"AttackRate"                "0.0"
+		"AttackRange"               "0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"HealthBarOffset"           "240"
+		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"                  "0"
+		"BountyGoldMin"             "0"
+		"BountyGoldMax"             "0"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"             "480"
+		"MovementTurnRate"          "0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1"
+		"StatusHealthRegen"			"0.0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0.0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"                  "DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"        "0"
+		"VisionNighttimeRange"      "0"
+	}
+
+	"npc_imba_donator_companion_baumi"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_base_additive"
+		"Model"						"models/heroes/mario/mario_model.vmdl"        
+		"Level"						"1"
+		"ModelScale"				"1.0"
+		"UnitLabel"					"donator_companion"        
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"companion_morph"
+		"Ability2"					"neutral_spell_immunity"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"             "0"
+		"MagicalResistance"         "0"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageMin"           "0"
+		"AttackDamageMax"           "0"
+		"AttackRate"                "0.0"
+		"AttackRange"               "0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"HealthBarOffset"           "240"
+		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"                  "0"
+		"BountyGoldMin"             "0"
+		"BountyGoldMax"             "0"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"             "480"
+		"MovementTurnRate"          "0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1"
+		"StatusHealthRegen"			"0.0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0.0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"                  "DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"        "0"
+		"VisionNighttimeRange"      "0"
+	}
+
+	"npc_imba_donator_companion_icefrog"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_base_additive"
+		"Model"						"models/courier/frog/frog.vmdl"        
+		"Level"						"1"
+		"ModelScale"				"1.0"
+		"UnitLabel"					"donator_companion"        
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"companion_morph"
+		"Ability2"					"neutral_spell_immunity"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"             "0"
+		"MagicalResistance"         "0"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageMin"           "0"
+		"AttackDamageMax"           "0"
+		"AttackRate"                "0.0"
+		"AttackRange"               "0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"HealthBarOffset"           "240"
+		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"                  "0"
+		"BountyGoldMin"             "0"
+		"BountyGoldMax"             "0"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"             "480"
+		"MovementTurnRate"          "0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1"
+		"StatusHealthRegen"			"0.0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0.0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"                  "DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"        "0"
+		"VisionNighttimeRange"      "0"
+	}
+
+	"npc_imba_donator_companion_admiral_bulldog"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_base_additive"
+		"Model"						"models/items/lone_druid/true_form/elemental_curse_set_elemental_curse_true_form/elemental_curse_set_elemental_curse_true_form.vmdl"        
+		"Level"						"1"
+		"ModelScale"				"0.3"
+		"UnitLabel"					"donator_companion"        
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"companion_morph"
+		"Ability2"					"neutral_spell_immunity"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"             "0"
+		"MagicalResistance"         "0"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageMin"           "0"
+		"AttackDamageMax"           "0"
+		"AttackRate"                "0.0"
+		"AttackRange"               "0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"HealthBarOffset"           "240"
+		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"                  "0"
+		"BountyGoldMin"             "0"
+		"BountyGoldMax"             "0"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"             "480"
+		"MovementTurnRate"          "0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1"
+		"StatusHealthRegen"			"0.0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0.0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"                  "DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"        "0"
+		"VisionNighttimeRange"      "0"
 	}
 
 	//=================================================================================================================
