@@ -594,11 +594,14 @@ function imba_nyx_assassin_mana_burn:OnSpellStart(target)
 	end
 
 	-- Get target's intelligence
-	local target_stat = target:GetIntellect()
+	local target_stat = 0
+	if target.GetIntellect ~= nil then
+		target_stat = target:GetIntellect()
 
-	-- Talent : Use the target's main attribute to calculate mana burn's damages
-	if caster:HasTalent("special_bonus_imba_nyx_assassin_3") then
-		target_stat = target:GetPrimaryStatValue()
+		-- Talent : Use the target's main attribute to calculate mana burn's damages
+		if caster:HasTalent("special_bonus_imba_nyx_assassin_3") then
+			target_stat = target:GetPrimaryStatValue()
+		end
 	end
 
 	-- Calculate mana burn

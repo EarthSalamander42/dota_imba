@@ -597,6 +597,25 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Dragon Knight
+	//=================================================================================================================
+	"npc_dota_hero_dragon_knight"
+	{
+		"override_hero"				"npc_dota_hero_dragon_knight"
+
+		//Picking Screen
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		"IsImba"					"1"
+
+		"Ability1"					"imba_dragon_knight_breathe_fire"
+		"Ability2"					"imba_dragon_knight_dragon_tail"
+//		"Ability3"					"imba_dragon_knight_dragon_blood"
+//		"Ability4"					"generic_hidden"
+//		"Ability5"					"generic_hidden"
+//		"Ability6"					"imba_dragon_knight_elder_dragon_form"
+	}
+
+	//=================================================================================================================
 	// HERO: Drow Ranger
 	//=================================================================================================================
 	"npc_dota_hero_drow_ranger"
@@ -2480,7 +2499,7 @@
 		"Ability1"			"storegga_arm_slam"
 		"Ability2"			"storegga_grab"
 		"Ability3"			"storegga_grab_throw"
-		"Ability4"			"storegga_passive"
+		"Ability4"			"generic_hidden"
 		"Ability5"			"generic_hidden"
 		"Ability6"			"storegga_avalanche"
 

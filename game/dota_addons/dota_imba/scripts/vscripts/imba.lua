@@ -74,14 +74,15 @@ function GameMode:PostLoadPrecache()
 	if GetAllCompanions() ~= nil then
 		for k, v in pairs(GetAllCompanions()) do
 			print("Precaching companion:", v.file)
-			PrecacheUnitByNameAsync(v.file, function(...) end)
+			PrecacheUnitWithQueue(v.file)
 		end
 	end
 
 	-- Storegga
-	PrecacheUnitByNameAsync("npc_dota_hero_earth_spirit", function(...) end)
-	PrecacheUnitByNameAsync("npc_dota_hero_leshrac", function(...) end)
-	PrecacheUnitByNameAsync("npc_dota_hero_tiny", function(...) end)
+	PrecacheUnitWithQueue("npc_dota_hero_earth_spirit")
+	PrecacheUnitWithQueue("npc_dota_hero_leshrac")
+	PrecacheUnitWithQueue("npc_dota_hero_phantom_assassin")
+	PrecacheUnitWithQueue("npc_dota_hero_tiny")
 end
 
 --[[
@@ -137,15 +138,12 @@ function GameMode:OnFirstPlayerLoaded()
 	-- IMBA: Contributor models
 	-------------------------------------------------------------------------------------------------
 
-	for _, amphibian in pairs(Entities:FindAllByName("imbamphibian2")) do
-		local imbamphibian = CreateUnitByName("npc_imba_amphibian", amphibian:GetAbsOrigin(), true, nil, nil, 2)
-		imbamphibian:SetForwardVector(Vector(1, 1, 0):Normalized())
-		imbamphibian:AddNewModifier(imbamphibian, nil, "modifier_imba_amphibian", {})
-	end
-	for _, amphibian in pairs(Entities:FindAllByName("imbamphibian3")) do
-		local imbamphibian = CreateUnitByName("npc_imba_amphibian", amphibian:GetAbsOrigin(), true, nil, nil, 3)
-		imbamphibian:SetForwardVector(Vector(1, 1, 0):Normalized())
-		imbamphibian:AddNewModifier(imbamphibian, nil, "modifier_imba_amphibian", {})
+	for i = 2, 3 do
+		for _, amphibian in pairs(Entities:FindAllByName("imbamphibian"..i)) do
+			local imbamphibian = CreateUnitByName("npc_imba_amphibian", amphibian:GetAbsOrigin(), true, nil, nil, i)
+			imbamphibian:SetForwardVector(Vector(1, 1, 0):Normalized())
+			imbamphibian:AddNewModifier(imbamphibian, nil, "modifier_imba_amphibian", {})
+		end
 	end
 
 	-- Contributor statue list

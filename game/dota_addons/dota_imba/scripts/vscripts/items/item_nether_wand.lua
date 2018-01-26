@@ -40,7 +40,6 @@ function modifier_imba_item_nether_wand_passive:OnCreated()
 	self.parent = self:GetParent()
 	if self.parent:IsHero() and self.item then
 		self.spell_amp = self.item:GetSpecialValueFor("spell_amp")
-		self:CheckUnique(true)
 	end
 end
 
@@ -53,7 +52,7 @@ function modifier_imba_item_nether_wand_passive:DeclareFunctions()
 end
 
 function modifier_imba_item_nether_wand_passive:GetModifierSpellAmplify_Percentage()
-	return self:CheckUniqueValue(self.spell_amp,{"modifier_imba_item_elder_staff_passive"})
+	return self.spell_amp
 end
 
 -------------------------------------------
@@ -90,10 +89,9 @@ function modifier_imba_item_elder_staff_passive:OnCreated()
 		self.bonus_as = self.item:GetSpecialValueFor("bonus_as")
 		self.bonus_intellect = self.item:GetSpecialValueFor("bonus_intellect")
 		self.cast_range_bonus = self.item:GetSpecialValueFor("cast_range_bonus")
-		self.spell_power = self.item:GetSpecialValueFor("spell_power")
+		self.spell_amp = self.item:GetSpecialValueFor("spell_amp")
 		self.burn_duration = self.item:GetSpecialValueFor("burn_duration")
 		self.bonus_cdr = self.item:GetSpecialValueFor("bonus_cdr")
-		self:CheckUnique(true)
 	end
 end
 
@@ -111,7 +109,7 @@ function modifier_imba_item_elder_staff_passive:DeclareFunctions()
 end
 
 function modifier_imba_item_elder_staff_passive:GetModifierSpellAmplify_Percentage()
-	return self:CheckUniqueValue(self.spell_power,nil)
+	return self.spell_amp
 end
 
 function modifier_imba_item_elder_staff_passive:GetModifierPreAttack_BonusDamage()

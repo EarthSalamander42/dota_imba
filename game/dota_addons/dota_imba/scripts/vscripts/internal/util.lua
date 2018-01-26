@@ -230,7 +230,6 @@ function InitializeInnateAbilities( hero )
 	end
 end
 
-
 function IndexAllTowerAbilities()
 	local ability_table = {}
 	local tier_one_abilities = {}
@@ -283,7 +282,6 @@ function GetAncientAbility( tier )
 		}
 
 		return ability_list[RandomInt(1, #ability_list)]
-
 	-- Tier 2 abilities
 	elseif tier == 2 then
 		local ability_list = {
@@ -293,7 +291,6 @@ function GetAncientAbility( tier )
 		}
 
 		return ability_list[RandomInt(1, #ability_list)]
-
 	-- Tier 3 abilities
 	elseif tier == 3 then
 		local ability_list = {
@@ -330,7 +327,7 @@ function GoldPickup(event)
 		UTIL_Remove( item ) -- otherwise it pollutes the player inventory
 	end
 end
-	
+
 -- Talents modifier function
 function ApplyAllTalentModifiers()
 	Timers:CreateTimer(0.1,function()
