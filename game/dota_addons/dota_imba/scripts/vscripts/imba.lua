@@ -70,7 +70,18 @@ function GameMode:OnItemPickedUp(event)
 end
 
 function GameMode:PostLoadPrecache()
+	-- precache companions
+	if GetAllCompanions() ~= nil then
+		for k, v in pairs(GetAllCompanions()) do
+			print("Precaching companion:", v.file)
+			PrecacheUnitByNameAsync(v.file, function(...) end)
+		end
+	end
 
+	-- Storegga
+	PrecacheUnitByNameAsync("npc_dota_hero_earth_spirit", function(...) end)
+	PrecacheUnitByNameAsync("npc_dota_hero_leshrac", function(...) end)
+	PrecacheUnitByNameAsync("npc_dota_hero_tiny", function(...) end)
 end
 
 --[[
@@ -385,7 +396,7 @@ function GameMode:ModifierFilter( keys )
 			local original_duration = keys.duration
 			local actually_duration = original_duration
 			local tenacity = modifier_owner:GetTenacity()
-			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 and tenacity ~= 0 then				
+			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then --and tenacity ~= 0 then				
 				actually_duration = actually_duration * (100 - tenacity) * 0.01
 				-------------------------------------------------------------------------------------------------
 				-- Frantic mode duration adjustment
@@ -1226,7 +1237,7 @@ function GameMode:OnAllPlayersLoaded()
 			building:SetDayTimeVisionRange(1900)
 			building:SetNightTimeVisionRange(800)
 		end
-	end	
+	end
 end
 
 function GameMode:OnHeroInGame(hero)	
@@ -1543,7 +1554,7 @@ function GameMode:InitGameMode()
 
 	-- Panorama event stuff
 	initScoreBoardEvents()
-	InitPlayerHeroImbaTalents();
+--	InitPlayerHeroImbaTalents();
 
 	if GetMapName() == "imba_overthrow" then
 		GameRules:GetGameModeEntity():SetLoseGoldOnDeath( false )
