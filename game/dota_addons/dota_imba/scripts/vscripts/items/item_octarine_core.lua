@@ -112,7 +112,10 @@ function modifier_imba_octarine_core_unique:IsPurgable() return false end
 function modifier_imba_octarine_core_unique:RemoveOnDeath() return false end
 
 function modifier_imba_octarine_core_unique:DeclareFunctions()
-	local funcs = {	MODIFIER_EVENT_ON_SPENT_MANA }
+	local funcs = {
+		MODIFIER_EVENT_ON_SPENT_MANA,
+		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
+	}
 	return funcs
 end
 
@@ -120,7 +123,7 @@ function modifier_imba_octarine_core_unique:GetModifierSpellLifesteal()
 	return self:GetAbility():GetSpecialValueFor("spell_lifesteal")
 end
 
-function modifier_imba_octarine_core_unique:GetCustomCooldownReductionStacking()
+function modifier_imba_octarine_core_unique:GetModifierPercentageCooldown()
 	return self:GetAbility():GetSpecialValueFor("bonus_cooldown")
 end
 

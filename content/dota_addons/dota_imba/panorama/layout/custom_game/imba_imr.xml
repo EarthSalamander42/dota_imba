@@ -76,7 +76,6 @@
 			</Panel>
 
 			<Panel id="DonatorInfoContainer" hittest="false">
-				<Label class="DonatorTabLabel" text="#donator_companion"/>
 				<Label class="DonatorTabLabel" text="#donator_info"/>
 				<!-- JS Inserts records here -->
 			</Panel>

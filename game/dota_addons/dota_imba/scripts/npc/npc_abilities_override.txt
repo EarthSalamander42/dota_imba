@@ -949,8 +949,8 @@
 	//=================================================================================================================
 	"item_tome_of_knowledge"
 	{
-		"ItemCost"						"75"
-		"ItemInitialStockTime"			"270.0"
+		"ItemCost"						"100"
+		"ItemInitialStockTime"			"390.0"
 		"ItemStockTime"					"60.0"
 
 		"AbilitySpecial"
@@ -963,12 +963,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"xp_per_use"			"50"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"customval_team_tomes_used"	"0"
+				"xp_per_use"			"135"
 			}
 		}
 	}

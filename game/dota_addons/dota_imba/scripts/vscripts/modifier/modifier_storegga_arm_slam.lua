@@ -72,7 +72,7 @@ function modifier_storegga_arm_slam:OnIntervalThink()
 						ParticleManager:SetParticleControlEnt( nFXIndex, 10, enemy, PATTACH_ABSORIGIN_FOLLOW, nil, enemy:GetOrigin(), true )
 						ParticleManager:ReleaseParticleIndex( nFXIndex )
 
-						EmitSoundOn( "Dungeon.BloodSplatterImpact", enemy )
+						EmitSoundOn( "Hero_PhantomAssassin.Spatter", enemy )
 					else
 						enemy:AddNewModifier( self:GetCaster(), self:GetAbility(), "modifier_stunned", { duration = self.stun_duration } )
 					end
