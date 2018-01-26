@@ -225,7 +225,7 @@
 	width: 100%;
 	height: 100%;
 	background-color: black;
-	background-image: url("file://{images}/custom_game/loading_screen/slyking_loading.png");
+	background-image: url("file://{images}/custom_game/loading_screen/wild-origins.png");
 	background-position: 65% 0%;
 	background-size: cover;
 	overflow: clip;
@@ -247,10 +247,12 @@
 	margin-bottom: 200px;
 	margin-left: 2%;
 	width: 50%;
-	background-color: rgba(255, 255, 255, 0.5);
+	background-color: #922c30ee;
 	padding: 20px 40px;
 	height: fit-children;
 	flow-children: down;
+	border: 2px solid #481618ee;
+	box-shadow: 0 0 10px #111;
 }
 
 .AspectRatio4x3 #imba-news {
@@ -283,7 +285,7 @@
 }
 
 #oaa-news-link {
-	color: #255;
+	color: #fff;
 	font-size: 20px;
 }
 
@@ -298,22 +300,27 @@
 
 #imba-ow-news-title, #imba-normal-news-title {
 	font-size: 32px;
-	color: #071010;
+	color: #b67f7f;
+	font-weight: bold;
+	text-shadow: 0 0 5px #000;
 }
 
 #imba-ow-news-article-title, #imba-normal-news-article-title {
 	font-size: 24px;
-	color: #255;
+	color: #fff;
+	text-shadow: 0 0 3px #000;
 }
 
 #imba-ow-news-article-text, #imba-normal-news-article-text {
 	font-size: 18px;
-	color: #122;
+	color: #ddd;
+	text-shadow: 0 0 2px #000;
 }
 
 #imba-ow-news-link, #imba-normal-news-link {
-	color: #255;
+	color: #fff;
 	font-size: 20px;
+	text-shadow: 0 0 2px #000;
 }
 
 #imba-news-link:hover {

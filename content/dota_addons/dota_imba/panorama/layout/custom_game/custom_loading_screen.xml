@@ -24,17 +24,17 @@
 
 			<Panel id="imba-news">
 				<Panel id="oaa-news-panel">
-					<Panel id="oaa-news-text">
+					<!--<Panel id="oaa-news-text">
 						<Label id="oaa-news-title" text="Open Angel Arena Anniversary Tournament" />
 						<Label id="oaa-news-article-text" text="#oaa_news_text" />
 						<Label id="oaa-news-link" text="Read more news on our Official Website" onactivate="DOTADisplayURL('http://www.dota2imba.org/');"
 						/>
-					</Panel>
+					</Panel>-->
 
 					<Image id="oaa-news-image" src="file://{images}/custom_game/loading_screen/oaa.png" />
 				</Panel>
 
-				<Label id="imba-ow-news-title" text="DOTA IMBA v7.03 - The Real Frostivus has arrived" />
+				<Label id="imba-ow-news-title" text="Dota IMBA 7.04 - Wild Origins" />
 				<Label id="imba-ow-news-article-title" />
 				<Label id="imba-ow-news-article-text" />
 				<Label id="imba-ow-news-link" text="Read more news on our Official Website" onactivate="DOTADisplayURL('http://www.dota2imba.org/');"
@@ -118,9 +118,9 @@
 					</Panel>
 				</Panel>
 			</Panel>
-
+ 
 			<Panel id="imba-news">
-				<Panel id="oaa-news-panel">
+<!--				<Panel id="oaa-news-panel"> 
 					<Panel id="oaa-news-text">
 						<Label id="oaa-news-title" text="Open Angel Arena Anniversary Tournament" />
 						<Label id="oaa-news-article-text" text="#oaa_news_text" />
@@ -128,9 +128,9 @@
 
 					<Image id="oaa-news-image" src="file://{images}/custom_game/loading_screen/oaa.jpg" />
 				</Panel>
-
-				<Label id="imba-normal-news-title" text="DOTA IMBA v7.04 - Back to the roots" />
-				<Label id="imba-normal-news-article-title" />
+-->
+				<Label id="imba-normal-news-title" text="Dota IMBA 7.04 - Wild Origins" />
+				<Label id="imba-normal-news-article-title" /> 
 				<Label id="imba-normal-news-article-text" />
 				<Label id="imba-normal-news-link" text="Read more news on our Official Website" onactivate="DOTADisplayURL('http://www.dota2imba.org/');"
 				/>

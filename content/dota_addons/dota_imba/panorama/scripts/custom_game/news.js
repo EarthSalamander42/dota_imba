@@ -7,8 +7,10 @@
 	};
 
 	var ui = {
-		title: $("#imba-normal-news-article-title"),
-		text: $("#imba-normal-news-article-text")
+		normalTitle: $("#imba-normal-news-article-title"),
+		normalText: $("#imba-normal-news-article-text"),
+		owTitle: $("#imba-ow-news-article-title"),
+		owText: $("#imba-ow-news-article-text")
 	};
 
 	var initializeNews = function InitializeNews() {
@@ -19,8 +21,10 @@
 			dataType: "json",
 			success: function (data) {
 				$.Msg("News received: " + JSON.stringify(data.data.en.title));
-				ui.title.text = data.data.en.title;
-				ui.text.text = data.data.en.text;
+				ui.normalTitle.text = data.data.en.title;
+				ui.normalText.text = data.data.en.text;
+				ui.owTitle.text = data.data.en.title;
+				ui.owText.text = data.data.en.text;
 			},
 			timeout: 5000,
 			error: function (err) {
@@ -31,4 +35,4 @@
 
 	initializeNews();
 
-})();
+})(); 
