@@ -68,12 +68,13 @@
 
 #BattlepassWindow
 {
-	width: 800px;
-	height: 650px;
+	width: 820px;
+	height: 670px;
 	background-color: #000000da;
 	align: center center;
 	flow-children: down;
 	visibility: collapse;
+	padding: 10px;
 }
 
 #InfoContent

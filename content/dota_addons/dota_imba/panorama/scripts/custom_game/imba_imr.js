@@ -44,10 +44,11 @@ function SwitchTab(tab) {
 }
 
 var companions = null
+
 function Battlepass() {
 	var BattlepassRewards = CustomNetTables.GetTableValue("game_options", "battlepass").battlepass;
 
-	$.AsyncWebRequest('https://api.dota2imba.org/meta/companions', {
+	$.AsyncWebRequest('http://api.dota2imba.org/meta/companions', {
 		type: 'GET',
 		dataType: 'json',
 		success: function (d) {
@@ -56,7 +57,7 @@ function Battlepass() {
 
 		timeout: 5000,
 		error: function (err) {
-			$.Msg("Api Error" + JSON.stringify(err));
+			$.Msg("Companion Api Error: " + JSON.stringify(err));
 		}
 	});
 
@@ -78,9 +79,9 @@ function Battlepass() {
 			//Button Generator (is_donator not added yet in lua)
 			var button_count = 3;
 
-//			if (plyData.is_donator) {
-//				button_count = button_count +1;
-//			}
+			//			if (plyData.is_donator) {
+			//				button_count = button_count +1;
+			//			}
 
 			var button_size = 100 / button_count;
 			button_size = button_size.toString();
@@ -158,11 +159,11 @@ function Battlepass() {
 
 			// Companion Generator
 			var companion_unit = []
-			for (var i = 0; i <= companions.length -1; i++) {
+			for (var i = 0; i <= companions.length - 1; i++) {
 				if (companions[i] != undefined) {
-					i_count = i +1
+					i_count = i + 1
 					companion_unit[i] = companions[i]["file"]
-//					$.Msg(companion_unit[i.toString()])
+					//					$.Msg(companion_unit[i.toString()])
 
 					if (i_count > 5) {
 						class_option_count = class_option_count + 1
@@ -178,12 +179,18 @@ function Battlepass() {
 					companionpreview.style.height = "85%";
 					companionpreview.BLoadLayoutFromString('<root><Panel><DOTAScenePanel style="width:100%; height:100%;" particleonly="false" unit="' + companion_unit[i.toString()] + '"/></Panel></root>', false, false);
 					companionpreview.style.opacityMask = 'url("s2r://panorama/images/masks/hero_model_opacity_mask_png.vtex");'
-					$.Msg(companion_unit[i])
-					companionpreview.SetPanelEvent("onactivate", function (k) {
+
+					var companion_unit_name = companion_unit[i];
+
+					/* This is weird. Seams like panorama v8 has a bug here. companion_unit_name should be 
+					 * copy-by-value but instead is copy-by-reference */
+					var event = function (ev) {
 						return function () {
-							SetCompanion(companion_unit[i]) // undefined.. WTF???????
+							SetCompanion(ev);
 						}
-					}(i));
+					};
+					
+					companionpreview.SetPanelEvent("onactivate", event(companion_unit_name));
 
 					var reward_label = $.CreatePanel("Label", companion, companions[i]["name"] + "_label");
 					reward_label.AddClass("BattlepassRewardLabel")
@@ -298,7 +305,26 @@ function Battlepass() {
 }
 
 function SetCompanion(companion) {
-	$.Msg(companion)
+
+	var steamId = Game.GetLocalPlayerInfo().player_steamid;
+	var url = 'http://api.dota2imba.org/meta/set-companion';
+	var data = {
+		companion: companion,
+		steam_id: steamId
+	};
+
+	$.AsyncWebRequest(url, {
+		type: 'POST',
+		success: function (d) {
+			companions = d.data;
+			$.Msg("Companion Api Good: " + JSON.stringify(d));
+		},
+		data: data,
+		error: function (err) {
+			$.Msg("Companion Api Error: " + JSON.stringify(err));
+		}
+	});
+
 }
 
 var current_type = ""
