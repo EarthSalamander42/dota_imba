@@ -50,6 +50,9 @@ function ImbaApi:perform(robj, endpoint, callback)
 		local base_request = {
 			agent = self.config.agent,
 			version = 1,
+			frames = tonumber(GetFrameCount()),
+			server_system_datetime = tostring(GetSystemDate()) .. " " .. tostring(GetSystemTime()),
+			server_time = tonumber(Time()),
 			data = robj
 		}
 

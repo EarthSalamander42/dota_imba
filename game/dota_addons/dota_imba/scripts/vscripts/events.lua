@@ -545,24 +545,32 @@ end
 
 -- An item was purchased by a player
 function GameMode:OnItemPurchased( keys )
-local plyID = keys.PlayerID
-if not plyID then return end
-local hero = PlayerResource:GetSelectedHeroEntity(plyID)
-local itemName = keys.itemname 
-local itemcost = keys.itemcost
+	local plyID = keys.PlayerID
+	if not plyID then return end
+	local hero = PlayerResource:GetSelectedHeroEntity(plyID)
+	local itemName = keys.itemname 
+	local itemcost = keys.itemcost
+
+	ApiEvent(ApiEventCodes.ItemPurchased, { 
+		item = tostring(keys.itemname),
+		hero = tostring(hero:GetUnitName()),
+		player = tostring(PlayerResource:GetSteamID(plyID))
+	})
+
 end
 
 -- An ability was used by a player
 function GameMode:OnAbilityUsed(keys)
-local player = keys.PlayerID
-local abilityname = keys.abilityname
-if not abilityname then return end
+	local player = keys.PlayerID
+	local abilityname = keys.abilityname
+	if not abilityname then return end
 
-local hero = PlayerResource:GetSelectedHeroEntity(player)
-if not hero then return end
+	local hero = PlayerResource:GetSelectedHeroEntity(player)
+	if not hero then return end
 
-local abilityUsed = hero:FindAbilityByName(abilityname)
-if not abilityUsed then return end
+
+	local abilityUsed = hero:FindAbilityByName(abilityname)
+	if not abilityUsed then return end
 
 	if abilityname == "rubick_spell_steal" then
 		local target = abilityUsed:GetCursorTarget()
@@ -574,9 +582,7 @@ if not abilityUsed then return end
 		for m = 1, #meepo_table do
 			if meepo_table[m]:IsClone() then
 				if abilityname == "item_sphere" then
---					print("Linken!")
-					local duration = abilityname:GetSpecialValueFor("block_cooldown")					
---					print("Duration", duration)
+					local duration = abilityname:GetSpecialValueFor("block_cooldown")		
 					meepo_table[m]:AddNewModifier(meepo_table[m], ability, "modifier_item_sphere_target", {duration = duration})
 				end
 			end
@@ -664,6 +670,12 @@ function GameMode:OnPlayerLearnedAbility( keys)
 			end
 		end)
 	end
+
+	ApiEvent(ApiEventCodes.AbilityLearned, {
+		player = tostring(PlayerResource:GetSteamID(player:GetPlayerID())),
+		ability = tostring(abilityname)
+	})
+
 end
 
 -- A channelled ability finished by either completing or being interrupted
@@ -1155,13 +1167,30 @@ function GameMode:OnEntityKilled( keys )
 
 		-- Check if the dying unit was a player-controlled hero
 		if killed_unit:IsRealHero() and killed_unit:GetPlayerID() then
-		
-			if killer ~= nil then		
-				ApiEvent(ApiEventCodes.HeroKilled, { 
-					player = tostring(PlayerResource:GetSteamID(killed_unit:GetPlayerID())), 
-					killed = killed_unit:GetUnitName(),
-					killer = killer:GetUnitName()
+			
+			-- API Event for Hero Killed
+			if killer ~= nil then
+				-- get player ids of killer and killed unit
+				local deadPlayerId = killed_unit:GetPlayerID()
+				local deadPlayerSteamId = PlayerResource:GetSteamID(deadPlayerId)
+
+				local killerPlayerId = -1
+				local killerPlayerSteamId = -1
+				if killer:IsRealHero() and killer:GetPlayerID() then 
+					killerPlayerId = killer:GetPlayerID()
+					killerPlayerSteamId = PlayerResource:GetSteamID(killerPlayerId)
+				end
+				
+				local killerUnitName = killer:GetUnitName()
+				local deadUnitName = killed_unit:GetUnitName()
+				
+				ApiEvent(ApiEventCodes.HeroKilled, {
+					killer = tostring(killerPlayerSteamId),
+					killer_unit = tostring(killerUnitName),
+					dead = tostring(deadPlayerSteamId),
+					dead_unit = tostring(deadUnitName)
 				})
+
 			end
 			
 			-- Buyback parameters
