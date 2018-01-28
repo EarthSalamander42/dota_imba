@@ -112,16 +112,6 @@ end
 
 modifier_imba_breathe_fire_debuff = class({})
 
-function modifier_imba_breathe_fire_debuff:OnCreated()
---	if IsServer() then
---		-- Ability properties
---		self.caster = self:GetCaster()
---		self.ability = self:GetAbility()
---
---		
---	end
-end
-
 function modifier_imba_breathe_fire_debuff:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
@@ -132,14 +122,14 @@ function modifier_imba_breathe_fire_debuff:DeclareFunctions()
 	return funcs
 end
 
---[[ crash for reasons
 function modifier_imba_breathe_fire_debuff:GetModifierPreAttack_BonusDamage()
 	if IsServer() then
-		self:SetStackCount(self:GetAbility():GetSpecialValueFor("reduction") * self:GetParent():GetAverageTrueAttackDamage(self:GetParent()))
+		local attack_damage = self:GetParent():GetAverageTrueAttackDamage(self:GetParent())
+		local damage_reduction = damage_reduction = self:GetAbility():GetSpecialValueFor("reduction") / 100 * attack_damage
+		print(attack_damage, damage_reduction, attack_damage - damage_reduction)
+		return attack_damage - damage_reduction
 	end
-	return self:GetStackCount() * 0.01
 end
---]]
 
 function modifier_imba_breathe_fire_debuff:GetEffectName()
 	return "particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire_trail.vpcf"

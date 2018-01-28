@@ -30768,7 +30768,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"reduction"				"-25"
+				"reduction"				"25"
 			}
 			"06"
 			{
