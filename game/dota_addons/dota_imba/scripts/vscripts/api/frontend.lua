@@ -206,15 +206,13 @@ function GetApiGameId()
 end
 
 -- Saves a print message to server
-function ApiPrint(str, tag)
-	if tag == nil then
-		tag = "debug"
-	end
+function ApiPrint(str)
 
-	imba_api_game_event(tag, str);
+	imba_api_game_event(ApiEventCodes.Log, str);
 end
 
 ApiEventCodes = {
+	Log = 1,
 	PlayerConnected = 2,
 	PlayerAbandoned = 3,
 	HeroKilled = 4,
@@ -225,37 +223,30 @@ ApiEventCodes = {
 	EnteredPostGame = 9,
 	PlayerDisconnected = 10,
 	TowerKilled = 11,
+	ItemPurchased = 12,
+	AbilityLearned = 13
 }
 
 function ApiEvent(event, content)
-	
-	rcontent = ""
-	if content ~= nil then
-		rcontent = content
-	end
-
-	imba_api_game_event(event, rcontent)
+	imba_api_game_event(event, content)
 end
 
 -- Will write a custom game event to the server
 -- event and content mandatory, tag optional 
-function imba_api_game_event(event, content, tag)
+function imba_api_game_event(event, content)
 
 	print("[api-frontend] Saving event")
 
-	local rtag = json.null
-
-	if (type(tag) ~= "nil") then
-		rtag = tostring(tag)
+	local rcontent = content
+	if content == nil then
+		rcontent = json.null
 	end
 
 	imba_api():game_event({ 
 		id = api_preloaded.id,
-		event = tostring(event),
-		content = content,
-		tag = rtag
-	}, function (response) end, 
-		function () print("[api-frontend] Error writing game event") end)
+		event = tonumber(event),
+		content = rcontent,
+	}, function (response) end, function () print("[api-frontend] Error writing game event") end)
 end
 
 -- returns the match id as integer
@@ -299,11 +290,7 @@ function imba_api_game_register(complete_fun)
 		map = tostring(GetMapName()),
 		leader = leader,
 		dedicated = true,
-		players = players,
-		frames = tonumber(GetFrameCount()),
-		system_date = tostring(GetSystemDate()),
-		system_time = tostring(GetSystemTime()),
-		server_time = tonumber(Time()) 
+		players = players
 	}
 
 	-- perform request
@@ -332,11 +319,7 @@ function imba_api_game_complete(complete_fun)
 	local args = {
 		id = api_preloaded.id,
 		winner = GAME_WINNER_TEAM,
-		results = {},
-		frames = tonumber(GetFrameCount()),
-		system_date = tostring(GetSystemDate()),
-		system_time = tostring(GetSystemTime()),
-		server_time = tonumber(Time()) 
+		results = {}
 	}
 
 	ApiPrint("game_complete Before player info collection")
