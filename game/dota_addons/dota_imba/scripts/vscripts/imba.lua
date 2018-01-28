@@ -204,6 +204,7 @@ function GameMode:OnFirstPlayerLoaded()
 		"npc_imba_developer_broccoli",
 		"npc_imba_developer_cookies",
 		"npc_imba_developer_dewouter",
+		"npc_imba_developer_suthernfriend",
 		"npc_imba_developer_fudge",
 		"npc_imba_developer_lindbrum",
 		"npc_imba_developer_sercankd",
