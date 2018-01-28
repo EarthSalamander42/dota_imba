@@ -47,7 +47,8 @@ function GameMode:OnDisconnect(keys)
 				Notifications:BottomToAll({text = "#imba_player_abandon_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
 				PlayerResource:SetHasAbandonedDueToLongDisconnect(player_id, true)
 				print("player "..player_id.." has abandoned the game.")
-				ApiEvent(ApiEventCodes.PlayerAbandoned, tostring(PlayerResource:GetSteamID(player_id)))
+
+				ApiEvent(ApiEventCodes.PlayerAbandoned, { tostring(PlayerResource:GetSteamID(player_id)) })
 
 				-- Start redistributing this player's gold to its allies
 				PlayerResource:StartAbandonGoldRedistribution(player_id)
@@ -77,7 +78,7 @@ function GameMode:OnGameRulesStateChange(keys)
 	-- IMBA: Pick screen stuff
 	-------------------------------------------------------------------------------------------------
 	if new_state == DOTA_GAMERULES_STATE_HERO_SELECTION then
-		ApiEvent(ApiEventCodes.EnteredHeroSelection, nil)
+		ApiEvent(ApiEventCodes.EnteredHeroSelection)
 		HeroSelection:HeroListPreLoad()
 
 		-- get the IXP of everyone (ignore bot)
@@ -88,7 +89,8 @@ function GameMode:OnGameRulesStateChange(keys)
 	-- IMBA: Start-of-pre-game stuff
 	-------------------------------------------------------------------------------------------------
 	if new_state == DOTA_GAMERULES_STATE_PRE_GAME then
-		ApiEvent(ApiEventCodes.EnteredPreGame, nil)
+		ApiEvent(ApiEventCodes.EnteredPreGame)
+
 		-- Initialize Battle Pass
 		Imbattlepass:Init()
 
@@ -103,7 +105,7 @@ function GameMode:OnGameRulesStateChange(keys)
 	-- IMBA: Game started (horn sounded)
 	-------------------------------------------------------------------------------------------------
 	if new_state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-		ApiEvent(ApiEventCodes.EnteredHeroSelection, nil)
+		ApiEvent(ApiEventCodes.StartedGame)
 
 		for _, hero in pairs(HeroList:GetAllHeroes()) do
 			if IsDeveloper(hero:GetPlayerID()) then
@@ -170,7 +172,7 @@ function GameMode:OnGameRulesStateChange(keys)
 
 	if new_state == DOTA_GAMERULES_STATE_POST_GAME then
 		-- call imba api
-		ApiEvent(ApiEventCodes.EnteredPostGame, nil)
+		ApiEvent(ApiEventCodes.EnteredPostGame)
 
 		imba_api_game_complete(function (players)
 			ApiPrint("Game complete request successful!")
@@ -339,7 +341,10 @@ local normal_xp = npc:GetDeathXP()
 
 	if npc:IsRealHero() then
 	
-		ApiEvent(ApiEventCodes.HeroRespawned, { player = tostring(PlayerResource:GetSteamID(npc:GetPlayerID())), hero = npc:GetUnitName() })
+		ApiEvent(ApiEventCodes.HeroRespawned, {
+			tostring(npc:GetUnitName()),
+			tostring(PlayerResource:GetSteamID(npc:GetPlayerID()))
+		})
 		
 	
 		if not npc.first_spawn then
@@ -552,9 +557,9 @@ function GameMode:OnItemPurchased( keys )
 	local itemcost = keys.itemcost
 
 	ApiEvent(ApiEventCodes.ItemPurchased, { 
-		item = tostring(keys.itemname),
-		hero = tostring(hero:GetUnitName()),
-		player = tostring(PlayerResource:GetSteamID(plyID))
+		tostring(keys.itemname),
+		tostring(hero:GetUnitName()),
+		tostring(PlayerResource:GetSteamID(plyID))
 	})
 
 end
@@ -658,6 +663,7 @@ function GameMode:OnPlayerLearnedAbility( keys)
 	DebugPrintTable(keys)
 
 	local player = EntIndexToHScript(keys.player)
+	local hero = player:GetAssignedHero()
 	local abilityname = keys.abilityname
 
 	-- If it the ability is Homing Missiles, wait a bit and set count to 1	
@@ -671,10 +677,15 @@ function GameMode:OnPlayerLearnedAbility( keys)
 		end)
 	end
 
-	ApiEvent(ApiEventCodes.AbilityLearned, {
-		player = tostring(PlayerResource:GetSteamID(player:GetPlayerID())),
-		ability = tostring(abilityname)
-	})
+	if hero ~= nil then
+
+		ApiEvent(ApiEventCodes.AbilityLearned, {
+			tostring(abilityname),
+			tostring(hero:GetUnitName()),
+			tostring(PlayerResource:GetSteamID(player:GetPlayerID()))
+		})
+
+	end
 
 end
 
@@ -700,6 +711,12 @@ function GameMode:OnPlayerLevelUp(keys)
 	local missing_point_levels = {17, 19, 21, 22, 23, 24}
 	local extra_point_levels = {33, 34, 37, 38, 39}
 	local missing_point_levels_meepo = {17, 32, 33, 34, 36, 37, 38, 39}
+
+	ApiEvent(ApiEventCodes.HeroLevelUp, {
+		tostring(hero:GetUnitName()),
+		tostring(hero_level),
+		tostring(PlayerResource:GetSteamID(player:GetPlayerID()))
+	})
 
 	if hero:GetUnitName() == "npc_dota_hero_meepo" then
 		-- Remove extra point on the appropriate levels for Meepo only
@@ -1185,10 +1202,10 @@ function GameMode:OnEntityKilled( keys )
 				local deadUnitName = killed_unit:GetUnitName()
 				
 				ApiEvent(ApiEventCodes.HeroKilled, {
-					killer = tostring(killerPlayerSteamId),
-					killer_unit = tostring(killerUnitName),
-					dead = tostring(deadPlayerSteamId),
-					dead_unit = tostring(deadUnitName)
+					tostring(killerUnitName),
+					tostring(killerPlayerSteamId),
+					tostring(deadUnitName),
+					tostring(deadPlayerSteamId)
 				})
 
 			end
@@ -1247,6 +1264,13 @@ function GameMode:OnEntityKilled( keys )
 					victimUnitName = killed_unit:GetUnitName(),
 					gold = gold_bounty,
 				})
+
+				ApiEvent(ApiEventCodes.BuildingKilled, {
+					tostring(killed_unit:GetUnitName()),
+					tostring(killed_unit:GetTeamNumber()),
+					tostring(killer:GetUnitName()),
+					tostring(PlayerResource:GetSteamID(killer:GetPlayerID()))
+				})
 			else
 				CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
 					type = "generic",
@@ -1255,6 +1279,13 @@ function GameMode:OnEntityKilled( keys )
 					teamColor = killer:GetTeam(),
 					team = killer:GetTeam(),
 					gold = gold_bounty,
+				})
+
+				ApiEvent(ApiEventCodes.BuildingKilled, {
+					tostring(killed_unit:GetUnitName()),
+					tostring(killed_unit:GetTeamNumber()),
+					tostring(killer:GetUnitName()),
+					tostring(0)
 				})
 			end
 		elseif killed_unit:IsCourier() then
@@ -1265,6 +1296,15 @@ function GameMode:OnEntityKilled( keys )
 				team = killed_unit:GetTeam(),
 				courier = true,
 			})
+
+			if killer:IsRealHero() then
+				ApiEvent(ApiEventCodes.CourierKilled, {
+					tostring(killed_unit:GetTeamNumber()),
+					tostring(killer:GetUnitName()),
+					tostring(PlayerResource:GetSteamID(killer:GetPlayerID()))
+				})
+			end
+
 		elseif killed_unit:GetUnitName() == "npc_imba_roshan" then
 			CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
 				type = "kill",
@@ -1274,6 +1314,14 @@ function GameMode:OnEntityKilled( keys )
 				roshan = true,
 				gold = 150,
 			})
+
+			if killer:IsRealHero() then
+				ApiEvent(ApiEventCodes.RoshanKilled, {
+					tostring(killer:GetUnitName()),
+					tostring(PlayerResource:GetSteamID(killer:GetPlayerID()))
+				})
+			end
+
 		end
 
 		if killer:IsRealHero() then
@@ -1325,7 +1373,7 @@ function GameMode:OnConnectFull(keys)
 	local ply = EntIndexToHScript(entIndex)
 	local player_id = ply:GetPlayerID()
 
-	ApiEvent(ApiEventCodes.PlayerConnectedFull, tostring(PlayerResource:GetSteamID(player_id)))
+	ApiEvent(ApiEventCodes.PlayerConnected, { tostring(PlayerResource:GetSteamID(player_id)) })
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Player data initialization
 	-------------------------------------------------------------------------------------------------
@@ -1385,8 +1433,6 @@ function GameMode:OnTowerKill(keys)
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Attack of the Ancients tower upgrade logic
 	-------------------------------------------------------------------------------------------------
-
-	ApiEvent(ApiEventCodes.TowerKilled, tower_team)
 
 	-- Always enabled!
 --	if TOWER_UPGRADE_MODE then		

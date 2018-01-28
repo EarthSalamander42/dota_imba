@@ -6,6 +6,7 @@ require("api/api")
 require("api/json")
 
 api_preloaded = {}
+imba_apifrontend_debug_enabled = false
 
 -- Asyncronous
 -- has to be called in GameMode:OnFirstPlayerLoaded
@@ -13,8 +14,7 @@ api_preloaded = {}
 -- complete_fun is called once all preload requests are finished 
 function imba_api_init(complete_fun)
 
-	print("[api-frontend] init")
-	print(api_preloaded.donators, api_preloaded.developers, api_preloaded.players, api_preloaded.topxpusers, api_preloaded.topimrusers, api_preloaded.hot_disabled_heroes, api_preloaded.companions)
+	imba_apifrontend_print("Initializing API")
 
 	local proxy_fun = function () 
 		if api_preloaded.donators ~= nil 
@@ -25,7 +25,7 @@ function imba_api_init(complete_fun)
             and api_preloaded.hot_disabled_heroes ~= nil
             and api_preloaded.companions ~= nil
 		then
-			print("[api-frontend] preloading completed")
+			imba_apifrontend_print("Preloading completed")
 			complete_fun()
 		end
 	end
@@ -43,7 +43,7 @@ end
 --
 function imba_api_preload(complete_fun)
 
-	print("[api-frontend] preloading")
+	imba_apifrontend_print("Preloading API data")
 
 	imba_api():meta_donators(function (donors)
 	   api_preloaded.donators = donors
@@ -207,35 +207,70 @@ end
 
 -- Saves a print message to server
 function ApiPrint(str)
-
-	imba_api_game_event(ApiEventCodes.Log, str);
+	ApiEvent(ApiEventCodes.Log, { str });
 end
 
 ApiEventCodes = {
-	Log = 1,
-	PlayerConnected = 2,
-	PlayerAbandoned = 3,
-	HeroKilled = 4,
-	HeroRespawned = 5,
-	EnteredHeroSelection = 6,
-	StartedGame = 7,
-	EnteredPreGame = 8,
-	EnteredPostGame = 9,
-	PlayerDisconnected = 10,
-	TowerKilled = 11,
-	ItemPurchased = 12,
-	AbilityLearned = 13
+	Log = 1, 					-- (text)
+	PlayerConnected = 2,		-- (steamid)
+	PlayerAbandoned = 3,		-- (steamid)
+	EnteredHeroSelection = 4,	-- ()
+	StartedGame = 5,			-- ()
+	EnteredPreGame = 6,			-- ()
+	EnteredPostGame = 7,		-- ()
+	PlayerDisconnected = 8,		-- (steamid)
+	ItemPurchased = 9,			-- (item_name, hero_name, steamid)
+	AbilityLearned = 10,		-- (ability_name, hero_name, steamid)
+	HeroKilled = 11,			-- (killer_unit, killer_steamid, dead_unit, dead_steamid)
+	HeroRespawned = 12,			-- (hero_name, steamid)
+	HeroLevelUp = 13,			-- (hero_name, level, steamid)
+	BuildingKilled = 14,		-- (killed_unit, killed_team, unit_name, steamid)
+	CourierKilled = 15,			-- (courier_team, killer_unit, steamid)
+	RoshanKilled = 16			-- (killer_unit, steamid)
 }
 
-function ApiEvent(event, content)
-	imba_api_game_event(event, content)
+function imba_api_event_to_string(eventCode)
+	for k,v in pairs(ApiEventCodes) do
+		if v == eventCode then
+			return tostring(k)
+		end
+	end
+	return tostring(eventCode)
+end
+
+function imba_apifrontend_debug(t)
+	if imba_apifrontend_debug_enabled then
+		print("[api-frontend-debug] " .. t)
+	end
+end
+
+function imba_apifrontend_print(t)
+	print("[api-frontend] " .. t)
+end
+
+function trim1(s)
+	return (s:gsub("^%s*(.-)%s*$", "%1"))
 end
 
 -- Will write a custom game event to the server
 -- event and content mandatory, tag optional 
-function imba_api_game_event(event, content)
+function ApiEvent(event, content)
 
-	print("[api-frontend] Saving event")
+	imba_apifrontend_debug("Saving game event ")
+
+	-- print message
+	local text = ""
+	if content ~= nil then
+		for i = 1, #content do
+			text = text .. content[i] .. " "
+		end 
+	end
+
+	text = trim1(text)
+
+	imba_apifrontend_print("Sending Event " .. imba_api_event_to_string(event) .. " with content '" .. text .. "'")
+	--
+
 
 	local rcontent = content
 	if content == nil then
@@ -246,7 +281,7 @@ function imba_api_game_event(event, content)
 		id = api_preloaded.id,
 		event = tonumber(event),
 		content = rcontent,
-	}, function (response) end, function () print("[api-frontend] Error writing game event") end)
+	}, function (response) end, function () imba_apifrontend_debug("Error writing game event") end)
 end
 
 -- returns the match id as integer
@@ -295,12 +330,12 @@ function imba_api_game_register(complete_fun)
 
 	-- perform request
 	imba_api():game_register(args, function (data) 
-		print("[api-frontend] Request good: ID: " .. tostring(data.id))
+		imba_apifrontend_debug("Request good: ID: " .. tostring(data.id))
 		api_preloaded.players = data.players
 		api_preloaded.id = data.id
 		complete_fun()
 	end, function (err)
-		print("[api-frontend] Request failed!")
+		imba_apifrontend_debug("Request failed!")
 		api_preloaded.id = 0
 	end)
 
@@ -322,9 +357,6 @@ function imba_api_game_complete(complete_fun)
 		results = {}
 	}
 
-	ApiPrint("game_complete Before player info collection")
-	ApiPrint("game_complete player count in game_complete: " .. tostring(PlayerResource:GetPlayerCount()))
-
 	-- for each player
 	for pid = 0, DOTA_MAX_TEAM_PLAYERS do
 		if PlayerResource:IsValidPlayerID(pid) then
@@ -335,7 +367,7 @@ function imba_api_game_complete(complete_fun)
 			local items = {}
 
 			if hero == nil then
-				ApiPrint("Hero for player " .. id .. " is nil")
+				imba_apifrontend_print("Hero for player " .. id .. " is nil")
 			else
 				-- get all items
 				-- inventory + backpack
@@ -404,13 +436,9 @@ function imba_api_game_complete(complete_fun)
 		end
 	end
 
-	ApiPrint(json.encode(args))
-	ApiPrint("game_complete after player info collection");
-
 	-- perform request
 	imba_api():game_complete(args, function (data)
-		ApiPrint("Request good")
-		print("[api-frontend] Request good (Game save)")
+		imba_apifrontend_debug("Request good (Game save)")
 
 		-- data contains info about changed xp and changed imr:
 		if complete_fun ~= nil then
@@ -418,13 +446,12 @@ function imba_api_game_complete(complete_fun)
 		end
 	end, function (err)
 		if (err == nil) then
-			ApiPrint("request failed with nil")
+			imba_apifrontend_print("Game complete request failed with nil")
 		elseif (err.message ~= nil) then
-			ApiPrint("request failed :" .. err.message)
+			imba_apifrontend_print("Game complete request failed :" .. err.message)
 		end
-		print("[api-frontend] Request failed!")
+		imba_apifrontend_debug("Request failed!")
 	end)
 
-	ApiPrint("Serialization successful")
-	print("[api-frontend] Saving game to server")
+	imba_apifrontend_debug("Saving game to server")
 end
