@@ -8814,7 +8814,7 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_ward_base"
-		"Model"						"models\courier\frog\frog.vmdl"
+		"Model"						"models/courier/frog/frog.vmdl"
 		"Level"						"1"
 		"ModelScale" 				"0.9"
 
