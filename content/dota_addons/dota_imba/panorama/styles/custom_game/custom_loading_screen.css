@@ -242,7 +242,7 @@
 	visibility: collapse;
 }
 
-#imba-news {
+#imba-normal-news, #imba-ow-news {
 	vertical-align: bottom;
 	margin-bottom: 200px;
 	margin-left: 2%;
@@ -255,75 +255,79 @@
 	box-shadow: 0 0 10px #111;
 }
 
-.AspectRatio4x3 #imba-news {
+.AspectRatio4x3 #imba-normal-news, .AspectRatio4x3 #imba-ow-news {
 	width: 40%;
 	margin-bottom: 220px;
 }
 
-#oaa-news-panel {
+#oaa-normal-news-panel, #oaa-ow-news-panel {
 	width: 100%;
 	margin-bottom: 10px;
-	margin-left: -10px;
-	padding: 10px 15px;
-	background-color: rgba(200, 100, 100, 0.6);
+	margin-top: 10px;
+	padding-top: 10px;
+	border-top: 2px solid #eee;
 	flow-children: right;
 }
 
-#oaa-news-text {
+#oaa-normal-news-text, #oaa-ow-news-text {
 	width: 600px;
 	flow-children: down;
 }
 
-#oaa-news-article-text {
+#oaa-normal-news-article-text, #oaa-ow-news-article-text {
 	font-size: 18px;
-	color: #122;
+	color: #ddd;
+	text-shadow: 0 0 2px #000;
 }
 
-#oaa-news-title {
-	font-size: 32px;
-	color: #071010;
+#oaa-normal-news-title, #oaa-ow-news-title {
+	font-size: 26px;
+	color: #b67f7f;
+	font-weight: bold;
+	text-shadow: 0 0 5px #000;
 }
 
-#oaa-news-link {
+#oaa-normal-news-link, #oaa-ow-news-link {
 	color: #fff;
 	font-size: 20px;
 }
 
-#oaa-news-link:hover {
+#oaa-normal-news-link:hover, #oaa-ow-news-link:hover {
 	text-decoration: underline;
 }
 
-#oaa-news-image {
+#oaa-normal-news-image, #oaa-ow-news-image {
 	background-size: cover;
 	overflow: clip;
+	height: 140px;
 }
 
-#imba-ow-news-title, #imba-normal-news-title {
+#imba-normal-news-title, #imba-ow-news-title {
 	font-size: 32px;
 	color: #b67f7f;
 	font-weight: bold;
 	text-shadow: 0 0 5px #000;
 }
 
-#imba-ow-news-article-title, #imba-normal-news-article-title {
+#imba-normal-news-article-title, #imba-ow-news-article-title {
 	font-size: 24px;
 	color: #fff;
 	text-shadow: 0 0 3px #000;
 }
 
-#imba-ow-news-article-text, #imba-normal-news-article-text {
+#imba-normal-news-article-text, #imba-ow-news-article-text {
 	font-size: 18px;
 	color: #ddd;
 	text-shadow: 0 0 2px #000;
 }
 
-#imba-ow-news-link, #imba-normal-news-link {
+#imba-normal-news-link, #imba-ow-news-link {
 	color: #fff;
 	font-size: 20px;
 	text-shadow: 0 0 2px #000;
 }
 
-#imba-news-link:hover {
+#imba-normal-news-link:hover, #imba-ow-news-link:hover {
 	text-decoration: underline;
 }
 
