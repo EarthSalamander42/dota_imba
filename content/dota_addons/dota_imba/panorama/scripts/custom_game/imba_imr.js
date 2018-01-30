@@ -342,6 +342,10 @@ function HallOfFame(type) {
 			var top_users = CustomNetTables.GetTableValue("top_imr_5v5", i.toString());
 		}
 
+		if (top_users == undefined) {
+			return;
+		}
+
 		if ($("#player_" + i)) {
 			$("#player_" + i).DeleteAsync(0);
 		}

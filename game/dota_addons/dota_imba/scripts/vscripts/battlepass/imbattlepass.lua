@@ -54,8 +54,8 @@ end
 CustomNetTables:SetTableValue("game_options", "battlepass", {battlepass = a})
 
 function Imbattlepass:Init()
+ImbattlepassReward = {}
 if api_preloaded.players == nil then return end
-	ImbattlepassReward = {}
 	for ID = 0, PlayerResource:GetPlayerCount() -1 do
 		for i = 1, #XP_level_table do
 			if GetStatsForPlayer(ID).xp > XP_level_table[i] then
@@ -66,7 +66,6 @@ if api_preloaded.players == nil then return end
 end
 
 function Imbattlepass:AddItemEffects(hero)
-if api_preloaded.players == nil then return end
 	GetBlinkEffect(hero)
 	GetForceStaffEffect(hero)
 	GetRadianceEffect(hero)
@@ -78,7 +77,9 @@ if api_preloaded.players == nil then return end
 end
 
 function Imbattlepass:GetRewardUnlocked(ID)
-	return ImbattlepassReward[ID]
+	local level = 0
+	if ImbattlepassReward[ID] ~= nil then level = ImbattlepassReward[ID] end
+	return level
 end
 
 function GetBlinkEffect(hero)

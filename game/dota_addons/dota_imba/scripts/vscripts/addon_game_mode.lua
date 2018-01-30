@@ -44,6 +44,9 @@ DebugPrint("[IMBA] Performing pre-load precache")
 	-- Aegis
 	LinkLuaModifier("modifier_item_imba_aegis", "items/item_aegis.lua", LUA_MODIFIER_MOTION_NONE)
 
+	-- Custom Mechanics modifier
+	LinkLuaModifier("modifier_custom_mechanics", "modifier/modifier_custom_mechanics.lua", LUA_MODIFIER_MOTION_NONE )	
+
 	-- War Veteran modifier
 	LinkLuaModifier("modifier_imba_war_veteran", "modifier/modifier_imba_war_veteran.lua", LUA_MODIFIER_MOTION_NONE )
 

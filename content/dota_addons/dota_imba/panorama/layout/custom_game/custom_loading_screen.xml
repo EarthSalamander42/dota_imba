@@ -26,7 +26,7 @@
 				<Label id="imba-ow-news-title" text="Dota IMBA 7.04 - Wild Origins" />
 				<Label id="imba-ow-news-article-title" /> 
 				<Label id="imba-ow-news-article-text" />
-				<Label id="imba-ow-news-link" text="Read more news on our Official Website" onactivate="DOTADisplayURL('http://www.dota2imba.org/');"
+				<Label id="imba-ow-news-link" text="Read more news on our Official Website" onactivate="DOTADisplayURL('https://preview.dota2imba.org/wild-origins');"
 				/>
 				<Panel id="oaa-ow-news-panel"> 
 					<Panel id="oaa-ow-news-text">
@@ -121,7 +121,7 @@
 				<Label id="imba-normal-news-title" text="Dota IMBA 7.04 - Wild Origins" />
 				<Label id="imba-normal-news-article-title" /> 
 				<Label id="imba-normal-news-article-text" />
-				<Label id="imba-normal-news-link" text="Read more news on our Official Website" onactivate="DOTADisplayURL('http://www.dota2imba.org/');"
+				<Label id="imba-normal-news-link" text="Read more news on our Official Website" onactivate="DOTADisplayURL('https://preview.dota2imba.org/wild-origins');"
 				/>
 				<Panel id="oaa-normal-news-panel"> 
 					<Panel id="oaa-normal-news-text">

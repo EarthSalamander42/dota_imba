@@ -99,6 +99,18 @@ function GameMode:OnGameRulesStateChange(keys)
 
 		-- Initialize rune spawners
 		InitRunes()
+
+		-------------------------------------------------------------------------------------------------
+		-- IMBA: Custom maximum level EXP tables adjustment
+		-------------------------------------------------------------------------------------------------
+		local max_level = tonumber(CustomNetTables:GetTableValue("game_options", "max_level")["1"])
+		print("MAX LEVEL:", max_level)
+		if max_level and max_level > 25 then
+			for i = 26, max_level do
+				XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + 2500
+				GameRules:GetGameModeEntity():SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
+			end
+		end
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -1065,7 +1077,7 @@ function GameMode:OnEntityKilled( keys )
 					end
 
 					-- divide the respawn time by 2 for frantic mode
-					if IMBA_FRANTIC_MODE_ON == true then
+					if IMBA_FRANTIC_MODE_ON then
 						killed_unit:SetTimeUntilRespawn(respawn_time * IMBA_FRANTIC_VALUE)
 					else
 						killed_unit:SetTimeUntilRespawn(respawn_time)

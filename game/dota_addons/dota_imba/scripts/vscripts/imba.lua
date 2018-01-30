@@ -1325,18 +1325,6 @@ function GameMode:OnGameInProgress()
 	-------------------------------------------------------------------------------------------------
 	GameRules:SetGoldTickTime( GOLD_TICK_TIME[GetMapName()] )
 
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Custom maximum level EXP tables adjustment
-	-------------------------------------------------------------------------------------------------
-	local max_level = tonumber(CustomNetTables:GetTableValue("game_options", "max_level")["1"])
-	print("MAX LEVEL:", max_level)
-	if max_level and max_level > 25 then
-		for i = 26, max_level do
-			XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + 2500
-			GameRules:GetGameModeEntity():SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
-		end
-	end
-
 	if GetMapName() == "imba_overthrow" then return end
 
 	-------------------------------------------------------------------------------------------------

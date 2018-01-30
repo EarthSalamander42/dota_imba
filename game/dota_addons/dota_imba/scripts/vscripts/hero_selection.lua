@@ -608,6 +608,9 @@ function HeroSelection:AssignHero(player_id, hero_name, dev_command)
 			PlayerResource:SetGold(player_id, initial_gold, false)
 		end
 
+		-- add modifier for custom mechanics handling
+		hero:AddNewModifier(hero, nil, "modifier_custom_mechanics", {})
+
 		-- Initialize innate hero abilities
 		InitializeInnateAbilities(hero)
 
@@ -645,7 +648,6 @@ function HeroSelection:AssignHero(player_id, hero_name, dev_command)
 		-- TODO: in js, remove the function that gray out a hero when picked, since this function should do it in real time
 		HeroSelection:HeroList(0.1) -- send the picked hero list once a hero is picked
 
---		PopulateHeroImbaTalents(hero);
 		Imbattlepass:AddItemEffects(hero)
 	end, player_id)
 end
