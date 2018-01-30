@@ -686,9 +686,7 @@ function GameMode:OnPlayerLearnedAbility( keys)
 			tostring(hero:GetUnitName()),
 			tostring(PlayerResource:GetSteamID(player:GetPlayerID()))
 		})
-
 	end
-
 end
 
 -- A channelled ability finished by either completing or being interrupted
@@ -723,7 +721,7 @@ function GameMode:OnPlayerLevelUp(keys)
 			hero:AddNewModifier(hero, nil, "modifier_imba_war_veteran", {})
 		end
 
-		hero:SetModifierStackCount("modifier_imba_war_veteran", hero, hero:GetLevel() -24)
+		hero:SetModifierStackCount("modifier_imba_war_veteran", hero, hero:GetLevel() -25)
 	end
 end
 

@@ -32,7 +32,7 @@
 					<Panel id="oaa-ow-news-text">
 						<Label id="oaa-ow-news-title" text="Open Angel Arena Anniversary Tournament" />
 						<Label id="oaa-ow-news-article-text" text="#oaa_news_text" />
-						<Label id="oaa-ow-news-link" text="Tournament Website" onactivate="DOTADisplayURL('https://www.reddit.com/r/DotA2/comments/7soifz/announcing_the_open_angel_arena_anniversary/');" />
+						<Label id="oaa-ow-news-link" text="Tournament Website" onactivate="DOTADisplayURL('https://oaa.gg/tournament');" />
 					</Panel>
 
 					<Image id="oaa-ow-news-image" src="file://{images}/custom_game/loading_screen/oaa.png" />
@@ -127,7 +127,7 @@
 					<Panel id="oaa-normal-news-text">
 						<Label id="oaa-normal-news-title" text="Open Angel Arena Anniversary Tournament" />
 						<Label id="oaa-normal-news-article-text" text="#oaa_news_text" />
-						<Label id="oaa-normal-news-link" text="Tournament Website" onactivate="DOTADisplayURL('https://www.reddit.com/r/DotA2/comments/7soifz/announcing_the_open_angel_arena_anniversary/');" />
+						<Label id="oaa-normal-news-link" text="Tournament Website" onactivate="DOTADisplayURL('https://oaa.gg/tournament');" />
 					</Panel>
 
 					<Image id="oaa-normal-news-image" src="file://{images}/custom_game/loading_screen/oaa.png" />

@@ -195,6 +195,7 @@ function OnSetGameMode( eventSourceIndex, args )
 
 	-- All random setup
 	if tonumber(mode_info.all_random_same_hero) == 1 then
+		print("ARDM:", mode_info.all_random_same_hero)
 		IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO = true
 		HERO_SELECTION_TIME = IMBA_ALL_RANDOM_HERO_SELECTION_TIME
 		CustomNetTables:SetTableValue("game_options", "all_random_same_hero", {true})

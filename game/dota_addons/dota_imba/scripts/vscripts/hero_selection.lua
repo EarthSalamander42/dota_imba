@@ -18,11 +18,6 @@ function HeroSelection:HeroListPreLoad()
 	HeroSelection.strength_heroes = {}
 	HeroSelection.agility_heroes = {}
 	HeroSelection.intellect_heroes = {}
-
-	HeroSelection.strength_heroes_custom = {}
-	HeroSelection.agility_heroes_custom = {}
-	HeroSelection.intellect_heroes_custom = {}
-
 	HeroSelection.vanilla_heroes = {}
 	HeroSelection.imba_heroes = {}
 	HeroSelection.new_heroes = {}
@@ -46,7 +41,6 @@ function HeroSelection:HeroListPreLoad()
 	for hero, attributes in pairs(NPC_HEROES_CUSTOM) do
 		hero = string.gsub(hero, "imba", "dota")
 		if string.find(hero, "npc_dota_hero_") then
-
 			if HeroIsHotDisabled(hero) then -- hero hot disable
 				table.insert(HeroSelection.disabled_heroes, hero)
 			elseif GetKeyValueByHeroName(hero, "IsDisabled") == 1 then
@@ -64,7 +58,8 @@ function HeroSelection:HeroListPreLoad()
 			if GetKeyValueByHeroName(hero, "IsImba") == 1 then
 				table.insert(HeroSelection.imba_heroes, hero)
 			elseif GetKeyValueByHeroName(hero, "IsCustom") == 1 then
-				HeroSelection:AddCustomHeroToList(hero)
+				HeroSelection:AddVanillaHeroToList(hero)
+				table.insert(HeroSelection.heroes_custom, hero)
 			end
 
 			-- Add a specific label
@@ -75,47 +70,6 @@ function HeroSelection:HeroListPreLoad()
 	end
 
 	HeroSelection:HeroList()
-end
-
-function HeroSelection:AddCustomHeroToList(hero_name)
-	if GetKeyValueByHeroName(hero_name, "AttributePrimary") == "DOTA_ATTRIBUTE_STRENGTH" then
-		table.insert(HeroSelection.strength_heroes_custom, hero_name)
-	elseif GetKeyValueByHeroName(hero_name, "AttributePrimary") == "DOTA_ATTRIBUTE_AGILITY" then
-		table.insert(HeroSelection.agility_heroes_custom, hero_name)
-	elseif GetKeyValueByHeroName(hero_name, "AttributePrimary") == "DOTA_ATTRIBUTE_INTELLECT" then
-		table.insert(HeroSelection.intellect_heroes_custom, hero_name)
-	end
-	table.insert(HeroSelection.heroes_custom, hero_name)
-
-	a = {}
-	for k, n in pairs(HeroSelection.strength_heroes_custom) do
-		table.insert(a, n)
-		HeroSelection.strength_heroes_custom = {}
-	end
-	table.sort(a)
-	for i,n in ipairs(a) do
-		table.insert(HeroSelection.strength_heroes_custom, n)
-	end
-
-	a = {}
-	for k, n in pairs(HeroSelection.agility_heroes_custom) do
-		table.insert(a, n)
-		HeroSelection.agility_heroes_custom = {}
-	end
-	table.sort(a)
-	for i,n in ipairs(a) do
-		table.insert(HeroSelection.agility_heroes_custom, n)
-	end
-
-	a = {}
-	for k, n in pairs(HeroSelection.intellect_heroes_custom) do
-		table.insert(a, n)
-		HeroSelection.intellect_heroes_custom = {}
-	end
-	table.sort(a)
-	for i,n in ipairs(a) do
-		table.insert(HeroSelection.intellect_heroes_custom, n)
-	end
 end
 
 function HeroSelection:AddVanillaHeroToList(hero_name)
@@ -165,9 +119,7 @@ function HeroSelection:HeroList()
 		Strength = HeroSelection.strength_heroes,
 		Agility = HeroSelection.agility_heroes,
 		Intellect = HeroSelection.intellect_heroes,
-		StrengthCustom = HeroSelection.strength_heroes_custom,
-		AgilityCustom = HeroSelection.agility_heroes_custom,
-		IntellectCustom = HeroSelection.intellect_heroes_custom,
+		Custom = HeroSelection.heroes_custom,
 		Imba = HeroSelection.imba_heroes,
 		New = HeroSelection.new_heroes,
 		Disabled10v10 = HeroSelection.disabled_10v10_heroes,
@@ -633,7 +585,7 @@ function HeroSelection:AssignHero(player_id, hero_name, dev_command)
 		hero.killstreak = 0
 
 		-- Set up initial level
-		local starting_level = tonumber(CustomNetTables:GetTableValue("game_options", "initial_level")["1"])
+		local starting_level = tonumber(CustomNetTables:GetTableValue("game_options", "initial_level")["1"]) or 1
 		if starting_level and starting_level > 1 then
 			hero:AddExperience(XP_PER_LEVEL_TABLE[starting_level], DOTA_ModifyXP_CreepKill, false, true)
 		end
@@ -644,7 +596,8 @@ function HeroSelection:AssignHero(player_id, hero_name, dev_command)
 		local has_randomed = HeroSelection.playerPickState[player_id].random_state
 		local has_repicked = PlayerResource:CustomGetHasRepicked(player_id)
 
-		local initial_gold = tonumber(CustomNetTables:GetTableValue("game_options", "initial_gold")["1"])
+		local initial_gold = tonumber(CustomNetTables:GetTableValue("game_options", "initial_gold")["1"]) or 1200
+
 		if has_repicked and has_randomed then
 			PlayerResource:SetGold(player_id, initial_gold +100, false)
 		elseif has_repicked then

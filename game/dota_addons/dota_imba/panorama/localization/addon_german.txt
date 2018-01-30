@@ -50,9 +50,9 @@
 
 	//Picking Screen
 	"loading_pre_game"				"Lade Helden, Bitte Warten..."
-	"hero_list_title_strength"		"Stärke Helden"
-	"hero_list_title_agility"		"Beweglichkeit Helden"
-	"hero_list_title_intellect"		"Intelligenz Helden"
+	"hero_list_title_strength"		"Stärke"
+	"hero_list_title_agility"		"Beweglichkeit"
+	"hero_list_title_intellect"		"Intelligenz"
 	"hero_list_title_custom"		"Extra Helden"
 	"hero_name_filler"				"Auswählen"
 	"team_title_radiant"			"Die Radiant"
@@ -140,33 +140,4 @@
 	"battlepass_bottle2"			"Goldene Bottle"
 	"battlepass_bottle3"			"Rote Bottle"
 	"battlepass_bottle4"			"Lila Bottle"
-
-	//=================================================================================================================
-	// Generic talent names
-	//=================================================================================================================
-
-	"imba_generic_talent_damage"					"Schaden"
-	"imba_generic_talent_all_stats"					"Alle Attribute"
-	"imba_generic_talent_strength"					"Stärke"
-	"imba_generic_talent_agility"					"Beweglichkeit"
-	"imba_generic_talent_intelligence"				"Intelligenz"
-	"imba_generic_talent_armor"						"Rüstung"
-	"imba_generic_talent_magic_resistance"			"Magieresistenz"
-	"imba_generic_talent_evasion"					"Ausweichen"
-	"imba_generic_talent_move_speed"				"Bewegungsgeschwindigkeit"
-	"imba_generic_talent_attack_speed"				"Angriffsgeschwindigkeit"
-	"imba_generic_talent_hp"						"Lebenpunkte"
-	"imba_generic_talent_hp_regen"					"Lebenspunkte Regeneration"
-	"imba_generic_talent_mp"						"Mana"
-	"imba_generic_talent_mp_regen"					"Mana Regeneration"
-	"imba_generic_talent_attack_range"				"Angriffsreichweite"
-	"imba_generic_talent_cast_range"				"Zauberreichweite"
-	"imba_generic_talent_attack_life_steal"			"Lebensraub"
-	"imba_generic_talent_spell_life_steal"			"Zauber Lebensraub"
-	"imba_generic_talent_spell_power"				"Zauber Verstärkung"
-	"imba_generic_talent_cd_reduction"				"Abklingzeit Reduzierung"
-	"imba_generic_talent_bonus_xp"					"Bonus Erfahrung"
-	"imba_generic_talent_respawn_reduction"			"Reduzierung der Todeszeit"
-	"talent_window_header"                          "Talente"
-	"talent_window_footer"                          "Halte ALT gedrückt um alle Talente zu Sehen"
 }

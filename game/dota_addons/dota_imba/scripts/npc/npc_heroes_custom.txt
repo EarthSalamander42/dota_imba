@@ -96,11 +96,13 @@
 		//Picking Screen
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
+		"IsDisabled"				"3" // All spells missing for reasons
 
 		"Ability1"					"imba_antimage_mana_break"
 		"Ability2"					"imba_antimage_blink"
 		"Ability3"					"imba_antimage_spell_shield"
 		"Ability4"					"generic_hidden"
+		"Ability5"					"generic_hidden"
 		"Ability6"					"imba_antimage_mana_void"
 
 		"Ability10"					"special_bonus_imba_antimage_3" //Blink cast point decrease
@@ -2321,7 +2323,6 @@
 
 		//Picking Screen
 		"IsCustom"					"1"
-		"IsNew"						"1"
 
 		// Abilities
 		//-------------------------------------------------------------------------------------------------------------
@@ -2409,7 +2410,6 @@
 
 		//Picking Screen
 		"IsCustom"					"1"
-		"IsNew"						"1"
 
 		// Abilities
 		//-------------------------------------------------------------------------------------------------------------
@@ -2502,6 +2502,7 @@
 		//Picking Screen
 		"IsCustom"					"1"
 		"IsNew"						"1"
+		"IsDisabled"				"4"
 
 		// Abilities
 		//-------------------------------------------------------------------------------------------------------------

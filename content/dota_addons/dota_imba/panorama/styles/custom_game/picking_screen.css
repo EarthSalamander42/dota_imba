@@ -73,6 +73,7 @@
 #PickingScreen {
 	width: 100%;
 	height: 100%;
+	padding-top: 10px;
 	flow-children: right;
 	animation-name: fade_in;
 	animation-duration: load_time;
@@ -134,20 +135,19 @@
 #BackgroundPanel {
 	width: 100%;
 	height: 100%;
-	blur: gaussian(2.0);
+	background-color: #000000ea;
 	z-index: -1000;
 }
 
 #Background {
 	width: 100%;
 	height: 100%;
-	background-color: #000000da;
+//	background-color: #000000fa;
 	z-index: -100;
 }
 
 #PickList {
 	width: 100%;
-	height: 48%;
 	flow-children: right;
 	align: center center;
 	visibility: visible;
@@ -155,7 +155,7 @@
 
 #BottomContainer {
 	width: 85%;
-	height: 23%;
+	height: 30%;
 	align: center center;
 	flow-children: right;
 	visibility: visible;
@@ -181,8 +181,6 @@
 	height: 100%;
 	flow-children: down;
 	color: #ffffff;
-	padding-top: 10px;
-	padding-bottom: 10px;
 	z-index: -10;
 }
 
@@ -278,19 +276,21 @@
 
 .ClassNormalOption,
 .ClassImbaOption,
+.ClassNewOption,
 .ClassCustomOption {
-	width: 85px;
-	height: 48px;
+	width: 84px;
+	height: 46px;
 	margin: 1px 0px 1px 0px;
 	horizontal-align: left;
 	wash-color: #7090B060;
 	background-size: 100% 100%;
-	pre-transform-scale2d: 0.95;
-	border-radius: 1px;
+	pre-transform-scale2d: 0.93;
+	border-radius: 4px;
 }
 
 .ClassNormalOptionLabel,
-.ClassImbaOptionLabel
+.ClassImbaOptionLabel,
+.ClassCustomOptionLabel
 {
 	width: 100%;
 	background-color: #1852D9;
@@ -308,7 +308,7 @@
 	animation-iteration-count: infinite;
 }
 
-.ClassCustomOptionLabel
+.ClassNewOptionLabel
 {
 	width: 100%;
 	background-color: #1852D9;
@@ -331,13 +331,19 @@
 	color: darkorange;
 }
 
-.ClassCustomOptionLabel
+.ClassNewOptionLabel
 {
 	color: dodgerblue;
 }
 
+.ClassCustomOptionLabel
+{
+	color: purple;
+}
+
 .AspectRatio16x10 .ClassNormalOption,
 .AspectRatio16x10 .ClassImbaOption,
+.AspectRatio16x10 .ClassNewOption,
 .AspectRatio16x10 .ClassCustomOption {
 	margin: 2px 0px 2px 1px;
 	width: 75px;
@@ -349,6 +355,7 @@
 
 .AspectRatio4x3 .ClassNormalOption,
 .AspectRatio4x3 .ClassImbaOption,
+.AspectRatio4x3 .ClassNewOption,
 .AspectRatio4x3 .ClassCustomOption {
 	margin: 1px 0px 1px 1px;
 	width: 67px;
@@ -366,8 +373,12 @@
 	border: 1px solid orange;
 }
 
-.ClassCustomOption {
+.ClassNewOption {
 	border: 2px solid #1852D9;
+}
+
+.ClassCustomOption {
+	border: 2px solid purple;
 }
 
 .selected {
@@ -378,6 +389,7 @@
 
 .ClassNormalOption:hover,
 .ClassImbaOption:hover,
+.ClassNewOption:hover,
 .ClassCustomOption:hover
 {
 	pre-transform-scale2d: 1.05;
@@ -387,6 +399,7 @@
 
 .ClassNormalOption.taken,
 .ClassImbaOption.taken,
+.ClassNewOption.taken,
 .ClassCustomOption.taken
 {
 	saturation: 0.0;
@@ -465,9 +478,9 @@
 }
 
 #ShowStatsLabel {
-	width: 200px;
+	width: 150px;
 	text-align: center;
-	font-size: 20px;
+	font-size: 18px;
 	font-family: "Bold";
 	color:#fff;
 	text-transform: uppercase;
@@ -475,7 +488,6 @@
 }
 
 #ClosePickScreen_Force {
-	margin-top: 10px;
 	background-color: #500000ba;
 	align: center center;
 	flow-children: down;
@@ -494,7 +506,7 @@
 }
 
 #ClosePickScreen_Force_Label {
-	width: 200px;
+	width: 150px;
 	text-align: center;
 	font-size: 18px;
 	font-family: "Bold";
@@ -562,6 +574,7 @@
 	font-family: "Bold";
 	text-transform: uppercase;
 	color: green;
+	letter-spacing: 1px;
 }
 
 #PickScreenTeamTitleDire {
@@ -579,6 +592,7 @@
 	text-align: right;
 	padding-right: 3%;
 	color: darkred;
+	letter-spacing: 1px;
 }
 
 #AverageMMRTeamRadiant,
@@ -591,6 +605,7 @@
 	font-size: 18px;
 	font-family: "Bold";
 	color: grey;
+	letter-spacing: 1px;
 }
 
 #AverageMMRTeamRadiant {
@@ -692,8 +707,8 @@
 }
 
 #HeroDetailsPanel {
-	width: 85%;
-	height: 85%;
+	width: 80%;
+	height: 45%;
 	align: center center;
 	flow-children: down;
 }
@@ -719,7 +734,7 @@
 
 #PickedHeroPanel {
 	width: 80%;
-	height: 30%;
+	height: 40%;
 	margin-top: 1%;
 	horizontal-align: center;
 	flow-children: right;
@@ -727,15 +742,17 @@
 
 #PickedHeroAbilitiesPanel {
 	width: 80%;
-	height: 35%;
+	height: 45%;
 	horizontal-align: center;
 	flow-children: right;
 }
 
 #PickedHeroName {
+	height: 16%;
+	margin-bottom: 0%;
 	horizontal-align: middle;
 	text-align: left;
-	font-size: 26px;
+	font-size: 22px;
 	font-family: "Bold";
 	color: #ffffff;
 }
@@ -880,18 +897,23 @@
 	color: white;
 	font-size: 20px;
 	align: center center;
+	text-align: center center;
 	font-family: "Bold";
 	text-transform: uppercase;
+	text-overflow: clip;
+	opacity: 0.75;
+	letter-spacing: 1px;
+	padding-left: 5px;
+	padding-right: 5px;
 }
 
 /* Right now this is just a dummy panel, to keep in place the others following
 ===============================================================*/
 #HeroSelectionChat
 {
-	width: 33%;
-	margin-right: 0.5%;
-	align: center bottom;
+	width: 100%;
 	height: 100%;
+	margin-top: 2%;
 //	background-color: #000000da;
 	border-top-left-radius: 8px;
 	border-top-right-radius: 8px;
@@ -939,63 +961,27 @@
 	margin-left: 10%;
 }
 
-#VanillaToCustom {
-	width: 10%;
+#MinimapContainer {
+	width: 33%;
 	height: 100%;
 }
 
-#PickingScreenSwap {
-	width: 200px; /* replace with 100% once there is enough custom heroes */
-	height: 500px; /* replace with 100% once there is enough custom heroes */
+#minimap {
+	width: 322px;
+	height: 322px;
+	background-image: url("s2r://panorama/images/hud/reborn/bg_minimap_psd.vtex");
+	background-size: contain;
+	overflow: clip;
+	align: left center;
+	border-radius: 5px;
+}
 
-	opacity: .5;
-	vertical-align: top;
+#TopButtons {
+	margin-top: 10px;
 	flow-children: right;
-	transition-property: background-color;
-	transition-duration: .2s;
-
-	background-image: url("s2r://panorama/images/control_icons/icon_hero_next_arrow_png.vtex");
-	background-repeat: no-repeat;
-	background-size: 50px 46px;
 }
 
-#PickingScreenSwapLabel {
-	width: 100%;
-	height: 10%;
-	font-size: 20px;
-	font-family: "Bold";
-	text-align: center;
-
-/*	text-overflow: shrink; */
-	text-transform: uppercase;
-	transition-property: position, opacity;
-	transition-duration: 0.2s;
-
-	vertical-align: middle;
-	white-space: normal;
-	width: 180px;
-	font-size: 18px;
-	color: #aabfbf;
-/*	tranform: scaleX(-1); */
-}
-
-#PickingScreenSwap:hover
-{
-	color: white;
-	opacity: .5;
-	//border: 1px solid #333333;
-	background-color: #111111;
-}
-
-#PickingScreenSwap:active
-{
-	//border: 1px solid #555555;
-	background-color: #666666;
-	sound: "ui_hero_select_slide";
-}
-
-#HeroListSTR_Custom,
-#HeroListAGI_Custom,
-#HeroListINT_Custom {
-	visibility: collapse;
+#custom1_label {
+	margin-top: 17%;
+	margin-left: 2%;
 }

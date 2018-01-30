@@ -49,13 +49,14 @@
 	width: 100%;
 	height: 30%;
 	margin-top: 5%;
-	font-size: 11px;
+	font-size: 12px;
 	font-family: "Radiance";
 	horizontal-align: center;
 	text-align: center;
-	text-transform: uppercase;
-	font-weight: bold;
-	color: #fff;
+	color: #e6e6e6;
+	text-overflow: clip;
+	opacity: 0.75;
+	letter-spacing: 1px;
 }
 
 /* Hall of Fame */

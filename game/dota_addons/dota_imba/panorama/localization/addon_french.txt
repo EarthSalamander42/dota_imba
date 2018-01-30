@@ -25,7 +25,6 @@
 	"ChatLinePass"									"<b><font color='{s:color}'>{s:name}</font></b>: <font color='gold'>{s:message}</font>"
 	"ChatRandomed"									"<b><font color='{s:color}'>{s:name}</font></b> a random <font color='gold'>{s:hero}</font>"
 
-	"imba_confirm_pick_button"                      "Selectionnez ce héros"
 	"imba_hero_name_filler"                         "Vérrouillez "
 
 	"custom_scoreboard_hero_name_and_desc"			"{s:hero_name}"
@@ -60,9 +59,9 @@
 
 	//Picking Screen
 	"loading_pre_game"				"Chargement du menu, veuillez patientez..."
-	"hero_list_title_strength"		"Héros Force"
-	"hero_list_title_agility"		"Héros Agilité"
-	"hero_list_title_intellect"		"Héros Intelligence"
+	"hero_list_title_strength"		"Force"
+	"hero_list_title_agility"		"Agilité"
+	"hero_list_title_intellect"		"Intelligence"
 	"hero_list_title_custom"		"Héros Custom"
 	"hero_name_filler"				"Vérrouillez"
 	"team_title_radiant"			"Le Radiant"
@@ -150,33 +149,4 @@
 	"battlepass_bottle2"			"Gold Bottle"
 	"battlepass_bottle3"			"Red Bottle"
 	"battlepass_bottle4"			"Purple Bottle"
-
-	//=================================================================================================================
-	// Generic talent names
-	//=================================================================================================================
-
-	"imba_generic_talent_damage"					"Dégâts"
-	"imba_generic_talent_all_stats"					"Tout les stats"
-	"imba_generic_talent_strength"					"Force"
-	"imba_generic_talent_agility"					"Agilité"
-	"imba_generic_talent_intelligence"				"Intelligence"
-	"imba_generic_talent_armor"						"Armure"
-	"imba_generic_talent_magic_resistance"			"Résistance Magique"
-	"imba_generic_talent_evasion"					"Evasion"
-	"imba_generic_talent_move_speed"				"Vitesse de Mouvement"
-	"imba_generic_talent_attack_speed"				"Vitesse d'Attaque"
-	"imba_generic_talent_hp"						"Points de Vie"
-	"imba_generic_talent_hp_regen"					"Régénération de Points de Vie"
-	"imba_generic_talent_mp"						"Mana"
-	"imba_generic_talent_mp_regen"					"Régénération de Mana"
-	"imba_generic_talent_attack_range"				"Portée d'Attaque"
-	"imba_generic_talent_cast_range"				"Portée d'incantation"
-	"imba_generic_talent_attack_life_steal"			"Lifesteal"
-	"imba_generic_talent_spell_life_steal"			"Spell Lifesteal"
-	"imba_generic_talent_spell_power"				"Spell Amplification"
-	"imba_generic_talent_cd_reduction"				"Réduction du Temps de Recharge"
-	"imba_generic_talent_bonus_xp"					"Bonus EXP"
-	"imba_generic_talent_respawn_reduction"			"Réduction du Temps de Réapparition"
-	"talent_window_header"                          "Talents"
-	"talent_window_footer"                          "Tenir Alt appuyé pour voir tout les Talents"
 }

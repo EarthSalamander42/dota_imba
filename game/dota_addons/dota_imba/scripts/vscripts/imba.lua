@@ -259,7 +259,7 @@ function GameMode:GoldFilter( keys )
 
 	-- Lobby options adjustment
 	local game_time = math.min(GameRules:GetDOTATime(false, false) / 60, 30) -- minutes
-	local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"])
+	local custom_gold_bonus = tonumber(CustomNetTables:GetTableValue("game_options", "bounty_multiplier")["1"]) or 100
 
 	if keys.reason_const == DOTA_ModifyGold_HeroKill then
 		keys.gold = keys.gold * (custom_gold_bonus / 100)

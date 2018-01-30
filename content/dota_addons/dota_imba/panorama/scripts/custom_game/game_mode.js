@@ -52,6 +52,19 @@ function InitializeUI() {
 			$('#imba-loading').style.visibility = 'collapse';
 			$('#overthrow-loading').style.visibility = 'visible';
 		}
+
+		if (Game.GetLocalPlayerInfo().player_steamid == "76561198015161808" || Game.GetLocalPlayerInfo().player_steamid == "76561198036748162") {
+			$.Msg("Bulldong!")
+			$('#imba-loading').style.visibility = 'visible';
+			$('#GameOptionsPanel').style.visibility = 'visible';
+			$('#GoldOptionsPanel').style.visibility = 'collapse';
+			$('#ExpOptionsPanel').style.visibility = 'collapse';
+			$('#TowerPowerOptionsPanel').style.visibility = 'collapse';
+			$('#HeroPowerOptionsPanel').style.visibility = 'collapse';
+			$('#FranticInfo').style.visibility = 'collapse';
+			$('#QuickOptionsPanel').style.visibility = 'collapse';
+			$('#game_options_game_mode_title').text = "Bulldong Game Options Panel";
+		}
 	}
 
 	SetGameOptions(); // Setup game options by default in case the host don't change them (initialize)
@@ -95,8 +108,6 @@ function SetQuickOptionsNormal() {
 		tower = 1
 		hero = 1
 	}
-
-	SetGameOptions();
 }
 
 // Sets all options to Hyper mode
@@ -114,8 +125,6 @@ function SetQuickOptionsHigh() {
 		tower = 2
 		hero = 2
 	}
-
-	SetGameOptions();
 }
 
 function SetGameOptions() {
@@ -131,4 +140,10 @@ function SetGameOptions() {
 			"hero_power": hero,
 		}
 	});
+
+	if (CustomNetTables.GetTableValue("game_options", "game_state").state == 2) {
+		$.Schedule(0.5, SetGameOptions)
+	} else {
+		return;
+	}	
 }

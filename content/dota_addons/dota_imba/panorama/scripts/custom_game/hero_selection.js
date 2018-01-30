@@ -123,30 +123,6 @@ function OnReceiveAbilities(data) {
 
 var switched = false
 
-function PickingScreenSwap() {
-	if (switched == false) {
-		switched = true
-		$("#HeroListSTR").style.visibility = 'collapse';
-		$("#HeroListAGI").style.visibility = 'collapse';
-		$("#HeroListINT").style.visibility = 'collapse';
-		$("#HeroListSTR_Custom").style.visibility = 'visible';
-		$("#HeroListAGI_Custom").style.visibility = 'visible';
-		$("#HeroListINT_Custom").style.visibility = 'visible';
-		$("#PickingScreenSwapLabel").text = $.Localize("swap_vanilla_to_custom");
-	} else {
-		switched = false
-		$("#HeroListSTR").style.visibility = 'visible';
-		$("#HeroListAGI").style.visibility = 'visible';
-		$("#HeroListINT").style.visibility = 'visible';
-		$("#HeroListSTR_Custom").style.visibility = 'collapse';
-		$("#HeroListAGI_Custom").style.visibility = 'collapse';
-		$("#HeroListINT_Custom").style.visibility = 'collapse';
-		$("#PickingScreenSwapLabel").text = $.Localize("swap_custom_to_vanilla");
-	}
-}
-
-var switched_alt = false
-
 function ShowStatsSwap() {
 	if (switched == false) {
 		switched = true
@@ -166,13 +142,11 @@ function ShowStatsSwap() {
 /*  Create a hero panel based on the attribute 
 	also handles 3 additional panels for custom heroes */
 function CreateHeroPanel(hero_table, attribute, custom) {
-	if (custom == true) {
-		attribute = attribute + "_Custom"
-	}
 	var i = 1;
 	var i_count = 1;
 	var class_option_count = 1;
 	var i_single = false
+
 	for (i in hero_table) {
 		if (hero_table[i] != null) {
 			if (i_single == false) {
@@ -212,19 +186,19 @@ function CreateHeroPanel(hero_table, attribute, custom) {
 	}
 }
 
-function MakeImbaHero(imba_heroes) {
+function MakeImbaHero(heroes) {
 	var h = 1;
-	for (h in imba_heroes) {
-		if (imba_heroes[h] != null) {
-			var hero = $("#PickList").FindChildTraverse(imba_heroes[h])
+	for (h in heroes) {
+		if (heroes[h] != null) {
+			var hero = $("#PickList").FindChildTraverse(heroes[h])
 			if (hero.BHasClass("ClassNormalOption")) {
 				hero.RemoveClass("ClassNormalOption")
 			}
 			hero.AddClass("ClassImbaOption")
-			$("#" + imba_heroes[h] + "_label").DeleteAsync(0);
+			$("#" + heroes[h] + "_label").DeleteAsync(0);
 
 			if (hero.BHasClass("taken")) {} else {
-				var HeroLabel = $.CreatePanel("Label", hero, imba_heroes[h] + "_label");
+				var HeroLabel = $.CreatePanel("Label", hero, heroes[h] + "_label");
 				HeroLabel.RemoveClass("ClassNormalOptionLabel")
 				HeroLabel.AddClass("ClassImbaOptionLabel")
 				HeroLabel.text = $.Localize("imba_hero");
@@ -233,20 +207,38 @@ function MakeImbaHero(imba_heroes) {
 	}
 }
 
-function MakeNewHero(new_heroes) {
+function MakeNewHero(heroes) {
 	var h = 1;
-	for (h in new_heroes) {
-		if (new_heroes[h] != null) {
-			var hero = $("#PickList").FindChildTraverse(new_heroes[h])
+	for (h in heroes) {
+		if (heroes[h] != null) {
+			var hero = $("#PickList").FindChildTraverse(heroes[h])
+			if (hero.BHasClass("ClassNormalOption")) {
+				hero.RemoveClass("ClassNormalOption")
+			}
+			hero.RemoveClass("ClassNormalOption")
+			hero.AddClass("ClassNewOption")
+			$("#" + heroes[h] + "_label").DeleteAsync(0);
+			var HeroLabel = $.CreatePanel("Label", hero, heroes[h] + "_label");
+			HeroLabel.AddClass("ClassNewOptionLabel")
+			HeroLabel.text = $.Localize("new_hero");
+		}
+	}
+}
+
+function MakeCustomHero(heroes) {
+	var h = 1;
+	for (h in heroes) {
+		if (heroes[h] != null) {
+			var hero = $("#PickList").FindChildTraverse(heroes[h])
 			if (hero.BHasClass("ClassNormalOption")) {
 				hero.RemoveClass("ClassNormalOption")
 			}
 			hero.RemoveClass("ClassNormalOption")
 			hero.AddClass("ClassCustomOption")
-			$("#" + new_heroes[h] + "_label").DeleteAsync(0);
-			var HeroLabel = $.CreatePanel("Label", hero, new_heroes[h] + "_label");
+			$("#" + heroes[h] + "_label").DeleteAsync(0);
+			var HeroLabel = $.CreatePanel("Label", hero, heroes[h] + "_label");
 			HeroLabel.AddClass("ClassCustomOptionLabel")
-			HeroLabel.text = $.Localize("new_hero");
+			HeroLabel.text = $.Localize("custom_hero");
 		}
 	}
 }
@@ -364,22 +356,21 @@ function LoadPlayers() {
 
 				RadiantLevels = RadiantLevels + plyData.IMR_5v5 / radiantPlayers.length
 				$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + RadiantLevels.toFixed([0]);
-			} else if (map_info.map_display_name == "imba_10v10") {
+			} else {
 				//				playerPanel.SetPlayerMMR( plyData.IMR_10v10.toFixed([0]) );
 				//				RadiantLevels = RadiantLevels + plyData.IMR_10v10 / radiantPlayers.length
 				//				$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + RadiantLevels.toFixed([0]);
-				if (plyData.lvl != undefined) {
+
+				if (plyData.Lvl != undefined) {
 					playerPanel.SetPlayerMMR(plyData.Lvl.toFixed([0]));
 					RadiantLevels = RadiantLevels + plyData.Lvl / radiantPlayers.length
-					$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + RadiantLevels.toFixed([0]);
-				}
-			} else if (map_info.map_display_name == "imba_frantic_10v10") {
-				if (plyData.lvl != undefined) {
-					playerPanel.SetPlayerMMR(plyData.Lvl.toFixed([0]));
-					RadiantLevels = RadiantLevels + plyData.Lvl / radiantPlayers.length
-					$("#AverageMMRTeamRadiant").text = $.Localize("average_mmr") + RadiantLevels.toFixed([0]);
+					$("#AverageMMRTeamRadiant").text = $.Localize("average_ixp") + RadiantLevels.toFixed([0]);
 				}
 			}
+		} else {
+			playerPanel.SetPlayerMMR("N/A");
+			RadiantLevels = RadiantLevels + 0 / direPlayers.length
+			$("#AverageMMRTeamDire").text = $.Localize("average_ixp") + RadiantLevels.toFixed([0]);
 		}
 	});
 
@@ -410,18 +401,19 @@ function LoadPlayers() {
 				playerPanel.SetPlayerMMR(plyData.IMR_5v5.toFixed([0]));
 				DireLevels = DireLevels + plyData.IMR_5v5 / direPlayers.length
 				$("#AverageMMRTeamDire").text = $.Localize("average_mmr") + DireLevels.toFixed([0]);
-			} else if (map_info.map_display_name == "imba_10v10") {
+			} else {
 				//				playerPanel.SetPlayerMMR( plyData.IMR_10v10.toFixed([0]) );
 				//				DireLevels = DireLevels + plyData.IMR_10v10 / radiantPlayers.length
 				//				$("#AverageMMRTeamDire").text = $.Localize("average_mmr") + DireLevels.toFixed([0]);
+
 				playerPanel.SetPlayerMMR(plyData.Lvl.toFixed([0]));
 				DireLevels = DireLevels + plyData.Lvl / direPlayers.length
-				$("#AverageMMRTeamDire").text = $.Localize("average_mmr") + DireLevels.toFixed([0]);
-			} else if (map_info.map_display_name == "imba_frantic_10v10") {
-				playerPanel.SetPlayerMMR(plyData.Lvl.toFixed([0]));
-				DireLevels = DireLevels + plyData.Lvl / direPlayers.length
-				$("#AverageMMRTeamDire").text = $.Localize("average_mmr") + DireLevels.toFixed([0]);
+				$("#AverageMMRTeamDire").text = $.Localize("average_ixp") + DireLevels.toFixed([0]);
 			}
+		} else {
+			playerPanel.SetPlayerMMR("N/A");
+			DireLevels = DireLevels + 0 / direPlayers.length
+			$("#AverageMMRTeamDire").text = $.Localize("average_ixp") + DireLevels.toFixed([0]);
 		}
 	});
 
@@ -474,7 +466,7 @@ function LoadOverthrowPlayers() {
 	var ClassOptionPanelRadiant_alt = $.CreatePanel("Panel", $("#LeftPlayers"), "PlayerRow2" + "_good");
 	ClassOptionPanelRadiant_alt.AddClass("PlayerOptionRowV10")
 
-	var TeamLabel = $.CreatePanel("Label", ClassOptionPanelRadiant_alt, "custom1_label");
+	var TeamLabel = $.CreatePanel("Label", $.GetContextPanel(), "custom1_label");
 	TeamLabel.AddClass("TeamLabelText")
 	TeamLabel.text = $.Localize("DOTA_Custom1");
 	TeamLabel.style.color = "#cc00cc";
@@ -521,9 +513,7 @@ function CreateHeroPick() {
 	var disabled_overthrow = hero_list.DisabledOverthrow
 	var imba_heroes = hero_list.Imba
 	var new_heroes = hero_list.New
-	var strength_heroes_custom = hero_list.StrengthCustom;
-	var agility_heroes_custom = hero_list.AgilityCustom;
-	var intellect_heroes_custom = hero_list.IntellectCustom;
+	var custom_heroes = hero_list.Custom;
 	var strength_heroes = hero_list.Strength;
 	var agility_heroes = hero_list.Agility;
 	var intellect_heroes = hero_list.Intellect;
@@ -532,13 +522,10 @@ function CreateHeroPick() {
 	CreateHeroPanel(agility_heroes, "AGI", false)
 	CreateHeroPanel(intellect_heroes, "INT", false)
 
-	CreateHeroPanel(strength_heroes_custom, "STR", true)
-	CreateHeroPanel(agility_heroes_custom, "AGI", true)
-	CreateHeroPanel(intellect_heroes_custom, "INT", true)
-
 	MakeDisabledHeroes(disabled_10v10, disabled_frantic, disabled, disabled_silent, disabled_overthrow)
 	MakeImbaHero(imba_heroes)
 	MakeNewHero(new_heroes)
+	MakeCustomHero(custom_heroes)
 }
 
 /* A player on the same team has picked a hero, tell the player's panel a hero was picked,
@@ -597,7 +584,11 @@ function SwitchToHeroPreview(heroName) {
 	$("#PickHeroBtn").style.visibility = 'collapse';
 	$('#PickList').style.visibility = 'collapse';
 	$('#PickedHeroPanel').style.visibility = 'collapse';
-	$('#WelcomePanel').style.visibility = 'collapse';
+
+	var map_info = Game.GetMapInfo();
+	if (map_info.map_display_name == "imba_overthrow") {
+		$.GetContextPanel().FindChildTraverse("custom1_label").style.visibility = "collapse";
+	}
 }
 
 /* Select a hero, called when a player clicks a hero panel in the layout */
@@ -610,6 +601,7 @@ function SelectHero(heroName) {
 	$("#PickedHeroImage").style.backgroundImage = 'url("s2r://panorama/images/heroes/' + heroName + '_png.vtex")';
 	$("#PickedHeroImage").style.backgroundSize = "100% 100%";
 	$("#PickedHeroImage").style.visibility = 'visible';
+	$("#PickHeroBtnTxt").text = $.Localize("imba_hero_name_filler") + $.Localize(heroName)
 
 	var panel_table = $("#PickList").FindChildrenWithClassTraverse("selected");
 	for (var i = 0; i < panel_table.length; i++) {
@@ -743,7 +735,6 @@ function RepickHero() {
 		$('#HeroPreview').DeleteAsync(0.0);
 		$('#PickList').style.visibility = 'visible';
 		$("#PickHeroBtn").style.visibility = 'visible';
-		$('#WelcomePanel').style.visibility = 'visible';
 		$('#PickedHeroPanel').style.visibility = 'visible';
 
 		$('#PostPickScreen').style.visibility = 'collapse';

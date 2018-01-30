@@ -116,9 +116,9 @@
 
 	//Picking Screen
 	"loading_pre_game"				"Loading heroes, please wait..."
-	"hero_list_title_strength"		"Strength Heroes"
-	"hero_list_title_agility"		"Agility Heroes"
-	"hero_list_title_intellect"		"Intelligence Heroes"
+	"hero_list_title_strength"		"Strength"
+	"hero_list_title_agility"		"Agility"
+	"hero_list_title_intellect"		"Intelligence"
 	"hero_list_title_custom"		"Custom Heroes"
 	"hero_name_filler"				"Lock In"
 	"team_title_radiant"			"The Radiant"
@@ -147,7 +147,6 @@
 	"ChatLinePass"									"<b><font color='{s:color}'>{s:name}</font></b>: <font color='gold'>{s:message}</font>"
 	"ChatRandomed"									"<b><font color='{s:color}'>{s:name}</font></b> has randomed <font color='gold'>{s:hero}</font>"
 
-	"imba_confirm_pick_button"                      "Select this hero"
 	"imba_hero_name_filler"                         "Lock in "
 	"imba_strength_hero_pick_list_title"            "Strength Heroes"
 	"imba_agility_hero_pick_list_title"             "Agility Heroes"
@@ -226,33 +225,4 @@
 	"battlepass_bottle2"			"Gold Bottle"
 	"battlepass_bottle3"			"Red Bottle"
 	"battlepass_bottle4"			"Purple Bottle"
-
-	//=================================================================================================================
-	// Generic talent names
-	//=================================================================================================================
-
-	"imba_generic_talent_damage"					"Damage"
-	"imba_generic_talent_all_stats"					"All Stats"
-	"imba_generic_talent_strength"					"Strength"
-	"imba_generic_talent_agility"					"Agility"
-	"imba_generic_talent_intelligence"				"Intelligence"
-	"imba_generic_talent_armor"						"Armor"
-	"imba_generic_talent_magic_resistance"			"Magic Resistance"
-	"imba_generic_talent_evasion"					"Evasion"
-	"imba_generic_talent_move_speed"				"Move Speed"
-	"imba_generic_talent_attack_speed"				"Attack Speed"
-	"imba_generic_talent_hp"						"Health"
-	"imba_generic_talent_hp_regen"					"Health Regen"
-	"imba_generic_talent_mp"						"Mana"
-	"imba_generic_talent_mp_regen"					"Mana Regen"
-	"imba_generic_talent_attack_range"				"Attack Range"
-	"imba_generic_talent_cast_range"				"Cast Range"
-	"imba_generic_talent_attack_life_steal"			"Lifesteal"
-	"imba_generic_talent_spell_life_steal"			"Spell Lifesteal"
-	"imba_generic_talent_spell_power"				"Spell Power"
-	"imba_generic_talent_cd_reduction"				"Cooldown Reduction"
-	"imba_generic_talent_bonus_xp"					"Bonus EXP"
-	"imba_generic_talent_respawn_reduction"			"Respawn Reduction"
-	"talent_window_header"                          "Talents"
-	"talent_window_footer"                          "Hold Alt To View All Talents"
 }
