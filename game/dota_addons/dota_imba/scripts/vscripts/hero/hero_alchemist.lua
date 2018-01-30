@@ -919,13 +919,6 @@ function imba_alchemist_goblins_greed:OnSpellStart()
 	
 		-- Apply periodic gold modifier
 		caster:AddNewModifier(caster, self, "modifier_imba_greevil_gold", {duration = greevil_duration} )
-	
-	
-	
-
-	
-	
-	
 	end
 end
 

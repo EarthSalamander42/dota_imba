@@ -609,10 +609,19 @@
 
 		"Ability1"					"imba_dragon_knight_breathe_fire"
 		"Ability2"					"imba_dragon_knight_dragon_tail"
-//		"Ability3"					"imba_dragon_knight_dragon_blood"
-//		"Ability4"					"generic_hidden"
-//		"Ability5"					"generic_hidden"
-//		"Ability6"					"imba_dragon_knight_elder_dragon_form"
+		"Ability3"					"imba_dragon_knight_dragon_blood"
+		"Ability4"					"imba_dragon_knight_elder_dragon_charge"
+		"Ability5"					"generic_hidden"
+		"Ability6"					"imba_dragon_knight_elder_dragon_form"
+
+		"Ability10"					"special_bonus_imba_dragon_knight_1"
+		"Ability11"					"special_bonus_imba_dragon_knight_2"
+		"Ability12"					"special_bonus_imba_dragon_knight_3"
+		"Ability13"					"special_bonus_imba_dragon_knight_4"
+		"Ability14"					"special_bonus_imba_dragon_knight_5"
+		"Ability15"					"special_bonus_imba_dragon_knight_6"
+		"Ability16"					"special_bonus_imba_dragon_knight_7"
+		"Ability17"					"special_bonus_imba_dragon_knight_8"
 	}
 
 	//=================================================================================================================

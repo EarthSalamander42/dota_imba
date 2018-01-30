@@ -50,6 +50,7 @@
 	"DOTA_Tooltip_ability_item_imba_rune_frost"				"Greevil Soul"
 
 	"lag_issues"									"Dota 2 IMBA website"
+	"oaa_news_title"								"OAA Anniversary Tournament - 10000$ Prize Pool"
 	"oaa_news_text"									"On the 3rd and 4th of March, the Open Angel Arena team will host their second tournament with over $10 000 prize pool. Click the link below to check out the game and find additional information about the tournament!"
 
 	"imba_gamemode_name_all_pick"                                                       "All Pick"

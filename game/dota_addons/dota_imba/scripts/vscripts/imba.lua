@@ -57,18 +57,6 @@ StoreCurrentDayCycle()
 --		OverrideReleaseIndex()
 --	end
 
-function GameMode:OnItemPickedUp(event) 
-	-- If this is a hero
-	if event.HeroEntityIndex then
-		local owner = EntIndexToHScript( event.HeroEntityIndex )
-		-- And you've picked up a gold bag
-		if owner:IsHero() and event.itemname == "item_bag_of_gold" then
-			-- Pick up the gold
-			GoldPickup(event)
-		end
-	end
-end
-
 function GameMode:PostLoadPrecache()
 	-- precache companions
 	if GetAllCompanions() ~= nil then
@@ -77,6 +65,9 @@ function GameMode:PostLoadPrecache()
 			PrecacheUnitWithQueue(v.file)
 		end
 	end
+
+	-- Ancient
+	PrecacheUnitWithQueue("npc_dota_hero_juggernaut")
 
 	-- Storegga
 	PrecacheUnitWithQueue("npc_dota_hero_earth_spirit")
@@ -712,6 +703,18 @@ function GameMode:OrderFilter( keys )
 --		end
 --	end
 
+	if keys.order_type == DOTA_UNIT_ORDER_MOVE_ITEM or keys.order_type == DOTA_UNIT_ORDER_DROP_ITEM then
+		if unit:GetUnitName() == "npc_dota_hero_dragon_knight" and unit:HasScepter() and EntIndexToHScript(keys["entindex_ability"]):GetAbilityName() == "item_ultimate_scepter" then
+			DisplayError(unit:GetPlayerID(),"#dota_hud_error_item_cant_be_dropped")
+			return false
+		end
+	elseif keys.order_type == DOTA_UNIT_ORDER_SELL_ITEM then
+		if unit:GetUnitName() == "npc_dota_hero_dragon_knight" and unit:HasScepter() and EntIndexToHScript(keys["entindex_ability"]):GetAbilityName() == "item_ultimate_scepter" then
+			DisplayError(unit:GetPlayerID(),"#dota_hud_error_cant_sell_item")
+			return false
+		end
+	end
+
 	if keys.order_type == DOTA_UNIT_ORDER_GLYPH then
 		CustomGameEventManager:Send_ServerToAllClients("create_custom_toast", {
 			type = "generic",
@@ -1326,7 +1329,8 @@ function GameMode:OnGameInProgress()
 	-- IMBA: Custom maximum level EXP tables adjustment
 	-------------------------------------------------------------------------------------------------
 	local max_level = tonumber(CustomNetTables:GetTableValue("game_options", "max_level")["1"])
-	if max_level and max_level > 40 then
+	print("MAX LEVEL:", max_level)
+	if max_level and max_level > 25 then
 		for i = 26, max_level do
 			XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + 2500
 			GameRules:GetGameModeEntity():SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )

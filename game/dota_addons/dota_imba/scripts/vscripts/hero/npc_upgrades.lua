@@ -39,7 +39,7 @@ function modifier_imba_creep_power:OnCreated()
 			self.bonus_health_per_minute = 12
 		end
 	end
-	
+
 	Timers:CreateTimer(1, function()
 		local gametime = GameRules:GetGameTime()
 		if gametime > 0 then
@@ -51,22 +51,16 @@ function modifier_imba_creep_power:OnCreated()
 				-- Set health of the creep according to stacks
 				local bonus_health = self.bonus_health_per_minute * stacks
 				local adjusted_hp = self.parent:GetMaxHealth() + bonus_health
-				SetCreatureHealth(self.parent, adjusted_hp, true)            
+				SetCreatureHealth(self.parent, adjusted_hp, true)
+
+				local bonus_damage = self.bonus_damage_per_minute * stacks
+				local adjusted_damage = self.parent:GetBaseDamageMax() + bonus_damage
+				self.parent:SetBaseDamageMin(adjusted_damage * 0.95)
+				self.parent:SetBaseDamageMax(adjusted_damage * 1.05)
 			end
 		end
 	end)
 end
-
-function modifier_imba_creep_power:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE}
-
-	return decFuncs
-end
-
-function modifier_imba_creep_power:GetModifierPreAttack_BonusDamage()
-	return self.bonus_damage_per_minute * self:GetStackCount()
-end
-
 
 function TowerUpgrade( keys )
 	local caster = keys.caster
