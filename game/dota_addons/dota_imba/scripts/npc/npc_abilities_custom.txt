@@ -3893,16 +3893,16 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"900"
-		"AbilityCooldown"				"45"
+		"AbilityCooldown"				"60"
 
 		"precache"
 		{
-			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_alchemist.vsndevts"
-			"soundfile" "soundevents/voscripts/game_sounds_vo_alchemist.vsndevts"
-			"particle"	"particles/units/heroes/hero_alchemist/alchemist_lasthit_coins.vpcf"
-			"particle"	"particles/units/heroes/hero_alchemist/alchemist_lasthit_msg_gold.vpcf"
-			"particle"	"particles/hero/alchemist/greevil_midas_touch.vpcf"
-			"particle"	"particles/items2_fx/hand_of_midas.vpcf"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_alchemist.vsndevts"
+			"soundfile"		"soundevents/voscripts/game_sounds_vo_alchemist.vsndevts"
+			"particle"		"particles/units/heroes/hero_alchemist/alchemist_lasthit_coins.vpcf"
+			"particle"		"particles/units/heroes/hero_alchemist/alchemist_lasthit_msg_gold.vpcf"
+			"particle"		"particles/hero/alchemist/greevil_midas_touch.vpcf"
+			"particle"		"particles/items2_fx/hand_of_midas.vpcf"
 		}
 
 		"AbilitySpecial"
@@ -3910,7 +3910,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration"				"30"
+				"duration"				"20"
 			}
 			"02"
 			{
@@ -3954,8 +3954,9 @@
 			}
 			"10"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"bounty_multiplier"			"1.5"
+				"var_type"					"FIELD_INTEGER"
+				"bounty_multiplier"			"150"
+				"LinkedSpecialBonus"		"special_bonus_imba_alchemist_7"
 			}
 		}
 	}
@@ -4090,7 +4091,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"BaseClass"				"special_bonus_undefined"                                                        
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -4115,7 +4116,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"BaseClass"				"special_bonus_undefined"                                                        
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -4140,7 +4141,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"BaseClass"				"special_bonus_undefined"                                                        
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -4165,7 +4166,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"BaseClass"				"special_bonus_undefined"                                                        
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -4201,7 +4202,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"BaseClass"				"special_bonus_undefined"                                                        
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -4227,7 +4228,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"BaseClass"				"special_bonus_undefined"                                                        
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -4253,7 +4254,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"BaseClass"				"special_bonus_undefined"                                                        
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -4268,8 +4269,8 @@
 		{
 			"01"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"value"			"1.5"
+				"var_type"		"FIELD_INTEGER"
+				"value"			"150"
 			}
 		}
 	}
@@ -4278,7 +4279,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"BaseClass"				"special_bonus_undefined"                                                        
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -4662,7 +4663,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"             "special_bonus_unique_centaur_2"
+		"BaseClass"             "special_bonus_undefined"
 		"AbilityType"           "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -4687,7 +4688,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"             "special_bonus_unique_centaur_2"
+		"BaseClass"             "special_bonus_undefined"
 		"AbilityType"           "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -4712,7 +4713,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"             "special_bonus_unique_centaur_2"
+		"BaseClass"             "special_bonus_undefined"
 		"AbilityType"           "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -4737,7 +4738,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"             "special_bonus_unique_centaur_2"
+		"BaseClass"             "special_bonus_undefined"
 		"AbilityType"           "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -4762,7 +4763,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"             "special_bonus_unique_centaur_2"
+		"BaseClass"             "special_bonus_undefined"
 		"AbilityType"           "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -4792,7 +4793,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"             "special_bonus_unique_centaur_2"
+		"BaseClass"             "special_bonus_undefined"
 		"AbilityType"           "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -4817,7 +4818,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"             "special_bonus_unique_centaur_2"
+		"BaseClass"             "special_bonus_undefined"
 		"AbilityType"           "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -4842,7 +4843,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"             "special_bonus_unique_centaur_2"
+		"BaseClass"             "special_bonus_undefined"
 		"AbilityType"           "DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -5196,7 +5197,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"
+		"BaseClass"				"special_bonus_undefined"
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -5222,7 +5223,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"
+		"BaseClass"				"special_bonus_undefined"
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -5247,7 +5248,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"
+		"BaseClass"				"special_bonus_undefined"
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -5272,7 +5273,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"
+		"BaseClass"				"special_bonus_undefined"
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -5297,7 +5298,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"
+		"BaseClass"				"special_bonus_undefined"
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -5328,7 +5329,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"
+		"BaseClass"				"special_bonus_undefined"
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -5353,7 +5354,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"
+		"BaseClass"				"special_bonus_undefined"
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -5378,7 +5379,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"
+		"BaseClass"				"special_bonus_undefined"
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -8624,7 +8625,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"BaseClass"				"special_bonus_undefined"                                                        
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -8649,7 +8650,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"BaseClass"				"special_bonus_undefined"                                                        
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -8674,7 +8675,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"BaseClass"				"special_bonus_undefined"                                                        
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -8699,7 +8700,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"BaseClass"				"special_bonus_undefined"                                                        
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -8724,7 +8725,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"BaseClass"				"special_bonus_undefined"                                                        
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -8749,7 +8750,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"BaseClass"				"special_bonus_undefined"                                                        
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -8774,7 +8775,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"BaseClass"				"special_bonus_undefined"                                                        
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -8799,7 +8800,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"BaseClass"				"special_bonus_undefined"                                                        
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -9215,7 +9216,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"BaseClass"				"special_bonus_undefined"                                                        
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -9240,7 +9241,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"BaseClass"				"special_bonus_undefined"                                                        
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -9265,7 +9266,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"BaseClass"				"special_bonus_undefined"                                                        
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -9290,7 +9291,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"BaseClass"				"special_bonus_undefined"                                                        
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -9315,7 +9316,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"BaseClass"				"special_bonus_undefined"                                                        
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -9340,7 +9341,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"BaseClass"				"special_bonus_undefined"                                                        
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -9365,7 +9366,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"BaseClass"				"special_bonus_undefined"                                                        
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -9390,7 +9391,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"BaseClass"				"special_bonus_undefined"                                                        
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -30710,7 +30711,7 @@
 		"BaseClass"								"ability_lua"
 		"ScriptFile"							"hero/hero_dragon_knight.lua"
 		"AbilityTextureName"					"dragon_knight_breathe_fire"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
@@ -30723,11 +30724,11 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"						"900"
-		"AbilityCastPoint"						"0.25"
+		"AbilityCastPoint"						"0.2"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"						"16 15 14 13"
+		"AbilityCooldown"						"14 13 12 11"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -30738,7 +30739,7 @@
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_dragon_knight.vsndevts"
-			"particle"					""
+			"particle"					"particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf"
 		}
 
 		// Special
@@ -30748,12 +30749,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"start_radius"			"150 150 150 150"
+				"start_radius"			"150"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"end_radius"			"250 250 250 250"
+				"end_radius"			"250"
 			}
 			"03"
 			{
@@ -30768,17 +30769,22 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"reduction"				"25"
+				"reduction"				"-35 -45 -55 -65"
 			}
 			"06"
 			{
-				"var_type"				"FIELD_FLOAT"
+				"var_type"				"FIELD_INTEGER"
 				"duration"				"11"
 			}
 			"07"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"damage"				"90 170 240 300"
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"90 180 270 360"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health_as_damage"		"5"
 			}
 		}
 	}
@@ -30788,6 +30794,8 @@
 	//=================================================================================================================
 	"imba_dragon_knight_dragon_tail"
 	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"hero/hero_dragon_knight.lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
@@ -30798,18 +30806,32 @@
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"dragon_knight_dragon_tail"
 
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"150"
 		"AbilityCastPoint"				"0"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"12 11 10 9"
-		"AbilityDamage"					"25 50 75 100"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"25 75 125 175"
 		"AbilityManaCost"				"100"
+
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_dragon_knight.vsndevts"
+			"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_dragon_tail.vpcf"
+		}
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"2.5 2.75 3.0 3.25"
+				"stun_duration"			"2.5 2.6 3.2 3.4"
 			}
 			"02"
 			{
@@ -30821,12 +30843,434 @@
 				"var_type"				"FIELD_INTEGER"
 				"projectile_speed"		"1600"
 			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"start_radius"			"150"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"end_radius"			"250"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"instances"				"2 4 6 8"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration_instances"	"8"
+			}
 		}
+	}
+
+	//=================================================================================================================
+	// Dragon Knight: Dragon Blood
+	//=================================================================================================================
+	"imba_dragon_knight_dragon_blood"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_dragon_knight.lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"dragon_knight_dragon_blood"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_health_regen"			"3 9 16 24"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_armor"					"3 9 16 24"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"dragon_form_mult"				"1.25 1.5 1.75 2.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Dragon Knight: Elder Dragon Charge
+	//=================================================================================================================
+	"imba_dragon_knight_elder_dragon_charge"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_dragon_knight.lua"
+		"AbilityTextureName"			"dragon_knight_elder_dragon_form"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"FightRecapLevel"				"1"
+		"AbilitySound"					"Hero_DragonKnight.ElderDragonForm"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+		"AbilityCooldown"				"35"
+		"AbilityManaCost"				"65"
+		"MaxLevel"						"1"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"rush_distance"				"800"
+				"LinkedSpecialBonus"		"special_bonus_imba_dragon_knight_2"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"initial_radius"			"175"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"final_radius"				"375"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cone_length"				"800"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"fire_speed"				"700"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"rush_duration"				"1.1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Dragon Knight: Elder Dragon Form
+	//=================================================================================================================
+	"imba_dragon_knight_elder_dragon_form"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_dragon_knight.lua"
+		"AbilityTextureName"			"dragon_knight_elder_dragon_form"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"FightRecapLevel"				"2"
+		"AbilitySound"					"Hero_DragonKnight.ElderDragonForm"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+		"AbilityCooldown"				"115"
+		"AbilityManaCost"				"50"		
+		"AbilityModifierSupportValue"	"0.35"	// Attacks are primarily about the damage
+		"HasScepterUpgrade"				"1"
 
 		"precache"
 		{
+			"particle"		"particles/econ/items/windrunner/windrunner_cape_cascade/windrunner_windrun_cascade.vpcf"
 			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_dragon_knight.vsndevts"
-			"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_dragon_tail.vpcf"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"60"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_movement_speed"		"25 25 25"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_attack_range"		"350"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_attack_damage"		"0"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"corrosive_breath_damage"	"20 20 20"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"corrosive_breath_duration"	"5.0 5.0 5.0"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"splash_radius"				"150 225 300"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"splash_damage_percent"		"100 75 50"
+			}
+			"09"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"frost_bonus_movement_speed"	"-30"
+			}
+			"10"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"frost_bonus_attack_speed"		"-20"
+			}
+			"11"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"frost_duration"				"3.0 3.0 3.0"
+			}
+			"12"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"frost_aoe"					"300"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Dragon Knight Talents
+	//=================================================================================================================
+
+	// Breathe Fire bonus damage now based on max hp instead of current
+	"special_bonus_imba_dragon_knight_1"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		//"ScriptFile"					"internal/funcs.lua"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_dragon_knight_breathe_fire"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"1"
+			}
+		}
+	}
+
+	// x2 range for Elder Dragon Charge (must be same than range value in EDC)
+	"special_bonus_imba_dragon_knight_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		//"ScriptFile"					"internal/funcs.lua"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_dragon_knight_elder_dragon_charge"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"800"
+			}
+		}
+	}
+
+	// Breathe Fire now reduces strength by 20% for the duration of the debuff
+	"special_bonus_imba_dragon_knight_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		//"ScriptFile"					"internal/funcs.lua"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_dragon_knight_breathe_fire"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"20"
+			}
+		}
+	}
+
+	// Breathe Fire become pure damage
+	"special_bonus_imba_dragon_knight_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		//"ScriptFile"					"internal/funcs.lua"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_dragon_knight_breathe_fire"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"1"
+			}
+		}
+	}
+
+	// Breathe Fire debuff Dragon Knight
+	"special_bonus_imba_dragon_knight_5"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		//"ScriptFile"					"internal/funcs.lua"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_dragon_knight_breathe_fire"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"1"
+			}
+		}
+	}
+
+	// Elder Dragon Form reduce enemies damage by 20% in 600 radius
+	"special_bonus_imba_dragon_knight_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		//"ScriptFile"					"internal/funcs.lua"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_dragon_knight_elder_dragon_form"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"reduction"				"-20"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"600"
+			}
+		}
+	}
+
+	// Dragon Tail apply break
+	"special_bonus_imba_dragon_knight_7"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		//"ScriptFile"					"internal/funcs.lua"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_dragon_knight_dragon_tail"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"1"
+			}
+		}
+	}
+
+	// 
+	"special_bonus_imba_dragon_knight_8"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		//"ScriptFile"					"internal/funcs.lua"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"	"imba_dragon_knight_elder_dragon_form"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"3"
+			}
 		}
 	}
 
@@ -31185,7 +31629,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"leap_range"			"900"
 			}
-
 		}
 	}
 
@@ -35855,7 +36298,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"
+		"BaseClass"				"special_bonus_undefined"
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -35880,7 +36323,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"
+		"BaseClass"				"special_bonus_undefined"
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -35905,7 +36348,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"
+		"BaseClass"				"special_bonus_undefined"
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -35930,7 +36373,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"
+		"BaseClass"				"special_bonus_undefined"
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -35955,7 +36398,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"
+		"BaseClass"				"special_bonus_undefined"
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -35980,7 +36423,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"
+		"BaseClass"				"special_bonus_undefined"
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -36005,7 +36448,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"
+		"BaseClass"				"special_bonus_undefined"
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -36030,7 +36473,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"special_bonus_unique_centaur_2"
+		"BaseClass"				"special_bonus_undefined"
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -38439,7 +38882,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"special_bonus_unique_centaur_2"
+		"BaseClass"							"special_bonus_undefined"
 		"AbilityType"						"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -38474,7 +38917,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"special_bonus_unique_centaur_2"
+		"BaseClass"							"special_bonus_undefined"
 		"AbilityType"						"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -38499,7 +38942,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"special_bonus_unique_centaur_2"
+		"BaseClass"							"special_bonus_undefined"
 		"AbilityType"						"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -38529,7 +38972,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"special_bonus_unique_centaur_2"
+		"BaseClass"							"special_bonus_undefined"
 		"AbilityType"						"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -38560,7 +39003,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"special_bonus_unique_centaur_2"
+		"BaseClass"							"special_bonus_undefined"
 		"AbilityType"						"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -38585,7 +39028,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"special_bonus_unique_centaur_2"
+		"BaseClass"							"special_bonus_undefined"
 		"AbilityType"						"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -38610,7 +39053,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"special_bonus_unique_centaur_2"
+		"BaseClass"							"special_bonus_undefined"
 		"AbilityType"						"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
@@ -42008,6 +42451,64 @@
 		}
 	}
 
+	"dota_ability_xp_granter"
+	{
+		"BaseClass"          			    "ability_datadriven"
+		"AbilityName"           			"dota_ability_xp_granter"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"Modifiers"
+		{
+			"modifier_dota_ability_xp_granter"
+			{
+				"IsHidden"				"1"
+				"Passive"				"1"
+				
+				"Aura"					"modifier_get_xp"
+				"Aura_Radius"			"1400"
+				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+				"Aura_Types"			"DOTA_UNIT_TARGET_HERO"
+				"Aura_ApplyToCaster"	"0"
+				"Aura_Flags"    		"DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS"
+
+				"States"
+				{
+					"MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_OUT_OF_GAME"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+
+				"ThinkInterval"	".5"
+
+				"OnIntervalThink"
+				{
+					"GrantXPGold"
+					{
+						"Target"
+						{
+							"Center"		"CASTER"
+							"radius"		"1400"
+							"Types"			"DOTA_UNIT_TARGET_HERO"
+							"Flags"			"DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS"
+						}
+						"XPAmount"		"4"
+						"SplitEvenly"	"0"
+						"GoldAmount"	"2"
+						"ReliableGold"	"0"
+					}
+				}
+			}
+
+			"modifier_get_xp"
+			{
+				"Passive"       "1"
+				"EffectName"	""
+				"TextureName"	"custom/custom_games_xp_coin"
+			}
+		}
+	}
+
 	"dota_ability_xp_granter2"
 	{
 		"BaseClass"          			    "ability_datadriven"
@@ -42045,7 +42546,7 @@
 						"Target"
 						{
 							"Center"		"CASTER"
-							"radius"		"2000"
+							"radius"		"1400"
 							"Types"			"DOTA_UNIT_TARGET_HERO"
 							"Flags"			"DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS"
 						}

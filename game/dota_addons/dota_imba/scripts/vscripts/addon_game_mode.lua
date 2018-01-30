@@ -44,30 +44,8 @@ DebugPrint("[IMBA] Performing pre-load precache")
 	-- Aegis
 	LinkLuaModifier("modifier_item_imba_aegis", "items/item_aegis.lua", LUA_MODIFIER_MOTION_NONE)
 
-	-- Generic talent modifiers
-	LinkLuaModifier("modifier_imba_generic_talents_handler", "modifier/generic_talents/modifier_imba_generic_talents_handler.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_imba_generic_talent_damage", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_imba_generic_talent_all_stats", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_imba_generic_talent_strength", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_imba_generic_talent_agility", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_imba_generic_talent_intelligence", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_imba_generic_talent_armor", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_imba_generic_talent_magic_resistance", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_imba_generic_talent_evasion", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_imba_generic_talent_move_speed", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_imba_generic_talent_attack_speed", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_imba_generic_talent_hp", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_imba_generic_talent_hp_regen", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_imba_generic_talent_mp", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_imba_generic_talent_mp_regen", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_imba_generic_talent_attack_range", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_imba_generic_talent_cast_range", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_imba_generic_talent_attack_life_steal", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_imba_generic_talent_spell_life_steal", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_imba_generic_talent_spell_power", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_imba_generic_talent_cd_reduction", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_imba_generic_talent_bonus_xp", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )
-	LinkLuaModifier("modifier_imba_generic_talent_respawn_reduction", "modifier/generic_talents/modifier_imba_generic_talents.lua", LUA_MODIFIER_MOTION_NONE )
+	-- War Veteran modifier
+	LinkLuaModifier("modifier_imba_war_veteran", "modifier/modifier_imba_war_veteran.lua", LUA_MODIFIER_MOTION_NONE )
 
 	-- Invoker lua modifiers
 	LinkLuaModifier("modifier_imba_invoke_buff", "modifier/modifier_imba_invoke_buff.lua", LUA_MODIFIER_MOTION_NONE )

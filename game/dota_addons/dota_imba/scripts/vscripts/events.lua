@@ -215,11 +215,12 @@ function GameMode:OnNPCSpawned(keys)
 GameMode:_OnNPCSpawned(keys)
 local npc = EntIndexToHScript(keys.entindex)
 local normal_xp = npc:GetDeathXP()
+local greeviling = false
 
 	if npc then
 --		npc:AddNewModifier(npc, nil, "modifier_river", {})
 
-		if RandomInt(1, 100) > 85 then
+		if greeviling == true and RandomInt(1, 100) > 85 then
 			if string.find(npc:GetUnitName(), "dota_creep") then
 				local material_group = tostring(RandomInt(0, 8))
 				npc.is_greevil = true
@@ -528,13 +529,15 @@ end
 
 -- An item was picked up off the ground
 function GameMode:OnItemPickedUp(keys)
-	DebugPrint( '[BAREBONES] OnItemPickedUp' )
-	DebugPrintTable(keys)
-
-	--local heroEntity = EntIndexToHScript(keys.HeroEntityIndex)
+	local heroEntity = EntIndexToHScript(keys.HeroEntityIndex)
 	--local itemEntity = EntIndexToHScript(keys.ItemEntityIndex)
 	--local player = PlayerResource:GetPlayer(keys.PlayerID)
-	--local itemname = keys.itemname
+	local itemname = keys.itemname
+
+	if heroEntity:IsHero() and itemname == "item_bag_of_gold" then
+		-- Pick up the gold
+		GoldPickup(keys)
+	end
 end
 
 -- A player has reconnected to the game. This function can be used to repaint Player-based particles or change
@@ -556,7 +559,6 @@ function GameMode:OnItemPurchased( keys )
 		hero = tostring(hero:GetUnitName()),
 		player = tostring(PlayerResource:GetSteamID(plyID))
 	})
-
 end
 
 -- An ability was used by a player
@@ -689,63 +691,23 @@ end
 
 -- A player leveled up
 function GameMode:OnPlayerLevelUp(keys)
-
 	local player = EntIndexToHScript(keys.player)
 	local hero = player:GetAssignedHero()
 	local hero_level = hero:GetLevel()
 
 	-------------------------------------------------------------------------------------------------
-	-- IMBA: Missing/Extra ability points correction
-	-------------------------------------------------------------------------------------------------
-	local missing_point_levels = {17, 19, 21, 22, 23, 24}
-	local extra_point_levels = {33, 34, 37, 38, 39}
-	local missing_point_levels_meepo = {17, 32, 33, 34, 36, 37, 38, 39}
-
-	if hero:GetUnitName() == "npc_dota_hero_meepo" then
-		-- Remove extra point on the appropriate levels for Meepo only
-		for _, current_level in pairs(missing_point_levels_meepo) do
-			if hero_level == current_level then
-				hero:SetAbilityPoints(hero:GetAbilityPoints() - 1)
-			end
-		end
-	else
-		-- Remove extra point on the appropriate levels
-		for _, current_level in pairs(extra_point_levels) do
-			if hero_level == current_level then
-				hero:SetAbilityPoints(hero:GetAbilityPoints() - 1)
-			end
-		end
-	end
-
-	-- Add missing point on the appropriate levels
-	for _, current_level in pairs(missing_point_levels) do
-		if hero_level == current_level then
-			hero:SetAbilityPoints(hero:GetAbilityPoints() + 1)
-		end
-	end
-
---	local special_talent = 0
---	if hero_level == 34 then
---		for i = 1, 24 do
---			local ability_key = hero:GetKeyValue("Ability"..i)
---			if ability_key and string.find(ability_key, "special_bonus_unique_*") then
---				special_talent = special_talent +1
---				print(special_talent)
---			end
---		end
-
---		if special_talent < 2 then
---			print("Removing an ability point")
---			hero:SetAbilityPoints(hero:GetAbilityPoints() - 1)
---		end
---	end
-
-	-------------------------------------------------------------------------------------------------
 	-- IMBA: Hero experience bounty adjustment
 	-------------------------------------------------------------------------------------------------
-
 	hero:SetCustomDeathXP(HERO_XP_BOUNTY_PER_LEVEL[hero_level])
 	HeroVoiceLine(hero, "level_voiceline")
+
+	if hero_level >= 26 then
+		if not hero:HasModifier("modifier_imba_war_veteran") then
+			hero:AddNewModifier(hero, nil, "modifier_imba_war_veteran", {})
+		end
+
+		hero:SetModifierStackCount("modifier_imba_war_veteran", hero, hero:GetLevel() -24)
+	end
 end
 
 -- A player last hit a creep, a tower, or a hero

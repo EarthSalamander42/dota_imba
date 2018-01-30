@@ -1287,11 +1287,11 @@ function PickupRune(rune_name, unit, bActiveByBottle)
 
 			-- If this is alchemist, increase the gold amount
 			if unit:FindAbilityByName("imba_alchemist_goblins_greed") and unit:FindAbilityByName("imba_alchemist_goblins_greed"):GetLevel() > 0 then
-				current_bounty = current_bounty * unit:FindAbilityByName("imba_alchemist_goblins_greed"):GetSpecialValueFor("bounty_multiplier")
+				current_bounty = current_bounty * (unit:FindAbilityByName("imba_alchemist_goblins_greed"):GetSpecialValueFor("bounty_multiplier") / 100)
 
 				-- #7 Talent: Doubles gold from bounty runes
 				if unit:HasTalent("special_bonus_imba_alchemist_7") then
-					current_bounty = current_bounty * unit:FindTalentValue("special_bonus_imba_alchemist_7")
+					current_bounty = current_bounty * (unit:FindTalentValue("special_bonus_imba_alchemist_7") / 100)
 				end		
 			end
 

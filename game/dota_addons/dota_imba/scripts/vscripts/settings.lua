@@ -293,10 +293,10 @@ HERO_STARTING_LEVEL["imba_frantic_10v10"] = {5, 12}
 HERO_STARTING_LEVEL["imba_overthrow"] = {1, 1}
 
 MAX_LEVEL = {}
-MAX_LEVEL["imba_standard"] = {40, 40}
-MAX_LEVEL["imba_10v10"] = {40, 40}
-MAX_LEVEL["imba_frantic_10v10"] = {40, 100}
-MAX_LEVEL["imba_overthrow"] = {40, 40}
+MAX_LEVEL["imba_standard"] = {50, 50}
+MAX_LEVEL["imba_10v10"] = {50, 50}
+MAX_LEVEL["imba_frantic_10v10"] = {50, 100}
+MAX_LEVEL["imba_overthrow"] = {50, 50}
 
 HERO_INITIAL_GOLD = {}
 HERO_INITIAL_GOLD["imba_standard"] = {1200, 1200}
@@ -343,6 +343,7 @@ CustomNetTables:SetTableValue("game_options", "all_random", {IMBA_PICK_MODE_ALL_
 CustomNetTables:SetTableValue("game_options", "all_random_same_hero", {IMBA_PICK_MODE_ALL_RANDOM_SAME_HERO})
 CustomNetTables:SetTableValue("game_options", "frantic_mode", {IMBA_FRANTIC_MODE_ON})
 CustomNetTables:SetTableValue("game_options", "gold_tick", {GOLD_TICK_TIME[GetMapName()]})
+CustomNetTables:SetTableValue("game_options", "max_level", {MAX_LEVEL[GetMapName()]})
 
 -- XP per level table (only active if custom hero levels are enabled) 
 XP_PER_LEVEL_TABLE = {}
