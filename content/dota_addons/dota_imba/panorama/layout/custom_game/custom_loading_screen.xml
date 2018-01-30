@@ -22,23 +22,21 @@
 				<Image id="seq_coins" class="SeqImg" src="file://{images}/custom_game/loading_screen/loading_seq_coins.psd" />
 			</Panel>
 
-			<Panel id="imba-news">
-				<Panel id="oaa-news-panel">
-					<!--<Panel id="oaa-news-text">
-						<Label id="oaa-news-title" text="Open Angel Arena Anniversary Tournament" />
-						<Label id="oaa-news-article-text" text="#oaa_news_text" />
-						<Label id="oaa-news-link" text="Read more news on our Official Website" onactivate="DOTADisplayURL('http://www.dota2imba.org/');"
-						/>
-					</Panel>-->
-
-					<Image id="oaa-news-image" src="file://{images}/custom_game/loading_screen/oaa.png" />
-				</Panel>
-
+			<Panel id="imba-ow-news">
 				<Label id="imba-ow-news-title" text="Dota IMBA 7.04 - Wild Origins" />
-				<Label id="imba-ow-news-article-title" />
+				<Label id="imba-ow-news-article-title" /> 
 				<Label id="imba-ow-news-article-text" />
 				<Label id="imba-ow-news-link" text="Read more news on our Official Website" onactivate="DOTADisplayURL('http://www.dota2imba.org/');"
 				/>
+				<Panel id="oaa-ow-news-panel"> 
+					<Panel id="oaa-ow-news-text">
+						<Label id="oaa-ow-news-title" text="Open Angel Arena Anniversary Tournament" />
+						<Label id="oaa-ow-news-article-text" text="#oaa_news_text" />
+						<Label id="oaa-ow-news-link" text="Tournament Website" onactivate="DOTADisplayURL('https://www.reddit.com/r/DotA2/comments/7soifz/announcing_the_open_angel_arena_anniversary/');" />
+					</Panel>
+
+					<Image id="oaa-ow-news-image" src="file://{images}/custom_game/loading_screen/oaa.png" />
+				</Panel>
 			</Panel>
 			<Panel id="imba-social">
 				<Panel id="imba-social-buttons">
@@ -119,22 +117,23 @@
 				</Panel>
 			</Panel>
  
-			<Panel id="imba-news">
-<!--				<Panel id="oaa-news-panel"> 
-					<Panel id="oaa-news-text">
-						<Label id="oaa-news-title" text="Open Angel Arena Anniversary Tournament" />
-						<Label id="oaa-news-article-text" text="#oaa_news_text" />
-					</Panel>
-
-					<Image id="oaa-news-image" src="file://{images}/custom_game/loading_screen/oaa.jpg" />
-				</Panel>
--->
+			<Panel id="imba-normal-news">
 				<Label id="imba-normal-news-title" text="Dota IMBA 7.04 - Wild Origins" />
 				<Label id="imba-normal-news-article-title" /> 
 				<Label id="imba-normal-news-article-text" />
 				<Label id="imba-normal-news-link" text="Read more news on our Official Website" onactivate="DOTADisplayURL('http://www.dota2imba.org/');"
 				/>
+				<Panel id="oaa-normal-news-panel"> 
+					<Panel id="oaa-normal-news-text">
+						<Label id="oaa-normal-news-title" text="Open Angel Arena Anniversary Tournament" />
+						<Label id="oaa-normal-news-article-text" text="#oaa_news_text" />
+						<Label id="oaa-normal-news-link" text="Tournament Website" onactivate="DOTADisplayURL('https://www.reddit.com/r/DotA2/comments/7soifz/announcing_the_open_angel_arena_anniversary/');" />
+					</Panel>
+
+					<Image id="oaa-normal-news-image" src="file://{images}/custom_game/loading_screen/oaa.png" />
+				</Panel>
 			</Panel>
+
 			<Panel id="imba-social">
 				<Panel id="imba-social-buttons">
 					<Button id="imba-social-button-discord-en" onactivate="DOTADisplayURL('http://tinyurl.com/imba-discord');" />

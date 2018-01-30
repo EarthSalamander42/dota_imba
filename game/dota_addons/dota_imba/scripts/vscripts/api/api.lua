@@ -8,8 +8,9 @@ require("api/json")
 local IMBA_API_CONFIG = {
 	key = "3utx8DehTd42Wxqh65ldAErJjoCdi6XB",
 	endpoint = "http://api.dota2imba.org",
-	agent = "dota_imba-lua-1.x",
-	timeout = 10000
+	agent = "dota_imba-7.04",
+	timeout = 10000,
+	debug = false
 }
 
 local IMBA_API_ENDPOINTS = {
@@ -40,6 +41,12 @@ function ImbaApi:print(t)
 	print("[api] " .. t)
 end
 
+function ImbaApi:debug(t)
+	if IMBA_API_CONFIG.debug then
+		print("[api-debug] " .. t)
+	end
+end
+
 function ImbaApi:perform(robj, endpoint, callback)
 
 	local payload = nil
@@ -62,10 +69,10 @@ function ImbaApi:perform(robj, endpoint, callback)
 		payload = json.encode(base_request)
 	end 
 
-	self:print("Performing " .. method .. " @ " .. endpoint)
+	self:debug("Performing " .. method .. " @ " .. endpoint)
 
 	if (method == "POST") then
-		self:print("Payload " .. payload)
+		self:debug("Payload " .. payload)
 	end
 	
 	-- create request
@@ -96,8 +103,8 @@ function ImbaApi:perform(robj, endpoint, callback)
 				self:print("Request failed with custom error: " .. rp.message)
 				callback(true, rp)
 			else
-				self:print("Request succesful")
-				self:print("Payload: " .. result.Body)
+				self:debug("Request succesful")
+				self:debug("Payload: " .. result.Body)
 				callback(false, rp)
 			end
 		end
