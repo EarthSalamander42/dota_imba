@@ -49,6 +49,7 @@ DebugPrint("[IMBA] Performing pre-load precache")
 
 	-- War Veteran modifier
 	LinkLuaModifier("modifier_imba_war_veteran", "modifier/modifier_imba_war_veteran.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_imba_war_veteran_hiden", "modifier/modifier_imba_war_veteran.lua", LUA_MODIFIER_MOTION_NONE )
 
 	-- Invoker lua modifiers
 	LinkLuaModifier("modifier_imba_invoke_buff", "modifier/modifier_imba_invoke_buff.lua", LUA_MODIFIER_MOTION_NONE )

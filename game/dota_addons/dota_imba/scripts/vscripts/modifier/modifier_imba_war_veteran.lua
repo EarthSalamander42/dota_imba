@@ -19,12 +19,14 @@ function modifier_imba_war_veteran:OnCreated()
 
 	if IsServer() then
 		self.primary_attribute = self:GetParent():GetPrimaryAttribute()
+		local buff = self:GetParent():AddNewModifier(self:GetParent(), nil, "modifier_imba_war_veteran_hiden", {})
+		buff:SetStackCount(self.primary_attribute)
 	end
 end
 
 function modifier_imba_war_veteran:GetTexture()
-	print("custom/war_veteran_"..self.primary_attribute)
-	return "custom/war_veteran_"..self.primary_attribute
+	local a = self:GetParent():GetModifierStackCount("modifier_imba_war_veteran_hiden", self:GetParent())
+	return "custom/war_veteran_"..a
 end
 
 function modifier_imba_war_veteran:DeclareFunctions()
@@ -40,31 +42,43 @@ function modifier_imba_war_veteran:DeclareFunctions()
 end
 
 function modifier_imba_war_veteran:GetModifierConstantHealthRegen()
-	if self.primary_attribute ~= 0 then return 0 end
+	local a = self:GetParent():GetModifierStackCount("modifier_imba_war_veteran_hiden", self:GetParent())
+	if a ~= 0 then return 0 end
 	return self.hp_regen * (self:GetParent():GetLevel() - 25)
 end
 
 function modifier_imba_war_veteran:GetCustomTenacity()
-	if self.primary_attribute ~= 0 then return 0 end
+	local a = self:GetParent():GetModifierStackCount("modifier_imba_war_veteran_hiden", self:GetParent())
+	if a ~= 0 then return 0 end
 	return self.status_resistance * (self:GetParent():GetLevel() - 25)
 end
 
 function modifier_imba_war_veteran:GetModifierAttackSpeedBonus_Constant()
-	if self.primary_attribute ~= 1 then return 0 end
+	local a = self:GetParent():GetModifierStackCount("modifier_imba_war_veteran_hiden", self:GetParent())
+	if a ~= 1 then return 0 end
 	return self.attack_speed * (self:GetParent():GetLevel() - 25)
 end
 
 function modifier_imba_war_veteran:GetModifierMoveSpeedBonus_Percentage()
-	if self.primary_attribute ~= 1 then return 0 end
+	local a = self:GetParent():GetModifierStackCount("modifier_imba_war_veteran_hiden", self:GetParent())
+	if a ~= 1 then return 0 end
 	return self.movespeed_pct * (self:GetParent():GetLevel() - 25)
 end
 
 function modifier_imba_war_veteran:GetModifierSpellAmplify_Percentage()
-	if self.primary_attribute ~= 2 then return 0 end
+	local a = self:GetParent():GetModifierStackCount("modifier_imba_war_veteran_hiden", self:GetParent())
+	if a ~= 2 then return 0 end
 	return self.spell_amp * (self:GetParent():GetLevel() - 25)
 end
 
 function modifier_imba_war_veteran:GetModifierMagicalResistanceBonus()
-	if self.primary_attribute ~= 2 then return 0 end
+	local a = self:GetParent():GetModifierStackCount("modifier_imba_war_veteran_hiden", self:GetParent())
+	if a ~= 2 then return 0 end
 	return self.magic_resist * (self:GetParent():GetLevel() - 25)
 end
+
+modifier_imba_war_veteran_hiden = class({})
+function modifier_imba_war_veteran_hiden:IsHidden() return true end
+function modifier_imba_war_veteran_hiden:IsPermanent() return true end
+function modifier_imba_war_veteran_hiden:RemoveOnDeath() return false end
+function modifier_imba_war_veteran_hiden:GetTexture()	 return "custom/attribute_bonus" end
