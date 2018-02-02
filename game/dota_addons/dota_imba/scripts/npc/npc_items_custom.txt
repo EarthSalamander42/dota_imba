@@ -7950,6 +7950,7 @@
 		"ItemQuality"					"magic"
 		"ItemAliases"					"power treads; mega; mega treads"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_SPECTATORS"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------

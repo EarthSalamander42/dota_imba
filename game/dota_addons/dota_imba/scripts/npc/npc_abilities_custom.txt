@@ -28907,6 +28907,509 @@
 	//=================================================================================================================
 
 	//=================================================================================================================
+	// Antimage Mana Break
+	//=================================================================================================================
+	"imba_antimage_mana_break"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"							"ability_lua"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"				"DAMAGE_TYPE_PHYSICAL"
+		"AbilityTextureName"				"antimage_mana_break"
+		"ScriptFile"						"hero/hero_antimage"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"  					"particles/generic_gameplay/generic_manaburn.vpcf"
+			"particle"						"particles/hero/antimage/mana_break_blast.vpcf"
+			"particle"						"particles/hero/antimage/mana_break_aoe_burn.vpcf"
+			"soundfile" 					"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"damage_per_burn"				"0.6"
+				"CalculateSpellDamageTooltip"   "0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"base_mana_burn"			"30 45 60 75"				
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"threshold_difference"		"50"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"blast_aoe"					"380"
+			}
+			"07"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"max_mana_blast"				"5 6 7 8"
+				"CalculateSpellDamageTooltip"   "1"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"illusions_efficiency_pct"	"40"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Antimage Blink
+	//=================================================================================================================
+	"imba_antimage_blink"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"antimage_blink"
+		"ScriptFile"					"hero/hero_antimage"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
+			"particle"		"particles/units/heroes/hero_antimage/antimage_blink_end.vpcf"
+			"particle"		"particles/units/heroes/hero_antimage/antimage_blink_start.vpcf"
+			"particle"		"particles/hero/antimage/blink_manaburn_basher_ti_5.vpcf"
+			"particle"		"particles/hero/antimage/blink_basher_manaburn_impact_lightning.vpcf"
+			"particle"		"particles/hero/antimage/blink_spellguard_immunity.vpcf"
+		}
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.4"
+		"AbilityCooldown"				"15 12 9 6"
+		"AbilityManaCost"				"60"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"blink_range"				"925 1075 1175 1225"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"percent_mana_burn"			"18 21 24"				
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"percent_damage"				"50"
+				"CalculateSpellDamageTooltip"   "1"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"400"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mana_burn_limit"			"150 300 450 600"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Antimage Spell Shield
+	//=================================================================================================================
+	"imba_antimage_spell_shield"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"BaseClass"						"ability_lua"
+		"AbilityTextureName"			"antimage_spell_shield"
+		"ScriptFile"					"hero/hero_antimage"
+		"HasScepterUpgrade"				"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"10"
+		"AbilityCastPoint"				"0.0"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"					"particles/units/heroes/hero_antimage/antimage_blink_end_glow.vpcf"
+			"particle"					"particles/units/heroes/hero_antimage/antimage_spellshield.vpcf"
+			"particle"					"particles/units/heroes/hero_antimage/antimage_spellshield_reflect.vpcf"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"magic_resistance"		"20 35 50 65"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"active_duration"		"1.5"				
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"internal_cooldown"		"6"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"spellshield_max_distance"	"2500"
+			}
+		}
+	}
+
+
+	//=================================================================================================================
+	// Antimage Mana Void
+	//=================================================================================================================
+	"imba_antimage_mana_void"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_antimage"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"antimage_mana_void"
+		"AOERadius"						"%mana_void_aoe_radius%"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"					"particles/units/heroes/hero_antimage/antimage_manavoid.vpcf"
+			"particle"					"particles/econ/items/antimage/antimage_weapon_basher_ti5/antimage_manavoid_ti_5.vpcf"
+			"particle"					"particles/econ/items/antimage/antimage_weapon_basher_ti5/antimage_manavoid_basher_cast.vpcf"
+			"particle"					"particles/hero/antimage/mana_void_delay_bubble.vpcf"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"600"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"70"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"125 225 325"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"mana_void_damage_per_mana"			"0.6 0.85 1.1"
+			}
+			"02"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"mana_void_ministun"				"0.3"
+			}
+			"03"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"mana_void_aoe_radius"				"500"
+			}
+			"04"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"mana_void_mana_burn_pct"			"10 15 20"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Antimage Talent 1: Blink now has charges
+	//=================================================================================================================
+	"special_bonus_imba_antimage_1"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		//"ScriptFile"					"internal/funcs.lua"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"  "imba_antimage_blink"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"3"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Antimage Talent 2 (Level 10): Spell Shield can be used while stunned.
+	//=================================================================================================================
+	"special_bonus_imba_antimage_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		//"ScriptFile"					"internal/funcs.lua"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_antimage_spell_shield"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Antimage Talent 3 (Level 20): Blink cast point decrease
+	//=================================================================================================================
+	"special_bonus_imba_antimage_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		//"ScriptFile"					"internal/funcs.lua"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_antimage_blink"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"0.2"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Antimage Talent 4 (Level 20): % of target's missing mana added to Mana Break damage
+	//=================================================================================================================
+	"special_bonus_imba_antimage_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		//"ScriptFile"					"internal/funcs.lua"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_antimage_mana_break"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"10"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Antimage Talent 5 (Level 30): Blinking grants a 1 second magic immunity shield.
+	//=================================================================================================================
+	"special_bonus_imba_antimage_5"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		//"ScriptFile"					"internal/funcs.lua"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_antimage_blink"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Antimage Talent 6 (Level 30): Mana Void explosion is delayed. Each point of mana lost is worth more missing mana points
+	//=================================================================================================================
+	"special_bonus_imba_antimage_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		//"ScriptFile"					"internal/funcs.lua"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_antimage_mana_void"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"delay_duration"			"2"
+			}
+
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mana_point_worth"			"3"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Antimage Talent 7 (Level 40): Mana Break attacks burn mana of nearby enemies in AoE, equal to a portion of the mana burned.
+	//=================================================================================================================
+	"special_bonus_imba_antimage_7"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		//"ScriptFile"					"internal/funcs.lua"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_antimage_mana_break"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mana_burn_aoe"				"400"
+			}
+
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mana_burn_pct"				"45"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Antimage Talent 8 (Level 40): Mana Void counts missing mana from all targets in the AOE
+	//=================================================================================================================
+	"special_bonus_imba_antimage_8"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_undefined"
+		//"ScriptFile"					"internal/funcs.lua"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01" 	"imba_antimage_mana_void"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Bloodseeker's Bloodrage
 	//=================================================================================================================
 	"imba_bloodseeker_bloodrage"
@@ -30909,7 +31412,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"hero/hero_dragon_knight.lua"
-		"AbilityTextureName"			"dragon_knight_elder_dragon_form"
+		"AbilityTextureName"			"custom/dragon_knight_elder_dragon_charge"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"

@@ -693,7 +693,7 @@
 =================================================================*/
 #CustomPickList
 {
-	width: 20%;
+	width: 33%;
 	height: 100%;
 	flow-children: right;
 	align: center center;
@@ -702,7 +702,6 @@
 #HeroDetailsContainer {
 	width: 33%;
 	height: 100%;
-	margin-right: 0.5%;
 	flow-children: down;
 }
 
@@ -831,10 +830,9 @@
 #RandomPickBtn,
 #RandomImbaPickBtn
 {
-	width: 100%;
-	height: 72px;
-	horizontal-align: center;
-	vertical-align: middle;
+	width: 160px;
+	height: 86px;
+	align: center center;
 	background-image: url("s2r://panorama/images/custom_game/random_button_png.vtex");
 }
 
@@ -899,7 +897,6 @@
 	align: center center;
 	text-align: center center;
 	font-family: "Bold";
-	text-transform: uppercase;
 	text-overflow: clip;
 	opacity: 0.75;
 	letter-spacing: 1px;

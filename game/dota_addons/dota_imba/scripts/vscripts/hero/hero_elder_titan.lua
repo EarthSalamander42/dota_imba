@@ -1,4 +1,4 @@
--- Author: Cookies
+-- Author: EarthSalamander #42
 -- Date: 03.12.2017
 
 CreateEmptyTalents("elder_titan")

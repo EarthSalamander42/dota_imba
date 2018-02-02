@@ -12385,10 +12385,9 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_base_additive"
-//		"Model"						"models/heroes/samus/samus_ball_model.vmdl"        
-		"Model"						"models/courier/seekling/seekling.vmdl"
+		"Model"						"models/creeps/roshan/roshan.vmdl"
 		"Level"						"1"
-		"ModelScale"				"1.0"
+		"ModelScale"				"0.3"
 		"UnitLabel"					"donator_companion"        
 
 		// Abilities
@@ -12641,6 +12640,136 @@
 		"VisionNighttimeRange"      "0"
 	}
 
+	"npc_imba_donator_companion_amaterasu"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_base_additive"
+		"Model"						"models/items/courier/amaterasu/amaterasu.vmdl"        
+		"Level"						"1"
+		"ModelScale"				"1.0"
+		"UnitLabel"					"donator_companion"        
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"companion_morph"
+		"Ability2"					"neutral_spell_immunity"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"             "0"
+		"MagicalResistance"         "0"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageMin"           "0"
+		"AttackDamageMax"           "0"
+		"AttackRate"                "0.0"
+		"AttackRange"               "0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"HealthBarOffset"           "240"
+		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"                  "0"
+		"BountyGoldMin"             "0"
+		"BountyGoldMax"             "0"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"             "480"
+		"MovementTurnRate"          "0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1"
+		"StatusHealthRegen"			"0.0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0.0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"                  "DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"        "0"
+		"VisionNighttimeRange"      "0"
+	}
+
+	"npc_imba_donator_companion_suthernfriend"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_base_additive"
+		"Model"						"models/creeps/roshan/roshan.vmdl"        
+		"Level"						"1"
+		"ModelScale"				"0.5"
+		"UnitLabel"					"donator_companion"        
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"companion_morph"
+		"Ability2"					"neutral_spell_immunity"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"             "0"
+		"MagicalResistance"         "0"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageMin"           "0"
+		"AttackDamageMax"           "0"
+		"AttackRate"                "0.0"
+		"AttackRange"               "0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"HealthBarOffset"           "240"
+		"BoundsHullName"            "DOTA_HULL_SIZE_SMALL"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"                  "0"
+		"BountyGoldMin"             "0"
+		"BountyGoldMax"             "0"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"             "480"
+		"MovementTurnRate"          "0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1"
+		"StatusHealthRegen"			"0.0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0.0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"                  "DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"         "DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"         "DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationshipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"        "0"
+		"VisionNighttimeRange"      "0"
+	}
+
 	//=================================================================================================================
 	// HERO: Ghost Revenant // Need to be duplicated in npc_units_custom.txt
 	//=================================================================================================================
@@ -12658,14 +12787,6 @@
 		//Picking Screen
 		"IsCustom"					"1"
 		"IsNew"						"1"
-
-		// Abilities
-		//-------------------------------------------------------------------------------------------------------------
-		"Ability1"					"ghost_revenant_blackjack"
-		"Ability2"					"ghost_revenant_wraith"
-		"Ability3"					"ghost_revenant_miasma"
-		"Ability4"					"ghost_revenant_ghost_immolation"
-		"Ability5"					"ghost_revenant_exhaustion"
 
 		// Talents
 		//-------------------------------------------------------------------------------------------------------------
@@ -12763,13 +12884,6 @@
 		"IsCustom"					"1"
 		"IsNew"						"1"
 
-		// Abilities
-		//-------------------------------------------------------------------------------------------------------------
-		"Ability1"					"imba_empress_eleven_curses"		// Ability 1
-		"Ability2"					"imba_empress_hellbolt"				// Ability 2
-		"Ability3"					"imba_empress_royal_wrath"		// Ability 3
-		"Ability4"					"imba_empress_hurl_through_hell"		// Ability 4
-
 		// Talents
 		//-------------------------------------------------------------------------------------------------------------
 //		"Ability10"					""		//10 Right
@@ -12866,13 +12980,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ArmorPhysical"				"4"									// Physical protection.
 		"MagicalResistance"			"25"								// Magical protection (percentage).
-
-		// Abilities
-		//-------------------------------------------------------------------------------------------------------------
-		"Ability1"					"imba_sly_king_burrow_blast"
-		"Ability2"					"imba_sly_king_frost_gale"
-		"Ability3"					"imba_sly_king_frozen_skin"
-		"Ability4"					"imba_sly_king_winterbringer"
 
 		// Attack
 		//-------------------------------------------------------------------------------------------------------------
@@ -14090,7 +14197,7 @@
 	"npc_dota_treasure_courier"
 	{
 		// General
-		//
+		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_base"	// Class of entity of link to.
 		"Model"						"models/courier/lockjaw/lockjaw_flying.vmdl"	// Model.
 		"SoundSet"					""					// Name of sound set.

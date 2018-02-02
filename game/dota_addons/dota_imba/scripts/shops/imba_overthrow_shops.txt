@@ -241,6 +241,7 @@
 		"item"		"item_eagle"
 		"item"		"item_relic"
 		"item"		"item_imba_moon_shard"
+		"item"		"item_imba_nether_wand"
 	}
 
 	"pregame"

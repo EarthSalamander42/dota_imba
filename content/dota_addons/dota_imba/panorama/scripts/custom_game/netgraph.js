@@ -32,14 +32,16 @@ function ToggleUniqueStats() {
 	}
 }
 
+function MaxLevel() {
+	GameEvents.SendCustomGameEventToServer("netgraph_max_level", {ID: Players.GetLocalPlayer()});
+}
+
 function RemoveUnits() {
-	$.Msg("Removing units...")
-	GameEvents.SendCustomGameEventToServer("remove_units", {});
+	GameEvents.SendCustomGameEventToServer("netgraph_remove_units", {});
 }
 
 function GiveItem(item) {
-	$.Msg("Give item: " + item)
-	GameEvents.SendCustomGameEventToServer("give_item", {item: item});
+	GameEvents.SendCustomGameEventToServer("netgraph_give_item", {ID: Players.GetLocalPlayer(), item: item});
 }
 
 //	function RemoveParticles()
@@ -114,14 +116,26 @@ function UpdateNetGraphHeroNames() {
 	GameEvents.Subscribe("show_netgraph_heronames", UpdateNetGraphHeroNames);
 
 	var items = [
+		"travel_boots_2",
+		"blink",
+		"sphere",
+		"ultimate_scepter",
 		"heart",
-		"butterfly",
+		"rapier",
 	]
 
 	var i = 0
 	for (i in items) {
-		var item_button = $.CreatePanel("Button", $("#Items"), items[i]);
+		var item = items[i]
+		var item_button = $.CreatePanel("Button", $("#Items"), item);
 		item_button.AddClass("item-button")
-		item_button.style.backgroundImage = 'url("s2r://panorama/images/items/' + items[i] + '_png.vtex")';
+		item_button.style.backgroundImage = 'url("s2r://panorama/images/items/' + item + '_png.vtex")';
+		var event = function (item) {
+			return function () {
+				GiveItem(item);
+			}
+		};
+		
+		item_button.SetPanelEvent("onactivate", event(item));
 	}
 })();

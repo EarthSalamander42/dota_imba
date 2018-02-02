@@ -72,8 +72,8 @@ DOTA_MAX_PLAYERS = 24						-- Maximum amount of players allowed in a game
 BUYBACK_COOLDOWN_ENABLED = true												-- Is the buyback cooldown enabled?
 
 BUYBACK_BASE_COST = 100														-- Base cost to buyback
-BUYBACK_COST_PER_LEVEL = 1.5												-- Level-based buyback cost
-BUYBACK_COST_PER_LEVEL_AFTER_25 = 35										-- Level-based buyback cost growth after level 25
+BUYBACK_COST_PER_LEVEL = 1.25												-- Level-based buyback cost
+BUYBACK_COST_PER_LEVEL_AFTER_25 = 20										-- Level-based buyback cost growth after level 25
 BUYBACK_COST_PER_SECOND = 0.25												-- Time-based buyback cost
 
 BUYBACK_COOLDOWN_START_POINT = 600											-- Game time (in seconds) after which buyback cooldown is activated
@@ -191,7 +191,7 @@ elseif GetMapName() == "imba_overthrow" then
 	UNIVERSAL_SHOP_MODE = true
 	FIXED_RESPAWN_TIME = 10
 	MAX_NUMBER_OF_TEAMS = 3
-	IMBA_PLAYERS_ON_GAME = 15
+	IMBA_PLAYERS_ON_GAME = 10
 	USE_CUSTOM_TEAM_COLORS = true						-- Should we use custom team colors?
 	USE_CUSTOM_TEAM_COLORS_FOR_PLAYERS = true			-- Should we use custom team colors to color the players/minimap?
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 5

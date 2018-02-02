@@ -1,4 +1,4 @@
--- Author: Cookies
+-- Author: EarthSalamander #42
 -- 26/01/2018 // DD/MM/YYYY
 -- Elder Dragon Form based on original author: SquawkyArctangent
 
@@ -458,7 +458,6 @@ local rush_speed = rush_distance / self:GetSpecialValueFor("rush_duration")
 
 	-- Move the caster
 	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_imba_elder_dragon_charge", {duration = self:GetSpecialValueFor("rush_duration"), distance = rush_distance})
-	self:GetCaster():AddNewModifier(self:GetCaster(), self, "modifier_stunned", {duration = self:GetSpecialValueFor("rush_duration")})
 end
 
 function imba_dragon_knight_elder_dragon_charge:OnProjectileHit(target, location)
@@ -509,6 +508,12 @@ function modifier_imba_elder_dragon_charge:IsPurgable() return false end
 function modifier_imba_elder_dragon_charge:IsStunDebuff() return false end
 function modifier_imba_elder_dragon_charge:IsMotionController() return true end
 function modifier_imba_elder_dragon_charge:GetMotionControllerPriority() return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end
+
+function modifier_imba_elder_dragon_charge:CheckState()
+	state = {[MODIFIER_STATE_STUNNED] = true}
+
+	return state
+end
 
 function modifier_imba_elder_dragon_charge:OnCreated(keys)
 	if IsServer() then
@@ -599,6 +604,13 @@ end
 function imba_dragon_knight_elder_dragon_form:OnInventoryContentsChanged()
 	if self:GetCaster():HasScepter() then
 		modifier_imba_elder_dragon_form:AddElderForm(self:GetCaster(), self, self:GetLevel())
+	else
+		if self:GetCaster():HasModifier("modifier_dragon_knight_dragon_form") and self:GetCaster():FindModifierByName("modifier_dragon_knight_dragon_form"):GetDuration() == -1 then
+			self:GetCaster():RemoveModifierByName("modifier_dragon_knight_dragon_form")
+			self:GetCaster():RemoveModifierByName("modifier_dragon_knight_corrosive_breath")
+			self:GetCaster():RemoveModifierByName("modifier_dragon_knight_splash_attack")
+			self:GetCaster():RemoveModifierByName("modifier_dragon_knight_frost_breath")
+		end
 	end
 end
 
@@ -610,8 +622,10 @@ function modifier_imba_elder_dragon_form:IsPurgable() return false end
 function modifier_imba_elder_dragon_form:RemoveOnDeath() return false end
 
 function modifier_imba_elder_dragon_form:OnCreated( event )
-	if IsClient() then return end
 	self:StartIntervalThink(0.5)
+	self.bonus_ms = self:GetCaster():GetHealth() / 100 * self:GetParent():FindTalentValue("special_bonus_imba_dragon_knight_8")
+	self:SetStackCount(self.bonus_ms)
+
 	-- apply all the edf modifiers on creation if has scepter
 	if self:GetParent():HasScepter() then
 		modifier_imba_elder_dragon_form:AddElderForm(self:GetParent(), self:GetAbility(), self:GetAbility():GetLevel())
@@ -654,7 +668,23 @@ if IsServer() then
 		if self:GetParent():HasTalent("special_bonus_imba_dragon_knight_6") and self:GetParent():HasModifier("modifier_dragon_knight_dragon_form") then
 			local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self:GetParent():FindTalentValue("special_bonus_imba_dragon_knight_6", "radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_DAMAGE_FLAG_NONE, FIND_ANY_ORDER, false)
 			for _, enemy in pairs(enemies) do
-				enemy:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_elder_dragon_form_debuff", {})
+				enemy:AddNewModifier(self:GetParent(), self:GetAbility(), "modifier_imba_elder_dragon_form_debuff", {duration=1.0})
+			end
+		end
+
+		if self:GetParent():HasModifier("modifier_item_ultimate_scepter_consumed") then
+			self:AddElderForm(self:GetParent(), self:GetAbility(), self:GetAbility():GetLevel())
+		end
+
+		if self:GetParent():HasScepter() then
+			if self:GetParent():PassivesDisabled() then
+				print("Passive Disabled!")
+				self:GetParent():RemoveModifierByName("modifier_dragon_knight_dragon_form")
+				self:GetParent():RemoveModifierByName("modifier_dragon_knight_corrosive_breath")
+				self:GetParent():RemoveModifierByName("modifier_dragon_knight_splash_attack")
+				self:GetParent():RemoveModifierByName("modifier_dragon_knight_frost_breath")
+			else
+				self:AddElderForm(self:GetParent(), self:GetAbility(), self:GetAbility():GetLevel())
 			end
 		end
 	end
@@ -686,12 +716,8 @@ if IsServer() then
 	end
 end
 
--- TODO: show the value on HUD
 function modifier_imba_elder_dragon_form:GetModifierMoveSpeedBonus_Constant()
 	if self:GetParent():HasModifier("modifier_dragon_knight_dragon_form") and self:GetParent():HasTalent("special_bonus_imba_dragon_knight_8") then
-		local bonus_ms = self:GetCaster():GetHealth() / 100 * self:GetParent():FindTalentValue("special_bonus_imba_dragon_knight_8")
-		self:SetStackCount(bonus_ms)
-
 		return self:GetStackCount()
 	else
 		return 0

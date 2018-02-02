@@ -74,14 +74,6 @@ local caster = PlayerResource:GetSelectedHeroEntity(keys.playerid)
 local caster_heroname = PlayerResource:GetSelectedHeroName(keys.playerid)
 local color = {}
 
-	for str in string.gmatch(text, "%S+") do
-		if str == "lol" or str == "lmao" or str == "rofl" or str == "lul" or str == "haha" or str == "kek" or str == "lel" or str == "kappa" or str == "topkek" or str == "toplel" or str == "lowkek" or str == "lowlel" or str == "hahaha" or str == "ahaha" then
-			HeroVoiceLine(caster, "laugh")
-		elseif str == "thank" or str == "thanks" or str == "ty" then
-			HeroVoiceLine(caster, "thanks")
-		end
-	end
-
 	-- This Handler is only for commands, ends the function if first character is not "-"
 	if not (string.byte(text) == 45) then
 		return nil
@@ -101,7 +93,9 @@ local color = {}
 				text = string.gsub(text, str, "")
 				text = string.gsub(text, " ", "")
 				if PlayerResource:GetSelectedHeroName(caster:GetPlayerID()) ~= "npc_dota_hero_"..text then
-					caster.companion:ForceKill(false)
+					if caster.companion then
+						caster.companion:ForceKill(false)
+					end
 					HeroSelection:AssignHero(caster:GetPlayerID(), "npc_dota_hero_"..text)
 				end
 			end

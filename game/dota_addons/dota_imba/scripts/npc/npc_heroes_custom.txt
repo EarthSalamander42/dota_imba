@@ -96,7 +96,6 @@
 		//Picking Screen
 		"IsImba"					"1"
 		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-		"IsDisabled"				"3" // All spells missing for reasons
 
 		"Ability1"					"imba_antimage_mana_break"
 		"Ability2"					"imba_antimage_blink"
@@ -195,82 +194,6 @@
 		"Ability4"					"generic_hidden"
 		"Ability5"					"generic_hidden"
 		"Ability6"					"batrider_flaming_lasso"
-
-		"ProjectileModel"			"particles/units/heroes/hero_batrider/batrider_base_attack.vpcf"
-
-		//Voice Lines (number of voicelines per events)
-		"ShortName"					"bat"
-
-		//Abilities
-		"failure"					"4" // ability_failure -- OnAbilityFail
-		"notyet"					"9" // notyet -- OnAbilityNotReady, These voicelines should be called in the right order, as the unit gets anger and anger the more you spam
-		"cast"						"4" // cast -- OnAbilityUsed
-
-		//Make them later
-		"OnAbility1Used"			"ability_napalm"
-		"OnAbility1UsedCount"		"6"
-		"OnAbility2Used"			"ability_flame"
-		"OnAbility2UsedCount"		"6"
-		"OnAbility3Used"			"ability_firefly"
-		"OnAbility3UsedCount"		"9"
-		"OnAbility4Used"			"ability_lasso"
-		"OnAbility4UsedCount"		"11"
-
-		//Orders
-		"battlebegins"				"2" // battlebegins -- OnGameInProgress
-		"anger"						"5" // anger -- OnAngry
-		"attack"					"14" // attack -- OnAttack (When the unit attack another unit)
-		"pain"						"9" // pain -- OnAttacked, when the unit is attacked. Add underattack (1) here?
-		"death"						"15" // death -- OnDeath
-		"deny"						"18" // deny -- OnDeny
-		"happy"						"3" // happy -- OnHappy
-		"kill"						"20" // kill -- OnKill
-		"lasthit"					"15" // lasthit -- OnLastHit
-		"laugh"						"4" // laugh -- OnLaugh
-		"level_voiceline"			"14" // level -- OnLevelUp
-		"lose"						"3" // lose -- OnLose
-		"move"						"22" // move -- OnMove
-		"rare"						"4" // rare -- OnMoveRare
-		"nomana"					"9"	// nomana -- These voicelines should be called in the right order, as the unit gets anger and anger the more you spam
-		"purch"						"4" // purch -- OnPurchase
-		"respawn"					"20" // respawn -- OnRespawn
-		"spawn"						"5" // spawn -- OnSpawn, (loadout?)
-		"thanks"					"2" // thanks -- OnThanks
-		"win"						"4" // win -- OnWin
-
-		"Rivals" // 10, 25 ?? sound_name = batrider_bat_rival_ (rival)
-		{
-			"01"					"lina"
-			"02"					"queenofpain"
-			"03"					"drow_ranger"
-			"04"					"windrunner"
-			"05"					"vengefulspirit"
-			"06"					"enchantress"
-			"07"					"spectre"
-			"08"					"crystal_maiden"
-			"09"					"lina"
-			"11"					"templar_assassin"
-			"12"					"death_prophet"
-			"13"					"mirana"
-			"14"					"broodmother"
-			"15"					"phantom_assassin"
-			"16"					"night_stalker"
-			"17"					"storm_spirit"
-			"18"					"pudge"
-			"19"					"pudge"
-			"20"					"necrolyte"
-			"21"					"faceless_void"
-			"22"					"viper"
-			"23"					"dragon_knight"
-			"24"					"jakiro"
-		}
-
-		"ItemPurchased" // batrider_bat_item_
-		{
-			"01"					"force_staff"
-			"02"					"vanguard"
-			"03"					"arcane_boots"
-		}
 	}
 
 	//=================================================================================================================
@@ -282,48 +205,6 @@
 
 		//Picking Screen
 		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-
-		//Voice Lines (number of voicelines per events)
-		"ShortName"					"beas"
-
-		//Abilities
-		"failure"					"3"		// ability_failure -- OnAbilityFail
-		"notyet"					"9"		// notyet -- OnAbilityNotReady, These voicelines should be called in the right order, as the unit gets anger and anger the more you spam
-		"cast"						"7"		// cast -- OnAbilityUsed
-	
-		"OnAbility1Used"			"ability_axes"
-		"OnAbility1UsedCount"		"6"
-		"OnAbility2Used"			"ability_callwild"
-		"OnAbility2UsedCount"		"5"
-
-		//Orders
-		"battlebegins"				"2"		// battlebegins -- OnGameInProgress
-		"anger"						"6"		// anger -- OnAngry
-		"attack"					"15"	// attack -- OnAttack (When the unit attack another unit)
-		"pain"						"1"		// pain -- OnAttacked, when the unit is attacked. Add underattack (1) here?
-		"death"						"14"	// death -- OnDeath
-		"deny"						"9"		// deny -- OnDeny
-		"happy"						"5"		// happy -- OnHappy
-		"kill"						"14"	// kill -- OnKill
-		"deny"						"8"		// lasthit -- OnLastHit
-		"laugh"						"9"		// laugh -- OnLaugh
-		"level"						"8"		// level -- OnLevelUp
-		"lose"						"3"		// lose -- OnLose
-		"move"						"16"	// move -- OnMove
-		"rare"						"5"		// rare -- OnMoveRare
-		"nomana"					"9"		// nomana -- These voicelines should be called in the right order, as the unit gets anger and anger the more you spam
-		"purch"						"4"		// purch -- OnPurchase
-		"respawn"					"12"	// respawn -- OnRespawn
-		"spawn"						"6"		// spawn -- OnSpawn, (loadout?)
-		"thanks"					"2"		// thanks -- OnThanks
-		"win"						"3"		// win -- OnWin
-	
-		//Shop
-//		"OnAegisPickup"				"2"
-//		"OnAghanimPurchased"		"2"
-//		"OnBlinkPurchased"			"2"
-//		"OnBottlePurchased"			"4"
-//		"OnNecronomiconPurchased"	"7"
 
 		"Ability1"					"beastmaster_wild_axes"
 		"Ability2"					"beastmaster_call_of_the_wild"
@@ -685,32 +566,6 @@
 		"Ability15"					"special_bonus_imba_elder_titan_6" // +3000 Earth Splitter crack distance
 		"Ability16"					"special_bonus_imba_elder_titan_7" // Echo Stomp no longer require channeling
 		"Ability17"					"special_bonus_imba_elder_titan_8" // Natural Order reduces physical and magical resistance
-	}
-
-	//=================================================================================================================
-	// HERO: Ember Spirit
-	//=================================================================================================================
-	"npc_dota_hero_ember_spirit"
-	{
-		"override_hero"				"npc_dota_hero_ember_spirit"
-
-		//Picking Screen
-		"AttributePrimary"			"DOTA_ATTRIBUTE_AGILITY"
-
-		"Ability1"					"ember_spirit_searing_chains"
-		"Ability2"					"ember_spirit_sleight_of_fist"
-		"Ability3"					"ember_spirit_flame_guard"
-		"Ability4"					"ember_spirit_activate_fire_remnant"
-		"Ability5"					"generic_hidden"
-		"Ability6"					"ember_spirit_fire_remnant"
-		"Ability10"					"special_bonus_attack_damage_20"
-		"Ability11"					"special_bonus_unique_ember_spirit_1"
-		"Ability12"					"special_bonus_unique_ember_spirit_3"
-		"Ability13"					"special_bonus_unique_ember_spirit_2"
-		"Ability14"					"special_bonus_spell_amplify_10"
-		"Ability15"					"special_bonus_truestrike"
-		"Ability16"					"generic_hidden"
-		"Ability17"					"special_bonus_unique_ember_spirit_5"
 	}
 
 	//=================================================================================================================

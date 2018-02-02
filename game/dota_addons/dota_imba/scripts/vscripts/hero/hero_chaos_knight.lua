@@ -1,4 +1,4 @@
--- Author: Cookies
+-- Author: EarthSalamander #42
 -- Date: 04/09/2017
 
 --  CreateEmptyTalents("chaos_knight")

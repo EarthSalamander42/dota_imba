@@ -53,7 +53,7 @@ function InitializeUI() {
 			$('#overthrow-loading').style.visibility = 'visible';
 		}
 
-		if (Game.GetLocalPlayerInfo().player_steamid == "76561198015161808" || Game.GetLocalPlayerInfo().player_steamid == "76561198036748162") {
+		if (map_info.map_display_name != "imba_frantic_10v10" && Game.GetLocalPlayerInfo().player_steamid == "76561198015161808" || Game.GetLocalPlayerInfo().player_steamid == "76561198036748162") {
 			$.Msg("Bulldong!")
 			$('#imba-loading').style.visibility = 'visible';
 			$('#GameOptionsPanel').style.visibility = 'visible';
