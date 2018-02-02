@@ -7,7 +7,6 @@ var first_time = false
 
 function ToggleBattlepass() {
 	if (toggle == false) {
-		$("#BattlepassWindow").style.visibility = "visible";
 		toggle = true
 		if (first_time == false) {
 			first_time = true
@@ -15,9 +14,17 @@ function ToggleBattlepass() {
 			Battlepass()
 			HallOfFame("XP")
 		}
+
+		if ($("#BattlepassWindow").BHasClass("sethidden")) {
+			$("#BattlepassWindow").RemoveClass("sethidden")
+		}
+		$("#BattlepassWindow").AddClass("setvisible")
 	} else {
-		$("#BattlepassWindow").style.visibility = "collapse";
 		toggle = false
+		if ($("#BattlepassWindow").BHasClass("setvisible")) {
+			$("#BattlepassWindow").RemoveClass("setvisible")
+		}
+		$("#BattlepassWindow").AddClass("sethidden")
 	}
 }
 
@@ -76,24 +83,11 @@ function Battlepass() {
 			var class_option_count = 1;
 			var plyData = CustomNetTables.GetTableValue("player_table", player);
 
-			//Button Generator (is_donator not added yet in lua)
-			var button_count = 3;
-
-			//			if (plyData.is_donator) {
-			//				button_count = button_count +1;
-			//			}
-
-			var button_size = 100 / button_count;
-			button_size = button_size.toString();
-			$("#BattlepassTabButton").style.width = button_size + "%";
-			$("#DonatorTabButton").style.width = button_size + "%";
-			$("#LeaderboardTabButton").style.width = button_size + "%";
-
 			var reward_row = $.CreatePanel("Panel", $('#BattlepassInfoContainer'), "BattlepassRow" + class_option_count + "_" + player);
 			reward_row.AddClass("BattlepassRow")
 
 			// Battlepass Generator
-			for (var i = 0; i <= 200; i++) {
+			for (var i = 1; i <= 200; i++) {
 				if (BattlepassRewards[i] != undefined) {
 
 					i_count = i_count + 1
@@ -158,65 +152,106 @@ function Battlepass() {
 			donator_row.AddClass("DonatorRow")
 
 			// Companion Generator
-			var companion_unit = []
-			for (var i = 0; i <= companions.length - 1; i++) {
-				if (companions[i] != undefined) {
-					i_count = i + 1
-					companion_unit[i] = companions[i]["file"]
-					//					$.Msg(companion_unit[i.toString()])
+			var plyData = CustomNetTables.GetTableValue("player_table", Players.GetLocalPlayer());
+/*
+			if (plyData.companion_enabled == 1) {
+				if ($("#DonatorOptionsToggle").BHasClass("companion_disabled")) {
+					$("#DonatorOptionsToggle").RemoveClass("companion_disabled")
+				}
+				$("#DonatorOptionsToggle").AddClass("companion_enabled")
+				$("#DonatorOptionsToggleLabel").text = $.Localize("#companion_enabled")
+			} else {
+				if ($("#DonatorOptionsToggle").BHasClass("companion_enabled")) {
+					$("#DonatorOptionsToggle").RemoveClass("companion_enabled")
+				}
+				$("#DonatorOptionsToggle").AddClass("companion_disabled")
+				$("#DonatorOptionsToggleLabel").text = $.Localize("#companion_disabled")
+			}
+*/
+			var companion_unit = [];
+			var companion_name = [];
 
-					if (i_count > 5) {
-						class_option_count = class_option_count + 1
-						var donator_row = $.CreatePanel("Panel", $('#DonatorInfoContainer'), "DonatorRow" + class_option_count + "_" + player);
-						donator_row.AddClass("DonatorRow")
+			// +1 for unique companion (e.g: cookies, baumi, bulldog, icefrog)
+			for (var i = 0; i <= companions.length; i++) {
+				var newbie = false
+				var vip = false
+				i_count = i_count + 1
+
+				if (i == companions.length -1) {
+					newbie = true
+				}
+
+				if (companions[i] != undefined) {
+					companion_unit[i] = companions[i]["file"]
+					companion_name[i] = companions[i]["name"]
+				} else {
+					var steamId = Game.GetLocalPlayerInfo().player_steamid;
+					if (steamId == "76561198015161808") {
+						companion_unit[i] = "npc_imba_donator_companion_cookies"
+						vip = true
+					} else if (steamId == "76561198003571172") {
+						companion_unit[i] = "npc_imba_donator_companion_baumi"
+						vip = true
+					} else if (steamId == "76561198014254115") {
+						companion_unit[i] = "npc_imba_donator_companion_icefrog"
+						vip = true
+					} else if (steamId == "76561198003571172") {
+						companion_unit[i] = "npc_imba_donator_companion_admiral_bulldog"
+						vip = true
+					} else if (steamId == "76561198021465788") {
+						companion_unit[i] = "npc_imba_donator_companion_suthernfriend"
+						vip = true
+					} else {
+						return;
 					}
 
-					var companion = $.CreatePanel("Panel", $("#DonatorRow" + class_option_count + "_" + player), companions[i]["name"]);
-					companion.AddClass("DonatorReward")
+					companion_name[i] = $.Localize(companion_unit[i])
+				}
 
-					var companionpreview = $.CreatePanel("Button", companion, "CompanionPreview_" + i);
-					companionpreview.style.width = "100%";
-					companionpreview.style.height = "85%";
-					companionpreview.BLoadLayoutFromString('<root><Panel><DOTAScenePanel style="width:100%; height:100%;" particleonly="false" unit="' + companion_unit[i.toString()] + '"/></Panel></root>', false, false);
-					companionpreview.style.opacityMask = 'url("s2r://panorama/images/masks/hero_model_opacity_mask_png.vtex");'
+				if (i_count > 5) {
+					class_option_count = class_option_count + 1
+					var donator_row = $.CreatePanel("Panel", $('#DonatorInfoContainer'), "DonatorRow" + class_option_count + "_" + player);
+					donator_row.AddClass("DonatorRow")
+					i_count = 0
+				}
 
-					var companion_unit_name = companion_unit[i];
+				var companion = $.CreatePanel("Panel", $("#DonatorRow" + class_option_count + "_" + player), companion_name[i]);
+				companion.AddClass("DonatorReward")
 
-					/* This is weird. Seams like panorama v8 has a bug here. companion_unit_name should be 
-					 * copy-by-value but instead is copy-by-reference */
-					var event = function (ev) {
-						return function () {
-							SetCompanion(ev);
-						}
-					};
-					
-					companionpreview.SetPanelEvent("onactivate", event(companion_unit_name));
+				var companionpreview = $.CreatePanel("Button", companion, "CompanionPreview_" + i);
+				companionpreview.style.width = "100%";
+				companionpreview.style.height = "85%";
+				companionpreview.BLoadLayoutFromString('<root><Panel><DOTAScenePanel style="width:100%; height:100%;" particleonly="false" unit="' + companion_unit[i.toString()] + '"/></Panel></root>', false, false);
+				companionpreview.style.opacityMask = 'url("s2r://panorama/images/masks/hero_model_opacity_mask_png.vtex");'
 
-					var reward_label = $.CreatePanel("Label", companion, companions[i]["name"] + "_label");
-					reward_label.AddClass("BattlepassRewardLabel")
-					reward_label.text = companions[i]["name"];
+				if (newbie == true) {
+					companionpreview.AddClass("CompanionNew")
+				}
+				if (vip == true) {
+					companionpreview.AddClass("CompanionUnique")
+				}
 
-					if (plyData != null) {
-						if (i <= plyData.Lvl) {
-							var reward_label_unlocked = $.CreatePanel("Label", reward_icon, companions[i] + "_label");
-							reward_label_unlocked.AddClass("BattlepassRewardLabelUnlocked")
-							reward_label_unlocked.text = $.Localize("#battlepass_" + companions[i]);
-						} else {
-							reward_icon.AddClass("BattlepassRewardIcon_locked")
-							var reward_label_locked = $.CreatePanel("Label", reward_icon, companions[i] + "_label");
-							reward_label_locked.AddClass("BattlepassRewardLabelLocked")
-							reward_label_locked.text = $.Localize("battlepass_reward_locked");
-						}
+				var companion_unit_name = companion_unit[i];
 
-						// all tooltips only show the last created window...
-						//						(function () {
-						//							reward_icon.SetPanelEvent("onmouseover", function() {
-						//								$.DispatchEvent("DOTAShowTextTooltip", reward_icon, $.Localize("battlepass_" + companions[i]));
-						//							})
-						//							reward_icon.SetPanelEvent("onmouseout", function() {
-						//								$.DispatchEvent( "DOTAHideTextTooltip", reward_icon);
-						//							})
-						//						})(reward_icon);
+				/* This is weird. Seams like panorama v8 has a bug here. companion_unit_name should be 
+				 * copy-by-value but instead is copy-by-reference */
+				var event = function (ev, name) {
+					return function () {
+						SetCompanion(ev, name);
+					}
+				};
+				
+				companionpreview.SetPanelEvent("onactivate", event(companion_unit_name, companion_name[i]));
+
+				var reward_label = $.CreatePanel("Label", companion, companion_name[i] + "_label");
+				reward_label.AddClass("BattlepassRewardLabel")
+				reward_label.text = companion_name[i];
+
+				if (plyData != null) {
+					if (i <= plyData.Lvl) {
+						var reward_label_unlocked = $.CreatePanel("Label", reward_icon, companions[i] + "_label");
+						reward_label_unlocked.AddClass("BattlepassRewardLabelUnlocked")
+						reward_label_unlocked.text = $.Localize("#battlepass_" + companions[i]);
 					} else {
 						reward_icon.AddClass("BattlepassRewardIcon_locked")
 						var reward_label_locked = $.CreatePanel("Label", reward_icon, companions[i] + "_label");
@@ -224,9 +259,24 @@ function Battlepass() {
 						reward_label_locked.text = $.Localize("battlepass_reward_locked");
 					}
 
-					// onmouseover="UIShowTextTooltip( imba_gamemode_settings_tower_power_title_tooltip )"
-					// onmouseout="UIHideTextTooltip()">
+					// all tooltips only show the last created window...
+					//						(function () {
+					//							reward_icon.SetPanelEvent("onmouseover", function() {
+					//								$.DispatchEvent("DOTAShowTextTooltip", reward_icon, $.Localize("battlepass_" + companions[i]));
+					//							})
+					//							reward_icon.SetPanelEvent("onmouseout", function() {
+					//								$.DispatchEvent( "DOTAHideTextTooltip", reward_icon);
+					//							})
+					//						})(reward_icon);
+				} else {
+					reward_icon.AddClass("BattlepassRewardIcon_locked")
+					var reward_label_locked = $.CreatePanel("Label", reward_icon, companions[i] + "_label");
+					reward_label_locked.AddClass("BattlepassRewardLabelLocked")
+					reward_label_locked.text = $.Localize("battlepass_reward_locked");
 				}
+
+				// onmouseover="UIShowTextTooltip( imba_gamemode_settings_tower_power_title_tooltip )"
+				// onmouseout="UIHideTextTooltip()">
 			}
 		});
 
@@ -304,7 +354,17 @@ function Battlepass() {
 	}
 }
 
-function SetCompanion(companion) {
+var companion_changed = false
+function SetCompanion(companion, name) {
+var is_donator = false
+	if (companion_changed == true) {
+		$.Msg("SLOW DOWN BUDDY!")
+		return;
+	}
+
+	if ($("#CompanionNotification").BHasClass("not_donator")) {
+		$("#CompanionNotification").RemoveClass("not_donator");
+	}
 
 	var steamId = Game.GetLocalPlayerInfo().player_steamid;
 	var url = 'http://api.dota2imba.org/meta/set-companion';
@@ -313,18 +373,49 @@ function SetCompanion(companion) {
 		steam_id: steamId
 	};
 
+	var i = 0
+	var donator = CustomNetTables.GetTableValue("game_options", "donators").donators;
+
+	for (i in donator) {
+		if (donator[i] != undefined) {
+			if (donator[i] == steamId) {
+				is_donator = true
+			}
+		}
+	}
+
+	if (is_donator == false) {
+		$("#CompanionNotification").AddClass("not_donator")
+		$("#CompanionNotificationLabel").text = $.Localize("companion_not_donator");
+		return;
+	}
+
 	$.AsyncWebRequest(url, {
 		type: 'POST',
 		success: function (d) {
 			companions = d.data;
 			$.Msg("Companion Api Good: " + JSON.stringify(d));
+			$("#CompanionNotification").AddClass("success")
+			$("#CompanionNotificationLabel").text = $.Localize("companion_success") + $.Localize(name) + "!";
+			GameEvents.SendCustomGameEventToServer("change_companion", {ID: Players.GetLocalPlayer(), unit: companion});
+			$.Schedule(6.0, function () {
+				$("#CompanionNotification").RemoveClass("success");
+				companion_changed = false
+			});
 		},
 		data: data,
 		error: function (err) {
 			$.Msg("Companion Api Error: " + JSON.stringify(err));
+			$("#CompanionNotification").AddClass("failure")
+			$("#CompanionNotificationLabel").text = $.Localize("companion_error");
+			$.Schedule(6.0, function () {
+				$("#CompanionNotification").RemoveClass("failure");
+				companion_changed = false
+			});
 		}
 	});
 
+	companion_changed = true
 }
 
 var current_type = ""

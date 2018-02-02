@@ -2079,7 +2079,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"movement_speed_pct"	"-15 -20 -25 -30"
+				"spell_resist_pct"	"-15 -20 -25 -30"
 				"LinkedSpecialBonus"	"special_bonus_unique_ancient_apparition_4"
 			}
 			"04"
@@ -5772,6 +5772,21 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"speed"					"1300"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ember Spirit: +3 Sleight of fist charges
+	//=================================================================================================================
+	"special_bonus_unique_ember_spirit_4"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"				"3"
 			}
 		}
 	}

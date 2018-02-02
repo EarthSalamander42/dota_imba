@@ -170,6 +170,10 @@
 	//Donator Tab
 	"donator_companion"		"Selected Companion"
 	"donator_info"			"Select a Companion"
+	"companion_enabled"		"Companion enabled."
+	"companion_disabled"	"Companion disabled."
+//	"companion_enabled"		"Companion enabled. (Click to disable)"
+//	"companion_disabled"	"Companion disabled. (Click to enable)"
 
 	//Leaderboard
 	"leaderboard"					"Leaderboard"
@@ -235,6 +239,10 @@
 	"battlepass_bottle2"			"Gold Bottle"
 	"battlepass_bottle3"			"Red Bottle"
 	"battlepass_bottle4"			"Purple Bottle"
+
+	"companion_success"				"Companion changed with: "
+	"companion_error"				"Oops! Something went wrong."
+	"companion_not_donator"			"This feature is only for Patreon donators. Click here to pledge!"
 
 	// Overthrow
 		"PointsToWin"									"+{d:points_to_win} more"

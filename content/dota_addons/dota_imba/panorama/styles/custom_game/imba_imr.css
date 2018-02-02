@@ -34,7 +34,6 @@
 {
 	width: 150px;
 	height: 35px;
-	margin-top: 0%;
 	padding: 4px 4px 4px 4px;
 	border-radius: 4px;
 	background-color: #000090ba;
@@ -69,12 +68,21 @@
 #BattlepassWindow
 {
 	width: 820px;
-	height: 670px;
+	height: 760px;
+	margin-bottom: 150px;
 	background-color: #000000da;
-	align: center center;
+	align: right center;
 	flow-children: down;
 	visibility: collapse;
 	padding: 10px;
+}
+
+#BattlepassWindow.setvisible {
+	visibility: visible;
+}
+
+#BattlepassWindow.sethidden {
+	visibility: collapse;
 }
 
 #InfoContent
@@ -88,7 +96,7 @@
 #DonatorInfoContainer,
 #LeaderboardInfoContainer, {
 	width: 100%;
-	height: fit-children;
+	height: 64%;
 	flow-children: down;
 	padding: 1% 1% 1% 1%;
 }
@@ -141,7 +149,6 @@
 .LeaderboardAvatar,
 .LeaderboardAvatar_alt
 {
-	margin-top: 0px;
 	text-align: center;
 	font-size: 19px;
 	font-weight: bolder;
@@ -237,25 +244,29 @@
 }
 
 #BattlepassTabButton,
+#CloseButton {
+	width: 100%;
+	height: 40px;
+	align: center bottom;
+	saturation: 0.9;
+}
+
+#BattlepassTabButton,
 #DonatorTabButton,
 #LeaderboardTabButton
 {
+	width: 33.333333333333333333%;
 	height: 40px;
 	align: center bottom;
 	background-color: #500000ba;
 	saturation: 0.9;
 }
 
-#BattlepassTabButton,
-#CloseButton {
-	width: 100%;
-	height: 40px;
-	align: center bottom;
-	saturation: 0.9;
+#BattlepassTabButton {
 	background-color: #000090ba;
 }
 
-#BattlepassTabButton {
+#CloseButton {
 	background-color: #000090ba;
 }
 
@@ -622,4 +633,122 @@
 
 .DonatorReward:active {
 	background-color: #000000aa;
+}
+
+#player_10 {
+	border-bottom: 1px solid white;
+}
+
+#CompanionNotification {
+	width: 100%;
+	height: 10%;
+	background-color: black;
+	align: center center;
+	visibility: collapse;
+}
+
+#CompanionNotification.success,
+#CompanionNotification.failure {
+	background-color: green;
+	animation-name: fade_full;
+	animation-duration: 3.0s;
+	animation-timing-function: ease-in;
+	animation-direction: alternate;
+	animation-iteration-count: infinite;
+	visibility: visible;
+	border-radius: 50px;
+}
+
+#CompanionNotification.failure {
+	background-color: darkred;
+}
+
+#CompanionNotification.not_donator {
+	animation-duration: 3.0s;
+	animation-name: fade_full;
+	animation-timing-function: ease-in;
+	animation-direction: alternate;
+	animation-iteration-count: 1;
+	background-color: #905000da;
+	visibility: visible;
+	border-radius: 50px;
+}
+
+#CompanionNotification.not_donator:hover {
+	background-color: #804000da;
+}
+
+#CompanionNotification.not_donator:active {
+	background-color: #703000da;
+}
+
+#CompanionNotificationLabel {
+	align: center center;
+	color: white;
+	text-align: center center;
+	font-size: 22px;
+	font-weight: bolder;
+}
+
+.CompanionNew {
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #3366ffba ), to( #414849ba ) );
+}
+
+.CompanionUnique {
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #997300ba ), to( #414849ba ) );
+}
+
+#DonatorOptions {
+	width: 100%;
+	height: 15%;
+	margin-bottom: 5px;
+	background-color: #000000da;
+	padding: 10px;
+}
+
+#DonatorOptionsToggle {
+	wash-color: #CDF;
+}
+
+#DonatorOptionsToggle
+{
+	width: 33%;
+	height: 100%;
+	align: left center;
+	saturation: 0.9;
+}
+
+#DonatorOptionsToggleLabel {
+	align: center center;
+	color: white;
+	text-align: center center;
+	font-size: 16px;
+}
+
+.companion_enabled {
+	background-color: #000090ba;
+}
+
+.companion_enabled:hover {
+	background-color: #000060ba;
+}
+
+.companion_enabled:active
+{
+	saturation: 1.0;
+	background-color: #000030ba;
+}
+
+.companion_disabled {
+	background-color: #500000ba;
+}
+
+.companion_disabled:hover {
+	background-color: #400000ba;
+}
+
+.companion_disabled:active
+{
+	saturation: 1.0;
+	background-color: #300000ba;
 }

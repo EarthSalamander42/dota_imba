@@ -21,9 +21,9 @@ function imba_api_init(complete_fun)
 			and api_preloaded.developers ~= nil 
 			and api_preloaded.players ~= nil
 			and api_preloaded.topxpusers ~= nil 
-            and api_preloaded.topimrusers ~= nil
-            and api_preloaded.hot_disabled_heroes ~= nil
-            and api_preloaded.companions ~= nil
+			and api_preloaded.topimrusers ~= nil
+			and api_preloaded.hot_disabled_heroes ~= nil
+			and api_preloaded.companions ~= nil
 		then
 			imba_apifrontend_print("Preloading completed")
 			complete_fun()
@@ -192,12 +192,12 @@ function HeroIsHotDisabled(hero)
 		return false
 	end
 
-    for i = 1, #api_preloaded.hot_disabled_heroes do
-        if api_preloaded.hot_disabled_heroes[i] == hero then
-            return true
-        end
-    end
-    return false
+	for i = 1, #api_preloaded.hot_disabled_heroes do
+		if api_preloaded.hot_disabled_heroes[i] == hero then
+			return true
+		end
+	end
+	return false
 end
 
 -- Returns the gameid

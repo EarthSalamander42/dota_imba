@@ -65,9 +65,6 @@ function GameMode:OnDisconnect(keys)
 end
 
 function GameMode:OnGameRulesStateChange(keys)
-	DebugPrint("[BAREBONES] GameRules State Changed")
-	DebugPrintTable(keys)
-
 	-- This internal handling is used to set up main barebones functions
 	GameMode:_OnGameRulesStateChange(keys)
 
@@ -100,17 +97,39 @@ function GameMode:OnGameRulesStateChange(keys)
 		-- Initialize rune spawners
 		InitRunes()
 
+		local donators_steamid = {}
+		if #api_preloaded.donators then
+			for i = 1, #api_preloaded.donators do
+				table.insert(donators_steamid, api_preloaded.donators[i].steamId64)
+			end
+		end
+
+		CustomNetTables:SetTableValue("game_options", "donators", {donators = donators_steamid})
+
 		-------------------------------------------------------------------------------------------------
 		-- IMBA: Custom maximum level EXP tables adjustment
 		-------------------------------------------------------------------------------------------------
 		local max_level = tonumber(CustomNetTables:GetTableValue("game_options", "max_level")["1"])
-		print("MAX LEVEL:", max_level)
 		if max_level and max_level > 25 then
 			for i = 26, max_level do
 				XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + 2500
 				GameRules:GetGameModeEntity():SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
 			end
 		end
+
+		Timers:CreateTimer(2.0, function()
+			for _, hero in pairs(HeroList:GetAllHeroes()) do
+				if IsDeveloper(hero:GetPlayerID()) then
+					hero.has_graph = true
+					CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph", {})
+--					CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
+				end
+
+				for k, v in pairs(api_preloaded.donators) do
+					CustomNetTables:SetTableValue("player_table", tostring(hero:GetPlayerID()), {companion_model = api_preloaded.donators[k].model, companion_enabled = api_preloaded.donators[k].enabled})
+				end
+			end
+		end)
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -118,14 +137,6 @@ function GameMode:OnGameRulesStateChange(keys)
 	-------------------------------------------------------------------------------------------------
 	if new_state == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		ApiEvent(ApiEventCodes.StartedGame)
-
-		for _, hero in pairs(HeroList:GetAllHeroes()) do
-			if IsDeveloper(hero:GetPlayerID()) then
-				hero.has_graph = true
-				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph", {})
---				CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "show_netgraph_heronames", {})
-			end
-		end
 
 		Timers:CreateTimer(60, function()
 			StartGarbageCollector()
@@ -305,7 +316,6 @@ local greeviling = false
 
 		if npc:IsCourier() then
 			if not npc:HasModifier("modifier_courier_hack") then
-				print("Apply courier modifier hack!")
 				npc:AddNewModifier(courier, nil, "modifier_courier_hack", {})
 			end
 
@@ -353,12 +363,11 @@ local greeviling = false
 	end
 
 	if npc:IsRealHero() then
-	
+
 		ApiEvent(ApiEventCodes.HeroRespawned, {
 			tostring(npc:GetUnitName()),
 			tostring(PlayerResource:GetSteamID(npc:GetPlayerID()))
 		})
-		
 	
 		if not npc.first_spawn then
 			if npc:GetUnitName() == "npc_dota_hero_troll_warlord" then
@@ -369,17 +378,21 @@ local greeviling = false
 
 			if IsDonator(npc) ~= false then
 				if npc:GetUnitName() ~= "npc_dota_hero_wisp" or npc.is_real_wisp then
-					if tostring(PlayerResource:GetSteamID(npc:GetPlayerID())) == "76561198015161808" then
-						DonatorCompanion(npc, "npc_imba_donator_companion_cookies")
-					elseif tostring(PlayerResource:GetSteamID(npc:GetPlayerID())) == "76561198003571172" then
-						DonatorCompanion(npc, "npc_imba_donator_companion_baumi")
-					elseif tostring(PlayerResource:GetSteamID(npc:GetPlayerID())) == "76561198014254115" then
-						DonatorCompanion(npc, "npc_imba_donator_companion_icefrog")
-					elseif tostring(PlayerResource:GetSteamID(npc:GetPlayerID())) == "76561198014254115" then
-						DonatorCompanion(npc, "npc_imba_donator_companion_admiral_bulldog")
-					else
-						DonatorCompanion(npc, IsDonator(npc))
-					end
+					Timers:CreateTimer(2.0, function()
+						if tostring(PlayerResource:GetSteamID(npc:GetPlayerID())) == "76561198015161808" then
+							DonatorCompanion(npc:GetPlayerID(), "npc_imba_donator_companion_cookies")
+						elseif tostring(PlayerResource:GetSteamID(npc:GetPlayerID())) == "76561198003571172" then
+							DonatorCompanion(npc:GetPlayerID(), "npc_imba_donator_companion_baumi")
+						elseif tostring(PlayerResource:GetSteamID(npc:GetPlayerID())) == "76561198014254115" then
+							DonatorCompanion(npc:GetPlayerID(), "npc_imba_donator_companion_icefrog")
+						elseif tostring(PlayerResource:GetSteamID(npc:GetPlayerID())) == "76561198014254115" then
+							DonatorCompanion(npc:GetPlayerID(), "npc_imba_donator_companion_admiral_bulldog")
+						elseif tostring(PlayerResource:GetSteamID(npc:GetPlayerID())) == "76561198021465788" then
+							DonatorCompanion(npc:GetPlayerID(), "npc_imba_donator_companion_suthernfriend")
+						else
+							DonatorCompanion(npc:GetPlayerID(), IsDonator(npc))
+						end
+					end)
 				end
 			end
 
@@ -656,26 +669,17 @@ end
 
 -- A non-player entity (necro-book, chen creep, etc) used an ability
 function GameMode:OnNonPlayerUsedAbility(keys)
-	DebugPrint('[BAREBONES] OnNonPlayerUsedAbility')
-	DebugPrintTable(keys)
-
 	local abilityname = keys.abilityname
 end
 
 -- A player changed their name
 function GameMode:OnPlayerChangedName(keys)
-	DebugPrint('[BAREBONES] OnPlayerChangedName')
-	DebugPrintTable(keys)
-
 	local newName = keys.newname
 	local oldName = keys.oldName
 end
 
 -- A player leveled up an ability
 function GameMode:OnPlayerLearnedAbility( keys)
-	DebugPrint('[BAREBONES] OnPlayerLearnedAbility')
-	DebugPrintTable(keys)
-
 	local player = EntIndexToHScript(keys.player)
 	local hero = player:GetAssignedHero()
 	local abilityname = keys.abilityname
@@ -703,9 +707,6 @@ end
 
 -- A channelled ability finished by either completing or being interrupted
 function GameMode:OnAbilityChannelFinished(keys)
-	DebugPrint('[BAREBONES] OnAbilityChannelFinished')
-	DebugPrintTable(keys)
-
 	local abilityname = keys.abilityname
 	local interrupted = keys.interrupted == 1
 end
@@ -720,7 +721,6 @@ function GameMode:OnPlayerLevelUp(keys)
 	-- IMBA: Hero experience bounty adjustment
 	-------------------------------------------------------------------------------------------------
 	hero:SetCustomDeathXP(HERO_XP_BOUNTY_PER_LEVEL[hero_level])
-	HeroVoiceLine(hero, "level_voiceline")
 
 	ApiEvent(ApiEventCodes.HeroLevelUp, {
 		tostring(hero:GetUnitName()),
@@ -729,19 +729,17 @@ function GameMode:OnPlayerLevelUp(keys)
 	})
 
 	if hero_level >= 26 then
-		if not hero:HasModifier("modifier_imba_war_veteran") then
-			hero:AddNewModifier(hero, nil, "modifier_imba_war_veteran", {})
+		if not hero:HasModifier("modifier_imba_war_veteran_"..hero:GetPrimaryAttribute()) then
+			hero:AddNewModifier(hero, nil, "modifier_imba_war_veteran_"..hero:GetPrimaryAttribute(), {})
 		end
 
-		hero:SetModifierStackCount("modifier_imba_war_veteran", hero, hero:GetLevel() -25)
+		hero:SetModifierStackCount("modifier_imba_war_veteran_"..hero:GetPrimaryAttribute(), hero, hero:GetLevel() -25)
+		hero:SetAbilityPoints(hero:GetAbilityPoints() -1)
 	end
 end
 
 -- A player last hit a creep, a tower, or a hero
 function GameMode:OnLastHit(keys)
-	DebugPrint('[BAREBONES] OnLastHit')
-	DebugPrintTable(keys)
-
 	if keys.PlayerID == -1 then return end
 	local isFirstBlood = keys.FirstBlood == 1
 	local isHeroKill = keys.HeroKill == 1
@@ -760,7 +758,6 @@ function GameMode:OnLastHit(keys)
 	streak[10] = "Beyond Godlike"
 
 	if isFirstBlood then
-		HeroVoiceLine(player:GetAssignedHero(), "firstblood")
 
 		player:GetAssignedHero().kill_hero_bounty = 0
 		Timers:CreateTimer(FrameTime() * 2, function()
@@ -794,18 +791,12 @@ end
 
 -- A tree was cut down by tango, quelling blade, etc
 function GameMode:OnTreeCut(keys)
-	DebugPrint('[BAREBONES] OnTreeCut')
-	DebugPrintTable(keys)
-
 	local treeX = keys.tree_x
 	local treeY = keys.tree_y
 end
 
 -- A rune was activated by a player
 function GameMode:OnRuneActivated(keys)
-	DebugPrint('[BAREBONES] OnRuneActivated')
-	DebugPrintTable(keys)
-
 	local player = PlayerResource:GetPlayer(keys.PlayerID)
 	local rune = keys.rune
 
@@ -828,9 +819,6 @@ end
 
 -- A player took damage from a tower
 function GameMode:OnPlayerTakeTowerDamage(keys)
-	DebugPrint('[BAREBONES] OnPlayerTakeTowerDamage')
-	DebugPrintTable(keys)
-
 	local player = PlayerResource:GetPlayer(keys.PlayerID)
 	local damage = keys.damage
 end
@@ -992,9 +980,6 @@ end
 
 -- An entity died
 function GameMode:OnEntityKilled( keys )
-	DebugPrint( '[BAREBONES] OnEntityKilled Called' )
-	DebugPrintTable( keys )
-
 	GameMode:_OnEntityKilled( keys )
 
 	-- The Unit that was killed
@@ -1086,7 +1071,6 @@ function GameMode:OnEntityKilled( keys )
 			end
 
 			if GetMapName() == "imba_overthrow" then
-				print("Imbathrow map")
 				allSpawned = true
 				--print("Hero has been killed")
 				--Add extra time if killed by Necro Ult
@@ -1142,9 +1126,9 @@ function GameMode:OnEntityKilled( keys )
 					end
 				end
 				if killed_unit:GetRespawnTime() > 10 then
-					--print("Hero has long respawn time")
+					print("Hero has long respawn time")
 					if killed_unit:IsReincarnating() == true then
-						--print("Set time for Wraith King respawn disabled")
+						print("Set time for Wraith King respawn disabled")
 					else
 						GameMode:SetRespawnTime( killed_unit:GetTeamNumber(), killed_unit, 0 )
 					end
@@ -1181,7 +1165,7 @@ function GameMode:OnEntityKilled( keys )
 				})
 
 			end
-			
+
 			-- Buyback parameters
 			local player_id = killed_unit:GetPlayerID()
 			local hero_level = killed_unit:GetLevel()
@@ -1211,15 +1195,6 @@ function GameMode:OnEntityKilled( keys )
 			-- Update buyback cost
 			PlayerResource:SetCustomBuybackCost(player_id, buyback_cost)
 			PlayerResource:SetCustomBuybackCooldown(player_id, buyback_cooldown)
-			HeroVoiceLine(killer, "kill", killed_unit)
-		end
-
-		if string.find(killed_unit:GetUnitName(), "dota_creep") then
-			if killer:GetTeamNumber() == killed_unit:GetTeamNumber() then
-				HeroVoiceLine(killer, "deny")
-			else
-				HeroVoiceLine(killer, "lasthit")
-			end
 		end
 
 		local gold_bounty = 200
@@ -1329,16 +1304,11 @@ end
 
 -- This function is called 1 to 2 times as the player connects initially but before they have completely connected
 function GameMode:PlayerConnect(keys)
-	DebugPrint('[BAREBONES] PlayerConnect')
-	DebugPrintTable(keys)
+
 end
 
 -- This function is called once when the player fully connects and becomes "Ready" during Loading
 function GameMode:OnConnectFull(keys)
-	DebugPrint('[BAREBONES] OnConnectFull')
-	DebugPrintTable(keys)
-	
-
 	GameMode:_OnConnectFull(keys)
 	
 	local entIndex = keys.index+1
@@ -1372,9 +1342,6 @@ end
 
 -- This function is called whenever an item is combined to create a new item
 function GameMode:OnItemCombined(keys)
-	DebugPrint('[BAREBONES] OnItemCombined')
-	DebugPrintTable(keys)
-
 	-- The playerID of the hero who is buying something
 	local plyID = keys.PlayerID
 	if not plyID then return end
@@ -1389,9 +1356,6 @@ end
 
 -- This function is called whenever an ability begins its PhaseStart phase (but before it is actually cast)
 function GameMode:OnAbilityCastBegins(keys)
-	DebugPrint('[BAREBONES] OnAbilityCastBegins')
-	DebugPrintTable(keys)
-
 	local player = PlayerResource:GetPlayer(keys.PlayerID)
 	local abilityName = keys.abilityname
 end
@@ -1437,9 +1401,6 @@ end
 
 -- This function is called whenever a player changes there custom team selection during Game Setup 
 function GameMode:OnPlayerSelectedCustomTeam(keys)
-	DebugPrint('[BAREBONES] OnPlayerSelectedCustomTeam')
-	DebugPrintTable(keys)
-
 	local player = PlayerResource:GetPlayer(keys.player_id)
 	local success = (keys.success == 1)
 	local team = keys.team_id
@@ -1447,9 +1408,6 @@ end
 
 -- This function is called whenever an NPC reaches its goal position/target
 function GameMode:OnNPCGoalReached(keys)
-	DebugPrint('[BAREBONES] OnNPCGoalReached')
-	DebugPrintTable(keys)
-
 	local goalEntity = EntIndexToHScript(keys.goal_entindex)
 	local nextGoalEntity = EntIndexToHScript(keys.next_goal_entindex)
 	local npc = EntIndexToHScript(keys.npc_entindex)

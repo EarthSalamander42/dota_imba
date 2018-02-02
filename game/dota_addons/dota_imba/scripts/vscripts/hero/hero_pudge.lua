@@ -864,8 +864,15 @@ end
 function imba_pudge_dismember:OnSpellStart()
 	local caster = self:GetCaster()
 	local target = self:GetCursorTarget()
+
+	if caster:GetTeamNumber() ~= target:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(self) then
+			return nil
+		end
+	end
+
 	self.target = target
-	target:AddNewModifier(caster, self, "modifier_dismember", {})
+	target:AddNewModifier(caster, self, "modifier_dismember", {duration=self.channelTime})
 	caster:AddNewModifier(caster, self, "modifier_imba_pudge_dismember_buff", {})
 	self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_dismember.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 end

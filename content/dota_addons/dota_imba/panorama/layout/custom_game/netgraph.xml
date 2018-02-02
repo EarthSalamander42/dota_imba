@@ -53,9 +53,15 @@
 			<Button id="ToggleNetGraph" class="Button" onmouseactivate="ToggleNetGraph();" >
 				<Label id="UniqueStatsButtonText" class="Event1_Title" text="Toggle Stats"/>
 			</Button>
-			<Button id="RemoveUnits" class="Button" onmouseactivate="RemoveUnits();" >
-				<Label id="UniqueStatsButtonText" class="Event1_Title" text="Remove Units"/>
+
+			<Button id="MaxLevel" class="Button" onmouseactivate="MaxLevel();" >
+				<Label id="UniqueStatsButtonText" class="Event1_Title" text="Max Level"/>
 			</Button>
+
+			<Button id="RemoveUnits" class="Button" onmouseactivate="RemoveUnits();" >
+				<Label id="UniqueStatsButtonText" class="Event1_Title" text="Remove Jungle Creeps"/>
+			</Button>
+
 <!--			<Button id="RemoveParticles" class="Button" onmouseactivate="RemoveParticles();" >
 				<Label id="UniqueStatsButtonText" class="Event1_Title" text="Remove Particles"/>
 			</Button> -->

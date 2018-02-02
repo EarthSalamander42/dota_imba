@@ -298,6 +298,12 @@ end
 		end
 	end
 
+	if HeroIsHotDisabled(random_hero) then
+		print("Hero is Hot Disabled!")
+		HeroSelection:RandomHero({PlayerID = id})
+		return
+	end
+
 	-- Flag the player as having randomed
 	PlayerResource:SetHasRandomed(id)
 
@@ -371,6 +377,12 @@ local id = event.PlayerID
 		end
 	end
 
+	if HeroIsHotDisabled(random_hero) then
+		print("Hero is Hot Disabled!")
+		HeroSelection:RandomHero({PlayerID = id})
+		return
+	end
+
 	PlayerResource:SetHasRandomed(id)
 	HeroSelection:HeroSelect({PlayerID = id, HeroName = random_hero, HasRandomed = true})
 	HeroSelection.playerPickState[id].random_state = true
@@ -382,6 +394,58 @@ function HeroSelection:RandomSameHero()
 
 	-- Roll a random hero, and keep it stored
 	local random_hero = HeroSelection.random_heroes[RandomInt(1, #HeroSelection.random_heroes)]
+
+	if GetMapName() == "imba_10v10" or GetMapName() == "imba_frantic_10v10" then
+		for _, picked_hero in pairs(HeroSelection.disabled_10v10_heroes) do
+			if random_hero == picked_hero then
+				print("10v10 hero disabled, random again...")
+				HeroSelection:RandomHero({PlayerID = id})
+				break
+			end
+		end
+
+		if GetMapName() == "imba_frantic_10v10" then
+			for _, picked_hero in pairs(HeroSelection.disabled_frantic_heroes) do
+				if random_hero == picked_hero then
+					print("10v10 hero disabled, random again...")
+					HeroSelection:RandomHero({PlayerID = id})
+					break
+				end
+			end
+		end
+	end
+
+	for _, picked_hero in pairs(HeroSelection.disabled_heroes) do
+		if random_hero == picked_hero then
+			print("Hero disabled, random again...")
+			HeroSelection:RandomHero({PlayerID = id})
+			break
+		end
+	end
+
+	for _, picked_hero in pairs(HeroSelection.disabled_silent_heroes) do
+		if random_hero == picked_hero then
+			print("Hero disabled silently, random again...")
+			HeroSelection:RandomHero({PlayerID = id})
+			break
+		end
+	end
+
+	if GetMapName() == "imba_overthrow" then
+		for _, picked_hero in pairs(HeroSelection.disabled_overthrow_heroes) do
+			if random_hero == picked_hero then
+				print("Overthrow hero disabled, random again...")
+				HeroSelection:RandomHero({PlayerID = id})
+				break
+			end
+		end
+	end
+
+	if HeroIsHotDisabled(random_hero) then
+		print("Hero is Hot Disabled!")
+		HeroSelection:RandomHero({PlayerID = id})
+		return
+	end
 
 	for _, hero in pairs(HeroList:GetAllHeroes()) do
 		PlayerResource:SetHasRandomed(hero:GetPlayerOwnerID())

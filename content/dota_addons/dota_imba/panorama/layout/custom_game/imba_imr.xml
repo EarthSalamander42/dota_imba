@@ -76,6 +76,17 @@
 			</Panel>
 
 			<Panel id="DonatorInfoContainer" hittest="false">
+<!--
+				<Panel id="DonatorOptions" hittest="false">
+					<Button id="DonatorOptionsToggle" onactivate="">
+						<Label id="DonatorOptionsToggleLabel"/>
+					</Button>
+				</Panel>
+-->
+				<Button id="CompanionNotification" onactivate="DOTADisplayURL('https://www.patreon.com/dotaimba');">
+					<Label id="CompanionNotificationLabel"/>
+				</Button>
+	
 				<Label class="DonatorTabLabel" text="#donator_info" />
 				<!-- JS Inserts records here -->
 			</Panel>

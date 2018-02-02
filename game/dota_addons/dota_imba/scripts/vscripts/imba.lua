@@ -61,7 +61,6 @@ function GameMode:PostLoadPrecache()
 	-- precache companions
 	if GetAllCompanions() ~= nil then
 		for k, v in pairs(GetAllCompanions()) do
-			print("Precaching companion:", v.file)
 			PrecacheUnitWithQueue(v.file)
 		end
 	end
@@ -1541,7 +1540,11 @@ function GameMode:InitGameMode()
 	Convars:RegisterCommand("imba_test", Dynamic_Wrap(self, 'StartImbaTest'), "Spawns several units to help with testing", FCVAR_CHEAT)
 	Convars:RegisterCommand("particle_table_print", PrintParticleTable, "Prints a huge table of all used particles", FCVAR_CHEAT)	
 
-	CustomGameEventManager:RegisterListener("remove_units", Dynamic_Wrap(self, "RemoveUnits"))
+	CustomGameEventManager:RegisterListener("netgraph_max_level", Dynamic_Wrap(self, "MaxLevel"))
+	CustomGameEventManager:RegisterListener("netgraph_remove_units", Dynamic_Wrap(self, "RemoveUnits"))
+	CustomGameEventManager:RegisterListener("netgraph_give_item", Dynamic_Wrap(self, "NetgraphGiveItem"))
+	CustomGameEventManager:RegisterListener("change_companion", Dynamic_Wrap(self, "DonatorCompanionJS"))
+
 
 	-- Panorama event stuff
 	initScoreBoardEvents()
@@ -1747,7 +1750,10 @@ local count = 0
 			end
 		end
 --	end
-	Notifications:TopToAll({text="Critical lags! All creeps have been removed: "..count, duration=10.0})
+
+	if count > 0 then
+		Notifications:TopToAll({text="Critical lags! Developer removed Jungle creeps: "..count, duration=10.0})
+	end
 end
 --[[
 function GameMode:ProcessItemForLootExpire( item, flCutoffTime )
@@ -2152,4 +2158,45 @@ local newState = GameRules:State_Get()
 	end
 
 	return 1
+end
+
+function GameMode:DonatorCompanionJS(event)
+	DonatorCompanion(event.ID, event.unit)
+end
+
+function GameMode:MaxLevel(event)
+local hero = PlayerResource:GetPlayer(event.ID):GetAssignedHero()
+
+	if IsInToolsMode() then
+		hero:AddExperience(500000, DOTA_ModifyXP_Unspecified, false, true)
+		for i = 0, 23 do 
+			local ability = hero:GetAbilityByIndex(i)
+			if IsValidEntity(ability) then
+				if ability:GetLevel() < ability:GetMaxLevel() then
+					for j = 1, ability:GetMaxLevel() - ability:GetLevel() do
+					hero:UpgradeAbility(ability)
+					end
+				end
+			end
+		end
+	else
+		AntiDevCheat()
+	end
+end
+
+function GameMode:NetgraphGiveItem(event)
+local hero = PlayerResource:GetPlayer(event.ID):GetAssignedHero()
+
+	if IsInToolsMode() then
+		hero:AddItemByName("item_"..event.item)
+		hero:AddItemByName("item_imba_"..event.item)
+	else
+		AntiDevCheat()
+	end
+end
+
+function AntiDevCheat()
+	Notifications:BottomToAll({hero = hero:GetName(), duration = 10.0})
+	Notifications:BottomToAll({text = PlayerResource:GetPlayerName(event.ID).." ", duration = 5.0, continue = true})
+	Notifications:BottomToAll({text = "is trying to cheat using dev tool! GET HIM!", duration = 5.0, style = {color = "Red"}, continue = true})
 end
