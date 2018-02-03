@@ -1,3 +1,20 @@
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Editors:
+--
+
 item_imba_black_queen_cape = item_imba_black_queen_cape or class({})
 LinkLuaModifier( "modifier_imba_black_queen_cape_passive", "items/item_black_queen_cape.lua", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_imba_black_queen_cape_active_heal", "items/item_black_queen_cape.lua", LUA_MODIFIER_MOTION_NONE )
@@ -11,7 +28,7 @@ function item_imba_black_queen_cape:GetIntrinsicModifierName()
 end
 
 function item_imba_black_queen_cape:GetAbilityTextureName()
-   return "custom/imba_black_queen_cape"
+	return "custom/imba_black_queen_cape"
 end
 
 function item_imba_black_queen_cape:OnSpellStart()
@@ -31,7 +48,7 @@ function item_imba_black_queen_cape:OnSpellStart()
 	local target = self:GetCursorTarget()
 
 	EmitSoundOn("DOTA_Item.BlackKingBar.Activate", target)
-	
+
 	local particle_fx = ParticleManager:CreateParticle(urn_particle, PATTACH_ABSORIGIN_FOLLOW, caster)
 	ParticleManager:SetParticleControl(particle_fx, 0, caster:GetAbsOrigin())
 	ParticleManager:SetParticleControl(particle_fx, 1, target:GetAbsOrigin())
@@ -75,16 +92,16 @@ end
 
 function modifier_imba_black_queen_cape_passive:DeclareFunctions()
 	local decFuns =
-	{
-		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
-		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
-		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
-		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
-		MODIFIER_EVENT_ON_HERO_KILLED
-	}
+		{
+			MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+			MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
+			MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
+			MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+			MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+			MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+			MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+			MODIFIER_EVENT_ON_HERO_KILLED
+		}
 	return decFuns
 end
 
@@ -131,7 +148,7 @@ function modifier_imba_black_queen_cape_passive:OnHeroKilled( params )
 				for i = 0, 5 do
 					local item = ally:GetItemInSlot(i)
 					if item then
-					-- if we find a BQC that's closer than us (that actually belongs to the cheeky bastard), stop searching
+						-- if we find a BQC that's closer than us (that actually belongs to the cheeky bastard), stop searching
 						if ( item:GetName() == cape_item_name ) and ( item:GetPurchaser() == ally ) then
 							if (ally:GetAbsOrigin() - target:GetAbsOrigin()):Length2D() < our_distance then
 								return nil
@@ -214,10 +231,10 @@ end
 
 function modifier_imba_black_queen_cape_active_heal:DeclareFunctions()
 	local decFuns =
-	{
-		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
-		MODIFIER_EVENT_ON_TAKEDAMAGE
-	}
+		{
+			MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
+			MODIFIER_EVENT_ON_TAKEDAMAGE
+		}
 	return decFuns
 end
 

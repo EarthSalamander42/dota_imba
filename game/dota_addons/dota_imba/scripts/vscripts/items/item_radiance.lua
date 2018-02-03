@@ -1,3 +1,20 @@
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Editors:
+--
+
 --	Author		 -	d2imba
 --	DateCreated	 -	25.03.2015	<-- It owes Jesus money
 --	Date Updated -	05.03.2017
@@ -35,7 +52,7 @@ function item_imba_radiance:GetAbilityTextureName()
 		if not caster.radiance_icon_client then return "custom/imba_radiance" end
 		return "custom/imba_radiance"..caster.radiance_icon_client
 	end
-	
+
 	return "custom/imba_radiance_inactive"
 end
 
@@ -106,15 +123,15 @@ function modifier_imba_radiance_aura:IsPurgable() return false end
 
 function modifier_imba_radiance_aura:GetAuraSearchTeam()
 	return DOTA_UNIT_TARGET_TEAM_ENEMY end
-	
+
 function modifier_imba_radiance_aura:GetAuraSearchType()
 	return DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO
 end
-	
+
 function modifier_imba_radiance_aura:GetModifierAura()
 	return "modifier_imba_radiance_burn"
 end
-	
+
 function modifier_imba_radiance_aura:GetAuraRadius()
 	return self:GetAbility():GetSpecialValueFor("aura_radius")
 end
@@ -183,7 +200,7 @@ function modifier_imba_radiance_burn:OnDestroy()
 		-- Destroy particle
 		ParticleManager:DestroyParticle(self.particle, false)
 		ParticleManager:ReleaseParticleIndex(self.particle)
-		
+
 		-- Apply afterburn with the appropriate amount of accumulates stacks
 		local stacks = self:GetStackCount()
 		if stacks > 0 then
@@ -192,7 +209,7 @@ function modifier_imba_radiance_burn:OnDestroy()
 			if not modifier_afterburn then
 				modifier_afterburn = parent:AddNewModifier(self:GetAbility():GetCaster(), self:GetAbility(), "modifier_imba_radiance_afterburn", {})
 			end
-			
+
 			if modifier_afterburn then
 				modifier_afterburn:SetStackCount(modifier_afterburn:GetStackCount() + stacks)
 			end
@@ -208,20 +225,20 @@ function modifier_imba_radiance_burn:OnIntervalThink()
 		local parent = self:GetParent()
 		local caster = self:GetCaster()
 		local damage = self.base_damage
-		local real_hero_nearby = false		
+		local real_hero_nearby = false
 
 		-- Checks for the presence of the real hero
 		if caster:IsRealHero() then
-			real_hero_nearby = true			
+			real_hero_nearby = true
 		else
-			local real_hero_finder = FindUnitsInRadius(parent:GetTeamNumber(), parent:GetAbsOrigin(), nil, self.aura_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD , FIND_ANY_ORDER , false) 
+			local real_hero_finder = FindUnitsInRadius(parent:GetTeamNumber(), parent:GetAbsOrigin(), nil, self.aura_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD , FIND_ANY_ORDER , false)
 			for _,hero in pairs(real_hero_finder) do
 				if hero:FindModifierByName("modifier_imba_radiance_aura") then
-					real_hero_nearby = true					
+					real_hero_nearby = true
 					break
 				end
 			end
-		end		
+		end
 
 		-- If the real hero is nearby, increase damage and afterburn counter by 1
 		if real_hero_nearby then
@@ -234,10 +251,10 @@ function modifier_imba_radiance_burn:OnIntervalThink()
 				self:SetStackCount(self:GetStackCount() + 1)
 			end
 		end
-		
+
 		-- Apply damage
 		ApplyDamage({victim = parent, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
-		
+
 		-- Handle particle and color based on Radiance carrier
 		ParticleManager:SetParticleControl(self.particle, 1, caster:GetAbsOrigin())
 		ParticleManager:SetParticleControl(self.particle, 2, caster:GetFittingColor())
@@ -299,13 +316,13 @@ function modifier_imba_radiance_afterburn:OnIntervalThink()
 			local caster = ability:GetCaster()
 			local stacks = self:GetStackCount()
 			local damage = self.base_damage
-			
+
 			-- Calculate and deal damage
 			damage = damage + self.extra_damage * parent:GetHealth() * 0.01
 			ApplyDamage({victim = parent, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 			self:SetStackCount(self:GetStackCount() - 1)
 			if self:GetStackCount() <= 0 then self:Destroy() return end
-			
+
 			local parent_loc = parent:GetAbsOrigin()
 			ParticleManager:SetParticleControl(self.particle, 1, Vector(parent_loc.x,parent_loc.y, 100)) -- lul orgy -- I'm 12 btw haHAA
 			ParticleManager:SetParticleControl(self.particle, 2, caster:GetFittingColor())

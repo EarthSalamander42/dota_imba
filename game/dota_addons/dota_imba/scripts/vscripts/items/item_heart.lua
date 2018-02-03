@@ -1,3 +1,20 @@
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Editors:
+--
+
 -- Author: Shush
 -- Date: 04/08/2017
 
@@ -37,7 +54,7 @@ function modifier_item_imba_heart:OnCreated()
 
 	-- Ability specials
 	self.bonus_strength = self.ability:GetSpecialValueFor("bonus_strength")
-	self.bonus_health = self.ability:GetSpecialValueFor("bonus_health")	
+	self.bonus_health = self.ability:GetSpecialValueFor("bonus_health")
 
 	if IsServer() then
 		-- If this is the first heart, add the unique modifier
@@ -58,7 +75,7 @@ end
 
 function modifier_item_imba_heart:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-					 MODIFIER_PROPERTY_HEALTH_BONUS}
+		MODIFIER_PROPERTY_HEALTH_BONUS}
 	return decFuncs
 end
 
@@ -81,14 +98,14 @@ function modifier_item_imba_heart_unique:RemoveOnDeath() return false end
 function modifier_item_imba_heart_unique:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()	
+	self.ability = self:GetAbility()
 
-	-- Ability specials	
+	-- Ability specials
 	self.aura_radius = self.ability:GetSpecialValueFor("aura_radius")
 	self.base_regen = self.ability:GetSpecialValueFor("base_regen")
 	self.noncombat_regen = self.ability:GetSpecialValueFor("noncombat_regen")
 	self.regen_cooldown_melee = self.ability:GetSpecialValueFor("regen_cooldown_melee")
-	self.regen_cooldown_ranged = self.ability:GetSpecialValueFor("regen_cooldown_ranged")	
+	self.regen_cooldown_ranged = self.ability:GetSpecialValueFor("regen_cooldown_ranged")
 end
 
 function modifier_item_imba_heart_unique:IsAura() return true end
@@ -100,7 +117,7 @@ function modifier_item_imba_heart_unique:GetModifierAura() return "modifier_item
 
 function modifier_item_imba_heart_unique:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE,
-					  MODIFIER_EVENT_ON_TAKEDAMAGE}
+		MODIFIER_EVENT_ON_TAKEDAMAGE}
 
 	return decFuncs
 end
@@ -139,19 +156,18 @@ modifier_item_imba_heart_aura_buff = modifier_item_imba_heart_aura_buff or class
 function modifier_item_imba_heart_aura_buff:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()	
+	self.ability = self:GetAbility()
 
-	-- Ability specials	
-	self.aura_str = self.ability:GetSpecialValueFor("aura_str")	
+	-- Ability specials
+	self.aura_str = self.ability:GetSpecialValueFor("aura_str")
 end
 
 function modifier_item_imba_heart_aura_buff:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_STATS_STRENGTH_BONUS}					  
+	local decFuncs = {MODIFIER_PROPERTY_STATS_STRENGTH_BONUS}
 
 	return decFuncs
 end
 
 function modifier_item_imba_heart_aura_buff:GetModifierBonusStats_Strength()
-	return self.aura_str	
+	return self.aura_str
 end
-

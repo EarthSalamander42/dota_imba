@@ -1,3 +1,20 @@
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Editors:
+--
+
 --	Author: Rook
 --	Date: 			26.01.2015		<-- Dinosaurs roamed the earth
 --	Converted to lua by Firetoad
@@ -12,7 +29,7 @@ if item_imba_arcane_boots == nil then item_imba_arcane_boots = class({}) end
 LinkLuaModifier( "modifier_item_imba_arcane_boots", "items/item_mekansm.lua", LUA_MODIFIER_MOTION_NONE )				-- Owner's bonus attributes, stackable
 
 function item_imba_arcane_boots:GetAbilityTextureName()
-   return "custom/imba_arcane_boots"
+	return "custom/imba_arcane_boots"
 end
 
 function item_imba_arcane_boots:GetIntrinsicModifierName()
@@ -35,7 +52,7 @@ function item_imba_arcane_boots:OnSpellStart()
 		local nearby_allies = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, replenish_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MANA_ONLY, FIND_ANY_ORDER, false)
 		for _, ally in pairs(nearby_allies) do
 
-			-- Grant the ally mana 
+			-- Grant the ally mana
 			ally:GiveMana(replenish_mana)
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_ADD , ally, replenish_mana, nil)
 
@@ -213,10 +230,10 @@ function modifier_item_imba_mekansm_aura_emitter:IsPurgable() return false end
 
 function modifier_item_imba_mekansm_aura_emitter:GetAuraSearchTeam()
 	return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
-	
+
 function modifier_item_imba_mekansm_aura_emitter:GetAuraSearchType()
 	return DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO end
-	
+
 function modifier_item_imba_mekansm_aura_emitter:GetModifierAura()
 	if IsServer() then
 		if self:GetParent():IsAlive() then
@@ -226,7 +243,7 @@ function modifier_item_imba_mekansm_aura_emitter:GetModifierAura()
 		end
 	end
 end
-	
+
 function modifier_item_imba_mekansm_aura_emitter:GetAuraRadius()
 	return self:GetAbility():GetSpecialValueFor("aura_radius") end
 
@@ -306,7 +323,7 @@ LinkLuaModifier( "modifier_item_imba_guardian_greaves_aura", "items/item_mekansm
 LinkLuaModifier( "modifier_item_imba_guardian_greaves_heal", "items/item_mekansm.lua", LUA_MODIFIER_MOTION_NONE )			-- Heal buff
 
 function item_imba_guardian_greaves:GetAbilityTextureName()
-   return "custom/imba_guardian_greaves"
+	return "custom/imba_guardian_greaves"
 end
 
 function item_imba_guardian_greaves:GetIntrinsicModifierName()
@@ -401,10 +418,10 @@ function modifier_item_imba_guardian_greaves_aura_emitter:IsPurgable() return fa
 
 function modifier_item_imba_guardian_greaves_aura_emitter:GetAuraSearchTeam()
 	return DOTA_UNIT_TARGET_TEAM_FRIENDLY end
-	
+
 function modifier_item_imba_guardian_greaves_aura_emitter:GetAuraSearchType()
 	return DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO end
-	
+
 function modifier_item_imba_guardian_greaves_aura_emitter:GetModifierAura()
 	if IsServer() then
 		if self:GetParent():IsAlive() then
@@ -414,7 +431,7 @@ function modifier_item_imba_guardian_greaves_aura_emitter:GetModifierAura()
 		end
 	end
 end
-	
+
 function modifier_item_imba_guardian_greaves_aura_emitter:GetAuraRadius()
 	return self:GetAbility():GetSpecialValueFor("aura_radius") end
 
@@ -563,7 +580,7 @@ function GreavesActivate(caster, ability, heal_amount, mana_amount, heal_radius,
 		-- Show hp & mana overhead messages
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, ally, heal_amount, nil)
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_ADD, ally, mana_amount, nil)
-		
+
 		-- Play target sound
 		ally:EmitSound("Item.GuardianGreaves.Target")
 

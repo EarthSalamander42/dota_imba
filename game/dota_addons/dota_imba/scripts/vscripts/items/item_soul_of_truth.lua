@@ -1,3 +1,20 @@
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Editors:
+--
+
 --[[
 		By: AtroCty
 		Date: 27.05.2017
@@ -12,16 +29,16 @@ item_imba_soul_of_truth = item_imba_soul_of_truth or class({})
 LinkLuaModifier("modifier_imba_soul_of_truth_buff","items/item_soul_of_truth", LUA_MODIFIER_MOTION_NONE)
 
 function item_imba_soul_of_truth:GetAbilityTextureName()
-   return "custom/imba_soul_of_truth"
+	return "custom/imba_soul_of_truth"
 end
 -------------------------------------------
 
 function item_imba_soul_of_truth:OnSpellStart()
-    if IsServer() then
+	if IsServer() then
 		-- Parameters
 		local hCaster = self:GetCaster()
 		local duration = self:GetSpecialValueFor("duration")
-		
+
 		hCaster:AddNewModifier(hCaster, self, "modifier_imba_soul_of_truth_buff", {duration = duration})
 		hCaster:AddNewModifier(hCaster, self, "modifier_item_gem_of_true_sight", {duration = duration})
 		self:Destroy()
@@ -51,18 +68,18 @@ function modifier_imba_soul_of_truth_buff:OnCreated()
 	self.health_regen = hItem:GetSpecialValueFor("health_regen")
 	self.eye_pfx = ParticleManager:CreateParticle("particles/item/soul_of_truth/soul_of_truth_overhead.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
 	self:AddParticle(self.eye_pfx, false, false, MODIFIER_PRIORITY_HIGH, false, false)
-	
+
 end
 
 function modifier_imba_soul_of_truth_buff:DeclareFunctions()
-    local decFuns =
-    {
-		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
-		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
-		MODIFIER_EVENT_ON_DEATH,
-		MODIFIER_EVENT_ON_RESPAWN
-    }
-    return decFuns
+	local decFuns =
+		{
+			MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+			MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
+			MODIFIER_EVENT_ON_DEATH,
+			MODIFIER_EVENT_ON_RESPAWN
+		}
+	return decFuns
 end
 
 function modifier_imba_soul_of_truth_buff:GetModifierPhysicalArmorBonus()
@@ -79,7 +96,7 @@ function modifier_imba_soul_of_truth_buff:OnDeath(keys)
 		ParticleManager:ReleaseParticleIndex(self.eye_pfx)
 		self.eye_pfx = nil
 		self:Destroy()
-	end	
+	end
 end
 
 function modifier_imba_soul_of_truth_buff:OnRespawn(keys)

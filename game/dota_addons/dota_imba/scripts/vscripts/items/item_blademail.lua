@@ -1,3 +1,20 @@
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Editors:
+--
+
 -- Author: Shush
 -- Date: 17/06/2017
 
@@ -30,7 +47,7 @@ function item_imba_blade_mail:GetAbilityTextureName()
 	if IsClient() then
 		local caster = self:GetCaster()
 		if not caster:IsHero() then return "custom/imba_blade_mail" end
-		
+
 		local uniqueBM = {
 			npc_dota_hero_axe = "axe",
 		}
@@ -38,7 +55,7 @@ function item_imba_blade_mail:GetAbilityTextureName()
 		if uniqueBM[caster:GetName()] then
 			return "custom/imba_blade_mail_"..uniqueBM[caster:GetName()]
 		end
-		
+
 		return "custom/imba_blade_mail"
 	end
 end
@@ -55,7 +72,7 @@ function modifier_imba_blade_mail:RemoveOnDeath() return false end
 function modifier_imba_blade_mail:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 
-function modifier_imba_blade_mail:OnCreated()    
+function modifier_imba_blade_mail:OnCreated()
 	-- Ability properties
 	self.parent = self:GetParent()
 	self.ability = self:GetAbility()
@@ -68,8 +85,8 @@ end
 
 function modifier_imba_blade_mail:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-					  MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-					  MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS}
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS}
 
 	return decFuncs
 end
@@ -99,7 +116,7 @@ function modifier_imba_blade_mail_active:IsPurgable() return false end
 function modifier_imba_blade_mail_active:OnCreated()
 	-- Ability properties
 	self.parent = self:GetParent()
-	self.ability = self:GetAbility()    
+	self.ability = self:GetAbility()
 
 	-- Ability specials
 	self.return_damage_pct = self.ability:GetSpecialValueFor("return_damage_pct")
@@ -131,7 +148,7 @@ function modifier_imba_blade_mail_active:OnTakeDamage(keys)
 	local damage_flags = keys.damage_flags
 
 	-- Only apply if the one taking damage is the parent
-	if target == self.parent then        
+	if target == self.parent then
 
 		-- If the damage was self-inflicted or from an ally, ignore it
 		if attacker:GetTeamNumber() == target:GetTeamNumber() then
@@ -160,12 +177,12 @@ function modifier_imba_blade_mail_active:OnTakeDamage(keys)
 
 		-- If we're here, it's time to return the favor
 		local damageTable = {victim = attacker,
-							damage = original_damage,
-							damage_type = damage_type,
-							damage_flags = DOTA_DAMAGE_FLAG_REFLECTION + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_NO_DAMAGE_MULTIPLIERS,
-							attacker = self.parent,
-							ability = self.ability
-							}
+			damage = original_damage,
+			damage_type = damage_type,
+			damage_flags = DOTA_DAMAGE_FLAG_REFLECTION + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_NO_DAMAGE_MULTIPLIERS,
+			attacker = self.parent,
+			ability = self.ability
+		}
 		ApplyDamage(damageTable)
 	end
 end

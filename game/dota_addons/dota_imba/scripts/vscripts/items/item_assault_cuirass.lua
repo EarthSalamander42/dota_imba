@@ -1,3 +1,20 @@
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Editors:
+--
+
 -- Author: Shush
 -- Date: 16/05/2017
 
@@ -17,7 +34,7 @@ function item_imba_assault:GetIntrinsicModifierName()
 end
 
 function item_imba_assault:GetAbilityTextureName()
-   return "custom/imba_assault"
+	return "custom/imba_assault"
 end
 
 
@@ -38,7 +55,7 @@ function modifier_imba_assault_cuirass:OnCreated()
 
 	-- Abiltiy specials
 	self.bonus_as = self.ability:GetSpecialValueFor("bonus_as")
-	self.bonus_armor = self.ability:GetSpecialValueFor("bonus_armor")    
+	self.bonus_armor = self.ability:GetSpecialValueFor("bonus_armor")
 
 	if IsServer() then
 		-- If it is the first Assault Cuirass in the inventory, grant the Assault Cuirass aura
@@ -50,8 +67,8 @@ function modifier_imba_assault_cuirass:OnCreated()
 end
 
 function modifier_imba_assault_cuirass:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,                      
-					  MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS}
+	local decFuncs = {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS}
 	return decFuncs
 end
 
@@ -112,7 +129,7 @@ function modifier_imba_assault_cuirass_aura_positive:GetAuraEntityReject(target)
 end
 
 function modifier_imba_assault_cuirass_aura_positive:GetAuraSearchFlags()
-	return DOTA_UNIT_TARGET_FLAG_NONE 
+	return DOTA_UNIT_TARGET_FLAG_NONE
 end
 
 function modifier_imba_assault_cuirass_aura_positive:GetAuraSearchTeam()
@@ -139,7 +156,7 @@ modifier_imba_assault_cuirass_aura_positive_effect = class({})
 function modifier_imba_assault_cuirass_aura_positive_effect:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()    
+	self.ability = self:GetAbility()
 
 	if not self.ability then
 		self:Destroy()
@@ -147,8 +164,8 @@ function modifier_imba_assault_cuirass_aura_positive_effect:OnCreated()
 	end
 
 	-- Ability specials
-	self.aura_as_ally = self.ability:GetSpecialValueFor("aura_as_ally")    
-	self.aura_armor_ally = self.ability:GetSpecialValueFor("aura_armor_ally")    
+	self.aura_as_ally = self.ability:GetSpecialValueFor("aura_as_ally")
+	self.aura_armor_ally = self.ability:GetSpecialValueFor("aura_armor_ally")
 end
 
 function modifier_imba_assault_cuirass_aura_positive_effect:IsHidden() return false end
@@ -156,20 +173,20 @@ function modifier_imba_assault_cuirass_aura_positive_effect:IsPurgable() return 
 function modifier_imba_assault_cuirass_aura_positive_effect:IsDebuff() return false end
 
 function modifier_imba_assault_cuirass_aura_positive_effect:DeclareFunctions()
-	local decFuncs = {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,                    
-					  MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS}
+	local decFuncs = {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS}
 
 	return decFuncs
 end
 
-function modifier_imba_assault_cuirass_aura_positive_effect:GetModifierAttackSpeedBonus_Constant()    
+function modifier_imba_assault_cuirass_aura_positive_effect:GetModifierAttackSpeedBonus_Constant()
 	if not self.ability then return nil end
-	return self.aura_as_ally    
+	return self.aura_as_ally
 end
 
-function modifier_imba_assault_cuirass_aura_positive_effect:GetModifierPhysicalArmorBonus()    
+function modifier_imba_assault_cuirass_aura_positive_effect:GetModifierPhysicalArmorBonus()
 	if not self.ability then return nil end
-	return self.aura_armor_ally       
+	return self.aura_armor_ally
 end
 
 
@@ -205,7 +222,7 @@ function modifier_imba_assault_cuirass_aura_negative:GetAuraEntityReject(target)
 end
 
 function modifier_imba_assault_cuirass_aura_negative:GetAuraSearchFlags()
-	return DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES 
+	return DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES
 end
 
 function modifier_imba_assault_cuirass_aura_negative:GetAuraSearchTeam()
@@ -232,10 +249,10 @@ modifier_imba_assault_cuirass_aura_negative_effect = class({})
 function modifier_imba_assault_cuirass_aura_negative_effect:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()    
+	self.ability = self:GetAbility()
 
-	-- Ability specials        
-	self.aura_armor_reduction_enemy = self.ability:GetSpecialValueFor("aura_armor_reduction_enemy")       
+	-- Ability specials
+	self.aura_armor_reduction_enemy = self.ability:GetSpecialValueFor("aura_armor_reduction_enemy")
 end
 
 function modifier_imba_assault_cuirass_aura_negative_effect:IsHidden() return false end
@@ -248,6 +265,6 @@ function modifier_imba_assault_cuirass_aura_negative_effect:DeclareFunctions()
 	return decFuncs
 end
 
-function modifier_imba_assault_cuirass_aura_negative_effect:GetModifierPhysicalArmorBonus()    
-	return self.aura_armor_reduction_enemy * (-1)       
+function modifier_imba_assault_cuirass_aura_negative_effect:GetModifierPhysicalArmorBonus()
+	return self.aura_armor_reduction_enemy * (-1)
 end

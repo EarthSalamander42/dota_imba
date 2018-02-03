@@ -1,3 +1,20 @@
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Editors:
+--
+
 --	Author: Firetoad
 --	Date: 			25.03.2017
 --	Last Update:	25.03.2017
@@ -15,7 +32,7 @@ LinkLuaModifier( "modifier_item_imba_spell_fencer_buff", "items/item_spell_fence
 LinkLuaModifier( "modifier_item_imba_spell_fencer_cooldown", "items/item_spell_fencer.lua", LUA_MODIFIER_MOTION_NONE )  -- Passive silence cooldown modifier
 
 function item_imba_spell_fencer:GetAbilityTextureName()
-   return "custom/imba_spell_fencer"
+	return "custom/imba_spell_fencer"
 end
 
 function item_imba_spell_fencer:GetBehavior()

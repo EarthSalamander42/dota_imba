@@ -1,9 +1,26 @@
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Editors:
+--
+
 --[[
 		By: AtroCty
 		Date: 25.05.2017
 		Updated:  25.05.2017
 	]]
-	
+
 -- Shared visible modifiers
 LinkLuaModifier("modifier_imba_echo_rapier_haste", "items/item_echo_sabre.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_echo_rapier_debuff_slow", "items/item_echo_sabre.lua", LUA_MODIFIER_MOTION_NONE)
@@ -15,11 +32,11 @@ LinkLuaModifier("modifier_imba_echo_sabre_passive", "items/item_echo_sabre.lua",
 item_imba_echo_sabre = item_imba_echo_sabre or class({})
 -------------------------------------------
 function item_imba_echo_sabre:GetIntrinsicModifierName()
-    return "modifier_imba_echo_sabre_passive"
+	return "modifier_imba_echo_sabre_passive"
 end
 
 function item_imba_echo_sabre:GetAbilityTextureName()
-   return "custom/imba_echo_sabre"
+	return "custom/imba_echo_sabre"
 end
 
 function item_imba_echo_sabre:GetCooldown( nLevel )
@@ -41,16 +58,16 @@ function modifier_imba_echo_sabre_passive:OnDestroy()
 end
 
 function modifier_imba_echo_sabre_passive:DeclareFunctions()
-    local decFuns =
-    {
-		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
-		MODIFIER_EVENT_ON_ATTACK_START
-	}
-    return decFuns
+	local decFuns =
+		{
+			MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+			MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+			MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+			MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+			MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
+			MODIFIER_EVENT_ON_ATTACK_START
+		}
+	return decFuns
 end
 
 function modifier_imba_echo_sabre_passive:OnCreated()
@@ -61,7 +78,7 @@ function modifier_imba_echo_sabre_passive:OnCreated()
 		self.bonus_strength = item:GetSpecialValueFor("bonus_strength")
 		self.bonus_attack_speed = item:GetSpecialValueFor("bonus_attack_speed")
 		self.bonus_damage = item:GetSpecialValueFor("bonus_damage")
-		self.bonus_mana_regen = item:GetSpecialValueFor("bonus_mana_regen")		
+		self.bonus_mana_regen = item:GetSpecialValueFor("bonus_mana_regen")
 		self:CheckUnique(true)
 	end
 end
@@ -94,7 +111,7 @@ function modifier_imba_echo_sabre_passive:OnAttackStart(keys)
 		if (keys.attacker == parent) and (parent:IsRealHero() or parent:IsClone()) then
 			if item:IsCooldownReady() then
 				if self:CheckUniqueValue(1,{"modifier_imba_reverb_rapier_passive"}) == 1 then
-					
+
 					parent:AddNewModifier(parent, item, "modifier_imba_echo_rapier_haste", {})
 					item:UseResources(false,false,true)
 				end
@@ -110,11 +127,11 @@ LinkLuaModifier("modifier_imba_reverb_rapier_passive", "items/item_echo_sabre.lu
 item_imba_reverb_rapier = item_imba_reverb_rapier or class({})
 -------------------------------------------
 function item_imba_reverb_rapier:GetIntrinsicModifierName()
-    return "modifier_imba_reverb_rapier_passive"
+	return "modifier_imba_reverb_rapier_passive"
 end
 
 function item_imba_reverb_rapier:GetAbilityTextureName()
-   return "custom/imba_reverb_rapier"
+	return "custom/imba_reverb_rapier"
 end
 
 function item_imba_reverb_rapier:GetCooldown( nLevel )
@@ -136,16 +153,16 @@ function modifier_imba_reverb_rapier_passive:OnDestroy()
 end
 
 function modifier_imba_reverb_rapier_passive:DeclareFunctions()
-    local decFuns =
-    {
-		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
-		MODIFIER_EVENT_ON_ATTACK_START
-	}
-    return decFuns
+	local decFuns =
+		{
+			MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+			MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+			MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+			MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+			MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
+			MODIFIER_EVENT_ON_ATTACK_START
+		}
+	return decFuns
 end
 
 function modifier_imba_reverb_rapier_passive:OnCreated()
@@ -156,7 +173,7 @@ function modifier_imba_reverb_rapier_passive:OnCreated()
 		self.bonus_strength = item:GetSpecialValueFor("bonus_strength")
 		self.bonus_attack_speed = item:GetSpecialValueFor("bonus_attack_speed")
 		self.bonus_damage = item:GetSpecialValueFor("bonus_damage")
-		self.bonus_mana_regen = item:GetSpecialValueFor("bonus_mana_regen")		
+		self.bonus_mana_regen = item:GetSpecialValueFor("bonus_mana_regen")
 		self:CheckUnique(true)
 	end
 end
@@ -223,19 +240,19 @@ function modifier_imba_echo_rapier_haste:OnCreated()
 end
 
 function modifier_imba_echo_rapier_haste:DeclareFunctions()
-    local decFuns =
-    {
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		MODIFIER_EVENT_ON_ATTACK
-    }
-    return decFuns
+	local decFuns =
+		{
+			MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+			MODIFIER_EVENT_ON_ATTACK
+		}
+	return decFuns
 end
 
 function modifier_imba_echo_rapier_haste:OnAttack(keys)
 	if self.parent == keys.attacker then
-		
+
 		keys.target:AddNewModifier(self.parent, self:GetAbility(), "modifier_imba_echo_rapier_debuff_slow", {duration = self.slow_duration})
-		
+
 		if self:GetStackCount() == 1 then
 			self:Destroy()
 			return nil
@@ -260,12 +277,12 @@ function modifier_imba_echo_rapier_debuff_slow:RemoveOnDeath() return true end
 -------------------------------------------
 
 function modifier_imba_echo_rapier_debuff_slow:DeclareFunctions()
-    local decFuns =
-    {
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
-    }
-    return decFuns
+	local decFuns =
+		{
+			MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+			MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+		}
+	return decFuns
 end
 
 function modifier_imba_echo_rapier_debuff_slow:OnCreated()
@@ -284,9 +301,9 @@ function modifier_imba_echo_rapier_debuff_slow:GetModifierMoveSpeedBonus_Percent
 	return self.movement_slow
 end
 
-function modifier_imba_echo_rapier_debuff_slow:GetTexture()	
+function modifier_imba_echo_rapier_debuff_slow:GetTexture()
 	if self:GetAbility():GetName() == "item_imba_reverb_rapier" then
-		return "custom/imba_reverb_rapier"	
+		return "custom/imba_reverb_rapier"
 	else
 		return "custom/imba_echo_sabre"
 	end

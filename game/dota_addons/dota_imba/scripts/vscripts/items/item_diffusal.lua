@@ -1,3 +1,20 @@
+-- Copyright (C) 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+-- Editors:
+--
+
 -- Author: Shush
 -- Date: 07/06/2017
 
@@ -16,7 +33,7 @@ function item_imba_diffusal_blade:GetIntrinsicModifierName()
 end
 
 function item_imba_diffusal_blade:GetAbilityTextureName()
-   return "custom/imba_diffusal_blade"
+	return "custom/imba_diffusal_blade"
 end
 
 function item_imba_diffusal_blade:OnSpellStart()
@@ -42,7 +59,7 @@ function item_imba_diffusal_blade:OnSpellStart()
 	ParticleManager:SetParticleControl(particle_target_fx, 0, target:GetAbsOrigin())
 	ParticleManager:ReleaseParticleIndex(particle_target_fx)
 
-	-- If the target has Linken sphere, trigger it and do nothing else    
+	-- If the target has Linken sphere, trigger it and do nothing else
 	if target:GetTeam() ~= caster:GetTeam() then
 		if target:TriggerSpellAbsorb(ability) then
 			return nil
@@ -81,16 +98,16 @@ function modifier_item_imba_diffusal:IsDebuff() return false end
 function modifier_item_imba_diffusal:IsPurgable() return false end
 function modifier_item_imba_diffusal:RemoveOnDeath() return false end
 
-function modifier_item_imba_diffusal:OnCreated()    
+function modifier_item_imba_diffusal:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()    
+	self.ability = self:GetAbility()
 	self.modifier_self = "modifier_item_imba_diffusal"
 	self.modifier_unique = "modifier_item_imba_diffusal_unique"
 
 	-- Ability specials
 	self.bonus_agi = self.ability:GetSpecialValueFor("bonus_agi")
-	self.bonus_int = self.ability:GetSpecialValueFor("bonus_int")    
+	self.bonus_int = self.ability:GetSpecialValueFor("bonus_int")
 
 	if IsServer() then
 		-- If the caster doesn't have the unique modifier yet, give it to him
@@ -111,7 +128,7 @@ end
 
 function modifier_item_imba_diffusal:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
-					  MODIFIER_PROPERTY_STATS_INTELLECT_BONUS}
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS}
 
 	return decFuncs
 end
@@ -137,7 +154,7 @@ function modifier_item_imba_diffusal_unique:RemoveOnDeath() return false end
 function modifier_item_imba_diffusal_unique:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()    
+	self.ability = self:GetAbility()
 	self.particle_manaburn = "particles/generic_gameplay/generic_manaburn.vpcf"
 
 	-- Ability specials
@@ -151,7 +168,7 @@ function modifier_item_imba_diffusal_unique:DeclareFunctions()
 	return decFuncs
 end
 
-function modifier_item_imba_diffusal_unique:GetModifierProcAttack_BonusDamage_Physical(keys)    
+function modifier_item_imba_diffusal_unique:GetModifierProcAttack_BonusDamage_Physical(keys)
 	if IsServer() then
 		local attacker = keys.attacker
 		local target = keys.target
@@ -229,7 +246,7 @@ function modifier_item_imba_diffusal_slow:OnCreated()
 	-- Ability specials
 	self.slow_degrade_pct = self.ability:GetSpecialValueFor("slow_degrade_pct")
 	self.starting_slow_pct = self.ability:GetSpecialValueFor("starting_slow_pct")
-	self.stack_loss_time = self.ability:GetSpecialValueFor("stack_loss_time")    
+	self.stack_loss_time = self.ability:GetSpecialValueFor("stack_loss_time")
 
 	-- Set slow
 	self.slow_pct = self.starting_slow_pct
@@ -238,7 +255,7 @@ function modifier_item_imba_diffusal_slow:OnCreated()
 	self:StartIntervalThink(self.stack_loss_time)
 end
 
-function modifier_item_imba_diffusal_slow:OnIntervalThink()    
+function modifier_item_imba_diffusal_slow:OnIntervalThink()
 	-- Reduce the slow
 	self.slow_pct = self.slow_pct - self.slow_degrade_pct
 end
@@ -295,7 +312,7 @@ LinkLuaModifier("modifier_item_imba_diffusal_2", "items/item_diffusal", LUA_MODI
 LinkLuaModifier("modifier_item_imba_diffusal_2_unique", "items/item_diffusal", LUA_MODIFIER_MOTION_NONE)
 
 function item_imba_diffusal_blade_2:GetAbilityTextureName()
-   return "custom/imba_diffusal_blade_2"
+	return "custom/imba_diffusal_blade_2"
 end
 
 function item_imba_diffusal_blade_2:GetIntrinsicModifierName()
@@ -312,7 +329,7 @@ function item_imba_diffusal_blade_2:OnSpellStart()
 	local particle_target = "particles/item/diffusal/diffusal_manaburn_2.vpcf"
 	local particle_dispel = "particles/item/diffusal/diffusal_2_dispel_explosion.vpcf"
 	local modifier_purge = "modifier_item_imba_diffusal_slow"
-	local modifier_root = "modifier_item_imba_diffusal_root"    
+	local modifier_root = "modifier_item_imba_diffusal_root"
 
 	-- Ability specials
 	local total_slow_duration = ability:GetSpecialValueFor("total_slow_duration")
@@ -327,7 +344,7 @@ function item_imba_diffusal_blade_2:OnSpellStart()
 	ParticleManager:SetParticleControl(particle_target_fx, 0, target:GetAbsOrigin())
 	ParticleManager:ReleaseParticleIndex(particle_target_fx)
 
-	-- If the target has Linken sphere, trigger it and do nothing else    
+	-- If the target has Linken sphere, trigger it and do nothing else
 	if target:GetTeam() ~= caster:GetTeam() then
 		if target:TriggerSpellAbsorb(ability) then
 			return nil
@@ -348,15 +365,15 @@ function item_imba_diffusal_blade_2:OnSpellStart()
 	-- Purge target
 	target:Purge(true, false, false, false, false)
 
-	-- Find the amount of modifiers it has after it has been purged. Give it a frame to lose modifiers    
+	-- Find the amount of modifiers it has after it has been purged. Give it a frame to lose modifiers
 	Timers:CreateTimer(FrameTime(), function()
-		local modifiers_lost = initial_modifiers - target:GetModifierCount()        
+		local modifiers_lost = initial_modifiers - target:GetModifierCount()
 
 		if modifiers_lost > 0 then
-			-- Burn mana and deal damage according to modifiers lost on the purge    
-			local mana_burn = modifiers_lost * dispel_burn    
+			-- Burn mana and deal damage according to modifiers lost on the purge
+			local mana_burn = modifiers_lost * dispel_burn
 
-			-- Burn the target's mana 
+			-- Burn the target's mana
 			local target_mana = target:GetMana()
 			target:ReduceMana(mana_burn)
 
@@ -370,18 +387,18 @@ function item_imba_diffusal_blade_2:OnSpellStart()
 
 			-- Damage the target
 			local damageTable = {victim = target,
-								attacker = caster,
-								damage = damage,
-								damage_type = DAMAGE_TYPE_MAGICAL,
-								ability = ability,
-								damage_flags = (DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL)
-								}
-												
+				attacker = caster,
+				damage = damage,
+				damage_type = DAMAGE_TYPE_MAGICAL,
+				ability = ability,
+				damage_flags = (DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL)
+			}
+
 			ApplyDamage(damageTable)
 
-			-- Apply particle effect            
+			-- Apply particle effect
 			local particle_dispel_fx = ParticleManager:CreateParticle(particle_dispel, PATTACH_ABSORIGIN_FOLLOW, target)
-			ParticleManager:SetParticleControl(particle_dispel_fx, 0, target:GetAbsOrigin())            
+			ParticleManager:SetParticleControl(particle_dispel_fx, 0, target:GetAbsOrigin())
 			ParticleManager:ReleaseParticleIndex(particle_dispel_fx)
 		end
 
@@ -392,7 +409,7 @@ function item_imba_diffusal_blade_2:OnSpellStart()
 
 		-- Add the slow modifier
 		target:AddNewModifier(caster, ability, modifier_purge, {duration = total_slow_duration})
-	end)    
+	end)
 end
 
 
@@ -410,13 +427,13 @@ function modifier_item_imba_diffusal_2:RemoveOnDeath() return false end
 function modifier_item_imba_diffusal_2:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()    
+	self.ability = self:GetAbility()
 	self.modifier_self = "modifier_item_imba_diffusal_2"
 	self.modifier_unique = "modifier_item_imba_diffusal_2_unique"
 
 	-- Ability specials
 	self.bonus_agi = self.ability:GetSpecialValueFor("bonus_agi")
-	self.bonus_int = self.ability:GetSpecialValueFor("bonus_int")    
+	self.bonus_int = self.ability:GetSpecialValueFor("bonus_int")
 
 	if IsServer() then
 		-- If the caster doesn't have the unique modifier yet, give it to him
@@ -437,7 +454,7 @@ end
 
 function modifier_item_imba_diffusal_2:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
-					  MODIFIER_PROPERTY_STATS_INTELLECT_BONUS}
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS}
 
 	return decFuncs
 end
@@ -464,7 +481,7 @@ function modifier_item_imba_diffusal_2_unique:RemoveOnDeath() return false end
 function modifier_item_imba_diffusal_2_unique:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()    
+	self.ability = self:GetAbility()
 	self.particle_manaburn = "particles/item/diffusal/diffusal_manaburn_2.vpcf"
 	self.particle_dispel = "particles/item/diffusal/diffusal_2_dispel_explosion.vpcf"
 
@@ -477,13 +494,13 @@ end
 
 function modifier_item_imba_diffusal_2_unique:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_PHYSICAL,
-					  MODIFIER_EVENT_ON_ATTACK_LANDED}
+		MODIFIER_EVENT_ON_ATTACK_LANDED}
 
 	return decFuncs
 end
 
-function modifier_item_imba_diffusal_2_unique:GetModifierProcAttack_BonusDamage_Physical(keys)  
-	if IsServer() then 
+function modifier_item_imba_diffusal_2_unique:GetModifierProcAttack_BonusDamage_Physical(keys)
+	if IsServer() then
 		local attacker = keys.attacker
 		local target = keys.target
 
@@ -569,7 +586,7 @@ function modifier_item_imba_diffusal_2_unique:OnAttackLanded(keys)
 			-- Don't apply on anything that is not a hero or a creep
 			if not target:IsHero() and not target:IsCreep() then
 				return nil
-			end            
+			end
 
 			-- Don't apply on spell immune targets
 			if target:IsMagicImmune() then
@@ -583,7 +600,7 @@ function modifier_item_imba_diffusal_2_unique:OnAttackLanded(keys)
 				local target_modifiers = target:FindAllModifiers()
 
 				-- Search for a buff
-				local buff_found = false          
+				local buff_found = false
 				for _,modifier in pairs(target_modifiers) do
 					if modifier.IsDebuff and modifier.IsPurgable then
 						if not modifier:IsDebuff() and modifier:IsPurgable() then
@@ -595,7 +612,7 @@ function modifier_item_imba_diffusal_2_unique:OnAttackLanded(keys)
 
 				if buff_found then
 					-- Randomize a buff to dispel. Try 100 times maximum (to prevent weird cases of infinite loops)
-					local buff_dispelled = false                    
+					local buff_dispelled = false
 					local check_count = 0
 
 					while not buff_dispelled do
@@ -610,7 +627,7 @@ function modifier_item_imba_diffusal_2_unique:OnAttackLanded(keys)
 								buff_dispelled = true
 
 								-- Burn additional mana and deal magical damage
-								local target_mana = target:GetMana()                                
+								local target_mana = target:GetMana()
 								target:ReduceMana(self.dispel_burn)
 
 								-- Calculate damage
@@ -623,16 +640,16 @@ function modifier_item_imba_diffusal_2_unique:OnAttackLanded(keys)
 
 								-- Deal appropriate magical damage, based on mana burnt
 								local damageTable = {victim = target,
-													attacker = attacker,
-													damage = damage,
-													damage_type = DAMAGE_TYPE_MAGICAL,
-													ability = ability,
-													damage_flags = (DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL)
-													}
-												
+									attacker = attacker,
+									damage = damage,
+									damage_type = DAMAGE_TYPE_MAGICAL,
+									ability = ability,
+									damage_flags = (DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL)
+								}
+
 								ApplyDamage(damageTable)
 
-								-- Apply particle effect            
+								-- Apply particle effect
 								local particle_dispel_fx = ParticleManager:CreateParticle(self.particle_dispel, PATTACH_ABSORIGIN_FOLLOW, target)
 								ParticleManager:SetParticleControl(particle_dispel_fx, 0, target:GetAbsOrigin())
 								ParticleManager:ReleaseParticleIndex(particle_dispel_fx)
@@ -645,7 +662,7 @@ function modifier_item_imba_diffusal_2_unique:OnAttackLanded(keys)
 						end
 					end
 				end
-			end        
+			end
 		end
 	end
 end
@@ -671,7 +688,7 @@ LinkLuaModifier("modifier_item_imba_diffusal_3", "items/item_diffusal", LUA_MODI
 LinkLuaModifier("modifier_item_imba_diffusal_3_unique", "items/item_diffusal", LUA_MODIFIER_MOTION_NONE)
 
 function item_imba_diffusal_blade_3:GetAbilityTextureName()
-   return "custom/imba_diffusal_blade_3"
+	return "custom/imba_diffusal_blade_3"
 end
 
 function item_imba_diffusal_blade_3:GetIntrinsicModifierName()
@@ -688,7 +705,7 @@ function item_imba_diffusal_blade_3:OnSpellStart()
 	local particle_target = "particles/item/diffusal/diffusal_manaburn_3.vpcf"
 	local particle_dispel = "particles/item/diffusal/diffusal_3_dispel_explosion.vpcf"
 	local modifier_purge = "modifier_item_imba_diffusal_slow"
-	local modifier_root = "modifier_item_imba_diffusal_root"    
+	local modifier_root = "modifier_item_imba_diffusal_root"
 
 	-- Ability specials
 	local total_slow_duration = ability:GetSpecialValueFor("total_slow_duration")
@@ -703,7 +720,7 @@ function item_imba_diffusal_blade_3:OnSpellStart()
 	ParticleManager:SetParticleControl(particle_target_fx, 0, target:GetAbsOrigin())
 	ParticleManager:ReleaseParticleIndex(particle_target_fx)
 
-	-- If the target has Linken sphere, trigger it and do nothing else    
+	-- If the target has Linken sphere, trigger it and do nothing else
 	if target:GetTeam() ~= caster:GetTeam() then
 		if target:TriggerSpellAbsorb(ability) then
 			return nil
@@ -728,21 +745,21 @@ function item_imba_diffusal_blade_3:OnSpellStart()
 			if not modifier:IsDebuff() and modifier:IsPurgable() then
 				caster:AddNewModifier(caster, modifier:GetAbility(), modifier:GetName(), {duration = modifier:GetDuration()})
 			end
-		end 
+		end
 	end
 
 	-- Purge target
 	target:Purge(true, false, false, false, false)
 
-	-- Find the amount of modifiers it has after it has been purged. Give it a frame to lose modifiers    
+	-- Find the amount of modifiers it has after it has been purged. Give it a frame to lose modifiers
 	Timers:CreateTimer(FrameTime(), function()
-		local modifiers_lost = initial_modifiers - target:GetModifierCount()        
+		local modifiers_lost = initial_modifiers - target:GetModifierCount()
 
 		if modifiers_lost > 0 then
-			-- Burn mana and deal damage according to modifiers lost on the purge    
-			local mana_burn = modifiers_lost * steal_burn    
+			-- Burn mana and deal damage according to modifiers lost on the purge
+			local mana_burn = modifiers_lost * steal_burn
 
-			-- Burn the target's mana 
+			-- Burn the target's mana
 			local target_mana = target:GetMana()
 			target:ReduceMana(mana_burn)
 
@@ -756,18 +773,18 @@ function item_imba_diffusal_blade_3:OnSpellStart()
 
 			-- Damage the target
 			local damageTable = {victim = target,
-								attacker = caster,
-								damage = damage,
-								damage_type = DAMAGE_TYPE_MAGICAL,
-								ability = ability,
-								damage_flags = (DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL)
-								}
-												
+				attacker = caster,
+				damage = damage,
+				damage_type = DAMAGE_TYPE_MAGICAL,
+				ability = ability,
+				damage_flags = (DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL)
+			}
+
 			ApplyDamage(damageTable)
 
-			-- Apply particle effect            
+			-- Apply particle effect
 			local particle_dispel_fx = ParticleManager:CreateParticle(particle_dispel, PATTACH_ABSORIGIN_FOLLOW, target)
-			ParticleManager:SetParticleControl(particle_dispel_fx, 0, target:GetAbsOrigin())            
+			ParticleManager:SetParticleControl(particle_dispel_fx, 0, target:GetAbsOrigin())
 			ParticleManager:SetParticleControl(particle_dispel_fx, 1, Vector(400, 1, 1))
 			ParticleManager:ReleaseParticleIndex(particle_dispel_fx)
 		end
@@ -797,13 +814,13 @@ function modifier_item_imba_diffusal_3:RemoveOnDeath() return false end
 function modifier_item_imba_diffusal_3:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()    
+	self.ability = self:GetAbility()
 	self.modifier_self = "modifier_item_imba_diffusal_3"
 	self.modifier_unique = "modifier_item_imba_diffusal_3_unique"
 
 	-- Ability specials
 	self.bonus_agi = self.ability:GetSpecialValueFor("bonus_agi")
-	self.bonus_int = self.ability:GetSpecialValueFor("bonus_int")    
+	self.bonus_int = self.ability:GetSpecialValueFor("bonus_int")
 
 	if IsServer() then
 		-- If the caster doesn't have the unique modifier yet, give it to him
@@ -824,7 +841,7 @@ end
 
 function modifier_item_imba_diffusal_3:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
-					  MODIFIER_PROPERTY_STATS_INTELLECT_BONUS}
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS}
 
 	return decFuncs
 end
@@ -850,7 +867,7 @@ function modifier_item_imba_diffusal_3_unique:RemoveOnDeath() return false end
 function modifier_item_imba_diffusal_3_unique:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
-	self.ability = self:GetAbility()    
+	self.ability = self:GetAbility()
 	self.particle_manaburn = "particles/item/diffusal/diffusal_manaburn_3.vpcf"
 	self.particle_dispel = "particles/item/diffusal/diffusal_2_dispel_explosion.vpcf"
 
@@ -863,13 +880,13 @@ end
 
 function modifier_item_imba_diffusal_3_unique:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_PHYSICAL,
-					  MODIFIER_EVENT_ON_ATTACK_LANDED}
+		MODIFIER_EVENT_ON_ATTACK_LANDED}
 
 	return decFuncs
 end
 
-function modifier_item_imba_diffusal_3_unique:GetModifierProcAttack_BonusDamage_Physical(keys)  
-	if IsServer() then 
+function modifier_item_imba_diffusal_3_unique:GetModifierProcAttack_BonusDamage_Physical(keys)
+	if IsServer() then
 		local attacker = keys.attacker
 		local target = keys.target
 
@@ -945,7 +962,7 @@ function modifier_item_imba_diffusal_3_unique:OnAttackLanded(keys)
 			-- Don't apply on anything that is not a hero or a creep
 			if not target:IsHero() and not target:IsCreep() then
 				return nil
-			end            
+			end
 
 			-- Don't apply on spell immune targets
 			if target:IsMagicImmune() then
@@ -959,7 +976,7 @@ function modifier_item_imba_diffusal_3_unique:OnAttackLanded(keys)
 				local target_modifiers = target:FindAllModifiers()
 
 				-- Search for a buff
-				local buff_found = false          
+				local buff_found = false
 				for _,modifier in pairs(target_modifiers) do
 					if modifier.IsDebuff and modifier.IsPurgable then
 						if not modifier:IsDebuff() and modifier:IsPurgable() then
@@ -971,7 +988,7 @@ function modifier_item_imba_diffusal_3_unique:OnAttackLanded(keys)
 
 				if buff_found then
 					-- Randomize a buff to steal. Try 100 times maximum (to prevent weird cases of infinite loops)
-					local buff_stolen = false                    
+					local buff_stolen = false
 					local check_count = 0
 
 					while not buff_stolen do
@@ -985,12 +1002,12 @@ function modifier_item_imba_diffusal_3_unique:OnAttackLanded(keys)
 								-- Add the buff to yourself
 								self.caster:AddNewModifier(self.caster, modifier:GetAbility(), modifier:GetName(), {duration = modifier:GetRemainingTime()})
 
-								-- Remove buff from enemy                                
+								-- Remove buff from enemy
 								target:RemoveModifierByName(modifier:GetName())
 								buff_stolen = true
 
 								-- Burn additional mana and deal magical damage
-								local target_mana = target:GetMana()                                
+								local target_mana = target:GetMana()
 								target:ReduceMana(self.steal_burn)
 
 								-- Calculate damage
@@ -1003,16 +1020,16 @@ function modifier_item_imba_diffusal_3_unique:OnAttackLanded(keys)
 
 								-- Deal appropriate magical damage, based on mana burnt
 								local damageTable = {victim = target,
-													attacker = attacker,
-													damage = damage,
-													damage_type = DAMAGE_TYPE_MAGICAL,
-													ability = ability,
-													damage_flags = (DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL)
-													}
-												
+									attacker = attacker,
+									damage = damage,
+									damage_type = DAMAGE_TYPE_MAGICAL,
+									ability = ability,
+									damage_flags = (DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION + DOTA_DAMAGE_FLAG_NO_SPELL_LIFESTEAL)
+								}
+
 								ApplyDamage(damageTable)
 
-								-- Apply particle effect            
+								-- Apply particle effect
 								local particle_dispel_fx = ParticleManager:CreateParticle(self.particle_dispel, PATTACH_ABSORIGIN_FOLLOW, target)
 								ParticleManager:SetParticleControl(particle_dispel_fx, 0, target:GetAbsOrigin())
 								ParticleManager:SetParticleControl(particle_dispel_fx, 1, Vector(400, 1, 1))
@@ -1026,7 +1043,7 @@ function modifier_item_imba_diffusal_3_unique:OnAttackLanded(keys)
 						end
 					end
 				end
-			end        
+			end
 		end
 	end
 end
