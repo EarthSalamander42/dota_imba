@@ -1,8 +1,21 @@
---[[
-		Author: MouJiaoZi
-		Date: 2017/12/15
-
-]]
+-- Copyright 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+--
+-- limitations under the License.
+--
+-- Editors:
+--     MouJiaoZi, 15.12.2017
+--     suthernfriend, 03.02.2018
 
 CreateEmptyTalents("enigma")
 -- thinker name : npc_dota_thinker
@@ -29,38 +42,38 @@ function SearchForEngimaThinker(caster, victim, length, talent)
 
 	local hThinker = caster -- enigma self
 
-	if talent then -- talent 
+	if talent then -- talent
 		local Thinkers = FindUnitsInRadius(victim:GetTeamNumber(),
-									victim:GetAbsOrigin(),
-									nil,
-									9999999,
-									DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-									DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-									DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD,
-									FIND_CLOSEST,
-									false)
-		for _,thinker in pairs(Thinkers) do
-			if thinker:FindModifierByNameAndCaster("modifier_imba_enigma_malefice", caster) and thinker ~= victim then
-				hThinker = thinker
-				break
-			end
-		end
-	end
-
-	local Thinkers = FindUnitsInRadius(caster:GetTeamNumber(),
-									victim:GetAbsOrigin(),
-									nil,
-									9999999,
-									DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-									DOTA_UNIT_TARGET_ALL,
-									DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD,
-									FIND_CLOSEST,
-									false)
-	for _,thinker in pairs(Thinkers) do -- midnight 
-		if thinker:GetUnitName() == "npc_dummy_unit" and thinker.midnight == true then
+			victim:GetAbsOrigin(),
+			nil,
+			9999999,
+			DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD,
+			FIND_CLOSEST,
+			false)
+	for _,thinker in pairs(Thinkers) do
+		if thinker:FindModifierByNameAndCaster("modifier_imba_enigma_malefice", caster) and thinker ~= victim then
 			hThinker = thinker
 			break
 		end
+	end
+	end
+
+	local Thinkers = FindUnitsInRadius(caster:GetTeamNumber(),
+		victim:GetAbsOrigin(),
+		nil,
+		9999999,
+		DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+		DOTA_UNIT_TARGET_ALL,
+		DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD,
+		FIND_CLOSEST,
+		false)
+	for _,thinker in pairs(Thinkers) do -- midnight
+		if thinker:GetUnitName() == "npc_dummy_unit" and thinker.midnight == true then
+			hThinker = thinker
+			break
+	end
 	end
 
 	if Black_Hole.thinker and not Black_Hole.thinker:IsNull() then hThinker = Black_Hole.thinker end -- black hole
@@ -151,10 +164,10 @@ end
 
 -- gain spell immune when casting
 function modifier_special_bonus_imba_enigma_7:DeclareFunctions()
-	local funcs = 
-	{
-		MODIFIER_EVENT_ON_ABILITY_START,
-	}
+	local funcs =
+		{
+			MODIFIER_EVENT_ON_ABILITY_START,
+		}
 	return funcs
 end
 
@@ -201,33 +214,33 @@ function modifier_special_bonus_imba_enigma_6:OnIntervalThink()
 	local ability = self.ability
 	local dmg_pct = ability:GetSpecialValueFor("damage_per_tick") * 0.01
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-									parent:GetAbsOrigin(),
-									nil,
-									self.radius,
-									DOTA_UNIT_TARGET_TEAM_ENEMY,
-									DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-									DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
-									FIND_ANY_ORDER,
-									false)
+		parent:GetAbsOrigin(),
+		nil,
+		self.radius,
+		DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
+		FIND_ANY_ORDER,
+		false)
 	for _, enemy in pairs(enemies) do
 		local dmg = enemy:GetMaxHealth() * dmg_pct
 		local damageTable = {victim = enemy,
-							attacker = caster,
-							damage = dmg,
-							damage_type = DAMAGE_TYPE_PURE,
-							damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
-							ability = ability}
+			attacker = caster,
+			damage = dmg,
+			damage_type = DAMAGE_TYPE_PURE,
+			damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
+			ability = ability}
 		ApplyDamage(damageTable)
 	end
 	local eidolons = FindUnitsInRadius(caster:GetTeamNumber(),
-									parent:GetAbsOrigin(),
-									nil,
-									self.radius,
-									DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-									DOTA_UNIT_TARGET_BASIC,
-									DOTA_UNIT_TARGET_FLAG_NONE,
-									FIND_ANY_ORDER,
-									false)
+		parent:GetAbsOrigin(),
+		nil,
+		self.radius,
+		DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+		DOTA_UNIT_TARGET_BASIC,
+		DOTA_UNIT_TARGET_FLAG_NONE,
+		FIND_ANY_ORDER,
+		false)
 	for _, eidolon in pairs(eidolons) do
 		if eidolon:HasModifier("modifier_imba_enigma_eidolon") then
 			eidolon:Heal(ability:GetSpecialValueFor("eidolon_hp_regen"), nil)
@@ -287,14 +300,14 @@ function imba_enigma_malefice:OnSpellStart()
 	else
 		local talent_radius = caster:FindTalentValue("special_bonus_imba_enigma_2")
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-									target:GetAbsOrigin(),
-									nil,
-									talent_radius,
-									DOTA_UNIT_TARGET_TEAM_ENEMY,
-									DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-									DOTA_UNIT_TARGET_FLAG_NONE,
-									FIND_ANY_ORDER,
-									false)
+			target:GetAbsOrigin(),
+			nil,
+			talent_radius,
+			DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			DOTA_UNIT_TARGET_FLAG_NONE,
+			FIND_ANY_ORDER,
+			false)
 		for _, enemy in pairs(enemies) do
 			local final_duration = CalculateDuration(enemy)
 			enemy:AddNewModifier(caster, ability, "modifier_imba_enigma_malefice", {duration = final_duration})
@@ -328,10 +341,10 @@ function modifier_imba_enigma_malefice:OnIntervalThink()
 	local target = self:GetParent()
 	local ability = self:GetAbility()
 	local damageTable = {victim = self:GetParent(),
-						attacker = self:GetCaster(),
-						damage = self.dmg,
-						damage_type = DAMAGE_TYPE_MAGICAL,
-						ability = ability}
+		attacker = self:GetCaster(),
+		damage = self.dmg,
+		damage_type = DAMAGE_TYPE_MAGICAL,
+		ability = ability}
 	ApplyDamage(damageTable)
 	target:AddNewModifier(caster, ability, "modifier_stunned", {duration = self.stun_duration})
 	EmitSoundOn("Hero_Enigma.MaleficeTick", target)
@@ -350,7 +363,7 @@ LinkLuaModifier("modifier_imba_enigma_eidolon_attacks_debuff","hero/hero_enigma"
 
 function imba_enigma_demonic_conversion:CastFilterResultTarget(target)
 	if IsServer() then
-		local caster = self:GetCaster() 
+		local caster = self:GetCaster()
 		-- #8 Talent: Cast Eidolons on heroes
 		if caster:HasTalent("special_bonus_imba_enigma_8") and target:IsRealHero() then
 			return UF_SUCCESS
@@ -405,15 +418,15 @@ function modifier_imba_enigma_eidolon:IsStunDebuff() 		return false end
 function modifier_imba_enigma_eidolon:RemoveOnDeath() 	return true  end
 
 function modifier_imba_enigma_eidolon:DeclareFunctions()
-	local funcs = 
-	{
-		MODIFIER_EVENT_ON_ATTACK_LANDED,
-		MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS,
-		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
-		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
-	}
+	local funcs =
+		{
+			MODIFIER_EVENT_ON_ATTACK_LANDED,
+			MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS,
+			MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+			MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+			MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+			MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
+		}
 	return funcs
 end
 
@@ -555,34 +568,34 @@ function modifier_imba_enigma_midnight_pulse_thinker:OnIntervalThink()
 	GridNav:DestroyTreesAroundPoint(parent:GetAbsOrigin(), self.radius, false)
 	local dmg_pct = ability:GetSpecialValueFor("damage_per_tick") * 0.01
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-									parent:GetAbsOrigin(),
-									nil,
-									self.radius,
-									DOTA_UNIT_TARGET_TEAM_ENEMY,
-									DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-									DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
-									FIND_ANY_ORDER,
-									false)
+		parent:GetAbsOrigin(),
+		nil,
+		self.radius,
+		DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
+		FIND_ANY_ORDER,
+		false)
 	for _, enemy in pairs(enemies) do
 		local dmg = enemy:GetMaxHealth() * dmg_pct
 		local damageTable = {victim = enemy,
-							attacker = caster,
-							damage = dmg,
-							damage_type = DAMAGE_TYPE_PURE,
-							damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
-							ability = ability}
+			attacker = caster,
+			damage = dmg,
+			damage_type = DAMAGE_TYPE_PURE,
+			damage_flags = DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION,
+			ability = ability}
 		ApplyDamage(damageTable)
 		SearchForEngimaThinker(caster, enemy, self.pull_length)
 	end
 	local eidolons = FindUnitsInRadius(caster:GetTeamNumber(),
-									parent:GetAbsOrigin(),
-									nil,
-									self.radius,
-									DOTA_UNIT_TARGET_TEAM_FRIENDLY,
-									DOTA_UNIT_TARGET_BASIC,
-									DOTA_UNIT_TARGET_FLAG_NONE,
-									FIND_ANY_ORDER,
-									false)
+		parent:GetAbsOrigin(),
+		nil,
+		self.radius,
+		DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+		DOTA_UNIT_TARGET_BASIC,
+		DOTA_UNIT_TARGET_FLAG_NONE,
+		FIND_ANY_ORDER,
+		false)
 	for _, eidolon in pairs(eidolons) do
 		if eidolon:HasModifier("modifier_imba_enigma_eidolon") then
 			eidolon:Heal(ability:GetSpecialValueFor("eidolon_hp_regen"), nil)
@@ -626,7 +639,7 @@ function imba_enigma_black_hole:IsRefreshable() 			return true end
 function imba_enigma_black_hole:IsStealable() 				return true end
 function imba_enigma_black_hole:IsNetherWardStealable() 	return true end
 
-function imba_enigma_black_hole:GetCooldown(nLevel)  
+function imba_enigma_black_hole:GetCooldown(nLevel)
 	local charges = self:GetCaster():GetModifierStackCount("modifier_imba_singularity", self:GetCaster())
 	local cd = self.BaseClass.GetCooldown( self, nLevel ) - charges * self:GetCaster():FindTalentValue("special_bonus_imba_enigma_1")
 	if cd < 30 then
@@ -684,23 +697,23 @@ function modifier_imba_enigma_black_hole_thinker:OnCreated(keys)
 	local pfx_name = "particles/units/heroes/hero_enigma/enigma_blackhole.vpcf"
 	self.sound = "Hero_Enigma.Black_Hole"
 	local total = FindUnitsInRadius(self:GetCaster():GetTeamNumber(),
-									self:GetParent():GetAbsOrigin(),
-									nil,
-									999999,
-									DOTA_UNIT_TARGET_TEAM_ENEMY,
-									DOTA_UNIT_TARGET_HERO,
-									DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_DEAD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD,
-									FIND_ANY_ORDER,
-									false)
+		self:GetParent():GetAbsOrigin(),
+		nil,
+		999999,
+		DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_HERO,
+		DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_DEAD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD,
+		FIND_ANY_ORDER,
+		false)
 	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(),
-									self:GetParent():GetAbsOrigin(),
-									nil,
-									self.radius,
-									DOTA_UNIT_TARGET_TEAM_ENEMY,
-									DOTA_UNIT_TARGET_HERO,
-									DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS,
-									FIND_ANY_ORDER,
-									false)
+		self:GetParent():GetAbsOrigin(),
+		nil,
+		self.radius,
+		DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_HERO,
+		DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS,
+		FIND_ANY_ORDER,
+		false)
 	if #enemies >= #total/2 then
 		pfx_name = "particles/econ/items/enigma/enigma_world_chasm/enigma_blackhole_ti5.vpcf"
 		self.sound = "Imba.EnigmaBlackHoleTi5"
@@ -716,10 +729,10 @@ function modifier_imba_enigma_black_hole_thinker:OnCreated(keys)
 	EmitSoundOn(self.sound, self:GetParent())
 	local dummy = self:GetParent()
 	self:GetParent():SetContextThink("StopBHsound", function()
-														StopSoundOn("Hero_Enigma.Black_Hole", dummy)
-														StopSoundOn("Imba.EnigmaBlackHoleTi5", dummy)
-														return nil
-													end, 4.0)
+		StopSoundOn("Hero_Enigma.Black_Hole", dummy)
+		StopSoundOn("Imba.EnigmaBlackHoleTi5", dummy)
+		return nil
+	end, 4.0)
 	self.particle = ParticleManager:CreateParticle(pfx_name, PATTACH_WORLDORIGIN, nil)
 	ParticleManager:SetParticleControl(self.particle, 0, Vector(self:GetParent():GetAbsOrigin().x,self:GetParent():GetAbsOrigin().y,self:GetParent():GetAbsOrigin().z+64))
 	ParticleManager:SetParticleControl(self.particle, 6, Vector(self.radius, self.radius ,self.radius))
@@ -745,14 +758,14 @@ function modifier_imba_enigma_black_hole_thinker:OnIntervalThink()
 	self.think_time = self.think_time + FrameTime()
 	-- Pull effect
 	local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(),
-									self:GetParent():GetAbsOrigin(),
-									nil,
-									self.pull_radius,
-									DOTA_UNIT_TARGET_TEAM_ENEMY,
-									DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-									DOTA_UNIT_TARGET_FLAG_NONE,
-									FIND_ANY_ORDER,
-									false)
+		self:GetParent():GetAbsOrigin(),
+		nil,
+		self.pull_radius,
+		DOTA_UNIT_TARGET_TEAM_ENEMY,
+		DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+		DOTA_UNIT_TARGET_FLAG_NONE,
+		FIND_ANY_ORDER,
+		false)
 	for _,enemy in pairs(enemies) do
 		enemy:AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_enigma_black_hole_pull", {})
 	end
@@ -760,20 +773,20 @@ function modifier_imba_enigma_black_hole_thinker:OnIntervalThink()
 	if self.think_time >= 1.0 then
 		self.think_time = self.think_time - 1.0
 		local enemies = FindUnitsInRadius(self:GetCaster():GetTeamNumber(),
-										self:GetParent():GetAbsOrigin(),
-										nil,
-										self.radius,
-										DOTA_UNIT_TARGET_TEAM_ENEMY,
-										DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-										DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
-										FIND_ANY_ORDER,
-										false)
+			self:GetParent():GetAbsOrigin(),
+			nil,
+			self.radius,
+			DOTA_UNIT_TARGET_TEAM_ENEMY,
+			DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+			DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
+			FIND_ANY_ORDER,
+			false)
 		for _, enemy in pairs(enemies) do
 			local damageTable = {victim = enemy,
-								attacker = self:GetCaster(),
-								damage = self.dmg,
-								damage_type = DAMAGE_TYPE_PURE,
-								ability = self:GetAbility()}
+				attacker = self:GetCaster(),
+				damage = self.dmg,
+				damage_type = DAMAGE_TYPE_PURE,
+				ability = self:GetAbility()}
 			ApplyDamage(damageTable)
 		end
 	end
@@ -802,13 +815,13 @@ function modifier_imba_enigma_black_hole:IsMotionController()  return true end
 function modifier_imba_enigma_black_hole:GetMotionControllerPriority()  return DOTA_MOTION_CONTROLLER_PRIORITY_HIGHEST end
 
 function modifier_imba_enigma_black_hole:CheckState()
-		local state = 
-	{
-		[MODIFIER_STATE_DISARMED] = true,
-		[MODIFIER_STATE_ROOTED] = true,
-		[MODIFIER_STATE_MUTED] = true,
-		[MODIFIER_STATE_STUNNED] = true,
-	}
+	local state =
+		{
+			[MODIFIER_STATE_DISARMED] = true,
+			[MODIFIER_STATE_ROOTED] = true,
+			[MODIFIER_STATE_MUTED] = true,
+			[MODIFIER_STATE_STUNNED] = true,
+		}
 	return state
 end
 

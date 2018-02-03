@@ -1,5 +1,21 @@
--- Author: yahnich
--- Date updated: 09/06/2017
+-- Copyright 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+--
+-- limitations under the License.
+--
+-- Editors:
+--     yahnich, 09.06.2017
+--     suthernfriend, 03.02.2018
 
 CreateEmptyTalents("tiny")
 
@@ -9,7 +25,7 @@ CreateEmptyTalents("tiny")
 imba_tiny_rolling_stone = imba_tiny_rolling_stone or class({})
 
 function imba_tiny_rolling_stone:GetAbilityTextureName()
-   return "custom/imba_tiny_rolling_stone"
+	return "custom/imba_tiny_rolling_stone"
 end
 
 function imba_tiny_rolling_stone:IsInnateAbility()
@@ -30,10 +46,10 @@ function modifier_imba_tiny_rolling_stone:OnCreated()
 	self.movespeed = self:GetAbility():GetSpecialValueFor("bonus_movespeed")
 	self.modelscale = self:GetAbility():GetSpecialValueFor("bonus_model_scale")
 	self.gain = self:GetAbility():GetSpecialValueFor("stack_per_min")
-	
+
 	self.talent8 = false
 	self.talent2 = false
-	
+
 	self.internalTimer = 0
 	if IsServer() then
 		self:StartIntervalThink(0.03)
@@ -127,7 +143,7 @@ end
 imba_tiny_avalanche = imba_tiny_avalanche or class({})
 
 function imba_tiny_avalanche:GetAbilityTextureName()
-   return "tiny_avalanche"
+	return "tiny_avalanche"
 end
 
 function imba_tiny_avalanche:GetAOERadius()
@@ -137,19 +153,19 @@ if IsServer() then
 	function imba_tiny_avalanche:OnSpellStart()
 		local vPos = self:GetCursorPosition()
 		local caster = self:GetCaster()
-		
-		local delay = self:GetSpecialValueFor("projectile_duration")	
+
+		local delay = self:GetSpecialValueFor("projectile_duration")
 		local casterPos = caster:GetAbsOrigin()
 		local distance = (vPos - casterPos):Length2D()
 		local direction = (vPos - casterPos):Normalized()
-		local velocity = distance/delay * direction		
+		local velocity = distance/delay * direction
 		local ticks = 1 / self:GetSpecialValueFor("tick_interval")
 		velocity.z = 0
-		
+
 		local info = {
 			EffectName = "particles/units/heroes/hero_tiny/tiny_avalanche_projectile.vpcf",
 			Ability = self,
-			vSpawnOrigin = self:GetCaster():GetOrigin(), 
+			vSpawnOrigin = self:GetCaster():GetOrigin(),
 			fStartRadius = 0,
 			fEndRadius = 0,
 			vVelocity = velocity,
@@ -162,11 +178,11 @@ if IsServer() then
 		ProjectileManager:CreateLinearProjectile( info )
 		EmitSoundOnLocationWithCaster(vPos, "Ability.Avalanche", caster)
 	end
-	
+
 	function imba_tiny_avalanche:OnProjectileHit_ExtraData(hTarget, vLocation, extradata)
 		local caster = self:GetCaster()
 		local grow_ability = caster:FindAbilityByName("imba_tiny_grow")
-		
+
 		local duration = self:GetSpecialValueFor("stun_duration")
 		local toss_mult = self:GetSpecialValueFor("toss_damage_multiplier")
 		local radius = self:GetSpecialValueFor("radius")
@@ -174,16 +190,16 @@ if IsServer() then
 			radius = radius + caster:FindModifierByName("modifier_imba_tiny_rolling_stone"):GetStackCount() * caster:FindAbilityByName("imba_tiny_grow"):GetSpecialValueFor("rolling_stones_aoe")
 		end
 		local interval = self:GetSpecialValueFor("tick_interval")
-		local damage = self:GetTalentSpecialValueFor("avalanche_damage") * self:GetSpecialValueFor("tick_interval")		
+		local damage = self:GetTalentSpecialValueFor("avalanche_damage") * self:GetSpecialValueFor("tick_interval")
 		self.repeat_increase = false
-		local avalanche = ParticleManager:CreateParticle("particles/units/heroes/hero_tiny/tiny_avalanche.vpcf", PATTACH_CUSTOMORIGIN, nil) 
-				ParticleManager:SetParticleControl(avalanche, 0, vLocation)
-				ParticleManager:SetParticleControl(avalanche, 1, Vector(radius, 1, radius))
+		local avalanche = ParticleManager:CreateParticle("particles/units/heroes/hero_tiny/tiny_avalanche.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(avalanche, 0, vLocation)
+		ParticleManager:SetParticleControl(avalanche, 1, Vector(radius, 1, radius))
 		local offset = 0
 		local ticks = extradata.ticks
 		if self:GetCaster():HasAbility("special_bonus_imba_tiny_3") then
 			offset = self:GetCaster():FindTalentValue("special_bonus_imba_tiny_3")
-			local projDuration = offset * 0.03 / (ticks * interval) 
+			local projDuration = offset * 0.03 / (ticks * interval)
 			local newLoc = vLocation
 			local distanceTravelled = 0
 			Timers:CreateTimer(function()
@@ -199,11 +215,11 @@ if IsServer() then
 		Timers:CreateTimer(function()
 			local enemies_tick = FindUnitsInRadius(caster:GetTeamNumber(), hitLoc, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
 			for _,enemy in pairs(enemies_tick) do
-				if enemy:HasModifier("modifier_tiny_toss_movement") and not self.repeat_increase then 
-					damage = damage * toss_mult 
+				if enemy:HasModifier("modifier_tiny_toss_movement") and not self.repeat_increase then
+					damage = damage * toss_mult
 					self.repeat_increase = true
 				end
-				ApplyDamage({victim = enemy, attacker = caster, damage = damage, damage_type = self:GetAbilityDamageType(), ability = self})				
+				ApplyDamage({victim = enemy, attacker = caster, damage = damage, damage_type = self:GetAbilityDamageType(), ability = self})
 				enemy:AddNewModifier(caster, self, "modifier_stunned", {duration = duration})
 			end
 			hitLoc = hitLoc + offset / ticks
@@ -259,19 +275,19 @@ function modifier_imba_tiny_avalanche_passive:OnAttackLanded(params)
 			if RollPseudoRandom(self.chance, self) then
 				local vPos = params.target:GetAbsOrigin()
 				local caster = self:GetCaster()
-				local delay = self:GetAbility():GetSpecialValueFor("projectile_duration")	
+				local delay = self:GetAbility():GetSpecialValueFor("projectile_duration")
 				local casterPos = caster:GetAbsOrigin()
 				local distance = (vPos - casterPos):Length2D()
 				local direction = (vPos - casterPos):Normalized()
 				local velocity = distance/delay * direction
 				velocity.z = 0
-				
+
 				local ticks = self:GetAbility():GetTalentSpecialValueFor("passive_ticks")
 
 				local info = {
 					EffectName = "particles/units/heroes/hero_tiny/tiny_avalanche_projectile.vpcf",
 					Ability = self:GetAbility(),
-					vSpawnOrigin = self:GetCaster():GetOrigin(), 
+					vSpawnOrigin = self:GetCaster():GetOrigin(),
 					fStartRadius = 0,
 					fEndRadius = 0,
 					vVelocity = velocity,
@@ -282,7 +298,7 @@ function modifier_imba_tiny_avalanche_passive:OnAttackLanded(params)
 					ExtraData = {ticks = ticks}
 				}
 				ProjectileManager:CreateLinearProjectile( info )
-				EmitSoundOnLocationWithCaster(vPos, "Ability.Avalanche", caster)				
+				EmitSoundOnLocationWithCaster(vPos, "Ability.Avalanche", caster)
 			end
 		end
 	end
@@ -295,7 +311,7 @@ end
 imba_tiny_toss = imba_tiny_toss or class({})
 
 function imba_tiny_toss:GetAbilityTextureName()
-   return "tiny_toss"
+	return "tiny_toss"
 end
 
 function imba_tiny_toss:IsNetherWardStealable()
@@ -308,7 +324,7 @@ function imba_tiny_toss:OnSpellStart()
 	local caster = self:GetCaster()
 	local tossVictim = caster
 	local duration = self:GetSpecialValueFor("duration")
-	
+
 	if not hTarget then
 		local targets = FindUnitsInRadius(caster:GetTeamNumber(), self.tossPosition, nil, self:GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 1, false)
 		for _,target in pairs(targets) do
@@ -325,12 +341,12 @@ function imba_tiny_toss:OnSpellStart()
 
 	local vLocation = self.tossPosition
 	local kv =
-	{
-		vLocX = vLocation.x,
-		vLocY = vLocation.y,
-		vLocZ = vLocation.z,
-		duration = duration	
-	}
+		{
+			vLocX = vLocation.x,
+			vLocY = vLocation.y,
+			vLocZ = vLocation.z,
+			duration = duration
+		}
 
 	local tossVictims = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, self:GetSpecialValueFor("grab_radius"), DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_CHECK_DISABLE_HELP, 1, false)
 	for _, victim in pairs(tossVictims) do
@@ -346,9 +362,9 @@ function imba_tiny_toss:OnSpellStart()
 	if #tossVictims <= 1 then
 		caster:AddNewModifier(caster, self, "modifier_tiny_toss_movement", kv)
 	end
-	
+
 	caster:StartGesture(ACT_TINY_TOSS)
-	
+
 	EmitSoundOn("Ability.TossThrow", self:GetCaster())
 end
 
@@ -362,10 +378,10 @@ function imba_tiny_toss:GetCastRange(vLocation, hTarget)
 end
 
 function imba_tiny_toss:GetAOERadius()
-    local ability = self
-    local radius = ability:GetSpecialValueFor("radius") 
-    
-    return radius
+	local ability = self
+	local radius = ability:GetSpecialValueFor("radius")
+
+	return radius
 end
 
 LinkLuaModifier("modifier_tiny_toss_movement", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
@@ -406,18 +422,18 @@ end
 --------------------------------------------------------------------------------
 
 function modifier_tiny_toss_movement:OnCreated( kv )
-  self.toss_minimum_height_above_lowest = 500
-  self.toss_minimum_height_above_highest = 100
-  self.toss_acceleration_z = 4000
-  self.toss_max_horizontal_acceleration = 3000
+	self.toss_minimum_height_above_lowest = 500
+	self.toss_minimum_height_above_highest = 100
+	self.toss_acceleration_z = 4000
+	self.toss_max_horizontal_acceleration = 3000
 
-	if IsServer() then				
-		self.ability = self:GetAbility()	
-		self.parent = self:GetParent()		
+	if IsServer() then
+		self.ability = self:GetAbility()
+		self.parent = self:GetParent()
 
 		EmitSoundOn("Hero_Tiny.Toss.Target", self:GetParent())
 
-    	self.vStartPosition = GetGroundPosition( self:GetParent():GetOrigin(), self:GetParent() )
+		self.vStartPosition = GetGroundPosition( self:GetParent():GetOrigin(), self:GetParent() )
 		self.flCurrentTimeHoriz = 0.0
 		self.flCurrentTimeVert = 0.0
 
@@ -476,7 +492,7 @@ function modifier_tiny_toss_movement:TossLand()
 		local rolling_stone_modifier = caster:FindModifierByName("modifier_imba_tiny_rolling_stone")
 		local radius = self:GetAbility():GetSpecialValueFor("radius")
 		if rolling_stone_modifier and caster:HasAbility("imba_tiny_grow") then
-		 	radius = radius + rolling_stone_modifier:GetStackCount() * caster:FindAbilityByName("imba_tiny_grow"):GetSpecialValueFor("rolling_stones_aoe")
+			radius = radius + rolling_stone_modifier:GetStackCount() * caster:FindAbilityByName("imba_tiny_grow"):GetSpecialValueFor("rolling_stones_aoe")
 		end
 
 		-- Destroy trees at the target point
@@ -514,7 +530,7 @@ function modifier_tiny_toss_movement:TossLand()
 		self.parent:SetUnitOnClearGround()
 		Timers:CreateTimer(FrameTime(), function()
 			ResolveNPCPositions(self.parent:GetAbsOrigin(), 150)
-		end)		
+		end)
 	end
 end
 
@@ -574,7 +590,7 @@ end
 --------------------------------------------------------------------------------
 
 function modifier_tiny_toss_movement:HorizontalMotion( me, dt )
-	if IsServer() then		
+	if IsServer() then
 		-- If the unit being tossed died, interrupt motion controllers and remove self
 		if not self.parent:IsAlive() then
 			self.parent:InterruptMotionControllers(true)
@@ -605,7 +621,7 @@ function modifier_tiny_toss_movement:VerticalMotion( me, dt )
 	if IsServer() then
 		self.flCurrentTimeVert = self.flCurrentTimeVert + dt
 		local bGoingDown = ( -self.toss_acceleration_z * self.flCurrentTimeVert + self.flInitialVelocityZ ) < 0
-		
+
 		local vNewPos = me:GetOrigin()
 		vNewPos.z = self.vStartPosition.z + ( -0.5 * self.toss_acceleration_z * ( self.flCurrentTimeVert * self.flCurrentTimeVert ) + self.flInitialVelocityZ * self.flCurrentTimeVert )
 
@@ -662,13 +678,13 @@ end
 
 function modifier_tiny_toss_scepter_bounce:OnCreated( kv )
 	if IsServer() then
-		if self:ApplyVerticalMotionController() == false then 
+		if self:ApplyVerticalMotionController() == false then
 			self:Destroy()
 		end
 
 		self.caster = self:GetCaster()
 		self.ability = self:GetAbility()
-		self.parent = self:GetParent()		
+		self.parent = self:GetParent()
 
 		self.scepter_bounce_damage_pct = self.ability:GetSpecialValueFor("scepter_bounce_damage_pct")
 		self.toss_damage = self.ability:GetSpecialValueFor("toss_damage")
@@ -739,7 +755,7 @@ function modifier_tiny_toss_scepter_bounce:OnIntervalThink()
 end
 
 function modifier_tiny_toss_scepter_bounce:VerticalMotion( me, dt )
-	if IsServer() then		
+	if IsServer() then
 
 		if self.time < self.bounce_duration then
 			self.time = self.time + dt
@@ -757,7 +773,7 @@ function modifier_tiny_toss_scepter_bounce:VerticalMotion( me, dt )
 		else
 			self.parent:InterruptMotionControllers(true)
 			self:Destroy()
-		end       
+		end
 	end
 end
 
@@ -785,7 +801,7 @@ function imba_tiny_craggy_exterior:GetIntrinsicModifierName()
 end
 
 function imba_tiny_craggy_exterior:GetAbilityTextureName()
-   return "tiny_craggy_exterior"
+	return "tiny_craggy_exterior"
 end
 
 LinkLuaModifier("modifier_imba_tiny_craggy_exterior_passive", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
@@ -832,7 +848,7 @@ function modifier_imba_tiny_craggy_exterior_passive:OnAttackLanded(params)
 			local caster = self:GetCaster()
 
 			if caster:PassivesDisabled() or                                              -- if Tiny is broken, do nothing.
-			params.attacker:IsBuilding() or	params.attacker:IsMagicImmune() then         -- if the guy attacking Tiny is a tower or spell immune, do nothing.
+				params.attacker:IsBuilding() or	params.attacker:IsMagicImmune() then         -- if the guy attacking Tiny is a tower or spell immune, do nothing.
 				return nil
 			end
 
@@ -840,13 +856,13 @@ function modifier_imba_tiny_craggy_exterior_passive:OnAttackLanded(params)
 				if self:GetParent():HasTalent("special_bonus_imba_tiny_4") then
 					EmitSoundOn("Hero_Tiny.CraggyExterior", self:GetCaster())
 					local radius = self:GetParent():FindTalentValue("special_bonus_imba_tiny_4")
-					local avalanche = ParticleManager:CreateParticle("particles/units/heroes/hero_tiny/tiny_avalanche.vpcf", PATTACH_CUSTOMORIGIN, params.attacker) 
-						ParticleManager:SetParticleControl(avalanche, 0, params.attacker:GetAbsOrigin())
-						ParticleManager:SetParticleControl(avalanche, 1, Vector(radius, 1, radius))
-						Timers:CreateTimer(0.2, function() 
-							ParticleManager:DestroyParticle(avalanche, false)
-							ParticleManager:ReleaseParticleIndex(avalanche)							
-						end)
+					local avalanche = ParticleManager:CreateParticle("particles/units/heroes/hero_tiny/tiny_avalanche.vpcf", PATTACH_CUSTOMORIGIN, params.attacker)
+					ParticleManager:SetParticleControl(avalanche, 0, params.attacker:GetAbsOrigin())
+					ParticleManager:SetParticleControl(avalanche, 1, Vector(radius, 1, radius))
+					Timers:CreateTimer(0.2, function()
+						ParticleManager:DestroyParticle(avalanche, false)
+						ParticleManager:ReleaseParticleIndex(avalanche)
+					end)
 					local craggy_targets = FindUnitsInRadius(caster:GetTeamNumber(), params.attacker:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
 					for _,target in pairs(craggy_targets) do
 						ApplyDamage({victim = target, attacker = caster, damage = self.damage, damage_type = self:GetAbility():GetAbilityDamageType(), ability = self:GetAbility()})
@@ -862,11 +878,11 @@ function modifier_imba_tiny_craggy_exterior_passive:OnAttackLanded(params)
 					ParticleManager:ReleaseParticleIndex(craggy)
 					EmitSoundOn("Hero_Tiny.CraggyExterior", self:GetCaster())
 					EmitSoundOn("Hero_Tiny.CraggyExterior.Stun", params.attacker)
-				end			
+				end
 			end
 
 			-- Bluntstone
-			
+
 			if not params.attacker:HasModifier("modifier_craggy_exterior_blunt") then
 				params.attacker:AddNewModifier(caster, self:GetAbility(), "modifier_craggy_exterior_blunt", {duration = self.reduction_duration})
 			end
@@ -884,7 +900,7 @@ LinkLuaModifier("modifier_craggy_exterior_blunt", "hero/hero_tiny", LUA_MODIFIER
 modifier_craggy_exterior_blunt = class({})
 function modifier_craggy_exterior_blunt:OnCreated()
 	self.caster = self:GetCaster()
-	self.reduction = self:GetAbility():GetSpecialValueFor("damage_reduction")		
+	self.reduction = self:GetAbility():GetSpecialValueFor("damage_reduction")
 end
 
 function modifier_craggy_exterior_blunt:OnRefresh()
@@ -898,7 +914,7 @@ function modifier_craggy_exterior_blunt:DeclareFunctions()
 end
 
 function modifier_craggy_exterior_blunt:GetModifierPreAttack_BonusDamage()
-	local reduction = self.reduction + self.caster:FindTalentValue("special_bonus_imba_tiny_5")	
+	local reduction = self.reduction + self.caster:FindTalentValue("special_bonus_imba_tiny_5")
 	return reduction * self:GetStackCount()
 end
 
@@ -909,7 +925,7 @@ end
 imba_tiny_grow = imba_tiny_grow or class({})
 
 function imba_tiny_grow:GetAbilityTextureName()
-   return "tiny_grow"
+	return "tiny_grow"
 end
 
 function imba_tiny_grow:GetIntrinsicModifierName()
@@ -925,7 +941,7 @@ function imba_tiny_grow:OnUpgrade()
 		local new_stacks = self:GetLevelSpecialValueFor("rolling_stones_stacks", self:GetLevel() - 1 )
 		if old_stacks == new_stacks then old_stacks = 0 end
 		rolling_stone:SetStackCount(rolling_stone:GetStackCount() - old_stacks + new_stacks)
-		local level = self:GetLevel() + 1		
+		local level = self:GetLevel() + 1
 		if level < 5 then -- model bullshit
 			-- Set new model
 			self:GetCaster():SetOriginalModel("models/heroes/tiny_0"..level.."/tiny_0"..level..".vmdl")
@@ -949,10 +965,10 @@ function imba_tiny_grow:OnUpgrade()
 		-- Effects
 		self:GetCaster():StartGesture(ACT_TINY_GROWL)
 		EmitSoundOn("Tiny.Grow", self:GetCaster())
-		local grow = ParticleManager:CreateParticle("particles/units/heroes/hero_tiny/tiny_transform.vpcf", PATTACH_POINT_FOLLOW, self:GetCaster()) 
-			ParticleManager:SetParticleControl(grow, 0, self:GetCaster():GetAbsOrigin())
-			ParticleManager:ReleaseParticleIndex(grow)
-		
+		local grow = ParticleManager:CreateParticle("particles/units/heroes/hero_tiny/tiny_transform.vpcf", PATTACH_POINT_FOLLOW, self:GetCaster())
+		ParticleManager:SetParticleControl(grow, 0, self:GetCaster():GetAbsOrigin())
+		ParticleManager:ReleaseParticleIndex(grow)
+
 	end
 end
 

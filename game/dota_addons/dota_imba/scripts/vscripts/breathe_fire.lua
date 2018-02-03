@@ -7,9 +7,9 @@ function breathe_fire:OnSpellStart()
 	self.end_radius = self:GetSpecialValueFor( "end_radius" )
 	self.range = self:GetSpecialValueFor( "range" )
 	self.speed = self:GetSpecialValueFor( "speed" )
-	self.fire_damage = self:GetSpecialValueFor( "fire_damage" ) 
+	self.fire_damage = self:GetSpecialValueFor( "fire_damage" )
 
-	
+
 
 	local vPos = nil
 	if self:GetCursorTarget() then
@@ -29,7 +29,7 @@ function breathe_fire:OnSpellStart()
 	local info = {
 		EffectName = effect_name,
 		Ability = self,
-		vSpawnOrigin = self:GetCaster():GetOrigin(), 
+		vSpawnOrigin = self:GetCaster():GetOrigin(),
 		fStartRadius = self.start_radius,
 		fEndRadius = self.end_radius,
 		vVelocity = vDirection * self.speed,
@@ -40,7 +40,7 @@ function breathe_fire:OnSpellStart()
 	}
 
 	ProjectileManager:CreateLinearProjectile( info )
-	
+
 	EmitSoundOn( "Conquest.FireTrap.Generic", self:GetCaster() )
 end
 

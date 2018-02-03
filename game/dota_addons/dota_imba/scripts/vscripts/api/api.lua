@@ -1,4 +1,4 @@
--- 
+--
 -- IMBA API
 --
 
@@ -22,9 +22,9 @@ local IMBA_API_ENDPOINTS = {
 	game_event = "/game/event",
 	meta_topxpusers = "/meta/top-xp-users",
 	meta_topimrusers = "/meta/top-imr-users",
-    meta_hotdisabledheroes = "/meta/hot-disabled-heroes",
-    meta_companions = "/meta/companions",
-    meta_companion_change = "/meta/companion-change",
+	meta_hotdisabledheroes = "/meta/hot-disabled-heroes",
+	meta_companions = "/meta/companions",
+	meta_companion_change = "/meta/companion-change",
 }
 
 ImbaApi = {}
@@ -64,17 +64,17 @@ function ImbaApi:perform(robj, endpoint, callback)
 		}
 
 		method = "POST"
-	
+
 		-- encode with json
 		payload = json.encode(base_request)
-	end 
+	end
 
 	self:debug("Performing " .. method .. " @ " .. endpoint)
 
 	if (method == "POST") then
 		self:debug("Payload " .. payload)
 	end
-	
+
 	-- create request
 	rqH = CreateHTTPRequestScriptVM(method, self.config.endpoint .. endpoint)
 	rqH:SetHTTPRequestAbsoluteTimeoutMS(self.config.timeout)
@@ -89,25 +89,25 @@ function ImbaApi:perform(robj, endpoint, callback)
 	-- send request
 	rqH:Send(function (result)
 
-		-- decode response (we should always get json)
-		-- 500 indi
-		if result.StatusCode == 503 then
-			self:print("Server not available!")
-			callback(true, nil)
-		elseif result.StatusCode ~= 200 then
-			self:print("Request failed with Invalid status: " .. result.StatusCode)
-			callback(true, nil)
-		else 
-			rp = json.decode(result.Body)
-			if rp.error then
-				self:print("Request failed with custom error: " .. rp.message)
-				callback(true, rp)
+			-- decode response (we should always get json)
+			-- 500 indi
+			if result.StatusCode == 503 then
+				self:print("Server not available!")
+				callback(true, nil)
+			elseif result.StatusCode ~= 200 then
+				self:print("Request failed with Invalid status: " .. result.StatusCode)
+				callback(true, nil)
 			else
-				self:debug("Request succesful")
-				self:debug("Payload: " .. result.Body)
-				callback(false, rp)
+				rp = json.decode(result.Body)
+				if rp.error then
+					self:print("Request failed with custom error: " .. rp.message)
+					callback(true, rp)
+				else
+					self:debug("Request succesful")
+					self:debug("Payload: " .. result.Body)
+					callback(false, rp)
+				end
 			end
-		end
 	end)
 end
 
@@ -152,11 +152,11 @@ function ImbaApi:meta_topimrusers(success_cb, error_cb)
 end
 
 function ImbaApi:meta_hotdisabledheroes(success_cb, error_cb)
-    self:simple_perform(nil, IMBA_API_ENDPOINTS.meta_hotdisabledheroes, success_cb, error_cb)
+	self:simple_perform(nil, IMBA_API_ENDPOINTS.meta_hotdisabledheroes, success_cb, error_cb)
 end
 
 function ImbaApi:meta_companions(success_cb, error_cb)
-    self:simple_perform(nil, IMBA_API_ENDPOINTS.meta_companions, success_cb, error_cb)
+	self:simple_perform(nil, IMBA_API_ENDPOINTS.meta_companions, success_cb, error_cb)
 end
 
 function ImbaApi:meta_companion_change(data, success_cb, error_cb)
@@ -171,6 +171,6 @@ function imba_api()
 	if _api_instance == nil then
 		_api_instance = ImbaApi:new(nil, IMBA_API_CONFIG)
 	end
- 
+
 	return _api_instance
 end

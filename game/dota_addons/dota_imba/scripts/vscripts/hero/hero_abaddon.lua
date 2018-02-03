@@ -1,23 +1,39 @@
---[[	Author: Broccoli
-		Date: 2-4-2017		]]
+-- Copyright 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+--
+-- limitations under the License.
+--
+-- Editors:
+--     Broccoli, 02.04.2017
+--     suthernfriend, 03.02.2018
 
 CreateEmptyTalents("abaddon")
 local LinkedModifiers = {}
 
 -- Yet Another ShallowCopy Copy...ironic
 local function ShallowCopy(orig)
-    local copy = {}
-        for orig_key, orig_value in pairs(orig) do
-            copy[orig_key] = orig_value
-        end
-    return copy
+	local copy = {}
+	for orig_key, orig_value in pairs(orig) do
+		copy[orig_key] = orig_value
+	end
+	return copy
 end
 
 local function getOverChannelDamageIncrease(caster)
 	if caster:HasModifier("modifier_over_channel_handler") then
 		local over_channel = caster:FindAbilityByName("imba_abaddon_over_channel")
-		if over_channel then			
-			-- #6 Talent: +50% Overchannel power			
+		if over_channel then
+			-- #6 Talent: +50% Overchannel power
 			return over_channel:GetSpecialValueFor("extra_dmg") * (1 + caster:FindTalentValue("special_bonus_imba_abaddon_6") * 0.01)
 		end
 	end
@@ -63,14 +79,14 @@ MergeTables(LinkedModifiers,{
 imba_abaddon_mist_coil = imba_abaddon_mist_coil or class({})
 
 function imba_abaddon_mist_coil:GetAbilityTextureName()
-   return "abaddon_death_coil"
+	return "abaddon_death_coil"
 end
 
 function imba_abaddon_mist_coil:GetIntrinsicModifierName()
-    return "modifier_imba_mist_coil_passive"
+	return "modifier_imba_mist_coil_passive"
 end
 
-function imba_abaddon_mist_coil:GetCastRange() 
+function imba_abaddon_mist_coil:GetCastRange()
 	return self:GetSpecialValueFor("cast_range")
 end
 
@@ -82,7 +98,7 @@ function imba_abaddon_mist_coil:OnSpellStart(unit, special_cast)
 	if IsServer() then
 		local caster = self:GetCaster()
 		local target = unit or self:GetCursorTarget()
-		
+
 		caster:EmitSound("Hero_Abaddon.DeathCoil.Cast")
 
 		-- If caster is alive
@@ -90,8 +106,8 @@ function imba_abaddon_mist_coil:OnSpellStart(unit, special_cast)
 			local responses = {"abaddon_abad_deathcoil_01","abaddon_abad_deathcoil_02","abaddon_abad_deathcoil_06","abaddon_abad_deathcoil_08",}
 			caster:EmitCasterSound("npc_dota_hero_abaddon",responses, 25, DOTA_CAST_SOUND_FLAG_NONE, 20,"coil")
 
-			local health_cost = self:GetSpecialValueFor("self_damage")						
-			health_cost = health_cost + getOverChannelDamageIncrease(caster)			
+			local health_cost = self:GetSpecialValueFor("self_damage")
+			health_cost = health_cost + getOverChannelDamageIncrease(caster)
 
 			if health_cost > 0 then
 				ApplyDamage({ victim = caster, attacker = caster, ability = self, damage = health_cost, damage_type = DAMAGE_TYPE_PURE })
@@ -143,11 +159,11 @@ function imba_abaddon_mist_coil:OnProjectileHit_ExtraData( hTarget, vLocation, E
 			mist_duration = mist_duration + self.overchannel_mist_increase
 		end
 
-        if target:GetTeam() ~= caster:GetTeam() then
+		if target:GetTeam() ~= caster:GetTeam() then
 			-- If target has Linken Sphere, block effect entirely
-            if target:TriggerSpellAbsorb(self) then
-                return nil
-            end
+			if target:TriggerSpellAbsorb(self) then
+				return nil
+			end
 
 			local damage = self:GetLevelSpecialValueFor("damage", ability_level) + self.overchannel_damage_increase
 			local damage_type = DAMAGE_TYPE_MAGICAL
@@ -159,14 +175,14 @@ function imba_abaddon_mist_coil:OnProjectileHit_ExtraData( hTarget, vLocation, E
 			end
 			-- Apply curse of avernus debuff
 			local curse_of_avernus = caster:FindAbilityByName("imba_abaddon_curse_of_avernus")
-			
+
 			if curse_of_avernus then
 				local debuff_duration = curse_of_avernus:GetSpecialValueFor("debuff_duration")
 
 				-- debuff_duration can be 0 if caster has ability but not learnt it yet
 				if debuff_duration > 0 and not caster:PassivesDisabled() then
 					target:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff_slow", { duration = debuff_duration })
-				end				
+				end
 			end
 
 			-- Apply the Mist
@@ -175,8 +191,8 @@ function imba_abaddon_mist_coil:OnProjectileHit_ExtraData( hTarget, vLocation, E
 			--Apply spellpower to heal
 			local heal_amp = 1 + (caster:GetSpellPower() * 0.01)
 
-			local heal = (self:GetLevelSpecialValueFor("heal", ability_level) + self.overchannel_damage_increase) * heal_amp			
-	
+			local heal = (self:GetLevelSpecialValueFor("heal", ability_level) + self.overchannel_damage_increase) * heal_amp
+
 			-- heal allies or self and apply mist
 			target:Heal(heal, caster)
 			target:AddNewModifier(caster, self, "modifier_imba_mist_coil_mist_ally", {duration = mist_duration})
@@ -187,7 +203,7 @@ function imba_abaddon_mist_coil:OnProjectileHit_ExtraData( hTarget, vLocation, E
 			if shield_modifier and shield_modifier.ResetAndExtendBy then
 				shield_modifier:ResetAndExtendBy(self:GetSpecialValueFor("shield_duration_extend"))
 			end
-        end
+		end
 
 		-- Extra effect if coil was casted with over channel
 		if not special_cast and caster:HasModifier("modifier_over_channel_handler") then
@@ -197,7 +213,7 @@ function imba_abaddon_mist_coil:OnProjectileHit_ExtraData( hTarget, vLocation, E
 			over_channel_particle = ParticleManager:CreateParticle("particles/dev/library/base_dust_hit_smoke.vpcf", PATTACH_POINT, target)
 			ParticleManager:ReleaseParticleIndex(over_channel_particle)
 		end
-		
+
 		-- Cast response
 		if not special_cast and caster:GetName() == "npc_dota_hero_abaddon" then
 			Timers:CreateTimer(0.4, function()
@@ -231,12 +247,12 @@ function modifier_imba_mist_coil_passive:IsStunDebuff() return false end
 function modifier_imba_mist_coil_passive:RemoveOnDeath() return false end
 -------------------------------------------
 function modifier_imba_mist_coil_passive:DeclareFunctions()
-    local decFuns =
-    {
-		MODIFIER_EVENT_ON_DEATH,
-		MODIFIER_EVENT_ON_TAKEDAMAGE,
-    }
-    return decFuns
+	local decFuns =
+		{
+			MODIFIER_EVENT_ON_DEATH,
+			MODIFIER_EVENT_ON_TAKEDAMAGE,
+		}
+	return decFuns
 end
 
 function modifier_imba_mist_coil_passive:OnDeath(keys)
@@ -270,11 +286,11 @@ function modifier_imba_mist_coil_mist_enemy:IsHidden() return false end
 function modifier_imba_mist_coil_mist_enemy:IsPurgable() return true end
 ----------------------------------------------
 function modifier_imba_mist_coil_mist_enemy:DeclareFunctions()
-    local decFuns =
-    {
-		MODIFIER_EVENT_ON_TAKEDAMAGE
-    }
-    return decFuns
+	local decFuns =
+		{
+			MODIFIER_EVENT_ON_TAKEDAMAGE
+		}
+	return decFuns
 end
 
 function modifier_imba_mist_coil_mist_enemy:OnCreated()
@@ -310,11 +326,11 @@ function modifier_imba_mist_coil_mist_ally:OnDestroy(keys)
 end
 
 function modifier_imba_mist_coil_mist_ally:DeclareFunctions()
-    local decFuns =
-    {
-		MODIFIER_EVENT_ON_TAKEDAMAGE
-    }
-    return decFuns
+	local decFuns =
+		{
+			MODIFIER_EVENT_ON_TAKEDAMAGE
+		}
+	return decFuns
 end
 
 function modifier_imba_mist_coil_mist_ally:OnTakeDamage(keys)
@@ -333,7 +349,7 @@ MergeTables(LinkedModifiers,{
 imba_abaddon_aphotic_shield = imba_abaddon_aphotic_shield or class({})
 
 function imba_abaddon_aphotic_shield:GetAbilityTextureName()
-   return "abaddon_aphotic_shield"
+	return "abaddon_aphotic_shield"
 end
 
 function imba_abaddon_aphotic_shield:GetCastRange(Location, Target)
@@ -383,7 +399,7 @@ function modifier_imba_aphotic_shield_buff_block:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_TOTAL_CONSTANT_BLOCK
 	}
- 
+
 	return funcs
 end
 
@@ -453,7 +469,7 @@ function modifier_imba_aphotic_shield_buff_block:OnDestroy()
 
 		-- Explosion particle is shown by default when the particle is to be removed, however that does not work for illusions. Hence this added explosion is to make the particle show when illusions die
 		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_explosion.vpcf", PATTACH_ABSORIGIN, caster)
-		ParticleManager:SetParticleControl(particle, 0, target_vector) 
+		ParticleManager:SetParticleControl(particle, 0, target_vector)
 		ParticleManager:ReleaseParticleIndex(particle)
 
 		local units = FindUnitsInRadius(caster:GetTeamNumber(), target_vector, nil, radius, explode_target_team, explode_target_type, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
@@ -465,7 +481,7 @@ function modifier_imba_aphotic_shield_buff_block:OnDestroy()
 
 		local debuff_duration
 		if curse_of_avernus then
-			 debuff_duration = curse_of_avernus:GetSpecialValueFor("debuff_duration")			
+			debuff_duration = curse_of_avernus:GetSpecialValueFor("debuff_duration")
 		end
 
 		-- Talent : When Aphotic Shield is destroyed, cast Mist Coil in 350 AoE
@@ -473,7 +489,7 @@ function modifier_imba_aphotic_shield_buff_block:OnDestroy()
 		local mist_coil_range
 		if caster:HasTalent("special_bonus_imba_abaddon_1") then
 			mist_coil_ability = caster:FindAbilityByName("imba_abaddon_mist_coil")
-			if mist_coil_ability then				
+			if mist_coil_ability then
 				mist_coil_range = caster:FindTalentValue("special_bonus_imba_abaddon_1")
 			end
 		end
@@ -532,7 +548,7 @@ function modifier_imba_aphotic_shield_buff_block:GetModifierTotal_ConstantBlock(
 		local shield_hit_particle 		= "particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_hit.vpcf"
 		-- Avoid blocking when borrowed time is active						--No need for block when there is no damage
 		if not target:HasModifier("modifier_imba_borrowed_time_buff_hot_caster")  and kv.damage > 0 then
-			
+
 			if self.has_talent and not self.invulnerability_expired then
 				-- damage_absorbtion_end is calculated in OnCreated
 				if GameRules:GetGameTime() <= self.damage_absorption_end then
@@ -551,25 +567,25 @@ function modifier_imba_aphotic_shield_buff_block:GetModifierTotal_ConstantBlock(
 				--Reduce the amount of shield remaining
 				self.shield_remaining = self.shield_remaining - kv.damage
 			end
-				
-			
+
+
 			--If there is enough shield to block everything, then block everything.
 			if kv.damage < original_shield_amount then
 				--Emit damage blocking effect
 				SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, target, kv.damage, nil)
 				return kv.damage
-			--Else, reduce what you can and blow up the shield
+					--Else, reduce what you can and blow up the shield
 			else
 				--Emit damage block effect
 				SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, target, original_shield_amount, nil)
 				self:Destroy()
 				return original_shield_amount
 			end
-			
+
 		end
 	end
-	
-end 
+
+end
 
 function modifier_imba_aphotic_shield_buff_block:ResetAndExtendBy(seconds)
 	self.shield_remaining = self.shield_init_value
@@ -674,7 +690,7 @@ function modifier_imba_curse_of_avernus_passive:DeclareFunctions()
 		MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_PHYSICAL,
 		MODIFIER_EVENT_ON_ORDER
 	}
- 
+
 	return funcs
 end
 
@@ -704,7 +720,7 @@ function modifier_imba_curse_of_avernus_passive:OnAttack(kv)
 			end
 		end
 
-		if kv.attacker == caster and self.ability:IsCooldownReady() and ( self.ability.curse_of_avernus_target or self.ability:GetAutoCastState() ) then				
+		if kv.attacker == caster and self.ability:IsCooldownReady() and ( self.ability.curse_of_avernus_target or self.ability:GetAutoCastState() ) then
 
 			local health_lost = caster:GetHealth() * caster:FindTalentValue("special_bonus_imba_abaddon_4", "health_cost_pct") / 100
 
@@ -726,7 +742,7 @@ function modifier_imba_curse_of_avernus_passive:OnAttack(kv)
 end
 
 function modifier_imba_curse_of_avernus_passive:OnOrder(kv)
-	local order_type = kv.order_type	
+	local order_type = kv.order_type
 
 	if order_type ~= DOTA_UNIT_ORDER_ATTACK_TARGET then
 		self.ability.curse_of_avernus_target = nil
@@ -809,7 +825,7 @@ function modifier_imba_curse_of_avernus_debuff_slow:DeclareFunctions()
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
 	}
- 
+
 	return funcs
 end
 
@@ -843,7 +859,7 @@ function modifier_imba_curse_of_avernus_debuff_slow:OnAttackLanded(kv)
 end
 
 function modifier_imba_curse_of_avernus_debuff_slow:OnTakeDamage(kv)
-	
+
 	if IsServer() then
 
 		-- Caster gain heal equal to damage to taken (heal_convert)
@@ -926,7 +942,7 @@ function modifier_imba_curse_of_avernus_buff_haste:DeclareFunctions()
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
 	}
- 
+
 	return funcs
 end
 
@@ -1049,7 +1065,7 @@ function modifier_imba_borrowed_time_handler:_CheckHealth(damage)
 		local hp_threshold = self.hp_threshold
 		local current_hp = target:GetHealth()
 		if current_hp <= hp_threshold then
-			target:CastAbilityImmediately(ability, target:GetPlayerID())			
+			target:CastAbilityImmediately(ability, target:GetPlayerID())
 		end
 	end
 end
@@ -1073,12 +1089,12 @@ function modifier_imba_borrowed_time_handler:DeclareFunctions()
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
 		MODIFIER_EVENT_ON_STATE_CHANGED
 	}
- 
+
 	return funcs
 end
 
 function modifier_imba_borrowed_time_handler:OnTakeDamage(kv)
-	
+
 	if IsServer() then
 		local target = self:GetParent()
 
@@ -1087,7 +1103,7 @@ function modifier_imba_borrowed_time_handler:OnTakeDamage(kv)
 			self:_CheckHealth(kv.damage)
 		end
 	end
-	
+
 end
 
 function modifier_imba_borrowed_time_handler:OnStateChanged(kv)
@@ -1119,7 +1135,7 @@ function modifier_imba_borrowed_time_buff_hot_caster:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE
 	}
- 
+
 	return funcs
 end
 
@@ -1155,7 +1171,7 @@ function modifier_imba_borrowed_time_buff_hot_caster:OnCreated()
 			--WHATCHA GUN DO
 			target:EmitSound("Imba.AbaddonHeyYou")
 		end
-		
+
 		--Play the borrowed time sound either way
 		target:EmitSound("Hero_Abaddon.BorrowedTime")
 
@@ -1163,7 +1179,7 @@ function modifier_imba_borrowed_time_buff_hot_caster:OnCreated()
 		-- Strong Dispel
 		target:Purge(false, true, false, true, false)
 
-	end	
+	end
 end
 
 function modifier_imba_borrowed_time_buff_hot_caster:OnDestroy()
@@ -1190,7 +1206,7 @@ function modifier_imba_borrowed_time_buff_hot_caster:GetModifierIncomingDamage_P
 		ParticleManager:SetParticleControl(heal_particle, 0, target_vector)
 		ParticleManager:SetParticleControl(heal_particle, 1, target_vector)
 		ParticleManager:ReleaseParticleIndex(heal_particle)
-		
+
 		--  A heal to heal the damage,and -100% to prevent it,
 		-- Talent : Heals that heal above maximum health threshold during Borrowed Time grants a mist shield (25% ratio) that is released after Borrowed Time expires for 5 seconds, healing Abaddon.
 		if self.has_talent then
@@ -1203,7 +1219,7 @@ function modifier_imba_borrowed_time_buff_hot_caster:GetModifierIncomingDamage_P
 		target:Heal(kv.damage, target)
 		return -100
 	end
-end 
+end
 
 modifier_imba_borrowed_time_buff_hot_ally = modifier_imba_borrowed_time_buff_hot_ally or class({
 	IsHidden				= function(self) return false end,
@@ -1215,7 +1231,7 @@ function modifier_imba_borrowed_time_buff_hot_ally:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE
 	}
- 
+
 	return funcs
 end
 
@@ -1263,10 +1279,10 @@ function modifier_imba_borrowed_time_buff_hot_ally:GetModifierIncomingDamage_Per
 		local attacker 		=	kv.attacker
 		local redirect_pct	=	(ability:GetLevelSpecialValueFor("redirect", ability_level))
 		local redirect_damage =	kv.damage * (redirect_pct/100)
-		
+
 		--Apply the damage to Abaddon.
 		ApplyDamage({ victim = caster, attacker = attacker, damage = redirect_damage, damage_type = DAMAGE_TYPE_PURE })
-		
+
 		--Block the amount of damage required.
 		return -(redirect_pct)
 
@@ -1289,9 +1305,9 @@ end
 
 function modifier_imba_borrowed_time_buff_mist:DeclareFunctions()
 	local decFuns =
-	{
-		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT
-	}
+		{
+			MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT
+		}
 	return decFuns
 end
 

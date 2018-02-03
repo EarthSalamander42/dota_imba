@@ -1,6 +1,24 @@
--- Author: Fudge
+-- Copyright 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+--
+-- limitations under the License.
+--
+-- Editors:
+--     Fudge
+--     suthernfriend, 03.02.2018
 
 CreateEmptyTalents("storm_spirit")
+
 imba_storm_spirit_static_remnant = storm_spirit_static_remnant or class({})
 LinkLuaModifier("modifier_imba_static_remnant", "hero/hero_storm_spirit.lua", LUA_MODIFIER_MOTION_NONE)
 
@@ -17,9 +35,9 @@ function imba_storm_spirit_static_remnant:OnSpellStart()
 		local cast_sound			=	"Hero_StormSpirit.StaticRemnantPlant"
 		--Ability paramaters
 		local remnant_duration		=	self:GetSpecialValueFor("big_remnant_duration")
-	
+
 		--Play a random cast response 50% of the time
-		if RollPercentage(50) and (caster:GetName() == "npc_dota_hero_storm_spirit") then 
+		if RollPercentage(50) and (caster:GetName() == "npc_dota_hero_storm_spirit") then
 			EmitSoundOn(cast_response..math.random(1,6),caster)
 		end
 		-- Play cast sound
@@ -31,7 +49,7 @@ function imba_storm_spirit_static_remnant:OnSpellStart()
 		dummy:AddNewModifier(caster, self, "modifier_imba_static_remnant", {duration = remnant_duration})
 
 	end
-end												
+end
 
 modifier_imba_static_remnant = modifier_imba_static_remnant or class({})
 
@@ -75,14 +93,14 @@ function modifier_imba_static_remnant:OnIntervalThink()
 
 		--Find nearby enemies
 		local nearby_enemies	=	FindUnitsInRadius(	self.caster:GetTeamNumber(),
-		remnant_location,
-		nil,
-		activation_range,
-		self.ability:GetAbilityTargetTeam(),
-		self.ability:GetAbilityTargetType(),
-		DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
-		FIND_ANY_ORDER,
-		false)
+			remnant_location,
+			nil,
+			activation_range,
+			self.ability:GetAbilityTargetTeam(),
+			self.ability:GetAbilityTargetType(),
+			DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
+			FIND_ANY_ORDER,
+			false)
 		--Blow up if there are nearby enemies
 		if #nearby_enemies > 0 then
 			self:Destroy()
@@ -104,13 +122,13 @@ function modifier_imba_static_remnant:OnDestroy()
 
 		--Find nearby enemies
 		local nearby_enemies	=	FindUnitsInRadius(	self.caster:GetTeamNumber(),
-		remnant_location,
-		nil,
-		damage_radius,
-		self.ability:GetAbilityTargetTeam(),
-		self.ability:GetAbilityTargetType(),
-		self.ability:GetAbilityTargetFlags(),
-		FIND_ANY_ORDER, false)
+			remnant_location,
+			nil,
+			damage_radius,
+			self.ability:GetAbilityTargetTeam(),
+			self.ability:GetAbilityTargetType(),
+			self.ability:GetAbilityTargetFlags(),
+			FIND_ANY_ORDER, false)
 
 		-- Damage nearby enemies
 		for _,enemy in pairs(nearby_enemies) do
@@ -201,14 +219,14 @@ function imba_storm_spirit_electric_vortex:OnSpellStart()
 			-- AGHANIM'S SCEPTER: Electric Vortex affects multiple targets around Storm.
 			--Find nearby enemies
 			local enemies	=	FindUnitsInRadius(	caster:GetTeamNumber(),
-			caster_loc,
-			nil,
-			self:GetCastRange(),
-			self:GetAbilityTargetTeam(),
-			self:GetAbilityTargetType(),
-			self:GetAbilityTargetFlags(),
-			FIND_ANY_ORDER,
-			false)
+				caster_loc,
+				nil,
+				self:GetCastRange(),
+				self:GetAbilityTargetTeam(),
+				self:GetAbilityTargetType(),
+				self:GetAbilityTargetFlags(),
+				FIND_ANY_ORDER,
+				false)
 
 			-- Apply vortex on nearby enemies
 			for _,enemy in pairs(enemies) do
@@ -301,16 +319,16 @@ end
 
 function modifier_imba_vortex_pull:CheckState()
 	local state =
-	{
-		[MODIFIER_STATE_STUNNED] = true
-	}
+		{
+			[MODIFIER_STATE_STUNNED] = true
+		}
 	return state
 end
 
 function modifier_imba_vortex_pull:HorizontalMotion( unit, time )
 	if IsServer() then
 
-		-- Move the target 
+		-- Move the target
 		local set_point = unit:GetAbsOrigin() + self.direction * self.speed
 		-- Stop moving when the vortex has been reached
 		if (unit:GetAbsOrigin() - self.vortex_loc):Length2D() > 50 then
@@ -323,9 +341,9 @@ end
 
 function modifier_imba_vortex_pull:DeclareFunctions()
 	local decFuncs =
-	{
-		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
-	}
+		{
+			MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
+		}
 	return decFuncs
 end
 
@@ -473,14 +491,14 @@ function modifier_imba_overload_buff:OnAttackLanded( keys )
 
 				-- Find enemies around the target
 				local enemies	=	FindUnitsInRadius(	parent:GetTeamNumber(),
-				keys.target:GetAbsOrigin(),
-				nil,
-				radius,
-				DOTA_UNIT_TARGET_TEAM_ENEMY,
-				DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP,
-				target_flag,
-				FIND_ANY_ORDER,
-				false)
+					keys.target:GetAbsOrigin(),
+					nil,
+					radius,
+					DOTA_UNIT_TARGET_TEAM_ENEMY,
+					DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP,
+					target_flag,
+					FIND_ANY_ORDER,
+					false)
 
 				-- Damage and apply slow to enemies near target
 				for _,enemy in pairs(enemies) do
@@ -607,36 +625,36 @@ function imba_storm_spirit_ball_lightning:OnSpellStart()
 		caster:EmitSound("Hero_StormSpirit.BallLightning.Loop")
 
 		-- Fire the ball of death!
-		local projectile = 
-		{
-			Ability				= self,
-			EffectName			= "particles/hero/storm_spirit/no_particle_particle.vpcf",
-			vSpawnOrigin		= caster_loc,
-			fDistance			= self.distance,
-			fStartRadius		= damage_radius,
-			fEndRadius			= damage_radius,
-			Source				= caster,
-			bHasFrontalCone		= false,
-			bReplaceExisting	= false,
-			iUnitTargetTeam		= self:GetAbilityTargetTeam(),
-			iUnitTargetFlags	= self:GetAbilityTargetFlags(),
-			iUnitTargetType		= self:GetAbilityTargetType(),
-			bDeleteOnHit		= false,
-			vVelocity 			= self.direction * speed * Vector(1, 1, 0),
-			bProvidesVision		= true,
-			iVisionRadius 		= vision,
-			iVisionTeamNumber 	= caster:GetTeamNumber(),
-			ExtraData			= {damage = damage,
-								   tree_radius = tree_radius,
-								   base_mana_cost = base_mana_cost,
-								   pct_mana_cost = pct_mana_cost,
-								   total_mana_cost = total_mana_cost,
-								   speed = speed * FrameTime(),
-								   max_spell_amp_range = max_spell_amp_range
-								}
-		}
+		local projectile =
+			{
+				Ability				= self,
+				EffectName			= "particles/hero/storm_spirit/no_particle_particle.vpcf",
+				vSpawnOrigin		= caster_loc,
+				fDistance			= self.distance,
+				fStartRadius		= damage_radius,
+				fEndRadius			= damage_radius,
+				Source				= caster,
+				bHasFrontalCone		= false,
+				bReplaceExisting	= false,
+				iUnitTargetTeam		= self:GetAbilityTargetTeam(),
+				iUnitTargetFlags	= self:GetAbilityTargetFlags(),
+				iUnitTargetType		= self:GetAbilityTargetType(),
+				bDeleteOnHit		= false,
+				vVelocity 			= self.direction * speed * Vector(1, 1, 0),
+				bProvidesVision		= true,
+				iVisionRadius 		= vision,
+				iVisionTeamNumber 	= caster:GetTeamNumber(),
+				ExtraData			= {damage = damage,
+					tree_radius = tree_radius,
+					base_mana_cost = base_mana_cost,
+					pct_mana_cost = pct_mana_cost,
+					total_mana_cost = total_mana_cost,
+					speed = speed * FrameTime(),
+					max_spell_amp_range = max_spell_amp_range
+				}
+			}
 		self.projectileID = ProjectileManager:CreateLinearProjectile(projectile)
-                  
+
 		-- Add Motion-Controller Modifier
 		caster:AddNewModifier(caster, self, "modifier_imba_ball_lightning", {})
 
@@ -698,43 +716,43 @@ function imba_storm_spirit_ball_lightning:OnProjectileThink_ExtraData(location, 
 		-- Get rid of the Ball
 		caster:FindModifierByName("modifier_imba_ball_lightning"):Destroy()
 		ProjectileManager:DestroyLinearProjectile(self.projectileID)
-			
+
 	end
 end
 
 function imba_storm_spirit_ball_lightning:OnProjectileHit_ExtraData(target, location, ExtraData)
 	if IsServer() then
-		if target then 
+		if target then
 
-	 		local caster	=	self:GetCaster()
-	 		local damage		=	ExtraData.damage * math.floor(self.traveled * 0.01)
-	 		local damage_flags 	= 	DOTA_DAMAGE_FLAG_NONE
+			local caster	=	self:GetCaster()
+			local damage		=	ExtraData.damage * math.floor(self.traveled * 0.01)
+			local damage_flags 	= 	DOTA_DAMAGE_FLAG_NONE
 
-	 		-- Prevent spell amp at large distances
-	 		if self.traveled > ExtraData.max_spell_amp_range then
-	 			damage_flags = damage_flags + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION
+			-- Prevent spell amp at large distances
+			if self.traveled > ExtraData.max_spell_amp_range then
+				damage_flags = damage_flags + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION
 
-	 			local damage_at_max_distance =  ExtraData.damage * ExtraData.max_spell_amp_range * 0.01 * (1 + (caster:GetSpellPower() * 0.01))
-	 			
-	 			-- If you are doing less damage because you went slightly more than the max range, set the damage to how much it would be at max range.
-	 			if damage < damage_at_max_distance then
-	 				damage	= damage_at_max_distance
-	 			end
-	 		end
+				local damage_at_max_distance =  ExtraData.damage * ExtraData.max_spell_amp_range * 0.01 * (1 + (caster:GetSpellPower() * 0.01))
+
+				-- If you are doing less damage because you went slightly more than the max range, set the damage to how much it would be at max range.
+				if damage < damage_at_max_distance then
+					damage	= damage_at_max_distance
+				end
+			end
 
 			-- Deal damage
 			local damageTable = {victim = target,
-								damage = damage,
-								damage_type = self:GetAbilityDamageType(),
-								attacker = caster,
-								ability = ability,
-								damage_flags = damage_flags
-								}
+				damage = damage,
+				damage_type = self:GetAbilityDamageType(),
+				attacker = caster,
+				ability = ability,
+				damage_flags = damage_flags
+			}
 
 			ApplyDamage(damageTable)
 
 			-- Emit rare kill response
-				if not target:IsAlive() then
+			if not target:IsAlive() then
 				local responses = {"stormspirit_ss_ability_lightning_01", "stormspirit_ss_ability_lightning_03"}
 				if caster:GetName() == "npc_dota_hero_storm_spirit" and RollPercentage(10) then
 					caster:EmitCasterSound("npc_dota_hero_storm_spirit",responses, 100, DOTA_CAST_SOUND_FLAG_BOTH_TEAMS, nil, nil)

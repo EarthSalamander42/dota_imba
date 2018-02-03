@@ -1,3 +1,22 @@
+-- Copyright 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+--
+-- limitations under the License.
+--
+-- Editors:
+--     Earth Salamander #42
+--     suthernfriend, 03.02.2018
+
 storegga_arm_slam = class({})
 LinkLuaModifier( "modifier_storegga_arm_slam", "modifier/modifier_storegga_arm_slam", LUA_MODIFIER_MOTION_NONE )
 
@@ -196,7 +215,7 @@ end
 
 function storegga_grab_throw:OnAbilityPhaseInterrupted()
 	if IsServer() then
-		--ParticleManager:DestroyParticle( self.nTargetFX, false )
+	--ParticleManager:DestroyParticle( self.nTargetFX, false )
 	end
 end
 
@@ -250,7 +269,7 @@ function storegga_grab_throw:OnSpellStart()
 			self.impact_radius = self.impact_radius * 1.5
 			self.knockback_damage = self.knockback_damage * 3
 		end
-		
+
 		self.vDirection = self:GetCursorPosition() - self:GetCaster():GetOrigin()
 		self.flDist = self.vDirection:Length2D() - 300 -- the direction is offset due to the attachment point
 		self.vDirection.z = 0.0
@@ -258,12 +277,12 @@ function storegga_grab_throw:OnSpellStart()
 
 		self.attach = self:GetCaster():ScriptLookupAttachment( "attach_attack2" )
 		self.vSpawnLocation = self:GetCaster():GetAttachmentOrigin( self.attach )
-		self.vEndPos = self.vSpawnLocation + self.vDirection * self.flDist	
+		self.vEndPos = self.vSpawnLocation + self.vDirection * self.flDist
 
 		local info = {
 			EffectName = "",
 			Ability = self,
-			vSpawnOrigin = self.vSpawnLocation, 
+			vSpawnOrigin = self.vSpawnLocation,
 			fStartRadius = self.impact_radius,
 			fEndRadius = self.impact_radius,
 			vVelocity = self.vDirection * self.throw_speed,
@@ -292,19 +311,19 @@ function storegga_grab_throw:OnProjectileHit( hTarget, vLocation )
 		--ParticleManager:DestroyParticle( self.nTargetFX, false )
 
 		EmitSoundOnLocationWithCaster( vLocation, "Ability.TossImpact", self:GetCaster() )
---		EmitSoundOnLocationWithCaster( vLocation, "OgreTank.GroundSmash", self:GetCaster() )
-		
+		--		EmitSoundOnLocationWithCaster( vLocation, "OgreTank.GroundSmash", self:GetCaster() )
+
 		if self.hThrowTarget ~= nil then
 			self.hThrowBuff:Destroy()
 			if self.hThrowTarget:IsRealHero() then
 				local damageInfo =
-				{
-					victim = self.hThrowTarget,
-					attacker = self:GetCaster(),
-					damage = self.knockback_damage / 3,
-					damage_type = DAMAGE_TYPE_PHYSICAL,
-					ability = self,
-				}
+					{
+						victim = self.hThrowTarget,
+						attacker = self:GetCaster(),
+						damage = self.knockback_damage / 3,
+						damage_type = DAMAGE_TYPE_PHYSICAL,
+						ability = self,
+					}
 
 				ApplyDamage( damageInfo )
 				if self.hThrowTarget:IsAlive() == false then
@@ -329,14 +348,14 @@ function storegga_grab_throw:OnProjectileHit( hTarget, vLocation )
 			local enemies = FindUnitsInRadius( self:GetCaster():GetTeamNumber(), vLocation, self:GetCaster(), self.impact_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, 0, false )
 			for _,enemy in pairs( enemies ) do
 				if enemy ~= nil and enemy:IsInvulnerable() == false and enemy ~= self.hThrowTarget then
-					local damageInfo = 
-					{
-						victim = enemy,
-						attacker = self:GetCaster(),
-						damage = self.knockback_damage,
-						damage_type = DAMAGE_TYPE_PHYSICAL,
-						ability = self,
-					}
+					local damageInfo =
+						{
+							victim = enemy,
+							attacker = self:GetCaster(),
+							damage = self.knockback_damage,
+							damage_type = DAMAGE_TYPE_PHYSICAL,
+							ability = self,
+						}
 
 					ApplyDamage( damageInfo )
 					if enemy:IsAlive() == false then
@@ -350,19 +369,19 @@ function storegga_grab_throw:OnProjectileHit( hTarget, vLocation )
 						EmitSoundOn( "Hero_PhantomAssassin.Spatter", enemy )
 					else
 						local kv =
-						{
-							center_x = vLocation.x,
-							center_y = vLocation.y,
-							center_z = vLocation.z,
-							should_stun = true, 
-							duration = self.knockback_duration,
-							knockback_duration = self.knockback_duration,
-							knockback_distance = self.knockback_distance,
-							knockback_height = self.knockback_height,
-						}
+							{
+								center_x = vLocation.x,
+								center_y = vLocation.y,
+								center_z = vLocation.z,
+								should_stun = true,
+								duration = self.knockback_duration,
+								knockback_duration = self.knockback_duration,
+								knockback_distance = self.knockback_distance,
+								knockback_height = self.knockback_height,
+							}
 						enemy:AddNewModifier( self:GetCaster(), self, "modifier_stunned", { duration = self.knockback_duration } )
 					end
-					
+
 				end
 			end
 		end

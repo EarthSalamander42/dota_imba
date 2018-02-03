@@ -1,13 +1,29 @@
---[[	Broccoli
-		Date: 24.03.2017.			]]
+-- Copyright 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+--
+-- limitations under the License.
+--
+-- Editors:
+--     Broccoli, 24.03.2017
+--     suthernfriend, 03.02.2018
 
 -- Copy shallow copy given input
 local function ShallowCopy(orig)
-    local copy = {}
-        for orig_key, orig_value in pairs(orig) do
-            copy[orig_key] = orig_value
-        end
-    return copy
+	local copy = {}
+	for orig_key, orig_value in pairs(orig) do
+		copy[orig_key] = orig_value
+	end
+	return copy
 end
 
 -- Base local ability to be used for fire breath and ice breath
@@ -46,7 +62,7 @@ function base_ability_dual_breath:OnUpgrade()
 			SetAbilityLevelIfPresent(caster, ability_other_breath_name, ability_level)
 		end
 	end
-	
+
 end
 
 function base_ability_dual_breath:OnSpellStart()
@@ -63,7 +79,7 @@ end
 local base_modifier_dual_breath_caster = class({
 	IsHidden 						= function(self) return true end,
 	IsPurgable 						= function(self) return false end,
-	IsDebuff 						= function(self) return false end,	
+	IsDebuff 						= function(self) return false end,
 	IgnoreTenacity					= function(self) return true end,
 	IsMotionController				= function(self) return true end,
 	GetMotionControllerPriority		= function(self) return DOTA_MOTION_CONTROLLER_PRIORITY_MEDIUM end,
@@ -79,15 +95,15 @@ function base_modifier_dual_breath_caster:DeclareFunctions()
 		MODIFIER_PROPERTY_DISABLE_TURNING,
 		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
 		MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE,
-		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS 
+		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS
 	}
- 
+
 	return funcs
 end
 
 function base_modifier_dual_breath_caster:OnCreated( kv )
 
-	if IsServer() then		
+	if IsServer() then
 
 		local caster = self:GetCaster()
 		local ability = self:GetAbility()
@@ -117,7 +133,7 @@ function base_modifier_dual_breath_caster:OnCreated( kv )
 
 		-- #6 Talent: Dual Breath Speed Increase
 		local breath_speed = ability:GetLevelSpecialValueFor("speed", ability_level) + caster:FindTalentValue("special_bonus_imba_jakiro_6")
-		
+
 		-- Ability variables
 		self.breath_direction = breath_direction
 		self.breath_distance = breath_distance
@@ -126,7 +142,7 @@ function base_modifier_dual_breath_caster:OnCreated( kv )
 		self.breath_speed = breath_speed * 1/30
 		self.breath_traveled = 0
 		self.affected_unit_list = {}
-		
+
 		-- Destroy existing particle if it exist
 		if self.existing_breath_particle then
 			local destroy_existing_breath_particle = self.existing_breath_particle
@@ -147,7 +163,7 @@ function base_modifier_dual_breath_caster:OnCreated( kv )
 		self.existing_breath_particle = breath_pfx
 
 		self.frametime = FrameTime()
-		self:StartIntervalThink(self.frametime)		
+		self:StartIntervalThink(self.frametime)
 	end
 end
 
@@ -159,7 +175,7 @@ function base_modifier_dual_breath_caster:OnIntervalThink()
 	end
 
 	-- Horizontal motion
-	self:HorizontalMotion(self.caster, self.frametime)	
+	self:HorizontalMotion(self.caster, self.frametime)
 end
 
 function base_modifier_dual_breath_caster:_DualBreathApplyModifierToEnemies( enemies )
@@ -226,7 +242,7 @@ function base_modifier_dual_breath_caster:HorizontalMotion()
 			local set_point = caster:GetAbsOrigin() + self.breath_direction * breath_speed
 			caster:SetAbsOrigin(Vector(set_point.x, set_point.y, GetGroundPosition(set_point, caster).z))
 			self.breath_traveled = breath_traveled + breath_speed
-		else			
+		else
 			self:Destroy()
 		end
 	end
@@ -236,7 +252,7 @@ function base_modifier_dual_breath_caster:CheckState()
 	local state = {
 		[MODIFIER_STATE_ROOTED] = true,
 	}
- 
+
 	return state
 end
 
@@ -248,7 +264,7 @@ function base_modifier_dual_breath_caster:OnDestroy()
 		if not ability:IsStolen() then
 			-- Switch breath abilities if spell is not stolen
 			caster:SwapAbilities(ability:GetAbilityName(), self.ability_other_breath_name, false, true)
-		end	
+		end
 
 		-- Destroy breath particle when motion interrupted
 		if self.existing_breath_particle then
@@ -287,7 +303,7 @@ function base_modifier_dot_debuff:_UpdateDebuffLevelValues()
 end
 
 function base_modifier_dot_debuff:OnCreated()
-	
+
 	self.caster 			= self:GetCaster()
 	self.parent 			= self:GetParent()
 
@@ -437,7 +453,7 @@ function modifier_imba_ice_breath_debuff:DeclareFunctions()
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
 	}
- 
+
 	return funcs
 end
 
@@ -462,7 +478,7 @@ LinkLuaModifier("modifier_imba_ice_path_freeze_debuff", "hero/hero_jakiro", LUA_
 LinkLuaModifier("modifier_imba_ice_path_slow_debuff", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
 
 function imba_jakiro_ice_path:GetAbilityTextureName()
-   return "jakiro_ice_path"
+	return "jakiro_ice_path"
 end
 
 function imba_jakiro_ice_path:OnSpellStart()
@@ -482,7 +498,7 @@ function modifier_imba_ice_path_thinker:OnCreated( kv )
 		local ability				= self:GetAbility()
 		local ability_level 		= ability:GetLevel() - 1
 		local path_length 			= ability:GetLevelSpecialValueFor("range", ability_level) + GetCastRangeIncrease(caster)
-		
+
 		local path_delay 			= ability:GetSpecialValueFor("path_delay")
 		local path_radius 			= ability:GetSpecialValueFor("path_radius")
 
@@ -550,7 +566,7 @@ function modifier_imba_ice_path_thinker:OnCreated( kv )
 		viewpoint_amount = math.ceil(viewpoint_amount)
 		local direction_vector = (end_pos - start_pos):Normalized()
 		------------------------------
-		
+
 		-- Apply affect after delay
 		Timers:CreateTimer(path_delay, function()
 			-- Create flying vision nodes
@@ -639,7 +655,7 @@ function modifier_imba_ice_path_freeze_debuff:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_OVERRIDE_ANIMATION
 	}
- 
+
 	return funcs
 end
 
@@ -648,7 +664,7 @@ function modifier_imba_ice_path_freeze_debuff:CheckState()
 		[MODIFIER_STATE_STUNNED] = true,
 		[MODIFIER_STATE_FROZEN] = true,
 	}
- 
+
 	return state
 end
 
@@ -673,7 +689,7 @@ function modifier_imba_ice_path_slow_debuff:DeclareFunctions()
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
 	}
- 
+
 	return funcs
 end
 
@@ -692,7 +708,7 @@ LinkLuaModifier("modifier_imba_liquid_fire_animate", "hero/hero_jakiro", LUA_MOD
 LinkLuaModifier("modifier_imba_liquid_fire_debuff", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
 
 function imba_jakiro_liquid_fire:GetAbilityTextureName()
-   return "jakiro_liquid_fire"
+	return "jakiro_liquid_fire"
 end
 
 function imba_jakiro_liquid_fire:IsNetherWardStealable() return false end
@@ -762,7 +778,7 @@ function modifier_imba_liquid_fire_caster:DeclareFunctions()
 end
 
 function modifier_imba_liquid_fire_caster:OnCreated()
-	
+
 	self.parent = self:GetParent()
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
@@ -830,7 +846,7 @@ function modifier_imba_liquid_fire_caster:OnAttack(keys)
 end
 
 function modifier_imba_liquid_fire_caster:_ApplyAOELiquidFire( keys )
-	
+
 
 	if IsServer() then
 
@@ -883,7 +899,7 @@ function modifier_imba_liquid_fire_caster:OnAttackFail( keys )
 end
 
 function modifier_imba_liquid_fire_caster:OnOrder(keys)
-	local order_type = keys.order_type	
+	local order_type = keys.order_type
 
 	-- On any order apart from attacking target, clear the cast_liquid_fire variable.
 	if order_type ~= DOTA_UNIT_ORDER_ATTACK_TARGET then
@@ -905,7 +921,7 @@ function modifier_imba_liquid_fire_animate:DeclareFunctions()
 		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
 		MODIFIER_EVENT_ON_ATTACK
 	}
- 
+
 	return funcs
 end
 
@@ -955,7 +971,7 @@ LinkLuaModifier("modifier_imba_macropyre_thinker", "hero/hero_jakiro", LUA_MODIF
 LinkLuaModifier("modifier_imba_macropyre_debuff", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
 
 function imba_jakiro_macropyre:GetAbilityTextureName()
-   return "jakiro_macropyre"
+	return "jakiro_macropyre"
 end
 
 function imba_jakiro_macropyre:OnSpellStart()
@@ -1014,7 +1030,7 @@ function modifier_imba_macropyre_thinker:OnCreated( kv )
 		self.macropyre_end_time 	= GameRules:GetGameTime() + path_duration
 		self.path_radius			= path_radius
 		self.sound_fire_loop		= sound_fire_loop
-		
+
 		self.start_pos = start_pos
 
 		-- Destroys trees around the target area
@@ -1029,7 +1045,7 @@ function modifier_imba_macropyre_thinker:OnCreated( kv )
 		self.thinker_pos_list = {}
 
 		for trail = trail_start, trail_end do
-		
+
 			local macropyre_pfx = ParticleManager:CreateParticle( particle_name, PATTACH_WORLDORIGIN, caster)
 
 			-- Calculate each trail's end position
@@ -1160,7 +1176,7 @@ function modifier_imba_macropyre_debuff:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
 	}
- 
+
 	return funcs
 end
 

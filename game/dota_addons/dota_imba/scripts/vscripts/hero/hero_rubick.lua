@@ -1,7 +1,21 @@
-  --[[	
-		Author: AtroCty
-		Date: 17.04.2017	
-	]]
+-- Copyright 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+--
+-- limitations under the License.
+--
+-- Editors:
+--     AtroCty, 17.04.2017
+--     suthernfriend, 03.02.2018
 
 --CreateEmptyTalents("rubick")
 
@@ -32,43 +46,43 @@ function imba_rubick_telekinesis:OnSpellStart( params )
 		else
 			maximum_distance = self:GetSpecialValueFor("enemy_range") + GetCastRangeIncrease(caster)
 		end
-		
+
 		if self.telekinesis_marker_pfx then
 			ParticleManager:DestroyParticle(self.telekinesis_marker_pfx, false)
 			ParticleManager:ReleaseParticleIndex(self.telekinesis_marker_pfx)
 		end
-		
+
 		-- If the marked distance is too great, limit it
 		local marked_distance = (target_loc - self.target_origin):Length2D()
 		if marked_distance > maximum_distance then
 			target_loc = self.target_origin + (target_loc - self.target_origin):Normalized() * maximum_distance
 		end
-		
+
 		-- Draw marker particle
 		self.telekinesis_marker_pfx = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_rubick/rubick_telekinesis_marker.vpcf", PATTACH_CUSTOMORIGIN, caster, caster:GetTeam())
 		ParticleManager:SetParticleControl(self.telekinesis_marker_pfx, 0, target_loc)
 		ParticleManager:SetParticleControl(self.telekinesis_marker_pfx, 1, Vector(3, 0, 0))
 		ParticleManager:SetParticleControl(self.telekinesis_marker_pfx, 2, self.target_origin)
 		ParticleManager:SetParticleControl(self.target_modifier.tele_pfx, 1, target_loc)
-		
+
 		self.target_modifier.final_loc = target_loc
 		self.target_modifier.changed_target = true
 		self:EndCooldown()
-	-- Handler on regular 
+		-- Handler on regular
 	else
 		-- Parameters
 		self.target = self:GetCursorTarget()
 		self.target_origin = self.target:GetAbsOrigin()
-		
+
 		local duration
 		local is_ally = true
 		-- Create modifier and check Linken
 		if self.target:GetTeam() ~= caster:GetTeam() then
-			
+
 			if self.target:TriggerSpellAbsorb(self) then
 				return nil
 			end
-			
+
 			duration = self:GetSpecialValueFor("enemy_lift_duration")
 			self.target:AddNewModifier(caster, self, "modifier_imba_telekinesis_stun", { duration = duration })
 			is_ally = false
@@ -76,13 +90,13 @@ function imba_rubick_telekinesis:OnSpellStart( params )
 			duration = self:GetSpecialValueFor("ally_lift_duration")
 			self.target:AddNewModifier(caster, self, "modifier_imba_telekinesis_root", { duration = duration})
 		end
-		
+
 		self.target_modifier = self.target:AddNewModifier(caster, self, "modifier_imba_telekinesis", { duration = duration })
-		
+
 		if is_ally then
 			self.target_modifier.is_ally = true
 		end
-		
+
 		-- Add the particle & sounds
 		self.target_modifier.tele_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_rubick/rubick_telekinesis.vpcf", PATTACH_CUSTOMORIGIN, caster)
 		ParticleManager:SetParticleControlEnt(self.target_modifier.tele_pfx, 0, self.target, PATTACH_POINT_FOLLOW, "attach_hitloc", self.target:GetAbsOrigin(), true)
@@ -91,13 +105,13 @@ function imba_rubick_telekinesis:OnSpellStart( params )
 		self.target_modifier:AddParticle(self.target_modifier.tele_pfx, false, false, 1, false, false)
 		caster:EmitSound("Hero_Rubick.Telekinesis.Cast")
 		self.target:EmitSound("Hero_Rubick.Telekinesis.Target")
-		
+
 		-- Modifier-Params
 		self.target_modifier.final_loc = self.target_origin
 		self.target_modifier.changed_target = false
 		-- Add caster handler
 		caster:AddNewModifier(caster, self, "modifier_imba_telekinesis_caster", { duration = duration + FrameTime()})
-		
+
 		self:EndCooldown()
 	end
 end
@@ -165,9 +179,9 @@ end
 
 -------------------------------------------
 modifier_imba_telekinesis = class({})
-function modifier_imba_telekinesis:IsDebuff() 
+function modifier_imba_telekinesis:IsDebuff()
 	if self:GetParent():GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then return true end
-	return false 
+	return false
 end
 function modifier_imba_telekinesis:IsHidden() return false end
 function modifier_imba_telekinesis:IsPurgable() return false end
@@ -180,16 +194,16 @@ function modifier_imba_telekinesis:GetMotionControllerPriority() return DOTA_MOT
 
 function modifier_imba_telekinesis:OnCreated( params )
 	if IsServer() then
-		 -- Ability properties
+		-- Ability properties
 		local caster = self:GetCaster()
-		local ability = self:GetAbility()		
-		self.parent = self:GetParent()		
+		local ability = self:GetAbility()
+		self.parent = self:GetParent()
 		self.z_height = 0
 		self.duration = params.duration
 		self.lift_animation = ability:GetSpecialValueFor("lift_animation")
 		self.fall_animation = ability:GetSpecialValueFor("fall_animation")
 		self.current_time = 0
-		
+
 		-- Start thinking
 		self.frametime = FrameTime()
 		self:StartIntervalThink(FrameTime())
@@ -202,7 +216,7 @@ function modifier_imba_telekinesis:OnIntervalThink()
 		if not self:CheckMotionControllers() then
 			self:Destroy()
 			return nil
-		end		
+		end
 
 		-- Vertical Motion
 		self:VerticalMotion(self.parent, self.frametime)
@@ -222,10 +236,10 @@ function modifier_imba_telekinesis:EndTransition()
 
 		local caster = self:GetCaster()
 		local parent = self:GetParent()
-		local ability = self:GetAbility()					
-		
-		-- Set the thrown unit on the ground		
-		parent:SetUnitOnClearGround()		
+		local ability = self:GetAbility()
+
+		-- Set the thrown unit on the ground
+		parent:SetUnitOnClearGround()
 
 		-- Remove the stun/root modifier
 		parent:RemoveModifierByName("modifier_imba_telekinesis_stun")
@@ -233,34 +247,34 @@ function modifier_imba_telekinesis:EndTransition()
 
 		local parent_pos = parent:GetAbsOrigin()
 
-		 -- Ability properties
+		-- Ability properties
 		local ability = self:GetAbility()
 		local impact_radius = ability:GetSpecialValueFor("impact_radius")
 		GridNav:DestroyTreesAroundPoint(parent_pos, impact_radius, true)
-		
+
 		-- Parameters
 		local damage = ability:GetSpecialValueFor("damage")
 		local impact_stun_duration = ability:GetSpecialValueFor("impact_stun_duration")
 		local impact_radius = ability:GetSpecialValueFor("impact_radius")
-		local cooldown 
+		local cooldown
 		if self.is_ally then
 			cooldown = ability:GetSpecialValueFor("ally_cooldown")
 		else
 			cooldown = ability.BaseClass.GetCooldown( ability, ability:GetLevel() )
 		end
-		
+
 		cooldown = (cooldown * (1 - caster:GetCooldownReduction() * 0.01)) - self:GetDuration()
-		
+
 		parent:StopSound("Hero_Rubick.Telekinesis.Target")
 		parent:EmitSound("Hero_Rubick.Telekinesis.Target.Land")
 		ParticleManager:ReleaseParticleIndex(self.tele_pfx)
-		
+
 		-- Play impact particle
 		local landing_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_rubick/rubick_telekinesis_land.vpcf", PATTACH_CUSTOMORIGIN, self:GetCaster())
 		ParticleManager:SetParticleControl(landing_pfx, 0, parent_pos)
 		ParticleManager:SetParticleControl(landing_pfx, 1, parent_pos)
 		ParticleManager:ReleaseParticleIndex(landing_pfx)
-		
+
 		-- Deal damage and stun to enemies
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), parent_pos, nil, impact_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 		for _,enemy in ipairs(enemies) do
@@ -279,12 +293,12 @@ function modifier_imba_telekinesis:EndTransition()
 end
 
 function modifier_imba_telekinesis:VerticalMotion(unit, dt)
-    if IsServer() then
+	if IsServer() then
 		self.current_time = self.current_time + dt
-		
+
 		local max_height = self:GetAbility():GetSpecialValueFor("max_height")
 		-- Check if it shall lift up
-        if self.current_time <= self.lift_animation  then
+		if self.current_time <= self.lift_animation  then
 			self.z_height = self.z_height + ((dt / self.lift_animation) * max_height)
 			unit:SetAbsOrigin(GetGroundPosition(unit:GetAbsOrigin(), unit) + Vector(0,0,self.z_height))
 		elseif self.current_time > (self.duration - self.fall_animation) then
@@ -294,17 +308,17 @@ function modifier_imba_telekinesis:VerticalMotion(unit, dt)
 		else
 			max_height = self.z_height
 		end
-		
+
 		if self.current_time >= self.duration then
 			self:EndTransition()
 			self:Destroy()
 		end
-    end
+	end
 end
 
 function modifier_imba_telekinesis:HorizontalMotion(unit, dt)
-	if IsServer() then		
-		
+	if IsServer() then
+
 		self.distance = self.distance or 0
 		if (self.current_time > (self.duration - self.fall_animation)) then
 			if self.changed_target then
@@ -346,9 +360,9 @@ function modifier_imba_telekinesis_stun:IsStunDebuff() return true end
 
 function modifier_imba_telekinesis_stun:DeclareFunctions()
 	local decFuns =
-	{
-		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
-	}
+		{
+			MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
+		}
 	return decFuns
 end
 
@@ -357,11 +371,11 @@ function modifier_imba_telekinesis_stun:GetOverrideAnimation()
 end
 
 function modifier_imba_telekinesis_stun:CheckState()
-    local state = 
-	{
-		[MODIFIER_STATE_STUNNED] = true
-	}
-    return state
+	local state =
+		{
+			[MODIFIER_STATE_STUNNED] = true
+		}
+	return state
 end
 
 
@@ -373,15 +387,15 @@ function modifier_imba_telekinesis_root:IsPurgable() return false end
 function modifier_imba_telekinesis_root:IsPurgeException() return false end
 -------------------------------------------
 function modifier_imba_telekinesis_root:CheckState()
-    local state = 
-	{
-		[MODIFIER_STATE_ROOTED] = true
-	}
-    return state
+	local state =
+		{
+			[MODIFIER_STATE_ROOTED] = true
+		}
+	return state
 end
 
 
-  --[[	
+--[[
 		Author: MouJiaoZi
 		Date: 09.09.2017	
 	]]

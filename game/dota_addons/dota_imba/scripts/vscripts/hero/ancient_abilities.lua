@@ -1,5 +1,21 @@
---[[	Author: Firetoad
-		Date: 10.01.2016	]]
+-- Copyright 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+--
+-- limitations under the License.
+--
+-- Editors:
+--     Firetoad, 10.01.2016
+--     suthernfriend, 03.02.2018
 
 function AncientHealth( keys )
 	local caster = keys.caster
@@ -41,7 +57,7 @@ function AncientThink( keys )
 	if #enemies == 0 then
 		return nil
 	end
-	
+
 	-- Ancient abilities logic
 	local behemoth_adjustment = 0
 	if SPAWN_ANCIENT_BEHEMOTHS then behemoth_adjustment = 1 end
@@ -72,9 +88,9 @@ function AncientThink( keys )
 
 		-- Fix to having people stuck under the ancient
 		if tier_3_ability:GetName() == "phoenix_supernova" then
-			Timers:CreateTimer(6.1, function() 
+			Timers:CreateTimer(6.1, function()
 				local units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 600, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-				for _,unit in pairs(units) do 
+				for _,unit in pairs(units) do
 					unit:SetUnitOnClearGround()
 				end
 			end)
@@ -113,7 +129,7 @@ function AncientAttacked( keys )
 	if #enemies == 0 then
 		return nil
 	end
-	
+
 	-- Ancient abilities logic
 	local behemoth_adjustment = 0
 	if SPAWN_ANCIENT_BEHEMOTHS then behemoth_adjustment = 1 end
@@ -185,51 +201,51 @@ function SpawnRadiantBehemoth( keys )
 	-- If no other hero died after 10 seconds, spawn the Behemoth
 	Timers:CreateTimer(12, function()
 
-		-- If body count is a match, this is the right spawn call
-		if caster.ancient_recently_dead_enemies and (this_call_body_count == caster.ancient_recently_dead_enemies) then
+			-- If body count is a match, this is the right spawn call
+			if caster.ancient_recently_dead_enemies and (this_call_body_count == caster.ancient_recently_dead_enemies) then
 
-			-- Parameters
-			local base_health = ability:GetLevelSpecialValueFor("base_health", ability:GetLevel() - 1)
-			local health_per_minute = ability:GetLevelSpecialValueFor("health_per_minute", ability:GetLevel() - 1)
-			local health_per_hero = ability:GetLevelSpecialValueFor("health_per_hero", ability:GetLevel() - 1)
-			local game_time = GameRules:GetDOTATime(false, false) * 3 / 60
-			
-			-- Spawn the Behemoth
-			local spawn_loc = Entities:FindByName(nil, "radiant_reinforcement_spawn_mid"):GetAbsOrigin()
-			local behemoth = CreateUnitByName("npc_imba_goodguys_mega_hulk", spawn_loc, true, caster, caster, caster:GetTeam())
-			FindClearSpaceForUnit(behemoth, spawn_loc, true)
+				-- Parameters
+				local base_health = ability:GetLevelSpecialValueFor("base_health", ability:GetLevel() - 1)
+				local health_per_minute = ability:GetLevelSpecialValueFor("health_per_minute", ability:GetLevel() - 1)
+				local health_per_hero = ability:GetLevelSpecialValueFor("health_per_hero", ability:GetLevel() - 1)
+				local game_time = GameRules:GetDOTATime(false, false) * 3 / 60
 
-			-- Adjust health
-			SetCreatureHealth(behemoth, base_health + this_call_body_count * health_per_hero + game_time * health_per_minute, true)
-			
-			-- Adjust armor & health regeneration
-			AddStacks(ability, caster, behemoth, modifier_stack, game_time, true)
+				-- Spawn the Behemoth
+				local spawn_loc = Entities:FindByName(nil, "radiant_reinforcement_spawn_mid"):GetAbsOrigin()
+				local behemoth = CreateUnitByName("npc_imba_goodguys_mega_hulk", spawn_loc, true, caster, caster, caster:GetTeam())
+				FindClearSpaceForUnit(behemoth, spawn_loc, true)
 
-			-- Grant extra abilities
-			behemoth:AddAbility("imba_behemoth_aura_goodguys")
-			local aura_ability = behemoth:FindAbilityByName("imba_behemoth_aura_goodguys")
-			aura_ability:SetLevel(math.min(this_call_body_count, 5))
-			behemoth:AddAbility("imba_behemoth_dearmor")
-			local dearmor_ability = behemoth:FindAbilityByName("imba_behemoth_dearmor")
-			dearmor_ability:SetLevel(1)
+				-- Adjust health
+				SetCreatureHealth(behemoth, base_health + this_call_body_count * health_per_hero + game_time * health_per_minute, true)
 
-			-- Increase Behemoth size according to its power
-			behemoth:SetModelScale(0.85 + 0.06 * this_call_body_count)
+				-- Adjust armor & health regeneration
+				AddStacks(ability, caster, behemoth, modifier_stack, game_time, true)
 
-			-- Play ambient particle
-			local ambient_pfx = ParticleManager:CreateParticle(particle_ambient, PATTACH_CUSTOMORIGIN, behemoth)
-			ParticleManager:SetParticleControlEnt(ambient_pfx, 0, behemoth, PATTACH_POINT_FOLLOW, "attach_mane1", behemoth:GetAbsOrigin(), true)
-			ParticleManager:ReleaseParticleIndex(ambient_pfx)
+				-- Grant extra abilities
+				behemoth:AddAbility("imba_behemoth_aura_goodguys")
+				local aura_ability = behemoth:FindAbilityByName("imba_behemoth_aura_goodguys")
+				aura_ability:SetLevel(math.min(this_call_body_count, 5))
+				behemoth:AddAbility("imba_behemoth_dearmor")
+				local dearmor_ability = behemoth:FindAbilityByName("imba_behemoth_dearmor")
+				dearmor_ability:SetLevel(1)
 
-			-- Make Behemoth attack-move the opposing ancient
-			local target_loc = Entities:FindByName(nil, "dire_reinforcement_spawn_mid"):GetAbsOrigin()
-			Timers:CreateTimer(0.5, function()
-				behemoth:MoveToPositionAggressive(target_loc)
-			end)
+				-- Increase Behemoth size according to its power
+				behemoth:SetModelScale(0.85 + 0.06 * this_call_body_count)
 
-			-- Reset body count
-			caster.ancient_recently_dead_enemies = nil
-		end
+				-- Play ambient particle
+				local ambient_pfx = ParticleManager:CreateParticle(particle_ambient, PATTACH_CUSTOMORIGIN, behemoth)
+				ParticleManager:SetParticleControlEnt(ambient_pfx, 0, behemoth, PATTACH_POINT_FOLLOW, "attach_mane1", behemoth:GetAbsOrigin(), true)
+				ParticleManager:ReleaseParticleIndex(ambient_pfx)
+
+				-- Make Behemoth attack-move the opposing ancient
+				local target_loc = Entities:FindByName(nil, "dire_reinforcement_spawn_mid"):GetAbsOrigin()
+				Timers:CreateTimer(0.5, function()
+					behemoth:MoveToPositionAggressive(target_loc)
+				end)
+
+				-- Reset body count
+				caster.ancient_recently_dead_enemies = nil
+			end
 	end)
 end
 
@@ -257,51 +273,51 @@ function SpawnDireBehemoth( keys )
 	-- If no other hero died after 10 seconds, spawn the Behemoth
 	Timers:CreateTimer(12, function()
 
-		-- If body count is a match, this is the right spawn call
-		if caster.ancient_recently_dead_enemies and (this_call_body_count == caster.ancient_recently_dead_enemies) then
+			-- If body count is a match, this is the right spawn call
+			if caster.ancient_recently_dead_enemies and (this_call_body_count == caster.ancient_recently_dead_enemies) then
 
-			-- Parameters
-			local base_health = ability:GetLevelSpecialValueFor("base_health", ability:GetLevel() - 1)
-			local health_per_minute = ability:GetLevelSpecialValueFor("health_per_minute", ability:GetLevel() - 1)
-			local health_per_hero = ability:GetLevelSpecialValueFor("health_per_hero", ability:GetLevel() - 1)
-			local game_time = GameRules:GetDOTATime(false, false) * 3 / 60
-			
-			-- Spawn the Behemoth
-			local spawn_loc = Entities:FindByName(nil, "dire_reinforcement_spawn_mid"):GetAbsOrigin()
-			local behemoth = CreateUnitByName("npc_imba_badguys_mega_hulk", spawn_loc, true, nil, nil, caster:GetTeam())
-			FindClearSpaceForUnit(behemoth, spawn_loc, true)
+				-- Parameters
+				local base_health = ability:GetLevelSpecialValueFor("base_health", ability:GetLevel() - 1)
+				local health_per_minute = ability:GetLevelSpecialValueFor("health_per_minute", ability:GetLevel() - 1)
+				local health_per_hero = ability:GetLevelSpecialValueFor("health_per_hero", ability:GetLevel() - 1)
+				local game_time = GameRules:GetDOTATime(false, false) * 3 / 60
 
-			-- Adjust health
-			SetCreatureHealth(behemoth, base_health + this_call_body_count * health_per_hero + game_time * health_per_minute, true)
+				-- Spawn the Behemoth
+				local spawn_loc = Entities:FindByName(nil, "dire_reinforcement_spawn_mid"):GetAbsOrigin()
+				local behemoth = CreateUnitByName("npc_imba_badguys_mega_hulk", spawn_loc, true, nil, nil, caster:GetTeam())
+				FindClearSpaceForUnit(behemoth, spawn_loc, true)
 
-			-- Adjust armor & health regeneration
-			AddStacks(ability, caster, behemoth, modifier_stack, game_time, true)
+				-- Adjust health
+				SetCreatureHealth(behemoth, base_health + this_call_body_count * health_per_hero + game_time * health_per_minute, true)
 
-			-- Grant extra abilities
-			behemoth:AddAbility("imba_behemoth_aura_badguys")
-			local aura_ability = behemoth:FindAbilityByName("imba_behemoth_aura_badguys")
-			aura_ability:SetLevel(math.min(this_call_body_count, 5))
-			behemoth:AddAbility("imba_behemoth_dearmor")
-			local dearmor_ability = behemoth:FindAbilityByName("imba_behemoth_dearmor")
-			dearmor_ability:SetLevel(1)
+				-- Adjust armor & health regeneration
+				AddStacks(ability, caster, behemoth, modifier_stack, game_time, true)
 
-			-- Increase Behemoth size according to its power
-			behemoth:SetModelScale(0.85 + 0.06 * this_call_body_count)
+				-- Grant extra abilities
+				behemoth:AddAbility("imba_behemoth_aura_badguys")
+				local aura_ability = behemoth:FindAbilityByName("imba_behemoth_aura_badguys")
+				aura_ability:SetLevel(math.min(this_call_body_count, 5))
+				behemoth:AddAbility("imba_behemoth_dearmor")
+				local dearmor_ability = behemoth:FindAbilityByName("imba_behemoth_dearmor")
+				dearmor_ability:SetLevel(1)
 
-			-- Play ambient particle
-			local ambient_pfx = ParticleManager:CreateParticle(particle_ambient, PATTACH_CUSTOMORIGIN, behemoth)
-			ParticleManager:SetParticleControlEnt(ambient_pfx, 0, behemoth, PATTACH_POINT_FOLLOW, "attach_mane1", behemoth:GetAbsOrigin(), true)
-			ParticleManager:ReleaseParticleIndex(ambient_pfx)
+				-- Increase Behemoth size according to its power
+				behemoth:SetModelScale(0.85 + 0.06 * this_call_body_count)
 
-			-- Make Behemoth move to the opposing ancient
-			local target_loc = Entities:FindByName(nil, "radiant_reinforcement_spawn_mid"):GetAbsOrigin()
-			Timers:CreateTimer(0.5, function()
-				behemoth:MoveToPositionAggressive(target_loc)
-			end)
+				-- Play ambient particle
+				local ambient_pfx = ParticleManager:CreateParticle(particle_ambient, PATTACH_CUSTOMORIGIN, behemoth)
+				ParticleManager:SetParticleControlEnt(ambient_pfx, 0, behemoth, PATTACH_POINT_FOLLOW, "attach_mane1", behemoth:GetAbsOrigin(), true)
+				ParticleManager:ReleaseParticleIndex(ambient_pfx)
 
-			-- Reset body count
-			caster.ancient_recently_dead_enemies = nil
-		end
+				-- Make Behemoth move to the opposing ancient
+				local target_loc = Entities:FindByName(nil, "radiant_reinforcement_spawn_mid"):GetAbsOrigin()
+				Timers:CreateTimer(0.5, function()
+					behemoth:MoveToPositionAggressive(target_loc)
+				end)
+
+				-- Reset body count
+				caster.ancient_recently_dead_enemies = nil
+			end
 	end)
 end
 
@@ -339,7 +355,7 @@ function StalwartDefense( keys )
 
 	-- Do nothing if there are no other nearby heroes
 	if #nearby_heroes > 0 then
-		
+
 		-- Play LOUD VUVUZELA SOUNDS
 		caster:EmitSound(sound_cast)
 
@@ -347,8 +363,8 @@ function StalwartDefense( keys )
 		for _,hero in pairs(nearby_heroes) do
 
 			-- Purge debuffs
-			hero:Purge(false, true, false, true, false)	
-			
+			hero:Purge(false, true, false, true, false)
+
 			-- Apply the modifier
 			ability:ApplyDataDrivenModifier(caster, hero, modifier_buff, {})
 

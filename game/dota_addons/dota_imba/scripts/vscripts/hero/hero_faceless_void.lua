@@ -1,6 +1,22 @@
 
---	Author		 - Zimberzimber
---	Date Created - 22.03.2017
+-- Copyright 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+--
+-- limitations under the License.
+--
+-- Editors:
+--     zimberzimber, 22.03.2017
+--     suthernfriend, 03.02.2018
 
 CreateEmptyTalents("faceless_void")
 
@@ -20,7 +36,7 @@ if imba_faceless_void_timelord == nil then imba_faceless_void_timelord = class({
 LinkLuaModifier("modifier_imba_faceless_void_timelord", "hero/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE)	-- increases attack speed by [current attack speed] * 0.15
 
 function imba_faceless_void_timelord:GetAbilityTextureName()
-   return "custom/faceless_void_timelord"
+	return "custom/faceless_void_timelord"
 end
 
 function imba_faceless_void_timelord:IsInnateAbility()
@@ -49,11 +65,11 @@ end
 function modifier_imba_faceless_void_timelord:OnCreated()
 	self:StartIntervalThink(0.2)
 	self.bonusAS = 0
-	
+
 	-- Initialize chronocharge counter
 	local parent = self:GetParent()
 	if not parent:HasModifier("modifier_imba_faceless_void_timelord") then
-		parent:AddNewModifier(parent, self:GetAbility(), "modifier_imba_faceless_void_timelord", {}) 
+		parent:AddNewModifier(parent, self:GetAbility(), "modifier_imba_faceless_void_timelord", {})
 	end
 end
 
@@ -184,7 +200,7 @@ function modifier_imba_faceless_void_time_walk_damage_counter:OnTakeDamage( keys
 		-- Only apply if the one taking damage is Faceless Void himself
 		if unit == self.caster then
 
-			-- Stores this instance of damage			
+			-- Stores this instance of damage
 			self.caster.time_walk_damage_taken = self.caster.time_walk_damage_taken + damage_taken
 
 			-- Decrease damage counter after the duration is up
@@ -273,7 +289,7 @@ function modifier_imba_faceless_void_time_walk_cast:OnCreated()
 		self.distance_traveled = 0
 		self.distance = distance
 
-		-- Enemy effect handler		
+		-- Enemy effect handler
 		self.as_stolen = 0
 		self.ms_stolen = 0
 
@@ -351,7 +367,7 @@ function modifier_imba_faceless_void_time_walk_cast:OnRemoved()
 			ParticleManager:SetParticleControl(particle, 1, Vector(aoe,aoe,aoe))
 			ParticleManager:ReleaseParticleIndex(particle)
 
-			-- Stop the casting animation and remove caster modifier 
+			-- Stop the casting animation and remove caster modifier
 			caster:FadeGesture(ACT_DOTA_CAST_ABILITY_1)
 		end)
 	end
@@ -801,14 +817,14 @@ function modifier_imba_faceless_void_time_lock:GetModifierProcAttack_BonusDamage
 				else
 					-- Find enemies
 					local enemies = FindUnitsInRadius(attacker:GetTeamNumber(),
-					target:GetAbsOrigin(),
-					nil,
-					5000, 					-- Should be big enough for any chrono size
-					ability:GetAbilityTargetTeam(),
-					ability:GetAbilityTargetType(),
-					ability:GetAbilityTargetFlags(),
-					FIND_ANY_ORDER,
-					false)
+						target:GetAbsOrigin(),
+						nil,
+						5000, 					-- Should be big enough for any chrono size
+						ability:GetAbilityTargetTeam(),
+						ability:GetAbilityTargetType(),
+						ability:GetAbilityTargetFlags(),
+						FIND_ANY_ORDER,
+						false)
 
 					-- Bash them
 					for _,enemy in pairs(enemies) do
@@ -1013,12 +1029,12 @@ function imba_faceless_void_chronosphere:OnSpellStart( mini_chrono, target_locat
 	self.mini_chrono = mini_chrono
 	-- Create the dummy and give it the chronosphere aura
 	local mod = CreateModifierThinker(caster,
-	ability,
-	"modifier_imba_faceless_void_chronosphere_aura",
-	{duration = duration},
-	chrono_center,
-	caster:GetTeamNumber(),
-	false)
+		ability,
+		"modifier_imba_faceless_void_chronosphere_aura",
+		{duration = duration},
+		chrono_center,
+		caster:GetTeamNumber(),
+		false)
 
 
 end
@@ -1034,7 +1050,7 @@ function modifier_imba_faceless_void_chronosphere_aura:IsNetherWardStealable() r
 
 function modifier_imba_faceless_void_chronosphere_aura:GetAuraDuration()
 	if self:GetAbility():GetCaster():HasTalent("special_bonus_imba_faceless_void_3") then return 0.01 end
-	return 0.1 
+	return 0.1
 end
 
 function modifier_imba_faceless_void_chronosphere_aura:GetAuraSearchTeam()
@@ -1187,9 +1203,9 @@ function modifier_imba_faceless_void_chronosphere_handler:OnIntervalThink()
 
 		-- Normal frozen enemy gets interrupted all the time
 		if self:GetStackCount() == 0 then
-		
-			-- Make certain people are stunned 
-			self.parent:AddNewModifier(self.caster, self:GetAbility(), "modifier_stunned", {duration = FrameTime()}) 
+
+			-- Make certain people are stunned
+			self.parent:AddNewModifier(self.caster, self:GetAbility(), "modifier_stunned", {duration = FrameTime()})
 
 			-- Non-IMBA handling
 			self.parent:InterruptMotionControllers(true)

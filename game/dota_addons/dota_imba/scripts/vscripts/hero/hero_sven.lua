@@ -1,9 +1,22 @@
---[[
-		By: AtroCty
-		Prev. Authors: Firetoad
-		Date:  04.08.2015
-		Updated:  23.04.2017
-	]]
+-- Copyright 2018  The Dota IMBA Development Team
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+-- http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+--
+-- limitations under the License.
+--
+-- Editors:
+--     Firetoad
+--     AtroCty, 23.04.2017
+--     suthernfriend, 03.02.2018
 
 CreateEmptyTalents("sven")
 
@@ -20,7 +33,7 @@ function imba_sven_storm_bolt:IsStealable() return true end
 function imba_sven_storm_bolt:IsNetherWardStealable() return false end
 
 function imba_sven_storm_bolt:GetAbilityTextureName()
-   return "sven_storm_bolt"
+	return "sven_storm_bolt"
 end
 -------------------------------------------
 
@@ -28,14 +41,14 @@ function imba_sven_storm_bolt:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
 		self.target = self:GetCursorTarget()
-		
+
 		-- Parameters
 		local damage = self:GetSpecialValueFor("damage")
 		local stun_duration = self:GetSpecialValueFor("stun_duration")
 		local radius = self:GetTalentSpecialValueFor("radius")
 		local vision_radius = self:GetSpecialValueFor("vision_radius")
 		local bolt_speed = self:GetSpecialValueFor("bolt_speed")
-		
+
 		-- Play sound
 		caster:EmitSound("Hero_Sven.StormBolt")
 
@@ -47,27 +60,27 @@ function imba_sven_storm_bolt:OnSpellStart()
 		-- Remove caster from the world
 		caster:AddNewModifier(caster, self, "modifier_imba_storm_bolt_caster", {})
 		caster:AddNoDraw()
-		
-		local projectile = 
-		{
-			Target 				= self.target,
-			Source 				= caster,
-			Ability 			= self,
-			EffectName 			= "particles/units/heroes/hero_sven/sven_spell_storm_bolt.vpcf",
-			iMoveSpeed			= bolt_speed,
-			vSpawnOrigin 		= caster:GetAbsOrigin(),
-			bDrawsOnMinimap 	= false,
-			bDodgeable 			= true,
-			bIsAttack 			= false,
-			bVisibleToEnemies 	= true,
-			bReplaceExisting 	= false,
-			flExpireTime 		= GameRules:GetGameTime() + 10,
-			bProvidesVision 	= true,
-			iSourceAttachment 	= DOTA_PROJECTILE_ATTACHMENT_ATTACK_2,
-			iVisionRadius 		= vision_radius,
-			iVisionTeamNumber 	= caster:GetTeamNumber(),
-			ExtraData			= {damage = damage, stun_duration = stun_duration, radius = radius}
-		}
+
+		local projectile =
+			{
+				Target 				= self.target,
+				Source 				= caster,
+				Ability 			= self,
+				EffectName 			= "particles/units/heroes/hero_sven/sven_spell_storm_bolt.vpcf",
+				iMoveSpeed			= bolt_speed,
+				vSpawnOrigin 		= caster:GetAbsOrigin(),
+				bDrawsOnMinimap 	= false,
+				bDodgeable 			= true,
+				bIsAttack 			= false,
+				bVisibleToEnemies 	= true,
+				bReplaceExisting 	= false,
+				flExpireTime 		= GameRules:GetGameTime() + 10,
+				bProvidesVision 	= true,
+				iSourceAttachment 	= DOTA_PROJECTILE_ATTACHMENT_ATTACK_2,
+				iVisionRadius 		= vision_radius,
+				iVisionTeamNumber 	= caster:GetTeamNumber(),
+				ExtraData			= {damage = damage, stun_duration = stun_duration, radius = radius}
+			}
 		ProjectileManager:CreateTrackingProjectile(projectile)
 	end
 end
@@ -75,7 +88,7 @@ end
 function imba_sven_storm_bolt:OnProjectileHit_ExtraData(target, location, ExtraData)
 	if IsServer() then
 		local caster = self:GetCaster()
-		
+
 		-- Play sound
 		EmitSoundOnLocationWithCaster(location, "Hero_Sven.StormBoltImpact", caster)
 		caster:RemoveModifierByName("modifier_imba_storm_bolt_caster")
@@ -91,12 +104,12 @@ function imba_sven_storm_bolt:OnProjectileHit_ExtraData(target, location, ExtraD
 			if (( target_pos - caster_pos ):Length2D() > 600) and (RandomInt(1, 100) <= 20) and (caster:GetName() == "npc_dota_hero_sven") then
 				caster:EmitSound("sven_sven_ability_teleport_0"..math.random(1,3))
 			end
-			
+
 			-- Start attacking the target + apply crit
 			caster:SetAttacking(target)
 			local crit_max_duration = self:GetSpecialValueFor("crit_max_duration")
 			caster:AddNewModifier(caster, self, "modifier_imba_storm_bolt_crit", {duration = crit_max_duration})
-			
+
 			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), location, nil, ExtraData.radius, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
 			for _,enemy in ipairs(enemies) do
 				if enemy == target and target:TriggerSpellAbsorb(self) then
@@ -129,12 +142,12 @@ function modifier_imba_storm_bolt_caster:RemoveOnDeath() return true end
 
 function modifier_imba_storm_bolt_caster:CheckState()
 	local state =
-	{
-		[MODIFIER_STATE_STUNNED] = true,
-		[MODIFIER_STATE_OUT_OF_GAME] = true,
-		[MODIFIER_STATE_INVULNERABLE] = true,
-		[MODIFIER_STATE_NO_HEALTH_BAR] = true,
-	}
+		{
+			[MODIFIER_STATE_STUNNED] = true,
+			[MODIFIER_STATE_OUT_OF_GAME] = true,
+			[MODIFIER_STATE_INVULNERABLE] = true,
+			[MODIFIER_STATE_NO_HEALTH_BAR] = true,
+		}
 	return state
 end
 
@@ -150,10 +163,10 @@ function modifier_imba_storm_bolt_crit:RemoveOnDeath() return true end
 
 function modifier_imba_storm_bolt_crit:DeclareFunctions()
 	local decFuns =
-	{
-		MODIFIER_EVENT_ON_ATTACK_LANDED,
-		MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE
-	}
+		{
+			MODIFIER_EVENT_ON_ATTACK_LANDED,
+			MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE
+		}
 	return decFuns
 end
 
@@ -187,7 +200,7 @@ function imba_sven_great_cleave:IsStealable() return true end
 function imba_sven_great_cleave:IsNetherWardStealable() return false end
 
 function imba_sven_great_cleave:GetAbilityTextureName()
-   return "sven_great_cleave"
+	return "sven_great_cleave"
 end
 -------------------------------------------
 
@@ -214,9 +227,9 @@ function modifier_imba_great_cleave:RemoveOnDeath() return true end
 
 function modifier_imba_great_cleave:DeclareFunctions()
 	local decFuncs =
-	{
-		MODIFIER_EVENT_ON_ATTACK_LANDED
-	}
+		{
+			MODIFIER_EVENT_ON_ATTACK_LANDED
+		}
 	return decFuncs
 end
 
@@ -247,10 +260,10 @@ function modifier_imba_great_cleave_active:RemoveOnDeath() return true end
 
 function modifier_imba_great_cleave_active:DeclareFunctions()
 	local decFuncs =
-	{
-		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
-		MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE
-	}
+		{
+			MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
+			MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE
+		}
 	return decFuncs
 end
 
@@ -263,13 +276,13 @@ end
 
 function modifier_imba_great_cleave_active:CheckState()
 	local state =
-	{
-		[MODIFIER_STATE_CANNOT_MISS] = true
-	}
+		{
+			[MODIFIER_STATE_CANNOT_MISS] = true
+		}
 	return state
 end
 
-function modifier_imba_great_cleave_active:GetModifierTotalDamageOutgoing_Percentage( params ) 
+function modifier_imba_great_cleave_active:GetModifierTotalDamageOutgoing_Percentage( params )
 	if IsServer() then
 		if params.target and not params.inflictor then
 			local armor = params.target:GetPhysicalArmorValue()
@@ -279,7 +292,7 @@ function modifier_imba_great_cleave_active:GetModifierTotalDamageOutgoing_Percen
 				return 0
 			elseif armor <= armor_ignore then
 				reduction_feedback = CalculateReductionFromArmor_Percentage( 0, armor )
-				
+
 			else
 				reduction_feedback = CalculateReductionFromArmor_Percentage( (armor - armor_ignore), armor )
 			end
@@ -311,7 +324,7 @@ function imba_sven_warcry:IsPurgable() return true end
 function imba_sven_warcry:IsNetherWardStealable() return true end
 
 function imba_sven_warcry:GetAbilityTextureName()
-   return "sven_warcry"
+	return "sven_warcry"
 end
 -------------------------------------------
 
@@ -357,11 +370,11 @@ function modifier_imba_warcry:RemoveOnDeath() return true end
 
 function modifier_imba_warcry:DeclareFunctions()
 	local decFuns =
-	{
-		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
-		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
-		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS
-	}
+		{
+			MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+			MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+			MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS
+		}
 	return decFuns
 end
 
@@ -376,7 +389,7 @@ function modifier_imba_warcry:OnCreated()
 	local ability = self:GetAbility()
 	local caster = self:GetCaster()
 	local parent = self:GetParent()
-	
+
 	self.ms_bonus_pct = ability:GetTalentSpecialValueFor("ms_bonus_pct")
 	self.armor_bonus = ability:GetSpecialValueFor("armor_bonus")
 	if parent == caster then
@@ -437,9 +450,9 @@ function modifier_imba_warcry_immunity:RemoveOnDeath() return true end
 -------------------------------------------
 function modifier_imba_warcry_immunity:CheckState()
 	local state =
-	{
-		[MODIFIER_STATE_MAGIC_IMMUNE] = true
-	}
+		{
+			[MODIFIER_STATE_MAGIC_IMMUNE] = true
+		}
 	return state
 end
 
@@ -464,7 +477,7 @@ function imba_sven_gods_strength:IsStealable() return true end
 function imba_sven_gods_strength:IsNetherWardStealable() return false end
 
 function imba_sven_gods_strength:GetAbilityTextureName()
-   return "sven_gods_strength"
+	return "sven_gods_strength"
 end
 -------------------------------------------
 function imba_sven_gods_strength:GetCooldown( nLevel )
@@ -496,7 +509,7 @@ function imba_sven_gods_strength:OnSpellStart()
 			caster:EmitSound("Imba.SvenBeAMan")
 		end
 		caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_4)
-		
+
 		local roar_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_sven/sven_spell_gods_strength.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 		ParticleManager:SetParticleControlEnt(roar_pfx, 1, caster, PATTACH_ABSORIGIN_FOLLOW, nil, caster:GetAbsOrigin(), true)
 		ParticleManager:ReleaseParticleIndex(roar_pfx)
@@ -524,11 +537,11 @@ function modifier_imba_god_strength:GetAttackSound()
 end
 
 function modifier_imba_god_strength:DeclareFunctions()
-	local decFuncs = 
-	{
-		MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
-		MODIFIER_PROPERTY_TRANSLATE_ATTACK_SOUND
-	}
+	local decFuncs =
+		{
+			MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
+			MODIFIER_PROPERTY_TRANSLATE_ATTACK_SOUND
+		}
 	return decFuncs
 end
 
@@ -627,10 +640,10 @@ function modifier_imba_god_strength_allies:OnRefresh()
 end
 
 function modifier_imba_god_strength_allies:DeclareFunctions()
-	local decFuncs = 
-	{
-		MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
-	}
+	local decFuncs =
+		{
+			MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
+		}
 	return decFuncs
 end
 -------------------------------------------
@@ -645,7 +658,7 @@ function imba_sven_colossal_slash:IsStealable() return true end
 function imba_sven_colossal_slash:IsNetherWardStealable() return false end
 
 function imba_sven_colossal_slash:GetAbilityTextureName()
-   return "custom/sven_colossal_strike"
+	return "custom/sven_colossal_strike"
 end
 -------------------------------------------
 
@@ -659,7 +672,7 @@ function imba_sven_colossal_slash:OnAbilityPhaseStart()
 	local roar_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_sven/sven_spell_gods_strength.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 	ParticleManager:SetParticleControlEnt(roar_pfx, 1, caster, PATTACH_ABSORIGIN_FOLLOW, nil, caster:GetAbsOrigin(), true)
 	ParticleManager:ReleaseParticleIndex(roar_pfx)
-	
+
 	if caster:GetName() == "npc_dota_hero_sven" then
 		-- Randomly play a cast line
 		if (math.random(1,100) <= 25) then
@@ -720,7 +733,7 @@ function imba_sven_colossal_slash:OnSpellStart()
 		local base_range = self:GetSpecialValueFor("base_range")
 		local range_multiplier = self:GetSpecialValueFor("range_multiplier")
 		local direction = (target_loc - caster_loc):Normalized()
-		
+
 		local modifier = caster:FindModifierByName("modifier_imba_god_strength")
 		ScreenShake(caster_loc, 10, 0.3, 0.5, 1000, 0, true)
 		local remaining_time = 0
@@ -728,7 +741,7 @@ function imba_sven_colossal_slash:OnSpellStart()
 			remaining_time = modifier:GetRemainingTime()
 			modifier:Destroy()
 		end
-		
+
 		local total_range = base_range + (remaining_time * range_multiplier)
 
 		local caster_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_earth_spirit/espirit_spawn_ground.vpcf", PATTACH_ABSORIGIN, caster)
@@ -736,25 +749,25 @@ function imba_sven_colossal_slash:OnSpellStart()
 
 		-- Launch projectile
 		local projectile =
-		{
-			Ability				= self,
-			EffectName			= "particles/hero/sven/colossal_slash.vpcf",
-			vSpawnOrigin		= caster_loc,
-			fDistance			= total_range,
-			fStartRadius		= radius,
-			fEndRadius			= radius,
-			Source				= caster,
-			bHasFrontalCone		= false,
-			bReplaceExisting	= false,
-			iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
-			iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-			fExpireTime 		= GameRules:GetGameTime() + 5.0,
-			bDeleteOnHit		= false,
-			vVelocity			= Vector(direction.x,direction.y,0) * proj_speed,
-			bProvidesVision		= true,
-			iVisionRadius 		= radius,
-			iVisionTeamNumber 	= caster:GetTeamNumber()
-		}
+			{
+				Ability				= self,
+				EffectName			= "particles/hero/sven/colossal_slash.vpcf",
+				vSpawnOrigin		= caster_loc,
+				fDistance			= total_range,
+				fStartRadius		= radius,
+				fEndRadius			= radius,
+				Source				= caster,
+				bHasFrontalCone		= false,
+				bReplaceExisting	= false,
+				iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
+				iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+				fExpireTime 		= GameRules:GetGameTime() + 5.0,
+				bDeleteOnHit		= false,
+				vVelocity			= Vector(direction.x,direction.y,0) * proj_speed,
+				bProvidesVision		= true,
+				iVisionRadius 		= radius,
+				iVisionTeamNumber 	= caster:GetTeamNumber()
+			}
 		ProjectileManager:CreateLinearProjectile(projectile)
 
 		EmitSoundOnLocationWithCaster(caster_loc, "Imba.SvenShockWave", caster)
@@ -789,12 +802,12 @@ function modifier_imba_colossal_slash_crit:IsStunDebuff() return false end
 function modifier_imba_colossal_slash_crit:RemoveOnDeath() return true end
 -------------------------------------------
 function modifier_imba_colossal_slash_crit:DeclareFunctions()
-	local decFuncs = 
-	{
-		MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
-		MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE,
-		MODIFIER_PROPERTY_TRANSLATE_ATTACK_SOUND,
-	}
+	local decFuncs =
+		{
+			MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
+			MODIFIER_PROPERTY_TOTALDAMAGEOUTGOING_PERCENTAGE,
+			MODIFIER_PROPERTY_TRANSLATE_ATTACK_SOUND,
+		}
 	return decFuncs
 end
 
@@ -833,9 +846,9 @@ function modifier_imba_colossal_slash_animation:RemoveOnDeath() return true end
 
 function modifier_imba_colossal_slash_animation:DeclareFunctions()
 	local decFuns =
-	{
-		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
-	}
+		{
+			MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
+		}
 	return decFuns
 end
 
