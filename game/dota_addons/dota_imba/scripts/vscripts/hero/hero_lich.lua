@@ -16,6 +16,7 @@
 -- Editors:
 --     Shush, 22.03.2017
 --     suthernfriend, 03.02.2018
+
 CreateEmptyTalents("lich")
 
 -----------------------------------
