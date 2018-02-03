@@ -57,6 +57,8 @@ function HeroSelection:HeroListPreLoad()
 
 	for hero, attributes in pairs(NPC_HEROES) do
 		if hero == "Version" or hero == "npc_dota_hero_base" or hero == "npc_dota_hero_target_dummy" then
+		elseif HeroIsHotDisabled(hero) then
+			table.insert(HeroSelection.disabled_heroes, hero);
 		else
 			table.insert(HeroSelection.vanilla_heroes, hero)
 			HeroSelection:AddVanillaHeroToList(hero)
