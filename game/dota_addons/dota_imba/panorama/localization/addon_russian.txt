@@ -210,7 +210,7 @@
 	"battlepass_force_staff4"		"Крассный Force Staff"
 	"battlepass_radiance"			"Водный Radiance"
 	"battlepass_radiance2"			"Крассный Radiance"
-	"battlepass_sheepstick"			"Хекс в виде синий свиньи" //как ето переводить хелп
+	"battlepass_sheepstick"			"Хекс в виде синей свиньи" //как ето переводить хелп
 	"battlepass_sheepstick2"		"Хекс в виде птицы"
 	"battlepass_shiva"				"Водянная Шива"
 	"battlepass_shiva2"				"Огнянная Шива"
