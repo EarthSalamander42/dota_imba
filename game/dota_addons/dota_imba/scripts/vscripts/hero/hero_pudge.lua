@@ -22,16 +22,9 @@ LinkLuaModifier("modifier_imba_hook_light_stack","hero/hero_pudge", LUA_MODIFIER
 function imba_pudge_sharp_hook:GetIntrinsicModifierName() return "modifier_imba_hook_sharp_stack" end
 function imba_pudge_light_hook:GetIntrinsicModifierName() return "modifier_imba_hook_light_stack" end
 
-function imba_pudge_sharp_hook:OnHeroLevelUp()
-	if self.buff then
-		self.buff:SetStackCount(self.buff:GetStackCount() + self:GetCaster():GetLevel() - self.buff.caster_level)
-		self.buff.caster_level = self:GetCaster():GetLevel()
-	end
-end
-
 function imba_pudge_sharp_hook:OnToggle()
 	local toggle = self:GetToggleState()  --true为打开 false为关闭
-	local buff = self.buff
+	local buff = self:GetCaster():FindModifierByName("modifier_imba_hook_sharp_stack")
 	local another_ability = self:GetCaster():FindAbilityByName("imba_pudge_light_hook")
 
 	if toggle and another_ability:GetToggleState() then
@@ -45,16 +38,9 @@ function imba_pudge_sharp_hook:OnToggle()
 	end
 end
 
-function imba_pudge_light_hook:OnHeroLevelUp()
-	if self.buff then
-		self.buff:SetStackCount(self.buff:GetStackCount() + self:GetCaster():GetLevel() - self.buff.caster_level)
-		self.buff.caster_level = self:GetCaster():GetLevel()
-	end
-end
-
 function imba_pudge_light_hook:OnToggle()
 	local toggle = self:GetToggleState()  --true为打开 false为关闭
-	local buff = self.buff
+	local buff = self:GetCaster():FindModifierByName("modifier_imba_hook_light_stack")
 	local another_ability = self:GetCaster():FindAbilityByName("imba_pudge_sharp_hook")
 
 	if toggle and another_ability:GetToggleState() then
@@ -81,9 +67,11 @@ function modifier_imba_hook_sharp_stack:GetTexture() return "custom/pudge_sharp_
 function modifier_imba_hook_sharp_stack:OnCreated()
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
-	self.ability.buff = self
-	self.caster_level = self.caster:GetLevel()
-	self:SetStackCount(self.caster:GetLevel())
+	self.caster_level = 1
+	self:SetStackCount(1)
+	if self.caster:HasTalent("special_bonus_imba_pudge_1") then
+		self:SetStackCount(1 + self.caster:FindTalentValue("special_bonus_imba_pudge_1") / 2)
+	end
 end
 
 function modifier_imba_hook_sharp_stack:OnIntervalThink()
@@ -109,9 +97,11 @@ function modifier_imba_hook_light_stack:GetTexture() return "custom/pudge_light_
 function modifier_imba_hook_light_stack:OnCreated()
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
-	self.ability.buff = self
-	self.caster_level = self.caster:GetLevel()
-	self:SetStackCount(self.caster:GetLevel())
+	self.caster_level = 1
+	self:SetStackCount(1)
+	if self.caster:HasTalent("special_bonus_imba_pudge_1") then
+		self:SetStackCount(1 + self.caster:FindTalentValue("special_bonus_imba_pudge_1") / 2)
+	end
 end
 
 function modifier_imba_hook_light_stack:OnIntervalThink()
@@ -127,9 +117,54 @@ function modifier_imba_hook_light_stack:OnIntervalThink()
 	end
 end
 
+function modifier_special_bonus_imba_pudge_1:OnCreated()
+	if not IsServer() then return end
+	local dmg_hook_buff = self:GetParent():FindModifierByName("modifier_imba_hook_sharp_stack")
+	local spd_hook_buff = self:GetParent():FindModifierByName("modifier_imba_hook_light_stack")
+	local stack = self:GetParent():FindTalentValue("special_bonus_imba_pudge_1")
+	if dmg_hook_buff and spd_hook_buff then
+		dmg_hook_buff:SetStackCount(dmg_hook_buff:GetStackCount() + (stack / 2))
+		spd_hook_buff:SetStackCount(spd_hook_buff:GetStackCount() + (stack / 2))
+	end
+end
+
+
+LinkLuaModifier("modifier_imba_pudge_meat_hook_stack_controller","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_pudge_meat_hook_caster_root","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_hook_target_enemy","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_hook_target_ally","hero/hero_pudge", LUA_MODIFIER_MOTION_NONE)
+
+function imba_pudge_meat_hook:GetIntrinsicModifierName() return "modifier_imba_pudge_meat_hook_stack_controller" end
+
+modifier_imba_pudge_meat_hook_stack_controller = modifier_imba_pudge_meat_hook_stack_controller or class({})
+
+function modifier_imba_pudge_meat_hook_stack_controller:IsDebuff() return false end
+function modifier_imba_pudge_meat_hook_stack_controller:IsHidden() return true end
+function modifier_imba_pudge_meat_hook_stack_controller:IsPurgable() return false end
+function modifier_imba_pudge_meat_hook_stack_controller:IsStunDebuff() return false end
+function modifier_imba_pudge_meat_hook_stack_controller:RemoveOnDeath() return false end
+
+function modifier_imba_pudge_meat_hook_stack_controller:OnCreated()
+	self.caster = self:GetCaster()
+	self:StartIntervalThink(1.0)
+end
+
+function modifier_imba_pudge_meat_hook_stack_controller:OnIntervalThink()
+	if IsServer() then
+		local dmg_hook_buff = self.caster:FindModifierByName("modifier_imba_hook_sharp_stack")
+		local spd_hook_buff = self.caster:FindModifierByName("modifier_imba_hook_light_stack")
+		local caster_level = self.caster:GetLevel()
+		if dmg_hook_buff and spd_hook_buff then
+			if dmg_hook_buff.caster_level < caster_level and spd_hook_buff.caster_level < caster_level then
+				local stacks = caster_level - dmg_hook_buff.caster_level
+				dmg_hook_buff.caster_level = caster_level
+				spd_hook_buff.caster_level = caster_level
+				dmg_hook_buff:SetStackCount(dmg_hook_buff:GetStackCount() + stacks)
+				spd_hook_buff:SetStackCount(spd_hook_buff:GetStackCount() + stacks)
+			end
+		end
+	end
+end
 
 function imba_pudge_meat_hook:IsHiddenWhenStolen() return false end
 function imba_pudge_meat_hook:IsRefreshable() 			return true  end
@@ -829,8 +864,15 @@ end
 function imba_pudge_dismember:OnSpellStart()
 	local caster = self:GetCaster()
 	local target = self:GetCursorTarget()
+
+	if caster:GetTeamNumber() ~= target:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(self) then
+			return nil
+		end
+	end
+
 	self.target = target
-	target:AddNewModifier(caster, self, "modifier_dismember", {})
+	target:AddNewModifier(caster, self, "modifier_dismember", {duration=self.channelTime})
 	caster:AddNewModifier(caster, self, "modifier_imba_pudge_dismember_buff", {})
 	self.pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_pudge/pudge_dismember.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 end
